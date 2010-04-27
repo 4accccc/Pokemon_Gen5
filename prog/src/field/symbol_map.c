@@ -367,15 +367,13 @@ static u16 getNextMapLSID( const u8 * map, u8 now_lsid, u8 dir_id )
 }
 
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-static const u8 * getMapTable( SYMBOL_MAP_LEVEL_LARGE large_lvl, SYMBOL_MAP_LEVEL_SMALL small_lvl )
-{
-  int index = small_lvl + SYMMAP_SMALL_LEVEL_LIMIT * large_lvl;
-  GF_ASSERT( index < NELEMS(symmap_tables) );
-  return symmap_tables[index];
-}
-
-//--------------------------------------------------------------
+/**
+ * @brief マップ段階の取得
+ * @param gsys
+ * @param small
+ * @param large
+ * @retval  BOOL  TRUE:正常の時、FALSE:通信エラー時
+ */
 //--------------------------------------------------------------
 static BOOL getMapLevel( GAMESYS_WORK * gsys, SYMBOL_MAP_LEVEL_SMALL * small, SYMBOL_MAP_LEVEL_LARGE * large )
 {
@@ -396,7 +394,7 @@ static BOOL getMapLevel( GAMESYS_WORK * gsys, SYMBOL_MAP_LEVEL_SMALL * small, SY
     INTRUDE_SYMBOL_WORK * isw;
     if ( intcomm == NULL )
     {
-      //通信エラーなので、とりあえず
+      //通信エラーでも正常動作するように値を入れる
       *small = SYMBOL_MAP_LEVEL_SMALL_1;
       *large = SYMBOL_MAP_LEVEL_LARGE_NONE;
       return FALSE;
@@ -410,13 +408,35 @@ static BOOL getMapLevel( GAMESYS_WORK * gsys, SYMBOL_MAP_LEVEL_SMALL * small, SY
 
 //--------------------------------------------------------------
 /**
+ * @brief マップ構造取得
+ * @return  マップ構造のテーブル。取得できなかった場合、NULLを返す
+ */
+//--------------------------------------------------------------
+static const u8 * getMapTable( GAMESYS_WORK * gsys )
+{
+  SYMBOL_MAP_LEVEL_SMALL small_lvl;
+  SYMBOL_MAP_LEVEL_LARGE large_lvl;
+  int index;
+  BOOL ok_flag;
+  ok_flag = getMapLevel( gsys, &small_lvl, &large_lvl);
+  if ( ok_flag == FALSE )
+  {
+    return NULL;
+  }
+  index = small_lvl + SYMMAP_SMALL_LEVEL_LIMIT * large_lvl;
+  GF_ASSERT( index < NELEMS(symmap_tables) );
+  return symmap_tables[index];
+}
+
+
+//--------------------------------------------------------------
+/**
  * @brief
  * @param heapID
  * @param gsys
  * @param no
  * @return  INTRUDE_SYMBOL_WORK
  *
- * @todo  拡張性などを考えるとINTRUDE_SYMBOL_WORKではなく、独自の構造体を返すべき
  */
 //--------------------------------------------------------------
 INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * gsys, u32 * no )
@@ -468,13 +488,14 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
 //--------------------------------------------------------------
 u16 SYMBOLMAP_GetZoneID( GAMESYS_WORK * gsys, SYMBOL_MAP_ID symmap_id )
 {
-  SYMBOL_MAP_LEVEL_LARGE large_lvl;
-  SYMBOL_MAP_LEVEL_SMALL small_lvl;
   const u8 * tbl;
-  getMapLevel( gsys, &small_lvl, &large_lvl );
-  tbl = getMapTable( large_lvl, small_lvl );
+  tbl = getMapTable( gsys );
 
-  return getSymbolMapZoneID( tbl, SYMMAPIDtoLSID( symmap_id ) );
+  if ( tbl ) {
+    return getSymbolMapZoneID( tbl, SYMMAPIDtoLSID( symmap_id ) );
+  } else {
+    return ZONE_ID_PALACE02;  //万が一のエラー処理：入り口タイプのゾーンを返す
+  }
 }
 
 //--------------------------------------------------------------
@@ -488,16 +509,17 @@ u16 SYMBOLMAP_GetZoneID( GAMESYS_WORK * gsys, SYMBOL_MAP_ID symmap_id )
 SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID(
     GAMESYS_WORK * gsys, SYMBOL_MAP_ID now_symmap_id, u16 dir_id )
 {
-  SYMBOL_MAP_LEVEL_LARGE large_lvl;
-  SYMBOL_MAP_LEVEL_SMALL small_lvl;
   const u8 * tbl;
   u8 next_lsid;
 
-  getMapLevel( gsys, &small_lvl, &large_lvl );
-  tbl = getMapTable( large_lvl, small_lvl );
-
-  next_lsid = getNextMapLSID( tbl, SYMMAPIDtoLSID(now_symmap_id), dir_id );
-  return LSIDtoSYMMAPID( next_lsid );
+  tbl = getMapTable( gsys );
+  if ( tbl != NULL ) {
+    next_lsid = getNextMapLSID( tbl, SYMMAPIDtoLSID(now_symmap_id), dir_id );
+    return LSIDtoSYMMAPID( next_lsid );
+  } else {
+    //万が一のエラー処理：入り口IDを返す
+    return LSIDtoSYMMAPID( SYMMAP_ENT_ID );
+  }
 }
 
 //--------------------------------------------------------------

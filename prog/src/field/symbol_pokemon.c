@@ -59,7 +59,7 @@ static const MMDL_HEADER data_MMdlHeader =
 	MOVE_LIMIT_NOT,	///<X方向移動制限
 	MOVE_LIMIT_NOT,	///<Z方向移動制限
   MMDL_HEADER_POSTYPE_GRID,
-  {0},            ///<ポジションバッファ ※check　グリッドマップの場合はここはMMDL_HEADER_GRIDPOS
+  {0},            ///<ポジションバッファ
 };
 
 
@@ -211,8 +211,6 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
  * KEEPゾーンの場合、前半１０は大きいポケモン、後半１０は小さいポケモンの
  * 領域で、間にポケモンが入っていない条件のデータが来ることもあるので注意。
  *
- * @todo
- * 消える演出をもう少しどうにかできないか？考える
  */
 //--------------------------------------------------------------
 void SYMBOLPOKE_Add(
