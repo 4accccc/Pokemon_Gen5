@@ -697,7 +697,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       *ret_wk = msg1;
     }
     break;
-  //アイテムをくれるNPCのmsg id取得
+  //アイテムをくれるNPCのアイテムナンバー取得
   case BSWTOOL_GET_HOME_NPC_GETITEM_ITEMNO:
     {
       u16 npc_no,msg0,msg1,item_no;
@@ -709,6 +709,15 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsway_GetHomeNPCItemData( bsw_scr, npc_no,
         &msg0, &msg1, &item_no );
       *ret_wk = item_no;
+    }
+    break;
+  //歴代トレーナーデータの格納されている人数を返す
+  case BSWTOOL_GET_LEADERDATA_DATANUM:
+    {
+      BSUBWAY_LEADER_DATA *pLeader =
+        BSUBWAY_WIFIDATA_GetLeaderDataAlloc( wifiData, HEAPID_PROC );
+      *ret_wk = (u16)BSUBWAY_LEADERDATA_GetDataNum( pLeader );
+      GFL_HEAP_FreeMemory( pLeader );
     }
     break;
   //----TOOL Wifi関連
