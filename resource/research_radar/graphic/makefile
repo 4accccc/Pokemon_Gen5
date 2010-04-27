@@ -115,6 +115,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(GRAPHIC_DATA)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+	ruby nanr_label_cut.rb bin/obj_NANR_LBLDEFS.h
 endif
 
 
