@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-20T11:31:23"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T17:54:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,7 +339,7 @@
 
 	<dialog left="92" top="163" right="797" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="821" top="127" right="1294" bottom="525" visible="yes"/>
+		<tag-palette left="807" top="127" right="1280" bottom="525" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -768,10 +768,10 @@
 		<comment>交換を募集、応募しようとしたときに
 てもちポケモンが1匹だったときの
 警告メッセージ</comment>
-		<language name="JPN" width="216">こうかん　するには　ポケモンが
-２ひき　いじょう　ひつよう　です！</language>
-		<language name="JPN_KANJI" width="216">交換するには　ポケモンが
-２匹以上　必要です！</language>
+		<language name="JPN" width="216">てもちと　ボックスを　あわせて
+２ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="216">手持ちと　ボックスを　合わせて
+２匹　以上　必要です</language>
 	</row>
 
 	<row id="msg_wifilobby_054">
