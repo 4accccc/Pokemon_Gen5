@@ -2639,7 +2639,7 @@ void DEBUG_SendBeaconCancel(void)
 void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag )
 {
   GF_ASSERT(GameBeaconSys != NULL);
-  GameBeaconSys->deb_beacon_priority_egnore;
+  GameBeaconSys->deb_beacon_priority_egnore = flag;
 }
 
 //==================================================================
