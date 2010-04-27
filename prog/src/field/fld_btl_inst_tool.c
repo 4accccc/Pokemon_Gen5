@@ -1110,6 +1110,7 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
   int  set_index;
   int  set_index_no[4];
   u32  set_rnd_no[4];
+  u8   set_seikaku[4];
   int  set_count;
   int  loop_count;
   BOOL  ret = 0;
@@ -1180,6 +1181,7 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
     }
 
     set_index_no[set_count]=set_index;
+    set_seikaku[set_count] = prd_d.chr;
     set_count++;
   }
 
@@ -1201,7 +1203,7 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
   for(i = 0;i< BSUBWAY_STOCK_PAREPOKE_MAX;i++){
     poke->poke_no[i] = set_index_no[i];
     poke->poke_rnd[i] = set_rnd_no[i];
-    poke->seikaku[i] = 0;
+    poke->seikaku[i] = set_seikaku[i];
   }
   return ret;
 }
