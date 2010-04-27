@@ -179,6 +179,8 @@ _EVENT_DATA  ev_hide_item_157
 _EVENT_DATA  ev_hide_item_158
 _EVENT_DATA  ev_hide_item_159
 _EVENT_DATA  ev_hide_item_160
+_EVENT_DATA  ev_hide_item_161
+_EVENT_DATA  ev_hide_item_162
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -985,6 +987,16 @@ EVENT_END
 EVENT_START ev_hide_item_160
 //ほうじょうのやしろ ( 43, 26 )
 	_ITEM_EVENT_HIDEITEM( 86, 1, FLAG_HIDEITEM_160 )// ちいさなキノコ
+EVENT_END
+
+EVENT_START ev_hide_item_161
+//ちかすいみゃくのあな１Ｆ ( 20, 11 )
+	_ITEM_EVENT_HIDEITEM( 51, 1, FLAG_HIDEITEM_161 )// ポイントアップ
+EVENT_END
+
+EVENT_START ev_hide_item_162
+//ちかすいみゃくのあな１Ｆ ( 23, 12 )
+	_ITEM_EVENT_HIDEITEM( 27, 1, FLAG_HIDEITEM_162 )// なんでもなおし
 EVENT_END
 
 //--------------------------------------------------------------

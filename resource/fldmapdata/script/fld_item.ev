@@ -521,7 +521,7 @@ EVENT_START ev_fld_item_139
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r03r0301 X=23 Y=11 ITEM=‚í‚´ƒ}ƒVƒ“‚S‚U FLAG=132
+// MAP=r03r0301 X=27 Y=9 ITEM=‚í‚´ƒ}ƒVƒ“‚S‚U FLAG=132
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_132
   _FLD_ITEM_EVENT ITEM_WAZAMASIN46,1
