@@ -452,7 +452,7 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='t4x4nflip' color_size='16' index='0'>
-		5620 41aa 2e69 24e8 396b 7a8f 0867 0c6a 
+		5620 41aa 2e69 4945 396b 7a8f 0867 0c6a 
 		1911 2197 192f 3a7a 5f5f 7fff 6af5 0000 
 	</tex_palette>
 </tex_palette_array>
