@@ -951,12 +951,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     MI_CpuClear8( bsw_scr->recv_buf, BSWAY_SIO_BUF_LEN );
     break;
   //トレーナー対戦前メッセージ表示
-  case BSWSUB_TRAINER_BEFORE_MSG:
+  case BSWSUB_TRAINER_BEFORE_MSG_UR:
     {
       u16 tr_idx = param0;
       u16 obj_id = param1;
       SCRIPT_CallEvent( sc,
-          BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,tr_idx,obj_id) );
+          BSUBWAY_EVENT_TrainerBeforeMsg(
+            bsw_scr,gsys,tr_idx,obj_id,SCRCMD_MSGWIN_UPRIGHT) );
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
@@ -1234,6 +1235,17 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //トレーナー対戦前メッセージ表示
+  case BSWSUB_TRAINER_BEFORE_MSG_DR:
+    {
+      u16 tr_idx = param0;
+      u16 obj_id = param1;
+      SCRIPT_CallEvent( sc,
+          BSUBWAY_EVENT_TrainerBeforeMsg(
+            bsw_scr,gsys,tr_idx,obj_id,SCRCMD_MSGWIN_DOWNRIGHT) );
+    }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
+    return( VMCMD_RESULT_SUSPEND );
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:

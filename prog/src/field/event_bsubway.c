@@ -42,6 +42,8 @@
 
 #include "effect_encount.h"
 
+#include "scrcmd_menuwin.h"
+
 #include "script_message.naix"
 #include "../../../resource/message/dst/script/msg_bsubway_scr.h"
 #include "../../../resource/message/dst/msg_tower_trainer.h"
@@ -334,7 +336,8 @@ static GMEVENT_RESULT ev_TrainerMsgBefore(
  */
 //--------------------------------------------------------------
 GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx, u16 obj_id )
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys,
+    int tr_idx, u16 obj_id, u8 pos_type )
 {
   GMEVENT *event;
   GAMEDATA *gdata;
@@ -386,12 +389,33 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
     MMDL_GetVectorPos( mmdl, &work->balloonWinPos );
   }
   
+  { //offset
+    VecFx32 offs;
+    const FIELD_CAMERA *fld_camera =
+      FIELDMAP_GetFieldCamera( fieldmap );
+    const GFL_G3D_CAMERA *g3d_camera =
+      FIELD_CAMERA_GetCameraPtr( fld_camera );
+    
+    EvCmdBalloonWin_GetOffsetPos(
+        &work->balloonWinPos, &offs, 
+        g3d_camera, fld_camera, pos_type );
+    
+    work->balloonWinPos.x += offs.x;
+    work->balloonWinPos.y += offs.y;
+    work->balloonWinPos.z += offs.z;
+  }
+  
   { //吹き出しウィンドウ
-     work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
-        msgbg,
-        FLDTALKMSGWIN_IDX_UPPER,
-        &work->balloonWinPos,
-        work->strBuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
+    FLDTALKMSGWIN_IDX win;
+    TAIL_SETPAT tail;
+    
+    EvCmdBalloonWin_GetWinType( pos_type, &win, &tail );
+    
+    work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
+       msgbg,
+       win,
+       &work->balloonWinPos,
+       work->strBuf, TALKMSGWIN_TYPE_NORMAL, tail );
   }
   
   return( event );
@@ -892,6 +916,7 @@ GMEVENT * BSUBWAY_EVENT_MsgWifiHomeNPC(
   GMEVENT *event;
   GAMEDATA *gdata;
   FLDMSGBG *msgbg;
+  u8 pos_type;
   FIELDMAP_WORK *fieldmap;
   BSUBWAY_LEADER_DATA *leader;
   EVENT_WORK_MSG_WIFI_HOME_NPC *work;
@@ -908,11 +933,33 @@ GMEVENT * BSUBWAY_EVENT_MsgWifiHomeNPC(
   
   { //mmdl
     MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    MMDL *jiki = MMDLSYS_SearchMMdlPlayer( mmdlsys );
+    
     mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
     MMDL_GetVectorPos( mmdl, &work->balloonWinPos );
+  
+    //pos type
+    pos_type = EvCmdBalloonWin_GetWinTypeDefault(
+        jiki, &work->balloonWinPos );
+  }
+  
+  { //offset
+    VecFx32 offs;
+    const FIELD_CAMERA *fld_camera =
+      FIELDMAP_GetFieldCamera( fieldmap );
+    const GFL_G3D_CAMERA *g3d_camera =
+      FIELD_CAMERA_GetCameraPtr( fld_camera );
+    
+    EvCmdBalloonWin_GetOffsetPos(
+        &work->balloonWinPos, &offs, 
+        g3d_camera, fld_camera, pos_type );
+    
+    work->balloonWinPos.x += offs.x;
+    work->balloonWinPos.y += offs.y;
+    work->balloonWinPos.z += offs.z;
   }
 
-  { //leader
+  { //leader data
     SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
     BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
         save, GMDATA_ID_BSUBWAY_WIFIDATA );
@@ -928,11 +975,16 @@ GMEVENT * BSUBWAY_EVENT_MsgWifiHomeNPC(
   GFL_HEAP_FreeMemory( leader );
   
   { //吹き出しウィンドウ
+    FLDTALKMSGWIN_IDX win;
+    TAIL_SETPAT tail;
+    
+    EvCmdBalloonWin_GetWinType( pos_type, &win, &tail );
+    
     work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
         msgbg,
-        FLDTALKMSGWIN_IDX_LOWER,
+        win,
         &work->balloonWinPos,
-        work->strBuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
+        work->strBuf, TALKMSGWIN_TYPE_NORMAL, tail );
   }
   
   return( event );

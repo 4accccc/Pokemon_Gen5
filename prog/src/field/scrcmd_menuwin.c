@@ -991,6 +991,89 @@ static void balloonWin_GetOffsetPos(
 
 //--------------------------------------------------------------
 /**
+ * 吹き出しウィンドウ　指定位置から調節位置を取得。
+ * 外部版。scrcmd_menuwinと同等の位置が欲しい場合に使用する。
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void EvCmdBalloonWin_GetOffsetPos(
+    const VecFx32 *pos, VecFx32 *offs,
+    const GFL_G3D_CAMERA *cp_g3Dcamera,
+    const FIELD_CAMERA *fld_camera,
+    u8 pos_type )
+{
+  balloonWin_GetOffsetPos( pos, offs, cp_g3Dcamera, fld_camera, pos_type );
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ　指定位置タイプから
+ * FLDTALKMSGWIN_IDX,TAIL_SETPATを取得。
+ * @param pos_type
+ * @param pOutTail
+ * @param pOutTail
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void EvCmdBalloonWin_GetWinType( u16 pos_type,
+    FLDTALKMSGWIN_IDX *pOutWin, TAIL_SETPAT *pOutTail )
+{
+  *pOutWin = FLDTALKMSGWIN_IDX_UPPER;
+  *pOutTail = TAIL_SETPAT_NONE;
+    
+  switch( pos_type ){
+  case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
+    *pOutTail = TAIL_SETPAT_FIX_DL;
+    break;
+  case SCRCMD_MSGWIN_DOWNLEFT: //ウィンドウ下　吹き出し向き左
+    *pOutWin = FLDTALKMSGWIN_IDX_LOWER;
+    *pOutTail = TAIL_SETPAT_FIX_UL;
+    break;
+  case SCRCMD_MSGWIN_UPRIGHT: //ウィンドウ上　吹き出し向き右
+    *pOutTail = TAIL_SETPAT_FIX_DR;
+    break;
+  case SCRCMD_MSGWIN_DOWNRIGHT: //ウィンドウ下　吹き出し向き右
+    *pOutWin = FLDTALKMSGWIN_IDX_LOWER;
+    *pOutTail = TAIL_SETPAT_FIX_UR;
+    break;
+  case SCRCMD_MSGWIN_UP: //ウィンドウ上　吹き出し位置自動
+    break;
+  case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
+    *pOutWin = FLDTALKMSGWIN_IDX_LOWER;
+    break;
+  case SCRCMD_MSGWIN_DEFAULT:
+    GF_ASSERT( 0 && "SYSWIN:ERROR BEFORE POS" );
+    *pOutWin = FLDTALKMSGWIN_IDX_LOWER;
+    *pOutTail = SCRCMD_MSGWIN_DOWN;
+    break;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ　自機の位置からSCRCMD_MSGWIN_UP,DOWNを取得
+ * @param pos 自機と比べる座標
+ * @retval u8 SCRCMD_MSGWIN_UP,SCRCMD_MSGWIN_DOWN
+ */
+//--------------------------------------------------------------
+u8 EvCmdBalloonWin_GetWinTypeDefault(
+    const MMDL *jiki, const VecFx32 *pos )
+{
+  VecFx32 jiki_pos;
+  u8 type = SCRCMD_MSGWIN_DOWN;
+        
+  MMDL_GetVectorPos( jiki, &jiki_pos ); //自機の位置から割り当て
+  
+  if( pos->z < jiki_pos.z ){
+    type = SCRCMD_MSGWIN_UP;
+  }
+  
+  return type;
+}
+
+//--------------------------------------------------------------
+/**
  * バルーンウィンドウクローズ待ち
  * @param core  VMHANDLE*
  * @param wk
@@ -1261,7 +1344,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
   }
   else //初期化
   { 
-    u16 idx;
+    FLDTALKMSGWIN_IDX idx;
     TAIL_SETPAT tail;
     
     MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
@@ -1287,49 +1370,14 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
       }
 #else //吹き出しデフォルトは常に自機の位置から割り当てになった
       {
-        VecFx32 pos,jiki_pos;
-        
+        VecFx32 pos;
         MMDL_GetVectorPos( npc, &pos );
-        MMDL_GetVectorPos( jiki, &jiki_pos ); //時期の位置から割り当て
-        
-        pos_type = SCRCMD_MSGWIN_DOWN;
-        
-        if( pos.z < jiki_pos.z ){
-          pos_type = SCRCMD_MSGWIN_UP;
-        }
+        pos_type = EvCmdBalloonWin_GetWinTypeDefault( jiki, &pos );
       }
 #endif
     }
     
-    idx = FLDTALKMSGWIN_IDX_UPPER;
-    tail = TAIL_SETPAT_NONE;
-    
-    switch( pos_type ){
-    case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
-      tail = TAIL_SETPAT_FIX_DL;
-      break;
-    case SCRCMD_MSGWIN_DOWNLEFT: //ウィンドウ下　吹き出し向き左
-      idx = FLDTALKMSGWIN_IDX_LOWER;
-      tail = TAIL_SETPAT_FIX_UL;
-      break;
-    case SCRCMD_MSGWIN_UPRIGHT: //ウィンドウ上　吹き出し向き右
-      tail = TAIL_SETPAT_FIX_DR;
-      break;
-    case SCRCMD_MSGWIN_DOWNRIGHT: //ウィンドウ下　吹き出し向き右
-      idx = FLDTALKMSGWIN_IDX_LOWER;
-      tail = TAIL_SETPAT_FIX_UR;
-      break;
-    case SCRCMD_MSGWIN_UP: //ウィンドウ上　吹き出し位置自動
-      break;
-    case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
-      idx = FLDTALKMSGWIN_IDX_LOWER;
-      break;
-    case SCRCMD_MSGWIN_DEFAULT:
-      GF_ASSERT( 0 && "SYSWIN:ERROR BEFORE POS" );
-      idx = FLDTALKMSGWIN_IDX_LOWER;
-      pos_type = SCRCMD_MSGWIN_DOWN;
-      break;
-    }
+    EvCmdBalloonWin_GetWinType( pos_type, &idx, &tail );
     
     bwin_work->win_idx = idx;
     SCRCMD_WORK_SetBeforeWindowPosType( work, pos_type );
