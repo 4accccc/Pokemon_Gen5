@@ -364,10 +364,10 @@
 #define FE_D04R2301_POKE13_GET             348 /* 0x015c 古代の城：ドラー捕獲フラグ */
 #define FE_R06R0101_EVENT_ON               349 /* 0x015d 季節研究所：シキジカイベント開始 */
 #define FE_R06R0101_ITEMGET_01             350 /* 0x015e 季節研究所：アイテム入手フラグ */
-#define FE_T01R0401_SUPPORT_TALK           351 /* 0x015f 研究所：クリア後サポートと話した */
+#define FE_T01R0401_SUPPORT_TALK           351 /* 0x015f 研究所：殿堂入り後サポートと話した */
 #define FE_C05R0201_BTL_01                 352 /* 0x0160 ホドモエシティ：交換後戦闘フラグ（クリア後） */
 #define FE_D09R1401_RIVAL_01               353 /* 0x0161 チャンピオンロード：ライバル初回話しかけフラグ */
-		/* not used   354(0x0162) */
+#define FE_T01R0201_SUPPORT_TALK           354 /* 0x0162 サポート宅：クリア後サポートと話した */
 		/* not used   355(0x0163) */
 		/* not used   356(0x0164) */
 		/* not used   357(0x0165) */
@@ -2528,8 +2528,8 @@
 #define TMFLG_C03P16_CABIN_01             2754 /* 0x0ac2 ヒウンシティ：遊覧船イベント（1日1回） */
 #define TMFLG_H04_KINOMI_SAND             2755 /* 0x0ac3 ビレッジブリッジ：きのみサンドイベント */
 #define TMFLG_D09R1401_RIVAL              2756 /* 0x0ac4 チャンピオンロード：クリア後ライバル戦闘済みフラグ */
-#define TMFLG_T01R0401_SUPPORT            2757 /* 0x0ac5 研究所：一日一回会話内容が変わる。会話変更フラグ。 週末は戦闘イベントの対戦済みフラグとして使用 */
-		/* not used  2758(0x0ac6) */
+#define TMFLG_T01R0401_SUP_TALK           2757 /* 0x0ac5 研究所：殿堂入り後サポートの初回会話した。 会話してか一日経過すると曜日イベントに切り替わる */
+#define TMFLG_T01R0401_SUP_BTL            2758 /* 0x0ac6 研究所：殿堂入り後サポートの１日１回戦闘フラグ 土曜、日曜なら対戦イベントが発生。 */
 		/* not used  2759(0x0ac7) */
 		/* not used  2760(0x0ac8) */
 		/* not used  2761(0x0ac9) */

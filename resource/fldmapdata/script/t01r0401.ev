@@ -27,7 +27,16 @@ _EVENT_DATA		ev_bg_t01r0401_note_01
 _EVENT_DATA		ev_t01r0401_pokemon_01
 _EVENT_DATA		ev_t01r0401_rival_01
 _EVENT_DATA		ev_t01r0401_support_01
+_EVENT_DATA		ev_t01r0401_support_02		//殿堂入り後サポート
 _EVENT_DATA_END
+
+
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK11を殿堂入り後サポートの再会話チェックに使用	//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
 
 /************************************************************/
@@ -537,5 +546,183 @@ EVENT_END
 EVENT_START   ev_t01r0401_pokemon_01
 	_EASY_TALK_POKEVOICE( MONSNO_537, msg_t01r0401_pokemon_01 )
 EVENT_END
+
+
+/************************************************************/
+/*					殿堂入り後サポート						*/
+/************************************************************/
+EVENT_START   ev_t01r0401_support_02
+	_TALK_OBJ_START()
+	
+	IF FLAG_OFF( FE_T01R0401_SUPPORT_TALK ) THEN
+	//初回会話なら
+		
+		//初回会話イベントへ
+		_CALL	ev_support_after
+		
+	ELSE
+	//２回目以降の話しかけ
+		
+		//初回会話後、一日以上経過しているなら曜日イベントへ
+		_CALL	ev_support_week_event
+		
+	ENDIF
+
+EVENT_END
+
+
+//殿堂入り後サポート：初回会話イベント
+ev_support_after:
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_01 )
+	_MSGWIN_CLOSE()
+	
+	//サポート：！マーク
+	_OBJ_ANIME( T01R0401_SUPPORT_02, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//そうだ！
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_02 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//さすが～～！
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_03 )
+	ELSE
+		//うふふ じゃあ教えてあげる
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_04 )
+	ENDIF
+	
+	//ポケモンの研究って
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_05 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//========================================//
+	//初回会話フラグをセット
+	_FLAG_SET( FE_T01R0401_SUPPORT_TALK )
+	
+	//１日１回フラグ：サポートと会話した
+	_FLAG_SET( TMFLG_T01R0401_SUP_TALK )
+	//========================================//
+_RET
+
+
+//殿堂入り後サポート：曜日イベント
+ev_support_week_event:
+	
+	//初回会話後、一日経過していない
+	IF FLAG_ON( TMFLG_T01R0401_SUP_TALK ) THEN
+		//ポケモンの研究って
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_05 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		_RET
+	ENDIF
+
+	_PLAYER_NAME( 0 )
+	_GET_WEEK( SCWK_ANSWER )	//曜日取得
+	SWITCH $SCWK_ANSWER
+	CASE RTC_WEEK_MONDAY THEN
+		//月曜日なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_06 )
+	CASE RTC_WEEK_TUESDAY THEN
+		//火曜日なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_07 )
+	CASE RTC_WEEK_WEDNESDAY THEN
+		//水曜日なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_08 )
+	CASE RTC_WEEK_THURSDAY THEN
+		//木曜日なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_09 )
+	CASE RTC_WEEK_FRIDAY THEN
+		//金曜日なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_10 )
+	DEFAULT
+		//土日なら対戦イベント
+		_CALL	ev_support_battle
+		
+	ENDSWITCH
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+_RET
+
+
+//殿堂入り後サポート：土日の対戦処理
+ev_support_battle:
+	IF FLAG_ON( TMFLG_T01R0401_SUP_BTL ) THEN
+		//対戦済み
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_24 )
+	
+	ELSE
+		//まだ対戦していない
+		
+		//対戦前メッセージ （一度断っていたら再会話用メッセージに変更）
+		IF $LOCALWORK11 != 111 THEN
+			//お ～～！ 今日は あたしと…
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_20 )
+		ELSE
+			//やっぱり あたしと
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_23 )
+		ENDIF
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//はい
+			
+			//興奮しすぎちゃダメだよ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_21 )
+			_MSGWIN_CLOSE()
+			
+			//トレーナー戦呼び出し
+			IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+				_TRAINER_BTL_SET( TRID_SUPPORT_16, 0 )
+			ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+				_TRAINER_BTL_SET( TRID_SUPPORT_17, 0 )
+			ELSE
+				_TRAINER_BTL_SET( TRID_SUPPORT_18, 0 )
+			ENDIF
+			
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+			
+			//対戦後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_24 )
+			
+			//========================================//
+			//１日１回フラグ：対戦済みフラグをセット
+			_FLAG_SET( TMFLG_T01R0401_SUP_BTL )
+			//========================================//
+			
+		ELSE
+			//いいえ
+			
+			//えええ！がっかり
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_end_22 )
+			
+			//========================================//
+			//再会話チェック用
+			$LOCALWORK11 = 111
+			//========================================//
+			
+		ENDIF
+	
+	ENDIF
+_RET
+
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+
 
 

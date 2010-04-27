@@ -14,6 +14,7 @@
 #define T01R0401_RIVAL_01                  2
 #define T01R0401_HAKASE1_01                3
 #define T01R0401_POKEMON_01                4
+#define T01R0401_SUPPORT_02                5
 
 #endif //ZONE_T01R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -306,6 +306,11 @@ init_flags:
 	//D09R1401チャンピオンロード：ライバル（クリア後に表示）
 	_FLAG_SET(FV_D09R1401_RIVAL)
 	
+	//カナワ民家：バトルサブウェイの落し物初回入手数をセット
+	$WK_OTHER_BSEVENT_NUM = 1
+	
+	//研究所の殿堂入り後サポートを非表示
+	_FLAG_SET( FV_T01R0401_SUPPORT_AFTER )
 }
 _RET
 
@@ -343,8 +348,10 @@ INIT_EVENT_START  ev_init_gameclear_script
     //初回なら
     _CALL	ev_first_gameclear
   ELSE
-    //２回目以降なら殿堂入りフラグをセット【保留】ゲームクリアと殿堂入りをちゃんと分けた方が良い
-    _FLAG_SET( SYS_FLAG_CHAMPION_WIN )
+    //初めて殿堂入りした時の処理を呼び出す
+    IF FLAG_OFF( SYS_FLAG_CHAMPION_WIN ) THEN
+      _CALL	ev_dendouiri
+    ENDIF
   ENDIF
   
   //全滅時の戻り先を自宅にする
@@ -465,6 +472,18 @@ ev_first_gameclear:
 
   //ギアステーションのジャッジを表示
   _FLAG_RESET( FV_POKE_JUDGE_01 )
+_RET
+
+
+//初回殿堂入り時の処理
+ev_dendouiri:
+  //殿堂入りフラグをセット
+  _FLAG_SET( SYS_FLAG_CHAMPION_WIN )
+
+  //研究所にサポートを表示
+  _FLAG_RESET( FV_T01R0401_SUPPORT_AFTER )
+  //サポート宅のサポートを非表示
+  _FLAG_SET( FV_T01R0201_SUPPORT )
 
 _RET
 
