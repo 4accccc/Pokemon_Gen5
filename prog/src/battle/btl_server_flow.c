@@ -3668,6 +3668,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BtlPokePos  orgTargetPos, actTargetPos;
   u8 fWazaEnable, fWazaExecute, fWazaLock, fReqWaza;
 
+  wazaEffCtrl_Init( &wk->wazaEffCtrl );
+
   reqWaza.wazaID = WAZANO_NULL;
   reqWaza.targetPos = BTL_POS_NULL;
 
@@ -3778,14 +3780,18 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
           // まだターゲットが残ってたらまずは普通に出す
           if( BTL_POKESET_GetCount(&wk->pokesetTarget) ){
             scproc_Fight_WazaExe( wk, attacker, actWaza, &wk->pokesetTarget );
+          }
           // 残ってなかったら、跳ね返しポケをターゲットに戻してエフェクトだけ発動させる
-          }else{
+          else
+          {
+            WAZAEFF_CTRL  effCtrl;
             u16 que_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
+
             BTL_POKESET_Add( &wk->pokesetTarget, robPoke );
-            wazaEffCtrl_Init( &wk->wazaEffCtrl );
-            wazaEffCtrl_Setup( &wk->wazaEffCtrl, wk, attacker, &wk->pokesetTarget );
-            wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
-            scPut_WazaEffect( wk, actWaza, &wk->wazaEffCtrl, que_pos );
+            wazaEffCtrl_Init( &effCtrl );
+            wazaEffCtrl_Setup( &effCtrl, wk, attacker, &wk->pokesetTarget );
+            wazaEffCtrl_SetEnable( &effCtrl );
+            scPut_WazaEffect( wk, actWaza, &effCtrl, que_pos );
           }
 
           // 跳ね返し確定イベント
@@ -4713,7 +4719,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   // レコードデータ更新
   scproc_WazaExeRecordUpdate( wk, waza );
-  wazaEffCtrl_Init( &wk->wazaEffCtrl );
+
 
   // １ターン溜めワザの発動チェック
   if( scproc_Fight_TameWazaExe(wk, attacker, targetRec, waza) ){
@@ -12787,6 +12793,7 @@ BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEf
 //=============================================================================================
 void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex )
 {
+  TAYA_Printf("set effect Index = %d\n", effIndex );
   wazaEffCtrl_SetEffectIndex( &wk->wazaEffCtrl, effIndex );
 }
 //=============================================================================================
@@ -13011,7 +13018,6 @@ static void relivePokeRec_Add( BTL_SVFLOW_WORK* wk, u8 pokeID )
   {
     wk->relivedPokeID[i] = pokeID;
     wk->numRelivePoke++;
-    TAYA_Printf("ポケモン生き返り記録%d件:ID=%d\n", wk->numRelivePoke, pokeID);
   }
 }
 

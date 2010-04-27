@@ -124,6 +124,10 @@ typedef enum {
   BTLV_WAZAEFF_DELAY_START = 0,     ///< ワザ撃ち
   BTLV_WAZAEFF_DELAY_ATTACK,        ///< 攻撃実行
 
+  // 交替差ワザ全般（とんぼがえり、ボルトチェンジ）
+  BTLV_WAZAEFF_POKECHANGE_ON = 0,    ///< 交替発生（控えがいる）
+  BTLV_WAZAEFF_POKECHANGE_OFF,       ///< 交替なし（控えがいない）
+
   // どろぼう
   BTLV_WAZAEFF_DOROBOU_NORMAL = 0,  ///< ヒットのみ
   BTLV_WAZAEFF_DOROBOU_STEAL,       ///< ヒット＆盗み成功
@@ -143,6 +147,12 @@ typedef enum {
   BTLV_WAZAEFF_WEATHERBALL_SAND,        ///< すなあらし
   BTLV_WAZAEFF_WEATHERBALL_RAIN,        ///< あまごい
 
+  // テクノバスター
+  BTLV_WAZAEFF_TECKNOBASTER_NORMAL = 0, ///< ノーマル
+  BTLV_WAZAEFF_TECKNOBASTER_MIZU,       ///< 水
+  BTLV_WAZAEFF_TECKNOBASTER_DENKI,      ///< 電気
+  BTLV_WAZAEFF_TECKNOBASTER_HONOO,      ///< 炎
+  BTLV_WAZAEFF_TECKNOBASTER_KOORI,      ///< こおり
 
 }BtlvWazaEffect_TurnType;
 
