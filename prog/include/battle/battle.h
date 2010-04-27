@@ -14,6 +14,7 @@
 #include <net.h>
 #include <procsys.h>
 
+#include "..\pm_define.h"
 #include "system/timezone.h"
 #include "system/pms_data.h"
 #include "field/field_light_status.h"
@@ -305,6 +306,8 @@ typedef struct {
 
   u8 cmdIllegalFlag      : 1;  // コマンド不正チェックフラグ（子機のみ操作。親機は常にFALSE）
   u8 recPlayCompleteFlag : 1;  // 録画再生モードで最後まで再生できたらTRUE。それ以外はFALSE
+
+  u8 fightPokeIndex[ TEMOTI_POKEMAX ];  // 戦闘に出たポケモンのパーティ内Indexと同じ位置がTRUEになる（それ以外はFALSE）
 
 }BATTLE_SETUP_PARAM;
 
