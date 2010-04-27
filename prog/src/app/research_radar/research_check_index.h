@@ -31,6 +31,7 @@ typedef enum {
   MENU_ITEM_ANSWER,    // 回答
   MENU_ITEM_MY_ANSWER, // 自分の回答
   MENU_ITEM_COUNT,     // 回答人数
+  MENU_ITEM_ANALYZE,   //「報告を見る」ボタン
   MENU_ITEM_NUM,       // 総数
 } MENU_ITEM;
 
@@ -53,6 +54,8 @@ typedef enum {
   PALETTE_ANIME_CURSOR_ON, // カーソルON
   PALETTE_ANIME_CURSOR_SET,// カーソルSET
   PALETTE_ANIME_SELECT,    //「ほうこくをみる」ボタン選択リアクション
+  PALETTE_ANIME_ANALYZE_CURSOR_ON, //「ほうこくをみる」ボタンカーソルON
+  PALETTE_ANIME_ANALYZE_CURSOR_SET, //「ほうこくをみる」ボタンカーソルSET
   PALETTE_ANIME_HOLD,      //「ほうこくをみる」ボタン暗転
   PALETTE_ANIME_RECOVER,   //「ほうこくをみる」ボタン復帰
   PALETTE_ANIME_RECEIVE_BUTTON, //「データじゅしんちゅう」ボタンフェード

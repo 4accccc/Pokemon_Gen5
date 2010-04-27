@@ -11,20 +11,21 @@
 
 // 処理シーケンス
 typedef enum {
-  RESEARCH_SELECT_SEQ_SETUP,          // 準備
-  RESEARCH_SELECT_SEQ_STANDBY,        // 最初のキー入力待ち
-  RESEARCH_SELECT_SEQ_KEY_WAIT,       // キー入力待ち
-  RESEARCH_SELECT_SEQ_SCROLL_WAIT,    // スクロール完了待ち
-  RESEARCH_SELECT_SEQ_SCROLL_CONTROL, // スクロール操作
-  RESEARCH_SELECT_SEQ_CONFIRM,        // 調査項目確定の確認
-  RESEARCH_SELECT_SEQ_DETERMINE,      // 調査項目確定
-  RESEARCH_SELECT_SEQ_FADE_IN,        // フェードイン
-  RESEARCH_SELECT_SEQ_FADE_OUT,       // フェードアウト
-  RESEARCH_SELECT_SEQ_FRAME_WAIT,     // フレーム経過待ち
-  RESEARCH_SELECT_SEQ_SCROLL_RESET,   // スクロールの復帰
-  RESEARCH_SELECT_SEQ_PALETTE_RESET,  // パレットの復帰
-  RESEARCH_SELECT_SEQ_CLEAN_UP,       // 後片付け
-  RESEARCH_SELECT_SEQ_FINISH,         // 終了
+  RESEARCH_SELECT_SEQ_SETUP,             // 準備
+  RESEARCH_SELECT_SEQ_STANDBY,           // 最初のキー入力待ち
+  RESEARCH_SELECT_SEQ_KEY_WAIT,          // キー入力待ち
+  RESEARCH_SELECT_SEQ_SCROLL_WAIT,       // スクロール完了待ち
+  RESEARCH_SELECT_SEQ_SCROLL_CONTROL,    // スクロール操作
+  RESEARCH_SELECT_SEQ_CONFIRM_STANDBY,   // 調査項目確定の確認 ( スタンバイ )
+  RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT,  // 調査項目確定の確認 ( キー入力待ち )
+  RESEARCH_SELECT_SEQ_DETERMINE,         // 調査項目確定
+  RESEARCH_SELECT_SEQ_FADE_IN,           // フェードイン
+  RESEARCH_SELECT_SEQ_FADE_OUT,          // フェードアウト
+  RESEARCH_SELECT_SEQ_FRAME_WAIT,        // フレーム経過待ち
+  RESEARCH_SELECT_SEQ_SCROLL_RESET,      // スクロールの復帰
+  RESEARCH_SELECT_SEQ_PALETTE_RESET,     // パレットの復帰
+  RESEARCH_SELECT_SEQ_CLEAN_UP,          // 後片付け
+  RESEARCH_SELECT_SEQ_FINISH,            // 終了
 } RESEARCH_SELECT_SEQ;
 
 // 選択項目

@@ -109,6 +109,7 @@ static void SetSeq( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq ); // èà
 static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
 static void SetWaitFrame( RESEARCH_MENU_WORK* work, u32 frame ); // FRAME_WAIT ÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
 static u32 GetWaitFrame( const RESEARCH_MENU_WORK* work ); // FRAME_WAIT ÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
+static RESEARCH_MENU_SEQ GetFirstSeq( const RESEARCH_MENU_WORK* work ); // ç≈èâÇÃÉVÅ[ÉPÉìÉXÇéÊìæÇ∑ÇÈ
 //------------------------------------------------------------------------------------
 // ÅüLAYER 2 ã@î\
 //------------------------------------------------------------------------------------
@@ -128,6 +129,7 @@ static void NewIconDispOff( const RESEARCH_MENU_WORK* work ); // "new" ÉAÉCÉRÉìÇ
 // ÅüLAYER 1 å¬ï ëÄçÏ
 //------------------------------------------------------------------------------------
 // ÉJÅ[É\Éãà íu
+static void SetupCursorPos( RESEARCH_MENU_WORK* work ); // ÉJÅ[É\Éãà íuÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
 static void ShiftCursorPos( RESEARCH_MENU_WORK* work, int offset ); // ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( ÉIÉtÉZÉbÉgéwíË )
 static void SetCursorPos( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( íºíléwíË )
 // í≤ç∏èâä˙âÊñ ÉèÅ[ÉN
@@ -423,10 +425,7 @@ static void FinishSeq_SETUP( RESEARCH_MENU_WORK* work )
  */
 //------------------------------------------------------------------------------------
 static void FinishSeq_STAND_BY( RESEARCH_MENU_WORK* work )
-{
-  // ÉJÅ[É\Éãà íuÇÃÉÅÉjÉÖÅ[çÄñ⁄ÇëIëèÛë‘Ç…Ç∑ÇÈ
-  MenuItemSetCursorOn( work->cursorPos );
-
+{ 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq STAND_BY\n" );
 }
@@ -495,6 +494,7 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
   CreateFont( work );
   CreateMessages( work );
   SetupTouchArea( work );
+  SetupCursorPos( work );
 
   // BG èÄîı
   SetupBG           ( work );
@@ -525,11 +525,9 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
       16, 0, 0);
 
-  // éüÇÃÉVÅ[ÉPÉìÉXÇÉZÉbÉg
-  SetNextSeq( work, RESEARCH_MENU_SEQ_STAND_BY ); 
 
-  // ÉVÅ[ÉPÉìÉXèIóπ
-  FinishCurrentSeq( work );
+  SetNextSeq( work, GetFirstSeq(work) ); // éüÇÃÉVÅ[ÉPÉìÉXÇÉZÉbÉg
+  FinishCurrentSeq( work ); // ÉVÅ[ÉPÉìÉXèIóπ
 }
 
 //------------------------------------------------------------------------------------
@@ -549,9 +547,9 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
 
-  //-----------------
-  //ÅuÇ‡Ç«ÇÈÅvÉ{É^Éì
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //----------------------
+  //ÅuÇ‡Ç«ÇÈÅvÉ{É^Éì or B
+  if( (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) || (trg & PAD_BUTTON_B) ) {
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
@@ -563,11 +561,11 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
     return;
   }
 
-  //--------------------
-  // è\éöÉLÅ[ or A or B
+  //----------------
+  // è\éöÉLÅ[ or A
   if( (trg & PAD_KEY_UP)   || (trg & PAD_KEY_DOWN)  ||
-      (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) ||
-      (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+      (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) || (trg & PAD_BUTTON_A) ) {
+    MenuItemSetCursorOn( work->cursorPos ); // ÉJÅ[É\Éãà íuÇÃÉÅÉjÉÖÅ[çÄñ⁄ÇëIëèÛë‘Ç…Ç∑ÇÈ
     SetNextSeq( work, RESEARCH_MENU_SEQ_KEY_WAIT );
     FinishCurrentSeq( work );
   }
@@ -575,7 +573,10 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   //-------------------------------------
   //Åuí≤ç∏ì‡óeÇïœçXÇ∑ÇÈÅvÉ{É^ÉìÇÉ^ÉbÉ`
   if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // âÊñ ëJà⁄ÇÃÉgÉäÉKÇìoò^
     MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH ); // ÉJÅ[É\Éãà íuÇçXêV
+    MenuItemSetCursorOn( work->cursorPos );              // ÉJÅ[É\Éãà íuÇÃÉÅÉjÉÖÅ[çÄñ⁄ÇëIëèÛë‘Ç…Ç∑ÇÈ
     StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );   // ÉJÅ[É\ÉãONÉpÉåÉbÉgÉAÉjÉÅèIóπ
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );     // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                      // åàíËâπ
@@ -589,7 +590,10 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   //-------------------------------------
   //Åuí≤ç∏ïÒçêÇämîFÇ∑ÇÈÅvÉ{É^ÉìÇÉ^ÉbÉ`
   if( touch == TOUCH_AREA_CHECK_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // âÊñ ëJà⁄ÇÃÉgÉäÉKÇìoò^
     MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // ÉJÅ[É\Éãà íuÇçXêV
+    MenuItemSetCursorOn( work->cursorPos );             // ÉJÅ[É\Éãà íuÇÃÉÅÉjÉÖÅ[çÄñ⁄ÇëIëèÛë‘Ç…Ç∑ÇÈ
     StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // ÉJÅ[É\ÉãONÉpÉåÉbÉgÉAÉjÉÅèIóπ
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // åàíËâπ
@@ -653,6 +657,8 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------
   // A É{É^Éì
   if( trg & PAD_BUTTON_A ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_BUTTON ); // âÊñ ëJà⁄ÇÃÉgÉäÉKÇìoò^
     StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // ÉJÅ[É\ÉãONÉpÉåÉbÉgÉAÉjÉÅèIóπ
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );   // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                    // åàíËâπ
@@ -671,6 +677,8 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------------------------
   //Åuí≤ç∏ì‡óeÇïœçXÇ∑ÇÈÅvÉ{É^Éì
   if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // âÊñ ëJà⁄ÇÃÉgÉäÉKÇìoò^
     MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH );  // ÉJÅ[É\Éãà íuÇçXêV
     StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );    // ÉJÅ[É\ÉãONÉpÉåÉbÉgÉAÉjÉÅèIóπ
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );      // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
@@ -685,6 +693,8 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------------------------
   //Åuí≤ç∏ïÒçêÇämîFÇ∑ÇÈÅvÉ{É^Éì
   if( touch == TOUCH_AREA_CHECK_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // âÊñ ëJà⁄ÇÃÉgÉäÉKÇìoò^
     MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // ÉJÅ[É\Éãà íuÇçXêV
     StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // ÉJÅ[É\ÉãONÉpÉåÉbÉgÉAÉjÉÅèIóπ
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
@@ -1055,6 +1065,36 @@ static void MoveCursorDirect( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem )
 
 //------------------------------------------------------------------------------------
 /**
+ * @brief ÉJÅ[É\Éãà íuÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupCursorPos( RESEARCH_MENU_WORK* work )
+{
+  RESEARCH_COMMON_WORK* commonWork;
+  RADAR_SEQ prev_seq;
+  SEQ_CHANGE_TRIG trig;
+  MENU_ITEM cursor_pos;
+
+  commonWork = work->commonWork;
+  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
+  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+
+  // ëOÇÃâÊñ ÇÉ{É^ÉìÇ≈èIóπ
+  if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
+    // ÉJÅ[É\Éãà íuÇèâä˙âª
+    switch( prev_seq ) {
+    default: GF_ASSERT(0);
+    case RADAR_SEQ_SELECT: cursor_pos = MENU_ITEM_CHANGE_RESEARCH; break;
+    case RADAR_SEQ_CHECK:  cursor_pos = MENU_ITEM_CHECK_RESEARCH;  break;
+    }
+    SetCursorPos( work, cursor_pos );
+  }
+}
+
+//------------------------------------------------------------------------------------
+/**
  * @brief ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ ( ÉIÉtÉZÉbÉgéwíË )
  *
  * @param work
@@ -1142,6 +1182,33 @@ static void SetWaitFrame( RESEARCH_MENU_WORK* work, u32 frame )
 static u32 GetWaitFrame( const RESEARCH_MENU_WORK* work )
 {
   return work->waitFrame;
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ç≈èâÇÃÉVÅ[ÉPÉìÉXÇéÊìæÇ∑ÇÈ
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static RESEARCH_MENU_SEQ GetFirstSeq( const RESEARCH_MENU_WORK* work )
+{
+  RESEARCH_COMMON_WORK* commonWork;
+  RADAR_SEQ prev_seq;
+  SEQ_CHANGE_TRIG trig;
+  MENU_ITEM cursor_pos;
+
+  commonWork = work->commonWork;
+  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
+  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+
+  // ëOÇÃâÊñ ÇÉ{É^ÉìÇ≈èIóπ
+  if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
+    return RESEARCH_MENU_SEQ_KEY_WAIT;
+  }
+  else {
+    return RESEARCH_MENU_SEQ_STAND_BY;
+  }
 }
 
 

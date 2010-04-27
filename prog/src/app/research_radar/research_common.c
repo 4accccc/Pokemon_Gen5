@@ -41,6 +41,11 @@ struct _RESEARCH_COMMON_WORK
 
   // カラーパレット
   PALETTE_FADE_PTR paletteFadeSystem; // カラーパレット フェードシステム
+
+  // 画面遷移
+  RADAR_SEQ prevSeq; // 直前の画面
+  RADAR_SEQ nowSeq;  // 現在の画面
+  SEQ_CHANGE_TRIG seqTrig; // 画面遷移の引き金となったトリガ
 };
 
 //-------------------------------------------------------------------------------
@@ -269,6 +274,78 @@ const GFL_UI_TP_HITTBL* RESEARCH_COMMON_GetHitTable( const RESEARCH_COMMON_WORK*
 
 //-------------------------------------------------------------------------------
 /**
+ * @brief 現在の画面を登録する
+ *
+ * @param work
+ * @param seq  登録する画面の識別子
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_SetNowSeq( RESEARCH_COMMON_WORK* work, RADAR_SEQ seq )
+{
+  // 直前の画面を更新
+  work->prevSeq = work->nowSeq;
+
+  // 現在の画面を更新
+  work->nowSeq = seq;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 画面遷移のトリガを登録する
+ *
+ * @param work
+ * @param trig
+ */
+//-------------------------------------------------------------------------------
+void RESEARCH_COMMON_SetSeqChangeTrig( RESEARCH_COMMON_WORK* work, SEQ_CHANGE_TRIG trig )
+{
+  work->seqTrig = trig;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 現在の画面を取得する
+ *
+ * @param work
+ *
+ * @return 現在の画面を表す識別子
+ */
+//-------------------------------------------------------------------------------
+RADAR_SEQ RESEARCH_COMMON_GetNowSeq( const RESEARCH_COMMON_WORK* work )
+{
+  return work->nowSeq;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 直前の画面を取得する
+ *
+ * @param work
+ *
+ * @return 直前の画面を表す識別子
+ */
+//-------------------------------------------------------------------------------
+RADAR_SEQ RESEARCH_COMMON_GetPrevSeq( const RESEARCH_COMMON_WORK* work )
+{
+  return work->prevSeq;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 画面遷移のトリガを取得する
+ *
+ * @paramw work
+ *
+ * @return 画面遷移の引き金となったトリガ
+ */
+//-------------------------------------------------------------------------------
+SEQ_CHANGE_TRIG RESEARCH_COMMON_GetSeqChangeTrig( const RESEARCH_COMMON_WORK* work )
+{
+  return work->seqTrig;
+}
+
+//-------------------------------------------------------------------------------
+/**
  * @brief パレットアニメーションを更新する
  *
  * @param work
@@ -373,6 +450,9 @@ static void InitCommonWork( RESEARCH_COMMON_WORK* work )
 {
   // 初期化
   GFL_STD_MemClear( work, sizeof(RESEARCH_COMMON_WORK) );
+
+  work->prevSeq = RADAR_SEQ_NULL;
+  work->nowSeq = RADAR_SEQ_NULL;
 
   InitOBJResources( work );
   InitClactUnits( work );

@@ -112,6 +112,7 @@ struct _RESEARCH_SELECT_WORK
 
   // カラーパレット
   PALETTE_FADE_PTR paletteFadeSystem; // パレットフェード処理システム
+  BOOL             palFadeOutFlag;    // フェードアウト中かどうか
 };
 
 
@@ -129,7 +130,8 @@ static void InitSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SE
 static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
 static void InitSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
 static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void InitSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void InitSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
+static void InitSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
 static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
 static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
 static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
@@ -143,7 +145,8 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SE
 static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
 static void MainSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
 static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void MainSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
+static void MainSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
 static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
 static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
 static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
@@ -157,7 +160,8 @@ static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_
 static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
 static void FinishSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
 static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void FinishSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM
+static void FinishSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
+static void FinishSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
 static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
 static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
 static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
@@ -174,6 +178,7 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); /
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // 画面終了結果を設定する
 static void SetWaitFrame( RESEARCH_SELECT_WORK* work, u32 frame ); // フレーム経過待ちシーケンスの待ち時間を設定する
 static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work ); // フレーム経過待ちシーケンスの待ち時間を取得する
+static void SetFirstSeq( RESEARCH_SELECT_WORK* work ); // 最初のシーケンスをセットする
 // VBlankタスク
 static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work ); // VBlankタスクを登録する
 static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work ); // VBlankタスクの登録を解除する
@@ -387,6 +392,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork
   work->scrollEndPos          = 0;
   work->scrollFrames          = 0;
   work->scrollFrameCount      = 0;
+  work->palFadeOutFlag        = FALSE;
 
   InitSeqQueue( work );
   InitMessages( work );
@@ -439,20 +445,21 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
 {
   // シーケンスごとの処理
   switch( work->seq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:           MainSeq_SETUP( work );           break;
-  case RESEARCH_SELECT_SEQ_STANDBY:         MainSeq_STANDBY( work );         break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:        MainSeq_KEY_WAIT( work );        break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:     MainSeq_SCROLL_WAIT( work );     break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:  MainSeq_SCROLL_CONTROL( work );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:         MainSeq_CONFIRM( work );         break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:       MainSeq_DETERMINE( work );       break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:         MainSeq_FADE_IN( work );         break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:        MainSeq_FADE_OUT( work );        break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:      MainSeq_FRAME_WAIT( work );      break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:    MainSeq_SCROLL_RESET( work );    break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:   MainSeq_PALETTE_RESET( work );   break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:        MainSeq_CLEAN_UP( work );        break;
-  case RESEARCH_SELECT_SEQ_FINISH:          return work->result; // 終了
+  case RESEARCH_SELECT_SEQ_SETUP:             MainSeq_SETUP( work );             break;
+  case RESEARCH_SELECT_SEQ_STANDBY:           MainSeq_STANDBY( work );           break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:          MainSeq_KEY_WAIT( work );          break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:       MainSeq_SCROLL_WAIT( work );       break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:    MainSeq_SCROLL_CONTROL( work );    break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:   MainSeq_CONFIRM_STANDBY( work );   break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT:  MainSeq_CONFIRM_KEY_WAIT( work );  break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:         MainSeq_DETERMINE( work );         break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:           MainSeq_FADE_IN( work );           break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:          MainSeq_FADE_OUT( work );          break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:        MainSeq_FRAME_WAIT( work );        break;
+  case RESEARCH_SELECT_SEQ_SCROLL_RESET:      MainSeq_SCROLL_RESET( work );      break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:     MainSeq_PALETTE_RESET( work );     break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:          MainSeq_CLEAN_UP( work );          break;
+  case RESEARCH_SELECT_SEQ_FINISH:            return work->result; // 終了
   default:  GF_ASSERT(0);
   }
 
@@ -529,13 +536,8 @@ static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work )
   // 通信アイコン
   SetupWirelessIcon( work );
 
-  // 次のシーケンスをセット
-  SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
-  SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
-  SetNextSeq( work, RESEARCH_SELECT_SEQ_STANDBY ); 
-
-  // シーケンス終了
-  FinishCurrentSeq( work );
+  SetFirstSeq( work ); // 次のシーケンスをセット
+  FinishCurrentSeq( work ); // シーケンス終了
 }
 
 //-----------------------------------------------------------------------------------------
@@ -557,8 +559,10 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
 
   //「もどる」ボタン
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
     RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
     SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
@@ -567,13 +571,26 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
     return;
   }
 
-  // 十字キー or A or B
+  // B
+  if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_BUTTON ); // 画面遷移のトリガを登録
+    RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
+    FinishCurrentSeq( work );
+    return;
+  }
+
+  // 十字キー or A
   if( (trg & PAD_KEY_UP) ||
       (trg & PAD_KEY_DOWN) ||
       (trg & PAD_KEY_LEFT) ||
       (trg & PAD_KEY_RIGHT) ||
-      (trg & PAD_BUTTON_A) || 
-      (trg & PAD_BUTTON_B) ) {
+      (trg & PAD_BUTTON_A) ) {
     SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
     FinishCurrentSeq( work );
     return;
@@ -588,7 +605,7 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
       SetSelectedTopicID( work, work->topicCursorPos );   // カーソル位置の調査項目を選択
       UpdateSubDisplayStrings( work );                    // 上画面のカーソル依存文字列を更新
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // 決定音
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM );
+      SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_STANDBY );
       FinishCurrentSeq( work );
     }
     return;
@@ -615,6 +632,8 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 
   //「もどる」ボタン
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // キャンセル音
@@ -649,7 +668,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
     SetSelectedTopicID( work, work->topicCursorPos ); // カーソル位置の調査項目を選択
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // 決定音
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT );
     FinishCurrentSeq( work );
     return;
   } 
@@ -663,7 +682,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
       UpdateSubDisplayStrings( work );                  // 上画面のカーソル依存文字列を更新
       SetSelectedTopicID( work, work->topicCursorPos ); // カーソル位置の調査項目を選択
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // 決定音
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM );
+      SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_STANDBY );
       FinishCurrentSeq( work );
     }
     return;
@@ -671,6 +690,8 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 
   // Bボタン
   if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
@@ -763,15 +784,77 @@ static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
   }
 }
 
-
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 調査項目確定の確認シーケンス ( RESEARCH_SELECT_SEQ_CONFIRM ) の処理
+ * @brief 調査項目確定の確認シーケンス ( RESEARCH_SELECT_SEQ_CONFIRM_STANDBY ) の処理
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void MainSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
+{
+  int trg;
+  int touchTrg;
+
+  trg = GFL_UI_KEY_GetTrg();
+  touchTrg = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
+
+  // スクロール処理
+  if( CheckScrollEnd(work) == FALSE ) {
+    UpdateScroll( work );           // スクロールを更新
+    UpdateScrollValue( work );      // スクロール実効値を更新
+    UpdateTopicTouchArea( work );   // タッチ範囲を更新する
+    UpdateScrollControlPos( work ); // スクロールバーのつまみ部分
+    UpdateTopicSelectIcon( work );  // 調査項目選択アイコン
+    UpdateTopicButtonMask( work );  // 調査項目のマスクウィンドを更新する
+  }
+
+
+  // 十字キー or A
+  if( (trg & PAD_KEY_UP) ||
+      (trg & PAD_KEY_DOWN) ||
+      (trg & PAD_KEY_LEFT) ||
+      (trg & PAD_KEY_RIGHT) ||
+      (trg & PAD_BUTTON_A) ) {
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT );
+    FinishCurrentSeq( work );
+    return;
+  }
+
+  //「けってい」ボタン
+  if( touchTrg == MENU_TOUCH_AREA_OK_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
+    MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK );
+    StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
+    StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
+    FinishCurrentSeq( work );
+    return;
+  } 
+
+  // Bボタン or 「やめる」ボタン
+  if( (trg & PAD_BUTTON_B) || 
+      (touchTrg == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
+    MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_CANCEL );
+    StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
+    StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+    FinishCurrentSeq( work );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目確定の確認シーケンス ( RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT ) の処理
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -801,6 +884,8 @@ static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
   if( trg & PAD_BUTTON_A ) {
     switch( work->menuCursorPos ) {
     case MENU_ITEM_DETERMINATION_OK:
+      RESEARCH_COMMON_SetSeqChangeTrig( 
+          work->commonWork, SEQ_CHANGE_BY_BUTTON ); // 画面遷移のトリガを登録
       SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
       break;
     case MENU_ITEM_DETERMINATION_CANCEL:
@@ -820,6 +905,8 @@ static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
 
   // 「けってい」ボタン
   if( touchTrg == MENU_TOUCH_AREA_OK_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK );
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
@@ -1014,20 +1101,21 @@ static void CountUpSeqCount( RESEARCH_SELECT_WORK* work )
 
   // 最大値を決定
   switch( work->seq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:          maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_STANDBY:        maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:       maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:    maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL: maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:        maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:      maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:        maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:       maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:     maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:   maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:  maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:       maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_FINISH:         maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_SETUP:             maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_STANDBY:           maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_KEY_WAIT:          maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:       maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:    maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:   maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT:  maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_DETERMINE:         maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
+  case RESEARCH_SELECT_SEQ_FADE_IN:           maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_FADE_OUT:          maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:        maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_SCROLL_RESET:      maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_PALETTE_RESET:     maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_CLEAN_UP:          maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_FINISH:            maxCount = 0xffffffff;                break;
   default: GF_ASSERT(0);
   }
 
@@ -1121,6 +1209,36 @@ static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief 最初のシーケンスをセットする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetFirstSeq( RESEARCH_SELECT_WORK* work )
+{
+  RESEARCH_COMMON_WORK* commonWork;
+  RADAR_SEQ prev_seq;
+  SEQ_CHANGE_TRIG trig;
+
+  commonWork = work->commonWork;
+  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
+  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+
+  // 前の画面をボタンで終了
+  if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT ); 
+  }
+  else {
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_STANDBY ); 
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief シーケンスを変更する
  *
  * @param work
@@ -1158,7 +1276,8 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
   case RESEARCH_SELECT_SEQ_KEY_WAIT:         FinishSeq_KEY_WAIT( work );         break;
   case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      FinishSeq_SCROLL_WAIT( work );      break;
   case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   FinishSeq_SCROLL_CONTROL( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:          FinishSeq_CONFIRM( work );          break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  FinishSeq_CONFIRM_STANDBY( work );  break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: FinishSeq_CONFIRM_KEY_WAIT( work ); break;
   case RESEARCH_SELECT_SEQ_DETERMINE:        FinishSeq_DETERMINE( work );        break;
   case RESEARCH_SELECT_SEQ_FADE_IN:          FinishSeq_FADE_IN( work );          break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:         FinishSeq_FADE_OUT( work );         break;
@@ -1182,7 +1301,8 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
   case RESEARCH_SELECT_SEQ_KEY_WAIT:         InitSeq_KEY_WAIT( work );         break;
   case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      InitSeq_SCROLL_WAIT( work );      break;
   case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   InitSeq_SCROLL_CONTROL( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:          InitSeq_CONFIRM( work );          break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  InitSeq_CONFIRM_STANDBY( work );  break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: InitSeq_CONFIRM_KEY_WAIT( work ); break;
   case RESEARCH_SELECT_SEQ_DETERMINE:        InitSeq_DETERMINE( work );        break;
   case RESEARCH_SELECT_SEQ_FADE_IN:          InitSeq_FADE_IN( work );          break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:         InitSeq_FADE_OUT( work );         break;
@@ -1202,7 +1322,8 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
   case RESEARCH_SELECT_SEQ_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );         break;
   case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n"    );   break;
   case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL\n" );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM:          OS_TFPrintf( PRINT_TARGET, "CONFIRM\n" );          break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  OS_TFPrintf( PRINT_TARGET, "CONFIRM_STANDBY\n" );  break;
+  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "CONFIRM_KEY_WAIT\n" ); break;
   case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );        break;
   case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );          break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );         break;
@@ -1334,12 +1455,58 @@ static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_CONFIRM )
+ * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_CONFIRM_STANDBY )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void InitSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
+{
+  SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // カーソルが乗っていない状態にする
+  SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_OK );     // カーソルが乗っていない状態にする
+
+  // 確認メッセージと選択項目を表示
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
+
+  if( work->palFadeOutFlag == FALSE ) {
+    BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xe ); // フォントのパレットを変更 ( パレットフェードが無効になるように )
+    StartPaletteFadeOut( work ); // パレットフェードアウト開始
+  }
+
+  // スクロール開始
+  {
+    int centerPos = ( GetMinScrollCursorMarginPos() + GetMaxScrollCursorMarginPos() ) / 2;
+    int startPos  = work->scrollCursorPos;
+    int endPos    = CalcScreenTopOfTopicButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
+    int frames;
+    // カーソル位置の調査項目が画面の任意の位置まで来るようにスクロールさせる
+    if( centerPos < endPos ) { 
+      // 進む方向でカーソル位置の始点・終点を変える
+      startPos = GetMaxScrollCursorMarginPos();
+      endPos   = GetMaxScrollCursorMarginPos() + (endPos - centerPos);
+    }
+    else {
+      startPos = GetMinScrollCursorMarginPos();
+      endPos   = GetMinScrollCursorMarginPos() - (centerPos - endPos);
+    }
+    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 2;
+    StartScroll( work, startPos, endPos, frames  );  
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM_STANDBY\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief シーケンスを初期化する ( ==> RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
   SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );         // カーソル位置を初期化
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // カーソルが乗っていない状態にする
@@ -1351,35 +1518,33 @@ static void InitSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
 
-  BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xe); // フォントのパレットを変更 ( パレットフェードが無効になるように )
-  StartPaletteFadeOut( work ); // パレットフェードアウト開始
+  if( work->palFadeOutFlag == FALSE ) {
+    BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xe ); // フォントのパレットを変更 ( パレットフェードが無効になるように )
+    StartPaletteFadeOut( work ); // パレットフェードアウト開始
+  }
 
   // スクロール開始
   {
     int centerPos = ( GetMinScrollCursorMarginPos() + GetMaxScrollCursorMarginPos() ) / 2;
-    int startPos = work->scrollCursorPos;
-    int endPos   = CalcScreenTopOfTopicButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
+    int startPos  = work->scrollCursorPos;
+    int endPos    = CalcScreenTopOfTopicButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
     int frames;
     // カーソル位置の調査項目が画面の任意の位置まで来るようにスクロールさせる
-    if( centerPos < endPos )
-    { // 進む方向でカーソル位置の始点・終点を変える
+    if( centerPos < endPos ) { 
+      // 進む方向でカーソル位置の始点・終点を変える
       startPos = GetMaxScrollCursorMarginPos();
-      //endPos = startPos + (endPos - centerPos);
-      endPos = GetMaxScrollCursorMarginPos() + (endPos - centerPos);
-      //endPos = 24 * 20;
+      endPos   = GetMaxScrollCursorMarginPos() + (endPos - centerPos);
     }
-    else
-    {
+    else {
       startPos = GetMinScrollCursorMarginPos();
-      //endPos = startPos - (centerPos - endPos);
-      endPos = GetMinScrollCursorMarginPos() - (centerPos - endPos);
+      endPos   = GetMinScrollCursorMarginPos() - (centerPos - endPos);
     }
     frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 2;
     StartScroll( work, startPos, endPos, frames  );  
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM_KEY_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1643,15 +1808,28 @@ static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_CONFIRM )
+ * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_CONFIRM_STANDBY )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CONFIRM( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
 { 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM_STANDBY\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief シーケンス終了処理 ( ==> RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void FinishSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+{ 
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM_KEY_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4870,6 +5048,9 @@ static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work )
                   MAIN_OBJ_PALETTE_FADE_OUT_COLOR,
                   work->VBlankTCBSystem );
 
+  // フラグを立てる
+  work->palFadeOutFlag = TRUE;
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: start palette fade out\n" );
 }
@@ -4902,6 +5083,9 @@ static void StartPaletteFadeIn( RESEARCH_SELECT_WORK* work )
                   MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH,
                   MAIN_OBJ_PALETTE_FADE_IN_COLOR,
                   work->VBlankTCBSystem );
+
+  // フラグを落とす
+  work->palFadeOutFlag = FALSE;
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: start palette fade in\n" );
@@ -4992,7 +5176,8 @@ static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work )
     case RESEARCH_SELECT_SEQ_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT " );         break;
     case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT " );      break;
     case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL " );   break;
-    case RESEARCH_SELECT_SEQ_CONFIRM:          OS_TFPrintf( PRINT_TARGET, "CONFIRM " );          break;
+    case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  OS_TFPrintf( PRINT_TARGET, "CONFIRM_STANDBY " );  break;
+    case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "CONFIRM_KEY_WAIT " ); break;
     case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE " );        break;
     case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN " );          break;
     case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );         break;

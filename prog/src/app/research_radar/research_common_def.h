@@ -9,6 +9,22 @@
 #pragma once 
 
 
+// 各画面の識別子
+typedef enum {
+  RADAR_SEQ_NULL,   // なし
+  RADAR_SEQ_MENU,   // メインメニュー画面
+  RADAR_SEQ_SELECT, // 調査項目セレクト画面
+  RADAR_SEQ_CHECK,  // 調査内容チェック画面
+} RADAR_SEQ;
+
+// 画面遷移の方法
+typedef enum {
+  SEQ_CHANGE_BY_BUTTON, // ボタン
+  SEQ_CHANGE_BY_TOUCH,  // タッチ
+} SEQ_CHANGE_TRIG;
+
+
+
 #define PRINT_TARGET (2)  // デバッグ情報の出力先
 
 #define DISP_CHR_WIDTH   (32) // ディスプレイ幅 ( キャラ単位 )

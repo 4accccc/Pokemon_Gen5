@@ -9,6 +9,7 @@
 #pragma once
 #include <gflib.h>
 #include "research_common_index.h"
+#include "research_common_def.h"
 #include "gamesystem/gamesystem.h" // for GAMESYS_WORK
 #include "system/palanm.h"         // for PaletteFadeXxxx
 
@@ -73,3 +74,17 @@ extern GFL_CLWK* RESEARCH_COMMON_GetClactWork(
 extern PALETTE_FADE_PTR RESEARCH_COMMON_GetPaletteFadeSystem( const RESEARCH_COMMON_WORK* work );
 // ヒットテーブルを取得する
 extern const GFL_UI_TP_HITTBL* RESEARCH_COMMON_GetHitTable( const RESEARCH_COMMON_WORK* work );
+// 現在の画面を取得する
+extern RADAR_SEQ RESEARCH_COMMON_GetNowSeq( const RESEARCH_COMMON_WORK* work );
+// 直前の画面を取得する
+extern RADAR_SEQ RESEARCH_COMMON_GetPrevSeq( const RESEARCH_COMMON_WORK* work );
+// 画面遷移のトリガを取得する
+extern SEQ_CHANGE_TRIG RESEARCH_COMMON_GetSeqChangeTrig( const RESEARCH_COMMON_WORK* work );
+
+//===============================================================================
+// ■設定
+//===============================================================================
+// 現在の画面を登録する
+extern void RESEARCH_COMMON_SetNowSeq( RESEARCH_COMMON_WORK* work, RADAR_SEQ seq );
+// 画面遷移のトリガを登録する
+extern void RESEARCH_COMMON_SetSeqChangeTrig( RESEARCH_COMMON_WORK* work, SEQ_CHANGE_TRIG trig );

@@ -91,6 +91,7 @@ struct _RESEARCH_CHECK_WORK
 
   // ƒtƒ‰ƒO
   BOOL analyzeFlag; // ‰ðÍ‚ªÏ‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
+  BOOL analyzeByTouchFlag; // ƒ^ƒbƒ`‚É‚æ‚é‰ðÍ‚©‚Ç‚¤‚©
   BOOL updateFlag;  // XV’†‚©‚Ç‚¤‚©
 
   // ‰~ƒOƒ‰ƒt
@@ -187,6 +188,7 @@ static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // 
 static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result ); // ‰æ–ÊI—¹Œ‹‰Ê‚ðÝ’è‚·‚é
 static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŽžŠÔ‚ðÝ’è‚·‚é
 static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŽžŠÔ‚ðŽæ“¾‚·‚é
+RESEARCH_CHECK_SEQ GetFirstSeq( const RESEARCH_CHECK_WORK* work ); // Å‰‚ÌƒV[ƒPƒ“ƒX‚ðŽæ“¾‚·‚é    
 //-----------------------------------------------------------------------------------------
 // žLAYER 3 ‹@”\
 //-----------------------------------------------------------------------------------------
@@ -194,6 +196,7 @@ static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒ
 static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work ); // ã‚ÖˆÚ“®‚·‚é
 static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // ’¼ÚˆÚ“®‚·‚é
+static void MoveMenuCursorSilent( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // ’¼ÚˆÚ“®‚·‚é ( “_–ÅESE‚È‚µ )
 // •\Ž¦‚·‚éŽ¿–â
 static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work ); // ŽŸ‚ÌŽ¿–â‚É•ÏX‚·‚é
 static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work ); // ‘O‚ÌŽ¿–â‚É•ÏX‚·‚é
@@ -222,6 +225,11 @@ static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispTy
 //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“
 static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðXV‚·‚é
 static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ð“_–Å‚³‚¹‚é
+static void SetAnalyzeButtonCursorOn( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+static void SetAnalyzeButtonCursorOff( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+static void SetAnalyzeButtonCursorSet( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒJ[ƒ\ƒ‹‚ðƒZƒbƒg‚µ‚½ó‘Ô‚É‚·‚é
+static void SetAnalyzeButtonActive( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
+static void SetAnalyzeButtonNotActive( RESEARCH_CHECK_WORK* work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ð”ñƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
 //u–ß‚évƒ{ƒ^ƒ“
 static void BlinkReturnButton( RESEARCH_CHECK_WORK* work ); //u–ß‚évƒ{ƒ^ƒ“‚ð“_–Å‚³‚¹‚é
 // ‰~ƒOƒ‰ƒt
@@ -403,24 +411,25 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
   work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_CHECK_WORK) );
 
   // ‰Šú‰»
-  work->commonWork      = commonWork;
-  work->heapID          = heapID;
-  work->gameSystem      = RESEARCH_COMMON_GetGameSystem( commonWork );
-  work->gameData        = RESEARCH_COMMON_GetGameData( commonWork );
-  work->seq             = RESEARCH_CHECK_SEQ_SETUP;
-  work->seqFinishFlag   = FALSE;
-  work->seqCount        = 0;
-  work->result          = RESEARCH_CHECK_RESULT_NONE;
-  work->waitFrame       = WAIT_FRAME_BUTTON;
-  work->cursorPos       = MENU_ITEM_QUESTION;
-  work->analyzeFlag     = FALSE;
-  work->updateFlag      = FALSE;
-  work->questionIdx     = 0;
-  work->answerIdx       = 0;
-  work->dispType        = DATA_DISP_TYPE_TODAY;
-  work->VBlankTCBSystem = GFUser_VIntr_GetTCBSYS();
-  work->percentageNum   = 0;
-  work->percentageDispNum = 0;
+  work->commonWork         = commonWork;
+  work->heapID             = heapID;
+  work->gameSystem         = RESEARCH_COMMON_GetGameSystem( commonWork );
+  work->gameData           = RESEARCH_COMMON_GetGameData( commonWork );
+  work->seq                = RESEARCH_CHECK_SEQ_SETUP;
+  work->seqFinishFlag      = FALSE;
+  work->seqCount           = 0;
+  work->result             = RESEARCH_CHECK_RESULT_NONE;
+  work->waitFrame          = WAIT_FRAME_BUTTON;
+  work->cursorPos          = MENU_ITEM_QUESTION;
+  work->analyzeFlag        = FALSE;
+  work->analyzeByTouchFlag = FALSE;
+  work->updateFlag         = FALSE;
+  work->questionIdx        = 0;
+  work->answerIdx          = 0;
+  work->dispType           = DATA_DISP_TYPE_TODAY;
+  work->VBlankTCBSystem    = GFUser_VIntr_GetTCBSYS();
+  work->percentageNum      = 0;
+  work->percentageDispNum  = 0;
 
   for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
 
@@ -560,7 +569,7 @@ static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
   SetupBmpOamSystem( work );
   CreateBmpOamActors( work );
 
-  SetupResearchData( work );   // ’²¸ƒf[ƒ^‚ðŽæ“¾
+  SetupResearchData( work );       // ’²¸ƒf[ƒ^‚ðŽæ“¾
   //Debug_SetupResearchData( work ); // TEST:
   //DebugPrint_researchData( work ); // TEST: 
   CreateCircleGraph( work );       // ‰~ƒOƒ‰ƒt ì¬
@@ -570,7 +579,7 @@ static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
   SetupPaletteFadeSystem( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ €”õ
   CreatePaletteAnime( work );     // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ð¶¬
   SetupPaletteAnime( work );      // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ðƒZƒbƒgƒAƒbƒv
-  RegisterVBlankTask( work ); // VBkankƒ^ƒXƒN“o˜^
+  RegisterVBlankTask( work );     // VBkankƒ^ƒXƒN“o˜^
 
   // ’ÊMƒAƒCƒRƒ“
   SetupWirelessIcon( work );
@@ -579,7 +588,7 @@ static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
 
-  SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY ); // ŽŸ‚ÌƒV[ƒPƒ“ƒX‚ðƒZƒbƒg
+  SetNextSeq( work, GetFirstSeq(work) ); // ŽŸ‚ÌƒV[ƒPƒ“ƒX‚ðƒZƒbƒg
   FinishCurrentSeq( work ); // ƒV[ƒPƒ“ƒXI—¹
 }
 
@@ -604,6 +613,8 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   //u‚à‚Ç‚évƒ{ƒ^ƒ“
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ð“o˜^
     BlinkReturnButton( work );
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ƒLƒƒƒ“ƒZƒ‹‰¹
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
@@ -625,12 +636,13 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   //u‰~ƒOƒ‰ƒtvƒ^ƒbƒ`
   if( touch == TOUCH_AREA_GRAPH ) {
     if( GetCountOfQuestion(work) != 0 ) {
+      work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY );
       FinishCurrentSeq( work );
     }
     return;
@@ -638,12 +650,13 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   //u‚Ù‚¤‚±‚­‚ð‚Ý‚évƒ{ƒ^ƒ“
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
     if( GetCountOfQuestion(work) != 0 ) {
+      work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY );
       FinishCurrentSeq( work );
     }
     else {
@@ -656,12 +669,13 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   if( touch == TOUCH_AREA_QUESTION ) {
     MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY );
       FinishCurrentSeq( work );
     }
     return;
@@ -695,6 +709,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
     case MENU_ITEM_ANSWER:    ChangeAnswerToPrev( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
+    case MENU_ITEM_ANALYZE:   break;
     default: GF_ASSERT(0);
     }
     SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
@@ -709,6 +724,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
     case MENU_ITEM_ANSWER:    ChangeAnswerToNext( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
+    case MENU_ITEM_ANALYZE:   break;
     default: GF_ASSERT(0);
     }
     SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
@@ -718,6 +734,8 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   // B ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_BUTTON ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ð“o˜^
     BlinkReturnButton( work );
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
     // ƒV[ƒPƒ“ƒX•ÏX
@@ -775,6 +793,8 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   //u‚à‚Ç‚évƒ{ƒ^ƒ“
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ð“o˜^
     BlinkReturnButton( work );
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
@@ -798,12 +818,13 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   //u‰~ƒOƒ‰ƒtvƒ^ƒbƒ`
   if( touch == TOUCH_AREA_GRAPH ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY );
       FinishCurrentSeq( work );
     }
     return;
@@ -811,12 +832,13 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   //u‚Ù‚¤‚±‚­‚ð‚Ý‚évƒ{ƒ^ƒ“
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
-      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY );
       FinishCurrentSeq( work );
     }
     else {
@@ -852,6 +874,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     case MENU_ITEM_ANSWER:    ChangeAnswerToPrev( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
+    case MENU_ITEM_ANALYZE:   break;
     default: GF_ASSERT(0);
     }
   }
@@ -863,16 +886,17 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     case MENU_ITEM_ANSWER:    ChangeAnswerToNext( work );    break;
     case MENU_ITEM_MY_ANSWER: break;
     case MENU_ITEM_COUNT:     SwitchDataDisplayType( work ); break;
+    case MENU_ITEM_ANALYZE:   break;
     default: GF_ASSERT(0);
     }
   }
 
   // A ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_A ) {
-    if( (work->analyzeFlag == FALSE ) &&
-        (GetCountOfQuestion(work) != 0) && 
-        (work->cursorPos == MENU_ITEM_QUESTION)  ) {
+    if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) && 
+        ( (work->cursorPos == MENU_ITEM_QUESTION) || (work->cursorPos == MENU_ITEM_ANALYZE) ) ) {
       // ƒV[ƒPƒ“ƒX•ÏX
+      work->analyzeByTouchFlag = FALSE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
@@ -886,6 +910,8 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   // B ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_SetSeqChangeTrig( 
+        work->commonWork, SEQ_CHANGE_BY_BUTTON ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ð“o˜^
     BlinkReturnButton( work );
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
     // ƒV[ƒPƒ“ƒX•ÏX
@@ -1144,6 +1170,34 @@ static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame )
 static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work )
 {
   return work->waitFrame;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Å‰‚ÌƒV[ƒPƒ“ƒX‚ðŽæ“¾‚·‚é    
+ *
+ * @param work
+ *
+ * @return ƒZƒbƒgƒAƒbƒvŒã‚ÌÅ‰‚ÌƒV[ƒPƒ“ƒX
+ */
+//-----------------------------------------------------------------------------------------
+RESEARCH_CHECK_SEQ GetFirstSeq( const RESEARCH_CHECK_WORK* work )
+{
+  RESEARCH_COMMON_WORK* commonWork;
+  RADAR_SEQ prev_seq;
+  SEQ_CHANGE_TRIG trig;
+
+  commonWork = work->commonWork;
+  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
+  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+
+  // ‘O‚Ì‰æ–Ê‚ðƒ{ƒ^ƒ“‚ÅI—¹
+  if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
+    return RESEARCH_CHECK_SEQ_KEY_WAIT;
+  }
+  else {
+    return RESEARCH_CHECK_SEQ_STANDBY;
+  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1533,6 +1587,7 @@ static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work )
 static void FinishSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 {
   UpdateBGFont_DataReceiving( work ); //uƒf[ƒ^‚µ‚ã‚Æ‚­‚¿‚ã‚¤v‚Ì•\Ž¦‚ðXV‚·‚é
+  UpdateBGFont_Answer( work );        //u‰ñ“šv•¶Žš—ñ‚Ì•\Ž¦‚ðXV‚·‚é
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq STANDBY\n" );
@@ -1563,9 +1618,17 @@ static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
   // ‰ðÍÏ‚Ýƒtƒ‰ƒO‚ð—§‚Ä‚é
   work->analyzeFlag = TRUE;
 
+  //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒ^ƒbƒ`‚Å‰ðÍ
+  if( work->analyzeByTouchFlag == FALSE ) {
+    MoveMenuCursorSilent( work, MENU_ITEM_ANSWER ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ðw‰ñ“šx‚É‡‚í‚¹‚é
+  }
+  else {
+    MoveMenuCursorSilent( work, MENU_ITEM_QUESTION ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ðwŽ¿–âx‚É‡‚í‚¹‚é
+  }
+
+  ChangeAnswerToTop( work ); // æ“ª‚Ì‰ñ“š‚ð•\Ž¦
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, FALSE ); //uc‚©‚¢‚¹‚«‚¿‚ã‚¤cv‚ðÁ‚·
   UpdateMainBG_WINDOW( work );        // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ðXV‚·‚é
-  SetMenuCursorOn( work );            // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
   UpdateBGFont_Answer( work );        // ‰ñ“š‚ðXV‚·‚é
   UpdateBGFont_MyAnswer( work );      // Ž©•ª‚Ì‰ñ“š‚ðXV‚·‚é
   UpdateBGFont_Count( work );         // ‰ñ“šl”‚ðXV‚·‚é
@@ -1804,23 +1867,39 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 //-----------------------------------------------------------------------------------------
 static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
 { 
+  BOOL loop = TRUE;
+
   // •\Ž¦‚ðXV
   SetMenuCursorOff( work );  // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 
   // ƒJ[ƒ\ƒ‹ˆÚ“®
   ShiftMenuCursorPos( work, -1 );
 
-  // ƒJ[ƒ\ƒ‹‚ªu‰ñ“švuŽ©•ª‚Ì‰ñ“šv‚ÌˆÊ’u‚É‚ ‚éê‡
-  while( (work->cursorPos == MENU_ITEM_ANSWER) || (work->cursorPos == MENU_ITEM_MY_ANSWER) )
+  // ƒJ[ƒ\ƒ‹ˆÊ’u‚ð’²®
+  while( loop )
   {
-    if( work->analyzeFlag == FALSE ) { // –¢‰ðÍ
-      ShiftMenuCursorPos( work, -1 ); 
+    //u‰ñ“švoruŽ©•ª‚Ì‰ñ“šv
+    if( (work->cursorPos == MENU_ITEM_ANSWER) || (work->cursorPos == MENU_ITEM_MY_ANSWER) ) {
+      // –¢‰ðÍ oru‚½‚¾‚¢‚Ü’²¸’†v
+      if( (work->analyzeFlag == FALSE) || (GetCountOfQuestion(work) == 0) ) {
+        ShiftMenuCursorPos( work, -1 ); 
+      }
+      else {
+        loop = FALSE;
+      }
     }
-    else if( GetCountOfQuestion(work) == 0 ) { //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v
-      ShiftMenuCursorPos( work, -1 ); 
+    //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“
+    else if( work->cursorPos == MENU_ITEM_ANALYZE ) {
+      // ‰ðÍÏ‚Ý oru‚½‚¾‚¢‚Ü’²¸’†v
+      if( (work->analyzeFlag == TRUE) || (GetCountOfQuestion(work) == 0) ) {
+        ShiftMenuCursorPos( work, -1 ); 
+      }
+      else {
+        loop = FALSE;
+      }
     }
     else {
-      break;
+      loop = FALSE;
     }
   }
 
@@ -1829,6 +1908,10 @@ static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
   UpdateControlCursor( work );  // ¶‰EƒJ[ƒ\ƒ‹‚ðXV
   UpdateMyAnswerIconOnGraph( work );  // Ž©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒOƒ‰ƒtã ) ‚ðXV‚·‚é
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); // ƒJ[ƒ\ƒ‹ƒZƒbƒg‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ðŠJŽn‚·‚é
+
+  if( work->cursorPos == MENU_ITEM_ANALYZE ) {
+    SetAnalyzeButtonCursorSet( work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ÌƒJ[ƒ\ƒ‹ƒZƒbƒgƒAƒjƒ‚ðŠJŽn‚·‚é
+  }
 
   // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -1846,23 +1929,39 @@ static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
 {
+  BOOL loop = TRUE;
+
   // •\Ž¦‚ðXV
   SetMenuCursorOff( work );  // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 
   // ƒJ[ƒ\ƒ‹ˆÚ“®
   ShiftMenuCursorPos( work, 1 );
 
-  // ƒJ[ƒ\ƒ‹‚ªu‰ñ“švuŽ©•ª‚Ì‰ñ“šv‚ÌˆÊ’u‚É‚ ‚éê‡
-  while( (work->cursorPos == MENU_ITEM_ANSWER) || (work->cursorPos == MENU_ITEM_MY_ANSWER) )
+  // ƒJ[ƒ\ƒ‹ˆÊ’u‚ð’²®
+  while( loop )
   {
-    if( work->analyzeFlag == FALSE ) { // –¢‰ðÍ
-      ShiftMenuCursorPos( work, 1 ); 
+    //u‰ñ“švoruŽ©•ª‚Ì‰ñ“šv
+    if( (work->cursorPos == MENU_ITEM_ANSWER) || (work->cursorPos == MENU_ITEM_MY_ANSWER) ) {
+      // –¢‰ðÍ oru‚½‚¾‚¢‚Ü’²¸’†v
+      if( (work->analyzeFlag == FALSE) || (GetCountOfQuestion(work) == 0) ) {
+        ShiftMenuCursorPos( work, 1 ); 
+      }
+      else {
+        loop = FALSE;
+      }
     }
-    else if( GetCountOfQuestion(work) == 0 ) { //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v
-      ShiftMenuCursorPos( work, 1 ); 
+    //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“
+    else if( work->cursorPos == MENU_ITEM_ANALYZE ) {
+      // ‰ðÍÏ‚Ý oru‚½‚¾‚¢‚Ü’²¸’†v
+      if( (work->analyzeFlag == TRUE) || (GetCountOfQuestion(work) == 0) ) {
+        ShiftMenuCursorPos( work, 1 ); 
+      }
+      else {
+        loop = FALSE;
+      }
     }
     else {
-      break;
+      loop = FALSE;
     }
   }
 
@@ -1871,6 +1970,10 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
   UpdateControlCursor( work );  // ¶‰EƒJ[ƒ\ƒ‹‚ðXV
   UpdateMyAnswerIconOnGraph( work );  // Ž©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒOƒ‰ƒtã ) ‚ðXV‚·‚é
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); // ƒJ[ƒ\ƒ‹ƒZƒbƒg‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ðŠJŽn‚·‚é
+
+  if( work->cursorPos == MENU_ITEM_ANALYZE ) {
+    SetAnalyzeButtonCursorSet( work ); //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ÌƒJ[ƒ\ƒ‹ƒZƒbƒgƒAƒjƒ‚ðŠJŽn‚·‚é
+  }
 
   // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -1888,6 +1991,25 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
  */
 //-----------------------------------------------------------------------------------------
 static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
+{
+  MoveMenuCursorSilent( work, menuItem );
+
+  // ƒJ[ƒ\ƒ‹ƒZƒbƒg‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ðŠJŽn‚·‚é
+  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); 
+
+  // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
+  PMSND_PlaySE( SEQ_SE_SELECT1 ); 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹‚ð’¼ÚˆÚ“®‚·‚é ( “_–ÅESE‚È‚µ )
+ *
+ * @param work
+ * @param menuItem ˆÚ“®æ‚Ìƒƒjƒ…[€–Ú
+ */
+//-----------------------------------------------------------------------------------------
+static void MoveMenuCursorSilent( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
 {
   // ˆÚ“®æ‚ªu‰ñ“švuŽ©•ª‚Ì‰ñ“šv‚Ìê‡
   if( (menuItem == MENU_ITEM_ANSWER) || (menuItem == MENU_ITEM_MY_ANSWER) )
@@ -1909,10 +2031,6 @@ static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem 
   SetMenuCursorOn( work );      // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
   UpdateControlCursor( work );  // ¶‰EƒJ[ƒ\ƒ‹‚ðXV
   UpdateMyAnswerIconOnGraph( work );  // Ž©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒOƒ‰ƒtã ) ‚ðXV‚·‚é
-  StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET ); // ƒJ[ƒ\ƒ‹ƒZƒbƒg‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ðŠJŽn‚·‚é
-
-  // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
-  PMSND_PlaySE( SEQ_SE_SELECT1 );
 
   // ƒ^ƒbƒ`”ÍˆÍ‚ðXV
   UpdateTouchArea( work );
@@ -2257,15 +2375,14 @@ static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work )
       (GetCountOfQuestion(work) == 0) ) { //u‚½‚¾‚¢‚Ü’²¸’†v
     // ˆÃ“]‚µ‚Ä‚¢‚È‚¢
     if( CheckPaletteAnime( work, PALETTE_ANIME_HOLD ) == FALSE ) {
-      StartPaletteAnime( work, PALETTE_ANIME_HOLD ); // ˆÃ“]‚³‚¹‚é
+      SetAnalyzeButtonNotActive( work );
     }
   }
   // ƒ{ƒ^ƒ“‚ª‰Ÿ‚¹‚é
   else {
     // ˆÃ“]‚µ‚Ä‚¢‚é
     if( CheckPaletteAnime( work, PALETTE_ANIME_HOLD ) == TRUE ) {
-      StopPaletteAnime( work, PALETTE_ANIME_HOLD ); // ˆÃ“]‚ðI—¹
-      StartPaletteAnime( work, PALETTE_ANIME_RECOVER ); // •œ‹A‚³‚¹‚é
+      SetAnalyzeButtonActive( work );
     }
   }
 }
@@ -2279,9 +2396,95 @@ static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work )
 {
+  // “K—p‚·‚éƒpƒŒƒbƒg”Ô†‚ð•ÏX
+  BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 0 );
+
   StopPaletteAnime( work, PALETTE_ANIME_HOLD );
   StopPaletteAnime( work, PALETTE_ANIME_RECOVER );
   StartPaletteAnime( work, PALETTE_ANIME_SELECT );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetAnalyzeButtonCursorOn( RESEARCH_CHECK_WORK* work )
+{
+  // “K—p‚·‚éƒpƒŒƒbƒg”Ô†‚ð•ÏX
+  BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 0 );
+
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJŽn
+  StartPaletteAnime( work, PALETTE_ANIME_ANALYZE_CURSOR_ON );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetAnalyzeButtonCursorOff( RESEARCH_CHECK_WORK* work )
+{
+  // “K—p‚·‚éƒpƒŒƒbƒg”Ô†‚ð•ÏX
+  BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 1 );
+
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“’âŽ~
+  StopPaletteAnime( work, PALETTE_ANIME_ANALYZE_CURSOR_ON );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒJ[ƒ\ƒ‹‚ðƒZƒbƒg‚µ‚½ó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetAnalyzeButtonCursorSet( RESEARCH_CHECK_WORK* work )
+{
+  // “K—p‚·‚éƒpƒŒƒbƒg”Ô†‚ð•ÏX
+  BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 0 );
+
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJŽn
+  StartPaletteAnime( work, PALETTE_ANIME_ANALYZE_CURSOR_SET );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ðƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetAnalyzeButtonActive( RESEARCH_CHECK_WORK* work )
+{
+  // “K—p‚·‚éƒpƒŒƒbƒg”Ô†‚ð•ÏX
+  BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 1 );
+
+  // ˆÃ“]‚ðI—¹
+  StopPaletteAnime( work, PALETTE_ANIME_HOLD ); 
+
+  // •œ‹A‚³‚¹‚é
+  StartPaletteAnime( work, PALETTE_ANIME_RECOVER ); 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ð”ñƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetAnalyzeButtonNotActive( RESEARCH_CHECK_WORK* work )
+{
+  // “K—p‚·‚éƒpƒŒƒbƒg”Ô†‚ð•ÏX
+  BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 1 );
+
+  // ˆÃ“]‚³‚¹‚é
+  StartPaletteAnime( work, PALETTE_ANIME_HOLD ); 
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2331,6 +2534,11 @@ static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work )
                                 MAIN_BG_PALETTE_MENU_ON );
     break;
 
+  //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“
+  case MENU_ITEM_ANALYZE:
+    SetAnalyzeButtonCursorOn( work );
+    break;
+
   // ƒGƒ‰[
   default:
     GF_ASSERT(0);
@@ -2345,7 +2553,7 @@ static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚éƒƒjƒ…[€–Ú‚ð, ƒƒjƒ…[€–Ú‚ðƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+ * @brief ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚éƒƒjƒ…[€–Ú‚ð, ƒƒjƒ…[€–Ú‚ðƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
  *
  * @param work
  */
@@ -2376,6 +2584,11 @@ static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work )
                                 ANSWER_LOWER_X, ANSWER_LOWER_Y, 
                                 ANSWER_LOWER_WIDTH, ANSWER_LOWER_HEIGHT,
                                 MAIN_BG_PALETTE_MENU_OFF );
+    break;
+
+  //u•ñ‚ðŒ©‚évƒ{ƒ^ƒ“
+  case MENU_ITEM_ANALYZE:
+    SetAnalyzeButtonCursorOff( work );
     break;
 
   // ƒGƒ‰[
@@ -2901,8 +3114,10 @@ static void UpdateControlCursor( RESEARCH_CHECK_WORK* work )
   cursorL = GetClactWork( work, CLWK_CONTROL_CURSOR_L );
   cursorR = GetClactWork( work, CLWK_CONTROL_CURSOR_R );
 
-  // XV’† oruŽ©•ª‚Ì‰ñ“šv‚ð‘I‘ð‚µ‚Ä‚¢‚éê‡‚Í•\Ž¦‚µ‚È‚¢
-  if( (work->updateFlag == TRUE ) || (work->cursorPos == MENU_ITEM_MY_ANSWER) ) {
+  // XV’† oruŽ©•ª‚Ì‰ñ“švoru•ñ‚ðŒ©‚évƒ{ƒ^ƒ“‚ð‘I‘ð‚µ‚Ä‚¢‚éê‡‚Í•\Ž¦‚µ‚È‚¢
+  if( (work->updateFlag == TRUE ) || 
+      (work->cursorPos == MENU_ITEM_MY_ANSWER) ||
+      (work->cursorPos == MENU_ITEM_ANALYZE) ) {
     GFL_CLACT_WK_SetDrawEnable( cursorL, FALSE );
     GFL_CLACT_WK_SetDrawEnable( cursorR, FALSE );
   }

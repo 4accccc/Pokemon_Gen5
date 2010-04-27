@@ -306,8 +306,7 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
   RESEARCH_WORK* work = wk;
   PROC_MAIN_SEQ  nextSeq;
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   nextSeq = ProcMain_SETUP ( work );  break;
   case PROC_MAIN_SEQ_TEST:    nextSeq = ProcMain_TEST  ( work );  break;
   case PROC_MAIN_SEQ_MENU:    nextSeq = ProcMain_MENU  ( work );  break;
@@ -370,10 +369,16 @@ static void ChangeMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ next
   // ŽŸ‚ÌƒV[ƒPƒ“ƒX‚ðŠJŽn
   SetMainProcSeq( work, seq, nextSeq );
 
+  // ‰æ–Ê‚Ì‘JˆÚ‚ð“o˜^‚·‚é
+  switch( *seq ) {
+  case PROC_MAIN_SEQ_MENU:    RESEARCH_COMMON_SetNowSeq( work->commonWork, RADAR_SEQ_MENU ); break;
+  case PROC_MAIN_SEQ_SELECT:  RESEARCH_COMMON_SetNowSeq( work->commonWork, RADAR_SEQ_SELECT ); break;
+  case PROC_MAIN_SEQ_CHECK:   RESEARCH_COMMON_SetNowSeq( work->commonWork, RADAR_SEQ_CHECK ); break;
+  }
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-PROC-MAIN: chenge seq ==> " );
-  switch( *seq )
-  {
+  switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   OS_TFPrintf( PRINT_TARGET, "SETUP(%d)\n",  *seq );  break;
   case PROC_MAIN_SEQ_TEST:    OS_TFPrintf( PRINT_TARGET, "TEST(%d)\n",   *seq );  break;
   case PROC_MAIN_SEQ_MENU:    OS_TFPrintf( PRINT_TARGET, "MENU(%d)\n",   *seq );  break;
