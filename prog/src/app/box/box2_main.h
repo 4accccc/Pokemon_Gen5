@@ -150,6 +150,8 @@ enum {
 	BOX2OBJ_ID_TB_END,			// タッチバー終了ボタン（C-gearへ）
 	BOX2OBJ_ID_TB_STATUS,		// タッチバーステータスボタン
 
+	BOX2OBJ_ID_CONV_BUTTON,	// 便利モードボタン
+
 	BOX2OBJ_ID_ITEMICON,
 	BOX2OBJ_ID_ITEMICON_SUB,
 

@@ -234,7 +234,7 @@ static void ItemIconDummyResLoad( BOX2_APP_WORK * appwk );
 //static void ItemIconObjAdd( BOX2_APP_WORK * appwk );
 
 //static void BoxObjResLoad( BOX2_APP_WORK * appwk );
-static void BoxObjAdd( BOX2_APP_WORK * appwk );
+static void BoxObjAdd( BOX2_SYS_WORK * syswk );
 
 //static void TrayIconResLoad( BOX2_APP_WORK * appwk );
 static void TrayObjAdd( BOX2_APP_WORK * appwk );
@@ -297,6 +297,12 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		{ TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_Y, 0, 64, 0 },
 		BOX2MAIN_CHRRES_BOX_BAR, BOX2MAIN_PALRES_TOUCH_BAR, BOX2MAIN_CELRES_BOX_BAR,
 		PALNUM_TB_STATUS, CLSYS_DRAW_MAIN,
+	},
+
+	{	// 便利モードボタン
+		{ 128, 6, BOX2OBJ_ANM_CONV_RED, 0, 0 },
+		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
+		0, CLSYS_DRAW_MAIN,
 	},
 
 	{	// アイテムアイコン
@@ -609,7 +615,7 @@ static void ClactAdd( BOX2_SYS_WORK * syswk )
 	TrayObjAdd( syswk->app );
 //	WallPaperObjAdd( syswk->app );
 	PokeIconObjAdd( syswk->app );
-	BoxObjAdd( syswk->app );
+	BoxObjAdd( syswk );
 	TypeIconObjAdd( syswk->app );
 
 /*
@@ -2689,9 +2695,12 @@ static void BoxObjResLoad( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BoxObjAdd( BOX2_APP_WORK * appwk )
+static void BoxObjAdd( BOX2_SYS_WORK * syswk )
 {
+	BOX2_APP_WORK * appwk;
 	u32	i;
+
+	appwk = syswk->app;
 
 	appwk->clwk[BOX2OBJ_ID_L_ARROW] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_L_ARROW] );
 	appwk->clwk[BOX2OBJ_ID_R_ARROW] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_R_ARROW] );
@@ -2707,6 +2716,7 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
 	appwk->clwk[BOX2OBJ_ID_TB_CANCEL] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TB_CANCEL] );
 	appwk->clwk[BOX2OBJ_ID_TB_END] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TB_END] );
 	appwk->clwk[BOX2OBJ_ID_TB_STATUS] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_TB_STATUS] );
+	appwk->clwk[BOX2OBJ_ID_CONV_BUTTON] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_CONV_BUTTON] );
 
 	for( i=0; i<6; i++ ){
 		appwk->clwk[BOX2OBJ_ID_MARK1+i]   = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_MARK1+i] );
@@ -2722,6 +2732,20 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_RARE, FALSE );
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS, FALSE );
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS_ICON, FALSE );
+
+	BOX2OBJ_PutConvButton( syswk, BOX2OBJ_ANM_CONV_RED, TRUE );
+}
+
+void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, u32 anm, BOOL flg )
+{
+	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_CONV_BUTTON, anm );
+	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON, flg );
+
+	if( syswk->dat->callMode != BOX_MODE_SEIRI &&
+			syswk->dat->callMode != BOX_MODE_BATTLE &&
+			syswk->dat->callMode != BOX_MODE_ITEM ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON, FALSE );
+	}
 }
 
 //--------------------------------------------------------------------------------------------

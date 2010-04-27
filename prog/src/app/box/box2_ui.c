@@ -352,6 +352,9 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	39, 41, 40, 40, { 112, 135, 168, 255 } },	// 40: にがす
 	{ 212, 136-4, 0, 0,	40, 36, 41, 41, { 136, 159, 168, 255 } },	// 41: とじる
 
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	42, 42, 42, 42, { 0, 8, 120, 136 } },		// 42: 便利モード
+
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangeMainCallBack = {
@@ -415,6 +418,9 @@ static const CURSORMOVE_DATA BoxArrangePokeMoveCursorMoveData[] =
 	{  0,   0, 0, 0,	40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },		// 40: ステータス
 	{  0,   0, 0, 0,	41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },		// 41: 戻る
 
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	42, 42, 42, 42, { 0, 8, 120, 136 } },		// 42: 便利モード
+
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePokeMoveCallBack = {
@@ -446,6 +452,9 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 	{ 212,  88-4, 0, 0,	11, 13, 12, 12, {  88, 111, 168, 255 } },	// 12: マーキング
 	{ 212, 112-4, 0, 0,	12, 14, 13, 13, { 112, 135, 168, 255 } },	// 13: にがす
 	{ 212, 136-4, 0, 0,	13,  9, 14, 14, { 136, 159, 168, 255 } },	// 14: とじる
+
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	15, 15, 15, 15, { 0, 8, 120, 136 } },		// 15: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -510,6 +519,9 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeMoveCursorMoveData[] =
 	{  0,   0, 0, 0,	40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },		// 40: ステータス
 	{  0,   0, 0, 0,	41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },		// 41: 戻る
 
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	42, 42, 42, 42, { 0, 8, 120, 136 } },		// 42: 便利モード
+
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePartyPokeMoveCallBack = {
@@ -570,6 +582,9 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	36, 38, 37, 37, { 112, 135, 168, 255 } },	// 37: バッグへ or もたせる
 	{ 212, 136-4, 0, 0,	37, 36, 38, 38, { 136, 159, 168, 255 } },	// 38: とじる
 
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	39, 39, 39, 39, { 0, 8, 120, 136 } },		// 39: 便利モード
+
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxItemArrangeMainCallBack = {
@@ -598,6 +613,9 @@ static const CURSORMOVE_DATA BoxItemArrangePartyPokeCursorMoveData[] =
 	{ 212,  88-4, 0, 0,	11, 10,  9,  9, {  88, 111, 168, 255 } },		// 09: いどうする
 	{ 212, 112-4, 0, 0,	 9, 11, 10, 10, { 112, 135, 168, 255 } },		// 10: バッグへ or もたせる
 	{ 212, 136-4, 0, 0,	10,  9, 11, 11, { 136, 159, 168, 255 } },		// 11: とじる
+
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	12, 12, 12, 12, { 0, 8, 120, 136 } },		// 12: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -683,6 +701,9 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	37, 39, 38, 38, { 112, 135, 168, 255 } },	// 38: もちもの
 	{ 212, 136-4, 0, 0,	38, 36, 39, 39, { 136, 159, 168, 255 } },	// 39: やめる
 
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	40, 40, 40, 40, { 0, 8, 120, 136 } },		// 40: 便利モード
+
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BattleBoxMainCallBack = {
@@ -712,6 +733,9 @@ static const CURSORMOVE_DATA BattleBoxPartyMainCursorMoveData[] =
 	{ 212,  88-4, 0, 0,	 9, 11, 10, 10, {  88, 111, 168, 255 } },	// 10: ようすをみる
 	{ 212, 112-4, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },	// 11: もちもの
 	{ 212, 136-4, 0, 0,	11,  9, 12, 12, { 136, 159, 168, 255 } },	// 12: とじる
+
+	// CONV_BUTTON_IN
+	{ 0, 0, 0, 0,	13, 13, 13, 13, { 0, 8, 120, 136 } },		// 13: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };

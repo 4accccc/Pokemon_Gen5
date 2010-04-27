@@ -28,6 +28,8 @@ enum {
 	BOX2OBJ_ANM_HAND2_NORMAL,			// 便利モード手カーソル：通常
 	BOX2OBJ_ANM_HAND2_OPEN,				// 便利モード手カーソル：開く
 	BOX2OBJ_ANM_HAND2_CLOSE,			// 便利モード手カーソル：閉じる
+	BOX2OBJ_ANM_CONV_BLUE,				// 便利モードボタン：青
+	BOX2OBJ_ANM_CONV_RED,					// 便利モードボタン：赤
 };
 
 #define	BOX2OBJ_TRAYPOKE_PX		( 24 )		// トレイのポケモンアイコン表示開始Ｘ座標
@@ -736,6 +738,10 @@ extern void BOX2OBJ_ItemIconCursorMove( BOX2_APP_WORK * appwk );
  */
 //--------------------------------------------------------------------------------------------
 //extern void BOX2OBJ_ItemIconPutSub( BOX2_APP_WORK * appwk );
+
+
+
+extern void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, u32 anm, BOOL flg );
 
 
 //============================================================================================
