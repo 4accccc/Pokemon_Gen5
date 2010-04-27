@@ -266,7 +266,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
       if( ISS_DUNGEON_SYS_IsActiveAt(issD, work->zoneID) && 
           ISS_DUNGEON_SYS_IsActiveAt(issD, work->nextZoneID) ) {
         // BGM フェードアウト
-        GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_FAST );
+        GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_SHORT );
         GMEVENT_CallEvent( event, fadeOutEvent );
         work->BGMFadeWaitFlag = TRUE; // BGMフェードを待つ
       }
@@ -287,12 +287,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     break;
 
   case 2: 
-    // BGMフェード完了待ち
-    if( (work->BGMFadeWaitFlag == FALSE) || (PMSND_CheckFadeOnBGM() == FALSE) ) { 
-      // クロスフェードでなければ, SEを再生
-      if( work->fadeOutType != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
-      (*seq)++; 
-    }
+    // クロスフェードでなければ, SEを再生
+    if( work->fadeOutType != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
+    (*seq)++; 
     break;
 
   case 3:
