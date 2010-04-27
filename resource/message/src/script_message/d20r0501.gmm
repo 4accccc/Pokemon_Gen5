@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-26T18:25:22"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-27T14:57:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -436,8 +436,8 @@
 		<comment>王の　歩みに　迷いは　無い
 勇気ある　王よ　先に　進め▼</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">HOJLFWBSCOPPH</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">HOJLFWBSCOPPH</language>
+		<language name="JPN" font=" 2:shinden" width="256">HOJLFWBSCOPPH[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">HOJLFWBSCOPPH[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d20r0501_sys_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
