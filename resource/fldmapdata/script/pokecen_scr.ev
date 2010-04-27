@@ -625,9 +625,9 @@ EVENT_START    ev_geonet
   IF FLAG_ON(FE_CGEAR_GET) THEN
     _CALL_GEONET_PROC()
   ELSE
-    _SYSWIN_MSG( msg_pc_geonet_01, POS_DEFAULT )
+    _PLAINWIN_MSG_DOWN( msg_pc_geonet_01 )
     _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
+    _PLAINWIN_CLOSE()
   ENDIF
 EVENT_END
 

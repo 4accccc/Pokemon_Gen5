@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t05.h"
   .include  "t05.h"
+  .include  "bsubway_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -700,15 +701,14 @@ EVENT_START	ev_t05_recept_01
 		
 		_TIME_WAIT( 16 )
 		
+		//予約スクリプト：主人公電車から出てくるアニメ演出
+		_RESERVE_SCRIPT( SCRID_BSW_TTOWN_DEMO_TRAIN_ARRIVAL )
+		
 		_MAP_FADE_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
 		
 		_MAP_CHANGE_NO_FADE( ZONE_ID_C04R0109, 16, 0, 14, DIR_DOWN )
 		
-		_MAP_FADE_BLACK_IN()
-		_DISP_FADE_END_CHECK()
-		
-	
 	ELSE
 		_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_03 )
 		_LAST_KEYWAIT()

@@ -25,7 +25,16 @@
 _EVENT_DATA    ev_init_c04r0109
 _EVENT_DATA    ev_recover_c04r0109
 _EVENT_DATA    ev_bg_c04r0109_sign1_01
+_EVENT_DATA    ev_c04r0109_informationm_01
 _EVENT_DATA_END
+
+
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK15を受付POSイベントの起動に使用				//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
 
 /************************************************************/
@@ -57,5 +66,13 @@ EVENT_START ev_bg_c04r0109_sign1_01
 	
 	_CALL_SUBWAY_ROUTE_MAP()
 EVENT_END
+
+
+/************************************************************/
+/*						お姉さん							*/
+/************************************************************/
+INIT_EVENT_START	ev_c04r0109_informationm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0109_infomationm_01 )
+INIT_EVENT_END
 
 
