@@ -454,11 +454,6 @@
 	</row>
 
 	<row id="search_abc_12">
-		<language name="JPN" width="216">Vしえねれーと</language>
-		<language name="JPN_KANJI" width="216">Vしえねれーと</language>
-	</row>
-
-	<row id="search_abc_13">
 		<language name="JPN" width="216">Wi\x{ff0d}Fi</language>
 		<language name="JPN_KANJI" width="216">Wi\x{ff0d}Fi</language>
 	</row>
