@@ -691,7 +691,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   // Bボタン
   if( trg & PAD_BUTTON_B ) {
     RESEARCH_COMMON_SetSeqChangeTrig( 
-        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
+        work->commonWork, SEQ_CHANGE_BY_BUTTON ); // 画面遷移のトリガを登録
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
