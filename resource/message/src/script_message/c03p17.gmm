@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:40:46"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:54:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,18 +292,17 @@
 	</lock>
 
 
-	<row id="msg_c03p17_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手前
-・メッセージ表示後、選択肢表示
-・仮メッセージ</comment>
+・メッセージ表示後、選択肢表示</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ブロッコ　スチック　ファウン　の
+		<language name="JPN" width="256">ヤナップ　バオップ　ヒヤップ　の
 ３びきは　とくべつな　いしで▽
 しんかをする　ポケモンなんだ！▼
 きみなら　どの　ポケモンを
 しんか　させてみたい？▼</language>
-		<language name="JPN_KANJI" width="256">ブロッコ　スチック　ファウン　の
+		<language name="JPN_KANJI" width="256">ヤナップ　バオップ　ヒヤップ　の
 ３匹は　特別な　石を　使うことで▽
 進化をする　ポケモンなんだ！▼
 きみなら　どの　ポケモンを
@@ -315,9 +314,9 @@
 ・アイテム入手処理
 　No085「リーフのいし」</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ブロッコ　か……
+		<language name="JPN" width="256">ヤナップ　か……
 それじゃあ　リーフのいし　だね▼</language>
-		<language name="JPN_KANJI" width="256">ブロッコ　か……
+		<language name="JPN_KANJI" width="256">ヤナップ　か……
 それじゃあ　リーフのいし　だね▼</language>
 	</row>
 
@@ -326,9 +325,9 @@
 ・アイテム入手処理
 　No082「ほのおのいし」</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">スチック　か……
+		<language name="JPN" width="256">バオップ　か……
 それじゃあ　ほのおのいし　だね▼</language>
-		<language name="JPN_KANJI" width="256">スチック　か……
+		<language name="JPN_KANJI" width="256">バオップ　か……
 それじゃあ　ほのおのいし　だね▼</language>
 	</row>
 
@@ -337,9 +336,9 @@
 ・アイテム入手処理
 　No084「みずのいし」</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ファウン　か……
+		<language name="JPN" width="256">ヒヤップ　か……
 それじゃあ　みずのいし　だね▼</language>
-		<language name="JPN_KANJI" width="256">ファウン　か……
+		<language name="JPN_KANJI" width="256">ヒヤップ　か……
 それじゃあ　みずのいし　だね▼</language>
 	</row>
 
@@ -359,22 +358,22 @@
 	<row id="msg_c03p17_select_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_02</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ブロッコ</language>
-		<language name="JPN_KANJI" width="256">ブロッコ</language>
+		<language name="JPN" width="256">ヤナップ</language>
+		<language name="JPN_KANJI" width="256">ヤナップ</language>
 	</row>
 
 	<row id="msg_c03p17_select_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_03</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">スチック</language>
-		<language name="JPN_KANJI" width="256">スチック</language>
+		<language name="JPN" width="256">バオップ</language>
+		<language name="JPN_KANJI" width="256">バオップ</language>
 	</row>
 
 	<row id="msg_c03p17_select_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_04</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ファウン</language>
-		<language name="JPN_KANJI" width="256">ファウン</language>
+		<language name="JPN" width="256">ヒヤップ</language>
+		<language name="JPN_KANJI" width="256">ヒヤップ</language>
 	</row>
 
 	<row id="msg_c03p17_badman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
