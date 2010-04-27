@@ -13,6 +13,7 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "print/str_tool.h"
+#include "net_app/union/union_beacon_tool.h"
 
 #include "gamesystem\msgspeed.h"
 #include "savedata/playtime.h"
@@ -399,28 +400,6 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
   }
 }
 
-// トレーナーカードに表示するユニオン見た目文字列
-static const trtype_name_tbl[]={
-  // 男子
-  MSG_TRTYPE_ELITEM,        // エリートトレーナー
-  MSG_TRTYPE_RANGERM,       // ポケモンレンジャー♂
-  MSG_TRTYPE_BREEDERM,      // ポケモンブリーダー♂
-  MSG_TRTYPE_SCIENTISTM,    // けんきゅういん♂
-  MSG_TRTYPE_TANPAN,        // たんぱんこぞう
-  MSG_TRTYPE_MOUNT,         // やまおとこ
-  MSG_TRTYPE_HEADS,         // スキンヘッズ
-  MSG_TRTYPE_KINDERGARTENM, // ようちえん♂
-
-  // 女子
-  MSG_TRTYPE_MINI,          // ミニスカート
-  MSG_TRTYPE_ELITEW,        // エリートトレーナー♀
-  MSG_TRTYPE_RANGERW,       // ポケモンレンジャー♀
-  MSG_TRTYPE_BREEDERW,      // ポケモンブリーダー♀
-  MSG_TRTYPE_SCIENTISTW,    // けんきゅういん♀
-  MSG_TRTYPE_NURSE,         // ナース
-  MSG_TRTYPE_PARASOL,       // パラソルおねえさん
-  MSG_TRTYPE_KINDERGARTENW, // ようちえん♀
-};
 
 //----------------------------------------------------------------------------------
 /**
@@ -435,7 +414,7 @@ void TRCBmp_PrintTrainerType( TR_CARD_WORK *wk, int trtype, int trans_sw )
 {
   GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                          NARC_message_trtype_dat, wk->heapId );
-  STRBUF *str = GFL_MSG_CreateString( msgdata, trtype_name_tbl[trtype] );
+  STRBUF *str = GFL_MSG_CreateString( msgdata, UnionView_GetMsgType(trtype) );
   int length = PRINTSYS_GetStrWidth( str, wk->fontHandle, 0 );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_TRAINER_TYPE]), 0 );
