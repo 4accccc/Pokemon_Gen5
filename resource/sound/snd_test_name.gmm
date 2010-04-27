@@ -8473,9 +8473,9 @@
 		<language name="JPN" width="256">SYS-100</language>
 		<language name="JPN_KANJI" width="256">SYS-100</language>
 	</row>
-	<row id="msg_seq_se_dmy_349">
-		<language name="JPN" width="256">DMY-349</language>
-		<language name="JPN_KANJI" width="256">DMY-349</language>
+	<row id="msg_seq_se_rizdemo_01">
+		<language name="JPN" width="256">RIZDEMO-01</language>
+		<language name="JPN_KANJI" width="256">RIZDEMO-01</language>
 	</row>
 	<row id="msg_seq_se_dmy_350">
 		<language name="JPN" width="256">DMY-350</language>
