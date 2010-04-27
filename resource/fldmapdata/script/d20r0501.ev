@@ -218,6 +218,7 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 	//•à”‚ª190•àˆÈ“à‚Ìê‡
 	IF $LWK_STEP <= 190 THEN
 		_SYSWIN_MSG( msg_d20r0501_bg19_01 , POS_DOWN )
+		_AB_KEYWAIT_MARK()
 		_SYSWIN_CLOSE()
 
 		//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é

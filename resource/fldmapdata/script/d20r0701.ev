@@ -125,6 +125,7 @@ EVENT_START		ev_pos_d20r0701_exit_01
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_43 )
 		ENDSWITCH
 		
+		_OBJ_ANIME_WAIT()
 
 		//ïÇè„ÉAÉjÉÅ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
