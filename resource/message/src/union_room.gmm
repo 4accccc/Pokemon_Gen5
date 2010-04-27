@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T18:08:39"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T18:09:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2356,14 +2356,14 @@ msg_connect_union_08からの分岐メッセージ
 また　今度　しようね</language>
 	</row>
 
-	<row id="msg_union_talkboy_07_14" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="msg_union_talkboy_07_14" text-color="#0000ff,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>ダメタマゴのため、参加が不成立だった
 　　→END
 
 プラチナで追加。</comment>
 		<language name="JPN" width="216" line="2">てもちに　こうかん　できない
 タマゴが　あります</language>
-		<language name="JPN_KANJI" width="216" line="2">てもちに　交換　できない
+		<language name="JPN_KANJI" width="216" line="2">手持ちに　交換　できない
 タマゴが　あります</language>
 	</row>
 
