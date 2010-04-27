@@ -1,0 +1,23 @@
+EFFSEQ
+$0003
+C:\home\pokemon_wb\resource\wazaeffect\graphic\reset_move.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_025_firework.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\reset_move.NSCR
+#001
+%00
+BGのロード	reset_move
+制御モード変更	継続
+ウインドウ操作	縦方向開く	0x00ff	0x5050	0x171f	14	0	ON
+BGの表示/非表示	エフェクト	表示
+BGのプライオリティ	前面
+エフェクト終了待ち	ウインドウ操作
+BGのスクロール	追従	256	0	32	0	0
+エフェクト終了待ち	BG
+タイマーによるウエイト	30
+ウインドウ操作	縦方向閉じる	0x00ff	0x425e	0x171f	14	0	ON
+エフェクト終了待ち	ウインドウ操作
+BGの表示/非表示	エフェクト	非表示
+ウインドウ操作	縦方向閉じる	0x00ff	0x4f51	0x171f	1	0	OFF
+エフェクト終了待ち	ウインドウ操作
+エフェクト終了
+&
