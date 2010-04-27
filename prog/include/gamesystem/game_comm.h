@@ -91,6 +91,9 @@ typedef enum{
 ///ゲーム通信管理ワークの不定形ポインタ
 typedef struct _GAME_COMM_SYS * GAME_COMM_SYS_PTR;
 
+///ExitCallbackの型
+typedef void (*GAMECOMM_EXITCALLBACK_FUNC)(void*);
+
 
 //==============================================================================
 //  構造体定義
@@ -121,6 +124,7 @@ extern void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *field
 //--------------------------------------------------------------
 extern void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work);
 extern void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp);
+extern void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_FUNC callback_func, void *parent_work);
 extern void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work);
 extern GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp);
 extern GAME_COMM_NO GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp);
@@ -135,6 +139,7 @@ extern GAME_COMM_LAST_STATUS GameCommSys_GetLastStatus(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid, int pm_version, BOOL first_status);
 extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
 extern u8 GameCommStatus_GetPlayerStatus_RomVersion(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
+extern void GameCommStatus_InitPlayerStatus(GAME_COMM_SYS_PTR gcsp);
 extern BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg);
 extern void GameCommInfo_MessageEntry_GetPower(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid);
 extern void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid);

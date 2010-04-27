@@ -763,13 +763,13 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
           }
           FLDMSGWIN_STREAM_PrintStart(evf->msgStream, 0, 0, msg_id);
         }
-      }
-      if(mission_fail == TRUE){
-        GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
-        *seq = SEQ_ME_WAIT;
-      }
-      else{
-        *seq = SEQ_MSG_SET;
+        if(mission_fail == TRUE){
+          GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
+          *seq = SEQ_ME_WAIT;
+        }
+        else{
+          *seq = SEQ_MSG_SET;
+        }
       }
     }
     break;
@@ -819,6 +819,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   case SEQ_FINISH:
   default:
     GameCommSys_ClearLastStatus(game_comm);
+    GameCommStatus_InitPlayerStatus(game_comm);
     GAMESYSTEM_CommBootAlways(gsys);
     return GMEVENT_RES_FINISH;
   }

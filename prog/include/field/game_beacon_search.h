@@ -48,7 +48,8 @@ typedef struct
   u8 restrictPhoto:1;   ///<TRUE:写真データ交換に制限がかかっている
   u8 isTwl:1;           ///<TRUE:TWLモードで動作している
   
-  u8 padding;
+  u8 intrude_ng:1;      ///<TRUE:乱入禁止
+  u8 padding:7;
   
   u32 trainer_id;
   

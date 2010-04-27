@@ -16,6 +16,7 @@
 #include "bingo_system.h"
 #include "intrude_main.h"
 #include "intrude_mission.h"
+#include "net/net_whpipe.h"
 
 
 //==============================================================================
@@ -983,6 +984,7 @@ static void _MissionOrderConfirm(const int netID, const int size, const void* pD
   entry_ret = MISSION_SetEntryNew(intcomm, &intcomm->mission, entry_req, netID);
   if(entry_ret == TRUE && entry_req->cdata.type == MISSION_TYPE_VICTORY){
     GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
+    GFL_NET_WL_PauseBeacon(TRUE);
     intcomm->member_fix = TRUE;
     OS_TPrintf("二人専用の為、乱入禁止\n");
   }
@@ -1600,6 +1602,7 @@ static void _IntrudeRecv_OtherMonolithIn(const int netID, const int size, const 
   intcomm->other_monolith_count++;
   if(intcomm->member_fix == FALSE){
     GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
+    GFL_NET_WL_PauseBeacon(TRUE);
   }
   OS_TPrintf("受信：他人モノリス入室 乱入禁止 num=%d\n", intcomm->other_monolith_count);
 }
@@ -1650,6 +1653,7 @@ static void _IntrudeRecv_OtherMonolithOut(const int netID, const int size, const
   if(intcomm->other_monolith_count == 0){
     if(intcomm->member_fix == FALSE){
       GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);  //乱入許可
+      GFL_NET_WL_PauseBeacon(FALSE);
       OS_TPrintf("乱入許可\n");
     }
   }

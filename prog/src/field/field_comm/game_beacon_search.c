@@ -58,6 +58,13 @@ typedef struct _GAME_BEACON_SYS
   
 }GAME_BEACON_SYS;
 
+///ビーコンサーチから侵入へ切り替えるときのワーク
+typedef struct{
+  GAMESYS_WORK *gsys;
+  u8 target_macAddress[6];
+  u8 padding[2];
+}EXITCALLBACK_WORK;
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -72,6 +79,7 @@ static void GameBeacon_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 static void GameBeacon_DisconnectCallBack(void* pWork);
 static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a , const GBS_BEACON *beacon_b );
 static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata);
+static void GameBeacon_ExitCallback_toInvasion(void *pWork);
 
 
 //==============================================================================
@@ -137,7 +145,7 @@ void * GameBeacon_Init(int *seq, void *pwk)
   GAMESYS_WORK *gsys = pwk;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	
-	gbs = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(HEAPID_PROC), sizeof(GAME_BEACON_SYS));
+	gbs = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(GAME_BEACON_SYS));
 	gbs->gamedata = gamedata;
 	return gbs;
 }
@@ -289,17 +297,13 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
     case WB_NET_PALACE_SERVICEID:     //侵入(パレス)
 //    case WB_NET_FIELDMOVE_SERVICEID:
       {
-        FIELD_INVALID_PARENT_WORK *invalid_parent;
-        int i;
+        EXITCALLBACK_WORK *exw;
         
-        invalid_parent = GFL_HEAP_AllocClearMemory(
-            GFL_HEAP_LOWID(HEAPID_PROC), sizeof(FIELD_INVALID_PARENT_WORK));
-        invalid_parent->gsys = gsys;
-        invalid_parent->game_comm = gcsp;
-        for(i = 0; i < 6; i++){
-          invalid_parent->parent_macAddress[i] = target->macAddress[i];
-        }
-        GameCommSys_ChangeReq(gcsp, GAME_COMM_NO_INVASION, invalid_parent);
+        exw = GFL_HEAP_AllocClearMemory(
+          GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(EXITCALLBACK_WORK));
+        exw->gsys = gsys;
+        GFL_STD_MemCopy(target->macAddress, exw->target_macAddress, 6);
+        GameCommSys_ExitReqCallback(gcsp, GameBeacon_ExitCallback_toInvasion, exw);
         OS_TPrintf("パレス親が見つかった為、通信を侵入に切り替えます\n");
       }
       break;
@@ -558,5 +562,45 @@ static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a ,
 void GameBeacon_SetErrorWait(GAME_BEACON_SYS_PTR gbs)
 {
   gbs->error_wait = GBS_ERROR_WAIT_TIMER;
+}
+
+//--------------------------------------------------------------
+/**
+ * GameComm終了コールバック：侵入通信を起動
+ *
+ * @param   pWork		GAMESYS_WORK
+ */
+//--------------------------------------------------------------
+static void GameBeacon_ExitCallback_toInvasion(void *pWork)
+{
+  EXITCALLBACK_WORK *exw = pWork;
+  GAMESYS_WORK *gsys;
+  GAME_COMM_SYS_PTR gcsp;
+  u8 target_macAddress[6];
+  
+  gsys = exw->gsys;
+  GFL_STD_MemCopy(exw->target_macAddress, target_macAddress, 6);
+  gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  
+  //必要なものは取得したのでさっさと解放
+  GFL_HEAP_FreeMemory(exw);
+  exw = NULL;
+  
+  if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE){
+    if(GFL_NET_IsInit() == FALSE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+      FIELD_INVALID_PARENT_WORK *invalid_parent;
+      
+      invalid_parent = GFL_HEAP_AllocClearMemory(
+          HEAPID_APP_CONTROL, sizeof(FIELD_INVALID_PARENT_WORK));
+      invalid_parent->gsys = gsys;
+      invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+      GFL_STD_MemCopy(target_macAddress, invalid_parent->parent_macAddress, 6);
+      
+      GameCommSys_Boot(gcsp, GAME_COMM_NO_INVASION, invalid_parent);
+      OS_TPrintf("CommBoot 侵入\n");
+      return;
+    }
+  }
+  OS_TPrintf("CommBoot起動は出来ない\n");
 }
 

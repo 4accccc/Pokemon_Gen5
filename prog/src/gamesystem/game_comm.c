@@ -98,13 +98,13 @@ typedef struct _GAME_COMM_SYS{
   GAMEDATA *gamedata;                 ///<ゲームデータへのポインタ
   GAME_COMM_STATUS comm_status;         ///<通信ステータス
   GAME_COMM_NO game_comm_no;
-  GAME_COMM_NO reserve_comm_game_no;   ///<予約通信ゲーム番号
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
   GAME_COMM_LAST_STATUS last_status;    ///<最後に実行していたGAME_COMM_NOの終了状態
   GAME_COMM_SUB_WORK sub_work;
   void *parent_work;                  ///<呼び出し時に引き渡すポインタ
   void *app_work;                     ///<各アプリケーションが確保したワークのポインタ
-  void *reserve_parent_work;          ///<呼び出し時に引き渡すポインタ
+  void *exitcallback_parentwork;      ///<終了時に呼び出すコールバック関数へ渡すParentWork
+  GAMECOMM_EXITCALLBACK_FUNC exitcallback_func; ///<終了時に呼び出すコールバック関数へのポインタ
   GAME_COMM_PLAYER_STATUS player_status[COMM_PLAYER_MAX]; ///<通信プレイヤーステータス
   GAME_COMM_INFO info;                ///<インフォメーションワーク
 }GAME_COMM_SYS;
@@ -309,16 +309,17 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     }
     //break;
   case GCSSEQ_FINISH:
-    if(NetErr_App_CheckError()){
-      return; //エラー発生による強制終了だった場合はエラー画面が表示されるまで待つ
-    }
     gcsp->app_work = NULL;
     gcsp->game_comm_no = GAME_COMM_NO_NULL;
     gcsp->comm_status = GAME_COMM_STATUS_NULL;
-    if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
-      GameCommSys_Boot(gcsp, gcsp->reserve_comm_game_no, gcsp->reserve_parent_work);
-      gcsp->reserve_comm_game_no = GAME_COMM_NO_NULL;
-      gcsp->reserve_parent_work = NULL;
+    {//終了コールバック
+      GAMECOMM_EXITCALLBACK_FUNC exit_callback = gcsp->exitcallback_func;
+      void *exit_parentwork = gcsp->exitcallback_parentwork;
+      gcsp->exitcallback_func = NULL;
+      gcsp->exitcallback_parentwork = NULL;
+      if(exit_callback != NULL){
+        exit_callback(exit_parentwork);
+      }
     }
     break;
   }
@@ -377,7 +378,10 @@ void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *p
   gcsp->last_comm_no = game_comm_no;
   gcsp->last_status = GAME_COMM_LAST_STATUS_NULL;
   gcsp->parent_work = parent_work;
+  gcsp->exitcallback_func = NULL;
+  gcsp->exitcallback_parentwork = NULL;
   GFL_STD_MemClear(&gcsp->sub_work, sizeof(GAME_COMM_SUB_WORK));
+  GameCommStatus_InitPlayerStatus(gcsp);
 }
 
 //==================================================================
@@ -391,30 +395,26 @@ void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *p
 //==================================================================
 void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp)
 {
-  GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
-  
-  OS_TPrintf("GameCommSys_ExitReq\n");
-  GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
+  GameCommSys_ExitReqCallback(gcsp, NULL, NULL);
 }
 
 //==================================================================
 /**
- * 通信ゲーム切り替えリクエスト
+ * 終了リクエスト(完全終了時に呼ばれるコールバック付き)
  *
  * @param   gcsp		
- * @param   game_comm_no		切り替え後、起動する通信ゲーム番号(GAME_COMM_NO_???)
- * @param   parent_work     引き渡すポインタ
+ * @param   callback_func		通信が終了時に呼ばれるコールバック関数へのポインタ
+ * @param   parent_work		  コールバック関数呼び出し時に引数として渡されるポインタ
  */
 //==================================================================
-void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work)
+void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_FUNC callback_func, void *parent_work)
 {
-  GF_ASSERT(gcsp->sub_work.seq >= GCSSEQ_UPDATE);
+  GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
   
-  if(gcsp->sub_work.seq == GCSSEQ_UPDATE){
-    GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
-  }
-  gcsp->reserve_comm_game_no = game_comm_no;
-  gcsp->reserve_parent_work = parent_work;
+  OS_TPrintf("GameCommSys_ExitReq\n");
+  GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
+  gcsp->exitcallback_func = callback_func;
+  gcsp->exitcallback_parentwork = parent_work;
 }
 
 //==================================================================
@@ -473,9 +473,6 @@ GAME_COMM_NO GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp)
 {
   if(gcsp->game_comm_no != GAME_COMM_NO_NULL){
     return gcsp->game_comm_no;
-  }
-  if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
-    return gcsp->reserve_comm_game_no;
   }
   return GAME_COMM_NO_NULL;
 }
@@ -684,6 +681,18 @@ u8 GameCommStatus_GetPlayerStatus_RomVersion(GAME_COMM_SYS_PTR gcsp, int comm_ne
 {
   GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
   return player_status->pm_version;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーステータスを初期化
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommStatus_InitPlayerStatus(GAME_COMM_SYS_PTR gcsp)
+{
+  GFL_STD_MemClear(gcsp->player_status, sizeof(GAME_COMM_PLAYER_STATUS) * COMM_PLAYER_MAX);
 }
 
 

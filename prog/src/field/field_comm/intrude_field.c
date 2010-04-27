@@ -1006,6 +1006,9 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
   if(GameCommSys_CheckSystemWaiting(game_comm) == TRUE){
     return;
   }
+  if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
+    return;
+  }
 
   if(GAMESYSTEM_IsEventExists(gameSys) == TRUE){
     //橋の上で切断イベントが起動しているとイベント中にも関わらず通信が起動して
@@ -1026,13 +1029,17 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
       FIELD_INVALID_PARENT_WORK *invalid_parent;
       
       invalid_parent = GFL_HEAP_AllocClearMemory(
-          GFL_HEAP_LOWID(HEAPID_PROC), sizeof(FIELD_INVALID_PARENT_WORK));
+          GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(FIELD_INVALID_PARENT_WORK));
       invalid_parent->my_invasion = TRUE;
       invalid_parent->gsys = gameSys;
       invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
       GameCommSys_Boot(game_comm, GAME_COMM_NO_INVASION, invalid_parent);
 
       OS_TPrintf("パレス通信起動：親\n");
+    }
+    else{
+      GAMESYSTEM_CommBootAlways(gameSys);
+      OS_TPrintf("ビーコンサーチ通信起動\n");
     }
     break;
   case GAME_COMM_NO_INVASION:
@@ -1041,14 +1048,8 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
         && GFL_NET_SystemGetConnectNum() <= 1){
       INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
       if(intcomm->comm_status != INTRUDE_COMM_STATUS_BOOT_CHILD){ //子として親を探しに行っている場合は通信終了にはまだいかない
-        if(GAMESYSTEM_GetAlwaysNetFlag(gameSys) == TRUE){
-          GameCommSys_ChangeReq(game_comm, GAME_COMM_NO_FIELD_BEACON_SEARCH, gameSys);
-          OS_TPrintf("パレス通信終了：ビーコンサーチへ\n");
-        }
-        else{
-          GameCommSys_ExitReq(game_comm);
-          OS_TPrintf("パレス通信終了：通信END\n");
-        }
+        GameCommSys_ExitReq(game_comm);
+        OS_TPrintf("パレス通信終了：通信END\n");
       }
     }
     break;
@@ -1224,7 +1225,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 {
   int use_num;
   
-  if(intcomm == NULL || fieldWork == NULL || ZONEDATA_IsPalace(FIELDMAP_GetZoneID(fieldWork)) == FALSE){
+  if(intcomm == NULL || fieldWork == NULL || FIELDMAP_IsReady(fieldWork) == FALSE || ZONEDATA_IsPalace(FIELDMAP_GetZoneID(fieldWork)) == FALSE){
     return;
   }
   

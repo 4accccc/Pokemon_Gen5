@@ -210,7 +210,7 @@ void GAMEBEACON_Update(void)
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
   
-  if(GameBeaconSys == NULL){
+  if(GameBeaconSys == NULL || GFL_NET_IsInit() == FALSE){
     return;
   }
 
