@@ -1244,8 +1244,10 @@ static BOOL _isConnect(u16 netID)
 	if(!pNetWL){
 		return FALSE;
 	}
-	if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
-		return FALSE;
+	if ((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (WH_GetSystemState() == WH_SYSSTATE_DATASHARING)) {
+  }
+  else{
+    return FALSE;
 	}
 	{
 		u16 bitmap = WH_GetBitmap();
