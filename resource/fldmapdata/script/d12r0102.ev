@@ -149,16 +149,17 @@ EVENT_START   ev_d12r0102_poke14_01
       $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
       _WILD_BTL_SET_EX( MONSNO_657 , 15, flag ) // Lv15 ビクティ
     }
-    //ビクティを消す
-    _FLAG_SET( FV_D12R0102_POKE14_01 )
-    _OBJ_DEL(D12R0102_POKE14_01)
-
-    //位置変更
-    _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_UP )
-    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 4, 0, 4, DIR_UP )
-
+    
     _WILD_LOSE_CHECK( SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+       //ビクティを消す
+       _FLAG_SET( FV_D12R0102_POKE14_01 )
+       _OBJ_DEL(D12R0102_POKE14_01)
+
+      //位置変更
+      _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_UP )
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 4, 0, 4, DIR_UP )
+
       _WILD_WIN()
     ELSE
       _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）

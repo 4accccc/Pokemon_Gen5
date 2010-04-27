@@ -238,12 +238,13 @@ zoroaaku_core:
     $flag |= SCR_WILD_BTL_FLAG_FEMALE    //メスを出す
     _WILD_BTL_SET_EX( MONSNO_ZOROAAKU , 25, flag ) //ゾロアーク
   }
-  //女性を消す
-  _FLAG_SET( FV_R16R0201_WOMAN3 )
-  _OBJ_DEL(R16R0201_WOMAN3_01)
 
   _WILD_LOSE_CHECK( SCWK_ANSWER )
+  //女性を消す(再戦に備え勝ち負けにかかわらず消しておく)
+  _FLAG_SET( FV_R16R0201_WOMAN3 )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+    //女性を消す
+    _OBJ_DEL(R16R0201_WOMAN3_01)
     _WILD_WIN()
   ELSE
     _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
