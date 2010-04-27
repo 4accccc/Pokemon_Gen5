@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T16:25:47"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T17:05:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -388,7 +388,13 @@
 		<comment>■選択肢ウインドウ
 ・ゲームクリアすると表示される</comment>
 		<language name="JPN" width="256">きろくをみる</language>
-		<language name="JPN_KANJI" width="256">きろくをみる</language>
+		<language name="JPN_KANJI" width="256">記録をみる</language>
+	</row>
+
+	<row id="msg_pc_window_07" back-color="#ff8080,,,#80ffff,,,,,,,,,,,,,,">
+		<comment>■最初から表示</comment>
+		<language name="JPN" width="256">ヘルプをみる</language>
+		<language name="JPN_KANJI" width="256">ヘルプをみる</language>
 	</row>
 
 	<row id="msg_pc_window_06" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
@@ -558,25 +564,18 @@
 パソコンに　接続した！</language>
 	</row>
 
-	<row id="msg_pc_mail_window_01" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="msg_pc_mail_window_01">
 		<comment>■選択肢ウインドウ
 ・msg_pc_mail_02表示</comment>
 		<language name="JPN" width="256">メールボックス</language>
 		<language name="JPN_KANJI" width="256">メールボックス</language>
 	</row>
 
-	<row id="msg_pc_mail_window_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
+	<row id="msg_pc_mail_window_02">
 		<comment>■選択肢ウインドウ
 ・msg_pc_mail_03表示</comment>
 		<language name="JPN" width="256">せつぞくを　きる</language>
 		<language name="JPN_KANJI" width="256">接続を　きる</language>
-	</row>
-
-	<row id="msg_pc_mail_window_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>■選択肢ウインドウ
-・msg_pc_mail_04表示</comment>
-		<language name="JPN" width="256">ヘルプを　みる</language>
-		<language name="JPN_KANJI" width="256">ヘルプを　みる</language>
 	</row>
 
 	<row id="msg_pc_mail_02">
@@ -597,23 +596,14 @@
 通信を　切断します</language>
 	</row>
 
-	<row id="msg_pc_mail_04">
-		<comment>■「ヘルプを　みる」にカーソルがあっているとき
-・決定するとヘルプ画面の処理へ</comment>
-		<language name="JPN" width="256">ゲームについての　さまざまな
-せつめいを　みることが　できます</language>
-		<language name="JPN_KANJI" width="256">ゲームについての　様々な
-説明を　みることが　できます</language>
-	</row>
-
-	<row id="msg_pc_kiroku_window_01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+	<row id="msg_pc_kiroku_window_01">
 		<comment>■選択肢ウインドウ
 ・msg_pc_kiroku_01表示</comment>
 		<language name="JPN" width="256">はじめてのクリア</language>
 		<language name="JPN_KANJI" width="256">初めてのクリア</language>
 	</row>
 
-	<row id="msg_pc_kiroku_window_02" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+	<row id="msg_pc_kiroku_window_02">
 		<comment>■選択肢ウインドウ
 ・殿堂入りデータがあると表示される
 　msg_pc_kiroku_02表示
@@ -624,11 +614,19 @@
 		<language name="JPN_KANJI" width="256">殿堂入り</language>
 	</row>
 
-	<row id="msg_pc_kiroku_window_03" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+	<row id="msg_pc_kiroku_window_03">
 		<comment>■選択肢ウインドウ
 ・msg_pc_kiroku_03表示</comment>
 		<language name="JPN" width="256">せつぞくを　きる</language>
 		<language name="JPN_KANJI" width="256">接続を　きる</language>
+	</row>
+
+	<row id="msg_pc_kiroku_window_04" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■「きろくをみる」選択時</comment>
+		<language name="JPN" width="256">きろく　システムに
+せつぞくした！</language>
+		<language name="JPN_KANJI" width="256">記録システムに
+接続した！</language>
 	</row>
 
 	<row id="msg_pc_kiroku_01">
@@ -664,6 +662,14 @@
 パソコンに　せつぞくした！</language>
 		<language name="JPN_KANJI" width="256">アララギ博士の
 パソコンに　接続した！</language>
+	</row>
+
+	<row id="msg_pc_help_01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■「ヘルプをみる」選択時</comment>
+		<language name="JPN" width="256">ヘルプ　システムに
+せつぞくした！</language>
+		<language name="JPN_KANJI" width="256">ヘルプ　システムに
+接続した！</language>
 	</row>
 
 	<row id="msg_exp_window">
