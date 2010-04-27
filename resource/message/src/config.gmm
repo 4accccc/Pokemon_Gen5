@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-21T21:37:02"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T18:30:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -557,9 +557,9 @@
 		<comment>他の人のレポートが書かれていて、
 レポートのオン・オフができないとき</comment>
 		<language name="JPN" width="216" line="2">べつの　レポートが　かかれているので
-レポートかかないを　えらべません[BE:01:ページ切り替え（クリア）]</language>
+へんこう　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">べつの　レポートが　書かれているので
-レポート書かないを　選べません[BE:01:ページ切り替え（クリア）]</language>
+変更　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="mes_config_comment20" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
