@@ -836,6 +836,9 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
       fake[i] = (GFUser_GetPublicRand0( 0xFFFFFFFF )%range)+f_prm->min;
     }
     info->trainer_view = GFUser_GetPublicRand0( 0xFFFFFFFF )%8;
+    if( fake[FAKE_LANG] == 6 ){ //無効値にしていると言語バージョン固定
+      fake[FAKE_LANG] = wk->fake_prm[TR_PAT_FAKE][FAKE_LANG];
+    }
     break;
   }
   //id
