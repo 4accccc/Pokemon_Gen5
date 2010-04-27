@@ -729,7 +729,18 @@ void myvct_free(void){
 		callback = _vWork->disconnectCallback;
 
 		// マイクのサンプリングとストリームをとめる。
-		(void)MIC_StopAutoSampling();
+    if( !DS_SYSTEM_IsRunOnTwl() ){//DSなら
+      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StopAutoSampling());
+    }
+    else{
+#if (defined(SDK_TWL))  //こちらが本番
+      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StopLimitedSampling());
+#else
+      GF_ASSERT(MIC_RESULT_SUCCESS == MIC_StopAutoSampling());
+#endif
+    }
+
+  
 		NNS_SndStrmStop(&_vWork->sSndStream);
 		NNS_SndStrmFreeChannel(&_vWork->sSndStream);
 

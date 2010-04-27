@@ -68,19 +68,12 @@
 #define SEQ_WIFILOBBY (0)
 #define SND_SCENE_DUMMY (0)
 #define BGM_WIFILOBBY_VOL (0)
-#define SEQ_PC_01 (0)
-#define SEQ_PC_02 (0)
 #define FLAG_ARRIVE_D32R0101 (0)
 #define GMDATA_ID_EMAIL (0)
 #define ID_PARA_monsno (0)
 #define ID_PARA_item (0)
 #define NUMBER_DISPTYPE_ZERO (STR_NUM_DISP_ZERO)
 #define NUMBER_CODETYPE_DEFAULT (0)
-#define _SE_CURSOR (0)
-#define _SE_INOUT  (0)
-#define _SE_DESIDE (0)
-#define _SE_OFFER (0)
-#define _SE_TBLCHANGE (0)
 #define FBMP_COL_NULL   (0)
 #define FBMP_COL_BLACK    (1)
 #define FBMP_COL_BLK_SDW  (2)
@@ -272,6 +265,7 @@ typedef struct{  // スクリーン用RECT構造体
 #define _TIMING_BATTLE_END  (16)// タイミングをそろえる
 #define _TIMING_POKEPARTY_END  (17)// タイミングをそろえる
 #define _TIMING_VCTEND  (18)// タイミングをそろえる
+#define _TIMING_VCTST  (19)// タイミングをそろえる
 
 #define _RECONECTING_WAIT_TIME (20)  //再接続時間
 
@@ -839,6 +833,7 @@ static int WifiP2PMatch_CancelEnableWait( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_CancelEnableWaitDP( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq );
 static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq );
+static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq );
 
 
 
@@ -1013,6 +1008,8 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   WifiP2PMatch_VCTDisconnectSend1,  //WIFIP2PMATCH_VCTEND_COMMSEND1
   WifiP2PMatch_VCTDisconnectSend2,  //WIFIP2PMATCH_VCTEND_COMMSEND2
   WifiP2PMatch_VCTDisconnectSend3, //WIFIP2PMATCH_VCTEND_COMMSEND3
+  WifiP2PMatch_VCTConnectMain, //WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN
+
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -3599,6 +3596,7 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
   return seq;
 }
 
+
 //------------------------------------------------------------------
 /**
  * $brief   VCT接続中  WIFIP2PMATCH_MODE_VCT_CONNECT
@@ -3608,17 +3606,21 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
 //------------------------------------------------------------------
 static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTST, WB_NET_WIFICLUB);
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN);
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   VCT接続中  WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq )
+{
   WIFI_STATUS* p_status;
   int status,gamemode;
-
-
-  // 通信リセットされるとindexが0より小さくなる
-  // そしたら切断
-//  if( (GFL_NET_DWC_GetFriendIndex() < 0 ) || (GFL_NET_DWC_IsDisconnect()) ){
-//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_016, FALSE);
- //   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
- //   return seq;
-//  }
 
   // VChatフラグを取得
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
