@@ -358,9 +358,9 @@
         <language name="JPN" width="256">「ポケモンのことをくわしくちょうさ」</language>
         <language name="JPN_KANJI" width="256">「ポケモンの事を詳しく調査」</language>
       </row><row id="str_topic_0_caption">
-        <language name="JPN" width="256">ポケットモンスター　ブラック・ホワイトを
+        <language name="JPN" width="256">ポケットモンスターブラック・ホワイトを
 どのように　あそんでいるか　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスター　ブラック・ホワイトを
+        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイトを
 どのように遊んでいるか調査します</language>
       </row><row id="str_topic_1_caption">
         <language name="JPN" width="256">じぶんの　まわりには　どんなひとが
@@ -408,8 +408,8 @@
         <language name="JPN_KANJI" width="256">ポケモンについてみんなの感想を
 詳しく調査します</language>
       </row><row id="str_question_00">
-        <language name="JPN" width="256">・ホワイトとブラック　どっち？</language>
-        <language name="JPN_KANJI" width="256">・ホワイトとブラック　どっち？</language>
+        <language name="JPN" width="256">・ブラックとホワイト　どっち？</language>
+        <language name="JPN_KANJI" width="256">・ブラックとホワイト　どっち？</language>
       </row><row id="str_question_01">
         <language name="JPN" width="256">・おとこと　おんな　どっち？</language>
         <language name="JPN_KANJI" width="256">・男と女　どっち？</language>
@@ -498,10 +498,10 @@
         <language name="JPN" width="256">・ゲームプレイじかんは？</language>
         <language name="JPN_KANJI" width="256">・ゲームプレイ時間は？</language>
       </row><row id="str_question_00_caption">
-        <language name="JPN" width="256">ポケットモンスターＷＢで　ホワイトとブラック
-どちらを　あそんでいる？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスターＷＢで　ホワイトとブラック
-どちらを遊んでいる？　のアンケート</language>
+        <language name="JPN" width="256">ポケットモンスターブラック・ホワイト
+あそんでいるのは　どっち？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイト
+遊んでいるのは　どっち？　のアンケート</language>
       </row><row id="str_question_01_caption">
         <language name="JPN" width="256">おとこと　おんな　どっちが　おおい？
 をあつめた　アンケート</language>
@@ -633,9 +633,9 @@
         <language name="JPN_KANJI" width="256">みんなはどんな事を仕事にしている？
 を集めたアンケート</language>
       </row><row id="str_question_27_caption">
-        <language name="JPN" width="256">ポケットモンスター　ホワイト・ブラックで
-どのジムリーダーが　すき？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">ポケットモンスター　ホワイト・ブラックで
+        <language name="JPN" width="256">ポケットモンスターブラック・ホワイトで
+どのジムリーダーがすき？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイトで
 どのジムリーダーが好き？　のアンケート</language>
       </row><row id="str_question_28_caption">
         <language name="JPN" width="256">ポケモンの　どのタイプが　すき？
@@ -643,9 +643,9 @@
         <language name="JPN_KANJI" width="256">ポケモンの　どのタイプが好き？
 を集めたアンケート</language>
       </row><row id="str_question_29_caption">
-        <language name="JPN" width="256">みんなが　ポケットモンスターＷＢで
+        <language name="JPN" width="256">ポケットモンスターブラック・ホワイトで
 あそんだじかんを　あつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">みんなが　ポケットモンスターＷＢで
+        <language name="JPN_KANJI" width="256">ポケットモンスターブラック・ホワイトで
 遊んだ時間を　集めたアンケート</language>
       </row>
 

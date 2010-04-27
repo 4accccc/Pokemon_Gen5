@@ -382,14 +382,14 @@
         <language name="JPN" width="256">へんな</language>
         <language name="JPN_KANJI" width="256">変な</language>
       </row><row id="answer_18">
-        <language name="JPN" width="256">ほのお</language>
-        <language name="JPN_KANJI" width="256">炎</language>
+        <language name="JPN" width="256">ポカブ</language>
+        <language name="JPN_KANJI" width="256">ポカブ</language>
       </row><row id="answer_19">
-        <language name="JPN" width="256">みず</language>
-        <language name="JPN_KANJI" width="256">水</language>
+        <language name="JPN" width="256">ミジュマル</language>
+        <language name="JPN_KANJI" width="256">ミジュマル</language>
       </row><row id="answer_20">
-        <language name="JPN" width="256">くさ</language>
-        <language name="JPN_KANJI" width="256">草</language>
+        <language name="JPN" width="256">ツタージャ</language>
+        <language name="JPN_KANJI" width="256">ツタージャ</language>
       </row><row id="answer_21">
         <language name="JPN" width="256">うみ</language>
         <language name="JPN_KANJI" width="256">海</language>
@@ -529,8 +529,8 @@
         <language name="JPN" width="256">ラップ</language>
         <language name="JPN_KANJI" width="256">ラップ</language>
       </row><row id="answer_67">
-        <language name="JPN" width="256">オーケストラ</language>
-        <language name="JPN_KANJI" width="256">オーケストラ</language>
+        <language name="JPN" width="256">クラシック</language>
+        <language name="JPN_KANJI" width="256">クラシック</language>
       </row><row id="answer_68">
         <language name="JPN" width="256">ニュース</language>
         <language name="JPN_KANJI" width="256">ニュース</language>
