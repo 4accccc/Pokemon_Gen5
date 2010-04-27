@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T15:38:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T22:56:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="136" right="2004" bottom="764" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="301" right="1263" bottom="699" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -400,8 +400,10 @@
 
 	<row id="TM_GUIDE_T01_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>カノコタウン</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ここちよい　しおかぜが　ふきぬけ
+なにかを　よかんさせる　いなかまち</language>
+		<language name="JPN_KANJI" width="256">心地よい　潮風が　吹き抜け
+なにかを　予感させる　田舎町</language>
 	</row>
 
 	<row id="TM_PLACE_T01_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -418,14 +420,18 @@
 
 	<row id="TM_GUIDE_T02_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カラクサタウン</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">こうていさが　ある　おかげで
+みはらしが　いいのが　とくちょう</language>
+		<language name="JPN_KANJI" width="256">起伏に　とんだ　地形の　おかげで
+見晴らしが　いいのが　特長</language>
 	</row>
 
 	<row id="TM_GUIDE_C01_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>サンヨウシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ゆきよけの　かいだんは　すみついた
+ひとが　ふるさとをおもい　つけたもの</language>
+		<language name="JPN_KANJI" width="256">雪除けの　階段は　移住してきた
+人々が　故郷を思い　つけたもの</language>
 	</row>
 
 	<row id="TM_PLACE_C01_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -442,14 +448,16 @@
 
 	<row id="TM_PLACE_C01_03" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所３</comment>
-		<language name="JPN" width="256">ゆめのけんきゅうじょ</language>
-		<language name="JPN_KANJI" width="256">夢の研究所</language>
+		<language name="JPN" width="256">マコモのけんきゅうしつ</language>
+		<language name="JPN_KANJI" width="256">マコモの研究室</language>
 	</row>
 
 	<row id="TM_GUIDE_C02_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>シッポウシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">１００ねんほどまえの　そうこが
+さいりようされ　かっきづく　まち</language>
+		<language name="JPN_KANJI" width="256">１００年ほど前の　倉庫が
+再利用され　活気づく　街</language>
 	</row>
 
 	<row id="TM_PLACE_C02_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -478,9 +486,9 @@
 
 	<row id="TM_GUIDE_C03_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ヒウンシティ</comment>
-		<language name="JPN" width="256">くもを　つらぬくような
+		<language name="JPN" width="256">じょうくうの　くもを　つらぬくような
 こうそうビルが　そびえる　だいとし</language>
-		<language name="JPN_KANJI" width="256">雲を　貫くような
+		<language name="JPN_KANJI" width="256">上空の　雲を　貫くような
 摩天楼が　そびえる　大都市</language>
 	</row>
 
@@ -566,8 +574,10 @@
 
 	<row id="TM_GUIDE_C05_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ホドモエシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">イッシュの　げんかんと　よばれ
+しなものが　いきかう　みなとまち</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方の玄関と　呼ばれ
+多くの品物が　流通する　港町</language>
 	</row>
 
 	<row id="TM_PLACE_C05_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -596,8 +606,10 @@
 
 	<row id="TM_GUIDE_C06_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>フキヨセシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">かっそうろの　そばで　さいばいし
+とれた　やさいを　かもつきで　はこぶ</language>
+		<language name="JPN_KANJI" width="256">滑走路の　そばで　栽培し
+採れた　野菜を　貨物機で　空輸する</language>
 	</row>
 
 	<row id="TM_PLACE_C06_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -626,8 +638,10 @@
 
 	<row id="TM_GUIDE_C07_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>セッカシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ふゆは　ふりつもる　ゆきにおおわれ
+いちめん　ぎんせかいとなる　まち</language>
+		<language name="JPN_KANJI" width="256">冬は降り積もる　雪に覆われ
+一面　銀世界となる　街</language>
 	</row>
 
 	<row id="TM_PLACE_C07_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -648,10 +662,12 @@
 		<language name="JPN_KANJI" width="256">ポケモンだいすきクラブ</language>
 	</row>
 
-	<row id="TM_GUIDE_C08_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="TM_GUIDE_C08_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ソウリュウシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">れきしを　おもんじ　むかしからの
+ものを　たいせつに　している　まち</language>
+		<language name="JPN_KANJI" width="256">歴史を重んじ　昔からのものを
+今も　大切にしている　街</language>
 	</row>
 
 	<row id="TM_PLACE_C08_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -674,8 +690,10 @@
 
 	<row id="TM_GUIDE_C09_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ポケモンリーグ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">すべての　ポケモンジムを　せいはした
+トレーナーだけが　いどむことができる</language>
+		<language name="JPN_KANJI" width="256">すべての　ポケモンジムを　制覇した
+トレーナーだけが　挑むことができる</language>
 	</row>
 
 	<row id="TM_PLACE_C09_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -686,8 +704,10 @@
 
 	<row id="TM_GUIDE_T03_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カゴメタウン</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">むかしからの　ふうしゅうを　まもり
+きそくただしく　くらす　ひとの　まち</language>
+		<language name="JPN_KANJI" width="256">昔からの　風習を　守り
+規則正しく　暮らす人の　町</language>
 	</row>
 
 	<row id="TM_PLACE_T03_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -712,8 +732,10 @@
 
 	<row id="TM_GUIDE_T05_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カナワタウン</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">てつどうしゃりょうが　せいびされたり
+ていはくする　しゃりょうきちの　まち</language>
+		<language name="JPN_KANJI" width="256">鉄道車両が　整備されたり
+停泊する　車両基地の　町</language>
 	</row>
 
 	<row id="TM_GUIDE_BC10_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -754,64 +776,82 @@
 
 	<row id="TM_GUIDE_R15R0301_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>シフトファクトリー</comment>
-		<language name="JPN" width="256">べつちほうの　ポケモンを
-けんきゅう　している　しせつ</language>
-		<language name="JPN_KANJI" width="256">別地方の　ポケモンを
-研究している　施設</language>
+		<language name="JPN" width="256">とおく　はなれた　べつちほうの
+ポケモンを　けんきゅうする　しせつ</language>
+		<language name="JPN_KANJI" width="256">遠く　離れた　別地方の
+ポケモンを　研究する　施設</language>
 	</row>
 
 	<row id="TM_GUIDE_D01_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ゆめのあとち</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">こどもや　ポケモンの　あそびばとして
+つかわれている　こうじょうの　あとち</language>
+		<language name="JPN_KANJI" width="256">子供や　ポケモンの　遊び場として
+使われている　工場の　跡地</language>
 	</row>
 
 	<row id="TM_GUIDE_D02_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ヤグルマのもり</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">たおれて　くうどうに　なった
+きの　うろも　とおることが　できる</language>
+		<language name="JPN_KANJI" width="256">倒れて　空洞に　なった
+樹洞も　通り抜けることが　できる</language>
 	</row>
 
 	<row id="TM_GUIDE_D03_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>リゾートデザ－ト</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">かんこうきゃくに　にんきだが
+リゾートとよぶには　きびしい　さばく</language>
+		<language name="JPN_KANJI" width="256">観光客に　人気の　スポットだが
+リゾートと呼ぶには　厳しい　砂漠</language>
 	</row>
 
 	<row id="TM_GUIDE_D04_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>こだいのしろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">かつて　えいがを　ほこるも　いつしか
+すなにうもれた　おおむかしの　いせき</language>
+		<language name="JPN_KANJI" width="256">かつて　栄華を　誇るも　いつしか
+砂に埋もれた　大昔の　遺跡</language>
 	</row>
 
 	<row id="TM_GUIDE_D05_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>れいとうコンテナ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">あつめられた　たいりょうの　しなを
+いっていの　おんどで　ほぞんしている</language>
+		<language name="JPN_KANJI" width="256">集められた　大量の　品を
+一定の　温度で　保存している</language>
 	</row>
 
 	<row id="TM_GUIDE_D06_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>でんきいしのほらあな</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">でんきを　おびた　いしと　いしが
+はんぱつして　うかんでいる　ほらあな</language>
+		<language name="JPN_KANJI" width="256">帯電した　石同士が　反発して
+浮かんでいる　洞穴</language>
 	</row>
 
 	<row id="TM_GUIDE_D07_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ネジやま</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">しつの　いい　こうせきが　とれる
+こうざんとして　ひょうばんがたかい</language>
+		<language name="JPN_KANJI" width="256">上質の　鉱石が　採掘できる
+鉱山として　評判が　高い</language>
 	</row>
 
 	<row id="TM_GUIDE_D08_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>リュウラセンのとう</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">いつ　だれが　たてかも　わからない
+イッシュで　もっとも　ふるい　とう</language>
+		<language name="JPN_KANJI" width="256">いつ　だれが　建造したかも　不明な
+イッシュ地方　最古の　塔</language>
 	</row>
 
 	<row id="TM_GUIDE_D09_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>チャンピオンロード</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">けいしゃで　トレーナーを　はばむ
+ポケモンリーグ　さいごの　かんもん</language>
+		<language name="JPN_KANJI" width="256">傾斜で　トレーナーを　はばむ
+ポケモンリーグ　最後の　関門</language>
 	</row>
 
 	<row id="TM_GUIDE_D10_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -824,8 +864,10 @@
 
 	<row id="TM_GUIDE_D12_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>リバティーガーデンとう</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ひとと　ポケモンとが　じゆうに
+くらせる　せかいを　ねがう　しま</language>
+		<language name="JPN_KANJI" width="256">人と　ポケモンとが　自由に
+暮らせる　世界を　願っている　島</language>
 	</row>
 
 	<row id="TM_GUIDE_D13_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -838,14 +880,18 @@
 
 	<row id="TM_GUIDE_R03R0301_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ちかすいみゃくのあな</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">しみこんだ　あまみずが　わきあがり
+ちかに　みずたまりを　つくりだした　</language>
+		<language name="JPN_KANJI" width="256">染みこんだ　雨水が　わきあがり
+地下に　水たまりを　つくりだした　</language>
 	</row>
 
 	<row id="TM_GUIDE_R06R0201_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>フキヨセのほらあな</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">でんせつの　けはいを　とじこめたまま
+ひとに　わすれさられた　ほらあな</language>
+		<language name="JPN_KANJI" width="256">伝説の　気配を　閉じこめたまま
+人に　忘れ去られた　洞穴</language>
 	</row>
 
 	<row id="TM_GUIDE_R07R0101_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -858,164 +904,218 @@
 
 	<row id="TM_GUIDE_R08R0101_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>セッカのしつげん</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">たいらな　とちの　くぼみに　たまった
+みずでできた　しつげんと　されている</language>
+		<language name="JPN_KANJI" width="256">平らな土地の　くぼみに　たまった
+水でできた　湿原と　されている</language>
 	</row>
 
 	<row id="TM_GUIDE_R14R0201_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ほうじょうのやしろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">かつては　ひとが　すんでいた　むらで
+いまも　とうじの　くうきが　ながれる</language>
+		<language name="JPN_KANJI" width="256">かつては　人が　暮らしていた　村で
+今も　当時の　空気が　流れる</language>
 	</row>
 
 	<row id="TM_GUIDE_D20_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>かいていいせき</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">すうせんねんまえ　かいていに
+しずんだ　こだいぶんめいの　あと</language>
+		<language name="JPN_KANJI" width="256">数千年の　昔　海底に
+沈んだ　古代文明の　跡</language>
 	</row>
 
 	<row id="TM_GUIDE_R16R0201_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>まよいのもり</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">さほど　いりくんでも　いないのに
+まようと　いわれる　ふしぎなもり</language>
+		<language name="JPN_KANJI" width="256">さほど　入り組んでもいないのに
+迷うと　いわれている　不思議な森</language>
 	</row>
 
 	<row id="TM_GUIDE_R01_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">トレーナーが　いないため　ゆっくり
+けしきを　たのしめる　うみぞいのみち</language>
+		<language name="JPN_KANJI" width="256">トレーナーが　いないため　ゆっくり
+景色を　楽しめる　海沿いの　小路</language>
 	</row>
 
 	<row id="TM_GUIDE_R02_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">のどかな　ムードの　みちでは
+かけだし　トレーナーが　うでをきそう</language>
+		<language name="JPN_KANJI" width="256">のどかな　ムードの　道では
+駆けだしトレーナーたちが　腕を競う</language>
 	</row>
 
 	<row id="TM_GUIDE_R03_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>３ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">おおくの　くさむらと　いけによって
+まがりくねった　ながい　どうろ</language>
+		<language name="JPN_KANJI" width="256">多くの　草むらと　池によって
+曲がりくねった　長い　道路</language>
 	</row>
 
 	<row id="TM_GUIDE_R04_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>４ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">すなあらしのため　２つの　としを
+つなぐ　こうじが　おくれている　みち</language>
+		<language name="JPN_KANJI" width="256">砂あらしのため　２つの都市を　つなぐ
+舗装工事が　遅れている　道路</language>
 	</row>
 
 	<row id="TM_GUIDE_R05_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>５ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">パフォーマーが　あつまり　にぎやかな
+ふんいきで　つつまれている　どうろ</language>
+		<language name="JPN_KANJI" width="256">パフォーマーが　集まり　にぎやかな
+雰囲気で　包まれている　道路</language>
 	</row>
 
 	<row id="TM_GUIDE_R06_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>６ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ゆたかな　きぎが　おいしげり
+しぜんの　みりょく　あふれる　どうろ</language>
+		<language name="JPN_KANJI" width="256">豊かな　木々が　生い茂り
+自然の　魅力　あふれる　道路</language>
 	</row>
 
 	<row id="TM_GUIDE_R07_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>７ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ながい　くさむらに　はいらなくても
+すすめるよう　いっぽんばしが　ある</language>
+		<language name="JPN_KANJI" width="256">長い　草むらに　入らずとも
+進めるように　一本橋が　架けられた</language>
 	</row>
 
 	<row id="TM_GUIDE_R08_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>８ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">あめが　おおく　ぬかるんだ
+しっちのなかには　ポケモンが　ひそむ</language>
+		<language name="JPN_KANJI" width="256">雨の日が　多く　ぬかるんだ
+湿地の中には　ポケモンが　潜む</language>
 	</row>
 
 	<row id="TM_GUIDE_R09_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>９ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ほそうされた　どうろが　はしりやすく
+バイクを　あいするものが　あつまる</language>
+		<language name="JPN_KANJI" width="256">舗装された　道路が　走りやすく
+バイクを　愛するものが　集まる</language>
 	</row>
 
 	<row id="TM_GUIDE_R10_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１０ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">うでじまんが　つどい　きそいあう
+バッジチェックゲートに　つづく　みち</language>
+		<language name="JPN_KANJI" width="256">腕に覚えのあるものが　集い　競い合う
+バッジチェックゲートに　つながる道</language>
 	</row>
 
 	<row id="TM_GUIDE_R11_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１１ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">せいりゅうが　どうろないを　めぐり
+うつくしい　けしきが　うまれた　みち</language>
+		<language name="JPN_KANJI" width="256">清流が　道路内を　巡ることで
+美しい　景観が　生まれた　道</language>
 	</row>
 
 	<row id="TM_GUIDE_R12_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１２ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">あるくだけで　たのしくなってしまう
+なだらかな　おかが　つらなる　ばしょ</language>
+		<language name="JPN_KANJI" width="256">歩くだけで　楽しくなってしまう
+なだらかな　丘陵地帯</language>
 	</row>
 
 	<row id="TM_GUIDE_R13_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１３ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">うみの　うえを　つらぬく　すなはまが
+めいぶつの　みずぎわの　みち</language>
+		<language name="JPN_KANJI" width="256">海上を　貫く　砂浜が
+名物となっている　水際の　道</language>
 	</row>
 
 	<row id="TM_GUIDE_R14_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１４ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">たきから　おちた　みずが　まい
+きりが　たちこめる　どうろ</language>
+		<language name="JPN_KANJI" width="256">滝から　落ちた　水が舞い
+霧が　たちこめる　道路</language>
 	</row>
 
 	<row id="TM_GUIDE_R15_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１５ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">きりたった　がけが　あるく　ものの
+こころを　さわがせる　どうろ</language>
+		<language name="JPN_KANJI" width="256">切りたった　絶壁が　歩くものの
+心を　騒がせる　荒々しい　道</language>
 	</row>
 
 	<row id="TM_GUIDE_R16_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１６ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ライモンシティに　おとずれた　ひとが
+きゅうけいに　くることが　おおい</language>
+		<language name="JPN_KANJI" width="256">ライモンシティに　訪れた　人が
+休憩のため　足を運ぶことが　多い</language>
 	</row>
 
 	<row id="TM_GUIDE_W17_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１７ばんすいどう</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ちけいの　かんけいで　きゅうりゅうが
+はっせいし　じゆうに　すすめない</language>
+		<language name="JPN_KANJI" width="256">地形の　関係で　急流が　発生し
+自由に　進むことが　できない場所</language>
 	</row>
 
 	<row id="TM_GUIDE_R18_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１８ばんどうろ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">リゾートデザートと　じつづきだったと
+してきする　けんきゅうしゃも　いる</language>
+		<language name="JPN_KANJI" width="256">リゾートデザートと　地続きだったと
+指摘する　研究者も　いる</language>
 	</row>
 
 	<row id="TM_GUIDE_H01_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>スカイアローブリッジ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">４ほんの　はしらで　ささえられた
+イッシュさいだい　さいちょうの　はし</language>
+		<language name="JPN_KANJI" width="256">４本の　主塔で　支えられた
+イッシュ地方　最大最長の　橋</language>
 	</row>
 
 	<row id="TM_GUIDE_H02_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ホドモエのはねばし</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ふねの　うんこうに　あわせて
+あがったり　さがったりする　はし</language>
+		<language name="JPN_KANJI" width="256">船の　運行に　あわせて
+上下する　仕組みの　跳開橋</language>
 	</row>
 
 	<row id="TM_GUIDE_H03_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>シリンダーブリッジ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ちかてつが　とおりぬけても
+びくともしない　こうてつの　はし</language>
+		<language name="JPN_KANJI" width="256">地下鉄が　通り抜けても
+びくともしない　鋼鉄の　橋</language>
 	</row>
 
 	<row id="TM_GUIDE_H04_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ビレッジブリッジ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">イッシュを　かいたくした　ひとびとが
+つくり　くらしはじめた　ふるい　はし</language>
+		<language name="JPN_KANJI" width="256">イッシュを　開拓した　人々が造り
+暮らし始めた　古い　橋</language>
 	</row>
 
 	<row id="TM_GUIDE_H05_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ワンダーブリッジ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">どんな　しょうげきも　やわらげるよう
+デザインされた　さいせんたんの　はし</language>
+		<language name="JPN_KANJI" width="256">どんな衝撃も　やわらげるよう
+デザインされた　最先端の　橋</language>
 	</row>
 
 	<row id="TM_GUIDE_PALACE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1028,8 +1128,10 @@
 
 	<row id="TM_GUIDE_R09R0301_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>しゅぎょうのいわや</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">つよさを　もとめる　トレーナーが
+きけんを　かえりみずに　きたえている</language>
+		<language name="JPN_KANJI" width="256">更なる　強さを求める　トレーナーが
+危険を　顧みずに　鍛えている</language>
 	</row>
 
 	<flowchart-group-list>
