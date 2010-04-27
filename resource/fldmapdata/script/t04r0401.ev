@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_t04r0401.h"
-  //.include  "t04r0401.h"
+  .include  "t04r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,464 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t04r0401
+_EVENT_DATA   ev_scene_t04r0401_shirona_01
+_EVENT_DATA   ev_t04r0401_shirona_02
+_EVENT_DATA   ev_t04r0401_bigfour4_01
+_EVENT_DATA   ev_t04r0401_bigfour1_01
+_EVENT_DATA   ev_t04r0401_leader8w_01
+_EVENT_DATA   ev_t04r0401_leader6_01
+_EVENT_DATA   ev_t04r0401_leader4_01
+_EVENT_DATA   ev_t04r0401_leader2_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_t04r0401:
-//  _END
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
+//	LOCALWORK15⇒$WK_SCENE_T04R0401 = 2の状態で						//
+//	退室するまで1の状態になります。									//
+//	初回イベントの退室までの間のみ再生されるセリフ用です。			//
+//																	//
+//------------------------------------------------------------------//
 
 /**************************************************************/
-/*                                                            */
+/* 初回入室イベント                      */
 /**************************************************************/
-ev_t04r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_scene_t04r0401_shirona_01
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SHIRONA )
+	
+	//シロナ「！」
+	_OBJ_ANIME( T04R0401_SHIRONA_01, anm_t04r0401_shirona_first_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//シロナ：あら…
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_01, T04R0401_SHIRONA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シロナ隣接
+	_OBJ_ANIME( T04R0401_SHIRONA_01, anm_t04r0401_shirona_first_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//シロナ：にてる…
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_02, T04R0401_SHIRONA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シロナ右を向く
+	_OBJ_ANIME( T04R0401_SHIRONA_01, anm_t04r0401_shirona_look_right )
+	_OBJ_ANIME_WAIT()
+	
+	//シロナ：サザナミタウンには
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_03, T04R0401_SHIRONA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//シロナ下を向く
+	_OBJ_ANIME( T04R0401_SHIRONA_01, anm_t04r0401_shirona_look_down )
+	_OBJ_ANIME_WAIT()
+	
+	//シロナ：さて ポケモントレーナーどうし
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_04, T04R0401_SHIRONA_01, POS_DEFAULT )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい
+	IF $SCWK_ANSWER == 0 THEN
+		
+		//戦闘処理コール
+		_CALL ev_t04r0401_btl_vs_shirona_first
+		
+		//イベント曲停止
+		_END_EVENT_BGM()
+	//いいえ
+	ELSE
+		//シロナ：うふふ
+		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_06, T04R0401_SHIRONA_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+		//イベント曲停止
+		_END_EVENT_BGM()
+		
+		//======================================//
+		
+		//初回会話を終了・入室時イベントを無効
+		$WK_SCENE_T04R0401 = 1
+		
+		//======================================//
+		
+	ENDIF
+	
+EVENT_END
 
+//--------------------------------------------------------------------
+//初回イベント：シロナ「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_t04r0401_shirona_first_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//初回イベント：シロナ、プレイヤーに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_t04r0401_shirona_first_02
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//初回イベント：シロナ右を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_t04r0401_shirona_look_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//初回イベント：シロナ下を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_t04r0401_shirona_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*CALL：シロナと初回戦闘処理						*/
+/************************************************************/
+ev_t04r0401_btl_vs_shirona_first:
+{
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//シロナ：ポケモンを くりだす まえから
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//【仮】戦闘処理（トレーナーIDが仮）
+	_TRAINER_BTL_SET( TRID_PRINCESS_1_08, 0 )
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		
+		_TRAINER_WIN()
+		
+	ELSE
+		//======================================//
+		
+		//初回会話を終了・入室時イベントを無効
+		$WK_SCENE_T04R0401 = 1
+		
+		//======================================//
+		_TRAINER_LOSE()
+		
+	ENDIF
+	
+	//シロナ：おみごと です
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_08, T04R0401_SHIRONA_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//======================================//
+		
+	//初回イベントを終了・春夏のランダム配置起動
+	$WK_SCENE_T04R0401 = 2
+	
+	//退室までの間限定のメッセージを表示
+	$LOCALWORK15 = 1
+	
+	//======================================//
+}
+	
+_RET
+
+/**************************************************************/
+/* シロナ直接話しかけ（春と夏のみ出現）                      */
+/**************************************************************/
+EVENT_START   ev_t04r0401_shirona_02
+{
+	_TALK_OBJ_START()
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//季節チェック
+	DEFINE_LOCAL SCWK_SEASON
+	_GET_SEASON_ID( SCWK_SEASON )
+	
+	//初回イベント未クリア
+	IF $WK_SCENE_T04R0401 == 1 THEN
+	
+		//シロナ：あら じゅんびは
+		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_07, T04R0401_SHIRONA_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+			
+			//戦闘処理コール
+			_CALL ev_t04r0401_btl_vs_shirona_first
+			
+		//いいえ
+		ELSE
+			//シロナ：うふふ
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_06, T04R0401_SHIRONA_01, POS_DEFAULT )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+		
+	//初回イベントクリア後退室前
+	ELSIF $WK_SCENE_T04R0401 == 2 && $LOCALWORK15 == 1 THEN
+		
+		//こちらにはね
+		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_first_09, T04R0401_SHIRONA_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//春である・戦闘していない
+	ELSIF $SCWK_SEASON == PMSEASON_SPRING && FLAG_OFF( TMFLG_T04R0401_SHIRONA_BTL ) THEN
+		
+		//シロナ：あら きてくれたのね！
+		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_01, T04R0401_SHIRONA_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+			
+			//シロナ：ありがとう！
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_02, T04R0401_SHIRONA_01, POS_DEFAULT )
+			_MSGWIN_CLOSE()
+			
+			//【仮】戦闘処理（トレーナーIDが仮）
+			_TRAINER_BTL_SET( TRID_PRINCESS_1_08, 0 )
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				//======================================//
+				
+				//今日の戦闘イベントを終了
+				_FLAG_SET ( TMFLG_T04R0401_SHIRONA_BTL )
+				
+				//======================================//
+				_TRAINER_WIN()
+				
+			ELSE
+				//======================================//
+				
+				//今日の戦闘イベントを終了
+				_FLAG_SET ( TMFLG_T04R0401_SHIRONA_BTL )
+				
+				//======================================//
+				_TRAINER_LOSE()
+				
+			ENDIF
+			
+			//シロナ：なんだか おもいだしちゃった
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		//いいえ
+		ELSE
+			//シロナ：うふふ
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_03, T04R0401_SHIRONA_01, POS_DEFAULT )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+
+	//春である・戦闘した
+	ELSIF $SCWK_SEASON == PMSEASON_SPRING && FLAG_ON( TMFLG_T04R0401_SHIRONA_BTL ) THEN
+		//シロナ：なんだか おもいだしちゃった
+		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//夏である
+	ELSIF $SCWK_SEASON == PMSEASON_SUMMER THEN
+	
+		//1/5の確率でランダムにその日固定のメッセージを表示
+		//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+		
+		IF $WK_OTHER_T04R0401_BIGFOUR4 == 0 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_01 )
+			
+		ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 1 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_02 )
+		
+		ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 2 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_03 )
+		
+		ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 3 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_04 )
+		
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_05 )
+			
+		ENDIF
+		
+	ENDIF
+}
+EVENT_END
+
+
+/**************************************************************/
+/* カトレア（春に75%の確率で出現）                      */
+/**************************************************************/
+EVENT_START   ev_t04r0401_bigfour4_01
+
+	//1/5の確率でランダムにその日固定のメッセージを表示
+	//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+	
+	IF $WK_OTHER_T04R0401_BIGFOUR4 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour4_spring_01 )
+		
+	ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour4_spring_02 )
+	
+	ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour4_spring_03 )
+	
+	ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour4_spring_04 )
+	
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour4_spring_05 )
+		
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* シキミ（春に50%の確率で出現）                       */
+/**************************************************************/
+EVENT_START   ev_t04r0401_bigfour1_01
+
+	//1/5の確率でランダムにその日固定のメッセージを表示
+	//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+	
+	IF $WK_OTHER_T04R0401_BIGFOUR1 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour1_spring_01 )
+		
+	ELSIF $WK_OTHER_T04R0401_BIGFOUR1 == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour1_spring_02 )
+	
+	ELSIF $WK_OTHER_T04R0401_BIGFOUR1 == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour1_spring_03 )
+	
+	ELSIF $WK_OTHER_T04R0401_BIGFOUR1 == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour1_spring_04 )
+	
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_bigfour1_spring_05 )
+		
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* アイリス（夏に75%の確率で出現）                       */
+/**************************************************************/
+EVENT_START   ev_t04r0401_leader8w_01
+
+	//1/5の確率でランダムにその日固定のメッセージを表示
+	//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+	
+	IF $WK_OTHER_T04R0401_LEADER8W == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader8w_summer_01 )
+		
+	ELSIF $WK_OTHER_T04R0401_LEADER8W == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader8w_summer_02 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER8W == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader8w_summer_03 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER8W == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader8w_summer_04 )
+	
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader8w_summer_05 )
+		
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* フウロ（夏に75%の確率で出現）                       */
+/**************************************************************/
+EVENT_START   ev_t04r0401_leader6_01
+
+	//1/5の確率でランダムにその日固定のメッセージを表示
+	//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+	
+	IF $WK_OTHER_T04R0401_LEADER6 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader6_summer_01 )
+		
+	ELSIF $WK_OTHER_T04R0401_LEADER6 == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader6_summer_02 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER6 == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader6_summer_03 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER6 == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader6_summer_04 )
+	
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader6_summer_05 )
+		
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* カミツレ（夏に50%の確率で出現）                       */
+/**************************************************************/
+EVENT_START   ev_t04r0401_leader4_01
+
+	//1/5の確率でランダムにその日固定のメッセージを表示
+	//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+	
+	IF $WK_OTHER_T04R0401_LEADER4 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader4_summer_01 )
+		
+	ELSIF $WK_OTHER_T04R0401_LEADER4 == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader4_summer_02 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER4 == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader4_summer_03 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER4 == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader4_summer_04 )
+	
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader4_summer_05 )
+		
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* アロエ（夏に25%の確率で出現）                       */
+/**************************************************************/
+EVENT_START   ev_t04r0401_leader2_01
+
+	//1/5の確率でランダムにその日固定のメッセージを表示
+	//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
+	
+	IF $WK_OTHER_T04R0401_LEADER2 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader2_summer_01 )
+		
+	ELSIF $WK_OTHER_T04R0401_LEADER2 == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader2_summer_02 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER2 == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader2_summer_03 )
+	
+	ELSIF $WK_OTHER_T04R0401_LEADER2 == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader2_summer_04 )
+	
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_leader2_summer_05 )
+		
+	ENDIF
+	
+EVENT_END

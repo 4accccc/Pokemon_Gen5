@@ -9,6 +9,13 @@
 #ifndef ZONE_T04R0401_EVC_H
 #define ZONE_T04R0401_EVC_H
 
+#define T04R0401_SHIRONA_01                0
+#define T04R0401_BIGFOUR4_01               1
+#define T04R0401_BIGFOUR1_01               2
+#define T04R0401_LEADER8W_01               3
+#define T04R0401_LEADER6_01                4
+#define T04R0401_LEADER4_01                5
+#define T04R0401_LEADER2_01                6
 
 #endif //ZONE_T04R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
