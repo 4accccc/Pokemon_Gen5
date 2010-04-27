@@ -614,7 +614,17 @@
 #define	TRID_DANCER_05   ( 601 ) 
 #define	TRID_DANCER_06   ( 602 ) 
 #define	TRID_BADRIDER_01_07   ( 603 ) 
-#define TRID_MAX  ( 604 )
+#define	TRID_ELITEW_21   ( 604 ) 
+#define	TRID_ELITEM_22   ( 605 ) 
+#define	TRID_ELITEM_23   ( 606 ) 
+#define	TRID_ELITEM_24   ( 607 ) 
+#define	TRID_ELITEW_22   ( 608 ) 
+#define	TRID_ELITEW_23   ( 609 ) 
+#define	TRID_HAKAIW1_12   ( 610 ) 
+#define	TRID_HAKAIW1_13   ( 611 ) 
+#define	TRID_HAKAIW1_14   ( 612 ) 
+#define	TRID_DOCTOR_05   ( 613 ) 
+#define TRID_MAX  ( 614 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
