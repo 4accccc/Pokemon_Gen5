@@ -51,6 +51,7 @@ extern VMCMD_RESULT EvCmdSubWinClose( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndSubWin( SCREND_CHECK *end_check, int *seq );
 
 extern VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBGWinSeaTempleMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBGWinClose( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndBGWin( SCREND_CHECK *end_check, int *seq );
 

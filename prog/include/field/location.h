@@ -81,7 +81,7 @@ typedef struct {
 	LOCATION_TYPE type;
 	s16 zone_id;
 	s16 exit_id;
-	s16 dir_id;
+	s16 dir_id; // EXIT DIR
   LOC_EXIT_OFS exit_ofs;
 	LOCATION_POS location_pos;
 }LOCATION;

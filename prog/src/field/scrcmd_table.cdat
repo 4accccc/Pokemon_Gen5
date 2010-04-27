@@ -835,6 +835,11 @@
   
   //動作モデル、ゾーン切り替えでも削除されない
   DEF_CMD( EvCmdObjSetNotDelZoneChange, EV_SEQ_OBJ_SET_NOT_DEL_ZONECHG )
+
+  //交換ポケモン　ポケモン名をワードセットに設定
+  DEF_CMD( EvCmdTradeAfterPokeNameSetWord, EV_SEQ_SET_WORD_TRADEAFTER_POKENAME )
+  //海底神殿、暗号メッセージ表示
+  DEF_CMD( EvCmdBGWinSeaTempleMsg, EV_SEQ_BGWIN_SEATEMPLE_MSG )
   
   END_CMD
   //スクリプトコマンドテーブル終了

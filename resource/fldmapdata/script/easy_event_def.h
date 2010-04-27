@@ -158,7 +158,7 @@
   .endm
 
 //--------------------------------------------------------------
-// イベント入手イベント「▼」待ちあり
+// イベント入手イベント「▼」待ちあり◆
 //--------------------------------------------------------------
   .macro  _ASM_ITEM_EVENT_FIELD itemno, num
   _PUSH_WORK  SCWK_PARAM0
@@ -250,6 +250,19 @@
   .macro _ASM_EASY_BGWIN_MSG msg_id, bg_type
   _ASM_TALK_START_SE_PLAY
   _ASM_BGWIN_MSG \msg_id, \bg_type
+  _ASM_BGWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 簡易BGウィンドウメッセージ表示     海底神殿　暗号用
+ * @param msg_id 表示するメッセージID
+ * @param bg_type 表示するタイプ TYPE_INFO,TYPE_TOWN,TYPE_POST,TYPE_ROAD
+ */
+//--------------------------------------------------------------
+  .macro _ASM_EASY_BGWIN_SEATEMPLE_MSG msg_id, bg_type
+  _ASM_TALK_START_SE_PLAY
+  _ASM_BGWIN_SEATEMPLE_MSG \msg_id, \bg_type
   _ASM_BGWIN_CLOSE
   .endm
 

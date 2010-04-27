@@ -295,6 +295,8 @@ struct _TAG_FLDBGWIN
   u32 line;
   
   FLDKEYWAITCURSOR cursor_work;
+
+  GFL_FONT * useFontHandle; // 使用するフォントハンドル
 };
 
 //--------------------------------------------------------------
@@ -3697,10 +3699,28 @@ static BOOL fldSubMsgWin_Print( FLDSUBMSGWIN *subwin )
 //--------------------------------------------------------------
 FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type )
 {
+  return FLDBGWIN_AddEx( fmb, type, fmb->fontHandle );
+}
+
+//----------------------------------------------------------------------------
+/**
+ * フィールドBGウィンドウ　追加 　詳細設定
+ *
+ * @param fmb FLDMSGBG*
+ * @param type FLDBGWIN_TYPE
+ * @param	useFontHandle フォントハンドル外部指定
+ * @retval FLDBGWIN*
+ *
+ * *10/04/27 海底神殿暗号メッセージ用に作成 takahashi tomoya 
+ */
+//-----------------------------------------------------------------------------
+FLDBGWIN * FLDBGWIN_AddEx( FLDMSGBG *fmb, FLDBGWIN_TYPE type, GFL_FONT* useFontHandle )
+{
   FLDBGWIN *bgWin;
   
   bgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDBGWIN) );
   bgWin->fmb = fmb;
+  bgWin->useFontHandle = useFontHandle;
   
   {
     bgWin->y = -48;
@@ -3806,7 +3826,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
 #endif
     
     bgwin_PrintStr(
-        GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->fmb->fontHandle,
+        GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->useFontHandle,
         bgWin->strBuf, bgWin->strTemp, &bgWin->line,
         BGWIN_NCOL );
     
@@ -3846,7 +3866,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
     GFL_BMP_Copy( GFL_BMPWIN_GetBmp(bgWin->bmpwin), bgWin->bmp_old );
     
     bgwin_PrintStr(
-        bgWin->bmp_new, bgWin->fmb->fontHandle,
+        bgWin->bmp_new, bgWin->useFontHandle,
         bgWin->strBuf, bgWin->strTemp, &bgWin->line,
         BGWIN_NCOL );
     bgWin->scroll_y = 0;

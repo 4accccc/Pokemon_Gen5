@@ -418,6 +418,7 @@ extern BOOL FLDSUBMSGWIN_CheckExistWindow( FLDMSGBG *fmb );
 
 //BGウィンドウ
 extern FLDBGWIN * FLDBGWIN_Add( FLDMSGBG *fmb, FLDBGWIN_TYPE type );
+extern FLDBGWIN * FLDBGWIN_AddEx( FLDMSGBG *fmb, FLDBGWIN_TYPE type, GFL_FONT* useFontHandle );
 extern void FLDBGWIN_Delete( FLDBGWIN *bgWin );
 extern BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf );
 

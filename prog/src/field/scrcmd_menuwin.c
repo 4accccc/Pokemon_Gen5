@@ -28,6 +28,7 @@
 #include "arc/script_message.naix"
 #include "msg/script/msg_common_scr.h"
 #include "../../../resource/fldmapdata/script/usescript.h"
+#include "font/font.naix"
 
 #include "sound/pm_sndsys.h"
 
@@ -1889,10 +1890,22 @@ static BOOL BGWinMsgWait( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static void bgWin_Close( SCRCMD_WORK *work )
 {
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+
   if( SCREND_CHK_CheckBit(SCREND_CHK_BGWIN_OPEN) ){
     FLDBGWIN *bgWin;
+    GFL_FONT* fontHandle;
+    
     bgWin = (FLDBGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
     FLDBGWIN_Delete( bgWin );
+
+    // 海底神殿でフォントを読み込んでいる可能性がある。
+    fontHandle = SCRIPT_GetFontHandle( sc );
+    SCRIPT_SetFontHandle( sc, NULL );
+    if( fontHandle ){
+      GFL_FONT_Delete( fontHandle );
+    }
+    
     SCREND_CHK_SetBitOff(SCREND_CHK_BGWIN_OPEN);
   }else{
     GF_ASSERT( 0 );
@@ -1922,6 +1935,53 @@ VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
     msgData = SCRCMD_WORK_GetMsgData( work );
     
 	  bgWin = FLDBGWIN_Add( fparam->msgBG, type );
+    SCRCMD_WORK_SetMsgWinPtr( work, bgWin );
+    
+    {
+      STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
+      WORDSET *wordset = SCRIPT_GetWordSet( sc );
+      STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+      GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+      WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
+      
+      VMCMD_SetWait( core, BGWinMsgWait );
+    }
+  }
+  
+  SCREND_CHK_SetBitOn( SCREND_CHK_BGWIN_OPEN);
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底神殿　暗号BGメッセージ　表示
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdBGWinSeaTempleMsg( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  u16 msg_id = VMGetU16( core );
+  u16 type = VMGetU16( core );
+  HEAPID heapID = FIELDMAP_GetHeapID( fparam->fieldMap );
+   
+  { 
+    SCRIPT_FLDPARAM *fparam;
+    GFL_MSGDATA *msgData;
+    FLDBGWIN *bgWin;
+    GFL_FONT* fontHandle;
+    
+    fparam = SCRIPT_GetFieldParam( sc );
+    msgData = SCRCMD_WORK_GetMsgData( work );
+
+    fontHandle = GFL_FONT_Create(
+      ARCID_FONT,
+      NARC_font_shinden_gftr, //新フォントID
+      GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+    SCRIPT_SetFontHandle( sc, fontHandle );
+    
+	  bgWin = FLDBGWIN_AddEx( fparam->msgBG, type, fontHandle );
     SCRCMD_WORK_SetMsgWinPtr( work, bgWin );
     
     {

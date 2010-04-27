@@ -1087,6 +1087,49 @@ VMCMD_RESULT EvCmdTradeAfterSaveSet( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブされているポケモン名をワードセットに設定する。
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdTradeAfterPokeNameSetWord( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*        work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*       gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*           gdata = GAMESYSTEM_GetGameData( gsys );
+  TRPOKE_AFTER_SAVE*  save = GAMEDATA_GetTrPokeAfterSaveData( gdata );
+  u16     trade_type = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16     word_idx = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  STRBUF* tmpStr;
+  WORDSET* wordset;
+
+  GF_ASSERT( trade_type < TRPOKE_AFTER_SAVE_TYPE_MAX );
+
+  tmpStr = SCRIPT_GetMsgTempBuffer(scw);
+  wordset = SCRIPT_GetWordSet(scw);
+
+  // データ有無チェック
+  if( TRPOKE_AFTER_SV_IsData( save, trade_type ) )
+  {
+    // ポケモン名をワードセットに設定
+    GFL_STR_SetStringCode( tmpStr, TRPOKE_AFTER_SV_GetNickName( save, trade_type ) );
+  }
+  else
+  {
+    STRCODE str[] = { 0 };
+    GF_ASSERT(0);
+    str[0] = GFL_STR_GetEOMCode(); // 即終わり
+    // データがない。ダミーの名前を設定。
+    GFL_STR_SetStringCode( tmpStr, str );
+  }
+
+  WORDSET_RegisterWord( wordset, word_idx, tmpStr, 0, TRUE, PM_LANG );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 
 
 

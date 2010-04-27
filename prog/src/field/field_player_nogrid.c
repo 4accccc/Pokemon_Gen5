@@ -2803,6 +2803,8 @@ static u16 nogrid_ControlUnderAutoUp( FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL
       u16 code = MMDL_ChangeDirAcmdCode( ret_dir, AC_WALK_U_16F );
       
       MMDL_SetAcmd( nogrid->p_mmdl, code );
+	    //nogrid->move_state = PLAYER_MOVE_WALK;  //•à‚¢‚Ä‚¢‚é‚±‚Æ‚É‚µ‚Ä‚Ý‚éB
+      FIELD_PLAYER_CORE_SetMoveValue( nogrid->p_player_core, PLAYER_MOVE_VALUE_WALK );
     }
     ret_dir = DIR_NOT;
     

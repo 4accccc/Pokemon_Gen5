@@ -1406,6 +1406,22 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def _BGWIN_SEATEMPLE_MSG
+ *  @brief 海底神殿　暗号　BGウィンドウを表示する
+ *  @param msg_id 表示するメッセージID
+ *  @param bg_type 表示するタイプ TYPE_INFO,TYPE_TOWN,TYPE_POST,TYPE_ROAD
+ */
+//--------------------------------------------------------------
+#define _BGWIN_SEATEMPLE_MSG( msg_id, bg_type ) _ASM_BGWIN_SEATEMPLE_MSG msg_id, bg_type
+  
+  .macro _ASM_BGWIN_SEATEMPLE_MSG msg_id, bg_type
+  .short EV_SEQ_BGWIN_SEATEMPLE_MSG
+  .short \msg_id
+  .short \bg_type
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  @def _BGWIN_CLOSE
  *  @brief BGウィンドウを閉じる
  *  @param none 
@@ -5224,6 +5240,26 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _SET_WORD_TRADEAFTER_POKENAME
+ * @brief 交換後ポケモン　ニックネームをワードセットに設定
+ * @param	trade_type  保存する交換タイプ
+ * @param	word_idx    GMMのワードバッファインデックス
+ *
+#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
+#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+ */
+//--------------------------------------------------------------
+#define _SET_WORD_TRADEAFTER_POKENAME( trade_type, word_idx ) \
+    _ASM_SET_WORD_TRADEAFTER_POKENAME trade_type, word_idx
+
+    .macro  _ASM_SET_WORD_TRADEAFTER_POKENAME trade_type, word_idx
+    .short  EV_SEQ_SET_WORD_TRADEAFTER_POKENAME
+    .short  \trade_type
+    .short  \word_idx
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_ZUKAN_HYOUKA
  * @brief ずかん評価用メッセージID取得
  * @param mode      ずかん評価モード（script_def.hのSCR_ZUKAN_HYOUKA_MODE_～を参照）
@@ -7780,7 +7816,9 @@
  * フィールド技スクリプトと海底遺跡でのみ使用しています。
  * 他の箇所では使用しないでください。
  *
- *  param 上昇と下降  SCR_EV_DIVING_MAPCHANGE_DOWN　SCR_EV_DIVING_MAPCHANGE_UP
+ *  param 上昇と下降  SCR_EV_DIVING_MAPCHANGE_DOWN　
+ *                    SCR_EV_DIVING_MAPCHANGE_UP 
+ *                    SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP
  */
 //--------------------------------------------------------------
 #define _DIVING( up_down ) _ASM_DIVING up_down
@@ -8187,6 +8225,20 @@
 //--------------------------------------------------------------
 #define _EASY_BGWIN_MSG( msg_id, bg_type ) \
   _ASM_EASY_BGWIN_MSG msg_id, bg_type
+
+//--------------------------------------------------------------
+/**
+ * 簡易BGウィンドウメッセージ表示　海底神殿　暗号メッセージ　用
+ * @param msg_id 表示するメッセージID
+ * @param bg_type 表示するタイプ TYPE_INFO,TYPE_TOWN,TYPE_POST,TYPE_ROAD
+                  TYPE_INFO → お得な掲示板
+                  TYPE_TOWN → 街看板
+                  TYPE_POST → 施設看板
+                  TYPE_ROAD → 道路看板
+ */
+//--------------------------------------------------------------
+#define _EASY_BGWIN_SEATEMPLE_MSG( msg_id, bg_type ) \
+  _ASM_EASY_BGWIN_SEATEMPLE_MSG msg_id, bg_type
 
 //--------------------------------------------------------------
 /**

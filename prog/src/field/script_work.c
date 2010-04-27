@@ -95,6 +95,7 @@ struct _TAG_SCRIPT_WORK
 	WORDSET* wordset;				//単語セット
 	STRBUF* msg_buf;				//メッセージバッファポインタ
 	STRBUF* tmp_buf;				//テンポラリバッファポインタ
+	GFL_FONT* font;			    //フォントポインタ　海底神殿暗号フォントに使用
 
 
   void *mw;				//ビットマップメニューワーク
@@ -284,6 +285,35 @@ STRBUF * SCRIPT_GetMsgTempBuffer( SCRIPT_WORK * sc )
 {
   return sc->tmp_buf;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォントハンドルを設定    （海底神殿　暗号メッセージに使用）
+ *
+ *	@param	sc
+ *	@param	fontHandle 
+ */
+//-----------------------------------------------------------------------------
+void SCRIPT_SetFontHandle( SCRIPT_WORK * sc, GFL_FONT* fontHandle )
+{
+  sc->font = fontHandle;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォントハンドルの取得  （海底神殿　暗号メッセージに使用）
+ *
+ *	@param	sc 
+ *
+ *	@return フォントハンドル
+ */
+//-----------------------------------------------------------------------------
+GFL_FONT* SCRIPT_GetFontHandle( const SCRIPT_WORK * sc )
+{
+  return sc->font;
+}
+
+
 //--------------------------------------------------------------
 /**
  * @brief SE制御用フラグの取得

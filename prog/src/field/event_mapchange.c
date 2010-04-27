@@ -1604,6 +1604,7 @@ GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* f
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
+  dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirectRail( &(work->loc_req), zoneID, dir, 
                           rail_loc->rail_index, rail_loc->line_grid, rail_loc->width_grid);
   work->exit_type = EXIT_TYPE_NONE;
@@ -1805,7 +1806,7 @@ GMEVENT* EVENT_ChangeMapBySeaTempleUp( GAMESYS_WORK* gameSystem )
   MAPCHANGE_WORK_init( work, gameSystem ); 
   work->loc_req      = *(GAMEDATA_GetSpecialLocation( work->gameData ));
   work->loc_req.type = LOCATION_TYPE_DIRECT;
-  work->loc_req.dir_id = DIR_DOWN;  // 出てきたときは下を見る。
+  work->loc_req.dir_id = EXIT_DIR_DOWN;  // 出てきたときは下を見る。
   work->exit_type    = EXIT_TYPE_NONE;
 
   return event;
@@ -1830,6 +1831,7 @@ GMEVENT* EVENT_ChangeMapBySeaTempleDown( GAMESYS_WORK* gameSystem, u16 zone_id )
   MAPCHANGE_WORK_init( work, gameSystem ); 
   LOCATION_SetDefaultPos( &(work->loc_req), zone_id );
   work->exit_type    = EXIT_TYPE_NONE;
+  work->loc_req.dir_id = EXIT_DIR_UP;  // 出てきたときは上を見る。
 
   // 特殊接続を保存
   {
