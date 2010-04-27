@@ -4973,9 +4973,9 @@
 		<language name="JPN" width="256">BGM-VS-SETPOKE</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-SETPOKE</language>
 	</row>
-	<row id="msg_seq_bgm_vs_shiroma">
-		<language name="JPN" width="256">BGM-VS-SHIROMA</language>
-		<language name="JPN_KANJI" width="256">BGM-VS-SHIROMA</language>
+	<row id="msg_seq_bgm_vs_shirona">
+		<language name="JPN" width="256">BGM-VS-SHIRONA</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-SHIRONA</language>
 	</row>
 	<row id="msg_seq_bgm_battlepinch">
 		<language name="JPN" width="256">BGM-BATTLEPINCH</language>
@@ -8465,13 +8465,13 @@
 		<language name="JPN" width="256">NDEMO-03</language>
 		<language name="JPN_KANJI" width="256">NDEMO-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_347">
-		<language name="JPN" width="256">DMY-347</language>
-		<language name="JPN_KANJI" width="256">DMY-347</language>
+	<row id="msg_seq_se_ardemo_01">
+		<language name="JPN" width="256">ARDEMO-01</language>
+		<language name="JPN_KANJI" width="256">ARDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_348">
-		<language name="JPN" width="256">DMY-348</language>
-		<language name="JPN_KANJI" width="256">DMY-348</language>
+	<row id="msg_seq_se_sys_100">
+		<language name="JPN" width="256">SYS-100</language>
+		<language name="JPN_KANJI" width="256">SYS-100</language>
 	</row>
 	<row id="msg_seq_se_dmy_349">
 		<language name="JPN" width="256">DMY-349</language>
