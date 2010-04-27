@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T13:01:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:24:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,11 +328,11 @@
 　（ゲーチスは下向きのまま）
 ・続けてsage1_02</comment>
 		<attribute name="キャラ指定">七賢人３</attribute>
-		<language name="JPN" width="256">七賢人『ジムの　めのまえに
+		<language name="JPN" width="256">スムラ『ジムの　めのまえに
 かくれがを　ようい　するのも▽
 おもしろいと　おもいましたが▽
 いがいに　はやく　ばれましたな▼</language>
-		<language name="JPN_KANJI" width="256">七賢人『ジムの　眼前に
+		<language name="JPN_KANJI" width="256">スムラ『ジムの　眼前に
 隠れ家を　用意するのも▽
 おもしろいと　思いましたが▽
 意外に　早く　ばれましたな▼</language>

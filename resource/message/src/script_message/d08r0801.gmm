@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T14:48:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:25:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -402,9 +402,9 @@
 　上向きのまま、メッセージ表示
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">？？？『いよいよである
+		<language name="JPN" width="256">ジャロ『いよいよである
 Ｎさまが　えいゆうに　なられる！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『いよいよである
+		<language name="JPN_KANJI" width="256">ジャロ『いよいよである
 Ｎさまが　英雄に　なられる！▼</language>
 	</row>
 
@@ -430,10 +430,10 @@
 		<comment>♂
 ・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">？？？『プラズマだん　いがいは
+		<language name="JPN" width="256">ジャロ『プラズマだん　いがいは
 すべて　てき！▽
 ぜんりょくで　はいじょ　する▼</language>
-		<language name="JPN_KANJI" width="256">？？？『プラズマ団　以外は
+		<language name="JPN_KANJI" width="256">ジャロ『プラズマ団　以外は
 すべて　敵！▽
 全力で　排除する▼</language>
 	</row>
@@ -443,11 +443,11 @@
 ・プラズマ団との戦闘後から
 　最上階イベント終了まで</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
-		<language name="JPN" width="256">？？？『えいゆうに　よって
+		<language name="JPN" width="256">ジャロ『えいゆうに　よって
 あたらしい　せかいに　みちびかれる▼
 そう！　おまえたち　トレーナーは
 ポケモンを　うしなうことに　なる！</language>
-		<language name="JPN_KANJI" width="256">？？？『英雄に　よって
+		<language name="JPN_KANJI" width="256">ジャロ『英雄に　よって
 新しい　世界に　導かれる▼
 そう！　おまえたち　トレーナーは
 ポケモンを　失うことに　なる！</language>

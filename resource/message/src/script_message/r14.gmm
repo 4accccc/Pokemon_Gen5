@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T17:57:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:29:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1332" top="247" right="2037" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,9 +298,9 @@
 ・続けて条件に応じて分岐</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">？？？『リュウラセンのとうに　きた
+		<language name="JPN" width="256">ジャロ『リュウラセンのとうに　きた
 つよき　ポケモントレーナーよ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『リュウラセンの塔に　来た
+		<language name="JPN_KANJI" width="256">ジャロ『リュウラセンの塔に　来た
 強き　ポケモントレーナーよ▼</language>
 	</row>
 
@@ -387,7 +387,7 @@
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">？？？『……イッシュ　でんせつは
+		<language name="JPN" width="256">ジャロ『……イッシュ　でんせつは
 ポケモンと　ひとの　ちからを　あわせ▽
 あたらしい　せかいを　つくった！▼
 ただ　それだけの　シンプルで
@@ -396,7 +396,7 @@
 ひとは　だれでも　えいゆうに　なれる▼
 それぞれを　かえれば
 せかいは　かわるのだからな▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……イッシュの　建国伝説は
+		<language name="JPN_KANJI" width="256">ジャロ『……イッシュの　建国伝説は
 ポケモンと　人の力を　合わせて▽
 世界を　変えた！▼
 ただ　それだけの　シンプルで
@@ -430,11 +430,11 @@
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">？？？『かまわんよ▼
+		<language name="JPN" width="256">ジャロ『かまわんよ▼
 プラズマだんは　わたしを　かえたが
 せかいは　かえられなかった……▽
 そなたたちが　どうするか　たのしみだ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼
+		<language name="JPN_KANJI" width="256">ジャロ『かまわんよ▼
 プラズマ団は　わたしを　変えたが
 世界は　変えられなかった……▽
 そなたたちが　どうするか　たのしみだ▼</language>

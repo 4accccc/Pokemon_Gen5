@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T18:16:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:26:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1332" top="248" right="2037" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,7 +297,7 @@
 ・GRIDX=6、GRIDZ=2、上向き
 ・続けてsage4_end_02</comment>
 		<attribute name="キャラ指定">七賢人その４</attribute>
-		<language name="JPN" width="256">？？？『……いまひとたび
+		<language name="JPN" width="256">リョクシ『……いまひとたび
 この　こだいのしろに　いる▽
 ポケモンの　ドラーを　つかまえ▽
 ゲーチスさまに　けんじょうする▼
@@ -305,7 +305,7 @@
 ダークトリニティどもが　いうには▽
 ゲーチスさまは　どこかに▽
 いかれたと　いうではないか……▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……今ひとたび
+		<language name="JPN_KANJI" width="256">リョクシ『……今ひとたび
 この古代の城に　いる▽
 ポケモンの　ドラーを　捕まえ▽
 ゲーチスさまに　献上する▼
@@ -354,13 +354,13 @@
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">七賢人その４</attribute>
-		<language name="JPN" width="256">？？？『この　こだいのしろも
+		<language name="JPN" width="256">リョクシ『この　こだいのしろも
 われわれの　しろも　くずれゆく……▼
 ただ　ちがうのは
 こだいのしろは　くにのあと……▼
 われらの　しろは
 なにも　のこせなかった……▼</language>
-		<language name="JPN_KANJI" width="256">？？？『この　古代の城も
+		<language name="JPN_KANJI" width="256">リョクシ『この　古代の城も
 われわれの　城も　くずれゆく……▼
 ただ　違うのは
 古代の城は　国のあと……▼
@@ -390,12 +390,12 @@
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">七賢人その４</attribute>
-		<language name="JPN" width="256">？？？『……りょうかいした▼
+		<language name="JPN" width="256">リョクシ『……りょうかいした▼
 だが　われわれは　ゲーチスさまも
 Ｎさまのことも　よくしらぬぞ▼
 ほんとうの　おやこか　どうかも
 さだかでは　ないのだ……▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……了解した▼
+		<language name="JPN_KANJI" width="256">リョクシ『……了解した▼
 だが　われわれは　ゲーチスさまも
 Ｎさまのことも　よく知らぬぞ▼
 本当の　親子か　どうかも

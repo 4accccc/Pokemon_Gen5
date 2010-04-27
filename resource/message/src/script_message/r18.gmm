@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T17:57:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:34:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1332" top="247" right="2037" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,10 +297,10 @@
 ・GRIDX=616、GRIDZ=53
 ・続けてsage6_end_01a</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
-		<language name="JPN" width="256">？？？『ここは　しおの　においがする▼
+		<language name="JPN" width="256">ロット『ここは　しおの　においがする▼
 わたしが　うまれた　くにと　おなじ
 しおの　においがする　ばしょ……▼</language>
-		<language name="JPN_KANJI" width="256">？？？『ここは　潮の　においがする▼
+		<language name="JPN_KANJI" width="256">ロット『ここは　潮の　においがする▼
 わたしが　生まれた　国と　同じ
 潮の　においがする　場所……▼</language>
 	</row>
@@ -373,13 +373,13 @@
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
-		<language name="JPN" width="256">？？？『……Ｎさまが　いつか
+		<language name="JPN" width="256">ロット『……Ｎさまが　いつか
 ポケモンだけでなく　ひとの　きもちも▽
 りかいできるように　なられたら……▼
 われわれも　もういちど　つどいたい……▼
 そして　ゲーチスさまと
 むきあってほしいと　つよく　のぞむ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……Ｎさまが　いつか
+		<language name="JPN_KANJI" width="256">ロット『……Ｎさまが　いつか
 ポケモンだけでなく　人の　気持ちも▽
 理解できるように　なられたら……▼
 われわれも　もういちど　集いたい……▼
@@ -409,9 +409,9 @@
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
-		<language name="JPN" width="256">？？？『……それが
+		<language name="JPN" width="256">ロット『……それが
 おまえの　のぞみと　あらば▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……それが
+		<language name="JPN_KANJI" width="256">ロット『……それが
 おまえの　望みと　あらば▼</language>
 	</row>
 

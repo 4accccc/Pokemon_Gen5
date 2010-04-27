@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:39:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:32:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,14 +301,14 @@
 ・続けてhakaim1_end_01</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『ヒウンで　みたときは
+		<language name="JPN" width="256">スムラ『ヒウンで　みたときは
 きにもとめなかった　そんざいが▼
 ここ　でんきいしのほらあな　では
 ゲーチスさまに　ためされた……▼
 ……さて　もういちど
 おまえが　なにものか　ためそう▼
 おまえたち　でてくるのだ！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『ヒウンで　みたときは
+		<language name="JPN_KANJI" width="256">スムラ『ヒウンで　みたときは
 気にも　とめなかった　存在が▼
 ここ　電気石の洞穴　では
 ゲーチスさまに　試された……▼
@@ -322,9 +322,9 @@
 ・メッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">HAKAIM
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『？？？さま
+		<language name="JPN" width="256">プラズマだん『スムラさま
 わたしが　こいつを　たおしましょう！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『？？？さま
+		<language name="JPN_KANJI" width="256">プラズマ団『スムラさま
 わたしが　こいつを　倒しましょう！▼</language>
 	</row>
 
@@ -374,14 +374,14 @@
 　No396「ロックカット」</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『われら　プラズマだんの
+		<language name="JPN" width="256">スムラ『われら　プラズマだんの
 ポケモンも　トレーナーのために▽
 たたかっているのだな▼
 あたりまえ　すぎて
 みおとしていたこと……　それを▽
 おしえてくれて　かんしゃする▼
 これを　うけとれ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『われら　プラズマ団の
+		<language name="JPN_KANJI" width="256">スムラ『われら　プラズマ団の
 ポケモンも　トレーナーのために▽
 体を張って　戦っているのだな▼
 当然すぎて
@@ -396,11 +396,11 @@
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『……いまなら
+		<language name="JPN" width="256">スムラ『……いまなら
 Ｎさまも　ポケモンが　キズついても▽
 トレーナーのため　ちからを　ふるう▽
 その　いみを　おわかりであろうか……？▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……いまなら
+		<language name="JPN_KANJI" width="256">スムラ『……いまなら
 Ｎさまも　ポケモンが　キズついても▽
 トレーナーのため　力を　奮う▽
 その意味を　おわかりであろうか……？▼</language>
@@ -429,13 +429,13 @@
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『……プラズマだんを　やめ
+		<language name="JPN" width="256">スムラ『……プラズマだんを　やめ
 ポケモンと　むきあおうと　する▽
 したっぱどもは　ゆるせよ▼
 ただし！
 ポケモンと　むきあわぬ　ものは▽
 わたしも　ゆるさんよ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……プラズマ団を　去り
+		<language name="JPN_KANJI" width="256">スムラ『……プラズマ団を　去り
 ポケモンと　向き合おうと　する▽
 したっぱどもは　許せよ▼
 ただし！

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T14:39:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T16:31:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -342,10 +342,10 @@
 ・ちなみにプラズマ団員は８人配置</comment>
 		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
-		<language name="JPN" width="256">？？？『おまえたち▼
+		<language name="JPN" width="256">ヴィオ『おまえたち▼
 もっと　ワタシを　くるめ
 さむくて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？『おまえたち▼
+		<language name="JPN_KANJI" width="256">ヴィオ『おまえたち▼
 もっと　ワタシを　くるめ
 寒くて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -370,12 +370,12 @@
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
-		<language name="JPN" width="256">？？？『いま　あずかっているのは
+		<language name="JPN" width="256">ヴィオ『いま　あずかっているのは
 おうの　ともだちである　ポケモン[BE:01:ページ切り替え（クリア）]
 こんな　ところで
 キズつけるわけには　いかぬ[BE:01:ページ切り替え（クリア）]
 おまえたち　こやつらを　けちらせ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？『今　預かっているのは
+		<language name="JPN_KANJI" width="256">ヴィオ『今　預かっているのは
 王の　友達である　ポケモン[BE:01:ページ切り替え（クリア）]
 こんな　ところで
 キズつけるわけには　いかぬ[BE:01:ページ切り替え（クリア）]
@@ -688,11 +688,11 @@
 ・続けてsage1_end_01a</comment>
 		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
-		<language name="JPN" width="256">？？？『……また　ここに　きたのか？
+		<language name="JPN" width="256">ヴィオ『……また　ここに　きたのか？
 ものずきな　トレーナーよ▼
 その　こうきしんに　おうじて
 すこし　かたってやると　するか▼</language>
-		<language name="JPN_KANJI" width="256">？？？『……また　ここに　来たのか？
+		<language name="JPN_KANJI" width="256">ヴィオ『……また　ここに　来たのか？
 物好きな　トレーナーよ▼
 その好奇心に　応じて
 すこし　語ってやると　するか▼</language>
@@ -786,12 +786,12 @@
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
-		<language name="JPN" width="256">？？？『Ｎさまは　いわれた……
+		<language name="JPN" width="256">ヴィオ『Ｎさまは　いわれた……
 ポケモンを　かんぜんに　したいと▼
 いまの　ひとと　ポケモンの
 かんけいでも　ポケモンは▽
 かんぜんを　めざせるのかもな……▼</language>
-		<language name="JPN_KANJI" width="256">？？？『Ｎさまは　いわれた……
+		<language name="JPN_KANJI" width="256">ヴィオ『Ｎさまは　いわれた……
 ポケモンを　完全に　したいと▼
 現状の　人と　ポケモンの　関係でも
 ポケモンは　完全な▽
@@ -821,12 +821,12 @@
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
-		<language name="JPN" width="256">？？？『ココは　さむすぎて
+		<language name="JPN" width="256">ヴィオ『ココは　さむすぎて
 もう　ふるえるのは　あきた▼
 かんがえる　じかんを　くれるなら
 はなせることは　はなしてやろう▽
 だから　つれてゆけ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『ココは　寒すぎて
+		<language name="JPN_KANJI" width="256">ヴィオ『ココは　寒すぎて
 もう　震えるのは　あきた▼
 考える　時間を　くれるなら
 話せることは　話してやろう▽
