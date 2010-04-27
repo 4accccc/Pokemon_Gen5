@@ -1147,10 +1147,17 @@ void    BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32*
 { 
   BTLV_MCSS_GetPokeDefaultPos( bew->bmw, target, position );
 
+#ifndef  CAMERA_FOCUS
   pos->x = target->x + BTLV_EFFECT_FOCUS_OFFSET_X;
   pos->y = target->y + BTLV_EFFECT_FOCUS_OFFSET_Y;
   pos->z = target->z + BTLV_EFFECT_FOCUS_OFFSET_Z;
   target->y += BTLV_EFFECT_FOCUS_TARGET_Y;
+#else
+  pos->x = target->x + camera_focus_offset_x;
+  pos->y = target->y + camera_focus_offset_y;
+  pos->z = target->z + camera_focus_offset_z;
+  target->y += camera_focus_target_y;
+#endif
 }
 
 //============================================================================================
