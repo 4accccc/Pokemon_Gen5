@@ -87,6 +87,7 @@ static void SetupStaffRollDemoParam( GAMECLEAR_WORK* work ); // スタッフロールデ
 static void SetupSequence( GAMECLEAR_WORK* work ); // シーケンスの流れをセットアップする
 static u16 GetEndingDemoID( void ); // エンディングの3DデモIDを取得する
 static void NowSeqFinish( GAMECLEAR_WORK* work, int* seq ); // 現在のシーケンスを終了する
+static void ElboardStartChampNews( GAMECLEAR_WORK* work ); // 電光掲示板にチャンピオンニュースの表示を開始する
 
 
 //============================================================================================
@@ -113,6 +114,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
 
 	switch( work->nowSeq ) {
 	case GMCLEAR_SEQ_INIT:
+    ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
     PMSND_FadeOutBGM( 30 );
     NowSeqFinish( work, seq );
 		break;
@@ -351,4 +353,21 @@ static void NowSeqFinish( GAMECLEAR_WORK* work, int* seq )
 {
   (*seq)++;
   work->nowSeq = work->seqArray[ *seq ];
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 電光掲示板にチャンピオンニュースの表示を開始する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void ElboardStartChampNews( GAMECLEAR_WORK* work )
+{
+  MISC* misc;
+  int minutes;
+
+  misc = GAMEDATA_GetMiscWork( work->gamedata );
+  minutes = 60 * 24; // 表示する時間[min]
+  MISC_SetChampNewsMinutes( misc, minutes );
 }
