@@ -27,11 +27,6 @@ _EVENT_DATA    ev_zone_r16r0201
 _EVENT_DATA    ev_recover_r16r0201
 _EVENT_DATA_END
 
-//R16R0201_WOMAN3_01
-//FV_R16R0201_WOMAN3
-//R16R0201_BACKPACKERM_01
-//FV_R16R0201_BACKPACKERM
-//WK_SCENE_R16R0201
 
 DEFINE_LOCAL target_poke_pos
 DEFINE_LOCAL target_monsno
@@ -46,14 +41,16 @@ INIT_EVENT_START ev_zone_r16r0201
   //マップ書き換えスイッチ初期化
   $map_replace_sw = FALSE
 
+  //ＯＢＪ消す（女性はイベントの進行にかかわらず消しといてよい）
+  _FLAG_SET( FV_R16R0201_WOMAN3 )
+
   //イベントが完全終了ならばマップを書き換え、トレーラーハウスの入り口を侵入不可の場所へ退避する
   IF $WK_SCENE_R16R0201 >= 2 THEN    //イベント完全終了
     //マップ書き換えイベント後のマップ
     $map_replace_sw = TRUE
     //自機が入れないようにトレーラーハウス入り口移動
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_R16R0201_R16R0301_EXIT01, 0, 0, 0 )
-    //ＯＢＪ消す
-    _FLAG_SET( FV_R16R0201_WOMAN3 )
+    //バックパッカーＯＢＪ消す
 	  _FLAG_SET( FV_R16R0201_BACKPACKERM )
   ELSE   //イベント未消化のとき
   {
@@ -240,10 +237,10 @@ zoroaaku_core:
   }
 
   _WILD_LOSE_CHECK( SCWK_ANSWER )
-  //女性を消す(再戦に備え勝ち負けにかかわらず消しておく)
-  _FLAG_SET( FV_R16R0201_WOMAN3 )
+  
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
     //女性を消す
+    _FLAG_SET( FV_R16R0201_WOMAN3 )
     _OBJ_DEL(R16R0201_WOMAN3_01)
     _WILD_WIN()
   ELSE
