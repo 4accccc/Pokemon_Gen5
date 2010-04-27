@@ -395,15 +395,9 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
   }
   else{  // ‚¢‚¢‚¦‚ð‘I‘ð‚µ‚½ê‡
-//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
-
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
-
-//    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB3);    //@todo
   }
-
- // _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   return seq;
 }
 

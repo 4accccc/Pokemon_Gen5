@@ -36,7 +36,6 @@ struct _WIH_DWC_WORK {
   BOOL bStop;
 	u16 AllBeaconNum;
   u16 level;
-//  u8 buff[200];  //赤外線受信を行う仮バッファ
 };
 
 

@@ -2188,7 +2188,6 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
     // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
-    // ※位置調整はとりあえずの値です。
     pIM->clwk_poke_item =
       UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,
                                2 * 8 + side * 16 * 8 + 4, 17*8-4, type, pWork->heapID );

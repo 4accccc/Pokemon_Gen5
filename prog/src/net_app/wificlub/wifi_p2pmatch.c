@@ -3087,13 +3087,13 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
     // ボタン全描画リクエスト
     MCVSys_BttnAllWriteReq( wk );
 
-    /* @todo出入りSE
+    //出入りSE
     if( in_flag == TRUE ){
-      Snd_SePlay( _SE_INOUT );
+      PMSND_PlaySE( SEQ_SE_FLD_05 );
     }else if( out_flag == TRUE ){
-      Snd_SePlay( _SE_INOUT );
+      PMSND_PlaySE( SEQ_SE_FLD_05 );
     }
-       */
+      
   }
 
 
@@ -3275,7 +3275,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
     OS_TPrintf("接続 %d\n",wk->DirectModeNo);
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);   //@todoユニオンルームでよばれたSE
+    PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -5501,11 +5501,6 @@ static int _exitYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if( WifiP2PMatchMessageEndCheck(wk) ){
     // はいいいえウインドウを出す
-
-    //@todo 読み込みが必要かどうか10.01.16
-    //    BmpWinFrame_GraphicSet(
-    //      GFL_BG_FRAME2_M, MENU_WIN_CGX_NUM, MENU_WIN_PAL, 0, HEAPID_WIFIP2PMATCH );
-
     _yenowinCreateM2(wk);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_WAIT);
@@ -6102,9 +6097,6 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       (map_param <= MCR_MAPPM_MAP03) ){
     if( wk->view.frame_no != (map_param - MCR_MAPPM_MAP00) ){
       wk->view.frame_no = (map_param - MCR_MAPPM_MAP00);
-
-
-//      Snd_SePlay( _SE_TBLCHANGE );   //@todo
 
       // 背景カラー変更
       MCVSys_BackDraw( wk );

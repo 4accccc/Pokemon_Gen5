@@ -101,7 +101,7 @@ typedef enum
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
 #define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 
-//BG面とパレット番号(仮設定
+//BG面とパレット番号
 #define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME1_S)
 #define _SUBSCREEN_PALLET	(0xE)
 

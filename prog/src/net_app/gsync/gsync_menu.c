@@ -65,7 +65,7 @@ typedef enum
 #endif
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
-// サウンドが出来るまでの仮想
+// SE
 #define _SE_DESIDE (SEQ_SE_SYS_69)
 #define _SE_CANCEL (SEQ_SE_SYS_70)
 
@@ -85,7 +85,7 @@ typedef enum
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
 #define _BUTTON_MSG_PAL   (13)  // メッセージフォント
 
-//BG面とパレット番号(仮設定
+//BG面とパレット番号
 #define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME1_S)
 #define _SUBSCREEN_PALLET	(0xE)
 

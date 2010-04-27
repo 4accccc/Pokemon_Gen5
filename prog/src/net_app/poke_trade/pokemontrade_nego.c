@@ -1510,9 +1510,8 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     }
     else if( NHTTP_ERROR_BUSY != error )
     {
-      //@todoÉGÉâÅ[Çî≠ê∂Ç≥ÇπÇÈ
-//      WIFIBATTLEMATCH_NETERR_SetNhttpError( &p_wk->error, error );
-      _CHANGE_STATE(pWork, NULL);
+       pWork->evilCheck[0] = 1;  //åüç∏Ç…é∏îsÇµÇΩ
+      _CHANGE_STATE(pWork, _PokeEvilChkEnd);
     }
     else{
       return;
@@ -1525,6 +1524,8 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     }
     DWC_RAPCOMMON_ResetSubHeapID();
     
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),
+                                 POKETRADE_FACTOR_TIMING_G ,WB_NET_TRADE_SERVICEID);
   }
 
 }

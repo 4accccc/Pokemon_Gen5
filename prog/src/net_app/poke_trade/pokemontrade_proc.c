@@ -1345,7 +1345,7 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 2:  //もどる
-      _CHANGE_STATE(pWork, _cancelPokemonSendDataNetwork);  ///@todo
+      _CHANGE_STATE(pWork, _cancelPokemonSendDataNetwork);
       break;
     }
   }
@@ -1954,8 +1954,6 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
     
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-
-//      WIPE_ResetBrightness(WIPE_DISP_MAIN);   //@todo つながりの状況をすべて確認してから外す必要がある
 
       POKE_GTS_InitWork(pWork);
       POKE_GTS_InitEruptedIconResource(pWork);
