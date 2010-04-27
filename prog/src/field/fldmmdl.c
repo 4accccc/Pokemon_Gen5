@@ -2731,6 +2731,7 @@ void MMDL_SetVectorAttrDrawOffsetPos( MMDL * mmdl, const VecFx32 *vec )
  * 実座標からグリッド値が欲しい場合はMMDL_GetVectorPosY()から変換して下さい。
  */
 //--------------------------------------------------------------
+#if 0
 s16 MMDL_GetHeightGrid( const MMDL * mmdl )
 {
   fx32 y = MMDL_GetVectorPosY( mmdl );
@@ -2738,6 +2739,7 @@ s16 MMDL_GetHeightGrid( const MMDL * mmdl )
   GF_ASSERT( 0 );
   return( gy );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4625,6 +4627,33 @@ static BOOL mmdlsys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no )
 #else
   return( EVENTWORK_CheckEventFlag(evwork,flag_no) );
 #endif
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定されたタイプがトレーナータイプであれば
+ * EV_TYPE_TRAINERもしくはEV_TYPE_TRAINER_EYEALLで返す。
+ * それ以外のタイプはそのまま返す
+ * @param type EV_TYPE_TRAINER等
+ * @retval u16 EV_TYPE_TRAINER等
+ */
+//--------------------------------------------------------------
+u16 MMDL_TOOL_GetTrainerEventType( u16 type )
+{
+  switch( type ){
+  case EV_TYPE_TRAINER_KYORO:
+  case EV_TYPE_TRAINER_SPIN_STOP_L:
+  case EV_TYPE_TRAINER_SPIN_STOP_R:
+  case EV_TYPE_TRAINER_SPIN_MOVE_L:
+  case EV_TYPE_TRAINER_SPIN_MOVE_R:
+  case EV_TYPE_TRAINER_DASH_ALTER:
+  case EV_TYPE_TRAINER_DASH_REACT:
+  case EV_TYPE_TRAINER_DASH_ACCEL:
+    type = EV_TYPE_TRAINER;
+    break;
+  }
+  
+  return( type );
 }
 
 //======================================================================

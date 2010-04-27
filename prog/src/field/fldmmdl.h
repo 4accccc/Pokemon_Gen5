@@ -900,7 +900,9 @@ extern void MMDL_GetVectorAttrDrawOffsetPos(
 		const MMDL * mmdl, VecFx32 *vec );
 extern void MMDL_SetVectorAttrDrawOffsetPos(
 		MMDL * mmdl, const VecFx32 *vec );
+#if 0
 extern s16 MMDL_GetHeightGrid( const MMDL * mmdl );
+#endif
 extern MMDL_BLACTCONT * MMDL_GetBlActCont( MMDL *mmdl );
 extern u8 MMDL_GetGridSizeX( const MMDL *mmdl );
 extern u8 MMDL_GetGridSizeZ( const MMDL *mmdl );
@@ -1006,6 +1008,7 @@ extern const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
     const OBJCODE_PARAM *param );
 
 extern u16 MMDL_TOOL_GetWorkOBJCode( const EVENTWORK *ev, u16 code );
+extern u16 MMDL_TOOL_GetTrainerEventType( u16 type );
 
 extern void MMDL_MoveInitProcDummy( MMDL * mmdl );
 extern void MMDL_MoveProcDummy( MMDL * mmdl );

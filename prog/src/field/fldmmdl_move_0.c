@@ -2640,7 +2640,8 @@ static BOOL checkMMdlEventTypeDashAccel( const MMDL *mmdl )
       ev_type == EV_TYPE_TR_D_SPINS_L ||
       ev_type == EV_TYPE_TR_D_SPINS_R ||
       ev_type == EV_TYPE_TR_D_SPINM_L ||
-      ev_type == EV_TYPE_TR_D_SPINM_R ){
+      ev_type == EV_TYPE_TR_D_SPINM_R ||
+      ev_type == EV_TYPE_D_ACC ){
     return( TRUE );
   }
   return( FALSE );

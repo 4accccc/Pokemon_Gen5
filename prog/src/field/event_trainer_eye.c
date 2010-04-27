@@ -931,21 +931,7 @@ static GMEVENT_RESULT controlTrainerEyeMoveEvent( GMEVENT * ev, int *seq, void *
 static u16 tr_GetTrainerEventType( const MMDL *mmdl )
 {
   u16 type = MMDL_GetEventType( mmdl );
-  
-  switch( type ){
-  case EV_TYPE_TRAINER_KYORO:
-  case EV_TYPE_TRAINER_SPIN_STOP_L:
-  case EV_TYPE_TRAINER_SPIN_STOP_R:
-  case EV_TYPE_TRAINER_SPIN_MOVE_L:
-  case EV_TYPE_TRAINER_SPIN_MOVE_R:
-  case EV_TYPE_TRAINER_DASH_ALTER:
-  case EV_TYPE_TRAINER_DASH_REACT:
-  case EV_TYPE_TRAINER_DASH_ACCEL:
-    type = EV_TYPE_TRAINER;
-    break;
-  }
-  
-  return( type );
+  return( MMDL_TOOL_GetTrainerEventType(type) );
 }
 
 //--------------------------------------------------------------

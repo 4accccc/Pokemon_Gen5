@@ -535,6 +535,7 @@ MMDL * MMDL_SearchMovePair( const MMDL * mmdl )
   case EV_TYPE_TRAINER_SPIN_STOP_R:
   case EV_TYPE_TRAINER_SPIN_MOVE_L:
   case EV_TYPE_TRAINER_SPIN_MOVE_R:
+  case EV_TYPE_SPINS_L:
     while( MMDLSYS_SearchUseMMdl(mmdlsys,&pair,&no) == TRUE )
     {
       if( mmdl != pair && MMDL_GetZoneID(pair) == zone_id )

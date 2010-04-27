@@ -389,7 +389,7 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   { //吹き出しウィンドウ
      work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
         msgbg,
-        FLDTALKMSGWIN_IDX_LOWER,
+        FLDTALKMSGWIN_IDX_UPPER,
         &work->balloonWinPos,
         work->strBuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
   }

@@ -453,6 +453,7 @@ static void SubMoveSpinStop_Init( MMDL * mmdl )
   type = MMDL_GetEventType( mmdl );
   
   if( type == EV_TYPE_TRAINER_SPIN_STOP_L ||
+      type == EV_TYPE_SPINS_L ||
       type == EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_L ){
     type = SPIN_STOP_L_TYPE;
   }else{
@@ -665,6 +666,8 @@ static void (* const DATA_MMdl_EventTypeInitProcTbl[EV_TYPE_MAX])( MMDL * ) =
   SubMoveSpinStop_Init, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R
   SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L
   SubMoveNon_Init, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_R
+  SubMoveNon_Init, //EV_TYPE_D_ACC
+  SubMoveSpinStop_Init, //EV_TYPE_TR_SPINS_L 
 };
 
 //--------------------------------------------------------------
@@ -691,6 +694,8 @@ static int (* const DATA_MMdl_EventTypeStartCheckProcTbl[EV_TYPE_MAX])( MMDL * )
   SubMoveSpinStop_StartCheck, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R
   SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L
   SubMoveNon_StartCheck, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_R
+  SubMoveNon_StartCheck, //EV_TYPE_D_ACC
+  SubMoveSpinStop_StartCheck, //EV_TYPE_SPINS_L
 };
 
 //--------------------------------------------------------------
@@ -717,4 +722,6 @@ static int (* const DATA_MMdl_EventTypeMoveProcTbl[EV_TYPE_MAX])( MMDL * ) =
   SubMoveSpinStop_Move, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_STOP_R
   SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_L
   SubMoveNon_Move, //EV_TYPE_TRAINER_DASH_ACCEL_SPIN_MOVE_R
+  SubMoveNon_Move, //EV_TYPE_D_ACC
+  SubMoveSpinStop_Move, //EV_TYPE_SPINS_L 
 };
