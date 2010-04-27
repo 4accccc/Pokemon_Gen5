@@ -293,4 +293,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/o_parasol_02.nsbmd \
 	$(RESDIR)/c03_cloud.nsbmd \
 	$(RESDIR)/c03_kanban.nsbmd \
+	$(RESDIR)/c09gate_main.nsbmd \
 

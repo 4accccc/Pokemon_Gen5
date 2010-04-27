@@ -292,3 +292,4 @@
 "nsbmdfiles/o_parasol_02.nsbmd"
 "nsbmdfiles/c03_cloud.nsbmd"
 "nsbmdfiles/c03_kanban.nsbmd"
+"nsbmdfiles/c09gate_main.nsbmd"
