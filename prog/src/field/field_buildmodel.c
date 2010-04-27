@@ -5,8 +5,10 @@
  * @author	tamada GAMEFREAK inc.
  * @date	2009.04.20
  *
- * @todo
- * メモリ削減：（１）テクスチャリソースをエリア単位で統合する（２）アニメリソースの重複を減らす
+ * @note
+ * メモリ削減：アニメリソースの重複を減らすことでもう少し可能。
+ * エリアIDと配置モデルリストの関係が、エリアデータの並びに依存した
+ * 計算になっているのでデータ追加・削除の際には注意すること。
  */
 //============================================================================================
 
@@ -115,8 +117,8 @@ enum{
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  BMODEL_ID_MAX = 400,  //とりあえず
-  BMODEL_ENTRY_MAX = 128,  //とりあえず
+  BMODEL_ID_MAX = 400,      ///<配置モデルの種類上限
+  BMODEL_ENTRY_MAX = 128,   ///<配置モデルの登録上限（メモリの方が先に制約条件となるはず）
 
   BMODEL_ID_NG  = BMODEL_ID_MAX,
   BMODEL_ENTRY_NG = BMODEL_ENTRY_MAX,
@@ -771,7 +773,7 @@ static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id
     if (data_max <= file_id)
     {	
       GF_ASSERT_MSG(0, "配置モデルリストデータがありません(%d<%d)\n", data_max, file_id);
-      file_id = 0;		//とりあえずハングアップ回避
+      file_id = 0;		//ハングアップ回避
     }
   }
 
@@ -781,7 +783,7 @@ static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id
 		if(size > sizeof(man->entryToBMIDTable))
 		{	
 			GF_ASSERT_MSG(0, "配置モデルリストデータがオーバー（size=%d ARCINDEX=%d)\n", size, file_id);
-			man->entryCount = BMODEL_ENTRY_MAX;	//とりあえずハングアップ回避
+			man->entryCount = BMODEL_ENTRY_MAX;	//ハングアップ回避
 			size = sizeof(man->entryToBMIDTable);
 		}
 		//TAMADA_Printf("entryCount=%d\n", man->entryCount);
@@ -824,7 +826,6 @@ static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
  * @param area_id 
  * @return  u16 情報アーカイブの指定ID
  *
- * @todo  エリアデータの並びに依存して計算しているので移行を考えること！
  */
 //------------------------------------------------------------------
 static u16 calcArcIndex(u16 area_id)
@@ -837,7 +838,8 @@ static u16 calcArcIndex(u16 area_id)
 	{	
 		return (area_id - AREA_ID_OUT01) / 4;
 	}
-	return 0;	//とりあえず
+  GF_ASSERT( 0 );
+	return 0;	//エラー対処
 }
 
 #ifdef BMODEL_TEXSET
@@ -922,8 +924,8 @@ static void BMANIME_init(FIELD_BMANIME_DATA * data)
   static const FIELD_BMANIME_DATA init = {  
     BMANIME_TYPE_NONE,  //アニメ適用の種類指定
     BMANIME_PROG_TYPE_NONE,  //動作プログラムの種類指定
-    0,  //アニメカウント（仮）
-    0,  //セットカウント（仮）
+    0,  //アニメセット数
+    0,  //アニメパターン数
     //アニメアーカイブ指定ID
     { BMANIME_NULL_ID, BMANIME_NULL_ID, BMANIME_NULL_ID, BMANIME_NULL_ID, }
 

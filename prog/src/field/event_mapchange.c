@@ -915,6 +915,7 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief 瞬間マップチェンジ ( デバッグ用 )
@@ -956,6 +957,7 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
   }
   return GMEVENT_RES_CONTINUE;
 }
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -1613,6 +1615,7 @@ GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* f
   return event;
 } 
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT* DEBUG_EVENT_ChangeMapDefaultPos( GAMESYS_WORK* gameSystem, 
@@ -1675,6 +1678,7 @@ GMEVENT * DEBUG_EVENT_QuickChangeMapAppoint( GAMESYS_WORK * gameSystem,
   work->loc_req.location_pos.pos = *pos;
   return event;
 }
+#endif
 
 //------------------------------------------------------------------
 /**

@@ -9,9 +9,6 @@
  * 2006.04.18 scr_tool.c,field_encount.cからゲームオーバー処理を持ってきて再構成した
  * 2009.09.20 HGSSから移植開始
  *
- * @todo
- * ゲームオーバーメッセージをPROCにしたのでメモリが足りないときには
- * 別オーバーレイ領域に引越しする
  */
 //============================================================================================
 #include <gflib.h>
@@ -102,9 +99,6 @@ static REVIVAL_TYPE getRevType( GAMEDATA * gamedata )
  * @retval	TRUE		イベント終了
  * @retval	FALSE		イベント継続中
  *
- * @todo
- * ポケセンでの復活処理を以前の仕様で作るためにはジョーイさんOBJの
- * OBJIDを何らかの方法で取得し、アニメーションさせる必要がある
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *work)

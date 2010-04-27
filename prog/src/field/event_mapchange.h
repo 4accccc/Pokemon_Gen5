@@ -5,9 +5,6 @@
  * @date  2008.11.05
  * @author  tamada GAME FREAK inc.
  *
- * @todo  DEBUG_という名前の本番用関数をリネームする
- * @todo  新規ゲームとコンティニューとで同一関数を呼び出しているのを切り分ける
- *
  * @note
  * 基本的にはイベントのみを外部公開して複雑な初期化やフラグ制御は
  * この内部に納めたい。（現在のところ例外はMAPCHG_GameOver）
@@ -28,12 +25,14 @@
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_CallGameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief デバッグ用：ゲーム終了
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -90,6 +89,7 @@ extern GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WO
 extern GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                                    u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir, BOOL seasonUpdateEnable );
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成 ( デフォルト座標 )
@@ -120,6 +120,7 @@ extern GMEVENT* DEBUG_EVENT_QuickChangeMapDefaultPos( GAMESYS_WORK * gameSystem,
 extern GMEVENT * DEBUG_EVENT_QuickChangeMapAppoint( GAMESYS_WORK * gameSystem,
                                     FIELDMAP_WORK* fieldmap, u16 zoneID,
                                     const VecFx32 *pos );
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -191,7 +192,6 @@ extern GMEVENT * EVENT_ChangeMapPalace_to_Palace( GAMESYS_WORK* gameSystem, u16 
 /**
  */
 //------------------------------------------------------------------
-extern GMEVENT* DEBUG_EVENT_ChangeToNextMap( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap );
 extern GMEVENT* EVENT_ChangeMapPosNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                           u16 zoneID, const VecFx32* pos, u16 dir );
 

@@ -5,7 +5,6 @@
  * @brief   PDW配達員関連
  * @author  tamada GAMEFREAK inc.
  *
- * @todo  keyWaitCursor_～をfield_msgbg.cからコピペで持ってきている
  */
 //======================================================================
 #include <gflib.h>
@@ -28,8 +27,6 @@
 #include "field/field_msgbg.h"
 
 #include "sound/pm_sndsys.h"
-
-//#include "gamesystem\msgspeed.h"
 
 #include "winframe.naix"
 
