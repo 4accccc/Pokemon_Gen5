@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T17:35:35"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T17:53:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="185" top="161" right="890" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="357" top="148" right="1062" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="58" top="61" right="531" bottom="459" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -609,7 +609,7 @@
 
 	<row id="IRCBTL_STR_42">
 		<language name="JPN" width="256">てもちで　たたかう</language>
-		<language name="JPN_KANJI" width="256">てもちで　戦う</language>
+		<language name="JPN_KANJI" width="256">手持ちで　戦う</language>
 	</row>
 
 	<row id="IRCBTL_STR_43">
@@ -625,9 +625,9 @@
 	</row>
 
 	<row id="IRCBTL_STR_45">
-		<language name="JPN" width="256">てもちか　ボックスに　ポケモンが
+		<language name="JPN" width="256">てもちと　ボックスを　あわせて
 ２ひき　いじょう　ひつようです</language>
-		<language name="JPN_KANJI" width="256">てもちか　ボックスに　ポケモンが
+		<language name="JPN_KANJI" width="256">手持ちと　ボックスを　合わせて
 ２匹　以上　必要です</language>
 	</row>
 
