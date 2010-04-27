@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:16:20"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T16:25:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1490" top="210" right="2142" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="14" top="160" right="719" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="477"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="644"/>
-		<band id="3" index="3" style="0000" width="644"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -572,6 +572,13 @@
 		<language name="JPN_KANJI" width="256">接続を　きる</language>
 	</row>
 
+	<row id="msg_pc_mail_window_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>■選択肢ウインドウ
+・msg_pc_mail_04表示</comment>
+		<language name="JPN" width="256">ヘルプを　みる</language>
+		<language name="JPN_KANJI" width="256">ヘルプを　みる</language>
+	</row>
+
 	<row id="msg_pc_mail_02">
 		<comment>■「メールボックス」にカーソルがあっているとき
 ・決定するとボックス預けるの処理へ</comment>
@@ -588,6 +595,15 @@
 つうしんを　せつだん　します</language>
 		<language name="JPN_KANJI" width="256">じぶんのパソコン　への
 通信を　切断します</language>
+	</row>
+
+	<row id="msg_pc_mail_04">
+		<comment>■「ヘルプを　みる」にカーソルがあっているとき
+・決定するとヘルプ画面の処理へ</comment>
+		<language name="JPN" width="256">ゲームについての　さまざまな
+せつめいを　みることが　できます</language>
+		<language name="JPN_KANJI" width="256">ゲームについての　様々な
+説明を　みることが　できます</language>
 	</row>
 
 	<row id="msg_pc_kiroku_window_01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
