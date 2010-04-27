@@ -948,7 +948,7 @@ EVENT_START ev_fld_item_151
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r06r0202 X=5 Y=9 ITEM=ブロムヘキシン FLAG=152
+// MAP=r06r0202 X=12 Y=9 ITEM=ブロムヘキシン FLAG=152
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_152
   _FLD_ITEM_EVENT ITEM_BUROMUHEKISIN,1

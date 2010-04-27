@@ -183,6 +183,8 @@ _EVENT_DATA  ev_hide_item_161
 _EVENT_DATA  ev_hide_item_162
 _EVENT_DATA  ev_hide_item_163
 _EVENT_DATA  ev_hide_item_164
+_EVENT_DATA  ev_hide_item_165
+_EVENT_DATA  ev_hide_item_166
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -477,7 +479,7 @@ EVENT_START ev_hide_item_057
 EVENT_END
 
 EVENT_START ev_hide_item_058
-//フキヨセのほらあな２Ｆ ( 26, 29 )
+//フキヨセのほらあな２Ｆ ( 19, 27 )
 	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_058 )// すごいキズぐすり
 EVENT_END
 
@@ -1009,6 +1011,16 @@ EVENT_END
 EVENT_START ev_hide_item_164
 //ちかすいみゃくのあなＢ１ ( 23, 55 )
 	_ITEM_EVENT_HIDEITEM( 24, 1, FLAG_HIDEITEM_164 )// まんたんのくすり
+EVENT_END
+
+EVENT_START ev_hide_item_165
+//フキヨセのほらあな２Ｆ ( 7, 28 )
+	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_165 )// ハイパーボール
+EVENT_END
+
+EVENT_START ev_hide_item_166
+//フキヨセのほらあな２Ｆ ( 5, 9 )
+	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_166 )// ピーピーマックス
 EVENT_END
 
 //--------------------------------------------------------------
