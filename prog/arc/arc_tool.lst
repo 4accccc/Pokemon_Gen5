@@ -236,6 +236,7 @@
   ARCID_GRID_CAMERA_SCENE "fieldmap/grid_camera_scene.narc" #gridマップのカメラシーン
   ARCID_ZUKAN_GRA "zukan_gra.narc"  # 図鑑グラフィック
   ARCID_DEMO3D_GRA "demo3d.narc" # 3Dデモ再生アプリ
+  ARCID_DEMO3D_2DGRA "demo3d_2dgra.narc" # 3Dデモ再生アプリ2Dリソース
   ARCID_GYM_DRAGON  "fieldmap/gym_dragon.narc"  #ドラゴンジム
   ARCID_SCR_CAM_PRM "fieldmap/scr_cam_prm.narc" #スクリプトカメラパラメータ
   ARCID_TITLETEST   "title1.narc"  #タイトルサンプル
