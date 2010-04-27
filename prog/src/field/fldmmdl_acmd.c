@@ -4428,6 +4428,9 @@ typedef struct
 {
 	fx32 total_offset;
 	fx32 value;
+  u16 wait;
+  u8 padding0;
+  u8 padding1;
 }AC_SHIN_MU_FLY_UPPPER_WORK;
 
 #define AC_SHIN_MU_FLY_UPPPER_WORK_SIZE (sizeof(AC_SHIN_MU_FLY_UPPPER_WORK))
@@ -4445,7 +4448,8 @@ static int AC_ShinMuFlyUpper0( MMDL * mmdl )
 	
   work = MMDL_InitMoveCmdWork( mmdl, AC_SHIN_MU_FLY_UPPPER_WORK_SIZE );
   work->value = FX32_ONE * 2;
-	
+	work->wait = (5*7) + (11*5);
+  
   MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_A_FLY_UP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
@@ -4463,8 +4467,13 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
 	int grid;
   AC_SHIN_MU_FLY_UPPPER_WORK *work;
 	
-	work = MMDL_GetMoveCmdWork( mmdl );
+  work = MMDL_GetMoveCmdWork( mmdl );
 	
+  if( work->wait ){
+    work->wait--;
+    return( FALSE );
+  }
+  
 	work->total_offset += work->value;
 	
 	{
