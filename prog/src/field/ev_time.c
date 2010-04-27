@@ -39,6 +39,8 @@
 
 #include "sheimi_normalform.h"
 
+#include "savedata/irc_compatible_savedata.h"
+
 //============================================================================================
 //============================================================================================
 
@@ -195,6 +197,9 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 
   //調査レーダー：本日のすれ違い人数を合計に移動
   QuestionnaireWork_DateChangeUpdate( SaveData_GetQuestionnaire(save) );
+
+  //フィーリングチェック：１日１回チェックを消す
+  IRC_COMPATIBLE_SV_ClearDayFlag( IRC_COMPATIBLE_SV_GetSavedata(save) );
   
   if(!is_penalty){  //ペナルティタイムでないときだけ処理する
   }

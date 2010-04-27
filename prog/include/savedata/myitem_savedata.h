@@ -23,6 +23,8 @@ typedef	struct {
 	u16	id;		// アイテム番号
 	u16	no;		// 個数
 }ITEM_ST;
+#define	ITEM_MAX_NORMAL			( 999 )		// 通常のアイテム所持数最大
+#define	ITEM_MAX_WAZAMACHINE	( 99 )		// 技マシンの所持数最大
 
 #define	BAG_EVENT_ITEM_MAX		( 83 )		// 大切な物ポケット最大数
 #define	BAG_WAZA_ITEM_MAX			( 109 )		// 技マシンポケット最大数

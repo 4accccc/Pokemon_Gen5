@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-15T18:51:20"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-04-27T12:23:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -387,6 +387,11 @@
 	<row id="COMPATI_BTN_000">
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">もどる</language>
+	</row>
+
+	<row id="COMPATI_BTN_001">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="COMPATI_TITLE_000">

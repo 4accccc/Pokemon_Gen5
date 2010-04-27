@@ -182,7 +182,8 @@ typedef struct {
   char end_month;//終了月：01-12
   char end_day;//終了日：01-31
   char status;  //大会状態： net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
-  u16 bgm_no;   //大会で使用するBGM REGULATION_CARD_BGM_TYPE列挙参照
+  u8   bgm_no;   //大会で使用するBGM REGULATION_CARD_BGM_TYPE列挙参照
+  u8   dummy;
   u16 crc;  //整合性検査
 } REGULATION_CARDDATA;
 

@@ -1115,6 +1115,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
       u8  month;
       u8  day;
 			u32 ID;
+      u16 mons_no;
 		} scp_debug_rank_data[]	=
 		{	
 			{	
@@ -1123,6 +1124,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         10,
         22,
 				0x573,
+        1,
 			},
 			{	
 				L"アリイズミ",
@@ -1130,6 +1132,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         1,
         27,
 				0x785,
+        2,
 			},
 			{	
 				L"キタさん",
@@ -1137,6 +1140,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         4,
         8,
 				0x123,
+        3,
 			},
 			{	
 				L"いわおっち",
@@ -1144,13 +1148,15 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         7,
         14,
 				0x987,
+        4,
 			},
 			{	
 				L"レイコ",
         0,
         2,
         15,
-				0x782
+				0x782,
+        5,
 			},
 			{	
 				L"イケイケ",
@@ -1158,13 +1164,15 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         8,
         2,
 				0x191,
+        6,
 			},
 			{	
 				L"ぺぐ",
         0,
         1,
         7,
-				0x232
+				0x232,
+        7,
 			},
 			{	
 				L"マナ",
@@ -1172,6 +1180,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         11,
         27,
 				0x595,
+        8,
 			},
 			{	
 				L"あさみん",
@@ -1179,6 +1188,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         10,
         18,
 				0x999,
+        9,
 			},
 			{	
 				L"プラット",
@@ -1186,6 +1196,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         1,
         1,
 				0x1234,
+        10,
 			},
 			{	
 				L"プラット",
@@ -1193,6 +1204,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         3,
         3,
 				0x2345,
+        11,
 			},
 			{	
 				L"プラット",
@@ -1200,6 +1212,7 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
         10,
         10,
 				0x3456,
+        12,
 			},
 		};
 		u16 *p_str;
@@ -1214,7 +1227,8 @@ static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk )
 
 		//セーブする
 		IRC_COMPATIBLE_SV_AddRanking( p_sv, str,
-        GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].sex, scp_debug_rank_data[idx].month, scp_debug_rank_data[idx].day, scp_debug_rank_data[idx].ID );
+        GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].sex, scp_debug_rank_data[idx].month, scp_debug_rank_data[idx].day, scp_debug_rank_data[idx].ID,
+  scp_debug_rank_data[idx].mons_no, 0, PTL_SEX_MALE, 0 );
 
     { 
       char  test[128];

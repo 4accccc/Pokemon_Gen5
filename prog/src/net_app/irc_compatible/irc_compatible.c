@@ -135,7 +135,7 @@ static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs );
 static void *SUBPROC_ALLOC_Ranking( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs );
 //RULE
-static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, HEAPID heapID );
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, BOOL is_init, HEAPID heapID );
 static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp_player2_name );
 static u32 MATH_GetMostOnebit( u32 x, u8 bit );
 static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status );
@@ -1023,8 +1023,35 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 	{	
 		if( p_wk->rhythm_score != 0 && p_wk->aura_score != 0 )
 		{	
+      BOOL is_init;
       u32 rhythm_minus;
       COMPATIBLE_STATUS my_status;
+
+      { 
+        MYSTATUS  *p_youstatus  = (MYSTATUS*)p_wk->p_you_status->my_status;
+
+        GAMEDATA  *p_gamedata  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+        SAVE_CONTROL_WORK *p_sv_ctrl;
+        IRC_COMPATIBLE_SAVEDATA *p_sv;
+
+#ifdef PM_DEBUG
+        if( p_wk->p_param->p_gamesys == NULL )
+        { 
+          p_sv_ctrl = SaveControl_GetPointer();
+        }
+        else
+#endif 
+        { 
+          p_sv_ctrl = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
+        }
+        //フィーリングチェックセーブデータ取得
+        p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+
+
+        is_init  = !IRC_COMPATIBLE_SV_IsPlayed( p_sv,
+            MyStatus_GetID(p_youstatus) );
+      }
+
       COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
 
       //リズムのマイナス点を計算
@@ -1032,7 +1059,7 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 
       //得点計算
 			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
-          rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status,
+          rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status, is_init,
           HEAPID_IRCCOMPATIBLE_SYSTEM );
 		}
 	}
@@ -1122,7 +1149,7 @@ static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs )
  *	@return	スコア
  */
 //-----------------------------------------------------------------------------
-static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, HEAPID heapID )
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, BOOL is_init, HEAPID heapID )
 {	
   u32 bio;
 	s32 score;
@@ -1145,7 +1172,16 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u
 
     name_score	= RULE_CalcNameScore( MyStatus_GetMyName(cp_my), MyStatus_GetMyName(cp_you) );
 		rate	= FX32_CONST(name_score) / 150;
-		rate	= MATH_CLAMP( rate , FX32_CONST(0.2F), FX32_CONST(0.8F) );
+
+    if( is_init )
+    {
+      //初回プレイ時はrate0.8固定
+      rate  = FX32_CONST(0.8F);
+    }
+    else
+    { 
+      rate	= MATH_CLAMP( rate , FX32_CONST(0.5F), FX32_CONST(1.0F) );
+    }
 
 		add	= ((100-score) * rate) >> FX32_SHIFT;
 	}

@@ -86,3 +86,10 @@ extern void APPBAR_Main( APPBAR_WORK *p_wk );
 extern APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 extern void APPBAR_SetNormal( APPBAR_WORK *p_wk );
 
+typedef enum
+{ 
+  APPBAR_BUTTON_TYPE_RETURN,  //‚à‚Ç‚é
+  APPBAR_BUTTON_TYPE_CANCEL,  //‚â‚ß‚é
+}APPBAR_BUTTON_TYPE;
+extern void APPBAR_ChangeButton( APPBAR_WORK *p_wk, APPBAR_BUTTON_TYPE type );
+

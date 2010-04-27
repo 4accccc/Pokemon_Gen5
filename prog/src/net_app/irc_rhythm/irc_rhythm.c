@@ -920,7 +920,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
   //タッチスタート文字列作成
 	MSGWND_InitEx( &p_wk->msgstart, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT],
 			MSGWND_START_X, MSGWND_START_Y, MSGWND_START_W, MSGWND_START_H, RHYTHM_BG_PAL_M_13, 0, GFL_BMP_CHRAREA_GET_F, HEAPID_IRCRHYTHM );
-	MSGWND_PrintCenterColor( &p_wk->msgstart, &p_wk->msg, RHYTHM_STR_005, PRINTSYS_LSB_Make(0xf,2,0) );
+	//MSGWND_PrintCenterColor( &p_wk->msgstart, &p_wk->msg, RHYTHM_STR_005, PRINTSYS_LSB_Make(0xf,2,0) );
 
   //リズム用ネット作成
 	RHYTHMNET_Init( &p_wk->net, p_wk->p_param->p_irc );
@@ -2311,7 +2311,7 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
     break;
 
   case SEQ_TOUCH_WAIT:
-    if( GFL_UI_TP_GetTrg() )
+//    if( GFL_UI_TP_GetTrg() )
     { 
       GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_TEXT ], FALSE );
       *p_seq  = SEQ_EXIT;

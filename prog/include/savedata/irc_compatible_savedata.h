@@ -65,6 +65,9 @@ extern u8	IRC_COMPATIBLE_SV_GetNewRank( const IRC_COMPATIBLE_SAVEDATA *cp_sv );
 extern u8 IRC_COMPATIBLE_SV_GetBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank, const RTCDate * cp_now_date );
 extern u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8 player_birth_month, u8 player_birth_day, const RTCDate * cp_now_date );
 
+extern BOOL IRC_COMPATIBLE_SV_IsDayFlag( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trainerID );
+
+extern BOOL IRC_COMPATIBLE_SV_IsPlayed( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trainerID );
 //-------------------------------------
 ///	irc_compatible.cでのみ使うprivate関数
 //=====================================
@@ -73,13 +76,12 @@ extern u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const R
 //-------------------------------------
 ///	データ設定関数
 //=====================================
-extern u8 IRC_COMPATIBLE_SV_AddRanking_New( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg );
+extern u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg );
 
-inline u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID )
-{ 
-
-  return IRC_COMPATIBLE_SV_AddRanking_New( p_sv, cp_name, score, sex, birth_month, birth_day, trainerID, 1, 0, 0, 0 );
-}
+//-------------------------------------
+///	１日１回フラグ消去
+//=====================================
+extern void IRC_COMPATIBLE_SV_ClearDayFlag( IRC_COMPATIBLE_SAVEDATA *p_sv );
 
 //-------------------------------------
 ///	セーブデータシステムで使用する関数

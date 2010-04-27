@@ -705,6 +705,7 @@ static void TOUCH_EFFECT_SetPos( TOUCH_EFFECT_SYS *p_wk, TOUCHEFFID id, u32 x, u
 static BOOL TP_GetRectTrg( const GFL_RECT *cp_rect, GFL_POINT *p_trg );
 static BOOL TP_GetRectCont( const GFL_RECT *cp_rect, GFL_POINT *p_cont );
 static u8   CalcScore( AURA_MAIN_WORK *p_wk );
+static u8   CalcShakeScore( const GFL_POINT *cp_my_shake_std, const GFL_POINT my_shake_pos[], const GFL_POINT *cp_you_shake_std, const GFL_POINT you_shake_pos[] );
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID );
 typedef enum
 {
@@ -3696,7 +3697,8 @@ static u8  CalcScore( AURA_MAIN_WORK *p_wk )
   AURANET_RESULT_DATA you;
 
   u32 pos_score;
-  u32 shake_score;
+  u32 left_shake_score;
+  u32 right_shake_score;
   my.trg_left   = p_wk->trg_left[0];
   my.trg_right  = p_wk->trg_right[0];
   my.shake_left = p_wk->shake_left[0];
@@ -3749,17 +3751,41 @@ static u8  CalcScore( AURA_MAIN_WORK *p_wk )
 
   //ブレスコア
   {
+    left_shake_score  = CalcShakeScore( &my.shake_left.shake[0], my.shake_left.shake, 
+                            &you.shake_left.shake[0], you.shake_left.shake );
+
+    right_shake_score  = CalcShakeScore( &my.shake_right.shake[0], my.shake_right.shake, 
+                            &you.shake_right.shake[0], you.shake_right.shake );
+  }
+
+  return (pos_score * 40 / 100) + (left_shake_score * 40 /100 ) + (right_shake_score * 20 / 100 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const GFL_POINT my_shake_std  自分の基準点
+ *	@param	GFL_POINT my_shake_pos[]    自分の座標
+ *	@param	GFL_POINT you_shake_std     相手の基準点
+ *	@param	GFL_POINT you_shake_pos[]   相手の座標
+ *
+ *	@return 点数
+ */
+//-----------------------------------------------------------------------------
+static u8   CalcShakeScore( const GFL_POINT *cp_my_shake_std, const GFL_POINT my_shake_pos[], const GFL_POINT *cp_you_shake_std, const GFL_POINT you_shake_pos[] )
+{ 
     int i;
     GFL_POINT temp1, temp2;
     u32 shake1, shake2;
     u16 ret;
-    shake_score = 0;
+    u32 shake_score = 0;
     for( i = 1; i <TOUCH_COUNTER_SHAKE_MAX; i++ )
     {
-      temp1.x = my.shake_left.shake[i].x - my.shake_left.shake[0].x;
-      temp1.y = my.shake_left.shake[i].y - my.shake_left.shake[0].y;
-      temp2.x = you.shake_left.shake[i].x - you.shake_left.shake[0].x;
-      temp2.y = you.shake_left.shake[i].y - you.shake_left.shake[0].y;
+      temp1.x = my_shake_pos[i].x - cp_my_shake_std->x;
+      temp1.y = my_shake_pos[i].y - cp_my_shake_std->y;
+      temp2.x = you_shake_pos[i].x - cp_you_shake_std->x;
+      temp2.y = you_shake_pos[i].y - cp_you_shake_std->y;
 
       OS_Printf( "自分のブレ[%d] X %d Y %d\n", i, temp1.x, temp1.y );
       OS_Printf( "相手のブレ[%d] X %d Y %d\n", i, temp2.x, temp2.y );
@@ -3808,9 +3834,8 @@ static u8  CalcScore( AURA_MAIN_WORK *p_wk )
     }
     shake_score /= 9;
     OS_Printf( "ブレ　%d点\n", shake_score );
-  }
 
-  return (pos_score + shake_score)/2;
+    return shake_score;
 }
 //----------------------------------------------------------------------------
 /**

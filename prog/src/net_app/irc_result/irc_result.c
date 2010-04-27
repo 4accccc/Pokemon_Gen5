@@ -422,6 +422,8 @@ struct _RESULT_MAIN_WORK
 
 	//その他汎用
 	u32		cnt;
+  BOOL  is_day14_both;
+  u32   item_num;
 
 	//引数
 	IRC_RESULT_PARAM	*p_param;
@@ -478,6 +480,7 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
 		u32 strID, u16 number, u16 buff_id );
 static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const COMPATIBLE_STATUS *cp_my, const COMPATIBLE_STATUS *cp_you, HEAPID heapID );
+static void MSGWND_PrintGetItem( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, const COMPATIBLE_STATUS *cp_my, u8 num, u32 strID );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //SEQ
 static void SEQ_Change( RESULT_MAIN_WORK *p_wk, SEQ_FUNCTION	seq_function );
@@ -485,6 +488,7 @@ static void SEQ_End( RESULT_MAIN_WORK *p_wk );
 //SEQ_FUNC
 static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
+static void SEQFUNC_End( RESULT_MAIN_WORK *p_wk, u16 *p_seq );
 //OBJNUMBER
 static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, int number );
 static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig );
@@ -524,12 +528,15 @@ typedef enum
   SCORE_RANK_MAX
 }SCORE_RANK;
 static SCORE_RANK UTIL_GetScoreRank( u8 score, BOOL *p_is_nearly );
+static u32 UTIL_GetItemNum( u8 score, BOOL is_day14 );
 
-
-//汎用
-//汎用的な動作
-//ぶったいの動作
-//DEBUG_PRINT
+typedef enum
+{ 
+  ITEM_RESULT_GET,      //もらえた
+  ITEM_RESULT_ONLY_DAY, //１日１個チェックでもらえなかった
+  ITEM_RESULT_BAG_FULL, //バッグがいっぱいでもらえなかった
+}ITEM_RESULT;
+static ITEM_RESULT UTIL_DataUpdate( RESULT_MAIN_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -707,6 +714,24 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
 	//ハート
 	HEARTEFF_Init( &p_wk->heart, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], p_wk->p_param->score, HEAPID_IRCRESULT );
+
+  
+  if( p_wk->p_param->p_gamesys )
+  {
+    COMPATIBLE_STATUS my_status;
+    COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
+    if( my_status.is_day14  && p_wk->p_param->p_you_status->is_day14 )
+    { 
+      p_wk->is_day14_both = TRUE;
+    }
+    else
+    { 
+      p_wk->is_day14_both = FALSE;
+    }
+
+
+    p_wk->item_num  = UTIL_GetItemNum( p_wk->p_param->score, p_wk->is_day14_both );
+  }
 
 
 	//ここで通信すると、通信終了の相手に送る、ユニットエラーになる
@@ -1757,6 +1782,55 @@ static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_ms
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  アイテムゲット時のメッセージ追加
+ *
+ *	@param	MSGWND_WORK* p_wk         ワーク
+ *	@param	MSG_WORK *cp_msg          メッセージ
+ *	@param	COMPATIBLE_STATUS *cp_my  ワーク
+ *	@param	num                       アイテムのかず　
+ *	@param	strID                     表示する文字
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintGetItem( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, const COMPATIBLE_STATUS *cp_my, u8 num, u32 strID )
+{ 
+	const GFL_MSGDATA* cp_msgdata;
+	WORDSET *p_wordset;
+	u16 x, y;
+	
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+
+	//モジュール取得
+	p_wordset		= MSG_GetWordSet( cp_msg );
+	cp_msgdata	= MSG_GetMsgDataConst( cp_msg );
+
+  //ワードセットに登録
+  { 
+    WORDSET_RegisterPlayerName( p_wordset, 0, (const MYSTATUS*)cp_my->my_status );
+    WORDSET_RegisterItemName( p_wordset, 1, ITEM_HAATOSUIITU );
+    WORDSET_RegisterNumber( p_wordset, 2, num, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  }
+
+	//元の文字列に数値を適用
+	{	
+		STRBUF	*p_strbuf;
+		p_strbuf	= GFL_MSG_CreateString( cp_msgdata, strID );
+		WORDSET_ExpandStr( p_wordset, p_wk->p_strbuf, p_strbuf );
+		GFL_STR_DeleteBuffer( p_strbuf );
+	}
+
+	//表示
+	{	
+		PRINT_QUE*	p_que;
+		GFL_FONT*		p_font;	
+		p_que		= MSG_GetPrintQue( cp_msg );
+		p_font	= MSG_GetFont( cp_msg );
+
+		PRINT_UTIL_Print( &p_wk->print_util, p_que, 0, 0, p_wk->p_strbuf, p_font );
+	}
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	画面クリア
  *
  *	@param	MSGWND_WORK* p_wk		ワーク
@@ -1819,54 +1893,6 @@ static void SEQ_End( RESULT_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 {	
-	IRC_COMPATIBLE_SAVEDATA *p_sv;
-	u8 score				= p_wk->p_param->score;
-	
-	if( p_wk->p_param->is_only_play )
-	{	
-
-		//BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
-		SEQ_Change( p_wk, SEQFUNC_DecideScore );
-		return;
-	}
-
-	if( p_wk->p_param->p_you_status )
-	{	
-    COMPATIBLE_STATUS *p_you;
-    MYSTATUS  *p_mystatus;
-    SAVE_CONTROL_WORK *p_sv_ctrl;
-#ifdef PM_DEBUG
-    if( p_wk->p_param->p_gamesys == NULL )
-    { 
-      p_sv_ctrl = SaveControl_GetPointer();
-    }
-    else
-#endif 
-    { 
-      p_sv_ctrl = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
-    }
-
-		p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
-		p_you	= p_wk->p_param->p_you_status;
-    p_mystatus  = (MYSTATUS*)p_you->my_status;
-
-		//セーブする
-		IRC_COMPATIBLE_SV_AddRanking(
-        p_sv,
-        MyStatus_GetMyName( p_mystatus ),
-        score, 
-        MyStatus_GetMySex( p_mystatus ) == PTL_SEX_MALE, 
-        p_you->barth_month, 
-        p_you->barth_day, 
-        MyStatus_GetID( p_mystatus ) );
-	}
-
-  //相性チェックをプレイした回数をレコードに登録する
-  { 
-    RECORD  *p_rec  = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
-    RECORD_Inc( p_rec, RECID_AFFINITY_CHECK_NUM);
-  }
-
 	//BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
 	SEQ_Change( p_wk, SEQFUNC_DecideScore );
 }
@@ -1897,6 +1923,8 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_END_MSG,
     SEQ_WAIT,
 		SEQ_END_WAIT,
+    SEQ_START_MSG,
+    SEQ_WAIT_MSG,
 		SEQ_END,
 	};
 
@@ -2023,15 +2051,66 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
       if( p_wk->cnt++ > 30 )
       { 
         p_wk->cnt = 0;
-        *p_seq  = SEQ_END;
+        *p_seq  = SEQ_START_MSG;
       }
     }
 		break;
 
+  case SEQ_START_MSG:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      COMPATIBLE_STATUS my_status;
+      ITEM_RESULT result;
+      if( p_wk->p_param->p_gamesys )
+      { 
+        COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
+      }
+
+      result  = UTIL_DataUpdate( p_wk );
+
+      if( result == ITEM_RESULT_GET )
+      { 
+        if( !p_wk->is_day14_both )
+        { 
+          //普通の日
+          MSGWND_PrintGetItem( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, 
+              &my_status, p_wk->item_num,
+              RESULT_GET_001 );
+        }
+        else
+        { 
+          //特別な日
+          MSGWND_PrintGetItem( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, 
+              &my_status, p_wk->item_num,
+              RESULT_GET_002 );
+        }
+        *p_seq  = SEQ_WAIT_MSG;
+      }
+      else if( result == ITEM_RESULT_BAG_FULL )
+      { 
+        MSGWND_Print(&p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, 
+              RESULT_GET_003, 0,0 );
+        *p_seq  = SEQ_WAIT_MSG;
+      }
+      else
+      { 
+        SEQ_Change( p_wk, SEQFUNC_End );
+      }
+    }
+    break;
+
+  case SEQ_WAIT_MSG:
+    if( p_wk->cnt++ > 30 )
+    { 
+      p_wk->cnt = 0;
+      *p_seq  = SEQ_END;
+    }
+    break;
+
   case SEQ_END:
     if( GFL_UI_TP_GetTrg() )
     { 
-      SEQ_End( p_wk );
+      SEQ_Change( p_wk, SEQFUNC_End );
     }
     break;
 	}
@@ -2045,6 +2124,18 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	OBJNUMBER_Main( &p_wk->number );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk  ワーク
+ *	@param	*p_seq                  シーケンス
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_End( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
+{ 
+  SEQ_End( p_wk );
+}
 //=============================================================================
 /**
  *			OBJ_NUMBER
@@ -2446,7 +2537,7 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
         {     
           plt = sc_color_tbl[ p_wk->now_color_idx ][i];
           HeartEff_MainPltFade( &p_wk->plt_buff[ plt ], p_wk->cnt, ONE_SYNC, RESULT_BG_PAL_M_08, plt, GX_RGB( 31, 31, 31 ), p_wk->plt_original[ plt ] );
-      }
+        }
 
         //個別チェック
         if( p_wk->cnt++ >= ONE_SYNC )
@@ -2814,6 +2905,139 @@ static SCORE_RANK UTIL_GetScoreRank( u8 score, BOOL *p_is_nearly )
   }
 
   return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムの取得数を計算
+ *
+ *	@param	u8 score  スコア
+ *	@param	is_day14  １４日かどうか
+ *
+ *	@return アイテムの数
+ */
+//-----------------------------------------------------------------------------
+static u32 UTIL_GetItemNum( u8 score, BOOL is_day14 )
+{ 
+  u32 rate  = is_day14 ? 2: 1;
+
+  if( score == 100 )
+  { 
+    return 3 * rate;
+  }
+  else if( score <= 79 )
+  { 
+    return 1 * rate;
+  }
+  else
+  { 
+    return 2 * rate;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データの反映処理
+ *
+ *	@param	RESULT_MAIN_WORK *p_wk ワーク
+ *	@retval TRUEアイテムがもらえた  FALSEもらえなかった
+ */
+//-----------------------------------------------------------------------------
+static ITEM_RESULT UTIL_DataUpdate( RESULT_MAIN_WORK *p_wk )
+{ 
+  ITEM_RESULT result  = ITEM_RESULT_ONLY_DAY;
+
+  IRC_COMPATIBLE_SAVEDATA *p_sv;
+  SAVE_CONTROL_WORK *p_sv_ctrl;
+
+  COMPATIBLE_STATUS *p_you;
+  MYSTATUS  *p_mystatus;
+
+
+#ifdef PM_DEBUG
+  if( p_wk->p_param->p_gamesys == NULL )
+  { 
+    p_sv_ctrl = SaveControl_GetPointer();
+  }
+  else
+#endif 
+  { 
+    p_sv_ctrl = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
+  }
+
+  //フィーリングチェックセーブデータ取得
+  p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+
+  //相手の情報取得
+  p_you	= p_wk->p_param->p_you_status;
+  p_mystatus  = (MYSTATUS*)p_you->my_status;
+
+  //Addの前にチェックしないと１日フラグが立ってしまう
+  if( !IRC_COMPATIBLE_SV_IsDayFlag( p_sv, MyStatus_GetID( p_mystatus ) ) )
+  { 
+
+    //アイテム追加
+    if( p_wk->p_param->p_gamesys )
+    {
+      GAMEDATA *p_gamedata  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+      MYITEM_PTR p_myitem  = GAMEDATA_GetMyItem( p_gamedata );
+      u32   now_num = MYITEM_GetItemNum( p_myitem, ITEM_HAATOSUIITU, HEAPID_IRCRESULT );
+
+      //アイテム上限より上
+      if( ITEM_MAX_NORMAL == now_num )
+      { 
+        result  = ITEM_RESULT_BAG_FULL;
+      }
+      else
+      {
+        u32 add_item  = p_wk->item_num;
+        //上限チェックを行なう
+        if( ITEM_MAX_NORMAL - now_num < p_wk->item_num )
+        { 
+          add_item  = ITEM_MAX_NORMAL - now_num;
+        }
+
+        //通常
+        if( MYITEM_AddItem( p_myitem, ITEM_HAATOSUIITU, add_item, HEAPID_IRCRESULT ) )
+        { 
+          result  = ITEM_RESULT_GET;
+        }
+        else
+        { 
+          result  = ITEM_RESULT_BAG_FULL;
+          //こないはずだが…
+          GF_ASSERT_MSG( 0, "item now%d add%d modify%d\n", now_num, p_wk->item_num, add_item );
+        }
+      }
+    }
+  }
+
+  //ランキングに追加
+	if( p_wk->p_param->p_you_status )
+	{	
+
+
+		//セーブする
+		IRC_COMPATIBLE_SV_AddRanking(
+        p_sv,
+        MyStatus_GetMyName( p_mystatus ),
+        p_wk->p_param->score, 
+        MyStatus_GetMySex( p_mystatus ) == PTL_SEX_MALE, 
+        p_you->barth_month, 
+        p_you->barth_day, 
+        MyStatus_GetID( p_mystatus ),
+        p_you->mons_no,
+        p_you->form_no,
+        p_you->mons_sex,
+        p_you->egg
+        );
+	}
+
+  //相性チェックをプレイした回数をレコードに登録する
+  { 
+    RECORD  *p_rec  = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
+    RECORD_Inc( p_rec, RECID_AFFINITY_CHECK_NUM);
+  }
+
+  return result;
 }
 
 //=============================================================================

@@ -1124,6 +1124,24 @@ void COMPATIBLE_IRC_GetStatus( GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_st
   p_status->barth_month  = info.birthday.month;
   p_status->barth_day    = info.birthday.day;
   MyStatus_Copy( p_player, (MYSTATUS*)p_status->my_status );
+
+  //ポケモン情報
+  { 
+    POKEPARTY *p_party  = GAMEDATA_GetMyPokemon( p_gamedata );
+    POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, 0 );
+
+    p_status->mons_no   = PP_Get( p_pp, ID_PARA_monsno, NULL );
+    p_status->form_no   = PP_Get( p_pp, ID_PARA_form_no, NULL );
+    p_status->mons_sex  = PP_Get( p_pp, ID_PARA_sex, NULL );
+    p_status->egg       = PP_Get( p_pp, ID_PARA_tamago_flag, NULL );
+  }
+
+  //14日チェックフラグ
+  {
+    RTCDate   date;
+    GFL_RTC_GetDate( &date );
+    p_status->is_day14  = (date.day == 14);
+  }
 }
 
 //=============================================================================

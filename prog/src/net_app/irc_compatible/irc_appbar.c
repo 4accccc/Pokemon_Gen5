@@ -61,6 +61,8 @@ struct _APPBAR_WORK
 	s32				cont;
 	u32				tbl_len;
   s32       seq;
+  APPBAR_BUTTON_TYPE  btn_type;
+  HEAPID              heapID;
 };
 
 
@@ -123,6 +125,8 @@ APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_f
 		p_wk->bg_frm	= bar_frm;
 		p_wk->trg			= APPBAR_SELECT_NONE;
 		p_wk->cont		= APPBAR_SELECT_NONE;
+    p_wk->btn_type= APPBAR_BUTTON_TYPE_RETURN;
+    p_wk->heapID  = heapID;
 	}
 
 	{	
@@ -230,7 +234,8 @@ void APPBAR_Main( APPBAR_WORK *p_wk )
   case SEQ_ANM:
     if( APP_TASKMENU_WIN_IsFinish( p_wk->p_win ) )
     { 
-      APPBAR_SetNormal( p_wk );
+      APP_TASKMENU_WIN_ResetDecide( p_wk->p_win );
+      APP_TASKMENU_WIN_SetActive( p_wk->p_win, FALSE );
       p_wk->seq = SEQ_END;
     }
     break;
@@ -267,6 +272,43 @@ void APPBAR_SetNormal( APPBAR_WORK *p_wk )
 { 
   APP_TASKMENU_WIN_ResetDecide( p_wk->p_win );
   APP_TASKMENU_WIN_SetActive( p_wk->p_win, FALSE );
+
+  p_wk->seq = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン作成しなおし
+ *
+ *	@param	APPBAR_WORK *p_wk ワーク
+ *	@param	type              種類
+ */
+//-----------------------------------------------------------------------------
+void APPBAR_ChangeButton( APPBAR_WORK *p_wk, APPBAR_BUTTON_TYPE type )
+{
+  if( type != p_wk->btn_type )
+  { 
+    //ウィンドウ破棄
+    APP_TASKMENU_WIN_Delete( p_wk->p_win );
+
+    //ウィンドウ読み込み
+    {
+      GFL_MSGDATA *p_msg;
+      APP_TASKMENU_ITEMWORK item;
+
+      p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_irc_compatible_dat, p_wk->heapID );
+
+      GFL_STD_MemClear( &item, sizeof(APP_TASKMENU_ITEMWORK) );
+      item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+
+      item.str      = GFL_MSG_CreateString( p_msg, COMPATI_BTN_000 + type );
+      item.type     = APP_TASKMENU_WIN_TYPE_RETURN;
+
+      p_wk->p_win       = APP_TASKMENU_WIN_Create( p_wk->p_menu_res, &item, 32-APP_TASKMENU_PLATE_WIDTH, 21, APP_TASKMENU_PLATE_WIDTH, p_wk->heapID );
+
+      GFL_STR_DeleteBuffer( item.str );
+      GFL_MSG_Delete( p_msg );
+    }
+  }
 }
 //=============================================================================
 /**

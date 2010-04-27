@@ -25,8 +25,6 @@
 //=============================================================================
 #define IRC_COMPATIBLE_SV_EXIST_NONE		(0xFF)		//ランクにいない
 
-#define   SAVEDATE_CHAGE_20100425
-
 //=============================================================================
 /**
  *					構造体宣言
@@ -47,12 +45,9 @@ typedef struct
 	u32			trainerID;														// 4
   u16     mons_no;
   u8      form_no;
-#ifdef SAVEDATE_CHAGE_20100425
-  u8      mons_sex  : 7;
+  u8      mons_sex  : 6;
   u8      egg_flag  : 1;
-#else
-  u8      mons_sex;
-#endif 
+  u8      only_day  : 1;
 }IRC_COMPATIBLE_RANKING_DATA;
 
 //-------------------------------------
@@ -62,7 +57,7 @@ struct _IRC_COMPATIBLE_SAVEDATA
 {	
 	IRC_COMPATIBLE_RANKING_DATA	rank[IRC_COMPATIBLE_SV_RANKING_MAX];
 	u32	new_rank		:8;
-	u32 dummy				:24;
+  u32 dummy       :24;
 };
 //=============================================================================
 /**
@@ -229,9 +224,7 @@ void IRC_COMPATIBLE_SV_GetPokeData( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 ra
 	*p_mons_no  = cp_sv->rank[ rank ].mons_no;
   *p_form_no  = cp_sv->rank[ rank ].form_no;
   *p_mons_sex = cp_sv->rank[ rank ].mons_sex;
-#ifdef SAVEDATE_CHAGE_20100425
   *p_egg      = cp_sv->rank[ rank ].egg_flag;
-#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -301,6 +294,55 @@ u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8
   }
 
   return best_idx;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  １日１回フラグを取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  ワーク
+ *	@param	trainerID                             チェックするトレーナーID
+ *
+ *	@return TRUEならば今日一度プレイしている  FALSEならば本日始めてプレイ
+ */
+//-----------------------------------------------------------------------------
+BOOL IRC_COMPATIBLE_SV_IsDayFlag( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trainerID )
+{ 
+  int i;
+
+	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
+	{	
+		if( cp_sv->rank[i].trainerID == trainerID && 
+        cp_sv->rank[i].play_cnt > 0 )
+		{
+		  return cp_sv->rank[i].only_day;
+		}
+	}
+	return FALSE;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイしたことがあるかチェック
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  ワーク
+ *	@param	trainerID                           トレーナーID
+ *
+ *	@return TRUE１回でもプレイしたことがある  FALSEない
+ */
+//-----------------------------------------------------------------------------
+BOOL IRC_COMPATIBLE_SV_IsPlayed( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trainerID )
+{ 
+  int i;
+
+	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
+	{	
+		if( cp_sv->rank[i].trainerID == trainerID && 
+        cp_sv->rank[i].play_cnt > 0 )
+		{
+		  return TRUE;
+		}
+	}
+	return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -377,7 +419,7 @@ u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate 
  *	@return	順位	or ランキングに入らなかった場合IRC_COMPATIBLE_SV_ADD_NONE
  */
 //-----------------------------------------------------------------------------
-u8 IRC_COMPATIBLE_SV_AddRanking_New( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg )
+u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg )
 {	
 	IRC_COMPATIBLE_RANKING_DATA	new_data;
 	u16 play_cnt;
@@ -399,6 +441,23 @@ u8 IRC_COMPATIBLE_SV_AddRanking_New( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCOD
 	}
 
 	return p_sv->new_rank;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一日一回フラグを消去
+ *
+ *	@param	IRC_COMPATIBLE_SAVEDATA *p_sv ワーク
+ */
+//-----------------------------------------------------------------------------
+void IRC_COMPATIBLE_SV_ClearDayFlag( IRC_COMPATIBLE_SAVEDATA *p_sv )
+{ 
+	int i;
+
+	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
+	{	
+	  p_sv->rank[i].only_day  = 0;
+	}
 }
 
 //=============================================================================
@@ -503,7 +562,8 @@ static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_ran
 
 	for( i = 0; i < len; i++ )
 	{	
-		if( cp_rank[i].trainerID == cp_new->trainerID )
+		if( cp_rank[i].trainerID == cp_new->trainerID &&
+        cp_rank[i].play_cnt > 0 )
 		{
 			return TRUE;
 		}
@@ -540,9 +600,8 @@ static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, cons
   p_data->mons_no     = mons_no;
   p_data->form_no     = form_no;
   p_data->mons_sex    = mons_sex;
-#ifdef SAVEDATE_CHAGE_20100425
   p_data->egg_flag    = egg & 0x1;
-#endif
+  p_data->only_day    = 1;
 }
 
 //----------------------------------------------------------------------------
@@ -591,6 +650,7 @@ static void Irc_Compatible_SV_AddPlayCount( IRC_COMPATIBLE_RANKING_DATA *p_rank,
 		if( p_rank[i].trainerID == cp_new->trainerID )
 		{
 			p_rank[i].play_cnt++;
+      p_rank[i].only_day  = 1;
 			p_rank[i].play_cnt	= MATH_CLAMP( p_rank[i].play_cnt, 0, IRC_COMPATIBLE_SV_DATA_PLAYCNT_MAX );
 		}
 	}
