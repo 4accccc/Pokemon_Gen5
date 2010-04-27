@@ -71,6 +71,8 @@
 #include "../../app/zukan/detail/zukan_detail.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h"
 
+// ゲーム内マニュアル
+#include "app/manual.h"
 
 // テスト
 #include "d_test.h"
@@ -88,12 +90,13 @@ FS_EXTERN_OVERLAY(subway_map);
 FS_EXTERN_OVERLAY(egg_demo);
 FS_EXTERN_OVERLAY(shinka_demo);
 FS_EXTERN_OVERLAY(zukan_detail);
+FS_EXTERN_OVERLAY(manual);
 
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 14 )
+#define	TOP_MENU_SIZ	( 15 )
 
 typedef struct {
 	u32	main_seq;
@@ -159,6 +162,9 @@ typedef struct {
   // テスト
   D_KAWADA_TEST_PARAM*  d_test_param;
 
+  // マニュアル
+  MANUAL_PARAM*       manual_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -182,6 +188,7 @@ enum {
 	MAIN_SEQ_SHINKA_DEMO_CALL,
 	MAIN_SEQ_ZUKAN_DETAIL_CALL,
 	MAIN_SEQ_D_TEST_CALL,
+	MAIN_SEQ_MANUAL_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -198,6 +205,7 @@ enum {
 	MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
 	MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN,
 	MAIN_SEQ_D_TEST_CALL_RETURN,
+	MAIN_SEQ_MANUAL_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -277,6 +285,10 @@ static void ZukanDetailExit( KAWADA_MAIN_WORK* wk );
 // テスト
 static void D_TestInit( KAWADA_MAIN_WORK* wk );
 static void D_TestExit( KAWADA_MAIN_WORK* wk );
+
+// ゲーム内マニュアル
+static void ManualInit( KAWADA_MAIN_WORK* wk );
+static void ManualExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -570,6 +582,18 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
   case MAIN_SEQ_D_TEST_CALL_RETURN:
     D_TestExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // ゲーム内マニュアル
+  case MAIN_SEQ_MANUAL_CALL:
+    ManualInit(wk);
+		wk->main_seq = MAIN_SEQ_MANUAL_CALL_RETURN;
+    break;
+  case MAIN_SEQ_MANUAL_CALL_RETURN:
+    ManualExit(wk);
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
@@ -1253,5 +1277,18 @@ static void D_TestInit( KAWADA_MAIN_WORK* wk )
 static void D_TestExit( KAWADA_MAIN_WORK* wk )
 {
   D_KAWADA_TEST_FreeParam( wk->d_test_param );
+}
+
+// ゲーム内マニュアル
+static void ManualInit( KAWADA_MAIN_WORK* wk )
+{
+  wk->manual_param            = GFL_HEAP_AllocMemory( wk->heapID, sizeof( MANUAL_PARAM ) );
+  wk->manual_param->gamedata  = wk->gamedata;
+  
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(manual), &MANUAL_ProcData, wk->manual_param );
+}
+static void ManualExit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_HEAP_FreeMemory( wk->manual_param );
 }
 
