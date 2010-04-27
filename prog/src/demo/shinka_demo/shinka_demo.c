@@ -723,8 +723,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         // 進化デモのパーティクルと背景
         SHINKADEMO_EFFECT_Start( work->efwk );
 
-        //PMSND_PlaySE( SEQ_SE_SHDEMO_01 );
-        PMSND_PlaySE( SEQ_SE_EDEMO_01 );
+        PMSND_PlaySE( SEQ_SE_SHDEMO_01 );
         work->se_play = TRUE;
         work->wait_count = 0;
       }
@@ -803,10 +802,10 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
           else if(    work->wait_count == 530
                    || work->wait_count == 585
                    || work->wait_count == 640
+                   || work->wait_count == 695
           )
           {
-            //PMSND_PlaySE( SEQ_SE_SHDEMO_03 );
-            PMSND_PlaySE( SEQ_SE_EDEMO_01 );
+            PMSND_PlaySE( SEQ_SE_SHDEMO_03 );
           }
           // この間少しwait_countは止まっています
           else if( work->wait_count == 740 )
