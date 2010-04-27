@@ -365,8 +365,8 @@
 #define FE_R06R0101_EVENT_ON               349 /* 0x015d 季節研究所：シキジカイベント開始 */
 #define FE_R06R0101_ITEMGET_01             350 /* 0x015e 季節研究所：アイテム入手フラグ */
 #define FE_T01R0401_SUPPORT_TALK           351 /* 0x015f 研究所：クリア後サポートと話した */
-		/* not used   352(0x0160) */
-		/* not used   353(0x0161) */
+#define FE_C05R0201_BTL_01                 352 /* 0x0160 ホドモエシティ：交換後戦闘フラグ（クリア後） */
+#define FE_D09R1401_RIVAL_01               353 /* 0x0161 チャンピオンロード：ライバル初回話しかけフラグ */
 		/* not used   354(0x0162) */
 		/* not used   355(0x0163) */
 		/* not used   356(0x0164) */
