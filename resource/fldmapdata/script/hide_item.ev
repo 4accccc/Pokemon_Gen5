@@ -181,6 +181,8 @@ _EVENT_DATA  ev_hide_item_159
 _EVENT_DATA  ev_hide_item_160
 _EVENT_DATA  ev_hide_item_161
 _EVENT_DATA  ev_hide_item_162
+_EVENT_DATA  ev_hide_item_163
+_EVENT_DATA  ev_hide_item_164
 //--------------------------------------------------------------
 //               ƒXƒNƒŠƒvƒg–{‘Ì ŠJŽn
 //--------------------------------------------------------------
@@ -997,6 +999,16 @@ EVENT_END
 EVENT_START ev_hide_item_162
 //‚¿‚©‚·‚¢‚Ý‚á‚­‚Ì‚ ‚È‚P‚e ( 23, 12 )
 	_ITEM_EVENT_HIDEITEM( 27, 1, FLAG_HIDEITEM_162 )// ‚È‚ñ‚Å‚à‚È‚¨‚µ
+EVENT_END
+
+EVENT_START ev_hide_item_163
+//‚¿‚©‚·‚¢‚Ý‚á‚­‚Ì‚ ‚È‚a‚P ( 25, 41 )
+	_ITEM_EVENT_HIDEITEM( 28, 1, FLAG_HIDEITEM_163 )// ‚°‚ñ‚«‚Ì‚©‚¯‚ç
+EVENT_END
+
+EVENT_START ev_hide_item_164
+//‚¿‚©‚·‚¢‚Ý‚á‚­‚Ì‚ ‚È‚a‚P ( 23, 55 )
+	_ITEM_EVENT_HIDEITEM( 24, 1, FLAG_HIDEITEM_164 )// ‚Ü‚ñ‚½‚ñ‚Ì‚­‚·‚è
 EVENT_END
 
 //--------------------------------------------------------------

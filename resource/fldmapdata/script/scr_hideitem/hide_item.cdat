@@ -1,4 +1,4 @@
-static const HIDE_ITEM_DATA hide_item_data[163] = {
+static const HIDE_ITEM_DATA hide_item_data[165] = {
 
 	{ // ‚©‚¨‚éƒLƒmƒR
 		  0, 
@@ -977,5 +977,17 @@ static const HIDE_ITEM_DATA hide_item_data[163] = {
 		0,0, // flags
 		333, // R03R0301 ‚¿‚©‚·‚¢‚Ý‚á‚­‚Ì‚ ‚È‚P‚e
 		 23, 12, // x, y
+	},
+	{ // ‚°‚ñ‚«‚Ì‚©‚¯‚ç
+		163, 
+		0,0, // flags
+		334, // R03R0302 ‚¿‚©‚·‚¢‚Ý‚á‚­‚Ì‚ ‚È‚a‚P
+		 25, 41, // x, y
+	},
+	{ // ‚Ü‚ñ‚½‚ñ‚Ì‚­‚·‚è
+		164, 
+		0,0, // flags
+		334, // R03R0302 ‚¿‚©‚·‚¢‚Ý‚á‚­‚Ì‚ ‚È‚a‚P
+		 23, 55, // x, y
 	},
 }; // end of hide_item_data
