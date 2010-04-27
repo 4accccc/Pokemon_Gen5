@@ -628,6 +628,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
       
 	case _SEQ_MINIGAME_PROC:
     OS_TPrintf("ミニゲームPROC呼び出し\n");
+    GFL_NET_SetNoChildErrorCheck(FALSE);  //子機が抜けてもエラーにしない
     if(situ->play_category == UNION_PLAY_CATEGORY_PICTURE){
   	  PICTURE_PARENT_WORK *picpwk = subproc->parent_work;
   	  picpwk->uniapp = unisys->alloc.uniapp;

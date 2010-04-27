@@ -839,6 +839,7 @@ static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
 {
   s32 offset;
   int i;
+  BOOL se_play = FALSE;
   
   if(log->old_chat_view_no == log->chat_view_no){
     return;
@@ -870,12 +871,17 @@ static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     offset = log->chat_view_no - log->old_chat_view_no;
     if(MATH_ABS(offset) >= UNION_CHAT_VIEW_LOG_NUM){
       _UniSub_Chat_DispAllWrite(unisub, log); //‘S‘ÌÄ•`‰æ
+      se_play = TRUE;
     }
     else{
       _UniSub_Chat_DispScroll(unisub, log, offset);
+      se_play = TRUE;
     }
   }
   
+  if(se_play == TRUE){
+    PMSND_PlaySE(UNION_SE_CHAT_SCROLL_BAR);
+  }
   log->old_chat_view_no = log->chat_view_no;
 }
 

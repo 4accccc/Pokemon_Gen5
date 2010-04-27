@@ -22,9 +22,9 @@
 ///一度に接続できる最大人数
 #define UNION_CONNECT_PLAYER_NUM      (5) //レコードコーナーが最大5人なので
 ///ぐるぐる交換の参加人数
-#define UNION_GURUGURU_MEMBER_MAX     (4)
+#define UNION_GURUGURU_MEMBER_MAX     (5)
 ///お絵かきの参加人数
-#define UNION_PICTURE_MEMBER_MAX      (4)
+#define UNION_PICTURE_MEMBER_MAX      (5)
 
 ///ビーコンデータが有効なものである事を示す数値
 #define UNION_BEACON_VALID            (1)

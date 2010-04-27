@@ -44,6 +44,7 @@
 #include "gamesystem/game_beacon.h"
 #include "field/party_select_list.h"
 #include "field/scrcmd.h"
+#include "union_snd_def.h"
 
 
 //==============================================================================
@@ -1053,6 +1054,7 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  PMSND_PlaySystemSE( UNION_SE_TALK_WIN_OPEN );
   UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_connect_union_08);
   return TRUE;
 }
@@ -1159,6 +1161,7 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  PMSND_PlaySystemSE( UNION_SE_TALK_WIN_OPEN );
   UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_02);
   _PlayerMinePause(unisys, fieldWork, TRUE);
   return TRUE;
@@ -3109,6 +3112,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
     
     //マルチ：募集処理を行う
+    GFL_NET_SetNoChildErrorCheck(FALSE);  //募集中は子機が抜けてもエラーにしない
     if(GFL_NET_IsParentMachine() == TRUE){
       clsys->entry_menu = CommEntryMenu_Setup(
         GAMEDATA_GetMyStatus(unisys->uniparent->game_data), fieldWork, 
@@ -3179,6 +3183,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
       switch(entry_result){
       case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
         (*seq) = 100;
+        GFL_NET_SetNoChildErrorCheck(TRUE);  //フリームーブになったので再び子機が抜けたらエラー
         break;
       case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
         (*seq) = 200;

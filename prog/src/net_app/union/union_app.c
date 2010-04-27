@@ -60,7 +60,6 @@ UNION_APP_PTR UnionAppSystem_AllocAppWork(HEAPID heap_id, u8 member_max, const M
   GF_ASSERT(member_max <= UNION_APP_MEMBER_MAX);
   
   uniapp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(struct _UNION_APP_WORK));
-  OS_TPrintf("aaa size uniapp = %d\n", sizeof(struct _UNION_APP_WORK)); //¦check
   for(i = 0; i < UNION_APP_MEMBER_MAX; i++){
     uniapp->mystatus[i] = MyStatus_AllocWork(heap_id);
   }
