@@ -13,8 +13,8 @@
 enum {
 	NARC_fld_trade_poke_trade_poke_tyurine_bin = 0,
 	NARC_fld_trade_poke_trade_poke_monmen_bin = 1,
-	NARC_fld_trade_poke_trade_poke_533_bin = 2,
-	NARC_fld_trade_poke_trade_poke_doodorio_bin = 3,
+	NARC_fld_trade_poke_trade_poke_basurao_bin = 2,
+	NARC_fld_trade_poke_trade_poke_603_bin = 3,
 	NARC_fld_trade_poke_trade_poke_gyaroppu_bin = 4,
 	NARC_fld_trade_poke_trade_poke_haganeeru_bin = 5,
 	NARC_fld_trade_poke_trade_poke_tubotubo_bin = 6,

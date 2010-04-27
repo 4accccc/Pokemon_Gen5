@@ -10,8 +10,8 @@
 //-------------------------------------------------
 #define FLD_TRADE_POKE_TYURINE (0)
 #define FLD_TRADE_POKE_MONMEN (1)
-#define FLD_TRADE_POKE_533 (2)
-#define FLD_TRADE_POKE_DOODORIO (3)
+#define FLD_TRADE_POKE_BASURAO (2)
+#define FLD_TRADE_POKE_603 (3)
 #define FLD_TRADE_POKE_GYAROPPU (4)
 #define FLD_TRADE_POKE_HAGANEERU (5)
 #define FLD_TRADE_POKE_TUBOTUBO (6)
