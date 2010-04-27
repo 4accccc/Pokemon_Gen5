@@ -8,6 +8,10 @@
 
 //#include "field\sysflag.h"
 
+#include "savedata/save_tbl.h"
+#include "field/eventwork.h"
+#include "field/eventwork_def.h"
+
 #include "pms_input_prv.h"
 //==================================================================================
 //==================================================================================
@@ -38,8 +42,8 @@ struct _PMSI_PARAM {
 
 	//WINTYPE		win_type; //syachiではありません
 
-//	const ZUKAN_WORK*     zukan_savedata;
-	const PMSW_SAVEDATA*  pmsw_savedata;
+	const ZUKAN_SAVEDATA*   zukan_savedata;
+	const PMSW_SAVEDATA*    pmsw_savedata;
 
 	PMS_DATA   pms;		// 文章モード用
 	PMS_WORD   word[PMS_INPUT_WORD_MAX];	// 単語モード用
@@ -87,13 +91,14 @@ PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
 
 	p->input_mode = input_mode;
 	p->guidance_type = guidance_type;
-	//FIXME
-//	p->zukan_savedata = SaveData_GetZukanWork(savedata);
+	
+  p->zukan_savedata = SaveControl_DataPtrGet( savedata, GMDATA_ID_ZUKAN );
+
 	p->pmsw_savedata = SaveData_GetPMSW(savedata);
-	//FIXME
-//	p->game_clear_flag = SysFlag_GameClearCheck( SaveData_GetEventWork(savedata) );
-	p->game_clear_flag = FALSE;
-	p->notedit_egnore_flag = FALSE;
+
+  p->game_clear_flag = EVENTWORK_CheckEventFlag( SaveData_GetEventWork(savedata), SYS_FLAG_GAME_CLEAR );
+	
+  p->notedit_egnore_flag = FALSE;
 
 	p->cancel_flag = TRUE;
 	p->modified_flag = FALSE;
@@ -307,12 +312,12 @@ int PMSI_PARAM_GetWindowType( const PMSI_PARAM* p )
 {
 	return 0;//p->win_type;
 }
-/*
-const ZUKAN_WORK*  PMSI_PARAM_GetZukanSaveData( const PMSI_PARAM* p )
+
+const ZUKAN_SAVEDATA*  PMSI_PARAM_GetZukanSaveData( const PMSI_PARAM* p )
 {
 	return p->zukan_savedata;
 }
-*/
+
 const PMSW_SAVEDATA* PMSI_PARAM_GetPMSW_SaveData( const PMSI_PARAM* p )
 {
 	return p->pmsw_savedata;
@@ -389,9 +394,6 @@ void PMSI_PARAM_WriteBackData( PMSI_PARAM* p, const PMS_WORD* word, const PMS_DA
 
 int PMSI_PARAM_GetKTStatus(const PMSI_PARAM* p)
 {
-	if(p == NULL /*|| p->pKeytouch == NULL*/){
-		return GFL_APP_KTST_KEY;
-	}
 	return GFL_UI_CheckTouchOrKey();
 }
 

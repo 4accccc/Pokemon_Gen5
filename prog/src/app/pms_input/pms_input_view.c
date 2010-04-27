@@ -142,8 +142,6 @@ static void Cmd_MoveCategoryCursor( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveWordWinCursor( GFL_TCB *tcb, void* wk_adrs  );
 static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  );
 
-static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs );
-static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_TaskMenuDecide( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveMenuCursor( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_EraseMenu( GFL_TCB *tcb, void* wk_adrs );
@@ -383,8 +381,6 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 		Cmd_MoveWordWinCursor,
 		Cmd_ScrollWordWin,
 
-		Cmd_DispMessageDefault,
-		Cmd_DispMessageWarn,
     Cmd_TaskMenuDecide,
 		Cmd_MoveMenuCursor,
 		Cmd_EraseMenu,
@@ -407,7 +403,6 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 
 
 
-	//if( cmd < NELEMS(func_tbl) )
 	if( cmd < VCMD_MAX )
 	{
 		COMMAND_WORK* cwk = GFL_HEAP_AllocMemory( HEAPID_PMS_INPUT_VIEW, sizeof(COMMAND_WORK) );
@@ -564,9 +559,6 @@ GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPU
 	cwk->vwk->edit_wk = PMSIV_EDIT_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 	PMSIV_EDIT_SetupGraphicDatas( cwk->vwk->edit_wk, p_handle );
 
-//	cwk->vwk->button_wk = PMSIV_BUTTON_Create( cwk->vwk, cwk->mwk, cwk->dwk );
-//	PMSIV_BUTTON_SetupGraphicDatas( cwk->vwk->button_wk, p_handle );
-
 	cwk->vwk->category_wk = PMSIV_CATEGORY_Create( cwk->vwk, cwk->mwk, cwk->dwk );
 	PMSIV_CATEGORY_SetupGraphicDatas( cwk->vwk->category_wk, p_handle );
 
@@ -643,9 +635,6 @@ GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &bank_data, HEAPID_PMS_INPU
 
   // 背景面転送
   PMSIView_SetBackScreen( cwk->vwk, FALSE );
-
-//	cwk->vwk->sub_wk = PMSIV_SUB_Create( cwk->vwk, cwk->mwk, cwk->dwk );
-//	PMSIV_SUB_SetupGraphicDatas( cwk->vwk->sub_wk, p_handle );
 
   // メニュー
   cwk->vwk->menu_wk = PMSIV_MENU_Create( cwk->vwk, cwk->mwk, cwk->dwk );
@@ -725,10 +714,8 @@ static void Cmd_Quit( GFL_TCB *tcb, void* wk_adrs )
 
 
 			PMSIV_EDIT_Delete( cwk->vwk->edit_wk );
-//	  PMSIV_BUTTON_Delete( cwk->vwk->button_wk );
 			PMSIV_CATEGORY_Delete( cwk->vwk->category_wk );
 			PMSIV_WORDWIN_Delete( cwk->vwk->wordwin_wk );
-//		PMSIV_SUB_Delete( cwk->vwk->sub_wk );
 
 			for(i=0; i<2; i++)
 			{
@@ -836,7 +823,6 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 
 
 	GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
-	//GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D);  // GFL_BG_SetBGModeを直後で呼んでいるから不要でしょ&3Dじゃないでしょ
 
 	GFL_DISP_SetBank( &bank_data );
 	GFL_BG_SetBGMode( &sys_data );
@@ -937,36 +923,6 @@ static void Cmd_ChangeKTEditArea( GFL_TCB *tcb, void* wk_adrs )
   COMMAND_WORK* wk = wk_adrs;
   PMSIView_ChangeKTEditArea( wk->vwk, wk->mwk, wk->dwk );
   DeleteCommand( wk );
-
-#if 0
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-  // 編集領域にいるか、ボタン領域にいるかを更新する
-  {
-    BOOL is_edit_area = PMSI_GetEditAreaOrButton( vwk->main_wk );
-    //if( is_edit_area ) vwk->status == PMSI_ST_EDIT;
-    //else               vwk->status == PMSI_ST_BUTTON;
-    // vwk->statusには常に正しい値が入っていると期待して、更新しないことにする
-  }
-
-	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
-		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルはカテゴリ選択(ポケモンやステータスなど、あいうえおなど)やワードウィン選択(ピカチュウなど)に移行している間は表示しておくが、編集エリア内では選ばない限り消しておく。
-    PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
-//		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
-	}else{	//タッチからキーへ
-		if(vwk->status == PMSI_ST_BUTTON){
-      PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
-      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
-//			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
-		}else{
-			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
-      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
-		}
-	}
-
-	DeleteCommand( wk );
-#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -983,37 +939,6 @@ static void Cmd_ChangeKTCategory( GFL_TCB *tcb, void* wk_adrs )
   COMMAND_WORK* wk = wk_adrs;
   PMSIView_ChangeKTCategory( wk->vwk, wk->mwk, wk->dwk );
   DeleteCommand( wk );
-
-#if 0
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-	PMSIV_CATEGORY_VisibleCursor(vwk->category_wk,TRUE);  // OBJのカーソルの表示/非表示が切り替わる
-#if 0 
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
-		PMSIV__VisibleCursor( vwk->edit_wk, FALSE );
-		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
-	}else{	//タッチからキーへ
-		if(vwk->status == PMSI_ST_BUTTON){
-			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
-		}else{
-			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
-		}
-	}
-#endif
-
-	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH)  // キーからタッチへ
-  {
-    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
-      PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 0 , FALSE );  // タスクメニュー全てにカーソルが置かれないようにする
-	}
-  else  // タッチからキーへ
-  {
-	  PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );  // 今選んでいるところにカーソルを置く
-  }
-
-	DeleteCommand( wk );
-#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1030,20 +955,6 @@ static void Cmd_ChangeKTWordWin( GFL_TCB *tcb, void* wk_adrs )
   COMMAND_WORK* wk = wk_adrs;
   PMSIView_ChangeKTWordWin( wk->vwk, wk->mwk, wk->dwk );
   DeleteCommand( wk );
-
-#if 0
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-	
-	PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk,TRUE);
-
-#if 0 
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
-	}else{	//タッチからキーへ
-	}
-#endif
-	DeleteCommand( wk );
-#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1066,9 +977,6 @@ static void Cmd_EditAreaToButton( GFL_TCB *tcb, void* wk_adrs )
 	PMSIV_EDIT_StopArrow( vwk->edit_wk );
 
   PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
-
-//	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
-//	PMSIV_BUTTON_MoveCursor( vwk->button_wk, PMSI_GetButtonCursorPos(vwk->main_wk) );
 
 	DeleteCommand( wk );
 }
@@ -1094,9 +1002,6 @@ static void Cmd_EditAreaToButtonTouch( GFL_TCB *tcb, void* wk_adrs )
 
   PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
 
-//	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
-//	PMSIV_BUTTON_MoveCursor( vwk->button_wk, PMSI_GetButtonCursorPos(vwk->main_wk) );
-
 	DeleteCommand( wk );
 }
 
@@ -1118,7 +1023,6 @@ static void Cmd_ButtonToEditArea( GFL_TCB *tcb, void* wk_adrs )
   
   PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
 	
-//	PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	PMSIV_EDIT_ActiveArrow( vwk->edit_wk );
 	PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
 	PMSIV_EDIT_MoveCursor( vwk->edit_wk, PMSI_GetEditAreaCursorPos( wk->mwk ) );
@@ -1157,8 +1061,6 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
 		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
-		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
-//		PMSIV_BUTTON_Hide( vwk->button_wk );
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
 
@@ -1204,16 +1106,12 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq ){
 	case 0:
-//		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
-//		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
 		wk->seq++;
 //		break;
 
 	case 1:
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
 
-    //PMSI_ClearInputWord( (PMS_INPUT_WORK*)(vwk->mwk) );  // この関数自体に来ない気がするが、ここって来るの？
- 
     PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
 		PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
     
@@ -1223,10 +1121,7 @@ static void Cmd_ChangeCategoryModeDisable( GFL_TCB *tcb, void* wk_adrs )
 		break;
 
 	case 2:
-		if(	PMSIV_CATEGORY_WaitModeChange( vwk->category_wk ) 
-//		&&	PMSIV_SUB_WaitChangeCategoryButton( vwk->sub_wk )
-//		&&	PMSIV_BUTTON_WaitChangeCategoryButton( vwk->button_wk )
-		)
+		if(	PMSIV_CATEGORY_WaitModeChange( vwk->category_wk ) )
 		{
       DeleteCommand( wk );
 		}
@@ -1250,8 +1145,6 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq ){
 	case 0:
-//		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
-//		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
     PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
     PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE ); 
 		wk->seq++;
@@ -1299,8 +1192,6 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
 		break;
 
 	case 3:
-//		if( PMSIV_SUB_WaitChangeCategoryButton( vwk->sub_wk ) )
-//		if( PMSIV_BUTTON_WaitChangeCategoryButton( vwk->button_wk ) )
 		{
 			PMSIV_CATEGORY_MoveCursor( vwk->category_wk, PMSI_GetCategoryCursorPos(vwk->main_wk) );
 			PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, TRUE );
@@ -1330,7 +1221,6 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
     HOSAKA_Printf("Cmd_CategoryToEditArea\n");
     PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
     PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
-//	PMSIV_BUTTON_Appear( vwk->button_wk );
 		wk->seq++;
 		break;
 
@@ -1351,7 +1241,6 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
     PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
     PMSIV_CATEGORY_StartDisableBG( vwk->category_wk );
     PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
-    PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
     PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
 
     // 上画面説明欄に表示するメッセージのウィンドウ
@@ -1483,18 +1372,12 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq ){
 	case 0:
-//		PMSIV_SUB_ChangeCategoryButton( vwk->sub_wk );
-//		PMSIV_BUTTON_ChangeCategoryButton( vwk->button_wk );
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
-
-    //PMSI_ClearInputWord( (PMS_INPUT_WORK*)(vwk->mwk) );  // 単語選択から戻ってきたときは文字を残しておきたいのでクリアしない
-
 		wk->seq++;
 		break;
 
 	case 1:
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-//		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
 		wk->seq++;
 		break;
@@ -1503,9 +1386,6 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 		if( PMSIV_WORDWIN_WaitFadeOut( vwk->wordwin_wk ) )
 		{
 			PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
-			
-      //if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL ) PMSIV_CATEGORY_InputWordUpdate( vwk->category_wk );  // 単語選択から戻ってきたときは文字を残しておきたいのでクリアしない
-    
       wk->seq++;
 		}
 		break;
@@ -1575,13 +1455,10 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	case 1:
     if( PMSIV_WORDWIN_WaitInputBlink( vwk->wordwin_wk ) )
     {
-  //		PMSIV_BUTTON_Appear( vwk->button_wk );
       PMSIV_MENU_SetupEdit( vwk->menu_wk );
   		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-  //		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
   		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
   		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
-  		PMSIV_EDIT_SetSystemMessage( vwk->edit_wk,PMSIV_MSG_GUIDANCE);
   		PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
   		wk->seq++;
     }
@@ -1647,9 +1524,7 @@ static void Cmd_WordWinToButton( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq ){
 	case 0:
-//		PMSIV_BUTTON_Appear( vwk->button_wk );
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
-//		PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
 		wk->seq++;
 		break;
@@ -1678,7 +1553,6 @@ static void Cmd_WordWinToButton( GFL_TCB *tcb, void* wk_adrs )
 		{
 			PMSIV_EDIT_UpdateEditArea( vwk->edit_wk );
 			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
-//			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
 			DeleteCommand( wk );
 		}
 	}
@@ -1717,7 +1591,6 @@ static void Cmd_MoveButtonCursor( GFL_TCB *tcb, void* wk_adrs )
   
   PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
 
-//	PMSIV_BUTTON_MoveCursor( vwk->button_wk, PMSI_GetButtonCursorPos(vwk->main_wk) );
 	DeleteCommand( wk );
 }
 //----------------------------------------------------------------------------------------------
@@ -1777,47 +1650,10 @@ static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  )
 	case 1:
 		if( PMSIV_WORDWIN_WaitScroll( vwk->wordwin_wk ) )
 		{
-//			PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, TRUE );
 			DeleteCommand( wk );
 		}
 		break;
 	}
-}
-//----------------------------------------------------------------------------------------------
-/**
-	* 描画コマンド：初期状態メッセージ表示
-	*
-	* @param   tcb		
-	* @param   wk_adrs		
-	*
-	*/
-//----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs )
-{
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_GUIDANCE );
-
-	DeleteCommand( wk );
-}
-
-//----------------------------------------------------------------------------------------------
-/**
-	* 描画コマンド：何かことばを入れてください！メッセージ表示
-	*
-	* @param   tcb		
-	* @param   wk_adrs		
-	*
-	*/
-//----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs )
-{
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_WARN_INPUT );
-	DeleteCommand( wk );
 }
 //-----------------------------------------------------------------------------
 /**
@@ -1872,17 +1708,11 @@ static void Cmd_EraseMenu( GFL_TCB *tcb, void* wk_adrs )
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_GUIDANCE );
-
-//	if( PMSIV_BUTTON_GetCursorVisibleFlag( vwk->button_wk ) )
 	if( vwk->status == PMSI_ST_BUTTON )
 	{
-//		PMSIV_BUTTON_UpdateButton( vwk->button_wk,TRUE,TRUE);
-//		PMSIV_BUTTON_ActiveCursor( vwk->button_wk );
 	}
 	else
 	{
-//		PMSIV_BUTTON_UpdateButton( vwk->button_wk,TRUE,FALSE);
 		PMSIV_EDIT_ActiveCursor( vwk->edit_wk );
 	}
 
@@ -1903,8 +1733,6 @@ static void Cmd_ButtonUpHold(GFL_TCB *tcb, void* wk_adrs)
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_UP, SUB_BUTTON_STATE_HOLD );
-
 	DeleteCommand( wk );
 }
 //------------------------------------------------------------------
@@ -1920,8 +1748,6 @@ static void Cmd_ButtonDownHold(GFL_TCB *tcb, void* wk_adrs)
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_DOWN, SUB_BUTTON_STATE_HOLD );
 
 	DeleteCommand( wk );
 }
@@ -1939,8 +1765,6 @@ static void Cmd_ButtonUpRelease(GFL_TCB *tcb, void* wk_adrs)
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
 
-//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_UP, SUB_BUTTON_STATE_RELEASE );
-
 	DeleteCommand( wk );
 }
 //------------------------------------------------------------------
@@ -1956,8 +1780,6 @@ static void Cmd_ButtonDownRelease(GFL_TCB *tcb, void* wk_adrs)
 {
 	COMMAND_WORK* wk = wk_adrs;
 	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-//	PMSIV_SUB_ChangeArrowButton( vwk->sub_wk, SUB_BUTTON_DOWN, SUB_BUTTON_STATE_RELEASE );
 
 	DeleteCommand( wk );
 }
@@ -2180,8 +2002,6 @@ int PMSIView_WaitYesNo(PMS_INPUT_VIEW* wk)
   }
 
   return -1; // 終了していない
-
-//	return PMSIV_EDIT_WaitYesNoBtn(wk->edit_wk);
 }
 
 void PMSIView_TouchEditButton( PMS_INPUT_VIEW* wk, int btn_id )
@@ -2221,18 +2041,6 @@ void PMSIView_GetDecoResource( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* out_res, u32
 
 void PMSIView_SetupDefaultActHeader( PMS_INPUT_VIEW* vwk, PMSIV_CELL_RES* header, u32 lcd, u32 bgpri )
 {
-#if 0
-	header->pImageProxy   = &vwk->obj_image_proxy[lcd];
-	header->pPaletteProxy = &vwk->obj_pltt_proxy[lcd];
-	header->pCellBank     = vwk->cellbank[lcd];
-	header->pAnimBank     = vwk->anmbank[lcd];
-	header->priority      = bgpri;
-
-	header->pCharData = NULL;
-	header->pMCBank = NULL;
-	header->pMCABank = NULL;
-	header->flag = FALSE;
-#endif
   GF_ASSERT( vwk );
   GF_ASSERT( lcd < 2 );
 	*header = vwk->resCell[lcd];
@@ -2279,7 +2087,7 @@ u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py )
 {
 	GFL_CLACTPOS pos;
 
-	PMSIV_WINDOW_GetScrollBarPos( vwk->wordwin_wk, &pos );
+	PMSIV_WORDWIN_GetScrollBarPos( vwk->wordwin_wk, &pos );
 	if( py < (pos.y-(PMSIV_TPWD_BAR_SY/2)) ){
 		return 1;		// 上
 	}
@@ -2414,20 +2222,15 @@ void PMSIView_ChangeKTEditArea( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
   // 編集領域にいるか、ボタン領域にいるかを更新する
   {
     BOOL is_edit_area = PMSI_GetEditAreaOrButton( vwk->main_wk );
-    //if( is_edit_area ) vwk->status == PMSI_ST_EDIT;
-    //else               vwk->status == PMSI_ST_BUTTON;
-    // vwk->statusには常に正しい値が入っていると期待して、更新しないことにする
   }
 
 	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
 		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルはカテゴリ選択(ポケモンやステータスなど、あいうえおなど)やワードウィン選択(ピカチュウなど)に移行している間は表示しておくが、編集エリア内では選ばない限り消しておく。
     PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
-//		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
 	}else{	//タッチからキーへ
 		if(vwk->status == PMSI_ST_BUTTON){
       PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );
       PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), TRUE );
-//			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
 		}else{
 			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
       PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );
@@ -2437,18 +2240,6 @@ void PMSIView_ChangeKTEditArea( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 void PMSIView_ChangeKTCategory( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
 	PMSIV_CATEGORY_VisibleCursor(vwk->category_wk,TRUE);  // OBJのカーソルの表示/非表示が切り替わる
-#if 0 
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
-		PMSIV__VisibleCursor( vwk->edit_wk, FALSE );
-		PMSIV_BUTTON_VisibleCursor( vwk->button_wk, FALSE );
-	}else{	//タッチからキーへ
-		if(vwk->status == PMSI_ST_BUTTON){
-			PMSIV_BUTTON_VisibleCursor( vwk->button_wk, TRUE );
-		}else{
-			PMSIV_EDIT_VisibleCursor( vwk->edit_wk, TRUE );
-		}
-	}
-#endif
 
 	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH)  // キーからタッチへ
   {
@@ -2463,11 +2254,5 @@ void PMSIView_ChangeKTCategory( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 void PMSIView_ChangeKTWordWin( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
 	PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk,TRUE);
-
-#if 0 
-	if(*vwk->p_key_mode == APP_KTST_TOUCH){	//キーからタッチへ
-	}else{	//タッチからキーへ
-	}
-#endif
 }
 

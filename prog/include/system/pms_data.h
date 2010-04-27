@@ -21,7 +21,7 @@
 
 //全開放デバッグ
 #ifdef PM_DEBUG
-#define  PMS_ALLOPEN (1) 
+#define  PMS_ALLOPEN (0) 
 #endif
 
 

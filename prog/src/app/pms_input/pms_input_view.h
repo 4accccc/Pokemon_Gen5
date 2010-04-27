@@ -254,7 +254,6 @@ extern void PMSIV_EDIT_MoveCursor( PMSIV_EDIT* wk, int pos );
 extern void PMSIV_EDIT_VisibleCursor( PMSIV_EDIT* wk, BOOL flag );
 
 extern void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode);
-extern void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type );
 extern void PMSIV_EDIT_StopArrow( PMSIV_EDIT* wk );
 extern void PMSIV_EDIT_ActiveArrow( PMSIV_EDIT* wk );
 
@@ -352,7 +351,7 @@ extern BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk );
 extern void PMSIV_WORDWIN_StartFadeOut( PMSIV_WORDWIN* wk );
 extern BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk );
 
-extern void PMSIV_WINDOW_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos );
+extern void PMSIV_WORDWIN_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos );
 extern void PMSIV_WORDWIN_MoveScrollBar( PMSIV_WORDWIN * wk, u32 py );
 extern u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max );
 extern void PMSIV_WORDWIN_SetScrollBarPos( PMSIV_WORDWIN * wk, u32 now, u32 max );

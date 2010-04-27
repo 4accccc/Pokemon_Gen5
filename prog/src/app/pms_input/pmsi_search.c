@@ -438,18 +438,6 @@ void PMSI_SEARCH_GetResultString( PMS_INPUT_SEARCH* wk, u8 result_idx, STRBUF* d
   HOSAKA_Printf("getresult result_idx=%d word_idx=%d \n", result_idx, word_idx );
 
   PMSI_DATA_GetWordString( wk->dwk, word_idx, dst_buf );
-
-#if 0
-  {
-    STRBUF* buf;
-
-    buf = MSGSEARCH_CreateString( wk->search_wk, &wk->search_result[ result_idx ] );
-    GFL_STR_CopyBuffer( dst_buf, buf );
-    GFL_STR_DeleteBuffer( buf );
-  }
-#endif
-
-
 }
 
 //-----------------------------------------------------------------------------

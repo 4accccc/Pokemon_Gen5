@@ -74,11 +74,6 @@ enum {
 	CURSOR_BACK_XPOS = 28*8,
 	CURSOR_BACK_YPOS = 22*8,
 	
-	ARROW_UP_X = 240,
-	ARROW_UP_Y = 8*10,
-	ARROW_DOWN_X = 240,
-	ARROW_DOWN_Y = 16*8,
-
 	SCRLL_BAR_X = 244,
 	SCRLL_BAR_Y = 8 + 14/2 +3,//12,
 };
@@ -113,8 +108,6 @@ struct _PMSIV_WORDWIN {
 	GFL_CLWK*	cursor_actor;
   BOOL      input_blink_cursor_visible;  // InputBlickを行うときのcursor_actorの表示を覚えておく
 
-//	GFL_CLWK*	up_arrow_actor;
-//	GFL_CLWK*	down_arrow_actor;
 	GFL_CLWK*	scroll_bar_actor;
   GFL_CLWK* deco_actor[ WORDWIN_DECO_ACT_NUM ];
 	STRBUF*		tmpbuf;
@@ -175,9 +168,6 @@ PMSIV_WORDWIN*  PMSIV_WORDWIN_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK*
 	wk->cursor_actor = NULL;
 	wk->input_blink_cursor_visible = FALSE;
 
-//	wk->up_arrow_actor = NULL;
-//	wk->down_arrow_actor = NULL;
-
 	wk->p_key_mode = PMSI_GetKTModePointer(wk->mwk);
 
 	return wk;
@@ -201,16 +191,7 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 	{
 		GFL_CLACT_WK_Remove( wk->scroll_bar_actor );
 	}
-/*
-	if( wk->up_arrow_actor )
-	{
-		GFL_CLACT_WK_Remove( wk->up_arrow_actor );
-	}
-	if( wk->down_arrow_actor )
-	{
-		GFL_CLACT_WK_Remove( wk->down_arrow_actor );
-	}
-*/
+
 	if( wk->tmpbuf )
 	{
 		GFL_STR_DeleteBuffer( wk->tmpbuf );
@@ -239,11 +220,8 @@ void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk )
 	GFL_BG_SetClearCharacter( FRM_MAIN_WORDWIN, 0x20, CLEAR_CHARPOS*0x20 , HEAPID_PMS_INPUT_VIEW );
 	GFL_BG_FillScreen( FRM_MAIN_WORDWIN, CLEAR_CHARPOS, 0, 0, 32, 32, PALNUM_MAIN_WORDWIN );
 
-//	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
-//	GF_BGL_BmpWinMakeScrn(&wk->win);
 	GFL_BMPWIN_MakeScreen( wk->win );
-	//GF_BGL_BmpWinCgxOn(&wk->win);
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 	GFL_BG_LoadScreenReq( FRM_MAIN_WORDWIN );
 
@@ -269,18 +247,6 @@ static void setup_actor( PMSIV_WORDWIN* wk )
 			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
 	GFL_CLACT_WK_SetAnmSeq( wk->scroll_bar_actor, ANM_EDITAREA_SCR_BTN );
 	GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, FALSE );
-
-/*
-	wk->up_arrow_actor = PMSIView_AddActor( wk->vwk, &header, ARROW_UP_X, ARROW_UP_Y,
-			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-	GFL_CLACT_WK_SetAnmSeq( wk->up_arrow_actor, ANM_WORD_SCR_U01 );
-	GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, FALSE );
-
-	wk->down_arrow_actor = PMSIView_AddActor( wk->vwk, &header, ARROW_DOWN_X, ARROW_DOWN_Y,
-			ACTPRI_WORDWIN_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-	GFL_CLACT_WK_SetAnmSeq( wk->down_arrow_actor, ANM_WORD_SCR_D01 );
-	GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
-*/
 
   // デコメ
   for( i=0; i<WORDWIN_DECO_ACT_NUM; i++ )
@@ -310,7 +276,6 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 {
 	u32 word_max, v_line, i;
 
-//	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
 	init_write_params( wk );
 
@@ -332,7 +297,6 @@ void PMSIV_WORDWIN_SetupWord( PMSIV_WORDWIN* wk )
 
 	
 
-//	GF_BGL_BmpWinCgxOn( &wk->win );
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 
 }
@@ -342,7 +306,6 @@ void PMSIV_WORDWIN_SetupWordBar( PMSIV_WORDWIN* wk, int idx )
 {
 	u32 word_max, v_line, i;
 
-//	GF_BGL_BmpWinDataFill(&wk->win, WORD_COL_GROUND);
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win ), WORD_COL_GROUND);
 	init_write_params( wk );
 	wk->write_word_idx = idx * 2;		// ２行なのでｘ２
@@ -366,7 +329,6 @@ void PMSIV_WORDWIN_SetupWordBar( PMSIV_WORDWIN* wk, int idx )
 	}
 
 
-//	GF_BGL_BmpWinCgxOn( &wk->win );
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 
 }
@@ -511,16 +473,17 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 		}else{
 			GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor,FALSE);
 		}
-		GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, TRUE );
-//		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
-//		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
+
+    {
+      u32 word_max = PMSI_GetCategoryWordMax( wk->mwk );
+	    BOOL bar_draw = ( word_max > WORDWIN_DISP_WORD_MAX );
+      GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, bar_draw );
+    }
 	}
 	else
 	{
 		GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor, flag );
 		GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, FALSE );
-//		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, FALSE );
-//		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, FALSE );
 	}
 }
 
@@ -540,13 +503,6 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 
 	if(pos == 0xFFFFFFFF){	//back
 //    GF_ASSERT(0); // 「もどる」カーソルは廃止
-#if 0
-		clPos.x = CURSOR_BACK_XPOS;
-		clPos.y = CURSOR_BACK_YPOS;
-
-		GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
-		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_CATEGORY_BACK_CURSOR_ACTIVE );
-#endif
 	}else{
 		x = pos & 1;
 		y = pos / 2;
@@ -584,7 +540,7 @@ void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 		v_line = next_v_line;
 		word_idx = next_word_idx;
 		write_word_max = -(vector * WORDWIN_DISP_COL_MAX);
-		scroll_wait = -( WORDWIN_SCROLL_WAIT_UNIT * vector );
+		scroll_wait = -( 1 * vector );//-( WORDWIN_SCROLL_WAIT_UNIT * vector );  // WORDWIN_SCROLL_WAIT_UNITを利用すると60フレームのときに2フレームかけて移動するようになってしまい、枠外に文字が表示される1フレームができてしまう。
 	}else{
 		v_line = (wk->write_v_line + WORDWIN_WRITE_PAGE_HEIGHT) & 255;
 		word_idx = wk->write_word_idx + WORDWIN_DISP_WORD_MAX;
@@ -593,7 +549,7 @@ void PMSIV_WORDWIN_StartScroll( PMSIV_WORDWIN* wk, int vector )
 		{
 			write_word_max--;
 		}
-		scroll_wait = WORDWIN_SCROLL_WAIT_UNIT * vector;
+		scroll_wait = 1 * vector;//WORDWIN_SCROLL_WAIT_UNIT * vector;  // WORDWIN_SCROLL_WAIT_UNITを利用すると60フレームのときに2フレームかけて移動するようになってしまい、枠外に文字が表示される1フレームができてしまう。
 	}
 
 	for(i=0; i<write_word_max; i++)
@@ -630,8 +586,6 @@ BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk )
 {
 	if( PMSIV_TOOL_WaitScroll(&wk->scroll_work) )
 	{
-//		GFL_CLACT_WK_SetDrawEnable( wk->up_arrow_actor, PMSI_GetWordWinUpArrowVisibleFlag(wk->mwk) );
-//		GFL_CLACT_WK_SetDrawEnable( wk->down_arrow_actor, PMSI_GetWordWinDownArrowVisibleFlag(wk->mwk) );
 		u16	now, max;
 		PMSI_GetWorkScrollData( wk->mwk, &now, &max );
 		PMSIV_WORDWIN_SetScrollBarPos( wk, now, max );
@@ -641,7 +595,7 @@ BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk )
 }
 
 // スクロールバーの座標取得
-void PMSIV_WINDOW_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos )
+void PMSIV_WORDWIN_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos )
 {
 	GFL_CLACT_WK_GetPos( wk->scroll_bar_actor, pos, CLSYS_DEFREND_MAIN );
 }
@@ -692,7 +646,7 @@ u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max )
 	u32	cnt;
 	u32	sy;
 
-	PMSIV_WINDOW_GetScrollBarPos( wk, &pos );
+	PMSIV_WORDWIN_GetScrollBarPos( wk, &pos );
 
 	sy = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY;
 	cnt = ( ((pos.y-SCRLL_BAR_Y)<<8) / ((sy<<8)/max) );

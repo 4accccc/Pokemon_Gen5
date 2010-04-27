@@ -55,20 +55,20 @@ use constant SRC_GROUP13	=> 12;
 
 
 my @TargetGmm = (
-	[ '../message/src/monsname.gmm',		'ポケモン名',		  1, -1, -1,  2,	-1, -1, -1,		'POKEMON' ],
-	[ '../message/src/wazaname.gmm',		'わざ名',			  1, -1, -1, -1,	449, 464, 465,	'SKILL'   ],
-	[ '../message/src/typename.gmm',		'ポケモンタイプ名',	 -1,  9,  9, -1,	-1, -1, -1,		'TYPE'    ],
-	[ '../message/src/tokusei.gmm',			'とくせい名',		  1, -1, -1, -1,	121, 123, -1,	'TOKUSEI' ],
-	[ '../message/src/pms/pms_word06.gmm',	'トレーナー',		 -1, -1, -1, -1,	-1, -1, -1,		'TRAINER' ],
-	[ '../message/src/pms/pms_word07.gmm',	'ひと',				 -1, -1, -1, -1,	-1, -1, -1,		'HITO'    ],
-	[ '../message/src/pms/pms_word08.gmm',	'あいさつ',			 -1, -1, -1, -1,	-1, -1, -1,		'AISATSU' ],
-	[ '../message/src/pms/pms_word09.gmm',	'せいかつ',			 -1, -1, -1, -1,	-1, -1, -1,		'SEIKATSU'],
-	[ '../message/src/pms/pms_word10.gmm',	'きもち',			 -1, -1, -1, -1,	-1, -1, -1,		'KIMOTI'  ],
-	[ '../message/src/pms/pms_word11.gmm',	'なんかいことば',	 -1, -1, -1, -1,	-1, -1, -1,		'NANKAI'  ],
-	[ '../message/src/pms/pms_word12.gmm',	'ユニオン',			 -1, -1, -1, -1,	-1, -1, -1,		'UNION'   ],
-	[ '../message/src/pms/pms_picture.gmm',	'ピクチャ',			 -1, -1, -1, -1,	-1, -1, -1,		'PICTURE'   ],
-	[ '../message/src/pms/pms_word13.gmm',	'こえ',			 -1, -1, -1, -1,	-1, -1, -1,		'KOE'   ],
-
+# [                                   0,                   1,  2, 3, 4, 5,  6,  7,  8,  9, 10, 11, 12, 13,14,15,        16 ]
+  [ '../message/src/monsname.gmm',        'ポケモン名',        1,-1,-1, 2, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'POKEMON'  ],
+  [ '../message/src/wazaname.gmm',        'わざ名',            1,-1,-1,-1,545,546,547,548,553,554,555,557,-1,-1,'SKILL'    ],
+  [ '../message/src/typename.gmm',        'ポケモンタイプ名', -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'TYPE'     ],
+  [ '../message/src/tokusei.gmm',         'とくせい名',        1,-1,-1,-1,162, -1, -1, -1, -1, -1, -1, -1,-1,-1,'TOKUSEI'  ],
+  [ '../message/src/pms/pms_word06.gmm',  'トレーナー',       -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'TRAINER'  ],
+  [ '../message/src/pms/pms_word07.gmm',  'ひと',             -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'HITO'     ],
+  [ '../message/src/pms/pms_word08.gmm',  'あいさつ',         -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'AISATSU'  ],
+  [ '../message/src/pms/pms_word09.gmm',  'せいかつ',         -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'SEIKATSU' ],
+  [ '../message/src/pms/pms_word10.gmm',  'きもち',           -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'KIMOTI'   ],
+  [ '../message/src/pms/pms_word11.gmm',  'なんかいことば',   -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'NANKAI'   ],
+  [ '../message/src/pms/pms_word12.gmm',  'ユニオン',         -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'UNION'    ],
+  [ '../message/src/pms/pms_picture.gmm', 'ピクチャ',         -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'PICTURE'  ],
+  [ '../message/src/pms/pms_word13.gmm',  'こえ',             -1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1,-1,-1,'KOE'      ],
 );
 
 use constant TGM_FILEPATH		=> 0;
@@ -80,7 +80,14 @@ use constant TGM_END_SKIP		=> 5;	# 最後のn件をスキップする（-1なら
 use constant TGM_FORCE_SKIP1	=> 6;	# ナンバー指定スキップ１（-1ならスキップしない）
 use constant TGM_FORCE_SKIP2	=> 7;	# ナンバー指定スキップ２（-1ならスキップしない）
 use constant TGM_FORCE_SKIP3	=> 8;	# ナンバー指定スキップ３（-1ならスキップしない）
-use constant TGM_SRC_ID			=> 9;
+use constant TGM_FORCE_SKIP4	=> 9;	# ナンバー指定スキップ４（-1ならスキップしない）
+use constant TGM_FORCE_SKIP5	=> 10;	# ナンバー指定スキップ５（-1ならスキップしない）
+use constant TGM_FORCE_SKIP6	=> 11;	# ナンバー指定スキップ６（-1ならスキップしない）
+use constant TGM_FORCE_SKIP7	=> 12;	# ナンバー指定スキップ７（-1ならスキップしない）
+use constant TGM_FORCE_SKIP8	=> 13;	# ナンバー指定スキップ８（-1ならスキップしない）
+use constant TGM_FORCE_SKIP9	=> 14;	# ナンバー指定スキップ９（-1ならスキップしない）
+use constant TGM_FORCE_SKIP10	=> 15;	# ナンバー指定スキップ１０（-1ならスキップしない）
+use constant TGM_SRC_ID			=> 16;
 
 
 
@@ -673,10 +680,24 @@ sub CreateSrcIdxArray {
 	my $skip1 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP1];
 	my $skip2 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP2];
 	my $skip3 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP3];
+	my $skip4 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP4];
+	my $skip5 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP5];
+	my $skip6 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP6];
+	my $skip7 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP7];
+	my $skip8 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP8];
+	my $skip9 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP9];
+	my $skip10 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP10];
 
 	if( $skip1 != -1 ){ $skip1 += ($p-1); }
 	if( $skip2 != -1 ){ $skip2 += ($p-1); }
 	if( $skip3 != -1 ){ $skip3 += ($p-1); }
+	if( $skip4 != -1 ){ $skip4 += ($p-1); }
+	if( $skip5 != -1 ){ $skip5 += ($p-1); }
+	if( $skip6 != -1 ){ $skip6 += ($p-1); }
+	if( $skip7 != -1 ){ $skip7 += ($p-1); }
+	if( $skip8 != -1 ){ $skip8 += ($p-1); }
+	if( $skip9 != -1 ){ $skip9 += ($p-1); }
+	if( $skip10 != -1 ){ $skip10 += ($p-1); }
 
 	if( $mid_skip_begin != -1 )
 	{
@@ -696,7 +717,7 @@ sub CreateSrcIdxArray {
 				next;
 			}
 
-			if( $p==$skip1 || $p==$skip2 || $p==$skip3 )
+			if( $p==$skip1 || $p==$skip2 || $p==$skip3 || $p==$skip4 || $p==$skip5 || $p==$skip6 || $p==$skip7 || $p==$skip8 || $p==$skip9 || $p==$skip10 )
 			{
 				next;
 			}
@@ -708,7 +729,7 @@ sub CreateSrcIdxArray {
 	{
 		for( ; $p < $end; $p++)
 		{
-			if( $p==$skip1 || $p==$skip2 || $p==$skip3 )
+			if( $p==$skip1 || $p==$skip2 || $p==$skip3 || $p==$skip4 || $p==$skip5 || $p==$skip6 || $p==$skip7 || $p==$skip8 || $p==$skip9 || $p==$skip10 )
 			{
 				next;
 			}

@@ -12,10 +12,13 @@
 #include "app\pms_input.h"
 #include "system\pms_word.h"
 
+#include "savedata/zukan_savedata.h"
+
+
 extern u32 PMSI_PARAM_GetInputMode( const PMSI_PARAM* p );
 extern u32 PMSI_PARAM_GetGuidanceType( const PMSI_PARAM* p );
 extern int PMSI_PARAM_GetWindowType( const PMSI_PARAM* p );
-//extern const PMS_DUMMY_ZUKAN*  PMSI_PARAM_GetZukanSaveData( const PMSI_PARAM* p );
+extern const ZUKAN_SAVEDATA* PMSI_PARAM_GetZukanSaveData( const PMSI_PARAM* p );
 extern const PMSW_SAVEDATA* PMSI_PARAM_GetPMSW_SaveData( const PMSI_PARAM* p );
 extern BOOL PMSI_PARAM_GetGameClearFlag( const PMSI_PARAM* p );
 extern void PMSI_PARAM_GetInitializeData( const PMSI_PARAM* p, PMS_WORD* word, PMS_DATA* pms );

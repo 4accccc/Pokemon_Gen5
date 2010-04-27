@@ -75,18 +75,12 @@ enum {
 	WORDAREA_HEIGHT = 16,
 	EDITAREA_LINE_HEIGHT = 16,
 
-#if 0
-	LEFT_ARROW_OBJ_XPOS = 24,
-	LEFT_ARROW_OBJ_YPOS = 64,
-	RIGHT_ARROW_OBJ_XPOS = 256-24,
-	RIGHT_ARROW_OBJ_YPOS = LEFT_ARROW_OBJ_YPOS,
-#else
 	LEFT_ARROW_OBJ_XPOS = 8,
 	LEFT_ARROW_OBJ_YPOS = 64,
 	RIGHT_ARROW_OBJ_XPOS = 256-8,
 	RIGHT_ARROW_OBJ_YPOS = LEFT_ARROW_OBJ_YPOS,
-#endif
-	BAR_OBJ_XPOS = 128,
+	
+  BAR_OBJ_XPOS = 128,
 	BAR_OBJ_YPOS = LEFT_ARROW_OBJ_YPOS,
 	BTN_OBJ_XPOS = 128,
 	BTN_OBJ_YPOS = LEFT_ARROW_OBJ_YPOS,
@@ -167,15 +161,8 @@ struct _PMSIV_EDIT {
 	GFL_BMPWIN	**win_message;
 	GFL_CLWK	*cursor_actor[PMSIV_LCD_MAX];
 	GFL_CLWK	*deco_actor[PMS_WORD_MAX][PMSIV_LCD_MAX];
-#if 0
-  // 会話文選択バー・ボタン
-	GFL_CLWK	*arrow_left_actor;
-	GFL_CLWK	*arrow_right_actor;
-	GFL_CLWK	*bar_actor;
-	GFL_CLWK	*btn_actor;
-#endif
 
-	GFL_MSGDATA		*msgman;
+  GFL_MSGDATA		*msgman;
 	STRBUF			*tmpbuf;
 	BMPCURSOR		*bmp_cursor;
 
@@ -202,11 +189,9 @@ struct _PMSIV_EDIT {
   BOOL          hblank_down_scroll_finish;
 
 	GFL_TCB*   vblank_task;
-#if 0
-  u16        scroll_y_per_line[192];
-#endif
 
   BGWINFRM_WORK*    bgwinfrm_work;
+  BOOL              bgwinfrm_trans;
 };
 
 #define BGWINFRM_INDEX (0)
@@ -259,13 +244,8 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
 
 	wk->cursor_actor[0] = NULL;
 	wk->cursor_actor[1] = NULL;
-#if 0
-	wk->arrow_left_actor = NULL;
-	wk->arrow_right_actor = NULL;
-	wk->bar_actor = NULL;
-	wk->btn_actor = NULL;
-#endif
-	wk->hBlankTask = NULL;
+
+  wk->hBlankTask = NULL;
 
 	wk->tmpbuf = GFL_STR_CreateBuffer( STR_TMPBUF_LEN, HEAPID_PMS_INPUT_VIEW );
 	wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pms_input_dat, HEAPID_PMS_INPUT_VIEW );
@@ -278,15 +258,6 @@ PMSIV_EDIT*  PMSIV_EDIT_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, 
   wk->hblank_down_scroll_finish  = FALSE;
 
   wk->vblank_task = NULL;
-#if 0
-  {
-    u8 i;
-    for( i=0; i<192; i++ )
-    {
-      wk->scroll_y_per_line[i] = 0;
-    }
-  }
-#endif
 	 
   wk->bgwinfrm_work = BGWINFRM_Create( BGWINFRM_TRANS_NORMAL, 1, HEAPID_PMS_INPUT_VIEW );
   
@@ -325,25 +296,8 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 	{
 		GFL_CLACT_WK_Remove( wk->cursor_actor[1] );
 	}
-#if 0
-	if( wk->arrow_left_actor )
-	{
-		GFL_CLACT_WK_Remove( wk->arrow_left_actor );
-	}
-	if( wk->arrow_right_actor )
-	{
-		GFL_CLACT_WK_Remove( wk->arrow_right_actor );
-	}
-	if( wk->bar_actor )
-	{
-		GFL_CLACT_WK_Remove( wk->bar_actor );
-	}
-	if( wk->btn_actor )
-	{
-		GFL_CLACT_WK_Remove( wk->btn_actor );
-	}
-#endif
-	if( wk->msgman )
+
+  if( wk->msgman )
 	{
 		GFL_MSG_Delete( wk->msgman );
 	}
@@ -453,6 +407,7 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
   BGWINFRM_FramePut( wk->bgwinfrm_work, BGWINFRM_INDEX, 0, 0 );
   BGWINFRM_BmpWinOn( wk->bgwinfrm_work, 0, wk->win_edit[0] );  // wk->bgwinfrm_workの左上を原点としてオフセットして書き込んでくれる
   BGWINFRM_FrameOn( wk->bgwinfrm_work, BGWINFRM_INDEX );
+  wk->bgwinfrm_trans = FALSE;
 }
 
 static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
@@ -463,72 +418,22 @@ static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
 	vc = GX_GetVCount();
   
 // HOSAKA_Printf("vc=%d\n", vc);
-
-/*
-	if(vc < 6*8){
-		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
-	}else{
-		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
-	}
-*/
-/*
-	if( vc == 0 ){
-		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
-	}else if( vc == 6*8 ){
-		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
-	}
-*/
-/*
-	if( vc == 192 +1 ){
-		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
-	}else if( vc == 6*8 +8 ){
-		GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
-	}
-*/
-/*
-  if( vc >= 192 )
-  {
-    if( !wk->hblank_up_scroll_finish )
-    {
-		  GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->main_scr);
-      wk->hblank_up_scroll_finish = TRUE;
-    }
-  }
-  else if( 6*8<=vc && vc<192-3*8 )
-  {
-    if( !wk->hblank_down_scroll_finish )
-    {
-		  GFL_BG_SetScroll( FRM_MAIN_EDITAREA, GFL_BG_SCROLL_Y_SET,0);
-      wk->hblank_down_scroll_finish = TRUE;
-    }
-  }
-*/
 }
 
 static void pmsiv_edit_vblank(GFL_TCB* tcb, void* work)
 {
-#if 0
-  // TwlSDK/build/demos/gx/UnitTours/Window_HDMA/src/main.c
-
-	PMSIV_EDIT* wk = (PMSIV_EDIT*)work;
- 
-  u32 dma_no = 0;
-
-  MI_StopDma( dma_no );
-  MI_HBlankDmaCopy16(
-      dma_no,
-      wk->scroll_y_per_line,
-      (void*)REG_BG0VOFS_ADDR,
-      sizeof(u16) 
-  );
-
-  OS_SetIrqCheckFlag(OS_IE_V_BLANK);
-#endif
-
 	PMSIV_EDIT* wk = (PMSIV_EDIT*)work;
   
   wk->hblank_up_scroll_finish = FALSE;
   wk->hblank_down_scroll_finish = FALSE;
+
+  if( wk->bgwinfrm_trans )
+  {
+    GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0000, 0, 0, 32, 6, GFL_BG_SCRWRT_PALIN );  // 前のを消してから次のを書く
+    BGWINFRM_FramePut( wk->bgwinfrm_work, BGWINFRM_INDEX, 0, -wk->main_scr/8 );
+    BGWINFRM_FrameOn( wk->bgwinfrm_work, BGWINFRM_INDEX );
+    wk->bgwinfrm_trans = FALSE;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -578,9 +483,6 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
 	s16	posY;
 	
 	if(wk->scr_ct > 5){
-    // スクリーンをクリア @TODO hosaka test > これでチラつきはなくなるが、一部残る。
-    //GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0, 0, 0, 32*8, 4*8, 0 );  // 単位はキャラだよ
-    //GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0, 0, 0, 32, 6, 0 );
 		return TRUE;
 	}
 	
@@ -619,37 +521,15 @@ int PMSIV_EDIT_ScrollWait( PMSIV_EDIT* wk)
     HOSAKA_Printf("task delete \n" );
 		GFL_TCB_DeleteTask( wk->hBlankTask );
 		wk->hBlankTask = NULL;
-//		sys_HBlankIntrSet(NULL,NULL);
-//		sys_HBlankIntrStop();
 
 		GFL_TCB_DeleteTask( wk->vblank_task );
 		wk->vblank_task = NULL;
 	}
 
-#if 0
-  {
-    u8 i=0;
-    
-    (void)OS_DisableIrq();
-    
-    for( i=0; i<48; i++ )
-    {
-      wk->scroll_y_per_line[i] = wk->main_scr;
-    }
-    for( i=48; i<192; i++ )
-    {
-      wk->scroll_y_per_line[i] = 0;
-    }
-   
-    (void)OS_EnableIrq();
-    
-    DC_FlushRange( (void *)wk->scroll_y_per_line[i], sizeof(u16)*192 );
-  }
-#endif
-
-  GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0000, 0, 0, 32, 6, GFL_BG_SCRWRT_PALIN );  // 前のを消してから次のを書く
-  BGWINFRM_FramePut( wk->bgwinfrm_work, BGWINFRM_INDEX, 0, -wk->main_scr/8 );
-  BGWINFRM_FrameOn( wk->bgwinfrm_work, BGWINFRM_INDEX );
+  //GFL_BG_FillScreen( FRM_MAIN_EDITAREA, 0x0000, 0, 0, 32, 6, GFL_BG_SCRWRT_PALIN );  // 前のを消してから次のを書く
+  //BGWINFRM_FramePut( wk->bgwinfrm_work, BGWINFRM_INDEX, 0, -wk->main_scr/8 );
+  //BGWINFRM_FrameOn( wk->bgwinfrm_work, BGWINFRM_INDEX );
+  wk->bgwinfrm_trans = TRUE;  // VBlank中に移動させる
 
 	return FALSE;
 }
@@ -729,8 +609,6 @@ static void setup_wordarea_pos( PMSIV_EDIT* wk )
 		break;
 
 	case PMSI_MODE_SENTENCE:
-		// 文章モードの場合、文章内容によって位置が変わるので
-		// ここでは何もしない
 		wk->word_pos_max = 0;
 		break;
 	}
@@ -788,38 +666,6 @@ static void setup_obj( PMSIV_EDIT* wk )
   }                          // することにしたので、ここはコメントアウトしておく。
 
 	set_cursor_anm( wk, TRUE );
-
-#if 0
-	wk->arrow_left_actor = PMSIView_AddActor( wk->vwk, &header, LEFT_ARROW_OBJ_XPOS, LEFT_ARROW_OBJ_YPOS,
-			ACTPRI_EDITAREA_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-
-	GFL_CLACT_WK_SetAnmSeq( wk->arrow_left_actor, ANM_EDITAREA_SCR_L01 );
-
-	wk->arrow_right_actor = PMSIView_AddActor( wk->vwk, &header, RIGHT_ARROW_OBJ_XPOS, RIGHT_ARROW_OBJ_YPOS,
-			ACTPRI_EDITAREA_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-
-	GFL_CLACT_WK_SetAnmSeq( wk->arrow_right_actor, ANM_EDITAREA_SCR_R01 );
-	
-	wk->btn_actor = PMSIView_AddActor( wk->vwk, &header, BTN_OBJ_XPOS, BTN_OBJ_YPOS,
-			ACTPRI_EDITAREA_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-
-	GFL_CLACT_WK_SetAnmSeq( wk->btn_actor, ANM_EDITAREA_SCR_BTN );
-	
-	wk->bar_actor = PMSIView_AddActor( wk->vwk, &header, BAR_OBJ_XPOS, BAR_OBJ_YPOS,
-			ACTPRI_EDITAREA_ARROW, NNS_G2D_VRAM_TYPE_2DMAIN );
-
-	GFL_CLACT_WK_SetAnmSeq( wk->bar_actor, ANM_EDITAREA_SCR_BAR );
-
-	if( PMSI_GetInputMode( wk->mwk ) != PMSI_MODE_SENTENCE )
-	{
-		GFL_CLACT_WK_SetDrawEnable( wk->arrow_right_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->arrow_left_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->bar_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->btn_actor, FALSE );
-	}
-
-#endif
-
 }
 
 //------------------------------------------------------------------
@@ -918,9 +764,6 @@ static u32 print_sentence( PMSIV_EDIT* wk ,GFL_BMPWIN* win, u8 cnt)
 	{
 		switch( prog_pms_analyze( &(wk->awk), buf ) ){
 		case PMS_ANALYZE_RESULT_STR:
-//			GF_STR_PrintColor( win, PMSI_FONT_EDITAREA_BASE, buf, x, y, MSG_NO_PUT,
-//				GF_PRINTCOLOR_MAKE(EDITAREA_WIN_BASE_COLOR_LETTER, EDITAREA_WIN_BASE_COLOR_SHADOW, EDITAREA_WIN_BASE_COLOR_GROUND),
-//				NULL);
 			GFL_FONTSYS_SetColor( EDITAREA_WIN_BASE_COLOR_LETTER, EDITAREA_WIN_BASE_COLOR_SHADOW, EDITAREA_WIN_BASE_COLOR_GROUND);
 			PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), x, y, buf,fontHandle );
 			x += PRINTSYS_GetStrWidth(buf,fontHandle, 0);
@@ -1218,72 +1061,6 @@ void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode)
 	BmpWinFrame_Write( *wk->win_message, WINDOW_TRANS_OFF ,wk->msgwin_cgx, PALNUM_MAIN_TALKWIN );
 }
 
-//------------------------------------------------------------------
-/**
-	* 下画面システムメッセージウィンドウに文字列表示
-	*
-	* @param   wk		
-	*
-	*/
-//------------------------------------------------------------------
-void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type )
-{
-	GFL_FONT *fontHandle = fontHandle = PMSIView_GetFontHandle(wk->vwk);
-	
-#ifndef USE_SYSWIN
-  return; 
-#endif
-  
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(*wk->win_message),MESSAGE_WIN_COL_GROUND);
-
-	switch( msg_type ){
-	case PMSIV_MSG_GUIDANCE:
-	#if 1
-		{
-			WORDSET* wordset = WORDSET_CreateEx(2, 60, HEAPID_PMS_INPUT_VIEW);
-			STRBUF*  exbuf = GFL_STR_CreateBuffer( 300, HEAPID_PMS_INPUT_VIEW );
-			
-			//FIXME 何を入れる？
-			//WORDSET_RegisterItemPocketWithIcon( wordset, 0, 0 );
-			GFL_MSG_GetString( wk->msgman, info00 + PMSI_GetGuidanceType(wk->mwk), wk->tmpbuf );
-			GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
-			PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
-
-			GFL_STR_DeleteBuffer(exbuf);
-			WORDSET_Delete(wordset);
-		}
-	#else
-		MSGMAN_GetString( wk->msgman, info00 + PMSI_GetGuidanceType(wk->mwk), wk->tmpbuf );
-		GF_STR_PrintColor( wk->win_message, PMSI_FONT_MESSAGE, wk->tmpbuf, 0, 0, MSG_NO_PUT,
-				GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-				NULL);
-	#endif
-		break;
-
-	case PMSIV_MSG_CONFIRM_DECIDE:
-		GFL_MSG_GetString( wk->msgman, msg_00, wk->tmpbuf );
-		GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
-		break;
-
-	case PMSIV_MSG_WARN_INPUT:
-		GFL_MSG_GetString( wk->msgman, msg_01, wk->tmpbuf );
-		GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
-		break;
-
-	case PMSIV_MSG_CONFIRM_CANCEL:
-		GFL_MSG_GetString( wk->msgman, msg_02, wk->tmpbuf );
-		GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
-		PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
-		break;
-
-	}
-
-	GFL_BMPWIN_MakeScreen( *wk->win_message );
-	GFL_BMPWIN_TransVramCharacter( *wk->win_message );
-}
-
 void PMSIV_EDIT_StopCursor( PMSIV_EDIT* wk )
 {
 	set_cursor_anm( wk, FALSE );
@@ -1294,9 +1071,6 @@ void PMSIV_EDIT_ActiveCursor( PMSIV_EDIT* wk )
 }
 void PMSIV_EDIT_VisibleCursor( PMSIV_EDIT* wk, BOOL flag )
 {
-	//if(flag && (*wk->p_key_mode == GFL_APP_KTST_TOUCH)){  // 呼び出し元がきちんとflagを立てているので、flag以外で表示を禁止する必要はない
-	//	return;                                             // タッチ入力であっても、編集エリアにはカーソルを表示しておく。
-	//}                                                     // 編集エリア以外(けってい/やめるボタン)をタッチしたときは、編集エリアのカーソルは非表示にする(非表示になるようこの関数を呼び出すこと)。
 	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor[0], flag );
 	GFL_CLACT_WK_SetDrawEnable( wk->cursor_actor[1], flag );
 	set_cursor_anm( wk, TRUE );
@@ -1305,30 +1079,9 @@ void PMSIV_EDIT_VisibleCursor( PMSIV_EDIT* wk, BOOL flag )
 
 void PMSIV_EDIT_StopArrow( PMSIV_EDIT* wk )
 {
-#if 0
-	if( PMSI_GetInputMode( wk->mwk ) == PMSI_MODE_SENTENCE )
-	{
-		GFL_CLACT_WK_SetDrawEnable( wk->arrow_left_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->arrow_right_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->btn_actor, FALSE );
-		GFL_CLACT_WK_SetDrawEnable( wk->bar_actor, FALSE );
-	}
-#endif
 }
 void PMSIV_EDIT_ActiveArrow( PMSIV_EDIT* wk )
 {
-#if 0
-	if( PMSI_GetInputMode( wk->mwk ) == PMSI_MODE_SENTENCE )
-	{
-		GFL_CLACT_WK_SetDrawEnable( wk->arrow_left_actor, TRUE );
-		GFL_CLACT_WK_SetDrawEnable( wk->arrow_right_actor, TRUE );
-		GFL_CLACT_WK_SetDrawEnable( wk->btn_actor, TRUE );
-		GFL_CLACT_WK_SetDrawEnable( wk->bar_actor, TRUE );
-
-		GFL_CLACT_WK_SetAnmSeq( wk->arrow_left_actor, ANM_EDITAREA_SCR_L01 );
-		GFL_CLACT_WK_SetAnmSeq( wk->arrow_right_actor, ANM_EDITAREA_SCR_R01 );
-	}
-#endif
 }
 
 
@@ -1347,12 +1100,9 @@ void PMSIV_EDIT_MoveCursor( PMSIV_EDIT* wk, int pos )
 	{
 		clPos.x = ALLCOVER_CURSOR_XPOS;
 		clPos.y = ALLCOVER_CURSOR_YPOS;
-
-//		CLACT_SetMatrix( wk->cursor_actor, &mtx );
 	}
 	GFL_CLACT_WK_SetPos( wk->cursor_actor[0], &clPos , CLSYS_DEFREND_MAIN );
 	clPos.y += GX_LCD_SIZE_Y;
-//	clPos.y -= wk->sub_scr;
 	GFL_CLACT_WK_SetPos( wk->cursor_actor[1], &clPos , CLSYS_DEFREND_SUB );
 	set_cursor_anm( wk, TRUE );
 }

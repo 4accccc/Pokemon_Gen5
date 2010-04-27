@@ -58,7 +58,6 @@ static inline void SetWordEnableFlag( PMS_INPUT_DATA* data, u32 pos );
 static inline BOOL GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 pos );
 static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
-static u32 CountupGroupNankai( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGroupPicture( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGruopDefault( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
@@ -200,26 +199,7 @@ static inline BOOL GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 pos )
 
 static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
 {
-  // @TODO ずかんチェック
-/*
-	const ZUKAN_WORK* zw;
-	u32 i, cnt;
-
-	cnt = 0;
-	zw = PMSI_PARAM_GetZukanSaveData( pmsi->input_param );
-	for(i=0; i<tbl_elems; i++)
-	{
-		if( ZukanWork_GetPokeSeeFlag( zw, src_tbl[i] ) )
-		{
-			SetWordEnableFlag( pmsi, src_tbl[i] );
-			*dst_tbl++ = src_tbl[i];
-			cnt++;
-		}
-	}
-
-	return cnt;
-*/
-
+#if PMS_ALLOPEN
 	u32 i, cnt;
 
 	cnt = 0;
@@ -231,6 +211,23 @@ static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u
 	}
 
 	return cnt;
+#else
+  const ZUKAN_SAVEDATA* zkn_sv = PMSI_PARAM_GetZukanSaveData( pmsi->input_param );
+	u32 i, cnt;
+
+	cnt = 0;
+	for(i=0; i<tbl_elems; i++)
+	{
+    if( ZUKANSAVE_GetPokeSeeFlag( zkn_sv, src_tbl[i] ) )
+    {
+			SetWordEnableFlag( pmsi, src_tbl[i] );
+			*dst_tbl++ = src_tbl[i];
+			cnt++;
+    }
+	}
+
+	return cnt;
+#endif
 }
 
 static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
@@ -257,23 +254,6 @@ static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u3
 	}
 }
 
-static u32 CountupGroupNankai( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
-{
-	const PMSW_SAVEDATA* sv = PMSI_PARAM_GetPMSW_SaveData(pmsi->input_param);
-	u32 i, cnt;
-
-	for(i=0, cnt=0; i<tbl_elems; i++)
-	{
-		if( PMSW_GetNankaiFlag(sv, i) )
-		{
-			SetWordEnableFlag( pmsi, src_tbl[i] );
-			*dst_tbl++ = src_tbl[i];
-			cnt++;
-		}
-	}
-	return cnt;
-}
-
 static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
 {
 	const PMSW_SAVEDATA* sv = PMSI_PARAM_GetPMSW_SaveData(pmsi->input_param);
@@ -290,7 +270,11 @@ static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, 
 		if( (src_tbl[i] >= aisatsu_top) && (src_tbl[i] <= aisatsu_end) )
 		{
 			u32 id = src_tbl[i] - aisatsu_top;
+#if PMS_ALLOPEN
+	    if( FALSE )
+#else
 			if( PMSW_GetAisatsuFlag(sv, id) == FALSE)
+#endif
 			{
 				continue;
 			}

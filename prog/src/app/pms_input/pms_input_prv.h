@@ -43,10 +43,6 @@ enum {
 	VCMD_MOVE_WORDWIN_CURSOR,	///< 単語選択カーソル移動
 	VCMD_SCROLL_WORDWIN,		///< 単語ウィンドウスクロール
 
-	VCMD_DISP_MESSAGE_DEFAULT,	///< 初期メッセージ表示
-//	VCMD_DISP_MESSAGE_OK,		///< これでいいですか？メッセージ＆メニュー
-//	VCMD_DISP_MESSAGE_CANCEL,	///< やめますか？メッセージ＆メニュー
-	VCMD_DISP_MESSAGE_WARN,		///< なにかことばをいれてください！メッセージ
   VCMD_TASKMENU_DECIDE,     ///< タスクメニュー決定演出
 	VCMD_MOVE_MENU_CURSOR,		///< メニューカーソル移動
 	VCMD_ERASE_MENU,			///< メニュー表示消去
@@ -143,8 +139,8 @@ enum {
 	INI_MU,
 	INI_ME,
 	INI_MO,
-#if 1
-	INI_YA,
+	
+  INI_YA,
 	INI_YU,
 	INI_YO,
 	INI_RA,
@@ -152,17 +148,8 @@ enum {
 	INI_RU,
 	INI_RE,
 	INI_RO,
-#else
-	INI_RA,
-	INI_RI,
-	INI_RU,
-	INI_RE,
-	INI_RO,
-	INI_YA,
-	INI_YU,
-	INI_YO,
-#endif
-	INI_WA,
+
+  INI_WA,
 	INI_OTHER,
   // ↑50音検索のgmmテーブルと対応しているので順番固定↑
   INI_WO,
@@ -206,13 +193,6 @@ enum {
 enum {
 	VTASKPRI_COMMAND,
 	VTASKPRI_MAIN,
-};
-
-enum {
-	PMSIV_MSG_GUIDANCE,
-	PMSIV_MSG_WARN_INPUT,
-	PMSIV_MSG_CONFIRM_DECIDE,
-	PMSIV_MSG_CONFIRM_CANCEL,
 };
 
 enum {
