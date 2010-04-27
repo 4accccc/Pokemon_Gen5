@@ -240,7 +240,6 @@ typedef struct {
   BTL_FIELD_SITUATION   fieldSituation;
   u16             musicDefault;   ///< デフォルト時のBGMナンバー
   u16             musicWin;       ///< 勝利時のBGMナンバー
-  u16             musicPinch;     ///< ピンチ時BGMナンバー
 
   //通信データ
   GFL_NETHANDLE*  netHandle;
