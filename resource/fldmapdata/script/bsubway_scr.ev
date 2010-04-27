@@ -15,6 +15,7 @@
   .include "c04r0106.h"
   .include "c04r0107.h"
   .include "c04r0108.h"
+  .include "c04r0109.h" //トレインタウン
 
 //--------------------------------------------------------------
 //  スクリプトテーブル
@@ -30,6 +31,8 @@ _EVENT_DATA ev_bsw_game_after
 _EVENT_DATA ev_bsw_retmap_receipt
 _EVENT_DATA ev_init_bsw_ttown
 _EVENT_DATA ev_bsw_ttown_receipt_talk
+_EVENT_DATA ev_bsw_ttown_receipt_stopper
+_EVENT_DATA ev_bsw_ttown_demo_train_arrival
 _EVENT_DATA ev_bsw_debug_map_chg_train
 _EVENT_DATA_END
 
@@ -1119,7 +1122,7 @@ _END
 ev_bsw_game_cancel:
 {
   //電車到着デモ
-  _CALL sub_receipt_demo_arrival_train
+  _CALL sub_receipt_demo_train_arrival
   
   //フラグクリア
   _CALL sub_receipt_flag_clear
@@ -1151,7 +1154,7 @@ _END
 ev_bsw_game_after:
 {
   //電車到着デモ
-  _CALL sub_receipt_demo_arrival_train
+  _CALL sub_receipt_demo_train_arrival
   
   //フラグクリア
   _CALL sub_receipt_flag_clear
@@ -1899,7 +1902,7 @@ _ANIME_LABEL anm_receipt_demo_start_train_partner3
 //--------------------------------------------------------------
 //  受付  デモ　電車到着
 //--------------------------------------------------------------
-sub_receipt_demo_arrival_train:
+sub_receipt_demo_train_arrival:
 {
   DEFINE_LOCAL objid_receipt
   DEFINE_LOCAL objid_partner
@@ -1939,7 +1942,7 @@ sub_receipt_demo_arrival_train:
   $objid_receipt = $SCWK_ANSWER
   
   //受付の向きを右に
-  _OBJ_ANIME( objid_receipt, anm_receipt_demo_arrival_train_receipt0 )
+  _OBJ_ANIME( objid_receipt, anm_receipt_demo_train_arrival_receipt0 )
   _OBJ_ANIME_WAIT()
   
   //マップフェードイン
@@ -1950,14 +1953,14 @@ sub_receipt_demo_arrival_train:
   _TIME_WAIT( 30 )
   
   //受付アニメ
-  _OBJ_ANIME( objid_receipt, anm_receipt_demo_arrival_train_receipt1 )
+  _OBJ_ANIME( objid_receipt, anm_receipt_demo_train_arrival_receipt1 )
 
   //自機移動アニメ
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_arrival_train_jiki0 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_train_arrival_jiki0 )
   
   //パートナーアニメ
   IF $ai_multi == TRUE THEN
-    _OBJ_ANIME( objid_partner, anm_receipt_demo_arrival_train_partner0 )
+    _OBJ_ANIME( objid_partner, anm_receipt_demo_train_arrival_partner0 )
   ENDIF
   
   //OBJアニメ待ち
@@ -1983,7 +1986,7 @@ sub_receipt_demo_arrival_train:
     _MSGWIN_CLOSE()
 
     //パートナー分かれるアニメ
-    _OBJ_ANIME( objid_partner, anm_receipt_demo_arrival_train_partner1 )
+    _OBJ_ANIME( objid_partner, anm_receipt_demo_train_arrival_partner1 )
     _OBJ_ANIME_WAIT()
     
     //サポート削除
@@ -1997,12 +2000,12 @@ sub_receipt_demo_arrival_train:
 _RET
 
 //アニメデータ　到着　受付
-_ANIME_LABEL anm_receipt_demo_arrival_train_receipt0
+_ANIME_LABEL anm_receipt_demo_train_arrival_receipt0
   _ANIME_DATA AC_DIR_R,1
   _ANIME_DATA ACMD_END,0
 
 //アニメデータ　到着　受付　自機移動に合わせて向きを変える
-_ANIME_LABEL anm_receipt_demo_arrival_train_receipt1
+_ANIME_LABEL anm_receipt_demo_train_arrival_receipt1
   _ANIME_DATA AC_WAIT_1F,5
   _ANIME_DATA AC_WAIT_8F,5
   _ANIME_DATA AC_STAY_WALK_D_8F,1
@@ -2011,7 +2014,7 @@ _ANIME_LABEL anm_receipt_demo_arrival_train_receipt1
   _ANIME_DATA ACMD_END,0
 
 //アニメデータ　到着　自機0
-_ANIME_LABEL anm_receipt_demo_arrival_train_jiki0
+_ANIME_LABEL anm_receipt_demo_train_arrival_jiki0
   _ANIME_DATA AC_VANISH_OFF,1
   _ANIME_DATA AC_WAIT_1F,4
   _ANIME_DATA AC_WALK_D_8F,3
@@ -2021,7 +2024,7 @@ _ANIME_LABEL anm_receipt_demo_arrival_train_jiki0
   _ANIME_DATA ACMD_END,0
 
 //アニメデータ　到着　パートナー0
-_ANIME_LABEL anm_receipt_demo_arrival_train_partner0
+_ANIME_LABEL anm_receipt_demo_train_arrival_partner0
   _ANIME_DATA AC_WAIT_1F,5
   _ANIME_DATA AC_VANISH_OFF,1
   _ANIME_DATA AC_WAIT_1F,4
@@ -2032,7 +2035,7 @@ _ANIME_LABEL anm_receipt_demo_arrival_train_partner0
   _ANIME_DATA ACMD_END,0
 
 //アニメデータ　到着　パートナー1
-_ANIME_LABEL anm_receipt_demo_arrival_train_partner1
+_ANIME_LABEL anm_receipt_demo_train_arrival_partner1
   _ANIME_DATA AC_WALK_L_8F,2
   _ANIME_DATA AC_WALK_U_8F,3
   _ANIME_DATA AC_WALK_L_8F,5
@@ -2224,6 +2227,7 @@ _RET
 //--------------------------------------------------------------
 //  受付　受付OBJID取得
 //  @retval SCWK_ANSWER OBJID
+//  @note トレインタウン受付(c04r0109)にも対応
 //--------------------------------------------------------------
 sub_bsw_common_get_objid_receipt:
 { 
@@ -2244,6 +2248,8 @@ sub_bsw_common_get_objid_receipt:
     $SCWK_ANSWER = C04R0107_RECEIPT
   CASE ZONE_ID_C04R0108 THEN
     $SCWK_ANSWER = C04R0108_RECEIPT
+  CASE ZONE_ID_C04R0109 THEN
+    $SCWK_ANSWER = C04R0109_RECEIPT
   ENDSWITCH
 }
 _RET
@@ -2547,12 +2553,31 @@ INIT_EVENT_START ev_init_bsw_ttown
 INIT_EVENT_END
 
 //--------------------------------------------------------------
+//  トレインタウン受付ストッパー用POSイベント
+//--------------------------------------------------------------
+EVENT_START ev_bsw_ttown_receipt_stopper
+{
+  _CALL sub_receipt_demo_stopper
+  _TALK_START_SE_PLAY()
+  _CALL sub_bsw_ttown_receipt_talk
+}
+EVENT_END
+
+//--------------------------------------------------------------
 //  トレインタウン受付　話し掛け
 //--------------------------------------------------------------
 EVENT_START ev_bsw_ttown_receipt_talk
 {
   _TALK_OBJ_START()
-   
+  _CALL sub_bsw_ttown_receipt_talk
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//  トレインタウン受付　話し掛け本体
+//--------------------------------------------------------------
+sub_bsw_ttown_receipt_talk:
+{
   $ret = FALSE
   $msg_id = msg_bsw_ttown_01
   
@@ -2562,7 +2587,7 @@ EVENT_START ev_bsw_ttown_receipt_talk
   ENDIF
   
   //戻るか？
-  _BALLOONWIN_TALKOBJ_MSG( msg_id )
+  _BALLOONWIN_OBJMSG_POS( msg_id, C04R0109_RECEIPT, POS_DOWN )
   _YES_NO_WIN( ret )
   
   IF $ret == SCR_YES THEN
@@ -2571,7 +2596,7 @@ EVENT_START ev_bsw_ttown_receipt_talk
     $msg_id = msg_bsw_ttown_03 //またお越し下さい
   ENDIF
   
-  _BALLOONWIN_TALKOBJ_MSG( msg_id )
+  _BALLOONWIN_OBJMSG_POS( msg_id, C04R0109_RECEIPT, POS_DOWN )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
@@ -2580,9 +2605,11 @@ EVENT_START ev_bsw_ttown_receipt_talk
     _GET_TRAIN_TOWN_COND( WK_OTHER_T05_TRAIN )
     _CALL sub_ttown_demo_start_train
     _MAP_CHANGE( ZONE_ID_T05, 22, 54, DIR_LEFT )
+  ELSE
+    _CALL sub_receipt_demo_leave_stopper
   ENDIF
 }
-EVENT_END
+_RET
 
 //--------------------------------------------------------------
 //  トレインタウン　電車発車デモ
@@ -2597,16 +2624,16 @@ sub_ttown_demo_start_train:
   //電車へ移動
   SWITCH $SCWK_ANSWER
   CASE DIR_UP THEN
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_receipt_demo_start_train_receipt1 )
+    _OBJ_ANIME( C04R0109_RECEIPT, anm_receipt_demo_start_train_receipt1 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_start_train_jiki1 )
   CASE DIR_DOWN THEN
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_receipt_demo_start_train_receipt0 )
+    _OBJ_ANIME( C04R0109_RECEIPT, anm_receipt_demo_start_train_receipt0 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_start_train_jiki0 )
   CASE DIR_LEFT THEN
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_receipt_demo_start_train_receipt3 )
+    _OBJ_ANIME( C04R0109_RECEIPT, anm_receipt_demo_start_train_receipt3 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_start_train_jiki3 )
   DEFAULT
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_receipt_demo_start_train_receipt2 )
+    _OBJ_ANIME( C04R0109_RECEIPT, anm_receipt_demo_start_train_receipt2 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_start_train_jiki2 )
   ENDSWITCH
   
@@ -2616,10 +2643,55 @@ sub_ttown_demo_start_train:
   //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
   _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
-  _TIME_WAIT( 35 )
+  _TIME_WAIT( 20 )
   _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
   
-  _TIME_WAIT( 15 ) //アニメを少し見せてフェードアウト
+  _TIME_WAIT( 30 ) //アニメを少し見せてフェードアウト
+}
+_RET
+
+//--------------------------------------------------------------
+//  トレインタウン　電車到着
+//--------------------------------------------------------------
+ev_bsw_ttown_demo_train_arrival:
+{
+  DEFINE_LOCAL objid_receipt
+  
+  $objid_receipt = C04R0109_RECEIPT
+  
+  //自機高さを固定化
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //自機座標を入り口に
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 13, DIR_DOWN )
+  
+  //自機非表示
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, MMDL_ID_PLAYER, TRUE, BSW_NULL )
+  
+  //受付の向きを右に
+  _OBJ_ANIME( objid_receipt, anm_receipt_demo_train_arrival_receipt0 )
+  _OBJ_ANIME_WAIT()
+  
+  //マップフェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  //一寸待ち
+  _TIME_WAIT( 30 )
+  
+  //受付アニメ
+  _OBJ_ANIME( objid_receipt, anm_receipt_demo_train_arrival_receipt1 )
+
+  //自機移動アニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_demo_train_arrival_jiki0 )
+
+  //OBJアニメ待ち
+  _OBJ_ANIME_WAIT()
+  
+  //自機高さを戻す
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  _CHG_LOCAL_SCR
 }
 _RET
 
