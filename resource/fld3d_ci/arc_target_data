@@ -111,6 +111,13 @@ ARC_TARGET_DATA = \
 	merodia.spa \
 	merodia01.nsbmd \
 	merodia01.nsbca \
+	san_ci.nsbmd \
+	san_ci02.nsbmd \
+	san_ci.nsbca \
+	san_ci.nsbta \
+	san_ci.nsbma \
+	san_ci02.nsbca \
+	san_ci02.nsbta \
 	get2_662.nsbmd \
 	get2_664.nsbmd \
 	get2_602.nsbmd \
