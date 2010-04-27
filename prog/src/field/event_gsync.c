@@ -248,6 +248,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     dbw->boxParam.myitem = GAMEDATA_GetMyItem(dbw->boxParam.gamedata);					// 所持アイテム（バッグで使用）
     dbw->boxParam.mystatus = GAMEDATA_GetMyStatus(dbw->boxParam.gamedata);				// プレイヤーデータ（バッグで使用）
     dbw->boxParam.cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(dbw->boxParam.gamedata));								// コンフィグデータ
+    dbw->boxParam.sleepTable = (u16*)dbw->selectPokeList.pokemonList;
     dbw->boxParam.zknMode = 0;								// 図鑑ナンバー表示モード
     dbw->boxParam.callMode = BOX_MODE_SLEEP;	// 寝かせる;					// 呼び出しモード
    // GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
