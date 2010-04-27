@@ -1200,6 +1200,7 @@ static int MainSeq_Start( BOX2_SYS_WORK * syswk )
 
 	case BOX_MODE_SLEEP:		// ‚Ë‚©‚¹‚é
 		BOX2MAIN_PokeInfoPut( syswk, 0 );
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 		seq = BOX2SEQ_MAINSEQ_SLEEP_MAIN;
 		break;
@@ -1269,6 +1270,7 @@ static int MainSeq_ArrangePokeMenuRcv( BOX2_SYS_WORK * syswk )
 			BOX2BMP_MenuStrPrint( syswk, BattleBoxMenuStrTbl, 4 );
 			break;
 		case BOX_MODE_SLEEP:
+			BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG4 );
 			BOX2BMP_MenuStrPrint( syswk, SleepMenuStrTbl, 2 );
 			break;
 		default:
@@ -6009,6 +6011,11 @@ static int MainSeq_SleepMenuSet( BOX2_SYS_WORK * syswk )
 			syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
 		}
+		if( BOX2MAIN_CheckSleep( syswk, syswk->get_pos ) == FALSE ){
+			BOX2BMP_PutPokeMoveErrMsg( syswk, BOX2MAIN_ERR_CODE_SLEEP, BOX2BMPWIN_ID_MSG4 );
+			syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
+			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
+		}
 		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, TRUE );
 		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
 		BOX2BMP_SleepSelectMsgPut( syswk );
@@ -7720,7 +7727,7 @@ static int BoxArg_BoxEndNo( BOX2_SYS_WORK * syswk )
 		break;
 
 	case BOX_MODE_SLEEP:	// Q‚©‚¹‚é
-		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+		BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 		return BOX2SEQ_MAINSEQ_SLEEP_MAIN;
 	}
 
@@ -7759,7 +7766,7 @@ static int BoxArg_SleepNo( BOX2_SYS_WORK * syswk )
 	BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG4 );
 	BOX2MAIN_ResetTouchBar( syswk );
 	CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
-	BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYPOKE, FALSE );
+	BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_TRAYITEM, TRUE );
 	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 
 	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){

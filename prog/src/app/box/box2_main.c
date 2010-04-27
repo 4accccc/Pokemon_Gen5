@@ -18,6 +18,7 @@
 #include "sound/pm_sndsys.h"
 #include "savedata/perapvoice.h"
 #include "savedata/zukan_savedata.h"
+#include "savedata/dreamworld_data.h"
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokerus.h"
@@ -1759,6 +1760,22 @@ void BOX2MAIN_LoadLocalNoList( BOX2_SYS_WORK * syswk )
 void BOX2MAIN_FreeLocalNoList( BOX2_SYS_WORK * syswk )
 {
   GFL_HEAP_FreeMemory( syswk->app->localNo );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		指定位置のポケモンが寝かせられるか
+ *
+ * @param   syswk   ボックス画面システムワーク
+ * @param		pos			位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BOX2MAIN_CheckSleep( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	u16	mons = BOX2MAIN_PokeParaGet( syswk, pos, syswk->tray, ID_PARA_monsno, NULL );
+	return	DREAMWORLD_SV_GetSleepEnable( syswk->dat->sleepTable, mons );
 }
 
 

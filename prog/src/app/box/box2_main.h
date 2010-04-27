@@ -627,8 +627,9 @@ enum {
 	BOX2MAIN_ERR_CODE_BOXMAX,			// ボックスがいっぱい
 	BOX2MAIN_ERR_CODE_MAIL,				// メールを持っている
 	BOX2MAIN_ERR_CODE_BATTLE,			// 戦えるポケモンがいなくなる
-	BOX2MAIN_ERR_CODE_EGG,				// タマゴはえらべない（バトルボックス専用）
+	BOX2MAIN_ERR_CODE_EGG,				// タマゴはえらべない
 	BOX2MAIN_ERR_CODE_ROCK,				// ロックされている（バトルボックス専用）
+	BOX2MAIN_ERR_CODE_SLEEP,			// 眠くない（寝かせる専用）
 };
 
 
@@ -1194,6 +1195,18 @@ extern void BOX2MAIN_LoadLocalNoList( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2MAIN_FreeLocalNoList( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		指定位置のポケモンが寝かせられるか
+ *
+ * @param   syswk   ボックス画面システムワーク
+ * @param		pos			位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL BOX2MAIN_CheckSleep( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**

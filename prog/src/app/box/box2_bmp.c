@@ -1924,8 +1924,12 @@ void BOX2BMP_PutPokeMoveErrMsg( BOX2_SYS_WORK * syswk, u32 errID, u32 winID )
 		str = msg_boxmes_06_03;
 		break;
 
-	case BOX2MAIN_ERR_CODE_EGG:				// タマゴはえらべない（バトルボックス専用）
+	case BOX2MAIN_ERR_CODE_EGG:				// タマゴはえらべない
 		str = msg_boxmes_06_07;
+		break;
+
+	case BOX2MAIN_ERR_CODE_SLEEP:			// 眠くない（寝かせる専用）
+		str = msg_boxmes_06_09;
 		break;
 	}
 

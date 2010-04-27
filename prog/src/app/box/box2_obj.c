@@ -1629,7 +1629,7 @@ void BOX2OBJ_TrayPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mv )
 			PokeIconChangeCore(
 				syswk->app, syswk->app->pokeicon_cgx[i], id, syswk->app->pokeicon_pal[i] );
 			BOX2OBJ_Vanish( syswk->app, id, syswk->app->pokeicon_exist[i] );
-			if( syswk->dat->callMode == BOX_MODE_ITEM ){
+			if( syswk->dat->callMode == BOX_MODE_ITEM || syswk->dat->callMode == BOX_MODE_SLEEP ){
 				BOX2OBJ_PokeIconBlendSetItem( syswk, i );
 			}
 		}
@@ -1821,11 +1821,22 @@ static void PokeIconBlendSetCore( BOX2_SYS_WORK * syswk, BOOL flg, u32 start, u3
 	u32	i;
 
 	if( item == TRUE ){
-		for( i=start; i<end; i++ ){
-			if( BOX2MAIN_PokeParaGet( syswk, i, syswk->tray, ID_PARA_item, NULL ) == 0 ){
-				BOX2OBJ_BlendModeSet( syswk->app, syswk->app->pokeicon_id[i], TRUE );
-			}else{
-				BOX2OBJ_BlendModeSet( syswk->app, syswk->app->pokeicon_id[i], FALSE );
+		if( syswk->dat->callMode == BOX_MODE_SLEEP ){
+			for( i=start; i<end; i++ ){
+				if( BOX2MAIN_CheckSleep( syswk, i ) == TRUE &&
+						BOX2MAIN_PokeParaGet( syswk, i, syswk->tray, ID_PARA_tamago_flag, NULL ) == 0 ){
+					BOX2OBJ_BlendModeSet( syswk->app, syswk->app->pokeicon_id[i], FALSE );
+				}else{
+					BOX2OBJ_BlendModeSet( syswk->app, syswk->app->pokeicon_id[i], TRUE );
+				}
+			}
+		}else{
+			for( i=start; i<end; i++ ){
+				if( BOX2MAIN_PokeParaGet( syswk, i, syswk->tray, ID_PARA_item, NULL ) == 0 ){
+					BOX2OBJ_BlendModeSet( syswk->app, syswk->app->pokeicon_id[i], TRUE );
+				}else{
+					BOX2OBJ_BlendModeSet( syswk->app, syswk->app->pokeicon_id[i], FALSE );
+				}
 			}
 		}
 	}else{
