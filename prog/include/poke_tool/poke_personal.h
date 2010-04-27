@@ -109,6 +109,7 @@ typedef enum{
 
 enum{
   // こづくりグループ
+POKEPER_EGG_GROUP_NONE,       //0：なし（この値は不正）
 POKEPER_EGG_GROUP_KAIJUU,     //１：怪獣
 POKEPER_EGG_GROUP_SUISEI,     //２：水棲
 POKEPER_EGG_GROUP_MUSI,       //３：虫
