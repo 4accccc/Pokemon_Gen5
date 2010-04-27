@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T19:24:41"/>
+	<create user="matsumiya" host="W00224" date="2010-04-27T14:52:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="146" right="2004" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1514" top="217" right="2219" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,12 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c03p14_infomationw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・話しかけた時のgmm
+・ユナイテッドタワーに行ける状態で話しかけた時のgmm
 ・はい/いいえ/なにそれ？の選択肢表示
 　はい→infomationw_02
-　はい、だけど行けない→infomationw_03
 　いいえ→infomationw_04
 　なにそれ？→infomationw_05</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -307,22 +306,22 @@
 ユナイテッドタワーに　ご用ですか？</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・はい、だけど行けない</comment>
+・ユナイテッドタワーに行けない状態で話しかけた時のgmm</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
-		<language name="JPN" width="256">ユナイテッドタワーは
-せかいの　ひとと　ポケモンを▽
-こうかん　したほうが　たのしめますよ▼
-ぜひ　がいこくの　ひとと
-ポケモンを　こうかんしてから▽
-また　おこしください！</language>
-		<language name="JPN_KANJI" width="256">ユナイテッドタワーは
-世界の　人と　ポケモンを▽
-交換した方が　楽しめますよ！▼
-ぜひ　外国の人と
-ポケモンを　交換してから▽
-また　お越しください！</language>
+		<language name="JPN" width="256">こっきょうって　なんのために
+あるんだと　おもいます？▼
+だれにも　みえないのに
+ちょっとした　せんを　こえるだけで▽
+ルールや　かんがえかたが　かわるって▽
+ちょっと　ふしぎですよね</language>
+		<language name="JPN_KANJI" width="256">国境って　何のために
+あるんだと　思います？▼
+だれにも　みえないのに
+ちょっとした　線を　越えるだけで▽
+ルールや　考え方が　変わるって▽
+ちょっと　不思議ですよね</language>
 	</row>
 
 	<row id="msg_c03p14_infomationw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -407,7 +406,7 @@
 そういってたから　信じてるの！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが0の場合
 　ダンサーイベント開始前</comment>
@@ -418,7 +417,7 @@
 ヒウンシティに　来たんだよー！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・はい/いいえの選択肢表示
@@ -437,7 +436,7 @@
 オレと　ポケモン勝負　だぜ！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_dancer3_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、トレーナー戦闘に
@@ -449,7 +448,7 @@
 ばっちり　なんだぜ！▼</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_dancer3_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度会話は、dancer3_02から</comment>
@@ -460,7 +459,7 @@
 誘うなら　強くないとねー！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_dancer3_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・戦闘後、フィールド復帰時に
