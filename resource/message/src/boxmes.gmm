@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T14:54:23"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-04-27T15:33:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="218" right="1997" bottom="846" maximized="no" rayout="Vertical2">
+	<dialog left="1389" top="379" right="2094" bottom="1007" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -714,6 +714,13 @@
 よろしいですか？</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]を　眠らせます
 よろしいですか？</language>
+	</row>
+
+	<row id="msg_boxmes_06_09" back-color="#00ffff,,,,,,,#ff0000,,,#ff0000,,,,,,,">
+		<language name="JPN" font=" 1:small" width="216">このポケモンは
+いまは　ねむくないみたいです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">このポケモンは
+今は眠くないみたいです</language>
 	</row>
 
 	<row id="msg_boxmes_07_01" back-color="#ffff80,,,#ffff80,,#ffff80,,#ff0000,,,#ff0000,#ffff80,,,,,,">
