@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: demo3d_2dgra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DEMO3D_2DGRA_NAIX_
+#define NARC_DEMO3D_2DGRA_NAIX_
+
+enum {
+	NARC_demo3d_2dgra_intro_town_NCLR = 0,
+	NARC_demo3d_2dgra_intro_town01_lz_NSCR = 1,
+	NARC_demo3d_2dgra_intro_town02_b_lz_NSCR = 2,
+	NARC_demo3d_2dgra_intro_town02_w_lz_NSCR = 3,
+	NARC_demo3d_2dgra_intro_town_lz_NCGR = 4
+};
+
+/* NARC_DEMO3D_2DGRA_NAIX_ */
+#endif
