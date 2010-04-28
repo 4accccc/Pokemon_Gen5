@@ -4810,12 +4810,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_496_000">
-		<language name="JPN">じめんを　すべるように　はしる。
-すばやい　うごきで　てきを　まどわせ
-ツルのムチで　しとめるのだ。</language>
-		<language name="JPN_KANJI">地面を　滑るように　駆ける。
-素早い　動きで　相手を　翻弄して
-ツルのムチで　しとめるのだ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_497_000">
@@ -5447,21 +5443,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_597_000">
-		<language name="JPN">きけんを　さっちすると　トゲを
-いっせいに　はっしゃして　はんげき。
-その　スキに　ころがって　にげる。</language>
-		<language name="JPN_KANJI">危険を　察知すると　トゲを
-いっせいに　発射して　反撃。
-その　スキに　転がって　逃げる。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_598_000">
-		<language name="JPN">３ほんの　トゲつきの　しょくしゅを
-ふりまわして　たたかう。おおいわを
-ふんさいする　はかいりょくだ。</language>
-		<language name="JPN_KANJI">３本の　トゲ付き　触手を　振り回して
-戦う。鋼の　トゲは　叩きつけると
-大岩を　粉砕する　破壊力だ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_599_000">
@@ -5507,30 +5495,18 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_605_000">
-		<language name="JPN">つよい　サイコパワーを　あやつる。
-サイコパワーで　あいての　のうみそを
-しめつけて　ずつうを　おこさせる。</language>
-		<language name="JPN_KANJI">強力な　サイコパワーを　操る。
-サイコパワーで　相手の　脳みそを
-絞めつけて　頭痛を　起こさせる。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_606_000">
-		<language name="JPN">あいての　きおくを　そうさする。
-３しょくの　ゆびを　てんめつさせて
-なかまと　かいわしている　らしい。</language>
-		<language name="JPN_KANJI">相手の　記憶を　操作する。
-３色の　指を　点滅させて
-仲間と　会話している　らしい。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_607_000">
-		<language name="JPN">ローソクンの　ともす　あかりは
-ひとや　ポケモンの　せいめいりょくを
-すいとって　もえているのだ。</language>
-		<language name="JPN_KANJI">ローソクンの　灯す　明かりは
-人や　ポケモンの　生命力を
-吸い取って　燃えているのだ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_608_000">

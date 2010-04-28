@@ -4810,12 +4810,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_496_000">
-		<language name="JPN">じゅもくの　すきまを　くぐりぬけて
-あいての　こうげきを　かわす。
-たくみな　ムチさばきで　はんげき。</language>
-		<language name="JPN_KANJI">樹木の　隙間を　素早く　潜り抜けて
-相手の　攻撃を　交わす。
-巧みな　ムチさばきで　反撃する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_497_000">
@@ -5447,21 +5443,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_597_000">
-		<language name="JPN">ほらあなの　かべに　トゲを　つきさし
-はりつく。いわの　なかの　こうぶつを
-とかして　きゅうしゅうする。</language>
-		<language name="JPN_KANJI">洞穴の　壁に　トゲを　突き刺し
-はりつく。岩に　埋もれている　鉱物を
-体液で　溶かして　吸収する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_598_000">
-		<language name="JPN">トゲつきの　しょくしゅで　じめんや
-ほらあなの　かべに　からだに　あった
-くぼみを　ほって　すみかを　つくる。</language>
-		<language name="JPN_KANJI">トゲ付きの　触手で　地面や
-洞穴の　壁に　体の　サイズに　合った
-くぼみを　掘って　すみかを　作る。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_599_000">
@@ -5507,30 +5495,18 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_605_000">
-		<language name="JPN">５０ねんまえに　さばくの　かなたから
-とつぜん　やってきた。その　ときまで
-だれも　みたことが　ない　ポケモン。</language>
-		<language name="JPN_KANJI">５０年前に　砂漠の　彼方から
-突然　やってきた。その　ときまで
-誰も　見たことが　ない　ポケモン。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_606_000">
-		<language name="JPN">サイコパワーで　あいての　のうみそを
-あやつり　きおくする　えいぞうを
-ちがう　ものに　かきかえてしまう。</language>
-		<language name="JPN_KANJI">サイコパワーで　相手の　脳みそを
-操り　記憶する　映像を
-違う　ものに　書き換えてしまう。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_607_000">
-		<language name="JPN">くらやみで　まちかまえて　あかりで
-みちあんない　する　ふりを　して
-せいめいりょくを　すいとるのだ。</language>
-		<language name="JPN_KANJI">暗闇で　待ち構えて　明かりを　灯して
-道案内　する　振りを　して
-生命力を　吸い取るのだ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_608_000">
