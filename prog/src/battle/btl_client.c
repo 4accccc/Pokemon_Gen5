@@ -1635,11 +1635,9 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
       &&  (BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0)
       ){
-        //現状、曲変化はジムリーダーと四天王だけ
+        //現状、曲変化はジムリーダーだけ
         u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-        if( (BTL_CALC_IsTrtypeGymLeader(trType) || BTL_CALC_IsTrtypeBig4(trType))
-        &&  (wk->fAITrainerBGMChanged == FALSE)
-        ){
+        if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
           //PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
           //wk->fAITrainerBGMChanged = TRUE;
           PMSND_FadeOutBGM( 8 );
