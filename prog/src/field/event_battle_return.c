@@ -21,6 +21,7 @@
 #include "app/zukan_toroku.h"
 #include "poke_tool/poke_memo.h"
 #include "field/zonedata.h"  //ZONEDATA_GetPlaceNameID
+#include "field/straw_poke_form.h"
 #include "gamesystem/game_data.h"
 #include "savedata/record.h"
 
@@ -33,6 +34,9 @@
 #include "item/itemsym.h"
 #include "poke_tool/tokusyu_def.h"
 #include "system/gfl_use.h"
+
+#include "battle/batt_bg_tbl.h"
+#include "batt_bg_tbl.naix"
 
 // local includes --------------------
 #include "event_battle_return.h"
@@ -80,6 +84,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
 static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param );
 static void monohiroi_mitsuatsume_check( POKEPARTY* ppt );
+static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, BATT_BG_OBONID obonID );
+static BATT_BG_OBONID get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID );
 
 /*--------------------------------------------------------------------------*/
 /* Proc Table                                                               */
@@ -191,6 +197,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         if( param->btlResult->result == BTL_RESULT_WIN )
         { 
           monohiroi_mitsuatsume_check( party );
+        }
+
+        //ミノムッチフォルムチェンジチェック
+        { 
+          BATT_BG_OBONID obonID = get_obonID( &param->btlResult->fieldSituation, wk->heapID );
+          minomucchi_form_change_check( param, party, obonID );
         }
 
         // おこづかい増やす
@@ -548,3 +560,51 @@ static  void  monohiroi_mitsuatsume_check( POKEPARTY* ppt )
 		}
 	}
 }
+
+//============================================================================================
+/**
+ *	ミノムッチフォルムチェンジチェック
+ *
+ */
+//============================================================================================
+static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, BATT_BG_OBONID obonID )
+{ 
+  int i;
+
+  //通信対戦、バトルサブウェイではフォルムチェンジしない
+  if( ( param->btlResult->competitor == BTL_COMPETITOR_SUBWAY ) ||
+      ( param->btlResult->competitor == BTL_COMPETITOR_COMM ) )
+  { 
+    return;
+  }
+
+	for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
+  { 
+    if( param->btlResult->fightPokeIndex[ i ] ) 
+    { 
+      POKEMON_PARAM* pp = PokeParty_GetMemberPointer( ppt, i );
+      STRAW_POKE_FORM_ChangeForm( param->gameData, pp, obonID );
+    }
+  }
+}
+
+//============================================================================================
+/**
+ *	お盆ID取得
+ *
+ *	@param[in]  bfs     BTL_FIELD_SITUATION構造体
+ *	@param[in]  heapID  ヒープID
+ */
+//============================================================================================
+static  BATT_BG_OBONID  get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID )
+{ 
+    BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,
+                                                                  NARC_batt_bg_tbl_zone_spec_table_bin,
+                                                                  heapID );
+    BATT_BG_OBONID  obonID = bbtzst[ bfs->bgType ].stage_file[ bfs->bgAttr ];
+
+    GFL_HEAP_FreeMemory( bbtzst );
+
+    return  obonID;
+}
+
