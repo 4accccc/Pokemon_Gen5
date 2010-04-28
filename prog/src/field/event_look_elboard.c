@@ -15,7 +15,6 @@
 #include "field_task_camera_zoom.h"
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
-#include "field_task_wait.h"
 #include "field_gimmick_gate.h"
 #include "event_look_elboard.h"
 
@@ -95,37 +94,28 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
         VEC_Set( &targetOffset, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
         break;
       case DIR_RIGHT: 
-        pitch  = 0x0e93;
-        yaw    = 0x4000;
+        pitch  = 0x0ee5;
+        yaw    = 0x3fff;
         length = 0x0086 << FX32_SHIFT;
-        VEC_Set( &targetOffset, 0xffff9000, 0x0028<<FX32_SHIFT, 0 );
+        VEC_Set( &targetOffset, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
         break;
       } 
       // ƒ^ƒXƒN“o˜^
       {
-        FIELD_TASK* wait;
-        FIELD_TASK* prevZoom;
-        FIELD_TASK* prevPitch;
         FIELD_TASK* zoomTask;
         FIELD_TASK* pitchTask;
         FIELD_TASK* yawTask;
         FIELD_TASK* targetOffsetTask;
         // ¶¬
-        wait      = FIELD_TASK_Wait( fieldmap, 40 );
-        yawTask   = FIELD_TASK_CameraRot_Yaw( fieldmap, 60, yaw );
-        prevPitch = FIELD_TASK_CameraRot_Pitch( fieldmap, 40, 0x1154 );
-        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, 40, &targetOffset );
-        prevZoom  = FIELD_TASK_CameraLinearZoom( fieldmap, 30, 0x0084<<FX32_SHIFT );
-        zoomTask  = FIELD_TASK_CameraLinearZoom( fieldmap, 20, length );
-        pitchTask = FIELD_TASK_CameraRot_Pitch( fieldmap, 20, pitch );
+        zoomTask  = FIELD_TASK_CameraLinearZoom( fieldmap, work->cameraAnimeFrame, length );
+        pitchTask = FIELD_TASK_CameraRot_Pitch( fieldmap, work->cameraAnimeFrame, pitch );
+        yawTask   = FIELD_TASK_CameraRot_Yaw( fieldmap, work->cameraAnimeFrame, yaw );
+        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, work->cameraAnimeFrame, &targetOffset );
         // “o˜^
-        FIELD_TASK_MAN_AddTask( taskManager, wait, NULL );
+        FIELD_TASK_MAN_AddTask( taskManager, zoomTask, NULL );
+        FIELD_TASK_MAN_AddTask( taskManager, pitchTask, NULL );
         FIELD_TASK_MAN_AddTask( taskManager, yawTask, NULL );
-        FIELD_TASK_MAN_AddTask( taskManager, prevZoom, NULL );
-        FIELD_TASK_MAN_AddTask( taskManager, prevPitch, NULL );
         FIELD_TASK_MAN_AddTask( taskManager, targetOffsetTask, NULL );
-        FIELD_TASK_MAN_AddTask( taskManager, zoomTask, wait );
-        FIELD_TASK_MAN_AddTask( taskManager, pitchTask, wait );
       }
     }
     ++(*seq);
