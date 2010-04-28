@@ -712,6 +712,11 @@ typedef struct
 extern MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
+//  fldmmdl_save.c
+//--------------------------------------------------------------
+extern u16 MMDL_TOOL_OBJCodeToDataNumber( u16 code );
+
+//--------------------------------------------------------------
 ///	fldmmdl.c
 //--------------------------------------------------------------
 extern u32 MMDL_BUFFER_GetWorkSize( void );

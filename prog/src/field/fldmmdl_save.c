@@ -365,7 +365,7 @@ static MMDL * mmdlsys_SearchSpaceMMdl( const MMDLSYS *sys )
  * @retval u16 codeをデータの並びにあわせた数値
  */
 //--------------------------------------------------------------
-static u16 OBJCode_GetDataNumber( u16 code )
+u16 MMDL_TOOL_OBJCodeToDataNumber( u16 code )
 {
   if( code < OBJCODEEND_BBD ){
     return( code );
@@ -398,6 +398,6 @@ static const OBJCODE_PARAM * mmdlsys_GetOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code )
 {
   GF_ASSERT( mmdlsys->pOBJCodeParamTbl != NULL );
-  code = OBJCode_GetDataNumber( code );
+  code = MMDL_TOOL_OBJCodeToDataNumber( code );
   return( &(mmdlsys->pOBJCodeParamTbl[code]) );
 }
