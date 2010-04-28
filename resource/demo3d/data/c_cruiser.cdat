@@ -12,14 +12,14 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_c_cruiser_scene = {
-	NARC_data_demo3d_c_cruiser_camera_bin,	///<カメラID
+	NARC_data_demo3d_cdemo_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
-	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
+	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
-	GX_SORTMODE_AUTO,GX_BUFFERMODE_Z,	///<SwapBuf αソートモード,バッファモード
+	GX_SORTMODE_MANUAL,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
@@ -70,13 +70,11 @@ static const DEMO3D_CMD_DATA demo3d_cmd_c_cruiser_end_data[] = {
 
 static const u16 res_c_cruiser_file_cdemo_01[] = {
  NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
  NARC_data_demo3d_cdemo_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_01[] = {
- { res_c_cruiser_file_cdemo_01, 4 },
+ { res_c_cruiser_file_cdemo_01, 2 },
 };
 
 ///==================================
@@ -84,10 +82,12 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_01[] = {
 
 static const u16 res_c_cruiser_file_cdemo_02[] = {
  NARC_data_demo3d_cdemo_02_nsbmd,
+ NARC_data_demo3d_cdemo_02_nsbma,
+ NARC_data_demo3d_cdemo_02_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_02[] = {
- { res_c_cruiser_file_cdemo_02, 1 },
+ { res_c_cruiser_file_cdemo_02, 3 },
 };
 
 ///==================================
@@ -95,10 +95,12 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_02[] = {
 
 static const u16 res_c_cruiser_file_cdemo_03[] = {
  NARC_data_demo3d_cdemo_03_nsbmd,
+ NARC_data_demo3d_cdemo_03_nsbma,
+ NARC_data_demo3d_cdemo_03_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_03[] = {
- { res_c_cruiser_file_cdemo_03, 1 },
+ { res_c_cruiser_file_cdemo_03, 3 },
 };
 
 ///==================================
@@ -129,10 +131,38 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_05[] = {
 
 static const u16 res_c_cruiser_file_cdemo_06[] = {
  NARC_data_demo3d_cdemo_06_nsbmd,
+ NARC_data_demo3d_cdemo_06_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_06[] = {
- { res_c_cruiser_file_cdemo_06, 1 },
+ { res_c_cruiser_file_cdemo_06, 2 },
+};
+
+///==================================
+/// cdemo_07 Unit File Resource
+
+static const u16 res_c_cruiser_file_cdemo_07[] = {
+ NARC_data_demo3d_cdemo_07_nsbmd,
+ NARC_data_demo3d_cdemo_07_nsbtp,
+ NARC_data_demo3d_cdemo_07_nsbta,
+ NARC_data_demo3d_cdemo_07_nsbca,
+ NARC_data_demo3d_cdemo_07_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_07[] = {
+ { res_c_cruiser_file_cdemo_07, 5 },
+};
+
+///==================================
+/// cdemo_01a Unit File Resource
+
+static const u16 res_c_cruiser_file_cdemo_01a[] = {
+ NARC_data_demo3d_cdemo_01a_nsbmd,
+ NARC_data_demo3d_cdemo_01a_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_01a[] = {
+ { res_c_cruiser_file_cdemo_01a, 2 },
 };
 
 ///========================================================
@@ -141,7 +171,7 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_06[] = {
 
 static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_file_unit_cdemo_01_tbl[] = {
  { res_c_cruiser_file_unit_cdemo_01, 1 },
- { res_c_cruiser_file_unit_cdemo_01, 1 },
+ { res_c_cruiser_file_unit_cdemo_01a, 1 },
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_file_unit_cdemo_02_tbl[] = {
@@ -164,6 +194,10 @@ static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_file_unit_cdemo_06_tbl[] = {
  { res_c_cruiser_file_unit_cdemo_06, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_file_unit_cdemo_07_tbl[] = {
+ { res_c_cruiser_file_unit_cdemo_07, 1 },
+};
+
 static const DEMO3D_SCENE_UNIT res_c_cruiser_scene_unit[] = {
  { res_c_cruiser_file_unit_cdemo_01_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
  { res_c_cruiser_file_unit_cdemo_02_tbl, 1, DEMO3D_UNITCHG_NONE },
@@ -171,5 +205,6 @@ static const DEMO3D_SCENE_UNIT res_c_cruiser_scene_unit[] = {
  { res_c_cruiser_file_unit_cdemo_04_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_c_cruiser_file_unit_cdemo_05_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_c_cruiser_file_unit_cdemo_06_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_c_cruiser_file_unit_cdemo_07_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 

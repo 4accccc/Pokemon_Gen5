@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-02-09T10:54:49" source="c_cruiser40.mb"/>
+	<create user="unno" host="W00199" date="2010-04-27T20:28:58" source="c_cruiser_v06.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -14,7 +14,7 @@
 	frame_size="5401"
 	tool_start_frame="0"
 	tool_end_frame="5400"
-	compress_material="on" material_size="5 5"
+	compress_material="on" material_size="12 12"
 />
 
 <tex_pattern_list_data image_size="11" palette_size="11">
@@ -48,20 +48,20 @@
 		2400
 	</frame_idx>
 	<image_idx size="11">
-		6 7 8 9 10 1 0 3 2 5
-		4
+		6 7 8 9 10 5 4 3 2 1
+		0
 	</image_idx>
 	<palette_idx size="11">
-		6 7 8 9 10 1 0 3 2 5
-		4
+		6 7 8 9 10 5 4 3 2 1
+		0
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="4">
-	<tex_pattern_anm index="0" material_name="haikei04" data_size="5" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="lambert13" data_size="2" data_head="5"/>
-	<tex_pattern_anm index="2" material_name="lambert14" data_size="2" data_head="7"/>
-	<tex_pattern_anm index="3" material_name="lambert15" data_size="2" data_head="9"/>
+	<tex_pattern_anm index="0" material_name="sea_mizu1_1" data_size="5" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="build03_1" data_size="2" data_head="5"/>
+	<tex_pattern_anm index="2" material_name="build02_1" data_size="2" data_head="7"/>
+	<tex_pattern_anm index="3" material_name="build01_1" data_size="2" data_head="9"/>
 </tex_pattern_anm_array>
 
 </body>

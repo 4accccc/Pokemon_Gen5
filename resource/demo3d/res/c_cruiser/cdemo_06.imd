@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-02-09T10:55:13" source="c_cruiser40.mb"/>
+	<create user="unno" host="W00199" date="2010-04-27T21:09:43" source="c_cruiser_v07.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-02-09T10:55:13" source="c_cruiser40.mb"/>
+<original_create user="unno" host="W00199" date="2010-04-27T21:09:43" source="c_cruiser_v07.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="b_light02_pl"
-		path="C:/0_WB/c_cruiser/c3/tex/b_light02.tga"
+		path="C:/home/wb_data3d/demo/c_cruiser/tex/b_light02.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -112,7 +112,7 @@
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="lambert16"
+	<material index="0" name="b_light02_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
