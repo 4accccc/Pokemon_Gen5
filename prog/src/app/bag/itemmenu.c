@@ -1590,11 +1590,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     // ----------かいじょ------------
     case BAG_MENU_TOUROKU:  
     case BAG_MENU_KAIZYO:   
-      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-      ITEMDISP_ChangeActive( pWork, TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
-//      _CHANGE_STATE(pWork, _itemKindSelectMenu);
-      ChangeStateItemKindSelectItemMenu( pWork );
+			if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+	      SHORTCUT_SetEventItem( pWork, pWork->curpos );
+	      ITEMDISP_ChangeActive( pWork, TRUE );
+	      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+//	      _CHANGE_STATE(pWork, _itemKindSelectMenu);
+	      ChangeStateItemKindSelectItemMenu( pWork );
+			}
       break;
     // ----------みる------------
     case BAG_MENU_MIRU:
@@ -1761,15 +1763,17 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-    if( pWork->pocketno == BAG_POKE_EVENT ){
-      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-    }else{
-      SHORTCUT_SetPocket( pWork );
-    }
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
-      KTST_SetDraw( pWork, TRUE );
-    }
+		if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+	    if( pWork->pocketno == BAG_POKE_EVENT ){
+	      SHORTCUT_SetEventItem( pWork, pWork->curpos );
+	    }else{
+	      SHORTCUT_SetPocket( pWork );
+	    }
+	    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+	      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
+	      KTST_SetDraw( pWork, TRUE );
+	    }
+		}
     return;
   // ソート
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
@@ -3042,6 +3046,14 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+BOOL ITEMMENU_CheckShortCutSetMode( FIELD_ITEMMENU_WORK* pWork )
+{
+	if( pWork->mode == BAG_MODE_FIELD ){
+		return TRUE;
+	}
+	return FALSE;
+}
+
 static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 {
   // 表示上の位置から実体の位置へ座標変換
@@ -3578,10 +3590,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   // Ｙ登録ボタン
   }else if(BUTTONID_CHECKBOX == bttnid){
-    SHORTCUT_SetPocket( pWork );
-    KTST_SetDraw( pWork, FALSE );
-		pWork->oamlistpos_old = 0xffff;
-    _windowRewrite(pWork);
+		if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+	    SHORTCUT_SetPocket( pWork );
+	    KTST_SetDraw( pWork, FALSE );
+			pWork->oamlistpos_old = 0xffff;
+	    _windowRewrite(pWork);
+		}
   // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
@@ -3631,8 +3645,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   // チェックボックス
   }else if(bttnid >= BUTTONID_CHECK_AREA){
-    int no = bttnid - BUTTONID_CHECK_AREA;
-    SHORTCUT_SetEventItem( pWork, no );
+		if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+	    int no = bttnid - BUTTONID_CHECK_AREA;
+	    SHORTCUT_SetEventItem( pWork, no );
+		}
   }
 
   if(pocketno != -1){

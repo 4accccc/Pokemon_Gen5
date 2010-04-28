@@ -469,3 +469,4 @@ extern void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk );
 extern void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern BOOL ITEMDISP_InitBagMode( FIELD_ITEMMENU_WORK * wk );
 extern void ITEMDISP_PrintUtilTrans( FIELD_ITEMMENU_WORK * wk );
+extern BOOL ITEMMENU_CheckShortCutSetMode( FIELD_ITEMMENU_WORK* pWork );

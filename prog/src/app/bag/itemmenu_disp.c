@@ -728,14 +728,17 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 //    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
 		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
 
-    //「×」
-    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
-
-    WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
-                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
-		PrintStr( pWork, &pWork->winItemNum, pWork->pExpStrBuf, 0, _UP_ITEMNUM_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
+		if( pWork->pocketno != BAG_POKE_EVENT ){
+	    //「×」
+	    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
+	    WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
+	                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+	    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//	    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+			PrintStr( pWork, &pWork->winItemNum, pWork->pExpStrBuf, 0, _UP_ITEMNUM_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
+		}else{
+			GFL_BMPWIN_TransVramCharacter( pWork->winItemNum.win );
+		}
 
 		GFL_BMPWIN_ClearScreen( pWork->winWaza.win );			// 技マシン用の表示データクリア
 
@@ -757,7 +760,9 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
 
 	  ITEMDISP_WazaInfoWindowChange( pWork, wazano );
-  }
+
+		GFL_BMPWIN_TransVramCharacter( pWork->winItemNum.win );
+	}
 
   // アイテムの説明文
 //  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
@@ -1696,11 +1701,11 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     if( pWork->nListEnable[i] != 0 ){
       //「たいせつなもの」ポケット
       if( pWork->pocketno == BAG_POKE_EVENT ){
-				if( pWork->nListEnable[i] == 3 ){
-	        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], FALSE );
-				}else{
+				if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE && pWork->nListEnable[i] != 3 ){
 					GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
 	        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
+				}else{
+	        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], FALSE );
 				}
 			//「どうぐ」ポケット
 			}else if( pWork->pocketno == BAG_POKE_NORMAL && pWork->nListEnable[i] >= 4 ){
