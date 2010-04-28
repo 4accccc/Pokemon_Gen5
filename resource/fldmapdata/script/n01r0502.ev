@@ -628,9 +628,8 @@ _ANIME_LABEL  anm_bikkuri
 EVENT_START		ev_n01r0502_wkobjcode00_01
 _TALK_START_TURN_NOT()
 
-//シン・ム戦以降の場合
 IF $WK_SCENE_N01R0502 >= 4 THEN
-
+  //戦闘あとの場合はぐったりアニメ
     _OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_gutari )
     _OBJ_ANIME_WAIT()
 
@@ -645,8 +644,8 @@ IF $WK_SCENE_N01R0502 >= 4 THEN
     _MSGWIN_CLOSE()
     _VOICE_WAIT()
 
-//それ以外
 ELSE
+  //それ以外
 
     _OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_hoeru )
     _OBJ_ANIME_WAIT()
@@ -680,8 +679,16 @@ EVENT_START		ev_n01r0502_wkobjcode01_01
 	//捕獲の場合
 	IF FLAG_ON( FE_PACKAGE_POKE_GET ) THEN
 	
-    //「……そうか　真実を追い求める英雄に
-		_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_11w, msg_n01r0502_boss_11b, N01R0502_BOSS_01, POS_DEFAULT )
+    //伝説ポケモンを（なるべく）手に入れる処理
+    _CALL sub_add_legend
+
+    _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_TEMOTI_CHECK, SCWK_ANSWER )
+    //手持ちに伝説ポケモンがいたら
+    IF $SCWK_ANSWER == TRUE THEN
+
+      //「……そうか　真実を追い求める英雄に
+      _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_11w, msg_n01r0502_boss_11b, N01R0502_BOSS_01, POS_DEFAULT )
+    ENDIF
     //「さて……　キミのポケモンが　きずついている
     _PLAYER_NAME( 0 )
 		_BALLOONWIN_OBJMSG( msg_n01r0502_boss_battle_01, N01R0502_BOSS_01 )
@@ -1527,7 +1534,9 @@ _ANIME_LABEL	anm_n_nayamu1
 	_ANIME_DATA	ACMD_END,0
 
 
+/************************************************************/
 //Ｎの伝説ポケモンの鳴き声
+/************************************************************/
 sub_voice_play_n_legend:
 	  _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
@@ -1537,7 +1546,9 @@ sub_voice_play_n_legend:
 		ENDIF
     _RET
 
+/************************************************************/
 //ストーンから生まれた伝説ポケモンの鳴き声
+/************************************************************/
 sub_voice_play_mine_legend:
 	  _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
@@ -1547,6 +1558,92 @@ sub_voice_play_mine_legend:
 		ENDIF
     _RET
 
+/************************************************************/
+//  伝説ポケモンを（なるべく）手持ちに入れる処理
+/************************************************************/
+sub_add_legend:
+  _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_TEMOTI_CHECK, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_SORT, SCWK_ANSWER )
+  ELSE
+    _CALL sub_legend_add_loop
+  ENDIF
+  _RET
+
+
+sub_legend_add_loop:
+{
+  DEFINE_LOCAL  LWK_SELPOS
+  DEFINE_LOCAL  LWK_LOOP
+  DEFINE_LOCAL  LWK_LOOP_END
+  DEFINE_LOCAL  LWK_GET_POKE
+
+  IF $LWK_ROM == VERSION_WHITE THEN
+      $LWK_GET_POKE = MONSNO_651
+  ELSE
+      $LWK_GET_POKE = MONSNO_650
+  ENDIF
+  $LWK_LOOP_END = FALSE
+  $LWK_LOOP = 0
+
+  WHILE $LWK_LOOP_END == FALSE
+
+      SWITCH $LWK_LOOP
+      CASE  0 THEN
+          //てもちに　くわえますか？
+          _MONS_NAME( 1, LWK_GET_POKE )
+          _SYSWIN_MSG( msg_n01r0502_get_01, POS_DEFAULT )
+          _YES_NO_WIN( SCWK_ANSWER )
+          IF $SCWK_ANSWER == SCR_YES THEN
+              $LWK_LOOP = 1   //ポケモン選択へ
+          ELSE
+              $LWK_LOOP = 3   //キャンセル確認へ
+          ENDIF
+
+      CASE  1 THEN
+          //ではどのポケモンを　おくりかえしますか？
+          _SYSWIN_MSG( msg_n01r0502_get_03, POS_DEFAULT )
+          _SYSWIN_CLOSE()
+          _SELECT_TEMOTI_POKE( SCWK_ANSWER, LWK_SELPOS, 0 )
+          IF $SCWK_ANSWER == TRUE THEN
+              $LWK_LOOP = 2   //送り返し確認へ
+          ELSE
+              $LWK_LOOP = 3   //キャンセル確認へ
+          ENDIF
+
+      CASE  2 THEN
+          //その～を送り返していいですか？
+          _TEMOTI_NICK_NAME( 1, LWK_SELPOS )
+          _SYSWIN_MSG( msg_n01r0502_get_04, POS_DEFAULT )
+          IF $SCWK_ANSWER == TRUE THEN
+              //ボックスの伝説ポケと選んだ手持ちを交換
+              _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_GET_FROM_BOX, LWK_SELPOS )
+              //～を　てもちにくわえた！
+              _MONS_NAME( 1, LWK_GET_POKE )
+              _SYSWIN_MSG( msg_n01r0502_get_05, POS_DEFAULT )
+              _AB_KEYWAIT_MARK()
+              _SYSWIN_CLOSE()
+              $LWK_LOOP_END = TRUE  //取得して完了
+          ELSE
+              $LWK_LOOP = 0     //取得確認へ
+          ENDIF
+      CASE  3 THEN
+          //てもちに　くわえなくていいですか？
+          _MONS_NAME( 1, LWK_GET_POKE )
+          _SYSWIN_MSG( msg_n01r0502_get_02, POS_DEFAULT )
+          _YES_NO_WIN( SCWK_ANSWER )
+          IF $SCWK_ANSWER == SCR_YES THEN
+              $LWK_LOOP_END = TRUE  //取得せずに完了
+          ELSE
+              $LWK_LOOP = 1     //ポケモン選択へ
+          ENDIF
+
+      ENDSWITCH
+
+  ENDWHILE
+
+  _RET
+}
 
 /**************************************************************/
 /*		ゲーチス	話しかけ（負けた場合のもの）			  */
