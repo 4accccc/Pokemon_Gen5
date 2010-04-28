@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-19T12:39:27"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-28T18:46:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -355,10 +355,10 @@
 	</row>
 
 	<row id="AURA_STR_003">
-		<language name="JPN" width="256">チェックが　おわりました　あいてに
-せきがいせんを　あわせてください</language>
+		<language name="JPN" width="256">チェックが　おわりました　あいてと
+せきがいせんつうしんを　してください</language>
 		<language name="JPN_KANJI" width="256">チェックが　終わりました
-相手に　赤外線を　合わせてください</language>
+相手と　赤外線通信を　してください</language>
 	</row>
 
 	<row id="AURA_STR_004">
@@ -375,10 +375,10 @@
 	</row>
 
 	<row id="AURA_STR_006">
-		<language name="JPN" width="256">つうしんが　きれました
-せきがいせんを　あわせてください</language>
-		<language name="JPN_KANJI" width="256">通信が　きれました
-赤外線を　合わせてください</language>
+		<language name="JPN" width="256">つうしんが　きれました　あいてと
+せきがいせんつうしんを　してください</language>
+		<language name="JPN_KANJI" width="256">通信が　切れました　相手と
+赤外線通信を　してください</language>
 	</row>
 
 	<row id="AURA_BTN_000">
