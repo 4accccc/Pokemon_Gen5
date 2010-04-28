@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T15:21:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T19:05:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -440,6 +440,18 @@
 震えていたら　勝てるわけ……</language>
 	</row>
 
+	<row id="msg_d05r0201_hakaim1_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後
+　4人目の場合</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
+ふるえていたら　かてるわけ……▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
+震えていたら　勝てるわけ……▼</language>
+	</row>
+
 	<row id="msg_d05r0201_hakaim2_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後、トレーナー戦闘に</comment>
@@ -462,6 +474,26 @@
 あつまっていた　ところ……▼
 ヤーコンの　おっさんに　みつかり
 つかまっていたのよ……</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……奪い集めた
+ポケモンを　まとめて　運ぶため▼
+夜中の　コンテナ前に
+集まっていた　ところ……▼
+ヤーコンの　おっさんに　みつかり
+つかまっていたのよ……▼</language>
+	</row>
+
+	<row id="msg_d05r0201_hakaim2_03">
+		<comment>♀
+・戦闘後
+　4人目の場合</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩW
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『……うばった
+ポケモンを　まとめて　はこぶため▼
+よなかの　コンテナまえに
+あつまっていた　ところ……▼
+ヤーコンの　おっさんに　みつかり
+つかまっていたのよ……▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……奪い集めた
 ポケモンを　まとめて　運ぶため▼
 夜中の　コンテナ前に
@@ -498,6 +530,24 @@
 そうに　違いない！</language>
 	</row>
 
+	<row id="msg_d05r0201_hakaim3_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後
+　4人目の場合</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……ひとと　いっしょに
+はたらく　ポケモンたち▼
+たのしそうに　みえるが
+きっと　くるしんでいるのだ！▽
+そうに　ちがいない！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……人と　共に
+働く　ポケモンたち▼
+楽しそうに　みえるが
+きっと　苦しんでいるのだ！▽
+そうに　違いない！▼</language>
+	</row>
+
 	<row id="msg_d05r0201_hakaiw1_01">
 		<comment>♀
 ・メッセージ表示後、トレーナー戦闘に</comment>
@@ -518,6 +568,18 @@
 なんだか　ねむくなってきた</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……なぜかしら
 なんだか　眠くなってきた</language>
+	</row>
+
+	<row id="msg_d05r0201_hakaiw1_03">
+		<comment>♀
+・戦闘後
+　4人目の場合</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『……なぜかしら
+なんだか　ねむくなってきた▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……なぜかしら
+なんだか　眠くなってきた▼</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
