@@ -460,6 +460,7 @@ static STRBUF* MakeStr( HEAPID heap_id,
 
 // 進化条件を処理する
 static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
+static void ShinkaDemo_ShinkaCondCheckSoubiUse( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 
 
 //=============================================================================
@@ -952,9 +953,18 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
     {
       switch( param->shinka_cond )
       {
-      case SHINKA_COND_SPECIAL_LEVELUP:  // ヌケニンを誕生させる  // SHINKA_COND_SPECIAL_NUKENINではなくSHINKA_COND_SPECIAL_LEVELUP(SHINKA_COND_SPECIAL_LEVELUPはツチニンでしか得られない値)
+      // ヌケニンを誕生させる
+      case SHINKA_COND_SPECIAL_LEVELUP:  // SHINKA_COND_SPECIAL_NUKENINではなくSHINKA_COND_SPECIAL_LEVELUP(SHINKA_COND_SPECIAL_LEVELUPはツチニンでしか得られない値)
         {
           ShinkaDemo_ShinkaCondCheckSpecialLevelup( param, work );
+        }
+        break;
+      // 装備アイテムを消す
+      case SHINKA_COND_TUUSHIN_ITEM:
+      case SHINKA_COND_SOUBI_NOON:
+      case SHINKA_COND_SOUBI_NIGHT:
+        {
+          ShinkaDemo_ShinkaCondCheckSoubiUse( param, work );
         }
         break;
       }
@@ -1581,6 +1591,22 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   
     GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
     GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
+  }
+
+  // param修正
+  {
+    if( work->step == STEP_FADE_IN_BEFORE )
+    {
+      // 進化条件
+      if( param->shinka_cond == SHINKA_COND_ITEM )  // 「たいようのいし」などを使って進化した場合は、進化キャンセルさせない
+      {
+        param->b_enable_cancel = FALSE;
+      }
+    }
+    else
+    {
+      // 何もしない
+    }
   }
 
   // 進化デモの演出
@@ -2557,5 +2583,11 @@ static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, 
       }
     }
   }
+}
+
+static void ShinkaDemo_ShinkaCondCheckSoubiUse( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  //装備アイテムを消す系
+  PP_Put( (POKEMON_PARAM*)(work->pp), ID_PARA_item, 0 );
 }
 
