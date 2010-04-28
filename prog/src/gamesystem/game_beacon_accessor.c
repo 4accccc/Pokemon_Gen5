@@ -1220,7 +1220,7 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
     WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_ItemNo(info) );
     break;
   case BEACON_WSET_PTIME:
-    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_Hour(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_Hour(info), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     break;
   case BEACON_WSET_THANKS:
     WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_ThankyouCount(info), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
