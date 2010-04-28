@@ -54,7 +54,7 @@
 #endif
 
 
-#define DEBUG_KEY_CONTROL // Lボタン　＋　AですべてOFF状態 　Bでライブキャスター YでPALACE
+//#define DEBUG_KEY_CONTROL // Lボタン　＋　AですべてOFF状態 　Bでライブキャスター YでPALACE
 
 
 

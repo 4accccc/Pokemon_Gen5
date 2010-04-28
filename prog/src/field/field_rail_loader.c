@@ -98,6 +98,7 @@ static RAIL_CAMERA_FUNC* sp_RAIL_CAMERA_FUNC[FIELD_RAIL_LOADER_CAMERA_FUNC_MAX] 
   FIELD_RAIL_CAMERAFUNC_OfsAngleCamera_Center,
   FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCamera,
   FIELD_RAIL_CAMERAFUNC_OfsAngleTargetOffsCamera,
+  FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCameraNotTrace,
 };
 
 // 座標動作関数テーブル

@@ -219,6 +219,7 @@ typedef struct
   fx32 target_offset_z;
 } RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK;
 extern void FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCamera(const FIELD_RAIL_MAN* man);
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCameraNotTrace(const FIELD_RAIL_MAN* man);
 
 //------------------------------------------------------------------
 //  アングル　ターゲットオフセット　カメラ 線形補間

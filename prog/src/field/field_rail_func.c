@@ -1503,6 +1503,29 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCamera(const FIELD_RAIL_MAN* man)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  固定アングル　ターゲットオフセット　camera　TRACEなし
+ *	＊H01でうまくいくようにするための処理　TRACEまわりの処理が入ってきています。
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCameraNotTrace(const FIELD_RAIL_MAN* man)
+{
+	FIELD_CAMERA* cam = FIELD_RAIL_MAN_GetCamera( man );
+  VecFx32 pos;
+
+  FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCamera( man );
+
+  //トレーナーとのバインドをきり、自分で設定
+  FIELD_CAMERA_FreeTarget( cam );
+
+  FIELD_RAIL_MAN_GetBindWorkPos( man, &pos );
+  FIELD_CAMERA_SetTargetPos( cam, &pos );
+
+  // TRACE内容を破棄
+  FIELD_CAMERA_RestartTrace( cam );
+}
+
 
 //------------------------------------------------------------------
 //  アングル　ターゲットオフセット　カメラ 線形補間
