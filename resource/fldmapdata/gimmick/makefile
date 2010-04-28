@@ -21,7 +21,8 @@ SUBDIRS	=	gym_denki \
 					sppoke \
 					d12 \
 					zoroa \
-					legend
+					legend \
+					r04d03
 
 .PHONY:	do-build clean
 

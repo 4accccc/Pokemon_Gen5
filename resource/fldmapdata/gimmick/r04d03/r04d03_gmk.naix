@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: r04d03_gmk.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-04-28T20:11:43
+ *****************************************************************************/
+
+#ifndef NARC_R04D03_GMK_NAIX_
+#define NARC_R04D03_GMK_NAIX_
+
+enum {
+	NARC_r04d03_gmk_trailer_01a_nsbmd = 0,
+	NARC_r04d03_gmk_trailer_01b_nsbmd = 1,
+	NARC_r04d03_gmk_trailer_02a_nsbmd = 2,
+	NARC_r04d03_gmk_trailer_02b_nsbmd = 3,
+	NARC_r04d03_gmk_trailer_03a_nsbmd = 4,
+	NARC_r04d03_gmk_trailer_03b_nsbmd = 5
+};
+
+/* NARC_R04D03_GMK_NAIX_ */
+#endif
