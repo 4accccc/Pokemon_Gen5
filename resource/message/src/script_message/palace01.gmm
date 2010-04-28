@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-28T14:59:32"/>
+	<create user="ohmori" host="W00223" date="2010-04-28T20:43:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -435,9 +435,9 @@
 また　だれか　きたな……▽
 ようこそ　ハイリンクへ▼
 ……　……　……
-……んん？▽
-そのようすだと　ここがどこだか▽
-わからないようだな▼</language>
+……うむ？▽
+そのようすだと　ここがどこか▽
+わからない　ようだな▼</language>
 		<language name="JPN_KANJI" width="256">おやおや
 また　だれか　きよった……▼
 ここは　こどもが
@@ -461,14 +461,15 @@
 
 	<row id="plc_oldman1_01_11" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">……うむ　ここは
+		<language name="JPN" width="256">……ここは
 イッシュの　ちゅうしんにある▽
 ハイリンクと　よばれる　しまだ▼
 ハイリンクは　だれかのせかいと
 つながる　ふしぎな　しま▼
-このハイリンク　は
-じぶんのせかいと　ちがう▽
-だれかのせかいに　つながっている▼</language>
+この　しまから　つながる
+だれかのせかいに　いけば▽
+そのせかいの　ぼうけんしゃに▽
+であうことが　できる▼</language>
 		<language name="JPN_KANJI" width="256">……うむ
 ここは　イッシュのちゅうしん　にある▽
 ハイリンクとよばれる　ばしょだ▼
@@ -484,16 +485,17 @@
 
 	<row id="plc_oldman1_01_12" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">……ここから
-だれかのせかいに　いけば▽
-そのせかいの　ぼうけんしゃに▽
-であえる　だろう▼
-そして　おぬしは　そのせかいの
-ぼうけんしゃを　たすけることが　できる▼
-もし　だれかを
+		<language name="JPN" width="256">そして　おぬしは
+そのぼうけんしゃを▽
+たすけることが　できるのだ▼
+……　……　……
+こどもよ！▼
+もし　そのぼうけんしゃを
 たすけたいと　おもうのなら▽
 このしまの　かけはしを　わたり▽
-だれかのせかいに　いってみるといい</language>
+だれかのせかいに　いってみるのだ▼
+そこに　おぬしをまっている
+だれかが　いるはずだ！</language>
 		<language name="JPN_KANJI" width="256">……こどもよ
 おぬしは　だれかを　たすけたいと▽
 ほんきで　おもったことは　あるか？▼
@@ -807,8 +809,6 @@ plc_girl4_03_06,7,8</comment>
 (侵入先）</attribute>
 		<language name="JPN" width="256">……
 ようこそ　だれかのせかいへ▼
-ここは　おぬしがいた　せかいとは
-ことなる　だれかのせかい▼
 おぬしは　ここで
 このせかいの　ぼうけんしゃを▽
 たすけることが　できる▼
@@ -833,7 +833,7 @@ plc_girl4_03_06,7,8</comment>
 選択肢表示、plc_oldman1_02_07,8,9</comment>
 		<attribute name="キャラ指定">OLDMAN1：
 (侵入先）</attribute>
-		<language name="JPN" width="256">さて　こどもよ
+		<language name="JPN" width="256">……さて　こどもよ
 なにか　ききたいことは　あるかな？</language>
 		<language name="JPN_KANJI" width="256">さて　こどもよ　だれかのせかい　に
 ついて　ききたいことは　あるかな？</language>
@@ -868,13 +868,12 @@ plc_girl4_03_06,7,8</comment>
 		<attribute name="キャラ指定">OLDMAN1：
 (侵入先）</attribute>
 		<language name="JPN" width="256">ミッション　とは
-このせかいで　ぼうけんしゃを▽
+このせかいの　ぼうけんしゃを▽
 たすける　ほうほうだ▼
 このきを　しらべれば
 ミッションを　うけることが　できる▼
-もし　おおくのぼうけんしゃ　を　
-たすけることが　できれば▽
-このきも　おおきく　そだつだろう▼</language>
+さあ　ミッションをうけ
+ぼうけんしゃのもとへ　いくのだ▼</language>
 		<language name="JPN_KANJI" width="256">ここは　おぬしのせかいとは　ことなる
 「だれかのせかい」だ▼
 ここには　おぬしと　おなじように
@@ -898,9 +897,9 @@ plc_girl4_03_06,7,8</comment>
 じゆうに　ワープすることができる▼
 ……このせかいは　おぬしの
 ゆめで　できているのだ▼
-おぬしが　イメージできれば
+おぬしが　イメージすれば
 そこに　ワープすることが　できる▼
-さあ　ミッションを　うけとり
+さあ　ミッションを　うけ
 ぼうけんしゃの　もとへいくのだ▼</language>
 		<language name="JPN_KANJI" width="256">ここ　だれかのせかい　では
 ちずにふれて　イメージすることで▽
