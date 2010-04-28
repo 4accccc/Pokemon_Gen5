@@ -14,6 +14,7 @@ USERS	= toru_nagihashi tetsuji_ohta obata_toshihiro kawada_koji shimoyamada
 targetname = townmap_data
 targetname_b = $(targetname)_version_black
 targetname_w = $(targetname)_version_white
+targetname2	= townmap_replace.dat
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -51,16 +52,16 @@ $(TARGETDIR_H)/$(targetname).h: $(targetname).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname_b).narc: $(targetname_b).dat
+$(targetname_b).narc: $(targetname_b).dat $(targetname2)
 	nnsarc -r -l -n -i $(targetname_b) $^
 
-$(targetname_w).narc: $(targetname_w).dat
+$(targetname_w).narc: $(targetname_w).dat $(targetname2)
 	nnsarc -r -l -n -i $(targetname_w) $^
 
-$(targetname_b).dat: townmap_data.xls
+$(targetname_b).dat $(targetname2): townmap_data.xls
 	perl townmap_data_conv.pl townmap_data.xls
 
-$(targetname_w).dat: townmap_data.xls
+$(targetname_w).dat $(targetname2): townmap_data.xls
 	perl townmap_data_conv.pl townmap_data.xls
 
 endif

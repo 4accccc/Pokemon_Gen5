@@ -4,14 +4,15 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-28T19:52:30
+	Update:2010-04-28T22:13:22
  *****************************************************************************/
 
 #ifndef NARC_TOWNMAP_DATA_VERSION_WHITE_NAIX_
 #define NARC_TOWNMAP_DATA_VERSION_WHITE_NAIX_
 
 enum {
-	NARC_townmap_data_version_white_townmap_data_version_white_dat = 0
+	NARC_townmap_data_version_white_townmap_data_version_white_dat = 0,
+	NARC_townmap_data_version_white_townmap_replace_dat = 1
 };
 
 /* NARC_TOWNMAP_DATA_VERSION_WHITE_NAIX_ */

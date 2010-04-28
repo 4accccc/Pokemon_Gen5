@@ -13,8 +13,9 @@
 $EXCEL_CONV_EXE			=	$ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";
 
 #エクセルデータ
-@TOWNMAP_XLS_HEADER	= ();		#タウンマップエクセルデータヘッダ
-@TOWNMAP_XLS_DATA		= ();		#タウンマップエクセルデータのデータ本体
+@TOWNMAP_XLS_HEADER	  = ();		#タウンマップエクセルデータヘッダ
+@TOWNMAP_XLS_DATA		  = ();		#タウンマップエクセルデータのデータ本体
+@TOWNMAP_XLS_REPLACE  = ();		#タウンマップエクセルデータの置き換えデータ本体
 
 @ZONETABLE_XLS_DATA	= ();		#ゾーンテーブルのデータ
 
@@ -22,6 +23,7 @@ $EXCEL_CONV_EXE			=	$ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";
 $OUTPUTNAME_DATA		= "townmap_data";
 $OUTPUTNAME_PREFIX  = ".dat";
 $OUTPUTNAME_HEADER	= "townmap_data.h";
+$OUTPUTNAME_REPLACE	= "townmap_replace.dat";
 
 #定義名取得用ファイルネーム
 $ZONEID_FILENAME		=	"../../fldmapdata/zonetable/zone_id.h";
@@ -76,6 +78,11 @@ $ZONE_ID_PREFIX     = "ZONE_ID_";
 @DATA_ZKN_POS_Y			=	();		#図鑑分布配置座標Y
 @DATA_VERSION 			=	();		#バージョン別情報
 
+#取得した置き換えデータ
+$DATA_REPLACE_LENGTH  = 0;  #総数
+@DATA_REPLACE_ZONEID  = (); #置き換え先ゾーングループ
+@DATA_REPLACE_SRCID00  = (); #置き換え元ゾーングループ00
+
 #データ総数
 $DATA_LENGTH				  = 0;  #総数
 @DATA_VERSION_LENGTH  = (); #バージョンごとの総数
@@ -108,6 +115,8 @@ if( @ARGV < 1 )
 #=====================================
 &EXCEL_GetData( $ARGV[0], "header", \@TOWNMAP_XLS_HEADER );
 &EXCEL_GetData( $ARGV[0], "data", \@TOWNMAP_XLS_DATA );
+&EXCEL_GetData( $ARGV[0], "replace", \@TOWNMAP_XLS_REPLACE );
+
 #-------------------------------------
 #	ヘッダ情報を取得
 #=====================================
@@ -131,6 +140,7 @@ if( @ARGV < 1 )
 #	データを取得
 #=====================================
 &TownmapData_ConvertData;
+&TownmapData_ConvertReplace;
 
 #-------------------------------------
 #	当たり判定情報に場所の位置を足す
@@ -162,6 +172,7 @@ foreach $ver ( @VERSION_TYPE )
   #	データ化
   &TownmapData_CreateBinaryData( $ver );
 }
+&TownmapData_CreateBinaryReplace;
 
 #-------------------------------------
 #	正常終了
@@ -349,7 +360,7 @@ sub TownmapData_ConvertZoneTable
 }
 
 #-------------------------------------
-#	@brief	ゾーングループのためにゾーンテーブルをコンバート
+#	@brief	エクセルデータコンバート
 #=====================================
 sub TownmapData_ConvertData
 {
@@ -654,6 +665,77 @@ sub TownmapData_ConvertData
 }
 
 #-------------------------------------
+#	@brief	エクセル置き換えデータコンバート
+#=====================================
+sub TownmapData_ConvertReplace
+{
+
+  my $is_start	= 0;
+  foreach $line ( @TOWNMAP_XLS_REPLACE )
+  {
+    $line	=~ s/\r\n//g;
+    @word	= split( /,/, $line );
+
+    print @word;
+
+    #データ範囲
+    if( $word[0] eq "#file_start" )
+    {
+      @TAG_WORD	= @word;
+      $is_start	= 1;
+      next;
+    }
+    elsif( $word[0] eq "#file_end" )
+    {
+      $is_start	= 0;
+    }
+
+    #データ取得
+    if( $is_start == 1 )
+    {
+      for( my $i = 0; $i < @TAG_WORD; $i++ ) 
+      {
+        #タグとデータを取得
+        my $tag	= $TAG_WORD[$i];
+        my $w		= $word[$i];
+
+        #置き換え先ID
+        if( $tag eq "#replace_id" )
+        {
+          &UndefAssert( $w );
+
+          unless( exists( $ZONEGROUP_HASH{ $w } ) )
+          {
+            print ( "ゾーングループではない値が設定されています $w\n" );
+            exit(1);
+          } 
+
+          push( @DATA_REPLACE_ZONEID, $ZONEGROUP_HASH{ $w } );
+        }
+        #置き換え元ID00
+        elsif( $tag eq "#src_id_00" )
+        {
+          &UndefAssert( $w );
+
+          unless( exists( $ZONEGROUP_HASH{ $w } ) )
+          {
+            print ( "ゾーングループではない値が設定されています $w\n" );
+            exit(1);
+          } 
+
+          push( @DATA_REPLACE_SRCID00, $ZONEGROUP_HASH{ $w } );
+        }
+        #終了
+				elsif( $tag eq "#end" )
+				{
+					$DATA_REPLACE_LENGTH++;
+				}
+			}
+		}
+  }
+}
+
+#-------------------------------------
 #	@brief	ヘッダ作成
 #=====================================
 sub TownmapData_CreateHeader
@@ -668,6 +750,8 @@ sub TownmapData_CreateHeader
   print( FILEOUT "//このファイルはtownmap_data_convによって自動生成されています\n\n" );
   print( FILEOUT "//データ総数\n" );
   print( FILEOUT "#define TOWNMAP_DATA_MAX\t($len)\n\n" );
+  print( FILEOUT "//置き換えデータの総数\n" );
+  print( FILEOUT "#define TOWNMAP_REPLACE_MAX\t($DATA_REPLACE_LENGTH)\n\n" );
   print( FILEOUT "//データエラー値\n" );
   print( FILEOUT "#define TOWNMAP_DATA_ERROR\t($DATA_ERROR_VALUE)\n\n" );
   print( FILEOUT "//場所のタイプ\n" );
@@ -743,6 +827,22 @@ sub TownmapData_CreateBinaryData
     print( FILEOUT pack( "S", $DATA_ZKN_ANM[$i] ) );
     print( FILEOUT pack( "S", $DATA_ZKN_POS_X[$i] ) );
     print( FILEOUT pack( "S", $DATA_ZKN_POS_Y[$i] ) );
+  }
+  close( FILEOUT ); 
+}
+
+#-------------------------------------
+#	@brief	置き換えバイナリデータ作成
+#	@param version
+#=====================================
+sub TownmapData_CreateBinaryReplace
+{
+  open( FILEOUT, ">$OUTPUTNAME_REPLACE" );
+  binmode( FILEOUT );
+  for( my $i = 0; $i < $DATA_REPLACE_LENGTH; $i++ )
+  {
+    print( FILEOUT pack( "S", $DATA_REPLACE_ZONEID[$i] ) );
+    print( FILEOUT pack( "S", $DATA_REPLACE_SRCID00[$i] ) );
   }
   close( FILEOUT ); 
 }

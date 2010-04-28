@@ -52,6 +52,7 @@ typedef enum
 	TOWNMAP_DATA_PARAM_MAX,
 } TOWNMAP_DATA_PARAM;
 
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -64,7 +65,7 @@ typedef struct _TOWNMAP_DATA TOWNMAP_DATA;
 
 //=============================================================================
 /**
- *					プロトタイプ宣言
+ *					タウンマップデータデータ取得
 */
 //=============================================================================
 extern TOWNMAP_DATA *TOWNMAP_DATA_Alloc( HEAPID heapID );
@@ -75,3 +76,19 @@ extern u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_DA
 //field_townmap.hのFIELD_TOWNMAP_GetRootZoneID関数で得たZONEIDを以下に渡すと
 //上記タウンマップデータのidxを返す
 extern u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID );
+
+
+
+//=============================================================================
+/**
+ *					置き換えデータ取得
+*/
+//=============================================================================
+//-------------------------------------
+///	置き換え情報
+//=====================================
+typedef struct _TOWNMAP_REPLACE_DATA TOWNMAP_REPLACE_DATA;
+
+extern TOWNMAP_REPLACE_DATA *TOWNMAP_REPLACE_DATA_Alloc( HEAPID heapID );
+extern void TOWNMAP_REPLACE_DATA_Free( TOWNMAP_REPLACE_DATA *p_wk );
+extern u16 TOWNMAP_REPLACE_DATA_GetReplace( const TOWNMAP_REPLACE_DATA *cp_wk, u16 zoneID );

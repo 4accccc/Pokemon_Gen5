@@ -4,6 +4,9 @@
 //データ総数
 #define TOWNMAP_DATA_MAX	(60)
 
+//置き換えデータの総数
+#define TOWNMAP_REPLACE_MAX	(1)
+
 //データエラー値
 #define TOWNMAP_DATA_ERROR	(65535)
 

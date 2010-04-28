@@ -100,7 +100,7 @@ BOOL TOWNMAP_UTIL_CheckFlag( GAMEDATA* p_gamedata, u16 flag )
     return EVTLOCK_CheckEvtLock( p_misc, EVT_LOCK_NO_VICTYTICKET, p_mystatus );
 
   case TOWNMAP_USER_FLAG_OVERSEAS_TRADE:
-    //国連へは世界交換したら行ける
+    //国連へは世界交換したら地図上い発見
     return WIFIHISTORY_GetMyCountryCountEx( p_wifi, p_mystatus, FALSE );
 
   default:

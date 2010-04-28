@@ -21,6 +21,15 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	置き換えデータ
+//=====================================
+typedef enum
+{
+  TOWNMAP_REPLACE_PARAM_DST_ZONE_ID,  //置き換え先ゾーングループ
+  TOWNMAP_REPLACE_PARAM_SRC_ZONE_ID_00,  //置き換え元ゾーングループ00
+  TOWNMAP_REPLACE_PARAM_MAX,
+} TOWNMAP_REPLACE_PARAM;
 
 //=============================================================================
 /**
@@ -35,6 +44,12 @@ typedef struct
 	u16	param[TOWNMAP_DATA_PARAM_MAX];
 } TOWNMAP_DATA_STRUCT;
 
+//-------------------------------------
+///	置き換えデータ本体
+//=====================================
+typedef struct {
+  u16 param[ TOWNMAP_REPLACE_PARAM_MAX ];
+} TOWNMAP_REPLACE_STRUCT;
 
 
 //-------------------------------------
@@ -104,7 +119,7 @@ u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_DATA_PARA
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  field_townmap.hのFIELD_TOWNMAP_GetRootZoneID関数で得た
+ *	@brief  townmap_util.hのFIELD_TOWNMAP_GetRootZoneID関数で得た
  *	ZONEIDを以下に渡すと上記タウンマップデータのidxを返す
  *
  *	@param	const TOWNMAP_DATA *cp_wk   ワーク
@@ -125,4 +140,71 @@ u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID )
   }
 
   return TOWNMAP_DATA_ERROR;
+}
+
+//=============================================================================
+/**
+ *    置き換え
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  置き換えデータ取得
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ハンドル
+ */
+//-----------------------------------------------------------------------------
+TOWNMAP_REPLACE_DATA *TOWNMAP_REPLACE_DATA_Alloc( HEAPID heapID )
+{ 
+	void *p_handle;
+	p_handle	= GFL_ARC_UTIL_Load( ARCID_TOWNMAP_DATA, 
+			1, FALSE, heapID );
+
+	return p_handle;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  置き換えデータ破棄
+ *
+ *	@param	TOWNMAP_REPLACE_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void TOWNMAP_REPLACE_DATA_Free( TOWNMAP_REPLACE_DATA *p_wk )
+{ 
+	GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  置き換え関数
+ *
+ *	@param	const TOWNMAP_REPLACE_DATA *cp_wk ワーク
+ *	@param	zoneID  置き換え元ゾーンID
+ *
+ *	@return 置き換え先ゾーンID  もし入っていなければTOWNMAP_DATA_ERROR
+ */
+//-----------------------------------------------------------------------------
+u16 TOWNMAP_REPLACE_DATA_GetReplace( const TOWNMAP_REPLACE_DATA *cp_wk, u16 zoneID )
+{ 
+  GF_ASSERT( cp_wk );
+
+	{	
+    int i;
+		const TOWNMAP_REPLACE_STRUCT *cp_data;
+
+    for( i = 0; i < TOWNMAP_REPLACE_MAX; i++ )
+    { 
+      cp_data	= (const TOWNMAP_REPLACE_STRUCT*)((const u8*)(cp_wk) + sizeof(TOWNMAP_REPLACE_STRUCT) * i);
+
+      if( cp_data->param[ TOWNMAP_REPLACE_PARAM_SRC_ZONE_ID_00 ] == zoneID )
+      { 
+        return cp_data->param[ TOWNMAP_REPLACE_PARAM_DST_ZONE_ID ];
+      }
+    }
+
+		return TOWNMAP_DATA_ERROR;
+	}
 }
