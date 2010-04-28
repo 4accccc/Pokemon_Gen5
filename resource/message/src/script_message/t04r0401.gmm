@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T21:23:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T21:44:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1314" top="174" right="2019" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1129,8 +1129,18 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER2
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その１</language>
+		<language name="JPN" width="256">アロエ『カセキって　すごくないかい？▼
+しんで　なにも　いえないはずなのに
+いきていた　じだいのことを▽
+あたしらに　おしえてくれるんだ▼
+ふふふ　いまのは　アララギの
+むすめの　うけうり　だけどさ！</language>
+		<language name="JPN_KANJI" width="256">アロエ『カセキって　すごくないかい？▼
+死んで　なにも　いえないはずなのに
+生きていた　時代のことを▽
+あたしらに　教えてくれるんだ▼
+ふふふ　今のは　アララギの
+娘の　受け売り　だけどさ！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader2_summer_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1139,8 +1149,20 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER2
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その２</language>
+		<language name="JPN" width="256">アロエ『あんた！
+わざ　かたきうちは　つかってるかい？▼
+わざマシンは
+なんどでも　つかえるんだろ？▼
+いろんな　ポケモンに　おしえていけば
+いつかは　ぴったりの▽
+ポケモンが　みつかるはずさ！</language>
+		<language name="JPN_KANJI" width="256">アロエ『あんた！
+技　かたきうちは　使ってるかい？▼
+わざマシンは
+何度でも　使えるんだろ？▼
+いろんな　ポケモンに　教えていけば
+いつかは　ぴったりの▽
+ポケモンが　みつかるはずさ！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader2_summer_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
