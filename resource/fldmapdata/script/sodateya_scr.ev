@@ -441,7 +441,7 @@ take_back_pokemon_core:
     _GET_SODATEYA_POKE_SEX( sex, 0 )
     _GET_SODATEYA_POKE_LV( now_level, 0 )
     // メニュー項目を追加
-    _SODATEYA_MONS_NAME( 0, 0 ) // モンスター名をセット
+    _SODATEYA_NICK_NAME( 0, 0 ) // ニックネームをセット
     _NUMBER( 1, now_level, 3 ) // レベルをセット
     IF ($monsno == MONSNO_NIDORAN_F) || ($monsno == MONSNO_NIDORAN_M) THEN
       _BMPMENU_MAKE_LIST( msg_sodateya_menu_08, 0 ) // ニドランは性別なし用のメッセージを使用
@@ -461,7 +461,7 @@ take_back_pokemon_core:
     _GET_SODATEYA_POKE_SEX( sex, 1 )
     _GET_SODATEYA_POKE_LV( now_level, 1 )
     // メニュー項目を追加
-    _SODATEYA_MONS_NAME( 0, 1 ) // モンスター名をセット
+    _SODATEYA_NICK_NAME( 0, 1 ) // ニックネームをセット
     _NUMBER( 1, now_level, 3 ) // レベルをセット
     IF ($monsno == MONSNO_NIDORAN_F) || ($monsno == MONSNO_NIDORAN_M) THEN
       _BMPMENU_MAKE_LIST( msg_sodateya_menu_08, 1 ) // ニドランは性別なし用のメッセージを使用
