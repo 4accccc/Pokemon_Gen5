@@ -2649,6 +2649,12 @@ static BOOL Earth3D_Control( EARTH_DEMO_WORK * wk,int keytrg,int keycont )
     }
     result = TRUE;
   }
+
+#ifdef PM_DEBUG
+  if(result){
+    OS_TPrintf("rot_x=0x%x, rot_y=0x%x\n", wk->rotate.x, wk->rotate.y);
+  }
+#endif
   return result;
 }
 
