@@ -572,7 +572,7 @@ enum{
 
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
  
-  {	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },   //タッチパネル全部
+  {	PANEL_Y2 * 8,  (PANEL_Y2 * 8) + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,255 },   //タッチパネル全部
   { (POS_EDITMARK_Y-8), (POS_EDITMARK_Y+8), (POS_EDITMARK_X-8), (POS_EDITMARK_X+8) },        //こうさく
   { (POS_HELPMARK_Y-8), (POS_HELPMARK_Y+8), (POS_HELPMARK_X-8), (POS_HELPMARK_X+8) },   //HELP
   { (POS_CROSS_Y_CENTER-8), (POS_CROSS_Y_CENTER+8), POS_CROSS_X_CENTER-40, POS_CROSS_X_CENTER+40 },                //SURECHIGAI
@@ -732,7 +732,6 @@ struct _C_GEAR_WORK {
   GFL_CLWK  *cellStartUp[STARTUP_ANIME_OBJ_MAX];
   u32 crossColor[CROSS_COLOR_MAX]; //すれ違いカラー
 
-  GFL_CLWK  *cellMove;
 
   STARTUP_ENDCALLBACK* pCall;
   void* pWork;
@@ -774,8 +773,6 @@ struct _C_GEAR_WORK {
   u8 touchx;    //タッチされた場所
   u8 touchy;    //タッチされた場所
   u8 bAction;
-  u8 cellMoveCreateCount;
-  u8 cellMoveType;
   u8 state_seq;
   u8 startCounter;
   u8 bPanelEdit;
@@ -1207,7 +1204,7 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
 static int getTypeToTouchPos(C_GEAR_WORK* pWork,int touchx,int touchy,int *pxp, int* pyp)
 {
   int xp,yp;
-  int type = CGEAR_PANELTYPE_NONE;
+  int type = CGEAR_PANELTYPE_MAX;
 
   {  // ギアのタイプ分析
     int ypos[2] = {PANEL_Y1,PANEL_Y2};
@@ -1215,6 +1212,9 @@ static int getTypeToTouchPos(C_GEAR_WORK* pWork,int touchx,int touchy,int *pxp, 
     touchx = touchx / 8;
     touchy = touchy / 8;
     xp = (touchx - PANEL_X1) / PANEL_SIZEXY;
+    if(xp < 0){
+      return CGEAR_PANELTYPE_MAX;
+    }
     if(touchy - ypos[xp % 2] < 0){
       return CGEAR_PANELTYPE_MAX;
     }
@@ -2864,6 +2864,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork)
 static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
 {
   u32 touchx,touchy;
+  BOOL result;
 
   // 起動してないなら、電源いがい触れない。
   if( pWork->power_flag == FALSE ){
@@ -2873,13 +2874,52 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     }
   }
 
+
   switch(bttnid){
   case TOUCH_LABEL_ALL:
-    if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
+    result  = GFL_UI_TP_GetPointCont(&touchx,&touchy);
+    GF_ASSERT( result );
+
+    if( pWork->bPanelEdit ){
+      int type;
+      int xp,yp;
+
       pWork->tpx = touchx;
       pWork->tpy = touchy;
+
+      //タッチ場所のタイプをとっておく。
+      type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
+
+      if(((_gearPanelTypeNum(pWork,type) > 1 ) || (type == CGEAR_PANELTYPE_BASE)) && _isSetChip(xp,yp))
+      {
+        type = (type+1) % CGEAR_PANELTYPE_MAX;
+        _modeSetSavePanelType(pWork, pWork->pCGSV,xp,yp,type);
+        GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+        PMSND_PlaySE( SEQ_SE_MSCL_07 );
+      }
+
+    }else{
+
+      // ボタンプッシュ
+      pWork->touchx = touchx;
+      pWork->touchy = touchy;
+
+      if( !SleepMode_IsSleep( pWork ) ){  //通信ONなら
+        u32 type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
+
+        switch( type ){
+        case CGEAR_PANELTYPE_IR:
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
+          break;
+        case CGEAR_PANELTYPE_WIFI:
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
+          break;
+        case CGEAR_PANELTYPE_WIRELESS:
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
+          break;
+        }
+      }
     }
-    pWork->cellMoveCreateCount = 0;
     break;
   case TOUCH_LABEL_EDIT:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
@@ -2945,113 +2985,8 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   }
 
-  switch( event ){
-  case GFL_BMN_EVENT_TOUCH:
+  if( event == GFL_BMN_EVENT_TOUCH ){
     _touchFunction(pWork,bttnid);
-    break;
-  case GFL_BMN_EVENT_HOLD:
-    if(pWork->bPanelEdit){
-      if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
-        pWork->tpx=touchx;
-        pWork->tpy=touchy;
-      }
-      if(pWork->cellMove){
-        GFL_CLACTPOS pos;
-        pos.x = pWork->tpx;  // OBJ表示の為の補正値
-        pos.y = pWork->tpy;
-        GFL_CLACT_WK_SetPos(pWork->cellMove, &pos, CGEAR_REND_SUB);
-      }
-      else if(pWork->cellMoveCreateCount > 20){
-        GFL_CLWK_DATA cellInitData;
-        int type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
-        if(type != CGEAR_PANELTYPE_MAX){
-          pWork->cellMoveType = type;
-        }
-        if(pWork->cellMoveType != CGEAR_PANELTYPE_NONE)
-        {
-
-          //セルの生成
-          cellInitData.pos_x = pWork->tpx;
-          cellInitData.pos_y = pWork->tpy;
-          cellInitData.anmseq = NANR_c_gear_obj_CellAnime01 + pWork->cellMoveType - 1;
-          cellInitData.softpri = 0;
-          cellInitData.bgpri = CGEAR_CLACT_BG_PRI;
-          pWork->cellMove = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                 pWork->objRes[_CLACT_CHR],
-                                                 pWork->objRes[_CLACT_PLT],
-                                                 pWork->objRes[_CLACT_ANM],
-                                                 &cellInitData ,
-                                                 CGEAR_REND_SUB,
-                                                 pWork->heapID );
-          GFL_CLACT_WK_SetDrawEnable( pWork->cellMove, TRUE );
-          GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellMove, TRUE );
-        }
-      }
-      else{
-        pWork->cellMoveCreateCount++;
-      }
-    }
-    break;
-
-  case GFL_BMN_EVENT_RELEASE:		///< 離された瞬間
-
-    touchx=pWork->tpx;
-    touchy=pWork->tpy;
-    pWork->tpx=0;
-    pWork->tpy=0;
-    type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);  // ギアのタイプ分析
-    if(type == CGEAR_PANELTYPE_MAX){
-      return;
-    }
-
-    if(pWork->cellMove){
-      GFL_CLACT_WK_Remove( pWork->cellMove );
-      pWork->cellMove=NULL;
-
-      if((type == CGEAR_PANELTYPE_BASE) ||(  _gearPanelTypeNum(pWork,type) > 1 && _isSetChip(xp,yp)))  //下にあるタイプが一個以上ある場合
-      {
-        type = pWork->cellMoveType;
-        _modeSetSavePanelType(pWork, pWork->pCGSV,xp,yp,type);
-        GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
-      }
-      return;
-    }
-
-
-    if(pWork->bPanelEdit)  ///< パネルタイプを変更
-    {
-      if(((_gearPanelTypeNum(pWork,type) > 1 ) || (type == CGEAR_PANELTYPE_BASE))&& _isSetChip(xp,yp))
-      {
-        type = (type+1) % CGEAR_PANELTYPE_MAX;
-        _modeSetSavePanelType(pWork, pWork->pCGSV,xp,yp,type);
-        GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
-        PMSND_PlaySE( SEQ_SE_MSCL_07 );
-      }
-    }
-    else{    ///< ギアメニューを変更
-      pWork->touchx = xp;
-      pWork->touchy = yp;
-
-      if( !SleepMode_IsSleep( pWork ) ){  //通信ONなら
-        u32 type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
-
-        switch( type ){
-        case CGEAR_PANELTYPE_IR:
-          pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
-          break;
-        case CGEAR_PANELTYPE_WIFI:
-          pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
-          break;
-        case CGEAR_PANELTYPE_WIRELESS:
-          pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
-          break;
-        }
-      }
-    }
-    break;
-
-  default:
-    break;
   }
 }
 
@@ -3550,10 +3485,6 @@ static void _arcGearRelease(C_GEAR_WORK* pWork)
 
   _gearCrossObjDelete(pWork);
 
-  if(pWork->cellMove){
-    GFL_CLACT_WK_Remove( pWork->cellMove );
-    pWork->cellMove=NULL;
-  }
   {
     int i;
     for(i = 0;i < _CLACT_TIMEPARTS_MAX; i++){
