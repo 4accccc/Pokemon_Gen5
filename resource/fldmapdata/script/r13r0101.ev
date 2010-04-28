@@ -19,20 +19,47 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r13r0101
+_EVENT_DATA    ev_r13r0101_veteranm_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r13r0101_flag_change:
-//  _END
+/************************************************************/
+/*						ベテラン							*/
+/************************************************************/
+EVENT_START	ev_r13r0101_veteranm_01
+	_TALK_OBJ_START()
+	
+	IF FLAG_ON( FE_R13R0101_ITEMGET_01 ) THEN
+		//プレート入手後
+		_BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ELSE
+		//プレート入手イベント
+		_BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_01 )
+		_MSGWIN_CLOSE()
+		
+		//しずくプレート
+		_ITEM_EVENT_KEYWAIT( ITEM_SIZUKUPUREETO, 1 )
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_02 )
+		_MSGWIN_CLOSE()
+		
+		//りゅうのプレート
+		_ITEM_EVENT_KEYWAIT( ITEM_RYUUNOPUREETO, 1 )
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+		//========================================//
+		//アイテム入手フラグをセット
+		_FLAG_SET( FE_R13R0101_ITEMGET_01 )
+		//========================================//
+		
+	ENDIF
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r13r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_END
+
 
