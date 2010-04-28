@@ -181,7 +181,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   }
   IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
 
-  if(intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE){
+  if(intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE || NetErr_App_CheckError()){
     return;
   }
 
