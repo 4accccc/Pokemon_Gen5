@@ -114,12 +114,12 @@ enum
 	RANKING_BG_PAL_S_15,		// 使用してない
 
 	// メイン画面OBJ
-	RANKING_OBJ_PAL_POKEICON_M = 0,//
+	RANKING_OBJ_PAL_POKEICON_M = 1,//
 
 	RANKING_OBJ_PAL_FONT_M = 14,// 
 
 	// サブ画面BG
-	RANKING_OBJ_PAL_POKEICON_S = 0,// 
+	RANKING_OBJ_PAL_POKEICON_S = 1,// 
 };
 
 //-------------------------------------
@@ -152,13 +152,13 @@ enum
 
 #define SCROLL_REWITE_DISTANCE	(SCROLL_BAR_HEIGHT*GFL_BG_1CHRDOTSIZ)	//どのくらいの距離すすんだら張り替えて、戻すか
 #define	SCROLL_WRITE_BAR_START_M	(0)	//開始インデックス
-#define SCROLL_WRITE_BAR_END_M		(9)
+#define SCROLL_WRITE_BAR_END_M		(10)
 #define SCROLL_WRITE_BAR_NUM_M		(SCROLL_WRITE_BAR_END_M-SCROLL_WRITE_BAR_START_M)
 #define	SCROLL_WRITE_BAR_START_S	(7)	//開始インデックス
 #define SCROLL_WRITE_BAR_END_S		(17)
 #define SCROLL_WRITE_BAR_NUM_S		(SCROLL_WRITE_BAR_END_S-SCROLL_WRITE_BAR_START_S)
 #define	SCROLL_WRITE_BAR_START_EX_M	(-1)	//EXが開始インデックスより前ならば、前にはる
-#define	SCROLL_WRITE_BAR_START_EX_S	(6)	//EXが開始インデックスより前ならば、前にはる
+#define	SCROLL_WRITE_BAR_START_EX_S	(5)	//EXが開始インデックスより前ならば、前にはる
 
 #define SCROLL_WRITE_POS_START_M	(3)	//どの位置から張り始めるか
 #define SCROLL_WRITE_POS_START_S	(0)	//どの位置から張り始めるか
@@ -169,7 +169,10 @@ enum
 
 
 #define SCROLL_BAR_ICON_X		(29*8)
-#define SCROLL_BAR_ICON_Y   (8)
+#define SCROLL_BAR_ICON_Y   (0)
+
+#define SCROLL_BAR_ICON_INIT_Y_M  (74)
+#define SCROLL_BAR_ICON_INIT_Y_S  (-(SCROLL_WRITE_BAR_START_EX_S*3)*8-16)  //*3はOBJが３キャラだから
 
 
 //-------------------------------------
@@ -371,7 +374,8 @@ typedef struct
 //スクロールワーク
 typedef struct 
 {
-  u32 icon_plt_idx;
+  u32 icon_plt_idx_m;
+  u32 icon_plt_idx_s;
   BAR_BUFF      barbuff;        //バーのスクリーンデータ
   RANKBAR_WORK  rankbar[ IRC_COMPATIBLE_SV_RANKING_MAX ];
 
@@ -562,7 +566,7 @@ static void Scroll_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs );
 //-------------------------------------
 ///	RANKBAR
 //=====================================
-static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, GFL_CLUNIT *p_clunit, u32 icon_plt_idx , GFL_MSGDATA	*p_msg, GFL_FONT *p_font, WORDSET *p_wordset, BAR_BUFF *p_bar, HEAPID heapID );
+static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, GFL_CLUNIT *p_clunit, u32 icon_plt_idx_m, u32 icon_plt_idx_s, GFL_MSGDATA	*p_msg, GFL_FONT *p_font, WORDSET *p_wordset, BAR_BUFF *p_bar, s16 icon_pos_m, s16 icon_pos_s, HEAPID heapID );
 static void RANKBAR_Exit( RANKBAR_WORK *p_wk );
 static void RANKBAR_Trans( RANKBAR_WORK *p_wk, GFL_BMPWIN *p_font_bmpwin, u8 bar_frm, u16 y );
 static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 add_y );
@@ -1583,7 +1587,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
   static const GFL_CLSYS_INIT sc_clsys_init = 
   {
     0, 0,
-    0, 192,
+    0, 512,
     4, 124,
     4, 124,
 		0,
@@ -1925,8 +1929,9 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
     BARBUFF_Init( &p_wk->barbuff, cp_bg, heapID );
 
     {
-      ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_POKEICON, heapID );
-      p_wk->icon_plt_idx  = GFL_CLGRP_PLTT_RegisterComp( p_handle, POKEICON_GetPalArcIndex(), CLSYS_DRAW_MAX, RANKING_OBJ_PAL_POKEICON_M*0x20, heapID );
+      ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, heapID );
+      p_wk->icon_plt_idx_m  = GFL_CLGRP_PLTT_RegisterComp( p_handle, POKEICON_GetPalArcIndex(), CLSYS_DRAW_MAIN, RANKING_OBJ_PAL_POKEICON_M*0x20, heapID );
+      p_wk->icon_plt_idx_s  = GFL_CLGRP_PLTT_RegisterComp( p_handle, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB, RANKING_OBJ_PAL_POKEICON_S*0x20, heapID );
       GFL_ARC_CloseDataHandle( p_handle );
     }
   }
@@ -1937,7 +1942,11 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 
     for( i = 0; i < RANKING_DATA_GetRankNum( cp_data ); i++ )
     { 
-      RANKBAR_Init( &p_wk->rankbar[i], &cp_data->data[i], p_clunit, p_wk->icon_plt_idx, p_wk->p_msg, p_wk->p_font, p_wk->p_wordset, &p_wk->barbuff, heapID );
+      RANKBAR_Init( &p_wk->rankbar[i], &cp_data->data[i], p_clunit, p_wk->icon_plt_idx_m, p_wk->icon_plt_idx_s,
+          p_wk->p_msg, p_wk->p_font, p_wk->p_wordset, &p_wk->barbuff,
+          SCROLL_BAR_ICON_INIT_Y_M + i * 24,
+          SCROLL_BAR_ICON_INIT_Y_S + i * 24,
+          heapID );
     }
   }
 
@@ -1960,7 +1969,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 	//移動制限
 	p_wk->y								= 0;
 	p_wk->top_limit_y			= 0;
-	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ + 96;
+	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ+2;
 	p_wk->bottom_limit_y	= MATH_IMax( 0, p_wk->bottom_limit_y );
 
 
@@ -2005,7 +2014,8 @@ static void SCROLL_Exit( SCROLL_WORK *p_wk )
 
   //バー共通素材破棄
   { 
-    GFL_CLGRP_PLTT_Release( p_wk->icon_plt_idx );
+    GFL_CLGRP_PLTT_Release( p_wk->icon_plt_idx_m );
+    GFL_CLGRP_PLTT_Release( p_wk->icon_plt_idx_s );
 
     BARBUFF_Exit( &p_wk->barbuff );
   }
@@ -2075,14 +2085,18 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SCROLL_AddPos( SCROLL_WORK *p_wk, s16 y )
 {	
+  s16 icon_add  = 0;
+
 	//移動制限
 	if( p_wk->top_limit_y > p_wk->y + y )
 	{	
+    icon_add  = p_wk->top_limit_y - (p_wk->y);
 		p_wk->y	= p_wk->top_limit_y;
 		p_wk->add_y		=	 0;
 	}
 	else if( p_wk->bottom_limit_y < p_wk->y + y )
 	{	
+    icon_add  = (p_wk->y) - p_wk->bottom_limit_y;
 		p_wk->y	= p_wk->bottom_limit_y;
 		p_wk->add_y		=	 0;
 	}
@@ -2109,7 +2123,7 @@ static void SCROLL_AddPos( SCROLL_WORK *p_wk, s16 y )
 		//加算
 		p_wk->y				+= y;
 		p_wk->add_y		=	 y;
-
+    icon_add      = y;
 		//上に移動
 	//	NAGI_Printf( "Ypos %d top%d \n", p_wk->y, p_wk->y / SCROLL_REWITE_DISTANCE );
 	}
@@ -2118,7 +2132,7 @@ static void SCROLL_AddPos( SCROLL_WORK *p_wk, s16 y )
     int i;
     for( i = 0; i < p_wk->data_len; i++ )
     {	
-      RANKBAR_Move( &p_wk->rankbar[ i ], p_wk->add_y );
+      RANKBAR_Move( &p_wk->rankbar[ i ], -icon_add );
     }
   }
 		
@@ -2210,7 +2224,7 @@ static void Scroll_Write( SCROLL_WORK *p_wk )
 			print_y	= (i-(p_wk->top_bar+SCROLL_WRITE_BAR_START_M))*
 				SCROLL_BAR_HEIGHT+SCROLL_WRITE_POS_START_M;
 
-      if( 0 <= print_y && print_y <= 24 - 3 )
+      if( 0 <= print_y && print_y <= 24 )
       { 
         RANKBAR_Trans( &p_wk->rankbar[ i ], p_wk->p_bmpwin[ SCROLL_BMPWIN_FONT_M ],
           p_wk->bar_frm_m, print_y );
@@ -2223,7 +2237,7 @@ static void Scroll_Write( SCROLL_WORK *p_wk )
 	{	
 		if( 0 <= i &&i < p_wk->data_len )
 		{
-			print_y	= (i-(p_wk->top_bar+SCROLL_WRITE_BAR_START_S))*
+			print_y	= (i-(p_wk->top_bar+SCROLL_WRITE_BAR_START_EX_S)+SCROLL_WRITE_POS_START_S)*
 				SCROLL_BAR_HEIGHT+SCROLL_WRITE_POS_START_S;
 
       if( 0 <= print_y && print_y <= 24 )
@@ -2370,7 +2384,7 @@ static void Scroll_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs )
  *	@param	heapID                    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, GFL_CLUNIT *p_clunit, u32 icon_plt_idx , GFL_MSGDATA	*p_msg, GFL_FONT *p_font, WORDSET *p_wordset, BAR_BUFF *p_bar, HEAPID heapID )
+static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, GFL_CLUNIT *p_clunit, u32 icon_plt_idx_m, u32 icon_plt_idx_s, GFL_MSGDATA	*p_msg, GFL_FONT *p_font, WORDSET *p_wordset, BAR_BUFF *p_bar, s16 icon_pos_m, s16 icon_pos_s, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(RANKBAR_WORK) );
   p_wk->cp_data = cp_data;
@@ -2428,6 +2442,7 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
 
   //OBJ作成
   { 
+    u32 plt_idx;
     int i;
     GFL_CLWK_DATA cldata;
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
@@ -2437,10 +2452,19 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
     for( i = 0; i < CLSYS_DEFREND_NUM; i++  )
     {
       cldata.pos_x  = SCROLL_BAR_ICON_X;
-      cldata.pos_y  = SCROLL_BAR_ICON_Y + 0 * GFL_BG_1CHRDOTSIZ;  //@todo
+      if( i == CLSYS_DRAW_MAIN )
+      { 
+        cldata.pos_y  = icon_pos_m;
+        plt_idx = icon_plt_idx_m;
+      }
+      else
+      { 
+        cldata.pos_y  = icon_pos_s;
+        plt_idx = icon_plt_idx_s;
+      }
       p_wk->p_icon[i]  = GFL_CLACT_WK_Create( p_clunit,
           p_wk->chr_idx,
-          icon_plt_idx,
+          plt_idx,
           p_wk->cel_idx,
           &cldata,
           i,
@@ -2450,7 +2474,14 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[i], 
           POKEICON_GetPalNum( cp_data->mons_no, cp_data->form_no, cp_data->sex, cp_data->egg )
           ,CLWK_PLTTOFFS_MODE_OAM_COLOR );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], TRUE );
+      if( -16 < cldata.pos_y && cldata.pos_y < 192 + 16 )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], TRUE );
+      }
+      else
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], FALSE );
+      }
     }
   }
 }
@@ -2517,7 +2548,7 @@ static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 add_y )
     GFL_CLACT_WK_GetPos( p_wk->p_icon[i], &pos, i );
     pos.y += add_y;
     GFL_CLACT_WK_SetPos( p_wk->p_icon[i], &pos, i );
-    if( -16 < pos.x && pos.x < 192 + 16 )
+    if( -16 < pos.y && pos.y < 192 + 16 )
     { 
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], TRUE );
     }
