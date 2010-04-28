@@ -508,7 +508,7 @@ static u16 get_teach_waza( const POKEMON_PARAM * pp, u16 mode )
 //--------------------------------------------------------------
 static u16 get_teach_limit_friendly( u16 mode )
 {
-  /* とりあえず、現状は最大値必要としている */
+  /* 現状、すべてのモードで最大値必要としている */
   return PTL_FRIEND_MAX;
 }
 
@@ -823,8 +823,6 @@ VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo  わざマシン１０＝＝１０を指定するなのか？10-1なのか？確認
- *
  * めざめるパワー＝わざマシン１０
  */
 //--------------------------------------------------------------
@@ -833,11 +831,17 @@ VMCMD_RESULT EvCmdGetMezameruPowerType( VMHANDLE * core, void *wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );  //結果格納ワーク
   u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
   POKEMON_PARAM * pp;
+  u8 machine_no;
+
+  //わざマシン１０がめざめるパワーじゃなくなったらAssert
+  GF_ASSERT( ITEM_GetWazaNo( ITEM_WAZAMASIN10 ) == WAZANO_MEZAMERUPAWAA );
+
+  machine_no = ITEM_GetWazaMashineNo( ITEM_WAZAMASIN10 );
   if ( SCRCMD_GetTemotiPP( wk, pos, &pp ) == FALSE )
   { //エラー対処
     *ret_wk = 0xffff;
   }
-  else if (PP_CheckWazaMachine( pp, 10 - 1 ) == FALSE)
+  else if (PP_CheckWazaMachine( pp, machine_no ) == FALSE)
   {
     *ret_wk = 0xffff;
   }
@@ -1131,6 +1135,33 @@ VMCMD_RESULT EvCmdTradeAfterPokeNameSetWord( VMHANDLE * core, void * wk )
 
 
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief   クライマックスデモ用コマンド
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdCrimaxCommand( VMHANDLE * core, void * wk )
+{
+  u16     cmd_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 *   use_wk = SCRCMD_GetVMWork( core, wk );
+
+  switch ( cmd_id )
+  {
+  case SCR_CRIMAX_CMD_TEMOTI_CHECK:
+    //手持ちにいるかのチェック
+    *use_wk = FALSE;
+    break;
+  case SCR_CRIMAX_CMD_SORT:
+    //先頭に持ってくるため、ならべ替える
+    break;
+  case SCR_CRIMAX_CMD_GET_FROM_BOX:
+    //ボックスから持ってくる
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
 
 
 

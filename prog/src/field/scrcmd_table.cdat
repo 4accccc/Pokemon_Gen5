@@ -845,6 +845,9 @@
   //ゲーム内マニュアルの呼び出し
   DEF_CMD( EvCmdCallGameManual, EV_SEQ_CALL_GAME_MANUAL )
   
+  //クライマックス用特殊コマンド
+  DEF_CMD( EvCmdCrimaxCommand, EV_SEQ_CRIMAX_COMMAND )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   

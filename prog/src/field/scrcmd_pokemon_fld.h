@@ -41,6 +41,7 @@ extern VMCMD_RESULT EvCmdWazaMachineLot( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdTradeAfterSaveSet( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdTradeAfterPokeNameSetWord( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdCrimaxCommand( VMHANDLE * core, void * wk );
 
 
 

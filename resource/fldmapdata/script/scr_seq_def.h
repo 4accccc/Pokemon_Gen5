@@ -11113,3 +11113,23 @@
   .macro _ASM_START_LEG_GMK
   .short EV_SEQ_START_LEG_GMK
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 伝説ポケモン戦の結果処理用コマンド
+ * @param cmd_id    コマンドID（script_def.hのSCR_CRIMAX_～を参照）
+ * @param use_wk    コマンドとのやりとりに使用するワーク
+ *
+ * ※謁見の間の伝説ポケモン戦特殊処理専用コマンドです。
+ * 　他では使用しないでください。
+ */
+//--------------------------------------------------------------
+#define _CRIMAX_DEMO_COMMAND( cmd_id, use_wk )  \
+    _ASM_CRIMAX_DEMO_COMMAND cmd_id, use_wk
+
+    .macro  _ASM_CRIMAX_DEMO_COMMAND cmd_id, use_wk
+    .short  EV_SEQ_CRIMAX_COMMAND
+    .short  \cmd_id
+    .short  \use_wk
+    .endm
+
