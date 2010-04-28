@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T16:37:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T21:23:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -693,8 +693,20 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR4
 カトレア</attribute>
-		<language name="JPN" width="256">カトレア『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その１</language>
+		<language name="JPN" width="256">カトレア『なんでも　おもいどおりに
+なってしまうのは　ふこうの　はじまり▼
+できないことが　あって
+できることが　ある▽
+それをしることが　だいじですって▼
+むかし　そういうことを　いう
+うるさい　にんげんが　いたの……</language>
+		<language name="JPN_KANJI" width="256">カトレア『なんでも　思い通りに
+なってしまうのは　不幸の　始まり▼
+できないことが　あって
+できることが　ある▽
+それを知ることが　大事ですって▼
+昔　そういうことを　いう
+うるさい　人間が　いたの……</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour4_spring_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -703,8 +715,20 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR4
 カトレア</attribute>
-		<language name="JPN" width="256">カトレア『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その２</language>
+		<language name="JPN" width="256">カトレア『……どうしても
+シロナさんには　かてない▼
+いぜんの　アタクシなら
+いかりを　ばくはつ　させていたかも▼
+だけど　いまは　おちついて
+たいせんを　みなおし　どうすれば▽
+つよくなれるか　かんがえられるの</language>
+		<language name="JPN_KANJI" width="256">カトレア『……どうしても
+シロナさんには　勝てない▼
+以前の　アタクシなら
+怒りを　爆発させていたかも▼
+だけど　今は　落ち着いて
+対戦を　見直し　どうすれば▽
+強くなれるか　考えられるの</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour4_spring_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -716,11 +740,11 @@
 		<language name="JPN" width="256">カトレア『……アナタ
 バトルキャッスルは　ごぞんじ？▼
 ジョウトや　シンオウに　あるから
-よければ　ちょうせん　なさってね</language>
+よければ　ちょうせん　なさって</language>
 		<language name="JPN_KANJI" width="256">カトレア『……アナタ
 バトルキャッスルは　ご存じ？▼
 ジョウトや　シンオウに　あるから
-よければ　挑戦なさってね</language>
+よければ　挑戦なさって</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour4_spring_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -732,11 +756,15 @@
 		<language name="JPN" width="256">カトレア『……ここ
 アタクシの　べっそう　なの▼
 せかいかくちに　あるから
-シロナさんに　つかってもらっています</language>
+シロナさんに　つかってもらっています▼
+アナタも　えんりょせずに
+あそびに　いらしてね</language>
 		<language name="JPN_KANJI" width="256">カトレア『……ここ
 アタクシの　別荘なの▼
 世界各地に　あるから
-シロナさんに　使ってもらっています</language>
+シロナさんに　使ってもらっています▼
+アナタも　遠慮せずに
+遊びに　いらしてね</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour4_spring_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -749,7 +777,7 @@
 ちょうのうりょく　なら▽
 ないほうが　まし　なのよね</language>
 		<language name="JPN_KANJI" width="256">カトレア『……制御できない
-超能力なら▽
+超能力に　振り回されるなら▽
 ないほうが　まし　なのよね</language>
 	</row>
 
@@ -759,8 +787,20 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR1
 シキミ</attribute>
-		<language name="JPN" width="256">シキミ『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その１</language>
+		<language name="JPN" width="256">シキミ『しょうせつを　かくとき……
+たくさん　インプット　してないと▽
+アウトプット　できないんですよ▼
+トレーナーも　おなじです▼
+わんさと　しょうぶして
+いろんな　ことを　まなんで▽
+じっせんで　ためして　つよくなれます</language>
+		<language name="JPN_KANJI" width="256">シキミ『小説を　書くとき……
+たくさん　インプット　してないと▽
+アウトプット　できないんですよ▼
+トレーナーも　同じです▼
+わんさと　勝負して
+いろんな　ことを　学んで▽
+実戦で　試して　強くなれます</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour1_spring_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
@@ -769,35 +809,17 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR1
 シキミ</attribute>
-		<language name="JPN" width="256">シキミ『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その２</language>
+		<language name="JPN" width="256">シキミ『にじいろのはね……
+ぎんいろのはね……▽
+そうぞうりょくを　かきたてられます！</language>
+		<language name="JPN_KANJI" width="256">シキミ『にじいろのはね……
+ぎんいろのはね……▽
+想像力を　かきたてられます！</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour1_spring_03" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・ランダムメッセージその３
-・その日固定</comment>
-		<attribute name="キャラ指定">BIGFOUR1
-シキミ</attribute>
-		<language name="JPN" width="256">シキミ『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その３</language>
-	</row>
-
-	<row id="msg_t04r0401_bigfour1_spring_04" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
-		<comment>♀
-・ランダムメッセージその４
-・その日固定</comment>
-		<attribute name="キャラ指定">BIGFOUR1
-シキミ</attribute>
-		<language name="JPN" width="256">シキミ『にじいろのはね……
-ぎんいろのはね……
-</language>
-		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その４</language>
-	</row>
-
-	<row id="msg_t04r0401_bigfour1_spring_05" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
-		<comment>♀
-・ランダムメッセージその５
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR1
 シキミ</attribute>
@@ -809,14 +831,56 @@
 なんて　幻想的な　光景！</language>
 	</row>
 
+	<row id="msg_t04r0401_bigfour1_spring_04" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『……いくら　しゅざいしても
+ちっとも　わかりません▼
+シロナさんって　おいくつ　かしら？
+アナタ　どう　おもいます？</language>
+		<language name="JPN_KANJI" width="256">シキミ『……いくら　取材しても
+ちっとも　わかりません▼
+シロナさんって　おいくつ　かしら？
+アナタ　どう　思います？</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour1_spring_05" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『……アタシの　マフラーとか
+ある　ポケモンを　イメージしてます▼
+アナタ　わかりますか？
+イマジネーションは　だいじですよ？</language>
+		<language name="JPN_KANJI" width="256">シキミ『……アタシの　マフラーとか
+ある　ポケモンを　イメージしてます▼
+アナタ　わかりますか？
+イマジネーションは　大事ですよ？</language>
+	</row>
+
 	<row id="msg_t04r0401_shirona_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・ランダムメッセージその１
 ・その日固定</comment>
 		<attribute name="キャラ指定">SHIRONA
 シロナ</attribute>
-		<language name="JPN" width="256">シロナ『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その１</language>
+		<language name="JPN" width="256">シロナ『いまよりも
+つよくなるために　ひつようなこと？▼
+それは　ずっとずっと 
+ポケモンを　すきで　いることかな▼
+じぶんが　そうだったから
+こんなことしか　いえないけど……</language>
+		<language name="JPN_KANJI" width="256">シロナ『今よりも
+強くなるために　必要なこと？▼
+それは　ずっとずっと 
+ポケモンを　好きで　いることかな▼
+自分が　そうだったから
+こんなことしか　いえないけど……</language>
 	</row>
 
 	<row id="msg_t04r0401_shirona_summer_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -845,18 +909,8 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">SHIRONA
 シロナ</attribute>
-		<language name="JPN" width="256">シロナ『いまよりも
-つよくなるために　ひつようなこと？▼
-それは　ずっとずっと 
-ポケモンを　すきで　いることかな▼
-じぶんが　そうだったから
-こんなことしか　いえないけど……</language>
-		<language name="JPN_KANJI" width="256">シロナ『今よりも
-強くなるために　必要なこと？▼
-それは　ずっとずっと 
-ポケモンを　好きで　いることかな▼
-自分が　そうだったから
-こんなことしか　いえないけど……</language>
+		<language name="JPN" width="256">シロナ『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その４</language>
 	</row>
 
 	<row id="msg_t04r0401_shirona_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -883,8 +937,12 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER8W
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その１</language>
+		<language name="JPN" width="256">アイリス『ねえねえ
+シロナさんの　ガブリアス　みた？▼
+すっごく　キュートなの！！</language>
+		<language name="JPN_KANJI" width="256">アイリス『ねえねえ
+シロナさんの　ガブリアス　みた？▼
+すっごく　キュートなの！！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader8w_summer_02" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -893,8 +951,18 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER8W
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その２</language>
+		<language name="JPN" width="256">アイリス『こんどねー
+シャガおじーちゃんと　いっしょに▽
+ゆうらんせんに　のるんだよ！▼
+ヒウンシティは　ひとばっかりだけど
+おじーちゃんと　いっしょだから▽
+アイリス　だいじょーぶ！！</language>
+		<language name="JPN_KANJI" width="256">アイリス『こんどねー
+シャガおじーちゃんと　いっしょに▽
+ゆうらんせんに　のるんだよ！▼
+ヒウンシティは　ひとばっかりだけど
+おじーちゃんと　いっしょだから▽
+アイリス　だいじょーぶ！！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader8w_summer_03" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -903,8 +971,16 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER8W
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その３</language>
+		<language name="JPN" width="256">アイリス『ときどきね
+うまれた　むらのこと　おもいだすけど▽
+あたし　ぜんぜん　へいき！▼
+だって　いろんな　ポケモンや
+みんなに　あえたもん！</language>
+		<language name="JPN_KANJI" width="256">アイリス『ときどきね
+うまれた　むらのこと　おもいだすけど▽
+あたし　ぜんぜん　へいき！▼
+だって　いろんな　ポケモンや
+みんなに　あえたもん！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader8w_summer_04" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -913,8 +989,8 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER8W
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『かりメッセージ　その４</language>
-		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その４</language>
+		<language name="JPN" width="256">アイリス『うみだよー！！</language>
+		<language name="JPN_KANJI" width="256">アイリス『うみだよー！！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader8w_summer_05" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -923,8 +999,12 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER8W
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『かりメッセージ　その５</language>
-		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その５</language>
+		<language name="JPN" width="256">アイリス『うみが　きれいだから
+ずっとずっと　もぐっていたら▽
+みんなに　しんぱい　されちゃった！</language>
+		<language name="JPN_KANJI" width="256">アイリス『うみが　きれいだから
+ずっとずっと　もぐっていたら▽
+みんなに　しんぱい　されちゃった！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader6_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -963,8 +1043,14 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER6
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『かりメッセージ　その４</language>
-		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その４</language>
+		<language name="JPN" width="256">フウロ『はるか　とおくの　シンオウも
+かもつきを　つかえば　ひとっとび！▼
+アタシは　ポケモンの　そらをとぶも
+きもちよくて　だいすき　だけど</language>
+		<language name="JPN_KANJI" width="256">フウロ『はるか　と奥の　シンオウも
+貨物機を　使えば　ひとっとび！▼
+アタシは　ポケモンの　そらをとぶも
+気持ちよくて　大好き　だけど</language>
 	</row>
 
 	<row id="msg_t04r0401_leader6_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -973,8 +1059,10 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER6
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『かりメッセージ　その５</language>
-		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その５</language>
+		<language name="JPN" width="256">フウロ『ふう……
+うみで　およぐのって　きもちいいね！</language>
+		<language name="JPN_KANJI" width="256">フウロ『ふう……
+海で　泳ぐのって　気持ちいいね！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader4_summer_01" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -1013,8 +1101,14 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『かりメッセージ　その４</language>
-		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その４</language>
+		<language name="JPN" width="256">カミツレ『はなさなくても……
+はなせなくても……　トレーナーには▽
+ポケモンが　いて　わたしの　かわりに▽
+きもちを　つたえてくれるの</language>
+		<language name="JPN_KANJI" width="256">カミツレ『話さなくても……
+話せなくても……　トレーナーには▽
+ポケモンが　いて　わたしの　代わりに▽
+気持ちを　雄弁に　伝えてくれるの</language>
 	</row>
 
 	<row id="msg_t04r0401_leader4_summer_05" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -1023,8 +1117,10 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『かりメッセージ　その５</language>
-		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その５</language>
+		<language name="JPN" width="256">カミツレ『いってしまえば
+みずぎなんて　ただの　ぬの　でしょ？</language>
+		<language name="JPN_KANJI" width="256">カミツレ『いってしまえば
+水着なんて　ただの　布でしょ？</language>
 	</row>
 
 	<row id="msg_t04r0401_leader2_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1053,8 +1149,17 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER2
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その３</language>
+		<language name="JPN" width="256">アロエ『あたしが　ちいさいころさ▼
+こうざんで　いしを　ほっていた
+おやじは　いつも▽
+ホネを　もってかえってきたよ▼
+こどもごころに　ホネの　みりょくに
+やられて　きづけば　けんきゅうかさ！</language>
+		<language name="JPN_KANJI" width="256">アロエ『あたしが　ちいさいころさ▼
+鉱夫だった　おやじは　いつも
+ホネを　持ってかえってきたよ▼
+子供心に　ホネの　魅力に　やられて
+気づけば　いつしか　研究家さ！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader2_summer_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1063,8 +1168,14 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER2
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『かりメッセージ　その４</language>
-		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その４</language>
+		<language name="JPN" width="256">アロエ『こないだ　ベルって　こが
+ポケモンのことを　ききに　きてたよ▼
+すきなことを　しりたいって　きもち
+つきること　ないんだよね</language>
+		<language name="JPN_KANJI" width="256">アロエ『こないだ　ベルって　子が
+ポケモンのことを　聞きにに　来てたよ▼
+好きなことを　知りたいって　気持ち
+尽きること　ないんだよね</language>
 	</row>
 
 	<row id="msg_t04r0401_leader2_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
