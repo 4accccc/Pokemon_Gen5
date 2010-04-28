@@ -135,6 +135,7 @@
 #define SCR_WILD_BTL_FLAG_MALE      (0x0020)  //オスと戦闘
 #define SCR_WILD_BTL_FLAG_FEMALE    (0x0040)  //メスと戦闘
 #define SCR_WILD_BTL_FLAG_WILD_TALK (0x0080)  //話しかけ野生戦闘(エンカウントメッセージが変化する)
+#define SCR_WILD_BTL_FLAG_IMMORTAL  (0x0100)  //シン・ム戦闘専用(捕まえるまで何度でも復活するので終了演出が特殊)
 
 
 ///野生ポケモン戦　再戦コードチェック

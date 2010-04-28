@@ -272,13 +272,17 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
   //バトルパラメータセット
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
-  
+ 
+  //エンカウントメッセージ変化
   if( flags & SCR_WILD_BTL_FLAG_LEGEND ){
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_LEGEND );
   }else if( flags & SCR_WILD_BTL_FLAG_WILD_TALK ){
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_WILD_TALK );
   }
-
+  //シン・ム用捕まえるまで何度でも復活バトル
+  if( flags & SCR_WILD_BTL_FLAG_IMMORTAL ){
+    BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_LEGEND_EX );
+  }
   //エンカウントイベント生成
   return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, TRUE, ENC_TYPE_NORMAL );
 }
