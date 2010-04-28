@@ -398,11 +398,18 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
     MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode );
   }
 
+  if( GFL_NET_IsInit() )
+  { 
+    GFL_NET_WirelessSetForceXYPos(GFL_WICON_POSX,GFL_WICON_POSY);
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_NAME_INPUT );
+    GFL_NET_ReloadIcon();
+  }
 
   if( p_wk->p_param->p_intr_sv )
   { 
     IntrSave_Resume( p_wk->p_param->p_intr_sv );
   }
+
 
   return GFL_PROC_RES_FINISH;
 }

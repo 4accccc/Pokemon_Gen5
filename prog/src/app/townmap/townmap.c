@@ -929,6 +929,14 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 #endif //DEBUG_PRINT_USE
 
+  if( GFL_NET_IsInit() )
+  { 
+    GFL_NET_WirelessSetForceXYPos(GFL_WICON_POSX,GFL_WICON_POSY);
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_TOWNMAP );
+    GFL_NET_ReloadIcon();
+  }
+
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------

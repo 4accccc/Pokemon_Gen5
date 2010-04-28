@@ -1266,6 +1266,7 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
     //最初にGRAPHIC初期化(パレット読み込みで、下記のものが上書きされるため)
     GRAPHIC_Init( &p_wk->graphic, HEAPID_CONFIG );
 
+
     //共通モジュール初期化
     p_wk->p_font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
                         GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_CONFIG );
@@ -2074,10 +2075,10 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 
   if( GFL_NET_IsInit() )
   { 
+    GFL_NET_WirelessSetForceXYPos(GFL_WICON_POSX,GFL_WICON_POSY);
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, heapID );
     GFL_NET_ReloadIcon();
   }
-
-
 }
 //----------------------------------------------------------------------------
 /**
