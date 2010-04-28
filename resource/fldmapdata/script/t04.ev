@@ -92,7 +92,7 @@ INIT_EVENT_START	ev_zone_t04
 				_FLAG_RESET( FV_T04R0401_BIGFOUR4_01 )
 				
 				//カトレアの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,4 )
+				_GET_RND( LWK_RANDWORD,5 )
 				$WK_OTHER_T04R0401_BIGFOUR4 = $LWK_RANDWORD
 				
 			//3ははずれで非表示
@@ -106,7 +106,7 @@ INIT_EVENT_START	ev_zone_t04
 				_FLAG_RESET( FV_T04R0401_BIGFOUR1_01 )
 				
 				//シキミの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,4 )
+				_GET_RND( LWK_RANDWORD,5 )
 				$WK_OTHER_T04R0401_BIGFOUR1 = $LWK_RANDWORD
 				
 			//0ははずれで非表示
@@ -134,7 +134,7 @@ INIT_EVENT_START	ev_zone_t04
 			_FLAG_SET( FV_T04R0401_LEADER2_01 )
 			
 			//***シロナの本日のセリフを設定
-			_GET_RND( LWK_RANDWORD,4 )
+			_GET_RND( LWK_RANDWORD,5 )
 			$WK_OTHER_T04R0401_SHIRONA = $LWK_RANDWORD
 			_FLAG_RESET( FV_T04R0401_SHIRONA_01 )
 			
@@ -145,7 +145,7 @@ INIT_EVENT_START	ev_zone_t04
 				_FLAG_RESET( FV_T04R0401_LEADER8W_01 )
 				
 				//アイリスの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,4 )
+				_GET_RND( LWK_RANDWORD,5 )
 				$WK_OTHER_T04R0401_LEADER8W = $LWK_RANDWORD
 				
 			//3ははずれで非表示
@@ -160,7 +160,7 @@ INIT_EVENT_START	ev_zone_t04
 				_FLAG_RESET( FV_T04R0401_LEADER6_01 )
 				
 				//フウロの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,4 )
+				_GET_RND( LWK_RANDWORD,5 )
 				$WK_OTHER_T04R0401_LEADER6 = $LWK_RANDWORD
 				
 			//3ははずれで非表示
@@ -175,7 +175,7 @@ INIT_EVENT_START	ev_zone_t04
 				_FLAG_RESET( FV_T04R0401_LEADER4_01 )
 				
 				//カミツレの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,4 )
+				_GET_RND( LWK_RANDWORD,5 )
 				$WK_OTHER_T04R0401_LEADER4 = $LWK_RANDWORD
 				
 			//0ははずれで非表示
@@ -190,7 +190,7 @@ INIT_EVENT_START	ev_zone_t04
 				_FLAG_RESET( FV_T04R0401_LEADER2_01 )
 				
 				//アロエの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,4 )
+				_GET_RND( LWK_RANDWORD,5 )
 				$WK_OTHER_T04R0401_LEADER2 = $LWK_RANDWORD
 				
 			//0ははずれで非表示
