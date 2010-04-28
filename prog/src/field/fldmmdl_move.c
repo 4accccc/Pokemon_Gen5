@@ -831,6 +831,7 @@ static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data )
       data->objcode_prm->shadow_type != MMDL_SHADOW_NON )
   {
     if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 ||
+        data->season == PMSEASON_WINTER && //‹Gß•Ï‰»’n–Ê•“~
         MAPATTR_VALUE_CheckSeasonGround1(data->attr_val_now) )
     {
       MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
