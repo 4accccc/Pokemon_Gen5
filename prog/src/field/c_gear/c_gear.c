@@ -237,7 +237,7 @@ static const u8 _CGEAR_NET_CHANGEPAL_ANM_COUNT_RESET[ _CGEAR_NET_CHANGEPAL_ANM_T
 static const u8 _CGEAR_NET_CHANGEPAL_ANM_COUNT_DIF[ _CGEAR_NET_CHANGEPAL_ANM_TYPE_MAX ] = 
 {
   0,
-  6,  // 
+  12,  // 
   3,  // 
   0,  // 
   0,  // 
@@ -785,7 +785,7 @@ struct _C_GEAR_WORK {
   u8 use_skip;    // スキップ許可
 
   u8 sleep_mode;  // イベント中のスリープモード
-  u8 high_sleep_mode;  // Highスリープモード
+  u8 net_sleep_mode;  // ネットスリープモード
   u8 sleep_color_req;
 
   u8 ex_col_change;  // wireless強制カラー変更
@@ -921,7 +921,8 @@ static void _modeEventWait( C_GEAR_WORK* pWork );
 
 // スリープモードの管理
 static void SleepMode_Start( C_GEAR_WORK* pWork );
-static void SleepMode_HighSleepStart( C_GEAR_WORK* pWork );
+static void SleepMode_NetSleepStart( C_GEAR_WORK* pWork );
+static void SleepMode_NetSleepEnd( C_GEAR_WORK* pWork );
 static void SleepMode_End( C_GEAR_WORK* pWork );
 static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork );
 static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork );
@@ -1446,6 +1447,12 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
             break;
           }
         }
+      }
+
+      // ぜんぜん引っかからないなら、DARKイエロー
+      if( i==_CGEAR_NET_WIRELES_TYPE_MAX ){
+        _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIRELES, _CGEAR_NET_PALTYPE_DARK_YELLOW, 
+            anime_type_normal, anime_type, panel_type );
       }
     }
   }
@@ -4130,13 +4137,6 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   _gearCrossObjMain( pWork );
 
 
-  // 通信OFF時は強制スリープ
-  if( (GFL_NET_IsInit() ==FALSE) && pWork->power_flag ){
-    // スリープ
-    SleepMode_HighSleepStart( pWork );
-  }
-
-
   //  _PFadeToBlack(pWork);
   //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
 
@@ -4197,6 +4197,15 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
 
 void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
+  // 通信OFF時は強制スリープ
+  if( (GFL_NET_IsInit() ==FALSE) && pWork->power_flag ){
+    // スリープ
+    SleepMode_NetSleepStart( pWork );
+  }else{
+    // スリープOFF
+    SleepMode_NetSleepEnd( pWork );
+  }
+  
   if(pWork->bAction != bAction){
 
     // イベント中は、画面を暗く
@@ -4608,11 +4617,9 @@ static void _modeEventWait( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SleepMode_Start( C_GEAR_WORK* pWork )
 {
-  if( pWork->high_sleep_mode == FALSE ){
-    if( pWork->sleep_mode == FALSE ){
-      pWork->sleep_mode = TRUE;
-      pWork->sleep_color_req = TRUE;
-    }
+  if( pWork->sleep_mode == FALSE ){
+    pWork->sleep_mode = TRUE;
+    pWork->sleep_color_req = TRUE;
   }
 }
 
@@ -4623,11 +4630,25 @@ static void SleepMode_Start( C_GEAR_WORK* pWork )
  *	@param	pWork   ワーク
  */
 //-----------------------------------------------------------------------------
-static void SleepMode_HighSleepStart( C_GEAR_WORK* pWork )
+static void SleepMode_NetSleepStart( C_GEAR_WORK* pWork )
 {
-  if( pWork->sleep_mode == FALSE ){
-    pWork->high_sleep_mode = TRUE;
-    pWork->sleep_mode = TRUE;
+  if( pWork->net_sleep_mode == FALSE ){
+    pWork->net_sleep_mode = TRUE;
+    pWork->sleep_color_req = TRUE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ネットスリープモード　終了
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void SleepMode_NetSleepEnd( C_GEAR_WORK* pWork )
+{
+  if( pWork->net_sleep_mode ){
+    pWork->net_sleep_mode = FALSE;
     pWork->sleep_color_req = TRUE;
   }
 }
@@ -4641,11 +4662,9 @@ static void SleepMode_HighSleepStart( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SleepMode_End( C_GEAR_WORK* pWork )
 {
-  if( pWork->high_sleep_mode == FALSE ){
-    if( pWork->sleep_mode == TRUE ){
-      pWork->sleep_mode = FALSE;
-      pWork->sleep_color_req = TRUE;
-    }
+  if( pWork->sleep_mode == TRUE ){
+    pWork->sleep_mode = FALSE;
+    pWork->sleep_color_req = TRUE;
   }
 }
 
@@ -4658,8 +4677,9 @@ static void SleepMode_End( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork )
 {
+  BOOL sleep_mode;
   if( pWork->sleep_color_req ){
-    _PFadeSetSleepBlack( pWork, pWork->sleep_mode );
+    _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
     pWork->sleep_color_req = FALSE;
   }
 }
@@ -4673,7 +4693,13 @@ static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork )
 {
-  return cpWork->sleep_mode;
+  if( cpWork->sleep_mode ){
+    return TRUE;
+  }
+  if( cpWork->net_sleep_mode ){
+    return TRUE;
+  }
+  return FALSE;
 
 }
 
