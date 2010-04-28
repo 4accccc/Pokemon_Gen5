@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T13:00:39"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T19:18:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -619,13 +619,13 @@ jugglimg_06</attribute>
 		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]▽
-チェレン</language>
+チェレン▽
+[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]▽
-チェレン</language>
+チェレン▽
+[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_c03gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -635,14 +635,14 @@ jugglimg_06</attribute>
 		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-チェレン[BE:00:ページ切り替え（行送り）]
+チェレン▽
+[1:00:トレーナー名:0]▽
 ベル</language>
 		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティ
 認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-チェレン[BE:00:ページ切り替え（行送り）]
+チェレン▽
+[1:00:トレーナー名:0]▽
 ベル</language>
 	</row>
 
