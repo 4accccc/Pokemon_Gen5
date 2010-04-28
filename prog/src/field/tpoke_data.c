@@ -15,6 +15,7 @@
 
 #include "arc_def.h"
 #include "fieldmap/tpoke_data.naix"
+#include "fieldmap/fldmmdl_mdlparam.naix"
 
 #include "field/tpoke_data.h"
 
@@ -48,6 +49,8 @@ typedef struct {
 //=====================================
 struct _TPOKE_DATA {
   TPOKE_DAT* p_data;
+  u8* p_objcodeParamBuf;
+  OBJCODE_PARAM* p_objcodeParam;
   u32 num;
 };
 
@@ -58,6 +61,8 @@ struct _TPOKE_DATA {
 //-----------------------------------------------------------------------------
 
 static int TPokeData_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno );
+
+static const OBJCODE_PARAM* TPokeData_GetObjCodeParam( const TPOKE_DATA* cp_wk, u16 objcode );
 
 
 //----------------------------------------------------------------------------
@@ -80,6 +85,12 @@ TPOKE_DATA* TPOKE_DATA_Create( HEAPID heapID )
   GF_ASSERT( (size % sizeof(TPOKE_DAT)) == 0 );
   p_wk->num = size / sizeof(TPOKE_DAT);
 
+
+  // オブジェコードパラメータ
+  p_wk->p_objcodeParamBuf = GFL_ARC_LoadDataAlloc( ARCID_MMDL_PARAM, 
+      NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin, heapID );
+  p_wk->p_objcodeParam = (OBJCODE_PARAM*)(&p_wk->p_objcodeParamBuf[OBJCODE_PARAM_TOTAL_NUMBER_SIZE]);
+
   return p_wk;
 }
 
@@ -92,6 +103,7 @@ TPOKE_DATA* TPOKE_DATA_Create( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void TPOKE_DATA_Delete( TPOKE_DATA* p_wk )
 {
+  GFL_HEAP_FreeMemory( p_wk->p_objcodeParamBuf );
   GFL_HEAP_FreeMemory( p_wk->p_data );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -133,13 +145,13 @@ u16 TPOKE_DATA_GetObjCode( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 for
 BOOL TPOKE_DATA_IsSizeBig( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
 {
   int index;
-  const MMDLSYS* cp_mmdlsys = GAMEDATA_GetMMdlSys( (GAMEDATA*)cp_gdata );
   const OBJCODE_PARAM * cp_objcode_para;
   
   
   index = TPokeData_GetIndex( cp_wk, monsno, sex, formno );
 
-  cp_objcode_para = MMDLSYS_GetOBJCodeParam( cp_mmdlsys, cp_wk->p_data[ index ].objcode );
+  // 目的のオブジェコードパラメータ取得
+  cp_objcode_para = TPokeData_GetObjCodeParam( cp_wk, cp_wk->p_data[ index ].objcode );
   
   if( cp_objcode_para->mdl_size == MMDL_BLACT_MDLSIZE_64x64 ){
     return TRUE;
@@ -172,13 +184,13 @@ BOOL TPOKE_DATA_IsSizeBig( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u1
 BOOL TPOKE_DATA_IsSizeNormal( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
 {
   int index;
-  const MMDLSYS* cp_mmdlsys = GAMEDATA_GetMMdlSys( (GAMEDATA*)cp_gdata );
   const OBJCODE_PARAM * cp_objcode_para;
   
   
   index = TPokeData_GetIndex( cp_wk, monsno, sex, formno );
 
-  cp_objcode_para = MMDLSYS_GetOBJCodeParam( cp_mmdlsys, cp_wk->p_data[ index ].objcode );
+  // 目的のオブジェコードパラメータ取得
+  cp_objcode_para = TPokeData_GetObjCodeParam( cp_wk, cp_wk->p_data[ index ].objcode );
   
   if( cp_objcode_para->mdl_size == MMDL_BLACT_MDLSIZE_32x32 ){
     return TRUE;
@@ -265,6 +277,22 @@ static int TPokeData_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16
   return index;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  objcodeのオブジェコードパラメータ取得
+ *
+ *	@param	cp_wk     ワーク
+ *	@param	objcode   オブジェコード
+ */
+//-----------------------------------------------------------------------------
+static const OBJCODE_PARAM* TPokeData_GetObjCodeParam( const TPOKE_DATA* cp_wk, u16 objcode )
+{
+  int code;
+  
+  code = MMDL_TOOL_OBJCodeToDataNumber( code );
+  return( &(cp_wk->p_objcodeParam[code]) );
+}
 
 
 
