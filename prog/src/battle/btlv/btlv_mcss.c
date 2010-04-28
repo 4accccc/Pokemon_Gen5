@@ -1362,11 +1362,12 @@ void  BTLV_MCSS_OverwriteMAW( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos, MCSS_ADD_WOR
  * @param[in] volume        鳴き声のボリューム
  * @param[in] chorus_vol    鳴き声のコーラス設定（ボリューム差）
  * @param[in] chorus_speed  鳴き声のコーラス設定（再生速度差）
+ * @param[in] play_dir      再生方向
  *
  * @retval  鳴き声プレイヤーINDEX
  */
 //============================================================================================
-u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volume, int chorus_vol, int chorus_speed )
+u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volume, int chorus_vol, int chorus_speed, BOOL play_dir )
 {
   int pan;
   int index = BTLV_MCSS_GetIndex( bmw, position );
@@ -1442,7 +1443,7 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
     }
 
     playerIndex = PMVOICE_Play( bmw->btlv_mcss[ index ].param.mons_no, bmw->btlv_mcss[ index ].param.form_no,
-                                pan, chorus, chorus_vol, chorus_speed, FALSE, (u32)pRef );
+                                pan, chorus, chorus_vol, chorus_speed, play_dir, (u32)pRef );
     PMVOICE_SetVolume( playerIndex, volume );
     PMVOICE_SetSpeed( playerIndex, pitch );
   }

@@ -174,7 +174,7 @@ extern  void            BTLV_MCSS_SetMosaic( BTLV_MCSS_WORK *bmw, int position, 
 extern  void            BTLV_MCSS_CopyMAW( BTLV_MCSS_WORK *bmw, int src, int dst );
 extern  void            BTLV_MCSS_OverwriteMAW( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos, MCSS_ADD_WORK* maw );
 extern  u32             BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volume,
-                                             int chorus_vol, int chorus_speed );
+                                             int chorus_vol, int chorus_speed, BOOL play_dir );
 extern  void            BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir );
 extern  int             BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int position );
 
