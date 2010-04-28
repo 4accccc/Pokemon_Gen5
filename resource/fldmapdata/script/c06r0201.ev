@@ -27,6 +27,7 @@ _EVENT_DATA    ev_c06r0201_veteranw_01
 _EVENT_DATA    ev_c06r0201_informationw_01
 _EVENT_DATA    ev_c06r0201_middleman2_01
 _EVENT_DATA    ev_c06r0201_pilot_01
+_EVENT_DATA    ev_c06r0201_waitress_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -34,6 +35,61 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_c06r0201_flag_change:
 //  _END
+
+/**************************************************************/
+/*  ウェイトレスのハートスイーツとハートのウロコ交換イベント
+/**************************************************************/
+EVENT_START		ev_c06r0201_waitress_01
+	
+	DEFINE_LOCAL LWK_DAY
+	DEFINE_LOCAL LWK_MONTH
+	DEFINE_LOCAL LWK_ITEM_NUM
+	DEFINE_LOCAL LWK_BAG_CHK
+	DEFINE_LOCAL LWK_ITEM_SUB_CHK
+	
+	_GET_DATE(LWK_MONTH,LWK_DAY)
+	_GET_ITEM_NUM( ITEM_HAATOSUIITU, LWK_ITEM_NUM )
+	_ADD_ITEM_CHK(ITEM_HAATONOUROKO,1,LWK_BAG_CHK)
+		
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG(msg_c06r0201_waitress_01,C06R0201_WAITRESS_01)
+
+	IF $LWK_ITEM_NUM > 9 THEN
+		_BALLOONWIN_OBJMSG(msg_c06r0201_waitress_02,C06R0201_WAITRESS_01)
+		_CALL	ev_item_get
+		_SUB_ITEM( ITEM_HAATOSUIITU,10,LWK_ITEM_SUB_CHK )
+	ELSE
+		_BALLOONWIN_OBJMSG(msg_c06r0201_waitress_04,C06R0201_WAITRESS_01)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
+	
+EVENT_END
+
+ev_item_get:
+	
+	_YES_NO_WIN(SCWK_ANSWER)
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		IF $LWK_BAG_CHK == 0 THEN 
+			_BALLOONWIN_OBJMSG(msg_c06r0201_waitress_06,C06R0201_WAITRESS_01)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		ELSE
+			_BALLOONWIN_OBJMSG(msg_c06r0201_waitress_05,C06R0201_WAITRESS_01)
+			_MSGWIN_CLOSE()
+			
+			_SYSWIN_MSG(msg_c06r0201_exchange_sys_01,POS_DEFAULT )
+			_MSGWIN_CLOSE()
+			_ITEM_EVENT_SUCCESS_KEYWAIT(ITEM_HAATONOUROKO,1)
+			
+		ENDIF
+	ELSE
+		_BALLOONWIN_OBJMSG(msg_c06r0201_waitress_07,C06R0201_WAITRESS_01)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
+_RET
 
 /**************************************************************/
 /*  c06r0201_workman_01:一言メッセージ*/

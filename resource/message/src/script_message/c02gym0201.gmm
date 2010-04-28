@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:24:09"/>
+	<create user="murakami_naoto" host="W00228" date="2010-04-28T17:19:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="119" right="2021" bottom="747" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="259"/>
 		<band id="3" index="4" style="0000" width="436"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1445,9 +1445,9 @@
 ここまで　これたかい？▽
 さあ　さいごの　もんだいだよ！▼
 [FF:00:色:1]Ｑ，この　ほんだなから……
-うえに２つ　ひだりに１つ▽
-したに２つ　みぎに１つ▽
-うえに１つ……　さて　どこだ？▼[FF:00:色:0]
+おくに２つ　ひだりに１つ▽
+てまえに２つ　みぎに１つ▽
+おくに１つ……　さて　どこだ？▼[FF:00:色:0]
 ヒントは……
 じぶんの　ちからで　さがしてごらん！</language>
 		<language name="JPN_KANJI" width="256">あとがきに　メモが　ある……！▼
@@ -1455,8 +1455,8 @@
 ここまで　来れたかい？▽
 さあ　最後の　問題だよ！▼
 [FF:00:色:1]Ｑ，この　本棚から……
-上に２つ　左に１つ　下に２つ▽
-右に１つ　上に１つ　さて　どこだ？▼[FF:00:色:0]
+奥に２つ　左に１つ　手前に２つ▽
+右に１つ　奥に１つ　さて　どこだ？▼[FF:00:色:0]
 ヒントは……
 自分の　力で　探してごらん！</language>
 	</row>

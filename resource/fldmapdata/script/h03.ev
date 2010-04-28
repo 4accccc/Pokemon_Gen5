@@ -44,8 +44,6 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_zone_h03
 	
-
-	
 	//一般人を表示 暴走族を非表示
 	_FLAG_RESET(FV_H03_GENERALPERSON)
 	_FLAG_SET(FV_H03_BADRIDER)
@@ -122,10 +120,13 @@ INIT_EVENT_START	ev_init_h03
 			IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 				//群集の起動
 				_CROWD_PEOPLE_START()
-				IF $LWK_POSZ_1 == 32 THEN
+				
+				IF $LWK_POSZ_1 <= 34 THEN
 					_OBJ_POS_CHANGE(H03_BADRIDER1_01,15,0,37,DIR_UP)
-					
-				ELSIF $LWK_POSZ_1 == 159 THEN
+				ELSIF $LWK_POSZ_1 <= 156 && $LWK_POSZ_1 >= 35 THEN
+					//POSイベントを無効にする
+					$WK_SCENE_H03_BADRIDER = 2
+				ELSIF $LWK_POSZ_1 >= 157 THEN
 					_OBJ_POS_CHANGE(H03_BADRIDER1_01,15,0,154,DIR_DOWN)
 				ENDIF
 				
@@ -276,92 +277,92 @@ EVENT_START    ev_pos_h03_sage_01
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_7)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_7)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_7)
-		_OBJ_ANIME( H03_NINJA_02,anm_ninja_03_idou_01_7)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_7)
 	ELSIF $LWK_POSX == 8 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_8)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_8)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_8)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_8)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_8)
 	ELSIF $LWK_POSX == 9 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_9)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_9)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_9)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_9)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_9)
 	ELSIF $LWK_POSX == 10 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_10)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_10)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_10)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_10)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_10)
 	ELSIF $LWK_POSX == 11 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_11)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_11)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_11)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_11)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_11)
 	ELSIF $LWK_POSX == 12 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_12)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_12)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_12)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_12)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_12)
 	ELSIF $LWK_POSX == 13 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_13)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_13)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_13)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_13)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_13)
 	ELSIF $LWK_POSX == 14 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_14)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_14)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_14)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_14)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_14)
 	ELSIF $LWK_POSX == 15 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_15)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_15)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_15)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_15)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_15)
 	ELSIF $LWK_POSX == 16 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_16)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_16)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_16)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_16)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_16)
 	ELSIF $LWK_POSX == 17 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_17)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_17)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_17)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_17)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_17)
 	ELSIF $LWK_POSX == 18 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_18)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_18)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_18)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_18)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_18)
 	ELSIF $LWK_POSX == 19 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_19)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_19)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_19)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_19)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_19)
 	ELSIF $LWK_POSX == 20 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_20)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_20)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_20)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_20)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_20)
 	ELSIF $LWK_POSX == 21 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_21)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_21)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_21)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_21)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_21)
 	ELSIF $LWK_POSX == 22 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_22)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_22)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_22)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_22)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_22)
 	ELSIF $LWK_POSX == 23 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_23)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_23)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_23)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_23)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_23)
 	ELSIF $LWK_POSX == 24 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_01_24)	
 		_OBJ_ANIME( H03_NINJA_01,anm_ninja_01_idou_01_24)
 		_OBJ_ANIME( H03_NINJA_02,anm_ninja_02_idou_01_24)
-		_OBJ_ANIME( H03_NINJA_03,anm_ninja_02_idou_01_24)
+		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_24)
 	ENDIF
 	_OBJ_ANIME_WAIT()
 	
@@ -460,6 +461,7 @@ EVENT_START    ev_pos_h03_sage_01
 	$WK_SCENE_H03_PLASMA = 1
 	//ゲーチス・ダークトリニティを非表示にする
 	_FLAG_SET(FV_H03_PLASMA)
+
 	//==============フラグワーク操作==============//
 	
 }
@@ -527,23 +529,23 @@ _ANIME_LABEL	anm_ninja_move
 
 //グリッドXが7のとき
 _ANIME_LABEL	anm_ninja_01_idou_01_7
-	_ANIME_DATA AC_WALK_R_4F,7
+	_ANIME_DATA AC_WALK_R_4F,8
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_ninja_02_idou_01_7
-	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA AC_WALK_R_4F,7
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_ninja_03_idou_01_7
-	_ANIME_DATA AC_WALK_R_4F,7
+	_ANIME_DATA AC_WALK_R_4F,8
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_idou_01_7
-	_ANIME_DATA AC_WALK_R_4F,7
+	_ANIME_DATA AC_WALK_R_4F,8
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 	
@@ -881,23 +883,23 @@ _ANIME_LABEL	anm_player_idou_01_23
 	
 //グリッドXが24のとき
 _ANIME_LABEL	anm_ninja_01_idou_01_24
-	_ANIME_DATA AC_WALK_L_4F,8
+	_ANIME_DATA AC_WALK_L_4F,9
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_ninja_02_idou_01_24
-	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA AC_WALK_L_4F,8
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_ninja_03_idou_01_24
-	_ANIME_DATA AC_WALK_L_4F,8
+	_ANIME_DATA AC_WALK_L_4F,9
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_idou_01_24
-	_ANIME_DATA AC_WALK_L_4F,8
+	_ANIME_DATA AC_WALK_L_4F,9
 	_ANIME_DATA AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 	
@@ -918,68 +920,69 @@ EVENT_START    ev_pos_h03_badrider_01
 	DEFINE_LOCAL LWK_POSZ
 	
 	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
-	
+
 	_OBJ_ANIME(H03_BADRIDER1_01,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
 	_TIME_WAIT(8)
 	
-	IF $LWK_POSX == 7 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u7)
-	ELSIF $LWK_POSX == 8  THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u8)
-	ELSIF $LWK_POSX == 9  THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u9)
-	ELSIF $LWK_POSX == 10 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u10)
-	ELSIF $LWK_POSX == 11 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u11)
-	ELSIF $LWK_POSX == 12 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u12)
-	ELSIF $LWK_POSX == 13 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u13)
-	ELSIF $LWK_POSX == 14 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u14)
-	ELSIF $LWK_POSX == 16 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u16)
-	ELSIF $LWK_POSX == 17 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u17)
-	ELSIF $LWK_POSX == 18 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u18)
-	ELSIF $LWK_POSX == 19 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u19)
-	ELSIF $LWK_POSX == 20 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u20)
-	ELSIF $LWK_POSX == 21 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u21)
-	ELSIF $LWK_POSX == 22 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u22)
-	ELSIF $LWK_POSX == 23 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u23)
-	ELSIF $LWK_POSX == 24 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u24)
-	ENDIF
-
-	_OBJ_ANIME_WAIT()
-	
-	IF $LWK_POSZ ==  34 THEN
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_up)	
+		IF $LWK_POSX == 7 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u7)
+		ELSIF $LWK_POSX == 8  THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u8)
+		ELSIF $LWK_POSX == 9  THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u9)
+		ELSIF $LWK_POSX == 10 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u10)
+		ELSIF $LWK_POSX == 11 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u11)
+		ELSIF $LWK_POSX == 12 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u12)
+		ELSIF $LWK_POSX == 13 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u13)
+		ELSIF $LWK_POSX == 14 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u14)
+		ELSIF $LWK_POSX == 16 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u16)
+		ELSIF $LWK_POSX == 17 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u17)
+		ELSIF $LWK_POSX == 18 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u18)
+		ELSIF $LWK_POSX == 19 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u19)
+		ELSIF $LWK_POSX == 20 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u20)
+		ELSIF $LWK_POSX == 21 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u21)
+		ELSIF $LWK_POSX == 22 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u22)
+		ELSIF $LWK_POSX == 23 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u23)
+		ELSIF $LWK_POSX == 24 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u24)
+		ENDIF
 		_OBJ_ANIME_WAIT()
-	ELSE
-		_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_down)	
-		_OBJ_ANIME_WAIT()		
-	ENDIF
 		
+		IF $LWK_POSX == 34 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_up)
+		ELSIF $LWK_POSZ == 157 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_down)
+		ENDIF
+		_OBJ_ANIME_WAIT()
+	
 	_TIME_WAIT(16)
 		
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
 	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
+
 	_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_01,H03_BADRIDER1_01,POS_UP)
 	_YES_NO_WIN(SCWK_ANSWER)
 			
 	IF$SCWK_ANSWER == SCR_YES THEN
+
 		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_03,H03_BADRIDER1_01,POS_UP)
-				
+
 	ELSE
+
 		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_02,H03_BADRIDER1_01,POS_UP)
 		_MSGWIN_CLOSE()
 				
@@ -995,17 +998,16 @@ EVENT_START    ev_pos_h03_badrider_01
 		ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
-						
-		//対戦後メッセージ
+		
 		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_04,H03_BADRIDER1_01,POS_UP)	
-				    	
+
 	ENDIF
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
 	//POSイベントを無効にする
 	$WK_SCENE_H03_BADRIDER = 2
-	
+
 	}
 EVENT_END
 
@@ -1206,7 +1208,6 @@ EVENT_START    ev_h03_badrider1_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
-EVENT_END
 /**************************************************************/
 /*    BADRIDER_2（リーダー）の話しかけイベント           */                                                           
 /**************************************************************/ 

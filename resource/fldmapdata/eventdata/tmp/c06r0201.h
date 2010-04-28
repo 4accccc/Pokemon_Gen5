@@ -19,6 +19,7 @@
 #define C06R0201_VETERANW_01               5
 #define C06R0201_PILOT_01                  6
 #define C06R0201_MIDDLEMAN2_01             7
+#define C06R0201_WAITRESS_01               8
 
 #endif //ZONE_C06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
