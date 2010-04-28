@@ -55,35 +55,30 @@ EVENT_START     ev_pos_d07r0201_leader5_01
 	//プレイヤーが通る4グリッド分を用意
 	SWITCH $LCW_POSX
 	CASE 3 THEN
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x3 )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x3 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x3 )
+	_TIME_WAIT( 24 )
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_look_leader5 )
 	_OBJ_ANIME_WAIT()
 		
 	CASE 4 THEN
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x4 )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x4 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x4 )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_look_leader5 )
 	_OBJ_ANIME_WAIT()
 		
 	CASE 5 THEN
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x5 )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x5 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x5 )
+	_TIME_WAIT( 24 )
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_look_leader5 )
 	_OBJ_ANIME_WAIT()
 		
 	DEFAULT //正面に立った時と同じ処理
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_come_x4 )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_to_leader5_x4 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_to_leader5_x4 )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_look_leader5 )
 	_OBJ_ANIME_WAIT()
 	
 	ENDSWITCH
-	}
 	
 	//ヤーコン：ネジやまをしさつしていて
 	_BALLOONWIN_OBJMSG(msg_d07r0201_leader5_01 , D07R0201_LEADER5_01)
@@ -117,12 +112,22 @@ EVENT_START     ev_pos_d07r0201_leader5_01
 	_BALLOONWIN_OBJMSG(msg_d07r0201_leader5_04 , D07R0201_LEADER5_01)
 	_BALLOONWIN_CLOSE()
 	
-	//ヤーコン退場、主人公達押しのけられる
-	_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_goodbye_01 )
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_aside_01 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_aside_01 )
-	_OBJ_ANIME_WAIT()
+	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 	
+	IF $LCW_POSX == 5 THEN
+		//ヤーコン退場、主人公達押しのけられる
+		_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_goodbye_01 )
+		_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_aside_01_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_aside_01_l )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		//ヤーコン退場、主人公達押しのけられる
+		_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_goodbye_01 )
+		_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_aside_01_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_aside_01_r )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+
 	//ヤーコン退場、主人公見送る
 	_OBJ_ANIME( D07R0201_LEADER5_01, anm_led5_leader5_goodbye_02 )
 	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_aside_02 )
@@ -133,9 +138,18 @@ EVENT_START     ev_pos_d07r0201_leader5_01
 	_BALLOONWIN_OBJMSG(msg_d07r0201_black_03 , D07R0201_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
-	//チェレン退場
-	_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_goodbye_01 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_look_rival_01 )
+	IF $LCW_POSX == 5 THEN
+		//チェレン退場
+		_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_goodbye_01_x5 )
+		_TIME_WAIT(32)
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_look_rival_01 )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		//チェレン退場
+		_OBJ_ANIME( D07R0201_RIVAL_01, anm_led5_rival_goodbye_01 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_led5_player_look_rival_01 )
+		_OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//自機にカメラを戻す
 	_CAMERA_DEF_MOVE (10) 
@@ -158,6 +172,7 @@ EVENT_START     ev_pos_d07r0201_leader5_01
 	$WK_SCENE_D07R0201 = 1
 	
 	//======================================//
+	}
 EVENT_END
 
 //--------------------------------------------------------------
@@ -165,62 +180,16 @@ EVENT_END
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_led5_rival_llook_player_01
+	_ANIME_DATA	AC_DIR_D,0
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ライバル主人公に隣接x3
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_led5_rival_come_x3
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ライバル主人公に隣接x4
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_led5_rival_come_x4
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ライバル主人公に隣接x5
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_led5_rival_come_x5
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	ライバルヤーコンの前に戻るx3
 //--------------------------------------------------------------
 
-_ANIME_LABEL	 anm_led5_rival_to_leader5_x3
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,2
+_ANIME_LABEL	 anm_led5_rival_look_leader5
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ライバルヤーコンの前に戻るx4
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_led5_rival_to_leader5_x4
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ライバルヤーコンの前に戻るx5
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_led5_rival_to_leader5_x5
-	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -229,8 +198,6 @@ _ANIME_LABEL	 anm_led5_rival_to_leader5_x5
 
 _ANIME_LABEL	 anm_led5_player_to_leader5_x3
 	_ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -238,7 +205,9 @@ _ANIME_LABEL	 anm_led5_player_to_leader5_x3
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_led5_player_to_leader5_x4
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -246,9 +215,7 @@ _ANIME_LABEL	 anm_led5_player_to_leader5_x4
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_led5_player_to_leader5_x5
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -285,22 +252,41 @@ _ANIME_LABEL	 anm_led5_leader5_goodbye_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ライバル押しのけられる
+//	ライバル押しのけられるL
 //--------------------------------------------------------------
 
-_ANIME_LABEL	 anm_led5_rival_aside_01
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	主人公押しのけられる
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_led5_player_aside_01
+_ANIME_LABEL	 anm_led5_rival_aside_01_l
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公押しのけられるL
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_aside_01_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル押しのけられるR
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_aside_01_r
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公押しのけられるR
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_player_aside_01_r
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -325,6 +311,15 @@ _ANIME_LABEL	 anm_led5_leader5_goodbye_02
 
 _ANIME_LABEL	 anm_led5_rival_goodbye_01
 	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ライバル退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_led5_rival_goodbye_01_x5
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

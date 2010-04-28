@@ -19,7 +19,7 @@
 #define D05R0201_HAKAIW_05                 7
 #define D05R0201_HAKAIM_06                 8
 #define D05R0201_HAKAIM_07                 9
-#define D05R0201_HAKAIM_08                10
+#define D05R0201_HAKAIW_08                10
 #define D05R0201_WORKMAN_02               11
 #define D05R0201_WORKMAN_03               12
 #define D05R0201_WORKMAN_04               13

@@ -139,7 +139,10 @@ EVENT_START   ev_bg_r07r0105_bell
 	_PLAINWIN_CLOSE()
 	
 	IF $SCWK_ANSWER01 == 0 THEN
-	
+		
+		//【仮】BGMを押さえる
+		_BGM_FADEOUT( 60 , 12 )
+		
 		//鐘SE再生
 		_SE_PLAY( SEQ_SE_FLD_151 )
 		
@@ -159,16 +162,18 @@ EVENT_START   ev_bg_r07r0105_bell
 		_SE_WAIT()
 		_PLAINWIN_CLOSE()
 		
-		//鳴り響いた
-		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_03  )
+		//【仮】BGMを戻す
+		_BGM_FADEIN( 12 )
 		
 		//フウロイベント中はイベントを起動
 		IF $WK_SCENE_C07R0105 == 1 THEN
-			
-			_AB_KEYWAIT_MARK()
+			//鳴り響いた
+			_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_03a  )
 			_PLAINWIN_CLOSE()
 			_CALL ev_r07r0105_leader6_03
 		ELSE
+			//鳴り響いた
+			_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_03  )
 			_LAST_KEYWAIT()
 			_PLAINWIN_CLOSE()
 			

@@ -31,7 +31,7 @@ _EVENT_DATA    ev_d05r0201_hakaiw_04
 _EVENT_DATA    ev_d05r0201_hakaiw_05
 _EVENT_DATA    ev_d05r0201_hakaim_06
 _EVENT_DATA    ev_d05r0201_hakaim_07
-_EVENT_DATA    ev_d05r0201_hakaim_08
+_EVENT_DATA    ev_d05r0201_hakaiw_08
 _EVENT_DATA    ev_init_d05r0201
 _EVENT_DATA_END
 
@@ -51,7 +51,7 @@ INIT_EVENT_START	ev_init_d05r0201
 		_OBJ_POS_CHANGE( D05R0201_HAKAIW_05, 6, 0, 11, DIR_DOWN )
 		_OBJ_POS_CHANGE( D05R0201_HAKAIM_06, 1, 0, 11, DIR_DOWN )
 		_OBJ_POS_CHANGE( D05R0201_HAKAIM_07, 4, 0, 9, DIR_DOWN )
-		_OBJ_POS_CHANGE( D05R0201_HAKAIM_08, 5, 0, 10, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIW_08, 5, 0, 10, DIR_DOWN )
 		_OBJ_POS_CHANGE( D05R0201_RIVAL_01, 3, 0, 11, DIR_UP )
 	ENDIF
 
@@ -80,8 +80,6 @@ EVENT_START   ev_scene_d05r0201_vs_plasma
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d05r0201_player_walk01)
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_lookup)
-	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
@@ -109,7 +107,7 @@ EVENT_START   ev_scene_d05r0201_vs_plasma
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団宣戦布告して布陣を組む
-	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_hakaim_01,D05R0201_HAKAIM_08 , POS_UR)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_hakaim_01,D05R0201_HAKAIW_08 , POS_UR)
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(D05R0201_HAKAIM_01,anm_d05r0201_hakai_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai_02)
@@ -118,7 +116,7 @@ EVENT_START   ev_scene_d05r0201_vs_plasma
 	_OBJ_ANIME(D05R0201_HAKAIW_05,anm_d05r0201_hakai_05)
 	_OBJ_ANIME(D05R0201_HAKAIM_06,anm_d05r0201_hakai_06)
 	_OBJ_ANIME(D05R0201_HAKAIM_07,anm_d05r0201_hakai_07)
-	_OBJ_ANIME(D05R0201_HAKAIM_08,anm_d05r0201_hakai_08)
+	_OBJ_ANIME(D05R0201_HAKAIW_08,anm_d05r0201_hakai_08)
 	_OBJ_ANIME_WAIT()
 	
 	//主人公とライバル向き合う
@@ -161,8 +159,6 @@ EVENT_END
 _ANIME_LABEL	anm_d05r0201_rival_gyoe
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -444,7 +440,7 @@ EVENT_END
 /**************************************************************/
 /*プラズマ団戦闘処理（8）         */
 /**************************************************************/
-EVENT_START   ev_d05r0201_hakaim_08
+EVENT_START   ev_d05r0201_hakaiw_08
 {
 
 	//戦闘を既に終えていたら一言メッセージ
@@ -455,11 +451,11 @@ EVENT_START   ev_d05r0201_hakaim_08
 	ELSE
 		
 		_TALK_OBJ_START()
-		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_01 , D05R0201_HAKAIM_08 )
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_01 , D05R0201_HAKAIW_08 )
 		_BALLOONWIN_CLOSE()
 		
 		//戦闘処理
-		_TRAINER_BTL_SET( TRID_HAKAIM1_10, 0 )
+		_TRAINER_BTL_SET( TRID_HAKAIW1_12, 0 )
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -476,7 +472,7 @@ EVENT_START   ev_d05r0201_hakaim_08
 		ENDIF
 		
 		//こんなに寒くて 震えてたら勝てるわけ…
-		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_02 , D05R0201_HAKAIM_08 )
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_02 , D05R0201_HAKAIW_08 )
 		_BALLOONWIN_CLOSE()
 		
 		//全員に勝利した場合終了イベントをコール
@@ -590,6 +586,10 @@ ev_d05r0201_vs_plasma_win:
 	_OBJ_ANIME(D05R0201_WORKMAN_02,anm_d05r0201_workman2_bye_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_01,anm_d05r0201_hakai1_bye_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai2_bye_01)
+	
+	_TIME_WAIT( 32 )
+	_SUBWIN_CLOSE( 1 )
+	
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL(D05R0201_WORKMAN_02)
@@ -600,8 +600,6 @@ ev_d05r0201_vs_plasma_win:
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
-	_SUBWIN_CLOSE( 1 )
-	
 	//プラズマ団：ひー
 	_SUBWIN_MSG( msg_d05r0201_hakaim_02 , 10 , 14 , 2 )
 	
@@ -609,6 +607,10 @@ ev_d05r0201_vs_plasma_win:
 	_OBJ_ANIME(D05R0201_WORKMAN_01,anm_d05r0201_workman1_bye_01)
 	_OBJ_ANIME(D05R0201_HAKAIW_04,anm_d05r0201_hakai4_bye_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_06,anm_d05r0201_hakai6_bye_01)
+	
+	_TIME_WAIT( 32 )
+	_SUBWIN_CLOSE( 2 )
+	
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL(D05R0201_WORKMAN_01)
@@ -619,30 +621,30 @@ ev_d05r0201_vs_plasma_win:
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
-	_SUBWIN_CLOSE( 2 )
-	
 	_SUBWIN_MSG( msg_d05r0201_hakaim_03 , 20 , 10 , 3 )
 	
 	//第二陣退場
 	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman3_bye_01)
-	_OBJ_ANIME(D05R0201_HAKAIM_08,anm_d05r0201_hakai8_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIW_08,anm_d05r0201_hakai8_bye_01)
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman3_bye_02)
-	_OBJ_ANIME(D05R0201_HAKAIM_08,anm_d05r0201_hakai8_bye_02)
+	_OBJ_ANIME(D05R0201_HAKAIW_08,anm_d05r0201_hakai8_bye_02)
 	_OBJ_ANIME(D05R0201_HAKAIW_05,anm_d05r0201_hakai5_bye_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_03,anm_d05r0201_hakai3_bye_01)
+	
+	_TIME_WAIT( 32 )
+	_SUBWIN_CLOSE( 3 )
+	
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL(D05R0201_WORKMAN_03)
-	_OBJ_DEL(D05R0201_HAKAIM_08)
+	_OBJ_DEL(D05R0201_HAKAIW_08)
 	_OBJ_DEL(D05R0201_HAKAIW_05)
 	_OBJ_DEL(D05R0201_HAKAIM_03)
 	
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
-	
-	_SUBWIN_CLOSE( 3 )
 	
 	//第四陣退場
 	_OBJ_ANIME(D05R0201_WORKMAN_04,anm_d05r0201_workman4_bye_01)

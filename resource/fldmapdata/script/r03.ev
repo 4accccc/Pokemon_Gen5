@@ -292,7 +292,7 @@ _ANIME_LABEL	 anm_babygirl1_trainer_to_right
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_babygirl1_trainer_down_z563
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1055,6 +1055,12 @@ _ANIME_LABEL	 anm_support_goodbye03
 /**************************************************************/
 EVENT_START   ev_pos_r03_rival_02
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//ライバル専用曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+
 	//草むらからライバル登場
 	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_01 )
 	_OBJ_ANIME_WAIT()
@@ -1096,6 +1102,10 @@ EVENT_START   ev_pos_r03_rival_02
 	
 	//退場
 	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_04 )
+	
+	//ライバル専用曲停止
+	_END_EVENT_BGM()
+	
 	_OBJ_ANIME_WAIT()
 
 	//======================================//
