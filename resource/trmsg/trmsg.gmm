@@ -13994,6 +13994,229 @@
 うん　勉強に　なったよ！</language>
 	</row>
 
+	<row id="TRID_ELITEW_21_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">トリプルバトルは
+ポケモン　３びきでの　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してね！</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルは
+ポケモン　３匹での　勝負！▼
+戦える　ポケモンを
+３匹は　用意してしてね！</language>
+	</row>
+
+	<row id="TRID_ELITEW_21_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_21_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_21_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_22_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">ローテーションバトルは
+ポケモン　３びきでの　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してほしいな！</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルは
+ポケモン　３匹での　勝負！▼
+戦える　ポケモンを
+３匹は　用意してほしいな！</language>
+	</row>
+
+	<row id="TRID_ELITEM_22_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_22_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_22_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_23_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">トリプルバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+３びきは　たたかえる
+ポケモンが　いないと　できないよ</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルは　ポケモン
+３匹での　新しい　勝負！▼
+３匹は　戦える
+ポケモンが　いないと　できないよ</language>
+	</row>
+
+	<row id="TRID_ELITEM_23_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_23_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_23_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_24_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">ローテーションバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+３びきは　たたかえる
+ポケモンが　いないと　できないよ</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルは　ポケモン
+３匹での　新しい　勝負！▼
+３匹は　戦える
+ポケモンが　いないと　できないよ</language>
+	</row>
+
+	<row id="TRID_ELITEM_24_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_24_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEM_24_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_22_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">トリプルバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してください！</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルは　ポケモン
+３匹での　新しい　勝負！▼
+戦える　ポケモンを
+３匹は　用意してください！</language>
+	</row>
+
+	<row id="TRID_ELITEW_22_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_22_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_22_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_23_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">ローテーションバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してください！</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルは　ポケモン
+３匹での　新しい　勝負！▼
+戦える　ポケモンを
+３匹は　用意してください！</language>
+	</row>
+
+	<row id="TRID_ELITEW_23_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_23_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_ELITEW_23_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_12_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">すばらしい　けいかくに
+ジャマは　つきもの　ね！</language>
+		<language name="JPN_KANJI" width="216">すばらしい　計画に
+ジャマは　つきもの　ね！</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_13_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_13_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_13_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_14_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かりの　メッセージ</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_14_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">いたい　いたーい！
+ポケモン　きずついちゃった！</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_14_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あなた……　ここに　くるまでに
+どれだけの　ポケモンを　きずつけたの？</language>
+		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+	</row>
+
+	<row id="TRID_DOCTOR_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">わたしは　ドクターで　あるまえに
+ひとりの　トレーナー　なのです！▼</language>
+		<language name="JPN_KANJI" width="216">私は　ドクターで　ある前に
+１人の　トレーナー　なのです！▼</language>
+	</row>
+
+	<row id="TRID_DOCTOR_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">トレーナーを　みかけると
+おもわず　しょうぶ　するんだよ……</language>
+		<language name="JPN_KANJI" width="216">トレーナーを　みかけると
+思わず　勝負するんだよ……</language>
+	</row>
+
+	<row id="TRID_DOCTOR_05_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
+		<language name="JPN" width="216">では　ポケモンを
+げんきに　しましょう！▼</language>
+		<language name="JPN_KANJI" width="216">では　ポケモンを
+元気に　しましょう！▼</language>
+	</row>
+
+	<row id="TRID_DOCTOR_05_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
+		<language name="JPN" width="216">リゾートデザートは　きびしいが
+くすりの　じゅんびは　ばっちりかい？</language>
+		<language name="JPN_KANJI" width="216">リゾートデザートは　厳しいが
+くすりの　準備は　ばっちりかい？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
