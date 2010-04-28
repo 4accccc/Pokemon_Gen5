@@ -16,6 +16,7 @@ static const u16 fs_stage1[] = {
 // フレンドリーショップ：第２段階
 static const u16 fs_stage2[] = {
 		ITEM_MONSUTAABOORU,
+		ITEM_SUUPAABOORU,
 		ITEM_KIZUGUSURI,
 		ITEM_IIKIZUGUSURI,
 		ITEM_DOKUKESI,
@@ -34,6 +35,7 @@ static const u16 fs_stage3[] = {
 		ITEM_SUUPAABOORU,
 		ITEM_KIZUGUSURI,
 		ITEM_IIKIZUGUSURI,
+		ITEM_SUGOIKIZUGUSURI,
 		ITEM_GENKINOKAKERA,
 		ITEM_DOKUKESI,
 		ITEM_MAHINAOSI,
