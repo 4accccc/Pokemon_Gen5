@@ -352,6 +352,10 @@
 #define BTLEFF_MIGAWARI_OFF     ( 0 )   // みがわりOFF
 #define BTLEFF_MIGAWARI_ON      ( 1 )   // みがわりON
 
+//なきごえ
+#define BTLEFF_NAKIGOE_NORMAL   ( 0 ) //正再生
+#define BTLEFF_NAKIGOE_REVERSE  ( 1 ) //逆再生
+
 //ボールモード
 #define BTLEFF_CAPTURE_BALL_POS_AA  ( 0 )
 #define BTLEFF_CAPTURE_BALL_POS_BB  ( 1 )
@@ -2189,12 +2193,13 @@ ex)
 /**
  * @brief	ポケモン鳴き声
  *
- * #param_num	5
+ * #param_num	6
  * @param pos           鳴き声を出すポケモンの立ち位置
  * @param pitch         鳴き声のピッチ（相対）
  * @param volume        鳴き声のボリューム（相対）
  * @param chorus_vol    鳴き声のコーラス設定（ボリューム差）
  * @param chorus_speed  鳴き声のコーラス設定（再生速度差）
+ * @param play_dir      再生方向
  *
  * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK	BTLEFF_POKEMON_SIDE_DEFENCE	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F
@@ -2202,16 +2207,19 @@ ex)
  * #param VALUE_INT ボリューム（相対）
  * #param VALUE_INT コーラス設定（ボリューム差）
  * #param VALUE_INT コーラス設定（再生速度差）
+ * #param	COMBOBOX_TEXT	正再生	逆再生
+ * #param	COMBOBOX_VALUE	BTLEFF_NAKIGOE_NORMAL	BTL_EFF_NAKIGOE_REVERSE
  *
  */
 //======================================================================
-	.macro	NAKIGOE pos, pitch, volume, chorus_vol, chorus_speed
+	.macro	NAKIGOE pos, pitch, volume, chorus_vol, chorus_speed, play_dir
   .short  EC_NAKIGOE
 	.long		\pos
 	.long		\pitch
 	.long		\volume
 	.long		\chorus_vol
 	.long		\chorus_speed
+	.long		\play_dir
 	.endm
 
 //======================================================================

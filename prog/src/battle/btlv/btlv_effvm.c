@@ -47,13 +47,16 @@ enum{
   EFFVM_CHANGE_VOLUME = ( 127 * EFFVM_VOLUME_DOWN_RATIO / 100 ) << FX32_SHIFT,
   EFFVM_CHANGE_VOLUME_DOWN_FRAME = EFFVM_VOLUME_DOWN_FRAME,
   EFFVM_CHANGE_VOLUME_UP_FRAME = EFFVM_VOLUME_UP_FRAME,
+  EFFVM_CHANGE_VOLUME_PV = ( 127 * EFFVM_VOLUME_DOWN_RATIO_PV / 100 ) << FX32_SHIFT,
+  EFFVM_CHANGE_VOLUME_DOWN_FRAME_PV = EFFVM_VOLUME_DOWN_FRAME_PV,
+  EFFVM_CHANGE_VOLUME_UP_FRAME_PV = EFFVM_VOLUME_UP_FRAME_PV,
 
   EFFVM_VOICEPLAYER_INDEX_NONE = 0xffffffff,
 };
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -63,6 +66,9 @@ enum{
 vu32  volume_down_ratio = EFFVM_VOLUME_DOWN_RATIO;
 vu32  volume_down_frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME;
 vu32  volume_up_frame   = EFFVM_CHANGE_VOLUME_UP_FRAME;
+vu32  volume_down_ratio_pv = EFFVM_VOLUME_DOWN_RATIO_PV;
+vu32  volume_down_frame_pv = EFFVM_CHANGE_VOLUME_DOWN_FRAME_PV;
+vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #endif
 #endif
 
@@ -369,13 +375,14 @@ static  void          MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m,
 static  int           EFFVM_GetTcbIndex( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw );
 static  ARCDATID      EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID );
-static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol );
+static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
 typedef enum
@@ -581,11 +588,13 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
     {
 #ifdef KAGEYAMA_DEBUG
       fx32  start_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+      int   frame = volume_up_frame;
 #else
       fx32  start_vol = EFFVM_CHANGE_VOLUME;
+      int   frame = EFFVM_CHANGE_VOLUME_UP_FRAME;
 #endif
       fx32  end_vol = 127 << FX32_SHIFT;
-      EFFVM_ChangeVolume( bevw, start_vol, end_vol );
+      EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
     }
 
     GFL_HEAP_FreeMemory( bevw->sequence );
@@ -655,21 +664,15 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
     //BGMのマスターボリュームを下げる
     {
-      BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
-      becv->tcb_index = EFFVM_GetTcbIndex( bevw );
-      becv->start_vol = 127 << FX32_ONE;
+      fx32  start_vol = 127 << FX32_SHIFT;
 #ifdef KAGEYAMA_DEBUG
-      becv->end_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+      fx32  end_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+      int   frame = volume_down_frame;
 #else
-      becv->end_vol = EFFVM_CHANGE_VOLUME;
+      fx32  end_vol = EFFVM_CHANGE_VOLUME;
+      int   frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME;
 #endif
-      becv->bevw = bevw;
-#ifdef KAGEYAMA_DEBUG
-      BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, volume_down_frame );
-#else
-      BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_DOWN_FRAME );
-#endif
-      bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
+      EFFVM_ChangeVolume( bevw, start_vol, end_vol, EFFVM_CHANGE_VOLUME_DOWN_FRAME );
     }
   }
   else
@@ -2240,7 +2243,6 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     }
     PaletteWorkSet( BTLV_EFFECT_GetPfd(), palData->pRawData, FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, palData->szByte );
 
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
     bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
@@ -2259,7 +2261,6 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
                         BTLV_EFFVM_BG_PAL * 16, 0 );
 
-  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
   GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
   bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
@@ -3235,6 +3236,7 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
   int volume        = ( int )VMGetU32( vmh );
   int chorus_vol    = ( int )VMGetU32( vmh );
   int chorus_speed  = ( int )VMGetU32( vmh );
+  BOOL play_dir     = ( BOOL )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_NAKIGOE:\npos:%d\n",pos_cnt);
@@ -3248,7 +3250,23 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
     for( i = 0 ; i < pos_cnt ; i++ )
     {
       bevw->voiceplayerIndex[ i ] = BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), pos[ i ], pitch, volume,
-                                                         chorus_vol, chorus_speed );
+                                                         chorus_vol, chorus_speed, play_dir );
+    }
+    //BGMのマスターボリュームを下げる
+    {
+      fx32  start_vol = 127 << FX32_SHIFT;
+#ifdef KAGEYAMA_DEBUG
+      fx32  end_vol = ( 127 * volume_down_ratio_pv / 100 ) << FX32_SHIFT;
+      int   frame = volume_down_frame_pv;
+#else
+      fx32  end_vol = EFFVM_CHANGE_VOLUME_PV;
+      int   frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME_PV;
+#endif
+      EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
+    }
+    if( bevw->volume_already_down == 0 )
+    { 
+      GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, bevw, 0 );
     }
   }
 
@@ -5427,13 +5445,14 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
  *  @param[in]  bevw      システム管理構造体
  *  @param[in]  start_vol 開始ボリューム
  *  @param[in]  end_vol   終了ボリューム
+ *  @param[in]  frame     操作フレーム数
  *
  *  @retval ARCDATID  オフセット計算をしたARCDATID
  */
 //-----------------------------------------------------------------------------
-static  void  EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol )
+static  void  EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame )
 {
-  BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
+  BTLV_EFFVM_CHANGE_VOLUME* becv;
 
   if( start_vol > end_vol )
   { 
@@ -5450,15 +5469,13 @@ static  void  EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 en
     bevw->volume_down_flag = 0;
   }
 
+  becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
+
   becv->tcb_index = EFFVM_GetTcbIndex( bevw );
   becv->start_vol = start_vol;
   becv->end_vol = end_vol;
   becv->bevw = bevw;
-#ifdef KAGEYAMA_DEBUG
-  BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, volume_up_frame );
-#else
-  BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, EFFVM_CHANGE_VOLUME_UP_FRAME );
-#endif
+  BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, FX32_CONST( frame ) );
   bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
 }
 
@@ -5600,7 +5617,7 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
 static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work )
 {
   BTLV_EFFVM_CHANGE_VOLUME* becv = ( BTLV_EFFVM_CHANGE_VOLUME* )work;
-  BOOL  ret;
+  BOOL  ret = TRUE;
 
   BTLV_EFFTOOL_CheckMove( &becv->start_vol, &becv->vec_vol, &becv->end_vol, &ret );
   //PMSND_ChangeBGMVolume( 0xffff, becv->start_vol >> FX32_SHIFT );
@@ -5689,6 +5706,40 @@ static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work )
   }
 }
 
+//============================================================================================
+/**
+ * @brief 鳴き声終了チェック
+ */
+//============================================================================================
+static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_EFFVM_WORK*  bevw = ( BTLV_EFFVM_WORK* )work;
+  int i;
+  for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+  {
+    if( bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
+    { 
+      if( PMVOICE_CheckPlay( bevw->voiceplayerIndex[ i ] ) )
+      { 
+        return;
+      }
+    }
+  }
+  {
+#ifdef KAGEYAMA_DEBUG
+    fx32  start_vol = ( 127 * volume_down_ratio_pv / 100 ) << FX32_SHIFT;
+    int   frame = volume_up_frame_pv;
+#else
+    fx32  start_vol = EFFVM_CHANGE_VOLUME_PV;
+    int   frame = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
+#endif
+    fx32  end_vol = 127 << FX32_SHIFT;
+    EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
+  }
+  bevw->volume_already_down = 0;
+  GFL_TCB_DeleteTask( tcb );
+}
+
 #ifdef PM_DEBUG
 
 //デバッグ用関数
@@ -5736,10 +5787,12 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
     fx32  start_vol = 127 << FX32_ONE;
 #ifdef KAGEYAMA_DEBUG
     fx32  end_vol = ( 127 * volume_down_ratio / 100 ) << FX32_SHIFT;
+    int   frame = volume_down_frame;
 #else
     fx32  end_vol = EFFVM_CHANGE_VOLUME;
+    int   frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME;
 #endif
-    EFFVM_ChangeVolume( bevw, start_vol, end_vol );
+    EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
   }
 
   bevw->attack_pos = from;
