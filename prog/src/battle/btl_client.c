@@ -200,6 +200,9 @@ struct _BTL_CLIENT {
 
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
+  #ifdef PM_DEBUG
+  const BTL_CLIENT* viewOldClient;
+  #endif
 };
 
 
@@ -399,9 +402,45 @@ static void RecPlayer_ChapterSkipOff( RECPLAYER_CONTROL* ctrl );
 static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl );
 static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl );
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
+static void AICtrl_Init( void );
+static void AICtrl_Delegate( BTL_CLIENT* wk );
+static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
 
 
+//=============================================================================================
+/**
+ * システム初期化
+ *
+ * @param   none
+ */
+//=============================================================================================
+void BTL_CLIENTSYSTEM_Init( void )
+{
+  #ifdef PM_DEBUG
+  AICtrl_Init();
+  #endif
+}
 
+
+//=============================================================================================
+/**
+ * クライアント生成
+ *
+ * @param   mainModule
+ * @param   pokecon
+ * @param   commMode
+ * @param   netHandle
+ * @param   clientID
+ * @param   numCoverPos
+ * @param   clientType
+ * @param   bagMode
+ * @param   fRecPlayMode
+ * @param   randContext
+ * @param   heapID
+ *
+ * @retval  BTL_CLIENT*
+ */
+//=============================================================================================
 BTL_CLIENT* BTL_CLIENT_Create(
   BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon, BtlCommMode commMode,
   GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos, BtlClientType clientType, BtlBagMode bagMode, BOOL fRecPlayMode,
@@ -1258,7 +1297,11 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   case 1:
     CmdLimit_CheckOver( wk );
-    if( ClientSubProc_Call(wk) ){
+    if( ClientSubProc_Call(wk) )
+    {
+      #ifdef PM_DEBUG
+      AICtrl_Delegate( wk );
+      #endif
       return TRUE;
     }
     break;
@@ -3278,7 +3321,10 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
   #ifdef PM_DEBUG
   if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_AI_CTRL) )
   {
-    return SubProc_UI_SelectAction( wk, seq );
+    if( AICtrl_IsMyFase(wk) ){
+      return SubProc_UI_SelectAction( wk, seq );
+    }
+    return FALSE;
   }
   #endif
 
@@ -7289,3 +7335,65 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
     }
   }
 }
+
+
+
+
+
+
+
+/*============================================================================================*/
+/* デバッグ用AIクライアントを操作するためのシステム                                           */
+/*============================================================================================*/
+#ifdef PM_DEBUG
+/**
+ *  AI操作システム：初期化
+ */
+static void AICtrl_Init( void )
+{
+  GViewCore = NULL;
+  GControlableAIClientID = BTL_CLIENTID_NULL;
+}
+/**
+ *  AI操作システム：１クライアント操作終了->次のクライアントへ権限委譲
+ */
+static void AICtrl_Delegate( BTL_CLIENT* wk )
+{
+  u8 clientID = wk->myID + 1;
+  while( clientID < BTL_CLIENT_MAX)
+  {
+    if( BTL_MAIN_IsExistClient(wk->mainModule, clientID) )
+    {
+      GControlableAIClientID = clientID;
+      GViewCore = wk->viewCore;
+
+      if( BTL_MAIN_GetPlayerClientID(wk->mainModule) != wk->myID )
+      {
+        BTLV_SetTmpClient( wk->viewCore, wk->viewOldClient );
+        wk->viewCore = NULL;
+        wk->viewOldClient = NULL;
+      }
+      return;
+    }
+    ++clientID;
+  }
+  GControlableAIClientID = BTL_CLIENTID_NULL;
+}
+/**
+ *  AI操作システム：操作権限が自分になっているか判定
+ */
+static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk )
+{
+  if( GControlableAIClientID == wk->myID )
+  {
+    if( wk->viewCore == NULL )
+    {
+      wk->viewCore = GViewCore;
+      wk->viewOldClient = BTLV_SetTmpClient( wk->viewCore, wk );
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+#endif

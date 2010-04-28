@@ -30,8 +30,9 @@ extern u32 BTL_MAIN_GetZukanCapturedCount( const BTL_MAIN_MODULE* wk );
 extern ZUKAN_SAVEDATA* BTL_MAIN_GetZukanSaveData( const BTL_MAIN_MODULE* wk );
 extern GAMEDATA* BTL_MAIN_GetGameData( const BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_RegisterZukanSeeFlag( const BTL_MAIN_MODULE* wk, u8 clientID, const BTL_POKEPARAM* bpp );
-extern POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk );
-extern POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk );
+extern POKEPARTY* BTL_MAIN_GetClientSrcParty( BTL_MAIN_MODULE* wk, u8 clientID );
+extern POKEPARTY* BTL_MAIN_GetClientMultiSrcParty( BTL_MAIN_MODULE* wk, u8 clientID );
+
 extern const BTL_FIELD_SITUATION* BTL_MAIN_GetFieldSituation( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern BOOL BTL_MAIN_IsRecordEnable( const BTL_MAIN_MODULE* wk );
@@ -62,6 +63,7 @@ extern BtlPokePos BTL_MAIN_GetFacedPokePos( const BTL_MAIN_MODULE* wk, BtlPokePo
 extern BtlPokePos BTL_MAINUTIL_GetFacedPokePos( BtlRule rule, BtlPokePos pos );
 extern u8 BTL_MAIN_GetClientCoverPosCount( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk );
+extern u8 BTL_MAIN_GetClientMultiPos( const BTL_MAIN_MODULE* wk, u8 clientID );
 
 extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_GetFrontPosNum( const BTL_MAIN_MODULE* wk );

@@ -70,6 +70,9 @@ typedef struct {
 #include "btlv/btlv_core_def.h"
 #include "app/b_bag.h"
 
+extern void BTL_CLIENTSYSTEM_Init( void );
+
+
 extern BTL_CLIENT* BTL_CLIENT_Create(
   BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon,
   BtlCommMode commMode, GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos,

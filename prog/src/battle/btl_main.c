@@ -291,6 +291,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       }
 
       BTL_CALC_InitSys( &wk->randomContext, wk->heapID );
+      BTL_CLIENTSYSTEM_Init();
 
       wk->bonusMoney =  BTL_CALC_WinMoney( setup_param );
       wk->loseMoney = 0;
@@ -3281,16 +3282,22 @@ BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
   return side1 == side2;
 }
 
-POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
+/**
+ *  クライアントの元パーティデータを取得（バトルリスト画面等に使用）
+ */
+POKEPARTY* BTL_MAIN_GetClientSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  srcParty_RefrectBtlParty( wk, wk->myClientID );
-  return srcParty_Get( wk, wk->myClientID );
+  srcParty_RefrectBtlParty( wk, clientID );
+  return srcParty_Get( wk, clientID );
 }
-POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk )
+/**
+ *  マルチバトル時、クライアントの仲間パーティ（いなければNULL）を取得
+ */
+POKEPARTY* BTL_MAIN_GetClientMultiSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
 {
   if( BTL_MAIN_IsMultiMode(wk) )
   {
-    u8 friendClientID = GetFriendCrientID( wk->myClientID );
+    u8 friendClientID = GetFriendCrientID( clientID );
     if( BTL_MAIN_IsExistClient(wk, friendClientID) ){
       srcParty_RefrectBtlParty( wk, friendClientID );
       return srcParty_Get( wk, friendClientID );
@@ -3298,6 +3305,23 @@ POKEPARTY* BTL_MAIN_GetMultiPlayerPokeParty( BTL_MAIN_MODULE* wk )
   }
   return NULL;
 }
+u8 BTL_MAIN_GetClientMultiPos( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  if( BTL_MAIN_IsMultiMode(wk) )
+  {
+    return ((clientID & 2) != 0);
+  }
+  return 0;
+}
+/**
+ * プレイヤーのマルチ立ち位置(0 or 1）を取得
+ */
+u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
+{
+  return BTL_MAIN_GetClientMultiPos( wk, wk->myClientID );
+}
+
+
 
 u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
 {
@@ -3324,17 +3348,6 @@ BOOL BTL_MAINUTIL_IsFriendClientID( u8 clientID_1, u8 clientID_2 )
 u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
 {
   return BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, idx );
-}
-/**
- * プレイヤーのマルチ立ち位置(0 or 1）を取得
- */
-u8 BTL_MAIN_GetPlayerMultiPos( const BTL_MAIN_MODULE* wk )
-{
-  if( BTL_MAIN_IsMultiMode(wk) ){
-//    return (wk->myClientID & 1);
-    return ((wk->myClientID & 2) != 0);
- }
-  return 0;
 }
 
 u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )

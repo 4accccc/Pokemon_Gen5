@@ -18,10 +18,10 @@
 
 
 #include "../btl_common.h"
-#include "battle/btl_main.h"
-#include "battle/btl_action.h"
-#include "battle/btl_calc.h"
-#include "battle/btl_util.h"
+#include "../btl_main.h"
+#include "../btl_action.h"
+#include "../btl_calc.h"
+#include "../btl_util.h"
 #include "../app/b_bag.h"
 #include "../app/b_plist.h"
 
@@ -1020,7 +1020,30 @@ void BTLV_UI_Restart( BTLV_CORE* core )
   BTLV_SCD_RestartUI( core->scrnD );
 }
 
+/**
+ *  ポケモンリストパラメータ設定共通処理
+ */
+static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode, u32 chg_waza_param )
+{
+  u8 clientID = BTL_CLIENT_GetClientID( wk->myClient );
 
+  plist->pp = BTL_MAIN_GetClientSrcParty( wk->mainModule, clientID );
+  plist->multi_pp = BTL_MAIN_GetClientMultiSrcParty( wk->mainModule, clientID );
+  plist->multiMode = ( plist->multi_pp != NULL );
+  plist->multiPos = BTL_MAIN_GetClientMultiPos( wk->mainModule, clientID );
+  plist->mode = bplMode;
+  plist->chg_waza = chg_waza_param;
+  plist->heap = wk->heapID;
+  plist->font = wk->largeFontHandle;
+  plist->rule = BTL_MAIN_GetRule( wk->mainModule );
+  plist->cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
+  plist->tcb_sys = BTLV_EFFECT_GetTCBSYS();
+  plist->pfd = BTLV_EFFECT_GetPfd();
+  plist->gamedata = BTL_MAIN_GetGameData( wk->mainModule );
+  plist->time_out_flg = FALSE;
+  plist->end_flg = FALSE;
+
+}
 //=============================================================================================
 /**
  * コマンド選択トップから「ポケモン」選択->交換するポケモン選択開始
@@ -1034,23 +1057,7 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 //=============================================================================================
 void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int outMemberIndex, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
 {
-  wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
-  wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
-  wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
-  wk->plistData.multiPos = BTL_MAIN_GetPlayerMultiPos( wk->mainModule );
-  wk->plistData.font = wk->largeFontHandle;
-  wk->plistData.heap = wk->heapID;
-  wk->plistData.mode = param->bplMode;
-  wk->plistData.end_flg = FALSE;
-  wk->plistData.sel_poke = (outMemberIndex >= 0)? outMemberIndex : 0;
-  wk->plistData.sel_pos_index = wk->plistData.sel_poke;
-  wk->plistData.chg_waza = 0;
-  wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
-  wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
-  wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
-  wk->plistData.pfd = BTLV_EFFECT_GetPfd();
-  wk->plistData.chg_waza = fCantEsc;  // 逃げ・交換禁止フラグ
-  wk->plistData.time_out_flg = FALSE;
+  SetupPlistDataCommon( wk, &wk->plistData, param->bplMode, fCantEsc );
 
   // 既に選択されているポケモンの位置情報を初期化
   {
@@ -1187,21 +1194,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
       wk->bagData.ball_use = BBAG_BALLUSE_TRUE;
     }
 
-    wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
-//    OS_TPrintf("Bag StructAdrs=%p, PP Adrs=%p, pokeCnt=%d\n", &(wk->plistData), wk->plistData.pp, PokeParty_GetPokeCount(wk->plistData.pp));
-    wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
-    wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
-    wk->plistData.multiPos = BTL_MAIN_GetPlayerMultiPos( wk->mainModule );
-    wk->plistData.font = wk->largeFontHandle;
-    wk->plistData.heap = wk->heapID;
-    wk->plistData.mode = BPL_MODE_ITEMUSE;
-    wk->plistData.end_flg = FALSE;
-    wk->plistData.sel_poke = 0;
-    wk->plistData.chg_waza = 0;
-    wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
-    wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
-    wk->plistData.pfd = BTLV_EFFECT_GetPfd();
-    wk->plistData.time_out_flg = FALSE;
+    SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0 );
 
   //「さしおさえ」で道具を使用できないポケモンを指定
     {
@@ -2499,6 +2492,9 @@ BOOL BTLV_YESNO_Wait( BTLV_CORE* wk, BtlYesNo* result )
 //=============================================================================================
 void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
 {
+  #if 1
+  SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_WAZASET, waza );
+  #else
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
   wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
   wk->plistData.multiMode = ( wk->plistData.multi_pp != NULL );
@@ -2514,7 +2510,7 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
   wk->plistData.gamedata = BTL_MAIN_GetGameData( wk->mainModule );
-
+  #endif
   wk->selectItemSeq = 0;
 }
 
@@ -2682,3 +2678,24 @@ u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core )
 {
   return core->myClientID;
 }
+
+
+#ifdef PM_DEBUG
+//=============================================================================================
+/**
+ * 一時的に依存クライアントを差し替え（デバッグ用AI操作処理のため）
+ *
+ * @param   wk
+ * @param   client
+ *
+ * @retval  BTL_CLIENT*   元々セットされていたクライアントポインタ
+ */
+//=============================================================================================
+const BTL_CLIENT* BTLV_SetTmpClient( BTLV_CORE* wk, const BTL_CLIENT* client )
+{
+  const BTL_CLIENT* oldClient = wk->myClient;
+  wk->myClient = client;
+
+  return oldClient;
+}
+#endif

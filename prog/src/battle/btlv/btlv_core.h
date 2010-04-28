@@ -415,4 +415,10 @@ extern void BTLV_RecPlayer_StartSkip( BTLV_CORE* wk, u16 nextChapter );
 
 extern u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core );
 
+
+#ifdef PM_DEBUG
+// 一時的に依存クライアントを差し替え（デバッグ用AI操作処理のため）
+extern const BTL_CLIENT* BTLV_SetTmpClient( BTLV_CORE* wk, const BTL_CLIENT* client );
+#endif
+
 #endif
