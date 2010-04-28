@@ -61,7 +61,8 @@ typedef struct {
 	STRBUF * exp;												// メッセージ展開領域
 //	PRINT_QUE * que;										// プリントキュー
 
-	PRINT_UTIL	util[2];		// BMPWIN
+	PRINT_UTIL	util[2];			// BMPWIN
+//	u8	vBmp[0x20*32*32*2];		// 仮想ＢＭＰ
 	u8	bmpTransFlag;
 //	u8	bmpShitfFlag;
 

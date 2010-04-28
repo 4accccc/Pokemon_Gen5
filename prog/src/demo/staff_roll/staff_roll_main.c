@@ -333,6 +333,7 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 	switch( wk->subSeq ){
 	case SUBSEQ_WAIT:
 		if( wk->listWait <= 0 ){
+			wk->listWait = 0;
 			wk->subSeq = SUBSEQ_INIT;
 		}else{
 			if( wk->skipFlag == 1 ){
@@ -608,8 +609,9 @@ static void DeleteListData( SRMAIN_WORK * wk )
 static void InitBmp( SRMAIN_WORK * wk )
 {
 	GFL_BMPWIN_Init( HEAPID_STAFF_ROLL );
-	wk->util[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 0, 0, 32, 26, MBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
-	wk->util[1].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S, 0, 0, 32, 26, SBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
+//	wk->util[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 0, 0, 32, 32, MBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
+	wk->util[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 0, 0, 32, 25, MBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
+	wk->util[1].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S, 0, 0, 32, 32, SBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
 
 //	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->util[0].win), 0, 16, 256, 32, 1 );
 //	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->util[1].win), 0, 32, 256, 16, 2 );
@@ -674,53 +676,18 @@ static int SetFadeOut( SRMAIN_WORK * wk, int next )
 
 #define	ITEMLIST_SCROLL_SPEED		( FX32_CONST(1) )
 
-/*
-static void ShiftChar( u8 * mchr, u8 * schr, u32 shift )
-{
-	u32	byte;
-	u32	i;
 
-	byte = shift << 2;		// ４バイトごとなので４倍
-
-	GFL_STD_MemCopy( mchr, &schr[32-byte], byte );
-
-	for( i=shift; i<8; i++ ){
-		mchr += byte;
-		GFL_STD_MemCopy( &mchr[byte], mchr, byte );
-	}
-}
-*/
-static void ShiftChar( u32 * mchr, u32 * schr, BOOL loop )
+static void ShiftChar( u32 * src, u32 * next, u32 shift )
 {
 	u32	i;
 
-	if( loop == FALSE ){
-		schr[7] = 0;
-	}else{
-		schr[7] = mchr[0];
-	}
-
-	for( i=0; i<7; i++ ){
-		mchr[i] = mchr[i+1];
-	}
-}
-
-static void ShiftCharSkip( u32 * mchr, u32 * schr, BOOL loop )
-{
-	u32	i;
-
-	if( loop == FALSE ){
-		for( i=0; i<SKIP_SPEED; i++ ){
-			schr[i+4] = 0;
-		}
-	}else{
-		for( i=0; i<SKIP_SPEED; i++ ){
-			schr[i+4] = mchr[i];
+	if( next != NULL ){
+		for( i=0; i<shift; i++ ){
+			next[8-shift+i] = src[i];
 		}
 	}
-
-	for( i=0; i<SKIP_SPEED; i++ ){
-		mchr[i] = mchr[i+4];
+	for( i=0; i<8-shift; i++ ){
+		src[i] = src[shift+i];
 	}
 }
 
@@ -739,53 +706,52 @@ static void ListScroll( SRMAIN_WORK * wk )
 	{
 		u8 * mBmp;
 		u8 * sBmp;
-		u32	p1, p2;
+		u32 p1;
+		u32 p2;
+		u32	shift;
 		u16	i, j;
+
+		// シフト値
+		if( wk->skipFlag == 0 ){
+			shift = 1;
+		}else{
+			shift = SKIP_SPEED;
+		}
 
 		mBmp = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(wk->util[0].win) );
 		sBmp = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(wk->util[1].win) );
 
-		if( wk->skipFlag == 0 ){
-			// 一列目はループさせるので別処理
-			p1 = 0;
-			p2 = ( 25 << 5 ) << 5;
+		// 上画面をシフト
+		p1 = 0;
+		for( j=0; j<32; j++ ){
+			ShiftChar( (u32 *)&mBmp[p1], NULL, shift );
+			p1 += 0x20;
+		}
+		for( i=1; i<25; i++ ){
+			p1 = ( i << 5 ) << 5;
+			p2 = ( ( i - 1 ) << 5 ) << 5;
 			for( j=0; j<32; j++ ){
-				ShiftChar( (u32*)&mBmp[p1], (u32*)&sBmp[p2], FALSE );
-				ShiftChar( (u32*)&sBmp[p1], (u32*)&mBmp[p2], TRUE );
+				ShiftChar( (u32 *)&mBmp[p1], (u32 *)&mBmp[p2], shift );
 				p1 += 0x20;
 				p2 += 0x20;
 			}
-			// 二列目以降
-			for( i=1; i<26; i++ ){
-				p1 = ( i << 5 ) << 5;
-				p2 = ( (i-1) << 5 ) << 5;
-				for( j=0; j<32; j++ ){
-					ShiftChar( (u32*)&mBmp[p1], (u32*)&mBmp[p2], TRUE );
-					ShiftChar( (u32*)&sBmp[p1], (u32*)&sBmp[p2], TRUE );
-					p1 += 0x20;
-					p2 += 0x20;
-				}
-			}
-		}else{
-			// 一列目はループさせるので別処理
-			p1 = 0;
-			p2 = ( 25 << 5 ) << 5;
+		}
+
+		// 下画面をシフト
+		p1 = 0;
+		p2 = ( 24 << 5 ) << 5;
+		for( j=0; j<32; j++ ){
+			ShiftChar( (u32 *)&sBmp[p1], (u32 *)&mBmp[p2], shift );
+			p1 += 0x20;
+			p2 += 0x20;
+		}
+		for( i=1; i<32; i++ ){
+			p1 = ( i << 5 ) << 5;
+			p2 = ( ( i - 1 ) << 5 ) << 5;
 			for( j=0; j<32; j++ ){
-				ShiftCharSkip( (u32*)&mBmp[p1], (u32*)&sBmp[p2], FALSE );
-				ShiftCharSkip( (u32*)&sBmp[p1], (u32*)&mBmp[p2], TRUE );
+				ShiftChar( (u32 *)&sBmp[p1], (u32 *)&sBmp[p2], shift );
 				p1 += 0x20;
 				p2 += 0x20;
-			}
-			// 二列目以降
-			for( i=1; i<26; i++ ){
-				p1 = ( i << 5 ) << 5;
-				p2 = ( (i-1) << 5 ) << 5;
-				for( j=0; j<32; j++ ){
-					ShiftCharSkip( (u32*)&mBmp[p1], (u32*)&mBmp[p2], TRUE );
-					ShiftCharSkip( (u32*)&sBmp[p1], (u32*)&sBmp[p2], TRUE );
-					p1 += 0x20;
-					p2 += 0x20;
-				}
 			}
 		}
 
