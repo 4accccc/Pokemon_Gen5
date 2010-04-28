@@ -25,6 +25,7 @@
 #define TR_JUGGLING_08                    11
 #define TR_JUGGLING_09                    12
 #define R07_FIGHTREW_02                   13
+#define TR_ELITEM_23                      14
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

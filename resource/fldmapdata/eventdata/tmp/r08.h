@@ -22,6 +22,7 @@
 #define R08_HAKAIM_01                      9
 #define R08_HAKAIM_02                     10
 #define R08_FLD_ITEM_04                   11
+#define TR_ELITEM_24                      12
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -32,5 +33,6 @@
 #define BG_R08_SIGN3_01                   1
 #define BG_R08_SIGN2_01                   2
 #define R08_HIDE_ITEM_01                  3
+#define R08_HIDE_ITEM_02                  4
 
 #endif //ZONE_R08_EVB_H
