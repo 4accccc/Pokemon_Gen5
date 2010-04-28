@@ -19,6 +19,12 @@ _EVENT_DATA ev_train_entry_first
 _EVENT_DATA ev_train_entry_continue
 _EVENT_DATA_END
 
+//--------------------------------------------------------------
+//  マルチバトルでの画面位置
+//  自機　　　　敵Trainer1
+//  パートナー　敵Trainer0
+//--------------------------------------------------------------
+
 //======================================================================
 //  バトルサブウェイ　列車内　初期化
 //======================================================================
@@ -108,7 +114,7 @@ sub_init_add_trainer_multi:
     _BSUBWAY_TOOL( BSWSUB_GET_ENEMY_OBJ, 1, BSW_NULL, OBJCHRWORK3 )
   ENDIF
   
-  _OBJ_ADD_EX( 9, 4, DIR_LEFT, BSW_TRAIN_OBJID_TRAINER_0, WKOBJCODE02, MV_DMY )
+  _OBJ_ADD_EX( 9, 5, DIR_LEFT, BSW_TRAIN_OBJID_TRAINER_0, WKOBJCODE02, MV_DMY )
   _OBJ_ADD_EX( 9, 3, DIR_LEFT, BSW_TRAIN_OBJID_TRAINER_1, WKOBJCODE03, MV_DMY )
 }
 _RET
@@ -163,13 +169,13 @@ EVENT_START ev_train_entry_first
   IF $multi_flag == TRUE THEN //マルチか？
     IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN //通信マルチ
       _BSUBWAY_TOOL( BSWSUB_COMM_GET_OBJCODE_OYA, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
-      _OBJ_ADD_EX( 4, 4, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
+      _OBJ_ADD_EX( 4, 5, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
 
       _BSUBWAY_TOOL( BSWSUB_COMM_GET_OBJCODE_KO, BSW_NULL, BSW_NULL, OBJCHRWORK1 )
       _OBJ_ADD_EX( 4, 3, DIR_RIGHT, BSW_TRAIN_OBJID_PARTNER, WKOBJCODE01, MV_DMY )
     ELSE //AIマルチ
       _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
-      _OBJ_ADD_EX( 4, 4, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
+      _OBJ_ADD_EX( 4, 5, DIR_RIGHT, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
       //パートナー
       _BSUBWAY_TOOL( BSWTOOL_GET_OBJCODE_PARTNER, BSW_NULL, BSW_NULL, OBJCHRWORK1 )
       _OBJ_ADD_EX( 4, 3, DIR_RIGHT, BSW_TRAIN_OBJID_PARTNER, WKOBJCODE01, MV_DMY )
@@ -344,20 +350,22 @@ sub_anm_player_in_continue_multi:
 }
 _RET
 
-_ANIME_LABEL  anm_player_in_continue_multi0
+_ANIME_LABEL  anm_player_in_continue_multi0 //自機
   _ANIME_DATA AC_WAIT_4F,1
   _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL  anm_player_in_continue_multi1
-  _ANIME_DATA AC_WALK_R_8F,3
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_player_in_continue_multi2
-  _ANIME_DATA AC_WAIT_4F,1
+_ANIME_LABEL  anm_player_in_continue_multi1 //自機
   _ANIME_DATA AC_WALK_R_8F,3
   _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_in_continue_multi2 //パートナー
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_WALK_R_8F,4
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
 //======================================================================
@@ -523,7 +531,12 @@ sub_train_battle_win_clear:
   _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //アニメを少し表示しながらフェードアウト
-  _TIME_WAIT( 100 )
+  IF $multi_flag == TRUE THEN
+    _TIME_WAIT( 120 ) //マルチはOBJアニメ少し長め
+  ELSE
+    _TIME_WAIT( 100 )
+  ENDIF
+
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
 
@@ -554,7 +567,7 @@ _ANIME_LABEL  anm_battle_win_tr
 //2vs2 敵トレーナー0
 _ANIME_LABEL  anm_battle_win_multi_tr0
   _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,1
+  _ANIME_DATA  AC_WALK_U_8F,2
   _ANIME_DATA  AC_WALK_L_8F,1
   _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_STAY_WALK_D_8F,1
@@ -567,21 +580,14 @@ _ANIME_LABEL  anm_battle_win_multi_tr1
   _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
 
-//1vs1 2vs2 自機　回復時
+//1vs1 自機　回復時
 _ANIME_LABEL  anm_battle_win_heal_jiki
   _ANIME_DATA  AC_WAIT_8F,3
   _ANIME_DATA  AC_WALK_R_8F,8
   _ANIME_DATA  AC_WALK_U_8F,2
   _ANIME_DATA  ACMD_END,0
 
-//2vs2 パートナー 回復時
-_ANIME_LABEL  anm_battle_win_heal_multi_pt
-  _ANIME_DATA  AC_WAIT_8F,3
-  _ANIME_DATA  AC_WALK_R_8F,7
-  _ANIME_DATA  AC_WALK_U_8F,1
-  _ANIME_DATA  ACMD_END,0
-
-//スクロール用自機アニメ　回復時
+//スクロール用自機アニメ　1vs1 回復時
 _ANIME_LABEL anm_battle_win_scroll_jiki
   _ANIME_DATA AC_WAIT_4F,1 //ちょっと遅らせる
   _ANIME_DATA AC_WAIT_8F,3
@@ -589,25 +595,63 @@ _ANIME_LABEL anm_battle_win_scroll_jiki
   _ANIME_DATA AC_WALK_U_8F,2
   _ANIME_DATA ACMD_END,0
 
-//1vs1 2vs2 自機 クリア時
+//2vs2 自機　回復時
+_ANIME_LABEL  anm_battle_win_heal_multi_jiki
+  _ANIME_DATA  AC_WAIT_8F,4
+  _ANIME_DATA  AC_WALK_R_8F,8
+  _ANIME_DATA  AC_WALK_U_8F,1
+  _ANIME_DATA  ACMD_END,0
+  
+//2vs2 パートナー 回復時
+_ANIME_LABEL  anm_battle_win_heal_multi_pt
+  _ANIME_DATA  AC_WAIT_8F,4
+  _ANIME_DATA  AC_WALK_R_8F,7
+  _ANIME_DATA  AC_WALK_U_8F,3
+  _ANIME_DATA  ACMD_END,0
+
+//スクロール用自機アニメ　2vs2 回復時
+_ANIME_LABEL anm_battle_win_scroll_multi_jiki
+  _ANIME_DATA AC_WAIT_4F,1 //ちょっと遅らせる
+  _ANIME_DATA AC_WAIT_8F,4
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//1vs1 自機 クリア時
 _ANIME_LABEL  anm_battle_win_clear_jiki 
   _ANIME_DATA  AC_WAIT_8F,3
   _ANIME_DATA  AC_WALK_R_8F,6
   _ANIME_DATA  AC_WALK_D_8F,4
   _ANIME_DATA  ACMD_END,0
 
-//スクロール用自機アニメ クリア時
+//スクロール用自機アニメ 1vs1 クリア時
 _ANIME_LABEL anm_battle_win_clear_scroll_jiki
   _ANIME_DATA AC_WAIT_4F,1 //ちょっと遅らせる
   _ANIME_DATA AC_WAIT_8F,3
   _ANIME_DATA AC_WALK_R_6F,4
   _ANIME_DATA ACMD_END,0
+  
+//2vs2 自機 クリア時
+_ANIME_LABEL  anm_battle_win_clear_multi_jiki 
+  _ANIME_DATA  AC_WAIT_8F,4
+  _ANIME_DATA  AC_WALK_R_8F,6
+  _ANIME_DATA  AC_WALK_D_8F,5
+  _ANIME_DATA  ACMD_END,0
+
+//スクロール用自機アニメ 2vs2 クリア時
+_ANIME_LABEL anm_battle_win_clear_scroll_multi_jiki
+  _ANIME_DATA AC_WAIT_4F,1 //ちょっと遅らせる
+  _ANIME_DATA AC_WAIT_8F,4
+  _ANIME_DATA AC_WALK_R_6F,4
+  _ANIME_DATA ACMD_END,0
 
 //2vs2 パートナー　クリア時
 _ANIME_LABEL anm_battle_win_clear_multi_partner
-  _ANIME_DATA  AC_WAIT_8F,3
-  _ANIME_DATA  AC_WALK_R_8F,6
-  _ANIME_DATA  AC_WALK_D_8F,4
+  _ANIME_DATA  AC_WAIT_8F,4
+  _ANIME_DATA  AC_WALK_R_8F,5
+  _ANIME_DATA  AC_WAIT_8F,3 //自機を待つ
+  _ANIME_DATA  AC_WALK_R_8F,1
+  _ANIME_DATA  AC_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
 
 //自機、次の車両へ移動
@@ -615,7 +659,6 @@ _ANIME_LABEL anm_jiki_next_car
   _ANIME_DATA AC_WALK_D_8F,2
   _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_STAY_WALK_R_16F,1
-  _ANIME_DATA AC_VANISH_ON,1
   _ANIME_DATA ACMD_END,0
   
 //パートナー　次の車両へ移動
@@ -623,13 +666,11 @@ _ANIME_LABEL anm_jiki_next_car_pt
   _ANIME_DATA AC_WALK_D_8F,2
   _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_STAY_WALK_R_16F,1
-  _ANIME_DATA AC_VANISH_ON,1
   _ANIME_DATA ACMD_END,0
   
 //スクロール用アニメ　次の車両へ移動
 _ANIME_LABEL anm_jiki_next_car_scroll
   _ANIME_DATA AC_WALK_D_8F,2
-  _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------
@@ -651,9 +692,9 @@ sub_anm_train_battle_win_clear_multi:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_battle_win_multi_tr0 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_battle_win_multi_tr1 )
-  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_battle_win_clear_jiki )
+  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_battle_win_clear_multi_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_battle_win_clear_multi_partner )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_battle_win_clear_scroll_jiki )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_battle_win_clear_scroll_multi_jiki )
   //_OBJ_ANIME_WAIT() 呼び先で待つ
 }
 _RET
@@ -1001,9 +1042,9 @@ ev_anm_train_battle_win_heal_multi:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_battle_win_multi_tr0 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_battle_win_multi_tr1 )
-  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_battle_win_heal_jiki )
+  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_battle_win_heal_multi_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_battle_win_heal_multi_pt )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_battle_win_scroll_jiki )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_battle_win_scroll_multi_jiki )
   _OBJ_ANIME_WAIT()
 }
 _RET
@@ -1062,11 +1103,11 @@ _RET
 //--------------------------------------------------------------
 sub_battle_multi:
 {
-  //対戦前台詞
-  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_DR, 0, BSW_TRAIN_OBJID_TRAINER_0, BSW_NULL )
+  //対戦前台詞(見栄えの為、上のOBJから
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_UR, 1, BSW_TRAIN_OBJID_TRAINER_1, BSW_NULL )
   
   //対戦前台詞
-  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_UR, 1, BSW_TRAIN_OBJID_TRAINER_1, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_DR, 0, BSW_TRAIN_OBJID_TRAINER_0, BSW_NULL )
   
   //互いに近づく
   _CALL sub_anm_battle_start_multi
@@ -1091,12 +1132,12 @@ _RET
 //--------------------------------------------------------------
 sub_battle_comm_multi:
 {
+  //対戦前台詞(見栄えの為、上のOBJから
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_UR, 1, BSW_TRAIN_OBJID_TRAINER_0, BSW_NULL )
+
   //対戦前台詞
   _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_DR, 0, BSW_TRAIN_OBJID_TRAINER_0, BSW_NULL )
   
-  //対戦前台詞
-  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_UR, 1, BSW_TRAIN_OBJID_TRAINER_0, BSW_NULL )
-
   //互いに近づく
   _CALL sub_anm_battle_start_multi
   
