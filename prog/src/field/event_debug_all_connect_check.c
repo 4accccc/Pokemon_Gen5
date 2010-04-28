@@ -150,8 +150,6 @@ enum {
   CHECK_SEQ_RETURN,         // チェック対象ゾーンへ戻る
   CHECK_SEQ_TO_NEXT_CHECK,  // 次のチェックへ
   CHECK_SEQ_FINISH,         // イベント終了
-  CHECK_SEQ_FANFARE,        // ファンファーレ
-  CHECK_SEQ_BGM_RECOVER,    // BGM 復帰
 };
 
 
@@ -269,20 +267,6 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
   // イベント終了
   case CHECK_SEQ_FINISH:
     DebugPrint_Finish( work );
-    (*seq)++; 
-    break;
-  // ファンファーレ
-  case CHECK_SEQ_FANFARE:
-    GMEVENT_CallEvent( event, 
-        EVENT_FSND_PushPlayJingleBGM( gameSystem, SEQ_ME_BADGE ) );
-    (*seq)++;
-    break; 
-  // BGM 復帰
-  case CHECK_SEQ_BGM_RECOVER:
-    GMEVENT_CallEvent( event, 
-        EVENT_FSND_PopBGM( gameSystem, FSND_FADE_NONE, FSND_FADE_SHORT ) );
-    (*seq)++;
-    break;
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
