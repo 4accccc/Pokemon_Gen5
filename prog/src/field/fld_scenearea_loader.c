@@ -518,17 +518,20 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   SCENEAREA_GridAngleGetOfsAndMax( cp_param, cp_pos, &dist, &sub_num );
 
 
+  sub_num = FX_Div( sub_num, dist );
+
+
   // ˆÚ“®Š„‡‚©‚çƒAƒ“ƒOƒ‹‚Æ‹——£‚ð‹‚ß‚é
-  pitch = cp_param->end_pitch - cp_param->start_pitch;
-  pitch = (pitch * sub_num) / dist;
+  pitch = (s32)cp_param->end_pitch - (s32)cp_param->start_pitch;
+  pitch = (pitch * sub_num) / FX32_ONE;
   pitch += cp_param->start_pitch;
 
-  yaw = cp_param->end_yaw - cp_param->start_yaw;
-  yaw = (yaw * sub_num) / dist;
+  yaw = (s32)cp_param->end_yaw - (s32)cp_param->start_yaw;
+  yaw = (yaw * sub_num) / FX32_ONE;
   yaw += cp_param->start_yaw;
 
   length = cp_param->end_length - cp_param->start_length;
-  length = FX_Div( FX_Mul(length, sub_num), dist );
+  length = FX_Mul(length, sub_num);
   length += cp_param->start_length;
 
   //TOMOYA_Printf( "set angle\n" );
