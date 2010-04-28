@@ -112,6 +112,8 @@ typedef struct{
   int                           form_no[ BTLV_INPUT_POKEICON_MAX ];   //繰り出しているポケモンのフォルムナンバー
   int                           sex[ BTLV_INPUT_POKEICON_MAX ];       //繰り出しているポケモンの性別
   BtlvMcssPos                   pos;
+  BtlBagMode                    bagMode;                              //バッグモード
+  u8                            shooterEnergy;                        //シューターエネルギー
 }BTLV_INPUT_COMMAND_PARAM;
 
 ///ローテーション画面構成用のワーク
