@@ -23,14 +23,14 @@
 
 #include "arc/fieldmap/zone_id.h"
 #include "arc/demo3d.naix"
+#include "arc/demo3d_2dgra.naix"
 
 #include "demo3d_data.h"
 
 ///////////////////////////////////////////////////////////////
-//demo3dで表示するメッセージアーカイブのヘッダーを記述する
+//demo3dで表示するメッセージアーカイブのヘッダーを記述する(手動)
 #include "message.naix"
 #include "msg/msg_wheel_demo.h"
-
 
 ///////////////////////////////////////////////////////////////
 //
@@ -69,16 +69,6 @@ typedef struct {
   const DEMO3D_CMD_DATA* end_cmd_data;
   const DEMO3D_SCENE_UNIT* scene_unit;
   u32   scene_unit_num;
-
-#if 0
-  const GFL_G3D_UTIL_SETUP* setup;
-  int max;
-  int camera_idx;
-  fx32 anime_speed;
-  fx32 fovy_sin;
-  fx32 fovy_cos;
-  BOOL is_double;
-#endif
 } DEMO3D_SETUP_DATA;
 
 #define DEMO_DATA(id) (c_demo3d_setup_data[id])
@@ -256,16 +246,6 @@ void Demo3D_DATA_GetG3DUtilSetup( GFL_G3D_UTIL_SETUP* sp, DEMO3D_SCENE_ENV* env,
   sp->objCount = 1;
   objTbl->anmCount = unit->num-1;
 
-#if 0
-  const GFL_G3D_UTIL_SETUP* setup;
-
-  id = check_demo_id(id);
-  GF_ASSERT( setup_idx < Demo3D_DATA_GetUnitMax( id ) );
-
-  setup = &c_demo3d_setup_data[ id ].setup[ setup_idx ];
-
-  return setup;
-#endif
 }
 
 static const DEMO3D_FILE_UNIT_TBL* data_GetUnitTbl( const DEMO3D_SCENE_UNIT* unit, DEMO3D_SCENE_ENV* env )
@@ -301,7 +281,7 @@ static const DEMO3D_FILE_UNIT_TBL* data_GetUnitTbl( const DEMO3D_SCENE_UNIT* uni
 const fx32 Demo3D_DATA_GetAnimeSpeed( DEMO3D_ID id )
 {
   const DEMO3D_SCENE_DATA* scene = Demo3D_DATA_GetSceneData( id );
-  return (FX32_ONE >> scene->frame_rate);  //c_demo3d_setup_data[ id ].anime_speed;
+  return (FX32_ONE >> scene->frame_rate);
 }
 
 //-----------------------------------------------------------------------------
@@ -316,7 +296,7 @@ const fx32 Demo3D_DATA_GetAnimeSpeed( DEMO3D_ID id )
 const BOOL Demo3D_DATA_GetDoubleFlag( DEMO3D_ID id )
 {
   const DEMO3D_SCENE_DATA* scene = Demo3D_DATA_GetSceneData( id );
-  return scene->double_view_f;  //c_demo3d_setup_data[ id ].is_double;
+  return scene->double_view_f;
 }
 
 //-----------------------------------------------------------------------------
@@ -332,7 +312,7 @@ const fx32 Demo3D_DATA_GetCameraFovySin( DEMO3D_ID id )
 {
   const DEMO3D_SCENE_DATA* scene = Demo3D_DATA_GetSceneData( id );
 
-  return scene->fovy_sin;  //c_demo3d_setup_data[ id ].fovy_sin;
+  return scene->fovy_sin;
 }
 
 //-----------------------------------------------------------------------------
@@ -348,7 +328,7 @@ const fx32 Demo3D_DATA_GetCameraFovyCos( DEMO3D_ID id )
 {
   const DEMO3D_SCENE_DATA* scene = Demo3D_DATA_GetSceneData( id );
 
-  return scene->fovy_cos;//c_demo3d_setup_data[ id ].fovy_cos;
+  return scene->fovy_cos;
 }
 
 //-----------------------------------------------------------------------------
@@ -374,7 +354,6 @@ void Demo3D_DATA_GetFadeParam( DEMO3D_ID id, u8 inout_f, u8* outType, u8* outSyn
 }
 
 // コンバートデータ読み込み
-//#include "demo3d_cmd_data.cdat"
 
 //-----------------------------------------------------------------------------
 /**

@@ -44,8 +44,8 @@ struct _DEMO3D_CMD_WORK {
   DEMO3D_ENGINE_WORK* core;
 
   GFL_TCBLSYS*  tcbsys;
-  GFL_FONT *fontHandle;
-  
+  GFL_FONT*     fontHandle;
+  ARCHANDLE*    h_2dgra; 
   DEMO3D_MBL_WORK* mb;
 };
 

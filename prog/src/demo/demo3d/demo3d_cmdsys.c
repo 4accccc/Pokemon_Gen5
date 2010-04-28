@@ -3,7 +3,7 @@
  *
  *	@file		demo3d_cmd.c
  *	@brief  3Dデモコマンド
- *	@author	hosaka genya
+ *	@author	hosaka genya → miyuki iwasawa
  *	@data		2009.12.09
  *
  */
@@ -217,6 +217,8 @@ static void cmd_SystemWorkInit( DEMO3D_CMD_WORK* wk )
 
 	wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+	
+  wk->h_2dgra	= GFL_ARC_OpenDataHandle( ARCID_DEMO3D_2DGRA, wk->heapID );
 
   //メッセージスピード取得
   wk->msg_spd  = MSGSPEED_GetWait();
@@ -253,6 +255,7 @@ static void cmd_SystemWorkRelease( DEMO3D_CMD_WORK* wk )
 
   ///////////////////////////////////////////////////
   //システムワーク破棄
+  GFL_ARC_CloseDataHandle( wk->h_2dgra );
   GFL_FONT_Delete(wk->fontHandle);
 
   // TCB削除
