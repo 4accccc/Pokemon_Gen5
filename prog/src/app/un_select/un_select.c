@@ -1875,6 +1875,7 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if ( marker_clear )
     {
+      //マーカークリアリクエスト
       wk->MarkerClearReq = TRUE;
     }
   }
@@ -2421,8 +2422,10 @@ static void ClearListMarker( UN_SELECT_MAIN_WORK *wk )
   int i;
   GFL_CLACTPOS calc_pos;
 
+  //リクエストが無ければクリア処理しない
   if ( !wk->MarkerClearReq ) return;
 
+  //リクエスト消化
   wk->MarkerClearReq = FALSE;
 
   for (i=0;i<UN_LISTMAKER_MAIN_MAX;i++)
