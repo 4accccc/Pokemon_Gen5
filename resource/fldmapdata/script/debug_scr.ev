@@ -144,41 +144,32 @@ EVENT_START ev_debug_masafumi
 
 	ELSIF $SCWK_TEMP1 == 1 THEN
 		//テスト01
-		_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
-		_TIME_WAIT( 30 )
-		_SUBWIN_MSG( msg_debug_06, 20, 10, 2 )
-		_TIME_WAIT( 30 )
-		_SUBWIN_CLOSE( 1 )
-		_SUBWIN_CLOSE( 2 )
 
-/*最初の一歩
-		_FLAG_RESET( FV_T01R0201_SUPPORT )
-		$WK_SCENE_T01R0201 = 0
-		
+		//最初の一歩イベント
 		$WK_SCENE_T01 = 2
-		_FLAG_RESET( FV_T01_RIVAL )
-		_FLAG_RESET( FV_T01_SUPPORT )
 		_MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
-*/
 
 	ELSIF $SCWK_TEMP1 == 2 THEN
 		//テスト02
+
+//		_MAP_CHANGE( ZONE_ID_D04R0501, 11, 21, DIR_DOWN )
 
 		//ママ：タウンマップ入手
 		_FLAG_SET( FV_T01_RIVAL )
 		_FLAG_SET( FV_T01_SUPPORT )
 		_FLAG_RESET( FV_T01_MAMA_01 )
 		$WK_SCENE_T01 = 1
-		_MAP_CHANGE( ZONE_ID_T01R0401, 10, 10, DIR_DOWN )
+		$WK_SCENE_T01R0401 = 1
+		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 10, DIR_DOWN )
 
 
 	ELSIF $SCWK_TEMP1 == 3 THEN
 		//テスト03
-		$WK_SCENE_T01 = 1
-		_FLAG_RESET( FV_T01_MAMA_01 )
-		_FLAG_RESET( FV_T01_RIVAL )
-		_FLAG_RESET( FV_T01_SUPPORT )
-		_MAP_CHANGE( ZONE_ID_T01R0401, 10, 10, DIR_DOWN )
+		
+		//古代の城：ライバルPOSイベント
+		$WK_SCENE_D03R0101 = 1
+		_FLAG_SET(FV_D03R0101_RIVAL_01)
+		_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
 
 	ELSIF $SCWK_TEMP1 == 4 THEN
 		//観覧車トレーナー
@@ -1113,9 +1104,10 @@ EVENT_START ev_debug_common
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//ゲームクリア
-		_BMPMENU_MAKE_LIST( msg_debug_common_01, 1 )	//ジムバッジ全部
-		_BMPMENU_MAKE_LIST( msg_debug_common_02, 2 )	//到着フラグ
+		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//シナリオクリア
+		_BMPMENU_MAKE_LIST( msg_debug_common_04, 1 )	//殿堂入り
+		_BMPMENU_MAKE_LIST( msg_debug_common_01, 10 )	//ジムバッジ全部
+		_BMPMENU_MAKE_LIST( msg_debug_common_02, 20 )	//到着フラグ
 		_BMPMENU_MAKE_LIST( msg_debug_08, 70 )	//イベントジャンプ
 		_BMPMENU_MAKE_LIST( msg_debug_05, 80 )	//イベントＯＦＦ
 		_BMPMENU_MAKE_LIST( msg_debug_07, 90 )	//マップ差し替え
@@ -1126,10 +1118,16 @@ EVENT_START ev_debug_common
 		
 		IF $SCWK_ANSWER == 0 THEN
 			
-			//殿堂入り後にかかる処理を呼び出す
+			//シナリオクリア後にかかる処理を呼び出す
 			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			
 		ELSIF $SCWK_ANSWER == 1 THEN
+			
+			//殿堂入り後にかかる処理を呼び出す（２回呼ぶことで殿堂入り後の処理になる）
+			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			
+		ELSIF $SCWK_ANSWER == 10 THEN
 			
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_SET_BADGE_FLAG( BADGE_ID_02 )
@@ -1140,7 +1138,7 @@ EVENT_START ev_debug_common
 			_SET_BADGE_FLAG( BADGE_ID_07 )
 			_SET_BADGE_FLAG( BADGE_ID_08 )
 			
-		ELSIF $SCWK_ANSWER == 1 THEN
+		ELSIF $SCWK_ANSWER == 20 THEN
 			
 			_FLAG_SET( SYS_FLAG_ARRIVE_T01 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_T02 )
@@ -1310,6 +1308,8 @@ ev_event_jump:
 		_MAP_CHANGE( ZONE_ID_C01R0102, 10, 8, DIR_RIGHT )
 
 	ELSIF $LWK_EVTJUMP == 20 THEN
+		//C04サポートパパイベント
+
 		//ミュージカルホール内、イベント無効
 		$WK_SCENE_C04R0201 = 1
 		//C04フィールド：サポートパパイベントを有効にする
@@ -1320,6 +1320,8 @@ ev_event_jump:
 		_MAP_CHANGE( ZONE_ID_C04R0201, 10, 10, DIR_UP )
 
 	ELSIF $LWK_EVTJUMP == 30 THEN
+		//復帰チャンピオン戦
+
 		//ポケモンリーグのチャンピオンとライバルを非表示
 		_FLAG_SET( FV_C09R0501_RIVAL_01 )
 		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
@@ -1327,7 +1329,7 @@ ev_event_jump:
 		//チャンピオン部屋：復帰チャンピオンを表示
 		_FLAG_RESET( FV_C09R0501_CHAMPION_02 )
 		//復帰チャンピオン戦を有効
-		$WK_SCENE_C09R0501 = 2
+		$WK_SCENE_C09R0501 = 3
 		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 20, DIR_UP )
 		
 	ELSIF $LWK_EVTJUMP == 40 THEN
