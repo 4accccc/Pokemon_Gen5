@@ -180,7 +180,6 @@ typedef enum {
   SELITEM_REC_MODE,
   SELITEM_REC_BUF,
 
-
   SELITEM_MUST_TUIKA,
   SELITEM_MUST_TOKU,
   SELITEM_MUST_ITEM,
@@ -190,6 +189,7 @@ typedef enum {
   SELITEM_HIT_100PER,
   SELITEM_DMG_RAND_OFF,
   SELITEM_SKIP_BTLIN,
+  SELITEM_AI_CTRL,
   SELITEM_LIMIT_GAME_MIN,
   SELITEM_LIMIT_GAME_SEC,
   SELITEM_LIMIT_COMMAND,
@@ -295,6 +295,8 @@ enum {
   LAYOUT_LABEL_HIT_100PER_X     = 4,
   LAYOUT_LABEL_DMG_RAND_OFF_X   = 4,
   LAYOUT_LABEL_SKIP_BTLIN_X     = 4,
+  LAYOUT_LABEL_AI_CTRL_X        = 4,
+
 
   LAYOUT_LABEL_LIMITTIME_X       = 160,
   LAYOUT_LABEL_LIMITTIME_Y       = 4,
@@ -315,6 +317,7 @@ enum {
   LAYOUT_LABEL_HIT_100PER_Y     = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
   LAYOUT_LABEL_DMG_RAND_OFF_Y   = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*7,
   LAYOUT_LABEL_SKIP_BTLIN_Y     = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
+  LAYOUT_LABEL_AI_CTRL_Y        = LAYOUT_LABEL_MUST_TUIKA_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*9,
 
   // --- PAGE 3
   LAYOUT_LABEL_PAGE3_X = 4,
@@ -397,6 +400,7 @@ static const LABEL_LAYOUT LabelLayout_Page2[] = {
   { DBGF_LABEL_HIT100PER,      LAYOUT_LABEL_HIT_100PER_X,    LAYOUT_LABEL_HIT_100PER_Y    },
   { DBGF_LABEL_DMGRAND_OFF,    LAYOUT_LABEL_DMG_RAND_OFF_X,  LAYOUT_LABEL_DMG_RAND_OFF_Y  },
   { DBGF_LABEL_SKIP_IN,        LAYOUT_LABEL_SKIP_BTLIN_X,    LAYOUT_LABEL_SKIP_BTLIN_Y    },
+  { DBGF_LABEL_AI_CTRL,        LAYOUT_LABEL_AI_CTRL_X,       LAYOUT_LABEL_AI_CTRL_Y       },
   { DBGF_LABEL_LIMIT_TIME,     LAYOUT_LABEL_LIMITTIME_X,     LAYOUT_LABEL_LIMITTIME_Y     },
   { DBGF_LABEL_LIMIT_GAME_MIN, LAYOUT_LABEL_LIMITGAME_X,     LAYOUT_LABEL_LIMITGAME_Y     },
   { DBGF_LABEL_LIMIT_GAME_SEC, LAYOUT_LABEL_LIMITGSEC_X,     LAYOUT_LABEL_LIMITGSEC_Y     },
@@ -502,6 +506,7 @@ static const ITEM_LAYOUT ItemLayout_Page2[] = {
   { SELITEM_HIT_100PER,     LAYOUT_LABEL_HIT_100PER_X    +68, LAYOUT_LABEL_HIT_100PER_Y     },
   { SELITEM_DMG_RAND_OFF,   LAYOUT_LABEL_DMG_RAND_OFF_X  +98, LAYOUT_LABEL_DMG_RAND_OFF_Y   },
   { SELITEM_SKIP_BTLIN,     LAYOUT_LABEL_SKIP_BTLIN_X    +68, LAYOUT_LABEL_SKIP_BTLIN_Y     },
+  { SELITEM_AI_CTRL,        LAYOUT_LABEL_AI_CTRL_X       +68, LAYOUT_LABEL_AI_CTRL_Y        },
   { SELITEM_LIMIT_GAME_MIN, LAYOUT_LABEL_LIMITGAME_X     +64, LAYOUT_LABEL_LIMITGAME_Y      },
   { SELITEM_LIMIT_GAME_SEC, LAYOUT_LABEL_LIMITGSEC_X     +64, LAYOUT_LABEL_LIMITGSEC_Y      },
   { SELITEM_LIMIT_COMMAND,  LAYOUT_LABEL_LIMITCMD_X      +64, LAYOUT_LABEL_LIMITCMD_Y       },
@@ -627,6 +632,7 @@ typedef struct {
   u32  fAI_8         : 1;
   u32  fAI_9         : 1;
   u32  fSubway       : 1;
+  u32  fAICtrl       : 1;
 
 
   u16  LimitTimeCommand;
@@ -1122,6 +1128,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->fSubway = 0;
   saveData->badgeCount = 8;
   saveData->btlRule = 0;
+  saveData->fAICtrl = 0;
 
   saveData->backGround = 0;
   saveData->landForm = 0;
@@ -1131,6 +1138,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->fld_zoneID = 0;
   saveData->fld_hour = 0;
   saveData->fld_minute = 0;
+
 
 
   for(i=0; i<POKEPARA_MAX; ++i){
@@ -1333,6 +1341,10 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_SKIP_BTLIN:
     save->fSkipBtlIn ^= 1;
     break;
+  case SELITEM_AI_CTRL:
+    save->fAICtrl ^= 1;
+    break;
+
 
   case SELITEM_AI0:   save->fAI_0 ^= 1; break;
   case SELITEM_AI1:   save->fAI_1 ^= 1; break;
@@ -1525,6 +1537,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_HIT_100PER:    printItem_Flag( wk, wk->saveData.fHit100Per, wk->strbuf ); break;
         case SELITEM_DMG_RAND_OFF:  printItem_Flag( wk, wk->saveData.fDmgRandomOff, wk->strbuf ); break;
         case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
+        case SELITEM_AI_CTRL:       printItem_Flag( wk, wk->saveData.fAICtrl, wk->strbuf ); break;
 
         case SELITEM_AI0: printItem_Flag( wk, wk->saveData.fAI_0,    wk->strbuf ); break;
         case SELITEM_AI1: printItem_Flag( wk, wk->saveData.fAI_1,    wk->strbuf ); break;
@@ -1758,7 +1771,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_SAVE,           SELITEM_BTL_RULE,      SELITEM_POKE_SELF_1,   SELITEM_BADGE,         SELITEM_LOAD          },
       { SELITEM_LOAD,           SELITEM_BTL_RULE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,          SELITEM_REC_BUF       },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,            Left-Item */
-      { SELITEM_MUST_TUIKA,     SELITEM_SKIP_BTLIN,    SELITEM_MUST_TOKU,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
+      { SELITEM_MUST_TUIKA,     SELITEM_AI_CTRL,       SELITEM_MUST_TOKU,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_TOKU,      SELITEM_MUST_TUIKA,    SELITEM_MUST_ITEM,     SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_ITEM,      SELITEM_MUST_TOKU,     SELITEM_MUST_CRITICAL, SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_MUST_CRITICAL,  SELITEM_MUST_ITEM,     SELITEM_HP_CONST,      SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
@@ -1766,7 +1779,8 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_PP_CONST,       SELITEM_HP_CONST,      SELITEM_HIT_100PER,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_HIT_100PER,     SELITEM_PP_CONST,      SELITEM_DMG_RAND_OFF,  SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_DMG_RAND_OFF,   SELITEM_HIT_100PER,    SELITEM_SKIP_BTLIN,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
-      { SELITEM_SKIP_BTLIN,     SELITEM_DMG_RAND_OFF,  SELITEM_MUST_TUIKA,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
+      { SELITEM_SKIP_BTLIN,     SELITEM_DMG_RAND_OFF,  SELITEM_AI_CTRL,       SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
+      { SELITEM_AI_CTRL,        SELITEM_SKIP_BTLIN,    SELITEM_MUST_TUIKA,    SELITEM_LIMIT_GAME_MIN, SELITEM_NULL          },
       { SELITEM_LIMIT_GAME_MIN, SELITEM_LIMIT_COMMAND, SELITEM_LIMIT_GAME_SEC,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_GAME_SEC, SELITEM_LIMIT_GAME_MIN,SELITEM_LIMIT_COMMAND, SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_COMMAND,  SELITEM_LIMIT_GAME_SEC,SELITEM_LIMIT_GAME_MIN,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
@@ -2215,6 +2229,8 @@ FS_EXTERN_OVERLAY(battle);
 
       cutoff_wildParty( wk->partyEnemy1, rule );
       BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &wk->fieldSit, rule, HEAPID_BTL_DEBUG_SYS );
+
+//      wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_LEGEND_EX;
     }
     // 通信対戦
     else if( btltype_IsComm(wk->saveData.btlType) )
@@ -2556,6 +2572,7 @@ static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* 
   if( save->fHit100Per )    { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_HIT100PER );     }
   if( save->fDmgRandomOff ) { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_DMG_RAND_OFF );  }
   if( save->fSkipBtlIn)     { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_SKIP_BTLIN );  }
+  if( save->fAICtrl)        { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_AI_CTRL );  }
 }
 /**
  *  デバッグフラグの全オフ
