@@ -46,13 +46,14 @@
 
 #ifdef  PM_DEBUG
 
-#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto)
-  
-#define SCRIPT_Printf( ... )  OS_Printf( __VA_ARGS__ )
-#else
-#define SCRIPT_Printf( ... )  ((void)0)
-#endif
+ #if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto)
+  #define SCRIPT_Printf( ... )  OS_Printf( __VA_ARGS__ )
+ #else
+  #define SCRIPT_Printf( ... )  ((void)0)
+ #endif
 
+#else //PM_DEBUG
+ #define SCRIPT_Printf( ... )  ((void)0)
 #endif  //PM_DEBUG
 
 //============================================================================================
