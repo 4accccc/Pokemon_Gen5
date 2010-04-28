@@ -289,7 +289,7 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
     0,   ///< DWCへのHEAPサイズ
     TRUE,        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-    SYASHI_NETWORK_GGID,  //ggid  
+    SYACHI_NETWORK_GGID,  //ggid  
     0,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID

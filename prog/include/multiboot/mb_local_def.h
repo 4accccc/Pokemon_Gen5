@@ -20,7 +20,7 @@
 #define MB_Printf(...)  ((void)0)
 #endif //DEB_ARI
 
-#define MB_DEF_GGID (SYASHI_NETWORK_GGID)
+#define MB_DEF_GGID (SYACHI_NETWORK_GGID)
 
 //êeéqï íËã`
 #ifndef MULTI_BOOT_MAKE

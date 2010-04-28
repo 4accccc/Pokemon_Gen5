@@ -114,7 +114,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   _getMyUserData,  ///< DWCのユーザデータ（自分のデータ）
   GFL_NET_DWC_HEAPSIZE,   ///< DWCへのHEAPサイズ
   TRUE,        ///< デバック用サーバにつなぐかどうか
-  SYASHI_NETWORK_GGID,  
+  SYACHI_NETWORK_GGID,  
   GFL_HEAPID_APP,  //元になるheapid
   HEAPID_NETWORK,  //通信用にcreateされるHEAPID
   HEAPID_WIFI,  //wifi用にcreateされるHEAPID

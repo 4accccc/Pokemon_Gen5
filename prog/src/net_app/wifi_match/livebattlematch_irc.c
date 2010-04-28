@@ -257,7 +257,7 @@ BOOL LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
     NULL,  ///< DWCのユーザデータ（自分のデータ）
     0,   ///< DWCへのHEAPサイズ
     TRUE,        ///< デバック用サーバにつなぐかどうか
-    SYASHI_NETWORK_GGID,  //ggid  
+    SYACHI_NETWORK_GGID,  //ggid  
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
