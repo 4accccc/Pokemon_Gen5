@@ -1315,23 +1315,23 @@ static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData, BOOL bSingle)
   int i;
 
   pData->bt_trd.player_id =10;
-  pData->bt_trd.tr_type = 20;
+  pData->bt_trd.tr_type = 51; //からておう
   pData->bt_trd.name[0]= L'で';
   pData->bt_trd.name[1]= L'ば';
   pData->bt_trd.name[2]= L'ぐ';
   pData->bt_trd.name[3]= 0xffff;
-  pData->bt_trd.appear_word[0]=1;
-  pData->bt_trd.appear_word[1]=2;
-  pData->bt_trd.appear_word[2]=3;
-  pData->bt_trd.appear_word[3]=4;
-  pData->bt_trd.win_word[0]=1;
-  pData->bt_trd.win_word[1]=2;
-  pData->bt_trd.win_word[2]=3;
-  pData->bt_trd.win_word[3]=4;
-  pData->bt_trd.lose_word[0]=1;
-  pData->bt_trd.lose_word[1]=2;
-  pData->bt_trd.lose_word[2]=3;
-  pData->bt_trd.lose_word[3]=4;
+  pData->bt_trd.appear_word[0]=1;   //対戦前
+  pData->bt_trd.appear_word[1]=10;  //11ばんめ
+  pData->bt_trd.appear_word[2]=1670;     //デルパワー
+  pData->bt_trd.appear_word[3]=1671;     //エレガント
+  pData->bt_trd.win_word[0]=2;    //かった
+  pData->bt_trd.win_word[1]=0;    //1ばんめ
+  pData->bt_trd.win_word[2]=1670;     //デルパワー
+  pData->bt_trd.win_word[3]=0;//単語無し
+  pData->bt_trd.lose_word[0]=3;   //まけた
+  pData->bt_trd.lose_word[1]=4;   //5ばんめ
+  pData->bt_trd.lose_word[2]=1670;     //デルパワー
+  pData->bt_trd.lose_word[3]=1671;     //エレガント
   if(bSingle){
     for(i=0;i<3;i++){
       BSUBWAY_POKEMON* pPoke = &pData->btpwd[i];
@@ -1360,7 +1360,9 @@ static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData, BOOL bSingle)
       pPoke->waza[2]=WAZANO_NULL;
       pPoke->waza[3]=WAZANO_NULL;
       pPoke->id_no = 12;
-      pPoke->nickname[0]=0xffff;
+      pPoke->nickname[0]= L'か';
+      pPoke->nickname[1]= 0xffff;
+      pPoke->seikaku = 0;
     }
   }
 }
