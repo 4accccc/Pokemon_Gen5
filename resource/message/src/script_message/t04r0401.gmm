@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T15:02:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T16:37:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -713,23 +713,19 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR4
 カトレア</attribute>
-		<language name="JPN" width="256">カトレア『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その３</language>
+		<language name="JPN" width="256">カトレア『……アナタ
+バトルキャッスルは　ごぞんじ？▼
+ジョウトや　シンオウに　あるから
+よければ　ちょうせん　なさってね</language>
+		<language name="JPN_KANJI" width="256">カトレア『……アナタ
+バトルキャッスルは　ご存じ？▼
+ジョウトや　シンオウに　あるから
+よければ　挑戦なさってね</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour4_spring_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ランダムメッセージその４
-・その日固定</comment>
-		<attribute name="キャラ指定">BIGFOUR4
-カトレア</attribute>
-		<language name="JPN" width="256">カトレア『かりメッセージ　その４</language>
-		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その４</language>
-	</row>
-
-	<row id="msg_t04r0401_bigfour4_spring_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
-・ランダムメッセージその５
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR4
 カトレア</attribute>
@@ -741,6 +737,20 @@
 アタクシの　別荘なの▼
 世界各地に　あるから
 シロナさんに　使ってもらっています</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour4_spring_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR4
+カトレア</attribute>
+		<language name="JPN" width="256">カトレア『……つかいこなせない
+ちょうのうりょく　なら▽
+ないほうが　まし　なのよね</language>
+		<language name="JPN_KANJI" width="256">カトレア『……制御できない
+超能力なら▽
+ないほうが　まし　なのよね</language>
 	</row>
 
 	<row id="msg_t04r0401_bigfour1_spring_01" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
@@ -779,7 +789,9 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR1
 シキミ</attribute>
-		<language name="JPN" width="256">シキミ『かりメッセージ　その４</language>
+		<language name="JPN" width="256">シキミ『にじいろのはね……
+ぎんいろのはね……
+</language>
 		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その４</language>
 	</row>
 
@@ -789,8 +801,12 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">BIGFOUR1
 シキミ</attribute>
-		<language name="JPN" width="256">シキミ『かりメッセージ　その５</language>
-		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その５</language>
+		<language name="JPN" width="256">シキミ『……やぶれたせかい
+そこに　ただ１ぴきで　いた　ポケモン▽
+なんて　げんそうてきな　こうけい！</language>
+		<language name="JPN_KANJI" width="256">シキミ『……破れた世界
+そこに　ただ１匹で　いた　ポケモン▽
+なんて　幻想的な　光景！</language>
 	</row>
 
 	<row id="msg_t04r0401_shirona_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
