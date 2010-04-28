@@ -480,25 +480,13 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_turndento2 )
 	_OBJ_ANIME_WAIT()
 	
-	//デント：その場足ふみ
-	_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_leader_stay )
-	_OBJ_ANIME_WAIT()	
-	
 	//あのですね　ぼくたちは
 	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1C_01 )
 	_BALLOONWIN_CLOSE()
-
-	//ポッド：その場足ふみ
-	_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_leader_stay )
-	_OBJ_ANIME_WAIT()	
 	
 	//もう！　オレがせつめいする！
 	_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_04a , C01GYM0101_LEADER1A_01 )
 	_BALLOONWIN_CLOSE()
-	
-	//コーン：その場足ふみ
-	_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_leader_stay )
-	_OBJ_ANIME_WAIT()	
 	
 	//分岐処理・最初に選んだポケモンから苦手なタイプになる
 

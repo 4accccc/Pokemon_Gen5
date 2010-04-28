@@ -192,6 +192,7 @@ EVENT_END
 /*  C01R0501 BOARDの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_c01r0501_board_01
+_TALK_START_SE_PLAY()
 	//こくばんに　ポケモンが　たたかっているときに　おこる
 	_SYSWIN_MSG( msg_c01r0501_board_01 , POS_DOWN )
 		

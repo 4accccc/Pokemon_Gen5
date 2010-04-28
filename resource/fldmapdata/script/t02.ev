@@ -733,9 +733,6 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_07, anm_stay_l )
 	_OBJ_ANIME_WAIT()
 
-	//BGM終了
-	_END_EVENT_BGM()
-
 	_CAMERA_MOVE( 9688,0,970752,51544064,0,42958848,15 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
@@ -757,7 +754,7 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_02A, anm_boodle2_look )
 	
 	//ポケモンを　解放って　そんな話　ありえないでしょ！
-	_BALLOONWIN_OBJMSG( msg_t02_boodle_05 , T02_BOODLE_02A )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_boodle_05 , T02_BOODLE_02A,POS_DOWN )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -771,10 +768,13 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_07, anm_boodle3_leave )
 	_OBJ_ANIME( T02_BOODLE_08, anm_boodle4_leave )
 	_TIME_WAIT( 10 )
-	
+
 	//画面暗転
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 1 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です

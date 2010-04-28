@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/14 21:51:58
+#save date:2010/04/27 16:49:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0801.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ C03R0801_CREW_02
 #OBJ CODE Number
 INFORMATIONM
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R0801_CREW_02
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 24
+104 0 56
 #event number: 2
 #type
 1
@@ -111,7 +111,7 @@ C03R0801_CREW_04
 #OBJ CODE Number
 INFORMATIONM
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -142,7 +142,7 @@ C03R0801_CREW_05
 #OBJ CODE Number
 INFORMATIONM
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -150,7 +150,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R0801_CREW_05
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 0 24
+328 0 56
 #event number: 5
 #type
 1
