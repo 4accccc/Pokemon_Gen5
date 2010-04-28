@@ -93,7 +93,10 @@ void	BTLV_EFFTOOL_CheckMove( fx32 *now_pos, fx32 *vec, fx32 *move_pos, BOOL *ret
 			*now_pos = *move_pos;
 		}
 		else{
-			*ret = FALSE;
+      if( ret != NULL )
+      { 
+			  *ret = FALSE;
+      }
 		}
 	}
 	else{
