@@ -23,7 +23,7 @@ _EVENT_DATA    ev_d04r2301_poke13_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/* パッケージポケモン 話しかけ                                                          
+/* ドラー 話しかけ                                                          
 /**************************************************************/
 EVENT_START    ev_d04r2301_poke13_01
 
@@ -31,13 +31,13 @@ EVENT_START    ev_d04r2301_poke13_01
 	_VOICE_PLAY( MONSNO_644, 0 )
 	_GIZAWIN_OBJMSG_POS( msg_d04r2301_poke_01 ,D04R2301_POKE13_01, POS_DEFAULT )
 	_VOICE_WAIT()
-	_AB_KEYWAIT()
+	_AB_KEYWAIT_MARK()
 	_MSGWIN_CLOSE()
 
 	_WILD_BTL_SET_LEGEND( MONSNO_644, 65 )
-	_BATTLE_RESULT_GET( SCWK_ANSWER )
+	_WILD_LOSE_CHECK( SCWK_ANSWER )
 	//倒した場合
-	IF $SCWK_ANSWER == 0 THEN
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN  THEN
 				
 		//========================================/
 				
@@ -71,9 +71,10 @@ EVENT_START    ev_d04r2301_poke13_01
 		 
 	CASE SCR_WILD_BTL_RET_CAPTURE THEN
 	//捕まえた場合
-
+		//========================================/
+		//捕獲フラグをセット
 		_FLAG_SET( FE_D04R2301_POKE13_GET )
-
+		//========================================/
 	ENDSWITCH
 
 EVENT_END

@@ -59,13 +59,13 @@ EVENT_START    ev_d08r0901_poke_01
 		IF $LWK_ROM == VERSION_BLACK THEN
 			_VOICE_PLAY( MONSNO_650, 0 )
 			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke8_01 ,D08R0901_POKE_01, POS_DEFAULT )
-			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
-
+			_MSGWIN_CLOSE()
+			
 			_WILD_BTL_SET_LEGEND( MONSNO_650, 50 )
-			_BATTLE_RESULT_GET( SCWK_ANSWER )
+			_WILD_LOSE_CHECK( SCWK_ANSWER )
 			//倒した場合
-			IF $SCWK_ANSWER == 0 THEN
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN  THEN
 				
 				
 				//========================================/
@@ -93,13 +93,13 @@ EVENT_START    ev_d08r0901_poke_01
 		ELSE
 			_VOICE_PLAY( MONSNO_651, 0 )
 			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke7_01 , D08R0901_POKE_01, POS_DEFAULT )
+			_VOICE_WAIT()		
 			_MSGWIN_CLOSE()
-			_VOICE_WAIT()
-
+			
 			_WILD_BTL_SET_LEGEND( MONSNO_651, 50 )
-			_BATTLE_RESULT_GET( SCWK_ANSWER )
+			_WILD_LOSE_CHECK( SCWK_ANSWER )
 			//倒した場合
-			IF $SCWK_ANSWER == 0 THEN
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN  THEN
 				
 				//========================================/
 				
@@ -145,7 +145,7 @@ EVENT_START    ev_d08r0901_poke_01
         
 	CASE SCR_WILD_BTL_RET_CAPTURE THEN
 	//捕まえた場合
-
+		//捕獲フラグをセット
 		_FLAG_SET( FE_PACKAGE_POKE_GET )
 
 	ENDSWITCH
@@ -199,7 +199,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	//カメラ操作　チャンピオンの位置にカメラを合わせる
-	_CAMERA_MOVE(9694,0,970795,1081344,0,819200,24 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE(9685,0,970639,1081344,0,770048,24 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//Nが喋る
@@ -225,7 +225,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_MSGWIN_CLOSE()
 	
 	//パッケージポケモンが画面外に
-
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_poke_idou_01)
 	_OBJ_ANIME_WAIT()
 
@@ -233,7 +232,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME_WAIT()
 	
 	//パッケージポケモンを、飛行の初期値（画面右）に移動
-	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,3,9,DIR_RIGHT)
+	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,3,8,DIR_RIGHT)
 	
 	//Nが喋る
 	//ぼくたちを　とめられるのは
@@ -271,10 +270,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME_WAIT()
 
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 24 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	
 	//============フラグワーク操作=============//
 	
@@ -289,6 +285,10 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//ライバルが喋る
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_black_01, D08R0901_RIVEL_01,POS_DL)
@@ -312,12 +312,12 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_MSGWIN_CLOSE()
 	_OBJ_ANIME(D08R0901_LEADER7_01,anm_common_turn_up)
 	_OBJ_ANIME_WAIT()
-	
+
 	//画面暗転処理
 	_TIME_WAIT(24)
 	_MAP_FADE_BLACK_OUT()
 	_MAP_FADE_END_CHECK()
-	
+
 	//============フラグワーク操作=============//
 	
 	//シンとムの復活のPOSイベントを無効
@@ -347,7 +347,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_idou_01
 
-	_ANIME_DATA AC_WALK_U_8F,3
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
