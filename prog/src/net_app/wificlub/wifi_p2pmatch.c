@@ -3608,6 +3608,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
 {
   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTST, WB_NET_WIFICLUB);
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN);
+  return seq;
 }
 
 //------------------------------------------------------------------
