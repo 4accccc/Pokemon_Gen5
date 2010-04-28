@@ -710,6 +710,7 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
 		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RESULT_BG_PAL_M_13, RESULT_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, MSG_GetFont(&p_wk->msg ), MSG_GetPrintQue(&p_wk->msg ), HEAPID_IRCRESULT );
+    APPBAR_SetVisible( p_wk->p_appbar, FALSE );
 	}
 
 	//ƒn[ƒg
@@ -1925,6 +1926,7 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_END_WAIT,
     SEQ_START_MSG,
     SEQ_WAIT_MSG,
+    SEQ_END_BEFORE,
 		SEQ_END,
 	};
 
@@ -2013,7 +2015,7 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_END_MSG:
     {
       u8  msgID = RESULT_STR_001 + (p_wk->p_param->score / 10 );
-      msgID = MATH_CLAMP( msgID, RESULT_STR_001, RESULT_STR_010 );
+      msgID = MATH_CLAMP( msgID, RESULT_STR_001, RESULT_STR_011 );
       MSGWND_PrintNumber( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, msgID,
           p_wk->p_param->score, 2 );
     }
@@ -2094,7 +2096,7 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
       }
       else
       { 
-        SEQ_Change( p_wk, SEQFUNC_End );
+        *p_seq  = SEQ_END_BEFORE;
       }
     }
     break;
@@ -2102,10 +2104,17 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
   case SEQ_WAIT_MSG:
     if( p_wk->cnt++ > 30 )
     { 
+      APPBAR_SetVisible( p_wk->p_appbar, TRUE );
       p_wk->cnt = 0;
-      *p_seq  = SEQ_END;
+      *p_seq  = SEQ_END_BEFORE;
     }
     break;
+
+  case SEQ_END_BEFORE:
+    APPBAR_SetVisible( p_wk->p_appbar, TRUE );
+    *p_seq  = SEQ_END;
+    break;
+
 
   case SEQ_END:
     if( GFL_UI_TP_GetTrg() )

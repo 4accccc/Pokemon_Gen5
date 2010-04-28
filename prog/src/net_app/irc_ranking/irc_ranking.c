@@ -158,9 +158,9 @@ enum
 #define SCROLL_WRITE_BAR_END_S		(17)
 #define SCROLL_WRITE_BAR_NUM_S		(SCROLL_WRITE_BAR_END_S-SCROLL_WRITE_BAR_START_S)
 #define	SCROLL_WRITE_BAR_START_EX_M	(-1)	//EXが開始インデックスより前ならば、前にはる
-#define	SCROLL_WRITE_BAR_START_EX_S	(5)	//EXが開始インデックスより前ならば、前にはる
+#define	SCROLL_WRITE_BAR_START_EX_S	(4)	//EXが開始インデックスより前ならば、前にはる
 
-#define SCROLL_WRITE_POS_START_M	(3)	//どの位置から張り始めるか
+#define SCROLL_WRITE_POS_START_M	(4)	//どの位置から張り始めるか
 #define SCROLL_WRITE_POS_START_S	(0)	//どの位置から張り始めるか
 
 #define SCROLL_FONT_Y_OFS	(1+4)	//文字Y位置
@@ -171,7 +171,7 @@ enum
 #define SCROLL_BAR_ICON_X		(29*8)
 #define SCROLL_BAR_ICON_Y   (0)
 
-#define SCROLL_BAR_ICON_INIT_Y_M  (74)
+#define SCROLL_BAR_ICON_INIT_Y_M  (74+8)
 #define SCROLL_BAR_ICON_INIT_Y_S  (-(SCROLL_WRITE_BAR_START_EX_S*3)*8-16)  //*3はOBJが３キャラだから
 
 
@@ -1970,7 +1970,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 	//移動制限
 	p_wk->y								= 0;
 	p_wk->top_limit_y			= 0;
-	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ-56;
+	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ-40+16;
 	p_wk->bottom_limit_y	= MATH_IMax( 0, p_wk->bottom_limit_y );
 
 

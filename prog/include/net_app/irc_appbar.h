@@ -86,6 +86,8 @@ extern void APPBAR_Main( APPBAR_WORK *p_wk );
 extern APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk );
 extern void APPBAR_SetNormal( APPBAR_WORK *p_wk );
 
+extern void APPBAR_SetVisible( APPBAR_WORK *p_wk, BOOL is_visible );
+
 typedef enum
 { 
   APPBAR_BUTTON_TYPE_RETURN,  //‚à‚Ç‚é

@@ -63,6 +63,7 @@ struct _APPBAR_WORK
   s32       seq;
   APPBAR_BUTTON_TYPE  btn_type;
   HEAPID              heapID;
+  BOOL      is_use;
 };
 
 
@@ -127,6 +128,7 @@ APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_f
 		p_wk->cont		= APPBAR_SELECT_NONE;
     p_wk->btn_type= APPBAR_BUTTON_TYPE_RETURN;
     p_wk->heapID  = heapID;
+    p_wk->is_use  = TRUE;
 	}
 
 	{	
@@ -221,6 +223,11 @@ void APPBAR_Main( APPBAR_WORK *p_wk )
     SEQ_END,
   };
 
+  if( !p_wk->is_use )
+  { 
+    return;
+  }
+
   switch( p_wk->seq )
   {
   case SEQ_TOUCH:
@@ -277,6 +284,19 @@ void APPBAR_SetNormal( APPBAR_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ボタンの表示設定
+ *
+ *	@param	APPBAR_WORK *p_wk ワーク
+ *	@param	is_visible        TRUEで表示  FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+void APPBAR_SetVisible( APPBAR_WORK *p_wk, BOOL is_visible )
+{ 
+  p_wk->is_use  = is_visible;
+  GFL_BG_SetVisible( p_wk->bg_frm, is_visible );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ボタン作成しなおし
  *
  *	@param	APPBAR_WORK *p_wk ワーク
@@ -307,6 +327,8 @@ void APPBAR_ChangeButton( APPBAR_WORK *p_wk, APPBAR_BUTTON_TYPE type )
 
       GFL_STR_DeleteBuffer( item.str );
       GFL_MSG_Delete( p_msg );
+
+      p_wk->btn_type  = type;
     }
   }
 }
