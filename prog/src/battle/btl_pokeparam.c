@@ -612,10 +612,8 @@ const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp )
   if( (bpp->coreParam.ppFake != NULL)
   &&  (bpp->coreParam.fFakeEnable)
   ){
-    TAYA_Printf("ƒCƒŠƒ…[ƒWƒ‡ƒ“’†‚ÌPPsrc‚ð•Ô‚·\n");
     return bpp->coreParam.ppFake;
   }
-  TAYA_Printf("‚Ó‚Â‚¤‚ÌPPsrc‚ð•Ô‚·\n");
   return bpp->coreParam.ppSrc;
 }
 
@@ -835,7 +833,6 @@ BOOL BPP_IsDead( const BTL_POKEPARAM* pp )
 BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp )
 {
   if( PP_Get(bpp->coreParam.ppSrc, ID_PARA_tamago_flag, NULL)){
-    TAYA_Printf("pokeID=%d, ‚½‚Ü‚²‚Å‚·\n", bpp->coreParam.myID );
     return FALSE;
   }
   if( BPP_IsDead(bpp) ){

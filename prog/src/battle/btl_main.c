@@ -4107,14 +4107,19 @@ static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member )
  */
 static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party )
 {
-  u32 idx;
-  for(idx=0; idx < party->memberCount; ++idx )
+  u32 idx, checkedCount;
+
+  idx = checkedCount = 0;
+  while( checkedCount < party->memberCount )
   {
-    if( !BPP_IsFightEnable(party->member[idx]) )
-    {
-      TAYA_Printf("pokeIdx:%d ->ç≈å„îˆÇ÷\n", idx);
+    if( BPP_IsFightEnable(party->member[idx]) ){
+      ++idx;
+    }
+    else{
+      TAYA_Printf("pokeIdx:%d ->ç≈å„îˆÇ÷\n", checkedCount);
       BTL_PARTY_MoveLastMember( party, idx );
     }
+    ++checkedCount;
   }
 }
 /**

@@ -166,6 +166,7 @@ typedef enum {
   DBGSTR_SVFL_UncategoryWazaInfo,
   DBGSTR_SVFL_QueWritePtr,
   DBGSTR_SVFL_ActOrderStart,
+  DBGSTR_SVFL_ActOrderEnd,
   DBGSTR_SVFL_ActOrder_Fight,
   DBGSTR_SVFL_ActOrder_Item,
   DBGSTR_SVFL_ActOrder_Change,
@@ -225,6 +226,8 @@ typedef enum {
   DBGSTR_SVFL_DeadAlready,
   DBGSTR_SVFL_DeadDiffLevelCheck,
   DBGSTR_SVFL_HandExRelive,
+  DBGSTR_SVFL_PutWazaEffect,
+  DBGSTR_SVFL_WazaDmgCmd,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
@@ -274,6 +277,8 @@ typedef enum {
   DBGSTR_VCORE_SelPokeEnd,
   DBGSTR_VCORE_SelPokeEnd_Sel,
   DBGSTR_VCORE_SelPokeEnd_Unsel,
+  DBGSTR_VCORE_PluralDamageInfo,
+  DBGSTR_VCORE_PluralDamagePoke,
   DBGSTR_SCU_RelivePokeAct,
 
   DBGSTR_POSPOKE_Out,

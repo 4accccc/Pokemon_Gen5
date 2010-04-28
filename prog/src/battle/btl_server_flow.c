@@ -340,7 +340,7 @@ static ACTION_ORDER_WORK* ActOrderTool_SearchForCombiWaza( BTL_SVFLOW_WORK* wk, 
 static u8 ActOrderTool_GetIndex( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static int ActOrderTool_Intr( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
 static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
-static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder, BOOL fAlivePokeOnly );
+static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
 static void scproc_ActStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -1060,7 +1060,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
       if( action->gen.cmd != BTL_ACTION_ROTATION ){ continue; }
       if( action->change.depleteFlag ){ continue; }
 
-      ActOrder_Proc( wk, &wk->actOrder[i], FALSE );
+      ActOrder_Proc( wk, &wk->actOrder[i] );
     }
   }
   #endif
@@ -1100,7 +1100,8 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 
   for(i=startOrderIdx; i<wk->numActOrder; i++)
   {
-    ActOrder_Proc( wk, &wk->actOrder[i], TRUE );
+    TAYA_Printf("通常処理アクション: adrs=%p, pokeID=%d\n", &wk->actOrder[i], BPP_GetID(wk->actOrder[i].bpp));
+    ActOrder_Proc( wk, &wk->actOrder[i] );
     scproc_CheckExpGet( wk );
 
     // 大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる。
@@ -1572,6 +1573,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
       ++p;
     }
   }
+
 // 各ポケモンの行動プライオリティ値を生成
   numAction = p;
   for(i=0; i<numAction; ++i)
@@ -1960,7 +1962,7 @@ static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WOR
  * @param   actOrder
  */
 //----------------------------------------------------------------------------------
-static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder, BOOL fAlivePokeOnly )
+static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
 {
   if( actOrder->fDone == FALSE )
   {
@@ -1968,96 +1970,104 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder, BOO
     BTL_ACTION_PARAM action = actOrder->action;
 
     actOrder->fDone = TRUE;
-    BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp));
+    BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp), actOrder );
 
-    if( BPP_IsDead(bpp) ){  // 死んでたら実行しない
-      return;
-    }
-    if( (action.gen.cmd != BTL_ACTION_ROTATION)
-    &&  (!BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(bpp)))  // ローテーション以外で、場にいないポケは実行しない
-    ){
-      return;
-    }
-    if( BPP_CheckSick(bpp, WAZASICK_FREEFALL) ){  // フリーフォール状態のポケは実行しない
-      return;
-    }
-
-    scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
-
-    switch( action.gen.cmd ){
-    #ifdef ROTATION_NEW_SYSTEM
-    case BTL_ACTION_ROTATION:
-      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Rotation, actOrder->clientID, action.rotation.dir);
-        BTL_SVFLOW_CreateRotationCommand( wk, actOrder->clientID, action.rotation.dir );
-      }
-      else{
-        GF_ASSERT(0);
-      }
-      break;
-    #endif
-    case BTL_ACTION_FIGHT:
-      if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
-        scproc_BeforeFirstFight( wk );
-        FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
-      }
-      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
-      wk->currentSabotageType = CheckSabotageType( wk, bpp );
-      scproc_Fight( wk, bpp, &action );
-      break;
-    case BTL_ACTION_ITEM:
-      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Item, action.item.number, action.item.targetIdx);
-      scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
-      break;
-    case BTL_ACTION_CHANGE:
-      BTL_Printf( DBGSTR_SVFL_ActOrder_Change, action.change.posIdx, action.change.memberIdx);
-      scproc_MemberChange( wk, bpp, action.change.memberIdx );
-      scproc_AfterMemberIn( wk );
-      break;
-    case BTL_ACTION_ESCAPE:
-      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
-      if( scproc_NigeruCmd( wk, bpp ) )
-      {
-        wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
-        wk->escapeClientID = actOrder->clientID;
-        if( !BTL_MAINUTIL_IsFriendClientID( wk->escapeClientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
-        {
-          BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
-        }
-      }
-      else
-      {
-        if( actOrder->clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
-        {
-          BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
-        }
-        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
-      }
-      if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
-        wk->nigeruCount = NIGERU_COUNT_MAX;
-      }
-      break;
-    case BTL_ACTION_MOVE:
-      scproc_Move( wk, bpp );
-      break;
-    case BTL_ACTION_SKIP:
-      scPut_CantAction( wk, bpp );
-      break;
-    case BTL_ACTION_NULL:
-      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Dead );
-//        scPut_CantAction( wk, bpp );
+    do {
+      // 死んでたら実行しない
+      if( BPP_IsDead(bpp) ){
         break;
-    }
+      }
+      // ローテーション以外で、場にいないポケは実行しない
+      if( (action.gen.cmd != BTL_ACTION_ROTATION)
+      &&  (!BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(bpp)))
+      ){
+        break;
+      }
+      // フリーフォール状態のポケは実行しない
+      if( BPP_CheckSick(bpp, WAZASICK_FREEFALL) ){
+        break;
+      }
 
-    BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
-    scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
+      scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
 
-    {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_ActProcEnd( wk, bpp );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-    }
+      switch( action.gen.cmd ){
+      #ifdef ROTATION_NEW_SYSTEM
+      case BTL_ACTION_ROTATION:
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+          BTL_N_Printf( DBGSTR_SVFL_ActOrder_Rotation, actOrder->clientID, action.rotation.dir);
+          BTL_SVFLOW_CreateRotationCommand( wk, actOrder->clientID, action.rotation.dir );
+        }
+        else{
+          GF_ASSERT(0);
+        }
+        break;
+      #endif
+      case BTL_ACTION_FIGHT:
+        if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
+          scproc_BeforeFirstFight( wk );
+          FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
+        }
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
+        wk->currentSabotageType = CheckSabotageType( wk, bpp );
+        scproc_Fight( wk, bpp, &action );
+        break;
+      case BTL_ACTION_ITEM:
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Item, action.item.number, action.item.targetIdx);
+        scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
+        break;
+      case BTL_ACTION_CHANGE:
+        BTL_Printf( DBGSTR_SVFL_ActOrder_Change, action.change.posIdx, action.change.memberIdx);
+        scproc_MemberChange( wk, bpp, action.change.memberIdx );
+        scproc_AfterMemberIn( wk );
+        break;
+      case BTL_ACTION_ESCAPE:
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
+        if( scproc_NigeruCmd( wk, bpp ) )
+        {
+          wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
+          wk->escapeClientID = actOrder->clientID;
+          if( !BTL_MAINUTIL_IsFriendClientID( wk->escapeClientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
+          {
+            BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
+          }
+        }
+        else
+        {
+          if( actOrder->clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+          {
+            BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
+          }
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+        }
+        if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
+          wk->nigeruCount = NIGERU_COUNT_MAX;
+        }
+        break;
+      case BTL_ACTION_MOVE:
+        scproc_Move( wk, bpp );
+        break;
+      case BTL_ACTION_SKIP:
+        scPut_CantAction( wk, bpp );
+        break;
+      case BTL_ACTION_NULL:
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Dead );
+  //        scPut_CantAction( wk, bpp );
+          break;
+      }
+
+      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
+      scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
+
+      {
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        scEvent_ActProcEnd( wk, bpp );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
+      }
+
+    }while(0);
+
+    BTL_N_Printf( DBGSTR_SVFL_ActOrderEnd, BPP_GetID(bpp), BPP_GetMonsNo(bpp), actOrder );
   }
 }
 //----------------------------------------------------------------------------------
@@ -2187,7 +2197,8 @@ static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 {
   ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
   if( actOrder && (actOrder->fDone == FALSE) ){
-    ActOrder_Proc( wk, actOrder, TRUE );
+    TAYA_Printf("割り込みアクション adrs=%p, pokeID=%d\n", actOrder, BPP_GetID(actOrder->bpp));
+    ActOrder_Proc( wk, actOrder );
     return TRUE;
   }
   return FALSE;
@@ -3829,7 +3840,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   SCQUE_PUT_OP_UpdateWazaProcResult( wk->que, BPP_GetID(attacker), actTargetPos, fWazaEnable, actWaza, orgWaza );
 
   // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
-  // @todo 実行できなくてもPP減らすんじゃないか？　じゃないと守るとかがPP減らない。
   if( !fWazaLock ){
     u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
     if( wazaIdx != PTL_WAZA_MAX ){
@@ -5296,6 +5306,8 @@ static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* ef
 {
   SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT,
           effCtrl->attackerPos, effCtrl->targetPos, waza, effCtrl->effectIndex );
+
+  BTL_N_Printf( DBGSTR_SVFL_PutWazaEffect, que_reserve_pos, waza, effCtrl->attackerPos, effCtrl->targetPos, effCtrl->effectIndex );
 
   effCtrl->effectIndex = BTLV_WAZAEFF_INDEX_DEFAULT;
 }
@@ -9710,10 +9722,13 @@ static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     affAbout = (affBadCnt)? BTL_TYPEAFF_ABOUT_DISADVANTAGE : BTL_TYPEAFF_ABOUT_NORMAL;
   }
   SCQUE_PUT_ACT_WazaDamagePlural( wk->que, poke_cnt, affAbout, wazaParam->wazaID );
+  BTL_N_Printf( DBGSTR_SVFL_WazaDmgCmd, wazaParam->wazaID, poke_cnt );
   for(i=0; i<poke_cnt; ++i)
   {
     SCQUE_PUT_ArgOnly( wk->que, BPP_GetID(bpp[i]) );
+    BTL_N_PrintfSimple( DBGSTR_csv, BPP_GetID(bpp[i]) );
   }
+  BTL_N_PrintfSimple( DBGSTR_LF );
 }
 //--------------------------------------------------------------------------
 /**

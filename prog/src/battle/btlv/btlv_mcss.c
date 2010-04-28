@@ -358,7 +358,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
     BtlvMcssPos pos;
 
     if( bmw->mcss_tcb_rotation_execute == 0 )
-    { 
+    {
       for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
       {
         if( ( BTLV_MCSS_CheckExist( bmw, pos ) ) && ( GFL_STD_MtRand( 100 ) == 0 ) )
@@ -808,8 +808,8 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
     BTLV_MCSS_GetDefaultPos( bmw, pos, position );
     type = EFFTOOL_CALCTYPE_INTERPOLATION;
   }
-	if( type == EFFTOOL_CALCTYPE_DIRECT )			//直接値を代入
-  { 
+  if( type == EFFTOOL_CALCTYPE_DIRECT )     //直接値を代入
+  {
     MCSS_SetPosition( bmw->btlv_mcss[ index ].mcss, pos );
     return;
   }
@@ -1132,6 +1132,7 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  TAYA_Printf("Mcss_SetPaletteFade : position=%d, index=%d, adrs=%p\n", position, index, bmw->btlv_mcss[index].mcss );
   MCSS_SetPaletteFade( bmw->btlv_mcss[ index ].mcss, start_evy, end_evy, wait, rgb );
 }
 
@@ -1424,7 +1425,7 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
 
     //エフェクトエディタで確認する場合、mainModuleがNULLなので、回避する
 #ifdef PM_DEBUG
-    if( mainModule ){ 
+    if( mainModule ){
 #endif
     if( !BTL_MAIN_SetPmvRef(mainModule, position, &refBody) ){
       pRef = NULL;
@@ -1432,13 +1433,13 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
 #ifdef PM_DEBUG
     }
     else
-    { 
+    {
       pRef = NULL;
     }
 #endif
 
     if( ( chorus_vol ) || ( chorus_speed ) )
-    { 
+    {
       chorus = TRUE;
     }
 
@@ -1949,7 +1950,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
     { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
     { BTLV_MCSS_POS_B, BTLV_MCSS_POS_D, BTLV_MCSS_POS_F },
   };
-  int src_angle[ 2 ][ 3 ] = { 
+  int src_angle[ 2 ][ 3 ] = {
     { 0x8000, 0xd555, 0x2aab },
     { 0x0000, 0x5555, 0xaaaa },
   };
@@ -1991,7 +1992,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
       if( i == 3 )
       {
         for( i = 0 ; i < 3 ; i++ )
-        { 
+        {
           bmrw->angle[ i ] = src_angle[ bmrw->side ][ i ];
         }
         BTLV_STAGE_SetAnmReq( BTLV_EFFECT_GetStageWork(), bmrw->side, 0, ( ( bmrw->dir == 0 ) ? FX32_ONE : -FX32_ONE ), 60 );
@@ -2020,7 +2021,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
         bmrw->angle[ i ] += bmrw->speed;
       }
       if( --bmrw->frame == 0 )
-      { 
+      {
         for( i = 0 ; i < 3 ; i++ )
         {
           VecFx32 pos;

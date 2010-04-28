@@ -899,10 +899,8 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_EXIT_SUBWAY_TRAINER,
         { SubProc_UI_ExitForSubwayTrainer,   NULL,  SubProc_REC_ExitForSubwayTrainer }, },
 
-
     { BTL_ACMD_EXIT_LOSE_WILD,
       { SubProc_UI_LoseWild,   NULL,  NULL }, },
-
 
     { BTL_ACMD_EXIT_COMM,
       { SubProc_UI_ExitCommTrainer,   NULL,  SubProc_REC_ExitCommTrainer }, },

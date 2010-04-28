@@ -1528,13 +1528,13 @@ void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAb
   subwk->wazaID = wazaID;
   subwk->seq = 0;
 
-  BTL_Printf("複数体ダメージ処理 (%d体) \n", pokeCnt);
+  BTL_N_Printf( DBGSTR_VCORE_PluralDamageInfo, pokeCnt, wazaID);
 
   {
     u32 i;
     for(i=0; i<pokeCnt; ++i)
     {
-      BTL_Printf("  対象ポケID=%d\n", pokeID[i]);
+      BTL_N_Printf( DBGSTR_VCORE_PluralDamagePoke, pokeID[i]);
       subwk->pokePos[i] = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID[i] );
     }
   }
