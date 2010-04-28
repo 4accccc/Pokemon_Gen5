@@ -1,0 +1,24 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: prof_word.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PROF_WORD_NAIX_
+#define NARC_PROF_WORD_NAIX_
+
+enum {
+	NARC_prof_word_de_data_bin = 0,
+	NARC_prof_word_es_data_bin = 1,
+	NARC_prof_word_fr_data_bin = 2,
+	NARC_prof_word_it_data_bin = 3,
+	NARC_prof_word_jp_data_bin = 4,
+	NARC_prof_word_kr_data_bin = 5,
+	NARC_prof_word_us_data_bin = 6
+};
+
+/* NARC_PROF_WORD_NAIX_ */
+#endif

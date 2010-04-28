@@ -1919,7 +1919,8 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 #===> SRCS_OVERLAY_BOX
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
-											app/name_input/namein_data.c
+											app/name_input/namein_data.c \
+											system/prof_word.c
 
 #i‰»ƒfƒ‚
 #===> SRCS_OVERLAY_WIFINOTE
