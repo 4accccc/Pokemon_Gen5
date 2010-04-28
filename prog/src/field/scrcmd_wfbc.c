@@ -572,7 +572,8 @@ typedef struct {
   u16 talk_seq;
   u8  is_yes;
   u8  mode;
-  u8  pad[2];
+  u8  err_check;
+  u8  pad[1];
 } WFBC_PALACE_TALK_WK;
 
 
@@ -608,8 +609,14 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
 
   GAME_COMM_SYS_PTR p_game_comm = GAMESYSTEM_GetGameCommSysPtr(p_gsys);
-  INTRUDE_COMM_SYS_PTR p_intcomm = GameCommSys_GetAppWork( p_game_comm );
-  WFBC_COMM_DATA * p_wfbc_comm = Intrude_GetWfbcCommData( p_intcomm  );
+  INTRUDE_COMM_SYS_PTR p_intcomm = Intrude_Check_CommConnect( p_game_comm );
+  WFBC_COMM_DATA * p_wfbc_comm;
+  
+  if( p_intcomm == NULL ){
+    return NULL;
+  }
+  
+  p_wfbc_comm = Intrude_GetWfbcCommData( p_intcomm  );
 
 
 
@@ -620,12 +627,13 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
   p_work                  = GMEVENT_GetEventWork( p_event );
   p_work->p_gsys          = p_gsys;
   p_work->p_fieldmap      = p_fieldmap;
-  p_work->p_strbuf        = GFL_STR_CreateBuffer( 128, heapID );
-  p_work->p_strbuf_tmp    = GFL_STR_CreateBuffer( 128, heapID );
+  p_work->p_strbuf        = GFL_STR_CreateBuffer( 256, heapID );
+  p_work->p_strbuf_tmp    = GFL_STR_CreateBuffer( 256, heapID );
   p_work->p_msgdata       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_plc10_dat, heapID );
   p_work->p_wordset       = WORDSET_Create( heapID );
   p_work->p_fmb           = p_msgbg;
   p_work->p_commsys       = p_wfbc_comm;
+  p_work->err_check       = TRUE;
 
   p_work->heapID          = GFL_HEAP_LOWID(heapID);
 
@@ -686,6 +694,15 @@ static GMEVENT* EVENT_SetUp_WFBC_Palece_Talk( GAMESYS_WORK* p_gsys, FIELDMAP_WOR
 static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void* p_wk )
 {
   WFBC_PALACE_TALK_WK*   p_work = p_wk;
+  GAME_COMM_SYS_PTR p_game_comm = GAMESYSTEM_GetGameCommSysPtr(p_work->p_gsys);
+  INTRUDE_COMM_SYS_PTR p_intcomm = Intrude_Check_CommConnect( p_game_comm );
+
+  // エラーチェック
+  if( p_intcomm == NULL ){
+    if( p_work->err_check ){
+      (*p_seq) = WFBC_PALACE_TALK_SEQ_END;
+    }
+  }
 
   switch( (*p_seq) )
   {
@@ -793,6 +810,7 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
 
   // やっぱり別の街にいく！
   case WFBC_PALACE_TALK_SEQ_TALK_06:       
+    p_work->err_check = FALSE;
     EVENT_WFBC_WFBC_TalkStart( p_work, 5, p_seq, WFBC_PALACE_TALK_SEQ_END );
     break;
 
@@ -804,6 +822,9 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
     // 親に通知
     FIELD_WFBC_COMM_DATA_ClearReqAnsData( p_work->p_commsys );
     FIELD_WFBC_COMM_DATA_SetReqData( p_work->p_commsys, p_work->npc_id, FIELD_WFBC_COMM_NPC_REQ_TAKE );
+
+    // エラーチェック終了
+    p_work->err_check = FALSE;
     break;
 
   // マップの再構築 フェードアウト
