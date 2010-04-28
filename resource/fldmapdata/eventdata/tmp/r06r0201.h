@@ -17,7 +17,6 @@
 #define TR_MOUNT_06                        4
 #define R06R0201_FLD_ITEM_01               5
 #define R06R0201_FLD_ITEM_02               6
-#define R06R0201_FLD_ITEM_03               7
 
 #endif //ZONE_R06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

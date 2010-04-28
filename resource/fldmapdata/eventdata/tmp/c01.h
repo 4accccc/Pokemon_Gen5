@@ -29,6 +29,7 @@
 #define C01_BABYGIRL1_01                  11
 #define C01_BADMAN1_01                    12
 #define C01_FLD_ITEM_01                   13
+#define C01_FLD_ITEM_02                   14
 
 #endif //ZONE_C01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/26 20:42:18
+#save date:2010/04/28 16:44:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -111,7 +111,7 @@ R03_WOMAN3
 #OBJ CODE Number
 WOMAN3
 #MOVE CODE Number
-MV_RND
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -119,7 +119,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R03_WOMAN3
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -129,7 +129,7 @@ DIR_DOWN
 #Move Limit X Number
 1
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
