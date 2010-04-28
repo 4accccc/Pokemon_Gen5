@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-14T16:08:45"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-29T00:12:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1001" top="448" right="1501" bottom="1077" maximized="no" rayout="Vertical2">
+	<dialog left="356" top="355" right="856" bottom="984" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1110" top="103" right="1583" bottom="501" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -357,7 +357,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1234,24 +1234,24 @@ msg_musical_recept_06を
 ポケモンは　うけつけにて▽
 てもちから　えらぶことが　できます▼
 さんかに　せいげんは　ございませんが
-からだの　とくちょうを　りゆうに▼
-いちぶの　グッズを　きかざることが
-にがてな　ポケモンは　いるようです▼
+からだの　とくちょうから▼
+グッズを　きかざる　ことが
+にがてな　ポケモンは　います▼
 きになる　ポケモンが　いれば
-とりあえず　しちゃくしつで▼
-ドレスアップ　してみると
-よいかも　しれませんね▼</language>
+とりあえず　しちゃくしつで▽
+ドレスアップ　してみると▽
+よいかもしれません▼</language>
 		<language name="JPN_KANJI">ミュージカルに　参加させる
 ポケモンは　受付にて▽
 手持ちから　選ぶことが　できます▼
 参加に　制限は　ございませんが
-身体の　特徴を　理由に▼
-一部の　グッズを　着飾ることが
-苦手な　ポケモンは　いるようです▼
+身体の　特徴から▼
+グッズを　着飾る　ことが
+苦手な　ポケモンは　います▼
 気になる　ポケモンが　いれば
-とりあえず　試着室で▼
-ドレスアップ　してみると
-よいかも　しれませんね▼</language>
+とりあえず　試着室で▽
+ドレスアップ　してみると▽
+良いかもしれません▼</language>
 	</row>
 
 	<row id="msg_musical_info_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1275,7 +1275,7 @@ msg_musical_recept_06を
 ポケモンが　ぶたいに
 あがった　ときに▼
 おきゃくさんの　ちゅうもくを
-あつめることも　できますよ▼
+あつめることが　できますよ▼
 また　あえて　イメージに
 あわない　グッズも　きかざることで▼
 それが　ワンポイントと　なって
@@ -1293,7 +1293,7 @@ msg_musical_recept_06を
 ポケモンが　舞台に
 あがった　ときに▼
 お客さんの　注目を
-集めることも　できますよ▼
+集めることが　できますよ▼
 また　あえて　イメージに
 あわない　グッズも　着飾ることで▼
 それが　ワンポイントと　なって
@@ -1327,7 +1327,7 @@ msg_musical_recept_06を
 ドレスアップの　いしょうしだいで
 おきゃくさんの　はんのうや▼
 アピールが　かわることも
-あるみたいですよ▼</language>
+あるようですよ▼</language>
 		<language name="JPN_KANJI">演目とは
 みなさんの　ポケモンが▼
 ドレスアップした　後に
@@ -1343,7 +1343,7 @@ msg_musical_recept_06を
 ドレスアップの　衣装次第で
 お客さんの　反応や▼
 アピールが　変わることも
-あるみたいですよ▼</language>
+あるようですよ▼</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-27T00:12:13"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-28T17:48:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1053" top="511" right="1553" bottom="1131" maximized="no" rayout="Vertical2">
+	<dialog left="1080" top="477" right="1580" bottom="1097" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="325"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -342,30 +342,30 @@
 
 	<row id="MUSICAL_EXTRA_NAME_02">
 		<comment>ノブ
-ミネズミ</comment>
-		<language name="JPN" width="240">みねやん</language>
-		<language name="JPN_KANJI">みねやん</language>
+ヤナップ</comment>
+		<language name="JPN" width="240">ヤナやん</language>
+		<language name="JPN_KANJI">ヤナやん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_03">
 		<comment>タナー
-ファウン</comment>
+ヒヤップ</comment>
 		<language name="JPN" width="240">みずきち</language>
 		<language name="JPN_KANJI">みずきち</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_04">
 		<comment>ソウタ
-パピー</comment>
+パブロー</comment>
 		<language name="JPN" width="240">ラッシュ</language>
 		<language name="JPN_KANJI">ラッシュ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_05">
 		<comment>テルジン
-ブロッコ</comment>
-		<language name="JPN" width="240">ブロすけ</language>
-		<language name="JPN_KANJI">ブロすけ</language>
+ヤナップ</comment>
+		<language name="JPN" width="240">ヤナすけ</language>
+		<language name="JPN_KANJI">ヤナすけ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_06">
@@ -377,7 +377,7 @@
 
 	<row id="MUSICAL_EXTRA_NAME_07">
 		<comment>トシ
-スチック</comment>
+バオップ</comment>
 		<language name="JPN" width="240">メラのぶ</language>
 		<language name="JPN_KANJI">メラのぶ</language>
 	</row>
@@ -385,13 +385,13 @@
 	<row id="MUSICAL_EXTRA_NAME_08">
 		<comment>ヒデオ
 ナゲキ</comment>
-		<language name="JPN" width="240">グラサン</language>
-		<language name="JPN_KANJI">グラサン</language>
+		<language name="JPN" width="240">アカオビ</language>
+		<language name="JPN_KANJI">アカオビ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_09">
 		<comment>オリー
-ガンクツ</comment>
+ガンセキ</comment>
 		<language name="JPN" width="240">ボンバー</language>
 		<language name="JPN_KANJI">ボンバー</language>
 	</row>
@@ -405,86 +405,86 @@
 
 	<row id="MUSICAL_EXTRA_NAME_11">
 		<comment>ノエ
-ゴスロ</comment>
-		<language name="JPN" width="240">ゴスりん</language>
-		<language name="JPN_KANJI">ゴスりん</language>
+ミネズミ</comment>
+		<language name="JPN" width="240">ズミエット</language>
+		<language name="JPN_KANJI">ズミエット</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_12">
 		<comment>サーヤ
-ミジュマル</comment>
-		<language name="JPN" width="240">ミズエ</language>
-		<language name="JPN_KANJI">ミズエ</language>
+ゴスロ</comment>
+		<language name="JPN" width="240">ごっちー</language>
+		<language name="JPN_KANJI">ごっちー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_13">
 		<comment>リマ
 チラーミィ</comment>
-		<language name="JPN" width="240">チラみん</language>
-		<language name="JPN_KANJI">チラみん</language>
+		<language name="JPN" width="240">チラリラ</language>
+		<language name="JPN_KANJI">チラリラ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_14">
 		<comment>リンダ
 マメパト</comment>
-		<language name="JPN" width="240">ビーン</language>
-		<language name="JPN_KANJI">ビーン</language>
+		<language name="JPN" width="240">おまめ</language>
+		<language name="JPN_KANJI">おまめ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_15">
 		<comment>コニー
 シママ</comment>
-		<language name="JPN" width="240">ゼブラ</language>
-		<language name="JPN_KANJI">ゼブラ</language>
+		<language name="JPN" width="240">ゼーブラ</language>
+		<language name="JPN_KANJI">ゼーブラ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_16">
 		<comment>コウ
-チラーミィ</comment>
+ヒヤップ</comment>
 		<language name="JPN" width="240">ミィちゃん</language>
 		<language name="JPN_KANJI">ミィちゃん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_17">
 		<comment>ゲルダ
-ツルリ</comment>
-		<language name="JPN" width="240">つるっぴ</language>
-		<language name="JPN_KANJI">つるっぴ</language>
+チュリネ</comment>
+		<language name="JPN" width="240">みどり</language>
+		<language name="JPN_KANJI">みどり</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_18">
 		<comment>ハナ
-グラップ</comment>
-		<language name="JPN" width="240">おジョウ</language>
-		<language name="JPN_KANJI">おジョウ</language>
+スンドメー</comment>
+		<language name="JPN" width="240">ルーズ</language>
+		<language name="JPN_KANJI">ルーズ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_19">
 		<comment>リタ
-ツタージャ</comment>
-		<language name="JPN" width="240">スネコ</language>
-		<language name="JPN_KANJI">スネコ</language>
+コアルヒー</comment>
+		<language name="JPN" width="240">おまる</language>
+		<language name="JPN_KANJI">おまる</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_20">
 		<comment>アリー
-チュリネ</comment>
-		<language name="JPN" width="240">チュチュ</language>
-		<language name="JPN_KANJI">チュチュ</language>
+バオップ</comment>
+		<language name="JPN" width="240">モエッキー</language>
+		<language name="JPN_KANJI">モエッキー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_21">
 		<comment>ユウゾウ
-ミルホッグ</comment>
-		<language name="JPN" width="240">ミルぞう</language>
-		<language name="JPN_KANJI">ミルぞう</language>
+ワルビル</comment>
+		<language name="JPN" width="240">ブラザー</language>
+		<language name="JPN_KANJI">ブラザー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_22">
 		<comment>サクジ
-タマゲタケ</comment>
-		<language name="JPN" width="240">キノコーン</language>
-		<language name="JPN_KANJI">キノコーン</language>
+ミルホッグ</comment>
+		<language name="JPN" width="240">ミルぞう</language>
+		<language name="JPN_KANJI">ミルぞう</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_23">
@@ -496,121 +496,121 @@
 
 	<row id="MUSICAL_EXTRA_NAME_24">
 		<comment>チャド
-オノドン</comment>
-		<language name="JPN" width="240">オノどん</language>
-		<language name="JPN_KANJI">オノどん</language>
+ミジュマル</comment>
+		<language name="JPN" width="240">あしがる</language>
+		<language name="JPN_KANJI">あしがる</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_25">
 		<comment>ジェフ
-イーグラ</comment>
-		<language name="JPN" width="240">わたげ</language>
-		<language name="JPN_KANJI">わたげ</language>
+ハトーボー</comment>
+		<language name="JPN" width="240">ブラボー</language>
+		<language name="JPN_KANJI">ブラボー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_26">
 		<comment>シュウ
-スチック</comment>
-		<language name="JPN" width="240">モエゾー</language>
-		<language name="JPN_KANJI">モエゾー</language>
+ヤナップ</comment>
+		<language name="JPN" width="240">やくぜん</language>
+		<language name="JPN_KANJI">やくぜん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_27">
 		<comment>カール
-プルンス</comment>
-		<language name="JPN" width="240">クアーレ</language>
-		<language name="JPN_KANJI">クアーレ</language>
+ツタージャ</comment>
+		<language name="JPN" width="240">アイビー</language>
+		<language name="JPN_KANJI">アイビー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_28">
 		<comment>ヤン
-スンドメー</comment>
-		<language name="JPN" width="240">ズルルン</language>
-		<language name="JPN_KANJI">ズルルン</language>
+ダゲキ</comment>
+		<language name="JPN" width="240">なぐろう</language>
+		<language name="JPN_KANJI">なぐろう</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_29">
 		<comment>テオ
-テレス</comment>
-		<language name="JPN" width="240">テレサ</language>
-		<language name="JPN_KANJI">テレサ</language>
+バオップ</comment>
+		<language name="JPN" width="240">バオウ</language>
+		<language name="JPN_KANJI">バオウ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_30">
 		<comment>トミー
-ブロッコル</comment>
-		<language name="JPN" width="240">ブローシュ</language>
-		<language name="JPN_KANJI">ブローシュ</language>
+ワルビル</comment>
+		<language name="JPN" width="240">バッドガイ</language>
+		<language name="JPN_KANJI">バッドガイ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_31">
 		<comment>リコ
-ミズッコ</comment>
-		<language name="JPN" width="240">ラコノスケ</language>
-		<language name="JPN_KANJI">ラコノスケ</language>
+フタチマル</comment>
+		<language name="JPN" width="240">ミズノスケ</language>
+		<language name="JPN_KANJI">ミズノスケ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_32">
 		<comment>アイリ
-ブロッコ</comment>
+ヤナップ</comment>
 		<language name="JPN" width="240">ブロリーン</language>
 		<language name="JPN_KANJI">ブロリーン</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_33">
 		<comment>ルミ
-アウトン</comment>
-		<language name="JPN" width="240">あっちゃん</language>
-		<language name="JPN_KANJI">あっちゃん</language>
+チュリネ</comment>
+		<language name="JPN" width="240">リリー</language>
+		<language name="JPN_KANJI">リリー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_34">
 		<comment>ミネ
-ランプラー</comment>
-		<language name="JPN" width="240">プラプー</language>
-		<language name="JPN_KANJI">プラプー</language>
+チラーミィ</comment>
+		<language name="JPN" width="240">ミィちゃん</language>
+		<language name="JPN_KANJI">ミィちゃん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_35">
 		<comment>カナ
 ゴスロス</comment>
-		<language name="JPN" width="240">ごっちー</language>
-		<language name="JPN_KANJI">ごっちー</language>
+		<language name="JPN" width="240">ゴシカ</language>
+		<language name="JPN_KANJI">ゴシカ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_36">
 		<comment>ユウコ
-マラカッチ</comment>
-		<language name="JPN" width="240">カチカッチ</language>
-		<language name="JPN_KANJI">カチカッチ</language>
+バオップ</comment>
+		<language name="JPN" width="240">たきび</language>
+		<language name="JPN_KANJI">たきび</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_37">
 		<comment>マキ
-エルフーン</comment>
-		<language name="JPN" width="240">エル</language>
-		<language name="JPN_KANJI">エル</language>
+ヒヤップ</comment>
+		<language name="JPN" width="240">ジョーロ</language>
+		<language name="JPN_KANJI">ジョーロ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_38">
 		<comment>タキ
 タブンネ</comment>
-		<language name="JPN" width="240">ミミガー</language>
-		<language name="JPN_KANJI">ミミガー</language>
+		<language name="JPN" width="240">ブンブン</language>
+		<language name="JPN_KANJI">ブンブン</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_39">
 		<comment>ニナ
-プルンス</comment>
-		<language name="JPN" width="240">ぷるるん</language>
-		<language name="JPN_KANJI">ぷるるん</language>
+クサネーク</comment>
+		<language name="JPN" width="240">ジャノン</language>
+		<language name="JPN_KANJI">ジャノン</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_40">
 		<comment>クラリス
-ファウン</comment>
-		<language name="JPN" width="240">ブルンネン</language>
-		<language name="JPN_KANJI">ブルンネン</language>
+ファウント</comment>
+		<language name="JPN" width="240">クアーレ</language>
+		<language name="JPN_KANJI">クアーレ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_41">
@@ -623,22 +623,22 @@
 	<row id="MUSICAL_EXTRA_NAME_42">
 		<comment>リク
 スチームル</comment>
-		<language name="JPN" width="240">スチーマー</language>
-		<language name="JPN_KANJI">スチーマー</language>
+		<language name="JPN" width="240">ブレイズ</language>
+		<language name="JPN_KANJI">ブレイズ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_43">
 		<comment>リュート
-ズルガシー</comment>
-		<language name="JPN" width="240">ガシラ</language>
-		<language name="JPN_KANJI">ガシラ</language>
+ブロッコル</comment>
+		<language name="JPN" width="240">ウード</language>
+		<language name="JPN_KANJI">ウード</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_44">
 		<comment>アキノリ
-オノノクス</comment>
-		<language name="JPN" width="240">アックス</language>
-		<language name="JPN_KANJI">アックス</language>
+ミルホッグ</comment>
+		<language name="JPN" width="240">ミッチー</language>
+		<language name="JPN_KANJI">ミッチー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_45">
@@ -650,44 +650,44 @@
 
 	<row id="MUSICAL_EXTRA_NAME_46">
 		<comment>ヨシミ
-ファウント</comment>
-		<language name="JPN" width="240">ファウーナ</language>
-		<language name="JPN_KANJI">ファウーナ</language>
+マラカッチ</comment>
+		<language name="JPN" width="240">リズミィ</language>
+		<language name="JPN_KANJI">リズミィ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_47">
 		<comment>ジェニー
 ハハコモリ</comment>
-		<language name="JPN" width="240">マミー</language>
-		<language name="JPN_KANJI">マミー</language>
+		<language name="JPN" width="240">マーザー</language>
+		<language name="JPN_KANJI">マーザー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_48">
 		<comment>ミナ
 チラチーノ</comment>
-		<language name="JPN" width="240">チラリー</language>
-		<language name="JPN_KANJI">チラリー</language>
+		<language name="JPN" width="240">チラリーナ</language>
+		<language name="JPN_KANJI">チラリーナ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_49">
 		<comment>ベッキー
-プルンゲル</comment>
-		<language name="JPN" width="240">クイーン</language>
-		<language name="JPN_KANJI">クイーン</language>
+ファウント</comment>
+		<language name="JPN" width="240">ファウナ</language>
+		<language name="JPN_KANJI">ファウナ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_50">
 		<comment>セリナ
 ドレディア</comment>
-		<language name="JPN" width="240">ディアラ</language>
-		<language name="JPN_KANJI">ディアラ</language>
+		<language name="JPN" width="240">ディア</language>
+		<language name="JPN_KANJI">ディア</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_51">
 		<comment>メイコ
-ゴスローゼ</comment>
-		<language name="JPN" width="240">ローゼ</language>
-		<language name="JPN_KANJI">ローゼ</language>
+エルフーン</comment>
+		<language name="JPN" width="240">タイフーン</language>
+		<language name="JPN_KANJI">タイフーン</language>
 	</row>
 
 	<flowchart-group-list>
