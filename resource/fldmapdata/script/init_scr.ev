@@ -309,8 +309,12 @@ init_flags:
 	//カナワ民家：バトルサブウェイの落し物初回入手数をセット
 	$WK_OTHER_BSEVENT_NUM = 1
 	
-	//研究所の殿堂入り後サポートを非表示
+	//研究所：殿堂入り後サポートを非表示
 	_FLAG_SET( FV_T01R0401_SUPPORT_AFTER )
+
+	//ワンダーブリッジ：ダークトリニティを非表示
+	_FLAG_SET( FV_H05_NINJA_01 )
+
 }
 _RET
 

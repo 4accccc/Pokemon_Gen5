@@ -850,7 +850,7 @@
 #define FV_T04R0401_LEADER6_01             826 /* 0x033a サザナミタウン別荘：フウロ */
 #define FV_T04R0401_LEADER4_01             827 /* 0x033b サザナミタウン別荘：カミツレ */
 #define FV_T04R0401_LEADER2_01             828 /* 0x033c サザナミタウン別荘：アロエ */
-		/* not used   829(0x033d) */
+#define FV_H05_NINJA_01                    829 /* 0x033d ワンダーブリッジ：ダークトリニティ×３ */
 		/* not used   830(0x033e) */
 		/* not used   831(0x033f) */
 		/* not used   832(0x0340) */

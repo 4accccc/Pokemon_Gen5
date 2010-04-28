@@ -10,6 +10,9 @@
 #ifndef ZONE_H05_EVC_H
 #define ZONE_H05_EVC_H
 
+#define H05_NINJA_01                       0
+#define H05_NINJA_02                       1
+#define H05_NINJA_03                       2
 
 #endif //ZONE_H05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

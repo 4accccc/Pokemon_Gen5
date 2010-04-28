@@ -5,6 +5,6 @@
 #define _H05_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_H05 (1)
+#define SCRID_POS_H05_NINJA_01 (1)
 
 #endif //_H05_DEF_H_

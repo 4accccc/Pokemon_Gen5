@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_h05.h"
-  //.include  "h05.h"
+  .include  "h05.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,297 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h05
+_EVENT_DATA    ev_pos_h05_ninja_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_h05:
-//  _END
+/************************************************************/
+/*					ワンダーブリッジ						*/
+/************************************************************/
+EVENT_START	ev_pos_h05_ninja_01
+{
+DEFINE_LOCAL	lwk_pos_x
+DEFINE_LOCAL	lwk_pos_z
+DEFINE_LOCAL	lwk_dir
+	
+	_FLAG_RESET( FV_H05_NINJA_01 )
+	
+	//自機の座標取得
+	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )
+	_PLAYER_DIR_GET( lwk_dir )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//その１の出現位置を設定（自機の正面）
+	$SCWK_TEMP0 = $lwk_pos_x
+	IF $lwk_dir == DIR_RIGHT THEN
+		$SCWK_TEMP0 += 2
+		$SCWK_TEMP1 = DIR_LEFT
+	ELSIF $lwk_dir == DIR_LEFT THEN
+		$SCWK_TEMP0 -= 2
+		$SCWK_TEMP1 = DIR_RIGHT
+	ENDIF
+	
+	//その１を追加
+	_OBJ_ADD( H05_NINJA_01 )
+	_OBJ_POS_CHANGE( H05_NINJA_01, SCWK_TEMP0, 0, lwk_pos_z, SCWK_TEMP1 )
+	_OBJ_ANIME( H05_NINJA_01, anm_ninja_appear_01 )
+	_OBJ_ANIME_WAIT()
+	
+//	_TIME_WAIT( 2 )
+	
+	//その２の出現位置を設定（自機の後ろ）
+	$SCWK_TEMP0 = $lwk_pos_x
+	IF $lwk_dir == DIR_RIGHT THEN
+		$SCWK_TEMP0 -= 2
+		$SCWK_TEMP1 = DIR_RIGHT
+	ELSIF $lwk_dir == DIR_LEFT THEN
+		$SCWK_TEMP0 += 2
+		$SCWK_TEMP1 = DIR_LEFT
+	ENDIF
+	
+	//その２を追加
+	_OBJ_ADD( H05_NINJA_02 )
+	_OBJ_POS_CHANGE( H05_NINJA_02, SCWK_TEMP0, 0, lwk_pos_z, SCWK_TEMP1 )
+	_OBJ_ANIME( H05_NINJA_02, anm_ninja_appear_01 )
+	_OBJ_ANIME_WAIT()
+	
+//	_TIME_WAIT( 2 )
+	
+	//その３の出現位置を設定（自機の上）※道路一番上の時だけ自機の下に出現
+	$SCWK_TEMP0 = $lwk_pos_z
+	IF $lwk_pos_z <= 32 THEN
+		$SCWK_TEMP0 += 2
+		$SCWK_TEMP1 = DIR_UP
+	ELSE
+		$SCWK_TEMP0 -= 2
+		$SCWK_TEMP1 = DIR_DOWN
+	ENDIF
+	
+//-	_TIME_WAIT( 2 )
+	
+	//その３を追加
+	_OBJ_ADD( H05_NINJA_03 )
+	_OBJ_POS_CHANGE( H05_NINJA_03, lwk_pos_x, 0, SCWK_TEMP0, SCWK_TEMP1 )
+	_OBJ_ANIME( H05_NINJA_03, anm_ninja_appear_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 16 )
+	
+	//……おまえか
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja1_01, H05_NINJA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス様はいない
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja2_01, H05_NINJA_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//われわれは ゲーチス様に
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja3_01, H05_NINJA_03, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	
+	//これを渡せと
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja1_02, H05_NINJA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//その１：自機に隣接
+	IF $lwk_dir == DIR_RIGHT THEN
+		_OBJ_ANIME( H05_NINJA_01, anm_ninja_move_l )
+	ELSE
+		_OBJ_ANIME( H05_NINJA_01, anm_ninja_move_r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//こんごうだま入手
+	_ITEM_EVENT_KEYWAIT( ITEM_KONGOUDAMA, 1 )
+	
+	//私からはこれを
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja2_02, H05_NINJA_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//その２：自機に隣接
+	IF $lwk_dir == DIR_RIGHT THEN
+		_OBJ_ANIME( H05_NINJA_02, anm_ninja_move_r )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	ELSE
+		_OBJ_ANIME( H05_NINJA_02, anm_ninja_move_l )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//しらたま入手
+	_ITEM_EVENT_KEYWAIT( ITEM_SIRATAMA, 1 )
+	
+	//そしてこれも
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja3_02, H05_NINJA_03, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//その３：自機に隣接
+	IF $lwk_pos_z <= 32 THEN
+		_OBJ_ANIME( H05_NINJA_03, anm_ninja_move_u )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	ELSE
+		_OBJ_ANIME( H05_NINJA_03, anm_ninja_move_d )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//はっきんだま入手
+	_ITEM_EVENT_KEYWAIT( ITEM_HAKKINDAMA, 1 )
+	
+	
+	//……ゲーチスさまが
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja1_03, H05_NINJA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//われらダークトリニティは
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja2_03, H05_NINJA_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//……おまえとは
+	_BALLOONWIN_OBJMSG_POS( msg_h05_ninja3_03, H05_NINJA_03, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//その１その２：一歩下がる
+	IF $lwk_dir == DIR_RIGHT THEN
+		_OBJ_ANIME( H05_NINJA_01, anm_ninja_back_r )
+		_OBJ_ANIME( H05_NINJA_02, anm_ninja_back_l )
+	ELSE
+		_OBJ_ANIME( H05_NINJA_01, anm_ninja_back_l )
+		_OBJ_ANIME( H05_NINJA_02, anm_ninja_back_r )
+	ENDIF
+	
+	//その３：一歩下がる
+	IF $lwk_pos_z <= 32 THEN
+		_OBJ_ANIME( H05_NINJA_03, anm_ninja_back_d )
+	ELSE
+		_OBJ_ANIME( H05_NINJA_03, anm_ninja_back_u )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ：退場
+	_OBJ_ANIME( H05_NINJA_01, anm_ninja_leave_01 )
+//	_TIME_WAIT( 2 )
+	_OBJ_ANIME( H05_NINJA_02, anm_ninja_leave_01 )
+//	_TIME_WAIT( 2 )
+	_OBJ_ANIME( H05_NINJA_03, anm_ninja_leave_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ：削除
+	_OBJ_DEL( H05_NINJA_01 )
+	_OBJ_DEL( H05_NINJA_02 )
+	_OBJ_DEL( H05_NINJA_03 )
+	
+	//========================================//
+	//POS無効
+	$WK_SCENE_H05 = 1
+	
+	//ダークトリニティ非表示
+	_FLAG_SET( FV_H05_NINJA_01 )
+	
+	//========================================//
+	
+}
+EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_h05:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ：自機に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_move_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_move_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_move_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_move_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ：一歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_back_u
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_back_d
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_back_l
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ninja_back_r
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ：出現
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_appear_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_leave_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+
+
+
+
 

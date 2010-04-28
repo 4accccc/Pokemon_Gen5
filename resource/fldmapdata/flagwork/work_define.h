@@ -222,6 +222,7 @@
 #define WK_SCENE_D01R0101_SAGE5          16610 /* 0x40e2 夢の跡地：クリア後七賢人イベント用ワーク */
 #define WK_SCENE_C05_BTLRIDER            16611 /* 0x40e3 ホドモエ：トリプル／ローテバトルイベント用ワーク */
 #define WK_SCENE_T04R0401                16612 /* 0x40e4 サザナミタウン：シロナイベント用ワーク */
+#define WK_SCENE_H05                     16613 /* 0x40e5 ワンダーブリッジ：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
