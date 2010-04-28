@@ -49,7 +49,6 @@ struct _TIMEICON_WORK {
 //============================================================================================
 static void MainTask(  GFL_TCB * tcb, void * work );
 static void MainTaskTcbl(  GFL_TCBL * tcbl, void * work );
-static void MainTaskCore( TIMEICON_WORK *wk );
 
 static void TIMEICON_CreateCore(
 							TIMEICON_WORK * wk , GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID );
@@ -75,8 +74,12 @@ TIMEICON_WORK * TIMEICON_Create(
 
 	TIMEICON_CreateCore( wk , msg_win , clear_color , wait , heapID );
 
+	if( tcbsys != NULL ){
+		 wk->tcb = GFL_TCB_AddTask( tcbsys, MainTask, wk, 0 );
+	}else{
+		 wk->tcb = NULL;
+	}
   wk->tcbl = NULL;
-  wk->tcb = GFL_TCB_AddTask( tcbsys, MainTask, wk, 0 );
 	wk->flg = TRUE;
 
 	return wk;
@@ -257,8 +260,7 @@ void TILEICON_Exit( TIMEICON_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void MainTask( GFL_TCB * tcb, void * work )
 {
-	TIMEICON_WORK * wk = work;
-	MainTaskCore( wk );
+	TIMEICON_Main( work );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -273,8 +275,7 @@ static void MainTask( GFL_TCB * tcb, void * work )
 //--------------------------------------------------------------------------------------------
 static void MainTaskTcbl(  GFL_TCBL * tcbl, void * work )
 {
-	TIMEICON_WORK * wk = work;
-	MainTaskCore( wk );
+	TIMEICON_Main( work );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -284,9 +285,11 @@ static void MainTaskTcbl(  GFL_TCBL * tcbl, void * work )
  * @param		wk		ワーク
  *
  * @return	none
+ *
+ * @li	セーブ消去など、TCBが動かない場合のみ、外部から直接呼んでください。
  */
 //--------------------------------------------------------------------------------------------
-static void MainTaskCore( TIMEICON_WORK * wk )
+void TIMEICON_Main( TIMEICON_WORK * wk )
 {
 	if( wk->flg == FALSE ){ return; }
 
@@ -309,4 +312,3 @@ static void MainTaskCore( TIMEICON_WORK * wk )
 		wk->cnt--;
 	}
 }
-

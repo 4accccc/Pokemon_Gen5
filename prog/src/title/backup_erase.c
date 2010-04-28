@@ -17,6 +17,7 @@
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
 #include "system/bmp_menu.h"
+#include "system/time_icon.h"
 #include "gamesystem/msgspeed.h"
 #include "sound/pm_sndsys.h"
 #include "print/printsys.h"
@@ -132,6 +133,9 @@ const GFL_PROC_DATA BACKUP_ERASE_ProcData = {
   BackupEraseProc_Main,
   BackupEraseProc_End,
 };
+
+static TIMEICON_WORK * TimeIconWork = NULL;		// タイマーアイコンのワーク
+
 
 //--------------------------------------------------------------
 //  
@@ -372,6 +376,22 @@ static void MainSeq_CheckYesNo( BACKUP_ERASE_WORK * wk, int * seq )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		タイマーアイコンメイン
+ *
+ * @param		none
+ *
+ * @return	none
+ *
+ * @li	VBLANKで処理します
+ */
+//--------------------------------------------------------------------------------------------
+static void VIntrFunc_TimeIcon(void)
+{
+	TIMEICON_Main( TimeIconWork );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		メインシーケンス：「消去ています」表示待ち
  *
  * @param		wk			セーブ初期化ワーク
@@ -385,6 +405,11 @@ static void MainSeq_ActionMessage( BACKUP_ERASE_WORK * wk, int * seq )
 	if( MainMessage( wk ) == FALSE ){
 		SAVE_CONTROL_WORK * sv;
 		u32	i;
+
+		TimeIconWork = TIMEICON_Create( NULL, wk->win, 15, TIMEICON_DEFAULT_WAIT, HEAPID_BACKUP_ERASE );
+		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->win) );
+		GFUser_SetVIntrFunc( VIntrFunc_TimeIcon );
+
 		sv = SaveControl_GetPointer();
 		{
       GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
@@ -398,6 +423,9 @@ static void MainSeq_ActionMessage( BACKUP_ERASE_WORK * wk, int * seq )
 			}
 			SaveControl_Extra_Unload( sv, i );
 		}
+
+		GFUser_ResetVIntrFunc();	// 消しておく
+
 		OS_ResetSystem(0);		// セーブ読み込み状況を更新する為、ソフトリセットする
 
 //		*seq = MAINSEQ_FADEOUT;		// リセットされるのでいらない。
