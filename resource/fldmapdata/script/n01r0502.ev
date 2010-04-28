@@ -191,7 +191,6 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	
 	//ボクが　のぞむのは　ポケモンだけの　せかい
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_01w, msg_n01r0502_boss_01_01b, N01R0502_BOSS_01, POS_DEFAULT )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 	//自機にカメラを戻す
@@ -214,7 +213,6 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	//========================================/
 
 EVENT_END
-
 
 //--------------------------------------------------------------------
 //		カメラ移動
@@ -266,20 +264,87 @@ EVENT_START		ev_pos_n01r0502_lastbtl_02
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last2 )
 	_OBJ_ANIME_WAIT()
 	
-	//ほら　キミが　てにいれた
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, POS_DEFAULT )
-	_LAST_KEYWAIT()
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,30 )	//一番最後の引数は移動にかかるフレーム数
+
+	//Ｎ：横向き
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_slow_r )
+	_OBJ_ANIME_WAIT()
+
+	_TIME_WAIT(30)
+
+	//ボクは　すこしだけ　キミのことを　きにいっていたのかも
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_03w, msg_n01r0502_boss_03b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
+	
+	//Ｎ:自機のほうを見る
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_turn )
+	_OBJ_ANIME_WAIT()
+
+	//首振りアニメ
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_kubi )
+	_OBJ_ANIME_WAIT()
+
+	//だけど　ちがった　いま　すごく　ガッカリしているよ
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04w, msg_n01r0502_boss_04b, N01R0502_BOSS_01, POS_DEFAULT )
+	
+	//キミに　できることは　２つ！
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//両手アニメ
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_hand )
+	_OBJ_ANIME_WAIT()
+
+	//おいで　シン！/ム！
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05w, msg_n01r0502_boss_05b, N01R0502_BOSS_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//シンとムの鳴き声
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_VOICE_PLAY( MONSNO_650, 0 )
+		ELSE
+			_VOICE_PLAY( MONSNO_651, 0 )
+		ENDIF
+			_VOICE_WAIT()
+}
 
 	//========================================/
 	
-	//WKを２にする
-	$WK_SCENE_N01R0502 = 2
-	
-	//ライトストーンの使用を許可する
-	$WK_SYS_N01R0502_ITEMUSE = 1
-	
+	//最終イベント４終了・ライトストーンイベント終了
+	$WK_SCENE_N01R0502 = 3
+	$WK_SYS_N01R0502_ITEMUSE = 3
+		
 	//========================================/
+
+	//デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ
+	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
+
+	//謁見の間、水が干上がった状態のマップに変更
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_COME_W )
+		ELSE
+			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_COME_B )
+		ENDIF
+
+}
+	//フラグリセット
+	_FLAG_RESET( FV_N01R0502_LEGEND_01 )
+
+	_OBJ_ADD( N01R0502_WKOBJCODE00_01 )
+	
+	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 
 EVENT_END
 //--------------------------------------------------------------------
@@ -316,7 +381,7 @@ _ANIME_LABEL	anm_player_last18
 /*	最終イベント３	WK_SCENE_N01R0502=2起動					*/
 /************************************************************/
 EVENT_START	ev_pos_n01r0502_lastbtl_03
-
+/*
 	DEFINE_LOCAL	LWK_DIR
 
 	//Ｎ：その場足踏み
@@ -343,7 +408,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_03
 }
 	
 	_OBJ_ANIME_WAIT()
-
+*/
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -385,7 +450,7 @@ _ANIME_LABEL	anm_last3_l
 /************************************************************/
 //WK_SYS_N01R0502_ITEMUSEが=2の時に起動
 EVENT_START		ev_scene_n01r0502_lastbtl_04
-
+/*
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
@@ -467,7 +532,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	$WK_SYS_N01R0502_ITEMUSE = 3
 		
 	//========================================/
-	
+*/
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -568,6 +633,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 
 	//Ｎ後ずさり
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_back )
+	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_gutari )
 	_OBJ_ANIME_WAIT()
 
 	_CAMERA_START()		//カメラ操作開始
@@ -783,6 +849,7 @@ EVENT_END
 /************************************************************/
 EVENT_START		ev_n01r0502_wkobjcode01_01
 _TALK_START_TURN_NOT()
+DEFINE_LOCAL	LWK_DIR
 
 {	
 	//自機：一歩前に戻る
