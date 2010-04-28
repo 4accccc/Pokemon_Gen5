@@ -178,12 +178,12 @@ _ANIME_LABEL	anm_stay_walk_r
 //ハンサム：七賢人の横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_handsome_come_01a
-	_ANIME_DATA	AC_WALK_D_8F,11
+	_ANIME_DATA	AC_WALK_D_4F,11
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_handsome_come_01b
-	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	AC_WALK_D_4F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
