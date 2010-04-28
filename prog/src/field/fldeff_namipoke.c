@@ -302,8 +302,12 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_SetMMdl( FLDEFF_CTRL *fectrl,
 //--------------------------------------------------------------
 void FLDEFF_NAMIPOKE_SetJointFlag( FLDEFF_TASK *task, NAMIPOKE_JOINT flag )
 {
-  TASKWORK_NAMIPOKE *work = FLDEFF_TASK_GetWork( task );
-  work->joint = flag;
+  if( task != NULL ){
+    TASKWORK_NAMIPOKE *work = FLDEFF_TASK_GetWork( task );
+    work->joint = flag;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -316,11 +320,15 @@ void FLDEFF_NAMIPOKE_SetJointFlag( FLDEFF_TASK *task, NAMIPOKE_JOINT flag )
 //--------------------------------------------------------------
 void FLDEFF_NAMIPOKE_SetRippleEffect( FLDEFF_TASK *task, BOOL flag )
 {
-  TASKWORK_NAMIPOKE *work = FLDEFF_TASK_GetWork( task );
-  if( flag == TRUE ){
-    work->ripple_off = FALSE;
+  if( task != NULL ){
+    TASKWORK_NAMIPOKE *work = FLDEFF_TASK_GetWork( task );
+    if( flag == TRUE ){
+      work->ripple_off = FALSE;
+    }else{
+      work->ripple_off = TRUE;
+    }
   }else{
-    work->ripple_off = TRUE;
+    GF_ASSERT( 0 );
   }
 }
 
@@ -1044,8 +1052,12 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_EFFECT_SetEffectAlone( FLDEFF_CTRL *fectrl,
 //--------------------------------------------------------------
 BOOL FLDEFF_NAMIPOKE_EFFECT_CheckTaskEnd( const FLDEFF_TASK *task )
 {
-  TASKWORK_NAMIPOKE_EFFECT *work = FLDEFF_TASK_GetWork( (FLDEFF_TASK*)task );
-  return( work->end_flag );
+  if( task != NULL ){
+    TASKWORK_NAMIPOKE_EFFECT *work = FLDEFF_TASK_GetWork( (FLDEFF_TASK*)task );
+    return( work->end_flag );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------

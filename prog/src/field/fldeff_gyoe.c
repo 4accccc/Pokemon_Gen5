@@ -199,7 +199,7 @@ void DEBUG_SetGyoeZoffs( FLDEFF_CTRL *fectrl, u32 value )
 /**
  * 動作モデル用びっくりマークエフェクト　追加
  * @param mmdl MMDL
- * @param FLDEFF_CTRL*
+  @param FLDEFF_CTRL*
  * @retval FLDEFF_TASK*
  */
 //--------------------------------------------------------------
@@ -264,8 +264,13 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdlNonDepend( FLDEFF_CTRL *fectrl,
 //--------------------------------------------------------------
 BOOL FLDEFF_GYOE_CheckEnd( FLDEFF_TASK *task )
 {
-  TASKWORK_GYOE *work = FLDEFF_TASK_GetWork( task );
-  return( work->end_flag );
+  if( task != NULL ){
+    TASKWORK_GYOE *work = FLDEFF_TASK_GetWork( task );
+    return( work->end_flag );
+  }
+  
+  GF_ASSERT( 0 );
+  return( TRUE );
 }
 
 //--------------------------------------------------------------

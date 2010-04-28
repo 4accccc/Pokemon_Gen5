@@ -201,9 +201,13 @@ FLDEFF_TASK * FLDEFF_HIDE_SetMMdl(
 //--------------------------------------------------------------
 void FLDEFF_HIDE_SetAnime( FLDEFF_TASK *task )
 {
-  TASKWORK_HIDE *work = FLDEFF_TASK_GetWork( task );
-  work->anm_flag = TRUE;
-  PMSND_PlaySE( data_PullOffSeTbl[work->head.hide_type] );
+  if( task != NULL ){
+    TASKWORK_HIDE *work = FLDEFF_TASK_GetWork( task );
+    work->anm_flag = TRUE;
+    PMSND_PlaySE( data_PullOffSeTbl[work->head.hide_type] );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -215,8 +219,13 @@ void FLDEFF_HIDE_SetAnime( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 BOOL FLDEFF_HIDE_CheckAnime( FLDEFF_TASK *task )
 {
-  TASKWORK_HIDE *work = FLDEFF_TASK_GetWork( task );
-  return( work->anm_end_flag );
+  if( task != NULL ){
+    TASKWORK_HIDE *work = FLDEFF_TASK_GetWork( task );
+    return( work->anm_end_flag );
+  }
+    
+  GF_ASSERT( 0 );
+  return( TRUE );
 }
 
 //--------------------------------------------------------------

@@ -464,8 +464,12 @@ FLDEFF_TASK* FLDEFF_ENCOUNT_SetEffect( FIELD_ENCOUNT* fld_enc, FLDEFF_CTRL *fect
 //--------------------------------------------------------------
 void FLDEFF_ENCOUNT_AnmPauseSet( FLDEFF_TASK* task, BOOL pause_f )
 {
-  TASKWORK_ENCOUNT *work = (TASKWORK_ENCOUNT*)FLDEFF_TASK_GetWork( task );
-  work->anm_pause_f = pause_f;
+  if( task != NULL ){
+    TASKWORK_ENCOUNT *work = (TASKWORK_ENCOUNT*)FLDEFF_TASK_GetWork( task );
+    work->anm_pause_f = pause_f;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------

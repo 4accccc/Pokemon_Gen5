@@ -481,7 +481,10 @@ void FLDEFF_CTRL_SetTaskParam( FLDEFF_CTRL *fectrl, u32 max )
  * @param add_param タスクに渡す任意のパラメタ
  * @param add_ptr タスクに渡す任意のポインタ
  * @param pri タスク動作時のTCBプライオリティ
- * @retval FLDEFF_TASK*
+ * @retval FLDEFF_TASK* NULL=タスク満杯の為、追加出来なかった。
+ *
+ * @attention 呼び出し側は戻り値NULL(追加不可)でも動く様、考慮して下さい。
+ * 
  * @note 追加時にヘッダー指定の初期化関数が呼ばれる。
  * add_paramはFLDEFF_TASK_GetAddParam()で取得。
  * add_ptrはFLDEFF_TASK_GetAddPointer()で取得。
@@ -614,7 +617,10 @@ void FLDEFF_TASKSYS_Draw( FLDEFF_TASKSYS *tasksys )
  * @param add_param タスクに渡す任意のパラメタ
  * @param add_ptr タスクに渡す任意のポインタ
  * @param pri タスク動作時のTCBプライオリティ
- * @retval FLDEFF_TASK*
+ * @retval FLDEFF_TASK* NULL=タスク満杯の為、追加出来なかった。
+ *
+ * @attention 呼び出し側は戻り値NULL(追加不可)でも動く様、考慮して下さい。
+ *
  * @note 追加時にヘッダー指定の初期化関数が呼ばれる。
  * add_paramはFLDEFF_TASK_GetAddParam()で取得。
  * add_ptrはFLDEFF_TASK_GetAddPointer()で取得。
@@ -651,9 +657,13 @@ FLDEFF_TASK * FLDEFF_TASKSYS_AddTask(
     task++;
   }while( i < tasksys->max );
   
-  GF_ASSERT( i < tasksys->max && "ERROR FLDEFF_TASKSYS MAX\n" );
-  FLDEFF_TASK_CallInit( task );
-  return( task );
+  if( i < tasksys->max ){
+    FLDEFF_TASK_CallInit( task );
+    return( task );
+  }
+  
+  GF_ASSERT( 0 && "ERROR FLDEFF_TASKSYS MAX\n" );
+  return( NULL );
 }
 
 //--------------------------------------------------------------
@@ -682,9 +692,12 @@ static void fetask_ProcTCB( GFL_TCB *tcb, void *wk )
 //--------------------------------------------------------------
 void FLDEFF_TASK_CallInit( FLDEFF_TASK *task )
 {
-  GF_ASSERT( task->flag );
-  GF_ASSERT( task != NULL );
-  task->header.proc_init( task, task->work );
+  if( task != NULL ){
+    GF_ASSERT( task->flag );
+    task->header.proc_init( task, task->work );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -696,11 +709,14 @@ void FLDEFF_TASK_CallInit( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 void FLDEFF_TASK_CallDelete( FLDEFF_TASK *task )
 {
-  GF_ASSERT( task->flag );
-  GF_ASSERT( task != NULL );
-  task->header.proc_delete( task, task->work );
-  GFL_TCB_DeleteTask( task->tcb );
-  task->flag = 0;
+  if( task != NULL ){
+    GF_ASSERT( task->flag );
+    task->header.proc_delete( task, task->work );
+    GFL_TCB_DeleteTask( task->tcb );
+    task->flag = 0;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -712,9 +728,12 @@ void FLDEFF_TASK_CallDelete( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 void FLDEFF_TASK_CallUpdate( FLDEFF_TASK *task )
 {
-  GF_ASSERT( task->flag );
-  GF_ASSERT( task != NULL );
-  task->header.proc_update( task, task->work );
+  if( task != NULL ){
+    GF_ASSERT( task->flag );
+    task->header.proc_update( task, task->work );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -726,10 +745,13 @@ void FLDEFF_TASK_CallUpdate( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 void FLDEFF_TASK_CallDraw( FLDEFF_TASK *task )
 {
-  GF_ASSERT( task->flag );
-  GF_ASSERT( task != NULL );
-  GF_ASSERT( task->work );
-  task->header.proc_draw( task, task->work );
+  if( task != NULL ){
+    GF_ASSERT( task->flag );
+    GF_ASSERT( task->work );
+    task->header.proc_draw( task, task->work );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -741,7 +763,12 @@ void FLDEFF_TASK_CallDraw( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 u32 FLDEFF_TASK_GetAddParam( const FLDEFF_TASK *task )
 {
-  return( task->add_param );
+  if( task != NULL ){
+    return( task->add_param );
+  }
+
+  GF_ASSERT( 0 );
+  return( 0 );
 }
 
 //--------------------------------------------------------------
@@ -753,7 +780,12 @@ u32 FLDEFF_TASK_GetAddParam( const FLDEFF_TASK *task )
 //--------------------------------------------------------------
 const void * FLDEFF_TASK_GetAddPointer( const FLDEFF_TASK *task )
 {
-  return( task->add_ptr );
+  if( task != NULL ){
+    return( task->add_ptr );
+  }
+  
+  GF_ASSERT( 0 );
+  return( 0 );
 }
 
 //--------------------------------------------------------------
@@ -766,7 +798,11 @@ const void * FLDEFF_TASK_GetAddPointer( const FLDEFF_TASK *task )
 //--------------------------------------------------------------
 void FLDEFF_TASK_GetPos( const FLDEFF_TASK *task, VecFx32 *pos )
 {
-  *pos = task->pos;
+  if( task != NULL ){
+    *pos = task->pos;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -779,7 +815,11 @@ void FLDEFF_TASK_GetPos( const FLDEFF_TASK *task, VecFx32 *pos )
 //--------------------------------------------------------------
 void FLDEFF_TASK_SetPos( FLDEFF_TASK *task, const VecFx32 *pos )
 {
-  task->pos = *pos;
+  if( task != NULL ){
+    task->pos = *pos;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -791,7 +831,12 @@ void FLDEFF_TASK_SetPos( FLDEFF_TASK *task, const VecFx32 *pos )
 //--------------------------------------------------------------
 void * FLDEFF_TASK_GetWork( FLDEFF_TASK *task )
 {
-  return( task->work );
+  if( task != NULL ){
+    return( task->work );
+  }else{
+    GF_ASSERT( 0 );
+    return( NULL );
+  }
 }
 
 //--------------------------------------------------------------
@@ -803,7 +848,12 @@ void * FLDEFF_TASK_GetWork( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
 {
-  return( task->tasksys->heapID );
+  if( task != NULL ){
+    return( task->tasksys->heapID );
+  }
+  
+  GF_ASSERT( 0 );
+  return( 0 );
 }
 
 //======================================================================

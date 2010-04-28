@@ -413,8 +413,12 @@ FLDEFF_TASK * FLDEFF_D06DENKI_BIGSTONE_Add(
 //--------------------------------------------------------------
 void FLDEFF_D06DENKI_BIGSTONE_OFFShakeV( FLDEFF_TASK *task )
 {
-  TASKWORK_BIGSTONE *work = FLDEFF_TASK_GetWork( task );
-  work->off_flag_shakeV = TRUE;
+  if( task != NULL ){
+    TASKWORK_BIGSTONE *work = FLDEFF_TASK_GetWork( task );
+    work->off_flag_shakeV = TRUE;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -426,24 +430,33 @@ void FLDEFF_D06DENKI_BIGSTONE_OFFShakeV( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 void FLDEFF_D06DENKI_BIGSTONE_ONShakeH( FLDEFF_TASK *task )
 {
-  int frame = 0;
-  TASKWORK_BIGSTONE *work = FLDEFF_TASK_GetWork( task );
-  work->set_flag_shakeH = TRUE;
-  work->end_flag_shakeH = FALSE;
-	GFL_G3D_OBJECT_SetAnimeFrame( work->obj, 1, &frame );
+  if( task != NULL ){
+    int frame = 0;
+    TASKWORK_BIGSTONE *work = FLDEFF_TASK_GetWork( task );
+    work->set_flag_shakeH = TRUE;
+    work->end_flag_shakeH = FALSE;
+	  GFL_G3D_OBJECT_SetAnimeFrame( work->obj, 1, &frame );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
 /**
  * 大きな浮遊石　横揺れ終了チェック
  * @param task FLDEFF_TASK*
- * @retval nothing
+ * @retval BOOL TRUE=終了
  */
 //--------------------------------------------------------------
 BOOL FLDEFF_D06DENKI_BIGSTONE_CheckShakeH( FLDEFF_TASK *task )
 {
-  TASKWORK_BIGSTONE *work = FLDEFF_TASK_GetWork( task );
-  return( (BOOL)work->end_flag_shakeH );
+  if( task != NULL ){
+    TASKWORK_BIGSTONE *work = FLDEFF_TASK_GetWork( task );
+    return( (BOOL)work->end_flag_shakeH );
+  }
+  
+  GF_ASSERT( 0 );
+  return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -616,11 +629,13 @@ FLDEFF_TASK * FLDEFF_D06DENKI_MINISTONE_Add(
 //--------------------------------------------------------------
 void FLDEFF_D06DENKI_MINISTONE_SetShake( FLDEFF_TASK *task )
 {
-  TASKWORK_MINISTONE *work = FLDEFF_TASK_GetWork( task );
-  if( work->set_flag_shake == FALSE ){
-    int frame = 0;
-    work->set_flag_shake = TRUE;
-	  GFL_G3D_OBJECT_SetAnimeFrame( work->obj, 1, &frame );
+  if( task != NULL ){
+    TASKWORK_MINISTONE *work = FLDEFF_TASK_GetWork( task );
+    if( work->set_flag_shake == FALSE ){
+      int frame = 0;
+      work->set_flag_shake = TRUE;
+	    GFL_G3D_OBJECT_SetAnimeFrame( work->obj, 1, &frame );
+    }
   }
 }
 

@@ -232,27 +232,31 @@ FLDEFF_TASK * FLDEFF_BTRAIN_SetTrain(
 void FLDEFF_BTRAIN_SetAnime(
     FLDEFF_TASK *task, FLDEFF_BTRAIN_ANIME_TYPE type )
 {
-  int i;
-  TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
+  if( task != NULL ){
+    int i;
+    TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
   
-  GF_ASSERT( type < FLDEFF_BTRAIN_ANIME_TYPE_MAX );
+    GF_ASSERT( type < FLDEFF_BTRAIN_ANIME_TYPE_MAX );
   
-  for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
-	  GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, i ); //無条件リセット
+    for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
+	    GFL_G3D_OBJECT_ResetAnimeFrame( work->obj, i ); //無条件リセット
     
-    if( i == type ){
-      GFL_G3D_OBJECT_EnableAnime( work->obj, i );
-    }else{
-      GFL_G3D_OBJECT_DisableAnime( work->obj, i );
+      if( i == type ){
+        GFL_G3D_OBJECT_EnableAnime( work->obj, i );
+      }else{
+        GFL_G3D_OBJECT_DisableAnime( work->obj, i );
+      }
     }
+  
+    work->anm_type = type;
+    work->anm_end = FALSE;
+  
+    #ifdef DEBUG_ONLY_FOR_kagaya
+    work->debugAnimeFrame = 0;
+    #endif
+  }else{
+    GF_ASSERT( 0 );
   }
-  
-  work->anm_type = type;
-  work->anm_end = FALSE;
-  
-#ifdef DEBUG_ONLY_FOR_kagaya
-  work->debugAnimeFrame = 0;
-#endif
 }
 
 //--------------------------------------------------------------
@@ -260,13 +264,18 @@ void FLDEFF_BTRAIN_SetAnime(
  * バトルトレイン　アニメ終了取得
  * @param task FLDEFF_TASK
  * @param type FLDEFF_BTRAIN_ANIME_TYPE
- * @retval nothing
+ * @retval BOOL TRUE=終了
  */
 //--------------------------------------------------------------
 BOOL FLDEFF_BTRAIN_CheckAnimeEnd( FLDEFF_TASK *task )
 {
-  TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
-  return( work->anm_end );
+  if( task != NULL ){
+    TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
+    return( work->anm_end );
+  }
+  
+  GF_ASSERT( 0 );
+  return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -279,8 +288,12 @@ BOOL FLDEFF_BTRAIN_CheckAnimeEnd( FLDEFF_TASK *task )
 //--------------------------------------------------------------
 void FLDEFF_BTRAIN_SetVanishFlag( FLDEFF_TASK *task, BOOL flag )
 {
-  TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
-  work->vanish = flag;
+  if( task != NULL ){
+    TASKWORK_BTRAIN *work = FLDEFF_TASK_GetWork( task );
+    work->vanish = flag;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------

@@ -207,10 +207,14 @@ FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos, u8 dir
 //--------------------------------------------------------------
 void FLDEFF_FISHING_LURE_ChangeAnime( FLDEFF_TASK* task, FISHING_LURE_ANM_ID anm_id )
 {
-  TASKWORK_FISHING_LURE *work = (TASKWORK_FISHING_LURE*)FLDEFF_TASK_GetWork( task );
+  if( task != NULL ){
+    TASKWORK_FISHING_LURE *work = (TASKWORK_FISHING_LURE*)FLDEFF_TASK_GetWork( task );
 
-  work->anm_change_req = TRUE;
-  work->anm_id = anm_id;
+    work->anm_change_req = TRUE;
+    work->anm_id = anm_id;
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
