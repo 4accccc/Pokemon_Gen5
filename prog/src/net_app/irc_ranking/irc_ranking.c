@@ -366,6 +366,7 @@ typedef struct
   const RANKING_ONE_DATA *cp_data;
   GFL_BMP_DATA  *p_bmp;     //フォントデータ  文字バッファ
   GFL_CLWK      *p_icon[ CLSYS_DEFREND_NUM ];    //ポケモンアイコン
+  s16           icon_init_pos[ CLSYS_DEFREND_NUM ];
   u32           chr_idx;    //ポケアイコンリソース
   u32           cel_idx;    //ポケアイコンリソース
   BAR_BUFF      *p_buff;
@@ -569,7 +570,7 @@ static void Scroll_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs );
 static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, GFL_CLUNIT *p_clunit, u32 icon_plt_idx_m, u32 icon_plt_idx_s, GFL_MSGDATA	*p_msg, GFL_FONT *p_font, WORDSET *p_wordset, BAR_BUFF *p_bar, s16 icon_pos_m, s16 icon_pos_s, HEAPID heapID );
 static void RANKBAR_Exit( RANKBAR_WORK *p_wk );
 static void RANKBAR_Trans( RANKBAR_WORK *p_wk, GFL_BMPWIN *p_font_bmpwin, u8 bar_frm, u16 y );
-static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 add_y );
+static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 bg_y );
 //-------------------------------------
 ///	BAR_BUFF
 //=====================================
@@ -1969,7 +1970,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 	//移動制限
 	p_wk->y								= 0;
 	p_wk->top_limit_y			= 0;
-	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ+2;
+	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ-56;
 	p_wk->bottom_limit_y	= MATH_IMax( 0, p_wk->bottom_limit_y );
 
 
@@ -2132,7 +2133,7 @@ static void SCROLL_AddPos( SCROLL_WORK *p_wk, s16 y )
     int i;
     for( i = 0; i < p_wk->data_len; i++ )
     {	
-      RANKBAR_Move( &p_wk->rankbar[ i ], -icon_add );
+      RANKBAR_Move( &p_wk->rankbar[ i ], p_wk->y );
     }
   }
 		
@@ -2462,6 +2463,7 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
         cldata.pos_y  = icon_pos_s;
         plt_idx = icon_plt_idx_s;
       }
+      p_wk->icon_init_pos[i]  = cldata.pos_y;
       p_wk->p_icon[i]  = GFL_CLACT_WK_Create( p_clunit,
           p_wk->chr_idx,
           plt_idx,
@@ -2539,14 +2541,18 @@ static void RANKBAR_Trans( RANKBAR_WORK *p_wk, GFL_BMPWIN *p_font_bmpwin, u8 bar
  *	@param	RANKBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 add_y )
+static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 bg_y )
 { 
   int i;
   GFL_CLACTPOS pos;
+  int bg_pos[2];
+
+  bg_pos[0] = -bg_y;//- (bg_y + SCROLL_MARGIN_SIZE_Y_M);
+  bg_pos[1] = -bg_y;//- (bg_y + SCROLL_MARGIN_SIZE_Y_S);
   for( i = 0; i < CLSYS_DRAW_MAX; i++ )
   { 
     GFL_CLACT_WK_GetPos( p_wk->p_icon[i], &pos, i );
-    pos.y += add_y;
+    pos.y = bg_pos[i] + p_wk->icon_init_pos[ i ];
     GFL_CLACT_WK_SetPos( p_wk->p_icon[i], &pos, i );
     if( -16 < pos.y && pos.y < 192 + 16 )
     { 
