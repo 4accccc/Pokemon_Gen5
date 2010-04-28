@@ -17,7 +17,7 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/arc_def.h"
-#include "arc/h01.naix"
+#include "arc/fieldmap/r04d03_gmk.naix"
 #include "gmk_tmp_wk.h"
 
 #include "field_gimmick_r04d03_se_def.h"
@@ -25,7 +25,7 @@
 #include "../../../resource/fldmapdata/gimmick/r04d03/gimmick_se_range_def.h"
 
 #define EXPOBJ_UNIT_IDX (0)
-#define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
+#define ARCID (ARCID_R04D03_GMK) // ギミックデータのアーカイブID
 #define R04D03_TMP_ASSIGN_ID  (1)
 
 #define TRAILER_TAIL_OFS (6*FIELD_CONST_GRID_FX32_SIZE)
@@ -50,6 +50,10 @@
 
 #define TRAILER1_WAIT (30)
 #define TRAILER2_WAIT (0)
+#define WAIT_BAND (30)
+
+//トレーラーの種類
+#define TRAILER_TYPE_MAX  (3)
 
 //==========================================================================================
 // ■ギミックワーク
@@ -57,7 +61,8 @@
 typedef struct GNK_OBJ_tag
 {
   int Frame;
-  int Wait;
+  u16 Wait;
+  u16 Obj;
   BOOL SeFlg;
 }GMK_OBJ;
 
@@ -74,13 +79,23 @@ typedef struct
 typedef enum {
   RES_TRAILER_HEAD_NSBMD,  // トレーラー(前)のモデル
   RES_TRAILER_TAIL_NSBMD,  // トレーラー(後)のモデル
+  RES_TRAILER_B_HEAD_NSBMD,  // トレーラーB(前)のモデル
+  RES_TRAILER_B_TAIL_NSBMD,  // トレーラーB(後)のモデル
+  RES_TRAILER_C_HEAD_NSBMD,  // トレーラーC(前)のモデル
+  RES_TRAILER_C_TAIL_NSBMD,  // トレーラーC(後)のモデル
+
   RES_NUM
 } RES_INDEX;
 
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
-  { ARCID, NARC_h01_trailer_01a_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(前)のモデル
-  { ARCID, NARC_h01_trailer_01b_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(後)のモデル
+  { ARCID, NARC_r04d03_gmk_trailer_01a_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(前)のモデル
+  { ARCID, NARC_r04d03_gmk_trailer_01b_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(後)のモデル
+  { ARCID, NARC_r04d03_gmk_trailer_02a_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラーB(前)のモデル
+  { ARCID, NARC_r04d03_gmk_trailer_02b_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラーB(後)のモデル
+  { ARCID, NARC_r04d03_gmk_trailer_03a_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラーC(前)のモデル
+  { ARCID, NARC_r04d03_gmk_trailer_03b_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラーC(後)のモデル
+
 };
 
 // オブジェクト
@@ -89,6 +104,14 @@ typedef enum {
   OBJ_TRAILER_1_TAIL,  // トレーラー1(後) 左から右
   OBJ_TRAILER_2_HEAD,  // トレーラー2(前) 右から左
   OBJ_TRAILER_2_TAIL,  // トレーラー2(後) 右から左
+  OBJ_TRAILER_B1_HEAD,  // トレーラーB1(前) 左から右
+  OBJ_TRAILER_B1_TAIL,  // トレーラーB1(後) 左から右
+  OBJ_TRAILER_B2_HEAD,  // トレーラーB2(前) 右から左
+  OBJ_TRAILER_B2_TAIL,  // トレーラーB2(後) 右から左
+  OBJ_TRAILER_C1_HEAD,  // トレーラーC1(前) 左から右
+  OBJ_TRAILER_C1_TAIL,  // トレーラーC1(後) 左から右
+  OBJ_TRAILER_C2_HEAD,  // トレーラーC2(前) 右から左
+  OBJ_TRAILER_C2_TAIL,  // トレーラーC2(後) 右から左
   OBJ_NUM
 } OBJ_INDEX;
 
@@ -98,6 +121,15 @@ static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] =
   { RES_TRAILER_TAIL_NSBMD, 0, RES_TRAILER_TAIL_NSBMD, NULL, 0 },  // トレーラー1(後)
   { RES_TRAILER_HEAD_NSBMD, 0, RES_TRAILER_HEAD_NSBMD, NULL, 0 },  // トレーラー2(前)
   { RES_TRAILER_TAIL_NSBMD, 0, RES_TRAILER_TAIL_NSBMD, NULL, 0 },  // トレーラー2(後)
+  { RES_TRAILER_B_HEAD_NSBMD, 0, RES_TRAILER_B_HEAD_NSBMD, NULL, 0 },  // トレーラーB1(前)
+  { RES_TRAILER_B_TAIL_NSBMD, 0, RES_TRAILER_B_TAIL_NSBMD, NULL, 0 },  // トレーラーB1(後)
+  { RES_TRAILER_B_HEAD_NSBMD, 0, RES_TRAILER_B_HEAD_NSBMD, NULL, 0 },  // トレーラーB2(前)
+  { RES_TRAILER_B_TAIL_NSBMD, 0, RES_TRAILER_B_TAIL_NSBMD, NULL, 0 },  // トレーラーB2(後)
+  { RES_TRAILER_C_HEAD_NSBMD, 0, RES_TRAILER_C_HEAD_NSBMD, NULL, 0 },  // トレーラーC1(前)
+  { RES_TRAILER_C_TAIL_NSBMD, 0, RES_TRAILER_C_TAIL_NSBMD, NULL, 0 },  // トレーラーC1(後)
+  { RES_TRAILER_C_HEAD_NSBMD, 0, RES_TRAILER_C_HEAD_NSBMD, NULL, 0 },  // トレーラーC2(前)
+  { RES_TRAILER_C_TAIL_NSBMD, 0, RES_TRAILER_C_TAIL_NSBMD, NULL, 0 },  // トレーラーC2(後)
+
 };
 
 // セットアップ情報
@@ -105,7 +137,7 @@ static GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
 
 
 static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap );
-
+static void InitWorkCore( GMK_WORK* work, FIELDMAP_WORK* fieldmap, int obj_head, int obj_tail );
 //------------------------------------------------------------------------------------------
 /**
  * @brief 初期化関数
@@ -201,24 +233,27 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   }
   else
   {
+    int obj = OBJ_TRAILER_1_HEAD + gmkobj->Obj*4;
     gmkobj->Frame++;
     frame = &gmkobj->Frame;
     { // トレーラー1(前)左から右に移動
       GFL_G3D_OBJSTATUS* status;
-      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj );
       status->trans.x = TRAILER_LEFT_X + TRAILER_SPEED * (*frame);
       if ( status->trans.x >= TRAILER_RIGHT_X)
       {
         (*frame) = 0;
         work->GmkObj[0].SeFlg = FALSE;
         //次の発射までウェイト
-        gmkobj->Wait = TRAILER1_WAIT;
+        gmkobj->Wait = TRAILER1_WAIT+GFUser_GetPublicRand(WAIT_BAND);
+        //次のトレーラー抽選
+        gmkobj->Obj = GFUser_GetPublicRand(TRAILER_TYPE_MAX);
       }
       tr1_x = status->trans.x;
     }
     { // トレーラー1(後)左から右に移動
       GFL_G3D_OBJSTATUS* status;
-      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj+1 );
       status->trans.x = TRAILER_TAIL_LEFT_X + TRAILER_SPEED * (*frame);
       if ( status->trans.x >= TRAILER_RIGHT_X) (*frame) = 0;
     }
@@ -230,24 +265,27 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     gmkobj->Wait--;
   }
   else{
+    int obj = OBJ_TRAILER_2_HEAD + gmkobj->Obj*4;
     gmkobj->Frame++;
     frame = &gmkobj->Frame;
     { // トレーラー2(前)右から左に移動
       GFL_G3D_OBJSTATUS* status;
-      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj );
       status->trans.x = TRAILER_RIGHT_X - TRAILER_SPEED * (*frame);
       if ( status->trans.x <= TRAILER_LEFT_X)
       {
         (*frame) = 0;
         work->GmkObj[1].SeFlg = FALSE;
         //次の発射までウェイト
-        gmkobj->Wait = TRAILER2_WAIT;
+        gmkobj->Wait = TRAILER2_WAIT+GFUser_GetPublicRand(WAIT_BAND);
+        //次のトレーラー抽選
+        gmkobj->Obj = GFUser_GetPublicRand(TRAILER_TYPE_MAX);
       }
       tr2_x = status->trans.x;
     }
     { // トレーラー2(後)右から左に移動
       GFL_G3D_OBJSTATUS* status;
-      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj+1 );
       status->trans.x = TRAILER_TAIL_RIGHT_X - TRAILER_SPEED * (*frame);
       if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
     }
@@ -303,6 +341,21 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
 {
+  InitWorkCore( work, fieldmap, OBJ_TRAILER_1_HEAD, OBJ_TRAILER_1_TAIL );
+  InitWorkCore( work, fieldmap, OBJ_TRAILER_B1_HEAD, OBJ_TRAILER_B1_TAIL );
+  InitWorkCore( work, fieldmap, OBJ_TRAILER_C1_HEAD, OBJ_TRAILER_C1_TAIL );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミック管理ワークを初期化する
+ *
+ * @param work     初期化対象ワーク
+ * @param fieldmap 依存するフィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+static void InitWorkCore( GMK_WORK* work, FIELDMAP_WORK* fieldmap, int obj_head, int obj_tail )
+{
   int i;
   HEAPID                heapID = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
@@ -310,7 +363,7 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
   // オブジェクトを作成
   { // トレーラー1(前)
     GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj_head );
     status->trans.x = TRAILER_LEFT_X;
     status->trans.y = TRAILER_Y;
     status->trans.z = TRAILER1_Z;
@@ -321,11 +374,11 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
       MTX_RotY33( &status->rotate, sin, cos );
     }
     //カリングする
-    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD, TRUE);
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, obj_head, TRUE);
   }  
   { // トレーラー1(後)
     GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj_tail );
     status->trans.x = TRAILER_TAIL_LEFT_X;
     status->trans.y = TRAILER_Y;
     status->trans.z = TRAILER1_Z;
@@ -336,11 +389,12 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
       MTX_RotY33( &status->rotate, sin, cos );
     }
     //カリングする
-    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL, TRUE);
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, obj_tail, TRUE);
   }
+
   { // トレーラー2(前)
     GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj_head+2 );
     status->trans.x = TRAILER_RIGHT_X;
     status->trans.y = TRAILER_Y;
     status->trans.z = TRAILER2_Z;
@@ -351,11 +405,11 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
       MTX_RotY33( &status->rotate, sin, cos );
     }
     //カリングする
-    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD, TRUE);
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, obj_head+2, TRUE);
   }  
   { // トレーラー2(後)
     GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj_tail+2 );
     status->trans.x = TRAILER_TAIL_RIGHT_X;
     status->trans.y = TRAILER_Y;
     status->trans.z = TRAILER2_Z;
@@ -366,7 +420,8 @@ static void InitWork( GMK_WORK* work, FIELDMAP_WORK* fieldmap )
       MTX_RotY33( &status->rotate, sin, cos );
     }
     //カリングする
-    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL, TRUE);
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, obj_tail+2, TRUE);
   }
 }
+
 
