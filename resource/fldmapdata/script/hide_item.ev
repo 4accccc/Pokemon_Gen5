@@ -186,6 +186,9 @@ _EVENT_DATA  ev_hide_item_164
 _EVENT_DATA  ev_hide_item_165
 _EVENT_DATA  ev_hide_item_166
 _EVENT_DATA  ev_hide_item_167
+_EVENT_DATA  ev_hide_item_168
+_EVENT_DATA  ev_hide_item_169
+_EVENT_DATA  ev_hide_item_170
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -1027,6 +1030,21 @@ EVENT_END
 EVENT_START ev_hide_item_167
 //８番道路 ( 224, 166 )
 	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_167 )// かいふくのくすり
+EVENT_END
+
+EVENT_START ev_hide_item_168
+//れいとうコンテナ ( 192, 460 )
+	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_168 )// ピーピーマックス
+EVENT_END
+
+EVENT_START ev_hide_item_169
+//れいとうコンテナ ( 202, 456 )
+	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_169 )// すごいキズぐすり
+EVENT_END
+
+EVENT_START ev_hide_item_170
+//まよいのもり ( 23, 33 )
+	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_170 )// きんのたま
 EVENT_END
 
 //--------------------------------------------------------------

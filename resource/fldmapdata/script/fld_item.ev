@@ -493,24 +493,24 @@ EVENT_START ev_fld_item_134
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r03r0302 X=10 Y=11 ITEM=しんぴのしずく FLAG=136
+// MAP=r16r0201 X=27 Y=48 ITEM=ふしぎなアメ FLAG=136
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_136
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r03r0302 X=25 Y=34 ITEM=しんぴのしずく FLAG=137
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_137
   _FLD_ITEM_EVENT ITEM_SINPINOSIZUKU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r03r0302 X=25 Y=34 ITEM=ダイブボール FLAG=137
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_137
-  _FLD_ITEM_EVENT ITEM_DAIBUBOORU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r03r0302 X=15 Y=39 ITEM=なんでもなおし FLAG=138
+// MAP=r03r0302 X=15 Y=39 ITEM=ダイブボール FLAG=138
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_138
-  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+  _FLD_ITEM_EVENT ITEM_DAIBUBOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -927,17 +927,17 @@ EVENT_START ev_fld_item_148
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r06r0201 X=10 Y=3 ITEM=すごいキズぐすり FLAG=149
+// MAP=r06r0201 X=9 Y=3 ITEM=すごいキズぐすり FLAG=149
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_149
   _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r06r0201 X=8 Y=13 ITEM=なんでもなおし FLAG=150
+// MAP=c01 X=748 Y=603 ITEM=モンスターボール FLAG=150
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_150
-  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
