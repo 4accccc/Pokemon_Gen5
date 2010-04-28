@@ -40,10 +40,6 @@
 #include "app/app_nogear_subscreen.h"
 //#include "comm_command_record.h"
 
-// SE用定義
-#define RECORD_MOVE_SE    (SEQ_SE_DP_SELECT)
-#define RECORD_DECIDE_SE  (SEQ_SE_DP_SELECT)
-#define RECORD_BS_SE    (SEQ_SE_DP_SELECT)
 
 #define FIELDOBJ_PAL_START  ( 7 )
 
@@ -2871,7 +2867,7 @@ static void TrainerObjFunc( GURU2RC_WORK *wk )
   
   // 登場SEが必要な場合は鳴らす
   if(seflag){
-    PMSND_PlaySE( SEQ_SE_SELECT2 );  // SE_GTC_APPEAR
+    PMSND_PlaySE( SEQ_SE_FLD_05 );  
   }
 }
 
