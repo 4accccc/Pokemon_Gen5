@@ -113,7 +113,7 @@ static GMEVENT_RESULT _EventCommErrorExit( GMEVENT *event, int *seq, void *wk )
     }
     break;
   case 3:
-    {
+    {//常時通信を起動出来たならばウェイトをセット
       GAME_BEACON_SYS_PTR gbs_ptr = GameCommSys_GetAppWork(game_comm);
       if ( gbs_ptr != NULL && GameCommSys_BootCheck( game_comm ) != GAME_COMM_NO_NULL ){
         GameBeacon_SetErrorWait(gbs_ptr);
