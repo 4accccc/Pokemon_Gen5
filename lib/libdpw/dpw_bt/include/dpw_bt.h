@@ -67,7 +67,7 @@ typedef enum {
 
 //! ポケモンのデータ。データの内容は見知しない
 typedef struct {
-	u8 data[56];		//!< ポケモンのデータ
+	u8 data[60];		//!< ポケモンのデータ
 } Dpw_Bt_PokemonData;
 
 //! リーダーデータ構造体
@@ -92,7 +92,7 @@ typedef struct {
 
 //! プレイヤーデータ構造体
 typedef struct {
-	Dpw_Bt_PokemonData pokemon[3];	//!< ポケモンデータ 56byte*3
+	Dpw_Bt_PokemonData pokemon[3];	//!< ポケモンデータ 60byte*3
 	u16 playerName[8];		//!< プレイヤー名           2*8
 	u8 versionCode;			//!< バージョンコード       1
 	u8 langCode;			//!< 言語コード             1
