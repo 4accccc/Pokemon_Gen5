@@ -48,10 +48,13 @@ static void EggCordinate_waza_parent( const POKEMON_PARAM* father, const POKEMON
 static void EggCordinate_waza_machine( HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg ); // 継承技 ( 技マシン ) セット
 static void EggCordinate_pityuu( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 特殊タマゴ処理 ( ピチュー )
 static void EggCordinate_karanakusi( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 特殊タマゴ処理 ( カラナクシ )
+static void EggCordinate_waza_sort( POKEMON_PARAM* egg ); // 技をソートする
 static void EggCordinate_finish( POKEMON_PARAM* egg, const MYSTATUS* mystatus, int memo, HEAPID heap_id );
 // タマゴ孵化
 static void EggBirth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id ); // タマゴを孵化させる
 // ユーティリティ
+static void PokeWazaLearnByPush( POKEMON_PARAM* poke, u32 wazano ); // 技を押し出し式に覚えさせる ( 重複チェック有 )
+static BOOL CheckWazaHave( const POKEMON_PARAM* poke, u32 wazano ); // 指定した技を持っているかどうかをチェックする
 static BOOL IsWazaMachineAbleToUse( HEAPID heap_id, u16 monsno, u16 formno, u16 itemno ); // 技マシンが使えるかどうかをチェックする
 static u16 GetSeedMonsNo( u16 monsno ); // 種ポケモンを取得する
 // デバッグ
@@ -92,6 +95,7 @@ void POKEMON_EGG_Create(
   EggCordinate_waza_machine( heap_id, father, egg );   // 技 ( 父のマシン技 )
   EggCordinate_pityuu( father, mother, egg );          // 特殊タマゴ ( ピチュー )
   EggCordinate_karanakusi( father, mother, egg );      // 特殊タマゴ ( カラナクシ )
+  EggCordinate_waza_sort( egg );                       // 技ソート
   EggCordinate_finish( egg, mystatus, memo, heap_id ); // 仕上げ
 }
 
@@ -534,7 +538,7 @@ static void EggCordinate_waza_default( POKEMON_PARAM* egg )
     int waza_lv = POKEPER_WAZAOBOE_GetLevel( wazaTable[i] );
     int waza_id = POKEPER_WAZAOBOE_GetWazaID( wazaTable[i] );
     if( level < waza_lv ) { break; }
-    PP_SetWazaPush( egg, waza_id );
+    PokeWazaLearnByPush( egg, waza_id );
     i++;
   }
 
@@ -547,7 +551,7 @@ static void EggCordinate_waza_default( POKEMON_PARAM* egg )
 #endif
 }
 
-//---------------------------------------------------------------------------------------- 
+//----------------------------------------------------------------------------------------
 /**
  * @brief タマゴ技を覚えさせる
  *        タマゴから孵るポケモンのみが覚えられる技のうち, 父ポケモンが覚えている技を習得
@@ -580,7 +584,7 @@ static void EggCordinate_waza_egg(
     for( j=1; j<=kowaza_num; j++ )
     {
       if( wazano == kowaza_table[j] ) {
-        PP_SetWazaPush( egg, wazano );
+        PokeWazaLearnByPush( egg, wazano );
         break;
       }
     }
@@ -660,7 +664,7 @@ static void EggCordinate_waza_parent(
 
     // 両親とも覚えていたら継承する
     if( father_have && mother_have ) {
-      PP_SetWazaPush( egg, wazano );
+      PokeWazaLearnByPush( egg, wazano );
     }
 
     // 次の技へ
@@ -715,7 +719,7 @@ static void EggCordinate_waza_machine(
       // 技マシンがあり, タマゴポケに使用できるなら, 習得する
       if( ( wazano == ITEM_GetWazaNo(itemno) ) &&
           ( IsWazaMachineAbleToUse(heap_id, monsno_egg, formno_egg, itemno) ) ) {
-        PP_SetWazaPush( egg, wazano );
+        PokeWazaLearnByPush( egg, wazano );
         break;
       }
     }
@@ -753,7 +757,7 @@ static void EggCordinate_pityuu(
   // 両親のどちらかが『でんきだま』を持っていたら,『ボルテッカー』を習得
   if( ( PP_Get( father, ID_PARA_item, NULL ) == ITEM_DENKIDAMA ) ||
       ( PP_Get( mother, ID_PARA_item, NULL ) == ITEM_DENKIDAMA ) ) {
-    PP_SetWazaPush( egg, WAZANO_BORUTEKKAA );
+    PokeWazaLearnByPush( egg, WAZANO_BORUTEKKAA );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "POKEMON-EGG: <Pityuu> learn BORUTEKKAA\n" );
@@ -787,6 +791,50 @@ static void EggCordinate_karanakusi(
   OS_TFPrintf( PRINT_TARGET, "POKEMON-EGG: <Karanakusi> derive form[%d]\n", formno );
 #endif 
   }
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 技をソートする
+ *        習得している技を前詰めする
+ *
+ * @param egg  設定するタマゴ
+ */
+//---------------------------------------------------------------------------------------- 
+static void EggCordinate_waza_sort( POKEMON_PARAM* egg )
+{
+  int i, num;
+  u32 wazano[ PTL_WAZA_MAX ]; 
+  u32 id_para[ PTL_WAZA_MAX ] = { ID_PARA_waza1, ID_PARA_waza2, ID_PARA_waza3, ID_PARA_waza4 };
+
+  // 全ての技を取得
+  for( i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    wazano[i] = PP_Get( egg, id_para[i], NULL );
+  }
+
+  // 全ての技をクリア
+  for( i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    PP_Put( egg, id_para[i], WAZANO_NULL );
+  }
+
+  // 覚えていた技を前詰めでセット
+  for( num=0,i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    if( wazano[i] != WAZANO_NULL ) {
+      PP_Put( egg, id_para[num], wazano[i] );
+      num++;
+    }
+  }
+
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_TARGET,
+      "POKEMON-EGG: <WazaSort> ==> egg(%d, %d, %d, %d)\n",
+      PP_Get( egg, ID_PARA_waza1, NULL ), PP_Get( egg, ID_PARA_waza2, NULL ),
+      PP_Get( egg, ID_PARA_waza3, NULL ), PP_Get( egg, ID_PARA_waza4, NULL ) );
+#endif
 }
 
 //---------------------------------------------------------------------------------------- 
@@ -888,6 +936,65 @@ static void EggBirth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id 
     u32 id = MyStatus_GetID( owner );
     PP_Put( egg, ID_PARA_id_no, id );
   } 
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 技を押し出し式に覚えさせる ( 重複チェック有 )
+ *
+ * @param poke
+ * @param wazano
+ */
+//---------------------------------------------------------------------------------------- 
+static void PokeWazaLearnByPush( POKEMON_PARAM* poke, u32 wazano )
+{
+  int i;
+  u32 id_para[ PTL_WAZA_MAX ] = { ID_PARA_waza1, ID_PARA_waza2, ID_PARA_waza3, ID_PARA_waza4 };
+
+  // 技番号が不正
+  if( wazano == WAZANO_NULL ) { return; }
+
+  // すでに覚えている
+  if( CheckWazaHave(poke, wazano) ) { return; }
+
+  // 空き要素にセット
+  for( i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    if( PP_Get( poke, id_para[i], NULL ) == WAZANO_NULL ) {
+      PP_Put( poke, id_para[i], wazano );
+      return;
+    }
+  }
+
+  // 空きがなければ押し出す
+  PP_SetWazaPush( poke, wazano );
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 指定した技を持っているかどうかをチェックする
+ *
+ * @param poke   チェックするポケモン
+ * @param wazano チェックする技
+ *
+ * @return 指定した技を持っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------------- 
+static BOOL CheckWazaHave( const POKEMON_PARAM* poke, u32 wazano )
+{
+  int i;
+  u32 id_para[ PTL_WAZA_MAX ] = { ID_PARA_waza1, ID_PARA_waza2, ID_PARA_waza3, ID_PARA_waza4 };
+
+  for( i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    // 発見
+    if( PP_Get( poke, id_para[i], NULL ) == wazano ) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 
 //---------------------------------------------------------------------------------------- 
