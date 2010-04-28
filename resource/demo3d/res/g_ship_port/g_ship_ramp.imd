@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-22T15:58:36" source="g_ship_port.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-28T12:15:55" source="g_ship_port.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-22T15:58:36" source="g_ship_port.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-28T12:15:55" source="g_ship_port.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="5 5"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="5 5"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="off"
@@ -308,10 +308,10 @@
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="flip flip"
-		tex_scale="1.000000 1.000000"
+		tex_scale="0.000000 0.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
+		tex_gen_mode="tex"
 	/>
 </material_array>
 

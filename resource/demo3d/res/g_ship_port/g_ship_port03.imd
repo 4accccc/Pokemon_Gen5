@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-20T22:36:32" source="g_ship_port.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-28T12:56:08" source="g_ship_port.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-20T22:36:32" source="g_ship_port.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-28T12:56:08" source="g_ship_port.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,14 +20,14 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="3 3"
-	compress_material="off" material_size="2 2"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="off"
 />
 
-<box_test pos_scale="5" xyz="-2.000000 0.000000 -1.000000" whd="2.500000 1.000000 4.500000"/>
+<box_test pos_scale="5" xyz="-2.000000 0.000000 -2.500000" whd="2.000000 1.000000 5.500000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="girl4"
@@ -296,7 +296,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 16.000000 128.000000"
+		translate="-16.000000 16.000000 112.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -316,7 +316,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-48.000000 16.000000 -32.000000"
+		translate="-48.000000 16.000000 -80.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
