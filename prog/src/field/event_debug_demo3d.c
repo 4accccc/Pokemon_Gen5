@@ -261,6 +261,8 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
 		break;
 	case 5:
     GAMESYSTEM_SetNetOffEventFlag( work->gsys, work->net_off_flag );
+    //ネットOffフラグを落とすタイミングがフィールド復帰に間に合わないので強制復帰させる
+    GAMESYSTEM_CommBootAlways(work->gsys);
     if( work->scene->bgm_change ){
       PMSND_PopBGM();
       PMSND_FadeInBGM(PMSND_FADE_NORMAL);
