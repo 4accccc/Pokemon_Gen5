@@ -132,6 +132,7 @@ EVENT_START   ev_heal_p01
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_05 )
       _CALL sub_heal_goodbye    //‚Ü‚½‚Ì‚²—˜—p‚ð
     ENDIF
 
