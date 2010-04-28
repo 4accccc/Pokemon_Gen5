@@ -886,6 +886,7 @@ static void _blendSmoke(GSYNC_DISP_WORK* pWork)
 void GSYNC_DISP_SetPerfomance(GSYNC_DISP_WORK* pWork,int percent)
 {
   float num = percent;
+  int cnt;
 
   num = num * 1.2;
   if(percent > 100){
