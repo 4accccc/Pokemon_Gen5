@@ -79,6 +79,13 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 	ret = GFL_UI_TP_HitTrg( TouchHitTbl );
 
 	if( ret != GFL_UI_TP_HIT_NONE ){
+		// 検索
+		if( ret == ZKNLISTUI_ID_START ){
+			// バージョンアップ前
+			if( ZUKANSAVE_GetGraphicVersionUpFlag( wk->dat->savedata ) == FALSE ){
+				return GFL_UI_TP_HIT_NONE;
+			}
+		}
 		// モード切替
 		if( ret == ZKNLISTUI_ID_SELECT ){
 			// 全国図鑑未取得時
@@ -121,9 +128,13 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 		return ZKNLISTUI_ID_X;
 	}
 
+	// 検索
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-		return ZKNLISTUI_ID_START;
+		// バージョンアップ後
+		if( ZUKANSAVE_GetGraphicVersionUpFlag( wk->dat->savedata ) == TRUE ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return ZKNLISTUI_ID_START;
+		}
 	}
 
 	// モード切替

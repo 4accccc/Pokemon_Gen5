@@ -428,7 +428,8 @@ static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk )
 	case 4:
 		if( wk->buttonCnt == 0 ){
 			wk->buttonSeq = 0;
-			return SetFadeOut( wk, MAINSEQ_RELEASE );
+//			return SetFadeOut( wk, MAINSEQ_RELEASE );
+			return MAINSEQ_END_SET;
 //			return MAINSEQ_MAIN;
 		}else{
 			wk->buttonCnt--;

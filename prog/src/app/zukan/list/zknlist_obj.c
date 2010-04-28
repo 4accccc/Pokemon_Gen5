@@ -80,6 +80,11 @@ static const ZKNCOMM_CLWK_DATA ClactParamTbl[] =
 		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
 		0, CLSYS_DRAW_MAIN
 	},
+	{	// Ａボタンマーク
+		{ 48, 48, ZKNLISTOBJ_ANM_TARGET, 10, 1 },
+		ZKNLISTOBJ_CHRRES_ZKNOBJ, ZKNLISTOBJ_PALRES_ZKNOBJ, ZKNLISTOBJ_CELRES_ZKNOBJ,
+		0, CLSYS_DRAW_MAIN
+	},
 	{	// 戻るボタン
 		{ 232, TOUCHBAR_ICON_Y, APP_COMMON_BARICON_RETURN, 0, 1 },
 		ZKNLISTOBJ_CHRRES_TOUCH_BAR, ZKNLISTOBJ_PALRES_TOUCH_BAR, ZKNLISTOBJ_CELRES_TOUCH_BAR,
@@ -574,6 +579,10 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 		wk->clwk[i] = ZKNCOMM_CreateClact( wk->clunit, &dat, HEAPID_ZUKAN_LIST );
 	}
 
+	// バージョンアップ前
+	if( ZUKANSAVE_GetGraphicVersionUpFlag( wk->dat->savedata ) == FALSE ){
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_START, FALSE );
+	}
 	// 全国図鑑未取得時
 	if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == FALSE ){
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TB_SELECT, FALSE );
@@ -678,6 +687,8 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 															NARC_zukan_gra_list_list_hate_NANR,
 															HEAPID_ZUKAN_LIST );
 		GFL_ARC_CloseDataHandle( ah );
+
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TARGET, FALSE );
 	}else{
 		ZUKANSAVE_GetDrawData( wk->dat->savedata, mons, &sex, &rare, &form, HEAPID_ZUKAN_LIST_L );
 
@@ -699,6 +710,8 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 															mons, form, sex, rare, POKEGRA_DIR_FRONT,
 															FALSE, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_ZUKAN_LIST );
 	  GFL_ARC_CloseDataHandle( ah );
+
+		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_TARGET, TRUE );
 	}
 
 	prm.chrRes = wk->chrRes[prm.chrRes];
