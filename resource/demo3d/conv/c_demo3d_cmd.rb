@@ -109,6 +109,8 @@ $prm_scr_draw_req = [
   $_cmd_prm.new( P_FREE, P_FREE, nil, $psfix_2dgra_ncg ), #ncg
   $_cmd_prm.new( P_FREE, P_FREE, nil, $psfix_2dgra_nsc ), #nscr
   $_cmd_prm.new( 1, P_FREE, nil, nil ), #表示するフレーム数
+  $_cmd_prm.new( P_FREE, P_FREE, nil, nil ), #αフェードインフレーム数
+  $_cmd_prm.new( P_FREE, P_FREE, nil, nil ), #αフェードアウトフレーム数
 ] 
 $prm_light_vector_set = [
   $_cmd_prm.new( 0, 3, nil, nil ), #ライトNo

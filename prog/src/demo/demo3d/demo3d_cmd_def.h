@@ -200,6 +200,8 @@ typedef enum
  *	@param	param[2]  キャラクタアーカイブID
  *	@param	param[3]  スクリーンアーカイブID
  *	@param	param[4]  ウィンドウを表示するフレーム数(1～)
+ *	@param	param[5]  αフェードインフレーム数 
+ *	@param	param[6]  αフェードアウトフレーム数
  */
 //======================================================
   DEMO3D_CMD_TYPE_SCR_DRAW_REQ,

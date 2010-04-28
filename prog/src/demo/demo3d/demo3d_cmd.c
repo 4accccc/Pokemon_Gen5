@@ -742,11 +742,24 @@ typedef struct _TASKWK_SCR_DRAW_REQ{
   int pltt_id;
   int char_id;
   int scr_id;
+
+  int s_frm;
+  int e_frm;
+
+  fx32  alpha_n;
+  fx32  alpha_d;
 }TASKWK_SCR_DRAW_REQ;
 
-static void taskAdd_ScrDrawReq( DEMO3D_CMD_WORK* wk, int pltt_id, int char_id, int scr_id, int sync );
+#define SCR_DRAW_ALPHA_1ST  (GX_BLEND_PLANEMASK_BG1)
+#define SCR_DRAW_ALPHA_2ND  (GX_BLEND_PLANEMASK_BG0)
+#define ALPHA_EV2_NORMAL  (3)
+#define ALPHA_EV1_NORMAL  (16-ALPHA_EV2_NORMAL)
+
+static void taskAdd_ScrDrawReq( DEMO3D_CMD_WORK* wk,
+    int pltt_id, int char_id, int scr_id, int sync, int s_frm, int e_frm );
 static void tcb_ScrDrawReq( GFL_TCBL *tcb , void* work);
-static void taskwk_ScrDrawReqInit( DEMO3D_CMD_WORK* wk, TASKWK_SCR_DRAW_REQ* twk,int pltt_id, int char_id, int scr_id, int sync );
+static void taskwk_ScrDrawReqInit( DEMO3D_CMD_WORK* wk, TASKWK_SCR_DRAW_REQ* twk,
+    int pltt_id, int char_id, int scr_id, int sync, int s_frm, int e_frm );
 static void taskwk_ScrDrawReqFree( TASKWK_SCR_DRAW_REQ* wk );
 
 //-----------------------------------------------------------------------------
@@ -758,6 +771,8 @@ static void taskwk_ScrDrawReqFree( TASKWK_SCR_DRAW_REQ* wk );
  *	@param	param[2]  キャラクタアーカイブID
  *	@param	param[3]  スクリーンアーカイブID
  *	@param	param[4]  ウィンドウを表示するフレーム数(1～)
+ *	@param	param[5]  αフェードインフレーム数 
+ *	@param	param[6]  αフェードアウトフレーム数
  */
 //-----------------------------------------------------------------------------
 static void DEMOCMD_ScrDrawReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
@@ -765,10 +780,12 @@ static void DEMOCMD_ScrDrawReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int
   if( param[0] != 0xFF && param[0] != CasetteVersion ){
     return; //無視
   }
-  taskAdd_ScrDrawReq( wk, param[1], param[2], param[3], sub_ConvFrame(wk,param[4]) );
+  taskAdd_ScrDrawReq( wk, param[1], param[2], param[3],
+    sub_ConvFrame(wk,param[4]), sub_ConvFrame(wk,param[5]), sub_ConvFrame(wk,param[6]) );
 }
 
-static void taskAdd_ScrDrawReq( DEMO3D_CMD_WORK* wk, int pltt_id, int char_id, int scr_id, int sync )
+static void taskAdd_ScrDrawReq( DEMO3D_CMD_WORK* wk,
+    int pltt_id, int char_id, int scr_id, int sync, int s_frm, int e_frm )
 {
   GFL_TCBL* tcb;
   TASKWK_SCR_DRAW_REQ* twk;
@@ -778,32 +795,86 @@ static void taskAdd_ScrDrawReq( DEMO3D_CMD_WORK* wk, int pltt_id, int char_id, i
   twk = GFL_TCBL_GetWork(tcb);
 
   //BMPウィンドウ&ストリーム生成
-  taskwk_ScrDrawReqInit( wk, twk, pltt_id, char_id, scr_id, sync );
+  taskwk_ScrDrawReqInit( wk, twk, pltt_id, char_id, scr_id, sync, s_frm, e_frm );
 }
 
 static void tcb_ScrDrawReq( GFL_TCBL *tcb , void* tcb_wk )
 {
   TASKWK_SCR_DRAW_REQ* twk = (TASKWK_SCR_DRAW_REQ*)tcb_wk;
-  
-  //システム終了かタイムアップで自殺
-  if( twk->cmd->cmdsys_end_f ||
-      (twk->ct++ >= twk->sync) ){
+  DEMO3D_CMD_WORK* cmd = twk->cmd;
+ 
+  //システム終了で自殺
+  if( twk->cmd->cmdsys_end_f) {
     taskwk_ScrDrawReqFree( twk );
     GFL_TCBL_Delete(tcb);
     return;
   }
   switch( twk->seq ){
   case 0:
+    GFL_ARCHDL_UTIL_TransVramPalette( cmd->h_2dgra, twk->pltt_id, PALTYPE_MAIN_BG, 0, 0, cmd->tmpHeapID );
+ 	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(	cmd->h_2dgra, twk->scr_id,
+						DEMO3D_CMD_FREE_BG_M1, 0, 0, 0, TRUE, cmd->tmpHeapID );	
+    twk->seq++;
+    break;
+  case 1:
+    twk->ct = 0;
+    twk->alpha_n = 0;
+    twk->alpha_d = FX_Div( FX32_CONST(16),FX32_CONST(twk->s_frm));
+
+    GFL_BG_SetPriority( TALKWIN_BG_FRM, 0 );
+    GFL_BG_SetPriority( DEMO3D_3D_BG_M, 1 );
+    G2_SetBlendAlpha( SCR_DRAW_ALPHA_1ST,SCR_DRAW_ALPHA_2ND, 0, 16 );
     GFL_BG_SetVisible( TALKWIN_BG_FRM, VISIBLE_ON );
     twk->seq++;
     break;
+  case 2:
+    {
+      int ev;
+      
+      if( twk->ct++ < twk->s_frm ){
+        twk->alpha_n += twk->alpha_d;
+        ev = FX_Whole( twk->alpha_n);
+        G2_ChangeBlendAlpha( ev, 16-ev);
+        break;
+      }
+      G2_ChangeBlendAlpha( 16, 0 );
+      twk->ct = 0;
+      twk->seq++;
+    }
+    break;
+  case 3:
+    if( twk->ct++ < twk->sync ){
+      break;
+    }
+    twk->ct = 0;
+    twk->alpha_n = 0;
+    twk->alpha_d = FX_Div( FX32_CONST(16),FX32_CONST(twk->e_frm));
+    twk->seq++;
+    break;
+  case 4:
+    {
+      int ev;
+      
+      if( twk->ct++ < twk->e_frm ){
+        twk->alpha_n += twk->alpha_d;
+        ev = FX_Whole( twk->alpha_n);
+        G2_ChangeBlendAlpha( 16-ev, ev);
+        break;
+      }
+      G2_ChangeBlendAlpha( 0, 16 );
+      twk->ct = 0;
+      twk->seq++;
+    }
+    break;
   default:
+    taskwk_ScrDrawReqFree( twk );
+    GFL_TCBL_Delete(tcb);
     break;
   }
 }
 
 static void taskwk_ScrDrawReqInit( DEMO3D_CMD_WORK* wk, TASKWK_SCR_DRAW_REQ* twk,
-    int pltt_id, int char_id, int scr_id, int sync )
+    int pltt_id, int char_id, int scr_id, int sync, int s_frm, int e_frm )
 {
   GFL_MSGDATA *msg_man;
   STRBUF *str;
@@ -812,15 +883,15 @@ static void taskwk_ScrDrawReqInit( DEMO3D_CMD_WORK* wk, TASKWK_SCR_DRAW_REQ* twk
   
   twk->cmd = wk;
   twk->sync = sync;
-	
-  GFL_ARCHDL_UTIL_TransVramPalette( wk->h_2dgra, pltt_id, PALTYPE_MAIN_BG, 0, 0, wk->tmpHeapID );
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->h_2dgra, char_id,
-						DEMO3D_CMD_FREE_BG_M1, 0, 0, TRUE, wk->tmpHeapID );
- 	GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(	wk->h_2dgra, scr_id,
-						DEMO3D_CMD_FREE_BG_M1, 0, 0, 0, TRUE, wk->tmpHeapID );	
 
-  GFL_BG_SetPriority( TALKWIN_BG_FRM, 0 );
-  GFL_BG_SetPriority( DEMO3D_3D_BG_M, 1 );
+  twk->pltt_id = pltt_id;
+  twk->char_id = char_id;
+  twk->scr_id = scr_id;
+
+  twk->s_frm = s_frm;
+  twk->e_frm = e_frm;
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	wk->h_2dgra, twk->char_id,
+						DEMO3D_CMD_FREE_BG_M1, 0, 0, TRUE, wk->tmpHeapID );
 }
 
 static void taskwk_ScrDrawReqFree( TASKWK_SCR_DRAW_REQ* twk )
@@ -831,6 +902,7 @@ static void taskwk_ScrDrawReqFree( TASKWK_SCR_DRAW_REQ* twk )
   GFL_BG_SetPriority( DEMO3D_3D_BG_M, DEMO3D_3D_BG_PRI );
   GFL_BG_SetPriority( TALKWIN_BG_FRM, 1 );
 
+  G2_BlendNone();
   GFL_BG_ClearFrame( DEMO3D_CMD_FREE_BG_M1 );
 }
 

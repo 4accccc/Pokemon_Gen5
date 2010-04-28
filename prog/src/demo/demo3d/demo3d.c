@@ -318,7 +318,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
     if( subVCount > 1 )
     {
       vCountDelay += (subVCount-1);
-      OS_TPrintf("Script Delay[%d]!!\n",subVCount-1);
+      OS_TPrintf("%d %d\n",subVCount-1, DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT);
     }
   }
 #endif
