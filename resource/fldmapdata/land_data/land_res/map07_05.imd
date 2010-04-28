@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-19T18:20:13" source="map07_05.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-27T19:46:47" source="map07_05.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-19T18:20:13" source="map07_05.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-27T19:46:47" source="map07_05.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1106,22 +1106,22 @@
 		path="C:/home/wb_data3d/field/out11/chip/tex_spring/sp_o11m2.tga"
 	>
 		<bitmap size="128">
-			e5e4 e8e7 e5e6 e5e4 e7e9 e5e5 e7e7 e7e7
-			e7e6 e5e8 e6e5 e7e5 e7e8 e5e5 e6e5 e6e4
-			e8e7 e5e5 e5e6 e4e7 e7e4 e3e4 e4e4 e0e3
-			e6e9 e5e4 e6e5 e4e9 e4e4 e3e4 e4e4 e1e3
-			e4e6 e5e5 e8e6 e4ea e4e4 e0e4 e7e4 e1e0
-			e4e4 e7e5 e9e9 e4e7 e4e4 e1e0 e4e0 ebe1
-			e5e5 eae8 e7e9 e4e4 e4e4 ebe0 eb62 6262
-			e7e6 eae9 e4e7 e4e4 e0e4 82eb 8282 8c82
-			eae7 e4e4 e4e4 e3e4 e0e3 8262 8c8c 8c8c
-			eae9 e6e7 e4e4 e3e4 ebe0 8c82 8c8c 8c8c
-			e7e9 e4e5 e4e4 e0e0 82eb 8c82 8d8c 8f8c
-			e5e5 e4e4 e0e4 62eb 8282 8c8c 8d8d 8f8f
-			e6e5 e3e4 e0e3 82eb 8c8c 8d8c 8f8f 8f8f
-			e8e6 e7e4 e4e7 82eb 8d8c 8f8d 8f8f 8e8d
-			e9e7 e4e4 ebe4 8262 8f8c 8f8f 8d8d 8f8e
-			e4e9 e4e4 ebe1 8c82 8f8c 8d8f 8e8d 8e8e
+			e4e4 e5e4 e4e5 e5e5 e4e8 e4e4 e7e7 e7e7
+			e4e4 e5e5 e6e4 e7e5 e4e4 e5e5 e6e5 e6e5
+			e4e4 e5e5 e5e6 e5e7 e7e5 e3e5 e5e5 e0e3
+			e8e5 e5e4 e6e5 e5e8 e5e5 e3e5 e5e5 e1e3
+			e5e6 e5e5 e7e6 e5e9 e5e7 e0e5 e7e5 e1e0
+			e5e5 e7e5 e8e8 e7e9 e7e5 e1e0 e5e0 eae1
+			e5e4 e9e7 e9e8 e5e7 e5e5 eae0 ea62 6262
+			e7e6 e9e8 e7e7 e5e5 e0e5 82ea 8282 8b82
+			e9e5 e5e5 e7e5 e3e5 e0e3 8262 8b8b 8b8b
+			e5e4 e6e7 e5e5 e3e5 eae0 8b82 8b8b 8b8b
+			e5e8 e5e5 e5e5 e0e0 82ea 8b82 8c8b 8e8b
+			e5e8 e5e5 e0e5 62ea 8282 8b8b 8c8c 8e8e
+			e6e5 e3e5 e0e3 82ea 8b8b 8c8b 8e8e 8e8e
+			e7e6 e7e5 e5e7 82ea 8c8b 8e8c 8e8e 8d8c
+			e8e7 e5e5 eae5 8262 8e8b 8e8e 8c8c 8e8d
+			e5e8 e5e5 eae1 8b82 8e8b 8c8e 8d8c 8d8d
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="sp_o11m4"
@@ -1375,8 +1375,8 @@
 		5aa5 5664 5ea5 5684 5aa5 5ac5 56a5 5ac5
 	</tex_palette>
 	<tex_palette index="14" name="sp_o11m2_pl" color_size="16">
-		370d 3aaa 3dc2 4370 4792 4793 47b3 47b4
-		4bb4 4bb5 4bd6 4e44 5664 5684 5a85 5aa5
+		370d 3aaa 3dc2 4370 4371 4792 4793 47b4
+		4bb5 4bd6 4e44 5664 5684 5a85 5aa5 7fff
 	</tex_palette>
 	<tex_palette index="15" name="sp_o11m4_pl" color_size="16">
 		3182 35a2 39a2 3dc2 41e3 4e44 5684 5a84
@@ -3145,9 +3145,9 @@
 	<polygon index="9" name="polygon9"
 		vertex_size="20" polygon_size="5"
 		triangle_size="0" quad_size="5"
-		volume_min="-3.500000 -0.062500 0.875000"
-		volume_max="-1.250000 0.187500 3.000000"
-		volume_r="4.610107"
+		volume_min="-3.500000 -0.041016 0.782471"
+		volume_max="-1.250000 0.095459 3.015381"
+		volume_r="4.620117"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -3158,45 +3158,45 @@
 					<mtx idx="0"/>
 					<tex st="17.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-1.750000 -0.062500 2.750000"/>
+					<pos_xyz xyz="-1.772461 -0.035400 2.780762"/>
 					<tex st="-1.000000 32.000000"/>
-					<pos_xy xy="-1.500000 -0.062500"/>
+					<pos_xy xy="-1.540039 -0.035400"/>
 					<tex st="-1.000000 0.000000"/>
-					<pos_yz yz="0.187500 2.625000"/>
+					<pos_yz yz="0.090820 2.531250"/>
 					<tex st="17.000000 0.000000"/>
-					<pos_xy xy="-1.750000 0.187500"/>
+					<pos_xy xy="-1.772461 0.090820"/>
 					<tex st="17.000000 32.000000"/>
-					<pos_s xyz="-1.500000 -0.062500 1.500000"/>
+					<pos_xyz xyz="-1.500000 -0.033691 1.531738"/>
 					<tex st="-1.000000 32.000000"/>
-					<pos_xy xy="-1.250000 -0.062500"/>
+					<pos_xy xy="-1.250000 -0.033691"/>
 					<tex st="-1.000000 0.000000"/>
-					<pos_yz yz="0.187500 1.375000"/>
+					<pos_yz yz="0.090332 1.281250"/>
 					<tex st="17.000000 0.000000"/>
-					<pos_xy xy="-1.500000 0.187500"/>
+					<pos_xy xy="-1.500000 0.090332"/>
 					<tex st="17.000000 32.000000"/>
-					<pos_s xyz="-2.750000 -0.062500 1.000000"/>
+					<pos_xyz xyz="-2.750000 -0.033203 1.030762"/>
 					<tex st="-1.000000 32.000000"/>
-					<pos_xy xy="-2.500000 -0.062500"/>
+					<pos_xy xy="-2.500000 -0.033203"/>
 					<tex st="-1.000000 0.000000"/>
-					<pos_yz yz="0.187500 0.875000"/>
+					<pos_yz yz="0.095459 0.782471"/>
 					<tex st="17.000000 0.000000"/>
-					<pos_xy xy="-2.750000 0.187500"/>
+					<pos_xy xy="-2.750000 0.095459"/>
 					<tex st="17.000000 32.000000"/>
-					<pos_s xyz="-3.500000 -0.062500 3.000000"/>
+					<pos_xyz xyz="-3.500000 -0.041016 3.015381"/>
 					<tex st="-1.000000 32.000000"/>
-					<pos_xy xy="-3.250000 -0.062500"/>
+					<pos_xy xy="-3.250000 -0.041016"/>
 					<tex st="-1.000000 0.000000"/>
-					<pos_yz yz="0.187500 2.875000"/>
+					<pos_yz yz="0.084229 2.765625"/>
 					<tex st="17.000000 0.000000"/>
-					<pos_xy xy="-3.500000 0.187500"/>
+					<pos_xy xy="-3.500000 0.084229"/>
 					<tex st="17.000000 32.000000"/>
-					<pos_s xyz="-3.250000 -0.062500 3.000000"/>
+					<pos_xyz xyz="-3.250000 -0.041016 3.015381"/>
 					<tex st="-1.000000 32.000000"/>
-					<pos_xy xy="-3.000000 -0.062500"/>
+					<pos_xy xy="-3.000000 -0.041016"/>
 					<tex st="-1.000000 0.000000"/>
-					<pos_yz yz="0.187500 2.875000"/>
+					<pos_yz yz="0.084229 2.765625"/>
 					<tex st="17.000000 0.000000"/>
-					<pos_xy xy="-3.250000 0.187500"/>
+					<pos_xy xy="-3.250000 0.084229"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
