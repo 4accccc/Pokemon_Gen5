@@ -2874,8 +2874,8 @@
 	</row>
 
 	<row id="MONSNAME_496">
-		<language name="JPN" width="216">クサネーク</language>
-		<language name="JPN_KANJI" width="216">クサネーク</language>
+		<language name="JPN" width="216">ジャノビー</language>
+		<language name="JPN_KANJI" width="216">ジャノビー</language>
 	</row>
 
 	<row id="MONSNAME_497">
@@ -3379,13 +3379,13 @@
 	</row>
 
 	<row id="MONSNAME_597">
-		<language name="JPN" width="216">テッパン</language>
-		<language name="JPN_KANJI" width="216">テッパン</language>
+		<language name="JPN" width="216">テッシード</language>
+		<language name="JPN_KANJI" width="216">テッシード</language>
 	</row>
 
 	<row id="MONSNAME_598">
-		<language name="JPN" width="216">ゴウキーン</language>
-		<language name="JPN_KANJI" width="216">ゴウキーン</language>
+		<language name="JPN" width="216">ナットレイ</language>
+		<language name="JPN_KANJI" width="216">ナットレイ</language>
 	</row>
 
 	<row id="MONSNAME_599">
@@ -3419,18 +3419,18 @@
 	</row>
 
 	<row id="MONSNAME_605">
-		<language name="JPN" width="216">テレス</language>
-		<language name="JPN_KANJI" width="216">テレス</language>
+		<language name="JPN" width="216">リグレー</language>
+		<language name="JPN_KANJI" width="216">リグレー</language>
 	</row>
 
 	<row id="MONSNAME_606">
-		<language name="JPN" width="216">テレパス</language>
-		<language name="JPN_KANJI" width="216">テレパス</language>
+		<language name="JPN" width="216">オーベム</language>
+		<language name="JPN_KANJI" width="216">オーベム</language>
 	</row>
 
 	<row id="MONSNAME_607">
-		<language name="JPN" width="216">ローソクン</language>
-		<language name="JPN_KANJI" width="216">ローソクン</language>
+		<language name="JPN" width="216">ヒトモシ</language>
+		<language name="JPN_KANJI" width="216">ヒトモシ</language>
 	</row>
 
 	<row id="MONSNAME_608">
