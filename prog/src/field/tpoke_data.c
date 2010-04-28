@@ -290,7 +290,7 @@ static const OBJCODE_PARAM* TPokeData_GetObjCodeParam( const TPOKE_DATA* cp_wk, 
 {
   int code;
   
-  code = MMDL_TOOL_OBJCodeToDataNumber( code );
+  code = MMDL_TOOL_OBJCodeToDataNumber( objcode );
   return( &(cp_wk->p_objcodeParam[code]) );
 }
 
