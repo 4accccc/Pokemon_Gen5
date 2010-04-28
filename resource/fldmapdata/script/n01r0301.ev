@@ -35,7 +35,6 @@ EVENT_START   ev_pos_n01r0301_ninja_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0301_ninja_coming_01 )
 	_OBJ_ANIME_WAIT()
 	
-	
 	//主人公の向きが上以外だった時は上を向かせる
 	DEFINE_LOCAL LWK_DIR
 	_PLAYER_DIR_GET( LWK_DIR )
@@ -45,32 +44,48 @@ EVENT_START   ev_pos_n01r0301_ninja_01
 		_OBJ_ANIME_WAIT()
 	ENDIF
 	
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,294912,0,622592,15 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//バージョンを取得して発言を分岐
 	DEFINE_LOCAL LCWK_VERSION
 	_GET_ROM_VERSION( LCWK_VERSION )
 	
 	//white
 	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_BALLOONWIN_OBJMSG_POS( msg_n01r0301_ninja_01w , MMDL_ID_EVENTOBJ_00 , POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_n01r0301_ninja_01w , MMDL_ID_EVENTOBJ_00 , POS_UP )
 		_BALLOONWIN_CLOSE()
 		
 	//Black
 	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_n01r0301_ninja_01b , MMDL_ID_EVENTOBJ_00 , POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_n01r0301_ninja_01b , MMDL_ID_EVENTOBJ_00 , POS_UP )
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
 	
 	//少し間を置く
-	_TIME_WAIT ( 18 )
+	_TIME_WAIT ( 25 )
 	
 	//ダークトリニティ退場演出
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0301_ninja_bye_01 )
 	_OBJ_ANIME_WAIT()
+	
 	//ダークトリニティOBJ消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	
 	}
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 15 )	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
 	//========================================//
 	
 	//フラグ操作：N01R0301のPOSを無効に
@@ -91,6 +106,10 @@ _ANIME_LABEL	anm_n01r0301_ninja_coming_01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_n01r0301_player_look_up
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------

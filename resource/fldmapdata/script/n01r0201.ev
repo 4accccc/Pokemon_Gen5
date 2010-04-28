@@ -79,15 +79,27 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staywalk_u )
 	_OBJ_ANIME_WAIT()
 	
-	//まずはあの部屋で休むがよい
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,1474560,0,557056,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//まずはあの部屋で休むがよい
+	_PLAINWIN_MSG_DOWN( msg_n01r0201_ninja_03 )
+	_PLAINWIN_CLOSE()
+
+	_CAMERA_RECV_MOVE( 20 )	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
 	//ダークトリニティ退場演出
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0201_ninja_bye_01 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	
+
 	//========================================//
 	$WK_SCENE_N01R0201 = 1
 	//========================================//

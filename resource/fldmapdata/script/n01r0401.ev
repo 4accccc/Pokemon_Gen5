@@ -58,19 +58,32 @@ EVENT_START   ev_scene_n01r0401_ninja_01
 	//ダークトリニティ登場演出
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_coming_01 )
 	_OBJ_ANIME_WAIT()
-	
-	//ダークトリニティ：あの部屋は
-	_BALLOONWIN_OBJMSG(msg_n01r0401_ninja1_01,MMDL_ID_EVENTOBJ_00)
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
 	//ダークトリニティ上を向く
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_look_up )
 	_OBJ_ANIME_WAIT()
 	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,688128,0,622592,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT( 30 )
+	
+	//ダークトリニティ：あの部屋は
+	_PLAINWIN_MSG_DOWN( msg_n01r0401_ninja1_01 )
+	_PLAINWIN_CLOSE()
+	
 	//少し間を置く
-	_TIME_WAIT ( 24 )
-	
-	_BALLOONWIN_CLOSE()
-	
+	_TIME_WAIT( 30 )
+
+	_CAMERA_RECV_MOVE( 20 )	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
 	//ダークトリニティプレイヤーの方を向く
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_look_left )
 	_OBJ_ANIME_WAIT()
