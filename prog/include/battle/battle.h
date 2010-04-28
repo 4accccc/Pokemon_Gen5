@@ -161,6 +161,7 @@ typedef enum {
   BTL_STATUS_FLAG_BOXFULL = 0x0040,     ///<手持ち・ボックスが満杯でもう捕獲できない時にTRUE
   BTL_STATUS_FLAG_WILD_TALK = 0x0080,   ///<話しかけでの野生戦の時にTRUE(Btlエンカウントメッセージ変化)
   BTL_STATUS_FLAG_NO_LOSE = 0x0100,     ///<ゲームオーバーにならないバトルならTRUE
+  BTL_STATUS_FLAG_LEGEND_EX = 0x0200,   ///<シナリオラストのシン・ム戦専用（経験値なし・倒したメッセージ表示なし）
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
