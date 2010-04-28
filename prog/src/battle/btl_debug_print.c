@@ -205,8 +205,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_STR_SetPokeNickname:      return "setPokeNickName ID=%d ....\n";
   case DBGSTR_STR_SetTagWazaName:       return "[TAG] Set WazaName ... waza=%d\n";
   case DBGSTR_STR_SetItemName:          return "set Item Name argIdx=%d, ID=%d ....\n";
-  case DBGSTR_SVFL_ActOrderStart:       return "アクション[開始]  ポケ[ID:%d = monsno:%d] (ptr=%p)\n";
-  case DBGSTR_SVFL_ActOrderEnd:         return "アクション[終了]  ポケ[ID:%d = monsno:%d] (ptr=%p)\n";
+  case DBGSTR_SVFL_ActOrderStart:       return ">>>> ActProc [開始] ポケ[ID:%d = monsno:%d] (ptr=%p)\n";
+  case DBGSTR_SVFL_ActOrderEnd:         return "<<<< ActProc [終了] ポケ[ID:%d = monsno:%d] (ptr=%p)\n";
   case DBGSTR_SVFL_ActOrder_Fight:      return "【たたかう】ポケ[%d]のワザ[%d]を、位置[%d]の相手に\n";
   case DBGSTR_SVFL_ActOrder_Item:       return "【どうぐ】を処理。アイテム%dを、%d番の相手に。\n";
   case DBGSTR_SVFL_ActOrder_Change:     return "【ポケモン】を処理。位置%d <- ポケ%d \n";
@@ -273,6 +273,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HandExRelive:        return "HandEx : ポケ生き返り pokeID=%d, HP=%d\n";
   case DBGSTR_SVFL_PutWazaEffect:       return "ワザエフェクトコマンド生成: reservedPos=%d, wazaID=%d, atkPos(%d)->defPos(%d), effIndex=%d\n";
   case DBGSTR_SVFL_WazaDmgCmd:          return "ワザダメージコマンド wazaID=%d, pokeCnt=%d pokeID= ";
+  case DBGSTR_SVFL_ActIntr:             return "割り込みアクション adrs=%p, pokeID=%d\n";
 
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";

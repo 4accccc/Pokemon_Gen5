@@ -405,6 +405,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
 static void AICtrl_Init( void );
 static void AICtrl_Delegate( BTL_CLIENT* wk );
 static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
+static void aictrl_RestoreViewClient( BTL_CLIENT* wk );
 
 
 //=============================================================================================
@@ -508,6 +509,10 @@ BTL_CLIENT* BTL_CLIENT_Create(
   }else{
     wk->btlRec = NULL;
   }
+
+  #ifdef PM_DEBUG
+  wk->viewOldClient = NULL;
+  #endif
 
   return wk;
 }
@@ -7366,18 +7371,26 @@ static void AICtrl_Delegate( BTL_CLIENT* wk )
     {
       GControlableAIClientID = clientID;
       GViewCore = wk->viewCore;
-
-      if( BTL_MAIN_GetPlayerClientID(wk->mainModule) != wk->myID )
-      {
-        BTLV_SetTmpClient( wk->viewCore, wk->viewOldClient );
-        wk->viewCore = NULL;
-        wk->viewOldClient = NULL;
-      }
+      aictrl_RestoreViewClient( wk );
       return;
     }
     ++clientID;
   }
+
   GControlableAIClientID = BTL_CLIENTID_NULL;
+  aictrl_RestoreViewClient( wk );
+}
+/**
+ *  AI操作システム：描画モジュールの管理クライアントを自分から元に戻す
+ */
+static void aictrl_RestoreViewClient( BTL_CLIENT* wk )
+{
+  if( wk->viewOldClient != NULL )
+  {
+    BTLV_SetTmpClient( wk->viewCore, wk->viewOldClient );
+    wk->viewCore = NULL;
+    wk->viewOldClient = NULL;
+  }
 }
 /**
  *  AI操作システム：操作権限が自分になっているか判定

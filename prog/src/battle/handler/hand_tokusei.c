@@ -2924,9 +2924,11 @@ static void handler_Housi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   {
     PokeSick sick;
     BPP_SICK_CONT cont;
-    u32 rand = BTL_CALC_GetRand( 100 );
-    if( rand < 30 )
+
+    if( Tokusei_IsExePer(flowWk, 30) )
     {
+      u32 rand = BTL_CALC_GetRand( 30 );
+
       if( rand > 20 ){
         sick = WAZASICK_DOKU;
       }else if( rand > 10 ){

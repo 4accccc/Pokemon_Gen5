@@ -2261,15 +2261,23 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
 
   case BTL_COMPETITOR_TRAINER:
     #ifdef PM_DEBUG
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R) ){
       return BTL_ESCAPE_MODE_OK;
     }
     #endif
     return BTL_ESCAPE_MODE_NG;
 
-  case BTL_COMPETITOR_COMM:
   case BTL_COMPETITOR_SUBWAY:
+    #ifdef PM_DEBUG
+    if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R)){
+      return BTL_ESCAPE_MODE_OK;
+    }
+    #endif
     return BTL_ESCAPE_MODE_CONFIRM;
+
+  case BTL_COMPETITOR_COMM:
+    return BTL_ESCAPE_MODE_CONFIRM;
+
 
   default:
     return BTL_ESCAPE_MODE_NG;
@@ -4508,6 +4516,9 @@ u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID )
   if( BTL_MAIN_IsClientNPC(wk, clientID) )
   {
     return wk->trainerParam[ clientID ].ai_bit;
+  }
+  else if( BTL_MAIN_GetRule(wk) == BTL_RULE_DOUBLE ){
+
   }
   return 0x00;
 }

@@ -228,6 +228,7 @@ typedef enum {
   DBGSTR_SVFL_HandExRelive,
   DBGSTR_SVFL_PutWazaEffect,
   DBGSTR_SVFL_WazaDmgCmd,
+  DBGSTR_SVFL_ActIntr,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
