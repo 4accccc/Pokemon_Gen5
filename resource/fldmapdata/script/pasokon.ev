@@ -205,7 +205,6 @@ pc_mail_box:
   //「○○の パコンに せつぞくした！」
   _PLAYER_NAME(0)
   _SYSWIN_MSG( msg_pc_mail_01 , POS_DOWN ) 
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
   $exit = FALSE
@@ -246,7 +245,6 @@ pc_zukan_check:
 
   //「はかせの パソコンに せつぞくした！」
   _SYSWIN_MSG( msg_pc_zukan_check_01 , POS_DOWN ) 
-  _AB_KEYWAIT()
 //  _SYSWIN_CLOSE() ずかん評価側で引き続きシステムMSG表示するので閉じない
   _CHG_COMMON_SCR SCRID_ZUKAN_MACHINE
 
@@ -265,7 +263,6 @@ pc_record:
 
   //「記録システムに接続した！」
   _SYSWIN_MSG( msg_pc_kiroku_window_04 , POS_DOWN ) 
-  _AB_KEYWAIT()
 
   $loop = TRUE
   WHILE $loop == TRUE
@@ -309,7 +306,6 @@ pc_record:
       // データが正常でない場合
       ELSE
         _SYSWIN_MSG( msg_pc_on_04, POS_DOWN ) //「データが壊れています｣
-        _AB_KEYWAIT()                         //
         _SYSWIN_CLOSE()                       //
       ENDIF
 
@@ -333,9 +329,10 @@ _RET
 /**************************************************************/
 pc_help:
 {
+  _SE_PLAY( SEQ_SE_PC_LOGIN )
+
   //「ヘルプシステムに接続した！」
   _SYSWIN_MSG( msg_pc_help_01 , POS_DOWN ) 
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
   // ゲーム内マニュアル画面を呼び出し
