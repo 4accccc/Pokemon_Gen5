@@ -112,11 +112,16 @@ const CI_SE_TBL Tbl12[] = {
 
 const CI_SE_TBL Tbl13[] = {
 	{ SEQ_SE_ROTATION_B, 10 },
+	{ SEQ_SE_SHDEMO_04, 38 },
+	{ SEQ_SE_TDEMO_003, 91 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl14[] = {
-	{ SEQ_SE_W009_01, 10 },
+	{ SEQ_SE_W009_01, 1 },
+	{ SEQ_SE_FLD_164, 22 },
+	{ SEQ_SE_SHDEMO_04, 46 },
+	{ SEQ_SE_FLD_127, 117 },
 	{ CI_SE_NONE, 0 },
 };
 
@@ -166,6 +171,11 @@ const CI_SE_TBL Tbl23[] = {
 };
 
 const CI_SE_TBL Tbl24[] = {
+	{ SEQ_SE_W010_01, 10 },
+	{ SEQ_SE_W010_01, 27 },
+	{ SEQ_SE_W010_01, 41 },
+	{ SEQ_SE_W043_01, 52 },
+	{ SEQ_SE_SYS_89, 75 },
 	{ CI_SE_NONE, 0 },
 };
 
