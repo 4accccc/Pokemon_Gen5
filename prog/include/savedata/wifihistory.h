@@ -89,6 +89,7 @@ extern void WIFIHISTORY_SetWorldFlag(WIFI_HISTORY * wh, BOOL flag);
 extern void WIFIHISTORY_Update(WIFI_HISTORY * wh);
 
 extern u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh);
+extern u8 WIFIHISTORY_GetMyCountryCountEx(WIFI_HISTORY * wh, const MYSTATUS *cp_mystats, BOOL my_country_flg );
 extern u8 WIFIHISTORY_GetValidUnDataNum(WIFI_HISTORY * wh);
 extern void WIFIHISTORY_AddMyCountryCount(WIFI_HISTORY * wh);
 extern void WIFIHISTORY_SetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType);

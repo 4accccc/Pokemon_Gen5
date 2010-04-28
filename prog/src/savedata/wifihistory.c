@@ -196,6 +196,33 @@ u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
   return wh->myCountryCount;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換した国の数を取得  拡張版
+ *
+ *	@param	* wh  WIFI履歴データへのポインタ
+ *	@param	my_country_flg TRUEで自分の国を含む　FALSEで含まない
+ *
+ *	@return 国数
+ */
+//-----------------------------------------------------------------------------
+u8 WIFIHISTORY_GetMyCountryCountEx(WIFI_HISTORY * wh, const MYSTATUS *cp_mystats, BOOL my_country_flg )
+{
+  u8 num  = WIFIHISTORY_GetMyCountryCount(wh);
+
+  if ( !my_country_flg )
+  {
+    int nation = MyStatus_GetMyNation(cp_mystats);
+    //自分の国の交換フラグが成立している場合、交換国数を-1する
+    if ( WIFIHISTORY_CheckCountryBit(wh, nation) )
+    {
+      if (num) num--; //１以上のとき減算
+    }
+  }
+
+  return num;
+}
+
 //----------------------------------------------------------
 /**
  * @brief	国連有効データ数を返す0～20
