@@ -162,10 +162,15 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
   if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
 #ifdef PM_DEBUG
-  //バトルサブウェイでのデバッグをしやすくするために強制逃げるを勝ち扱いにする
-  if( ( param->btlResult->result == BTL_RESULT_RUN ) && ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) )
+  // デバッグ都合上、特定キー押しながら逃げた時に結果コード書き換え
+  if( param->btlResult->result == BTL_RESULT_RUN )
   {
-    param->btlResult->result = BTL_RESULT_WIN;
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){      // R押し = 勝ち
+      param->btlResult->result = BTL_RESULT_WIN;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ // X押し = 負け
+      param->btlResult->result = BTL_RESULT_LOSE;
+    }
   }
 #endif
 
@@ -195,12 +200,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
         //ものひろい＆あまいみつチェック（勝利時のみ）
         if( param->btlResult->result == BTL_RESULT_WIN )
-        { 
+        {
           monohiroi_mitsuatsume_check( party );
         }
 
         //ミノムッチフォルムチェンジチェック
-        { 
+        {
           BATT_BG_OBONID obonID = get_obonID( &param->btlResult->fieldSituation, wk->heapID );
           minomucchi_form_change_check( param, party, obonID );
         }
@@ -488,100 +493,100 @@ static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
 
 //============================================================================================
 /**
- *	特性ものひろい、みつあつめのチェック
+ *  特性ものひろい、みつあつめのチェック
  *
- *	@param[in]  ppt POKEPARTY構造体
+ *  @param[in]  ppt POKEPARTY構造体
  */
 //============================================================================================
 static  void  monohiroi_mitsuatsume_check( POKEPARTY* ppt )
 {
-	int	rnd;
-	int	i,j,k;
-	u16 monsno;
-	u16 itemno;
-	u8	speabi;
-	u8	LvOffset;
-	POKEMON_PARAM	*pp;
+  int rnd;
+  int i,j,k;
+  u16 monsno;
+  u16 itemno;
+  u8  speabi;
+  u8  LvOffset;
+  POKEMON_PARAM *pp;
 
-	for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
+  for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
   {
-		pp = PokeParty_GetMemberPointer( ppt, i );
-		monsno = PP_Get( pp, ID_PARA_monsno_egg, NULL );
-		itemno = PP_Get( pp, ID_PARA_item, NULL );
-		speabi = PP_Get( pp, ID_PARA_speabino, NULL );
-		//ものひろいチェック
-		if( ( speabi == TOKUSYU_MONOHIROI ) &&
+    pp = PokeParty_GetMemberPointer( ppt, i );
+    monsno = PP_Get( pp, ID_PARA_monsno_egg, NULL );
+    itemno = PP_Get( pp, ID_PARA_item, NULL );
+    speabi = PP_Get( pp, ID_PARA_speabino, NULL );
+    //ものひろいチェック
+    if( ( speabi == TOKUSYU_MONOHIROI ) &&
         ( monsno != 0 ) &&
         ( monsno != MONSNO_TAMAGO ) &&
         ( itemno == 0) &&
         ( GFUser_GetPublicRand( 10 ) == 0 ) )
     {
-			rnd = GFUser_GetPublicRand( 100 );
-			LvOffset = ( PP_Get( pp, ID_PARA_level, NULL ) - 1 ) / 10;
-			if( LvOffset >= 10 )
+      rnd = GFUser_GetPublicRand( 100 );
+      LvOffset = ( PP_Get( pp, ID_PARA_level, NULL ) - 1 ) / 10;
+      if( LvOffset >= 10 )
       {
-				LvOffset = 9; //レベルが100を超えなければありえないが、念のため
-			}
-			for( j = 0 ; j < 9 ; j++ )
+        LvOffset = 9; //レベルが100を超えなければありえないが、念のため
+      }
+      for( j = 0 ; j < 9 ; j++ )
       {
-				if( ItemProb[ j ] > rnd )
+        if( ItemProb[ j ] > rnd )
         {
-					PP_Put( pp, ID_PARA_item, MonohiroiTable1[ LvOffset + j ] );
-					break;
-				}
-				else if( ( rnd >= 98 ) && ( rnd <= 99 ) )
+          PP_Put( pp, ID_PARA_item, MonohiroiTable1[ LvOffset + j ] );
+          break;
+        }
+        else if( ( rnd >= 98 ) && ( rnd <= 99 ) )
         {
-					PP_Put( pp, ID_PARA_item, MonohiroiTable2[ LvOffset + ( 99 - rnd ) ] );
-					break;
-				}
-			}
-		}
-		//みつあつめチェック
-		if( ( speabi == TOKUSYU_MITUATUME ) &&
+          PP_Put( pp, ID_PARA_item, MonohiroiTable2[ LvOffset + ( 99 - rnd ) ] );
+          break;
+        }
+      }
+    }
+    //みつあつめチェック
+    if( ( speabi == TOKUSYU_MITUATUME ) &&
         ( monsno != 0 ) &&
         ( monsno != MONSNO_TAMAGO ) &&
         ( itemno == 0 ) )
     {
-			j = 0;
-			k = 10;
-			LvOffset = PP_Get( pp, ID_PARA_level, NULL );
-			while( LvOffset > k )
+      j = 0;
+      k = 10;
+      LvOffset = PP_Get( pp, ID_PARA_level, NULL );
+      while( LvOffset > k )
       {
-				j++;
-				k += 10;
-			}
-			//テーブルオーバーを監視するためにアサートをかます
-			GF_ASSERT( j < 10 );
-			if( GFUser_GetPublicRand( 100 ) < MitsuatsumeProb[ j ] )
+        j++;
+        k += 10;
+      }
+      //テーブルオーバーを監視するためにアサートをかます
+      GF_ASSERT( j < 10 );
+      if( GFUser_GetPublicRand( 100 ) < MitsuatsumeProb[ j ] )
       {
-				j = ITEM_AMAIMITU;
-				PP_Put( pp, ID_PARA_item, j );
-			}
-		}
-	}
+        j = ITEM_AMAIMITU;
+        PP_Put( pp, ID_PARA_item, j );
+      }
+    }
+  }
 }
 
 //============================================================================================
 /**
- *	ミノムッチフォルムチェンジチェック
+ *  ミノムッチフォルムチェンジチェック
  *
  */
 //============================================================================================
 static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, BATT_BG_OBONID obonID )
-{ 
+{
   int i;
 
   //通信対戦、バトルサブウェイではフォルムチェンジしない
   if( ( param->btlResult->competitor == BTL_COMPETITOR_SUBWAY ) ||
       ( param->btlResult->competitor == BTL_COMPETITOR_COMM ) )
-  { 
+  {
     return;
   }
 
-	for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
-  { 
-    if( param->btlResult->fightPokeIndex[ i ] ) 
-    { 
+  for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
+  {
+    if( param->btlResult->fightPokeIndex[ i ] )
+    {
       POKEMON_PARAM* pp = PokeParty_GetMemberPointer( ppt, i );
       STRAW_POKE_FORM_ChangeForm( param->gameData, pp, obonID );
     }
@@ -590,14 +595,14 @@ static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, B
 
 //============================================================================================
 /**
- *	お盆ID取得
+ *  お盆ID取得
  *
- *	@param[in]  bfs     BTL_FIELD_SITUATION構造体
- *	@param[in]  heapID  ヒープID
+ *  @param[in]  bfs     BTL_FIELD_SITUATION構造体
+ *  @param[in]  heapID  ヒープID
  */
 //============================================================================================
 static  BATT_BG_OBONID  get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID )
-{ 
+{
     BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,
                                                                   NARC_batt_bg_tbl_zone_spec_table_bin,
                                                                   heapID );
