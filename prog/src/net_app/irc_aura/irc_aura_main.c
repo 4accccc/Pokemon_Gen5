@@ -2561,7 +2561,6 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
-    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
   }
@@ -2686,7 +2685,6 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
-    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
   }
@@ -2764,7 +2762,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
-    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+    
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
   }
@@ -2878,7 +2876,6 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   //–ß‚éƒ{ƒ^ƒ“
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
-    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
     SEQ_End( p_wk );
   }

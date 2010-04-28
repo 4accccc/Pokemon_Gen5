@@ -21,7 +21,7 @@
 //復帰時は以下のパラメータがpreIDから帰ってくる
 #define BR_PROC_SYS_RECOVERY_ID	(0xFFFFFFFE)
 
-#define BR_PROC_SYS_STACK_MAX	  (5)
+#define BR_PROC_SYS_STACK_MAX	  (6)
 
 //=============================================================================
 /**

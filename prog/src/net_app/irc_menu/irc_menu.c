@@ -1812,7 +1812,6 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 		{
-			PMSND_PlaySystemSE( MENU_SE_CANCEL );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
       APPBAR_SetNormal( p_wk->p_appbar );
@@ -1855,7 +1854,6 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
 		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 		{
-			PMSND_PlaySystemSE( MENU_SE_CANCEL );
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
       APPBAR_SetNormal( p_wk->p_appbar );
@@ -2075,7 +2073,6 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	if( (APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN) && *p_seq >= SEQ_SELECT )
 	{
 		COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-		PMSND_PlaySystemSE( MENU_SE_CANCEL );
 		SEQ_Change( p_wk, SEQFUNC_End );
 	}
 }

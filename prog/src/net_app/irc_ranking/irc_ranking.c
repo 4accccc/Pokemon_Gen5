@@ -1273,7 +1273,6 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	if( APPBAR_GetTrg( p_wk->p_appbar ) == APPBAR_ICON_RETURN
 			|| GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
 	{	
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 	}
 

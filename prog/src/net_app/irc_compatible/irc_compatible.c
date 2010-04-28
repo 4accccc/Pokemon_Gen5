@@ -18,6 +18,7 @@
 #include "system/main.h"	//HEAPID
 #include "system/gfl_use.h"
 #include "gamesystem/gamesystem.h"
+#include "sound/pm_sndsys.h"
 
 //	module
 #include "net_app/compatible_irc_sys.h"
@@ -285,6 +286,9 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 
   GF_ASSERT_MSG( COMPATIBLE_MYSTATUS_SIZE == MyStatus_GetWorkSize(), "number %d != mystatus %d!!\n", COMPATIBLE_MYSTATUS_SIZE, MyStatus_GetWorkSize() );
 
+  PMSND_PushBGM( );
+  PMSND_FadeOutBGM( PMSND_FADE_FAST );
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -317,6 +321,8 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	//ƒq[ƒv”jŠü
 	GFL_HEAP_DeleteHeap( HEAPID_IRCCOMPATIBLE_SYSTEM );
 	
+  PMSND_PopBGM( );
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -333,25 +339,42 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
-	GFL_PROC_MAIN_STATUS ret;
+  enum
+  { 
+    SEQ_BGM_WAIT,
+    SEQ_MAIN,
+  };
+
 	IRC_COMPATIBLE_MAIN_WORK	*p_wk;
 	p_wk	= p_work;
 
-	ret	= SUBPROC_Main( &p_wk->subproc );
+  switch( *p_seq )
+  { 
+  case SEQ_BGM_WAIT:
+    if( !PMSND_CheckFadeOnBGM() )
+    { 
+      (*p_seq)++;
+    }
+    break;
 
-	if( ret == GFL_PROC_MAIN_NULL )
-	{	
-		p_wk->seq_function( p_wk, &p_wk->seq );
-	}
+  case SEQ_MAIN:
+    { 
+      GFL_PROC_MAIN_STATUS ret = SUBPROC_Main( &p_wk->subproc );
 
-	if( p_wk->is_end )
-	{
-		return GFL_PROC_RES_FINISH;
-	}
-	else
-	{	
-		return GFL_PROC_RES_CONTINUE;
-	}
+      if( ret == GFL_PROC_MAIN_NULL )
+      {	
+        p_wk->seq_function( p_wk, &p_wk->seq );
+      }
+
+      if( p_wk->is_end )
+      {
+        return GFL_PROC_RES_FINISH;
+      }
+      break;
+    }
+  }
+
+  return GFL_PROC_RES_CONTINUE;
 }
 
 //=============================================================================

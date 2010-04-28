@@ -2325,7 +2325,6 @@ static void SEQFUNC_StartGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
   }
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 	{
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
@@ -2359,7 +2358,6 @@ static void SEQFUNC_CountDown( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
   if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 	{
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 		SEQ_End( p_wk );
 	}
@@ -2419,7 +2417,6 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
   { 
     if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
     {
-      PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
       p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
       SEQ_End( p_wk );
     }
@@ -2466,7 +2463,6 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 		{
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
 			p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
 			SEQ_End( p_wk );
 		}	

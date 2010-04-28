@@ -2126,7 +2126,6 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 	{	
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		SEQ_End( p_wk );
 	}
 

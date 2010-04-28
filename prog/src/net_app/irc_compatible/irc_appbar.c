@@ -16,6 +16,7 @@
 #include "msg/msg_irc_compatible.h"
 #include "app/app_taskmenu.h"
 #include "irccompatible_gra.naix"
+#include "sound/pm_sndsys.h"
 
 //mine
 #include "net_app/irc_appbar.h"
@@ -234,6 +235,7 @@ void APPBAR_Main( APPBAR_WORK *p_wk )
     p_wk->trg = APPBAR_SELECT_NONE;
     if( APP_TASKMENU_WIN_IsTrg( p_wk->p_win ) )
     { 
+			PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
       APP_TASKMENU_WIN_SetDecide( p_wk->p_win, TRUE );
       p_wk->seq = SEQ_ANM;
     }
