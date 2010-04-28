@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T18:52:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T19:18:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1926,7 +1926,7 @@
 キミたちを　巻き込んで　しまった[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="ｍｓｇ_n01r0502_get_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_n01r0502_get_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>捕獲後
 ・はい/いいえの選択肢表示
 ・はい→get_03
@@ -1939,7 +1939,7 @@
 てもちに　くわえますか？</language>
 	</row>
 
-	<row id="ｍｓｇ_n01r0502_get_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_n01r0502_get_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>捕獲後
 ・get_01でいいえ選択
 ・はい/いいえの選択肢表示
@@ -1953,7 +1953,7 @@
 くわえなくて　いいですか？</language>
 	</row>
 
-	<row id="ｍｓｇ_n01r0502_get_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_n01r0502_get_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>捕獲後
 ・get_01ではい選択
 ・メッセージ表示後、手持ちポケモンのリスト展開</comment>
@@ -1964,7 +1964,7 @@
 おくりかえしますか？</language>
 	</row>
 
-	<row id="ｍｓｇ_n01r0502_get_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_n01r0502_get_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>捕獲後
 ・はい/いいえの選択肢表示
 ・はい→get05
@@ -1977,7 +1977,7 @@
 おくりかえして　いいですか？</language>
 	</row>
 
-	<row id="ｍｓｇ_n01r0502_get_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_n01r0502_get_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>捕獲後
 ・ポケモン選択後
 ・1＝ポケモン名（WHITE→No651/BLACK→No650）
