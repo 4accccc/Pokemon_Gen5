@@ -79,7 +79,7 @@ XLS2TAB = $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-COMMON_TARGET = $(target_narc) $(target_naix) $(target_demoid_def_h) $(target_demo_res_dat) $(TARGET_DEMO_LIST_DAT)
+COMMON_TARGET = make_res2d $(target_narc) $(target_naix) $(target_demoid_def_h) $(target_demo_res_dat) $(TARGET_DEMO_LIST_DAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
 ifeq	($(CMDONLY_USER),true)
@@ -148,6 +148,9 @@ make_narc:
 	@echo naixカット
 	$(NAIXCUT) $(demo3d_naix)
 
+make_res2d:
+	$(MAKE) -C res2d
+
 # narc のコピーだけ実行する
 $(target_narc): $(demo3d_narc)
 	$(COPY) $(demo3d_narc) $(target_narc)
@@ -183,6 +186,7 @@ endif
 	rm -f $(demo_res_dat)
 
 endif
+	make clean -C res2d
 	@echo $(DEMO3D_DAT_DIR)
 	rm -f $(target_demoid_def_h)
 	rm -f $(target_demo_res_dat)

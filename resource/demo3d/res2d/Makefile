@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 #  demo3d用 2D素材のnarcを作るmakefile  
-#  コピーしてtargetnameを書き換えれば汎用的に使えます
 #  2010.04.27
 #------------------------------------------------------------------------------
 
@@ -8,6 +7,12 @@
 #ユーザー定義をインクルード
 #------------------------------------------------------------------------------
 include ..\make_users
+
+ifneq	(,$(filter $(USERNAME),$(ALL_USERS)))
+RESMAKE_USER	= true
+else
+RESMAKE_USER = false
+endif
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -40,7 +45,8 @@ sobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+ifeq	($(RESMAKE_USER),true) #リソースコンバート対象者のみ、コンバートのルールを有効にする
+
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
@@ -76,7 +82,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+ifeq	($(RESMAKE_USER),true) #リソースコンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
 	-ls *.NCLR *_lz.NCGR *_lz.NSCR *.NCER *.NANR > arclist.txt 
@@ -92,11 +98,12 @@ endif
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+ifeq	($(RESMAKE_USER),true) #リソースコンバート対象者のみ、中間ファイル削除
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f arclist.txt
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
