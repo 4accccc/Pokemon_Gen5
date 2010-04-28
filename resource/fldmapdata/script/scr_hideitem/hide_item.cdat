@@ -1,4 +1,4 @@
-static const HIDE_ITEM_DATA hide_item_data[167] = {
+static const HIDE_ITEM_DATA hide_item_data[168] = {
 
 	{ // ‚©‚¨‚éƒLƒmƒR
 		  0, 
@@ -326,13 +326,13 @@ static const HIDE_ITEM_DATA hide_item_data[167] = {
 	},
 	{ // ‚¿‚¢‚³‚ÈƒLƒmƒR
 		 54, 
-		1,0, // flags
+		1,1, // flags
 		340, // R06 ‚U”Ô“¹˜H
 		128,362, // x, y
 	},
 	{ // ‚¨‚¨‚«‚ÈƒLƒmƒR
 		 55, 
-		1,1, // flags
+		1,0, // flags
 		340, // R06 ‚U”Ô“¹˜H
 		131,362, // x, y
 	},
@@ -584,13 +584,13 @@ static const HIDE_ITEM_DATA hide_item_data[167] = {
 	},
 	{ // ‚¿‚¢‚³‚ÈƒLƒmƒR
 		 97, 
-		1,0, // flags
+		1,1, // flags
 		377, // R12 ‚P‚Q”Ô“¹˜H
 		622,174, // x, y
 	},
 	{ // ‚¿‚¢‚³‚ÈƒLƒmƒR
 		 98, 
-		1,0, // flags
+		1,1, // flags
 		377, // R12 ‚P‚Q”Ô“¹˜H
 		603,165, // x, y
 	},
@@ -602,7 +602,7 @@ static const HIDE_ITEM_DATA hide_item_data[167] = {
 	},
 	{ // ‚¿‚¢‚³‚ÈƒLƒmƒR
 		100, 
-		1,0, // flags
+		1,1, // flags
 		377, // R12 ‚P‚Q”Ô“¹˜H
 		628,174, // x, y
 	},
@@ -758,7 +758,7 @@ static const HIDE_ITEM_DATA hide_item_data[167] = {
 	},
 	{ // ‚¨‚¨‚«‚ÈƒLƒmƒR
 		126, 
-		1,1, // flags
+		1,0, // flags
 		118, // C07 ƒZƒbƒJƒVƒeƒB
 		199,223, // x, y
 	},
@@ -1001,5 +1001,11 @@ static const HIDE_ITEM_DATA hide_item_data[167] = {
 		0,0, // flags
 		343, // R06R0202 ƒtƒLƒˆƒZ‚Ì‚Ù‚ç‚ ‚È‚Q‚e
 		  5,  9, // x, y
+	},
+	{ // ‚©‚¢‚Ó‚­‚Ì‚­‚·‚è
+		167, 
+		1,0, // flags
+		354, // R08 ‚W”Ô“¹˜H
+		224,166, // x, y
 	},
 }; // end of hide_item_data

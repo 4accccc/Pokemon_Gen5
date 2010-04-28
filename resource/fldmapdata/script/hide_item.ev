@@ -185,6 +185,7 @@ _EVENT_DATA  ev_hide_item_163
 _EVENT_DATA  ev_hide_item_164
 _EVENT_DATA  ev_hide_item_165
 _EVENT_DATA  ev_hide_item_166
+_EVENT_DATA  ev_hide_item_167
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -1021,6 +1022,11 @@ EVENT_END
 EVENT_START ev_hide_item_166
 //フキヨセのほらあな２Ｆ ( 5, 9 )
 	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_166 )// ピーピーマックス
+EVENT_END
+
+EVENT_START ev_hide_item_167
+//８番道路 ( 224, 166 )
+	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_167 )// かいふくのくすり
 EVENT_END
 
 //--------------------------------------------------------------
