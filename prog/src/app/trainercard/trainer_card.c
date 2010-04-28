@@ -2318,11 +2318,11 @@ static void ResetAffinePlane(void)
 }
 
 #define TRAINER_SCREEN_PASTE_X  ( 21 )
-#define TRAINER_SCREEN_PASTE_Y  (  4 )
+#define TRAINER_SCREEN_PASTE_Y  (  2 )
 #define TRAINER_SCREEN_PASTE_W  ( 10 )
 #define TRAINER_SCREEN_PASTE_H  ( 11 )
 #define TRAINER_SCREEN_SRC_X    ( 21 )
-#define TRAINER_SCREEN_SRC_Y    (  7 )
+#define TRAINER_SCREEN_SRC_Y    (  2 )
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2342,13 +2342,6 @@ static void DispTrainer(TR_CARD_WORK *wk)
   //TRAINER
   GFL_BG_LoadCharacter(TRC_BG_TRAINER, wk->TrCharData->pRawData, wk->TrCharData->szByte, 0);
 
-#if 0
-  if( GFL_BG_ScreenAdrsGet( TRC_BG_TRAINER ) != NULL ){
-    GFL_BG_ScreenBufSet( TRC_BG_TRAINER, wk->ScrnData->rawData, transSize );
-  }
-
-  GFL_BG_LoadScreen( TRC_BG_TRAINER, wk->ScrnData->rawData, transSize, 0 );
-#else
   GFL_BG_WriteScreenExpand(TRC_BG_TRAINER,
     TRAINER_SCREEN_PASTE_X,TRAINER_SCREEN_PASTE_Y,
     TRAINER_SCREEN_PASTE_W,TRAINER_SCREEN_PASTE_H,
@@ -2357,7 +2350,6 @@ static void DispTrainer(TR_CARD_WORK *wk)
     TRAINER_SCREEN_SRC_Y,
     wk->ScrnData->screenWidth/8,wk->ScrnData->screenHeight/8);
   GFL_BG_LoadScreenReq( TRC_BG_TRAINER );
-#endif
 
 }
 
