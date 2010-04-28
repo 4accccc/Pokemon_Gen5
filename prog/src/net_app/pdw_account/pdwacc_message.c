@@ -115,6 +115,7 @@ struct _PDWACC_MESSAGE_WORK {
   WORDSET *pWordSet;                // メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
   STRBUF* pStrBuf;
+  STRBUF* pStrExBuf;
   int msgidx[_MESSAGE_INDEX_MAX];
 
   GFL_BMPWIN* noDispWin;
@@ -155,8 +156,10 @@ PDWACC_MESSAGE_WORK* PDWACC_MESSAGE_Init(HEAPID id,int msg_dat)
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
+  pWork->pStrExBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_dat, pWork->heapID );
+  pWork->pWordSet    = WORDSET_Create( pWork->heapID );
 
   pWork->pAppTaskRes =
     APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
@@ -203,6 +206,8 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
+  GFL_STR_DeleteBuffer(pWork->pStrExBuf);
+  WORDSET_Delete(pWork->pWordSet);
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
@@ -528,7 +533,7 @@ void PDWACC_MESSAGE_DispClear(PDWACC_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code)
+void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code,int no)
 {
   GFL_BMPWIN* pwin;
   int i;
@@ -610,12 +615,28 @@ void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code)
   if(pWork->noTitleDispWin==NULL){
     pWork->noTitleDispWin = GFL_BMPWIN_Create(
       _MESSAGE_NO_FRAME ,
-      3 , 3, 16 , 2,
+      3 , 3, 22 , 2,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->noTitleDispWin;
   GFL_FONTSYS_SetColor(1, 2, 0);
+
+#if PM_DEBUG
+#if DEBUG_ONLY_FOR_none
   GFL_MSG_GetString( pWork->pMsgData, PDWACC_009, pWork->pStrBuf );
+#else
+
+  GFL_MSG_GetString( pWork->pMsgData, PDWACC_DEBUG001, pWork->pStrExBuf );
+  WORDSET_RegisterNumber(pWork->pWordSet, 0, no%100000 ,
+                         5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(pWork->pWordSet, 1, (no/100000),
+                         5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pStrExBuf );
+
+#endif
+#else
+  GFL_MSG_GetString( pWork->pMsgData, PDWACC_009, pWork->pStrBuf );
+#endif
   PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle);
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);

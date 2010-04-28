@@ -1,7 +1,7 @@
 
 
 
-#define _POKEMON_CELLX ( 128 )  //ポケモン位置
+#define _POKEMON_CELLX ( 133 )  //ポケモン位置
 #define _POKEMON_CELLY ( 128 )  //ポケモン位置
 
 

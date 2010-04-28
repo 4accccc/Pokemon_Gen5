@@ -406,7 +406,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 			return FALSE;   // サービスが異なる場合は拾わない
 		}
 	}
-	if(pGF->connectNum >= pInit->maxConnectNum){
+	if((pGF->connectNum >= pInit->maxConnectNum) && (pInit->maxConnectNum>1)){
 		return FALSE;   // 接続人数いっぱいの場合拾わない
 	}
 //	NET_PRINT("_scanCheckok\n");
@@ -2173,32 +2173,6 @@ GameServiceID GFL_NET_WLGetGameServiceID(u8 index)
 	}
 	return WB_NET_NOP_SERVICEID;
 }
-
-
-
-//-------------------------------------------------------------
-/**
- * @brief   保持しているビーコンのサービス番号を返す が  初期化人数満たしているものは返さない
- * @param   index  ビーコンindex
- * @retval  GameServiceID
- */
-//-------------------------------------------------------------
-
-GameServiceID GFL_NET_WLGetGameServiceIDLimit(u8 index)
-{
-	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
-  GFL_NETWL* pNetWL = _pNetWL;
-
-  if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
-		_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
-    if(pGF->connectNum < pInit->maxConnectNum){
-      return pGF->serviceNo;
-    }
-	}
-	return WB_NET_NOP_SERVICEID;
-}
-
-
 
 //-------------------------------------------------------------
 /**

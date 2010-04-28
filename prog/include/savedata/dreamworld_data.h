@@ -12,6 +12,7 @@
 #include "system/gf_date.h"
 
 #define DREAM_WORLD_DATA_MAX_ITEMBOX (20)          ///< 受け取るアイテムボックスの数
+#define DREAM_WORLD_DATA_MAX_ITEMNUM (20)          ///< 受け取るアイテムのMAX数
 #define DREAM_WORLD_DATA_FURNITURE_NAME_NUM (12)  ///< 家具名文字列NUM
 #define DREAM_WORLD_DATA_MAX_FURNITURE (5)        ///< 家具のMAX ５つ
 #define DREAM_WORLD_NOPICTURE (0)              ///< 絵が入っていない状態

@@ -761,7 +761,7 @@ void GSYNC_DISP_PokemonIconJump(GSYNC_DISP_WORK* pWork)
 
 static u16 paletteTbl[]={0x5ab6,0x5ef7,0x6318,0x6739,0x6b5a,0x6f7b,0x739c,0x77bd,0x7bde,0x7fff };
 
-
+#define PALETTEPOS (32*0xA+2)
 
 static void dreamSmoke_HBlank( GFL_TCB* p_tcb, void* p_work )
 {
@@ -778,22 +778,22 @@ static void dreamSmoke_HBlank( GFL_TCB* p_tcb, void* p_work )
     G2_SetBG3Offset( pWork->scroll[v_c], 0 );
 #if 1
     if(pWork->performCnt >= 192){
-      GX_LoadBGPltt(&paletteTbl[0], 62, 2);
+      GX_LoadBGPltt(&paletteTbl[0], PALETTEPOS, 2);
     }
     else if(pWork->performCnt == 0){
-      GX_LoadBGPltt(&paletteTbl[9], 62, 2);
+      GX_LoadBGPltt(&paletteTbl[9], PALETTEPOS, 2);
     }
     else if(200 < v_c2){
-      GX_LoadBGPltt(&paletteTbl[0], 62, 2);
+      GX_LoadBGPltt(&paletteTbl[0], PALETTEPOS, 2);
     }
     else if(pWork->performCnt > v_c2){
-      GX_LoadBGPltt(&paletteTbl[0], 62, 2);
+      GX_LoadBGPltt(&paletteTbl[0], PALETTEPOS, 2);
     }
     else if(((v_c2 - pWork->performCnt) < elementof(paletteTbl))  && ((v_c2 - pWork->performCnt) >= 0)){
-      GX_LoadBGPltt(&paletteTbl[v_c2 - pWork->performCnt], 62, 2);
+      GX_LoadBGPltt(&paletteTbl[v_c2 - pWork->performCnt], PALETTEPOS, 2);
     }
     else{
-      GX_LoadBGPltt(&paletteTbl[9], 62, 2);
+      GX_LoadBGPltt(&paletteTbl[9], PALETTEPOS, 2);
     }
 #endif
 	}
@@ -861,13 +861,13 @@ static void _blendSmoke(GSYNC_DISP_WORK* pWork)
 
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
   if(i > 10){
-    G2_BlendNone();
+//    G2_BlendNone();
     pWork->blendStart = 0;
     return;
   }
   else if(i < 0){
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-   G2_BlendNone();
+ //  G2_BlendNone();
     pWork->blendStart = 0;
     return;
   }
@@ -889,10 +889,13 @@ void GSYNC_DISP_SetPerfomance(GSYNC_DISP_WORK* pWork,int percent)
 
   num = num * 1.2;
   if(percent > 100){
-    pWork->performCnt = 0;
+    cnt = 0;
   }
   else{
-    pWork->performCnt = 120 - num;
+    cnt = 120 - num;
+  }
+  if(pWork->performCnt > cnt){
+    pWork->performCnt = cnt;
   }
 }
 
@@ -1137,9 +1140,11 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
 
 void GSYNC_DISP_MoveIconAdd(GSYNC_DISP_WORK* pWork,int index, int no, int form, int sex)
 {
-  pWork->aIconParam[index].no = no;
-  pWork->aIconParam[index].form = form;
-  pWork->aIconParam[index].sex = sex;
+  if((no!=0) && (no <= MONSNO_ARUSEUSU)){  // データ読み込み・破棄
+    pWork->aIconParam[index].no = no;
+    pWork->aIconParam[index].form = form;
+    pWork->aIconParam[index].sex = sex;
+  }
 
 }
 

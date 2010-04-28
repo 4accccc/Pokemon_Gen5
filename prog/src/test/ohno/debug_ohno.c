@@ -925,7 +925,7 @@ static void _traialDataRecv(DEBUG_OHNO_CONTROL * pDOC)
   pDOC->aInit.data[0].LangCode  = CasetteLanguage;
   pDOC->aInit.data[0].version   = 1<<GET_VERSION();
   pDOC->aInit.dataNum = 1;
-  pDOC->aInit.ConfusionID = 12;
+  pDOC->aInit.ConfusionID = 0;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
 
 }

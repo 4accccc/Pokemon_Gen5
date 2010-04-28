@@ -302,9 +302,7 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
     u32 contentLength;
     if ( NHTTP_ERROR_NONE == NHTTPGetConnectionProgress(pWork->handle, &receivedCurrent, &contentLength))
     {
-
-      NET_PRINT(" %d recv  \n",100*contentLength/receivedCurrent);
-
+//      NET_PRINT(" %d recv  \n",100*contentLength/receivedCurrent);
     }
   }
   else

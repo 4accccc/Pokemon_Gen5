@@ -21,6 +21,7 @@
 //--------------------------------------------------------------------------------------------
 int DREAMWORLD_SV_GetWorkSize(void)
 {
+  OS_Printf("ドリームワールドサイズ\n",sizeof(DREAMWORLD_SAVEDATA));
 	return sizeof(DREAMWORLD_SAVEDATA);
 }
 
@@ -195,6 +196,9 @@ u16 DREAMWORLD_SV_GetItem(DREAMWORLD_SAVEDATA* pSV,int index)
   if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
     return 0;
   }
+  if(pSV->itemID[index] >= ITEM_DATA_MAX){
+    return 0;
+  }
   return pSV->itemID[index];
 }
 
@@ -210,6 +214,9 @@ u16 DREAMWORLD_SV_GetItem(DREAMWORLD_SAVEDATA* pSV,int index)
 u8 DREAMWORLD_SV_GetItemNum(DREAMWORLD_SAVEDATA* pSV, int index)
 {
   if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
+    return 0;
+  }
+  if(DREAM_WORLD_DATA_MAX_ITEMNUM < pSV->itemNum[index]){
     return 0;
   }
   return pSV->itemNum[index];
@@ -230,8 +237,8 @@ void DREAMWORLD_SV_SetItem(DREAMWORLD_SAVEDATA* pSV,int index ,int itemNo, int n
   if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
     return;
   }
-  pSV->itemID[index] =itemNo;
-  pSV->itemNum[index] =num;
+  pSV->itemID[index] = itemNo;
+  pSV->itemNum[index] = num;
 }
 
 //--------------------------------------------------------------------------------------------
