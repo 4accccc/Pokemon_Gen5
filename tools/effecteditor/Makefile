@@ -31,7 +31,7 @@ SUBDIRS	=
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
-include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
+#include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include	$(COMMONDEFS_CCTYPE_CW)
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
@@ -50,7 +50,7 @@ WAZAEFFSRCS	:= $(wildcard $(RES_DIR)*.s)
 
 do-build: $(notdir $(WAZAEFFSRCS:.s=.bin))
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
+	"$(CWFOLDER_TWL)ARM_Tools/Command_Line_Tools/mwasmarm.exe" $< -o $*.o
+	"$(CWFOLDER_TWL)ARM_Tools/Command_Line_Tools/mwldarm.exe" -dis -o $*.elf $*.o
 	../elf2bin $*.elf
 
