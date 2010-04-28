@@ -39,7 +39,12 @@ INIT_EVENT_START	ev_zone_d01r0201
 		
 		//D01R0201：ムシャーナ復活
 		_FLAG_RESET( FV_D01R0201_POKE16_01 )
+		
+	//その他の条件ではゾーン切り替えの際にムシャーナを非表示にする
+	ELSE
 	
+		//D01R0201：ムシャーナ非表示
+		_FLAG_SET( FV_D01R0201_POKE16_01 )
 	ENDIF
 
 }
