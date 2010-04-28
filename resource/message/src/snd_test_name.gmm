@@ -8477,29 +8477,29 @@
 		<language name="JPN" width="256">RIZDEMO-01</language>
 		<language name="JPN_KANJI" width="256">RIZDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_350">
-		<language name="JPN" width="256">DMY-350</language>
-		<language name="JPN_KANJI" width="256">DMY-350</language>
+	<row id="msg_seq_se_fld_167">
+		<language name="JPN" width="256">FLD-167</language>
+		<language name="JPN_KANJI" width="256">FLD-167</language>
 	</row>
-	<row id="msg_seq_se_dmy_351">
-		<language name="JPN" width="256">DMY-351</language>
-		<language name="JPN_KANJI" width="256">DMY-351</language>
+	<row id="msg_seq_se_fld_168">
+		<language name="JPN" width="256">FLD-168</language>
+		<language name="JPN_KANJI" width="256">FLD-168</language>
 	</row>
-	<row id="msg_seq_se_dmy_352">
-		<language name="JPN" width="256">DMY-352</language>
-		<language name="JPN_KANJI" width="256">DMY-352</language>
+	<row id="msg_seq_se_fld_169">
+		<language name="JPN" width="256">FLD-169</language>
+		<language name="JPN_KANJI" width="256">FLD-169</language>
 	</row>
-	<row id="msg_seq_se_dmy_353">
-		<language name="JPN" width="256">DMY-353</language>
-		<language name="JPN_KANJI" width="256">DMY-353</language>
+	<row id="msg_seq_se_fld_170">
+		<language name="JPN" width="256">FLD-170</language>
+		<language name="JPN_KANJI" width="256">FLD-170</language>
 	</row>
-	<row id="msg_seq_se_dmy_354">
-		<language name="JPN" width="256">DMY-354</language>
-		<language name="JPN_KANJI" width="256">DMY-354</language>
+	<row id="msg_seq_se_vdemo_03">
+		<language name="JPN" width="256">VDEMO-03</language>
+		<language name="JPN_KANJI" width="256">VDEMO-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_355">
-		<language name="JPN" width="256">DMY-355</language>
-		<language name="JPN_KANJI" width="256">DMY-355</language>
+	<row id="msg_seq_se_rizdemo_02">
+		<language name="JPN" width="256">RIZDEMO-02</language>
+		<language name="JPN_KANJI" width="256">RIZDEMO-02</language>
 	</row>
 	<row id="msg_seq_se_dmy_356">
 		<language name="JPN" width="256">DMY-356</language>
