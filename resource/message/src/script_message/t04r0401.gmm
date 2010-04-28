@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T21:44:17"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T22:29:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1314" top="174" right="2019" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="115" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -889,8 +889,16 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">SHIRONA
 シロナ</attribute>
-		<language name="JPN" width="256">シロナ『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その２</language>
+		<language name="JPN" width="256">シロナ『すうねんに　いちど
+かくちほうの　チャンピオンが　つどい▽
+だれが　さいきょうなのか　きそう！▼
+そんな　あつまりが　あると
+おもしろいと　おもわない？</language>
+		<language name="JPN_KANJI" width="256">シロナ『数年に　一度
+各地方の　チャンピオンが　集い▽
+だれが　最強なのか　競う！▼
+そんな　集まりが　あると
+おもしろいと　思わない？</language>
 	</row>
 
 	<row id="msg_t04r0401_shirona_summer_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -899,8 +907,16 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">SHIRONA
 シロナ</attribute>
-		<language name="JPN" width="256">シロナ『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その３</language>
+		<language name="JPN" width="256">シロナ『ここで　くらしたいけれど
+そうすると　けんきゅうしりょうが▽
+やまのように　つみかさなるのよね……▼
+そうよ！　シロナ！
+こんどこそ　かたづけるのよ！</language>
+		<language name="JPN_KANJI" width="256">シロナ『ここで　暮らしたいけれど
+そうすると　研究資料が▽
+山のように　積み重なるのよね……▼
+そうよ！　シロナ！
+今度こそ　片付けるのよ！</language>
 	</row>
 
 	<row id="msg_t04r0401_shirona_summer_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -909,8 +925,14 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">SHIRONA
 シロナ</attribute>
-		<language name="JPN" width="256">シロナ『かりメッセージ　その４</language>
-		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その４</language>
+		<language name="JPN" width="256">シロナ『もんだいが　あります▼
+しろい　みずぎと
+くろい　みずぎ……▽
+どちらが　あたしに　にあうかしら？</language>
+		<language name="JPN_KANJI" width="256">シロナ『問題が　あります▼
+白い　水着と
+黒い　水着……▽
+どちらが　あたしに　似合うかしら？</language>
 	</row>
 
 	<row id="msg_t04r0401_shirona_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1013,8 +1035,16 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER6
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その１</language>
+		<language name="JPN" width="256">フウロ『カミツレちゃんとは
+なかよし　だけど▽
+ポケモンしょうぶは　べつよ！▼
+だいじなのは　やっぱり
+でんき　たいさく　なの！</language>
+		<language name="JPN_KANJI" width="256">フウロ『カミツレちゃんとは
+仲良しだけど▽
+ポケモン勝負は　べつよ！▼
+大事なのは　やっぱり　電気対策なの！
+お肌の　ケアぐらい　大事なの！</language>
 	</row>
 
 	<row id="msg_t04r0401_leader6_summer_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1023,8 +1053,14 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER6
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その２</language>
+		<language name="JPN" width="256">フウロ『あれる　あめの　なか
+あまぐもを　つきぬけたときに▽
+はじめて　みえる　こうけい……▼
+いつか　アナタにも　みせてあげたいな</language>
+		<language name="JPN_KANJI" width="256">フウロ『荒れる　雨の中
+雨雲を　つきぬけたときに▽
+はじめて　みえる　光景……▼
+いつか　アナタにも　みせてあげたいな</language>
 	</row>
 
 	<row id="msg_t04r0401_leader6_summer_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1033,8 +1069,12 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER6
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その３</language>
+		<language name="JPN" width="256">フウロ『……いま　かんがえていたの▼
+みずぎって　みせるもの　なの？
+それとも　かくすもの　なの？</language>
+		<language name="JPN_KANJI" width="256">フウロ『……いま　考えていたの▼
+水着って　魅せるもの　なの？
+それとも　隠すもの　なの？</language>
 	</row>
 
 	<row id="msg_t04r0401_leader6_summer_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1071,8 +1111,12 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『かりメッセージ　その１</language>
-		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その１</language>
+		<language name="JPN" width="256">カミツレ『……ポケモンの　みりょくを
+ひきだすには　ひきだすがわにも▽
+みりょくが　ないと　むずかしいわね</language>
+		<language name="JPN_KANJI" width="256">カミツレ『……ポケモンの　魅力を
+ひきだすには　ひきだす側にも▽
+魅力が　ないと　難しいわね</language>
 	</row>
 
 	<row id="msg_t04r0401_leader4_summer_02" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -1081,8 +1125,14 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『かりメッセージ　その２</language>
-		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その２</language>
+		<language name="JPN" width="256">カミツレ『……ライモンシティはね
+でんきタイプ　ポケモンの▽
+はつでんする　エネルギーで　うごくの▼
+……ウソよ</language>
+		<language name="JPN_KANJI" width="256">カミツレ『……ライモンシティはね
+でんきタイプ　ポケモンの▽
+発電する　エネルギーで　動くの▼
+……ウソよ</language>
 	</row>
 
 	<row id="msg_t04r0401_leader4_summer_03" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
@@ -1091,8 +1141,16 @@
 ・その日固定</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『かりメッセージ　その３</language>
-		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その３</language>
+		<language name="JPN" width="256">カミツレ『なやんでばかりは
+からだと　こころに　よくないの▼
+そんなときは　しこうかいろを
+わざと　ショートさせて▽
+きぶんを　いっしん　させないと</language>
+		<language name="JPN_KANJI" width="256">カミツレ『悩んでばかりは
+肉体と　精神に　よくないの▼
+そんなときは　思考回路を
+わざと　ショートさせて▽
+気分を　一新させないと</language>
 	</row>
 
 	<row id="msg_t04r0401_leader4_summer_04" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
