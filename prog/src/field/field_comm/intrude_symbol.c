@@ -42,11 +42,18 @@ static const VecFx32 PalaceForestDoorwayPos = {FX32_CONST(504), FX32_CONST(32), 
 NetID IntrudeSymbol_CheckIntrudeNetID(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
 {
   INTRUDE_COMM_SYS_PTR intcomm;
+  NetID my_netid = GAMEDATA_GetIntrudeMyID(gamedata);
   
-  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
-    intcomm = GameCommSys_GetAppWork(game_comm);
-    if(intcomm == NULL 
-        || intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(NetErr_App_CheckError()){
+    NetID invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, my_netid);
+    if(invasion_netid == my_netid){
+      return INTRUDE_NETID_NULL;
+    }
+    return invasion_netid;
+  }
+  else if(intcomm != NULL){
+    if(intcomm->intrude_status_mine.palace_area == my_netid){
       return INTRUDE_NETID_NULL;
     }
     return intcomm->intrude_status_mine.palace_area;
