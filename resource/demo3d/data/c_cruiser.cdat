@@ -70,11 +70,12 @@ static const DEMO3D_CMD_DATA demo3d_cmd_c_cruiser_end_data[] = {
 
 static const u16 res_c_cruiser_file_cdemo_01[] = {
  NARC_data_demo3d_cdemo_01_nsbmd,
+ NARC_data_demo3d_cdemo_01_nsbta,
  NARC_data_demo3d_cdemo_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_01[] = {
- { res_c_cruiser_file_cdemo_01, 2 },
+ { res_c_cruiser_file_cdemo_01, 3 },
 };
 
 ///==================================
@@ -158,11 +159,12 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_07[] = {
 
 static const u16 res_c_cruiser_file_cdemo_01a[] = {
  NARC_data_demo3d_cdemo_01a_nsbmd,
+ NARC_data_demo3d_cdemo_01a_nsbta,
  NARC_data_demo3d_cdemo_01a_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_01a[] = {
- { res_c_cruiser_file_cdemo_01a, 2 },
+ { res_c_cruiser_file_cdemo_01a, 3 },
 };
 
 ///========================================================

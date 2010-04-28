@@ -117,13 +117,8 @@ static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town02_tbl[] = 
  { res_intro_town_file_unit_intro_town02, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town03_tbl[] = {
- { res_intro_town_file_unit_intro_town03, 1 },
-};
-
 static const DEMO3D_SCENE_UNIT res_intro_town_scene_unit[] = {
  { res_intro_town_file_unit_intro_town01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_intro_town_file_unit_intro_town02_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_intro_town_file_unit_intro_town03_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-27T20:41:33" source="c_cruiser_v06.mb"/>
+	<create user="unno" host="W00199" date="2010-04-28T20:59:35" source="c_cruiser_v24.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-04-27T20:41:33" source="c_cruiser_v06.mb"/>
+<original_create user="unno" host="W00199" date="2010-04-28T20:59:35" source="c_cruiser_v24.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2013,7 +2013,7 @@
 					<tex st="64.000000 -32.000000"/>
 					<pos_diff xyz="0.005127 0.024414 0.003662"/>
 					<tex st="0.000000 -32.000000"/>
-					<clr rgb="31 31 31"/>
+					<clr rgb="23 23 23"/>
 					<pos_xyz xyz="-0.200195 0.032471 -1.134033"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_diff xyz="0.003174 -0.026855 0.001709"/>
@@ -2047,7 +2047,7 @@
 					<tex st="64.000000 -32.000000"/>
 					<pos_diff xyz="0.005127 0.024170 0.003662"/>
 					<tex st="0.000000 -32.000000"/>
-					<clr rgb="31 31 31"/>
+					<clr rgb="23 23 23"/>
 					<pos_xyz xyz="-0.148193 0.023926 -2.555176"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_diff xyz="0.003174 -0.027100 0.001709"/>
@@ -3502,7 +3502,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="polySurface2" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
