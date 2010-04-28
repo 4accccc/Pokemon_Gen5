@@ -91,7 +91,6 @@ typedef enum {
 static struct {
 
   const BTL_MAIN_MODULE*  mainModule;   ///< メインモジュール
-  const BTL_CLIENT*       client;       ///< UIクライアント
   const BTL_POKE_CONTAINER* pokeCon;    ///< ポケモンコンテナ
   WORDSET*          wset;               ///< WORDSET
   STRBUF*           tmpBuf;             ///< 文字列一時展開用バッファ
@@ -140,12 +139,11 @@ static void ms_yesno_simple( STRBUF* dst, BtlStrID_WAZAOBOE strID, const int* ar
  * 文字列生成システム初期化（バトル起動直後に１回だけ呼ぶ）
  *
  * @param   mainModule
- * @param   client
  * @param   heapID
  *
  */
 //=============================================================================================
-void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID )
+void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID )
 {
   static const u16 msgDataID[] = {
     NARC_message_btl_std_dat,
@@ -161,10 +159,9 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
   int i;
 
   SysWork.mainModule = mainModule;
-  SysWork.client = client;
   SysWork.pokeCon = pokeCon;
   SysWork.heapID = heapID;
-  SysWork.clientID = BTL_CLIENT_GetClientID( client );
+  SysWork.clientID = playerClientID;
 
   SysWork.wset = WORDSET_Create( heapID );
   SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );

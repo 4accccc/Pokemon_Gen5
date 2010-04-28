@@ -8862,7 +8862,13 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       BTL_DEADREC_Add( &wk->deadRec, pokeID );
 
       // @@@ みがわり出てたら画面から消すコマンド生成？
-      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
+
+      // ラストのシン・ムは「○○は　たおれた」メッセージを表示しない
+      if( (BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND_EX) == FALSE)
+      ||  (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_CLIENT_PLAYER)
+      ){
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
+      }
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
 
       BPP_Clear_ForDead( poke );

@@ -322,7 +322,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->mainSeq = 0;
   core->selectItemSeq = 0;
 
-  BTL_STR_InitSystem( mainModule, client, pokeCon, heapID );
+  BTL_STR_InitSystem( mainModule, core->myClientID, pokeCon, heapID );
 
   return core;
 }

@@ -106,6 +106,15 @@ typedef struct {
   u16  skipTurnCount;
 }RECPLAYER_CONTROL;
 
+/*--------------------------------------------------------------------------*/
+/* Globals                                                                  */
+/*--------------------------------------------------------------------------*/
+#ifdef PM_DEBUG
+static BTLV_CORE* GViewCore = NULL;
+static int GControlableAIClientID = -1;
+#endif
+
+
 //--------------------------------------------------------------
 /**
  *  クライアントモジュール構造定義
@@ -150,7 +159,6 @@ struct _BTL_CLIENT {
   u8             AITrainerMsgCheckedFlag[ AITRAINER_MSG_MAX ];
 
 
-
   const BTL_PARTY*  myParty;
   u8                numCoverPos;    ///< 担当する戦闘ポケモン数
   u8                procPokeIdx;    ///< 処理中ポケモンインデックス
@@ -193,6 +201,7 @@ struct _BTL_CLIENT {
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
 };
+
 
 
 /*--------------------------------------------------------------------------*/
@@ -3252,6 +3261,9 @@ static BtlRotateDir RotAI_CheckRotation( BTL_CLIENT* wk )
   return BTL_ROTATEDIR_STAY;
 }
 
+/**
+ *  アクション選択：AI
+ */
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   enum {
@@ -3262,6 +3274,13 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
   };
 
   GF_ASSERT(wk->AIHandle);
+
+  #ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_AI_CTRL) )
+  {
+    return SubProc_UI_SelectAction( wk, seq );
+  }
+  #endif
 
   switch( *seq ){
   case SEQ_INIT:

@@ -29,7 +29,7 @@ enum {
 };
 
 
-extern void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID );
+extern void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID );
 extern void BTL_STR_QuitSystem( void );
 
 //---------------------------------------------------------------------------------------

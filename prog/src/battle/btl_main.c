@@ -2102,7 +2102,9 @@ BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
   if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
   ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
   ){
-    return TRUE;
+    if( !BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_LEGEND_EX) ){
+      return TRUE;
+    }
   }
   return FALSE;
 }
