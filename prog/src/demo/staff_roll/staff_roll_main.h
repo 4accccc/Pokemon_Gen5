@@ -72,11 +72,15 @@ typedef struct {
 
 	s8	britness;
 
+	u8	skipCount;
+	u8	skipFlag;
+
 	ITEMLIST_DATA * list;
 	u16	listPos;
 	s16	listWait;
 	fx32	listScrollCnt;
 	BOOL	listScrollFlg;
+
 
 	int	mainSeq;
 	int	subSeq;

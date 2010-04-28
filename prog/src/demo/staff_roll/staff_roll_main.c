@@ -95,6 +95,9 @@ enum {
 	STR_PUT_MODE_CENTER,			// 中央
 };
 
+#define SKIP_SPEED				( 4 )
+#define	STR_FADE_SPEED		( 4 )
+#define	LOGO_FADE_SPEED		( 1 )
 
 typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 
@@ -142,6 +145,10 @@ static BOOL Comm_LabelScrollStart( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelScrollStop( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+
+#ifdef	PM_DEBUG
+static void DebugGridSet(void);
+#endif	// PM_DEBUG
 
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -282,14 +289,17 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 static int MainSeq_Main( SRMAIN_WORK * wk )
 {
-//	u16	loop;
-//	u16	i;
 
 #ifdef	PM_DEBUG
+	// 終了
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
-	// デバッグ用一時停止
+	// グリッド表示
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		DebugGridSet();
+	}
+	// 一時停止
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		wk->debugStopFlg ^= 1;
 	}
@@ -298,67 +308,66 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 	}
 #endif
 
-//	loop = 1;
 	if( wk->dat->fastMode == TRUE ){
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
-//			loop = 4;
+		if( wk->skipCount == 0 ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+				wk->skipFlag = 1;
+			}else{
+				wk->skipFlag = 0;
+			}
 		}
 	}
 
-//	for( i=0; i<loop; i++ ){
-		if( wk->subSeq == SUBSEQ_INIT ){
-			while( 1 ){
-				ITEMLIST_DATA * item = &wk->list[wk->listPos];
-//				OS_Printf( "[%d] : label = %d, msg = %d\n", wk->listPos, item->label, item->msgIdx );
-				if( CommFunc[item->label]( wk, item ) == TRUE ){
-					wk->listPos++;
-					break;
-				}
+	if( wk->subSeq == SUBSEQ_INIT ){
+		while( 1 ){
+			ITEMLIST_DATA * item = &wk->list[wk->listPos];
+//			OS_Printf( "[%d] : label = %d, msg = %d\n", wk->listPos, item->label, item->msgIdx );
+			if( CommFunc[item->label]( wk, item ) == TRUE ){
 				wk->listPos++;
+				break;
 			}
+			wk->listPos++;
 		}
+	}
 
-		switch( wk->subSeq ){
-		case SUBSEQ_WAIT:
-			if( wk->listWait <= 0 ){
-				wk->subSeq = SUBSEQ_INIT;
+	switch( wk->subSeq ){
+	case SUBSEQ_WAIT:
+		if( wk->listWait <= 0 ){
+			wk->subSeq = SUBSEQ_INIT;
+		}else{
+			if( wk->skipFlag == 1 ){
+				wk->listWait -= SKIP_SPEED;
 			}else{
 				wk->listWait--;
 			}
-			break;
-
-		case SUBSEQ_STR_PUT:
-			if( PutStr( wk ) == FALSE ){
-				wk->subSeq = SUBSEQ_INIT;
-			}
-			break;
-
-		case SUBSEQ_STR_CLEAR:
-			if( ClearStr( wk ) == FALSE ){
-				wk->subSeq = SUBSEQ_INIT;
-			}
-			break;
-
-		case SUBSEQ_LOGO_PUT:
-			if( PutLogo( wk ) == FALSE ){
-				wk->subSeq = SUBSEQ_INIT;
-			}
-			break;
-
-		case SUBSEQ_END:
-			return SetFadeOut( wk, MAINSEQ_RELEASE );
 		}
+		break;
 
-		ListScroll( wk );
-//	}
+	case SUBSEQ_STR_PUT:
+		if( PutStr( wk ) == FALSE ){
+			wk->subSeq = SUBSEQ_INIT;
+		}
+		break;
 
-/*
-	if( wk->bmpShitfFlag == 1 ){
-		SetBmpWinTransFlag( wk, BMPWIN_TRANS_MAIN_FLAG|BMPWIN_TRANS_SUB_FLAG );
-		wk->bmpShitfFlag = 0;
+	case SUBSEQ_STR_CLEAR:
+		if( ClearStr( wk ) == FALSE ){
+			wk->subSeq = SUBSEQ_INIT;
+		}
+		break;
+
+	case SUBSEQ_LOGO_PUT:
+		if( PutLogo( wk ) == FALSE ){
+			wk->subSeq = SUBSEQ_INIT;
+		}
+		break;
+
+	case SUBSEQ_END:
+		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
-*/
 
+	ListScroll( wk );
+
+	wk->skipCount = ( wk->skipCount + 1 ) & 3;
 
 	return MAINSEQ_MAIN;
 }
@@ -380,7 +389,7 @@ static void InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_2D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
@@ -411,6 +420,18 @@ static void InitBg(void)
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
 	}
 
+#ifdef PM_DEBUG
+	{	// グリッド面
+		GFL_BG_BGCNT_HEADER cnth= {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x1000,
+			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &cnth, GFL_BG_MODE_TEXT );
+	}
+#endif	// PM_DEBUG
+
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 }
@@ -420,7 +441,12 @@ static void ExitBg(void)
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF);
 
+#ifdef PM_DEBUG
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
+#endif	// PM_DEBUG
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
 
 	GFL_BG_Exit();
@@ -679,6 +705,25 @@ static void ShiftChar( u32 * mchr, u32 * schr, BOOL loop )
 	}
 }
 
+static void ShiftCharSkip( u32 * mchr, u32 * schr, BOOL loop )
+{
+	u32	i;
+
+	if( loop == FALSE ){
+		for( i=0; i<SKIP_SPEED; i++ ){
+			schr[i+4] = 0;
+		}
+	}else{
+		for( i=0; i<SKIP_SPEED; i++ ){
+			schr[i+4] = mchr[i];
+		}
+	}
+
+	for( i=0; i<SKIP_SPEED; i++ ){
+		mchr[i] = mchr[i+4];
+	}
+}
+
 static void ListScroll( SRMAIN_WORK * wk )
 {
 	if( wk->listScrollFlg == FALSE ){ return; }
@@ -700,24 +745,47 @@ static void ListScroll( SRMAIN_WORK * wk )
 		mBmp = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(wk->util[0].win) );
 		sBmp = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(wk->util[1].win) );
 
-		// 一列目はループさせるので別処理
-		p1 = 0;
-		p2 = ( 25 << 5 ) << 5;
-		for( j=0; j<32; j++ ){
-			ShiftChar( (u32*)&mBmp[p1], (u32*)&sBmp[p2], FALSE );
-			ShiftChar( (u32*)&sBmp[p1], (u32*)&mBmp[p2], TRUE );
-			p1 += 0x20;
-			p2 += 0x20;
-		}
-		// 二列目以降
-		for( i=1; i<26; i++ ){
-			p1 = ( i << 5 ) << 5;
-			p2 = ( (i-1) << 5 ) << 5;
+		if( wk->skipFlag == 0 ){
+			// 一列目はループさせるので別処理
+			p1 = 0;
+			p2 = ( 25 << 5 ) << 5;
 			for( j=0; j<32; j++ ){
-				ShiftChar( (u32*)&mBmp[p1], (u32*)&mBmp[p2], TRUE );
-				ShiftChar( (u32*)&sBmp[p1], (u32*)&sBmp[p2], TRUE );
+				ShiftChar( (u32*)&mBmp[p1], (u32*)&sBmp[p2], FALSE );
+				ShiftChar( (u32*)&sBmp[p1], (u32*)&mBmp[p2], TRUE );
 				p1 += 0x20;
 				p2 += 0x20;
+			}
+			// 二列目以降
+			for( i=1; i<26; i++ ){
+				p1 = ( i << 5 ) << 5;
+				p2 = ( (i-1) << 5 ) << 5;
+				for( j=0; j<32; j++ ){
+					ShiftChar( (u32*)&mBmp[p1], (u32*)&mBmp[p2], TRUE );
+					ShiftChar( (u32*)&sBmp[p1], (u32*)&sBmp[p2], TRUE );
+					p1 += 0x20;
+					p2 += 0x20;
+				}
+			}
+		}else{
+			// 一列目はループさせるので別処理
+			p1 = 0;
+			p2 = ( 25 << 5 ) << 5;
+			for( j=0; j<32; j++ ){
+				ShiftCharSkip( (u32*)&mBmp[p1], (u32*)&sBmp[p2], FALSE );
+				ShiftCharSkip( (u32*)&sBmp[p1], (u32*)&mBmp[p2], TRUE );
+				p1 += 0x20;
+				p2 += 0x20;
+			}
+			// 二列目以降
+			for( i=1; i<26; i++ ){
+				p1 = ( i << 5 ) << 5;
+				p2 = ( (i-1) << 5 ) << 5;
+				for( j=0; j<32; j++ ){
+					ShiftCharSkip( (u32*)&mBmp[p1], (u32*)&mBmp[p2], TRUE );
+					ShiftCharSkip( (u32*)&sBmp[p1], (u32*)&sBmp[p2], TRUE );
+					p1 += 0x20;
+					p2 += 0x20;
+				}
 			}
 		}
 
@@ -781,7 +849,6 @@ static BOOL PutStr( SRMAIN_WORK * wk )
 {
 	switch( wk->labelSeq ){
 	case 0:
-		// 輝度下げ
 		if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
 			G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BD, 0, 16 );
 		}
@@ -793,8 +860,11 @@ static BOOL PutStr( SRMAIN_WORK * wk )
 		break;
 
 	case 1:
-		// 輝度上げ
-		wk->britness++;
+		if( wk->skipFlag == 1 ){
+			wk->britness += ( STR_FADE_SPEED * SKIP_SPEED );
+		}else{
+			wk->britness += STR_FADE_SPEED;
+		}
 		{
 			s32	p1, p2;
 			if( wk->britness > 16 ){
@@ -840,7 +910,11 @@ static BOOL ClearStr( SRMAIN_WORK * wk )
 		wk->labelSeq++;
 
 	case 1:
-		wk->britness++;
+		if( wk->skipFlag == 1 ){
+			wk->britness += ( STR_FADE_SPEED * SKIP_SPEED );
+		}else{
+			wk->britness += STR_FADE_SPEED;
+		}
 		{
 			s32	p1, p2;
 			if( wk->britness > 16 ){
@@ -896,7 +970,11 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		break;
 
 	case 1:
-		wk->britness++;
+		if( wk->skipFlag == 1 ){
+			wk->britness += ( LOGO_FADE_SPEED * SKIP_SPEED );
+		}else{
+			wk->britness += LOGO_FADE_SPEED;
+		}
 		if( wk->britness >= 16 ){
 			G2_ChangeBlendAlpha( 16, 0 );
 			wk->britness = 0;
@@ -907,7 +985,11 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		break;
 
 	case 2:
-		wk->listWait--;
+		if( wk->skipFlag == 1 ){
+			wk->listWait -= SKIP_SPEED;
+		}else{
+			wk->listWait--;
+		}
 		if( wk->listWait <= 0 ){
 			wk->listWait = 0;
 			wk->labelSeq++;
@@ -915,7 +997,11 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		break;
 
 	case 3:
-		wk->britness++;
+		if( wk->skipFlag == 1 ){
+			wk->britness += ( LOGO_FADE_SPEED * SKIP_SPEED );
+		}else{
+			wk->britness += LOGO_FADE_SPEED;
+		}
 		if( wk->britness >= 16 ){
 			G2_BlendNone();
 			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
@@ -1020,3 +1106,50 @@ static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 	wk->subSeq = SUBSEQ_LOGO_PUT;
 	return TRUE;
 }
+
+
+
+//============================================================================================
+//	デバッグ
+//============================================================================================
+#ifdef PM_DEBUG
+
+static const u8 GridChar[] = {
+	0x00, 0x00, 0x00, 0x80,
+	0x00, 0x00, 0x00, 0x80,
+	0x00, 0x00, 0x00, 0x80,
+	0x00, 0x00, 0x00, 0x80,
+	0x00, 0x00, 0x00, 0x80,
+	0x00, 0x00, 0x00, 0x80,
+	0x00, 0x00, 0x00, 0x80,
+	0x88, 0x88, 0x88, 0x88,
+
+	0x00, 0x00, 0x00, 0x60,
+	0x00, 0x00, 0x00, 0x60,
+	0x00, 0x00, 0x00, 0x60,
+	0x00, 0x00, 0x00, 0x60,
+	0x00, 0x00, 0x00, 0x60,
+	0x00, 0x00, 0x00, 0x60,
+	0x00, 0x00, 0x00, 0x60,
+	0x88, 0x88, 0x88, 0x68,
+};
+
+static void DebugGridSet(void)
+{
+	GFL_BG_LoadCharacter( GFL_BG_FRAME3_M, GridChar, 0x40, 1 );
+	GFL_BG_LoadCharacter( GFL_BG_FRAME3_S, GridChar, 0x40, 1 );
+
+	GFL_BG_ClearScreenCode( GFL_BG_FRAME3_M, 0xf001 );
+	GFL_BG_ClearScreenCode( GFL_BG_FRAME3_S, 0xf001 );
+
+	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0xf002, 15, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( GFL_BG_FRAME3_S, 0xf002, 15, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+}
+
+#endif // PM_DEBUG
+
