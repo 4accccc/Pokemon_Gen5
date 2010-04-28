@@ -72,8 +72,8 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
 static void blact_SetCommonOffsPos( VecFx32 *pos );
 static u16 blact_GetDrawDir( MMDL *mmdl );
 static void blact_UpdatePauseVanish(
-    MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID, BOOL force_anm );
-
+    MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID,
+    BOOL start_anm, BOOL anm_pause_only );
 
 static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u8 dir );
 static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PARAM* obj_prm, VecFx32* outVec);
@@ -391,7 +391,7 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
     work->anmcnt.set_anm_status = status;
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -526,7 +526,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
     init_flag = TRUE;
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
 
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -574,7 +574,8 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
-      blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+      blact_UpdatePauseVanish(
+          mmdl, actSys, work->actID, init_flag, FALSE );
     }else{
       comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
     }
@@ -626,7 +627,8 @@ static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
       }
       
       init_flag = TRUE; //演技中はポーズ無視
-      blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+      blact_UpdatePauseVanish(
+          mmdl, actSys, work->actID, init_flag, FALSE );
     }else{
       comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
     }
@@ -749,7 +751,7 @@ static void DrawItemGetHero_Draw( MMDL *mmdl )
     }
   }
 
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -813,7 +815,7 @@ static void DrawPCAzukeHero_Draw( MMDL *mmdl )
     }
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -911,7 +913,7 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -981,7 +983,7 @@ static void DrawYureHero_Draw( MMDL *mmdl )
     work->anmcnt.set_anm_dir = dir;
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1091,7 +1093,7 @@ static void DrawBlAct_DrawOnePatternLoop( MMDL *mmdl )
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1260,7 +1262,7 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
     GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
     
-    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   }
 }
 
@@ -1419,7 +1421,7 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
     
 //    MMDL_GetDrawVectorPos( mmdl, &pos );
 //    blact_SetCommonOffsPos( &pos );
-    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   }
 }
 
@@ -1580,7 +1582,8 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
     }
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  blact_UpdatePauseVanish( //シンムは動作ポーズを無視する
+      mmdl, actSys, work->actID, init_flag, TRUE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1655,7 +1658,7 @@ static void DrawBlActSpider_Draw( MMDL *mmdl )
     }
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1726,7 +1729,7 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
     init_flag = TRUE;
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
@@ -1929,7 +1932,7 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
   }
 #endif
   
-  blact_UpdatePauseVanish( mmdl, actSys, actID, init_flag );
+  blact_UpdatePauseVanish( mmdl, actSys, actID, init_flag, FALSE );
 }
 
 //======================================================================
@@ -1984,22 +1987,43 @@ static u16 blact_GetDrawDir( MMDL *mmdl )
  * @param mmdl MMDL*
  * @param actSys GFL_BBDACT_SYS
  * @param actID BBDACT ID
- * @param force_anm TRUE=アニメ強制セット
+ * @param start_anm TRUE=初回アニメである
+ * @param anm_pause_only TRUE=動作ポーズを無視する(アニメポーズのみ判定
  * @retval nothing
  */
 //--------------------------------------------------------------
 static void blact_UpdatePauseVanish(
-    MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID, BOOL force_anm )
+    MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID,
+    BOOL start_anm, BOOL anm_pause_only )
 {
   BOOL flag = TRUE; //アニメフラグ
+  BOOL update = MMDL_BLACTCONT_CheckUpdateBBD( mmdl );
   
-  if( force_anm == FALSE && //強制フラグOFF
-      MMDL_CheckDrawPause(mmdl) == TRUE && //描画ポーズON
-      MMDL_BLACTCONT_CheckUpdateBBD(mmdl) == TRUE ){ //アクター更新済み
-    flag = FALSE; //アニメ停止
+  if( start_anm == FALSE )    //初回アニメではない
+  {
+    if( anm_pause_only == TRUE )  //アニメポーズのみ判定する
+    {
+      if( update == TRUE )    //アクター更新済みで
+      {                       //アニメポーズ指定があるなら
+	      if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_PAUSE_ANM) )
+        {
+          flag = FALSE;       //アニメ停止
+        }
+      }
+    }
+    else                      //動作ポーズも加味する
+    {
+      if( update == TRUE )    //アクター更新済みで
+      {                       //描画ポーズ指定があるならば
+        if( MMDL_CheckDrawPause(mmdl) == TRUE )
+        {
+          flag = FALSE;           //アニメ停止
+        }
+      }
+    }
   }
   
-  GFL_BBDACT_SetAnimeEnable( actSys, actID, flag );
+  GFL_BBDACT_SetAnimeEnable( actSys, actID, flag ); //アニメ有効フラグ
   
   flag = TRUE; //表示フラグ
 
@@ -2007,5 +2031,5 @@ static void blact_UpdatePauseVanish(
     flag = FALSE; //非表示
   }
   
-  GFL_BBDACT_SetDrawEnable( actSys, actID, flag );
+  GFL_BBDACT_SetDrawEnable( actSys, actID, flag ); //表示有効フラグ
 }
