@@ -1135,7 +1135,7 @@ static BOOL CheckDendouDataExist( const GATEWORK* work )
 
   evwork  = GAMEDATA_GetEventWork( work->gameData );
 
-  // ゲームクリアフラグが立っている
+  // チャンピオンに勝利フラグが立っている
   if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_CHAMPION_WIN ) == TRUE ) {
     return TRUE;
   }
@@ -1509,9 +1509,9 @@ static void SetupElboardNews_Normal( GATEWORK* work )
   if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
+  AddNews_PROPAGATION( work ); // 大量発生
   AddNews_DATE( work );        // 日付
   AddNews_WEATHER( work );     // 天気
-  AddNews_PROPAGATION( work ); // 大量発生
   AddNews_INFO_A( work );      // 地域情報A
   AddNews_INFO_B( work );      // 地域情報B
   AddNews_INFO_C( work );      // 地域情報C
@@ -1538,9 +1538,9 @@ static void SetupElboardNews_Champion( GATEWORK* work )
   if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
+  AddNews_PROPAGATION( work ); // 大量発生
   AddNews_DATE( work );        // 日付
   AddNews_WEATHER( work );     // 天気
-  AddNews_PROPAGATION( work ); // 大量発生
   AddNews_CHAMPION( work );    // チャンピオン情報
   AddNews_CM( work );          // 一言CM
 }
@@ -1566,9 +1566,9 @@ static void SetupElboardNews_Special( GATEWORK* work )
   if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
+  AddNews_PROPAGATION( work ); // 大量発生
   AddNews_DATE( work );        // 日付
   AddNews_WEATHER( work );     // 天気
-  AddNews_PROPAGATION( work ); // 大量発生
   AddNews_SPECIAL( work );     // 臨時ニュース
   AddNews_CM( work );          // 一言CM
 }
