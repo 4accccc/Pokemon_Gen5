@@ -75,7 +75,8 @@ enum {
 	CURSOR_BACK_YPOS = 22*8,
 	
 	SCRLL_BAR_X = 244,
-	SCRLL_BAR_Y = 8 + 14/2 +3,//12,
+	SCRLL_BAR_Y = 8 + 14/2 +3,//12,  // スクロールバー上を移動するカーソルの最小位置と最大位置
+	SCRLL_BAR_Y_MAX = 156 - 14/2,    // SCRLL_BAR_Y<= <=SCRLL_BAR_Y_MAX
 };
 
 enum {
@@ -476,7 +477,7 @@ void PMSIV_WORDWIN_VisibleCursor( PMSIV_WORDWIN* wk, BOOL flag )
 
     {
       u32 word_max = PMSI_GetCategoryWordMax( wk->mwk );
-	    BOOL bar_draw = ( word_max > WORDWIN_DISP_WORD_MAX );
+	    BOOL bar_draw = ( word_max > WORDWIN_DISP_WORD_MAX -4 );  // 上1行(2単語)、下1行(2単語)はまともに見えていないのでスクロールが必要
       GFL_CLACT_WK_SetDrawEnable( wk->scroll_bar_actor, bar_draw );
     }
 	}
@@ -595,9 +596,11 @@ BOOL PMSIV_WORDWIN_WaitScroll( PMSIV_WORDWIN* wk )
 }
 
 // スクロールバーの座標取得
-void PMSIV_WORDWIN_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos )
+BOOL PMSIV_WORDWIN_GetScrollBarPos( PMSIV_WORDWIN * wk, GFL_CLACTPOS * pos )
 {
+  BOOL draw_flag = GFL_CLACT_WK_GetDrawEnable( wk->scroll_bar_actor );
 	GFL_CLACT_WK_GetPos( wk->scroll_bar_actor, pos, CLSYS_DEFREND_MAIN );
+  return draw_flag;
 }
 
 // スクロール値からバーの座標を設定
@@ -612,12 +615,21 @@ void PMSIV_WORDWIN_SetScrollBarPos( PMSIV_WORDWIN * wk, u32 now, u32 max )
 	if( now == 0 ){
 		pos.y = SCRLL_BAR_Y;
 	}else if( now == max ){
-		pos.y = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY/2;
+		pos.y = SCRLL_BAR_Y_MAX;
 	}else{
-		u32	y = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY;
-
-		y = ((y<<8)/max*now) >> 8;
-		pos.y = SCRLL_BAR_Y + y;
+    if( max > 0 )
+    {
+      // 0<= <=max
+      s16 h = SCRLL_BAR_Y_MAX - SCRLL_BAR_Y +1;
+      s16 s = now * h / (max +1) +SCRLL_BAR_Y;  // s<= <=e
+      s16 e = (now +1) * h / (max +1) -1 +SCRLL_BAR_Y;
+      s16 c = (s + e) /2;
+      pos.y = c;
+    }
+    else  // if( max == 0 )
+    {
+		  pos.y = SCRLL_BAR_Y;
+    }
 	}
 
 	GFL_CLACT_WK_SetPos( wk->scroll_bar_actor, &pos, CLSYS_DEFREND_MAIN );
@@ -633,8 +645,8 @@ void PMSIV_WORDWIN_MoveScrollBar( PMSIV_WORDWIN * wk, u32 py )
 	if( pos.y < SCRLL_BAR_Y ){
 		pos.y = SCRLL_BAR_Y;
 	}
-	if( pos.y > (PMSIV_TPWD_RAIL_SY-PMSIV_TPWD_BAR_SY/2) ){
-		pos.y = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY/2;
+	if( pos.y > SCRLL_BAR_Y_MAX ){
+		pos.y = SCRLL_BAR_Y_MAX;
 	}
 	GFL_CLACT_WK_SetPos( wk->scroll_bar_actor, &pos, CLSYS_DEFREND_MAIN );
 }
@@ -644,15 +656,30 @@ u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max )
 {
 	GFL_CLACTPOS	pos;
 	u32	cnt;
-	u32	sy;
 
 	PMSIV_WORDWIN_GetScrollBarPos( wk, &pos );
 
-	sy = PMSIV_TPWD_RAIL_SY - PMSIV_TPWD_BAR_SY;
-	cnt = ( ((pos.y-SCRLL_BAR_Y)<<8) / ((sy<<8)/max) );
-	if( cnt > max ){
-		cnt = max;
-	}
+  if( max > 0 )
+  {
+    // 0<= <=max
+    s16 h = SCRLL_BAR_Y_MAX - SCRLL_BAR_Y +1;
+    s16 i;
+    for( i=0; i<=max; i++ )
+    {
+      s16 s = i * h / (max +1) +SCRLL_BAR_Y;  // s<= <=e
+      s16 e = (i +1) * h / (max +1) -1 +SCRLL_BAR_Y;
+      if( s<=pos.y && pos.y<=e )
+      {
+        cnt = i;
+        break;
+      }
+    }
+  }
+  else  // if( max == 0 )
+  {
+    cnt = 0;
+  }
+
 	return cnt;
 }
 

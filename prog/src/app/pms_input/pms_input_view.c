@@ -1342,7 +1342,6 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 		{
 			PMSIV_WORDWIN_MoveCursor( vwk->wordwin_wk, PMSI_GetWordWinCursorPos(vwk->main_wk) );
 			PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, TRUE );
-			PMSIV_SUB_VisibleArrowButton( vwk->sub_wk, TRUE );
 			DeleteCommand( wk );
 		}
 		break;
@@ -2087,7 +2086,13 @@ u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py )
 {
 	GFL_CLACTPOS pos;
 
-	PMSIV_WORDWIN_GetScrollBarPos( vwk->wordwin_wk, &pos );
+	BOOL draw_flag = PMSIV_WORDWIN_GetScrollBarPos( vwk->wordwin_wk, &pos );
+
+  if( !draw_flag )
+  {
+    return 3;  // 1画面で表示できるのでスクロールバーが不要で、非表示にしてある
+  }
+
 	if( py < (pos.y-(PMSIV_TPWD_BAR_SY/2)) ){
 		return 1;		// 上
 	}

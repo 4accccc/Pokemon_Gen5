@@ -2730,6 +2730,9 @@ static int word_input_scr_btn(PMS_INPUT_WORK* wk)
 			wk->scroll_bar_flg = 1;
 			PMSIView_SetScrollBarPos( wk->vwk, tpy );
 			return check_wordwin_scroll_down_pos( wk->vwk, &(wk->word_win) );
+    case 3:  // 1画面で表示できるのでスクロールバーが不要で、非表示にしてある
+      // 何もしない
+      break;
 		}
 	}
 
@@ -2863,7 +2866,7 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 			wordwin->cursor_y++;
 			pos = get_wordwin_pos( wordwin );
 
-			if( pos < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
+      if( pos < wordwin->word_max - PMSI_DUMMY_LABEL_NUM )
 			{
 				return WORDWIN_RESULT_CURSOR_MOVE;
 			}
@@ -2874,6 +2877,11 @@ static int check_wordwin_key( WORDWIN_WORK* wordwin, u16 key )
 					wordwin->cursor_x = 0;
 					return WORDWIN_RESULT_CURSOR_MOVE;
 				}
+        else
+        {
+			    wordwin->cursor_y--;
+			    return WORDWIN_RESULT_INVALID;
+        }
 			}
       else
       {
