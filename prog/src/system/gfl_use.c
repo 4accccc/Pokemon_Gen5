@@ -241,7 +241,6 @@ void GFLUser_Main(void)
 #endif
   {
     GFL_PROC_Main();
-    GFL_FADE_Main();
   }
   GFL_RTC_Main();
   //GFL_SOUND_Main();
@@ -381,6 +380,19 @@ void GFLUser_VTiming(void)
 #endif //MULTI_BOOT_MAKE
 #endif
   GFL_DMA_Main();
+
+
+#ifdef PM_DEBUG
+#ifndef MULTI_BOOT_MAKE
+  //Lを押している間停止。L押しながらRで1コマ送る
+  if( DEBUG_PAUSE_Update() == TRUE &&
+      DEBUGWIN_IsActive() == FALSE )
+#endif MULTI_BOOT_MAKE
+#endif
+  {
+    GFL_FADE_Main();  // フェード反映
+  }
+  
   GFL_USE_VintrCounter++;
 }
 
