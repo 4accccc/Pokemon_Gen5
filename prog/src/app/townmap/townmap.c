@@ -273,7 +273,8 @@ typedef struct
 	s32		param[PLACE_DATA_PARAM_MAX];
 	u8		non_active_anm;
 	u8		active_anm;
-	u16		now_anm;
+	u8		now_anm;
+  u8    dummy;
 
 	fx32	scale;
 	BOOL	is_arrive;	//到達フラグ
@@ -786,6 +787,21 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//マップデータ作成
 	p_wk->p_data	= TOWNMAP_DATA_Alloc( HEAPID_TOWNMAP );
+
+#ifdef PM_DEBUG
+  { 
+    int i;
+
+    u16 zoneID;
+    u16 hide_flag;
+    for( i = 0; i < TOWNMAP_DATA_MAX; i++ )
+    { 
+      zoneID    = TOWNMAP_DATA_GetParam( p_wk->p_data, i, TOWNMAP_DATA_PARAM_ZONE_ID );
+      hide_flag = TOWNMAP_DATA_GetParam( p_wk->p_data, i, TOWNMAP_DATA_PARAM_HIDE_FLAG );
+      NAGI_Printf( "ID%d hide%d\n", zoneID, hide_flag );
+    }
+  }
+#endif
 
 	//シーケンス作成
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
@@ -2738,6 +2754,17 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 		p_wk->active_anm			= 15;
 		p_wk->non_active_anm	= 14;
 		break;
+	case TOWNMAP_PLACETYPE_HIDE_TOWN_S:
+		p_wk->active_anm			= 18;
+    if( p_wk->is_arrive )
+    { 
+      p_wk->non_active_anm	= 17;
+    }
+    else
+    { 
+      p_wk->non_active_anm	= 16;
+    }
+		break;
 	default:
 		GF_ASSERT(0);
 	}
@@ -2798,7 +2825,16 @@ static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible )
       }
       else
       { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+        if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE ||
+            PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE_TOWN_S )
+        { 
+          PlaceData_SetAnmSeq( p_wk, p_wk->non_active_anm );
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+        }
+        else 
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+        }
       }
 		}
 	}
@@ -3045,8 +3081,8 @@ static void PlaceData_SetAnmSeq(PLACE_DATA *p_wk, u16 seq )
 //-----------------------------------------------------------------------------
 static void PlaceData_Active( PLACE_DATA *p_wk )
 {	
-  BOOL is_hide_visible  = FALSE;
 
+  BOOL is_hide_visible  = FALSE;
 #ifdef DEBUG_OBJ_ALLVISIBLE
   if( s_is_place_visible_debug )
   { 
@@ -3054,20 +3090,22 @@ static void PlaceData_Active( PLACE_DATA *p_wk )
   }
 #endif
 
-  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE )
+
+  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE ||
+      PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE_TOWN_S )
   { 
     is_hide_visible = !p_wk->is_hide;
   }
 
-	if( p_wk->is_arrive || is_hide_visible )
-	{	
-		PlaceData_SetVisible( p_wk, TRUE );
-		PlaceData_SetAnmSeq( p_wk,  p_wk->active_anm );
-	}
-	else
-	{	
-		PlaceData_SetVisible( p_wk, FALSE );
-	}
+  if( p_wk->is_arrive || is_hide_visible )
+  {	
+    PlaceData_SetVisible( p_wk, TRUE );
+    PlaceData_SetAnmSeq( p_wk,  p_wk->active_anm );
+  }
+  else
+  {	
+    PlaceData_SetVisible( p_wk, FALSE );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3087,23 +3125,24 @@ static void PlaceData_NonActive( PLACE_DATA *p_wk )
   }
 #endif
 
-  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE )
+  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE ||
+      PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE_TOWN_S )
   { 
     is_hide_visible = !p_wk->is_hide;
   }
 
-	if( p_wk->is_arrive || is_hide_visible )
-	{	
-		if( p_wk->p_clwk )
-		{	
-			PlaceData_SetVisible( p_wk, TRUE );
-			PlaceData_SetAnmSeq( p_wk,  p_wk->non_active_anm );
-		}
-	}
-	else
-	{	
-		PlaceData_SetVisible( p_wk, FALSE );
-	}
+  if( p_wk->is_arrive || is_hide_visible )
+  {	
+    if( p_wk->p_clwk )
+    {	
+      PlaceData_SetVisible( p_wk, TRUE );
+      PlaceData_SetAnmSeq( p_wk,  p_wk->non_active_anm );
+    }
+  }
+  else
+  {	
+    PlaceData_SetVisible( p_wk, FALSE );
+  }
 }
 //=============================================================================
 /**

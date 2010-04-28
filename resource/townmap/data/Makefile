@@ -12,6 +12,8 @@ USERS	= toru_nagihashi tetsuji_ohta obata_toshihiro kawada_koji shimoyamada
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = townmap_data
+targetname_b = $(targetname)_version_black
+targetname_w = $(targetname)_version_white
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -32,28 +34,33 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR_ARC)/$(targetname).narc $(TARGETDIR_ARC)/$(targetname).naix $(TARGETDIR_H)/$(targetname).h
+do-build:	subdir $(TARGETDIR_ARC)/$(targetname_b).narc $(TARGETDIR_ARC)/$(targetname_w).narc $(TARGETDIR_H)/$(targetname).h
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(TARGETDIR_ARC)
+$(TARGETDIR_ARC)/$(targetname_b).narc: $(targetname_b).narc
+	$(COPY) $(targetname_b).narc $(TARGETDIR_ARC)
 
-$(TARGETDIR_ARC)/$(targetname).naix: $(targetname).naix
-	$(COPY) $(targetname).naix $(TARGETDIR_ARC) 
+$(TARGETDIR_ARC)/$(targetname_w).narc: $(targetname_w).narc
+	$(COPY) $(targetname_w).narc $(TARGETDIR_ARC)
 
 $(TARGETDIR_H)/$(targetname).h: $(targetname).h
 	$(COPY) $(targetname).h		 $(TARGETDIR_H) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: townmap_data.dat
-	nnsarc -r -l -n -i $(targetname) $^
-	$(NAIXCUT) $(targetname).naix
+$(targetname_b).narc: $(targetname_b).dat
+	nnsarc -r -l -n -i $(targetname_b) $^
 
-townmap_data.dat: townmap_data.xls
+$(targetname_w).narc: $(targetname_w).dat
+	nnsarc -r -l -n -i $(targetname_w) $^
+
+$(targetname_b).dat: townmap_data.xls
+	perl townmap_data_conv.pl townmap_data.xls
+
+$(targetname_w).dat: townmap_data.xls
 	perl townmap_data_conv.pl townmap_data.xls
 
 endif
@@ -67,10 +74,10 @@ clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.dat
 	rm -f *.h
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
+	rm -f $(targetname_b).narc
+	rm -f $(targetname_w).narc
 endif
-	rm -f $(TARGETDIR_ARC)/$(targetname).narc
-	rm -f $(TARGETDIR_ARC)/$(targetname).naix
+	rm -f $(TARGETDIR_ARC)/$(targetname_b).narc
+	rm -f $(TARGETDIR_ARC)/$(targetname_w).narc
 
 

@@ -16,6 +16,7 @@
 #include "field/zonedata.h"
 #include "src/field/evt_lock.h"
 #include "app/townmap_data.h"
+#include "savedata/wifihistory.h"
 
 //=============================================================================
 /**
@@ -83,14 +84,27 @@ BOOL TOWNMAP_UTIL_CheckFlag( GAMEDATA* p_gamedata, u16 flag )
   EVENTWORK	* p_ev		    = GAMEDATA_GetEventWork( p_gamedata );
   MISC      * p_misc      = GAMEDATA_GetMiscWork( p_gamedata );
   MYSTATUS  * p_mystatus  = GAMEDATA_GetMyStatus( p_gamedata );
+  WIFI_HISTORY *p_wifi    = SaveData_GetWifiHistory( GAMEDATA_GetSaveControlWork(p_gamedata) );
 
-  //まずはユーザーフラグかチェック
-  if( flag == TOWNMAP_USER_FLAG_LIBERTY_GARDEN_TICKET )
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
   { 
+    return TRUE;
+  }
+#endif //PM_DEBUG
+
+  switch( flag )
+  { 
+  case TOWNMAP_USER_FLAG_LIBERTY_GARDEN_TICKET:
     //ビクティイベントフラグ　リバティガーデン島へのチケットを持っているか？
     return EVTLOCK_CheckEvtLock( p_misc, EVT_LOCK_NO_VICTYTICKET, p_mystatus );
-  }
 
-  //さもなくばイベントフラグ
-  return EVENTWORK_CheckEventFlag( p_ev, flag );
+  case TOWNMAP_USER_FLAG_OVERSEAS_TRADE:
+    //国連へは世界交換したら行ける
+    return WIFIHISTORY_GetMyCountryCountEx( p_wifi, p_mystatus, FALSE );
+
+  default:
+    //さもなくばイベントフラグ
+    return EVENTWORK_CheckEventFlag( p_ev, flag );
+  }
 }

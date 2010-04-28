@@ -13,7 +13,6 @@
 
 //archive
 #include "arc_def.h"
-#include "townmap_data.naix"
 
 //mine
 #include "app/townmap_data_sys.h"
@@ -63,7 +62,7 @@ TOWNMAP_DATA *TOWNMAP_DATA_Alloc( HEAPID heapID )
 {	
 	void *p_handle;
 	p_handle	= GFL_ARC_UTIL_Load( ARCID_TOWNMAP_DATA, 
-			NARC_townmap_data_townmap_data_dat, FALSE, heapID );
+			0, FALSE, heapID );
 
 	return p_handle;
 }

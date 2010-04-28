@@ -156,7 +156,8 @@
   ARCID_APP_MENU_COMMON   "app_menu_common.narc"   #共通素材ARC 
   ARCID_PLACE_NAME "place_name.narc"   #地名表示ウィンドウ
   ARCID_TOWNMAP_GRAPHIC "townmap_gra.narc"  #タウンマップアプリケーション用グラフィック
-  ARCID_TOWNMAP_DATA  "townmap_data.narc"   #タウンマップ用データ
+  $VERSION_WHITE ARCID_TOWNMAP_DATA  "townmap_data_version_white.narc"   #ホワイト版タウンマップ用データ
+  $VERSION_BLACK ARCID_TOWNMAP_DATA  "townmap_data_version_black.narc"   #ブラック版タウンマップ用データ
   ARCID_BGM_INFO "bgm_info.narc"   #BGMの情報
   ARCID_BAG "bag.narc"   # バッグ
   ARCID_UNION "unionroom.narc"   # ユニオンルーム
