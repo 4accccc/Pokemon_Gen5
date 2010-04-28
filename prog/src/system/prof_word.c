@@ -145,3 +145,55 @@ static const BOOL PROF_WORD_CheckWord( STRCODE *code , STRCODE *word )
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正数字チェック  数字の連続は４桁まで
+ *
+ *	@param	const STRBUF *strBuf  文字列
+ *	@param	HEAPID heapId         ヒープID
+ *
+ *	@return TRUEならば不正  FALSEならば正常
+ */
+//-----------------------------------------------------------------------------
+const BOOL PROF_WORD_CheckProfanityNumber( const STRBUF *strBuf , const HEAPID heapId )
+{ 
+  return PROF_WORD_CheckProfanityNumberCode( GFL_STR_GetStringCodePointer(strBuf), 
+      GFL_STR_GetBufferLength( strBuf ),
+      heapId );
+}
+const BOOL PROF_WORD_CheckProfanityNumberCode( const STRCODE *strCode , const u16 str_len, const HEAPID heapId )
+{ 
+  enum
+  { 
+    PROFANITY_NUMBER  = 4,
+  };
+
+  int i;
+  BOOL ret = FALSE;
+  STRCODE code[PROF_WORD_LEN] = {0};
+  int cnt = 0;
+  
+  GFL_STD_MemCopy( strCode , code , str_len*2 );
+
+  //チェックする文字列の変換
+  for( i=0;i<PROF_WORD_LEN;i++ )
+  {
+    if( (code[i] >= L'0' && code[i] <= L'9')
+        || (code[i] >= L'０' && code[i] <= L'９') )
+    {
+      cnt++;
+    }
+    else
+    { 
+      cnt = 0;
+    }
+
+    if( cnt > PROFANITY_NUMBER )
+    { 
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}

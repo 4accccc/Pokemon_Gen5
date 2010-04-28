@@ -23,6 +23,7 @@
 //  module
 #include "app/app_menu_common.h"
 #include "pokeicon/pokeicon.h"
+#include "system/prof_word.h"
 
 //  archive
 #include "arc_def.h"
@@ -5089,6 +5090,26 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
           p_wk->is_illegal_msg  = TRUE;
           break;
         }
+
+        //不正文字チェック
+        if( PROF_WORD_CheckProfanityWordCode( p_wk->strinput.input_str, HEAPID_NAME_INPUT ) )
+        { 
+          PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+          break;
+        }
+
+        //不正数値チェック
+        if( PROF_WORD_CheckProfanityNumberCode(
+              p_wk->strinput.input_str,
+              p_wk->strinput.input_idx,
+              HEAPID_NAME_INPUT ) )
+        { 
+          PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+          MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_009 );
+          p_wk->is_illegal_msg  = TRUE;
+          break;
+        }
+
 
         PMSND_PlaySE( NAMEIN_SE_DECIDE );
 
