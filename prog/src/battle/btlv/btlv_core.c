@@ -291,7 +291,7 @@ static void QuitSystemCore( void )
  * @retval  BTLV_CORE*    生成された描画メインモジュールのハンドラ
  */
 //=============================================================================================
-BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID )
+BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID )
 {
   BTLV_CORE* core = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_CORE) );
 
@@ -316,7 +316,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
           core->largeFontHandle, core->smallFontHandle, core->myClientID, heapID );
 
   core->scrnD = BTLV_SCD_Create( core, core->mainModule, pokeCon, core->tcbl,
-          core->largeFontHandle, core->myClient, heapID );
+          core->largeFontHandle, core->myClient, bagMode, heapID );
 
   core->mainProc = NULL;
   core->mainSeq = 0;
@@ -734,7 +734,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
   switch( *seq ){
   case 0:
     BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam,
-        core->fActionPrevButton, core->actionParam );
+        core->fActionPrevButton, BTL_CLIENT_GetShooterEnergy(core->myClient), core->actionParam );
     (*seq)++;
   case 1:
     core->playerAction = BTLV_SCD_WaitActionSelect( core->scrnD );

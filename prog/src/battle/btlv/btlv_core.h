@@ -160,7 +160,7 @@ extern void BTLV_ResetSystem( HEAPID heapID );
  * @retval  BTLV_CORE*    生成された描画メインモジュールのハンドラ
  */
 //=============================================================================================
-extern BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, HEAPID heapID );
+extern BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, const BTL_POKE_CONTAINER* pokeCon, BtlBagMode bagMode, HEAPID heapID );
 
 //=============================================================================================
 /**

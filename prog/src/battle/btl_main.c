@@ -681,8 +681,7 @@ static BOOL setup_alone_single( int* seq, void* work )
   // 描画エンジン生成、プレイヤークライアントに関連付ける
   {
     BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
-    BTL_Printf("viewClient = %d\n", sp->commPos);
-    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, HEAPID_BTL_VIEW );
+    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
     BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
   }
 
@@ -801,7 +800,7 @@ static BOOL setup_alone_double( int* seq, void* work )
 
 
   // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
 
   // プレイヤークライアントに描画エンジンを関連付ける
   BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
@@ -921,7 +920,7 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
 
 
   // 描画エンジン生成＆プレイヤークライアントに描画エンジンを関連付ける
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
   BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
 
   // Server に Client を接続
@@ -999,7 +998,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
   }
 
   // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
 
   // プレイヤークライアントに描画エンジンを関連付ける
   BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
@@ -1059,7 +1058,7 @@ static BOOL setup_alone_rotation( int* seq, void* work )
     BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
 
   // プレイヤークライアントに描画エンジンを関連付ける
   BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
@@ -1896,9 +1895,10 @@ static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq )
   case 0:
     {
       const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+      u8 bagMode = checkBagMode( sp );
 
       // 描画エンジン生成
-      wk->viewCore = BTLV_Create( wk, wk->client[wk->myClientID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+      wk->viewCore = BTLV_Create( wk, wk->client[wk->myClientID], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
       BTL_CLIENT_AttachViewCore( wk->client[wk->myClientID], wk->viewCore );
 
       if( wk->ImServer ){
@@ -5035,6 +5035,7 @@ static u8 CommClientRelation( u8 myClientID, u8 targetClientID )
 void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum )
 {
   u32 i;
+  u8 bagMode = checkBagMode( wk->setupParam );
 
   BTL_CALC_ResetSys( &wk->randomContext );
 
@@ -5053,7 +5054,7 @@ void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum )
 
   BTLV_Delete( wk->viewCore );
   BTLV_ResetSystem( HEAPID_BTL_VIEW );
-  wk->viewCore = BTLV_Create( wk, wk->client[wk->setupParam->commPos], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+  wk->viewCore = BTLV_Create( wk, wk->client[wk->setupParam->commPos], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
   BTL_CLIENT_AttachViewCore( wk->client[wk->setupParam->commPos], wk->viewCore );
 
   // Server 始動

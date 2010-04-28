@@ -6933,6 +6933,20 @@ BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
 {
   return client->basePos + client->procPokeIdx*2;
 }
+//=============================================================================================
+/**
+ * シューターエネルギー量を取得
+ *
+ * @param   client
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_CLIENT_GetShooterEnergy( const BTL_CLIENT* client )
+{
+  return client->shooterEnergy;
+}
+
 
 //------------------------------------------------------------------------------------------------------
 // AIアイテム

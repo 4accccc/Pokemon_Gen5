@@ -122,6 +122,8 @@ struct _BTLV_SCD {
   s8                fadeValueEnd;
   s8                fadeStep;
   u8                cursor_flag;    //下画面カーソルフラグ
+  u8                bagMode;
+  u8                shooterEnergy;
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -164,7 +166,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs );
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
-        const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, HEAPID heapID )
+        const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, BtlBagMode bagMode, HEAPID heapID )
 {
   BTLV_SCD* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLV_SCD) );
 
@@ -177,6 +179,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->playerParty = BTL_POKECON_GetPartyDataConst( pokeCon, BTL_CLIENT_GetClientID(client) );
   wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
   wk->pokesel_param = NULL;
+  wk->bagMode = bagMode;
+  wk->shooterEnergy = 0;
 
   wk->cursor_flag = 0;
 
@@ -330,12 +334,13 @@ static BOOL spstack_call( BTLV_SCD* wk )
  * @param   dest
  */
 //=============================================================================================
-void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest )
+void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, u8 shooterEnergy, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;
   wk->destActionParam = dest;
   wk->selActionResult = BTL_ACTION_NULL;
   wk->fActionPrevButton = fPrevButton;
+  wk->shooterEnergy = shooterEnergy;
 
   spstack_push( wk, selectAction_init, selectActionRoot_loop );
 }
@@ -503,6 +508,8 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 
   MI_CpuClear16( &bicp, sizeof( BTLV_INPUT_COMMAND_PARAM ) );
 
+  bicp.bagMode = wk->bagMode;
+  bicp.shooterEnergy = wk->shooterEnergy;
   bicp.pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                        BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
 

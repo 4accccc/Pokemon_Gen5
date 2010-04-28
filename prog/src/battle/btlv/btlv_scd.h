@@ -54,7 +54,7 @@ typedef enum {
 
 extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore,
     const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font,
-    const BTL_CLIENT* client, HEAPID heapID );
+    const BTL_CLIENT* client, BtlBagMode bagMode, HEAPID heapID );
 
 extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
@@ -65,7 +65,7 @@ extern void BTLV_SCD_Setup( BTLV_SCD* wk );
 
 extern void BTLV_SCD_RestartUI( BTLV_SCD* wk );
 
-extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest );
+extern void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, u8 shooterEnergy, BTL_ACTION_PARAM* dest );
 extern void BTLV_SCD_StartActionSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest );
 extern BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
 
