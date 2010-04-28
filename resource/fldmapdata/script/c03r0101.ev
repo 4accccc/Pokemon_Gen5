@@ -127,22 +127,6 @@ DEFINE_LOCAL v1_7
 // SET_FORCE_QUESTION_EVENT_OFF ◆強制アンケートイベントを無効にする
 
 //----------------------------------------------------------------------
-// ◆デバッグ出力
-//----------------------------------------------------------------------
-DEBUG_PRINT:
-{
-  _NUMBER( 0, SCWK_TEMP0, 4 )
-  _NUMBER( 1, SCWK_TEMP1, 4 )
-  _NUMBER( 2, SCWK_TEMP2, 4 )
-  _NUMBER( 3, SCWK_TEMP3, 4 )
-  _NUMBER( 4, SCWK_ANSWER, 4 )
-  _SYSWIN_MSG( msg_c03r0101_debug, POS_DOWN )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
-}
-_RET
-
-//----------------------------------------------------------------------
 // ◆初期カーソル位置を指定して, YES NO ウィンドウを表示する
 // ◇in  SCWK_TEMP0  カーソル初期位置 ( SCR_YES or SCR_NO )
 // ◇out SCWK_ANSWER 選択結果 ( SCR_YES or SCR_NO )
@@ -1668,7 +1652,6 @@ SYSTEM_MSG_REPORT_RESULT:
 
   // メッセージを表示
   _SYSWIN_MSG( v1_2, POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 _RET
@@ -1740,7 +1723,6 @@ SYSTEM_MSG_RECEIVE_REQUEST:
 
   // メッセージを表示
   _SYSWIN_MSG( v1_2, POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 _RET 
@@ -1768,7 +1750,6 @@ SYSTEM_MSG_Rank_up:
   _SE_PLAY( SEQ_SE_SYS_82 )
   _PLAYER_NAME(1)
   _SYSWIN_MSG( v2_2, POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 _RET 
@@ -1779,20 +1760,17 @@ LEADER_SAY_Nice_to_meet_you:
 {
   //「キミを　とくべつに　ちょうさたいいんに　にんめいする！」
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_01, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 
   //「ちょうさたいいん　に　にんめい　されてしまった！」
   _SE_PLAY( SEQ_SE_SYS_82 ) 
   _PLAYER_NAME(1)
   _SYSWIN_MSG( msg_c03r0101_assistantm_01_02, POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
   //「キミの　かつやくを　きたいしているぞ！」
   _PLAYER_NAME(1)
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_03, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET 
@@ -1802,7 +1780,6 @@ _RET
 LEADER_SAY_You_are_welcome:
   _PLAYER_NAME(1)
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_04, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 _RET
 //----------------------------------------------------------------------
@@ -1982,7 +1959,6 @@ _RET
 LEADER_SAY_Report_research_result:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_19, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -1993,7 +1969,6 @@ LEADER_SAY_Present_for_you:
 {
   _PLAYER_NAME(1)
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_25, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2004,7 +1979,6 @@ LEADER_SAY_Congraturation:
 {
   _PLAYER_NAME(1)
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_30, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 }
 _RET
@@ -2035,7 +2009,6 @@ _RET
 LEADER_SAY_It_is_count_research:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_34b, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2045,7 +2018,6 @@ _RET
 LEADER_SAY_It_is_time_research:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_34a, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2056,7 +2028,6 @@ LEADER_SAY_You_have_finishd_count_research:
 {
   _PLAYER_NAME(1)
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_14x, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2067,7 +2038,6 @@ LEADER_SAY_You_have_finishd_time_research:
 {
   _PLAYER_NAME(1)
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_13x, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2093,7 +2063,6 @@ LEADER_SAY_I_appoint_you_as:
 
   // メッセージを表示
   _BALLOONWIN_OBJMSG_POS( v2_2, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
 
   // 吹出しを閉じる
   _BALLOONWIN_CLOSE() 
@@ -2125,7 +2094,6 @@ LEADER_SAY_Next_rank:
 
   // メッセージ表示
   _BALLOONWIN_OBJMSG_POS( v3_2, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2197,7 +2165,6 @@ LEADER_SAY_This_request_is:
 
   // メッセージを表示
   _BALLOONWIN_OBJMSG_POS( v4_1, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET 
@@ -2268,7 +2235,6 @@ LEADER_SAY_Your_request_is:
 
   // メッセージを表示
   _BALLOONWIN_OBJMSG_POS( v4_1, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -2365,7 +2331,6 @@ LEADER_SAY_Ah_hah:
 
   // メッセージを表示
   _BALLOONWIN_OBJMSG_POS( v4_1, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3357,7 +3322,6 @@ SYSTEM_MSG_1:
 
   // メッセージを表示
   _SYSWIN_MSG( v1_1, POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 _RET
@@ -3378,7 +3342,6 @@ MEMBER_Q_SAY_2:
 {
   _PLAYER_NAME(1) 
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_02, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3389,7 +3352,6 @@ MEMBER_Q_SAY_3:
 {
   //「そうだアナタに頼みたい事があるの」
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_03, C03R0101_WOMAN2_01, POS_DOWN ) 
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE()
 }
 _RET
@@ -3490,7 +3452,6 @@ MEMBER_Q_SAY_10:
 
   // メッセージを表示
   _BALLOONWIN_OBJMSG_POS( v1_1, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3623,7 +3584,6 @@ _RET
 MEMBER_Q_SAY_14:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_14, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3633,7 +3593,6 @@ _RET
 MEMBER_Q_SAY_15:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_15, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3643,7 +3602,6 @@ _RET
 MEMBER_Q_SAY_16:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_16, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3653,7 +3611,6 @@ _RET
 MEMBER_Q_SAY_18:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_18, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3663,7 +3620,6 @@ _RET
 MEMBER_Q_SAY_19:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_19, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3687,7 +3643,6 @@ MEMBER_Q_SAY_21:
   _NUMBER( 1, SCWK_ANSWER, 1 )
 
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_21, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3707,7 +3662,6 @@ _RET
 MEMBER_Q_SAY_23:
 {
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_23, C03R0101_WOMAN2_01, POS_DOWN )
-  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3779,7 +3733,6 @@ EVENT_START ev_member_hello
 
   //「こんにちは！」
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_boy2_01, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 
   // 初回会話チェック
@@ -3841,7 +3794,6 @@ EVENT_START ev_member_thanks
 
   //「こんにちは」
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_girl4_01, SCWK_TARGET_OBJID, POS_DOWN )
-  _AB_KEYWAIT()
   //_BALLOONWIN_CLOSE() 
 
   // 初回会話チェック
@@ -3852,12 +3804,10 @@ EVENT_START ev_member_thanks
     _FLAG_SET( FE_RES_THANKS_FIRSTTALK ) // 初回会話フラグを立てる
     //「モンスターボールを落としたわよ」
     _BALLOONWIN_OBJMSG_POS( msg_c03r0101_girl4_02, SCWK_TARGET_OBJID, POS_DOWN )
-    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE() 
     //『落としたモンスターボール度受けとった』
     _PLAYER_NAME(1)
     _SYSWIN_MSG( msg_c03r0101_girl4_03, POS_DOWN )
-    _AB_KEYWAIT()
     _SYSWIN_CLOSE()
     //「こら！まちなさい！」
     _BALLOONWIN_OBJMSG_POS( msg_c03r0101_girl4_04, SCWK_TARGET_OBJID, POS_DOWN )
