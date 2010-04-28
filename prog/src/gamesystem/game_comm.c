@@ -97,6 +97,7 @@ typedef struct{
 typedef struct _GAME_COMM_SYS{
   GAMEDATA *gamedata;                 ///<ゲームデータへのポインタ
   GAME_COMM_STATUS comm_status;         ///<通信ステータス
+  u8 exit_reserve;                      ///<終了予約
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
   GAME_COMM_LAST_STATUS last_status;    ///<最後に実行していたGAME_COMM_NOの終了状態
@@ -409,12 +410,29 @@ void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp)
 //==================================================================
 void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_FUNC callback_func, void *parent_work)
 {
-  GF_ASSERT(gcsp->sub_work.seq == GCSSEQ_UPDATE);
-  
   OS_TPrintf("GameCommSys_ExitReq\n");
-  GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
-  gcsp->exitcallback_func = callback_func;
-  gcsp->exitcallback_parentwork = parent_work;
+
+  if(gcsp->sub_work.seq == GCSSEQ_UPDATE){
+    GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
+    gcsp->exitcallback_func = callback_func;
+    gcsp->exitcallback_parentwork = parent_work;
+  }
+  else if(gcsp->sub_work.seq < GCSSEQ_UPDATE){
+    OS_TPrintf("exit reserve\n");
+    GF_ASSERT(gcsp->exit_reserve == FALSE);
+    gcsp->exit_reserve = TRUE;  //終了予約
+  }
+  else{
+    OS_TPrintf("既に終了リクエストが発生している\n");
+    //どちらもコールバックが設定されている場合は危険な為ASSERTにする
+    GF_ASSERT(gcsp->exitcallback_func != NULL && callback_func != NULL);
+    //先にかけていた終了リクエストに何もコールバックが設定されていないなら
+    //今回の終了コールバックを設定する
+    if(gcsp->exitcallback_func == NULL){
+      gcsp->exitcallback_func = callback_func;
+      gcsp->exitcallback_parentwork = parent_work;
+    }
+  }
 }
 
 //==================================================================
