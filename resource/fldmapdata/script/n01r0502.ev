@@ -315,14 +315,6 @@ EVENT_START		ev_pos_n01r0502_lastbtl_02
 			_VOICE_WAIT()
 }
 
-	//========================================/
-	
-	//最終イベント４終了・ライトストーンイベント終了
-	$WK_SCENE_N01R0502 = 3
-	$WK_SYS_N01R0502_ITEMUSE = 3
-		
-	//========================================/
-
 	//デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ
 	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 
@@ -341,10 +333,18 @@ EVENT_START		ev_pos_n01r0502_lastbtl_02
 }
 	//フラグリセット
 	_FLAG_RESET( FV_N01R0502_LEGEND_01 )
-
+	_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 37, DIR_DOWN )
 	_OBJ_ADD( N01R0502_WKOBJCODE00_01 )
 	
 	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
+	
+	//========================================/
+	
+	//最終イベント４終了・ライトストーンイベント終了
+	$WK_SCENE_N01R0502 = 3
+	$WK_SYS_N01R0502_ITEMUSE = 3
+		
+	//========================================/
 
 EVENT_END
 //--------------------------------------------------------------------
@@ -1329,7 +1329,7 @@ ev_last:
 	_OBJ_ANIME_WAIT()
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,65551,1736704,110 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,65551,1736704,220 )
 
 	//自機・N：上に移動
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi )
@@ -1352,7 +1352,7 @@ ev_last:
 	_MSGWIN_CLOSE()
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,131103,1081344,60 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,131103,1081344,110 )
 
 	//Ｎ：もうちょい歩く・自機の方を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi1 )
