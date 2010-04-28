@@ -205,9 +205,6 @@ static  void register_PokeNickname( u8 pokeID, WordBufID bufID )
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
   pp = BPP_GetViewSrcData( bpp );
 
-  TAYA_Printf(" Register Poke NickName : pokeID=%d, monsno=%d, bpp(%p)=pp(%p)\n",
-      pokeID, PP_Get(pp,ID_PARA_monsno,NULL), bpp, pp);
-
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
 
@@ -228,9 +225,6 @@ static void register_PokeName( u8 pokeID, u8 bufID )
 
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
   pp = BPP_GetViewSrcData( bpp );
-
-  TAYA_Printf(" Register Poke MonsName : pokeID=%d, monsno=%d, bpp(%p)=pp(%p)\n",
-      pokeID, PP_Get(pp,ID_PARA_monsno,NULL), bpp, pp);
 
   WORDSET_RegisterPokeMonsName( SysWork.wset, bufID, pp );
 }
@@ -377,7 +371,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
-  TAYA_Printf("Simple strID=%d\n", strID);
+
   registerWords( SysWork.tmpBuf, args, SysWork.wset );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
@@ -756,10 +750,12 @@ static void ms_set_rankup_item( STRBUF* dst, u16 strID, const int* args )
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 {
   u8 statusType = args[1] - WAZA_RANKEFF_ORIGIN;
-  if( args[2] > 1 )
-  {
-    strID += (SETTYPE_MAX * WAZA_RANKEFF_NUMS);
-  }
+  u16 leap = 0;
+  if( args[2] >= 3 ){ leap = 2; }
+  if( args[2] == 2 ){ leap = 1; }
+
+  strID += (leap * SETTYPE_MAX * WAZA_RANKEFF_NUMS);
+
   register_PokeNickname( args[0], BUFIDX_POKE_1ST );
   strID = get_setPtnStrID( args[0], strID, statusType );
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
