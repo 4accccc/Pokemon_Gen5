@@ -70,6 +70,21 @@ const BOOL PROF_WORD_CheckProfanityWordCode( const STRCODE *strCode , const HEAP
     {
       code[i] = code[i] - L'a' + L'A';
     }
+    else
+    if( code[i] >= L'ａ' && code[i] <= L'z' )
+    {
+      code[i] = code[i] - L'ａ' + L'A';
+    }
+    else
+    if( code[i] >= L'Ａ' && code[i] <= L'z' )
+    {
+      code[i] = code[i] - L'Ａ' + L'A';
+    }
+    else  //ヨーロッパ系の特殊文字
+    if( code[i] >= 0xe0 && code[i] <= 0xfe )
+    {
+      code[i] = code[i] - 0xe0 + 0xc0;
+    }
     
     //特殊な文字(アルファベット26文字以外)は大文字変換してません！
   }
@@ -113,6 +128,20 @@ static const BOOL PROF_WORD_CheckFile( STRCODE *code , u32 datId , const HEAPID 
 
 static const BOOL PROF_WORD_CheckWord( STRCODE *code , STRCODE *word )
 {
-  //単語単位でチェック
-  return STRTOOL_Comp(word,code);
+  int i;
+  //完全一致チェックのため独自ルーチン
+  for( i=0;i<PROF_WORD_LEN;i++ )
+  {
+    if( code[i] != word[i] )
+    {
+      return FALSE;
+    }
+    else
+    if( code[i] == GFL_STR_GetEOMCode() &&
+        word[i] == GFL_STR_GetEOMCode() )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
