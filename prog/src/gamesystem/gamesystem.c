@@ -36,6 +36,7 @@
 //============================================================================================
 #ifdef PM_DEBUG
 
+static void heapLeakCheck( void );
 
 #endif
 
@@ -324,6 +325,10 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
     NetErr_DispCall(FALSE);
   }
   
+#ifdef  PM_DEBUG
+  //イベントが存在しない時だけリークチェックを走らせる
+  if ( gsys->event == NULL ) heapLeakCheck();
+#endif
 	if (gsys->proc_result == GFL_PROC_MAIN_NULL && gsys->event == NULL)
 	{
 		//プロセスもイベントも存在しないとき、ゲーム終了
@@ -643,4 +648,40 @@ GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void)
   return GameSysWork;
 }
 
+//============================================================================================
+//============================================================================================
+static u32 ProcHeapFreeSize = 0;
+static u32 WorldHeapFreeSize = 0;
+
+//------------------------------------------------------------------
+/**
+ * @brief ヒープのリークチェック
+ *
+ * なんのイベントも起動していない状態の初期値を保持しておき、
+ * 以降イベントが起動していないタイミングで常に監視を行う
+ */
+//------------------------------------------------------------------
+
+static void heapLeakCheck( void )
+{
+  u32 temp_proc_size = GFL_HEAP_GetHeapFreeSize( HEAPID_PROC );
+  u32 temp_world_size = GFL_HEAP_GetHeapFreeSize( HEAPID_WORLD );
+
+  if ( ProcHeapFreeSize == 0 ) {
+    ProcHeapFreeSize == temp_proc_size;
+  } else if ( ProcHeapFreeSize != temp_proc_size ) {
+    GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( HEAPID_PROC );
+    GF_ASSERT_MSG( 0, "HEAPID_PROC LEAK now(%08x) < start(%08x)\n", temp_proc_size, ProcHeapFreeSize );
+  }
+
+  if ( WorldHeapFreeSize == 0 ) {
+    WorldHeapFreeSize == temp_world_size;
+  } else if ( WorldHeapFreeSize != temp_world_size ) {
+    GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( HEAPID_PROC );
+    GF_ASSERT_MSG( 0, "HEAPID_WORLD LEAK now(%08x) < start(%08x)\n", temp_world_size, WorldHeapFreeSize );
+  }
+}
+
 #endif //PM_DEBUG
+
+
