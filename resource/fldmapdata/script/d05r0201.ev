@@ -325,14 +325,19 @@ EVENT_START   ev_d05r0201_hakaim_03
 			_TRAINER_LOSE()
 		ENDIF
 		
-		//こんなに寒くて 震えてたら勝てるわけ…
-		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim1_02 , D05R0201_HAKAIM_03 )
-		_BALLOONWIN_CLOSE()
-		
 		//全員に勝利した場合終了イベントをコール
 		IF $WK_SCENE_D05_PLASMA == 7 THEN
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim1_03 , D05R0201_HAKAIM_03 )
+			_BALLOONWIN_CLOSE()
 			_CALL ev_d05r0201_vs_plasma_win
+		ELSE
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim1_02 , D05R0201_HAKAIM_03 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 		ENDIF
+		
 		
 	ENDIF
 
@@ -374,13 +379,17 @@ EVENT_START   ev_d05r0201_hakaiw_05
 			_TRAINER_LOSE()
 		ENDIF
 		
-		//こんなに寒くて 震えてたら勝てるわけ…
-		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaiw1_02 , D05R0201_HAKAIW_05 )
-		_BALLOONWIN_CLOSE()
-		
 		//全員に勝利した場合終了イベントをコール
 		IF $WK_SCENE_D05_PLASMA == 7 THEN
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaiw1_03 , D05R0201_HAKAIW_05 )
+			_BALLOONWIN_CLOSE()
 			_CALL ev_d05r0201_vs_plasma_win
+		ELSE
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaiw1_02 , D05R0201_HAKAIW_05 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 		ENDIF
 		
 	ENDIF
@@ -423,14 +432,19 @@ EVENT_START   ev_d05r0201_hakaim_07
 			_TRAINER_LOSE()
 		ENDIF
 		
-		//こんなに寒くて 震えてたら勝てるわけ…
-		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim3_02 , D05R0201_HAKAIM_07 )
-		_BALLOONWIN_CLOSE()
-		
 		//全員に勝利した場合終了イベントをコール
 		IF $WK_SCENE_D05_PLASMA == 7 THEN
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim3_03 , D05R0201_HAKAIM_07 )
+			_BALLOONWIN_CLOSE()
 			_CALL ev_d05r0201_vs_plasma_win
+		ELSE
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim3_02 , D05R0201_HAKAIM_07 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 		ENDIF
+		
 		
 	ENDIF
 
@@ -471,13 +485,17 @@ EVENT_START   ev_d05r0201_hakaiw_08
 			_TRAINER_LOSE()
 		ENDIF
 		
-		//こんなに寒くて 震えてたら勝てるわけ…
-		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_02 , D05R0201_HAKAIW_08 )
-		_BALLOONWIN_CLOSE()
-		
 		//全員に勝利した場合終了イベントをコール
 		IF $WK_SCENE_D05_PLASMA == 7 THEN
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_03 , D05R0201_HAKAIW_08 )
+			_BALLOONWIN_CLOSE()
 			_CALL ev_d05r0201_vs_plasma_win
+		ELSE
+			//こんなに寒くて 震えてたら勝てるわけ…
+			_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_02 , D05R0201_HAKAIW_08 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 		ENDIF
 		
 	ENDIF
