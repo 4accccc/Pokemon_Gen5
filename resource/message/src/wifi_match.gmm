@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-23T18:07:49"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-28T00:59:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1252" top="294" right="1957" bottom="922" maximized="no" rayout="Vertical2">
+	<dialog left="1127" top="417" right="1832" bottom="1045" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1021,7 +1021,7 @@
 確認　しています……</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_37" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="WIFIMATCH_WIFI_STR_37">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">ポケモンバトル　Ｗｉ－Ｆｉたいかい！
 たいせんを　つづけますか？</language>
@@ -1029,22 +1029,34 @@
 たいせんを　つづけますか？</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_SELECT_11" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="WIFIMATCH_WIFI_SELECT_11">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいせんする</language>
 		<language name="JPN_KANJI" width="256">対戦する</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_SELECT_12" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="WIFIMATCH_WIFI_SELECT_12">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">さんかを　かいじょする</language>
 		<language name="JPN_KANJI" width="256">参加を　解除する</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_SELECT_13" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="WIFIMATCH_WIFI_SELECT_13">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="WIFIMATCH_WIFI_STR_38" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>WIFI大会</comment>
+		<language name="JPN" width="256">エントリーした　たいかいは
+まだ　かいさい　されていません[BE:01:ページ切り替え（クリア）]
+たいかいの　にっていを
+かくにんして　おまちください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">エントリーした　大会は
+まだ　開催　されていません[BE:01:ページ切り替え（クリア）]
+大会の　日程を
+確認して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_POKE_00">
@@ -1159,7 +1171,7 @@
 解除に　なりました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_10" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="WIFIMATCH_DPC_STR_10" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">さんかを　かいじょすると
 おなじ　たいかいには[BE:00:ページ切り替え（行送り）]
@@ -1171,12 +1183,19 @@
 解除しても　よろしいですか？</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_11" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="WIFIMATCH_DPC_STR_11" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">たいかいの　さんかを　かいじょ　します
 ほんとうに　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">大会の　参加を　解除します
 本当に　よろしいですか？</language>
+	</row>
+
+	<row id="WIFIMATCH_DPC_STR_12" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<language name="JPN" width="256">たいかいへの　さんかを
+かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">大会への　参加を
+解除しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_DPC_SELECT_00">
