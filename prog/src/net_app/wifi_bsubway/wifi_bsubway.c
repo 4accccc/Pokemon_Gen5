@@ -965,7 +965,6 @@ static void ROOM_DATA_LoadRoomData( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR*
 
   p_wk->room_no = room_no;
   GF_ASSERT( p_wk->room_no <= p_wk->room_num );
-  GF_ASSERT_MSG(0,"ライブラリ対応の為封鎖 100426\n");
   Dpw_Bt_DownloadRoomAsync( p_wk->rank, p_wk->room_no, &p_wk->bt_roomdata );
   ERROR_DATA_GetAsyncStart( p_error );
 }
@@ -1432,7 +1431,6 @@ static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_
     room_no = BSUBWAY_WIFIDATA_GetPlayerRoomNo( p_wk->cp_bsubway_wifi );
     win = BSUBWAY_SCOREDATA_GetWifiNum( p_wk->cp_bsubway_score );
 
-    GF_ASSERT_MSG(0,"ライブラリ対応の為封鎖 100426\n");
     Dpw_Bt_UploadPlayerAsync(  rank,  room_no,  win, &p_wk->bt_player, p_wk->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
     WIFI_BSUBWAY_Printf( "Start\n" );
     ERROR_DATA_GetAsyncStart( p_error );
