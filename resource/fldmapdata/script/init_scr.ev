@@ -472,6 +472,10 @@ ev_first_gameclear:
 
   //ギアステーションのジャッジを表示
   _FLAG_RESET( FV_POKE_JUDGE_01 )
+  
+  //ゲーム内交換の対戦トレーナーとバトル可能にする
+  _FLAG_SET(FE_C02R0301_BTL_01)
+  
 _RET
 
 
