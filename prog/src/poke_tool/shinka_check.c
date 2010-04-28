@@ -328,26 +328,23 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
 			if( ( pst->psd[ i ].ShinkaCond == SHINKA_COND_ITEM ) && ( pst->psd[ i ].ShinkaData == param ) )
       {
 				ret = pst->psd[ i ].ShinkaMons;
-				break;
 			}
 			if( ( pst->psd[ i ].ShinkaCond == SHINKA_COND_ITEM_MALE ) &&
 			    ( PP_Get( pp, ID_PARA_sex, NULL ) == PTL_SEX_MALE ) &&
 			    ( pst->psd[ i ].ShinkaData == param ) )
       {
 				ret = pst->psd[ i ].ShinkaMons;
-				break;
 			}
 			if( ( pst->psd[ i ].ShinkaCond == SHINKA_COND_ITEM_FEMALE ) &&
 			    ( PP_Get( pp, ID_PARA_sex, NULL ) == PTL_SEX_FEMALE ) &&
 			    ( pst->psd[ i ].ShinkaData == param ) )
       {
 				ret = pst->psd[ i ].ShinkaMons;
-				break;
 			}
 			//i‰»ðŒ‚ªŒ©‚Â‚©‚Á‚½‚çA”²‚¯‚é
 			if( ret )
       {
-				(*cond) = 0;
+				(*cond) = pst->psd[ i ].ShinkaCond;
 				break;
 			}
 		}
