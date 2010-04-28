@@ -448,6 +448,9 @@ BOOL WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode)
 {
   BOOL rc;
   rc = FALSE;
+
+  if (inCountryCode == 0) return rc;
+
   //指定インデックオーバーチェック
   if (inCountryCode < WIFI_COUNTRY_MAX)
   {

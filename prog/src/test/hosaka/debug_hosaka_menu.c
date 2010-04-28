@@ -61,7 +61,7 @@ static BOOL TESTMODE_ITEM_SelectUNSelect( TESTMODE_WORK* work, const int idx )
   {
     int i;
     //解禁国コードをテストセット
-    for( i=0; i<UN_LIST_MAX; i++)
+    for( i=0; i<WIFI_COUNTRY_MAX-1; i++)
     {
       if ( GFUser_GetPublicRand0( 2 ) ) initParam->OpenCountryFlg[i] = 1;
       else initParam->OpenCountryFlg[i] = 0;

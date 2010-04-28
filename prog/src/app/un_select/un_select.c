@@ -69,7 +69,7 @@
 #include "msg/msg_wifi_place_msg_UN.h"  // GMM
 
 //国50音順配列
-#include "country_ary.cdat"
+#include "country_ary.cdat"   //for g_FloorTable
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -113,8 +113,8 @@ FS_EXTERN_OVERLAY(ui_common);
 
 //ＢＧ書き換え用
 #define BASE_OFS  (1*32)    //ＢＧ先頭アドレス１キャラ先から開始
-#define MAIN_DISP_COUNTRY_MAX (144)   //メイン画面には144カ国表示
-#define SUB_DISP_COUNTRY_MAX (89)   //サブ画面には89カ国表示
+#define MAIN_DISP_COUNTRY_MAX (80)   //メイン画面には80カ国表示
+#define SUB_DISP_COUNTRY_MAX (52)   //サブ画面には52カ国表示
 //ＯＢＪ
 #define UN_OBJ_CHRRES_MAX (1)
 #define UN_OBJ_PALRES_MAX (1)
@@ -135,10 +135,10 @@ FS_EXTERN_OVERLAY(ui_common);
 #define LIST_MARLER_OFS (5*8)     //リスト項目は５キャラ間隔
 #define BASE_FLOOR_IDX (3)       //計算基底フロアインデックス
 
-//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0(1カ国目234階)に相当
-#define BUIL_FLOOR_YDOT_TOP    (103)
-//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス232（233カ国目2階）に相当
-#define BUIL_FLOOR_YDOT_BOTTOM    (335)
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0(1カ国目133階)に相当
+#define BUIL_FLOOR_YDOT_TOP    (88)
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス131（132カ国目2階）に相当
+#define BUIL_FLOOR_YDOT_BOTTOM    (351)
 
 #define SCROLL_BAR_UY (8)
 #define SCROLL_BAR_DY (160)
@@ -284,7 +284,7 @@ typedef struct
 
   int ListSelPos;   //リストで選んだ位置 0～UN_LIST_MAX-1
 
-  BOOL Valid[UN_LIST_MAX]; //0=最上階　232=2Ｆ
+  BOOL Valid[UN_LIST_MAX]; //0=最上階　131=2Ｆ
 
   GFL_TCB * htask;		// TCB ( HBLANK )
 
@@ -297,6 +297,8 @@ typedef struct
 
   //マーカー表示する２０個の対象フロア
   int MarkerFloor[FLOOR_MARKING_MAX];
+
+  BOOL MarkerClearReq;
   
 } UN_SELECT_MAIN_WORK;
 
@@ -353,6 +355,7 @@ static void MakeAct( UN_SELECT_MAIN_WORK *wk );
 static void DelAct( UN_SELECT_MAIN_WORK *wk );
 static GFL_CLWK *CreateAct( GFL_CLUNIT *unit, UN_CLWK_DATA *data );
 
+static void ClearListMarker( UN_SELECT_MAIN_WORK *wk );
 static void MvListMarkerPos( UN_SELECT_MAIN_WORK *wk, const int inAddVal);
 static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk );
 static void SetScrollBarPos( UN_SELECT_MAIN_WORK *wk, const int inY );
@@ -704,6 +707,7 @@ static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
 
       if ( !wk->Valid[valid_idx] )
       {
+#if 0        //1ヶ国１ライン版
         //書き換えキャラを選定
         chr_idx = target/8;
         target_line = 7 - (target%8);    //キャラ内書き換え対象ライン（0～7）キャラの下から書き換える
@@ -714,6 +718,23 @@ static void UNSelect_BG_LoadResource( UN_SELECT_MAIN_WORK* wk, HEAPID heap_id )
         data[adr+1] = 0xff;
         data[adr+2] = 0xff;
         data[adr+3] = 0xff;
+#else       //１カ国２ライン版
+        //書き換えキャラを選定
+        chr_idx = target/4;   //1キャラに４カ国
+        target_line = (3 - (target%4))*2;    //キャラ内書き換え対象ライン（0,2,4,6）キャラの下から書き換える
+        ofs = target_line * 4;    //一列８ドットは４バイト
+        adr = BASE_OFS + (chr_idx * 32) + ofs;
+        //8バイト書き換え
+        data[adr] = 0xff;
+        data[adr+1] = 0xff;
+        data[adr+2] = 0xff;
+        data[adr+3] = 0xff;
+        data[adr+4] = 0xff;
+        data[adr+5] = 0xff;
+        data[adr+6] = 0xff;
+        data[adr+7] = 0xff;
+#endif
+
       }
     }
   }
@@ -892,7 +913,7 @@ static void PASSIVE_Request( void )
 {
   BrightnessChgReset( YESNO_MASK_DISP );
   ChangeBrightnessRequest( BRIGHT_PASSIVE_SYNC, BRIGHT_PASSIVE_VOL, 0, YESNO_MASK_PLANE, YESNO_MASK_DISP );
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 8, -1 );
+//  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 8, -1 );
 
 }
 
@@ -909,7 +930,7 @@ static void PASSIVE_Reset( void )
 {
   BrightnessChgReset( YESNO_MASK_DISP ); // パッシブ解除
   ChangeBrightnessRequest( BRIGHT_PASSIVE_SYNC, 0, BRIGHT_PASSIVE_VOL, YESNO_MASK_PLANE, YESNO_MASK_DISP );
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 8, 0, -1 );
+//  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 8, 0, -1 );
 }
 
 
@@ -992,7 +1013,7 @@ static UN_SELECT_MSG_CNT_WORK* MSG_CNT_Create( HEAPID heap_id )
 
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 4, 0, wk->strbuf, wk->font);
 
-#if 1   //@todo
+#if 1
     GFL_BMPWIN_TransVramCharacter( win );
     GFL_BMPWIN_MakeScreen( win );
 
@@ -1357,6 +1378,8 @@ static void ListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 
 { 
   UN_SELECT_MAIN_WORK* wk = work;
   u32 prm;
+
+  ClearListMarker( wk );
   
   prm = FRAMELIST_GetItemParam( wk->lwk, itemNum );
 
@@ -1419,7 +1442,7 @@ static void ListCallBack_Move( void * work, u32 listPos, BOOL flg )
       int buil_cur_y;
       list_pos = FRAMELIST_GetListPos( wk->lwk );
       cur_pos = FRAMELIST_GetCursorPos( wk->lwk );
-      buil_cur_y = BUIL_FLOOR_YDOT_TOP + (list_pos - cur_pos);
+      buil_cur_y = BUIL_FLOOR_YDOT_TOP + (list_pos - cur_pos)*2;    //１カ国２ドットなのでｘ2する
       SetBuilCurPos( wk, buil_cur_y );
     }
     
@@ -1453,7 +1476,7 @@ static void ListCallBack_Scroll( void * work, s8 mv )
       int buil_cur_y;
       list_pos = FRAMELIST_GetListPos( wk->lwk );
       cur_pos = FRAMELIST_GetCursorPos( wk->lwk );
-      buil_cur_y = BUIL_FLOOR_YDOT_TOP + (list_pos - cur_pos);
+      buil_cur_y = BUIL_FLOOR_YDOT_TOP + (list_pos - cur_pos)*2;    //１カ国２ドットなのでｘ2する
       SetBuilCurPos( wk, buil_cur_y );
     }
   }
@@ -1843,6 +1866,19 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
   u32 ret;
   UN_SELECT_MAIN_WORK* wk = work;
 
+  //マーカクリアリクエスト初期化
+  wk->MarkerClearReq = FALSE;
+  {
+    BOOL marker_clear = FALSE;
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ) marker_clear = TRUE;
+    else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ) marker_clear = TRUE;
+
+    if ( marker_clear )
+    {
+      wk->MarkerClearReq = TRUE;
+    }
+  }
+
   // フロア選択処理
   ret = FRAMELIST_Main( wk->lwk );
 
@@ -1886,12 +1922,10 @@ static BOOL SceneSelectFloor_Main( UI_SCENE_CNT_PTR cnt, void* work )
   switch( TOUCHBAR_GetTrg( wk->touchbar ) )
   {
   case TOUCHBAR_ICON_CUR_L : // ←
-    //@TODO
     HOSAKA_Printf("L!\n");
     break;
 
   case TOUCHBAR_ICON_CUR_R : // →
-    //@TODO
     HOSAKA_Printf("R!\n"); 
     break;
 
@@ -2381,6 +2415,44 @@ static GFL_CLWK *CreateAct( GFL_CLUNIT *unit, UN_CLWK_DATA *data )
   return clwk;
 }
 
+//マーカーをクリア
+static void ClearListMarker( UN_SELECT_MAIN_WORK *wk )
+{
+  int i;
+  GFL_CLACTPOS calc_pos;
+
+  if ( !wk->MarkerClearReq ) return;
+
+  wk->MarkerClearReq = FALSE;
+
+  for (i=0;i<UN_LISTMAKER_MAIN_MAX;i++)
+  {
+    int pos;
+    //アクター取得
+    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_LIST_MARKER_M_START+i];
+    //使用してるか？
+    if ( GFL_CLACT_WK_GetDrawEnable( clwk ) )
+    {
+      //非表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+    }
+  }
+
+  for (i=0;i<UN_LISTMAKER_SUB_MAX;i++)
+  {
+    int pos;
+    //アクター取得
+    GFL_CLWK *clwk = wk->ClWk[UN_OBJ_LIST_MARKER_S_START+i];
+    //使用してるか？
+    if ( GFL_CLACT_WK_GetDrawEnable( clwk ) )
+    {
+      //非表示
+      GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+    }
+  }
+}
+
+
 //マーカーの管理位置座標を更新
 static void MvListMarkerPos( UN_SELECT_MAIN_WORK *wk, const int inAddVal)
 {
@@ -2457,7 +2529,7 @@ static void SetBuilMarkerPos( UN_SELECT_MAIN_WORK *wk )
 
     //座標セット
     GFL_CLACT_WK_GetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
-    calc_pos.y = BUIL_FLOOR_YDOT_TOP + wk->MarkerFloor[i];
+    calc_pos.y = BUIL_FLOOR_YDOT_TOP + wk->MarkerFloor[i]*2;
     GFL_CLACT_WK_SetPos( clwk, &calc_pos, CLWK_SETSF_NONE ); //絶対座標指定
   }
 }
@@ -2596,7 +2668,7 @@ static void SetListMarker(UN_SELECT_MAIN_WORK* wk, const BOOL inIsMain, const in
     rc = SetListMarkerCore(clwk_org, i, setsf, inY);
     if (rc) break;
   }
-  GF_ASSERT( i != num);
+  GF_ASSERT_MSG( i != num, "%d %d",i, num);
 }
 
 static BOOL SetListMarkerCore(GFL_CLWK **clwk_ary, const int inIdx, const u16 inSetsf, const int inY)
@@ -2644,7 +2716,7 @@ static int GetFloorIdxFromCountryCode(const int inCountryCode)
   if ( i >= UN_LIST_MAX )
   {
     GF_ASSERT_MSG( 0,"code not found %d",inCountryCode );
-    return 0;
+    return NOT_MARKER;
   }
   return i;
 }

@@ -33,6 +33,17 @@ void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
   UNITEDNATIONS_SAVE *un_data;
   u32 same_idx;
 
+  {
+    //自分の国コードを取得
+    int my_country_code = MyStatus_GetMyNation(&add_data->aMyStatus);
+    if ( my_country_code == 0 )
+    {
+      //登録指定無い場合は処理を行わない
+      OS_Printf("自分の国コードが設定されていないので、処理しない\n");
+      return;
+    }
+  }
+
   un_data = WIFIHISTORY_GetUNDataPtr(wh);
 
   //同一人物検索

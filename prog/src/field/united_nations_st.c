@@ -121,11 +121,11 @@ GMEVENT * UN_CreateAppEvt(GAMESYS_WORK *gsys, u16 inFloor, u16 *outFloor, u16 *o
         NOZOMU_Printf("-------------code %d\n",i);
         evt_work->Param.OpenCountryFlg[idx] = 1;
       }
-      else
-        evt_work->Param.OpenCountryFlg[idx] = 0;
+      else evt_work->Param.OpenCountryFlg[idx] = 0;
     }
     //訪問国セット
     num = WIFIHISTORY_GetValidUnDataNum(wh);
+    if (num>FLOOR_MARKING_MAX) num = FLOOR_MARKING_MAX;
     for (i=0;i<num;i++){
       int code;
       MYSTATUS *status = WIFIHISTORY_GetUnMyStatus(wh, i);
@@ -158,7 +158,7 @@ static GMEVENT_RESULT CallAppEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    //デモプロック
+    //プロック
     GMEVENT_CallProc( event, FS_OVERLAY_ID(un_select), &UNSelectProcData, &evt_work->Param );
     (*seq)++;
     break;

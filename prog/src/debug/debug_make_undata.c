@@ -1252,7 +1252,7 @@ static void MakeData(MAKE_WORK *wk)
         GF_ASSERT_MSG(0,"ERROR placeidx over idx=%d max_idx=%d",place, count);
         place = 0;
       }
-      MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], place);
+      MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], place); //todo
     }
     //リージョン※
     //ロムコード※
