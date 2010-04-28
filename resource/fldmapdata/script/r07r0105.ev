@@ -141,7 +141,7 @@ EVENT_START   ev_bg_r07r0105_bell
 	IF $SCWK_ANSWER01 == 0 THEN
 		
 		//【仮】BGMを押さえる
-		_BGM_FADEOUT( 60 , 12 )
+		//_BGM_FADEOUT( 60 , 12 )
 		
 		//鐘SE再生
 		_SE_PLAY( SEQ_SE_FLD_151 )
@@ -163,7 +163,7 @@ EVENT_START   ev_bg_r07r0105_bell
 		_PLAINWIN_CLOSE()
 		
 		//【仮】BGMを戻す
-		_BGM_FADEIN( 12 )
+		//_BGM_FADEIN( 12 )
 		
 		//フウロイベント中はイベントを起動
 		IF $WK_SCENE_C07R0105 == 1 THEN
