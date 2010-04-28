@@ -94,7 +94,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
   HEAPID_WIFI,  //wifi用にcreateされるHEAPID
   HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
   GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
-  1,                            // 最大接続人数
+  2,                            // 最大接続人数
   88,                  //最大送信バイト数
   _BCON_GET_NUM,    // 最大ビーコン収集数
   TRUE,     // CRC計算
