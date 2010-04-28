@@ -529,7 +529,7 @@ static void EggCordinate_waza_default( POKEMON_PARAM* egg )
   // Lv.1 で覚える技をセット
   POKE_PERSONAL_LoadWazaOboeTable( monsno, formno, wazaTable );
   i = 0;
-  while( POKEPER_WAZAOBOE_IsEndCode( wazaTable[i] ) )
+  while( !POKEPER_WAZAOBOE_IsEndCode( wazaTable[i] ) )
   {
     int waza_lv = POKEPER_WAZAOBOE_GetLevel( wazaTable[i] );
     int waza_id = POKEPER_WAZAOBOE_GetWazaID( wazaTable[i] );
@@ -628,7 +628,7 @@ static void EggCordinate_waza_parent(
 
   // 子の全レベルアップ習得技をチェック
   i = 0;
-  while( POKEPER_WAZAOBOE_IsEndCode( wazaTable[i] ) )
+  while( !POKEPER_WAZAOBOE_IsEndCode( wazaTable[i] ) )
   {
     u32  wazano      = POKEPER_WAZAOBOE_GetWazaID( wazaTable[i] );
     BOOL father_have = FALSE; // 父親が覚えている技かどうか
@@ -670,15 +670,15 @@ static void EggCordinate_waza_parent(
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET,
-      "POKEMON-EGG: <TamagoWaza> father(%d, %d, %d, %d)\n",
+      "POKEMON-EGG: <ParentWaza> father(%d, %d, %d, %d)\n",
       PP_Get( father, ID_PARA_waza1, NULL ), PP_Get( father, ID_PARA_waza2, NULL ),
       PP_Get( father, ID_PARA_waza3, NULL ), PP_Get( father, ID_PARA_waza4, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
-      "POKEMON-EGG: <TamagoWaza> mother(%d, %d, %d, %d)\n",
+      "POKEMON-EGG: <ParentWaza> mother(%d, %d, %d, %d)\n",
       PP_Get( mother, ID_PARA_waza1, NULL ), PP_Get( mother, ID_PARA_waza2, NULL ),
       PP_Get( mother, ID_PARA_waza3, NULL ), PP_Get( mother, ID_PARA_waza4, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
-      "POKEMON-EGG: <TamagoWaza> ==> egg(%d, %d, %d, %d)\n",
+      "POKEMON-EGG: <ParentWaza> ==> egg(%d, %d, %d, %d)\n",
       PP_Get( egg, ID_PARA_waza1, NULL ), PP_Get( egg, ID_PARA_waza2, NULL ),
       PP_Get( egg, ID_PARA_waza3, NULL ), PP_Get( egg, ID_PARA_waza4, NULL ) );
 #endif
