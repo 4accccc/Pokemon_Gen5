@@ -103,7 +103,9 @@ typedef enum {
 
   OBJ_BARRIER,
 
-  OBJ_NUM
+  OBJ_NUM,
+
+  TREE_OBJ_NUM = OBJ_BARRIER,
 } OBJ_INDEX;
 static const GFL_G3D_UTIL_OBJ obj_table[ OBJ_NUM ] = 
 {
@@ -334,7 +336,7 @@ static void _AllVanish(FLD_EXP_OBJ_CNT_PTR exobj_cnt)
 {
   int i;
 
-  for(i = 0; i < OBJ_NUM; i++){
+  for(i = 0; i < TREE_OBJ_NUM; i++){
     FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, i, TRUE);
   }
 }

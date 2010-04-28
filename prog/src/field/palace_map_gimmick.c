@@ -44,7 +44,6 @@
 enum {
   MAP_RES_CUBE,           // 
   MAP_RES_CUBE_ANIME,     // 
-  MAP_RES_CUBE_ANIME2,     // 
 
   MAP_RES_WARP,           // 
   MAP_RES_WARP_ANIME,     // 
@@ -54,7 +53,6 @@ enum {
 static const GFL_G3D_UTIL_RES map_res_tbl[ MAP_RES_NUM ] = 
 {
   { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbmd, GFL_G3D_UTIL_RESARC },     // 
-  { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbma, GFL_G3D_UTIL_RESARC },     // 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbta, GFL_G3D_UTIL_RESARC },     // 
 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_warp01_nsbmd, GFL_G3D_UTIL_RESARC },     // 
@@ -64,7 +62,6 @@ static const GFL_G3D_UTIL_RES map_res_tbl[ MAP_RES_NUM ] =
 // アニメーションインデックス
 enum{
   MAP_ANM_CUBE_ANIME,
-  MAP_ANM_CUBE_ANIME2,
   MAP_ANM_CUBE_NUM,
 
   MAP_ANM_WARP_ANIME = 0,
@@ -73,7 +70,6 @@ enum{
 static const GFL_G3D_UTIL_ANM map_res_cube_anm_tbl[ MAP_ANM_CUBE_NUM ] = 
 {
   { MAP_RES_CUBE_ANIME, 0 },
-  { MAP_RES_CUBE_ANIME2, 0 },
 };
 
 static const GFL_G3D_UTIL_ANM map_res_warp_anm_tbl[ MAP_ANM_WARP_NUM ] = 
