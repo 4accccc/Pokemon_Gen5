@@ -4508,14 +4508,40 @@ static int AC_ShinMuGutari( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
- * AC_SHIN_MU_TURN
+ * AC_SHIN_MU_TURN 0
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_ShinMuTurn( MMDL * mmdl )
+static int AC_ShinMuTurn0( MMDL * mmdl )
 {
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_TURN );
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_TURN );
+	MMDL_IncAcmdSeq( mmdl );
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_TURN 1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuTurn1( MMDL * mmdl )
+{
+  MMDL_BLACTCONT *blact_cont = MMDLSYS_GetBlActCont( MMDL_GetMMdlSys(mmdl) );
+  GFL_BBDACT_SYS *bbdact_sys = MMDL_BLACTCONT_GetBbdActSys( blact_cont );
+  u32 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  
+  if( actID != MMDL_BLACTID_NULL ){
+    u16 comm;
+    
+    if( GFL_BBDACT_GetAnimeLastCommand(bbdact_sys,actID,&comm) == FALSE ){
+      return( FALSE );
+    }
+  }
+  
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_STOP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
@@ -4617,7 +4643,6 @@ static int AC_Melodyer_1N( MMDL * mmdl )
   
   return( FALSE );
 }
-
 
 //======================================================================
 //	data	アニメーションコマンドテーブル
@@ -6414,7 +6439,8 @@ int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * ) =
 //--------------------------------------------------------------
 int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * ) =
 {
-  AC_ShinMuTurn,
+  AC_ShinMuTurn0,
+  AC_ShinMuTurn1,
 	AC_End,
 };
 
