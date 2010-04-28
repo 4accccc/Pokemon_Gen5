@@ -24,6 +24,7 @@
 #define TR_HAKAIW1_09                     11
 #define TR_HAKAIM1_21                     12
 #define D08R0601_FLD_ITEM_02              13
+#define TR_HAKAIW1_14                     14
 
 #endif //ZONE_D08R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
