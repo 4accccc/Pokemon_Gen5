@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:38:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T11:33:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -499,11 +499,11 @@
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
 キミも　ストーンを　てにいれたんだ▼
-その　ダークストーン……
+その　ライトストーン……
 ムに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
 キミも　ストーンを　手に入れたんだ▼
-その　ダークストーン……
+その　ライトストーン……
 ムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 

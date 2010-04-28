@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:27:03"/>
+	<create user="matsumiya" host="W00224" date="2010-04-28T12:03:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,19 +308,19 @@
 ・水曜日
 ・メッセージ表示後
 　アイテム入手処理
-　No033「モーモーミルク」</comment>
+　No031「サイコソーダ」</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウエートレス</attribute>
 		<language name="JPN" width="256">いなかの　ちょっと　おしゃれな
 カフェ　ソーコへ　ようこそ！！▼
 すいようびは　サービスデー！
-こちらの　モーモーミルクを　どうぞ！▼
+こちらの　サイコソーダを　どうぞ！▼
 とうてん　じまんの
 あじを　おためし　ください！▼</language>
 		<language name="JPN_KANJI" width="256">いなかの　ちょっと　おしゃれな
 カフェ　ソーコへ　ようこそ！！▼
 水曜日は　サービスデー！
-こちらの　モーモーミルクを　どうぞ！▼
+こちらの　サイコソーダを　どうぞ！▼
 当店自慢の
 味を　お試しください！▼</language>
 	</row>
