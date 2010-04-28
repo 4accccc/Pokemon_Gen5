@@ -1598,7 +1598,9 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
     if( work->step == STEP_FADE_IN_BEFORE )
     {
       // 進化条件
-      if( param->shinka_cond == SHINKA_COND_ITEM )  // 「たいようのいし」などを使って進化した場合は、進化キャンセルさせない
+      if(    param->shinka_cond == SHINKA_COND_ITEM           // 「たいようのいし」などを使って進化した場合は、進化キャンセルさせない
+          || param->shinka_cond == SHINKA_COND_ITEM_MALE
+          || param->shinka_cond == SHINKA_COND_ITEM_FEMALE )
       {
         param->b_enable_cancel = FALSE;
       }
