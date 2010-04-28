@@ -280,8 +280,10 @@ SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl)
   
 	result = GFL_BACKUP_Save(ctrl->sv_normal);
 	if(result == SAVE_RESULT_OK){
-		ctrl->new_data_flag = FALSE;
-		ctrl->data_exists = TRUE;
+    if(SaveData_GetNowSaveModeSetup(ctrl) == FALSE){
+  		ctrl->new_data_flag = FALSE;
+	  	ctrl->data_exists = TRUE;
+	  }
 	}
 	return result;
 }
@@ -320,8 +322,10 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
   
 	result = GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_normal);
 	if(result == SAVE_RESULT_OK){
-		ctrl->new_data_flag = FALSE;
-		ctrl->data_exists = TRUE;
+    if(SaveData_GetNowSaveModeSetup(ctrl) == FALSE){
+  		ctrl->new_data_flag = FALSE;
+	  	ctrl->data_exists = TRUE;
+	  }
 	}
 	return result;
 }
