@@ -24,9 +24,13 @@
 //  define
 //======================================================================
 #define GYOE_FLDOBJ_Y_OFFSET (NUM_FX32(22)) ///<フィールドOBJからのYオフセット
-#define GYOE_FLDOBJ_Y_MOVE_START (0x6000) ///<ギョエー初速
+#define GYOE_FLDOBJ_Y_MOVE_START  (0x6000)  ///<ギョエー初速
+#define GYOE_FLDOBJ_Y_MOVE_OFFS   (0x2000)  ///<ギョエー速度変化
 #define GYOE_END_FRAME (30) ///<ギョエー終了フレーム	
 
+enum {
+  PRO_MAT_Z_OFS = 4,
+};
 //======================================================================
 //  struct
 //======================================================================
@@ -44,6 +48,8 @@ struct _TAG_FLDEFF_GYOE
   GFL_G3D_RES *g3d_res_mdl[FLDEFF_GYOETYPE_MAX];
   GFL_G3D_RND *g3d_rnd[FLDEFF_GYOETYPE_MAX];
   GFL_G3D_OBJ *g3d_obj[FLDEFF_GYOETYPE_MAX];
+
+  u16 gyoe_z_offs;
 };
 
 //--------------------------------------------------------------
@@ -152,6 +158,8 @@ static void gyoe_InitResource( FLDEFF_GYOE *gyoe )
   
     gyoe->g3d_obj[i] = GFL_G3D_OBJECT_Create( gyoe->g3d_rnd[i], NULL, 0 );
   }
+
+  gyoe->gyoe_z_offs = PRO_MAT_Z_OFS;
 }
 
 //--------------------------------------------------------------
@@ -172,6 +180,18 @@ static void gyoe_DeleteResource( FLDEFF_GYOE *gyoe )
   }
 }
 
+#ifdef  PM_DEBUG
+u32 DEBUG_GetGyoeZoffs( FLDEFF_CTRL *fectrl )
+{
+  FLDEFF_GYOE * eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
+  return eff_gyoe->gyoe_z_offs;
+}
+void DEBUG_SetGyoeZoffs( FLDEFF_CTRL *fectrl, u32 value )
+{
+  FLDEFF_GYOE * eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
+  eff_gyoe->gyoe_z_offs = value;
+}
+#endif
 //======================================================================
 //	びっくりマークエフェクト　タスク
 //======================================================================
@@ -341,10 +361,25 @@ static void gyoeTask_Draw( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_GYOE *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
+
+  MtxFx44 org_pm,pm;
+  const MtxFx44 * m = NNS_G3dGlbGetProjectionMtx();
+  fx32 offs_z = FX32_CONST( work->head.eff_gyoe->gyoe_z_offs );
+  org_pm = *m;
+  pm = org_pm;
+  pm._32 += FX_Mul( pm._22, offs_z );
+  NNS_G3dGlbSetProjectionMtx(&pm);
+  NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
+  NNS_G3dGeFlushBuffer(); // 転送まち
+
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
   GFL_G3D_DRAW_DrawObjectCullingON(
       work->head.eff_gyoe->g3d_obj[work->head.type], &status );
+
+  NNS_G3dGlbSetProjectionMtx(&org_pm);
+  NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
+  NNS_G3dGeFlushBuffer(); // 転送まち
 }
 
 //======================================================================
@@ -412,7 +447,7 @@ static void gyoe_CalcPos( TASKWORK_GYOE *work, VecFx32 * pos )
   case 0:
     work->offs_y += work->move_y;
     if( work->offs_y ){
-      work->move_y += -0x2000;
+      work->move_y += -GYOE_FLDOBJ_Y_MOVE_OFFS;
     }else{
       work->move_y = 0;
       work->seq_no++;
