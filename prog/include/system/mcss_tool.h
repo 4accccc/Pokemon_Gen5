@@ -28,4 +28,6 @@ extern  void	MCSS_TOOL_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK *maw, int dir 
 extern  MCSS_WORK*  MCSS_TOOL_AddPokeMcss( MCSS_SYS_WORK* mcss_sys, const POKEMON_PARAM* pp, MCSS_DIR dir,
                                            fx32	pos_x, fx32	pos_y, fx32	pos_z );
 extern  void  MCSS_TOOL_SetMakeBuchiCallback( MCSS_SYS_WORK* mcss_sys, u32 personal_rnd );
+//MusicalMcss—p‚É•ª—£
+extern  void MCSS_TOOL_MakeBuchiCore( u8 *buf , u32 rnd );
 

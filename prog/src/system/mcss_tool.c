@@ -176,47 +176,50 @@ static  BOOL  MCSS_TOOL_MakeBuchi( const MCSS_ADD_WORK* maw, TCB_LOADRESOURCE_WO
   //パッチールにぶちをつける
   if( maw->ncec == NARC_pokegra_wb_pfwb_327_NCEC )
   { 
-	  const	PATTIIRU_BUCHI_DATA	*pbd;
-	  int i, j;
-	  u8	setx, sety, cnt;
-	  int	pos[ 2 ];
-    u32 rnd = work;
-    u8  *buf = tlw->pCharData->pRawData;
-
-	  //1枚目
-	  for( i = 0 ; i < 4 ; i++ )
-    {
-		  pbd = pbd_table[ i ];
-		  cnt=0;
-		  while( pbd[ cnt ].posx != 0xff )
-      {
-			  setx = pbd[ cnt ].posx +   ( ( rnd & 0x0f ) - 8 );
-			  sety = pbd[ cnt ].posy + ( ( ( rnd & 0xf0 ) >> 4 ) - 8 );
-			  pos[ 0 ] = setx / 2 + sety * 128;
-			  pos[ 1 ] = setx / 2 + ( sety + 40 ) * 128;
-        for( j = 0 ; j < 2 ; j++ )
-        { 
-			    if( setx & 1)
-          {
-				    if( ( ( buf[ pos[ j ] ] & 0xf0 ) >= 0x10 ) && ( ( buf[ pos[ j ] ] & 0xf0 ) <= 0x30) )
-            {
-					    buf[ pos[ j ] ] += 0x50;
-				    }
-			    }
-			    else
-          {
-				    if( ( ( buf[ pos[ j ] ] & 0x0f ) >= 0x01 ) && ( ( buf[ pos[ j ] ] & 0x0f ) <= 0x03 ) )
-            {
-					    buf[ pos[ j ] ] += 0x05;
-				    }
-			    }
-        }
-			  cnt++;
-		  }
-		  rnd = rnd >> 8;
-	  }
+    MCSS_TOOL_MakeBuchiCore( tlw->pCharData->pRawData , work );
   }
 
   return TRUE;
+}
+
+void MCSS_TOOL_MakeBuchiCore( u8 *buf , u32 rnd )
+{
+  const	PATTIIRU_BUCHI_DATA	*pbd;
+  int i, j;
+  u8	setx, sety, cnt;
+  int	pos[ 2 ];
+
+  //1枚目
+  for( i = 0 ; i < 4 ; i++ )
+  {
+    pbd = pbd_table[ i ];
+    cnt=0;
+    while( pbd[ cnt ].posx != 0xff )
+    {
+  	  setx = pbd[ cnt ].posx +   ( ( rnd & 0x0f ) - 8 );
+  	  sety = pbd[ cnt ].posy + ( ( ( rnd & 0xf0 ) >> 4 ) - 8 );
+  	  pos[ 0 ] = setx / 2 + sety * 128;
+  	  pos[ 1 ] = setx / 2 + ( sety + 40 ) * 128;
+      for( j = 0 ; j < 2 ; j++ )
+      { 
+  	    if( setx & 1)
+        {
+  		    if( ( ( buf[ pos[ j ] ] & 0xf0 ) >= 0x10 ) && ( ( buf[ pos[ j ] ] & 0xf0 ) <= 0x30) )
+          {
+  			    buf[ pos[ j ] ] += 0x50;
+  		    }
+  	    }
+  	    else
+        {
+  		    if( ( ( buf[ pos[ j ] ] & 0x0f ) >= 0x01 ) && ( ( buf[ pos[ j ] ] & 0x0f ) <= 0x03 ) )
+          {
+  			    buf[ pos[ j ] ] += 0x05;
+  		    }
+  	    }
+      }
+  	  cnt++;
+    }
+    rnd = rnd >> 8;
+  }  
 }
 

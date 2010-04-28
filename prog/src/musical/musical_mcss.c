@@ -16,10 +16,12 @@
 //#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
 #include "musical_mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
 #include "musical_mcss_def.h"
+#include "system/mcss_tool.h"
 #include "musical_local.h"
 #include "musical/musical_camera_def.h"
 #include "test/ariizumi/ari_debug.h"
 #include "test/ariizumi/mus_mcss_debug.h"
+#include "pokegra_mus.naix"
 
 #define	MUS_MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
 #define	MUS_MCSS_DEFAULT_LINE		( 1 << MUS_MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
@@ -58,7 +60,7 @@ typedef struct
 	int						chr_ofs;
 	int						pal_ofs;
 	MUS_MCSS_WORK				*mcss;
-}TCB_LOADRESOURCE_WORK;
+}TCB_LOADRESOURCE_WORK_MUS;
 
 //--------------------------------------------------------------------------
 /**
@@ -154,7 +156,7 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 
 	// load palette data
 	{
-		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		TCB_LOADRESOURCE_WORK_MUS *tlw = GFL_HEAP_AllocClearMemory( heapID, sizeof( TCB_LOADRESOURCE_WORK_MUS ) );
 
 		tlw->palette_p = &mus_shadow_palette;
 		tlw->pal_ofs = MUS_MCSS_PAL_ADRS + 0x100;
@@ -1098,7 +1100,7 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
     // VRAM 関連の初期化
     //
     {
-			TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+			TCB_LOADRESOURCE_WORK_MUS *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK_MUS ) );
 			tlw->image_p = &mcss->mcss_image_proxy;
 			tlw->palette_p = &mcss->mcss_palette_proxy;
 			tlw->chr_ofs = mcss_sys->texAdrs + MUS_MCSS_TEX_SIZE * count;
@@ -1134,6 +1136,13 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 				GF_ASSERT( tlw->pBufPltt != NULL);
 			}
 			
+			//パッチールぶち
+			if( maw->ncec == NARC_pokegra_mus_pfwb_327_NCEC )
+			{
+        ARI_TPrintf("パッチーる！\n");
+        MCSS_TOOL_MakeBuchiCore( tlw->pCharData->pRawData , maw->rand );
+      }
+			
 			if( isVBlank == TRUE )
 			{
 				GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
@@ -1152,7 +1161,7 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 //--------------------------------------------------------------------------
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 {
-	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
+	TCB_LOADRESOURCE_WORK_MUS *tlw = ( TCB_LOADRESOURCE_WORK_MUS *)work;
 
 	if( tlw->mcss ){
 		tlw->mcss->vanish_flag = 0;

@@ -57,6 +57,8 @@ typedef struct
 	ARCDATID	nmcr;
 	ARCDATID	nmar;
 	ARCDATID	ncec;
+	
+	u32 rand;
 }MUS_MCSS_ADD_WORK;
 typedef struct _MUS_MCSS_NCEC		MUS_MCSS_NCEC;
 typedef struct _MUS_MCSS_NCEC_MUS	MUS_MCSS_NCEC_MUS;

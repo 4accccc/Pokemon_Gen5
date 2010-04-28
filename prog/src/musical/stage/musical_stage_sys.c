@@ -82,10 +82,10 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   {
     GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
     work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKATYUU , 0 , 0 ,60 , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_PURUNSU , 0 , 0 ,120 , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_509  , 0 , 0 ,NPC_APPEAL_TIME_ACTION , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WARUBIARU , 0 , 0 ,NPC_APPEAL_TIME_DISTURB_H , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , 327 , 0 , 0xFF000000 ,60 , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , 327 , 0 , 0x00FF0000 ,120 , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , 327 , 0 , 0x0000FF00  ,NPC_APPEAL_TIME_ACTION , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , 327 , 0 , 0x000000FF  ,NPC_APPEAL_TIME_DISTURB_H , HEAPID_MUSICAL_STAGE );
     
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_R , 19 , 0 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L  , 19 , 0 , 1 );
@@ -238,7 +238,7 @@ void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 p
   GF_ASSERT_MSG( idx < MUSICAL_POKE_MAX , "Musical invalid index [%d]\n",idx);
   GF_ASSERT_MSG( initWork->musPoke[idx] == NULL , "Musical index[%d] is not NULL\n",idx);
 
-  initWork->musPoke[idx] = MUSICAL_SYSTEM_InitMusPokeParam( pokeID , sex , 0 , 0 , 0 , heapId );
+  initWork->musPoke[idx] = MUSICAL_SYSTEM_InitMusPokeParam( pokeID , sex , 0 , 0 , perRand , heapId );
   initWork->musPoke[idx]->charaType = MUS_CHARA_NPC;
   initWork->musPoke[idx]->npcAppealTime = npcAppealTime;
 }
