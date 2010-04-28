@@ -409,6 +409,7 @@ static void CleanUpBG_GAMESTART( EVENT_WORK* work )
   GF_ASSERT( GetMode(work) == EVENT_MODE_GAMESTART );
 
   GFL_BG_FreeBGControl( BG_FRAME_SEASON );
+  GFL_BG_Exit();
 }
 
 //------------------------------------------------------------------------------
@@ -746,6 +747,9 @@ static void EventExit( EVENT_WORK* work )
   if( work->fieldmap ) {
     FIELDMAP_SetSeasonDispFlag( work->fieldmap, FALSE );
   }
+
+  // BG のクリーンアップ
+  CleanUpBG( work );
 }
 
 //------------------------------------------------------------------------------
