@@ -69,7 +69,9 @@ typedef struct{
   s8 end_log;                         ///<ログのチェーン終端位置
   s8 log_num;                         ///<ログ件数
   u8 new_entry;                       ///<TRUE:新しい人物とすれ違った
-
+  u16 backup_hour;                    ///<プレイ時間バックアップ
+  u16 padding;
+  
 #ifdef PM_DEBUG
   BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
 #endif
@@ -214,6 +216,22 @@ void GAMEBEACON_Update(void)
     return;
   }
 
+  if(bsys->gamedata != NULL){//プレイ時間が規定数を超えていれば送信
+    PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(bsys->gamedata) );
+    u16 play_hour = PLAYTIME_GetHour( sv_playtime );
+    if(bsys->backup_hour != play_hour){
+      switch(play_hour){
+      case 10:
+      case 30:
+      case 50:
+      case 100:
+        GAMEBEACON_Set_PlayTime(play_hour);
+        break;
+      }
+    }
+    bsys->backup_hour = play_hour;
+  }
+
   SendBeacon_Update(&bsys->send);
   
   for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
@@ -240,6 +258,11 @@ void GAMEBEACON_Setting(GAMEDATA *gamedata)
 
   GameBeaconSys->gamedata = gamedata;
   SendBeacon_Init(send, gamedata);
+
+  {
+    PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gamedata) );
+    GameBeaconSys->backup_hour = PLAYTIME_GetHour( sv_playtime );
+  }
 }
 
 //==================================================================
