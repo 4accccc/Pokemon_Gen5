@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T19:29:42"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-28T16:09:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -554,6 +554,15 @@
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">カナワタウンいき　トレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">カナワタウン行き　トレイン　乗り場</language>
+	</row>
+
+	<row id="msg_c04r0101_bsboard_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>BGメッセージ
+・仮</comment>
+		<attribute name="キャラ指定">バトルサブウェイ
+歴代リーダー画面</attribute>
+		<language name="JPN" width="256">ただいま　ちょうせいちゅう　です</language>
+		<language name="JPN_KANJI" width="256">ただいま　調整中です</language>
 	</row>
 
 	<flowchart-group-list>

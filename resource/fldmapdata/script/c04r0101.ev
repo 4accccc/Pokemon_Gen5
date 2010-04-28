@@ -249,8 +249,23 @@ _RET
 EVENT_START	ev_bg_bsleader_board
 	_TALK_START_SE_PLAY()
 	
-	//【仮】サーバに接続できないため仮データを表示する。第２～４引数はダミー
-	_BSUBWAY_TOOL( BSWTOOL_WIFI_EV_READ_SCDATA, 0, 0, SCWK_ANSWER )
+	//歴代リーダーの人数チェック
+	_BSUBWAY_TOOL( BSWTOOL_GET_LEADERDATA_DATANUM, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+	
+	_DEBUG_PRINT_WK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == 0 THEN
+		//人数0 データを取得していないなら
+		_SYSWIN_MSG( msg_c04r0101_bsboard_01, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ELSE
+		//【仮】サーバに接続できないため仮データを表示する。第２～４引数はダミー
+		_BSUBWAY_TOOL( BSWTOOL_WIFI_EV_READ_SCDATA, 0, 0, SCWK_ANSWER )
+		
+	ENDIF
+	
 EVENT_END
 
 
