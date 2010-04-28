@@ -11,9 +11,13 @@
 	.include	"tr_ai_seq_def.h"
 
 //========================================================
-//	ギャンブルAI
+//	ギャンブルAI 改め　甘いＡＩ　最初のバトル用　2010/4/28
 //========================================================
+
 GambleAISeq:
+
+#ifdef 0
+
 	IF_MIKATA_ATTACK	GambleAI_end			//対象が味方なら終了
 
 	CHECK_WAZASEQNO
@@ -24,6 +28,28 @@ GambleAISeq:
 	INCDEC		2
 GambleAI_end:
 	AIEND
+
+#else	//ifdef 0
+
+  IF_HP_OVER CHECK_DEFENCE,50,AmaiAI_end
+
+	COMP_POWER	LOSS_CALC_OFF
+	IF_EQUAL	COMP_POWER_NONE,AmaiAI_2
+	
+	IF_RND_UNDER	80,AmaiAI_2
+	INCDEC		-1
+
+AmaiAI_2:
+  IF_HP_OVER CHECK_DEFENCE,25,AmaiAI_end
+
+	IF_RND_UNDER	50,AmaiAI_end
+	INCDEC		-1
+
+AmaiAI_end:
+	AIEND
+
+#endif	//ifdef 0
+
 
 GambleAI_Table:
 	.long	1,7,9,38,43,49,83,88,89,98

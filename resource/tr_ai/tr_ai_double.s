@@ -112,7 +112,6 @@ DoubleAI_StrongAI_end:
 	IF_WAZANO	WAZANO_WAIDOGAADO,DoubleEnemyAI_Waidogaado		// ワイドガード　2010/4/23
 	IF_WAZANO	WAZANO_RINSYOU,DoubleEnemyAI_Rinsyou      	//　りんしょう　2010/4/23 
 	IF_WAZANO	WAZANO_SAIDOTHENZI,DoubleEnemyAI_Sidechange      	//　サイドチェンジ　2010/4/23 
-	IF_WAZANO	WAZANO_IYASINOHADOU,DoubleEnemyAI_Iyasinohadou      	//　いやしのはどう　2010/4/23 
 	IF_WAZANO	WAZANO_SAKIOKURI,DoubleEnemyAI_Sakiokuri      	//　さきおくり　2010/4/23 
 	IF_WAZANO	WAZANO_GIHUTOPASU,DoubleEnemyAI_Gihutopasu      	//　ギフトパス　2010/4/23 
 
@@ -763,10 +762,59 @@ DoubleEnemyAI_Rinsyou_End:
 	AIEND
 
 DoubleEnemyAI_Sidechange:      	//　サイドチェンジ　2010/4/23 
+  CHECK_MONSNO	CHECK_DEFENCE
+	IF_TABLE_JUMP	DoubleEnemyAI_Sidechange_Table,DoubleEnemyAI_Sidechange_neko    // 相手がねこだましを出しそう
+	
+  JUMP  DoubleEnemyAI_Sidechange_end
+
+DoubleEnemyAI_Sidechange_neko:
+	CHECK_NEKODAMASI	CHECK_DEFENCE
+	IFN_EQUAL	0,DoubleEnemyAI_Sidechange_end
+
+	IF_COMMONRND_UNDER	128,DoubleEnemyAI_Sidechange_end
+	INCDEC	+2
+  JUMP  DoubleEnemyAI_Sidechange_end
+
+DoubleEnemyAI_Sidechange_ng:
+	IF_RND_UNDER	128,DoubleEnemyAI_Sidechange_end
+	INCDEC	-1
+DoubleEnemyAI_Sidechange_end:
 	AIEND
 
-DoubleEnemyAI_Iyasinohadou:      	//　いやしのはどう　2010/4/23 
+DoubleEnemyAI_Sidechange_Table:    // 相手がねこだましを出しそう
+	.long	MONSNO_KAMEKKUSU
+	.long	MONSNO_PERUSIAN
+	.long	MONSNO_ZYUGON
+	.long	MONSNO_GARUURA
+	.long	MONSNO_BARIYAADO
+	.long	MONSNO_PIKATYUU
+	.long	MONSNO_RAITYUU
+	.long	MONSNO_ETEBOOSU
+	.long	MONSNO_MANYUURA
+	.long	MONSNO_EBIWARAA
+	.long	MONSNO_SAWAMURAA
+	.long	MONSNO_KAPOERAA
+	.long	MONSNO_RUUZYURA
+	.long	MONSNO_RUNPAPPA
+	.long	MONSNO_DAATENGU
+	.long	MONSNO_HARITEYAMA
+	.long	MONSNO_ENEKORORO
+	.long	MONSNO_YAMIRAMI
+	.long	MONSNO_TYAAREMU
+	.long	MONSNO_PATTIIRU
+	.long	MONSNO_KAKUREON
+	.long	MONSNO_GOUKAZARU
+	.long	MONSNO_MIMIROPPU
+	.long	MONSNO_BUNYATTO
+	.long	MONSNO_GUREGGURU
+	.long	MONSNO_DERIBAADO
+	.long	MONSNO_DERIBAADO
+	.long	MONSNO_638 //　ズルズキン
+	.long	MONSNO_547 //　レパルダス
+	.long	0xffffffff
+
 DoubleEnemyAI_Gihutopasu:       	//　ギフトパス　2010/4/23 
+
 	JUMP	AI_DEC10 
 
 DoubleEnemyAI_Sakiokuri:      	//　さきおくり　2010/4/23 
@@ -919,6 +967,8 @@ DoubleMineAI_1:
 	IF_WAZANO	WAZANO_TUBOWOTUKU, DoubleMineAI_Tubowotuku	// つぼをつく2006.6.23
 
 	IF_WAZANO	WAZANO_OSAKINIDOUZO, DoubleMineAI_Osakinidouzo	// おさきにどうぞ2010.4.22
+
+	IF_WAZANO	WAZANO_IYASINOHADOU,DoubleMineAI_Iyasinohadou      	//　いやしのはどう　2010/4/23 
 
 	JUMP	DoubleMineAI_end
 
@@ -1228,6 +1278,38 @@ DoubleMineAI_Osakinidouzo_ok:
 
 DoubleMineAI_Osakinidouzo_end:
 	AIEND
+
+
+DoubleMineAI_Iyasinohadou:      	//　いやしのはどう　2010/4/27 
+	IF_HP_EQUAL	CHECK_DEFENCE,0,DoubleMineAI_Iyasinohadou_end
+	IF_HP_OVER	CHECK_DEFENCE,100,DoubleMineAI_Iyasinohadou_end
+
+	IF_HP_OVER	CHECK_DEFENCE,70,DoubleMineAI_Iyasinohadou_end
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Iyasinohadou_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Iyasinohadou_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Iyasinohadou_ok
+
+
+
+
+                                    
+
+
+
+DoubleMineAI_Iyasinohadou_ok:
+
+	IF_COMMONRND_UNDER	128,DoubleMineAI_Iyasinohadou_end
+
+	INCDEC		3	
+	JUMP  DoubleMineAI_Iyasinohadou_end
+
+	IF_HP_OVER	CHECK_DEFENCE,70,DoubleMineAI_Iyasinohadou_end
+
+DoubleMineAI_Iyasinohadou_end:
+	INCDEC		-1	
+	AIEND
+
 
 
 

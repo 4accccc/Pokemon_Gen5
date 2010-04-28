@@ -1358,7 +1358,7 @@ ExpertAI_38_end:
 	AIEND
 //---------------------------------------------------------------------------
 ExpertAI_40:	//‚¢‚©‚è‚Ì‚Ü‚¦‚Î
-	IF_HP_OVER	CHECK_DEFENCE,50,ExpertAI_40_end
+	IF_HP_OVER	CHECK_DEFENCE,60,ExpertAI_40_end
 
 	INCDEC		-1
 ExpertAI_40_end:	
