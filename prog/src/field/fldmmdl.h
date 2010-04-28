@@ -1172,6 +1172,7 @@ extern void MMDL_GetDrawVectorPos(
 //--------------------------------------------------------------
 extern BOOL MMDL_DrawYureHero_SetAnimeFrame( MMDL *mmdl, u32 frame );
 extern BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl );
+extern void MMDL_SetDrawMelodyerStartAnimeFrame( MMDL *mmdl );
 
 //--------------------------------------------------------------
 //	fldmmdl_acmd.c

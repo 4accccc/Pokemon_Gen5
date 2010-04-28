@@ -4604,6 +4604,8 @@ static int AC_MelodyerSpinPose( MMDL * mmdl )
 static int AC_MelodyerShake( MMDL * mmdl )
 {
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_MELODYER_SHAKE );
+  MMDL_SetDrawMelodyerStartAnimeFrame( mmdl );
+  
 	MMDL_IncAcmdSeq( mmdl );
 	
 	return( FALSE );
@@ -6479,7 +6481,7 @@ int (* const DATA_AC_MelodyerSpinPose_Tbl[])( MMDL * ) =
 int (* const DATA_AC_MelodyerShake_Tbl[])( MMDL * ) =
 {
   AC_MelodyerShake,
-  AC_Melodyer_1,
+  AC_Melodyer_1N,
 	AC_End,
 };
 

@@ -1765,6 +1765,26 @@ BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl )
 }
 
 //--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン メロディア アニメフレーム初期化
+ * @param  mmdl  MMDL
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+void MMDL_SetDrawMelodyerStartAnimeFrame( MMDL *mmdl )
+{
+  if( MMDL_GetOBJCode(mmdl) == POKE12 ){
+    u16 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+    
+    if( actID != MMDL_BLACTID_NULL ){
+      GFL_BBDACT_SYS *actSys;
+      actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+      GFL_BBDACT_SetAnimeFrmIdx( actSys, actID, 0 );
+    }
+  }
+}
+
+//--------------------------------------------------------------
 /// 描画処理　ビルボード　ポケモン メロディア　描画
 //--------------------------------------------------------------
 const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActMelodyer =
