@@ -172,7 +172,7 @@ ev_poke_chk:
 			_MSGWIN_CLOSE()
 			
 			//アイテムを取得する
-			_ITEM_EVENT_KEYWAIT(ITEM_HAATONOUROKO,3)
+			_ITEM_EVENT_KEYWAIT(ITEM_DAIBUBOORU,5)
 			
 			//抽選されたポケモンを初期化する
 			$WK_OTHER_FISHING_MONSNUM = 0

@@ -57,5 +57,7 @@
 #define BGID_C03_SIGN6_01                 9
 #define BGID_C03_SIGN1_04                10
 #define BGID_C03_SIGN1_05                11
+#define BGID_C03_SIGN8_01                12
+#define BGID_C03_SIGN8_02                13
 
 #endif //ZONE_C03_EVB_H

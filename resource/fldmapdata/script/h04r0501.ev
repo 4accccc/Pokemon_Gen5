@@ -20,50 +20,267 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_h04r0501_woman2_01
+
 _EVENT_DATA		ev_h04r0501_poke17_01
 _EVENT_DATA		ev_h04r0501_poke17_02
 _EVENT_DATA		ev_h04r0501_poke17_03
 _EVENT_DATA		ev_h04r0501_poke17_04
+
+_EVENT_DATA		ev_h04r0501_wkobjcode00_01
+_EVENT_DATA		ev_h04r0501_wkobjcode01_01
+
+_EVENT_DATA		ev_init_h04r0501
+
 _EVENT_DATA_END
 
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_h04r0501
+	
+	DEFINE_LOCAL LWK_NUM
+	_GET_RND(LWK_NUM,3)
+	
+	//乱数によって、出現させる引越し客を変化させる
+	IF $LWK_NUM == 0 THEN
+		$OBJCHRWORK0 = MAN1
+		$OBJCHRWORK1 = WOMAN1
+		$LOCALWORK0 = 0
+	ELSIF $LWK_NUM == 1 THEN
+		$OBJCHRWORK0 = MAN2
+		$OBJCHRWORK1 = WOMAN2
+		$LOCALWORK0 = 1
+	ELSIF $LWK_NUM == 2 THEN
+		$OBJCHRWORK0 = MAN3
+		$OBJCHRWORK1 = WOMAN3
+		$LOCALWORK0 = 2
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_h04r0501:
-//  _END
-
-/**************************************************************/
-/*		H04R0501		ミネズミ当てクイズ					  */
+/*		H04R0501							  */
 /**************************************************************/
 EVENT_START		ev_h04r0501_woman2_01
+	
+	DEFINE_LOCAL LWK_DIR
+	_PLAYER_DIR_GET(LWK_DIR)
+	
+	_TALK_OBJ_START()
+	//…しんてんちを
+	_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_woman2_01)
+	_MSGWIN_CLOSE()
+	
+	//ジャンプ
+	_OBJ_ANIME(H04R0501_WOMAN2_01,anm_jump)
+	_OBJ_ANIME_WAIT()
+	
+	//部屋から退出する
+	SWITCH $LWK_DIR
+	CASE DIR_UP THEN
+		_OBJ_ANIME( H04R0501_WOMAN2_01, anm_woman_leave_up)
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( H04R0501_WOMAN2_01, anm_woman_leave_left)
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( H04R0501_WOMAN2_01, anm_woman_leave_down)
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( H04R0501_WOMAN2_01, anm_woman_leave_right)
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+	
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_OBJ_DEL(H04R0501_WOMAN2_01)
+	_SE_WAIT()
+	
+	//ミネズミがビックリ
+	_OBJ_ANIME(H04R0501_POKE17_01,anm_common_turn_d)
+	_OBJ_ANIME(H04R0501_POKE17_02,anm_common_turn_d)
+	_OBJ_ANIME(H04R0501_POKE17_03,anm_common_turn_d)
+	_OBJ_ANIME(H04R0501_POKE17_04,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(H04R0501_POKE17_01,anm_common_gyoe)
+	_OBJ_ANIME(H04R0501_POKE17_02,anm_common_gyoe)
+	_OBJ_ANIME(H04R0501_POKE17_03,anm_common_gyoe)
+	_OBJ_ANIME(H04R0501_POKE17_04,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//鳴きながら主人を追いかける
+	_VOICE_PLAY(MONSNO_537,0)
+	_OBJ_ANIME(H04R0501_POKE17_01,anm_poke17_leave_01)
+	_OBJ_ANIME(H04R0501_POKE17_02,anm_poke17_leave_02)
+	_OBJ_ANIME(H04R0501_POKE17_03,anm_poke17_leave_03)
+	_OBJ_ANIME(H04R0501_POKE17_04,anm_poke17_leave_04)
+	_OBJ_ANIME_WAIT()
+	_VOICE_WAIT()
+
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+	
+	//ビレッジ民家のミネズミを消して、ワンダーブリッジに表示
+	_FLAG_SET(FV_H04R0501_MINEZUMI)
+	_FLAG_RESET(FV_H05_MINEZUMI)
+	_FLAG_RESET(FV_H04R0501_GUEST)
 
 EVENT_END
 
+//--------------------------------------------------------------------
+// ミネズミが退去する                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump
+
+	_ANIME_DATA AC_STAY_JUMP_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_woman_leave_down
+
+	_ANIME_DATA AC_WALK_D_4F,4
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_woman_leave_up
+
+	_ANIME_DATA AC_WALK_R_4F,1
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA AC_WALK_L_4F,1
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_woman_leave_left
+
+	_ANIME_DATA AC_WALK_D_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_woman_leave_right
+
+	_ANIME_DATA AC_WALK_D_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke17_leave_01
+
+	_ANIME_DATA AC_WALK_D_4F,3
+	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke17_leave_02
+
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA AC_WALK_R_4F,1
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke17_leave_03
+
+	_ANIME_DATA AC_WALK_D_4F,4
+	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_WALK_D_4F,3
+	_ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke17_leave_04
+
+	_ANIME_DATA AC_WALK_D_4F,6
+	_ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
-/*		H04R0501		ミネズミ１号						  */
+/*		H04R0501							  */
 /**************************************************************/
 EVENT_START		ev_h04r0501_poke17_01
-
+		_EASY_TALK_POKEVOICE(MONSNO_537,msg_h04r0501_poke17_01)
 EVENT_END
-
 /**************************************************************/
-/*		H04R0501		ミネズミ２号						  */
+/*		H04R0501							  */
 /**************************************************************/
 EVENT_START		ev_h04r0501_poke17_02
-
+		_EASY_TALK_POKEVOICE(MONSNO_537,msg_h04r0501_poke17_01)
 EVENT_END
-
 /**************************************************************/
-/*		H04R0501		ミネズミ３号						  */
+/*		H04R0501							  */
 /**************************************************************/
 EVENT_START		ev_h04r0501_poke17_03
+		_EASY_TALK_POKEVOICE(MONSNO_537,msg_h04r0501_poke17_01)
+EVENT_END
+/**************************************************************/
+/*		H04R0501							  */
+/**************************************************************/
+EVENT_START		ev_h04r0501_poke17_04
+		_EASY_TALK_POKEVOICE(MONSNO_537,msg_h04r0501_poke17_01)
+EVENT_END
+
+/**************************************************************/
+/*		H04R0501		可変OBJその1					  */
+/**************************************************************/
+EVENT_START		ev_h04r0501_wkobjcode00_01
+
+	_TALK_OBJ_START()
+	IF $LOCALWORK0 == 0 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_man2_01)
+	ELSIF $LOCALWORK0 == 1 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_man2_03)
+	ELSIF $LOCALWORK0 == 2 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_man2_03)
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 
 EVENT_END
 
 /**************************************************************/
-/*		H04R0501		ミネズミ４号						  */
+/*		H04R0501		可変OBJその2						  */
 /**************************************************************/
-EVENT_START		ev_h04r0501_poke17_04
+EVENT_START		ev_h04r0501_wkobjcode01_01
+
+	_TALK_OBJ_START()
+	IF $LOCALWORK0 == 0 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_woman3_01)
+	ELSIF $LOCALWORK0 == 1 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_woman3_02)
+	ELSIF $LOCALWORK0 == 2 THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_h04r0501_woman3_03)
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 
 EVENT_END

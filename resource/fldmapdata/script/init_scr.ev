@@ -316,6 +316,9 @@ init_flags:
 	_FLAG_SET( FV_H05_NINJA_01 )
 	_FLAG_SET( FV_H05_MINEZUMI )
 
+	//ビレッジブリッジ民家：引越しにくる人を非表示
+	_FLAG_SET( FV_H04R0501_GUEST )
+
 }
 _RET
 
