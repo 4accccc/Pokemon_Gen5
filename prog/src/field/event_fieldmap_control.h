@@ -37,7 +37,7 @@ extern GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys);
 
 //------------------------------------------------------------------
 /**
- * @brief	フィールドマップ終了イベント生成
+ * @brief	フィールドマップ終了イベント生成 ( FIELD_SOUNDの処理待ち有 )
  * @param	gsys		GAMESYS_WORKへのポインタ
  * @param	fieldmap	フィールドマップワークへのポインタ
  * @return	GMEVENT		生成したイベントへのポインタ

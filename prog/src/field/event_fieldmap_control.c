@@ -17,6 +17,7 @@
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady,FIELDMAP_ForceUpdate
 #include "field/fieldmap.h"
 
+#include "./field_sound_system.h"
 #include "./event_fieldmap_control.h"
 #include "./event_fieldmap_control_local.h"
 #include "./event_gamestart.h"
@@ -48,6 +49,8 @@ static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
 	FIELD_OPENCLOSE_WORK * focw = work;
 	GAMESYS_WORK * gsys = focw->gsys;
 	FIELDMAP_WORK * fieldmap = focw->fieldmap;
+	FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( focw->gamedata );
+
 	switch (*seq) {
 	case 0:
 		FIELDMAP_Close(fieldmap);
@@ -55,6 +58,7 @@ static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
 		break;
 	case 1:
 		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
+		if (FIELD_SOUND_HaveRequest(fsnd) == TRUE) break;
      
     if( focw->unload_fieldinit ){
       // フィールド初期化用オーバーレイ破棄
@@ -79,11 +83,37 @@ GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldCloseEvent_NoWait(GMEVENT * event, int * seq, void *work)
+{
+	FIELD_OPENCLOSE_WORK * focw = work;
+	GAMESYS_WORK * gsys = focw->gsys;
+	FIELDMAP_WORK * fieldmap = focw->fieldmap;
+	FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( focw->gamedata );
+
+	switch (*seq) {
+	case 0:
+		FIELDMAP_Close(fieldmap);
+		(*seq) ++;
+		break;
+	case 1:
+		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
+     
+    if( focw->unload_fieldinit ){
+      // フィールド初期化用オーバーレイ破棄
+      GAMESTART_OVERLAY_FIELD_INIT_UnLoad();
+    }
+		return GMEVENT_RES_FINISH;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
 // event_mapchange専用
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldClose_FieldProcOnly(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
 {
-	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCloseEvent, sizeof(FIELD_OPENCLOSE_WORK));
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCloseEvent_NoWait, sizeof(FIELD_OPENCLOSE_WORK));
 	FIELD_OPENCLOSE_WORK * focw = GMEVENT_GetEventWork(event);
 	focw->gsys = gsys;
 	focw->fieldmap = fieldmap;
@@ -91,6 +121,7 @@ GMEVENT * EVENT_FieldClose_FieldProcOnly(GAMESYS_WORK *gsys, FIELDMAP_WORK * fie
   focw->unload_fieldinit = FALSE;
 	return event;
 }
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
