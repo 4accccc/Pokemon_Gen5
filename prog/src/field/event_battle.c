@@ -197,7 +197,8 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
         int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
         FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
         //エンカウントエフェクトとＢＧＭを取得してセット
-        ENCEFFNO_GetWildEncEffNoBgmNo( monsno, wbew->EncType, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
+        ENCEFFNO_GetWildEncEffNoBgmNo( monsno, wbew->EncType, ( wbew->bp->rule == BTL_RULE_DOUBLE),
+            fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
       }
 
       GMEVENT_CallEvent( event, battle_main_event );
@@ -491,7 +492,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE;
   //エンカウントエフェクトとＢＧＭをセット
-  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_MINEZUMI, ENC_TYPE_DEMO, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
+  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_MINEZUMI, ENC_TYPE_DEMO, FALSE, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
 
   return event;
 }
