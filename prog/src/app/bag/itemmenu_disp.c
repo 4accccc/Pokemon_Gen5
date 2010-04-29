@@ -683,6 +683,17 @@ void ITEMDISP_ItemInfoVanishSet( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 	if( pWork->cellicon != NULL ){
 		GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, on_off );
 	}
+
+	{
+		ITEM_ST * item;
+		u16	waza;
+		item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
+		waza = ITEM_GetWazaNo( item->id );
+		if( waza != WAZANO_NULL ){
+			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(waza)], on_off );
+			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(waza)], on_off );
+		}
+	}
 }
 
 //------------------------------------------------------------------------------
