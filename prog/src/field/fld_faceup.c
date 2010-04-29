@@ -10,12 +10,14 @@
 #include "field_bg_def.h"
 #include "field_place_name.h" //for   FIELD_PLACE_NAME
 #include "field_debug.h"      //for FIELD_DEBUG～
+#include "fld_faceup_def.h"
 #include "fld_faceup.h"
 #include "fieldmap.h"
 
 #include "arc/fieldmap/fld_faceup.naix"
 
-#define BG_PLT_NO (9)
+#define BG_PLT_NO (0)
+#define BG_PLT_NUM (10)
 #define FACE_PLT_NO (0)
 #define FACE_PLT_NUM  (2) 
 
@@ -24,7 +26,7 @@
 
 typedef struct FACEUP_WORK_tag
 {
-  HEAPID HeapID;
+  //HEAPID HeapID;
   u8 BgPriority[4];
   GXPlaneMask Mask;
   GXBg23ControlText CntText;
@@ -56,6 +58,7 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
   heapID = HEAPID_FLD3DCUTIN;
+  
   //ワークをアロケーションして、フェイスアップデータポインタにセット
   ptr = GFL_HEAP_AllocClearMemory(heapID, sizeof(FACEUP_WORK));   //カットインヒープからアロケート
 
@@ -66,7 +69,7 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *
   }
 
   *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = ptr;
-  ptr->HeapID = heapID;
+//  ptr->HeapID = heapID;
   ptr->BackNo = inBackNo;
 
   //イベント作成
@@ -127,6 +130,9 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
 {
   int ncgr;
   int nscr;
+  int nclr;
+  HEAPID heapID = HEAPID_FIELDMAP;
+
   //プライオリティ保存
   PushPriority(ptr);
   //表示状態の保存
@@ -158,7 +164,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
       //BG Frame
 		  GFL_BG_BGCNT_HEADER bgcntText = {
 		   0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
-		   GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+		   GFL_BG_SCRSIZ_256x256, /*FLDBG_MFRM_EFF1_COLORMODE*/GX_BG_COLORMODE_256,
 		   FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_EFF1_CHARBASE, FLDBG_MFRM_EFF1_CHARSIZE,
 		   GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
 		  };
@@ -166,16 +172,19 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
     }
 	}
 
-  if (ptr->BackNo == 0)
+  if (ptr->BackNo == FLD_FACEUP_BG_WHEEL)
   {
-    ncgr = NARC_fld_faceup_faceup_bg_white_ncgr;
-    nscr = NARC_fld_faceup_faceup_bg_white_nscr;
+    ncgr = NARC_fld_faceup_faceup_bg_wheel_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_wheel_nscr;
+    nclr = NARC_fld_faceup_faceup_bg_wheel_nclr;
   }
   else
   {
-    ncgr = NARC_fld_faceup_faceup_bg_black_ncgr;
-    nscr = NARC_fld_faceup_faceup_bg_black_nscr;
+    ncgr = NARC_fld_faceup_faceup_bg_catsle_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_catsle_nscr;
+    nclr = NARC_fld_faceup_faceup_bg_catsle_nclr;
   }
+  
   //タイプごとの背景、顔BGをロード
   {
     void *buf;    
@@ -183,7 +192,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
     //キャラ
     {
       NNSG2dCharacterData *chr;
-		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, ncgr, ptr->HeapID );
+		  buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, ncgr, GFL_HEAP_LOWID(heapID) );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -194,7 +203,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, nscr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, nscr, GFL_HEAP_LOWID(heapID) );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
@@ -206,19 +215,19 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
     //パレット
     {
       NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_bg_nclr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, nclr, GFL_HEAP_LOWID(heapID) );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
         GF_ASSERT( 0 );
       }
-      GFL_BG_LoadPalette( FLDBG_MFRM_EFF1, pal->pRawData, 32, BG_PLT_NO*32 );
+      GFL_BG_LoadPalette( FLDBG_MFRM_EFF1, pal->pRawData, BG_PLT_NUM*32, BG_PLT_NO*32 );
       GFL_HEAP_FreeMemory( buf );
     }
     //顔
     //キャラ
     {
       NNSG2dCharacterData *chr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_ncgr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_ncgr, GFL_HEAP_LOWID(heapID) );
 		  GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
         GF_ASSERT( 0 );
@@ -229,7 +238,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
     //スクリーン
     {
       NNSG2dScreenData *scr;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nscr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nscr, GFL_HEAP_LOWID(heapID) );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
@@ -237,10 +246,11 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
       GFL_BG_LoadScreen( FLDBG_MFRM_EFF2, scr->rawData, scr->szByte, 0 );
       GFL_HEAP_FreeMemory( buf );
     }
+/**    
     //パレット
     {
       NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nclr, ptr->HeapID );
+      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nclr, GFL_HEAP_LOWID(heapID) );
       GF_ASSERT( buf != NULL );
       if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
         GF_ASSERT( 0 );
@@ -248,6 +258,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
       GFL_BG_LoadPalette( FLDBG_MFRM_EFF2, pal->pRawData, FACE_PLT_NUM*32, FACE_PLT_NO*32 );
       GFL_HEAP_FreeMemory( buf );
     }
+*/    
   }
 
   //プライオリティ
@@ -362,36 +373,6 @@ static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
   //ワーク解放
   GFL_HEAP_FreeMemory( ptr );
   *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = NULL;
-}
-
-//キャラ変更
-void FLD_FACEUP_Change(void)
-{
-  void *buf;
-  HEAPID heapID = HEAPID_FLD3DCUTIN;
-  //キャラ
-  {
-    NNSG2dCharacterData *chr;
-    buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_ncgr, heapID );
-		GF_ASSERT( buf != NULL );
-    if( NNS_G2dGetUnpackedBGCharacterData(buf,&chr) == FALSE ){
-      GF_ASSERT( 0 );
-    }
-    GFL_BG_LoadCharacter( FLDBG_MFRM_EFF2, chr->pRawData, chr->szByte, 0 );
-    GFL_HEAP_FreeMemory( buf );
-  }
-  
-  //パレット
-  {
-    NNSG2dPaletteData *pal;
-    buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nclr, heapID );
-    GF_ASSERT( buf != NULL );
-    if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
-      GF_ASSERT( 0 );
-    }
-    GFL_BG_LoadPalette( FLDBG_MFRM_EFF2, pal->pRawData, FACE_PLT_NUM*32, FACE_PLT_NO*32 );
-    GFL_HEAP_FreeMemory( buf );
-  }
 }
 
 //----------------------------------------------------------------------------
