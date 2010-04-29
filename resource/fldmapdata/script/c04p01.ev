@@ -96,7 +96,7 @@ EVENT_START	ev_pos_c04p01_boss_01
 		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
 	ENDIF
 	
-	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生	
+	_START_EVENT_BGM( SEQ_BGM_E_N )			//イベント曲再生
 	
 	//Ｎ：主人公に気づく
 	_OBJ_ANIME( C04P01_BOSS_01, anm_n_look_01 )
@@ -164,11 +164,12 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
 	_OBJ_ANIME_WAIT()
 	
+//	_BGM_FADEOUT( 100, 60 )
 	
 	//-------------観覧車未実装------------------------
 	
 	//画面暗転
-  _DEMO_FADEOUT_BLACK_CALL()
+	_DEMO_FADEOUT_BLACK_CALL()
 
 	_CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, 0 )
 	
@@ -176,7 +177,7 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_POS_CHANGE( C04P01_BOSS_01, 53, 1, 15, DIR_RIGHT )
 	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 55, 1, 15, DIR_LEFT )
 	
-  _DEMO_FADEIN_BLACK_CALL()
+	_DEMO_FADEIN_BLACK_CALL()
 	
 	//------------------------------------------------
 	
@@ -185,11 +186,13 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ADD( C04P01_HAKAIM_01 )
 	_OBJ_ADD( C04P01_HAKAIM_02 )
 	
+	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )			//イベント曲再生（プラズマ団）
+	
 	//したっぱズ：登場
 	_OBJ_ANIME( C04P01_HAKAIM_01, anm_hakai_come_01a )
-	_TIME_WAIT( 10 )
 	_OBJ_ANIME( C04P01_HAKAIM_02, anm_hakai_come_01b )
 	_OBJ_ANIME_WAIT()
+	
 	
 	//Ｎさま！
 	_BALLOONWIN_OBJMSG_POS( msg_c04p01_hakaim1_01, C04P01_HAKAIM_01, POS_UL )

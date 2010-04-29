@@ -325,45 +325,44 @@ EVENT_END
 //主人公：プラズマ団前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakai_player_move_01a
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_player_move_01b
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_player_move_01c
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_player_move_01d
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_player_move_01e
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_player_move_01f
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_player_move_01g
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
-
 
 //--------------------------------------------------------------------
 //じいさん：！マーク
@@ -372,7 +371,7 @@ _ANIME_LABEL	anm_sodateya_gyoe_01
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_4F,3
+	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
@@ -381,7 +380,7 @@ _ANIME_LABEL	anm_sodateya_gyoe_01
 //育て屋：主人公横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sodateya_come_01
-	_ANIME_DATA	AC_WALK_D_4F,4
+	_ANIME_DATA	AC_WALK_D_4F,3
 	_ANIME_DATA	AC_WALK_R_4F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -390,12 +389,12 @@ _ANIME_LABEL	anm_sodateya_come_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakai_move_01a
 	_ANIME_DATA	AC_WAIT_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_move_01b
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -419,14 +418,14 @@ _ANIME_LABEL	anm_hakai_move_03
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakai_goaway_01a
 	_ANIME_DATA	AC_WALK_R_6F,2
-	_ANIME_DATA	AC_WALK_U_6F,6
+	_ANIME_DATA	AC_WALK_U_6F,5
 	_ANIME_DATA	AC_WALK_R_6F,8
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakai_goaway_01b
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_WALK_R_6F,3
-	_ANIME_DATA	AC_WALK_U_6F,6
+	_ANIME_DATA	AC_WALK_U_6F,5
 	_ANIME_DATA	AC_WALK_R_6F,8
 	_ANIME_DATA	ACMD_END,0
 
@@ -454,14 +453,14 @@ _ANIME_LABEL	anm_stay_walk_r
 //じいさん：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sodateya_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：主人公横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_come_01
-	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -483,9 +482,9 @@ _ANIME_LABEL	anm_support_dance_01
 //サポート：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_support_goaway_01
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
