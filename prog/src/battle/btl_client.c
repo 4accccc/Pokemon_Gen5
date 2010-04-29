@@ -4986,6 +4986,15 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+    (*seq)++;
+    break;
+  case 1:
+    if(!BTLV_EFFECT_CheckExecute()){
+      (*seq)++;
+    }
+    break;
+  case 2:
     if( fPutMsg )
     {
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, posIdx );
@@ -5028,7 +5037,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
     (*seq)++;
     break;
 
-  case 1:
+  case 3:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
@@ -5040,7 +5049,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       (*seq)++;
     }
     break;
-  case 2:
+  case 4:
     if( BTLV_WaitMemberChangeAct(wk->viewCore) )
     {
       EnemyPokeHPBase_Update( wk );
@@ -5753,12 +5762,14 @@ static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
-    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_ResetMove );
-    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+//    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_ResetMove );
+//    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    BTLV_EFFECT_Add( BTLEFF_RESET_MOVE );
     (*seq)++;
     break;
   case 1:
-    if( BTLV_WaitMsg(wk->viewCore) )
+//    if( BTLV_WaitMsg(wk->viewCore) )
+    if( !BTLV_EFFECT_CheckExecute() )
     {
       u8 clientID = args[0];
       u8 posIdx1 = args[1];

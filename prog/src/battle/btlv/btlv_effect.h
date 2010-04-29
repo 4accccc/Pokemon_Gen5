@@ -128,10 +128,6 @@ typedef enum {
   BTLV_WAZAEFF_DELAY_START = 0,     ///< ワザ撃ち
   BTLV_WAZAEFF_DELAY_ATTACK,        ///< 攻撃実行
 
-  // 交替差ワザ全般（とんぼがえり、ボルトチェンジ）
-  BTLV_WAZAEFF_POKECHANGE_OFF= 0,    ///< 交替発生（控えがいる）
-  BTLV_WAZAEFF_POKECHANGE_ON,        ///< 交替なし（控えがいない）
-
   // どろぼう
   BTLV_WAZAEFF_DOROBOU_NORMAL = 0,  ///< ヒットのみ
   BTLV_WAZAEFF_DOROBOU_STEAL,       ///< ヒット＆盗み成功

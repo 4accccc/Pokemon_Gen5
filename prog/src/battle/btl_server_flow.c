@@ -2885,8 +2885,14 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
       if( clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
         BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_USE_SHOOTER_COUNT );
       }
-    }else{
+    }else
+    {
+      // シューター用
+      BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
       SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, clientID, targetPokeID, itemID );
+      if( pos != BTL_POS_NULL ){
+        SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_SHOOTER_EFFECT );
+      }
     }
   }
 
@@ -8073,7 +8079,7 @@ static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk )
   for(i=clwk->numCoverPos, count=0; i<members; ++i)
   {
     bpp = BTL_PARTY_GetMemberDataConst( clwk->party, i );
-    if( IsBppExist(bpp) ){
+    if( BPP_IsFightEnable(bpp) ){
       list[count++] = i;
     }
   }

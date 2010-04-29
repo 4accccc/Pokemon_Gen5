@@ -4761,9 +4761,6 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
           param->header.failSkipFlag = TRUE;
         }
       }
-      else{
-        TAYA_Printf("相手が死んでるからレッドカード効かない\n");
-      }
       break;
     }
   }

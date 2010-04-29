@@ -7199,14 +7199,13 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_SET_EFFECT_IDX* effIdx_param;
-
     if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
     {
       u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
 
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param;
 
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Tonbogaeri );
@@ -7216,14 +7215,12 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       param->pokeID = pokeID;
 
-      effIdx_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_EFFECT_IDX, pokeID );
-      effIdx_param->effIndex = BTLV_WAZAEFF_POKECHANGE_ON;
-      effIdx_param->header.failSkipFlag = TRUE;
-    }
-    else
-    {
-      effIdx_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_EFFECT_IDX, pokeID );
-      effIdx_param->effIndex = BTLV_WAZAEFF_POKECHANGE_OFF;
+      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      eff_param->effectNo = (BTL_EVENT_FACTOR_GetSubID(myHandle) == WAZANO_TONBOGAERI)?
+                    BTLEFF_TONBOGAERI_RETURN : BTLEFF_VOLTCHANGE_RETURN;
+      eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param->pos_to = BTL_POS_NULL;
+      eff_param->header.failSkipFlag = TRUE;
     }
   }
 }
