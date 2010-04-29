@@ -31,6 +31,9 @@
 #define ISS_3DS_UNIT_NUM (10) // 3Dユニット数
 #define TAIL_INTERVAL    (1)  // 前部分が発射してから後部分が発射するまでの間隔
 #define GIMMICK_WORK_ASSIGN_ID (0) // ギミックワークのアサインID
+#define WIND_FADE_SPEED (16) // 風の音量のフェード速度
+#define WIND_MIN_VOLUME (0)   // 風の最小ボリューム
+#define WIND_MAX_VOLUME (127) // 風の最大ボリューム
 
 // 音源オブジェクトのインデックス
 typedef enum {
@@ -97,9 +100,9 @@ static GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
 //==========================================================================================
 // ■風
 //==========================================================================================
-typedef struct
-{
-  u16 trackBit;  // 操作対象トラックビット
+typedef struct {
+
+  u16 trackBit;     // 操作対象トラックビット
   u16 padding;
   float minHeight;  // 音が鳴り出す高さ
   float maxHeight;  // 音が最大になる高さ
@@ -110,15 +113,17 @@ typedef struct
 //==========================================================================================
 // ■ギミックワーク
 //==========================================================================================
-typedef struct
-{ 
-  HEAPID            heapID; // 使用するヒープID
-  ISS_3DS_SYS*   iss3dsSys; // 3Dサウンドシステム
-  SOUNDOBJ* sobj[SOBJ_NUM]; // 音源オブジェクト
-  int       wait[SOBJ_NUM]; // 音源オブジェクトの動作待機カウンタ
-  int    minWait[SOBJ_NUM]; // 最短待ち時間
-  int    maxWait[SOBJ_NUM]; // 最長待ち時間
-  WIND_DATA      wind_data; // 風データ
+typedef struct { 
+
+  HEAPID       heapID;            // 使用するヒープID
+  ISS_3DS_SYS* iss3dsSys;         // 3Dサウンドシステム
+  SOUNDOBJ*    sobj[SOBJ_NUM];    // 音源オブジェクト
+  int          wait[SOBJ_NUM];    // 音源オブジェクトの動作待機カウンタ
+  int          minWait[SOBJ_NUM]; // 最短待ち時間
+  int          maxWait[SOBJ_NUM]; // 最長待ち時間
+  WIND_DATA    wind_data;         // 風データ
+	int          wind_volume;       // 風の音量
+
 } H01WORK;
 
 
@@ -132,7 +137,12 @@ static void SaveGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap );
 static void LoadGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap );
 static void SetStandBy( H01WORK* work, SOBJ_INDEX index );
 static void MoveStart( H01WORK* work, SOBJ_INDEX index );
-static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work );
+// 風
+static void ApplyWindVolumeForBGM( const H01WORK* work ); // 風の音量をBGMに反映させる
+static void UpdateWindVolume( H01WORK* work, FIELDMAP_WORK* fieldmap ); // 風の音量を更新する
+static int CalcWindVolume( const H01WORK* work, FIELDMAP_WORK* fieldmap ); // 風の音量 ( 目標値 ) を計算する
+static void WindVolumeUp( H01WORK* work, int max_volume ); // 風の音量を上げる
+static void WindVolumeDown( H01WORK* work, int min_volume ); // 風の音量を下げる
 
 
 //==========================================================================================
@@ -241,37 +251,29 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   for( i=0; i<SOBJ_NUM; i++ )
   { 
     // 待機状態 ==> 発車カウントダウン
-    if( 0 < work->wait[i] )
-    {
+    if( 0 < work->wait[i] ) {
       // カウントダウン終了 ==> 発車
-      if( --work->wait[i] <= 0 )
-      {
+      if( --work->wait[i] <= 0 ) {
         MoveStart( work, i );
         // 後部分を前部分に追従させる
-        switch(i)
-        {
-        case SOBJ_TRAILER_1_HEAD:
-          work->wait[SOBJ_TRAILER_1_TAIL] = TAIL_INTERVAL;
-          break;
-        case SOBJ_TRAILER_2_HEAD:
-          work->wait[SOBJ_TRAILER_2_TAIL] = TAIL_INTERVAL;
-          break;
+        switch(i) {
+        case SOBJ_TRAILER_1_HEAD: work->wait[SOBJ_TRAILER_1_TAIL] = TAIL_INTERVAL; break;
+        case SOBJ_TRAILER_2_HEAD: work->wait[SOBJ_TRAILER_2_TAIL] = TAIL_INTERVAL; break;
         }
       }
     }
     // 動作中 ==> アニメーションを更新
-    else
-    {
+    else {
       // アニメーション再生が終了 ==> 待機状態へ
-      if( SOUNDOBJ_IncAnimeFrame( work->sobj[i], FX32_ONE ) )
-      {
+      if( SOUNDOBJ_IncAnimeFrame( work->sobj[i], FX32_ONE ) ) {
         SetStandBy( work, i );
       }
     }
   }
 
   // 風を更新
-  UpdateWindVolume( fieldmap, work );
+  UpdateWindVolume( work, fieldmap );
+	ApplyWindVolumeForBGM( work );
 
   // 拡張オブジェのアニメーション再生
   {
@@ -300,8 +302,8 @@ static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
   HEAPID                heapID = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
-  // ヒープIDを記憶
   work->heapID = heapID;
+	work->wind_volume = 0;
 
   // 3Dサウンドシステムを取得
   {
@@ -531,41 +533,121 @@ static void MoveStart( H01WORK* work, SOBJ_INDEX index )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief 風の音量をBGMに反映させる
+ *
+ * @param work
+ */
+//--------------------------------------------------------------------------------------------
+static void ApplyWindVolumeForBGM( const H01WORK* work )
+{
+  PMSND_ChangeBGMVolume( work->wind_data.trackBit, work->wind_volume );
+	OBATA_Printf( "wind ==>%d\n", work->wind_volume );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief 風の音量を調整する
  *
  * @param fieldmap フィールドマップ
  * @param work     ギミック管理ワーク
  */
 //--------------------------------------------------------------------------------------------
-static void UpdateWindVolume( FIELDMAP_WORK* fieldmap, H01WORK* work )
+static void UpdateWindVolume( H01WORK* work, FIELDMAP_WORK* fieldmap )
 {
   int volume;
-  VecFx32 pos;
-  float cam_y;
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( fieldmap );
-
-  // カメラ座標を取得
-  FIELD_CAMERA_GetCameraPos( camera, &pos );
-  cam_y = FX_FX32_TO_F32( pos.y );
 
   // 風の音量を算出
-  if( cam_y <= work->wind_data.minHeight )
-  {
-    volume = 0;
+	volume = CalcWindVolume( work, fieldmap );
+
+  // 音量を調整 ( フェード )
+	if( work->wind_volume < volume ) {
+		WindVolumeUp( work, volume );
+	}
+	else if( volume < work->wind_volume ) {
+		WindVolumeDown( work, volume );
+	} 
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 風の音量 ( 目標値 ) を計算する
+ *
+ * @param work     ギミック管理ワーク
+ * @param fieldmap 
+ *
+ * @return 現在の状況における風の音量
+ */
+//--------------------------------------------------------------------------------------------
+static int CalcWindVolume( const H01WORK* work, FIELDMAP_WORK* fieldmap )
+{
+  int volume;
+  float cam_y;
+
+  // カメラ座標を取得
+	{
+		FIELD_CAMERA* camera;
+		VecFx32 pos;
+
+		camera = FIELDMAP_GetFieldCamera( fieldmap );
+		FIELD_CAMERA_GetCameraPos( camera, &pos );
+		cam_y = FX_FX32_TO_F32( pos.y );
+	}
+
+  // 音量を算出
+  if( cam_y <= work->wind_data.minHeight ) {
+		// 最小
+    volume = WIND_MIN_VOLUME;
   }
-  else if( work->wind_data.maxHeight < cam_y )
-  {
-    volume = 127;
+  else if( work->wind_data.maxHeight < cam_y ) {
+		// 最大
+    volume = WIND_MAX_VOLUME;
   }
-  else
-  {
-    float    max = work->wind_data.maxHeight - work->wind_data.minHeight;
-    float height = cam_y - work->wind_data.minHeight;
-    volume = 127 * height / max;
-    // DEBUG:
-    OBATA_Printf( "GIMMICK-H01: update wind volume => %d\n", volume );
+  else {
+		// 補間
+    float max = work->wind_data.maxHeight - work->wind_data.minHeight;
+    float now = cam_y - work->wind_data.minHeight;
+    volume = WIND_MIN_VOLUME + (WIND_MAX_VOLUME - WIND_MIN_VOLUME) * now / max;
   }
 
-  // 音量を調整
-  PMSND_ChangeBGMVolume( work->wind_data.trackBit, volume );
+	return volume;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 風の音量を上げる
+ *
+ * @param work       ギミック管理ワーク
+ * @param max_volume 最大音量
+ */
+//--------------------------------------------------------------------------------------------
+static void WindVolumeUp( H01WORK* work, int max_volume )
+{
+	GF_ASSERT( work->wind_volume < max_volume );
+
+	work->wind_volume += WIND_FADE_SPEED;
+
+	// 最大値補正
+	if( max_volume < work->wind_volume ) {
+		work->wind_volume = max_volume;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 風の音量を下げる
+ *
+ * @param work       ギミック管理ワーク
+ * @param min_volume 最小音量
+ */
+//--------------------------------------------------------------------------------------------
+static void WindVolumeDown( H01WORK* work, int min_volume )
+{
+	GF_ASSERT( min_volume < work->wind_volume );
+
+	work->wind_volume -= WIND_FADE_SPEED;
+
+	// 最小値補正
+	if( work->wind_volume < min_volume ) {
+		work->wind_volume = min_volume;
+	}
 }
