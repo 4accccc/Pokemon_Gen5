@@ -4516,6 +4516,7 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
 		return( FALSE );
 	}
   
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_A_STOP_DOWN );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
@@ -4569,6 +4570,7 @@ static int AC_ShinMuTurn1( MMDL * mmdl )
     }
   }
   
+	MMDL_SetDirDisp( mmdl, DIR_DOWN );
   MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_STOP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );

@@ -207,9 +207,12 @@ enum {
   FIELD_G3D_BBDACT_RESMAX	    =   64,
   ///billboardActで使用するオブジェクトの最大設定可能数
   FIELD_G3D_BBDACT_ACTMAX	    =   128,
-
+  
   FIELD_G3D_SUBBBDACT_RESMAX  =   32,
   FIELD_G3D_SUBBBDACT_ACTMAX  =   64,
+  
+  FIELD_G3D_EFFBBDACT_RESMAX  =   8,
+  FIELD_G3D_EFFBBDACT_ACTMAX  =   32,
   
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
@@ -325,7 +328,8 @@ struct _FIELDMAP_WORK
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 	GFL_BBDACT_SYS *mainBbdActSys; //ビルボードアクトシステム設定ハンドル
   GFL_BBDACT_SYS *subBbdActSys;
-
+  GFL_BBDACT_SYS *effBbdActSys;
+  
   FLDMAPFUNC_SYS * fldmapFuncSys;
 	
 	GAMEMODE gamemode;
@@ -1757,6 +1761,18 @@ GFL_BBDACT_SYS * FIELDMAP_GetSubBbdActSys( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
+ * FIELDMAP_WORK エフェクトGFL_BBDACT_SYS取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GFL_BBDACT_SYS
+ */
+//--------------------------------------------------------------
+GFL_BBDACT_SYS * FIELDMAP_GetEffBbdActSys( FIELDMAP_WORK *fieldWork )
+{
+  return fieldWork->effBbdActSys;
+}
+
+//--------------------------------------------------------------
+/**
  * FIELDMAP_WORK FLDMAPPER*取得
  * @param fieldWork FIELDMAP_WORK
  * @retval FLDMAPPER*
@@ -2283,11 +2299,15 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
     GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->mainBbdActSys);
     GFL_BBD_SetOrigin(bbdsys, GFL_BBD_ORIGIN_BOTTOM);
   }
-
+  
   fieldWork->subBbdActSys = GFL_BBDACT_CreateSys(
       FIELD_G3D_SUBBBDACT_RESMAX, FIELD_G3D_SUBBBDACT_ACTMAX,
       fldmap_G3D_BBDTrans, fieldWork->heapID );
-
+  
+  fieldWork->effBbdActSys = GFL_BBDACT_CreateSys(
+      FIELD_G3D_EFFBBDACT_RESMAX, FIELD_G3D_EFFBBDACT_ACTMAX,
+      fldmap_G3D_BBDTrans, fieldWork->heapID );
+  
   fieldmap_G3D_BBDSetColorParam( fieldWork ); // 色設定
 
   
@@ -2327,7 +2347,8 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 
 	GFL_BBDACT_Main( fieldWork->mainBbdActSys );
   GFL_BBDACT_Main( fieldWork->subBbdActSys );
-  
+  GFL_BBDACT_Main( fieldWork->effBbdActSys );
+
   // NOGRID動作制御
   FLDNOGRID_MAPPER_Main( fieldWork->nogridMapper );
 
@@ -2387,9 +2408,10 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 // field_g3d_mapperのtopフレーム描画
 static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 {
-  if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
-        (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ) return;
-
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
+        (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ){
+    return;
+  }
   
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定
@@ -2421,13 +2443,17 @@ static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
     }
   }
 }
+
 // tailフレームでの描画
 // 3D・2Dの描画処理
 // ３D描画終了（スワップバッファ）
 static void fldmap_G3D_Draw_tail( FIELDMAP_WORK * fieldWork )
 {
-  if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
-        (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ) return;
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
+        (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ){
+    return;
+  }
+  
   {
     static const DRAW3DMODE_FUNC func[DRAW3DMODE_MAX] = {
       Draw3DNormalMode_tail,
@@ -2456,6 +2482,7 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork )
 	GFL_G3D_CAMERA_Delete( fieldWork->g3Dcamera );
 	GFL_BBDACT_DeleteSys( fieldWork->mainBbdActSys );
   GFL_BBDACT_DeleteSys( fieldWork->subBbdActSys );
+  GFL_BBDACT_DeleteSys( fieldWork->effBbdActSys );
   FLD_G3DOBJ_CTRL_Delete( fieldWork->fieldG3dObjCtrl );
 }
 
@@ -3379,79 +3406,88 @@ static void Draw3DNormalMode_top( FIELDMAP_WORK * fieldWork )
 	GFL_G3D_CAMERA_Switching( fieldWork->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( fieldWork->g3Dlightset );
 
-	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TOP );
+	FLDMAPPER_Draw(
+      fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TOP );
 }
 
 //　tailフレームでの描画処理
 static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 {
-  if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintG3D( fieldWork->fldMsgBG ); }
-
+  if( fieldWork->fldMsgBG ){
+    FLDMSGBG_PrintG3D( fieldWork->fldMsgBG );
+  }
+  
   SET_CHECK("update_tail:mapper draw");
-  FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TAIL );
+  FLDMAPPER_Draw(
+      fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TAIL );
   
   SET_CHECK("update_tail:wipe draw");
 	FIELDSKILL_MAPEFF_Draw( fieldWork->fieldskill_mapeff );
-
-
+  
 #ifdef PM_DEBUG
-  // デバックカメラ表示
-  // (WIPE用)
+  // デバックカメラ表示 (WIPE用)
   if( FIELD_CAMERA_DEBUG_IsWipeDraw( fieldWork->camera_control ) ){
     FIELD_CAMERA_DEBUG_Draw( fieldWork->camera_control );
   }
 #endif
+  
   SET_CHECK("update_tail:proj calc");
 
   {
 	  MtxFx44 org_pm,pm;
 		const MtxFx44 *m;
 		m = NNS_G3dGlbGetProjectionMtx();
+    
 /**		
 		OS_Printf("%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n%x,%x,%x,%x\n",
 				m->_00,m->_01,m->_02,m->_03,
 				m->_10,m->_11,m->_12,m->_13,
 				m->_20,m->_21,m->_22,m->_23,
 				m->_30,m->_31,m->_32,m->_33);
-//*/				
-    
+*/				
 		org_pm = *m;
 		pm = org_pm;
+    
 #if 0
     {
-      FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+      FIELD_STATUS * fldstatus =
+        GAMEDATA_GetFieldStatus( fieldWork->gamedata );
       fx32 proj_z_value = FIELD_STATUS_GetProjectionZValue( fldstatus );
       pm._32 += FX_Mul( pm._22, proj_z_value );
     }
 #else
 		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
 #endif
+    
 		NNS_G3dGlbSetProjectionMtx(&pm);
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
 
-    if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
+    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_A) )
     {
     }
     else
     {
-     
-    SET_CHECK("update_tail:g3dobj draw");
-    FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
-    
-    SET_CHECK("update_tail:bbd draw");
-    GFL_BBDACT_Draw(
-        fieldWork->mainBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+      SET_CHECK("update_tail:g3dobj draw");
+      FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
+      
+      SET_CHECK("update_tail:bbd draw");
+      GFL_BBDACT_Draw( fieldWork->mainBbdActSys,
+          fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+      
+      SET_CHECK("update_tail:eff bbd draw");
+      GFL_BBDACT_Draw( fieldWork->effBbdActSys,
+          fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     }
-
+    
     SET_CHECK("update_tail:fldeff draw");
     FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
     
     if(fieldWork->union_eff != NULL){
       UNION_EFF_SystemDraw( fieldWork->union_eff);
     }
-   
+    
     SET_CHECK("update_tail:bbd draw 2");
 #if 1
 		pm = org_pm;
@@ -3460,18 +3496,16 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
 #endif
-    GFL_BBDACT_Draw(
-        fieldWork->subBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
-
+    GFL_BBDACT_Draw( fieldWork->subBbdActSys,
+        fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+    
 		NNS_G3dGlbSetProjectionMtx(&org_pm);
 		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
-
   }
-
+  
+  // フィールドマップ用制御タスクシステム
   SET_CHECK("update_tail:FLDMAPFUNC_Sys_Draw3D");
-	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Draw3D( fieldWork->fldmapFuncSys );
-
 	
   SET_CHECK("update_tail:weather 3d");
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
@@ -3479,6 +3513,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   SET_CHECK("update_tail: exp obj draw");
   //フィールド拡張3ＤＯＢＪ描画
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
+  
 #ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
 #if 0    
@@ -3499,12 +3534,10 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 #endif    
   }
 #endif  //PM_DEBUG  
-
+  
   SET_CHECK("update_tail:prt & ci draw");
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
-
-
 }
 
 //==================================================================
