@@ -5709,9 +5709,9 @@
 		<language name="JPN" width="256">ME-QUIZ</language>
 		<language name="JPN_KANJI" width="256">ME-QUIZ</language>
 	</row>
-	<row id="msg_seq_me_01">
-		<language name="JPN" width="256">ME-01</language>
-		<language name="JPN_KANJI" width="256">ME-01</language>
+	<row id="msg_seq_me_del_power">
+		<language name="JPN" width="256">ME-DEL-POWER</language>
+		<language name="JPN_KANJI" width="256">ME-DEL-POWER</language>
 	</row>
 	<row id="msg_seq_me_02">
 		<language name="JPN" width="256">ME-02</language>
