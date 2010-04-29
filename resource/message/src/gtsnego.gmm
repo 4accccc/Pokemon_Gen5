@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-04-18T17:52:12"/>
+	<create user="ohno" host="W00141" date="2010-04-29T12:54:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="76" top="101" right="781" bottom="721" maximized="no" rayout="Vertical2">
+	<dialog left="1479" top="165" right="2184" bottom="785" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -564,6 +564,13 @@
 せつだん　しても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクション　から
 切断しても　よろしいですか？</language>
+	</row>
+
+	<row id="GTSNEGO_048" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">てもちと　ボックスを　あわせて
+２ひき　いじょう　ひつようです</language>
+		<language name="JPN_KANJI" width="256">手持ちと　ボックスを　合わせて
+２匹　以上　必要です</language>
 	</row>
 
 	<flowchart-group-list>
