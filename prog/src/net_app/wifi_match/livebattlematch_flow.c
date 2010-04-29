@@ -169,6 +169,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //-------------------------------------
 ///	便利関数
 //=====================================
@@ -208,7 +209,6 @@ static void UTIL_DATA_GetBtlBoxParty( LIVEBATTLEMATCH_FLOW_WORK *p_wk, POKEPARTY
 //自分のデータ作成
 static void UTIL_DATA_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static void UTIL_DATA_SetupMyData_Debug( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBATTLEMATCH_FLOW_WORK *p_wk );
-
 
 //-------------------------------------
 ///	デバッグ
@@ -472,6 +472,8 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
     SEQ_START_MOVEOUT_CARD,  //以前の大会カードをしまう
     SEQ_WAIT_MOVEOUT_CARD,
+    SEQ_START_MOVEOUT_CARD_RET,  //以前の大会カードをしまい、メニューへ戻る
+    SEQ_WAIT_MOVEOUT_CARD_RET,
 
     SEQ_START_MSG_RECVCARD, //選手証受け取り
     SEQ_START_RECVCARD,
@@ -593,7 +595,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           break;
 
         case 1: //いいえ
-          UTIL_FLOW_End( p_wk, LIVEBATTLEMATCH_FLOW_RET_LIVEMENU );
+          *p_seq  = SEQ_START_MOVEOUT_CARD_RET;
           break;
         }
       }
@@ -609,6 +611,18 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_MOVEOUT_CARD:
     UTIL_PLAYERINFO_Delete( p_wk );
     *p_seq  = SEQ_START_MSG_RECVCARD;
+    break;
+
+  case SEQ_START_MOVEOUT_CARD_RET:  //以前の大会カードをしまい、メニューへ戻る
+    if( UTIL_PLAYERINFO_MoveOut( p_wk ) )
+    {
+      *p_seq  = SEQ_WAIT_MOVEOUT_CARD_RET;
+    }
+    break;
+
+  case SEQ_WAIT_MOVEOUT_CARD_RET:
+    UTIL_PLAYERINFO_Delete( p_wk );
+    UTIL_FLOW_End( p_wk, LIVEBATTLEMATCH_FLOW_RET_LIVEMENU );
     break;
 
   case SEQ_START_MSG_RECVCARD: //選手証受け取り
