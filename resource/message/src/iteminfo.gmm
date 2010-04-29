@@ -5266,12 +5266,12 @@
 	</row>
 
 	<row id="ITEMINFO_571">
-		<language name="JPN" width="256">きれいな　ハートの　かたちの
-とても　めずらしい　ハネ。
-とても　うすく　かるい。</language>
-		<language name="JPN_KANJI" width="256">きれいな　ハートの　形の
-とても　珍しい　ハネ。
-とても　うすく　かるい。</language>
+		<language name="JPN" width="256">きれいなだけで　なんの　こうかもない
+ごくごく　ふつうの　ハネ。
+</language>
+		<language name="JPN_KANJI" width="256">きれいなだけで　なんの　効果もない
+ごくごく　普通の　ハネ。
+</language>
 	</row>
 
 	<row id="ITEMINFO_572">

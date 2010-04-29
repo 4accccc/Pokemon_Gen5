@@ -633,7 +633,7 @@ const ITEMDATA_INDEX ItemDataIndex[] =
 	{ NARC_item_icon_item_665_NCGR, NARC_item_icon_item_665_NCLR },
 	{ NARC_item_icon_item_665_NCGR, NARC_item_icon_item_665_NCLR },
 	{ NARC_item_icon_item_665_NCGR, NARC_item_icon_item_665_NCLR },
-	{ NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR },
+	{ NARC_item_icon_item_754_NCGR, NARC_item_icon_item_754_NCLR },
 	{ NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR },
 	{ NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR },
 	{ NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR },

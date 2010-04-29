@@ -561,7 +561,7 @@
 #define ITEM_TIRYOKUNOHANE		( 568 )		// ちりょくのハネ
 #define ITEM_SEISINNOHANE		( 569 )		// せいしんのハネ
 #define ITEM_SYUNPATUNOHANE		( 570 )		// しゅんぱつのハネ
-#define ITEM_HAATONOHANE		( 571 )		// ハートのハネ
+#define ITEM_KIREINAHANE		( 571 )		// きれいなハネ
 #define ITEM_HUTANOKASEKI		( 572 )		// ふたのカセキ
 #define ITEM_HANENOKASEKI		( 573 )		// はねのカセキ
 #define ITEM_RIBATHITIKETTO		( 574 )		// リバティチケット
@@ -616,8 +616,9 @@
 #define ITEM_HAITATUBUTU1		( 623 )		// はいたつぶつ１
 #define ITEM_HAITATUBUTU2		( 624 )		// はいたつぶつ２
 #define ITEM_HAITATUBUTU3		( 625 )		// はいたつぶつ３
+#define ITEM_HAATONOHANE		( 626 )		// ハートのハネ
 
-#define ITEM_DATA_MAX		( 625 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 626 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
