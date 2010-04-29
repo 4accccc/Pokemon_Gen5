@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kitakaze_tomohiro" host="W00198" date="2010-04-14T18:37:51" source="batt_field_all04a.mb"/>
+	<create user="kitakaze_tomohiro" host="W00198" date="2010-04-29T22:58:43" source="batt_field_all04a.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="kitakaze_tomohiro" host="W00198" date="2010-04-14T18:37:51" source="batt_field_all04a.mb"/>
+<original_create user="kitakaze_tomohiro" host="W00198" date="2010-04-29T22:58:43" source="batt_field_all04a.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-2.379639 0.000000 -1.793945" whd="4.759033 1.716309 4.759033"/>
+<box_test pos_scale="5" xyz="-2.379639 -0.059082 -1.793945" whd="4.759033 1.775146 4.759033"/>
 
 <tex_image_array size="5">
 	<tex_image index="0" name="batt_brush04a"
@@ -2345,13 +2345,13 @@
 			fb69 fb69 fb69 fb69 fb69 fb69 fb69 fb69
 			fb69 fb69 fb69 fb69 fb69 fb69 fb69 fb69
 			fb69 fb69 fb69 fb69 fb69 fb69 fb69 fb69
-			fb8a fb8a fb8a fb8a fb8a fb6a fb6a fb6a
+			fb8a fb8a fb6a fb6a fb6a fb6a fb6a fb6a
 			fb6a fb6a fb6a fb6a fb6a fb6a fb6a fb6a
 			fb6a fb6a fb6a fb6a fb6a fb6a fb6a fb6a
 			fb6a fb6a fb6a fb6a fb6a fb6a fb6a fb6a
 			fb6a fb6a fb6a fb6a fb6a fb6a fb6a fb6a
 			fb6a fb6a fb6a fb6a fb6a fb6a fb6a fb6a
-			fb6a fb6a fb6a fb6a fb6a fb6a fb69 fb69
+			fb6a fb6a fb6a fb6a fb69 fb69 fb69 fb69
 			fb69 fb69 fb69 fb69 fb69 fb69 fb69 fb69
 			fb69 fb69 fb69 fb69 fb69 fb69 fb69 fb69
 			fb69 fb69 fb69 fb69 fb69 fb69 fb69 fb69
@@ -2543,9 +2543,9 @@
 			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
 			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
 			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
-			fbcd fbcd fbcd fbcd fbad fbad f7ad f7ad
-			f7ad f7ad f7ad f7ad f7ad fbad fbad fbad
-			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
+			fbcd fbcd fbad fbad fbad f7ad f7ad f7ad
+			f7ad f7ad f7ad f7ad f7ad f7ad f7ad fbad
+			fbad fbad fbcd fbcd fbcd fbcd fbcd fbcd
 			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
 			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
 			fbcd fbcd fbcd fbcd fbcd fbcd fbcd fbcd
@@ -2559,335 +2559,335 @@
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbae fbae f7ae f7ae
+			fbce fbce fbae fbae fbae f7ae f7ae f7ae
 			f7ae f7ae f7ae f7ae f7ae f7ae f7ae f7ae
 			f7ae f7ae f7ae f7ae f7ae f7ae f7ae f7ae
 			f7ae f7ae f7ae f7ae f7ae f7ae f7ae f7ae
-			f7ae fbae fbae fbce fbce fbce fbce fbce
+			f7ae f7ae f7ae fbae fbae fbce fbce fbce
+			fbce fbce fbce fbce fbce fbce fbce fbce
+			fbce fbce fbce fbce fbce fbce fbce fbce
+			fbce fbce fbce fbce fbce fbce fbce fbce
+			fbae fbae fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbae fbae f7ae f7ae f7ae f7ae f7ae
+			fbce fbce fbce fbce fbce fbce fbae fbae
+			fbae f7ae f7ae f7ae f7ae f7ae f7ae f78e
 			f78e f38e f38e f38e f38e f38e f38e f38e
 			f38e f38e f38e f38e f38e f38e f38e f38e
-			f38e f38e f38e f38e f38e f78e f7ae f7ae
+			f38e f38e f38e f38e f38e f38e f78e f7ae
 			f7ae f7ae f7ae f7ae f7ae f7ae f7ae f7ae
 			f7ae f7ae f7ae f7ae f7ae f7ae f7ae f7ae
-			f7ae f7ae f7ae fbae fbae fbae fbce fbce
+			f7ae f7ae f7ae f7ae f7ae fbae fbae fbae
+			fbae fbce fbce fbce fbce fbce fbce fbaf
+			f7af f7cf fbcf fbce fbce fbce fbcf fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
 			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbce fbce fbce
-			fbce fbce fbce fbce fbce fbae fbae f7ae
+			fbce fbce fbce fbce fbce fbae f7ae f7ae
 			f7ae f7ae f7ae f7ae f7ae f7ae f7ae f7ae
-			f7ae f78e f38e f38e f38e f38e ef6d ef6d
-			eb4d eb4d eb4d eb4d eb4d eb4d eb4d eb4d
-			eb4d eb4d eb4d eb4d eb4d eb4d eb6d ef6e
-			ef6e ef6e f38e f38e f38e f38e f38e f38e
-			f38e ef6d ef6d ef6d eb6d eb4d eb4d eb4d
-			eb4d eb4d eb4d eb4d eb4d eb4d eb4d ef6d
-			ef6d f36e f38e f38e f7ae f7ae f7ae fbaf
+			f78e f38e f38e f38e f38e ef6d ef6d ef6d
+			ef6d eb4d eb4d eb4d eb4d eb4d eb4d eb4d
+			eb4d eb4d eb4d eb4d eb4d eb4d ef6d ef6d
+			ef6e ef6e ef8e f38e f38e f38e f38e f38e
+			ef6d ef6d ef6d ef6d eb6d eb4d eb4d eb4d
+			e72d e72d e72c e72c e30c e30c e72d e72d
+			eb4d ef6d ef6e f38e f38e f7ae f7ae f7ae
+			f7af fbaf fbcf fbcf fbcf fbcf fbcf f7af
+			f7af f7af f7af fbcf fbcf f7af f7af fbaf
 			fbcf fbcf fbcf fbcf fbcf fbcf fbcf fbcf
-			fbcf fbcf fbcf fbcf fbcf fbcf fbcf fbcf
-			fbcf fbcf fbcf fbcf fbcf fbcf fbcf fbcf
-			fbcf fbcf fbcf fbcf fbcf fbcf fbcf fbcf
-			fbcf fbaf fbcf fbaf fbaf fbaf fbaf f7ae
+			fbcf fbcf fbcf fbcf fbcf fbaf f7af fbaf
+			fbaf fbaf fbaf fbaf fbae f7ae f7af f7af
 			f7af f7af f7af f7af f78f f38f f38f f38f
 			f38f f38f f38f f38f f38f f38f f38f f38f
-			f38f f78f f78f f7af f7af f7af f7af f7af
-			f38e f38e ef6e ef6e eb4d eb4d e72d e72d
-			e72d e72d e30d e30c e30c e30c deec deec
-			deec deec deec deec deec deec deec e30c
-			e30c e30d e30d e30d e72d e72d eb4e eb4e
-			eb4e ef6e ef6e ef8e f38e f38e f36e ef6e
-			ef6e eb4d eb4d e72d e70d e30c e30c e30c
-			e30c deec deec deec daec dacc dacd deed
-			deed e30d e72e eb4e ef6e f38f f38f f7af
-			f7af fbaf fbaf fbcf fbcf fbcf fbcf fbcf
-			fbcf fbcf fbcf fbcf fbcf fbcf fbcf fbcf
-			fbcf fbcf fbcf fbcf fbcf fbcf fbcf fbcf
-			f7b0 f7b0 f7b0 f7b0 f7b0 f7b0 f7b0 f7b0
-			f7b0 f7b0 f7af f7af f7af f7af f38f f38f
-			ef6e ef6e eb4e e74e e72e e30d e30d deed
-			deed deed deec deec deed deed df0d e30d
-			e72d e74e eb4e ef6e ef6f f38f f38f f38f
-			f38f ef6e eb4e eb4e e72d e30d deed deec
-			daec dacc dacc d6ac d6ac d2ab d28b d28b
-			d28b ce8b d28b d28b d28c d6ac d6ac d6cc
-			dacd daed daed deee df0e e30e e72e e74e
-			eb4e eb6e ef6e ef6e ef8e f38f ef6f ef6e
-			eb6e eb4e e72e e30d df0d deed deec dacc
-			dacc dacc d6cc d6ac d6ac d2ac d2ad d6ad
-			dacd deed e30d e72e eb4e ef6e f38f f3af
-			f7af f7af f7d0 f7d0 f7d0 f7d0 f7d0 f7b0
-			f7b0 f7b0 f7b0 f7b0 f7b0 f3b0 f3b0 f3b0
-			f3b0 f3b0 f3b0 f3b0 f3b0 f3b0 f3b0 f3b0
-			ef72 ef72 eb72 eb72 eb72 eb71 ef71 ef71
-			ef71 ef70 f390 f390 f38f f38f ef6f eb4f
-			eb4f e72f e30f deef dace d6ce d6ad d2ad
-			d28d d28d ce8d ce8d ce8d d28d d2ad d6ae
-			dace deef e32f e74f eb50 ef70 f390 f390
-			f390 ef70 eb50 e750 e32f df0f deef dace
-			dace d6ce d6ad d2ad d2ad d28c ce6c ca6c
-			ca4c ca4c ca4b c64b ca4b ca4c ca6c ce6c
-			ce8d d28d d2ae d6ce dace deee df0f e32f
-			e72f eb4f eb6f ef6f f38f f390 ef70 ef70
-			eb70 eb50 e730 e30f df0f daee dace dace
-			d6ce d6ae d6ad d2ad d28d d28d d28d d6ad
-			dacd daed e30e e72e eb4e ef6f f38f f38f
-			f7af f7d0 f7d0 f7b0 f7b0 f7b1 f7b1 f391
-			f391 ef71 eb71 eb51 e751 e750 e730 e730
-			e730 e730 e730 e730 e750 e750 e751 e751
-			e311 e311 e331 e331 e331 e331 e330 e730
-			e750 eb50 eb50 ef6f ef6f ef6f eb4f eb4f
-			e72f e32f df0f daef d6ce d2ae d28d ce8d
-			ce6d ca6d ca6c ca6c ca6d ca6d ce6d ce8d
-			d2ae d6ce deef e32f e750 ef70 f390 f391
-			f391 ef71 eb71 eb50 e330 e310 deef daef
-			dace d6ce d6ae d2ad d28d ce8d ce8c ce6c
-			ca4c ca4c c64b c64b c64b c64b c64c ca4c
-			ca6d ce8d d28d d6ae dace daef df0f e30f
-			e72f eb4f eb6f ef6f ef6f f390 ef70 ef70
-			eb71 e751 e731 e310 df10 deef daef dacf
-			dace d6ae d2ae d2ad d28d ce8d ce8d d28d
-			d6ad dacd deee e72e eb4e ef6f f38f f390
-			f7b0 f7b0 f7b1 f7b1 f7b1 f3b1 f391 ef71
-			eb71 eb51 e751 e331 e331 df10 df10 def0
-			daf0 daf0 daf0 daf0 daf0 def0 df10 df10
-			dad0 dad0 dad0 dad0 daf0 def0 df10 e310
-			e330 e74f eb4f eb4f eb4f eb4f eb4f e74f
-			e32f e30f deef dacf d6ce d2ae d28e ce8d
-			ce6d ca6d ca6d ca6d ca6d ca6d ca6d ce6d
-			d28e d6ae daef e30f e730 eb70 f390 f391
-			f391 ef71 eb71 eb51 e730 e310 def0 daef
-			dacf d6cf d6ae d2ae d28d ce8d ce8d ca6c
-			ca4c c64c c64b c64b c62b c62b c64c ca4c
-			ca6d ce8d d2ae d6ae daef deef df0f e32f
-			e72f eb4f eb4f eb6f ef6f ef70 ef70 eb71
-			eb51 e731 e311 df10 daef dacf d6ce d6ae
-			d2ae d2ae d28e d28d ce8d ce8d ce8d d28d
-			d2ad d6ce daee e30e e72f eb4f ef6f f390
-			f390 f7b1 f7b1 f3b1 f391 f391 ef72 eb72
-			eb52 e751 e731 e331 df11 def1 daf0 dad0
-			d6d0 d6b0 d6af d2af d2af d2af d2af d6af
-			d6b0 d6b0 d6b0 d6d0 d6d0 dad0 daf0 df10
-			e310 e730 e750 eb50 eb50 eb50 e750 e730
-			e310 df10 def0 daf0 d6d0 d2af d2ae ce8e
-			ce6d ca6d ca6d ca6d ca6d ca6d ca6d ce6d
-			d28e d2ae daef df0f e730 eb70 ef90 f391
-			f391 ef91 ef71 eb51 e731 e311 df11 daf0
-			dad0 d6d0 d6af d2af d28e ce8e ce6d ca6d
-			ca4c c64c c64c c62c c22c c22c c62c c64d
-			ca6d ce8e d28e d2ae d6cf daef deef df0f
-			e30f e32f e72f e750 e750 e750 e730 e330
-			df10 daf0 d6cf d2af ce8e ca6d ca4d c64c
-			c62c c22b c22b c20b c20b c22b c22c c64c
-			ca6d ce8d d2ae d6ce daef def0 e310 e331
-			e731 e751 e751 e751 eb52 eb52 eb52 e752
-			e752 e752 e332 e332 df11 def1 daf1 dad0
-			d6d0 d6b0 d2af d2af d28f d28f d28f d28f
-			d2b0 d2b0 d2b0 d6b0 d6d0 d6d0 daf0 def0
-			df10 e330 e730 e750 e750 e730 e331 e331
-			df11 df11 daf1 dad1 d6d0 d2af d2af ce8f
-			ce6e ca6e ca6d ca6d ca6d ca6d ce6e ce6e
-			d28e d6af dacf df10 e730 eb50 ef71 f391
-			ef91 ef72 eb52 e752 e332 df12 daf1 dad1
-			d6d0 d6b0 d2af d2af ce8f ce8e ce6d ca6d
-			c64c c62c c22c c20c c20c c20c c22c c62d
-			ca6d ce6e ce8f d2af d6b0 d6d0 dad0 daf0
-			daf0 def0 df10 e310 e310 e310 df10 def0
-			dad0 d6b0 d2af ce6e ca4d c64d c22c c20b
-			bdeb b9ea b9ca b9ca b9ca b9ea b9ea bdeb
-			c20c c62c ca4d ce6e d28f d2af d6d0 daf1
-			daf1 df11 e312 e332 e332 e752 e752 e752
-			e332 e332 e312 df12 daf1 daf1 d6d1 d6d0
-			d6b0 d2b0 d2af d28f d28f d28f d28f d28f
-			d28f d28f d28f d28f d28f d2b0 d2af d6b0
-			d6d0 d6cf dacf dacf dacf d6cf d6af d6af
-			d2af d2af ce8f ce8e ce6e ca6e ca6e ca6d
-			ca6d ca6d ca6e ca6e ca6e ce6e ce6e ce6e
-			ce8e d2ae dacf deef e330 e750 eb51 eb71
-			eb51 e751 e331 df11 daf1 d6d0 d2af ce8f
-			ce8e ce6e ca6e ca6e ca4d ca4d ca4d c64d
-			c62c c22c c22c c20c c20c c20c c22c c64d
-			ca4d ce6e ce8e d2af d6af d6d0 dad0 daf0
-			daf0 def0 def0 df10 df10 df11 def0 daf0
-			d6d0 d2b0 d28f ce6e ca4e c62d c22c c20b
-			bdeb b9ea b9ca b9ca b9ca b9ca b9ea bdeb
-			be0b c22c c64d ca4e ce6e d28f d2af d2b0
-			d6d0 d6d0 dad1 daf1 daf1 daf1 daf1 daf1
-			daf1 dad1 d6d1 d6d1 d6b0 d2b0 d2b0 d2b0
-			d2af d2af d28f d28f d28f d28f d28f d28f
-			d28f d28f d28f ce8f ce8f ce6f ce6f ca6f
-			ca6e ca6e ca6e ca4e c64d c64d c64d c64d
-			c62d c62d c22d c22c c22c c20c c20c c22c
-			c22d c62d c64d ca4e ca6e ca6e ca6e ce8e
-			ce8f d2af d6cf daef e310 e330 e731 e731
-			e331 df11 daf1 d6d1 d2b0 ce8f ca6e ca4e
-			c64d c64d c64d c64d c64d c64d c64d c62d
-			c62d c22d c22d c22d c22c c22c c62d c64d
-			ca6e ce6e ce8f d2af d2b0 d6d0 d6d0 d6d1
-			d6d1 d6d1 d6d1 d6d1 d6d1 d6d1 d6d1 d2d1
-			d2b0 d2b0 ce8f ca6e c64e c64d c22c c20c
-			be0b bdeb b9eb b9ea b9ca b9ea b9eb bdeb
-			be0c c22c c62d c64e ca6e ce8f ce8f d290
-			d290 d2b0 d2b0 d2b0 d2b0 d2b0 d2b0 d290
-			d290 ce8f ce8f ca6f ca6f ca6e ca6e ce6f
-			ce8f d28f d28f d28f d2af d2af d2af d28f
-			d28f d28f ce8f ce6f ce6f ca6f ca6f ca6f
-			ca4f c64f c64e c64e c62e c22d c22d c22d
-			c22d c22c c20c be0c be0c be0b bdeb bdeb
-			be0b be0c c22c c22d c62d c64d ca4e ca6e
-			ce6e ce8f d2af d6cf daf0 def0 df10 def1
-			daf0 dad0 d2b0 ce8f ca6f ca4e c64d c62d
-			c62d c22d c22d c22d c62d c62d c62d c62d
-			c62d c62d c22d c22d c22d c22d c22d c64d
-			c64d ca6e ca6e ce8f d28f d2b0 d2b0 d2b0
-			d2b0 d2b0 d2b0 d2b0 d2b0 d2b0 ce90 ce70
-			ca6f c64e c22d c20c be0c bdeb b9eb b9eb
-			b9cb b9cb b9ca b9ca b9ca b9ca b9cb b9eb
-			bdeb be0c c20c c22d c64e c64e ca4e ca4e
-			ca4e ca4e ca4e ca4e c64e c64e c64e c62d
-			c22d c22d c22d c20c c20c c20c c22d c64d
-			ca4e ca6e ce8f d28f d2af d2af d2af d2af
-			d28f d28f ce8f ce6f ca6f ca6f ca6f ca4f
-			c64f c64f c64f c64f c62f c62e c22e c22e
-			c22e c22d c20d c20c be0c bdec bdeb bdeb
-			bdeb bdec c20c c20d c22d c62e c64e ca6e
-			ca6e ce6f d28f d2af d6d0 dad0 daf1 dad1
-			d6d1 d6b0 d2b0 ce70 ca6f c64e c64e c22d
-			c22d c22d c22d c22d c22d c62d c62d c62e
-			c62e c62e c62e c62e c22d c22d c22d c22d
-			c22d c22d c62d c64e c64e ca4f ca6f ca6f
-			ce70 ce90 ce90 ce90 ce90 ca70 ca6f c64f
-			c22e c20d be0c b9eb b9cb b9cb b5ca b5cb
-			b5cb b5cb b9cb b9cb b9cb b9cb b9cb b9cb
-			b9eb b9ec bdec be0c be0d c20d c22d c20d
-			c20d c20d be0d be0d be0c be0c bdec bdec
-			bdec bdec b9ec b9ec b9ec bdec be0c c22d
-			c64e ca6e ce8f d28f d2b0 d6b0 d2af d2af
-			d28f d28f ce8f ce6f ce6f ca6f ca6f ca6f
-			c64f c64f c64f c64f c64f c64f c62f c62f
-			c22e c22e c20d be0d be0c bdec b9eb b9eb
-			b9eb bdec be0c be0d c22d c22d c64e ca4e
-			ca6e ca6f ce8f d2af d6b0 d6d0 d6d1 d6d1
-			d2b1 d2b0 ce90 ca6f c64f c64e c22d c22d
-			c22d c22d c22d c22d c22d c22d c22d c22e
-			c22e c22e c22e c22e c22e c22d c22d c22d
-			c22d c22d c22d c22d c22e c22e c64e c64f
-			ca6f ca6f ca70 ca70 ca70 ca70 c64f c64f
-			c22e be0d b9ec b9ec b9cb b9cb b5cb b9cb
-			b9cb b9cb b9cb b9cb b9cb b9cb b9cb b5cb
-			b9cb b9eb b9ec b9ec b9ec b9ec b9ec b9ec
-			b9ec b9ec b9cc b9cb b5cb b5cb b5cb b5cb
-			b5cb b5cb b5cb b5cb b9cb b9ec be0c c22d
-			c64e ca6e ce8f d2af d6b0 d6b0 d6af d2af
-			d28f d28f ce8f ce6f ce6f ca6f ca6f ca4f
-			ca50 c650 c650 c650 c650 c64f c62f c62f
-			c22e c22e be0d be0d bdec b9ec b9eb b9eb
-			b9eb bdec bdec be0d c20d c22d c62e c64e
-			ca4e ca6f ce8f d28f d2b0 d6b0 d6b1 d2b1
-			d2b1 d291 ca70 ca50 c64f c62e c22e c22d
-			c22d c22d c22d c22d c22d c22d c22e c22e
-			c62e c62e c62e c22e c22e c22e c22d c22d
-			c22d c22d c22d c22d c22e c22e c22e c62f
-			c64f c64f ca50 ca70 c650 ca50 c650 c64f
-			c22f c22e be0d bded b9ec b9ec b9ec b9ec
-			b9ec b9ec b9ec b9ec b9ec b9ec b9ec b9ec
-			b9ec b9ec b9ec b9ec b9ed b9ed b9ec b9ec
-			b9ec b9cc b5cb b5cb b5cb b5ab b5ab b5ab
-			b5ab b5ab b5ab b5cb b5cb b9ec be0d c22d
-			c64e ca6f ce8f d2b0 d6b0 d6d0 d6b0 d6b0
-			d28f ce8f ce6f ce6f ca6f ca6f ca4f ca50
-			c650 ca50 c650 c650 c650 c650 c64f c62f
-			c22e c20e be0d be0c bdec b9eb b9eb b9eb
-			b9eb bdec be0c be0d c20d c22e c62e c64e
-			ca4f ca6f ce8f ce90 d2b0 d2b0 d2b1 d2b1
-			d291 ce91 ca71 ca70 c64f c64f c22e c22e
-			c22d c22d c22d c22d c22e c22e c22e c62f
-			c62f c62f c62f c62e c22e c22d c22d c22d
-			c20d c22d c22d c22d c20d c22e c22e c64f
-			c64f c650 ca70 ca70 c650 c64f c24f c22f
-			c22e be0e ba0d b9ed b9ec b9ec b9ec b9ec
-			b9ec b9ec b9ec b9ec b9ec b9ec b9cc b9cc
-			b9ec b9ec b9ec b9ed bded bded b9ed b9ec
-			b9ec b9cc b5cb b5cb b5ab b5ab b5ab b5ab
-			b5ab b5ab b5ab b5ab b5cb b9cc b9ec c20d
-			c62e ca6f ce8f d2b0 d2b0 d6d0 d6d0 d6d0
-			ca8f ca6f ca6f ca6f ca6f ca6f ca4f ca4f
-			c650 ca50 c670 c670 ca50 c650 c650 c250
-			c22f c22e c22e be0d be0d bdec b9ec b9ec
-			bdec be0d be0d be0d c22e c22e c64e c64e
-			c64f ca6f ca6f ca6f ca90 ca90 ca90 c690
-			c270 c26f c26f be4e be4e ba2e ba2d ba2d
-			ba2d ba2c ba2d ba2d ba2d ba2d ba2d ba2d
-			ba4e ba2d ba4e ba2d ba2d ba2d ba2d ba2d
-			ba2d ba2d ba2d ba0d ba2d ba2d ba0d ba0d
-			ba0d ba2d ba2d ba2d ba2d b62c b60c b20c
-			b20b b1eb adeb adeb b1eb b1eb b1eb b1eb
-			b1eb b1eb b1eb b1eb b1cb b1cb b1cb b5cb
-			b5cb b5eb b5ec b9ec b9ec b9ec b9ec b9ec
-			b9ec b5ec b5cc b5cc b1cb b5cb b5cb b1cb
-			b5cb b5cb b5cb b9cc b9ec b9ec be0d be0d
-			c22e ca4f ce8f d2af d2af d2af d2d0 d2b0
-			baae baae baae ba8e ba8e be8e be6e ba8e
-			ba8e ba8e ba6e ba6e ba6d b66d b66d b66d
-			b66d b66c b24c b24c b24c b24c b24c b24c
-			b24c b24c b24c b24c b24c b24b b24c b26c
-			b26c b26c b66c b66d b68d b28d b28c b2ac
-			aeac ae8c aa8c aa8c aa8c aa8c aa8b aa8b
-			aa6b aa6b aa8b aa8b aa8c ae8c ae8c ae8c
-			ae8c ae8c ae8c ae8c ae8c ae8c b28c b28c
-			b28c b28c b28d b68d b66d b28d b26d b24c
-			b24c b24c b24c b22c b24c ae2c ae2b ae2b
-			ae2b ae2b ae2b ae2b ae0b b20b b20b b20b
-			b20b b20b b20b b20b b20b b20b b20b b20b
-			b20c b20c b20c b20c b20c b20c b20c b1eb
-			b1eb b1ec b1eb b1eb b20b ae0b adeb ae0b
-			b1eb b1eb b1eb b1eb b1eb b1eb b20b b20b
-			b20b b60b ba2c be4d be4d c26e c26e c26e
-			b2ed b2ed b2cd aeed aeed aecd aecd aeed
-			aeed aecd aecd aecc aecc aaac aaac aaab
-			aa8b aa8b aaab aa8b aaab aaab aaab aaab
-			aaab aa8b a6ab a6ab a6ab a6ab a68b a68b
-			a68b a68b a68b a68b a6ac a6ab a6ab a6ab
+			f38f f38f f78f f7af f7af f7af f78f f38e
+			f38e f38e ef6e ef6e eb4d eb4d eb2d e72d
+			e72d e72d e30c e30c e30c deec deec deec
+			dacc dacc dacc dacc dacc decc deec deec
+			e30c e30d e30d e72d e72d e72d eb4e eb4e
+			eb4e ef6e ef6e ef6e ef6e ef6e ef6e ef6e
+			ef6e eb4d eb4d e72d e30d e30c deec dacc
+			d2ac ce8b ca6b ca4b ca4b ca4b ce6c d28c
+			d6ac deed e30d e72e ef4e ef6e f38f f7af
+			f7af f7af f7af fbaf fbcf fbcf fbcf f7af
+			f7af f7af f7af fbcf f7af f7af f7af fbcf
+			fbcf fbcf fbcf fbcf fbcf fbcf f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f38e
+			ef6e ef6e eb4e e74e e72e e30d e30d df0d
+			deed deed deed deed deed df0d e30d e30d
+			e72d e72e eb4e ef6e ef6e ef6f f38f ef6f
+			ef6e ef6e eb4e e72e e72d e30d df0d deec
+			daec dacc dacc d6ac d28b ce8b ce6b ca4b
+			c62b c62b c62b c62b c64b ca4b ce6c d28c
+			d6ac dacd daed deed e30e e30e e72e e72e
+			eb4e eb4e ef6e ef6e ef6e ef6e ef6e ef6e
+			eb4e eb4e e72e e30d deed dacc d6ac ce8c
+			ca6b c64b c22b c20b c20b c22b c62b ca4b
+			ce8c d6ad deed e30e eb4e ef6e f38f f38f
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f38f f38f f38f f7af f38f eb6f
+			e74f e72f e30f deee dace d6ae d28d ce8d
+			ce6d ca6d ca6c ca6c ca6d ce6d ce8d d28d
+			d6ae dace df0f e72f eb4f eb70 ef70 ef70
+			ef70 ef70 eb50 e72f e32f e30f deef daee
+			dace d6ce d6ad d28d ce6c ca4c c62b c20b
+			be0b bdeb bdea bdea bdeb be0b c22b c64c
+			ca6c ce8d d2ad d6ae dace deee df0e e32f
+			e72f eb4f eb4f ef6f ef6f ef6f ef70 eb70
+			eb50 e750 e730 e30f deef d6ce d28d ca6c
+			c62c c20b be0b bdea bdea be0b c20b c64b
+			ce6c d6ad daed e30e eb4e ef6e ef6f f38f
+			f7af f7b0 f7b0 f7b0 f7b0 f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f38f f7af f7af f3af
+			f7af f7af f38e f38e f38e f38f ef6f eb4f
+			e72f e30f daef d6ce d28e ce6d ca4d c64c
+			c22c c22c c22c c22c c22c c22c c62c c64d
+			ca6d d28e d6ce deef e32f eb50 ef70 ef70
+			ef70 ef70 eb70 e750 e730 e310 df0f daef
+			dace d6ce d2ae d28d ce6d ca4c c62c c20b
+			be0b bdeb b9ea b9ea bdeb be0b c20b c22c
+			c64c ce6d d28d d6ae dace daee df0f e30f
+			e72f eb4f eb4f ef6f ef6f ef70 ef70 eb70
+			eb50 e750 e730 e310 deef d6cf d2ae ce6d
+			c64c c20b bdeb bdea b9ea bdeb c20b c62b
+			ca6c d28d dacd e30e e72e eb4f ef6f f390
+			f3b0 f7b0 f7b0 f7b0 f7b0 f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f38f f7af f7af f38f f38f f38f f38f f38f
+			f3af f38f ef6e eb4e e74e e72e eb4f e74f
+			e30f deef dacf d2ae ce8e ca6d c64d c22c
+			c22c c22c c22c c22c c22c c22c c22c c62d
+			ca4d ce8d d6ae daef e30f e750 eb70 ef70
+			ef71 ef71 eb50 e750 e330 df10 daef dacf
+			d6cf d6ae d2ae ce8d ce6d ca4c c22c be0b
+			bdeb bdeb b9ea b9ea bdeb bdeb c20b c22c
+			ca4c ce6d d28d d6ae dace deee df0f e32f
+			e72f e74f eb4f eb4f eb6f eb70 eb50 eb50
+			e730 e310 def0 dacf d6ae d28e ce6d c64c
+			c22c c20b bdeb bdeb bdea bdeb c20b c22b
+			ca4c ce8d d6ad deee e30e e74f eb6f ef70
+			f390 f390 f391 f3b0 f7b0 f7af f7af f3af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f38e f7ae f7ae f38e f38e f38f f38f f38f
+			f38f eb6e e30e deee dace daee e30f e330
+			e310 def0 dacf d2af ce8e ca6d c64d c62d
+			c22c c22c c22c c22c c22c c22c c22c c62c
+			c64d ce6d d2ae daef e30f e750 eb70 ef71
+			ef71 eb51 e730 deef d6ae ce8e ca6d ca4d
+			c64d ca4d ca6d ca6d ca4d c64c c22c be0b
+			bdeb bdeb b9ea b9ea bdeb bdeb c20b c22c
+			c64c ca6d ce8e d2ae d6ae d6cf daef deef
+			df0f e30f e32f e72f e730 e730 e330 df10
+			daef d6af ce8e ca6d c64c c22c be0b be0b
+			bdeb b9ea b9ea b9ea b9ea b9ea bdeb c20b
+			c22c ca4d ce6d d28e d6cf daef df10 e310
+			e330 e330 e330 e730 ef6f f38f f38f f38f
+			f38f f38f f38f f38f f38f f38f f7af f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f38e f7ae f7ae f7ae f38e f38f ef6f ef6f
+			ef6f e72e d6ce d6ad d6ad d6ce daef e310
+			df11 daf0 dad0 d6af d28f ce6e ca4d c64d
+			c62d c22d c22c c22c c22c c20c c22c c62d
+			c64d ce6d d2ae daef e310 e730 eb51 eb71
+			eb51 e730 df10 d6cf ce8e ca4d c62c c22c
+			c22c c62d c64d ca4d c64d c64d c22c c20b
+			be0b bdeb b9eb b9ea b9eb bdeb be0b c20c
+			c62c ca6d ce6e ce8e d28f d2af d2af d2af
+			d6af d6cf daef def0 df10 df10 def0 dad0
+			d6af ce8e ca6d c62d c20c be0b bdeb b9eb
+			b9ea b9ea b9ca b9ca b9ca b9ea b9ea bdeb
+			be0b c20c c22c c62d c64d ca4d ca6e ce6e
+			ce8f ce8f d2ae daee e74f f38f f38f f38f
+			f38f eb4f e72e e30e e32e eb4f f38f f7af
+			f7af f7af f7af f7af f7af f7af f7af f7af
+			f38e f7ae f7ae f7ae f38e ef6f ef6f ef6f
+			eb4f deee ce8d ce6d ce8d ce8d ce8e d2af
+			d2af d28f ce8f ce8e ce6e ca6e ca4d ca4d
+			c64d c64d c64d c62d c62d c22c c22c c62d
+			c64d ce6d d2ae dacf df0f e330 e730 e751
+			e731 e310 daef d2ae ca6d c64c c22c c20c
+			c20c c22c c62c c64d c64d c62c c22c c20c
+			be0b bdeb b9eb b9ea b9eb bdeb be0b c20c
+			c62c ca4d ce6e ce8e ce8e ce8e ce8e d28e
+			d2ae d6af d6cf daf0 daf0 daf0 daf0 d6d0
+			d2af ce8e ca4d c22c be0c bdeb b9eb b9ea
+			b9ea b9ea b9ca b9ca b9ca b9ea b9ea b9eb
+			bdeb be0c be0c c20c c20c c22c c22d c64d
+			c64d ca4e ce8e d6ae e72e ef6f f38f ef6f
+			eb4f e30e daee dace d6ce deee eb6f f7af
+			f7af f38f f38f f38f f38f f38f f38f f38f
+			f38e f7ae f7ae f7ae ef8e eb6e eb4e e72e
+			e32e dacd ce6d ca6d ca6c ca4c c22c c20d
+			c22c c22c c20c c20c c20c c20c c22c c22c
+			c22d c62d c62d c62d c62d c22d c22d c62d
+			c64d ca6d d28e d6cf daef df10 e310 e311
+			df10 daf0 d6af ce8e ca4d c62d c20c be0c
+			be0c c20c c22c c62c c62d c62c c22c c20c
+			be0b bdeb bdeb b9eb b9eb bdeb be0b c20c
+			c62c ca4d ca6e ce8e ce8f ce8f ce6e ce6e
+			ce8f ce8f d2af d2b0 d6b0 d6d1 d2b0 d2b0
+			ce8f ca6e c64d c22c be0c bdeb b9eb b9ea
+			b9ea b9ea b9ea b9ea b9ea b9ea b9eb b9eb
+			bdeb be0b be0b be0b be0c be0c c22c c22d
+			c62d c64d ca6d ce8d daee eb4f eb4f e72f
+			e30f deee d6ae d6ae d6ae d6ae e72e f38f
+			ef8e eb4e eb4e eb4e ef6e f38e f38e f38e
+			f38e f7ae f7ae f3ae eb6e e30e deee daee
+			dace d6ad ce6d ca6c ca6c ca6c c22c be0c
+			be0c be0c be0c be0c bdec bdeb be0b be0c
+			be0c c20c c20c c22c c22c c22d c22d c22d
+			c62d ca4d ce6e d28e d6af dad0 daf0 daf0
+			d6d0 d6af d28f ca6e c64d c22c c20c be0b
+			be0b c20c c22c c62c c62c c62c c22c c20c
+			be0c be0b bdeb bdeb bdeb bdeb be0b c20c
+			c22c c64d ca4e ca6e ca6e ca6e ca6e ca6e
+			ca6e ca6f ce8f ce8f ce90 ce90 ce90 ca6f
+			c64e c62d c20c be0c b9eb b9eb b9ea b9ca
+			b9ca b9ca b9ca b9ca b9ca b9ca b9ea b9eb
+			b9eb bdeb bdeb bdeb bdeb be0b be0c c20c
+			c22d c22d c62d ca4d ce8d ce8d ce8d ce8d
+			d2ad dace d2ae d28e d28e d2ae e30e ef6f
+			df0e d6ae d28d daee e72e ef6e ef6e ef6e
+			f38e f7ae f7ae f7ae eb4e dace d28e d28e
+			d28d d6ad d28d ce6c ca6c ce6d c22c bdec
+			bdec bdec bdec bdec bdec bdec bdec bdec
+			bdec be0c be0c c20c c20d c22d c22d c22d
+			c62d c64d ca6e ce8f d2af d6b0 d6d0 d6d0
+			d6b0 d2b0 ce8f ca4e c62d c22c be0c be0b
+			bdeb be0b c20c c22c c22c c22c c22c c20c
+			be0c be0b be0b bdeb bdeb bdeb bdeb bdeb
+			be0c be0c c20c c20c c22d c22d c22d c22d
+			c64e c64e ca4f ca6f ca6f ca6f ca4f c64e
+			c22d c20d be0c b9eb b9eb b9cb b9ca b9ca
+			b9ca b9ca b9ca b9ca b9ca b9ca b9ca b9eb
+			b9eb b9eb b9eb b9eb b9eb b9eb bdeb bdec
+			be0c be0c be0c be0c be0c bdeb bdeb c20c
+			c64c d6ce d6ce d2ae d2ae d6ae e30f e72f
+			ce8e c64d c64d ce8d deee eb4e eb6e ef6e
+			ef6e f38e f38e ef6e df0e ce8e ca6e ca6e
+			ca6d d28d d6ad d28d ce8c ca6d c20c bdec
+			bdec bdec bdec bdec bdec bdec bdec bdec
+			bdec be0c be0c c20c c20d c20d c22d c22d
+			c22d c64d ca4e ce6f ce8f d2b0 d2b0 d2b0
+			d2b0 ce90 ca6f c64e c62d c20c be0c bdeb
+			bdeb be0b be0b c20c c22c c22c c22c c20c
+			be0c be0b bdeb bdeb bdeb bdeb bdeb bdeb
+			bdeb bdeb be0c be0c be0c be0c be0c c20d
+			c22d c22e c64e c64f c64f c64f c64f c22e
+			c22e be0d bdec b9eb b9cb b9cb b9ca b9ca
+			b9ca b9ca b9ca b9ca b9ca b9ca b9cb b9eb
+			b9eb b9eb b9eb b9eb b9eb b9eb b9eb b9eb
+			b9eb b9cb b9cb b9cb b9cb b9cb b9eb be0b
+			c62c d2ae d6ce d6ae d6ae d6ce e30f e32f
+			ca6d c64d c64d ca6d dace e32e e72e eb4e
+			e32e eb4e eb4e e32e dace ce6e ca6e ca4d
+			ca4d ce8d d28d d28d ce8c c62c be0c bdec
+			bdec bdec bdec bdec b9ec b9eb b9eb b9ec
+			bdec bdec be0c be0c c20d c20d c22d c22d
+			c22d c64d ca4e ce6e ce8f d2b0 d2b0 d2b0
+			d290 ce90 ca6f c64e c22d c20d be0c bdeb
+			bdeb bdeb be0b c20c c22c c22c c20c be0c
+			be0c bdeb bdeb bdeb bdeb bdeb bdeb bdeb
+			bdeb bdec be0c be0c be0c be0c be0c c20d
+			c22d c22e c62e c64f c64f c64f c64f c22f
+			c22e be0d be0d bdec b9eb b9eb b9eb b9ea
+			b9ea b9ea b9eb b9eb b9eb b9eb b9eb b9eb
+			b9eb b9eb b9eb b9eb b9eb b9eb b9eb b9cb
+			b9cb b9cb b9cb b5cb b5cb b5cb b9cb bdeb
+			c22c ce8d d6ae d6ce d6ce dace e30f e30f
+			ca6e c64d c64d ca6d daee e30e e30e e30e
+			d28e d6ce d6ce d6ae d28e ca6e ca4e ca4d
+			ca4d ca4d ca4c ca4c c62c be0c bdec bdec
+			bdec bdec bdec bdec b9ec b9eb b9eb b9eb
+			b9ec bdec be0c be0c c20d c20d c22d c22d
+			c22d c64d ca4e ca6f ce8f ce90 d290 ce91
+			ce91 ce70 ca70 c64f c22e c20d be0c be0c
+			bdeb bdeb be0b c20c c20c c20c c20c be0c
+			be0c be0c be0c be0c be0c be0c be0c be0c
+			be0c be0c be0c be0c be0c be0d c20d c22d
+			c22e c22e c64f c64f c64f c64f c22f c22e
+			c22e be0d be0c b9ec b9eb b9eb b9eb b9eb
+			b9eb b9eb b9eb b9eb b9eb b9eb b9eb b9eb
+			b9eb b9eb b9eb b9eb b9eb b9eb b9eb b9eb
+			b9cb b9cb b9cb b5cb b5cb b5cb b5cb b9cb
+			bdeb c62c ce8d d2ae d6ae dace d6ae d6ae
+			ce6e c64d c64d ca6d d6ae dace d6cd d2ad
+			c64d c64d c64e c64e c64e ca4e c64e c64e
+			c22d c20d c20c be0c be0c be0c be0c be0c
+			be0c be0c be0c be0c bdec bdec bdec bdec
+			be0c be0d be0d be0d c20d c22d c22d c22d
+			c62d c64e c64e c66f ca6f ca70 c670 c670
+			c670 c26f be4f be4e be2d ba2d ba0c ba0c
+			ba0b ba0b ba0b ba0b ba0b ba0b ba0b ba0c
+			ba0c ba0c ba0c ba0c ba0c ba0c ba0c ba0c
+			ba0c ba0c ba0d ba0d ba0d ba0d ba0d ba0d
+			ba0d ba2d ba2d ba2d b62c b60c b60c b60c
+			b20b b1eb b1eb b5eb b5eb b5ea b5ea b5ea
+			b5eb b5cb b5cb b5cb b5cb b5cb b5cb b5cb
+			b5eb b9eb b9eb b9eb b9eb b9eb b9eb b5eb
+			b5eb b5cb b5cb b5cb b5cb b5cb b5cb b5cb
+			b5cb b5cb b9ec be0c be0c be0d be0d c22d
+			c22d c62d c62d c62d c62d c64d c64d c62c
+			ba8d ba8d ba8d ba8d ba6d ba6d be6d be4d
+			ba4d ba2c ba2c ba2c ba2c ba2c ba2c ba2c
+			ba2c b62c b62c b62c b62c b22c b22c b24c
+			b24c b24c b24c b24c b24c b24c b24c b24c
+			b26c b66c b66c b66c b28c b28c b28c ae8c
+			ae8c ae8c ae8c ae8c ae6b ae6b ae6b ae4b
+			ae4b b24b b24b b24b b24b b24b b24b b24b
+			b24b b26c b26c b26c b26c b28c b28c b28c
+			b28c b28c b28d b28d b26d b26d b26d b26c
+			b24c b24c b24c b22c b22c b22c b22b ae2b
+			b22b b20b b20b b20b b20b b20b b20b b20b
+			b20b b20b b20b b20b b20b b20b b20b b60b
+			b60b b60b b60c b60c b60b b60b b1eb b1eb
+			b1eb b1eb b1eb b1eb b1eb b1eb adeb adeb
+			adeb adeb b1eb b1eb b1eb b1eb b20b b20b
+			b20b b60b b60c ba2c ba2c be2c be2c be4d
+			b2ed b2ed aecd aecd aecd aecd aecd aecd
+			aead aeac aeac aeac aeac aeac aa8c aa8c
+			aa8b aa8b aa8b aa8b aa8b aa8b aa8b aaab
+			aaab a6ab a6ab a6ab a68b a68b a68b a68b
+			a68b a68b a6ab a6ab a6ab a6ab a6ab a6ab
 			a6ab a68b a68b a68b a68b a68b a68b a68b
-			a68b a68b a68b a68b a6ab a6ab a6ab a6ab
-			a6ab a6ac a6ac a6ac aaac aaac aaac aaac
+			a68b a68b a68b a68b a68b a68b a6ab a6ab
+			a6ab a6ab a6ac aaac aaac aaac aaac aaac
 			aaac aaac aeac aeac aeac ae8c ae8c ae8c
-			ae8c ae8c ae6c ae6c ae6c ae6c ae6c ae6c
-			ae6c ae6c ae6c b26c b26c b26c b26c b24c
-			b26c b26c b26c b26c b26c b24c b24c ae4c
-			ae4c b24c b26c ae6c ae6c ae6c ae6c ae6c
+			ae8c ae6c ae6c ae6c ae6c ae6c ae6c ae6c
+			ae6c b24c b24c b24c b24c b24c b24c b24c
+			b24c b24c b24c b24c b24c b24c b24c b24c
+			ae4c ae4c ae4c ae6c ae6c ae6c ae6c ae6c
 			ae6c ae6c ae6c ae6c ae6c ae6c ae6c ae6c
-			ae6c ae6c ae4b ae4c ae4c ae4b ae4b ae4c
-			ae4c ae4b ae4c b24c b24c b26c b26c b28c
-			af0e af0e af0e af0e aeed aeed aeed aeed
-			aeed aeed aeed aeed aecd aacc aacc aacc
+			ae4c ae4c ae4c ae4c ae4c ae4c ae4c ae4c
+			ae4c b24c b24c b24c b24c b26c b26c b26c
+			af0e af0e af0e af0d aeed aeed aeed aeed
+			aeed aeed aecd aecd aecc aacc aacc aacc
 			aacc a6ac a6ac a6ac a6ab a6ab a6ab a6ab
-			a6ab a68b a6ab a6ab a6ac a6ab a6ab a6ab
 			a6ab a6ab a6ab a6ab a6ab a6ab a6ab a6ab
-			a6ab a6ab a68b a6ab a6ab a6ab a6ab a6ab
 			a6ab a6ab a6ab a6ab a6ab a6ab a6ab a6ab
-			a6ab a6ab a6ab a6ab a6ab a68b aa8b aa8b
-			aa8b aa8b aa8b aa8c aa8c aa8c aa8c aa8c
-			aa8c aa8b aa8b aa8b aa8b aa8b aa8c aa8c
-			aa8c ae8c ae8c ae6c ae6c ae6c ae6c ae6c
-			ae6c ae6c ae6c ae6c ae8c ae8c ae6c b28c
-			ae8c ae8c ae8d b28d b28d b28d aead aeac
-			aead aeac aead aead aead aead aead aead
-			aead aead ae8d aead b28d b28d b28d ae8d
+			a6ab a68b a68b a68b a68b a68b a6ab a6ab
+			a6ab a6ab a6ab a6ab a6ab a6ab a6ab a6ab
+			a6ab a6ab a6ab a68b a68b a68b a68b a68b
+			aa8b aa8b aa8c aa8c aa8c aa8c aa8c aa8c
+			aa8c aa8b aa8b aa8b aa8b aa8c aa8c aa8c
+			aa8c ae6c ae6c ae6c ae6c ae6c ae6c ae6c
+			ae6c ae6c ae6c ae6c ae6c ae6c ae6c ae8c
+			ae8c ae8c ae8c ae8c ae8c ae8d ae8d aead
+			aead aead aead aead aead aead aead aead
+			aead ae8d ae8d ae8d ae8d ae8d ae8c ae8c
 			ae8c ae8c ae8c ae8c aeac aeac aeac aeac
 		</bitmap>
 	</tex_image>
@@ -4062,7 +4062,7 @@
 		billboard="off"
 		scale="0.881836 1.131592 0.881836"
 		rotate="0.000000 45.537109 0.000000"
-		translate="0.000000 6.393311 20.000000"
+		translate="-9.299072 4.199951 16.322021"
 		visibility="on"
 		display_size="1"
 		vertex_size="12" polygon_size="5"
@@ -4122,7 +4122,7 @@
 		billboard="off"
 		scale="0.948730 1.217529 0.948730"
 		rotate="0.000000 -15.912109 0.000000"
-		translate="0.000000 6.393311 20.000000"
+		translate="0.000000 4.199951 8.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="12" polygon_size="5"
