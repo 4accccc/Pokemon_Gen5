@@ -371,8 +371,8 @@
 #define FE_C02R0301_BTL_01                 355 /* 0x0163 シッポウ倉庫：交換後戦闘フラグ（クリア後） */
 #define FE_R13R0101_ITEMGET_01             356 /* 0x0164 13番道路民家：アイテム入手フラグ（プレート２種） */
 #define FE_C09P01_GATE_OPEN                357 /* 0x0165 ポケモンリーグフロント：ゲート開放フラグ */
-		/* not used   358(0x0166) */
-		/* not used   359(0x0167) */
+#define FE_H05_LOOK_WANDERGIRL             358 /* 0x0166 15番道路：消える少女を見た */
+#define FE_T04PC0101_ITEMGET_01            359 /* 0x0167 サザナミポケセン：アイテム入手フラグ */
 		/* not used   360(0x0168) */
 		/* not used   361(0x0169) */
 		/* not used   362(0x016a) */
@@ -851,10 +851,10 @@
 #define FV_T04R0401_LEADER4_01             827 /* 0x033b サザナミタウン別荘：カミツレ */
 #define FV_T04R0401_LEADER2_01             828 /* 0x033c サザナミタウン別荘：アロエ */
 #define FV_H05_NINJA_01                    829 /* 0x033d ワンダーブリッジ：ダークトリニティ×３ */
-		/* not used   830(0x033e) */
-		/* not used   831(0x033f) */
-		/* not used   832(0x0340) */
-		/* not used   833(0x0341) */
+#define FV_C08R0202_TRAINER_W              830 /* 0x033e ソウリュウバトルの館：ホワイトバージョンのトレーナー */
+#define FV_C08R0202_TRAINER_B              831 /* 0x033f ソウリュウバトルの館：ブラックバージョンのトレーナー */
+#define FV_R07_TRAINER_W                   832 /* 0x0340 ７番道路：ホワイトバージョンのトレーナー */
+#define FV_R07_TRAINER_B                   833 /* 0x0341 ７番道路：ブラックバージョンのトレーナー */
 		/* not used   834(0x0342) */
 		/* not used   835(0x0343) */
 		/* not used   836(0x0344) */
@@ -2522,7 +2522,7 @@
 #define TMFLG_D01R0201_POKE16_BTL         2748 /* 0x0abc 夢の跡地B2：ムシャーナエンカウントフラグ */
 #define TMFLG_H04R0301_FISHING            2749 /* 0x0abd ビレッジブリッジ民家：釣りイベント */
 #define TMFLG_T05R0301_BTLITEM            2750 /* 0x0abe カナワタウン民家：戦闘用アイテム入手イベント */
-#define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルハウストレーナー再戦フラグ */
+#define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルの館、再戦チェックフラグ */
 #define TMFLG_H03_EMPEROR_BTL             2752 /* 0x0ac0 シリンダーブリッジ：暴走族と対戦したフラグ */
 #define TMFLG_T03R0401_ITEMGET_01         2753 /* 0x0ac1 カゴメタウン：日曜日限定1日1回アイテム入手イベント */
 #define TMFLG_C03P16_CABIN_01             2754 /* 0x0ac2 ヒウンシティ：遊覧船イベント（1日1回） */
