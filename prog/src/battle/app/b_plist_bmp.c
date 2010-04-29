@@ -2151,14 +2151,14 @@ static void BPL_WazaKindPut( BPLIST_WORK * wk, u32 idx, u32 kind )
   win = wk->add_win[idx].win;
 
   switch( kind ){
-  case 0:   // •¨—
+  case 0:   // •Ï‰»
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_302 );
+    break;
+  case 1:   // •¨—
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_301 );
     break;
-  case 1:   // •Ï‰»
-    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_303 );
-    break;
   case 2:   // “ÁŽê
-    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_302 );
+    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_303 );
   }
 //  PRINTSYS_PrintQueColor(
 //    wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
