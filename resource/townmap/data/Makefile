@@ -22,6 +22,9 @@ targetname2	= townmap_replace.dat
 TARGETDIR_ARC	= $(PROJECT_ARCDIR)#アーカイブ用
 TARGETDIR_H		= $(PROJECT_ROOT)/prog/include/app#ヘッダ用
 
+#依存するファイル
+MESSAGE_GMM = ..\..\message\dst\msg_townmap.h
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -58,10 +61,7 @@ $(targetname_b).narc: $(targetname_b).dat $(targetname2)
 $(targetname_w).narc: $(targetname_w).dat $(targetname2)
 	nnsarc -r -l -n -i $(targetname_w) $^
 
-$(targetname_b).dat $(targetname2): townmap_data.xls
-	perl townmap_data_conv.pl townmap_data.xls
-
-$(targetname_w).dat $(targetname2): townmap_data.xls
+$(targetname_w).dat $(targetname_b).dat $(targetname2): townmap_data.xls $(MESSAGE_GMM)
 	perl townmap_data_conv.pl townmap_data.xls
 
 endif
