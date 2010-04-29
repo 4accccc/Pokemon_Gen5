@@ -374,7 +374,7 @@
 #define FE_H05_LOOK_WANDERGIRL             358 /* 0x0166 15番道路：消える少女を見た */
 #define FE_T04PC0101_ITEMGET_01            359 /* 0x0167 サザナミポケセン：アイテム入手フラグ */
 #define FE_R15R0401_TRADE_01               360 /* 0x0168 15番道路：ポケモン入手イベント */
-		/* not used   361(0x0169) */
+#define FE_C03PC0101_GEONET                361 /* 0x0169 ヒウンポケセン：ジオネット誘導イベントの初回会話フラグ */
 		/* not used   362(0x016a) */
 		/* not used   363(0x016b) */
 		/* not used   364(0x016c) */
@@ -856,9 +856,9 @@
 #define FV_R07_TRAINER_W                   832 /* 0x0340 ７番道路：ホワイトバージョンのトレーナー */
 #define FV_R07_TRAINER_B                   833 /* 0x0341 ７番道路：ブラックバージョンのトレーナー */
 #define FV_H05_WANDERGIRL                  834 /* 0x0342 ワンダーブリッジ：消える少女 */
-		/* not used   835(0x0343) */
-		/* not used   836(0x0344) */
-		/* not used   837(0x0345) */
+#define FV_H05_MINEZUMI                    835 /* 0x0343 ワンダーブリッジ：ミネズミゲーム */
+#define FV_H04R0501_MINEZUMI               836 /* 0x0344 ビレッジブリッジ民家：ミネズミ */
+#define FV_H04R0501_GUEST                  837 /* 0x0345 ビレッジブリッジ民家：訪問客（２人） */
 		/* not used   838(0x0346) */
 		/* not used   839(0x0347) */
 		/* not used   840(0x0348) */
@@ -2532,7 +2532,7 @@
 #define TMFLG_T01R0401_SUP_BTL            2758 /* 0x0ac6 研究所：殿堂入り後サポートの１日１回戦闘フラグ 土曜、日曜なら対戦イベントが発生。 */
 #define TMFLG_T04R0401_SHIRONA_BTL        2759 /* 0x0ac7 サザナミタウン：春に１日１回シロナと戦闘できる。 */
 #define TMFLG_T04R0401_TALKSET            2760 /* 0x0ac8 サザナミタウン：春と夏にT04R0101に登場する人々の 日替わりのメッセージを設定するフラグ */
-		/* not used  2761(0x0ac9) */
+#define TMFLG_H05_MINEZUMI                2761 /* 0x0ac9 ワンダーブリッジ：ミネズミ当てゲーム */
 		/* not used  2762(0x0aca) */
 		/* not used  2763(0x0acb) */
 		/* not used  2764(0x0acc) */
