@@ -680,12 +680,12 @@ enum{
 //「かち」
 #define BMPL_FINFO_WIN_WIN_PX ( 23 )
 #define BMPL_FINFO_WIN_WIN_PY ( 8 )
-#define BMPL_FINFO_WIN_WIN_SX ( 3 )
+#define BMPL_FINFO_WIN_WIN_SX ( 4 )
 #define BMPL_FINFO_WIN_WIN_SY ( 2 )
 //「まけ」
 #define BMPL_FINFO_WIN_LOSE_PX  ( 23 )
 #define BMPL_FINFO_WIN_LOSE_PY  ( 10 )
-#define BMPL_FINFO_WIN_LOSE_SX  ( 3 )
+#define BMPL_FINFO_WIN_LOSE_SX  ( 4 )
 #define BMPL_FINFO_WIN_LOSE_SY  ( 2 )
 // 勝ち数
 #define BMPL_FINFO_WIN_WIN_NUM_PX ( 27 )
