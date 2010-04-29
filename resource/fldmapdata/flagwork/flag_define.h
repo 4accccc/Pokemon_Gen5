@@ -2399,7 +2399,7 @@
 #define SYS_FLAG_PALACE_MISSION_START     2431 /* 0x097f ハイリンク：ミッションを初めて開始したフラグ */
 #define SYS_FLAG_PALACE_MISSION_CLEAR     2432 /* 0x0980 ハイリンク：ミッションを初めてクリアしたフラグ */
 #define SYS_FLAG_PALACE_DPOWER            2433 /* 0x0981 ハイリンク：デルパワーを初めて登録したフラグ */
-		/* not used  2434(0x0982) */
+#define SYS_FLAG_BGM_T01R0102             2434 /* 0x0982 自宅２F：３匹選択のBGM変更フラグ */
 		/* not used  2435(0x0983) */
 		/* not used  2436(0x0984) */
 		/* not used  2437(0x0985) */

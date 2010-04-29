@@ -149,6 +149,11 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
+	//========================================//
+	//ゾーンBGMを変更
+	_FLAG_SET( SYS_FLAG_BGM_T01R0102 )
+	//========================================//
+
 	//イベント曲終了
 	_END_EVENT_BGM()
 	
