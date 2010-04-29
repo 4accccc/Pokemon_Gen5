@@ -368,6 +368,12 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/map21_03.nsbmd \
 	$(DIR_TEMP)/map23_06.nsbmd \
 	$(DIR_TEMP)/map22_05.nsbmd \
+	$(DIR_TEMP)/summer24_22.nsbmd \
+	$(DIR_TEMP)/summer24_21.nsbmd \
+	$(DIR_TEMP)/autumn24_22.nsbmd \
+	$(DIR_TEMP)/autumn24_21.nsbmd \
+	$(DIR_TEMP)/winter24_22.nsbmd \
+	$(DIR_TEMP)/winter24_21.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -816,7 +822,6 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_d12h02_00_00.nsbmd \
 	$(DIR_TEMP)/m_d12h03_00_00.nsbmd \
 	$(DIR_TEMP)/m_tryhouse01_00_00.nsbmd \
-	$(DIR_TEMP)/m_bsubway02_01_00.nsbmd \
 	$(DIR_TEMP)/m_bsubway02_02_00.nsbmd \
 	$(DIR_TEMP)/m_bsubway02_03_00.nsbmd \
 	$(DIR_TEMP)/m_labo03_00_01.nsbmd \

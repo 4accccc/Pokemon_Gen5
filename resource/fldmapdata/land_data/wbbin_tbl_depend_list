@@ -1518,6 +1518,30 @@ $(DIR_WBTMP)/map22_05.tbl: $(DIR_RES)/map22_05.bin
 	@echo create_bintbl map22_05
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map22_05.bin
 
+$(DIR_WBTMP)/summer24_22.tbl: $(DIR_RES)/summer24_22.bin
+	@echo create_bintbl summer24_22
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/summer24_22.bin
+
+$(DIR_WBTMP)/summer24_21.tbl: $(DIR_RES)/summer24_21.bin
+	@echo create_bintbl summer24_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/summer24_21.bin
+
+$(DIR_WBTMP)/autumn24_22.tbl: $(DIR_RES)/autumn24_22.bin
+	@echo create_bintbl autumn24_22
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn24_22.bin
+
+$(DIR_WBTMP)/autumn24_21.tbl: $(DIR_RES)/autumn24_21.bin
+	@echo create_bintbl autumn24_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn24_21.bin
+
+$(DIR_WBTMP)/winter24_22.tbl: $(DIR_RES)/winter24_22.bin
+	@echo create_bintbl winter24_22
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/winter24_22.bin
+
+$(DIR_WBTMP)/winter24_21.tbl: $(DIR_RES)/winter24_21.bin
+	@echo create_bintbl winter24_21
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/winter24_21.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
@@ -3401,10 +3425,6 @@ $(DIR_WBTMP)/m_d12h03_00_00.tbl: $(DIR_RES)/m_d12h03_00_00.bin
 $(DIR_WBTMP)/m_tryhouse01_00_00.tbl: $(DIR_RES)/m_tryhouse01_00_00.bin
 	@echo create_bintbl m_tryhouse01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_tryhouse01_00_00.bin
-
-$(DIR_WBTMP)/m_bsubway02_01_00.tbl: $(DIR_RES)/m_bsubway02_01_00.bin
-	@echo create_bintbl m_bsubway02_01_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_bsubway02_01_00.bin
 
 $(DIR_WBTMP)/m_bsubway02_02_00.tbl: $(DIR_RES)/m_bsubway02_02_00.bin
 	@echo create_bintbl m_bsubway02_02_00

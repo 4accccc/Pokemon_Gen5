@@ -368,6 +368,12 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map21_03.3dppack \
 	$(DIR_OUTPUT)/map23_06.3dppack \
 	$(DIR_OUTPUT)/map22_05.3dppack \
+	$(DIR_OUTPUT)/summer24_22.3dppack \
+	$(DIR_OUTPUT)/summer24_21.3dppack \
+	$(DIR_OUTPUT)/autumn24_22.3dppack \
+	$(DIR_OUTPUT)/autumn24_21.3dppack \
+	$(DIR_OUTPUT)/winter24_22.3dppack \
+	$(DIR_OUTPUT)/winter24_21.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -816,7 +822,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_d12h02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_d12h03_00_00.3dppack \
 	$(DIR_OUTPUT)/m_tryhouse01_00_00.3dppack \
-	$(DIR_OUTPUT)/m_bsubway02_01_00.3dppack \
 	$(DIR_OUTPUT)/m_bsubway02_02_00.3dppack \
 	$(DIR_OUTPUT)/m_bsubway02_03_00.3dppack \
 	$(DIR_OUTPUT)/m_labo03_00_01.3dppack \
