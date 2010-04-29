@@ -46,6 +46,7 @@ enum {
 
   PRAND_TOKUSEI_SHIFT = 16,   ///< 個性乱数：とくせい種類を決定するBitのIndex
   PRAND_TOKUSEI_MASK = (1 << PRAND_TOKUSEI_SHIFT ),
+  PRAND_TOKUSEI_MASK_OLD = 1, ///< 個性乱数：とくせい種類を決定するBitのIndex(シャチより過去のバージョン）
 };
 
 /*--------------------------------------------------------------------------*/
@@ -776,12 +777,20 @@ static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 next_monsno,
   POKEMON_PERSONAL_DATA* ppd = Personal_Load( next_monsno, form_no );
   u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
   u16 param = POKEPER_ID_speabi1;
+  u32 mask = PRAND_TOKUSEI_MASK;
+  
+  //シャチで特性を判断するビット位置が変更になったのでカセットバージョンを見て変更する
+  if( PPP_Get( ppp, ID_PARA_get_cassette, 0 ) < VERSION_WHITE )
+  { 
+    mask = PRAND_TOKUSEI_MASK_OLD;
+  }
+
   if( PPP_Get( ppp, ID_PARA_tokusei_3_flag, NULL ) )
   {
     param = POKEPER_ID_speabi3;
   }
   else if( Personal_GetTokuseiCount(ppd) == 2 ){
-    if( rnd & 0x200 ){
+    if( rnd & mask ){
       param = POKEPER_ID_speabi2;
     }
   }
@@ -1923,28 +1932,19 @@ u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 
 
   //特性ナンバーではないので、2以上はアサートにする
   GF_ASSERT( tokusei < 2 );
+  //特性のマスクビットが0x10000であることを想定してレア計算をするので変化していたらアサートにする
+  GF_ASSERT( PRAND_TOKUSEI_MASK == 0x10000 );
 
   if( rare_flag )
   {
     u32 mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
 
     rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
-    if( ( rnd & 0x00000001 ) != tokusei )
-    {
-      if( sex == PTL_SEX_MALE )
-      {
-        rnd++;
-      }
-      else
-      {
-        //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
-        if( rnd )
-        {
-          rnd--;
-        }
-      }
-    }
     rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
+    if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
+    { 
+      rnd ^= PRAND_TOKUSEI_MASK;
+    }
   }
   else
   {
@@ -1953,24 +1953,17 @@ u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 
 
     rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
     rnd = ( rnd ^ 0xff00 ) << 16;
+    if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
+    {
+      rnd ^= PRAND_TOKUSEI_MASK;
+    }
 
     if( PokePersonal_SexVecTypeGet( per_sex ) != POKEPER_SEXTYPE_FIX )
     {
       rnd |= per_sex;
-      if( sex == PTL_SEX_MALE )
-      {
-        if( ( rnd & 1 ) != tokusei )
-        {
-          rnd++;
-        }
-      }
-      else
+      if( sex == PTL_SEX_FEMALE )
       {
         rnd--;
-        if( ( rnd & 1 ) != tokusei )
-        {
-          rnd--;
-        }
       }
     }
   }
@@ -1999,6 +1992,8 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
   GF_ASSERT( sex        < PTL_SEX_SPEC_MAX );
   GF_ASSERT( tokusei    < PTL_TOKUSEI_SPEC_MAX );
   GF_ASSERT( rare_flag  < PTL_RARE_SPEC_MAX );
+  //特性のマスクビットが0x10000であることを想定してレア計算をするので変化していたらアサートにする
+  GF_ASSERT( PRAND_TOKUSEI_MASK == 0x10000 );
 
   if( sex == PTL_SEX_SPEC_UNKNOWN )
   {
@@ -2014,48 +2009,11 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
     {
       u32 rare_mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
       rnd &= 0x000000ff;
-      if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
-      {
-        if( ( rnd & 0x00000001 ) != tokusei )
-        {
-          if( sex == PTL_SEX_FEMALE )
-          {
-            //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
-            if( rnd )
-            {
-              rnd--;
-            }
-          }
-          else
-          {
-            rnd++;
-          }
-        }
-      }
-      else
-      {
-        if( sex == PTL_SEX_FEMALE )
-        {
-          //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
-          if( rnd )
-          {
-            rnd--;
-            if( ( GFUser_GetPublicRand( 2 ) ) && ( rnd ) )
-            {
-              rnd--;
-            }
-          }
-        }
-        else
-        {
-          rnd++;
-          if( GFUser_GetPublicRand( 2 ) )
-          {
-            rnd++;
-          }
-        }
-      }
       rnd |= ( rare_mask ^ ( rnd & 0x0000ffff ) ) << 16;
+      if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
+      { 
+        rnd ^= PRAND_TOKUSEI_MASK;
+      }
     }
     break;
   case PTL_RARE_SPEC_FALSE:
@@ -2067,46 +2025,9 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
     }
     /* fallthru */
   case PTL_RARE_SPEC_BOTH:
-    if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
-    {
-      if( ( rnd & 0x00000001 ) != tokusei )
-      {
-        if( sex == PTL_SEX_FEMALE )
-        {
-          //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
-          if( rnd )
-          {
-            rnd--;
-          }
-        }
-        else
-        {
-          rnd++;
-        }
-      }
-    }
-    else
-    {
-      if( sex == PTL_SEX_FEMALE )
-      {
-        //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
-        if( rnd )
-        {
-          rnd--;
-          if( ( GFUser_GetPublicRand( 2 ) ) && ( rnd ) )
-          {
-            rnd--;
-          }
-        }
-      }
-      else
-      {
-        rnd++;
-        if( GFUser_GetPublicRand( 2 ) )
-        {
-          rnd++;
-        }
-      }
+    if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
+    { 
+      rnd ^= PRAND_TOKUSEI_MASK;
     }
     break;
   }
