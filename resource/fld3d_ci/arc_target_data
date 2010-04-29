@@ -12,7 +12,6 @@ ARC_TARGET_DATA = \
 	get1_482.nsbmd \
 	get1_bg.nsbca \
 	get1_bg.nsbma \
-	get1_item.nsbta \
 	get1_item.nsbca \
 	get1_item.nsbma \
 	gym1.spa \
