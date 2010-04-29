@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T21:33:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T21:34:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,13 +342,13 @@
 タワーオブヘブンの　かねは
 ポケモンの　たましいを　しずめるの▼
 しかも　ならす　ひとの　こころねが
-ねいろに　はんえい　されるの……▼</language>
+ねいろに　はんえい　される……▼</language>
 		<language name="JPN_KANJI" width="256">そうだ！　せっかく　来たんだし
 あの　鐘を　鳴らしたら　どう？▼
 タワーオブヘブンの　鐘は
 ポケモンの　魂を　鎮めるの▼
 しかも　鳴らす　人の　心根が
-音色に　反映されるの……▼</language>
+音色に　反映される……▼</language>
 	</row>
 
 	<row id="msg_r07r0105_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
