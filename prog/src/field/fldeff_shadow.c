@@ -278,12 +278,21 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
       return;
     }
   }
-  
+
+#ifdef PM_DEBUG  
   if( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) ||
       MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
       MMDL_CheckMoveBit(work->fmmdl,MMDL_MOVEBIT_SHADOW_VANISH) ){
     work->vanish_flag = TRUE;
-  }else{
+  }
+#else
+  if( MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
+      MMDL_CheckMoveBit(work->fmmdl,MMDL_MOVEBIT_SHADOW_VANISH) ){
+    work->vanish_flag = TRUE;
+  }
+#endif
+  else
+  {
     work->vanish_flag = FALSE;
     MMDL_GetVectorPos( work->fmmdl, &pos );
     pos.y += NUM_FX32(-4);

@@ -1057,6 +1057,7 @@ BOOL FLDEFF_NAMIPOKE_EFFECT_CheckTaskEnd( const FLDEFF_TASK *task )
     return( work->end_flag );
   }else{
     GF_ASSERT( 0 );
+    return( TRUE );
   }
 }
 
