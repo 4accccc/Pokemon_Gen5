@@ -230,7 +230,7 @@ static BOOL ICON_IsTrg( const ICON_WORK *cp_wk );
 static void Icon_StartMove( ICON_WORK *p_wk );
 static BOOL Icon_MainMove( ICON_WORK *p_wk );
 
-static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode );
+static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 );
 //-------------------------------------
 /// その他
 //=====================================
@@ -369,7 +369,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   { 
     GFL_CLUNIT  *p_clunit = NAMEIN_GRAPHIC_GetClunit( p_wk->p_graphic );
     OBJ_Init( &p_wk->obj, p_clunit, HEAPID_NAME_INPUT );
-    ICON_Init( &p_wk->icon, ICON_GetModoToType(p_param->mode), p_param->param1, p_param->param2, p_clunit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_bmpoam_sys, HEAPID_NAME_INPUT );
+    ICON_Init( &p_wk->icon, ICON_GetModoToType(p_param->mode,p_param->param1), p_param->param1, p_param->param2, p_clunit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_bmpoam_sys, HEAPID_NAME_INPUT );
   }
   p_wk->p_keymap_handle = NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID_NAME_INPUT );
 
@@ -4217,6 +4217,9 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       anm   = POKEICON_GetAnmArcIndex();
       is_comp = TRUE;
       break;
+
+    case ICON_TYPE_HATENA:
+      /* fallthrough */
     case ICON_TYPE_BOX:
       arcID = ARCID_NAMEIN_GRA;
       plt   = NARC_namein_gra_name_obj_NCLR;
@@ -4224,6 +4227,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       cel   = NARC_namein_gra_name_obj_NCER;
       anm   = NARC_namein_gra_name_obj_NANR;
       is_sex_visible  = FALSE;
+      plt_src_ofs = 1;
       break;
     default:
       GF_ASSERT(0);
@@ -4290,8 +4294,13 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
           POKEICON_GetPalNum( param1, param2 & 0x00ff, ( param2 & 0xff00 ) >> 8, FALSE ),
           CLWK_PLTTOFFS_MODE_OAM_COLOR );
       break;
+    case ICON_TYPE_HATENA:
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 5 );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      break;
     case ICON_TYPE_BOX:
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 2 );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       break;
     default:
       GF_ASSERT(0);
@@ -4508,11 +4517,12 @@ static BOOL Icon_MainMove( ICON_WORK *p_wk )
  *	@brief  モードからタイプへの　変換
  *
  *	@param	NAMEIN_MODE mode  モード
+ *	@param1 param1            引数
  *
  *	@return タイプ
  */
 //-----------------------------------------------------------------------------
-static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode )
+static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
 { 
   switch( mode )
   { 
@@ -4535,7 +4545,14 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode )
     return ICON_TYPE_RIVAL;
 
 	case NAMEIN_FRIENDNAME:
-    return ICON_TYPE_PERSON;
+    if( param1 == NAMEIN_TRAINER_VIEW_UNKNOWN )
+    { 
+      return ICON_TYPE_HATENA;
+    }
+    else
+    { 
+      return ICON_TYPE_PERSON;
+    }
 
   default:
     GF_ASSERT( 0 );

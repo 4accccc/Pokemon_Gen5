@@ -20,6 +20,11 @@
  *	定義
  */
 //=============================================================================
+
+//モードがNAMEIN_FRIENDNAMEのときparam1へいれると、友達手帳の初期入力用のはてなOBJが出ます
+#define NAMEIN_TRAINER_VIEW_UNKNOWN  (0xFFFF)
+
+
 //-------------------------------------
 ///	名前入力モード  
 //=====================================
@@ -29,7 +34,7 @@ typedef enum
 	NAMEIN_POKEMON,			// ポケモンの名前 param1モンスター番号 param2フォルム番号
 	NAMEIN_BOX,					// ボックスの名前
 	NAMEIN_RIVALNAME,		// ライバルネーム WBでは使わなくなりました
-	NAMEIN_FRIENDNAME,  // WIFIともだち手帳に書き込むともだちの名前 param1 ユニオンの見た目
+	NAMEIN_FRIENDNAME,  // WIFIともだち手帳に書き込むともだちの名前 param1 ユニオンの見た目(NAMEIN_TRAINERVIEW_UNKNOWNであればともだち手帳の初期入力用の？が出ます)
   NAMEIN_GREETING_WORD, // すれちがい挨拶言葉 param1自分の性別
   NAMEIN_THANKS_WORD,   // すれちがいお礼言葉 param1自分の性別
   NAMEIN_FREE_WORD,     // すれちがいフリーワードparam1自分の性別

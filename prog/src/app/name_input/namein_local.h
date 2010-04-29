@@ -335,6 +335,7 @@ typedef enum
   ICON_TYPE_PERSON,
   ICON_TYPE_POKE,
   ICON_TYPE_BOX,
+  ICON_TYPE_HATENA,
 } ICON_TYPE;
 
 //-------------------------------------
