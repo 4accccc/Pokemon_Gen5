@@ -749,10 +749,14 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
     bgw->bgcl[ pos ].hp_clwk      = NULL;
     bgw->bgcl[ pos ].status_clwk  = NULL;
 
-    if( bgw->bgcl[ pos ].exp_clwk )
-    {
+    if( ( pos & 1 ) == 0 )
+    { 
       GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].exp_charID );
       GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].exp_cellID );
+    }
+
+    if( bgw->bgcl[ pos ].exp_clwk )
+    {
       GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].exp_clwk );
       bgw->bgcl[ pos ].exp_clwk = NULL;
     }
