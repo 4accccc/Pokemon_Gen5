@@ -167,6 +167,11 @@ void CommPlayer_Update(COMM_PLAYER_SYS_PTR cps)
 void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, u16 obj_code, const COMM_PLAYER_PACKAGE *pack)
 {
   OS_TPrintf("通信プレイヤーAdd index=%d\n", index);
+  
+  if(cps->act_ctrl == NULL){
+    OS_TPrintf("act_ctrl=NULL\n");
+    return;
+  }
 
 #ifdef PM_DEBUG
   {//最大人数を超えて追加しようとしていないかチェック
