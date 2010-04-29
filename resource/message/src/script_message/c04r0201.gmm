@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-28T18:55:59"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-29T15:58:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1093" top="426" right="1593" bottom="1054" maximized="no" rayout="Vertical2">
+	<dialog left="1092" top="423" right="1592" bottom="1051" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1104" top="16" right="1577" bottom="414" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -754,14 +754,14 @@
 ・もしくは、引っ張ってくるコンディションがない</comment>
 		<attribute name="キャラ指定">MAN2
 ＝スタイリスト</attribute>
-		<language name="JPN" width="256">そうそう　そうなんだよ！
-きみが　えらぶ　グッズ！▼
-チャーミングな　ポケモンを
-いっそう　チャーミングに　してるさ</language>
-		<language name="JPN_KANJI" width="256">そうそう　そうなんだよ！
-きみが　選ぶ　グッズ！▼
-チャーミングな　ポケモンを
-いっそう　チャーミングに　してるさ</language>
+		<language name="JPN" width="256">もっともっと　みりょくてきに
+ポケモンを　きかざりたいから▼
+ほかの　ひとの　ドレスアップも
+けんきゅう　してるのさ！</language>
+		<language name="JPN_KANJI" width="256">もっともっと　魅力的に
+ポケモンを　着飾りたいから
+他の　人の　ドレスアップも
+研究　してるのさ！</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -796,8 +796,8 @@
 ・メッセージ表示と共に鳴き声再生</comment>
 		<attribute name="キャラ指定">ポケモン
 ワルビル</attribute>
-		<language name="JPN" width="256">ずもっ！！</language>
-		<language name="JPN_KANJI" width="256">ずもっ！！</language>
+		<language name="JPN" width="256">ワルビル『ずもっ！！</language>
+		<language name="JPN_KANJI" width="256">ワルビル『ずもっ！！</language>
 	</row>
 
 	<row id="msg_c04r0201_dancer_02">
@@ -1023,15 +1023,15 @@
 観客席封鎖用</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">このさきは　かんきゃくせきに
-なりますがー　……▼
+なりますがー▼
 あなたには　かんきゃくせき　よりも
 はなやかな　ぶたいの　ほうが▽
-おにあい　ですな</language>
+おにあい　ですなー</language>
 		<language name="JPN_KANJI" width="256">この先は　観客席に
-なりますがー　……▼
+なりますがー▼
 あなたには　観客席よりも
 華やかな　舞台の　ほうが▽
-お似合い　ですな</language>
+お似合い　ですなー</language>
 	</row>
 
 	<flowchart-group-list>
