@@ -24,17 +24,25 @@ _EVENT_DATA    ev_pos_h05_wandergirl
 _EVENT_DATA    ev_h05_man3_01
 _EVENT_DATA    ev_h05_middleman1_01
 _EVENT_DATA    ev_zone_h05
+_EVENT_DATA		ev_h05_woman2_01
+_EVENT_DATA		ev_h05_minezumi_01
+_EVENT_DATA		ev_h05_minezumi_02
+_EVENT_DATA		ev_h05_minezumi_03
+_EVENT_DATA		ev_h05_minezumi_04
 _EVENT_DATA_END
-
 
 /************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_h05
 	//20％の確率で
+	_FLAG_SET( FV_H05_WANDERGIRL )
+	
 	_GET_RND( SCWK_ANSWER, 100 )
 	_DEBUG_PRINT_WK( SCWK_ANSWER )
 	IF $SCWK_ANSWER < 20 THEN
+		//消える少女みたフラグをリセット
+		_FLAG_RESET( FE_H05_LOOK_WANDERGIRL )
 		//消える少女を表示
 		_FLAG_RESET( FV_H05_WANDERGIRL )
 		//POSイベントを有効
@@ -555,5 +563,1207 @@ ev_buy_poke:
 
 _RET
 
+/**************************************************************/
+/*		ミネズミショーのお姉さん							  */
+/**************************************************************/
+EVENT_START		ev_h05_woman2_01
 
+	//１日１回制限・既にイベントをしている場合
+	IF FLAG_ON( TMFLG_H05_MINEZUMI ) THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_12 )
+	
+	ELSE
+		
+		//ミネズミショー開始前
+		IF $LOCALWORK10 == 0 THEN
+			_TALK_OBJ_START()
+			
+			//ミネズミショー　みていかない？
+			_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_01 )
+			_YES_NO_WIN( SCWK_ANSWER )
+			_MSGWIN_CLOSE()
+	
+			//はい選択の場合
+			IF $SCWK_ANSWER == SCR_YES THEN
+		
+				_CALL ev_minezumi_show
+	
+			//いいえ選択の場合
+			ELSE
+			
+				//そっかー……
+				_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_03 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+	
+			ENDIF
+		
+		//ミネズミショー開始後
+		ELSE
+		
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_07 )
+		
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ミネズミショー処理・シャッフル前					  */
+/**************************************************************/
+ev_minezumi_show:
+
+//おねえさん：踊る
+_OBJ_ANIME( H05_WOMAN2_01, anm_common_dance )
+_OBJ_ANIME_WAIT()
+
+//オッケー　おねえさん
+_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_02 )
+_MSGWIN_CLOSE()
+
+//よーし　ミネズミちゃん
+_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_04 )
+_MSGWIN_CLOSE()
+
+//おねえさん：踊る
+_OBJ_ANIME( H05_WOMAN2_01, anm_common_dance )
+_OBJ_ANIME_WAIT()
+
+//ミネズミＯＢＪ・鳴き声と共に現れる
+_VOICE_PLAY( MONSNO_537, 0 )
+_OBJ_ANIME( H05_MINEZUMI_01, anm_common_dancejump )
+_TIME_WAIT( 5 )
+_OBJ_ANIME( H05_MINEZUMI_02, anm_common_dancejump )
+_TIME_WAIT( 5 )
+_OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
+_TIME_WAIT( 5 )
+_OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
+_TIME_WAIT( 5 )
+_OBJ_ANIME_WAIT()
+_VOICE_WAIT()
+
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
+_CAMERA_MOVE( 9467,0,917504,6979584,0,2129920,30 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+//この　ミネズミちゃんの　なかで
+_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_05 )
+_MSGWIN_CLOSE()
+
+//正解取得・乱数
+DEFINE_LOCAL	LWK_SHOW
+_GET_RND( LWK_SHOW,3 )
+_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+
+//乱数分岐
+SWITCH	$LWK_SHOW
+CASE 0 THEN
+	//ミネズミ１：ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_common_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//えがおが　まぶしい
+	_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_06a )
+	_MSGWIN_CLOSE()
+
+	//ミネズミ１：２回ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_common_jump2 )
+	_OBJ_ANIME_WAIT()
+	
+	_VOICE_PLAY( MONSNO_537, 0 )
+	
+	//みぎゅう！？
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
+	
+	_VOICE_WAIT()
+	
+	//========================================/
+	
+	$LOCALWORK11 = 10
+	
+	//========================================/
+	
+	
+CASE 1 THEN
+	//ミネズミ２：ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_common_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//えくぼが　キュートな
+	_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_06b )
+	_MSGWIN_CLOSE()
+
+	//ミネズミ２：２回ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_common_jump2 )
+	_OBJ_ANIME_WAIT()
+
+	_VOICE_PLAY( MONSNO_537, 0 )
+	
+	//みぎゅう！？
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
+	
+	_VOICE_WAIT()
+
+	//========================================/
+	
+	$LOCALWORK11 = 20
+	
+	//========================================/
+
+CASE 2 THEN
+	//ミネズミ３：ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_common_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//オシャレな　マユゲの
+	_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_06c )
+	_MSGWIN_CLOSE()
+
+	//ミネズミ３：２回ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_common_jump2 )
+	_OBJ_ANIME_WAIT()
+
+	_VOICE_PLAY( MONSNO_537, 0 )
+	
+	//みぎゅう！？
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
+	
+	_VOICE_WAIT()
+	
+	//========================================/
+	
+	$LOCALWORK11 = 30
+	
+	//========================================/
+	
+CASE 3 THEN
+	//ミネズミ４：ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_common_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//おなかが　おおきい
+	_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_06d )
+	_MSGWIN_CLOSE()
+	
+	//ミネズミ４：２回ジャンプアニメ
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_common_jump2 )
+	_OBJ_ANIME_WAIT()
+
+	_VOICE_PLAY( MONSNO_537, 0 )
+	
+	//みぎゅう！？
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
+	
+	_VOICE_WAIT()
+	
+	//========================================/
+	
+	$LOCALWORK11 = 40
+	
+	//========================================/
+	
+ENDSWITCH
+
+_CALL ev_shuffle
+
+_RET
+
+
+
+/**************************************************************/
+/*			シャッフル										  */
+/**************************************************************/
+ev_shuffle:
+
+//正解取得・乱数
+DEFINE_LOCAL	LWK_SHUFFLE
+_GET_RND( LWK_SHUFFLE,2 )
+
+//乱数分岐
+SWITCH	$LWK_SHUFFLE
+CASE 0 THEN		//1種類目
+	//1ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_r_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_r_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_l_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_l_2 )
+	_OBJ_ANIME_WAIT()
+	//2ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_l_3 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_r_3 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_u_r_1 )
+	_OBJ_ANIME_WAIT()
+	//3ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_d_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_u_r_1 )
+	_OBJ_ANIME_WAIT()
+	//4ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_r_3 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_l_3 )
+	_OBJ_ANIME_WAIT()
+	//5ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_jump_2 )
+	_OBJ_ANIME_WAIT()
+	//6ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_r_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_jump_1 )
+	_OBJ_ANIME_WAIT()
+	//7ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_l_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_jump_2 )
+	_OBJ_ANIME_WAIT()
+	//8ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_l_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_r_walk_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_walk_2 )
+	_OBJ_ANIME_WAIT()
+	//9ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_l_walk_3 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_walk_1 )
+	_OBJ_ANIME_WAIT()
+	//フィニッシュ
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
+	_OBJ_ANIME_WAIT()
+CASE 1 THEN
+	//1ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_d_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_u_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_l_1 )
+	_OBJ_ANIME_WAIT()
+	//2ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_r_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_r_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_l_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_l_2 )
+	_OBJ_ANIME_WAIT()
+	//3ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_d_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_u_r_1 )
+	_OBJ_ANIME_WAIT()
+	//4ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_l_3 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_r_3 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_r_1 )
+	_OBJ_ANIME_WAIT()
+	//5ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_r_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_jump_1 )
+	_OBJ_ANIME_WAIT()
+	//6ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_jump_1 )
+	_OBJ_ANIME_WAIT()
+	//7ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_r_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_jump_2 )
+	_OBJ_ANIME_WAIT()
+	//8ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_walk_3 )
+	_OBJ_ANIME_WAIT()
+	//9ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_l_walk_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_l_walk_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_walk_3 )
+	_OBJ_ANIME_WAIT()
+	//フィニッシュ
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
+	_OBJ_ANIME_WAIT()
+CASE 2 THEN
+	//1ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_r_3 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_l_3 )
+	_OBJ_ANIME_WAIT()
+	//2ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_u_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_r_1 )
+	_OBJ_ANIME_WAIT()
+	//3ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_l_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_u_l_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_d_r_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_r_2 )
+	_OBJ_ANIME_WAIT()
+	//4ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_u_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_d_l_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_u_r_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_d_l_1 )
+	_OBJ_ANIME_WAIT()
+	//5ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_r_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_jump_2 )
+	_OBJ_ANIME_WAIT()
+	//6ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_d_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_l_jump_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_jump_1 )
+	_OBJ_ANIME_WAIT()
+	//7ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_l_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_r_jump_2 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_r_jump_2 )
+	_OBJ_ANIME_WAIT()
+	//8ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_l_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_r_walk_1 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_walk_1 )
+	_OBJ_ANIME_WAIT()
+	//9ターン目
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_r_walk_2 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_r_walk_2 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_l_walk_3 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_l_walk_1 )
+	_OBJ_ANIME_WAIT()
+	//フィニッシュ
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
+	_TIME_WAIT( 5 )
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
+	_OBJ_ANIME_WAIT()
+ENDSWITCH
+
+//さあ！　さっきの　ミネズミちゃん　あててみて！
+_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_07 )
+_MSGWIN_CLOSE()
+
+//自機にカメラを戻す
+_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+_CAMERA_END()		//カメラ操作終了
+
+//========================================/
+ 	
+ 	//シャッフル後にする
+ 	$LOCALWORK10 = 1
+ 	
+//========================================/
+
+_RET
+
+//--------------------------------------------------------------------
+//		ミネズミショー用　アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_jump
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_jump2
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_dance
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_dancejump
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　1段階目　１マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_u_r_1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_u_l_1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_r_1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_l_1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　1段階目　２マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_u_r_2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_4F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_u_l_2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_r_2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_4F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_l_2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　1段階目　３マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_u_r_3
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_2F,2
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_u_l_3
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_2F,2
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_r_3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_2F,2
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_l_3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_2F,2
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　２段階目　１マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r_jump_1
+	_ANIME_DATA	AC_JUMP_R_1G_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_l_jump_1
+	_ANIME_DATA	AC_JUMP_L_1G_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　２段階目　２マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r_jump_2
+	_ANIME_DATA	AC_JUMP_R_2G_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_l_jump_2
+	_ANIME_DATA	AC_JUMP_L_2G_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　２段階目　その場ジャンプ用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_d_jump_1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　３段階目　１マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r_walk_1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_l_walk_1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　３段階目　２マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r_walk_2
+	_ANIME_DATA	AC_WALK_R_4F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_l_walk_2
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		シャッフル専用アニメ　３段階目　３マス移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r_walk_3
+	_ANIME_DATA	AC_WALK_R_2F,2
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_l_walk_3
+	_ANIME_DATA	AC_WALK_L_2F,2
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		ミネズミ１号										  */
+/**************************************************************/
+EVENT_START		ev_h05_minezumi_01
+_TALK_OBJ_START()
+
+	//ミネズミショー中か？
+	IF $LOCALWORK10 == 1 THEN
+		_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+		//その　ミネズミちゃんが
+		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はい選択
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//あたりの場合
+			IF $LOCALWORK11 == 10 THEN
+				_CALL ev_atari
+			//はずれの場合
+			ELSE
+				_CALL ev_hazure
+			ENDIF
+		
+		ENDIF
+	
+	//ショーではない
+	ELSE
+	
+		_EASY_TALK_POKEVOICE( MONSNO_537, msg_h05_poke17_01 )
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ミネズミ２号										  */
+/**************************************************************/
+EVENT_START		ev_h05_minezumi_02
+_TALK_OBJ_START()
+
+	//ミネズミショー中か？
+	IF $LOCALWORK10 == 1 THEN
+		_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+		//その　ミネズミちゃんが
+		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はい選択
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//あたりの場合
+			IF $LOCALWORK11 == 20 THEN
+				_CALL ev_atari
+			//はずれの場合
+			ELSE
+				_CALL ev_hazure
+			ENDIF
+		
+		ENDIF
+	
+	//ショーではない
+	ELSE
+	
+		_EASY_TALK_POKEVOICE( MONSNO_537, msg_h05_poke17_01 )
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ミネズミ３号										  */
+/**************************************************************/
+EVENT_START		ev_h05_minezumi_03
+_TALK_OBJ_START()
+
+	//ミネズミショー中か？
+	IF $LOCALWORK10 == 1 THEN
+		_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+		//その　ミネズミちゃんが
+		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はい選択
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//あたりの場合
+			IF $LOCALWORK11 == 30 THEN
+				_CALL ev_atari
+			//はずれの場合
+			ELSE
+				_CALL ev_hazure
+			ENDIF
+		
+		ENDIF
+	
+	//ショーではない
+	ELSE
+	
+		_EASY_TALK_POKEVOICE( MONSNO_537, msg_h05_poke17_01 )
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		ミネズミ４号										  */
+/**************************************************************/
+EVENT_START		ev_h05_minezumi_04
+_TALK_OBJ_START()
+
+	//ミネズミショー中か？
+	IF $LOCALWORK10 == 1 THEN
+		_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+		//その　ミネズミちゃんが
+		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//はい選択
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//あたりの場合
+			IF $LOCALWORK11 == 40 THEN
+				_CALL ev_atari
+			//はずれの場合
+			ELSE
+				_CALL ev_hazure
+			ENDIF
+		
+		ENDIF
+	
+	//ショーではない
+	ELSE
+	
+		_EASY_TALK_POKEVOICE( MONSNO_537, msg_h05_poke17_01 )
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		あたり処理
+/**************************************************************/
+ev_atari:
+//おおあたりー！
+_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_09 , H05_WOMAN2_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+				
+_ITEM_EVENT_KEYWAIT( ITEM_KODAINODOUKA, 1 )
+
+//それでは　ミネズミショー　しゅうりょうになります
+_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_11 , H05_WOMAN2_01, POS_DEFAULT )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+_OBJ_POS_CHANGE( H05_MINEZUMI_01,105,0,31,DIR_DOWN)
+_OBJ_POS_CHANGE( H05_MINEZUMI_02,106,0,31,DIR_DOWN)
+_OBJ_POS_CHANGE( H05_MINEZUMI_03,107,0,31,DIR_DOWN)
+_OBJ_POS_CHANGE( H05_MINEZUMI_04,108,0,31,DIR_DOWN)
+
+_OBJ_ANIME( H05_MINEZUMI_01, anm_common_dancejump )
+_OBJ_ANIME( H05_MINEZUMI_02, anm_common_dancejump )
+_OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
+_OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
+_OBJ_ANIME_WAIT()
+				
+//========================================/
+
+//タイムフラグセット
+$LOCALWORK10 = 0
+$LOCALWORK11 = 0
+_FLAG_SET(TMFLG_H05_MINEZUMI)
+
+//========================================/
+
+_RET
+/**************************************************************/
+/*		はずれ処理
+/**************************************************************/
+ev_hazure:
+
+//ざんねん　はずれです
+_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_10 , H05_WOMAN2_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+//それでは　ミネズミショー　しゅうりょうになります
+_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_11 , H05_WOMAN2_01, POS_DEFAULT )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+_OBJ_POS_CHANGE( H05_MINEZUMI_01,105,0,31,DIR_DOWN)
+_OBJ_POS_CHANGE( H05_MINEZUMI_02,106,0,31,DIR_DOWN)
+_OBJ_POS_CHANGE( H05_MINEZUMI_03,107,0,31,DIR_DOWN)
+_OBJ_POS_CHANGE( H05_MINEZUMI_04,108,0,31,DIR_DOWN)
+
+_OBJ_ANIME( H05_MINEZUMI_01, anm_common_dancejump )
+_OBJ_ANIME( H05_MINEZUMI_02, anm_common_dancejump )
+_OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
+_OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
+_OBJ_ANIME_WAIT()
+				
+//========================================/
+
+//タイムフラグセット
+$LOCALWORK10 = 0
+$LOCALWORK11 = 0
+
+//========================================/
+
+_RET
 

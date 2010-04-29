@@ -312,8 +312,9 @@ init_flags:
 	//研究所：殿堂入り後サポートを非表示
 	_FLAG_SET( FV_T01R0401_SUPPORT_AFTER )
 
-	//ワンダーブリッジ：ダークトリニティを非表示
+	//ワンダーブリッジ：ダークトリニティ・ミネズミを非表示
 	_FLAG_SET( FV_H05_NINJA_01 )
+	_FLAG_SET( FV_H05_MINEZUMI )
 
 }
 _RET

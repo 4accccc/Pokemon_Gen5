@@ -16,6 +16,11 @@
 #define H05_GIRL2_01                       3
 #define H05_MAN3_01                        4
 #define H05_MIDDLEMAN1_01                  5
+#define H05_WOMAN2_01                      6
+#define H05_MINEZUMI_01                    7
+#define H05_MINEZUMI_02                    8
+#define H05_MINEZUMI_03                    9
+#define H05_MINEZUMI_04                   10
 
 #endif //ZONE_H05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
