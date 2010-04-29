@@ -1135,6 +1135,16 @@ VMCMD_RESULT EvCmdTradeAfterPokeNameSetWord( VMHANDLE * core, void * wk )
 
 
 
+//==============================================================================================
+//
+//    クライマックスデモ用コマンド
+//
+//==============================================================================================
+static int searchPartyLegend( GAMEDATA * gamedata );
+static void exchangeLegendPosition( SCRCMD_WORK * work );
+static void getLegendFromBox( SCRCMD_WORK * work, u16 select_pos );
+static BOOL searchLegendInBox( GAMEDATA * gamedata, u16 monsno, u16 * traynum, u16 * tray_pos );
+
 //-----------------------------------------------------------------------------
 /**
  * @brief   クライマックスデモ用コマンド
@@ -1144,25 +1154,180 @@ VMCMD_RESULT EvCmdCrimaxCommand( VMHANDLE * core, void * wk )
 {
   u16     cmd_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 *   use_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
 
   switch ( cmd_id )
   {
   case SCR_CRIMAX_CMD_TEMOTI_CHECK:
     //手持ちにいるかのチェック
-    *use_wk = FALSE;
+    if (searchPartyLegend( gamedata ) < 0 ) {
+      *use_wk = FALSE;
+    } else {
+      *use_wk = TRUE;
+    }
     break;
   case SCR_CRIMAX_CMD_SORT:
     //先頭に持ってくるため、ならべ替える
+    exchangeLegendPosition( wk );
     break;
   case SCR_CRIMAX_CMD_GET_FROM_BOX:
     //ボックスから持ってくる
+    getLegendFromBox( wk, *use_wk );
+    exchangeLegendPosition( wk );
     break;
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT( 0 ); //未対応のコマンド
   }
   return VMCMD_RESULT_CONTINUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief ボックスから伝説ポケモンを取り出し、手持ちと入れ替える
+ */
+//-----------------------------------------------------------------------------
+static void getLegendFromBox( SCRCMD_WORK * work, u16 select_pos )
+{
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gamedata );
+
+  u16 traynum, tray_pos;
+
+  GF_ASSERT( PokeParty_GetPokeCount( party ) > select_pos );
+
+  /* さがす */
+  {
+    u16 monsno;
+    if ( GET_VERSION() == VERSION_WHITE ) {
+      monsno = MONSNO_651;
+    } else {
+      monsno = MONSNO_650;
+    }
+    if ( searchLegendInBox( gamedata, monsno, &traynum, &tray_pos ) == FALSE )
+    {
+      GF_ASSERT( 0 );
+      return;
+    }
+  }
+
+  
+  {
+    HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+    BOX_MANAGER * boxman = GAMEDATA_GetBoxManager( gamedata );
+    POKEMON_PARAM * legend_pp;
+    POKEMON_PARAM * temp_pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
+
+    //上書きする手持ちデータをとっておく
+    GFL_STD_MemCopy(
+        PokeParty_GetMemberPointer( party, select_pos ), temp_pp, POKETOOL_GetWorkSize() );
+
+    //伝説ポケモンで手持ちを上書き
+    legend_pp = PP_CreateByPPP(
+        BOXDAT_GetPokeDataAddress( boxman, traynum, tray_pos ), heapID );
+    PokeParty_SetMemberData( party, select_pos, legend_pp );
+    GFL_HEAP_FreeMemory( legend_pp );
+
+    //ボックスの伝説ポケの場所をとっておいた手持ちデータで上書き
+    BOXDAT_PutPokemonPos( boxman, traynum, tray_pos, PP_GetPPPPointer(temp_pp) );
+    GFL_HEAP_FreeMemory( temp_pp );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ボックスから指定ポケモンを探す
+ * @param work      
+ * @param monsno    探すポケモンナンバー
+ * @param traynum   トレイ指定ID
+ * @param tray_pos  トレイ内のインデックス
+ * @return  BOOL  TRUEのとき、見つかった
+ *
+ * 自分のIDを持つ、指定ポケモンを探す
+ */
+//-----------------------------------------------------------------------------
+static BOOL searchLegendInBox( GAMEDATA * gamedata, u16 monsno, u16 * traynum, u16 * tray_pos )
+{
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gamedata );
+  MYSTATUS*  status = GAMEDATA_GetMyStatus( gamedata );
+  BOX_MANAGER * boxman = GAMEDATA_GetBoxManager( gamedata );
+  int current_tray = BOXDAT_GetCureentTrayNumber( boxman );
+  int tray_idx, poke_pos;
+  u32 my_id = MyStatus_GetID( status );
+
+  for ( tray_idx = 0; tray_idx < BOX_MAX_TRAY; tray_idx ++ )
+  {
+    int tray = ( tray_idx + current_tray ) % BOX_MAX_TRAY;
+    for ( poke_pos = 0; poke_pos < BOX_MAX_POS; poke_pos ++ )
+    {
+      if ( BOXDAT_PokeParaGet( boxman, tray, poke_pos, ID_PARA_poke_exist, NULL )
+          && BOXDAT_PokeParaGet( boxman, tray, poke_pos, ID_PARA_id_no, NULL ) == my_id
+          && BOXDAT_PokeParaGet( boxman, tray, poke_pos, ID_PARA_monsno, NULL ) == monsno
+          && BOXDAT_PokeParaGet( boxman, tray, poke_pos, ID_PARA_tamago_flag, NULL ) == FALSE
+          )
+      {
+        *traynum = tray;
+        *tray_pos = poke_pos;
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief   手持ちの伝説ポケモンを先頭に持ってくる
+ */
+//-----------------------------------------------------------------------------
+static void exchangeLegendPosition( SCRCMD_WORK * work )
+{
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gamedata );
+  int idx;
+  idx = searchPartyLegend( gamedata );
+  if ( idx >= 0 ) {
+    PokeParty_ExchangePosition( party, idx, 0, SCRCMD_WORK_GetHeapID( work ) );
+  } else {
+    GF_ASSERT( 0 );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 手持ちの伝説ポケモンを探す
+ * @retval  0-5 見つかった位置
+ * @retval  -1  見つからなかった
+ */
+//-----------------------------------------------------------------------------
+static int searchPartyLegend( GAMEDATA * gamedata )
+{
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gamedata );
+  MYSTATUS*  status = GAMEDATA_GetMyStatus( gamedata );
+  int idx, max;
+  u32 my_id;
+  u16 monsno;
+
+  if ( GET_VERSION() == VERSION_WHITE ) {
+    monsno = MONSNO_651;
+  } else {
+    monsno = MONSNO_650;
+  }
+
+  max = PokeParty_GetPokeCount( party );
+  my_id = MyStatus_GetID( status );
+
+  for ( idx = 0; idx < max; idx++ )
+  {
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, idx );
+    if ( PP_Get( pp, ID_PARA_id_no, NULL ) == my_id
+        && PP_Get( pp, ID_PARA_monsno, NULL ) == monsno
+        && PP_Get( pp, ID_PARA_tamago_flag, NULL ) == FALSE )
+    {
+      return idx;
+    }
+  }
+  return -1;
+}
 
 
 
