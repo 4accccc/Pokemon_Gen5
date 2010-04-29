@@ -3642,7 +3642,6 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
     }
     else{
       int num = (GFL_UI_GetBattLevel() == GFL_UI_BATTLEVEL_HI ? 1 : 0);
-      TOMOYA_Printf( "num %d\n", num );
       if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
         GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
       }
