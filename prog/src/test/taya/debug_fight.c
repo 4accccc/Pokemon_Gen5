@@ -2230,7 +2230,17 @@ FS_EXTERN_OVERLAY(battle);
       cutoff_wildParty( wk->partyEnemy1, rule );
       BTL_SETUP_Wild( &wk->setupParam, wk->gameData, wk->partyEnemy1, &wk->fieldSit, rule, HEAPID_BTL_DEBUG_SYS );
 
-//      wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_LEGEND_EX;
+      if( rule == BTL_RULE_SINGLE )
+      {
+        u16 monsno = PP_Get( PokeParty_GetMemberPointer(wk->partyEnemy1,0), ID_PARA_monsno, NULL );
+        if( (monsno == MONSNO_SIN) || (monsno == MONSNO_MU) )
+        {
+          wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_LEGEND;
+          wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_LEGEND_EX;
+          wk->setupParam.musicDefault = SEQ_BGM_VS_SHIN;
+          wk->setupParam.musicWin = SEQ_BGM_WIN1;
+        }
+      }
     }
     // ’ÊM‘Îí
     else if( btltype_IsComm(wk->saveData.btlType) )
