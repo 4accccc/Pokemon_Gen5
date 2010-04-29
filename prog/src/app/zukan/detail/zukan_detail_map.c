@@ -10,7 +10,7 @@
 //============================================================================
 
 
-#define DEBUG_SET_ANIME_AND_POS  // これが定義されているとき、生息する場所に置くOBJのアニメ指定、位置指定用のデータ調整モードになる
+//#define DEBUG_SET_ANIME_AND_POS  // これが定義されているとき、生息する場所に置くOBJのアニメ指定、位置指定用のデータ調整モードになる
 //#define DEBUG_KAWADA
 
 
@@ -2861,7 +2861,7 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 //=====================================
 static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle )
 {
-#if 0
+//#if 0
   // 本データ
   u32 size;
   //AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_w_zkn_area_w_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
@@ -2869,7 +2869,7 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
   AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, monsno -1, FALSE, heap_id, &size );
   GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
   return area_data;
-#endif
+//#endif
 
 #if 0
   // 仮データ
