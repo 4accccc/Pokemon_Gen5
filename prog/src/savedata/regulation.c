@@ -699,6 +699,10 @@ void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TY
   case REGULATION_CARD_STATUS:      ///< 大会状態：０未開催／１開催中／２終了
     pReg->status = param;
     break;
+  case REGULATION_CARD_BGM:         ///< 大会で使用する曲（シーケンス番号がそのまま入っているわけではない
+    pReg->bgm_no  = param;
+    break;
+
   case REGULATION_CARD_SAMEMATCH:   ///< 同じ人との対戦を許可するかどうか
     pReg->same_match  = param;
     break;

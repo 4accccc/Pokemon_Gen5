@@ -476,6 +476,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_WAIT_MOVEOUT_CARD_RET,
 
     SEQ_START_MSG_RECVCARD, //選手証受け取り
+    SEQ_START_MSG_RECVCARD_NOW,
     SEQ_START_RECVCARD,
     SEQ_WAIT_RECVCARD,
     SEQ_WAIT_RECV_DEBUG,
@@ -626,12 +627,19 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_RECVCARD: //選手証受け取り
-    UTIL_TEXT_Print( p_wk, LIVE_STR_03, WBM_TEXT_TYPE_WAIT );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_03, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_RECVCARD_NOW );
+    break;
+
+  case SEQ_START_MSG_RECVCARD_NOW:
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_25, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_RECVCARD );
     break;
+
   case SEQ_START_RECVCARD:
-    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
     LIVEBATTLEMATCH_IRC_StartRecvRegulation( p_wk->p_irc, &p_wk->regulation_temp );
     *p_seq  = SEQ_WAIT_RECVCARD;
     break;
@@ -1448,6 +1456,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 { 
   enum
   { 
+    SEQ_START_MSG_MATCHING_PRE, //マッチング準備
     SEQ_START_MSG_MATCHING, //マッチング開始
     SEQ_START_CONNECT,      //接続開始
     SEQ_WAIT_CONNECT,       
@@ -1495,18 +1504,25 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   //シーケンス
   switch( *p_seq )
-  { 
+  {
+  case SEQ_START_MSG_MATCHING_PRE: //マッチング準備
+    UTIL_TEXT_Print( p_wk, LIVE_STR_16, WBM_TEXT_TYPE_STREAM);
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MATCHING ); 
+		break;
+ 
   case SEQ_START_MSG_MATCHING: //マッチング開始
-    UTIL_TEXT_Print( p_wk, LIVE_STR_16, WBM_TEXT_TYPE_WAIT);
+
+    UTIL_TEXT_Print( p_wk, LIVE_STR_26, WBM_TEXT_TYPE_WAIT);
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
+    PMSND_PlaySE( WBM_SND_SE_MATCHING );
+
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CONNECT ); 
 		break;
   case SEQ_START_CONNECT:
     if( LIVEBATTLEMATCH_IRC_StartConnect( p_wk->p_irc ) )
     { 
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-      PMSND_PlaySE( WBM_SND_SE_MATCHING );
-
       *p_seq  = SEQ_WAIT_CONNECT;
     }
     break;
@@ -1557,7 +1573,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           break;
 
         case 1: //いいえ
-          *p_seq  = SEQ_START_CONNECT;
+          *p_seq  = SEQ_START_MSG_MATCHING;
           break;
         }
       }
@@ -2292,6 +2308,8 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
         Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_MONTH ), 
         Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_DAY ),
           0);
+
+    info_setup.bgm_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
 
     p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_reg_view, FALSE, p_wk->heapID );
   }

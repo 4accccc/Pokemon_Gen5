@@ -224,6 +224,7 @@ typedef struct
 	u16										rate;						//レーティング
 	u16										btl_cnt;				//対戦回数
 	u16										btl_max;				//対戦回数上限
+  u16                   bgm_no;         //BGMNOによってパレットを切り替えるため
 } PLAYERINFO_WIFICUP_DATA;
 //-------------------------------------
 ///	ライブ大会の上画面に表示するデータ
@@ -238,6 +239,8 @@ typedef struct
 	u16										lose_cnt;				//負け回数
 	u16										btl_cnt;				//対戦回数
 	u16										btl_max;				//対戦回数上限
+  u16                   bgm_no;         //BGMNOによってパレットを切り替えるため
+  u16                   dummy;
 } PLAYERINFO_LIVECUP_DATA;
 
 //=============================================================================

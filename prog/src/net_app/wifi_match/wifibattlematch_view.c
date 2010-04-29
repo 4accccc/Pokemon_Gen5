@@ -595,6 +595,21 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
   }
 
+  switch( cp_data->bgm_no )
+  { 
+  case REGULATION_CARD_BGM_TRAINER:
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 3 );
+    GFL_BG_LoadScreenReq( p_wk->frm );
+    break;
+  case REGULATION_CARD_BGM_WCS:
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 7 );
+    GFL_BG_LoadScreenReq( p_wk->frm );
+    break;
+  }
+
+
   //BMPWINçÏê¨
   PlayerInfo_Bmpwin_Wifi_Create( p_wk, is_limit, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );
 
@@ -786,6 +801,22 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
 
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, PLAYERINFO_ALPHA_EV1, PLAYERINFO_ALPHA_EV2);
   }
+
+  switch( cp_data->bgm_no )
+  { 
+  case REGULATION_CARD_BGM_TRAINER:
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 3 );
+    GFL_BG_LoadScreenReq( p_wk->frm );
+    break;
+  case REGULATION_CARD_BGM_WCS:
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 7 );
+    GFL_BG_LoadScreenReq( p_wk->frm );
+    break;
+  }
+
+
 
   //BMPWINçÏê¨
   PlayerInfo_Bmpwin_Live_Create( p_wk, cp_data, p_my, p_font, p_que, p_msg, p_word, heapID );

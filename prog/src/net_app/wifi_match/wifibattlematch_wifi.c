@@ -3838,6 +3838,8 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 
     info_setup.rate = p_wk->p_param->p_wifi_sake_data->rate;
     info_setup.btl_cnt = p_wk->p_param->p_wifi_sake_data->win + p_wk->p_param->p_wifi_sake_data->lose;
+    info_setup.bgm_no = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_BGM );
+
 
     if( info_setup.btl_cnt == 0 &&  info_setup.rate == 0 )
     { 
