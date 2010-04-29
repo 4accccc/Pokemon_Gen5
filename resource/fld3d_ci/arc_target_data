@@ -124,6 +124,9 @@ ARC_TARGET_DATA = \
 	san_ci02.nsbca \
 	san_ci02.nsbta \
 	san_ci02.nsbtp \
+	ci_smr.nsbmd \
+	ci_smr.nsbca \
+	ci_smr.nsbta \
 	get2_662.nsbmd \
 	get2_664.nsbmd \
 	get2_602.nsbmd \

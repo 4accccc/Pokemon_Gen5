@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-29T13:19:59
+	Update:2010-04-29T16:28:34
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -136,19 +136,22 @@ enum {
 	NARC_fld3d_ci_san_ci02_nsbca = 122,
 	NARC_fld3d_ci_san_ci02_nsbta = 123,
 	NARC_fld3d_ci_san_ci02_nsbtp = 124,
-	NARC_fld3d_ci_get2_662_nsbmd = 125,
-	NARC_fld3d_ci_get2_664_nsbmd = 126,
-	NARC_fld3d_ci_get2_602_nsbmd = 127,
-	NARC_fld3d_ci_get1_361_nsbmd = 128,
-	NARC_fld3d_ci_get1_264_nsbmd = 129,
-	NARC_fld3d_ci_get1_360_nsbmd = 130,
-	NARC_fld3d_ci_get1_601_nsbmd = 131,
-	NARC_fld3d_ci_get1_773_nsbmd = 132,
-	NARC_fld3d_ci_get1_663_nsbmd = 133,
-	NARC_fld3d_ci_get1_659_nsbmd = 134,
-	NARC_fld3d_ci_get1_665_nsbmd = 135,
-	NARC_fld3d_ci_get1_660_nsbmd = 136,
-	NARC_fld3d_ci_get1_757_nsbmd = 137
+	NARC_fld3d_ci_ci_smr_nsbmd = 125,
+	NARC_fld3d_ci_ci_smr_nsbca = 126,
+	NARC_fld3d_ci_ci_smr_nsbta = 127,
+	NARC_fld3d_ci_get2_662_nsbmd = 128,
+	NARC_fld3d_ci_get2_664_nsbmd = 129,
+	NARC_fld3d_ci_get2_602_nsbmd = 130,
+	NARC_fld3d_ci_get1_361_nsbmd = 131,
+	NARC_fld3d_ci_get1_264_nsbmd = 132,
+	NARC_fld3d_ci_get1_360_nsbmd = 133,
+	NARC_fld3d_ci_get1_601_nsbmd = 134,
+	NARC_fld3d_ci_get1_773_nsbmd = 135,
+	NARC_fld3d_ci_get1_663_nsbmd = 136,
+	NARC_fld3d_ci_get1_659_nsbmd = 137,
+	NARC_fld3d_ci_get1_665_nsbmd = 138,
+	NARC_fld3d_ci_get1_660_nsbmd = 139,
+	NARC_fld3d_ci_get1_757_nsbmd = 140
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
