@@ -8501,9 +8501,9 @@
 		<language name="JPN" width="256">RIZDEMO-02</language>
 		<language name="JPN_KANJI" width="256">RIZDEMO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_356">
-		<language name="JPN" width="256">DMY-356</language>
-		<language name="JPN_KANJI" width="256">DMY-356</language>
+	<row id="msg_seq_se_fld_171">
+		<language name="JPN" width="256">FLD-171</language>
+		<language name="JPN_KANJI" width="256">FLD-171</language>
 	</row>
 	<row id="msg_seq_se_dmy_357">
 		<language name="JPN" width="256">DMY-357</language>
