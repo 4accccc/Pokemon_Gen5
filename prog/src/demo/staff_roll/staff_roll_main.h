@@ -17,6 +17,7 @@
 
 //============================================================================================
 //============================================================================================
+//#define	SRMAIN_DRAW_3D		// 定義を有効にすると３Ｄが有効になります
 
 // フォントタイプ
 enum {
@@ -54,13 +55,15 @@ typedef struct {
 	u32	palRes;
 	u32	celRes;
 */
+
+#ifdef	SRMAIN_DRAW_3D
 	GFL_G3D_UTIL * g3d_util;
 	GFL_G3D_SCENE * g3d_scene;
-	GFL_G3D_CAMERA * g3d_camera[2];
+	GFL_G3D_CAMERA * g3d_camera;
 	GFL_G3D_LIGHTSET * g3d_light;
 	u32	g3d_obj_id;
 	u16	g3d_unit;
-//	u32	box_anm;
+#endif	// SRMAIN_DRAW_3D
 
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント
 	GFL_MSGDATA * mman;									// メッセージデータマネージャ
