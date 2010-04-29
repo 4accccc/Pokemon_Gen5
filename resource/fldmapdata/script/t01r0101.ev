@@ -28,7 +28,7 @@ _EVENT_DATA_END
 //	！！！	同マップ内での使用を禁止します				！！！
 
 
-/************************************************************/	
+/************************************************************/
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_t01r0101
@@ -41,7 +41,7 @@ INIT_EVENT_START ev_init_t01r0101
 INIT_EVENT_END
 
 
-/************************************************************/	
+/************************************************************/
 /*				自宅１階：初めて下りたとき					*/
 /************************************************************/
 EVENT_START ev_scene_t01r0101_first_01
@@ -60,8 +60,8 @@ EVENT_START ev_scene_t01r0101_first_01
 	
 	
 	//ライバル：その場歩き
-	_OBJ_ANIME( T01R0101_RIVAL_01, anm_stay_walk_r )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( T01R0101_RIVAL_01, anm_stay_walk_r )
+//	_OBJ_ANIME_WAIT()
 
 	//ライバルＭＳＧ：騒がしくしてすみませんでした
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_black_01, T01R0101_RIVAL_01, POS_DL )
@@ -269,33 +269,34 @@ _ANIME_LABEL	anm_home_mama_walk_01
 	_ANIME_DATA	ACMD_END,0
 
 
-/************************************************************/	
+/************************************************************/
 /*						主人公ママ							*/
 /************************************************************/
 EVENT_START ev_t01r0101_mother_01
-	_TALK_OBJ_START()
-	
-	IF $LOCALWORK15 == 999 THEN
-		//回復済みなら一言メッセージ
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
-	
-	ELSIF $LOCALWORK15 == 333 THEN
-		//クリア後のハンサムイベント後なら一言メッセージ
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_end_08 )
-		
-	ELSE
-		//それ以外の時は、図鑑入手後かで分岐
-		IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) && $LOCALWORK15 == 0 THEN
+
+	//図鑑入手前後で分岐
+	IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) THEN
+		//回復済みかで分岐
+		IF $LOCALWORK15 == 999 THEN
+			//回復済みなら一言メッセージ
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
+			
+		ELSIF $LOCALWORK15 == 333 THEN
+			//クリア後のハンサムイベント後なら一言メッセージ
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_end_08 )
+			
+		ELSE
 			//ママの回復イベントへ
 			_CALL		ev_everyday
-		ELSE
-			//図鑑入手するまで
-
-			//アララギ博士によろしくね
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_04_01 )
 			
 		ENDIF
 	
+	ELSE
+		//図鑑入手するまで
+		
+		//アララギ博士によろしくね
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_04_01 )
+		
 	ENDIF
 
 
@@ -360,7 +361,7 @@ ev_kaifuku:
 _RET
 
 
-/************************************************************/	
+/************************************************************/
 /*                 ゲームオーバー復帰時                     */
 /************************************************************/
 EVENT_START ev_t01r0101_gameover_recover
@@ -390,7 +391,7 @@ EVENT_START ev_t01r0101_gameover_recover
 EVENT_END
 
 
-/************************************************************/	
+/************************************************************/
 /*				クリア後：ハンサムイベント					*/
 /************************************************************/
 EVENT_START ev_scene_t01r0101_handsome_01
