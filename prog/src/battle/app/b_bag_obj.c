@@ -313,7 +313,7 @@ static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 		pal_type = ITEM_GET_ICON_PAL;
 	}
 
-	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), wk->dat->heap );
+	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), GFL_HEAP_LOWID(wk->dat->heap) );
 
 	for( i=0; i<7; i++ ){
 	  wk->chrRes[BBAG_CHRRES_ITEM1+i] = GFL_CLGRP_CGR_Register(
@@ -333,7 +333,7 @@ static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 	u32	i;
 	ARCHANDLE* hdl;
 	
-	hdl = GFL_ARC_OpenDataHandle( ARC_ITEMICON,  wk->dat->heap ); 
+	hdl = GFL_ARC_OpenDataHandle( ARC_ITEMICON,  GFL_HEAP_LOWID(wk->dat->heap) ); 
 	
 	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
 
@@ -382,7 +382,7 @@ static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 pa
 		pal_type = ITEM_GET_ICON_PAL;
 	}
 
-	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), wk->dat->heap );
+	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), GFL_HEAP_LOWID(wk->dat->heap) );
 
 	// ƒLƒƒƒ‰
 	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter(
@@ -444,7 +444,7 @@ static void CostResLoad( BBAG_WORK * wk )
   ARCHANDLE * ah;
 	u32	i;
 	
-	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
+	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, GFL_HEAP_LOWID(wk->dat->heap) );
 
   wk->chrRes[BBAG_CHRRES_COST] = GFL_CLGRP_CGR_Register(
 																		ah, NARC_b_bag_gra_test_cost_lz_NCGR,
@@ -467,7 +467,7 @@ static void CursorResLoad( BBAG_WORK * wk )
 {
   ARCHANDLE * ah;
 
-	ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, wk->dat->heap );
+	ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->dat->heap) );
 
 	// ƒLƒƒƒ‰
 	wk->chrRes[BBAG_CHRRES_CURSOR] = GFL_CLGRP_CGR_Register(
@@ -489,7 +489,7 @@ static void CursorResLoad( BBAG_WORK * wk )
 		NNSG2dPaletteData * dat;
 		void * buf;
 
-		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_battle_w_obj_NCLR, &dat, wk->dat->heap );
+		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_battle_w_obj_NCLR, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
 		PaletteWorkSet(
 			wk->pfd, &(((u16*)(dat->pRawData))[16*4]), FADE_SUB_OBJ, BBAG_PALRES_CURSOR*16, 0x20 );
 	
@@ -512,7 +512,7 @@ static void CursorResLoad( BBAG_WORK * wk )
 /*
 static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk )
 {
-  ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, wk->dat->heap );
+  ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->dat->heap) );
 
 	// ƒLƒƒƒ‰
 	wk->chrRes[BBAG_CHRRES_DEMO] = GFL_CLGRP_CGR_Register(
@@ -534,7 +534,7 @@ static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk )
 		NNSG2dPaletteData * dat;
 		void * buf;
 
-		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_finger_cursor_NCLR, &dat, wk->dat->heap );
+		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_finger_cursor_NCLR, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
 		PaletteWorkSet(
 			wk->pfd, &(((u16*)(dat->pRawData))[0]), FADE_SUB_OBJ, BBAG_PALRES_DEMO*16, 0x20 );
 	

@@ -404,7 +404,7 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
   u16 i;
 	u16	pos;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(wk->dat->heap) );
 
   // キャラ
   res = &wk->chrRes[BPLIST_CHRRES_POKE1];
@@ -456,7 +456,7 @@ static void BPL_ClactStatusLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
 
   // キャラ
   wk->chrRes[BPLIST_CHRRES_STATUS] = GFL_CLGRP_CGR_Register(
@@ -490,7 +490,7 @@ static void BPL_ClactTypeLoad( BPLIST_WORK * wk )
   ARCHANDLE * ah;
   u32 i;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
 
   // パレット
   wk->palRes[BPLIST_PALRES_TYPE] = GFL_CLGRP_PLTT_Register(
@@ -533,7 +533,7 @@ static void BPL_ClactItemLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
 
   // キャラ
   wk->chrRes[BPLIST_CHRRES_ITEM] = GFL_CLGRP_CGR_Register(
@@ -588,7 +588,7 @@ static void CursorResLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->dat->heap) );
 
   // キャラ
   wk->chrRes[BPLIST_CHRRES_CURSOR] = GFL_CLGRP_CGR_Register(
@@ -613,7 +613,7 @@ static void HPGaugeResLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
 
-  ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), GFL_HEAP_LOWID(wk->dat->heap) );
 
   // キャラ
   wk->chrRes[BPLIST_CHRRES_HPGAUGE] = GFL_CLGRP_CGR_Register(
@@ -715,7 +715,7 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
 {
   u32 i;
 
-  wk->clunit = GFL_CLACT_UNIT_Create( BPL_CA_MAX+BAPPTOOL_CURSOR_MAX, 0, wk->dat->heap );
+  wk->clunit = GFL_CLACT_UNIT_Create( BPL_CA_MAX+BAPPTOOL_CURSOR_MAX, 0, GFL_HEAP_LOWID(wk->dat->heap) );
 
   for( i=0; i<BPL_CA_MAX; i++ ){
     wk->clwk[i] = BPL_ClactAdd( wk, ObjParamEz[i] );
@@ -846,10 +846,10 @@ static void BPL_TypeIconChange( BPLIST_WORK * wk, GFL_CLWK * clwk, u32 chrResID,
   void * buf;
   ARCHANDLE * ah;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
 
   buf = GFL_ARCHDL_UTIL_LoadOBJCharacter(
-          ah, APP_COMMON_GetPokeTypeCharArcIdx(type), FALSE, &dat, wk->dat->heap );
+          ah, APP_COMMON_GetPokeTypeCharArcIdx(type), FALSE, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
   GFL_CLGRP_CGR_Replace( wk->chrRes[chrResID], dat );
   GFL_HEAP_FreeMemory( buf );
 
@@ -879,10 +879,10 @@ static void BPL_KindIconChange( BPLIST_WORK * wk, u32 objID, u32 chrResID, u32 k
 	objID += wk->waza_kind_swap;
 	chrResID += wk->waza_kind_swap;
 
-  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
+  ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
 
   buf = GFL_ARCHDL_UTIL_LoadOBJCharacter(
-          ah, APP_COMMON_GetWazaKindCharArcIdx(kind), FALSE, &dat, wk->dat->heap );
+          ah, APP_COMMON_GetWazaKindCharArcIdx(kind), FALSE, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
   GFL_CLGRP_CGR_Replace( wk->chrRes[chrResID], dat );
   GFL_HEAP_FreeMemory( buf );
 

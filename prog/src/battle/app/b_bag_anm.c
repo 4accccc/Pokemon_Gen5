@@ -305,7 +305,7 @@ void BBAGANM_ButtonInit( BBAG_WORK * wk )
 
 	wk->bgwfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, BBAG_BGWF_MAX, wk->dat->heap );
 
-	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
+	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, GFL_HEAP_LOWID(wk->dat->heap) );
 
 	for( i=0; i<BBAG_BGWF_MAX; i++ ){
 		BGWINFRM_Add( wk->bgwfrm, i, GFL_BG_FRAME2_S, ButtonAddData[i].sx, ButtonAddData[i].sy );

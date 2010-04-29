@@ -718,23 +718,17 @@ static void BPL_ButtonScreenMake( BPLIST_WORK * wk, u16 * buf, u8 id, u8 anm, u8
 //--------------------------------------------------------------------------------------------
 static void BPL_ButtonScreenWrite( BPLIST_WORK * wk, u8 id, u8 anm, u8 pat )
 {
-	u16 * buf = GFL_HEAP_AllocMemory( wk->dat->heap, ButtonScreenAnm[id].sx*ButtonScreenAnm[id].sy*2 );
-/*Å™[GS_CONVERT_TAG]*/
+	u16 * buf = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), ButtonScreenAnm[id].sx*ButtonScreenAnm[id].sy*2 );
 
 	BPL_ButtonScreenMake( wk, buf, id, anm, pat );
 
 	GFL_BG_WriteScreen(
-/*Å™[GS_CONVERT_TAG]*/
 		GFL_BG_FRAME2_S, buf,
-/*Å™[GS_CONVERT_TAG]*/
 		ButtonScreenAnm[id].px, ButtonScreenAnm[id].py,
 		ButtonScreenAnm[id].sx, ButtonScreenAnm[id].sy );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
-/*Å™[GS_CONVERT_TAG]*/
-/*Å™[GS_CONVERT_TAG]*/
 
 	GFL_HEAP_FreeMemory( buf );
-/*Å™[GS_CONVERT_TAG]*/
 }
 
 //--------------------------------------------------------------------------------------------

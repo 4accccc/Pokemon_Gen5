@@ -1411,7 +1411,7 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 {
   ARCHANDLE * hdl;
 
-  hdl = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
+  hdl = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, GFL_HEAP_LOWID(wk->dat->heap) );
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
     hdl, NARC_b_bag_gra_b_bag_bg_lz_NCGR,

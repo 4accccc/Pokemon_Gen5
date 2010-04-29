@@ -2300,7 +2300,7 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
 {
   ARCHANDLE* hdl;
 
-  hdl  = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA,  wk->dat->heap );
+  hdl  = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA,  GFL_HEAP_LOWID(wk->dat->heap) );
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
     hdl, NARC_b_plist_gra_b_plist_lz_NCGR, GFL_BG_FRAME3_S, 0, 0, TRUE, wk->dat->heap );
@@ -3913,7 +3913,7 @@ static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
     BGWINFRM_Add( wk->chg_wfrm, 2, GFL_BG_FRAME1_S, BPL_COMM_BSX_PLATE, BPL_COMM_BSY_PLATE );
     BGWINFRM_Add( wk->chg_wfrm, 3, GFL_BG_FRAME2_S, BPL_COMM_BSX_PLATE, BPL_COMM_BSY_PLATE );
     {
-      u16 * buf = GFL_HEAP_AllocMemory( wk->dat->heap, BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE*2 );
+      u16 * buf = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), BPL_COMM_BSX_PLATE*BPL_COMM_BSY_PLATE*2 );
       MakeDeadChgScrn( buf, GFL_BG_FRAME1_S, wk->chg_pos1 );
       BGWINFRM_FrameSet( wk->chg_wfrm, 0, buf );
       MakeDeadChgScrn( buf, GFL_BG_FRAME2_S, wk->chg_pos1 );
