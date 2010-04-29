@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:59:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T22:05:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -413,9 +413,13 @@
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">すっごく　あるいちゃった！
 あしが　パンパンよ▼
+……　……　……
+……　……　……▼
 ……あのう　あんまり　みないでね</language>
 		<language name="JPN_KANJI" width="256">すっごく　歩いちゃった！
 脚が　パンパンよ▼
+……　……　……
+……　……　……▼
 ……あのう　あんまり　みないでね</language>
 	</row>
 
