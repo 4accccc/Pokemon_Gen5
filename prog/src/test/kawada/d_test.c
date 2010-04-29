@@ -577,7 +577,7 @@ static void D_Test_BtlvInit( D_TEST_WORK* work )
   }
 
   //work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, BTLV_EFFECT_GetPfd(), work->font, &work->btlv_cursor_flag, work->heap_id );
-  work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, work->btlv_pfd, work->font, &work->btlv_cursor_flag, work->heap_id );
+//テストなのでもう不要なのでコメントアウト  work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, work->btlv_pfd, work->font, &work->btlv_cursor_flag, work->heap_id );
 
   work->sub_main_step = 0;
 }
