@@ -741,7 +741,7 @@ sub TownmapData_ConvertReplace
 sub TownmapData_CreateHeader
 {
   #バージョンごとのファイル数は同数としておく
-  my $len = $DATA_LENGTH-$DATA_VERSION_LENGTH[0]-1;
+  my $len = $DATA_LENGTH-$DATA_VERSION_LENGTH[0];
 
   print "$DATA_LENGTH, $DATA_VERSION_LENGTH[0]\n";
 

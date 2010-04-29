@@ -2,7 +2,7 @@
 //このファイルはtownmap_data_convによって自動生成されています
 
 //データ総数
-#define TOWNMAP_DATA_MAX	(60)
+#define TOWNMAP_DATA_MAX	(61)
 
 //置き換えデータの総数
 #define TOWNMAP_REPLACE_MAX	(1)
