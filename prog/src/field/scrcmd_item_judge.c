@@ -51,8 +51,8 @@ static const u8 sc_ARC_DATA[ SCR_ITEM_JUDGE_OBJTYPE_KOUKO+1 ] = {
 ///	ITEMä”íËèÓïÒ
 //=====================================
 typedef struct {
-  u16 item_no;
-  u16 money;
+  u32 item_no;
+  u32 money;
 } ITEM_JUDGE_DATA;
 
 //-----------------------------------------------------------------------------

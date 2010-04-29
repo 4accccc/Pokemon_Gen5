@@ -83,8 +83,8 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
   if( $GOURMET_LIST[ $i ] > 0 ){
     &DEBUG_Puts($ITEM_LIST[ $i ]."\n");
     &DEBUG_Puts($GOURMET_LIST[ $i ]."\n");
-    print( FILEOUT pack( "S", $ITEM_LIST[ $i ] ) );
-    print( FILEOUT pack( "S", $GOURMET_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $ITEM_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $GOURMET_LIST[ $i ] ) );
   }
 }
 close( FILEOUT );
@@ -96,8 +96,8 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
   if( $STONE_MANIA_LIST[ $i ] > 0 ){
     &DEBUG_Puts($ITEM_LIST[ $i ]."\n");
     &DEBUG_Puts($STONE_MANIA_LIST[ $i ]."\n");
-    print( FILEOUT pack( "S", $ITEM_LIST[ $i ] ) );
-    print( FILEOUT pack( "S", $STONE_MANIA_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $ITEM_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $STONE_MANIA_LIST[ $i ] ) );
   }
 }
 close( FILEOUT );
@@ -108,8 +108,8 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
   if( $RICH_LIST[ $i ] > 0 ){
     &DEBUG_Puts($ITEM_LIST[ $i ]."\n");
     &DEBUG_Puts($RICH_LIST[ $i ]."\n");
-    print( FILEOUT pack( "S", $ITEM_LIST[ $i ] ) );
-    print( FILEOUT pack( "S", $RICH_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $ITEM_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $RICH_LIST[ $i ] ) );
   }
 }
 close( FILEOUT );
@@ -120,8 +120,8 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
   if( $KOUKO_LIST[ $i ] > 0 ){
     &DEBUG_Puts($ITEM_LIST[ $i ]."\n");
     &DEBUG_Puts($KOUKO_LIST[ $i ]."\n");
-    print( FILEOUT pack( "S", $ITEM_LIST[ $i ] ) );
-    print( FILEOUT pack( "S", $KOUKO_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $ITEM_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $KOUKO_LIST[ $i ] ) );
   }
 }
 close( FILEOUT );
