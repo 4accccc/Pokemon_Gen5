@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T13:33:44"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T20:26:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -444,9 +444,9 @@
 　続いて2_04</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">オッケー　おねえさん
-はりきっちゃうわよー！</language>
+はりきっちゃうわよー！▼</language>
 		<language name="JPN_KANJI" width="256">オッケー　お姉さん
-張り切っちゃうわよー！</language>
+はりきっちゃうわよー！▼</language>
 	</row>
 
 	<row id="msg_h05_woman2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -464,10 +464,10 @@
 ・メッセージ後
 　ミネズミ４匹出現（お姉さんの後ろから？（</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">ヨーシ　ミネズミちゃーん！
-ぜんいん　しゅうごーう！</language>
-		<language name="JPN_KANJI" width="256">ヨーシ　ミネズミちゃーん！
-全員　集合！</language>
+		<language name="JPN" width="256">よーし　ミネズミちゃーん！
+ぜんいん　しゅうごーう！▼</language>
+		<language name="JPN_KANJI" width="256">よーし　ミネズミちゃーん！
+全員　集合！▼</language>
 	</row>
 
 	<row id="msg_h05_woman2_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -476,9 +476,9 @@
 　以下のmsgに分岐</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">この　ミネズミちゃんの　なかで
-あなたに　あててもらう　こは……</language>
+あなたに　あててもらう　こは……▼</language>
 		<language name="JPN_KANJI" width="256">この　ミネズミちゃんの　中で
-あなたに　当ててもらう　子は……</language>
+あなたに　当ててもらう　子は……▼</language>
 	</row>
 
 	<row id="msg_h05_woman2_06a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -581,7 +581,7 @@
 ……………………▽
 おおあたりー！▼
 けいひんの　[1:09:どうぐ名:0]は
-ミネズミちゃんから　もらえまーす！</language>
+ミネズミちゃんから　もらえまーす！▼</language>
 		<language name="JPN_KANJI" width="256">答えは……！！
 ……▽
 …………▽
@@ -589,7 +589,7 @@
 ……………………▽
 大当たりー！▼
 景品の　[1:09:どうぐ名:0]は
-ミネズミちゃんから　もらえまーす！</language>
+ミネズミちゃんから　もらえまーす！▼</language>
 	</row>
 
 	<row id="msg_h05_woman2_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -600,17 +600,16 @@
 ……▽
 …………▽
 ………………▽
-ざんねん！　はずれです……</language>
+ざんねん！　はずれです……▼</language>
 		<language name="JPN_KANJI" width="256">答えは……！！
 ……▽
 …………▽
 ………………▽
-残念！　はずれです……</language>
+残念！　はずれです……▼</language>
 	</row>
 
 	<row id="msg_h05_woman2_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>イベント終了
-ミネズミ退場アニメ</comment>
+		<comment>イベント終了</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">それでは　ミネズミショー
 しゅうりょうに　なります！▽
