@@ -1010,7 +1010,7 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
   {
     BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( server->mainModule );
 
-//    TAYA_Printf("ExitBattle .. competitor = %d\n", competitor);
+    BTL_N_Printf( DBGSTR_SV_ExitBattle, competitor);
 
     switch( competitor ){
     case BTL_COMPETITOR_TRAINER:

@@ -65,7 +65,11 @@ typedef struct {
 //------------------------------------------------------------------
 static const HEAP_INIT_HEADER hih[]={
   { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
+#if 1
+  { 0x182000,   OS_ARENA_MAIN },
+#else
   { HEAPSIZE_APP,   OS_ARENA_MAIN },
+#endif
 };
 
 static const HEAP_INIT_HEADER hihDSi[]={  //DSI用
@@ -228,7 +232,7 @@ void GFLUser_Main(void)
   GFL_UI_Main();
 
   NET_DEV_Main();
-  
+
 
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
@@ -392,7 +396,7 @@ void GFLUser_VTiming(void)
   {
     GFL_FADE_Main();  // フェード反映
   }
-  
+
   GFL_USE_VintrCounter++;
 }
 

@@ -259,6 +259,7 @@ typedef enum {
   DBGSTR_SV_CmdCheckNG,
   DBGSTR_SV_SendActRecord,
   DBGSTR_SV_SendActRecordFailed,
+  DBGSTR_SV_ExitBattle,
 
   DBGSTR_EVENT_AddFactorInfo,
   DBGSTR_EV_AddFactor,

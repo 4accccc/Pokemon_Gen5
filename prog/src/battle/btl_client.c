@@ -4365,6 +4365,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
       u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      TAYA_Printf( "Win for NPC, clientID=%d, trainerID=%d\n", clientID, trainerID );
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
       (*seq) = SEQ_WIN_WAIT_TR1_MSG;
     }

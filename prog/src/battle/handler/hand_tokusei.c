@@ -598,7 +598,10 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_SUNANOTIKARA,     HAND_TOK_ADD_SunanoTikara  }, // すなのちから
     { POKETOKUSEI_TETUNOTOGE,       HAND_TOK_ADD_Samehada      }, // てつのとげ = さめはだ
     { POKETOKUSEI_DARUMAMOODO,      HAND_TOK_ADD_DarumaMode    }, // ダルマモード
-    { POKETOKUSEI_GUDDORAKKU,       HAND_TOK_ADD_GoodLuck      }, // グッドラック
+    { POKETOKUSEI_SYOURINOHOSI,     HAND_TOK_ADD_GoodLuck      }, // しょうりのほし
+    { POKETOKUSEI_TAABOBUREIZU,     HAND_TOK_ADD_Katayaburi    }, // ターボブレイズ
+    { POKETOKUSEI_TERABORUTEEZI,    HAND_TOK_ADD_Katayaburi    }, // テラボルテージ
+
   };
 
 //  if( !BPP_CheckSick(pp, WAZASICK_IEKI) )
@@ -3109,7 +3112,7 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     if( (sick==POKESICK_DOKU)||(sick==POKESICK_MAHI) ||(sick==POKESICK_YAKEDO) )
     {
       u8 attackPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-      if( attackPokeID != BTL_POKEID_NULL )
+      if( (attackPokeID != BTL_POKEID_NULL) && (attackPokeID != pokeID) )
       {
         BTL_HANDEX_PARAM_ADD_SICK* param;
         const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
