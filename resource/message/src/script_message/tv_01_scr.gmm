@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T23:03:01"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T23:05:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1553,7 +1553,7 @@
 みなさま　おげんきですか……？▼
 わざと　くらす　の
 おじかんが　やって　まいりました▼
-ほんじつは　ベノムショック　を▽
+ほんじつは　ベノムショック　を
 みなさまと　べんきょう　いたします▼
 それでは　さっそく　ほんじつも
 ヒウンだいがく　きょうじゅの▽
@@ -4476,6 +4476,9 @@
 	</row>
 
 	<row id="msg_tv_03_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>星座別性格診断
+・ランダム表示
+・担当：佐藤</comment>
 		<language name="JPN" width="256">しかい『さあ　きょうも　はじまります
 せいざべつ！　せいかくしんだん！▽
 きょうの　せいざは　なにざ　でしょう？▼
