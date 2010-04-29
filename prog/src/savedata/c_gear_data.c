@@ -228,11 +228,11 @@ u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV)
 CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(const CGEAR_SAVEDATA* pSV,int x, int y)
 {
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
-  if(!(x < C_GEAR_PANEL_WIDTH)){
+  if(!((x < C_GEAR_PANEL_WIDTH) && (x >= 0))){
     return CGEAR_PANELTYPE_NONE;
   }
   GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
-  if(!(y < C_GEAR_PANEL_HEIGHT)){
+  if(!((y < C_GEAR_PANEL_HEIGHT) && (y >= 0))){
     return CGEAR_PANELTYPE_NONE;
   }
   // 上位4ビットはカット
@@ -255,10 +255,10 @@ BOOL CGEAR_SV_IsPanelTypeIcon(const CGEAR_SAVEDATA* pSV,int x, int y)
 {
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
 	GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
-  if(!(x < C_GEAR_PANEL_WIDTH)){
+  if(!((x < C_GEAR_PANEL_WIDTH) && (x >= 0))){
     return FALSE;
   }
-  if(!(y < C_GEAR_PANEL_HEIGHT)){
+  if(!((y < C_GEAR_PANEL_HEIGHT) && (y >= 0))){
     return FALSE;
   }
   // 上位1ビットはカット
@@ -286,10 +286,10 @@ BOOL CGEAR_SV_IsPanelTypeLast(const CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANE
   u32 bit;
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
 	GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
-  if(!(x < C_GEAR_PANEL_WIDTH)){
+  if(!((x < C_GEAR_PANEL_WIDTH) && (x >= 0))){
     return FALSE;
   }
-  if(!(y < C_GEAR_PANEL_HEIGHT)){
+  if(!((y < C_GEAR_PANEL_HEIGHT) && (y >= 0))){
     return FALSE;
   }
 
@@ -330,13 +330,14 @@ void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENU
     return;
   }
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
-  if(!(x < C_GEAR_PANEL_WIDTH)){
+  if(!((x < C_GEAR_PANEL_WIDTH) && (x >= 0))){
     return;
   }
 	GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
-  if(!(y < C_GEAR_PANEL_HEIGHT)){
+  if(!((y < C_GEAR_PANEL_HEIGHT) && (y >= 0))){
     return;
   }
+
   set_type = type;
   if( (icon == TRUE) && 
       ( (type == CGEAR_PANELTYPE_IR) ||

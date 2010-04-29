@@ -2863,6 +2863,8 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,C_GEAR_WORK* pWork)
 
 static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
 {
+  int type;
+  int xp,yp;
   u32 touchx,touchy;
   BOOL result;
 
@@ -2880,16 +2882,14 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     result  = GFL_UI_TP_GetPointCont(&touchx,&touchy);
     GF_ASSERT( result );
 
+    type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
+
     if( pWork->bPanelEdit ){
-      int type;
-      int xp,yp;
 
       pWork->tpx = touchx;
       pWork->tpy = touchy;
 
       //タッチ場所のタイプをとっておく。
-      type = getTypeToTouchPos(pWork,touchx,touchy,&xp,&yp);
-
       if(((_gearPanelTypeNum(pWork,type) > 1 ) || (type == CGEAR_PANELTYPE_BASE)) && _isSetChip(xp,yp))
       {
         type = (type+1) % CGEAR_PANELTYPE_MAX;
@@ -2900,12 +2900,12 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
 
     }else{
 
-      // ボタンプッシュ
-      pWork->touchx = touchx;
-      pWork->touchy = touchy;
 
+      // ボタンプッシュ
       if( !SleepMode_IsSleep( pWork ) ){  //通信ONなら
-        u32 type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
+
+        pWork->touchx =xp;
+        pWork->touchy =yp;
 
         switch( type ){
         case CGEAR_PANELTYPE_IR:
