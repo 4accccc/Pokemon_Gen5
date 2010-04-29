@@ -32,6 +32,7 @@
 
 #include "btlv/btlv_core.h"
 #include "btlv/btlv_mcss.h"
+#include "tr_ai/tr_ai.h"
 
 #include "btl_main.h"
 
@@ -4517,8 +4518,9 @@ u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID )
   {
     return wk->trainerParam[ clientID ].ai_bit;
   }
-  else if( BTL_MAIN_GetRule(wk) == BTL_RULE_DOUBLE ){
-
+  else if( BTL_MAIN_GetRule(wk) == BTL_RULE_DOUBLE )
+  {
+    return AI_THINK_BIT_DOUBLE;
   }
   return 0x00;
 }

@@ -1326,8 +1326,8 @@ static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
       } while( !SCQUE_IsFinishRead(que) );
 
     }
-    #endif
   }
+  #endif
 }
 
 BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, const void* recvedCmd, u32 cmdSize )
@@ -1790,6 +1790,7 @@ void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
       }
     }
     server->changePokePos[ server->changePokeCnt++ ] = pos;
+    TAYA_Printf("サーバに記憶：交替すべき位置ID=%d, 合計%d件\n");
   }
 }
 

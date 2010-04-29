@@ -1023,7 +1023,7 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 /**
  *  ポケモンリストパラメータ設定共通処理
  */
-static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode, u32 chg_waza_param )
+static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode, u8 sel_poke, u32 chg_waza_param )
 {
   u8 clientID = BTL_CLIENT_GetClientID( wk->myClient );
 
@@ -1032,6 +1032,7 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->multiMode = ( plist->multi_pp != NULL );
   plist->multiPos = BTL_MAIN_GetClientMultiPos( wk->mainModule, clientID );
   plist->mode = bplMode;
+  plist->sel_poke = sel_poke;
   plist->chg_waza = chg_waza_param;
   plist->heap = wk->heapID;
   plist->font = wk->largeFontHandle;
@@ -1057,13 +1058,16 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
 //=============================================================================================
 void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, int outMemberIndex, BOOL fCantEsc, BTL_POKESELECT_RESULT* result )
 {
-  SetupPlistDataCommon( wk, &wk->plistData, param->bplMode, fCantEsc );
+  if( outMemberIndex < 0 ){
+    outMemberIndex = 0;
+  }
+  SetupPlistDataCommon( wk, &wk->plistData, param->bplMode, outMemberIndex, fCantEsc );
 
   // 既に選択されているポケモンの位置情報を初期化
   {
     u32 i, selectedPokeCnt = BTL_POKESELECT_RESULT_GetCount( result );
 
-    BTL_N_Printf( DBGSTR_VCORE_PokeListStart, wk->plistData.mode, selectedPokeCnt);
+    BTL_N_Printf( DBGSTR_VCORE_PokeListStart, wk->plistData.mode, selectedPokeCnt, outMemberIndex);
     for(i=0; i<selectedPokeCnt; ++i)
     {
       if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
@@ -1194,7 +1198,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
       wk->bagData.ball_use = BBAG_BALLUSE_TRUE;
     }
 
-    SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0 );
+    SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0, 0 );
 
   //「さしおさえ」で道具を使用できないポケモンを指定
     {
@@ -2493,7 +2497,7 @@ BOOL BTLV_YESNO_Wait( BTLV_CORE* wk, BtlYesNo* result )
 void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
 {
   #if 1
-  SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_WAZASET, waza );
+  SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_WAZASET, pos, waza );
   #else
   wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
   wk->plistData.multi_pp = BTL_MAIN_GetMultiPlayerPokeParty( wk->mainModule );
