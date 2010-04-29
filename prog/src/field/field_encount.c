@@ -45,6 +45,8 @@
 //======================================================================
 #define HEAPID_BTLPARAM (HEAPID_PROC) ///<バトルパラメタ用HEAPID
 
+#define FIRST_STEP_ENCOUNT_PER  (1) //最初の一歩目のエンカウント率
+
 //--------------------------------------------------------------
 /// エンカウントデータ要素
 //--------------------------------------------------------------
@@ -564,7 +566,7 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
     if(walk_ct == 0){
       return FALSE;
     }else if(walk_ct == 1){
-      per = 2;  //最初の一歩目は強制で2%
+      per = FIRST_STEP_ENCOUNT_PER;  //最初の一歩目は強制で1%
     }
   }
 
