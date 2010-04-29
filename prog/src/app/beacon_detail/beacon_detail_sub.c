@@ -611,10 +611,10 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
 	//プレイヤーの場所から、データインデックスを取得
   {
 	  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( wk->tmap, GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ) );
-
+    
 	  //タウンマップ上の座標取得
-    if( dataIndex == TOWNMAP_DATA_ERROR ||
-        TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE ){
+    if( (dataIndex == TOWNMAP_DATA_ERROR) ||
+        (TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_HIDE_FLAG ) != TOWNMAP_DATA_ERROR )){
       wk->icon_enable_f = FALSE;
       
       wk->icon_x = wk->icon_y = 0;
