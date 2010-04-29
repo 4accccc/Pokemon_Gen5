@@ -3101,9 +3101,9 @@ static void MailBox_SetFirstMail( GAMEDATA* gamedata )
   // カセットバージョン
   MailData_SetCasetteVersion( mail, PM_VERSION );
   // 簡易会話セット
-  MailData_SetMsgByIndex( mail, &mail_pmsdata[0], 0 );
-  MailData_SetMsgByIndex( mail, &mail_pmsdata[1], 1 );
-  MailData_SetMsgByIndex( mail, &mail_pmsdata[2], 2 );
+  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[0], 0 );
+  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[1], 1 );
+  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[2], 2 );
   // 簡易ワード「トレーナー」セット
   MailData_SetFormBit( mail, 1419 );
 
