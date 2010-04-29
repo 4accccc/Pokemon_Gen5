@@ -10166,6 +10166,20 @@
   .short \country
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 国連関連 自分が国コードをセットしているかを調べる
+ * @param ret       検索結果  TRUE:セットされている   FALSE:セットされていない
+ */
+//--------------------------------------------------------------
+#define _UN_IS_SETTING_MYCOUNTRY( ret ) _ASM_UN_IS_SETTING_MYCOUNTRY ret
+
+  .macro  _ASM_UN_IS_SETTING_MYCOUNTRY ret
+  .short EV_SEQ_UN_IS_SETTING_MYCOUNTRY
+  .short \ret
+  .endm
+  
   
 //======================================================================
 //======================================================================

@@ -848,6 +848,9 @@
   //クライマックス用特殊コマンド
   DEF_CMD( EvCmdCrimaxCommand, EV_SEQ_CRIMAX_COMMAND )
 
+  //自分の国コードがセットされているかを調べる
+  DEF_CMD( EvCmdUn_IsSetingMyCountry, EV_SEQ_UN_IS_SETTING_MYCOUNTRY )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   
