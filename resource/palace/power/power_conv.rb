@@ -133,7 +133,8 @@ def DataConv()
         || PowerData[i].type == "SALE" || PowerData[i].type == "CAPTURE_UP")
       num = PowerData[i].data.to_f;
       num *= 100; #小数を整数に変換する(100倍の固定小数)
-      PowerData[i].data = (0x100 * num / 100).to_i;  #下位8bit固定小数にさらに変換
+      #PowerData[i].data = (0x100 * num / 100).to_i;  #下位8bit固定小数にさらに変換
+      PowerData[i].data = num.to_i;  #下位8bit固定小数にさらに変換
     end
 
     if(PowerData[i].level_w != "配布" && PowerData[i].level_b != "配布" \

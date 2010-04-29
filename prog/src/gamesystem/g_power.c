@@ -370,14 +370,14 @@ u32 GPOWER_Calc_Encount(u32 encount)
   u32 calc;
   
   if(GPowerSys.occur_power[GPOWER_TYPE_ENCOUNT_UP] != GPOWER_ID_NULL){
-    calc = ((GPowerSys.powerdata_data[GPOWER_TYPE_ENCOUNT_UP] * encount) + 0x80) >> 8;
+    calc = (GPowerSys.powerdata_data[GPOWER_TYPE_ENCOUNT_UP] * encount) / 100;
     if(calc > 100){
       calc = 100;
     }
     return calc;
   }
   if(GPowerSys.occur_power[GPOWER_TYPE_ENCOUNT_DOWN] != GPOWER_ID_NULL){
-    calc = ((GPowerSys.powerdata_data[GPOWER_TYPE_ENCOUNT_DOWN] * encount) + 0x80) >> 8;
+    calc = (GPowerSys.powerdata_data[GPOWER_TYPE_ENCOUNT_DOWN] * encount) / 100;
     if(calc > 100){
       calc = 100;
     }
@@ -398,7 +398,7 @@ u32 GPOWER_Calc_Encount(u32 encount)
 u32 GPOWER_Calc_Hatch(u32 add_count)
 {
   if(GPowerSys.occur_power[GPOWER_TYPE_HATCH_UP] != GPOWER_ID_NULL){
-    return ((GPowerSys.powerdata_data[GPOWER_TYPE_HATCH_UP] * add_count) + 0x80) >> 8;
+    return (GPowerSys.powerdata_data[GPOWER_TYPE_HATCH_UP] * add_count) / 100;
   }
   return add_count;
 }
@@ -432,7 +432,7 @@ s32 GPOWER_Calc_Natsuki(s32 natsuki)
 u32 GPOWER_Calc_Sale(u32 price)
 {
   if(GPowerSys.occur_power[GPOWER_TYPE_SALE] != GPOWER_ID_NULL){
-    return ((GPowerSys.powerdata_data[GPOWER_TYPE_SALE] * price) + 0x80) >> 8;
+    return (GPowerSys.powerdata_data[GPOWER_TYPE_SALE] * price) / 100;
   }
   return price;
 }
@@ -552,10 +552,10 @@ s32 GPOWER_Calc_PPRestore(POKEPARTY *party)
 u32 GPOWER_Calc_Exp(u32 exp)
 {
   if(GPowerSys.occur_power[GPOWER_TYPE_EXP_UP] != GPOWER_ID_NULL){
-    return ((GPowerSys.powerdata_data[GPOWER_TYPE_EXP_UP] * exp) + 0x80) >> 8;
+    return (GPowerSys.powerdata_data[GPOWER_TYPE_EXP_UP] * exp) / 100;
   }
   if(GPowerSys.occur_power[GPOWER_TYPE_EXP_DOWN] != GPOWER_ID_NULL){
-    return ((GPowerSys.powerdata_data[GPOWER_TYPE_EXP_DOWN] * exp) + 0x80) >> 8;
+    return (GPowerSys.powerdata_data[GPOWER_TYPE_EXP_DOWN] * exp) / 100;
   }
   return exp;
 }
@@ -572,7 +572,7 @@ u32 GPOWER_Calc_Exp(u32 exp)
 u32 GPOWER_Calc_Money(u32 money)
 {
   if(GPowerSys.occur_power[GPOWER_TYPE_MONEY_UP] != GPOWER_ID_NULL){
-    return ((GPowerSys.powerdata_data[GPOWER_TYPE_MONEY_UP] * money) + 0x80) >> 8;
+    return (GPowerSys.powerdata_data[GPOWER_TYPE_MONEY_UP] * money) / 100;
   }
   return money;
 }
@@ -592,7 +592,7 @@ fx32 GPOWER_Calc_Capture(fx32 hokakuritu)
   
   if(GPowerSys.occur_power[GPOWER_TYPE_CAPTURE_UP] != GPOWER_ID_NULL){
     calc = GPowerSys.powerdata_data[GPOWER_TYPE_CAPTURE_UP];
-    calc = ((calc * hokakuritu) + 0x80) >> 8;
+    calc = (calc * hokakuritu) / 100;
     return (fx32)calc;
   }
   return hokakuritu;
