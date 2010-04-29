@@ -495,7 +495,7 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
   actData.trans = *pos;
   actData.alpha = 31;
   actData.drawEnable = TRUE;
-  actData.lightMask = GFL_BBD_LIGHTMASK_01;
+  actData.lightMask = GFL_BBD_LIGHTMASK_0;
   actData.work = pBlActCont;
   actData.func = BlActFunc;
   
@@ -737,7 +737,7 @@ GFL_BBDACT_ACTUNIT_ID MMDL_BLACTCONT_AddActor( MMDL *mmdl, u32 code )
   actData.trans = pos;
   actData.alpha = 31;
   actData.drawEnable = TRUE;
-  actData.lightMask = GFL_BBD_LIGHTMASK_01;
+  actData.lightMask = GFL_BBD_LIGHTMASK_0;
   actData.work = mmdl;
   actData.func = BlActFunc;
   
