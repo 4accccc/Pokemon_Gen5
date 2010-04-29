@@ -27,6 +27,8 @@
 
 #include "msg/script/msg_tv_01_scr.h"
 
+#include "savedata/misc.h"               // for MISC
+
 #define RECORD_TV_SEX_MAX (11)
 #define RECORD_TV_COMMON_MAX (18)
 
@@ -39,6 +41,8 @@
 #define REC_TAG_MAX (2)
 
 #define NO_REC_ID (0xffffffff)
+
+#define BADGE_MAX (8)
 
 #ifdef PM_DEBUG
 //デバッグテレビ用番組番号 実体はmisc.c
@@ -77,6 +81,20 @@ static const u32 RecordTbl[RECORD_TV_MAX][REC_TAG_MAX+2] = {    //{ レコードＩＤ
   { RECID_DAYMAX_TRAINER_BATTLE,  NO_REC_ID, 4, 0 },        // 27 1日で倒したトレーナー最高、なし 4, 0
   { RECID_DAYMAX_EVOLUTION,  NO_REC_ID, 4, 0 },             // 28 1日で進化させたポケモン最高、なし 4, 0
 };
+
+//ジムバッジに影響するメッセージ
+static const int BadgeMsg[BADGE_MAX] = {
+  msg_tv_03_13,
+  msg_tv_03_14,
+  msg_tv_03_15,
+  msg_tv_03_16,
+  msg_tv_03_17,
+  msg_tv_03_18,
+  msg_tv_03_19,
+  msg_tv_03_20
+};
+
+static int CheckBadge(GAMEDATA *gdata, const int inMsg);
 
 //--------------------------------------------------------------
 /**
@@ -184,7 +202,10 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
   }
 
   msg = msg_base+rnd;
+  
   OS_Printf("テレビ番組抽選結果　min = %d, rnd = %d, msg = %d\n",minute, rnd, msg);
+
+  msg = CheckBadge(gdata, msg);
 
 #ifdef PM_DEBUG
   if (DebugTvNo)
@@ -208,4 +229,38 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
 }
 
 
+//ジムバッジの所持状態による分岐
+static int CheckBadge(GAMEDATA *gdata, const int inMsg)
+{
+  int i;
+  int msg;
+  MISC* misc;
+  // セーブデータ取得
+  {
+    SAVE_CONTROL_WORK* save;
+    save = GAMEDATA_GetSaveControlWork( gdata );
+    misc = SaveData_GetMisc( save );
+  }
 
+  msg = inMsg;
+  for (i=0;i<BADGE_MAX;i++)
+  {
+    if ( BadgeMsg[i] == msg )
+    {
+      //バッジチェック
+      if ( MISC_GetBadgeFlag( misc, BADGE_ID_01+i ) )
+      {
+        //持っているなら放送ＯＫ
+        return msg;
+      }
+      else
+      {
+        //もって無い場合は別のメッセージ
+        OS_Printf("%dバッジ番組抽選したけど、持って無いから別のに変更\n",i);
+        return 0;
+      }
+    }
+  }
+  //バッジ関係ないメッセージ
+  return msg;
+}
