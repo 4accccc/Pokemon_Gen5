@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T17:03:15"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T13:55:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1493" top="279" right="2198" bottom="907" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,67 +292,51 @@
 	</lock>
 
 
-	<row id="msg_t04pc0101_middleman_01">
+	<row id="msg_t04pc0101_middleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂：オールシーズンいる
 ・主人公性別：♂
-・コイキング購入前
-・はい/いいえの選択肢表示
-・はい→glasses_02
-　はい＆金額不足→glasses_03
-　はい＆手持ち一杯→glasses_04
-　いいえ→glasses_05</comment>
+・アイテム入手処理
+　No537「きれいなウロ」</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">おじさん『ぼっちゃん！
-あ・な・た・だけに…！▽
-いい　おはなしが　ありまして▼
-ひみつの　ポケモン　コイキングが
-なんと　たったの　５００円！▽
-どうだい　かうかね？</language>
-		<language name="JPN_KANJI" width="256">おじさん『ぼっちゃん！
-あ・な・た・だけに…！▽
-いい　お話が　ありまして▼
-秘密の　ポケモン　コイキングが
-なんと　たったの　５００円！▽
-どうだい　買うかね？</language>
+		<language name="JPN" width="256">ぼっちゃん！▼
+サザナミに　べっそうが　あるの？
+おかねもち　だね！▼
+おちかづきの　しるしに
+コレを　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">ぼっちゃん！▼
+サザナミに　別荘が　あるの？
+お金持ち　だね！▼
+お近づきの　しるしに
+コレを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_02">
+	<row id="msg_t04pc0101_middleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・主人公性別：♀
-・コイキング購入前
-・はい/いいえの選択肢表示
-・はい→glasses_02
-　はい＆金額不足→glasses_03
-　はい＆手持ち一杯→glasses_04
-　いいえ→glasses_05</comment>
+・主人公性別：♀</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">おじさん『じょうちゃん！
-あ・な・た・だけに…！▽
-いい　おはなしが　ありまして▼
-ひみつの　ポケモン　コイキングが
-なんと　たったの　５００円！▽
-どうだい　かうかね？</language>
-		<language name="JPN_KANJI" width="256">おじさん『じょうちゃん！
-あ・な・た・だけに…！▽
-いい　お話が　ありまして▼
-秘密の　ポケモン　コイキングが
-なんと　たったの　５００円！▽
-どうだい　買うかね？</language>
+		<language name="JPN" width="256">じょうちゃん！▼
+サザナミに　べっそうが　あるの？
+おかねもち　だね！▼
+おちかづきの　しるしに
+コレを　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">じょうちゃん！▼
+サザナミに　別荘が　あるの？
+お金持ち　だね！▼
+お近づきの　しるしに
+コレを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_03">
+	<row id="msg_t04pc0101_middleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・はい選択時
-・ポケモン入手処理＋所持金操作
-　ニックネームの確認</comment>
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　コイキングを
-５００円も　だして　かった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　コイキングを
-５００円も　だして　買った！</language>
+		<language name="JPN" width="256">きれいなウロコ　きれいでしょ！
+ポケモンに　もたせると　いいかもね</language>
+		<language name="JPN_KANJI" width="256">きれいなウロコ　きれいでしょ！
+ポケモンに　持たせると　いいかもね</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_04">
+	<row id="msg_t04pc0101_middleman_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
 		<language name="JPN" width="256">てにいれた　コイキングに
 ニックネームを　つけますか？</language>
@@ -360,7 +344,7 @@
 ニックネームを　つけますか？</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_05">
+	<row id="msg_t04pc0101_middleman_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい＆金額不足</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -368,7 +352,7 @@
 		<language name="JPN_KANJI" width="256">お金　足りない　みたいだねえ</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_06">
+	<row id="msg_t04pc0101_middleman_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい＆手持ち一杯</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -376,7 +360,7 @@
 		<language name="JPN_KANJI" width="256">ポケモン　一杯で　持てないな</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_07">
+	<row id="msg_t04pc0101_middleman_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -384,7 +368,7 @@
 		<language name="JPN_KANJI" width="256">そお　残念だねえ…</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_08">
+	<row id="msg_t04pc0101_middleman_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・コイキング購入後</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
