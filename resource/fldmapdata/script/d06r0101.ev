@@ -856,9 +856,7 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_END_EVENT_BGM()
 	
 	//プレイヤーがアララギに近づく
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou3_a)
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(D06R0101_HEROINE_01,anm_common_turn_right)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 	
 	//博士2が喋る
