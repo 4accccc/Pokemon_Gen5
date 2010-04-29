@@ -1414,6 +1414,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
     if(pWork->pAppWin==NULL){
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
+      return;
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
       GFL_NET_StateWifiMatchEnd(TRUE);

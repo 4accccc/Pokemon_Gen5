@@ -213,6 +213,7 @@ extern void GTSNEGO_MESSAGE_ResetDispSet(GTSNEGO_MESSAGE_WORK* pWork);
 extern void GTSNEGO_MESSAGE_CancelButtonDecide(GTSNEGO_MESSAGE_WORK* pWork);
 extern void GTSNEGO_MESSAGE_DispCountryInfo(GTSNEGO_MESSAGE_WORK* pWork, int msg);
 extern void GTSNEGO_MESSAGE_DeleteCountryMsg(GTSNEGO_MESSAGE_WORK* pWork);
+extern void GTSNEGO_MESSAGE_CancelButtonDeleteForce(GTSNEGO_MESSAGE_WORK* pWork);
 
 extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 

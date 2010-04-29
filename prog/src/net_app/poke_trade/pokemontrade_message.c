@@ -1246,6 +1246,9 @@ APP_TASKMENU_WIN_WORK* POKEMONTRADE_MESSAGE_CancelButtonStart(POKEMON_TRADE_WORK
 
 void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,int change)
 {
+  if(!PRINTSYS_QUE_IsFinished(pWork->SysMsgQue)){
+    PRINTSYS_QUE_Clear(pWork->SysMsgQue);
+  }
   if(bar){
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
   }
@@ -1254,6 +1257,7 @@ void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,i
   }
   APP_TASKMENU_WIN_Delete(pWork->pAppWin);
   pWork->pAppWin = NULL;
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
 }
 
 

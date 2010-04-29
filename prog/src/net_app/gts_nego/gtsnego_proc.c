@@ -817,7 +817,8 @@ static void _matchingState( GTSNEGO_WORK *pWork )
 
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
 
-    GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork);
+    GTSNEGO_MESSAGE_CancelButtonDeleteForce(pWork->pMessageWork);
+//    GF_ASSERT(GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork));
     
     _CHANGE_STATE(pWork, _lookatDownState);
   }
@@ -2009,7 +2010,10 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   EVENT_GTSNEGO_WORK* pEv=pwk;
   GTSNEGO_WORK* pWork = mywk;
 
-
+  if(!WIPE_SYS_EndCheck()){
+    return GFL_PROC_RES_CONTINUE;
+  }
+  
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
   }

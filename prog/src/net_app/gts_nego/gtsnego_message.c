@@ -857,12 +857,12 @@ void GTSNEGO_MESSAGE_DispCountryInfo(GTSNEGO_MESSAGE_WORK* pWork, int msg)
 
   GFL_MSG_GetString( pWork->pMsgData, msg, pWork->pStrBuf );
   if(pWork->placeMsgWin==NULL){
-    pWork->placeMsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 2 , 13, 14 , 2 ,  _NUM_FONT_PALETTE , GFL_BMP_CHRAREA_GET_B );
+    pWork->placeMsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 1 , 13, 14 , 2 ,  _NUM_FONT_PALETTE , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->placeMsgWin;
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
   GFL_FONTSYS_SetColor(15, 14, 0);
-  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 0, 1, pWork->pStrBuf, pWork->pFontHandle );
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 2, 1, pWork->pStrBuf, pWork->pFontHandle );
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   
@@ -1320,16 +1320,29 @@ void GTSNEGO_MESSAGE_CancelButtonDecide(GTSNEGO_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
+void GTSNEGO_MESSAGE_CancelButtonDeleteForce(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  pWork->pAppWin = NULL;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンを消す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
 BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork)
 {
   if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
-    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-    pWork->pAppWin = NULL;
+    GTSNEGO_MESSAGE_CancelButtonDeleteForce(pWork);
     return TRUE;
   }
   return FALSE;
 }
-
 
 
 //------------------------------------------------------------------------------
