@@ -3137,7 +3137,9 @@ struct _TAG_FLDPLAINMSGWIN
   GFL_BMPWIN *bmpwin;
   FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
-  
+
+  PRINTSTREAM_STATE State;    //100429 add プレーンウィンドウにのみ追加　バストアップＢＧの口パク制御のために参照する
+
   s16 shake_y;
   u8 padding[2];
 };
@@ -3416,6 +3418,7 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   trg = GFL_UI_KEY_GetTrg();
   cont = GFL_UI_KEY_GetCont();
   state = fldMsgPrintStream_ProcPrint( plnwin->msgPrintStream );
+  plnwin->State = state;    //ステート保存
   
   { //shake
     GFL_BG_SetScroll(
@@ -3471,6 +3474,18 @@ void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin )
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
   FLDKEYWAITCURSOR_Write( &plnwin->cursor_work, bmp, 0x0f );
   GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDPLAINMSGWIN プレーンウィンドウ 現在のストリームステートを取得
+ * @param plnwin FLDTALKMSGWIN
+ * @retval PRINTSTREAM_STATE
+ */
+//--------------------------------------------------------------
+PRINTSTREAM_STATE FLDPLAINMSGWIN_GetStreamState( FLDPLAINMSGWIN *plnwin )
+{
+  return plnwin->State;
 }
 
 //======================================================================

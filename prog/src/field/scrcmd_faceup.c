@@ -55,7 +55,7 @@ VMCMD_RESULT EvCmdFaceup_Start( VMHANDLE *core, void *wk )
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(fld_faceup) );		//オーバーレイロード
 
-  call_event = FLD_FACEUP_Start(back_idx, char_idx, gsys);
+  call_event = FLD_FACEUP_Start(back_idx, char_idx, gsys, work);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;

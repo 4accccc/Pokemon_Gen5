@@ -405,6 +405,7 @@ extern void FLDPLAINMSGWIN_PrintStreamStartStrBuf(
     FLDPLAINMSGWIN *plnwin, u16 x, u16 y, const STRBUF *strBuf );
 extern BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin );
 extern void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin );
+extern PRINTSTREAM_STATE FLDPLAINMSGWIN_GetStreamState( FLDPLAINMSGWIN *plnwin );
 
 //サブウィンドウ
 extern void FLDSPWIN_GetNeedWindowCharaSize(

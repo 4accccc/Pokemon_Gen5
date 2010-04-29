@@ -381,7 +381,8 @@ static void sysWin_Close( SCRCMD_WORK *work )
         SCRCMD_WORK_SetTimeIconPtr( work, NULL );
       }
     }
-    
+    //NULLセット
+    SCRCMD_WORK_SetMsgWinPtr( work, NULL );
     SCREND_CHK_SetBitOff(SCREND_CHK_WIN_OPEN);
   }
   else
@@ -1106,6 +1107,8 @@ static BOOL EvWaitballoonWin_Close( VMHANDLE *core, void *wk )
   tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
 
   if( FLDTALKMSGWIN_WaitClose(tmsg) == TRUE ){
+     //NULLセット
+    SCRCMD_WORK_SetMsgWinPtr( work, NULL );
     SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
     return( TRUE );
   }
@@ -1150,6 +1153,8 @@ static void DeleteBalloonWin(SCRCMD_WORK *work)
     FLDTALKMSGWIN *tmsg;
     tmsg = (FLDTALKMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
     FLDTALKMSGWIN_Delete( tmsg );
+    //NULLセット
+    SCRCMD_WORK_SetMsgWinPtr( work, NULL );
     SCREND_CHK_SetBitOff(SCREND_CHK_BALLON_WIN_OPEN);
   }else{
     #ifdef SCR_ASSERT_ON    
@@ -1747,6 +1752,8 @@ static void plainWin_Close( SCRCMD_WORK *work )
   if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
     FLDPLAINMSGWIN *win = (FLDPLAINMSGWIN*)SCRCMD_WORK_GetMsgWinPtr( work );
     FLDPLAINMSGWIN_Delete( win );
+    //NULLセット
+    SCRCMD_WORK_SetMsgWinPtr( work, NULL );
     SCREND_CHK_SetBitOff(SCREND_CHK_PLAINWIN_OPEN);
   }else{
     GF_ASSERT( 0 && "PLAINWIN:ERROR とじるウィンドウがありません" );
@@ -1977,7 +1984,8 @@ static void bgWin_Close( SCRCMD_WORK *work )
     if( fontHandle ){
       GFL_FONT_Delete( fontHandle );
     }
-    
+    //NULLセット
+    SCRCMD_WORK_SetMsgWinPtr( work, NULL ); 
     SCREND_CHK_SetBitOff(SCREND_CHK_BGWIN_OPEN);
   }else{
     GF_ASSERT( 0 );
@@ -2113,6 +2121,8 @@ static void spWin_Close( SCRCMD_WORK *work )
   if( SCREND_CHK_CheckBit(SCREND_CHK_SPWIN_OPEN) ){
     FLDSPWIN *spWin = SCRCMD_WORK_GetMsgWinPtr( work );
     FLDSPWIN_Delete( spWin );
+    //NULLセット
+    SCRCMD_WORK_SetMsgWinPtr( work, NULL );
     SCREND_CHK_SetBitOff( SCREND_CHK_SPWIN_OPEN );
   }else{
     GF_ASSERT( 0 );

@@ -33,6 +33,10 @@ typedef struct FACEUP_WORK_tag
 
   int BackNo;       //背景BG
 
+  SCRCMD_WORK *ScrCmdWork;
+  GFL_TCB* MainTcb;
+  BOOL MsgEnd;
+
   //顔BG
 }FACEUP_WORK;
 
@@ -49,7 +53,9 @@ static void PopDisp(FACEUP_WK_PTR ptr);
 
 static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
 
-GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *gsys)
+static void MainTcbFunc( GFL_TCB* tcb, void* work );
+
+GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *gsys, SCRCMD_WORK *scrCmdWork)
 {
   GMEVENT * event;
   HEAPID heapID;
@@ -71,9 +77,19 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *
   *FIELDMAP_GetFaceupWkPtrAdr(fieldmap) = ptr;
 //  ptr->HeapID = heapID;
   ptr->BackNo = inBackNo;
+  ptr->ScrCmdWork = scrCmdWork;
 
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, SetupEvt, 0 );
+
+  {
+    GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( fieldmap );
+
+    // TCBを追加
+    ptr->MainTcb = GFL_TCB_AddTask( tcbsys, MainTcbFunc, ptr, 0 );
+
+    ptr->MsgEnd = FALSE;
+  }
   return event;
 }
 
@@ -321,6 +337,15 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
   case 1:
     //ブラックアウト待ち
     if ( GFL_FADE_CheckFade() ) break;
+
+    //メインＴＣＢ削除
+    GFL_TCB_DeleteTask( ptr->MainTcb );
+    (*seq)++;
+    break;
+  case 2:
+    //転送タスク終了待ち
+    if (0)  break;
+
     //リリース
     Release(fieldmap, ptr);
     //ブラックイン開始
@@ -328,7 +353,7 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 0 );
     (*seq)++;
     break;
-  case 2:
+  case 3:
     if ( GFL_FADE_CheckFade() == FALSE ){
       return GMEVENT_RES_FINISH;
     }
@@ -458,3 +483,43 @@ static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
     }
   }
 }
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief TCB実行関数
+ */
+//------------------------------------------------------------------------------------------
+static void MainTcbFunc( GFL_TCB* tcb, void* work )
+{
+  FACEUP_WK_PTR ptr = (FACEUP_WK_PTR)work;
+  
+  if (ptr->MsgEnd) return;
+  
+  //プレーンウィンドウ以外のときは処理しない
+  if ( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) )
+  {
+    FLDPLAINMSGWIN *win = SCRCMD_WORK_GetMsgWinPtr( ptr->ScrCmdWork );
+    if (win != NULL)
+    {
+      PRINTSTREAM_STATE state = FLDPLAINMSGWIN_GetStreamState( win );
+      if ( state == PRINTSTREAM_STATE_RUNNING )
+      {
+        NOZOMU_Printf("口パクしてＯＫ\n");
+      }
+      else
+      {
+        //
+        NOZOMU_Printf("口閉じる\n");
+        if ( state == PRINTSTREAM_STATE_DONE )
+        {
+          NOZOMU_Printf("メッセージ終了\n");
+          ptr->MsgEnd = TRUE;
+        }
+      }
+    }
+    else{
+      NOZOMU_Printf("NOTHING WIN\n");
+    }
+  }
+}
+
