@@ -185,6 +185,7 @@ struct _GTSNEGO_WORK {
   MATCH_DATA myMatchData;
   MATCH_DATA MatchData;
   BOOL keyMode;
+  BOOL bSingle;
   DWC_TOOL_BADWORD_WORK aBadWork;
 };
 
@@ -206,6 +207,8 @@ static void _changeStateDebug(GTSNEGO_WORK* pWork,StateFunc* state, int line);
 static void _modeSelectMenuInit(GTSNEGO_WORK* pWork);
 static void _modeSelectMenuWait(GTSNEGO_WORK* pWork);
 static void _profileIDCheck(GTSNEGO_WORK* pWork);
+static void _messageEndCheck(GTSNEGO_WORK* pWork);
+static void _cancelFlash(GTSNEGO_WORK* pWork);
 
 static void _modeReportInit(GTSNEGO_WORK* pWork);
 static void _modeReportWait(GTSNEGO_WORK* pWork);
@@ -342,6 +345,8 @@ static void _recvMatchData(const int netID, const int size, const void* pData, v
 static BOOL _AnyoneOrFriendButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 {
   pWork->changeMode = bttnid;
+
+  GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
   if(bttnid==0){
     pWork->key1 = _CROSSCUR_TYPE_MAINUP;
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin,pWork->key1);
@@ -489,7 +494,7 @@ static void _wipeEnd( GTSNEGO_WORK *pWork )
 static void _messageEnd( GTSNEGO_WORK *pWork )
 {
   pWork->timer--;
-  if(pWork->timer==0){
+  if(pWork->timer<=0){
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     _CHANGE_STATE(pWork, _wipeEnd);
@@ -796,30 +801,35 @@ static void _lookatDownState( GTSNEGO_WORK *pWork )
 
 static void _matchingState( GTSNEGO_WORK *pWork )
 {
-#if _DISP_DEBUG
-  if(GFL_UI_KEY_GetTrg()==0){
-    return;
-  }
-
-  
-  if(1){
-#else
-
   GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
 
   //接続したら表示して交換に
-//  if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
-  if(GFL_NET_STATE_MATCHED == GFL_NET_StateGetWifiStatus()){
 
+#if _DISP_DEBUG
+  if(GFL_UI_KEY_GetTrg())
+#else
+  if(GFL_NET_STATE_MATCHED == GFL_NET_StateGetWifiStatus())
 #endif
+  {
     
     GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_021);
 
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
 
+    GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork);
+    
     _CHANGE_STATE(pWork, _lookatDownState);
   }
+  else if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_CANCEL)
+  {
+    GTSNEGO_MESSAGE_CancelButtonDecide(pWork->pMessageWork);
+    GFL_NET_StateWifiMatchEnd(TRUE);
+    PMSND_PlaySystemSE(_SE_CANCEL);
+    _CHANGE_STATE(pWork,_cancelFlash);
+  }
+
+  
 }
 
 //----------------------------------------------------------------------------
@@ -1012,37 +1022,33 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
 
   GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
 
+  if(GFL_UI_KEY_GetTrg()){
+    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+      return;
+    }
+  }
+  
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
-    pWork->keyMode = TRUE;
     _LevelKeyCallback(FALSE, pWork);
   }
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
-    pWork->keyMode = TRUE;
     _LevelKeyCallback(TRUE, pWork);
   }
   
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
     PMSND_PlaySystemSE(_SE_CUR);
     bHit=TRUE;
-    if(!pWork->keyMode){
-      pWork->keyMode=TRUE;
-    }
-    else{
-      if(pWork->key2 != _CROSSCUR_TYPE_ANY1){
-        pWork->key2--;
-      }
+    if(pWork->key2 != _CROSSCUR_TYPE_ANY1){
+      pWork->key2--;
     }
   }
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
     PMSND_PlaySystemSE(_SE_CUR);
     bHit=TRUE;
-    if(!pWork->keyMode){
-      pWork->keyMode=TRUE;
-    }
-    else{
-      if(pWork->key2 != _CROSSCUR_TYPE_ANY4){
-        pWork->key2++;
-      }
+    if(pWork->key2 != _CROSSCUR_TYPE_ANY4){
+      pWork->key2++;
     }
   }
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
@@ -1115,7 +1121,15 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 
   GF_ASSERT(pWork->pAppWin==NULL);
   pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_023);
-  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
+
+  if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
+  }
+  else{
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
+  }
+
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 
   _CHANGE_STATE(pWork,_levelSelectWait);
 }
@@ -1238,17 +1252,29 @@ static void _MatchingCancelState(GTSNEGO_WORK* pWork)
 
 
 
+
+
+static void _cancelFlash2(GTSNEGO_WORK* pWork)
+{
+  GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
+  GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
+  _CHANGE_STATE(pWork,_modeSelectMenuInit);
+}
+
 static void _cancelFlash(GTSNEGO_WORK* pWork)
 {
   if(!GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork)){
     return;
   }
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-  GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
-  GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+  GTSNEGO_MESSAGE_DeleteDispLevel(pWork->pMessageWork);
+  GTSNEGO_DISP_LevelInputFree(pWork->pDispWork);
+  G2S_BlendNone();
   GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
-  _CHANGE_STATE(pWork,_modeSelectMenuInit);
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+  _CHANGE_STATE(pWork,_cancelFlash2);
 }
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1264,15 +1290,11 @@ static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work)
   case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
     //マッチング中だけ実行
     if(pWork->state == &_matchingState){
-//      GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork);
-  //    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_043);
- //     _CHANGE_STATE(pWork , _MatchingCancelState);
 
       GTSNEGO_MESSAGE_CancelButtonDecide(pWork->pMessageWork);
       GFL_NET_StateWifiMatchEnd(TRUE);
+      PMSND_PlaySystemSE(_SE_CANCEL);
       _CHANGE_STATE(pWork,_cancelFlash);
-
-
     }
     break;
   }
@@ -1301,6 +1323,7 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
       break;
     case 1:
       G2S_BlendNone();
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_024);
       _CHANGE_STATE(pWork,_friendSelectWait);
       break;
     }
@@ -1586,6 +1609,26 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
 
 //------------------------------------------------------------------
 /**
+ * $brief   交換相手いないのでもとにもどる
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static void _friendSelectCancel( GTSNEGO_WORK *pWork )
+{
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  pWork->timer--;
+  if(pWork->timer <= 0){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
+    _CHANGE_STATE(pWork,_modeSelectMenuWait);
+  }
+}
+
+//------------------------------------------------------------------
+/**
  * $brief   交換相手選択
  * @param   wk
  * @retval  none
@@ -1604,7 +1647,8 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
   
   if(a==0){
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_034);
-    _CHANGE_STATE(pWork,_modeSelectMenuWait);
+    pWork->timer = 30*2;
+    _CHANGE_STATE(pWork,_friendSelectCancel);
     return;
   }
   pWork->scrollPanelCursor.listmax = a;
@@ -1663,6 +1707,18 @@ static void _connectionStart(GTSNEGO_WORK* pWork)
 
 
 
+static void _modeSelectEnd(GTSNEGO_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_047);
+    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
+    }
+    _CHANGE_STATE(pWork, _messageEndCheck);
+  }
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   だれでもかしりあいか選択
@@ -1675,7 +1731,8 @@ static void _connectionStart(GTSNEGO_WORK* pWork)
 static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 {
   GTSNEGO_DISP_ScrollReset(pWork->pDispWork);
-  if(pWork->keyMode){
+
+  if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
   }
   else{
@@ -1684,13 +1741,20 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
   GTSNEGO_MESSAGE_DispAnyoneOrFriend(pWork->pMessageWork, &_BttnCallBack, pWork);
   pWork->touch = &_AnyoneOrFriendButtonCallback;
 
-  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
+  {
+    POKEPARTY* party = GAMEDATA_GetMyPokemon(pWork->pGameData);
+    if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
+      pWork->bSingle = TRUE;
+    }
+  }
 
-
+  if(!pWork->bSingle){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
+  }
   GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
-
   _CHANGE_STATE(pWork,_modeSelectMenuWait);
+  
 }
 
 
@@ -1738,6 +1802,10 @@ static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork)
   int buttonNo = _buttonCheck(pWork, pWork->key1);
   if(buttonNo==_CROSSCUR_TYPE_MAINUP){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
+
+    GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+
     _CHANGE_STATE(pWork,_levelSelect);
   }
   else if(buttonNo==_CROSSCUR_TYPE_MAINDOWN){
@@ -1755,9 +1823,11 @@ static void _messageEndCheck2(GTSNEGO_WORK* pWork)
     switch(selectno){
     case 0:
       pWork->dbw->result = FALSE;
+      pWork->timer=0;
       _CHANGE_STATE(pWork,_messageEnd);
       break;
     case 1:
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
       TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
       G2S_BlendNone();
       _CHANGE_STATE(pWork,_modeSelectMenuWait);
@@ -1790,38 +1860,37 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
+  if(pWork->bSingle){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_048);
+    _CHANGE_STATE(pWork,_modeSelectEnd);
+    return;
+  }
 
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    if(!pWork->keyMode){
+
+  if(GFL_UI_KEY_GetTrg()){
+    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
       pWork->keyMode=TRUE;
-    }
-    else{
-      _buttonDecide(pWork, pWork->key1);
-      _CHANGE_STATE(pWork,_modeSelectMenuFlash);
       return;
     }
   }
 
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+    _buttonDecide(pWork, pWork->key1);
+    _CHANGE_STATE(pWork,_modeSelectMenuFlash);
+    return;
+  }
   
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
     bHit=TRUE;
     PMSND_PlaySystemSE(_SE_CUR);
-    if(!pWork->keyMode){
-      pWork->keyMode=TRUE;
-    }
-    else{
-      pWork->key1=_CROSSCUR_TYPE_MAINUP;
-    }
+    pWork->key1=_CROSSCUR_TYPE_MAINUP;
   }
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN){
     bHit=TRUE;
     PMSND_PlaySystemSE(_SE_CUR);
-    if(!pWork->keyMode){
-      pWork->keyMode=TRUE;
-    }
-    else{
-      pWork->key1=_CROSSCUR_TYPE_MAINDOWN;
-    }
+    pWork->key1=_CROSSCUR_TYPE_MAINDOWN;
   }
   if(bHit){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
@@ -1833,9 +1902,10 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
     pWork->timer=1;
-//    GFL_NET_Exit(NULL);
-//    _CHANGE_STATE(pWork, _messageEnd);
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_047);
+    if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
+    }
     _CHANGE_STATE(pWork, _messageEndCheck);
     break;
   default:

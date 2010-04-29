@@ -107,7 +107,7 @@ struct _GTSNEGO_MESSAGE_WORK {
   u32 bgchar2S;  //SystemMsg
   u32 bgchar1M; //info
 
-  GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
+//  GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
 
   GFL_MSGDATA *pMsgData;  //
@@ -830,26 +830,6 @@ void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork)
 
 APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno)
 {
-#if 0
-  int i;
-  APP_TASKMENU_INITWORK appinit;
-  APP_TASKMENU_WORK* pAppTask;
-
-  appinit.heapId = pWork->heapID;
-  appinit.itemNum =  1;
-  appinit.itemWork =  &pWork->appitem[0];
-  appinit.charPosX = 18;
-  appinit.charPosY = 24;
-  appinit.posType = ATPT_RIGHT_DOWN;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
-
-  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
-  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-#endif
   APP_TASKMENU_WIN_WORK* pAppWin;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
@@ -859,6 +839,10 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
   pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
                                            pWork->appitem, 16-4, 24-3, 10, pWork->heapID);
 
+  if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
+    APP_TASKMENU_WIN_SetActive( pAppWin , TRUE);
+  }
+  
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   
   return pAppWin;
@@ -1303,6 +1287,11 @@ void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
   GF_ASSERT(pWork->pAppWin==NULL);
   pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
                                            pWork->appitem, 16 - 5, 24-3, 10, pWork->heapID);
+
+  if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
+    APP_TASKMENU_WIN_SetActive( pWork->pAppWin , TRUE);
+  }
+
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
 
   _ButtonSafeDelete(pWork);
