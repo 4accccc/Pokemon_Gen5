@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-19T15:20:51" source="gelboard01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-29T16:16:14" source="gelboard01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-04-19T15:20:51" source="gelboard01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-29T16:16:14" source="gelboard01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2782,46 +2782,46 @@
 			7777 7777 0007 0000 0000 0000 0000 0000
 			1111 1111 1111 1111 1111 1111 1111 1111
 			1111 1111 0001 0000 0000 0000 0000 0000
-			bbb1 bbbb bbbb bbbb bbbb bbbb 6bbb b6b6
-			8566 1888 0001 0000 0000 0000 0000 0000
-			ebb1 ffff bbbe bbbb bbbb bbbb 68bb b6bb
-			856b 1bbb 0001 0000 0000 0000 0000 0000
-			fbb1 ffff bbbe bbbb bbbb bbbb 65bb 6666
-			8566 1bbb 0001 0000 0000 0000 0000 0000
-			fcc1 ccef cccc cccc cccc cccc 658c 6666
-			5566 1ccc 0001 0000 0000 0000 0000 0000
-			fbb1 bbbf bbbb bbbb bbbb bbbb 855b 6666
-			5586 1bbb 0001 0000 0000 0000 0000 0000
-			fcc1 cccf cccc cccc cccc cccc c858 cccc
-			55cc 1cc8 0001 0000 0000 0000 0000 0000
-			ebb1 bbbe bbbb bbbb bbbb bbbb b853 bbbb
-			55bb 1bb5 0001 0000 0000 0000 0000 0000
-			ccc1 cccc cccc cccc cccc 33cc 5333 ccc8
-			55cc 1c85 0001 0000 0000 0000 0000 0000
-			acc1 cccc cccc cccc cccc c33c 33c3 c855
-			58cc 1c55 0001 0000 0000 0000 0000 0000
-			ecc1 cccc cccc cccc cccc cc3c 3cc3 5555
-			5885 1855 0001 0000 0000 0000 0000 0000
-			ecc1 cccc cccc cccc cccc 333c 3333 5558
-			5555 1555 0001 0000 0000 0000 0000 0000
-			9991 c999 cccc caac acaa 333a 3333 58cc
-			5555 1555 0001 0000 0000 0000 0000 0000
-			aca1 caac cccc 99bc 9999 33cb c333 8ccc
-			5555 1888 0001 0000 0000 0000 0000 0000
-			ada1 daad dddd a999 99aa 5dd9 ddd8 dddd
-			8558 1558 0001 0000 0000 0000 0000 0000
-			aca1 caac abbb cb99 9ccc 5ca9 ccc8 8ccc
-			8555 1445 0001 0000 0000 0000 0000 0000
-			add1 bddd 9bbb bba9 addd 8d99 dd85 558d
-			8555 1444 0001 0000 0000 0000 0000 0000
-			add1 bbdd 9bbb bbb9 dddb dd99 5825 5555
-			8855 1444 0001 0000 0000 0000 0000 0000
-			aee1 bbee abbb bbba eeeb 2eaa 2222 8855
-			5888 1444 0001 0000 0000 0000 0000 0000
-			9ee1 9bee 9b99 bbb9 eeeb 2299 2e2e ec82
-			48ee 1444 0001 0000 0000 0000 0000 0000
-			9ee1 9bee 9b99 bbb9 eeeb e299 ee2e eec2
-			48ee 1444 0001 0000 0000 0000 0000 0000
+			bbb1 bbbb bbbb bbbb bbbb bbbb fbbb 6eee
+			bbf8 1833 0001 0000 0000 0000 0000 0000
+			ebb1 ffff bbbe bbbb bbbb bbbb fbbb bbbe
+			bb86 183b 0001 0000 0000 0000 0000 0000
+			fbb1 ffff bbbe bbbb bbbb bbbb 2bbb 2e22
+			bb62 18bb 0001 0000 0000 0000 0000 0000
+			fcc1 ccef cccc cccc cccc cccc 3ccc 2223
+			c863 18cc 0001 0000 0000 0000 0000 0000
+			fbb1 bbbf bbbb bbbb bbbb bbbb bbbb 3333
+			8683 1888 0001 0000 0000 0000 0000 0000
+			fcc1 cccf cccc cccc cccc cccc cccc cccc
+			668c 1666 0001 0000 0000 0000 0000 0000
+			ebb1 bbbe bbbb bbbb bbbb bbbb b864 bbbb
+			6668 18b8 0001 0000 0000 0000 0000 0000
+			ccc1 cccc cccc cccc cccc ffcc 66ff 8cc8
+			6886 18c6 0001 0000 0000 0000 0000 0000
+			acc1 cccc cccc cccc cccc eefc 6eee 6886
+			8ccc 1886 0001 0000 0000 0000 0000 0000
+			ecc1 cccc cccc cccc cccc cefc fecc 8666
+			cccc 1866 0001 0000 0000 0000 0000 0000
+			ecc1 cccc cccc cccc cccc 222c 222e 6688
+			cc86 1668 0001 0000 0000 0000 0000 0000
+			9991 c999 cccc caac acaa 233a 3322 868c
+			8666 1556 0001 0000 0000 0000 0000 0000
+			aca1 caac cccc 99bc 9999 33cb c333 c86c
+			668c 1885 0001 0000 0000 0000 0000 0000
+			ada1 daad dddd a999 99aa ddd9 dddd dd6d
+			58dd 1588 0001 0000 0000 0000 0000 0000
+			aca1 caac abbb cb99 9ccc cca9 cccc 886c
+			5666 1488 0001 0000 0000 0000 0000 0000
+			add1 bddd 9bbb bba9 addd dd99 88dd 6666
+			5886 1458 0001 0000 0000 0000 0000 0000
+			add1 bbdd 9bbb bbb9 dddb dd99 6648 8686
+			6ddd 1445 0001 0000 0000 0000 0000 0000
+			aee1 bbee abbb bbba eeeb feaa ffff 86e8
+			68ee 1545 0001 0000 0000 0000 0000 0000
+			9ee1 9bee 9b99 bbb9 eeeb ef99 eeee 68ef
+			8688 1544 0001 0000 0000 0000 0000 0000
+			9ee1 9bee 9b99 bbb9 eeeb ef99 eccc 8eef
+			8866 1654 0001 0000 0000 0000 0000 0000
 			1111 1111 1111 1111 1111 1111 1111 1111
 			1111 1111 0001 0000 0000 0000 0000 0000
 			1111 1111 1111 1111 1111 1111 1111 1111
@@ -6652,7 +6652,7 @@
 		59e7 5a2d 6334 6628 73b8 7f55 7fff 7fff
 	</tex_palette>
 	<tex_palette index="37" name="geat_tv.9_pl" color_size="16">
-		0000 294a 3255 35b2 3a0e 4250 59aa 5a2d
+		0000 294a 2d6b 3194 31ac 3a0e 4250 5a2d
 		5e90 6a88 72ab 7aed 7b0f 7f31 7f55 7fff
 	</tex_palette>
 	<tex_palette index="38" name="gelboard_1_pl" color_size="16">
