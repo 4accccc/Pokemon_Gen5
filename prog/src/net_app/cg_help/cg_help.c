@@ -422,9 +422,18 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
   {
     arcHandle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR , work->heapId );
 
-    work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
-          NARC_c_gear_c_gear_m_obj_NCLR, CLSYS_DRAW_SUB , 
-          0 , 0 , 15 , work->heapId  );
+    if( MyStatus_GetMySex( work->initWork->myStatus ) == PM_MALE )
+    {
+      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+            NARC_c_gear_c_gear_m_obj_NCLR, CLSYS_DRAW_SUB , 
+            0 , 0 , 15 , work->heapId  );
+    }
+    else
+    {
+      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+            NARC_c_gear_c_gear_f_obj_NCLR, CLSYS_DRAW_SUB , 
+            0 , 0 , 15 , work->heapId  );
+    }
     work->cellResIdx[CHCR_CGEAR_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
           NARC_c_gear_c_gear_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->cellResIdx[CHCR_CGEAR_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 

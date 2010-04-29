@@ -63,10 +63,10 @@ static const u16 INFOWIN_CHR_FLIP_Y = 0x800;
 #define INFOWIN_CHECK_BIT(value,bit) (value&bit?TRUE:FALSE)
 
 static const u16 INFOWIN_COLOR_BLACK = 0x0000;
-static const u16 INFOWIN_COLOR_WHITE1 = GX_RGB(31,31,31);
-static const u16 INFOWIN_COLOR_WHITE2 = GX_RGB(19,19,19);
-static const u16 INFOWIN_COLOR_GRAY1  = GX_RGB( 9, 9, 9);
-static const u16 INFOWIN_COLOR_GRAY2  = GX_RGB( 6, 6, 6);
+static const u16 INFOWIN_COLOR_WHITE1 = GX_RGB(31,31,31); //点滅計算も修正
+static const u16 INFOWIN_COLOR_WHITE2 = GX_RGB(19,19,19); //点滅計算も修正
+static const u16 INFOWIN_COLOR_GRAY1  = GX_RGB( 9, 9, 9); //点滅計算も修正
+static const u16 INFOWIN_COLOR_GRAY2  = GX_RGB( 6, 6, 6); //点滅計算も修正
 static const u16 INFOWIN_COLOR_RED1   = GX_RGB(31, 4, 4);
 static const u16 INFOWIN_COLOR_RED2   = GX_RGB(16, 2, 2);
 static const u16 INFOWIN_COLOR_YERROW1= GX_RGB(31,22, 0);
@@ -76,6 +76,11 @@ static const u16 INFOWIN_COLOR_GREEN2 = GX_RGB( 0, 8,16);
 
 static const u16 INFOWIN_BEACON_SCAN_SYNC = 10*60;  //10秒スキャンする
 static const u16 INFOWIN_BEACON_WAIT_SYNC = 10*60;//30*60;  //30秒ネット開始をまつ
+
+#define INFOWIN_ANIME_MAX (16*5)
+#define INFOWIN_ANIME_SPAN (16)
+#define INFOWIN_ANIME_SPAN_H (8)
+
 //======================================================================
 //  enum
 //======================================================================
@@ -89,11 +94,13 @@ enum
   INFOWIN_REFRESH_BATTERY   = 0x0020,
 
   INFOWIN_DISP_GPF_SYNC = 0x0100, //未使用
-  INFOWIN_DISP_IR     = 0x0200,
-  INFOWIN_DISP_BEACON   = 0x0400,
+  INFOWIN_DISP_IR      = 0x0200,
+  INFOWIN_DISP_BEACON  = 0x0400,
+  INFOWIN_IS_ANIME     = 0x0800,
+  INFOWIN_GET_BEACON   = 0x1000,
 
   INFOWIN_REFRESH_MASK = 0x003F,
-  INFOWIN_DISP_MASK = 0x0700,
+  INFOWIN_DISP_MASK = 0x1700,
   INFOWIN_BIT_MASK = 0xFFFF,
   INFOWIN_FLG_NULL = 0x0000,
 };
@@ -151,6 +158,7 @@ typedef struct
   u16 isRefresh;
   u8  bgplane;
   u8  pltNo;
+  u8  anmCnt;
   WIFI_LIST *wifiList;
 
   //時計
@@ -205,6 +213,7 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , WIFI_LIST *wifiList , co
   infoWk->wifiState = IWS_DISABLE;
   infoWk->batteryVol = GFL_UI_GetBattLevel();
   infoWk->wifiList = wifiList;
+  infoWk->anmCnt = 0;
   
   //一回強制的に更新
   INFOWIN_Update();
@@ -244,13 +253,30 @@ void  INFOWIN_Update( void )
   {
     u32 bit = WIH_DWC_GetAllBeaconTypeBit(infoWk->wifiList);
     
+    //すれ違いビーコンのチェック
+    int checkCnt=0;
+    if( GAMEBEACON_Get_UpdateLogNo( &checkCnt ) != GAMEBEACON_SYSTEM_LOG_MAX )
+    {
+      INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+      INFOWIN_SetBit(INFOWIN_GET_BEACON);
+    }
+    else
+    {
+      INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+      INFOWIN_ResetBit(INFOWIN_GET_BEACON);
+    }
+
+    
     if(bit & GAME_COMM_SBIT_IRC_ALL)
     {
+      /*
       if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == FALSE )
       {
         INFOWIN_SetBit(INFOWIN_REFRESH_IR);
         INFOWIN_SetBit(INFOWIN_DISP_IR);
       }
+      */
+      //IRは通常時つかない
     }
     else
     {
@@ -263,8 +289,18 @@ void  INFOWIN_Update( void )
     
     if(bit & GAME_COMM_SBIT_WIRELESS_ALL)
     {
+      if( bit & (GAME_COMM_STATUS_BIT_WIRELESS|GAME_COMM_STATUS_BIT_WIRELESS_TR) )
+      {
+        //点滅モード
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_SetBit(INFOWIN_DISP_BEACON);
+        INFOWIN_SetBit(INFOWIN_IS_ANIME);
+      }
+      else
       if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == FALSE )
       {
+        infoWk->anmCnt = 0;
+        INFOWIN_ResetBit(INFOWIN_IS_ANIME);
         INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
         INFOWIN_SetBit(INFOWIN_DISP_BEACON);
       }
@@ -273,8 +309,10 @@ void  INFOWIN_Update( void )
     {
       if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == TRUE )
       {
+        infoWk->anmCnt = 0;
         INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
         INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
+        INFOWIN_ResetBit(INFOWIN_IS_ANIME);
       }
     }
 
@@ -326,6 +364,15 @@ void  INFOWIN_Update( void )
       {
         INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
         INFOWIN_SetBit(INFOWIN_DISP_BEACON);
+        INFOWIN_ResetBit(INFOWIN_IS_ANIME);
+        infoWk->anmCnt = 0;
+      }
+      if( netInit->gsid == WB_NET_PALACE_SERVICEID )
+      {
+        //点滅モード
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_SetBit(INFOWIN_DISP_BEACON);
+        INFOWIN_SetBit(INFOWIN_IS_ANIME);
       }
     }
     else
@@ -334,6 +381,8 @@ void  INFOWIN_Update( void )
       {
         INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
         INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
+        INFOWIN_ResetBit(INFOWIN_IS_ANIME);
+        infoWk->anmCnt = 0;
       }
     }
     
@@ -477,19 +526,60 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
   //ワイヤレスの更新
   if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_BEACON) )
   {
-    static const u16 BEACON_TOP_CHAR[2] = {0x20,0x20};
-    const u8  flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON);
-    INFOWIN_SetScrFunc( BEACON_TOP_CHAR[flg],infoWk->pltNo,
+    static const u16 BEACON_TOP_CHAR = 0x20;
+    static const u16 BEACON_BACK_COLOR[2][2] = 
+    {
+      {INFOWIN_COLOR_GRAY2,INFOWIN_COLOR_GRAY1},
+      {INFOWIN_COLOR_WHITE2,INFOWIN_COLOR_WHITE1} 
+    };
+
+    INFOWIN_SetScrFunc( BEACON_TOP_CHAR,infoWk->pltNo,
               INFOWIN_BEACON_DRAW_X,0,
               INFOWIN_BEACON_DRAW_WIDTH,2 );
-
-    {//Pallet
-      static const u16 BEACON_BACK_COLOR[2][2] = {
-            {INFOWIN_COLOR_GRAY2,INFOWIN_COLOR_GRAY1},
-            {INFOWIN_COLOR_WHITE2,INFOWIN_COLOR_WHITE1} };
-
+    
+    //Pallet
+    if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_IS_ANIME) )
+    {
+      //点滅モード
+      if( GFL_UI_GetFrameRate() == GFL_UI_FRAMERATE_30 )
+      {
+        infoWk->anmCnt+=2;
+      }
+      else
+      {
+        infoWk->anmCnt++;
+      }
+      if( infoWk->anmCnt >= INFOWIN_ANIME_MAX )
+      {
+        infoWk->anmCnt = 0;
+      }
+      {
+        const u8 anmSpan = (infoWk->anmCnt/INFOWIN_ANIME_SPAN);
+        const u8 anmFrame = (infoWk->anmCnt%INFOWIN_ANIME_SPAN);
+        
+        if( anmSpan < 4 )
+        {
+          const u8 shade = INFOWIN_ANIME_SPAN_H-MATH_ABS(anmFrame-(INFOWIN_ANIME_SPAN_H));
+          u8 col[2];
+          u16 colRGB[2];
+          col[0] = ((19-6)*shade/INFOWIN_ANIME_SPAN_H) + 6;
+          col[1] = ((31-9)*shade/INFOWIN_ANIME_SPAN_H) + 9;
+          colRGB[0] = GX_RGB( col[0],col[0],col[0] );
+          colRGB[1] = GX_RGB( col[1],col[1],col[1] );
+          INFOWIN_SetPltFunc( INFOWIN_PLT_BEACON_BACK , colRGB , 2 );
+        }
+        else
+        {
+          INFOWIN_SetPltFunc( INFOWIN_PLT_BEACON_BACK , BEACON_BACK_COLOR[0] , 2 );
+        }
+      }
+    }
+    else
+    {
+      const u8  flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,(INFOWIN_DISP_BEACON|INFOWIN_GET_BEACON));
       INFOWIN_SetPltFunc( INFOWIN_PLT_BEACON_BACK , BEACON_BACK_COLOR[flg] , 2 );
     }
+    
     infoWk->isRefresh -= INFOWIN_REFRESH_BEACON;
     transReq = TRUE;
 
@@ -500,7 +590,7 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
   {
     const u16 BATTERY_TOP_CHAR[6] = {0x40,0x41,0x42,0x43,0x44,0x45};
     const u8 flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON);
-    const u8 dispPosArr[6] = {0,1,1,2,2,3};
+    const u8 dispPosArr[6] = {0,0,1,1,2,3};
     u16 scrData[2][2];
     u8 dispPos;
     if( OS_IsRunOnTwl() )//DSIなら
