@@ -1132,7 +1132,7 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
-  TAYA_Printf("Mcss_SetPaletteFade : position=%d, index=%d, adrs=%p\n", position, index, bmw->btlv_mcss[index].mcss );
+
   MCSS_SetPaletteFade( bmw->btlv_mcss[ index ].mcss, start_evy, end_evy, wait, rgb );
 }
 

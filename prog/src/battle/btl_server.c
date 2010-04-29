@@ -1790,7 +1790,6 @@ void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos )
       }
     }
     server->changePokePos[ server->changePokeCnt++ ] = pos;
-    TAYA_Printf("サーバに記憶：交替すべき位置ID=%d, 合計%d件\n");
   }
 }
 

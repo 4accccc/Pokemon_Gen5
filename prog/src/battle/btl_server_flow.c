@@ -12850,7 +12850,6 @@ BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEf
 //=============================================================================================
 void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex )
 {
-  TAYA_Printf("set effect Index = %d\n", effIndex );
   wazaEffCtrl_SetEffectIndex( wk->wazaEffCtrl, effIndex );
 }
 //=============================================================================================
@@ -13089,14 +13088,14 @@ static BOOL relivePokeRec_CheckNecessaryPokeIn( BTL_SVFLOW_WORK* wk )
   {
     clientID = BTL_MAINUTIL_PokeIDtoClientID( wk->relivedPokeID[i] );
 
-    TAYA_Printf("ClientID=%d のポケが生き返った..", clientID);
+    BTL_N_Printf( DBGSTR_SVFL_RelivePokeStart, clientID);
 
     // １個所でも空き位置があれば入場させる必要アリ
     if( BTL_POSPOKE_GetClientEmptyPos(&wk->pospokeWork, clientID, pos) ){
-      TAYA_Printf( "空きがあるので入場させる\n");
+      BTL_N_Printf( DBGSTR_SVFL_ReliveEndIn );
       return TRUE;
     }
-    TAYA_Printf( "空きがないので無視する\n");
+    BTL_N_Printf( DBGSTR_SVFL_ReliveEndIgnore );
   }
   return FALSE;
 }
@@ -14341,7 +14340,7 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   if( scproc_MemberOutForChange(wk, bpp) )
   {
     BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
-    TAYA_Printf("とんぼいれかえ pos=%d, pokeID=%d\n", pos, param->pokeID );
+
     BTL_SERVER_RequestChangePokemon( wk->server, pos );
     handexSub_putString( wk, &param->exStr );
     wk->flowResult = SVFLOW_RESULT_POKE_CHANGE;

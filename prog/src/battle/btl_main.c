@@ -585,7 +585,6 @@ static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID )
   if( sp->tr_data[relation_clientID]->tr_id != TRID_NULL ){
     trainerParam_StoreNPCTrainer( trParam, sp->tr_data[relation_clientID] );
   }else{
-    TAYA_Printf("   setupPlayer\n");
     trainerParam_StorePlayer( trParam, wk->heapID, sp->playerStatus[relation_clientID] );
   }
 }
@@ -4140,7 +4139,6 @@ static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party )
       ++idx;
     }
     else{
-      TAYA_Printf("pokeIdx:%d ->ÅŒã”ö‚Ö\n", checkedCount);
       BTL_PARTY_MoveLastMember( party, idx );
     }
     ++checkedCount;

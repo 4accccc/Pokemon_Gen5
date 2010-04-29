@@ -778,8 +778,6 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
       pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
       waza = BPP_WAZA_GetID( wk->rotationSelParam->poke[ pokeIdx ].bpp, wazaIdx );
 
-      TAYA_Printf("Rotate dir=%d, pokeIdx=%d\n", dir, pokeIdx);
-
       BTL_ACTION_SetRotation( &wk->rotationSelParam->actRotation, dir );
       BTL_ACTION_SetFightParam( &wk->rotationSelParam->actWaza, waza, BTL_POS_NULL );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );

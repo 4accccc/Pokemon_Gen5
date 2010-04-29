@@ -99,6 +99,7 @@ static struct {
 
   HEAPID          heapID;               ///< ヒープID
   u32             clientID;             ///< UIクライアントID
+  u32             fIgnoreFormat;        ///< 対象による文字列フォーマット変更をオフ（常に自分用=接頭詞なし）
 
 }SysWork;
 
@@ -162,6 +163,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
   SysWork.pokeCon = pokeCon;
   SysWork.heapID = heapID;
   SysWork.clientID = playerClientID;
+  SysWork.fIgnoreFormat = BTL_MAIN_GetSetupStatusFlag( mainModule, BTL_STATUS_FLAG_LEGEND_EX );
 
   SysWork.wset = WORDSET_Create( heapID );
   SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );
@@ -386,17 +388,20 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args )
 //--------------------------------------------------------------------------
 static inline SetStrFormat get_strFormat( u8 pokeID )
 {
-  u8 targetClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
-
-  if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
+  if( SysWork.fIgnoreFormat == FALSE )
   {
-    if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
+    u8 targetClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+
+    if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
     {
-      return SETTYPE_WILD;
-    }
-    else
-    {
-      return SETTYPE_ENEMY;
+      if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
+      {
+        return SETTYPE_WILD;
+      }
+      else
+      {
+        return SETTYPE_ENEMY;
+      }
     }
   }
   return SETTYPE_MINE;
