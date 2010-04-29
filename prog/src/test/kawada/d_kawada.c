@@ -741,6 +741,7 @@ static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk )
         NULL,
         NULL,
         0 );
+    wk->zukan_toroku_param->gamedata = wk->gamedata;
     GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, wk->zukan_toroku_param );
 }
 static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk )

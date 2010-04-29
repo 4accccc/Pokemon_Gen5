@@ -137,6 +137,7 @@ struct _ZUKAN_NICKNAME_WORK
   GFL_CLUNIT*                clunit;     ///< セルアクターユニット  // 他のところのを覚えているだけで生成や破棄はしない。
   GFL_FONT*                  font;       ///< フォント              // 他のところのを覚えているだけで生成や破棄はしない。
   PRINT_QUE*                 print_que;  ///< 文字キュー            // 他のところのを覚えているだけで生成や破棄はしない。
+  GAMEDATA*                  gamedata;
 
 #ifndef USE_BSS
   // 下画面
@@ -208,7 +209,8 @@ static void Zukan_Nickname_BssMain( ZUKAN_NICKNAME_WORK* work );
 //-----------------------------------------------------------------------------
 ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
                                           const STRBUF* a_box_strbuf, const BOX_MANAGER* a_box_manager, u32 a_box_tray,
-                                          GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que )
+                                          GFL_CLUNIT* a_clunit, GFL_FONT* a_font, PRINT_QUE* a_print_que,
+                                          GAMEDATA* a_gamedata )
 {
   ZUKAN_NICKNAME_WORK* work;
 
@@ -229,6 +231,7 @@ ZUKAN_NICKNAME_WORK* ZUKAN_NICKNAME_Init( HEAPID a_heap_id, POKEMON_PARAM* a_pp,
     work->clunit        = a_clunit;
     work->font          = a_font;
     work->print_que     = a_print_que;
+    work->gamedata      = a_gamedata;
   }
 
   // 初期化

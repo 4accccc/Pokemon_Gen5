@@ -307,7 +307,8 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                                    param->box_strbuf, param->box_manager, param->box_tray,
                                                    ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic),
                                                    work->font,
-                                                   work->print_que );
+                                                   work->print_que,
+                                                   param->gamedata );
   
   // 通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );

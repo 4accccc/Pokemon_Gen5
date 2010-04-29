@@ -14,6 +14,10 @@
 // lib
 #include <gflib.h>
 
+
+#include "gamesystem/gamedata_def.h"
+
+
 //=============================================================================
 /**
  *  PROC
@@ -62,6 +66,7 @@ typedef struct _ZUKAN_TOROKU_PARAM
   const STRBUF*       box_strbuf;      ///< [in]  !=NULLのとき、ボックスに転送しましたというメッセージを表示する
   const BOX_MANAGER*  box_manager;     ///< [in]  box_strbuf!=NULLのときのみ有効
   u32                 box_tray;        ///< [in]  box_strbuf!=NULLのときのみ有効
+  GAMEDATA*           gamedata;
   ZUKAN_TOROKU_RESULT result;          ///< [out] 結果
 }
 ZUKAN_TOROKU_PARAM;

@@ -244,6 +244,7 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         {
           ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, param->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
         }
+        wk->zukan_toroku_param.gamedata = param->gameData;
         // ƒ[ƒJƒ‹PROCŒÄ‚Ño‚µ
         GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
         (*seq)++;
