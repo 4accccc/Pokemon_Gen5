@@ -168,6 +168,8 @@ typedef struct
   int           bgm_fade_flag;
   int           pinch_bgm_flag;
 
+  BtlRule       rule;
+
   GFL_PTC_PTR   ptc;
 
 }EFFECT_VIEWER_WORK;
@@ -291,7 +293,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
     G3X_AlphaTest( FALSE, 31 );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     G3X_AntiAlias( TRUE );
     GFL_BG_SetBGControl3D( 1 );
   }
@@ -321,8 +323,9 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_HEAP_FreeMemory( besp );
   }
 
-  evw->mons_no = MONSNO_WARUBIRU;
-  evw->tr_type = TRTYPE_HERO;
+  evw->mons_no  = MONSNO_WARUBIRU;
+  evw->tr_type  = TRTYPE_HERO;
+  evw->rule     = BTL_RULE_SINGLE;
   set_pokemon( evw );
 
   //2D画面初期化
@@ -376,6 +379,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 
   }
 
+#if 0
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
   {
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
@@ -388,6 +392,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     G2_SetWnd0Position( 1, 1, 255, 191 );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
   }
+#endif
 
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
@@ -511,6 +516,26 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         if( evw->mons_no < 0 )
         { 
           evw->mons_no = 0;
+        }
+        del_pokemon( evw );
+        set_pokemon( evw );
+      }
+      if( trg & PAD_BUTTON_DEBUG )
+      { 
+        evw->rule++;
+        if( evw->rule > BTL_RULE_ROTATION )
+        { 
+          evw->rule = BTL_RULE_SINGLE;
+        }
+        if( evw->rule == BTL_RULE_ROTATION )
+        { 
+          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
+          BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 1 );
+        }
+        else
+        { 
+          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 1 );
+          BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
         }
         del_pokemon( evw );
         set_pokemon( evw );
@@ -1631,10 +1656,30 @@ static  void  set_pokemon( EFFECT_VIEWER_WORK *evw )
   
     PP_Put( pp, ID_PARA_monsno, evw->mons_no );
     PP_Put( pp, ID_PARA_id_no, 0x10 );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
-    BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
+    { 
+      BtlvMcssPos pos, start, end;
 
-    GFL_HEAP_FreeMemory( pp );
+      switch( evw->rule ){ 
+      case BTL_RULE_SINGLE:
+        start = BTLV_MCSS_POS_AA;
+        end   = BTLV_MCSS_POS_BB;
+        break;
+      case BTL_RULE_DOUBLE:
+        start = BTLV_MCSS_POS_A;
+        end   = BTLV_MCSS_POS_D;
+        break;
+      case BTL_RULE_TRIPLE:
+      case BTL_RULE_ROTATION:
+        start = BTLV_MCSS_POS_A;
+        end   = BTLV_MCSS_POS_F;
+        break;
+      }
+      for( pos = start ; pos <= end ; pos++ )
+      { 
+        BTLV_EFFECT_SetPokemon( pp, pos );
+      }
+      GFL_HEAP_FreeMemory( pp );
+    }
   }
   else
   { 
@@ -1644,13 +1689,14 @@ static  void  set_pokemon( EFFECT_VIEWER_WORK *evw )
 
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw )
 {
-  if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
+  BtlvMcssPos pos;
+  
+  for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
   { 
-    BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_AA );
-  }
-  if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_BB ) == TRUE )
-  { 
-    BTLV_EFFECT_DelPokemon( BTLV_MCSS_POS_BB );
+    if( BTLV_EFFECT_CheckExist( pos ) == TRUE )
+    { 
+      BTLV_EFFECT_DelPokemon( pos );
+    }
   }
   if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_TR_BB ) == TRUE )
   { 
