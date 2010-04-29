@@ -167,6 +167,9 @@ const CI_SE_TBL Tbl22[] = {
 };
 
 const CI_SE_TBL Tbl23[] = {
+	{ SEQ_SE_FLD_164, 2 },
+	{ SEQ_SE_NDEMO_01, 12 },
+	{ SEQ_SE_SDEMO_03, 21 },
 	{ CI_SE_NONE, 0 },
 };
 
@@ -180,6 +183,8 @@ const CI_SE_TBL Tbl24[] = {
 };
 
 const CI_SE_TBL Tbl25[] = {
+	{ SEQ_SE_FLD_152, 16 },
+	{ SEQ_SE_SDEMO_03, 32 },
 	{ CI_SE_NONE, 0 },
 };
 
