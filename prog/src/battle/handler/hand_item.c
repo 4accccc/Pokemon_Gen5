@@ -4733,26 +4733,38 @@ static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RedCard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_RedCard },   /// ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO,     handler_RedCard },   /// ダメージ処理終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-/// ダメージ反応ハンドラ
+/// ダメージ処理終了ハンドラ
 static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  u32 i, cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
+  for(i=0; i<cnt; ++i)
   {
-    BTL_HANDEX_PARAM_PUSHOUT* push_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
-    push_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-    HANDEX_STR_Setup( &push_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
-    HANDEX_STR_AddArg( &push_param->exStr, pokeID );
-    HANDEX_STR_AddArg( &push_param->exStr, push_param->pokeID );
-
-    // 相手を吹き飛ばしたら、アイテムを消費する
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID )
     {
-      BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
-      param->header.failSkipFlag = TRUE;
+      u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) != BTL_POS_NULL )
+      {
+        BTL_HANDEX_PARAM_PUSHOUT* push_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
+        push_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+        HANDEX_STR_Setup( &push_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
+        HANDEX_STR_AddArg( &push_param->exStr, pokeID );
+        HANDEX_STR_AddArg( &push_param->exStr, push_param->pokeID );
+
+        // 相手を吹き飛ばしたら、アイテムを消費する
+        {
+          BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
+          param->header.failSkipFlag = TRUE;
+        }
+      }
+      else{
+        TAYA_Printf("相手が死んでるからレッドカード効かない\n");
+      }
+      break;
     }
   }
 }

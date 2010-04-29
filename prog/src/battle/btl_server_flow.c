@@ -7973,6 +7973,11 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
 
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
 
+    // ‘ÎÛ‚ªê‚É‚¢‚È‚¯‚ê‚Î¸”s
+    if( targetPos == BTL_POS_NULL ){
+      return FALSE;
+    }
+
     // ‘ÎÛ‚ª€‚ñ‚Å‚½‚ç¸”s
     if( BPP_IsDead(target) ){
       return FALSE;

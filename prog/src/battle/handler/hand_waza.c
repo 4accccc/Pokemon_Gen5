@@ -1261,16 +1261,6 @@ static void handler_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_REMOVE_FLDEFF, pokeID );
       param->effect = BTL_FLDEFF_TRICKROOM;
-
-    #if 0
-      {
-        BTL_HANDEX_PARAM_MESSAGE*  msg_param;
-        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TrickRoomOff );
-        HANDEX_STR_AddArg( &msg_param->str, pokeID );
-      }
-    #endif
-
     }
   }
 }
