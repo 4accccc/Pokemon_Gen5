@@ -527,6 +527,11 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         { 
           evw->rule = BTL_RULE_SINGLE;
         }
+        if( evw->rule == BTL_RULE_TRIPLE )
+        { 
+          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 1 );
+          BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
+        }
         if( evw->rule == BTL_RULE_ROTATION )
         { 
           BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
@@ -534,7 +539,7 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         }
         else
         { 
-          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 1 );
+          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
           BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
         }
         del_pokemon( evw );
