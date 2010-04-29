@@ -208,7 +208,7 @@ static GFL_PROC_RESULT MUS_LOBBY_InitProc( GFL_PROC * proc, int * seq , void *pw
   
   MUS_LOBBY_InitGraphic( work );
 
-  INFOWIN_Init( MUS_LOBBY_BG_INFO , MUS_LOBBY_INFO_PLT , MUS_COMM_GetGameComm(work->commWork) , work->heapId );
+  INFOWIN_Init( MUS_LOBBY_BG_INFO , MUS_LOBBY_INFO_PLT , NULL , work->heapId );
 
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
 

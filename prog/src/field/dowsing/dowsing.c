@@ -1415,9 +1415,9 @@ static void Dowsing_TouchbarInit( DOWSING_WORK* work )
   // INFOWIN
   {
     GAMESYS_WORK*      gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
-    GAME_COMM_SYS_PTR  gcs_ptr     = GAMESYSTEM_GetGameCommSysPtr( gs_wk );
+    GAMEDATA*          gm_data     = GAMESYSTEM_GetGameData(gs_wk);
 
-    INFOWIN_Init( BG_FRAME_S_TOUCHBAR, BG_PAL_POS_S_INFOWIN, gcs_ptr, work->heap_id );  // GFL_BG_AllocCharacterArea でキャラの領域を確保している
+    INFOWIN_Init( BG_FRAME_S_TOUCHBAR, BG_PAL_POS_S_INFOWIN, GAMEDATA_GetWiFiList(gm_data) , work->heap_id );  // GFL_BG_AllocCharacterArea でキャラの領域を確保している
   }
 
   // タッチバー

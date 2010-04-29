@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "gamesystem/game_comm.h"
+#include "savedata/wifilist.h"
 
 //======================================================================
 //	define
@@ -36,7 +36,7 @@
 //	@param commSys	通信システム
 //	@param heapId	ヒープID
 //	VramのCharエリアに INFOWIN_CHARAREA_SIZE の空きが必要です
-void	INFOWIN_Init( const u8 bgplane , const u8 pltNo, GAME_COMM_SYS_PTR commSys ,const HEAPID heapId );
+void	INFOWIN_Init( const u8 bgplane , const u8 pltNo, WIFI_LIST *wifiList ,const HEAPID heapId );
 void	INFOWIN_Update( void );
 void	INFOWIN_Exit( void );
 

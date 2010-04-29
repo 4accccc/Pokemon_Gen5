@@ -151,7 +151,7 @@ typedef struct
   u16 isRefresh;
   u8  bgplane;
   u8  pltNo;
-  GAME_COMM_SYS_PTR commSys;
+  WIFI_LIST *wifiList;
 
   //時計
   BOOL  isDispColon;
@@ -189,7 +189,7 @@ static INFOWIN_WORK *infoWk = NULL;
 //  @param pltNo  パレット番号(1本必要)
 //  @param commSys  通信システム
 //  @param heapId ヒープID
-void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAME_COMM_SYS_PTR commSys , const HEAPID heapId )
+void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , WIFI_LIST *wifiList , const HEAPID heapId )
 {
   GF_ASSERT_MSG(infoWk == NULL ,"Infobar is initialized!!\n");
 
@@ -198,25 +198,14 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAME_COMM_SYS_PTR commSy
 
   infoWk->bgplane = bgplane;
   infoWk->pltNo = pltNo;
-  infoWk->commSys = commSys;
-  if( infoWk->commSys == NULL )
-  {
-//    OS_TPrintf("--------------------------------------\n");
-//    OS_TPrintf("InfoWin GAME_COMM_SYS_PTR is NULL !!!!\n");
-//    OS_TPrintf("--------------------------------------\n");
-  }
   INFOWIN_InitBg( bgplane,pltNo,heapId );
 
   infoWk->vblankFunc = GFUser_VIntr_CreateTCB( INFOWIN_VBlankFunc , (void*)infoWk , 1 );
 
   infoWk->wifiState = IWS_DISABLE;
   infoWk->batteryVol = GFL_UI_GetBattLevel();
-/*
-  //ダミー用通信アイコン
-  INFOWIN_SetScrFunc( 0x6e,infoWk->pltNo,
-            INFOWIN_WMI_DRAW_X,0,
-            INFOWIN_WMI_DRAW_WIDTH,2 );
-*/
+  infoWk->wifiList = wifiList;
+  
   //一回強制的に更新
   INFOWIN_Update();
   infoWk->isRefresh = INFOWIN_REFRESH_MASK;
@@ -225,6 +214,8 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAME_COMM_SYS_PTR commSy
 
 void  INFOWIN_Update( void )
 {
+  u8 connectNum = 0;
+  GFLNetInitializeStruct *netInit = NULL;
   if( infoWk == NULL )
     return;
 
@@ -243,16 +234,15 @@ void  INFOWIN_Update( void )
   }
 
   //通信系の更新
-  if( infoWk->commSys != NULL )
+  if( GFL_NET_IsInit() == TRUE )
   {
-    u32 bit = WIH_DWC_GetAllBeaconTypeBit(NULL);  //@todo
-    
-#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-    {
-      bit = 0;
-    }
-#endif
+    netInit = GFL_NET_GetNETInitStruct();
+    connectNum = GFL_NET_GetConnectNum();
+  }
+  
+  if( connectNum < 2 )
+  {
+    u32 bit = WIH_DWC_GetAllBeaconTypeBit(infoWk->wifiList);
     
     if(bit & GAME_COMM_SBIT_IRC_ALL)
     {
@@ -304,30 +294,13 @@ void  INFOWIN_Update( void )
         infoWk->wifiState = IWS_DISABLE;
       }
     }
-
-/*
-    const GAME_COMM_STATUS state = GameCommSys_GetCommStatus( infoWk->commSys );
-
-    //ワイヤレス
-    if( state >= GAME_COMM_STATUS_WIRELESS && state <= GAME_COMM_STATUS_WIRELESS_FU)
-    {
-      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == FALSE )
-      {
-        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-        INFOWIN_SetBit(INFOWIN_DISP_BEACON);
-      }
-    }
-    else
-    {
-      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == TRUE )
-      {
-        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-        INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
-      }
-    }
-
-    //IRC
-    if( state == GAME_COMM_STATUS_IRC )
+  }
+  else
+  if( netInit != NULL )
+  {
+    //通常通信時
+    //IR
+    if( netInit->bNetType == GFL_NET_TYPE_IRC )
     {
       if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == FALSE )
       {
@@ -343,9 +316,31 @@ void  INFOWIN_Update( void )
         INFOWIN_ResetBit(INFOWIN_DISP_IR);
       }
     }
-
-    //Wifi
-    if( state >= GAME_COMM_STATUS_WIFI  && state <= GAME_COMM_STATUS_WIFI_LOCK)
+    
+    //WIRELESS
+    if( netInit->bNetType == GFL_NET_TYPE_WIRELESS ||
+        netInit->bNetType == GFL_NET_TYPE_IRC_WIRELESS ||
+        netInit->bNetType == GFL_NET_TYPE_WIRELESS_SCANONLY )
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == FALSE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_SetBit(INFOWIN_DISP_BEACON);
+      }
+    }
+    else
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == TRUE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
+      }
+    }
+    
+    //WIFI
+    if( netInit->bNetType == GFL_NET_TYPE_WIFI ||
+        netInit->bNetType == GFL_NET_TYPE_WIFI_LOBBY ||
+        netInit->bNetType == GFL_NET_TYPE_WIFI_GTS )
     {
       if( infoWk->wifiState == IWS_DISABLE )
       {
@@ -361,7 +356,6 @@ void  INFOWIN_Update( void )
         infoWk->wifiState = IWS_DISABLE;
       }
     }
-*/
   }
 }
 

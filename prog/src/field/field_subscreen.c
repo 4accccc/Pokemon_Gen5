@@ -892,8 +892,7 @@ static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
   };
   GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
-  GAME_COMM_SYS_PTR commSys = GAMESYSTEM_GetGameCommSysPtr(gameSys);
-
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData(gameSys);
 
   GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
   GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
@@ -901,7 +900,7 @@ static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
   
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
-  INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , commSys , pWork->heapID);
+  INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , GAMEDATA_GetWiFiList(gameData) , pWork->heapID);
  // FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
 }
 
@@ -945,7 +944,6 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
     GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
   };
   GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
-  GAME_COMM_SYS_PTR commSys = GAMESYSTEM_GetGameCommSysPtr(gameSys);
   u32 zoneId = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gameSys) );
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
   EVENTWORK *ev = GAMEDATA_GetEventWork( gameData );
@@ -969,8 +967,9 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
   
   pWork->fieldMenuWork = FIELD_MENU_InitMenu( HEAPID_FIELD_SUBSCREEN , pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
-  if(FIELDMENU_GetMenuType(gameData,ev,zoneId)!=FIELD_MENU_UNION){
-    INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , commSys , pWork->heapID);
+  if(FIELDMENU_GetMenuType(gameData,ev,zoneId)!=FIELD_MENU_UNION)
+  {
+    INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , GAMEDATA_GetWiFiList(gameData) , pWork->heapID);
   }
   // INFOWINのスクリーン下部分にタッチバーを書き込む(のでINFOWIN_Initの後に置いてね）
   FIELDMENU_RewriteInfoScreen( pWork->heapID );
