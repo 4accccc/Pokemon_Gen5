@@ -58,8 +58,8 @@ EVENT_END
 
 _ELEVATOR_LABEL elevator_c03r03
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R0301,7,0,0
-  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R0302,7,0,0
-  _ELEVATOR_DATA  msg_elevator_3f, ZONE_ID_C03R0303,7,0,0
+  _ELEVATOR_DATA  msg_elevator_47f, ZONE_ID_C03R0302,7,0,0
+  _ELEVATOR_DATA  msg_elevator_55f, ZONE_ID_C03R0303,7,0,0
 _ELEVATOR_DATA_END
 
 /**************************************************************/
@@ -79,7 +79,7 @@ EVENT_END
 
 _ELEVATOR_LABEL elevator_c03r04
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R0401,7,0,0
-  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R0402,7,0,0
+  _ELEVATOR_DATA  msg_elevator_22f, ZONE_ID_C03R0402,7,0,0
 _ELEVATOR_DATA_END
 
 /**************************************************************/
@@ -99,7 +99,7 @@ EVENT_END
 
 _ELEVATOR_LABEL elevator_c03r05
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R0501,7,0,0
-  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R0502,7,0,0
+  _ELEVATOR_DATA  msg_elevator_11f, ZONE_ID_C03R0502,7,0,0
 _ELEVATOR_DATA_END
 
 /**************************************************************/
@@ -119,7 +119,7 @@ EVENT_END
 
 _ELEVATOR_LABEL elevator_c03r10
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1001,7,0,0
-  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1002,7,0,0
+  _ELEVATOR_DATA  msg_elevator_11f, ZONE_ID_C03R1002,7,0,0
 _ELEVATOR_DATA_END
 
 /**************************************************************/
@@ -159,7 +159,7 @@ EVENT_END
 
 _ELEVATOR_LABEL elevator_c03r12
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1201,7,0,0
-  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1202,7,0,0
+  _ELEVATOR_DATA  msg_elevator_47f, ZONE_ID_C03R1202,7,0,0
 _ELEVATOR_DATA_END
 
 /**************************************************************/
@@ -179,7 +179,7 @@ EVENT_END
 
 _ELEVATOR_LABEL elevator_c03r13
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1301,7,0,0
-  _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1302,7,0,0
+  _ELEVATOR_DATA  msg_elevator_47f, ZONE_ID_C03R1302,7,0,0
 _ELEVATOR_DATA_END
 
 
