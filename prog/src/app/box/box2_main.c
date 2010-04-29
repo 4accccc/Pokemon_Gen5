@@ -1722,6 +1722,7 @@ void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos )
 
 //  PPP_ChangeFormNo( ppp, FORMNO_SHEIMI_LAND );
   ChangePokeForm( syswk, ppp, FORMNO_SHEIMI_LAND );
+	BOX2MAIN_FormChangeRenew( syswk, pos );
 
   // ポケモンアイコン切り替え
   BOX2OBJ_PokeIconChange( syswk, syswk->tray, pos, syswk->app->pokeicon_id[pos] );
@@ -1731,6 +1732,32 @@ void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos )
     BOX2MAIN_PokeInfoPut( syswk, pos );
   }
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * フォルムチェンジ後にPOKEMON_PARAMを再設定
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		pos			位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2MAIN_FormChangeRenew( BOX2_SYS_WORK * syswk, u32 pos )
+{
+	POKEMON_PARAM * pp;
+	BOOL  fast;
+
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		return;
+	}
+
+	pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, pos-BOX2OBJ_POKEICON_TRAY_MAX );
+  fast = PP_FastModeOn( pp );
+	PP_Renew( pp );
+	PP_FastModeOff( pp, fast );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**

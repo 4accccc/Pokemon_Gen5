@@ -5252,6 +5252,7 @@ static int MainSeq_ItemBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, mvwk->put_pos );
 	if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+		BOX2MAIN_FormChangeRenew( syswk, mvwk->put_pos );
 		BOX2OBJ_PokeIconChange(
 			syswk, syswk->tray, mvwk->put_pos,
 			syswk->app->pokeicon_id[mvwk->put_pos] );
@@ -5265,6 +5266,7 @@ static int MainSeq_ItemBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
 		ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos,
 				syswk->app->pokeicon_id[syswk->get_pos] );
@@ -5476,6 +5478,7 @@ static int MainSeq_ItemKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 	BOX2MAIN_PokeParaPut( syswk, syswk->app->poke_put_key, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->app->poke_put_key );
 	if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+		BOX2MAIN_FormChangeRenew( syswk, syswk->app->poke_put_key );
 		BOX2OBJ_PokeIconChange(
 			syswk, syswk->tray, syswk->app->poke_put_key,
 			syswk->app->pokeicon_id[syswk->app->poke_put_key] );
@@ -5488,6 +5491,7 @@ static int MainSeq_ItemKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
 		ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->app->get_item_init_pos );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->app->get_item_init_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->app->get_item_init_pos,
 				syswk->app->pokeicon_id[syswk->app->get_item_init_pos] );
@@ -5811,6 +5815,7 @@ static int MainSeq_ItemPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	BOX2MAIN_PokeParaPut( syswk, mvwk->put_pos, syswk->tray, ID_PARA_item, syswk->app->get_item );
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, mvwk->put_pos );
 	if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+		BOX2MAIN_FormChangeRenew( syswk, mvwk->put_pos );
 		BOX2OBJ_PokeIconChange(
 			syswk, syswk->tray, mvwk->put_pos,
 			syswk->app->pokeicon_id[mvwk->put_pos] );
@@ -5823,6 +5828,7 @@ static int MainSeq_ItemPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 	if( syswk->get_tray == BOX2MAIN_GETPOS_NONE || syswk->get_tray == syswk->tray ){
 		ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos,
 				syswk->app->pokeicon_id[syswk->get_pos] );
@@ -7621,6 +7627,7 @@ static int BoxArg_ItemGetYes( BOX2_SYS_WORK * syswk )
 		item = 0;
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, item );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos,
 				syswk->app->pokeicon_id[syswk->get_pos] );
@@ -7733,6 +7740,7 @@ static int BoxItemArg_RetBagYes( BOX2_SYS_WORK * syswk )
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, item );
 
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange( syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
 		BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
@@ -8091,6 +8099,7 @@ static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
 
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
@@ -8161,6 +8170,7 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
@@ -8241,6 +8251,7 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
 
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
 		if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
+			BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
 			BOX2OBJ_PokeIconChange(
 				syswk, syswk->tray, syswk->get_pos, syswk->app->pokeicon_id[syswk->get_pos] );
 		}
