@@ -466,6 +466,11 @@ enum
   FINGER_CURSOR_WAIT  = 16,
 };
 
+enum
+{ 
+  BTLV_INPUT_SHOOTER_ENERGY_X = 24 / 2,
+  BTLV_INPUT_SHOOTER_ENERGY_Y = 0,
+};
 
 //============================================================================================
 /**
@@ -555,6 +560,8 @@ struct _BTLV_INPUT_WORK
   //BMP
   GFL_BMPWIN*           bmp_win;
   GFL_BMP_DATA*         bmp_data;
+  GFL_BMPWIN*           bmp_win_shooter;    //シューターエネルギー表示用BMPWIN
+  GFL_BMP_DATA*         bmp_data_shooter;
 
   //メインループTCB
   GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
@@ -722,6 +729,7 @@ static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work );
+static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw );
@@ -923,9 +931,14 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   //ビットマップ初期化
   biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 0, 4, 32, 12, BMPWIN_PAL_NO, GFL_BMP_CHRAREA_GET_B );
   biw->bmp_data = GFL_BMPWIN_GetBmp( biw->bmp_win );
+  biw->bmp_win_shooter = GFL_BMPWIN_Create( GFL_BG_FRAME2_S, 3, 22, 3, 2, BMPWIN_PAL_NO, GFL_BMP_CHRAREA_GET_B );
+  biw->bmp_data_shooter = GFL_BMPWIN_GetBmp( biw->bmp_win_shooter );
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
+  GFL_BMP_Clear( biw->bmp_data_shooter, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+  GFL_BMPWIN_TransVramCharacter( biw->bmp_win_shooter );
   GFL_BMPWIN_MakeScreen( biw->bmp_win );
+  GFL_BMPWIN_MakeScreen( biw->bmp_win_shooter );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 
   //情報ステータスバー初期化
@@ -1044,6 +1057,7 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   }
 
   GFL_BMPWIN_Delete( biw->bmp_win );
+  GFL_BMPWIN_Delete( biw->bmp_win_shooter );
 
   INFOWIN_Exit();
 
@@ -1188,7 +1202,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
-      BTLV_INPUT_DeleteWeatherIcon( biw );
 
       if( biw->main_loop_tcb_flag == TRUE )
       { 
@@ -1235,7 +1248,44 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
+      if( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+      {
+        if( bicp->bagMode == BBAG_MODE_SHOOTER )
+        { 
+          ttw->datID = NARC_battgra_wb_battle_w_bg0i_NSCR;
+        }
+        else
+        { 
+          ttw->datID = NARC_battgra_wb_battle_w_bg0a_NSCR;
+        }
+      }
+      else
+      {
+        if( ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( bicp->pos != BTLV_MCSS_POS_C ) )
+        {
+          if( bicp->bagMode == BBAG_MODE_SHOOTER )
+          { 
+            ttw->datID = NARC_battgra_wb_battle_w_bg0k_NSCR;
+          }
+          else
+          { 
+            ttw->datID = NARC_battgra_wb_battle_w_bg0e_NSCR;
+          }
+        }
+        else
+        {
+          if( bicp->bagMode == BBAG_MODE_SHOOTER )
+          { 
+            ttw->datID = NARC_battgra_wb_battle_w_bg0j_NSCR;
+          }
+          else
+          { 
+            ttw->datID = NARC_battgra_wb_battle_w_bg0d_NSCR;
+          }
+        }
+      }
 
+      BTLV_INPUT_PutShooterEnergy( biw, bicp );
 #ifdef ROTATION_NEW_SYSTEM
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
 #else
@@ -1284,7 +1334,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       else
       {
         BTLV_INPUT_DeletePokeIcon( biw );
-        BTLV_INPUT_DeleteWeatherIcon( biw );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 );
       }
     }
@@ -1776,24 +1825,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-    {
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    }
-    else
-    {
-      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-      {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
-                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-      }
-      else
-      {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
-                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-      }
-    }
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     PMSND_PlaySE( SEQ_SE_OPEN2 );
@@ -1801,6 +1833,8 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
@@ -1811,6 +1845,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -1881,28 +1916,13 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-    {
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    }
-    else
-    {
-      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-      {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
-                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-      }
-      else
-      {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
-                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-      }
-    }
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_CLOSE );
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -1912,6 +1932,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -1932,29 +1953,14 @@ static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
-    {
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    }
-    else
-    {
-      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
-      {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
-                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-      }
-      else
-      {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
-                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-      }
-    }
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -1964,6 +1970,7 @@ static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -3627,8 +3634,14 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
 
+  //シューターエネルギー
+  GFL_BMP_Clear( biw->bmp_data_shooter, 0x00 );
+  GFL_BMPWIN_TransVramCharacter( biw->bmp_win_shooter );
+
   BTLV_INPUT_DeleteWazaTypeIcon( biw );
   BTLV_INPUT_DeleteWaruagakiButton( biw );
+
+  BTLV_INPUT_DeleteWeatherIcon( biw );
 
   //攻撃対象選択
   GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0, 32, 2, 32, 32, 0 );
@@ -4462,6 +4475,44 @@ static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
       GFL_TCB_DeleteTask( tcb );
     }
     break;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   シューターエネルギー表示
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp )
+{ 
+  if( bicp->bagMode != BBAG_MODE_SHOOTER )
+  { 
+    return;
+  }
+  {
+    WORDSET*  wordset = WORDSET_Create( biw->heapID );
+    STRBUF*   se_p = GFL_STR_CreateBuffer( BUFLEN_BI_PP_NUM, biw->heapID );
+    STRBUF*   se_src = GFL_MSG_CreateString( biw->msg,  BI_ShooterEnergy );
+    u8 letter, shadow, back;
+    int dot_len, char_len;
+
+    GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+
+    WORDSET_RegisterNumber( wordset, 0, bicp->shooterEnergy,  2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
+    WORDSET_ExpandStr( wordset, se_p, se_src);
+
+    GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                          PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                          PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
+
+    FontLenGet( se_p, biw->font, &dot_len, &char_len );
+    PRINTSYS_Print( biw->bmp_data_shooter, BTLV_INPUT_SHOOTER_ENERGY_X - ( dot_len / 2 ), BTLV_INPUT_SHOOTER_ENERGY_Y,
+                    se_p, biw->font );
+    GFL_FONTSYS_SetColor( letter, shadow, back );
+
+    WORDSET_Delete( wordset );
+    GFL_STR_DeleteBuffer( se_src );
+    GFL_STR_DeleteBuffer( se_p );
   }
 }
 
