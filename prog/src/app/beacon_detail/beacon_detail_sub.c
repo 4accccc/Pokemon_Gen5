@@ -624,11 +624,11 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
       wk->icon_enable_f = TRUE;
   	  
       wk->icon_x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
-	    wk->icon_y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
+	    wk->icon_y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y )-16;
       IWASAWA_Printf(" BeaconWin root_zone = %d, tmap_dat_idx = %d, x = %d, y = %d\n",
           GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ),dataIndex,wk->icon_x,wk->icon_y);
-      if( wk->icon_y < 16 ){
-       wk->icon_y = 16;
+      if( wk->icon_y < 32 ){
+       wk->icon_y = 32;
       }else if( wk->icon_y > 152 ){
        wk->icon_y = 152;
       }
