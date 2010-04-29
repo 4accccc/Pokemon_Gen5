@@ -22,6 +22,8 @@
 // UI DEBUGSYSÇ™ñ≥å¯ÇÃÇŒÇ†Ç¢ÅB
 void DEBUG_UI_SetUp( DEBUG_UI_TYPE type ){}
 
+DEBUG_UI_TYPE DEBUG_UI_GetType( void ){ return 0; }
+
 #else 
 
 
@@ -155,6 +157,11 @@ void DEBUG_UI_SetUp( DEBUG_UI_TYPE type )
     GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
   }
 
+}
+
+DEBUG_UI_TYPE DEBUG_UI_GetType( void )
+{ 
+  return s_DEBUG_UI_WORK.type; 
 }
 
 

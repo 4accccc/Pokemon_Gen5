@@ -449,7 +449,10 @@ static void DEBUG_UI_AutoKey( void  )
   }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoLeftRight ) ){
     DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT );
   }else{
-    DEBUG_UI_SetUp( DEBUG_UI_NONE );
+    if( (DEBUG_UI_GetType() == DEBUG_UI_AUTO_UPDOWN) ||
+        (DEBUG_UI_GetType() == DEBUG_UI_AUTO_LEFTRIGHT) ){
+      DEBUG_UI_SetUp( DEBUG_UI_NONE );
+    }
   }
 
 }

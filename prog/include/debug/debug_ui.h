@@ -41,6 +41,7 @@ typedef enum {
 //-----------------------------------------------------------------------------
 
 extern void DEBUG_UI_SetUp( DEBUG_UI_TYPE type );
+extern DEBUG_UI_TYPE DEBUG_UI_GetType( void );
 
 
 #endif // PM_DEBUG
