@@ -33,6 +33,7 @@
 
 #include "debug/debug_str_conv.h"
 
+#if PM_DEBUG
 //=============================================================================
 /**
  *					定数宣言
@@ -1055,3 +1056,15 @@ static u32 MATH_GetMostOnebit( u32 x, u8 bit )
 
 	return i;
 }
+#else
+
+//-------------------------------------
+///	プロックデータ
+//=====================================
+const GFL_PROC_DATA DebugIrcName_ProcData	= 
+{	
+	NULL,
+	NULL,
+	NULL,
+};
+#endif //PM_DEBUG

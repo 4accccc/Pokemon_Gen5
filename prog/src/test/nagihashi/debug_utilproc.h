@@ -21,4 +21,8 @@
  *					ç\ë¢ëÃêÈåæ
 */
 //=============================================================================
+#if PM_DEBUG
 extern const GFL_PROC_DATA DEBUG_NAGI_IRC_REGULATION_ProcData;
+#else
+static const GFL_PROC_DATA DEBUG_NAGI_IRC_REGULATION_ProcData = {0};
+#endif

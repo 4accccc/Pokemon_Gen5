@@ -34,6 +34,7 @@
 //ŠO•”ŒöŠJ
 #include "debug_utilproc.h"
 
+#if PM_DEBUG
 //=============================================================================
 /**
  *					’è”éŒ¾
@@ -497,3 +498,4 @@ static void UTIL_LoadBg( HEAPID heapID )
   GFL_BG_LoadScreenReq( BG_FRAME_TEXT_M );
   GFL_BG_LoadScreenReq( BG_FRAME_BACK_S );
 }
+#endif// PM_DEBUG
