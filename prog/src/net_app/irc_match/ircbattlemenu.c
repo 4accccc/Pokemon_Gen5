@@ -30,6 +30,8 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
+#include "system/time_icon.h"
+#include "system/palanm.h"
 #include "sound/pm_sndsys.h"
 
 #include "msg/msg_ircbattle.h"
@@ -63,6 +65,7 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
+#define _BUTTON_MSG_PAL2   (8)  // メッセージフォント
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
 #define _BUTTON_WIN_CENTERY (13)   //
@@ -222,6 +225,10 @@ struct _IRC_BATTLE_MENU {
 	APP_TASKMENU_RES* pAppTaskRes;
   APP_TASKMENU_WIN_WORK* pAppWin;
   EVENT_IRCBATTLE_WORK * dbw;
+  TIMEICON_WORK* pTimeIcon;
+  void* pVramOBJ;
+  void* pVramBG;
+  
   int windowNum;
   BOOL IsIrc;
 
@@ -396,6 +403,73 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
   }
 }
 
+
+#if 1
+
+
+static void _PaletteFadeSingle(IRC_BATTLE_MENU* pWork, int type, int palettenum)
+{
+  u32 addr;
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  PaletteFadeWorkAllocSet(pP, type, 16 * 32, pWork->heapID);
+  PaletteWorkSet_VramCopy( pP, type, 0, palettenum*32);
+  SoftFadePfd(pP, type, 0, 16 * palettenum, 6, 0);
+  addr = (u32)PaletteWorkTransWorkGet( pP, type );
+
+  switch(type){
+  case FADE_SUB_OBJ:
+    GXS_LoadOBJPltt((void*)addr, 0, palettenum * 32);
+    break;
+  case FADE_SUB_BG:
+    GXS_LoadBGPltt((void*)addr, 0, palettenum * 32);
+    break;
+  }
+  PaletteFadeWorkAllocFree(pP,type);
+  PaletteFadeFree(pP);
+}
+
+
+
+static void _PaletteFade(IRC_BATTLE_MENU* pWork,BOOL bFade)
+{
+  u32 addr;
+
+  if(bFade){
+    {
+      GFL_STD_MemCopy((void*)HW_DB_OBJ_PLTT, pWork->pVramOBJ, 16*2*16);
+      GFL_STD_MemCopy((void*)HW_DB_BG_PLTT, pWork->pVramBG, 16*2*16);
+      _PaletteFadeSingle( pWork,  FADE_SUB_OBJ, 14);
+      _PaletteFadeSingle( pWork,  FADE_SUB_BG, 9);
+    }
+  }
+  else{
+    GXS_LoadOBJPltt((void*)pWork->pVramOBJ, 0, 14 * 32);
+    GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 9 * 32);
+  }
+
+}
+#endif
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タイムアイコンを出す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+static void _MESSAGE_WindowTimeIconStart(IRC_BATTLE_MENU* pWork)
+{
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
+  pWork->pTimeIcon =
+    TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   メッセージの画面消去
@@ -405,6 +479,10 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
 
 static void _infoMessageDispClear(IRC_BATTLE_MENU* pWork)
 {
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
@@ -484,7 +562,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _W
   
   pWork->windowNum = num;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+                                0x20*_BUTTON_MSG_PAL2, 0x20, pWork->heapID);
 
   for(i = 0;i < _WINDOW_MAXNUM;i++){
 		if(pWork->buttonWin[i]){
@@ -496,13 +574,13 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _W
   }
 
   for(i=0;i < num;i++){
-    GFL_FONTSYS_SetColor(0xe,0xf,3);
+    GFL_FONTSYS_SetColor(0xf,0x2,0);
 
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
       pos[i].leftx, pos[i].lefty,
       pos[i].width, pos[i].height,
-      _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+      _BUTTON_MSG_PAL2,GFL_BMP_CHRAREA_GET_F);
 
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
     // システムウインドウ枠描画
@@ -1674,7 +1752,8 @@ static void _YesNoStart(IRC_BATTLE_MENU* pWork)
   APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //キー抑制
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+  _PaletteFade(pWork, TRUE);
+//  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
 }
 
 
@@ -1859,6 +1938,7 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
       else{
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
         _infoMessageDisp(pWork);
+        _MESSAGE_WindowTimeIconStart(pWork);
         GAMEDATA_SaveAsyncStart(pWork->pGameData);
         _CHANGE_STATE(pWork,_modeReporting);
       }
@@ -1867,11 +1947,15 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _infoMessageEnd(pWork);
       pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-      _CHANGE_STATE(pWork,  _modeSelectMenuInit);
+
+      _CHANGE_STATE(pWork,_modeSelectMenuWait);
+
+      //_CHANGE_STATE(pWork,  _modeSelectMenuInit);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+    _PaletteFade(pWork, FALSE);
+//    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
   }
 }
 
@@ -1966,8 +2050,10 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 
     _createSubBg(pWork);
 		_modeInit(pWork);
+    pWork->pVramOBJ = GFL_HEAP_AllocMemory(pWork->heapID, 16*2*16);  //バックアップ
+    pWork->pVramBG = GFL_HEAP_AllocMemory(pWork->heapID, 16*2*16);  //バックアップ
     
-    pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
+    pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
     pWork->pKeyCursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, pWork->heapID );
     pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
     pWork->pAppTaskRes =
@@ -2057,6 +2143,13 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
   pParentWork->bBattelBox = pWork->bBattelBox;
 
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
+  
+  GFL_HEAP_FreeMemory(pWork->pVramOBJ);
+  GFL_HEAP_FreeMemory(pWork->pVramBG);
   _CLACT_Release(pWork);
 
   GFL_PROC_FreeWork(proc);

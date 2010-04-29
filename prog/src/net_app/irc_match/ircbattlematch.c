@@ -335,7 +335,8 @@ struct _IRC_BATTLE_MATCH {
   GFL_BUTTON_MAN* pButton;
   TouchFunc* touch;
   int timer;
-  
+
+  void* pVramBG;
   PRINT_QUE*            SysMsgQue;
   APP_TASKMENU_WORK* pAppTask;
 	APP_TASKMENU_RES* pAppTaskRes;
@@ -422,6 +423,51 @@ static void _modeFadeout(IRC_BATTLE_MATCH* pWork)
     _CHANGE_STATE(pWork, NULL);        // 終わり
   }
 }
+
+
+#if 1
+
+
+static void _PaletteFadeSingle(IRC_BATTLE_MATCH* pWork, int type, int palettenum)
+{
+  u32 addr;
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  PaletteFadeWorkAllocSet(pP, type, 16 * 32, pWork->heapID);
+  PaletteWorkSet_VramCopy( pP, type, 0, palettenum*32);
+  SoftFadePfd(pP, type, 0, 16 * palettenum, 6, 0);
+  addr = (u32)PaletteWorkTransWorkGet( pP, type );
+
+  switch(type){
+  case FADE_SUB_OBJ:
+    GXS_LoadOBJPltt((void*)addr, 0, palettenum * 32);
+    break;
+  case FADE_SUB_BG:
+    GXS_LoadBGPltt((void*)addr, 0, palettenum * 32);
+    break;
+  }
+  PaletteFadeWorkAllocFree(pP,type);
+  PaletteFadeFree(pP);
+}
+
+
+
+static void _PaletteFade(IRC_BATTLE_MATCH* pWork,BOOL bFade)
+{
+  u32 addr;
+
+  if(bFade){
+    {
+      GFL_STD_MemCopy((void*)HW_DB_BG_PLTT, pWork->pVramBG, 16*2*16);
+      _PaletteFadeSingle( pWork,  FADE_SUB_BG, 9);
+    }
+  }
+  else{
+    GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 9 * 32);
+  }
+
+}
+#endif
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1126,7 +1172,8 @@ static void _YesNoStart(IRC_BATTLE_MATCH* pWork)
   APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //キー抑制
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+  _PaletteFade(pWork,TRUE);
+//  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
 }
 
 
@@ -1677,6 +1724,8 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     {  // いいえを選択した場合
       _CHANGE_STATE(pWork,_ircExitWaitNO);
     }
+    _PaletteFade(pWork,FALSE);
+    
   }
 }
 
@@ -2279,6 +2328,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
     pWork->heapID = HEAPID_IRCBATTLE;
     pWork->selectType =  pWork->pBattleWork->selectType; //EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
 
+    pWork->pVramBG = GFL_HEAP_AllocMemory(pWork->heapID, 16*2*16);  //バックアップ
     _modeInit(pWork);
 //    _CHANGE_STATE( pWork, _modeInit);
   }
@@ -2353,6 +2403,8 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 	if(pWork->pButton){
 		GFL_BMN_Delete(pWork->pButton);
 	}
+  GFL_HEAP_FreeMemory(pWork->pVramBG);
+
   pWork->pButton = NULL;
   WORDSET_Delete(pWork->pWordSet);
 
