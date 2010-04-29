@@ -820,7 +820,7 @@ static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT* event;
-  
+
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID( debug_make_egg ), DEBUG_EVENT_FLDMENU_MakeEgg, wk->fieldWork );
 
@@ -836,7 +836,7 @@ static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_Sodateya( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT* event;
-  
+
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID( debug_sodateya ), DEBUG_EVENT_DebugMenuSodateya, wk->fieldWork );
 
@@ -1095,7 +1095,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
   if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
-		u16 * pal = (u16 *)palData->pRawData;
+    u16 * pal = (u16 *)palData->pRawData;
     for(i=0;i<16;i++){
       GFL_STD_MemCopy( &pal[16*i], &pPic->customPalette[16*i], 32);
     }
@@ -4160,7 +4160,7 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
 
 
   // DEBUG_ CAMERA
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_camera) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_camera) );
 
   FIELD_CAMERA_DEBUG_InitControl( p_work->p_camera, heapID );
 
@@ -5610,13 +5610,13 @@ typedef struct
   FIELDMAP_WORK *fieldWork;
   GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
-  
+
   int play_mode;
   int game_round;
   int before_round;
   FLDMSGWIN *msgWin;
   STRBUF *strBuf;
-  
+
   int key_repeat;
   int key_repeat_wait;
 }DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK;
@@ -5636,7 +5636,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK  *work = wk;
-  
+
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init(
@@ -5649,18 +5649,18 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       u16 dummy_ret;
       GMEVENT *next_event = NULL;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_NULL ){  //‘€ì–³‚µ
         break;
       }
-      
+
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      
+
       if( ret == FLDMENUFUNC_CANCEL ){  //ƒLƒƒƒ“ƒZƒ‹
         GFL_STR_DeleteBuffer( work->strBuf );
         return( GMEVENT_RES_FINISH );
       }
-      
+
       work->play_mode = ret;
       (*seq)++;
       break;
@@ -5679,25 +5679,25 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       int add1 = 0, add10 = 0;
       int trg = GFL_UI_KEY_GetTrg();
       int cont = GFL_UI_KEY_GetCont();
-      
+
       if( trg & PAD_BUTTON_B ){
         FLDMSGWIN_Delete( work->msgWin );
         GFL_STR_DeleteBuffer( work->strBuf );
         return( GMEVENT_RES_FINISH );
       }
-      
+
       if( trg & PAD_BUTTON_A ){
         FLDMSGWIN_Delete( work->msgWin );
         GFL_STR_DeleteBuffer( work->strBuf );
-        
+
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, work->play_mode );
         BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, work->game_round );
-        
+
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       }
-      
+
       if( cont && cont == work->key_repeat ){
         if( work->key_repeat_wait < 30*10 ){
           work->key_repeat_wait++;
@@ -5705,16 +5705,16 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       }else{
         work->key_repeat_wait = 0;
       }
-      
+
       work->key_repeat = cont;
-      
+
       if( (trg & PAD_KEY_ALL) ){
         add1 = 1;
         add10 = 10;
       }else if( work->key_repeat ){
         int rep = work->key_repeat;
         int wait = work->key_repeat_wait;
-        
+
         if( wait < 15 ){
           //none
         }else if( wait < 30*3 ){
@@ -5749,14 +5749,14 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
           add10 = 160;
         }
       }
-      
+
       if( add1 || add10 ){
         int check = trg & PAD_KEY_ALL;
-        
+
         if( check == 0 ){
           check = cont;
         }
-        
+
         if( (check & PAD_KEY_UP) ){
           work->game_round -= add1;
         }else if( (check & PAD_KEY_DOWN) ){
@@ -5767,13 +5767,13 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
           work->game_round += add10;
         }
       }
-      
+
       if( work->game_round <= 0 ){
         work->game_round = 1;
       }else if( work->game_round > 99999 ){
         work->game_round = 99999;
       }
-      
+
       switch( work->play_mode ){
       case BSWAY_MODE_SINGLE:
       case BSWAY_MODE_DOUBLE:
@@ -5782,7 +5782,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
           work->game_round = 21;
         }
       }
-      
+
       if( work->game_round != work->before_round ){
         work->before_round = work->game_round;
         STRTOOL_SetNumber(
@@ -5793,7 +5793,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       }
     }
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -5811,12 +5811,12 @@ static void debugMenuCallProc_BSubwayAnyStage(
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK *work;
-  
+
   GMEVENT_Change( event, debugMenuBSubwayAnyStageEvent,
       sizeof(DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
-  
+
   work->gmSys = gsys;
   work->gmEvent = event;
   work->heapID = heapID;
@@ -6535,7 +6535,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
   return FALSE;
 }
 static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   DOWNLOAD_GIFT_DATA  dl_data;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL, GFL_HEAPID_APP );
@@ -6544,7 +6544,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_
 
   GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
   DEBUG_MYSTERY_SetGiftItemData( &data, ITEM_RIBATHITIKETTO );
-  DEBUG_MYSTERY_SetGiftCommonData( &data, MYSTERY_DATA_EVENT_LIBERTY, FALSE ); 
+  DEBUG_MYSTERY_SetGiftCommonData( &data, MYSTERY_DATA_EVENT_LIBERTY, FALSE );
   MYSTERYDATA_SetCardData( p_mystery_sv, &data );
 
   DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
@@ -6556,7 +6556,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_
   return FALSE;
 }
 static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk )
-{ 
+{
   DOWNLOAD_GIFT_DATA  dl_data;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
@@ -6571,7 +6571,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk )
     {
       DEBUG_MYSTERY_SetGiftPokeData( &data );
       data.data.pokemon.egg = 1;
-      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE ); 
+      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE );
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
 
       DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
@@ -6581,10 +6581,10 @@ static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk )
         int j;
         const u8 * cp_data  = (const u8*)&dl_data;
         for( j = 0; j < sizeof(DOWNLOAD_GIFT_DATA); j++ )
-        { 
+        {
           OS_TFPrintf( 3, "0x%x ", cp_data[j] );
           if( j % 0x10 == 0xF )
-          { 
+          {
             OS_TFPrintf( 3, "\n" );
           }
         }
@@ -6624,7 +6624,7 @@ static BOOL debugMenuCallProc_AllConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk )
 {
   GMEVENT * new_event;
   new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
-      FS_OVERLAY_ID( debug_all_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL ); 
+      FS_OVERLAY_ID( debug_all_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
   return TRUE;
 }
@@ -7459,7 +7459,7 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
               MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
               MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
               MISC *miscData = GAMEDATA_GetMiscWork( gmData );
-              
+
               EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_LOCKCAPSULE , myStatus );
               MYITEM_AddItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId );
             }
@@ -7469,7 +7469,7 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
               MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
               MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
               MISC *miscData = GAMEDATA_GetMiscWork( gmData );
-              
+
               EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_VICTYTICKET , myStatus );
               MYITEM_AddItem( myItem , ITEM_RIBATHITIKETTO , 1 , work->heapId );
             }
@@ -7521,7 +7521,7 @@ static const FLDMENUFUNC_LIST DATA_Musical[] =
   { DEBUG_FIELD_MUSICAL_03, (void*)2 },
 };
 
-static const DEBUG_MENU_INITIALIZER DebugMusicalMenu = 
+static const DEBUG_MENU_INITIALIZER DebugMusicalMenu =
 {
   NARC_message_d_field_dat,
   NELEMS(DATA_Musical),
@@ -7691,7 +7691,7 @@ static GMEVENT_RESULT debugCutin(
     if ( DbgCutinNo < 0  ) DbgCutinNo = FLDCIID_MAX-1;
     OS_Printf("DebugCutinNo %d\n",DbgCutinNo);
   }
-  
+
   return( GMEVENT_RES_CONTINUE );
 }
 
