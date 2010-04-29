@@ -146,6 +146,9 @@ EVENT_START ev_sodateya_grandpa
     // タマゴ削除
     ELSE
       _DELETE_SODATEYA_EGG()
+			//「それじゃ わしが貰おう」
+			_BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_11, SCWK_TARGET_OBJID, POS_DOWN )
+			_LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ENDIF
   //-------------------
