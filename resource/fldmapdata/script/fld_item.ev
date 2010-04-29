@@ -1228,7 +1228,7 @@ EVENT_START ev_fld_item_169
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d08r0701 X=9 Y=23 ITEM=‚°‚ñ‚«‚Ì‚©‚¯‚ç FLAG=173
+// MAP=d08r0701 X=9 Y=24 ITEM=‚°‚ñ‚«‚Ì‚©‚¯‚ç FLAG=173
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_173
   _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
