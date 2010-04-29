@@ -20,6 +20,7 @@
 #include "msg/msg_staff_list_jp.h"
 #include "msg/msg_staff_list_eng.h"
 #include "title.naix"
+//#include "demo3d.naix"
 
 #include "staff_roll_main.h"
 #include "staff_roll.naix"
@@ -27,6 +28,10 @@
 
 //============================================================================================
 //============================================================================================
+
+// 後方確保用ヒープＩＤ
+#define	HEAPID_STAFF_ROLL_L		( GFL_HEAP_LOWID(HEAPID_STAFF_ROLL) )
+
 enum {
 	MAINSEQ_INIT = 0,
 	MAINSEQ_WIPE,
@@ -126,6 +131,12 @@ static void ExitBmp( SRMAIN_WORK * wk );
 static void SetBmpWinTransFlag( SRMAIN_WORK * wk, u32 flg );
 static void TransBmpWinChar( SRMAIN_WORK * wk );
 
+/*
+static void Init3D( SRMAIN_WORK * wk );
+static void Exit3D( SRMAIN_WORK * wk );
+static void Main3D( SRMAIN_WORK * wk );
+*/
+
 static int SetFadeIn( SRMAIN_WORK * wk, int next );
 static int SetFadeOut( SRMAIN_WORK * wk, int next );
 
@@ -166,20 +177,20 @@ static const pSRMAIN_FUNC	MainSeq[] = {
 
 // VRAM割り振り
 static const GFL_DISP_VRAM VramTbl = {
-	GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
+	GX_VRAM_BG_128_D,							// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
 
 	GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
 
-	GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+	GX_VRAM_OBJ_NONE,							// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
 
-	GX_VRAM_SUB_OBJ_128_D,				// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJ_NONE,					// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 
-	GX_VRAM_TEX_NONE,							// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_NONE,					// テクスチャパレットスロット
+	GX_VRAM_TEX_01_AB,						// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_0123_E,				// テクスチャパレットスロット
 
 	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
@@ -222,6 +233,8 @@ BOOL SRMAIN_Main( SRMAIN_WORK * wk )
 		return FALSE;
 	}
 
+//	Main3D( wk );
+
 	return TRUE;
 }
 
@@ -246,6 +259,7 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	LoadBgGraphic();
 	InitMsg( wk );
 	InitBmp( wk );
+//	Init3D( wk );
 
 	CreateListData( wk );
 
@@ -268,6 +282,7 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 	DeleteListData( wk );
 
+//	Exit3D( wk );
 	ExitBmp( wk );
 	ExitMsg( wk );
 	ExitBg();
@@ -289,7 +304,6 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 static int MainSeq_Main( SRMAIN_WORK * wk )
 {
-
 #ifdef	PM_DEBUG
 	// 終了
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
@@ -390,7 +404,7 @@ static void InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
@@ -399,7 +413,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -407,7 +421,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x10000,
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -416,7 +430,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -455,7 +469,7 @@ static void ExitBg(void)
 
 static void LoadBgGraphic(void)
 {
-	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL );
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL_L );
 
 #if PM_VERSION == VERSION_BLACK
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
@@ -538,18 +552,22 @@ static void InitMsg( SRMAIN_WORK * wk )
 								ARCID_MESSAGE, NARC_message_staff_list_eng_dat, HEAPID_STAFF_ROLL );
 	}
   
-	wk->wset = WORDSET_Create( HEAPID_STAFF_ROLL );
+//	wk->wset = WORDSET_Create( HEAPID_STAFF_ROLL );
 //	wk->que  = PRINTSYS_QUE_Create( HEAPID_STAFF_ROLL );
 	wk->exp  = GFL_STR_CreateBuffer( 64, HEAPID_STAFF_ROLL );
 
+//	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 	wk->font[SRMAIN_FONT_NORMAL] = GFL_FONT_Create(
 																	ARCID_FONT, NARC_font_large_gftr,
 //																GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
 																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
+//	OS_Printf( "heap size [1] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
+
 	wk->font[SRMAIN_FONT_SMALL] = GFL_FONT_Create(
 																	ARCID_FONT, NARC_font_small_gftr,
 //																GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
 																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
+//	OS_Printf( "heap size [2] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 }
 
 static void ExitMsg( SRMAIN_WORK * wk )
@@ -559,7 +577,7 @@ static void ExitMsg( SRMAIN_WORK * wk )
 
 	GFL_STR_DeleteBuffer( wk->exp );
 //	PRINTSYS_QUE_Delete( wk->que );
-	WORDSET_Delete( wk->wset );
+//	WORDSET_Delete( wk->wset );
 	GFL_MSG_Delete( wk->mman );
 }
 
@@ -611,7 +629,7 @@ static void InitBmp( SRMAIN_WORK * wk )
 	GFL_BMPWIN_Init( HEAPID_STAFF_ROLL );
 //	wk->util[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 0, 0, 32, 32, MBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
 	wk->util[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 0, 0, 32, 25, MBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
-	wk->util[1].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S, 0, 0, 32, 32, SBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
+	wk->util[1].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S, 0, 0, 32, 28, SBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
 
 //	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->util[0].win), 0, 16, 256, 32, 1 );
 //	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->util[1].win), 0, 32, 256, 16, 2 );
@@ -650,6 +668,417 @@ static void TransBmpWinChar( SRMAIN_WORK * wk )
 	}
 	wk->bmpTransFlag = 0;
 }
+
+
+//============================================================================================
+//	3D
+//============================================================================================
+#if 0
+
+// 下画面カメラ設定（数値は外山くん指定）
+// 焦点
+#define	D_CAMERA_TX_F32	( 0.0 )
+#define	D_CAMERA_TY_F32	( 4.5 )
+#define	D_CAMERA_TZ_F32	( 2.3 )
+#define	D_CAMERA_TX		( FX_F32_TO_FX32(D_CAMERA_TX_F32) )
+#define	D_CAMERA_TY		( FX_F32_TO_FX32(D_CAMERA_TY_F32) )
+#define	D_CAMERA_TZ		( FX_F32_TO_FX32(D_CAMERA_TZ_F32) )
+// 位置
+#define	D_CAMERA_PX_F32	( 0.0 )
+#define	D_CAMERA_PY_F32	( 18.0 )
+#define	D_CAMERA_PZ_F32	( 14.0 )
+#define	D_CAMERA_PX		( FX_F32_TO_FX32(D_CAMERA_PX_F32) )
+#define	D_CAMERA_PY		( FX_F32_TO_FX32(D_CAMERA_PY_F32) )
+#define	D_CAMERA_PZ		( FX_F32_TO_FX32(D_CAMERA_PZ_F32) )
+
+#define	CAMERA_FOVY		( 18.5 )			// 縦(y)方向の視界角度
+#define	CAMERA_ASPECT	( FX32_ONE * 1.5 )	// 縦に対する横の視界の割合
+
+// ライト設定（数値は外山くん指定）
+#define	LIGHT_PX		( FX_F32_TO_FX16(0.0) )
+#define	LIGHT_PY		( FX_F32_TO_FX16(-0.8) )
+#define	LIGHT_PZ		( FX_F32_TO_FX16(-0.5) )
+#define	LIGHT_COLOR		( 0x7fff )
+
+// 絶対値計算
+#define	GAME_START_CAMERA_MX_U		( U_CAMERA_PX/16 )
+#define	GAME_START_CAMERA_MY_U		( U_CAMERA_PY/16 )
+#define	GAME_START_CAMERA_MZ_U		( U_CAMERA_PZ/16 )
+#define	GAME_START_CAMERA_MX_D		( (f32)(D_CAMERA_PX_F32-D_CAMERA_TX_F32)/(f32)16 )
+#define	GAME_START_CAMERA_MY_D		( (f32)(D_CAMERA_PY_F32-D_CAMERA_TY_F32)/(f32)16 )
+#define	GAME_START_CAMERA_MZ_D		( (f32)(D_CAMERA_PZ_F32-D_CAMERA_TZ_F32)/(f32)16 )
+
+#define	GAME_START_CAMERA_MOVE_UX(cnt)	( GAME_START_CAMERA_MX_U * (16-cnt) )
+#define	GAME_START_CAMERA_MOVE_UY(cnt)	( GAME_START_CAMERA_MY_U * (16-cnt) )
+#define	GAME_START_CAMERA_MOVE_UZ(cnt)	( GAME_START_CAMERA_MZ_U * (16-cnt) )
+#define	GAME_START_CAMERA_MOVE_DX(cnt)	( FX_F32_TO_FX32( (f32)GAME_START_CAMERA_MX_D * (f32)(16-cnt) ) )
+#define	GAME_START_CAMERA_MOVE_DY(cnt)	( FX_F32_TO_FX32( (f32)GAME_START_CAMERA_MY_D * (f32)(16-cnt) ) )
+#define	GAME_START_CAMERA_MOVE_DZ(cnt)	( FX_F32_TO_FX32( (f32)GAME_START_CAMERA_MZ_D * (f32)(16-cnt) ) )
+
+static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work );
+
+// リソーステーブル
+static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
+{
+#if	PM_VERSION == VERSION_BLACK
+	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_b_02_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
+	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_b_02_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+#else
+	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_w_02_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
+	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_w_02_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+#endif
+};
+
+// アニメテーブル
+static const GFL_G3D_UTIL_ANM G3DUtil_AnmTbl[] =
+{
+	{ 1, 0 },		// 00: アニメ
+};
+
+// 3D OBJテーブル
+static const GFL_G3D_UTIL_OBJ G3DUtilObjTbl[] =
+{
+	{ 0, 0, 0, G3DUtil_AnmTbl, NELEMS(G3DUtil_AnmTbl) },
+};
+
+// 設定データ
+static const GFL_G3D_UTIL_SETUP G3DUtilSetup = {
+	G3DUtilResTbl, NELEMS(G3DUtilResTbl),
+	G3DUtilObjTbl, NELEMS(G3DUtilObjTbl),
+};
+
+
+// 3D OBJデータ
+static const GFL_G3D_SCENEOBJ_DATA	ObjData[] =
+{
+	{	// ポケモン
+		0,			// OBJ ID
+		0,			// 動作プライオリティ
+		0,			// 表示プライオリティ
+		31,			// アルファブレンド
+		FALSE,		// カリングフラグ
+		TRUE,		// drowSW (????)
+		{	//	オブジェクト描画情報
+			{ 0, 0, 0 },										// trans
+			{ FX32_ONE, FX32_ONE, FX32_ONE },					// scale
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	// rotate
+		},
+		Poke3DMove,	// 動作関数
+	},
+};
+
+// カメラ注視点
+//static const VecFx32 U_ComeraTarget = { U_CAMERA_TX, U_CAMERA_TY, U_CAMERA_TZ };
+static const VecFx32 D_ComeraTarget = { D_CAMERA_TX, D_CAMERA_TY, D_CAMERA_TZ };
+
+// カメラ位置
+//static const VecFx32 U_ComeraPos = { U_CAMERA_PX, U_CAMERA_PY, U_CAMERA_PZ };
+static const VecFx32 D_ComeraPos = { D_CAMERA_PX, D_CAMERA_PY, D_CAMERA_PZ };
+
+// ライトデータ
+static const GFL_G3D_LIGHT_DATA LightData = { 0, { { LIGHT_PX, LIGHT_PY, LIGHT_PZ }, LIGHT_COLOR } };
+static const GFL_G3D_LIGHTSET_SETUP LightSetup = { &LightData, 1 };
+
+
+//ライト初期設定データ
+static const GFL_G3D_LIGHT_DATA light_data[] = {
+  { 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 1, {{  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+  { 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+};
+static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_data) };
+
+// カメラ設定関連
+#define cameraPerspway  ( 0x0b60 )
+#define cameraAspect    ( FX32_ONE * 4 / 3 )
+#define cameraNear      ( 1 << FX32_SHIFT )
+#define cameraFar       ( 1024 << FX32_SHIFT )
+
+// ３Ｄカメラ設定
+#define BADGE3D_CAMERA_POS_Y     ( FX32_ONE*1.4  )  ///< ジムリーダーリングの倒れ具合
+#define BADGE3D_CAMERA_POS_Z     ( FX32_ONE*5.49 )  ///< ジムリーダーとカメラの距離（ドットのゆがみ調整）
+#define BADGE3D_CAMERA_TARGET_Y  ( FX32_ONE*-1.49 )  ///< 座標(0,0,0)のモデリングデータ画面上の位置
+
+#ifdef PM_DEBUG
+//static VecFx32 test_pos    = { 0, BADGE3D_CAMERA_POS_Y, BADGE3D_CAMERA_POS_Z };
+//static VecFx32 test_target = { 0, BADGE3D_CAMERA_TARGET_Y, 0 };
+static VecFx32 test_pos    = { 0, -FX32_ONE, -FX32_ONE };
+static VecFx32 test_target = { 0, 0, 0 };
+static int     moveflag;
+#endif
+
+
+static void Init3D( SRMAIN_WORK * wk )
+{
+	OS_Printf( "heap size [3] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
+
+#if 1
+	// ３Ｄシステム起動
+	GFL_G3D_Init(
+		GFL_G3D_VMANLNK,		// テクスチャマネージャ使用モード（フレームモード（とりっぱなし））
+		GFL_G3D_TEX256K,		// テクスチャマネージャサイズ 128KB(1ブロック)
+		GFL_G3D_VMANLNK,		// パレットマネージャ使用モード（フレームモード（とりっぱなし））
+		GFL_G3D_PLT64K,			// パレットマネージャサイズ
+		0x1000,							// ジオメトリバッファの使用サイズ
+		HEAPID_STAFF_ROLL,	// ヒープID
+		NULL );							// セットアップ関数(NULLの時はDefaultSetUp)
+
+
+	// ハンドル作成
+//	wk->g3d_util  = GFL_G3D_UTIL_Create( &G3DUtilSetup, HEAPID_STAFF_ROLL );
+	wk->g3d_util = GFL_G3D_UTIL_Create ( 2, 1, HEAPID_STAFF_ROLL );
+	wk->g3d_unit = GFL_G3D_UTIL_AddUnit( wk->g3d_util, &G3DUtilSetup );
+	{
+		u16	cnt, i;
+		GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		cnt = GFL_G3D_OBJECT_GetAnimeCount( obj );
+		for( i=0; i<cnt; i++ ){
+			GFL_G3D_OBJECT_EnableAnime( obj, i );
+		}
+	}
+
+
+
+
+/*
+	// 管理システム作成
+	wk->g3d_scene = GFL_G3D_SCENE_Create(
+										wk->g3d_util,					// 依存するg3Dutil
+										1000,									// 配置可能なオブジェクト数
+										4,										// １オブジェクトに割り当てるワークのサイズ
+										32,										// アクセサリ数
+										FALSE,								// パーティクルシステムの起動フラグ
+										HEAPID_STAFF_ROLL );	// ヒープID
+	// OBJ追加
+	wk->g3d_obj_id = GFL_G3D_SCENEOBJ_Add( wk->g3d_scene, ObjData, NELEMS(ObjData), 0 );
+//	TITLE3D_JewelBoxAnmChange( wk, JEWELBOX_ANM_STOP );
+
+	{
+		GFL_G3D_SCENEOBJ * obj = GFL_G3D_SCENEOBJ_Get( wk->g3d_scene, wk->g3d_obj_id );
+		GFL_G3D_SCENEOBJ_DisableAnime( obj, 0 );
+		GFL_G3D_SCENEOBJ_ResetAnimeFrame( obj, 0 );
+		GFL_G3D_SCENEOBJ_EnableAnime( obj, 0 );
+	}
+*/
+
+	{	// カメラ作成
+/*
+		VecFx32 defaultCameraUp = { 0, FX32_ONE, 0 };
+
+		wk->g3d_camera[0] = GFL_G3D_CAMERA_Create(
+									GFL_G3D_PRJPERS, 
+									FX_SinIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
+									CAMERA_ASPECT,
+									0,
+									defaultCameraNear,
+									FX32_ONE,
+									0,
+									&D_ComeraPos,
+									&defaultCameraUp,
+									&D_ComeraTarget,
+									HEAPID_STAFF_ROLL );
+*/
+  // ライト作成
+	wk->g3d_light = GFL_G3D_LIGHT_Create( &light3d_setup, HEAPID_STAFF_ROLL );
+  GFL_G3D_LIGHT_Switching( wk->g3d_light );
+
+  // カメラ初期設定
+  {
+    GFL_G3D_PROJECTION proj = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 }; 
+    proj.param1 = FX_SinIdx( cameraPerspway ); 
+    proj.param2 = FX_CosIdx( cameraPerspway ); 
+    GFL_G3D_SetSystemProjection( &proj ); 
+  }
+ // カメラ作成
+  {
+//    VecFx32    pos = { 0, BADGE3D_CAMERA_POS_Y,    BADGE3D_CAMERA_POS_Z };
+//    VecFx32 target = { 0, BADGE3D_CAMERA_TARGET_Y, 0                    };
+    VecFx32    pos = { 0, -FX32_ONE, -FX32_ONE };
+    VecFx32 target = { 0, 0, 0 };
+    wk->g3d_camera[0]   = GFL_G3D_CAMERA_CreateDefault( &pos, &target, HEAPID_STAFF_ROLL );
+  }
+
+/*
+		wk->local->g3d_camera[1] = GFL_G3D_CAMERA_Create(
+									GFL_G3D_PRJPERS, 
+									FX_SinIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
+									CAMERA_ASPECT,
+									0,
+									defaultCameraNear,
+									FX32_ONE,
+									0,
+									&U_ComeraPos,
+									&defaultCameraUp,
+									&U_ComeraTarget,
+									HEAPID_TITLE_LOCAL );
+*/
+	}
+
+	// ライト作成
+//	wk->g3d_light = GFL_G3D_LIGHT_Create( &LightSetup, HEAPID_STAFF_ROLL );
+
+	// カメラ・ライト反映
+//	GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
+//	GFL_G3D_LIGHT_Switching( wk->g3d_light );
+
+	G3X_AntiAlias( TRUE );	// セットアップ関数で作ったほうがいいけど。。。
+
+
+
+
+	GFL_BG_SetBGControl3D( 2 );				// BG面設定（引数は優先度）
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+#endif
+}
+
+static void Exit3D( SRMAIN_WORK * wk )
+{
+#if 1
+	GFL_G3D_LIGHT_Delete( wk->g3d_light );
+//	GFL_G3D_CAMERA_Delete( wk->local->g3d_camera[1] );
+	GFL_G3D_CAMERA_Delete( wk->g3d_camera[0] );
+
+	GFL_G3D_SCENEOBJ_Remove( wk->g3d_scene, wk->g3d_obj_id, NELEMS(ObjData) );
+
+	GFL_G3D_SCENE_Delete( wk->g3d_scene );
+	GFL_G3D_UTIL_Delete( wk->g3d_util );
+
+	GFL_G3D_Exit();
+#endif
+}
+
+
+static void Main3D( SRMAIN_WORK * wk )
+{
+#if 1
+/*
+  static fx32 frame = 0;
+//  static fx32 anime_speed = FX32_ONE;
+  static fx32 anime_speed = 0;
+  GFL_G3D_OBJSTATUS status;
+
+  VEC_Set( &status.trans, 0, 0, 0 );
+  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  MTX_Identity33( &status.rotate );
+*/
+  // カメラ更新
+  GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
+
+#ifdef PM_DEBUG
+  // TEMP: カメラ設定
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
+  {
+    
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      test_pos.z -= FX32_ONE /10;
+    }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
+      test_pos.z += FX32_ONE /10;
+    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){
+      test_pos.y -= FX32_ONE /10;
+    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_DOWN){
+      test_pos.y += FX32_ONE /10;
+    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_LEFT){
+      test_target.y -= FX32_ONE /10;
+    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_RIGHT){
+      test_target.y += FX32_ONE /10;
+    }
+    GFL_G3D_CAMERA_SetPos( wk->g3d_camera[0], &test_pos );
+    GFL_G3D_CAMERA_SetTarget( wk->g3d_camera[0], &test_target );
+    OS_Printf("pos.y=%d pos.z=%d, target.y=%d \n", test_pos.y, test_pos.z, test_target.y);
+  }
+//  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+//    anime_speed = FX32_ONE;
+//  }else{
+//    anime_speed = 0;
+//  }
+
+#endif
+
+  // アニメーション更新
+/*
+  {
+		GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      GFL_G3D_OBJECT_GetAnimeFrame( obj, 0, &frame );
+//      OS_Printf("anime_frame=%d\n", frame/FX32_ONE);
+
+      for( j=0; j<anime_count; j++ )
+      {
+//        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, wk->anime_speed );
+        GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &wk->animeFrame );
+      }
+    }
+  }
+*/
+  // 描画
+  GFL_G3D_DRAW_Start();
+  GFL_G3D_DRAW_SetLookAt();
+  {
+	  GFL_G3D_OBJSTATUS status;
+		GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		GFL_G3D_DRAW_DrawObject( obj, &status );
+  }
+  GFL_G3D_DRAW_End();
+
+
+
+/*
+	{
+		GFL_G3D_SCENEOBJ * obj = GFL_G3D_SCENEOBJ_Get( wk->g3d_scene, wk->g3d_obj_id );
+		GFL_G3D_SCENEOBJ_LoopAnimeFrame( obj, 0, FX32_ONE );
+	}
+
+	GFL_G3D_SCENE_Main( wk->g3d_scene );
+	GFL_G3D_SCENE_Draw( wk->g3d_scene );  
+*/
+#endif
+}
+
+
+static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work )
+{
+}
+
+
+/*
+
+
+///==================================
+/// n_legend_meat_b_02 Unit File Resource
+
+static const u16 res_ending_b_file_n_legend_meat_b_02[] = {
+ NARC_data_demo3d_n_legend_meat_b_02_nsbmd,
+ NARC_data_demo3d_n_legend_meat_b_02_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_ending_b_file_unit_n_legend_meat_b_02[] = {
+ { res_ending_b_file_n_legend_meat_b_02, 2 },
+};
+
+///========================================================
+/// シーンユニットテーブル
+///========================================================
+
+static const DEMO3D_FILE_UNIT_TBL res_ending_b_file_unit_n_legend_meat_b_01_tbl[] = {
+ { res_ending_b_file_unit_n_legend_meat_b_01, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_ending_b_file_unit_n_legend_meat_b_02_tbl[] = {
+ { res_ending_b_file_unit_n_legend_meat_b_02, 1 },
+};
+
+static const DEMO3D_SCENE_UNIT res_ending_b_scene_unit[] = {
+ { res_ending_b_file_unit_n_legend_meat_b_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_ending_b_file_unit_n_legend_meat_b_02_tbl, 1, DEMO3D_UNITCHG_NONE },
+};
+
+*/
+
+#endif
+
 
 
 //============================================================================================
@@ -745,7 +1174,7 @@ static void ListScroll( SRMAIN_WORK * wk )
 			p1 += 0x20;
 			p2 += 0x20;
 		}
-		for( i=1; i<32; i++ ){
+		for( i=1; i<28; i++ ){
 			p1 = ( i << 5 ) << 5;
 			p2 = ( ( i - 1 ) << 5 ) << 5;
 			for( j=0; j<32; j++ ){

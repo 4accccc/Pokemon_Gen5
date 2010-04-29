@@ -54,10 +54,17 @@ typedef struct {
 	u32	palRes;
 	u32	celRes;
 */
+	GFL_G3D_UTIL * g3d_util;
+	GFL_G3D_SCENE * g3d_scene;
+	GFL_G3D_CAMERA * g3d_camera[2];
+	GFL_G3D_LIGHTSET * g3d_light;
+	u32	g3d_obj_id;
+	u16	g3d_unit;
+//	u32	box_anm;
 
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント
 	GFL_MSGDATA * mman;									// メッセージデータマネージャ
-	WORDSET * wset;											// 単語セット
+//	WORDSET * wset;											// 単語セット
 	STRBUF * exp;												// メッセージ展開領域
 //	PRINT_QUE * que;										// プリントキュー
 
