@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 19:21:34
+#save date:2010/04/29 21:41:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r07r0103.wms
 #SECTION START:OBJ_EVENT
@@ -78,7 +78,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_ESPW_03
 #OBJ CODE Number
-ESPM
+ESPW
 #MOVE CODE Number
 MV_SPIN_R
 #EVENT TYPE Number
