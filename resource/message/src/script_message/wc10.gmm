@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-26T22:34:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T17:13:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -264,13 +264,13 @@
 		</language>
 	</columns>
 
-	<dialog left="396" top="89" right="1101" bottom="709" maximized="no" rayout="Vertical2">
+	<dialog left="1500" top="130" right="2205" bottom="750" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="619" top="121" right="1092" bottom="519" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -1879,6 +1879,14 @@
 また　しぜんなのが　いいのよね……</language>
 		<language name="JPN_KANJI" width="256">タツベイの　美しさも
 また　自然なのが　いいのよね……</language>
+	</row>
+
+	<row id="wc10_sign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">ここは　ホワイトフォレスト
+いいかえれば　しろい　もり</language>
+		<language name="JPN_KANJI" width="256">ここは　ホワイトフォレスト
+いいかえれば　白い　森</language>
 	</row>
 
 	<flowchart-group-list>
