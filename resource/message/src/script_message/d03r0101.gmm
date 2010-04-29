@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T22:12:12"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-29T16:59:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -542,16 +542,38 @@
 正しさを　証明したいのか？▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・メッセージ後、ＴＶトランシーバー画面に切り替え
-・0＝主人公名前</comment>
+・0＝主人公名前
+
+100429斉藤マ
+TVT着信演出の統一に伴い未使用になっています</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
 ライブキャスター　だれから？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
 ライブキャスター　だれから？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d03r0101_tvt_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・コール音再生と同時に表示
+・コール音終了後に、msg_d03r0101_tvt_02へ</comment>
+		<attribute name="キャラ指定">システム
+ライブキャスター</attribute>
+		<language name="JPN" width="256">ライブキャスターが　なっている</language>
+		<language name="JPN_KANJI" width="256">ライブキャスターが　なっている</language>
+	</row>
+
+	<row id="msg_d03r0101_tvt_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>・メッセージ表示後、ライブキャスター画面へ</comment>
+		<attribute name="キャラ指定">システム
+ライブキャスター</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d03r0101_champion_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">

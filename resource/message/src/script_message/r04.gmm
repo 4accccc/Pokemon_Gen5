@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:28:11"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-29T16:53:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -418,8 +418,18 @@
 もっと　強さを　ひきだせるよ▼</language>
 	</row>
 
-	<row id="msg_r04_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>・アララギ博士（娘）からの連絡</comment>
+	<row id="msg_r04_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アララギ博士（娘）からの連絡
+・コール音再生と同時に表示
+・コール音終了後にmsg_r04_tvt_02を表示</comment>
+		<attribute name="キャラ指定">システム
+TVトランシーバー</attribute>
+		<language name="JPN" width="256">ライブキャスターが　なっている</language>
+		<language name="JPN_KANJI" width="256">ライブキャスターが　なっている</language>
+	</row>
+
+	<row id="msg_r04_tvt_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・メッセージ表示後、ライブキャスター画面へ</comment>
 		<attribute name="キャラ指定">システム
 TVトランシーバー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は

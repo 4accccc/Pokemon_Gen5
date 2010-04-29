@@ -174,15 +174,21 @@ EVENT_START		ev_reserve_d03r0101_event_01
 	
 	//TVT着信音を再生
 	_ME_PLAY( SEQ_ME_CALL )
+	_SYSWIN_MSG( msg_d03r0101_tvt_01, POS_DOWN )
 	_ME_WAIT()
 	
+/*100429斉藤マ TVT着信演出の統一に伴い削除
 	//ライバル：自機のほうに向く
 	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
 	//おまえの　TVトランシーバーなってるぜ
-	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_04 , D03R0101_RIVAL_02 )
+	_MSGWIN_CLOSE()
+*/
+	
+	_PLAYER_NAME(0)
+	_SYSWIN_MSG( msg_d03r0101_tvt_02, POS_DOWN )
 	_MSGWIN_CLOSE()
 	
 	//TVトランシーバー起動
@@ -192,9 +198,11 @@ EVENT_START		ev_reserve_d03r0101_event_01
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
 
+/*
 	//ライバル：自機のほうに向く
 	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_l )
 	_OBJ_ANIME_WAIT()
+*/
 
 	//……シッポウはくぶつかん　そこに　いけば
 	_BALLOONWIN_OBJMSG( msg_d03r0101_champion_02 , D03R0101_CHAMPION_01 )

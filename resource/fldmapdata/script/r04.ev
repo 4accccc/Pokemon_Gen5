@@ -301,12 +301,13 @@ EVENT_START		ev_pos_r04_rival_01
 	
 	//TVT着信音を再生
 	_ME_PLAY( SEQ_ME_CALL )
+	_SYSWIN_MSG( msg_r04_tvt_01, POS_DOWN )
 	_ME_WAIT()
 	
 	//アララギ博士からの連絡
 	_PLAYER_NAME(0)
-	_PLAINWIN_MSG_DOWN( msg_r04_tvt_01 )
-	_PLAINWIN_CLOSE()
+	_SYSWIN_MSG( msg_r04_tvt_02, POS_DOWN )
+	_MSGWIN_CLOSE()
 	
 	//TVトランシーバー起動
   _MAP_FADE_BLACK_OUT()
