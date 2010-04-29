@@ -885,7 +885,7 @@ static void Zukan_Nickname_BssInit( ZUKAN_NICKNAME_WORK* work )
     PaletteFadeWorkAllocSet( work->bss_pfd, FADE_SUB_OBJ,  0x1c0, work->heap_id );
   }
 
-  work->bss_wk = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, work->bss_pfd, work->font, &work->bss_cursor_flag, work->heap_id );
+  work->bss_wk = BTLV_INPUT_InitEx( work->gamedata, BTLV_INPUT_TYPE_SINGLE, work->bss_pfd, work->font, &work->bss_cursor_flag, work->heap_id );
 
   work->bss_state = BSS_STATE_STANDBY_START;
 }

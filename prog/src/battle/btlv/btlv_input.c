@@ -490,6 +490,7 @@ struct _BTLV_INPUT_WORK
   GFL_TCBSYS*           tcbsys;
   void*                 tcbwork;
   ARCHANDLE*            handle;
+  GAMEDATA*             gameData;
   BTLV_INPUT_TYPE       type;
   BtlCompetitor         comp;
   BTLV_INPUT_SCRTYPE    scr_type;
@@ -670,8 +671,9 @@ typedef struct
  *  プロトタイプ宣言
  */
 //============================================================================================
-static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd,
-                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_tcb_flag, HEAPID heapID );
+static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
+                                               PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag,
+                                               BOOL main_loop_tcb_flag, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work );
@@ -745,6 +747,7 @@ static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 /**
  *  @brief  システム初期化（汎用）
  *
+ *  @param[in]  gameData      GAMEDATA構造体
  *  @param[in]  type          インターフェースタイプ
  *  @param[in]  pfd           パレットフェード管理構造体ポインタ
  *  @param[in]  font          使用するフォント
@@ -754,15 +757,16 @@ static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, FALSE, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, FALSE, heapID );
 }
 
 //============================================================================================
 /**
  *  @brief  システム初期化（戦闘専用）
  *
+ *  @param[in]  gameData      GAMEDATA構造体
  *  @param[in]  type          インターフェースタイプ
  *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
  *  @param[in]  pfd           パレットフェード管理構造体ポインタ
@@ -773,15 +777,16 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd,
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( type, comp, pfd, font, cursor_flag, TRUE, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, TRUE, heapID );
 }
 
 //============================================================================================
 /**
  *  @brief  システム初期化コア
  *
+ *  @param[in]  gameData      GAMEDATA構造体
  *  @param[in]  type          インターフェースタイプ
  *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
  *  @param[in]  pfd           パレットフェード管理構造体ポインタ
@@ -792,8 +797,9 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, PAL
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd,
-                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_tcb_flag, HEAPID heapID )
+static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
+                                               PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag,
+                                               BOOL main_loop_tcb_flag, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -802,9 +808,10 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetit
   biw->tcbwork  = GFL_HEAP_AllocClearMemory( biw->heapID, GFL_TCB_CalcSystemWorkSize( BTLV_INPUT_TCB_MAX ) );
   biw->tcbsys   = GFL_TCB_Init( BTLV_INPUT_TCB_MAX, biw->tcbwork );
 
-  biw->font = font;
-  biw->type = type;
-  biw->comp = comp;
+  biw->gameData = gameData;
+  biw->font     = font;
+  biw->type     = type;
+  biw->comp     = comp;
 
   biw->cursor_mode = cursor_flag;
 
@@ -942,7 +949,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 
   //情報ステータスバー初期化
-  INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, NULL, biw->heapID );
+  INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, GAMEDATA_GetWiFiList( biw->gameData ), biw->heapID );
   //情報ステータスバー表示
   GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
 

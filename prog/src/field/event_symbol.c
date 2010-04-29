@@ -250,7 +250,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
       MYITEM_AddItem( GAMEDATA_GetMyItem(gamedata), ITEM_DORIIMUBOORU, 1, esb->heap_id );
       
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
-      esb->pdc_setup = PDC_MakeSetUpParam( esb->pp, &esb->bfs, 
+      esb->pdc_setup = PDC_MakeSetUpParam( gamedata, esb->pp, &esb->bfs, 
         GAMEDATA_GetMyStatus(gamedata), GAMEDATA_GetMyItem(gamedata), 
         SaveData_GetConfig( sv ), ZUKAN_SAVEDATA_GetZukanSave(sv), esb->heap_id );
       GMEVENT_CallProc( event, NO_OVERLAY_ID, &PDC_ProcData, esb->pdc_setup );

@@ -29,6 +29,7 @@
 
 struct _PDC_SETUP_PARAM
 { 
+  GAMEDATA*             gameData;
   POKEMON_PARAM*        pp;
   BTL_FIELD_SITUATION*  bfs;
   MYSTATUS*             my_status;
@@ -61,6 +62,7 @@ FS_EXTERN_OVERLAY(battle_view);
 /**
  * @brief PDC_SETUP_PARAM生成
  *
+ * @param[in] gameData  GAMEDATA構造体
  * @param[in] pp        POKEMON_PARAM構造体
  * @param[in] bfs       BTL_FIELD_SITUATION構造体
  * @param[in] my_status プレイヤーデータ
@@ -72,10 +74,12 @@ FS_EXTERN_OVERLAY(battle_view);
  * @retval  PDC_SETUP_PARAM
  */
 //--------------------------------------------------------------------------
-PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bfs, MYSTATUS* my_status, MYITEM* my_item, CONFIG* config, ZUKAN_SAVEDATA* zs, HEAPID heapID )
+PDC_SETUP_PARAM*  PDC_MakeSetUpParam( GAMEDATA* gameData, POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bfs, MYSTATUS* my_status,
+                                      MYITEM* my_item, CONFIG* config, ZUKAN_SAVEDATA* zs, HEAPID heapID )
 { 
   PDC_SETUP_PARAM*  psp = GFL_HEAP_AllocMemory( heapID, sizeof( PDC_SETUP_PARAM ) );
 
+  psp->gameData   = gameData;
   psp->pp         = pp;
   psp->bfs        = bfs;
   psp->my_status  = my_status;
@@ -85,6 +89,20 @@ PDC_SETUP_PARAM*  PDC_MakeSetUpParam( POKEMON_PARAM* pp, BTL_FIELD_SITUATION* bf
   psp->result     = PDC_RESULT_NONE;
 
   return psp;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief gameData取得
+ *
+ * @param[in] psp PDC_SETUP_PARAM
+ *
+ * @retval  GAMEDATA
+ */
+//--------------------------------------------------------------------------
+GAMEDATA*  PDC_GetGameData( PDC_SETUP_PARAM* psp )
+{ 
+  return psp->gameData;
 }
 
 //--------------------------------------------------------------------------
