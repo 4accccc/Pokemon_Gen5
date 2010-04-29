@@ -566,5 +566,5 @@
 #define		WAZANO_KOORUDOHUREA		( 554 )		//コールドフレア
 #define		WAZANO_BAAKUAUTO			( 555 )		//バークアウト
 #define		WAZANO_TURARAOTOSI		( 556 )		//つららおとし
-#define		WAZANO_								( 557 )		//Vジェネレート
+#define		WAZANO_vJENEREETO			( 557 )		//Ｖジェネレート
 #define		WAZANO_MAX						( 558 )

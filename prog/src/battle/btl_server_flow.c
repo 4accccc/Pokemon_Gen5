@@ -11109,6 +11109,20 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
   u8 ratio = WAZADATA_GetParam( waza, WAZAPARAM_DAMAGE_REACTION_RATIO );
   u8 ratio_ex = 0;
   u8 fail_flag = FALSE;
+  u8 anti_fail_flag = FALSE;
+  SV_ReactionType  reactionType = SV_REACTION_NONE;
+
+  if( ratio )
+  {
+    reactionType = SV_REACTION_DAMAGE;
+  }
+  else
+  {
+    ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_REACTION_RATIO );
+    if(  ratio ){
+      reactionType = SV_REACTION_HP;
+    }
+  }
 
 #ifdef SOGA_DEBUG
   //ÉhÉåÉCÉìånÇÕîΩìÆÇ…Ç»ÇÁÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
@@ -11119,25 +11133,38 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 #endif
 
   BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, pokeID );
     BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO_EX, ratio_ex );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, pokeID );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO_EX, 0 );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_KICKBACK );
+
     ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
     fail_flag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+    anti_fail_flag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
     ratio_ex = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO_EX );
   BTL_EVENTVAR_Pop();
 
-  if( fail_flag )
+  if( !anti_fail_flag )
   {
-    ratio = 0;
+    if( fail_flag == TRUE ){
+      return 0;
+    }
   }
   ratio += ratio_ex;
 
   if( ratio )
   {
-    damage = roundMin( (damage*ratio)/100, 1 );
+    if( reactionType == SV_REACTION_HP )
+    {
+      damage = roundMin( (BPP_GetValue(attacker,BPP_MAX_HP)*ratio)/100, 1 );
+    }
+    else{
+      damage = roundMin( (damage*ratio)/100, 1 );
+    }
+    TAYA_Printf("îΩìÆî≠ê∂, ratio=%d, damage=%d\n", ratio, damage);
     return damage;
   }
   return 0;
@@ -11669,14 +11696,23 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
 static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, PokeType waza_type )
 {
   BOOL f_match = BPP_IsMatchType( attacker, waza_type );
-  fx32 ratio = (f_match)? FX32_CONST(1.5f) : FX32_CONST(1);
+  fx32 ratio = FX32_CONST(1);
 
   BTL_EVENTVAR_Push();
   {
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_GEN_FLAG, f_match );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_TYPEMATCH_CHECK );
+    f_match = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+
+    if( f_match ){
+      ratio = FX32_CONST(1.5f);
+    }
+
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEMATCH_FLAG, f_match );
     BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_TYPEMATCH_RATIO );
+
     ratio = (fx32)BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
   }
   BTL_EVENTVAR_Pop();

@@ -84,6 +84,7 @@ typedef enum {
   BTL_EVENT_DEFENDER_GUARD,         ///< 防御側の能力値（ぼうぎょorとくぼう）補正ハンドラ
   BTL_EVENT_CHECK_AFFINITY,         ///< 相性計算
   BTL_EVENT_ATTACKER_TYPE,          ///< 攻撃側ポケタイプ
+  BTL_EVENT_TYPEMATCH_CHECK,        ///< 攻撃側タイプ一致チェック
   BTL_EVENT_TYPEMATCH_RATIO,        ///< 攻撃側タイプ一致時倍率
   BTL_EVENT_WAZA_ATK_TYPE,          ///< 攻撃側ポケタイプチェックハンドラ
   BTL_EVENT_WAZA_DEF_TYPE,          ///< 防御側ポケタイプチェックハンドラ
@@ -252,6 +253,7 @@ typedef enum {
   BTL_EVAR_FAIL_FLAG,
   BTL_EVAR_AVOID_FLAG,
   BTL_EVAR_ALMOST_FLAG,
+  BTL_EVAR_TYPEMATCH_FLAG,
   BTL_EVAR_CRITICAL_FLAG,
   BTL_EVAR_ITEMUSE_FLAG,
   BTL_EVAR_TRICK_FLAG,

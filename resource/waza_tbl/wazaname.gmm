@@ -3179,8 +3179,8 @@
 	</row>
 
 	<row id="WAZANAME_557">
-		<language name="JPN" width="216">Vジェネレート</language>
-		<language name="JPN_KANJI" width="216">Vジェネレート</language>
+		<language name="JPN" width="216">Ｖジェネレート</language>
+		<language name="JPN_KANJI" width="216">Ｖジェネレート</language>
 	</row>
 
 	<flowchart-group-list>

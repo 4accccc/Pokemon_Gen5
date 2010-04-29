@@ -570,6 +570,8 @@ static const BtlEventHandlerTable* ADD_Tuibamu( u32* numElems );
 static void handler_Tuibamu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems );
+static void handler_Waruagaki_KickBack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Waruagaki_SeqStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Waruagaki_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems );
@@ -697,6 +699,7 @@ static const BtlEventHandlerTable*  ADD_KusaNoTikai( u32* numElems );
 static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_CombiWaza_TypeMatch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_TechnoBaster( u32* numElems );
@@ -7980,11 +7983,32 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASEQ_START,   handler_Waruagaki_SeqStart    }, // ワザ処理開始ハンドラ
     { BTL_EVENT_WAZA_PARAM,      handler_Waruagaki_WazaParam   }, // ワザパラメータ取得
-    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki             }, // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_CALC_KICKBACK,   handler_Waruagaki_KickBack    }, // 反動チェックハンドラ
+//    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki             }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+// 反動チェックハンドラ
+static void handler_Waruagaki_KickBack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    // 無効化禁止フラグON
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
+}
+// ワザ処理開始ハンドラ
+static void handler_Waruagaki_SeqStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WaruagakiExe );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+  }
 }
 // ワザパラメータ取得
 static void handler_Waruagaki_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -10068,11 +10092,12 @@ static CombiEffectType GetCombiWazaType( WazaID waza1, WazaID waza2 )
 static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe  },    // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
-    { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
-    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
+    { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
+    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
+    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
+    { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
+    { BTL_EVENT_WAZA_POWER,          handler_CombiWaza_Pow       }, // 威力計算
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10085,11 +10110,12 @@ static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
 static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe  },    // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
-    { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
-    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
+    { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
+    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
+    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
+    { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
+    { BTL_EVENT_WAZA_POWER,          handler_CombiWaza_Pow       }, // 威力計算
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10103,11 +10129,12 @@ static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems )
 static const BtlEventHandlerTable*  ADD_KusaNoTikai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK, handler_CombiWaza_CheckExe  },    // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
-    { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
-    { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
+    { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
+    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
+    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
+    { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
+    { BTL_EVENT_WAZA_POWER,          handler_CombiWaza_Pow       }, // 威力計算
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10163,6 +10190,18 @@ static void handler_CombiWaza_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       case COMBI_EFFECT_MOOR:      type = POKETYPE_KUSA; break;
       }
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
+    }
+  }
+}
+// タイプマッチチェックハンドラ
+static void handler_CombiWaza_TypeMatch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  {
+    if( work[0] )
+    {
+      TAYA_Printf("合体ワザ発動につき、かならずタイプ一致あつかい\n");
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
   }
 }

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-29T17:02:41"/>
+	<create user="taya" host="W00146" date="2010-04-30T00:45:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,7 +427,7 @@
 		<band id="2" index="3" style="0000" width="520"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -5446,6 +5446,26 @@
 ファストガードで　まもられた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 ファストガードで　守られた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_WaruagakiExe">
+		<comment>わるあがき</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+だすことのできる　わざが　ない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+出すことのできるワザが　無い！</language>
+	</row>
+	<row id="BTL_STRID_SET_WaruagakiExe_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+だすことのできる　わざが　ない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+出すことのできるワザが　無い！</language>
+	</row>
+	<row id="BTL_STRID_SET_WaruagakiExe_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+だすことのできる　わざが　ない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+出すことのできるワザが　無い！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SinpiNoMamori_Exe">

@@ -1319,7 +1319,7 @@ static void handler_Tekiouryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEMATCH_FLAG) )
     {
       BTL_EVENTVAR_RewriteValue(BTL_EVAR_RATIO, FX32_CONST(2));
       BTL_Printf("É|ÉP[%d]ÇÃ ÇƒÇ´Ç®Ç§ÇËÇÂÇ≠ Ç≈É^ÉCÉvàÍívï‚ê≥ó¶ÇQî{Ç…\n", pokeID);
@@ -3159,7 +3159,7 @@ static void handler_Isiatama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, 0 );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Isiatama( u32* numElems )

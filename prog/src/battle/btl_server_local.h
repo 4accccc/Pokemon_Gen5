@@ -54,5 +54,14 @@ typedef enum {
 
 }SV_DamageCause;
 
+
+typedef enum {
+
+  SV_REACTION_NONE = 0,   ///< ”½“®‚È‚µ
+  SV_REACTION_DAMAGE,     ///< —^‚¦‚½ƒ_ƒ[ƒW‚ÌŠ„‡‚É‚æ‚é”½“®
+  SV_REACTION_HP,         ///< Ž©•ª‚ÌÅ‘åHP‚ÌŠ„‡‚É‚æ‚é”½“®
+
+}SV_ReactionType;
+
 #endif
 
