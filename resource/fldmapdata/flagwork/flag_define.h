@@ -373,7 +373,7 @@
 #define FE_C09P01_GATE_OPEN                357 /* 0x0165 ポケモンリーグフロント：ゲート開放フラグ */
 #define FE_H05_LOOK_WANDERGIRL             358 /* 0x0166 15番道路：消える少女を見た */
 #define FE_T04PC0101_ITEMGET_01            359 /* 0x0167 サザナミポケセン：アイテム入手フラグ */
-		/* not used   360(0x0168) */
+#define FE_R15R0401_TRADE_01               360 /* 0x0168 15番道路：ポケモン入手イベント */
 		/* not used   361(0x0169) */
 		/* not used   362(0x016a) */
 		/* not used   363(0x016b) */
