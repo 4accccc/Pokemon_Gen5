@@ -323,16 +323,11 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
-  //道具＆特性によるエンカウント率変動(@todo 釣りに影響するの？)
+  //道具/特性/Gパワーによるエンカウント率変動は釣りに影響しない
   if( enc_type != ENC_TYPE_EFFECT ){
-    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
     if( enc_GetPercentRand() < per ){
       return( NULL );
     }
-  }
-
-  { //移動ポケモンチェック( @todo 移動ポケモンは釣りでエンカウントするの？)
-
   }
 
   //エンカウントデータ生成
@@ -429,7 +424,6 @@ void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_w
 
 /*
  *  @brief  戦闘背景/天候 など FIELDMAP_WORKを参照して決定されるシチュエーションデータを取得する
- *  @todo 仮処理
  */
 void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork )
 {
@@ -510,7 +504,7 @@ static ENCOUNT_LOCATION enc_GetLocation( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
       return ENC_LOCATION_GROUND_H;
     }
   }
-  //@todo その他は今のところ地面ローレベルを当てておく 091002
+  //その他は地面ローレベルを当てておく 091002
   return ENC_LOCATION_GROUND_L;
 }
 

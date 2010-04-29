@@ -603,11 +603,6 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
  * @param seq イベントシーケンス
  * @param wk イベントワーク
  * @retval GMEVENT_RESULT
- *
- * @todo
- * 今は単一のイベントですべてのフィールド戦闘呼び出しを
- * 実行しているが、バリエーションが増えたところで
- * 分割するべきかどうかを検討する
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT fieldBattleEvent(
@@ -960,7 +955,8 @@ static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
  * @param bew   BATTLE_EVENT_WORKへのポインタ
  * @param gamedata
  *
- * @todo  戦闘結果からずかんや手持ちポケモン状態などの反映処理を実装する
+ *  戦闘結果からGAMEDATAへの勝敗反映などの処理を実装する
+ *  前作では貯金への反映、サファリボールカウントの反映などを行っていた
  */
 //--------------------------------------------------------------
 static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata)
@@ -972,9 +968,6 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 
   //ビーコンリクエスト
   BeaconReq_BattleEnd( bew );
-
-  //前作では貯金への反映、サファリボールカウントの反映、
-  //いったん取っておいたPokeParamの反映などを行っていた
 
   //諸々の戦闘結果を反映して、天候を再設定する
   PM_WEATHER_UpdateZoneChangeWeatherNo( bew->gsys, PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( gamedata )) );

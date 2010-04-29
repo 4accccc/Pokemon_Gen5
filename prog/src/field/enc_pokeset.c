@@ -651,7 +651,7 @@ static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM
   if( gene == NULL || gene->zone_id != zone_id ){
     return FALSE;
   }
-  if( ioEfp->location != ENC_LOCATION_GROUND_L && ioEfp->location != ENC_LOCATION_GROUND_H ){
+  if( ioEfp->location != ENC_LOCATION_GROUND_L ){
     return FALSE;
   }
   if( GFUser_GetPublicRand0( 1000 ) >= GENERATE_ENC_PROB ){
@@ -682,7 +682,7 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
   u32 num = 0,calctype = ENCPROB_CALCTYPE_NORMAL;
   const ENC_COMMON_DATA* src;
 
-  //@todo 大量発生チェック
+  //大量発生チェック
   if( eps_CheckGeneratePoke( inData, ioEfp, zone_id, outTable)){
     return ioEfp->tbl_num;
   }
@@ -883,8 +883,6 @@ static void eps_EncPokeItemSet(POKEMON_PARAM* pp,
 
 /*
  *  @brief  個性乱数計算
- *
- *  @todo
  */
 static u32 eps_EncPokeCalcPersonalRand(
     const ENCPOKE_FLD_PARAM* efp, const POKEMON_PERSONAL_DATA*  personal,const ENC_POKE_PARAM* poke )
@@ -917,31 +915,6 @@ static u32 eps_EncPokeCalcPersonalRand(
     }
   }
 
-  //@todo無限ループをし用意しないように処理を変更する予定
-#if 0
-  do{
-    p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
-    IWASAWA_Printf("PP_Rnd = %08x\n",p_rnd);
-
-    //レア禁止してる場合の処理
-    if ( poke->rare == POKE_RARE_SEL_NOT )
-    {
-      //抽選した個性乱数はレアか？
-      if ( POKETOOL_CheckRare( efp->myID, p_rnd ) ) continue; //レアが出たので再抽選
-    }
-
-    //性別をしている場合の処理
-    if( sex != PTL_SEX_UNKNOWN )
-    {
-      if( POKETOOL_GetSex( poke->monsNo, poke->form, p_rnd) == sex ){
-        break;  //性別指定一致
-      }
-    }else
-    {
-      break;  //指定無し
-    }
-  }while(1);  
-#else
   //レア指定（レア指定はＢＷではありません）
   if ( poke->rare == POKE_RARE_SEL_NOT ) rare_spec = PTL_RARE_SPEC_FALSE; //レア禁止
   else  rare_spec = PTL_RARE_SPEC_BOTH; //どちらでも可
@@ -950,7 +923,7 @@ static u32 eps_EncPokeCalcPersonalRand(
                                          sex_spec, PTL_TOKUSEI_SPEC_BOTH, rare_spec );
   
   IWASAWA_Printf("EncountMons sex_spec = %d, rare_spec = %d, p_rnd = %d\n",sex_spec, rare_spec, p_rnd & 0x000000FF);
-#endif
+  
   //レア禁止してる場合の処理
   if ( poke->rare == POKE_RARE_SEL_NOT ){
     return p_rnd;
