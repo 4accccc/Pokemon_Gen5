@@ -3484,6 +3484,7 @@ static void _arcGearRelease(C_GEAR_WORK* pWork)
 {
 
   _gearCrossObjDelete(pWork);
+  _gearEndStartUpObjAnime( pWork );
 
   {
     int i;
@@ -3506,6 +3507,8 @@ static void _arcGearRelease(C_GEAR_WORK* pWork)
       }
     }
   }
+
+
   GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
@@ -3540,6 +3543,25 @@ static void _workEnd(C_GEAR_WORK* pWork)
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッテリーに対応した、アニメーションINDEXを返す
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static u32 _batteryIconGetTwlIndex( void )
+{
+  static u8 sc_Index[] = {
+    0,
+    0,
+    1,
+    1,
+    2,
+    3,
+  };
+  return sc_Index[ GFL_UI_GetBattLevel() ];
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -3613,12 +3635,14 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
   {
     GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_batt1];
     if( OS_IsRunOnTwl() ){//DSIなら
-      if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  GFL_UI_GetBattLevel()){
-        GFL_CLACT_WK_SetAnmIndex(cp_wk, GFL_UI_GetBattLevel());
+      int index = _batteryIconGetTwlIndex();
+      if(GFL_CLACT_WK_GetAnmIndex(cp_wk) != index ){
+        GFL_CLACT_WK_SetAnmIndex(cp_wk, index );
       }
     }
     else{
       int num = (GFL_UI_GetBattLevel() == GFL_UI_BATTLEVEL_HI ? 1 : 0);
+      TOMOYA_Printf( "num %d\n", num );
       if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
         GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
       }
@@ -3902,6 +3926,9 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
     _PFadeSetBlack(pWork);
     _gearAllObjDrawEnabel( pWork, TRUE );
     _gearMarkObjDrawEnable(pWork,FALSE);
+
+    // 起動演出中のスリープにも対応。
+    _gearEndStartUpObjAnime( pWork );
 
     // 枠部分を表示
     _gearBootInitScreen( pWork ); // 1回表示するため。
