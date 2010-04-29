@@ -174,7 +174,7 @@ class OutputData
   #-------------------------------
   def def_label
     monsname = @label_monsno.sub("MONSNO_", "")
-    label    = "FLD_TRADE_POKE_#{monsname}"
+    label    = "FLD_TRADE_POKE_#{@trade_no + 1}_#{monsname}"
     return label
   end
 end
