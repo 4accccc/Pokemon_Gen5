@@ -2208,7 +2208,7 @@ ex)
  * #param VALUE_INT コーラス設定（ボリューム差）
  * #param VALUE_INT コーラス設定（再生速度差）
  * #param	COMBOBOX_TEXT	正再生	逆再生
- * #param	COMBOBOX_VALUE	BTLEFF_NAKIGOE_NORMAL	BTL_EFF_NAKIGOE_REVERSE
+ * #param	COMBOBOX_VALUE	BTLEFF_NAKIGOE_NORMAL	BTLEFF_NAKIGOE_REVERSE
  *
  */
 //======================================================================
