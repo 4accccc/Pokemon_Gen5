@@ -22,3 +22,4 @@ extern VMCMD_RESULT EvCmdUn_GetRoomObjCode( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdUn_GetRoomInfo( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdUn_CallFloorSelApp( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdUn_IsSetingMyCountry( VMHANDLE *core, void *wk );

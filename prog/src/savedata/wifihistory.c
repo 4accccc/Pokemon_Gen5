@@ -209,14 +209,20 @@ u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh)
 u8 WIFIHISTORY_GetMyCountryCountEx(WIFI_HISTORY * wh, const MYSTATUS *cp_mystats, BOOL my_country_flg )
 {
   u8 num  = WIFIHISTORY_GetMyCountryCount(wh);
+  NOZOMU_Printf("交換国数 %d\n",num);
 
   if ( !my_country_flg )
   {
     int nation = MyStatus_GetMyNation(cp_mystats);
-    //自分の国の交換フラグが成立している場合、交換国数を-1する
-    if ( WIFIHISTORY_CheckCountryBit(wh, nation) )
+    //国コードがセットされていない場合は0を返すようにする
+    if (!nation) num = 0;
+    else
     {
-      if (num) num--; //１以上のとき減算
+      //自分の国の交換フラグが成立している場合、交換国数を-1する
+      if ( WIFIHISTORY_CheckCountryBit(wh, nation) )
+      {
+        if (num) num--; //１以上のとき減算
+      }
     }
   }
 

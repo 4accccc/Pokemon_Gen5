@@ -45,31 +45,15 @@ VMCMD_RESULT EvCmdUn_GetCountryNum( VMHANDLE *core, void *wk )
 
   my_country_flg = SCRCMD_GetVMWorkValue( core, work );
   ret = SCRCMD_GetVMWork( core, work );
-  
+
   //セーブデータにアクセス
   {
-    int num;
     GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
     SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
     WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
-    num = WIFIHISTORY_GetMyCountryCount(wh);
-    NOZOMU_Printf("交換国数 %d\n",num);
+    MYSTATUS *my_status = GAMEDATA_GetMyStatus(gdata);
 
-    //自分の国を含まない場合
-    if ( !my_country_flg )
-    {
-      int code;
-      MYSTATUS *my_status;
-      my_status = GAMEDATA_GetMyStatus(gdata);
-      //自分の国コードを取得
-      code = MyStatus_GetMyNation(my_status);
-      //自分の国の交換フラグが成立している場合、交換国数を-1する
-      if ( WIFIHISTORY_CheckCountryBit(wh, code) )
-      {
-        if (num) num--; //１以上のとき減算
-      }
-    }
-    (*ret) = num;
+    *ret = WIFIHISTORY_GetMyCountryCountEx(wh, my_status, my_country_flg );
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -309,6 +293,37 @@ VMCMD_RESULT EvCmdUn_GetRoomObjMsg( VMHANDLE *core, void *wk )
   *msg = UN_GetRoomObjMsg(wordset, gsys, unsv_work, obj_idx, first);
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 自分の国がセットされているかを調べる
+ * @note セットされている場合retにTRUEが入る
+ *
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdUn_IsSetingMyCountry( VMHANDLE *core, void *wk )
+{
+  u16 *ret;
+  SCRCMD_WORK *work = wk;
+
+  ret = SCRCMD_GetVMWork( core, work );
+  
+  //自分の国コードを取得
+  {
+    int nation;
+    GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+    GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
+    MYSTATUS *my_status = GAMEDATA_GetMyStatus(gdata);
+    nation = MyStatus_GetMyNation(my_status);
+    if (nation) *ret = TRUE;
+    else *ret = FALSE;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 
 
