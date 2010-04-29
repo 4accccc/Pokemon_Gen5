@@ -52,7 +52,7 @@ foreach $one ( @EXCEL_FILE )
     {
       $data_in = 0;
     }
-    elsif( $data_index > 1 ){
+    elsif( $data_index >= 1 ){
       
       $DATA_ARRAY[ $DATA_NUM * $DATA_IDX_MAX ] = $line[0];
       $DATA_ARRAY[ ($DATA_NUM * $DATA_IDX_MAX) + 1 ] = $line[1];
