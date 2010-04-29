@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-22T22:14:09"/>
+	<create user="ohmori" host="W00223" date="2010-04-29T23:28:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,9 +260,9 @@
 		</language>
 	</columns>
 
-	<dialog left="2123" top="197" right="2828" bottom="825" maximized="no" rayout="Vertical2">
+	<dialog left="2149" top="558" right="2854" bottom="1168" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="238" right="1280" bottom="862" visible="yes"/>
+		<tag-palette left="505" top="256" right="978" bottom="880" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -924,306 +924,306 @@
 
 	<row id="plc_mis_06_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　タウリンを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　タウリンを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　タウリンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　タウリンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　インドメタシンを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　インドメタシンを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　インドメタシンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　インドメタシンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　リゾチウムを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　リゾチウムを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　リゾチウムを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　リゾチウムを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　キトサンを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　キトサンを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　キトサンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　キトサンを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　マックスアップを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　マックスアップを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　マックスアップを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　マックスアップを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_09" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのこなを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのこなを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのこなを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのこなを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_10" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのねっこを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのねっこを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのねっこを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのねっこを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_11" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ばんのうごなを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ばんのうごなを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ばんのうごなを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ばんのうごなを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_12" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ふっかつそうを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ふっかつそうを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ふっかつそうを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ふっかつそうを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_13" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ハイパーボールを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ハイパーボールを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ハイパーボールを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ハイパーボールを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_14" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_15" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_16" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　なんでもなおしを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　なんでもなおしを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　なんでもなおしを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　なんでもなおしを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_17" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかけらを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかけらを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかけらを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかけらを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_18" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　スーパーボールを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　スーパーボールを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　スーパーボールを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　スーパーボールを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_19" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　モンスターボールを
-はやく　やすく　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　モンスターボールを
-はやく　やすく　かってもらえ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　モンスターボールを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　モンスターボールを　すばやく
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_20" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　タウリンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　タウリンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_21" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_22" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　インドメタシンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　インドメタシンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_23" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　リゾチウムを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　リゾチウムを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_24" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　キトサンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　キトサンを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_25" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　マックスアップを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　マックスアップを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_26" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_27" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_28" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのこなを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのこなを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_29" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのねっこを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのねっこを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_30" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ばんのうごなを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ばんのうごなを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_31" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ふっかつそうを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ふっかつそうを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_32" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ハイパーボールを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ハイパーボールを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_33" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_34" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_35" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　なんでもなおしを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　なんでもなおしを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_36" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかけらを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかけらを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_37" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　スーパーボールを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　スーパーボールを
-やすく　かってもらえ！</language>
+おかいどくな　ねだんで　かってもらえ！</language>
 	</row>
 
 	<row id="plc_mis_06_38" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　モンスターボールを
-やすく　かってもらえ</language>
+おかいどくな　ねだんで　かってもらえ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　モンスターボールを
-やすく　かってもらえ</language>
+おかいどくな　ねだんで　かってもらえ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-29T12:25:09"/>
+	<create user="ohmori" host="W00223" date="2010-04-29T23:36:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -480,9 +480,9 @@
 
 	<row id="msg_mono_pow_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
-		<language name="JPN" width="256">このデルパワーを　Ｃギアに
+		<language name="JPN" width="256">このデルパワーを　C-GEARに
 とうろくしますか？</language>
-		<language name="JPN_KANJI" width="256">このデルパワーを　Ｃギアに
+		<language name="JPN_KANJI" width="256">このデルパワーを　C-GEARに
 とうろくしますか？</language>
 	</row>
 
@@ -501,9 +501,9 @@
 	<row id="msg_mono_pow_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
 		<language name="JPN" width="256">『[1:1C:簡易会話単語:0]』　を
-Ｃギアに　とうろくした！</language>
+C-GEARに　とうろくした！</language>
 		<language name="JPN_KANJI" width="256">『[1:1C:簡易会話単語:0]』　を
-Ｃギアに　とうろくした！</language>
+C-GEARに　とうろくした！</language>
 	</row>
 
 	<row id="msg_mono_pow_012" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -520,16 +520,16 @@
 
 	<row id="msg_mono_pow_014" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
-		<language name="JPN" width="256">リストから　Ｃギアでしようする
+		<language name="JPN" width="256">リストから　C-GEARで　しようする
 デルパワーを　えらんでください</language>
-		<language name="JPN_KANJI" width="256">リストから　Ｃギアでしようする
+		<language name="JPN_KANJI" width="256">リストから　C-GEARで　しようする
 デルパワーを　えらんでください</language>
 	</row>
 
 	<row id="msg_mono_pow_up_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">Ｃギアに　とうろくされてる　デルパワー</language>
-		<language name="JPN_KANJI" width="256">Ｃギアに　とうろくされてる　デルパワー</language>
+		<language name="JPN" width="256">C-GEARに　とうろくされてる　デルパワー</language>
+		<language name="JPN_KANJI" width="256">C-GEARに　とうろくされてる　デルパワー</language>
 	</row>
 
 	<row id="msg_mono_pow_up_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
