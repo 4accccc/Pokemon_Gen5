@@ -205,7 +205,7 @@ typedef enum
 //-------------------------------------
 ///	アトリビュート
 //=====================================
-#define WIFI_FILE_ATTR1			"REGCARD"
+#define WIFI_FILE_ATTR1			"REGCARD_J"
 //#define WIFI_FILE_ATTR2		//ここに大会番号が入っている
 #define WIFI_FILE_ATTR3			""
 #define REGULATION_CARD_DATA_SIZE (sizeof(REGULATION_CARDDATA))

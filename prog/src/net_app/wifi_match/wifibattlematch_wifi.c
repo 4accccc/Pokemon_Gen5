@@ -1522,7 +1522,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_WAIT_SAVE_RENEWAL:
     {
       SAVE_RESULT ret = GAMEDATA_SaveAsyncMain( p_param->p_param->p_game_data );
-      if( ret == SAVE_RESULT_OK || ret == SAVE_RESULT_NG )
+      if( ret == SAVE_RESULT_OK )
       {
         *p_seq  = SEQ_NG_EXIT;
       }
@@ -2290,7 +2290,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
 
         //Ž©•ª‚Ìƒf[ƒ^ì¬
-        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+        *p_wk->p_param->p_server_time  = 0;
         Util_SetMyDataInfo( p_my_data, p_wk );
 
 
@@ -2486,7 +2486,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     { 
       if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
       { 
-        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC2;
         *p_seq  = SEQ_CHECK_DIRTY_POKE;
       }
 
