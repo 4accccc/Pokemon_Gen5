@@ -1608,6 +1608,31 @@ static u32 DrawBlActShinMu_GetBlActID( MMDL *mmdl, u32 state )
 }
 
 //--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　ポケモン　シン・ム専用　アニメフレームNo取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void MMDL_ShinMuA_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx )
+{
+  u16 code = MMDL_GetOBJCode( mmdl );
+  
+  if( code == SHIN_A || code == MU_A ){
+    GFL_BBDACT_SYS *actSys =
+      MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+    DRAW_BLACT_WORK *work = MMDL_GetDrawProcWork( mmdl );
+    
+    *outIdx = GFL_BBDACT_GetAnimeIdx( actSys, work->actID );
+    *outFrmIdx = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
+  }else{
+    GF_ASSERT( 0 );
+    *outIdx = 0;
+    *outFrmIdx = 0;
+  }
+}
+
+//--------------------------------------------------------------
 //  描画処理　ビルボード　ポケモン シン・ム　まとめ
 //--------------------------------------------------------------
 const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActShinMu =

@@ -4429,6 +4429,7 @@ typedef struct
 	fx32 total_offset;
 	fx32 value;
   u16 wait;
+  u8 setAnmFrmIdx;
   u8 padding0;
   u8 padding1;
 }AC_SHIN_MU_FLY_UPPPER_WORK;
@@ -4448,8 +4449,9 @@ static int AC_ShinMuFlyUpper0( MMDL * mmdl )
 	
   work = MMDL_InitMoveCmdWork( mmdl, AC_SHIN_MU_FLY_UPPPER_WORK_SIZE );
   work->value = FX32_ONE * 2;
-	work->wait = (5*7) + (11*5);
-  
+	work->wait = 0;
+  work->setAnmFrmIdx = 0;
+
   MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_A_FLY_UP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
@@ -4465,12 +4467,38 @@ static int AC_ShinMuFlyUpper0( MMDL * mmdl )
 static int AC_ShinMuFlyUpper1( MMDL * mmdl )
 {
 	int grid;
+  u16 anmIdx,anmFrmIdx;
   AC_SHIN_MU_FLY_UPPPER_WORK *work;
 	
   work = MMDL_GetMoveCmdWork( mmdl );
-	
-  if( work->wait ){
-    work->wait--;
+  MMDL_ShinMuA_GetAnimeFrame( mmdl, &anmIdx, &anmFrmIdx );
+  
+  work->wait++;
+   
+  if( MMDL_GetOBJCode(mmdl) == SHIN_A ){
+    if( anmIdx == DRAW_STA_SHINMU_A_ANMNO_FLY_UP ){ //shin ‰H‚Î‚½‚«‰¹
+      if( work->setAnmFrmIdx != anmFrmIdx ){
+        work->setAnmFrmIdx = anmFrmIdx;
+        
+        switch( anmFrmIdx ){
+        case 7:
+        case 12:
+        case 17:
+          PMSND_PlaySE( SEQ_SE_FLD_167 );
+          break;
+        case 10:
+        case 15:
+        case 20:
+          PMSND_PlaySE( SEQ_SE_FLD_168 );
+          break;
+        }
+      }
+    }
+  }else if( work->wait == ((5*7)+(12*5)) ){ //mu ã¸‰¹
+    PMSND_PlaySE( SEQ_SE_FLD_169 );
+  }
+  
+  if( work->wait < ((5*7) + (12*5)) ){
     return( FALSE );
   }
   
@@ -4487,7 +4515,7 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
 	if( grid < 16 ){
 		return( FALSE );
 	}
-	
+  
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
