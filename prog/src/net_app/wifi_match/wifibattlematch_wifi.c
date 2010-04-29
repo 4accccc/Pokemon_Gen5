@@ -48,6 +48,9 @@
 #include "wifibattlematch_util.h"
 #include "wifibattlematch_snd.h"
 
+//デバッグ
+#include "wifibattlematch_debug.h"
+
 //外部公開
 #include "wifibattlematch_core.h"
 
@@ -71,10 +74,10 @@ FS_EXTERN_OVERLAY(dpw_common);
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
 //#define SAKE_REPORT_NONE          //レポートをしない
+
+#define DEBUGWIN_USE
 #endif //PM_DEBUG
 
-#ifndef SAKE_REPORT_NONE
-#endif 
 
 
 #define DEBUG_WIFICUP_Printf(...)  OS_TFPrintf( 2, __VA_ARGS__ );
@@ -287,6 +290,22 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p
 //ポケパーティを比較
 static BOOL Util_ComarepPokeParty( const POKEPARTY *cp_pokeparty_1, const POKEPARTY *cp_pokeparty_2 );
 
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef DEBUGWIN_USE
+#include "debug/debugwin_sys.h"
+#define DEBUGWIN_GROUP_WIFIMATCH (50)
+
+static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID );
+static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
+
+#else
+
+#define DEBUGWIN_Init( ... )  /*  */
+#define DEBUGWIN_Exit( ... )  /*  */
+#endif //DEBUGWIN_USE
+
 //=============================================================================
 /**
  *					外部参照
@@ -384,6 +403,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
 
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
 
+  //デバッグウィンドウ
+  DEBUGWIN_Init( p_wk, HEAPID_WIFIBATTLEMATCH_CORE );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -404,6 +426,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Exit( GFL_PROC *p_proc, int *p_
 
 	WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	= p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_param_adrs;
+
+  //デバッグウィンドウ
+  DEBUGWIN_Exit( p_wk );
 
   GFL_HEAP_FreeMemory( p_wk->p_other_party );
 
@@ -4291,3 +4316,27 @@ static BOOL Util_ComarepPokeParty( const POKEPARTY *cp_pokeparty_1, const POKEPA
   
   return FALSE;
 }
+
+//=============================================================================
+/**
+ *  デバッグ
+ */
+//=============================================================================
+
+#ifdef DEBUGWIN_USE
+
+static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
+{ 
+  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
+  DEBUGWIN_ChangeLetterColor( 0,31,0 );
+
+  DEBUGWIN_REG_Init( p_wk->p_reg, heapID );
+
+}
+static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
+{ 
+  DEBUGWIN_REG_Exit();
+
+  DEBUGWIN_ExitProc();
+}
+#endif

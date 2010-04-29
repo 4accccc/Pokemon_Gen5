@@ -87,3 +87,5 @@ extern int LIVEMATCH_DATA_GetFoeParam( const LIVEMATCH_DATA *cp_wk, u32 index, L
 extern void LIVEMATCH_DATA_SetFoeMacAddr( LIVEMATCH_DATA *p_wk, u32 index, const u8* cp_mac_addr );
 extern void LIVEMATCH_DATA_SetFoeParam( LIVEMATCH_DATA *p_wk, u32 index, LIVEMATCH_FOEDATA_PARAM param, int data );
 
+//マックアドレスが同一のモノがあるか
+extern BOOL LIVEMATCH_DATA_IsSameMacAddress( const LIVEMATCH_DATA *cp_wk, const u8 *cp_mac_addr );

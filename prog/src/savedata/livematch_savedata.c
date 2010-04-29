@@ -152,7 +152,8 @@ void LIVEMATCH_DATA_GetFoeMacAddr( const LIVEMATCH_DATA *cp_wk, u32 index, u8* p
 {
   const LIVEMATCH_FOEDATA *cp_data;
 
-  GF_ASSERT( index < LIVEMATCH_FOEDATA_MAX );
+  //回り込む
+  index %= LIVEMATCH_FOEDATA_MAX;
 
   cp_data  = &cp_wk->foe[ index ];
 
@@ -175,7 +176,9 @@ int LIVEMATCH_DATA_GetFoeParam( const LIVEMATCH_DATA *cp_wk, u32 index, LIVEMATC
   const LIVEMATCH_FOEDATA *cp_data;
 
   GF_ASSERT( param < LIVEMATCH_FOEDATA_PARAM_MAX );
-  GF_ASSERT( index < LIVEMATCH_FOEDATA_MAX );
+
+  //回り込む
+  index %= LIVEMATCH_FOEDATA_MAX;
 
   cp_data  = &cp_wk->foe[ index ];
   return cp_data->param[ param ];
@@ -195,7 +198,8 @@ void LIVEMATCH_DATA_SetFoeMacAddr( LIVEMATCH_DATA *p_wk, u32 index, const u8* cp
 {
   LIVEMATCH_FOEDATA *p_data;
 
-  GF_ASSERT( index < LIVEMATCH_FOEDATA_MAX );
+  //回り込む
+  index %= LIVEMATCH_FOEDATA_MAX;
 
   p_data  = &p_wk->foe[ index ];
 
@@ -217,10 +221,42 @@ void LIVEMATCH_DATA_SetFoeParam( LIVEMATCH_DATA *p_wk, u32 index, LIVEMATCH_FOED
   LIVEMATCH_FOEDATA *p_data;
 
   GF_ASSERT( param < LIVEMATCH_FOEDATA_PARAM_MAX );
-  GF_ASSERT( index < LIVEMATCH_FOEDATA_MAX );
+
+  //回り込む
+  index %= LIVEMATCH_FOEDATA_MAX;
 
   p_data  = &p_wk->foe[ index ];
   p_data->param[ param ]  = data;
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じマックアドレスがあるかチェック
+ *
+ *	@param	const LIVEMATCH_DATA *cp_wk ワーク
+ *	@param	*p_mac_addr   調べるマックアドレス
+ *
+ *	@return TRUE同じものがある  FALSEない
+ */
+//-----------------------------------------------------------------------------
+BOOL LIVEMATCH_DATA_IsSameMacAddress( const LIVEMATCH_DATA *cp_wk, const u8 *cp_mac_addr )
+{ 
+  int max = LIVEMATCH_DATA_GetMyParam( cp_wk, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+
+  int i;
+  u8  foe_mac_addr[6];
+
+  max =  MATH_IMin( max, LIVEMATCH_FOEDATA_MAX );
+  for( i = 0; i < max; i++ )
+  { 
+    LIVEMATCH_DATA_GetFoeMacAddr( cp_wk, i, foe_mac_addr );
+
+    if( GFL_STD_MemComp( cp_mac_addr, foe_mac_addr, sizeof(u8)*6 ) == 0 )
+    { 
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}

@@ -385,7 +385,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
   DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
   DEBUGWIN_AddGroupToTop( 0, "ランダムマッチ", HEAPID_WIFIBATTLEMATCH_CORE );
   DEBUGWIN_AddItemToGroup( "じぶんカード", 
-                              DEBUGWIN_VisiblePlayerInfo, 
+                              DEBUGWIN_VisiblePlayerInfo,
                               p_wk, 
                               0, 
                               HEAPID_WIFIBATTLEMATCH_CORE );

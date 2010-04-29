@@ -106,6 +106,7 @@ typedef enum  {
   REGULATION_CARD_END_DAY,     ///< 終了日：01-31
   REGULATION_CARD_STATUS,      ///< 大会状態：net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
   REGULATION_CARD_BGM,         ///< 大会で使用する曲（シーケンス番号がそのまま入っているわけではない）
+  REGULATION_CARD_SAMEMATCH,         ///< 同じ人との対戦を許可するかどうか TRUEで許可
 } REGULATION_CARD_PARAM_TYPE;
 
 typedef enum {  
@@ -183,8 +184,8 @@ typedef struct {
   char end_day;//終了日：01-31
   char status;  //大会状態： net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
   u8   bgm_no;   //大会で使用するBGM REGULATION_CARD_BGM_TYPE列挙参照
-  u8   dummy;
-  u16 crc;  //整合性検査
+  u8   same_match;//同じ人との対戦を許可するかどうかTRUEで許可する
+  u16  crc;  //整合性検査
 } REGULATION_CARDDATA;
 
 //選手証の見た目情報

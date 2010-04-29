@@ -647,6 +647,11 @@ int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_CARD_PAR
     break;
   case REGULATION_CARD_BGM:         ///< 大会で使用する曲（シーケンス番号がそのまま入っているわけではない
     ret = pReg->bgm_no;
+    break;
+
+  case REGULATION_CARD_SAMEMATCH:         ///< 同じ人との対戦を許可するかどうか（ライブ大会でしか使わない→対戦した人のmacaddresを保存していないから）
+    ret = pReg->same_match;
+    break;
   }
   return ret;
 }
@@ -693,6 +698,9 @@ void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TY
     break;
   case REGULATION_CARD_STATUS:      ///< 大会状態：０未開催／１開催中／２終了
     pReg->status = param;
+    break;
+  case REGULATION_CARD_SAMEMATCH:   ///< 同じ人との対戦を許可するかどうか
+    pReg->same_match  = param;
     break;
   }
 }
@@ -949,6 +957,7 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
   pReg->end_day     = 24;
   pReg->status      = 0;
   pReg->code        = LANG_JAPAN;
+  pReg->crc         = GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
 }
 #include "debug/debug_str_conv.h"
 //----------------------------------------------------------------------------

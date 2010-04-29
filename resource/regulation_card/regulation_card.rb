@@ -50,6 +50,7 @@ COL_END_YEAR = 33 #終了年
 COL_END_MONTH = 34 #終了月
 COL_END_DAY = 35 #終了日
 COL_BGM_MODE  = 36 #曲モード
+COL_SAME_MATCH = 37 #同じ人との試合
 
 
 
@@ -295,7 +296,11 @@ class RegulationBin
       num = @HashBGM[value]
       p num
       p value
-      outFH.write([num].pack("s"))
+      outFH.write([num].pack("c"))
+
+    when COL_SAME_MATCH #同じ人との試合
+      num = @HashOKNG[value]
+      outFH.write([num].pack("c"))
       
     else
     end
