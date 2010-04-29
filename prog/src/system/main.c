@@ -39,6 +39,8 @@
 #include "test/performance.h"
 #include "test/debug_pause.h"
 #include "debug/debugwin_sys.h"
+#include "debug/debug_ui.h"
+#include "debug/debug_flg.h"
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -56,6 +58,7 @@ static  void  _set_sound_mode( CONFIG *config );
 
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
+static void DEBUG_UI_AutoKey(void);
 
 #define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
 
@@ -159,6 +162,11 @@ void NitroMain(void)
 #ifdef PM_DEBUG
     DEBUG_StackOverCheck();
 #endif  //PM_DEBUG
+
+#ifdef PM_DEBUG
+    DEBUG_UI_AutoKey();
+#endif  //PM_DEBUG
+
 
     MachineSystem_Main();
     // メイン処理して…
@@ -360,7 +368,7 @@ static  void  GameExit(void)
 #ifdef PM_DEBUG
   //デバッグシステム
   DEBUGWIN_ExitSystem();
-#endif PM_DEBUG
+#endif //PM_DEBUG
 
   GAMEBEACON_Exit();
   WIH_DWC_DeleteCFG();
@@ -423,6 +431,27 @@ static void DEBUG_StackOverCheck(void)
     OS_TPrintf("IRQスタック溢れの警戒水準に達しています\n");
     break;
   }
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オートキーチェック
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_UI_AutoKey( void  )
+{
+  
+  // 自動 UPDOWN
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoUpDown ) ){
+    DEBUG_UI_SetUp( DEBUG_UI_AUTO_UPDOWN );
+  }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoLeftRight ) ){
+    DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT );
+  }else{
+    DEBUG_UI_SetUp( DEBUG_UI_NONE );
+  }
+
 }
 
 #endif  //PM_DEBUG

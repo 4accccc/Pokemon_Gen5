@@ -216,6 +216,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/font2tex.c \
 		    debug/debug_sd_print.c \
         debug/mcs_mode.c \
+        debug/debug_ui.c \
 		    system/ds_system.c \
         savedata/undata_update.c \
         system/scroll_bar.c \
@@ -302,8 +303,6 @@ SRCS  +=    $(SOUNDSRC) \
 # 要望・質問は森さんか大野にお願いします。
 #
 #
-
-
 
 
 # wifiプログラムのライブラリ libwcm$(TWL_LIBSUFFIX).a
@@ -1632,6 +1631,19 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 #===> SRCS_OVERLAY_MCS_LIB
 SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
 
+
+############################
+#デバック
+#KEY　オートUPDOWN
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_DEBUG_UI_UPDOWN   = debug/debug_ui_updown.c
+
+#KEY　オートLEFTRIGHT
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_DEBUG_UI_LEFTRIGHT   = debug/debug_ui_leftright.c
+
+############################
+
 #SNDVIEWERライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_SOUNDVIEW = sound/snd_viewer.c
@@ -2158,4 +2170,5 @@ SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
 #===> SRCS_OVERLAY_INTRO
 #===> SRCS_OVERLAY_MYSTERY
 SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
+
 
