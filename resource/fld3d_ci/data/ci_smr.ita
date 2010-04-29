@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2010-04-29T14:35:35" source="ci_smr_v03.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="51"
+	tool_start_frame="0"
+	tool_end_frame="50"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="2 2"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="52">
+	0.000000 -0.399902 -0.436768 -0.473389 -0.510010 -0.546631 -0.583252 -0.620117 -0.656738 -0.693359
+	-0.729980 -0.766602 -0.803223 -0.840088 -0.876709 -0.913330 -0.949951 -0.986572 -1.023438 -1.060059
+	-1.096680 -1.133301 -1.169922 -1.206787 -1.243408 -1.280029 -1.316650 -1.353271 -1.389893 -1.426758
+	-1.463379 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000
+	-1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000 -1.500000
+	-1.500000 -1.500000
+</tex_translate_data>
+
+<tex_srt_anm_array size="1">
+	<tex_srt_anm index="0" material_name="smr_wave">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="51" data_head="1"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
