@@ -93,6 +93,7 @@ enum{
   BTLEFF_IYASINONEGAI_KAIHUKU,                //いやしのねがい回復エフェクト
   BTLEFF_MIKADUKINOMAI_KAIHUKU,               //みかづきのまい回復エフェクト
   BTLEFF_RESET_MOVE,                          //リセットムーブエフェクト
+  BTLEFF_SHOOTER_EFFECT,                      //シューターエフェクト
 
   BTLEFF_STATUS_EFFECT_END,
 };
