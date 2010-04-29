@@ -15,5 +15,6 @@
 #define SCRID_WC10_MIDDLEMAN2_01 (8)
 #define SCRID_WC10_OLDWOMAN1_01 (9)
 #define SCRID_WF_NPC (10)
+#define SCRID_BG_WC10_BOARD_01 (11)
 
 #endif //_WC10_DEF_H_

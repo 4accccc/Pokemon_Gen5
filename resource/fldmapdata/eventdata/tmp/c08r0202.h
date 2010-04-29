@@ -9,6 +9,8 @@
 #ifndef ZONE_C08R0202_EVC_H
 #define ZONE_C08R0202_EVC_H
 
+#define C08R0202_TRAINERM_01               0
+#define C08R0202_TRAINERW_02               1
 
 #endif //ZONE_C08R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -19,20 +19,48 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0202
+_EVENT_DATA    ev_zone_c08r0202
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*            フィールド初期化スクリプト                      */
 /**************************************************************/
-//ev_c08r0202_flag_change:
-//  _END
-
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c08r0202:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
+INIT_EVENT_START ev_zone_c08r0202
+	{
+	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//その日最初に入室したならば、トレーナーフラグをRESET
+	IF FLAG_OFF( TMFLG_C08R0201_BTL ) THEN
+		_TRAINER_FLAG_RESET( TRID_ELITEW_18 )
+		_TRAINER_FLAG_RESET( TRID_ELITEM_18 )
+		_TRAINER_FLAG_RESET( TRID_ELITEW_21 )
+		_TRAINER_FLAG_RESET( TRID_ELITEW_22 )
+		
+		//==================================//
+				
+		//その日のトレーナーフラグのRESETは終了
+		_FLAG_SET ( TMFLG_C08R0201_BTL )
+		
+		//==================================//
+	ENDIF
+	
+	//OBJ非表示処理
+	_FLAG_SET( FV_C08R0202_TRAINER_W )
+	_FLAG_SET( FV_C08R0202_TRAINER_B )
+	
+	//★Blackの場合ローテーションバトルOBJを表示
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_FLAG_RESET( FV_C08R0202_TRAINER_B )
+	
+	//★whiteの場合トリプルバトルOBJを表示
+	ELSE
+		_FLAG_RESET( FV_C08R0202_TRAINER_W )
+	
+	ENDIF
+		
+	}
+INIT_EVENT_END

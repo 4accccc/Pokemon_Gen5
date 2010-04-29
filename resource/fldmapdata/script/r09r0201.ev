@@ -178,7 +178,7 @@ EVENT_END
 //=============================================================
 EVENT_START ev_r09r0201_fix_shop_02
   _TALK_OBJ_START()
-  _FIX_SHOP_CALL( SHOP_MALL2 )
+  _FIX_SHOP_CALL_GREETING_WAZA( SHOP_MALL2 )
 EVENT_END
 
 //=============================================================

@@ -22,6 +22,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bc10
 _EVENT_DATA    ev_bc_npc
+_EVENT_DATA    ev_bg_bc10_board_01
 _EVENT_DATA_END
 
 
@@ -114,3 +115,9 @@ EVENT_START ev_bc_npc
 	_WFBC_TALKEND()
 EVENT_END
 
+/**************************************************************/
+/*ÅyâºÅzä≈î¬01                                                 */
+/**************************************************************/
+EVENT_START  ev_bg_bc10_board_01
+	_EASY_BGWIN_MSG(bc10_sign1_01 , TYPE_TOWN)
+EVENT_END

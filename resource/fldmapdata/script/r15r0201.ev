@@ -36,7 +36,21 @@ EVENT_END
 /*  _oldwoman1_01*/
 /**************************************************************/
 EVENT_START   ev_r15r0201_oldwoman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r15r0201_oldwoman1_01)
+
+	//消える少女イベント後であったら
+	IF FLAG_ON( FE_H05_LOOK_WANDERGIRL ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r15r0201_oldwoman1_02)
+		
+		//==================================//
+		//消える少女イベントフラグをRESET
+		_FLAG_RESET( FE_H05_LOOK_WANDERGIRL )
+		//==================================//
+	
+	//通常時
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r15r0201_oldwoman1_01)
+	ENDIF
+		
 EVENT_END
 
 /**************************************************************/

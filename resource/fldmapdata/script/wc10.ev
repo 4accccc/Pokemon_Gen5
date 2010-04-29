@@ -30,6 +30,7 @@ _EVENT_DATA    ev_wc10_girl3_01
 _EVENT_DATA    ev_wc10_middleman2_01
 _EVENT_DATA    ev_wc10_oldwoman1_01
 _EVENT_DATA    ev_wf_npc
+_EVENT_DATA    ev_bg_wc10_board_01
 _EVENT_DATA_END
 
 
@@ -207,3 +208,9 @@ EVENT_START   ev_wc10_oldwoman1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_oldwoman1_01 )
 EVENT_END
 
+/**************************************************************/
+/*ÅyâºÅzä≈î¬01                                                 */
+/**************************************************************/
+EVENT_START  ev_bg_wc10_board_01
+	_EASY_BGWIN_MSG(wc10_sign_01 , TYPE_TOWN)
+EVENT_END

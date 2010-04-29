@@ -21,5 +21,6 @@
 #ifndef ZONE_BC10_EVB_H
 #define ZONE_BC10_EVB_H
 
+#define BG_BC10_BOARD_01                  0
 
 #endif //ZONE_BC10_EVB_H

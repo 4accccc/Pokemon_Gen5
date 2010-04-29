@@ -26,5 +26,6 @@
 #ifndef ZONE_WC10_EVB_H
 #define ZONE_WC10_EVB_H
 
+#define BG_WC10_BOARD_01                  0
 
 #endif //ZONE_WC10_EVB_H
