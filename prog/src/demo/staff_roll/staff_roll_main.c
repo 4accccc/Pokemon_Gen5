@@ -563,14 +563,14 @@ static void InitMsg( SRMAIN_WORK * wk )
 //	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 	wk->font[SRMAIN_FONT_NORMAL] = GFL_FONT_Create(
 																	ARCID_FONT, NARC_font_large_gftr,
-																	GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
-//																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
+//																	GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
+																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
 //	OS_Printf( "heap size [1] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 
 	wk->font[SRMAIN_FONT_SMALL] = GFL_FONT_Create(
 																	ARCID_FONT, NARC_font_small_gftr,
-																	GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
-//																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
+//																	GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
+																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
 //	OS_Printf( "heap size [2] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 }
 
