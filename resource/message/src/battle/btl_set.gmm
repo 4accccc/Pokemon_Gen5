@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-28T16:35:34"/>
+	<create user="taya" host="W00146" date="2010-04-29T17:02:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5584,25 +5584,6 @@
 じくうを　ゆがめた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 時空を　ゆがめた！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_TrickRoomOff">
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-ゆがんだ　じくうを　もとに　もどした！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-ゆがんだ　時空を　元に戻した！</language>
-	</row>
-	<row id="BTL_STRID_SET_TrickRoomOff_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-ゆがんだ　じくうを　もとに　もどした！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-ゆがんだ　時空を　元に戻した！</language>
-	</row>
-	<row id="BTL_STRID_SET_TrickRoomOff_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-ゆがんだ　じくうを　もとに　もどした！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-ゆがんだ　時空を　元に戻した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_HorobiCountDown">
