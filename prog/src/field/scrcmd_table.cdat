@@ -209,9 +209,9 @@
   DEF_CMD( EvCmdTrainerLoseCheck, EV_SEQ_TRAINER_LOSE_CHECK )
   DEF_CMD( EvCmdTrainerWin, EV_SEQ_TRAINER_WIN )
 
-  DEF_CMD( EvCmd2vs2BattleCheck, EV_SEQ_2VS2_BATTLE_CHECK )
-  DEF_CMD( EvCmdDebugBattleSet, EV_SEQ_DEBUG_BTL_SET )
-  DEF_CMD( EvCmdBattleResultGet, EV_SEQ_BATTLE_RESULT_GET )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   DEF_CMD( EvCmdTrainerSpecialTypeGet, EV_SEQ_TRAINER_SPTYPE_GET )
   DEF_CMD( EvCmdTrainerItemGet, EV_SEQ_TRAINER_ITEM_GET )
