@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-29T12:33:23
+	Update:2010-04-29T13:19:59
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -124,29 +124,31 @@ enum {
 	NARC_fld3d_ci_merodia01_nsbca = 110,
 	NARC_fld3d_ci_cave_ci_nsbmd = 111,
 	NARC_fld3d_ci_cave_ci_nsbca = 112,
-	NARC_fld3d_ci_ci_kami_nsbmd = 113,
-	NARC_fld3d_ci_ci_kami_nsbca = 114,
-	NARC_fld3d_ci_san_ci_nsbmd = 115,
-	NARC_fld3d_ci_san_ci02_nsbmd = 116,
-	NARC_fld3d_ci_san_ci_nsbca = 117,
-	NARC_fld3d_ci_san_ci_nsbta = 118,
-	NARC_fld3d_ci_san_ci_nsbma = 119,
-	NARC_fld3d_ci_san_ci02_nsbca = 120,
-	NARC_fld3d_ci_san_ci02_nsbta = 121,
-	NARC_fld3d_ci_san_ci02_nsbtp = 122,
-	NARC_fld3d_ci_get2_662_nsbmd = 123,
-	NARC_fld3d_ci_get2_664_nsbmd = 124,
-	NARC_fld3d_ci_get2_602_nsbmd = 125,
-	NARC_fld3d_ci_get1_361_nsbmd = 126,
-	NARC_fld3d_ci_get1_264_nsbmd = 127,
-	NARC_fld3d_ci_get1_360_nsbmd = 128,
-	NARC_fld3d_ci_get1_601_nsbmd = 129,
-	NARC_fld3d_ci_get1_773_nsbmd = 130,
-	NARC_fld3d_ci_get1_663_nsbmd = 131,
-	NARC_fld3d_ci_get1_659_nsbmd = 132,
-	NARC_fld3d_ci_get1_665_nsbmd = 133,
-	NARC_fld3d_ci_get1_660_nsbmd = 134,
-	NARC_fld3d_ci_get1_757_nsbmd = 135
+	NARC_fld3d_ci_sand_ci_nsbmd = 113,
+	NARC_fld3d_ci_sand_ci_nsbca = 114,
+	NARC_fld3d_ci_ci_kami_nsbmd = 115,
+	NARC_fld3d_ci_ci_kami_nsbca = 116,
+	NARC_fld3d_ci_san_ci_nsbmd = 117,
+	NARC_fld3d_ci_san_ci02_nsbmd = 118,
+	NARC_fld3d_ci_san_ci_nsbca = 119,
+	NARC_fld3d_ci_san_ci_nsbta = 120,
+	NARC_fld3d_ci_san_ci_nsbma = 121,
+	NARC_fld3d_ci_san_ci02_nsbca = 122,
+	NARC_fld3d_ci_san_ci02_nsbta = 123,
+	NARC_fld3d_ci_san_ci02_nsbtp = 124,
+	NARC_fld3d_ci_get2_662_nsbmd = 125,
+	NARC_fld3d_ci_get2_664_nsbmd = 126,
+	NARC_fld3d_ci_get2_602_nsbmd = 127,
+	NARC_fld3d_ci_get1_361_nsbmd = 128,
+	NARC_fld3d_ci_get1_264_nsbmd = 129,
+	NARC_fld3d_ci_get1_360_nsbmd = 130,
+	NARC_fld3d_ci_get1_601_nsbmd = 131,
+	NARC_fld3d_ci_get1_773_nsbmd = 132,
+	NARC_fld3d_ci_get1_663_nsbmd = 133,
+	NARC_fld3d_ci_get1_659_nsbmd = 134,
+	NARC_fld3d_ci_get1_665_nsbmd = 135,
+	NARC_fld3d_ci_get1_660_nsbmd = 136,
+	NARC_fld3d_ci_get1_757_nsbmd = 137
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
