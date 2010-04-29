@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-13T18:44:49"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-29T13:53:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,10 +386,10 @@
 
 	<row id="cg_power_02">
 		<language name="JPN" width="216">オンのときは　ＤＳの　ふたを　とじても
-スリープ　じょうたいに　なりません[BE:00:ページ切り替え（行送り）]
+スリープ　じょうたいに　なりません
 のこりでんちに　ごちゅうい　ください</language>
 		<language name="JPN_KANJI" width="216">オンのときは　ＤＳの　ふたを閉じても
-スリープ状態に　なりません[BE:00:ページ切り替え（行送り）]
+スリープ状態に　なりません
 残り電池に　ご注意ください</language>
 	</row>
 
