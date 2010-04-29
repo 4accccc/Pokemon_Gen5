@@ -2221,8 +2221,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_FadeOut( WEATHER_TASK* p_wk, WEA
 static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Exit( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
 {
 	WEATHER_RAIKAMI_WORK* p_local_wk;
+
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+  GF_ASSERT( p_local_wk );
 
 	// FOG終了
 	WEATHER_TASK_FogClear( p_wk, fog_cont );

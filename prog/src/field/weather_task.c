@@ -33,6 +33,23 @@
  *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
 */
 //-----------------------------------------------------------------------------
+#ifdef PM_DEBUG
+
+//#define DEBUG_WEATHER_PRINT 
+
+#endif
+
+#ifdef DEBUG_WEATHER_PRINT
+
+#define DEBUG_WEATHER_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
+
+#else
+
+#define DEBUG_WEATHER_Printf( ... )  ((void)0)
+
+#endif
+
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -215,10 +232,11 @@ struct _WEATHER_TASK {
 	
 	// 天気基本情報
 	const WEATHER_TASK_DATA*	cp_data;
-	u8							fog_cont;	// フォグ操作の許可
-	u8							fade;		// フェード有無
+	u8							fog_cont:4;	// フォグ操作の許可
+	u8							fade:4;		// フェード有無
 	u8							init_mode;	// 初期化モード
 	u8							seq;		// 全体シーケンス
+  u8              load_complete;
 
 	// グラフィック情報
 	WEATHER_TASK_GRAPHIC graphic;
@@ -271,6 +289,13 @@ static void WEATHER_TASK_WK_InitBg( WEATHER_TASK* p_wk, HEAPID heapID );
 static void WEATHER_TASK_WK_ExitBg( WEATHER_TASK* p_wk );
 static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, HEAPID heapID );
 static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk );
+
+
+//-------------------------------------
+///	読み込み処理　完了設定
+//=====================================
+static void WEATHER_TASK_WK_SetLoadComplete( WEATHER_TASK* p_wk );
+static BOOL WEATHER_TASK_WK_IsLoadComplete( const WEATHER_TASK* cp_wk );
 
 
 //-------------------------------------
@@ -415,12 +440,16 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		WEATHER_TASK_WK_InitBg( p_wk, heapID );
 		WEATHER_TASK_WK_InitOther( p_wk, heapID );
 
+    // 読み込み完了
+    WEATHER_TASK_WK_SetLoadComplete( p_wk );
 		p_wk->seq = WEATHER_TASK_SEQ_CALL_INIT;
 		break;
 
 	// 分割読み込み OAM
 	case WEATHER_TASK_SEQ_INIT_DIV_OAM:		
 		WEATHER_TASK_WK_InitOam( p_wk, heapID );
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_INIT_DIV_OAM\n" );
 
 		p_wk->seq = WEATHER_TASK_SEQ_INIT_DIV_BG;
 		break;
@@ -429,6 +458,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 	case WEATHER_TASK_SEQ_INIT_DIV_BG:		
 		WEATHER_TASK_WK_InitBg( p_wk, heapID );
 
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_INIT_DIV_BG\n" );
+
 		p_wk->seq = WEATHER_TASK_SEQ_INIT_DIV_CREATE;
 		break;
 
@@ -436,11 +467,14 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 	case WEATHER_TASK_SEQ_INIT_DIV_CREATE:	
 		WEATHER_TASK_WK_InitOther( p_wk, heapID );
 
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_INIT_DIV_CREATE\n" );
+
 		p_wk->seq = WEATHER_TASK_SEQ_CALL_INIT;
 		break;
 
 	// 管理関数　初期化	　		呼び出し
 	case WEATHER_TASK_SEQ_CALL_INIT:		
+
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_init, heapID ) ){
 			if( p_wk->fade ){
 				p_wk->seq = WEATHER_TASK_SEQ_CALL_FADEIN;
@@ -449,6 +483,12 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 			}
 		}
     WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
+
+    // 読み込み完了
+    WEATHER_TASK_WK_SetLoadComplete( p_wk );
+
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_INIT\n" );
 		break;
 
 	// 管理関数  フェードイン	呼び出し
@@ -459,6 +499,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
     WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_FADEIN\n" );
 		break;
 
 	// 管理関数	 フェードなし	呼び出し
@@ -468,6 +510,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
     WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_NOFADE\n" );
 		break;
 
 	// 管理関数　メイン			呼び出し
@@ -476,6 +520,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main, heapID );
 		WEATHER_TASK_WK_MainObjList( p_wk );
     WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_MAIN\n" );
 		break;
 
 	// 管理関数　フェードアウト 呼び出し
@@ -485,6 +531,8 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
     WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_FADEOUT_INIT\n" );
 		break;
 
 	// 管理関数　フェードアウト 呼び出し
@@ -494,19 +542,23 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
     WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
+
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_FADEOUT\n" );
 		break;
 
 	// 管理関数　破棄			呼び出し
 	// １回で終わる必要がある
 	case WEATHER_TASK_SEQ_CALL_DEST:
-		{
+		if( WEATHER_TASK_WK_IsLoadComplete( p_wk ) ){
 			WEATHER_TASK_FUNC_RESULT result;
 			result = WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_dest, heapID );
 
 			// 破棄処理は１シンクで終わる必要があります。
 			GF_ASSERT( result == WEATHER_TASK_FUNC_RESULT_FINISH );
-			p_wk->seq = WEATHER_TASK_SEQ_DELETE_ALL;
+
+      DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_CALL_DEST\n" );
 		}
+		p_wk->seq = WEATHER_TASK_SEQ_DELETE_ALL;
 		break;
 
 	// 全情報の破棄
@@ -518,6 +570,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		WEATHER_TASK_WK_ExitOam( p_wk );
 		WEATHER_TASK_WK_Clear( p_wk );
 
+    DEBUG_WEATHER_Printf( "WEATHER_TASK_SEQ_DELETE_ALL\n" );
 		p_wk->seq = WEATHER_TASK_SEQ_NONE;
 		break;
 
@@ -2140,6 +2193,34 @@ static void WEATHER_TASK_WK_ExitOther( WEATHER_TASK* p_wk )
   // SEの停止
   WEATHER_TASK_StopLoopSnd( p_wk );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  読み込み完了設定
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_TASK_WK_SetLoadComplete( WEATHER_TASK* p_wk )
+{
+  p_wk->load_complete = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  読み込み処理が完了しているかチェック
+ *
+ *	@param	cp_wk 
+ *
+ *	@retval TRUE  完了
+ *	@retval FALSE 途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL WEATHER_TASK_WK_IsLoadComplete( const WEATHER_TASK* cp_wk )
+{
+  return cp_wk->load_complete;
+}
+
 
 
 
