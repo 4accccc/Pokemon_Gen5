@@ -962,7 +962,7 @@ EVENT_START    ev_pos_h03_badrider_01
 		ENDIF
 		_OBJ_ANIME_WAIT()
 		
-		IF $LWK_POSX == 34 THEN
+		IF $LWK_POSZ == 34 THEN
 			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_up)
 		ELSIF $LWK_POSZ == 157 THEN
 			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_down)
@@ -1207,7 +1207,8 @@ EVENT_START    ev_h03_badrider1_01
 	ENDIF
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-	
+
+EVENT_END
 /**************************************************************/
 /*    BADRIDER_2（リーダー）の話しかけイベント           */                                                           
 /**************************************************************/ 

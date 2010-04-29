@@ -32,7 +32,7 @@ _EVENT_DATA_END
 /**************************************************************/
 INIT_EVENT_START	ev_zone_d06
 
-	IF $WK_SCENE_D06 < 2 THEN  
+	IF $WK_SCENE_D06 < 2 THEN
 	
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
 	
@@ -71,6 +71,7 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START    ev_d06_stopper_01
 	
+	_TALK_START_SE_PLAY()
 	IF $WK_SCENE_D06 == 0 THEN
 		_SYSWIN_MSG(msg_d06_stopper_01, POS_DOWN ) 
 		_LAST_KEYWAIT()
@@ -216,9 +217,6 @@ EVENT_START    ev_d06_stopper_01
 		//ヤーコンがアイテムをくれる
 		_BALLOONWIN_OBJMSG( msg_d06_leader_04, D06_LEADER5_01)
 		_BALLOONWIN_CLOSE()
-		
-		_OBJ_ANIME(D06_LEADER5_01,anm_common_turn_r)
-		_OBJ_ANIME_WAIT()
 		
 		//アイテム入手処理
 		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN78, 1 )
