@@ -133,6 +133,8 @@ POKE_SET;
 // 全部を合わせて1枚と見たときのサイズ
 #define INDEPENDENT_PANEL_TOTAL_W  (36)
 #define INDEPENDENT_PANEL_TOTAL_H  (36)
+//#define INDEPENDENT_PANEL_TOTAL_W  //(37.4f)//(ii38.0f)//(36.8f)//(36.2f)//(ii35.8f)//(35)//(37)
+//#define INDEPENDENT_PANEL_TOTAL_H  //(37.4f)//(ii38.0f)//(36.8f)//(36.2f)//(ii35.8f)//(35)//(37)
 // 全部を合わせて1枚と見たときの最小最大のテクスチャ座標
 #define INDEPENDENT_PANEL_TOTAL_MIN_S  ( 16)
 #define INDEPENDENT_PANEL_TOTAL_MAX_S  (112)
@@ -1286,6 +1288,18 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
         defaultCameraAspect, 0,
         defaultCameraNear, defaultCameraFar, 0,
         &pos, &up, &target, work->heap_id );
+
+/*
+    independent_poke_mgr->camera = GFL_G3D_CAMERA_CreateOrtho(
+			  //chiiFX32_CONST(96), -FX32_CONST(96), -FX32_CONST(128), FX32_CONST(128),
+        //dekaFX32_CONST(6), -FX32_CONST(6), -FX32_CONST(8), FX32_CONST(8), 
+			  //chiiFX32_CONST(48), -FX32_CONST(48), -FX32_CONST(64), FX32_CONST(64),
+			  //dekaFX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
+			  //dekaFX32_CONST(27), -FX32_CONST(27), -FX32_CONST(36), FX32_CONST(36),
+			  FX32_CONST(36), -FX32_CONST(36), -FX32_CONST(48), FX32_CONST(48),  // だいたいいいけどちょっと線が汚い
+        defaultCameraNear, defaultCameraFar, 0,
+        &pos, &up, &target, work->heap_id );
+*/
   }
 }
 static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work )
