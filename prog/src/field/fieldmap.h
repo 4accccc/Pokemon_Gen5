@@ -48,7 +48,7 @@
 #include "field_task.h"
 #include "field_task_manager.h"
 
-#include "fld_faceup.h"
+#include "fld_faceup_ptr.h"
 
 //======================================================================
 //	define
