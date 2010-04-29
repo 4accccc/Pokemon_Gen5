@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/28 21:00:31
+#save date:2010/04/29 18:26:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h05.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h05.wms
 #hold event type:
 1
 #hold event number:
-3
+6
 #event number: 0
 #type
 1
@@ -103,6 +103,99 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 760 0 -280
+#event number: 3
+#type
+1
+#ID name
+H05_GIRL2_01
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H05_WANDERGIRL
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2120 0 -328
+#event number: 4
+#type
+1
+#ID name
+H05_MAN3_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H05_MAN3_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2088 0 -328
+#event number: 5
+#type
+1
+#ID name
+H05_MIDDLEMAN1_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H05_MIDDLEMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 0 -248
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -122,7 +215,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+3
 #event number: 0
 #Pos Event Label
 POS_H05_NINJA_01
@@ -140,6 +233,40 @@ EVENTDATA_POSTYPE_GRID
 776 0 -248
 #size
 1 6
+#event number: 1
+#Pos Event Label
+POS_H05_WANDERGIRL_01
+#Pos Script Name
+SCRID_POS_H05_WANDERGIRL
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_H05_GIRL
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2120 0 -312
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_H05_WANDERGIRL_03
+#Pos Script Name
+SCRID_POS_H05_WANDERGIRL
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_H05_GIRL
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2104 0 -328
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

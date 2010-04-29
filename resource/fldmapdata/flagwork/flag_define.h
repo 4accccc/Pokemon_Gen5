@@ -352,7 +352,7 @@
 #define FE_WC10R0101_BTL_02                336 /* 0x0150 ホワイトフォレスト：トリプルバトル終了フラグ */
 #define FE_C03P13_PILOT_TALK_01            337 /* 0x0151 ヒウンシティ：船員の初回会話フラグ */
 #define FE_D10R0401_POKE10_GET             338 /* 0x0152 ジャイアントホール：ライ捕獲フラグ */
-#define FE_T04PC0101_TRADE_01              339 /* 0x0153 サザナミタウン：ポケモンセンターコイキング購入フラグ */
+#define FE_H05_BUY_POKE                    339 /* 0x0153 ワンダーブリッジ：ポケモンセンターコイキング購入フラグ */
 #define FE_N_LASTMESSAGE                   340 /* 0x0154 Nの城 謁見の間：ラストメッセージ分岐用フラグ */
 #define FE_R18R0101_APPRAISAL_TALK         341 /* 0x0155 18番道路：鉱物鑑定士2初回話しかけフラグ */
 #define FE_JUDGE_TALK                      342 /* 0x0156 ジャッジ初回会話フラグ */
@@ -855,7 +855,7 @@
 #define FV_C08R0202_TRAINER_B              831 /* 0x033f ソウリュウバトルの館：ブラックバージョンのトレーナー */
 #define FV_R07_TRAINER_W                   832 /* 0x0340 ７番道路：ホワイトバージョンのトレーナー */
 #define FV_R07_TRAINER_B                   833 /* 0x0341 ７番道路：ブラックバージョンのトレーナー */
-		/* not used   834(0x0342) */
+#define FV_H05_WANDERGIRL                  834 /* 0x0342 ワンダーブリッジ：消える少女 */
 		/* not used   835(0x0343) */
 		/* not used   836(0x0344) */
 		/* not used   837(0x0345) */

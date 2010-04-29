@@ -13,6 +13,9 @@
 #define H05_NINJA_01                       0
 #define H05_NINJA_02                       1
 #define H05_NINJA_03                       2
+#define H05_GIRL2_01                       3
+#define H05_MAN3_01                        4
+#define H05_MIDDLEMAN1_01                  5
 
 #endif //ZONE_H05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
