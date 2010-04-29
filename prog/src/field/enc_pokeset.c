@@ -171,7 +171,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
 
   //ダブルエンカウントチェック
   if( outEfp->location == ENC_LOCATION_GROUND_H ){
-    if(PokeParty_GetPokeCountBattleEnable( party ) >= 2 && eps_GetPercentRand() < 10) {
+    if(PokeParty_GetPokeCountBattleEnable( party ) >= 2 && eps_GetPercentRand() < 40) {
       outEfp->enc_double_f = TRUE;
     }
   }
