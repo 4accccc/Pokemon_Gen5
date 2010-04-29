@@ -28,11 +28,12 @@ _EVENT_DATA    ev_r03r0101_woman3_02
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r03r0101_flag_change:
-//  _END
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK1を使用しました。同マップ内の使用を禁止します。	//
+//	LOCALWORK1⇒回復処理を行った後1// 
+//																	//
+//------------------------------------------------------------------//
 
 /**************************************************************/
 /*  R03R0101 MIDDLEWOMAN2の会話用イベントスクリプト*/
@@ -92,35 +93,8 @@ EVENT_END
 EVENT_START   ev_r03r0101_woman3_02
 	_TALK_OBJ_START()
 	
-	//手持ちポケモンカウント
-	DEFINE_LOCAL LCW_POKECOUNT
-	_GET_PARTY_POKE_COUNT( LCW_POKECOUNT , POKECOUNT_MODE_NOT_EGG )
-	
-	//カウント変数定義
-	DEFINE_LOCAL LCW_COUNTER
-	$LCW_COUNTER = 0
-	//HPチェック変数定義
-	DEFINE_LOCAL LCW_HP
-	//HP減り匹数チェック変定義
-	DEFINE_LOCAL LCW_MINUS_POKE
-	$LCW_MINUS_POKE = 0
-	
-	//全手持ちポケモンのHPチェック
-	WHILE $LCW_POKECOUNT > $LCW_COUNTER
-	
-		_CHECK_TEMOTI_HP  ( LCW_HP,LCW_COUNTER )
-		
-		IF $LCW_HP == FALSE THEN
-			//体力が減っているポケモン匹数にプラス
-			$LCW_MINUS_POKE += 1
-		ENDIF
-		
-		//カウントアップ
-		$LCW_COUNTER += 1
-	ENDWHILE
-	
-	//体力の減ったポケモンが１匹以上いる
-	IF $LCW_MINUS_POKE >= 1 THEN
+	//入室して初回話しかけ
+	IF $LOCALWORK1 == 0 THEN
 	
 		//やすんでいきなさい
 		_BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_02,R03R0101_WOMAN3_02 )
@@ -134,13 +108,18 @@ EVENT_START   ev_r03r0101_woman3_02
 		_ME_WAIT()
 		_BLACK_IN()
 		_DISP_FADE_END_CHECK()
-	
-	//体力の減ったポケモンはいない
-	ELSE
 		
+		//========================================//
+		$LOCALWORK1 = 1
+		//========================================//
+	
+	//入室して２回目以降の話しかけ
+	ELSE
 		//元気ね
 		_BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_01,R03R0101_WOMAN3_02 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
+		
 	
 	ENDIF
 EVENT_END

@@ -29,8 +29,9 @@ _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
 //																	//
-//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。	//
+//	LOCALWORK1,LOCALWORK15を使用しました。同マップ内の使用を禁止します。	//
 //	LOCALWORK15⇒$WK_SCENE_R07_MOVEPOKE == 1の状態で1回目のセリフを聞いた後1// 
+//	LOCALWORK1⇒回復処理を行った後1// 
 //																	//
 //------------------------------------------------------------------//
 
@@ -371,42 +372,15 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_r07r0301_woman3_01
 _TALK_OBJ_START()
-	//手持ちポケモンの総数をカウント
-	DEFINE_LOCAL	LWK_TEMOCHI
-	DEFINE_LOCAL	LWK_POS
-	DEFINE_LOCAL	LWK_POKE
-	DEFINE_LOCAL	LWK_FULL
-	_GET_PARTY_POKE_COUNT( LWK_TEMOCHI  , POKECOUNT_MODE_TOTAL )
 	
-	$LWK_POS = 0 //LWK_POSを０に定義
-	$LWK_FULL = 0
-	
-	//手持ちポケモンのＨＰをチェック
-	WHILE $LWK_POS < $LWK_TEMOCHI
-		//LWK_KAIFUKUが手持ちの数と同じになるまで繰り返し
-		_CHECK_TEMOTI_HP( LWK_POKE, LWK_POS )
-		
-			//LWK_POSのポケモンが満タンの場合
-			IF $LWK_POKE == TRUE THEN
-				$LWK_POS += 1
-			//ポケモンのHPが減っていた場合
-			ELSE
-				_TEMOTI_POKEMON_KAIFUKU()
-				$LWK_POS += 1
-				$LWK_FULL += 1
-				
-			ENDIF
-
-	ENDWHILE
-	
-	//体力の減ったポケモンはいない
-	IF $LWK_FULL == 0 THEN
+	//入室して２回目以降の話しかけ
+	IF $LOCALWORK1 == 1 THEN
 	
 		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0301_woman_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
-	//１匹以上体力の減ったポケモンがいる
+	//入室して初回話しかけ
 	ELSE
 
 
@@ -421,6 +395,10 @@ _TALK_OBJ_START()
 		_ME_WAIT()
 		_BLACK_IN()
 		_DISP_FADE_END_CHECK()
+		
+		//========================================//
+		$LOCALWORK1 = 1
+		//========================================//
 	
 	ENDIF
 	
