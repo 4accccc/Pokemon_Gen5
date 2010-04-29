@@ -541,7 +541,6 @@ static void MoveStart( H01WORK* work, SOBJ_INDEX index )
 static void ApplyWindVolumeForBGM( const H01WORK* work )
 {
   PMSND_ChangeBGMVolume( work->wind_data.trackBit, work->wind_volume );
-	OBATA_Printf( "wind ==>%d\n", work->wind_volume );
 }
 
 //--------------------------------------------------------------------------------------------
