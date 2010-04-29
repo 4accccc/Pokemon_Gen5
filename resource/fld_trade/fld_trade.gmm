@@ -351,24 +351,18 @@
       </row><row id="TRADE_OYA_03">
         <language name="JPN" width="256">ナオキ</language>
         <language name="JPN_KANJI" width="256">ナオキ</language>
-      </row><row id="TRADE_POKE_04">
-        <language name="JPN" width="256">カケアシ</language>
-        <language name="JPN_KANJI" width="256">カケアシ</language>
-      </row><row id="TRADE_OYA_04">
-        <language name="JPN" width="256">サンジ</language>
-        <language name="JPN_KANJI" width="256">サンジ</language>
       </row><row id="TRADE_POKE_05">
-        <language name="JPN" width="256">ハガネール</language>
-        <language name="JPN_KANJI" width="256">ハガネール</language>
+        <language name="JPN" width="256">まんぷく</language>
+        <language name="JPN_KANJI" width="256">まんぷく</language>
       </row><row id="TRADE_OYA_05">
-        <language name="JPN" width="256">ミカン</language>
-        <language name="JPN_KANJI" width="256">ミカン</language>
+        <language name="JPN" width="256">タマコ</language>
+        <language name="JPN_KANJI" width="256">タマコ</language>
       </row><row id="TRADE_POKE_06">
-        <language name="JPN" width="256">ネッシー</language>
-        <language name="JPN_KANJI" width="256">ネッシー</language>
+        <language name="JPN" width="256">ドッキー</language>
+        <language name="JPN_KANJI" width="256">ドッキー</language>
       </row><row id="TRADE_OYA_06">
-        <language name="JPN" width="256">セイジ</language>
-        <language name="JPN_KANJI" width="256">セイジ</language>
+        <language name="JPN" width="256">ユイ</language>
+        <language name="JPN_KANJI" width="256">ユイ</language>
       </row><row id="TRADE_POKE_07">
         <language name="JPN" width="256">ひきゃく</language>
         <language name="JPN_KANJI" width="256">ひきゃく</language>

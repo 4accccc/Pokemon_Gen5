@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T14:55:42"/>
+	<create user="taya" host="W00146" date="2010-04-17T17:42:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -246,6 +246,9 @@
 			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -362,13 +365,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-126" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="571"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="404"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1203,6 +1206,16 @@
 	<row id="TOKUSEI_162">
 		<language name="JPN" width="216">しょうりのほし</language>
 		<language name="JPN_KANJI" width="216">しょうりのほし</language>
+	</row>
+
+	<row id="TOKUSEI_163">
+		<language name="JPN" width="216">ターボブレイズ</language>
+		<language name="JPN_KANJI" width="216">ターボブレイズ</language>
+	</row>
+
+	<row id="TOKUSEI_164">
+		<language name="JPN" width="216">テラボルテージ</language>
+		<language name="JPN_KANJI" width="216">テラボルテージ</language>
 	</row>
 
 	<flowchart-group-list>

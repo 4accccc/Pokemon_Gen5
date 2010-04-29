@@ -172,4 +172,6 @@
 #define		TOKUSYU_TETUNOTOGE					( 160 )		//てつのトゲ
 #define		TOKUSYU_DARUMAMOODO					( 161 )		//ダルマモード
 #define		TOKUSYU_SYOURINOHOSI				( 162 )		//しょうりのほし
-#define		TOKUSYU_MAX						( 162 )
+#define		TOKUSYU_TAABOBUREIZU				( 163 )		//ターボブレイズ
+#define		TOKUSYU_TERABORUTEEZI				( 164 )		//テラボルテージ
+#define		TOKUSYU_MAX						( 164 )
