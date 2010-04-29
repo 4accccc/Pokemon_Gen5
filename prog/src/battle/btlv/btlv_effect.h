@@ -94,6 +94,8 @@ enum{
   BTLEFF_MIKADUKINOMAI_KAIHUKU,               //みかづきのまい回復エフェクト
   BTLEFF_RESET_MOVE,                          //リセットムーブエフェクト
   BTLEFF_SHOOTER_EFFECT,                      //シューターエフェクト
+  BTLEFF_TONBOGAERI_RETURN,                   //とんぼがえり戻りエフェクト
+  BTLEFF_VOLTCHANGE_RETURN,                   //ボルトチェンジ戻りエフェクト
 
   BTLEFF_STATUS_EFFECT_END,
 };
