@@ -92,6 +92,7 @@ VMCMD_RESULT EvCmdCallCGearCommentPut( VMHANDLE *core, void *wk )
         BMPWIN_POS_SIZX, BMPWIN_POS_SIZY, BMPWIN_PAL , BMPWIN_CHARPOS );
 
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_bmp ), 15 );
+    GFL_BMPWIN_TransVramCharacter( p_bmp );
     GFL_BMPWIN_MakeScreen( p_bmp );
     BmpWinFrame_Write( p_bmp, WINDOW_TRANS_ON, 1, FRAME_PAL );
 
