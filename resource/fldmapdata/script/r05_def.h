@@ -18,5 +18,8 @@
 #define SCRID_INIT_R05 (11)
 #define SCRID_R05_MUSICIAN_01 (12)
 #define SCRID_R05_RIVAL_02 (13)
+#define SCRID_R05_WOMAN1_01 (14)
+#define SCRID_R05_MAN2_02 (15)
+#define SCRID_R05_GIRL1_01 (16)
 
 #endif //_R05_DEF_H_

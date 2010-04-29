@@ -32,7 +32,10 @@ _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
 _EVENT_DATA    ev_init_r05
 _EVENT_DATA    ev_r05_musician_01
-_EVENT_DATA    ev_r05_rival_02
+_EVENT_DATA    ev_r05_rival_02			//クリア後ライバル
+_EVENT_DATA    ev_r05_woman1_01
+_EVENT_DATA    ev_r05_man2_02
+_EVENT_DATA    ev_r05_girl1_01
 _EVENT_DATA_END
 
 
@@ -56,6 +59,8 @@ INIT_EVENT_END
 /*					ライバルposイベント						*/
 /************************************************************/
 EVENT_START	ev_pos_r05_rival_01
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	{
 	DEFINE_LOCAL	LWK_POSX
@@ -388,6 +393,8 @@ EVENT_START	ev_pos_r05_rival_01
 	
 	}
 	
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -1039,11 +1046,11 @@ EVENT_END
 
 
 /************************************************************/
-/*					クリア後ライバル					*/
+/*					クリア後ライバル						*/
 /************************************************************/
 EVENT_START	ev_r05_rival_02
 {
-	_TALK_START_SE_PLAY()
+	_TALK_START_TURN_NOT()
 	_PLAYER_NAME( 0 )
 	
 	//主人公の話しかけ方向を取得
@@ -1182,3 +1189,29 @@ _ANIME_LABEL	anm_r04_after_rival_bye_left
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,9
 	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*							女性１							*/
+/************************************************************/
+EVENT_START	ev_r05_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_woman1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							男性２							*/
+/************************************************************/
+EVENT_START	ev_r05_man2_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_man2_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							少女１							*/
+/************************************************************/
+EVENT_START	ev_r05_girl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_girl1_01 )
+EVENT_END
+
+
