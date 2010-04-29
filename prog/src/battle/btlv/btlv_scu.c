@@ -3094,16 +3094,19 @@ typedef struct {
  */
 void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos )
 {
-  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskFakeDisable, sizeof(FAKEDISABLE_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
-  FAKEDISABLE_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+  if( pos != BTL_POS_NULL )
+  {
+    GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskFakeDisable, sizeof(FAKEDISABLE_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+    FAKEDISABLE_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
-  twk->parentWork = wk;
-  twk->pos = pos;
-  twk->vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-  twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
-  twk->seq = 0;
+    twk->parentWork = wk;
+    twk->pos = pos;
+    twk->vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+    twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+    twk->seq = 0;
 
-  (*(twk->pTaskCounter))++;
+    (*(twk->pTaskCounter))++;
+  }
 }
 
 /**
@@ -3121,30 +3124,6 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
 {
   FAKEDISABLE_ACT_WORK* wk = wk_adrs;
 
-  // @todo ¡‚Í‚½‚¾Á‚µ‚Ä, o‚µ‚Ä‚é‚¾‚¯‚Å‚·
-#if 0
-  switch( wk->seq ){
-  case 0:
-    BTLV_EFFECT_DelPokemon( wk->vpos );
-    BTLV_EFFECT_DelGauge( wk->vpos );
-    wk->seq++;
-    break;
-  case 1:
-    {
-      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
-      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      BTLV_EFFECT_SetPokemon( pp, wk->vpos );
-      BTLV_EFFECT_SetGauge( wk->parentWork->mainModule, bpp, wk->vpos );
-      wk->seq++;
-    }
-  case 2:
-    if( !BTLV_EFFECT_CheckExecute() ){
-      (*(wk->pTaskCounter))--;
-      GFL_TCBL_Delete( tcbl );
-    }
-    break;
-  }
-#endif
   switch( wk->seq ){
   case 0:
     {

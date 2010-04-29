@@ -11161,6 +11161,7 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
 
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION_L2 );
   BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
@@ -14546,14 +14547,17 @@ static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 {
   BTL_HANDEX_PARAM_HENSIN* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
 
-  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
-
-  if( BPP_IsFakeEnable(bpp) )
+  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
-    BPP_FakeDisable( bpp );
-    SCQUE_PUT_ACT_FakeDisable( wk->que, param->pokeID );
-    handexSub_putString( wk, &param->exStr );
-    return 1;
+    BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
+
+    if( BPP_IsFakeEnable(bpp) )
+    {
+      BPP_FakeDisable( bpp );
+      SCQUE_PUT_ACT_FakeDisable( wk->que, param->pokeID );
+      handexSub_putString( wk, &param->exStr );
+      return 1;
+    }
   }
   return 0;
 }

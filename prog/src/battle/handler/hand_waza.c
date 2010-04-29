@@ -9230,7 +9230,7 @@ static void handler_Yakitukusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_TomoeNage( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,  handler_TomoeNage   },         // ダメージ直後
+    { BTL_EVENT_WAZA_DMG_REACTION_L2,  handler_TomoeNage   },         // ダメージ直後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
