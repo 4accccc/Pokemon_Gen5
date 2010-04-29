@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-25T14:52:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T21:15:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_h03_ninja_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h03_ninja_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・このイベントが終わるまで
 　暴走族イベントは発生しない
@@ -309,7 +309,7 @@
 ……　……　来い▼</language>
 	</row>
 
-	<row id="msg_h03_ninja_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h03_ninja_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・GRIDX=15、GRIDZ=42まで誘導
 ・ダークトリニティ３人はゲーチスの
@@ -325,7 +325,7 @@
 ゲーチスさま　連れてきました▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・WHITEver
 ・GRIDX=15、GRIDZ=40で待機
@@ -342,7 +342,7 @@
 申しあげて　おきましょうか▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてsage1_02</comment>
@@ -358,7 +358,7 @@
 申しあげて　おきましょうか▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・右へ２歩移動、下向きでメッセージ表示
 ・続けてsage1_03</comment>
@@ -380,7 +380,7 @@
 確かめたい……　とのことです▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・左へ４歩移動、下向きでメッセージ表示
 ・続けてsage1_04</comment>
@@ -400,7 +400,7 @@
 本当に　純粋な　お方です▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・右へ２歩移動、下向きでメッセージ表示
 ・続けてsage1_05</comment>
@@ -426,7 +426,7 @@
 ポケモンを　使えばいいのです！▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・一度右を向いてから
 　下を向いてメッセージ表示
@@ -471,7 +471,7 @@
 そんな世界に　変わるのですよ▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h03_sage1_06" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、r09方面に移動
 ・画面外に消えると
@@ -531,12 +531,12 @@
 ※金曜日の夜のみいない
 ※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
-		<language name="JPN" width="256">ちょっとアンタ▼
+		<language name="JPN" width="256">ちょっと　アンタ！▼
 しゅうまつの　よるは
 ここには　こないほうが　いいわよ▼
 きんじょの　わるガキが　あつまって
 くだらないこと　してるから</language>
-		<language name="JPN_KANJI" width="256">ちょっとアンタ▼
+		<language name="JPN_KANJI" width="256">ちょっと　アンタ！▼
 週末の　夜は
 ここには　来ないほうが　いいわよ▼
 近所の　悪ガキが　集まって
