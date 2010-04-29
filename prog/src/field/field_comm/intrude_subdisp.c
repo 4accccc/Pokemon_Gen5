@@ -52,7 +52,7 @@ enum{
 };
 
 ///インフォメーションメッセージ更新ウェイト
-#define INFOMSG_UPDATE_WAIT   (60)
+#define INFOMSG_UPDATE_WAIT   (90)
 
 ///近くにいるビーコンの人物を表示する最大数
 #define INTSUB_BCON_PLAYER_PRINT_MAX    (INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX)
@@ -86,18 +86,7 @@ enum{
   INTSUB_ACTOR_TOUCH_TOWN_7,
   INTSUB_ACTOR_TOUCH_TOWN_MAX = INTSUB_ACTOR_TOUCH_TOWN_7,
 
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_0,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_1,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_2,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_3,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_4,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_5,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_6,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_7,
-  INTSUB_ACTOR_TOUCH_TOWN_EFF_MAX = INTSUB_ACTOR_TOUCH_TOWN_EFF_7,
-
   INTSUB_ACTOR_TOUCH_PALACE,
-  INTSUB_ACTOR_TOUCH_PALACE_EFF,
   
   INTSUB_ACTOR_AREA_0,
   INTSUB_ACTOR_AREA_1,
@@ -117,12 +106,7 @@ enum{
   INTSUB_ACTOR_WARP_NG_2,
   INTSUB_ACTOR_WARP_NG_MAX = INTSUB_ACTOR_WARP_NG_2,
   
-//  INTSUB_ACTOR_MARK,        ///<自分のいるエリアを指す
-
   INTSUB_ACTOR_LV_NUM_KETA_0,
-  INTSUB_ACTOR_LV_NUM_KETA_1,
-  INTSUB_ACTOR_LV_NUM_KETA_2,
-  INTSUB_ACTOR_LV_NUM_KETA_MAX = INTSUB_ACTOR_LV_NUM_KETA_2,
 
   INTSUB_ACTOR_MAX,
 };
@@ -147,17 +131,10 @@ enum{
 
 ///palace_obj.nceのアニメーションシーケンス
 enum{
-//  PALACE_ACT_ANMSEQ_TOWN_G,
-//  PALACE_ACT_ANMSEQ_TOWN_W,
-//  PALACE_ACT_ANMSEQ_TOWN_B,
   PALACE_ACT_ANMSEQ_AREA,
   PALACE_ACT_ANMSEQ_CUR_S,
   PALACE_ACT_ANMSEQ_CUR_L_MALE,
   PALACE_ACT_ANMSEQ_CUR_L_FEMALE,
-//  PALACE_ACT_ANMSEQ_MARK,
-//  PALACE_ACT_ANMSEQ_POWER,
-//  PALACE_ACT_ANMSEQ_MISSION,
-//  PALACE_ACT_ANMSEQ_INCLUSION,
   PALACE_ACT_ANMSEQ_SENKYO_EFF,
   PALACE_ACT_ANMSEQ_LV_NUM,
   PALACE_ACT_ANMSEQ_POINT_NUM,
@@ -179,7 +156,6 @@ enum{
   SOFTPRI_CUR_L = 19,
   SOFTPRI_WARP_NG = 30,
   SOFTPRI_LV_NUM = 10,
-  SOFTPRI_INFOMSG = 8,
   SOFTPRI_ENTRY_BUTTON = 5,
   SOFTPRI_ENTRY_BUTTON_MSG = 4,
 };
@@ -330,6 +306,8 @@ enum{
 ///[TIME]が書かれているスクリーンをクリアする時のスクリーンコード
 #define BG_TIME_SCRN_CLEAR_CODE   (0x3001)
 
+#define NUM_TRANS_BUFFER_SIZE   (8*2 * 32)  //数字3桁分(横8キャラ縦2キャラ)
+
 //--------------------------------------------------------------
 //  ミッションフォーカス
 //--------------------------------------------------------------
@@ -363,6 +341,8 @@ typedef struct _INTRUDE_SUBDISP{
   u32 index_pltt;
   u32 index_pltt_font;
   u32 index_cell;
+  u32 index_cgr_num;
+  u32 index_cell_num;
 
   GFL_FONT *font_handle;
   GFL_TCBLSYS *tcbl_sys;
@@ -377,6 +357,7 @@ typedef struct _INTRUDE_SUBDISP{
 	STRBUF *strbuf_title;
 	
 	PRINT_UTIL printutil_title;  ///<タイトルメッセージ
+	PRINT_UTIL printutil_info;   ///<インフォメーションメッセージ
 	
 	GFL_CLUNIT *clunit;
 	GFL_CLSYS_REND *clrend;
@@ -385,9 +366,13 @@ typedef struct _INTRUDE_SUBDISP{
   BMPOAM_SYS_PTR bmpoam_sys;
   GFL_BMP_DATA *entrymsg_bmp[ENTRY_BUTTON_MSG_PATERN_MAX];
   GFL_BMP_DATA *backmsg_bmp;
-  GFL_BMP_DATA *infomsg_bmp;
   BMPOAM_ACT_PTR entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_MAX];
-  BMPOAM_ACT_PTR infomsg_bmpoam;
+
+  void *numchar_buffer;
+  NNSG2dCharacterData *numchara_nnsg2d;
+
+  u8 *num_trans_buffer; //
+  u32 num_vram_address; //numchara_nnsg2dが転送されているVramアドレス
   
   INTRUDE_COMM_PARAM comm;  ///<intcommから取得出来るパラメータ類(非通信の時はソロ用の値)
   
@@ -401,9 +386,9 @@ typedef struct _INTRUDE_SUBDISP{
   u8 bar_type;            ///<BG_BAR_TYPE_xxx
   
   u8 title_print_type;    ///<_TITLE_PRINT_xxx
-  u8 infomsg_trans_req;
   u8 print_mission_status;  ///<現在表示しているミッション状況
   u8 print_mission_exe_flag;  ///<ミッション実行状況のメッセージ振り分けフラグ
+  u8 level_char_trans_req;
   
   u16 warp_zone_id;
   u8 event_req;           ///< _EVENT_REQ_NO_xxx
@@ -443,8 +428,6 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_BGUnload(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BmpWinDel(INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_BmpOamCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
-static void _IntSub_BmpOamDelete(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorResourceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
@@ -560,7 +543,6 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   _IntSub_BmpWinAdd(intsub);
   _IntSub_ActorResourceLoad(intsub, handle);
   _IntSub_ActorCreate(intsub, handle);
-  _IntSub_BmpOamCreate(intsub, handle);
   
   GFL_ARC_CloseDataHandle(handle);
 
@@ -592,7 +574,6 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
 	GFL_TCB_DeleteTask(intsub->vintr_tcb);
 
-  _IntSub_BmpOamDelete(intsub);
   _IntSub_Delete_EntryButton(intsub);
   _IntSub_ActorDelete(intsub);
   _IntSub_ActorResourceUnload(intsub);
@@ -634,11 +615,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 	GFL_TCBL_Main( intsub->tcbl_sys );
 	PRINTSYS_QUE_Main( intsub->print_que );
   PRINT_UTIL_Trans( &intsub->printutil_title, intsub->print_que );
-  if(intsub->infomsg_trans_req == TRUE 
-      && PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->infomsg_bmp) == FALSE){
-    BmpOam_ActorBmpTrans(intsub->infomsg_bmpoam);
-    intsub->infomsg_trans_req = FALSE;
-  }
+  PRINT_UTIL_Trans( &intsub->printutil_info, intsub->print_que );
   for(i = 0; i < ENTRY_BUTTON_MSG_PATERN_MAX; i++){
     if(PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->entrymsg_bmp[i]) == FALSE){
       BmpOam_ActorBmpTrans(intsub->entrymsg_bmpoam[i]);
@@ -802,6 +779,11 @@ static void _VblankFunc(GFL_TCB *tcb, void *work)
         INTSUB_ACTOR_PAL_TOUCH_MINE * 0x20 + PLAYER_PALANM_START_COLOR * 2, 
         PLAYER_PALANM_BUFFER_SIZE );
       intsub->player_pal_trans_req = FALSE;
+    }
+    if(intsub->level_char_trans_req){
+      DC_FlushRange( (void*)intsub->num_trans_buffer, NUM_TRANS_BUFFER_SIZE );
+      GXS_LoadOBJ( intsub->num_trans_buffer, intsub->num_vram_address, NUM_TRANS_BUFFER_SIZE );
+      intsub->level_char_trans_req = FALSE;
     }
   }
 }
@@ -972,9 +954,16 @@ static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub)
 {
   GFL_BMPWIN *bmpwin;
   
+  //タイトルメッセージ
   bmpwin = GFL_BMPWIN_Create( INTRUDE_FRAME_S_BAR, 
     0, 0, 0x20, 2, _FONT_BG_PALNO, GFL_BMP_CHRAREA_GET_B );
   PRINT_UTIL_Setup( &intsub->printutil_title, bmpwin );
+  GFL_BMPWIN_MakeTransWindow(bmpwin);
+  
+  //インフォメーションメッセージ
+  bmpwin = GFL_BMPWIN_Create( INTRUDE_FRAME_S_BAR, 
+    1, 0x12, 30, 4, _FONT_BG_PALNO, GFL_BMP_CHRAREA_GET_B );
+  PRINT_UTIL_Setup( &intsub->printutil_info, bmpwin );
   GFL_BMPWIN_MakeTransWindow(bmpwin);
 }
 
@@ -988,48 +977,7 @@ static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub)
 static void _IntSub_BmpWinDel(INTRUDE_SUBDISP_PTR intsub)
 {
   GFL_BMPWIN_Delete(intsub->printutil_title.win);
-}
-
-//--------------------------------------------------------------
-/**
- * BMPOAM作成
- *
- * @param   intsub		
- * @param   handle		
- */
-//--------------------------------------------------------------
-static void _IntSub_BmpOamCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
-{
-  BMPOAM_ACT_DATA bmpoam_head = {
-    NULL,   //OAMとして表示させるBMPデータへのポインタ
-    8, 0x12*8,   //X, Y
-    0,      //適用するパレットのindex(GFL_CLGRP_PLTT_Registerの戻り値)
-    0,      //pal_offset(pltt_indexのパレット内でのオフセット)
-    SOFTPRI_INFOMSG,
-    BGPRI_ACTOR_COMMON,
-    INTSUB_CLACT_REND_SUB,
-    CLSYS_DRAW_SUB,
-  };
-
-  intsub->infomsg_bmp = GFL_BMP_Create( 
-    INFOMSG_BMP_SIZE_X, INFOMSG_BMP_SIZE_Y, GFL_BMP_16_COLOR, HEAPID_FIELD_SUBSCREEN );
-  
-  bmpoam_head.bmp = intsub->infomsg_bmp;
-  bmpoam_head.pltt_index = intsub->index_pltt_font;
-  intsub->infomsg_bmpoam = BmpOam_ActorAdd(intsub->bmpoam_sys, &bmpoam_head);
-}
-
-//--------------------------------------------------------------
-/**
- * BMPOAM削除
- *
- * @param   intsub		
- */
-//--------------------------------------------------------------
-static void _IntSub_BmpOamDelete(INTRUDE_SUBDISP_PTR intsub)
-{
-  BmpOam_ActorDel(intsub->infomsg_bmpoam);
-  GFL_BMP_Delete(intsub->infomsg_bmp);
+  GFL_BMPWIN_Delete(intsub->printutil_info.win);
 }
 
 //--------------------------------------------------------------
@@ -1063,6 +1011,20 @@ static void _IntSub_ActorResourceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
       INTSUB_ACTOR_PAL_FONT * 0x20, HEAPID_FIELDMAP );
     GFL_ARC_CloseDataHandle(font_pal_handle);
   }
+  
+  //数値用のNCGとCell
+  intsub->index_cgr_num = GFL_CLGRP_CGR_Register(
+    handle, NARC_palace_palace_num_lz_NCGR, TRUE, CLSYS_DRAW_SUB, HEAPID_FIELDMAP);
+  intsub->index_cell_num = GFL_CLGRP_CELLANIM_Register(
+    handle, NARC_palace_palace_num_dmmy_NCER, 
+    NARC_palace_palace_num_dmmy_NANR, HEAPID_FIELD_SUBSCREEN);
+  //数値用の転送用キャラクタ
+  intsub->numchar_buffer = GFL_ARCHDL_UTIL_LoadBGCharacter( 
+    handle, NARC_palace_palace_num_lz_NCGR, TRUE, 
+    &intsub->numchara_nnsg2d, HEAPID_FIELD_SUBSCREEN);
+  intsub->num_vram_address = GFL_CLGRP_CGR_GetAddr(intsub->index_cgr_num, NNS_G2D_VRAM_TYPE_2DSUB);
+  intsub->num_trans_buffer = GFL_HEAP_AllocClearMemory(
+    HEAPID_FIELD_SUBSCREEN, NUM_TRANS_BUFFER_SIZE);
 
   //VRAMからパレットアニメ対象のデータをバッファへコピー
   GFL_STD_MemCopy16((void*)(HW_DB_OBJ_PLTT + INTSUB_ACTOR_PAL_TOUCH_DECIDE * 0x20 + PLAYER_PALANM_START_COLOR * 2), intsub->player_pal_src, PLAYER_PALANM_BUFFER_SIZE);
@@ -1079,10 +1041,14 @@ static void _IntSub_ActorResourceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
 //--------------------------------------------------------------
 static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub)
 {
+  GFL_HEAP_FreeMemory(intsub->num_trans_buffer);
+  GFL_HEAP_FreeMemory(intsub->numchar_buffer);
   GFL_CLGRP_PLTT_Release(intsub->index_pltt_font);
   GFL_CLGRP_PLTT_Release(intsub->index_pltt);
   GFL_CLGRP_CGR_Release(intsub->index_cgr);
+  GFL_CLGRP_CGR_Release(intsub->index_cgr_num);
   GFL_CLGRP_CELLANIM_Release(intsub->index_cell);
+  GFL_CLGRP_CELLANIM_Release(intsub->index_cell_num);
 }
 
 //--------------------------------------------------------------
@@ -1130,22 +1096,15 @@ static void _IntSub_ActorDelete(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
-  int i, effno;
+  int i;
   GFL_CLWK_DATA head = {
   	0, 0,                       //X, Y座標
   	PALACE_ACT_ANMSEQ_TOUCH_TOWN,   //アニメーションシーケンス
   	SOFTPRI_TOUCH_TOWN,               //ソフトプライオリティ
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
-  GFL_CLWK_DATA eff_head = {
-  	0, 0,                       //X, Y座標
-  	PALACE_ACT_ANMSEQ_TOUCH_TOWN_EFF,   //アニメーションシーケンス
-  	SOFTPRI_TOUCH_TOWN_EFF,               //ソフトプライオリティ
-  	BGPRI_ACTOR_COMMON,         //BGプライオリティ
-  };
   
   GF_ASSERT(PALACE_TOWN_DATA_MAX == (INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0 + 1));
-  effno = INTSUB_ACTOR_TOUCH_TOWN_EFF_0;
   for(i = INTSUB_ACTOR_TOUCH_TOWN_0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX; i++){
     head.pos_x = PalaceTownData[i - INTSUB_ACTOR_TOUCH_TOWN_0].subscreen_x;
     head.pos_y = PalaceTownData[i - INTSUB_ACTOR_TOUCH_TOWN_0].subscreen_y;
@@ -1154,15 +1113,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
-
-    eff_head.pos_x = head.pos_x;
-    eff_head.pos_y = head.pos_y;
-    intsub->act[effno] = GFL_CLACT_WK_Create(intsub->clunit, 
-      intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &eff_head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
-    GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[effno], TRUE);  //オートアニメON
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[effno], FALSE);  //表示OFF
-    effno++;
+    GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[i], TRUE);  //オートアニメON
   }
   
   //タッチパレス島
@@ -1173,15 +1124,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], FALSE);  //表示OFF
-  //タッチパレス島エフェクト
-  eff_head.anmseq = PALACE_ACT_ANMSEQ_TOUCH_PALACE_EFF;
-  eff_head.pos_x = PALACE_ICON_POS_X;
-  eff_head.pos_y = PALACE_ICON_POS_Y;
-  intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF] = GFL_CLACT_WK_Create(intsub->clunit, 
-    intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &eff_head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
-  GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], TRUE);  //オートアニメON
-  GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], FALSE);  //表示OFF
+  GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);  //オートアニメON
 }
 
 //--------------------------------------------------------------
@@ -1309,34 +1252,20 @@ static void _IntSub_ActorCreate_WarpNG(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *ha
 //--------------------------------------------------------------
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
-  int i;
   BOOL time_enable = FALSE;
   GFL_CLWK_DATA head = {
-  	0, 0,                       //X, Y座標
-  	PALACE_ACT_ANMSEQ_LV_NUM,   //アニメーションシーケンス
+  	0x1a*8, 0x16*8,                       //X, Y座標
+  	0,                          //アニメーションシーケンス
   	SOFTPRI_LV_NUM,             //ソフトプライオリティ
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
-  static const struct{
-    u16 x;
-    u16 y;
-  }LvNumPos[] = {
-    {0x1a*8 + 4*8, 0x16*8},   //一の位
-    {0x1a*8 + 2*8, 0x16*8},   //十の位
-    {0x1a*8, 0x16*8},         //百の位
-  };
   
-  GF_ASSERT(NELEMS(LvNumPos) == (INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0 + 1));
-
   time_enable = _TimeNum_CheckEnable(intsub);
-  for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
-    head.pos_x = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].x;
-    head.pos_y = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].y;
-    intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
-      intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], time_enable);
-  }
+  
+  intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0] = GFL_CLACT_WK_Create(intsub->clunit, 
+    intsub->index_cgr_num, intsub->index_pltt, intsub->index_cell_num, 
+    &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
+  GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0], time_enable);
 }
 
 //--------------------------------------------------------------
@@ -1428,14 +1357,13 @@ static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub)
 static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
-  int i;
+  int i, palofs;
   
   if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
     BOOL palace_enable;
     //自分のエリアの為、パレス島しかタッチ出来ない
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], FALSE);
-      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_EFF_0 + i], FALSE);
     }
     //自分のエリアの場合はパレスは表フィールドにいないとタッチできない
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
@@ -1444,26 +1372,30 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
     else{
       palace_enable = FALSE;
     }
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], palace_enable);
     
-    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], 
-      INTSUB_ACTOR_PAL_BASE_START + intsub->comm.now_palace_area, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], palace_enable);
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
+      INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], palace_enable);
   }
   else{
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], TRUE);
-      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_EFF_0 + i], TRUE);
-      GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_EFF_0 + i], 
-        INTSUB_ACTOR_PAL_BASE_START + intsub->comm.now_palace_area, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], 
+        INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     }
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);
     
-    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], 
-      INTSUB_ACTOR_PAL_BASE_START + intsub->comm.now_palace_area, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], TRUE);
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
+      INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);
   }
   
+  //現在地のROMのカラーをコピーしてくる
+  for(palofs = INTSUB_ACTOR_PAL_TOUCH_NORMAL; palofs <= INTSUB_ACTOR_PAL_TOUCH_MINE; palofs++){
+    GFL_STD_MemCopy16(
+      (void*)(HW_DB_OBJ_PLTT + (INTSUB_ACTOR_PAL_BASE_START + intsub->comm.now_palace_area) * 0x20 + 1*2), 
+      (void*)(HW_DB_OBJ_PLTT + palofs * 0x20 + 6*2), 2);
+  }
+
   //決定した街を光らす
   if(intsub->decide_pal_occ == TRUE){
     if(intsub->decide_pal_timer % TOWN_DECIDE_PAL_FLASH_WAIT == 0){
@@ -1819,9 +1751,7 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
   if(_TimeNum_CheckEnable(intsub) == FALSE){
     //ミッションをやっていないのに数字が表示されているなら非表示にする
     if(GFL_CLACT_WK_GetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0]) == TRUE){
-      for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
-        GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);
-      }
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0], FALSE);
       _TimeScrn_Clear();
     }
     return;
@@ -1829,9 +1759,7 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
   else{
     //ミッション中に数字が表示されていないなら表示
     if(GFL_CLACT_WK_GetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0]) == FALSE){
-      for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
-        GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
-      }
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0], TRUE);
       _TimeScrn_Recover(intsub);
     }
   }
@@ -1845,12 +1773,18 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
   }
   
   if(intsub->print_time != level){
+    int num, i;
+    u8 *pSrc = intsub->numchara_nnsg2d->pRawData;
     intsub->print_time = level;
-    for(i = 0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0; i++){
-      act = intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0 + i];
-      GFL_CLACT_WK_SetAnmIndex(act, level % 10);
+    for(i = 0; i < 3; i++){
+      num = level % 10;
       level /= 10;
+      
+      GFL_STD_MemCopy32(&pSrc[num * 0x40], &intsub->num_trans_buffer[(2-i)*0x40], 0x40);
+      GFL_STD_MemCopy32(&pSrc[num * 0x40 + 0x40*10], 
+        &intsub->num_trans_buffer[(2-i)*0x40 + 0x20*8], 0x40);
     }
+    intsub->level_char_trans_req = TRUE;
   }
 }
 
@@ -1917,9 +1851,6 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   MISSION_STATUS mission_status;
 #endif
 
-  if(intsub->infomsg_trans_req == TRUE){
-    return;
-  }
   if(intsub->infomsg_wait > 0){
     intsub->infomsg_wait--;
     return;
@@ -2002,12 +1933,10 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   intsub->print_touch_player = INTRUDE_NETID_NULL;
   
   if(msg_on == TRUE){
-    GFL_BMP_Clear( intsub->infomsg_bmp, 0 );
-    PRINTSYS_PrintQueColor( intsub->print_que, intsub->infomsg_bmp, 0, 0, intsub->strbuf_info, 
-      intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
-    intsub->infomsg_trans_req = TRUE;
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(intsub->printutil_info.win), 0 );
+    PRINT_UTIL_PrintColor( &intsub->printutil_info, intsub->print_que, 
+      0, 0, intsub->strbuf_info, intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
     intsub->infomsg_wait = INFOMSG_UPDATE_WAIT;
-    OS_TPrintf("メッセージ描画：id=%d\n", infomsg.message_id);
   }
 }
 
@@ -2258,6 +2187,7 @@ static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub)
     INTSUB_BG_PAL_BASE_START_TOWN + bg_pal);
 
   GFL_BMPWIN_MakeScreen(intsub->printutil_title.win);
+  GFL_BMPWIN_MakeScreen(intsub->printutil_info.win);
 
   GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BACKGROUND);
   GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);

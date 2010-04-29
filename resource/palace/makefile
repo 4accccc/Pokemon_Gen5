@@ -34,6 +34,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
+esources:=$(wildcard *.nce)
 bmpsources:=$(wildcard *.bmp)
 imdsources:=$(wildcard *.imd)
 
@@ -68,7 +69,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(ssources) $(imdsources) $(bmpsources) cnv.bat makefile
+$(targetname).narc: $(lsources) $(gsources) $(ssources) $(esources) $(imdsources) $(bmpsources) cnv.bat makefile
 	cnv.bat
 	$(NAIXCUT) $(targetname).naix
 

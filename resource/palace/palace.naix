@@ -20,7 +20,11 @@ enum {
 	NARC_palace_palace_bar_lz_NSCR = 6,
 	NARC_palace_palace_bar2_lz_NSCR = 7,
 	NARC_palace_palace_time_lz_NSCR = 8,
-	NARC_palace_palace_bg_NCLR = 9
+	NARC_palace_palace_bg_NCLR = 9,
+	NARC_palace_palace_num_lz_NCGR = 10,
+	NARC_palace_palace_num_dmmy_NCGR = 11,
+	NARC_palace_palace_num_dmmy_NCER = 12,
+	NARC_palace_palace_num_dmmy_NANR = 13
 };
 
 /* NARC_PALACE_NAIX_ */

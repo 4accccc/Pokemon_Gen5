@@ -8,3 +8,7 @@
 "palace_bar2_lz.NSCR"
 "palace_time_lz.NSCR"
 "palace_bg.NCLR"
+"palace_num_lz.NCGR"
+"palace_num_dmmy.NCGR"
+"palace_num_dmmy.NCER"
+"palace_num_dmmy.NANR"

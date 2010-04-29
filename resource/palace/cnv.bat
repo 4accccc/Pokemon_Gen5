@@ -22,6 +22,11 @@ ntrcomp -lex -A4 -o palace_bar_lz.NSCR palace_bar.NSCR
 ntrcomp -lex -A4 -o palace_bar2_lz.NSCR palace_bar2.NSCR
 ntrcomp -lex -A4 -o palace_time_lz.NSCR palace_time.NSCR
 
+g2dcvtr palace_num.ncg -bg
+g2dcvtr palace_num_dmmy.nce -br -ncn
+ntrcomp -lex -A4 -o palace_num_dmmy_lz.NCGR palace_num_dmmy.NCGR
+ntrcomp -lex -A4 -o palace_num_lz.NCGR palace_num.NCGR
+
 
 echo narcçÏê¨
 nnsarc -c -l -n -i palace -S palace_arc.txt
