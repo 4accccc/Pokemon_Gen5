@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-08T19:51:06" source="door_bar.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-29T23:01:50" source="door_bar.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-08T19:51:06" source="door_bar.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-29T23:01:50" source="door_bar.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,13 +18,13 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="2 1"
 	compress_material="on" material_size="1 1"
 	output_texture="used"
 	force_full_weight="off"
-	use_primitive_strip="on"
+	use_primitive_strip="off"
 />
 
 <box_test pos_scale="3" xyz="-2.375000 0.250000 -0.250000" whd="2.750000 4.500000 0.500000"/>
@@ -32,35 +32,51 @@
 <tex_image_array size="1">
 	<tex_image index="0" name="door_bar"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
 		palette_name="door_bar_pl"
 		path="C:/home/wb_data3d/build_model/outdoor/door_bar/tex/door_bar.tga"
 	>
-		<bitmap size="128">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			5555 5555 5555 0015 6aa9 66aa a6aa 556a
-			6aa9 66aa a6aa 556a 6aa9 66aa a6aa 556a
-			6aa9 66aa a6aa 556a 6559 66aa a6aa 556a
-			67d9 6555 a555 556a 67d9 6555 a555 556a
-			a7d9 aaaa aaaa 556a a7d9 aaaa aaaa 556a
-			63c9 6555 a555 556a 63c9 6555 a555 556a
-			6009 66aa a6aa 556a 6559 66aa a6aa 556a
-			6aa9 66aa a6aa 556a 6aa9 66aa a6aa 556a
-			6aa9 66aa a6aa 556a 6aa9 6555 a555 556a
-			6aa9 6555 a555 556a aaa9 aaaa aaaa 556a
-			aaa9 aaaa aaaa 556a aaa9 aaaa aaaa 556a
+		<bitmap size="256">
+			2222 2222 2222 2222 2222 2222 0222 0000
+			2222 2222 2222 2222 2222 2222 0222 0000
+			2222 2222 2222 2222 2222 2222 0222 0000
+			2222 2222 2222 2222 2222 2222 0222 0000
+			4444 4444 4444 4444 4444 4444 2444 2222
+			5554 5555 5555 5555 5555 5555 4555 2444
+			5554 5555 4444 5544 4444 5544 4555 2444
+			5554 5555 4444 5544 4444 5544 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			1554 5551 4444 5544 4444 5544 4555 2444
+			3154 5513 4444 5544 4444 5544 4555 2444
+			3154 5513 5555 5555 5555 5555 4555 2444
+			3154 5513 5555 5555 5555 5555 4555 2444
+			3154 5513 4444 5544 4444 5544 4555 2444
+			3154 5513 4444 5544 4444 5544 4555 2444
+			3154 5513 5554 5545 5554 5545 4555 2444
+			1454 5541 5554 5545 5554 5545 4555 2444
+			4454 5544 5554 5545 5554 5545 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			5554 5555 5554 5545 5554 5545 4555 2444
+			5554 5555 4444 5544 4444 5544 4555 2444
+			5554 5555 4444 5544 4444 5544 4555 2444
+			5554 5555 5555 5555 5555 5555 4555 2444
+			5554 5555 5555 5555 5555 5555 4555 2444
+			5554 5555 5555 5555 5555 5555 4555 2444
+			5554 5555 5555 5555 5555 5555 4555 2444
+			4444 4444 4444 4444 4444 4444 4444 2444
+			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="door_bar_pl" color_size="4">
-		194f 1d91 25d4 439f
+	<tex_palette index="0" name="door_bar_pl" color_size="8">
+		0467 0595 08ab 0a5c 0cef 1154 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -78,9 +94,9 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="16 16 16"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="flip flip"
@@ -110,40 +126,37 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.375000 0.250000 0.250000"/>
+					<tex st="29.000000 32.000000"/>
+					<pos_xy xy="0.375000 0.250000"/>
+					<tex st="29.000000 0.000000"/>
+					<pos_xy xy="0.375000 4.750000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.375000 4.750000"/>
+					<tex st="30.062500 63.312500"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_xy xy="0.375000 0.250000"/>
+					<pos_xz xz="0.375000 -0.250000"/>
+					<pos_xy xy="0.375000 4.750000"/>
+					<pos_xz xz="0.375000 0.250000"/>
+					<tex st="29.000000 0.000000"/>
+					<nrm xyz="0.000000 0.000000 -1.000000"/>
+					<pos_xz xz="0.375000 -0.250000"/>
+					<tex st="29.000000 32.000000"/>
+					<pos_xy xy="0.375000 0.250000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="-2.375000 0.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.375000 4.750000"/>
 					<tex st="24.000000 0.000000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_s xyz="-2.375000 4.750000 -0.250000"/>
+					<pos_xy xy="-2.375000 4.750000"/>
 					<tex st="24.000000 32.000000"/>
 					<pos_xy xy="-2.375000 0.250000"/>
 					<pos_xz xz="-2.375000 0.250000"/>
 					<tex st="24.000000 0.000000"/>
-					<pos_xy xy="-2.375000 4.750000"/>
-					<tex st="27.000000 0.000000"/>
-					<nrm xyz="0.000000 0.000000 -1.000000"/>
-					<pos_xz xz="0.375000 -0.250000"/>
-					<tex st="27.000000 32.000000"/>
-					<pos_xy xy="0.375000 0.250000"/>
-					<tex st="0.000000 32.000000"/>
-					<pos_xy xy="-2.375000 0.250000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.375000 4.750000"/>
-					<tex st="1.125000 60.000000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="0.375000 0.250000 0.250000"/>
-					<tex st="7.000000 60.000000"/>
-					<pos_xz xz="0.375000 -0.250000"/>
-					<tex st="7.000000 4.000000"/>
-					<pos_xy xy="0.375000 4.750000"/>
-					<tex st="1.125000 4.000000"/>
-					<pos_xz xz="0.375000 0.250000"/>
-					<tex st="0.000000 32.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xy xy="-2.375000 0.250000"/>
-					<tex st="27.000000 32.000000"/>
-					<pos_xy xy="0.375000 0.250000"/>
-					<tex st="27.000000 0.000000"/>
-					<pos_xy xy="0.375000 4.750000"/>
-					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-2.375000 4.750000"/>
 				</primitive>
 			</primitive_array>
