@@ -18,6 +18,7 @@
 
 #include "event_debug_menu_make_egg.h"
 
+#ifdef PM_DEBUG
 
 //--------------------------------------------------------------
 // タマゴ作成　メニューヘッダー
@@ -166,3 +167,6 @@ GMEVENT* DEBUG_EVENT_FLDMENU_MakeEgg( GAMESYS_WORK* gameSystem, void* wk )
 
   return event;
 }
+
+
+#endif //PM_DEBUG
