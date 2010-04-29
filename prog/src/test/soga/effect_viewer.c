@@ -532,7 +532,7 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
           BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 1 );
           BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
         }
-        if( evw->rule == BTL_RULE_ROTATION )
+        else if( evw->rule == BTL_RULE_ROTATION )
         { 
           BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
           BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 1 );
