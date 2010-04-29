@@ -1680,7 +1680,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
 {
   GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
 
-#if DEBUG_ONLY_FOR_ohno
+#if (defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
 #else
   if(GMTIME_IsPenaltyMode(pGMT)){  //ペナルティー中は眠る事ができない
     _CHANGE_STATE(_wakeupActionFailed);
