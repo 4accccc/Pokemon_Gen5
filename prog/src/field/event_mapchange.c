@@ -51,7 +51,7 @@
 #include "event_appear.h"
 #include "event_disappear.h"
 #include "event_demo3d.h"
-#include "savedata/gimmickwork.h"   //for GIMMICKWORK
+#include "savedata/gimmickwork.h"           //for GIMMICKWORK
 #include "field_comm/intrude_main.h"
 #include "field_comm/intrude_work.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
@@ -63,12 +63,15 @@
 #include "savedata/intrude_save.h"
 
 #include "system/playtime_ctrl.h" // for PLAYTIMECTRL_Start
-#include "savedata/gametime.h"  // for GMTIME
+#include "savedata/gametime.h"    // for GMTIME
 #include "savedata/system_data.h" //SYSTEMDATA_
-#include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
-#include "ev_time.h"  // EVTIME_Update
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"  // SYS_FLAG_SPEXIT_REQUEST
-#include "../../../resource/fldmapdata/flagwork/work_define.h"  // WK_SYS_SCENE_COMM 
+#include "savedata/mail_util.h"   // MAIL_BLOCK
+#include "arc/message.naix"       // メッセージデータ参照用
+#include "msg/msg_trname.h"       // 文字列名support_01
+#include "gamesystem/pm_season.h" // for PMSEASON_TOTAL
+#include "ev_time.h"              // EVTIME_Update
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"    // SYS_FLAG_SPEXIT_REQUEST
+#include "../../../resource/fldmapdata/flagwork/work_define.h"    // WK_SYS_SCENE_COMM 
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h"  // SCRID_POKECEN_ELEVATOR_OUT
 
 
@@ -121,6 +124,8 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
 static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_req );
 
 static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata );
+
+static void MailBox_SetFirstMail( GAMEDATA* gamedata );
 
 //--------------------------------------------------------------
 //  
@@ -206,16 +211,16 @@ static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
       u8 season = GAMEDATA_GetSeasonID( gameData );
       GMEVENT_CallEvent( event, EVENT_SimpleSeasonDisplay( gameSystem, season, season ) );
     }
-		(*seq)++;
-		break;
+    (*seq)++;
+    break;
 
-	case 2:
+  case 2:
     // デモを呼ぶ
     GMEVENT_CallEvent( event, EVENT_CallDemo3D( gameSystem, event, DEMO3D_ID_INTRO_TOWN, 0, TRUE ));
-		(*seq)++;
-		break;
+    (*seq)++;
+    break;
 
-	case 3:
+  case 3:
     // イベント変更
     {
       GMEVENT* nextEvent;
@@ -269,14 +274,14 @@ typedef struct {
 
 //------------------------------------------------------------------
 /**
- *	@brief  フィールドの新規開始初期化処理
+ *  @brief  フィールドの新規開始初期化処理
  *
- *	@param	gsys  ゲームシステム
+ *  @param  gsys  ゲームシステム
  *
  * @note
- *	GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
+ *  GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
  *
- *	このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
+ *  このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
  */
 //------------------------------------------------------------------
 static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
@@ -402,6 +407,9 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
   //プレイ時間カウント　開始
   PLAYTIMECTRL_Start();
 
+  //メールボックスに最初からメールを一通入れておく
+  MailBox_SetFirstMail( fmw->gamedata );
+
   // VRAM全クリア
   GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
   MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
@@ -429,14 +437,14 @@ typedef struct {
 
 //------------------------------------------------------------------
 /**
- *	@brief  フィールドのコンティニュー開始初期化処理
+ *  @brief  フィールドのコンティニュー開始初期化処理
  *
- *	@param	gsys  ゲームシステム
+ *  @param  gsys  ゲームシステム
  *
  * @note
- *	GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
+ *  GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
  *
- *	このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
+ *  このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
  */
 //------------------------------------------------------------------
 static void GAME_FieldContinueInit( GAMESYS_WORK * gsys )
@@ -2308,7 +2316,7 @@ static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief    ゲームオーバーイベント
+ *  @brief    ゲームオーバーイベント
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
@@ -2347,20 +2355,20 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
     break;
 
   case 3:
-		return GMEVENT_RES_FINISH;
+    return GMEVENT_RES_FINISH;
   }
-	return GMEVENT_RES_CONTINUE;
+  return GMEVENT_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ゲームオーバーイベント生成
+ *  @brief  ゲームオーバーイベント生成
  */
 //-----------------------------------------------------------------------------
 GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-	GMEVENT * event;
+  GMEVENT * event;
   MAPCHANGE_GAMEOVER* p_wk;
   event = GMEVENT_Create( gsys, NULL, GMEVENT_GameOver, sizeof(MAPCHANGE_GAMEOVER) );
   p_wk = GMEVENT_GetEventWork( event );
@@ -2606,10 +2614,10 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WFBCのセットアップ処理
+ *  @brief  WFBCのセットアップ処理
  *
- *	@param	gamedata
- *	@param	loc 
+ *  @param  gamedata
+ *  @param  loc 
  */
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
@@ -2962,10 +2970,10 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  脱出先の特殊設定
+ *  @brief  脱出先の特殊設定
  *
- *	@param	gamedata      ゲームデータ
- *	@param	loc_req       リクエストロケーション
+ *  @param  gamedata      ゲームデータ
+ *  @param  loc_req       リクエストロケーション
  */
 //-----------------------------------------------------------------------------
 static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_req )
@@ -2996,10 +3004,10 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
 
 //----------------------------------------------------------------------------
 /**
- *	@brie 特殊な脱出先を取得する
+ *  @brie 特殊な脱出先を取得する
  *
- *	@param	gamedata  ゲームデータ
- *	@param	loc_req   ロケーション
+ *  @param  gamedata  ゲームデータ
+ *  @param  loc_req   ロケーション
  */
 //-----------------------------------------------------------------------------
 static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_req )
@@ -3018,9 +3026,9 @@ static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自機のフォームを通常に戻す
+ *  @brief  自機のフォームを通常に戻す
  *
- *	@param	gamedata  ゲームデータ
+ *  @param  gamedata  ゲームデータ
  */
 //-----------------------------------------------------------------------------
 static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata )
@@ -3037,3 +3045,76 @@ static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata )
 }
 
 
+static const PMS_DATA mail_pmsdata[]={
+  // 「しょうぶ」してくれて　ありがとう！
+  {
+    PMS_TYPE_PECULIAR,  9,
+    { 1406, PMS_WORD_NULL},
+  },
+  // 「ドキドキ」で　とってもよかったです！
+  {
+    PMS_TYPE_PECULIAR,  10,
+    { 1649, PMS_WORD_NULL},
+  },
+  // また「しょうぶ」しようね！　「バイバイ」
+  {
+    PMS_TYPE_PECULIAR,  20,
+    { 1406, 2058},
+    
+  },
+
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メールボックスにベルからのメールを最初から入れておく
+ *
+ * @param   gamedata    
+ */
+//----------------------------------------------------------------------------------
+static void MailBox_SetFirstMail( GAMEDATA* gamedata )
+{
+  MAIL_DATA   *mail;
+  GFL_MSGDATA *TrainerMsgData;
+  STRBUF  *strbuf;
+  STRCODE strdata[BUFLEN_PERSON_NAME];
+
+  // トレーナー名メッセージデータオープン
+  TrainerMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                                NARC_message_trname_dat, GFL_HEAPID_APP );
+  strbuf = GFL_MSG_CreateString( TrainerMsgData, support_01 );
+
+  // サポート名の生文字列を取得
+  GFL_STR_GetStringCode( strbuf, strdata, BUFLEN_PERSON_NAME );
+
+  // メールデータ作成
+  mail = MailData_CreateWork( GFL_HEAPID_APP );
+
+  // サポート名セット
+  MailData_SetWriterName( mail, strdata );
+  // 性別
+  MailData_SetWriterSex( mail, PM_FEMALE );
+  // メールデザインNo
+  MailData_SetDesignNo( mail, 3 );
+  // 国コードセット
+  MailData_SetCountryCode( mail, PM_LANG );
+  // カセットバージョン
+  MailData_SetCasetteVersion( mail, PM_VERSION );
+  // 簡易会話セット
+  MailData_SetMsgByIndex( mail, &mail_pmsdata[0], 0 );
+  MailData_SetMsgByIndex( mail, &mail_pmsdata[1], 1 );
+  MailData_SetMsgByIndex( mail, &mail_pmsdata[2], 2 );
+  // 簡易ワード「トレーナー」セット
+  MailData_SetFormBit( mail, 1419 );
+
+  // メールボックスにメールをセット
+  {
+    MAIL_BLOCK *mail_block = GAMEDATA_GetMailBlock( gamedata );
+    MAIL_AddMailFormWork( mail_block, MAILBLOCK_PASOCOM, 0, mail);
+  }
+
+  // ワーク解放
+  GFL_HEAP_FreeMemory( mail );
+  GFL_STR_DeleteBuffer( strbuf );
+  GFL_MSG_Delete( TrainerMsgData );
+}
