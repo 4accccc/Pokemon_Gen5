@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-27T02:09:45"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-30T01:19:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -445,13 +445,13 @@
 	</row>
 
 	<row id="LIVE_SELECT_00">
-		<language name="JPN" width="256">はい</language>
-		<language name="JPN_KANJI" width="256">はい</language>
+		<language name="JPN" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">決定</language>
 	</row>
 
 	<row id="LIVE_SELECT_01">
-		<language name="JPN" width="256">いいえ</language>
-		<language name="JPN_KANJI" width="256">いいえ</language>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="LIVE_STR_07">
@@ -674,14 +674,28 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 
 	<row id="LIVE_STR_29" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>対戦相手と一度戦っている</comment>
-		<language name="JPN" width="256">この　たいかいで
-たいせん　しています[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">マッチングした　あいてとは
+いちど　たいせん　しています[BE:01:ページ切り替え（クリア）]
 おなじ　あいてとは
 たいせん　できません[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　大会で
-対戦　しています[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">マッチングした　相手とは
+一度　対戦　しています[BE:01:ページ切り替え（クリア）]
 同じ　相手とは
 対戦は　できません[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_STR_30" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>バトルボックスにポケモンが１匹もいない</comment>
+		<language name="JPN" width="256">バトルボックスに
+ポケモンが　いません[BE:01:ページ切り替え（クリア）]
+たいかいの　ルールを　かくにんして
+バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
+おいてください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">バトルボックスに
+ポケモンが　いません[BE:01:ページ切り替え（クリア）]
+たいかいの　ルールを　確認して
+バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
+おいてください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_ERR_01">
