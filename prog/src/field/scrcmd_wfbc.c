@@ -525,6 +525,7 @@ enum {
 //=====================================
 enum {
   WFBC_PALACE_TALKSYS_SEQ_PRINT,
+  WFBC_PALACE_TALKSYS_SEQ_KEYWAIT,
   WFBC_PALACE_TALKSYS_SEQ_YESNO_START,
   WFBC_PALACE_TALKSYS_SEQ_YESNO_WAIT,
   WFBC_PALACE_TALKSYS_SEQ_CLOSE,
@@ -990,13 +991,19 @@ static BOOL EVENT_WFBC_WFBC_TalkMain( WFBC_PALACE_TALK_WK* p_wk )
       result = FLDTALKMSGWIN_Print( p_wk->p_talkwin );
       if( result )
       {
-        if( p_wk->mode == WFBC_PALACE_TALKMODE_NORMAL ){
-          // クローズへ
-          p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_CLOSE;
-        }else{
-          // YESNOチェックへ
-          p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_YESNO_START;
-        }
+        p_wk->talk_seq ++;
+      }
+    }
+    break;
+
+  case WFBC_PALACE_TALKSYS_SEQ_KEYWAIT:
+    if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
+      if( p_wk->mode == WFBC_PALACE_TALKMODE_NORMAL ){
+        // クローズへ
+        p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_CLOSE;
+      }else{
+        // YESNOチェックへ
+        p_wk->talk_seq = WFBC_PALACE_TALKSYS_SEQ_YESNO_START;
       }
     }
     break;
