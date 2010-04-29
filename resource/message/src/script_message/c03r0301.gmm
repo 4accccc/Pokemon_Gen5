@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:41:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T15:11:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,13 +302,15 @@
 		<language name="JPN" width="256">この　ビルで　はたらく
 にんげんが　たたかわせるのは▽
 いけん　ではなく　ポケモン▼
-みたところ　つよそうだが
-あがるなら　きを　つけなさいよ▼</language>
+みたところ　つよそうですが
+うえの　フロアに　あがるなら▽
+ぞんぶんに　きを　つけなさいよ▼</language>
 		<language name="JPN_KANJI" width="256">このビルで　働く
 人間が　たたかわせるのは▽
 意見ではなく　ポケモン▼
-みたところ　強そうだが
-あがるなら　気を　つけなさいよ▼</language>
+みたところ　強そうですが
+上の　フロアに　あがるなら▽
+存分に　気を　つけなさいよ▼</language>
 	</row>
 
 	<row id="msg_c03r0301_cleaningm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -330,10 +332,12 @@
 受付</attribute>
 		<language name="JPN" width="256">いらっしゃいませ！▼
 エレベータを　おつかいに　なるなら
+とびら　もしくは▽
 よこにある　スイッチを▽
 おして　くださいませ</language>
 		<language name="JPN_KANJI" width="256">いらっしゃいませ！▼
 エレベータを　お使いになるなら
+扉　もしくは▽
 隣の　コンパネを　押してくださいませ</language>
 	</row>
 
@@ -361,9 +365,9 @@
 道具の　研究開発！</language>
 	</row>
 
-	<row id="msg_c03r0301_painting1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0301_painting1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>BGメッセージ</comment>
-		<attribute name="キャラ指定">絵画？</attribute>
+		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">えの　すみっこに
 アーティの　サインが　しるされている</language>
 		<language name="JPN_KANJI" width="256">絵画の　すみっこに

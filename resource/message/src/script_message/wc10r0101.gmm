@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:23:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T15:21:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -519,6 +519,44 @@
 		<language name="JPN_KANJI" width="256">考えることが　多くって
 でも　それが　楽しいのね▽
 トリプルバトルって！</language>
+	</row>
+
+	<row id="msg_wc10r0101_elitew_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい/いいえ選択肢表示
+・はい→戦闘（trmsg.gmm）
+　はい＆2匹以下（trmsg.gmm）
+　いいえ→elitew_02</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_23</attribute>
+		<language name="JPN" width="256">ローテーションバトルの　こうかてきな
+たたかいかたを　しらべたいの▼
+よければ　あいて　してくれるかしら？</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルの　効果的な
+戦い方を　調べたいの▼
+よければ　相手してくれるかしら？</language>
+	</row>
+
+	<row id="msg_wc10r0101_elitew_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_23</attribute>
+		<language name="JPN" width="256">トレーナーなら　もっと
+せっきょくてきに　きてよ</language>
+		<language name="JPN_KANJI" width="256">トレーナーなら　もっと
+積極的に　きてよ</language>
+	</row>
+
+	<row id="msg_bc10r0401_elitew_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_23</attribute>
+		<language name="JPN" width="256">よければ　おともだちとも
+ローテーションバトルを　してみてね</language>
+		<language name="JPN_KANJI" width="256">よければ　お友達とも
+ローテーションバトルを　してみてね</language>
 	</row>
 
 	<flowchart-group-list>

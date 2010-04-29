@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T19:46:41"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T15:22:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -540,6 +540,42 @@
 ウンが　なかっただけださ</language>
 		<language name="JPN_KANJI" width="256">ふん！　今日は
 運が　なかっただけださ</language>
+	</row>
+
+	<row id="msg_bc10r0401_elitew_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい/いいえ選択肢表示
+・はい→戦闘（trmsg.gmm）
+　はい＆2匹以下（trmsg.gmm）
+　いいえ→elitew_02</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_21</attribute>
+		<language name="JPN" width="256">ねえ　あなた
+トリプルバトル　ためさない？</language>
+		<language name="JPN_KANJI" width="256">ねえ　あなた
+トリプルバトル　試さない？</language>
+	</row>
+
+	<row id="msg_bc10r0401_elitew_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_21</attribute>
+		<language name="JPN" width="256">トレーナーなのに
+じゅんび　してなくて？</language>
+		<language name="JPN_KANJI" width="256">トレーナーなのに
+準備してなくて？</language>
+	</row>
+
+	<row id="msg_bc10r0401_elitew_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_21</attribute>
+		<language name="JPN" width="256">ぐうぜんは　じゅんびの　できていない
+ひとを　たすけないんですって</language>
+		<language name="JPN_KANJI" width="256">偶然は　準備の　できていない
+人を　助けないんですって</language>
 	</row>
 
 	<flowchart-group-list>
