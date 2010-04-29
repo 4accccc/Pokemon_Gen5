@@ -746,6 +746,58 @@ extern void GFL_UI_StartFrameRateMode( const GFL_UI_FRAMERATE_ENUM framerate );
 extern int GFL_UI_GetBattLevel(void);
 
 
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *      UIデバックシステム
+ *
+ *      UI情報上書きコールバック
+ */
+//-----------------------------------------------------------------------------
+#define	GFL_UI_DEBUGSYS_ENABLE
+
+#ifdef GFL_UI_DEBUGSYS_ENABLE
+
+/**
+ * @brief UI 上書き　データ構造体
+ */
+typedef struct {
+  int trg;
+  int cont;
+  int repeat;
+  u16 tp_x;
+  u16 tp_y;
+  u16 tp_trg;
+  u16 tp_cont;
+} GFL_UI_DEBUG_OVERWRITE;
+
+/**
+ * @brief UI 上書き　コールバック型　
+ *
+ * @param GFL_UI_DEBUG_OVERWRITE* データ格納先
+ * @retval  TRUE    上書き する
+ * @retval  FALSE   上書き しない
+ */
+typedef BOOL (GFL_UI_DEBUG_OVERWRITE_FUNC)( GFL_UI_DEBUG_OVERWRITE* pOverWrite );
+
+//----------------------------------------------------------------------------
+/**
+ * @brief	  UI 上書き　コールバック　設定
+ * @param	  GFL_UI_DEBUG_OVERWRITE_FUNC*
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_UI_DEBUG_OVERWRITE_SetCallBack( GFL_UI_DEBUG_OVERWRITE_FUNC* pFunc );
+
+#endif // GFL_UI_DEBUGSYS_ENABLE
+
+
+
+
+
+
+
 #ifdef __cplusplus
 }/* extern "C" */
 #endif
