@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:35:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T12:59:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="225"/>
+		<comment position="4" width="246"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="29" top="145" right="734" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="726" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -369,6 +369,93 @@
 ひとも　ポケモンも　おなじだよ</language>
 		<language name="JPN_KANJI" width="256">つかれたら　休む！
 人も　ポケモンも　同じだよ</language>
+	</row>
+
+	<row id="msg_geonet_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・GRIDX=7GRIDZ=12
+・メッセージ表示後、一歩移動(基本は右）して
+　msg_geonet_02
+・2回目以降はmsg_geonet_02から
+・マップ遷移すると座標移動</comment>
+		<attribute name="キャラ指定">TENNISW</attribute>
+		<language name="JPN" width="256">ポケモンの　かいふく？
+オー　ごめんなさーい！▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　かいふく？
+オー　ごめんなさーい！▼</language>
+	</row>
+
+	<row id="msg_geonet_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢表示
+・はい＋ジオネット登録済み→msg_geonet_03
+　はい＋ジオネット未登録→msg_geonet_04
+　いいえ→msg_geonet_05</comment>
+		<attribute name="キャラ指定">TENNISW</attribute>
+		<language name="JPN" width="256">アナタ　ジオネット　しってる？</language>
+		<language name="JPN_KANJI" width="256">アナタ　ジオネット　しってる？</language>
+	</row>
+
+	<row id="msg_geonet_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい選択＋ジオネット登録済み</comment>
+		<attribute name="キャラ指定">TENNISW</attribute>
+		<language name="JPN" width="256">アナタ！　ジオネット　つかってるね！
+すごいね▽
+ここだけの　はなし　おしえるヨ▼
+さいしんの　カガクでハ
+とおく　はなれタ　ひととも▽
+ポケモン　こうかん　できるとヨ！▼
+……ダマされたと　おもっテ
+ためすネ！　ビックリするヨ！</language>
+		<language name="JPN_KANJI" width="256">アナタ！　ジオネット　使ってるね！
+すごいね▽
+ここだけの　はなし　おしえるヨ▼
+最新の　カガクでハ
+とおく　離れタ　人とも▽
+ポケモン　交換　できるとヨ！▼
+……ダマされたと　思っテ
+試すネ！　ビックリするヨ！</language>
+	</row>
+
+	<row id="msg_geonet_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい選択＋ジオネット未登録</comment>
+		<attribute name="キャラ指定">TENNISW</attribute>
+		<language name="JPN" width="256">オー！　ジオネット　しってる！
+アナタ　すごーい！▼
+だけど　アナタ　もっともっと
+すごくなる　ほうほう　おしえるヨ！▼
+ジオネットを　しらべたラ
+じぶんの　すんでいる　ところを▽
+ばっちり　とうろく　できるヨ！</language>
+		<language name="JPN_KANJI" width="256">オー！　ジオネット　しってる！
+アナタ　すごーい！▼
+だけど　アナタ　もっともっと
+すごくなる　方法　教えるヨ！▼
+ジオネットを　調べたラ
+じぶんの　すんでいる　ところを▽
+ばっちり　登録　できるヨ！</language>
+	</row>
+
+	<row id="msg_geonet_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時
+・ポケモン2Fのほうをみながら
+　メッセージ表示</comment>
+		<attribute name="キャラ指定">TENNISW</attribute>
+		<language name="JPN" width="256">この　ポケモンセンターの
+２かいに　ちきゅうぎ　あるでしょ▼
+あれ　ジオネット　って　なまえ▼
+あの　ジオネットを　しらべたラ
+じぶんの　すんでいる　ところ▽
+ばっちり　とうろく　できるヨ！</language>
+		<language name="JPN_KANJI" width="256">この　ポケモンセンターの
+２階に　地球儀　あるでしょ▼
+あれ　ジオネット　って　名前▼
+あの　ジオネットを　調べたラ
+じぶんの　すんでいる　ところを▽
+ばっちり　登録　できるヨ！</language>
 	</row>
 
 	<flowchart-group-list>
