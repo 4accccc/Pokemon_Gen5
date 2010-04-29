@@ -113,7 +113,9 @@ typedef struct
   WIFIBATTLEMATCH_RECORD_DATA record_data;        //戦績
   BOOL                        is_err_return_login;//WIFILOGINにエラーで戻るとき
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;//GPFサーバーから落としてきた選手証データ
-  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   sake_data;
+  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   wifi_sake_data;
+  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA    rnd_sake_data;
+
   WIFIBATTLEMATCH_NET_DATA    net_data;   //通信が終了しても残しておくデータ
   WIFIBATTLEMATCH_RECV_DATA   recv_data;  //サーバーから落としてきたデータ
 } WIFIBATTLEMATCH_SYS;
@@ -695,7 +697,8 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_recv_data    = &p_wk->recv_data;
   p_param->cp_btl_score   = &p_wk->btl_score;
   p_param->p_gpf_data     = &p_wk->gpf_data;
-  p_param->p_sake_data    = &p_wk->sake_data;
+  p_param->p_wifi_sake_data   = &p_wk->wifi_sake_data;
+  p_param->p_rnd_sake_data    = &p_wk->rnd_sake_data;
   { 
     BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );

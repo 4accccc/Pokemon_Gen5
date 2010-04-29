@@ -752,6 +752,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     ///	GPFデータ取得
     //=====================================
   case SEQ_START_DOWNLOAD_GPF_DATA:
+    GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
     WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
     *p_seq = SEQ_WAIT_DOWNLOAD_GPF_DATA;
     break;
@@ -1078,8 +1079,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_START_WRITE_SAKE_DELETE_POKE:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
-      GFL_STD_MemClear( p_wk->p_param->p_sake_data->pokeparty, WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE );
-      WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY, p_wk->p_param->p_sake_data->pokeparty );
+      GFL_STD_MemClear( p_wk->p_param->p_wifi_sake_data->pokeparty, WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE );
+      WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY, p_wk->p_param->p_wifi_sake_data->pokeparty );
       *p_seq  = SEQ_WAIT_WRITE_SAKE_DELETE_POKE;
     }
     break;
@@ -1369,8 +1370,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     //GPFサーバへポケモンを転送し、バトルポケモンを消す
     if( *p_wk->p_param->p_server_time == 0 )
     { 
-      GFL_STD_MemClear( p_wk->p_param->p_sake_data->pokeparty, WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE );
-      WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY, p_wk->p_param->p_sake_data->pokeparty );
+      GFL_STD_MemClear( p_wk->p_param->p_wifi_sake_data->pokeparty, WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE );
+      WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY, p_wk->p_param->p_wifi_sake_data->pokeparty );
       *p_seq  = SEQ_WAIT_GPF_POKEMON;
     }
     break;
@@ -1469,7 +1470,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_RECV_SAKE_DATA:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
-      WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE, p_wk->p_param->p_sake_data );
+      WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE, p_wk->p_param->p_wifi_sake_data );
       *p_seq  = SEQ_WAIT_SAKE_DATA;
     }
     break;
@@ -1487,7 +1488,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       u32 my_rate ;
 
       my_rate = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE );
-      if( p_wk->p_param->p_sake_data->rate != my_rate )
+      if( p_wk->p_param->p_wifi_sake_data->rate != my_rate )
       { 
         *p_seq  = SEQ_START_RENEWAL_MSG;
       }
@@ -1510,9 +1511,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
 
       //最後の成績を反映
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, p_wk->p_param->p_sake_data->rate );
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->p_param->p_sake_data->win );
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->p_param->p_sake_data->lose );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, p_wk->p_param->p_wifi_sake_data->rate );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->p_param->p_wifi_sake_data->win );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->p_param->p_wifi_sake_data->lose );
 
       GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
       *p_seq  = SEQ_WAIT_SAVE_RENEWAL;
@@ -2277,7 +2278,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_RECV_SAKE_DATA:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
-      WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE, p_wk->p_param->p_sake_data );
+      WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_WIFI_SCORE, p_wk->p_param->p_wifi_sake_data );
       *p_seq  = SEQ_WAIT_SAKE_DATA;
     }
     break;
@@ -2295,7 +2296,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
 
         //消したくない情報を常駐に保存
-        p_wk->p_param->p_recv_data->record_save_idx = p_wk->p_param->p_sake_data->record_save_idx;
+        p_wk->p_param->p_recv_data->record_save_idx = p_wk->p_param->p_wifi_sake_data->record_save_idx;
 
 #ifdef MYPOKE_SELFCHECK
         {
@@ -2321,7 +2322,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           }
 
 
-          if( Util_ComarepPokeParty( (POKEPARTY*)p_wk->p_param->p_sake_data->pokeparty, p_my_party ) )
+          if( Util_ComarepPokeParty( (POKEPARTY*)p_wk->p_param->p_wifi_sake_data->pokeparty, p_my_party ) )
           { 
             OS_TFPrintf( 3, "自分のパーティとサケは一緒\n" );
           }
@@ -2369,9 +2370,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       const REGULATION_CARDDATA *cp_reg_card  = p_wk->p_reg;
       WIFIBATTLEMATCH_MATCH_KEY_DATA  data;
       GFL_STD_MemClear( &data, sizeof(WIFIBATTLEMATCH_MATCH_KEY_DATA) );
-      data.rate = p_wk->p_param->p_sake_data->rate;
-      data.disconnect = p_wk->p_param->p_sake_data->disconnect;
+      data.rate = p_wk->p_param->p_wifi_sake_data->rate;
+      data.disconnect = p_wk->p_param->p_wifi_sake_data->disconnect;
       data.cup_no = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_CUPNO );
+      data.btlcnt= p_wk->p_param->p_wifi_sake_data->win + p_wk->p_param->p_wifi_sake_data->lose;
       WIFIBATTLEMATCH_NET_StartMatchMake( p_wk->p_net, WIFIBATTLEMATCH_TYPE_WIFICUP, FALSE, p_param->p_param->btl_rule, &data ); 
       p_wk->other_dirty_cnt = 0;
       p_wk->my_dirty_cnt = 0;
@@ -2907,9 +2909,9 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_START_SAVE:
     { 
 
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, p_wk->p_param->p_sake_data->rate );
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->p_param->p_sake_data->win );
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->p_param->p_sake_data->lose );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, p_wk->p_param->p_wifi_sake_data->rate );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->p_param->p_wifi_sake_data->win );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->p_param->p_wifi_sake_data->lose );
 
     }
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
@@ -3834,8 +3836,8 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
 
-    info_setup.rate = p_wk->p_param->p_sake_data->rate;
-    info_setup.btl_cnt = p_wk->p_param->p_sake_data->win + p_wk->p_param->p_sake_data->lose;
+    info_setup.rate = p_wk->p_param->p_wifi_sake_data->rate;
+    info_setup.btl_cnt = p_wk->p_param->p_wifi_sake_data->win + p_wk->p_param->p_wifi_sake_data->lose;
 
     if( info_setup.btl_cnt == 0 &&  info_setup.rate == 0 )
     { 
@@ -4206,9 +4208,9 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
     cp_mypms        = SaveData_GetMyPmsDataConst( p_sv );
     MYPMS_GetPms( cp_mypms, MYPMS_PMS_TYPE_INTRODUCTION, &p_my_data->pms );
   }
-  p_my_data->win_cnt    = cp_wk->p_param->p_sake_data->win;
-  p_my_data->lose_cnt   = cp_wk->p_param->p_sake_data->lose;
-  p_my_data->rate       = cp_wk->p_param->p_sake_data->rate;
+  p_my_data->win_cnt    = cp_wk->p_param->p_wifi_sake_data->win;
+  p_my_data->lose_cnt   = cp_wk->p_param->p_wifi_sake_data->lose;
+  p_my_data->rate       = cp_wk->p_param->p_wifi_sake_data->rate;
 
   p_my_data->sake_recordID = WIFIBATTLEMATCH_GDB_GetRecordID( cp_wk->p_net );
 

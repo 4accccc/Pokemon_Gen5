@@ -177,6 +177,7 @@ typedef enum
   MATCHMAKE_KEY_RATE,
   MATCHMAKE_KEY_CUPNO,
   MATCHMAKE_KEY_DISCONNECT,
+  MATCHMAKE_KEY_BTLCNT,
 
   MATCHMAKE_KEY_MAX,
 } MATCHMAKE_KEY;
@@ -184,9 +185,11 @@ typedef enum
 //マッチメイクタイミングシンク
 
 //マッチメイク評価計算式の定数
-#define MATCHMAKE_EVAL_CALC_RATE_STANDARD       (1000)
-#define MATCHMAKE_EVAL_CALC_WEIGHT              (1)
-#define MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT   (32)
+#define MATCHMAKE_EVAL_CALC_RATE_STANDARD       (1000)  //定数A
+#define MATCHMAKE_EVAL_CALC_WEIGHT              (1)     //定数B
+#define MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT   (32)    //定数C
+#define MATCHMAKE_EVAL_CALC_DISCONNECT_REVISE   (5)     //定数D
+#define MATCHMAKE_EVAL_CALC_DISCONNECT_RATE     (50)    //定数E
 
 //-------------------------------------
 ///	受信フラグ
@@ -790,6 +793,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_RATE, cp_data->rate );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DISCONNECT, cp_data->disconnect );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_CUPNO, cp_data->cup_no );
+  MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTLCNT, cp_data->btlcnt );
   STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", btl_mode, btl_rule, MATCHINGKEY );
   OS_TFPrintf( 3, "%s\n", p_wk->filter );
   p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
@@ -1112,38 +1116,52 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
   WIFIBATTLEMATCH_NET_WORK *p_wk  = p_param_adrs;
 
   int value=0;
-  int rate, disconnect, cup;
+  int rate, disconnect, cup, btlcnt;
   rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, -1 );
   disconnect= DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].keyStr, -1 );
+  btlcnt    = DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_BTLCNT].keyStr, -1 );
   cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, -1 );
 
   //指標キーが反映されていないので、無視する
-  if( rate == -1 && disconnect == -1 && cup == -1 )
+  if( rate == -1 && disconnect == -1 && cup == -1 && btlcnt == -1 )
   { 
     return 0;
   }
 
   if( cup == p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue )
   {
+    int my_disconnect_rate;
+    int you_disconnect_rate;
+    int disconnect_rate;
+
+    //切断比率を求める
+    you_disconnect_rate = MATCHMAKE_EVAL_CALC_DISCONNECT_RATE *
+      disconnect / (btlcnt+MATCHMAKE_EVAL_CALC_DISCONNECT_REVISE);
+
+    my_disconnect_rate  = MATCHMAKE_EVAL_CALC_DISCONNECT_RATE * 
+      p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].ivalue / 
+      (p_wk->key_wk[MATCHMAKE_KEY_BTLCNT].ivalue + MATCHMAKE_EVAL_CALC_DISCONNECT_REVISE);
+
     //差を求める
     rate        -= p_wk->key_wk[MATCHMAKE_KEY_RATE].ivalue;
     rate        = MATH_ABS( rate );
-    disconnect  -= p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].ivalue;
-    disconnect  = MATH_ABS( disconnect );
+    disconnect_rate  = you_disconnect_rate - my_disconnect_rate;
+    disconnect_rate  = MATH_ABS( disconnect_rate );
 
     //評価計算式
-    //マッチング評価値  ＝　（定数A - レーティング差） ＊ 定数B　ー　切断数差 ＊ 定数C
+    //マッチング評価値  ＝　（定数A - レーティング差） ＊ 定数B　ー　切断比率差 ＊ 定数C
     value = (MATCHMAKE_EVAL_CALC_RATE_STANDARD - rate) * MATCHMAKE_EVAL_CALC_WEIGHT
-      - disconnect * MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT;
+      - disconnect_rate * MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT;
 
     value = MATH_IMax( value, 0 );
+    OS_TPrintf( "評価コールバック %d 切断比率(自) %d切断比率（相） \n", value, my_disconnect_rate, you_disconnect_rate );
   }
   else
   { 
     value = 0;
+    OS_TPrintf( "評価コールバック %d cupが異なった %d<>%d\n", value, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue, cup );
   }
 
-  OS_TPrintf( "評価コールバック %d \n", value );
   return value;
 
 }

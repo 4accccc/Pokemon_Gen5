@@ -257,6 +257,7 @@ typedef struct
   u32 rate;
   u32 disconnect;
   u32 cup_no;
+  u32 btlcnt;
 } WIFIBATTLEMATCH_MATCH_KEY_DATA;
 extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_MATCH_KEY_DATA *cp_data );
 extern BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk );

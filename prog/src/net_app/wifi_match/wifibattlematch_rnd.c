@@ -170,14 +170,8 @@ typedef struct
   //引数
   WIFIBATTLEMATCH_CORE_PARAM    *p_param;
 
-  //サーバーからの受信バッファ
-  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  rnd_score;  //※戦闘後のデータは無効なので注意！！
-
   //不正チェックのときに使用するバッファ（それ以外は参照しない）
   WIFIBATTLEMATCH_NET_EVILCHECK_DATA  evilecheck_data;
-
-  //GFPの状態
-  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data; //※戦闘後のデータは無効なので注意！！
 
   //ウエイト
   u32 cnt;
@@ -682,6 +676,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
 
   case SEQ_START_RECV_GPF:
+    GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
     WIFIBATTLEMATCH_NET_StartRecvGpfData( p_wk->p_net, HEAPID_WIFIBATTLEMATCH_CORE );
     *p_seq = SEQ_WAIT_RECV_GPF;
     break;
@@ -692,12 +687,12 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_UPDATE:
       break;
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS:
-      WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, &p_wk->gpf_data );
+      WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, p_wk->p_param->p_gpf_data );
       *p_seq = SEQ_CHECK_GPF;
       break;
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY:
       //もらえなかったので、クリア
-      GFL_STD_MemClear( &p_wk->gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
+      GFL_STD_MemClear( p_wk->p_param->p_gpf_data, sizeof(DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
       *p_seq = SEQ_CHECK_GPF;
       break;
     case WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR:
@@ -782,7 +777,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     }
 #endif//DEBUG_FLAG_GPF_PASS_ON
     { 
-      if( p_wk->gpf_data.signin )
+      if( p_wk->p_param->p_gpf_data->signin )
       { 
         *p_seq = SEQ_SELECT_MSG;
       }
@@ -1021,7 +1016,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
     //=====================================
   case SEQ_START_RECVRATE_SAKE:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, &p_wk->rnd_score );
+    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, p_wk->p_param->p_rnd_sake_data );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_SERVER );
     break;
@@ -1046,7 +1041,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         Util_RenewalMyData( p_param->p_player_data, p_wk );
 
         //消したくない情報を常駐に保存
-        p_wk->p_param->p_recv_data->record_save_idx = p_wk->rnd_score.record_save_idx;
+        p_wk->p_param->p_recv_data->record_save_idx = p_wk->p_param->p_rnd_sake_data->record_save_idx;
 
         //自分の情報を表示
         Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );
@@ -2847,38 +2842,38 @@ static void Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE b
   switch( btl_rule )
   { 
   case WIFIBATTLEMATCH_BTLRULE_SINGLE:  
-    rate     = cp_wk->rnd_score.single_rate;
-    win_cnt  = cp_wk->rnd_score.single_win;
-    lose_cnt = cp_wk->rnd_score.single_lose;
-    btl_cnt  = cp_wk->rnd_score.single_win + cp_wk->rnd_score.single_lose;
+    rate     = cp_wk->p_param->p_rnd_sake_data->single_rate;
+    win_cnt  = cp_wk->p_param->p_rnd_sake_data->single_win;
+    lose_cnt = cp_wk->p_param->p_rnd_sake_data->single_lose;
+    btl_cnt  = cp_wk->p_param->p_rnd_sake_data->single_win + cp_wk->p_param->p_rnd_sake_data->single_lose;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_DOUBLE:
-    rate     = cp_wk->rnd_score.double_rate;
-    win_cnt  = cp_wk->rnd_score.double_win;
-    lose_cnt = cp_wk->rnd_score.double_lose;
-    btl_cnt  = cp_wk->rnd_score.double_win + cp_wk->rnd_score.double_lose;
+    rate     = cp_wk->p_param->p_rnd_sake_data->double_rate;
+    win_cnt  = cp_wk->p_param->p_rnd_sake_data->double_win;
+    lose_cnt = cp_wk->p_param->p_rnd_sake_data->double_lose;
+    btl_cnt  = cp_wk->p_param->p_rnd_sake_data->double_win + cp_wk->p_param->p_rnd_sake_data->double_lose;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_TRIPLE:
-    rate     = cp_wk->rnd_score.triple_rate;
-    win_cnt  = cp_wk->rnd_score.triple_win;
-    lose_cnt = cp_wk->rnd_score.triple_lose;
-    btl_cnt  = cp_wk->rnd_score.triple_win + cp_wk->rnd_score.triple_lose;
+    rate     = cp_wk->p_param->p_rnd_sake_data->triple_rate;
+    win_cnt  = cp_wk->p_param->p_rnd_sake_data->triple_win;
+    lose_cnt = cp_wk->p_param->p_rnd_sake_data->triple_lose;
+    btl_cnt  = cp_wk->p_param->p_rnd_sake_data->triple_win + cp_wk->p_param->p_rnd_sake_data->triple_lose;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_ROTATE:
-    rate     = cp_wk->rnd_score.rot_rate;
-    win_cnt  = cp_wk->rnd_score.rot_win;
-    lose_cnt = cp_wk->rnd_score.rot_lose;
-    btl_cnt  = cp_wk->rnd_score.rot_win + cp_wk->rnd_score.rot_lose;
+    rate     = cp_wk->p_param->p_rnd_sake_data->rot_rate;
+    win_cnt  = cp_wk->p_param->p_rnd_sake_data->rot_win;
+    lose_cnt = cp_wk->p_param->p_rnd_sake_data->rot_lose;
+    btl_cnt  = cp_wk->p_param->p_rnd_sake_data->rot_win + cp_wk->p_param->p_rnd_sake_data->rot_lose;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
-    rate     = cp_wk->rnd_score.shooter_rate;
-    win_cnt  = cp_wk->rnd_score.shooter_win;
-    lose_cnt = cp_wk->rnd_score.shooter_lose;
-    btl_cnt  = cp_wk->rnd_score.shooter_win + cp_wk->rnd_score.shooter_lose;
+    rate     = cp_wk->p_param->p_rnd_sake_data->shooter_rate;
+    win_cnt  = cp_wk->p_param->p_rnd_sake_data->shooter_win;
+    lose_cnt = cp_wk->p_param->p_rnd_sake_data->shooter_lose;
+    btl_cnt  = cp_wk->p_param->p_rnd_sake_data->shooter_win + cp_wk->p_param->p_rnd_sake_data->shooter_lose;
     break;
   } 
 
@@ -3007,29 +3002,36 @@ static void Util_Matchkey_SetData( WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data, const
 { 
   GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_MATCH_KEY_DATA) );
 
-  p_data->disconnect = cp_wk->rnd_score.disconnect;
-  p_data->cup_no = 1;
+  p_data->disconnect = cp_wk->p_param->p_rnd_sake_data->disconnect;
+  p_data->cup_no = 0;
+
+  //全試合数
+  p_data->btlcnt  =  cp_wk->p_param->p_rnd_sake_data->single_win + cp_wk->p_param->p_rnd_sake_data->single_lose //シングル
+    + cp_wk->p_param->p_rnd_sake_data->double_win + cp_wk->p_param->p_rnd_sake_data->double_lose   //ダブル
+    + cp_wk->p_param->p_rnd_sake_data->triple_win + cp_wk->p_param->p_rnd_sake_data->triple_lose   //トリプル
+    + cp_wk->p_param->p_rnd_sake_data->rot_win + cp_wk->p_param->p_rnd_sake_data->rot_lose   //ローテーション
+    + cp_wk->p_param->p_rnd_sake_data->shooter_win + cp_wk->p_param->p_rnd_sake_data->shooter_lose;  //シューター
 
   switch( cp_wk->p_param->p_param->btl_rule )
   { 
   case WIFIBATTLEMATCH_BTLRULE_SINGLE:  
-    p_data->rate    = cp_wk->rnd_score.single_rate;
+    p_data->rate    = cp_wk->p_param->p_rnd_sake_data->single_rate;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_DOUBLE:
-    p_data->rate     = cp_wk->rnd_score.double_rate;
+    p_data->rate     = cp_wk->p_param->p_rnd_sake_data->double_rate;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_TRIPLE:
-    p_data->rate     = cp_wk->rnd_score.triple_rate;
+    p_data->rate     = cp_wk->p_param->p_rnd_sake_data->triple_rate;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_ROTATE:
-    p_data->rate     = cp_wk->rnd_score.rot_rate;
+    p_data->rate     = cp_wk->p_param->p_rnd_sake_data->rot_rate;
     break;
 
   case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
-    p_data->rate     = cp_wk->rnd_score.shooter_rate;
+    p_data->rate     = cp_wk->p_param->p_rnd_sake_data->shooter_rate;
     break;
   } 
 
@@ -3342,11 +3344,11 @@ static void DEBUGWIN_ChangePlayerInfo( void* userWork , DEBUGWIN_ITEM* item )
       win = WBM_CARD_WIN_NORMAL;
       break;
     }
-    p_wk->rnd_score.single_win  = win;
-    p_wk->rnd_score.double_win  = win;
-    p_wk->rnd_score.triple_win  = win;
-    p_wk->rnd_score.rot_win  = win;
-    p_wk->rnd_score.shooter_win  = win;
+    p_wk->p_param->p_rnd_sake_data->single_win  = win;
+    p_wk->p_param->p_rnd_sake_data->double_win  = win;
+    p_wk->p_param->p_rnd_sake_data->triple_win  = win;
+    p_wk->p_param->p_rnd_sake_data->rot_win  = win;
+    p_wk->p_param->p_rnd_sake_data->shooter_win  = win;
     RNDMATCH_SetParam( p_wk->p_param->p_rndmatch, p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN, win );
 
     Util_PlayerInfo_Delete( p_wk );
