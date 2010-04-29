@@ -168,7 +168,8 @@ SUBDIRS	=	wmi \
 			btl_subway \
 			dendou_demo \
 			fld3d_ci_se \
-			profanity_word
+			profanity_word \
+			manual
 
 
 include $(RESOURCE_MACRO)
