@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-29T13:31:41"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-29T18:49:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,9 +395,9 @@
 	<row id="NAMEIN_MSG_INFO_009">
 		<comment>文字が４桁以上の数字が混じっていたとき</comment>
 		<language name="JPN" width="256">にゅうりょく　できる　すうじは
-４つ　まで　です</language>
+４もじ　まで　です</language>
 		<language name="JPN_KANJI" width="256">入力　できる　数字は
-４つ　まで　です</language>
+４文字　まで　です</language>
 	</row>
 
 	<row id="NAMEIN_DEF_NAME_000">
