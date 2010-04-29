@@ -17,16 +17,17 @@
 //--------------------------------------------------------------
 /**
  * 野生戦エフェクト抽選（釣りを除く）
- * @param inMonsNo    モンスターナンバー
- * @param inEncType   エンカウントタイプ　encount_data.h参照
+ * @param inMonsNo        モンスターナンバー
+ * @param inEncType       エンカウントタイプ　encount_data.h参照
+ * @param inDoubleBattle  ダブルバトルならTRUE
  * @param fieldmap    フィールドマップポインタ
  * @param   outEffNo    エンカウントエフェクトナンバー
  * @param   outBgmNo    BGMナンバー
  * @retval none        
  */
 //--------------------------------------------------------------
-void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, FIELDMAP_WORK *fieldmap,
-                                    int *outEffNo, u16 *outBgmNo )
+void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, BOOL inDoubleBattle, 
+    FIELDMAP_WORK *fieldmap,int *outEffNo, u16 *outBgmNo )
 {
   //特定のモンスターかを調べる
   switch (inMonsNo){
@@ -71,6 +72,13 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     return;
 
   }
+  //エフェクトエンカウントチェック
+  if ( inEncType == ENC_TYPE_EFFECT )
+  {
+    *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
+    *outEffNo = ENCEFFID_WILD_HEIGH;
+    return;
+  }
 
   //自機のいる場所のアトリビュートを取得
   {
@@ -89,15 +97,15 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
       bgm = SEQ_BGM_VS_NORAPOKE;
       eff = ENCEFFID_WILD_WATER;
     }
-    else if ( MAPATTR_VALUE_CheckEncountGrassLow( val ) ) //弱草
+    else if ( MAPATTR_VALUE_CheckEncountGrass( val ) )
     {
-      bgm = SEQ_BGM_VS_NORAPOKE;
-      eff = ENCEFFID_WILD_NORMAL;
-    }
-    else if ( MAPATTR_VALUE_CheckEncountGrassHigh( val ) ) //強草
-    {
-      bgm = SEQ_BGM_VS_TSUYOPOKE;
-      eff = ENCEFFID_WILD_HEIGH;
+      if( inDoubleBattle ){
+        bgm = SEQ_BGM_VS_TSUYOPOKE;
+        eff = ENCEFFID_WILD_HEIGH;
+      }else{
+        bgm = SEQ_BGM_VS_NORAPOKE;
+        eff = ENCEFFID_WILD_NORMAL;
+      }
     }
     else if ( MAPATTR_VALUE_CheckMarsh( val ) )         //浅沼
     {
