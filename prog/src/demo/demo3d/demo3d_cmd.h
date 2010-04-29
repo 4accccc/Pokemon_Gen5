@@ -39,6 +39,7 @@ struct _DEMO3D_CMD_WORK {
   int   cmd_idx;
   u8    msg_spd;
   u8    bgm_push_f;
+  u8    delay_f;
 
   //ÉRÉ}ÉìÉhêßå‰
   DEMO3D_ENGINE_WORK* core;

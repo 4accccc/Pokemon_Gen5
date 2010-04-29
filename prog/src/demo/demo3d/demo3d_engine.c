@@ -114,7 +114,6 @@ static void FrustCamera_Delete( GFL_G3D_CAMERA* p_camera )
 DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PARAM* param, HEAPID heapID )
 {
   DEMO3D_ENGINE_WORK* wk;
-  u8 unit_max;
 
   GF_ASSERT( graphic );
 
@@ -173,11 +172,15 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
     GFL_G3D_DOUBLE3D_Init( heapID );
 		GFUser_SetVIntrFunc(vintrFunc);
   }
+  // ステータス初期化
+  VEC_Set( &wk->obj_status.trans, 0, 0, 0 );
+  VEC_Set( &wk->obj_status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  MTX_Identity33( &wk->obj_status.rotate );
 
-  unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
+  wk->scene_unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
 
   // ユニットID 動的配列 アロケート
-  wk->unit_idx = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16) * unit_max );
+  wk->unit_idx = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16) * wk->scene_unit_max );
 
   // icaデータをロード
   wk->ica_anime = Demo3D_DATA_CreateICACamera( wk->demo_id, heapID, ICA_BUFF_SIZE );
@@ -186,7 +189,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(wk->env.start_frame) );
 
   // 3D管理ユーティリティーの生成
-  wk->g3d_util = GFL_G3D_UTIL_Create( unit_max*6, unit_max*6, heapID );
+  wk->g3d_util = GFL_G3D_UTIL_Create( wk->scene_unit_max*6, wk->scene_unit_max*6, heapID );
 
   // ユニット追加
   {
@@ -194,7 +197,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
     int i;
 
     setup = Demo3D_DATA_InitG3DUtilSetup(heapID);
-    for( i=0; i<unit_max; i++ )
+    for( i=0; i<wk->scene_unit_max; i++ )
     {
 
       Demo3D_DATA_GetG3DUtilSetup( setup, &wk->env, i );
@@ -209,7 +212,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   // アニメーション有効化
   {
     int i;
-    for( i=0; i<unit_max; i++ )
+    for( i=0; i<wk->scene_unit_max; i++ )
     {
       int j;
       GFL_G3D_OBJ* obj;
@@ -262,7 +265,7 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
   // ユニット破棄
   {
     int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
+    for( i=0; i< wk->scene_unit_max; i++ )
     {
       GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
       GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( HEAPID_DEMO3D ) == TRUE,"Demo3D HeapError!\n" );
@@ -514,13 +517,16 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
  *	@brief  3Dグラフィック 主処理
  *
  *	@param	DEMO3D_ENGINE_WORK* wk ワーク
+ *	@param  前フレームまでに処理落ちしたVCount数
  *
  *	@retval TRUE : 終了
  */
 //-----------------------------------------------------------------------------
-BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
+BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk, u32 delayCount )
 {
+  int i,j;
   BOOL is_end = FALSE;
+  fx32  speed = 0;
 
 //  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
@@ -541,30 +547,28 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 #endif
 
   // コマンド実行
-  if( wk->end_result == DEMO3D_RESULT_NULL){
-    Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
-  }else{
-    Demo3D_CMD_Main( wk->cmd, -FX32_ONE );
+  for(i = 0;i < (delayCount+1);i++){
+    if( wk->end_result == DEMO3D_RESULT_NULL){
+      Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ), i );
+    }else{
+      Demo3D_CMD_Main( wk->cmd, -FX32_ONE, i );
+    }
+    speed += wk->anime_speed;
   }
-
   // ICAカメラ更新
-  is_end = ICA_ANIME_IncAnimeFrameNoLoop( wk->ica_anime, wk->anime_speed );
+  is_end = ICA_ANIME_IncAnimeFrameNoLoop( wk->ica_anime, speed );
 
   // ICAカメラ座標を設定
   ICA_CAMERA_SetCameraStatus( wk->camera, wk->ica_anime );
 
   // アニメーション更新
-	{
-    int i;
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
+  for( i=0; i< wk->scene_unit_max; i++ )
+  {
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
+    int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    for( j=0; j<anime_count; j++ )
     {
-      int j;
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-      for( j=0; j<anime_count; j++ )
-      {
-        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, wk->anime_speed );
-      }
+      GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, speed );
     }
   }
 
@@ -579,20 +583,10 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   // 描画
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );
 	
+  for( i=0; i<wk->scene_unit_max; i++ )
   {
-    int i;
-    GFL_G3D_OBJSTATUS status;
-
-    // ステータス初期化
-    VEC_Set( &status.trans, 0, 0, 0 );
-    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-    MTX_Identity33( &status.rotate );
-
-    for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
-    {
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
-      GFL_G3D_DRAW_DrawObject( obj, &status );
-    }
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[i] );
+    GFL_G3D_DRAW_DrawObject( obj, &wk->obj_status );
   }
 
 	DEMO3D_GRAPHIC_3D_EndDraw( wk->graphic );

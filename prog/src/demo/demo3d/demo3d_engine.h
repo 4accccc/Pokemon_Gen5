@@ -16,10 +16,6 @@ typedef struct _DEMO3D_ENGINE_WORK DEMO3D_ENGINE_WORK;
 
 #define DEBUG_USE_KEY // デバッグ用のキー操作を使うフラグ
 
-// @TODO ジェームスの席だけデバッグ処理
-#if DEBUG_ONLY_FOR_james_turner
-#endif // DEBUG_ONLY_FOR_james_turner
-
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -69,11 +65,13 @@ extern void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk );
  *	@brief  3Dグラフィック 主処理
  *
  *	@param	DEMO3D_ENGINE_WORK* wk ワーク
+ *	@param  前フレームまでに処理落ちしたVCount数
  *
  *	@retval TRUE : 終了
  */
 //-----------------------------------------------------------------------------
-extern BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk );
+extern BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk, u32 delayCount );
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  現在のフレーム値を取得

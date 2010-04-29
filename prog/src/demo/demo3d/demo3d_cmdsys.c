@@ -148,10 +148,13 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
+void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame, u32 delayCount )
 {
   DEMO3D_ENGINE_WORK* core = wk->core;
   const DEMO3D_CMD_DATA* data;
+
+  //遅延フレームかどうかチェック
+  wk->delay_f = (delayCount>0);
 
   // TCB主処理
   GFL_TCBL_Main( wk->tcbsys );

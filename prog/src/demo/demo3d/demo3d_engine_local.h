@@ -23,8 +23,11 @@ struct _DEMO3D_ENGINE_WORK {
   ICA_ANIME*    ica_anime;
   GFL_G3D_UTIL*   g3d_util;
   GFL_G3D_CAMERA* camera;
-  fx32 def_top;
-  fx32 def_bottom;
+  fx32  def_top;
+  fx32  def_bottom;
+  u32   scene_unit_max;
+  GFL_G3D_OBJSTATUS obj_status;
+
   DEMO3D_CMD_WORK*  cmd;
 
   u16* unit_idx; // unit_idxï€éùÅiALLOC)

@@ -649,18 +649,6 @@ static void taskAdd_TalkWinReq( DEMO3D_CMD_WORK* wk, int msg_arc, int msg_id, in
 static void tcb_TalkWinReq( GFL_TCBL *tcb , void* tcb_wk )
 {
   TASKWK_TALKWIN_REQ* twk = (TASKWK_TALKWIN_REQ*)tcb_wk;
-#if 0
-  PRINTSTREAM_STATE state;
-  state = PRINTSYS_PrintStreamGetState( twk->printStream );
-
-  //文字列描画終了かシステム終了かタイムアップで自殺
-  if( twk->cmd->cmdsys_end_f ||
-      state == PRINTSTREAM_STATE_DONE ||
-      (twk->ct++ >= twk->sync) ){
-    taskwk_TalkWinReqFree( twk );
-    GFL_TCBL_Delete(tcb);
-  }
-#endif
   //システム終了かタイムアップで自殺
   if( twk->cmd->cmdsys_end_f ||
       (twk->ct++ >= twk->sync) ){
@@ -811,12 +799,18 @@ static void tcb_ScrDrawReq( GFL_TCBL *tcb , void* tcb_wk )
   }
   switch( twk->seq ){
   case 0:
+    if( cmd->delay_f ){
+      break;  //処理負荷分散のため、遅延フレームなら処理しない
+    }
     GFL_ARCHDL_UTIL_TransVramPalette( cmd->h_2dgra, twk->pltt_id, PALTYPE_MAIN_BG, 0, 0, cmd->tmpHeapID );
  	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(	cmd->h_2dgra, twk->scr_id,
 						DEMO3D_CMD_FREE_BG_M1, 0, 0, 0, TRUE, cmd->tmpHeapID );	
     twk->seq++;
     break;
   case 1:
+    if( cmd->delay_f ){
+      break;  //必ず転送を待つため、遅延フレームなら処理しない
+    }
     twk->ct = 0;
     twk->alpha_n = 0;
     twk->alpha_d = FX_Div( FX32_CONST(16),FX32_CONST(twk->s_frm));

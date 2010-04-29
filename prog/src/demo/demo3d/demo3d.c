@@ -49,11 +49,6 @@
 
 FS_EXTERN_OVERLAY(ui_common);
 
-#ifdef PM_DEBUG
-static u32 befVCount = 0;
-static u32 vCountDelay = 0;
-#endif
-
 //=============================================================================
 /**
  *                定数定義
@@ -105,7 +100,9 @@ typedef struct
   // アプリ例外処理エンジン
   APP_EXCEPTION_WORK*   expection;
   
-
+  u32 oldVCount;
+  u32 delayVCount;
+  u32 delayVCountTotal;
 } DEMO3D_MAIN_WORK;
 
 
@@ -217,12 +214,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   // フェードイン リクエスト
   sub_FadeInOutReq( param->demo_id, WIPE_TYPE_FADEIN, wk->heapID );
 
-#ifdef PM_DEBUG
-  befVCount = OS_GetVBlankCount();
-  vCountDelay = 0;
-  OS_Printf("#Demo3D 処理落ちフレーム数 [%d]!!\n",vCountDelay);
-#endif
-
   return GFL_PROC_RES_FINISH;
 }
 
@@ -307,21 +298,21 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   DEMO3D_GRAPHIC_2D_Draw( wk->graphic );
 
   //3D描画
-  is_end = Demo3D_ENGINE_Main( wk->engine );
+  is_end = Demo3D_ENGINE_Main( wk->engine, wk->delayVCount );
  
-#ifdef PM_DEBUG
-  {
+  { //処理落ちを検出
     u32 nowVCount = OS_GetVBlankCount();
-    u32 subVCount = nowVCount - befVCount;
-    befVCount = nowVCount;
-   
-    if( subVCount > 1 )
+    u32 subVCount = nowVCount - wk->oldVCount;
+  
+    wk->delayVCount = 0;
+    if( wk->oldVCount > 0 && subVCount > 1 )
     {
-      vCountDelay += (subVCount-1);
+      wk->delayVCount = (subVCount-1);
       OS_TPrintf("%d %d\n",subVCount-1, DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT);
     }
+    wk->oldVCount = nowVCount;
+    wk->delayVCountTotal += wk->delayVCount;
   }
-#endif
 
   switch( *seq ){
   case 0:
@@ -331,9 +322,12 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
       wk->param->result     = DEMO3D_RESULT_USER_END + is_end;
       DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
-      
+     
+//      MI_CpuClear32( (void*)0x05000200, 4);
       #ifdef PM_DEBUG
-        OS_TPrintf("# Demo3D EndFrame = [%d] 処理落ちフレーム数 [%d]!!\n",wk->param->end_frame, vCountDelay);
+        OS_TPrintf("# Demo3D EndFrame = [%d] 処理落ちフレーム数 [%d]!!\n",wk->param->end_frame, wk->delayVCountTotal);
+      #else
+        GF_ASSERT_MSG((!wk->delayVCountTotal),"AnmDelay %d please push(L+R+X+Y)\n",wk->delayVCountTotal);
       #endif
     
       // フェードアウト リクエスト

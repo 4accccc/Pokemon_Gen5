@@ -39,6 +39,6 @@ extern DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ENGINE_WORK* core, HEAPID heap_i
 
 extern void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk );
 
-extern void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame );
+extern void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame, u32 delayCount );
 
 
