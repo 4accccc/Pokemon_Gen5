@@ -17,6 +17,8 @@
 #define D05_FLD_ITEM_02                    5
 #define D05_FLD_ITEM_03                    6
 #define D05_WORKMAN_03                     7
+#define TR_TANPAN_06                       8
+#define TR_TANPAN_05                       9
 
 #endif //ZONE_D05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
