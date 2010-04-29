@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:25:56"/>
+	<create user="matsumiya" host="W00224" date="2010-04-29T21:13:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,23 +292,23 @@
 	</lock>
 
 
-	<row id="msg_r08r0201_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_r08r0201_badman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BADMAN
 不良</attribute>
-		<language name="JPN" width="256">なんちゅーの？　あしうらに
-つたわる　あの　しんどう？[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">なんちゅーの？▼
+シリンダーブリッジで　あしうらに
+つたわってくる　あの　しんどう？[BE:00:ページ切り替え（行送り）]
 さいきょうに　クールだよな！</language>
-		<language name="JPN_KANJI" width="256">なんちゅーの？　足裏に
-伝わる　あの　振動？[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">なんちゅーの？▼
+シリンダーブリッジで　足裏に
+伝わってくる　あの　振動？[BE:00:ページ切り替え（行送り）]
 最強に　クールだよな！</language>
 	</row>
 
-	<row id="msg_r08r0201_backpackerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r08r0201_backpackerm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・GRIDX=7、GRIDZ=3、下向き
-・仮メッセージ</comment>
+・GRIDX=7、GRIDZ=3、下向き</comment>
 		<attribute name="キャラ指定">BACKPACKERM
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">てつどうマニアに　とって
@@ -323,10 +323,9 @@
 撮影ポイント　さ！</language>
 	</row>
 
-	<row id="msg_r08r0201_assistantm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r08r0201_assistantm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・GRIDX=8、GRIDZ=3、下向き
-・仮メッセージ</comment>
+・GRIDX=8、GRIDZ=3、下向き</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">ゆくてに　そびえる
 きょだいな　てつのはし……▼
