@@ -6719,9 +6719,9 @@ static void common_IllusionBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「グッドラック」
+ *  とくせい「しょうりのほし」
  *
- * 自分を含め、味方側の命中率が10％アップする。８０％の時８０＋１０で９０％
+ * 自分を含め、味方側の命中率が1.1倍になる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_GoodLuck( u32* numElems )
@@ -6739,7 +6739,7 @@ static void handler_GoodLuck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
   if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID ) )
   {
-    BTL_EVENTVAR_MulValue( BTL_EVAR_HIT_PER, FX32_CONST(1.1) );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.1) );
   }
 }
 
