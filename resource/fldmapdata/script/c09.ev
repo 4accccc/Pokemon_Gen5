@@ -53,6 +53,9 @@ INIT_EVENT_START	ev_zone_c09
 	IF FLAG_ON( FE_C09_FORBIDDEN ) THEN
 		$LOCALWORK10 = 111	//POSイベントを有効にする
 	ENDIF
+
+	// リーグフロントのゲートを開ける
+  _FLAG_SET( FE_C09P01_GATE_OPEN )
 	
 INIT_EVENT_END
 
