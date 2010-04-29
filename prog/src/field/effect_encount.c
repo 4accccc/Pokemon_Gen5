@@ -743,7 +743,7 @@ static u16 effitem_GetItemBridge(void)
     rnd = GFUser_GetPublicRand0(ITEM_TBL_FEATHER_NUM*100) / 100;
     return ITEM_TAIRYOKUNOHANE+rnd;
   }
-  return ITEM_HAATONOHANE;
+  return ITEM_KIREINAHANE;
 }
 
 static GMEVENT* effitem_ItemGetEventSet( FIELD_ENCOUNT* enc, u16 itemno )
