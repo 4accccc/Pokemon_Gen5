@@ -108,7 +108,7 @@ static const struct
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
+		FALSE,	//初期表示
 	},
 	//SUB---------------------------
 	{	
@@ -120,7 +120,7 @@ static const struct
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
+		FALSE,	//初期表示
 	},
 	{	
 		GFL_BG_FRAME1_S,	//設定するフレーム
@@ -131,7 +131,7 @@ static const struct
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
+		FALSE,	//初期表示
 	},
 	{	
 		GFL_BG_FRAME2_S,	//設定するフレーム
@@ -142,7 +142,7 @@ static const struct
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
 		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
+		FALSE,	//初期表示
 	},
 };
 
@@ -499,20 +499,6 @@ void DEMO3D_GRAPHIC_Scene3DParamSet( DEMO3D_GRAPHIC_WORK *p_wk, const FIELD_LIGH
 	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, 2, (u16*)&f_light->light2);
 	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, 3, (u16*)&f_light->light3);
   GFL_G3D_LIGHT_Switching( g3d->p_lightset );
-
-#if 0
-	// フォグセットアップ
-  G3X_SetFog(FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0400, 0x00e00 );
-  G3X_SetFogColor(FIELD_DEFAULT_FOG_COLOR, 0);
-  G3X_SetFogTable(fldmapdata_fogColorTable);
-	
-	// クリアカラーの設定
-	//color,alpha,depth,polygonID,fog
-	G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
-
-	G3X_SetEdgeColorTable( fldmapdata_edgeColorTable ); 
-	G3X_EdgeMarking( FALSE );
-#endif
 }
 
 //----------------------------------------------------------------------------
@@ -528,7 +514,6 @@ void DEMO3D_GRAPHIC_3DLightColorSet( DEMO3D_GRAPHIC_WORK *p_wk, u8 light_no, GXR
 
   //ライト再設定
 	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, light_no, (u16*)&col);
-//  GFL_G3D_LIGHT_Switching( g3d->p_lightset );
 }
 
 //----------------------------------------------------------------------------
