@@ -135,6 +135,10 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk );
 static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID );
 static int _key_check( DEMO3D_MAIN_WORK *wk );
 
+#ifdef PM_DEBUG
+static void debug_FldmmdlAnmCodeCheck( const GAMESYS_WORK* gsys );
+#endif  //PM_DEBUG
+
 //=============================================================================
 /**
  *                外部公開
@@ -172,6 +176,9 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
   GF_ASSERT( param->demo_id != DEMO3D_ID_NULL && param->demo_id < DEMO3D_ID_MAX );
+#ifdef PM_DEBUG
+  debug_FldmmdlAnmCodeCheck( param->gsys );
+#endif
 
   //ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DEMO3D, DEMO3D_HEAP_SIZE );
@@ -512,5 +519,43 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk )
     wk->p_funcset->Main( wk );
   }
 }
+
+#ifdef PM_DEBUG
+#include "arc/fieldmap/fldmmdl_objcode.h"
+#include "field/fldmmdl_list_symbol.h"
+#include "field/fldmmdl.h"
+/*
+ *  @brief  流用しているfldmmdlのアニメIDが、demo3dが把握しているタイプと
+ *        　一致しているかどうかをチェック
+ */
+static void debug_FldmmdlAnmCodeCheck( const GAMESYS_WORK* gsys )
+{
+  int i;
+  const OBJCODE_PARAM* obj_prm;
+  const MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( GAMESYSTEM_GetGameData( (GAMESYS_WORK*)gsys ));
+
+  static const u16 checkTbl[][2] = {
+    HERO,     ANMID_HERO,
+    HEROINE,  ANMID_HERO,
+		BOSS,     ANMID_BOSS_N,
+		DANCER,   ANMID_BLACT_FLIP,
+		TRAINERM, ANMID_BLACT_FLIP,
+    WAITRESS, ANMID_BLACT_FLIP,
+    BOY4,     ANMID_BLACT_NONFLIP,
+    GIRL2,    ANMID_BLACT_FLIP,
+    MOUNTMAN, ANMID_BLACT_FLIP,
+    OL,       ANMID_BLACT_NONFLIP,
+    BABYGIRL2,ANMID_BLACT_FLIP,
+  };
+
+  for(i = 0;i < NELEMS(checkTbl);i++){
+    obj_prm = MMDLSYS_GetOBJCodeParam( mmdlsys, checkTbl[i][0] );
+    if( obj_prm->anm_id != checkTbl[i][1]){
+      GF_ASSERT_MSG(0,"Demo3D Fldmmdl anmType err idx=%d -> %d \n",i, checkTbl[i][0]);
+    }
+  }
+}
+
+#endif  //PM_DEBUG
 
 
