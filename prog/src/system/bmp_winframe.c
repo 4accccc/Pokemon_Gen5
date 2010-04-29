@@ -232,8 +232,8 @@ void BmpWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal )
 		frm, 
 		GFL_BMPWIN_GetPosX( win ),
 		GFL_BMPWIN_GetPosY( win ),
-		GFL_BMPWIN_GetSizeX( win ),
-		GFL_BMPWIN_GetSizeY( win ),
+		GFL_BMPWIN_GetScreenSizeX( win ),
+		GFL_BMPWIN_GetScreenSizeY( win ),
 		pal, win_cgx );
 	
 	if( trans_sw == WINDOW_TRANS_ON ){
@@ -279,8 +279,8 @@ void BmpWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw )
 		frm, 0,
 		GFL_BMPWIN_GetPosX( win ) - 1,
 		GFL_BMPWIN_GetPosY( win ) - 1,
-		GFL_BMPWIN_GetSizeX( win ) + 2,
-		GFL_BMPWIN_GetSizeY( win ) + 2,
+		GFL_BMPWIN_GetScreenSizeX( win ) + 2,
+		GFL_BMPWIN_GetScreenSizeY( win ) + 2,
 		0 );
 
 	if( trans_sw == WINDOW_TRANS_ON ){

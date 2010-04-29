@@ -65,7 +65,6 @@ enum {
   SEQ_ON_YESNO_WAIT,
 
   SEQ_ON_MSG_PRINT01,
-  SEQ_ON_MSG_PRINT01_WAIT,
   SEQ_ON_MSG_PRINT01_TOUCHWAIT,
 
 
@@ -161,7 +160,8 @@ static const GFL_BG_BGCNT_HEADER BGFrameYesNo = {
 #define TALK_MSG_POS_X  (1)
 #define TALK_MSG_POS_Y  (1)
 #define TALK_MSG_POS_SIZX  (30)
-#define TALK_MSG_POS_SIZY  (4)
+#define TALK_MSG_POS_SIZY  (6)
+#define TALK_MSG_POS_SIZY_NORMAL  (4)
 
 #define SYS_MSG_POS_X  (1)
 #define SYS_MSG_POS_Y  (13)
@@ -264,6 +264,7 @@ static void PowerOnOff_ExitWin( CGEAR_POWER_ONOFF* p_sys );
 
 // メッセージ表示
 static void PowerOnOff_PrintMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u32 strID );
+static void PowerOnOff_PrintMsgYSize( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u32 strID, u32 scrn_szy );
 static void PowerOnOff_PrintStreamMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u32 strID, HEAPID heapID );
 static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win );
 
@@ -586,6 +587,8 @@ static void PowerOnOff_InitWin( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
                                     PLTID_BG_MSG_S,
                                     GFL_BMP_CHRAREA_GET_B );
 
+  // 通常時は、NORMALサイズ
+  GFL_BMPWIN_SetScreenSizeY( p_sys->p_talkmsg, TALK_MSG_POS_SIZY_NORMAL );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_sys->p_talkmsg ) , 15 );
   GFL_BMPWIN_TransVramCharacter( p_sys->p_talkmsg );
   GFL_BMPWIN_MakeScreen( p_sys->p_talkmsg );
@@ -656,6 +659,37 @@ static void PowerOnOff_PrintMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u3
   
   GFL_STR_DeleteBuffer( p_str );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ表示　スクリーンサイズ変更
+ *
+ *	@param	p_sys
+ *	@param	p_win
+ *	@param	strID
+ *	@param	scrn_szy 
+ */
+//-----------------------------------------------------------------------------
+static void PowerOnOff_PrintMsgYSize( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u32 strID, u32 scrn_szy )
+{
+  STRBUF* p_str;
+
+  p_str = GFL_MSG_CreateString( p_sys->p_msgdata, strID );
+
+  GFL_BMPWIN_SetScreenSizeY( p_win, scrn_szy ); // サイズせってい
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_win ) , 15 );
+  BmpWinFrame_Clear( p_win, WINDOW_TRANS_OFF );
+  GFL_BMPWIN_MakeScreen( p_win );
+  
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_win), 0, 0, p_str, p_sys->p_font );
+  BmpWinFrame_WriteAreaMan( p_win, WINDOW_TRANS_ON, 
+      p_sys->winframe_area, PLTID_BG_WIN_S );
+  
+  GFL_BMPWIN_TransVramCharacter( p_win );
+  
+  GFL_STR_DeleteBuffer( p_str );
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -849,16 +883,9 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_ON_MSG_PRINT01:
-    PowerOnOff_PrintStreamMsg( p_sys, p_sys->p_talkmsg, cg_power_02, p_sys->heapID );
+    PowerOnOff_PrintMsgYSize( p_sys, p_sys->p_talkmsg, cg_power_02, TALK_MSG_POS_SIZY );
     p_sys->seq ++;
     break;
-
-  case SEQ_ON_MSG_PRINT01_WAIT:
-    if( PowerOnOff_PrintStreamUpdate( p_sys, p_sys->p_talkmsg ) ){
-      p_sys->seq ++;
-    }
-    break;
-
 
   case SEQ_ON_MSG_PRINT01_TOUCHWAIT:
     if( GFL_UI_TP_GetTrg() ){
