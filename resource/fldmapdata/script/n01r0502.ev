@@ -11,6 +11,23 @@
 //  N01R0502_SAGE1_01         ゲーチス
 //  N01R0502_RIVAL_01         ライバル
 //  N01R0502_CHAMPION_01      チャンピオン
+//
+//
+/*
+使用可能なアニメコマンド一覧
+シンムA( SHIN_A / MU_A )
+AC_DIR_U 上向き
+AC_SHIN_MU_FLY_L シンム　飛ぶ　左
+AC_SHIN_MU_FLY_UPPER シンム　上昇
+AC_SHIN_MU_GUTARI シンム　ぐったりアニメ
+
+シンムB( SHIN_B / MU_B )
+AC_DIR_U　上向き
+AC_DIR_D　下向き
+AC_SHIN_MU_HOERU シンム　吠えるアニメ
+AC_SHIN_MU_TURN シンム　振り向き
+*/
+//
 //======================================================================
 
   .text
@@ -107,7 +124,7 @@ sub_setup_objpos:
 		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 39, DIR_DOWN )
   CASE 3 THEN		//Ｎ戦前
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
-		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 37, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
 	CASE 4 THEN		//シン（ム）・ゲーチス連戦前
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE01_01, 16, 0, 38, DIR_DOWN )
@@ -679,6 +696,10 @@ EVENT_START		ev_n01r0502_wkobjcode01_01
 	//捕獲の場合
 	IF FLAG_ON( FE_PACKAGE_POKE_GET ) THEN
 	
+    //Ｎが主人公の方を向く
+    _OBJ_ANIME( N01R0502_BOSS_01, anm_dir_l )
+    _OBJ_ANIME_WAIT()
+
     //伝説ポケモンを（なるべく）手に入れる処理
     _CALL sub_add_legend
 
@@ -706,6 +727,10 @@ EVENT_START		ev_n01r0502_wkobjcode01_01
 
     //========================================/
 
+    //Ｎ：シン（ム）の前に移動
+    _OBJ_ANIME( N01R0502_BOSS_01, anm_n_lastbtl5 )
+    _OBJ_ANIME_WAIT()
+	
     //Ｎとの戦いに続く…
     _RESERVE_SCRIPT( SCRID_RESERVE_N01R0502_N_BATTLE )
 	ENDIF
@@ -746,10 +771,6 @@ sub_sage_appear:
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,30 )
 
-	//Ｎ：シン（ム）の前に移動
-	//_OBJ_ANIME( N01R0502_BOSS_01, anm_n_lastbtl5 )
-	//_OBJ_ANIME_WAIT()
-	
 	_TIME_WAIT(30)
 
 	//「上回ったか…
@@ -1592,7 +1613,7 @@ sub_legend_add_loop:
       CASE  0 THEN
           //てもちに　くわえますか？
           _MONS_NAME( 1, LWK_GET_POKE )
-          _SYSWIN_MSG( msg_n01r0502_get_01, POS_DEFAULT )
+          _SYSWIN_MSG( msg_n01r0502_get_01, POS_DOWN )
           _YES_NO_WIN( SCWK_ANSWER )
           IF $SCWK_ANSWER == SCR_YES THEN
               $LWK_LOOP = 1   //ポケモン選択へ
@@ -1602,7 +1623,7 @@ sub_legend_add_loop:
 
       CASE  1 THEN
           //ではどのポケモンを　おくりかえしますか？
-          _SYSWIN_MSG( msg_n01r0502_get_03, POS_DEFAULT )
+          _SYSWIN_MSG( msg_n01r0502_get_03, POS_DOWN )
           _SYSWIN_CLOSE()
           _SELECT_TEMOTI_POKE( SCWK_ANSWER, LWK_SELPOS, 0 )
           IF $SCWK_ANSWER == TRUE THEN
@@ -1613,14 +1634,15 @@ sub_legend_add_loop:
 
       CASE  2 THEN
           //その～を送り返していいですか？
-          _TEMOTI_NICK_NAME( 1, LWK_SELPOS )
-          _SYSWIN_MSG( msg_n01r0502_get_04, POS_DEFAULT )
+          _TEMOTI_NICK_NAME( 2, LWK_SELPOS )
+          _SYSWIN_MSG( msg_n01r0502_get_04, POS_DOWN )
+          _YES_NO_WIN( SCWK_ANSWER )
           IF $SCWK_ANSWER == TRUE THEN
               //ボックスの伝説ポケと選んだ手持ちを交換
               _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_GET_FROM_BOX, LWK_SELPOS )
               //～を　てもちにくわえた！
               _MONS_NAME( 1, LWK_GET_POKE )
-              _SYSWIN_MSG( msg_n01r0502_get_05, POS_DEFAULT )
+              _SYSWIN_MSG( msg_n01r0502_get_05, POS_DOWN )
               _AB_KEYWAIT_MARK()
               _SYSWIN_CLOSE()
               $LWK_LOOP_END = TRUE  //取得して完了
@@ -1630,9 +1652,10 @@ sub_legend_add_loop:
       CASE  3 THEN
           //てもちに　くわえなくていいですか？
           _MONS_NAME( 1, LWK_GET_POKE )
-          _SYSWIN_MSG( msg_n01r0502_get_02, POS_DEFAULT )
+          _SYSWIN_MSG( msg_n01r0502_get_02, POS_DOWN )
           _YES_NO_WIN( SCWK_ANSWER )
           IF $SCWK_ANSWER == SCR_YES THEN
+              _SYSWIN_CLOSE()
               $LWK_LOOP_END = TRUE  //取得せずに完了
           ELSE
               $LWK_LOOP = 1     //ポケモン選択へ
