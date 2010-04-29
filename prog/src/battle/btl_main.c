@@ -2410,21 +2410,26 @@ u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
     return 1;
   }
 
-  switch( wk->setupParam->rule ){
-  case BTL_RULE_SINGLE:
-  default:
-    return expandPokePos_single( wk, exType, basePos, dst );
-  case BTL_RULE_DOUBLE:
-    return expandPokePos_double( wk, exType, basePos, dst );
-  case BTL_RULE_TRIPLE:
-    return expandPokePos_triple( wk, exType, basePos, dst );
-  case BTL_RULE_ROTATION:
-    #ifdef ROTATION_NEW_SYSTEM
-    return expandPokePos_single( wk, exType, basePos, dst );
-    #else
-    return expandPokePos_double( wk, exType, basePos, dst );
-    #endif
+  if( basePos != BTL_POS_NULL )
+  {
+    switch( wk->setupParam->rule ){
+    case BTL_RULE_SINGLE:
+    default:
+      return expandPokePos_single( wk, exType, basePos, dst );
+    case BTL_RULE_DOUBLE:
+      return expandPokePos_double( wk, exType, basePos, dst );
+    case BTL_RULE_TRIPLE:
+      return expandPokePos_triple( wk, exType, basePos, dst );
+    case BTL_RULE_ROTATION:
+      #ifdef ROTATION_NEW_SYSTEM
+      return expandPokePos_single( wk, exType, basePos, dst );
+      #else
+      return expandPokePos_double( wk, exType, basePos, dst );
+      #endif
+    }
   }
+
+  return BTL_POS_NULL;
 }
 // ƒVƒ“ƒOƒ‹—p
 static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst )
@@ -2479,6 +2484,7 @@ static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
     return 2;
   case BTL_EXPOS_AREA_FRIENDS:
   case BTL_EXPOS_FULL_FRIENDS:
+  case BTL_EXPOS_NEXT_FRIENDS:
     dst[0] = BTL_MAIN_GetNextPokePos( wk, basePos );
     return 1;
   case BTL_EXPOS_AREA_ALL:
@@ -2575,6 +2581,20 @@ static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 b
     }
     break;
 
+  case BTL_EXPOS_NEXT_FRIENDS:
+    if( fCenter )
+    {
+      dst[0] = BTL_MAINUTIL_GetFriendPokePos( basePos, 0 );
+      dst[1] = BTL_MAINUTIL_GetFriendPokePos( basePos, 2 );
+      return 2;
+    }
+    else
+    {
+      dst[0] = BTL_MAINUTIL_GetFriendPokePos( basePos, 1 );
+      return 1;
+    }
+    break;
+
   case BTL_EXPOS_AREA_FRIENDS:
     if( fCenter )
     {
@@ -2625,6 +2645,7 @@ static inline clientID_to_side( u8 clientID )
 static inline BtlPokePos getTripleFrontPos( BtlPokePos pos )
 {
   u8 idx = btlPos_to_sidePosIdx( pos );
+  TAYA_Printf("btlpos2sidePosIdx .. pos(%d) -> idx(%d)\n", pos, idx);
   if( idx == 0 ){
     idx = 2;
   }else if(idx == 2){

@@ -208,6 +208,8 @@ typedef enum {
   BTL_EXPOS_FULL_FRIENDS,     ///< （全フィールドの）自分以外の味方ポケ全部
   BTL_EXPOS_FULL_ALL,         ///< （全フィールドの）ポケ全部
 
+  BTL_EXPOS_NEXT_FRIENDS,     ///< （自分の隣の）味方全部
+
 
 //  BTL_EXPOS_AREA_ENEMY
 
