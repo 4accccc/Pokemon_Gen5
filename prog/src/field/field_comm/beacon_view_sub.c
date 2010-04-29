@@ -84,7 +84,8 @@ static u8 panel_FrameColorGet( GAMEBEACON_INFO* info );
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, int* task_ct );
 static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, int* task_ct );
-static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, PANEL_DRAW_TYPE draw_type, int* task_ct );
+static void panel_Draw( BEACON_VIEW_PTR wk,
+    PANEL_WORK* pp, GAMEBEACON_INFO* info, PANEL_DRAW_TYPE draw_type, BOOL icon_cancel_f, int* task_ct );
 
 static void list_TimeOutCheck( BEACON_VIEW_PTR wk );
 static void list_UpDownReq( BEACON_VIEW_PTR wk, SCROLL_DIR dir );
@@ -133,7 +134,7 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   
     pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
     panel_Entry( pp, idx, PANEL_VIEW_START+i );  //パネル新規登録
-    panel_Draw( wk, pp, wk->tmpInfo, PANEL_DRAW_INI, NULL );   //パネル描画
+    panel_Draw( wk, pp, wk->tmpInfo, PANEL_DRAW_INI, FALSE, NULL );   //パネル描画
     panel_VisibleSet( pp, TRUE );   //パネル描画
   }
   //矢印と御礼メニューの見た目セット
@@ -418,7 +419,7 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
           return TRUE;  //パネルが見えていない時はポップアップのみ
         }
         //ターゲットパネル書換え
-        panel_Draw( wk, pp, wk->newLogInfo, PANEL_DRAW_UPDATE, NULL );
+        panel_Draw( wk, pp, wk->newLogInfo, PANEL_DRAW_UPDATE, !popup_f, NULL );
         panel_VisibleSet( pp, TRUE );
         if(popup_f){
           sub_PlaySE( BVIEW_SE_ICON );
@@ -1370,7 +1371,8 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
 /*
  *  @brief  パネル描画
  */
-static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, PANEL_DRAW_TYPE draw_type, int* task_ct )
+static void panel_Draw( BEACON_VIEW_PTR wk,
+    PANEL_WORK* pp, GAMEBEACON_INFO* info, PANEL_DRAW_TYPE draw_type, BOOL icon_cancel_f, int* task_ct )
 {
   //トレーナーID取得
   pp->tr_id = GAMEBEACON_Get_TrainerID( info );
@@ -1392,6 +1394,9 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
   panel_ColorPlttSet( wk, pp, info );
 
   //パネル文字列バッファ転送&アイコン表示リクエスト
+  if( icon_cancel_f ){
+    return;
+  }
   switch( draw_type ){
   case PANEL_DRAW_UPDATE:
     {
@@ -1555,7 +1560,7 @@ static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u
   wk->eff_task_ct++;
 
   panel_Entry( pp, idx, 0 );  //パネル新規登録(ラインは後で初期化)
-  panel_Draw( wk, pp, info, draw_type, &twk->child_task );   //パネル描画
+  panel_Draw( wk, pp, info, draw_type, FALSE, &twk->child_task );   //パネル描画
 }
 
 static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
@@ -2199,27 +2204,13 @@ static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
   twk->bvp = wk;
   twk->pp = pp;
   twk->wait = ICON_POP_TIME;
+  twk->pp->tcb = tcb;
 
   if( new_f ){
     twk->action = GAMEBEACON_ACTION_SEARCH;
   }else{
     twk->action = GAMEBEACON_Get_Action_ActionNo( info );
   }
-/*
-  switch( twk->action ){
-  case GAMEBEACON_ACTION_SEARCH:
-    panel_MsgPrint( wk, pp, pp->str ); 
-    break;
-  case GAMEBEACON_ACTION_THANKYOU:
-    GAMEBEACON_Get_ThankyouMessage(info, wk->str_tmp );
-    panel_MsgPrint( wk, pp, wk->str_tmp ); 
-    break;
-  case GAMEBEACON_ACTION_FREEWORD:
-    GAMEBEACON_Get_FreeWordMessage(info, wk->str_tmp );
-    panel_MsgPrint( wk, pp, wk->str_tmp ); 
-    break;
-  }
-*/
   panel_IconObjUpdate( wk, pp, GAMEBEACON_GetActionDataIconType( twk->action ) );
   panel_IconVisibleSet( pp, !new_f );
 }
@@ -2238,6 +2229,7 @@ static void tcb_IconEffect( GFL_TCBL *tcb , void* tcb_wk)
     panel_NamePrint( twk->bvp, twk->pp, TRUE, NULL ); 
     break;
   }
+  twk->pp->tcb = NULL;
   panel_IconVisibleSet( twk->pp, FALSE );
   GFL_TCBL_Delete(tcb);
 }
