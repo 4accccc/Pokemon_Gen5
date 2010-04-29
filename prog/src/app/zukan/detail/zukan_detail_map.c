@@ -8,7 +8,10 @@
  *  モジュール名：ZUKAN_DETAIL_MAP
  */
 //============================================================================
-#define DEBUG_KAWADA
+
+
+#define DEBUG_SET_ANIME_AND_POS  // これが定義されているとき、生息する場所に置くOBJのアニメ指定、位置指定用のデータ調整モードになる
+//#define DEBUG_KAWADA
 
 
 // インクルード
@@ -32,7 +35,12 @@
 #include "app/townmap_util.h"
 
 #include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
-#include "../../../../../resource/zukan_data/zkn_area_zone_group.cdat"
+
+#if	PM_VERSION == VERSION_BLACK
+#include "../../../../../resource/zukan_data/zkn_area_b_zone_group.cdat"
+#else
+#include "../../../../../resource/zukan_data/zkn_area_w_zone_group.cdat"
+#endif
 
 #include "zukan_detail_def.h"
 #include "zukan_detail_common.h"
@@ -1067,7 +1075,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
   ZKNDTL_COMMON_FadeMain( work->fade_wk_m, work->fade_wk_s );
 
 
-#if 0 
+#ifdef DEBUG_SET_ANIME_AND_POS
   {
     // 生息する場所に置くOBJのアニメ指定、位置指定
     if(    *seq >= SEQ_PREPARE
@@ -1598,6 +1606,9 @@ static void Zukan_Detail_Map_HideSpotInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
     if( hide_flag != TOWNMAP_DATA_ERROR )
     {
       BOOL is_hide = !TOWNMAP_UTIL_CheckFlag( gamedata, hide_flag );
+#ifdef DEBUG_SET_ANIME_AND_POS
+      is_hide = FALSE;
+#endif
       if( is_hide )
       {
         work->hide_spot[i].state    = HIDE_STATE_HIDE_TRUE;
@@ -1605,10 +1616,12 @@ static void Zukan_Detail_Map_HideSpotInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
       }
       else
       {
+        u16 placetype = TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_PLACE_TYPE );
+
         GFL_CLWK_DATA cldata;
         cldata.pos_x    = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_X );
         cldata.pos_y    = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_Y );
-        cldata.anmseq   = 14;
+        cldata.anmseq   = (placetype==TOWNMAP_PLACETYPE_HIDE)?(14):(16);  // 偽の場合はTOWNMAP_PLACETYPE_HIDE_TOWN_Sとなっているはず
         cldata.softpri  = 5;
         cldata.bgpri    = BG_FRAME_PRI_M_ROOT;
 
@@ -2848,14 +2861,15 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 //=====================================
 static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle )
 {
-//#if 0
+#if 0
+  // 本データ
   u32 size;
   //AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_w_zkn_area_w_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
   //AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_b_zkn_area_b_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
   AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, monsno -1, FALSE, heap_id, &size );
   GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
   return area_data;
-//#endif
+#endif
 
 #if 0
   // 仮データ
@@ -2902,7 +2916,10 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
     break;
   }
   return area_data;
-#elif 0 
+#endif
+
+
+#ifdef DEBUG_SET_ANIME_AND_POS
   // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
   AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
   u8 i;
@@ -2917,6 +2934,8 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
   }
   return area_data;
 #endif
+
+
 }
 static void Zukan_Detail_Map_AreaDataUnload( AREA_DATA* area_data )
 {

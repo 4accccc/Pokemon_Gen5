@@ -1079,6 +1079,7 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
   }
 
 
+  // GENERALのパレットアニメ
   {
     ZKNDTL_COMMAND cmd = ZUKAN_DETAIL_TOUCHBAR_GetTrg( work );
     ZKNDTL_COMMAND scmd = ZUKAN_DETAIL_TOUCHBAR_GetTouch( work );
@@ -1087,13 +1088,18 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
     {
       u8 general_icon = Zukan_Detail_Touchbar_CmdToGeneralIcon( cmd );
       u8 disp = Zukan_Detail_Touchbar_CmdToDisp( cmd );
-      u8 i;
-      for( i= GENERAL_ICON_CUSTOM_FORM; i<=GENERAL_ICON_CUSTOM_INFO; i++ )
+
+      if(    general_icon != GENERAL_ICON_MAX
+          && disp != ZUKAN_DETAIL_TOUCHBAR_DISP_CURR_ICON_NONE )
       {
-        ZKND_TBAR_SetActive( work->tbwk, work->icon_set[i].cset->id, ( i != general_icon ) );
+        u8 i;
+        for( i= GENERAL_ICON_CUSTOM_FORM; i<=GENERAL_ICON_CUSTOM_INFO; i++ )
+        {
+          ZKND_TBAR_SetActive( work->tbwk, work->icon_set[i].cset->id, ( i != general_icon ) );
+        }
+        work->curr_icon_disp_general = disp;
+        Zukan_Detail_Touchbar_AnimeInitGeneral( work );
       }
-      work->curr_icon_disp_general = disp;
-      Zukan_Detail_Touchbar_AnimeInitGeneral( work );
     }
 
     if( scmd != ZKNDTL_CMD_NONE )

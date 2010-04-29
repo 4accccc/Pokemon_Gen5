@@ -138,6 +138,7 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.dat
+	rm -f *.cdat
 	rm -f $(input_data_sort_aiueo_idx)
 	rm -f $(input_area_list_w)
 	rm -f $(input_area_list_b)

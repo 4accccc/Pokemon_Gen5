@@ -214,7 +214,14 @@ $lead_zonename_num;
 %lead_zonename_hash = ();  # $lead_zonename_hash{ 代表ゾーン名 } = @lead_zonename_tblの配列添え字 となるようなハッシュ
 
 $lead_real_zoneid_file_name = "zkn_area_zone_group.cdat";  # zkn_area_monsno_???.datに書かれているゾーンを順番通りにCソースファイルに列挙しておく
-                                                        # townmap_data.xlsと同じ個数同じ並びになっている
+                                                           # townmap_data.xlsと同じ個数同じ並びになっている
+
+# バージョンによって$lead_real_zoneid_file_nameの名前を変更する
+# version w
+$lead_real_zoneid_file_name_w = "zkn_area_w_zone_group.cdat";
+# version b
+$lead_real_zoneid_file_name_b = "zkn_area_b_zone_group.cdat";
+
 $lead_real_zoneid_prefix = "ZONE_ID_";  # pokemon_wbのゾーンIDの数値をそのまま書かずに、ZONE_ID_で始まるdefine名を書いておく
 
 
@@ -949,7 +956,11 @@ sub MakeLeadZonenameTableAndGroupToLeadZonenameHash()
   my $line_start        = "#file_start";
   my $line_end          = "#file_end";
   my $zone_col_name     = "#zone";
-  my $zone_col_no;
+  my $zone_col_no       = 0;  # あとで正しい値を代入する
+  my $version_col_name  = "#version";
+  my $version_col_no    = 0;  # あとで正しい値を代入する
+  my $version_word_w    = "VERSION_WHITE";
+  my $version_word_b    = "VERSION_BLACK";
   my $step              = 0;  # 0のとき$line_startまで
                               # 1のときデータ読み込み中で$line_endまで
                               # 2のとき$line_endから
@@ -975,14 +986,18 @@ sub MakeLeadZonenameTableAndGroupToLeadZonenameHash()
     {
       if( $values[0] eq $line_start )
       {
-        $zone_col_no = 0;
+        my $col_no = 0;
         foreach my $word ( @values )
         {
           if( $zone_col_name eq $word )
           {
-            last;
+            $zone_col_no = $col_no;
           }
-          $zone_col_no++;
+          elsif( $version_col_name eq $word )
+          {
+            $version_col_no = $col_no;
+          }
+          $col_no++;
         }
         $step = 1;
       }
@@ -995,8 +1010,31 @@ sub MakeLeadZonenameTableAndGroupToLeadZonenameHash()
       }
       else
       {
+        my $version_word = $values[$version_col_no];
+        if( $version_word eq $version_word_w )
+        {
+          if( $version eq $version_b )
+          {
+            # バージョンが異なるので飛ばす
+            next;
+          }
+        }
+        elsif( $version_word eq $version_word_b )
+        {
+          if( $version eq $version_w )
+          {
+            # バージョンが異なるので飛ばす
+            next;
+          }
+        }
+
         my $zone_word = $values[$zone_col_no];
         my $zonename = substr( $zone_word, $start_pos, length($zone_word)-$start_pos );
+
+=pid
+        # 確認
+        printf "zone_word=%s, zonename=%s\r\n", $zone_word, $zonename;
+=cut
 
         $lead_zonename_tbl[$lead_zonename_num] = $zonename;  # 代表ゾーン名の配列
         $lead_zonename_hash{$zonename} = $lead_zonename_num;  # 代表ゾーン名から配列添え字を得るハッシュ
@@ -1386,13 +1424,15 @@ sub InitVersion
 {
   if( $version eq $version_w )
   {
-    $mons_area_pre_file_name  = $mons_area_pre_file_name_w;
-    $mons_area_file_list_name = $mons_area_file_list_name_w;
+    $mons_area_pre_file_name    = $mons_area_pre_file_name_w;
+    $mons_area_file_list_name   = $mons_area_file_list_name_w;
+    $lead_real_zoneid_file_name = $lead_real_zoneid_file_name_w;
   }
   else
   {
-    $mons_area_pre_file_name  = $mons_area_pre_file_name_b;
-    $mons_area_file_list_name = $mons_area_file_list_name_b;
+    $mons_area_pre_file_name    = $mons_area_pre_file_name_b;
+    $mons_area_file_list_name   = $mons_area_file_list_name_b;
+    $lead_real_zoneid_file_name = $lead_real_zoneid_file_name_b;
   }
 }
 
