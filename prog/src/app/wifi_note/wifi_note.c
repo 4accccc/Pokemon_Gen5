@@ -5294,7 +5294,7 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
     wk.posType  = ATPT_RIGHT_DOWN;
     wk.charPosX = 32;
     wk.charPosY = 24;
-    wk.w        = APP_TASKMENU_PLATE_WIDTH;
+    wk.w        = 17;
     wk.h        = APP_TASKMENU_PLATE_HEIGHT;
 
     p_wk->listWork = APP_TASKMENU_OpenMenu( &wk, p_wk->listRes );
