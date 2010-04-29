@@ -529,17 +529,6 @@
   .short  \wk2
   .endm
 
-#if 0 //wb null
-//--------------------------------------------------------------
-/**
- * デバッグ用：ワーク情報表示
- */
-//--------------------------------------------------------------
-  .macro  _DEBUG_WATCH_WORK  wk
-  .short  EV_SEQ_DEBUG_WATCH_VALUE
-  .short  \wk
-  .endm
-#endif //wb null
 
 //======================================================================
 //  仮想マシン関連
@@ -612,7 +601,7 @@
  * @brief コンティニュー時かどうかの判定
  * @param ret_wk    TRUEのとき、コンティニュータイミング
  *
- * FIELD_RECOVER_LABELからのスクリプト以外では常にFALSEになる
+ * FIELD_RECOVER_LABEL/FIELD_INIT_LABELからのスクリプト以外では常にFALSEになる
  */
 //--------------------------------------------------------------
 #define _CHECK_CONTINUE_RECOVER( ret_wk ) \
@@ -2594,7 +2583,6 @@
 
   .macro  _ASM_TRAINER_WIN_CALL
     _ASM_TRAINER_WIN
-    //_BLACK_IN() //ここでブラックインを呼ぶ予定
   .endm
 
   .macro  _ASM_TRAINER_WIN
@@ -2605,6 +2593,9 @@
 /**
  *  _TRAINER_LOSE トレーナー敗北
  *  @param none
+ *
+ *  このコマンドを呼び出すとスクリプトが強制終了し、敗北後の
+ *  復帰イベント（自宅＆ポケセン）に遷移します。
  */
 //--------------------------------------------------------------
 #define _TRAINER_LOSE() \
@@ -2776,7 +2767,6 @@
 
   .macro  _ASM_WILD_WIN_CALL
     _ASM_WILD_WIN
-    //_BLACK_IN() //ここでブラックインを呼ぶ予定
   .endm
 
   .macro  _ASM_WILD_WIN
@@ -2787,6 +2777,9 @@
 /**
  * _WILD_LOSE  野生戦敗北処理
  * @param none
+ *
+ *  このコマンドを呼び出すとスクリプトが強制終了し、敗北後の
+ *  復帰イベント（自宅＆ポケセン）に遷移します。
  */
 //--------------------------------------------------------------
 #define _WILD_LOSE() \
@@ -2868,66 +2861,6 @@
   .endm
 
 
-#if 0
-//--------------------------------------------------------------
-/**
- *  _SEACRET_POKE_RETRY_CHECK 隠しポケモン再戦可不可チェック
- *  @param ret_wk 結果格納先 
- */
-//--------------------------------------------------------------
-  .macro  _SEACRET_POKE_RETRY_CHECK ret_wk
-  .short  EV_SEQ_SEACRET_POKE_RETRY_CHECK
-  .short  \ret_wk
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _HAIFU_POKE_RETRY_CHECK 配布ポケモン再戦可不可チェック
- *  @param ret_wk 結果格納先
- */
-//--------------------------------------------------------------
-  .macro  _HAIFU_POKE_RETRY_CHECK ret_wk
-  .short  EV_SEQ_HAIFU_POKE_RETRY_CHECK
-  .short  \ret_wk
-  .endm
-#endif
-
-//--------------------------------------------------------------
-/**
- *  @def  _2VS2_BATTLE_CHECK
- *  @brief  手持ちチェック 2vs2が可能か取得
- *  @param ret_wk 結果格納先
- *  @return TRUE == 2vs2 ができる
- */
-//--------------------------------------------------------------
-#define _2VS2_BATTLE_CHECK( ret_wk ) \
-    _ASM_2VS2_BATTLE_CHECK ret_wk
-
-  .macro  _ASM_2VS2_BATTLE_CHECK ret_wk
-  .short  EV_SEQ_2VS2_BATTLE_CHECK
-  .short  \ret_wk
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _DEBUG_BTL_SET デバック戦闘呼び出し
- *  @param none
- */
-//--------------------------------------------------------------
-  .macro  _DEBUG_BTL_SET
-  .short  EV_SEQ_DEBUG_BTL_SET
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _BATTLE_RESULT_GET 戦闘結果を取得
- *  @param ret_wk 結果格納先
- */
-//--------------------------------------------------------------
-  .macro  _BATTLE_RESULT_GET ret_wk
-  .short  EV_SEQ_BATTLE_RESULT_GET
-  .short  \ret_wk
-  .endm
 
 //======================================================================
 //  トレーナーフラグ
@@ -5340,7 +5273,10 @@
 /**
  * @def _GOTO_GAMECLEAR_DEMO
  * @brief ゲームクリアデモへの移行
- * @param mode  現在未使用：０を入れておいてください
+ * @param mode  SCR_GAMECLEAR_MODE_（script_def.h）参照
+ *
+ * @li  SCR_GAMECLEAR_MODE_FIRST  初回ゲームクリア
+ * @li  SCR_GAMECLEAR_MODE_DENDOU ２回目以降、殿堂入り
  */
 //--------------------------------------------------------------
 #define _GOTO_GAMECLEAR_DEMO( mode ) \
@@ -5758,7 +5694,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def _ADD_POKEMON_TO_BOX
+ * @def _ADD_TAMAGO_TO_PARTY
  * @brief タマゴを手持ちに追加する
  * @param ret_wk 結果を受け取るワーク
  * @param monsno  モンスターナンバー
@@ -7568,8 +7504,8 @@
 
 //--------------------------------------------------------------
 /**
- * @def
- * @brief
+ * @def _CALL_FIRST_POKE_SELECT
+ * @brief 最初の３体選択
  * @param ret_wk
  */
 //--------------------------------------------------------------
@@ -8210,16 +8146,6 @@
 //
 //======================================================================
 .include  "easy_event_def.h"
-
-//--------------------------------------------------------------
-/**
- * 簡易メッセージ表示 BG用	！！！！！！使用禁止！！！！！！！
- 	* _EASY_BGWIN_MSG()に置き換えていきます。無くなり次第削除予定
- * @param msg_id 表示するメッセージID
- */
-//--------------------------------------------------------------
-#define _EASY_MSG( msg_id ) \
-  _ASM_EASY_MSG msg_id
 
 //--------------------------------------------------------------
 /**
@@ -9533,7 +9459,7 @@
 
 //--------------------------------------------------------------
 /**
- *  _GET_PALPARK_VALUE 
+ *  _GET_PALPARK_VALUE_HIGHSCORE
  *  @brief パルパーク：ハイスコア
  *  @param ret_val  戻り値
  */
