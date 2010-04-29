@@ -614,6 +614,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkSort, TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, TRUE );
+
+		ITEMDISP_ChangeSortButton( pWork );
   }
 }
 
