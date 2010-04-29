@@ -557,8 +557,9 @@ void FIELD_SUBSCREEN_ChangeForce( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_M
   GF_ASSERT(funcTable[new_mode].mode == new_mode);
   new_mode=FIELD_SUBSCREEN_CGearCheck(pWork,new_mode);
   funcTable[pWork->mode].exit_func(pWork);
-  funcTable[new_mode].init_func(pWork,pWork->mode);
-  pWork->mode = new_mode;
+  pWork->nextMode = new_mode;
+  funcTable[pWork->nextMode].init_func(pWork,pWork->mode);
+  pWork->mode = pWork->nextMode;
   pWork->state = FSS_UPDATE;
 }
 
@@ -769,6 +770,11 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
 
 
   CGEAR_SV_SetPowerFlag( pCGSV, effect );
+
+
+  // 通常のギアモードに変更
+  pWork->mode     = FIELD_SUBSCREEN_NORMAL;
+  pWork->nextMode = FIELD_SUBSCREEN_NORMAL;
 }
 
 
