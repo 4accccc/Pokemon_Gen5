@@ -2199,6 +2199,9 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     NNSG2dScreenData* scrnData;
     NNSG2dPaletteData* palData;
 
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+
     ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
 
     ofs = ofs_p[ dpd_no + 0 ];
@@ -2243,8 +2246,6 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     }
     PaletteWorkSet( BTLV_EFFECT_GetPfd(), palData->pRawData, FADE_MAIN_BG, BTLV_EFFVM_BG_PAL * 16, palData->szByte );
 
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
     bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
     bevw->temp_scr_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
@@ -2255,14 +2256,14 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     return bevw->control_mode;
   }
 #endif
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
   GFL_ARC_UTIL_TransVramScreen( ARCID_WAZAEFF_GRA, datID, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
                         BTLV_EFFVM_BG_PAL * 16, 0 );
 
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
   bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
   bevw->temp_scr_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
