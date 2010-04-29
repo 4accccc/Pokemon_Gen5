@@ -257,11 +257,16 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	//パッケージポケモンがNを乗せて飛び去る
 	_OBJ_ANIME( D08R0901_BOSS_01,anm_boss_idou_01)
 	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	_SE_PLAY(SEQ_SE_FLD_170)
+	_TIME_WAIT(8)
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke_idou_02)
 	//Nの動作モデルを消す
 	_TIME_WAIT(23)
 	_OBJ_DEL( D08R0901_BOSS_01 )
 	_OBJ_ANIME_WAIT()
+	_SE_WAIT()
 	
 	//Nとパッケージポケモンを消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
