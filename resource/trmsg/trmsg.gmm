@@ -3713,7 +3713,7 @@
 おちぶれてなんか　いないぜ！</language>
 		<language name="JPN_KANJI" width="216">ハン！　プラズマ団の　ように
 他人の　ポケモンを　奪うほど▽
-おちぶれてなんか　いないぜ！</language>
+落ちぶれてなんか　いないぜ！</language>
 	</row>
 
 	<row id="TRID_KARATE_01_TRMSG_FIGHT_START">
@@ -3889,9 +3889,13 @@
 
 	<row id="TRID_MOUNT_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">チャンピオンロード！
-そりゃもう　すごいって　もんだ！</language>
+そりゃもう　すごいって　もんだ！▼
+さすが　ポケモンリーグに
+つながる　みち　だ！</language>
 		<language name="JPN_KANJI" width="216">チャンピオンロード！
-そりゃもう　すごいって　もんだ！</language>
+そりゃもう　すごいって　もんだ！▼
+さすが　ポケモンリーグに
+つながる　道だ！</language>
 	</row>
 
 	<row id="TRID_MOUNT_02_TRMSG_FIGHT_START">
@@ -4139,12 +4143,12 @@
 	</row>
 
 	<row id="TRID_PARASOL_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">わたし　おとなげ　ないから
-パラソルを　まわして▽
-すいてき　とばしちゃう！　エイッ！</language>
-		<language name="JPN_KANJI" width="216">わたし　大人げ　ないから
-パラソルを　回して▽
-水滴　飛ばしちゃう！　エイッ！</language>
+		<language name="JPN" width="216">あめのひに　かさをさすのも
+コートをきるのも　ぬれちゃうのも▽
+すきなように　すれば　いいの！</language>
+		<language name="JPN_KANJI" width="216">雨の日に　傘をさすのも
+コートを着るのも　ぬれちゃうのも▽
+好きなように　すれば　いいの！</language>
 	</row>
 
 	<row id="TRID_PRINCE_03_TRMSG_FIGHT_START">
@@ -4281,7 +4285,7 @@
 	<row id="TRID_RANGERM_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しぜんは　うつりかわり
 ポケモンは　しんかする……▼
-ひとは　どうすれば　しんぽするだろう？</language>
+ひとは　どうすれば　かわるだろう？</language>
 		<language name="JPN_KANJI" width="216">自然は　移り変わり
 ポケモンは　進化する……▼
 人は　どうすれば　進歩するだろう？</language>
@@ -6324,9 +6328,9 @@
 	</row>
 
 	<row id="TRID_ESPW_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あいての　ことが　わかる……
+		<language name="JPN" width="216">あいての　ことを　りかいする……
 これは　だれにでも　できることよ</language>
-		<language name="JPN_KANJI" width="216">相手のことが　わかる……
+		<language name="JPN_KANJI" width="216">相手のことを　理解する……
 これは　だれにでも　できることよ</language>
 	</row>
 
