@@ -67,7 +67,7 @@ static int sc_debug_num = FX32_ONE;
 ///	蝶の飛ぶデータ
 //=====================================
 #define BUTTERFLY_MOVE_FIX_SYNC   (240) //下から上まで蝶が飛ぶフレーム  固定値
-#define BUTTERFLY_MOVE_RND_SYNC   (480)  //蝶が飛ぶフレーム  ランダム値　この値はランダムで上に足されます
+#define BUTTERFLY_MOVE_RND_SYNC   (360)  //蝶が飛ぶフレーム  ランダム値　この値はランダムで上に足されます
 #define BUTTERFLY_MOVE_OFFSET     (184)  //初期座標から終了座標までのX座標の差ここを大きくすると角度がつくよ
 #define BUTTERFLY_ADD_SYNC        (30)  //最初だけ徐々に蝶が増えて行く処理
 
