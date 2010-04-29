@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/21 20:39:31
+#save date:2010/04/29 15:20:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r06.wms
 #SECTION START:OBJ_EVENT
@@ -140,7 +140,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_RANGERM_03
 #OBJ CODE Number
-RANGERW
+RANGERM
 #MOVE CODE Number
 MV_RTRD         
 #EVENT TYPE Number
