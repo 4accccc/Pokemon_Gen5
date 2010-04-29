@@ -100,10 +100,10 @@ enum
   GENERAL_ICON_RETURN,
   GENERAL_ICON_CLOSE,
   GENERAL_ICON_CHECK,
-  GENERAL_ICON_CUSTOM_FORM,
-  GENERAL_ICON_CUSTOM_VOICE,
-  GENERAL_ICON_CUSTOM_MAP,
-  GENERAL_ICON_CUSTOM_INFO,
+  GENERAL_ICON_CUSTOM_FORM,   // この並び順を使用している箇所があるので、並び順は変更しないこと↓
+  GENERAL_ICON_CUSTOM_VOICE,  // ↓
+  GENERAL_ICON_CUSTOM_MAP,    // ↓
+  GENERAL_ICON_CUSTOM_INFO,   // ↓
   GENERAL_ICON_CUR_D,
   GENERAL_ICON_CUR_U,
   GENERAL_ICON_MAX,
@@ -132,22 +132,23 @@ typedef struct
   int            id;
   GFL_CLACTPOS   pos;
   u16            width;
-  ZKNDTL_COMMAND cmd;
+  ZKNDTL_COMMAND cmd;     // ボタンのアニメが終わった瞬間
+  ZKNDTL_COMMAND scmd;    // ボタンを触った瞬間
 }
 ICON_CONST_SET;
 
 // GENERAL
 static const ICON_CONST_SET general_icon_const_set[GENERAL_ICON_MAX] =
 {
-  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_RETURN,        },
-  { ZKND_TBAR_ICON_CLOSE,     { 208, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CLOSE,         },
-  { ZKND_TBAR_ICON_CHECK,     { 184, ZKND_TBAR_ICON_Y_CHECK },    24,  ZKNDTL_CMD_CHECK,         },
-  { GENERAL_CUSTOM_FORM,      { 144, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_FORM,          },
-  { GENERAL_CUSTOM_VOICE,     { 112, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_VOICE,         }, 
-  { GENERAL_CUSTOM_MAP,       {  80, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_MAP,           },
-  { GENERAL_CUSTOM_INFO,      {  48, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_INFO,          },
-  { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_D,         },
-  { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_U,         },
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_RETURN,         ZKNDTL_SCMD_RETURN,        },
+  { ZKND_TBAR_ICON_CLOSE,     { 208, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CLOSE,          ZKNDTL_SCMD_CLOSE,         },
+  { ZKND_TBAR_ICON_CHECK,     { 184, ZKND_TBAR_ICON_Y_CHECK },    24,  ZKNDTL_CMD_CHECK,          ZKNDTL_SCMD_CHECK,         },
+  { GENERAL_CUSTOM_FORM,      { 144, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_FORM,           ZKNDTL_SCMD_FORM,          },
+  { GENERAL_CUSTOM_VOICE,     { 112, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_VOICE,          ZKNDTL_SCMD_VOICE,         }, 
+  { GENERAL_CUSTOM_MAP,       {  80, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_MAP,            ZKNDTL_SCMD_MAP,           },
+  { GENERAL_CUSTOM_INFO,      {  48, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_INFO,           ZKNDTL_SCMD_INFO,          },
+  { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_D,          ZKNDTL_SCMD_CUR_D,         },
+  { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_U,          ZKNDTL_SCMD_CUR_U,         },
 };
 static const GFL_CLACTPOS general_icon_const_pos_no_form[GENERAL_ICON_MAX] =
 {
@@ -164,17 +165,17 @@ static const GFL_CLACTPOS general_icon_const_pos_no_form[GENERAL_ICON_MAX] =
 // MAP
 static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
-  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,    },
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,     ZKNDTL_SCMD_MAP_RETURN,    },
 };
 // FORM
 static const ICON_CONST_SET form_icon_const_set[FORM_ICON_MAX] =
 {
-  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_RETURN,   },
-  { ZKND_TBAR_ICON_CUR_R,     { 192, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_R,    },
-  { ZKND_TBAR_ICON_CUR_L,     { 168, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_L,    },
-  { FORM_CUSTOM_EXCHANGE,     { 104, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_FORM_EXCHANGE, },
-  { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_D,    },
-  { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_U,    },
+  { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_RETURN,    ZKNDTL_SCMD_FORM_RETURN,   },
+  { ZKND_TBAR_ICON_CUR_R,     { 192, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_R,     ZKNDTL_SCMD_FORM_CUR_R,    },
+  { ZKND_TBAR_ICON_CUR_L,     { 168, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_L,     ZKNDTL_SCMD_FORM_CUR_L,    },
+  { FORM_CUSTOM_EXCHANGE,     { 104, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_FORM_EXCHANGE,  ZKNDTL_SCMD_FORM_EXCHANGE, },
+  { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_D,     ZKNDTL_SCMD_FORM_CUR_D,    },
+  { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_U,     ZKNDTL_SCMD_FORM_CUR_U,    },
 };
 
 
@@ -208,6 +209,7 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   ZUKAN_DETAIL_TOUCHBAR_TYPE    type;
   ZUKAN_DETAIL_TOUCHBAR_DISP    prev_disp;
   ZUKAN_DETAIL_TOUCHBAR_DISP    disp;
+  ZUKAN_DETAIL_TOUCHBAR_DISP    curr_icon_disp_general;
   ZUKAN_DETAIL_TOUCHBAR_SPEED   speed;
   u8                            scroll_wait_count;
 
@@ -270,6 +272,10 @@ static void Zukan_Detail_Touchbar_AnimeBaseExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WO
 static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeMainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+// 変換
+static u8 Zukan_Detail_Touchbar_DispToGeneralIcon( ZUKAN_DETAIL_TOUCHBAR_DISP disp );
+static u8 Zukan_Detail_Touchbar_CmdToGeneralIcon( ZKNDTL_COMMAND cmd );
+static u8 Zukan_Detail_Touchbar_CmdToDisp( ZKNDTL_COMMAND cmd );
 
 // MAP
 static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
@@ -308,10 +314,11 @@ ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL for
   
   // 状態
   work->state = ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR;
-  work->prev_type = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
-  work->type      = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
-  work->prev_disp = ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
-  work->disp      = ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
+  work->prev_type              = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
+  work->type                   = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
+  work->prev_disp              = ZUKAN_DETAIL_TOUCHBAR_DISP_MAP;      // work->disp以外なら初期化できちんとなる
+  work->disp                   = ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
+  work->curr_icon_disp_general = work->disp;                          // work->dispできちんと初期化
   work->speed = ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE;
 
   // 初期スクロール位置
@@ -474,6 +481,10 @@ void ZUKAN_DETAIL_TOUCHBAR_SetType(
   work->disp = disp;
 
   Zukan_Detail_Touchbar_Delete( work );
+
+  // curr_icon_disp_generalを変更
+  work->curr_icon_disp_general = work->disp;
+  
   Zukan_Detail_Touchbar_Create( work );
 }
 
@@ -581,6 +592,45 @@ ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTrg( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
  *  @retval          
  */
 //------------------------------------------------------------------
+ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTouch( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  int icon_id = ZKND_TBAR_GetTouch( work->tbwk );
+  ZKNDTL_COMMAND cmd = ZKNDTL_CMD_NONE;
+  u8 i;
+
+  if( icon_id != ZKND_TBAR_SELECT_NONE )
+  {
+    switch( work->type )
+    {
+    case ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL:
+    case ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP:
+    case ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM:
+      {
+        for( i=0; i<work->icon_set_num; i++ )
+        {
+          if( icon_id == work->icon_set[i].cset->id )
+          {
+            cmd = work->icon_set[i].cset->scmd;
+            break;
+          }
+        }
+      }
+      break;
+    }
+  }
+
+  return cmd;
+}
+
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
 void ZUKAN_DETAIL_TOUCHBAR_Unlock( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
   ZKND_TBAR_UnlockWhole( work->tbwk );
@@ -601,12 +651,29 @@ void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
 {
   if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
   {
+    BOOL                       use_temp = FALSE;
+    ZUKAN_DETAIL_TOUCHBAR_DISP temp;
+   
     work->prev_disp = work->disp;
     work->disp = disp;
+
+    // curr_icon_disp_generalを変えなくていいとき
+    if( work->disp == work->curr_icon_disp_general )
+    {
+      use_temp = TRUE;
+      temp     = work->curr_icon_disp_general;
+      work->curr_icon_disp_general = ZUKAN_DETAIL_TOUCHBAR_DISP_CURR_ICON_NONE;  // 一時的に変更して、アニメを消されないようにしておく
+    }
 
     // GENERALのパレットアニメ
     Zukan_Detail_Touchbar_AnimeExitGeneral( work );
     Zukan_Detail_Touchbar_AnimeInitGeneral( work );
+
+    // curr_icon_disp_generalを変えなくていいとき
+    if( use_temp )
+    {
+      work->curr_icon_disp_general = temp;  // 一時的に変更したものを、元に戻す
+    }
   }
 }
 
@@ -686,8 +753,6 @@ static void Zukan_Detail_Touchbar_VBlankFunc( GFL_TCB* tcb, void* wk )
 //=====================================
 static void Zukan_Detail_Touchbar_Create( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
-  Zukan_Detail_Touchbar_Delete( work );
-
   switch( work->type )
   {
   case ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL:
@@ -891,6 +956,13 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     }
   }
 
+  // 現在表示しているところのアイコンを無反応にしておく
+  {
+    u8 general_icon = Zukan_Detail_Touchbar_DispToGeneralIcon( work->disp ); 
+    if( general_icon != GENERAL_ICON_MAX )
+      ZKND_TBAR_SetActive( work->tbwk, work->icon_set[general_icon].cset->id,  FALSE );
+  }
+
   // GENERALのパレットアニメ
   Zukan_Detail_Touchbar_AnimeBaseInitGeneral( work );
   Zukan_Detail_Touchbar_AnimeInitGeneral( work );
@@ -1005,6 +1077,40 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_D].cset->id );
     }
   }
+
+
+  {
+    ZKNDTL_COMMAND cmd = ZUKAN_DETAIL_TOUCHBAR_GetTrg( work );
+    ZKNDTL_COMMAND scmd = ZUKAN_DETAIL_TOUCHBAR_GetTouch( work );
+
+    if( cmd != ZKNDTL_CMD_NONE )
+    {
+      u8 general_icon = Zukan_Detail_Touchbar_CmdToGeneralIcon( cmd );
+      u8 disp = Zukan_Detail_Touchbar_CmdToDisp( cmd );
+      u8 i;
+      for( i= GENERAL_ICON_CUSTOM_FORM; i<=GENERAL_ICON_CUSTOM_INFO; i++ )
+      {
+        ZKND_TBAR_SetActive( work->tbwk, work->icon_set[i].cset->id, ( i != general_icon ) );
+      }
+      work->curr_icon_disp_general = disp;
+      Zukan_Detail_Touchbar_AnimeInitGeneral( work );
+    }
+
+    if( scmd != ZKNDTL_CMD_NONE )
+    {
+      switch( scmd )
+      {
+      case ZKNDTL_SCMD_INFO:
+      case ZKNDTL_SCMD_MAP:
+      case ZKNDTL_SCMD_VOICE:
+      case ZKNDTL_SCMD_FORM:
+        {
+          Zukan_Detail_Touchbar_AnimeExitGeneral( work );
+        }
+        break;
+      }
+    }
+  }
 }
 
 // GENERALのパレットアニメ
@@ -1024,33 +1130,41 @@ static void Zukan_Detail_Touchbar_AnimeBaseExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WO
 }
 static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
-  u8 icon;
+  u8 icon = GENERAL_ICON_MAX;
   GFL_CLWK* clwk;
-  switch( work->disp )
+  switch( work->curr_icon_disp_general )
   {
   case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:   icon = GENERAL_ICON_CUSTOM_INFO;    break;
   case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:    icon = GENERAL_ICON_CUSTOM_MAP;     break;
   case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:  icon = GENERAL_ICON_CUSTOM_VOICE;   break;
   case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:   icon = GENERAL_ICON_CUSTOM_FORM;    break;
   }
-  clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[icon].cset->id );
-  //GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC, CLWK_PLTTOFFS_MODE_PLTT_TOP );  // これでも同じようにパレットを変えられるのだが、↓つづく
-  GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  if( icon != GENERAL_ICON_MAX )
+  {
+    clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[icon].cset->id );
+    //GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC, CLWK_PLTTOFFS_MODE_PLTT_TOP );  // これでも同じようにパレットを変えられるのだが、↓つづく
+    GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  }
 }
 static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
-  u8 icon;
+  u8 icon = GENERAL_ICON_MAX;
   GFL_CLWK* clwk;
-  switch( work->prev_disp )
+  switch( work->curr_icon_disp_general )
   {
   case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:   icon = GENERAL_ICON_CUSTOM_INFO;    break;
   case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:    icon = GENERAL_ICON_CUSTOM_MAP;     break;
   case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:  icon = GENERAL_ICON_CUSTOM_VOICE;   break;
   case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:   icon = GENERAL_ICON_CUSTOM_FORM;    break;
   }
-  clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[icon].cset->id );
-  //GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_NONE, CLWK_PLTTOFFS_MODE_PLTT_TOP );  // つづき↑元に戻したらデザイナーさんのパレットアニメが発生しなくなってしまった。
-  GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  if( icon != GENERAL_ICON_MAX )
+  {
+    clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[icon].cset->id );
+    //GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_NONE, CLWK_PLTTOFFS_MODE_PLTT_TOP );  // つづき↑元に戻したらデザイナーさんのパレットアニメが発生しなくなってしまった。
+    GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+
+    work->curr_icon_disp_general = ZUKAN_DETAIL_TOUCHBAR_DISP_CURR_ICON_NONE;
+  }
 }
 static void Zukan_Detail_Touchbar_AnimeMainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
@@ -1100,6 +1214,113 @@ static void Zukan_Detail_Touchbar_AnimeMainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* 
         0x20 );
   }
 }
+
+// 変換
+static u8 Zukan_Detail_Touchbar_DispToGeneralIcon( ZUKAN_DETAIL_TOUCHBAR_DISP disp )
+{
+  // 変換できないときGENERAL_ICON_MAXを返す
+  switch( disp )
+  {
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:
+    {
+      return GENERAL_ICON_CUSTOM_INFO;
+    }
+    break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:
+    {
+      return GENERAL_ICON_CUSTOM_MAP;
+    }
+    break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:
+    {
+      return GENERAL_ICON_CUSTOM_VOICE;
+    }
+    break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:
+    {
+      return GENERAL_ICON_CUSTOM_FORM;
+    }
+    break;
+  default:
+    {
+      return GENERAL_ICON_MAX;
+    }
+    break;
+  }
+}
+static u8 Zukan_Detail_Touchbar_CmdToGeneralIcon( ZKNDTL_COMMAND cmd )
+{
+  // 変換できないときGENERAL_ICON_MAXを返す
+  switch( cmd )
+  {
+  case ZKNDTL_CMD_INFO:
+  case ZKNDTL_SCMD_INFO:
+    {
+      return GENERAL_ICON_CUSTOM_INFO;
+    }
+    break;
+  case ZKNDTL_CMD_MAP:
+  case ZKNDTL_SCMD_MAP:
+    {
+      return GENERAL_ICON_CUSTOM_MAP;
+    }
+    break;
+  case ZKNDTL_CMD_VOICE:
+  case ZKNDTL_SCMD_VOICE:
+    {
+      return GENERAL_ICON_CUSTOM_VOICE;
+    }
+    break;
+  case ZKNDTL_CMD_FORM:
+  case ZKNDTL_SCMD_FORM:
+    {
+      return GENERAL_ICON_CUSTOM_FORM;
+    }
+    break;
+  default:
+    {
+      return GENERAL_ICON_MAX;
+    }
+    break;
+  }
+}
+static u8 Zukan_Detail_Touchbar_CmdToDisp( ZKNDTL_COMMAND cmd )
+{
+  // 変換できないときZUKAN_DETAIL_TOUCHBAR_DISP_CURR_ICON_NONEを返す
+  switch( cmd )
+  {
+  case ZKNDTL_CMD_INFO:
+  case ZKNDTL_SCMD_INFO:
+    {
+      return ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
+    }
+    break;
+  case ZKNDTL_CMD_MAP:
+  case ZKNDTL_SCMD_MAP:
+    {
+      return ZUKAN_DETAIL_TOUCHBAR_DISP_MAP;
+    }
+    break;
+  case ZKNDTL_CMD_VOICE:
+  case ZKNDTL_SCMD_VOICE:
+    {
+      return ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE;
+    }
+    break;
+  case ZKNDTL_CMD_FORM:
+  case ZKNDTL_SCMD_FORM:
+    {
+      return ZUKAN_DETAIL_TOUCHBAR_DISP_FORM;
+    }
+    break;
+  default:
+    {
+      return ZUKAN_DETAIL_TOUCHBAR_DISP_CURR_ICON_NONE;
+    }
+    break;
+  }
+}
+
 
 //-------------------------------------
 /// MAP

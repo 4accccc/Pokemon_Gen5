@@ -238,7 +238,7 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
     work->touchbar = ZUKAN_DETAIL_TOUCHBAR_Init( work->heap_id, form_version );
   } 
   // タイトルバー
-  work->headbar = ZUKAN_DETAIL_HEADBAR_Init( work->heap_id, work->font, work->print_que );
+  work->headbar = ZUKAN_DETAIL_HEADBAR_Init( work->heap_id, work->font );
 
   // 共通のデータをまとめたもの
   work->cmn = ZKNDTL_COMMON_Init(
@@ -264,6 +264,10 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
 
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 0, 0 );
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heap_id );
+  GFL_NET_ReloadIcon();
 
   return GFL_PROC_RES_FINISH;
 }
@@ -294,10 +298,14 @@ static GFL_PROC_RESULT Zukan_Detail_ProcExit( GFL_PROC* proc, int* seq, void* pw
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     ZUKAN_DETAIL_GRAPHIC_Exit( work->graphic );
   }
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   // ヒープ
   {
@@ -342,7 +350,12 @@ static GFL_PROC_RESULT Zukan_Detail_ProcMain( GFL_PROC* proc, int* seq, void* pw
 
   if( !create_proc_instant )
   {
-    ZKNDTL_COMMAND cmd = ZUKAN_DETAIL_TOUCHBAR_GetTrg( work->touchbar );
+    ZKNDTL_COMMAND cmd;
+    cmd = ZUKAN_DETAIL_TOUCHBAR_GetTrg( work->touchbar );
+    if( cmd == ZKNDTL_CMD_NONE )  // TrgをTouchより優先させる
+    {
+      cmd = ZUKAN_DETAIL_TOUCHBAR_GetTouch( work->touchbar );
+    }
     ZKNDTL_PROC_SysCommand(work->zkndtl_proc, work->cmn, cmd);
     
     switch( cmd )

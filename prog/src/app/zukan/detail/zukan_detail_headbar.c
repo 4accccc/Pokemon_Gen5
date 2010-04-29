@@ -57,7 +57,6 @@ struct _ZUKAN_DETAIL_HEADBAR_WORK
   // 他のところから借用するもの
   HEAPID                      heap_id;
   GFL_FONT*                   font;
-  PRINT_QUE*                  print_que;
 
   // ここで作成するもの
   // 状態
@@ -74,6 +73,10 @@ struct _ZUKAN_DETAIL_HEADBAR_WORK
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
+
+  // print_que
+  PRINT_QUE*                  print_que;    // ここ専用のprint_que
+  BOOL                        print_trans;  // 転送する必要がある場合TRUE
 };
 
 
@@ -90,6 +93,7 @@ static void Zukan_Detail_Headbar_CreateBase( ZUKAN_DETAIL_HEADBAR_WORK* work );
 static void Zukan_Detail_Headbar_DeleteBase( ZUKAN_DETAIL_HEADBAR_WORK* work );
 static void Zukan_Detail_Headbar_Create( ZUKAN_DETAIL_HEADBAR_WORK* work );
 static void Zukan_Detail_Headbar_Delete( ZUKAN_DETAIL_HEADBAR_WORK* work );
+static void Zukan_Detail_Headbar_PrintTransMain( ZUKAN_DETAIL_HEADBAR_WORK* work );
 
 
 //=============================================================================
@@ -108,8 +112,7 @@ static void Zukan_Detail_Headbar_Delete( ZUKAN_DETAIL_HEADBAR_WORK* work );
 //------------------------------------------------------------------
 ZUKAN_DETAIL_HEADBAR_WORK* ZUKAN_DETAIL_HEADBAR_Init(
                                HEAPID      heap_id,
-                               GFL_FONT*   font,
-                               PRINT_QUE*  print_que )
+                               GFL_FONT*   font )
 {
   ZUKAN_DETAIL_HEADBAR_WORK*   work;
 
@@ -119,7 +122,6 @@ ZUKAN_DETAIL_HEADBAR_WORK* ZUKAN_DETAIL_HEADBAR_Init(
   // 初期化
   work->heap_id     = heap_id;
   work->font        = font;
-  work->print_que   = print_que;
 
   // 状態
   work->state = ZUKAN_DETAIL_HEADBAR_STATE_DISAPPEAR;
@@ -138,6 +140,10 @@ ZUKAN_DETAIL_HEADBAR_WORK* ZUKAN_DETAIL_HEADBAR_Init(
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Headbar_VBlankFunc, work, 1 );
 
+  // print_que
+  work->print_que = PRINTSYS_QUE_Create( work->heap_id );
+  work->print_trans = FALSE;
+  
   return work;
 }
 
@@ -152,6 +158,10 @@ ZUKAN_DETAIL_HEADBAR_WORK* ZUKAN_DETAIL_HEADBAR_Init(
 //------------------------------------------------------------------
 void ZUKAN_DETAIL_HEADBAR_Exit( ZUKAN_DETAIL_HEADBAR_WORK* work )
 {
+  // print_que
+  PRINTSYS_QUE_Clear( work->print_que );
+  PRINTSYS_QUE_Delete( work->print_que );
+
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
@@ -227,6 +237,10 @@ void ZUKAN_DETAIL_HEADBAR_Main( ZUKAN_DETAIL_HEADBAR_WORK* work )
     }
     break;
   }
+
+  // print_que
+  Zukan_Detail_Headbar_PrintTransMain( work );
+  PRINTSYS_QUE_Main( work->print_que );
 }
 
 //------------------------------------------------------------------
@@ -415,8 +429,11 @@ static void Zukan_Detail_Headbar_Create( ZUKAN_DETAIL_HEADBAR_WORK* work )
     PRINTSYS_PrintQueColor( work->print_que, work->head_bmp_data,
         24, 5, strbuf, work->font, PRINTSYS_LSB_Make(15,14,0) );
     GFL_STR_DeleteBuffer( strbuf );
+    
+    work->print_trans = TRUE;
   }
 
+/*
   // BGキャラを同じ場所に転送する
   GFL_BG_LoadCharacter(
       ZKNDTL_BG_FRAME_S_HEADBAR,
@@ -426,9 +443,34 @@ static void Zukan_Detail_Headbar_Create( ZUKAN_DETAIL_HEADBAR_WORK* work )
 
   // スクリーン転送
 	GFL_BG_LoadScreenV_Req( ZKNDTL_BG_FRAME_S_HEADBAR );
+*/
+
+  // 既に済んでいるかもしれないので、Mainを1度呼んでおく
+  Zukan_Detail_Headbar_PrintTransMain( work );
 }
 static void Zukan_Detail_Headbar_Delete( ZUKAN_DETAIL_HEADBAR_WORK* work )
 {
   // 何もしない
+}
+
+static void Zukan_Detail_Headbar_PrintTransMain( ZUKAN_DETAIL_HEADBAR_WORK* work )
+{
+  if( work->print_trans )
+  {
+    if( !PRINTSYS_QUE_IsExistTarget( work->print_que, work->head_bmp_data ) )
+    {
+      // BGキャラを同じ場所に転送する
+      GFL_BG_LoadCharacter(
+        ZKNDTL_BG_FRAME_S_HEADBAR,
+        GFL_BMP_GetCharacterAdrs( work->head_bmp_data ),
+        work->head_bmp_size,
+        work->head_bmp_pos );
+
+      // スクリーン転送
+	    GFL_BG_LoadScreenV_Req( ZKNDTL_BG_FRAME_S_HEADBAR );
+
+      work->print_trans = FALSE;
+    }
+  }
 }
 

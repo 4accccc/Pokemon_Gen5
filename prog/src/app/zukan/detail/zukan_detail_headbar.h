@@ -18,7 +18,6 @@
 #include "system/main.h"
 
 #include "print/gf_font.h"
-#include "print/printsys.h"
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_detail);
@@ -70,8 +69,7 @@ typedef struct _ZUKAN_DETAIL_HEADBAR_WORK ZUKAN_DETAIL_HEADBAR_WORK;
 //=============================================================================
 extern ZUKAN_DETAIL_HEADBAR_WORK* ZUKAN_DETAIL_HEADBAR_Init(
                                       HEAPID      heap_id,
-                                      GFL_FONT*   font,
-                                      PRINT_QUE*  print_que );
+                                      GFL_FONT*   font );
 extern void ZUKAN_DETAIL_HEADBAR_Exit( ZUKAN_DETAIL_HEADBAR_WORK* work );
 extern void ZUKAN_DETAIL_HEADBAR_Main( ZUKAN_DETAIL_HEADBAR_WORK* work );
 
