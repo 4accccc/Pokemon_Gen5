@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T19:09:27"/>
+	<create user="matsumiya" host="W00224" date="2010-04-30T11:01:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -327,19 +327,19 @@
 		<language name="JPN" width="256">ふぅ……▼
 サザナミタウンで　ゆっくりしてたら
 なんだか　ふとっちゃったぁ▼
-チラーチィが　そばに　いれば
+[1:01:ポケモン種族名:0]が　そばに　いれば
 かっこよくなろう　って▽
 ダイエットできると　おもうんだぁ▼
-きみぃ！　ボクの　ゴンベと
-チラーチィを　こうかんしてよぉ？▼</language>
+きみぃ！　ボクの　[1:01:ポケモン種族名:1]と
+[1:01:ポケモン種族名:0]を　こうかんしてよぉ？▼</language>
 		<language name="JPN_KANJI" width="256">ふぅ……▼
 サザナミタウンで　ゆっくりしてたら
 なんだか　ふとっちゃったぁ▼
-チラーチィが　そばに　いれば
+[1:01:ポケモン種族名:0]が　そばに　いれば
 かっこよくなろう　って▽
 ダイエットできると　思うんだぁ▼
-きみぃ！　ボクの　ゴンベと
-チラーチィを　交換してよぉ？▼</language>
+きみぃ！　ボクの　[1:01:ポケモン種族名:1]と
+[1:01:ポケモン種族名:0]を　交換してよぉ？▼</language>
 	</row>
 
 	<row id="msg_t04r0201_diet_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -352,14 +352,14 @@
 		<language name="JPN" width="256">ふぅ……　
 ありがとぉ▼
 ボクと　ひとなつを　すごした
-ゴンベを　だいじに　してよぉ▼
-これからは　キミの　チラーチィと
+[1:01:ポケモン種族名:1]を　だいじに　してよぉ▼
+これからは　キミの　[1:01:ポケモン種族名:0]と
 ダイエットに　はげむよぉ……</language>
 		<language name="JPN_KANJI" width="256">ふぅ……　
 ありがとぉ▼
 ボクと　ひと夏を　すごした
-ゴンベを　大事に　してよぉ▼
-これからは　キミの　チラーチィと
+[1:01:ポケモン種族名:1]を　大事に　してよぉ▼
+これからは　キミの　[1:01:ポケモン種族名:0]と
 ダイエットに　はげむよぉ……</language>
 	</row>
 
@@ -368,9 +368,9 @@
 ・チラーチィ以外を選択</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">ふぅ……　ボクが　ほしいのは
-チラーチィ　だよぉ</language>
+[1:01:ポケモン種族名:0]　だよぉ</language>
 		<language name="JPN_KANJI" width="256">ふぅ……　ボクが　ほしいのは
-チラーチィ　だよぉ</language>
+[1:01:ポケモン種族名:0]　だよぉ</language>
 	</row>
 
 	<row id="msg_t04r0201_diet_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -389,12 +389,12 @@
 		<language name="JPN" width="256">やぁ　きみぃ！
 ポケモンこうかん　してくれたから▽
 すっかり　みちがえたでしょ▼
-チラーチィが　そばに　いたら
+[1:01:ポケモン種族名:0]が　そばに　いたら
 なんだか　おしゃれに　なれましたよ！</language>
 		<language name="JPN_KANJI" width="256">やぁ　きみぃ！
 ポケモン交換　してくれたから▽
 すっかり　見違えたでしょ▼
-チラーチィが　そばに　いたら
+[1:01:ポケモン種族名:0]が　そばに　いたら
 なんだか　おしゃれに　なれましたよ！</language>
 	</row>
 
