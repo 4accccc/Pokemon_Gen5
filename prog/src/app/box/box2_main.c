@@ -21,6 +21,7 @@
 #include "savedata/dreamworld_data.h"
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/monsnum_def.h"
 #include "poke_tool/pokerus.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
@@ -1649,6 +1650,16 @@ BOOL BOX2MAIN_PokeItemFormChange( BOX2_SYS_WORK * syswk, POKEMON_PASO_PARAM * pp
     item = PPP_Get( ppp, ID_PARA_item, NULL );
     bf = PPP_Get( ppp, ID_PARA_form_no, NULL );
     af = POKETOOL_GetPokeTypeFromItem( item );
+    if( bf != af ){
+//      PPP_ChangeFormNo( ppp, af );
+      ChangePokeForm( syswk, ppp, af );
+    }
+    if( bf != af ){ return TRUE; }
+  // インセクタ
+  }else if( mons == MONSNO_656 ){
+    item = PPP_Get( ppp, ID_PARA_item, NULL );
+    bf = PPP_Get( ppp, ID_PARA_form_no, NULL );
+		af = POKETOOL_GetPokeInsekutaFromItem( item );
     if( bf != af ){
 //      PPP_ChangeFormNo( ppp, af );
       ChangePokeForm( syswk, ppp, af );
