@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T13:56:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-30T17:29:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,9 +297,15 @@
 ・</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">……しんてんちを　めざすのです！
-あたしと　ミネズミなら　できます！▼</language>
-		<language name="JPN_KANJI" width="256">……しんてんちを　めざすのです！
-あたしと　ミネズミなら　できます！▼</language>
+あたしと　ミネズミなら　できます！▼
+あたしたちを　そだててくれた
+ビレッジブリッジ……▽
+ありがとう……　そして　サヨウナラ！▼</language>
+		<language name="JPN_KANJI" width="256">……新天地を　目指すのです！
+あたしと　ミネズミなら　できます！▼
+あたしたちを　育ててくれた
+ビレッジブリッジ……▽
+ありがとう……　そして　サヨウナラ！▼</language>
 	</row>
 
 	<row id="msg_h04r0501_poke17_01">
