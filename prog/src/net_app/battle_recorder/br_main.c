@@ -544,6 +544,43 @@ static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   BattleRec_UnloadToolModule();
 
   PMSND_PushBGM();
+
+
+  //アッパーバージョンで増える可能性があるので、
+  //今回録画される曲にすべて置換する
+
+  //戦闘曲
+  switch( p_param->musicDefault )
+  { 
+  //置換しない曲
+  case SEQ_BGM_VS_SUBWAY_TRAINER:
+  case SEQ_BGM_VS_CHAMP:
+  case SEQ_BGM_VS_TRAINER_WIFI:
+  case SEQ_BGM_WCS:
+    /* そのままなのでなにもしない */
+    break;
+  //置換するもの
+  case SEQ_BGM_VS_TRAINER_M:
+  case SEQ_BGM_VS_TRAINER_S:
+  default:
+    p_param->musicDefault = SEQ_BGM_VS_TRAINER_WIFI;
+    break;
+  }
+
+  //勝利曲
+  switch( p_param->musicWin )
+  { 
+  //置換しない曲
+  case SEQ_BGM_WIN2:
+  case SEQ_BGM_WIN5:
+    /* そのままなのでなにもしない */
+    break;
+  //置換するもの
+  default:
+    p_param->musicWin = SEQ_BGM_WIN2;
+    break;
+  }
+
   PMSND_PlayBGM( p_param->musicDefault );
 
   return p_param;

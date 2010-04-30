@@ -247,13 +247,19 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
     break;
 
   case BR_RECODE_PROC_MY:
+    p_wk->p_header  = BattleRec_HeaderPtrGet();
+    p_wk->p_profile = BattleRec_GDSProfilePtrGet();
+    p_wk->is_secure = TRUE;
+    p_wk->can_save  = FALSE;
+    break;
+
   case BR_RECODE_PROC_OTHER_00:
   case BR_RECODE_PROC_OTHER_01:
   case BR_RECODE_PROC_OTHER_02:
     //保存してあるデータを使うときはBRS上に読み込んでいるので、それを使う
     p_wk->p_header  = BattleRec_HeaderPtrGet();
     p_wk->p_profile = BattleRec_GDSProfilePtrGet();
-    p_wk->is_secure = TRUE;//RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_SECURE, 0 );
+    p_wk->is_secure = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_SECURE, 0 );
     p_wk->can_save  = FALSE;
     break;
 
@@ -293,8 +299,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   { 
     //ブラウザモードのとき、戦闘から復帰し、かつ視聴完了した場合
     //視聴済みセーブへ行く
-    if( (p_wk->p_param->mode == BR_RECODE_PROC_MY
-        || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_00
+    if( (  p_wk->p_param->mode == BR_RECODE_PROC_OTHER_00
         || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_01
         || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_02
         ) && p_wk->p_param->is_return && *p_wk->p_param->cp_is_recplay_finish )
@@ -1113,7 +1118,7 @@ static void Br_Record_Seq_SecureSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_SAVE_WAIT:
     {
       SAVE_RESULT result;
-      GF_ASSERT(p_wk->p_param->mode < LOADDATA_DOWNLOAD2 );
+      GF_ASSERT(p_wk->p_param->mode <= BR_RECODE_PROC_OTHER_02 );
       result  = BattleRec_SecureSetSave( p_wk->p_param->p_gamedata, p_wk->p_param->mode, &p_wk->sv_wk0, &p_wk->sv_wk1, p_wk->heapID );
       if( result == SAVE_RESULT_OK )
       { 

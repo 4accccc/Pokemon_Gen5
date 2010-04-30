@@ -1155,12 +1155,12 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
       - disconnect_rate * MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT;
 
     value = MATH_IMax( value, 0 );
-    OS_TPrintf( "評価コールバック %d 切断比率(自) %d切断比率（相） \n", value, my_disconnect_rate, you_disconnect_rate );
+    OS_TPrintf( "▼評価値！ %d 切断比率(自) %d切断比率（相）%d \n", value, my_disconnect_rate, you_disconnect_rate );
   }
   else
   { 
     value = 0;
-    OS_TPrintf( "評価コールバック %d cupが異なった %d<>%d\n", value, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue, cup );
+    OS_TPrintf( "▼評価値！ %d cupが異なった %d<>%d\n", value, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue, cup );
   }
 
   return value;

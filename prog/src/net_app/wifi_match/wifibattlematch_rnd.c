@@ -893,6 +893,8 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   { 
     SEQ_START_RATE_MSG,
     SEQ_START_RECV_MSG,
+    SEQ_START_INIT_SAKE,
+    SEQ_WAIT_INIT_SAKE,
     SEQ_WAIT_RECVRATE_SAKE,
     SEQ_WAIT_CARDIN,
     SEQ_START_POKECHECK_SERVER,
@@ -920,6 +922,36 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_POKECHECK_SERVER );
+    break;
+
+    //-------------------------------------
+    ///	SAKEレコードID取得＆なかった場合のレコード作成処理
+    //=====================================
+  case SEQ_START_INIT_SAKE:
+    if( *p_wk->p_param->p_server_time == 0 )
+    { 
+      WIFIBATTLEMATCH_NET_StartInitialize( p_wk->p_net );
+      *p_seq  = SEQ_WAIT_INIT_SAKE;
+    }
+    break;
+
+  case SEQ_WAIT_INIT_SAKE:
+    if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net ) )
+    { 
+      *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+      *p_seq  = SEQ_START_POKECHECK_SERVER;
+    }
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      break;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
     break;
 
     //-------------------------------------
@@ -1155,7 +1187,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_START_MATCHING_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_009, WBM_TEXT_TYPE_WAIT );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_009, WBM_TEXT_TYPE_QUE );
     *p_seq = SEQ_WAIT_MATCHING;
     break;
 
@@ -2012,7 +2044,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_START_MATCHING_MSG:
     PMSND_PlaySE( WBM_SND_SE_MATCHING );
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, TRUE );
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_009, WBM_TEXT_TYPE_WAIT );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_009, WBM_TEXT_TYPE_QUE );
     *p_seq = SEQ_START_MATCHING;
     break;
 
