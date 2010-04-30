@@ -35,7 +35,7 @@
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
 #define AI_SEQ_PRINT
-#define AI_SPEEDUP
+//#define AI_SPEEDUP
 #endif
 #endif
 
@@ -1350,7 +1350,7 @@ static  void  ai_if_sideeff( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
   int adrs  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
-  BOOL exist_flag = 0;//(BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect ) != 0);
+  BOOL exist_flag = (BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect ) != 0);
 
   branch_act( vmh, cond, exist_flag, TRUE, adrs );
 }
@@ -1596,7 +1596,7 @@ static  VMCMD_RESULT  AI_CHECK_TURN( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_CHECK_TURN\n");
 #endif
 
-  taw->calc_work = 0;//BTL_SVFTOOL_GetTurnCount( taw->svfWork );
+  taw->calc_work = BTL_SVFTOOL_GetTurnCount( taw->svfWork );
 
   return taw->vmcmd_result;
 }
@@ -1697,7 +1697,7 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
     u8  atkPokeID = BPP_GetID( taw->atk_bpp );
     u8  defPokeID = BPP_GetID( taw->def_bpp );
 
-    u32 src_dmg = 0;//BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
+    u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
 
     if( src_dmg == 0 )
     {
@@ -1714,7 +1714,7 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
         WazaID waza_no = BPP_WAZA_GetID( taw->atk_bpp, i );
         if( i == taw->waza_pos ) continue;
 
-        dmg = 0;//BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
+        dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
         if( dmg > src_dmg )
         {
           taw->calc_work = COMP_POWER_NOTOP;
@@ -1755,8 +1755,8 @@ static  VMCMD_RESULT  AI_IF_FIRST( VMHANDLE* vmh, void* context_work )
   int adrs  = ( int )VMGetU32( vmh );
 
   //@todo ‚±‚ê‚Å—Ç‚¢‚©Šm”FB
-  u16 atk_agility = 0;//BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->atk_bpp, TRUE );
-  u16 def_agility = 0;//BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->def_bpp, TRUE );
+  u16 atk_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->atk_bpp, TRUE );
+  u16 def_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->def_bpp, TRUE );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_IF_FIRST\n");
@@ -1876,8 +1876,8 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_AISYOU( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   BtlTypeAff  aisyou  = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
-  BtlTypeAff  aff = 0;//BTL_SVFTOOL_SimulationAffinity(
-            //taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), taw->waza_no );
+  BtlTypeAff  aff = BTL_SVFTOOL_SimulationAffinity(
+            taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), taw->waza_no );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_CHECK_WAZA_AISYOU\n");
@@ -2102,8 +2102,8 @@ static  void  ai_if_waza_hinshi( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond
   int adrs  = ( int )VMGetU32( vmh );
   int hp = BPP_GetValue( taw->def_bpp, BPP_HP );
 
-  int damage = 0;//BTL_SVFTOOL_SimulationDamage( taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp),
-                  //  taw->waza_no, TRUE, FALSE );
+  int damage = BTL_SVFTOOL_SimulationDamage( taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp),
+                    taw->waza_no, TRUE, FALSE );
 
   branch_act( vmh, cond, hp, damage, adrs );
 }
@@ -2806,7 +2806,7 @@ static  VMCMD_RESULT  AI_CHECK_SIDEEFF_COUNT( VMHANDLE* vmh, void* context_work 
   OS_TPrintf("AI_CHECK_SIDEEFF_COUNT\n");
 #endif
 
-  taw->calc_work = 0;//BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect );
+  taw->calc_work = BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect );
 
   return taw->vmcmd_result;
 }
@@ -3001,7 +3001,7 @@ static  VMCMD_RESULT  AI_CHECK_AGI_RANK( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_CHECK_AGI_RANK\n");
 #endif
 
-  taw->calc_work = 0;//BTL_SVFTOOL_CalcAgilityRank( taw->svfWork, bpp, TRUE );
+  taw->calc_work = BTL_SVFTOOL_CalcAgilityRank( taw->svfWork, bpp, TRUE );
 
   return taw->vmcmd_result;
 }
@@ -3083,8 +3083,8 @@ static  VMCMD_RESULT  AI_IF_HAVE_BATSUGUN( VMHANDLE* vmh, void* context_work )
   for( i = 0 ; i < BPP_WAZA_GetCount( taw->atk_bpp ) ; i++ )
   {
     WazaID waza_no = BPP_WAZA_GetID( taw->atk_bpp, i );
-    BtlTypeAff  aisyou = 0;//BTL_SVFTOOL_SimulationAffinity(
-            //taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), waza_no );
+    BtlTypeAff  aisyou = BTL_SVFTOOL_SimulationAffinity(
+            taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), waza_no );
     if( ( aisyou == BTL_TYPEAFF_200 ) || ( aisyou == BTL_TYPEAFF_400 ) )
     {
       VMCMD_Jump( vmh, vmh->adrs + adrs );
@@ -3116,7 +3116,7 @@ static  VMCMD_RESULT  AI_IF_LAST_WAZA_DAMAGE_CHECK( VMHANDLE* vmh, void* context
     WazaID waza_no = BPP_GetPrevWazaID( bpp );
     u8  atkPokeID = BPP_GetID( bpp );
     u8  defPokeID = BPP_GetID( taw->def_bpp );
-    if( dmg < 0 )//BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag ) )
+    if( dmg < BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag ) )
     {
       VMCMD_Jump( vmh, vmh->adrs + adrs );
     }
@@ -3236,7 +3236,7 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
   int idx = BTL_PARTY_FindMember( pty, taw->atk_bpp );
   u8  atkPokeID = BPP_GetID( taw->atk_bpp );
   u8  defPokeID = BPP_GetID( taw->def_bpp );
-  u32 src_dmg = 0;//BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
+  u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_COMP_POWER_WITH_PARTNER\n");
@@ -3267,7 +3267,7 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
         WazaID waza_no = BPP_WAZA_GetID( bpp, i );
         if( i == taw->waza_pos ) continue;
 
-        dmg = 0;//BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
+        dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
         if( dmg > src_dmg )
         {
           taw->calc_work = COMP_POWER_NOTOP;
@@ -3503,7 +3503,7 @@ static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_IF_MIRAIYOCHI\n");
 #endif
 
-  if( 0 )//BTL_SVFTOOL_IsExistPosEffect(taw->svfWork, pos, BTL_POSEFF_DELAY_ATTACK) )
+  if( BTL_SVFTOOL_IsExistPosEffect(taw->svfWork, pos, BTL_POSEFF_DELAY_ATTACK) )
   {
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }
@@ -3885,7 +3885,7 @@ static  u32 get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const
   {
     WazaID waza_no = BPP_WAZA_GetID( atk_bpp, i );
 
-    dmg = 0;//BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
+    dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
     if( dmg > max_dmg )
     {
       max_dmg = dmg;
