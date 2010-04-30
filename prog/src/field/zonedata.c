@@ -646,6 +646,7 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }
+
 //------------------------------------------------------------------
 /**
  * @brief  ユニオンルームマップかどうかのチェック
@@ -659,6 +660,7 @@ BOOL ZONEDATA_IsUnionRoom(u16 zone_id)
 
   return (zone_id == ZONE_ID_UNION);
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsColosseum(u16 zone_id)
@@ -675,6 +677,7 @@ BOOL ZONEDATA_IsColosseum(u16 zone_id)
   }
 }
 
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 /**
  * @brief  遊覧船内マップかどうかのチェック
@@ -1189,6 +1192,28 @@ BOOL ZONEDATA_IsChampionLord(u16 zone_id)
   case ZONE_ID_D09R1301:
   case ZONE_ID_D09R1401:
   case ZONE_ID_D09R1501:
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+//  バトルサブウェイ関連のマップか
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsBattleSubway( u16 zone_id )
+{
+  zone_id = ControlZoneID(zone_id);
+  
+  switch( zone_id ){
+  case ZONE_ID_C04R0102:
+  case ZONE_ID_C04R0103:
+  case ZONE_ID_C04R0104:
+  case ZONE_ID_C04R0105:
+  case ZONE_ID_C04R0106:
+  case ZONE_ID_C04R0107:
+  case ZONE_ID_C04R0108:
+  case ZONE_ID_C04R0110:
+  case ZONE_ID_C04R0111:
     return TRUE;
   }
   return FALSE;
