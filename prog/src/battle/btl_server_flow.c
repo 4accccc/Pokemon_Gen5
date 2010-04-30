@@ -12366,8 +12366,9 @@ BtlTypeAff BTL_SVFTOOL_SimulationAffinity( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8
 //--------------------------------------------------------------------------------------
 u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fEnableRand )
 {
-  if( WAZADATA_IsDamage(waza) )
-  {
+  if( ( waza != WAZANO_NULL )
+  &&  ( WAZADATA_IsDamage(waza) )
+  ){
     const BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
     const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
 
