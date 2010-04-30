@@ -290,9 +290,11 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
   
+#if 0  
   //バトル成績書き出し
   BSUBWAY_PLAYDATA_AddWifiRecord( bsw_scr->playData,
     bsw_scr->rec_down, bsw_scr->rec_turn, bsw_scr->rec_damage );
+#endif
   
   //抽選されたトレーナーNo書き出し
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
@@ -376,9 +378,11 @@ void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
   
+#if 0  
   //バトル成績書き出し
   BSUBWAY_PLAYDATA_AddWifiRecord( bsw_scr->playData,
     bsw_scr->rec_down, bsw_scr->rec_turn, bsw_scr->rec_damage );
+#endif
   
   //セーブフラグを有効状態にリセット
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
@@ -1410,11 +1414,13 @@ static void bsw_SetCommonScore(
   case BSWAY_MODE_WIFI:
     //ポケモンデータセット
     bsw_SaveMemberPokeData( wk, sv, BSWAY_SCORE_POKE_WIFI );
-    
+
+#if 0    
     //スコア押し出し
     BSUBWAY_PLAYDATA_AddWifiRecord(
         wk->playData, wk->rec_down, wk->rec_turn, wk->rec_damage );
-
+#endif
+  
     //プレイモード書き出し
     buf8 = wk->play_mode;
     BSUBWAY_PLAYDATA_SetData(

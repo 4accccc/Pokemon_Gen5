@@ -83,9 +83,12 @@ struct _TAG_BSUBWAY_SCRWORK
   u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
   
   u16 pare_stage_no; ///<通信マルチパートナーの周回数
+  
+#if 0
   u16 rec_turn; ///<かかったターン数
   u16 rec_damage; ///<食らったダメージ
   u16 rec_down; ///<ポケモンのダウン数
+#endif
   
   u8  member[BSUBWAY_STOCK_MEMBER_MAX];  ///<選んだポケモンの手持ちNo
   u16  mem_poke[BSUBWAY_STOCK_MEMBER_MAX];  ///<選んだポケモンのmonsno

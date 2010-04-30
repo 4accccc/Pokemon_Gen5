@@ -1246,6 +1246,48 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
+  //wifi成績、戦闘結果更新
+  case BSWSUB_UPDATE_WIFISCORE_BTLRESULT:
+    GF_ASSERT( bsw_scr->btl_setup_param != NULL );
+    
+    if( bsw_scr->btl_setup_param != NULL ){
+      BATTLE_SETUP_PARAM *btlParam = bsw_scr->btl_setup_param;
+      u8 turn = btlParam->TurnNum;
+      u8 down = btlParam->LosePokeNum;
+      int damage;
+
+      { //ＨＰ割合計算
+        int i;
+        int poke_num;
+        int hp, hp_max;
+        POKEPARTY *party = btlParam->party[BTL_CLIENT_PLAYER];
+
+        //ポケモン数を取得
+        poke_num = PokeParty_GetPokeCount(party);
+        //ＨＰ格納バッファ初期化
+        hp = 0;
+        hp_max = 0;
+
+        for (i=0;i<poke_num;i++)
+        {
+          int pokehp, pokehp_max;
+          POKEMON_PARAM *pp;
+          pp = PokeParty_GetMemberPointer(party, i); 
+          //残りＨＰ取得
+          pokehp = PP_Get( pp, ID_PARA_hp, NULL);
+          //最大ＨＰ取得
+          pokehp_max = PP_Get( pp, ID_PARA_hpmax, NULL);
+          //足しこみ
+          hp += pokehp;
+          hp_max += pokehp_max;
+        }
+        
+        damage = hp_max - hp;
+      }
+      
+      BSUBWAY_PLAYDATA_AddWifiRecord( playData, down, turn, damage );
+    }
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:

@@ -1526,7 +1526,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
   code = MMDL_GetOBJCode( mmdl );
   status = MMDL_GetDrawStatus( mmdl );
   
-  if( code == SHIN_A || code == MU_A ){
+  if( code == SHIN_A || code == MU_A || code == POKE10 ){
     u16 anm_idx = DRAW_STA_SHINMU_A_ANMNO_STOP;
     
     if( status != work->anmcnt.set_anm_status ){

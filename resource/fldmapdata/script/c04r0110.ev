@@ -1086,6 +1086,9 @@ sub_battle_single_double:
   //バトル呼び出し
   _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //wifi成績に戦闘結果を反映(wifiモード以外でも反映して問題無し)
+  _BSUBWAY_TOOL( BSWSUB_UPDATE_WIFISCORE_BTLRESULT, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //戦闘録画データを格納
   _BSUBWAY_TOOL( BSWSUB_STORE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
   

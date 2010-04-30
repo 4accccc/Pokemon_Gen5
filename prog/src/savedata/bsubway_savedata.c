@@ -46,11 +46,10 @@ struct _BSUBWAY_PLAYDATA
   u16 use_battle_box:1; ///<バトルボックスを使用するか
   u16 sel_wifi_dl_play:1; ///<wifiダウンロードプレイを行うか
   u16 padding_bit:5; ///<余り
-  u8 wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
   u8 round;  ///<バトルサブウェイ ラウンド数
-  
-  u16  wifi_rec_turn;    ///<勝ち抜きにかかったターン数
-  u16  wifi_rec_damage;  ///<勝ち抜きまでに受けたダメージ数
+  u8 wifi_rec_down;    ///<勝ち抜きまでに倒されたポケモン数
+  u16 wifi_rec_turn;    ///<勝ち抜きにかかったターン数
+  u16 wifi_rec_damage;  ///<勝ち抜きまでに受けたダメージ数
   
   u8 member_poke[BSUBWAY_STOCK_MEMBER_MAX];    ///<選択したポケモンの位置
   u16 trainer_no[BSUBWAY_STOCK_TRAINER_MAX];    ///<対戦トレーナーNo保存
@@ -790,16 +789,19 @@ void BSUBWAY_SCOREDATA_SetWifiScore( BSUBWAY_SCOREDATA *bsw_score, const BSUBWAY
   sa = (bsw_play->round-1)*1000;
   sb = bsw_play->wifi_rec_turn*10;
   sc = bsw_play->wifi_rec_down*20;
+  
   if(sb+sc > 950){
     st = 0;
   }else{
     st = 950-(sb+sc);
   }
+  
   if(bsw_play->wifi_rec_damage>(1000-30)){
     sd = 0;
   }else{
     sd = (1000-bsw_play->wifi_rec_damage)/30;
   }
+  
   score = sa+st+sd;
   bsw_score->wifi_score = score;
 }
