@@ -69,7 +69,7 @@ enum
 
 //#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-8))
 #define FOOTMARK_OFFSPOS_Y (NUM_FX32(-1))
-#define FOOTMARK_OFFSPOS_Z_WALK_LR (NUM_FX32(-i))
+#define FOOTMARK_OFFSPOS_Z_WALK_LR (NUM_FX32(-2))
 
 #define FOOTMARK_VANISH_START_FRAME (16)			///<点滅開始フレーム(赤緑40)
 #define FOOTMARK_VANISH_END_FRAME (28)				///<点滅終了フレーム(赤緑56)
