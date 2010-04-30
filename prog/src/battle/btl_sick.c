@@ -515,8 +515,16 @@ void BTL_SICKEVENT_CheckFlying( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bp
  *------------------------------------------------------------*/
 void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 {
-  if( BPP_CheckSick(bpp, WAZASICK_NEWOHARU) ){
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  if( BPP_CheckSick(bpp, WAZASICK_NEWOHARU) )
+  {
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_FLAG, TRUE) )
+    {
+      u8 pokeID = BPP_GetID( bpp );
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruStick );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+    }
   }
 }
 /**-------------------------------------------------------------
@@ -529,7 +537,6 @@ void BTL_SICKEVENT_CheckHitRatio( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* 
     BPP_SICK_CONT cont = BPP_GetSickCont( attacker, WAZASICK_HITRATIO_UP );
     u16 param = BPP_SICKCONT_GetParam( cont );
     ratio = FX32_CONST( param ) / 100;
-    BTL_Printf("命中率アップ状態のポケ[%d] : %d -> %08x\n", BPP_GetID(attacker), param, ratio);
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
   }
 }

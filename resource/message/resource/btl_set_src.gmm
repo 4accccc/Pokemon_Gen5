@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-30T17:02:16"/>
+	<create user="taya" host="W00146" date="2010-04-30T19:30:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2199,16 +2199,25 @@
 	</row>
 
 	<row id="BTL_STRID_SET_NeWoHaru">
-		<comment>ねをはる</comment>
+		<comment>ねをはる：発動</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねを　はった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根を　はった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_NeWoHaruRecover">
+		<comment>ねをはる：回復</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねから
 ようぶんを　すいとった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根から
 養分を　吸い取った！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_NeWoHaruStick">
+		<comment>ねをはる：ふきとばされそうなとき</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねをはって
+うごかない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根をはって
+動かない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Gaman">

@@ -591,7 +591,7 @@ static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, c
     BtlTypeAffAbout affAbout, BppKoraeruCause korae_cause, u16 damage );
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  BOOL fForceChange, BTL_HANDEX_STR_PARAMS* succeedMsg );
+  BOOL fForceChange, BOOL* fFailMsgDisped, BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
@@ -7960,13 +7960,14 @@ static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, c
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec )
 {
   BTL_POKEPARAM *target;
+  BOOL fFailMsgDisped = FALSE;
 
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
-    if( scproc_PushOutCore(wk, attacker, target, FALSE, NULL) ){
+    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, NULL) ){
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-    }else{
+    }else if( fFailMsgDisped == FALSE ){
       scPut_WazaFail( wk, attacker, waza );
     }
   }
@@ -7980,15 +7981,17 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
  * @param   attacker
  * @param   target
  * @param   fForceChange  強制的に入れ替えモードで実行（FALSEならルール等に応じて自動判別）
- * @param   succeedMsg    成功時出力メッセージパラメータ
+ * @param   fFailMsgDisped  [out] 特殊な失敗条件発生、原因を表示したらTRUE
  *
  * @retval  BOOL    成功時TRUE
  */
 //----------------------------------------------------------------------------------
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  BOOL fForceChange, BTL_HANDEX_STR_PARAMS* succeedMsg )
+  BOOL fForceChange, BOOL* fFailMsgDisped, BTL_HANDEX_STR_PARAMS* succeedMsg )
 {
   PushOutEffect   eff;
+
+  *fFailMsgDisped = FALSE;
 
   if( fForceChange ){
     eff = PUSHOUT_EFFECT_CHANGE;
@@ -8013,8 +8016,20 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
     }
 
     // 特殊要因で失敗
-    if( scEvent_CheckPushOutFail(wk, attacker, target) ){
-      return FALSE;
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      u8 fFailed = scEvent_CheckPushOutFail( wk, attacker, target );
+      if( fFailed )
+      {
+        if( scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) != HandExResult_NULL ){
+          (*fFailMsgDisped) = TRUE;
+        }
+      }
+      Hem_PopState( &wk->HEManager, hem_state );
+
+      if( fFailed ){
+        return FALSE;
+      }
     }
 
     // 通常処理
@@ -14497,7 +14512,9 @@ static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
-  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &param->exStr) ){
+  BOOL fFailMsgDisped;
+
+  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped, &param->exStr) ){
     return 1;
   }
   return 0;
