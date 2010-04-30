@@ -1910,7 +1910,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
         intsub->wordset, 0, &intsub->comm.p_md->target_info, HEAPID_FIELD_SUBSCREEN);
       
       //“¯‚¶ƒ][ƒ“‚É‚¢‚ê‚Î‹êŠ‚Ì•ûŒü‚ð•\Ž¦
-      if(intsub->comm.now_palace_area == intsub->comm.target_palace_area){
+      if(intsub->comm.now_palace_area == intsub->comm.target_palace_area
+          && my_zone_id == ist->zone_id){
         fx32 offset_x, offset_z;
         u32 msg_id;
         offset_x = ist->player_pack.pos.x - player_pos.x;
