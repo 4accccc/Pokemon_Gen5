@@ -582,6 +582,8 @@ static int scEvent_RankValueChange( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* ta
   u8 wazaUsePokeID, u16 itemID, int volume );
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
+static BOOL scproc_RecoverHP_IsOK( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scproc_RecoverHP_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP );
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP );
 static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Ichigeki_Succeed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, const SVFL_WAZAPARAM* wazaParam, BtlTypeAffAbout affAbout );
@@ -771,7 +773,7 @@ static BOOL relivePokeRec_CheckNecessaryPokeIn( BTL_SVFLOW_WORK* wk );
 static void PSetStack_Init( BTL_SVFLOW_WORK* wk );
 static void PSetStack_Push( BTL_SVFLOW_WORK* wk );
 static void PSetStack_Pop( BTL_SVFLOW_WORK* wk );
-static void psetstack_setup( BTL_SVFLOW_WORK*, u32 sp, BOOL fClear );
+static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear );
 static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
 static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -7805,11 +7807,11 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
 /**
  *  HP回復可否チェック
  */
-static BOOL scproc_IsRecoverHP_OK( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+static BOOL scproc_RecoverHP_IsOK( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI)
-  &&  !BPP_IsFightEnable(bpp)
   &&  !BPP_IsHPFull(bpp)
+  &&  BPP_IsFightEnable(bpp)
   ){
     return TRUE;
   }
@@ -7832,7 +7834,7 @@ static void scproc_RecoverHP_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 
  */
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP )
 {
-  if( scproc_IsRecoverHP_OK(wk, bpp) )
+  if( scproc_RecoverHP_IsOK(wk, bpp) )
   {
     scproc_RecoverHP_Core( wk, bpp, recoverHP );
     return TRUE;
@@ -13377,37 +13379,34 @@ static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 {
   const BTL_HANDEX_PARAM_RECOVER_HP* param = (const BTL_HANDEX_PARAM_RECOVER_HP*)param_header;
 
-  u8 result = 0;
-
 /// 道具使用による実行もあるので、場にいなくても有効
 //  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
-
-    if( !BPP_IsDead(pp_target)
-    &&  !BPP_IsHPFull(pp_target)
-    ){
+    if( scproc_RecoverHP_IsOK(wk, pp_target) )
+    {
       if( param_header->tokwin_flag ){
         scPut_TokWin_In( wk, pp_user );
       }
 
-      if( scproc_RecoverHP(wk, pp_target, param->recoverHP) ){
-        if( param->exStr.type != BTL_STRTYPE_NULL ){
+      scproc_RecoverHP_Core( wk, pp_target, param->recoverHP );
+
+      if( param->exStr.type != BTL_STRTYPE_NULL ){
           handexSub_putString( wk, &(param->exStr) );
-        }else if( itemID != ITEM_DUMMY_DATA ){
-          SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverHP, param->pokeID, itemID );
-        }
-        result = 1;
+      }else if( itemID != ITEM_DUMMY_DATA ){
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverHP, param->pokeID, itemID );
       }
 
       if( param_header->tokwin_flag ){
         scPut_TokWin_Out( wk, pp_user );
       }
+
+       return 1;
     }
   }
-  return result;
+  return 0;
 }
 /**
  * ポケモンHP回復（ドレイン系）
