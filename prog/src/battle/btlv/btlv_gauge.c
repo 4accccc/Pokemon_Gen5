@@ -67,6 +67,7 @@ enum
   GP_SPACE        = 0x33 * 0x20,      //空白
   GP_LV           = 0x34 * 0x20,      //LVラベル
 
+  GP_HPBAR_DAMAGE = 0x35 * 0x20,      //HPバーダメージ
 };
 
 enum
@@ -137,7 +138,8 @@ enum
   BTLV_GAUGE_LVD_CHARSTART_E = 0x2c,
 
 
-  BTLV_GAUGE_HP_CHARSTART = 0x02,
+  BTLV_GAUGE_HP_CHARSTART = 0x00,
+  BTLV_GAUGE_HP_DAMAGE_CHARSTART = 0x00,
   BTLV_GAUGE_NOWHP_CHARSTART = 0x00,
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
   BTLV_GAUGE_EXP_CHARSTART = 0x01,
@@ -172,6 +174,7 @@ struct _BTLV_GAUGE_CLWK
   GFL_CLWK*     base_clwk;
   GFL_CLWK*     hpnum_clwk;
   GFL_CLWK*     hp_clwk;
+  GFL_CLWK*     hp_damage_clwk;
   GFL_CLWK*     exp_clwk;
   GFL_CLWK*     status_clwk;
 
@@ -184,6 +187,9 @@ struct _BTLV_GAUGE_CLWK
   //HPゲージ
   u32           hp_charID;
   u32           hp_cellID;
+  //HPダメージゲージ
+  u32           hp_damage_charID;
+  u32           hp_damage_cellID;
   //EXPゲージ
   u32           exp_charID;
   u32           exp_cellID;
@@ -238,11 +244,12 @@ struct _BTLV_GAUGE_WORK
 
   BTLV_GAUGE_CLWK bgcl[ BTLV_GAUGE_CLWK_MAX ];
 
-  u32             vanish_flag   :1;
-  u32             bgm_fade_flag :1;
-  u32             pinch_bgm_flag:1;
-  u32             yure_angle    :16;
-  u32                           :14;
+  u32             vanish_flag             :1;
+  u32             bgm_fade_flag           :1;
+  u32             pinch_bgm_flag          :1;
+  u32             yure_angle              :16;
+  u32             trainer_bgm_change_flag :1;
+  u32                                     :13;
 
   u32             now_bgm_no;
 
@@ -637,6 +644,11 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
   bgw->bgcl[ pos ].hp_cellID = GFL_CLGRP_CELLANIM_Register( bgw->handle, NARC_battgra_wb_gauge_hp_NCER,
                                                             NARC_battgra_wb_gauge_hp_NANR, bgw->heapID );
 
+  bgw->bgcl[ pos ].hp_damage_charID = GFL_CLGRP_CGR_Register( bgw->handle, NARC_battgra_wb_gauge_hp_damage_NCGR, FALSE,
+                                                              CLSYS_DRAW_MAIN, bgw->heapID );
+  bgw->bgcl[ pos ].hp_damage_cellID = GFL_CLGRP_CELLANIM_Register( bgw->handle, NARC_battgra_wb_gauge_hp_damage_NCER,
+                                                                   NARC_battgra_wb_gauge_hp_NANR, bgw->heapID );
+
   if( ( pos & 1 ) == 0 )
   {
     bgw->bgcl[ pos ].exp_charID = GFL_CLGRP_CGR_Register( bgw->handle, NARC_battgra_wb_gauge_exp_NCGR, FALSE,
@@ -652,12 +664,12 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
       0, 0, 1,  //アニメ番号、優先順位、BGプライオリティ
     };
     int pltt_id = ( pos < BTLV_MCSS_POS_A ) ? pos : pos - BTLV_MCSS_POS_A;
-    gauge.softpri = 1;
+    gauge.softpri = 2;
     bgw->bgcl[ pos ].base_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                       bgw->bgcl[ pos ].base_charID, bgw->plttID[ pltt_id ],
                                                       bgw->bgcl[ pos ].base_cellID,
                                                       &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
-    gauge.softpri = 0;
+    gauge.softpri = 1;
     bgw->bgcl[ pos ].hpnum_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                        bgw->bgcl[ pos ].hpnum_charID, bgw->plttID[ pltt_id ],
                                                        bgw->bgcl[ pos ].hpnum_cellID,
@@ -671,8 +683,14 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
                                                         bgw->status_cellID,
                                                         &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
-
     BTLV_GAUGE_SetStatus( bgw, sick, pos );
+
+    gauge.softpri = 0;
+    bgw->bgcl[ pos ].hp_damage_clwk = GFL_CLACT_WK_Create( bgw->clunit,
+                                                           bgw->bgcl[ pos ].hp_damage_charID, bgw->plttID[ pltt_id ],
+                                                           bgw->bgcl[ pos ].hp_damage_cellID,
+                                                           &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hp_damage_clwk, FALSE );
 
     if( ( ( pos & 1 ) == 0 ) &&
           ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) &&
@@ -725,19 +743,23 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].base_charID );
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hpnum_charID );
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_charID );
+    GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_damage_charID );
 
     GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].base_cellID );
     GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hpnum_cellID );
     GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hp_cellID );
+    GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].hp_damage_cellID );
 
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].base_clwk );
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hpnum_clwk );
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_clwk );
+    GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].hp_damage_clwk );
     GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].status_clwk );
-    bgw->bgcl[ pos ].base_clwk    = NULL;
-    bgw->bgcl[ pos ].hpnum_clwk   = NULL;
-    bgw->bgcl[ pos ].hp_clwk      = NULL;
-    bgw->bgcl[ pos ].status_clwk  = NULL;
+    bgw->bgcl[ pos ].base_clwk      = NULL;
+    bgw->bgcl[ pos ].hpnum_clwk     = NULL;
+    bgw->bgcl[ pos ].hp_clwk        = NULL;
+    bgw->bgcl[ pos ].hp_damage_clwk = NULL;
+    bgw->bgcl[ pos ].status_clwk    = NULL;
 
     if( ( pos & 1 ) == 0 )
     { 
@@ -1878,7 +1900,16 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       if( bgw->pinch_bgm_flag )
       {
         PMSND_PopBGM();
-        bgm_pause( FALSE );
+        if( ( bgw->trainer_bgm_change_flag == 0 ) && ( BTLV_EFFECT_GetTrainerBGMChangeFlag() ) )
+        { 
+          bgw->now_bgm_no = SEQ_BGM_BATTLESUPERIOR;
+          PMSND_PlayBGM( bgw->now_bgm_no );
+          bgw->trainer_bgm_change_flag = 1;
+        }
+        else
+        {  
+          bgm_pause( FALSE );
+        }
         PMSND_FadeInBGM( 24 );
       }
       else

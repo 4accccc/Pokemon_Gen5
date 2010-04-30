@@ -103,6 +103,8 @@ struct _BTLV_EFFECT_WORK
   int                     tcb_execute_flag;
   HEAPID                  heapID;
 
+  BOOL                    trainer_bgm_change_flag;
+
   int                     trainer_index[ BTLV_MCSS_POS_MAX ];
 };
 
@@ -1371,14 +1373,34 @@ const BTLV_SCU* BTLV_EFFECT_GetScu( void )
 
 //============================================================================================
 /**
- * @brief  ゲージワークを取得
+ * @brief  ピンチBGMフラグを取得
  *
- * @retval bgw
+ * @retval 0:ピンチBGMじゃない　1:ピンチBGM
  */
 //============================================================================================
-BTLV_GAUGE_WORK* BTLV_EFFECT_GetGaugeWork( void )
+int BTLV_EFFECT_GetPinchBGMFlag( void )
 {
-  return bew->bgw;
+  return BTLV_GAUGE_GetPinchBGMFlag( bew->bgw );
+}
+
+//============================================================================================
+/**
+ * @brief  トレーナー曲チェンジフラグをセット
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetTrainerBGMChangeFlag( void )
+{
+  bew->trainer_bgm_change_flag = TRUE;
+}
+
+//============================================================================================
+/**
+ * @brief  トレーナー曲チェンジフラグをゲット
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_GetTrainerBGMChangeFlag( void )
+{
+  return bew->trainer_bgm_change_flag;
 }
 
 //============================================================================================

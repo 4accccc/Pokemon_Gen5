@@ -258,7 +258,9 @@ extern  BOOL              BTLV_EFFECT_GetMulti( void );
 extern  int               BTLV_EFFECT_GetTrType( int pos );
 extern  const BTL_MAIN_MODULE* BTLV_EFFECT_GetMainModule( void );
 extern  const BTLV_SCU*   BTLV_EFFECT_GetScu( void );
-extern  BTLV_GAUGE_WORK*  BTLV_EFFECT_GetGaugeWork( void );
+extern  int               BTLV_EFFECT_GetPinchBGMFlag( void );
+extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( void );
+extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
