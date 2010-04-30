@@ -1341,7 +1341,8 @@ static void Cmd_CategoryToWordWin( GFL_TCB *tcb, void* wk_adrs )
 		if( PMSIV_WORDWIN_WaitFadeIn( vwk->wordwin_wk ) )
 		{
 			PMSIV_WORDWIN_MoveCursor( vwk->wordwin_wk, PMSI_GetWordWinCursorPos(vwk->main_wk) );
-			PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, TRUE );
+		  PMSIV_WORDWIN_SetScrollBarPos( vwk->wordwin_wk, PMSI_GetWordWinLinePos(vwk->main_wk), PMSI_GetWordWinLineMax(vwk->main_wk) );
+      PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, TRUE );
 			DeleteCommand( wk );
 		}
 		break;
@@ -2093,6 +2094,8 @@ u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py )
     return 3;  // 1画面で表示できるのでスクロールバーが不要で、非表示にしてある
   }
 
+/*
+  // スクロールバーの大きさを考慮したとき
 	if( py < (pos.y-(PMSIV_TPWD_BAR_SY/2)) ){
 		return 1;		// 上
 	}
@@ -2105,6 +2108,18 @@ u32 PMSIView_GetScrollBarPos( PMS_INPUT_VIEW* vwk, u32 px, u32 py )
 			px < (pos.x+(PMSIV_TPWD_BAR_SX/2)) ){
 		return 0;		// 同じ
 	}
+*/
+  // スクロールバーの大きさを考慮していないとき
+	if( py < pos.y ){
+		return 1;		// 上
+	}
+	if( py > pos.y ){
+		return 2;		// 下
+	}
+	if( py == pos.y ){
+		return 0;		// 同じ
+	}
+
 	return 3;			// その他
 }
 

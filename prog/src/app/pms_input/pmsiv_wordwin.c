@@ -513,7 +513,7 @@ void PMSIV_WORDWIN_MoveCursor( PMSIV_WORDWIN* wk, u32 pos )
 
 		GFL_CLACT_WK_SetPos( wk->cursor_actor, &clPos , CLSYS_DEFREND_MAIN );
 		GFL_CLACT_WK_SetAnmSeq( wk->cursor_actor, ANM_WORDWIN_CURSOR_ACTIVE );
-	}
+  }
 }
 
 

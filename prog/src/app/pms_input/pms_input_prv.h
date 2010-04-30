@@ -232,6 +232,7 @@ extern void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF
 extern u32 PMSI_GetWordWinCursorPos( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetWordWinScrollVector( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetWordWinLinePos( const PMS_INPUT_WORK* wk );
+extern int PMSI_GetWordWinLineMax( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetWordWinUpArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetWordWinDownArrowVisibleFlag( const PMS_INPUT_WORK* wk );
 extern int PMSI_GetTalkWindowType( const PMS_INPUT_WORK* wk );

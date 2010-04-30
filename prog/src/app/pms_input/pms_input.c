@@ -3717,6 +3717,10 @@ int PMSI_GetWordWinLinePos( const PMS_INPUT_WORK* wk )
 {
 	return get_wordwin_linepos(&(wk->word_win));
 }
+int PMSI_GetWordWinLineMax( const PMS_INPUT_WORK* wk )
+{
+	return get_wordwin_linemax(&(wk->word_win));
+}
 BOOL PMSI_GetWordWinUpArrowVisibleFlag( const PMS_INPUT_WORK* wk )
 {
 	return (get_wordwin_linepos(&(wk->word_win)) != 0);
