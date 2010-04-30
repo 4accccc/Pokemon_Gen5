@@ -119,6 +119,12 @@ extern u8 SCRCMD_WORK_GetBeforeWindowPosType( const SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type );
 extern u8 SCRCMD_WORK_GetWindowPosType( const SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetWindowPosType( SCRCMD_WORK *work, u8 type );
+//--------------------------------------------------------------
+// ウェイト値の操作
+//--------------------------------------------------------------
+extern u8 SCRCMD_WORK_GetWaitCount( SCRCMD_WORK *work );
+extern void SCRCMD_WORK_SetWaitCount( SCRCMD_WORK *work, u8 wait );
+extern BOOL SCRCMD_WORK_WaitCountDown( SCRCMD_WORK * work );
 
 //アニメーションコマンド
 extern void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );

@@ -73,7 +73,8 @@ struct _SCRCMD_GLOBAL_WORK {
 
   u8 before_win_pos_type;
   u8 win_pos_type;
-  u8 padding[2]; //余り
+  u8 wait_count;          ///<ウェイト用ワーク、現状選択開始までのウェイトのみに使用
+  u8 padding[1]; //余り
 };
 
 //--------------------------------------------------------------
@@ -429,6 +430,40 @@ void SCRCMD_WORK_SetWindowPosType( SCRCMD_WORK *work, u8 type )
   work->gwork->win_pos_type = type;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ウェイト値の取得
+ */
+//--------------------------------------------------------------
+u8 SCRCMD_WORK_GetWaitCount( SCRCMD_WORK *work )
+{
+  return work->gwork->wait_count;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ウェイト値の設定
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetWaitCount( SCRCMD_WORK *work, u8 wait )
+{
+  work->gwork->wait_count = wait;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ウェイト値のカウントダウン
+ */
+//--------------------------------------------------------------
+BOOL SCRCMD_WORK_WaitCountDown( SCRCMD_WORK * work )
+{
+  if ( work->gwork->wait_count == 0 )
+  {
+    return TRUE;
+  }
+  -- ( work->gwork->wait_count );
+  return FALSE;
+}
 
 //======================================================================
 //  動作モデルアニメーション  
