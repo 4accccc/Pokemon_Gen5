@@ -211,12 +211,12 @@ enum {
   FIELD_G3D_SUBBBDACT_RESMAX  =   32,
   FIELD_G3D_SUBBBDACT_ACTMAX  =   64,
   
-  FIELD_G3D_EFFBBDACT_RESMAX  =   8,
-  FIELD_G3D_EFFBBDACT_ACTMAX  =   32,
+  FIELD_G3D_EFFBBDACT_RESMAX  =   56,
+  FIELD_G3D_EFFBBDACT_ACTMAX  =   48,
   
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
-
+  
   ///フォグ色
   FIELD_DEFAULT_FOG_COLOR		  =   (GX_RGB(31,31,31)),
   ///背景色
@@ -2307,9 +2307,13 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
   fieldWork->effBbdActSys = GFL_BBDACT_CreateSys(
       FIELD_G3D_EFFBBDACT_RESMAX, FIELD_G3D_EFFBBDACT_ACTMAX,
       fldmap_G3D_BBDTrans, fieldWork->heapID );
+  {
+    GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( fieldWork->effBbdActSys );
+    VecFx32 scale = {FX32_ONE+0xc00,FX32_ONE+0xc00,FX32_ONE+0xc00};
+    GFL_BBD_SetScale( bbdSys, &scale );
+  }
   
   fieldmap_G3D_BBDSetColorParam( fieldWork ); // 色設定
-
   
   //G3dObj作成
   fieldWork->fieldG3dObjCtrl = FLD_G3DOBJ_CTRL_Create(

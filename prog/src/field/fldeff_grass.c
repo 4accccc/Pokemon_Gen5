@@ -36,7 +36,8 @@ typedef struct _TAG_FLDEFF_GRASS FLDEFF_GRASS;
 struct _TAG_FLDEFF_GRASS
 {
 	FLDEFF_CTRL *fectrl;
-  FLD_G3DOBJ_RESIDX res_idx_tbl[FLDEFF_GRASS_MAX];
+  GFL_BBDACT_SYS *bbdact_sys;
+  u16 res_idx_tbl[FLDEFF_GRASS_MAX];
 };
 
 //--------------------------------------------------------------
@@ -45,7 +46,6 @@ struct _TAG_FLDEFF_GRASS
 typedef struct
 {
   FLDEFF_GRASS *eff_grass;
-  FLD_G3DOBJ_CTRL *obj_ctrl;
   MMDL *fmmdl;
   int init_gx;
   int init_gz;
@@ -63,7 +63,7 @@ typedef struct
   int seq_no;
   TASKHEADER_GRASS head;
   MMDL_CHECKSAME_DATA samedata;
-  FLD_G3DOBJ_OBJIDX obj_idx;
+  u16 act_id;
 }TASKWORK_GRASS;
 
 //--------------------------------------------------------------
@@ -72,7 +72,6 @@ typedef struct
 typedef struct
 {
   u16 idx_mdl;
-  u16 idx_anm;
 }GRASS_ARCIDX;
 
 //======================================================================
@@ -84,6 +83,8 @@ static void grass_DeleteResource( FLDEFF_GRASS *grass );
 static const FLDEFF_TASK_HEADER DATA_grassTaskHeader;
 
 static const GRASS_ARCIDX data_ArcIdxTbl[FLDEFF_GRASS_MAX][PMSEASON_TOTAL];
+static const GFL_BBDACT_ANM * const * data_BlActAnm_GrassTbl[FLDEFF_GRASS_MAX];
+static const u16 data_BlActAnmEndNo[FLDEFF_GRASS_MAX];
 
 //======================================================================
 //	草エフェクト　システム
@@ -99,9 +100,13 @@ static const GRASS_ARCIDX data_ArcIdxTbl[FLDEFF_GRASS_MAX][PMSEASON_TOTAL];
 void * FLDEFF_GRASS_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
 	FLDEFF_GRASS *grass;
-	
+	FIELDMAP_WORK *fieldmap;
+
 	grass = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_GRASS) );
 	grass->fectrl = fectrl;
+  
+  fieldmap = FLDEFF_CTRL_GetFieldMapWork( grass->fectrl );
+  grass->bbdact_sys = FIELDMAP_GetEffBbdActSys( fieldmap );
   
 	grass_InitResource( grass );
 	return( grass );
@@ -137,26 +142,26 @@ static void grass_InitResource( FLDEFF_GRASS *grass )
   BOOL ret;
   int i,season;
   ARCHANDLE *handle;
-  GAMESYS_WORK *gsys;
   FIELDMAP_WORK *fieldmap;
-  FLD_G3DOBJ_CTRL *obj_ctrl;
-  FLD_G3DOBJ_RES_HEADER head;
-
-  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( grass->fectrl );
+  GAMESYS_WORK *gsys;
+  GFL_BBDACT_G3DRESDATA data;
+  
   handle = FLDEFF_CTRL_GetArcHandleEffect( grass->fectrl );
   fieldmap = FLDEFF_CTRL_GetFieldMapWork( grass->fectrl );
   gsys = FIELDMAP_GetGameSysWork( fieldmap );
   season = FLDEFF_CTRL_GetSeasonID( grass->fectrl );
   
+  data.texFmt = GFL_BBD_TEXFMT_PAL16;
+  data.texSiz = GFL_BBD_TEXSIZ_32x128;
+  data.celSizX = 32;
+  data.celSizY = 32;
+  data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
+  
   for( i = 0; i < FLDEFF_GRASS_MAX; i++ ){
-    FLD_G3DOBJ_RES_HEADER_Init( &head );
-    FLD_G3DOBJ_RES_HEADER_SetMdl(
-        &head, handle, data_ArcIdxTbl[i][season].idx_mdl );
-    FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
-    FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
-        &head, data_ArcIdxTbl[i][season].idx_anm );
+    data.g3dres = GFL_G3D_CreateResourceHandle(
+          handle, data_ArcIdxTbl[i][season].idx_mdl );
     grass->res_idx_tbl[i] =
-      FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+      GFL_BBDACT_AddResourceG3DResUnit( grass->bbdact_sys, &data, 1 );
   }
 }
 
@@ -170,12 +175,10 @@ static void grass_InitResource( FLDEFF_GRASS *grass )
 static void grass_DeleteResource( FLDEFF_GRASS *grass )
 {
   int i;
-  FLD_G3DOBJ_CTRL *obj_ctrl;
-  
-  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( grass->fectrl );
   
   for( i = 0; i < FLDEFF_GRASS_MAX; i++ ){
-    FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, grass->res_idx_tbl[i] );
+    GFL_BBDACT_RemoveResourceUnit(
+        grass->bbdact_sys, grass->res_idx_tbl[i], 1 );
   }
 }
 
@@ -202,10 +205,9 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
     GF_ASSERT( 0 );
     return;
   }
-
+  
   grass = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GRASS );
   head.eff_grass = grass;
-  head.obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( fectrl );
   head.fmmdl = fmmdl;
   head.type = type;
   head.obj_id = MMDL_GetOBJID( fmmdl );
@@ -218,20 +220,28 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
   // レール動作の設定
   if( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) )
   {
+    #if 0 //old
     pos.y += FX32_CONST(4);  
+    #else
+    pos.y += NUM_FX32(7);
+    pos.z += NUM_FX32(-2);
+    #endif
   }
   // グリッド動作の設定
   else
   {
     MMDL_GetMapPosHeight( fmmdl, &pos, &h );
     pos.y = h;
-    
-    pos.y += NUM_FX32(4);
-    pos.z += NUM_FX32(12);
+
+    /*
+    pos.y += NUM_FX32(10); //ぴったりだが被る
+    */
+    pos.y += NUM_FX32(7);
+    pos.z += NUM_FX32(-2);
   }
   
   head.pos = pos;
-
+  
   FLDEFF_CTRL_AddTask(
       fectrl, &DATA_grassTaskHeader, NULL, anm, &head, 0 );
 }
@@ -248,14 +258,34 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_GRASS *work = wk;
   const TASKHEADER_GRASS *head;
+  GFL_BBDACT_ACTDATA actData;
+  GFL_BBDACT_SYS *bbdact_sys;
+  u16 type;
   
   head = FLDEFF_TASK_GetAddPointer( task );
   work->head = *head;
+  
   MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
   FLDEFF_TASK_SetPos( task, &head->pos );
   
-  work->obj_idx = FLD_G3DOBJ_CTRL_AddObject( work->head.obj_ctrl,
-      work->head.eff_grass->res_idx_tbl[work->head.type], 0, &head->pos );
+  type = work->head.type;
+  
+  actData.resID = work->head.eff_grass->res_idx_tbl[type];
+  actData.sizX = FX16_ONE*8-1;
+  actData.sizY = FX16_ONE*8-1;
+  actData.alpha = 31;
+  actData.drawEnable = TRUE;
+  actData.lightMask = GFL_BBD_LIGHTMASK_0;
+  actData.trans = head->pos;
+  actData.func = NULL;
+  actData.work = work;
+  
+  bbdact_sys = work->head.eff_grass->bbdact_sys;
+  
+  work->act_id = GFL_BBDACT_AddAct( bbdact_sys, 0, &actData, 1 );
+  GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  
+      (GFL_BBDACT_ANMTBL)data_BlActAnm_GrassTbl[type], 1 );
+  GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
   
   if( FLDEFF_TASK_GetAddParam(task) == FALSE ){ //アニメ無し
     work->seq_no = 1;
@@ -275,7 +305,8 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
 static void grassTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_GRASS *work = wk;
-  FLD_G3DOBJ_CTRL_DeleteObject( work->head.obj_ctrl, work->obj_idx );
+  GFL_BBDACT_SYS *bbdact_sys = work->head.eff_grass->bbdact_sys;
+  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
 }
 
 //--------------------------------------------------------------
@@ -288,21 +319,30 @@ static void grassTask_Delete( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void grassTask_Update( FLDEFF_TASK *task, void *wk )
 {
+  u16 comm;
   TASKWORK_GRASS *work = wk;
-  FLD_G3DOBJ_CTRL *obj_ctrl = work->head.obj_ctrl;
-  
+  GFL_BBDACT_SYS *bbdact_sys = work->head.eff_grass->bbdact_sys;
+ 
   switch( work->seq_no ){
   case 0: //アニメ終了待ち
-    if( FLD_G3DOBJ_CTRL_AnimeObject(
-          work->head.obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
+    if( GFL_BBDACT_GetAnimeLastCommand(bbdact_sys,work->act_id,&comm) ){
       work->seq_no++;
     }
     break;
-  case 1: //アニメ終了 or 揺れ無し
-    FLD_G3DOBJ_CTRL_SetAnimeFrame(
-        obj_ctrl, work->obj_idx, 0, GRASS_SHAKE_FRAME );
+  case 1: //アニメ終了位置へ
+    if( MMDL_CheckSameData(work->head.fmmdl,&work->samedata) == FALSE ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
+    
+    GFL_BBDACT_SetAnimeFrmIdx(
+        bbdact_sys, work->act_id, data_BlActAnmEndNo[work->head.type] );
     work->seq_no++;
-  case 2:
+    break;
+  case 2: //アニメポーズ
+    GFL_BBDACT_SetAnimeEnable( bbdact_sys, work->act_id, FALSE );
+    work->seq_no++;
+  case 3:
     if( MMDL_CheckSameData(work->head.fmmdl,&work->samedata) == FALSE ){
       FLDEFF_TASK_CallDelete( task );
       return;
@@ -359,51 +399,107 @@ static const FLDEFF_TASK_HEADER DATA_grassTaskHeader =
 static const GRASS_ARCIDX data_ArcIdxTbl[FLDEFF_GRASS_MAX][PMSEASON_TOTAL] =
 {
   { //短い草
-    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
-    { NARC_fldeff_kusaeff_sm_nsbmd, NARC_fldeff_kusaeff_sm_nsbtp },
-    { NARC_fldeff_kusaeff_at_nsbmd, NARC_fldeff_kusaeff_at_nsbtp },
-    { NARC_fldeff_kusaeff_wt_nsbmd, NARC_fldeff_kusaeff_wt_nsbtp },
+    { NARC_fldeff_kusaeff_sp_nsbtx },
+    { NARC_fldeff_kusaeff_sm_nsbtx },
+    { NARC_fldeff_kusaeff_at_nsbtx },
+    { NARC_fldeff_kusaeff_wt_nsbtx },
   },
   { //短い草 強
-    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
-    { NARC_fldeff_kusaeff_sm2_nsbmd, NARC_fldeff_kusaeff_sm2_nsbtp },
-    { NARC_fldeff_kusaeff_at2_nsbmd, NARC_fldeff_kusaeff_at2_nsbtp },
-    { NARC_fldeff_kusaeff_wt2_nsbmd, NARC_fldeff_kusaeff_wt2_nsbtp },
+    { NARC_fldeff_kusaeff_sp2_nsbtx },
+    { NARC_fldeff_kusaeff_sm2_nsbtx },
+    { NARC_fldeff_kusaeff_at2_nsbtx },
+    { NARC_fldeff_kusaeff_wt2_nsbtx },
   },
   { //長い草
-    { NARC_fldeff_lgrass_sp_nsbmd, NARC_fldeff_lgrass_sp_nsbtp },
-    { NARC_fldeff_lgrass_sm_nsbmd, NARC_fldeff_lgrass_sm_nsbtp },
-    { NARC_fldeff_lgrass_at_nsbmd, NARC_fldeff_lgrass_at_nsbtp },
-    { NARC_fldeff_lgrass_wt_nsbmd, NARC_fldeff_lgrass_wt_nsbtp },
+    { NARC_fldeff_lgrass_sp_nsbtx },
+    { NARC_fldeff_lgrass_sm_nsbtx },
+    { NARC_fldeff_lgrass_at_nsbtx },
+    { NARC_fldeff_lgrass_wt_nsbtx },
   },
   { //長い草 強
-    { NARC_fldeff_lgrass_sp2_nsbmd, NARC_fldeff_lgrass_sp2_nsbtp },
-    { NARC_fldeff_lgrass_sm2_nsbmd, NARC_fldeff_lgrass_sm2_nsbtp },
-    { NARC_fldeff_lgrass_at2_nsbmd, NARC_fldeff_lgrass_at2_nsbtp },
-    { NARC_fldeff_lgrass_wt2_nsbmd, NARC_fldeff_lgrass_wt2_nsbtp },
+    { NARC_fldeff_lgrass_sp2_nsbtx },
+    { NARC_fldeff_lgrass_sm2_nsbtx },
+    { NARC_fldeff_lgrass_at2_nsbtx },
+    { NARC_fldeff_lgrass_wt2_nsbtx },
   },
   { //豪雪地帯 １シーズンのみ
-    { NARC_fldeff_kusaeff_sn_nsbmd, NARC_fldeff_kusaeff_sn_nsbtp },
-    { NARC_fldeff_kusaeff_sn_nsbmd, NARC_fldeff_kusaeff_sn_nsbtp },
-    { NARC_fldeff_kusaeff_sn_nsbmd, NARC_fldeff_kusaeff_sn_nsbtp },
-    { NARC_fldeff_kusaeff_sn_nsbmd, NARC_fldeff_kusaeff_sn_nsbtp },
+    { NARC_fldeff_kusaeff_sn_nsbtx },
+    { NARC_fldeff_kusaeff_sn_nsbtx },
+    { NARC_fldeff_kusaeff_sn_nsbtx },
+    { NARC_fldeff_kusaeff_sn_nsbtx },
   },
   { //豪雪地帯 強 １シーズンのみ
-    { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
-    { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
-    { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
-    { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
+    { NARC_fldeff_kusaeff_sn2_nsbtx },
+    { NARC_fldeff_kusaeff_sn2_nsbtx },
+    { NARC_fldeff_kusaeff_sn2_nsbtx },
+    { NARC_fldeff_kusaeff_sn2_nsbtx },
   },
   { //四季変化なし草　弱
-    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
-    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
-    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
-    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
+    { NARC_fldeff_kusaeff_sp_nsbtx },
+    { NARC_fldeff_kusaeff_sp_nsbtx },
+    { NARC_fldeff_kusaeff_sp_nsbtx },
+    { NARC_fldeff_kusaeff_sp_nsbtx },
   },
   { //四季変化なし草　強
-    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
-    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
-    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
-    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
+    { NARC_fldeff_kusaeff_sp2_nsbtx },
+    { NARC_fldeff_kusaeff_sp2_nsbtx },
+    { NARC_fldeff_kusaeff_sp2_nsbtx },
+    { NARC_fldeff_kusaeff_sp2_nsbtx },
   },
+};
+
+//短い草アニメ
+static const GFL_BBDACT_ANM data_BlActAnm_ShortGrass[] = {
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * data_BlActAnm_ShortGrassTbl[] =
+{
+  data_BlActAnm_ShortGrass,
+};
+
+//長い草アニメ
+static const GFL_BBDACT_ANM data_BlActAnm_LongGrass[] = {
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,2},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,2},
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,2},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,2},
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,2},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,2},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * data_BlActAnm_LongGrassTbl[] =
+{
+  data_BlActAnm_LongGrass,
+};
+
+//種類別アニメ
+static const GFL_BBDACT_ANM * const * data_BlActAnm_GrassTbl[FLDEFF_GRASS_MAX] =
+{
+  data_BlActAnm_ShortGrassTbl, //FLDEFF_GRASS_SHORT
+  data_BlActAnm_ShortGrassTbl, //FLDEFF_GRASS_SHORT2
+  data_BlActAnm_LongGrassTbl, //FLDEFF_GRASS_LONG
+  data_BlActAnm_LongGrassTbl, //FLDEFF_GRASS_LONG2
+  data_BlActAnm_ShortGrassTbl, //FLDEFF_GRASS_SNOW
+  data_BlActAnm_ShortGrassTbl, //FLDEFF_GRASS_SNOW2
+  data_BlActAnm_ShortGrassTbl, //FLDEFF_GRASS_ALLYEAR_SHORT
+  data_BlActAnm_ShortGrassTbl, //FLDEFF_GRASS_ALLYEAR_SHORT2
+};
+
+//種類別アニメ終了位置
+static const u16 data_BlActAnmEndNo[FLDEFF_GRASS_MAX] =
+{
+  3, //FLDEFF_GRASS_SHORT
+  3, //FLDEFF_GRASS_SHORT2
+  5, //FLDEFF_GRASS_LONG
+  5, //FLDEFF_GRASS_LONG2
+  3, //FLDEFF_GRASS_SNOW
+  3, //FLDEFF_GRASS_SNOW2
+  3, //FLDEFF_GRASS_ALLYEAR_SHORT
+  3, //FLDEFF_GRASS_ALLYEAR_SHORT2
 };
