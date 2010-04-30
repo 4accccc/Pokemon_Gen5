@@ -2513,6 +2513,9 @@ static void WbmRndSeq_Free_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_START_SELECT_CANCEL,
     SEQ_WAIT_SELECT_CANCEL,
 
+    SEQ_START_MSG_END,
+    SEQ_END,
+
     SEQ_WAIT_MSG,
   };
 
@@ -2543,7 +2546,7 @@ static void WbmRndSeq_Free_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         { 
         case 0:
           p_param->result = WIFIBATTLEMATCH_CORE_RESULT_FINISH;
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
+          *p_seq  = SEQ_START_MSG_END;
           break;
         case 1:
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
@@ -2551,6 +2554,16 @@ static void WbmRndSeq_Free_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         }
       }
     }
+    break;
+
+  case SEQ_START_MSG_END:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_020, WBM_TEXT_TYPE_WAIT );
+    *p_seq = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END );
+    break;
+
+  case SEQ_END:
+    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_DisConnectEnd );
     break;
 
     //-------------------------------------

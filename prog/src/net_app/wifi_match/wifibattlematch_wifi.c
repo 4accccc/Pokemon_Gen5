@@ -1033,6 +1033,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     { 
       //この大会にギブアップor本体替えしているので、
       //相応のメッセージをだして、大会見つからなかった、へ
+      p_wk->is_wificup_end  = TRUE;
       *p_seq  = SEQ_START_GIVEUP_MSG;
     }
     else
