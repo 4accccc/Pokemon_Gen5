@@ -300,7 +300,7 @@ BasicAI_01:
 	ADRS  BasicAI_172		// 	このゆびとまれ
 	ADRS  BasicAI_Dummy	//	  ダミー
 	ADRS  BasicAI_Dummy	//	  ダミー
-	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_175	  //	  ちょうはつ
 	ADRS  BasicAI_176		// 	てだすけ
 	ADRS  BasicAI_177		// 	トリック
 	ADRS  BasicAI_Dummy	//	  ダミー
@@ -1168,6 +1168,10 @@ BasicAI_172:			// 	このゆびとまれ
   CHECK_BTL_RULE
 	IF_EQUAL		BTL_RULE_SINGLE,AI_DEC10
   AIEND
+
+BasicAI_175://ちょうはつ
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_TYOUHATSU,AI_DEC10	// ちょうはつ中
+	AIEND
 
 BasicAI_176://てだすけ
 	CHECK_BTL_RULE

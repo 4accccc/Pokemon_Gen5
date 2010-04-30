@@ -771,7 +771,7 @@ DoubleEnemyAI_Sidechange_neko:
 	CHECK_NEKODAMASI	CHECK_DEFENCE
 	IFN_EQUAL	0,DoubleEnemyAI_Sidechange_end
 
-	IF_COMMONRND_UNDER	128,DoubleEnemyAI_Sidechange_end
+	IF_RND_UNDER	128,DoubleEnemyAI_Sidechange_end
 	INCDEC	+2
   JUMP  DoubleEnemyAI_Sidechange_end
 
@@ -808,7 +808,6 @@ DoubleEnemyAI_Sidechange_Table:    // 相手がねこだましを出しそう
 	.long	MONSNO_BUNYATTO
 	.long	MONSNO_GUREGGURU
 	.long	MONSNO_DERIBAADO
-	.long	MONSNO_DERIBAADO
 	.long	MONSNO_638 //　ズルズキン
 	.long	MONSNO_547 //　レパルダス
 	.long	0xffffffff
@@ -817,7 +816,23 @@ DoubleEnemyAI_Gihutopasu:       	//　ギフトパス　2010/4/23
 
 	JUMP	AI_DEC10 
 
-DoubleEnemyAI_Sakiokuri:      	//　さきおくり　2010/4/23 
+DoubleEnemyAI_Sakiokuri:      	//　さきおくり　2010/4/30 
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IF_EQUAL	0,AI_DEC10            	  //1位
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IF_EQUAL	1,AI_DEC10            	  //2位
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IF_EQUAL	0,DoubleEnemyAI_Sakiokuri_ok        	//1位
+
+	JUMP	AI_DEC10 
+
+DoubleEnemyAI_Sakiokuri_ok:
+	IF_COMMONRND_UNDER	128,DoubleEnemyAI_Sakiokuri_end
+
+  INCDEC  1
+DoubleEnemyAI_Sakiokuri_end:
 	AIEND
 
 DoubleEnemyAI_Daakuhouru:      	//　ダークホール　2010/4/23 
@@ -837,7 +852,7 @@ DoubleEnemyAI_rendou_Osakinidouzo_1:
 	IF_EQUAL	0,AI_DEC10        	//1位タイ
 	IF_EQUAL	1,AI_DEC10        	//2位
 
-	IF_COMMONRND_UNDER	50,DoubleEnemyAI_rendou_Osakinidouzo_end
+	IF_COMMONRND_UNDER	128,DoubleEnemyAI_rendou_Osakinidouzo_end
 	INCDEC		3	
 
 DoubleEnemyAI_rendou_Osakinidouzo_end:
@@ -858,9 +873,8 @@ DoubleAI_MineSeq:
 	IF_EQUAL	POKETYPE_HONOO, DoubleMineAI_FireType
 	IF_EQUAL	POKETYPE_DENKI, DoubleMineAI_ElectricType
 	IF_EQUAL	POKETYPE_MIZU, DoubleMineAI_WaterType
-	IF_WAZANO	WAZANO_NAGETUKERU, DoubleMineAI_Nagetukeru	//なげつける2006.6.23
-	
 
+	IF_WAZANO	WAZANO_NAGETUKERU, DoubleMineAI_Nagetukeru	//なげつける2006.6.23
 
 DoubleMineDamageEnd:
 	JUMP	AI_DEC30	// 基本的にダメージワザは出さない
@@ -958,9 +972,11 @@ DoubleMineAI_1:
 	IF_WAZA_SEQNO_JUMP	66,DoubleMineAI_Doku				// どく	2006.6.23
 	
 	IF_WAZANO	WAZANO_TEDASUKE, DoubleMineAI_Tedasuke		// てだすけ 2010/4/22
-	IF_WAZANO	WAZANO_IBARU, DoubleMineAI_Ibaru			// いばる 2010/4/
-	IF_WAZANO	WAZANO_TORIKKU, DoubleMineAI_Torikku		// トリック2006.6.23
-	IF_WAZANO	WAZANO_SURIKAE, DoubleMineAI_Torikku		// いれかえ2006.6.23
+	IF_WAZANO	WAZANO_IBARU, DoubleMineAI_Ibaru			// いばる 2010/4/22
+
+	IF_WAZANO	WAZANO_TORIKKU, DoubleMineAI_Torikku		// トリック2010.4.29
+	IF_WAZANO	WAZANO_SURIKAE, DoubleMineAI_Torikku		// すりかえ2010.4.29
+	IF_WAZANO	WAZANO_GIHUTOPASU,DoubleMineAI_Gihutopasu      	//　ギフトパス　2010/4/27 
 	
 	IF_WAZANO	WAZANO_IEKI, DoubleMineAI_Ieki				// いえき2006.6.23
 	
@@ -968,7 +984,8 @@ DoubleMineAI_1:
 
 	IF_WAZANO	WAZANO_OSAKINIDOUZO, DoubleMineAI_Osakinidouzo	// おさきにどうぞ2010.4.22
 
-	IF_WAZANO	WAZANO_IYASINOHADOU,DoubleMineAI_Iyasinohadou      	//　いやしのはどう　2010/4/23 
+	IF_WAZANO	WAZANO_IYASINOHADOU,DoubleMineAI_Iyasinohadou      	//　いやしのはどう　2010/4/27 
+
 
 	JUMP	DoubleMineAI_end
 
@@ -1193,12 +1210,215 @@ DoubleMineAI_IbaruEnd:
 	AIEND
 
 
-
-
-//ダブル
+DoubleMineAI_Gihutopasu:      	//　ギフトパス　2010/4/27 
 DoubleMineAI_Nagetukeru:
 DoubleMineAI_Torikku:
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_ramunomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_kagonomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_kurabonomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_tiigonomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_nanashinomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_momonnomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_kiinomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_siroihaabu
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_obonnomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_mentaruhaabu
+
+	JUMP	DoubleMineAI_end
+
+
+DoubleMineAI_Torikku_ramunomi:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_NEMURI,DoubleMineAI_Torikku_nemuri		// ねむり中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_MAHI,DoubleMineAI_Torikku_mahi 		// まひ中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KOORI,DoubleMineAI_Torikku_yakedo 		// やけど中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KOORI,DoubleMineAI_Torikku_koori 		// こおり中
+	IF_DOKUDOKU	CHECK_DEFENCE,DoubleMineAI_Torikku_dokudoku	     	// どくどく中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KONRAN,DoubleMineAI_Torikku_konran 		// こんらん中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_kagonomi:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_NEMURI,DoubleMineAI_Torikku_nemuri		// ねむり中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_kurabonomi:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_MAHI,DoubleMineAI_Torikku_mahi 		// まひ中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_tiigonomi:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KOORI,DoubleMineAI_Torikku_yakedo 		// やけど中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_nanashinomi:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KOORI,DoubleMineAI_Torikku_koori 		// こおり中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_momonnomi:
+	IF_DOKUDOKU	CHECK_DEFENCE,DoubleMineAI_Torikku_dokudoku	     	// どくどく中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_kiinomi:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KONRAN,DoubleMineAI_Torikku_konran 		// こんらん中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_siroihaabu:
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_POW,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_DEF,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_SPEPOW,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_AVOID,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_DEF,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_AVOID,5,DoubleMineAI_Torikku_statusdown
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_mentaruhaabu:
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_MEROMERO,DoubleMineAI_Torikku_meromero 		// メロメロ中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KONRAN,DoubleMineAI_Torikku_konran 		// こんらん中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_ICHAMON,DoubleMineAI_Torikku_ityamon 		// いちゃもん中
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_TYOUHATSU,DoubleMineAI_Torikku_tyouhatu 		// ちょうはつ中
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Torikku_obonnomi:
+	IF_HP_UNDER	CHECK_ATTACK_FRIEND,50,DoubleMineAI_end
+	JUMP	DoubleMineAI_Torikku_ok
+
+DoubleMineAI_Torikku_nemuri:		// ねむり中
+  IF_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_IBIKI,DoubleMineAI_end
+  IF_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_NEGOTO,DoubleMineAI_end
+
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_Torikku_ok
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,DoubleMineAI_end     	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	1,DoubleMineAI_end     	//2位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+
+DoubleMineAI_Torikku_mahi: 		// まひ中
+  IF_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_NEMURU,DoubleMineAI_end
+	IF_HP_UNDER	CHECK_ATTACK_FRIEND,80,DoubleMineAI_end
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	3,DoubleMineAI_end     	//4位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+
+DoubleMineAI_Torikku_yakedo: 		// やけど中
+  IF_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_NEMURU,DoubleMineAI_end
+	IF_HP_UNDER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_end
+  
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+  IF_DMG_PHYSIC_UNDER CHECK_ATTACK_FRIEND,DoubleMineAI_end
+
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,80,DoubleMineAI_Torikku_ok
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,DoubleMineAI_end     	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	1,DoubleMineAI_end     	//2位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+
+DoubleMineAI_Torikku_koori: 		// こおり中
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_Torikku_ok
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,DoubleMineAI_end     	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	1,DoubleMineAI_end     	//2位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+
+DoubleMineAI_Torikku_konran: 		// こんらん中
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_Torikku_ok
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,DoubleMineAI_end     	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	1,DoubleMineAI_end     	//2位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+
+DoubleMineAI_Torikku_dokudoku: 		// どくどく中
+  IF_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_NEMURU,DoubleMineAI_end
+
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,80,DoubleMineAI_Torikku_ok
+	IF_HP_UNDER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_end
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+  JUMP  DoubleMineAI_end
+
+
+DoubleMineAI_Torikku_statusdown: 		// ステータスダウン中
+	IF_HP_UNDER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_end
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,80,DoubleMineAI_Torikku_ok
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,DoubleMineAI_end     	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	1,DoubleMineAI_end     	//2位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+
+DoubleMineAI_Torikku_meromero: 		// メロメロ中
+DoubleMineAI_Torikku_ityamon: 		// いちゃもん中
+DoubleMineAI_Torikku_tyouhatu: 		// ちょうはつ中
+	IF_HP_OVER	CHECK_ATTACK_FRIEND,40,DoubleMineAI_Torikku_ok
+
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Torikku_ok
+	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Torikku_ok
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,DoubleMineAI_end     	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	1,DoubleMineAI_end     	//2位じゃない
+
+	JUMP	DoubleMineAI_Torikku_ok
+
+DoubleMineAI_Torikku_ok:
+	IF_COMMONRND_UNDER	128,DoubleMineAI_Torikku_end  //まもる連動
+	INCDEC	3
+
+DoubleMineAI_Torikku_end:
 	AIEND
+
 
 DoubleMineAI_Ieki:
 	IF_WAZASICK	CHECK_ATTACK_FRIEND,WAZASICK_IEKI,DoubleMineAI_end		// いえき中
@@ -1273,7 +1493,7 @@ DoubleMineAI_Osakinidouzo_Trickroom_pass:
 	JUMP	DoubleMineAI_Osakinidouzo_end
 
 DoubleMineAI_Osakinidouzo_ok:
-	IF_COMMONRND_UNDER	50,DoubleMineAI_Osakinidouzo_end
+	IF_COMMONRND_UNDER	128,DoubleMineAI_Osakinidouzo_end
 	INCDEC		3	
 
 DoubleMineAI_Osakinidouzo_end:
@@ -1281,38 +1501,41 @@ DoubleMineAI_Osakinidouzo_end:
 
 
 DoubleMineAI_Iyasinohadou:      	//　いやしのはどう　2010/4/27 
-	IF_HP_EQUAL	CHECK_DEFENCE,0,DoubleMineAI_Iyasinohadou_end
+	IF_HP_EQUAL	CHECK_DEFENCE,0,DoubleMineAI_end
 	IF_HP_OVER	CHECK_DEFENCE,100,DoubleMineAI_Iyasinohadou_end
 
-	IF_HP_OVER	CHECK_DEFENCE,70,DoubleMineAI_Iyasinohadou_end
+	IF_HP_OVER	CHECK_DEFENCE,70,DoubleMineAI_Iyasinohadou_70up
+	IF_HP_OVER	CHECK_DEFENCE,30,DoubleMineAI_Iyasinohadou_ok
 
 	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,7,DoubleMineAI_Iyasinohadou_ok
 	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,7,DoubleMineAI_Iyasinohadou_ok
 	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,7,DoubleMineAI_Iyasinohadou_ok
 
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IF_EQUAL	0,DoubleMineAI_Iyasinohadou_ok        	//1位
 
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	0,DoubleMineAI_Iyasinohadou_end        	//1位じゃない
 
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IF_EQUAL	1,DoubleMineAI_Iyasinohadou_ok        	//2位
 
-                                    
+	JUMP	DoubleMineAI_Iyasinohadou_end
 
-
+DoubleMineAI_Iyasinohadou_70up:      	
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IF_EQUAL	3,DoubleMineAI_Iyasinohadou_ok        	//4位
+	JUMP	DoubleMineAI_Iyasinohadou_end
 
 DoubleMineAI_Iyasinohadou_ok:
 
-	IF_COMMONRND_UNDER	128,DoubleMineAI_Iyasinohadou_end
-
+	IF_COMMONRND_UNDER	128,DoubleMineAI_Iyasinohadou_end   //　まもると連動
 	INCDEC		3	
 	JUMP  DoubleMineAI_Iyasinohadou_end
-
-	IF_HP_OVER	CHECK_DEFENCE,70,DoubleMineAI_Iyasinohadou_end
 
 DoubleMineAI_Iyasinohadou_end:
 	INCDEC		-1	
 	AIEND
-
-
-
-
 
 DoubleMineAI_end:
 	INCDEC	-30		//基本的に味方には出さない

@@ -16,7 +16,7 @@
 
 GambleAISeq:
 
-#ifdef 0
+#if 0
 
 	IF_MIKATA_ATTACK	GambleAI_end			//ëŒè€Ç™ñ°ï˚Ç»ÇÁèIóπ
 
@@ -29,12 +29,11 @@ GambleAISeq:
 GambleAI_end:
 	AIEND
 
-#else	//ifdef 0
+#else
+	COMP_POWER	LOSS_CALC_OFF
+	IFN_EQUAL	COMP_POWER_NONE,AmaiAI_damage
 
   IF_HP_OVER CHECK_DEFENCE,50,AmaiAI_end
-
-	COMP_POWER	LOSS_CALC_OFF
-	IF_EQUAL	COMP_POWER_NONE,AmaiAI_2
 	
 	IF_RND_UNDER	80,AmaiAI_2
 	INCDEC		-1
@@ -44,11 +43,20 @@ AmaiAI_2:
 
 	IF_RND_UNDER	50,AmaiAI_end
 	INCDEC		-1
+  JUMP  AmaiAI_end
 
+AmaiAI_damage:  
+	CHECK_TURN
+	IFN_EQUAL	0,AmaiAI_end
+
+	INCDEC		1
 AmaiAI_end:
 	AIEND
 
-#endif	//ifdef 0
+
+
+
+#endif
 
 
 GambleAI_Table:

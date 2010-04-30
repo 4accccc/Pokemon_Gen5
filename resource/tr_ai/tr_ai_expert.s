@@ -464,22 +464,22 @@ ExpertAI_7_1:
 	IF_HP_UNDER	CHECK_ATTACK,80,ExpertAI_7_2
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_7_2
 
-	IF_RND_UNDER	50,ExpertAI_7_5
+	IF_COMMONRND_UNDER	50,ExpertAI_7_5
 	JUMP		AI_DEC3
 
 ExpertAI_7_2:
 	IF_HP_OVER	CHECK_ATTACK,50,ExpertAI_7_4
-	IF_RND_UNDER	128,ExpertAI_7_3
+	IF_COMMONRND_OVER	128,ExpertAI_7_3
 
 	INCDEC		+1
 ExpertAI_7_3:
 	IF_HP_OVER	CHECK_ATTACK,30,ExpertAI_7_5
-	IF_RND_UNDER	50,ExpertAI_7_5
+	IF_COMMONRND_OVER	128,ExpertAI_7_5
 	INCDEC		+1
 	JUMP		ExpertAI_7_5
 
 ExpertAI_7_4:
-	IF_RND_UNDER	50,ExpertAI_7_5
+	IF_COMMONRND_UNDER	50,ExpertAI_7_5
 	INCDEC		-1
 ExpertAI_7_5:
 	AIEND
@@ -1889,7 +1889,7 @@ ExpertAI_111:	// まもる
 	JUMP	ExpertAI_111_mamoriyaburanai
 
 ExpertAI_111_mamoriyaburi:
-	IF_RND_UNDER	128,ExpertAI_111_mamoriyaburanai
+	IF_COMMONRND_UNDER	128,ExpertAI_111_mamoriyaburanai
 	INCDEC		-2
 
 ExpertAI_111_mamoriyaburanai:
@@ -1917,8 +1917,8 @@ ExpertAI_111_mamoriyaburanai:
 	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_YADORIGI,    ExpertAI_111_ok   // やどりぎ
 	IF_WAZASICK	  CHECK_DEFENCE,WAZASICK_AKUBI,       ExpertAI_111_ok		// あくび
 	
-	CHECK_BTL_RULE
-	IF_EQUAL		BTL_RULE_DOUBLE,ExpertAI_111_ok							//2VS2
+//	CHECK_BTL_RULE
+//	IF_EQUAL		BTL_RULE_DOUBLE,ExpertAI_111_ok							//2VS2
 	
 	//自分がロックオンされていたら守る
 	IF_WAZASICK	  CHECK_ATTACK,WAZASICK_MUSTHIT_TARGET,ExpertAI_111_ok	//ロックオンされ中
@@ -1929,8 +1929,8 @@ ExpertAI_111_ok:
 	INCDEC		2
 
 ExpertAI_111_1:
-	IF_RND_UNDER	128,ExpertAI_111_1_2
-	INCDEC		-1
+	IF_COMMONRND_UNDER	128,ExpertAI_111_1_2             //　連動ランダム
+	INCDEC		-2
 ExpertAI_111_1_2:
 	CHECK_MAMORU_COUNT	CHECK_ATTACK
 	IF_EQUAL	0,ExpertAI_111_end
@@ -1940,12 +1940,6 @@ ExpertAI_111_1_2:
 	JUMP		ExpertAI_111_end
 
 ExpertAI_111_ng1:
-	
-	//相手がロックオンをしてなかったら守る：ＡＧＢから間違っていると思われるので修正2006.8.9
-	//CHECK_LAST_WAZA	CHECK_DEFENCE
-	//CHECK_WORKWAZA_SEQNO
-	//IFN_EQUAL	94,ExpertAI_111_end		
-	
 	//自分がロックオンをされていたら
 	IF_WAZASICK	CHECK_ATTACK,WAZASICK_MUSTHIT_TARGET,ExpertAI_111_end	//ロックオンされ中
 
