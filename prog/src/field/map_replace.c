@@ -295,7 +295,8 @@ static int getReplaceTablePos( MAPREPLACE_TYPE rep_type )
  * @param offsets
  * @param gamesystem
  *
- * @todo  イベントフラグの対応を行う必要がある
+ * @note
+ * イベントフラグの対応を行う必要がある。記述箇所が分散しているので注意すること。
  */
 //--------------------------------------------------------------
 static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WORK * gamesystem )
@@ -322,7 +323,7 @@ static void MAPREPLACE_makeReplaceOffset ( REPLACE_OFFSET * offsets, GAMESYS_WOR
     {
       offsets->flag_pos[i] = 1;
     } else {
-      offsets->flag_pos[i] = 0; //とりあえず
+      offsets->flag_pos[i] = 0; 
     }
   }
 }
