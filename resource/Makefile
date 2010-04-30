@@ -124,6 +124,8 @@ SUBDIRS	=	wmi \
 			local_tvt \
 			palace \
             op_demo \
+            op_demo2 \
+            gf_logo \
 			battle_recorder \
 			monolith \
 			fourkings_scene \
