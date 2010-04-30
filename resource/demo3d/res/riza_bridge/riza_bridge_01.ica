@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-22T11:18:44" source="riza_bridge_01_v22.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-04-30T10:27:06" source="riza_bridge_matome_v03.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
@@ -17,7 +17,7 @@
 	tool_start_frame="0"
 	tool_end_frame="450"
 	interpolation="frame"
-	compress_node="none" node_size="2 2"
+	compress_node="none" node_size="3 3"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
@@ -77,11 +77,11 @@
 	0.000000 0.000000
 </node_rotate_data>
 
-<node_translate_data size="4">
-	-1088.000000 0.000000 409.090332 175.008789
+<node_translate_data size="6">
+	-1088.000000 0.000000 409.090332 175.008789 594.909912 -175.008789
 </node_translate_data>
 
-<node_anm_array size="2">
+<node_anm_array size="3">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
@@ -102,6 +102,17 @@
 		<rotate_z frame_step="1" data_size="451" data_head="1"/>
 		<translate_x frame_step="1" data_size="1" data_head="2"/>
 		<translate_y frame_step="1" data_size="1" data_head="3"/>
+		<translate_z frame_step="1" data_size="1" data_head="1"/>
+	</node_anm>
+	<node_anm index="2">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="4"/>
+		<translate_y frame_step="1" data_size="1" data_head="5"/>
 		<translate_z frame_step="1" data_size="1" data_head="1"/>
 	</node_anm>
 </node_anm_array>
