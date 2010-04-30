@@ -192,6 +192,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   evWork->scriptWork->eventWork = evWork;
   evWork->commWork = scriptWork->commWork;
   evWork->isNetErr = FALSE;
+  evWork->progWork = NULL;
   
   {
     STRBUF *str = GFL_STR_CreateBuffer( SAVELEN_POKEMON_NAME+EOM_SIZE , HEAPID_PROC_WRAPPER );
@@ -1482,7 +1483,10 @@ void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )
 {
   u32 conPointArr = MUS_COMM_GetConditionPointArr( evWork->commWork );
   u32 npcArr = MUS_COMM_GetNpcArr( evWork->commWork );
-  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , 0 );
+  if( evWork->progWork == NULL )
+  {
+    evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , 0 );
+  }
   MUSICAL_PROGRAM_SetConditionPointArr( evWork->progWork , conPointArr );
   MUSICAL_PROGRAM_SetNpcArr( evWork->progWork , npcArr );
 }

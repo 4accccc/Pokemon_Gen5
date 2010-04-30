@@ -323,6 +323,7 @@ void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR 
 
 void MUS_COMM_ExitField( MUS_COMM_WORK *work )
 {
+  MUS_COMM_ExitMusical( work );
   GameCommSys_ExitReq( work->gameComm );
 }
 
