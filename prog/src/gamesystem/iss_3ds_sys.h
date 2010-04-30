@@ -19,8 +19,8 @@ typedef struct _ISS_3DS_SYS ISS_3DS_SYS;
 // ■定数
 //===============================================================================
 // 3Dサウンドユニット インデックス
-typedef enum
-{
+typedef enum {
+
   ISS3DS_UNIT_TRACK01,  // トラック 1を操作するユニット
   ISS3DS_UNIT_TRACK02,  // トラック 2を操作するユニット
   ISS3DS_UNIT_TRACK03,  // トラック 3を操作するユニット
@@ -38,6 +38,7 @@ typedef enum
   ISS3DS_UNIT_TRACK15,  // トラック15を操作するユニット
   ISS3DS_UNIT_TRACK16,  // トラック16を操作するユニット
   ISS3DS_UNIT_NUM
+
 } ISS3DS_UNIT_INDEX;
 
 

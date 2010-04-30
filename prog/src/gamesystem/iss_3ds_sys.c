@@ -36,12 +36,20 @@
 // 絶対値取得マクロ
 #define ABS(n) (n>0 ? n : -n)
 
+#define UNIT_VOLUME_FADE_SPEED (16) // ユニットボリュームのフェード速度
+#define MIN_UNIT_VOLUME         (0) // ユニットボリュームの最小値
+#define MAX_UNIT_VOLUME       (127) // ユニットボリュームの最大値
+
+#define UNIT_PAN_MOVE_SPEED (32) // ユニットのパンの移動速度
+#define MIN_UNIT_PAN      (-128) // ユニットのパンの最小値
+#define MAX_UNIT_PAN       (127) // ユニットのパンの最大値
+
 
 //===============================================================================
 // ■1つの音源を扱う構造体 ( ユニット )
 //===============================================================================
-typedef struct
-{ 
+typedef struct { 
+
   BOOL    active;          // 有効かどうか
   VecFx32 pos;             // 音源の位置
   fx32    effectiveRange;  // 音が届く距離
@@ -54,8 +62,8 @@ typedef struct
 //===============================================================================
 // ■システムデータ
 //===============================================================================
-typedef struct
-{
+typedef struct {
+
   u32 soundIdx;     // BGM No.
   u16 holdTrackBit; // システム起動時に抑えるトラックのビットマスク
   u16 padding;
@@ -66,8 +74,8 @@ typedef struct
 //===============================================================================
 // ■システムワーク
 //===============================================================================
-struct _ISS_3DS_SYS
-{
+struct _ISS_3DS_SYS {
+
   HEAPID heapID;
   BOOL   boot;    // 起動しているかどうか
 
@@ -78,11 +86,15 @@ struct _ISS_3DS_SYS
   VecFx32 observerPos;        // 観測者の座標
   VecFx32 observerTargetPos;  // 観測者の注視点座標
 
-  ISS_3DS_UNIT unit[ ISS3DS_UNIT_NUM ];  // ユニット
+  ISS_3DS_UNIT unit      [ ISS3DS_UNIT_NUM ]; // ユニット
+	int          unitVolume[ ISS3DS_UNIT_NUM ]; // ユニットの音量
+	int          unitPan   [ ISS3DS_UNIT_NUM ]; // ユニットのパン
+
 
   ISS_BRIDGE_DATA* systemData;         // システムデータ
   u8               systemDataNum;      // システムデータの数
   u8               currentSysDataIdx;  // 参照中データのインデックス
+
 };
 
 
@@ -90,16 +102,15 @@ struct _ISS_3DS_SYS
 // ■非公開関数
 //=============================================================================== 
 // システムデータ
-static void InitSystemData          ( ISS_3DS_SYS* system );
-static void LoadSystemData          ( ISS_3DS_SYS* system );
-static void UnloadSystemData        ( ISS_3DS_SYS* system );
-static void ChangeCurrentSystemData ( ISS_3DS_SYS* system, u8 nextDataIdx );
-static u8   SearchSystemData        ( const ISS_3DS_SYS* system, u32 soundIdx );
+static void InitSystemData( ISS_3DS_SYS* system );
+static void LoadSystemData( ISS_3DS_SYS* system );
+static void UnloadSystemData( ISS_3DS_SYS* system );
+static void ChangeCurrentSystemData( ISS_3DS_SYS* system, u8 nextDataIdx );
+static u8 SearchSystemData( const ISS_3DS_SYS* system, u32 soundIdx );
 // ユニット
-static void InitAllUnit ( ISS_3DS_SYS* system ); 
-static void RegisterUnit( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx, 
-                          fx32 effectiveRange, int maxVolume );
-static void SetUnitPos  ( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx, const VecFx32* pos );
+static void InitAllUnit( ISS_3DS_SYS* system ); 
+static void RegisterUnit( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx, fx32 effectiveRange, int maxVolume );
+static void SetUnitPos( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx, const VecFx32* pos );
 // 観測者
 static void SetObserverPos( ISS_3DS_SYS* system, const VecFx32* pos, const VecFx32* targetPos );
 // システム制御
@@ -107,16 +118,22 @@ static void BootSystem( ISS_3DS_SYS* system );
 static void StopSystem( ISS_3DS_SYS* system );
 static void SystemMain( ISS_3DS_SYS* system );
 static void ZoneChange( ISS_3DS_SYS* system );
-// ボリューム / パン
-static void InitTrackVolume  ( const ISS_3DS_SYS* system );
-static void UpdateTrackVolume( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx );
-static void UpdateTrackPan   ( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx );
-static int  CalcTrackVolume  ( const ISS_3DS_UNIT* unit, const VecFx32* observerPos );
-static int  CalcTrackPan     ( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, 
-                               const VecFx32* observerTargetPos );
+// ボリューム
+static void InitTrackVolume( const ISS_3DS_SYS* system );
+static void UpdateUnitVolume( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx );
+static int CalcUnitVolume( const ISS_3DS_UNIT* unit, const VecFx32* observerPos );
+static void UnitVolumeUp( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int max_volume );
+static void UnitVolumeDown( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int min_volume );
+static void ApplyUnitVolumeForBGM( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx );
+// パン
+static void UpdateUnitPan( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx );
+static int CalcUnitPan( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, const VecFx32* observerTargetPos );
+static void UnitPanMoveToLeft( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int limit_pan );
+static void UnitPanMoveToRight( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int limit_pan );
+static void ApplyUnitPanForBGM( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx );
 // マスターボリューム
 static void FadePracticalMasterVolume( ISS_3DS_SYS* system );
-static u8   AdjustByMasterVolume     ( const ISS_3DS_SYS* system, u8 volume );
+static u8 AdjustByMasterVolume( const ISS_3DS_SYS* system, u8 volume );
 
 #ifdef DEBUG_PRINT_ON
 // デバッグ
@@ -477,6 +494,8 @@ static void InitAllUnit( ISS_3DS_SYS* system )
     system->unit[ unitIdx ].active    = FALSE;
     system->unit[ unitIdx ].maxVolume = MAX_VOLUME;
     system->unit[ unitIdx ].trackBit  = ( 1 << unitIdx );
+		system->unitVolume[ unitIdx ]     = 0;
+		system->unitPan[ unitIdx ]        = 0;
   }
 
   // DEBUG:
@@ -629,6 +648,7 @@ static void StopSystem( ISS_3DS_SYS* system )
 static void SystemMain( ISS_3DS_SYS* system )
 {
   ISS3DS_UNIT_INDEX unitIdx;
+	BOOL print = TRUE;
 
   // 起動していない
   if( system->boot == FALSE ){ return; }
@@ -639,8 +659,21 @@ static void SystemMain( ISS_3DS_SYS* system )
   // ボリュームとパンを更新
   for( unitIdx=ISS3DS_UNIT_TRACK01; unitIdx < ISS3DS_UNIT_NUM; unitIdx++ )
   {
-    UpdateTrackVolume( system, unitIdx );
-    UpdateTrackPan( system, unitIdx );
+		if( system->unit[ unitIdx ].active == FALSE ) { continue; }
+
+		// 更新
+    UpdateUnitVolume( system, unitIdx );
+    UpdateUnitPan( system, unitIdx );
+
+		// BGMに反映
+		ApplyUnitVolumeForBGM( system, unitIdx );
+	  ApplyUnitPanForBGM( system, unitIdx );
+
+		if( print ) {
+			print = FALSE;
+			OS_TFPrintf( 2, "volume = %d\n", system->unitVolume[ unitIdx ] );
+			OS_TFPrintf( 3, "pan = %d\n", system->unitPan[ unitIdx ] );
+		}
   }
 }
 
@@ -687,7 +720,7 @@ static void InitTrackVolume( const ISS_3DS_SYS* system )
  * @param unitIdx ユニットを指定
  */
 //-------------------------------------------------------------------------------
-static void UpdateTrackVolume( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx )
+static void UpdateUnitVolume( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx )
 { 
   const ISS_3DS_UNIT* unit;
   int volume;
@@ -698,11 +731,17 @@ static void UpdateTrackVolume( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit
   if( unit->active == FALSE ){ return; }
 
   // ボリューム更新
-  volume = CalcTrackVolume( unit, &(system->observerPos) ); 
-  volume = AdjustByMasterVolume( system, volume );
-  PMSND_ChangeBGMVolume( unit->trackBit, volume );
+  volume = CalcUnitVolume( unit, &(system->observerPos) ); 
 
-  // DEBUG:
+	// ユニットボリュームを更新
+	if( system->unitVolume[ unitIdx ] < volume ) {
+		UnitVolumeUp( system, unitIdx, volume );
+	}
+	else if( volume < system->unitVolume[ unitIdx ] ) {
+		UnitVolumeDown( system, unitIdx, volume );
+	}
+
+
 #if 0
   OS_TFPrintf( PRINT_TARGET, 
                "ISS-B: update track volume (unit[%d] ==> %d)\n", unitIdx, volume );
@@ -717,7 +756,7 @@ static void UpdateTrackVolume( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit
  * @param unitIdx ユニットを指定
  */
 //-------------------------------------------------------------------------------
-static void UpdateTrackPan( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx )
+static void UpdateUnitPan( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx )
 {
   const ISS_3DS_UNIT* unit;
   int pan;
@@ -728,10 +767,16 @@ static void UpdateTrackPan( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx
   if( unit->active == FALSE ){ return; }
 
   // パンを設定
-  pan = CalcTrackPan( unit, &(system->observerPos), &(system->observerTargetPos) ); 
-  PMSND_SetStatusBGM_EX( unit->trackBit, 256, 0, pan );
+  pan = CalcUnitPan( unit, &(system->observerPos), &(system->observerTargetPos) ); 
 
-  // DEBUG:
+	if( pan < system->unitPan[ unitIdx ] ) {
+		UnitPanMoveToLeft( system, unitIdx, pan );
+	}
+	else if( system->unitPan[ unitIdx ] < pan ) {
+		UnitPanMoveToRight( system, unitIdx, pan );
+	}
+
+
 #if 0
   OS_TFPrintf( PRINT_TARGET, 
                "ISS-B: update track pan (unit[%d] ==> %d)\n", unitIdx, pan );
@@ -740,7 +785,7 @@ static void UpdateTrackPan( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx
 
 //-------------------------------------------------------------------------------
 /**
- * @brief ボリュームを計算する
+ * @brief ボリューム ( 理論値 ) を計算する
  *
  * @param unit        計算対象のユニット
  * @param observerPos 観測者の位置
@@ -748,7 +793,7 @@ static void UpdateTrackPan( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx
  * @return 指定したユニットが操作するトラックのボリューム
  */
 //-------------------------------------------------------------------------------
-static int CalcTrackVolume( const ISS_3DS_UNIT* unit, const VecFx32* observerPos )
+static int CalcUnitVolume( const ISS_3DS_UNIT* unit, const VecFx32* observerPos )
 {
   int volume;
 
@@ -766,18 +811,101 @@ static int CalcTrackVolume( const ISS_3DS_UNIT* unit, const VecFx32* observerPos
     range = unit->effectiveRange;
 
     // ボリューム決定
-    if( range < dist )  
-    { // 音が届かない距離
+    if( range < dist )  { 
+			// 音が届かない距離
       volume = 0;
     }
-    else                
-    { // 音が届く距離
+    else { 
+			// 音が届く距離
       float rate = FX_FX32_TO_F32( FX_Div( range - dist, range ) ); 
       volume     = unit->maxVolume * rate;
     }
   } 
 
   return volume;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief ユニットボリュームを上げる
+ *
+ * @param system
+ * @param unit_idx   ユニット番号
+ * @param max_volume 最大ボリューム
+ */
+//-------------------------------------------------------------------------------
+static void UnitVolumeUp( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int max_volume )
+{ 
+	int volume;
+
+	// インデックスエラー
+	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	
+	volume = system->unitVolume[ unit_idx ];
+
+	// 不正呼び出し
+	GF_ASSERT( volume < max_volume )
+
+	// ボリュームUP
+	volume += UNIT_VOLUME_FADE_SPEED;
+
+	// 最大値補正
+	if( max_volume < volume ) {
+		volume = max_volume;
+	}
+
+	system->unitVolume[ unit_idx ] = volume;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief ユニットボリュームを下げる
+ *
+ * @param system
+ * @param unit_idx   ユニット番号
+ * @param max_volume 最小ボリューム
+ */
+//-------------------------------------------------------------------------------
+static void UnitVolumeDown( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int min_volume )
+{
+	int volume;
+
+	// インデックスエラー
+	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	
+	volume = system->unitVolume[ unit_idx ];
+
+	// 不正呼び出し
+	GF_ASSERT( min_volume < volume )
+
+	// ボリュームDOWN
+	volume -= UNIT_VOLUME_FADE_SPEED;
+
+	// 最小値補正
+	if( volume < min_volume ) {
+		volume = min_volume;
+	}
+
+	system->unitVolume[ unit_idx ] = volume;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief ユニットのトラックボリュームをBGMに反映させる
+ *
+ * @param system
+ * @param unit_idx ユニット番号
+ */
+//-------------------------------------------------------------------------------
+static void ApplyUnitVolumeForBGM( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx )
+{
+	int volume;
+
+	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM ); // インデックスエラー
+  GF_ASSERT( system->unit[ unit_idx ].active ); // ユニットが有効でない
+
+  volume = AdjustByMasterVolume( system, system->unitVolume[ unit_idx ] );
+  PMSND_ChangeBGMVolume( system->unit[ unit_idx ].trackBit, volume );
 }
 
 //-------------------------------------------------------------------------------
@@ -791,7 +919,7 @@ static int CalcTrackVolume( const ISS_3DS_UNIT* unit, const VecFx32* observerPos
  * @return 指定したユニットが操作するトラックのパン
  */
 //-------------------------------------------------------------------------------
-static int CalcTrackPan( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, const VecFx32* observerTargetPos )
+static int CalcUnitPan( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, const VecFx32* observerTargetPos )
 {
   int pan;
 
@@ -842,6 +970,94 @@ static int CalcTrackPan( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, c
   
   return pan;
 } 
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief ユニットのパンを左へ移動する
+ *
+ * @param system
+ * @param unit_idx   ユニット番号
+ * @param limit_pan  パンの最小値
+ */
+//-------------------------------------------------------------------------------
+static void UnitPanMoveToLeft( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int limit_pan )
+{
+	int pan;
+
+	// インデックスエラー
+	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	
+	pan = system->unitPan[ unit_idx ];
+
+	// 不正呼び出し
+	GF_ASSERT( limit_pan < pan )
+
+	// パンを変化
+	pan -= UNIT_PAN_MOVE_SPEED;
+
+	// 最小値補正
+	if( pan < limit_pan ) {
+		pan = limit_pan;
+	}
+
+	system->unitPan[ unit_idx ] = pan;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief ユニットのパンを右へ移動する
+ *
+ * @param system
+ * @param unit_idx  ユニット番号
+ * @param limit_pan パンの最大値
+ */
+//-------------------------------------------------------------------------------
+static void UnitPanMoveToRight( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int limit_pan )
+{
+	int pan;
+
+	// インデックスエラー
+	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	
+	pan = system->unitPan[ unit_idx ];
+
+	// 不正呼び出し
+	GF_ASSERT( pan < limit_pan )
+
+	// パンを変化
+	pan += UNIT_PAN_MOVE_SPEED;
+
+	// 最大値補正
+	if( limit_pan < pan ) {
+		pan = limit_pan;
+	}
+
+	system->unitPan[ unit_idx ] = pan;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief ユニットのパンをBGMに反映させる
+ *
+ * @param system
+ * @param unit_idx ユニット番号
+ */
+//-------------------------------------------------------------------------------
+static void ApplyUnitPanForBGM( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx )
+{
+  const ISS_3DS_UNIT* unit;
+
+	// インデックスエラー
+	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+
+  unit = &( system->unit[ unit_idx ] );
+
+  // ユニットが有効でない
+  GF_ASSERT( unit->active );
+
+  // パンを設定
+  PMSND_SetStatusBGM_EX( unit->trackBit, 256, 0, system->unitPan[ unit_idx ] );
+}
 
 //-------------------------------------------------------------------------------
 /**
