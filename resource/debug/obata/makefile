@@ -73,13 +73,13 @@ subdir:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
 	ruby $(ICACONV) -rt camera_null2.ica ica_test_data2.bin
-	ruby $(ICACONV) -srt dice.ica dice_anime_srt.bin
-	ruby $(ICACONV) -sr dice.ica dice_anime_sr.bin
-	ruby $(ICACONV) -st dice.ica dice_anime_st.bin
-	ruby $(ICACONV) -rt dice.ica dice_anime_rt.bin
-	ruby $(ICACONV) -s dice.ica dice_anime_s.bin
-	ruby $(ICACONV) -r dice.ica dice_anime_r.bin
-	ruby $(ICACONV) -t dice.ica dice_anime_t.bin
+	ruby $(ICACONV) -srt camera_null2.ica dice_anime_srt.bin
+	ruby $(ICACONV) -sr camera_null2.ica dice_anime_sr.bin
+	ruby $(ICACONV) -st camera_null2.ica dice_anime_st.bin
+	ruby $(ICACONV) -rt camera_null2.ica dice_anime_rt.bin
+	ruby $(ICACONV) -s camera_null2.ica dice_anime_s.bin
+	ruby $(ICACONV) -r camera_null2.ica dice_anime_r.bin
+	ruby $(ICACONV) -t camera_null2.ica dice_anime_t.bin
 	g3dcvtr houou_test.imd
 	g3dcvtr houou_test.ica
 	g3dcvtr houou_test.ita
