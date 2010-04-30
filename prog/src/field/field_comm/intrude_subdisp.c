@@ -1921,7 +1921,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
         else{
           msg_id = (offset_z > 0) ? msg_invasion_info_015 : msg_invasion_info_014;
         }
-        GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_info );
+        GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
+        WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
         msg_on = TRUE;
       }
       else{    //同じゾーンにはいないがCursorSで差している場所が同じの時のメッセージ
@@ -1931,7 +1932,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
         if(tar_zonesetting != NULL && my_zonesetting != NULL 
             && tar_zonesetting->sub_x == my_zonesetting->sub_x
             && tar_zonesetting->sub_y == my_zonesetting->sub_y){
-          GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_018, intsub->strbuf_info );
+          GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_018, intsub->strbuf_temp );
+          WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
           msg_on = TRUE;
         }
       }
@@ -1989,7 +1991,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   }
 
   //裏世界にいて、まだいったことのない場所
-  if(msg_on == FALSE && ZONEDATA_IsPalace(my_zone_id) == FALSE 
+  if(msg_on == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE
+      && ZONEDATA_IsPalace(my_zone_id) == FALSE 
       && ZONEDATA_IsBingo(my_zone_id) == FALSE
       && FIELD_PALACE_CheckArriveZone(gamedata, my_zone_id) == FALSE){
     GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
