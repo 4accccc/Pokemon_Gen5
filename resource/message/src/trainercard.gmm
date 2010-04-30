@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-04-23T00:51:08"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-30T12:56:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,12 +260,12 @@
 		</language>
 	</columns>
 
-	<dialog left="1146" top="485" right="1646" bottom="1105" maximized="no" rayout="Vertical2">
+	<dialog left="1192" top="480" right="1600" bottom="1100" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1102" top="80" right="1575" bottom="478" visible="yes"/>
-		<band id="0" index="0" style="0000" width="492"/>
+		<band id="0" index="0" style="0000" width="445"/>
 		<band id="1" index="1" style="0000" width="171"/>
-		<band id="2" index="2" style="0000" width="319"/>
+		<band id="2" index="2" style="0000" width="227"/>
 		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
@@ -352,14 +352,14 @@
 		<comment>カード裏面項目。通信した回数。
 単位「回」の表示は画像で行う。
 →単位はなしにします。</comment>
-		<language name="JPN" width="256">つうしんした　かいすう</language>
-		<language name="JPN_KANJI" width="256">通信した　回数</language>
+		<language name="JPN" width="256">つうしん　かいすう</language>
+		<language name="JPN_KANJI" width="256">通信回数</language>
 	</row>
 
 	<row id="MSG_TCARD_11_1">
 		<comment>カード裏面項目。通信対戦の戦績。
 →単位はなしにします。</comment>
-		<language name="JPN" width="256">つうしんたいせん</language>
+		<language name="JPN" width="256">つうしん　たいせん</language>
 		<language name="JPN_KANJI" width="256">通信対戦</language>
 	</row>
 
@@ -367,7 +367,7 @@
 		<comment>カード裏面項目。
 通信対戦の勝利回数。
 →単位はなしにします。</comment>
-		<language name="JPN" width="256">つうしんたいせん　かち</language>
+		<language name="JPN" width="256">つうしん　たいせん　かち</language>
 		<language name="JPN_KANJI" width="256">通信対戦　勝ち</language>
 	</row>
 
@@ -375,7 +375,7 @@
 		<comment>カード裏面項目。
 通信対戦の敗北回数。
 →単位はなしにします。</comment>
-		<language name="JPN" width="256">つうしんたいせん　まけ</language>
+		<language name="JPN" width="256">つうしん　たいせん　まけ</language>
 		<language name="JPN_KANJI" width="256">通信対戦　負け</language>
 	</row>
 
@@ -429,8 +429,8 @@
 	<row id="MSG_TCARD_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>カード裏面項目。ミュージカル参加回数。
 （個人・通信の合計。）単位はなし。</comment>
-		<language name="JPN" width="256">ミュージカル　さんか</language>
-		<language name="JPN_KANJI" width="256">ミュージカル参加</language>
+		<language name="JPN" width="256">ミュージカル　さんか　かいすう</language>
+		<language name="JPN_KANJI" width="256">ミュージカル　参加回数</language>
 	</row>
 
 	<row id="MSG_TCARD_21" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -448,7 +448,7 @@
 		<language name="JPN_KANJI" width="256">バトル検定　ハイスコア</language>
 	</row>
 
-	<row id="MSG_TCARD_23" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="MSG_TCARD_23" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>カード裏面項目。
 トライアルハウスのバトル検定の現在ランク
 「バトルけんてい」の文字列から位１文字分
