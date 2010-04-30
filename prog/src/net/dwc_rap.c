@@ -410,36 +410,6 @@ int GFL_NET_DWC_connect()
       {
         // 自動接続処理中
         DWC_ProcessInet();
-
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
-        switch ( DWC_GetInetStatus() )
-        {
-        case DWC_CONNECTINET_STATE_ERROR:
-          {
-            // エラー表示
-            DWCError err;
-            int errcode;
-            err = DWC_GetLastError( &errcode );
-
-            OS_TPrintf("   Error occurred %d %d.\n", err, errcode );
-          }
-          DWC_ClearError();
-
-          DWC_CleanupInet();
-          break;
-        case DWC_CONNECTINET_STATE_FATAL_ERROR:
-          {
-            // エラー表示
-            DWCError err;
-            int errcode;
-            err = DWC_GetLastError( &errcode );
-
-            OS_Panic("   Error occurred %d %d.\n", err, errcode );
-          }
-          break;
-        }
-#endif
-
         break;
       }
     }
