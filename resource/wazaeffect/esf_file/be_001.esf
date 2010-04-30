@@ -23,19 +23,19 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\be_000_ec001_1a.spa
 エフェクト終了待ち	カメラ
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_2
 ポケモンパレットフェード	POS_BB	12	0	1	0:0:0
-ポケモン鳴き声	POS_BB	0	0	0	0	正再生
+ポケモン鳴き声	POS_BB	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生
 ラベル	NO_EXIST_BB_2
 立ち位置チェック	POS_B	いない	NO_EXIST_B_2
 ポケモンパレットフェード	POS_B	12	0	1	0:0:0
-ポケモン鳴き声	POS_B	0	0	0	0	正再生
+ポケモン鳴き声	POS_B	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生
 ラベル	NO_EXIST_B_2
 立ち位置チェック	POS_D	いない	NO_EXIST_D_2
 ポケモンパレットフェード	POS_D	12	0	1	0:0:0
-ポケモン鳴き声	POS_D	0	0	0	0	正再生
+ポケモン鳴き声	POS_D	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生
 ラベル	NO_EXIST_D_2
 立ち位置チェック	POS_F	いない	NO_EXIST_F_2
 ポケモンパレットフェード	POS_F	12	0	1	0:0:0
-ポケモン鳴き声	POS_F	0	0	0	0	正再生
+ポケモン鳴き声	POS_F	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生
 ラベル	NO_EXIST_F_2
 カメラ移動	追従	初期位置	20	0	20
 エフェクト終了待ち	カメラ
