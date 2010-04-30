@@ -36,13 +36,13 @@ GambleAI_end:
   IF_HP_OVER CHECK_DEFENCE,50,AmaiAI_end
 	
 	IF_RND_UNDER	80,AmaiAI_2
-	INCDEC		-1
+	INCDEC		1
 
 AmaiAI_2:
   IF_HP_OVER CHECK_DEFENCE,25,AmaiAI_end
 
 	IF_RND_UNDER	50,AmaiAI_end
-	INCDEC		-1
+	INCDEC		1
   JUMP  AmaiAI_end
 
 AmaiAI_damage:  
