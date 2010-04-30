@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-04-30T14:56:16"/>
+	<create user="nakamura_akira" host="W00161" date="2010-04-30T15:14:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -803,11 +803,11 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『しょうねんと　しょうじょ　おおいのは？』　
+『おとことと　おんな　おおいのは？』　
 時間調査　⇒　assistantm_01_13d
 人数調査　⇒　assistantm_01_14d</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">しょうねんと　しょうじょ　おおいのは？</language>
+		<language name="JPN" width="256">おとことと　おんな　おおいのは？</language>
 		<language name="JPN_KANJI" width="256">少年と　少女　多いのは？</language>
 	</row>
 
@@ -1151,7 +1151,7 @@ assistantm_01_15へ続く
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『じかんちょうさ』を選択し、
-『しょうねんと　しょうじょ　おおいのは？』を選択
+『おとことと　おんな　おおいのは？』を選択
 
 初期から選択可能
 
@@ -1164,7 +1164,7 @@ assistantm_01_15へ続く
 とある　しんぶんしゃ　からの
 いらい　だな▼
 ４じかん　いじょう　ちょうさして
-しょうねんと　しょうじょ▽
+おとことと　おんな▽
 どっちが　おおいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -1937,7 +1937,7 @@ assistantm_01_23○へ続く
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『にんずうちょうさ』を選択し、
-『しょうねんと　しょうじょ　おおいのは？』を選択
+『おとことと　おんな　おおいのは？』を選択
 
 初期から選択可能
 
@@ -1951,7 +1951,7 @@ assistantm_01_23○へ続く
 とある　しんぶんしゃ　からの
 いらいだな▼
 １０にん　いじょうと　すれちがって
-しょうねんと　しょうじょ▽
+おとことと　おんな▽
 どっちが　おおいかを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -2720,7 +2720,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『しょうねんと　しょうじょ▽
+『おとことと　おんな▽
 おおいのは？』の▽
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
@@ -3235,7 +3235,7 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『しょうねんと　しょうじょ
+		<language name="JPN" width="256">まだ　『おとことと　おんな
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
@@ -3950,7 +3950,7 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『しょうねんと　しょうじょ
+		<language name="JPN" width="256">まだ　『おとことと　おんな
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
@@ -4650,7 +4650,7 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『しょうねんと　しょうじょ
+		<language name="JPN" width="256">まだ　『おとことと　おんな
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
@@ -5332,7 +5332,7 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24dへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『しょうねんと　しょうじょ
+		<language name="JPN" width="256">『おとことと　おんな
 おおいのは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</language>
 		<language name="JPN_KANJI" width="256">『少年と　少女　多いのは？』の
@@ -5721,11 +5721,11 @@ assistantm_01_25へ続く
 assistantm_01_25へ続く
 
 [簡易会話単語:5]＝調査レーダーの
-『しょうねん　しょうじょ　どっち？』の多かったものを表示</comment>
+『おとことと　おんな　どっち？』の多かったものを表示</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-しょうねんと　しょうじょでは
+おとことと　おんなでは
 『[1:13:アンケート回答:0]』が　おおいようだな▼
 ポケモンは　だれでも　たのしめる！
 みんなが　たのしんで　ほしいな▼</language>
