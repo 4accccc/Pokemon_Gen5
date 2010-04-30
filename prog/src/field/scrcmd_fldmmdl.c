@@ -1323,9 +1323,12 @@ VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk )
 		MMDL_InitGridPosition( mmdl, grid_x, grid_y, grid_z, dir );
 	}
 
+	// 向きを設定
+	MMDL_SetDirDisp( mmdl, dir );
+
 	// 動作モデルの描画オフセットを初期設定 ( 画面外にいるようにする )
 	{
-		VecFx32 offset = { 0, 100<<FX32_SHIFT, 0 };
+		VecFx32 offset = { 0, 250<<FX32_SHIFT, 0 };
 		MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
 	}
 
