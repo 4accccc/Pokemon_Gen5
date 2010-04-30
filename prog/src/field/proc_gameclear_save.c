@@ -5,8 +5,6 @@
  * @author  tamada GAMEFREAK inc.
  * @brief ゲームクリア時のセーブなど
  *
- * @todo
- * 適当に作成した仮画面なので、実際にはUI班がきちんとした仕様をもとに作り直す。
  */
 //============================================================================================
 
@@ -14,6 +12,11 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
+#include "gamesystem/msgspeed.h"
+#include "system/bmp_winframe.h"     // BmpWinFrame_GraphicSet
+#include "app/app_printsys_common.h" //
+#include "system/time_icon.h"
+#include "sound/pm_sndsys.h"
 
 #include "savedata/save_tbl.h"
 #include "savedata/record.h"
@@ -28,7 +31,7 @@
 
 //==============================================================================================
 //
-//	メッセージ表示関連
+//  メッセージ表示関連
 //
 //==============================================================================================
 #include "print/wordset.h"  //WORDSET_
@@ -49,31 +52,43 @@
 //==============================================================================================
 //==============================================================================================
 //----------------------------------------------------------------------------------------------
-//	構造体宣言
+//  構造体宣言
 //----------------------------------------------------------------------------------------------
 typedef struct{
   HEAPID heapID;
   u16 arc_id;
-  GAMEDATA * gamedata;
-  const MYSTATUS * mystatus;
+  GAMEDATA * gamedata;            ///< ゲームデータアクセス構造体
+  const MYSTATUS * mystatus;      ///< 自分情報
 
-  GFL_FONT * fontHandle;
-	GFL_MSGDATA* msgman;						//メッセージマネージャー
-	WORDSET* wordset;								//単語セット
-	GFL_BMPWIN *bmpwin;							//BMPウィンドウデータ
+  STRBUF*   expand_buf;           ///< 文字列表示用バッファ
+  GFL_FONT* fontHandle;
+  GFL_MSGDATA* msgman;            ///< メッセージマネージャー
+  WORDSET* wordset;               ///< 単語セット
+  GFL_BMPWIN *bmpwin;             ///< BMPウィンドウデータ
+  PRINT_STREAM *printStream;      ///< 文字列表示管理構造体
+  GFL_TCBLSYS  *pMsgTcbSys;       ///< メッセージ表示管理タスク
+  APP_PRINTSYS_COMMON_WORK AppPrintWait;
+  TIMEICON_WORK *TimeIconWork;
 
-  BOOL saveSuccessFlag;
-  BOOL dendouSaveInitFlag;   //「殿堂入り」データの分割セーブ初期化が完了したかどうか
-  BOOL dendouSaveFinishFlag; //「殿堂入り」データの分割セーブが完了したかどうか
-  BOOL otherSaveExist; // 既存のデータが存在するかどうか
+  BOOL saveSuccessFlag;           ///< セーブに成功したかどうか
+  BOOL dendouSaveInitFlag;        ///<「殿堂入り」データの分割セーブ初期化が完了したかどうか
+  BOOL dendouSaveFinishFlag;      ///<「殿堂入り」データの分割セーブが完了したかどうか
+  BOOL otherSaveExist;            ///< 既存のデータが存在するかどうか
+
+  int  next_seq;
+  int  wait;
 
 }GAMECLEAR_MSG_WORK;
 
 
-#define GAMECLEAR_MSG_BUF_SIZE		(1024)			//メッセージバッファサイズ
-#define GAMECLEAR_FADE_SYNC			(8)				//フェードsync数
+#define GAMECLEAR_MSG_BUF_SIZE    (1024)  ///< メッセージバッファサイズ
+#define GAMECLEAR_FADE_SYNC       (   8)  ///< フェードsync数
 
-enum { //コンパイルを通すためにとりあえず
+// 文字色指定
+#define GAMECELAR_MSG_COL       ( PRINTSYS_LSB PRINTSYS_LSB_Make( u8 l, u8 s, u8 b ) )
+
+// BG面初期化用定義
+enum { 
 
   FLD_SYSFONT_PAL = 13,
 
@@ -86,22 +101,29 @@ enum { //コンパイルを通すためにとりあえず
   PALNO_BACKGROUND = 15,//FBMP_COL_NULL,
 };
 //----------------------------------------------------------------------------------------------
-//	BMPウィンドウ
+//  BMPウィンドウ
 //----------------------------------------------------------------------------------------------
 enum{
-	GAMECLEAR_BMPWIN_FRAME	= GFL_BG_FRAME0_M,
-	GAMECLEAR_BMPWIN_PX1	= 3,
-	GAMECLEAR_BMPWIN_PY1	= 5,
-	GAMECLEAR_BMPWIN_SX		= 28,
-	GAMECLEAR_BMPWIN_SY		= 15,
-	GAMECLEAR_BMPWIN_PL		= FLD_SYSFONT_PAL,
-	GAMECLEAR_BMPWIN_CH		= 1,
+  GAMECLEAR_BMPWIN_FRAME  = GFL_BG_FRAME0_M,
+  GAMECLEAR_BMPWIN_PX1  = 2,
+  GAMECLEAR_BMPWIN_PY1  = 18,
+  GAMECLEAR_BMPWIN_SX   = 27,
+  GAMECLEAR_BMPWIN_SY   = 4,
+  GAMECLEAR_BMPWIN_PL   = FLD_SYSFONT_PAL,
 };
+
+// ウインドウ枠
+enum{
+  GAMECLEAR_WINFRAME_CHAR = 1,
+  GAMECLEAR_WINFRAME_PAL  = 12,
+};
+
+
 
 //==============================================================================================
 //==============================================================================================
 //----------------------------------------------------------------------------------------------
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //----------------------------------------------------------------------------------------------
 
 static void setup_bg_sys( HEAPID heapID );
@@ -119,6 +141,10 @@ static void DendouSave_main( GAMECLEAR_MSG_WORK* work ); // 殿堂入りデータの更新
 static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameClearMsgProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static void _init_display( GAMECLEAR_MSG_WORK *wk, GAMECLEAR_MSG_PARAM *para );
+static void _release_display( GAMECLEAR_MSG_WORK *wk);
+
+
 
 //==============================================================================================
 //==============================================================================================
@@ -130,19 +156,29 @@ const GFL_PROC_DATA GameClearMsgProcData = {
   GameClearMsgProc_End,
 };
 
-//--------------------------------------------------------------
-//--------------------------------------------------------------
+//----------------------------------------------------------------------------------
+/**
+ * @brief ゲームクリアセーブ画面初期化
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//----------------------------------------------------------------------------------
 static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GAMECLEAR_MSG_WORK * gcmwk;
   GAMECLEAR_MSG_PARAM * para = pwk;
   GAMESYS_WORK * gsys = para->gsys;
 
- 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMEOVER_MSG, 0x40000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMEOVER_MSG, 0x40000 );
   gcmwk = GFL_PROC_AllocWork(proc, sizeof(GAMECLEAR_MSG_WORK), HEAPID_GAMEOVER_MSG);
-	GFL_STD_MemClear32( gcmwk, sizeof(GAMECLEAR_MSG_WORK) );
-  gcmwk->heapID = HEAPID_GAMEOVER_MSG;
-  gcmwk->arc_id = NARC_message_gameclear_dat;
+  GFL_STD_MemClear32( gcmwk, sizeof(GAMECLEAR_MSG_WORK) );
+  gcmwk->heapID   = HEAPID_GAMEOVER_MSG;
+  gcmwk->arc_id   = NARC_message_gameclear_dat;
   gcmwk->gamedata = GAMESYSTEM_GetGameData( gsys );
   gcmwk->mystatus = GAMEDATA_GetMyStatus( gcmwk->gamedata );
 
@@ -159,9 +195,37 @@ static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void *
   
   return GFL_PROC_RES_FINISH;
 }
-  
-//--------------------------------------------------------------
-//--------------------------------------------------------------
+
+enum{
+  GAMECLEAR_SEQ_INIT=0,
+  GAMECLEAR_SEQ_FADEIN,
+  GAMECLEAR_SEQ_FADEIN_WAIT,
+  GAMECLEAR_SEQ_KEY_WAIT,
+  GAMECLEAR_SEQ_SAVETYPE_BRANCH,
+  GAMECLEAR_SEQ_SAVE_DENDOU,
+  GAMECLEAR_SEQ_SAVE_MAIN,
+  GAMECLEAR_SEQ_MSG_SAVEEND,
+  GAMECLEAR_SEQ_MSG_END,
+  GAMECLEAR_SEQ_FADEOUT,
+  GAMECLEAR_SEQ_FADEOUT_WAIT,
+  GAMECLEAR_SEQ_EXIT,
+  GAMECLEAR_SEQ_ALLEND,
+  GAMECLEAR_SEQ_MSG_WAIT,
+};
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ゲームクリアセーブ画面メイン
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//----------------------------------------------------------------------------------
 static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GAMECLEAR_MSG_WORK * wk = mywk;
@@ -169,79 +233,61 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 
   int trg = GFL_UI_KEY_GetTrg();
 
-	switch( *seq ){
-  case 0:
+  switch( *seq ){
+  case GAMECLEAR_SEQ_INIT:
 
-    GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
-    MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
-    (void)GX_DisableBankForLCDC();
+    // 画面初期化
+    _init_display(wk, para);
 
-    setup_bg_sys( wk->heapID );
-
-		wk->fontHandle = GFL_FONT_Create(
-			ARCID_FONT,
-      NARC_font_large_gftr, //新フォントID
-			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-
-    //メッセージデータマネージャー作成
-    wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-        ARCID_MESSAGE, wk->arc_id, wk->heapID);
-    wk->wordset = WORDSET_Create( wk->heapID );
-
-    //ビットマップ追加
-    wk->bmpwin = GFL_BMPWIN_Create(
-      GAMECLEAR_BMPWIN_FRAME,						//ウインドウ使用フレーム
-      GAMECLEAR_BMPWIN_PX1,GAMECLEAR_BMPWIN_PY1,	//ウインドウ領域の左上のX,Y座標（キャラ単位で指定）
-      GAMECLEAR_BMPWIN_SX, GAMECLEAR_BMPWIN_SY,	//ウインドウ領域のX,Yサイズ（キャラ単位で指定）
-      GAMECLEAR_BMPWIN_PL,						//ウインドウ領域のパレットナンバー	
-      GAMECLEAR_BMPWIN_CH							//ウインドウキャラ領域の開始キャラクタナンバー
-    );
-
-    if ( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
-      //ゲームクリア　おめでとう！
-      scr_msg_print( wk, msg_gameclear_first_01, 0, 0 );
-    } else {
-      //でんどういり　おめでとう！
-      scr_msg_print( wk, msg_gameclear_01, 0, 0 );
-    }
-
-    GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
-
-    (*seq) ++;
+    (*seq)++;
     break;
 
-	//メッセージ転送待ち
-	case 1:
+  //メッセージ転送待ち
+  case GAMECLEAR_SEQ_FADEIN:
     {
       G2_BlendNone();
       GX_SetVisiblePlane( GX_PLANEMASK_BG0 );
       GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
     }
-		(*seq)++;
-		break;
+    (*seq)++;
+    break;
 
-	//メイン画面フェードイン待ち
-	case 2:
+  //メイン画面フェードイン待ち
+  case GAMECLEAR_SEQ_FADEIN_WAIT:
     if( GFL_FADE_CheckFade() == FALSE ) {
-			(*seq)++;
-		}
-		break;
+      if ( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
+        //ゲームクリア　おめでとう！
+        scr_msg_print( wk, msg_gameclear_first_01, 0, 0 );
+        wk->next_seq = GAMECLEAR_SEQ_KEY_WAIT;
+        (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
+      } else {
+        //でんどういり　おめでとう！
+        scr_msg_print( wk, msg_gameclear_01, 0, 0 );
+        wk->next_seq = GAMECLEAR_SEQ_KEY_WAIT;
+        (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
+    }
+      
+    GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
+    }
+    break;
 
-	//キー待ち
-	case 3:
+  //キー待ち
+  case GAMECLEAR_SEQ_KEY_WAIT:
     if( wk->otherSaveExist ) {
       (*seq) ++; 
     }
     else if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
       //「レポートをかいています　でんげんをきらないでください」
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );
       scr_msg_print( wk, msg_gameclear_report_01, 0, 0 );
+      wk->next_seq = GAMECLEAR_SEQ_SAVETYPE_BRANCH;
+      (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
       GAMEDATA_SaveAsyncStart( wk->gamedata );
-      (*seq) ++;
     }
     break;
 
-  case 4: 
+  case GAMECLEAR_SEQ_SAVETYPE_BRANCH: 
     if( wk->otherSaveExist == FALSE ) {
 
       //「初回クリア」をセーブ
@@ -256,10 +302,13 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
         DendouSave_init( wk );
       }
     }
+    // 時間アイコン表示
+    wk->TimeIconWork = TIMEICON_CreateTcbl( wk->pMsgTcbSys, wk->bmpwin, 15, 
+                                            TIMEICON_DEFAULT_WAIT, wk->heapID );
     (*seq) ++;
     break;
 
-  case 5:
+  case GAMECLEAR_SEQ_SAVE_DENDOU:
     // 殿堂入りデータをセーブ
     if( wk->otherSaveExist==FALSE && wk->dendouSaveInitFlag ) {
       DendouSave_main( wk );
@@ -274,7 +323,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     }
     break;
 
-  case 6:
+  case GAMECLEAR_SEQ_SAVE_MAIN:
     // 分割セーブ実行
     if( wk->otherSaveExist == FALSE ) {
       SAVE_RESULT result = GAMEDATA_SaveAsyncMain( wk->gamedata );
@@ -299,68 +348,86 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     }
     break;
 
-  case 7:
+  case GAMECLEAR_SEQ_MSG_SAVEEND:
+    TILEICON_Exit( wk->TimeIconWork );
     if (wk->otherSaveExist==FALSE && wk->saveSuccessFlag) {
       //「レポートをかきました」
       scr_msg_print( wk, msg_gameclear_report_02, 0, 0 );
+      wk->next_seq = GAMECLEAR_SEQ_MSG_END;
+      (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
+      PMSND_PlaySE( SEQ_SE_SAVE );
     } else {
       //「レポートがかけませんでした」
       scr_msg_print( wk, msg_gameclear_report_03, 0, 0 );
+      wk->next_seq = GAMECLEAR_SEQ_MSG_END;
+      (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
     }
-    (*seq) ++;
     break;
 
-  case 8:
-		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
-      //「おしまい」
-      scr_msg_print( wk, msg_gameclear_02, 0, 0 );
+  case GAMECLEAR_SEQ_MSG_END:
+    if( wk->wait>120 ) {
       (*seq) ++;
     }
+    wk->wait++;
     break;
 
-  case 9:
-		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
-      GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
-			(*seq)++;
-		}
-		break;
+  case GAMECLEAR_SEQ_FADEOUT:
+    GFL_FADE_SetMasterBrightReq(
+        GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
+    (*seq)++;
+    break;
 
-	//メイン画面フェードアウト待ち
-	case 10:
+  //メイン画面フェードアウト待ち
+  case GAMECLEAR_SEQ_FADEOUT_WAIT:
     if( GFL_FADE_CheckFade() == FALSE ) {
 
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  PALNO_BACKGROUND );		//塗りつぶし
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  PALNO_BACKGROUND );    //塗りつぶし
 
-			(*seq)++;
-		}
-		break;
+      (*seq)++;
+    }
+    break;
 
-	//終了開放
-	case 11:
-		BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
-		GFL_BMPWIN_Delete( wk->bmpwin );
-
-		WORDSET_Delete( wk->wordset );
-		GFL_MSG_Delete( wk->msgman );
-		GFL_BG_FreeBGControl( GAMECLEAR_BMPWIN_FRAME );
-
-    GFL_FONT_Delete( wk->fontHandle );
-
-    release_bg_sys();
+  //終了開放
+  case GAMECLEAR_SEQ_EXIT:
+    _release_display(wk);
 
     (*seq) ++;
     break;
 
-  case 12:
-		return GFL_PROC_RES_FINISH;
-	}
+  case GAMECLEAR_SEQ_ALLEND:
+    return GFL_PROC_RES_FINISH;
 
-	return GFL_PROC_RES_CONTINUE;
+  // 文字表示待ち
+  case GAMECLEAR_SEQ_MSG_WAIT:
+    if(APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->AppPrintWait, wk->printStream )){
+      (*seq) = wk->next_seq;
+    }
+    break;
+  }
+
+  // メッセージタスクメイン
+  if(wk->pMsgTcbSys){
+    GFL_TCBL_Main( wk->pMsgTcbSys );
+  }
+  if(wk->TimeIconWork){
+    TIMEICON_Main( wk->TimeIconWork );
+  }
+
+  return GFL_PROC_RES_CONTINUE;
 }
 
-//--------------------------------------------------------------
-//--------------------------------------------------------------
+//----------------------------------------------------------------------------------
+/**
+ * @brief ゲームクリアセーブ画面終了
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk    
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//----------------------------------------------------------------------------------
 static GFL_PROC_RESULT GameClearMsgProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GFL_PROC_FreeWork( proc );
@@ -368,45 +435,133 @@ static GFL_PROC_RESULT GameClearMsgProc_End( GFL_PROC * proc, int * seq, void * 
   return GFL_PROC_RES_FINISH;
 }
 
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+// static 関数群
+//----------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 画面初期化
+ *
+ * @param   wk    
+ * @param   para    
+ */
+//----------------------------------------------------------------------------------
+static void _init_display( GAMECLEAR_MSG_WORK *wk, GAMECLEAR_MSG_PARAM *para )
+{
+  GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+  MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+  (void)GX_DisableBankForLCDC();
+
+  setup_bg_sys( wk->heapID );
+
+  wk->fontHandle = GFL_FONT_Create(
+    ARCID_FONT,
+    NARC_font_large_gftr, //新フォントID
+    GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
+  // 会話フォントパレット転送
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+                                 FLD_SYSFONT_PAL*0x20, 32, wk->heapID );
+
+  //メッセージデータマネージャー作成
+  wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_MESSAGE, wk->arc_id, wk->heapID);
+  wk->wordset = WORDSET_Create( wk->heapID );
+
+  // システムウインドウキャラクター転送
+  BmpWinFrame_GraphicSet( GAMECLEAR_BMPWIN_FRAME, GAMECLEAR_WINFRAME_CHAR, 
+                          GAMECLEAR_WINFRAME_PAL, MENU_TYPE_SYSTEM, wk->heapID );
+  
+
+  //ビットマップ追加
+  wk->bmpwin = GFL_BMPWIN_Create(
+    GAMECLEAR_BMPWIN_FRAME,                   //ウインドウ使用フレーム
+    GAMECLEAR_BMPWIN_PX1,GAMECLEAR_BMPWIN_PY1,//ウインドウ領域の左上のX,Y座標（キャラ単位で指定）
+    GAMECLEAR_BMPWIN_SX, GAMECLEAR_BMPWIN_SY, //ウインドウ領域のX,Yサイズ（キャラ単位で指定）
+    GAMECLEAR_BMPWIN_PL,                      //ウインドウ領域のパレットナンバー  
+    GFL_BMP_CHRAREA_GET_B                     //ウインドウキャラの取得方向
+  );
+
+  // メッセージ表示用タスクシステム確保
+  wk->pMsgTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 10, 32 );
+  wk->expand_buf = GFL_STR_CreateBuffer( GAMECLEAR_MSG_BUF_SIZE, wk->heapID );
+  
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ワーク解放
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void _release_display( GAMECLEAR_MSG_WORK *wk )
+{
+    GFL_TCBL_DeleteAll( wk->pMsgTcbSys );
+    GFL_TCBL_Exit( wk->pMsgTcbSys );
+
+    BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
+    GFL_BMPWIN_Delete( wk->bmpwin );
+
+    GFL_STR_DeleteBuffer( wk->expand_buf );
+    WORDSET_Delete( wk->wordset );
+    GFL_MSG_Delete( wk->msgman );
+    GFL_BG_FreeBGControl( GAMECLEAR_BMPWIN_FRAME );
+
+    GFL_FONT_Delete( wk->fontHandle );
+
+    release_bg_sys();
+
+}
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setup_bg_sys( HEAPID heapID )
 {
-	static const GFL_DISP_VRAM SetBankData = {
-		GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+  static const GFL_DISP_VRAM SetBankData = {
+    GX_VRAM_BG_128_B,       // メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_0_A,        // テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
     GX_OBJVRAMMODE_CHAR_1D_64K, // メインOBJマッピングモード
     GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
-	};
+  };
 
-	static const GFL_BG_SYS_HEADER BGsys_data = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
-	};
+  static const GFL_BG_SYS_HEADER BGsys_data = {
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+  };
 
-	static const GFL_BG_BGCNT_HEADER header = {
-		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
-		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
-	};
+  static const GFL_BG_BGCNT_HEADER header = {
+    0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+    GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+    GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
+    GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+  };
 
   GFL_BG_Init( heapID );
-	GFL_DISP_SetBank( &SetBankData );
-	GFL_BG_SetBGMode( &BGsys_data );
-	GFL_BG_SetBGControl( GAMECLEAR_BMPWIN_FRAME, &header, GFL_BG_MODE_TEXT );
+  GFL_DISP_SetBank( &SetBankData );
+  GFL_BG_SetBGMode( &BGsys_data );
+  GFL_BG_SetBGControl( GAMECLEAR_BMPWIN_FRAME, &header, GFL_BG_MODE_TEXT );
 
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_systemwin_nclr, PALTYPE_MAIN_BG, 
-																0x20*GAMECLEAR_BMPWIN_PL, 0x20, heapID );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_systemwin_nclr, PALTYPE_MAIN_BG, 
+                                0x20*GAMECLEAR_BMPWIN_PL, 0x20, heapID );
 
-	GFL_BG_SetBackGroundColor(GAMECLEAR_BMPWIN_FRAME,0);
+  GFL_BG_SetBackGroundColor(GAMECLEAR_BMPWIN_FRAME,0);
 
   GFL_BMPWIN_Init( heapID );
 }
@@ -420,40 +575,41 @@ static void release_bg_sys( void )
 
 //--------------------------------------------------------------
 /**
- * @brief	メッセージ表示
+ * @brief メッセージ表示
  *
- * @param	wk			EV_WIN_WORK型のアドレス
- * @param	msg_id		メッセージID
- * @param	x			表示Ｘ座標
- * @param	y			表示Ｙ座標
+ * @param wk      EV_WIN_WORK型のアドレス
+ * @param msg_id    メッセージID
+ * @param x     表示Ｘ座標
+ * @param y     表示Ｙ座標
  *
- * @retval	none
+ * @retval  none
  */
 //--------------------------------------------------------------
 static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
 {
   PRINTSYS_LSB lsb = PRINTSYS_LSB_Make( PALNO_FONT, PALNO_FONTSHADOW, PALNO_BACKGROUND);
-	STRBUF* tmp_buf = GFL_STR_CreateBuffer( GAMECLEAR_MSG_BUF_SIZE, wk->heapID );
-	STRBUF* tmp_buf2= GFL_STR_CreateBuffer( GAMECLEAR_MSG_BUF_SIZE, wk->heapID );
+  STRBUF* tmp_buf = GFL_STR_CreateBuffer( GAMECLEAR_MSG_BUF_SIZE, wk->heapID );
 
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  PALNO_BACKGROUND );			//塗りつぶし
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  0x0f0f );      //塗りつぶし
 
-	GFL_MSG_GetString( wk->msgman, msg_id, tmp_buf );
+  GFL_MSG_GetString( wk->msgman, msg_id, tmp_buf );
 
   //主人公名セット
   WORDSET_RegisterPlayerName( wk->wordset, 0, wk->mystatus );
 
-	WORDSET_ExpandStr( wk->wordset, tmp_buf2, tmp_buf );
-  GFL_FONTSYS_SetColor( PALNO_FONT, PALNO_FONTSHADOW,  PALNO_BACKGROUND );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp( wk->bmpwin ), x, y, tmp_buf2, wk->fontHandle );
+  WORDSET_ExpandStr( wk->wordset, wk->expand_buf, tmp_buf );
+//  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->bmpwin ), x, y, tmp_buf2, wk->fontHandle, PRINTSYS_LSB_Make( 1, 2, 15 ) );
+  OS_Printf("msgspeed=%d\n",MSGSPEED_GetWait());
 
-	GFL_STR_DeleteBuffer( tmp_buf );
-	GFL_STR_DeleteBuffer( tmp_buf2 );
+  wk->printStream = PRINTSYS_PrintStream(
+    wk->bmpwin, x, y, wk->expand_buf, wk->fontHandle,
+    MSGSPEED_GetWait(), wk->pMsgTcbSys, 0, wk->heapID, 0x0f0f );
 
-  GFL_BMPWIN_TransVramCharacter( wk->bmpwin );  //transfer characters
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( wk->bmpwin ) );  //transfer screen
+  GFL_STR_DeleteBuffer( tmp_buf );
 
-	return;
+  BmpWinFrame_Write( wk->bmpwin, WINDOW_TRANS_OFF, GAMECLEAR_WINFRAME_CHAR, GAMECLEAR_WINFRAME_PAL );
+
+  return;
 }
 
 //-----------------------------------------------------------------------------
