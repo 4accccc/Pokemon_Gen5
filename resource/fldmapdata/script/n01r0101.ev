@@ -258,7 +258,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_CAMERA_END()		//ƒJƒƒ‰‘€ìI—¹
 
 	//BGM–ß‚·
-	_END_EVENT_BGM()
+	_END_EVENT_BGM_EX( 120 )
 
 	//========================================//
 	

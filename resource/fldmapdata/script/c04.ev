@@ -1002,7 +1002,8 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( C04_SUPPORT_01 )
 	
-	_END_EVENT_BGM()
+	//BGM戻す
+	_END_EVENT_BGM_EX( 120 )
 	
 	//========================================//
 	//シーンチェンジイベント無効
@@ -1013,7 +1014,7 @@ EVENT_START	ev_scene_c04_support_01
 	_FLAG_SET( FV_C04_SUPPORTPAPA_01 )
 	
 	//========================================//
-
+	
 	//重要イベントでの通信切断から復帰
 	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
