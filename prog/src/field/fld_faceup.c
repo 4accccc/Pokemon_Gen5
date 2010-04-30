@@ -24,6 +24,12 @@
 #define SCR_SIZE_W  (32)
 #define SCR_SIZE_H  (24)
 
+#define ALPHA_MASK_FACE  ( GX_BLEND_PLANEMASK_BG3 )  // αブレンディング第一対象面(顔)
+#define ALPHA_MASK_BG   ( GX_BLEND_PLANEMASK_BG2 )  // αブレンディング第二対象面(背景)
+#define ALPHA_MAX          (16)                      // α最大値
+
+#define ALPHA_COUNT_MAX (30)
+
 typedef struct FACEUP_WORK_tag
 {
   //HEAPID HeapID;
@@ -36,6 +42,8 @@ typedef struct FACEUP_WORK_tag
   SCRCMD_WORK *ScrCmdWork;
   GFL_TCB* MainTcb;
   BOOL MsgEnd;
+
+  int AlphaCount;
 
   //顔BG
 }FACEUP_WORK;
@@ -52,6 +60,7 @@ static void PopPriority(FACEUP_WK_PTR ptr);
 static void PopDisp(FACEUP_WK_PTR ptr);
 
 static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
+static BOOL AlphaFunc(FACEUP_WK_PTR ptr);
 
 static void MainTcbFunc( GFL_TCB* tcb, void* work );
 
@@ -129,6 +138,14 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 2:
     if ( GFL_FADE_CheckFade() == FALSE ){
+      ptr->AlphaCount = 0;    //アルファカウント初期化
+      (*seq)++;
+    }
+    break;
+  case 3:
+    //アルファ処理
+    if ( AlphaFunc(ptr) )
+    {
       return GMEVENT_RES_FINISH;
     }
   }
@@ -156,14 +173,15 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
   //BG設定保存
   ptr->CntText = G2_GetBG3ControlText();
   
-  //ＢＧ3セットアップ（顔BG256色）
+  //ＢＧ3セットアップ（顔BG256色）もともとの設定は地名表示がしてくれている
   G2_SetBG3ControlText(
       GX_BG_SCRSIZE_TEXT_256x256,
       GX_BG_COLORMODE_256,
       GX_BG_SCRBASE_0x1000,
       GX_BG_CHARBASE_0x04000);
 
-  G2_BlendNone();
+  //アルファセット
+  G2_SetBlendAlpha( ALPHA_MASK_FACE, ALPHA_MASK_BG, 0, ALPHA_MAX );
 
   { //BGリソースをクリア
     BOOL rc;
@@ -391,6 +409,8 @@ static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
   FIELD_DEBUG_RecoverBgCont( debug );
 #endif
 
+  G2_BlendNone();
+
   //プライオリティ復帰
   PopPriority(ptr);
   //表示状態復帰
@@ -482,6 +502,26 @@ static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
       }
     }
   }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief アルファコントロール実行関数
+ * @param ptr   管理ポインタ
+ */
+//------------------------------------------------------------------------------------------
+static BOOL AlphaFunc(FACEUP_WK_PTR ptr)
+{
+  int   alpha1;
+  int   alpha2;
+  ptr->AlphaCount++;
+  alpha1 = (ALPHA_MAX * ptr->AlphaCount) / ALPHA_COUNT_MAX;
+  alpha2 = ALPHA_MAX - alpha1;
+
+  G2_SetBlendAlpha( ALPHA_MASK_FACE, ALPHA_MASK_BG, alpha1, alpha2 );
+
+  if ( ptr->AlphaCount >=  ALPHA_COUNT_MAX ) return TRUE;
+  else return FALSE;
 }
 
 //------------------------------------------------------------------------------------------
