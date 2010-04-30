@@ -35,16 +35,10 @@ _EVENT_DATA_END
 EVENT_START		ev_reserve_d04r0601_event_01
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
-//	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_vanish )
 	_OBJ_ANIME_WAIT()
 	
-	_OBJ_POS_CHANGE(D04R0601_RIVAL_01,14,3,24,DIR_UP )
-
-/*	//ライバル：落ちてくる 【仮】落下演出が仮。新規コマンド作成予定[100422斉藤マ]
-	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_drop )
-	_OBJ_ANIME_WAIT()
-*/
 	_SE_PLAY(SEQ_SE_FLD_17)
+	_OBJ_FALL_IN( D04R0601_RIVAL_01,14,24,DIR_UP )
 	_SE_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_down )
