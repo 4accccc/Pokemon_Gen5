@@ -9895,21 +9895,6 @@
   .short EV_SEQ_FACEUP_END
   .endm
   
-//--------------------------------------------------------------
-/**
- * @brief 顔アップ 顔j変更
- * @note      引数は、src/field/fld_faceup_def.hを参照のこと
- * @param char_idx    キャラクター指定  FLD_FACEUP_CHAR～を指定   
- */
-//--------------------------------------------------------------
-#define _CHANGE_FACEUP( char_idx ) _ASM_CHANGE_FACEUP char_idx
-
-  .macro  _ASM_CHANGE_FACEUP char_idx
-  .short EV_SEQ_FACEUP_CHG
-  .short \char_idx
-  .endm
-
-
 //======================================================================
 //
 //    国連関連

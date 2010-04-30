@@ -656,7 +656,7 @@
   //顔アップ
   DEF_CMD( EvCmdFaceup_Start, EV_SEQ_FACEUP_SATRT )
   DEF_CMD( EvCmdFaceup_End, EV_SEQ_FACEUP_END )
-  DEF_CMD( EvCmdFaceup_Change, EV_SEQ_FACEUP_CHG )
+  NO_CMD()  //DEF_CMD( EvCmdFaceup_Change, EV_SEQ_FACEUP_CHG )  未使用になったので削除
 
   //相性チェック
   DEF_CMD( EvCmdGetFeelingCheckCount, EV_SEQ_GET_FEELING_COUNT )

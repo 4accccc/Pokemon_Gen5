@@ -95,26 +95,6 @@ VMCMD_RESULT EvCmdFaceup_End( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 顔アップ顔変更
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdFaceup_Change( VMHANDLE *core, void *wk )
-{
-  u8 char_idx;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-
-  char_idx = VMGetU16( core );
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  *スクリプト終了時 顔アップ終了チェック
  * @param   end_chk     チェック構造体
  * @param   seq     サブシーケンサ
