@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-25T14:55:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-30T13:35:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -431,12 +431,12 @@
 ダークストーンを　もつものよ！▼
 この　へやにて　じぶんも
 えいゆうに　なれるのか▽
-たしかめれば　いいのです！▼</language>
+たしかめれば　いいのです！</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さあ！
 ダークストーンを　持つ者よ！▼
 この部屋にて　自分にも
 英雄の　資質が　あるか▽
-確かめれば　いいのです！▼</language>
+確かめれば　いいのです！</language>
 	</row>
 
 	<row id="msg_n01r0501_sage1_08b">
@@ -450,12 +450,12 @@
 ライトストーンを　もつものよ！▼
 この　へやにて　じぶんも
 えいゆうに　なれるのか▽
-たしかめれば　いいのです！▼</language>
+たしかめれば　いいのです！</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さあ！
 ライトストーンを　持つ者よ！▼
 この部屋にて　自分にも
 英雄の　資質が　あるか▽
-確かめれば　いいのです！▼</language>
+確かめれば　いいのです！</language>
 	</row>
 
 	<flowchart-group-list>
