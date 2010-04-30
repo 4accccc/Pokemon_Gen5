@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T18:48:24"/>
+	<create user="matsumiya" host="W00224" date="2010-04-30T10:33:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1318" top="344" right="2023" bottom="972" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -759,13 +759,13 @@ TVT着信演出の統一に伴い未使用になっています</comment>
 		<language name="JPN" width="256">ちょっぴり
 おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 せっかくの　であいです
-いろんな　ひとと　おはなしましょう！[BE:01:ページ切り替え（クリア）]
+いろんな　ひとと　おはなししましょう！[BE:01:ページ切り替え（クリア）]
 きっと　みんなが　やくだつことを
 おしえてくれる　はずです！</language>
 		<language name="JPN_KANJI" width="256">ちょっぴり
 お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 せっかくの　出会いです
-いろんな　人と　お話ましょう！[BE:01:ページ切り替え（クリア）]
+いろんな　人と　お話しましょう！[BE:01:ページ切り替え（クリア）]
 きっと　みんなが　役立つことを
 教えてくれる　はずです！</language>
 	</row>
