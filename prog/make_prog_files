@@ -86,7 +86,6 @@ SRCS  +=    $(SOUNDSRC) \
         test/matsuda/performance.c \
         system/debug_print.c \
         system/vm.c \
-        system/g3d_tool.c \
         system/rtc_tool.c \
         system/build_revision.c \
         system/ica_anime.c \
@@ -438,7 +437,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_gimmick_d12_st.c \
         field/fldmmdl.c \
         field/straw_poke_form.c \
-        field/event_battle.c
+        field/event_battle.c \
+        system/g3d_tool.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
