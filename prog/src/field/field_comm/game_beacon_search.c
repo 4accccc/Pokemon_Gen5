@@ -192,7 +192,7 @@ static void GameBeacon_InitCallback(void *pWork)
   
   gbs->status = GBS_STATUS_INIT;
   //全部のビーコンを探知する
-  gbs->pWDWork = WIH_DWC_AllBeaconStart(aGFLNetInit.maxBeaconNum, GFL_HEAP_LOWID(HEAPID_PROC));
+  gbs->pWDWork = WIH_DWC_AllBeaconStart(aGFLNetInit.maxBeaconNum, GFL_HEAP_LOWID(HEAPID_APP_CONTROL));
 }
 
 //==================================================================
