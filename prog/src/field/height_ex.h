@@ -20,6 +20,7 @@ extern void EXH_SetUpHeightData(	const u8 inIndex,
 									const int inSizX,
 									const int inSizZ,
 									const fx32 inHeight,
+                  const u32 inAttr,
 									EHL_PTR outExHeightList );
 
 extern void EXH_FreeHeightList(EHL_PTR outExHeightList);
@@ -31,7 +32,7 @@ extern BOOL EXH_HitCheckHeight(	const int inGridX, const int inGridZ,
 									const u8 inIdx);
 
 extern fx32 EXH_GetHeight(const u8 inIndex, EHL_CONST_PTR inExHeightList);
-
+extern u32 EXH_GetAttr(const u8 inIndex, EHL_CONST_PTR inExHeightList);
 extern void EXH_SetHeight(	const u8 inIndex, const fx32 inHeight, EHL_PTR outExHeightList );
 
 extern void EXH_SetHeightValid(	const u8 inIndex, const BOOL inValid, EHL_PTR outExHeightList );

@@ -2112,7 +2112,7 @@ static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPE
         break;  //‚±‚êˆÈã‚ÍÏ‚ß‚È‚¢‚Ì‚Å”²‚¯‚é
       }
       gridInfo->gridData[idx].vecN = normVec;
-			gridInfo->gridData[idx].attr = 0;
+			gridInfo->gridData[idx].attr = EXH_GetAttr(i, g3Dmapper->ExHeightList);
 			gridInfo->gridData[idx].height = EXH_GetHeight(i, g3Dmapper->ExHeightList);
     }
   }

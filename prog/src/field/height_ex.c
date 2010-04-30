@@ -17,6 +17,7 @@ typedef struct EX_HEIGHT_DATA_tag
 	int SizeGridZ;
 	fx32 Height;
 	BOOL Valid;
+  u32  Attr;
 }EX_HEIGHT_DATA;
 
 typedef struct EX_HEIGHT_LIST_tag
@@ -118,6 +119,7 @@ void EXH_SetUpHeightData(	const u8 inIndex,
 							const int inSizX,
 							const int inSizZ,
 							const fx32 inHeight,
+              const u32 inAttr,
 							EHL_PTR outExHeightList )
 {
   if ( inIndex >= outExHeightList->Num )
@@ -137,6 +139,7 @@ void EXH_SetUpHeightData(	const u8 inIndex,
 	outExHeightList->ExHeightData[inIndex].SizeGridX = inSizX;
 	outExHeightList->ExHeightData[inIndex].SizeGridZ = inSizZ;
 	outExHeightList->ExHeightData[inIndex].Height = inHeight;
+  outExHeightList->ExHeightData[inIndex].Attr = inAttr;
 	outExHeightList->ExHeightData[inIndex].Valid = TRUE;
 }
 
@@ -213,6 +216,24 @@ fx32 EXH_GetHeight(const u8 inIndex, EHL_CONST_PTR inExHeightList)
 	GF_ASSERT((inExHeightList->ExHeightData[inIndex].Valid)&&"データは無効です");
 	return inExHeightList->ExHeightData[inIndex].Height;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 拡張高さデータからアトリビュートを取得(リスト)
+ *
+ * @param	inIndex	拡張高さデータインデックス
+ * @param	inExHeightList	拡張高さデータへのポインタ
+ *
+ * @return	u32 アトリビュート
+ */
+//--------------------------------------------------------------------------------------------
+u32 EXH_GetAttr(const u8 inIndex, EHL_CONST_PTR inExHeightList)
+{
+	GF_ASSERT((inIndex<inExHeightList->Num)&&"拡張高さデータのインデックスオーバー");
+	GF_ASSERT((inExHeightList->ExHeightData[inIndex].Valid)&&"データは無効です");
+	return inExHeightList->ExHeightData[inIndex].Attr;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -412,6 +412,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     EXH_SetUpHeightData( i,
               FloorRect[i].X, FloorRect[i].Z, FloorRect[i].W, FloorRect[i].H,
 							FloorRect[i].Height,
+              0x800000,   //‰e‚Â‚¯‚é,
 							exHeightPtr );
   }
 
@@ -427,6 +428,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     EXH_SetUpHeightData( height_idx,
               LiftRect[i].X, LiftRect[i].Z, LiftRect[i].W, LiftRect[i].H,
 							LiftRect[i].Height[idx],
+              0x800000,   //‰e‚Â‚¯‚é
 							exHeightPtr );
   }
 
