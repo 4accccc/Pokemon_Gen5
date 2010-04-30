@@ -51,8 +51,10 @@ typedef u16 WEATHER_NO;
 #define		WEATHER_NO_PALACE_WHITE_MIST	(10)		// パレス　White用霧
 #define		WEATHER_NO_PALACE_BLACK_MIST	(11)		// パレス　Black用霧
 #define		WEATHER_NO_STORMHIGH	(12)		// 砂嵐強
+#define		WEATHER_NO_PALACE_WHITE_MIST_HIGH	(13)		// パレス　White用霧　行ったことないところ用
+#define		WEATHER_NO_PALACE_BLACK_MIST_HIGH	(14)		// パレス　Black用霧  行ったことないところ用
 
-#define		WEATHER_NO_NUM				(13)			// 天気数
+#define		WEATHER_NO_NUM				(15)			// 天気数
 
 	// 戦闘フィールド状態していよう
 	// バトルファクトリーのルーレット施設で

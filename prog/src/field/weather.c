@@ -256,6 +256,19 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_storm)
 	},
 
+	// 霧
+	{
+		&c_WEATHER_TASK_DATA_MIST,
+		FS_OVERLAY_ID(field_weather_mist)
+	},
+
+
+	// パレスホワイト霧
+	{
+		&c_WEATHER_TASK_DATA_PALACE_WHITE_MIST,
+		FS_OVERLAY_ID(field_weather_mist)
+	},
+
 
 
 

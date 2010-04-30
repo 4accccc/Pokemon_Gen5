@@ -109,7 +109,7 @@ static const u32 sc_MIST_FOG_OFFS[] = {
 /*== 霧 ==*/
 #define	WEATHER_PALACE_MIST_FOG_TIMING		(90)							// に１回フォグテーブルを操作
 #define	WEATHER_PALACE_MIST_FOG_TIMING_END	(60)							// に１回フォグテーブルを操作
-#define WEATHER_PALACE_MIST_FOG_OFS			(32546)
+#define WEATHER_PALACE_MIST_FOG_OFS			(32607)
 #define WEATHER_PALACE_MIST_FOG_SLOPE		(8)
 
 static const u8 sc_PALACE_MIST_FOG_SLOPE[] = {
@@ -122,8 +122,8 @@ static const u8 sc_PALACE_MIST_FOG_SLOPE[] = {
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（裏路地）
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C03中央広場
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（ジム）
-  7,    // H02
-  3,    // H03
+  WEATHER_PALACE_MIST_FOG_SLOPE,    // H02
+  1,    // H03
   WEATHER_PALACE_MIST_FOG_SLOPE,    // チャンピオンロード
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C05地面ジム
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C03路地（真ん中）
@@ -137,7 +137,7 @@ static const u8 sc_PALACE_MIST_FOG_SLOPE[] = {
   WEATHER_PALACE_MIST_FOG_SLOPE,    // ポケリーグ内部（リフト下）
   WEATHER_PALACE_MIST_FOG_SLOPE,    // WFBC高さ１
   WEATHER_PALACE_MIST_FOG_SLOPE,    // WFBC高さ2
-  3,    // WFBC高さ3
+  4,    // WFBC高さ3
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C03ベイサイド
   8,    // H05
   WEATHER_PALACE_MIST_FOG_SLOPE,    // C07氷ジム
@@ -159,7 +159,7 @@ static const u32 sc_PALACE_MIST_FOG_OFFS[] = {
   WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（裏路地）
   WEATHER_PALACE_MIST_FOG_OFS,    // C03中央広場
   WEATHER_PALACE_MIST_FOG_OFS,    // C03路地（ジム）
-  32460,    // H02
+  WEATHER_PALACE_MIST_FOG_OFS,    // H02
   0,    // H03
   WEATHER_PALACE_MIST_FOG_OFS,    // チャンピオンロード
   WEATHER_PALACE_MIST_FOG_OFS,    // C05地面ジム
@@ -174,9 +174,9 @@ static const u32 sc_PALACE_MIST_FOG_OFFS[] = {
   WEATHER_PALACE_MIST_FOG_OFS,    // ポケリーグ内部（リフト下）
   WEATHER_PALACE_MIST_FOG_OFS,    // WFBC高さ１
   WEATHER_PALACE_MIST_FOG_OFS,    // WFBC高さ2
-  0,    // WFBC高さ3
+  2568,    // WFBC高さ3
   WEATHER_PALACE_MIST_FOG_OFS,    // C03ベイサイド
-  32591,    // H05
+  32623,    // H05
   WEATHER_PALACE_MIST_FOG_OFS,    // C07氷ジム
   WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（ゴースト）頂上
   WEATHER_PALACE_MIST_FOG_OFS,    // 四天王部屋（あく）頂上
@@ -240,6 +240,8 @@ static void WEATHER_MIST_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID );
 //=====================================
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_HIGH_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
+static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_HIGH_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_MIST_FadeIn( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_MIST_NoFade( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_MIST_Main( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID ); 
@@ -626,6 +628,56 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
   p_local_wk->weather_no = WEATHER_NO_PALACE_BLACK_MIST;
+
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_SLOPE) );
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_OFFS) );
+
+  // slope と offsを求める
+  p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
+  p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_HIGH_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_PALACE_MIST_WORK* p_local_wk;
+  u32 camera_type = WEATHER_TASK_CAMERA_GetType( p_wk );
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
+	p_local_wk->work[0] = 0;	// 同じくフォグ用
+
+  p_local_wk->weather_no = WEATHER_NO_PALACE_WHITE_MIST_HIGH;
+
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_SLOPE) );
+  GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_OFFS) );
+
+  // slope と offsを求める
+  p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
+  p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
+
+	return WEATHER_TASK_FUNC_RESULT_FINISH;
+}
+
+static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_HIGH_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+{
+	WEATHER_PALACE_MIST_WORK* p_local_wk;
+  u32 camera_type = WEATHER_TASK_CAMERA_GetType( p_wk );
+
+	// ローカルワーク取得
+	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
+	p_local_wk->work[0] = 0;	// 同じくフォグ用
+
+  p_local_wk->weather_no = WEATHER_NO_PALACE_BLACK_MIST_HIGH;
 
   GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_SLOPE) );
   GF_ASSERT( camera_type < NELEMS(sc_PALACE_MIST_FOG_OFFS) );

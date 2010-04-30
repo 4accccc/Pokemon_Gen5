@@ -134,29 +134,6 @@ void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id )
   }
 }
 
-// PALACEマップ　もやがかかるか取得
-//----------------------------------------------------------------------------
-/**
- *	@brief  PALACEマップ　もやがかかるか取得
- *
- *	@param	cp_gamesystem   ゲームシステム
- *	@param	zone_id         ゾーンID
- *
- *	@retval TRUE    かかる
- *	@retval FALSE   かからない
- */
-//-----------------------------------------------------------------------------
-BOOL PM_WEATHER_IsPalaceMistWeather( const GAMESYS_WORK* cp_gamesystem, int zone_id )
-{
-  const GAMEDATA* cp_gamedata  = GAMESYSTEM_GetGameData( (GAMESYS_WORK*)cp_gamesystem );
-
-  if( PM_WEATHER_GetPalaceWeather( cp_gamesystem, cp_gamedata, zone_id ) == WEATHER_NO_NONE ){
-    return FALSE;
-  }
-  return TRUE;
-}
-
-
 
 
 
@@ -185,22 +162,30 @@ static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const
   // パレスなら、パレス用
   if( ZONEDATA_IsPalaceField( zone_id ) )
   {
-     for( i=0; i<NELEMS(sc_PALACE_WEATHER_DATA); i++ )
-     {
-       if( sc_PALACE_WEATHER_DATA[i].zone_id == zone_id )
-       {
-         if( EVENTWORK_CheckEventFlag( p_evwork, sc_PALACE_WEATHER_DATA[i].sys_flag ) == FALSE )
-         {
-           if( p_gamecomm ){
-             if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE ){
-                return WEATHER_NO_PALACE_WHITE_MIST;
-             }else{
-                return WEATHER_NO_PALACE_BLACK_MIST;
-             }
-           }
-         }
-       }
-     }
+    if( p_gamecomm ){
+      for( i=0; i<NELEMS(sc_PALACE_WEATHER_DATA); i++ )
+      {
+        if( sc_PALACE_WEATHER_DATA[i].zone_id == zone_id )
+        {
+          if( EVENTWORK_CheckEventFlag( p_evwork, sc_PALACE_WEATHER_DATA[i].sys_flag ) == FALSE )
+          {
+            if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE ){
+              return WEATHER_NO_PALACE_WHITE_MIST_HIGH;
+            }else{
+              return WEATHER_NO_PALACE_BLACK_MIST_HIGH;
+            }
+          }
+          else
+          {
+            if( Intrude_GetRomVersion( p_gamecomm ) == VERSION_WHITE ){
+              return WEATHER_NO_PALACE_WHITE_MIST;
+            }else{
+              return WEATHER_NO_PALACE_BLACK_MIST;
+            }
+          }
+        }
+      }
+    }
   }
 
   return WEATHER_NO_NONE;

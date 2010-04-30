@@ -38,8 +38,6 @@ extern void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMESYS_WORK* p_gamesystem, in
 // セーブ復帰での天気更新処理
 extern void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id );
 
-// PALACEマップ　もやがかかるか取得
-extern BOOL PM_WEATHER_IsPalaceMistWeather( const GAMESYS_WORK* cp_gamesystem, int zone_id );
 
 
 #ifdef _cplusplus
