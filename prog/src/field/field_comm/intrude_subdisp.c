@@ -452,7 +452,7 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_I
 static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
 static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
-static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, ZONEID my_zone_id);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
@@ -1847,8 +1847,10 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
 static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, ZONEID my_zone_id)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GAME_COMM_INFO_MESSAGE infomsg;
   int k;
+  int print_mission_status_backup;
   BOOL msg_on = FALSE;
 #if 0
   MISSION_STATUS mission_status;
@@ -1858,6 +1860,9 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     intsub->infomsg_wait--;
     return;
   }
+  
+  print_mission_status_backup = intsub->print_mission_status;
+  intsub->print_mission_status = MISSION_STATUS_NULL;
   
   if(intcomm != NULL && GFL_NET_GetConnectNum() <= 1){
     if(intcomm->search_count > 0){
@@ -1872,12 +1877,17 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       msg_on = TRUE;
     }
   }
-  
+
+  //表の世界にいて近くに誰かが来ている
+  if(msg_on == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
+    msg_on = TRUE;
+  }
+
   if(msg_on == FALSE && intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
       && Intrude_GetMyStatus(intcomm, intsub->print_touch_player) != NULL){
     MYSTATUS *myst = Intrude_GetMyStatus(intcomm, intsub->print_touch_player);
     
-    intsub->print_mission_status = MISSION_STATUS_NULL;
     GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_011, intsub->strbuf_temp );
     WORDSET_RegisterPlayerName( intsub->wordset, 0, myst );
     WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
@@ -1885,12 +1895,12 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     msg_on = TRUE;
   }
   else if(intsub->comm.m_status != MISSION_STATUS_NULL && intsub->comm.p_md != NULL
-      && (intsub->comm.m_status == MISSION_STATUS_EXE || intsub->print_mission_status != intsub->comm.m_status)){
+      && (intsub->comm.m_status == MISSION_STATUS_EXE || print_mission_status_backup != intsub->comm.m_status)){
     //ミッション発動中の場合はミッション関連のメッセージを優先して表示
     //ミッションは状況を示すメッセージの為、キューに貯めずに現在の状態をそのまま表示
     
-  #if 0
     if(intsub->comm.m_status == MISSION_STATUS_EXE && intcomm != NULL){
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
       INTRUDE_STATUS *ist = &intcomm->intrude_status[intsub->comm.p_md->target_info.net_id];
       VecFx32 player_pos;
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
@@ -1900,9 +1910,9 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       if(intsub->comm.now_palace_area == intsub->comm.target_palace_area){
         fx32 offset_x, offset_z;
         u32 msg_id;
-        offset_x = ist->player_pack.x - player_pos.x;
-        offset_z = ist->player_pack.z - player_pos.z;
-        if(MATH_ABS(offset_x) > MATH_ABS(offset_y)){
+        offset_x = ist->player_pack.pos.x - player_pos.x;
+        offset_z = ist->player_pack.pos.z - player_pos.z;
+        if(MATH_ABS(offset_x) > MATH_ABS(offset_z)){
           msg_id = (offset_x > 0) ? msg_invasion_info_016 : msg_invasion_info_017;
         }
         else{
@@ -1921,18 +1931,12 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
           GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_018, intsub->strbuf_info );
           msg_on = TRUE;
         }
-        
-        //裏世界にいて、まだいったことのない場所
-        if(msg_on == FALSE 
-            && FIELD_PALACE_CheckArriveZone(GAMESYSTEM_GetGameData(intsub->gsys), my_zone_id)){
-          GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
-          msg_on = TRUE;
-        }
       }
     }
-  #endif
-    
-    if(msg_on == FALSE){ //ミッション説明のメッセージ
+
+    //ミッション説明のメッセージ
+    if(msg_on == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+      intsub->print_mission_status = MISSION_STATUS_NULL;
       switch(intsub->comm.m_status){
       case MISSION_STATUS_NOT_ENTRY: //ミッションは実施されているが参加していない
         GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_004, intsub->strbuf_info );
@@ -1960,12 +1964,13 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
         GF_ASSERT_MSG(0, "m_status=%d\n", intsub->comm.m_status);
         return;
       }
+      
+      if(intsub->comm.m_status != MISSION_STATUS_EXE){
+        intsub->print_mission_exe_flag = 0;
+      }
+      intsub->print_mission_status = intsub->comm.m_status;
+      msg_on = TRUE;
     }
-    if(intsub->comm.m_status != MISSION_STATUS_EXE){
-      intsub->print_mission_exe_flag = 0;
-    }
-    intsub->print_mission_status = intsub->comm.m_status;
-    msg_on = TRUE;
   }
   else if(GameCommInfo_GetMessage(game_comm, &infomsg) == TRUE){
     intsub->print_mission_status = MISSION_STATUS_NULL;
@@ -1979,6 +1984,13 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
     msg_on = TRUE;
   }
+
+  //裏世界にいて、まだいったことのない場所
+  if(msg_on == FALSE && FIELD_PALACE_CheckArriveZone(gamedata, my_zone_id)){
+    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
+    msg_on = TRUE;
+  }
+
   intsub->print_touch_player = INTRUDE_NETID_NULL;
   
   if(msg_on == TRUE){
