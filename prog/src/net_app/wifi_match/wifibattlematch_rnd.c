@@ -921,7 +921,7 @@ static void WbmRndSeq_Rate_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_START_RECV_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_POKECHECK_SERVER );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_INIT_SAKE );
     break;
 
     //-------------------------------------
@@ -1156,6 +1156,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_START_SESSION,
     SEQ_WAIT_SESSION,
 
+    SEQ_END_SESSION,
     SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
@@ -1354,8 +1355,14 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     if( WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net ) )
 #endif
     { 
-      *p_seq  = SEQ_END_MATCHING_MSG;
+      *p_seq  = SEQ_END_SESSION;
     }
+    break;
+
+  case SEQ_END_SESSION:
+    DWC_RAPCOMMON_ResetSubHeapID();
+    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
+    *p_seq  = SEQ_END_MATCHING_MSG;
     break;
 
   case SEQ_END_MATCHING_MSG:

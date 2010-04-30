@@ -1186,7 +1186,7 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
       - disconnect_rate * MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT;
 
     value = MATH_IMax( value, 0 );
-    OS_TPrintf( "▼評価値！ %d 切断比率(自) %d切断比率（相）%d \n", value, my_disconnect_rate, you_disconnect_rate );
+    OS_TPrintf( "▼評価値！ %d レート%d 切断比率(自) %d切断比率（相）%d \n", value, rate, my_disconnect_rate, you_disconnect_rate );
   }
   else
   { 
