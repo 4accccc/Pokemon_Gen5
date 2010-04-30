@@ -112,7 +112,7 @@ class OutputData
     if @label_monsno == nil then return end
     # ファイル名を生成
     monsname = @label_monsno.sub("MONSNO_", "").downcase
-    filename = path + "/trade_poke_#{monsname}.txt"
+    filename = path + "/trade_poke_#{@trade_no}_#{monsname}.txt"
     # ファイルに出力
     file = File::open(filename, "w")
     file.puts("TRADE_NO      = #{trade_no}")
@@ -150,7 +150,7 @@ class OutputData
   #------------------------
   def binary_filename
     monsname = @label_monsno.sub("MONSNO_", "").downcase
-    filename = "trade_poke_#{monsname}.bin"
+    filename = "trade_poke_#{@trade_no}_#{monsname}.bin"
     return filename
   end
   #--------------
