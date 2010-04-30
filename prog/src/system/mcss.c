@@ -1856,14 +1856,23 @@ static  inline  void  mosaic_make( u8 *buf, int pos_x, int pos_y, int tex_x, int
       int put_y = pos_y + y;
       int pos = mosaic_pos_get( put_x, put_y, tex_x );
 
-      if( put_x & 1 )
+		  if( pos < MCSS_TEX_SIZE )
       { 
-        buf[ pos ] = ( buf[ pos ] & 0x0f ) | col_h;
+        if( put_x & 1 )
+        { 
+          buf[ pos ] = ( buf[ pos ] & 0x0f ) | col_h;
+        }
+        else
+        { 
+          buf[ pos ] = ( buf[ pos ] & 0xf0 ) | col_l;
+        }
       }
+#ifdef PM_DEBUG
       else
       { 
-        buf[ pos ] = ( buf[ pos ] & 0xf0 ) | col_l;
+        OS_TPrintf("mcss_mosaic:”ÍˆÍŠO‚ðˆ—‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚Ü‚·\n");
       }
+#endif
     }
   }
 }
