@@ -99,28 +99,8 @@ G3D_FE_MDL = kage.imd \
   mark_hate.imd \
   mark_onpu.imd \
   mark_ten.imd \
-  f_mark_u.imd \
-  f_mark_d.imd \
-  f_mark_l.imd \
-  f_mark_r.imd \
-  c_mark_u.imd \
-  c_mark_l.imd \
-  c_mark_ul.imd \
-  c_mark_ur.imd \
-  c_mark_dl.imd \
-  c_mark_dr.imd \
   shibuki01.imd \
   ripple.imd \
-  nf_mark_u.imd \
-  nf_mark_d.imd \
-  nf_mark_l.imd \
-  nf_mark_r.imd \
-  nc_mark_u.imd \
-  nc_mark_l.imd \
-  nc_mark_ul.imd \
-  nc_mark_ur.imd \
-  nc_mark_dl.imd \
-  nc_mark_dr.imd \
   taki_land.imd \
   taki_loop_s.imd \
   taki_roop_f.imd \
@@ -150,12 +130,6 @@ G3D_FE_MDL = kage.imd \
   $(EFF_D06DENKI)d6_ishikage01.imd \
   iaigiri.imd \
   awa.imd \
-  sc_mark_u.imd \
-  sc_mark_l.imd \
-  sc_mark_ul.imd \
-  sc_mark_ur.imd \
-  sc_mark_dl.imd \
-  sc_mark_dr.imd \
   fishing_lure.imd \
   b_train01.imd \
   b_train02.imd \

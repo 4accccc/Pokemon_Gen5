@@ -67,12 +67,15 @@ enum
 ///深い雪 リソース位置
 #define FOOTMARK_DEEPSNOW_START (FOOTMARK_DEEPSNOW_UD)
 
-#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-8))
-#define FOOTMARK_OFFSPOS_Z (NUM_FX32(1))
-#define FOOTMARK_OFFSPOS_Z_WALK_LR (NUM_FX32(-2))
+//#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-8))
+#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-1))
+#define FOOTMARK_OFFSPOS_Z_WALK_LR (NUM_FX32(-i))
 
 #define FOOTMARK_VANISH_START_FRAME (16)			///<点滅開始フレーム(赤緑40)
 #define FOOTMARK_VANISH_END_FRAME (28)				///<点滅終了フレーム(赤緑56)
+
+#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*4+0xa00-1)
+#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*4+0xa00-1)
 
 //======================================================================
 //  struct
@@ -88,10 +91,8 @@ typedef struct _TAG_FLDEFF_FOOTMARK FLDEFF_FOOTMARK;
 struct _TAG_FLDEFF_FOOTMARK
 {
   FLDEFF_CTRL *fectrl;
-  
-  GFL_G3D_RES *g3d_res_mdl[FOOTMARK_ALL_MAX];
-  GFL_G3D_RND *g3d_rnd[FOOTMARK_ALL_MAX];
-  GFL_G3D_OBJ *g3d_obj[FOOTMARK_ALL_MAX];
+  GFL_BBDACT_SYS *bbdact_sys;
+  u16 res_idx_tbl[FOOTMARK_ALL_MAX];
 };
 
 //--------------------------------------------------------------
@@ -100,8 +101,7 @@ struct _TAG_FLDEFF_FOOTMARK
 typedef struct
 {
   FLDEFF_FOOTMARK *eff_fmark;
-  GFL_G3D_OBJ *obj;
-  NNSG3dResMdl *resMdl;
+  u16 res_idx;
 }TASKHEADER_FOOTMARK;
 
 //--------------------------------------------------------------
@@ -110,10 +110,11 @@ typedef struct
 typedef struct
 {
   TASKHEADER_FOOTMARK head;
-  int seq_no;
-  int vanish;
+  u16 act_id;
+  u16 seq_no;
+  u16 vanish;
+  s16 alpha;
   int frame;
-  int alpha;
 }TASKWORK_FOOTMARK;
 
 //======================================================================
@@ -122,10 +123,10 @@ typedef struct
 static void fmark_InitResource( FLDEFF_FOOTMARK *fmark );
 static void fmark_DeleteResource( FLDEFF_FOOTMARK *fmark );
 static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
-    FOOTMARK_TYPE type, u16 now_dir, u16 old_dir, GFL_G3D_OBJ **outobj );
+    FOOTMARK_TYPE type, u16 now_dir, u16 old_dir );
 
 static const FLDEFF_TASK_HEADER data_fmarkTaskHeader;
-static const u32 data_FootMarkArcIdx[FOOTMARK_ALL_MAX];
+static const u16 data_FootMarkArcIdx[FOOTMARK_ALL_MAX];
 static const u8 data_FootMarkCycleDirTbl[DIR_MAX4][DIR_MAX4];
 
 //======================================================================
@@ -142,9 +143,13 @@ static const u8 data_FootMarkCycleDirTbl[DIR_MAX4][DIR_MAX4];
 void * FLDEFF_FOOTMARK_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
   FLDEFF_FOOTMARK *fmark;
+	FIELDMAP_WORK *fieldmap;
   
   fmark = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_FOOTMARK) );
   fmark->fectrl = fectrl;
+  
+  fieldmap = FLDEFF_CTRL_GetFieldMapWork( fmark->fectrl );
+  fmark->bbdact_sys = FIELDMAP_GetEffBbdActSys( fieldmap );
   
   fmark_InitResource( fmark );
   return( fmark );
@@ -178,29 +183,21 @@ void FLDEFF_FOOTMARK_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void fmark_InitResource( FLDEFF_FOOTMARK *fmark )
 {
   int i;
-  NNSG3dResMdl *pMdl;
-  NNSG3dRenderObj *rnd;
-  const u32 *idx = data_FootMarkArcIdx;
+  GFL_BBDACT_G3DRESDATA data;
+  const u16 *idx = data_FootMarkArcIdx;
   ARCHANDLE *handle = FLDEFF_CTRL_GetArcHandleEffect( fmark->fectrl );
+  
+  data.texFmt = GFL_BBD_TEXFMT_PAL4;
+  data.texSiz = GFL_BBD_TEXSIZ_16x16;
+  data.celSizX = 16;
+  data.celSizY = 16;
+  data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
   
   for( i = 0; i < FOOTMARK_ALL_MAX; i++, idx++ )
   {
-    fmark->g3d_res_mdl[i] =
-      GFL_G3D_CreateResourceHandle( handle, *idx );
-      GFL_G3D_TransVramTexture( fmark->g3d_res_mdl[i] );
-    fmark->g3d_rnd[i] =
-      GFL_G3D_RENDER_Create(
-          fmark->g3d_res_mdl[i], 0, fmark->g3d_res_mdl[i] );
-  
-    rnd = GFL_G3D_RENDER_GetRenderObj( fmark->g3d_rnd[i] );
-    pMdl = NNS_G3dRenderObjGetResMdl( rnd );
-#if 0
-    NNS_G3dMdlUseGlbDiff( pMdl );
-    NNS_G3dMdlUseGlbAmb( pMdl );
-    NNS_G3dMdlUseGlbSpec( pMdl );
-#endif    
-    fmark->g3d_obj[i] = 
-      GFL_G3D_OBJECT_Create( fmark->g3d_rnd[i], NULL, 0 );
+    data.g3dres = GFL_G3D_CreateResourceHandle( handle, *idx );
+    fmark->res_idx_tbl[i] =
+      GFL_BBDACT_AddResourceG3DResUnit( fmark->bbdact_sys, &data, 1 );
   }
 }
 
@@ -217,9 +214,8 @@ static void fmark_DeleteResource( FLDEFF_FOOTMARK *fmark )
   
   for( i = 0; i < FOOTMARK_ALL_MAX; i++ )
   {
-    GFL_G3D_OBJECT_Delete( fmark->g3d_obj[i] );
-    GFL_G3D_RENDER_Delete( fmark->g3d_rnd[i] );
-    GFL_G3D_DeleteResource( fmark->g3d_res_mdl[i] );
+    GFL_BBDACT_RemoveResourceUnit(
+        fmark->bbdact_sys, fmark->res_idx_tbl[i], 1 );
   }
 }
   
@@ -235,35 +231,29 @@ static void fmark_DeleteResource( FLDEFF_FOOTMARK *fmark )
  */
 //--------------------------------------------------------------
 static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
-    FOOTMARK_TYPE type, u16 now_dir, u16 old_dir, GFL_G3D_OBJ **outobj )
+    FOOTMARK_TYPE type, u16 now_dir, u16 old_dir )
 {
   int no = 0;
   switch( type ){
   case FOOTMARK_TYPE_HUMAN:
     no = FOOTMARK_WALK_UP + now_dir;
-    *outobj = fmark->g3d_obj[no];
     break;
   case FOOTMARK_TYPE_CYCLE:
     no = data_FootMarkCycleDirTbl[old_dir][now_dir];
-    *outobj = fmark->g3d_obj[no];
     break;
   case FOOTMARK_TYPE_HUMAN_SNOW:
     no = FOOTMARK_SNOW_WALK_UP + now_dir;
-    *outobj = fmark->g3d_obj[no];
     break;
   case FOOTMARK_TYPE_CYCLE_SNOW:
     no = data_FootMarkCycleDirTbl[old_dir][now_dir] - FOOTMARK_CYCLE_START;
     no += FOOTMARK_SNOW_CYCLE_START;
-    *outobj = fmark->g3d_obj[no];
     break;
   case FOOTMARK_TYPE_DEEPSNOW:
     no = data_FootMarkCycleDirTbl[old_dir][now_dir] - FOOTMARK_CYCLE_START;
     no += FOOTMARK_DEEPSNOW_START;
-    *outobj = fmark->g3d_obj[no];
     break;
   default:
     GF_ASSERT( 0 );
-    *outobj = fmark->g3d_obj[no];
   }
   return( no );
 }
@@ -282,42 +272,27 @@ static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
 void FLDEFF_FOOTMARK_SetMMdl(
     MMDL *mmdl, FLDEFF_CTRL *fectrl, FOOTMARK_TYPE type )
 {
-  int no;
   VecFx32 pos;
   FLDEFF_FOOTMARK *fmark;
   TASKHEADER_FOOTMARK head;
   
   fmark = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_FOOTMARK );
   head.eff_fmark = fmark;
-  no = fmark_GetObject( fmark, type,
-      MMDL_GetDirDisp(mmdl), MMDL_GetDirDispOld(mmdl), &head.obj );
+  head.res_idx = fmark_GetObject( fmark, type,
+      MMDL_GetDirDisp(mmdl), MMDL_GetDirDispOld(mmdl) );
   
-  {
-    GFL_G3D_RND *g3drnd = GFL_G3D_OBJECT_GetG3Drnd( head.obj );
-    NNSG3dRenderObj *rnd = GFL_G3D_RENDER_GetRenderObj( g3drnd );
-    head.resMdl = NNS_G3dRenderObjGetResMdl( rnd );
-  }
-
   MMDL_GetVectorPos( mmdl, &pos ); //y
   MMDL_TOOL_GetCenterGridPos(
       MMDL_GetOldGridPosX(mmdl), MMDL_GetOldGridPosZ(mmdl), &pos );
-  
-  switch( type ){
-  case FOOTMARK_TYPE_HUMAN:
-  case FOOTMARK_TYPE_CYCLE:
-    pos.y += FOOTMARK_OFFSPOS_Y;
-    
-    if( type == FOOTMARK_TYPE_HUMAN &&
-        (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
-      pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
-    }else{
-      pos.z += FOOTMARK_OFFSPOS_Z;
-    }
-    break;
-  case FOOTMARK_TYPE_DEEPSNOW:
-    pos.y += NUM_FX32( -8 );
-    pos.z += NUM_FX32( -4 );
-    break;
+
+  pos.y += FOOTMARK_OFFSPOS_Y;
+
+  if( type == FOOTMARK_TYPE_HUMAN &&
+      (head.res_idx == FOOTMARK_WALK_LEFT ||
+       head.res_idx == FOOTMARK_WALK_RIGHT) ){
+    pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
+  }else if( type == FOOTMARK_TYPE_DEEPSNOW ){
+    pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
   }
   
   FLDEFF_CTRL_AddTask(
@@ -334,11 +309,30 @@ void FLDEFF_FOOTMARK_SetMMdl(
 //--------------------------------------------------------------
 static void fmarkTask_Init( FLDEFF_TASK *task, void *wk )
 {
+  ARCHANDLE *handle;
   TASKWORK_FOOTMARK *work = wk;
   const TASKHEADER_FOOTMARK *head;
+  GFL_BBDACT_ACTDATA actData;
+  GFL_BBDACT_SYS *bbdact_sys;
+  
   head = FLDEFF_TASK_GetAddPointer( task );
   work->head = *head;
   work->alpha = 31;
+  
+  actData.resID = work->head.eff_fmark->res_idx_tbl[work->head.res_idx];
+  actData.sizX = FOOTMARK_BBDACT_SIZE_X;
+  actData.sizY = FOOTMARK_BBDACT_SIZE_Y;
+  actData.alpha = work->alpha;
+  actData.drawEnable = TRUE;
+  actData.lightMask = GFL_BBD_LIGHTMASK_0;
+  actData.func = NULL;
+  actData.work = work;
+  
+  FLDEFF_TASK_GetPos( task, &actData.trans );
+  
+  bbdact_sys = work->head.eff_fmark->bbdact_sys;
+  work->act_id = GFL_BBDACT_AddActEx(
+      bbdact_sys, 0, &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
 }
 
 //--------------------------------------------------------------
@@ -351,6 +345,9 @@ static void fmarkTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void fmarkTask_Delete( FLDEFF_TASK *task, void *wk )
 {
+  TASKWORK_FOOTMARK *work = wk;
+  GFL_BBDACT_SYS *bbdact_sys = work->head.eff_fmark->bbdact_sys;
+  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
 }
 
 //--------------------------------------------------------------
@@ -374,8 +371,15 @@ static void fmarkTask_Update( FLDEFF_TASK *task, void *wk )
     break;
   case 1:
     work->alpha -= 2;
+    
     if( work->alpha < 0 ){
       FLDEFF_TASK_CallDelete( task );
+    }else{
+      u8 alpha = work->alpha;
+      GFL_BBDACT_SYS *bbdact_sys = work->head.eff_fmark->bbdact_sys;
+      GFL_BBD_SYS *bbdsys = GFL_BBDACT_GetBBDSystem( bbdact_sys );
+      u16 obj_idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdact_sys, work->act_id );
+      GFL_BBD_SetObjectAlpha( bbdsys, obj_idx, &alpha );
     }
   }
 } 
@@ -390,6 +394,7 @@ static void fmarkTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void fmarkTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+#if 0 //ビルボードアクターに任せる
   TASKWORK_FOOTMARK *work = wk;
   
   if( work->vanish == FALSE ){
@@ -400,6 +405,7 @@ static void fmarkTask_Draw( FLDEFF_TASK *task, void *wk )
     FLDEFF_TASK_GetPos( task, &status.trans );
     GFL_G3D_DRAW_DrawObjectCullingON( work->head.obj, &status );
   }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -420,39 +426,39 @@ static const FLDEFF_TASK_HEADER data_fmarkTaskHeader =
 //--------------------------------------------------------------
 ///	足跡imdテーブル　並びはFOOTMARK_WALK_UP等の値に一致
 //--------------------------------------------------------------
-static const u32 data_FootMarkArcIdx[FOOTMARK_ALL_MAX] =
+static const u16 data_FootMarkArcIdx[FOOTMARK_ALL_MAX] =
 {
   //通常
-	NARC_fldeff_f_mark_u_nsbmd,
-	NARC_fldeff_f_mark_d_nsbmd,
-	NARC_fldeff_f_mark_l_nsbmd,
-	NARC_fldeff_f_mark_r_nsbmd,
-	NARC_fldeff_c_mark_u_nsbmd,
-	NARC_fldeff_c_mark_l_nsbmd,
-	NARC_fldeff_c_mark_ul_nsbmd,
-	NARC_fldeff_c_mark_ur_nsbmd,
-	NARC_fldeff_c_mark_dl_nsbmd,
-	NARC_fldeff_c_mark_dr_nsbmd,
+	NARC_fldeff_f_mark_u_nsbtx,
+	NARC_fldeff_f_mark_d_nsbtx,
+	NARC_fldeff_f_mark_l_nsbtx,
+	NARC_fldeff_f_mark_r_nsbtx,
+	NARC_fldeff_c_mark_u_nsbtx,
+	NARC_fldeff_c_mark_l_nsbtx,
+	NARC_fldeff_c_mark_ul_nsbtx,
+	NARC_fldeff_c_mark_ur_nsbtx,
+	NARC_fldeff_c_mark_dl_nsbtx,
+	NARC_fldeff_c_mark_dr_nsbtx,
   
   //雪
-	NARC_fldeff_nf_mark_u_nsbmd,
-	NARC_fldeff_nf_mark_d_nsbmd,
-	NARC_fldeff_nf_mark_l_nsbmd,
-	NARC_fldeff_nf_mark_r_nsbmd,
-	NARC_fldeff_sc_mark_u_nsbmd,
-	NARC_fldeff_sc_mark_l_nsbmd,
-	NARC_fldeff_sc_mark_ul_nsbmd,
-	NARC_fldeff_sc_mark_ur_nsbmd,
-	NARC_fldeff_sc_mark_dl_nsbmd,
-	NARC_fldeff_sc_mark_dr_nsbmd,
+	NARC_fldeff_nf_mark_u_nsbtx,
+	NARC_fldeff_nf_mark_d_nsbtx,
+	NARC_fldeff_nf_mark_l_nsbtx,
+	NARC_fldeff_nf_mark_r_nsbtx,
+	NARC_fldeff_sc_mark_u_nsbtx,
+	NARC_fldeff_sc_mark_l_nsbtx,
+	NARC_fldeff_sc_mark_ul_nsbtx,
+	NARC_fldeff_sc_mark_ur_nsbtx,
+	NARC_fldeff_sc_mark_dl_nsbtx,
+	NARC_fldeff_sc_mark_dr_nsbtx,
 
   //深い雪
-	NARC_fldeff_nc_mark_u_nsbmd,
-	NARC_fldeff_nc_mark_l_nsbmd,
-	NARC_fldeff_nc_mark_ul_nsbmd,
-	NARC_fldeff_nc_mark_ur_nsbmd,
-	NARC_fldeff_nc_mark_dl_nsbmd,
-	NARC_fldeff_nc_mark_dr_nsbmd,
+	NARC_fldeff_nc_mark_u_nsbtx,
+	NARC_fldeff_nc_mark_l_nsbtx,
+	NARC_fldeff_nc_mark_ul_nsbtx,
+	NARC_fldeff_nc_mark_ur_nsbtx,
+	NARC_fldeff_nc_mark_dl_nsbtx,
+	NARC_fldeff_nc_mark_dr_nsbtx,
 };
 
 //--------------------------------------------------------------
