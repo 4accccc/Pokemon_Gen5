@@ -313,8 +313,7 @@ static char* news_plt_name[NEWS_INDEX_NUM] =
   "gelboard_7_pl",
 };
 // 天気に使用するメッセージ
-//u32 str_id_weather[ WEATHER_NO_NUM ] = 
-u32 str_id_weather[] = // TEMP: 天気の追加に対応
+u32 str_id_weather[ WEATHER_NO_NUM ] = 
 {
   msg_gate_sunny,        // 晴れ
   msg_gate_snow,         // 雪
@@ -329,6 +328,8 @@ u32 str_id_weather[] = // TEMP: 天気の追加に対応
   msg_gate_mist,         // パレスWhite用 霧
   msg_gate_mist,         // パレスBlack用 霧
   msg_gate_storm_high,   // 砂嵐強
+  msg_gate_mist,         // パレスWhite用 霧 行ったことない所用
+  msg_gate_mist,         // パレスBlack用 霧 行ったことない所用
 };
 
 // ジム情報の登録場所
