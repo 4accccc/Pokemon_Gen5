@@ -648,7 +648,6 @@ static void StopSystem( ISS_3DS_SYS* system )
 static void SystemMain( ISS_3DS_SYS* system )
 {
   ISS3DS_UNIT_INDEX unitIdx;
-	BOOL print = TRUE;
 
   // ‹N“®‚µ‚Ä‚¢‚È‚¢
   if( system->boot == FALSE ){ return; }
@@ -668,12 +667,6 @@ static void SystemMain( ISS_3DS_SYS* system )
 		// BGM‚É”½‰f
 		ApplyUnitVolumeForBGM( system, unitIdx );
 	  ApplyUnitPanForBGM( system, unitIdx );
-
-		if( print ) {
-			print = FALSE;
-			OS_TFPrintf( 2, "volume = %d\n", system->unitVolume[ unitIdx ] );
-			OS_TFPrintf( 3, "pan = %d\n", system->unitPan[ unitIdx ] );
-		}
   }
 }
 
