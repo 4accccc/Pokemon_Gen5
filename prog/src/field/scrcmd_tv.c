@@ -35,6 +35,7 @@
 #define RECORD_TV_MAX (29)    //男女別11　共通18
 #define LECTURE_TV_MAX  (50)
 #define VARIETY_TV_MAX (80)
+#define NOTBADGE_RETRY_TV_MAX   (12)    //バッジ持っていなかったときの再抽選番組数
 
 #define TV_MAX ( RECORD_TV_MAX+LECTURE_TV_MAX+VARIETY_TV_MAX )  //29+50+80=159
 
@@ -256,8 +257,9 @@ static int CheckBadge(GAMEDATA *gdata, const int inMsg)
       else
       {
         //もって無い場合は別のメッセージ
-        OS_Printf("%dバッジ番組抽選したけど、持って無いから別のに変更\n",i);
-        return 0;
+        msg = msg_tv_03_01 + GFUser_GetPublicRand(NOTBADGE_RETRY_TV_MAX);
+        OS_Printf("%dバッジ番組抽選したけど、持って無いから別のに変更 >> %d\n",i, msg);
+        return msg;
       }
     }
   }
