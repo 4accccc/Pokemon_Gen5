@@ -17,16 +17,6 @@ EFF_D06DENKI = eff_denkidoukutu/
 #	フィールドエフェクト　itpアニメ定義
 #---------------------------------------------------------------
 G3D_FE_ANMITP = hero_kemu.itp \
-  kusaeff.itp \
-  kusaeff_sp.itp \
-  kusaeff_sm.itp \
-  kusaeff_at.itp \
-  kusaeff_wt.itp \
-  kusaeff_sn.itp \
-  lgrass_sp.itp \
-  lgrass_sm.itp \
-  lgrass_at.itp \
-  lgrass_wt.itp \
   ripple.itp \
   shibuki.itp \
   taki_loop_s.itp \
@@ -36,15 +26,6 @@ G3D_FE_ANMITP = hero_kemu.itp \
   iwakudaki.itp \
   $(EFF_D06DENKI)d6_yuka_biri01.itp \
   fishing_lure.itp \
-  kusaeff_sp2.itp \
-  kusaeff_sm2.itp \
-  kusaeff_at2.itp \
-  kusaeff_wt2.itp \
-  kusaeff_sn2.itp \
-  lgrass_sp2.itp \
-  lgrass_sm2.itp \
-  lgrass_at2.itp \
-  lgrass_wt2.itp \
   mv_hide_tsuchi.itp \
   mv_hide_kusa.itp \
   shibuki02.itp
@@ -115,16 +96,6 @@ G3D_FE_ANMIVA =
 #---------------------------------------------------------------
 G3D_FE_MDL = kage.imd \
   hero_kemu.imd \
-  kusaeff.imd \
-  kusaeff_sp.imd \
-  kusaeff_sm.imd \
-  kusaeff_at.imd \
-  kusaeff_wt.imd \
-  kusaeff_sn.imd \
-  lgrass_sp.imd \
-  lgrass_sm.imd \
-  lgrass_at.imd \
-  lgrass_wt.imd \
   sea_ride.imd \
   sisen_ef.imd \
   mark_hate.imd \
@@ -189,15 +160,6 @@ G3D_FE_MDL = kage.imd \
   sc_mark_dl.imd \
   sc_mark_dr.imd \
   fishing_lure.imd \
-  kusaeff_sp2.imd \
-  kusaeff_sm2.imd \
-  kusaeff_at2.imd \
-  kusaeff_wt2.imd \
-  kusaeff_sn2.imd \
-  lgrass_sp2.imd \
-  lgrass_sm2.imd \
-  lgrass_at2.imd \
-  lgrass_wt2.imd \
   b_train01.imd \
   b_train02.imd \
   b_train03.imd \
@@ -213,8 +175,54 @@ G3D_FE_MDL = kage.imd \
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
 #---------------------------------------------------------------
-G3D_FE_TEX =
-
+G3D_FE_TEX = kusaeff.imd \
+  kusaeff_sp.imd \
+  kusaeff_sm.imd \
+  kusaeff_at.imd \
+  kusaeff_wt.imd \
+  kusaeff_sn.imd \
+  kusaeff_sp2.imd \
+  kusaeff_sm2.imd \
+  kusaeff_at2.imd \
+  kusaeff_wt2.imd \
+  kusaeff_sn2.imd \
+  lgrass_sp.imd \
+  lgrass_sm.imd \
+  lgrass_at.imd \
+  lgrass_wt.imd \
+  lgrass_sp2.imd \
+  lgrass_sm2.imd \
+  lgrass_at2.imd \
+  lgrass_wt2.imd \
+  shibuki.imd \
+  shibuki02.imd \
+  f_mark_u.imd \
+  f_mark_d.imd \
+  f_mark_l.imd \
+  f_mark_r.imd \
+  c_mark_u.imd \
+  c_mark_l.imd \
+  c_mark_ul.imd \
+  c_mark_ur.imd \
+  c_mark_dl.imd \
+  c_mark_dr.imd \
+  nf_mark_u.imd \
+  nf_mark_d.imd \
+  nf_mark_l.imd \
+  nf_mark_r.imd \
+  nc_mark_u.imd \
+  nc_mark_l.imd \
+  nc_mark_ul.imd \
+  nc_mark_ur.imd \
+  nc_mark_dl.imd \
+  nc_mark_dr.imd \
+  sc_mark_u.imd \
+  sc_mark_l.imd \
+  sc_mark_ul.imd \
+  sc_mark_ur.imd \
+  sc_mark_dl.imd \
+  sc_mark_dr.imd
+  
 #---------------------------------------------------------------
 #	フィールドエフェクト　変換不要データ定義
 #---------------------------------------------------------------
