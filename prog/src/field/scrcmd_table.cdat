@@ -861,6 +861,9 @@
 	DEF_CMD( EvCmdItemJudgeSetWordSet, EV_SEQ_ITEMJUDGE_SET_WORDSET )
 	DEF_CMD( EvCmdItemJudgeAddMoney, EV_SEQ_ITEMJUDGE_ADD_MONEY )
 
+	//フィールドBGMの復帰
+  DEF_CMD( EvCmdBgmNowMapPlayEx, EV_SEQ_END_EVENT_BGM_EX )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   

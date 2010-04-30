@@ -3220,11 +3220,27 @@
 	* @param frame フェードアウトフレーム数
   */
 //--------------------------------------------------------------
-#define _START_EVENT_BGM_EX( no, frame ) _ASM_START_EVENT_BGM_EX no, frame
+#define _START_EVENT_BGM_EX( no, frame ) \
+		_ASM_START_EVENT_BGM_EX no, frame
 
    .macro  _ASM_START_EVENT_BGM_EX no, frame
   .short  EV_SEQ_START_EVENT_BGM_EX
   .short  \no
+  .short  \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _END_EVENT_BGM_EX 
+ *  @brief 現在のマップのBGMを鳴らす ( FOフレーム数指定 ver. )
+ *  @param frame フェードアウトフレーム数
+ */
+//--------------------------------------------------------------
+#define _END_EVENT_BGM_EX( frame ) \
+		_ASM_END_EVENT_BGM_EX frame
+
+  .macro  _ASM_END_EVENT_BGM_EX frame
+  .short  EV_SEQ_END_EVENT_BGM_EX
   .short  \frame
   .endm
 

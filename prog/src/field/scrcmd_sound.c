@@ -316,6 +316,38 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * 現在のマップのBGMを再生 ( FOフレーム数指定ver. )
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ * @note 再生中のBGMを破棄し, フィールドのBGMを再生する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work     = wk;
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gdata    = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_SOUND*   fsnd     = GAMEDATA_GetFieldSound( gdata );
+  SCRIPT_WORK*   script   = SCRCMD_WORK_GetScriptWork( work );
+  u16            frame    = VMGetU16( core ); // コマンド第一引数: FOフレーム数
+
+  {
+    GMEVENT* event;
+    u16 zoneID;
+    u32 soundIdx;
+
+    zoneID   = FIELDMAP_GetZoneID( fieldmap );
+    soundIdx = FSND_GetFieldBGM( gdata, zoneID );
+    event    = EVENT_FSND_ChangeBGM( gsys, soundIdx, frame, FSND_FADE_NORMAL );
+    SCRIPT_CallEvent( script, event );
+    FSND_RePlayEnvSE( fsnd ); // 環境音復帰
+  }
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
  * 現在のBGMを退避し, イベントBGMを再生する
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
