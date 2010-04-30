@@ -288,7 +288,6 @@ void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
   GFL_BBDACT_SYS *pBbdActSys, int res_max )
 {
   HEAPID heapID;
-  GFL_BBDACT_ACTDATA *actData;
   GFL_BBDACT_ACTUNIT_ID actUnitID;
   MMDL_BLACTCONT *pBlActCont;
   
@@ -511,20 +510,6 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
         actID, (GFL_BBDACT_ANMTBL)anmTbl->pAnmTbl, anmTbl->anm_max );
       GFL_BBDACT_SetAnimeIdxOn( pBlActCont->pBbdActSys, actID, 0 );
     }
-  }
-
-  {
-#if 0
-    //なぜか64x64だと32x32サイズで表示されてしまう
-    //ひとまずサイズ等倍にして対処。kagaya
-    if( prm->mdl_size == MMDL_BLACT_MDLSIZE_64x64 ){
-      fx16 sizX = FX16_ONE*8-1;
-      fx16 sizY = FX16_ONE*8-1;
-      GFL_BBD_SetObjectSiz(
-        GFL_BBDACT_GetBBDSystem(pBlActCont->pBbdActSys),
-        actID, &sizX, &sizY );
-    }
-#endif
   }
   
   return( actID );
