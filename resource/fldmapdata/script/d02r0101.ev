@@ -150,6 +150,7 @@ EVENT_END
 /*	D02R0101	リーフィア進化用の石						  */
 /**************************************************************/
 EVENT_START		ev_bg_d02r0101_stone_01
+_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_d02r0101_stone_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
