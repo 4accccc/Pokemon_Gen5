@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T19:08:21"/>
+	<create user="satou" host="W00177" date="2010-04-30T12:17:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,9 +438,9 @@
 ・続けてright_answer_04</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">セヤナ『ヒュー　ヒュー！
-ヤーフー！▼</language>
+ナイス　ガンバ！▼</language>
 		<language name="JPN_KANJI" width="256">セヤナ『ヒュー　ヒュー！
-ヤーフー！▼</language>
+ナイス　ガンバ！▼</language>
 	</row>
 
 	<row id="msg_quiz_right_answer_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -719,7 +719,7 @@
 	</row>
 
 	<row id="msg_quiz_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>バンビーノ</comment>
+		<comment>シキジカ</comment>
 		<attribute name="キャラ指定">クイズその20</attribute>
 		<language name="JPN" width="256">きせつに　よって　すがたがかわる
 しんかまえの　ポケモンは　なに？▼</language>
@@ -737,7 +737,7 @@
 	</row>
 
 	<row id="msg_quiz_22" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>フルコング</comment>
+		<comment>ズルズキン</comment>
 		<attribute name="キャラ指定">クイズその22</attribute>
 		<language name="JPN" width="256">あくタイプと　かくとうタイプを　もつ
 だっぴポケモンが▽
@@ -784,7 +784,7 @@
 	</row>
 
 	<row id="msg_quiz_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>アイスゴン</comment>
+		<comment>フリージオ</comment>
 		<attribute name="キャラ指定">クイズその27</attribute>
 		<language name="JPN" width="256">つめたい　こおりの
 けっしょうポケモンと　いえば？▼</language>
@@ -802,7 +802,7 @@
 	</row>
 
 	<row id="msg_quiz_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>ブロッコ</comment>
+		<comment>ヤナップ</comment>
 		<attribute name="キャラ指定">クイズその29</attribute>
 		<language name="JPN" width="256">あたまに　はっぱが　はえた
 くさザルポケモンと　いえば？▼</language>
