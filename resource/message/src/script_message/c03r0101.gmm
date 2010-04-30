@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-04-30T14:52:40"/>
+	<create user="nakamura_akira" host="W00161" date="2010-04-30T14:56:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -6825,7 +6825,7 @@ assistantm_01_31へ続く
 アンケート隊員</attribute>
 		<language name="JPN" width="256">アンケートは　なんども　
 こたえられるから▽
-こたえを　かえたくなったら
+こたえを　かえたくなったら▽
 いってね</language>
 		<language name="JPN_KANJI" width="256">アンケートは　何度も　答えられるから
 答えを　変えたくなったら　いってね</language>
@@ -7544,7 +7544,8 @@ woman2_18へ続く</comment>
 アンケート隊員</attribute>
 		<language name="JPN" width="256">アンケートは　なんども
 こたえられるから▽
-こたえを　かえたくなったら　いってね</language>
+こたえを　かえたくなったら▽
+いってね</language>
 		<language name="JPN_KANJI" width="256">アンケートは　何度も　答えられるから
 答えを　変えたくなったら　いってね</language>
 	</row>
