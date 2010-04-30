@@ -1988,7 +1988,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   //— ¢ŠE‚É‚¢‚ÄA‚Ü‚¾‚¢‚Á‚½‚±‚Æ‚Ì‚È‚¢êŠ
   if(msg_on == FALSE && ZONEDATA_IsPalace(my_zone_id) == FALSE 
       && ZONEDATA_IsBingo(my_zone_id) == FALSE
-      && FIELD_PALACE_CheckArriveZone(gamedata, my_zone_id)){
+      && FIELD_PALACE_CheckArriveZone(gamedata, my_zone_id) == FALSE){
     GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
     msg_on = TRUE;
   }
