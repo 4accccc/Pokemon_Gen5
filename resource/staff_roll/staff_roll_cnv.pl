@@ -24,6 +24,8 @@ $CNV_FILE = 0;				# 作成ファイル
 	"スクロール停止",
 	"終了",
 	"ロゴ",
+	"３Ｄ開始",
+	"３Ｄ停止",
 );
 $LABEL_NAME_MAX = 6;
 
@@ -35,6 +37,8 @@ $LABEL_NAME_MAX = 6;
 	4,		# ITEMLIST_LABEL_SCROLL_STOP
 	5,		# ITEMLIST_LABEL_END
 	6,		# ITEMLIST_LABEL_LOGO_PUT
+	7,		# ITEMLIST_LABEL_3D_PUT
+	8,		# ITEMLIST_LABEL_3D_CLEAR
 );
 
 # 表示モードテーブル
