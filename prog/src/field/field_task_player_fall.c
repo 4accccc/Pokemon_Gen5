@@ -116,7 +116,7 @@ static FIELD_TASK_RETVAL FallPlayer( void* wk )
   switch( work->seq ) {
   case 0:
     // 主人公の向きを設定
-    MMDL_SetAcmd( mmdl, AC_DIR_D ); 
+    //MMDL_SetAcmd( mmdl, AC_DIR_D ); 
     // 描画オフセット初期化
     CalcDrawOffset( &offset, work->frame, work->endFrame, work->moveDist );
     MMDL_SetVectorDrawOffsetPos( mmdl, &offset );

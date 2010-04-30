@@ -263,10 +263,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     { // 主人公の描画オフセットの初期設定(画面外にいるように設定)
-      VecFx32       offset = {0, 100<<FX32_SHIFT, 0};
+      VecFx32       offset = {0, 250<<FX32_SHIFT, 0};
       FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
       MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
       MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+			MMDL_SetAcmd( mmdl, AC_DIR_D ); // 向きを初期化
     }
     { // フェードイン
       GMEVENT* fadeInEvent;
