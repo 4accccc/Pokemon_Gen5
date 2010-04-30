@@ -30,6 +30,7 @@
 #include "field_task_manager.h"
 #include "field_task_player_rot.h"
 #include "field_task_player_drawoffset.h"
+#include "field_task_player_fall.h"
 
 #include "event_fldmmdl_control.h"
 #include "event_rail_slipdown.h"
@@ -1283,6 +1284,58 @@ VMCMD_RESULT EvCmdObjWarpOut( VMHANDLE *core, void *wk )
   // タスクを登録
   FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
   FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL ); 
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 動作モデルの落下による出現
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*     work     = wk;
+  SCRIPT_WORK*     script   = SCRCMD_WORK_GetScriptWork( work );
+  u16              obj_id   = SCRCMD_GetVMWorkValue( core, work ); // コマンド第一引数: OBJID
+  u16              grid_x   = SCRCMD_GetVMWorkValue( core, work ); // コマンド第二引数: x 座標 ( グリッド単位 )
+  u16              grid_z   = SCRCMD_GetVMWorkValue( core, work ); // コマンド第三引数: z 座標 ( グリッド単位 )
+  u16              dir      = SCRCMD_GetVMWorkValue( core, work ); // コマンド第四引数: 向き
+  MMDLSYS*         mmdlsys  = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL*            mmdl     = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  SCRIPT_FLDPARAM* fldparam = SCRIPT_GetFieldParam( script );
+  FIELDMAP_WORK*   fieldmap = fldparam->fieldMap;
+  FIELD_TASK_MAN*  taskMan  = FIELDMAP_GetTaskManager( fieldmap );
+
+
+  GF_ASSERT( mmdl ); // 引数エラー: 指定されたOBJIDは存在しない
+
+	// 動作モデルを落下地点に移動
+	{
+		VecFx32 pos;
+		fx32 y = 0;
+		s16 grid_y;
+
+		pos.x = GRID_TO_FX32( grid_x );
+		pos.z = GRID_TO_FX32( grid_z ); 
+		MMDL_GetMapPosHeight( mmdl, &pos, &y );
+		grid_y = SIZE_GRID_FX32( y );
+		MMDL_InitGridPosition( mmdl, grid_x, grid_y, grid_z, dir );
+	}
+
+	// 動作モデルの描画オフセットを初期設定 ( 画面外にいるようにする )
+	{
+		VecFx32 offset = { 0, 100<<FX32_SHIFT, 0 };
+		MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+	}
+
+  // タスクを登録
+	{
+		FIELD_TASK* task;
+
+		task = FIELD_TASK_PlayerFall( fieldmap, mmdl, 40, 250 ); 
+		FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+	}
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -1875,6 +1875,26 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief 動作モデルの落下による登場
+ * @param obj_id 適用するOBJID
+ * @param grid_x 着地地点の x 座標 ( グリッド単位 )
+ * @param grid_z 着地地点の z 座標 ( グリッド単位 )
+ * @param dir    動作モデルの向き ( DIR_xxxx )
+ */
+//--------------------------------------------------------------
+#define _OBJ_FALL_IN( obj_id, grid_x, grid_z, dir ) \
+    _ASM_OBJ_FALL_IN obj_id, grid_x, grid_z, dir
+
+  .macro  _ASM_OBJ_FALL_IN obj_id, grid_x, grid_z, dir
+  .short  EV_SEQ_OBJ_FALL_IN
+  .short  \obj_id
+  .short  \grid_x
+  .short  \grid_z
+  .short  \dir
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 動作モデルのワープによる消去
  * @param obj_id 適用するOBJID
  */
@@ -3191,6 +3211,23 @@
   //_ASM_BGM_STOP
   _ASM_BGM_NOW_MAP_RECOVER
   .endm
+
+//--------------------------------------------------------------
+/**
+  * @def _START_EVENT_BGM_EX 
+	* @brief BGMを鳴らす ( FOフレーム数指定 ver. )
+  * @param no    BGM Number
+	* @param frame フェードアウトフレーム数
+  */
+//--------------------------------------------------------------
+#define _START_EVENT_BGM_EX( no, frame ) _ASM_START_EVENT_BGM_EX no, frame
+
+   .macro  _ASM_START_EVENT_BGM_EX no, frame
+  .short  EV_SEQ_START_EVENT_BGM_EX
+  .short  \no
+  .short  \frame
+  .endm
+
 
 //======================================================================
 //  サウンド ISS

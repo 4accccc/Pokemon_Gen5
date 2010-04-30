@@ -46,7 +46,7 @@ extern VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdObjHighJump( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjWarpOut( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdObjWarpIn( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk );
 
 
 //======================================================================

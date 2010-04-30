@@ -629,6 +629,64 @@ GMEVENT* EVENT_FSND_PlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx )
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief イベントBGM再生イベント処理関数 ( FOフレーム数指定ver. )
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PlayEventBGMExEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  case 0:  // リクエスト発行
+    FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, work->fadeOutFrame );
+    FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
+    (*seq)++;
+    break;
+  case 1:
+    // 即時再生の完了待ち
+    if( FIELD_SOUND_HaveRequest( fieldSound ) == FALSE ) {
+      return GMEVENT_RES_FINISH;
+    }
+  } 
+  return GMEVENT_RES_CONTINUE;
+} 
+//--------------------------------------------------------------------------------- 
+/**
+ * @brief イベントBGMの再生イベントを生成する ( FOフレーム数指定ver. )
+ *
+ * @param gameSystem
+ * @param soundIdx     再生するBGM
+ * @param fadeOutFrame フェードアウトフレーム数
+ *
+ * @return 生成したイベント
+ */
+//--------------------------------------------------------------------------------- 
+GMEVENT* EVENT_FSND_PlayEventBGMEx( GAMESYS_WORK* gameSystem, u32 soundIdx, u32 fadeOutFrame )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  // イベントを生成
+  event = GMEVENT_Create( gameSystem, NULL, PlayEventBGMExEvent, sizeof(FSND_EVWORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound   = GAMEDATA_GetFieldSound( gdata );
+  work->soundIdx     = soundIdx;
+	work->fadeOutFrame = fadeOutFrame;
+
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief イベントBGM再生イベント処理関数 ( フィールド BGM 退避 ver. )
  */
 //---------------------------------------------------------------------------------

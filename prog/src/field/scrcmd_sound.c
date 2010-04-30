@@ -90,6 +90,39 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * BGM変更 ( FOフレーム数指定ver. )
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ * @note 現在再生中のBGMを破棄し、指定BGMを再生している。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work      = wk;
+  GAMESYS_WORK* gsys      = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script    = SCRCMD_WORK_GetScriptWork( work );
+  u16           sound_idx = VMGetU16( core ); // コマンド第一引数: BGM
+  u16           frame     = VMGetU16( core ); // コマンド第二引数: FOフレーム数
+
+  {
+    GMEVENT* event;
+    event = EVENT_FSND_PlayEventBGMEx( gsys, sound_idx, frame );
+    SCRIPT_CallEvent( script, event );
+  }
+
+  // フィールドサウンド。
+  // 環境SE停止。
+  {
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
+    FSND_PauseEnvSE( fsound );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
  * BGM停止
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
@@ -215,10 +248,17 @@ static BOOL EvWaitBgmFade( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
 {
-  u16 vol    = VMGetU16(core);
-  u16 frame  = VMGetU16(core);
-  PMSND_FadeOutBGM( frame );
-  VMCMD_SetWait( core, EvWaitBgmFade );
+  SCRCMD_WORK*  work   = wk;
+  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script = SCRCMD_WORK_GetScriptWork( work );
+  u16           vol    = VMGetU16( core ); // @todo 引数削除
+  u16           frame  = VMGetU16( core );
+
+	GMEVENT* event;
+
+	event = EVENT_FSND_FadeOutBGM( gsys, frame );
+	SCRIPT_CallEvent( script, event );
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -231,9 +271,16 @@ VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
 {
-  u16 frame = VMGetU16(core);
-  PMSND_FadeInBGM( frame );
-  VMCMD_SetWait( core, EvWaitBgmFade );
+  SCRCMD_WORK*  work   = wk;
+  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script = SCRCMD_WORK_GetScriptWork( work );
+  u16           frame  = VMGetU16( core );
+
+	GMEVENT* event;
+
+	event = EVENT_FSND_FadeInBGM( gsys, frame ); 
+	SCRIPT_CallEvent( script, event );
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -370,81 +417,6 @@ BOOL SCREND_CheckEndBGMPushPop( SCREND_CHECK *end_check, int *seq )
   return FALSE;
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * BGMの復帰忘れがあれば強制復帰。エラー回避用。
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdBgmForcePop( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-  FIELD_SOUND_ForcePopBGM( fsnd );
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
-
-#if 0
-VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
-{
-#if 0
-  int zone_id = core->fsys->location->zone_id;
-  //u16 music  = Snd_PcBgmNoGet( core->fsys, Snd_FieldBgmNoGet(core->fsys,zone_id) );
-  u16 music  = Snd_FieldBgmNoGetNonBasicBank( core->fsys,zone_id );
-  Snd_BgmPlay( music );
-#else
-  {
-	  u16 trackBit = 0xfcff;	// track 9,10 OFF
-    SCRCMD_WORK *work = wk;
-    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-    SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork(
-        sc, ID_EVSCR_WK_FLDPARAM );
-    u16 zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
-    u16 bgm = ZONEDATA_GetBGMID( zone_id, GAMEDATA_GetSeasonID(gdata) );
-    
-    if( bgm != 0 ){
-      PMSND_PlayNextBGM_EX( bgm, trackBit, 60, 0 );
-    }
-  }
-#endif
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
-
-#if 0 //wb
-//--------------------------------------------------------------
-/**
- * 演出BGM再生(ライバル、サポート、つれてけ)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdPlayerFieldDemoBgmPlay( VMHANDLE *core, void *wk )
-{
-  Snd_PlayerFieldDemoBgmPlay( SND_SCENE_FIELD, VMGetU16(core) );
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
-
-#if 0 //wb
-//--------------------------------------------------------------
-/**
- * フィールドBGMを固定にするフラグセット(セーブしない)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdCtrlBgmFlagSet( VMHANDLE *core, void *wk )
-{
-  Snd_CtrlBgmFlagSet( VMGetU8(core) );
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
 
 //======================================================================
 //  コマンド　SE

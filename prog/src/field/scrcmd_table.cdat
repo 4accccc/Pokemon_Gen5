@@ -851,6 +851,12 @@
   //自分の国コードがセットされているかを調べる
   DEF_CMD( EvCmdUn_IsSetingMyCountry, EV_SEQ_UN_IS_SETTING_MYCOUNTRY )
 
+	//動作モデルの落下アニメ
+	DEF_CMD( EvCmdObjFallIn, EV_SEQ_OBJ_FALL_IN )
+
+	//イベントBGMの再生 ( FOフレーム数指定ver. )
+	DEF_CMD( EvCmdBgmPlayEx, EV_SEQ_START_EVENT_BGM_EX )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   
