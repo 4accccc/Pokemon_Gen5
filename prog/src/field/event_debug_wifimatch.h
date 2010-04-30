@@ -15,6 +15,17 @@
 #include "gamesystem/game_event.h"
 #include "net_app/debug_wifi_match.h"
 
+FS_EXTERN_OVERLAY(event_debug_wifimatch);
 
-extern GMEVENT* EVENT_DEBUG_WifiMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, DEBUG_WIFIBATTLEMATCH_MODE mode );
+//-------------------------------------
+///	ÉpÉâÉÅÅ[É^
+//=====================================
+typedef struct {
+  FIELDMAP_WORK* fieldmap;
+  DEBUG_WIFIBATTLEMATCH_MODE mode;
+} EV_DEBUG_WIFIMATCH;
+
+
+
+extern GMEVENT* EVENT_DEBUG_CallWifiMatch( GAMESYS_WORK * gsys, void* work );
 

@@ -171,7 +171,7 @@ static GMEVENT_RESULT EVENT_DebugWifiMatchMain(GMEVENT * event, int *  seq, void
  *	@param  mode                モード
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_DEBUG_WifiMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, DEBUG_WIFIBATTLEMATCH_MODE mode )
+static GMEVENT* EVENT_DEBUG_WifiMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, DEBUG_WIFIBATTLEMATCH_MODE mode )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_DebugWifiMatchMain, sizeof(EVENT_DEBUGWIFIMATCH_WORK));
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
@@ -191,4 +191,17 @@ GMEVENT* EVENT_DEBUG_WifiMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, D
   return event;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグWiFi世界対戦コール
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_DEBUG_CallWifiMatch( GAMESYS_WORK * gsys, void* work )
+{
+  EV_DEBUG_WIFIMATCH* param = work;
+
+  return EVENT_DEBUG_WifiMatch( gsys, param->fieldmap, param->mode );
+}
 

@@ -138,23 +138,26 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
  *  @brief  WiFiクラブイベントコール
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+static GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BOOL bFieldEnd )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK));
-  wifi_SetEventParam( event, gsys, fieldmap, FALSE );
+  wifi_SetEventParam( event, gsys, fieldmap, bFieldEnd );
 
   return event;
 }
 
-//------------------------------------------------------------------
-/*
- *  @brief  WiFiクラブイベントチェンジ
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Wifiクラブイベントを生成
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
  */
-//------------------------------------------------------------------
-void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_CallWiFiClub( GAMESYS_WORK * gsys, void * work )
 {
-  GMEVENT_Change( event, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK) );
-  wifi_SetEventParam( event, gsys, fieldmap,TRUE );
+  EV_WIFICLUB_PARAM* param = work;
+
+  return EVENT_WiFiClub( gsys, param->fieldmap, param->bFieldEnd );
 }
 
 

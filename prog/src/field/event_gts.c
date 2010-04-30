@@ -57,6 +57,23 @@ typedef struct
 */
 //=============================================================================
 static GMEVENT_RESULT Event_CallGtsMain( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+static GMEVENT* EVENT_Gts( GAMESYS_WORK * p_gamesys, FIELDMAP_WORK * p_fieldmap, BOOL is_debug );
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GTSコール
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_CallGts( GAMESYS_WORK * p_gamesys, void* work )
+{
+  EV_GTS_PARAM* param = work;
+  return EVENT_Gts( p_gamesys, param->fieldmap, param->is_debug );
+}
+
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  GTS接続イベント
@@ -66,7 +83,7 @@ static GMEVENT_RESULT Event_CallGtsMain( GMEVENT *p_event, int *p_seq, void *p_w
  *	@param  is_debug            デバッグかどうか
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_Gts( GAMESYS_WORK * p_gamesys, FIELDMAP_WORK * p_fieldmap, BOOL is_debug )
+static GMEVENT* EVENT_Gts( GAMESYS_WORK * p_gamesys, FIELDMAP_WORK * p_fieldmap, BOOL is_debug )
 { 
   GAMEDATA        *p_gamedata      = GAMESYSTEM_GetGameData(p_gamesys);
 

@@ -336,6 +336,9 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     
   case _CALL_BATTLE:
     {
+      GMEVENT* next_event;
+      EV_BATTLE_CALL_PARAM battlecall_param;
+
 #if 1
       int i;
       for( i=0;i<4;i++){
@@ -343,7 +346,15 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         dbw->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
       }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-      GMEVENT_CallEvent( event, EVENT_CommBattle(gsys, dbw->para, &dbw->demo_prm) );
+
+      battlecall_param.btl_setup_prm = dbw->para;
+      battlecall_param.demo_prm = &dbw->demo_prm;
+
+      next_event = GMEVENT_CreateOverlayEventCall( gsys, 
+                    FS_OVERLAY_ID(event_battlecall), 
+                    EVENT_CallCommBattle, &battlecall_param );
+
+      GMEVENT_CallEvent( event, next_event );
 #else
       GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
 #endif

@@ -111,8 +111,15 @@ VMCMD_RESULT EvCmdWifiClubEventCall( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  EV_WIFICLUB_PARAM param;
 
-  SCRIPT_CallEvent( sc, EVENT_WiFiClub( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
+  param.fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  param.bFieldEnd = FALSE;
+  
+  SCRIPT_CallEvent( sc, 
+      GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID(event_wificlub), 
+              EVENT_CallWiFiClub, &param ) );
   
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }
@@ -132,8 +139,14 @@ VMCMD_RESULT EvCmdWifiGTSEventCall( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  EV_GTS_PARAM param;
 
-  SCRIPT_CallEvent( sc, EVENT_Gts( gsys, GAMESYSTEM_GetFieldMapWork(gsys), FALSE));
+  param.fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  param.is_debug = FALSE;
+
+  SCRIPT_CallEvent( sc, 
+      GMEVENT_CreateOverlayEventCall( gsys, 
+        FS_OVERLAY_ID(event_gts), EVENT_CallGts, &param ) );
   
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }
@@ -153,8 +166,13 @@ VMCMD_RESULT EvCmdWifiGTSNegoEventCall( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT* event;
 
-  SCRIPT_CallEvent( sc, EVENT_GTSNego( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
+  event = GMEVENT_CreateOverlayEventCall( gsys, 
+      FS_OVERLAY_ID(event_gtsnego), EVENT_CallGTSNego, GAMESYSTEM_GetFieldMapWork(gsys) );
+
+
+  SCRIPT_CallEvent( sc, event );
   
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }

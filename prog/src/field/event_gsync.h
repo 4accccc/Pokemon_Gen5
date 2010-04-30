@@ -19,6 +19,28 @@
 #include "app/box_mode.h"
 
 
+FS_EXTERN_OVERLAY(event_gsync);
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *    オーバーレイ管理＋イベント起動
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には FIELDMAP_WORK*を渡す。
+//=====================================
+extern GMEVENT* EVENT_CallGSync( GAMESYS_WORK* gsys, void* work );
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ */
+//-----------------------------------------------------------------------------
 typedef enum{
   GSYNC_CALLTYPE_INFO,    // 状態を確認>ダウンロード
   GSYNC_CALLTYPE_BOXSET,  // BOXポケモンセット後
@@ -48,5 +70,6 @@ typedef struct {
 extern void EVENT_GSYNC_SetEnd(EVENT_GSYNC_WORK* pWk);
 
 
-extern GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate);
+
+
 

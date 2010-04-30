@@ -4853,7 +4853,8 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
   // アニメ完了後別イベントへ
   switch(p_wk->createEvent){
   case FIELD_SUBSCREEN_ACTION_GSYNC:
-    p_cevent = EVENT_GSync(pWork->pGameSys, fieldWork, NULL, TRUE);
+    p_cevent = GMEVENT_CreateOverlayEventCall(pWork->pGameSys, 
+        FS_OVERLAY_ID(event_gsync), EVENT_CallGSync, fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_IRC:
     p_cevent = EVENT_IrcBattle(pWork->pGameSys, fieldWork, NULL, TRUE);

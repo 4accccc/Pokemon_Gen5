@@ -21,6 +21,9 @@
 #include "demo/comm_btl_demo.h"
 #include "net_app/btl_rec_sel.h"
 
+
+FS_EXTERN_OVERLAY(event_battlecall);
+
 //=============================================================================
 /**
  *								定数定義
@@ -66,35 +69,34 @@ typedef struct{
   COMM_BATTLE_CALL_PROC_PARAM cbc;
 }EVENT_BATTLE_CALL_WORK;
 
+
+//-------------------------------------
+///	パラメータ
+//=====================================
+typedef struct {
+  BATTLE_SETUP_PARAM *btl_setup_prm;
+  COMM_BTL_DEMO_PARAM *demo_prm;
+} EV_BATTLE_CALL_PARAM;
+
+
 //=============================================================================
 /**
  *								EXTERN宣言
  */
-//=============================================================================
+//
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には EV_BATTLE_CALL_PARAM*を渡す。
+//=====================================
 
 //==================================================================
 /**
  * イベント作成：通信バトル呼び出し
  *
  * @param   gsys		
- * @param   para		
- * @param   demo_prm		
- *
- * @retval  GMEVENT *		
+ * @param   work
  */
 //==================================================================
-extern GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm);
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  イベント：通信バトル呼び出し
- *
- *	@param	* event
- *	@param	*  seq
- *	@param	* work
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-extern GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work);
+extern GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void* work );
 

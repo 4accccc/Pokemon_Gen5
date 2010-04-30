@@ -176,7 +176,7 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
  *	@param	* fieldmap          フィールドマップ
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_POKE  poke, WIFIBATTLEMATCH_BTLRULE btl_rule )
+static GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_POKE  poke, WIFIBATTLEMATCH_BTLRULE btl_rule )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WifiBattleMatchMain, sizeof(EVENT_WIFIBTLMATCH_WORK));
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
@@ -204,5 +204,19 @@ GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, W
 
   return event;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OverLay WifiBattleMatch 呼び出し
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_CallWifiBattleMatch( GAMESYS_WORK* gsys, void* work )
+{
+  EV_WIFIBATTLEMATCH_PARAM* param = work;
+
+  return EVENT_WifiBattleMatch( gsys, param->fieldmap, param->mode, param->poke, param->btl_rule );
+}
+
 
 

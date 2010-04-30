@@ -884,8 +884,17 @@ static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *next_event;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GAMESYS_WORK  *gameSys  = wk->gmSys;
+  EV_WIFICLUB_PARAM param;
 
-  EVENT_WiFiClubChange(gameSys, fieldWork, event);
+  param.fieldmap = fieldWork;
+  param.bFieldEnd = TRUE;
+  
+
+  next_event = GMEVENT_CreateOverlayEventCall( gameSys, 
+      FS_OVERLAY_ID(event_wificlub), 
+      EVENT_CallWiFiClub, &param );
+
+  GMEVENT_ChangeEvent( event, next_event );
 
   return( TRUE );
 }
@@ -902,8 +911,11 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   GAMESYS_WORK  *gameSys  = wk->gmSys;
+  GMEVENT *next_event;
 
-  EVENT_GTSNegoChangeDebug(gameSys, fieldWork, event);
+  next_event = GMEVENT_CreateOverlayEventCall( gameSys, 
+      FS_OVERLAY_ID(event_gtsnego), EVENT_GTSNegoChangeDebug, fieldWork );
+  GMEVENT_ChangeEvent( event, next_event );
   return( TRUE );
 }
 
@@ -3307,7 +3319,16 @@ FS_EXTERN_OVERLAY(worldtrade);
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Gts( p_wk->gmSys, p_wk->fieldWork, TRUE ) );
+  EV_GTS_PARAM param;
+
+  param.fieldmap = p_wk->fieldWork;
+  param.is_debug = TRUE;
+  
+  
+  
+  GMEVENT_ChangeEvent( p_wk->gmEvent, 
+      GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
+        FS_OVERLAY_ID(event_gts), EVENT_CallGts, &param ) );
   return TRUE;
 }
 
@@ -3784,6 +3805,7 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
 {
   WIFIBATTLEMATCH_MODE mode = WIFIBATTLEMATCH_MODE_RANDOM;
   WIFIBATTLEMATCH_BTLRULE btl_rule  = WIFIBATTLEMATCH_BTLRULE_SINGLE;
+  EV_WIFIBATTLEMATCH_PARAM ev_btl_param;
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L && GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
@@ -3799,7 +3821,13 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
   }
 #endif
 
-  GMEVENT_ChangeEvent( wk->gmEvent, EVENT_WifiBattleMatch( wk->gmSys, wk->fieldWork, DEBUG_MODE(mode), WIFIBATTLEMATCH_POKE_BTLBOX, btl_rule ) );
+  ev_btl_param.fieldmap = wk->fieldWork;
+  ev_btl_param.mode     = DEBUG_MODE(mode);
+  ev_btl_param.poke     = WIFIBATTLEMATCH_POKE_BTLBOX;
+  ev_btl_param.btl_rule = btl_rule;
+
+  GMEVENT_ChangeEvent( wk->gmEvent, 
+      GMEVENT_CreateOverlayEventCall( wk->gmSys, FS_OVERLAY_ID(event_wifibtlmatch), EVENT_CallWifiBattleMatch, &btl_rule ) );
   return TRUE;
 }
 
@@ -3814,7 +3842,16 @@ static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_SAKE ) );
+  GMEVENT* set_event;
+  EV_DEBUG_WIFIMATCH param;
+  
+  param.fieldmap = p_wk->fieldWork;
+  param.mode     = DEBUG_WIFIBATTLEMATCH_MODE_SAKE;
+
+  set_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
+        FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
+  
+  GMEVENT_ChangeEvent( p_wk->gmEvent, set_event );
   return TRUE;
 }
 //----------------------------------------------------------------------------
@@ -3828,7 +3865,16 @@ static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_DEBUG_WifiMatch( p_wk->gmSys, p_wk->fieldWork, DEBUG_WIFIBATTLEMATCH_MODE_ATLAS ) );
+  GMEVENT* set_event;
+  EV_DEBUG_WIFIMATCH param;
+  
+  param.fieldmap = p_wk->fieldWork;
+  param.mode     = DEBUG_WIFIBATTLEMATCH_MODE_ATLAS;
+
+  set_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
+        FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
+  
+  GMEVENT_ChangeEvent( p_wk->gmEvent, set_event );
   return TRUE;
 }
 
@@ -5675,6 +5721,8 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       VecFx32 receipt_map_pos = {GRID_SIZE_FX32(9),0,GRID_SIZE_FX32(12)};
       VecFx32 home_map_pos = {GRID_SIZE_FX32(27),0,GRID_SIZE_FX32(15)};
       GMEVENT *next_event = NULL;
+      EV_WIFIBSUBWAY_PARAM wifi_bsubway_param;
+      
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
 
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
@@ -5702,16 +5750,28 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         next_event = BSUBWAY_EVENT_CallLeaderBoard( work->gmSys );
         break;
       case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD: //wifi データダウンロード
-        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
-            WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD, &dummy_ret );
+        wifi_bsubway_param.mode = WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD;
+        wifi_bsubway_param.ret_wk = &dummy_ret;
+        
+        next_event = GMEVENT_CreateOverlayEventCall( work->gmSys, 
+                      FS_OVERLAY_ID(event_wifibsubway), 
+                      WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
         break;
       case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  //wif 履歴ダウンロード
-        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
-            WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD, &dummy_ret );
+        wifi_bsubway_param.mode = WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD;
+        wifi_bsubway_param.ret_wk = &dummy_ret;
+        
+        next_event = GMEVENT_CreateOverlayEventCall( work->gmSys, 
+                      FS_OVERLAY_ID(event_wifibsubway), 
+                      WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
         break;
       case DEBUG_BSWAY_WIFI_UPLOAD: //wifi データアップロード
-        next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
-            WIFI_BSUBWAY_MODE_SCORE_UPLOAD, &dummy_ret );
+        wifi_bsubway_param.mode = WIFI_BSUBWAY_MODE_SCORE_UPLOAD;
+        wifi_bsubway_param.ret_wk = &dummy_ret;
+        
+        next_event = GMEVENT_CreateOverlayEventCall( work->gmSys, 
+                      FS_OVERLAY_ID(event_wifibsubway), 
+                      WIFI_BSUBWAY_EVENT_CallStart, &wifi_bsubway_param );
         break;
       case DEBUG_BSWAY_ZONE_SINGLE: //シングル受付へ
         param = ZONE_ID_C04R0102;

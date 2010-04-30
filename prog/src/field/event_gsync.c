@@ -81,6 +81,8 @@ enum _EVENT_IRCBATTLE {
   _GAMESYNC_CALLBOX_WAIT,
 };
 
+static GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
+
 
 //============================================================================================
 //
@@ -280,20 +282,27 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   return GMEVENT_RES_CONTINUE;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate)
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には FIELDMAP_WORK*を渡す。
+//=====================================
+GMEVENT* EVENT_CallGSync( GAMESYS_WORK* gsys, void* work )
 {
-  GMEVENT * event = prevevent;
+  return EVENT_GSync( gsys, work );
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
+{
+  GMEVENT * event;
   BATTLE_SETUP_PARAM * para;
   EVENT_GSYNC_WORK * dbw;
 
-  if(bCreate){
-    event = GMEVENT_Create(gsys, NULL, EVENT_GSyncMain, sizeof(EVENT_GSYNC_WORK));
-  }
-  else{
-    GMEVENT_Change( event,EVENT_GSyncMain, sizeof(EVENT_GSYNC_WORK) );
-  }
+  event = GMEVENT_Create(gsys, NULL, EVENT_GSyncMain, sizeof(EVENT_GSYNC_WORK));
+
   dbw = GMEVENT_GetEventWork(event);
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);

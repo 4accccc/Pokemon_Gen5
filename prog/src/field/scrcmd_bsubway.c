@@ -211,6 +211,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
       save, GMDATA_ID_BSUBWAY_WIFIDATA );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  EV_WIFIBSUBWAY_PARAM wifibsubway_param;
+  GMEVENT* next_event;
   u16 com_id = VMGetU16( core );
   u16 param0 = SCRCMD_GetVMWorkValue( core, work );
   u16 param1 = SCRCMD_GetVMWorkValue( core, work );
@@ -747,20 +749,36 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //WiFi 前回の記録をアップロード
   case BSWTOOL_WIFI_UPLOAD_SCORE:
-    SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_SCORE_UPLOAD, ret_wk) );
+
+    wifibsubway_param.mode = WIFI_BSUBWAY_MODE_SCORE_UPLOAD;
+    wifibsubway_param.ret_wk = ret_wk;
+
+    next_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID(event_wifibsubway), 
+              WIFI_BSUBWAY_EVENT_CallStart, &wifibsubway_param );
+    SCRIPT_CallEvent( sc, next_event );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi ゲーム情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_GAMEDATA:
-    SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD, ret_wk) );
+    wifibsubway_param.mode = WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD;
+    wifibsubway_param.ret_wk = ret_wk;
+
+    next_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID(event_wifibsubway), 
+              WIFI_BSUBWAY_EVENT_CallStart, &wifibsubway_param );
+    SCRIPT_CallEvent( sc, next_event );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi 歴代情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_SCDATA:
-    SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD, ret_wk) );
+    wifibsubway_param.mode = WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD;
+    wifibsubway_param.ret_wk = ret_wk;
+
+    next_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID(event_wifibsubway), 
+              WIFI_BSUBWAY_EVENT_CallStart, &wifibsubway_param );
+    SCRIPT_CallEvent( sc, next_event );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi ランク取得

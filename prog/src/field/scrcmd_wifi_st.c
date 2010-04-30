@@ -107,7 +107,17 @@ VMCMD_RESULT EvCmdWifiRandomMatchEventCall( VMHANDLE* core, void* wk )
     GF_ASSERT(0);
   }
 
-  SCRIPT_CallEvent( sc, EVENT_WifiBattleMatch( gsys, GAMESYSTEM_GetFieldMapWork(gsys), WIFIBATTLEMATCH_MODE_RANDOM, poke, btl_rule ) );
+  {
+    EV_WIFIBATTLEMATCH_PARAM ev_btl_param;
+
+    ev_btl_param.fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+    ev_btl_param.mode     = WIFIBATTLEMATCH_MODE_RANDOM;
+    ev_btl_param.poke     = poke;
+    ev_btl_param.btl_rule = btl_rule;
+      
+    SCRIPT_CallEvent( sc, 
+        GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID(event_wifibtlmatch), EVENT_CallWifiBattleMatch, &ev_btl_param ) );
+  }
   
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }
@@ -131,12 +141,17 @@ VMCMD_RESULT EvCmdWifiBattleRecorderEventCall( VMHANDLE* core, void* wk )
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
   u16 value = SCRCMD_GetVMWorkValue( core, work );
+  EV_WIFIBATTLERECORDER_PARAM param;
 
   const BR_MODE mode = (value == SCRCMD_BTL_RECORDER_MODE_VIDEO)? BR_MODE_GLOBAL_BV:  BR_MODE_GLOBAL_MUSICAL;
 
-  SCRIPT_CallEvent( sc, EVENT_WifiBattleRecorder( gsys, GAMESYSTEM_GetFieldMapWork(gsys), mode ) );
+  param.fieldmap  = GAMESYSTEM_GetFieldMapWork(gsys);
+  param.mode      = mode;
+  
 
+  SCRIPT_CallEvent( sc, GMEVENT_CreateOverlayEventCall( gsys,  
+        FS_OVERLAY_ID(event_wifibtlmatch), EVENT_CallWifiBattleRecorder, &param ) );
+ 
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }

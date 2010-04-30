@@ -17,6 +17,9 @@
 #include "battle/battle.h"
 //typedef struct _EVENT_WIFICLUB_WORK EVENT_WIFICLUB_WORK;
 
+
+FS_EXTERN_OVERLAY(event_wificlub);
+
 typedef struct {
   GMEVENT * event;
   GAMESYS_WORK * gsys;
@@ -29,6 +32,19 @@ typedef struct {
 } EVENT_WIFICLUB_WORK;
 
 
-extern GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
-extern void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
+
+
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には EV_WIFICLUB_PARAM*を渡す。
+//=====================================
+//-------------------------------------
+///	パラメータ
+//=====================================
+typedef struct {
+  FIELDMAP_WORK * fieldmap;
+  BOOL bFieldEnd;
+} EV_WIFICLUB_PARAM;
+extern GMEVENT* EVENT_CallWiFiClub( GAMESYS_WORK * gsys, void * work );
 

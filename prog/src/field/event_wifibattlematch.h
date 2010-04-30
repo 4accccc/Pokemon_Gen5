@@ -15,6 +15,8 @@
 #include "gamesystem/game_event.h"
 #include "net_app/wifibattlematch.h"
 
+FS_EXTERN_OVERLAY(event_wifibtlmatch);
+
 #ifdef PM_DEBUG
 #define DEBUG_MODE_BIT    (0x10000)
 #define DEBUG_MODE(mode)  (mode|DEBUG_MODE_BIT)
@@ -22,5 +24,25 @@
 #define DEBUG_MODE(mode)  (mode)
 #endif //PM_DEBUG
 
-extern GMEVENT* EVENT_WifiBattleMatch( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, WIFIBATTLEMATCH_MODE mode, WIFIBATTLEMATCH_POKE  poke, WIFIBATTLEMATCH_BTLRULE btl_rule );
+
+
+
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には EV_WIFIBATTLEMATCH_PARAM*を渡す。
+//=====================================
+//-------------------------------------
+///	パラメータ
+//=====================================
+typedef struct {
+
+  FIELDMAP_WORK* fieldmap;
+  WIFIBATTLEMATCH_MODE mode;
+  WIFIBATTLEMATCH_POKE  poke;
+  WIFIBATTLEMATCH_BTLRULE btl_rule;
+  
+} EV_WIFIBATTLEMATCH_PARAM;
+
+extern GMEVENT* EVENT_CallWifiBattleMatch( GAMESYS_WORK* gsys, void* work );
 

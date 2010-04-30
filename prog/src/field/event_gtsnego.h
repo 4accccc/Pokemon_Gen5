@@ -14,9 +14,22 @@
 #include "gamesystem/game_event.h"
 #include "net_app/gtsnego.h"
 
+FS_EXTERN_OVERLAY(event_gtsnego);
+
+//-----------------------------------------------------------------------------
+/**
+ *    オーバーレイ管理＋イベント起動
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には FIELDMAP_WORK*を渡す。
+//=====================================
+extern GMEVENT* EVENT_CallGTSNego( GAMESYS_WORK* gsys, void* work );
 
 
-extern GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 #if PM_DEBUG
-extern void EVENT_GTSNegoChangeDebug(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
+
+extern GMEVENT* EVENT_GTSNegoChangeDebug(GAMESYS_WORK * gsys, void * work);
 #endif

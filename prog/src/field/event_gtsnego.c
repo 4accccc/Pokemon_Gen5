@@ -294,25 +294,40 @@ static EVENT_GTSNEGO_LINK_WORK* wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK
  *  @brief  WiFiクラブイベントコール
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+static GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK));
   wifi_SetEventParam( event, gsys, fieldmap,FALSE );
   return event;
 }
 
+
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には FIELDMAP_WORK*を渡す。
+//=====================================
+GMEVENT* EVENT_CallGTSNego( GAMESYS_WORK* gsys, void* work )
+{
+  return EVENT_GTSNego( gsys, work );
+}
+
 #if PM_DEBUG
+
 //------------------------------------------------------------------
 /*
  *  @brief  WiFiクラブイベントチェンジ
  */
 //------------------------------------------------------------------
-void EVENT_GTSNegoChangeDebug(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
+GMEVENT* EVENT_GTSNegoChangeDebug(GAMESYS_WORK * gsys,  void * work)
 {
   EVENT_GTSNEGO_LINK_WORK* dbw ;
-  GMEVENT_Change( event, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK) );
+  FIELDMAP_WORK * fieldmap = work;
+  GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK));
   dbw = wifi_SetEventParam( event, gsys, fieldmap,TRUE );
   dbw->is_debug=TRUE;
+
+  return event;
 }
 #endif
 

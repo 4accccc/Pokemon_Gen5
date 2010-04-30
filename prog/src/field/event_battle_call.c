@@ -334,6 +334,25 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 FS_EXTERN_OVERLAY(battle);
 
+
+static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm);
+static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work);
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント作成：通信バトル呼び出し
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void* work )
+{
+  EV_BATTLE_CALL_PARAM* param = work;
+
+  return EVENT_CommBattle( gsys, param->btl_setup_prm, param->demo_prm );
+}
+
+
 //============================================================================================
 //
 //    サブイベント
@@ -350,7 +369,7 @@ FS_EXTERN_OVERLAY(battle);
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm)
+static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm)
 {
   EVENT_BATTLE_CALL_WORK *bcw;
   GMEVENT * event;
@@ -374,7 +393,7 @@ GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_pr
  *	@retval
  */
 //-----------------------------------------------------------------------------
-GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
+static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
 {
   EVENT_BATTLE_CALL_WORK * bcw = work;
   GAMESYS_WORK * gsys = bcw->gsys;

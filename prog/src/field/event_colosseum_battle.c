@@ -101,7 +101,19 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq)++;
     break;
   case 4:
-    GMEVENT_CallEvent( event, EVENT_CommBattle(gsys, &cbw->para, cbw->demo_prm) );
+    {
+      GMEVENT* next_event;
+      EV_BATTLE_CALL_PARAM battlecall_param;
+
+      battlecall_param.btl_setup_prm = &cbw->para;
+      battlecall_param.demo_prm = cbw->demo_prm;
+
+      next_event = GMEVENT_CreateOverlayEventCall( gsys, 
+                    FS_OVERLAY_ID(event_battlecall), 
+                    EVENT_CallCommBattle, &battlecall_param );
+
+      GMEVENT_CallEvent( event, next_event );
+    }
     (*seq)++;
     break;
   case 5:

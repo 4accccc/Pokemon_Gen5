@@ -125,7 +125,7 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
  *	@param	* fieldmap          フィールドマップ
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_WifiBattleRecorder( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BR_MODE mode )
+static GMEVENT* EVENT_WifiBattleRecorder( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BR_MODE mode )
 {
   GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_BRMain, sizeof(EVENT_BR_WORK));
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
@@ -142,6 +142,20 @@ GMEVENT* EVENT_WifiBattleRecorder( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   }
 
   return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Overlay読み込みあり、バトルレコーダー起動
+ *
+ *  GMEVENT_CreateOverlayEventCall用
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_CallWifiBattleRecorder( GAMESYS_WORK * gsys, void* work )
+{
+  EV_WIFIBATTLERECORDER_PARAM* param = work;
+
+  return EVENT_WifiBattleRecorder( gsys, param->fieldmap, param->mode );
 }
 
 

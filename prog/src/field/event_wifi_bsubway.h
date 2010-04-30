@@ -21,6 +21,27 @@ extern "C"{
 
 #include "net_app/wifi_bsubway.h"
 
+
+
+FS_EXTERN_OVERLAY(event_wifibsubway);
+
+
+//-------------------------------------
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//
+//  void* work には EV_WIFIBATTLEMATCH_PARAM*を渡す。
+//=====================================
+//-------------------------------------
+///	パラメータ
+//=====================================
+typedef struct {
+  
+  WIFI_BSUBWAY_MODE mode;
+  u16* ret_wk;
+  
+} EV_WIFIBSUBWAY_PARAM;
+
+
 //-----------------------------------------------------------------------------
 /**
  *  バトルサブウェイ  WiFi　Dataアップロード　ダウンロード
@@ -32,8 +53,9 @@ extern "C"{
  *
  */
 //-----------------------------------------------------------------------------
-extern GMEVENT * WIFI_BSUBWAY_EVENT_Start(
-    GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode, u16* ret_wk );
+extern GMEVENT * WIFI_BSUBWAY_EVENT_CallStart(
+    GAMESYS_WORK *gsys, void* p_work );
+
 
 
 #ifdef _cplusplus

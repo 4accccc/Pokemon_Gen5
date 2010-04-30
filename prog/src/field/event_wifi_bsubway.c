@@ -59,6 +59,21 @@ typedef struct {
 //-----------------------------------------------------------------------------
 
 static GMEVENT_RESULT EV_WIFIBSUBWAY_Proc( GMEVENT *event, int *seq, void *wk );
+static GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode, u16* ret_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルサブウェイ　WiFi　アップロード　ダウンロード　イベント　生成
+ */
+///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+//-----------------------------------------------------------------------------
+GMEVENT * WIFI_BSUBWAY_EVENT_CallStart(
+    GAMESYS_WORK *gsys, void* p_work )
+{
+  EV_WIFIBSUBWAY_PARAM* param = p_work;
+  
+  return WIFI_BSUBWAY_EVENT_Start( gsys, param->mode, param->ret_wk );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -71,7 +86,7 @@ static GMEVENT_RESULT EV_WIFIBSUBWAY_Proc( GMEVENT *event, int *seq, void *wk );
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode, u16* ret_wk )
+static GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode, u16* ret_wk )
 {
   GMEVENT * p_event;
   GAMEDATA * p_gdata;

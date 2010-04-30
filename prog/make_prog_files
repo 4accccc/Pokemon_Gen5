@@ -102,16 +102,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_location.c \
         field/field_status.c \
         field/event_fieldmap_control.c \
-        field/event_gsync.c \
-        field/event_gtsnego.c \
-        field/event_wifibattlematch.c \
-        field/event_battlerecorder.c \
-        field/event_gts.c \
-        field/event_debug_wifimatch.c \
         net_app/wificlub/wifi_p2pevent.c \
-        field/event_wificlub.c \
-        field/event_battle_call.c \
-        field/event_wifi_bsubway.c \
         field/field_light_status.c \
         system/mcss.c \
         system/mcss_tool.c \
@@ -302,8 +293,60 @@ SRCS  +=    $(SOUNDSRC) \
 #
 
 
-# wifiプログラムのライブラリ libwcm$(TWL_LIBSUFFIX).a
+#================================================
+# 常駐　並列イベント
+#================================================
+
+#ゲームシンク
 #===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_GSYNC  =  field/event_gsync.c
+
+#GTS　ネゴシエーション
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_GTSNEGO  =  field/event_gtsnego.c
+
+#Wifiバトル
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_WIFIBTLMATCH = field/event_wifibattlematch.c
+
+#バトルレコーダー
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_BTLRECORDER  =  field/event_battlerecorder.c
+
+#GTS
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_GTS  =  field/event_gts.c
+
+#デバック
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_DEBUG_WIFIMATCH  = field/event_debug_wifimatch.c
+
+#Wifiクラブ
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_WIFICLUB = field/event_wificlub.c
+
+#Wifiバトルサブウェイ
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_WIFIBSUBWAY  = field/event_wifi_bsubway.c
+
+#通信バトル
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_BATTLECALL = field/event_battle_call.c
+
+
+
+
+# wifiプログラムのライブラリ libwcm$(TWL_LIBSUFFIX).a
+#===> GROUP_OVERLAY_MAINEVENT
 #LIB=>          libcps.$HYB.a
 #LIB=>          libsoc.$HYB.a
 #LIB=>          libssl.$HYB.a
@@ -331,7 +374,7 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
 # この領域はWIFIライブラリがない状態で自動で読み込まれるオーバーレイです
 # WIFI施設で必要ない常駐にあった物はここに配置してください
 # k.ohno 10.01.12
-#===> main
+#===> GROUP_OVERLAY_MAINEVENT
 SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         musical/musical_event.c \
         musical/dressup/musical_dressup_sys.c \

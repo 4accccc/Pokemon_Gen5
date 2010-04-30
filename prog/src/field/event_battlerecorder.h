@@ -22,16 +22,26 @@
  *					定数宣言
 */
 //=============================================================================
+FS_EXTERN_OVERLAY(event_btlrecorder);
+
 
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+//-------------------------------------
+///	パラメータ
+//=====================================
+typedef struct {
+  FIELDMAP_WORK* fieldmap;
+  BR_MODE mode;
+} EV_WIFIBATTLERECORDER_PARAM;
 
 //=============================================================================
 /**
  *					外部公開
+ *  GMEVENT_CreateOverlayEventCall用
 */
 //=============================================================================
-extern GMEVENT* EVENT_WifiBattleRecorder( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BR_MODE mode );
+extern GMEVENT* EVENT_CallWifiBattleRecorder( GAMESYS_WORK * gsys, void* work );
