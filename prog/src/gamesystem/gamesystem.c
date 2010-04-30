@@ -327,7 +327,13 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
   
 #ifdef  PM_DEBUG
   //イベントが存在しない時だけリークチェックを走らせる
-  if ( gsys->event == NULL ) heapLeakCheck();
+  if ( gsys->event == NULL ){
+    u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
+    //ユニオンルームはチェックしない
+    if(ZONEDATA_IsUnionRoom(zone_id) == FALSE && ZONEDATA_IsColosseum(zone_id) == FALSE){
+      heapLeakCheck();
+    }
+  }
 #endif
 	if (gsys->proc_result == GFL_PROC_MAIN_NULL && gsys->event == NULL)
 	{
