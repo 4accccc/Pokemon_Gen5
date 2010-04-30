@@ -1572,7 +1572,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 static void CodeIn_Exit( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw );
 static void CodeIn_DrawInit( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID );
 static void CodeIn_DrawExit( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw );
-static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, HEAPID heapID );
+static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, BOOL newData, HEAPID heapID );
 
 //-------------------------------------
 /// 自分の友達コード確認画面ワーク
@@ -6206,7 +6206,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     // ui削除
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
     // 名前入力、コード入力パラメータ作成
-    p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
+    p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, TRUE, heapID );
 
     CodeIn_BlockDataMake_4_4_4( block );
     p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_FRIEND, 0, FRIENDCODE_MAXLEN, block );
@@ -6267,7 +6267,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     // ui削除
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
     // 名前入力、コード入力パラメータ作成
-    p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
+    p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, FALSE, heapID );
 
     WFNOTE_DrawExit( p_sys ); // 画面ワーク全破棄
     p_wk->p_subproc = GFL_PROC_LOCAL_boot( heapID );
@@ -6356,19 +6356,49 @@ static void CodeIn_DrawExit( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, WFNOTE_DR
 /**
  *  @brief  名前入力　ワーク作成
  *
- *  @param  p_wk    ワーク
+ *  @param  p_wk			ワーク
  *  @param  p_data    データ
+ *	@param	newData		新規データ
  *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, HEAPID heapID )
+static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p_data, BOOL newData, HEAPID heapID )
 {
-  MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_data->pGameData) );
-  NAMEIN_PARAM* p_param;
+  MISC * misc;
+  NAMEIN_PARAM * p_param;
+	WIFI_LIST * list;
+	u32	sex;
+	u32	pos;
 
-  p_param = NAMEIN_AllocParam( heapID, NAMEIN_FRIENDNAME, 0, 0,
-              NAMEIN_PERSON_LENGTH,
-              NULL,  misc );
+	misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_data->pGameData) );
+
+	list = GAMEDATA_GetWiFiList( p_data->pGameData );
+	pos  = p_data->idx.fridx[p_data->select_listidx];
+	sex  = WifiList_GetFriendInfo( list, pos, WIFILIST_FRIEND_SEX );
+
+	//「？」表示
+	if( newData == TRUE || sex == PM_NEUTRAL ){
+	  p_param = NAMEIN_AllocParam(
+								heapID,
+								NAMEIN_FRIENDNAME,
+								NAMEIN_TRAINER_VIEW_UNKNOWN,
+								0,
+	              NAMEIN_PERSON_LENGTH,
+	              NULL,
+								misc );
+	// トレーナー表示
+	}else{
+		u32	view = WifiList_GetFriendInfo( list, pos, WIFILIST_FRIEND_UNION_GRA );
+
+	  p_param = NAMEIN_AllocParam(
+								heapID,
+								NAMEIN_FRIENDNAME,
+								view,
+								0,
+	              NAMEIN_PERSON_LENGTH,
+	              NULL,
+								misc );
+	}
 
   // 名前入力画面初期化dataチェック
   if( p_data->namein_init.init == TRUE ){
