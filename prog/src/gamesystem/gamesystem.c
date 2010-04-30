@@ -668,14 +668,14 @@ static void heapLeakCheck( void )
   u32 temp_world_size = GFL_HEAP_GetHeapFreeSize( HEAPID_WORLD );
 
   if ( ProcHeapFreeSize == 0 ) {
-    ProcHeapFreeSize == temp_proc_size;
+    ProcHeapFreeSize = temp_proc_size;
   } else if ( ProcHeapFreeSize != temp_proc_size ) {
     GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( HEAPID_PROC );
     GF_ASSERT_MSG( 0, "HEAPID_PROC LEAK now(%08x) < start(%08x)\n", temp_proc_size, ProcHeapFreeSize );
   }
 
   if ( WorldHeapFreeSize == 0 ) {
-    WorldHeapFreeSize == temp_world_size;
+    WorldHeapFreeSize = temp_world_size;
   } else if ( WorldHeapFreeSize != temp_world_size ) {
     GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( HEAPID_PROC );
     GF_ASSERT_MSG( 0, "HEAPID_WORLD LEAK now(%08x) < start(%08x)\n", temp_world_size, WorldHeapFreeSize );
