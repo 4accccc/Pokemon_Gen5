@@ -593,6 +593,8 @@ typedef struct
   int               seq_no;
   BtlvMcssPos       pos;
   ARCDATID          datID;
+  int               scr_x;
+  int               scr_y;
 }TCB_TRANSFORM_WORK;
 
 typedef struct
@@ -1440,6 +1442,16 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
         biw->tcb_execute_flag = 1;
         ttw->biw = biw;
+        if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
+        { 
+          ttw->scr_x = 0;
+          ttw->scr_y = TTS2BR_FRAME0_SCROLL_Y;
+        }
+        else
+        { 
+          ttw->scr_x = TTS2BR_FRAME0_SCROLL_X;
+          ttw->scr_y = 0;
+        }
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 );
       }
       else
@@ -2310,8 +2322,8 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
-      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
+      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, ttw->scr_x );
+      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, ttw->scr_y );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -3616,8 +3628,6 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
     msg_src = GFL_MSG_CreateString( biw->msg,  BI_BattleRecorderStopKey + bibrp->stop_flag - 1 );
     PRINTSYS_Print( biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, msg_src, biw->font );
     GFL_STR_DeleteBuffer( msg_src );
-    GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
-    GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X1 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y1 );
     /*fall thru*/
@@ -3629,6 +3639,13 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( chapter_src );
   GFL_STR_DeleteBuffer( chapter_p );
+
+  //パレットコピー
+  { 
+    u16*  pal = PaletteWorkDefaultWorkGet( BTLV_EFFECT_GetPfd(), FADE_SUB_BG );
+
+    PaletteWorkSet( biw->pfd, &pal[ 0x20 ], FADE_SUB_BG, 0x70, 0x20 );
+  }
 }
 
 //--------------------------------------------------------------
