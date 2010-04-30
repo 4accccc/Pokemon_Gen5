@@ -56,6 +56,7 @@ typedef struct {
 
   BOX2_GFL_PROC_PARAM box_data;
   void * bb_party;
+	u16	sleepTable[MONSNO_MAX+8];
 
   COMMANDDEMO_DATA  cdemo_data;
 
@@ -249,7 +250,7 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 {
   NAKAHIRO_MAIN_WORK * wk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAKAHIRO_DEBUG, 0x60000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAKAHIRO_DEBUG, 0x30000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(NAKAHIRO_MAIN_WORK), HEAPID_NAKAHIRO_DEBUG );
 
@@ -406,12 +407,15 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
   case MAIN_SEQ_BOX_CALL6:
+		GFL_STD_MemClear( wk->sleepTable, sizeof(u16)*(MONSNO_END+8) );
+		wk->sleepTable[1] = 1;
     wk->box_data.gamedata  = wk->gamedata;
     wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );
     wk->box_data.pokeparty = GAMEDATA_GetMyPokemon( wk->gamedata );
     wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
     wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
     wk->box_data.callMode  = BOX_MODE_SLEEP;
+    wk->box_data.sleepTable = wk->sleepTable;
     SetBoxPoke( wk );
     SetPartyPoke( wk );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
@@ -505,7 +509,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_STAFF_ROLL:
-		wk->sr_data.fastMode = FALSE;
+		wk->sr_data.fastMode = TRUE;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, &wk->sr_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;

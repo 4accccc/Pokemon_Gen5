@@ -89,6 +89,8 @@ enum {
 	ITEMLIST_LABEL_END,
 
 	ITEMLIST_LABEL_LOGO_PUT,
+	ITEMLIST_LABEL_3D_PUT,
+	ITEMLIST_LABEL_3D_CLEAR,
 
 	ITEMLIST_LABEL_MAX,
 };
@@ -154,6 +156,8 @@ static BOOL Comm_LabelScrollStart( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelScrollStop( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
 static void DebugGridSet(void);
@@ -215,6 +219,8 @@ static const pCOMM_FUNC CommFunc[] = {
 	Comm_LabelEnd,					// ƒ‰ƒxƒ‹FI—¹
 
 	Comm_LabelLogoPut,			// ƒ‰ƒxƒ‹FƒƒS•\Ž¦
+	Comm_Label3DPut,				// ƒ‰ƒxƒ‹F‚R‚c•\Ž¦
+	Comm_Label3DClear,			// ƒ‰ƒxƒ‹F‚R‚cƒNƒŠƒA
 };
 
 
@@ -568,10 +574,11 @@ static void InitMsg( SRMAIN_WORK * wk )
 //	OS_Printf( "heap size [1] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 
 	wk->font[SRMAIN_FONT_SMALL] = GFL_FONT_Create(
-																	ARCID_FONT, NARC_font_small_gftr,
+//																	ARCID_FONT, NARC_font_large_gftr,
+																	ARCID_FONT, NARC_font_small_batt_gftr,
 //																	GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
 																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
-//	OS_Printf( "heap size [2] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
+	OS_Printf( "heap size [2] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 }
 
 static void ExitMsg( SRMAIN_WORK * wk )
@@ -1049,7 +1056,7 @@ static void MakeScrollStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 	if( item->font == SRMAIN_FONT_NORMAL ){
 		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192 );
 	}else{
-		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192+6 );
+		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192 );
 	}
 }
 
@@ -1335,6 +1342,17 @@ static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 	return TRUE;
 }
 
+// ‚R‚c•\Ž¦
+static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+	return TRUE;
+}
+
+// ‚R‚cƒNƒŠƒA
+static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+	return TRUE;
+}
 
 
 //============================================================================================
