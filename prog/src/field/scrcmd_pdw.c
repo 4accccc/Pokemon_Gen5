@@ -237,6 +237,7 @@ VMCMD_RESULT EvCmdPDW_SetFurnitureWord( VMHANDLE *core, void *wk )
         STRBUF* str = GFL_STR_CreateBuffer( DREAM_WORLD_DATA_FURNITURE_NAME_NUM + 2 , heapId );
         GFL_STR_SetStringCode( str , furData->furnitureName );
         WORDSET_RegisterWord( wordset, idx, str, 0, FALSE, PM_LANG );
+        GFL_STR_DeleteBuffer(str);
       }
     }
   }
