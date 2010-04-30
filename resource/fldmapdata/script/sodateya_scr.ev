@@ -129,8 +129,8 @@ EVENT_START ev_sodateya_grandpa
         //「タマゴを貰った」
         _BALLOONWIN_CLOSE()
         _PLAYER_NAME( 0 )
-        _SYSWIN_MSG( msg_sodateya_oldman_08, POS_DEFAULT )
         _ME_PLAY( SEQ_ME_TAMAGO_GET )
+        _SYSWIN_MSG( msg_sodateya_oldman_08, POS_DEFAULT )
         _ME_WAIT()
         _AB_KEYWAIT_MARK()
         _SYSWIN_CLOSE()
