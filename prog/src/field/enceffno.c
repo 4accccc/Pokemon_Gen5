@@ -64,19 +64,18 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     return;
   }
 
-  //釣りチェック
-  if ( inEncType == ENC_TYPE_FISHING )
-  {
-    *outBgmNo = SEQ_BGM_VS_NORAPOKE;
-    *outEffNo = ENCEFFID_WILD_WATER;
-    return;
-
-  }
   //エフェクトエンカウントチェック
   if ( inEncType == ENC_TYPE_EFFECT )
   {
     *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
     *outEffNo = ENCEFFID_WILD_HEIGH;
+    return;
+  }
+  //釣りチェック
+  if ( inEncType == ENC_TYPE_FISHING )
+  {
+    *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    *outEffNo = ENCEFFID_WILD_WATER;
     return;
   }
 
