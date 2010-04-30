@@ -123,7 +123,9 @@ struct _BTLV_SCD {
   u8                cursor_flag;    //下画面カーソルフラグ
   u8                bagMode;
   u8                shooterEnergy;
+
   u8                yesno_seq;
+  int               yesno_result;
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -1266,7 +1268,7 @@ BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
       int input = BTLV_INPUT_CheckInput( wk->biw, &YesNoTouchData, YesNoKeyData );
       if( input != GFL_UI_TP_HIT_NONE )
       {
-        *result = input;
+        wk->yesno_result = input;
         BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
         wk->yesno_seq++;
       }
@@ -1275,6 +1277,7 @@ BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
 
   case 1:
     if( !BTLV_INPUT_CheckExecute(wk->biw) ){
+      *result = wk->yesno_result;
       return TRUE;
     }
     break;
