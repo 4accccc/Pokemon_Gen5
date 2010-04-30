@@ -351,6 +351,12 @@
       </row><row id="TRADE_OYA_03">
         <language name="JPN" width="256">ナオキ</language>
         <language name="JPN_KANJI" width="256">ナオキ</language>
+      </row><row id="TRADE_POKE_04">
+        <language name="JPN" width="256">トビマル</language>
+        <language name="JPN_KANJI" width="256">トビマル</language>
+      </row><row id="TRADE_OYA_04">
+        <language name="JPN" width="256">ゲンゾウ</language>
+        <language name="JPN_KANJI" width="256">ゲンゾウ</language>
       </row><row id="TRADE_POKE_05">
         <language name="JPN" width="256">まんぷく</language>
         <language name="JPN_KANJI" width="256">まんぷく</language>
