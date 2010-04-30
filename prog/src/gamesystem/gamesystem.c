@@ -326,8 +326,8 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
   }
   
 #ifdef  PM_DEBUG
-  //イベントが存在しない時だけリークチェックを走らせる
-  if( gsys->event == NULL ){
+  //PROCが存在していて、イベントが存在しない時だけリークチェックを走らせる
+  if( gsys->event == NULL && gsys->proc_result != GFL_PROC_MAIN_NULL ){
     u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
     
     //リークチェックを除外するマップ
