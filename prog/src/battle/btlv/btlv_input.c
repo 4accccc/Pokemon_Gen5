@@ -689,6 +689,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work );
+static  void  TCB_SetFocus( GFL_TCB* tcb, void* work );
 
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y );
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work );
@@ -732,6 +733,7 @@ static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HIT
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work );
 static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
+static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw );
 
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw );
@@ -739,7 +741,6 @@ static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
-static  inline  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw );
 
 static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 
@@ -1760,7 +1761,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
 //============================================================================================
 BOOL  BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw )
 { 
-  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
+  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) || BTLV_EFFECT_CheckExecute() )
   { 
     return TRUE;
   }
@@ -4524,6 +4525,25 @@ static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMM
 }
 
 //=============================================================================================
+//  カメラフォーカス
+//=============================================================================================
+static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
+{ 
+  GFL_TCB_AddTask( biw->tcbsys, TCB_SetFocus, biw, 0 );
+}
+
+static  void  TCB_SetFocus( GFL_TCB* tcb, void* work )
+{ 
+  BTLV_INPUT_WORK* biw = ( BTLV_INPUT_WORK* )work;
+
+  if( !BTLV_EFFECT_CheckExecute() )
+  { 
+    BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//=============================================================================================
 //  選択音再生
 //=============================================================================================
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw )
@@ -4587,13 +4607,5 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
   {
     PMSND_PlaySE( SEQ_SE_ROTATION_B );
   }
-}
-
-//=============================================================================================
-//  カメラフォーカス
-//=============================================================================================
-static  inline  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
-{ 
-  BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
 }
 
