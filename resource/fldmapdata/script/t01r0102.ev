@@ -269,18 +269,21 @@ ev_first_pkeget:
 	IF $lwk_ret_num == 0 THEN
 		//草タイプを選んだ
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
+		_SET_MY_ANSWER( QUESTION_ID_FIRST_POKEMON, 3 ) // 草タイプを選択（すれ違い調査隊用）
 		$lwk_poke_num = MONSNO_551	//ツタージャをセット
 		_MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
 
 	ELSIF $lwk_ret_num == 1 THEN
 		//炎タイプを選んだ
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
+		_SET_MY_ANSWER( QUESTION_ID_FIRST_POKEMON, 1 ) // 炎タイプを選択（すれ違い調査隊用）
 		$lwk_poke_num = MONSNO_554	//ポカブをセット
 		_MONS_NAME( 1, MONSNO_554 )	//ポケモン名タグをセット
 
 	ELSE
 		//水タイプを選んだ
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
+		_SET_MY_ANSWER( QUESTION_ID_FIRST_POKEMON, 2 ) // 水タイプを選択（すれ違い調査隊用）
 		$lwk_poke_num = MONSNO_557	//ミジュマルをセット
 		_MONS_NAME( 1, MONSNO_557 )	//ポケモン名タグをセット
 
