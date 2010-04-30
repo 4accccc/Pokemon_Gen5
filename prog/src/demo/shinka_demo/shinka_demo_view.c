@@ -130,11 +130,21 @@ POKE_SET;
 // 何分割するか
 #define INDEPENDENT_PANEL_NUM_X    (18)
 #define INDEPENDENT_PANEL_NUM_Y    (18)
+//#define INDEPENDENT_PANEL_NUM_X    (4)  // パネルのちょうど継ぎ目の箇所が絵が汚くなることが判明した。
+//#define INDEPENDENT_PANEL_NUM_Y    (4)  // さて、どう対策するか。
+
 // 全部を合わせて1枚と見たときのサイズ
-#define INDEPENDENT_PANEL_TOTAL_W  (36)
-#define INDEPENDENT_PANEL_TOTAL_H  (36)
-//#define INDEPENDENT_PANEL_TOTAL_W  //(37.4f)//(ii38.0f)//(36.8f)//(36.2f)//(ii35.8f)//(35)//(37)
-//#define INDEPENDENT_PANEL_TOTAL_H  //(37.4f)//(ii38.0f)//(36.8f)//(36.2f)//(ii35.8f)//(35)//(37)
+//#define INDEPENDENT_PANEL_TOTAL_W  (36)  // 採用
+//#define INDEPENDENT_PANEL_TOTAL_H  (36)  // 採用
+#define INDEPENDENT_PANEL_TOTAL_W  (36.39702342662f)//(36.397f)  // 計算その1
+#define INDEPENDENT_PANEL_TOTAL_H  (36.39702342662f)//(36.397f)  // 計算その1
+//#define INDEPENDENT_PANEL_TOTAL_W  (96.0f)  // 計算その2
+//#define INDEPENDENT_PANEL_TOTAL_H  (96.0f)  // 計算その2
+//#define INDEPENDENT_PANEL_TOTAL_W  (96.0f)  // 正射影計算その1
+//#define INDEPENDENT_PANEL_TOTAL_H  (96.0f)  // 正射影計算その1
+//#define INDEPENDENT_PANEL_TOTAL_W  //(37.4f)//(ii38.0f)//(36.8f)//(36.2f)//(ii35.8f)//(35)//(37)  // テスト
+//#define INDEPENDENT_PANEL_TOTAL_H  //(37.4f)//(ii38.0f)//(36.8f)//(36.2f)//(ii35.8f)//(35)//(37)  // テスト
+
 // 全部を合わせて1枚と見たときの最小最大のテクスチャ座標
 #define INDEPENDENT_PANEL_TOTAL_MIN_S  ( 16)
 #define INDEPENDENT_PANEL_TOTAL_MAX_S  (112)
@@ -282,7 +292,7 @@ INDEPENDENT_POKE_MANAGER;
 // ポケモンのX,Y,Z座標
 #define INDEPENDENT_POKE_X_HIDE    (FX32_CONST(256))
 #define INDEPENDENT_POKE_X_CENTER  (FX32_CONST(0))
-#define INDEPENDENT_POKE_Y         (-FX32_HALF)
+#define INDEPENDENT_POKE_Y         (-FX32_HALF)  // 位置を少し下げているので、カメラの真正面にINDEPENDENTパネルがあるわけではない。ビルボードのようにカメラ方向に向けてもいない。1パネルずつではなく全体をカメラ方向に向ける処理をいれたほうがいいだろうか？
 #define INDEPENDENT_POKE_Z         (FX32_CONST(0))
 
 
@@ -1035,6 +1045,7 @@ static void ShinkaDemo_View_McssInit( SHINKADEMO_VIEW_WORK* work )
   work->mcss_sys_wk = MCSS_Init( POKE_MAX, work->heap_id );
   MCSS_SetTextureTransAdrs( work->mcss_sys_wk, POKE_TEX_ADRS_FOR_PARTICLE );  // パーティクルと一緒に使うため
   MCSS_SetOrthoMode( work->mcss_sys_wk );
+  //MCSS_ResetOrthoMode( work->mcss_sys_wk );
 }
 //-------------------------------------
 /// MCSSシステム終了処理
@@ -1281,6 +1292,8 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
     VecFx32 up     = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 1.0f ), FX_F32_TO_FX32(   0.0f ) };
     VecFx32 target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   0.0f ) };
 
+/*
+//採用
     independent_poke_mgr->camera = GFL_G3D_CAMERA_Create(
         GFL_G3D_PRJPERS, 
         FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
@@ -1288,8 +1301,11 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
         defaultCameraAspect, 0,
         defaultCameraNear, defaultCameraFar, 0,
         &pos, &up, &target, work->heap_id );
-
+//#define INDEPENDENT_PANEL_TOTAL_W  (36)
+//#define INDEPENDENT_PANEL_TOTAL_H  (36)
+*/
 /*
+//正射影テスト
     independent_poke_mgr->camera = GFL_G3D_CAMERA_CreateOrtho(
 			  //chiiFX32_CONST(96), -FX32_CONST(96), -FX32_CONST(128), FX32_CONST(128),
         //dekaFX32_CONST(6), -FX32_CONST(6), -FX32_CONST(8), FX32_CONST(8), 
@@ -1299,6 +1315,54 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
 			  FX32_CONST(36), -FX32_CONST(36), -FX32_CONST(48), FX32_CONST(48),  // だいたいいいけどちょっと線が汚い
         defaultCameraNear, defaultCameraFar, 0,
         &pos, &up, &target, work->heap_id );
+*/
+
+//計算その1
+    independent_poke_mgr->camera = GFL_G3D_CAMERA_Create(
+        GFL_G3D_PRJPERS, 
+        FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+        FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+        defaultCameraAspect, 0,
+        defaultCameraNear, defaultCameraFar, 0,
+        &pos, &up, &target, work->heap_id );
+    // 画面の縦screen_hが不明のとき(ポケモンの縦poke_hも不明)
+    // 画面の縦screen_h = 2 * defaultCameraNear * tan(defaultCameraFovy/2);
+    // ポケモンの縦poke_h = screen_h * 96/192;
+    // 実際に値を代入すると
+    // screen_h = 2 * 1 * tan(40/2);  (40degree)
+    // screen_h = 0.72794;
+    // poke_h = 0.72794 * 96/192;
+    // poke_h = 0.36397;
+//#define INDEPENDENT_PANEL_TOTAL_W  (36.4f)
+//#define INDEPENDENT_PANEL_TOTAL_H  (36.4f)
+
+/*
+//計算その2
+    independent_poke_mgr->camera = GFL_G3D_CAMERA_Create(
+        GFL_G3D_PRJPERS, 
+        FX_SinIdx( (int)( 87.66172f / 2.0f * 0x10000 / 360.0f ) ),
+        FX_CosIdx( (int)( 87.66172f / 2.0f * 0x10000 / 360.0f ) ),
+        defaultCameraAspect, 0,
+        defaultCameraNear, defaultCameraFar, 0,
+        &pos, &up, &target, work->heap_id );
+    // 画面の縦screen_hが決まっていてtheta(defaultCameraFovyに相当するところのもの)が不明のとき(ポケモンの縦poke_hも決まっている)
+    // tan(theta/2) = screen_h / 2 / defaultCameraNear;
+    // 実際に値を代入すると
+    // screen_h = 1.92;
+    // poke_h = 0.96;
+    // tan(theta/2) = 1.92 / 2 / 1;
+    // theta = 43.83086 * 2 = 87.66172;  (degree)
+//#define INDEPENDENT_PANEL_TOTAL_W  (96.0f)
+//#define INDEPENDENT_PANEL_TOTAL_H  (96.0f)
+*/
+/*
+//正射影計算その1
+    independent_poke_mgr->camera = GFL_G3D_CAMERA_CreateOrtho(
+			  FX32_CONST(96), -FX32_CONST(96), -FX32_CONST(128), FX32_CONST(128),
+        defaultCameraNear, defaultCameraFar, 0,
+        &pos, &up, &target, work->heap_id );
+//#define INDEPENDENT_PANEL_TOTAL_W  (96.0f)
+//#define INDEPENDENT_PANEL_TOTAL_H  (96.0f)
 */
   }
 }
@@ -1858,6 +1922,7 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
     f32  w, h;
     f32  sw, th;
     f32  start_x, start_y;
+    f32  epsilon_x, epsilon_y;  // 効果がないので、使うのやめた。
 
     max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
 
@@ -1869,6 +1934,13 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
 
     start_x = - INDEPENDENT_PANEL_TOTAL_W / 2.0f + w / 2.0f;  // 右が正
     start_y =   INDEPENDENT_PANEL_TOTAL_H / 2.0f - h / 2.0f;  // 上が正
+
+    //epsilon_x =   ( (f32)( INDEPENDENT_PANEL_TOTAL_MAX_S - INDEPENDENT_PANEL_TOTAL_MIN_S ) ) / TEXSIZ_S / INDEPENDENT_PANEL_NUM_X \
+    //            / ( ( INDEPENDENT_PANEL_TOTAL_MAX_S - INDEPENDENT_PANEL_TOTAL_MIN_S ) * INDEPENDENT_PANEL_NUM_X );  // 1ピクセルはテクスチャ座標系でどれだけの大きさか
+    //epsilon_x = 1.0f / TEXSIZ_S;  // 上記の計算をまとめるとこうなる
+    //epsilon_y = 1.0f / TEXSIZ_T;
+    epsilon_x = 1.0f;  // テクスチャ座標系は0<= <=1じゃなくて0<= <=128でいいみたい。
+    epsilon_y = 1.0f;  // だから1ピクセルは1のまま。
 
     for( i=0; i<max; i++ )
     {
@@ -1892,10 +1964,14 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
       panel_wk->pos.x += FX_F32_TO_FX32( start_x + w * x );
       panel_wk->pos.y += FX_F32_TO_FX32( start_y - h * y );
 
-      panel_wk->s0 = ( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S ) * FX32_ONE;
-      panel_wk->t0 = ( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T ) * FX32_ONE;
-      panel_wk->s1 = panel_wk->s0 + FX32_CONST(sw);
-      panel_wk->t1 = panel_wk->t0 + FX32_CONST(th);
+      panel_wk->s0 = FX_F32_TO_FX32( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S );
+      panel_wk->t0 = FX_F32_TO_FX32( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T );
+      //panel_wk->s0 = FX_F32_TO_FX32( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S + epsilon_x/10 );
+      //panel_wk->t0 = FX_F32_TO_FX32( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T + epsilon_y/10 );
+      panel_wk->s1 = panel_wk->s0 + FX_F32_TO_FX32(sw);
+      panel_wk->t1 = panel_wk->t0 + FX_F32_TO_FX32(th);
+      //panel_wk->s1 = panel_wk->s0 + FX_F32_TO_FX32(sw - epsilon_x/10);
+      //panel_wk->t1 = panel_wk->t0 + FX_F32_TO_FX32(th - epsilon_y/10);
 
       panel_wk->pos_prev = panel_wk->pos;
     }
