@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T12:11:04"/>
+	<create user="nakamura_akira" host="W00161" date="2010-04-30T17:30:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -734,20 +734,20 @@ msg_sys_gpower_use00～02が
 		<comment>1：消費アイテム限定</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
 [1:09:どうぐ名:1]を
-つかいました</language>
+つかっています</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
 [1:09:どうぐ名:1]を
-使いました</language>
+使っています</language>
 	</row>
 
 	<row id="msg_beacon_036" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>1：フィールド技限定</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
 [1:07:わざ名:1]を
-つかいました</language>
+つかっています</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
 [1:07:わざ名:1]を
-使いました</language>
+使っています</language>
 	</row>
 
 	<row id="msg_beacon_037" back-color="#ffff80,,,,,,,,,,,,,,,,,">
