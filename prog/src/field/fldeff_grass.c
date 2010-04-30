@@ -256,11 +256,11 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
 //--------------------------------------------------------------
 static void grassTask_Init( FLDEFF_TASK *task, void *wk )
 {
+  u16 type;
   TASKWORK_GRASS *work = wk;
   const TASKHEADER_GRASS *head;
   GFL_BBDACT_ACTDATA actData;
   GFL_BBDACT_SYS *bbdact_sys;
-  u16 type;
   
   head = FLDEFF_TASK_GetAddPointer( task );
   work->head = *head;

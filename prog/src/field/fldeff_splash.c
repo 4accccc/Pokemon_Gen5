@@ -34,8 +34,10 @@ typedef struct _TAG_FLDEFF_SPLASH FLDEFF_SPLASH;
 struct _TAG_FLDEFF_SPLASH
 {
 	FLDEFF_CTRL *fectrl;
-  FLD_G3DOBJ_RESIDX res_idx_splash;
-  FLD_G3DOBJ_RESIDX res_idx_shoal;
+  GFL_BBDACT_SYS *bbdact_sys;
+  
+  u16 res_idx_splash;
+  u16 res_idx_shoal;
 };
 
 //--------------------------------------------------------------
@@ -56,7 +58,7 @@ typedef struct
   int seq_no;
   TASKHEADER_SPLASH head;
   MMDL_CHECKSAME_DATA samedata;
-  FLD_G3DOBJ_OBJIDX obj_idx;
+  u16 act_id;
 }TASKWORK_SPLASH;
 
 //======================================================================
@@ -66,6 +68,9 @@ static void splash_InitResource( FLDEFF_SPLASH *splash );
 static void splash_DeleteResource( FLDEFF_SPLASH *splash );
 
 static const FLDEFF_TASK_HEADER DATA_splashTaskHeader;
+
+static const GFL_BBDACT_ANM * data_BlActAnm_SplashTbl[1];
+static const GFL_BBDACT_ANM * data_BlActAnm_ShoalTbl[1];
 
 //======================================================================
 //	水飛沫　システム
@@ -81,9 +86,13 @@ static const FLDEFF_TASK_HEADER DATA_splashTaskHeader;
 void * FLDEFF_SPLASH_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
 	FLDEFF_SPLASH *splash;
+	FIELDMAP_WORK *fieldmap;
 	
 	splash = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_SPLASH) );
 	splash->fectrl = fectrl;
+  
+  fieldmap = FLDEFF_CTRL_GetFieldMapWork( splash->fectrl );
+  splash->bbdact_sys = FIELDMAP_GetEffBbdActSys( fieldmap );
   
 	splash_InitResource( splash );
 	return( splash );
@@ -117,31 +126,31 @@ void FLDEFF_SPLASH_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void splash_InitResource( FLDEFF_SPLASH *splash )
 {
   ARCHANDLE *handle;
-  FLD_G3DOBJ_CTRL *obj_ctrl;
-  FLD_G3DOBJ_RES_HEADER head;
+  GFL_BBDACT_G3DRESDATA data;
   
-  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
   handle = FLDEFF_CTRL_GetArcHandleEffect( splash->fectrl );
   
-  FLD_G3DOBJ_RES_HEADER_Init( &head );
-  FLD_G3DOBJ_RES_HEADER_SetMdl(
-        &head, handle, NARC_fldeff_shibuki_nsbmd );
-  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
-  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
-      &head, NARC_fldeff_shibuki_nsbtp );
+  data.texFmt = GFL_BBD_TEXFMT_PAL4;
+  data.texSiz = GFL_BBD_TEXSIZ_32x128;
+  data.celSizX = 32;
+  data.celSizY = 32;
+  data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
   
-  splash->res_idx_shoal = 
-      FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
-
-  FLD_G3DOBJ_RES_HEADER_Init( &head );
-  FLD_G3DOBJ_RES_HEADER_SetMdl(
-        &head, handle, NARC_fldeff_shibuki02_nsbmd );
-  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
-  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
-      &head, NARC_fldeff_shibuki02_nsbtp );
-  
+  data.g3dres = GFL_G3D_CreateResourceHandle(
+      handle, NARC_fldeff_shibuki_nsbtx );
   splash->res_idx_splash = 
-      FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+      GFL_BBDACT_AddResourceG3DResUnit( splash->bbdact_sys, &data, 1 );
+  
+  data.texFmt = GFL_BBD_TEXFMT_PAL4;
+  data.texSiz = GFL_BBD_TEXSIZ_16x64;
+  data.celSizX = 16;
+  data.celSizY = 16;
+  data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
+  
+  data.g3dres = GFL_G3D_CreateResourceHandle(
+      handle, NARC_fldeff_shibuki02_nsbtx );
+  splash->res_idx_shoal = 
+      GFL_BBDACT_AddResourceG3DResUnit( splash->bbdact_sys, &data, 1 );
 }
 
 //--------------------------------------------------------------
@@ -153,11 +162,10 @@ static void splash_InitResource( FLDEFF_SPLASH *splash )
 //--------------------------------------------------------------
 static void splash_DeleteResource( FLDEFF_SPLASH *splash )
 {
-  FLD_G3DOBJ_CTRL *obj_ctrl;
-  
-  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
-  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, splash->res_idx_splash );
-  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, splash->res_idx_shoal );
+  GFL_BBDACT_RemoveResourceUnit(
+      splash->bbdact_sys, splash->res_idx_splash, 1 );
+  GFL_BBDACT_RemoveResourceUnit(
+      splash->bbdact_sys, splash->res_idx_shoal, 1 );
 }
 
 //======================================================================
@@ -196,8 +204,10 @@ void FLDEFF_SPLASH_SetMMdl(
 //--------------------------------------------------------------
 static void splashTask_Init( FLDEFF_TASK *task, void *wk )
 {
+  VecFx32 pos;
   TASKWORK_SPLASH *work = wk;
   const TASKHEADER_SPLASH *head;
+  GFL_BBDACT_ACTDATA actData;
   
   head = FLDEFF_TASK_GetAddPointer( task );
   work->head = *head;
@@ -205,24 +215,41 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
   if( work->head.joint == TRUE ){
     MMDL_InitCheckSameData( work->head.mmdl, &work->samedata );
   }
-
+  
+  MMDL_GetVectorPos( work->head.mmdl, &pos );
+  pos.z += SPLASH_DRAW_Z_OFFSET;
+  FLDEFF_TASK_SetPos( task, &pos );
+  
   {
-    VecFx32 pos;
-    MMDL_GetVectorPos( work->head.mmdl, &pos );
-    pos.z += SPLASH_DRAW_Z_OFFSET;
-    FLDEFF_TASK_SetPos( task, &pos );
- 
+    FLDEFF_SPLASH *splash = work->head.eff_splash;
+    GFL_BBDACT_SYS *bbdact_sys = splash->bbdact_sys;
+    
+    actData.resID = splash->res_idx_splash;
+    
+    if( work->head.joint == TRUE ){
+      actData.resID = splash->res_idx_shoal;
+    }
+    
+    actData.sizX = FX16_ONE*8-1;
+    actData.sizY = FX16_ONE*8-1;
+    actData.alpha = 31;
+    actData.drawEnable = TRUE;
+    actData.lightMask = GFL_BBD_LIGHTMASK_0;
+    actData.trans = pos;
+    actData.func = NULL;
+    actData.work = work;
+    
+    work->act_id = GFL_BBDACT_AddAct( bbdact_sys, 0, &actData, 1 );
+    
     {
-      FLDEFF_SPLASH *splash = work->head.eff_splash;
-      FLD_G3DOBJ_CTRL *obj_ctrl =
-        FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
-      u16 idx = splash->res_idx_splash;
+      GFL_BBDACT_ANMTBL tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_SplashTbl;
       
       if( work->head.joint == TRUE ){
-        idx = splash->res_idx_shoal;
+        tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_ShoalTbl;
       }
       
-      work->obj_idx = FLD_G3DOBJ_CTRL_AddObject( obj_ctrl, idx, 0, &pos );
+      GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  tbl, 1 );
+      GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
     }
   }
   
@@ -241,10 +268,8 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
 static void splashTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SPLASH *work = wk;
-  FLDEFF_SPLASH *splash = work->head.eff_splash;
-  FLD_G3DOBJ_CTRL *obj_ctrl =
-    FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
-  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, work->obj_idx );
+  GFL_BBDACT_SYS *bbdact_sys = work->head.eff_splash->bbdact_sys;
+  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
 }
 
 //--------------------------------------------------------------
@@ -274,26 +299,28 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
   }
 
   {
+    u16 comm;
     FLDEFF_SPLASH *splash = work->head.eff_splash;
-    FLD_G3DOBJ_CTRL *obj_ctrl =
-      FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
+    GFL_BBDACT_SYS *bbdact_sys = work->head.eff_splash->bbdact_sys;
     
-    if( FLD_G3DOBJ_CTRL_LoopAnimeObject(
-          obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
+    if( GFL_BBDACT_GetAnimeLastCommand(bbdact_sys,work->act_id,&comm) ){
       if( work->head.joint == FALSE ){
         FLDEFF_TASK_CallDelete( task );
         return;
       }
+
+      GFL_BBDACT_SetAnimeFrmIdx( bbdact_sys, work->act_id, 0 );
     }
-  
+    
     if( work->head.joint == TRUE ){
       VecFx32 pos;
-      GFL_G3D_OBJSTATUS *st = FLD_G3DOBJ_CTRL_GetObjStatus(
-          obj_ctrl, work->obj_idx );
+      
       MMDL_GetVectorPos( work->head.mmdl, &pos );
       pos.z += SPLASH_DRAW_Z_OFFSET;
       FLDEFF_TASK_SetPos( task, &pos );
-      st->trans = pos;
+      
+      GFL_BBD_SetObjectTrans(
+        GFL_BBDACT_GetBBDSystem(bbdact_sys), work->act_id, &pos );
     }
   }
 }
@@ -329,4 +356,36 @@ static const FLDEFF_TASK_HEADER DATA_splashTaskHeader =
   splashTask_Delete,
   splashTask_Update,
   splashTask_Draw,
+};
+
+//======================================================================
+//  data
+//======================================================================
+//splash anime table
+static const GFL_BBDACT_ANM data_BlActAnm_Splash[] =
+{
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+  {2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,4},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * data_BlActAnm_SplashTbl[1] =
+{
+  data_BlActAnm_Splash,
+};
+
+//shoal anime table
+static const GFL_BBDACT_ANM data_BlActAnm_Shoal[] =
+{
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * data_BlActAnm_ShoalTbl[1] =
+{
+  data_BlActAnm_Shoal,
 };
