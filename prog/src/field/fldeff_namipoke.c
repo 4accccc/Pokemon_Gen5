@@ -439,6 +439,57 @@ static void namipokeTask_Delete( FLDEFF_TASK *task, void *wk )
   }
 }
 
+#define RIPPLE_OFFS_Y (-0x4000)
+#define RIPPLE_OFFS_XZ (0xe000)
+
+static void namipokeTask_DrawCore( FLDEFF_TASK *task, void *wk )
+{
+  VecFx32 pos;
+  GFL_G3D_OBJSTATUS *st;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+  TASKWORK_NAMIPOKE *work = wk;
+  u16 rtbl[DIR_MAX4][3] = {{0,0x8000,0},{0,0,0},{0,0xc000,0},{0,0x4000,0}};
+  u16 *rot = rtbl[work->dir];
+  
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
+      work->head.eff_namipoke->fectrl );
+  
+  //ƒ|ƒPƒ‚ƒ“‰ñ“]AÀ•WÝ’è
+  st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, work->obj_idx );
+  GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &st->rotate );
+  FLDEFF_TASK_GetPos( task, &st->trans );
+  
+  if( work->ripple_work.vanish_flag == FALSE ){ //”ò–—
+    RIPPLE_WORK *rip = &work->ripple_work;
+    VecFx32 rip_otbl[DIR_MAX4] = {
+      {0,RIPPLE_OFFS_Y,RIPPLE_OFFS_XZ},
+      {0,RIPPLE_OFFS_Y,-RIPPLE_OFFS_XZ},
+      {RIPPLE_OFFS_XZ,RIPPLE_OFFS_Y,0},
+      {-RIPPLE_OFFS_XZ,RIPPLE_OFFS_Y,0},
+    };
+    u16 rip_rtbl[DIR_MAX4][3] = {
+      {0,0,0},{0,0x8000,0},{0,0x4000,0},{0,0xc000,0} };
+    VecFx32 *rip_offs = &rip_otbl[work->dir];
+    u16 *rip_rot = rip_rtbl[work->dir];
+    
+    st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, rip->obj_idx );
+    
+    GFL_CALC3D_MTX_CreateRot(
+        rip_rot[0], rip_rot[1], rip_rot[2], &st->rotate );
+      
+    FLDEFF_TASK_GetPos( task, &st->trans );
+    st->trans.x += rip->offs.x + rip_offs->x;
+    st->trans.y += rip->offs.y + rip_offs->y;
+    st->trans.z += rip->offs.z + rip_offs->z;
+    st->scale = rip->scale;
+    
+    FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, FALSE );
+  }else{
+    RIPPLE_WORK *rip = &work->ripple_work;
+    FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, TRUE );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * ”gæ‚èƒ|ƒPƒ‚ƒ“ƒ^ƒXƒN@XV
@@ -460,7 +511,7 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     work->dir = MMDL_GetDirDisp( work->head.mmdl );
   }
   
-  if( work->joint == NAMIPOKE_JOINT_ON ){ //—h‚ê
+  if( work->joint == NAMIPOKE_JOINT_ON ){ //’Ç@—h‚ê
 		work->shake_offs += work->shake_value;
 		
 		if( work->shake_offs >= NAMIPOKE_SHAKE_MAX ){
@@ -471,14 +522,13 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 			work->shake_value = -work->shake_value;
 		}
     
-    { //‰^“]Žè‚É—h‚ê‚ð’Ç‰Á
-      oya_offs.x = 0;
-      oya_offs.y = work->shake_offs + NAMIPOKE_RIDE_Y_OFFSET;
-      oya_offs.z = NAMIPOKE_RIDE_Z_OFFSET;
-      MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
-    }
+    //‰^“]Žè‚É—h‚ê‚ð’Ç‰Á
+    oya_offs.x = 0;
+    oya_offs.y = work->shake_offs + NAMIPOKE_RIDE_Y_OFFSET;
+    oya_offs.z = NAMIPOKE_RIDE_Z_OFFSET;
+    MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
   }
-
+  
   { //À•W
     VecFx32 pos;
     MMDL_GetDrawVectorPos( work->head.mmdl, &pos );
@@ -486,8 +536,8 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     pos.x -= oya_offs.x;
     pos.y -= oya_offs.y;
     pos.z -= oya_offs.z;
-    
     pos.y += work->shake_offs - FX32_ONE;
+    
     FLDEFF_TASK_SetPos( task, &pos );
   }
   
@@ -568,10 +618,10 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     
     rip->save_pos = pos;
   }
+
+  namipokeTask_DrawCore( task, wk );
 }
 
-#define RIPPLE_OFFS_Y (-0x4000)
-#define RIPPLE_OFFS_XZ (0xe000)
 
 //--------------------------------------------------------------
 /**
@@ -585,6 +635,7 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+#if 0
   VecFx32 pos;
   GFL_G3D_OBJSTATUS *st;
   FLD_G3DOBJ_CTRL *obj_ctrl;
@@ -623,13 +674,13 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
     st->trans.y += rip->offs.y + rip_offs->y;
     st->trans.z += rip->offs.z + rip_offs->z;
     st->scale = rip->scale;
-
+    
     FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, FALSE );
   }else{
-
     RIPPLE_WORK *rip = &work->ripple_work;
     FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, TRUE );
   }
+#endif
 }
 
 //--------------------------------------------------------------

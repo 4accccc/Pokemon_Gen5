@@ -101,7 +101,7 @@ struct _TAG_FLDEFF_FOOTMARK
 typedef struct
 {
   FLDEFF_FOOTMARK *eff_fmark;
-  u16 res_idx;
+  u16 fmark_no;
 }TASKHEADER_FOOTMARK;
 
 //--------------------------------------------------------------
@@ -272,28 +272,32 @@ static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
 void FLDEFF_FOOTMARK_SetMMdl(
     MMDL *mmdl, FLDEFF_CTRL *fectrl, FOOTMARK_TYPE type )
 {
+  u16 no;
   VecFx32 pos;
   FLDEFF_FOOTMARK *fmark;
   TASKHEADER_FOOTMARK head;
   
   fmark = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_FOOTMARK );
   head.eff_fmark = fmark;
-  head.res_idx = fmark_GetObject( fmark, type,
-      MMDL_GetDirDisp(mmdl), MMDL_GetDirDispOld(mmdl) );
   
+  no = fmark_GetObject( fmark, type,
+      MMDL_GetDirDisp(mmdl), MMDL_GetDirDispOld(mmdl) );
+
   MMDL_GetVectorPos( mmdl, &pos ); //y
   MMDL_TOOL_GetCenterGridPos(
       MMDL_GetOldGridPosX(mmdl), MMDL_GetOldGridPosZ(mmdl), &pos );
 
   pos.y += FOOTMARK_OFFSPOS_Y;
-
+  
   if( type == FOOTMARK_TYPE_HUMAN &&
-      (head.res_idx == FOOTMARK_WALK_LEFT ||
-       head.res_idx == FOOTMARK_WALK_RIGHT) ){
+      (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
     pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
-  }else if( type == FOOTMARK_TYPE_DEEPSNOW ){
+  }else if( type == FOOTMARK_TYPE_DEEPSNOW &&
+      (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
     pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
   }
+  
+  head.fmark_no = no;
   
   FLDEFF_CTRL_AddTask(
       fectrl, &data_fmarkTaskHeader, &pos, 0, &head, 0 );
@@ -319,7 +323,7 @@ static void fmarkTask_Init( FLDEFF_TASK *task, void *wk )
   work->head = *head;
   work->alpha = 31;
   
-  actData.resID = work->head.eff_fmark->res_idx_tbl[work->head.res_idx];
+  actData.resID = work->head.eff_fmark->res_idx_tbl[work->head.fmark_no];
   actData.sizX = FOOTMARK_BBDACT_SIZE_X;
   actData.sizY = FOOTMARK_BBDACT_SIZE_Y;
   actData.alpha = work->alpha;
