@@ -1905,6 +1905,9 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       VecFx32 player_pos;
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
       FIELD_PLAYER_GetPos( fld_player, &player_pos );
+
+      MISSIONDATA_WordsetTargetName(
+        intsub->wordset, 0, &intsub->comm.p_md->target_info, HEAPID_FIELD_SUBSCREEN);
       
       //“¯‚¶ƒ][ƒ“‚É‚¢‚ê‚Î‹êŠ‚Ì•ûŒü‚ð•\Ž¦
       if(intsub->comm.now_palace_area == intsub->comm.target_palace_area){

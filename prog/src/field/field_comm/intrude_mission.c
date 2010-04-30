@@ -961,6 +961,7 @@ static void MISSION_SetTargetInfo(INTRUDE_COMM_SYS_PTR intcomm, MISSION_TARGET_I
   
   myst = Intrude_GetMyStatus(intcomm, target->net_id);
   MyStatus_CopyNameStrCode(myst, target->name, PERSON_NAME_SIZE + EOM_SIZE);
+  target->sex = MyStatus_GetMySex(myst);
 }
 
 //==================================================================
@@ -1232,14 +1233,30 @@ NetID MISSION_GetMissionTargetNetID(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM
  * @param   temp_heap_id		テンポラリで使用するヒープID
  */
 //--------------------------------------------------------------
-static void _Wordset_Strcode(WORDSET *wordset, u32 bufID, const STRCODE *code, int str_length, HEAPID temp_heap_id)
+static void _Wordset_Strcode(WORDSET *wordset, u32 bufID, const STRCODE *code, int str_length, HEAPID temp_heap_id, int sex)
 {
   STRBUF *strbuf = 	GFL_STR_CreateBuffer(str_length, temp_heap_id);
 
 	GFL_STR_SetStringCodeOrderLength(strbuf, code, str_length);
-  WORDSET_RegisterWord(wordset, bufID, strbuf, 0, TRUE, PM_LANG);
+  WORDSET_RegisterWord(wordset, bufID, strbuf, sex, TRUE, PM_LANG);
 
   GFL_STR_DeleteBuffer(strbuf);
+}
+
+//==================================================================
+/**
+ * ミッションターゲットの名前をWordsetする
+ *
+ * @param   wordset		
+ * @param   bufID		
+ * @param   target		
+ * @param   temp_heap_id		
+ */
+//==================================================================
+void MISSIONDATA_WordsetTargetName(WORDSET *wordset, u32 bufID, const MISSION_TARGET_INFO *target, HEAPID temp_heap_id)
+{
+  _Wordset_Strcode(wordset, bufID, target->name, 
+    PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id, target->sex);
 }
 
 //==================================================================
@@ -1259,8 +1276,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
     {
       const MISSION_TYPEDATA_VICTORY *d_vic = (void*)cdata->data;
       
-      _Wordset_Strcode(wordset, 0, target->name, 
-        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
       
       WORDSET_RegisterNumber(wordset, 1, d_vic->battle_level, 3, 
         STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
@@ -1270,8 +1286,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
     {
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)cdata->data;
 
-      _Wordset_Strcode(wordset, 0, target->name, 
-        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
       WORDSET_RegisterGPowerName( wordset, 2, d_skill->gpower_id );
     }
     break;
@@ -1279,8 +1294,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
     {
       const MISSION_TYPEDATA_BASIC *d_bas = (void*)cdata->data;
       
-      _Wordset_Strcode(wordset, 0, target->name, 
-        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
       WORDSET_RegisterGPowerName( wordset, 2, d_bas->gpower_id );
     }
     break;
@@ -1288,8 +1302,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)cdata->data;
 
-      _Wordset_Strcode(wordset, 0, target->name, 
-        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
       WORDSET_RegisterItemName( wordset, 1, d_attr->item );
       WORDSET_RegisterNumber( 
         wordset, 2, d_attr->price, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -1301,16 +1314,14 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
       
       WORDSET_RegisterItemName( wordset, 0, d_item->item_no );
       
-      _Wordset_Strcode(wordset, 1, target->name, 
-        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      MISSIONDATA_WordsetTargetName(wordset, 1, target, temp_heap_id);
     }
     break;
   case MISSION_TYPE_PERSONALITY: //性格
     {
       const MISSION_TYPEDATA_PERSONALITY *d_per = (void*)cdata->data;
       
-      _Wordset_Strcode(wordset, 0, target->name, 
-        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
     }
     break;
   }

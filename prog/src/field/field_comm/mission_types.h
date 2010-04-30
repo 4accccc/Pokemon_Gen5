@@ -181,7 +181,9 @@ typedef struct{
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
 
   u8 net_id;
-  u8 padding[3];
+  u8 sex:1;
+  u8    :7;
+  u8 padding[2];
 }MISSION_TARGET_INFO;
 
 ///ミッションタイプ毎に異なる拡張パラメータ
