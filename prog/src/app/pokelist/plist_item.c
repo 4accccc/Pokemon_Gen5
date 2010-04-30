@@ -381,6 +381,20 @@ void PLIST_ITEM_CangeAruseusuForm( PLIST_WORK *work , POKEMON_PARAM *pp , const 
   }
 }
 
+void PLIST_ITEM_CangeInsekutaForm( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo )
+{
+  const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
+  if( monsNo == MONSNO_656 )  //インセクタ
+  {
+    const u32 formNo =  PP_Get( pp , ID_PARA_form_no , NULL );
+    u32 newForm = POKETOOL_GetPokeInsekutaFromItem(itemNo);
+    if( formNo != newForm )
+    {
+      PP_ChangeFormNo( pp , newForm );
+    }
+  }
+}
+
 #pragma mark [> msg func
 //--------------------------------------------------------------------------
 //  アイテム使えないメッセージの表示

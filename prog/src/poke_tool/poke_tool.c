@@ -4079,3 +4079,32 @@ PokeType  POKETOOL_GetPokeTypeFromItem( u16 item )
 {
   return get_type_from_item( item );
 }
+
+//==================================================================
+/**
+ * アイテムナンバーからフォルムを取得
+ *
+ * @param   item アイテムナンバー
+ *
+ * @retval  フォルム
+ */
+//==================================================================
+const u32 POKETOOL_GetPokeInsekutaFromItem( const u16 item )
+{
+  switch( item )
+  {
+  case ITEM_AKUAKASETTO:    //( 116 )		// アクアカセット
+    return FORMNO_656_AQUA;
+    break;
+  case ITEM_INAZUMAKASETTO: //( 117 )		// イナズマカセット
+    return FORMNO_656_INAZUMA;
+    break;
+  case ITEM_BUREIZUKASETTO: //( 118 )		// ブレイズカセット
+    return FORMNO_656_BLAZE;
+    break;
+  case ITEM_HURIIZUKASETTO: //( 119 )		// フリーズカセット
+    return FORMNO_656_FREEZE;
+    break;
+  }
+  return FORMNO_656_NORMAL;
+}
