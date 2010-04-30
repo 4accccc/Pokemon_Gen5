@@ -53,7 +53,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c03r0601_board_01
 
-	_LOOK_ELBOARD( 45 )
+	_LOOK_ELBOARD( 36 )
 
 EVENT_END
 
@@ -119,7 +119,7 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	//と　そのまえに
 	_BALLOONWIN_OBJMSG( msg_c03r0601_white_02 , MMDL_ID_EVENTOBJ_00 )
 	_MSGWIN_CLOSE()
-	
+/*
 	SWITCH $LWK_POSX
 	CASE 2 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info2_a )
@@ -165,6 +165,28 @@ EVENT_START		ev_pos_c03r0601_stop_01
 		_OBJ_ANIME_WAIT()
 	CASE 7 THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info7_b )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+*/
+
+	SWITCH $LWK_POSX
+	CASE 2 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info2 )
+		_OBJ_ANIME_WAIT()
+	CASE 3 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info3 )
+		_OBJ_ANIME_WAIT()
+	CASE 4 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info4 )
+		_OBJ_ANIME_WAIT()
+	CASE 5 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info5 )
+		_OBJ_ANIME_WAIT()
+	CASE 6 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info6 )
+		_OBJ_ANIME_WAIT()
+	CASE 7 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_info7 )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
@@ -274,6 +296,7 @@ EVENT_END
 //--------------------------------------------------------------------
 //	受付嬢　ベルから戦闘したいとの話を聞く
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL anm_kiotukete_a
  	_ANIME_DATA		AC_WAIT_8F,1
  	_ANIME_DATA		AC_MARK_HATENA,1
@@ -281,16 +304,17 @@ _ANIME_LABEL anm_kiotukete_a
   	_ANIME_DATA		AC_MARK_GYOE,1
    	_ANIME_DATA		AC_STAY_WALK_L_8F,4
 	_ANIME_DATA		ACMD_END,0
-
+*/
 //--------------------------------------------------------------------
 //	サポート　戦闘したいとの話をする
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL anm_kiotukete_b
  	_ANIME_DATA		AC_WAIT_8F,1
     _ANIME_DATA		AC_STAY_WALK_R_16F,1
  	_ANIME_DATA		AC_WAIT_4F,1
 	_ANIME_DATA		ACMD_END,0
-	
+*/
 //--------------------------------------------------------------------
 //	サポート　自機に近づく
 //--------------------------------------------------------------------
@@ -332,6 +356,7 @@ _ANIME_LABEL anm_support_come7
 //--------------------------------------------------------------------
 //	サポート　受付嬢の前に移動
 //--------------------------------------------------------------------
+/*
 _ANIME_LABEL anm_support_info2_a
 	_ANIME_DATA		AC_WALK_R_8F,5
 	_ANIME_DATA		AC_WALK_D_8F,1
@@ -398,6 +423,77 @@ _ANIME_LABEL anm_support_info6_b
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_support_info7_b
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+*/
+
+_ANIME_LABEL anm_support_info2
+	_ANIME_DATA		AC_WALK_R_8F,5
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_HATENA,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,5
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_support_info3
+	_ANIME_DATA		AC_WALK_R_8F,4
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_HATENA,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,4
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_support_info4
+	_ANIME_DATA		AC_WALK_R_8F,3
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_HATENA,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,3
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_support_info5
+	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_HATENA,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL anm_support_info6
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_HATENA,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL anm_support_info7
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_HATENA,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
 	_ANIME_DATA		AC_WALK_U_8F,1
 	_ANIME_DATA		AC_STAY_WALK_U_8F,1
 	_ANIME_DATA		ACMD_END,0

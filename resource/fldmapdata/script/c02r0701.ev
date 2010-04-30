@@ -124,6 +124,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c02r0701_board_01
 
-	_LOOK_ELBOARD( 45 )
+	_LOOK_ELBOARD( 36 )
 
 EVENT_END

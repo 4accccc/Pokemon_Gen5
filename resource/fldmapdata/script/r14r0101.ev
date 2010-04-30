@@ -43,7 +43,7 @@ ev_r14r0101:
 /**************************************************************/
 EVENT_START   ev_bg_r14r0101_board_01
 
-	_LOOK_ELBOARD( 45 )
+	_LOOK_ELBOARD( 36 )
 
 EVENT_END
 
