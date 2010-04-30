@@ -219,7 +219,6 @@ SRCS  +=    $(SOUNDSRC) \
         savedata/undata_update.c \
         system/scroll_bar.c \
         system/time_icon.c \
-        demo/demo3d/demo3d_param.c \
         item/shooter_item.c \
 				poke_tool/poke_memo.c \
 				field/field_skill_check.c \
@@ -380,6 +379,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_fldmmdl_control.c \
         field/event_geonet.c \
         field/event_demo3d.c \
+        demo/demo3d/demo3d_param.c \
         field/field_comm/bingo_system.c \
         field/field_wfbc_data.c \
         field/eventdata_system.c \
