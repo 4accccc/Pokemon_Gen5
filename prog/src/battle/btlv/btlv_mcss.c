@@ -40,7 +40,7 @@
 
 #define BTLV_MCSS_NO_INDEX  ( -1 )
 
-#define BTLV_MCSS_PINCH_PITCH ( -5120 )
+#define BTLV_MCSS_PINCH_PITCH ( -2560 )
 
 enum{
   REVERSE_FLAG_OFF = 0,

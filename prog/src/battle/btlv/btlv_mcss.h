@@ -166,6 +166,7 @@ extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int posit
 extern  int             BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position );
 extern  int             BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
+extern  u16             BTLV_MCSS_GetHPColor( BTLV_MCSS_WORK *bmw, int position );
 extern  u32             BTLV_MCSS_GetStatusFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  BOOL            BTLV_MCSS_GetNoJump( BTLV_MCSS_WORK *bmw, int position );
 extern  u8              BTLV_MCSS_GetFlyFlag( BTLV_MCSS_WORK *bmw, int position );
