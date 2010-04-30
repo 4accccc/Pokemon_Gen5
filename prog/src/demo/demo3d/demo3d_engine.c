@@ -531,18 +531,27 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk, u32 delayCount )
 //  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
 #ifdef DEBUG_USE_KEY
-  // アニメ再生切り替え
-  if( CHECK_KEY_TRG( PAD_BUTTON_START ) )
   {
     static BOOL _is_anime = TRUE;
-    _is_anime ^= 1;
-    if( _is_anime == TRUE ) {
-      wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( wk->demo_id );
-    } else {
-      wk->anime_speed = 0;
-      OS_Printf("アニメフレーム %df / %df\n",
+    static BOOL _is_anime_double = FALSE;
+
+    // アニメ再生切り替え
+    if( CHECK_KEY_TRG( PAD_BUTTON_START ) )
+    {
+      _is_anime ^= 1;
+      if( _is_anime == TRUE ) {
+        wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( wk->demo_id );
+      } else {
+        wk->anime_speed = 0;
+        OS_Printf("アニメフレーム %df / %df\n",
           FX_Whole(ICA_ANIME_GetNowFrame(wk->ica_anime)),ICA_ANIME_GetMaxFrame(wk->ica_anime) );
+      }
     }
+    if( CHECK_KEY_TRG( PAD_BUTTON_SELECT ) )
+    {
+      _is_anime_double ^= 1;
+    }
+    delayCount += _is_anime_double;
   }
 #endif
 
