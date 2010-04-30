@@ -1429,7 +1429,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
         PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
         
         PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
-        PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , 0 );
+        PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , work->plData->item );
         if( PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara ) == TRUE )
         {
           //ギラティナ・フォルムチェンジ
@@ -1707,7 +1707,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
 
           PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
-          PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , 0 );
+          PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , work->plData->item );
 
           if( PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara ) == TRUE )
           {
@@ -3851,7 +3851,7 @@ static void PLIST_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const int 
       PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
 
       PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
-      PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , 0 );
+      PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , work->plData->item );
 
       isGirathinaToOrigin = PLIST_DEMO_CheckGirathnaToOrigin( work , work->selectPokePara );
       isGirathinaToAnother = PLIST_DEMO_CheckGirathnaToAnother( work , work->selectPokePara );
