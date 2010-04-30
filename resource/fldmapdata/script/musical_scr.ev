@@ -82,7 +82,9 @@ EVENT_START ev_musical_recept_single
         //入場アニメ
         _CALL recept_move_obj_solo
 
+        _SE_PLAY(	SEQ_SE_KAIDAN )
         _MAP_FADE_BLACK_OUT( )
+        _SE_WAIT()
         _MAP_FADE_END_CHECK()
         _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
         //ここから処理は帰ってきません。
@@ -385,7 +387,10 @@ ev_musical_recept_comm_core:
   //入場アニメ
   _CALL recept_move_obj_comm
   
+
+  _SE_PLAY(	SEQ_SE_KAIDAN )
   _MAP_FADE_BLACK_OUT( )
+  _SE_WAIT()
   _MAP_FADE_END_CHECK()
 
   _MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
