@@ -25,6 +25,7 @@
 //  module
 #include "app/app_menu_common.h"
 #include "pokeicon/pokeicon.h"
+#include "system/prof_word.h"
 
 //  archive
 #include "arc_def.h"
@@ -580,5 +581,8 @@ typedef struct
 
   //不許可文字の場合のメッセージ
   BOOL  is_illegal_msg;
+
+  //不正文字チェックルーチン
+  PROF_WORD_WORK  *p_prof;
 
 } NAMEIN_WORK;

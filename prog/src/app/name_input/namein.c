@@ -23,7 +23,6 @@
 //  module
 #include "app/app_menu_common.h"
 #include "pokeicon/pokeicon.h"
-#include "system/prof_word.h"
 
 //  archive
 #include "arc_def.h"
@@ -379,6 +378,8 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, &p_wk->obj, HEAPID_NAME_INPUT );
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
   PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
+  p_wk->p_prof  = PROF_WORD_AllocWork( HEAPID_NAME_INPUT );
+
   //文字描画
   if( p_param->mode == NAMEIN_POKEMON )
   { 
@@ -430,6 +431,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   NAMEIN_WORK *p_wk = p_wk_adrs;
 
   //モジュール破棄
+  PROF_WORD_FreeWork( p_wk->p_prof );
   PS_Exit( &p_wk->ps );
   MSGWND_Exit( &p_wk->msgwnd );
   KEYBOARD_Exit( &p_wk->keyboard );
@@ -5116,7 +5118,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         }
 
         //不正文字チェック
-        if( PROF_WORD_CheckProfanityWordCode( p_wk->strinput.input_str, HEAPID_NAME_INPUT ) )
+        if( PROF_WORD_CheckProfanityWordCode( p_wk->p_prof, 
+              p_wk->strinput.input_str, 
+              HEAPID_NAME_INPUT ) )
         { 
           PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
           break;
