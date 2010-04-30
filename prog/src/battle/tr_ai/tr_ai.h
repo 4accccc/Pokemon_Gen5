@@ -12,6 +12,7 @@
 #include  "battle/btl_common.h"
 #include  "battle/btl_main.h"
 #include  "../btl_server_flow_def.h"
+#include  "tr_ai_def.h"
 
 //=========================================================================
 //  AI_THINK_BITéŒ¾

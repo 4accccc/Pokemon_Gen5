@@ -26,7 +26,6 @@
 #include "item/item.h"
 
 #include "tr_ai.h"
-#include "tr_ai_def.h"
 #include "tr_ai.cdat"
 
 #include "arc_def.h"
