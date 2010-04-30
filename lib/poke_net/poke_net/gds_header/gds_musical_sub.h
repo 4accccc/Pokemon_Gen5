@@ -25,7 +25,7 @@ typedef enum
 
 	MUS_POKE_EQUIP_USER_MAX,
 	
-	MUS_POKE_EQU_USER_INVALID	//無効値
+	MUS_POKE_EQU_USER_INVALID,	//無効値
 }MUS_POKE_EQUIP_USER;
 
 ///ミュージカルのトレーナーネーム長
@@ -56,7 +56,7 @@ typedef struct
 }MUSICAL_SHOT_POKE_EQUIP;
 
 //--------------------------------------------------------------
-//  ポケモン１体のデータ　84byte
+//  ポケモン１体のデータ　100byte
 //--------------------------------------------------------------
 typedef struct
 {
@@ -65,6 +65,7 @@ typedef struct
   u16  rare:1; //レアフラグ
   u16  form:5; //フォルム番号
   u16  pad :8;
+  u32  perRand; //個性乱数  +8byte
   
   STRCODE trainerName[MUSICAL_TRAINER_NAME_LEN];  //トレーナー名
   MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(７個
@@ -72,7 +73,7 @@ typedef struct
 }MUSICAL_SHOT_POKE;
 
 //--------------------------------------------------------------
-//  ミュージカルショット　416byte
+//  ミュージカルショット　480byte
 //--------------------------------------------------------------
 typedef struct
 {
