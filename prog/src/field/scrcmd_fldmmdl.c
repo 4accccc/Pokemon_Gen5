@@ -1307,8 +1307,11 @@ VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk )
   FIELDMAP_WORK*   fieldmap = fldparam->fieldMap;
   FIELD_TASK_MAN*  taskMan  = FIELDMAP_GetTaskManager( fieldmap );
 
-
-  GF_ASSERT( mmdl ); // 引数エラー: 指定されたOBJIDは存在しない
+	// 引数エラー: 指定されたOBJIDは存在しない
+	if( mmdl == NULL ) {
+		GF_ASSERT(0); 
+		return VMCMD_RESULT_CONTINUE;
+	}
 
 	// 動作モデルを落下地点に移動
 	{
@@ -1316,15 +1319,15 @@ VMCMD_RESULT EvCmdObjFallIn( VMHANDLE *core, void *wk )
 		fx32 y = 0;
 		s16 grid_y;
 
-		pos.x = GRID_TO_FX32( grid_x );
-		pos.z = GRID_TO_FX32( grid_z ); 
+		pos.x = GRID_TO_FX32( grid_x ) + GRID_HALF_FX32; // グリッドの中心
+		pos.y = 250 << FX32_SHIFT;
+		pos.z = GRID_TO_FX32( grid_z ) + GRID_HALF_FX32; // グリッドの中心
 		MMDL_GetMapPosHeight( mmdl, &pos, &y );
-		grid_y = SIZE_GRID_FX32( y );
+		pos.y = y;
+		grid_y = SIZE_GRID_FX32( pos.y );
 		MMDL_InitGridPosition( mmdl, grid_x, grid_y, grid_z, dir );
+		MMDL_SetVectorPos( mmdl, &pos );
 	}
-
-	// 向きを設定
-	MMDL_SetDirDisp( mmdl, dir );
 
 	// 動作モデルの描画オフセットを初期設定 ( 画面外にいるようにする )
 	{
