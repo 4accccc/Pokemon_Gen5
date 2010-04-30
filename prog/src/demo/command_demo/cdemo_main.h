@@ -139,15 +139,15 @@ typedef struct {
 	int	alpha_mv_frm;		// 終了までのフレーム数
 
 	// ＢＧスクリーン切り替えアニメ
-	int	bgsa_chr;
-	int	bgsa_pal;
-	int	bgsa_scr;
-	u16	bgsa_max;
+//	u16	frmMax;
 	u16	bgsa_num;
 	u8	bgsa_wait;
 	u8	bgsa_cnt;
 	u16	bgsa_load;
 	u16	bgsa_seq;
+//	int	bgsa_chr;
+//	int	bgsa_pal;
+//	int	bgsa_scr;
 
 	int	main_seq;
 	int	next_seq;

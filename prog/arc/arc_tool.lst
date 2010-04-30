@@ -306,3 +306,5 @@
   ARCID_R04D03_GMK "fieldmap/r04d03_gmk.narc" # R04D03ギミックアーカイブ
   ARCID_MANUAL "manual.narc" # ゲーム内マニュアルのグラフィックデータ
   ARCID_PALACE_PALETTE "palace_palette.narc" # パレスのグレースケール用テーブル
+  ARCID_GF_LOGO_MOVIE   "gf_logo_movie.narc" # ゲームフリークロゴムービー
+  ARCID_OP_DEMO2_MOVIE  "op_demo2.narc" # オープニングムービー２

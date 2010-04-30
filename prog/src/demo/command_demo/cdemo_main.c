@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "sound/pm_sndsys.h"
 
 #include "cdemo_main.h"
 #include "cdemo_comm.cdat"
@@ -170,7 +171,7 @@ void CDEMOMAIN_BgExit(void)
 
 void CDEMOMAIN_CommDataLoad( CDEMO_WORK * wk )
 {
-	wk->commSrc = (int *)CommandData;
+	wk->commSrc = (int *)CommandDataTable[wk->dat->mode];
 	wk->commPos = wk->commSrc;
 }
 

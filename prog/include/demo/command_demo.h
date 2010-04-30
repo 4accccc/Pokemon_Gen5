@@ -21,7 +21,9 @@
 
 // 処理モード
 enum {
-	COMMANDDEMO_MODE_TEST = 0,		// テストムービー
+	COMMANDDEMO_MODE_GF_LOGO = 0,		// ゲームフリークロゴ
+	COMMANDDEMO_MODE_OP_MOVIE1,			// オープニングムービー１
+	COMMANDDEMO_MODE_OP_MOVIE2,			// オープニングムービー２
 };
 
 // スキップ設定

@@ -9,6 +9,7 @@
 #include <gflib.h>
 
 #include "system/main.h"
+#include "sound/pm_sndsys.h"
 
 #include "cdemo_main.h"
 #include "cdemo_seq.h"
@@ -121,7 +122,7 @@ static const int CommandSize[] = {
 	3,		// 16: OBJ座標設定					COMM_OBJ_PUT, x, y,
 	2,		// 17: OBJとBGのプライオリティ設定	COMM_OBJ_BG_PRI_CHANGE, pri,
 
-  4,		//  CDEMOCOMM_BG_FRM_ANIME, gra, max, wait,
+  2,		//  CDEMOCOMM_BG_FRM_ANIME, wait,
 
 	2,		// 18: デバッグプリント				COMM_DEBUG_PRINT, id
 
@@ -496,6 +497,8 @@ static int Comm_BGMStop( CDEMO_WORK * wk, const int * comm )
 	bgm = Snd_NowBgmNoGet();
 	Snd_BgmStop( bgm, 0 );
 */
+	PMSND_StopBGM();
+
 	return CDEMOCOMM_RET_FALSE;
 }
 
@@ -522,6 +525,8 @@ static int Comm_BGMPlay( CDEMO_WORK * wk, const int * comm )
 		Snd_BgmPlay( comm[1] );
 	}
 */
+	PMSND_PlayBGM( comm[1] );
+
 	return CDEMOCOMM_RET_FALSE;
 }
 
@@ -595,20 +600,17 @@ static int Comm_ObjBgPriChange( CDEMO_WORK * wk, const int * comm )
 
 /*
 	0: コマンド
-	1: 開始番号
-	2: 枚数
-	3: ウェイト
+	1: ウェイト
 */
 static int Comm_BgScreenAnime( CDEMO_WORK * wk, const int * comm )
 {
 	GF_ASSERT_MSG( comm[0] == CDEMOCOMM_BG_FRM_ANIME, "COMM_BG_FRM_ANIME: comm[0] = %d\n", comm[0] );
 
-	wk->bgsa_chr  = NCGR_START_IDX + comm[1];
-	wk->bgsa_pal  = NCLR_START_IDX + comm[1];
-	wk->bgsa_scr  = NSCR_START_IDX + comm[1];
-	wk->bgsa_max  = comm[2];
+//	wk->bgsa_chr  = NCGR_START_IDX + comm[1];
+//	wk->bgsa_pal  = NCLR_START_IDX + comm[1];
+//	wk->bgsa_scr  = NSCR_START_IDX + comm[1];
 	wk->bgsa_num  = 0;
-	wk->bgsa_wait = comm[3];
+	wk->bgsa_wait = comm[1];
 	wk->bgsa_cnt  = 0;
 	wk->bgsa_load = 0;
 	wk->bgsa_seq  = 0;

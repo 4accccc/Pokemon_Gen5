@@ -23,6 +23,12 @@
 //============================================================================================
 #define	CDEMO_SKIP_KEY		(PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_START)		// スキップボタン
 
+typedef struct {
+	u16	arcID;					// アークＩＤ
+	u16	frmMax;					// フレーム数
+	u32	byteSize;				// バイトサイズ
+	u32	byteOffset;			// 転送開始オフセット
+}BGFRM_ANM_DATA;
 
 
 //============================================================================================
@@ -51,7 +57,13 @@ static const pCommDemoFunc MainSeq[] = {
 	MainSeq_Main,
 };
 
-
+// モード別データ
+static const BGFRM_ANM_DATA ModeData[] =
+{
+	{	ARCID_GF_LOGO_MOVIE, 134, 256*192*2, 0 },				// ゲームフリークロゴ
+	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2 },		// オープニングムービー１
+	{	ARCID_OP_DEMO2_MOVIE, 228, 256*192*2, 0 },			// オープニングムービー２
+};
 
 
 //--------------------------------------------------------------------------------------------
@@ -163,7 +175,7 @@ static int MainSeq_Init( CDEMO_WORK * wk )
 	CDEMOMAIN_VramBankSet();
 	CDEMOMAIN_BgInit( wk );
 
-	wk->gra_ah = GFL_ARC_OpenDataHandle( ARCID_CDEMO_DATA, HEAPID_COMMAND_DEMO ); 
+	wk->gra_ah = GFL_ARC_OpenDataHandle( ModeData[wk->dat->mode].arcID, HEAPID_COMMAND_DEMO ); 
 
 	// データロード
 	CDEMOMAIN_CommDataLoad( wk );
@@ -416,175 +428,22 @@ static int MainSeq_Main( CDEMO_WORK * wk )
 
 static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 {
-/*
-	switch( wk->bgsa_seq ){
-	case 0:
-		{
-			u32	i;
-			for( i=0; i<3; i++ ){
-				if( wk->bgsa_max > i ){
-					CDEMOMAIN_LoadBgGraphic( wk, wk->bgsa_chr, wk->bgsa_pal, wk->bgsa_scr, GFL_BG_FRAME0_M+i );
-					GFL_BG_SetPriority( GFL_BG_FRAME0_M+i, i );
-					wk->bgsa_chr++;
-					wk->bgsa_pal++;
-					wk->bgsa_scr++;
-					wk->bgsa_load++;
-				}else{
-					break;
-				}
-			}
-		}
-		wk->bgsa_num++;
-		wk->bgsa_seq = 1;
-//		break;
-
-	case 1:
-		if( wk->bgsa_cnt >= wk->bgsa_wait ){
-			if( wk->bgsa_num >= wk->bgsa_max ){
-				return CDEMOSEQ_MAIN_MAIN;
-			}
-			wk->bgsa_cnt = 0;
-			wk->bgsa_seq = 2;
-			break;
-		}
-		wk->bgsa_cnt++;
-		break;
-
-	case 2:
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M+(wk->bgsa_num%3), 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M+((wk->bgsa_num+1)%3), 1 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M+((wk->bgsa_num+2)%3), 2 );
-		wk->bgsa_num++;
-		wk->bgsa_seq = 3;
-//		break;
-
-	case 3:
-		if( wk->bgsa_cnt >= wk->bgsa_wait ){
-			if( wk->bgsa_num >= wk->bgsa_max ){
-				return CDEMOSEQ_MAIN_MAIN;
-			}
-			wk->bgsa_cnt = 0;
-			wk->bgsa_seq = 4;
-			break;
-		}
-		wk->bgsa_cnt++;
-		break;
-
-	case 4:
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M+(wk->bgsa_num%3), 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M+((wk->bgsa_num+1)%3), 1 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M+((wk->bgsa_num+2)%3), 2 );
-		if( wk->bgsa_load < wk->bgsa_max ){
-			CDEMOMAIN_LoadBgGraphic(
-				wk, wk->bgsa_chr, wk->bgsa_pal, wk->bgsa_scr, GFL_BG_FRAME0_M+((wk->bgsa_num+1)%3) );
-			wk->bgsa_chr++;
-			wk->bgsa_pal++;
-			wk->bgsa_scr++;
-			wk->bgsa_load++;
-		}
-		wk->bgsa_num++;
-		wk->bgsa_seq = 3;
-		break;
-	}
-*/
-
-/*
-	switch( wk->bgsa_seq ){
-	case 0:
-		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
-		wk->bgsa_seq = 1;
-
-	case 1:
-		{
-			void * buf;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_ld_arceus_ds_2_00000_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO );
-//			DC_FlushRange( buf, 256*192*2 );
-			if( ( wk->bgsa_load & 1 ) == 0 ){
-		    GX_LoadBG2Bmp( buf, 0, 256*192*2 );
-				GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
-				GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
-			}else{
-		    GX_LoadBG3Bmp( buf, 0, 256*192*2 );
-				GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );
-				GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
-			}
-			GFL_HEAP_FreeMemory( buf );
-		}
-		wk->bgsa_load++;
-		wk->bgsa_num += 2;
-		wk->bgsa_seq = 2;
-
-	case 2:
-		if( wk->bgsa_cnt >= wk->bgsa_wait ){
-			if( wk->bgsa_num >= wk->bgsa_max ){
-				return CDEMOSEQ_MAIN_MAIN;
-			}
-			wk->bgsa_cnt = 0;
-			wk->bgsa_seq = 1;
-			break;
-		}
-		wk->bgsa_cnt++;
-		break;
-	}
-*/
-
-/*
-	switch( wk->bgsa_seq ){
-	case 0:
-		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
-		wk->bgsa_seq = 1;
-
-	case 1:
-		{
-			void * buf;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_ld_arceus_ds_2_00000_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO );
-//			DC_FlushRange( buf, 256*192*2 );
-			if( ( wk->bgsa_load & 1 ) == 0 ){
-		    GX_LoadBG2Bmp( buf, 0, 256*192*2 );
-//		    MI_CpuCopy32( buf, (void*)G2_GetBG2ScrPtr(), 256*192*2 );
-				GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
-				GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
-			}else{
-		    GX_LoadBG3Bmp( buf, 0, 256*192*2 );
-//		    MI_CpuCopy32( buf, (void*)G2_GetBG3ScrPtr(), 256*192*2 );
-				GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );
-				GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
-			}
-//	    MI_CpuCopyFast( buf, (void*)G2_GetBG2ScrPtr(), 256*192*2 );
-			GFL_HEAP_FreeMemory( buf );
-		}
-		wk->bgsa_load++;
-		wk->bgsa_num += 2;
-		wk->bgsa_seq = 2;
-
-	case 2:
-		if( wk->bgsa_cnt >= wk->bgsa_wait ){
-			if( wk->bgsa_num >= wk->bgsa_max ){
-				return CDEMOSEQ_MAIN_MAIN;
-			}
-			wk->bgsa_cnt = 0;
-			wk->bgsa_seq = 1;
-			break;
-		}
-		wk->bgsa_cnt++;
-		break;
-	}
-*/
+	const BGFRM_ANM_DATA * dat = &ModeData[wk->dat->mode];
 
 	switch( wk->bgsa_seq ){
 	case 0:
 		{
 			void * buf;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin, TRUE, HEAPID_COMMAND_DEMO_L );
-			DC_FlushRange( buf, 256*170*2 );
-	    GX_LoadBG2Bmp( buf, 256*11*2, 256*170*2 );
+//			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin, TRUE, HEAPID_COMMAND_DEMO_L );
+			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, 0, TRUE, HEAPID_COMMAND_DEMO_L );
+			DC_FlushRange( buf, dat->byteSize );
+	    GX_LoadBG2Bmp( buf, dat->byteOffset, dat->byteSize );
 			GFL_HEAP_FreeMemory( buf );
 			wk->bgsa_num += 1;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
-			DC_FlushRange( buf, 256*170*2 );
-	    GX_LoadBG3Bmp( buf, 256*11*2, 256*170*2 );
+//			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
+			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
+			DC_FlushRange( buf, dat->byteSize );
+	    GX_LoadBG3Bmp( buf, dat->byteOffset, dat->byteSize );
 			GFL_HEAP_FreeMemory( buf );
 			wk->bgsa_num += 1;
 		}
@@ -595,7 +454,7 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 
 	case 1:
 		if( wk->bgsa_cnt >= wk->bgsa_wait ){
-			if( wk->bgsa_num >= wk->bgsa_max ){
+			if( wk->bgsa_num >= dat->frmMax ){
 				return CDEMOSEQ_MAIN_MAIN;
 			}
 			wk->bgsa_cnt = 0;
@@ -608,14 +467,15 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 	case 2:
 		GFL_BG_SetPriority( GFL_BG_FRAME2_M+(wk->bgsa_load&1), 0 );
 		GFL_BG_SetPriority( GFL_BG_FRAME2_M+((wk->bgsa_load+1)&1), 1 );
-		if( wk->bgsa_num < wk->bgsa_max ){
+		if( wk->bgsa_num < dat->frmMax ){
 			void * buf;
-			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
-			DC_FlushRange( buf, 256*170*2 );
+//			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
+			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
+			DC_FlushRange( buf, dat->byteSize );
 			if( ((wk->bgsa_load+1)&1) == 0 ){
-		    GX_LoadBG2Bmp( buf, 256*11*2, 256*170*2 );
+		    GX_LoadBG2Bmp( buf, dat->byteOffset, dat->byteSize );
 			}else{
-		    GX_LoadBG3Bmp( buf, 256*11*2, 256*170*2 );
+		    GX_LoadBG3Bmp( buf, dat->byteOffset, dat->byteSize );
 			}
 			GFL_HEAP_FreeMemory( buf );
 			wk->bgsa_num += 1;
@@ -625,7 +485,7 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 
 	case 3:
 		if( wk->bgsa_cnt >= wk->bgsa_wait ){
-			if( wk->bgsa_num >= wk->bgsa_max ){
+			if( wk->bgsa_num >= dat->frmMax ){
 				return CDEMOSEQ_MAIN_MAIN;
 			}
 			wk->bgsa_cnt = 0;
@@ -635,9 +495,6 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		wk->bgsa_cnt++;
 		break;
 	}
-
-
-
 
 	return CDEMOSEQ_MAIN_BG_SCRN_ANM;
 }

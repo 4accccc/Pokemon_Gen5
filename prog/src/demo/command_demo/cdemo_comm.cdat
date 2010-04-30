@@ -257,16 +257,14 @@ static const int CommandSize[] = {
 #endif
 
 // コマンドデータ
-static const int CommandData[] = {
+static const int CommandData_GFLogo[] = {
 
-//#if ( PM_VERSION == VERSION_BLACK )
-//#else
 	COMM_BLACK_IN,		1, 1,
-//	COMM_FADE_MAIN,
+	COMM_FADE_MAIN,
 
 	COMM_DEBUG_PRINT,   0,
 
-    COMM_BG_FRM_ANIME,  0, 752, 0,
+    COMM_BG_FRM_ANIME,  0,
 
 	COMM_DEBUG_PRINT,   1,
 
@@ -274,9 +272,59 @@ static const int CommandData[] = {
 
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
-//#endif
 
 	COMM_END,
+};
+
+// コマンドデータ
+static const int CommandData_OPMovie1[] = {
+
+	COMM_BLACK_IN,		1, 1,
+	COMM_FADE_MAIN,
+
+	COMM_DEBUG_PRINT,   0,
+
+    COMM_BG_FRM_ANIME,  0,
+
+	COMM_DEBUG_PRINT,   1,
+
+	COMM_WAIT,			32,
+
+	COMM_BLACK_OUT,		1, 1,
+	COMM_FADE_MAIN,
+
+	COMM_END,
+};
+
+// コマンドデータ
+static const int CommandData_OPMovie2[] = {
+
+    COMM_BGM_PLAY, SEQ_BGM_TITLE01,
+
+	COMM_BLACK_IN,		1, 1,
+//	COMM_FADE_MAIN,
+
+	COMM_DEBUG_PRINT,   0,
+
+    COMM_BG_FRM_ANIME,  0,
+
+	COMM_DEBUG_PRINT,   1,
+
+	COMM_WAIT,			32,
+
+	COMM_BLACK_OUT,		1, 1,
+	COMM_FADE_MAIN,
+
+    COMM_BGM_STOP,
+
+	COMM_END,
+};
+
+
+static const int * const CommandDataTable[] = {
+    CommandData_GFLogo,
+    CommandData_OPMovie1,
+    CommandData_OPMovie2,
 };
 
 
