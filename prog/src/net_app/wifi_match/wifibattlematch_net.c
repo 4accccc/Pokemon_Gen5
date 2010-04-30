@@ -127,6 +127,8 @@ typedef enum
   WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_START,
   WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_WAIT,
   WIFIBATTLEMATCH_SC_SEQ_EXIT,
+  WIFIBATTLEMATCH_SC_SEQ_END_TIMING_START,
+  WIFIBATTLEMATCH_SC_SEQ_END_TIMING_WAIT,
   WIFIBATTLEMATCH_SC_SEQ_END,
 } WIFIBATTLEMATCH_SC_SEQ;
 
@@ -150,7 +152,8 @@ typedef enum
 #define WIFIBATTLEMATCH_SC_RETURN_PLAYERDATA_TIMING   (2)
 #define WIFIBATTLEMATCH_SC_REPORT_TIMING              (3)
 #define WIFIBATTLEMATCH_SC_DIRTY_TIMING               (4)
-#define WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT        15
+#define WIFIBATTLEMATCH_SC_END_TIMING                 (5)
+#define WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT        (15)
 
 //-------------------------------------
 ///	その他
@@ -266,6 +269,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   GAMEDATA          *p_gamedata;
   s32               pid;
   DWCSvlResult      *p_svl_result;
+  s32               timing_no;
 
   //エラー
   WIFIBATTLEMATCH_NETERR_WORK error;
@@ -588,6 +592,33 @@ void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイミングとり
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	timing_no                         タイミングNO
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_StartTiming( WIFIBATTLEMATCH_NET_WORK *p_wk, int timing_no )
+{ 
+  p_wk->timing_no = timing_no;
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), p_wk->timing_no, WB_NET_WIFIMATCH);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同期待ち
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで同期をとった  FALSEでとっていない
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_WaitTiming( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  return GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),p_wk->timing_no,WB_NET_WIFIMATCH);
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1931,9 +1962,19 @@ BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
     case WIFIBATTLEMATCH_SC_SEQ_EXIT:
       DEBUG_NET_Printf( "SC:exit\n" );
       DwcRap_Sc_Finalize( p_wk );
-      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_END;
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_END_TIMING_START;
       break;
 
+    case WIFIBATTLEMATCH_SC_SEQ_END_TIMING_START:
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_SC_END_TIMING, WB_NET_WIFIMATCH);
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_END_TIMING_WAIT;
+      break;
+    case WIFIBATTLEMATCH_SC_SEQ_END_TIMING_WAIT:
+      if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_SC_END_TIMING,WB_NET_WIFIMATCH) )
+      { 
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_END;
+      }
+      break;
     case WIFIBATTLEMATCH_SC_SEQ_END:
       return TRUE;
     }

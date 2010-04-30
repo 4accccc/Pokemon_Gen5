@@ -239,6 +239,12 @@ extern void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //-------------------------------------
+///	ìØä˙
+//=====================================
+extern void WIFIBATTLEMATCH_NET_StartTiming( WIFIBATTLEMATCH_NET_WORK *p_wk, int timing_no );
+extern BOOL WIFIBATTLEMATCH_NET_WaitTiming( WIFIBATTLEMATCH_NET_WORK *p_wk );
+
+//-------------------------------------
 ///	ÉGÉâÅ[
 //=====================================
 extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_heavy );
