@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-22T13:19:19"/>
+	<create user="ohmori" host="W00223" date="2010-04-30T10:52:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -290,12 +290,12 @@
 
 	<row id="plc_power_s_01" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>そうぐうパワー　＋</comment>
-		<language name="JPN" width="256">やせいの　ポケモンと　すこし
+		<language name="JPN" width="256">やせいの　ポケモンと　少し
 そうぐうしやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンと　すこし
+		<language name="JPN_KANJI" width="256">野生の　ポケモンと　少し
 そうぐうしやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_02" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -303,9 +303,9 @@
 		<language name="JPN" width="256">やせいの　ポケモンと　とても
 そうぐうしやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンと　とても
+		<language name="JPN_KANJI" width="256">野生の　ポケモンと　とても
 そうぐうしやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_03" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -313,19 +313,19 @@
 		<language name="JPN" width="256">やせいの　ポケモンと　かなり
 そうぐうしやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンと　かなり
+		<language name="JPN_KANJI" width="256">野生の　ポケモンと　かなり
 そうぐうしやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_04" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>そうぐうパワー　ー</comment>
-		<language name="JPN" width="256">やせいの　ポケモンと　すこし
+		<language name="JPN" width="256">やせいの　ポケモンと　少し
 そうぐうしづらく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンと　すこし
+		<language name="JPN_KANJI" width="256">野生の　ポケモンと　少し
 そうぐうしづらく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_05" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -333,9 +333,9 @@
 		<language name="JPN" width="256">やせいの　ポケモンと　とても
 そうぐうしづらく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンと　とても
+		<language name="JPN_KANJI" width="256">野生の　ポケモンと　とても
 そうぐうしづらく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_06" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -343,19 +343,19 @@
 		<language name="JPN" width="256">やせいの　ポケモンと　かなり
 そうぐうしづらく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンと　かなり
+		<language name="JPN_KANJI" width="256">野生の　ポケモンと　かなり
 そうぐうしづらく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_07" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>たまごふかパワー　＋</comment>
 		<language name="JPN" width="256">あるいているときに　タマゴが
-すこし　かえりやすく　なります
+少し　かえりやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">あるいているときに　タマゴが
-すこし　かえりやすく　なります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">歩いているときに　タマゴが
+少し　かえりやすく　なります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_08" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -363,9 +363,9 @@
 		<language name="JPN" width="256">あるいているときに　タマゴが
 とても　かえりやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">あるいているときに　タマゴが
+		<language name="JPN_KANJI" width="256">歩いているときに　タマゴが
 とても　かえりやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_09" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -373,19 +373,19 @@
 		<language name="JPN" width="256">あるいているときに　タマゴが
 かなり　かえりやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">あるいているときに　タマゴが
+		<language name="JPN_KANJI" width="256">歩いているときに　タマゴが
 かなり　かえりやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>なつきパワー　＋</comment>
-		<language name="JPN" width="256">ポケモンが　すこし
+		<language name="JPN" width="256">ポケモンが　少し
 なつきやすく　なります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　すこし
+		<language name="JPN_KANJI" width="256">ポケモンが　少し
 なつきやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_11" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -395,7 +395,7 @@
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　とても
 なつきやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_12" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -405,7 +405,7 @@
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　かなり
 なつきやすく　なります
-こうかは　３ふん　です</language>
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_13" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -414,8 +414,8 @@
 １０％オフの　やすうりが　はじまります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">フレンドリィショップで
-１０％オフの　やすうりが　はじまります
-こうかは　３ふん　です</language>
+１０％オフの　安売りが　はじまります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_14" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -424,8 +424,8 @@
 ２５％オフの　やすうりが　はじまります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">フレンドリィショップで
-２５％オフの　やすうりが　はじまります
-こうかは　３ふん　です</language>
+２５％オフの　安売りが　はじまります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_15" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -434,68 +434,68 @@
 ５０％オフの　やすうりが　はじまります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">フレンドリィショップで
-５０％オフの　やすうりが　はじまります
-こうかは　３ふん　です</language>
+５０％オフの　安売りが　はじまります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_16" back-color=",,,#ffff80,,,,,,,,,,,,,,">
-		<comment>HPかいふくパワー　＋</comment>
+		<comment>HP回復パワー　＋</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
 そのばで　せんとうにいる　ポケモンの
 たいりょくが　すこし　かいふくします</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-たいりょくが　すこし　かいふくします</language>
+その場で　先頭にいる　ポケモンの
+体力が　少し　回復します</language>
 	</row>
 
 	<row id="plc_power_s_17" back-color=",,,#ffff80,,,,,,,,,,,,,,">
-		<comment>HPかいふくパワー　＋＋</comment>
+		<comment>HP回復パワー　＋＋</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
 そのばで　せんとうにいる　ポケモンの
 たいりょくが　とても　かいふくします</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-たいりょくが　とても　かいふくします</language>
+その場で　先頭にいる　ポケモンの
+体力が　とても　回復します</language>
 	</row>
 
 	<row id="plc_power_s_18" back-color=",,,#ffff80,,,,,,,,,,,,,,">
-		<comment>HPかいふくパワー　＋＋＋</comment>
+		<comment>HP回復パワー　＋＋＋</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
 そのばで　せんとうにいる　ポケモンの
 たいりょくが　かなり　かいふくします</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-たいりょくが　かなり　かいふくします</language>
+その場で　先頭にいる　ポケモンの
+体力が　かなり　回復します</language>
 	</row>
 
 	<row id="plc_power_s_19" back-color=",,,#ffff80,,,,,,,,,,,,,,">
-		<comment>PPかいふくパワー　＋</comment>
+		<comment>PP回復パワー　＋</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
 そのばで　せんとうにいる　ポケモンの
 ＰＰが　すこし　かいふくします</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-ＰＰが　すこし　かいふくします</language>
+その場で　先頭にいる　ポケモンの
+ＰＰが　少し　回復します</language>
 	</row>
 
 	<row id="plc_power_s_20" back-color=",,,#ffff80,,,,,,,,,,,,,,">
-		<comment>PPかいふくパワー　＋＋</comment>
+		<comment>PP回復パワー　＋＋</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
 そのばで　せんとうにいる　ポケモンの
 ＰＰが　とても　かいふくします</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-ＰＰが　とても　かいふくします</language>
+その場で　先頭にいる　ポケモンの
+ＰＰが　とても　回復します</language>
 	</row>
 
 	<row id="plc_power_s_21" back-color=",,,#ffff80,,,,,,,,,,,,,,">
-		<comment>PPかいふくパワー　＋＋＋</comment>
+		<comment>PP回復パワー　＋＋＋</comment>
 		<language name="JPN" width="256">このパワーを　うけとると
 そのばで　せんとうにいる　ポケモンの
 ＰＰが　かなり　かいふくします</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-そのばで　せんとうにいる　ポケモンの
-ＰＰが　かなり　かいふくします</language>
+その場で　先頭にいる　ポケモンの
+ＰＰが　かなり　回復します</language>
 	</row>
 
 	<row id="plc_power_s_22" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -503,9 +503,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 すこし　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-すこし　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+少し　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_23" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -513,9 +513,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 とても　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-とても　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+とても　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_24" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -523,9 +523,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 かなり　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-かなり　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+かなり　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_25" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -533,9 +533,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 すこし　へります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-すこし　へります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+少し　減ります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_26" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -543,9 +543,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 とても　へります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-とても　へります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+とても　減ります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_27" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -553,19 +553,19 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 かなり　へります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-かなり　へります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+かなり　減ります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_28" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>おこづかいパワー　＋</comment>
 		<language name="JPN" width="256">たたかったあと　もらえる　おこづかいが
-すこし　あがります
+少し　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　おこづかいが
-すこし　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　おこづかいが
+少し　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_29" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -573,9 +573,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　おこづかいが
 とても　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　おこづかいが
-とても　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　おこづかいが
+とても　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_30" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -583,19 +583,19 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　おこづかいが
 かなり　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　おこづかいが
-かなり　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　おこづかいが
+かなり　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_31" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>ほかくパワー　＋</comment>
 		<language name="JPN" width="256">ポケモンを　ほかくする　かくりつが
-すこし　あがります
+少し　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　かくりつが
-すこし　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　確率が
+少し　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_32" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -603,9 +603,9 @@
 		<language name="JPN" width="256">ポケモンを　ほかくする　かくりつが
 とても　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　かくりつが
-とても　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　確率が
+とても　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_33" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -613,9 +613,9 @@
 		<language name="JPN" width="256">ポケモンを　ほかくする　かくりつが
 かなり　あがります
 こうかは　３ふん　です</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　かくりつが
-かなり　あがります
-こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　確率が
+かなり　上がります
+効果は　３分　です</language>
 	</row>
 
 	<row id="plc_power_s_34" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -623,9 +623,9 @@
 		<language name="JPN" width="256">あるいているときに　タマゴが
 かなり　かえりやすく　なります
 こうかは　３０ふん　です</language>
-		<language name="JPN_KANJI" width="256">あるいているときに　タマゴが
+		<language name="JPN_KANJI" width="256">歩いているときに　タマゴが
 かなり　かえりやすく　なります
-こうかは　３０ふん　です</language>
+効果は　３０分　です</language>
 	</row>
 
 	<row id="plc_power_s_35" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -634,8 +634,8 @@
 ５０％オフの　やすうりが　はじまります
 こうかは　３０ふん　です</language>
 		<language name="JPN_KANJI" width="256">フレンドリィショップで
-５０％オフの　やすうりが　はじまります
-こうかは　３０ふん　です</language>
+５０％オフの　安売りが　はじまります
+効果は　３０分　です</language>
 	</row>
 
 	<row id="plc_power_s_36" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -645,7 +645,7 @@
 こうかは　３０ふん　です</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　かなり
 なつきやすく　なります
-こうかは　３０ふん　です</language>
+効果は　３０分　です</language>
 	</row>
 
 	<row id="plc_power_s_37" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -653,9 +653,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 かなり　あがります
 こうかは　３０ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-かなり　あがります
-こうかは　３０ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+かなり　上がります
+効果は　３０分　です</language>
 	</row>
 
 	<row id="plc_power_s_38" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -663,9 +663,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　おこづかいが
 かなり　あがります
 こうかは　３０ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　おこづかいが
-かなり　あがります
-こうかは　３０ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　おこづかいが
+かなり　上がります
+効果は　３０分　です</language>
 	</row>
 
 	<row id="plc_power_s_39" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -673,9 +673,9 @@
 		<language name="JPN" width="256">ポケモンを　ほかくする　かくりつが
 かなり　あがります
 こうかは　３０ふん　です</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　かくりつが
-かなり　あがります
-こうかは　３０ふん　です</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　確率が
+かなり　上がります
+効果は　３０分　です</language>
 	</row>
 
 	<row id="plc_power_s_40" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -684,8 +684,8 @@
 てもちにいる　すべての　ポケモンが
 ぜんかい　します</language>
 		<language name="JPN_KANJI" width="256">このパワーを　うけとると
-てもちにいる　すべての　ポケモンが
-ぜんかい　します</language>
+手持ちにいる　全ての　ポケモンが
+全快します</language>
 	</row>
 
 	<row id="plc_power_s_41" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -693,9 +693,9 @@
 		<language name="JPN" width="256">あるいているときに　タマゴが
 かなり　かえりやすく　なります
 こうかは　６０ふん　です</language>
-		<language name="JPN_KANJI" width="256">あるいているときに　タマゴが
+		<language name="JPN_KANJI" width="256">歩いているときに　タマゴが
 かなり　かえりやすく　なります
-こうかは　６０ふん　です</language>
+効果は　６０分　です</language>
 	</row>
 
 	<row id="plc_power_s_42" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -704,8 +704,8 @@
 ５０％オフの　やすうりが　はじまります
 こうかは　６０ふん　です</language>
 		<language name="JPN_KANJI" width="256">フレンドリィショップで
-５０％オフの　やすうりが　はじまります
-こうかは　６０ふん　です</language>
+５０％オフの　安売りが　はじまります
+効果は　６０分　です</language>
 	</row>
 
 	<row id="plc_power_s_43" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -715,7 +715,7 @@
 こうかは　６０ふん　です</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　かなり
 なつきやすく　なります
-こうかは　６０ふん　です</language>
+効果は　６０分　です</language>
 	</row>
 
 	<row id="plc_power_s_44" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -723,9 +723,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　けいけんちが
 かなり　あがります
 こうかは　６０ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　けいけんちが
-かなり　あがります
-こうかは　６０ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　経験値が
+かなり　上がります
+効果は　６０分　です</language>
 	</row>
 
 	<row id="plc_power_s_45" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -733,9 +733,9 @@
 		<language name="JPN" width="256">たたかったあと　もらえる　おこづかいが
 かなり　あがります
 こうかは　６０ふん　です</language>
-		<language name="JPN_KANJI" width="256">たたかったあと　もらえる　おこづかいが
-かなり　あがります
-こうかは　６０ふん　です</language>
+		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　おこづかいが
+かなり　上がります
+効果は　６０分　です</language>
 	</row>
 
 	<row id="plc_power_s_46" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -743,9 +743,9 @@
 		<language name="JPN" width="256">ポケモンを　ほかくする　かくりつが
 かなり　あがります
 こうかは　６０ふん　です</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　かくりつが
-かなり　あがります
-こうかは　６０ふん　です</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　確率が
+かなり　上がります
+効果は　６０分　です</language>
 	</row>
 
 	<row id="plc_power_s_47" back-color=",,,#c0c0c0,,,,,,,,,,,,,,">
