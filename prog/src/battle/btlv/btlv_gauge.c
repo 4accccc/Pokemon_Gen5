@@ -39,16 +39,6 @@
 #define BTLV_GAUGE_CLWK_MAX ( BTLV_MCSS_POS_MAX )              //ゲージCLWKのMAX値
 #define BTLV_GAUGE_CLUNIT_CLWK_MAX ( BTLV_MCSS_POS_MAX * 5 )   //CLUNITを生成するときのCLWKのMAX値
 
-///1キャラの中に入っているゲージのドット数
-#define BTLV_GAUGE_DOTTO      (8)
-
-///HPバーのキャラ数
-#define BTLV_GAUGE_HP_CHARMAX   (6)
-///EXPバーのキャラ数
-#define BTLV_GAUGE_EXP_CHARMAX  (10)
-
-///HPゲージのドット数
-#define BTLV_GAUGE_HP_DOTTOMAX  ( BTLV_GAUGE_DOTTO * BTLV_GAUGE_HP_CHARMAX )
 
 ///作業用ワークの初期値として使用
 #define BTLV_GAUGE_HP_WORK_INIT_VALUE (-2147483648)

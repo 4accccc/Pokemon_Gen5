@@ -353,6 +353,7 @@
 #define BTLEFF_MIGAWARI_ON      ( 1 )   // みがわりON
 
 //なきごえ
+#define BTLEFF_NAKIGOE_PINCH_PITCH  ( 0x80000000 )    //ピンチかどうかチェックしてピッチを変化
 #define BTLEFF_NAKIGOE_NORMAL   ( 0 ) //正再生
 #define BTLEFF_NAKIGOE_REVERSE  ( 1 ) //逆再生
 

@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 
+#include "poke_tool/gauge_tool.h"
 #include "system/gfl_use.h"
 #include "system/mcss_tool.h"
 #include "sound/pm_voice.h"
@@ -39,6 +40,8 @@
 
 #define BTLV_MCSS_NO_INDEX  ( -1 )
 
+#define BTLV_MCSS_PINCH_PITCH ( -5120 )
+
 enum{
   REVERSE_FLAG_OFF = 0,
   REVERSE_FLAG_ON,
@@ -65,6 +68,7 @@ typedef struct
   int form_no;
   u32 personal_rnd;
   u16 weight;
+  u16 appear_hp_color;    //登場時のHPバーカラー
 }BTLV_MCSS_PARAM;
 
 struct  _BTLV_MCSS
@@ -439,6 +443,12 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
     bmw->btlv_mcss[ index ].param.form_no = PP_Get( pp, ID_PARA_form_no, NULL );
     bmw->btlv_mcss[ index ].param.weight = POKETOOL_GetPersonalParam( bmw->btlv_mcss[ index ].param.mons_no,
                                                                 bmw->btlv_mcss[ index ].param.form_no, POKEPER_ID_weight );
+  }
+  //登場時のHPバーカラーを取得
+  { 
+    int hp    = PP_Get( pp, ID_PARA_hp, NULL );
+    int hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
+    bmw->btlv_mcss[ index ].param.appear_hp_color = GAUGETOOL_GetHPGaugeDottoColor( hp, hpmax, BTLV_GAUGE_HP_DOTTOMAX );
   }
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
@@ -1186,6 +1196,22 @@ u16  BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
+ * @brief 指定された立ち位置のMCSSのHP初期カラーデータを取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ *
+ */
+//============================================================================================
+u16  BTLV_MCSS_GetHPColor( BTLV_MCSS_WORK *bmw, int position )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  return bmw->btlv_mcss[ index ].param.appear_hp_color;
+}
+
+//============================================================================================
+/**
  * @brief 指定された立ち位置のstatus_flagを取得
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
@@ -1441,6 +1467,19 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
     if( ( chorus_vol ) || ( chorus_speed ) )
     {
       chorus = TRUE;
+    }
+
+    //ピンチかどうかチェックしてピッチを変化
+    if( pitch == BTLEFF_NAKIGOE_PINCH_PITCH )
+    { 
+      if( bmw->btlv_mcss[ index ].param.appear_hp_color == GAUGETOOL_HP_DOTTO_RED )
+      { 
+        pitch = BTLV_MCSS_PINCH_PITCH;
+      }
+      else
+      { 
+        pitch = 0;
+      }
     }
 
     playerIndex = PMVOICE_Play( bmw->btlv_mcss[ index ].param.mons_no, bmw->btlv_mcss[ index ].param.form_no,

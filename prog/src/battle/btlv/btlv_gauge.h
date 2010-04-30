@@ -16,6 +16,15 @@
 #include "../btl_main.h"
 #include "../btl_pokeparam.h"
 
+///1キャラの中に入っているゲージのドット数
+#define BTLV_GAUGE_DOTTO      (8)
+
+///HPバーのキャラ数
+#define BTLV_GAUGE_HP_CHARMAX   (6)
+///EXPバーのキャラ数
+#define BTLV_GAUGE_EXP_CHARMAX  (10)
+///HPゲージのドット数
+#define BTLV_GAUGE_HP_DOTTOMAX  ( BTLV_GAUGE_DOTTO * BTLV_GAUGE_HP_CHARMAX )
 
 typedef enum
 {
