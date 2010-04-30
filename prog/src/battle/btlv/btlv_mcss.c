@@ -1472,7 +1472,7 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
     //ピンチかどうかチェックしてピッチを変化
     if( pitch == BTLEFF_NAKIGOE_PINCH_PITCH )
     { 
-      if( bmw->btlv_mcss[ index ].param.appear_hp_color == GAUGETOOL_HP_DOTTO_RED )
+      if( bmw->btlv_mcss[ index ].param.appear_hp_color == GAUGETOOL_HP_DOTTO_YELLOW )
       { 
         pitch = BTLV_MCSS_PINCH_PITCH;
       }

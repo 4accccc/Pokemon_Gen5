@@ -1910,7 +1910,7 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       {
         u8  color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
 
-        if( ( color == GAUGETOOL_HP_DOTTO_RED ) || ( color == GAUGETOOL_HP_DOTTO_NULL ) )
+        if( color == GAUGETOOL_HP_DOTTO_RED )
         {
           pinch_flag = TRUE;
         }
