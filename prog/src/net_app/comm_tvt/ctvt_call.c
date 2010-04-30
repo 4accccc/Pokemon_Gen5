@@ -398,7 +398,7 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   GFL_BMPWIN_Delete( callWork->msgWin );
   if( callWork->timeIcon != NULL )
   {
-    TILEICON_Exit( callWork->timeIcon );
+    TIMEICON_Exit( callWork->timeIcon );
     callWork->timeIcon = NULL;
   }
   GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
@@ -666,7 +666,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
         if( callWork->timeIcon != NULL )
         {
-          TILEICON_Exit( callWork->timeIcon );
+          TIMEICON_Exit( callWork->timeIcon );
           callWork->timeIcon = NULL;
         }
 
@@ -1595,7 +1595,7 @@ static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *c
 
       if( callWork->timeIcon != NULL )
       {
-        TILEICON_Exit( callWork->timeIcon );
+        TIMEICON_Exit( callWork->timeIcon );
         callWork->timeIcon = NULL;
       }
       BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
@@ -1663,7 +1663,7 @@ static void CTVT_CALL_DispCallMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *cal
   callWork->reqDispTimeIcon = FALSE;
   if( callWork->timeIcon != NULL )
   {
-    TILEICON_Exit( callWork->timeIcon );
+    TIMEICON_Exit( callWork->timeIcon );
     callWork->timeIcon = NULL;
   }
 

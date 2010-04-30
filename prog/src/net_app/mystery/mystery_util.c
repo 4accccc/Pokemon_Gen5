@@ -454,7 +454,7 @@ void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
   }
   if( p_wk->p_time )
   { 
-    TILEICON_Exit( p_wk->p_time );
+    TIMEICON_Exit( p_wk->p_time );
     p_wk->p_time  = NULL;
   }
   if( p_wk->p_keycursor )
@@ -651,7 +651,7 @@ void MYSTERY_TEXT_EndWait( MYSTERY_TEXT_WORK *p_wk )
   p_wk->is_end_print  = TRUE;
   if( p_wk->p_time )
   { 
-    TILEICON_Exit( p_wk->p_time );
+    TIMEICON_Exit( p_wk->p_time );
     p_wk->p_time  = NULL;
 
     //タイムアイコンのあとはスクリーンが壊れているため、再転送

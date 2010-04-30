@@ -1115,7 +1115,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         BattleRec_DataDecoded();
 
         // タイマーアイコン
-        TILEICON_Exit( work->timeicon_wk );
+        TIMEICON_Exit( work->timeicon_wk );
         
         if( work->battle_rec_new_save_result == SAVE_RESULT_OK )  // セーブ正常終了
         {
@@ -1258,7 +1258,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           if( ret )
           {
             // タイマーアイコン
-            TILEICON_Exit( work->timeicon_wk );
+            TIMEICON_Exit( work->timeicon_wk );
           }
         }
         if( ret )  // 相手待ち終了

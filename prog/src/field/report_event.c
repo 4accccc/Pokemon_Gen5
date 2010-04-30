@@ -297,7 +297,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
         WORDSET_Delete( wset );
       }
       SetReportMsgBuff( wk );
-      TILEICON_Exit( wk->local->timeIcon );
+      TIMEICON_Exit( wk->local->timeIcon );
       *seq = REPORT_SEQ_RESULT_OK_WAIT;
 */
       *seq = REPORT_SEQ_RESULT_OK_BAR_WAIT;
@@ -308,7 +308,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       ResetReportBgAnime( wk );
 			ResetReportPlayerAnime( wk );
 			SetReportMsg( wk, msg_common_report_06 );
-			TILEICON_Exit( wk->local->timeIcon );
+			TIMEICON_Exit( wk->local->timeIcon );
 			PMSND_StopSE();
 			*seq = REPORT_SEQ_RESULT_NG_WAIT;
 			break;
@@ -332,7 +332,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
         WORDSET_Delete( wset );
       }
       SetReportMsgBuff( wk );
-      TILEICON_Exit( wk->local->timeIcon );
+      TIMEICON_Exit( wk->local->timeIcon );
       *seq = REPORT_SEQ_RESULT_OK_WAIT;
     }
     break;

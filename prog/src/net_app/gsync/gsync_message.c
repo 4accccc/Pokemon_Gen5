@@ -191,7 +191,7 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
   int i;
   
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   if(pWork->infoDispWin){
@@ -332,7 +332,7 @@ BOOL GSYNC_MESSAGE_InfoMessageEndCheck(GSYNC_MESSAGE_WORK* pWork)
 void GSYNC_MESSAGE_InfoMessageEnd(GSYNC_MESSAGE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
@@ -609,7 +609,7 @@ void GSYNC_MESSAGE_DispClear(GSYNC_MESSAGE_WORK* pWork)
 void GSYNC_MESSAGE_WindowTimeIconStart(GSYNC_MESSAGE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   pWork->pTimeIcon =

@@ -189,7 +189,7 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   
   if( msgWork->timeIcon != NULL )
   {
-    TILEICON_Exit( msgWork->timeIcon );
+    TIMEICON_Exit( msgWork->timeIcon );
     msgWork->timeIcon = NULL;
   }
 
@@ -375,7 +375,7 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
   
   if( msgWork->timeIcon != NULL )
   {
-    TILEICON_Exit( msgWork->timeIcon );
+    TIMEICON_Exit( msgWork->timeIcon );
     msgWork->timeIcon = NULL;
   }
   //ˆê‰žƒfƒtƒH‚ÍÁ‚µ‚Ä‚¨‚­
@@ -438,7 +438,7 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
   
   if( msgWork->timeIcon != NULL )
   {
-    TILEICON_Exit( msgWork->timeIcon );
+    TIMEICON_Exit( msgWork->timeIcon );
     msgWork->timeIcon = NULL;
   }
 
@@ -497,7 +497,7 @@ void MB_MSG_MessageHide( MB_MSG_WORK *msgWork )
 
   if( msgWork->timeIcon != NULL )
   {
-    TILEICON_Exit( msgWork->timeIcon );
+    TIMEICON_Exit( msgWork->timeIcon );
     msgWork->timeIcon = NULL;
   }
 

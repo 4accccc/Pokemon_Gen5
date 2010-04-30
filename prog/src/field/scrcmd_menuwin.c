@@ -563,7 +563,7 @@ static void sysWin_Close( SCRCMD_WORK *work )
     {
       timeIcon = SCRCMD_WORK_GetTimeIconPtr( work );
       if( timeIcon ){
-        TILEICON_Exit( timeIcon );
+        TIMEICON_Exit( timeIcon );
         SCRCMD_WORK_SetTimeIconPtr( work, NULL );
       }
     }
@@ -755,7 +755,7 @@ VMCMD_RESULT EvCmdSysWinTimeIcon( VMHANDLE *core, void *wk )
   timeIcon = (TIMEICON_WORK*)SCRCMD_WORK_GetTimeIconPtr( work );
   if( timeIcon ){
     // ”jŠü
-    TILEICON_Exit( timeIcon );
+    TIMEICON_Exit( timeIcon );
     SCRCMD_WORK_SetTimeIconPtr( work, NULL );
   }
 

@@ -164,7 +164,7 @@ static GFL_BMPWIN* _BmpWinDel(GFL_BMPWIN* pBmpWin)
 static void _timeWaitIconDel(WIFIP2PMATCH_WORK *wk)
 {
   if(wk->pTimeIcon){
-    TILEICON_Exit(wk->pTimeIcon);
+    TIMEICON_Exit(wk->pTimeIcon);
     wk->pTimeIcon=NULL;
   }
 //  wk->MsgWin = _BmpWinDel(wk->MsgWin);
@@ -1766,7 +1766,7 @@ static void _Menu_RegulationDelete(WIFIP2PMATCH_WORK* wk)
 void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk)
 {
   if(wk->pTimeIcon){
-    TILEICON_Exit(wk->pTimeIcon);
+    TIMEICON_Exit(wk->pTimeIcon);
     wk->pTimeIcon=NULL;
   }
   wk->pTimeIcon =

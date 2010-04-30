@@ -655,7 +655,7 @@ void INTRO_MSG_InitTimeIcon( INTRO_MSG_WORK* wk )
 void INTRO_MSG_ExitTimeIcon( INTRO_MSG_WORK* wk )
 {
 	if( wk->timeicon != NULL ){
-		TILEICON_Exit( wk->timeicon );
+		TIMEICON_Exit( wk->timeicon );
 		wk->timeicon = NULL;
 	}
 }

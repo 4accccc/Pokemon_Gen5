@@ -181,7 +181,7 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
 {
   if( pWork->timeIcon )
   { 
-    TILEICON_Exit( pWork->timeIcon );
+    TIMEICON_Exit( pWork->timeIcon );
     pWork->timeIcon = NULL;
   }
 
@@ -287,7 +287,7 @@ void WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(WIFILOGIN_MESSAGE_WORK* pWork,int
 
   if( pWork->timeIcon )
   { 
-    TILEICON_Exit( pWork->timeIcon );
+    TIMEICON_Exit( pWork->timeIcon );
     pWork->timeIcon = NULL;
   }
 
@@ -330,7 +330,7 @@ void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 {
   if( pWork->timeIcon )
   { 
-    TILEICON_Exit( pWork->timeIcon );
+    TIMEICON_Exit( pWork->timeIcon );
     pWork->timeIcon = NULL;
   }
 

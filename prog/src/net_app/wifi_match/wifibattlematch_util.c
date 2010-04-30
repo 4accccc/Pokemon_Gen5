@@ -129,7 +129,7 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
 
   if( p_wk->p_time )
   { 
-    TILEICON_Exit( p_wk->p_time );
+    TIMEICON_Exit( p_wk->p_time );
     p_wk->p_time  = NULL;
   }
   if( p_wk->p_keycursor )
@@ -312,7 +312,7 @@ void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk )
   p_wk->is_end_print  = TRUE;
   if( p_wk->p_time )
   { 
-    TILEICON_Exit( p_wk->p_time );
+    TIMEICON_Exit( p_wk->p_time );
     p_wk->p_time  = NULL;
 
     //タイムアイコンのあとはスクリーンが壊れているため、再転送

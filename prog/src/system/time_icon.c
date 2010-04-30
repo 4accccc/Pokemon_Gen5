@@ -224,7 +224,7 @@ void TIMEICON_StartEz( TIMEICON_WORK * wk, GFL_TCBSYS * tcbsys, GFL_BMPWIN * msg
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void TILEICON_Exit( TIMEICON_WORK * wk )
+void TIMEICON_Exit( TIMEICON_WORK * wk )
 {
 	// Ez‚Å‰Šú‰»‚µ‚½‚¾‚¯‚Ìê‡
 	if( wk->tcb == NULL && wk->tcbl == NULL ){

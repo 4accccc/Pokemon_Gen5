@@ -125,7 +125,7 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   }
   if( msgWork->timeIcon != NULL )
   {
-    TILEICON_Exit( msgWork->timeIcon );
+    TIMEICON_Exit( msgWork->timeIcon );
   }
 
   APP_KEYCURSOR_Delete( msgWork->cursorWork );
@@ -279,7 +279,7 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   
   if( msgWork->timeIcon != NULL )
   {
-    TILEICON_Exit( msgWork->timeIcon );
+    TIMEICON_Exit( msgWork->timeIcon );
     msgWork->timeIcon = NULL;
   }
   

@@ -99,7 +99,7 @@ extern void TIMEICON_StartEz(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void TILEICON_Exit( TIMEICON_WORK * wk );
+extern void TIMEICON_Exit( TIMEICON_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

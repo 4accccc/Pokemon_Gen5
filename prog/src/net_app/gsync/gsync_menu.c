@@ -350,7 +350,7 @@ static void _createSubBg(GAMESYNC_MENU* pWork)
 static void _MESSAGE_WindowTimeIconStart(GAMESYNC_MENU* pWork)
 {
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   pWork->pTimeIcon =
@@ -1038,7 +1038,7 @@ static void _YesNoStart(GAMESYNC_MENU* pWork)
 static void _infoMessageDispClear(GAMESYNC_MENU* pWork)
 {
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
@@ -1429,7 +1429,7 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
 

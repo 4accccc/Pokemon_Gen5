@@ -349,7 +349,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     break;
 
   case GAMECLEAR_SEQ_MSG_SAVEEND:
-    TILEICON_Exit( wk->TimeIconWork );
+    TIMEICON_Exit( wk->TimeIconWork );
     if (wk->otherSaveExist==FALSE && wk->saveSuccessFlag) {
       //「レポートをかきました」
       scr_msg_print( wk, msg_gameclear_report_02, 0, 0 );

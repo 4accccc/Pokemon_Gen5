@@ -462,7 +462,7 @@ static void _PaletteFade(IRC_BATTLE_MENU* pWork,BOOL bFade)
 static void _MESSAGE_WindowTimeIconStart(IRC_BATTLE_MENU* pWork)
 {
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   pWork->pTimeIcon =
@@ -480,7 +480,7 @@ static void _MESSAGE_WindowTimeIconStart(IRC_BATTLE_MENU* pWork)
 static void _infoMessageDispClear(IRC_BATTLE_MENU* pWork)
 {
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
@@ -2144,7 +2144,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   pParentWork->bBattelBox = pWork->bBattelBox;
 
   if(pWork->pTimeIcon){
-    TILEICON_Exit(pWork->pTimeIcon);
+    TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
   

@@ -3070,7 +3070,7 @@ static void VIEW_EndTimeIcon( WIFI_BSUBWAY_VIEW* p_wk )
 {
   if( p_wk->p_timeicon )
   {
-    TILEICON_Exit( p_wk->p_timeicon );
+    TIMEICON_Exit( p_wk->p_timeicon );
     p_wk->p_timeicon =NULL;
   }
 }

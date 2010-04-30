@@ -221,7 +221,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
   case SEQ_MIC_INIT_WAIT: // ƒ}ƒCƒN€”õ‘Ò‚¿
     SND_MIC_Main();
     if( SND_MIC_IsAmpOnWaitFlag() == TRUE ){
-      TILEICON_Exit( wk->timeIcon );
+      TIMEICON_Exit( wk->timeIcon );
 //      PMSND_PauseBGM( TRUE );
       FLDMSGWIN_STREAM_ClearMessage( wk->msgWin );
       FLDMSGWIN_STREAM_PrintStart( wk->msgWin, 0, 0, perap_msg_01 );
