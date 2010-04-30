@@ -180,7 +180,7 @@ extern void FLDMAPPER_GetBlockXZPos( const FLDMAPPER * g3Dmapper, u32 * blockx, 
 //--------------------------------------------------------------
 //テクスチャリソースを進入用のカラーに変更する
 //--------------------------------------------------------------
-extern BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, int gray_scale);
+extern BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, u8* gray_scale);
 
 
 //--------------------------------------------------------------

@@ -1360,7 +1360,7 @@ void PaletteGrayScaleFlip(u16* pal, int pal_size)
 
 //--------------------------------------------------------------
 /**
- * @brief グレースケール化(パレス白用)
+ * @brief グレースケール化(パレス用テーブル私)
  *
  * @param pal       変更対象パレットデータ
  * @param pal_size    変更サイズ(何色変更するか)
@@ -1369,18 +1369,10 @@ void PaletteGrayScaleFlip(u16* pal, int pal_size)
  *
  */
 //--------------------------------------------------------------
-void PaletteGrayScalePalaceWhite(u16* pal, int pal_size)
+void PaletteGrayScaleShadeTable(u16* pal, int pal_size, u8* shade_table )
 {
   int i, r, g, b;
   u32 c;
-
-  static u8 whiteRate[32] = 
-  {
-     27, 26, 27, 26, 27, 26, 27, 26,
-     27, 26, 27, 26, 27, 26, 27, 26,
-     27, 26, 27, 26, 27, 26, 27, 26,
-     27, 26, 27, 26, 27, 26, 27, 26,
-  };
 
   for(i = 0; i < pal_size; i++)
   {
@@ -1388,43 +1380,7 @@ void PaletteGrayScalePalaceWhite(u16* pal, int pal_size)
     g = ((*pal) >> 5) & 0x1f;
     b = ((*pal) >> 10) & 0x1f;
 
-    c = whiteRate[RGBtoY(r,g,b)];
-    
-    *pal = (u16)((c<<10)|(c<<5)|c);
-    pal++;
-  }
-}
-//--------------------------------------------------------------
-/**
- * @brief グレースケール化(パレス黒用)
- *
- * @param pal       変更対象パレットデータ
- * @param pal_size    変更サイズ(何色変更するか)
- *
- * @retval  none
- *
- */
-//--------------------------------------------------------------
-void PaletteGrayScalePalaceBlack(u16* pal, int pal_size)
-{
-  int i, r, g, b;
-  u32 c;
-
-  static u8 blackRate[32] = 
-  {
-     9, 10, 9, 10, 9, 10, 9, 10,
-     9, 10, 9, 10, 9, 10, 9, 10,
-     9, 10, 9, 10, 9, 10, 9, 10,
-     9, 10, 9, 10, 9, 10, 9, 10,
-  };
-
-  for(i = 0; i < pal_size; i++)
-  {
-    r = (*pal) & 0x1f;
-    g = ((*pal) >> 5) & 0x1f;
-    b = ((*pal) >> 10) & 0x1f;
-
-    c = blackRate[RGBtoY(r,g,b)];
+    c = shade_table[RGBtoY(r,g,b)];
     
     *pal = (u16)((c<<10)|(c<<5)|c);
     pal++;

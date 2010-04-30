@@ -87,6 +87,7 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
+#include "field_palace_sys.h"
 
 #include "field_sound.h"
 
@@ -319,6 +320,7 @@ struct _FIELDMAP_WORK
 	FIELD_ENCOUNT *encount;
 	FLDEFF_CTRL *fldeff_ctrl;
 	UNION_EFF_SYSTEM *union_eff;    //ユニオンエフェクト制御システム
+  FIELD_PALACE_SYS *palace_sys;  //侵入系ワーク
 
 	FIELDSKILL_MAPEFF * fieldskill_mapeff;
   
@@ -693,6 +695,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     SET_CHECK("setup: nogrid mapper");  //デバッグ：処理負荷計測
     // NOGRIDマッパー生成
     fieldWork->nogridMapper = FLDNOGRID_MAPPER_Create( fieldWork->heapID, fieldWork->camera_control, fieldWork->sceneArea, fieldWork->sceneAreaLoader );
+    
+    //進入用グレースケール管理作成
+    fieldWork->palace_sys = FIELD_PALACE_Create( fieldWork->heapID, gsys , fieldWork , fieldWork->map_id );
 
     SET_CHECK("setup: fldmapper");  //デバッグ：処理負荷計測
     {
@@ -706,10 +711,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
       //ここで配置モデルリストをセットする
       {
-        GRAYSCALE_TYPE gray_scale;
+        u8 *gray_scale;
         GAME_COMM_SYS_PTR game_comm;
         game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
-        gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
+        gray_scale  = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
         FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata, gray_scale);
       }
     }
@@ -728,21 +733,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     
     //マップデータ登録
     {
-      GRAYSCALE_TYPE gray_scale;
+      u8 *gray_scale;
       GAME_COMM_SYS_PTR game_comm;
       game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
-      gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
-#if PM_DEBUG
-      if( DEBUG_FLG_GetFlg( DEBUG_FLG_BlackTexture ) == TRUE )
-      {
-        gray_scale = GRAYSCALE_TYPE_BLACK;
-      }
-      else
-      if( DEBUG_FLG_GetFlg( DEBUG_FLG_WhiteTexture ) == TRUE )
-      {
-        gray_scale = GRAYSCALE_TYPE_WHITE;
-      }
-#endif
+      gray_scale  = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
       FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res, gray_scale );
     }
 
@@ -1336,6 +1330,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   // フォグシステム破棄
   FIELD_FOG_Delete( fieldWork->fog );
 
+  //侵入系開放
+  FIELD_PALACE_Delete( fieldWork->palace_sys );
+  
   // NOGRIDマッパー破棄
   FLDNOGRID_MAPPER_Delete( fieldWork->nogridMapper );
 

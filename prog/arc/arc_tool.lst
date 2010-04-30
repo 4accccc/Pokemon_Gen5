@@ -305,3 +305,4 @@
   ARCID_PROF_WORD  "prof_word.narc"   # 不正文字列アーカイブ
   ARCID_R04D03_GMK "fieldmap/r04d03_gmk.narc" # R04D03ギミックアーカイブ
   ARCID_MANUAL "manual.narc" # ゲーム内マニュアルのグラフィックデータ
+  ARCID_PALACE_PALETTE "palace_palette.narc" # パレスのグレースケール用テーブル

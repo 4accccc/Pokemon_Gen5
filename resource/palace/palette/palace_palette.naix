@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: palace_palette.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PALACE_PALETTE_NAIX_
+#define NARC_PALACE_PALETTE_NAIX_
+
+enum {
+	NARC_palace_palette_shade_black_fog_bin = 0,
+	NARC_palace_palette_shade_black_normal_bin = 1,
+	NARC_palace_palette_shade_white_fog_bin = 2,
+	NARC_palace_palette_shade_white_normal_bin = 3
+};
+
+/* NARC_PALACE_PALETTE_NAIX_ */
+#endif

@@ -754,7 +754,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_camera_shake.c \
         field/scrcmd_zoroa.c \
         field/scrcmd_leg_gmk.c \
-        field/event_game_manual.c
+        field/event_game_manual.c \
+		field/field_palace_sys.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE

@@ -22,7 +22,7 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= mission power weather secret_item effect zone
+SUBDIRS	= mission power weather secret_item effect zone palette
 
 
 #共通ルールファイルのインクルード

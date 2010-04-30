@@ -89,6 +89,6 @@ typedef struct {
  * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
-extern void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale );
+extern void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale );
 
 

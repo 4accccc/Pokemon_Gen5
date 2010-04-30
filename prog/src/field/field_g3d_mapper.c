@@ -179,7 +179,7 @@ struct _FLD_G3D_MAPPER {
 
 
 //------------------------------------------------------------------
-static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale );
+static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale );
 static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper );
 
 
@@ -723,7 +723,7 @@ static NNSG3dResFileHeader * createDummyTexHeader( HEAPID heapID, void * file )
  * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
-void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale )
+void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale )
 {
 	GF_ASSERT( g3Dmapper );
 
@@ -885,7 +885,7 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, int gray_scale)
+BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, u8* gray_scale)
 {
 	NNSG3dResFileHeader*	header;
 	NNSG3dResTex*			texture;
@@ -898,16 +898,9 @@ BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, int gray_scale)
 	if( texture ){
     sz = (u32)texture->plttInfo.sizePltt << 3;
     pData = (u8*)texture + texture->plttInfo.ofsPlttData;
-    switch(gray_scale){
-    case GRAYSCALE_TYPE_WHITE:
-      PaletteGrayScalePalaceWhite(pData, sz / sizeof(u16));
-      break;
-    case GRAYSCALE_TYPE_BLACK:
-      PaletteGrayScalePalaceBlack(pData, sz / sizeof(u16));
-      break;
-    default:
-      PaletteGrayScale(pData, sz / sizeof(u16));
-      break;
+    if( gray_scale != NULL )
+    {
+      PaletteGrayScaleShadeTable(pData, sz / sizeof(u16),gray_scale);
     }
 		return TRUE;
 	}
@@ -921,7 +914,7 @@ BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, int gray_scale)
  * @brief	グローバルテクスチャ作成
  */
 //------------------------------------------------------------------
-static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale )
+static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale )
 {
 	switch (resistData->gtexType) {
 	case FLDMAPPER_TEXTYPE_USE:
@@ -941,7 +934,8 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
       buffer = GFL_ARC_LoadDataAlloc( gtexData->arcID, gtexData->datID,
           GFL_HEAP_LOWID(g3Dmapper->heapID) );
       GFL_G3D_CreateResourceAuto( g3Dmapper->globalTexture, buffer );
-      if( gray_scale != GRAYSCALE_TYPE_NULL ){
+      if( gray_scale != NULL )
+      {
         FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture, gray_scale);
       }
       GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
