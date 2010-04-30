@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="james_turner" host="W00212" date="2010-04-30T08:06:38" source="n_legend_come_w_OK.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="1261"
+	tool_start_frame="0"
+	tool_end_frame="1260"
+	compress_material="on" material_size="14 14"
+/>
+
+<tex_pattern_list_data image_size="2" palette_size="2">
+	<image_name index="0" name="n_tp_roof.1"/>
+	<image_name index="1" name="n_tp_roof.2"/>
+	<palette_name index="0" name="n_tp_roof.1_pl"/>
+	<palette_name index="1" name="n_tp_roof.2_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="3">
+		0 680 1058
+	</frame_idx>
+	<image_idx size="3">
+		0 1 0
+	</image_idx>
+	<palette_idx size="3">
+		0 1 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="n_tp_roof2" data_size="3" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

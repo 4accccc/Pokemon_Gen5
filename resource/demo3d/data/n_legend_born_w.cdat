@@ -21,10 +21,10 @@ static const DEMO3D_SCENE_DATA data_n_legend_born_w_scene = {
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
-	FX32_CONST(32.0),FX32_CONST(32.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(28.0),FX32_CONST(28.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
-	142,-130,	///<2画面main_ofs,2画面sub_ofs
+	149,-142,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
 	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
 	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
@@ -42,8 +42,8 @@ static const DEMO3D_SCENE_DATA data_n_legend_born_w_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_born_w_data[] = {
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1142-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1192-30, { MASK_MAIN_DISPLAY, 30, -16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1172-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1222-30, { MASK_MAIN_DISPLAY, 30, -16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1480-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
@@ -79,11 +79,13 @@ static const DEMO3D_FILE_UNIT res_n_legend_born_w_file_unit_n_legend_born_w_01[]
 
 static const u16 res_n_legend_born_w_file_n_legend_born_w_02[] = {
  NARC_data_demo3d_n_legend_born_w_02_nsbmd,
+ NARC_data_demo3d_n_legend_born_w_02_nsbtp,
  NARC_data_demo3d_n_legend_born_w_02_nsbca,
+ NARC_data_demo3d_n_legend_born_w_02_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_n_legend_born_w_file_unit_n_legend_born_w_02[] = {
- { res_n_legend_born_w_file_n_legend_born_w_02, 2 },
+ { res_n_legend_born_w_file_n_legend_born_w_02, 4 },
 };
 
 ///==================================

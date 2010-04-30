@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-04-09T21:39:20" source="n_legend_come_b_04.mb"/>
+	<create user="james_turner" host="W00212" date="2010-04-30T05:21:49" source="n_legend_come_b_05.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -800,9 +800,9 @@
 		<diffuse_r frame_step="1" data_size="1261" data_head="1263"/>
 		<diffuse_g frame_step="1" data_size="1261" data_head="2524"/>
 		<diffuse_b frame_step="1" data_size="1261" data_head="1263"/>
-		<ambient_r frame_step="1" data_size="1" data_head="313"/>
-		<ambient_g frame_step="1" data_size="1" data_head="313"/>
-		<ambient_b frame_step="1" data_size="1" data_head="313"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1261"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1261"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1261"/>
 		<specular_r frame_step="1" data_size="1" data_head="1261"/>
 		<specular_g frame_step="1" data_size="1" data_head="1261"/>
 		<specular_b frame_step="1" data_size="1" data_head="1261"/>

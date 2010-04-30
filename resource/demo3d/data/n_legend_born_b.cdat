@@ -21,10 +21,10 @@ static const DEMO3D_SCENE_DATA data_n_legend_born_b_scene = {
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
-	FX32_CONST(32.0),FX32_CONST(32.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(28.0),FX32_CONST(28.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
-	142,-130,	///<2画面main_ofs,2画面sub_ofs
+	149,-142,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
 	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
 	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
