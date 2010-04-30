@@ -501,11 +501,11 @@
 
   //êNì¸ä÷òA
   DEF_CMD( EvCmdIntrudePalaceMmdlSetting, EV_SEQ_INTRUDE_PALACE_MMDL_SETTING )
-  DEF_CMD( EvCmdIntrudeMissionStart, EV_SEQ_INTRUDE_MISSION_START )
+  DEF_CMD( EvCmdIntrudeGetPalaceAreaOffset, EV_SEQ_GET_PALACE_AREA_OFFSET )
   DEF_CMD( EvCmdIntrudeConnectMapSetting, EV_SEQ_INTRUDE_CONNECT_MAP_SETTING )
   DEF_CMD( EvCmdCallMonolithProc, EV_SEQ_CALL_MONOLITH_PROC )
   DEF_CMD( EvCmdIntrudeMissionChoiceListReq, EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ )
-  DEF_CMD( EvCmdPalaceInDisguise, EV_SEQ_PALACE_IN_DISGUISE )
+  DEF_CMD( EvCmdIntrudeCheckEqpGPower, EV_SEQ_CHECK_EQP_GPOWER )
   DEF_CMD( EvCmdGetDisguiseCode, EV_SEQ_GET_DISGUISE_CODE )
   DEF_CMD( EvCmdGetMissionEntry, EV_SEQ_GET_MISSION_ENTRY )
   DEF_CMD( EvCmdIntrudeMissionStartWait, EV_SEQ_MISSION_START_WAIT_EVENT )

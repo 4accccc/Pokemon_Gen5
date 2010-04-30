@@ -51,7 +51,7 @@ EVENT_END
 /*  ƒ~ƒjƒ‚ƒmƒŠƒX                                              */
 /**************************************************************/
 EVENT_START ev_plc10_minimono
-  _INTRUDE_MISSION_START()
+  //_INTRUDE_MISSION_START()
 EVENT_END
 
 /**************************************************************/

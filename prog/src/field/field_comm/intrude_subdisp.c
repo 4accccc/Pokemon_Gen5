@@ -38,6 +38,7 @@
 #include "net/network_define.h"
 #include "net/net_whpipe.h"
 #include "gamesystem/game_beacon_accessor.h"
+#include "field/field_palace_sys.h"
 
 
 //==============================================================================
@@ -331,6 +332,8 @@ typedef struct{
   MISSION_STATUS m_status;  ///<ミッション状況
   s32 m_timer;              ///<ミッションタイマー
   const MISSION_DATA *p_md; ///<受信しているミッションデータへのポインタ
+  u8 target_palace_area;
+  u8 padding[3];
 }INTRUDE_COMM_PARAM;
 
 ///侵入下画面制御ワーク
@@ -701,7 +704,7 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   
   //インフォメーションメッセージ
   _IntSub_TitleMsgUpdate(intsub, my_zone_id);
-  _IntSub_InfoMsgUpdate(intsub, intcomm);
+  _IntSub_InfoMsgUpdate(intsub, intcomm, my_zone_id);
   
   //アクター更新
   _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
@@ -1841,7 +1844,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm)
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, ZONEID my_zone_id)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAME_COMM_INFO_MESSAGE infomsg;
@@ -1885,32 +1888,78 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       && (intsub->comm.m_status == MISSION_STATUS_EXE || intsub->print_mission_status != intsub->comm.m_status)){
     //ミッション発動中の場合はミッション関連のメッセージを優先して表示
     //ミッションは状況を示すメッセージの為、キューに貯めずに現在の状態をそのまま表示
-    switch(intsub->comm.m_status){
-    case MISSION_STATUS_NOT_ENTRY: //ミッションは実施されているが参加していない
-      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_004, intsub->strbuf_info );
-      break;
-    case MISSION_STATUS_READY:     //ミッション開始待ち
-      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_005, intsub->strbuf_info );
-      break;
-    case MISSION_STATUS_EXE:       //ミッション中
-      if(intsub->print_mission_exe_flag == 0){
-        GFL_MSG_GetString(intsub->msgdata, 
-          msg_invasion_info_m01 + intsub->comm.p_md->cdata.type, intsub->strbuf_info );
+    
+  #if 0
+    if(intsub->comm.m_status == MISSION_STATUS_EXE && intcomm != NULL){
+      INTRUDE_STATUS *ist = &intcomm->intrude_status[intsub->comm.p_md->target_info.net_id];
+      VecFx32 player_pos;
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      FIELD_PLAYER_GetPos( fld_player, &player_pos );
+      
+      //同じゾーンにいれば居場所の方向を表示
+      if(intsub->comm.now_palace_area == intsub->comm.target_palace_area){
+        fx32 offset_x, offset_z;
+        u32 msg_id;
+        offset_x = ist->player_pack.x - player_pos.x;
+        offset_z = ist->player_pack.z - player_pos.z;
+        if(MATH_ABS(offset_x) > MATH_ABS(offset_y)){
+          msg_id = (offset_x > 0) ? msg_invasion_info_016 : msg_invasion_info_017;
+        }
+        else{
+          msg_id = (offset_z > 0) ? msg_invasion_info_015 : msg_invasion_info_014;
+        }
+        GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_info );
+        msg_on = TRUE;
       }
-      else{
-        GFL_MSG_GetString(intsub->msgdata_mission, 
-          intsub->comm.p_md->cdata.msg_id_contents, intsub->strbuf_temp );
-        MISSIONDATA_Wordset(&intsub->comm.p_md->cdata, 
-          &intsub->comm.p_md->target_info, intsub->wordset, HEAPID_FIELD_SUBSCREEN);
-        WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+      else{    //同じゾーンにはいないがCursorSで差している場所が同じの時のメッセージ
+        const PALACE_ZONE_SETTING *tar_zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
+        const PALACE_ZONE_SETTING *my_zonesetting = IntrudeField_GetZoneSettingData(my_zone_id);
+        
+        if(tar_zonesetting != NULL && my_zonesetting != NULL 
+            && tar_zonesetting->sub_x == my_zonesetting->sub_x
+            && tar_zonesetting->sub_y == my_zonesetting->sub_y){
+          GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_018, intsub->strbuf_info );
+          msg_on = TRUE;
+        }
+        
+        //裏世界にいて、まだいったことのない場所
+        if(msg_on == FALSE 
+            && FIELD_PALACE_CheckArriveZone(GAMESYSTEM_GetGameData(intsub->gsys), my_zone_id)){
+          GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
+          msg_on = TRUE;
+        }
       }
-      intsub->print_mission_exe_flag ^= 1;
-      break;
-    case MISSION_STATUS_RESULT:   //結果受信
-      return;   //特に表示するものはない
-    default:
-      GF_ASSERT_MSG(0, "m_status=%d\n", intsub->comm.m_status);
-      return;
+    }
+  #endif
+    
+    if(msg_on == FALSE){ //ミッション説明のメッセージ
+      switch(intsub->comm.m_status){
+      case MISSION_STATUS_NOT_ENTRY: //ミッションは実施されているが参加していない
+        GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_004, intsub->strbuf_info );
+        break;
+      case MISSION_STATUS_READY:     //ミッション開始待ち
+        GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_005, intsub->strbuf_info );
+        break;
+      case MISSION_STATUS_EXE:       //ミッション中
+        if(intsub->print_mission_exe_flag == 0){
+          GFL_MSG_GetString(intsub->msgdata, 
+            msg_invasion_info_m01 + intsub->comm.p_md->cdata.type, intsub->strbuf_info );
+        }
+        else{
+          GFL_MSG_GetString(intsub->msgdata_mission, 
+            intsub->comm.p_md->cdata.msg_id_contents, intsub->strbuf_temp );
+          MISSIONDATA_Wordset(&intsub->comm.p_md->cdata, 
+            &intsub->comm.p_md->target_info, intsub->wordset, HEAPID_FIELD_SUBSCREEN);
+          WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+        }
+        intsub->print_mission_exe_flag ^= 1;
+        break;
+      case MISSION_STATUS_RESULT:   //結果受信
+        return;   //特に表示するものはない
+      default:
+        GF_ASSERT_MSG(0, "m_status=%d\n", intsub->comm.m_status);
+        return;
+      }
     }
     if(intsub->comm.m_status != MISSION_STATUS_EXE){
       intsub->print_mission_exe_flag = 0;
@@ -2247,8 +2296,10 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
     comm->palace_in = intcomm->palace_in;
     comm->m_status = MISSION_FIELD_CheckStatus(&intcomm->mission);
     comm->m_timer = MISSION_GetMissionTimer(&intcomm->mission);
-
     comm->p_md = MISSION_GetRecvData(&intcomm->mission);
+    if(comm->p_md != NULL){
+      comm->target_palace_area = intcomm->intrude_status[comm->p_md->target_info.net_id].palace_area;
+    }
   }
 }
 

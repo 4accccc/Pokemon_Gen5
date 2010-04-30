@@ -289,103 +289,6 @@ VMCMD_RESULT EvCmdGetDisguiseCode( VMHANDLE *core, void *wk )
 //==============================================================================
 //==================================================================
 /**
- * パレスIN時の強制変装イベント
- *
- * @param   core		仮想マシン制御構造体へのポインタ
- * @param   wk		
- *
- * @retval  VMCMD_RESULT		
- */
-//==================================================================
-VMCMD_RESULT EvCmdPalaceInDisguise( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  
-  SCRIPT_CallEvent( scw, EVENT_Intrude_PalaceInDisguise(gsys) );
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント：パレスIN時の強制変装イベント
- *
- * @param   gsys		
- *
- * @retval  GMEVENT *		
- */
-//--------------------------------------------------------------
-static GMEVENT * EVENT_Intrude_PalaceInDisguise(GAMESYS_WORK * gsys)
-{
-  GMEVENT *event;
-  PALACE_IN_DISGUISE_WORK *pidw;
-  
-  event = GMEVENT_Create( gsys, NULL, _event_PalaceInDisguise, sizeof(PALACE_IN_DISGUISE_WORK) );
-  pidw = GMEVENT_GetEventWork(event);
-  GFL_STD_MemClear(pidw, sizeof(PALACE_IN_DISGUISE_WORK));
-  
-  return event;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント処理関数：パレスIN時の強制変装イベント
- *
- * @param   event		
- * @param   seq		
- * @param   work		
- *
- * @retval  GMEVENT_RESULT		
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT _event_PalaceInDisguise( GMEVENT * event, int * seq, void * work )
-{
-  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-  GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  PALACE_IN_DISGUISE_WORK *pidw = work;
-  INTRUDE_COMM_SYS_PTR intcomm;
-  enum{
-    SEQ_INIT,
-    SEQ_MAIN,
-  };
-  
-  intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
-  //シーケンスの流れ適にNULLチェックの必要なし
-  //  return GMEVENT_RES_FINISH;
-  }
-  
-  switch( *seq ){
-  case SEQ_INIT:
-    {
-      const MYSTATUS *myst = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) );
-      u16 disguise_code;
-      u8 disguise_type, disguise_sex;
-      Intrude_GetNormalDisguiseObjCode(myst, &disguise_code, &disguise_type, &disguise_sex);
-      IntrudeEvent_Sub_DisguiseEffectSetup(
-        &pidw->ev_diswork, gsys, fieldWork, disguise_code, disguise_type, disguise_sex);
-    }
-    (*seq)++;
-    break;
-  case SEQ_MAIN:
-    if(IntrudeEvent_Sub_DisguiseEffectMain(&pidw->ev_diswork, intcomm) == TRUE){
-      return GMEVENT_RES_FINISH;
-    }
-    break;
-  }
-
-  return GMEVENT_RES_CONTINUE;
-}
-
-//==============================================================================
-//  
-//==============================================================================
-//==================================================================
-/**
  * ミッションエントリーしているかを取得
  *
  * @param   core		仮想マシン制御構造体へのポインタ
@@ -411,7 +314,6 @@ VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk )
   else{
     *ret_wk = FALSE;
   }
-  OS_TPrintf("get mission entry = %d\n", *ret_wk);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -629,3 +531,78 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
   return GMEVENT_RES_CONTINUE;
 }
 
+
+//==============================================================================
+//  
+//==============================================================================
+//==================================================================
+/**
+ * 今自分がいるパレスエリアが、自分のパレスエリアを基点(0)とした場合、
+ * 何個目のパレスエリアにいるかを取得する
+ * 
+ * 通信IDとイコールではなく、オフセットである事に注意
+ *   ※0の場合は自分のパレスエリアにいる
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdIntrudeGetPalaceAreaOffset( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm;
+  
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm == NULL || Intrude_GetPalaceArea(intcomm) == GAMEDATA_GetIntrudeMyID(gamedata)){
+    *ret_wk = 0;
+  }
+  else{
+    int area_offset = Intrude_GetPalaceArea(intcomm) - GAMEDATA_GetIntrudeMyID(gamedata);
+    if(area_offset < 0){
+      area_offset += FIELD_COMM_MEMBER_MAX;
+    }
+    *ret_wk = area_offset;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//==================================================================
+/**
+ * Gパワーを何か装備しているか取得
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ *
+ * TRUE:何か装備している
+ * FALSE:何も装備していない
+ */
+//==================================================================
+VMCMD_RESULT EvCmdIntrudeCheckEqpGPower( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  INTRUDE_SAVE_WORK * intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GPOWER_ID gpower_id;
+  
+  gpower_id = ISC_SAVE_GetGPowerID(intsave);
+  if(gpower_id != GPOWER_ID_NULL){
+    *ret_wk = TRUE;
+  }
+  else{
+    *ret_wk = FALSE;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}

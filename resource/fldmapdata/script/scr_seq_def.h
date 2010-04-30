@@ -8593,13 +8593,17 @@
 
 //--------------------------------------------------------------
 /**
- * 侵入コマンド　ミッション開始
+ * 侵入コマンド　今自分がいるパレスエリアが、自分のパレスエリアを基点(0)とした場合、何個目のパレスエリアにいるかを取得する
+ * 
+ * 通信IDとイコールではなく、オフセットである事に注意
+ *   ※0の場合は自分のパレスエリアにいる
  */
 //--------------------------------------------------------------
-#define _INTRUDE_MISSION_START() _ASM_INTRUDE_MISSION_START
+#define _GET_PALACE_AREA_OFFSET( ret_wk ) _ASM_GET_PALACE_AREA_OFFSET ret_wk
 
-  .macro  _ASM_INTRUDE_MISSION_START
-  .short  EV_SEQ_INTRUDE_MISSION_START
+  .macro  _ASM_GET_PALACE_AREA_OFFSET  ret_wk
+  .short  EV_SEQ_GET_PALACE_AREA_OFFSET
+  .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------
@@ -8665,10 +8669,11 @@
  * 侵入コマンド　パレスIN時の変装イベント
  */
 //--------------------------------------------------------------
-#define _PALACE_IN_DISGUISE() _ASM_PALACE_IN_DISGUISE
+#define _CHECK_EQP_GPOWER( ret_wk ) _ASM_CHECK_EQP_GPOWER ret_wk
 
-  .macro  _ASM_PALACE_IN_DISGUISE
-  .short  EV_SEQ_PALACE_IN_DISGUISE
+  .macro  _ASM_CHECK_EQP_GPOWER     ret_wk
+  .short  EV_SEQ_CHECK_EQP_GPOWER
+  .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------

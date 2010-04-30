@@ -36,6 +36,7 @@
 #include "sound/pm_sndsys.h"
 #include "fieldmap/zone_id.h"
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady
+#include "system/main.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -43,6 +44,10 @@
 
 #include "palace_gimmick.h"
 #include "field/scrcmd.h"
+
+#include "script.h"     //for SCRIPT_CallScript
+#include "../../../resource/fldmapdata/script/palace01_def.h"  //for SCRID_～
+#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 
 
 //==============================================================================
@@ -707,6 +712,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     SEQ_MSG_WAIT,
     SEQ_DISGUISE_INIT,
     SEQ_DISGUISE_MAIN,
+   	SEQ_TUTORIAL,
     SEQ_FINISH,
   };
   
@@ -816,6 +822,32 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     }
     break;
 
+  case SEQ_TUTORIAL:
+    if(EVENTWORK_CheckEventFlag(
+        GAMEDATA_GetEventWork(gamedata), SYS_FLAG_PALACE_MISSION_CLEAR) == FALSE){
+      GAME_COMM_LAST_STATUS last_status = GameCommSys_GetLastStatus(game_comm);
+      u32 scr_id = 0;
+      switch(last_status){
+      case GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT:           //誰かの退出による終了
+      case GAME_COMM_LAST_STATUS_INTRUDE_ERROR:            //通信エラー
+      default:
+        *seq = SEQ_FINISH;
+        return GMEVENT_RES_CONTINUE;
+      case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS:  //ミッション成功で終了
+        scr_id = SCRID_PALACE01_OLDMAN_MISSION_FIRST_CLEAR;
+        break;
+      case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL: //ミッション失敗で終了(相手に先を越された)
+      case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT:  //ミッション失敗で終了(タイムアウト)
+        scr_id = SCRID_PALACE01_OLDMAN_MISSION_FIRST_FAIL;
+        break;
+      }
+      SCRIPT_CallScript( event, scr_id, NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+    }
+    else{
+      *seq = SEQ_FINISH;
+    }
+    break;
+    
   case SEQ_FINISH:
   default:
     GameCommSys_ClearLastStatus(game_comm);

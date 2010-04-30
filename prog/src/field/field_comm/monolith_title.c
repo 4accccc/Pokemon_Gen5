@@ -18,6 +18,8 @@
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
 #include "monolith_snd_def.h"
+#include "field/eventwork.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 
 
 //==============================================================================
@@ -38,6 +40,13 @@ enum{
 ///BMP枠のキャラクタ開始位置
 #define BMPWIN_FRAME_START_CGX    (1)
 
+///タイトルの表示モード
+enum{
+  TITLE_MODE_NOMISSION,   ///<ミッション選択が出来ない
+  TITLE_MODE_NORMAL,      ///<通常表示
+  TITLE_MODE_NOPOWER,     ///<パワー選択が出来ない
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -46,7 +55,7 @@ typedef struct{
   PANEL_ACTOR panel[TITLE_PANEL_MAX];
   s8 cursor_pos;      ///<カーソル位置
   s8 select_panel;    ///<選択したパネル(TITLE_PANEL_xxx)
-  u8 mission_occ;     ///<TRUE:ミッションが選択できる
+  u8 title_mode;      ///<タイトルの表示モード(TITLE_MODE_xxx)
   u8 no_focus;        ///<TRUE:カーソルが何もフォーカスしていない状態
   MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
   GFL_BMPWIN *bmpwin;
@@ -96,12 +105,16 @@ enum{
   TITLE_PANEL_Y_MISSION = 8*5 + 4,
   TITLE_PANEL_Y_POWER = 8*10 + 4,
   TITLE_PANEL_Y_STATUS = 8*15 + 4,
+
+  TITLE_PANEL_Y_MISSION_NOPOWER = TITLE_PANEL_Y_POWER_NOMISSION,
+  TITLE_PANEL_Y_STATUS_NOPOWER = TITLE_PANEL_Y_STATUS_NOMISSION,
 };
 
 ///パネルの数
-static const u32 TitlePanelMax[] = {  // 0:ミッションなし　1:ミッションあり
+static const u32 TitlePanelMax[] = {  // 0:ミッションなし　1:ミッションあり　2:初ミッション
   2,
   3,
+  2,
 };
 
 ///パネルY座標テーブル
@@ -115,6 +128,10 @@ static const u32 TitlePanelTblY[][3] = {
     TITLE_PANEL_Y_POWER,
     TITLE_PANEL_Y_STATUS,
   },
+  {
+    TITLE_PANEL_Y_MISSION_NOPOWER,
+    TITLE_PANEL_Y_STATUS_NOPOWER,
+  },
 };
 
 static const u32 TitlePanelSelectIndex[][4] = {
@@ -126,6 +143,11 @@ static const u32 TitlePanelSelectIndex[][4] = {
   {
     TITLE_PANEL_MISSION,
     TITLE_PANEL_POWER,
+    TITLE_PANEL_STATUS,
+    TITLE_PANEL_CANCEL,
+  },
+  {
+    TITLE_PANEL_MISSION,
     TITLE_PANEL_STATUS,
     TITLE_PANEL_CANCEL,
   },
@@ -181,6 +203,27 @@ static const GFL_UI_TP_HITTBL TitlePanelRect[][5] = {
     },
     { GFL_UI_TP_HIT_END, 0, 0, 0 },
   },
+  {
+    {//TITLE_PANEL_Y_MISSION
+      TITLE_PANEL_Y_MISSION_NOPOWER - PANEL_CHARSIZE_Y/2*8,
+      TITLE_PANEL_Y_MISSION_NOPOWER + PANEL_CHARSIZE_Y/2*8,
+      PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8,
+      PANEL_POS_X + PANEL_SMALL_CHARSIZE_X/2*8,
+    },
+    {//TITLE_PANEL_Y_STATUS
+      TITLE_PANEL_Y_STATUS_NOPOWER - PANEL_CHARSIZE_Y/2*8,
+      TITLE_PANEL_Y_STATUS_NOPOWER + PANEL_CHARSIZE_Y/2*8,
+      PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8,
+      PANEL_POS_X + PANEL_SMALL_CHARSIZE_X/2*8,
+    },
+    {//キャンセルアイコン
+      CANCEL_POS_Y - CANCEL_TOUCH_RANGE_HALF,
+      CANCEL_POS_Y + CANCEL_TOUCH_RANGE_HALF,
+      CANCEL_POS_X - CANCEL_TOUCH_RANGE_HALF,
+      CANCEL_POS_X + CANCEL_TOUCH_RANGE_HALF,
+    },
+    { GFL_UI_TP_HIT_END, 0, 0, 0 },
+  },
 };
 
 
@@ -205,11 +248,21 @@ static GFL_PROC_RESULT MonolithTitleProc_Init(GFL_PROC * proc, int * seq, void *
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_TITLE_WORK *mtw = mywk;
 	ARCHANDLE *hdl;
+	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
   
   mtw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_TITLE_WORK), HEAPID_MONOLITH);
   GFL_STD_MemClear(mtw, sizeof(MONOLITH_TITLE_WORK));
   
-  mtw->mission_occ = appwk->parent->list_occ;
+  if(EVENTWORK_CheckEventFlag(
+      GAMEDATA_GetEventWork(gamedata), SYS_FLAG_PALACE_MISSION_CLEAR) == FALSE){
+    mtw->title_mode = TITLE_MODE_NOPOWER;
+  }
+  else if(appwk->parent->list_occ == TRUE){
+    mtw->title_mode = TITLE_MODE_NORMAL;
+  }
+  else{
+    mtw->title_mode = TITLE_MODE_NOMISSION;
+  }
   
   _Setup_BGFrameSetting();
   _Setup_BmpWinCreate(mtw, appwk->setup);
@@ -252,11 +305,11 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
 
   switch(*seq){
   case _SEQ_MAIN:
-    tp_ret = GFL_UI_TP_HitTrg(TitlePanelRect[mtw->mission_occ]);
+    tp_ret = GFL_UI_TP_HitTrg(TitlePanelRect[mtw->title_mode]);
     if(tp_ret != GFL_UI_TP_HIT_NONE){
       OS_TPrintf("タッチ有効 %d\n", tp_ret);
       mtw->cursor_pos = tp_ret;
-      mtw->select_panel = TitlePanelSelectIndex[mtw->mission_occ][tp_ret];
+      mtw->select_panel = TitlePanelSelectIndex[mtw->title_mode][tp_ret];
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       mtw->no_focus = FALSE;
       (*seq)++;
@@ -269,12 +322,12 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       if(trg > 0 && mtw->no_focus == TRUE){
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         mtw->no_focus = FALSE;
-        MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
+        MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->title_mode], 
           mtw->cursor_pos, FADE_SUB_OBJ);
         PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       else if(trg & PAD_BUTTON_DECIDE){
-        mtw->select_panel = TitlePanelSelectIndex[mtw->mission_occ][mtw->cursor_pos];
+        mtw->select_panel = TitlePanelSelectIndex[mtw->title_mode][mtw->cursor_pos];
         (*seq)++;
       }
       else if(trg & PAD_BUTTON_CANCEL){
@@ -283,20 +336,20 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       }
       else if(repeat & PAD_KEY_DOWN){
         mtw->cursor_pos++;
-        if(mtw->cursor_pos >= TitlePanelMax[mtw->mission_occ]){
+        if(mtw->cursor_pos >= TitlePanelMax[mtw->title_mode]){
           mtw->cursor_pos = 0;
         }
         MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, 
-          TitlePanelMax[mtw->mission_occ], mtw->cursor_pos, FADE_SUB_OBJ);
+          TitlePanelMax[mtw->title_mode], mtw->cursor_pos, FADE_SUB_OBJ);
         PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       else if(repeat & PAD_KEY_UP){
         mtw->cursor_pos--;
         if(mtw->cursor_pos < 0){
-          mtw->cursor_pos = TitlePanelMax[mtw->mission_occ] - 1;
+          mtw->cursor_pos = TitlePanelMax[mtw->title_mode] - 1;
         }
         MonolithTool_PanelOBJ_Focus(
-          appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
+          appwk, mtw->panel, TitlePanelMax[mtw->title_mode], 
           mtw->cursor_pos, FADE_SUB_OBJ);
         PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
@@ -320,7 +373,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     }
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
       MonolithTool_PanelOBJ_Flash(appwk, mtw->panel, 
-        TitlePanelMax[mtw->mission_occ], mtw->cursor_pos, FADE_SUB_OBJ);
+        TitlePanelMax[mtw->title_mode], mtw->cursor_pos, FADE_SUB_OBJ);
       PMSND_PlaySE(MONOLITH_SE_DECIDE);
     }
     else{
@@ -412,23 +465,30 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
   
   MonolithTool_Panel_Init(appwk);
 
-  for(i = 0; i < TitlePanelMax[mtw->mission_occ]; i++){
-    if(mtw->mission_occ == TRUE){
+  for(i = 0; i < TitlePanelMax[mtw->title_mode]; i++){
+    if(mtw->title_mode == TITLE_MODE_NORMAL){
       MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
         COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 
-        PANEL_POS_X, TitlePanelTblY[mtw->mission_occ][i], 
+        PANEL_POS_X, TitlePanelTblY[mtw->title_mode][i], 
         msg_mono_title_001 + i, NULL);
     }
-    else{
+    else if(mtw->title_mode == TITLE_MODE_NOMISSION){
       MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
         COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 
-        PANEL_POS_X, TitlePanelTblY[mtw->mission_occ][i], 
+        PANEL_POS_X, TitlePanelTblY[mtw->title_mode][i], 
         msg_mono_title_002 + i, NULL);
+    }
+    else if(mtw->title_mode == TITLE_MODE_NOPOWER){
+      u32 msg_id = i == 0 ? msg_mono_title_001 : msg_mono_title_003;
+      MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
+        COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 
+        PANEL_POS_X, TitlePanelTblY[mtw->title_mode][i], 
+        msg_id, NULL);
     }
   }
   
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
-    MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
+    MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->title_mode], 
       0, FADE_SUB_OBJ);
     mtw->no_focus = FALSE;
   }
@@ -448,7 +508,7 @@ static void _Title_PanelDelete(MONOLITH_TITLE_WORK *mtw)
 {
   int i;
   
-  for(i = 0; i < TitlePanelMax[mtw->mission_occ]; i++){
+  for(i = 0; i < TitlePanelMax[mtw->title_mode]; i++){
     MonolithTool_PanelOBJ_Delete(&mtw->panel[i]);
   }
 }
@@ -465,7 +525,7 @@ static void _Title_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
   int i;
   
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_OBJ);
-  for(i = 0; i < TitlePanelMax[mtw->mission_occ]; i++){
+  for(i = 0; i < TitlePanelMax[mtw->title_mode]; i++){
     MonolithTool_PanelOBJ_TransUpdate(appwk->setup, &mtw->panel[i]);
   }
 }

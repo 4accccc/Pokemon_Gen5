@@ -31,7 +31,12 @@ _EVENT_DATA    ev_scene_palace01_1stguide	//パレス初回誘導イベント
 _EVENT_DATA    ev_palace01_oldman1_02		//侵入先のパレスじいさん
 _EVENT_DATA    ev_palace01_girl4_03			//パレス４姉妹
 _EVENT_DATA    ev_palace01_girl4_04			//パレス４姉妹
+_EVENT_DATA    ev_palace01_oldman_mission_first_clear
+_EVENT_DATA    ev_palace01_oldman_mission_first_fail
 _EVENT_DATA_END
+
+
+DEFINE_LOCAL  area_oldman_objid   //パレスエリア毎の爺さんのOBJID
 
 
 /**************************************************************/
@@ -75,24 +80,105 @@ EVENT_END
 /*  モノリス                                              */
 /**************************************************************/
 EVENT_START ev_palace01_monolith
-  //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
-  _INTRUDE_MISSION_CHOICE_LIST_REQ()
-  
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-  _FIELD_CLOSE()
+  _GET_PALACE_AREA_OFFSET( SCWK_ANSWER )
+  IF ($SCWK_ANSWER == 0) && FLAG_OFF( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
+    //まだミッションをクリアしていないので「他人のパレスへ行け！」を表示
 
-  _CALL_MONOLITH_PROC()
+  	//パレスじじい：主人公横へ
+  	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+  	_OBJ_ANIME_WAIT()
+  	
+  	//主人公：じじいを見る
+  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+  	_OBJ_ANIME_WAIT()
+  	
+  	//「まず他人のパレスへ行け」
+  	_BALLOONWIN_OBJMSG( plc_help_01, PALACE01_OLDMAN1_01 )
+  	_LAST_KEYWAIT()
+  	_MSGWIN_CLOSE()
 
-  _FIELD_OPEN()
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  	//パレスじじい：元の位置へ
+  	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_02 )
+  	_OBJ_ANIME_WAIT()
+
+  	//パレスじじい：下を向く
+  	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_d )
+  	_OBJ_ANIME_WAIT()
+    
+  ELSE  //通常のモノリス処理
   
-  //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
-  _GET_MISSION_ENTRY( SCWK_ANSWER )
-	IF $SCWK_ANSWER == TRUE THEN
-	  _MISSION_START_WAIT_EVENT()
+    //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
+    _INTRUDE_MISSION_CHOICE_LIST_REQ()
+    
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _FIELD_CLOSE()
+
+    _CALL_MONOLITH_PROC()
+
+    _FIELD_OPEN()
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
+    
+    //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
+    _GET_MISSION_ENTRY( SCWK_ANSWER )
+  	IF $SCWK_ANSWER == TRUE THEN
+    	//初めて受注したミッションならチュートリアルメッセージ表示
+    	IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
+      	_FLAG_SET( SYS_FLAG_PALACE_MISSION_START )
+      	
+    	  _CALL sub_get_area_oldman_objid
+
+      	//パレスじじい：主人公横へ
+      	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+      	_OBJ_ANIME_WAIT()
+      	
+      	//主人公：じじいを見る
+      	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+      	_OBJ_ANIME_WAIT()
+      	
+      	//「ミッションを開始したな！ワープが出来るぞ！」
+      	_BALLOONWIN_OBJMSG( plc_help_02, area_oldman_objid )
+      	_LAST_KEYWAIT()
+      	_MSGWIN_CLOSE()
+
+      	//パレスじじい：元の位置へ
+      	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_02 )
+      	_OBJ_ANIME_WAIT()
+
+      	//パレスじじい：下を向く
+      	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_d )
+      	_OBJ_ANIME_WAIT()
+    	ENDIF
+    	
+  	  //ミッション開始待ち
+  	  _MISSION_START_WAIT_EVENT()
+  	ELSIF FLAG_OFF( SYS_FLAG_PALACE_DPOWER ) THEN
+  	  _CHECK_EQP_GPOWER( SCWK_ANSWER )
+  	  IF $SCWK_ANSWER == TRUE THEN
+  	    
+  	    _FLAG_SET( SYS_FLAG_PALACE_DPOWER )
+
+    	  _CALL sub_get_area_oldman_objid
+  	    
+      	//パレスじじい：主人公を見て
+      	_OBJ_ANIME( area_oldman_objid, anm_stay_walk_r )
+      	_OBJ_ANIME_WAIT()
+
+      	//主人公：じじいを見る
+      	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+      	_OBJ_ANIME_WAIT()
+      	
+      	//「それはすれ違いで使えるのだ！」
+      	_BALLOONWIN_OBJMSG( plc_help_05, area_oldman_objid )
+      	_LAST_KEYWAIT()
+      	_MSGWIN_CLOSE()
+
+  	  ENDIF
+    ENDIF
+  
   ENDIF
+  
 EVENT_END
 
 
@@ -169,6 +255,13 @@ _ANIME_LABEL	anm_oldman1_look_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_oldman1_move_01
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//パレスじじい：元の位置へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman1_move_02
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -402,15 +495,17 @@ EVENT_END
 /*  パレス裏おやじ [100419斉藤マ]                             */
 /**************************************************************/
 //進入先でのチュートリアルおやじ
-//OBJ_IDはプログラム配置のため固定で OBJID_PALACE_OLDMAN を指定
+//OBJ_IDはプログラム配置のためsub_get_area_oldman_objidで動的に取得
 EVENT_START ev_palace01_oldman1_02
+	_CALL sub_get_area_oldman_objid
+	
 	_TALK_OBJ_START()
 	
 	//初回会話分岐
 	IF FLAG_OFF( FE_PALACE01_OLDMANTALK2 ) THEN
 		//初回時
 		
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_01, OBJID_PALACE_OLDMAN, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_01, area_oldman_objid, POS_DOWN )
 		
 		//初回会話フラグをセット
 		//========================================//
@@ -420,7 +515,7 @@ EVENT_START ev_palace01_oldman1_02
 	ELSE
 		//２回目以降
 		
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_04, OBJID_PALACE_OLDMAN, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_04, area_oldman_objid, POS_DOWN )
 		
 	ENDIF
 	
@@ -431,7 +526,7 @@ EVENT_START ev_palace01_oldman1_02
 	//パレス質問メニュー（やめる選択までループ）
 	WHILE $lwk_loop != 555
 		
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_02, OBJID_PALACE_OLDMAN, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_02, area_oldman_objid, POS_DOWN )
 		
 		//選択肢表示
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
@@ -448,10 +543,10 @@ EVENT_START ev_palace01_oldman1_02
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
 			//ミッションとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_05, OBJID_PALACE_OLDMAN, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_05, area_oldman_objid, POS_DOWN )
 		CASE 1 THEN
 			//ワープとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_06, OBJID_PALACE_OLDMAN, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_06, area_oldman_objid, POS_DOWN )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -461,12 +556,89 @@ EVENT_START ev_palace01_oldman1_02
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_03, OBJID_PALACE_OLDMAN, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_03, area_oldman_objid, POS_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
 EVENT_END
 
+
+/**************************************************************/
+/*  パレス裏おやじ：チュートリアル：初めてミッション成功
+/**************************************************************/
+EVENT_START ev_palace01_oldman_mission_first_clear
+	
+	_FLAG_SET(SYS_FLAG_PALACE_MISSION_CLEAR)
+
+	//パレスじじい：主人公横へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//主人公：じじいを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( plc_help_03, PALACE01_OLDMAN1_01, POS_DOWN )
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//パレスじじい：元の位置へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_02 )
+	_OBJ_ANIME_WAIT()
+
+	//パレスじじい：下を向く
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+/**************************************************************/
+/*  パレス裏おやじ：チュートリアル：ミッション失敗(クリアしたこともまだ無い)
+/**************************************************************/
+EVENT_START ev_palace01_oldman_mission_first_fail
+	
+	//パレスじじい：主人公横へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公：じじいを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( plc_help_04, PALACE01_OLDMAN1_01, POS_DOWN )
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//パレスじじい：元の位置へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_02 )
+	_OBJ_ANIME_WAIT()
+
+	//パレスじじい：下を向く
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+
+//==============================================================
+//サブルーチン：パレスエリア毎の爺さんのOBJID取得
+//==============================================================
+sub_get_area_oldman_objid:
+{
+  DEFINE_LOCAL area_offset
+  
+  _GET_PALACE_AREA_OFFSET( area_offset )
+  IF $area_offset == 0 THEN
+    $area_oldman_objid = PALACE01_OLDMAN1_01
+  ELSIF $area_offset == 1 THEN
+    $area_oldman_objid = OBJID_PALACE_OLDMAN1
+  ELSE
+    $area_oldman_objid = OBJID_PALACE_OLDMAN2
+  ENDIF
+}
+_RET
 
 
 

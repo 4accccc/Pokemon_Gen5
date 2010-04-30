@@ -1536,7 +1536,7 @@ void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
     u16 event_id;
     u16 obj_id;
   }PalaceMmdlData[] = {
-    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_02, OBJID_PALACE_OLDMAN},
+    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_02, OBJID_PALACE_OLDMAN1},
 //    {GIRL4, 14, 29, SCRID_PALACE01_GIRL4_01},
 //    {GIRL4, 48, 29, SCRID_PALACE01_GIRL4_02},
   };
@@ -1545,7 +1545,8 @@ void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
     for(i = 0; i < NELEMS(PalaceMmdlData); i++){
       IntrudeField_AddMMdl(fieldWork, 
         PalaceMmdlData[i].grid_x + PALACE_MAP_LEN_GRID * comm_no, PalaceMmdlData[i].grid_z, 
-        0x2001f, PalaceMmdlData[i].objcode, PalaceMmdlData[i].event_id, PalaceMmdlData[i].obj_id);
+        0x2001f, PalaceMmdlData[i].objcode, PalaceMmdlData[i].event_id, 
+        PalaceMmdlData[i].obj_id + comm_no-1);
     }
   }
 }

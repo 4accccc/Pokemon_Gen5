@@ -15,7 +15,6 @@
 #ifndef	__ASM_NO_DEF_ //アセンブラソースは無効に
 
 extern VMCMD_RESULT EvCmdIntrudePalaceMmdlSetting( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdIntrudeMissionStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
@@ -23,9 +22,10 @@ extern VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk );
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetDisguiseCode( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdPalaceInDisguise( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeMissionStartWait( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdIntrudeGetPalaceAreaOffset( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdIntrudeCheckEqpGPower( VMHANDLE *core, void *wk );
 
 //-- イベント単体抜き出し
 extern GMEVENT * EVENT_Intrude_MissionStartWait(GAMESYS_WORK * gsys);
