@@ -311,8 +311,9 @@ select_del_skill:
   WHILE $DECIDE == FALSE
     //ニックネームを0にセット
     _TEMOTI_NICK_NAME( 0, SEL_POS )
+    //覚える技をタグ１にセット
     _WAZA_NAME( 1, NEW_SKILL )
-    //固有技を覚えたい。4つでいっぱい。技忘れる？
+    //固有技○○を覚えたい。4つでいっぱい。技忘れる？
     _SYSWIN_MSG( msg_rotom_waza_01 , POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
     IF $SCWK_ANSWER == 0 THEN   //忘れる
@@ -366,6 +367,9 @@ _RET
 
 //技あきらめる？
 stop_del_skill:
+  //覚える技をタグ１にセット
+  _WAZA_NAME( 1, NEW_SKILL )
+  //では、固有技○○をあきらめる？
   _SYSWIN_MSG( msg_rotom_waza_02 , POS_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )    //ループに戻る可能性があるので、クローズしない
 _RET
