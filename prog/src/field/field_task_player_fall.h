@@ -13,10 +13,11 @@
  * @brief プレイヤーの落下処理タスクを作成する
  *
  * @param fieldmap タスク動作対象のフィールドマップ
+ * @param mmdl     操作対象の動作モデル
  * @param frame    タスク動作フレーム数
  * @param dist     移動距離
  *
  * @return 作成したフィールドタスク
  */
 //------------------------------------------------------------------------------------------
-extern FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, int frame, int dist );
+extern FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, MMDL* mmdl, int frame, int dist );

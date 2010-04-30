@@ -18,13 +18,14 @@
 //========================================================================================== 
 // ■タスクワーク
 //========================================================================================== 
-typedef struct
-{
+typedef struct {
+
   u8             seq;       // シーケンス
   FIELDMAP_WORK* fieldmap;  // 動作対象のフィールドマップ
   u16            frame;     // 動作フレーム数
   u16            endFrame;  // 最大フレーム数
   float          moveDist;  // 移動距離
+  MMDL*          mmdl;      // 操作対象の動作モデル
 
 } TASK_WORK;
 
@@ -41,13 +42,14 @@ static FIELD_TASK_RETVAL FallPlayer( void* wk );
  * @brief プレイヤーの落下処理タスクを作成する
  *
  * @param fieldmap タスク動作対象のフィールドマップ
+ * @param mmdl     操作対象の動作モデル
  * @param frame    タスク動作フレーム数
  * @param dist     移動距離
  *
  * @return 作成したフィールドタスク
  */
 //------------------------------------------------------------------------------------------
-FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, int frame, int dist )
+FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, MMDL* mmdl, int frame, int dist )
 {
   FIELD_TASK* task;
   TASK_WORK* work;
@@ -62,6 +64,7 @@ FIELD_TASK* FIELD_TASK_PlayerFall( FIELDMAP_WORK* fieldmap, int frame, int dist 
   work->frame    = 0;
   work->endFrame = frame;
   work->moveDist = dist;
+	work->mmdl     = mmdl;
 
   return task;
 }
@@ -107,11 +110,10 @@ static FIELD_TASK_RETVAL FallPlayer( void* wk )
 {
   TASK_WORK*      work = (TASK_WORK*)wk;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
+  MMDL*           mmdl = work->mmdl;
   VecFx32       offset;
 
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case 0:
     // 主人公の向きを設定
     MMDL_SetAcmd( mmdl, AC_DIR_D ); 
@@ -127,8 +129,8 @@ static FIELD_TASK_RETVAL FallPlayer( void* wk )
     work->frame++;
     CalcDrawOffset( &offset, work->frame, work->endFrame, work->moveDist );
     MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
-    if( work->endFrame <= work->frame )  // 落下終了
-    { 
+		// 落下終了
+    if( work->endFrame <= work->frame )  { 
       // 砂埃を出す
       FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
       FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );

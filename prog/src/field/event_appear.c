@@ -276,8 +276,12 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
     { // ƒ^ƒXƒN‚Ì’Ç‰Á
       FIELD_TASK* fall;
       FIELD_TASK_MAN* man;
-      fall = FIELD_TASK_PlayerFall( work->fieldmap, 40, 250 );
-      man  = FIELDMAP_GetTaskManager( work->fieldmap ); 
+      FIELD_PLAYER* player;
+			MMDL* mmdl;
+      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+			mmdl   = FIELD_PLAYER_GetMMdl( player ); 
+      fall   = FIELD_TASK_PlayerFall( work->fieldmap, mmdl, 40, 250 );
+      man    = FIELDMAP_GetTaskManager( work->fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, fall, NULL );
     }
     (*seq)++;
