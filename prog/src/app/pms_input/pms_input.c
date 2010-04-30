@@ -2664,6 +2664,7 @@ static void word_input_key(PMS_INPUT_WORK* wk,int* seq)
 		case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
 			PMSND_PlaySE(SOUND_MOVE_CURSOR);
 			PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
+			PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
 			(*seq) = SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE;
 			return;
 		}
@@ -2798,9 +2799,19 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 
 	// ƒXƒNƒ[ƒ‹ƒo[ƒ^ƒbƒ`Œp‘±ƒ`ƒFƒbƒN
 	if( word_input_scroll_bar_touch(wk) == TRUE ){
-		check_wordwin_scroll_pos( wk->vwk, &(wk->word_win) );
-		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN_BAR );
-		(*seq) = SEQ_WORD_SCROLL_BAR_WAIT;
+		ret = check_wordwin_scroll_pos( wk->vwk, &(wk->word_win) );
+    switch(ret)
+    {
+    case WORDWIN_RESULT_SCROLL:
+	  	PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN_BAR );
+	  	(*seq) = SEQ_WORD_SCROLL_BAR_WAIT;
+	  	return;
+	  case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
+	   	PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN_BAR );
+	  	PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
+	  	(*seq) = SEQ_WORD_SCROLL_BAR_WAIT;
+	  	return;
+    }
 		return;
 	}
 
@@ -2830,6 +2841,7 @@ static void word_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	case WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE:
 		PMSND_PlaySE(SOUND_MOVE_CURSOR);
 		PMSIView_SetCommand( wk->vwk, VCMD_SCROLL_WORDWIN );
+		PMSIView_SetCommand( wk->vwk, VCMD_MOVE_WORDWIN_CURSOR );
 		(*seq) = SEQ_WORD_SCROLL_WAIT_AND_CURSOR_MOVE;
 		return;
 	}
@@ -3009,7 +3021,7 @@ static int check_wordwin_scroll_down( WORDWIN_WORK* wordwin )
 			wordwin->line = wordwin->line_max;
 		}
 
-		if( get_wordwin_pos( wordwin ) < wordwin->word_max )
+		if( (int)(get_wordwin_pos( wordwin )) < (int)(wordwin->word_max) -PMSI_DUMMY_LABEL_NUM )  // ‰º1s(PMSI_DUMMY_LABEL_NUM˜g(2˜g))‚ÍG‚ê‚È‚¢˜g‚È‚Ì‚Å
 		{
 			return WORDWIN_RESULT_SCROLL;
 		}
@@ -3028,7 +3040,15 @@ static int check_wordwin_scroll_up_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordw
 	if( wordwin->line ){
 		wordwin->line = PMSIView_GetScrollBarPosCount( vwk, wordwin->line_max );
 		wordwin->scroll_lines = 0;
-		return WORDWIN_RESULT_SCROLL;
+		if( (int)(get_wordwin_pos( wordwin )) < (int)(wordwin->word_max) -PMSI_DUMMY_LABEL_NUM )  // ‰º1s(PMSI_DUMMY_LABEL_NUM˜g(2˜g))‚ÍG‚ê‚È‚¢˜g‚È‚Ì‚Å
+    {
+      return WORDWIN_RESULT_SCROLL;
+    }
+    else
+    {
+			wordwin->cursor_x = 0;
+			return WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE;
+    }
 	}
 	return WORDWIN_RESULT_INVALID;
 }
@@ -3039,7 +3059,15 @@ static int check_wordwin_scroll_down_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wor
 	if( wordwin->line < wordwin->line_max ){
 		wordwin->line = PMSIView_GetScrollBarPosCount( vwk, wordwin->line_max );
 		wordwin->scroll_lines = 0;
-		return WORDWIN_RESULT_SCROLL;
+		if( (int)(get_wordwin_pos( wordwin )) < (int)(wordwin->word_max) -PMSI_DUMMY_LABEL_NUM )  // ‰º1s(PMSI_DUMMY_LABEL_NUM˜g(2˜g))‚ÍG‚ê‚È‚¢˜g‚È‚Ì‚Å
+    {
+      return WORDWIN_RESULT_SCROLL;
+    }
+    else
+    {
+			wordwin->cursor_x = 0;
+			return WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE;
+    }
 	}
 	return WORDWIN_RESULT_INVALID;
 }
@@ -3057,7 +3085,15 @@ static int check_wordwin_scroll_pos( PMS_INPUT_VIEW* vwk, WORDWIN_WORK* wordwin 
     PMSND_PlaySE( SOUND_TOUCH_SLIDEBAR );
   }
 
-  return WORDWIN_RESULT_SCROLL;
+  if( (int)(get_wordwin_pos( wordwin )) < (int)(wordwin->word_max) -PMSI_DUMMY_LABEL_NUM )  // ‰º1s(PMSI_DUMMY_LABEL_NUM˜g(2˜g))‚ÍG‚ê‚È‚¢˜g‚È‚Ì‚Å
+  {
+    return WORDWIN_RESULT_SCROLL;
+  }
+  else
+  {
+  	wordwin->cursor_x = 0;
+		return WORDWIN_RESULT_SCROLL_AND_CURSOR_MOVE;
+  }
 }
 
 
