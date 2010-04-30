@@ -42,6 +42,9 @@
 #define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
 #define GOLD_WIN_KETA   (7) // 所持金数値の桁数
 
+enum {
+  SELECT_WAIT_VALUE = 8,
+};
 //======================================================================
 //  proto
 //======================================================================
@@ -63,6 +66,84 @@ static STRBUF * SetExpandWord(
 //  はい、いいえ　処理
 //======================================================================
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  SCRCMD_WORK * scrcmd_work;
+  u16 * ret_wk;
+}YESNO_EV_WORK;
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT_RESULT YesNoSelectEvent( GMEVENT * event, int * seq, void * work )
+{
+  YESNO_EV_WORK * yew = work;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( yew->scrcmd_work );
+
+  switch (*seq)
+  {
+  case 0:
+    SCRCMD_WORK_SetWaitCount( yew->scrcmd_work, SELECT_WAIT_VALUE );
+    (*seq) ++;
+    /* FALL THROUGH */
+
+  case 1:
+    //一定時間ウェイト後、選択可能にする
+    if ( SCRCMD_WORK_WaitCountDown( yew->scrcmd_work ) == TRUE )
+    {
+      GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( yew->scrcmd_work );
+      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
+      FLDMENUFUNC *mw = FLDMENUFUNC_AddYesNoMenu( msgBG, 0 );
+      SCRIPT_SetFLDMENUFUNC( sc, mw );
+
+      (*seq) ++;
+    }
+    break;
+
+  case 2:
+    {
+      FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
+      FLDMENUFUNC_YESNO ret;
+      ret = FLDMENUFUNC_ProcYesNoMenu( mw );
+      switch ( ret )
+      {
+      case FLDMENUFUNC_YESNO_NULL:
+        break;
+      case FLDMENUFUNC_YESNO_YES:
+        *yew->ret_wk = SCR_YES;
+        (*seq) ++;
+        break;
+      default:
+        *yew->ret_wk = SCR_NO;
+        (*seq) ++;
+        break;
+      }
+    }
+    break;
+
+  case 3:
+    {
+      FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
+      FLDMENUFUNC_DeleteMenu( mw );
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+static GMEVENT * createYesNoEvent( GAMESYS_WORK * gsys, SCRCMD_WORK * work, u16 * ret_wk )
+{
+  GMEVENT * event;
+  YESNO_EV_WORK * yew;
+  event = GMEVENT_Create( gsys, NULL, YesNoSelectEvent, sizeof(YESNO_EV_WORK) );
+  yew = GMEVENT_GetEventWork( event );
+  yew->scrcmd_work = work;
+  yew->ret_wk = ret_wk;
+  return event;
+}
+
+#if 0
+//--------------------------------------------------------------
 /**
  * 「はい・いいえ」処理 ウェイト部分
  * @param  core    仮想マシン制御構造体へのポインタ
@@ -76,7 +157,15 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, core->vm_register[0] );
-  FLDMENUFUNC_YESNO ret = FLDMENUFUNC_ProcYesNoMenu( mw );
+  FLDMENUFUNC_YESNO ret;
+  
+  //一定時間ウェイト後、選択可能にする
+  if ( SCRCMD_WORK_WaitCountDown( work ) == FALSE )
+  {
+    return FALSE;
+  }
+
+  ret = FLDMENUFUNC_ProcYesNoMenu( mw );
   
   if( ret == FLDMENUFUNC_YESNO_NULL ){
     return FALSE;
@@ -91,6 +180,7 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
   FLDMENUFUNC_DeleteMenu( mw );
   return TRUE;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -103,6 +193,7 @@ VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+#if 0
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   FLDMENUFUNC *mw;
   u16 wk_id      = VMGetU16( core );
@@ -112,12 +203,79 @@ VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
   core->vm_register[0] = wk_id;
    
   VMCMD_SetWait( core, EvYesNoWinSelect );
+  SCRCMD_WORK_SetWaitCount( work, SELECT_WAIT_VALUE );
+#endif
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT * event;
+  event = createYesNoEvent( gsys, work, ret_wk );
+  SCRIPT_CallEvent( sc, event );
   return VMCMD_RESULT_SUSPEND;
 }
 
 //======================================================================
 //  メニュー
 //======================================================================
+
+//--------------------------------------------------------------
+///  BMPMENU制御イベント用ワーク
+//--------------------------------------------------------------
+typedef struct {
+  SCRCMD_WORK * scrcmd_work;  ///< スクリプト個別ワークへのポインタ
+  BOOL breakable_flag;        ///< Ｘボタン有効かどうか
+}BMPMENU_EVENT_WORK;
+
+//--------------------------------------------------------------
+///  BMPMENU制御イベント本体
+//--------------------------------------------------------------
+static GMEVENT_RESULT bmpMenuEvent( GMEVENT * event, int *seq, void * work )
+{
+  BMPMENU_EVENT_WORK * bew = work;
+  BOOL result;
+
+  switch ( *seq )
+  {
+  case 0:
+    SCRCMD_WORK_SetWaitCount( bew->scrcmd_work, SELECT_WAIT_VALUE );
+    (*seq) ++;
+    /* FALL THROUGH */
+
+  case 1:
+    if ( SCRCMD_WORK_WaitCountDown( bew->scrcmd_work ) == TRUE )
+    {
+      SCRCMD_WORK_StartMenu( bew->scrcmd_work );
+      (*seq) ++;
+    }
+    break;
+
+  case 2:
+    if ( bew->breakable_flag ) {
+      result = SCRCMD_WORK_ProcMenu_Breakable( bew->scrcmd_work );
+    } else {
+      result = SCRCMD_WORK_ProcMenu( bew->scrcmd_work );
+    }
+    if ( result == TRUE ){
+      return GMEVENT_RES_FINISH;
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+///  BMPMENU制御イベント生成
+//--------------------------------------------------------------
+static GMEVENT * createBmpMenuEvent( GAMESYS_WORK * gsys, SCRCMD_WORK * work, BOOL breakable_flag )
+{
+  GMEVENT * event;
+  BMPMENU_EVENT_WORK * bew;
+  event = GMEVENT_Create( gsys, NULL, bmpMenuEvent, sizeof(BMPMENU_EVENT_WORK) );
+  bew = GMEVENT_GetEventWork( event );
+  bew->scrcmd_work = work;
+  bew->breakable_flag = breakable_flag;
+  return event;
+}
+
 //--------------------------------------------------------------
 /**
  * BMPメニュー初期化
@@ -225,6 +383,7 @@ VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * BMPメニュー	ウェイト部分
@@ -235,11 +394,18 @@ VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk )
 static BOOL EvSelWinWait( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  //一定時間ウェイト後、選択可能にする
+  if ( SCRCMD_WORK_WaitCountDown( work ) == FALSE )
+  {
+    return FALSE;
+  }
+
   if( SCRCMD_WORK_ProcMenu(work) == TRUE ){
     return( TRUE );
   }
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -251,11 +417,18 @@ static BOOL EvSelWinWait( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT * event = createBmpMenuEvent( gsys, work, FALSE );
+  SCRIPT_CallEvent( sc, event );
+#if 0
   SCRCMD_WORK_StartMenu( work );
 	VMCMD_SetWait( core, EvSelWinWait );
+#endif
 	return VMCMD_RESULT_SUSPEND;
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * BMPメニュー	ウェイト部分(xボタンによる中断あり)
@@ -266,11 +439,18 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
 static BOOL EvSelWinWait_Breakable( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  //一定時間ウェイト後、選択可能にする
+  if ( SCRCMD_WORK_WaitCountDown( work ) == FALSE )
+  {
+    return FALSE;
+  }
+
   if( SCRCMD_WORK_ProcMenu_Breakable(work) == TRUE ){
     return( TRUE );
   }
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -282,8 +462,14 @@ static BOOL EvSelWinWait_Breakable( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBmpMenuStart_Breakable( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT * event = createBmpMenuEvent( gsys, work, FALSE );
+  SCRIPT_CallEvent( sc, event );
+#if 0
   SCRCMD_WORK_StartMenu( work );
 	VMCMD_SetWait( core, EvSelWinWait_Breakable );
+#endif
 	return VMCMD_RESULT_SUSPEND;
 }
 
