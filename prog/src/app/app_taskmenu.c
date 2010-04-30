@@ -708,7 +708,7 @@ void APP_TASKMENU_RES_Delete( APP_TASKMENU_RES *wk )
 //-----------------------------------------------------------------------------
 APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID )
 {	
-	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, 0, heapID );
+	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, 0, FALSE ,heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -721,13 +721,15 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, co
  *	@param	w			幅（キャラ単位）
  *	@param	h			高さ（キャラ単位）
  *	@param	anmDouble			BOOL:30fで稼動させる場合でアニメ速度を倍にしたい場合TRUE
+ *	@param	isCenter			BOOL:センタリング
  *
  *	@return	単発用ワーク
  */
 //-----------------------------------------------------------------------------
-APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, HEAPID heapID )
+APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, const BOOL isCenter , HEAPID heapID )
 {	
 	APP_TASKMENU_WIN_WORK *wk;
+	u8 drawX = 2;
 
 	//ワーク作成
 	wk	= GFL_HEAP_AllocMemory( heapID ,sizeof(APP_TASKMENU_WIN_WORK) );
@@ -742,8 +744,14 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
 
 	//読み込み	
 	APP_TASKMENU_TransFrame( wk->bmpwin, res, item->type );
+	if( isCenter == TRUE )
+	{
+    const u32 len = PRINTSYS_GetStrWidth( item->str , res->fontHandle , 0 );
+    drawX = ((w*8)-len-16)/2;
+  }
+	
 	PRINTSYS_PrintQueColor( res->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ), 
-                8+2 , 4+2 , item->str , res->fontHandle , item->msgColor );
+                8+drawX , 4+2 , item->str , res->fontHandle , item->msgColor );
 	GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmpwin );
 
   // プレートのアニメの色

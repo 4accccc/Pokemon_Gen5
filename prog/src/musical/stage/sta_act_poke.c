@@ -255,19 +255,27 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
     ePosTemp = ePos;
-    
+    //”½“]‚µ‚Ä‚à‰E‚Í‰E‚ÉŽ‚ÂI
     if( pokeWork->dir == SPD_RIGHT )
     {
       if( ePos == MUS_POKE_EQU_HAND_R )
       {
         ePosTemp = MUS_POKE_EQU_HAND_L;
-//        ARI_TPrintf("R->L\n");
       }
       else
       if( ePos == MUS_POKE_EQU_HAND_L )
       {
         ePosTemp = MUS_POKE_EQU_HAND_R;
-//        ARI_TPrintf("L->R\n");
+      }
+      else
+      if( ePos == MUS_POKE_EQU_EAR_R )
+      {
+        ePosTemp = MUS_POKE_EQU_EAR_L;
+      }
+      else
+      if( ePos == MUS_POKE_EQU_EAR_L )
+      {
+        ePosTemp = MUS_POKE_EQU_EAR_R;
       }
     }
 

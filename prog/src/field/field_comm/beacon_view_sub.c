@@ -1014,7 +1014,7 @@ static void tmenu_Create( BEACON_VIEW_PTR wk, u8 menu_idx )
   }
   for( i = 0;i < max;i++){
     tmenu[i].work = APP_TASKMENU_WIN_CreateEx( wk->menuRes, &tmenu[i].item, 
-                        px+TMENU_W*i, TMENU_PY, TMENU_W, TMENU_H, TRUE, wk->heap_sID );
+                        px+TMENU_W*i, TMENU_PY, TMENU_W, TMENU_H, TRUE, FALSE ,wk->heap_sID );
   }
 }
 
