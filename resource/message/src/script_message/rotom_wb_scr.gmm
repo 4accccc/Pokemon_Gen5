@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-15T15:33:45"/>
+	<create user="matsumiya" host="W00224" date="2010-04-30T12:27:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1641" top="295" right="2346" bottom="907" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -502,11 +502,11 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 モーターの　中に　はいりこんだ！[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]は　新しく
-[1:07:わざ名:1]を　おぼえたい……！[BE:01:ページ切り替え（クリア）]
+[1:07:わざ名:1]を　覚えたい……！[BE:01:ページ切り替え（クリア）]
 しかし　[1:02:ポケモンニックネーム:0]は
-すでに　わざを　４つ　おぼえている！[BE:01:ページ切り替え（クリア）]
+すでに　技を　４つ　覚えている！[BE:01:ページ切り替え（クリア）]
 [1:07:わざ名:1]の　かわりに
-他の　わざを　忘れさせますか？</language>
+他の　技を　忘れさせますか？</language>
 	</row>
 
 	<row id="msg_rotom_waza_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -519,7 +519,7 @@
 		<language name="JPN" width="256">それでは　[1:07:わざ名:1]を
 おぼえさせるのを　あきらめますか？</language>
 		<language name="JPN_KANJI" width="256">それでは　[1:07:わざ名:1]を
-おぼえさせるのを　あきらめますか？</language>
+覚えさせるのを　あきらめますか？</language>
 	</row>
 
 	<row id="msg_rotom_waza_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -532,7 +532,7 @@
 [1:02:ポケモンニックネーム:0]は
 モーターの　なかから　でてきた！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
-おぼえずに　おわった！[BE:01:ページ切り替え（クリア）]
+覚えずに　終わった！[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]は
 モーターの　中から　でてきた！</language>
 	</row>
@@ -568,7 +568,7 @@
 つかいかたを　きれいにわすれた！▼
 そして……！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
-つかいかたを　きれいに忘れた！▼
+使い方を　きれいに忘れた！▼
 そして……！</language>
 	</row>
 
@@ -580,8 +580,8 @@
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　あたらしく
 [1:07:わざ名:2]を　おぼえた！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:2]を　おぼえた！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:2]を　覚えた！</language>
 	</row>
 
 	<row id="msg_rotom_waza_08" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
@@ -593,7 +593,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:2]を　わすれた……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:2]を　わすれた……</language>
+[1:07:わざ名:2]を　忘れた……</language>
 	</row>
 
 	<row id="msg_rotom_08">
@@ -607,7 +607,7 @@
 モーターに　はいっています！</language>
 		<language name="JPN_KANJI" width="256">選んだ　[1:02:ポケモンニックネーム:0]は　すでに
 その　電化製品の[BE:00:ページ切り替え（行送り）]
-モーターに　はいっています！</language>
+モーターに　入っています！</language>
 	</row>
 
 	<row id="msg_rotom_09">
@@ -634,7 +634,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 モーターに　はいっていません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-モーターに　はいっていません！[BE:01:ページ切り替え（クリア）]</language>
+モーターに　入っていません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rotom_11">
@@ -645,7 +645,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　モーターの　なかに
 はいるのを　あきらめた……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　モーターの　中に
-はいるのを　あきらめた……</language>
+入るのを　あきらめた……</language>
 	</row>
 
 	<flowchart-group-list>
