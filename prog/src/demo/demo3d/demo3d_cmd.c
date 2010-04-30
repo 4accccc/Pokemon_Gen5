@@ -591,9 +591,12 @@ static void DEMOCMD_LightVectorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core,
 typedef struct _TASKWK_TALKWIN_REQ{
   DEMO3D_CMD_WORK* cmd;
 
+  int seq;
   int ct;
   int sync;
 
+  int msg_arc;
+  int msg_id;
   GFL_ARCUTIL_TRANSINFO tInfo;
 
   GFL_BMPWIN *win;
@@ -649,25 +652,63 @@ static void taskAdd_TalkWinReq( DEMO3D_CMD_WORK* wk, int msg_arc, int msg_id, in
 static void tcb_TalkWinReq( GFL_TCBL *tcb , void* tcb_wk )
 {
   TASKWK_TALKWIN_REQ* twk = (TASKWK_TALKWIN_REQ*)tcb_wk;
-  //システム終了かタイムアップで自殺
-  if( twk->cmd->cmdsys_end_f ||
-      (twk->ct++ >= twk->sync) ){
+  DEMO3D_CMD_WORK* cmd = twk->cmd;
+
+  //システム終了で自殺
+  if( twk->cmd->cmdsys_end_f ){
     taskwk_TalkWinReqFree( twk );
     GFL_TCBL_Delete(tcb);
+    return;
+  }
+  switch(twk->seq){
+  case 0:
+    {
+      GFL_MSGDATA *msg_man;
+      STRBUF *str;
+
+      //ストリーム開始
+      msg_man = GFL_MSG_Create(
+		  GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, twk->msg_arc, cmd->tmpHeapID );
+
+      str = GFL_MSG_CreateString( msg_man, twk->msg_id );
+
+      GFL_FONTSYS_SetColor( 1, 2, 15 );
+      twk->printStream = PRINTSYS_PrintStream( twk->win, 0, 0,
+        str, cmd->fontHandle, cmd->msg_spd, cmd->tcbsys, 0, cmd->heapID, 15 );
+
+      GFL_BMPWIN_MakeTransWindow( twk->win );
+      BmpWinFrame_WriteAreaMan( twk->win, WINDOW_TRANS_ON_V, twk->tInfo, TALKWIN_FRAME_PAL );
+
+      GFL_STR_DeleteBuffer( str );
+      GFL_MSG_Delete( msg_man );
+
+      GFL_BG_SetPriority( TALKWIN_BG_FRM, 0 );
+      GFL_BG_SetPriority( DEMO3D_3D_BG_M, 1 );
+      GFL_BG_SetVisible( TALKWIN_BG_FRM, VISIBLE_ON );
+    }
+    twk->seq++;
+    break;
+  case 1:
+    if(twk->ct++ < twk->sync) {
+      break;
+    }
+    taskwk_TalkWinReqFree( twk );
+    GFL_TCBL_Delete(tcb);
+    break;
   }
 }
 
 static void taskwk_TalkWinReqInit( DEMO3D_CMD_WORK* wk, TASKWK_TALKWIN_REQ* twk,
     int msg_arc, int msg_id, int sync, u8 px, u8 py, u8 sx, u8 sy )
 {
-  GFL_MSGDATA *msg_man;
-  STRBUF *str;
   
   MI_CpuClear8( twk, sizeof( TASKWK_TALKWIN_REQ ));
   
   twk->cmd = wk;
   twk->sync = sync;
- 
+  twk->msg_arc = msg_arc;
+  twk->msg_id = msg_id;
+
   //Bmpウィンドウグラフィックセット
   twk->tInfo = BmpWinFrame_GraphicSetAreaMan(
 	  TALKWIN_BG_FRM, TALKWIN_FRAME_PAL, MENU_TYPE_TALK, wk->tmpHeapID );
@@ -678,34 +719,15 @@ static void taskwk_TalkWinReqInit( DEMO3D_CMD_WORK* wk, TASKWK_TALKWIN_REQ* twk,
   
   twk->win = GFL_BMPWIN_Create( TALKWIN_BG_FRM, px, py, sx, sy, TALKWIN_FONT_PAL, GFL_BMP_CHRAREA_GET_F );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( twk->win ), 15 );
-  GFL_BMPWIN_MakeTransWindow( twk->win );
-
-  //ストリーム開始
-  msg_man = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_arc, wk->tmpHeapID );
-
-  str = GFL_MSG_CreateString( msg_man, msg_id );
-
-  GFL_FONTSYS_SetColor( 1, 2, 15 );
-  twk->printStream = PRINTSYS_PrintStream( twk->win, 0, 0,
-      str, wk->fontHandle, wk->msg_spd, wk->tcbsys, 0, wk->heapID, 15 );
-
-  BmpWinFrame_WriteAreaMan( twk->win, WINDOW_TRANS_ON_V, twk->tInfo, TALKWIN_FRAME_PAL );
-
-  GFL_STR_DeleteBuffer( str );
-  GFL_MSG_Delete( msg_man );
-
-  GFL_BG_SetPriority( TALKWIN_BG_FRM, 0 );
-  GFL_BG_SetPriority( DEMO3D_3D_BG_M, 1 );
-  GFL_BG_SetVisible( TALKWIN_BG_FRM, VISIBLE_ON );
 }
 
 static void taskwk_TalkWinReqFree( TASKWK_TALKWIN_REQ* twk )
 {
-  PRINTSYS_PrintStreamDelete( twk->printStream );
+  if( twk->printStream != NULL ){
+    PRINTSYS_PrintStreamDelete( twk->printStream );
+  }
   GFL_FONTSYS_SetDefaultColor();
   
-//	GFL_BMPWIN_ClearScreen( twk->win );
   BmpWinFrame_Clear( twk->win, WINDOW_TRANS_ON_V );
   GFL_BMPWIN_Delete( twk->win );
   BmpWinFrame_GraphicFreeAreaMan( TALKWIN_BG_FRM, twk->tInfo );
