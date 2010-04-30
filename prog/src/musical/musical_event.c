@@ -967,7 +967,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
   u8 rewardNum;
   u8 *rewardArr = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , MUS_REWARD_NUM );
   u32 checkPoint = 0;
-  static const u16 totalPointArr[10] = {20000,15000,10000,5000,2500,1000,500,250,100,0};
+  static const u16 totalPointArr[10] = {12000,8000,5500,3500,2000,1000,500,250,100,0};
   //Ç∆ÇËÇ†Ç¶Ç∏èâä˙âª
   for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
   {
