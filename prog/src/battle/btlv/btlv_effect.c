@@ -1122,15 +1122,53 @@ void    BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int fra
 
   GF_ASSERT( ( move_type == BTLEFF_CAMERA_MOVE_DIRECT ) || ( move_type == BTLEFF_CAMERA_MOVE_INTERPOLATION ) );
 
-  BTLV_EFFECT_GetCameraFocus( position, &pos, &target );
+  if( position & 1 )
+  { 
+    BTLV_EFFECT_GetCameraFocus( position, &pos, &target );
 
-  switch( move_type ){
-  case BTLEFF_CAMERA_MOVE_DIRECT:   //ダイレクト
-    BTLV_CAMERA_MoveCameraPosition( bew->bcw, &pos, &target );
-    break;
-  case BTLEFF_CAMERA_MOVE_INTERPOLATION:  //追従
-    BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, frame, wait, brake );
-    break;
+    switch( move_type ){
+    case BTLEFF_CAMERA_MOVE_DIRECT:   //ダイレクト
+      BTLV_CAMERA_MoveCameraPosition( bew->bcw, &pos, &target );
+      break;
+    case BTLEFF_CAMERA_MOVE_INTERPOLATION:  //追従
+      BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, frame, wait, brake );
+      break;
+    }
+  }
+  else
+  { 
+    switch( bew->besp.rule ){ 
+    case BTL_RULE_SINGLE:
+      BTLV_EFFECT_Add( BTLEFF_1vs1_POS_AA_FOCUS );
+      break;
+    case BTL_RULE_DOUBLE:
+      if( position == BTLV_MCSS_POS_A )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_2vs2_POS_A_FOCUS );
+      }
+      else
+      { 
+        BTLV_EFFECT_Add( BTLEFF_2vs2_POS_C_FOCUS );
+      }
+      break;
+    case BTL_RULE_TRIPLE:
+      if( position == BTLV_MCSS_POS_A )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_3vs3_POS_A_FOCUS );
+      }
+      else if( position == BTLV_MCSS_POS_C )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_1vs1_POS_AA_FOCUS );
+      }
+      else
+      { 
+        BTLV_EFFECT_Add( BTLEFF_3vs3_POS_E_FOCUS );
+      }
+      break;
+    case BTL_RULE_ROTATION:
+      BTLV_EFFECT_Add( BTLEFF_ROTATION_POS_A_FOCUS );
+      break;
+    }
   }
 }
 

@@ -1335,6 +1335,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
       ttw->pos = biwp->pos;
 
+      if( ( biw->main_loop_tcb_flag == TRUE ) && ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_3vs3_CAMERA_ZOOMOUT );
+      }
+
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformDir2Waza, ttw, 1 );
@@ -2855,6 +2860,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 {
 #ifdef ROTATION_NEW_SYSTEM
   TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+  int eff = rotate_camera_focus[ biw->rotate_scr ][ dir - 5 ];
 
   BTLV_INPUT_ClearScreen( biw );
 
@@ -2868,7 +2874,8 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 
   BTLV_EFFECT_Stop();
   biw->camera_work_wait = 0;
-  BTLV_EFFECT_SetCameraFocus( rotate_focus_pos[ biw->rotate_scr ], BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+  //BTLV_EFFECT_SetCameraFocus( rotate_focus_pos[ biw->rotate_scr ], BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+  BTLV_EFFECT_Add( eff );
 #else
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
