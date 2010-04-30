@@ -19,13 +19,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r15r0401_woman2_01
+_EVENT_DATA    ev_r15r0401_assistantw_01
 _EVENT_DATA_END
 
 /**************************************************************/
 /*                ポケモン交換イベント                         */
 /**************************************************************/
-EVENT_START		ev_r15r0401_woman2_01
+EVENT_START		ev_r15r0401_assistantw_01
 	{
 	//交換後話しかけ
 	IF FLAG_ON( FE_R15R0401_TRADE_01 ) THEN
@@ -34,12 +34,12 @@ EVENT_START		ev_r15r0401_woman2_01
 	ELSE
 	
 		_TALK_OBJ_START()
-		//【仮】ポケモン名をセリフにセット
-		_MONS_NAME ( 1 , MONSNO_446  ) //交換先（ゴンベ）
-		_MONS_NAME ( 0 , MONSNO_534  ) //要望（チラチーノ）
+		//ポケモン名をセリフにセット
+		_MONS_NAME ( 1 , MONSNO_479  ) //交換先（ロトム）
+		_MONS_NAME ( 0 , MONSNO_132  ) //要望（メタモン）
 	
 		//交換しようよ
-		_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_01 ,R15R0401_WOMAN2_01)
+		_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_01 ,R15R0401_ASSISTANTW_01)
 		_YES_NO_WIN( SCWK_ANSWER )
 		
 		//はい
@@ -61,15 +61,15 @@ EVENT_START		ev_r15r0401_woman2_01
 				//要望と一致してるかチェック結果格納変数定義
 				DEFINE_LOCAL LWK_TRADE_CHECK
 			
-				//【仮】選択したポケモンが交換可能かチェック（トレードするデータが仮）
-				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_1_TYURINE , LWK_CHOICE )
+				//選択したポケモンが交換可能かチェック（トレードするデータが仮）
+				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_7_ROTOMU , LWK_CHOICE )
 				
 				//交換可能である
 				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
 				
-					//【仮】交換処理
-					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_1_TYURINE , LWK_CHOICE )
-					_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_02 ,R15R0401_WOMAN2_01)
+					//交換処理
+					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_7_ROTOMU , LWK_CHOICE )
+					_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_02 ,R15R0401_ASSISTANTW_01)
 					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 					
@@ -83,14 +83,14 @@ EVENT_START		ev_r15r0401_woman2_01
 				//条件と一致しなかった
 				ELSE
 					//私がほしいのは （ポケモン名）だよ
-					_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_03 ,R15R0401_WOMAN2_01)
+					_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_03 ,R15R0401_ASSISTANTW_01)
 					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 				ENDIF
 			
 			//選択キャンセル
 			ELSE
-				_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_04 ,R15R0401_WOMAN2_01)
+				_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_04 ,R15R0401_ASSISTANTW_01)
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 				
@@ -98,7 +98,7 @@ EVENT_START		ev_r15r0401_woman2_01
 		
 		//いいえ
 		ELSE
-			_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_04 ,R15R0401_WOMAN2_01)
+			_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_04 ,R15R0401_ASSISTANTW_01)
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		ENDIF

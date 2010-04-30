@@ -182,35 +182,78 @@ EVENT_START   ev_c05r0201_boy2_01
 			
 				//要望と一致してるかチェック結果格納変数定義
 				DEFINE_LOCAL LWK_TRADE_CHECK
-			
-				//選択したポケモンが交換可能かチェック
-				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_3_BASURAO , LWK_CHOICE )
-			
-				//交換可能である
-				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
+				DEFINE_LOCAL LWK_VERSION
 				
-					//交換したポケモンを記録
-					_TRADEPOKE_AFTER_SAVE( LWK_CHOICE , SCR_TRPOKE_AFTER_SAVE_C05 )
+				//バージョンによって参照するテーブルを変更する
+				//バージョンを取得
+				_GET_ROM_VERSION( LWK_VERSION )
 				
-					//交換処理
-					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_3_BASURAO , LWK_CHOICE )
-					_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_02 ,C05R0201_BOY2_01)
-					_LAST_KEYWAIT()
-					_BALLOONWIN_CLOSE()
+				//ブラックの場合
+				IF $LWK_VERSION == VERSION_BLACK THEN
+				
+					//選択したポケモンが交換可能かチェック
+					_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_3_BASURAO , LWK_CHOICE )
+				
+					//交換可能である
+					IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
 					
-					//==================================//
+						//交換したポケモンを記録
+						_TRADEPOKE_AFTER_SAVE( LWK_CHOICE , SCR_TRPOKE_AFTER_SAVE_C05 )
+					
+						//交換処理
+						_FIELD_POKE_TRADE ( FLD_TRADE_POKE_3_BASURAO , LWK_CHOICE )
+						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_02 ,C05R0201_BOY2_01)
+						_LAST_KEYWAIT()
+						_BALLOONWIN_CLOSE()
+						
+						//==================================//
+				
+						//交換完了
+						_FLAG_SET ( FE_C05R0201_POKETRADE_01 )
+								
+						//==================================//
 			
-					//交換完了
-					_FLAG_SET ( FE_C05R0201_POKETRADE_01 )
-							
-					//==================================//
-		
-				//条件と一致しなかった
+					//条件と一致しなかった
+					ELSE
+						//オイラがほしいのは違う
+						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_03 ,C05R0201_BOY2_01)
+						_LAST_KEYWAIT()
+						_BALLOONWIN_CLOSE()
+					ENDIF
+					
+				//ホワイトの場合
 				ELSE
-					//オイラがほしいのは違う
-					_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_03 ,C05R0201_BOY2_01)
-					_LAST_KEYWAIT()
-					_BALLOONWIN_CLOSE()
+				
+					//選択したポケモンが交換可能かチェック
+					_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_4_BASURAO , LWK_CHOICE )
+				
+					//交換可能である
+					IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
+					
+						//交換したポケモンを記録
+						_TRADEPOKE_AFTER_SAVE( LWK_CHOICE , SCR_TRPOKE_AFTER_SAVE_C05 )
+					
+						//交換処理
+						_FIELD_POKE_TRADE ( FLD_TRADE_POKE_4_BASURAO , LWK_CHOICE )
+						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_02 ,C05R0201_BOY2_01)
+						_LAST_KEYWAIT()
+						_BALLOONWIN_CLOSE()
+						
+						//==================================//
+				
+						//交換完了
+						_FLAG_SET ( FE_C05R0201_POKETRADE_01 )
+								
+						//==================================//
+			
+					//条件と一致しなかった
+					ELSE
+						//オイラがほしいのは違う
+						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_03 ,C05R0201_BOY2_01)
+						_LAST_KEYWAIT()
+						_BALLOONWIN_CLOSE()
+					ENDIF
+				
 				ENDIF
 			
 			//選択キャンセル
