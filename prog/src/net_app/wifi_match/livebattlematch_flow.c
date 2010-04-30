@@ -60,12 +60,12 @@
 
 //#define DEBUG_REGULATIONCRC_PASS  //レギュレーションのCRCチェックを通過する
 #define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
+#define DEBUGWIN_USE                  //デバッグウィンドウを使用する
 
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
 //#define DEBUG_REGULATION_RECVCHECK_PASS  //レギュレーションの受信チェックを通過する
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 
-#define DEBUGWIN_USE
 
 #endif //PM_DEBUG
 
@@ -708,9 +708,11 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( p_wk->p_irc );
         *p_seq  = SEQ_WAIT_RECV_DEBUG;
       }
+#endif //DEBUG_REGULATION_RECV_A_PASS
     }
     break;
 
+#ifdef DEBUG_REGULATION_RECV_A_PASS
   case SEQ_WAIT_RECV_DEBUG:
     if( LIVEBATTLEMATCH_IRC_WaitCancelRecvRegulation( p_wk->p_irc ) )
     { 
@@ -857,11 +859,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       SAVE_RESULT result;
       result = GAMEDATA_SaveAsyncMain(p_wk->param.p_gamedata);
       switch(result){
-      case SAVE_RESULT_CONTINUE:
-      case SAVE_RESULT_LAST:
-        break;
       case SAVE_RESULT_OK:
-      case SAVE_RESULT_NG:
         *p_seq  = SEQ_SUCCESS_END;
         break;
       }
