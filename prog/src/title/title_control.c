@@ -145,6 +145,40 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 #else
 	switch( *seq  ){
 	case 0:		// 社名表示
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, NULL );
+		*seq = 1;
+		break;
+
+	case 1:		// 社名デモ
+		cdemo_data.mode = COMMANDDEMO_MODE_GF_LOGO;
+		cdemo_data.skip = COMMANDDEMO_SKIP_ON;
+		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		*seq = 2;
+		break;
+
+	case 2:
+		cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE1;
+		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		*seq = 3;
+		break;
+
+	case 3:
+		cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE2;
+		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
+		*seq = 4;		// タイトルへ
+		break;
+
+	case 4:		// メインタイトル
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
+		*seq = 0;
+		break;
+	}
+/*
+	switch( *seq  ){
+	case 0:		// 社名表示
 		cdemo_data.mode = COMMANDDEMO_MODE_OP_MOVIE1;
 		cdemo_data.skip = COMMANDDEMO_SKIP_ON;
 		cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
@@ -162,6 +196,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 		*seq = 0;
 		break;
 	}
+*/
 #endif
 
 	return GFL_PROC_RES_CONTINUE;
