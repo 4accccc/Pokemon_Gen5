@@ -213,11 +213,6 @@ void FLDSKILL_InitCheckWork(
     }
   }
 
-  //パレス＆裏フィールドにいるときは、すべてのフィールド技を使えないようにする
-  if ( GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData( scwk->gsys ) ) == TRUE )
-  {
-    scwk->enable_skill = 0;
-  }
 
   //海底神殿の設定
   {
@@ -239,6 +234,12 @@ void FLDSKILL_InitCheckWork(
         }
       }
     }
+  }
+
+  //パレス＆裏フィールドにいるときは、すべてのフィールド技を使えないようにする
+  if ( GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData( scwk->gsys ) ) == TRUE )
+  {
+    scwk->enable_skill = 0;
   }
 }
 

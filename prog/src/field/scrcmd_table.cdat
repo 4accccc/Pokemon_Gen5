@@ -857,6 +857,10 @@
 	//イベントBGMの再生 ( FOフレーム数指定ver. )
 	DEF_CMD( EvCmdBgmPlayEx, EV_SEQ_START_EVENT_BGM_EX )
 
+  //鑑定士
+	DEF_CMD( EvCmdItemJudgeSetWordSet, EV_SEQ_ITEMJUDGE_SET_WORDSET )
+	DEF_CMD( EvCmdItemJudgeAddMoney, EV_SEQ_ITEMJUDGE_ADD_MONEY )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   

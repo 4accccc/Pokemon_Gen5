@@ -36,6 +36,8 @@ extern "C"{
 //-----------------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdItemJudgeCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdItemJudgeHaveCheck( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdItemJudgeSetWordSet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdItemJudgeAddMoney( VMHANDLE *core, void *wk );
 
 #ifdef _cplusplus
 }	// extern "C"{

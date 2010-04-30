@@ -147,4 +147,90 @@ VMCMD_RESULT EvCmdItemJudgeHaveCheck( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  金額をワードセットに設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdItemJudgeSetWordSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  HEAPID heapID = FIELDMAP_GetHeapID( fparam->fieldMap );
+  u16 item_no = SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_type = SCRCMD_GetVMWorkValue( core, work );
+  u16 buf_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 keta = SCRCMD_GetVMWorkValue( core, work );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
+  ITEM_JUDGE_DATA* p_data;
+  u32 size;
+  int  i;
+
+  GF_ASSERT( obj_type <= SCR_ITEM_JUDGE_OBJTYPE_KOUKO );
+  GF_ASSERT( item_no < ITEM_DATA_MAX );
+
+  //TOMOYA_Printf( "item_no %d  obj_type %d\n", item_no, obj_type );
+
+  // テーブルの読み込み
+  p_data = GFL_ARC_UTIL_LoadEx( ARCID_ITEM_JUDGE, sc_ARC_DATA[obj_type], FALSE, GFL_HEAP_LOWID(heapID), &size );
+  size /= sizeof(ITEM_JUDGE_DATA);
+
+  // SEARCH
+  for( i=0; i<size; i++ ){
+    //TOMOYA_Printf( "item_no %d == %d\n", p_data[i].item_no, item_no );
+    if( p_data[i].item_no == item_no ){
+      //TOMOYA_Printf( "money %d\n", p_data[i].money );
+      WORDSET_RegisterNumber( wordset, buf_id, p_data[i].money, keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      break;
+    }
+  }
+  GFL_HEAP_FreeMemory( p_data );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  金額を足しこむ
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdItemJudgeAddMoney( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  HEAPID heapID = FIELDMAP_GetHeapID( fparam->fieldMap );
+  u16 item_no = SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_type = SCRCMD_GetVMWorkValue( core, work );
+  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
+  MYSTATUS*  mystatus = &player->mystatus;
+  ITEM_JUDGE_DATA* p_data;
+  u32 size;
+  int  i;
+
+  GF_ASSERT( obj_type <= SCR_ITEM_JUDGE_OBJTYPE_KOUKO );
+  GF_ASSERT( item_no < ITEM_DATA_MAX );
+
+  //TOMOYA_Printf( "item_no %d  obj_type %d\n", item_no, obj_type );
+
+  // テーブルの読み込み
+  p_data = GFL_ARC_UTIL_LoadEx( ARCID_ITEM_JUDGE, sc_ARC_DATA[obj_type], FALSE, GFL_HEAP_LOWID(heapID), &size );
+  size /= sizeof(ITEM_JUDGE_DATA);
+
+  // SEARCH
+  for( i=0; i<size; i++ ){
+    //TOMOYA_Printf( "item_no %d == %d\n", p_data[i].item_no, item_no );
+    if( p_data[i].item_no == item_no ){
+      //TOMOYA_Printf( "money %d\n", p_data[i].money );
+      MISC_AddGold( GAMEDATA_GetMiscWork(gdata), p_data[i].money );
+      break;
+    }
+  }
+  GFL_HEAP_FreeMemory( p_data );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+
 

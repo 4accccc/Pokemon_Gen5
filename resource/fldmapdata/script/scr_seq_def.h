@@ -10581,6 +10581,52 @@
   .short \ret_money
   .endm  
 
+//--------------------------------------------------------------
+/**
+ *  _ITEMJUDGE_SET_WORD_MONEY     鑑定士 金額をワードセットに設定
+ *  @param  item_no   鑑定するアイテム
+ *  @param  obj_type  鑑定する人  
+ *                    SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
+ *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
+ *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
+ *  @param  buf_id    ワードセットのバッファID
+ *  @param  keta      桁
+ *
+ */
+//--------------------------------------------------------------
+#define _ITEMJUDGE_SET_WORD_MONEY( item_no, obj_type, buf_id, keta ) \
+    _ASM_ITEMJUDGE_SET_WORD_MONEY item_no, obj_type, buf_id, keta
+
+  .macro _ASM_ITEMJUDGE_SET_WORD_MONEY item_no, obj_type, buf_id, keta
+  .short EV_SEQ_ITEMJUDGE_SET_WORDSET
+  .short \item_no
+  .short \obj_type
+  .short \buf_id
+  .short \keta
+  .endm  
+
+//--------------------------------------------------------------
+/**
+ *  _ITEMJUDGE_ADD_MONEY     鑑定士 金額を所持金に加算
+ *  @param  item_no   鑑定するアイテム
+ *  @param  obj_type  鑑定する人  
+ *                    SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
+ *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
+ *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
+ *
+ */
+//--------------------------------------------------------------
+#define _ITEMJUDGE_ADD_MONEY( item_no, obj_type ) \
+    _ASM_ITEMJUDGE_ADD_MONEY item_no, obj_type
+
+  .macro _ASM_ITEMJUDGE_ADD_MONEY item_no, obj_type
+  .short EV_SEQ_ITEMJUDGE_ADD_MONEY
+  .short \item_no
+  .short \obj_type
+  .endm  
+
 
 
 
