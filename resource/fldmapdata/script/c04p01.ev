@@ -164,8 +164,6 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
 	_OBJ_ANIME_WAIT()
 	
-//	_BGM_FADEOUT( 100, 60 )
-	
 	//-------------ŠÏ——ŽÔ–¢ŽÀ‘•------------------------
 	
 	//‰æ–ÊˆÃ“]

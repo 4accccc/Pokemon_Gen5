@@ -798,7 +798,8 @@ sub_sage_appear:
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
-	_BGM_FADEOUT(0, 30)//–³‰¹‚É‚·‚é
+	//–³‰¹‚É‚·‚é
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 30 )
 
 	_TIME_WAIT( 30 )
 

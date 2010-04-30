@@ -129,11 +129,12 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//われら６人を相手に勝ち残れるとは思えん
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_02, N01R0101_SAGE2_02, POS_UP )
 	_MSGWIN_CLOSE()
-
-	_BGM_FADEOUT(0, 30)
-
-	_TIME_WAIT( 30 )
-
+	
+	_TIME_WAIT( 15 )
+	
+	//BGM無音へ
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 6 )
+	
 	//???だいじょうぶだろうよ
 	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
 	_MSGWIN_CLOSE()
@@ -255,6 +256,9 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
+
+	//BGM戻す
+	_END_EVENT_BGM()
 
 	//========================================//
 	

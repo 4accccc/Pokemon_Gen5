@@ -84,7 +84,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	_BGM_PLAY( SEQ_BGM_E_SAGE )
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 	
 	//Ｎ：メッセージ
 	_BALLOONWIN_OBJMSG_WB( msg_c09r0501_boss_01w, msg_c09r0501_boss_01b, C09R0501_N_01, DIR_UP )
@@ -130,10 +130,10 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_OBJ_ANIME( C09R0501_N_01, anm_n_hand )
 	_OBJ_ANIME_WAIT()
 	
-	//！注意！ BGM演出のため、特別にBGMフェードを個別にかけています。[100413斉藤マ]
+	//画面暗転、BGMフェード
 	_DEMO_FADEOUT_BLACK_CALL()
-	_BGM_FADEOUT( 0, 6 )
-	_BGM_STOP()
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 6 )
+	
 	//Ｎ城出現デモ=============================
 	
 	//マップマトリクスの差し替えフラグをON Ｎ城への通路が突き刺さる
@@ -153,7 +153,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_CAMERA_MOVE( 9688,0,970752,1081344,196655,622592,1 )
 	
 	_DEMO_FADEIN_BLACK_CALL()
-	_BGM_PLAY( SEQ_BGM_N_CASTLE_BRIDGE )
+	_START_EVENT_BGM( SEQ_BGM_N_CASTLE_BRIDGE )
 	
 	//あれが僕のお城…
 	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_boss_08, C09R0501_N_01, POS_UL )
