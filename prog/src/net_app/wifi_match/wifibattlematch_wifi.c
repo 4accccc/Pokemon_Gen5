@@ -99,7 +99,8 @@ typedef enum
 
   //大会期間チェックの戻り値
   WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE  = 0,//期間内
-  WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER,     //期間をすぎた
+  WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER,     //期間後
+  WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE,   //期間前
 
   //ポケモン不正チェックの戻り値
   WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS  = 0,  //成功
@@ -2252,7 +2253,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
         *p_seq  = SEQ_RECV_SAKE_DATA;
       }
-      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER )
+      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER
+          || ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE )
       { 
         *p_seq  = SEQ_NEXT_START;
       }
@@ -2945,7 +2947,8 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         p_wk->is_wificup_end  = TRUE;
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
       }
-      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER )
+      else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER ||
+          ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE )
       { 
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextSendTime );
       }
@@ -3321,6 +3324,8 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_CHECK_CUP_STATUS,
 
     SEQ_CHECK_DATE,
+
+    SEQ_START_DATEBEFORE_MSG,
     SEQ_START_DATE_MSG,
     SEQ_START_SAVE_MSG,
     SEQ_CHECK_LOCK,
@@ -3384,7 +3389,12 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
                         now_date.year, now_date.month, now_date.day, now,
                         end_date.year, end_date.month, end_date.day, end );
 
-      if( ret && ( start <= now && now <= end ) )
+      if( ret && ( now <= start ) )
+      { 
+        p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE;
+        *p_seq  = SEQ_START_DATE_MSG;
+      }
+      else if( ret && ( start <= now && now <= end ) )
       {
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE;
         *p_seq  = SEQ_END;
@@ -3395,6 +3405,12 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         *p_seq  = SEQ_START_DATE_MSG;
       }
     }
+    break;
+
+  case SEQ_START_DATEBEFORE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_38, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END );
     break;
 
   case SEQ_START_DATE_MSG:
