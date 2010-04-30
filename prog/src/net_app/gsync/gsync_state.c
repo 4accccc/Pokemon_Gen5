@@ -156,6 +156,7 @@ struct _G_SYNC_WORK {
   int lvup;
   int percent;
   int lv1timer;
+  int time;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
   char tempbuffer[30];
   u8 musicalNo;      ///< webで選択した番号  無い場合 0
@@ -409,7 +410,22 @@ static void _wakeupActio9(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
+  pWork->time--;
+  if(pWork->time>0){
+    return;
+  }
+  if(pWork->time==0){
+    PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
+    PMSND_FadeInBGM(PMSND_FADE_FAST);
+  }
+  
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+
+    PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
+    PMSND_FadeInBGM(PMSND_FADE_FAST);
+
     _CHANGE_STATE(_wakeupActio92);
   }
 }
@@ -421,7 +437,6 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-//  if(GFL_UI_KEY_GetTrg()){
     if(pWork->lvup==0){
       _CHANGE_STATE(_wakeupActio92);
     }
@@ -429,8 +444,13 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
       GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
       GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_015, pWork->lvup, pWork->pp);
       GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
+
+      PMSND_PauseBGM(TRUE);
+      PMSND_PushBGM();
+      PMSND_PlayBGM( SEQ_ME_LVUP);
+      pWork->time = 60*3;
+      _CHANGE_STATE(_wakeupActio9);
     }
-    _CHANGE_STATE(_wakeupActio92);
   }
 }
 
@@ -472,9 +492,15 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
     if(pWork->lvup!=0){  //レベル更新
       int level = PP_Get( pp, ID_PARA_level, 0);
-      level += pWork->lvup;
-      if(level > 100){
+      if(level==100){
+        pWork->lvup=0;
+      }
+      if((level + pWork->lvup) > 100){
+        pWork->lvup = 100 - level;
         level = 100;
+      }
+      else{
+        level += pWork->lvup;
       }
       POKETOOL_MakeLevelRevise( pp, level);
     }
@@ -611,6 +637,7 @@ static void _cgearsave3(G_SYNC_WORK* pWork)
 {
   pWork->cgearNo=DREAM_WORLD_NOPICTURE;
   GFL_HEAP_FreeMemory(pWork->pCGearWork);
+  pWork->pCGearWork=NULL;
   _CHANGE_STATE(_exsaveEnd);
 }
 
@@ -648,6 +675,9 @@ static void _cgearsave(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_cgearsave3);
   }
   else{
+    OS_TPrintf("CGEARサイズ %x %x",size, SAVESIZE_EXTRA_CGEAR_PICTURE);
+
+
     SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, pWork->heapID,
                                pWork->pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE);
     GFL_STD_MemCopy(pCRC, pPic->picture, size);
@@ -662,6 +692,7 @@ static void _zukansave3(G_SYNC_WORK* pWork)
 {
   pWork->zukanNo=DREAM_WORLD_NOPICTURE;
   GFL_HEAP_FreeMemory(pWork->pZknWork);
+  pWork->pZknWork=NULL;
   _CHANGE_STATE(_exsaveEnd);
 }
 
@@ -942,7 +973,7 @@ static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SER
     for(i=0;i<DREAM_WORLD_DATA_MAX_FURNITURE;i++){
       DREAMWORLD_SV_SetFurnitureData(pDreamSave, i,   &pDream->Furniture[i]);
     }
-    DREAMWORLD_SV_SetIsSyncFurniture(pDreamSave, FALSE);
+    DREAMWORLD_SV_SetSelectFurnitureNo(pDreamSave, DREAM_WORLD_NOFURNITURE);
   }
 }
 
@@ -1280,10 +1311,20 @@ static void _wakeupAction12(G_SYNC_WORK* pWork)
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed_shadow);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_rug_ani3);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
 
-  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_003);
+  {
+    DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+    if( DREAMWORLD_SV_GetItemRestNum(pDreamSave) ){
+      GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_014);
+    }
+    else{
+      GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_003);
+    }
+  }
+  
   PMSND_PlaySE(SEQ_SE_SYS_26);
 
   _CHANGE_STATE(_wakeupAction2);
@@ -1336,7 +1377,7 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-
+#if 0
   {
     DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
     if( DREAMWORLD_SV_GetItemRestNum(pDreamSave) ){
@@ -1350,7 +1391,8 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
       _CHANGE_STATE(_wakeupAction12);
     }
   }
-  
+#endif  
+  _CHANGE_STATE(_wakeupAction12);
 }
 
 
@@ -1456,6 +1498,41 @@ static void _playingEnd(G_SYNC_WORK* pWork)
 }
 
 
+
+static void _playingPlaying1(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    _CHANGE_STATE(_networkClose);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   遊んで無いのでおわり
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _playingPlaying(G_SYNC_WORK* pWork)
+{
+
+ if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_013);
+  _CHANGE_STATE(_playingPlaying1);
+
+
+}
+
+
+
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン起こし処理
@@ -1479,9 +1556,13 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
       else if(DREAM_WORLD_SERVER_PLAY_END == status){  //OK
         _CHANGE_STATE(_wakeupAction1);
       }
-      else if((DREAM_WORLD_SERVER_PLAY_ACTIVE == status) || (DREAM_WORLD_SERVER_PLAY_NONE==status)){  //NG
+      else if(DREAM_WORLD_SERVER_PLAY_NONE==status){  //NG
         //GSYNC_010
         _CHANGE_STATE(_playingEnd);
+      }
+      else if(DREAM_WORLD_SERVER_PLAY_ACTIVE == status){  //NG
+        //GSYNC_010
+        _CHANGE_STATE(_playingPlaying);
       }
       else if(DREAM_WORLD_SERVER_PLAY_FINISH == status){ //LV1だけど サービス終わり
         _CHANGE_STATE(_wakeupAction1);
@@ -1804,7 +1885,10 @@ static void _updateSave(G_SYNC_WORK* pWork)
     GFL_RTC_GetDate( &date );
     DREAMWORLD_SV_SetTime(pDream , GFDATE_Set(date.year,date.month,date.day,date.week));
     //家具を送信した
-    DREAMWORLD_SV_SetIsSyncFurniture(pDream, TRUE);
+    if(DREAMWORLD_SV_GetSelectFurnitureNo(pDream) != DREAM_WORLD_NOFURNITURE){
+      DREAMWORLD_SV_SetIsSyncFurniture(pDream, TRUE);
+      DREAMWORLD_SV_SetSelectFurnitureNo(pDream,  DREAM_WORLD_INVALID_FURNITURE );
+    }
   }
   pWork->percent=_UPLOAD_PROCESS_PERCENT;
 
@@ -2039,6 +2123,9 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
     BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
     DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
   }
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed_shadow);
+  
   _CHANGE_STATE(_upeffectStart);
 
 }
@@ -2126,7 +2213,7 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
     state( pWork );
     ret = GFL_PROC_RES_CONTINUE;
   }
-
+  
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
@@ -2165,6 +2252,11 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
   if(pWork->pCGearWork){
     GFL_HEAP_FreeMemory(pWork->pCGearWork);
   }
+#if PM_DEBUG
+  if(!GFL_HEAP_CheckHeapSafe(pWork->heapID)){
+    GF_ASSERT(0);
+  }
+#endif
   if(pWork->pp){
     GFL_HEAP_FreeMemory(pWork->pp);
   }

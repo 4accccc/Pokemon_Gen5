@@ -225,9 +225,9 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->pMessageStrBufEx);
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
-  GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
+  GFL_TCBL_Exit(pWork->pMsgTcblSys);
 
 	GFL_BMPWIN_Exit();
   GFL_HEAP_FreeMemory(pWork);

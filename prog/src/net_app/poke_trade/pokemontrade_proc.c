@@ -3295,55 +3295,6 @@ static void _VBlank( GFL_TCB *tcb, void *work )
   }
 }
 
-
-#if PM_DEBUG
-//--------------------------------------------------------------
-/**
- * @brief   デバッグ用に適当に手持ちポケモンをAdd
- * @param   gsys
- */
-//--------------------------------------------------------------
-static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
-{
-  POKEMON_PARAM *pp;
-  const STRCODE *name;
-  int i,itemno;
-  MAIL_DATA* pMail;
-  STRBUF* pStrBuf= GFL_STR_CreateBuffer( 128, heapID );
-
-  while( PokeParty_GetPokeCount(party)){
-    PokeParty_Delete(party,0);
-  }
-
-  name = MyStatus_GetMyName( myStatus );
-
-  pp = PP_Create(93, 100, 123456, GFL_HEAPID_APP);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-
-  pMail=MailData_MailEventDataMake(pp, 1, MyStatus_GetMySex( myStatus ),pStrBuf,
-                                   123, heapID);
-  itemno = ITEM_MailNumGet(MailData_GetDesignNo(pMail));
-  PP_Put(pp,ID_PARA_mail_data,(u32)pMail);
-  PP_Put(pp,ID_PARA_item,itemno);
-
-  PokeParty_Add(party, pp);
-
-  PP_Setup(pp, MONSNO_510, 100, 123456);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PokeParty_Add(party, pp);
-  PokeParty_Add(party, pp);
-  PokeParty_Add(party, pp);
-  PP_Setup(pp, MONSNO_511, 100, 123456);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PokeParty_Add(party, pp);
-  PokeParty_Add(party, pp);
-  GFL_HEAP_FreeMemory(pp);
-  GFL_HEAP_FreeMemory(pMail);
-  GFL_HEAP_FreeMemory(pStrBuf);
-}
-#endif
-
 //------------------------------------------------------------------------------
 /**
  * @brief   セーブ関連の初期化と開放

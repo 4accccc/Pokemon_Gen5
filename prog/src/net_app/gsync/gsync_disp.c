@@ -507,8 +507,6 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
         p_handle , NARC_gsync_hand_obj_NCER, NARC_gsync_hand_obj_NANR , pWork->heapID  );
 
 
-    _SetBed(pWork, NANR_gsync_obj_bed);
-    _SetBed(pWork, NANR_gsync_obj_bed_shadow);
     _CreatePokeIconResource(pWork);
 
     GFL_ARC_CloseDataHandle(p_handle);
@@ -548,8 +546,10 @@ void GSYNC_DISP_ResetCallback(GSYNC_DISP_WORK* pWork,int no)
 
 void GSYNC_DISP_ObjEnd(GSYNC_DISP_WORK* pWork,int no)
 {
-  GFL_CLACT_WK_Remove( pWork->curIcon[no] );
-  pWork->curIcon[no]=NULL;
+  if(pWork->curIcon[no]){
+    GFL_CLACT_WK_Remove( pWork->curIcon[no] );
+    pWork->curIcon[no]=NULL;
+  }
 }
 
 

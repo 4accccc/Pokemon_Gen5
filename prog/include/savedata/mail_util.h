@@ -112,19 +112,6 @@ extern void MAIL_GetMailData(MAIL_BLOCK* block,MAILBLOCK_ID blockID,int dataID,M
  */
 extern void MAILDATA_CreateFromSaveData( MAIL_DATA* dat,u8 design_no,u8 pos,GAMEDATA *gamedata );
 
-/**
- *  @brief  メールポケモンイベント専用メールデータ生成
- *
- *  @param  pp      メールを持たせるポケモンのポケパラ
- *  @param  design_no メールのイメージNo
- *  @param  oya_sex   親の性別
- *  @param  oya_name  親の名前
- *  @param  oya_id    親のトレーナーID
- *
- *  @com  メモリをAllocして返すので、呼び出し側が解放すること！
- */
-extern MAIL_DATA* MailData_MailEventDataMake(POKEMON_PARAM* pp,
-  u8 design_no,u8 oya_sex,STRBUF* oya_name,u8 oya_id, HEAPID heapID);
 
 
 

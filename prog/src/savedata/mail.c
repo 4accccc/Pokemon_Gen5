@@ -265,49 +265,6 @@ void MAILDATA_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos, GAMEDATA* g
 }
 
 /**
- *  @brief  メールポケモンイベント専用メールデータ生成
- *
- *  @param  pp      メールを持たせるポケモンのポケパラ
- *  @param  design_no メールのイメージNo
- *  @param  oya_sex   親の性別
- *  @param  oya_name  親の名前
- *  @param  oya_id    親のトレーナーID
- *
- *  @com  メモリをAllocして返すので、呼び出し側が解放すること！
- */
-MAIL_DATA* MailData_MailEventDataMake(POKEMON_PARAM* pp,
-  u8 design_no,u8 oya_sex,STRBUF* oya_name,u8 oya_id, HEAPID heapID)
-{
-  MAIL_DATA* dat=MailData_CreateWork(heapID);
-
-  MailData_Clear(dat);
-  dat->design = design_no;
-
-  //名前
-  GFL_STD_MemCopy( oya_name, dat->name, BUFLEN_PERSON_NAME );
-
-  //性別
-  dat->sex = oya_sex;
-  //トレーナーID
-  dat->writerID = oya_id;
-  
-  //簡易文データセット
-  PMSDAT_SetSentence( &dat->msg[0], 1, 7 );
-  PMSDAT_SetWord( &dat->msg[0], 0, 1349 );
-  PMSDAT_SetWord( &dat->msg[0], 1, PMS_WORD_NULL );
-  
-  PMSDAT_SetSentence( &dat->msg[1], 1, 15 );
-  PMSDAT_SetWord( &dat->msg[1], 0, 1371 );
-  PMSDAT_SetWord( &dat->msg[1], 1, PMS_WORD_NULL );
-  
-  PMSDAT_SetSentence( &dat->msg[2], 2, 1 );
-  PMSDAT_SetWord( &dat->msg[2], 0, 41 );
-  PMSDAT_SetWord( &dat->msg[2], 1, PMS_WORD_NULL );
-  
-  return dat;
-}
-
-/**
  *  @brief  メールデータ　トレーナーID取得
  */
 u32 MailData_GetWriterID(const MAIL_DATA* dat)
