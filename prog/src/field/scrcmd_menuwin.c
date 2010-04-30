@@ -1828,8 +1828,8 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   u16 msg_id = VMGetU16( core );
-  u8 x = VMGetU8( core );
-  u8 y = VMGetU8( core );
+  u16 x = SCRCMD_GetVMWorkValue( core, work );
+  u16 y = SCRCMD_GetVMWorkValue( core, work );
   u16 win_id = VMGetU16( core );
   u16 sx;
   u8 cx;

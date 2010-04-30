@@ -1355,8 +1355,8 @@
   .macro _ASM_SUBWIN_MSG  msg_id, pos_x, pos_y, win_id
   .short EV_SEQ_SUBWIN_MSG
   .short \msg_id
-  .byte \pos_x
-  .byte \pos_y
+  .short \pos_x
+  .short \pos_y
   .short \win_id
   .endm
 
