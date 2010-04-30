@@ -34,6 +34,8 @@
 #define R04_FLD_ITEM_11                   19
 #define R04_FLD_ITEM_09                   20
 #define R04_MOUNTAIN_01                   21
+#define TR_BACKPACKERM_07                 22
+#define TR_WORKER2_16                     23
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

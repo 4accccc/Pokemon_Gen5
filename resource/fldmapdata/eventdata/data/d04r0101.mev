@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/27 18:39:51
+#save date:2010/04/30 20:12:15
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0101.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0101.wms
 #ID name
 TR_ESPW_01
 #OBJ CODE Number
-TRAINERW
+ESPW
 #MOVE CODE Number
 MV_UP
 #EVENT TYPE Number
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_ESPM_01
 #OBJ CODE Number
-TRAINERM
+ESPM
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number

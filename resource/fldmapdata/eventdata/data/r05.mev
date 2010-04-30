@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/29 14:04:48
+#save date:2010/04/30 20:18:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -233,7 +233,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_ARTIST_01
 #OBJ CODE Number
-MIDDLEMAN1
+OLDMAN1
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
