@@ -46,8 +46,6 @@ _EVENT_DATA		ev_c03r0801_wkobjcode11_01
 _EVENT_DATA		ev_c03r0801_wkobjcode12_01
 _EVENT_DATA		ev_c03r0801_wkobjcode13_01
 _EVENT_DATA		ev_c03r0801_wkobjcode14_01
-_EVENT_DATA		ev_c03r0801_babygirl1_01
-_EVENT_DATA		ev_c03r0801_babygirl1_02
 _EVENT_DATA		ev_zone_c03r0801
 _EVENT_DATA		ev_pos_c03r0801_move_01
 _EVENT_DATA		ev_reserve_c03r0801_cabinguide_01
@@ -532,20 +530,6 @@ EVENT_START		ev_c03r0801_wkobjcode14_01
   //可変オブジェ共通ラベルをコール
   _CALL ev_wkobjcommon
 
-EVENT_END
-
-/**************************************************************/
-/*		3号室のふたごちゃん片割れ１								  */
-/**************************************************************/
-EVENT_START		ev_c03r0801_babygirl1_01
-//@todo   削除予定
-EVENT_END
-
-/**************************************************************/
-/*		8号室のふたごちゃん片割れ２								  */
-/**************************************************************/
-EVENT_START		ev_c03r0801_babygirl1_02
-//@todo   削除予定
 EVENT_END
 
 //--------------------------------------------------------------
