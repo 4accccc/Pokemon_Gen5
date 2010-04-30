@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-04-12T18:52:20"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-04-30T10:49:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -343,9 +343,17 @@
 	<row id="msg_palpark_02">
 		<comment>博士</comment>
 		<language name="JPN" width="256">ヘイ　ファンタスティック　トレーナー！
-せいきの　だいじっけん　してみない？▼</language>
+せいきの　だいじっけん　するかい！▼
+ポケシフターを　あそぶには
+ＤＳは　２つ　ひつようだよ！▼
+もう１つの　ＤＳを　つかって
+あそぶけど　それで　いいかな？</language>
 		<language name="JPN_KANJI" width="256">ヘイ　ファンタスティック　トレーナー！
-世紀の　大実験　してみない？▼</language>
+世紀の　大実験　するかい！▼
+ポケシフターを　あそぶには
+ＤＳは　２つ　必要だよ！▼
+もう１つの　ＤＳを　つかって
+遊ぶけど　それで　いいかな？</language>
 	</row>
 
 	<row id="msg_palpark_03">
@@ -368,12 +376,14 @@ BOXに6匹以上の空きがない</comment>
 	<row id="msg_palpark_05">
 		<comment>はい選択で
 BOXに6匹以上の空きがある</comment>
-		<language name="JPN" width="256">ＤＳは　２つ　ひつようだよ！▼
-もう１つの　ＤＳを　つかって
-あそぶけど　それで　いいかな？</language>
-		<language name="JPN_KANJI" width="256">ＤＳは　２つ　必要だよ！▼
-もう１つの　ＤＳを　使って
-遊ぶけど　それで　いいかな？▼</language>
+		<language name="JPN" width="256">オーケイ！▼
+いちど　つれてきた　ポケモンは
+もう　もとの　ばしょには　もどれないよ！▼
+それでも　いいね？</language>
+		<language name="JPN_KANJI" width="256">オーケイ！▼
+一度　連れてきた　ポケモンは
+もう　元の　場所には　戻れないよ！▼
+それでも　いいね？</language>
 	</row>
 
 	<row id="msg_palpark_06" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
@@ -640,9 +650,9 @@ BOXに6匹以上の空きがある</comment>
 	<row id="msg_palpark_first_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>激しいふきだし</comment>
 		<language name="JPN" width="256">ちょちょ　ちょっと　あなた！
-でんどういり　してるじゃない！▼</language>
+バッジ　ぜんぶ　もってるの？！▼</language>
 		<language name="JPN_KANJI" width="256">ちょっちょ　ちょっと　あなた！
-殿堂入り　してるじゃない！▼</language>
+バッジ　全部　持ってるの？！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_21_b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -680,14 +690,14 @@ msg_palpark_first_19に続く</comment>
 		<language name="JPN" width="256">はかせ！▼
 ちょっと　いいかしら？
 いいわよね！　きいて！▼
-このこ　なんと　でんどういり　してる
+このこ　なんと　ぜんバッジ　もってる
 トレーナー　なのよ！▼
 このこなら　きっと
 アレを　うごかせるわ！▼</language>
 		<language name="JPN_KANJI" width="256">博士！▼
 ちょっと　いいかしら？
 いいわよね！　きいて！▼
-この子　なんと　殿堂入り　してる
+この子　なんと　全バッジ　持ってる
 トレーナー　なのよ！▼
 この子なら　きっと
 アレを　動かせるわ！▼</language>
@@ -714,9 +724,9 @@ msg_palpark_first_19に続く</comment>
 	<row id="msg_palpark_first_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>激しいふきだし</comment>
 		<language name="JPN" width="256">って
-でんどういり　してるだと！？▼</language>
+バッジ　ぜんぶっ？！▼</language>
 		<language name="JPN_KANJI" width="256">って
-殿堂入り　してるだと！？▼</language>
+バッジ　全部っ？！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_05_b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -766,7 +776,7 @@ msg_palpark_first_19に続く</comment>
 れきしを　うごかす　だいじっけんに
 さんか　しないかね！？▼
 ここの　そうちは　ポケシフターと　いって▼
-エネルギー　パーティクルを
+エネルギー　パーティクルを▼
 イヴォークしつつ▼
 
 ＤＳという……▼
@@ -792,7 +802,7 @@ msg_palpark_first_19に続く</comment>
 歴史を　動かす　大実験に
 参加　しないかね！？▼
 ここの　装置は　ポケシフターと　言って▼
-エネルギー　パーティクルを
+エネルギー　パーティクルを▼
 イヴォークしつつ▼
 
 ＤＳという……▼
@@ -831,7 +841,7 @@ msg_palpark_first_19に続く</comment>
 てぶらが　一番　なのよ▼</language>
 	</row>
 
-	<row id="msg_palpark_first_09" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_palpark_first_09">
 		<comment>博士
 激しいふきだし</comment>
 		<language name="JPN" width="256">……というわけで　ユー！▼</language>
@@ -842,11 +852,19 @@ msg_palpark_first_19に続く</comment>
 		<language name="JPN" width="256">ファンタスティック
 ポケモントレーナー！▼
 せいきの　だいじっけんに
-つきあって　くれるかい？</language>
+つきあって　くれないか！▼
+ポケシフターに　ＤＳは
+２つ　ひつようだ！▼
+もう１つの　ＤＳで　じっけんするけど
+それでも　いいかな？</language>
 		<language name="JPN_KANJI" width="256">ファンタスティック
 ポケモントレーナー！▼
 世紀の　大実験に
-つきあって　くれるかい？</language>
+つきあって　くれないか！▼
+ポケシフターに　ＤＳは
+２つ　必要だ！▼
+もう１つの　ＤＳで　実験するけど
+それでも　いいかな？</language>
 	</row>
 
 	<row id="msg_palpark_15">
@@ -884,11 +902,11 @@ msg_palpark_first_19に続く</comment>
 	<row id="msg_palpark_17">
 		<comment>研究者B</comment>
 		<language name="JPN" width="256">ここでは　ポケシフターの
-モニターを　しているんだ▼
+モニタリングを　しているんだ▼
 ポケモンに　なにか　あったら
 いけないからね！</language>
 		<language name="JPN_KANJI" width="256">ここでは　ポケシフターの
-モニターを　しているんだ▼
+モニタリングを　しているんだ▼
 ポケモンに　なにか　あったら
 いけないからね！</language>
 	</row>
