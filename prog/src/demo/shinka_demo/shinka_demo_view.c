@@ -132,6 +132,8 @@ POKE_SET;
 #define INDEPENDENT_PANEL_NUM_Y    (18)
 //#define INDEPENDENT_PANEL_NUM_X    (4)  // パネルのちょうど継ぎ目の箇所が絵が汚くなることが判明した。
 //#define INDEPENDENT_PANEL_NUM_Y    (4)  // さて、どう対策するか。
+//#define INDEPENDENT_PANEL_NUM_X    (28)  // 上下左右に1ピクセルずつ大きなパネルにすると、パネル1つずつが大きくなってしまうので、
+//#define INDEPENDENT_PANEL_NUM_Y    (28)  // 元の大きさと合わせるにはこれくらい分割せねばならないが、処理落ちが激しくなる。
 
 // 全部を合わせて1枚と見たときのサイズ
 //#define INDEPENDENT_PANEL_TOTAL_W  (36)  // 採用
@@ -1923,6 +1925,8 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
     f32  sw, th;
     f32  start_x, start_y;
     f32  epsilon_x, epsilon_y;  // 効果がないので、使うのやめた。
+    f32  s_for_1pixel, t_for_1pixel;  // テクスチャ1ピクセル分のテクスチャの幅、テクスチャの高さ
+    f32  w_for_1pixel, h_for_1pixel;  // テクスチャ1ピクセル分のパネルの幅、パネルの高さ
 
     max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
 
@@ -1942,6 +1946,11 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
     epsilon_x = 1.0f;  // テクスチャ座標系は0<= <=1じゃなくて0<= <=128でいいみたい。
     epsilon_y = 1.0f;  // だから1ピクセルは1のまま。
 
+    s_for_1pixel = 0.0f;//0.05f;//1.0f;  // 1.0fピクセルじゃなくてもOKなようにつくってある
+    t_for_1pixel = 0.0f;//0.05f;//1.0f;
+    w_for_1pixel = w / sw * s_for_1pixel;
+    h_for_1pixel = h / th * t_for_1pixel;
+
     for( i=0; i<max; i++ )
     {
       int x, y;
@@ -1955,23 +1964,34 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
       panel_wk->polygon_id = INDEPENDENT_BEFORE_POLYGON_ID;
       panel_wk->alpha = 31;
       
-      panel_wk->vtx[0].x = FX_F32_TO_FX16( - w /2.0f );  panel_wk->vtx[0].y = FX_F32_TO_FX16(   h /2.0f );  panel_wk->vtx[0].z = 0;
-      panel_wk->vtx[1].x = FX_F32_TO_FX16( - w /2.0f );  panel_wk->vtx[1].y = FX_F32_TO_FX16( - h /2.0f );  panel_wk->vtx[1].z = 0;
-      panel_wk->vtx[2].x = FX_F32_TO_FX16(   w /2.0f );  panel_wk->vtx[2].y = FX_F32_TO_FX16( - h /2.0f );  panel_wk->vtx[2].z = 0;
-      panel_wk->vtx[3].x = FX_F32_TO_FX16(   w /2.0f );  panel_wk->vtx[3].y = FX_F32_TO_FX16(   h /2.0f );  panel_wk->vtx[3].z = 0;
+      //panel_wk->vtx[0].x = FX_F32_TO_FX16( - w /2.0f );  panel_wk->vtx[0].y = FX_F32_TO_FX16(   h /2.0f );  panel_wk->vtx[0].z = 0;
+      //panel_wk->vtx[1].x = FX_F32_TO_FX16( - w /2.0f );  panel_wk->vtx[1].y = FX_F32_TO_FX16( - h /2.0f );  panel_wk->vtx[1].z = 0;
+      //panel_wk->vtx[2].x = FX_F32_TO_FX16(   w /2.0f );  panel_wk->vtx[2].y = FX_F32_TO_FX16( - h /2.0f );  panel_wk->vtx[2].z = 0;
+      //panel_wk->vtx[3].x = FX_F32_TO_FX16(   w /2.0f );  panel_wk->vtx[3].y = FX_F32_TO_FX16(   h /2.0f );  panel_wk->vtx[3].z = 0;
+
+      panel_wk->vtx[0].x = FX_F32_TO_FX16( - w /2.0f - w_for_1pixel );  panel_wk->vtx[0].y = FX_F32_TO_FX16(   h /2.0f + h_for_1pixel);  panel_wk->vtx[0].z = 0;
+      panel_wk->vtx[1].x = FX_F32_TO_FX16( - w /2.0f - w_for_1pixel );  panel_wk->vtx[1].y = FX_F32_TO_FX16( - h /2.0f - h_for_1pixel);  panel_wk->vtx[1].z = 0;
+      panel_wk->vtx[2].x = FX_F32_TO_FX16(   w /2.0f + w_for_1pixel );  panel_wk->vtx[2].y = FX_F32_TO_FX16( - h /2.0f - h_for_1pixel);  panel_wk->vtx[2].z = 0;
+      panel_wk->vtx[3].x = FX_F32_TO_FX16(   w /2.0f + w_for_1pixel );  panel_wk->vtx[3].y = FX_F32_TO_FX16(   h /2.0f + h_for_1pixel);  panel_wk->vtx[3].z = 0;
 
       panel_wk->pos = poke_wk->pos;
       panel_wk->pos.x += FX_F32_TO_FX32( start_x + w * x );
       panel_wk->pos.y += FX_F32_TO_FX32( start_y - h * y );
 
-      panel_wk->s0 = FX_F32_TO_FX32( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S );
-      panel_wk->t0 = FX_F32_TO_FX32( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T );
+      //panel_wk->s0 = FX_F32_TO_FX32( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S );
+      //panel_wk->t0 = FX_F32_TO_FX32( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T );
+      //panel_wk->s1 = panel_wk->s0 + FX_F32_TO_FX32(sw);
+      //panel_wk->t1 = panel_wk->t0 + FX_F32_TO_FX32(th);
+
       //panel_wk->s0 = FX_F32_TO_FX32( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S + epsilon_x/10 );
       //panel_wk->t0 = FX_F32_TO_FX32( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T + epsilon_y/10 );
-      panel_wk->s1 = panel_wk->s0 + FX_F32_TO_FX32(sw);
-      panel_wk->t1 = panel_wk->t0 + FX_F32_TO_FX32(th);
       //panel_wk->s1 = panel_wk->s0 + FX_F32_TO_FX32(sw - epsilon_x/10);
       //panel_wk->t1 = panel_wk->t0 + FX_F32_TO_FX32(th - epsilon_y/10);
+
+      panel_wk->s0 = FX_F32_TO_FX32( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S - s_for_1pixel );
+      panel_wk->t0 = FX_F32_TO_FX32( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T - t_for_1pixel );
+      panel_wk->s1 = panel_wk->s0 + FX_F32_TO_FX32(sw + s_for_1pixel*2.0f);
+      panel_wk->t1 = panel_wk->t0 + FX_F32_TO_FX32(th + t_for_1pixel*2.0f);
 
       panel_wk->pos_prev = panel_wk->pos;
     }
