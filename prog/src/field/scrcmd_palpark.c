@@ -69,8 +69,9 @@ VMCMD_RESULT EvCmdPalparkCall( VMHANDLE *core, void *wk )
   param->mode    = MPM_POKE_SHIFTER;
   param->gameData    = gdata;
 
-  event = EVENT_FieldSubProcNoFade( gsys, fieldmap, 
-                              FS_OVERLAY_ID(multiboot), &MultiBoot_ProcData, param );
+  event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap, 
+                              FS_OVERLAY_ID(multiboot), &MultiBoot_ProcData, param ,
+                              NULL , param );
 
   SCRIPT_CallEvent( sc, event );
 
