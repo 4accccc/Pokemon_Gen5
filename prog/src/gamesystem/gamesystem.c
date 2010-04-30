@@ -334,9 +334,8 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
     if( ZONEDATA_IsUnionRoom(zone_id) == FALSE && //ユニオン
         ZONEDATA_IsColosseum(zone_id) == FALSE && //コロシアム
         ZONEDATA_IsBattleSubway(zone_id) == FALSE ) //バトルサブウェイ
-      {
-        heapLeakCheck();
-      }
+    {
+      heapLeakCheck();
     }
   }
 #endif
