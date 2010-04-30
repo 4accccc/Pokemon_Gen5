@@ -633,7 +633,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   int *start_ofs;
   int table_ofs;
 
-  GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です" );
+  GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です\neffno:%d\n", bevw->waza );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("EFFVM_Start:\nEFFNO:%d\n",waza);
@@ -2199,6 +2199,7 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     NNSG2dScreenData* scrnData;
     NNSG2dPaletteData* palData;
 
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
@@ -2256,6 +2257,7 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     return bevw->control_mode;
   }
 #endif
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
   GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
@@ -3574,6 +3576,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
     }
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
     bevw->set_priority_flag = 0;
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
