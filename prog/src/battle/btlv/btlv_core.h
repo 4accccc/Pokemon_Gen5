@@ -221,6 +221,8 @@ extern void BTLV_UI_SelectTarget_ForceQuit( BTLV_CORE* core );
 
 
 extern void BTLV_UI_Restart( BTLV_CORE* wk );
+extern BOOL BTLV_UI_WaitRestart( BTLV_CORE* core );
+
 
 
 extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx );

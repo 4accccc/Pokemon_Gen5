@@ -7802,23 +7802,44 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
     }
   }
 }
-static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP )
+/**
+ *  HP回復可否チェック
+ */
+static BOOL scproc_IsRecoverHP_OK( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   if( !BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI)
-  &&  !BPP_IsDead(bpp)
+  &&  !BPP_IsFightEnable(bpp)
   &&  !BPP_IsHPFull(bpp)
   ){
-    u8 pokeID = BPP_GetID( bpp );
-    BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
-    if( pos != BTL_POS_NULL ){
-      SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_HP_RECOVER );
-    }
-
-    scPut_SimpleHp( wk, bpp, recoverHP, TRUE );
     return TRUE;
   }
   return FALSE;
 }
+/**
+ *  HP回復処理コア
+ */
+static void scproc_RecoverHP_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
+  if( pos != BTL_POS_NULL ){
+    SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_HP_RECOVER );
+  }
+  scPut_SimpleHp( wk, bpp, recoverHP, TRUE );
+}
+/**
+ *  HP回復可否チェック->回復処理コア呼び出し
+ */
+static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP )
+{
+  if( scproc_IsRecoverHP_OK(wk, bpp) )
+  {
+    scproc_RecoverHP_Core( wk, bpp, recoverHP );
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //---------------------------------------------------------------------------------------------
 // サーバーフロー：一撃ワザ処理
 //---------------------------------------------------------------------------------------------

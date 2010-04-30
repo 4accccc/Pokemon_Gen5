@@ -11,6 +11,10 @@
 
 #include "sound\pm_sndsys.h"
 #include "poke_tool\pokeparty.h"
+#include  "tr_tool/tr_tool.h"
+#include  "tr_tool/trtype_def.h"
+#include  "btlv/btlv_effect.h"
+#include  "btlv/btlv_gauge.h"
 
 #include "battle\battle.h"
 #include "btl_common.h"
@@ -235,8 +239,9 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
-static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
+static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq );
+static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
 static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* param );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
@@ -404,8 +409,8 @@ static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl );
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
 static void AICtrl_Init( void );
 static void AICtrl_Delegate( BTL_CLIENT* wk );
-static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
 static void aictrl_RestoreViewClient( BTL_CLIENT* wk );
+static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk );
 
 
 //=============================================================================================
@@ -1437,13 +1442,211 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
-//@todo トレーナーメッセージ表示実験
-#include  "tr_tool/tr_tool.h"
-#include  "tr_tool/trtype_def.h"
-#include  "btlv/btlv_effect.h"
-#include  "btlv/btlv_gauge.h"
 
+//----------------------------------------------------------------------
+/**
+ *  アクション選択ルート
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
+    wk->actionAddCount = 0;
+    BTL_ACTION_SetNULL( wk->procAction );
 
+    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+      BTL_N_Printf( DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
+      ClientSubProc_Set( wk, selact_CheckFinish );
+    }
+    else
+    {
+      if( check_tr_message( wk, &wk->AITrainerMsgID ) == TRUE )
+      {
+        ClientSubProc_Set( wk, selact_TrainerMessage );
+      }
+      else
+      {
+        (*seq)++;
+      }
+    }
+    break;
+
+  case 1:
+    // 「○○はどうする？」表示
+    if( (wk->prevPokeIdx != wk->procPokeIdx)
+    ||  (wk->fStdMsgChanged)
+    ){
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
+      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+      BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
+      wk->fStdMsgChanged = FALSE;
+      wk->prevPokeIdx = wk->procPokeIdx;
+      (*seq)++;
+    }
+    else{
+      (*seq) += 2;
+    }
+    break;
+  case 2:
+    if( !BTLV_WaitMsg(wk->viewCore) ){
+      return FALSE;
+    }
+    (*seq)++;
+    /* fallthru */
+
+  case 3:
+    // アクション選択開始
+    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->firstPokeIdx );
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx>wk->firstPokeIdx), wk->procAction );
+    (*seq)++;
+    break;
+
+  case 4:
+    if( CheckSelactForceQuit(wk, selact_ForceQuit) )
+    {
+      BTL_N_Printf( DBGSTR_CLIENT_ForceQuitByTimeLimit, wk->myID );
+      BTLV_UI_SelectAction_ForceQuit( wk->viewCore );
+      return FALSE;
+    }
+
+    switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
+
+    // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
+    case BTL_ACTION_CHANGE:
+      BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Pokemon );
+      shooterCost_Save( wk, wk->procPokeIdx, 0 );
+      ClientSubProc_Set( wk, selact_SelectChangePokemon );
+      break;
+
+    // 「たたかう」を選んだ
+    case BTL_ACTION_FIGHT:
+      BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Fight );
+      shooterCost_Save( wk, wk->procPokeIdx, 0 );
+      ClientSubProc_Set( wk, selact_Fight );
+      break;
+
+    // 「どうぐ」を選んだ
+    case BTL_ACTION_ITEM:
+      // シューター使えない設定チェック
+      if( wk->bagMode == BBAG_MODE_SHOOTER )
+      {
+        const SHOOTER_ITEM_BIT_WORK* shooterReg = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
+        if( shooterReg->shooter_use == FALSE)
+        {
+          BTLV_UI_Restart( wk->viewCore );
+          (*seq) = 5;
+          break;
+        }
+      }
+
+      ClientSubProc_Set( wk, selact_Item );
+      break;
+
+    // 「にげる」or「もどる」
+    case BTL_ACTION_ESCAPE:
+      // 先頭のポケなら「にげる」として処理
+      if( wk->procPokeIdx == wk->firstPokeIdx ){
+        shooterCost_Save( wk, wk->procPokeIdx, 0 );
+        ClientSubProc_Set( wk, selact_Escape );
+      // ２体目以降は「もどる」として処理
+      }else{
+        BTL_POKEPARAM* bpp;
+        while( wk->procPokeIdx )
+        {
+          wk->procPokeIdx--;
+          bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
+          if( !is_action_unselectable(wk, bpp, NULL) )
+          {
+            wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
+            // 「もどる」先のポケモンが、既に「ポケモン」で交換対象を選んでいた場合はその情報をPopする
+            if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_CHANGE ){
+              BTL_POKESELECT_RESULT_Pop( &wk->pokeSelResult );
+            }
+            ClientSubProc_Set( wk, selact_Root );
+            return FALSE;
+          }
+        }
+        GF_ASSERT(0);
+      }
+      break;
+    }
+    break;
+
+  case 5:
+    if( BTLV_UI_WaitRestart(wk->viewCore) ){
+      (*seq) = 3;
+    }
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  アクション選択直前のトレーナーメッセージ表示処理
+ */
+//----------------------------------------------------------------------
+static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+      BTLV_StartMsgTrainer( wk->viewCore, trainerID, wk->AITrainerMsgID );
+
+      // @todo これだとピンチBGM中にはSEQ_BGM_BATTLESUPERIORに移行しないが、これで良いのだろうか？
+      if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
+      &&  (BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0)
+      ){
+        //現状、曲変化はジムリーダーだけ
+        u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+        if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
+          //PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+          //wk->fAITrainerBGMChanged = TRUE;
+          PMSND_FadeOutBGM( 8 );
+          (*seq) = 1;
+          break;
+        }
+      }
+      (*seq) = 2;
+    }
+    break;
+  case 1:
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    {
+      PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+      wk->fAITrainerBGMChanged = TRUE;
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute()
+    &&  BTLV_WaitMsg(wk->viewCore)
+    ){
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      ClientSubProc_Set( wk, selact_Root );
+    }
+    break;
+  }
+
+  return FALSE;
+}
+/**
+ *  トレーナーメッセージ表示タイミングかどうか判定
+ */
 static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID )
 {
   if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
@@ -1534,198 +1737,6 @@ static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID )
     } /* if( trainerID != TRID_NULL ) */
   }
 
-  return FALSE;
-}
-
-//----------------------------------------------------------------------
-/**
- *  アクション選択ルート
- */
-//----------------------------------------------------------------------
-static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
-{
-  switch( *seq ){
-  case 0:
-    wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-    wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
-    wk->actionAddCount = 0;
-    BTL_ACTION_SetNULL( wk->procAction );
-
-    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
-      BTL_N_Printf( DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
-      ClientSubProc_Set( wk, selact_CheckFinish );
-    }
-    else{
-      //@todo トレーナーメッセージ表示実験
-#if 1
-      if( check_tr_message( wk, &wk->AITrainerMsgID ) == TRUE )
-      {
-        (*seq) = 5;
-      }
-      else
-      {
-        (*seq)++;
-      }
-#else
-      (*seq)++;
-#endif
-    }
-    break;
-
-  case 1:
-    // 「○○はどうする？」表示
-    if( (wk->prevPokeIdx != wk->procPokeIdx)
-    ||  (wk->fStdMsgChanged)
-    ){
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
-      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
-      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
-      BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
-      wk->fStdMsgChanged = FALSE;
-      wk->prevPokeIdx = wk->procPokeIdx;
-      (*seq)++;
-    }
-    else{
-      (*seq) += 2;
-    }
-    break;
-  case 2:
-    if( !BTLV_WaitMsg(wk->viewCore) ){
-      return FALSE;
-    }
-    (*seq)++;
-    /* fallthru */
-
-  case 3:
-    // アクション選択開始
-    BTL_N_Printf( DBGSTR_CLIENT_SelectActionStart, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->firstPokeIdx );
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx>wk->firstPokeIdx), wk->procAction );
-    (*seq)++;
-    break;
-
-  case 4:
-    if( CheckSelactForceQuit(wk, selact_ForceQuit) )
-    {
-      BTL_N_Printf( DBGSTR_CLIENT_ForceQuitByTimeLimit, wk->myID );
-      BTLV_UI_SelectAction_ForceQuit( wk->viewCore );
-      return FALSE;
-    }
-
-    switch( BTLV_UI_SelectAction_Wait(wk->viewCore) ){
-
-    // 入れ替えポケモン選択の場合はまだアクションパラメータが不十分->ポケモン選択へ
-    case BTL_ACTION_CHANGE:
-      BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Pokemon );
-      shooterCost_Save( wk, wk->procPokeIdx, 0 );
-      ClientSubProc_Set( wk, selact_SelectChangePokemon );
-      break;
-
-    // 「たたかう」を選んだ
-    case BTL_ACTION_FIGHT:
-      BTL_N_Printf( DBGSTR_CLIENT_SelectAction_Fight );
-      shooterCost_Save( wk, wk->procPokeIdx, 0 );
-      ClientSubProc_Set( wk, selact_Fight );
-      break;
-
-    // 「どうぐ」を選んだ
-    case BTL_ACTION_ITEM:
-      // シューター使えない設定チェック
-      if( wk->bagMode == BBAG_MODE_SHOOTER )
-      {
-        const SHOOTER_ITEM_BIT_WORK* shooterReg = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
-        if( shooterReg->shooter_use == FALSE)
-        {
-          BTLV_UI_Restart( wk->viewCore );
-          (*seq) = 3;
-          break;
-        }
-      }
-
-      ClientSubProc_Set( wk, selact_Item );
-      break;
-
-    // 「にげる」or「もどる」
-    case BTL_ACTION_ESCAPE:
-      // 先頭のポケなら「にげる」として処理
-      if( wk->procPokeIdx == wk->firstPokeIdx ){
-        shooterCost_Save( wk, wk->procPokeIdx, 0 );
-        ClientSubProc_Set( wk, selact_Escape );
-      // ２体目以降は「もどる」として処理
-      }else{
-        BTL_POKEPARAM* bpp;
-        while( wk->procPokeIdx )
-        {
-          wk->procPokeIdx--;
-          bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-          if( !is_action_unselectable(wk, bpp, NULL) )
-          {
-            wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
-            // 「もどる」先のポケモンが、既に「ポケモン」で交換対象を選んでいた場合はその情報をPopする
-            if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_CHANGE ){
-              BTL_POKESELECT_RESULT_Pop( &wk->pokeSelResult );
-            }
-            ClientSubProc_Set( wk, selact_Root );
-            return FALSE;
-          }
-        }
-        GF_ASSERT(0);
-        break;
-      }
-      break;
-    }
-    break;
-
-  //@todo トレーナーメッセージ表示実験
-  case 5:
-    {
-      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-
-      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
-      BTLV_StartMsgTrainer( wk->viewCore, trainerID, wk->AITrainerMsgID );
-
-      // @todo これだとピンチBGM中にはSEQ_BGM_BATTLESUPERIORに移行しないが、これで良いのだろうか？
-      if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
-      &&  (BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0)
-      ){
-        //現状、曲変化はジムリーダーだけ
-        u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-        if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
-          //PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
-          //wk->fAITrainerBGMChanged = TRUE;
-          PMSND_FadeOutBGM( 8 );
-          (*seq) = 6;
-          break;
-        }
-      }
-      (*seq) = 7;
-    }
-    break;
-  case 6:
-    if( PMSND_CheckFadeOnBGM() == FALSE )
-    {
-      PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
-      wk->fAITrainerBGMChanged = TRUE;
-      (*seq)++;
-    }
-    break;
-  case 7:
-    if( !BTLV_EFFECT_CheckExecute()
-    &&  BTLV_WaitMsg(wk->viewCore)
-    ){
-      BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
-      (*seq)++;
-    }
-    break;
-  case 8:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      (*seq) = 0;
-    }
-    break;
-  }
   return FALSE;
 }
 
@@ -1879,8 +1890,6 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_UNSEL_WAZA_MSG:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-//      BTLV_UI_Restart( wk->viewCore );
-//      (*seq) = SEQ_START;
       BTLV_UI_SelectWaza_Restart( wk->viewCore );
       (*seq) = SEQ_SELECT_WAZA_WAIT;
     }
@@ -2174,22 +2183,31 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 //----------------------------------------------------------------------
 static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
 {
-  BTLV_UI_Restart( wk->viewCore );
+  switch( *seq ){
+  case 0:
+    BTLV_UI_Restart( wk->viewCore );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_UI_WaitRestart(wk->viewCore) )
+    {
+      wk->procPokeIdx++;
 
-  wk->procPokeIdx++;
+      if( wk->procPokeIdx >= wk->numCoverPos )
+      {
+        u8 actionCnt = wk->numCoverPos + wk->actionAddCount;
+        BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
 
-  if( wk->procPokeIdx >= wk->numCoverPos )
-  {
-    u8 actionCnt = wk->numCoverPos + wk->actionAddCount;
-    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
-
-    wk->actionAddCount = 0;
-    wk->returnDataPtr = &(wk->actionParam[0]);
-    wk->returnDataSize = sizeof(wk->actionParam[0]) * actionCnt;
-    ClientSubProc_Set( wk, selact_Finish );
-  }
-  else{
-    ClientSubProc_Set( wk, selact_Root );
+        wk->actionAddCount = 0;
+        wk->returnDataPtr = &(wk->actionParam[0]);
+        wk->returnDataSize = sizeof(wk->actionParam[0]) * actionCnt;
+        ClientSubProc_Set( wk, selact_Finish );
+      }
+      else{
+        ClientSubProc_Set( wk, selact_Root );
+      }
+    }
+    break;
   }
 
   return FALSE;
@@ -3438,11 +3456,19 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     if( !TR_AI_Main(wk->AIHandle) )
     {
       u8 wazaIdx = TR_AI_GetSelectWazaPos( wk->AIHandle );
-      u8 targetPos = TR_AI_GetSelectWazaDir( wk->AIHandle );
+      if( wazaIdx != AI_ENEMY_ESCAPE )
+      {
+        u8 targetPos = TR_AI_GetSelectWazaDir( wk->AIHandle );
 
-      WazaID  waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
-      BTL_ACTION_SetFightParam( wk->procAction, waza, targetPos );
-      (*seq) = SEQ_INC;
+        WazaID  waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
+        BTL_ACTION_SetFightParam( wk->procAction, waza, targetPos );
+        (*seq) = SEQ_INC;
+      }
+      else
+      {
+        BTL_ACTION_SetEscapeParam( wk->procAction );
+        (*seq) = SEQ_INC;
+      }
     }
     break;
 
@@ -4365,7 +4391,6 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
       u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-      TAYA_Printf( "Win for NPC, clientID=%d, trainerID=%d\n", clientID, trainerID );
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
       (*seq) = SEQ_WIN_WAIT_TR1_MSG;
     }
@@ -5428,8 +5453,8 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_WaitDeadAct(wk->viewCore) )
     {
-      BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-      BPP_Clear_ForDead( pp );
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      BPP_Clear_ForDead( bpp );
       return TRUE;
     }
     break;

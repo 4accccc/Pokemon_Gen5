@@ -585,11 +585,14 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     }
     break;
   case 6:
-    if( BTLV_WaitMsg( core ) )
+    if( BTLV_WaitMsg(core) )
     {
-      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU,
-          BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
-      (*seq)++;
+      if( BTLV_SCD_WaitRestartUI(core->scrnD) )
+      {
+        BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU,
+            BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
+        (*seq)++;
+      }
     }
     break;
   case 7:
@@ -1018,6 +1021,10 @@ static void ForceQuitSelect_Common( BTLV_CORE* core )
 void BTLV_UI_Restart( BTLV_CORE* core )
 {
   BTLV_SCD_RestartUI( core->scrnD );
+}
+BOOL BTLV_UI_WaitRestart( BTLV_CORE* core )
+{
+  return BTLV_SCD_WaitRestartUI( core->scrnD );
 }
 
 /**

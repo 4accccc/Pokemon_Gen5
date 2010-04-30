@@ -101,7 +101,6 @@ struct _BTLV_SCD {
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
 
-  BTL_PROC      subProc;
   BTL_PROC      subProcStack[ SUBPROC_STACK_DEPTH ];
   u32           subProcStackPtr;
   int           sub_seq;
@@ -124,6 +123,7 @@ struct _BTLV_SCD {
   u8                cursor_flag;    //下画面カーソルフラグ
   u8                bagMode;
   u8                shooterEnergy;
+  u8                yesno_seq;
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -266,11 +266,20 @@ static void setupMainWin( BTLV_SCD* wk )
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 #endif
 }
-
+/**
+ *  UI再起動
+ */
 void BTLV_SCD_RestartUI( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
   BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
+}
+/**
+ *  UI再起動の完了待ち
+ */
+BOOL BTLV_SCD_WaitRestartUI( BTLV_SCD* wk )
+{
+  return !BTLV_INPUT_CheckExecute( wk->biw );
 }
 
 void BTLV_SCD_Delete( BTLV_SCD* wk )
@@ -615,32 +624,36 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
   BTLV_SCD* wk = wk_adrs;
   int hit;
 
-//  hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
-  hit = BTLV_INPUT_CheckInput( wk->biw, &BattleMenuTouchData, BattleMenuKeyData );
-  if( hit != GFL_UI_TP_HIT_NONE )
-  {
-    static const u8 action[] = {
-      BTL_ACTION_FIGHT,   BTL_ACTION_ITEM,
-      BTL_ACTION_CHANGE,  BTL_ACTION_ESCAPE,
-    };
+  switch( *seq ){
+  case 0:
+    hit = BTLV_INPUT_CheckInput( wk->biw, &BattleMenuTouchData, BattleMenuKeyData );
+    if( hit != GFL_UI_TP_HIT_NONE )
+    {
+      static const u8 action[] = {
+        BTL_ACTION_FIGHT,   BTL_ACTION_ITEM,
+        BTL_ACTION_CHANGE,  BTL_ACTION_ESCAPE,
+      };
 
-    wk->selActionResult = action[ hit ];
+      wk->selActionResult = action[ hit ];
 
-    switch( wk->selActionResult ){
-    // @@@ 現状アイテム選択はクライアント側で状況に応じて勝手に行っている
-    case BTL_ACTION_ITEM:
-      break;
-
-    case BTL_ACTION_ESCAPE:
-      BTL_ACTION_SetEscapeParam( wk->destActionParam );
-      BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
-      BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
-      break;
+      if( wk->selActionResult == BTL_ACTION_ESCAPE )
+      {
+        BTL_ACTION_SetEscapeParam( wk->destActionParam );
+        BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+        BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
+        (*seq)++;
+      }
+      else{
+        return TRUE;
+      }
     }
+    break;
 
-    return TRUE;
+  case 1:
+    if( !BTLV_INPUT_CheckExecute(wk->biw) ){
+      return TRUE;
+    }
   }
-
   return FALSE;
 }
 
@@ -1242,19 +1255,33 @@ void BTLV_SCD_SelectRotate_ForceQuit( BTLV_SCD* wk )
 void BTLV_SCD_SelectYesNo_Start( BTLV_SCD* wk, BTLV_INPUT_YESNO_PARAM* param )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_YES_NO, param );
+  wk->yesno_seq = 0;
 }
 
 BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
 {
-  int input = BTLV_INPUT_CheckInput( wk->biw, &YesNoTouchData, YesNoKeyData );
-  if( input != GFL_UI_TP_HIT_NONE )
-  {
-    *result = input;
-    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
-    return TRUE;
+  switch( wk->yesno_seq ){
+  case 0:
+    {
+      int input = BTLV_INPUT_CheckInput( wk->biw, &YesNoTouchData, YesNoKeyData );
+      if( input != GFL_UI_TP_HIT_NONE )
+      {
+        *result = input;
+        BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+        wk->yesno_seq++;
+      }
+    }
+    break;
+
+  case 1:
+    if( !BTLV_INPUT_CheckExecute(wk->biw) ){
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }
+
 
 
 
@@ -1278,7 +1305,7 @@ void   BTLV_SCD_ForceQuitInput_Notify( BTLV_SCD* wk )
 
 BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk )
 {
-  return TRUE;
+  return !BTLV_INPUT_CheckExecute( wk->biw );
 }
 
 //=============================================================================================
