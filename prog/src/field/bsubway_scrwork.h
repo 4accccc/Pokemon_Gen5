@@ -67,28 +67,21 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 my_sex;      ///<自分の性別
   u8 pare_sex;    ///<自分とパートナーの性別
   
-  u8 clear_f:1;  ///<クリアフラグ
-  u8 boss_f:2;  ///<ボスを倒したフラグ
-  u8 retire_f:1;  ///<リタイアフラグ
-  u8 prize_f:1;  ///<ご褒美フラグ
-  u8 partner:3;  ///<パートナーNo
-  u8 comm_sio_f:1; ///<通信中フラグ
-  u8 comm_irc_f:1; ///<赤外線通信フラグ
-  u8 btlrec_exist_f:2; ///<戦闘録画存在フラグ
-  u8 padding_bit:6; ///<余り
+  u16        clear_f:1;  ///<クリアフラグ
+  u16         boss_f:2;  ///<ボスを倒したフラグ
+  u16       retire_f:1;  ///<リタイアフラグ
+  u16        prize_f:1;  ///<ご褒美フラグ
+  u16        partner:3;  ///<パートナーNo
+  u16     comm_sio_f:1; ///<通信中フラグ
+  u16     comm_irc_f:1; ///<赤外線通信フラグ
+  u16 btlrec_exist_f:2; ///<戦闘録画存在フラグ
+  u16    padding_bit:4; ///<余り
   u8 padding[2]; //余り
   
   BtlResult comm_btl_result; ///< 勝敗結果
-  
-  u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
-  
   u16 pare_stage_no; ///<通信マルチパートナーの周回数
   
-#if 0
-  u16 rec_turn; ///<かかったターン数
-  u16 rec_damage; ///<食らったダメージ
-  u16 rec_down; ///<ポケモンのダウン数
-#endif
+  u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
   
   u8  member[BSUBWAY_STOCK_MEMBER_MAX];  ///<選んだポケモンの手持ちNo
   u16  mem_poke[BSUBWAY_STOCK_MEMBER_MAX];  ///<選んだポケモンのmonsno

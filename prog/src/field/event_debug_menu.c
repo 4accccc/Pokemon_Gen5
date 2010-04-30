@@ -5694,6 +5694,21 @@ static void debugMenuCallProc_BSubwayAnyStage(
   work->strBuf = GFL_STR_CreateBuffer( 32, work->heapID );
 }
 
+static BOOL bsubway_CheckBattleZoneID( DEBUG_BSUBWAY_EVENT_WORK *work )
+{
+  u16 zone_id = FIELDMAP_GetZoneID( work->fieldWork );
+  
+  if( ZONEDATA_IsBattleSubway(zone_id) == TRUE ){
+    if( zone_id != ZONE_ID_C04R0110 &&
+        zone_id != ZONE_ID_C04R0111 ){
+      return( TRUE );
+    }
+  }
+  
+  OS_Printf( "DEBUG BSW バトルサブウェイ受付マップで行って下さい\n" );
+  return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * イベント：バトルサブウェイデバッグメニュー
@@ -5721,20 +5736,20 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       VecFx32 receipt_map_pos = {GRID_SIZE_FX32(9),0,GRID_SIZE_FX32(12)};
       VecFx32 home_map_pos = {GRID_SIZE_FX32(27),0,GRID_SIZE_FX32(15)};
       GMEVENT *next_event = NULL;
+      FLDMENUFUNC *menuFunc = work->menuFunc;
       EV_WIFIBSUBWAY_PARAM wifi_bsubway_param;
       
-      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-
+      ret = FLDMENUFUNC_ProcMenu( menuFunc );
+      
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
-
-      FLDMENUFUNC_DeleteMenu( work->menuFunc );
-
+      
       if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
+        FLDMENUFUNC_DeleteMenu( menuFunc );
         return( GMEVENT_RES_FINISH );
       }
-
+      
       switch( ret ){
       case DEBUG_BSWAY_ZONE_HOME: //ホームへ移動
         param = ZONE_ID_C04R0111;
@@ -5809,82 +5824,136 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_AUTO_SINGLE: //シングルオート戦闘
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        debug_bsw_SetAuto( work->gmSys );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
+          debug_bsw_SetAuto( work->gmSys );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_AUTO_DOUBLE: //ダブルオート戦闘
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        debug_bsw_SetAuto( work->gmSys );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
+          debug_bsw_SetAuto( work->gmSys );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_AUTO_MULTI: //マルチオート戦闘
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        debug_bsw_SetAuto( work->gmSys );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
+          debug_bsw_SetAuto( work->gmSys );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_AUTO_S_SINGLE: //Sシングルオート戦闘
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
-        debug_bsw_SetAuto( work->gmSys );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
+          debug_bsw_SetAuto( work->gmSys );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_AUTO_S_DOUBLE: //Sダブルオート戦闘
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
-        debug_bsw_SetAuto( work->gmSys );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
+          debug_bsw_SetAuto( work->gmSys );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_AUTO_S_MULTI: //Sマルチオート戦闘
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
-        debug_bsw_SetAuto( work->gmSys );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
+          debug_bsw_SetAuto( work->gmSys );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_SINGLE_7: //シングル７戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_DOUBLE_7: //ダブル７戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_MULTI_7: //マルチ７戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_SINGLE_21: //シングル２１戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_DOUBLE_21: //ダブル２１戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_MULTI_21: //マルチ２１戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_SET_REGU_OFF: //レギュオフ
         {
           u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
           flag ^= BSW_DEBUG_FLAG_REGU_OFF;
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
+          
+          if( (flag & BSW_DEBUG_FLAG_REGU_OFF) ){
+            OS_Printf( "DEBUG BSW : レギュOFF\n" );
+          }else{
+            OS_Printf( "DEBUG BSW : レギュON\n" );
+          }
         }
         break;
       case DEBUG_BSWAY_SET_BTL_SKIP: //バトルスキップ
@@ -5892,36 +5961,59 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
           flag ^= BSW_DEBUG_FLAG_BTL_SKIP;
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
+
+          if( (flag & BSW_DEBUG_FLAG_BTL_SKIP) ){
+            OS_Printf( "DEBUG BSW : バトルスキップ OFF\n" );
+          }else{
+            OS_Printf( "DEBUG BSW : バトルスキップ ON\n" );
+          }
         }
         break;
       case DEBUG_BSWAY_BTL_S_SINGLE_49: //Ｓシングル４９戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_S_DOUBLE_49: //Ｓダブル４９戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_BTL_S_MULTI_49: //Ｓマルチ４９戦から
-        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
-        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
-        SCRIPT_ChangeScript(
-            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
+          BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
+          SCRIPT_ChangeScript(
+              event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       case DEBUG_BSWAY_ANYSTAGE: //任意ステージ
-        debugMenuCallProc_BSubwayAnyStage( event, work );
-        return( GMEVENT_RES_CONTINUE );
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          FLDMENUFUNC_DeleteMenu( menuFunc );
+          debugMenuCallProc_BSubwayAnyStage( event, work );
+          return( GMEVENT_RES_CONTINUE );
+        }
+        break;
       default:
         break;
       }
-
+      
       if( next_event == NULL ){
-        return( GMEVENT_RES_FINISH );
+        break;
       }else{
+        FLDMENUFUNC_DeleteMenu( menuFunc );
         GMEVENT_CallEvent( event, next_event );
         (*seq)++;
       }

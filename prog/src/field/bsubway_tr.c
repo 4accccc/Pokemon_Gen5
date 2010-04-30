@@ -1193,17 +1193,29 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
     case BSWAY_MODE_S_COMM_MULTI:
       if( boss_no == 0 )
       {
+#if 0
         if( pair_no == 0 )
         {
-          no = BSW_TR_DATANO_MULTI0;
+          no = BSW_TR_DATANO_MULTI0; //ノボリ
         }
         else
         {
-          no = BSW_TR_DATANO_MULTI1;
+          no = BSW_TR_DATANO_MULTI1; //クダリ
         }
+#else //メッセージ演出に合わせる
+        if( pair_no == 0 )
+        {
+          no = BSW_TR_DATANO_MULTI1; //クダリ
+        }
+        else
+        {
+          no = BSW_TR_DATANO_MULTI0; //ノボリ
+        }
+#endif
       }
       else if( boss_no == 1 )
       {
+#if 0
         if( pair_no == 0 )
         {
           no = BSW_TR_DATANO_S_MULTI0;
@@ -1212,6 +1224,16 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
         {
           no = BSW_TR_DATANO_S_MULTI1;
         }
+#else //メッセージ演出に合わせる
+        if( pair_no == 0 )
+        {
+          no = BSW_TR_DATANO_S_MULTI1;
+        }
+        else
+        {
+          no = BSW_TR_DATANO_S_MULTI0;
+        }
+#endif
       }
       break;
     default:
