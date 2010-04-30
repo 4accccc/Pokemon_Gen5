@@ -150,14 +150,6 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
     work->calcPP = NULL;
   }
 
-  if( work->page < PPT_SKILL_ADD )
-  {
-    for( i=0;i<PPT_MAX;i++ )
-    {
-      work->shortCutCheck[i] = GAMEDATA_GetShortCut( work->psData->game_data, SHORTCUT_ID_PSTATUS_STATUS+i );
-    }
-  }
-
   PSTATUS_InitGraphic( work );
 
   work->subWork = PSTATUS_SUB_Init( work );
@@ -196,6 +188,16 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   else
   {
     work->page = work->psData->page;
+
+    if( work->page < PPT_SKILL_ADD )
+    {
+      for( i=0;i<PPT_MAX-1;i++ )
+      {
+        work->shortCutCheck[i] = GAMEDATA_GetShortCut( work->psData->game_data, SHORTCUT_ID_PSTATUS_STATUS+i );
+        OS_TPrintf("[[%d]]",work->shortCutCheck[i]);
+      }
+    }
+
     PSTATUS_SUB_DispPage( work , work->subWork );
     PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
     switch( work->page )
@@ -260,7 +262,7 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 
   if( work->page < PPT_SKILL_ADD )
   {
-    for( i=0;i<PPT_MAX;i++ )
+    for( i=0;i<PPT_MAX-1;i++ )
     {
       GAMEDATA_SetShortCut( work->psData->game_data, SHORTCUT_ID_PSTATUS_STATUS+i , work->shortCutCheck[i] );
     }

@@ -170,6 +170,7 @@ struct _CTVT_CALL_WORK
 
   BOOL  isUpdateMsgWin;
   BOOL  isUpdateCallMsgWin;
+  BOOL  isPlayCallAnswer;
   GFL_BMPWIN *msgWin;
   GFL_BMPWIN *callMsgWin;
   u16 connectTimeOutCnt;
@@ -356,6 +357,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->isHoldScroll = FALSE;
   callWork->isUpdateMsgWin = FALSE;
   callWork->isUpdateCallMsgWin = FALSE;
+  callWork->isPlayCallAnswer = FALSE;
   callWork->barState = CCBS_NONE;
   callWork->barMenuWork = NULL;
   callWork->state = CCS_FADEIN;
@@ -594,7 +596,10 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       if( COMM_TVT_GetConnectNum( work ) >= 2 )
       {
         PMSND_StopSE();
-        PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
+        if( callWork->isPlayCallAnswer == FALSE )
+        {
+          PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
+        }
         callWork->state = CCS_FADEOUT;
       }
       if( callWork->state == CCS_WAIT_CONNECT_CALL )
@@ -690,6 +695,15 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
 
     break;
   case CCS_DISP_WARN:
+    if( COMM_TVT_GetConnectNum( work ) >= 2 )
+    {
+      PMSND_StopSE();
+      if( callWork->isPlayCallAnswer == FALSE )
+      {
+        callWork->isPlayCallAnswer = TRUE;
+        PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
+      }
+    }
     if( GFL_UI_TP_GetTrg() == TRUE )
     {
       PMSND_PlaySystemSE( CTVT_SND_DECIDE );
