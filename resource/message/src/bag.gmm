@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-04-20T17:27:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-30T12:08:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="10" top="162" right="715" bottom="790" maximized="no" rayout="Vertical2">
+	<dialog left="1619" top="303" right="2324" bottom="931" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="737" top="230" right="1210" bottom="628" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -753,7 +753,7 @@ const u8 msg_item_del03[]
 [2:02:３桁:1]コ　捨てても　よろしいですか？</language>
 	</row>
 
-	<row id="msg_bag_057" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_bag_057" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>バッグ / アイテム関連
 const u8 msg_item_use_error[]
 ０＝主人公名
@@ -768,7 +768,7 @@ common_scr.gmmの変更も忘れないでください
 		<language name="JPN" font=" 1:small">アララギの　ことば……
 [1:00:トレーナー名:0]！　こういう　ものには▽
 つかいどきが　あるのよ</language>
-		<language name="JPN_KANJI" font=" 1:small">アララギの　ことば……
+		<language name="JPN_KANJI" font=" 1:small">アララギの　言葉……
 [1:00:トレーナー名:0]！　こういう　ものには▽
 使いどきが　あるのよ</language>
 	</row>
@@ -785,12 +785,12 @@ common_scr.gmmの変更も忘れないでください</comment>
 		<language name="JPN_KANJI" font=" 1:small">ここでは　降りられない！</language>
 	</row>
 
-	<row id="msg_bag_059" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_bag_059" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>・イベント配布では窓口で同じものをはねつける</comment>
 		<language name="JPN" font=" 1:small">アララギの　ことば……
 [1:00:トレーナー名:0]！　こういう　ものには▽
 つかいどきが　あるのよ</language>
-		<language name="JPN_KANJI" font=" 1:small">アララギの　ことば……
+		<language name="JPN_KANJI" font=" 1:small">アララギの　言葉……
 [1:00:トレーナー名:0]！　こういう　ものには▽
 使いどきが　あるのよ</language>
 	</row>
@@ -800,21 +800,21 @@ common_scr.gmmの変更も忘れないでください</comment>
 const u8 msg_coincase[]
 ０＝数字5桁（所有コイン枚数）</comment>
 		<language name="JPN" font=" 1:small">あなたの　コイン　[2:04:５桁:0]まい</language>
-		<language name="JPN_KANJI" font=" 1:small">あなたの　コイン　[2:04:５桁:0]まい</language>
+		<language name="JPN_KANJI" font=" 1:small">あなたの　コイン　[2:04:５桁:0]枚</language>
 	</row>
 
 	<row id="msg_bag_063">
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine00[]</comment>
 		<language name="JPN" font=" 1:small">わざマシンを　きどうした！</language>
-		<language name="JPN_KANJI" font=" 1:small">わざマシンを　きどうした！</language>
+		<language name="JPN_KANJI" font=" 1:small">わざマシンを　起動した！</language>
 	</row>
 
 	<row id="msg_bag_064">
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine01[]</comment>
 		<language name="JPN" font=" 1:small">ひでんマシンを　きどうした！</language>
-		<language name="JPN_KANJI" font=" 1:small">ひでんマシンを　きどうした！</language>
+		<language name="JPN_KANJI" font=" 1:small">ひでんマシンを　起動した！</language>
 	</row>
 
 	<row id="msg_bag_065">
@@ -825,10 +825,10 @@ const u8 msg_waza_machine02[]
 きろく　されていた！▼
 [1:07:わざ名:0]を
 ポケモンに　おぼえさせますか？</language>
-		<language name="JPN_KANJI" font=" 1:small">なかには　[1:07:わざ名:0]が
+		<language name="JPN_KANJI" font=" 1:small">中には　[1:07:わざ名:0]が
 記録されていた！▼
 [1:07:わざ名:0]を
-ポケモンに　おぼえさせますか？</language>
+ポケモンに　覚えさせますか？</language>
 	</row>
 
 	<row id="msg_bag_066">
