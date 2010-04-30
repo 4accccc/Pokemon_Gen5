@@ -206,8 +206,6 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
   
   OS_Printf("テレビ番組抽選結果　min = %d, rnd = %d, msg = %d\n",minute, rnd, msg);
 
-  msg = CheckBadge(gdata, msg);
-
 #ifdef PM_DEBUG
   if (DebugTvNo)
   {
@@ -223,14 +221,22 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
   }
 #endif  //PM_DEBUG
 
+  msg = CheckBadge(gdata, msg);
+
   *ret = msg;
 
   return VMCMD_RESULT_CONTINUE;
 
 }
 
-
-//ジムバッジの所持状態による分岐
+//--------------------------------------------------------------
+/**
+ * ジムバッジの所持状態によるメッセージ抽選
+ * @param   gdata    ゲームデータポインタ
+ * @param   inMag     抽選されたメッセージ
+ * @retval int      再抽選されたメッセージ
+ */
+//--------------------------------------------------------------
 static int CheckBadge(GAMEDATA *gdata, const int inMsg)
 {
   int i;
