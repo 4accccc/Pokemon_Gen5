@@ -354,7 +354,7 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   
   work = GMEVENT_GetEventWork( event );
   work->gsys = gsys;
-  work->strBuf = GFL_STR_CreateBuffer( 92, HEAPID_PROC );
+  work->strBuf = GFL_STR_CreateBuffer( 352, HEAPID_PROC );
   work->obj_id = obj_id;
 
   if( bsw_scr->tr_data[tr_idx].bt_trd.appear_word[0] == 0xffff ){ //ROM MSG
