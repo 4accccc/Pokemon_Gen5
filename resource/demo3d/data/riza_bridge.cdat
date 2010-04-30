@@ -18,7 +18,7 @@ static const DEMO3D_SCENE_DATA data_riza_bridge_scene = {
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
-	FALSE,TRUE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
+	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(60.0),FX32_CONST(60.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
@@ -66,23 +66,51 @@ static const DEMO3D_CMD_DATA demo3d_cmd_riza_bridge_end_data[] = {
 
 static const u16 res_riza_bridge_file_riza_bridge_01[] = {
  NARC_data_demo3d_riza_bridge_01_nsbmd,
+ NARC_data_demo3d_riza_bridge_01_nsbta,
  NARC_data_demo3d_riza_bridge_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_riza_bridge_file_unit_riza_bridge_01[] = {
- { res_riza_bridge_file_riza_bridge_01, 2 },
+ { res_riza_bridge_file_riza_bridge_01, 3 },
 };
 
 ///==================================
 /// riza_bridge_02 Unit File Resource
 
-static const u16 res_riza_bridge_file_riza_bridge_02[] = {
+static const u16 res_riza_bridge_file_riza_bridge_02_morning[] = {
  NARC_data_demo3d_riza_bridge_02_nsbmd,
  NARC_data_demo3d_riza_bridge_02_nsbta,
+ NARC_data_demo3d_riza_bridge_02hiru_nsbca,
+ NARC_data_demo3d_riza_bridge_02hiru_nsbva,
+};
+static const u16 res_riza_bridge_file_riza_bridge_02_noon[] = {
+ NARC_data_demo3d_riza_bridge_02_nsbmd,
+ NARC_data_demo3d_riza_bridge_02_nsbta,
+ NARC_data_demo3d_riza_bridge_02hiru_nsbca,
+ NARC_data_demo3d_riza_bridge_02hiru_nsbva,
+};
+static const u16 res_riza_bridge_file_riza_bridge_02_evening[] = {
+ NARC_data_demo3d_riza_bridge_02_nsbmd,
+ NARC_data_demo3d_riza_bridge_02_nsbta,
+ NARC_data_demo3d_riza_bridge_02yuu_nsbva,
+};
+static const u16 res_riza_bridge_file_riza_bridge_02_night[] = {
+ NARC_data_demo3d_riza_bridge_02_nsbmd,
+ NARC_data_demo3d_riza_bridge_02_nsbta,
+ NARC_data_demo3d_riza_bridge_02yoru_nsbva,
+};
+static const u16 res_riza_bridge_file_riza_bridge_02_midnight[] = {
+ NARC_data_demo3d_riza_bridge_02_nsbmd,
+ NARC_data_demo3d_riza_bridge_02_nsbta,
+ NARC_data_demo3d_riza_bridge_02yoru_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_riza_bridge_file_unit_riza_bridge_02[] = {
- { res_riza_bridge_file_riza_bridge_02, 2 },
+ { res_riza_bridge_file_riza_bridge_02_morning, 4 },
+ { res_riza_bridge_file_riza_bridge_02_noon, 4 },
+ { res_riza_bridge_file_riza_bridge_02_evening, 3 },
+ { res_riza_bridge_file_riza_bridge_02_night, 3 },
+ { res_riza_bridge_file_riza_bridge_02_midnight, 3 },
 };
 
 ///==================================
@@ -107,7 +135,7 @@ static const DEMO3D_FILE_UNIT_TBL res_riza_bridge_file_unit_riza_bridge_01_tbl[]
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_riza_bridge_file_unit_riza_bridge_02_tbl[] = {
- { res_riza_bridge_file_unit_riza_bridge_02, 1 },
+ { res_riza_bridge_file_unit_riza_bridge_02, 5 },
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_riza_bridge_file_unit_riza_bridge_03_tbl[] = {
