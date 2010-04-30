@@ -117,9 +117,12 @@ const u32 Intro_Se_PresetData[] =
   SEQ_SE_NAGERU,
   SEQ_SE_BOWA2,
 	SEQ_SE_OPEN2,
+
+	SEQ_BGM_STARTING,
+	SEQ_BGM_STARTING2,
 };
 
-const u32 Intro_Se_PresetNum  = 3;
+const u32 Intro_Se_PresetNum  = 5;
 
 //=============================================================================
 /**
@@ -232,7 +235,7 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	INTRO_MAIN_WORK* wk = mywk;
-  
+/*  
   if( *seq == 0 )
   {
     // フェードアウト リクエスト
@@ -245,6 +248,7 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
     // フェード中は処理に入らない
     return GFL_PROC_RES_CONTINUE;
   }
+*/
 
   INTRO_PARTICLE_Exit( wk->ptc );
   INTRO_MCSS_Exit( wk->mcss );

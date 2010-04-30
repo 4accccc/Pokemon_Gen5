@@ -32,7 +32,7 @@ static const INTRO_CMD_DATA c_intro_scene_init[] =
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
   // 初期化
-//  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_BRIGHTNESS_SET, { -16, }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 } },
 
@@ -96,10 +96,11 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
   { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 2 }, },     // 博士をボールを投げるアニメに変更
-//  { INTRO_CMD_TYPE_WAIT, 146 },                      // ウェイト
-  { INTRO_CMD_TYPE_WAIT, 142 },                      // ウェイト
-  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, },     // 博士を停止アニメに変更
+  { INTRO_CMD_TYPE_WAIT, 52 },                      // ウェイト
   { INTRO_CMD_TYPE_SE, { SEQ_SE_NAGERU } },         // ボール投げる音
+//  { INTRO_CMD_TYPE_WAIT, 146 },                      // ウェイト
+  { INTRO_CMD_TYPE_WAIT, 90 },                      // ウェイト
+  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, },     // 博士を停止アニメに変更
 //  { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
 
   { INTRO_CMD_TYPE_SE, { SEQ_SE_BOWA2 }, CMD_READ_NEXT }, // ボールから出てくる音
@@ -179,6 +180,7 @@ static const INTRO_CMD_DATA c_intro_scene_05[] =
   { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
 #endif
 
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 }, }, // 画面フェードアウト
   { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
 };
 
@@ -235,6 +237,7 @@ static const INTRO_CMD_DATA c_intro_scene_05_retry[] =
   { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
 #endif
 
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 2 }, }, // 画面フェードアウト
   { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
 };
 
@@ -276,7 +279,8 @@ static const INTRO_CMD_DATA c_intro_scene_07[] =
   // @TODO 主人公立ち絵：（フェードイン）
   // @TODO 主人公立ち絵→フィールドOBJへ
 
-  { INTRO_CMD_TYPE_BGM_FADEOUT, { 60 } }, // BGMフェードアウト
+  { INTRO_CMD_TYPE_BGM_FADEOUT, { 60 } },               // BGMフェードアウト
+  { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 6 }, }, // 画面フェードアウト
   { INTRO_CMD_TYPE_END }, ///< 終了
 };
 

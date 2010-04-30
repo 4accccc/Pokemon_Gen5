@@ -646,11 +646,11 @@ static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
 //  OS_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
 
-	if( PMSND_CheckPlayBGM() == TRUE ){
-	  PMSND_PlayNextBGM( param[0], param[1], param[2] );
-	}else{
+//	if( PMSND_CheckPlayBGM() == TRUE ){
+//	  PMSND_PlayNextBGM( param[0], param[1], param[2] );
+//	}else{
 		PMSND_PlayBGM( param[0] );
-	}
+//	}
   return TRUE;
 }
 
@@ -1132,7 +1132,7 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
       else
       {
         // ‚¿‚å‚Á‚Æ‚Ü‚Á‚Ä‚ËI
-        INTRO_MSG_SetPrint( wk->wk_msg, msg_intro_00, 1 );
+        INTRO_MSG_SetPrint( wk->wk_msg, msg_intro_00, 0 );
         sdat->seq++;
       }
       break;

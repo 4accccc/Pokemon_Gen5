@@ -289,7 +289,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 
     work->bgm_handle  = SOUNDMAN_PresetSoundTbl( se_tbl, namein_se_num + intro_se_num );
 
-    work->voice_load_id = PMVOICE_LoadOnly( MONSNO_TIRAAMHI , 0, 0, FALSE, 0, 0, FALSE, NULL );
+    work->voice_load_id = PMVOICE_LoadOnly( MONSNO_TIRAAMHI, 0, 64, FALSE, 0, 0, FALSE, NULL );
   }
 
   // イントロデモのパラメータ初期化
