@@ -326,6 +326,9 @@ static GFL_PROC_RESULT IntroProc_Main( GFL_PROC *proc, int *seq, void *pwk, void
   //3D描画
   INTRO_GRAPHIC_3D_StartDraw( wk->graphic );
 
+	// ポケモンアニメ監視
+	INTRO_MCSS_PokeAnime( wk->mcss );
+
   INTRO_MCSS_Main( wk->mcss );
   INTRO_PARTICLE_Main( wk->ptc );
   INTRO_G3D_Main( wk->g3d );

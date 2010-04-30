@@ -135,7 +135,7 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
   wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heap_id );
 
   // ê—pƒJƒƒ‰‚ð—pˆÓ
-  wk->camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
+  wk->camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS,//GFL_G3D_PRJORTH, 
 									FX_SinIdx( 30/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( 30/2 *PERSPWAY_COEFFICIENT ),
 //									defaultCameraAspect, 0,

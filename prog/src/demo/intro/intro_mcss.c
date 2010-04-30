@@ -30,6 +30,10 @@ enum
   MCSS_ID_MAX = 8,
 };
 
+#define	POKE_ANIME_WAIT_MIN		( 200 )
+#define	POKE_ANIME_WAIT_VAL		( 20 )
+
+
 //=============================================================================
 /**
  *								構造体定義
@@ -45,6 +49,7 @@ struct _INTRO_MCSS_WORK
   MCSS_SYS_WORK*  mcss;
   MCSS_WORK*      mcss_work[ MCSS_ID_MAX ];
 	BOOL	animeFlag[ MCSS_ID_MAX ];
+	u32	pokeAnimeWait;
 };
 
 
@@ -203,6 +208,7 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
 	MCSS_SetAnmStopFlag( wk->mcss_work[id] );
 
 	wk->animeFlag[id] = FALSE;
+	wk->pokeAnimeWait = POKE_ANIME_WAIT_MIN + POKE_ANIME_WAIT_VAL * GFL_STD_MtRand( 5 );
 	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
 }
 
@@ -432,4 +438,21 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 	}
 
 	return flg;
+}
+
+// ポケモンアニメ監視
+void INTRO_MCSS_PokeAnime( INTRO_MCSS_WORK * wk )
+{
+	if( wk->animeFlag[1] == FALSE ){
+		return;
+	}
+
+	if( wk->pokeAnimeWait == 0 ){
+		wk->pokeAnimeWait = POKE_ANIME_WAIT_MIN + POKE_ANIME_WAIT_VAL * GFL_STD_MtRand( 5 );
+		INTRO_MCSS_SetAnimeIndex( wk, 1, 0 );
+		return;
+	}
+
+	MCSS_SetAnmStopFlag( wk->mcss_work[1] );
+	wk->pokeAnimeWait--;
 }
