@@ -18,8 +18,8 @@
 //======================================================================
 //	define
 //======================================================================
-#define RIPPLE_DRAW_Y_OFFSET (-FX32_ONE*(8))		///<水波紋描画オフセット
-#define RIPPLE_DRAW_Z_OFFSET (FX32_ONE*(1))
+#define RIPPLE_DRAW_Y_OFFSET (FX32_ONE*(-1))		///<水波紋描画オフセット
+#define RIPPLE_DRAW_Z_OFFSET (FX32_ONE*(-2))
 
 //======================================================================
 //	struct
@@ -35,21 +35,9 @@ typedef struct _TAG_FLDEFF_RIPPLE FLDEFF_RIPPLE;
 struct _TAG_FLDEFF_RIPPLE
 {
 	FLDEFF_CTRL *fectrl;
-  
-  GFL_G3D_RES *g3d_res_mdl;
-  GFL_G3D_RES *g3d_res_anm;
+  GFL_BBDACT_SYS *bbdact_sys;
+  u16 res_idx_ripple;
 };
-
-//--------------------------------------------------------------
-/// TASKWORK_RIPPLE
-//--------------------------------------------------------------
-typedef struct
-{
-  FLDEFF_RIPPLE *eff_ripple;
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm;
-  GFL_G3D_RND *obj_rnd;
-}TASKWORK_RIPPLE;
 
 //--------------------------------------------------------------
 /// TASKHEADER_RIPPLE
@@ -60,6 +48,15 @@ typedef struct
   VecFx32 pos;
 }TASKHEADER_RIPPLE;
 
+//--------------------------------------------------------------
+/// TASKWORK_RIPPLE
+//--------------------------------------------------------------
+typedef struct
+{
+  FLDEFF_RIPPLE *eff_ripple;
+  u16 act_id;
+}TASKWORK_RIPPLE;
+
 //======================================================================
 //	プロトタイプ
 //======================================================================
@@ -67,6 +64,8 @@ static void ripple_InitResource( FLDEFF_RIPPLE *ripple );
 static void ripple_DeleteResource( FLDEFF_RIPPLE *ripple );
 
 static const FLDEFF_TASK_HEADER DATA_rippleTaskHeader;
+
+static const GFL_BBDACT_ANM * data_BlActAnm_RippleTbl[1];
 
 //======================================================================
 //	水波紋　システム
@@ -82,10 +81,14 @@ static const FLDEFF_TASK_HEADER DATA_rippleTaskHeader;
 void * FLDEFF_RIPPLE_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
 	FLDEFF_RIPPLE *ripple;
+	FIELDMAP_WORK *fieldmap;
 	
 	ripple = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_RIPPLE) );
 	ripple->fectrl = fectrl;
   
+  fieldmap = FLDEFF_CTRL_GetFieldMapWork( ripple->fectrl );
+  ripple->bbdact_sys = FIELDMAP_GetEffBbdActSys( fieldmap );
+
 	ripple_InitResource( ripple );
 	return( ripple );
 }
@@ -118,15 +121,20 @@ void FLDEFF_RIPPLE_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void ripple_InitResource( FLDEFF_RIPPLE *ripple )
 {
   ARCHANDLE *handle;
+  GFL_BBDACT_G3DRESDATA data;
   
   handle = FLDEFF_CTRL_GetArcHandleEffect( ripple->fectrl );
   
-  ripple->g3d_res_mdl	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_ripple_nsbmd );
-  GFL_G3D_TransVramTexture( ripple->g3d_res_mdl );
-
-  ripple->g3d_res_anm	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_ripple_nsbtp );
+  data.texFmt = GFL_BBD_TEXFMT_PAL4;
+  data.texSiz = GFL_BBD_TEXSIZ_16x64;
+  data.celSizX = 16;
+  data.celSizY = 16;
+  data.dataCut = GFL_BBDACT_RESTYPE_DATACUT;
+  
+  data.g3dres = GFL_G3D_CreateResourceHandle(
+      handle, NARC_fldeff_ripple_nsbtx );
+  ripple->res_idx_ripple = 
+      GFL_BBDACT_AddResourceG3DResUnit( ripple->bbdact_sys, &data, 1 );
 }
 
 //--------------------------------------------------------------
@@ -138,8 +146,8 @@ static void ripple_InitResource( FLDEFF_RIPPLE *ripple )
 //--------------------------------------------------------------
 static void ripple_DeleteResource( FLDEFF_RIPPLE *ripple )
 {
- 	GFL_G3D_DeleteResource( ripple->g3d_res_anm );
- 	GFL_G3D_DeleteResource( ripple->g3d_res_mdl );
+  GFL_BBDACT_RemoveResourceUnit(
+      ripple->bbdact_sys, ripple->res_idx_ripple, 1 );
 }
 
 //======================================================================
@@ -188,17 +196,29 @@ static void rippleTask_Init( FLDEFF_TASK *task, void *wk )
   work->eff_ripple = head->eff_ripple;
   FLDEFF_TASK_SetPos( task, &head->pos );
   
-  work->obj_rnd =
-    GFL_G3D_RENDER_Create(
-        work->eff_ripple->g3d_res_mdl, 0, work->eff_ripple->g3d_res_mdl );
-  
-  work->obj_anm =
-    GFL_G3D_ANIME_Create(
-        work->obj_rnd, work->eff_ripple->g3d_res_anm, 0 );
-  
-  work->obj = GFL_G3D_OBJECT_Create(
-      work->obj_rnd, &work->obj_anm, 1 );
-  GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
+  {
+    GFL_BBDACT_ANMTBL tbl;
+    GFL_BBDACT_ACTDATA actData;
+    FLDEFF_RIPPLE *ripple = work->eff_ripple;
+    GFL_BBDACT_SYS *bbdact_sys = ripple->bbdact_sys;
+    
+    actData.resID = ripple->res_idx_ripple;
+    actData.sizX = FX16_ONE*4+0xa00-1;
+    actData.sizY = FX16_ONE*4+0xa00-1;
+    actData.alpha = 31;
+    actData.drawEnable = TRUE;
+    actData.lightMask = GFL_BBD_LIGHTMASK_0;
+    actData.trans = head->pos;
+    actData.func = NULL;
+    actData.work = work;
+    
+    work->act_id = GFL_BBDACT_AddActEx(
+        bbdact_sys, 0, &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
+    
+    tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_RippleTbl;
+    GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  tbl, 1 );
+    GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -212,9 +232,8 @@ static void rippleTask_Init( FLDEFF_TASK *task, void *wk )
 static void rippleTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_RIPPLE *work = wk;
-  GFL_G3D_ANIME_Delete( work->obj_anm );
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
+  GFL_BBDACT_SYS *bbdact_sys = work->eff_ripple->bbdact_sys;
+  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
 }
 
 //--------------------------------------------------------------
@@ -227,9 +246,12 @@ static void rippleTask_Delete( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void rippleTask_Update( FLDEFF_TASK *task, void *wk )
 {
+  u16 comm;
   TASKWORK_RIPPLE *work = wk;
-  
-  if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
+  FLDEFF_RIPPLE *ripple = work->eff_ripple;
+  GFL_BBDACT_SYS *bbdact_sys = work->eff_ripple->bbdact_sys;
+    
+  if( GFL_BBDACT_GetAnimeLastCommand(bbdact_sys,work->act_id,&comm) ){
     FLDEFF_TASK_CallDelete( task );
   }
 }
@@ -244,6 +266,7 @@ static void rippleTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void rippleTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+#if 0 //ビルボードアクターに移行
   VecFx32 pos;
   TASKWORK_RIPPLE *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
@@ -251,6 +274,7 @@ static void rippleTask_Draw( FLDEFF_TASK *task, void *wk )
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
   GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -263,4 +287,22 @@ static const FLDEFF_TASK_HEADER DATA_rippleTaskHeader =
   rippleTask_Delete,
   rippleTask_Update,
   rippleTask_Draw,
+};
+
+//======================================================================
+//  data
+//======================================================================
+//ripple anime table
+static const GFL_BBDACT_ANM data_BlActAnm_Ripple[] =
+{
+  {0,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {1,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {2,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {3,GFL_BBDACT_ANMFLIP_OFF,GFL_BBDACT_ANMFLIP_OFF,3},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * data_BlActAnm_RippleTbl[1] =
+{
+  data_BlActAnm_Ripple,
 };

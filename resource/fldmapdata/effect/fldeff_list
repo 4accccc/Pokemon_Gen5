@@ -17,7 +17,6 @@ EFF_D06DENKI = eff_denkidoukutu/
 #	フィールドエフェクト　itpアニメ定義
 #---------------------------------------------------------------
 G3D_FE_ANMITP = hero_kemu.itp \
-  ripple.itp \
   taki_loop_s.itp \
   taki_roop_f.itp \
   taki_start_f.itp \
@@ -26,7 +25,8 @@ G3D_FE_ANMITP = hero_kemu.itp \
   $(EFF_D06DENKI)d6_yuka_biri01.itp \
   fishing_lure.itp \
   mv_hide_tsuchi.itp \
-  mv_hide_kusa.itp
+  mv_hide_kusa.itp \
+  shibuki.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -100,7 +100,6 @@ G3D_FE_MDL = kage.imd \
   mark_onpu.imd \
   mark_ten.imd \
   shibuki01.imd \
-  ripple.imd \
   taki_land.imd \
   taki_loop_s.imd \
   taki_roop_f.imd \
@@ -140,7 +139,8 @@ G3D_FE_MDL = kage.imd \
   b_train07.imd \
   b_train08.imd \
   mv_hide_tsuchi.imd \
-  mv_hide_kusa.imd
+  mv_hide_kusa.imd \
+  shibuki.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
@@ -164,8 +164,6 @@ G3D_FE_TEX = kusaeff.imd \
   lgrass_sm2.imd \
   lgrass_at2.imd \
   lgrass_wt2.imd \
-  shibuki.imd \
-  shibuki02.imd \
   f_mark_u.imd \
   f_mark_d.imd \
   f_mark_l.imd \
@@ -192,9 +190,9 @@ G3D_FE_TEX = kusaeff.imd \
   sc_mark_ur.imd \
   sc_mark_dl.imd \
   sc_mark_dr.imd \
-  shibuki.imd \
-  shibuki02.imd
-  
+  shibuki02.imd \
+  ripple.imd
+
 #---------------------------------------------------------------
 #	フィールドエフェクト　変換不要データ定義
 #---------------------------------------------------------------

@@ -739,7 +739,7 @@ static void MMdl_MapAttrSplashProc_0( MMDL *mmdl, ATTRDATA *data )
 {
   if( MAPATTR_VALUE_CheckShoal(data->attr_val_now) == TRUE ){
     if( MMDL_CheckMoveBitShoalEffect(mmdl) == FALSE ){
-      FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl, TRUE );
+      FLDEFF_SHOAL_SetMMdl( data->fectrl, mmdl );
       MMDL_SetMoveBitShoalEffect( mmdl, TRUE );
     }
   }else{
@@ -760,11 +760,11 @@ static void MMdl_MapAttrSplashProc_12( MMDL *mmdl, ATTRDATA *data )
 {
   if( MAPATTR_VALUE_CheckShoal(data->attr_val_now) == TRUE ){
     if( MMDL_CheckMoveBitShoalEffect(mmdl) == FALSE ){
-      FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl, TRUE );
+      FLDEFF_SHOAL_SetMMdl( data->fectrl, mmdl );
       MMDL_SetMoveBitShoalEffect( mmdl, TRUE );
     }
   }else if( MAPATTR_VALUE_CheckMarsh(data->attr_val_now) == TRUE ){
-    FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl, FALSE );
+    FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl );
   }else{
     MMDL_SetMoveBitShoalEffect( mmdl, FALSE );
   }
