@@ -1962,6 +1962,13 @@ static void AddNews_CHAMPION( GATEWORK* work )
   for( i=0; i<monsnum; i++ )
   {
     WORDSET_RegisterPokeMonsNameNo( wordset, i, monsno[i] );
+  } 
+
+  // プレイヤー名をワードセットに登録
+  {
+    MYSTATUS* mystatus;
+    mystatus = GAMEDATA_GetMyStatus( work->gameData );
+    WORDSET_RegisterPlayerName( wordset, 6, mystatus );
   }
 
   // ニュースパラメータを作成
