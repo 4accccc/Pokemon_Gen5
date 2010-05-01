@@ -92,6 +92,10 @@ typedef enum
   MCS_CHECK_ROM_CRC,
 
   //転送・保存
+  MCS_TRANS_CONFIRM_INIT,
+  MCS_TRANS_CONFIRM_WAIT,
+  MCS_TRANS_CONFIRM_MAIN,
+  
   MCS_TRANS_POKE_INIT,
   MCS_TRANS_POKE_SEND,
   MCS_TRANS_POKE_SEND_WAIT,
@@ -677,8 +681,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       }
       if( work->captureNum > 0 )
       {
-        work->state = MCS_TRANS_POKE_INIT;
-        MB_COMM_SetChildState( work->commWork , MCCS_SEND_POKE );
+        work->state = MCS_TRANS_CONFIRM_INIT;
       }
       else
       {
@@ -689,6 +692,44 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
   //--------------------------------------------------------
   //転送・保存フェイズ
+  //確認
+  case MCS_TRANS_CONFIRM_INIT:
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_13 , work->initData->msgSpeed );
+    work->state = MCS_TRANS_CONFIRM_WAIT;
+    break;
+  
+  case MCS_TRANS_CONFIRM_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
+    {
+      MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
+      work->state = MCS_TRANS_CONFIRM_MAIN;
+    }
+    MB_CHILD_ErrCheck( work , FALSE );
+    break;
+    
+  case MCS_TRANS_CONFIRM_MAIN:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        MB_COMM_SetChildState( work->commWork , MCCS_SEND_POKE );
+        work->state = MCS_TRANS_POKE_INIT;
+        MB_MSG_ClearYesNo( work->msgWork );
+        MB_MSG_MessageHide( work->msgWork );
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
+        MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
+        MB_MSG_ClearYesNo( work->msgWork );
+        MB_MSG_MessageHide( work->msgWork );
+      }
+    }
+    break;
+
+  //転送
   case MCS_TRANS_POKE_INIT:
     {
       u8 i;

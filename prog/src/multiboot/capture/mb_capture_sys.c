@@ -1344,7 +1344,10 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
     u8 i;
     u16 baseChara;
     u16 len = work->gameTime * MB_CAP_TIME_GAUGE_WIDTH / MB_CAP_GAMETIME;
-    len += 1; //•â³
+    if( work->gameTime != 0 )
+    {
+      len += 1; //•â³
+    }
     if( work->gameTime <= MB_CAP_RED_TIME )
     {
       baseChara = MB_CAP_TIME_GAUGE_CHARA_R;
@@ -1525,6 +1528,8 @@ static GFL_PROC_RESULT MB_CAPTURE_ProcTerm( GFL_PROC * proc, int * seq , void *p
 {
   MB_CAPTURE_WORK *work = mywk;
   
+  //ƒsƒˆƒsƒˆ‰¹‚ªŽ~‚Ü‚ç‚È‚¢‚±‚Æ‚ª‚ ‚Á‚½‚Ì‚Å
+  PMSND_StopSE();
   MB_CAPTURE_Term( work );
 
   if( pwk == NULL )

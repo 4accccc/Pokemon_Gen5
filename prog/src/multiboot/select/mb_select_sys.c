@@ -103,6 +103,8 @@ typedef enum
   MSS_CONFIRM_ITEM_WAIT,
   MSS_CONFIRM_ITEMFULL_INIT,
   MSS_CONFIRM_ITEMFULL_WAIT,
+  MSS_CONFIRM_EXIT_INIT,
+  MSS_CONFIRM_EXIT_WAIT,
   
 }MB_SELECT_STATE;
 
@@ -503,6 +505,34 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
     }
     break;
   
+  //ポケシフターやめる？
+  case MSS_CONFIRM_EXIT_INIT:
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+    MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_09 );
+    
+    MB_MSG_DispYesNo( work->msgWork , MMYT_MID );
+    work->state = MSS_CONFIRM_EXIT_WAIT;
+    break;
+    
+  case MSS_CONFIRM_EXIT_WAIT:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      if( ret == MMYR_RET1 )
+      {
+        //はい
+        work->state = MSS_FADEOUT;
+        work->initWork->isCancel = TRUE;
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        //いいえ
+        work->state = MSS_MAIN;
+        MB_MSG_ClearYesNo( work->msgWork );
+        MB_MSG_MessageHide( work->msgWork );
+      }
+    }
+    break;
   }
 
   //OBJの更新
@@ -1061,10 +1091,8 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         //キャンセルボタン
         GFL_CLACT_WK_SetAnmSeq( work->clwkRetIcon , APP_COMMON_BARICON_RETURN_ON );
         GFL_CLACT_WK_SetAutoAnmFlag( work->clwkRetIcon , TRUE );
-        work->state = MSS_FADEOUT;
+        work->state = MSS_CONFIRM_EXIT_INIT;
         work->exitWaitCell = work->clwkRetIcon;
-        //TODO 確認MSG？
-        work->initWork->isCancel = TRUE;
         PMSND_PlaySE( SEQ_SE_CANCEL1 );
       }
       work->befTpx = tpx;
@@ -1241,10 +1269,10 @@ static const BOOL MB_SELECT_CheckDropTray( MB_SELECT_WORK *work )
 static const BOOL MB_SELECT_CheckDropBox( MB_SELECT_WORK *work )
 {
   //範囲チェック
-  if( work->befTpx > MB_SEL_POKE_BOX_TOP-16 &&
-      work->befTpx < MB_SEL_POKE_BOX_TOP+MB_SEL_POKE_BOX_HEIGHT*(MB_SEL_POKE_BOX_Y_NUM-1)+16 &&
-      work->befTpy > MB_SEL_POKE_BOX_LEFT-16 &&
-      work->befTpy < MB_SEL_POKE_BOX_LEFT+MB_SEL_POKE_BOX_WIDTH*(MB_SEL_POKE_BOX_X_NUM-1)+16 )
+  if( work->befTpy > MB_SEL_POKE_BOX_TOP-16 &&
+      work->befTpy < MB_SEL_POKE_BOX_TOP+MB_SEL_POKE_BOX_HEIGHT*(MB_SEL_POKE_BOX_Y_NUM-1)+16 &&
+      work->befTpx > MB_SEL_POKE_BOX_LEFT-16 &&
+      work->befTpx < MB_SEL_POKE_BOX_LEFT+MB_SEL_POKE_BOX_WIDTH*(MB_SEL_POKE_BOX_X_NUM-1)+16 )
   {
     if( MB_SEL_POKE_GetType( work->holdPoke ) == MSPT_TRAY )
     {

@@ -1519,7 +1519,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
   {
   case MPCS_INIT:
     MB_MSG_MessageHide( work->msgWork );
-
+    GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
     if( work->mode == MPM_POKE_SHIFTER )
     {
       MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
@@ -1582,6 +1582,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
         MB_MSG_MessageCreateWordset( work->msgWork );
         MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN );
 
         if( work->mode == MPM_POKE_SHIFTER )
         {
