@@ -3317,7 +3317,7 @@ BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
 BOOL BTL_MAIN_IsPokeListMultiMode( BTL_MAIN_MODULE* wk )
 {
   if( (BTL_MAIN_IsMultiMode(wk))
-  &&  (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_TRAINER)
+  &&  (BTL_MAIN_GetCompetitor(wk) != BTL_COMPETITOR_TRAINER)
   ){
     return TRUE;
   }
