@@ -125,7 +125,6 @@ ev_hiden_kairiki_02:
   
   _TEMOTI_NICK_NAME( 0, i_poke )
   _SYSWIN_MSG( msg_kairiki_05 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
   _CALL sub_cutin_player_form_set
@@ -204,7 +203,6 @@ ev_hiden_naminori_02:
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   
   _SYSWIN_MSG( msg_naminori_02 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
   _CALL sub_cutin_player_form_set
@@ -271,7 +269,6 @@ ev_hiden_iaigiri_02:
   
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   _SYSWIN_MSG( msg_iai_02 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
   //カットイン
