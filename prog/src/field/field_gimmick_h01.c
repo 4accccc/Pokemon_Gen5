@@ -34,6 +34,9 @@
 #define WIND_FADE_SPEED (16) // •—‚Ì‰¹—Ê‚ÌƒtƒF[ƒh‘¬“x
 #define WIND_MIN_VOLUME (0)   // •—‚ÌÅ¬ƒ{ƒŠƒ…[ƒ€
 #define WIND_MAX_VOLUME (127) // •—‚ÌÅ‘åƒ{ƒŠƒ…[ƒ€
+#define PAUL_SOUND_PLAY_SPEED ( FX32_ONE*100 ) // ’Ê‰ß‰¹‚ğo‚·ƒXƒs[ƒh
+#define PAUL_SOUND_Y_TMP_NUM ( 32 ) // ’Ê‰ß‰¹@YÀ•W•Û”
+#define PAUL_SOUND_PLAY_POS_Z ( 1798<<FX32_SHIFT )        // ’Ê‰ß‰¹‚ğo‚·ZÀ•W
 
 // ‰¹Œ¹ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒX
 typedef enum {
@@ -111,6 +114,19 @@ typedef struct {
 
 
 //==========================================================================================
+// ¡’Œ‚ÌŠÔ‚Æ’Ê‚é‰¹
+//==========================================================================================
+typedef struct {
+
+  fx32 last_z;
+  fx32 tmp_y[ PAUL_SOUND_Y_TMP_NUM ];
+  s16  tmp_start_index;
+  s16  tmp_count;
+
+} PAUL_SOUND;
+
+
+//==========================================================================================
 // ¡ƒMƒ~ƒbƒNƒ[ƒN
 //==========================================================================================
 typedef struct { 
@@ -123,6 +139,7 @@ typedef struct {
   int          maxWait[SOBJ_NUM]; // Å’·‘Ò‚¿ŠÔ
   WIND_DATA    wind_data;         // •—ƒf[ƒ^
 	int          wind_volume;       // •—‚Ì‰¹—Ê
+  PAUL_SOUND   paul_sound;        // ’Œ‚ÌŠÔ‚ğ’Ê‚é‰¹
 
 } H01WORK;
 
@@ -143,6 +160,9 @@ static void UpdateWindVolume( H01WORK* work, FIELDMAP_WORK* fieldmap ); // •—‚Ì‰
 static int CalcWindVolume( const H01WORK* work, FIELDMAP_WORK* fieldmap ); // •—‚Ì‰¹—Ê ( –Ú•W’l ) ‚ğŒvZ‚·‚é
 static void WindVolumeUp( H01WORK* work, int max_volume ); // •—‚Ì‰¹—Ê‚ğã‚°‚é
 static void WindVolumeDown( H01WORK* work, int min_volume ); // •—‚Ì‰¹—Ê‚ğ‰º‚°‚é
+// ’Œ‚ÌŠÔ‚ğ’Ê‚é
+static void InitPaulSound( PAUL_SOUND* work );
+static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera );
 
 
 //==========================================================================================
@@ -235,13 +255,13 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   int i;
   H01WORK* work = (H01WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
+  FIELD_CAMERA* fieldCamera;
+  fieldCamera = FIELDMAP_GetFieldCamera( fieldmap );
 
   // ŠÏ‘ªÒ‚ÌˆÊ’u‚ğİ’è
   {
-    FIELD_CAMERA* fieldCamera;
     VecFx32 cameraPos, targetPos;
 
-    fieldCamera = FIELDMAP_GetFieldCamera( fieldmap );
     FIELD_CAMERA_GetCameraPos( fieldCamera, &cameraPos );
     FIELD_CAMERA_GetTargetPos( fieldCamera, &targetPos );
     ISS_3DS_SYS_SetObserverPos( work->iss3dsSys, &cameraPos, &targetPos );
@@ -280,6 +300,9 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   }
+
+  // ’Œ‚ÌŠÔ‰¹ƒf[ƒ^
+  UpdatePaulSound(&work->paul_sound, fieldCamera);
 
 }
 
@@ -385,6 +408,8 @@ static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
   LoadWaitTime( work );
   // •—ƒf[ƒ^
   LoadWindData( work );
+  // ’Œ‚ÌŠÔ‰¹ƒf[ƒ^
+  InitPaulSound(&work->paul_sound);
 }
 
 //------------------------------------------------------------------------------------------
@@ -650,3 +675,74 @@ static void WindVolumeDown( H01WORK* work, int min_volume )
 		work->wind_volume = min_volume;
 	}
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ’Œ‚ÌŠÔ‚ğ’Ê‚é‰¹@‰Šú‰»
+ *
+ *	@param	work  ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+static void InitPaulSound( PAUL_SOUND* work )
+{
+  GFL_STD_MemClear32( work, sizeof(PAUL_SOUND) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ’Œ‚ÌŠÔ‚ğ’Ê‚é‰¹@XVˆ—
+ *
+ *	@param	work      ƒ[ƒN
+ *	@param	camera    ƒJƒƒ‰
+ */
+//-----------------------------------------------------------------------------
+static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera )
+{
+  VecFx32 camera_pos;
+
+  // ˆÚ“®ƒXƒs[ƒhŒv‘ª
+  FIELD_CAMERA_GetCameraPos( camera, &camera_pos );
+  if( work->last_z != camera_pos.z ){
+    // ˆÚ“®ƒtƒŒ[ƒ€B
+    s32 set_index;
+
+    if( work->tmp_count < PAUL_SOUND_Y_TMP_NUM ){
+      set_index = (work->tmp_start_index + work->tmp_count) % PAUL_SOUND_Y_TMP_NUM;
+      work->tmp_count ++;
+    }else{
+      set_index = work->tmp_start_index;
+      work->tmp_start_index = (work->tmp_start_index + 1) % PAUL_SOUND_Y_TMP_NUM;
+    }
+
+    work->tmp_y[ set_index ] = camera_pos.y;
+    //TOMOYA_Printf( "set index %d   count %d\n", set_index, work->tmp_count );
+  }else{
+    // ˆÚ“®‚È‚µƒtƒŒ[ƒ€
+    // ‘SƒNƒŠƒA
+    work->tmp_count = 0;
+    work->tmp_start_index = 0;
+    //TOMOYA_Printf( "tmp y clear\n" );
+  }
+  
+  // ƒJƒƒ‰ˆÊ’u‚ª–Â‚ç‚·êŠ‚ğ’Ê‰ß‚µ‚½‚©ƒ`ƒFƒbƒNB
+  if( work->tmp_count > 0 ){
+    if( ((camera_pos.z < PAUL_SOUND_PLAY_POS_Z) && (work->last_z > PAUL_SOUND_PLAY_POS_Z)) || 
+        ((camera_pos.z > PAUL_SOUND_PLAY_POS_Z) && (work->last_z < PAUL_SOUND_PLAY_POS_Z)) ){
+      fx32 dist;
+
+      // ˆê”ÔÌ‚ÌÀ•W‚©‚ç‚Ç‚Ì‚­‚ç‚¢‚©‚í‚Á‚½‚Ì‚©H
+      dist = work->tmp_y[ work->tmp_start_index ] - camera_pos.y;
+    
+      TOMOYA_Printf( "camera_speed 0x%x\n", dist );
+      if( dist >= PAUL_SOUND_PLAY_SPEED ){
+        PMSND_PlaySE( SEQ_SE_FLD_171 );
+        TOMOYA_Printf( "sound on\n" );
+      }
+    }
+  }
+
+  work->last_z = camera_pos.z;
+}
+
