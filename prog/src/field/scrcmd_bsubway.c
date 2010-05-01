@@ -2255,10 +2255,12 @@ void BSUBWAY_SCRWORK_DebugFightAnyRound(
   
   renshou = game_round_now - 1;
   
+#if 0  
   OS_Printf( "BSW ================================================\n" );
   OS_Printf( "BSW DEBUG %dí–Ú‚Ö(STAGE %d ROUND %d RENSHOU %d\n",
       game_round_now, stage, round, renshou );
   OS_Printf( "BSW ================================================\n" );
+#endif
   
   BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
   BSUBWAY_SCOREDATA_SetStageNo_Org1(
