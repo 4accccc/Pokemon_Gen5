@@ -107,7 +107,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_DEFAULT = 0,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_XZ,
@@ -128,7 +127,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_NOGRID_BRIDGE = 1,
 	{	//実験マップ　橋
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			2048*FX32_ONE, 2048*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -149,7 +147,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_NOGRID_C3 = 2,
 	{	//実験マップ　C3
 		{	
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -170,7 +167,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_PALACE = 3,
 	{	//実験マップ グリッド移動   パレス
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ_LOOP, 
@@ -191,7 +187,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_RANDOMMAP = 4,
 	{	//実験マップ グリッド移動   ランダム生成マップ
 		{
-			FLDMAPPER_FILETYPE_RANDOM,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -212,7 +207,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_NOGRID_LEAGUE = 5,
 	{	//実験マップ チャンピオンリーグ
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			1024*FX32_ONE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -233,7 +227,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_UNION = 6,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -253,7 +246,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_NOGRID_DEFAULT = 7,
 	{	//実験マップ レール移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_XZ, 
@@ -274,7 +266,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_NOGRID_C03P02 = 8,
 	{	//実験マップ レール移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ, 
@@ -295,7 +286,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_MUSICAL = 9,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_XZ, 
@@ -316,7 +306,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_GYM_ELEC = 10,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -338,7 +327,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_WIDE = 11,
 	{	//横に長い
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ, 
@@ -360,7 +348,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_NOGRID_D09 = 12,
 	{	//チャンピオンロード　外側
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -382,7 +369,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_BRIDGE_H03 = 13,
 	{	//H03 縦長　常駐マップ
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,6,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -404,7 +390,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_HYBRID = 14,
 	{	//グリッド、レールハイブリッド
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -426,7 +411,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_FOURKINGS = 15,
 	{	//四天王部屋 グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -448,7 +432,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_NOSCROLL = 16,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -470,7 +453,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_CABIN = 17,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       5,1,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -492,7 +474,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_H04 = 18,
 	{	//実験マップ グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
@@ -513,7 +494,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_DEF_TAILDRAW = 19,
 	{ //トップ描画しないテイル描画のみ通常マップ
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,2,
       FLDMAPPER_MODE_SCROLL_XZ,
@@ -534,7 +514,6 @@ const SCENE_DATA resistMapTbl[] = {
   //RSC_GRID_LEAGIN02 = 20,
 	{	//ポケモンリーグフロント２専用　グリッド移動
 		{
-			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       2,3,
       FLDMAPPER_MODE_SCROLL_NONE, 
