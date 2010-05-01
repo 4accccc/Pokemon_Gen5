@@ -134,7 +134,9 @@ static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
     }
   }
   else{
-    PokeParty_Copy(BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC ), dbw->pParty);
+    POKEPARTY* party = BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC );
+    PokeParty_Copy(party, dbw->pParty);
+    GFL_HEAP_FreeMemory(party);
   }
   _ModifyLevelPokeParty(dbw->pParty);
 }
