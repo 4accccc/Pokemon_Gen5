@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-30T19:19:48"/>
+	<create user="taya" host="W00146" date="2010-05-01T16:57:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5034,7 +5034,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_NeWoHaru">
-		<comment>ねをはる</comment>
+		<comment>ねをはる：発動</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねを　はった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根を　はった！</language>
 	</row>
@@ -5048,6 +5048,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_NeWoHaruRecover">
+		<comment>ねをはる：回復</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねから
 ようぶんを　すいとった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根から
@@ -5067,6 +5068,7 @@
 	</row>
 
 	<row id="BTL_STRID_SET_NeWoHaruStick">
+		<comment>ねをはる：ふきとばされそうなとき</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　ねをはって
 うごかない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　根をはって
@@ -6852,6 +6854,22 @@
 自分の体力を　削って▽
 [1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
 	</row>
+	<row id="BTL_STRID_SET_Noroi_2Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じぶんの　たいりょくを　けずって▽
+やせいの　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+自分の体力を　削って▽
+野生の　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+	</row>
+	<row id="BTL_STRID_SET_Noroi_2E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+じぶんの　たいりょくを　けずって▽
+あいての　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+自分の体力を　削って▽
+相手の　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+	</row>
 	<row id="BTL_STRID_SET_Noroi_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 じぶんの　たいりょくを　けずって▽
@@ -6860,6 +6878,14 @@
 自分の体力を　削って▽
 [1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
 	</row>
+	<row id="BTL_STRID_SET_Noroi_Y2Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+じぶんの　たいりょくを　けずって▽
+やせいの　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+自分の体力を　削って▽
+野生の　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+	</row>
 	<row id="BTL_STRID_SET_Noroi_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 じぶんの　たいりょくを　けずって▽
@@ -6867,6 +6893,14 @@
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 自分の体力を　削って▽
 [1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+	</row>
+	<row id="BTL_STRID_SET_Noroi_E2E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+じぶんの　たいりょくを　けずって▽
+あいての　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+自分の体力を　削って▽
+相手の　[1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_NoroiDamage">

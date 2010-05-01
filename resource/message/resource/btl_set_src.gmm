@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-30T19:30:23"/>
+	<create user="taya" host="W00146" date="2010-05-01T16:57:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2948,6 +2948,7 @@
 
 	<row id="BTL_STRID_SET_Noroi">
 		<comment>のろい</comment>
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 じぶんの　たいりょくを　けずって▽
 [1:02:ポケモンニックネーム:1]に　のろいを　かけた！</language>
