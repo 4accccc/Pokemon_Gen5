@@ -36,3 +36,5 @@ typedef struct {
 
 extern const GFL_PROC_DATA PDW_ACC_ProcData;
 
+extern void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf);
+

@@ -79,7 +79,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
 
 
 FS_EXTERN_OVERLAY(wifi_login);
-FS_EXTERN_OVERLAY(pdw_acc);
+FS_EXTERN_OVERLAY(gamesync);
 extern const GFL_PROC_DATA WiFiLogin_ProcData;
 extern const GFL_PROC_DATA PDW_ACC_ProcData;
 
@@ -104,7 +104,7 @@ static GFL_PROC_RESULT PDWACCProc_Main( GFL_PROC * proc, int * seq, void * pwk, 
       pWork->pwdaccWork.gameData = pWork->gameData;
       pWork->pwdaccWork.heapID = pWork->heapID;
       pWork->pwdaccWork.pSvl = &pWork->aSVL;
-      GFL_PROC_SysCallProc(FS_OVERLAY_ID(pdw_acc), &PDW_ACC_ProcData, &pWork->pwdaccWork);
+      GFL_PROC_SysCallProc(FS_OVERLAY_ID(gamesync), &PDW_ACC_ProcData, &pWork->pwdaccWork);
     }
     pWork->state++;
     break;

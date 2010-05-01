@@ -55,7 +55,9 @@ typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gameData;
   SAVE_CONTROL_WORK *ctrl;
-//  BATTLE_SETUP_PARAM para;
+  DREAM_WORLD_SERVER_STATUS_DATA aDreamStatus;  //ダウンロードしてきたステータス値
+  BOOL baDreamStatusON;  //ダウンロードしたら1
+  //  BATTLE_SETUP_PARAM para;
   DWCSvlResult aSVL;
   int selectType;
   BOOL push;

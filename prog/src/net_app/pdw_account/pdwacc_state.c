@@ -222,14 +222,8 @@ static void _createAccount8(PDWACC_WORK* pWork)
 
 static void _createAccount7(PDWACC_WORK* pWork)
 {
-  int i;
-  s32 id = pWork->profileID;
-  u16 crc = GFL_STD_CrcCalc( &id, 4 );
-  u64 code = id + crc * 0x100000000;
-  OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
-
   
-  PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork,code, id);
+  PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork, pWork->profileID, pWork->profileID);
   PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008);
   
   _CHANGE_STATE(_createAccount8);

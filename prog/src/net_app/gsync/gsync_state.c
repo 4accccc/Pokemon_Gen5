@@ -127,8 +127,8 @@ typedef enum{
 struct _G_SYNC_WORK {
   HEAPID heapID;
   DREAM_WORLD_SERVER_DOWNLOAD_FINISH_DATA aDownFinish;
-  DREAM_WORLD_SERVER_STATUS_DATA aDreamStatus;
-  BOOL baDreamStatusON;
+//  DREAM_WORLD_SERVER_STATUS_DATA aDreamStatus;
+//  BOOL baDreamStatusON;
   GSYNC_DOWNLOAD_WORK* pDownload;
   POKEMON_PARAM* pp;
   NHTTP_RAP_WORK* pNHTTPRap;
@@ -189,11 +189,11 @@ static BOOL _IsNetworkMode(G_SYNC_WORK* pWork)
   if(GSYNC_CALLTYPE_BOXSET_NOACC == pWork->pParent->selectType){
     return FALSE;
   }
-  if(pWork->baDreamStatusON){
-    if(pWork->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_EMPTY){ //アカウント未修得
-      return FALSE;
-    }
-    if(pWork->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_FINISH){ //サービス終了
+  if(pWork->pParent->baDreamStatusON){
+//    if(pWork->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_EMPTY){ //アカウント未修得
+//      return FALSE;
+//    }
+    if(pWork->pParent->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_FINISH){ //サービス終了
       return FALSE;
     }
   }
@@ -216,8 +216,8 @@ static BOOL _IsNetworkMode(G_SYNC_WORK* pWork)
 
 static BOOL _IsLv1Message(G_SYNC_WORK* pWork)
 {
-  if(pWork->baDreamStatusON){
-    if(pWork->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_EMPTY){ //アカウント未修得
+  if(pWork->pParent->baDreamStatusON){
+    if(pWork->pParent->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_EMPTY){ //アカウント未修得
       return TRUE;
     }
   }
@@ -235,11 +235,11 @@ static BOOL _IsLv1Message(G_SYNC_WORK* pWork)
 
 static BOOL _IsLv1Mode(G_SYNC_WORK* pWork)
 {
-  if(pWork->baDreamStatusON){
-    if(pWork->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_EMPTY){ //アカウント未修得
+  if(pWork->pParent->baDreamStatusON){
+    if(pWork->pParent->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_EMPTY){ //アカウント未修得
       return TRUE;
     }
-    if(pWork->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_FINISH){ //サービス終了
+    if(pWork->pParent->aDreamStatus.PlayStatus == DREAM_WORLD_SERVER_PLAY_FINISH){ //サービス終了
       return TRUE;
     }
   }
@@ -338,7 +338,7 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
   
   GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork,gmm);
-  GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,16);
+  GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,16);
   _CHANGE_STATE(_ErrorDisp2);
 }
 
@@ -393,7 +393,7 @@ static void _wakeupActio92(G_SYNC_WORK* pWork)
   if(pWork->msgBit!=0){
     GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, msgbuff[pWork->msgBit]);
-    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,8);
+    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,8);
     _CHANGE_STATE(_wakeupActio10);
   }
   else{
@@ -443,7 +443,7 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
     else{
       GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
       GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_015, pWork->lvup, pWork->pp);
-      GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
+      GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork, FALSE);
 
       PMSND_PauseBGM(TRUE);
       PMSND_PushBGM();
@@ -517,11 +517,11 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
   if(pWork->bGet){
     GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
-    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,8);
+    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,8);
   }
   else{
     GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_026,0, pWork->pp);
-    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,4);
+    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,4);
   }
 
 
@@ -1103,22 +1103,24 @@ static BOOL _lv1check(G_SYNC_WORK* pWork)
 {
   int i,j;
   DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+  DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
 
+  
   //ポケモンシンボルエンカウント
-  _symbolPokemonSave(pWork, pDreamSave, pWork->aDreamStatus.findPokemon,
-                     pWork->aDreamStatus.findPokemonSex,
-                     pWork->aDreamStatus.findPokemonForm,
-                     pWork->aDreamStatus.findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
+  _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
+                     pDreamStatus->findPokemonSex,
+                     pDreamStatus->findPokemonForm,
+                     pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
 
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     for(j=i+1;j<DREAM_WORLD_DATA_MAX_ITEMBOX;j++){
-      if((pWork->aDreamStatus.itemID[i] != 0) && (pWork->aDreamStatus.itemID[j] == pWork->aDreamStatus.itemID[i])){
+      if((pDreamStatus->itemID[i] != 0) && (pDreamStatus->itemID[j] == pDreamStatus->itemID[i])){
         return FALSE;
       }
     }
   }
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
-    DREAMWORLD_SV_SetItem(pDreamSave, i, pWork->aDreamStatus.itemID[i], pWork->aDreamStatus.itemNum[i]);
+    DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
   }
   return TRUE;
 }
@@ -1171,7 +1173,8 @@ static void _wakeupAction6(G_SYNC_WORK* pWork)
         GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
       }
       if(_lv1check(pWork)){
-        _CHANGE_STATE(_wakeupAction7);
+        _CHANGE_STATE(_wakeupAction_1);
+//        _CHANGE_STATE(_wakeupAction7);
       }
       else{
         pWork->ErrorNo = _ERRNO_DOWNLOAD_CRASH;
@@ -1397,6 +1400,43 @@ static void _wakeupAction1(G_SYNC_WORK* pWork)
 
 
 
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモン仮アカウント作成 メッセージ
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _accountCreateMessage3(G_SYNC_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    _CHANGE_STATE(_ghttpPokemonListDownload);
+  }
+}
+
+static void _accountCreateMessage2(G_SYNC_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, GSYNC_029);
+    GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,7, 14);
+    _CHANGE_STATE(_accountCreateMessage3);
+  }
+}
+
+static void _accountCreateMessage(G_SYNC_WORK* pWork)
+{
+  GSYNC_MESSAGE_SetPassword(pWork->pMessageWork,
+                            MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pWork->pParent->gameData) ));
+  GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork, TRUE);
+
+  GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, GSYNC_028);
+  GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork, 7, 14);
+  _CHANGE_STATE(_accountCreateMessage2);
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン仮アカウント作成
@@ -1416,7 +1456,8 @@ static void _createAccount2(G_SYNC_WORK* pWork)
         }
         else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
           DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
-           _CHANGE_STATE(_ghttpPokemonListDownload);
+          GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+          _CHANGE_STATE( _accountCreateMessage);
         }
         else{
           pWork->ErrorNo = pEvent->ret_cd;
@@ -1627,10 +1668,10 @@ static void _ghttpInfoWait1(G_SYNC_WORK* pWork)
         u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(pWork->pNHTTPRap);
         gs_response* pRep = (gs_response*)pEvent;
         DREAM_WORLD_SERVER_STATUS_DATA* pDream = (DREAM_WORLD_SERVER_STATUS_DATA*)&pEvent[sizeof(gs_response)];
-        GFL_STD_MemCopy(pDream, &pWork->aDreamStatus, sizeof(DREAM_WORLD_SERVER_STATUS_DATA));
+        GFL_STD_MemCopy(pDream, &pWork->pParent->aDreamStatus, sizeof(DREAM_WORLD_SERVER_STATUS_DATA));
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
         NET_PRINT("PlayStatus %d\n",pDream->PlayStatus);
-        pWork->baDreamStatusON = TRUE;
+        pWork->pParent->baDreamStatusON = TRUE;
         _playStatusCheck(pWork, pDream->PlayStatus, pRep);  //分岐する
       }
     }
@@ -1848,7 +1889,7 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
   GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
 
   GSYNC_MESSAGE_NickNameMessageDisp( pWork->pMessageWork, GSYNC_007,0, pWork->pp );
-  GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
+  GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork, FALSE);
  // GSYNC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
   
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
@@ -1920,8 +1961,25 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
   DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
   GSYNC_DISP_PokemonMove(pWork->pDispWork);
 
+
+  if(_IsLv1Message(pWork)){
+    if(pWork->lv1timer == 0){
+      GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, GSYNC_023);
+      GSYNC_MESSAGE_CMMessageDisp(pWork->pMessageWork );
+    }
+    else if(pWork->lv1timer == 60*_LV1MESSAGE){
+      GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, GSYNC_024);
+      GSYNC_MESSAGE_CMMessageDisp(pWork->pMessageWork );
+    }
+    else if(pWork->lv1timer == 60*_LV1MESSAGE*2){
+      GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork, GSYNC_025);
+      GSYNC_MESSAGE_CMMessageDisp(pWork->pMessageWork );
+    }
+    pWork->lv1timer++;
+  }
+
   
-  if(_IsNetworkMode(pWork) && DREAMWORLD_SV_GetSignin(pDream)){
+  if(_IsNetworkMode(pWork) ){
     if(pWork->percent < _UPLOAD_PROCESS_PERCENT){
       pWork->percent++;
     }
@@ -1936,6 +1994,11 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
         int d,j;
         u32 size;
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+
+        if(_IsLv1Message(pWork)){
+          GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+        }
+
         if(pRep->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE){  //成功
           _CHANGE_STATE(_updateSave);
         }
@@ -1950,6 +2013,11 @@ static void _upeffectLoop5(G_SYNC_WORK* pWork)
     GSYNC_DISP_SetPerfomance(pWork->pDispWork,pWork->notNetEffect);
     pWork->notNetEffect++;
     if(pWork->notNetEffect==100){
+
+      if(_IsLv1Message(pWork)){
+        GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+      }
+
       _CHANGE_STATE(_updateSave);
     }
   }
@@ -1972,14 +2040,14 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
     return;
   }
 
-  if(_IsNetworkMode(pWork) && DREAMWORLD_SV_GetSignin(pDream)){
+  pWork->lv1timer=0;
+  if(_IsNetworkMode(pWork)){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_UPLOAD, pWork->pNHTTPRap)){
       u32 size;
       u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
       NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
       GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
       pWork->percent=0;
-
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_upeffectLoop5);
       }

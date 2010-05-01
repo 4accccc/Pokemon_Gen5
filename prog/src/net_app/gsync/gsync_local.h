@@ -77,11 +77,12 @@ extern void GSYNC_MESSAGE_DispMyChange(GSYNC_MESSAGE_WORK* pWork,int no);
 extern void GSYNC_MESSAGE_DispFriendChange(GSYNC_MESSAGE_WORK* pWork,int no);
 //extern void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,POKEMON_PARAM* pp);
 extern void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid, int lvup,POKEMON_PARAM* pp);
-extern void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork);
+extern void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork, BOOL bFast);
 
 extern APP_TASKMENU_WORK* GSYNC_MESSAGE_SearchButtonStart(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_WindowTimeIconStart(GSYNC_MESSAGE_WORK* pWork);
-extern void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork, int height);
+extern void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork,int start, int height);
+extern void GSYNC_MESSAGE_SetPassword(GSYNC_MESSAGE_WORK* pWork,u32 profileID);
 
 
 extern GSYNC_DISP_WORK* GSYNC_DISP_Init(HEAPID id);

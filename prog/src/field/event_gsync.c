@@ -109,6 +109,8 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq) = _CALL_GAMESYNC_MENU;
     break;
   case _CALL_GAMESYNC_MENU:
+    GFL_STD_MemClear( &dbw->aDreamStatus, sizeof(DREAM_WORLD_SERVER_STATUS_DATA) );
+    dbw->baDreamStatusON=FALSE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(gamesync), &GameSyncMenuProcData, dbw);
     (*seq)++;
     break;

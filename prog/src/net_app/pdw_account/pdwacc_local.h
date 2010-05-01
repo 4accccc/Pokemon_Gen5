@@ -46,7 +46,7 @@ extern void PDWACC_MESSAGE_DispFriendChange(PDWACC_MESSAGE_WORK* pWork,int no);
 
 extern BOOL PDWACC_MESSAGE_NoMessageEndCheck(PDWACC_MESSAGE_WORK* pWork);
 extern void PDWACC_MESSAGE_NoMessageEnd(PDWACC_MESSAGE_WORK* pWork);
-extern void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code,int no);
+extern void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u32 profileID,int no);
 
 
 

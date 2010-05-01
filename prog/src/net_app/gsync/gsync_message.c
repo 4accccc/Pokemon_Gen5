@@ -35,6 +35,7 @@
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "app/app_printsys_common.h"
+#include "net_app/pdwacc.h"
 
 #include "gsync_local.h"
 #include "gtsnego.naix"
@@ -242,7 +243,7 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork)
+void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork, BOOL bFast)
 {
   GFL_BMPWIN* pwin;
   
@@ -257,10 +258,14 @@ void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
-
-  APP_PRINTSYS_COMMON_PrintStreamInit( &pWork->aPrintWork ,APP_PRINTSYS_COMMON_TYPE_BOTH);
+  if(bFast){
+    PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle );
+  }
+  else{
+    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
+                                          MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+    APP_PRINTSYS_COMMON_PrintStreamInit( &pWork->aPrintWork ,APP_PRINTSYS_COMMON_TYPE_BOTH);
+  }
   
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M), _BUTTON_WIN_PAL );
 
@@ -279,7 +284,7 @@ void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork)
 void GSYNC_MESSAGE_InfoMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid)
 {
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  GSYNC_MESSAGE_MessageDisp(pWork);
+  GSYNC_MESSAGE_MessageDisp(pWork, FALSE);
 }
 
 
@@ -425,7 +430,7 @@ void GSYNC_MESSAGE_SetNormalMessage(GSYNC_MESSAGE_WORK* pWork,int msgid)
  */
 //------------------------------------------------------------------------------
 
-void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork, int height)
+void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork, int start, int height)
 {
   GFL_BMPWIN* pwin;
 
@@ -434,7 +439,7 @@ void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork, int height)
   }
 
   pWork->systemDispWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_S , 1 , 1, 30 , height ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+    GFL_BG_FRAME2_S , 1 , start, 30 , height ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   pwin = pWork->systemDispWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
@@ -505,7 +510,7 @@ void GSYNC_MESSAGE_ErrorMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,int no)
   WORDSET_RegisterNumber(pWork->pWordSet, 0, no,
                          5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  GSYNC_MESSAGE_SystemMessageDisp(pWork,16);
+  GSYNC_MESSAGE_SystemMessageDisp(pWork, 1,16);
 }
 
 
@@ -616,3 +621,17 @@ void GSYNC_MESSAGE_WindowTimeIconStart(GSYNC_MESSAGE_WORK* pWork)
     TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   パスワードを入れる
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void GSYNC_MESSAGE_SetPassword(GSYNC_MESSAGE_WORK* pWork,u32 profileID)
+{
+  PDWACC_MESSAGE_GetPassWord(profileID, pWork->pStrBuf);
+}

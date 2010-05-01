@@ -533,12 +533,10 @@ void PDWACC_MESSAGE_DispClear(PDWACC_MESSAGE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code,int no)
+void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf)
 {
   GFL_BMPWIN* pwin;
   int i;
-  //  STRCODE buff[]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x41,0x42,0x43,0x44,0x45,0x46};
-  // STRCODE buff2[]="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   STRCODE buff2[]={
     65,	//A
     66,	//B
@@ -578,20 +576,40 @@ void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code,int no)
     57,	//9
   };
 
-  u64 moji=code;
+  u64 moji;
   u16 word;
-
   STRCODE disp[13*sizeof(STRCODE)];
+  s32 id = profileID;
+  u16 crc = GFL_STD_CrcCalc( &id, 4 );
+  u64 code = id + crc * 0x100000000;
+  OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
 
+  moji = code;
   GFL_STD_MemFill(disp,0xff,sizeof(disp));
   for(i = 0; i < 10 ; i++){
     word = moji & 0x1f;
     moji = moji >> 5;
     disp[i]=buff2[word];
   }
-  GFL_STR_SetStringCode(pWork->pStrBuf,disp);
+  GFL_STR_SetStringCode(pStrbuf,disp);
 
-  //GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アクセスコード表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u32 profileID,int no)
+{
+  GFL_BMPWIN* pwin;
+  int i;
+
+  PDWACC_MESSAGE_GetPassWord(profileID, pWork->pStrBuf);
 
   if(pWork->noDispWin==NULL){
     pWork->noDispWin = GFL_BMPWIN_Create(
