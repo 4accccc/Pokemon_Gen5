@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 14:11:17
+#save date:2010/05/01 15:21:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04r0401.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 168
+-216 0 168
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 168
+-184 0 168
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ H04R0401_BREEDERW_01
 #OBJ CODE Number
 BREEDERW
 #MOVE CODE Number
-MV_DMY
+MV_RTRD         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_H04R0401_BREEDERW_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 168
+-120 0 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -33,6 +33,34 @@ _EVENT_DATA_END
 /*		H04R0601	回復処理	WOMAN3						  */
 /**************************************************************/
 EVENT_START		ev_h04r0601_woman3_01
+
+	_TALK_OBJ_START()
+	//回復した処理
+	IF $LOCALWORK0 == 1 THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_h04r0601_woman3_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	ELSE
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_h04r0601_woman3_02 )
+		_MSGWIN_CLOSE()
+
+		//暗転して手持ちポケモンを回復
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		_ME_PLAY( SEQ_ME_ASA )
+		_ME_WAIT()
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+		
+		$LOCALWORK0 = 1
+	
+	ENDIF
+	
+/*
 _TALK_OBJ_START()
 	//手持ちポケモンの総数をカウント
 	DEFINE_LOCAL	LWK_TEMOCHI
@@ -85,5 +113,5 @@ _TALK_OBJ_START()
 		_DISP_FADE_END_CHECK()
 	
 	ENDIF
-	
+*/
 EVENT_END
