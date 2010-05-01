@@ -135,6 +135,10 @@ POKE_SET;
 //#define INDEPENDENT_PANEL_NUM_X    (28)  // 上下左右に1ピクセルずつ大きなパネルにすると、パネル1つずつが大きくなってしまうので、
 //#define INDEPENDENT_PANEL_NUM_Y    (28)  // 元の大きさと合わせるにはこれくらい分割せねばならないが、処理落ちが激しくなる。
 
+// ★注意★ INDEPENDENT_PANEL_NUM_Yを変更したらIndependentOneMain中のpanel_hやtex_hも変更すること!
+// ★注意★ INDEPENDENT_PANEL_NUM_Yを変更したらIndependentOneMain中のindependent_one_pixelも変更すること!
+
+
 // 全部を合わせて1枚と見たときのサイズ
 //#define INDEPENDENT_PANEL_TOTAL_W  (36)  // 採用
 //#define INDEPENDENT_PANEL_TOTAL_H  (36)  // 採用
@@ -153,9 +157,13 @@ POKE_SET;
 #define INDEPENDENT_PANEL_TOTAL_MIN_T  ( 16)
 #define INDEPENDENT_PANEL_TOTAL_MAX_T  (112)
 
+// ★注意★ INDEPENDENT_PANEL_TOTAL_MIN_T, INDEPENDENT_PANEL_TOTAL_MAX_Tを変更したらIndependentOneMain中のindependent_one_pixelやpanel_pixelも変更すること!
+
+
 // ポリゴンID
 #define INDEPENDENT_BEFORE_POLYGON_ID  (60)
 #define INDEPENDENT_AFTER_POLYGON_ID   (61)
+#define INDEPENDENT_ONE_POLYGON_ID     (59)
 
 typedef enum
 {
@@ -280,14 +288,37 @@ typedef struct
 
   // パネル個々
   INDEPENDENT_PANEL_WORK  panel_wk[INDEPENDENT_PANEL_NUM_Y][INDEPENDENT_PANEL_NUM_X];
+
+  // y何列目以降は非表示
+  u8 not_disp_y;  // 0のとき全部非表示、INDEPENDENT_PANEL_NUM_Yのとき全部表示
 }
 INDEPENDENT_POKE_WORK;
+
+typedef struct
+{
+  // 転送画像展開用
+  u32 tex_adr;  // INDEPENDENT_POKE_WORKが読み込んだものを拝借しているだけ
+  u32 pal_adr;
+
+  // 全体の値
+  VecFx32  pos;
+  VecFx32  scale;                              // ( INDEPENDENT_PANEL_TOTAL_W, INDEPENDENT_PANEL_TOTAL_H, 1 )に固定
+  int      polygon_id;      // ポリゴンID
+  fx32     s0, s1, t0, t1;  // テクスチャ座標
+  u8       alpha;           // 0<= <=31
+  VecFx16  vtx[4];          // 頂点座標        // -0.5<= <=0.5にしておく(大きさ1にしておく)
+
+  // y何列目以降は表示
+  u8 not_disp_y;  // 0のとき全部表示、INDEPENDENT_PANEL_NUM_Yのとき全部非表示  // これに合わせてvtxとs0,s1,t0,t1を変動させる
+}
+INDEPENDENT_ONE_WORK;
 
 typedef struct
 {
   INDEPENDENT_STATE       state;
   GFL_G3D_CAMERA*         camera;             // INDEPENDENT専用カメラ
   INDEPENDENT_POKE_WORK*  poke_wk[POKE_MAX];  // NULLのときはなし
+  INDEPENDENT_ONE_WORK*   one_wk;             // NULLのときはなし
 }
 INDEPENDENT_POKE_MANAGER;
 
@@ -375,9 +406,7 @@ static void IndependentPokeManagerStart( SHINKADEMO_VIEW_WORK* work );
 static BOOL IndependentPokeManagerIsEnableCancel( SHINKADEMO_VIEW_WORK* work );
 static void IndependentPokeManagerCancel( SHINKADEMO_VIEW_WORK* work );
 
-static void IndependentPokeManagerSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x );
 static void IndependentPokeManagerSetPosXYZ( SHINKADEMO_VIEW_WORK* work, fx32 pos_x, fx32 pos_y, fx32 pos_z );
-static void IndependentPokeSetPosX( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x );
 static void IndependentPokeSetPosXYZ( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x, fx32 pos_y, fx32 pos_z );
 
 static void IndependentPokeManagerPalStartWhiteToColor( SHINKADEMO_VIEW_WORK* work );
@@ -411,6 +440,14 @@ static BOOL IndependentPokePalIsWhite( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
 static BOOL IndependentPokePalIsStartWhiteToColor( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id );
 static void IndependentPokePalStartWhiteToColor( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id );
 static void IndependentPokePalMain( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id );
+
+// INDEPENDENT_ONE
+static INDEPENDENT_ONE_WORK* IndependentOneInit( u32 tex_adr, u32 pal_adr, HEAPID heap_id );
+static void IndependentOneExit( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id );
+static void IndependentOneMain( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id );
+static void IndependentOneDraw( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id );
+
+static void IndependentOneSetPosXYZ( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id, fx32 pos_x, fx32 pos_y, fx32 pos_z );
 
 
 //=============================================================================
@@ -1204,6 +1241,7 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
   independent_poke_mgr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(INDEPENDENT_POKE_MANAGER) );
   independent_poke_mgr->poke_wk[POKE_BEFORE] = NULL;
   independent_poke_mgr->poke_wk[POKE_AFTER]  = NULL;
+  independent_poke_mgr->one_wk               = NULL;
 
   if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
   {
@@ -1279,11 +1317,17 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
 
     }
   }
-  
+
+  // INDEPENDENT_ONE
+  if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
+  {
+    independent_poke_mgr->one_wk = IndependentOneInit( INDEPENDENT_POKE_TEX_ADRS, INDEPENDENT_POKE_PAL_ADRS, work->heap_id );
+  }
+
   work->independent_poke_mgr = independent_poke_mgr;
   
   {
-    // 次の関数の中でwork->independent_poke_mgrを使用しているので、work->independent_poke_mgrへの代入、IndependentPokeManagerSetPosX呼び出しの順で。
+    // 次の関数の中でwork->independent_poke_mgrを使用しているので、work->independent_poke_mgrへの代入、IndependentPokeManagerSetPosXYZ呼び出しの順で。
     IndependentPokeManagerSetPosXYZ( work, INDEPENDENT_POKE_X_HIDE, INDEPENDENT_POKE_Y, INDEPENDENT_POKE_Z );
   }
 
@@ -1377,6 +1421,12 @@ static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work )
   // INDEPENDENT専用カメラ
   {
     GFL_G3D_CAMERA_Delete( independent_poke_mgr->camera );
+  }
+
+  // INDEPENDENT_ONE
+  if( independent_poke_mgr->one_wk )
+  {
+    IndependentOneExit( independent_poke_mgr->one_wk, work->heap_id  );
   }
 
   for( i=0; i<POKE_MAX; i++ )
@@ -1503,6 +1553,14 @@ static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work )
     }
   }
 
+  // INDEPENDENT_ONE
+  {
+    if( independent_poke_mgr->one_wk )
+    {
+      IndependentOneDraw( independent_poke_mgr->one_wk, work->heap_id );
+    }
+  }
+
   // INDEPENDENT専用カメラから戻す
   {
     GFL_G3D_SetSystemProjection(&projection);
@@ -1549,19 +1607,6 @@ static void IndependentPokeManagerCancel( SHINKADEMO_VIEW_WORK* work )
   }
 }
 
-static void IndependentPokeManagerSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x )
-{
-  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
-
-  u8 i;
-  for( i=0; i<POKE_MAX; i++ )
-  {
-    if( independent_poke_mgr->poke_wk[i] )
-    {
-      IndependentPokeSetPosX( independent_poke_mgr->poke_wk[i], work->heap_id, pos_x );
-    }
-  }
-}
 static void IndependentPokeManagerSetPosXYZ( SHINKADEMO_VIEW_WORK* work, fx32 pos_x, fx32 pos_y, fx32 pos_z )
 {
   INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
@@ -1574,12 +1619,16 @@ static void IndependentPokeManagerSetPosXYZ( SHINKADEMO_VIEW_WORK* work, fx32 po
       IndependentPokeSetPosXYZ( independent_poke_mgr->poke_wk[i], work->heap_id, pos_x, pos_y, pos_z );
     }
   }
+
+  // INDEPENDENT_ONE
+  {
+    if( independent_poke_mgr->one_wk )
+    {
+      IndependentOneSetPosXYZ( independent_poke_mgr->one_wk, work->heap_id, pos_x, pos_y, pos_z );
+    }
+  }
 }
 
-static void IndependentPokeSetPosX( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x )
-{
-  poke_wk->pos.x = pos_x;
-}
 static void IndependentPokeSetPosXYZ( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x, fx32 pos_y, fx32 pos_z )
 {
   poke_wk->pos.x = pos_x;
@@ -1783,6 +1832,10 @@ static void IndependentPokeInitEvo( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_
   }
 
   {
+    poke_wk->not_disp_y = 0;
+  }
+
+  {
     u8 i, j;
     for( j=0; j<INDEPENDENT_PANEL_NUM_Y; j++ )
     {
@@ -1919,6 +1972,10 @@ static void IndependentPokeInitAfter( INDEPENDENT_POKE_WORK* poke_wk, HEAPID hea
   }
 
   {
+    poke_wk->not_disp_y = INDEPENDENT_PANEL_NUM_Y;
+  }
+
+  {
     int  i;
     int  max;
     f32  w, h;
@@ -2051,7 +2108,8 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
       int x, y;
 
       //for( i=0; i<max; i++ )
-      for( y=0; y<INDEPENDENT_PANEL_NUM_Y; y++ )
+      //for( y=0; y<INDEPENDENT_PANEL_NUM_Y; y++ )
+      for( y=0; y<poke_wk->not_disp_y; y++ )
         for( x=0; x<INDEPENDENT_PANEL_NUM_X; x++ )
       {
         //int x, y;
@@ -2239,6 +2297,8 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
           poke_wk_dst->change_no_up_x = poke_wk_src->change_no_up_x;
           poke_wk_dst->change_no_up_y = poke_wk_src->change_no_up_y;
         }
+
+        poke_wk_dst->not_disp_y = poke_wk_src->not_disp_y;
       }
 
       // パレットアニメ
@@ -2259,6 +2319,16 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
           //IndependentPokePalStartWhiteToColor( poke_wk_dst, heap_id );
         }
       }
+
+      // INDEPENDENT_ONE
+      {
+        if( independent_poke_mgr->one_wk )
+        {
+          independent_poke_mgr->one_wk->not_disp_y = independent_poke_mgr->poke_wk[POKE_BEFORE]->not_disp_y;
+          IndependentOneMain( independent_poke_mgr->one_wk, heap_id );
+        }
+      }
+
     }
     break;
   }
@@ -2358,6 +2428,8 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
               panel_wk->pos.z += panel_wk->first_vel.z;
               
               panel_wk->count++;
+
+              poke_wk->not_disp_y = j + 1;
             }
             else  // 次からは安定軌道を目指す
             {
@@ -2963,5 +3035,235 @@ static void IndependentPokePalMain( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_
   }
 
   IndependentPokePalUpdate( poke_wk, heap_id );
+}
+
+
+// INDEPENDENT_ONE
+static INDEPENDENT_ONE_WORK* IndependentOneInit( u32 tex_adr, u32 pal_adr, HEAPID heap_id )
+{
+  INDEPENDENT_ONE_WORK* wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof(INDEPENDENT_ONE_WORK) );
+
+  wk->tex_adr = tex_adr;
+  wk->pal_adr = pal_adr;
+
+  wk->pos.x = wk->pos.y = wk->pos.z = 0;
+ 
+  wk->scale.x = FX_F32_TO_FX32(INDEPENDENT_PANEL_TOTAL_W);
+  wk->scale.y = FX_F32_TO_FX32(INDEPENDENT_PANEL_TOTAL_H);
+  wk->scale.z = FX_F32_TO_FX32(1.0f);
+
+  wk->polygon_id = INDEPENDENT_ONE_POLYGON_ID;
+
+  wk->s0 = FX_F32_TO_FX32(INDEPENDENT_PANEL_TOTAL_MIN_S);
+  wk->t0 = FX_F32_TO_FX32(INDEPENDENT_PANEL_TOTAL_MIN_T);
+  wk->s1 = FX_F32_TO_FX32(INDEPENDENT_PANEL_TOTAL_MAX_S);
+  wk->t1 = FX_F32_TO_FX32(INDEPENDENT_PANEL_TOTAL_MAX_T);
+
+  wk->alpha = 31;
+
+  wk->vtx[0].x = - FX16_HALF;    wk->vtx[0].y =   FX16_HALF;    wk->vtx[0].z = 0;
+  wk->vtx[1].x = - FX16_HALF;    wk->vtx[1].y = - FX16_HALF;    wk->vtx[1].z = 0;
+  wk->vtx[2].x =   FX16_HALF;    wk->vtx[2].y = - FX16_HALF;    wk->vtx[2].z = 0;
+  wk->vtx[3].x =   FX16_HALF;    wk->vtx[3].y =   FX16_HALF;    wk->vtx[3].z = 0;
+
+  wk->not_disp_y = 0;
+
+  return wk;
+}
+static void IndependentOneExit( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id )
+{
+  GFL_HEAP_FreeMemory( one_wk );
+}
+static void IndependentOneMain( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id )
+{
+/*
+  // 割り算するのがイヤなので、テーブルにしておく
+  static const fx16 independent_one_top_vtx_y[INDEPENDENT_PANEL_NUM_Y] =  // 0.5 - 1/INDEPENDENT_PANEL_NUM_Y * i
+  {
+    FX16_HALF,                                                   //  0  //  0.5
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  1 ),  //  1  //  0.4444444
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  2 ),  //  2  //  0.3888888
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  3 ),  //  3  //  0.3333333
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  4 ),  //  4  //  0.2777777
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  5 ),  //  5  //  0.2222222
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  6 ),  //  6  //  0.1666666
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  7 ),  //  7  //  0.1111111
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y *  8 ),  //  8  //  0.0555555
+    0,                                                           //  9  //  0
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 10 ),  // 10  // -0.0555555  
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 11 ),  // 11  // -0.1111111
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 12 ),  // 12  // -0.1666666
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 13 ),  // 13  // -0.2222222
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 14 ),  // 14  // -0.2777777
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 15 ),  // 15  // -0.3333333
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 16 ),  // 16  // -0.3888888
+    FX_F32_TO_FX16( 0.5f - 1.0f/INDEPENDENT_PANEL_NUM_Y * 17 ),  // 17  // -0.4444444
+  };
+でもテーブルはプログラムサイズが大きくなるので止めた。
+*/
+
+/*
+  const fx16 panel_h = FX_F32_TO_FX16( 0.055555555555f );  // 1/INDEPENDENT_PANEL_NUM_Y = 1/18
+  const fx32 tex_h   = FX_F32_TO_FX32( 5.333333333333f );  // ( INDEPENDENT_PANEL_TOTAL_MAX_T - INDEPENDENT_PANEL_TOTAL_MIN_T ) / INDEPENDENT_PANEL_NUM_Y = ( 112 - 16 ) / 18 = 96/18
+
+  one_wk->vtx[0].y = one_wk->vtx[3].y = FX16_HALF - panel_h * one_wk->not_disp_y;
+  one_wk->t0 = FX32_CONST( INDEPENDENT_PANEL_TOTAL_MIN_T ) + tex_h * one_wk->not_disp_y;
+画像がカタカタ動く。多分テクスチャ座標が計算結果をそのまま利用していると上や下へずれているのだろう。
+*/ 
+
+  // ピクセルが整数になるようなテーブル
+  static const fx16 independent_one_top_vtx_y[INDEPENDENT_PANEL_NUM_Y +1] =
+  {
+    FX16_HALF,                        //  0
+    FX_F32_TO_FX16(  0.447916667f ),  //  1
+    FX_F32_TO_FX16(  0.395833333f ),  //  2
+    FX_F32_TO_FX16(  0.333333333f ),  //  3
+    FX_F32_TO_FX16(  0.28125f     ),  //  4
+    FX_F32_TO_FX16(  0.229166667f ),  //  5
+    FX_F32_TO_FX16(  0.166666667f ),  //  6
+    FX_F32_TO_FX16(  0.114583333f ),  //  7
+    FX_F32_TO_FX16(  0.0625f      ),  //  8
+    0,                                //  9
+    FX_F32_TO_FX16( -0.052083333f ),  // 10 
+    FX_F32_TO_FX16( -0.104166667f ),  // 11
+    FX_F32_TO_FX16( -0.166666667f ),  // 12
+    FX_F32_TO_FX16( -0.21875f     ),  // 13
+    FX_F32_TO_FX16( -0.270833333f ),  // 14
+    FX_F32_TO_FX16( -0.333333333f ),  // 15
+    FX_F32_TO_FX16( -0.385416667f ),  // 16
+    FX_F32_TO_FX16( -0.4375f      ),  // 17
+    - FX16_HALF,                      // 18
+  };
+
+  // 整数にしたピクセルに合わせたテクスチャ座標テーブル
+  static const u8 independent_one_t0[INDEPENDENT_PANEL_NUM_Y +1] =
+  {
+     16,  //  0
+     21,  //  1
+     26,  //  2
+     32,  //  3
+     37,  //  4
+     42,  //  5
+     48,  //  6
+     53,  //  7
+     58,  //  8
+     64,  //  9
+     69,  // 10 
+     74,  // 11
+     80,  // 12
+     85,  // 13
+     90,  // 14
+     96,  // 15
+    101,  // 16
+    106,  // 17
+    112,  // 18
+  };
+
+  one_wk->vtx[0].y = one_wk->vtx[3].y = independent_one_top_vtx_y[one_wk->not_disp_y];
+  one_wk->t0 = FX32_CONST( independent_one_t0[one_wk->not_disp_y] );
+//でもテーブルはプログラムサイズが大きくなるので、最小限に留めた下記のindependent_one_pixelを使用することにした。
+
+/*
+  // 整数ピクセルのテーブル
+  static const u8 independent_one_pixel[INDEPENDENT_PANEL_NUM_Y +1] =  // 5.333を整数にしたので5ピクセル進むときと6ピクセル進むときがある。
+  {
+      0,  //  0
+      5,  //  1
+     10,  //  2
+     16,  //  3
+     21,  //  4
+     26,  //  5
+     32,  //  6
+     37,  //  7
+     42,  //  8
+     48,  //  9
+     53,  // 10 
+     58,  // 11
+     64,  // 12
+     69,  // 13
+     74,  // 14
+     80,  // 15
+     85,  // 16
+     90,  // 17
+     96,  // 18  // INDEPENDENT_PANEL_TOTAL_MAX_T - INDEPENDENT_PANEL_TOTAL_MIN_T = 112 - 16 = 96
+  };
+
+  const fx16 panel_pixel = FX_F32_TO_FX16( 0.010416666666f );  // 1/(INDEPENDENT_PANEL_TOTAL_MAX_T - INDEPENDENT_PANEL_TOTAL_MIN_T) = 1/(112-16) = 1/96
+
+  one_wk->vtx[0].y = one_wk->vtx[3].y = FX16_HALF - panel_pixel * independent_one_pixel[one_wk->not_disp_y];
+  one_wk->t0 = FX32_CONST( INDEPENDENT_PANEL_TOTAL_MIN_T + independent_one_pixel[one_wk->not_disp_y] );
+これだと後半少しずれるところが出てしまう。やはり計算せずに全テーブルを上記のように持つしかないか。
+*/
+}
+static void IndependentOneDraw( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id )
+{
+  if( one_wk->not_disp_y >= INDEPENDENT_PANEL_NUM_Y ) return;
+  
+  {
+    G3_TexImageParam(
+        GX_TEXFMT_PLTT16,
+        GX_TEXGEN_TEXCOORD,
+        GX_TEXSIZE_S128,
+        GX_TEXSIZE_T128,
+        GX_TEXREPEAT_ST,
+        GX_TEXFLIP_NONE,
+        GX_TEXPLTTCOLOR0_TRNS,//GX_TEXPLTTCOLOR0_TRNS,//GX_TEXPLTTCOLOR0_USE,
+        one_wk->tex_adr );
+
+    G3_TexPlttBase( one_wk->pal_adr, GX_TEXFMT_PLTT16 );
+  }
+
+  {
+    GXCull cull; 
+    
+    G3_PushMtx();
+
+    // ポリゴンアトリビュート設定
+    if( one_wk->alpha == 0 )  // アルファ0のまま描画してしまうと、ワイヤーフレームで表示されてしまうので。
+    {
+      cull = GX_CULL_ALL;
+    }
+    else
+    {
+      cull = GX_CULL_BACK;
+    }
+
+    G3_PolygonAttr(
+        GX_LIGHTMASK_NONE,//GX_LIGHTMASK_0,			  // ライトを反映  // ライトなし用の設定GX_LIGHTMASK_NONE
+        GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
+        cull,             // カリング
+        one_wk->polygon_id,                         // ポリゴンＩＤ ０
+        one_wk->alpha,					  // アルファ値  // パーティクルより手前に描画するには半透明にするしか手がない・・・
+        GX_POLYGON_ATTR_MISC_NONE );
+
+    // 位置設定
+    G3_Translate(one_wk->pos.x, one_wk->pos.y, one_wk->pos.z);
+    // スケール設定
+    G3_Scale(one_wk->scale.x, one_wk->scale.y, one_wk->scale.z);
+
+    G3_Begin( GX_BEGIN_QUADS );
+
+    G3_Normal( 0, 0, FX32_ONE );
+
+    G3_TexCoord(one_wk->s0, one_wk->t0);
+    G3_Vtx( one_wk->vtx[0].x, one_wk->vtx[0].y, one_wk->vtx[0].z );
+    G3_TexCoord(one_wk->s0, one_wk->t1);
+    G3_Vtx( one_wk->vtx[1].x, one_wk->vtx[1].y, one_wk->vtx[1].z );
+    G3_TexCoord(one_wk->s1, one_wk->t1);
+    G3_Vtx( one_wk->vtx[2].x, one_wk->vtx[2].y, one_wk->vtx[2].z );
+    G3_TexCoord(one_wk->s1, one_wk->t0);
+    G3_Vtx( one_wk->vtx[3].x, one_wk->vtx[3].y, one_wk->vtx[3].z );
+
+    G3_End();
+
+    G3_PopMtx(1);
+  }
+}
+
+static void IndependentOneSetPosXYZ( INDEPENDENT_ONE_WORK* one_wk, HEAPID heap_id, fx32 pos_x, fx32 pos_y, fx32 pos_z )
+{
+  one_wk->pos.x = pos_x;
+  one_wk->pos.y = pos_y;
+  one_wk->pos.z = pos_z;
 }
 
