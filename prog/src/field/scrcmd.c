@@ -1509,8 +1509,6 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
  * @brief   セーブ機能呼び出し
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
- *
- * @todo  セーブ呼び出しの詳細が確定したら機能を呼び出す
  */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
