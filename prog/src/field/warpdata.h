@@ -17,6 +17,7 @@
 //--------------------------------------------------------------------------------------------
 //	ÉèÅ[ÉvÇ∆Ç—êÊ
 //--------------------------------------------------------------------------------------------
+extern BOOL WARPDATA_IsValidID( int warp_id );
 extern void WARPDATA_GetWarpLocation(int warp_id, LOCATION * loc);
 extern void WARPDATA_GetRevivalLocation(int warp_id, LOCATION * loc);
 extern void WARPDATA_GetEscapeLocation(int warp_id, LOCATION * loc);

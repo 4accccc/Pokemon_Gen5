@@ -77,6 +77,20 @@ int WARPDATA_GetInitializeID(void)
 
 //------------------------------------------------------------------
 /**
+ * @brief ワープIDの範囲チェックを行う
+ */
+//------------------------------------------------------------------
+BOOL WARPDATA_IsValidID( int warp_id )
+{
+	if(warp_id <= 0 || warp_id > NELEMS(WarpData)) {
+		GF_ASSERT_MSG(0, "不正なワープID（%d）です。\n", warp_id);
+    return FALSE;
+	}
+  return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	ワープ場所の取得
  * @param	warp_id		ワープID
  * @param	loc			場所を受け取るLOCATIONへのポインタ
@@ -207,7 +221,7 @@ void ARRIVEDATA_SetArriveFlag( GAMEDATA * gamedata, int zone_id)
 	int i;
 	for (i = 0; i < NELEMS(WarpData); i++) {
 		//OS_Printf("zone = %d, WarpZone = %d\n",zone_id,WarpData[i].fld_id);
-		if (WarpData[i].room_id == zone_id && WarpData[i].AutoSetArriveFlag) {
+		if (WarpData[i].fld_id == zone_id && WarpData[i].AutoSetArriveFlag) {
 			EVENTWORK_SetEventFlag(GAMEDATA_GetEventWork( gamedata ), WarpData[i].arrive_flag);
       TAMADA_Printf("Arrive Flag Set: %x\n", WarpData[i].arrive_flag );
 			return;
@@ -271,9 +285,9 @@ static void set_location(LOCATION * loc, u16 zone_id, u16 dir, u16 gx, u16 gz)
 //------------------------------------------------------------------
 static int regulate_warp_id(int warp_id)
 {
-	if(warp_id <= 0 || warp_id > NELEMS(WarpData)) {
-		GF_ASSERT_MSG(0, "不正なワープID（%d）です。\n", warp_id);
-		warp_id = 1;		//製品版では不正な値でも動作するように補正する
+  if ( WARPDATA_IsValidID( warp_id ) == FALSE ) {
+    //製品版では不正な値でも動作するように補正する
+		warp_id = WARPDATA_GetInitializeID();
 	}
 	warp_id --;		//1 origin --> 0 origin
 	return warp_id;

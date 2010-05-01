@@ -36,6 +36,7 @@
 #include "field/field_const.h"  //GRID_TO_FX32
 #include "net_app/union/union_beacon_tool.h" // UnionView_xxxx
 #include "map_replace.h"    //MAPREPLACE_ChangeFlag
+#include "warpdata.h"   //WARPDATA_IsValidID
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //for SYS_FLAG_
 #include "report.h" //REPORT_SAVE_TYPE_VAL
@@ -414,8 +415,6 @@ VMCMD_RESULT EvCmdGetZoneID( VMHANDLE *core, void * wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo  どのレイヤーで不正な値のチェックを入れるか検討する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
@@ -423,7 +422,9 @@ VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
   GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
   u16 warp_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  GAMEDATA_SetWarpID( gamedata, warp_id );
+  if ( WARPDATA_IsValidID( warp_id ) == TRUE ) {
+    GAMEDATA_SetWarpID( gamedata, warp_id );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
