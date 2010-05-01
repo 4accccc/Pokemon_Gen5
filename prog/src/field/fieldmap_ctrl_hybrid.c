@@ -43,6 +43,8 @@ struct _FIELDMAP_CTRL_HYBRID
   FLDMAP_BASESYS_TYPE base_type;
 
   FIELD_PLAYER*         p_player;
+
+  BOOL  last_automove;
 };
 
 
@@ -148,6 +150,9 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
       mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir, &pos );
     }
   }
+
+  p_wk->last_automove = FALSE;
+
 }
 
 
@@ -359,7 +364,7 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
       }
     }
   }
-  
+
   if( FIELD_PLAYER_CheckPossibleDash(p_wk->p_player) == TRUE ){
     mbit |= PLAYER_MOVEBIT_DASH;
   }
@@ -380,14 +385,16 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   MAPATTR front_attr;
   MAPATTR_VALUE value;
   MMDL * mmdl;
-  u16 dir;
+  u16 dir = DIR_NOT;
   u16 set_dir;
   
   mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
-  dir = FIELD_PLAYER_GetKeyDir( p_wk->p_player, key_cont );
-
-
+  if( p_wk->last_automove == FALSE ){
+    dir = FIELD_PLAYER_GetKeyDir( p_wk->p_player, key_cont );
+  }else{
+    dir = MMDL_GetDirMove( mmdl );
+  }
 
   // 移動完了しているか？
   // 1つ前が動いたか、今から動こうとして、乗り換えの上にいたら乗り換え
@@ -418,11 +425,14 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
           set_dir = dir;
           
           mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, set_dir, &pos );
+          p_wk->last_automove = FALSE;
           return ;
         }
       }
     }
   }
+
+  p_wk->last_automove = FIELD_PLAYER_IsAutoMoveNoGrid( p_wk->p_player );
 
   FIELD_PLAYER_MoveNoGrid( p_wk->p_player, key_trg, key_cont );
 }

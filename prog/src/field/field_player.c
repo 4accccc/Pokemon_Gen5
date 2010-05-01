@@ -1359,6 +1359,22 @@ void FIELD_PLAYER_StopNoGrid( FIELD_PLAYER *fld_player )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  NOGRIDワーク　オート動作チェック
+ *
+ *	@param	fld_player  プレイヤー
+ *
+ *	@retval TRUE  オート動作
+ *	@retval FALSE オート動作じゃない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_IsAutoMoveNoGrid( const FIELD_PLAYER *fld_player )
+{
+  GF_ASSERT( fld_player->nogridwk );
+  return FIELD_PLAYER_NOGRID_IsAutoMove( fld_player->nogridwk );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  NOGRIDワーク　レールワークの取得
  *
  *	@param	fld_player  フィールドプレイヤー

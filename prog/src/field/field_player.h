@@ -258,6 +258,9 @@ extern void FIELD_PLAYER_RestartNoGrid( FIELD_PLAYER *fld_player, const RAIL_LOC
 // NOGRID　停止
 extern void FIELD_PLAYER_StopNoGrid( FIELD_PLAYER *fld_player );
 
+// NOGRID　オートムーブチェック
+extern BOOL FIELD_PLAYER_IsAutoMoveNoGrid( const FIELD_PLAYER *fld_player );
+
 // RAILWKの取得
 extern FIELD_RAIL_WORK* FIELD_PLAYER_GetNoGridRailWork( const FIELD_PLAYER *fld_player );
 

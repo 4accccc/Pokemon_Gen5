@@ -205,7 +205,7 @@ static void nogrid_OnMoveBit(
 static void nogrid_OffMoveBit(
     FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit );
 static BOOL nogrid_CheckMoveBit(
-    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit );
+    const FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit );
 static void nogrid_OnMoveBitForce( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OffMoveBitForce( FIELD_PLAYER_NOGRID *nogrid );
 static BOOL nogrid_CheckMoveBitForce( FIELD_PLAYER_NOGRID *nogrid );
@@ -222,7 +222,7 @@ static void nogrid_OffMoveBitTurnR( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OnMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid );
 static void nogrid_OffMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid );
 
-static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir );
+static UNDER nogrid_CheckUnder( const FIELD_PLAYER_NOGRID *nogrid );
 
 static u16 nogrid_ControlUnder(
     FIELD_PLAYER_NOGRID *nogrid, u16 dir, BOOL debug );
@@ -584,6 +584,27 @@ BOOL FIELD_PLAYER_NOGRID_IsHitch( const FIELD_PLAYER_NOGRID* cp_player )
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オート動作チェック
+ *
+ *	@param	cp_player   プレイヤー
+ *
+ *	@retval TRUE  オート動作
+ *	@retval FALSE オート動作じゃない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_NOGRID_IsAutoMove( const FIELD_PLAYER_NOGRID* cp_player )
+{
+  // 強制移動
+  if( nogrid_CheckMoveBit(cp_player, FIELD_PLAYER_NOGRID_MOVEBIT_FORCE) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 
@@ -2250,7 +2271,7 @@ static void nogrid_OffMoveBit(
  */
 //--------------------------------------------------------------
 static BOOL nogrid_CheckMoveBit(
-    FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit )
+    const FIELD_PLAYER_NOGRID *nogrid, FIELD_PLAYER_NOGRID_MOVEBIT bit )
 {
   GF_ASSERT( bit < FIELD_PLAYER_NOGRID_MOVEBIT_BITMAX );
   if( (nogrid->move_bit & bit) ){
@@ -2455,7 +2476,7 @@ static void nogrid_OffMoveBitAutoUp( FIELD_PLAYER_NOGRID *nogrid )
  * @retval
  */
 //--------------------------------------------------------------
-static UNDER nogrid_CheckUnder( FIELD_PLAYER_NOGRID *nogrid, u16 dir )
+static UNDER nogrid_CheckUnder( const FIELD_PLAYER_NOGRID *nogrid )
 {
   MMDL *mmdl = nogrid->p_mmdl;
   MAPATTR attr = MMDL_GetMapAttr( mmdl );
@@ -2519,7 +2540,7 @@ static u16 nogrid_ControlUnder(
   
   if( debug == FALSE )
   {
-    UNDER under = nogrid_CheckUnder( nogrid, dir );
+    UNDER under = nogrid_CheckUnder( nogrid );
     
     if( under!=UNDER_NONE )
     {
