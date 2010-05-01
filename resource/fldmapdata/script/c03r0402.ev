@@ -27,6 +27,15 @@ _EVENT_DATA    ev_c03r0402_middleman2_01
 _EVENT_DATA    ev_c03r0402_trainerm_01
 _EVENT_DATA_END
 
+
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK10を表彰状イベントのの制御に使用				//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
+
+
 /**************************************************************/
 /* 			DIRECTOR										  */
 /**************************************************************/
@@ -219,5 +228,26 @@ EVENT_END
 /* 			かげやまさん									  */
 /**************************************************************/
 EVENT_START		ev_c03r0402_trainerm_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_01 )
+	
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+	//クリア後
+		_TALK_OBJ_START()
+		//とくべつ だいサービス！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_02 )
+		_MSGWIN_CLOSE()
+		
+		_START_EVENT_BGM( SEQ_BGM_E_SOUND_DESIGNER )
+		
+		_TIME_WAIT( 30 )
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ELSE
+	//クリア前
+		//ぼくサウンドデザイナー！
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_01 )
+	ENDIF
+
 EVENT_END

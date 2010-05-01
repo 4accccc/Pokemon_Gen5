@@ -168,8 +168,14 @@ EVENT_START	ev_c09r0301_bigfour3_01
 			
 			//戦闘後---------------------------------------------------
 			
-			//戦闘後メッセージ
-			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_03 )
+			//戦闘後メッセージ 四天王討伐状況で修正
+			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+				//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_04 )
+			ELSE
+				//戦闘後メッセージ
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_03 )
+			ENDIF
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
@@ -239,8 +245,13 @@ EVENT_START	ev_c09r0301_bigfour3_01
 			
 			//戦闘後---------------------------------------------------
 			
-			//戦闘後メッセージ
-			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_07 )
+			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+				//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_08 )
+			ELSE
+				//戦闘後メッセージ
+				_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_07 )
+			ENDIF
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
