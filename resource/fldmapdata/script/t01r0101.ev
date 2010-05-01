@@ -448,6 +448,8 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	
 	//ハンサム：一歩下がる
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_00 )
+	_TIME_WAIT( 4 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//イッシュ地方で
@@ -465,8 +467,6 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	//ハンサム：うろうろ
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_01 )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
-	_OBJ_ANIME_WAIT()
 	
 	//だがしかし！
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
@@ -482,12 +482,8 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	
 	//いいえならループ
 	WHILE $SCWK_ANSWER == SCR_NO
-		//ハンサム：その場歩き
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
-
 		//ゴホン！
 		_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_08, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
-		_OBJ_ANIME_WAIT()
 
 		_YES_NO_WIN( SCWK_ANSWER )
 	ENDWHILE
@@ -496,7 +492,7 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_09, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
-	//ハンサム：その場歩き
+	//ハンサム：一歩前へ
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_02 )
 	_OBJ_ANIME_WAIT()
 	
@@ -525,9 +521,10 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	
 	//ハンサム：ママの前へ
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_03 )
-	_TIME_WAIT( 16 )
-//	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_d )
+	_TIME_WAIT( 4 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	_TIME_WAIT( 12 )
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//なるほど
@@ -564,7 +561,7 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_goaway_01 )
 	_TIME_WAIT( 8 )
 	//主人公：見送る
-//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//ハンサム消す
@@ -676,7 +673,6 @@ _ANIME_LABEL	anm_clear_handome_move_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_clear_handome_move_02
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
