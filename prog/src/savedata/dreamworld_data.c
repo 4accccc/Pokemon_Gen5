@@ -51,6 +51,7 @@ void DREAMWORLD_SV_Init(DREAMWORLD_SAVEDATA* pSV)
 	GFL_STD_MemClear(pSV, DREAMWORLD_SV_GetWorkSize());
   DREAMWORLD_SV_SetTime(pSV , GFDATE_Set(2010,1,1,0));
 
+  pSV->uploadCount = 0xffffffff;
   pSV->musicalNo = DREAM_WORLD_NOPICTURE;
   pSV->cgearNo = DREAM_WORLD_NOPICTURE;
   pSV->zukanNo = DREAM_WORLD_NOPICTURE;
