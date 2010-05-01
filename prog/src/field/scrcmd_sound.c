@@ -735,31 +735,28 @@ VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo  色々懸念があった模様なので、サウンドとすり合わせる
- *
-  //ぺラップ再生テスト
-  //no = MONSNO_PERAPPU;
-  //パターンを指定できる関数に置き換える予定
- * ★手持ちの先頭のポケモンの鳴き声を鳴らす時があったら、フォルムを見る必要がある！
-  //フィールド上で、スカイフォルムが出現することはない。
-  //育て屋に預けるとノーマルフォルムになるので、育て屋の鳴き声もOK
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
 {
+  SCRCMD_WORK*  work = wk;
   u16 monsno  = SCRCMD_GetVMWorkValue(core, wk);
-  u8 formno = VMGetU8(core);
-  u8 ptn = VMGetU8(core);     //今は捨てている
-
-  core->vm_register[0] = PMV_PlayVoice( monsno, formno );
+  u16 formno = SCRCMD_GetVMWorkValue(core, wk);
+  u32 player; 
+  player = PMV_PlayVoice( monsno, formno );
+  SCRCMD_WORK_SetPMVoiceIndex( work, player );
 
   return VMCMD_RESULT_CONTINUE;
 }
 
-//return 1 = 終了
+//--------------------------------------------------------------
+///@return TRUE = 終了
+//--------------------------------------------------------------
 static BOOL EvWaitVoicePlay(VMHANDLE *core, void *wk)
 {
-  if (PMVOICE_CheckPlay( core->vm_register[0] ) == FALSE)
+  SCRCMD_WORK*  work = wk;
+  u32 player = SCRCMD_WORK_GetPMVoiceIndex( work );
+  if (PMVOICE_CheckPlay( player ) == FALSE)
   {
     return TRUE;
   }

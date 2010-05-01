@@ -73,8 +73,10 @@ struct _SCRCMD_GLOBAL_WORK {
 
   u8 before_win_pos_type;
   u8 win_pos_type;
-  u8 wait_count;          ///<ウェイト用ワーク、現状選択開始までのウェイトのみに使用
-  u8 padding[1]; //余り
+  u16 wait_count;          ///<ウェイト用ワーク、現状選択開始までのウェイトのみに使用
+  
+  u32 voice_index;          ///<ポケモン鳴き声用インデックス
+  void * elevator_adrs;  ///<エレベーターデータのアドレス
 };
 
 //--------------------------------------------------------------
@@ -435,7 +437,7 @@ void SCRCMD_WORK_SetWindowPosType( SCRCMD_WORK *work, u8 type )
  * @brief ウェイト値の取得
  */
 //--------------------------------------------------------------
-u8 SCRCMD_WORK_GetWaitCount( SCRCMD_WORK *work )
+u16 SCRCMD_WORK_GetWaitCount( const SCRCMD_WORK *work )
 {
   return work->gwork->wait_count;
 }
@@ -445,7 +447,7 @@ u8 SCRCMD_WORK_GetWaitCount( SCRCMD_WORK *work )
  * @brief ウェイト値の設定
  */
 //--------------------------------------------------------------
-void SCRCMD_WORK_SetWaitCount( SCRCMD_WORK *work, u8 wait )
+void SCRCMD_WORK_SetWaitCount( SCRCMD_WORK *work, u16 wait )
 {
   work->gwork->wait_count = wait;
 }
@@ -463,6 +465,43 @@ BOOL SCRCMD_WORK_WaitCountDown( SCRCMD_WORK * work )
   }
   -- ( work->gwork->wait_count );
   return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief ポケモン鳴き声コントローラーインデックスの取得
+ */
+//--------------------------------------------------------------
+u32 SCRCMD_WORK_GetPMVoiceIndex( const SCRCMD_WORK * work )
+{
+  return work->gwork->voice_index;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケモン鳴き声コントローラーインデックスのセット
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetPMVoiceIndex( SCRCMD_WORK * work, u32 voice_index )
+{
+  work->gwork->voice_index = voice_index;
+}
+//--------------------------------------------------------------
+/**
+ * @brief  エレベーターデータのアドレスを取得
+ */
+//--------------------------------------------------------------
+void * SCRCMD_WORK_GetElevatorDataAddress( const SCRCMD_WORK * work )
+{
+  return work->gwork->elevator_adrs;
+}
+//--------------------------------------------------------------
+/**
+ * @brief エレベーターデータのアドレスをセット
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetElevatorDataAddress( SCRCMD_WORK * work, void * adrs )
+{
+  work->gwork->elevator_adrs = adrs;
 }
 
 //======================================================================

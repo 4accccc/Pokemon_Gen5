@@ -5,7 +5,9 @@
  * @date  2010.02.15
  * @author	tamada GAMEFREAK inc.
  *
- * @todo  vm_registerの使い道をちゃんとヘッダに定義する
+ * @note
+ * _ELEVATOR_ENTRY_LISTコマンドで登録したアドレスのデータを、
+ * _ELEVATOR_MAKE_LISTや_ELEVATOR_MAP_CHANGEなどで使用する。
  */
 //======================================================================
 
@@ -33,11 +35,7 @@
 //  define
 //======================================================================
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-enum {
-  VMREG_ID_ELEVATOR = 1,
-};
-//--------------------------------------------------------------
+///エレベーターデータの各要素へのオフセット定義
 //--------------------------------------------------------------
 enum {
   FDATA_OFS_MSGID = 0,
@@ -91,12 +89,14 @@ static inline u16 getFloorMsgID( VM_CODE * floorData )
 //--------------------------------------------------------------
 static void dumpFloorInfo( VM_CODE * floorData )
 {
-  OS_Printf("ZONE,X,Y,Z,MSGID: %d %d %d %d %d\n",
+#ifdef  PM_DEBUG
+  TAMADA_Printf("ZONE,X,Y,Z,MSGID: %d %d %d %d %d\n",
       getFloorZoneID( floorData ),
       getFloorPosX( floorData ),
       getFloorPosY( floorData ),
       getFloorPosZ( floorData ),
       getFloorMsgID( floorData ) );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -127,8 +127,9 @@ static u32 getFloorCount( VM_CODE * top )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdElevatorEntryList( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK *work = wk;
   u32 offset = VMGetU32( core );
-  core->vm_register[VMREG_ID_ELEVATOR] =(u32)( core->adrs + offset );
+  SCRCMD_WORK_SetElevatorDataAddress( work, (VM_CODE *)( core->adrs + offset ) );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -140,7 +141,7 @@ VMCMD_RESULT EvCmdElevatorEntryList( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdElevatorBmpMenuMakeList( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK *work = wk;
-  VM_CODE * topAdrs = (VM_CODE *)core->vm_register[VMREG_ID_ELEVATOR];
+  VM_CODE * topAdrs = SCRCMD_WORK_GetElevatorDataAddress( work );
 
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF *msgbuf  = SCRIPT_GetMsgBuffer( sc );
@@ -173,16 +174,16 @@ VMCMD_RESULT EvCmdElevatorMapChange( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK *work = wk;
   u16 select = SCRCMD_GetVMWorkValue( core, wk );
-  VM_CODE * topData = (VM_CODE *)core->vm_register[VMREG_ID_ELEVATOR];
+  VM_CODE * topAdrs = SCRCMD_WORK_GetElevatorDataAddress( work );
   u16 now_zone_id = SCRCMD_WORK_GetZoneID( wk );
-  u32 max = getFloorCount( topData );
+  u32 max = getFloorCount( topAdrs );
   u32 count;
 
   OS_Printf("ELEVATOR: select = %d, max = %d\n", select, max );
 
   if ( select < max )
   {
-    VM_CODE * fdata = getFloorData( topData, select );
+    VM_CODE * fdata = getFloorData( topAdrs, select );
     GMEVENT * mapchange_event;
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     GAMESYS_WORK * gsys = SCRIPT_GetGameSysWork( sc );
