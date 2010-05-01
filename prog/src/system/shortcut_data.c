@@ -24,6 +24,10 @@
  *					構造体宣言
 */
 //=============================================================================
+typedef struct _ITEM2SHORTCUT_TBL{
+  u16 itemno:10;
+  u16 shortcut_id:6;
+}ITEM2SHORTCUT_TBL;
 
 //=============================================================================
 /**
@@ -51,10 +55,27 @@ void SHORTCUT_CURSOR_Init( SHORTCUT_CURSOR *p_wk )
  */
 //-----------------------------------------------------------------------------
 SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item )
-{	
-	
-	NAGI_Printf( "アイテム変換 %d\n", item );
+{
+#if 1 //switch caseをなくして軽量化 by iwasawa 10.05.01
+  int i;
+  static const ITEM2SHORTCUT_TBL Item2ShortcutTbl[] = {
+ 	  { ITEM_ZITENSYA, SHORTCUT_ID_ZITENSYA },
+    { ITEM_SUGOITURIZAO, SHORTCUT_ID_TURIZAO },
+    { ITEM_TAUNMAPPU, SHORTCUT_ID_TOWNMAP },
+	  { ITEM_BATORUREKOODAA, SHORTCUT_ID_BTLRECORDER },
+    { ITEM_TOMODATITETYOU, SHORTCUT_ID_FRIENDNOTE },
+    { ITEM_DAUZINGUMASIN, SHORTCUT_ID_DOWSINGMACHINE },
+    { ITEM_GURASIDEANOHANA, SHORTCUT_ID_GURASHIDEA },
+  };
 
+  for( i = 0;i < NELEMS( Item2ShortcutTbl);i++){
+    if( Item2ShortcutTbl[i].itemno == item ){
+      return Item2ShortcutTbl[i].shortcut_id;
+    }
+  }
+	return SHORTCUT_ID_NULL;
+#else
+	NAGI_Printf( "アイテム変換 %d\n", item );
 	switch( item )
 	{	
 	case ITEM_ZITENSYA:
@@ -85,5 +106,6 @@ SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item )
 	default:
 		return SHORTCUT_ID_NULL;
 	}
+#endif
 }
 
