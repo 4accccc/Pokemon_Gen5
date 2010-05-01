@@ -3011,31 +3011,6 @@
 
 //--------------------------------------------------------------
 /**
- *  _BGM_STOP BGMを止める
- *  @param none
- */
-//--------------------------------------------------------------
-#define _BGM_STOP() _ASM_BGM_STOP
-
-  .macro  _ASM_BGM_STOP
-  .short  EV_SEQ_BGM_STOP
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _BGM_PLAYER_PAUSE シーケンスを一時停止または再開
- *  @param flag (1=停止、0=再開)
- */
-//--------------------------------------------------------------
-#define _BGM_PLAYER_PAUSE(flag) _ASM_BGM_PLAYER_PAUSE
-
-  .macro  _ASM_BGM_PLAYER_PAUSE flag
-  .short  EV_SEQ_BGM_PLAYER_PAUSE
-  .byte  \flag
-  .endm
-
-//--------------------------------------------------------------
-/**
  *  _BGM_PLAY_CHECK ＢＧＭなっているかチェック
  *  @param  music   BGMナンバー
  *  @param  ret     TRUEなっている
@@ -3047,35 +3022,6 @@
   .short  EV_SEQ_BGM_PLAY_CHECK
   .short music
   .short ret
-  .endm
-
-
-//--------------------------------------------------------------
-/**
- *  _BGM_FADEOUT BGMフェードアウト
- *  @param vol    = ボリューム
- *  @param frame  = 何フレームかけてフェードするか
- */
-//--------------------------------------------------------------
-#define _BGM_FADEOUT(vol, frame)  _ASM_BGM_FADEOUT vol, frame
-
-  .macro  _ASM_BGM_FADEOUT vol,frame
-  .short  EV_SEQ_BGM_FADEOUT
-  .short  \vol
-  .short  \frame
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _BGM_FADEIN BGMフェードイン
- *  @param frame = 何フレームかけてフェードするか
- */
-//--------------------------------------------------------------
-#define _BGM_FADEIN(frame)  _ASM_BGM_FADEIN frame
-
-  .macro  _ASM_BGM_FADEIN frame
-  .short  EV_SEQ_BGM_FADEIN
-  .short  \frame
   .endm
 
 //--------------------------------------------------------------

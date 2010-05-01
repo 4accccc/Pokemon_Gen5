@@ -121,6 +121,7 @@ VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * BGM停止
@@ -144,7 +145,9 @@ VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
+#if 0
 //--------------------------------------------------------------
 /**
  * シーケンスを一時停止または再開
@@ -158,6 +161,7 @@ VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk )
   PMSND_PauseBGM( flag );
   return VMCMD_RESULT_CONTINUE;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -224,21 +228,7 @@ VMCMD_RESULT EvCmdBgmSpecialSet( VMHANDLE *core, void *wk )
 }
 #endif
 
-//--------------------------------------------------------------
-/**
- * BGMフェードアウト待ち　ウェイト部分
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvWaitBgmFade( VMHANDLE *core, void *wk )
-{
-  if( !PMSND_CheckFadeOnBGM() ){
-    return( TRUE );
-  }
-  return FALSE;
-}
-
+#if 0
 //--------------------------------------------------------------
 /**
  * BGMフェードアウト待ち
@@ -261,7 +251,9 @@ VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
+#endif
 
+#if 0
 //--------------------------------------------------------------
 /**
  * BGMフェードイン待ち(フェードアウトしたものが再開する)
@@ -283,6 +275,7 @@ VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
+#endif
 
 //--------------------------------------------------------------
 /**

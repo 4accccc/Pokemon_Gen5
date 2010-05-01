@@ -16,11 +16,11 @@
 //BGM
 extern VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk );
+//extern VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk );
+//extern VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk );
+//extern VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk );
+//extern VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmFadeWait( VMHANDLE *core, void *wk );
