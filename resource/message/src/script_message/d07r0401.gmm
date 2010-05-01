@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T14:13:48"/>
+	<create user="matsumiya" host="W00224" date="2010-05-01T20:40:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -419,6 +419,50 @@
 チャンピオンに　いわれたこと……▼
 ぼくは　強くなって
 なにを　したいのか　ってこと……</language>
+	</row>
+
+	<row id="msg_d07r0401_fossil_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア前</comment>
+		<attribute name="キャラ指定">WORKER</attribute>
+		<language name="JPN" width="256">こうやって　なんにもないところを
+さがすと　いいものが　みつかるべよ！</language>
+		<language name="JPN_KANJI" width="256">こうやって　なんにもないところを
+探すと　いいものが　みつかるべよ！</language>
+	</row>
+
+	<row id="msg_d07r0401_fossil_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後＋アイテム入手前
+・以下のアイテムをランダム入手
+　No099「ねっこのカセキ」
+　No100「ツメのカセキ」
+　No101「かいのカセキ」
+　No102「こうらのカセキ」
+　No103「ひみつのコハク」
+　No104「たてのカセキ」
+　No105「ずがいのカセキ」</comment>
+		<attribute name="キャラ指定">WORKER</attribute>
+		<language name="JPN" width="256">こうやって　なんにもないところを
+さがすと　いいものが　みつかるべよ！▼
+ほら！　さっきも　カセキが
+みつかったからよ　もってけよ！▼</language>
+		<language name="JPN_KANJI" width="256">こうやって　なんにもないところを
+探すと　いいものが　みつかるべよ！▼
+ほら！　さっきも　カセキが
+みつかったからよ　持ってけよ！▼</language>
+	</row>
+
+	<row id="msg_d07r0401_fossil_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・クリア後＋アイテム入手後</comment>
+		<attribute name="キャラ指定">WORKER</attribute>
+		<language name="JPN" width="256">また　あしたに　なれば
+カセキの　いっこぐらい　みつかるから▽
+よければ　あそびに　くるべ！</language>
+		<language name="JPN_KANJI" width="256">また　明日に　なれば
+カセキの　１個ぐらい　みつかるから▽
+よければ　遊びに　来るべ！</language>
 	</row>
 
 	<flowchart-group-list>
