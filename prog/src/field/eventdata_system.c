@@ -931,16 +931,11 @@ BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect)
 BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id,
     LOC_EXIT_OFS exit_ofs )
 {
-  /** TODO:　見た目含めてオフセットを再計算すること */
-  enum{ GRIDSIZE = 8, MV = GRIDSIZE * FX32_ONE};
-//  static const VecFx32 ofs = { CONNECT_POS_OFS_X * FX32_ONE, CONNECT_POS_OFS_Y * FX32_ONE, 0 * FX32_ONE }; GPOS_GetPos内で行っています。
-
 	const CONNECT_DATA * connect = EVENTDATA_GetConnectByID(evdata, exit_id);
 	if (connect == NULL) {
 		return FALSE;
 	}
 
-	//CONNECTDATA_SetLocation(connect, loc);
 	LOCATION_Init(loc);
 	if (connect->link_exit_id == EXIT_ID_SPECIAL) {
 		loc->type = LOCATION_TYPE_SPID;
@@ -948,7 +943,6 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 		loc->type = LOCATION_TYPE_EXITID;
 	}
 
-	//loc->pos = connect->pos;
   //グリッドマップORレールマップのロケーションを作成
   if( connect->pos_type == EVENTDATA_POSTYPE_GRID )
   {
