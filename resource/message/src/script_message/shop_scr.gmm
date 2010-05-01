@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-22T15:57:03"/>
+	<create user="iwasawa" host="W00157" date="2010-05-01T16:21:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,6 +300,13 @@
 お買い物ですね？</language>
 	</row>
 
+	<row id="msg_shop_01_waza" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">わざマシン　うりばへ　ようこそ！
+おかいもの　ですね？</language>
+		<language name="JPN_KANJI" width="256">わざマシン売り場へ　ようこそ！
+お買い物ですね？</language>
+	</row>
+
 	<row id="msg_shop_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">♂♀共有</attribute>
 		<language name="JPN" width="256">その　ほかに　わたしどもで
@@ -354,13 +361,6 @@
 また　おこしくださいね！</language>
 		<language name="JPN_KANJI" width="256">ＢＰを　貯めて
 また　お越しくださいね！</language>
-	</row>
-
-	<row id="msg_shop_greeting_waza" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">わざマシン　うりばへ　ようこそ！
-おかいもの　ですね？</language>
-		<language name="JPN_KANJI" width="256">わざマシン売り場へ　ようこそ！
-お買い物ですね？</language>
 	</row>
 
 	<flowchart-group-list>
