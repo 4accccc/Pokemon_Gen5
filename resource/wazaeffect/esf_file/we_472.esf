@@ -1,14 +1,16 @@
 EFFSEQ
-$0006
+$0008
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_171_nightmare.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_472_wonderroom.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_472_wireroom.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_472_wonderroom.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_472_wireroom.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_177_cyclone.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_472_wonder_room.NSCR
 #001
 %00
-BGのロード	bg_472_wireroom
+BGのロード	bg_472_wonder_room
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	15	1	0:0:0
 エフェクト終了待ち	すべて
