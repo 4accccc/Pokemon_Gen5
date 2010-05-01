@@ -20,6 +20,9 @@
 //======================================================================
 #define SPLASH_DRAW_Z_OFFSET (FX32_ONE*(8))
 
+#define SHOAL_DRAW_Y_OFFSET (NUM_FX32(-1))
+#define SHOAL_DRAW_Z_OFFSET (1)
+
 //======================================================================
 //	struct
 //======================================================================
@@ -217,40 +220,54 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
   }
   
   MMDL_GetVectorPos( work->head.mmdl, &pos );
-  pos.z += SPLASH_DRAW_Z_OFFSET;
-  FLDEFF_TASK_SetPos( task, &pos );
   
   {
+    GFL_BBDACT_ANMTBL tbl;
     FLDEFF_SPLASH *splash = work->head.eff_splash;
     GFL_BBDACT_SYS *bbdact_sys = splash->bbdact_sys;
     
-    actData.resID = splash->res_idx_splash;
-    
-    if( work->head.joint == TRUE ){
+    if( work->head.joint == FALSE ){
+      pos.z += SPLASH_DRAW_Z_OFFSET;
+
+      actData.resID = splash->res_idx_splash;
+      actData.sizX = FX16_ONE*8-1;
+      actData.sizY = FX16_ONE*8-1;
+      actData.alpha = 31;
+      actData.drawEnable = TRUE;
+      actData.lightMask = GFL_BBD_LIGHTMASK_0;
+      actData.trans = pos;
+      actData.func = NULL;
+      actData.work = work;
+      
+      work->act_id = GFL_BBDACT_AddAct( bbdact_sys, 0, &actData, 1 );
+      
+      tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_SplashTbl;
+      GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  tbl, 1 );
+      GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
+    }else{
+      pos.y += SHOAL_DRAW_Y_OFFSET;
+      pos.z += SHOAL_DRAW_Z_OFFSET;
+
       actData.resID = splash->res_idx_shoal;
-    }
-    
-    actData.sizX = FX16_ONE*8-1;
-    actData.sizY = FX16_ONE*8-1;
-    actData.alpha = 31;
-    actData.drawEnable = TRUE;
-    actData.lightMask = GFL_BBD_LIGHTMASK_0;
-    actData.trans = pos;
-    actData.func = NULL;
-    actData.work = work;
-    
-    work->act_id = GFL_BBDACT_AddAct( bbdact_sys, 0, &actData, 1 );
-    
-    {
-      GFL_BBDACT_ANMTBL tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_SplashTbl;
+      actData.resID = splash->res_idx_splash;
+      actData.sizX = FX16_ONE*4+0x0a00-1;
+      actData.sizY = FX16_ONE*4+0x0a00-1;
+      actData.alpha = 31;
+      actData.drawEnable = TRUE;
+      actData.lightMask = GFL_BBD_LIGHTMASK_0;
+      actData.trans = pos;
+      actData.func = NULL;
+      actData.work = work;
       
-      if( work->head.joint == TRUE ){
-        tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_ShoalTbl;
-      }
+      work->act_id = GFL_BBDACT_AddActEx(
+        bbdact_sys, 0, &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
       
+      tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_ShoalTbl;
       GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  tbl, 1 );
       GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
     }
+
+    FLDEFF_TASK_SetPos( task, &pos );
   }
   
 //即反映すると親がjointフラグがセットされていない状態。
@@ -289,15 +306,13 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
       FLDEFF_TASK_CallDelete( task );
       return;
     }
-  }
-  
-  if( work->head.joint == TRUE ){
+    
     if( MMDL_CheckMoveBitShoalEffect(work->head.mmdl) == FALSE ){
       FLDEFF_TASK_CallDelete( task );
       return;
     }
   }
-
+  
   {
     u16 comm;
     FLDEFF_SPLASH *splash = work->head.eff_splash;
@@ -308,7 +323,7 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
         FLDEFF_TASK_CallDelete( task );
         return;
       }
-
+      
       GFL_BBDACT_SetAnimeFrmIdx( bbdact_sys, work->act_id, 0 );
     }
     
@@ -316,7 +331,7 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
       VecFx32 pos;
       
       MMDL_GetVectorPos( work->head.mmdl, &pos );
-      pos.z += SPLASH_DRAW_Z_OFFSET;
+      pos.z += SHOAL_DRAW_Z_OFFSET;
       FLDEFF_TASK_SetPos( task, &pos );
       
       GFL_BBD_SetObjectTrans(
