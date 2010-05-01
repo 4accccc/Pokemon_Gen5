@@ -23,6 +23,9 @@ class AnimeIndexError < Exception; end
 BUILDMODEL_HEADER = "../../../prog/src/field/field_buildmodel.h"
 ANIME_INDEX_FILE  ="wkdir/buildmodel_anime.h"
 
+#配置モデルIDの上限
+BUILDMODEL_ID_MAX = 350
+
 COL_FILENAME = 1
 COL_ANIME_IDX = 8
 COL_PROG_IDX = 9
@@ -72,8 +75,8 @@ class BMData
     else
       raise SymbolRedefineError, "ファイル#{sym}が多重定義されています"
     end
-    if @@syms.length > 300 then
-      raise TooMuchSymbolError, "配置モデルの種類が制限値（300)を超えています！！"
+    if @@syms.length > BUILDMODEL_ID_MAX then
+      raise TooMuchSymbolError, "配置モデルの種類が制限値（#{BUILDMODEL_ID_MAX})を超えています！！"
     end
     @sym = sym
     @anime_id = getAnimeID( anime_id )
