@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/26 16:50:19
+#save date:2010/05/01 18:03:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #hold event type:
 1
 #hold event number:
-16
+18
 #event number: 0
 #type
 1
@@ -506,6 +506,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -120 48 -232
+#event number: 16
+#type
+1
+#ID name
+C07_DUMMY_03
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+776 0 -152
+#event number: 17
+#type
+1
+#ID name
+C07_DUMMY_04
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+840 0 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -515,7 +577,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-9
+11
 #event number: 0
 #Bg Event Label
 C07_BOARD_01
@@ -633,6 +695,32 @@ SCRID_HIDE_ITEM_077
 EVENTDATA_POSTYPE_GRID
 #position
 248 -24 -488
+#event number: 9
+#Bg Event Label
+C07_HIDE_ITEM_06
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_171
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+712 48 -312
+#event number: 10
+#Bg Event Label
+C07_HIDE_ITEM_07
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_172
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+744 48 -328
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

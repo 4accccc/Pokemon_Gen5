@@ -31,6 +31,8 @@
 #define C07_DUMMY_01                      13
 #define C07_DUMMY_02                      14
 #define C07_FLD_ITEM_01                   15
+#define C07_DUMMY_03                      16
+#define C07_DUMMY_04                      17
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -46,5 +48,7 @@
 #define C07_HIDE_ITEM_03                  6
 #define C07_HIDE_ITEM_04                  7
 #define C07_HIDE_ITEM_05                  8
+#define C07_HIDE_ITEM_06                  9
+#define C07_HIDE_ITEM_07                 10
 
 #endif //ZONE_C07_EVB_H
