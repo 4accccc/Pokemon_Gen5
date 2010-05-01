@@ -66,13 +66,16 @@ static STRBUF * SetExpandWord(
 //  はい、いいえ　処理
 //======================================================================
 //--------------------------------------------------------------
+/// はい・いいえウィンドウ制御イベント用ワーク定義
 //--------------------------------------------------------------
 typedef struct {
   SCRCMD_WORK * scrcmd_work;
   u16 * ret_wk;
+  FLDMENUFUNC * mw;
 }YESNO_EV_WORK;
 
 //--------------------------------------------------------------
+/// はい・いいえウィンドウ制御イベント
 //--------------------------------------------------------------
 static GMEVENT_RESULT YesNoSelectEvent( GMEVENT * event, int * seq, void * work )
 {
@@ -94,7 +97,7 @@ static GMEVENT_RESULT YesNoSelectEvent( GMEVENT * event, int * seq, void * work 
       FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
       FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
       FLDMENUFUNC *mw = FLDMENUFUNC_AddYesNoMenu( msgBG, 0 );
-      SCRIPT_SetFLDMENUFUNC( sc, mw );
+      yew->mw = mw;
 
       (*seq) ++;
     }
@@ -102,9 +105,8 @@ static GMEVENT_RESULT YesNoSelectEvent( GMEVENT * event, int * seq, void * work 
 
   case 2:
     {
-      FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
       FLDMENUFUNC_YESNO ret;
-      ret = FLDMENUFUNC_ProcYesNoMenu( mw );
+      ret = FLDMENUFUNC_ProcYesNoMenu( yew->mw );
       switch ( ret )
       {
       case FLDMENUFUNC_YESNO_NULL:
@@ -122,15 +124,15 @@ static GMEVENT_RESULT YesNoSelectEvent( GMEVENT * event, int * seq, void * work 
     break;
 
   case 3:
-    {
-      FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
-      FLDMENUFUNC_DeleteMenu( mw );
-    }
+    FLDMENUFUNC_DeleteMenu( yew->mw );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/// はい・いいえウィンドウ制御イベントの生成
+//--------------------------------------------------------------
 static GMEVENT * createYesNoEvent( GAMESYS_WORK * gsys, SCRCMD_WORK * work, u16 * ret_wk )
 {
   GMEVENT * event;
@@ -142,46 +144,6 @@ static GMEVENT * createYesNoEvent( GAMESYS_WORK * gsys, SCRCMD_WORK * work, u16 
   return event;
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * 「はい・いいえ」処理 ウェイト部分
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  FLDMENUFUNC *mw = SCRIPT_GetFLDMENUFUNC( sc );
-  u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, core->vm_register[0] );
-  FLDMENUFUNC_YESNO ret;
-  
-  //一定時間ウェイト後、選択可能にする
-  if ( SCRCMD_WORK_WaitCountDown( work ) == FALSE )
-  {
-    return FALSE;
-  }
-
-  ret = FLDMENUFUNC_ProcYesNoMenu( mw );
-  
-  if( ret == FLDMENUFUNC_YESNO_NULL ){
-    return FALSE;
-  }
-  
-  if( ret == FLDMENUFUNC_YESNO_YES ){
-    *ret_wk = 0;
-  }else{
-    *ret_wk = 1;
-  }
-  
-  FLDMENUFUNC_DeleteMenu( mw );
-  return TRUE;
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * 「はい・いいえ」処理
@@ -192,24 +154,14 @@ static BOOL EvYesNoWinSelect( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-#if 0
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  FLDMENUFUNC *mw;
-  u16 wk_id      = VMGetU16( core );
-  
-  mw = FLDMENUFUNC_AddYesNoMenu( fparam->msgBG, 0 );
-  SCRIPT_SetFLDMENUFUNC( sc, mw );
-  core->vm_register[0] = wk_id;
-   
-  VMCMD_SetWait( core, EvYesNoWinSelect );
-  SCRCMD_WORK_SetWaitCount( work, SELECT_WAIT_VALUE );
-#endif
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
   GMEVENT * event;
   event = createYesNoEvent( gsys, work, ret_wk );
   SCRIPT_CallEvent( sc, event );
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -383,30 +335,6 @@ VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * BMPメニュー	ウェイト部分
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvSelWinWait( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  //一定時間ウェイト後、選択可能にする
-  if ( SCRCMD_WORK_WaitCountDown( work ) == FALSE )
-  {
-    return FALSE;
-  }
-
-  if( SCRCMD_WORK_ProcMenu(work) == TRUE ){
-    return( TRUE );
-  }
-  return( FALSE );
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * BMPメニュー	開始
@@ -421,36 +349,9 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
   GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
   GMEVENT * event = createBmpMenuEvent( gsys, work, FALSE );
   SCRIPT_CallEvent( sc, event );
-#if 0
-  SCRCMD_WORK_StartMenu( work );
-	VMCMD_SetWait( core, EvSelWinWait );
-#endif
+
 	return VMCMD_RESULT_SUSPEND;
 }
-
-#if 0
-//--------------------------------------------------------------
-/**
- * BMPメニュー	ウェイト部分(xボタンによる中断あり)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvSelWinWait_Breakable( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  //一定時間ウェイト後、選択可能にする
-  if ( SCRCMD_WORK_WaitCountDown( work ) == FALSE )
-  {
-    return FALSE;
-  }
-
-  if( SCRCMD_WORK_ProcMenu_Breakable(work) == TRUE ){
-    return( TRUE );
-  }
-  return( FALSE );
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -466,10 +367,7 @@ VMCMD_RESULT EvCmdBmpMenuStart_Breakable( VMHANDLE *core, void *wk )
   GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
   GMEVENT * event = createBmpMenuEvent( gsys, work, FALSE );
   SCRIPT_CallEvent( sc, event );
-#if 0
-  SCRCMD_WORK_StartMenu( work );
-	VMCMD_SetWait( core, EvSelWinWait_Breakable );
-#endif
+
 	return VMCMD_RESULT_SUSPEND;
 }
 

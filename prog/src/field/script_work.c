@@ -98,8 +98,6 @@ struct _TAG_SCRIPT_WORK
 	GFL_FONT* font;			    //フォントポインタ　海底神殿暗号フォントに使用
 
 
-  void *mw;				//ビットマップメニューワーク
-
 	void * subproc_work; //サブプロセスとのやりとりに使用するワークへの*
 
   u8 sound_se_flag;   ///< サウンドSE再生チェックフラグ
@@ -333,18 +331,6 @@ u8 * SCRIPT_GetSoundSeFlag( SCRIPT_WORK * sc )
 u16 SCRIPT_GetStartScriptID( const SCRIPT_WORK * sc )
 {
   return sc->start_scr_id;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void * SCRIPT_GetFLDMENUFUNC( SCRIPT_WORK * sc )
-{
-  return sc->mw;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void SCRIPT_SetFLDMENUFUNC( SCRIPT_WORK * sc, void * mw )
-{
-  sc->mw = mw;
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------

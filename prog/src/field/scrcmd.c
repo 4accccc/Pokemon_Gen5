@@ -417,13 +417,8 @@ static VMCMD_RESULT EvCmdEnd( VMHANDLE *core, void *wk )
 static BOOL EvWaitTime(VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  u32 * counter = &core->vm_register[0];
 
-  (*counter)--;
-  if( *counter == 0 ){ 
-    return TRUE;
-  }
-  return FALSE;
+  return SCRCMD_WORK_WaitCountDown( work );
 }
 
 //--------------------------------------------------------------
@@ -438,8 +433,7 @@ static VMCMD_RESULT EvCmdTimeWait( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   u16 num        = VMGetU16( core );
   
-  //仮想マシンの汎用レジスタにウェイトを格納
-  core->vm_register[0] = num;
+  SCRCMD_WORK_SetWaitCount( work, num );
   VMCMD_SetWait( core, EvWaitTime );
   return VMCMD_RESULT_SUSPEND;
 }

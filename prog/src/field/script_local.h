@@ -140,8 +140,7 @@ extern void SCRIPT_SetFontHandle( SCRIPT_WORK * sc, GFL_FONT* fontHandle );
 extern GFL_FONT* SCRIPT_GetFontHandle( const SCRIPT_WORK * sc );
 
 extern u8 * SCRIPT_GetSoundSeFlag( SCRIPT_WORK * sc );
-extern void SCRIPT_SetFLDMENUFUNC( SCRIPT_WORK * sc, void * mw );
-extern void * SCRIPT_GetFLDMENUFUNC( SCRIPT_WORK * sc );
+
 extern MMDL * SCRIPT_GetTargetObj( SCRIPT_WORK * sc );
 extern void SCRIPT_SetTargetObj( SCRIPT_WORK * sc, MMDL * obj );
 
