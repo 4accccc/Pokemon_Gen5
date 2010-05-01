@@ -33,7 +33,7 @@ EVENT_START	ev_r18r0101_rangerm_01
 	IF FLAG_ON( FE_R18R0101_POKE_GET ) THEN
 		//入手済み
 		
-		//そのポケモン ラーは…
+		//そのポケモンのタマゴだが
 		_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_06 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -62,7 +62,7 @@ EVENT_START	ev_r18r0101_rangerm_01
 			//はい
 			
 			//ラーを入手
-			_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_643, 0, 20 )
+//			_ADD_TAMAGO_TO_PARTY( SCWK_ANSWER, MONSNO_643, 0 )
 			
 			//追加できたかチェック
 			IF $SCWK_ANSWER == TRUE THEN
@@ -73,36 +73,19 @@ EVENT_START	ev_r18r0101_rangerm_01
 				_MSGWIN_CLOSE()
 				
 				//========================================//
-				//ポケモン入手フラグをセット
+				//ポケモンのタマゴ入手フラグをセット
 				_FLAG_SET( FE_R18R0101_POKE_GET )
 				//========================================//
 				
 				//手に入れた！
 				_PLAYER_NAME( 0 )
 				_MONS_NAME( 1, MONSNO_643 )
-				_ME_PLAY( SEQ_ME_POKEGET )
-				_SYSWIN_MSG_ALLPUT( msg_r18r0101_00_07, POS_DEFAULT )
+				_ME_PLAY( SEQ_ME_TAMAGO_GET )
+				_SYSWIN_MSG( msg_r18r0101_00_07, POS_DEFAULT )
 				_ME_WAIT()
 				_AB_KEYWAIT_MARK()
 				_MSGWIN_CLOSE()
 				
-				//てにいれた～～に ニックネームつける？
-				_SYSWIN_MSG( msg_r18r0101_00_08, POS_DEFAULT )
-				_YES_NO_WIN( SCWK_ANSWER )
-				_MSGWIN_CLOSE()
-				
-				IF $SCWK_ANSWER == SCR_YES THEN
-					{
-					DEFINE_LOCAL	lwk_name_inpt
-					DEFINE_LOCAL	lwk_pos
-					
-					//ニックネーム画面へ
-					_GET_PARTY_POKE_COUNT( lwk_pos, POKECOUNT_MODE_TOTAL )
-					$lwk_pos -= 1
-					_PARTY_POKE_NAME_INPUT( lwk_name_inpt,lwk_pos, TRUE )
-					
-					}
-				ENDIF
 				//そのポケモン…
 				_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_06 )
 				_LAST_KEYWAIT()
