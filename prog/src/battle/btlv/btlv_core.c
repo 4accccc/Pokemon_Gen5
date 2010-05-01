@@ -1039,7 +1039,7 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->multiMode = ( plist->multi_pp != NULL );
   plist->multiPos = BTL_MAIN_GetClientMultiPos( wk->mainModule, clientID );
   plist->mode = bplMode;
-  plist->sel_poke = 0;
+  plist->sel_poke = ( bplMode == BPL_MODE_WAZASET )? pos_index : 0;
   plist->sel_pos_index = pos_index;
   plist->chg_waza = chg_waza_param;
   plist->heap = wk->heapID;
