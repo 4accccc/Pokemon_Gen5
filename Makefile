@@ -145,6 +145,12 @@ test:
 	$(MAKE) CONVERTUSER=false clean
 	$(MAKE) CONVERTUSER=false
 
+
+sddebug:
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) PM_DEBUG_SD_PRINT=yes
+
+
 # フィールドマップ　地形データのみclean make
 #--------------------------------------------------------------------
 FLD_LAND_DATA_DIR = $(RESOURCE_DIR)/fldmapdata/land_data/
