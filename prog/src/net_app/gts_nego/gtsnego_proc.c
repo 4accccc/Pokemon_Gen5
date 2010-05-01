@@ -347,6 +347,11 @@ static BOOL _AnyoneOrFriendButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
   pWork->changeMode = bttnid;
 
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+
+  if(pWork->bSingle == TRUE){
+    PMSND_PlaySystemSE(_SE_CANCEL);
+    return TRUE;
+  }
   if(bttnid==0){
     pWork->key1 = _CROSSCUR_TYPE_MAINUP;
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin,pWork->key1);
@@ -1126,10 +1131,14 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_025);
 
   GF_ASSERT(pWork->pAppWin==NULL);
+
   pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_023);
 
   if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
+    if(pWork->key2 == _CROSSCUR_TYPE_ANY4){
+      APP_TASKMENU_WIN_SetActive( pWork->pAppWin , TRUE);
+    }
   }
   else{
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
@@ -1794,6 +1803,9 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
   if(!pWork->bSingle){
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
   }
+  else{
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_048);
+  }
   GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
   _CHANGE_STATE(pWork,_modeSelectMenuWait);
@@ -1869,13 +1881,15 @@ static void _messageEndCheck2(GTSNEGO_WORK* pWork)
       _CHANGE_STATE(pWork,_messageEnd);
       break;
     case 1:
-      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
+
+      if(!pWork->bSingle){
+        GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
+      }
+      else{
+        GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_048);
+      }
       TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
-
       GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
-
-      //      G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2,
- //                       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ,15,9);
       _CHANGE_STATE(pWork,_modeSelectMenuWait);
       break;
     }
@@ -1909,12 +1923,6 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if(pWork->bSingle){
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_048);
-    _CHANGE_STATE(pWork,_modeSelectEnd);
-    return;
-  }
-
 
   if(GFL_UI_KEY_GetTrg()){
     if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
@@ -1926,9 +1934,14 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   }
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    _buttonDecide(pWork, pWork->key1);
-    _CHANGE_STATE(pWork,_modeSelectMenuFlash);
-    return;
+    if(!pWork->bSingle){
+      _buttonDecide(pWork, pWork->key1);
+      _CHANGE_STATE(pWork,_modeSelectMenuFlash);
+      return;
+    }
+    else{
+      PMSND_PlaySystemSE(_SE_CANCEL);
+    }
   }
   
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){

@@ -707,14 +707,14 @@ void GTSNEGO_MESSAGE_DispClear(GTSNEGO_MESSAGE_WORK* pWork)
 #define _BUTTON_FRIEND_X (9)
 #define _BUTTON_FRIEND_Y (13)
 
-#define _BUTTON_TYPE_WIDTH (13*8)
+#define _BUTTON_TYPE_WIDTH (15*8)
 #define _BUTTON_TYPE_HEIGHT (3*8)
 
 static const GFL_UI_TP_HITTBL _AnyoneOrFriendBtnTbl[] = {
   {	 _BUTTON_ANYONE_Y*8,  _BUTTON_ANYONE_Y*8 + _BUTTON_TYPE_HEIGHT ,
-    _BUTTON_ANYONE_X*8 , _BUTTON_ANYONE_X*8 + _BUTTON_TYPE_WIDTH  },
+    _BUTTON_ANYONE_X*8-8 , _BUTTON_ANYONE_X*8 + _BUTTON_TYPE_WIDTH  },
   {	_BUTTON_FRIEND_Y*8,  _BUTTON_FRIEND_Y*8 + _BUTTON_TYPE_HEIGHT ,
-    _BUTTON_FRIEND_X*8 , _BUTTON_FRIEND_X*8 + _BUTTON_TYPE_WIDTH  },
+    _BUTTON_FRIEND_X*8-8 , _BUTTON_FRIEND_X*8 + _BUTTON_TYPE_WIDTH  },
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
@@ -839,9 +839,6 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
   pAppWin =APP_TASKMENU_WIN_CreateEx( pWork->pAppTaskRes,
                                            pWork->appitem, 16-6, 24-3, 12,3, FALSE,TRUE, pWork->heapID);
 
-  if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
-    APP_TASKMENU_WIN_SetActive( pAppWin , TRUE);
-  }
   
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   
