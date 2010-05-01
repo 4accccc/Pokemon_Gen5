@@ -35,6 +35,7 @@ DEBUG_UI_TYPE DEBUG_UI_GetType( void ){ return 0; }
 // キーテーブル
 #include "debug_ui_updown.h"
 #include "debug_ui_leftright.h"
+#include "debug_ui_input.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -148,6 +149,12 @@ void DEBUG_UI_SetUp( DEBUG_UI_TYPE type )
     if( cp_keytable->overlay_id != GFL_OVERLAY_BLANK_ID ){
   		GFL_OVERLAY_Load( cp_keytable->overlay_id );
     }
+  }
+
+  // 入力データを設定
+  if( type == DEBUG_UI_AUTO_USER_INPUT ){
+    s_DEBUG_UI_WORK.cp_data   = DEBUG_UI_INPUT_GetInputBuf();
+    s_DEBUG_UI_WORK.data_max  = DEBUG_UI_INPUT_GetInputBufNum();
   }
 
 

@@ -30,6 +30,7 @@ typedef enum {
   DEBUG_UI_NONE,            // なし
   DEBUG_UI_AUTO_UPDOWN,     // 自動　上下
   DEBUG_UI_AUTO_LEFTRIGHT,  // 自動　左右
+  DEBUG_UI_AUTO_USER_INPUT, // 自動　入力データ再生
 
   DEBUG_UI_TYPE_MAX,
 } DEBUG_UI_TYPE;

@@ -40,6 +40,7 @@
 #include "test/debug_pause.h"
 #include "debug/debugwin_sys.h"
 #include "debug/debug_ui.h"
+#include "debug/debug_ui_input.h"
 #include "debug/debug_flg.h"
 #endif //PM_DEBUG
 
@@ -448,11 +449,24 @@ static void DEBUG_UI_AutoKey( void  )
     DEBUG_UI_SetUp( DEBUG_UI_AUTO_UPDOWN );
   }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoLeftRight ) ){
     DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT );
+  }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoInputData ) ){
+    DEBUG_UI_SetUp( DEBUG_UI_AUTO_USER_INPUT );
   }else{
     if( (DEBUG_UI_GetType() == DEBUG_UI_AUTO_UPDOWN) ||
-        (DEBUG_UI_GetType() == DEBUG_UI_AUTO_LEFTRIGHT) ){
+        (DEBUG_UI_GetType() == DEBUG_UI_AUTO_LEFTRIGHT) ||
+        (DEBUG_UI_GetType() == DEBUG_UI_AUTO_USER_INPUT) ){
       DEBUG_UI_SetUp( DEBUG_UI_NONE );
     }
+  }
+
+  // InputƒTƒ“ƒvƒŠƒ“ƒO
+  if( (OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER)) ){
+    if( DEBUG_FLG_GetFlg( DEBUG_FLG_SampleInputData ) ){
+      DEBUG_UI_INPUT_Start();
+    }else{
+      DEBUG_UI_INPUT_End();
+    }
+    DEBUG_UI_INPUT_Update();
   }
 
 }

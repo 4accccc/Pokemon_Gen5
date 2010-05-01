@@ -1669,6 +1669,7 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 				               field/rail_editor.c \
                        field/script_debugger_core.c \
                        test/ariizumi/mus_mcss_debug.c \
+                       debug/debug_ui_input.c \
                        sound/snd_viewer_mcs.c
 
 
