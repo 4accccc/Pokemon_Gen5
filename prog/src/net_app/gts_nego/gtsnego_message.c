@@ -521,7 +521,7 @@ APP_TASKMENU_WORK* GTSNEGO_MESSAGE_YesNoStart(GTSNEGO_MESSAGE_WORK* pWork,int ty
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , -8 );
+ // G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , -8 );
   return pAppTask;
 }
 
@@ -742,24 +742,24 @@ void GTSNEGO_MESSAGE_DispAnyoneOrFriend(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
 
 
 
-
+#define _TOUCH_MARGIN (13)
 
 
 static const GFL_UI_TP_HITTBL _levelselectBtnTbl[] = {
-  {	_ARROW_LEVEL_YU*8-8,   _ARROW_LEVEL_YU*8 + 8 ,
-    _ARROW_LEVEL_XU*8-8 ,  _ARROW_LEVEL_XU*8 + 8  },
-  {	_ARROW_LEVEL_YD*8-8,   _ARROW_LEVEL_YD*8 + 8 ,
-    _ARROW_LEVEL_XD*8-8 ,  _ARROW_LEVEL_XD*8 + 8  },
+  {	_ARROW_LEVEL_YU*8-_TOUCH_MARGIN,   _ARROW_LEVEL_YU*8 + _TOUCH_MARGIN ,
+    _ARROW_LEVEL_XU*8-_TOUCH_MARGIN ,  _ARROW_LEVEL_XU*8 + _TOUCH_MARGIN  },
+  {	_ARROW_LEVEL_YD*8-_TOUCH_MARGIN,   _ARROW_LEVEL_YD*8 + _TOUCH_MARGIN ,
+    _ARROW_LEVEL_XD*8-_TOUCH_MARGIN ,  _ARROW_LEVEL_XD*8 + _TOUCH_MARGIN  },
 
-  {	_ARROW_MY_YU*8-8,   _ARROW_MY_YU*8 + 8 ,
-    _ARROW_MY_XU*8-8 ,  _ARROW_MY_XU*8 + 8  },
-  {	_ARROW_MY_YD*8-8,   _ARROW_MY_YD*8 + 8 ,
-    _ARROW_MY_XD*8-8 ,  _ARROW_MY_XD*8 + 8  },
+  {	_ARROW_MY_YU*8-_TOUCH_MARGIN,   _ARROW_MY_YU*8 + _TOUCH_MARGIN ,
+    _ARROW_MY_XU*8-_TOUCH_MARGIN ,  _ARROW_MY_XU*8 + _TOUCH_MARGIN  },
+  {	_ARROW_MY_YD*8-_TOUCH_MARGIN,   _ARROW_MY_YD*8 + _TOUCH_MARGIN ,
+    _ARROW_MY_XD*8-_TOUCH_MARGIN ,  _ARROW_MY_XD*8 + _TOUCH_MARGIN  },
 
-  {	_ARROW_FRIEND_YU*8-8,   _ARROW_FRIEND_YU*8 + 8 ,
-    _ARROW_FRIEND_XU*8-8 ,  _ARROW_FRIEND_XU*8 + 8  },
-  {	_ARROW_FRIEND_YD*8-8,   _ARROW_FRIEND_YD*8 + 8 ,
-    _ARROW_FRIEND_XD*8-8 ,  _ARROW_FRIEND_XD*8 + 8  },
+  {	_ARROW_FRIEND_YU*8-_TOUCH_MARGIN,   _ARROW_FRIEND_YU*8 + _TOUCH_MARGIN ,
+    _ARROW_FRIEND_XU*8-_TOUCH_MARGIN ,  _ARROW_FRIEND_XU*8 + _TOUCH_MARGIN  },
+  {	_ARROW_FRIEND_YD*8-_TOUCH_MARGIN,   _ARROW_FRIEND_YD*8 + _TOUCH_MARGIN ,
+    _ARROW_FRIEND_XD*8-_TOUCH_MARGIN ,  _ARROW_FRIEND_XD*8 + _TOUCH_MARGIN },
 
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -836,8 +836,8 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
   GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                           pWork->appitem, 16-4, 24-3, 10, pWork->heapID);
+  pAppWin =APP_TASKMENU_WIN_CreateEx( pWork->pAppTaskRes,
+                                           pWork->appitem, 16-6, 24-3, 12,3, FALSE,TRUE, pWork->heapID);
 
   if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
     APP_TASKMENU_WIN_SetActive( pAppWin , TRUE);
@@ -1141,7 +1141,6 @@ APP_TASKMENU_WORK* GTSNEGO_MESSAGE_MatchOrReturnStart(GTSNEGO_MESSAGE_WORK* pWor
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2| GX_BLEND_PLANEMASK_OBJ , -8 );
   return pAppTask;
 }
 
@@ -1285,8 +1284,8 @@ void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
 
   GF_ASSERT(pWork->pAppWin==NULL);
-  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                           pWork->appitem, 16 - 5, 24-3, 10, pWork->heapID);
+  pWork->pAppWin =APP_TASKMENU_WIN_CreateEx( pWork->pAppTaskRes,
+                                           pWork->appitem, 16 - 6, 24-3, 12, 3,FALSE,TRUE, pWork->heapID);
 
   if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
     APP_TASKMENU_WIN_SetActive( pWork->pAppWin , TRUE);
@@ -1473,7 +1472,6 @@ void GTSNEGO_MESSAGE_ResetDispSet(GTSNEGO_MESSAGE_WORK* pWork)
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
 																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-  G2S_BlendNone();
 
 }
 

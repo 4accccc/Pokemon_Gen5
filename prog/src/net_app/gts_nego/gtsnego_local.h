@@ -188,6 +188,8 @@ extern void GTSNEGO_DISP_PanelScrollAdjust(GTSNEGO_DISP_WORK* pWork,BOOL bDown);
 extern void GTSNEGO_DISP_PanelScrollCancel(GTSNEGO_DISP_WORK* pWork);
 
 extern void GTSNEGO_DISP_DeleteTouchWork(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int pal);
+
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
 extern void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData);

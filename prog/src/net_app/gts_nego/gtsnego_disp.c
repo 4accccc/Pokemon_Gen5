@@ -26,6 +26,7 @@
 #include "system/blink_palanm.h"
 
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
+#include "system/palanm.h"
 
 #include "message.naix"
 #include "print/printsys.h"
@@ -163,6 +164,8 @@ struct _GTSNEGO_DISP_WORK {
 
   NNSG2dScreenData* pBGPanelScr;
   void* pBGPanelScrAddr;
+  void* pVramOBJ;
+  void* pVramBG;
   
   GFL_CLWK* SearchBackOAM;
   GFL_CLWK* SearchPeopleOAM;
@@ -272,6 +275,8 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
   settingSubBgControl(pWork);
   dispInit(pWork);
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
+  pWork->pVramOBJ = GFL_HEAP_AllocMemory(pWork->heapID, 16*2*16);  //バックアップ
+  pWork->pVramBG = GFL_HEAP_AllocMemory(pWork->heapID, 16*2*16);  //バックアップ
 
   _CreateCrossIcon(pWork);
   
@@ -307,6 +312,8 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   _RemoveMenuBarObj(pWork);
   _BGPanelFree(pWork);
 
+  GFL_HEAP_FreeMemory(pWork->pVramOBJ);
+  GFL_HEAP_FreeMemory(pWork->pVramBG);
 
   _ArrowRelease(pWork);
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
@@ -473,6 +480,101 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
   }
 }
 
+
+#if 1
+
+
+static void _PaletteFadeSingle(GTSNEGO_DISP_WORK* pWork, int type, int palettenum)
+{
+  u32 addr;
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  PaletteFadeWorkAllocSet(pP, type, 16 * 32, pWork->heapID);
+  PaletteWorkSet_VramCopy( pP, type, 0, palettenum*32);
+  SoftFadePfd(pP, type, 0, 16 * palettenum, 6, 0);
+  addr = (u32)PaletteWorkTransWorkGet( pP, type );
+
+  switch(type){
+  case FADE_SUB_OBJ:
+    GXS_LoadOBJPltt((void*)addr, 0, palettenum * 32);
+    break;
+  case FADE_SUB_BG:
+    GXS_LoadBGPltt((void*)addr, 0, palettenum * 32);
+    break;
+  }
+  PaletteFadeWorkAllocFree(pP,type);
+  PaletteFadeFree(pP);
+}
+
+static void _PaletteFadeSingle2(GTSNEGO_DISP_WORK* pWork, int type, int* start, int* palettenum, int num)
+{
+  u32 addr;
+  int i;
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  PaletteFadeWorkAllocSet(pP, type, 16 * 32, pWork->heapID);
+  PaletteWorkSet_VramCopy( pP, type, 0, 16*32);
+  SoftFadePfd(pP, type,  0, 16 * 16, 6, 0);
+  addr = (u32)PaletteWorkTransWorkGet( pP, type );
+
+  for(i=0;i<num;i++){
+    switch(type){
+    case FADE_SUB_OBJ:
+      GXS_LoadOBJPltt((void*)(addr+32*start[i]), start[i]*16*2, palettenum[i] * 32);
+      break;
+    case FADE_SUB_BG:
+      GXS_LoadBGPltt((void*)(addr+32*start[i]),  start[i]*16*2, palettenum[i] * 32);
+      break;
+    }
+  }
+  PaletteFadeWorkAllocFree(pP,type);
+  PaletteFadeFree(pP);
+}
+
+
+
+void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
+{
+  u32 addr;
+
+  if(bFade){
+    {
+      GFL_STD_MemCopy((void*)HW_DB_OBJ_PLTT, pWork->pVramOBJ, 16*2*16);
+      GFL_STD_MemCopy((void*)HW_DB_BG_PLTT, pWork->pVramBG, 16*2*16);
+
+      if(palette== _TOUCHBAR_PAL1)
+      {
+        int stb[]={ 1};
+        int paln[]={15};
+        _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 1);
+      }
+      else
+      {
+        int stb[]={ 0,11};
+        int paln[]={10,5};
+        _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 2);
+      }
+
+      if(palette== _TOUCHBAR_PAL1){
+        int stb[]={  0,11};
+        int paln[]={ 9, 4};
+        _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 1);
+      }
+      else{
+        int stb[]={  0,11};
+        int paln[]={ 9, 5};
+        _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
+      }
+//      _PaletteFadeSingle( pWork,  FADE_SUB_BG, 9);
+    }
+  }
+  else{
+    GXS_LoadOBJPltt((void*)pWork->pVramOBJ, 0, 16 * 32);
+    GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 16 * 32);
+  }
+
+}
+#endif
+
+
 //--------------------------------------------------------------
 /**
  * G3D VBlank処理
@@ -614,7 +716,8 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
-  G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
+  G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2,
+                    GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ,15,9);
 
 }
 
@@ -770,6 +873,7 @@ static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork)
                                           &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->crossIcon , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->crossIcon, FALSE );
+  GFL_CLACT_WK_SetObjMode( pWork->crossIcon, GX_OAM_MODE_XLU);
 }
 
 
@@ -1688,9 +1792,6 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index)
     pWork->bSearchScroll=FALSE;
     
 	}
-
- // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
-
 }
 
 
@@ -1736,9 +1837,6 @@ void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
     pWork->bSearchScroll=TRUE;
     
 	}
-
- // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
-
 }
 
 
@@ -1805,8 +1903,5 @@ void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork)
     pWork->bSearchScroll=FALSE;
     
 	}
-
- // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
-
 }
 

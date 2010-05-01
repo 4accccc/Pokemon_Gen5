@@ -36,6 +36,9 @@
 #include "debug_ohno.h"
 
 
+#include "debug/debugwin_sys.h"
+#include "test/debug_pause.h"
+
 //==============================================================================
 //	íËêîíËã`
 //==============================================================================
@@ -728,6 +731,9 @@ static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
 
   _DebugDataCreate(pWork);
 
+  DEBUGWIN_InitProc( GFL_BG_FRAME3_M , NULL );
+  DEBUG_PAUSE_SetEnable( TRUE );
+  
   return pWork;
 }
 
