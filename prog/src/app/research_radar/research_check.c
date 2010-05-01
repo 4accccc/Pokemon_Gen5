@@ -326,6 +326,7 @@ static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // 現在表示
 static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // 現在表示中の回答に対する, 合計の回答人数
 static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work ); // 現在調査中の調査項目IDを取得する
 static u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work ); // 現在表示中の質問に対する, 自分の回答IDを取得する
+static u8 GetMyAnswerID_PlayTime( const RESEARCH_CHECK_WORK* work ); // 質問『プレイ時間は？』に対する自分の回答IDを取得する
 // OBJ
 static void CreateClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ システムを生成する
 static void DeleteClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ システムを破棄する
@@ -3205,6 +3206,12 @@ void UpdateMyAnswerIconOnGraph( RESEARCH_CHECK_WORK* work )
   // 自分の回答IDを取得
   answerID = GetMyAnswerID( work );
 
+  // 対象が0%なら表示しない
+  if( CIRCLE_GRAPH_GetComponentPercentage_byID( GetMainGraph(work), answerID ) == 0 ) { 
+    GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+    return; 
+  }
+
   // 無回答なら表示しない
   if( answerID == ANSWER_ID_000 ) {
     GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
@@ -3539,11 +3546,16 @@ u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work )
   QSave = SaveData_GetQuestionnaire( save );
   myAnswer = Questionnaire_GetAnswerWork( QSave );
 
+  // 質問IDを取得
+  questionID = GetQuestionID( work );
+
+  // 質問が『プレイ時間は？』なら個別対処
+  if( questionID == QUESTION_ID_PLAY_TIME ) {
+    return GetMyAnswerID_PlayTime( work );
+  }
+
   // 現在表示中の質問に対する, 自分の回答インデックスを取得
-  researchData = &( work->researchData );
-  questionIdx  = work->questionIdx;
-  questionID   = GetQuestionID( work );
-  answerIdx    = QuestionnaireAnswer_ReadBit( myAnswer, questionID );
+  answerIdx = QuestionnaireAnswer_ReadBit( myAnswer, questionID );
 
   // 無回答を考慮する
   if( answerIdx == 0 ) {
@@ -3554,11 +3566,42 @@ u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work )
   }
 
   // 回答IDを取得
-  answerID = RESEARCH_DATA_GetAnswerID_byIndex( researchData, questionIdx, answerIdx );
+  researchData = &( work->researchData );
+  questionIdx  = work->questionIdx;
+  answerID     = RESEARCH_DATA_GetAnswerID_byIndex( researchData, questionIdx, answerIdx );
 
   return answerID;
 }
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 質問『プレイ時間は？』に対する自分の回答IDを取得する
+ *
+ * @param work
+ *
+ * @return 質問『プレイ時間は？』に対する自分の回答ID ( ANSWER_ID_xxxx )
+ */
+//-----------------------------------------------------------------------------------------
+static u8 GetMyAnswerID_PlayTime( const RESEARCH_CHECK_WORK* work )
+{
+  PLAYTIME* time;
+  u16 hour;
+
+  time = GAMEDATA_GetPlayTimeWork( work->gameData );
+  hour = PLAYTIME_GetHour( time );
+
+  if( hour <=10 ) { return ANSWER_ID_135; }
+  else if( hour <=  20 ) { return ANSWER_ID_136; }
+  else if( hour <=  30 ) { return ANSWER_ID_137; }
+  else if( hour <=  40 ) { return ANSWER_ID_138; }
+  else if( hour <=  50 ) { return ANSWER_ID_139; }
+  else if( hour <=  60 ) { return ANSWER_ID_140; }
+  else if( hour <=  70 ) { return ANSWER_ID_141; }
+  else if( hour <=  80 ) { return ANSWER_ID_142; }
+  else if( hour <=  90 ) { return ANSWER_ID_143; }
+  else if( hour <= 100 ) { return ANSWER_ID_144; }
+  else { return ANSWER_ID_145; }
+}
 
 //-----------------------------------------------------------------------------------------
 /**
