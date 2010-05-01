@@ -341,61 +341,6 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 再戦トレーナー会話の種類取得
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- *
- * @todo  使っていない？検証する
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
-{
-	u16 btl_type,lr,start_type,after_type,one_type;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u16 script_id   = SCRIPT_GetStartScriptID( sc );
-	u16 *wk1				= SCRCMD_GetVMWork( core, work );
-	u16 *wk2				= SCRCMD_GetVMWork( core, work );
-	u16 *wk3				= SCRCMD_GetVMWork( core, work );
-  
-	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
-	btl_type = SCRIPT_CheckTrainer2vs2Type(
-      SCRIPT_GetTrainerID_ByScriptID(script_id) );
-  
-	//シングルかダブルかチェック
-	if( btl_type == 0 ){
-		//シングル
-		start_type = TRMSG_REVENGE_FIGHT_START;
-		after_type = 0;
-		one_type   = 0;
-	}else{
-		//ダブル
-		lr = SCRIPT_GetTrainerLR_ByScriptID( script_id );
-
-		if( lr == 0 ){
-			//左
-			start_type = TRMSG_REVENGE_FIGHT_START_1;
-			after_type = 0;
-			one_type   = TRMSG_POKE_ONE_1;
-		}else{
-			//右
-			start_type = TRMSG_REVENGE_FIGHT_START_2;
-			after_type = 0;
-			one_type   = TRMSG_POKE_ONE_2;
-		}
-	}
-
-	*wk1 = start_type;
-	*wk2 = after_type;
-	*wk3 = one_type;
-  OS_Printf( "start_type = %d\n", *wk1 );
-	OS_Printf( "after_type = %d\n", *wk2 );
-	OS_Printf( "one_type = %d\n", *wk3 );
-	return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * トレーナー：戦闘ルール取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	"0"
@@ -443,11 +388,6 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
  * トレーナー勝利
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND
- *
- * @todo
- * 現状はこれが呼ばれなくても正常動作している。
- * 勝利時にスクリプトからOBJ操作などを行い、その後フェードインする。
- * その際のフェードイン処理などが実装される予定。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )

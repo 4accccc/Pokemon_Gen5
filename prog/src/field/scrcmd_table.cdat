@@ -201,7 +201,7 @@
   DEF_CMD( EvCmdTrainerMessageSet, EV_SEQ_TRAINER_MSG_SET )
 
   DEF_CMD( EvCmdTrainerTalkTypeGet, EV_SEQ_TRAINER_TALK_TYPE_GET )
-  DEF_CMD( EvCmdRevengeTrainerTalkTypeGet, EV_SEQ_REVENGE_TRAINER_TALK_TYPE_GET )
+  NO_CMD()
   DEF_CMD( EvCmdTrainerBtlRuleGet, EV_SEQ_TRAINER_BTL_RULE_GET )
   DEF_CMD( EvCmdTrainerBgmSet, EV_SEQ_TRAINER_BGM_SET )
 

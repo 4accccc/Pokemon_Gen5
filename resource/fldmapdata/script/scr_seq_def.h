@@ -2542,24 +2542,6 @@
 
 //--------------------------------------------------------------
 /**
- *  _REVENGE_TRAINER_TALK_TYPE_GET 再戦トレーナー会話の種類取得
- *  @param wk1 会話種類格納先ワーク 戦闘前
- *  @param wk2 会話種類格納先ワーク 戦闘後
- *  @param wk2 会話種類格納先ワーク ポケモン１体
- */
-//--------------------------------------------------------------
-#define _REVENGE_TRAINER_TALK_TYPE_GET(  wk1,wk2,wk3 ) \
-  _ASM_REVENGE_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
-
-  .macro  _ASM_REVENGE_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
-  .short  EV_SEQ_REVENGE_TRAINER_TALK_TYPE_GET
-  .short  \wk1
-  .short  \wk2
-  .short  \wk3
-  .endm
-
-//--------------------------------------------------------------
-/**
  *  _TRAINER_BTL_RULE_GET トレーナータイプ取得
  *  @param  tr_id   トレーナーID
  *  @param  ret_wk  戦闘ルール格納先ワーク
