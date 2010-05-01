@@ -1564,8 +1564,26 @@ static void _fadeInWait(IRC_BATTLE_MATCH* pWork)
   if( GFL_FADE_CheckFade() ){
     _CHANGE_STATE(pWork,_ircMatchStart);
   }
-
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ミュージカル専用モード比較
+ * @retval  あっていればTRUE
+ */
+//------------------------------------------------------------------------------
+static BOOL _gsidcallback(u8 mygsid, u8 targetgsid)
+{
+  if((WB_NET_MUSICAL_LEADER==mygsid) && (WB_NET_MUSICAL_CHILD==targetgsid)){
+    return TRUE;
+  }
+  else if((WB_NET_MUSICAL_LEADER==targetgsid) && (WB_NET_MUSICAL_CHILD==mygsid)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -1626,10 +1644,12 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
 
     switch(pWork->selectType){
     case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+      GFL_NET_IRC_SetGSIDCallback(_gsidcallback);
       GFL_NET_ReserveNetID_IRCWIRELESS(1);
       GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_MUSICAL);
       break;
     case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+      GFL_NET_IRC_SetGSIDCallback(_gsidcallback);
       GFL_NET_ReserveNetID_IRCWIRELESS(0);
       GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_MUSICAL);
       break;
@@ -1672,13 +1692,15 @@ static void _workEnd(IRC_BATTLE_MATCH* pWork)
 static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_IsInit() == TRUE){	//初期化終了待ち
+    switch(pWork->selectType){
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+      GFL_NET_IRC_SetGSIDCallback(_gsidcallback);
+      break;
+    }
     GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback,_ircConnectEndCallback); // 専用の自動接続
-
-
     pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
     pWork->touch = &_cancelButtonCallback;
-
-
     _CHANGE_STATE(pWork,_ircMatchWait);
   }
 }

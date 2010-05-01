@@ -87,6 +87,7 @@ typedef struct{
   u32 timeout;		///<再接続時のタイムアウト時間
   u32 retry_time;		///<再接続中のタイムカウンタ
   void *send_buf;		///<送信データへのポインタ
+  IrcGSIDCallback* checkGSID;  ///< GSIDの特殊比較が必要のばあい使う
 
   u8 initialize;		///<TRUE:初期化完了
   u8 send_use;		///<今フレームで既にSendを使用したかどうか(TRUE:使用した)
@@ -219,6 +220,18 @@ void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func)
 {
   NetIrcSys.recieve_func = recieve_func;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   GSID比較コールバック 
+ */
+//--------------------------------------------------------------
+
+void GFL_NET_IRC_SetGSIDCallback(IrcGSIDCallback* callback)
+{
+  NetIrcSys.checkGSID = callback;
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -414,7 +427,14 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
     return;
   }
 
-  if(NetIrcSys.aSendBuff.gsid != pData->gsid){//内容が違う
+  if(NetIrcSys.checkGSID){
+    if(NetIrcSys.checkGSID(NetIrcSys.aSendBuff.gsid , pData->gsid)==FALSE){
+      IRC_PRINT("GSIDが違うA %d %d\n",NetIrcSys.aSendBuff.gsid , pData->gsid);
+      return;
+    }
+  }
+  else if(NetIrcSys.aSendBuff.gsid != pData->gsid){//内容が違う
+    IRC_PRINT("GSIDが違う %d %d\n",NetIrcSys.aSendBuff.gsid , pData->gsid);
     return;
   }
   if((pData->friendunique == NetIrcSys.aSendBuff.unique)

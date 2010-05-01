@@ -32,7 +32,8 @@ enum{
 //==============================================================================
 /// 受信コールバックの書式指定
 typedef BOOL (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
-
+/// 比較コールバック
+typedef BOOL (IrcGSIDCallback)(u8 mygsid,u8 friendgsid);
 
 //==============================================================================
 //	外部関数宣言
@@ -40,6 +41,7 @@ typedef BOOL (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
 extern void GFL_NET_IRC_Init(u32 irc_timeout,u8 gsid);
 extern void GFL_NET_IRC_ChangeTimeoutTime(u32 irc_timeout);
 extern void GFL_NET_IRC_Exit(void);
+extern void GFL_NET_IRC_SetGSIDCallback(IrcGSIDCallback* callback);
 extern void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func);
 extern void GFL_NET_IRC_InitializeFlagSet(void);
 extern BOOL GFL_NET_IRC_InitializeFlagGet(void);
