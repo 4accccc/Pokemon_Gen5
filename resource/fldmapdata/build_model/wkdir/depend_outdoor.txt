@@ -294,4 +294,12 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c03_cloud.nsbmd \
 	$(RESDIR)/c03_kanban.nsbmd \
 	$(RESDIR)/c09gate_main.nsbmd \
+	$(RESDIR)/r01_a_spring.nsbmd \
+	$(RESDIR)/r01_b_spring.nsbmd \
+	$(RESDIR)/r01_a_summer.nsbmd \
+	$(RESDIR)/r01_b_summer.nsbmd \
+	$(RESDIR)/r01_a_autumn.nsbmd \
+	$(RESDIR)/r01_b_autumn.nsbmd \
+	$(RESDIR)/r01_a_winter.nsbmd \
+	$(RESDIR)/r01_b_winter.nsbmd \
 

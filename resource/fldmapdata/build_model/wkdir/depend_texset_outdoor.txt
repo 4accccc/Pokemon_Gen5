@@ -90,7 +90,15 @@ DEP_TEXSET_IMD_OUTDOOR001 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/r01_a_spring.imd \
+	$(SRCDIR)/r01_b_spring.imd \
+	$(SRCDIR)/r01_a_summer.imd \
+	$(SRCDIR)/r01_b_summer.imd \
+	$(SRCDIR)/r01_a_autumn.imd \
+	$(SRCDIR)/r01_b_autumn.imd \
+	$(SRCDIR)/r01_a_winter.imd \
+	$(SRCDIR)/r01_b_winter.imd
 
 texset/outdoor001.imd: $(DEP_TEXSET_IMD_OUTDOOR001) texset/tmp/outdoor001.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor001.list
