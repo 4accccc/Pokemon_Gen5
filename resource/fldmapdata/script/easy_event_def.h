@@ -277,7 +277,7 @@
     .macro  _ASM_EASY_TALK_POKEVOICE monsno, msg_id
     _ASM_TALK_START_SE_PLAY
     _ASM_TURN_HERO_SITE   
-    _ASM_VOICE_PLAY \monsno
+    _ASM_VOICE_PLAY \monsno, 0
     _ASM_BALLOONWIN_TALKOBJ_MSG \msg_id 
     _ASM_VOICE_WAIT
     _ASM_LAST_KEYWAIT

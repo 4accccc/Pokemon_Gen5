@@ -3384,8 +3384,7 @@
   .macro  _ASM_VOICE_PLAY monsno, formno
   .short  EV_SEQ_VOICE_PLAY
   .short  \monsno
-  .byte  0
-  .byte  0
+  .short  \formno
   .endm
 
 //--------------------------------------------------------------
