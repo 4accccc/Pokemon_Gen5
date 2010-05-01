@@ -93,7 +93,8 @@ static void		InitWork( FLD_G3D_MAP* g3Dmap );
 static void		MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RES* tex );
 static void		TrashMapRender( NNSG3dRenderObj* rndObj );
 static s32		testBoundingBox( const GXBoxTestParam* boundingBox );
-static BOOL		checkCullingBoxTest( NNSG3dRenderObj* rnd );
+//static BOOL		checkCullingBoxTest( NNSG3dRenderObj* rnd );
+static BOOL checkCullingBoxTest( NNSG3dResMdl * mdl );
 static GFL_G3D_RES*	getResourceTex( const FLD_G3D_MAP* g3Dmap );
 
 //------------------------------------------------------------------
@@ -838,19 +839,6 @@ BOOL FLD_G3D_MAP_TransVram( FLD_G3D_MAP* g3Dmap )
 	return TRUE;
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	ファイル識別設定（仮）※いずれはデータファイルの中に識別を埋め込む
- */
-//------------------------------------------------------------------
-void FLD_G3D_MAP_ResistFileType( FLD_G3D_MAP* g3Dmap, u32 fileType )
-{
-#if 0
-	GF_ASSERT( g3Dmap );
-
-	g3Dmap->fileType = fileType;
-#endif
-}
 
 
 
@@ -889,7 +877,7 @@ static BOOL	DrawGround( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
       NNS_G3dGeLoadMtx43( NNS_G3dGlbGetCameraMtx() );
       NNS_G3dGeTranslateVec( &g3Dmap->trans );
       
-      if( checkCullingBoxTest( g3Dmap->NNSrnd ) == TRUE ){
+      if( checkCullingBoxTest( NNS_G3dRenderObjGetResMdl(g3Dmap->NNSrnd) ) == TRUE ){
 #ifdef PM_DEBUG
         FIELD_DEBUG_AddDrawLandNum();
 #endif
@@ -913,9 +901,8 @@ static void	DrawObj( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 	u32					count = g3Dmap->globalResObj->gobjCount;
 	GFL_G3D_OBJ*		g3Dobj;
 	NNSG3dRenderObj		*NNSrnd;
+  NNSG3dResMdl * resMdl;
 	int					i;
-	MtxFx43				mtxAll;
-	MtxFx43				mtxRotTmp;
 	MtxFx33				mtxRot;
 
 	if(( count == 0 )||( obj == NULL )){ return; }
@@ -925,21 +912,39 @@ static void	DrawObj( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 
       g3Dobj = obj[ g3Dmap->object[i].id ].g3DobjHQ;
       NNSrnd = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ); 
-
-      if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
+      resMdl = NNS_G3dRenderObjGetResMdl( NNSrnd );
+      if( resMdl != NULL ){
 
         {
           fx32 sin = FX_SinIdx(g3Dmap->object[i].rotate);
           fx32 cos = FX_CosIdx(g3Dmap->object[i].rotate);
 
-          NNS_G3dGeIdentity();
-          NNS_G3dGeLoadMtx43( NNS_G3dGlbGetCameraMtx() );
-          NNS_G3dGeTranslateVec( &g3Dmap->trans );
-          NNS_G3dGeTranslateVec( &g3Dmap->object[i].trans );
-          MTX_RotY33( &mtxRot, sin, cos );
-          NNS_G3dGeMultMtx33( &mtxRot );
+          {
+            struct { 
+               MtxFx33 mtx; 
+               VecFx32 trans; 
+            } mtx43;
 
-          if( checkCullingBoxTest( NNSrnd ) == TRUE ){
+            //NNS_G3dGeIdentity();
+            NNS_G3dGeLoadMtx43( NNS_G3dGlbGetCameraMtx() );
+            VEC_Add( &g3Dmap->trans, &g3Dmap->object[i].trans, &mtx43.trans );
+            MTX_RotY33( &mtx43.mtx, sin, cos );
+            NNS_G3dGeMultMtx43( (MtxFx43*)(&mtx43) );
+          }
+          /*  G3OP_MTX_TRANS（NNS_G3dGeTranslateVecの実態）は通常22サイクル消費するので、
+           *  mtx43を使って回転行列の適用と一緒にまとめた
+           *  ↓下記は元の判定
+          {
+            NNS_G3dGeIdentity();
+            NNS_G3dGeLoadMtx43( NNS_G3dGlbGetCameraMtx() );
+            NNS_G3dGeTranslateVec( &g3Dmap->trans );
+            NNS_G3dGeTranslateVec( &g3Dmap->object[i].trans );
+            MTX_RotY33( &mtxRot, sin, cos );
+            NNS_G3dGeMultMtx33( &mtxRot );
+          }
+          */
+
+          if( checkCullingBoxTest( resMdl ) == TRUE ){
             //オブジェクト描画
             GFL_G3D_Draw( NNSrnd );
           }
@@ -1186,14 +1191,16 @@ static void TrashMapRender( NNSG3dRenderObj* rndObj )
 //（オブジェクトのグローバルステータス反映後に呼ぶこと）
 static s32 testBoundingBox( const GXBoxTestParam* boundingBox );
 
-static BOOL checkCullingBoxTest( NNSG3dRenderObj* rnd )
+static BOOL checkCullingBoxTest( NNSG3dResMdl * mdl )
+//static BOOL checkCullingBoxTest( NNSG3dRenderObj* rnd )
 {
 	NNSG3dResMdlInfo*	modelInfo;		// モデルデータからのボックステスト用パラメータ取得用
 	BOOL				result = TRUE;
 	GXBoxTestParam		boundingBox;
 
 	//ボックステスト用パラメータ取得
-	modelInfo = NNS_G3dGetMdlInfo( NNS_G3dRenderObjGetResMdl(rnd) );
+//	modelInfo = NNS_G3dGetMdlInfo( NNS_G3dRenderObjGetResMdl(rnd) );
+  modelInfo = NNS_G3dGetMdlInfo( mdl );
 
 	//バウンディングボックス作成
 	boundingBox.x		= modelInfo->boxX;

@@ -28,16 +28,6 @@ typedef enum {
 }FLDMAPPER_MODE;
 
 //------------------------------------------------------------------
-///	読み込みブロックファイルの種類コード
-///	field_g3d_mapper.cのmapFileFuncTblと同期する必要がある
-//------------------------------------------------------------------
-typedef enum {
-	FLDMAPPER_FILETYPE_NORMAL = 0,
-	FLDMAPPER_FILETYPE_PKGS = 1,
-  FLDMAPPER_FILETYPE_RANDOM = 2,
-}FLDMAPPER_FILETYPE;
-
-//------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef enum {
 	FLDMAPPER_TEXTYPE_NONE = 0,
@@ -59,7 +49,6 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-	FLDMAPPER_FILETYPE		g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	fx32					blockWidth;			//ブロック１辺の幅
 	fx32					blockHeight;		//ブロック高さ
   u16           blockXNum;      //メモリに一度に置く、X方向ブロック数

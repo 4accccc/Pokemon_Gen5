@@ -132,7 +132,6 @@ typedef struct {
 struct _FLD_G3D_MAPPER {
 	HEAPID					heapID;
 
-	FLDMAPPER_FILETYPE	g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	fx32				blockWidth;		//ブロック１辺の幅
 	fx32				blockHeight;		//ブロック高さ
 	FLDMAPPER_MODE		mode;		//動作モード
@@ -727,7 +726,6 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 {
 	GF_ASSERT( g3Dmapper );
 
-	g3Dmapper->g3DmapFileType = resistData->g3DmapFileType;
 	g3Dmapper->blockWidth = resistData->blockWidth;
 	g3Dmapper->blockHeight = resistData->blockHeight;
 	g3Dmapper->arcID = resistData->arcID;
@@ -827,8 +825,6 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
       FLD_G3D_MAP_ResistGlobalObjResource( g3dmap,
           FIELD_BMODEL_MAN_GetGlobalObjects(g3Dmapper->bmodel_man) );
 
-      //ファイル識別設定（仮）
-      FLD_G3D_MAP_ResistFileType( g3dmap, resistData->g3DmapFileType );
     }
 
 	}
@@ -1704,19 +1700,6 @@ void FLDMAPPER_GetBlockXZPos( const FLDMAPPER * g3Dmapper, u32 * blockx, u32 * b
   *blockz = FX_Whole( FX_Div( g3Dmapper->posCont.z, g3Dmapper->blockWidth ) );
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * マップデータファイルタイプを取得
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-FLDMAPPER_FILETYPE FLDMAPPER_GetFileType( const FLDMAPPER *g3Dmapper )
-{
-	return( g3Dmapper->g3DmapFileType );
-}
-#endif
 
 //--------------------------------------------------------------
 //	描画オフセット

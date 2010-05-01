@@ -297,12 +297,6 @@ extern void	FLD_G3D_MAP_GetTrans( FLD_G3D_MAP* g3Dmap, VecFx32* trans );
 extern void FLD_G3D_MAP_InitAttr( FLD_G3D_MAP_ATTRINFO* attrInfo );
 extern void FLD_G3D_MAP_GetAttr( FLD_G3D_MAP_ATTRINFO* attrInfo,
 								FLD_G3D_MAP* g3Dmap, const VecFx32* pos, const fx32 map_width );
-//------------------------------------------------------------------
-/**
- * @brief	ファイル識別設定（仮）※いずれはデータファイルの中に識別を埋め込む
- */
-//------------------------------------------------------------------
-extern void FLD_G3D_MAP_ResistFileType( FLD_G3D_MAP* g3Dmap, u32 fileType );
 
 
 //============================================================================================
