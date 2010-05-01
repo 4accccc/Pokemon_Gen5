@@ -104,7 +104,7 @@ static const DEBUG_UI_KEY_TABLE sc_DEBUG_UI_KEY_TABLE[] = {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data );
+static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DEBUG_OVERWRITE* p_data30 );
 static const DEBUG_UI_KEY_TABLE* DebugUI_GetKeyTable( DEBUG_UI_TYPE type );
 
 //----------------------------------------------------------------------------
@@ -118,11 +118,6 @@ void DEBUG_UI_SetUp( DEBUG_UI_TYPE type )
 {
   const DEBUG_UI_KEY_TABLE* cp_keytable;
   if( type == s_DEBUG_UI_WORK.type ){
-    return ;
-  }
-
-  // デバッカーか？
-  if( !(OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER)) ){
     return ;
   }
 
@@ -179,14 +174,44 @@ DEBUG_UI_TYPE DEBUG_UI_GetType( void )
  *    private関数
  */
 //-----------------------------------------------------------------------------
-static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data )
+static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DEBUG_OVERWRITE* p_data30 )
 {
+  const GFL_UI_DEBUG_OVERWRITE* cp_tmp;
 
   if( DEBUGWIN_IsActive() ){
     return FALSE;
   }
 
   *p_data = s_DEBUG_UI_WORK.cp_data[ s_DEBUG_UI_WORK.count ];
+
+  // 30フレーム用データ作成。
+  if( s_DEBUG_UI_WORK.count >= 2 ){
+    if( ((s_DEBUG_UI_WORK.count % 2) == 0) ){
+      *p_data30 = s_DEBUG_UI_WORK.cp_data[ s_DEBUG_UI_WORK.count-1 ];
+      cp_tmp = &s_DEBUG_UI_WORK.cp_data[ s_DEBUG_UI_WORK.count ];
+    }else{
+
+      *p_data30 = s_DEBUG_UI_WORK.cp_data[ s_DEBUG_UI_WORK.count-2 ];
+      cp_tmp = &s_DEBUG_UI_WORK.cp_data[ s_DEBUG_UI_WORK.count-1 ];
+      
+    }
+
+    p_data30->trg |= cp_tmp->trg;
+    p_data30->cont |= cp_tmp->cont;
+    p_data30->repeat |= cp_tmp->repeat;
+    if( cp_tmp->tp_x != 0 ){
+      p_data30->tp_x = cp_tmp->tp_x;
+    }
+    if( cp_tmp->tp_y != 0 ){
+      p_data30->tp_y = cp_tmp->tp_y;
+    }
+    p_data30->tp_trg |= cp_tmp->tp_trg;
+    p_data30->tp_cont |= cp_tmp->tp_cont;
+
+
+  }else{
+    GFL_STD_MemClear( p_data30, sizeof(GFL_UI_DEBUG_OVERWRITE) );
+  }
     
   // L+SELECTは保持
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){

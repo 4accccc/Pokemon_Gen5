@@ -13,6 +13,8 @@
 
 #include "debug_ui_input.h"
 
+#include "debug/debugwin_sys.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					íËêîêÈåæ
@@ -31,7 +33,7 @@
 */
 //-----------------------------------------------------------------------------
 
-#define DEBUG_UI_INPUT_BUF_MAX  ( 60*60*20 )
+#define DEBUG_UI_INPUT_BUF_MAX  ( 60*60*20 ) // 20ï™ï™
 GFL_UI_DEBUG_OVERWRITE DEBUG_UI_InputBuf[ DEBUG_UI_INPUT_BUF_MAX ] = {
   {
     0
@@ -79,6 +81,11 @@ void DEBUG_UI_INPUT_Update( void )
     // L(cont) + SELECT(trg)ÇÃèÍçáÅAñ≥éãÅB
     if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) ){
+      TOMOYA_Printf( "L+SELECT???\n" );
+      return ;
+    }
+    if( DEBUGWIN_IsActive() ){
+      TOMOYA_Printf( "???\n" );
       return ;
     }
 
@@ -90,7 +97,24 @@ void DEBUG_UI_INPUT_Update( void )
     DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_trg = GFL_UI_TP_GetTrg();
     DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_x = tp_x;
     DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_y = tp_y;
+
+    OS_TPrintf( "{ %d, %d, %d, %d, %d, %d, %d, },// count %d\n", 
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].trg,
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].cont,
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].repeat,
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_x,
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_y,
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_trg,
+        DEBUG_UI_InputBuf[ DEBUG_UI_InputCount ].tp_cont,
+        DEBUG_UI_InputCount );
+    
     DEBUG_UI_InputCount ++;
+
+    if( DEBUG_UI_InputCount >= DEBUG_UI_INPUT_BUF_MAX ){
+      //èIóπ
+      OS_TPrintf("DEBUG UI Input Sampling Buff Max End\n");
+      DEBUG_UI_InputOn = FALSE;
+    }
   }
 }
 

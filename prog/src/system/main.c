@@ -444,23 +444,23 @@ static void DEBUG_StackOverCheck(void)
 static void DEBUG_UI_AutoKey( void  )
 {
   
-  // 自動 UPDOWN
-  if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoUpDown ) ){
-    DEBUG_UI_SetUp( DEBUG_UI_AUTO_UPDOWN );
-  }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoLeftRight ) ){
-    DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT );
-  }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoInputData ) ){
-    DEBUG_UI_SetUp( DEBUG_UI_AUTO_USER_INPUT );
-  }else{
-    if( (DEBUG_UI_GetType() == DEBUG_UI_AUTO_UPDOWN) ||
-        (DEBUG_UI_GetType() == DEBUG_UI_AUTO_LEFTRIGHT) ||
-        (DEBUG_UI_GetType() == DEBUG_UI_AUTO_USER_INPUT) ){
-      DEBUG_UI_SetUp( DEBUG_UI_NONE );
-    }
-  }
-
-  // Inputサンプリング
   if( (OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER)) ){
+    // 自動 UPDOWN
+    if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoUpDown ) ){
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_UPDOWN );
+    }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoLeftRight ) ){
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT );
+    }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoInputData ) ){
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_USER_INPUT );
+    }else{
+      if( (DEBUG_UI_GetType() == DEBUG_UI_AUTO_UPDOWN) ||
+          (DEBUG_UI_GetType() == DEBUG_UI_AUTO_LEFTRIGHT) ||
+          (DEBUG_UI_GetType() == DEBUG_UI_AUTO_USER_INPUT) ){
+        DEBUG_UI_SetUp( DEBUG_UI_NONE );
+      }
+    }
+
+    // Inputサンプリング
     if( DEBUG_FLG_GetFlg( DEBUG_FLG_SampleInputData ) ){
       DEBUG_UI_INPUT_Start();
     }else{

@@ -205,7 +205,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/font2tex.c \
 		    debug/debug_sd_print.c \
         debug/mcs_mode.c \
-        debug/debug_ui.c \
 		    system/ds_system.c \
         savedata/undata_update.c \
         system/scroll_bar.c \
@@ -1669,6 +1668,7 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 				               field/rail_editor.c \
                        field/script_debugger_core.c \
                        test/ariizumi/mus_mcss_debug.c \
+                       debug/debug_ui.c \
                        debug/debug_ui_input.c \
                        sound/snd_viewer_mcs.c
 

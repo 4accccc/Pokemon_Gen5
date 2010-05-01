@@ -764,23 +764,24 @@ extern int GFL_UI_GetBattLevel(void);
  * @brief UI 上書き　データ構造体
  */
 typedef struct {
-  int trg;
-  int cont;
-  int repeat;
+  u16 trg;
+  u16 cont;
+  u16 repeat;
   u16 tp_x;
   u16 tp_y;
-  u16 tp_trg;
-  u16 tp_cont;
+  u8 tp_trg;
+  u8 tp_cont;
 } GFL_UI_DEBUG_OVERWRITE;
 
 /**
  * @brief UI 上書き　コールバック型　
  *
  * @param GFL_UI_DEBUG_OVERWRITE* データ格納先
+ * @param GFL_UI_DEBUG_OVERWRITE* データ格納先 30フレーム時の上書き情報
  * @retval  TRUE    上書き する
  * @retval  FALSE   上書き しない
  */
-typedef BOOL (GFL_UI_DEBUG_OVERWRITE_FUNC)( GFL_UI_DEBUG_OVERWRITE* pOverWrite );
+typedef BOOL (GFL_UI_DEBUG_OVERWRITE_FUNC)( GFL_UI_DEBUG_OVERWRITE* pOverWrite, GFL_UI_DEBUG_OVERWRITE* pOverWrite30 );
 
 //----------------------------------------------------------------------------
 /**
