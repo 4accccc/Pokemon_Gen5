@@ -85,7 +85,7 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	//statusParam->player_id		= MyStatus_GetID( wk->param->mystatus );
 	//statusParam->player_sex	=  MyStatus_GetMySex( wk->param->mystatus );
 
-	statusParam->ppt  =PST_PP_TYPE_POKEPARAM;
+	statusParam->ppt  =PST_PP_TYPE_POKEPASO;
 	statusParam->max  = 1;
 	statusParam->pos  = 0;
 	statusParam->mode = PST_MODE_NO_WAZACHG;	// ‹Z“ü‚ê‘Ö‚¦‹ÖŽ~‚É‚·‚é
