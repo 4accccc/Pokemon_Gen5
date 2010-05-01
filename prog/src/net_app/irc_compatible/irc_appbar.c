@@ -332,6 +332,10 @@ void APPBAR_ChangeButton( APPBAR_WORK *p_wk, APPBAR_BUTTON_TYPE type )
 
       p_wk->btn_type  = type;
     }
+
+    //ó‘ÔƒŠƒZƒbƒg
+    p_wk->seq = 0;
+    p_wk->trg = APPBAR_SELECT_NONE;
   }
 }
 //=============================================================================

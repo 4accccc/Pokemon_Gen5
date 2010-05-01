@@ -1789,6 +1789,22 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_NEXTPROC,
 	};
 
+  if( SEQ_BOOT <= *p_seq && *p_seq <= SEQ_CONNECT && COMPATIBLE_IRC_IsCancelConnext( p_wk->p_param->p_irc ) )
+  { 
+    if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+		{
+			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
+			SEQ_Change( p_wk, SEQFUNC_DisConnect );
+      APPBAR_SetNormal( p_wk->p_appbar );
+      APPBAR_ChangeButton( p_wk->p_appbar, APPBAR_BUTTON_TYPE_RETURN );
+      GFL_BG_LoadScreenReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN] );
+
+      MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
+      BUTTON_Reset( &p_wk->btn );
+      return;
+		}
+  }
+
 	switch( *p_seq )
 	{	
 	case SEQ_BOOT:
@@ -1808,18 +1824,6 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		if( COMPATIBLE_IRC_ConnextWait( p_wk->p_param->p_irc ) )
 		{	
 			*p_seq	= SEQ_MSG_PRINT;
-		}
-
-		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
-		{
-			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			SEQ_Change( p_wk, SEQFUNC_DisConnect );
-      APPBAR_SetNormal( p_wk->p_appbar );
-      APPBAR_ChangeButton( p_wk->p_appbar, APPBAR_BUTTON_TYPE_RETURN );
-      GFL_BG_LoadScreenReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN] );
-
-      MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
-      BUTTON_Reset( &p_wk->btn );
 		}
 		break;
 
@@ -1850,15 +1854,6 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
         }
       }
       *p_seq	= SEQ_TIMING_START;
-		}
-
-		if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
-		{
-			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-			SEQ_Change( p_wk, SEQFUNC_DisConnect );
-      APPBAR_SetNormal( p_wk->p_appbar );
-      MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
-      BUTTON_Reset( &p_wk->btn );
 		}
 		break;
 
@@ -2029,11 +2024,9 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			switch( p_wk->select )
 			{	
 			case BTNID_COMATIBLE:
-				PMSND_PlaySE( IRCMENU_SE_DECIDE );
 				*p_seq	= SEQ_MSG;
 				break;
 			case BTNID_RANKING:
-				PMSND_PlaySE( IRCMENU_SE_DECIDE );
 				p_wk->p_param->select	= IRCMENU_SELECT_RANKING;
 				SEQ_Change( p_wk, SEQFUNC_NextProc );
 				break;
@@ -2130,7 +2123,6 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum{	
 		SEQ_SCENE,
-		SEQ_NET_DISCONNECT,
 		SEQ_NET_EXIT,
 		SEQ_CHANGE_MENU,
 	};
@@ -2140,14 +2132,7 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_SCENE:
     MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
 		COMPATIBLE_IRC_ResetScene( p_wk->p_param->p_irc );
-		*p_seq	= SEQ_NET_DISCONNECT;
-		break;
-
-	case SEQ_NET_DISCONNECT:
-		if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_param->p_irc ) )
-		{	
-			*p_seq	= SEQ_NET_EXIT;
-		}
+		*p_seq	= SEQ_NET_EXIT;
 		break;
 
 	case SEQ_NET_EXIT:
@@ -2176,7 +2161,6 @@ static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum{	
 		SEQ_JUNCTION,
-		SEQ_NET_DISCONNECT,
 		SEQ_NET_EXIT,
 		SEQ_END,
 	};
@@ -2186,7 +2170,7 @@ static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_JUNCTION:
 		if( COMPATIBLE_IRC_IsConnext(p_wk->p_param->p_irc) )
 		{	
-			*p_seq	= SEQ_NET_DISCONNECT;
+			*p_seq	= SEQ_NET_EXIT;
 		}
 		else if( COMPATIBLE_IRC_IsInit(p_wk->p_param->p_irc ) )
 		{	
@@ -2195,13 +2179,6 @@ static void SEQFUNC_End( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		else
 		{	
 			*p_seq	= SEQ_END;
-		}
-		break;
-
-	case SEQ_NET_DISCONNECT:
-		if( COMPATIBLE_IRC_DisConnextWait( p_wk->p_param->p_irc ) )
-		{	
-			*p_seq	= SEQ_NET_EXIT;
 		}
 		break;
 
@@ -2410,8 +2387,10 @@ static void BUTTON_Main( BUTTON_WORK *p_wk )
   switch( p_wk->seq )
   {
   case SEQ_MAIN:
+    p_wk->is_touch  = FALSE;
     if( GFL_BMN_Main( p_wk->p_btn ) )
     { 
+      PMSND_PlaySE( IRCMENU_SE_DECIDE );
       p_wk->cnt = 0;
       p_wk->seq = SEQ_ANM;
     }
@@ -2454,7 +2433,7 @@ static void BUTTON_Main( BUTTON_WORK *p_wk )
       }
       p_wk->cnt++;
 
-      if( p_wk->cnt >= 16 )
+      if( p_wk->cnt >= 0 )
       { 
         p_wk->is_touch  = TRUE;
         p_wk->seq = SEQ_MAIN;

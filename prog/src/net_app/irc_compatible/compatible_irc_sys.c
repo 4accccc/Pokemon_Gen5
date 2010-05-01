@@ -101,6 +101,7 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_only_play;
 	u8		mac_address[6];
 	u16		scene_send_cnt;
+  BOOL  is_cancel;
 
 	HEAPID	heapID;
 };
@@ -401,7 +402,7 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 		}
 		else
 		{
-			return TRUE;
+			p_sys->seq  = SEQ_EXIT_END;
 		}
 		break;
 
@@ -422,6 +423,21 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 	}
 	
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キャンセル可能かどうか
+ *
+ *	@param	COMPATIBLE_IRC_SYS *p_sys		ワーク
+ *
+ *	@retval	TRUEならば終了
+ *	@ratval	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+BOOL COMPATIBLE_IRC_IsCancelConnext( const COMPATIBLE_IRC_SYS *cp_sys )
+{ 
+  return cp_sys->is_cancel;
 }
 
 //----------------------------------------------------------------------------
@@ -454,12 +470,14 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 	case SEQ_CONNECT_START:
 		GFL_NET_ChangeoverConnect( NULL );
 		p_sys->seq	= SEQ_CONNECT_WAIT;
+    p_sys->is_cancel  = TRUE;
 		break;
 
 	case SEQ_CONNECT_WAIT:
 		//自動接続待ち
 		if( p_sys->is_connect )
 		{
+      p_sys->is_cancel  = FALSE;
 			IRC_Print("接続した\n");
 			p_sys->seq	= SEQ_CONNECT_TIMING_START;
 		}
@@ -492,6 +510,7 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 	return FALSE;
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief	切断待ち処理
@@ -519,7 +538,6 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	switch(p_sys->seq){
 	case SEQ_DISCONNECT_MENU:
-		//仮　応急処置	DisConnectでExitすると、ExitでDelCommandできない
 		p_sys->seq	= SEQ_DISCONNECT_END;
 		break;
 
@@ -565,7 +583,7 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 	
 	return FALSE;
 }
-
+#endif
 //----------------------------------------------------------------------------
 /**
  *	@brief	接続中かチェック
