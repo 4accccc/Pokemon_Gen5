@@ -3318,7 +3318,7 @@ BOOL BTL_MAIN_IsPokeListMultiMode( BTL_MAIN_MODULE* wk )
 {
   if( (BTL_MAIN_IsMultiMode(wk)) )
   {
-    BtlCompetitor = BTL_MAIN_GetCompetitor( wk );
+    BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk );
 
     if( (competitor != BTL_COMPETITOR_TRAINER)
     &&  (competitor != BTL_COMPETITOR_WILD)

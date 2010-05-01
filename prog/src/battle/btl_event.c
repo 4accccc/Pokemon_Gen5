@@ -33,11 +33,11 @@ enum {
   FACTOR_PER_POKE = EVENT_WAZA_STICK_MAX + 3,            ///< ワザ貼り付き最大数+使用ワザ+とくせい+アイテム = 11
   FACTOR_MAX_FOR_POKE = FACTOR_PER_POKE * BTL_POS_MAX,   ///< ポケモンごと最大数(11) * 場所数(6) = 66
   FACTOR_MAX_FOR_SIDEEFF = BTL_SIDEEFF_MAX * 2,          ///< サイドエフェクト最大数(13)×陣営数(2) = 26
-  FACTOR_MAX_FOR_POSEFF = BTL_POSEFF_MAX * BTL_POS_MAX,  ///< 位置エフェクト最大数(3) * 場所数(6) = 18
+  FACTOR_MAX_FOR_POSEFF = BTL_POSEFF_MAX * BTL_POS_MAX,  ///< 位置エフェクト最大数(5) * 場所数(6) = 30
   FACTOR_MAX_FOR_FIELD = BTL_FLDEFF_MAX,                 ///< フィールドエフェクト最大数 = 6
   FACTOR_MAX_FOR_ONCE  = 18,                             ///< 一時登録最大数(トリプル6人*3つを想定）
 
-  // 登録できるイベントファクター最大数（66 + 18 + 18 + 6 + 18) = 126
+  // 登録できるイベントファクター最大数（66 + 26 + 30 + 6 + 18) = 146
   FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD + FACTOR_MAX_FOR_POSEFF + FACTOR_MAX_FOR_ONCE,
   EVENTVAL_STACK_DEPTH = 96,   ///< イベント変数スタックの容量
 
