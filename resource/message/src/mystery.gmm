@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-24T15:18:43"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-30T19:39:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1248,12 +1248,18 @@
 		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
-	<row id="syachi_mystery_01_009" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="syachi_mystery_01_009" back-color="#8080ff,,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>通信確立：赤外線</comment>
 		<language name="JPN" width="216">せきがいせん　つういんを
-かいし　します</language>
+かいし　します[BE:01:ページ切り替え（クリア）]
+じぶんと　あいての
+ＤＳカードを　むきあわせて[BE:00:ページ切り替え（行送り）]
+Ａボタンを　おしてください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">赤外線通信を
-開始します</language>
+開始します[BE:01:ページ切り替え（クリア）]
+自分と　相手の
+ＤＳカードを　向き合わせて[BE:00:ページ切り替え（行送り）]
+Ａボタンを　押してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_009_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">

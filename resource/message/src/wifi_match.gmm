@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-30T01:18:33"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-01T18:55:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -801,7 +801,7 @@
 バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
 だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
 バトルボックスの　ポケモンを
-ロックしても　よろしいですか？</language>
+とうろく　しても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">バトルボックスの　ポケモンを
 大会に　登録します[BE:01:ページ切り替え（クリア）]
 注意！
@@ -810,19 +810,19 @@
 バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
 出し入れ　できなくなります[BE:01:ページ切り替え（クリア）]
 バトルボックスの　ポケモンを
-ロックしても　よろしいですか？</language>
+とうろく　しても　よろしいですか？</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_SELECT_06">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">けってい</language>
-		<language name="JPN_KANJI" width="256">決定</language>
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_SELECT_07">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_16">
@@ -1071,6 +1071,13 @@
 たいかいの　ルールを　確認して
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
 おいてください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="WIFIMATCH_WIFI_STR_40" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<language name="JPN" width="256">たいせんの　けっかを
+サーバーに　おくりました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">対戦の　結果を
+サーバーに　送りました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_POKE_00">
