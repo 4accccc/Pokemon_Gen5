@@ -93,7 +93,7 @@ Ltdautoload LTDMAIN
 BOTTOM_LSFFILE1
  
 bottom_lsf2 = <<BOTTOM_LSFFILE2
-	Address	0x02500000
+	Address	0x02700000
   Object		* (.ltdmain)
 	Object		$(OBJS_LTDAUTOLOAD)
 	Library		$(LLIBS_EX) $(GLIBS_EX)
