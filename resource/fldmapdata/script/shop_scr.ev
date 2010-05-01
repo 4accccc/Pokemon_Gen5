@@ -66,7 +66,7 @@ sub_shop_main:
   DEFINE_LOCAL  i_loop
 
   //‚æ‚¤‚±‚»
-  IF $lwk_greeting != SHOP_GREETING_WAZA THEN
+  IF $lwk_greeting == SHOP_GREETING_WAZA THEN
     _BALLOONWIN_OBJMSG_POS( msg_shop_01_waza, SCWK_TARGET_OBJID, POS_DOWN )
   ELSE
     _BALLOONWIN_OBJMSG_POS( msg_shop_01, SCWK_TARGET_OBJID, POS_DOWN )
