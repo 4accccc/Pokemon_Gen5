@@ -45,6 +45,8 @@
 #include "field_debug.h"
 
 #include "field_event_check.h"
+#include "event_debug_menu_connect_check.h"
+#include "event_debug_menu_research.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
 #include "event_debug_numinput.h"
 #include "event_debug_numinput_research.h"
@@ -86,7 +88,6 @@
 #include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
 #include "event_debug_sodateya.h" // for DEBUG_EVENT_DebugMenuSodateya
 #include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
-#include "event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
@@ -1186,7 +1187,7 @@ static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event;
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-    FS_OVERLAY_ID( d_numinput_research ), DEBUG_EVENT_FLDMENU_ResearchNumInput, wk );
+    FS_OVERLAY_ID( d_numinput_research ), DEBUG_EVENT_DebugMenu_Research, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -6617,8 +6618,10 @@ static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk )
 static BOOL debugMenuCallProc_AllConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk )
 {
   GMEVENT * new_event;
-  new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
-      FS_OVERLAY_ID( debug_all_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
+
+  new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
+      FS_OVERLAY_ID( debug_connect_check ), DEBUG_EVENT_DebugMenu_ConnectCheck, NULL );
+
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
   return TRUE;
 }

@@ -500,8 +500,18 @@
 	</row>
 
 	<row id="DEBUG_FIELD_STR10">
-		<language name="JPN" width="80">オール接続チェック</language>
-		<language name="JPN_KANJI" width="80">オール接続チェック</language>
+		<language name="JPN" width="80">接続チェック</language>
+		<language name="JPN_KANJI" width="80">接続チェック</language>
+	</row>
+
+	<row id="DEBUG_FIELD_CONNECT_01">
+		<language name="JPN" width="80">現在のマップ</language>
+		<language name="JPN_KANJI" width="80">現在のマップ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_CONNECT_02">
+		<language name="JPN" width="80">全てのマップ</language>
+		<language name="JPN_KANJI" width="80">全てのマップ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR12">
@@ -900,6 +910,31 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_RESEARCH">
 		<language name="JPN" width="160">すれちがい調査</language>
 		<language name="JPN_KANJI" width="160">すれ違い調査</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESEARCH_team">
+		<language name="JPN" width="160">調査隊</language>
+		<language name="JPN_KANJI" width="160">調査隊</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESEARCH_Qtotal">
+		<language name="JPN" width="200">いままでの調査人数 ( 質問 )</language>
+		<language name="JPN_KANJI" width="200">いままでの調査人数 ( 質問 )</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESEARCH_Atotal">
+		<language name="JPN" width="200">いままでの調査人数 ( 回答 )</language>
+		<language name="JPN_KANJI" width="200">いままでの調査人数 ( 回答 )</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESEARCH_Qtoday">
+		<language name="JPN" width="200">今日の調査人数 ( 質問 )</language>
+		<language name="JPN_KANJI" width="200">今日の調査人数 ( 質問 )</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESEARCH_Atoday">
+		<language name="JPN" width="200">今日の調査人数 ( 回答 )</language>
+		<language name="JPN_KANJI" width="200">今日の調査人数 ( 回答 )</language>
 	</row>
 
 	<row id="DEBUG_FIELD_RECORD">

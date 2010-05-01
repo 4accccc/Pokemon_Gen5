@@ -14,6 +14,7 @@
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 #include "sound/wb_sound_data.sadl" // for SEQ_ME_BADGE
+#include "sound/pm_sndsys.h" // for PMSND_xxxx
 
 #include "fieldmap.h"
 #include "event_debug_all_connect_check.h"
@@ -40,6 +41,14 @@ static const u16 UncheckZoneList[] =
   ZONE_ID_C04R0202, // ミュージカル: 正しい手順を経て入室する必要がある
 };
 
+//========================================================================
+// ■イベント動作モード
+//========================================================================
+typedef enum {
+	EVMODE_ONE_CHECK, // 現在のゾーンのみをチェック
+	EVMODE_ALL_CHECK, // すべてのゾーンをチェック
+} EVMODE;
+
 
 //========================================================================
 // ■イベントワーク
@@ -49,6 +58,7 @@ typedef struct {
   GAMESYS_WORK*     gameSystem;
   GAMEDATA*         gameData;
   EVENTDATA_SYSTEM* eventDataSystem;
+	EVMODE mode; // 動作モード
   u32 start_zone_id; // スタート地点のゾーンID
 
   // チェックデータ
@@ -129,9 +139,43 @@ GMEVENT* EVENT_DEBUG_AllConnectCheck( GAMESYS_WORK* gameSystem, void* wk )
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(CHECK_WORK) );
-  work->gameSystem = gameSystem;
-  work->gameData = gameData;
+  work->gameSystem      = gameSystem;
+  work->gameData        = gameData;
 	work->eventDataSystem = GAMEDATA_GetEventData( gameData );
+	work->mode            = EVMODE_ALL_CHECK;
+
+  return event;
+} 
+
+//------------------------------------------------------------------------
+/**
+ * @brief 現マップの接続チェックイベントを生成する
+ *
+ * @param gameSystem
+ * @param wk
+ *
+ * @return 生成したイベント
+ */
+//------------------------------------------------------------------------
+GMEVENT* EVENT_DEBUG_NowConnectCheck( GAMESYS_WORK* gameSystem, void* wk )
+{
+  GMEVENT* event;
+  CHECK_WORK* work;
+  GAMEDATA* gameData;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+
+  // イベントを生成
+  event = GMEVENT_Create( 
+      gameSystem, NULL, AllConnectCheckEvent, sizeof(CHECK_WORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(CHECK_WORK) );
+  work->gameSystem      = gameSystem;
+  work->gameData        = gameData;
+	work->eventDataSystem = GAMEDATA_GetEventData( gameData );
+	work->mode            = EVMODE_ONE_CHECK;
 
   return event;
 } 
@@ -181,7 +225,12 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
   case CHECK_SEQ_SEARCH_CONNECT:
     // 全ての出入り口のチェックが完了
     if( GetConnectNum(work) <= work->check_exit_id ) {
-      *seq = CHECK_SEQ_JUMP_NEXT_ZONE; // 次のゾーンへ
+			if( work->mode == EVMODE_ONE_CHECK ) {
+				*seq = CHECK_SEQ_FINISH; // 終了
+			}
+			else {
+				*seq = CHECK_SEQ_JUMP_NEXT_ZONE; // 次のゾーンへ
+			}
     }
     else {
       *seq = CHECK_SEQ_CONNECT_TEST;
@@ -267,6 +316,7 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
   // イベント終了
   case CHECK_SEQ_FINISH:
     DebugPrint_Finish( work );
+		PMSND_PlaySE( SEQ_SE_DECIDE4 );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

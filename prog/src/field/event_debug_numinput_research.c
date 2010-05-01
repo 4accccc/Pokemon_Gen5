@@ -33,6 +33,7 @@ typedef enum {
 
 //数値入力メインイベント制御ワーク
 typedef struct _DNINPUT_EV_WORK{
+	int page;
   HEAPID  heapID;
 
   GAMESYS_WORK* gsys;
@@ -166,11 +167,27 @@ static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
   0,    //表示サイズY キャラ単位
 };
 
-static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
+// 調査隊関連
+static const FLDMENUFUNC_LIST DATA_DNumInputMenu_team[] =
 {
   { dni_research_team, (void*)&DATA_researchTeam },
+};
+
+// 今日の回答人数 ( 質問ごと )
+static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Qtoday[] =
+{
   { dni_q_today, (void*)&DATA_Q_today },
-  { dni_q_total, (void*)&DATA_Q_total },
+};
+
+// いままでの回答人数 ( 質問ごと )
+static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Qtotal[] =
+{
+  { dni_q_total,     (void*)&DATA_Q_total },
+};
+
+// 今日の回答人数 ( 回答ごと )
+static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Atoday[] =
+{
   { dni_a_today_q01, (void*)&DATA_A_today_Q01 },
   { dni_a_today_q02, (void*)&DATA_A_today_Q02 },
   { dni_a_today_q03, (void*)&DATA_A_today_Q03 },
@@ -201,6 +218,11 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_a_today_q28, (void*)&DATA_A_today_Q28 },
   { dni_a_today_q29, (void*)&DATA_A_today_Q29 },
   { dni_a_today_q30, (void*)&DATA_A_today_Q30 },
+};
+
+// いままでの回答人数 ( 回答ごと )
+static const FLDMENUFUNC_LIST DATA_DNumInputMenu_Atotal[] =
+{
   { dni_a_total_q01, (void*)&DATA_A_total_Q01 },
   { dni_a_total_q02, (void*)&DATA_A_total_Q02 },
   { dni_a_total_q03, (void*)&DATA_A_total_Q03 },
@@ -233,11 +255,52 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_a_total_q30, (void*)&DATA_A_total_Q30 },
 };
 
-static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
-  NARC_message_d_numinput_r_dat,  //メッセージアーカイブ
-  NELEMS(DATA_DNumInputMenu),  //項目数max
-  DATA_DNumInputMenu, //メニュー項目リスト
-  &DATA_DNumInput_MenuFuncHeader, //メニュヘッダ
+// 調査隊関連
+static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer_team = {
+  NARC_message_d_numinput_r_dat,    // メッセージアーカイブ
+  NELEMS(DATA_DNumInputMenu_team),  // 項目数max
+  DATA_DNumInputMenu_team,          // メニュー項目リスト
+  &DATA_DNumInput_MenuFuncHeader,   // メニュヘッダ
+  1, 4, 30, 16,
+  NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
+  NULL,
+};
+// 今日の回答人数 ( 質問 )
+static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer_Qtoday = {
+  NARC_message_d_numinput_r_dat,    // メッセージアーカイブ
+  NELEMS(DATA_DNumInputMenu_Qtoday),  // 項目数max
+  DATA_DNumInputMenu_Qtoday,          // メニュー項目リスト
+  &DATA_DNumInput_MenuFuncHeader,   // メニュヘッダ
+  1, 4, 30, 16,
+  NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
+  NULL,
+};
+// 今日の回答人数 ( 回答 )
+static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer_Atoday = {
+  NARC_message_d_numinput_r_dat,    // メッセージアーカイブ
+  NELEMS(DATA_DNumInputMenu_Atoday),  // 項目数max
+  DATA_DNumInputMenu_Atoday,          // メニュー項目リスト
+  &DATA_DNumInput_MenuFuncHeader,   // メニュヘッダ
+  1, 4, 30, 16,
+  NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
+  NULL,
+};
+// いままでの回答人数 ( 質問 )
+static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer_Qtotal = {
+  NARC_message_d_numinput_r_dat,    // メッセージアーカイブ
+  NELEMS(DATA_DNumInputMenu_Qtotal),  // 項目数max
+  DATA_DNumInputMenu_Qtotal,          // メニュー項目リスト
+  &DATA_DNumInput_MenuFuncHeader,   // メニュヘッダ
+  1, 4, 30, 16,
+  NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
+  NULL,
+};
+// いままでの回答人数 ( 回答 )
+static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer_Atotal = {
+  NARC_message_d_numinput_r_dat,    // メッセージアーカイブ
+  NELEMS(DATA_DNumInputMenu_Atotal),  // 項目数max
+  DATA_DNumInputMenu_Atotal,          // メニュー項目リスト
+  &DATA_DNumInput_MenuFuncHeader,   // メニュヘッダ
   1, 4, 30, 16,
   NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
   NULL,
@@ -266,19 +329,20 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
  * @retval  BOOL  TRUE=イベント継続
  */
 //--------------------------------------------------------------
-GMEVENT* DEBUG_EVENT_FLDMENU_ResearchNumInput( GAMESYS_WORK* gsys, void* work )
+GMEVENT* DEBUG_EVENT_FLDMENU_ResearchNumInput( GAMESYS_WORK* gsys, void* wk, int page )
 {
-  DEBUG_MENU_EVENT_WORK* dme_wk = (DEBUG_MENU_EVENT_WORK*)work;
-  DNINPUT_EV_WORK* wk;
+  DEBUG_MENU_EVENT_WORK* dme_wk = (DEBUG_MENU_EVENT_WORK*)wk;
+  DNINPUT_EV_WORK* work;
   GMEVENT* event;
 
   event = GMEVENT_Create( gsys, NULL, dninput_MainEvent, sizeof(DNINPUT_EV_WORK) );
 
-  wk = GMEVENT_GetEventWork( event );
-  wk->gsys = gsys; 
-  wk->gdata = dme_wk->gdata; 
-  wk->fieldWork = dme_wk->fieldWork;
-  wk->heapID = dme_wk->heapID;
+  work = GMEVENT_GetEventWork( event );
+  work->gsys      = gsys; 
+  work->gdata     = dme_wk->gdata; 
+  work->fieldWork = dme_wk->fieldWork;
+  work->heapID    = dme_wk->heapID;
+	work->page      = page;
 
   return event;
 }
@@ -293,40 +357,47 @@ static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work)
   GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
   DNINPUT_EV_WORK* wk = (DNINPUT_EV_WORK*)work;
 
-  switch(*seq)
-  {
+  switch( *seq ) {
   case 0:
-    wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldWork, wk->heapID, &DATA_DNumInput_MenuInitializer );
+		{
+			const DEBUG_MENU_INITIALIZER* menu;
+			switch( wk->page ) {
+			case 0: menu = &DATA_DNumInput_MenuInitializer_team; break;
+			case 1: menu = &DATA_DNumInput_MenuInitializer_Qtotal; break;
+			case 2: menu = &DATA_DNumInput_MenuInitializer_Atotal; break;
+			case 3: menu = &DATA_DNumInput_MenuInitializer_Qtoday; break;
+			case 4: menu = &DATA_DNumInput_MenuInitializer_Atoday; break;
+			default: GF_ASSERT(0);
+			}
+			wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldWork, wk->heapID, menu );
+		}
     (*seq)++;
     break;
+
   case 1:
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( wk->menuFunc );
 
-      if( ret == FLDMENUFUNC_NULL ){
-        break;
-      }
-      FLDMENUFUNC_DeleteMenu( wk->menuFunc );
+			if( ret == FLDMENUFUNC_NULL ) { break; }
 
-      if( ret == FLDMENUFUNC_CANCEL ){
-        return GMEVENT_RES_FINISH;
-      }
-      if ( ret != NULL ) {
-        const DEBUG_NUMINPUT_INITIALIZER *init;
-        init = (const DEBUG_NUMINPUT_INITIALIZER *)ret;
-        GMEVENT_CallEvent( event, DEBUG_EVENT_FLDMENU_FlagWork( gsys, init ) );
-        (*seq)++;
-        break;
-      }
-      return GMEVENT_RES_FINISH;
-    }
-    break;
-  case 2:
-    *seq = 0;
+			FLDMENUFUNC_DeleteMenu( wk->menuFunc );
+
+			if( ret == FLDMENUFUNC_CANCEL ) {  // キャンセル
+				(*seq)++;
+				break;
+			}
+
+			if( ret != NULL ) {
+				const DEBUG_NUMINPUT_INITIALIZER *init;
+				init = (const DEBUG_NUMINPUT_INITIALIZER *)ret;
+				GMEVENT_CallEvent( event, DEBUG_EVENT_FLDMENU_FlagWork( gsys, init ) );
+				*seq = 0;
+			}
+		}
     break;
 
-  default:
+	case 2:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -630,7 +701,7 @@ static const DEBUG_MENU_INITIALIZER DebugListSelectData = {
   0,                                ///<項目最大数（固定リストでない場合、０）
   NULL,                             ///<参照するメニューデータ（生成する場合はNULL)
   &DATA_DebugMenuList_ZoneSel,      ///<メニュー表示指定データ（流用）
-  1, 1, 20, 16,
+  1, 1, 30, 16,
   DEBUG_SetMenuWork_DebugList,    ///<メニュー生成関数へのポインタ
   DEBUG_GetDebugListMax,          ///<項目最大数取得関数へのポインタ
 };

@@ -1701,7 +1701,8 @@ SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
 #D_NUMINPUT_RESEARCH
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_D_NUMINPUT_RESEARCH = field/event_debug_numinput_research.c \
-                                   field/debug_numinput_research.c 
+                                   field/debug_numinput_research.c \
+                                   field/event_debug_menu_research.c
 #D_NUMINPUT_RECORD
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_D_NUMINPUT_RECORD = field/event_debug_numinput_record.c
@@ -1743,9 +1744,10 @@ SRCS_OVERLAY_DEBUG_MAKE_EGG = field/event_debug_menu_make_egg.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_SODATEYA = field/event_debug_sodateya.c
 
-#DEBUG_ALL_CONNECT_CHECK
+#DEBUG_CONNECT_CHECK
 #===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_DEBUG_ALL_CONNECT_CHECK = field/event_debug_all_connect_check.c
+SRCS_OVERLAY_DEBUG_CONNECT_CHECK = field/event_debug_all_connect_check.c \
+                                   field/event_debug_menu_connect_check.c
 
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE
