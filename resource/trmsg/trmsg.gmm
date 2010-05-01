@@ -1398,8 +1398,10 @@
 	</row>
 
 	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">そんなの　きくかよ！</language>
-		<language name="JPN_KANJI" width="216">そんなの　効くかよ！</language>
+		<language name="JPN" width="216">オレの　ポケモンに
+そんなの　きくかよ！</language>
+		<language name="JPN_KANJI" width="216">オレの　ポケモンに
+そんなの　効くかよ！</language>
 	</row>
 
 	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_POKE_LAST">
@@ -14401,6 +14403,69 @@
 くすりの　じゅんびは　ばっちりかい？</language>
 		<language name="JPN_KANJI" width="216">リゾートデザートは　厳しいが
 くすりの　準備は　ばっちりかい？</language>
+	</row>
+
+	<row id="TRID_RIVAL_04_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">クッ！　あいかわらず
+いい　わざを　えらぶよね</language>
+		<language name="JPN_KANJI" width="216">クッ！　相変わらず
+いい　技を　選ぶよね</language>
+	</row>
+
+	<row id="TRID_RIVAL_04_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ここからだよ
+ほんきを　おみせするのは！</language>
+		<language name="JPN_KANJI" width="216">ここからだよ
+本気を　おみせするのは！</language>
+	</row>
+
+	<row id="TRID_RIVAL_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ジムバッジの　かずは
+おなじ　１コ　なのに……</language>
+		<language name="JPN_KANJI" width="216">ジムバッジの　数は
+同じ　１コ　なのに……</language>
+	</row>
+
+	<row id="TRID_RIVAL_05_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">クッ！　あいかわらず
+いい　わざを　えらぶよね</language>
+		<language name="JPN_KANJI" width="216">クッ！　相変わらず
+いい　技を　選ぶよね</language>
+	</row>
+
+	<row id="TRID_RIVAL_05_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ここからだよ
+ほんきを　おみせするのは！</language>
+		<language name="JPN_KANJI" width="216">ここからだよ
+本気を　おみせするのは！</language>
+	</row>
+
+	<row id="TRID_RIVAL_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ジムバッジの　かずは
+おなじ　１コ　なのに……</language>
+		<language name="JPN_KANJI" width="216">ジムバッジの　数は
+同じ　１コ　なのに……</language>
+	</row>
+
+	<row id="TRID_RIVAL_06_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">クッ！　あいかわらず
+いい　わざを　えらぶよね</language>
+		<language name="JPN_KANJI" width="216">クッ！　相変わらず
+いい　技を　選ぶよね</language>
+	</row>
+
+	<row id="TRID_RIVAL_06_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ここからだよ
+ほんきを　おみせするのは！</language>
+		<language name="JPN_KANJI" width="216">ここからだよ
+本気を　おみせするのは！</language>
+	</row>
+
+	<row id="TRID_RIVAL_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ジムバッジの　かずは
+おなじ　１コ　なのに……</language>
+		<language name="JPN_KANJI" width="216">ジムバッジの　数は
+同じ　１コ　なのに……</language>
 	</row>
 
 	<flowchart-group-list>
