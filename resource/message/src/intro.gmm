@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T17:30:51"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-05-01T13:38:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -385,8 +385,10 @@
 
 	<row id="msg_intro_00">
 		<comment>■セーブ中</comment>
-		<language name="JPN" width="256">ちょっと　まってね！</language>
-		<language name="JPN_KANJI" width="256">ちょっと　まってね！</language>
+		<language name="JPN" width="256">セーブデータを　さくせい　しています
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">セーブデータを　作成しています
+しばらく　おまちください</language>
 	</row>
 
 	<row id="msg_intro_01">
@@ -552,17 +554,59 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_intro_06">
+	<row id="msg_intro_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>■
-・続けてmsg_intro_07
-・セーブできていないときはmsg_intro_08</comment>
+・続けてmsg_intro_06_01
+</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　いう　なまえ！
 すごく　ステキ　だよね！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　いう　名前！
 すごく　ステキ　だよね！▼</language>
 	</row>
 
-	<row id="msg_intro_07">
+	<row id="msg_intro_06_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>■メッセージ表示後、博士を消して友達紹介へ
+・続けてmsg_intro_06_02</comment>
+		<language name="JPN" width="256">いっしょに　ぼうけんする
+なかまを　しょうかい　するわ▼</language>
+		<language name="JPN_KANJI" width="256">一緒に　冒険する
+仲間を　紹介するわ▼</language>
+	</row>
+
+	<row id="msg_intro_06_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>■チェレンを表示してから、メッセージ表示
+・続けてmsg_intro_06_03
+</comment>
+		<language name="JPN" width="256">このこは　チェレン
+ナイスな　ヤングボーイよ！！▼</language>
+		<language name="JPN_KANJI" width="256">このこは　チェレン
+ナイスな　ヤングボーイよ！！▼</language>
+	</row>
+
+	<row id="msg_intro_06_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>■ベルを表示してから、メッセージ表示
+・続けてmsg_intro_06_04
+</comment>
+		<language name="JPN" width="256">このこは　ベル
+ナイスな　ヤングガールよ！！▼</language>
+		<language name="JPN_KANJI" width="256">このこは　ベル
+ナイスな　ヤングガールよ！！▼</language>
+	</row>
+
+	<row id="msg_intro_06_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>
+・セーブできていないときはmsg_intro_00</comment>
+		<language name="JPN" width="256">そう　あなたたちは　いまから
+ぼうけんのたびに　しゅっぱつ　します▼
+ナイスな　ヤングボーイ＆ガールに
+ポケモンを　プレゼントしちゃいます！▼</language>
+		<language name="JPN_KANJI" width="256">そう　あなたたちは　いまから
+冒険の旅に　出発します▼
+ナイスな　ヤングボーイ＆ガールに
+ポケモンを　プレゼントしちゃいます！▼</language>
+	</row>
+
+	<row id="msg_intro_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>■メッセージ表示後、ゲームヘ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！▼
 いまから　あなただけの
@@ -590,19 +634,21 @@
 ポケットモンスターの　世界へ！▼</language>
 	</row>
 
-	<row id="msg_intro_08">
+	<row id="msg_intro_08" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
 		<comment>■
-・セーブ処理中</comment>
+・セーブ処理中
+（未使用）</comment>
 		<language name="JPN" width="256">ちょっと　まってね……！
 いま　いろいろ　じゅんび　してるから</language>
 		<language name="JPN_KANJI" width="256">ちょっと　待ってね……！
 いま　いろいろ　準備してるから</language>
 	</row>
 
-	<row id="msg_intro_09">
+	<row id="msg_intro_09" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
 		<comment>■
 ・セーブ終了時
-・続けてmsg_intro_07</comment>
+・続けてmsg_intro_07
+（未使用）</comment>
 		<language name="JPN" width="256">よーし！
 これで　オーケーと！▼</language>
 		<language name="JPN_KANJI" width="256">よーし！
