@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T16:53:04"/>
+	<create user="matsumiya" host="W00224" date="2010-05-01T13:25:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="173" right="2013" bottom="801" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -534,12 +534,23 @@
 進んだところに　ありますよ</language>
 	</row>
 
-	<row id="msg_c03p01_sign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮メッセージ</comment>
+	<row id="msg_c03p01_sign_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">ここは　ヒウン　セントラルエリア</language>
-		<language name="JPN_KANJI" width="256">ここは　ヒウン　セントラルエリア</language>
+		<language name="JPN" width="256">ここは　ヒウン　セントラルエリア
+このさき　４ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">ここは　ヒウン　セントラルエリア
+この先　４ばんどうろ</language>
+	</row>
+
+	<row id="msg_c03p01_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・GRIDX=22、GRIDZ=22</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">このさき　モードストリート
+ヒウンアイス　＆　アトリエ　ヒウン</language>
+		<language name="JPN_KANJI" width="256">この先　モードストリート
+ヒウンアイス　＆　アトリエ　ヒウン</language>
 	</row>
 
 	<flowchart-group-list>
