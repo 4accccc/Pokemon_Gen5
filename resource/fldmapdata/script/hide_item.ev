@@ -189,6 +189,8 @@ _EVENT_DATA  ev_hide_item_167
 _EVENT_DATA  ev_hide_item_168
 _EVENT_DATA  ev_hide_item_169
 _EVENT_DATA  ev_hide_item_170
+_EVENT_DATA  ev_hide_item_171
+_EVENT_DATA  ev_hide_item_172
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -1045,6 +1047,16 @@ EVENT_END
 EVENT_START ev_hide_item_170
 //まよいのもり ( 23, 33 )
 	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_170 )// きんのたま
+EVENT_END
+
+EVENT_START ev_hide_item_171
+//セッカシティ ( 220, 195 )
+	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_171 )// ハイパーボール
+EVENT_END
+
+EVENT_START ev_hide_item_172
+//セッカシティ ( 222, 196 )
+	_ITEM_EVENT_HIDEITEM( 10, 1, FLAG_HIDEITEM_172 )// タイマーボール
 EVENT_END
 
 //--------------------------------------------------------------
