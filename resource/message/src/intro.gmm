@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-05-01T13:38:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-01T16:49:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="1023" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -406,10 +406,12 @@
 		<comment>■旧作は、このタイミングで
 　操作説明・ゲーム説明をしていた
 ・続けてmsg_intro_03</comment>
-		<language name="JPN" width="256">わたし　アララギと　いいます▼
+		<language name="JPN" width="256">わたしの　なまえは
+アララギと　いいます▼
 みんなからは
 ポケモンはかせ　と　よばれているわ▼</language>
-		<language name="JPN_KANJI" width="256">わたし　アララギと　いいます▼
+		<language name="JPN_KANJI" width="256">わたしの　名前は
+アララギと　いいます▼
 みんなからは
 ポケモン博士　と　呼ばれているわ▼</language>
 	</row>
@@ -421,11 +423,13 @@
 		<language name="JPN" width="256">そう！　この　せかいには
 ポケットモンスター▼
 ちぢめて「ポケモン」とよばれる
-ふしぎな　いきものが　いるの▼</language>
+ふしぎな　いきものが▽
+いたる　ところに　いるの！▼</language>
 		<language name="JPN_KANJI" width="256">そう！　この　世界には
 ポケットモンスター▼
 ちぢめて「ポケモン」と呼ばれる
-不思議な　生き物が　いるの▼</language>
+不思議な　生き物が▽
+いたる　ところに　いるの！▼</language>
 	</row>
 
 	<row id="msg_intro_04">
@@ -445,7 +449,7 @@
 ポケモンどうしを　たたかわせて▽
 きずなを　ふかめる　ことね▼
 で　わたしは　ポケモンたちを
-けんきゅう　しているわけ▼</language>
+けんきゅう　している　わけ▼</language>
 		<language name="JPN_KANJI" width="256">不思議な　力を　秘めている
 ポケモンは　姿かたちも▽
 暮らしている　場所も　さまざま▼
@@ -564,73 +568,109 @@
 すごく　ステキ　だよね！▼</language>
 	</row>
 
-	<row id="msg_intro_06_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_06_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>■メッセージ表示後、博士を消して友達紹介へ
 ・続けてmsg_intro_06_02</comment>
-		<language name="JPN" width="256">いっしょに　ぼうけんする
-なかまを　しょうかい　するわ▼</language>
-		<language name="JPN_KANJI" width="256">一緒に　冒険する
-仲間を　紹介するわ▼</language>
+		<language name="JPN" width="256">それでは　あなたと　いつも
+いっしょに　いる　おともだちを▽
+あらためて　しょうかい　するわね▼</language>
+		<language name="JPN_KANJI" width="256">それでは　あなたと　いつも
+一緒に　いる　お友達を▽
+あらためて　紹介するわね▼</language>
 	</row>
 
-	<row id="msg_intro_06_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_06_02" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>■チェレンを表示してから、メッセージ表示
 ・続けてmsg_intro_06_03
 </comment>
-		<language name="JPN" width="256">このこは　チェレン
-ナイスな　ヤングボーイよ！！▼</language>
-		<language name="JPN_KANJI" width="256">このこは　チェレン
-ナイスな　ヤングボーイよ！！▼</language>
+		<language name="JPN" width="256">こちらの　おとこのこは　チェレン▼
+きむずかしい　ところも　あるけれど
+まっすぐな　おとこのこ▼</language>
+		<language name="JPN_KANJI" width="256">こちらの　おとこのこは　チェレン▼
+きむずかしい　ところも　あるけれど
+まっすぐな　おとこのこ▼</language>
 	</row>
 
-	<row id="msg_intro_06_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_06_03" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>■ベルを表示してから、メッセージ表示
 ・続けてmsg_intro_06_04
 </comment>
-		<language name="JPN" width="256">このこは　ベル
-ナイスな　ヤングガールよ！！▼</language>
-		<language name="JPN_KANJI" width="256">このこは　ベル
-ナイスな　ヤングガールよ！！▼</language>
+		<language name="JPN" width="256">こちらの　おんなのこは　ベル▼
+ちょっと　マイペース　だけど
+がんばりやの　おんねのこ▼</language>
+		<language name="JPN_KANJI" width="256">こちらの　おんなのこは　ベル▼
+ちょっと　マイペース　だけど
+がんばりやの　おんねのこ▼</language>
 	</row>
 
-	<row id="msg_intro_06_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_06_04" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>
 ・セーブできていないときはmsg_intro_00</comment>
-		<language name="JPN" width="256">そう　あなたたちは　いまから
-ぼうけんのたびに　しゅっぱつ　します▼
-ナイスな　ヤングボーイ＆ガールに
-ポケモンを　プレゼントしちゃいます！▼</language>
-		<language name="JPN_KANJI" width="256">そう　あなたたちは　いまから
-冒険の旅に　出発します▼
-ナイスな　ヤングボーイ＆ガールに
-ポケモンを　プレゼントしちゃいます！▼</language>
+		<language name="JPN" width="256">これから　あなたたち　３にんを
+みこんで　だいじな　だいじな▽
+ポケモンを　プレゼントします▼</language>
+		<language name="JPN_KANJI" width="256">これから　あなたたち　３人を
+見込んで　大事な　大事な▽
+ポケモンを　プレゼントします▼</language>
 	</row>
 
-	<row id="msg_intro_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_07" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>■メッセージ表示後、ゲームヘ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！▼
-いまから　あなただけの
+たびの　パートナーとなる
+ポケモンを　えらんだ　そのときから▼
+あなただけの
 たびものがたりが　はじまります▼
 この　たびで　あなたは
 かずおおくの　ポケモン▽
 いろんな　かんがえの　ひとと▽
-であうでしょう！▼
-そうした　さまざまな　であいから
+であい　ふれあうでしょう！▼
+ときには　ひとびとが
+しょうぶを　もうしこんできたり▼
+やせいの　ポケモンが
+たちふさがることも　あります▼
+さまざまな　たたかいに　かつことで
+あなたと　ポケモンは▽
+つよく　たくましく　なっていくはず▼
+だけど　つよくなること　だけが
+ぼうけんの　もくてきでは　ありません▼
+たびでの　さまざまな　であいから
 あなただけの　たいせつな　ものを▽
-ぜひ　みつけてほしいな！▼
-では　いきましょう！
+ぜひ　みつけてほしい……▼
+そう！
+たくさんの　ひとびとと　ふれあい▽
+じぶんじしんを　せいちょう　させる▼
+それが　この　ぼうけんの
+もっとも　おおきな　もくてきです▼
+それでは　いきましょう！
 ポケットモンスターの　せかいへ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼
-いまから　あなただけの
+旅の　パートナーとなる
+ポケモンを　選んだ　その瞬間から▼
+あなただけの
 旅物語が　始まります▼
 この　旅で　あなたは
 数多くの　ポケモン▽
 いろんな　考えの　人と▽
-出会うでしょう！▼
-そうした　さまざまな　出会いから
+出会い　触れ合うでしょう！▼
+時には　人々が
+勝負を　申しこんできたり▼
+野生の　ポケモンが
+立ちふさがることも　あります▼
+さまざまな　戦いに　勝つことで
+あなたと　ポケモンは▽
+強く　たくましく　なっていくはず▼
+だけど　強くなること　だけが
+冒険の　目的では　ありません▼
+旅での　様々な　出会いから
 あなただけの　大切な　ものを▽
-ぜひ　みつけてほしいな！▼
-では　いきましょう！
+ぜひ　みつけてほしい……▼
+そう！
+たくさんの　人々と　触れあい▽
+自分自身を　成長させる▼
+それが　この冒険の
+もっとも　大きな　目的です▼
+それでは　行きましょう！
 ポケットモンスターの　世界へ！▼</language>
 	</row>
 
