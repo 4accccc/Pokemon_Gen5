@@ -35,10 +35,9 @@ enum {
   FACTOR_MAX_FOR_SIDEEFF = BTL_SIDEEFF_MAX * 2,          ///< サイドエフェクト最大数(13)×陣営数(2) = 26
   FACTOR_MAX_FOR_POSEFF = BTL_POSEFF_MAX * BTL_POS_MAX,  ///< 位置エフェクト最大数(5) * 場所数(6) = 30
   FACTOR_MAX_FOR_FIELD = BTL_FLDEFF_MAX,                 ///< フィールドエフェクト最大数 = 6
-  FACTOR_MAX_FOR_ONCE  = 18,                             ///< 一時登録最大数(トリプル6人*3つを想定）
 
-  // 登録できるイベントファクター最大数（66 + 26 + 30 + 6 + 18) = 146
-  FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD + FACTOR_MAX_FOR_POSEFF + FACTOR_MAX_FOR_ONCE,
+  // 登録できるイベントファクター最大数（66 + 26 + 30 + 6) = 128
+  FACTOR_REGISTER_MAX = FACTOR_MAX_FOR_POKE + FACTOR_MAX_FOR_SIDEEFF + FACTOR_MAX_FOR_FIELD + FACTOR_MAX_FOR_POSEFF,
   EVENTVAL_STACK_DEPTH = 96,   ///< イベント変数スタックの容量
 
 };
@@ -111,8 +110,8 @@ static VAR_STACK VarStack = {0};
 /*--------------------------------------------------------------------------*/
 static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BOOL fSkipCheck );
 static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventID );
-static BTL_EVENT_FACTOR* popFactor( void );
-static void pushFactor( BTL_EVENT_FACTOR* factor );
+static BTL_EVENT_FACTOR* pushFactor( void );
+static void popFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
 static inline u32 calcFactorPriority( BtlEventFactorType factorType, u16 subPri );
 static void varStack_Init( void );
@@ -220,7 +219,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
 {
   BTL_EVENT_FACTOR* newFactor;
 
-  newFactor = popFactor();
+  newFactor = pushFactor();
   if( newFactor )
   {
     newFactor->priority = calcFactorPriority( factorType, priority );
@@ -298,6 +297,32 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     return NULL;
   }
 }
+
+//=============================================================================================
+/**
+ * 分離ハンドラを全削除
+ *
+ * @param   none
+ */
+//=============================================================================================
+void BTL_EVENT_RemoveIsolateFactors( void )
+{
+  BTL_EVENT_FACTOR *factor, *next;
+
+  factor = FirstFactorPtr;
+  while( factor != NULL )
+  {
+    next = factor->next;
+    if( factor->factorType == BTL_EVENT_FACTOR_ISOLATE )
+    {
+      TAYA_Printf("分離ファクター見つけた:削除します\n");
+      BTL_EVENT_FACTOR_Remove( factor );
+    }
+    factor = next;
+  }
+}
+
+
 //=============================================================================================
 /**
  * イベント反応要素を削除
@@ -327,11 +352,11 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType );
   printLinkDebug();
 
-  pushFactor( factor );
+  popFactor( factor );
 }
 //=============================================================================================
 /**
- * 反応要素の対応するポケモンを差し替え
+ * ファクターの対応するポケモンを差し替え
  *
  * @param   factor
  * @param   pokeID
@@ -355,6 +380,17 @@ void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 
   {
     GF_ASSERT(0); // ポケ依存しない要素を操作しようとした
   }
+}
+//=============================================================================================
+/**
+ * ファクターの種類
+ *
+ * @param   factor
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_ConvertForIsolate( BTL_EVENT_FACTOR* factor )
+{
+  factor->factorType = BTL_EVENT_FACTOR_ISOLATE;
 }
 //=============================================================================================
 /**
@@ -639,7 +675,7 @@ void BTL_EVENT_SleepFactor( BtlEventFactorType type, u16 subID )
 }
 
 
-static BTL_EVENT_FACTOR* popFactor( void )
+static BTL_EVENT_FACTOR* pushFactor( void )
 {
   if( StackPtr == FACTOR_REGISTER_MAX )
   {
@@ -649,7 +685,7 @@ static BTL_EVENT_FACTOR* popFactor( void )
 }
 
 
-static void pushFactor( BTL_EVENT_FACTOR* factor )
+static void popFactor( BTL_EVENT_FACTOR* factor )
 {
   if( StackPtr == 0 )
   {

@@ -432,7 +432,9 @@ typedef enum {
   BTL_EVENT_FACTOR_TOKUSEI,
   BTL_EVENT_FACTOR_ITEM,
 
-  BTL_EVENT_FACTOR_ONCE,  // あらゆるタイプのハンドラから追加される特殊タイプで、ポケモンに依存しないので死んでも実行される。１度実行されたら消去される。
+  BTL_EVENT_FACTOR_ISOLATE, // あらゆるタイプのハンドラからコンバートされる特殊タイプで、
+                            // ポケモン・アイテムに依存しないので、死んだりアイテムを消費しても実行される。
+                            // 毎ターン終了時にまとめて消去される。
 
   BTL_EVENT_FACTOR_MAX,
 
@@ -443,6 +445,6 @@ extern void BTL_EVENT_InitSystem( void );
 extern void BTL_EVENT_StartTurn( void );
 extern void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* server, BtlEventType type );
 extern void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID );
-
+extern void BTL_EVENT_RemoveIsolateFactors( void );
 
 #endif

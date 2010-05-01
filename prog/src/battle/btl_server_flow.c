@@ -150,13 +150,14 @@ typedef struct {
  */
 typedef struct {
 
-  BTL_POKESET  TargetOrg;
-  BTL_POKESET  Target;
-  BTL_POKESET  Friend;
-  BTL_POKESET  Enemy;
-  BTL_POKESET  Damaged;
-  BTL_POKESET  RobTarget;
-  WAZAEFF_CTRL effCtrl;
+  BTL_POKESET     TargetOrg;
+  BTL_POKESET     Target;
+  BTL_POKESET     Friend;
+  BTL_POKESET     Enemy;
+  BTL_POKESET     Damaged;
+  BTL_POKESET     RobTarget;
+  WAZAEFF_CTRL    effCtrl;
+  SVFL_WAZAPARAM  wazaParam;
 
 }POKESET_STACK_UNIT;
 
@@ -316,7 +317,7 @@ struct _BTL_SVFLOW_WORK {
 
   BTL_POKESET         pokesetMemberInProc;
 
-  SVFL_WAZAPARAM         wazaParam;
+  SVFL_WAZAPARAM         *wazaParam;
   BTL_POSPOKE_WORK       pospokeWork;
   BTL_HANDEX_STR_PARAMS  strParam;
   CALC_EXP_WORK          calcExpWork[ BTL_PARTY_MEMBER_MAX ];
@@ -434,8 +435,8 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
 static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
+static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
+static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos );
@@ -3751,7 +3752,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       BTL_HANDLER_Waza_Add( attacker, reqWaza.wazaID );
       actWaza = reqWaza.wazaID;
       actTargetPos = reqWaza.targetPos;
-      scproc_WazaExe_Decide( wk, attacker, orgWaza );
+      scEvent_GetWazaParam( wk, orgWaza, attacker, wk->wazaParam );
+      scproc_WazaExe_Decide( wk, attacker, wk->wazaParam );
 
     }else{
       actWaza = orgWaza;
@@ -3761,7 +3763,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     scEvent_CheckCombiWazaExe( wk, attacker, actWaza );
 
     // ワザパラメータ確定
-    scEvent_GetWazaParam( wk, actWaza, attacker, &wk->wazaParam );
+    scEvent_GetWazaParam( wk, actWaza, attacker, wk->wazaParam );
 
     // ワザメッセージ出力
     if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &wk->strParam) ){
@@ -3783,13 +3785,13 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( wk->psetTargetOrg );
-    registerWazaTargets( wk, attacker, actTargetPos, &wk->wazaParam, wk->psetTargetOrg );
+    registerWazaTargets( wk, attacker, actTargetPos, wk->wazaParam, wk->psetTargetOrg );
     BTL_POKESET_Copy( wk->psetTargetOrg, wk->psetTarget );
 
     // ここまで来たらワザが出ることは確定
     BTL_WAZAREC_Add( &wk->wazaRec, actWaza, wk->turnCount, BPP_GetID(attacker) );
     BTL_Printf( "ポケ[%d]がワザ_%dを出す\n", BPP_GetID(attacker), actWaza );
-    scproc_WazaExe_Decide( wk, attacker, actWaza );
+    scproc_WazaExe_Decide( wk, attacker, wk->wazaParam );
 
     {
       // ワザ乗っ取り判定
@@ -3811,8 +3813,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
           Hem_PopState( &wk->HEManager, hem_state );
 
           // ワザパラメータ差し替え
-          scEvent_GetWazaParam( wk, actWaza, robPoke, &wk->wazaParam );
-          registerWazaTargets( wk, robPoke, actTargetPos, &wk->wazaParam, wk->psetRobTarget );
+          scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
+          registerWazaTargets( wk, robPoke, actTargetPos, wk->wazaParam, wk->psetRobTarget );
 
           BTL_HANDLER_Waza_Add( robPoke, actWaza );
           scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
@@ -3850,8 +3852,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
           }
           // その後、跳ね返し処理
           // ワザパラメータ差し替え
-          scEvent_GetWazaParam( wk, actWaza, robPoke, &wk->wazaParam );
-          registerWazaTargets( wk, robPoke, robTargetPos, &wk->wazaParam, wk->psetRobTarget );
+          scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
+          registerWazaTargets( wk, robPoke, robTargetPos, wk->wazaParam, wk->psetRobTarget );
 
           BTL_HANDLER_Waza_Add( robPoke, actWaza );
           scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
@@ -3920,11 +3922,11 @@ static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
 
-  scEvent_WazaExeDecide( wk, attacker, waza );
+  scEvent_WazaExeDecide( wk, attacker, wazaParam );
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
 }
@@ -3937,11 +3939,12 @@ static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXE_DECIDE );
   BTL_EVENTVAR_Pop();
 }
@@ -4811,13 +4814,13 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
 
     if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) ){
-      flowsub_checkWazaAffineNoEffect( wk, &wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
+      flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
     }
 
     // 対象ごとの無効チェック＆回避チェック->原因表示はその先に任せる
-    flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
+    flowsub_checkNotEffect( wk, wk->wazaParam, attacker, targetRec );
     if( category != WAZADATA_CATEGORY_ICHIGEKI ){
-      flowsub_checkWazaAvoid( wk, &wk->wazaParam, attacker, targetRec );
+      flowsub_checkWazaAvoid( wk, wk->wazaParam, attacker, targetRec );
     }
     // 最初は居たターゲットが残っていない -> 無効イベント呼び出し後終了
     if( BTL_POKESET_IsRemovedAll(targetRec) ){
@@ -4832,25 +4835,25 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
 
     if( fDamage ){
-      scproc_Fight_Damage_Root( wk, &wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
+      scproc_Fight_Damage_Root( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
     }
     else{
 
       switch( category ){
       case WAZADATA_CATEGORY_SIMPLE_EFFECT:
-        scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
-        scproc_Fight_SimpleEffect( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Migawari_CheckNoEffect( wk, wk->wazaParam, attacker, targetRec );
+        scproc_Fight_SimpleEffect( wk, wk->wazaParam, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_SIMPLE_SICK:
-        scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Migawari_CheckNoEffect( wk, wk->wazaParam, attacker, targetRec );
         scproc_Fight_SimpleSick( wk, waza, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_EFFECT_SICK:
-        scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
-        scproc_Fight_EffectSick( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Migawari_CheckNoEffect( wk, wk->wazaParam, attacker, targetRec );
+        scproc_Fight_EffectSick( wk, wk->wazaParam, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_ICHIGEKI:
-        scproc_Fight_Ichigeki( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Fight_Ichigeki( wk, wk->wazaParam, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_PUSHOUT:
         scproc_Fight_PushOut( wk, waza, attacker, targetRec );
@@ -4859,11 +4862,11 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
         scproc_Fight_SimpleRecover( wk, waza, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_FIELD_EFFECT:
-        scput_Fight_FieldEffect( wk, &wk->wazaParam, attacker );
+        scput_Fight_FieldEffect( wk, wk->wazaParam, attacker );
         break;
       case WAZADATA_CATEGORY_SIDE_EFFECT:
       case WAZADATA_CATEGORY_OTHERS:
-        scput_Fight_Uncategory( wk, &wk->wazaParam, attacker, targetRec );
+        scput_Fight_Uncategory( wk, wk->wazaParam, attacker, targetRec );
         break;
       default:
         SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
@@ -8553,6 +8556,9 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
   if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ){
     scproc_CheckResetMove( wk );
   }
+
+  // 分離イベントファクター削除
+  BTL_EVENT_RemoveIsolateFactors();
 
   if( wk->turnCount < BTL_TURNCOUNT_MAX ){
     wk->turnCount++;
@@ -13233,6 +13239,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->psetDamaged   = &unit->Damaged;
   wk->psetRobTarget = &unit->RobTarget;
   wk->wazaEffCtrl   = &unit->effCtrl;
+  wk->wazaParam     = &unit->wazaParam;
 
   if( fClear ){
     BTL_POKESET_Clear( wk->psetTargetOrg );
@@ -13242,6 +13249,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
     BTL_POKESET_Clear( wk->psetDamaged );
     BTL_POKESET_Clear( wk->psetRobTarget );
     wazaEffCtrl_Init( wk->wazaEffCtrl );
+    GFL_STD_MemClear( wk->wazaParam, sizeof(*(wk->wazaParam)) );
   }
 }
 
