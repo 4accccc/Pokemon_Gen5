@@ -3316,10 +3316,15 @@ BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
  */
 BOOL BTL_MAIN_IsPokeListMultiMode( BTL_MAIN_MODULE* wk )
 {
-  if( (BTL_MAIN_IsMultiMode(wk))
-  &&  (BTL_MAIN_GetCompetitor(wk) != BTL_COMPETITOR_TRAINER)
-  ){
-    return TRUE;
+  if( (BTL_MAIN_IsMultiMode(wk)) )
+  {
+    BtlCompetitor = BTL_MAIN_GetCompetitor( wk );
+
+    if( (competitor != BTL_COMPETITOR_TRAINER)
+    &&  (competitor != BTL_COMPETITOR_WILD)
+    ){
+      return TRUE;
+    }
   }
   return FALSE;
 }
