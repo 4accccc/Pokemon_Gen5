@@ -423,6 +423,15 @@ static int _DevGetError(void)  ///< ƒGƒ‰[‚ð“¾‚é
   else if(errorCode==0){  //WIFI‚Å‚Í‚O”Ô‚ª‹A‚é‚±‚Æ‚ª‚ ‚é‚½‚ß•ÏŠ·‚µ‚Ä•Ô‚·
     return -10000;
   }
+
+  { 
+    GFL_NETSTATE_DWCERROR*p_error = GFL_NET_StateGetWifiError();
+    if( p_error->errorUser != 0 )
+    { 
+      return p_error->errorUser;
+    }
+  }
+
   return errorCode;
 }
 

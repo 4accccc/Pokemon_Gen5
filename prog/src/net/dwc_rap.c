@@ -1496,6 +1496,7 @@ static void ConnectionClosedCallback(DWCError error,
       else {
         if(_dWork->bAutoDisconnect){
           GFL_NET_StateSetError(0);
+          GFL_NET_StateSetWifiError( 0, 0, 0, STEPMATCH_DISCONNECT );
         }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");

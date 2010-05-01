@@ -52,10 +52,10 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
 { 
   if( GFL_NET_IsInit() )
   { 
+    const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+
     if( NetErr_App_CheckError() )
     { 
-      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-
       switch( cp_error->errorType )
       { 
       case DWC_ETYPE_LIGHT:
@@ -87,11 +87,13 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
         NetErr_DispCallFatal();
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
+    }
 
-      if( cp_error->errorUser == ERRORCODE_TIMEOUT )
-      { 
-        return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
-      }
+    if( cp_error->errorUser == STEPMATCH_DISCONNECT )
+    { 
+      NetErr_DispCallPushPop();
+      GFL_NET_StateClearWifiError();
+      return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
   }
 
