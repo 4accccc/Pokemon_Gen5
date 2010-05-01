@@ -103,8 +103,11 @@ extern GAMEDATA *SCRCMD_WORK_GetGameData( SCRCMD_WORK *work );
 extern MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work );
 extern SCRIPT_WORK * SCRCMD_WORK_GetScriptWork( SCRCMD_WORK *work );
 extern FLDMSGBG * SCRCMD_WORK_GetFldMsgBG( SCRCMD_WORK *work );
+
 extern void SCRCMD_WORK_SetMsgData(SCRCMD_WORK *work, GFL_MSGDATA *msgData);
 extern GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work );
+extern u16 SCRCMD_WORK_GetMsgDataID( const SCRCMD_WORK * work );
+
 extern void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin );
 extern void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetTimeIconPtr( SCRCMD_WORK *work, void *timeIcon );

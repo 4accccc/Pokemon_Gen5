@@ -89,12 +89,14 @@ struct _TAG_SCRCMD_WORK
 	HEAPID heapID;
 	SCRCMD_WORK_HEADER head;
 	
-	GFL_MSGDATA *msgData;
+	GFL_MSGDATA *msgData;   ///<MSGDATAへのポインタ
+  u16 msg_naix_id;        ///<MSGDATAのデータID
   
-  void * backup_work;
-  
-  u8 wait_vm_id;
+  u8 wait_vm_id;          ///<停止中に監視する仮想マシンのID
+  u8 dummy;               ///<padding
 
+  void * backup_work;     ///<VM切り替え時のスクリプトワークをバックアップするためのポインタ
+  
   SCRCMD_GLOBAL * gwork;
 };
 
@@ -291,6 +293,16 @@ void SCRCMD_WORK_SetMsgData( SCRCMD_WORK *work, GFL_MSGDATA *msgData )
 GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work )
 {
 	return( work->msgData );
+}
+//--------------------------------------------------------------
+/**
+ * @brief MSGDATAのDATAIDを取得する
+ * @return  u16 datID( script_message.naix内のインデックス値）
+ */
+//--------------------------------------------------------------
+u16 SCRCMD_WORK_GetMsgDataID( const SCRCMD_WORK * work )
+{
+  return work->msg_naix_id;
 }
 
 //--------------------------------------------------------------
@@ -587,7 +599,9 @@ void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
 {
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
 		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
-	SCRCMD_WORK_SetMsgData( work, msgData );
+
+  work->msgData = msgData;
+  work->msg_naix_id = datID;
 }
 
 //======================================================================

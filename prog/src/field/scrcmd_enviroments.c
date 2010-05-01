@@ -122,22 +122,12 @@ VMCMD_RESULT EvCmdGetRand( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 /**
  * @brief 現在のスクリプトでのメッセージアーカイブIDを取得
- * @todo
- * 現在のゾーンIDからメッセージ指定IDを辞書引きしているが、
- * 本来はスクリプト起動時に使用するメッセージアーカイブIDを保存しておき、
- * そこからわたすような仕組みとするべき
- * （そうでないとcommon_scrなどの場合に妙なことになる）
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
 {
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  { 
-    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
-    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-    u16 zone_id = PLAYERWORK_getZoneID( player );
-    *ret_wk = ZONEDATA_GetMessageArcID( zone_id );
-  }
+  *ret_wk = SCRCMD_WORK_GetMsgDataID( wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -366,7 +356,6 @@ VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo 書き込むデータサイズに応じて, その段階を返す
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
@@ -385,7 +374,6 @@ VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
   // プレイ中のデータが新規データかどうか
   *ret_new   = SaveControl_NewDataFlagGet( scw );
 
-  // @todo 書き込むデータサイズに応じて, その段階を返す
   SaveControl_GetActualSize( scw, &actual_size, &total_size );
   if ( actual_size * REPORT_SAVE_TYPE_VAL < total_size )
   {
