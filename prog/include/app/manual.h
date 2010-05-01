@@ -26,6 +26,13 @@ FS_EXTERN_OVERLAY(manual);
 *  定数定義
 */
 //=============================================================================
+// どのように終了したか
+typedef enum
+{
+  MANUAL_RESULT_CLOSE,   //×ボタン
+  MANUAL_RESULT_RETURN,  //←┘ボタン
+}
+MANUAL_RESULT;
 
 
 //=============================================================================
@@ -46,7 +53,8 @@ extern const GFL_PROC_DATA  MANUAL_ProcData;
 //=====================================
 typedef struct
 {
-  GAMEDATA*  gamedata;  ///< [in] セーブデータにアクセスするのに必要
+  GAMEDATA*      gamedata;  ///< [in]  セーブデータにアクセスするのに必要
+  MANUAL_RESULT  result;    ///< [out] どのように終了したか
 }
 MANUAL_PARAM;
 

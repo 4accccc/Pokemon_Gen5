@@ -1,0 +1,80 @@
+//============================================================================
+/**
+ *  @file   manual.h
+ *  @brief  ゲーム内マニュアル
+ *  @author Koji Kawada
+ *  @data   2010.04.26
+ *  @note   
+ *
+ *  モジュール名：MANUAL_COMMON
+ */
+//============================================================================
+#pragma once
+
+
+// インクルード
+#include <gflib.h>
+
+#include "gamesystem/gamedata_def.h"
+
+
+//=============================================================================
+/**
+*  定数定義
+*/
+//=============================================================================
+
+
+//=============================================================================
+/**
+*  構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+/// ワーク
+//=====================================
+typedef struct
+{
+  // MANUALを呼んだ場所からの借り物
+  GAMEDATA*                   gamedata;
+ 
+  // MANUALで生成したもの
+  HEAPID                      heap_id;
+  
+  // グラフィック、フォントなど
+  MANUAL_GRAPHIC_WORK*        graphic;
+  GFL_FONT*                   font;
+  PRINT_QUE*                  print_que_title;  // タイトルのprint_que
+  PRINT_QUE*                  print_que_main;   // リストや本文のprint_que
+  PRINT_QUE*                  print_que_tb;     // タッチバーのprint_que
+
+  // メッセージ
+  GFL_MSGDATA*                msgdata_system;  // システムのメッセージ
+  GFL_MSGDATA*                msgdata_main;    // カテゴリやタイトル、本文のメッセージ
+
+  // ファイルハンドル
+  ARCHANDLE*                  handle_system;   // システムのファイルハンドル
+  ARCHANDLE*                  handle_explain;  // 説明画面のファイルハンドル
+}
+MANUAL_COMMON_WORK;
+
+
+//=============================================================================
+/**
+*  関数のプロトタイプ宣言
+*/
+//=============================================================================
+// 初期化処理
+extern  MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
+    GAMEDATA*  gamedata,
+    HEAPID     heap_id
+);
+// 終了処理
+extern  void  MANUAL_COMMON_Exit(
+    MANUAL_COMMON_WORK*  work
+);
+// 主処理
+extern  void  MANUAL_COMMON_Main(
+    MANUAL_COMMON_WORK*  work
+);
+

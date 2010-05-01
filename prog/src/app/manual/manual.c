@@ -19,21 +19,27 @@
 #include "print/printsys.h"
 
 #include "manual_graphic.h"
+#include "manual_def.h"
+#include "manual_common.h"
+#include "manual_touchbar.h"
+#include "manual_top.h"
 #include "app/manual.h"
 
 // アーカイブ
 #include "arc_def.h"
 #include "font/font.naix"
 #include "message.naix"
-//#include "msg/msg_????.h"
-//#include "manual_gra????.naix"
+#include "msg/msg_manual.h"
+#include "manual.naix"
+
+// ダミー
+#include "msg/msg_zkn.h"
+#include "zukan_gra.naix"
+
 
 // サウンド
 
 // オーバーレイ
-
-
-#include "app/app_nogear_subscreen.h"
 
 
 //=============================================================================
@@ -42,42 +48,6 @@
 */
 //=============================================================================
 #define HEAP_SIZE              (0x30000)               ///< ヒープサイズ
-
-// メインBGフレーム
-#define BG_FRAME_M_FRONT       (GFL_BG_FRAME1_M)
-#define BG_FRAME_M_TEXT        (GFL_BG_FRAME2_M)
-
-// メインBGフレームのプライオリティ
-#define BG_FRAME_PRI_M_FRONT   (1)
-#define BG_FRAME_PRI_M_TEXT    (0)
-
-// メインBGパレット
-// 本数
-enum
-{
-  BG_PAL_NUM_M_GRA_FRONT     = 15,
-  BG_PAL_NUM_M_TEXT          = 1,
-};
-// 位置
-enum
-{
-  BG_PAL_POS_M_GRA_FRONT    =  0,
-  BG_PAL_POS_M_TEXT         = 15,
-};
-
-// メインOBJパレット
-// 本数
-enum
-{
-  OBJ_PAL_NUM_M_BALL        = 2,
-  OBJ_PAL_NUM_M_GF          = 1,
-};
-// 位置
-enum
-{
-  OBJ_PAL_POS_M_BALL        = 0,
-  OBJ_PAL_POS_M_GF          = 2,
-};
 
 // ProcMainのシーケンス
 enum
@@ -97,15 +67,15 @@ enum
 };
 
 // BG_PAL_POS_M_TEXTの割り当て
-#define TEXT_PAL_POS      (BG_PAL_POS_M_TEXT)
+#define TEXT_PAL_POS      (BG_PAL_POS_S_TEXT)
 #define TEXT_COLOR_L      (1)  // 文字主色
 #define TEXT_COLOR_S      (2)  // 文字影色
 #define TEXT_COLOR_B      (0)  // 文字背景色(透明)
 
 static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
-  // frmnum           posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
-  {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  // frmnum              posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
+  {  BG_FRAME_S_TB_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 // フェード
@@ -126,19 +96,17 @@ typedef struct
   // ヒープ、パラメータなど
   HEAPID                      heap_id;
   MANUAL_PARAM*               param;
-  
-  // グラフィック、フォントなど
-  MANUAL_GRAPHIC_WORK*        graphic;
-  GFL_FONT*                   font;
-  PRINT_QUE*                  print_que;
+ 
+  // 共通
+  MANUAL_COMMON_WORK*         cmn_wk;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
 
-  // テキスト
-  GFL_MSGDATA*                msgdata;
-  GFL_BMPWIN*                 text_bmpwin[TEXT_MAX];
-  BOOL                        text_trans[TEXT_MAX];  // bmpwinの転送の必要がある場合TRUE
+  // タッチバー
+  MANUAL_TOUCHBAR_WORK*       mtb_wk;
+  // トップ画面
+  MANUAL_TOP_WORK*            top_wk;
 }
 MANUAL_WORK;
 
@@ -206,35 +174,35 @@ static GFL_PROC_RESULT Manual_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
     
     work->heap_id       = HEAPID_MANUAL;
     work->param         = (MANUAL_PARAM*)pwk;
+
+    work->param->result = MANUAL_RESULT_RETURN;
   }
 
-  // グラフィック、フォントなど
-  {
-    work->graphic       = MANUAL_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
-    work->font          = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
-    work->print_que     = PRINTSYS_QUE_Create( work->heap_id );
-  }
+  // 共通
+  work->cmn_wk = MANUAL_COMMON_Init( work->param->gamedata, work->heap_id );
 
   // メインBG
-  GFL_BG_SetPriority( BG_FRAME_M_FRONT,  BG_FRAME_PRI_M_FRONT );
-  GFL_BG_SetPriority( BG_FRAME_M_TEXT,   BG_FRAME_PRI_M_TEXT  );
+  GFL_BG_SetPriority( BG_FRAME_M_PIC,     BG_FRAME_PRI_M_PIC );
+  // サブBG
+  GFL_BG_SetPriority( BG_FRAME_S_REAR,    BG_FRAME_PRI_S_REAR );
+  GFL_BG_SetPriority( BG_FRAME_S_MAIN,    BG_FRAME_PRI_S_MAIN );
+  GFL_BG_SetPriority( BG_FRAME_S_TB_BAR,  BG_FRAME_PRI_S_TB_BAR );
+  GFL_BG_SetPriority( BG_FRAME_S_TB_TEXT, BG_FRAME_PRI_S_TB_TEXT );
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Manual_VBlankFunc, work, 1 );
-
-  // サブBG
-  {
-    const MYSTATUS*  mystatus  = GAMEDATA_GetMyStatus( work->param->gamedata );
-    APP_NOGEAR_SUBSCREEN_Init();
-    APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, mystatus->sex );  // PM_MALE or PM_FEMALE  // include/pm_version.h
-  }
-
+  
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
   GFL_NET_ReloadIcon();
+
+  // マニュアルタッチバー
+  work->mtb_wk = MANUAL_TOUCHBAR_Init( work->cmn_wk );
+  // トップ画面
+  work->top_wk = MANUAL_TOP_Init( work->cmn_wk );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -246,22 +214,19 @@ static GFL_PROC_RESULT Manual_ProcExit( GFL_PROC* proc, int* seq, void* pwk, voi
 {
   MANUAL_WORK* work = (MANUAL_WORK*)mywk;
 
+  // トップ画面
+  MANUAL_TOP_Exit( work->top_wk );
+  // マニュアルタッチバー
+  MANUAL_TOUCHBAR_Exit( work->mtb_wk );
+
   // 通信アイコン
   GFL_NET_WirelessIconEasy_DefaultLCD();
-
-  // サブBG
-  APP_NOGEAR_SUBSCREEN_Exit();
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
-  // グラフィック、フォントなど
-  {
-    PRINTSYS_QUE_Clear( work->print_que );
-    PRINTSYS_QUE_Delete( work->print_que );
-    GFL_FONT_Delete( work->font );
-    MANUAL_GRAPHIC_Exit( work->graphic );
-  }
+  // 共通
+  MANUAL_COMMON_Exit( work->cmn_wk );
 
   // ヒープ、パラメータなど
   {
@@ -332,14 +297,13 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
     break;
   }
 
-  PRINTSYS_QUE_Main( work->print_que );
+  // 共通
+  MANUAL_COMMON_Main( work->cmn_wk );
 
-  // 2D描画
-  MANUAL_GRAPHIC_2D_Draw( work->graphic );
-
-  // 3D描画
-  //MANUAL_GRAPHIC_3D_StartDraw( work->graphic );
-  //MANUAL_GRAPHIC_3D_EndDraw( work->graphic );
+  // マニュアルタッチバー
+  MANUAL_TOUCHBAR_Main( work->mtb_wk );
+  // トップ画面
+  MANUAL_TOP_Main( work->top_wk );
 
   return GFL_PROC_RES_CONTINUE;
 }

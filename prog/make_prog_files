@@ -2185,7 +2185,10 @@ SRCS_OVERLAY_SUBWAY_MAP = app/subway_map/subway_map.c \
 # ゲーム内マニュアル
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_MANUAL = app/manual/manual.c \
-                      app/manual/manual_graphic.c
+                      app/manual/manual_graphic.c \
+                      app/manual/manual_common.c \
+                      app/manual/manual_touchbar.c \
+                      app/manual/manual_top.c
 
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON
