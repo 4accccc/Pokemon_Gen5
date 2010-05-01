@@ -5974,21 +5974,28 @@ static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       if( cnt )
       {
         const BTL_POKEPARAM* bppSelf = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-        u32 i;
+
         // 自分と同じタイプは除外
-        for(i=0; i<cnt; ++i)
+        if( PokeTypePair_IsPure(BPP_GetPokeType(bppSelf)) )
         {
-          if( BPP_IsMatchType(bppSelf, typeArray[i])
-          &&  PokeTypePair_IsPure( BPP_GetPokeType(bppSelf) )
-          ){
-            u32 j = i+1;
-            while( j < cnt ){
-              typeArray[j-1] = typeArray[j++];
+          u32 i = 0;
+          while( i<cnt )
+          {
+            if( BPP_IsMatchType(bppSelf, typeArray[i]) )
+            {
+              int move_len = (cnt - 1) - i;
+
+              if( move_len > 0 ){
+                GFL_STD_MemCopy( &typeArray[i+1], &typeArray[i], move_len * sizeof(PokeType) );
+              }
+              --cnt;
             }
-            --cnt;
-            break;
+            else{
+              ++i;
+            }
           }
         }
+
         if( cnt )
         {
           BTL_HANDEX_PARAM_CHANGE_TYPE* param;
