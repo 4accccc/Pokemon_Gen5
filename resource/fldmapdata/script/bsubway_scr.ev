@@ -2384,8 +2384,8 @@ sub_bsw_common_select_btl_box:
   CASE SCR_BTL_PARTY_SELECT_NG THEN //レギュレーションNG
     _BSUBWAY_TOOL( BSWSUB_GET_REGULATION_TYPE, BSW_NULL, BSW_NULL, ret )
     _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
-    _AB_KEYWAIT()
-    _MSGWIN_CLOSE()
+//    _AB_KEYWAIT() //不要
+//  _MSGWIN_CLOSE() //不要
     $ret = FALSE
   DEFAULT
     $ret = FALSE
