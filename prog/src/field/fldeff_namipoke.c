@@ -520,6 +520,15 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     oya_offs.x = 0;
     oya_offs.y = work->shake_offs + NAMIPOKE_RIDE_Y_OFFSET;
     oya_offs.z = NAMIPOKE_RIDE_Z_OFFSET;
+    
+    { //’Þ‚èŽ©‹@•\Ž¦
+      u16 code = MMDL_GetOBJCode( work->head.mmdl );
+      
+      if( code == FISHHERO || code == FISHHEROINE ){ //64x64
+        oya_offs.y = work->shake_offs + (NAMIPOKE_RIDE_Y_OFFSET*8);
+      }
+    }
+    
     MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
   }else if( work->joint == NAMIPOKE_JOINT_ONLY ){
     MMDL_GetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
