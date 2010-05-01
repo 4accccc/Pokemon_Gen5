@@ -4,7 +4,6 @@
  * @brief	プレイ時間情報の操作
  * @date	2006.06.21
  * @author	taya
- * @todo  OS_InitTickがWiFi接続時に呼ばれるので、別途計測手段を考える
  *
  * 2010.02.18 tamada  旧システムから移行中
  *
@@ -45,7 +44,6 @@ void PLAYTIMECTRL_Start( void )
 	LastTick = 0;
 	PassedSec = 0;
   StartTick = OS_GetTick();
-	//StartTick = APTM_GetData();
 }
 
 //------------------------------------------------------------------
@@ -60,7 +58,6 @@ void PLAYTIMECTRL_Countup( GAMEDATA* gamedata )
 {
 	if( StartFlag )
 	{
-		//u64  sec = APTM_CalcSec( APTM_GetData() - StartTick );
     u64 sec;
     u64 tick = OS_GetTick();
 
