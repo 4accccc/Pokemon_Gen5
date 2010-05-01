@@ -922,6 +922,12 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
       p_wk->is_err_return_login = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     }
+    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI )
+    { 
+      //切断された
+      p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+    }
   }
 
   //ランダムマッチではレギュレーションをALLOCしたので

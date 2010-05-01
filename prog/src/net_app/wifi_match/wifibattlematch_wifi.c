@@ -2790,7 +2790,17 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-    *p_seq = SEQ_INIT_DISCONNECT;
+
+
+    //‘ŠŽè‚ÉØ’f‚³‚ê‚Ä‚¢‚½‚çA˜^‰æ‚ð”ò‚Î‚·
+    if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
+    { 
+      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndRec );
+    }
+    else
+    { 
+      *p_seq = SEQ_INIT_DISCONNECT;
+    }
     break;
 
     //-------------------------------------

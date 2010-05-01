@@ -117,6 +117,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Init( GFL_PROC *p_proc, int *p_s
   procWork->befVCount = OS_GetVBlankCount();
   procWork->state = IBSS_INIT_POKELIST;
 
+  p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS;
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -174,6 +176,47 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     }
   }
 
+  //エラー処理
+  if( GFL_NET_IsInit() )
+  { 
+    if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
+    { 
+      if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
+      { 
+        NetErr_App_ReqErrorDisp();
+        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE;
+        return GFL_PROC_RES_FINISH;
+      }
+    }
+    else
+    { 
+      GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+      switch( result )
+      { 
+      case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
+      case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
+        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI;
+        procWork->plData.isNetErr = TRUE;
+        procWork->psData.isExitRequest = TRUE;
+        OS_TPrintf( "相手が切断\n" );
+        break;
+
+      case GFL_NET_DWC_ERROR_RESULT_NONE:
+        /*  エラーが発生していない  */
+        break;
+
+      case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
+      case GFL_NET_DWC_ERROR_RESULT_FATAL:
+      default:
+        OS_TPrintf( "ネット切断\n" );
+        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
+        procWork->plData.isNetErr = TRUE;
+        procWork->psData.isExitRequest = TRUE;
+        break;
+      }
+    }
+  }
+
   PLIST_COMM_UpdateComm( &procWork->plData );
 
   
@@ -202,7 +245,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     }
     else
     {
-      p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS;
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -229,32 +271,16 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
 
   case IBSS_EXIT_POKESTATUS:
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(poke_status) );
-    procWork->plData.ret_sel = procWork->psData.pos;
-    procWork->state = IBSS_INIT_POKELIST;
-    break;
-  }
-
-  //エラー処理ここで起きたら復帰が難しいので切断
-  if( GFL_NET_IsInit() )
-  { 
-    if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
+    if( procWork->plData.isNetErr == FALSE )
     { 
-
-      if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
-      { 
-        NetErr_App_ReqErrorDisp();
-        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE;
-        return GFL_PROC_RES_FINISH;
-      }
+      procWork->plData.ret_sel = procWork->psData.pos;
+      procWork->state = IBSS_INIT_POKELIST;
     }
     else
     { 
-      if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
-      { 
-        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
-        return GFL_PROC_RES_FINISH;
-      }
+      return GFL_PROC_RES_FINISH;
     }
+    break;
   }
 
 

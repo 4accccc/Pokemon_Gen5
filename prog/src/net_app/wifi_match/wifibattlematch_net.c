@@ -1020,6 +1020,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     {
       DEBUG_NET_Printf( "IŽq‹@ " );
     }
+    GFL_NET_DWC_SetNoChildErrorCheck( TRUE );
     return TRUE;
   }
 
@@ -1052,6 +1053,7 @@ WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMAT
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force )
 { 
+  GFL_NET_DWC_SetNoChildErrorCheck( FALSE );
   GFL_NET_StateWifiMatchEnd(!is_force);
   return TRUE;
 }
@@ -4713,6 +4715,8 @@ WIFIBATTLEMATCH_NET_EVILCHECK_RET WIFIBATTLEMATCH_NET_WaitEvilCheck( WIFIBATTLEM
         {
           NHTTP_RAP_End(p_wk->p_nhttp);
           p_wk->p_nhttp  = NULL;
+          p_wk->seq = 0;
+          return WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR;
         }
       }
     }

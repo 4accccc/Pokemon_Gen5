@@ -504,6 +504,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Main( GFL_PROC *p_proc, int *p_s
   WIFIBATTLEMATCH_CORE_PARAM *p_param  = p_param_adrs;
 
 #ifdef PM_DEBUG
+#if 0
   { 
     static u32  s_core_buff = 0xFFFFFFFF;
     static u32  s_sys_buff = 0xFFFFFFFF;
@@ -512,6 +513,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Main( GFL_PROC *p_proc, int *p_s
     DEBUG_HEAP_PrintRestUse2( HEAPID_WIFIBATTLEMATCH_SYS, &s_sys_buff );
     DEBUG_HEAP_PrintRestUse2( GFL_HEAPID_APP, &s_app_buff );
   }
+#endif
 #endif
 
   switch( *p_seq )
@@ -1518,7 +1520,16 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-    *p_seq = SEQ_START_DISCONNECT;
+
+    //相手に切断されていたら、録画を飛ばす
+    if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
+    { 
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndRec );
+    }
+    else
+    { 
+      *p_seq = SEQ_START_DISCONNECT;
+    }
     break;
 
     //-------------------------------------
@@ -1646,6 +1657,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   }
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ランダムマッチ  レーティングモード録画からの戻り
@@ -2289,6 +2301,7 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 { 
   enum
   { 
+    SEQ_CHECK,
     SEQ_START_DISCONNECT,
     SEQ_WAIT_DISCONNECT,
 
@@ -2307,6 +2320,18 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   switch( *p_seq )
   { 
+  case SEQ_CHECK:
+    //相手に切断されていたら、録画を飛ばす
+    if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
+    { 
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_EndRec );
+    }
+    else
+    { 
+      *p_seq = SEQ_START_DISCONNECT;
+    }
+    break;
+
     //-------------------------------------
     /// 切断処理
     //=====================================
