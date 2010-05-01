@@ -754,7 +754,8 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
   }
   
   //«•Ê
-  if( work->isEgg == FALSE )
+  if( work->isEgg == FALSE &&
+      PPP_Get( ppp , ID_PARA_nidoran_nickname , NULL ) == TRUE )
   {
     STRBUF *srcStr;
     u32 sex = PPP_Get( ppp , ID_PARA_sex , NULL );

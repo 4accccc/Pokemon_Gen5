@@ -95,6 +95,7 @@ typedef struct
   CG_HELP_INIT_WORK *initWork;
 
   BOOL isNetErr;
+  BOOL isFirst;
   CG_HELP_STATE state;
   GFL_TCB *vBlankTcb;
   u8     page;
@@ -174,6 +175,7 @@ static void CG_HELP_Init( CG_HELP_WORK *work )
   work->vBlankTcb = GFUser_VIntr_CreateTCB( CG_HELP_VBlankFunc , work , 8 );
   
   work->page = 0;
+  work->isFirst = TRUE;
   CG_HELP_DispPage( work , work->page );
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
@@ -259,11 +261,12 @@ static const BOOL CG_HELP_Main( CG_HELP_WORK *work )
   {
     if( APP_TASKMENU_WIN_IsFinish( work->nextButton ) == TRUE ||
         APP_TASKMENU_WIN_IsFinish( work->backButton ) == TRUE ||
-        work->page == 0 )
+        work->isFirst == TRUE )
     {
       GFL_BMPWIN_TransVramCharacter( work->msgWin );
       GFL_BMPWIN_TransVramCharacter( work->infoWin );
       work->isUpdateMsg = FALSE;
+      work->isFirst = FALSE;
       CG_HELP_DispPageIcon( work , work->page );
 
       if( work->page == CG_HELP_PAGE_MAX-1 )

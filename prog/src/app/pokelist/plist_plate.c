@@ -435,6 +435,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     WORDSET_Delete( wordSet );
   }
   //«•Ê
+
+  if( PP_Get( plateWork->pp , ID_PARA_nidoran_nickname , NULL ) == TRUE )
   {
     u32 sex = PP_Get( plateWork->pp , ID_PARA_sex , NULL );
     if( sex == PTL_SEX_MALE )
