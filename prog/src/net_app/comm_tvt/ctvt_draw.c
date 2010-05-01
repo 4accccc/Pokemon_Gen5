@@ -727,6 +727,14 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
           GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , TRUE );
         }
       }
+      else
+      {
+        u8 i;
+        for( i=0;i<CDEX_MAX;i++ )
+        {
+          GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , FALSE );
+        }
+      }
     }
   }
   
@@ -1518,10 +1526,6 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
             CTVT_DRAW_INFO_DRAW_X2 , 32 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
 
-    for( i=0;i<CDEX_MAX;i++ )
-    {
-      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkExplainButton[i] , FALSE );
-    }
   }
   BmpWinFrame_Write( drawWork->infoWin , WINDOW_TRANS_OFF , 
                       CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );

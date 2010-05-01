@@ -110,6 +110,7 @@ typedef enum
   CCBS_CALL_CHILD,
   CCBS_JOIN_PARENT,
   CCBS_JOIN_PARENT_DIRECT,
+  CCBS_DISP_MSG,
   
   CCBS_CANCEL,
 }CTVT_CALL_BAR_STATE;
@@ -655,7 +656,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         //CGEARから呼び出しできた。
         CTVT_CAMERA_StopCapture( work , camWork );
         callWork->state = CCS_FADEOUT_BOTH;
-        callWork->barState = CCBS_NONE;
       }
       else
       {
@@ -678,7 +678,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
         //メッセージのアップデートで出す
         //CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
-        callWork->barState = CCBS_NONE;
+        callWork->barState = CCBS_DISP_MSG;
       }
     }
     break;
@@ -729,6 +729,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         //メッセージのアップデートで出す
         callWork->state = CCS_MAIN;
+        callWork->barState = CCBS_DISP_MSG;
         //CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
       }
     }
@@ -1280,7 +1281,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     CTVT_TPrintf("UpdateBar\n");
     CTVT_CALL_UpdateBar( work , callWork );
     callWork->isUpdateBarPos = TRUE;
-    
+    isUpdateBar = TRUE;
   }
   //バーの数が必要なのでここでやる。
   if( isUpdateBar == TRUE &&
