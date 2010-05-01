@@ -44,26 +44,31 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_zone_h03
 	
+	//==============フラグワーク操作==============//
 	//一般人を表示 暴走族を非表示
 	_FLAG_RESET(FV_H03_GENERALPERSON)
 	_FLAG_SET(FV_H03_BADRIDER)
 		
 	//暴走族のPOSイベントを無効にする
 	$WK_SCENE_H03_BADRIDER = 0
-
+	//==============フラグワーク操作==============//
+	
+	
 	//ゲーチスのイベントが起きていないときは、暴走族を出さない
 	IF $WK_SCENE_H03_PLASMA != 0 THEN 
 	
 		//タイムフラグがOFFだったら（対戦してから一日経過していたら）
 		IF FLAG_OFF(TMFLG_H03_EMPEROR_BTL) THEN
-		
+			
+			//==============フラグワーク操作==============//
 			//トレーナーフラグセット
 			_TRAINER_FLAG_RESET(TRID_BADRIDER_05)
 			_TRAINER_FLAG_RESET(TRID_BADRIDER_06)
 			
 			//タグにエンペルトを挿入
 			$WK_OTHER_EMPEROR_MONSNUM = MONSNO_395
-			
+			//==============フラグワーク操作==============//
+		
 		ENDIF
 		
 		//LOCALWORK0→ 曜日
@@ -87,14 +92,21 @@ ev_time_chk:
 	
 	//夕方～夜の間は暴走族を表示し、一般人を非表示
 	IF $LOCALWORK1 == TIMEZONE_NIGHT  || $LOCALWORK1 == TIMEZONE_EVENING THEN
+		
+		//==============フラグワーク操作==============//
 		_FLAG_RESET(FV_H03_BADRIDER)
 		_FLAG_SET(FV_H03_GENERALPERSON)
+		//==============フラグワーク操作==============//
 		
 		//トレーナーと対戦していないなら、POSイベントを有効にする
 		_TRAINER_FLAG_CHECK( TRID_BADRIDER_05, SCWK_ANSWER )
   		IF $SCWK_ANSWER ==  FALSE THEN
+  			
+  			//==============フラグワーク操作==============//
 			//暴走族子分のPOSイベントを有効にする
 			$WK_SCENE_H03_BADRIDER = 1
+			//==============フラグワーク操作==============//
+		
 		ENDIF
 		
 	ENDIF
@@ -124,8 +136,12 @@ INIT_EVENT_START	ev_init_h03
 				IF $LWK_POSZ_1 <= 34 THEN
 					_OBJ_POS_CHANGE(H03_BADRIDER1_01,15,0,37,DIR_UP)
 				ELSIF $LWK_POSZ_1 <= 156 && $LWK_POSZ_1 >= 35 THEN
+				
+					//==============フラグワーク操作==============//
 					//POSイベントを無効にする
 					$WK_SCENE_H03_BADRIDER = 2
+					//==============フラグワーク操作==============//
+					
 				ELSIF $LWK_POSZ_1 >= 157 THEN
 					_OBJ_POS_CHANGE(H03_BADRIDER1_01,15,0,154,DIR_DOWN)
 				ENDIF
@@ -155,7 +171,6 @@ INIT_EVENT_END
 EVENT_START    ev_h03_fighterw_01
 	
 	_TALK_OBJ_START()	
-	
 	//アイテムを入手しているかによって分岐
 	IF FLAG_OFF(FE_H03_ITEMGET_01) THEN
 		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_01, H03_FIGHTERW_01, POS_UP )
@@ -191,11 +206,8 @@ EVENT_START    ev_pos_h03_sage_01
 		_OBJ_POS_CHANGE(H03_NINJA_03,7,0,51,DIR_UP)
 	ELSIF $LWK_POSX == 8 THEN
 		_OBJ_POS_CHANGE(H03_NINJA_01,7,0,50,DIR_UP)
-		
 		_OBJ_POS_CHANGE(H03_NINJA_02,8,0,51,DIR_UP)
-		
 		_OBJ_POS_CHANGE(H03_NINJA_03,9,0,50,DIR_UP)
-		
 	ELSIF $LWK_POSX == 9 THEN
 		_OBJ_POS_CHANGE(H03_NINJA_01,8,0,50,DIR_UP)
 		_OBJ_POS_CHANGE(H03_NINJA_02,9,0,51,DIR_UP)
@@ -461,7 +473,6 @@ EVENT_START    ev_pos_h03_sage_01
 	$WK_SCENE_H03_PLASMA = 1
 	//ゲーチス・ダークトリニティを非表示にする
 	_FLAG_SET(FV_H03_PLASMA)
-
 	//==============フラグワーク操作==============//
 	
 }
@@ -921,9 +932,18 @@ EVENT_START    ev_pos_h03_badrider_01
 	
 	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
 
+
+	IF $LWK_POSX <= 9 || $LWK_POSX >= 19 THEN
+		_PLAINWIN_MSG_UP(msg_h03_badrider1_05)
+	ELSE
+		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_05,H03_BADRIDER1_01,POS_UP)
+	ENDIF
+	_MSGWIN_CLOSE()
+/*
 	_OBJ_ANIME(H03_BADRIDER1_01,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
-	_TIME_WAIT(8)
+*/	
+	IF $LWK_POSZ == 34 THEN
 	
 		IF $LWK_POSX == 7 THEN
 			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u7)
@@ -960,16 +980,47 @@ EVENT_START    ev_pos_h03_badrider_01
 		ELSIF $LWK_POSX == 24 THEN
 			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_u24)
 		ENDIF
-		_OBJ_ANIME_WAIT()
-		
-		IF $LWK_POSZ == 34 THEN
-			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_up)
-		ELSIF $LWK_POSZ == 157 THEN
-			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_down)
+
+	ELSIF $LWK_POSZ == 157 THEN
+
+		IF $LWK_POSX == 7 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d7)
+		ELSIF $LWK_POSX == 8  THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d8)
+		ELSIF $LWK_POSX == 9  THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d9)
+		ELSIF $LWK_POSX == 10 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d10)
+		ELSIF $LWK_POSX == 11 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d11)
+		ELSIF $LWK_POSX == 12 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d12)
+		ELSIF $LWK_POSX == 13 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d13)
+		ELSIF $LWK_POSX == 14 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d14)
+		ELSIF $LWK_POSX == 16 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d16)
+		ELSIF $LWK_POSX == 17 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d17)
+		ELSIF $LWK_POSX == 18 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d18)
+		ELSIF $LWK_POSX == 19 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d19)
+		ELSIF $LWK_POSX == 20 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d20)
+		ELSIF $LWK_POSX == 21 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d21)
+		ELSIF $LWK_POSX == 22 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d22)
+		ELSIF $LWK_POSX == 23 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d23)
+		ELSIF $LWK_POSX == 24 THEN
+			_OBJ_ANIME(H03_BADRIDER1_01,anm_badrider_move_d24)
 		ENDIF
-		_OBJ_ANIME_WAIT()
-	
-	_TIME_WAIT(16)
+		
+	ENDIF
+	_OBJ_ANIME_WAIT()
 		
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
 	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
@@ -978,11 +1029,8 @@ EVENT_START    ev_pos_h03_badrider_01
 	_YES_NO_WIN(SCWK_ANSWER)
 			
 	IF$SCWK_ANSWER == SCR_YES THEN
-
 		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_03,H03_BADRIDER1_01,POS_UP)
-
 	ELSE
-
 		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_02,H03_BADRIDER1_01,POS_UP)
 		_MSGWIN_CLOSE()
 				
@@ -992,9 +1040,12 @@ EVENT_START    ev_pos_h03_badrider_01
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			
+			//==============フラグワーク操作==============//
 			_TRAINER_FLAG_SET( TRID_BADRIDER_05 )
 			_FLAG_SET(TMFLG_H03_EMPEROR_BTL)
-
+			//==============フラグワーク操作==============//
+			
 		ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
@@ -1005,8 +1056,10 @@ EVENT_START    ev_pos_h03_badrider_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
+	//==============フラグワーク操作==============//
 	//POSイベントを無効にする
 	$WK_SCENE_H03_BADRIDER = 2
+	//==============フラグワーク操作==============//
 
 	}
 EVENT_END
@@ -1056,97 +1109,212 @@ _ANIME_LABEL	anm_common_turn_u
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_badrider_move_down
 
-	_ANIME_DATA AC_WALK_D_4F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_badrider_move_up
-
-	_ANIME_DATA AC_WALK_U_4F,1
-	_ANIME_DATA	ACMD_END,0
-	
 _ANIME_LABEL	anm_badrider_move_u7
 
 	_ANIME_DATA AC_WALK_L_4F,8
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_badrider_move_u8
 
 	_ANIME_DATA AC_WALK_L_4F,7
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u9
 
 	_ANIME_DATA AC_WALK_L_4F,6
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u10
 
 	_ANIME_DATA AC_WALK_L_4F,5
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_badrider_move_u11
 
 	_ANIME_DATA AC_WALK_L_4F,4
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u12
 
 	_ANIME_DATA AC_WALK_L_4F,3
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u13
 
 	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u14
 
 	_ANIME_DATA AC_WALK_L_4F,1
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_badrider_move_u16
 
 	_ANIME_DATA AC_WALK_R_4F,1
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u17
 
 	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u18
 
 	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u19
 
 	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u20
 
 	_ANIME_DATA AC_WALK_R_4F,5
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u21
 
 	_ANIME_DATA AC_WALK_R_4F,6
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u22
 
 	_ANIME_DATA AC_WALK_R_4F,7
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u23
 
 	_ANIME_DATA AC_WALK_R_4F,8
+	_ANIME_DATA AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_badrider_move_u24
 
 	_ANIME_DATA AC_WALK_R_4F,9
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+
+
+
+_ANIME_LABEL	anm_badrider_move_d7
+
+	_ANIME_DATA AC_WALK_L_4F,8
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_badrider_move_d8
+
+	_ANIME_DATA AC_WALK_L_4F,7
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d9
+
+	_ANIME_DATA AC_WALK_L_4F,6
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d10
+
+	_ANIME_DATA AC_WALK_L_4F,5
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_badrider_move_d11
+
+	_ANIME_DATA AC_WALK_L_4F,4
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d12
+
+	_ANIME_DATA AC_WALK_L_4F,3
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d13
+
+	_ANIME_DATA AC_WALK_L_4F,2
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d14
+
+	_ANIME_DATA AC_WALK_L_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_badrider_move_d16
+
+	_ANIME_DATA AC_WALK_R_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d17
+
+	_ANIME_DATA AC_WALK_R_4F,2
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d18
+
+	_ANIME_DATA AC_WALK_R_4F,3
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d19
+
+	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d20
+
+	_ANIME_DATA AC_WALK_R_4F,5
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d21
+
+	_ANIME_DATA AC_WALK_R_4F,6
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d22
+
+	_ANIME_DATA AC_WALK_R_4F,7
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d23
+
+	_ANIME_DATA AC_WALK_R_4F,8
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_badrider_move_d24
+
+	_ANIME_DATA AC_WALK_R_4F,9
+	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -1193,8 +1361,11 @@ EVENT_START    ev_h03_badrider1_01
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				
+				//==============フラグワーク操作==============//
 				_TRAINER_FLAG_SET( TRID_BADRIDER_05 )
 				_FLAG_SET(TMFLG_H03_EMPEROR_BTL)
+				//==============フラグワーク操作==============//
 				
 			ELSE
 				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -1232,7 +1403,6 @@ EVENT_START    ev_h03_badrider1_02
 		
 		IF$SCWK_ANSWER == SCR_NO THEN
 			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_03,H03_BADRIDER1_02,POS_UP)
-			
 		ELSE
 			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_02,H03_BADRIDER1_02,POS_UP)
 			_MSGWIN_CLOSE()
@@ -1243,10 +1413,12 @@ EVENT_START    ev_h03_badrider1_02
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-				_TRAINER_FLAG_SET( TRID_BADRIDER_06 )
 				
+				//==============フラグワーク操作==============//
+				_TRAINER_FLAG_SET( TRID_BADRIDER_06 )
 				//タイムフラグを操作する
 				_FLAG_SET(TMFLG_H03_EMPEROR_BTL)
+				//==============フラグワーク操作==============//
 				
 				//手持ちポケモンの種族名を取得する処理				
 				_GET_PARTY_FRONT_POKEMON( LWK_POKE_POS, POKECOUNT_MODE_BATTLE_ENABLE )

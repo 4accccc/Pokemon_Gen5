@@ -108,22 +108,22 @@ EVENT_START   ev_h04_girl1_01
 		_VOICE_WAIT()
 		_MSGWIN_CLOSE()
 		
+		//きょろきょろするアニメを作るためのウェイト使用
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
+		_TIME_WAIT(8)
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
+		_TIME_WAIT(4)
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_r)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
+		_TIME_WAIT(4)
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()		
-		_TIME_WAIT(24)	
+		_TIME_WAIT(16)	
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		
-		_TIME_WAIT(16)
 		_BALLOONWIN_OBJMSG(msg_h04_girl1_01a,H04_GIRL1_01)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -142,10 +142,8 @@ EVENT_START   ev_h04_girl1_01
 			_OBJ_ANIME(H04_GIRL1_01,anm_common_turn_r)
 			_OBJ_ANIME_WAIT()
 
-			_TIME_WAIT(16)
 			_VOICE_PLAY( MONSNO_278, 0 )
-			_VOICE_WAIT()
-			_TIME_WAIT(8)			
+			_VOICE_WAIT()		
 			_OBJ_ANIME(H04_POKE100_01,anm_common_jump_d)
 			_BALLOONWIN_OBJMSG_POS(msg_h04_poke_02,H04_POKE100_01,POS_DEFAULT)
 			_MSGWIN_CLOSE()
@@ -169,12 +167,12 @@ EVENT_START   ev_h04_girl1_01
 				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_05,H04_GIRL1_01,POS_DEFAULT)
 				_MSGWIN_CLOSE()
 				
-				_TIME_WAIT(24)
 				_VOICE_PLAY( MONSNO_278, 0 )
 				_VOICE_WAIT()
 				_BALLOONWIN_OBJMSG_POS(msg_h04_poke_03,H04_POKE100_01,POS_DEFAULT)
 				_MSGWIN_CLOSE()
 				
+				//羽ばたくアニメを作るためにウェイト使用
 				_TIME_WAIT(16)
 				_OBJ_ANIME(H04_POKE100_01,anm_kyamome_wing)
 				_OBJ_ANIME_WAIT()
@@ -186,17 +184,15 @@ EVENT_START   ev_h04_girl1_01
     			_OBJ_DEL(H04_POKE100_01)
     			_FLAG_SET(FV_H04_POKE_01)
 				
+				//キャモメが飛んでいく間の時間経過
 				_TIME_WAIT(24)
 				_SE_PLAY(SEQ_SE_KAIDAN)
 				_SE_WAIT()
 				
-			    //ちょっと待つ
-			    _TIME_WAIT( 16 )
 			    //フェードイン
 			    _BLACK_IN()
 			    _DISP_FADE_END_CHECK()
     			
-    			_TIME_WAIT(16)
 				_SYSWIN_MSG( msg_h04_sys_01, POS_DEFAULT )
 				_MSGWIN_CLOSE()
 				
@@ -305,22 +301,22 @@ EVENT_START   ev_h04_poke100_01
 		_VOICE_WAIT()
 		_MSGWIN_CLOSE()
 		
+		//きょろきょろするアニメをつくる為のウェイト
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
+		_TIME_WAIT(8)
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
+		_TIME_WAIT(4)
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_r)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
+		_TIME_WAIT(4)
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()		
-		_TIME_WAIT(24)	
+		_TIME_WAIT(16)	
 		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		
-		_TIME_WAIT(16)
 		_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_01a,H04_GIRL1_01,POS_UL)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -339,7 +335,8 @@ EVENT_START   ev_pos_h04_baker
 	DEFINE_LOCAL LWK_POSX
 	DEFINE_LOCAL LWK_POSZ
 	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
-
+	
+	//振り向きに差をつけるためのウェイト
 	IF $LWK_POSX == 73 THEN
 		_OBJ_ANIME(H04_BAKER_01,anm_baker_come_x72)
 		_TIME_WAIT(8)
@@ -368,7 +365,6 @@ EVENT_START   ev_pos_h04_baker
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 		
-		_TIME_WAIT(24)
 		_PLAINWIN_MSG_DOWN(msg_h04_waitress_18)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -515,7 +511,8 @@ EVENT_START   ev_h04_baker_01
 			ENDIF
 			_OBJ_ANIME_WAIT()
 			
-			_TIME_WAIT(24)
+			//対戦に驚き、呆然とする時間
+			_TIME_WAIT(16)
 			//対戦後メッセージ
 			//あなた　すっごいわね！
 			_BALLOONWIN_OBJMSG_MF(msg_h04_waitress_03,msg_h04_waitress_02,H04_BAKER_01,POS_DEFAULT)
@@ -529,7 +526,6 @@ EVENT_START   ev_h04_baker_01
 			_MSGWIN_CLOSE()
 		ENDIF
 		
-		_TIME_WAIT(8)
 		IF $SCWK_ANSWER == SCR_YES THEN
 			//ウェイトレスorウェイターの仕事をする？にYES
 			//仕事の内容は分かる？
@@ -539,6 +535,7 @@ EVENT_START   ev_h04_baker_01
 		  	
 		  	IF $SCWK_ANSWER == SCR_NO THEN
 		  		
+		  		//振り向きに差をつけるためのウェイト
 		  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_d)
 		  		_TIME_WAIT(8)
 		  		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
@@ -553,9 +550,9 @@ EVENT_START   ev_h04_baker_01
 				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 				
-				_TIME_WAIT(16)
 		  		_PLAINWIN_MSG_UP(msg_h04_waitress_07)
 		  		
+		  		//振り向きに差をつける為のウェイト
 				IF $LWK_POSX_TALK == 76 THEN
 			  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_l)
 		  			_TIME_WAIT(8)
@@ -573,7 +570,6 @@ EVENT_START   ev_h04_baker_01
 		  		_OBJ_ANIME_WAIT()
 		  		_MSGWIN_CLOSE()
 		  		
-		  		_TIME_WAIT(16)
 		  		_PLAINWIN_MSG_UP(msg_h04_waitress_09)
 		  		_LAST_KEYWAIT()
 		  		_MSGWIN_CLOSE()
@@ -635,11 +631,9 @@ EVENT_START   ev_h04_baker_01
 			  		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LOCALWORK8  )
 					_CALL	ev_order_baker
 										
-					_TIME_WAIT(16)
 					_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_11)
 					_MSGWIN_CLOSE()
 					
-					_TIME_WAIT(16)
 					_OBJ_ANIME(H04_BAKER_01,anm_baker_make1)
 					_OBJ_ANIME_WAIT()
 					_OBJ_DEL(H04_BAKER_01)
@@ -647,6 +641,7 @@ EVENT_START   ev_h04_baker_01
 					_SE_PLAY( SEQ_SE_KAIDAN )
 					_SE_WAIT()
 					
+					//サンドイッチを作っている時間
 					_TIME_WAIT(90)
 
 					//階段SE
@@ -665,7 +660,6 @@ EVENT_START   ev_h04_baker_01
 					ENDIF
 					_OBJ_ANIME_WAIT()
 					
-					_TIME_WAIT(16)
 					_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_12)					
 					_LAST_KEYWAIT()
 					_MSGWIN_CLOSE()
@@ -678,20 +672,16 @@ EVENT_START   ev_h04_baker_01
 				ELSE
 					//お客さん全員に渡している？
 					IF FLAG_ON(FH_07) && FLAG_ON(FH_08) && FLAG_ON(FH_09) && FLAG_ON(FH_10) THEN
-						_TIME_WAIT(8)
 						//全員に正しく渡せている？
 						IF FLAG_ON(FH_11) && FLAG_ON(FH_12) && FLAG_ON(FH_13) && FLAG_ON(FH_14) THEN
 							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_14)
 							_MSGWIN_CLOSE()
 							
-							_TIME_WAIT(8)
 							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_16 )
 							_MSGWIN_CLOSE()
 							
-							//【仮】アイテム内容
 							_ITEM_EVENT_KEYWAIT(ITEM_RAMUNOMI,1)	
 
-							_TIME_WAIT(8)
 							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_17)
 							_LAST_KEYWAIT()
 							_MSGWIN_CLOSE()
@@ -700,7 +690,6 @@ EVENT_START   ev_h04_baker_01
 							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_15)
 							_MSGWIN_CLOSE()
 							
-							_TIME_WAIT(8)
 							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_17)
 							_LAST_KEYWAIT()
 							_MSGWIN_CLOSE()
@@ -881,7 +870,6 @@ EVENT_START   ev_h04_girl2_01
 					ENDIF
 					
 					IF $LOCALWORK1 ==  $LWK_GIRL_TAKE THEN
-						_TIME_WAIT(8)
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 52 THEN
 							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_u)
@@ -889,7 +877,8 @@ EVENT_START   ev_h04_girl2_01
 							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_l)
 						ENDIF
 						_OBJ_ANIME_WAIT()
-
+						
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_GIRL2_01,anm_common_onpu)
 						_OBJ_ANIME(H04_POKE19_01,anm_common_onpu)
@@ -904,7 +893,6 @@ EVENT_START   ev_h04_girl2_01
 						_FLAG_SET(FH_11)
 						
 					ELSE
-						_TIME_WAIT(8)
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 52 THEN
 							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_u)
@@ -912,7 +900,8 @@ EVENT_START   ev_h04_girl2_01
 							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_l)
 						ENDIF
 						_OBJ_ANIME_WAIT()
-
+						
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_GIRL2_01,anm_common_hatena)
 						_OBJ_ANIME(H04_POKE19_01,anm_common_hatena)
@@ -1044,7 +1033,6 @@ EVENT_START   ev_h04_man1_01
 					ENDIF
 					
 					IF $LOCALWORK2 == $LWK_MAN1_TAKE THEN
-						_TIME_WAIT(8)
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 49 THEN
 							_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_u)
@@ -1053,6 +1041,7 @@ EVENT_START   ev_h04_man1_01
 						ENDIF
 						_OBJ_ANIME_WAIT()
 
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_MAN1_01 ,anm_common_onpu)
 						_OBJ_ANIME(H04_PIKACHU_01,anm_common_onpu)
@@ -1064,7 +1053,6 @@ EVENT_START   ev_h04_man1_01
 						//注文成功フラグON
 						_FLAG_SET(FH_12)
 					ELSE
-						_TIME_WAIT(8)
 						IF $LWK_POSZ == 49 THEN
 							_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_u)
 						ELSIF $LWK_POSZ == 50 THEN
@@ -1072,6 +1060,7 @@ EVENT_START   ev_h04_man1_01
 						ENDIF
 						_OBJ_ANIME_WAIT()
 
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_MAN1_01 ,anm_common_hatena)
 						_OBJ_ANIME(H04_PIKACHU_01,anm_common_hatena)
@@ -1202,7 +1191,6 @@ EVENT_START   ev_h04_man3_01
 					ENDIF
 					
 					IF $LOCALWORK3 ==  $LWK_MAN3_TAKE THEN
-						_TIME_WAIT(8)
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 52 THEN
 							_OBJ_ANIME(H04_POKE20_01,anm_common_turn_u)
@@ -1211,6 +1199,7 @@ EVENT_START   ev_h04_man3_01
 						ENDIF
 						_OBJ_ANIME_WAIT()
 
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_MAN3_01 ,anm_common_onpu)
 						_OBJ_ANIME(H04_POKE20_01,anm_common_onpu)
@@ -1223,7 +1212,7 @@ EVENT_START   ev_h04_man3_01
 						_FLAG_SET(FH_13)
 						
 					ELSE
-						_TIME_WAIT(8)
+
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 52 THEN
 							_OBJ_ANIME(H04_POKE20_01,anm_common_turn_u)
@@ -1232,6 +1221,7 @@ EVENT_START   ev_h04_man3_01
 						ENDIF
 						_OBJ_ANIME_WAIT()
 
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_MAN3_01 ,anm_common_hatena)
 						_OBJ_ANIME(H04_POKE20_01,anm_common_hatena)
@@ -1362,7 +1352,6 @@ EVENT_START   ev_h04_woman1_01
 					ENDIF
 					
 					IF $LOCALWORK4 ==  $LWK_WOMAN_TAKE THEN
-						_TIME_WAIT(8)
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 49 THEN
 							_OBJ_ANIME(H04_POKE17_01,anm_common_turn_u)
@@ -1371,6 +1360,7 @@ EVENT_START   ev_h04_woman1_01
 						ENDIF
 						_OBJ_ANIME_WAIT()
 
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_WOMAN1_01 ,anm_common_onpu)
 						_OBJ_ANIME(H04_POKE17_01,anm_common_onpu)
@@ -1383,7 +1373,6 @@ EVENT_START   ev_h04_woman1_01
 						_FLAG_SET(FH_14)
 						
 					ELSE
-						_TIME_WAIT(8)
 						//ポケモンが振り向く
 						IF $LWK_POSZ == 49 THEN
 							_OBJ_ANIME(H04_POKE17_01,anm_common_turn_u)
@@ -1392,6 +1381,7 @@ EVENT_START   ev_h04_woman1_01
 						ENDIF
 						_OBJ_ANIME_WAIT()
 
+						//お客さんが食べている時間
 						_TIME_WAIT(8)
 						_OBJ_ANIME(H04_WOMAN1_01 ,anm_common_hatena)
 						_OBJ_ANIME(H04_POKE17_01,anm_common_hatena)
