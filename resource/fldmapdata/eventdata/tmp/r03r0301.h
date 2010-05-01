@@ -15,7 +15,7 @@
 #define R03R0301_HAKAIM_01                 2
 #define R03R0301_HAKAIM_02                 3
 #define R03R0301_HAKAIM_03                 4
-#define R03R0301_HAKAIW_01                 5
+#define R03R0301_HAKAIM_04                 5
 #define R03R0301_FLD_ITEM_03               6
 #define R03R0301_FLD_ITEM_01               7
 
