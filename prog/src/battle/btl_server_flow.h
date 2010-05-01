@@ -108,7 +108,7 @@ extern BTL_ACTION_PARAM BTL_SVCL_ACTION_Get( const BTL_SVCL_ACTION* clientAction
 
 
 extern void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage );
-extern u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk );
+extern const BTL_ESCAPEINFO* BTL_SVFLOW_GetEscapeInfoPointer( const BTL_SVFLOW_WORK* wk );
 extern BtlPokePos BTL_SVFLOW_GetCapturedPokePos( const BTL_SVFLOW_WORK* wk );
 
 

@@ -89,10 +89,10 @@ struct _BTL_SERVER {
   BTL_RECTOOL             recTool;
   BTL_RESULT_CONTEXT      btlResultContext;
   STRBUF*                 strbuf;
+  const BTL_ESCAPEINFO*   escapeInfo;
 
   BTL_SVCL_ACTION         clientAction;
 
-  u32         escapeClientID;
   u32         exitTimer;
   u8          enemyPutPokeID;
   u8          quitStep;
@@ -178,7 +178,6 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
   sv->changePokeCnt = 0;
   sv->giveupClientCnt = 0;
   sv->bagMode = bagMode;
-  sv->escapeClientID = BTL_CLIENTID_NULL;
   sv->randContext = *randContext;
   sv->strbuf = GFL_STR_CreateBuffer( SERVER_STRBUF_SIZE, heapID );
 
@@ -194,6 +193,8 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
 
   sv->flowWork = BTL_SVFLOW_InitSystem( sv, sv->mainModule, sv->pokeCon,
         &sv->queBody, sv->bagMode, sv->heapID );
+
+  sv->escapeInfo = BTL_SVFLOW_GetEscapeInfoPointer( sv->flowWork );
 
   setMainProc( sv, ServerMain_WaitReady );
 
@@ -348,8 +349,7 @@ BOOL BTL_SERVER_Main( BTL_SERVER* sv )
   {
     if( sv->mainProc( sv, &sv->seq ) )
     {
-      sv->escapeClientID = BTL_SVFLOW_GetEscapeClientID( sv->flowWork );
-      SetAdapterCmdEx( sv, BTL_ACMD_QUIT_BTL, &sv->escapeClientID, sizeof(sv->escapeClientID) );
+      SetAdapterCmdEx( sv, BTL_ACMD_QUIT_BTL, sv->escapeInfo, sizeof(BTL_ESCAPEINFO) );
       BTL_N_Printf( DBGSTR_SV_SendQuitACmad, BTL_ACMD_QUIT_BTL );
       sv->quitStep = QUITSTEP_CORE;
     }
@@ -372,9 +372,9 @@ BOOL BTL_SERVER_Main( BTL_SERVER* sv )
  * @retval  u8    逃げたクライアントID（誰も逃げていないならBTL_CLIENTID_NULL）
  */
 //----------------------------------------------------------------------------------
-u8 BTL_SERVER_GetEscapeClientID( const BTL_SERVER* sv )
+void BTL_SERVER_GetEscapeInfo( const BTL_SERVER* sv, BTL_ESCAPEINFO* dst )
 {
-  return sv->escapeClientID;
+  *dst = *(sv->escapeInfo);
 }
 //----------------------------------------------------------------------------------
 /**

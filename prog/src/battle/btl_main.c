@@ -134,13 +134,14 @@ struct _BTL_MAIN_MODULE {
   u16       LimitTimeGame;
   u16       LimitTimeCommand;
 
+  BTL_ESCAPEINFO  escapeInfo;
+
 
   BTL_PROC    subProc;
   int         subSeq;
   pMainLoop   mainLoop;
 
   HEAPID      heapID;
-  u8          escapeClientID;
   u8          sendClientID;
 
   u8        numClients;
@@ -298,7 +299,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->loseMoney = 0;
 
 
-      wk->escapeClientID = BTL_CLIENTID_NULL;
+      BTL_ESCAPEINFO_Clear( &wk->escapeInfo );
       wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
       wk->changeMode = (CONFIG_GetBattleRule(setup_param->configData) == BATTLERULE_IREKAE)?
           BTL_CHANGEMODE_IREKAE : BTL_CHANGEMODE_KATINUKI;
@@ -1936,7 +1937,7 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
     {
       if( BTL_CLIENT_Main(wk->client[i]) )
       {
-        wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
+        BTL_CLIENT_GetEscapeInfo( wk->client[i], &wk->escapeInfo );
         quitFlag = TRUE;
       }
     }
@@ -1963,7 +1964,7 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 
     quitFlag = BTL_SERVER_Main( wk->server );
     if( quitFlag ){
-      wk->escapeClientID = BTL_SERVER_GetEscapeClientID( wk->server );
+      BTL_SERVER_GetEscapeInfo( wk->server, &wk->escapeInfo );
     }
 
     for(i=0; i<BTL_CLIENT_MAX; i++)
@@ -1998,7 +1999,7 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
       {
         if( BTL_CLIENT_Main(wk->client[i]) )
         {
-          wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
+          BTL_CLIENT_GetEscapeInfo( wk->client[i], &wk->escapeInfo );
           quitFlag = TRUE;
         }
       }
@@ -4933,10 +4934,10 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   {
     result = BTL_RESULT_CAPTURE;
   }
-  else if( wk->escapeClientID != BTL_CLIENTID_NULL )
+  else if( BTL_ESCAPEINFO_GetCount(&wk->escapeInfo) )
   {
-    result = (wk->escapeClientID == wk->myClientID)? BTL_RESULT_RUN : BTL_RESULT_RUN_ENEMY;
-    BTL_Printf( "逃げたクライアント=%d, 自分=%d\n", wk->escapeClientID, wk->myClientID );
+    TAYA_Printf("逃げたクライアント情報から勝利判定\n");
+    result = BTL_ESCAPEINFO_CheckWinner( &wk->escapeInfo, wk->myClientID );
   }
   else
   {

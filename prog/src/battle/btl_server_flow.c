@@ -24,6 +24,7 @@
 #include "btl_pospoke_state.h"
 #include "btl_pokeset.h"
 #include "btl_shooter.h"
+#include "btl_calc.h"
 #include "btlv\btlv_effect.h"
 
 #include "handler\hand_tokusei.h"
@@ -285,13 +286,13 @@ struct _BTL_SVFLOW_WORK {
   ARCHANDLE*              sinkaArcHandle;
   WAZAEFF_CTRL*           wazaEffCtrl;
   HITCHECK_PARAM          hitCheckParam;
+  BTL_ESCAPEINFO          escInfo;
 
   HEAPID  heapID;
 
   u8      numClient;
   u8      numActOrder;
   u8      numEndActOrder;
-  u8      escapeClientID;
   u8      getPokePos;
   u8      numRelivePoke;
   u8      nigeruCount;
@@ -856,7 +857,6 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->heapID = heapID;
   wk->prevExeWaza = WAZANO_NULL;
   wk->bagMode = bagMode;
-  wk->escapeClientID = BTL_CLIENTID_NULL;
   wk->getPokePos = BTL_POS_NULL;
   wk->nigeruCount = 0;
   wk->wazaEffIdx = 0;
@@ -887,8 +887,8 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   GFL_STD_MemClear( wk->memberChangeCount, sizeof(wk->memberChangeCount) );
 
   AffCounter_Clear( &wk->affCounter );
-
   PSetStack_Init( wk );
+  BTL_ESCAPEINFO_Clear( &wk->escInfo );
 
   Hem_Init( &wk->HEManager );
   eventWork_Init( &wk->eventWork );
@@ -1138,7 +1138,9 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
       return i+1;
     }
-    if( wk->flowResult != SVFLOW_RESULT_DEFAULT ){
+    if( (wk->flowResult != SVFLOW_RESULT_DEFAULT)
+    &&  (wk->flowResult != SVFLOW_RESULT_BTL_QUIT)
+    ){
       BTL_N_Printf( DBGSTR_SVFL_ActOrderMainDropOut, wk->flowResult );
       break;
     }
@@ -1149,27 +1151,33 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
   // 全アクション処理し終えた
   if( i == wk->numActOrder )
   {
-    u8 numDeadPoke;
+    // 途中で逃げが発生
+    if( wk->flowResult == SVFLOW_RESULT_BTL_QUIT ){
+      return SVFLOW_RESULT_BTL_QUIT;
+    }
+    else{
+      u8 numDeadPoke;
 
-    // ターンチェック処理
-    scproc_TurnCheck( wk );
-    if( scproc_CheckShowdown(wk) ){
-      wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
+      // ターンチェック処理
+      scproc_TurnCheck( wk );
+      if( scproc_CheckShowdown(wk) ){
+        wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
+        return i;
+      }
+
+      numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
+      // 死亡・生き返りなどでポケ交換の必要があるかチェック
+      if( relivePokeRec_CheckNecessaryPokeIn(wk)
+      ||  (numDeadPoke != 0)
+      ){
+        reqChangePokeForServer( wk );
+        wk->flowResult = SVFLOW_RESULT_POKE_COVER;
+        return i;
+      }
+
+      wk->flowResult = SVFLOW_RESULT_DEFAULT;
       return i;
     }
-
-    numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    // 死亡・生き返りなどでポケ交換の必要があるかチェック
-    if( relivePokeRec_CheckNecessaryPokeIn(wk)
-    ||  (numDeadPoke != 0)
-    ){
-      reqChangePokeForServer( wk );
-      wk->flowResult = SVFLOW_RESULT_POKE_COVER;
-      return i;
-    }
-
-    wk->flowResult = SVFLOW_RESULT_DEFAULT;
-    return i;
   }
   // まだアクションが残っているが入れ替え・逃げなど発生でサーバーへ返す
   else
@@ -1259,7 +1267,7 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
 
 //=============================================================================================
 /**
- * サーバコマンド生成（逃げる処理）
+ * サーバコマンド生成（次のポケモンを出す or にげる -> にげるを選んだ時の処理）
  *
  * @param   wk
  *
@@ -1275,7 +1283,7 @@ BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk )
 
   if( scproc_NigeruCmd(wk, bpp) )
   {
-    wk->escapeClientID = clientID;
+    BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
     return TRUE;
   }
   else
@@ -1408,9 +1416,9 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk )
+const BTL_ESCAPEINFO* BTL_SVFLOW_GetEscapeInfoPointer( const BTL_SVFLOW_WORK* wk )
 {
-  return wk->escapeClientID;
+  return &(wk->escInfo);
 }
 //=============================================================================================
 /**
@@ -2003,6 +2011,12 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
     BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp), actOrder );
 
     do {
+      // 既に誰かの逃げが確定している時、逃げコマンド処理以外は実行しない
+      if( (wk->flowResult == SVFLOW_RESULT_BTL_QUIT)
+      &&  (action.gen.cmd != BTL_ACTION_ESCAPE)
+      ){
+        break;
+      }
       // 死んでたら実行しない
       if( BPP_IsDead(bpp) ){
         break;
@@ -2055,8 +2069,8 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         if( scproc_NigeruCmd( wk, bpp ) )
         {
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
-          wk->escapeClientID = actOrder->clientID;
-          if( !BTL_MAINUTIL_IsFriendClientID( wk->escapeClientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
+          BTL_ESCAPEINFO_Add( &wk->escInfo, actOrder->clientID );
+          if( !BTL_MAINUTIL_IsFriendClientID( actOrder->clientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
           {
             BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
           }
@@ -5874,9 +5888,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     ){
       break;
     }
-    if( BPP_IsDead(attacker) ){
-      break;
-    }
+    if( BPP_IsDead(attacker) ){ break; }
 
     wk->hitCheckParam.count++;
     wk->hitCheckParam.fPutEffectCmd = FALSE;

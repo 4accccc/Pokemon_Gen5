@@ -134,6 +134,7 @@ struct _BTL_CLIENT {
   BTL_RECREADER*        btlRecReader;
   RECPLAYER_CONTROL     recPlayer;
   ClientMainProc        mainProc;
+  BTL_ESCAPEINFO        escapeInfo;
 
   BTL_ADAPTER*    adapter;
   BTLV_CORE*      viewCore;
@@ -484,6 +485,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
+  BTL_ESCAPEINFO_Clear( &wk->escapeInfo );
 
   RecPlayer_Init( &wk->recPlayer );
 
@@ -719,9 +721,9 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
       if( cmd == BTL_ACMD_QUIT_BTL )
       {
-        const u32* p;
+        const BTL_ESCAPEINFO* p;
         BTL_ADAPTER_GetRecvData( wk->adapter, (const void**)&p );
-        wk->escapeClientID = *p;
+        wk->escapeInfo = *p;
         BTL_N_Printf( DBGSTR_CLIENT_RecvedQuitCmd, wk->myID );
         setDummyReturnData( wk );
         wk->subSeq = 0;
@@ -991,9 +993,9 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk )
+void BTL_CLIENT_GetEscapeInfo( const BTL_CLIENT* wk, BTL_ESCAPEINFO* dst )
 {
-  return wk->escapeClientID;
+  *dst = wk->escapeInfo;
 }
 
 //=============================================================================================

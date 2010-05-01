@@ -156,6 +156,23 @@ extern BOOL BTL_RULE_IsNeedSelectTarget( BtlRule rule );
 extern u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos );
 extern WazaTarget BTL_CALC_GetNoroiTargetType( const BTL_POKEPARAM* attacker );
 
+
+//--------------------------------------------------------------
+/**
+ *  逃げたクライアント情報
+ */
+//--------------------------------------------------------------
+typedef struct {
+  u32 count;
+  u8  clientID[ BTL_CLIENT_MAX ];
+}BTL_ESCAPEINFO;
+
+extern void BTL_ESCAPEINFO_Clear( BTL_ESCAPEINFO* info );
+extern void BTL_ESCAPEINFO_Add( BTL_ESCAPEINFO* info, u8 clientID );
+extern u32 BTL_ESCAPEINFO_GetCount( const BTL_ESCAPEINFO* info );
+extern BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myClientID );
+
+
 //=============================================================================================
 /**
  * ワザターゲットの自動決定（ランダム）

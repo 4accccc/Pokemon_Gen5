@@ -16,6 +16,7 @@
 #include "btl_adapter.h"
 #include "btl_action.h"
 #include "btl_rec.h"
+#include "btl_calc.h"
 #include "btl_server_flow_def.h"
 #include "app/b_bag.h"
 
@@ -44,7 +45,7 @@ extern void BTL_SERVER_Startup( BTL_SERVER* server );
 extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 
 extern BOOL BTL_SERVER_Main( BTL_SERVER* server );
-extern u8 BTL_SERVER_GetEscapeClientID( const BTL_SERVER* sv );
+extern void BTL_SERVER_GetEscapeInfo( const BTL_SERVER* sv, BTL_ESCAPEINFO* dst );
 
 extern BTL_SVFLOW_WORK* BTL_SERVER_GetFlowWork( BTL_SERVER* server );
 

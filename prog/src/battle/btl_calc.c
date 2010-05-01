@@ -1097,3 +1097,69 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
   }
 }
 
+
+//=============================================================================================
+/**
+ *
+ *
+ * @param   info
+ */
+//=============================================================================================
+void BTL_ESCAPEINFO_Clear( BTL_ESCAPEINFO* info )
+{
+  u32 i;
+  for(i=0; i<NELEMS(info->clientID); ++i){
+    info->clientID[i] = BTL_CLIENTID_NULL;
+  }
+  info->count = 0;
+}
+void BTL_ESCAPEINFO_Add( BTL_ESCAPEINFO* info, u8 clientID )
+{
+  u32 i;
+  for(i=0; i<NELEMS(info->clientID); ++i)
+  {
+    if( info->clientID[i] == clientID ){ break; }
+    if( info->clientID[i] == BTL_CLIENTID_NULL )
+    {
+      info->clientID[i] = clientID;
+      info->count++;
+      break;
+    }
+  }
+}
+u32 BTL_ESCAPEINFO_GetCount( const BTL_ESCAPEINFO* info )
+{
+  return info->count;
+}
+
+BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myClientID )
+{
+  BOOL fMyTeamEscaped = FALSE;
+  BOOL fOtherTeamEscaped = FALSE;
+  u32 i;
+
+  TAYA_Printf("逃げたクライアント数=%d\n", info->count);
+
+  for(i=0; i<info->count; ++i)
+  {
+    if( BTL_MAINUTIL_IsFriendClientID( info->clientID[i], myClientID ) ){
+      TAYA_Printf("ClientID=%d が逃げた ... 自分のチーム\n", info->clientID[i]);
+      fMyTeamEscaped = TRUE;
+    }else{
+      TAYA_Printf("ClientID=%d が逃げた ... 相手のチーム\n", info->clientID[i]);
+      fOtherTeamEscaped = TRUE;
+    }
+  }
+
+  if( fMyTeamEscaped && fOtherTeamEscaped ){
+    TAYA_Printf("両チームが逃げたから引き分け\n");
+    return BTL_RESULT_DRAW;
+  }
+  if( fMyTeamEscaped ){
+    TAYA_Printf("自分チームが逃げたから負け\n");
+    return BTL_RESULT_RUN;
+  }
+  TAYA_Printf("相手チームが逃げたから勝ち\n");
+  return BTL_RESULT_RUN_ENEMY;
+}
+
