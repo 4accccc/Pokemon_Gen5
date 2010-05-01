@@ -34,6 +34,11 @@
 #define R13_FLD_ITEM_04                   20
 #define R13_FLD_ITEM_06                   21
 #define TR_FISHING_09                     22
+#define R13_GIRL1_01                      23
+#define R13_POKE100_01                    24
+#define R13_MONSTERBALL_01                25
+#define R13_BACKPACKERW_01                26
+#define R13_OLDMAN1_01                    27
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
