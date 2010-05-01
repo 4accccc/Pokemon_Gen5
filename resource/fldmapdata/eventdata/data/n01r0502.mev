@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/28 20:49:58
+#save date:2010/05/01 19:35:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #SECTION START:OBJ_EVENT
@@ -150,7 +150,7 @@ FV_N01R0502_LEGEND_02
 #Event Script Name
 SCRID_N01R0502_WKOBJCODE01_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -360
+8 0 -376
 #event number: 5
 #type
 1
@@ -215,7 +215,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-6
+2
 #event number: 0
 #Pos Event Label
 POS_N01R0502_LASTBTL_01
@@ -234,74 +234,6 @@ EVENTDATA_POSTYPE_GRID
 #size
 5 1
 #event number: 1
-#Pos Event Label
-POS_N01R0502_LASTBTL_03a
-#Pos Script Name
-SCRID_POS_N01R0502_LASTBTL_03
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_N01R0502
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 0 -376
-#size
-1 1
-#event number: 2
-#Pos Event Label
-POS_N01R0502_LASTBTL_03d
-#Pos Script Name
-SCRID_POS_N01R0502_LASTBTL_03
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_N01R0502
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -392
-#size
-1 1
-#event number: 3
-#Pos Event Label
-POS_N01R0502_LASTBTL_03c
-#Pos Script Name
-SCRID_POS_N01R0502_LASTBTL_03
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_N01R0502
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 0 -376
-#size
-1 1
-#event number: 4
-#Pos Event Label
-POS_N01R0502_LASTBTL_03b
-#Pos Script Name
-SCRID_POS_N01R0502_LASTBTL_03
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_N01R0502
-#Event Trigger Work Value
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -360
-#size
-1 1
-#event number: 5
 #Pos Event Label
 POS_N01R0502_LASTBTL_02
 #Pos Script Name

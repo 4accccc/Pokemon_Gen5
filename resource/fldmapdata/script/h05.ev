@@ -615,10 +615,6 @@ EVENT_END
 /**************************************************************/
 ev_minezumi_show:
 
-//おねえさん：踊る
-_OBJ_ANIME( H05_WOMAN2_01, anm_common_dance )
-_OBJ_ANIME_WAIT()
-
 //オッケー　おねえさん
 _BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_02 )
 _MSGWIN_CLOSE()
@@ -676,7 +672,7 @@ CASE 0 THEN
 	_VOICE_PLAY( MONSNO_537, 0 )
 	
 	//みぎゅう！？
-	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
@@ -705,7 +701,7 @@ CASE 1 THEN
 	_VOICE_PLAY( MONSNO_537, 0 )
 	
 	//みぎゅう！？
-	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
@@ -733,7 +729,7 @@ CASE 2 THEN
 	_VOICE_PLAY( MONSNO_537, 0 )
 	
 	//みぎゅう！？
-	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
@@ -761,7 +757,7 @@ CASE 3 THEN
 	_VOICE_PLAY( MONSNO_537, 0 )
 	
 	//みぎゅう！？
-	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_DEFAULT )
+	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
@@ -1740,6 +1736,18 @@ ev_hazure:
 //ざんねん　はずれです
 _BALLOONWIN_OBJMSG_POS( msg_h05_woman2_10 , H05_WOMAN2_01, POS_DEFAULT )
 _MSGWIN_CLOSE()
+
+SWITCH $LOCALWORK11
+CASE 10 THEN
+	_OBJ_ANIME( H05_MINEZUMI_01, anm_common_jump )
+CASE 20 THEN
+	_OBJ_ANIME( H05_MINEZUMI_02, anm_common_jump )
+CASE 30 THEN
+	_OBJ_ANIME( H05_MINEZUMI_03, anm_common_jump )
+CASE 40 THEN
+	_OBJ_ANIME( H05_MINEZUMI_04, anm_common_jump )
+ENDSWITCH
+_OBJ_ANIME_WAIT()
 
 //それでは　ミネズミショー　しゅうりょうになります
 _BALLOONWIN_OBJMSG_POS( msg_h05_woman2_11 , H05_WOMAN2_01, POS_DEFAULT )

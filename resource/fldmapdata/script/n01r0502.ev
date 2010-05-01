@@ -121,16 +121,14 @@ sub_setup_objpos:
 		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 2, 18, DIR_DOWN )
 	CASE 2 THEN   //2番目のPOS起動後（伝説出現後）の場合
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
-		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 39, DIR_DOWN )
-  CASE 3 THEN		//Ｎ戦前
+		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE01_01, 16, 0, 39, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
+	CASE 3 THEN		//Ｎ戦前
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
 	CASE 4 THEN		//シン（ム）・ゲーチス連戦前
-		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
-		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE01_01, 16, 0, 38, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 39, DIR_LEFT )
 	CASE 5 THEN		//ゲーチス戦で負けた場合
-		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_CHAMPION_01, 15, 0, 40, DIR_UP )
 		_OBJ_POS_CHANGE( N01R0502_RIVAL_01, 17, 0, 40, DIR_UP )
 		_OBJ_POS_CHANGE( N01R0502_SAGE1_01, 16, 0, 38, DIR_DOWN )
@@ -283,6 +281,7 @@ sub_NsLegend_appear:
 	
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
 
 	//Ｎ：横向き
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_slow_r )
@@ -318,7 +317,7 @@ sub_NsLegend_appear:
 	_MSGWIN_CLOSE()
 
 	//シンとムの鳴き声
-  _CALL sub_voice_play_n_legend
+	_CALL sub_voice_play_n_legend
 
 	//デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ
 	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
@@ -352,25 +351,31 @@ _ANIME_LABEL	anm_n_last2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_last14
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_last15
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+	
 _ANIME_LABEL	anm_player_last16
 	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_player_last17
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_last18
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -378,7 +383,6 @@ _ANIME_LABEL	anm_player_last18
 /************************************************************/
 EVENT_START	ev_pos_n01r0502_lastbtl_03
 EVENT_END
-
 
 /************************************************************/
 /*	最終イベント４											*/
@@ -435,29 +439,29 @@ _ANIME_LABEL	anm_sage1_hand
 //  基本的にはWK_SCENE_N01R0502が2,3,4の場合しかありえないはず
 /************************************************************/
 EVENT_START		ev_n01r0502_boss_01
-  _TALK_OBJ_START()
+_TALK_OBJ_START()
 
-  SWITCH $WK_SCENE_N01R0502
-  CASE  0,1,2 THEN
+	SWITCH $WK_SCENE_N01R0502
+	CASE  0,1,2 THEN
 
-    //「こころして　かかりたまえ
-    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, POS_DEFAULT )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+		//「こころして　かかりたまえ
+		_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 
-  CASE  3 THEN
+	CASE  3 THEN
 
-    //Ｎとの戦いに続く…
-    _CALL sub_n_battle
+	//Ｎとの戦いに続く…
+		_CALL sub_n_battle
 
-  CASE  4,5 THEN
+	CASE  4,5 THEN
 
-    //「……ボクの数式は　間違って　いたのか？」
-    _BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_boss )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+		//「……ボクの数式は　間違って　いたのか？」
+		_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_boss )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 
-  ENDSWITCH
+	ENDSWITCH
 
 EVENT_END
 
@@ -471,9 +475,15 @@ EVENT_START ev_reserve_n01r0502_n_battle
 EVENT_END
 
 sub_n_battle:
-  //「絶対に　勝つ！！
-  _BALLOONWIN_OBJMSG( msg_n01r0502_boss_battle_02, N01R0502_BOSS_01 )
-  _MSGWIN_CLOSE()
+
+  	//「絶対に　勝つ！！
+	_GIZAWIN_OBJMSG_POS( msg_n01r0502_boss_battle_02 , N01R0502_BOSS_01, POS_DEFAULT )
+	_GIZAWIN_CLOSE()
+
+	//N・自機　一歩前へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_battle_01 )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_battle_02 )
+	_OBJ_ANIME_WAIT()
 
   //戦闘呼び出し
 	_GET_ROM_VERSION( LWK_ROM )
@@ -488,6 +498,7 @@ sub_n_battle:
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
     _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+	_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
   
     //可変OBJの確定
     IF $LWK_ROM == VERSION_WHITE THEN
@@ -495,6 +506,11 @@ sub_n_battle:
     ELSE
 			$OBJCHRWORK0 = MU_A		//ム
     ENDIF
+	_OBJ_DEL( N01R0502_WKOBJCODE00_01 )
+	
+	//========================================/
+	_FLAG_SET(FV_N01R0502_LEGEND_01)
+	//========================================/
 
     _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
   
@@ -503,10 +519,6 @@ sub_n_battle:
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   
   ENDIF
-		
-  //「……ボクの数式は　間違って　いたのか？」
-  _BALLOONWIN_OBJMSG( msg_n01r0502_rematch_boss, N01R0502_BOSS_01 )
-  _MSGWIN_CLOSE()
 
 	//========================================/
   $WK_SCENE_N01R0502 = 4    //対ゲーチス戦へ
@@ -514,26 +526,34 @@ sub_n_battle:
 
   //ゲーチスの登場に続く…
   _RESERVE_SCRIPT( SCRID_RESERVE_N01R0502_SAGE_APPEAR )
-  _RET
+
+_RET
+
+//--------------------------------------------------------------------
+//		バトル前アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_battle_01
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_battle_02
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 //  伝説ポケモン誕生
 /************************************************************/
 sub_legend_born:
-	//Ｎ後ずさり
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_back )
-	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_gutari )
-	_OBJ_ANIME_WAIT()
 
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
+	_TIME_WAIT( 30 )
 	
-	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )	//一番最後の引数は移動にかかるフレーム数	
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(4,0,4,5,1,0,1,3)
 
-    //主人公にビックリマーク表示
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_bikkuri )
-    _OBJ_ANIME_WAIT()
     //バッグの　なか……
     _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
@@ -541,12 +561,30 @@ sub_legend_born:
 		ELSE
 			_SYSWIN_MSG( msg_n01r0502_stone_02b , POS_DOWN )
 		ENDIF
-    _AB_KEYWAIT_MARK()
-    _SYSWIN_CLOSE()
+	_AB_KEYWAIT_MARK()
+	_SYSWIN_CLOSE()
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,20 )	//一番最後の引数は移動にかかるフレーム数	
+
+	//主人公にビックリマーク表示
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_bikkuri )
+	_OBJ_ANIME_WAIT()
+
+	//Ｎ後ずさり
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_back ) 
+	_OBJ_ANIME_WAIT()
+
 	//キミの　もつ
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_07w, msg_n01r0502_boss_07b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
+
+	//自機一歩下がる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+	_OBJ_ANIME_WAIT()
 
 	//ダーク（ライト）ストーンの演出
   _START_LEG_GMK()
@@ -578,33 +616,37 @@ sub_legend_born:
 	//========================================/
 	
 	_OBJ_ADD( N01R0502_WKOBJCODE01_01 )
-	_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 36, DIR_DOWN )
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,1 )	//一番最後の引数は移動にかかるフレーム数
-
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,1 )	//一番最後の引数は移動にかかるフレーム数
+	
+	_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
+	
 	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 
 	//シンと　ムは……　もとは　ひとつの　いのち
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_08w, msg_n01r0502_boss_08b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-	
+
+/*	
 	//シン（ム）が自機の方を見る
 	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_legend_turn )
 	_OBJ_ANIME_WAIT()
+
+	_CALL sub_voice_play_mine_legend
 	
+	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_legend_hoeru )
+	_OBJ_ANIME_WAIT()
+*/
+
 	//その　ポケモンが　なんといっているか　おしえてあげるよ
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_09w, msg_n01r0502_boss_09b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 70 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-
-	//Ｎ：自機の横に移動
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_move )
-	_OBJ_ANIME_WAIT()
+	_CAMERA_RECV_MOVE( 40 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
@@ -622,8 +664,7 @@ _ANIME_LABEL	anm_package_dir
 	
 _ANIME_LABEL	anm_n_move
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -634,6 +675,11 @@ _ANIME_LABEL	anm_n_back
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL  anm_bikkuri
   _ANIME_DATA AC_MARK_GYOE,1
@@ -646,18 +692,15 @@ EVENT_START		ev_n01r0502_wkobjcode00_01
 _TALK_START_TURN_NOT()
 
 IF $WK_SCENE_N01R0502 >= 4 THEN
-  //戦闘あとの場合はぐったりアニメ
-    _OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_gutari )
-    _OBJ_ANIME_WAIT()
 
     _CALL sub_voice_play_n_legend
-    _GET_ROM_VERSION( LWK_ROM )
+    
+	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
 			_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_pokemon_01w )
 		ELSE
 			_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_pokemon_01b )
 		ENDIF
-    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     _VOICE_WAIT()
 
@@ -670,18 +713,14 @@ ELSE
     _CALL sub_voice_play_n_legend
     _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01b , N01R0502_WKOBJCODE00_01, POS_UP )
+			_GIZAPLAINWIN_MSG_POS( msg_n01r0502_pokemon_01b, POS_UP )
 		ELSE
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01w , N01R0502_WKOBJCODE00_01, POS_UP )
+			_GIZAPLAINWIN_MSG_POS( msg_n01r0502_pokemon_01w, POS_UP )
 		ENDIF
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-    _VOICE_WAIT()
+	_GIZAPLAINWIN_CLOSE()
+	_VOICE_WAIT()
 
 ENDIF
-
-	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_stay_d )
-	_OBJ_ANIME_WAIT()
 
 EVENT_END
 
@@ -689,54 +728,87 @@ EVENT_END
 //  話しかけ：ストーンから誕生した伝説ポケモン
 /************************************************************/
 EVENT_START		ev_n01r0502_wkobjcode01_01
-  _TALK_START_TURN_NOT()
+_TALK_START_TURN_NOT()
 
-  _CALL sub_legend_battle
+	_CALL sub_legend_battle
 
 	//捕獲の場合
 	IF FLAG_ON( FE_PACKAGE_POKE_GET ) THEN
+
+		//Ｎが主人公の方を向く
+		_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_d )
+		_OBJ_ANIME_WAIT()
+
+		//伝説ポケモンを（なるべく）手に入れる処理
+		_CALL sub_add_legend
+
+		_CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_TEMOTI_CHECK, SCWK_ANSWER )
+
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
 	
-    //Ｎが主人公の方を向く
-    _OBJ_ANIME( N01R0502_BOSS_01, anm_dir_l )
-    _OBJ_ANIME_WAIT()
+		//カメラ操作　Ｎの位置にカメラを合わせる
+		_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,20 )
+		_CAMERA_WAIT_MOVE()
 
-    //伝説ポケモンを（なるべく）手に入れる処理
-    _CALL sub_add_legend
+		//手持ちに伝説ポケモンがいたら
+		IF $SCWK_ANSWER == TRUE THEN
 
-    _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_TEMOTI_CHECK, SCWK_ANSWER )
-    //手持ちに伝説ポケモンがいたら
-    IF $SCWK_ANSWER == TRUE THEN
+			//「……そうか　真実を追い求める英雄に
+			_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_11w, msg_n01r0502_boss_11b, N01R0502_BOSS_01, POS_DEFAULT )
+    		_MSGWIN_CLOSE()
+    		
+    	ENDIF
 
-      //「……そうか　真実を追い求める英雄に
-      _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_11w, msg_n01r0502_boss_11b, N01R0502_BOSS_01, POS_DEFAULT )
-    ENDIF
-    //「さて……　キミのポケモンが　きずついている
-    _PLAYER_NAME( 0 )
+		//自機にカメラを戻す
+		_CAMERA_RECV_MOVE( 40 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+
+		//Ｎ：自機の横に移動
+		_OBJ_ANIME( N01R0502_BOSS_01, anm_n_move )
+		_OBJ_ANIME_WAIT()
+		
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+		//「さて……　キミのポケモンが　きずついている
+    	_PLAYER_NAME( 0 )
 		_BALLOONWIN_OBJMSG( msg_n01r0502_boss_battle_01, N01R0502_BOSS_01 )
 		_MSGWIN_CLOSE()
-    //「Ｎは　～のポケモンを　かいふくさせた！
-    _SYSWIN_MSG( msg_n01r0502_boss_heal_01, POS_DOWN )
-    _SYSWIN_CLOSE()
+    
+    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+    	_OBJ_ANIME_WAIT()
+    
+		//「Ｎは　～のポケモンを　かいふくさせた！
+		_PLAYER_NAME( 0 )
+		_SE_PLAY( SEQ_SE_RECOVERY )
+		_SYSWIN_MSG( msg_n01r0502_boss_heal_01, POS_DOWN )
+		_SYSWIN_CLOSE()
+		_SE_WAIT()
 
-    //回復
-    _TEMOTI_POKEMON_KAIFUKU()
+		//回復
+		_TEMOTI_POKEMON_KAIFUKU()
 	
-    //========================================/
+		//========================================/
 
-    $WK_SCENE_N01R0502 = 3
+		$WK_SCENE_N01R0502 = 3
 
-    //========================================/
+		//========================================/
 
-    //Ｎ：シン（ム）の前に移動
-    _OBJ_ANIME( N01R0502_BOSS_01, anm_n_lastbtl5 )
-    _OBJ_ANIME_WAIT()
+		//カメラ操作　Ｎの位置にカメラを合わせる
+		_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,20 )
+
+		//Ｎ：シン（ム）の前に移動
+    	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+		_OBJ_ANIME( N01R0502_BOSS_01, anm_n_lastbtl5 )
+		_OBJ_ANIME_WAIT()
 	
-    //Ｎとの戦いに続く…
-    _RESERVE_SCRIPT( SCRID_RESERVE_N01R0502_N_BATTLE )
+		_CAMERA_WAIT_MOVE()
+		
+		//Ｎとの戦いに続く…
+		 _CALL sub_n_battle
+	
 	ENDIF
 
 EVENT_END
-
 
 /************************************************************/
 //  Ｎが迷って、ゲーチス登場
@@ -793,11 +865,11 @@ sub_sage_appear:
 
 	//Ｎのアップ絵終了
 	_END_FACEUP()
-	
-	//Ｎ：自機に背を向ける
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_u )
-	_OBJ_ANIME_WAIT()
 
+	//Ｎ：自機に背を向ける
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+	
 	//無音にする
 	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 30 )
 
@@ -918,7 +990,6 @@ sub_legend_battle:
 	_PLAYER_DIR_GET( LWK_DIR )
 	SWITCH $LWK_DIR
 	CASE DIR_UP THEN
-		
 	CASE DIR_DOWN THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_d )
 	CASE DIR_RIGHT THEN
@@ -928,9 +999,6 @@ sub_legend_battle:
 	ENDSWITCH
 	_OBJ_ANIME_WAIT()
 }
-
-	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_dir_d )
-	_OBJ_ANIME_WAIT()
 
 	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_legend_hoeru )
 	_OBJ_ANIME_WAIT()
@@ -945,14 +1013,14 @@ sub_legend_battle:
     _CALL sub_voice_play_mine_legend
     _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_BLACK THEN
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01b , N01R0502_WKOBJCODE01_01, POS_DEFAULT )
-			_MSGWIN_CLOSE()
+			_GIZAPLAINWIN_MSG_POS( msg_n01r0502_pokemon_01b,POS_DEFAULT )
+			_GIZAPLAINWIN_CLOSE()
 			_VOICE_WAIT()
 
 			_WILD_BTL_SET_EX( MONSNO_650, 50, LWK_BATTLE_FLAG )
 		ELSE
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01w , N01R0502_WKOBJCODE01_01, POS_DEFAULT )
-			_MSGWIN_CLOSE()
+			_GIZAPLAINWIN_MSG_POS( msg_n01r0502_pokemon_01w,POS_DEFAULT )
+			_GIZAPLAINWIN_CLOSE()
 			_VOICE_WAIT()
 
 			_WILD_BTL_SET_EX( MONSNO_651, 50, LWK_BATTLE_FLAG )
@@ -973,9 +1041,6 @@ sub_legend_battle:
           //フラグセット
           _FLAG_SET( FV_N01R0502_LEGEND_02 )
           
-          //自機の位置調整
-          _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
-          
           //========================================/
         ENDIF
 
@@ -993,6 +1058,7 @@ sub_legend_battle:
 	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
 		//勝利した場合、あるいは逃げた場合
 		_GET_ROM_VERSION( LWK_ROM )
+		_PLAYER_NAME( 0 )
 		IF $LWK_ROM == VERSION_WHITE THEN
 			_SYSWIN_MSG( msg_n01r0502_pokemon_02w , POS_DOWN )
 		ELSE
@@ -1180,6 +1246,7 @@ ev_last:
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,30 )
+	
 	_CAMERA_WAIT_MOVE()
 
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_nayamu )
@@ -1190,13 +1257,12 @@ ev_last:
 	
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_nayamu1 )
 	_OBJ_ANIME_WAIT()
+	
 	_CAMERA_WAIT_MOVE()
 	
 	//ちょっといいかな　
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_20 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
-
-	_TIME_WAIT( 30 )
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi0 )
 	_OBJ_ANIME_WAIT()
@@ -1208,6 +1274,8 @@ ev_last:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi )
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_ayumi )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
 	_OBJ_ANIME_WAIT()
@@ -1225,12 +1293,14 @@ ev_last:
 	_MSGWIN_CLOSE()
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,131103,1081344,110 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,131103,1081344,120 )
 
 	//Ｎ：もうちょい歩く・自機の方を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi1 )
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_ayumi1 )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()
 
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_d )
 	_OBJ_ANIME_WAIT()
@@ -1250,12 +1320,14 @@ ev_last:
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_24 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	_CAMERA_MOVE( 9688,0,970752,1081344,196655,819200,30 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,196655,819200,60 )
 	
 	//Ｎ：移動後・自機の方を見る
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_last )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()
 
 	//ポケモンのことしか
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_25 , N01R0502_BOSS_01,POS_DEFAULT )
@@ -1265,7 +1337,10 @@ ev_last:
 
 	//Ｎ：飛び降り地点まで移動
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_lastscene )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lastscene1 )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()
 	
 	//ポケモンのことしか
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_16 , N01R0502_BOSS_01,POS_DEFAULT )
@@ -1279,6 +1354,11 @@ ev_last:
 	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_17 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
+
+	//無音にする
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 30 )
+
+	_TIME_WAIT( 30 )
 
 	//Ｎのアップ絵表示
 	_START_FACEUP( FLD_FACEUP_BG_CATSLE, FLD_FACEUP_CHAR_BOSS )
@@ -1330,8 +1410,18 @@ ev_last:
 		
 		ENDIF
 }
-	//Ｎのアップ絵終了
+
+	//画面暗転
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	_CAMERA_END()
 	_END_FACEUP()
+	//ゲームクリア
+	_GOTO_GAMECLEAR_DEMO( 0 )
+
+	//Ｎのアップ絵終了
+
 
 	//========================================/
 	
@@ -1339,9 +1429,6 @@ ev_last:
 	$WK_SCENE_N01R0502 = 6
 
 	//========================================/
-	
-	//ゲームクリア
-	_GOTO_GAMECLEAR_DEMO( 0 )
 
 _RET
 
@@ -1349,7 +1436,7 @@ _RET
 //	Ｎ：lastbtl5用アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_lastbtl5
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -1500,20 +1587,27 @@ _ANIME_LABEL	anm_n_ayumi1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_last
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_16F,2
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_last
 	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_16F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_lastscene
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_16F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_lastscene1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_package_lastscene
