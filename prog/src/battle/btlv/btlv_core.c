@@ -1035,9 +1035,14 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   u8 clientID = BTL_CLIENT_GetClientID( wk->myClient );
 
   plist->pp = BTL_MAIN_GetClientSrcParty( wk->mainModule, clientID );
-  plist->multi_pp = BTL_MAIN_GetClientMultiSrcParty( wk->mainModule, clientID );
-  plist->multiMode = ( plist->multi_pp != NULL );
-  plist->multiPos = BTL_MAIN_GetClientMultiPos( wk->mainModule, clientID );
+  plist->multiMode = BTL_MAIN_IsPokeListMultiMode( wk->mainModule );
+  if( plist->multiMode ){
+    plist->multi_pp = BTL_MAIN_GetClientMultiSrcParty( wk->mainModule, clientID );
+    plist->multiPos = BTL_MAIN_GetClientMultiPos( wk->mainModule, clientID );
+  }else{
+    plist->multi_pp = NULL;
+    plist->multiPos = 0;
+  }
   plist->mode = bplMode;
   plist->sel_poke = ( bplMode == BPL_MODE_WAZASET )? pos_index : 0;
   plist->sel_pos_index = pos_index;

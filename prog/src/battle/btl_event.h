@@ -432,6 +432,8 @@ typedef enum {
   BTL_EVENT_FACTOR_TOKUSEI,
   BTL_EVENT_FACTOR_ITEM,
 
+  BTL_EVENT_FACTOR_ONCE,  // あらゆるタイプのハンドラから追加される特殊タイプで、ポケモンに依存しないので死んでも実行される。１度実行されたら消去される。
+
   BTL_EVENT_FACTOR_MAX,
 
 }BtlEventFactorType;

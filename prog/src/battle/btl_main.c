@@ -3312,6 +3312,19 @@ BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
 }
 
 /**
+ *  ポケモンリスト画面をマルチモードで開くかどうか判定
+ */
+BOOL BTL_MAIN_IsPokeListMultiMode( BTL_MAIN_MODULE* wk )
+{
+  if( (BTL_MAIN_IsMultiMode(wk))
+  &&  (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_TRAINER)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
  *  クライアントの元パーティデータを取得（バトルリスト画面等に使用）
  */
 POKEPARTY* BTL_MAIN_GetClientSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )

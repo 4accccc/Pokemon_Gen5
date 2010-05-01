@@ -143,9 +143,8 @@ struct _BTL_CLIENT {
   BTLV_ROTATION_WAZASEL_PARAM  rotWazaSelParam;
   BtlRotateDir    prevRotateDir;
 
-  ClientSubProc  subProc;
-  int            subSeq;
-
+  ClientSubProc   subProc;
+  int             subSeq;
   ClientSubProc   selActProc;
   int             selActSeq;
 
@@ -1605,7 +1604,7 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
       if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
       ){
         if( BTLV_EFFECT_GetPinchBGMFlag() == 0 )
-        { 
+        {
           //現状、曲変化はジムリーダーだけ
           u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
           if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
@@ -1617,7 +1616,7 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
           }
         }
         else
-        { 
+        {
           BTLV_EFFECT_SetTrainerBGMChangeFlag();
           wk->fAITrainerBGMChanged = TRUE;
         }
@@ -4222,7 +4221,6 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
 
       if( result == BTL_RESULT_WIN ){
         u32 winBGMNo = BTL_MAIN_GetWinBGMNo( wk->mainModule );
-        OS_TPrintf("勝ったけんBGM変えるよ -> BGMNO:%d\n", winBGMNo);
         PMSND_PlayBGM( winBGMNo );
         (*seq)++;
       }else{
