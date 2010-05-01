@@ -325,11 +325,6 @@ EVENT_START   ev_pos_c02_boss_01
 		_BALLOONWIN_OBJMSG_POS( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
     	_MSGWIN_CLOSE()
     	
-		//==============フラグワーク操作==============//
-    	//Nイベントのワークをインクリメント
-    	$WK_OTHER_N_COUNT += 1
-		//============================================//
-    	
 	ENDIF
 	
 	//Nとの戦闘

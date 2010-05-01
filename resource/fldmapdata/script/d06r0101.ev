@@ -159,11 +159,6 @@ EVENT_START    ev_pos_d06r0101_n_01
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_11,D06R0101_BOSS_01, POS_UR )
 		_MSGWIN_CLOSE()
 		
-		//==============フラグワーク操作==============//
-    	//Nイベントのワークをインクリメント
-    	$WK_OTHER_N_COUNT += 1
-		//============================================//
-	
 	ELSE
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_12,D06R0101_BOSS_01, POS_UR )
 		_MSGWIN_CLOSE()
@@ -757,9 +752,6 @@ EVENT_START    ev_pos_d06r0101_denki_04
 		_MSGWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
-    	//Nイベントのワークをインクリメント
-    	$WK_OTHER_N_COUNT += 1
-    	
     	//ラストメッセージようにフラグをセット
     	_FLAG_SET(FE_N_LASTMESSAGE)
 		//============================================//

@@ -120,6 +120,10 @@ EVENT_START	ev_pos_r05_rival_01
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		_TRAINER_WIN()
 	ELSE
+		//========================================//
+		//ライバルの配置を初期化
+		_FLAG_SET( FV_R05_RIVAL )
+		//========================================//
 		_TRAINER_LOSE()
 	ENDIF
 	
