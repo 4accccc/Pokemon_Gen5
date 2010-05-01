@@ -20,6 +20,7 @@ _EVENT_DATA_END
 INIT_EVENT_START  ev_init_script
 {
 	_CALL	init_flags
+	_CALL init_my_answers
   //全滅時の戻り先設定：通常ゲーム開始時は自宅1階から
   _SET_WARP_ID( WARP_ID_T01 )
 
@@ -321,6 +322,32 @@ init_flags:
 
 }
 _RET
+
+
+//--------------------------------
+// 調査レーダーの自分の回答初期化
+//--------------------------------
+init_my_answers:
+{
+	//『ブラックとホワイト どっち？』
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	SWITCH $SCWK_ANSWER
+	CASE VERSION_BLACK THEN _SET_MY_ANSWER( QUESTION_ID_WB, 1 )
+	CASE VERSION_WHITE THEN _SET_MY_ANSWER( QUESTION_ID_WB, 2 )
+	ENDSWITCH
+
+	//『男と女 どっち？』
+	_GET_MY_SEX( SCWK_ANSWER )
+	SWITCH $SCWK_ANSWER
+	CASE PM_MALE   THEN _SET_MY_ANSWER( QUESTION_ID_SEX, 1 )
+	CASE PM_FEMALE THEN _SET_MY_ANSWER( QUESTION_ID_SEX, 2 )
+	ENDSWITCH
+
+	//『ゲームプレイ時間は？』
+	_SET_MY_ANSWER( QUESTION_ID_PLAY_TIME, 1 )
+}
+_RET
+
 
 //=====================================================================
 //  ゲーム開始スクリプト（デバッグ）
