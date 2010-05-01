@@ -714,9 +714,11 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
     if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin )) == FALSE )
     {
+      BmpWinFrame_Write( drawWork->infoWin , WINDOW_TRANS_OFF , 
+                          CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
       GFL_BMPWIN_TransVramCharacter( drawWork->infoWin );
       GFL_BMPWIN_MakeScreen( drawWork->infoWin );
-      GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+      GFL_BG_LoadScreenV_Req(CTVT_FRAME_SUB_MSG);
       drawWork->isUpdateInfo = FALSE;
       
       if( drawWork->isUpdateInfoEdit == TRUE )
@@ -803,7 +805,8 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
 //--------------------------------------------------------------
 static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 {
-  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT )
+  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT &&
+      drawWork->isUpdateInfo == FALSE )
   {
     drawWork->state = CDS_EDIT;
     drawWork->barScroll = 0;
@@ -1008,9 +1011,10 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     }
   }
   
-  if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT ||
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
-      ret == CDED_RETURN )
+  if( (GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT ||
+       GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
+       ret == CDED_RETURN ) &&
+      drawWork->isUpdateInfo == FALSE )
   {
     drawWork->state = CDS_DRAW;
     drawWork->barScroll = 24;
@@ -1343,13 +1347,13 @@ static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork 
   BOOL isUpdate = FALSE;
   if( drawWork->barScroll < drawWork->dispBarScroll )
   {
-    drawWork->dispBarScroll -= 2;
+    drawWork->dispBarScroll -= 24;
     isUpdate = TRUE;
   }
   else
   if( drawWork->barScroll > drawWork->dispBarScroll )
   {
-    drawWork->dispBarScroll += 2;
+    drawWork->dispBarScroll += 24;
     isUpdate = TRUE;
   }
   
@@ -1437,13 +1441,12 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
   GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
-
-  if( drawWork->infoWin != NULL )
+  GFL_BMPWIN *tempWin = drawWork->infoWin;
+  if( tempWin != NULL )
   {
     PRINTSYS_QUE_Clear( printQue );
-    BmpWinFrame_Clear( drawWork->infoWin , WINDOW_TRANS_ON );
-    GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );
-    GFL_BMPWIN_Delete( drawWork->infoWin );
+    BmpWinFrame_Clear( drawWork->infoWin , WINDOW_TRANS_OFF );
+    GFL_BMPWIN_ClearScreen( drawWork->infoWin );
   }
 
   drawWork->isUpdateInfoEdit = isEditMode;
@@ -1457,7 +1460,7 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
                                       CTVT_PAL_BG_SUB_FONT ,
                                       GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0xF );
-    
+    GFL_BMPWIN_TransVramCharacter( drawWork->infoWin );
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_007 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
             CTVT_DRAW_INFO_EDIT_X , 4 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
@@ -1486,8 +1489,6 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
   }
   else
   {
-    u8 i;
-
     STRBUF *str;
     
     drawWork->infoWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
@@ -1495,6 +1496,7 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
                                       CTVT_PAL_BG_SUB_FONT ,
                                       GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 0xF );
+    GFL_BMPWIN_TransVramCharacter( drawWork->infoWin );
 
     str = GFL_MSG_CreateString( msgHandle , COMM_TVT_DRAW_001 );
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
@@ -1525,11 +1527,15 @@ static void CTVT_DRAW_DrawInfoMsg( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( drawWork->infoWin ) , 
             CTVT_DRAW_INFO_DRAW_X2 , 32 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
     GFL_STR_DeleteBuffer( str );
-
   }
-  BmpWinFrame_Write( drawWork->infoWin , WINDOW_TRANS_OFF , 
-                      CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
   drawWork->isUpdateInfo = TRUE;
+
+
+  if( tempWin != NULL )
+  {
+    //ƒLƒƒƒ‰—Ìˆæ‚Ì”í‚è‚ð–h‚®‚½‚ß‚±‚±‚ÅŠJ•ú
+    GFL_BMPWIN_Delete(tempWin);
+  }
 }
 
 
@@ -1581,7 +1587,7 @@ static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
   GFL_BMPWIN_TransVramCharacter( drawWork->msgWin );
   GFL_BMPWIN_MakeScreen( drawWork->msgWin );
   BmpWinFrame_Write( drawWork->msgWin , WINDOW_TRANS_ON_V , 
-                      CTVT_BMPWIN_CGX , CTVT_PAL_BG_MAIN_WINFRAME );
+                      CTVT_BMPWIN_CGX_MAIN , CTVT_PAL_BG_MAIN_WINFRAME );
   drawWork->isUpdateMsgWin = TRUE;
 
 }

@@ -954,13 +954,17 @@ static void CTVT_CALL_UpdateTP( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
         tpy >= CTVT_CALL_SCROLL_Y - CTVT_CALL_SCROLL_HIT_HEIGHT + callWork->scrollBarPos &&
         tpy <= CTVT_CALL_SCROLL_Y + CTVT_CALL_SCROLL_HIT_HEIGHT + callWork->scrollBarPos )
     {
-      callWork->isHoldScroll = TRUE;
-      GFL_CLACT_WK_SetAnmSeq( callWork->clwkScrollBar , CTOAS_SCROLL_BAR_ACTIVE );
-      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      if( callWork->barNum > 5 )
+      {
+        callWork->isHoldScroll = TRUE;
+        GFL_CLACT_WK_SetAnmSeq( callWork->clwkScrollBar , CTOAS_SCROLL_BAR_ACTIVE );
+        PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      }
     }
   }
   if( isHold == TRUE &&
-      callWork->isHoldScroll == TRUE )
+      callWork->isHoldScroll == TRUE &&
+      callWork->barNum > 5 )
   {
     if( holdTpx >= CTVT_CALL_SCROLL_X - CTVT_CALL_SCROLL_HIT_WIDTH &&
         holdTpx <= CTVT_CALL_SCROLL_X + CTVT_CALL_SCROLL_HIT_WIDTH &&
