@@ -111,7 +111,6 @@ CTVT_MIC_WORK* CTVT_MIC_Init( const HEAPID heapId )
       CTVT_MIC_Print("AMP‚ÌƒQƒCƒ“İ’è‚É¸”si%dj", ret);
     }
   }
-  SNDEX_Init();
   {
     static SNDEXIirFilterParam FilterParam =
       { 0x7E46, 0x81BA, 0x7E46, 0x7E43, 0x836E};     // ’áü”g¬•ª‚ğŒ¸Š‚³‚¹‚é
