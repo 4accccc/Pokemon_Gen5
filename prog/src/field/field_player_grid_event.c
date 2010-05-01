@@ -749,8 +749,8 @@ void FIELD_PLAYER_GRID_DeleteEventTakinobori( GFL_TCB *tcb )
 static void takinobori_SetJikiOffset( MMDL *mmdl, const VecFx32 *offset )
 {
   VecFx32 offs = *offset;
-  offs.y += (FX32_ONE*8);
-  offs.z += (FX32_ONE*4);
+  offs.y += NAMIPOKE_RIDE_Y_OFFSET;
+  offs.z += NAMIPOKE_RIDE_Z_OFFSET;
   MMDL_SetVectorOuterDrawOffsetPos( mmdl, &offs );
 }
 

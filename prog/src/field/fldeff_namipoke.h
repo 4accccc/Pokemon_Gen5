@@ -40,6 +40,13 @@ typedef enum
   NAMIPOKE_EFFECT_TYPE_MAX,
 }NAMIPOKE_EFFECT_TYPE;
 
+#if 0 
+#define NAMIPOKE_RIDE_Y_OFFSET (FX32_ONE*7) ///<運転手表示オフセットY
+#else //100421 new
+#define NAMIPOKE_RIDE_Y_OFFSET (FX32_ONE*1)
+#endif
+#define NAMIPOKE_RIDE_Z_OFFSET (FX32_ONE*5) ///<運転手表示オフセットZ
+
 //======================================================================
 //  struct
 //======================================================================

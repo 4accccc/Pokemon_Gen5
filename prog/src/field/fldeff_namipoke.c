@@ -23,13 +23,6 @@
 #define NAMIPOKE_SHAKE_VALUE (0x0400) ///<初期揺れ幅
 #define NAMIPOKE_SHAKE_MAX (FX32_ONE*4) ///<揺れ幅最大
 
-#if 0 
-#define NAMIPOKE_RIDE_Y_OFFSET (FX32_ONE*7) ///<運転手表示オフセットY
-#else //100421 new
-#define NAMIPOKE_RIDE_Y_OFFSET (FX32_ONE*1)
-#endif
-#define NAMIPOKE_RIDE_Z_OFFSET (FX32_ONE*4) ///<運転手表示オフセットZ
-
 #define NAMIPOKE_RIDE_RAIL_Y_OFFSET (FX32_ONE*5) ///<運転手表示オフセットY
 #define NAMIPOKE_RIDE_RAIL_Z_OFFSET (FX32_ONE*7) ///<運転手表示オフセットZ
 
@@ -504,6 +497,7 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
   VecFx32 oya_offs = { 0, 0, 0 };
   
   if( work->joint == NAMIPOKE_JOINT_OFF ){ //接続しない
+    namipokeTask_DrawCore( task, wk ); //表示処理だけ行う
     return;
   }
  	
@@ -527,6 +521,8 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     oya_offs.y = work->shake_offs + NAMIPOKE_RIDE_Y_OFFSET;
     oya_offs.z = NAMIPOKE_RIDE_Z_OFFSET;
     MMDL_SetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
+  }else if( work->joint == NAMIPOKE_JOINT_ONLY ){
+    MMDL_GetVectorOuterDrawOffsetPos( work->head.mmdl, &oya_offs );
   }
   
   { //座標
@@ -536,7 +532,10 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
     pos.x -= oya_offs.x;
     pos.y -= oya_offs.y;
     pos.z -= oya_offs.z;
-    pos.y += work->shake_offs - FX32_ONE;
+    
+    if( work->joint != NAMIPOKE_JOINT_ONLY ){
+      pos.y += work->shake_offs - FX32_ONE;
+    }
     
     FLDEFF_TASK_SetPos( task, &pos );
   }
@@ -622,7 +621,6 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
   namipokeTask_DrawCore( task, wk );
 }
 
-
 //--------------------------------------------------------------
 /**
  * 波乗りポケモンタスク　描画
@@ -635,6 +633,9 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+  //ここで表示座標を設定していたが
+  //動作モデルとの処理タイミングが変わり、ズレが発生する様になった
+  //更新処理内で表示設定を行う。
 #if 0
   VecFx32 pos;
   GFL_G3D_OBJSTATUS *st;
