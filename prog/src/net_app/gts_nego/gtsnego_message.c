@@ -624,7 +624,7 @@ static void GTSNEGO_MESSAGE_DispInit(GTSNEGO_MESSAGE_WORK* pWork)
 }
 
 
-static int GTSNEGO_MESSAGE_DispFrame(GTSNEGO_MESSAGE_WORK* pWork,int msgid,int x,int y, int frame)
+static int GTSNEGO_MESSAGE_DispFrame(GTSNEGO_MESSAGE_WORK* pWork,int msgid,int x,int y, int width, int frame)
 {
   GFL_BMPWIN* pwin;
   int i;
@@ -632,7 +632,7 @@ static int GTSNEGO_MESSAGE_DispFrame(GTSNEGO_MESSAGE_WORK* pWork,int msgid,int x
   for(i=0;i<_BMP_WINDOW_NUM;i++){
     if(pWork->mainDispWin[i]==NULL){
       pWork->mainDispWin[i] = GFL_BMPWIN_Create(
-        frame , x , y, 20 , 2 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+        frame , x , y, width , 2 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
 
       pwin = pWork->mainDispWin[i];
 
@@ -650,7 +650,7 @@ static int GTSNEGO_MESSAGE_DispFrame(GTSNEGO_MESSAGE_WORK* pWork,int msgid,int x
 
 static int GTSNEGO_MESSAGE_Disp(GTSNEGO_MESSAGE_WORK* pWork,int msgid,int x,int y)
 {
-  return GTSNEGO_MESSAGE_DispFrame(pWork,msgid,x,y,GFL_BG_FRAME2_S);
+  return GTSNEGO_MESSAGE_DispFrame(pWork,msgid,x,y,20,GFL_BG_FRAME2_S);
 }
 
 
@@ -701,20 +701,20 @@ void GTSNEGO_MESSAGE_DispClear(GTSNEGO_MESSAGE_WORK* pWork)
 
 
 
-#define _BUTTON_ANYONE_X (9)
+#define _BUTTON_ANYONE_X (8)
 #define _BUTTON_ANYONE_Y (7)
 
-#define _BUTTON_FRIEND_X (9)
+#define _BUTTON_FRIEND_X (8)
 #define _BUTTON_FRIEND_Y (13)
 
-#define _BUTTON_TYPE_WIDTH (15*8)
+#define _BUTTON_TYPE_WIDTH (16*8)
 #define _BUTTON_TYPE_HEIGHT (3*8)
 
 static const GFL_UI_TP_HITTBL _AnyoneOrFriendBtnTbl[] = {
   {	 _BUTTON_ANYONE_Y*8,  _BUTTON_ANYONE_Y*8 + _BUTTON_TYPE_HEIGHT ,
-    _BUTTON_ANYONE_X*8-8 , _BUTTON_ANYONE_X*8 + _BUTTON_TYPE_WIDTH  },
+    _BUTTON_ANYONE_X*8 , _BUTTON_ANYONE_X*8 + _BUTTON_TYPE_WIDTH  },
   {	_BUTTON_FRIEND_Y*8,  _BUTTON_FRIEND_Y*8 + _BUTTON_TYPE_HEIGHT ,
-    _BUTTON_FRIEND_X*8-8 , _BUTTON_FRIEND_X*8 + _BUTTON_TYPE_WIDTH  },
+    _BUTTON_FRIEND_X*8 , _BUTTON_FRIEND_X*8 + _BUTTON_TYPE_WIDTH  },
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
@@ -731,8 +731,8 @@ void GTSNEGO_MESSAGE_DispAnyoneOrFriend(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
 
   GTSNEGO_MESSAGE_DispInit(pWork);
 
-  GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_005, _BUTTON_ANYONE_X, _BUTTON_ANYONE_Y);
-  GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_006, _BUTTON_FRIEND_X, _BUTTON_FRIEND_Y);
+  GTSNEGO_MESSAGE_DispFrame(pWork, GTSNEGO_005, _BUTTON_ANYONE_X, _BUTTON_ANYONE_Y,16,GFL_BG_FRAME2_S );
+  GTSNEGO_MESSAGE_DispFrame(pWork, GTSNEGO_006, _BUTTON_FRIEND_X, _BUTTON_FRIEND_Y,16,GFL_BG_FRAME2_S);
 
   GTSNEGO_MESSAGE_DispTransReq(pWork);
 
@@ -959,7 +959,7 @@ void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* p
   MYSTATUS* pMyStatus;
 
   GFL_FONTSYS_SetColor(FBMP_COL_WHITE, 2, 0);
-  GTSNEGO_MESSAGE_DispFrame(pWork, GTSNEGO_035, 0, 0, GFL_BG_FRAME1_S);
+  GTSNEGO_MESSAGE_DispFrame(pWork, GTSNEGO_035, 0, 0, 20,GFL_BG_FRAME1_S);
 
   for(i = 0 ; i < 3; i++){
     pMyStatus = GTSNEGO_GetMyStatus(pGameData, i);
