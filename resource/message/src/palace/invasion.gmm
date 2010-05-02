@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-30T11:11:50"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T13:51:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,9 +260,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1050" top="447" right="1755" bottom="1067" maximized="no" rayout="Vertical2">
+	<dialog left="693" top="445" right="1398" bottom="1065" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="518" top="256" right="991" bottom="880" visible="yes"/>
+		<tag-palette left="-85" top="291" right="388" bottom="915" visible="yes"/>
 		<band id="0" index="0" style="0000" width="521"/>
 		<band id="1" index="1" style="0000" width="174"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -689,9 +689,9 @@
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　このばしょの
-どこかに　ひそんでいます</language>
+ちかくに　かくれています</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　この場所の
-どこかに　ひそんでいます</language>
+近くに　隠れています</language>
 	</row>
 
 	<row id="msg_invasion_info_019" back-color="#ffff80,,,,,,,,,,,,,,,,,">

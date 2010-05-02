@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-30T10:52:53"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T13:55:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -290,7 +290,7 @@
 
 	<row id="plc_power_s_01" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>そうぐうパワー　＋</comment>
-		<language name="JPN" width="256">やせいの　ポケモンと　少し
+		<language name="JPN" width="256">やせいの　ポケモンと　すこし
 そうぐうしやすく　なります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">野生の　ポケモンと　少し
@@ -320,7 +320,7 @@
 
 	<row id="plc_power_s_04" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>そうぐうパワー　ー</comment>
-		<language name="JPN" width="256">やせいの　ポケモンと　少し
+		<language name="JPN" width="256">やせいの　ポケモンと　すこし
 そうぐうしづらく　なります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">野生の　ポケモンと　少し
@@ -351,7 +351,7 @@
 	<row id="plc_power_s_07" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>たまごふかパワー　＋</comment>
 		<language name="JPN" width="256">あるいているときに　タマゴが
-少し　かえりやすく　なります
+すこし　かえりやすく　なります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">歩いているときに　タマゴが
 少し　かえりやすく　なります
@@ -380,7 +380,7 @@
 
 	<row id="plc_power_s_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>なつきパワー　＋</comment>
-		<language name="JPN" width="256">ポケモンが　少し
+		<language name="JPN" width="256">ポケモンが　すこし
 なつきやすく　なります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　少し
@@ -561,7 +561,7 @@
 	<row id="plc_power_s_28" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>おこづかいパワー　＋</comment>
 		<language name="JPN" width="256">たたかったあと　もらえる　おこづかいが
-少し　あがります
+すこし　あがります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">戦ったあと　もらえる　おこづかいが
 少し　上がります
@@ -591,7 +591,7 @@
 	<row id="plc_power_s_31" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>ほかくパワー　＋</comment>
 		<language name="JPN" width="256">ポケモンを　ほかくする　かくりつが
-少し　あがります
+すこし　あがります
 こうかは　３ふん　です</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　ほかくする　確率が
 少し　上がります
