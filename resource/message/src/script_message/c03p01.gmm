@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-01T13:25:14"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:23:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p01_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p01_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c03p15イベント後
 　GRIDX=4、GRIDZ=24似出現
@@ -309,7 +309,7 @@
 んぬん　ジムの　方向だな！？▼</language>
 	</row>
 
-	<row id="msg_c03p01_dancer1_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03p01_dancer1_00">
 		<comment>♂
 ・初回会話
 ・はい/いいえの選択肢
@@ -324,7 +324,7 @@
 ちょいと　勝負してくれよ！</language>
 	</row>
 
-	<row id="msg_c03p01_dancer1_00a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p01_dancer1_00a">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、戦闘に
@@ -336,7 +336,7 @@
 踊るように　ファイトだぜ！▼</language>
 	</row>
 
-	<row id="msg_c03p01_dancer1_00b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p01_dancer1_00b">
 		<comment>♂
 ・いいえ選択時
 ・再度会話時はdancer1_00c</comment>
@@ -347,7 +347,7 @@
 ノリが　悪いんじゃないの</language>
 	</row>
 
-	<row id="msg_c03p01_dancer1_00c" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p01_dancer1_00c">
 		<comment>♂
 ・戦闘前、２回目以降の会話
 ・はい/いいえの選択肢
@@ -362,7 +362,7 @@
 ちょいと　勝負してくれよ！</language>
 	</row>
 
-	<row id="msg_c03p01_dancer1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03p01_dancer1_01">
 		<comment>♂
 ・先頭後、フィールド復帰で自動で表示
 ・会話でダンサーイベント開始
@@ -517,7 +517,7 @@
 レッツ　ダンシング！▼</language>
 	</row>
 
-	<row id="msg_c03p01_oldman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p01_oldman1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ひとが　いる　けしき……
@@ -534,7 +534,7 @@
 進んだところに　ありますよ</language>
 	</row>
 
-	<row id="msg_c03p01_sign_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03p01_sign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ここは　ヒウン　セントラルエリア
@@ -543,7 +543,7 @@
 この先　４ばんどうろ</language>
 	</row>
 
-	<row id="msg_c03p01_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03p01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=22、GRIDZ=22</comment>
 		<attribute name="キャラ指定">看板</attribute>

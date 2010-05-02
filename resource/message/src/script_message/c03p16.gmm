@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-26T16:02:25"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:40:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1311" top="103" right="2016" bottom="723" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -320,7 +320,7 @@
 クルーズタイプの　きゃくせん　です[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号は　１日１回
 夕方のみに　出港する[BE:00:ページ切り替え（行送り）]
-クルーズタイプの　客船　です[BE:01:ページ切り替え（クリア）]</language>
+クルーズタイプの　客船です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03p16_cabinguide_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -356,11 +356,9 @@
 ご乗船に　なりますか？</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p16_cabinguide_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・続けてcabinguide_03
-
-※乗船時間以降の文章がおかしい</comment>
+・続けてcabinguide_03</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
 		<language name="JPN" width="256">イッシュちほうの　おおきな　はし
@@ -483,13 +481,11 @@ C03R0801へマップ移動</comment>
 じゅんびちゅう　です[BE:01:ページ切り替え（クリア）]
 さいきょうの　ポケモントレーナーに
 ふさわしい　ふねに　なりますよう[BE:01:ページ切り替え（クリア）]
-こころを　こめて
-じゅんび　しています</language>
+こころをこめて　じゅんび　しています</language>
 		<language name="JPN_KANJI" width="256">この船は　準備中　です[BE:01:ページ切り替え（クリア）]
 最強の　ポケモントレーナーに
-ふさわしい　船に　なりますよう[BE:01:ページ切り替え（クリア）]
-心を　こめて
-準備　しています</language>
+ふさわしい　船に　なりますよう▽
+心を　こめて　準備しています</language>
 	</row>
 
 	<row id="msg_c03p16_cabin_menu_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

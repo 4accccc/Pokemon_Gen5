@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-15T18:43:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:37:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1414" top="233" right="2119" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="349" right="1261" bottom="747" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -316,7 +316,7 @@
 心の　大きさよ！</language>
 	</row>
 
-	<row id="msg_c03p13_captain_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●船長のポジション（GRIDX=20/GIRIDZ=13）
 ●船を向いて立っています。
 
@@ -336,7 +336,7 @@
 船の　サイズは　関係ないのです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p13_captain_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●リバティチケットを持っているときのセリフ
 　・「はい」　→msg_c03p13_captain_03
 　・「いいえ」　→msg_c03p13_captain_04
@@ -353,7 +353,7 @@
 リバティガーデン島へ　行かれますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p13_captain_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●「はい」のセリフ
 ●セリフ後、画面フェードアウト。
 　→出航デモへ</comment>
@@ -367,7 +367,7 @@
 乗船して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p13_captain_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●「いいえ」のセリフ</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
@@ -379,7 +379,7 @@
 また　声を　かけてください</language>
 	</row>
 
-	<row id="msg_c03p13_captain_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●２回目以降のセリフ。
 　・「はい」　→msg_c03p13_captain_03
 　・「いいえ」　→msg_c03p13_captain_04</comment>
@@ -389,7 +389,7 @@
 		<language name="JPN_KANJI" width="256">リバティガーデン島へ　行きますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p13_captain_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●プラズマ団イベントが進行しているとき「はい」を選んだ場合
 ●セリフ後、画面フェードアウト。
 ※出航デモはカット。</comment>
@@ -401,7 +401,7 @@
 止めなければ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p13_captain_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03p13_captain_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●プラズマ団イベントが進行しているとき「いいえ」を選んだ場合
 </comment>
 		<attribute name="キャラ指定">PILOT

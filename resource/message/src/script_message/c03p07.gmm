@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-29T16:28:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:30:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="732" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,17 +335,19 @@
 		<language name="JPN" width="256">このまま　イッシュちほうの
 ジムリーダー　ぜんいんに　かつ▼
 そして　ポケモンリーグに　むかい
-チャンピオンを　たおすよ▼
-そうすれば　だれもが
-ぼくを　つよい　トレーナーとして▽
-みとめてくれる……▼</language>
+チャンピオンを　こえる！▼
+そうすれば　だれもが　ぼくを　つよい
+トレーナーとして　みとめてくれる……▼
+それでこそ　ぼくは
+いきていると　じっかん　できるはず……▼</language>
 		<language name="JPN_KANJI" width="256">このまま　イッシュ地方の
 ジムリーダー　全員に　勝利し▼
 そして　ポケモンリーグに　向かい
-チャンピオンを　倒すよ▼
-そうすれば　だれもが
-ぼくを　強い　トレーナーとして▽
-認めてくれる……▼</language>
+チャンピオンを　超える！▼
+そうすれば　だれもが　ぼくを　強い
+トレーナーとして　認めてくれる……▼
+それでこそ　ぼくは
+生きていると　実感できるはず……▼</language>
 	</row>
 
 	<row id="msg_c03p07_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -405,7 +407,7 @@
 あうう……　もうしわけないけど
 ちょいと　まってくれるかな？▼
 れんらくが　あってさ！
-プラズマだんが　いたらしいんだ！▼
+プラズマだんが　でたらしいんだ！▼
 というか　きみも　きてよ！
 プライムピアって▽
 はとばに　いくからさ！！▼</language>
@@ -413,7 +415,7 @@
 あうう……　もうしわけないけど
 ちょいと　待ってくれるかな？▼
 連絡が　あってさ！
-プラズマ団が　いたらしいんだ！▼
+プラズマ団が　でたらしいんだ！▼
 というか　きみも　来てよ！
 プライムピアって▽
 波止場に　行くからさ！！▼</language>
@@ -614,7 +616,7 @@
 [1:00:トレーナー名:0]も　来てえ！▼</language>
 	</row>
 
-	<row id="msg_c03p07_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p07_tvt_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ジムバッジ取得後
 ・ジムの外に出るとコール音
 ・</comment>
@@ -624,7 +626,7 @@ TVトランシーバー</attribute>
 		<language name="JPN_KANJI" width="256">ライブキャスターが　なっている</language>
 	</row>
 
-	<row id="msg_c03p07_tvt_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p07_tvt_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ジムバッジ取得後
 ・ライブキャスター画面へ</comment>
 		<attribute name="キャラ指定">システム
@@ -653,7 +655,7 @@ TVトランシーバー</attribute>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">ジムに　チャレンジする　まえに
 キズぐすりの　かずは　たりているか▽
-かくにん　しておかないとね</language>
+たしかめて　おかないとね</language>
 		<language name="JPN_KANJI" width="256">ジムに　チャレンジする前に
 キズぐすりの　数は　足りているか▽
 確認しておかないとね</language>
@@ -668,12 +670,12 @@ TVトランシーバー</attribute>
 つよくなれる　わけじゃないよ▼
 だけど　ポケモンを　あいしたり
 いっしょに　あそんだりは▽
-だれにでも　できることだよね</language>
+みんなに　できることだよね</language>
 		<language name="JPN_KANJI" width="256">だれもが　ポケモントレーナーとして
 強くなれる　わけじゃないよ▼
 だけど　ポケモンを　愛したり
 一緒に　遊んだりは▽
-だれにでも　できることだよね</language>
+みんなに　できることだよね</language>
 	</row>
 
 	<row id="msg_c03p07_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -694,10 +696,10 @@ TVトランシーバー</attribute>
 </attribute>
 		<language name="JPN" width="256">あたしの　ポケモン　かわいーの！▼
 くたびれて　おうちに　かえった
-あたしの　つかれを　いやしてくれるの！</language>
+あたしを　いやしてくれるの！</language>
 		<language name="JPN_KANJI" width="256">あたしの　ポケモン　かわいーの！▼
 くたびれて　おうちに　帰った
-あたしの　つかれを　癒してくれるの！</language>
+あたしを　癒してくれるの！</language>
 	</row>
 
 	<row id="msg_c03p07_gymsign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

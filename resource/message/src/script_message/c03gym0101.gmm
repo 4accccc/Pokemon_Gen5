@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T19:18:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:23:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -512,13 +512,13 @@ jugglimg_06</attribute>
 		<language name="JPN" width="256">いやあ
 ヒウンシティは　どうですか？[BE:01:ページ切り替え（クリア）]
 ひとが　おおくて　ジムに
-くるだけで　つかれたでしょ？[BE:01:ページ切り替え（クリア）]
+くるだけで　へたばったでしょ？[BE:01:ページ切り替え（クリア）]
 というわけで
 これを　さしあげるっす！▼</language>
 		<language name="JPN_KANJI" width="256">いやあ
 ヒウンシティは　どうですか？[BE:01:ページ切り替え（クリア）]
 人が　多くて　ジムに
-来るだけで　つかれたでしょ？[BE:01:ページ切り替え（クリア）]
+来るだけで　へたばったでしょ？[BE:01:ページ切り替え（クリア）]
 というわけで
 これを　さしあげるっす！▼</language>
 	</row>
@@ -539,7 +539,7 @@ jugglimg_06</attribute>
 		<language name="JPN_KANJI" width="256">この　ジムはですね
 壁を　突き抜けるのが　テーマっす！▼
 一見　通れそうにない　ない
-ハチミツの　壁　ですけど▽
+ハチミツの　壁ですけど▽
 がんばれば　なんとか　なるっす！▼
 なんとか　ならないときは
 床の　スイッチを　踏んでください！</language>
@@ -574,11 +574,11 @@ jugglimg_06</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
 プライムピアに　いく！　って
 ちょいと　でていっちゃいましてね▽
-よければ　さがしに　いってください</language>
+よければ　さがして　きてください</language>
 		<language name="JPN_KANJI" width="256">ジムリーダー　なんですけど▼
 プライムピアに　行く！　って
 ちょいと　でていっちゃいましてね▽
-よければ　探しに　いってください</language>
+よければ　探して　きてください</language>
 	</row>
 
 	<row id="msg_c03gym0101_glasses_stop_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
@@ -591,11 +591,11 @@ jugglimg_06</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
 プライムピアに　いく！　って
 ちょいと　でていっちゃいましてね▽
-よければ　さがしに　いってください▼</language>
+よければ　さがして　きてください▼</language>
 		<language name="JPN_KANJI" width="256">ジムリーダー　なんですけど▼
 プライムピアに　行く！　って
 ちょいと　でていっちゃいましてね▽
-よければ　探しに　いってください▼</language>
+よければ　探して　きてください▼</language>
 	</row>
 
 	<row id="msg_c03gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

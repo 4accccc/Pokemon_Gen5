@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-27T14:52:52"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:37:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1514" top="217" right="2219" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p14_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ユナイテッドタワーに行ける状態で話しかけた時のgmm
 ・はい/いいえ/なにそれ？の選択肢表示
@@ -306,21 +306,21 @@
 ユナイテッドタワーに　ご用ですか？</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ユナイテッドタワーに行けない状態で話しかけた時のgmm</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
 		<language name="JPN" width="256">こっきょうって　なんのために
 あるんだと　おもいます？▼
 だれにも　みえないのに
-ちょっとした　せんを　こえるだけで▽
-ルールや　かんがえかたが　かわるって▽
+ちょっとした　せんを　こえるだけで▼
+ルールや　かんがえかたが　かわるって
 ちょっと　ふしぎですよね</language>
 		<language name="JPN_KANJI" width="256">国境って　何のために
 あるんだと　思います？▼
 だれにも　みえないのに
-ちょっとした　線を　越えるだけで▽
-ルールや　考え方が　変わるって▽
+ちょっとした　線を　越えるだけで▼
+ルールや　考え方が　変わるって
 ちょっと　不思議ですよね</language>
 	</row>
 
