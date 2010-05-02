@@ -32,10 +32,8 @@ _EVENT_DATA_END
 EVENT_START   ev_c02r0401_shopm1_01
 
   _TALK_OBJ_START()
-  _BALLOONWIN_TALKOBJ_MSG(msg_c02r0401_shopm_01)
-  _MSGWIN_CLOSE()
-// _FIX_SHOP_CALL(C02_RL)
-  _FIX_SHOP_CALL(SHOP_UP)
+  _BALLOONWIN_OBJMSG_POS( msg_c02r0401_shopm_01, SCWK_TARGET_OBJID, POS_DOWN )
+  _FIX_SHOP_CALL_GREETING_LESS( SHOP_UP )
 EVENT_END
 
 /**************************************************************/
