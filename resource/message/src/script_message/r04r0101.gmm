@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T18:00:51"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T18:01:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -316,7 +316,7 @@
 	<row id="msg_r04r0101_pokemon_01">
 		<comment>ポケモン
 ・メッセージ表示と共に鳴き声再生</comment>
-		<attribute name="キャラ指定">ポケモン
+		<attribute name="キャラ指定">POKE20
 ワルビル</attribute>
 		<language name="JPN" width="256">ぐっぐっぐ！！</language>
 		<language name="JPN_KANJI" width="256">ぐっぐっぐ！！</language>

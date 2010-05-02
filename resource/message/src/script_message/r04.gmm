@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-29T16:53:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T18:00:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -395,7 +395,7 @@
 確かめさせて　もらうよ▼</language>
 	</row>
 
-	<row id="msg_r04_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r04_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後
 ・メッセージ表示後
@@ -418,7 +418,7 @@
 もっと　強さを　ひきだせるよ▼</language>
 	</row>
 
-	<row id="msg_r04_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アララギ博士（娘）からの連絡
 ・コール音再生と同時に表示
 ・コール音終了後にmsg_r04_tvt_02を表示</comment>
@@ -428,7 +428,7 @@ TVトランシーバー</attribute>
 		<language name="JPN_KANJI" width="256">ライブキャスターが　なっている</language>
 	</row>
 
-	<row id="msg_r04_tvt_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_tvt_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・メッセージ表示後、ライブキャスター画面へ</comment>
 		<attribute name="キャラ指定">システム
 TVトランシーバー</attribute>
@@ -459,11 +459,9 @@ TVトランシーバー</attribute>
 ・高速道路のそばに配置</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">フリーウェイを　みていると
-なんというか　みたされるんだ……[BE:00:ページ切り替え（行送り）]
-じぶんでも　わけが　わからないけれど</language>
+なんというか　みたされるんだ……</language>
 		<language name="JPN_KANJI" width="256">フリーウェイを　みていると
-なんというか　満たされるんだ……[BE:00:ページ切り替え（行送り）]
-自分でも　訳が　わからないけれど</language>
+なんというか　満たされるんだ……</language>
 	</row>
 
 	<row id="msg_r04_woman2_01">
