@@ -606,7 +606,6 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       //ŽóM‚µ‚È‚¨‚·‚Ì‚ÅƒNƒŠƒA
       GFL_STD_MemClear( p_wk->p_param->p_outline, sizeof(BR_OUTLINE_DATA ) );
 
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
       p_wk->cnt = 0;
       BR_NET_StartRequest( p_wk->p_param->p_net, type, &req_param );
       *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -618,7 +617,6 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     { 
       if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_DOWNLOAD_END;
       }

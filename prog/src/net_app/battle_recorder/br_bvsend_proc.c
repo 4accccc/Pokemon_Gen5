@@ -338,7 +338,6 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_UPLOAD_START:
-    PMSND_PlaySE( BR_SND_SE_SEARCH );
     p_wk->cnt = 0;
     BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD, NULL );
     *p_seq  = SEQ_UPLOAD_WAIT;
@@ -357,7 +356,6 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         break;
       }
 
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
 
 

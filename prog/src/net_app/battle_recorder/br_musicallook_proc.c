@@ -497,7 +497,6 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_musical_shot_search_monsno = p_wk->mons_no;
 
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
       p_wk->cnt = 0;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD, &req_param );
     }
@@ -509,7 +508,6 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     { 
       if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_DOWNLOAD_END;
       }

@@ -355,7 +355,6 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = p_wk->p_param->video_number;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
       p_wk->cnt = 0;
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -367,7 +366,6 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     { 
       if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_DOWNLOAD_END;
       }
@@ -785,7 +783,6 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
     //•Û‘¶ˆ—
   case SEQ_SAVE_INIT:
-    PMSND_PlaySE( BR_SND_SE_SEARCH );
     p_wk->cnt = 0;
     p_wk->work0 = 0;
     p_wk->work1 = 0;
@@ -830,7 +827,6 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
 
         BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_012 );
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         (*p_seq)++;
       }
     }

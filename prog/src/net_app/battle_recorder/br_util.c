@@ -1982,6 +1982,11 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
   }
   p_wk->is_end      = FALSE;
 
+  if( move == BR_BALLEFF_MOVE_NOP && BR_SEQ_IsComp( p_wk->p_seq, Br_BallEff_Seq_BigCircle ) )
+  { 
+    PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+  }
+
   OS_TPrintf( "X%d Y%d\n", p_wk->init_pos.x, p_wk->init_pos.y );
 
   switch( move )
@@ -2405,6 +2410,8 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         MOVE_CIRCLE_Init( &p_wk->move[i].circle, &p_wk->init_pos, BR_BALLEFF_CIRCLE_R, 0xFFFF*i/BR_BALLEFF_CIRCLE_USE_MAX, BR_BALLEFF_CIRCLE_SYNC );
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
       }
+
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
     }
     *p_seq  = SEQ_MAIN;
     /* fallthr  */
@@ -2759,13 +2766,17 @@ static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt )
 
   const u16 diff_angle  = p_wk->end_angle - p_wk->init_angle;
   const s16 diff_r      = (s16)p_wk->max_r - (s16)p_wk->r;
+  const s8  dir_r       = diff_r / MATH_IAbs(diff_r);
 
   u16 angle;
-  u16 r;
+  s32 r;
 
   //現在のアングルを取得
   angle = p_wk->init_angle + (diff_angle * cnt / p_wk->cnt_max);
-  r     = p_wk->r + ( diff_r * cnt / p_wk->cnt_max );
+  r     = p_wk->r + dir_r * ( MATH_IAbs(diff_r) * cnt / p_wk->cnt_max );
+  r     = MATH_IMax( r, 1 );
+
+  NAGI_Printf( "ang%d r%d\n", angle, r );
 
   ///角度から座標を求める
   p_wk->now_pos.x = (FX_CosIdx( angle ) * r) >> FX32_SHIFT;

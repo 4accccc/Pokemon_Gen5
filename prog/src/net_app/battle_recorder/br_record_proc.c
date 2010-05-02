@@ -771,7 +771,6 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = p_wk->p_param->video_number;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
       p_wk->cnt = 0;
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -783,7 +782,6 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
     { 
       if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_DOWNLOAD_END;
       }
@@ -960,7 +958,6 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
       p_wk->cnt = 0;
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -972,7 +969,6 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
     { 
       if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_DOWNLOAD_END;
       }
@@ -1319,6 +1315,7 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     break;
 
   case SEQ_SAVE_START:
+
     GAMEDATA_SaveAsyncStart( p_wk->p_param->p_gamedata );
     *p_seq  = SEQ_SAVE_WAIT;
     break;
@@ -1329,6 +1326,7 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
       result  = GAMEDATA_SaveAsyncMain( p_wk->p_param->p_gamedata );
       if( result == SAVE_RESULT_OK )
       { 
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_FADEOUT_START;
       }
     }

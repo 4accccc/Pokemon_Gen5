@@ -601,6 +601,7 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   PMSND_PopBGM();
 
   p_wk->data.is_recplay_finish = p_param->recPlayCompleteFlag;
+  OS_TPrintf( "バトルビデオ全部みたか？ %d", p_param->recPlayCompleteFlag );
 
   GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
   BTL_SETUP_QuitForRecordPlay( p_param );

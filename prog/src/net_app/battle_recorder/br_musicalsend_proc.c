@@ -69,7 +69,7 @@ typedef struct
   BR_BTN_WORK         *p_btn[ BR_MUSICALSEND_BTN_MAX ];
   BR_SEQ_WORK         *p_seq;
   BR_TEXT_WORK        *p_text;
-  BR_BALLEFF_WORK     *p_balleff;
+  BR_BALLEFF_WORK     *p_balleff[ CLSYS_DRAW_MAX ];
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;
 	HEAPID              heapID;
@@ -160,10 +160,14 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
   //モジュール作成
   p_wk->p_que   = PRINTSYS_QUE_Create( p_wk->heapID );
   { 
+    int i;
     GFL_CLUNIT *p_unit;
     p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
     p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_unit );
-    p_wk->p_balleff = BR_BALLEFF_Init( p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i] = BR_BALLEFF_Init( p_unit, p_param->p_res, i, p_wk->heapID );
+    }
   }
 
   //自分のミュージカルショット読み込み
@@ -208,7 +212,13 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
   Br_MusicalSend_DeletePhoto( p_wk, p_param );
   
 	//モジュール破棄
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
   if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
@@ -256,7 +266,13 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
   }
 
   //ボール処理
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
 
   //各プリント処理
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -369,11 +385,24 @@ static void Br_MusicalSend_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   {
     if( BR_BTN_GetTrg( p_wk->p_btn[ BR_MUSICALSEND_BTN_RETURN ], x, y ) )
     { 
+
+      GFL_POINT pos;
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
       p_wk->p_param->ret  = BR_MUSICALSEND_RET_RETURN;
       BR_SEQ_SetNext( p_seqwk, Br_MusicalSend_Seq_FadeOut );
     }
     if( BR_BTN_GetTrg( p_wk->p_btn[ BR_MUSICALSEND_BTN_SEND ], x, y ) )
     { 
+      { 
+        GFL_POINT pos;
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       p_wk->p_param->ret  = BR_MUSICALSEND_RET_SEND;
       BR_SEQ_SetNext( p_seqwk, Br_MusicalSend_Seq_Upload );
     }
@@ -438,7 +467,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
       GFL_POINT pos;
       pos.x = 256/2;
       pos.y = 192/2;
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
     }
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
@@ -462,7 +491,6 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.cp_upload_musical_shot_data = p_wk->p_musical_shot;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD, &req_param );
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
       p_wk->cnt = 0;
     }
     *p_seq  = SEQ_UPLOAD_WAIT;
@@ -474,8 +502,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     { 
       if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
-        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-        BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
         *p_seq  = SEQ_UPLOAD_END;
       }
     }

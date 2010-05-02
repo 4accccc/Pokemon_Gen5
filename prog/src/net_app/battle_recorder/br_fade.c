@@ -101,9 +101,9 @@ BR_FADE_WORK * BR_FADE_Init( HEAPID heapID )
   p_wk->p_pfd   = PaletteFadeInit( heapID );
 
   PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_BG, FADE_PAL_ALL_SIZE, heapID );
-  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, heapID );
+  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ONE_SIZE*14, heapID );
   PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, heapID );
-  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, heapID );
+  PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_OBJ, FADE_PAL_ONE_SIZE*14, heapID );
   PaletteTrans_AutoSet( p_wk->p_pfd, TRUE );
 
   return p_wk;
@@ -225,9 +225,9 @@ void BR_FADE_StartChangeFade( BR_FADE_WORK *p_wk, const BR_FADE_CHANGEFADE_PARAM
 void BR_FADE_PALETTE_Copy( BR_FADE_WORK *p_wk )
 {
   PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
-  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ONE_SIZE*14 );
   PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
-  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, 0, FADE_PAL_ONE_SIZE*14 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -648,7 +648,7 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
       if( p_wk->display == BR_FADE_DISPLAY_TOUCH_HERE )
       { 
         //TOUCH_HERE‚Ì‚Ý
-        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG, 0xF000, ev, 0xFFFF );
+        ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG, 0x3000, ev, 0xFFFF );
       }
       else
       { 
@@ -660,7 +660,7 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
         }
         if( p_wk->display & BR_FADE_DISPLAY_SUB )
         { 
-          ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFF, ev, p_wk->pfd_color );	///< sub	oam
+          ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0x3FFF, ev, p_wk->pfd_color );	///< sub	oam
           ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, ev, p_wk->pfd_color );	///< sub	bg
         }
       }

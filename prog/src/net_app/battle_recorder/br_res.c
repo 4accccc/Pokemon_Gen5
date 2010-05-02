@@ -843,9 +843,9 @@ void BR_RES_LoadCommon( BR_RES_WORK *p_wk, CLSYS_DRAW_TYPE type, HEAPID heapID )
         plt = PLT_OBJ_S_COMMON;
       }
 
-      p_wk->obj_common_plt[ type ]	= GFL_CLGRP_PLTT_Register( p_handle, 
+      p_wk->obj_common_plt[ type ]	= GFL_CLGRP_PLTT_RegisterEx( p_handle, 
           Br_Res_GetCommonObjPlt( p_wk->color ), 
-          type, plt*0x20, heapID );
+          type, plt*0x20, 0, 13, heapID );
     }
 
 
@@ -984,8 +984,8 @@ void BR_RES_TransPaletteFade( BR_RES_WORK *p_wk, BR_FADE_WORK *p_fade, HEAPID he
 	ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
 
   //OBJのパレット
-  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonObjPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_OBJ_M, 0, 0, heapID );
-  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonObjPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_OBJ_S, 0, 0, heapID );
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonObjPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_OBJ_M, 0, 32*14, heapID );
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonObjPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_OBJ_S, 0, 32*14, heapID );
 
   //BGのパレット
   //BGFONTのパレット
