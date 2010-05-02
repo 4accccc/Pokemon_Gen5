@@ -845,6 +845,22 @@ BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
+ * @brief ２つの指定ゾーンが同じマトリックス指定かどうかを判定
+ * @param  zone_id_a 判定するゾーンのID
+ * @param  zone_id_b 判定するゾーンのID
+ * @return  BOOL TRUEのとき、同じマトリックス指定
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsSameMatrixID(u16 zone_id_a, u16 zone_id_b)
+{
+  if(ZONEDATA_GetMatrixID(zone_id_a) == ZONEDATA_GetMatrixID(zone_id_b)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief 指定ゾーンのエンカウントデータIDを取得
  * @param  zone_id 判定するゾーンのID
  * @return  BOOL TRUEのとき、フィールドマップのマトリックス指定
