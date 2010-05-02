@@ -262,7 +262,7 @@ enum{
 ///通信相手が不明ゾーンにいる場合の表示座標X
 #define NOTHING_ZONE_SUB_POS_X            (240)
 ///通信相手が不明ゾーンにいる場合の表示座標Y
-#define NOTHING_ZONE_SUB_POS_Y            (64)
+#define NOTHING_ZONE_SUB_POS_Y            (80)
 ///通信相手が不明ゾーンにいる場合の表示座標間隔Y
 #define NOTHING_ZONE_SUB_POS_Y_SPACE      (24)
 
