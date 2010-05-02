@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-02T18:55:28"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T19:52:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="174"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -748,17 +748,17 @@
 	<row id="msg_invasion_info_m04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">「アイテム　ミッション！」　タッチで
-どうぐをかくす　ばしょに　いってください</language>
+ぼうけんしゃの　ちかくに　いってください</language>
 		<language name="JPN_KANJI" width="256">「アイテム　ミッション！」　タッチで
-道具を隠す　場所に　行って下さい</language>
+冒険者の　近くに　行って下さい</language>
 	</row>
 
 	<row id="msg_invasion_info_m05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">「アイテム　ミッション！」　タッチで
-ぼうけんしゃの　ちかくに　いってください</language>
+どうぐをかくす　ばしょに　いってください</language>
 		<language name="JPN_KANJI" width="256">「アイテム　ミッション！」　タッチで
-冒険者の　近くに　行って下さい</language>
+道具を隠す　場所に　行って下さい</language>
 	</row>
 
 	<row id="msg_invasion_info_m06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
