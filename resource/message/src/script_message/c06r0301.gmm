@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:09:57"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T18:58:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="218"/>
+		<comment position="4" width="233"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,8 +294,7 @@
 
 	<row id="msg_c06r0301_boy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・このMAPに「技思い出し」「技忘れ」配置
-・仮メッセージ</comment>
+・このMAPに「技思い出し」「技忘れ」配置</comment>
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
 		<language name="JPN" width="256">ハートのウロコなら
