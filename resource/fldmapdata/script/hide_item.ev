@@ -191,6 +191,8 @@ _EVENT_DATA  ev_hide_item_169
 _EVENT_DATA  ev_hide_item_170
 _EVENT_DATA  ev_hide_item_171
 _EVENT_DATA  ev_hide_item_172
+_EVENT_DATA  ev_hide_item_173
+_EVENT_DATA  ev_hide_item_174
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -1057,6 +1059,16 @@ EVENT_END
 EVENT_START ev_hide_item_172
 //セッカシティ ( 222, 196 )
 	_ITEM_EVENT_HIDEITEM( 10, 1, FLAG_HIDEITEM_172 )// タイマーボール
+EVENT_END
+
+EVENT_START ev_hide_item_173
+//ビレッジブリッジ ( 83, 13 )
+	_ITEM_EVENT_HIDEITEM( 45, 1, FLAG_HIDEITEM_173 )// マックスアップ
+EVENT_END
+
+EVENT_START ev_hide_item_174
+//ビレッジブリッジ ( 85, 8 )
+	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_174 )// かいふくのくすり
 EVENT_END
 
 //--------------------------------------------------------------

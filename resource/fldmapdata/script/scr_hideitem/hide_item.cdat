@@ -1,4 +1,4 @@
-static const HIDE_ITEM_DATA hide_item_data[173] = {
+static const HIDE_ITEM_DATA hide_item_data[175] = {
 
 	{ // かおるキノコ
 		  0, 
@@ -1037,5 +1037,17 @@ static const HIDE_ITEM_DATA hide_item_data[173] = {
 		1,0, // flags
 		118, // C07 セッカシティ
 		222,196, // x, y
+	},
+	{ // マックスアップ
+		173, 
+		0,0, // flags
+		263, // h04 ビレッジブリッジ
+		 83, 13, // x, y
+	},
+	{ // かいふくのくすり
+		174, 
+		0,0, // flags
+		263, // h04 ビレッジブリッジ
+		 85,  8, // x, y
 	},
 }; // end of hide_item_data
