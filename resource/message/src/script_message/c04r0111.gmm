@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-04-24T16:39:46"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T18:09:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="145" right="1985" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -716,7 +716,7 @@
 キミも　頑張れよな！</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerm_3" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_c04r0111_backpackerm_3" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>スーパー　７連勝
 
 ♂</comment>
@@ -728,7 +728,7 @@
 手ごわい　相手　ばっかりやな</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerm_4" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_c04r0111_backpackerm_4" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>スーパー　42連勝
 
 ♂</comment>
@@ -740,7 +740,7 @@
 オイラも　なかなか　やるじゃない</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerm_5" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_c04r0111_backpackerm_5" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>スーパー　84連勝
 
 ♂</comment>
@@ -752,7 +752,7 @@
 これは　夢か　幻か……</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerw_1" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_c04r0111_backpackerw_1" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ノーマル　14連勝
 
 ♀</comment>
@@ -918,7 +918,7 @@
 私　なんだか　不安ですよ……</language>
 	</row>
 
-	<row id="msg_c04r0111_oldman1_5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_oldman1_5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>スーパー　２１連勝
 
 no.051
@@ -943,7 +943,7 @@ no.051
 受け取って　くださいデース……▼</language>
 	</row>
 
-	<row id="msg_c04r0111_oldman1_5_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_oldman1_5_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>スーパー　２１連勝
 
 no.051
@@ -1279,7 +1279,7 @@ no.051
 倒したんだな　オレたちは……</language>
 	</row>
 
-	<row id="msg_c04r0111_trainerw_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_trainerw_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>スーパー　28連勝
 
 
@@ -1301,7 +1301,7 @@ no.050
 強くなりなさいな▼</language>
 	</row>
 
-	<row id="msg_c04r0111_trainerw_1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_trainerw_1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>スーパー　28連勝
 
 no.050
@@ -1371,7 +1371,7 @@ no.050
 まだまだ　続きますのよ</language>
 	</row>
 
-	<row id="msg_c04r0111_trainerw_5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_trainerw_5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>スーパー　203連勝
 
 no.207
@@ -1397,7 +1397,7 @@ no.207
 だから……　あなたに　これ　あげる▼</language>
 	</row>
 
-	<row id="msg_c04r0111_trainerw_5_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_trainerw_5_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>スーパー　203連勝
 
 no.207
@@ -1452,7 +1452,7 @@ no.207
 ポケモンは　マジで　奥が　深いぜ</language>
 	</row>
 
-	<row id="msg_c04r0111_cleaningm_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_cleaningm_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>ノーマル　２１連勝
 
 no.051
@@ -1467,7 +1467,7 @@ no.051
 おめーさん　よかったら　持っていきな▼</language>
 	</row>
 
-	<row id="msg_c04r0111_cleaningm_1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_cleaningm_1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>ノーマル ２１連勝
 
 no.051
@@ -1652,7 +1652,7 @@ no.051
 たっせい　できるかね？</language>
 		<language name="JPN_KANJI" width="256">アタイも　アンタも　９１連勝▼
 どちらが　先に　１００連勝を
-達成　できるかね？</language>
+達成できるかね？</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_5">
@@ -1817,7 +1817,7 @@ no.051
 出世　できるんだろうなあ</language>
 	</row>
 
-	<row id="msg_c04r0111_businessman_4" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_businessman_4" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 スーパー　105連勝
 
@@ -1835,7 +1835,7 @@ no.206
 お近づきの　記念だ　取っとけよ</language>
 	</row>
 
-	<row id="msg_c04r0111_businessman_4_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_c04r0111_businessman_4_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 スーパー　105連勝
 
