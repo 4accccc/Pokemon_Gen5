@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_pos_c04_hakai_01
+_EVENT_DATA    ev_pos_c04_hakai_01			//育て屋＆サポートイベント（到着フラグセット）
 _EVENT_DATA    ev_pos_c04_musicalguide_01
 _EVENT_DATA    ev_c04_footballm_01
 _EVENT_DATA    ev_c04_clown_01
@@ -106,6 +106,7 @@ _ANIME_LABEL	anm_exit_player_walk_out
 
 /************************************************************/
 /*					プラズマ団 posイベント					*/
+/*				！！到着フラグセットイベント！！			*/
 /************************************************************/
 EVENT_START	ev_pos_c04_hakai_01
 	//重要イベントでの通信切断
@@ -300,6 +301,8 @@ EVENT_START	ev_pos_c04_hakai_01
 	_END_EVENT_BGM()
 	
 	//========================================//
+	//C04到着フラグをセット ※そらとび問題のためイベント終了後に到着フラグをセットしています
+	_FLAG_SET( SYS_FLAG_ARRIVE_C04 )
 	
 	//POSイベント無効
 	$WK_SCENE_C04 = 1
@@ -765,7 +768,7 @@ EVENT_START	ev_scene_c04_support_01
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	_START_EVENT_BGM( SEQ_BGM_E_EMOTION )
+	_START_EVENT_BGM_EX( SEQ_BGM_E_EMOTION, 90 )
 	
 	//パパ！？どうしてここに
 	_BALLOONWIN_OBJMSG_POS( msg_c04_white_08, C04_SUPPORT_01, POS_UR )

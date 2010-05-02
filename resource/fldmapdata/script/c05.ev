@@ -25,7 +25,7 @@ _EVENT_DATA    ev_c05_trainerm_02
 _EVENT_DATA    ev_c05_trainerm_01
 _EVENT_DATA    ev_c05_badman
 _EVENT_DATA    ev_c05_workman
-_EVENT_DATA    ev_pos_c05_gymleader_01
+_EVENT_DATA    ev_pos_c05_gymleader_01		//ヤーコン＆ライバルイベント（到着フラグセット）
 _EVENT_DATA    ev_pos_c05_gymleader_02
 _EVENT_DATA    ev_c05_businessman_01
 _EVENT_DATA    ev_bg_c05_board_01
@@ -48,6 +48,7 @@ _EVENT_DATA_END
 
 /**************************************************************/
 /*POSイベント：ジムリーダーと会話                             */
+/*              ！！到着フラグセットイベント！！              */
 /**************************************************************/
 EVENT_START   ev_pos_c05_gymleader_01
 
@@ -129,6 +130,8 @@ EVENT_START   ev_pos_c05_gymleader_01
 	_OBJ_DEL( C05_GYMLEADER_01 )
 	}
 	//=======================================//
+	//C05到着フラグをセット ※そらとび問題のためイベント終了後に到着フラグをセットしています
+	_FLAG_SET( SYS_FLAG_ARRIVE_C05 )
 	
 	//C05イベント（１）のキャラクターを非表示にする
 	_FLAG_SET(FV_C05_GYMLEADER_01)
