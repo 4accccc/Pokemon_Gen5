@@ -23,6 +23,13 @@
 #include "intrude_work.h"
 #include "field/field_status.h"
 #include "field/field_status_local.h"
+#include "fieldmap/zone_id.h"
+
+
+//==============================================================================
+//  データ
+//==============================================================================
+#include "palace_zone_id_tbl.cdat"
 
 
 //==================================================================
@@ -466,6 +473,27 @@ BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm)
   }
   if(intcomm->recv_profile > 1 && GFL_NET_GetConnectNum() > 1){
     return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * パレスに接続してもよいZONEにいるかを判定
+ *
+ * @param   zone_id		
+ *
+ * @retval  BOOL		  TRUE:接続してよい
+ */
+//==================================================================
+BOOL Intrude_CheckZonePalaceConnect(u16 zone_id)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(PalaceZoneIDTbl); i++){
+    if(PalaceZoneIDTbl[i] == zone_id){
+      return TRUE;
+    }
   }
   return FALSE;
 }

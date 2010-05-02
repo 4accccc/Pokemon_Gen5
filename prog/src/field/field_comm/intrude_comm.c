@@ -26,6 +26,7 @@
 #include "intrude_mission.h"
 #include "net/net_whpipe.h"
 #include "gamesystem/game_beacon_accessor.h"
+#include "intrude_work.h"
 
 
 //==============================================================================
@@ -500,8 +501,9 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
   if(GFL_NET_WL_scanCheck(pBss, WL_SCAN_CHK_BIT_ALL ^ WL_SCAN_CHK_BIT_BEACON_COMP) == FALSE){
     return;
   }
-  
+
   bcon_buff = GFL_NET_WLGetDirectGFBss(pBss, &id);
+
   if(id == WB_NET_PALACE_SERVICEID || id == WB_NET_FIELDMOVE_SERVICEID){
     int i;
     for(i = 0; i < intcomm->search_count; i++){
@@ -518,6 +520,9 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
   	    = MyStatus_GetRegionCode(&bcon_buff->intrude_myst);
     }
     else{
+      if(Intrude_CheckZonePalaceConnect(bcon_buff->info.zone_id) == FALSE){
+        return;
+      }
       GAMEBEACON_Get_PlayerNameToBuf(
         &bcon_buff->info, intcomm->search_child[intcomm->search_count]);
   	  intcomm->search_child_sex[intcomm->search_count] = GAMEBEACON_Get_Sex(&bcon_buff->info);

@@ -19,6 +19,11 @@
 #include "net/net_whpipe.h"
 #include "savedata/mystatus.h"
 
+#include "field/fieldmap.h"
+#include "field/fieldmap_call.h"
+#include "field/field_comm/intrude_work.h"
+#include "fieldmap/zone_id.h"
+
 
 //==============================================================================
 //  定数定義
@@ -49,7 +54,9 @@ typedef struct _GAME_BEACON_SYS
 {
   GAMEDATA *gamedata;
   GBS_STATUS status;        ///<TRUE:初期化済み
-  BOOL fatal_err;   ///<TRUE:エラー発生
+  u8 fatal_err;   ///<TRUE:エラー発生
+  u8 padding;
+  u16 palace_check_zoneid;
   u32 error_wait;
   GBS_BEACON beacon_send_data;    ///<送信ビーコンデータ
   GBS_TARGET_INFO target_info;    ///<ビーコンで見つけた相手の情報
@@ -147,6 +154,7 @@ void * GameBeacon_Init(int *seq, void *pwk)
 	
 	gbs = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(GAME_BEACON_SYS));
 	gbs->gamedata = gamedata;
+	gbs->palace_check_zoneid = ZONE_ID_MAX;
 	return gbs;
 }
 
@@ -269,9 +277,10 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   GAMESYS_WORK *gsys = pwk;
   GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAME_BEACON_SYS_PTR gbs = pWork;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   GBS_TARGET_INFO *target;
   
-  if(GAMEDATA_GetIsSave(GAMESYSTEM_GetGameData(gsys)) == TRUE){
+  if(GAMEDATA_GetIsSave(gamedata) == TRUE){
     return;
   }
   
@@ -297,14 +306,23 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
     case WB_NET_PALACE_SERVICEID:     //侵入(パレス)
 //    case WB_NET_FIELDMOVE_SERVICEID:
       {
-        EXITCALLBACK_WORK *exw;
-        
-        exw = GFL_HEAP_AllocClearMemory(
-          GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(EXITCALLBACK_WORK));
-        exw->gsys = gsys;
-        GFL_STD_MemCopy(target->macAddress, exw->target_macAddress, 6);
-        GameCommSys_ExitReqCallback(gcsp, GameBeacon_ExitCallback_toInvasion, exw);
-        OS_TPrintf("パレス親が見つかった為、通信を侵入に切り替えます\n");
+        u16 zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
+        if(zone_id != gbs->palace_check_zoneid){
+          gbs->palace_check_zoneid = zone_id; //一度チェックしたのでゾーンが変わるまでは再チェックしない
+          if(Intrude_CheckZonePalaceConnect(zone_id) == TRUE){
+            EXITCALLBACK_WORK *exw;
+            
+            exw = GFL_HEAP_AllocClearMemory(
+              GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(EXITCALLBACK_WORK));
+            exw->gsys = gsys;
+            GFL_STD_MemCopy(target->macAddress, exw->target_macAddress, 6);
+            GameCommSys_ExitReqCallback(gcsp, GameBeacon_ExitCallback_toInvasion, exw);
+            OS_TPrintf("パレス親が見つかった為、通信を侵入に切り替えます\n");
+          }
+          else{
+            OS_TPrintf("palace no connect zone\n");
+          }
+        }
       }
       break;
     default:
