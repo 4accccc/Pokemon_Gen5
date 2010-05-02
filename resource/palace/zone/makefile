@@ -13,6 +13,7 @@ USERS	= matsuda ohmori
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = palace_zone_setting
+targetname_tbl = palace_zone_id_tbl
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -55,6 +56,7 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).cdat: $(targetname).cdat
 	$(COPY) $(targetname).cdat $(TARGETDIR)
+	$(COPY) $(targetname_tbl).cdat $(TARGETDIR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -76,4 +78,5 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.csv
 endif
 	rm -f $(TARGETDIR)/$(targetname).cdat
+	rm -f $(TARGETDIR)/$(targetname_tbl).cdat
 

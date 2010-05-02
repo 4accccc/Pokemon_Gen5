@@ -32,11 +32,12 @@ class ZONE_DATA
     @warp_grid_z = "0"         #WARPグリッドZ
     @sub_x = "0"               #下画面X
     @sub_y = "0"               #下画面Y
+    @connect = "0"             #パレスとの接続可否
     @comment = "0"             #備考欄
   end
 
   attr_accessor :zone_id, :warp_zone_id, :warp_grid_x, :warp_grid_y, :warp_grid_z;
-  attr_accessor :sub_x, :sub_y, :comment;
+  attr_accessor :sub_x, :sub_y, :connect, :comment;
 end
 
 
@@ -85,6 +86,8 @@ def CsvConvFileCheck()
     ZoneData[s].sub_x = line[cell].sub(/\.0/, "");
     cell += 1;
     ZoneData[s].sub_y = line[cell].sub(/\.0/, "");
+    cell += 1;
+    ZoneData[s].connect = line[cell];
     cell += 1;
     ZoneData[s].comment = line[cell];
     cell += 1;
@@ -135,6 +138,21 @@ def DataFileOutput()
       file.printf("\t\t%s,\t\t//sub_x\n", ZoneData[i].sub_x);
       file.printf("\t\t%s,\t\t//sub_y\n", ZoneData[i].sub_y);
       file.printf("\t},\n");
+    end
+    
+    file.printf("};\n");
+  }
+
+  File.open("palace_zone_id_tbl.cdat", "w"){|file|
+    file.printf("//============================================================\n");
+    file.printf("//       palace_zone_conv.rb で出力されたファイルです\n");
+    file.printf("//============================================================\n\n");
+    file.printf("ALIGN4 const u16 PalaceZoneIDTbl[] = {\n");
+
+    for i in 0..ZoneData.size-1
+      if (ZoneData[i].connect == "○")
+        file.printf("\t%s,\n", ZoneData[i].zone_id);
+      end
     end
     
     file.printf("};\n");
