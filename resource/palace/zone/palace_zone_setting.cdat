@@ -5,7 +5,7 @@
 const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	{	//0  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR05,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -25,7 +25,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//2  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR06,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -85,7 +85,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//8  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR07,		//reverse_zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -165,7 +165,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//16  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R08,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR08,		//reverse_zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -195,7 +195,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//19  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R09,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR09,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -265,7 +265,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//26  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R11,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR11,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -295,7 +295,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//29  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R12,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR12,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -315,7 +315,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//31  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R13,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR13,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -355,7 +355,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//35  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R14,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR14,		//reverse_zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -395,7 +395,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//39  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R15,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR15,		//reverse_zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -445,7 +445,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//44  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R16,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR16,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -485,7 +485,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//48  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H02,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH02,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -495,7 +495,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//49  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H03,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH03,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -505,7 +505,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//50  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH04,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -585,7 +585,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//58  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH05,		//reverse_zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -595,7 +595,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//59  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC04,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -945,7 +945,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//94  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC05,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1055,7 +1055,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//105  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC06,		//reverse_zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1125,7 +1125,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//112  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC07,		//reverse_zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1195,7 +1195,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//119  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C08,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC08,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1355,7 +1355,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//135  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_T03,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLT03,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1415,7 +1415,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//141  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_T04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLT04,		//reverse_zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1475,7 +1475,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//147  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_BC10,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC10,		//reverse_zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1535,7 +1535,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//153  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_WC10,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLCW10,		//reverse_zone_id
 		ZONE_ID_PLCW10,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1595,7 +1595,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//159  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_D06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLD06,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1635,7 +1635,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//163  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_D07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLD07,		//reverse_zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1855,7 +1855,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//185  裏マップ
 		ZONE_ID_PLC04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC04,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		405,		//warp_grid_x
 		1,		//warp_grid_y
@@ -1865,7 +1865,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//186  裏マップ
 		ZONE_ID_PLC05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC05,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1875,7 +1875,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//187  裏マップ
 		ZONE_ID_PLC06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC06,		//reverse_zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		108,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1885,7 +1885,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//188  裏マップ
 		ZONE_ID_PLC07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC07,		//reverse_zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		184,		//warp_grid_x
 		3,		//warp_grid_y
@@ -1895,7 +1895,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//189  裏マップ
 		ZONE_ID_PLC08,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC08,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1905,7 +1905,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//190  裏マップ
 		ZONE_ID_PLC10,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLC10,		//reverse_zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		43,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1915,7 +1915,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//191  裏マップ
 		ZONE_ID_PLCW10,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLCW10,		//reverse_zone_id
 		ZONE_ID_PLCW10,		//warp_zone_id
 		43,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1925,7 +1925,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//192  裏マップ
 		ZONE_ID_PLH02,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH02,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1935,7 +1935,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//193  裏マップ
 		ZONE_ID_PLH03,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH03,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1945,7 +1945,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//194  裏マップ
 		ZONE_ID_PLH04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH04,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1955,7 +1955,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//195  裏マップ
 		ZONE_ID_PLH05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLH05,		//reverse_zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		43,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1965,7 +1965,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//196  裏マップ
 		ZONE_ID_PLR05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR05,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		405,		//warp_grid_x
 		1,		//warp_grid_y
@@ -1975,7 +1975,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//197  裏マップ
 		ZONE_ID_PLR06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR06,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1985,7 +1985,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//198  裏マップ
 		ZONE_ID_PLR07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR07,		//reverse_zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		108,		//warp_grid_x
 		0,		//warp_grid_y
@@ -1995,7 +1995,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//199  裏マップ
 		ZONE_ID_PLR08,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR08,		//reverse_zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		184,		//warp_grid_x
 		3,		//warp_grid_y
@@ -2005,7 +2005,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//200  裏マップ
 		ZONE_ID_PLR09,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR09,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2015,7 +2015,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//201  裏マップ
 		ZONE_ID_PLR11,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR11,		//reverse_zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2025,7 +2025,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//202  裏マップ
 		ZONE_ID_PLR12,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR12,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2035,7 +2035,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//203  裏マップ
 		ZONE_ID_PLR13,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR13,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2045,7 +2045,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//204  裏マップ
 		ZONE_ID_PLR14,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR14,		//reverse_zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		760,		//warp_grid_x
 		-4,		//warp_grid_y
@@ -2055,7 +2055,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//205  裏マップ
 		ZONE_ID_PLR15,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR15,		//reverse_zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		43,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2065,7 +2065,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//206  裏マップ
 		ZONE_ID_PLR16,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLR16,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		405,		//warp_grid_x
 		1,		//warp_grid_y
@@ -2075,7 +2075,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//207  裏マップ
 		ZONE_ID_PLT03,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLT03,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2085,7 +2085,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//208  裏マップ
 		ZONE_ID_PLT04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLT04,		//reverse_zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		760,		//warp_grid_x
 		-4,		//warp_grid_y
@@ -2095,7 +2095,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//209  裏マップ
 		ZONE_ID_PLD06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLD06,		//reverse_zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2105,7 +2105,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//210  裏マップ
 		ZONE_ID_PLD07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PLD07,		//reverse_zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		108,		//warp_grid_x
 		0,		//warp_grid_y
@@ -2115,7 +2115,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//211  裏マップ
 		ZONE_ID_PALACE01,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE01,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2125,7 +2125,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//212  裏マップ
 		ZONE_ID_PALACE02,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE02,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2135,7 +2135,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//213  裏マップ
 		ZONE_ID_PALACE03,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE03,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2145,7 +2145,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//214  裏マップ
 		ZONE_ID_PALACE04,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE04,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2155,7 +2155,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//215  裏マップ
 		ZONE_ID_PALACE05,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE05,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2165,7 +2165,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//216  裏マップ
 		ZONE_ID_PALACE06,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE06,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2175,7 +2175,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//217  裏マップ
 		ZONE_ID_PALACE07,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE07,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2185,7 +2185,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//218  裏マップ
 		ZONE_ID_PALACE08,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE08,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2195,7 +2195,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//219  裏マップ
 		ZONE_ID_PALACE09,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE09,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y
@@ -2205,7 +2205,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 	},
 	{	//220  裏マップ
 		ZONE_ID_PALACE10,		//zone_id
-		ZONE_ID_MAX,		//reverse_zone_id
+		ZONE_ID_PALACE10,		//reverse_zone_id
 		ZONE_ID_PALACE01,		//warp_zone_id
 		31,		//warp_grid_x
 		2,		//warp_grid_y

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-02T16:42:18"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T18:42:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -697,25 +697,17 @@
 
 	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
-		<language name="JPN" width="256">かんしゃの　きもちが　あつまり
-ハイルツリーが　せいちょうした！▼
-みんなの　ハイルツリーの
+		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
 ブラックＬｖが　[2:02:３桁:0]あがった！</language>
-		<language name="JPN_KANJI" width="256">感謝の　気持ちが　集まり
-ハイルツリーが　生長した！▼
-皆の　ハイルツリーの
+		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
 ブラックＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
 
 	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
-		<language name="JPN" width="256">かんしゃの　きもちが　あつまり
-ハイルツリーが　せいちょうした！▼
-みんなの　ハイルツリーの
+		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
 ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
-		<language name="JPN_KANJI" width="256">感謝の　気持ちが　集まり
-ハイルツリーが　生長した！▼
-皆の　ハイルツリーの
+		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
 ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
 
@@ -3654,9 +3646,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
+		<language name="JPN" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　もっていた
 [1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　持っていた
+		<language name="JPN_KANJI" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　持っていた
 [1:09:どうぐ名:1]を　その場に　隠した！</language>
 	</row>
 
@@ -3667,9 +3661,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
+		<language name="JPN" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　もっていた
 [1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　持っていた
+		<language name="JPN_KANJI" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　持っていた
 [1:09:どうぐ名:1]を　その場に　隠した！</language>
 	</row>
 
@@ -3680,9 +3676,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
+		<language name="JPN" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　もっていた
 [1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　持っていた
+		<language name="JPN_KANJI" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　持っていた
 [1:09:どうぐ名:1]を　その場に　隠した！</language>
 	</row>
 
@@ -3693,9 +3691,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
+		<language name="JPN" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　もっていた
 [1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　持っていた
+		<language name="JPN_KANJI" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　持っていた
 [1:09:どうぐ名:1]を　その場に　隠した！</language>
 	</row>
 
@@ -3706,9 +3706,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　もっていた
+		<language name="JPN" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　もっていた
 [1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　持っていた
+		<language name="JPN_KANJI" width="256">ガサガサッ！▼
+[1:00:トレーナー名:0]は　持っていた
 [1:09:どうぐ名:1]を　その場に　隠した！</language>
 	</row>
 
