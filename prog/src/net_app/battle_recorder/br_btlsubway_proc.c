@@ -63,7 +63,7 @@ typedef enum
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_CAPTION,   //Ç∫ÇÒÇ©Ç¢
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_SUFFIX,    //òAèü
-  BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_CAPTION,   //Ç∫ÇÒÇ©Ç¢
+  BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_CAPTION,   //Ç≥Ç¢Ç±Ç§
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_SUFFIX,   //òAèü
   BR_BTLSUBWAY_MSGWINID_M_SINGLE_MAX,
@@ -73,7 +73,7 @@ typedef enum
   BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_CAPTION,   //Ç∫ÇÒÇ©Ç¢
   BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_SUFFIX,    //òAèü
-  BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_CAPTION,   //Ç∫ÇÒÇ©Ç¢
+  BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_CAPTION,   //Ç≥Ç¢Ç±Ç§
   BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_SUFFIX,   //òAèü
   BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MAX,
@@ -84,7 +84,7 @@ typedef enum
   BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_CAPTION,   //Ç∫ÇÒÇ©Ç¢
   BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_SUFFIX,    //òAèü
-  BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_CAPTION,   //Ç∫ÇÒÇ©Ç¢
+  BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_CAPTION,   //Ç≥Ç¢Ç±Ç§
   BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_SUFFIX,   //òAèü
 
@@ -92,7 +92,7 @@ typedef enum
   BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_CAPTION,   //Ç∫ÇÒÇ©Ç¢
   BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_SUFFIX,    //òAèü
-  BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_CAPTION,   //Ç∫ÇÒÇ©Ç¢
+  BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_CAPTION,   //Ç≥Ç¢Ç±Ç§
   BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_NUM,       //ÇXÇXÇXÇX
   BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_SUFFIX,   //òAèü
   BR_BTLSUBWAY_MSGWINID_M_MULTI_MAX,
@@ -609,6 +609,21 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       switch( i )
       { 
+      case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_CAPTION: //Ç∫ÇÒÇ©Ç¢
+        { 
+          u16 msgID;
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ) )
+          { 
+            msgID = msg_817;
+          }
+          else
+          { 
+            msgID = msg_807;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break;
+
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_NUM:  //Ç∫ÇÒÇ©Ç¢ÇÃêîíl
         { 
          const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ); 
@@ -749,6 +764,21 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       switch( i )
       { 
+      case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_CAPTION: //Ç∫ÇÒÇ©Ç¢
+        { 
+          u16 msgID;
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE ) )
+          { 
+            msgID = msg_817;
+          }
+          else
+          { 
+            msgID = msg_807;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break;
+
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_NUM:  //Ç∫ÇÒÇ©Ç¢ÇÃêîíl
         { 
          const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE ); 
@@ -943,6 +973,21 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       switch( i )
       { 
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_CAPTION:
+        { 
+          u16 msgID;
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_MULTI ) )
+          { 
+            msgID = msg_817;
+          }
+          else
+          { 
+            msgID = msg_807;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break; 
+
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_NUM:   //Ç∫ÇÒÇ©Ç¢
         { 
          const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_MULTI ); 
@@ -963,6 +1008,21 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
           GFL_STR_DeleteBuffer( p_src );
         }
         break;
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_CAPTION:
+        { 
+          u16 msgID;
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ) )
+          { 
+            msgID = msg_817;
+          }
+          else
+          { 
+            msgID = msg_807;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break;
+
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_NUM:  //Ç∫ÇÒÇ©Ç¢ÇÃêîíl
         { 
          const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
@@ -1046,12 +1106,12 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     { 
       21,
       10,
-      6,
+      5,
       2,
       msg_814,
     },
     { 
-      28,
+      27,
       10,
       2,
       2,
@@ -1085,7 +1145,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
          const int number  = BSUBWAY_SCOREDATA_GetWifiRank( p_param->p_subway );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
           GFL_STR_DeleteBuffer( p_src );
         }
@@ -1342,7 +1402,6 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, const BR
 
   //CLWKçÏê¨
   { 
-    
     int i;
     GFL_CLWK_DATA cldata;
 
