@@ -19,10 +19,10 @@ static const DEMO3D_SCENE_DATA data_intro_town_scene = {
 	FALSE,	///<2画面連結
 	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,TRUE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
-	GX_SORTMODE_AUTO,GX_BUFFERMODE_Z,	///<SwapBuf αソートモード,バッファモード
+	GX_SORTMODE_MANUAL,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
-	FX32_CONST(1.000 ),FX32_CONST(900.000 ),	///<near,far
+	FX32_CONST(1.000 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(0.5 ),	///<ScaleW
 	0,0,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
@@ -83,26 +83,63 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town01[] = {
 static const u16 res_intro_town_file_intro_town02[] = {
  NARC_data_demo3d_intro_town02_nsbmd,
  NARC_data_demo3d_intro_town02_nsbtp,
- NARC_data_demo3d_intro_town02_nsbta,
  NARC_data_demo3d_intro_town02_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02[] = {
- { res_intro_town_file_intro_town02, 4 },
+ { res_intro_town_file_intro_town02, 3 },
 };
 
 ///==================================
-/// intro_town03 Unit File Resource
+/// intro_town03sp Unit File Resource
 
-static const u16 res_intro_town_file_intro_town03[] = {
- NARC_data_demo3d_intro_town03_nsbmd,
- NARC_data_demo3d_intro_town03_nsbtp,
- NARC_data_demo3d_intro_town03_nsbca,
- NARC_data_demo3d_intro_town03_nsbma,
+static const u16 res_intro_town_file_intro_town03sp[] = {
+ NARC_data_demo3d_intro_town03sp_nsbmd,
+ NARC_data_demo3d_intro_town03sp_nsbtp,
+ NARC_data_demo3d_intro_town03sp_nsbta,
 };
 
-static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03[] = {
- { res_intro_town_file_intro_town03, 4 },
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03sp[] = {
+ { res_intro_town_file_intro_town03sp, 3 },
+};
+
+///==================================
+/// intro_town03su Unit File Resource
+
+static const u16 res_intro_town_file_intro_town03su[] = {
+ NARC_data_demo3d_intro_town03su_nsbmd,
+ NARC_data_demo3d_intro_town03su_nsbtp,
+ NARC_data_demo3d_intro_town03su_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03su[] = {
+ { res_intro_town_file_intro_town03su, 3 },
+};
+
+///==================================
+/// intro_town03au Unit File Resource
+
+static const u16 res_intro_town_file_intro_town03au[] = {
+ NARC_data_demo3d_intro_town03au_nsbmd,
+ NARC_data_demo3d_intro_town03au_nsbtp,
+ NARC_data_demo3d_intro_town03au_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03au[] = {
+ { res_intro_town_file_intro_town03au, 3 },
+};
+
+///==================================
+/// intro_town03wi Unit File Resource
+
+static const u16 res_intro_town_file_intro_town03wi[] = {
+ NARC_data_demo3d_intro_town03wi_nsbmd,
+ NARC_data_demo3d_intro_town03wi_nsbtp,
+ NARC_data_demo3d_intro_town03wi_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03wi[] = {
+ { res_intro_town_file_intro_town03wi, 3 },
 };
 
 ///========================================================
@@ -117,8 +154,16 @@ static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town02_tbl[] = 
  { res_intro_town_file_unit_intro_town02, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town03sp_tbl[] = {
+ { res_intro_town_file_unit_intro_town03sp, 1 },
+ { res_intro_town_file_unit_intro_town03su, 1 },
+ { res_intro_town_file_unit_intro_town03au, 1 },
+ { res_intro_town_file_unit_intro_town03wi, 1 },
+};
+
 static const DEMO3D_SCENE_UNIT res_intro_town_scene_unit[] = {
  { res_intro_town_file_unit_intro_town01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_intro_town_file_unit_intro_town02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_intro_town_file_unit_intro_town03sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
 };
 
