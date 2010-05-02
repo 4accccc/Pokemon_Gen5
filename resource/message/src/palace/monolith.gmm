@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-02T18:50:05"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T20:17:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -322,8 +322,8 @@
 
 	<row id="msg_mono_st_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">ハイルツリーのＬｖ：[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">ハイルツリーのＬｖ：[2:02:３桁:0]</language>
+		<language name="JPN" width="256">ハイルツリーのごうけいＬｖ：[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーの合計Ｌｖ：[2:02:３桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
@@ -358,8 +358,8 @@
 
 	<row id="msg_mono_st_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">ハイリンクにいたじかん：　[2:01:２桁:0]：[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" width="256">ハイリンクにいた時間：　[2:01:２桁:0]：[2:01:２桁:1]</language>
+		<language name="JPN" width="256">ハイリンクにいたじかん　　[2:01:２桁:0]：[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256">ハイリンクにいた時間　　[2:01:２桁:0]：[2:01:２桁:1]</language>
 	</row>
 
 	<row id="msg_mono_st_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-02T18:42:01"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T20:25:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="910"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -418,7 +418,7 @@
 
 	<row id="msg_invasion_mission_sys003" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
 		<language name="JPN" width="256">デルダマを　[2:01:２桁:0]こ　てにいれた！▼</language>
-		<language name="JPN_KANJI" width="256">デルダマを　[2:01:２桁:0]こ　手に入れた！▼</language>
+		<language name="JPN_KANJI" width="256">デルダマを　[2:01:２桁:0]個　手に入れた！▼</language>
 	</row>
 
 	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
@@ -449,10 +449,10 @@
 たすけにきた　[1:00:トレーナー名:0]が
 どうぐを　おいていったようだ</language>
 		<language name="JPN_KANJI" width="256">どうやら　[1:00:トレーナー名:0]が
-助けに　きてくれたようだ▼
+助けに　来てくれたようだ▼
 ……おや？▼
-助けにきた　[1:00:トレーナー名:0]が
-道具を　おいていったようだ</language>
+助けに来た　[1:00:トレーナー名:0]が
+道具を　置いていったようだ</language>
 	</row>
 
 	<row id="msg_invasion_mission000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
@@ -3646,12 +3646,20 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　もっていた
-[1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　持っていた
-[1:09:どうぐ名:1]を　その場に　隠した！</language>
+		<language name="JPN" width="256">もくてきちに　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+もってきた　[1:09:どうぐ名:1]を▽
+みつけたひとが　びっくりするように▽
+メモと　いっしょに　かくした！</language>
+		<language name="JPN_KANJI" width="256">目的地に　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+持ってきた　[1:09:どうぐ名:1]を▽
+見つけた人が　びっくりするように▽
+メモと　一緒に　隠した！</language>
 	</row>
 
 	<row id="mis_m05_03_m2" back-color="#80ff80,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -3661,12 +3669,20 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　もっていた
-[1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　持っていた
-[1:09:どうぐ名:1]を　その場に　隠した！</language>
+		<language name="JPN" width="256">もくてきちに　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+もってきた　[1:09:どうぐ名:1]を▽
+みつけたひとが　びっくりするように▽
+メモと　いっしょに　かくした！</language>
+		<language name="JPN_KANJI" width="256">目的地に　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+持ってきた　[1:09:どうぐ名:1]を▽
+見つけた人が　びっくりするように▽
+メモと　一緒に　隠した！</language>
 	</row>
 
 	<row id="mis_m05_03_m3" back-color="#80ff80,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -3676,12 +3692,20 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　もっていた
-[1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　持っていた
-[1:09:どうぐ名:1]を　その場に　隠した！</language>
+		<language name="JPN" width="256">もくてきちに　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+もってきた　[1:09:どうぐ名:1]を▽
+みつけたひとが　びっくりするように▽
+メモと　いっしょに　かくした！</language>
+		<language name="JPN_KANJI" width="256">目的地に　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+持ってきた　[1:09:どうぐ名:1]を▽
+見つけた人が　びっくりするように▽
+メモと　一緒に　隠した！</language>
 	</row>
 
 	<row id="mis_m05_03_m4" back-color="#80ff80,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -3691,12 +3715,20 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　もっていた
-[1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　持っていた
-[1:09:どうぐ名:1]を　その場に　隠した！</language>
+		<language name="JPN" width="256">もくてきちに　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+もってきた　[1:09:どうぐ名:1]を▽
+みつけたひとが　びっくりするように▽
+メモと　いっしょに　かくした！</language>
+		<language name="JPN_KANJI" width="256">目的地に　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+持ってきた　[1:09:どうぐ名:1]を▽
+見つけた人が　びっくりするように▽
+メモと　一緒に　隠した！</language>
 	</row>
 
 	<row id="mis_m05_03_m5" back-color="#80ff80,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -3706,12 +3738,20 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝隠した道具</comment>
-		<language name="JPN" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　もっていた
-[1:09:どうぐ名:1]を　そのばに　かくした！</language>
-		<language name="JPN_KANJI" width="256">ガサガサッ！▼
-[1:00:トレーナー名:0]は　持っていた
-[1:09:どうぐ名:1]を　その場に　隠した！</language>
+		<language name="JPN" width="256">もくてきちに　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+もってきた　[1:09:どうぐ名:1]を▽
+みつけたひとが　びっくりするように▽
+メモと　いっしょに　かくした！</language>
+		<language name="JPN_KANJI" width="256">目的地に　たどりついた！▼
+……　……　……
+……ガサガサッ！▼
+[1:00:トレーナー名:0]は
+持ってきた　[1:09:どうぐ名:1]を▽
+見つけた人が　びっくりするように▽
+メモと　一緒に　隠した！</language>
 	</row>
 
 	<row id="mis_m06_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
