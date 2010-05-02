@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T13:02:36"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T14:01:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -864,9 +864,8 @@
 勝負するのが　一番だからね▼</language>
 	</row>
 
-	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_t01_woman1_01" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
 		<language name="JPN" width="256">あなたと　あなたのポケモン
 どことなく　にてるって　かんじ！</language>
@@ -874,9 +873,8 @@
 どことなく　似てるって　感じ！</language>
 	</row>
 
-	<row id="msg_t01_oldman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_t01_oldman1_01" text-color="#000000,,,,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">老人１</attribute>
 		<language name="JPN" width="256">おじいちゃんが
 いいことを　おしえてあげよう▼
@@ -922,7 +920,7 @@
 この　場所が　好きなんだなぁ</language>
 	</row>
 
-	<row id="msg_t01_girl1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_t01_girl1_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">くさむらから　とびでて　おそってくる
