@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-01T22:12:29"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T12:53:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="128" top="28" right="833" bottom="648" maximized="no" rayout="Vertical2">
+	<dialog left="1318" top="188" right="2023" bottom="816" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -351,7 +351,7 @@
 		<language name="JPN_KANJI" width="256">１３番道路</language>
 	</row>
 
-	<row id="msg_r13_sign3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r13_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
@@ -370,7 +370,7 @@
 いろいろ　変化します！</language>
 	</row>
 
-	<row id="msg_r13_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_r13_poke_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ポケモン
 ・OBJをウロウロさせる
 　会話後、GIRL1が通訳をする</comment>
@@ -379,7 +379,7 @@
 		<language name="JPN_KANJI" width="256">キャモメ『キュルル……ルー……</language>
 	</row>
 
-	<row id="msg_r13_poke_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_r13_poke_02" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ポケモン
 ・msg_r13_girl1_02後に表示
 　その後個数によって
@@ -391,7 +391,7 @@
 		<language name="JPN_KANJI" width="256">キャモメ『キュルルー！</language>
 	</row>
 
-	<row id="msg_r13_poke_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_r13_poke_03" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジャンプアニメをしてメッセージ表示</comment>
 		<attribute name="キャラ指定">POKE</attribute>
@@ -399,7 +399,7 @@
 		<language name="JPN_KANJI" width="256">キャモメ『キャル！　キャルルー！</language>
 	</row>
 
-	<row id="msg_r13_sys_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_r13_sys_01" text-color=",,,,,,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>システム
 ・キャモメのお礼を取得
 　No416「わざマシン８９」（とんぼがえり）</comment>
@@ -414,7 +414,7 @@
 なにか　落ちている</language>
 	</row>
 
-	<row id="msg_r13_girl1_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_01">
 		<comment>♀
 ・直接会話時
 　配達物イベント開始</comment>
@@ -429,22 +429,24 @@
 どうにか　してあげたいのだけど……</language>
 	</row>
 
-	<row id="msg_r13_girl1_01a" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_01a">
 		<comment>♀
 ・先にキャモメに話しかけた場合
 　配達物イベント開始</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">この　キャモメね　はいたつぶつを
-３つ　１３ばんどうろで▽
+		<language name="JPN" width="256">この　キャモメね▼
+はいたつぶつを　３つ　
+１３ばんどうろで▽
 なくしちゃった　みたいなの▽
 どうにか　してあげたいのだけど……▼</language>
-		<language name="JPN_KANJI" width="256">この　キャモメね　配達物を
-３つ　１３番道路で▽
+		<language name="JPN_KANJI" width="256">この　キャモメね▼
+配達物を　３つ▽
+１３番道路で▽
 なくしちゃった　みたいなの▽
 どうにか　してあげたいのだけど……▼</language>
 	</row>
 
-	<row id="msg_r13_girl1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_02" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・配達物を１つ以上持っている場合
 　キャモメに渡しているようなアニメ後
@@ -458,7 +460,7 @@
 ちょっと　みせて　あげようよ！</language>
 	</row>
 
-	<row id="msg_r13_girl1_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_03" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・１つ見つけている場合</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -468,7 +470,7 @@
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_r13_girl1_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_04" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・２つ見つけている場合</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -478,7 +480,7 @@
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_r13_girl1_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_05" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・全部見つけている場合
 　msg_r13_poke_03へ</comment>
@@ -489,7 +491,7 @@
 これで　キャモメも　おおだすかりね！</language>
 	</row>
 
-	<row id="msg_r13_girl1_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_r13_girl1_06" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・イベントクリア後は、これを繰り返し</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -501,10 +503,9 @@
 顔をみると　シアワセに　なるね！</language>
 	</row>
 
-	<row id="msg_r13_oldman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+	<row id="msg_r13_oldman1_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-キャモメイベント開始前
-追加分</comment>
+キャモメイベント開始前</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">はて？
 そらから　てがみが　おちてきたぞい？</language>
@@ -512,7 +513,7 @@
 空から　手紙が　落ちてきたぞい？</language>
 	</row>
 
-	<row id="msg_r13_oldman1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+	<row id="msg_r13_oldman1_02" text-color=",,,,,,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 キャモメイベント中</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
@@ -526,21 +527,19 @@
 キャモメに　渡して　あげなされ▼</language>
 	</row>
 
-	<row id="msg_r13_oldman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+	<row id="msg_r13_oldman1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-キャモメイベント後
-追加分</comment>
+キャモメイベント後</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">おっちょこちょいな
-ポケモンも　いるんじゃのー</language>
-		<language name="JPN_KANJI" width="256">おっちょこちょいな
-ポケモンも　いるんじゃのー</language>
+		<language name="JPN" width="256">あの　キャモメも　わしらのため
+がんばって　くれてたんじゃのう！</language>
+		<language name="JPN_KANJI" width="256">あの　キャモメも　わしらのため
+がんばって　くれてたんじゃのう！</language>
 	</row>
 
-	<row id="msg_r13_backpackerw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r13_backpackerw_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-キャモメイベント開始前
-追加文</comment>
+キャモメイベント開始前</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>
 		<language name="JPN" width="256">なんで　わたしの　だした
 てがみが　そらから　ふってくるの……？</language>
@@ -548,7 +547,7 @@
 手紙が　空から　降ってくるの……？</language>
 	</row>
 
-	<row id="msg_r13_backpackerw_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r13_backpackerw_02" text-color=",,,,,,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 キャモメイベント中</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>
@@ -566,15 +565,14 @@
 今度は　落とさないように　ってね！</language>
 	</row>
 
-	<row id="msg_r13_backpackerw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r13_backpackerw_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-キャモメイベント後
-追加分</comment>
+キャモメイベント後</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>
-		<language name="JPN" width="256">あの　てがみね
-ママに　かいた　てがみなの！</language>
-		<language name="JPN_KANJI" width="256">あの　手紙ね
-ママに　書いた　手紙なの！</language>
+		<language name="JPN" width="256">クチベタな　わたしは　メールに
+たびで　かんじた　きもちを　かくの</language>
+		<language name="JPN_KANJI" width="256">クチベタな　わたしは　メールに
+旅で　感じた　気持ちを　書くの</language>
 	</row>
 
 	<flowchart-group-list>
