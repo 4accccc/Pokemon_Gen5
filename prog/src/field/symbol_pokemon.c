@@ -24,13 +24,11 @@
 #include "symbol_pokemon.h"
 #include "field/tpoke_data.h"
 
+#include "symbol_lv_tbl.naix"
+
 
 //==============================================================================
 //==============================================================================
-///シンボルポケモンのレベル
-#define SYMBOL_POKE_LEVEL       (30)
-
-
 typedef struct {
   TPOKE_DATA * tpdata;
   FIELDMAP_WORK * fieldmap;
@@ -178,12 +176,19 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
   POKEMON_PARAM * pp;
   u32 personal_rnd;
   u32 oya_id;
+  u8 *level_tbl;
+  u8 level;
+  
+  level_tbl = GFL_ARC_UTIL_Load(ARCID_SYMBOL_LV, NARC_symbol_lv_tbl_lv_tbl_bin, FALSE, heapID);
+  level = level_tbl[sympoke->monsno];
+  GFL_HEAP_FreeMemory(level_tbl);
+
   oya_id = MyStatus_GetID( GAMEDATA_GetMyStatus( gamedata ) );
   personal_rnd = POKETOOL_CalcPersonalRandEx(
       oya_id, sympoke->monsno, sympoke->form_no, sympoke->sex, 0, FALSE );
 
-  pp = PP_Create( sympoke->monsno, SYMBOL_POKE_LEVEL, PTL_SETUP_ID_AUTO, heapID );
-  PP_SetupEx( pp, sympoke->monsno, SYMBOL_POKE_LEVEL, oya_id, PTL_SETUP_ID_AUTO, personal_rnd );
+  pp = PP_Create( sympoke->monsno, level, PTL_SETUP_ID_AUTO, heapID );
+  PP_SetupEx( pp, sympoke->monsno, level, oya_id, PTL_SETUP_ID_AUTO, personal_rnd );
   PP_SetTokusei3( pp, sympoke->monsno, sympoke->form_no );
   if ( sympoke->wazano )
   {

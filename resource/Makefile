@@ -171,7 +171,8 @@ SUBDIRS	=	wmi \
 			dendou_demo \
 			fld3d_ci_se \
 			profanity_word \
-			manual
+			manual \
+			symbol
 
 
 include $(RESOURCE_MACRO)

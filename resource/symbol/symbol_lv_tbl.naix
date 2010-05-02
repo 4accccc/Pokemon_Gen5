@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: symbol_lv_tbl.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_SYMBOL_LV_TBL_NAIX_
+#define NARC_SYMBOL_LV_TBL_NAIX_
+
+enum {
+	NARC_symbol_lv_tbl_lv_tbl_bin = 0
+};
+
+/* NARC_SYMBOL_LV_TBL_NAIX_ */
+#endif
