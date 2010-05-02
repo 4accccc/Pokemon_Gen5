@@ -340,14 +340,14 @@
         <language name="JPN" width="256">アヤ</language>
         <language name="JPN_KANJI" width="256">アヤ</language>
       </row><row id="TRADE_POKE_02">
-        <language name="JPN" width="256">アオメ</language>
-        <language name="JPN_KANJI" width="256">アオメ</language>
+        <language name="JPN" width="256">アカメ</language>
+        <language name="JPN_KANJI" width="256">アカメ</language>
       </row><row id="TRADE_OYA_02">
         <language name="JPN" width="256">ナオキ</language>
         <language name="JPN_KANJI" width="256">ナオキ</language>
       </row><row id="TRADE_POKE_03">
-        <language name="JPN" width="256">アカメ</language>
-        <language name="JPN_KANJI" width="256">アカメ</language>
+        <language name="JPN" width="256">アオメ</language>
+        <language name="JPN_KANJI" width="256">アオメ</language>
       </row><row id="TRADE_OYA_03">
         <language name="JPN" width="256">ナオキ</language>
         <language name="JPN_KANJI" width="256">ナオキ</language>

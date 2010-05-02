@@ -774,8 +774,8 @@
 	</row>
 
 	<row id="worker1_05">
-		<language name="JPN" width="216">ヨシカズ</language>
-		<language name="JPN_KANJI" width="216">ヨシカズ</language>
+		<language name="JPN" width="216">ノリヒロ</language>
+		<language name="JPN_KANJI" width="216">ノリヒロ</language>
 	</row>
 
 	<row id="worker1_06">
@@ -1259,8 +1259,8 @@
 	</row>
 
 	<row id="fanm_02">
-		<language name="JPN" width="216">カツとシン</language>
-		<language name="JPN_KANJI" width="216">カツとシン</language>
+		<language name="JPN" width="216">ヒロとシン</language>
+		<language name="JPN_KANJI" width="216">ヒロとシン</language>
 	</row>
 
 	<row id="fanm_03">
@@ -1689,8 +1689,8 @@
 	</row>
 
 	<row id="veteranm_03">
-		<language name="JPN" width="216">タイガ</language>
-		<language name="JPN_KANJI" width="216">タイガ</language>
+		<language name="JPN" width="216">ムラマサ</language>
+		<language name="JPN_KANJI" width="216">ムラマサ</language>
 	</row>
 
 	<row id="veteranw_03">
@@ -2099,13 +2099,13 @@
 	</row>
 
 	<row id="fanm_06">
-		<language name="JPN" width="216">カツとシン</language>
-		<language name="JPN_KANJI" width="216">カツとシン</language>
+		<language name="JPN" width="216">ヒロとシン</language>
+		<language name="JPN_KANJI" width="216">ヒロとシン</language>
 	</row>
 
 	<row id="fanm_07">
-		<language name="JPN" width="216">カツとシン</language>
-		<language name="JPN_KANJI" width="216">カツとシン</language>
+		<language name="JPN" width="216">ヒロとシン</language>
+		<language name="JPN_KANJI" width="216">ヒロとシン</language>
 	</row>
 
 	<row id="fanm_08">
