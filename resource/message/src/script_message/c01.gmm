@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:00:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T15:03:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1523" top="180" right="2228" bottom="808" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -513,15 +513,13 @@
 		<attribute name="キャラ指定">BOY2
 少年（活発）</attribute>
 		<language name="JPN" width="256">ポケモンの　タイプと
-わざの　タイプが　おなじだと[BE:00:ページ切り替え（行送り）]
-いりょくが　アップ！[BE:01:ページ切り替え（クリア）]
-すごいだろ？
-ジムリーダーに　おしえてもらったんだ</language>
+わざの　タイプが　おなじだと▽
+いりょくが　アップって　すごいよな！▽
+ジムリーダーが　おしえてくれたぜ！</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　タイプと
-技の　タイプが　同じだと[BE:00:ページ切り替え（行送り）]
-なんと　技の　威力が　アップ！[BE:01:ページ切り替え（クリア）]
-すごいだろ？
-ジムリーダーに　教えてもらったんだ</language>
+技の　タイプが　同じだと▽
+威力が　アップって　すごいよな！▽
+ジムリーダーが　教えてくれたぜ！</language>
 	</row>
 
 	<row id="msg_c01_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -529,30 +527,22 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">ゆめのあとち　という　はいきょには
-やせいの　ポケモンが　すみついておる[BE:01:ページ切り替え（クリア）]
-なかでも　めずらしいのは
-ゆめをみせる　という　ポケモンじゃな</language>
-		<language name="JPN_KANJI" width="256">夢の跡地……　あの工場跡には
-野生の　ポケモンが　すみついておる[BE:01:ページ切り替え（クリア）]
-中でも　珍しいのは
-夢を見せる　という　ポケモンじゃな</language>
+ゆめを　みせるらしい　めずらしい▽
+やせいの　ポケモンが　おるぞ！</language>
+		<language name="JPN_KANJI" width="256">夢の跡地という　工場跡には
+夢を　みせるらしい　珍しい▽
+野生の　ポケモンが　おるぞ！</language>
 	</row>
 
 	<row id="msg_c01_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・メッセージ修正予定</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
-		<language name="JPN" width="256">この　まちには
-トレーナーズスクールが　あって[BE:00:ページ切り替え（行送り）]
-ポケモンジムが　ある[BE:01:ページ切り替え（クリア）]
-そのため　おとずれる
-しょしんしゃトレーナーが　おおいわ</language>
-		<language name="JPN_KANJI" width="256">この街には
-トレーナーズスクールが　あって[BE:00:ページ切り替え（行送り）]
-ポケモンジムが　ある[BE:01:ページ切り替え（クリア）]
-そのため　訪れる
-初心者トレーナーが　多いわ</language>
+		<language name="JPN" width="256">もしかして　トレーナーズスクール？
+そういう　トレーナーさん　おおいよね</language>
+		<language name="JPN_KANJI" width="256">もしかして　トレーナーズスクール？
+そういう　トレーナーさん　多いよね</language>
 	</row>
 
 	<row id="msg_c01_woman2_01">
@@ -643,9 +633,9 @@
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">FISING</attribute>
 		<language name="JPN" width="256">つりをしながら　しずかに　くらす……
-それが　おれの　りそうなのだ</language>
+おれの　りそうにして　しんじつなのだ</language>
 		<language name="JPN_KANJI" width="256">釣りをしながら　静かに　暮らす……
-それが　おれの　理想なのだ</language>
+おれの　理想にして　真実なのだ</language>
 	</row>
 
 	<row id="msg_c01_badman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -687,12 +677,13 @@
 サンヨウとは　３つ並ぶ　星のこと</language>
 	</row>
 
-	<row id="msg_c01_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>d01の案内看板
-・仮メッセージ</comment>
+	<row id="msg_c01_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>d01の案内看板</comment>
 		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">このさき　ゆめのあとち</language>
-		<language name="JPN_KANJI" width="256">この先　夢の跡地</language>
+		<language name="JPN" width="256">このさき　ゆめのあとち
+しんまいトレーナーの　あそびばしょ</language>
+		<language name="JPN_KANJI" width="256">この先　夢の跡地
+新米トレーナーの　遊び場所</language>
 	</row>
 
 	<row id="msg_c01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
