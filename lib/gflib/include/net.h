@@ -421,6 +421,16 @@ extern void GFL_NET_InitServer(void);
 extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
 //==============================================================================
 /**
+ * @brief    親機子機を繰り返し、必ず親になって接続
+ * @param    none
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_ChangeoverParent(NetStepEndCallback callback);
+
+
+//==============================================================================
+/**
  * @brief    親機子機を繰り返しするのを速度変更
  * @param    num GFL_NET_CROSS_SPEED_XXX
  * @return   none
