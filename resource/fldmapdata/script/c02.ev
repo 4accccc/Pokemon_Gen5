@@ -149,8 +149,8 @@ EVENT_START   ev_pos_c02_rival_01
 	//クロックが歩いていく
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_walk )
 	
-	//クロックの歩きと主人公の歩きを取る為のウェイト 
-	_TIME_WAIT(16)
+	//クロックの歩きと主人公の歩きに差をつける為のウェイト 
+	_TIME_WAIT(8)
 	
 	//主人公もついていく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_walk )
@@ -215,7 +215,7 @@ _ANIME_LABEL	anm_player_01_kiduku
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_01_walk
 
-	_ANIME_DATA	AC_WALK_L_8F,19
+	_ANIME_DATA	AC_WALK_L_8F,20
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -249,7 +249,7 @@ _ANIME_LABEL	anm_rival_item
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_01_walk
 
-	_ANIME_DATA	AC_WALK_L_8F,20
+	_ANIME_DATA	AC_WALK_L_8F,21
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -273,18 +273,18 @@ _ANIME_LABEL	anm_rival_01_saru
 /**************************************************************/
 EVENT_START   ev_pos_c02_boss_01
 
+	//プレイヤーがNにきづく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	
 	//Nを出現させる
 	//階段音と！マーク音とBGMがかぶらないように、ウェイトで調整
 	_SE_PLAY(SEQ_SE_KAIDAN)
 	_TIME_WAIT(4)
 	_OBJ_ADD_EX( 644, 581, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
-	
-	//プレイヤーがNにきづく
-	_TIME_WAIT(12)
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe)
 	_SE_WAIT()
-	_OBJ_ANIME_WAIT()
-	
+
+
 	//NのBGM再生
 	_TIME_WAIT(12)
 	_START_EVENT_BGM( SEQ_BGM_E_N )

@@ -57,6 +57,12 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START    ev_pos_d06r0101_n_01
 
+	//===============フラグ操作===============//
+	_FLAG_RESET(FV_D06R0101_HAKAI)
+	_OBJ_ADD(D06R0101_NINJA_01)
+	_OBJ_ADD(D06R0101_NINJA_02)
+	//===============フラグ操作===============//
+	
 	DEFINE_LOCAL	LWK_HERO_POSX
 	DEFINE_LOCAL	LWK_HERO_POSZ
 	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
@@ -187,6 +193,7 @@ EVENT_START    ev_pos_d06r0101_n_01
 	//Nを次のイベントの位置に移動
 	_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)
 	
+	_FLAG_SET(FV_D06R0101_HAKAI)
 //========================================//
 
 EVENT_END
@@ -418,6 +425,8 @@ EVENT_START    ev_pos_d06r0101_denki_01
 //===============フラグ操作===============//
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 2
+
+
 //========================================//
 
 EVENT_END  
@@ -530,6 +539,11 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	
 	//名前の格納
 	_PLAYER_NAME(0)
+
+	//座標の取得
+	DEFINE_LOCAL	LWK_POSX_A
+	DEFINE_LOCAL	LWK_POSZ_A
+	_PLAYER_POS_GET( LWK_POSX_A,LWK_POSZ_A )
 	
 	//博士2の場所を移動
 	//ホワイトの場所を移動
@@ -547,33 +561,62 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	//博士2がやってくる
 	//ホワイトがやってくる
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_03)
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_02)
+	IF $LWK_POSZ_A == 24 THEN
+		_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_02_a)
+	ELSE
+		_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_02_b)
+	ENDIF
 	_OBJ_ANIME_WAIT()
-	
-	//博士2が喋る
-	//博士2:ハーイ！　なにか　みつかった？
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_05, D06R0101_HAKASE2_01,POS_UL)
-	_BALLOONWIN_CLOSE()
-	
-	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_common_turn_left)
-	_OBJ_ANIME_WAIT()
-	
-	//博士2:この　どうくつは　1000ねんも
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_06, D06R0101_HAKASE2_01,POS_UL)
-	_BALLOONWIN_CLOSE()
-	
-	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
-	_OBJ_ANIME_WAIT()
+
+	IF $LWK_POSZ_A == 24 THEN
+		//博士2が喋る
+		//博士2:ハーイ！　なにか　みつかった？
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_05, D06R0101_HAKASE2_01,POS_DL)
+		_BALLOONWIN_CLOSE()
 		
-	//博士2:ポケモンたちが　どこから　きたのか
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01,POS_UL)
-	_BALLOONWIN_CLOSE()
-	
-	//ホワイトが喋る
-	//ホワイト:ねえねえ　ポケモンって
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_DEFAULT)
-	_BALLOONWIN_CLOSE()
-	
+		_OBJ_ANIME( D06R0101_HAKASE2_01,anm_common_turn_left)
+		_OBJ_ANIME_WAIT()
+		
+		//博士2:この　どうくつは　1000ねんも
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_06, D06R0101_HAKASE2_01,POS_DL)
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
+		_OBJ_ANIME_WAIT()
+			
+		//博士2:ポケモンたちが　どこから　きたのか
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01,POS_DL)
+		_BALLOONWIN_CLOSE()
+		
+		//ホワイトが喋る
+		//ホワイト:ねえねえ　ポケモンって
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_UL)
+		_BALLOONWIN_CLOSE()
+	ELSE
+		//博士2:ハーイ！　なにか　みつかった？
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_05, D06R0101_HAKASE2_01,POS_UL)
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME( D06R0101_HAKASE2_01,anm_common_turn_left)
+		_OBJ_ANIME_WAIT()
+		
+		//博士2:この　どうくつは　1000ねんも
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_06, D06R0101_HAKASE2_01,POS_UL)
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
+		_OBJ_ANIME_WAIT()
+			
+		//博士2:ポケモンたちが　どこから　きたのか
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01,POS_UL)
+		_BALLOONWIN_CLOSE()
+		
+		//ホワイトが喋る
+		//ホワイト:ねえねえ　ポケモンって
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_DL)
+		_BALLOONWIN_CLOSE()
+		
+	ENDIF
 //===============フラグ操作===============//
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 3
@@ -584,10 +627,17 @@ EVENT_END
 //--------------------------------------------------------------------
 //ホワイト: やってくる２                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_heroine_kuru_02
+_ANIME_LABEL	anm_heroine_kuru_02_a
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_heroine_kuru_02_b
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
@@ -604,11 +654,15 @@ _ANIME_LABEL	anm_hakase2_kuru_03
 /**************************************************************/
 /*  D06R0101 ダークトリニティのPOSイベントスクリプト2         */
 /**************************************************************/
-EVENT_START    ev_pos_d06r0101_denki_03	
-	
+EVENT_START    ev_pos_d06r0101_denki_03
+
+//===============フラグ操作===============//
+	_FLAG_RESET(FV_D06R0101_HAKAI)
 	_OBJ_ADD(D06R0101_NINJA_01)
 	_OBJ_ADD(D06R0101_NINJA_02)
-	
+	_OBJ_ADD(D06R0101_NINJA_03)
+//===============フラグ操作===============//
+
 	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
 	
 	IF $LWK_HERO_POSZ == 41 THEN			
@@ -675,6 +729,9 @@ EVENT_START    ev_pos_d06r0101_denki_03
 //===============フラグ操作===============//
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 4
+	
+	//ダークトリニティを消す
+	_FLAG_SET(FV_D06R0101_HAKAI)
 //========================================//
 
 EVENT_END
@@ -761,6 +818,11 @@ EVENT_START    ev_pos_d06r0101_denki_04
 		//Nが喋る
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_03, D06R0101_BOSS_01, POS_DEFAULT )
 		_MSGWIN_CLOSE()
+		
+		//==============フラグワーク操作==============//
+    	//ラストメッセージようにフラグをセット
+    	_FLAG_RESET(FE_N_LASTMESSAGE)
+		//============================================//
 	
 	ENDIF
 		
@@ -897,6 +959,7 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_FLAG_SET(FV_D06R0101_FRIENDS)
 	_FLAG_SET(FV_D06R0201_BOSS_01)
 	
+	//プラズマ団を消す
 	_FLAG_SET(FV_D06R0201_PLASMA)	
 //========================================//
 

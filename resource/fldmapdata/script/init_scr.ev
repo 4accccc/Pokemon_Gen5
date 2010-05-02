@@ -320,6 +320,9 @@ init_flags:
 	//ビレッジブリッジ民家：引越しにくる人を非表示
 	_FLAG_SET( FV_H04R0501_GUEST )
 
+	//電気石の洞穴のダークトリニティを非表示
+	_FLAG_SET(FV_D06R0101_HAKAI)
+
 }
 _RET
 

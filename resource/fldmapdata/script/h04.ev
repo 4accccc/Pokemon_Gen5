@@ -146,8 +146,6 @@ EVENT_START   ev_pos_h04_baker
 	ENDIF
 	
 	_YES_NO_WIN(SCWK_ANSWER)
-	_MSGWIN_CLOSE()
-	
 	IF $SCWK_ANSWER == SCR_YES THEN
 		
 		_PLAINWIN_MSG_DOWN(msg_h04_waitress_18)
@@ -302,13 +300,11 @@ EVENT_START   ev_h04_baker_01
 			//あなた　すっごいわね！
 			_BALLOONWIN_OBJMSG_MF(msg_h04_waitress_03,msg_h04_waitress_02,H04_BAKER_01,POS_DEFAULT)
 			_YES_NO_WIN(SCWK_ANSWER)
-			_MSGWIN_CLOSE()
 		
 		ELSE
 			//あら　あなたね　やっぱり
 	  		_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_04)
 	  		_YES_NO_WIN(SCWK_ANSWER)
-			_MSGWIN_CLOSE()
 		ENDIF
 		
 		IF $SCWK_ANSWER == SCR_YES THEN
@@ -316,10 +312,10 @@ EVENT_START   ev_h04_baker_01
 			//仕事の内容は分かる？
 		  	_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_06)
 		  	_YES_NO_WIN(SCWK_ANSWER)
-		  	_MSGWIN_CLOSE()
 		  	
 		  	IF $SCWK_ANSWER == SCR_NO THEN
 		  		
+			  	_MSGWIN_CLOSE()
 		  		//振り向きに差をつけるためのウェイト
 		  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_d)
 		  		_TIME_WAIT(8)

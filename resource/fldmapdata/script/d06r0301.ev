@@ -119,7 +119,7 @@ EVENT_START   ev_d06r0301_sage3_01
 	_OBJ_ANIME_WAIT()
 
 	//さてと……　プラズマ団について
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_01, MMDL_ID_EVENTOBJ_00, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_01, MMDL_ID_EVENTOBJ_00, POS_UR )
 	_MSGWIN_CLOSE()
 
 	//……プラズマ団をやめ　ポケモンと向き合おう
@@ -139,14 +139,14 @@ EVENT_START   ev_d06r0301_sage3_01
 	IF $WK_SCENE_AFTER_SAGE == 5 THEN
 		_PLAYER_NAME(0)
 		//ありがとう！　きみにつたえることがある
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_03, MMDL_ID_EVENTOBJ_00, POS_UL )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_03, MMDL_ID_EVENTOBJ_00, POS_UR )
 	ELSE
 		//探していない
 		$SCWK_TEMP0 = 5
 		$SCWK_TEMP0 -= $WK_SCENE_AFTER_SAGE
 		_NUMBER( 0, SCWK_TEMP0, 1 )
 		//ありがとう　これでゲーチスをのぞき　のこる
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_02, MMDL_ID_EVENTOBJ_00, POS_UL )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_02, MMDL_ID_EVENTOBJ_00, POS_UR )
 	ENDIF
 	_MSGWIN_CLOSE()
 	
@@ -155,7 +155,6 @@ EVENT_START   ev_d06r0301_sage3_01
 	//画面暗転----------------------------
 	_TIME_WAIT(8)
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_icpo_come_02)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
 	_TIME_WAIT(8)
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
@@ -189,7 +188,6 @@ ev_hakaim_btl:
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		_TRAINER_FLAG_SET( TRID_BAKER_03 )
 					
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -204,7 +202,6 @@ ev_hakaiw_btl:
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		_TRAINER_FLAG_SET( TRID_BAKER_03 )
 					
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
