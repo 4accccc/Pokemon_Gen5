@@ -959,6 +959,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
   if( prevMode == FIELD_SUBSCREEN_NORMAL ||
       prevMode == FIELD_SUBSCREEN_NOGEAR ||
       prevMode == FIELD_SUBSCREEN_UNION ||
+      prevMode == FIELD_SUBSCREEN_INTRUDE ||
       prevMode == FIELD_SUBSCREEN_BEACON_VIEW ||
       prevMode == FIELD_SUBSCREEN_DOWSING )
   {
