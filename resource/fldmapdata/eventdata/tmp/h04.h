@@ -49,5 +49,7 @@
 #define BG_H04_SIGN_01                    1
 #define BG_H04_SIGN_02                    2
 #define H04_HIDE_ITEM_01                  3
+#define H04_HIDE_ITEM_02                  4
+#define H04_HIDE_ITEM_03                  5
 
 #endif //ZONE_H04_EVB_H
