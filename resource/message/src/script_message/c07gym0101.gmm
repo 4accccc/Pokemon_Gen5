@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T18:40:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T20:34:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="166" right="2013" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -310,9 +310,9 @@
 		<comment>♂
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……つよき　こころを　もつものよ
+		<language name="JPN" width="256">つよき　こころを　もつものよ
 これを　わたそう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……強き　心を　持つものよ
+		<language name="JPN_KANJI" width="256">強き　心を　持つものよ
 これを　わたそう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -331,12 +331,12 @@
 ・アイテム入手処理
 　No406「こおりのいぶき」</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……バッジが　７つ▼
+		<language name="JPN" width="256">バッジが　７つ▼
 なるほど　レベル８０までの　ポケモンは
 めいれいを　すなおに　きいてくれる▼
 この　わざマシンには
 わたしの　おもいが　こめられている[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……バッジが　７つ▼
+		<language name="JPN_KANJI" width="256">バッジが　７つ▼
 なるほど　レベル８０までの　ポケモンは
 命令を　素直に　きいてくれる▼
 この　わざマシンには
@@ -361,11 +361,11 @@
 　c02でのストーン入手終了まで
 　ここから動作モデルを削除</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……いくら　たたかえど
+		<language name="JPN" width="256">いくら　たたかえど
 つよさ　とは　なにか　わからない[BE:01:ページ切り替え（クリア）]
 だが　おまえなら
 なにか　こたえを　みつけるやもな</language>
-		<language name="JPN_KANJI" width="256">……いくら　戦えど
+		<language name="JPN_KANJI" width="256">いくら　戦えど
 強さとは　なにか　わからない[BE:01:ページ切り替え（クリア）]
 だが　おまえなら
 なにか　答えを　みつけるやもな</language>
@@ -375,9 +375,9 @@
 		<comment>♂
 ・竜の塔イベント後からクリアまで</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">……つよさを　ひけらかすのは
+		<language name="JPN" width="256">つよさを　ひけらかすのは
 よわい　ものが　することだ</language>
-		<language name="JPN_KANJI" width="256">……強さを　ひけらかすのは
+		<language name="JPN_KANJI" width="256">強さを　ひけらかすのは
 弱い　ものが　することだ</language>
 	</row>
 
@@ -385,7 +385,7 @@
 		<comment>♂
 ・クリア後</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
-		<language name="JPN" width="256">ハチク『……そのむかし　ケガをして
+		<language name="JPN" width="256">ハチク『そのむかし　ケガをして
 おちこんでいた　わたしに▽
 アデクさんは　いわれた▼
 ほかのひとや　ポケモンと　ともにあり
@@ -394,7 +394,7 @@
 そういう　つよさも　ある　と▼
 チェレンと　いう　わかものも
 それを　さとったようだな</language>
-		<language name="JPN_KANJI" width="256">ハチク『……その昔　ケガをして
+		<language name="JPN_KANJI" width="256">ハチク『その昔　ケガをして
 おちこんでいた　わたしに▽
 アデクさんは　いわれた▼
 他の人や　ポケモンと　共にあり
