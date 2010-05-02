@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-27T16:24:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T17:56:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -328,11 +328,11 @@
 　（ゲーチスは下向きのまま）
 ・続けてsage1_02</comment>
 		<attribute name="キャラ指定">七賢人３</attribute>
-		<language name="JPN" width="256">スムラ『ジムの　めのまえに
+		<language name="JPN" width="256">スムラ『ポケモンジムの　めのまえに
 かくれがを　ようい　するのも▽
 おもしろいと　おもいましたが▽
 いがいに　はやく　ばれましたな▼</language>
-		<language name="JPN_KANJI" width="256">スムラ『ジムの　眼前に
+		<language name="JPN_KANJI" width="256">スムラ『ポケモンジムの　眼前に
 隠れ家を　用意するのも▽
 おもしろいと　思いましたが▽
 意外に　早く　ばれましたな▼</language>
