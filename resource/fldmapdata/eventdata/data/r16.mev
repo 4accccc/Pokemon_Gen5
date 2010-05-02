@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/19 20:24:42
+#save date:2010/05/02 17:24:14
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r16.wms
 #SECTION START:OBJ_EVENT
@@ -28,7 +28,7 @@ SCRID_TRID_BACKPACKERM_11
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
-3
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -113,7 +113,7 @@ CYCLEM
 #MOVE CODE Number
 MV_RTRUDL       
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -144,7 +144,7 @@ CYCLEW
 #MOVE CODE Number
 MV_RTDR         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -152,19 +152,19 @@ SCRID_TRID_CYCLINGW_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-4
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
 0
 #Move Limit X Number
-8
+12
 #Move Limit Z Number
 2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -168
+40 0 -168
 #event number: 5
 #type
 1
