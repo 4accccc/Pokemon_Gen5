@@ -51,6 +51,7 @@ static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , Game
 static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void  IntrudeComm_DisconnectCallBack(void* pWork);
 static void IntrudeComm_HardConnect(void* pWork,int hardID);
+static void _ExitCallback_toAlwaysSearch(void *pWork);
 static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level);
 
 
@@ -216,7 +217,8 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 
   if(intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
     if(intcomm->exit_recv == TRUE){
-      GameCommSys_ExitReq(intcomm->game_comm);
+      GameCommSys_ExitReqCallback(
+        intcomm->game_comm, _ExitCallback_toAlwaysSearch, invalid_parent->gsys);
       return;
     }
   }
@@ -278,7 +280,8 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         && intcomm->intrude_status_mine.season != GAMEDATA_GetSeasonID(gamedata)
         && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE){
       OS_TPrintf("季節が変わったため切断します\n");
-      GameCommSys_ExitReq(intcomm->game_comm);
+      GameCommSys_ExitReqCallback(
+        intcomm->game_comm, _ExitCallback_toAlwaysSearch, invalid_parent->gsys);
       *seq = 200; //一応何も動作しないシーケンス番号にしておく
       break;
     }
@@ -290,7 +293,8 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
       intcomm->other_player_timeout++;
       if(intcomm->other_player_timeout > OTHER_PLAYER_TIMEOUT){
         OS_TPrintf("例外エラー aaa \n");
-        GameCommSys_ExitReq(intcomm->game_comm);
+        GameCommSys_ExitReqCallback(
+          intcomm->game_comm, _ExitCallback_toAlwaysSearch, invalid_parent->gsys);
         break;
       }
     }
@@ -475,6 +479,29 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
     break;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * GameComm終了コールバック：常時通信を起動
+ *
+ * @param   pWork		GAMESYS_WORK
+ *
+ * このコールバックは
+ * 　・相手側の都合による通信終了
+ * 　・表にいて季節が変わった時の自らの通信終了
+ * 　・エラー以外の例外処理の通信終了
+ * などの主に外側の力による切断時に、常時通信を再度動かす時用に仕込んでいます。
+ * 自ら通信切断を切る(表に戻る、イベント前切断)処理には設定していません。
+ */
+//--------------------------------------------------------------
+static void _ExitCallback_toAlwaysSearch(void *pWork)
+{
+  GAMESYS_WORK *gsys = pWork;
+  
+  if(GAMEDATA_GetIntrudeReverseArea(GAMESYSTEM_GetGameData(gsys)) == FALSE){
+    GAMESYSTEM_CommBootAlways( gsys );
+  }
 }
 
 //--------------------------------------------------------------
