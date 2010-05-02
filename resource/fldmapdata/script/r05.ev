@@ -190,6 +190,8 @@ EVENT_START	ev_pos_r05_rival_01
 	_PLAINWIN_MSG_UP( msg_r05_champion_01 )
 	_MSGWIN_CLOSE()
 	
+	_START_EVENT_BGM( SEQ_BGM_E_CHAMPION )
+	
 	//カミツレたち：チャンプを見る
 	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_u )
 	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
@@ -239,10 +241,6 @@ EVENT_START	ev_pos_r05_rival_01
 	//聞こえたが…手厳しい若者だな
 	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_02 , R05_CHAMPION_01, POS_UR )
 	_MSGWIN_CLOSE()
-	
-	//ライバル：その場歩き
-	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
-	_OBJ_ANIME_WAIT()
 	
 	//はじめまして
 	_BALLOONWIN_OBJMSG_POS( msg_r05_black_05 , R05_RIVAL_01, POS_DR )
@@ -355,11 +353,14 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_OBJMSG_POS( msg_r05_champion_07 , R05_CHAMPION_01 , POS_UL )
 	_MSGWIN_CLOSE()
 	
+	//ちょっとした沈黙
+	_TIME_WAIT( 30 )
+	
 	//カミツレ：主人公たちを見て
 	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_r )
 	_OBJ_ANIME_WAIT()
 	
-	//さ いきましょ
+	//……さ いきましょ
 	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_04 , R05_LEADER4_01 , POS_DL )
 	_MSGWIN_CLOSE()
 	
@@ -368,15 +369,13 @@ EVENT_START	ev_pos_r05_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_DEF_MOVE(30)		//カメラ主人公位置に復帰
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-	
+	_TIME_WAIT( 15 )
 	//ライバル：下を向いて
 	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_d )
 	_OBJ_ANIME_WAIT()
-	
-	_TIME_WAIT( 16 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 	
 	//チャンピオンは強い それ以外にないよ
 	_BALLOONWIN_OBJMSG_POS( msg_r05_black_08 , R05_RIVAL_01 , POS_DR )
@@ -385,6 +384,9 @@ EVENT_START	ev_pos_r05_rival_01
 	//ライバル：先に行く
 	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_03 )
 	_OBJ_ANIME_WAIT()
+
+	//イベントBGM停止
+	_END_EVENT_BGM()
 
 	//カミツレ＆ライバル：位置移動
 	_OBJ_POS_CHANGE( R05_RIVAL_01, 336, 0, 431, DIR_LEFT )
