@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-01T13:25:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T16:53:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,9 +335,9 @@
 ・ポケモン交換
 ・0＝渡すポケモン</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">あたしが　ほしいのは
+		<language name="JPN" width="256">あたしが　こうかん　してほしいのは
 [1:01:ポケモン種族名:0]　なんだけど……</language>
-		<language name="JPN_KANJI" width="256">あたしが　ほしいのは
+		<language name="JPN_KANJI" width="256">あたしが　交換してほしいのは
 [1:01:ポケモン種族名:0]　なんだけど……</language>
 	</row>
 
@@ -381,7 +381,7 @@
 		<language name="JPN_KANJI" width="256">あなたに　交換してもらった
 [1:02:ポケモンニックネーム:0]　だけど▽
 すっごく　育って　強くなったの！▽
-よかったら　勝負　してみない？</language>
+よかったら　勝負してみない？</language>
 	</row>
 
 	<row id="msg_c02r0301_woman2_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -473,7 +473,7 @@
 		<comment>ポケモン
 ・WHITEver
 ・あわせて鳴き声SE</comment>
-		<attribute name="キャラ指定">ポケモン
+		<attribute name="キャラ指定">POKE18
 チュリネ</attribute>
 		<language name="JPN" width="256">きゅっきゅ！</language>
 		<language name="JPN_KANJI" width="256">きゅっきゅ！</language>
@@ -483,7 +483,7 @@
 		<comment>ポケモン
 ・BLACKver
 ・あわせて鳴き声SE</comment>
-		<attribute name="キャラ指定">ポケモン
+		<attribute name="キャラ指定">POKE24
 モンメン</attribute>
 		<language name="JPN" width="256">ぽふぉー</language>
 		<language name="JPN_KANJI" width="256">ぽふぉー</language>
@@ -498,7 +498,7 @@
 こうかんした　ポケモンは
 そだちすぎると　トレーナーの▽
 いうことを　きかなくなっちゃう▼
-もっとも　たくさん　ジムバッジを
+たくさん　ジムバッジを
 もっていれば　だいじょうぶ　だけど</language>
 		<language name="JPN_KANJI" width="256">人と　交換した
 ポケモンは　早く　育つ！▼
@@ -506,7 +506,7 @@
 交換した　ポケモンは
 育ちすぎると　トレーナーの▽
 いうことを　きかなくなっちゃう▼
-もっとも　たくさん　ジムバッジを
+たくさん　ジムバッジを
 持っていれば　大丈夫だけど</language>
 	</row>
 

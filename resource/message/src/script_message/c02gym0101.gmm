@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:21:22"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T16:44:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1986" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="525"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="538"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="692"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,11 +306,9 @@
 		<comment>♀
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">受付嬢その１</attribute>
-		<language name="JPN" width="256">あの　ドロボウって……▼
-プラズマだん　って
+		<language name="JPN" width="256">あのドロボウ……　プラズマだん　って
 いったい　なにもの　ですか？</language>
-		<language name="JPN_KANJI" width="256">あの　ドロボウって……▼
-プラズマ団　って
+		<language name="JPN_KANJI" width="256">あのドロボウ……　プラズマ団って
 いったい　何者ですか？</language>
 	</row>
 
@@ -329,9 +327,9 @@
 ・盗難イベント発生時</comment>
 		<attribute name="キャラ指定">受付嬢その２</attribute>
 		<language name="JPN" width="256">ドラゴンのホネを　うばって
-どうするつもり　でしょう？</language>
+どうする　つもり　でしょう？</language>
 		<language name="JPN_KANJI" width="256">ドラゴンのホネを　奪って
-どうするつもり　でしょう？</language>
+どうする　つもり　でしょう？</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -342,7 +340,7 @@
 　posを踏むと下を向き
 　主人公に隣接してad_02
 ・ホネ（大）→隕石→石→ジム</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">うーむ！　この　こっかくは
 いつみても……　ホレボレしますな▼</language>
@@ -352,7 +350,7 @@
 
 	<row id="msg_c02gym0101_ad_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">どうも　わたくし
 ふくかんちょうの　キダチ　です▼
@@ -367,7 +365,7 @@
 	<row id="msg_c02gym0101_ad_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・骨格標本</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">こちらの　こっかく……
 ドラゴンタイプの　ポケモンですね▼
@@ -386,7 +384,7 @@
 	<row id="msg_c02gym0101_ad_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・隕石</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">この　いしは　すごいですよ
 いんせき　なんですよ！▼
@@ -403,7 +401,7 @@
 ・古い石
 　WHITEverなら「ダークストーン（黒）」
 　BLACKverなら「ライトストーン（白）」</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">ああ　こちらは
 ただの　ふるいいし　です▼
@@ -425,7 +423,7 @@
 		<comment>♂
 ・階段付近
 ・続けて、下を向いてから07表示</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">この　さきが
 ポケモンジムと　なっております▼</language>
@@ -438,7 +436,7 @@
 ・ジム（予定）……階段付近
 ・ジムバッジ取得まで
 　この位置でこのメッセージ繰り返し</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">いちばん　おくで　つよくて　やさしい
 ジムリーダーが　まってます▼
@@ -540,7 +538,7 @@
 	<row id="msg_c02gym0101_ad_07a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">キダチ『あっ　あっ！？
 おいかけないと　いけないですよね</language>
@@ -551,7 +549,7 @@
 	<row id="msg_c02gym0101_ad_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後～盗難イベント解決前</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">キダチ『あの　ホネは
 アロエが　だいすきな　もの……</language>
@@ -578,17 +576,17 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『プラズマだんの　せいで
-ジムリーダーが　いないのか……▼
+ジムリーダーと　たたかえないのか……▼
 なんとも　メンドーな　はなしだね</language>
 		<language name="JPN_KANJI" width="256">チェレン『プラズマ団のせいで
-ジムリーダーが　いないのか……▼
+ジムリーダーと　戦えないのか……▼
 なんとも　メンドーな　話だね</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント解決後</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
+		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">ホネの　ひょうほん　って
 ふしぎ　なんですよ……▼
@@ -612,7 +610,7 @@ MAN1</attribute>
 		<language name="JPN" width="256">せかいかっこくの　めずしいモノ……
 はくぶつかんは　ロマンが　つまってる</language>
 		<language name="JPN_KANJI" width="256">世界各国の　珍しいモノ……
-そう考えると　ロマンの　集合体だね</language>
+博物館は　ロマンの　集合体だね</language>
 	</row>
 
 	<row id="msg_c02gym0101_man1_02">
