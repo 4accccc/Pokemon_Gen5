@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-27T16:25:07"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T18:31:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -431,7 +431,7 @@
 強くなれるからね……▼</language>
 	</row>
 
-	<row id="msg_c05_black_03a" text-color="#ff0000,,,#000000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
+	<row id="msg_c05_black_03a" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ライバル、画面左に移動
 ・画面外に消えると、主人公操作可能</comment>
@@ -631,7 +631,7 @@
 それにしても　あの　ゲーチス
 ただもの　じゃないって　かんじだ▼
 ……さてと　ぼくは
-ポケモンを　きたえてくるよ▼
+ポケモンを　きたえてくる▼
 あの　ヤーコンって　ひとには
 ぜったい　まけたくないからね▼
 というか　かんぜん　しょうりで
@@ -641,7 +641,7 @@
 それにしても　あの　ゲーチス
 ただもの　じゃないって　感じ▼
 ……さてと　ぼくは
-ポケモンを　鍛えてくるよ▼
+ポケモンを　鍛えてくる▼
 あの　ヤーコンって　人には
 絶対　負けたくないからね▼
 というか　完全勝利で
@@ -838,7 +838,7 @@
 ポケモン　奪われちゃったよ……</language>
 	</row>
 
-	<row id="msg_c05_driver_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_driver_01">
 		<comment>♂
 ・GRIDX=184、GRIDZ=436辺り</comment>
 		<attribute name="キャラクター">TRAINERM</attribute>
@@ -847,7 +847,7 @@
 いつも　そうおもっている
 うぬぼれると　すぐ　ダメになるもんな</language>
 		<language name="JPN_KANJI" width="256">勝てたのは　ポケモンの　おかげ
-負けたのは　じぶんの　せい……▼
+負けたのは　自分の　せい……▼
 いつも　そう思っている
 うぬぼれると　すぐ　ダメになるもんな</language>
 	</row>
@@ -866,7 +866,7 @@
 なにが　ヤバイかは　いえないけどさ</language>
 	</row>
 
-	<row id="msg_c05_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05_workman_01">
 		<comment>♂
 ・GRIDX=175、GRIDZ=437辺りに調整</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
@@ -929,7 +929,7 @@
 つなぐ　シンボル　なんだから！</language>
 	</row>
 
-	<row id="msg_c05_badrider_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・トリプルバトルチュートリアル
@@ -953,7 +953,7 @@
 どんな　勝負か　知りたいか？</language>
 	</row>
 
-	<row id="msg_c05_badrider_02w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_02w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・いいえ選択時
@@ -965,7 +965,7 @@
 気をひくのは　ほんと　難しいな</language>
 	</row>
 
-	<row id="msg_c05_badrider_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・メッセージ表示後にアニメ(どこかに行って戻る）
@@ -989,7 +989,7 @@
 トリプルバトルの　あらましさ▼</language>
 	</row>
 
-	<row id="msg_c05_badrider_04w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_04w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・はい/いいえ選択肢表示
@@ -1007,7 +1007,7 @@
 やらないか　トリプルバトルを？</language>
 	</row>
 
-	<row id="msg_c05_badrider_05w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・はい選択時
@@ -1023,7 +1023,7 @@
 いつだって　フルスロットルだぜ！▼</language>
 	</row>
 
-	<row id="msg_c05_badrider_06w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_06w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・はい、だけど戦えるポケモンが２匹以下</comment>
@@ -1040,7 +1040,7 @@
 ３匹　必要なんだよ</language>
 	</row>
 
-	<row id="msg_c05_badrider_07w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_07w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・いいえ選択時
@@ -1056,7 +1056,7 @@
 チャレンジこそが　人生なんだぜ</language>
 	</row>
 
-	<row id="msg_c05_badrider_08w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_08w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・トレーナー戦闘後、フィールド復帰時で自動表示</comment>
@@ -1079,7 +1079,7 @@
 ソウリュウシティに　行きな……</language>
 	</row>
 
-	<row id="msg_c05_badrider_09w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_09w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・c08r0201でトリプルバトル後</comment>
@@ -1094,7 +1094,7 @@
 似合う　ツミな　男さ</language>
 	</row>
 
-	<row id="msg_c05_badrider_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_01b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・トリプルバトルチュートリアル
@@ -1118,7 +1118,7 @@
 どんな　勝負か　知りたいか？</language>
 	</row>
 
-	<row id="msg_c05_badrider_02b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_02b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・いいえ選択時
@@ -1130,7 +1130,7 @@
 気をひくのは　ほんと　難しいな</language>
 	</row>
 
-	<row id="msg_c05_badrider_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_03b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・メッセージ表示後にアニメ(どこかに行って戻る）
@@ -1158,7 +1158,7 @@
 ローテーションバトルの　あらましさ▼</language>
 	</row>
 
-	<row id="msg_c05_badrider_04b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_04b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・はい/いいえ選択肢表示
@@ -1176,7 +1176,7 @@
 やらないか　ローテーションバトルを？</language>
 	</row>
 
-	<row id="msg_c05_badrider_05b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_05b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・はい選択時
@@ -1192,7 +1192,7 @@
 いつだって　フルスロットルだぜ！▼</language>
 	</row>
 
-	<row id="msg_c05_badrider_06b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_06b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・はい、だけど戦えるポケモンが２匹以下</comment>
@@ -1209,7 +1209,7 @@
 ３匹　必要なんだよ</language>
 	</row>
 
-	<row id="msg_c05_badrider_07b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_07b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・いいえ選択時
@@ -1225,7 +1225,7 @@
 チャレンジこそが　人生なんだぜ</language>
 	</row>
 
-	<row id="msg_c05_badrider_08b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_08b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・トレーナー戦闘後、フィールド復帰時で自動表示</comment>
@@ -1248,7 +1248,7 @@
 ソウリュウシティに　行きな……</language>
 	</row>
 
-	<row id="msg_c05_badrider_09b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_09b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・c08r0201でトリプルバトル後</comment>
@@ -1263,14 +1263,14 @@
 似合う　ツミな　男さ</language>
 	</row>
 
-	<row id="msg_c05_sign1_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>橋看板</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエのはねばし</language>
 		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
 	</row>
 
-	<row id="msg_c05_sign2_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c05_sign2_01" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>船のオブジェクト用
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">看板</attribute>
