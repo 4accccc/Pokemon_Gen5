@@ -1880,7 +1880,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
 
   //表の世界にいて近くに誰かが来ている
   if(msg_on == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
-    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_019, intsub->strbuf_info );
+    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_020, intsub->strbuf_info );
     msg_on = TRUE;
   }
 
@@ -1900,6 +1900,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     //ミッションは状況を示すメッセージの為、キューに貯めずに現在の状態をそのまま表示
     
     if(intsub->comm.m_status == MISSION_STATUS_EXE && intcomm != NULL){
+      const PALACE_ZONE_SETTING *tar_zonesetting;
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
       INTRUDE_STATUS *ist = &intcomm->intrude_status[intsub->comm.p_md->target_info.net_id];
       VecFx32 player_pos;
@@ -1910,8 +1911,9 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
         intsub->wordset, 0, &intsub->comm.p_md->target_info, HEAPID_FIELD_SUBSCREEN);
       
       //同じゾーンにいれば居場所の方向を表示
+      tar_zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
       if(intsub->comm.now_palace_area == intsub->comm.target_palace_area
-          && my_zone_id == ist->zone_id){
+          && (tar_zonesetting->zone_id == my_zone_id || tar_zonesetting->reverse_zone_id == my_zone_id)){
         fx32 offset_x, offset_z;
         u32 msg_id;
         offset_x = ist->player_pack.pos.x - player_pos.x;
