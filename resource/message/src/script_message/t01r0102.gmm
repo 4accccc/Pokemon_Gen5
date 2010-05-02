@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T22:03:07"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T13:57:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -406,7 +406,7 @@
 ごめんなさい　[1:00:トレーナー名:0]▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_02_01" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0102_white_02_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_03
 ・0＝主人公名前</comment>
@@ -441,17 +441,17 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">その　プレゼントボックスの　なか
-ポケモンは　ぼくたちを　まっている▼
+ポケモンが　ぼくたちを　まっている▼
 さあ　[1:00:トレーナー名:0]
 いっぽ　ふみだして▽
 プレゼントボックスを　しらべてよ▽
-はやく　ポケモンと　あいたいから！</language>
+はやく　ポケモンと　あいたいんだ！</language>
 		<language name="JPN_KANJI" width="256">その　プレゼントボックスの　中
-ポケモンは　ぼくたちを　待っている▼
+ポケモンが　ぼくたちを　待っている▼
 さあ　[1:00:トレーナー名:0]
 一歩　踏みだして▽
 プレゼントボックスを　調べてよ▽
-はやく　ポケモンと　会いたいから！</language>
+はやく　ポケモンと　会いたいんだ！</language>
 	</row>
 
 	<row id="msg_t01r0102_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -461,9 +461,9 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『プレゼントボックスを
-しらべずに　どこに　いくつもり？▼</language>
+しらべずに　どこに　いくの？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『プレゼントボックスを
-調べずに　どこに　行くつもり？▼</language>
+調べずに　どこに　行くの？▼</language>
 	</row>
 
 	<row id="msg_t01r0102_black_04a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -472,11 +472,11 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『プレゼントボックスを
-しらべて　あけてくれるかな▼
+しらべて　あけてくれないかな？▼
 ポケモンだって　はやく
 ぼくたちと　であいたいはずだよ</language>
 		<language name="JPN_KANJI" width="256">チェレン『プレゼントボックスを
-調べて　開けてくれるかな▼
+調べて　開けてくれないかな？▼
 ポケモンだって　はやく
 ぼくたちと　出会いたいはずだよ</language>
 	</row>
