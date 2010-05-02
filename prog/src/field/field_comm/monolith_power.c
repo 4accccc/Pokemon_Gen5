@@ -391,6 +391,10 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_DECIDE_STREAM,
     SEQ_DECIDE_SEND,
     SEQ_DECIDE_STREAM_WAIT,
+    SEQ_DECIDE_ME_FADEOUT_WAIT,
+    SEQ_DECIDE_ME_PLAY,
+    SEQ_DECIDE_ME_PLAY_WAIT,
+    SEQ_DECIDE_ME_FADEIN_WAIT,
     SEQ_DECIDE_STREAM_KEY_WAIT,
     SEQ_TP_RELEASE_WAIT,
     SEQ_FINISH,
@@ -549,15 +553,35 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
   case SEQ_DECIDE_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
-      PMSND_PlaySE( MONOLITH_SE_GPOWER_EQP );
+      PMSND_FadeOutBGM (PMSND_FADE_FAST);
+      (*seq)++;
+    }
+    break;
+  case SEQ_DECIDE_ME_FADEOUT_WAIT:
+    if(PMSND_CheckFadeOnBGM() == FALSE){
+      PMSND_PauseBGM(TRUE);
+      PMSND_PushBGM();
+      (*seq)++;
+    }
+    break;
+  case SEQ_DECIDE_ME_PLAY:
+    PMSND_PlayBGM( MONOLITH_ME_GPOWER_EQP );
+    (*seq)++;
+    break;
+  case SEQ_DECIDE_ME_PLAY_WAIT:
+    if( PMSND_CheckPlayBGM() == FALSE ){
+      PMSND_PopBGM();
+      PMSND_PauseBGM(FALSE);
+      PMSND_FadeInBGM (PMSND_FADE_FAST);
+      (*seq)++;
+    }
+    break;
+  case SEQ_DECIDE_ME_FADEIN_WAIT:
+    if(PMSND_CheckFadeOnBGM() == FALSE){
       *seq = SEQ_DECIDE_STREAM_KEY_WAIT;
     }
     break;
   case SEQ_DECIDE_STREAM_KEY_WAIT:
-    if(PMSND_CheckPlayingSEIdx(MONOLITH_SE_GPOWER_EQP) == TRUE){
-      break;
-    }
-    
     if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
       _Clear_MsgStream(mpw);
       {

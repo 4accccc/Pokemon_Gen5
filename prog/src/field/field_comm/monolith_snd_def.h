@@ -29,5 +29,10 @@
 ///「ミッションを受ける」を選択
 #define MONOLITH_SE_DECIDE_MISSION    (SEQ_SE_SYS_68)
 
+
+
+//==============================================================================
+//  ME
+//==============================================================================
 ///Gパワーを装備
-#define MONOLITH_SE_GPOWER_EQP  (SEQ_SE_FLD_133)
+#define MONOLITH_ME_GPOWER_EQP    (SEQ_ME_DEL_POWER)
