@@ -85,7 +85,7 @@ endif
 #------------------------------------------------------------------------------
 #do-build:	$(ZONETABLE_DIR)$(ZONEID_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_MONO_H) $(FLDMMDL_DIR)$(FLDMMDL_CODE_H) $(ITEM_DIR)$(ITEM_H) $(MONSNO_DIR)$(MONSNO_H) $(MONSNO_DIR)$(MONSNUM_H) $(FIELDCOMM_DIR)$(MISSION_TYPES_H) subdir $(TARGETDIR)/$(targetname).narc
 #do-build:	subdir $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MONSNO_H) $(MONSNUM_H) $(MISSION_TYPES_H)
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETLISTDIR)/mission_list_param.cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
