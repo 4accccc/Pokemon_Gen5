@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T11:33:42"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T21:06:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -459,14 +459,14 @@
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクと　アナタは
 おたがいの　しんねんを　かけて▽
-たたかった▼
+ちからを　ふりしぼり　たたかった▼
 そして　ボクが　かった▼
-もう　なにも　いわないでください[BE:09:速度コントロール:0]▼</language>
+もう　なにも　いわないでほしい[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクと　アナタは
-お互いの　信念を　かけて▽
-戦った▼
+お互いの　信念を　懸けて▽
+死力を　尽くして　戦った▼
 そして　勝利したのは　ボクです▼
-もう　なにも　いわないでください[BE:09:速度コントロール:0]▼</language>
+もう　なにも　いわないでほしい[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -507,7 +507,7 @@
 ムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　Nの芝居（両手を広げる）
@@ -597,11 +597,11 @@
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……まあね▼
-ポケモンリーグを　かちぬきましたよ
+		<language name="JPN" width="256">チェレン『……なんとか
+ポケモンリーグを　かちぬけました▽
 なかなか　タフでしたけど▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……まあね▼
-ポケモンリーグを　勝ち抜きましたよ
+		<language name="JPN_KANJI" width="256">チェレン『……なんとか
+ポケモンリーグを　勝ち抜けました▽
 なかなか　タフでしたけど▼</language>
 	</row>
 
@@ -625,7 +625,7 @@
 わかったから　強くなれたんです▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_03a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_black_03a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・主人公を見てメッセージ表示
 ・続けてchampion_04</comment>

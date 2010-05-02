@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:46:47"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T21:02:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -323,7 +323,7 @@
 ポケモンリーグに　向かうんだね？</language>
 	</row>
 
-	<row id="msg_r10_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r10_black_02">
 		<comment>♂
 ・はい選択時
 ・続けてトレーナー戦闘に</comment>
@@ -347,7 +347,7 @@
 きみが　どれだけ　強いかを！▼</language>
 	</row>
 
-	<row id="msg_r10_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r10_black_03">
 		<comment>♂
 ・いいえ選択時
 ・続けてトレーナー戦闘に</comment>
@@ -367,7 +367,7 @@
 きみが　どれだけ　強いかを！▼</language>
 	</row>
 
-	<row id="msg_r10_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r10_black_04">
 		<comment>♀
 ・戦闘後、フィールドに復帰して自動で表示
 ・続けてwhite_01</comment>
@@ -383,7 +383,7 @@
 元気に　してあげないとね▼</language>
 	</row>
 
-	<row id="msg_r10_black_04a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r10_black_04a">
 		<comment>♂
 ・システムウインドウ
 ・回復処理
@@ -396,7 +396,7 @@
 回復させた！▼</language>
 	</row>
 
-	<row id="msg_r10_black_04b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r10_black_04b">
 		<comment>♂
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂
@@ -411,7 +411,7 @@
 なにか　助けてあげら……▼</language>
 	</row>
 
-	<row id="msg_r10_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No029「げんきのかたまり」×２
@@ -636,8 +636,7 @@
 	</row>
 
 	<row id="msg_r10_sign2_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
-		<comment>バッジチェックゲート
-・仮メッセージ</comment>
+		<comment>バッジチェックゲート</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">バッジチェックゲート
 ゲートをひらき　れきしをかえよ！</language>

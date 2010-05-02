@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T12:47:43"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T21:07:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1491" top="188" right="2196" bottom="808" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,11 +315,11 @@
 		<attribute name="キャラ指定">NINJA
 ダークトリニティ</attribute>
 		<language name="JPN" width="256">この　しろでも
-ポケモンの　かいふくや[BE:00:ページ切り替え（行送り）]
+ポケモンを　かいふく　させたり[BE:00:ページ切り替え（行送り）]
 パソコンは　つかえる……[BE:01:ページ切り替え（クリア）]
 あんしん　しろ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">この　城でも
-ポケモンの　回復や[BE:00:ページ切り替え（行送り）]
+ポケモンを　回復させたり[BE:00:ページ切り替え（行送り）]
 パソコンは　使える……[BE:01:ページ切り替え（クリア）]
 安心しろ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -336,12 +336,12 @@
 ポケモンを　やすめるが　いい[BE:01:ページ切り替え（クリア）]
 おまえが　この　しろの
 いちばん　おくに　すすむことが[BE:00:ページ切り替え（行送り）]
-ゲーチスさまの　のぞみ　だ……[BE:01:ページ切り替え（クリア）]</language>
+Ｎさまの　のぞみ　だ……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……まずは　あの部屋で
 ポケモンを　休めるが　いい[BE:01:ページ切り替え（クリア）]
 おまえが　この城の
 一番　奥まで　進むことが[BE:00:ページ切り替え（行送り）]
-ゲーチスさまの　望みだ……[BE:01:ページ切り替え（クリア）]</language>
+Ｎさまの　望みだ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
