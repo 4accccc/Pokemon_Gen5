@@ -155,6 +155,7 @@ typedef enum
 #define PLTID_OBJ_POKESTATE_M (13) //
 #define PLTID_OBJ_POKERUS_M (15) //
 #define PLTID_OBJ_DEMO_M (7)
+#define PLTID_OBJ_POKEITEM_M (6)
 #define _OBJPLT_GTS_POKEICON_OFFSET_M (0)
 
 
@@ -844,6 +845,9 @@ extern void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc* state);
 extern BOOL POKEMONTRADE_IsMailBoxFull(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRAE_EndCancelState(POKEMON_TRADE_WORK* pWork);
+
+extern void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev );
 
 
 #if _TRADE_DEBUG

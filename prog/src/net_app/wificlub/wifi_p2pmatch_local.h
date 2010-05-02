@@ -270,6 +270,10 @@ enum{
 ///レギュレーション：NG色
 #define REG_FAIL_COLOR        PRINTSYS_MACRO_LSB(4, 2, 0)
 
+
+#define MSG_WHITE_COLOR      PRINTSYS_MACRO_LSB(15, 2, 0)
+
+
 typedef enum{
   REGWIN_TYPE_RULE,        ///<ルールを見る
   REGWIN_TYPE_RULE_SHORT,

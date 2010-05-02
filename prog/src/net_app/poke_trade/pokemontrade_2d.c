@@ -2160,6 +2160,7 @@ void IRC_POKETRADE_EndSubMojiBG(POKEMON_TRADE_WORK* pWork)
 void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARAM* pp)
 {
   // ポケアイコン用アイテムアイコン
+  int x,y;
   {
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
     UI_EASY_CLWK_RES_PARAM prm;
@@ -2173,8 +2174,22 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     if(ITEM_CheckMail(item)){
       type = 1;
     }
+    switch(side){
+    case 0:
+    case 1:
+      x = 2 * 8 + side * 16 * 8 + 4;
+      y = 17*8-4;
+      prm.draw_type = CLSYS_DRAW_SUB;
+      prm.pltt_line = PLTID_OBJ_POKEITEM_S;
+      break;
+    case 2:
+      x = 16;
+      y = 192-24;
+      prm.draw_type = CLSYS_DRAW_MAIN;
+      prm.pltt_line = PLTID_OBJ_POKEITEM_M;
+      break;
+    }
 
-    prm.draw_type = CLSYS_DRAW_SUB;
     prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
     prm.arc_id    = APP_COMMON_GetArcId();
     prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
@@ -2188,9 +2203,10 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
     // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
+    
     pIM->clwk_poke_item =
       UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,
-                               2 * 8 + side * 16 * 8 + 4, 17*8-4, type, pWork->heapID );
+                               x, y, type, pWork->heapID );
   }
 }
 

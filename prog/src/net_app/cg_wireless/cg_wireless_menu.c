@@ -1424,6 +1424,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
     pWork->dbw = pwk;
 	}
   GFL_NET_ReloadIcon();
+  GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
   
   return GFL_PROC_RES_FINISH;
 }

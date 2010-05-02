@@ -863,12 +863,13 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 
 
 
+
 //--------------------------------------------------------------
 //	ポケモンMCSS作成
 //   bRev  反転フラグ
 //   bGTS  正面フラグ
 //--------------------------------------------------------------
-void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev,BOOL bGTS )
+void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev )
 {
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
@@ -878,12 +879,7 @@ void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFro
 
   GF_ASSERT( pWork->pokeMcss[no] == NULL );
 
-  if(bGTS && !bFront){
-    bFront=TRUE;
-    scale.x = -scale.x;
-  }
 
-  
   if(bRev){
     u16 mons = PP_Get( pp, ID_PARA_monsno, NULL );
     u16 frm = PP_Get( pp, ID_PARA_form_no, NULL );
@@ -894,7 +890,6 @@ void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFro
       scale.x = -scale.x;
     }
   }
-
   if(bFront){
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
     z=PSTATUS_MCSS_POS_MYZ;
@@ -905,6 +900,24 @@ void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFro
   }
   pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
+}
+
+
+//--------------------------------------------------------------
+//	ポケモンMCSS作成
+//   bRev  反転フラグ
+//   bGTS  正面フラグ
+//--------------------------------------------------------------
+void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev,BOOL bGTS )
+{
+  int z;
+  BOOL rev;
+
+  if(bGTS && !bFront){
+    bFront=TRUE;
+    bRev = TRUE;
+  }
+  IRCPOKETRADE_PokeCreateMcssNormal(pWork, no, bFront, pp, bRev);
 }
 
 //上のラッパー関数

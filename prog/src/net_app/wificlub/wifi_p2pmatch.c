@@ -3081,9 +3081,11 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
     // memcpy( wk->index2NoBackUp, wk->index2No, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
     GFL_STD_MemCopy(  wk->index2No, wk->index2NoBackUp,sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
 
-    // ボタン全描画リクエスト
-    MCVSys_BttnAllWriteReq( wk );
 
+    if( in_flag || out_flag){
+      // ボタン全描画リクエスト
+      MCVSys_BttnAllWriteReq( wk );
+    }
     //出入りSE
     if( in_flag == TRUE ){
       PMSND_PlaySE( SEQ_SE_FLD_05 );
@@ -3509,7 +3511,7 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
     _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT中になる
   wk->VChatModeOff = FALSE;
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
-    WifiList_SetLastPlayDate( wk->pList, wk->friendNo - 1); // 最後に遊んだ日付は、VCTがつながったときに設定する
+    //WifiList_SetLastPlayDate( wk->pList, wk->friendNo - 1); // 最後に遊んだ日付は、VCTがつながったときに設定する
     _changeBGMVol( wk, 0 );
 
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
@@ -3536,7 +3538,7 @@ static int WifiP2PMatch_VCTConnectInit( WIFIP2PMATCH_WORK *wk, int seq )        
   _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT中になる
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT_WAIT);
 
-  WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex()); // 最後に遊んだ日付は、VCTがつながったときに設定する
+  //WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex()); // 最後に遊んだ日付は、VCTがつながったときに設定する
 
 #if 0
   if(GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED){  // つながった
@@ -3671,7 +3673,7 @@ static int WifiP2PMatch_VCTConnectEndYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 
   if( WifiP2PMatchMessageEndCheck(wk)){
     // 最後に遊んだ日付は、VCTがつながったときに設定する
-    WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
+    //WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
 
     if(wk->VChatModeOff){
       EndMessageWindowOff(wk);
@@ -5801,6 +5803,9 @@ static void _myStatusChange(WIFIP2PMATCH_WORK *wk, int status,int gamemode)
   }
   if((status == WIFI_STATUS_WAIT) && (gamemode==WIFI_GAME_LOGIN_WAIT)){
     WIFI_STATUS_ResetVChatMac(wk->pMatch);
+  }
+  if(status == WIFI_STATUS_PLAYING){
+    WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
   }
   _myStatusChange_not_send( wk, status, gamemode );
   _sendMatchStatus(wk);

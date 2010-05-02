@@ -1635,6 +1635,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
                                     pWork->scrollPanelCursor.oamlistpos-2 );
         GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData,
                                            pWork->scrollPanelCursor.oamlistpos-2);
+        PMSND_PlaySystemSE(_SE_CUR);
       }
     }
     return;

@@ -1239,53 +1239,55 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
   // ó‘Ô
   msg_id = MCVSys_StatusMsgIdGet( status, gamemode, &col );
-  _COL_N_WHITE;
+  if((msg_id >= msg_wifilobby_1034) && (msg_wifilobby_1037 >= msg_id)){
+    msg_id = msg_id - msg_wifilobby_1034 + msg_wifilobby_0571;
+  }
   GFL_MSG_GetString(wk->MsgManager, msg_id, wk->pExpStrBuf);
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_ST_X, MCV_USERD_ST_Y,
-                  wk->pExpStrBuf, wk->fontHandle);
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_ST_X, MCV_USERD_ST_Y,
+                  wk->pExpStrBuf, wk->fontHandle,MSG_WHITE_COLOR);
 
 
   // ‘Îí¬Ñ
   {
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_035, wk->TitleString );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_X, MCV_USERD_VS_Y,
-                    wk->TitleString, wk->fontHandle);
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_X, MCV_USERD_VS_Y,
+                    wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
     // ‚©‚¿
     num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_BATTLE_WIN);
     WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_036, wk->pExpStrBuf );
     WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_WIN_X, MCV_USERD_VS_WIN_Y,
-                    wk->TitleString, wk->fontHandle);
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_WIN_X, MCV_USERD_VS_WIN_Y,
+                    wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
     // ‚Ü‚¯
     num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_BATTLE_LOSE);
     WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_037, wk->pExpStrBuf );
     WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_LOS_X, MCV_USERD_VS_LOS_Y,
-                    wk->TitleString, wk->fontHandle);
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_VS_LOS_X, MCV_USERD_VS_LOS_Y,
+                    wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
   }
   // ƒ|ƒPƒ‚ƒ“ŒðŠ·
   {
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_038, wk->TitleString );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_TR_X,  MCV_USERD_TR_Y,
-                    wk->TitleString, wk->fontHandle);
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_TR_X,  MCV_USERD_TR_Y,
+                    wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
 
     num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_TRADE_NUM);
     WORDSET_RegisterNumber(wk->view.p_wordset, 0, num, 4, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_039, wk->pExpStrBuf );
     WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
 
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_TRNUM_X, MCV_USERD_TR_Y,
-                    wk->TitleString, wk->fontHandle);
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_TRNUM_X, MCV_USERD_TR_Y,
+                    wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
   }
 
 
   // ÅŒã‚É—V‚ñ‚¾“ú•t
   {
     GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_040, wk->TitleString );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_DAY_X, MCV_USERD_DAY_Y,
-                    wk->TitleString, wk->fontHandle);
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_DAY_X, MCV_USERD_DAY_Y,
+                    wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
 
     num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_LASTBT_DAY);
     if(num!=0){
@@ -1296,8 +1298,8 @@ static void MCVSys_UserDispDrawType00( WIFIP2PMATCH_WORK *wk, u32 heapID )
       WORDSET_RegisterNumber(wk->view.p_wordset, 1, num, 2, STR_NUM_DISP_SPACE, NUMBER_CODETYPE_DEFAULT);
       GFL_MSG_GetString(  wk->MsgManager, msg_wifilobby_041, wk->pExpStrBuf );
       WORDSET_ExpandStr( wk->view.p_wordset, wk->TitleString, wk->pExpStrBuf );
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_DAYNUM_X, MCV_USERD_DAY_Y,
-                      wk->TitleString, wk->fontHandle);
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->view.userWin), MCV_USERD_DAYNUM_X, MCV_USERD_DAY_Y,
+                      wk->TitleString, wk->fontHandle,MSG_WHITE_COLOR);
     }
   }
   GFL_BMPWIN_MakeScreen(wk->view.userWin);
