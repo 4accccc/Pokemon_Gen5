@@ -594,8 +594,13 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
           target_status->player_pack.vanish = TRUE;
         }
       }
-      else{ //同じROM内にいてシンボルマップ以外なら表示
-        target_status->player_pack.vanish = FALSE;
+      else{ //同じROM内にいてシンボルマップ以外
+        if(ZONEDATA_IsSameMatrixID(mine_st->zone_id, target_status->zone_id) == TRUE){
+          target_status->player_pack.vanish = FALSE;
+        }
+        else{
+          target_status->player_pack.vanish = TRUE;
+        }
       }
     }
     else{
