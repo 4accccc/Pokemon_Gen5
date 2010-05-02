@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:54:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T20:43:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="1001" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -476,7 +476,7 @@
 ようやく　ごかくに　なれる！▽
 ボクたちを　とめられる！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止めるなら
-キミも　英雄に　なるんだ！▼
+キミも　英雄に　なればいい！▼
 そう！　ムと　対をなす
 ポケモン　シンに　認められてこそ▽
 ようやく　対等に　なれる！▽
@@ -571,8 +571,8 @@
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……なんたること▼</language>
-		<language name="JPN_KANJI" width="256">ハチク『……なんたること▼</language>
+		<language name="JPN" width="256">ハチク『なんたること！▼</language>
+		<language name="JPN_KANJI" width="256">ハチク『なんたること！▼</language>
 	</row>
 
 	<row id="msg_d08r0901_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -606,12 +606,12 @@
 　d08：リュウラセンの塔（外）へ切り替え</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……おちつけ
+		<language name="JPN" width="256">ハチク『おちつけ！
 まずは　もどるぞ▼
 いま　だいじ　なのは
 おきたことを　かいめい　するより▽
 これから　なにをするか　だ▼</language>
-		<language name="JPN_KANJI" width="256">ハチク『……落ち着け
+		<language name="JPN_KANJI" width="256">ハチク『落ち着け！
 まずは　戻るぞ▼
 いま　大事なのは
 起きたことを　解明するより▽
