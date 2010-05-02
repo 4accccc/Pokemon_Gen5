@@ -95,6 +95,8 @@ static BOOL SEQ_Main( WIFILOGOUT_WORK *p_wk );
 static void SEQFUNCTION_StartFadeIn( WIFILOGOUT_WORK *p_wk );
 static void SEQFUNCTION_WaitFadeIn( WIFILOGOUT_WORK *p_wk );
 
+static void SEQFUNCTION_Callback( WIFILOGOUT_WORK *p_wk );
+
 static void SEQFUNCTION_StartDisConnectMessage( WIFILOGOUT_WORK *p_wk );
 static void SEQFUNCTION_WaitDisConnectMessage( WIFILOGOUT_WORK *p_wk );
 static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk );
@@ -369,6 +371,31 @@ static void SEQFUNCTION_WaitFadeIn( WIFILOGOUT_WORK *p_wk )
     SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartDisConnectMessage );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コールバック処理
+ *
+ *	@param	WIFILOGOUT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNCTION_Callback( WIFILOGOUT_WORK *p_wk )
+{ 
+  if( GFL_NET_IsExit() )
+  { 
+    SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartDisConnectMessage );
+  }
+  else
+  { 
+    WIFILOGIN_CALLBACK_RESULT result;
+    result  = p_wk->p_param->logout_before_callback( p_wk->p_message, p_wk->p_param->p_callback_wk );
+    if( result != WIFILOGIN_CALLBACK_RESULT_CONTINUE )
+    { 
+      SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartDisConnectMessage );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  メッセージ開始

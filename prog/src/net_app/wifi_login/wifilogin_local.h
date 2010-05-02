@@ -5,7 +5,7 @@
 #include "net_app/wifi_login.h"
 
 
-typedef struct _WIFILOGIN_MESSAGE_WORK  WIFILOGIN_MESSAGE_WORK;
+//typedef struct _WIFILOGIN_MESSAGE_WORK  WIFILOGIN_MESSAGE_WORK;
 typedef struct _WIFILOGIN_DISP_WORK WIFILOGIN_DISP_WORK;
 typedef struct _WIFILOGIN_YESNO_WORK WIFILOGIN_YESNO_WORK;
 
@@ -25,6 +25,9 @@ extern void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork);
 //メッセージ描画
 extern void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid);
 extern void WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(WIFILOGIN_MESSAGE_WORK* pWork,int msgid);
+
+extern void WIFILOGIN_MESSAGE_InfoMessageDispEx(WIFILOGIN_MESSAGE_WORK* pWork, GFL_MSGDATA *p_msg, int msgid);
+extern void WIFILOGIN_MESSAGE_InfoMessageDispWaitIconEx(WIFILOGIN_MESSAGE_WORK* pWork, GFL_MSGDATA *p_msg, int msgid);
 extern BOOL WIFILOGIN_MESSAGE_InfoMessageEndCheck(WIFILOGIN_MESSAGE_WORK* pWork);
 extern void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork);
 

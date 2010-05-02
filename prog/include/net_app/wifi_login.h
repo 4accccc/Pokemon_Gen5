@@ -77,6 +77,25 @@ typedef enum
   WIFILOGIN_FADE_WHITE      = WIFILOGIN_FADE_WHITE_IN|WIFILOGIN_FADE_WHITE_OUT,
 } WIFILOGIN_FADE;
 
+
+//-------------------------------------
+///	前方宣言
+//=====================================
+typedef struct _WIFILOGIN_MESSAGE_WORK  WIFILOGIN_MESSAGE_WORK;
+
+//-------------------------------------
+///	WIFIログイン中に処理を追加する場合
+//=====================================
+//  WIFILOGINへメッセージをだすためにmessage_workを引数にしている
+//  message_work使用関数はsrc\net_app\wifi_login\wifilogin_local.hをインクルードのする
+typedef enum
+{ 
+  WIFILOGIN_CALLBACK_RESULT_SUCCESS,  //処理成功 -> resultにWIFILOGIN_RESULT_LOGINが入る
+  WIFILOGIN_CALLBACK_RESULT_FAILED,   //処理失敗 -> resultにWIFILOGIN_RESULT_CANCELが入る
+  WIFILOGIN_CALLBACK_RESULT_CONTINUE, //処理続行中
+}WIFILOGIN_CALLBACK_RESULT;
+typedef WIFILOGIN_CALLBACK_RESULT (*WIFILOGIN_CALLBACK_FUNCTION)( WIFILOGIN_MESSAGE_WORK * p_msg, void *p_callback_wk );
+
 //-------------------------------------
 ///	WIFILOGINに渡す引数
 //=====================================
@@ -90,6 +109,9 @@ typedef struct
   WIFILOGIN_MODE    mode;     //[in ]起動モード
   WIFILOGIN_BGM     bgm;      //[in ]BGM設定
   WIFILOGIN_RESULT  result;   //[out]終了方法
+
+  WIFILOGIN_CALLBACK_FUNCTION login_after_callback; //[in]コールバック(処理のタイミングはログイン後)
+  void                        *p_callback_wk;     //[in]コールバック用ワーク
 } WIFILOGIN_PARAM;
 
 

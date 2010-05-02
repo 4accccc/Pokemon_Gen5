@@ -35,6 +35,9 @@ typedef struct
   WIFILOGIN_DISPLAY   display;  //[in ]どちらの画面を使うか WIFILOGINと同じモジュールを使っているため
   WIFILOGIN_BGM       bgm;      //[in ]BGM設定
   WIFILOGIN_FADE      fade;     //[in ]フェード
+
+  WIFILOGIN_CALLBACK_FUNCTION logout_before_callback; //[in]コールバック(処理のタイミングはログアウト前)
+  void              *p_callback_wk;               //[in]コールバック用ワーク
 } WIFILOGOUT_PARAM;
 
 //=============================================================================

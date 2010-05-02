@@ -36,6 +36,7 @@
 #include "net/nhttp_rap.h"
 #include "net/nhttp_rap_evilcheck.h"
 #include "app/app_taskmenu.h"
+#include "system/time_icon.h"
 
 #include "worldtrade_adapter.h"
 
@@ -128,8 +129,8 @@ enum{
 	
   // worldtrade_enter.c
   MODE_WIFILOGIN,     ///< WIFIログイン
-  MODE_CONNECT,       ///< GTSサーバー接続をする
-  MODE_DISCONNECT,   ///< GTSサーバー切断をする
+//  MODE_CONNECT,       ///< GTSサーバー接続をする
+//  MODE_DISCONNECT,   ///< GTSサーバー切断をする
   MODE_WIFILOGOUT,    ///< WIFIログアウト
   MODE_WIFILOGIN_ERR, ///< WIFIログイン エラー
 };
@@ -595,6 +596,7 @@ typedef struct _WORLDTRADE_WORK{
   BOOL  is_sub_graphic_init;
   BOOL  sub_display_continue; //サブ画面引継フラグ
   int search_se_sync;
+  int wifi_seq;
 
 #ifdef PM_DEBUG
 	int 					frame;									//

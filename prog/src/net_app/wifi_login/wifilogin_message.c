@@ -228,10 +228,22 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
 
 void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
 {
+  WIFILOGIN_MESSAGE_InfoMessageDispEx( pWork, pWork->pMsgData, msgid);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void WIFILOGIN_MESSAGE_InfoMessageDispEx(WIFILOGIN_MESSAGE_WORK* pWork, GFL_MSGDATA *p_msg, int msgid)
+{
   GFL_BMPWIN* pwin;
   u8 y;
 
-  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+  GFL_MSG_GetString( p_msg, msgid, pWork->pStrBuf );
 
   if( pWork->display == WIFILOGIN_DISPLAY_DOWN )
   { 
@@ -283,7 +295,18 @@ void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
 //------------------------------------------------------------------------------
 void WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
 { 
-  WIFILOGIN_MESSAGE_InfoMessageDisp(pWork,msgid);
+  WIFILOGIN_MESSAGE_InfoMessageDispWaitIconEx( pWork, pWork->pMsgData, msgid);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示  タイムアイコン版
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void WIFILOGIN_MESSAGE_InfoMessageDispWaitIconEx(WIFILOGIN_MESSAGE_WORK* pWork,GFL_MSGDATA *p_msg, int msgid)
+{ 
+  WIFILOGIN_MESSAGE_InfoMessageDispEx(pWork,p_msg, msgid);
 
   if( pWork->timeIcon )
   { 

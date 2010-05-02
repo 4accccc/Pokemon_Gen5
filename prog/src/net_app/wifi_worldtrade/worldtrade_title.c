@@ -1143,7 +1143,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		GFL_BMPWIN_ClearTransWindow_VBlank( wk->ExplainWin );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
 		GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
-		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_DISCONNECT );
+		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGOUT );
 		wk->subprocess_seq  = SUBSEQ_END_DEMO;
 
 	}else if(ret==WORLDTRADE_RET_NO){

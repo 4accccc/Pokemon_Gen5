@@ -82,6 +82,9 @@ static void* _getMyUserData(void* pWork);  //DWCUserData
 static void* _getFriendData(void* pWork);  //DWCFriendData
 static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
 static void _modeFadeStart(WIFILOGIN_WORK* pWork);
+static void _callbackFunciton(WIFILOGIN_WORK* pWork);
+static void _logoutStart(WIFILOGIN_WORK* pWork);
+static void _logoutWait(WIFILOGIN_WORK* pWork);
 
 
 ///通信コマンドテーブル
@@ -368,7 +371,7 @@ static void _exitEnd( WIFILOGIN_WORK* pWork)
   }
   pWork->timer--;
   if(pWork->timer==0){
-    _CHANGE_STATE(pWork, _modeFadeStart);
+    _CHANGE_STATE(pWork, _callbackFunciton);
   }
 }
 
@@ -378,7 +381,7 @@ static void _exitEnd2( WIFILOGIN_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
-    _CHANGE_STATE(pWork, _modeFadeStart);
+    _CHANGE_STATE(pWork, _callbackFunciton);
   }
 }
 
@@ -539,7 +542,7 @@ static void _saveEndWait(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork, _modeSvlGetStart);  //認証
     }
     else{
-      _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
+      _CHANGE_STATE(pWork, _callbackFunciton);  //接続完了
     }
   }
 }
@@ -566,7 +569,7 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
         _CHANGE_STATE(pWork, _modeSvlGetStart);  //認証
       }
       else{
-        _CHANGE_STATE(pWork, _modeFadeStart);  //接続完了
+        _CHANGE_STATE(pWork, _callbackFunciton);  //接続完了
       }
     }
   }
@@ -705,7 +708,7 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      _CHANGE_STATE(pWork,_modeFadeStart);
+      _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
@@ -732,7 +735,7 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      _CHANGE_STATE(pWork,_modeFadeStart);
+      _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -800,7 +803,7 @@ static void _modeDifferDSWait7(WIFILOGIN_WORK* pWork)
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      _CHANGE_STATE(pWork,_modeFadeStart);
+      _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
@@ -856,7 +859,7 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      _CHANGE_STATE(pWork,_modeFadeStart);
+      _CHANGE_STATE(pWork,_callbackFunciton);
     }
   }
 }
@@ -889,7 +892,7 @@ static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
       {
         WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
       }
-      _CHANGE_STATE(pWork,_modeFadeStart);
+      _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
     pWork->pSelectWork=NULL;
@@ -987,6 +990,73 @@ static void _modeFadeout(WIFILOGIN_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   コールバック処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _callbackFunciton(WIFILOGIN_WORK* pWork)
+{ 
+  if( pWork->dbw->login_after_callback && pWork->dbw->result == WIFILOGIN_RESULT_LOGIN )
+  { 
+    WIFILOGIN_CALLBACK_RESULT result;
+
+    result  = pWork->dbw->login_after_callback( pWork->pMessageWork, pWork->dbw->p_callback_wk );
+
+    if( result != WIFILOGIN_CALLBACK_RESULT_CONTINUE )
+    { 
+      switch( result )
+      { 
+      case WIFILOGIN_CALLBACK_RESULT_SUCCESS:
+        pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
+        _CHANGE_STATE(pWork,_modeFadeStart);
+        break;
+      case WIFILOGIN_CALLBACK_RESULT_FAILED:
+        pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+        _CHANGE_STATE(pWork,_logoutStart);
+        break;
+      }
+    }
+  }
+  else
+  { 
+    _CHANGE_STATE(pWork,_modeFadeStart);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ログアウト開始
+ */
+//-----------------------------------------------------------------------------
+static void _logoutStart(WIFILOGIN_WORK* pWork)
+{ 
+  if( GFL_NET_IsExit() )
+  {
+    _CHANGE_STATE(pWork,_modeFadeStart);
+  }
+  else
+  { 
+    //初期化されていたら解放
+    if( GFL_NET_Exit( NULL ) )
+    { 
+      _CHANGE_STATE(pWork,_logoutWait);
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ログアウト中
+ */
+//-----------------------------------------------------------------------------
+static void _logoutWait(WIFILOGIN_WORK* pWork)
+{ 
+  if( GFL_NET_IsExit() )
+  { 
+    _CHANGE_STATE(pWork,_modeFadeStart);
+  }
+}
+//------------------------------------------------------------------------------
+/**
  * @brief   フェードアウト処理
  * @retval  none
  */
@@ -1055,17 +1125,17 @@ static void _modeSvlGetMain(WIFILOGIN_WORK* pWork)
     NET_PRINT("status = %s\n", pSvl->status==TRUE ? "TRUE" : "FALSE");
     NET_PRINT("svlhost = %s\n", pSvl->svlhost);
     NET_PRINT("svltoken = %s\n", pSvl->svltoken);
-    _CHANGE_STATE(pWork, _modeFadeStart);
+    _CHANGE_STATE(pWork, _callbackFunciton);
   }
   else if(state == DWC_SVL_STATE_ERROR) {
     dwcerror = DWC_GetLastErrorEx(&errorcode, &dwcerrortype);
-    _CHANGE_STATE(pWork, _modeFadeStart);
+    _CHANGE_STATE(pWork, _callbackFunciton);
     NET_PRINT("Failed to get SVL Token\n");
     NET_PRINT("DWCError = %d, errorcode = %d, DWCErrorType = %d\n", dwcerror, errorcode, dwcerrortype);
   }
   else if(state == DWC_SVL_STATE_CANCELED) {
     NET_PRINT("SVL canceled.\n");
-    _CHANGE_STATE(pWork, _modeFadeStart);
+    _CHANGE_STATE(pWork, _callbackFunciton);
   }
 }
 

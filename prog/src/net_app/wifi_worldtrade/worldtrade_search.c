@@ -1594,7 +1594,7 @@ static int SubSeq_SearchErrorDisconnectMessage2( WORLDTRADE_WORK *wk )
 	// ‚¤‚¯‚Â‚¯‚É‚à‚Ç‚è‚Ü‚·
 	SubSeq_MessagePrint( wk, msg_gtc_error_006_02, 4, 0, 0x0f0f );
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_END );
-	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_CONNECT );
+	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGIN_ERR );
 	PMSND_PlaySE(SE_GTC_NG);
 
 	return SEQ_MAIN;
