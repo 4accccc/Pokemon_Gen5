@@ -55,6 +55,11 @@ EVENT_START ev_r06r0203_legend1
         IF FLAG_OFF(FE_LEGEND1_BATTLE) THEN
         //初回のみ、じいさんデモ。復活以降はでない
             _CALL sub_legend1_escaped
+        ELSE
+        //２回目以降：じいさん登場なし
+            _SYSWIN_MSG( msg_r06r0203_legend1_03, POS_DOWN )
+            _LAST_KEYWAIT()
+            _MSGWIN_CLOSE()
         ENDIF
 
         
@@ -65,15 +70,23 @@ EVENT_START ev_r06r0203_legend1
             _CALL sub_legend1_captured
         ENDIF
 
+        //========================================//
+        //捕獲フラグをセット
         _FLAG_SET( FE_LEGEND1_GET )
+        //========================================//
+
     ENDSWITCH
     
+    //========================================//
+    //他の三銃士のストッパー岩を非表示
     _FLAG_SET( FV_D09_ROCK1 )
     _FLAG_SET( FV_D02_ROCK1 )
 
     //【2/24_村上_フラグを追加】
     //アトスと戦ったかどうかを判別するフラグ
     _FLAG_SET(FE_LEGEND1_BATTLE)
+    
+    //========================================//
 
 EVENT_END
 
