@@ -1055,6 +1055,9 @@ EVENT_END
 /*					クリア後ライバル						*/
 /************************************************************/
 EVENT_START	ev_r05_rival_02
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+
 {
 	_TALK_START_TURN_NOT()
 	_PLAYER_NAME( 0 )
@@ -1130,7 +1133,7 @@ EVENT_START	ev_r05_rival_02
 	ENDIF
 	
 	//イベント曲停止
-	_END_EVENT_BGM()
+	_END_EVENT_BGM_EX( 120 )
 	
 	//ライバルを消す
 	_OBJ_DEL( R05_RIVAL_02 )
@@ -1143,6 +1146,9 @@ EVENT_START	ev_r05_rival_02
 	_FLAG_RESET( FV_D09R1401_RIVAL )
 	//========================================//
 }
+
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------------
