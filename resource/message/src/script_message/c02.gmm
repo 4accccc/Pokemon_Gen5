@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-24T21:03:33"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T16:39:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="103" right="2018" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -398,16 +398,16 @@
 		<language name="JPN" width="256">チェレン『カゴのみを　ポケモンに
 もたせておけば　ねむらされても▽
 ポケモンは　かいふくして　めざめる▼
-ついでに　おしえておくけど
-シッポウシティの　ジムリーダーは▽
+ついでに　アドバイス▼
+シッポウシティの　ジムリーダーは
 ノーマルタイプの　つかいて▼
 かくとうタイプの　ポケモンが　いると
 かなり　ゆうり　だろうね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『カゴのみを　ポケモンに
 持たせておけば　眠らされても▽
-ポケモンは　回復して　目覚めるる▼
-ついでに　ついでに　教えておくけど
-シッポウシティの　ジムリーダーは▽
+ポケモンは　回復して　目覚める▼
+ついでに　アドバイス▼
+シッポウシティの　ジムリーダーは
 ノーマルタイプの　使い手▼
 かくとうタイプの　ポケモンが　いると
 かなり　有利だろうね▼</language>
@@ -421,26 +421,24 @@
 ・はい/いいえの選択
 　どちらを選んだか保存しておく</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクは……
-ダレにも　みえない　ものを▽
-みたいんだ▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクは……　ダレにも
+みえない　ものが　みたいんだ▼
 ボールの　なかの
 ポケモンたちの　りそう▼
 トレーナーという
 ありかたの　しんじつ▼
 そして　ポケモンが
 かんぜんと　なった　みらい……▼
-キミも　みたいと　おもうだろう？[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクは……
-ダレにも　みえない　ものを▽
-みたいんだ▼
+キミも　みたいだろう？[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクは……　ダレにも
+みえない　ものが　みたいんだ▼
 ボールの　中の
 ポケモンたちの　理想▼
 トレーナーという
 在り方の　真実▼
 そして　ポケモンが
 完全となった　未来……▼
-キミも　みたいと　思うだろう？[BE:09:速度コントロール:0]</language>
+キミも　みたいだろう？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_c02_boss_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -466,13 +464,13 @@
 ・トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ふうん
-ちょっと　きたいはずれ　だな▼
+きたいはずれ　だな▼
 それよりも　ボクと
 ボクの　トモダチで▽
 みらいを　みることが　できるか▽
 キミで　たしかめさせて　もらうよ[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ふうん
-ちょっと　期待はずれ　だな▼
+期待はずれ　だな▼
 それよりも　ボクと
 ボクの　トモダチで▽
 未来を　みることが　できるか▽
@@ -830,7 +828,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『こっちの　ほうには
 プラズマだん　いないみたいだけど▽
 ここを　うごくわけにも　いかないし▼
-あんた……　ヤグルマのもりを
+アンタ……　ヤグルマのもりを
 しっかり　さがしておくれよ！</language>
 		<language name="JPN_KANJI" width="256">アロエ『こっちの　ほうには
 プラズマ団　いないみたいだけど▽
@@ -843,13 +841,13 @@ C02ジムリーダー</attribute>
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性（金髪）</attribute>
-		<language name="JPN" width="256">だれも　つかっていない
+		<language name="JPN" width="256">だれも　つかっていない　ふるびた
 いふくの　こうじょうや　そうこを▼
 きぼうにあふれた　わかい　ひとたちが
-アトリエとして　つかっていたの▼
+アトリエとして　つかいだしたの▼
 それが　げいじゅつのまち　とよばれる
 シッポウシティの　はじまりね</language>
-		<language name="JPN_KANJI" width="256">だれも　使っていない
+		<language name="JPN_KANJI" width="256">だれも　使っていない　古びた
 衣服の　工場や　倉庫を▼
 希望にあふれた　若い人たちが
 アトリエとして　使いだしたの▼
@@ -857,16 +855,15 @@ C02ジムリーダー</attribute>
 シッポウシティの　始まりね</language>
 	</row>
 
-	<row id="msg_c02_man2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<comment>♂</comment>
+	<row id="msg_c02_man2_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+・GRIDX=624、GRIDZ=598</comment>
 		<attribute name="キャラ指定">MAN2
 青年（金髪）</attribute>
-		<language name="JPN" width="256">そうこって　でかいもんな！▼
-ポケモンを　おもうぞんぶん
-たたかわせたく　なるよな！</language>
-		<language name="JPN_KANJI" width="256">倉庫って　でかいもんな！▼
-ポケモンを　思う存分
-戦わせたくなるよな！</language>
+		<language name="JPN" width="256">この　そうこ……
+なかで　いいもの　うってるぜ</language>
+		<language name="JPN_KANJI" width="256">この倉庫……
+中で　いいもの　売ってるぜ</language>
 	</row>
 
 	<row id="msg_c02_middlewoman2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -897,8 +894,7 @@ C02ジムリーダー</attribute>
 
 	<row id="msg_c02_accordion_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♂
-・ISS用
-・仮メッセージ</comment>
+・ISS用</comment>
 		<attribute name="キャラ指定">アコーディオン</attribute>
 		<language name="JPN" width="256">アコーディオンの　ねいろ　どうですか？</language>
 		<language name="JPN_KANJI" width="256">アコーディオンの　音色　どうですか？</language>
