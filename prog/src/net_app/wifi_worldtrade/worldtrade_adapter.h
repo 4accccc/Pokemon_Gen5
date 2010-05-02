@@ -103,7 +103,7 @@ static inline void * TimeWaitIconAdd( GFL_BMPWIN *bmpwin, int a )
 }
 static inline void TimeWaitIconDel( void *wk )
 {
-  TILEICON_Exit( (TIMEICON_WORK *)wk );
+  TIMEICON_Exit( (TIMEICON_WORK *)wk );
 }
 
 static inline int PokePersonalParaGet(int mons_no, int param )

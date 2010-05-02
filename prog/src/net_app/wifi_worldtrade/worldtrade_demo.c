@@ -38,7 +38,7 @@
 #include "poke_tool/shinka_check.h"
 
 FS_EXTERN_OVERLAY(pokemon_trade);
-
+FS_EXTERN_OVERLAY( ui_common );
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -144,6 +144,9 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->pNPCStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );
 		p_param->pNPC  = wk->pNPCStatus;
 
+    OS_Printf( "my monsno %d\n", PP_Get( p_param->pMyPoke, ID_PARA_monsno, NULL ) );
+    OS_Printf( "npc monsno %d\n", PP_Get( p_param->pNPCPoke, ID_PARA_monsno, NULL ) );
+
     call_proc = &PokemonTradeGTSMidProcData;
 		break;
   default:
@@ -215,6 +218,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
           //進化デモ
 #ifndef DEBUG_DEMO_NONE
+          GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ));
+
           GAMESYSTEM_CallProc( wk->param->gamesys,
               FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
 #endif
@@ -311,6 +316,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 			// ハードウェアウインドウを解除
 			GX_SetVisibleWnd(GX_WNDMASK_NONE);
+
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( ui_common ));
 
 			// セーブへ
 //			WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
