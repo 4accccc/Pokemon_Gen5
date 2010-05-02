@@ -102,11 +102,12 @@ const CI_SE_TBL Tbl10[] = {
 };
 
 const CI_SE_TBL Tbl11[] = {
-	{ SEQ_SE_FLD_01, 24 },
+	{ SEQ_SE_FLD_01, 42 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl12[] = {
+	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
@@ -140,16 +141,17 @@ const CI_SE_TBL Tbl16[] = {
 };
 
 const CI_SE_TBL Tbl17[] = {
-	{ SEQ_SE_FLD_01, 24 },
+	{ SEQ_SE_FLD_01, 42 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl18[] = {
-	{ SEQ_SE_FLD_01, 24 },
+	{ SEQ_SE_FLD_01, 42 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl19[] = {
+	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
