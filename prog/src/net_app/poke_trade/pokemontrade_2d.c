@@ -331,7 +331,7 @@ void IRC_POKETRADE_CommonCellInit(POKEMON_TRADE_WORK* pWork)
 
 
 
-void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int bgtype)
+void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int leftright, int bgtype)
 {
   int nscr[]={NARC_trade_wb_trade_stbg01_NSCR,NARC_trade_wb_trade_stbg02_NSCR};
   int frame = GFL_BG_FRAME0_S;
@@ -344,7 +344,7 @@ void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int bgt
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
 
-  if(pokeposx < 128){
+  if(leftright){
     GFL_BG_SetScroll( frame, GFL_BG_SCROLL_X_SET, 128 );
   }
   else{
@@ -2100,12 +2100,12 @@ void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 
   
-  if(pWork->curIcon[CELL_CUR_SCROLLBAR]){
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
-  }
-  if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], FALSE );
-  }
+//  if(pWork->curIcon[CELL_CUR_SCROLLBAR]){
+//    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
+//  }
+//  if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
+//    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], FALSE );
+//  }
   GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
   GFL_BG_SetVisible(GFL_BG_FRAME2_S, TRUE);
 
@@ -3405,8 +3405,73 @@ BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork)
 
 
 
+static void _PaletteFadeSingle3(POKEMON_TRADE_WORK* pWork, int type, int paletteBIT)
+{
+  u32 addr;
+  int i;
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  PaletteFadeWorkAllocSet(pP, type, 16 * 32, pWork->heapID);
+  PaletteWorkSet_VramCopy( pP, type, 0, 16*32);
+  SoftFadePfd(pP, type,  0, 16 * 16, 6, 0);
+  addr = (u32)PaletteWorkTransWorkGet( pP, type );
+
+  for(i = 0; i < 16 ; i++){
+    if(paletteBIT & (0x1 << i)){
+      switch(type){
+      case FADE_SUB_OBJ:
+        GXS_LoadOBJPltt((void*)(addr+32*i), i*16*2, 32);
+        break;
+      case FADE_SUB_BG:
+        GXS_LoadBGPltt((void*)(addr+32*i),  i*16*2, 32);
+        break;
+      case FADE_MAIN_OBJ:
+        GX_LoadOBJPltt((void*)(addr+32*i), i*16*2, 32);
+        break;
+      case FADE_MAIN_BG:
+        GX_LoadBGPltt((void*)(addr+32*i),  i*16*2, 32);
+        break;
+      }
+    }
+  }
+  PaletteFadeWorkAllocFree(pP,type);
+  PaletteFadeFree(pP);
+}
+
+static void POKEMON_TRADE_PaletteFade(POKEMON_TRADE_WORK* pWork, BOOL bFade, int type, int paletteBIT)
+{
+  u32 addr;
+
+  if(bFade){
+    {
+      if( type == FADE_SUB_OBJ){
+        GFL_STD_MemCopy((void*)HW_DB_OBJ_PLTT, pWork->pVramOBJ, 16*2*16);
+      }
+      else if( type == FADE_SUB_BG){
+        GFL_STD_MemCopy((void*)HW_DB_BG_PLTT, pWork->pVramBG, 16*2*16);
+      }
+      _PaletteFadeSingle3( pWork,  type, paletteBIT);
+    }
+  }
+  else{
+    if( type == FADE_SUB_OBJ){
+      GXS_LoadOBJPltt((void*)pWork->pVramOBJ, 0, 16 * 32);
+    }
+    else if( type == FADE_SUB_BG){
+      GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 16 * 32);
+    }
+  }
+}
+
+
+
+
+
 void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray)
 {
+
+  POKEMON_TRADE_PaletteFade(pWork, bGray,FADE_SUB_OBJ,0xfffe);
+
+#if 0
   u32 addr;
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
   PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
@@ -3423,4 +3488,5 @@ void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray)
   PaletteFadeWorkAllocFree(pP,FADE_SUB_OBJ);
   PaletteFadeFree(pP);
   GFL_ARC_CloseDataHandle(arcHandlePoke);
+#endif
 }

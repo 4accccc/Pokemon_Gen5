@@ -876,11 +876,17 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
 }
 
 // î•ñ•\Ž¦‚Ì•ÏX ‚P‚Ü‚¢‚ß‚©‚Q‚Ü‚¢‚ß‚ª‚ ‚é
-void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int leftright,POKEMON_PARAM* pp)
+void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,POKEMON_PARAM* pp)
 {
   int i,num,num2,bEgg;
   int xwinpos[]={0,16};
   int xdotpos[]={0,128};
+  int leftright=0;
+
+  if(pWork->x < 128){
+    leftright = 1;
+  }
+
   {
  //   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
    //                               0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
@@ -931,7 +937,7 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
     }
   }
 
-  IRC_POKETRADE_SubStatusInit(pWork,pWork->x, pageno);  //‰æ–ÊBG•\Ž¦
+  IRC_POKETRADE_SubStatusInit(pWork,leftright, pageno);  //‰æ–ÊBG•\Ž¦
 
   GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
   GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
@@ -1047,16 +1053,17 @@ void IRCPOKEMONTRADE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
   }
 }
 
-void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork)
+void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork, BOOL bClear)
 {
   _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   if(pWork->MyInfoWin){
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
-    GFL_BMPWIN_ClearScreen(pWork->MyInfoWin);
-    GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+    if(bClear){
+      GFL_BMPWIN_ClearScreen(pWork->MyInfoWin);
+      GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
+    }
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin = NULL;
   }

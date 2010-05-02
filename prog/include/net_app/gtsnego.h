@@ -17,6 +17,13 @@
 #define EVENT_GTSNEGO_RECONNECT_NUM (100)
 
 
+typedef enum{
+  EVENT_GTSNEGO_EXIT,
+  EVENT_GTSNEGO_LV,
+  EVENT_GTSNEGO_FRIEND,
+} EVENT_GTSNEGO_SELECTTYPE;
+
+
 //êeÉèÅ[ÉN
 typedef struct {
   int selectLV;

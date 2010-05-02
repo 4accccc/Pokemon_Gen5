@@ -389,7 +389,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
   pWin = pWork->GTSInfoWindow;
   GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
 
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+  if((pWork->type == POKEMONTRADE_TYPE_GTSNEGO) && (pWork->GTSlv[0]!=-1)){
     GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_31 , pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 8,  2, pWork->pStrBuf, pWork->pFontHandle);
     GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_22 + pWork->GTSlv[0], pWork->pStrBuf );
@@ -416,7 +416,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
       WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8, 2, pWork->pStrBuf, pWork->pFontHandle);
       
-      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+      if((pWork->type == POKEMONTRADE_TYPE_GTSNEGO) && (pWork->GTStype[side]!=-1)){
         GFL_FONTSYS_SetColor( 3, 4, 0x0 );
         GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_17 + pWork->GTStype[side], pWork->pStrBuf );
         PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), sidex[side]*8+4, 32+2, pWork->pStrBuf, pWork->pFontHandle);

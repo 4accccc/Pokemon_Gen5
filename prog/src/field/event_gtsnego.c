@@ -143,7 +143,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-    if(dbw->gts.result){
+    if(dbw->gts.result != EVENT_GTSNEGO_EXIT){
       (*seq)++;
     }
     else{
@@ -152,7 +152,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     break;
   case _CALL_TRADE:
     dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
-    dbw->aPokeTr.gamedata=gamedata;
+    dbw->aPokeTr.gamedata = gamedata;
     dbw->aPokeTr.pNego = &dbw->gts;
     dbw->aPokeTr.pSvl = &dbw->aSVL;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, &dbw->aPokeTr);

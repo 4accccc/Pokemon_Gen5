@@ -621,7 +621,7 @@ struct _POKEMON_TRADE_WORK{
   u32 receive_first_param;
 
   int nowBoxno;  //いまのボックス
-  u32 x;
+  int x;
   u32 y;
   BOOL bUpVec;
 
@@ -683,6 +683,8 @@ struct _POKEMON_TRADE_WORK{
   int modelno;  ///< 表示しているモデルの番号
   int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
 
+  void* pVramOBJ;
+  void* pVramBG;
   GFL_CLWK* eruptedButtonGTS[GTS_ERUPTED_BUTTON_NUM * 2];  //顔噴出し
   GFL_CLWK* faceButtonGTS[GTS_FACE_BUTTON_NUM];  //顔マークボタン
   GFL_CLWK* select6Msg[GTS_SEL6MSG_NUM];  //文章
@@ -960,10 +962,10 @@ extern void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_AppMenuOpenCustom(POKEMON_TRADE_WORK* pWork, int *menustr,int num, int x,int y);
 extern void POKETRADE_MESSAGE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num);
 extern void POKETRADE_MESSAGE_AppMenuClose(POKEMON_TRADE_WORK* pWork);
-extern void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int leftright,POKEMON_PARAM* pp);
+extern void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,POKEMON_PARAM* pp);
 extern void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp, int mcssno, int change);
 extern void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON_PARAM* pp);
-extern void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork,BOOL bClear);
 extern void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork);
 extern void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
 extern void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame);

@@ -527,7 +527,7 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
   }
   if(pWork->timer==0){
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
-    pParent->result = TRUE;
+//    pParent->result = TRUE;
     pWork->timer = _FRIEND_GREE_DOWN_TIME;
 //    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
     GTSNEGO_MESSAGE_DispCountryInfo(pWork->pMessageWork, GTSNEGO_040);
@@ -1003,6 +1003,9 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
  // GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
 
   GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _TOUCHBAR_PAL1);
+
+  pWork->dbw->result = EVENT_GTSNEGO_LV;
+
   
   _CHANGE_STATE(pWork, _matchKeyMake);
 }
@@ -1360,7 +1363,10 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
       GTSNEGO_DISP_SearchPeopleDispSet(pWork->pDispWork);
 
       GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
-
+      pWork->chageLevel=0;
+      pWork->myChageType=0;
+      pWork->friendChageType=0;
+      pWork->dbw->result = EVENT_GTSNEGO_FRIEND;
       _CHANGE_STATE(pWork,_matchKeyMake);
       break;
     case 1:
@@ -1877,7 +1883,7 @@ static void _messageEndCheck2(GTSNEGO_WORK* pWork)
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:
-      pWork->dbw->result = FALSE;
+      pWork->dbw->result = EVENT_GTSNEGO_EXIT;
       pWork->timer=0;
       _CHANGE_STATE(pWork,_messageEnd);
       break;
