@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:42:01"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T20:26:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1382" top="229" right="2087" bottom="857" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,10 +303,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
 ジェットバッジを　もつもの　どうし
-どちらが　つよいか　たしかめよう▼</language>
+どちらが　つよいか　たしかめる！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！▼
 ジェットバッジを　持つ者　同士
-どちらが　強いか　確かめよう▼</language>
+どちらが　強いか　確かめる！▼</language>
 	</row>
 
 	<row id="msg_d07_champion_01">
@@ -335,14 +335,16 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……どなたかと　おもえば
 チャンピオンの　アデクさん　ですか▼
-じぶんは　まけたのに
+じぶんは　よわくて　まけたんです！▼
+……それなのに
 いい　しょうぶと　いわれれても▽
-しょうじき　こまりますけど▼</language>
+しょうじき　こまります……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……どなたかと　おもえば
 チャンピオンの　アデクさん　ですか▼
-自分は　負けたのに
+自分は　弱くて　負けたんです！▼
+……それなのに
 いい　勝負と　いわれれても▽
-正直　困りますけど▼</language>
+正直　困ります……▼</language>
 	</row>
 
 	<row id="msg_d07_champion_02">
@@ -356,12 +358,12 @@
 		<language name="JPN" width="256">アデク『……まったく▼
 とげのある　いいかたをせず
 すなおに　よろこべ▼
-それで　まえにも　きいたが
+それで　まえにも　たずねたが
 つよくなって　どうするのかね？▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……まったく▼
 とげのある　いいかたをせず
 素直に　喜べ▼
-それで　前にも　きいたが
+それで　前にも　たずねたが
 強くなって　どうするのかね？▼</language>
 	</row>
 
@@ -397,7 +399,7 @@
 これでも　もっていけ！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『ふむう……
 君は　レンブに　似ておるな▼
-なるほど　たしかに
+なるほど　確かに
 なにに　なりたいかは　大事だ▼
 だが　それ以上に　大事なのは
 強くなり　得た　力で▽
@@ -493,9 +495,8 @@
 野生ポケモンが　でるって　ことだ</language>
 	</row>
 
-	<row id="msg_d07_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>看板
-・仮メッセージ</comment>
+	<row id="msg_d07_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板</comment>
 		<attribute name="キャラ指定">看板：洞窟</attribute>
 		<language name="JPN" width="256">このさき　ネジやま
 ……やせいポケモンに　ちゅうい</language>
