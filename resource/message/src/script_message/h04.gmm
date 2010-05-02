@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-01T21:45:22"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T14:26:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1471" top="93" right="2176" bottom="713" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="107" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,223 +292,106 @@
 	</lock>
 
 
-	<row id="msg_h04_poke_01" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>ポケモン
-・OBJをウロウロさせる
-　会話後、GIRL1が通訳をする</comment>
-		<attribute name="キャラ指定">POKE</attribute>
-		<language name="JPN" width="256">キャモメ『クルル……クル</language>
-		<language name="JPN_KANJI" width="256">キャモメ『クルル……クル</language>
+	<row id="msg_h04_poke_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_poke_02" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>ポケモン
-・msg_h04_girl1_02後に表示
-　その後個数によって
-　msg_h04_girl1_03
-　msg_h04_girl1_04
-　msg_h04_girl1_05に分岐</comment>
-		<attribute name="キャラ指定">POKE</attribute>
-		<language name="JPN" width="256">キャモメ『クルル！</language>
-		<language name="JPN_KANJI" width="256">キャモメ『クルル！</language>
+	<row id="msg_h04_poke_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_poke_03" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♂
-・ジャンプアニメをしてメッセージ表示</comment>
-		<attribute name="キャラ指定">POKE</attribute>
-		<language name="JPN" width="256">キャモメ『クルルー！　クル！</language>
-		<language name="JPN_KANJI" width="256">キャモメ『クルルー！　クル！</language>
+	<row id="msg_h04_poke_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_sys_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>システム
-・キャモメのお礼を取得
-　No416「わざマシン８９」（とんぼがえり）</comment>
-		<attribute name="キャラ指定">SYSTEM</attribute>
-		<language name="JPN" width="256">キャモメは　うれしそうに
-そらへ　とびさった！▼
-……おや？
-なにか　おちている</language>
-		<language name="JPN_KANJI" width="256">キャモメは　うれしそうに
-空へ　飛び去った！▼
-……おや？
-なにか　落ちている</language>
+	<row id="msg_h04_sys_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_01" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・直接会話時
-　配達物イベント開始</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">この　キャモメね　はいたつぶつを
-３つ　ビレッジブリッジで▽
-なくしちゃった　みたいなの▽
-どうにか　してあげたいのだけど……</language>
-		<language name="JPN_KANJI" width="256">この　キャモメね　配達物を
-３つ　ビレッジブリッジで▽
-なくしちゃった　みたいなの▽
-どうにか　してあげたいのだけど……</language>
+	<row id="msg_h04_girl1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_01a" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・先にキャモメに話しかけた場合
-　配達物イベント開始</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">この　キャモメね　はいたつぶつを
-３つ　ビレッジブリッジで▽
-なくしちゃった　みたいなの▽
-どうにか　してあげたいのだけど……</language>
-		<language name="JPN_KANJI" width="256">この　キャモメね　配達物を
-３つ　ビレッジブリッジで▽
-なくしちゃった　みたいなの▽
-どうにか　してあげたいのだけど……</language>
+	<row id="msg_h04_girl1_01a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_02" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・配達物を１つ以上持っている場合
-　キャモメに渡しているようなアニメ後
-　msg_h04_poke_02へ</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">あ　すごい！
-それ　はいたつぶつ　じゃない？▽
-ちょっと　みせて　あげようよ！</language>
-		<language name="JPN_KANJI" width="256">あ　すごい！
-それ　配達物　じゃない？▽
-ちょっと　みせて　あげようよ！</language>
+	<row id="msg_h04_girl1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_03" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・１つ見つけている場合</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">あと　２つね！
-キャモメ　よろこんでる　みたい</language>
-		<language name="JPN_KANJI" width="256">あと　２つね！
-キャモメ　喜んでる　みたい</language>
+	<row id="msg_h04_girl1_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_04" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・２つ見つけている場合</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">あと　１つね！
-キャモメ　よろこんでる　みたい</language>
-		<language name="JPN_KANJI" width="256">あと　１つね！
-キャモメ　喜んでる　みたい</language>
+	<row id="msg_h04_girl1_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_05" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・全部見つけている場合
-　msg_h04_poke_03へ</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">ぜんぶ　そろったね！
-これで　キャモメも　おおだすかりね！</language>
-		<language name="JPN_KANJI" width="256">ぜんぶ　そろったね！
-これで　キャモメも　おおだすかりね！</language>
+	<row id="msg_h04_girl1_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_girl1_06" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・イベントクリア後は、これを繰り返し</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">ありがとう　トレーナーさん！▼
-ポケモンの　うれしそうな
-かおをみると　シアワセに　なるね！</language>
-		<language name="JPN_KANJI" width="256">ありがとう　トレーナーさん！▼
-ポケモンの　うれしそうな
-顔をみると　シアワセに　なるね！</language>
+	<row id="msg_h04_girl1_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_boy1_01" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♂
-・配達物イベント開始すると
-　あるBOY1・NPCがこれを喋るようになる
-　イベント後は通常の会話に</comment>
-		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">はいたつぶつ？▼
-あー　はしの　したに
-おちていったのを　みたよ！</language>
-		<language name="JPN_KANJI" width="256">配達物？▼
-あー　橋の　下に
-落ちていったのを　みたよ！</language>
+	<row id="msg_h04_boy1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_boy1_02" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♂
-・通常時</comment>
-		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">ぼくも　ポケモンしょうぶ　しようかな？▼
-ブリッジの　まわりに
-ポケモントレーナーも　いることだし</language>
-		<language name="JPN_KANJI" width="256">ぼくも　ポケモン勝負　しようかな？▼
-ブリッジの　周りに
-ポケモントレーナーも　いることだし</language>
+	<row id="msg_h04_boy1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_oldman1_01" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♂
-・配達物イベント開始すると
-　あるOLDMAN1・NPCがこれを喋るようになる
-　イベント後は通常の会話に
-・No???「はいたつぶつ１」入手</comment>
-		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">はいたつぶつ？▼
-はて　もしかして　これかね
-さっき　あたまに　おちてきたのじゃよ▽
-キャモメに　わたして　あげなされ▼</language>
-		<language name="JPN_KANJI" width="256">配達物？▼
-はて　もしかして　これかね
-さっき　頭に　落ちてきたのじゃよ▽
-キャモメに　渡して　あげなされ▼</language>
+	<row id="msg_h04_oldman1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_oldman1_02" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♂
-・通常時</comment>
-		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">ひるは　のんびり　にっこうよく
-よるは　しんみり　げっこうよく▼
-ひかりが　からだに　しみこんで
-ハッピー　ハッピー　ソー　ハッピー</language>
-		<language name="JPN_KANJI" width="256">昼は　のんびり　日光浴
-夜は　しんみり　月光浴▼
-光が　からだに　染みこんで
-ハッピー　ハッピー　ソー　ハッピー</language>
+	<row id="msg_h04_oldman1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_backpackerw_01" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・配達物イベント開始すると
-　あるBACKPACKERWがこれを喋るようになる
-　イベント後は通常の会話に
-・No???「はいたつぶつ２」入手</comment>
-		<attribute name="キャラ指定">BACKPACKERW</attribute>
-		<language name="JPN" width="256">なんで　わたしの　だした
-てがみが　そらから　ふってくるの……？▼
-……なーんだ！
-キャモメが　おとしちゃったのね▼
-はい！　これ　キャモメに　わたして！
-こんどは　おとさないように　ってね！</language>
-		<language name="JPN_KANJI" width="256">なんで　わたしの　だした
-手紙が　空から　降ってくるの……？▼
-……なーんだ！
-キャモメが　落としちゃったのね▼
-はい！　これ　キャモメに　わたして！
-今度は　落とさないように　ってね！</language>
+	<row id="msg_h04_backpackerw_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h04_backpackerw_02" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>♀
-・通常時</comment>
-		<attribute name="キャラ指定">BACKPACKERW</attribute>
-		<language name="JPN" width="256">クチベタな　わたしは　メールで
-たびで　かんじた　きもちを　かくの</language>
-		<language name="JPN_KANJI" width="256">クチベタな　わたしは　メールで
-旅で　感じた　気持ちを　書くの</language>
+	<row id="msg_h04_backpackerw_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_h04_whistle_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -530,11 +413,11 @@
 		<attribute name="キャラ指定">T
 草笛</attribute>
 		<language name="JPN" width="256">タンボ『こころに　しみいるは
-くさぶえの　ねいろ▼
+さみしい　ねいろ▼
 フトコロに　しみるは
 つめてぇ　よかぜ　ってね</language>
-		<language name="JPN_KANJI" width="256">タンボ『心に　しみ入るは
-草笛の　音色▼
+		<language name="JPN_KANJI" width="256">タンボ『心に　染み入るは
+寂しい　音色▼
 フトコロに　しみるは
 冷てぇ　夜風　ってね</language>
 	</row>
@@ -562,14 +445,14 @@
 		<attribute name="キャラ指定">T
 草笛</attribute>
 		<language name="JPN" width="256">タンボ『くちに　するのは
-この　くさぶえと▽
-うまく　いかねえ　まいにちへの▽
+この　ねいろと▼
+うまく　いかねえ　まいにちへの
 ぐち　ばかり　ってね▼
 そんな　やつらの　ふきだまりが
 この　はしさ</language>
 		<language name="JPN_KANJI" width="256">タンボ『口に　するのは
-この　草笛と▽
-うまく　いかねえ　毎日への▽
+この音色と▼
+うまく　いかねえ　毎日への
 ぐち　ばかり　ってね▼
 そんな　奴らの　ふきだまりが
 この　橋さ</language>
@@ -586,7 +469,7 @@
 ひびいて　こないかい！</language>
 		<language name="JPN_KANJI" width="256">ソン『どうだい！　この音！
 君の　魂（ハート）に▽
-ひびいて　来ないかい！</language>
+響いて　来ないかい！</language>
 	</row>
 
 	<row id="msg_h04_guitar_02">
@@ -595,12 +478,12 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">ソン『しってるさ　おれの　ギターは
+		<language name="JPN" width="256">ソン『しってるさ　おれの　サウンドは
 この　とかい（まち）には　にあわねえ▼
 だけど　おれは……
 じぶんの　じんせい（スタイル）を▽
 かえる　ことは　できないのさ</language>
-		<language name="JPN_KANJI" width="256">ソン『知ってるさ　おれの　ギターは
+		<language name="JPN_KANJI" width="256">ソン『知ってるさ　おれの　サウンドは
 この　都会（まち）には　にあわねえ▼
 だけど　おれは……
 自分の　人生（スタイル）を▽
@@ -615,11 +498,11 @@
 ・話しかけた時点でISS起動</comment>
 		<attribute name="キャラ指定">S
 ギター弾き</attribute>
-		<language name="JPN" width="256">ソン『この　ギターは
+		<language name="JPN" width="256">ソン『こいつは
 だいじな　ともだち（あいぼう）さ▼
 おれの　なみだ（かなしみ）を
 すべて　しってるのさ</language>
-		<language name="JPN_KANJI" width="256">ソン『この　ギターは
+		<language name="JPN_KANJI" width="256">ソン『こいつは
 大事な　友達（あいぼう）さ▼
 おれの　涙（かなしみ）を
 全て　知ってるのさ</language>
@@ -661,15 +544,15 @@
 ・話しかけた時点でISS停止</comment>
 		<attribute name="キャラ指定">G
 ボイスパーカス</attribute>
-		<language name="JPN" width="256">ガッチー『ぺっ　ぺっ！
-きょうは　ちょうし　わりいだ▽
+		<language name="JPN" width="256">ガッチー『ぺっ　ぺっ！▼
+きょうは　ちょうし　わりいだ
 マイクが　こわれてんだべー▼
-おらの　ボイパ
+おらの　テク
 こんなもんじゃ　ねんだけどなー</language>
-		<language name="JPN_KANJI" width="256">ガッチー『ぺっ　ぺっ！
-今日は　調子　わりいだ▽
-マイクが　こわれてんだべー▼
-おらの　ボイパ
+		<language name="JPN_KANJI" width="256">ガッチー『ぺっ　ぺっ！▼
+今日は　調子　わりいだ
+マイクが　壊れてんだべー▼
+おらの　テク
 こんなもんじゃ　ねんだけどなー</language>
 	</row>
 
@@ -695,14 +578,14 @@
 ボイスパーカス</attribute>
 		<language name="JPN" width="256">ガッチー『こったら　たのしそうに
 きーで　くれたのは▼
-なんがい　ボイパじんせいで
+ながーい　じんせいで
 おまえさんが　はずめてだべー▽
-ありがとよ……</language>
+あんがとよ……</language>
 		<language name="JPN_KANJI" width="256">ガッチー『こったら　楽しそうに
 きーで　くれたのは▼
-なんがい　ボイパ人生で
+ながーい　じんせいで
 おまえさんが　はずめてだべー▽
-ありがとよ……</language>
+あんがとよ……</language>
 	</row>
 
 	<row id="msg_h04_leadsinger_01">
@@ -1264,30 +1147,34 @@
 		<language name="JPN_KANJI" width="256">じゃあごぉおおお</language>
 	</row>
 
-	<row id="msg_h04_topping_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_topping_01" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>・トッピングの内容①
 ・ビットマップで表示</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">クラボのみ</language>
 		<language name="JPN_KANJI" width="256">クラボのみ</language>
 	</row>
 
-	<row id="msg_h04_topping_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_topping_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>・トッピングの内容②
 ・ビットマップで表示</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">キーのみ</language>
 		<language name="JPN_KANJI" width="256">キーのみ</language>
 	</row>
 
-	<row id="msg_h04_topping_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_topping_03" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>・トッピングの内容③
 ・ビットマップで表示</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">モモンのみ</language>
 		<language name="JPN_KANJI" width="256">モモンのみ</language>
 	</row>
 
-	<row id="msg_h04_topping_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_topping_04" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>・トッピングの内容④
 ・ビットマップで表示</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">カゴのみ</language>
 		<language name="JPN_KANJI" width="256">カゴのみ</language>
 	</row>
@@ -1296,6 +1183,7 @@
 		<comment>・ウェイトレスにサンドイッチを渡された状態で客に話しかけたとき
 ・タグに道具名をセット
 ・プレーンウィンで表示</comment>
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">この　おきゃくさんに　[1:09:どうぐ名:0]の
 サンドイッチを　わたしますか？</language>
 		<language name="JPN_KANJI" width="256">この　お客さんに　[1:09:どうぐ名:0]の
