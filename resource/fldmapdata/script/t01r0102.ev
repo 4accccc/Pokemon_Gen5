@@ -84,7 +84,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_SE_WAIT()	//ＳＥ終了待ち
 	
 	//サポート曲再生。
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	_START_EVENT_BGM( SEQ_BGM_E_FRIEND )
 	
 	//主人公＆ライバル：サポートを見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
@@ -148,11 +148,10 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_03a, T01R0102_RIVAL_01, POS_DR )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
-	//イベント曲終了
-	_END_EVENT_BGM()
 	
 //================フラグ操作==================//
+	//ゾーンBGM変更
+	_FLAG_SET( SYS_FLAG_BGM_T01R0102 )
 
 	//シーンチェンジラベル無効
 	$WK_SCENE_T01R0102 = 1
@@ -343,8 +342,6 @@ ev_first_pkeget:
 	_DISP_FADE_END_CHECK()	//---------------------------------
 
 	_OBJ_ANIME_WAIT()
-
-	_START_EVENT_BGM( SEQ_BGM_E_FRIEND )
 
 	//みんな選んだよね
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_05, T01R0102_SUPPORT_01, POS_DR )
@@ -554,13 +551,19 @@ ev_first_pkeget:
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_firstget_support_goaway_01 )
 	_OBJ_ANIME_WAIT()
 
+	//========================================//
+	//ゾーンBGMを戻す
+	_FLAG_RESET( SYS_FLAG_BGM_T01R0102 )
+	//========================================//
+
+	//ゾーンBGMを再生（通常時のゾーン曲に戻す）
+	_BGM_NOW_MAP_RECOVER()
+
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 
 	_OBJ_DEL( T01R0102_RIVAL_01 )
 	_OBJ_DEL( T01R0102_SUPPORT_01 )
-
-	_END_EVENT_BGM()	//BGM停止
 
 	//========================================//
 	//ライバルとサポートを非表示
@@ -570,7 +573,7 @@ ev_first_pkeget:
 
 	//ストッパーPOSイベントを無効
 	$WK_SCENE_T01R0102 = 2
-	
+
 	//========================================//
 
 _RET
