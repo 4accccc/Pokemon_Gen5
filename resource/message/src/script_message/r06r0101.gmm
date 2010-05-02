@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-28T16:28:18"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T18:39:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="491" top="388" right="991" bottom="1016" maximized="no" rayout="Vertical2">
+	<dialog left="1594" top="41" right="2094" bottom="668" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -298,10 +298,10 @@
 		<attribute name="キャラ指定">ASSISTANTM
 助手♂</attribute>
 		<language name="JPN" width="256">こちら　きせつけんきゅうじょ　です[BE:01:ページ切り替え（クリア）]
-このさき　ネジやま　では
+フキヨセのさき　ネジやま　では
 きせつによって　ゆきがつもりますよ</language>
 		<language name="JPN_KANJI" width="256">こちら　季節研究所　です[BE:01:ページ切り替え（クリア）]
-このさき　ネジ山　では
+フキヨセの先　ネジ山では
 季節によって　雪が積もりますよ</language>
 	</row>
 
@@ -415,20 +415,16 @@
 		<comment>♂
 ・四季イベント
 
-はい↓
-季節が春（春フォルムの場合）
+はい→季節が春（春フォルムの場合）
 assistantm3_03
 
-はい↓
-季節が夏（夏フォルムの場合）
+はい→季節が夏（夏フォルムの場合）
 assistantm3_04
 
-はい↓
-季節が春（秋フォルムの場合）
+はい→季節が春（秋フォルムの場合）
 assistantm3_05
 
-はい↓
-季節が春（冬フォルムの場合）
+はい→季節が春（冬フォルムの場合）
 assistantm3_06
 
 すでにフォルムを見せている場合↓
@@ -713,7 +709,7 @@ GRID X=7 Y=３に配置</comment>
 機械で　コントロールしてるの</language>
 	</row>
 
-	<row id="msg_r06r0101_planter_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r06r0101_planter_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・春用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
@@ -725,7 +721,7 @@ GRID X=7 Y=３に配置</comment>
 可愛い　実を　つけてる！</language>
 	</row>
 
-	<row id="msg_r06r0101_planter_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r06r0101_planter_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・夏用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
@@ -737,7 +733,7 @@ GRID X=7 Y=３に配置</comment>
 葉っぱが　散って　枯れている……</language>
 	</row>
 
-	<row id="msg_r06r0101_planter_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r06r0101_planter_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・秋用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
@@ -749,7 +745,7 @@ GRID X=7 Y=３に配置</comment>
 小さな　芽が　でてる！</language>
 	</row>
 
-	<row id="msg_r06r0101_planter_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r06r0101_planter_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・冬用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
@@ -761,7 +757,7 @@ GRID X=7 Y=３に配置</comment>
 大きな　葉っぱ　いっぱいだ！</language>
 	</row>
 
-	<row id="msg_r06r0101_heatgauge_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r06r0101_heatgauge_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・春用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
@@ -769,7 +765,7 @@ GRID X=7 Y=３に配置</comment>
 		<language name="JPN_KANJI" width="256">６番道路の気温　１６度</language>
 	</row>
 
-	<row id="msg_r06r0101_heatgauge_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r06r0101_heatgauge_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・夏用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
@@ -777,7 +773,7 @@ GRID X=7 Y=３に配置</comment>
 		<language name="JPN_KANJI" width="256">６番道路の気温　３４度</language>
 	</row>
 
-	<row id="msg_r06r0101_heatgauge_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r06r0101_heatgauge_03" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・秋用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
@@ -785,7 +781,7 @@ GRID X=7 Y=３に配置</comment>
 		<language name="JPN_KANJI" width="256">６番道路の気温　１１度</language>
 	</row>
 
-	<row id="msg_r06r0101_heatgauge_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r06r0101_heatgauge_04" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・冬用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
