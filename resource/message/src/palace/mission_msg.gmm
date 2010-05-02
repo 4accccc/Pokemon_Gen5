@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-02T14:16:46"/>
+	<create user="ohmori" host="W00223" date="2010-05-02T16:42:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="910"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -698,11 +698,11 @@
 	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
 		<language name="JPN" width="256">かんしゃの　きもちが　あつまり
-みんなの　ハイルツリーが　せいちょうした！▼
+ハイルツリーが　せいちょうした！▼
 みんなの　ハイルツリーの
 ブラックＬｖが　[2:02:３桁:0]あがった！</language>
 		<language name="JPN_KANJI" width="256">感謝の　気持ちが　集まり
-皆の　ハイルツリーが　せいちょうした！▼
+ハイルツリーが　生長した！▼
 皆の　ハイルツリーの
 ブラックＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
@@ -710,11 +710,11 @@
 	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
 		<language name="JPN" width="256">かんしゃの　きもちが　あつまり
-みんなの　ハイルツリーが　せいちょうした！▼
+ハイルツリーが　せいちょうした！▼
 みんなの　ハイルツリーの
 ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
 		<language name="JPN_KANJI" width="256">感謝の　気持ちが　集まり
-皆の　ハイルツリーが　せいちょうした！▼
+ハイルツリーが　生長した！▼
 皆の　ハイルツリーの
 ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
