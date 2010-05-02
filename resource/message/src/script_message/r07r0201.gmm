@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T13:14:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T19:05:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1572" top="205" right="2277" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07r0201_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07r0201_mountain_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
@@ -315,7 +315,7 @@
 交換しないか？</language>
 	</row>
 
-	<row id="msg_r07r0201_mountain_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07r0201_mountain_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
@@ -334,7 +334,7 @@
 大切に　してくれよ</language>
 	</row>
 
-	<row id="msg_r07r0201_mountain_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07r0201_mountain_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモン交換
 ・0＝渡すポケモン</comment>
@@ -347,7 +347,7 @@
 [1:01:ポケモン種族名:0]　だぞ……？</language>
 	</row>
 
-	<row id="msg_r07r0201_mountain_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07r0201_mountain_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</comment>
@@ -358,7 +358,7 @@
 また　話しかけてくれい！</language>
 	</row>
 
-	<row id="msg_r07r0201_mountain_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r07r0201_mountain_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモン交換後</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
@@ -385,7 +385,7 @@
 		<comment>ポケモン
 ・BLACKver
 ・メッセージ表示とともに鳴き声再生</comment>
-		<attribute name="キャラ指定">POKEMON
+		<attribute name="キャラ指定">POKE18
 チュリネ</attribute>
 		<language name="JPN" width="256">ちゅりゅりゅ♪</language>
 		<language name="JPN_KANJI" width="256">ちゅりゅりゅ♪</language>
@@ -395,8 +395,8 @@
 		<comment>ポケモン
 ・WHITEver
 ・メッセージ表示とともに鳴き声再生</comment>
-		<attribute name="キャラ指定">POKEMON
-モンネン</attribute>
+		<attribute name="キャラ指定">POKE24
+モンメン</attribute>
 		<language name="JPN" width="256">ぷっふふー</language>
 		<language name="JPN_KANJI" width="256">ぷっふふー</language>
 	</row>
