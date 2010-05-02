@@ -32,6 +32,7 @@ EVENT_START ev_r06r0203_legend1
     _VOICE_PLAY( MONSNO_645, 0 )
     _GIZAPLAINWIN_MSG_POS( msg_r06r0203_legend1_01, POS_DOWN )
     _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
 
     _WILD_BTL_SET_LEGEND( MONSNO_645 , 50 ) //アトス
@@ -82,7 +83,6 @@ EVENT_END
 sub_legend1_escaped:
     //どこかへ消えてしまった…
     _SYSWIN_MSG( msg_r06r0203_legend1_02 , POS_DOWN )
-    _AB_KEYWAIT()
     _SYSWIN_CLOSE()
 
     _CALL   sub_guide_appear
