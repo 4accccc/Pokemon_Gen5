@@ -26,6 +26,7 @@ InputExcelFile = ARGV[0];
 class ZONE_DATA
   def initialize()
     @zone_id = "0"             #ZONE_ID
+    @reverse_zone_id = "0"     #裏ZONE_ID
     @warp_zone_id = "0"        #WARP_ZONE_ID
     @warp_grid_x = "0"         #WARPグリッドX
     @warp_grid_y = "0"         #WARPグリッドY
@@ -36,7 +37,8 @@ class ZONE_DATA
     @comment = "0"             #備考欄
   end
 
-  attr_accessor :zone_id, :warp_zone_id, :warp_grid_x, :warp_grid_y, :warp_grid_z;
+  attr_accessor :zone_id, :reverse_zone_id, :warp_zone_id;
+  attr_accessor :warp_grid_x, :warp_grid_y, :warp_grid_z;
   attr_accessor :sub_x, :sub_y, :connect, :comment;
 end
 
@@ -75,6 +77,8 @@ def CsvConvFileCheck()
 
     ZoneData[s].zone_id = line[cell];
     cell += 1;
+    ZoneData[s].reverse_zone_id = line[cell];
+    cell += 1;
     ZoneData[s].warp_zone_id = line[cell];
     cell += 1;
     ZoneData[s].warp_grid_x = line[cell].sub(/\.0/, ""); #csvの時点で小数点がついているので取り除く
@@ -108,6 +112,11 @@ end
 def DataConv()
   for i in 0..ZoneData.size-1
     ZoneData[i].zone_id = "ZONE_ID_" + ZoneData[i].zone_id;
+    if(ZoneData[i].reverse_zone_id == "-")
+      ZoneData[i].reverse_zone_id = "ZONE_ID_MAX";
+    else
+      ZoneData[i].reverse_zone_id = "ZONE_ID_" + ZoneData[i].reverse_zone_id;
+    end
     ZoneData[i].warp_zone_id = "ZONE_ID_" + ZoneData[i].warp_zone_id;
   end
 end
@@ -131,6 +140,7 @@ def DataFileOutput()
     for i in 0..ZoneData.size-1
       file.printf("\t{\t//%d  %s\n", i, ZoneData[i].comment);
       file.printf("\t\t%s,\t\t//zone_id\n", ZoneData[i].zone_id);
+      file.printf("\t\t%s,\t\t//reverse_zone_id\n", ZoneData[i].reverse_zone_id);
       file.printf("\t\t%s,\t\t//warp_zone_id\n", ZoneData[i].warp_zone_id);
       file.printf("\t\t%s,\t\t//warp_grid_x\n", ZoneData[i].warp_grid_x);
       file.printf("\t\t%s,\t\t//warp_grid_y\n", ZoneData[i].warp_grid_y);
