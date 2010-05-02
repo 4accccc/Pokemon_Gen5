@@ -46,8 +46,10 @@ _EVENT_DATA_END
 /**************************************************************/
 INIT_EVENT_START	ev_init_c02gym0101
 	
+	//ジムバッジの取得状況によって人物配置を変える
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
 	
+	//盗難イベント中かどうかで、人物配置を変える
 	IF $SCWK_TEMP0 == 0 THEN
 		IF $WK_SCENE_C02GYM0101 == 1  THEN 
 			IF FLAG_OFF( FE_MUSEUM_TOUNAN) THEN	

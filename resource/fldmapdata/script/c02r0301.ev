@@ -192,8 +192,12 @@ EVENT_START   ev_c02r0301_woman2_01
 					_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 					IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 						_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+						
+						//==============フラグ操作==============//
 						_FLAG_RESET(FE_C02R0301_BTL_01)
 						_TRAINER_FLAG_SET(TRID_MINI_11)
+						//==============フラグ操作==============//
+					
 					ELSE
 						_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 					ENDIF

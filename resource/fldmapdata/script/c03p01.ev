@@ -187,12 +187,10 @@ _PLAYER_DIR_GET( LWK_DIR )
 				
 			//どうだい！　バツグンの　ステップだろ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_dancer1_02 )
-			_MSGWIN_CLOSE()
 			
 			//そうだ　キミ！　ダンサーに　こえ　かけてくれない？
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_dancer1_03 )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
 				
 			//はいの場合
 			IF $SCWK_ANSWER == SCR_YES THEN
@@ -252,7 +250,6 @@ _PLAYER_DIR_GET( LWK_DIR )
 			//そうだ　キミ！　ダンサーに　こえ　かけてくれない？
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_dancer1_03 )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
 			
 			//はいの場合
 			IF $SCWK_ANSWER == SCR_YES THEN
@@ -296,7 +293,6 @@ _PLAYER_DIR_GET( LWK_DIR )
 		
 			//さかばのある　ストリートと　はとばで　ダンスしてる　ヤツが
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_dancer1_05 )
-			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
 			//ダンサー踊る

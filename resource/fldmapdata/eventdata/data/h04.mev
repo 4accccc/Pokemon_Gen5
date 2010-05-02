@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/02 17:46:34
+#save date:2010/05/02 20:37:39
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #hold event type:
 1
 #hold event number:
-23
+20
 #event number: 0
 #type
 1
@@ -324,37 +324,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-H04_MONSTERBALL_01
-#OBJ CODE Number
-MONSTERBALL
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_H04_ITEM_02
-#Event Script Name
-SCRID_H04_MONSTERBALL_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-264 0 -72
-#event number: 11
-#type
-1
-#ID name
 H04_FLD_ITEM_01
 #OBJ CODE Number
 MONSTERBALL
@@ -382,7 +351,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 392 0 56
-#event number: 12
+#event number: 11
 #type
 1
 #ID name
@@ -413,7 +382,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 456 0 -440
-#event number: 13
+#event number: 12
 #type
 1
 #ID name
@@ -444,7 +413,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -504
-#event number: 14
+#event number: 13
 #type
 1
 #ID name
@@ -475,7 +444,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 744 0 -392
-#event number: 15
+#event number: 14
 #type
 1
 #ID name
@@ -506,7 +475,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 984 0 -504
-#event number: 16
+#event number: 15
 #type
 1
 #ID name
@@ -537,7 +506,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 264 0 -440
-#event number: 17
+#event number: 16
 #type
 1
 #ID name
@@ -567,8 +536,8 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-8 3 -3
-#event number: 18
+8 6 -3
+#event number: 17
 #type
 1
 #ID name
@@ -599,7 +568,7 @@ DIR_UP
 EVENTDATA_POSTYPE_RAIL
 #position
 14 9 -3
-#event number: 19
+#event number: 18
 #type
 1
 #ID name
@@ -630,69 +599,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 11 1 -8
-#event number: 20
-#type
-1
-#ID name
-H04_GIRL1_01
-#OBJ CODE Number
-GIRL1
-#MOVE CODE Number
-MV_RAIL_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_GIRL1_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-8 6 -4
-#event number: 21
-#type
-1
-#ID name
-H04_POKE100_01
-#OBJ CODE Number
-TPOKE_0305
-#MOVE CODE Number
-MV_RAIL_DIR_RND_ULR
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_H04_POKE_01
-#Event Script Name
-SCRID_H04_POKE100_01
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-8 7 -4
-#event number: 22
+#event number: 19
 #type
 1
 #ID name

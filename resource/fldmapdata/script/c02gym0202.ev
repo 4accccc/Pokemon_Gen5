@@ -46,7 +46,6 @@ EVENT_START	ev_c02gym0202_leader2_01
 	
 
 	_TALK_OBJ_START()
-
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
 
@@ -55,8 +54,10 @@ EVENT_START	ev_c02gym0202_leader2_01
 		//バッジ入手前なら、ジムリーダー戦イベント
 		_CALL		ev_leader2_btl
 		
-		_TIME_WAIT(16)
+
 		//盗難イベント開始
+		//副館長がやってくるまでの時間
+		_TIME_WAIT(16)
 		_CALL		ev_c02gym_tounan
 
 //==============フラグワーク操作==============//
@@ -103,7 +104,6 @@ EVENT_END
 ev_leader2_btl:
 	//リーダー：戦闘前メッセージ
 
-	_TALK_OBJ_START()
 	//いらっしゃい！
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_01 )
 	_BALLOONWIN_CLOSE()
