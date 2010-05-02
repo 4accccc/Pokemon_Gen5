@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T14:51:52"/>
+	<create user="matsumiya" host="W00224" date="2010-05-02T15:06:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -385,7 +385,7 @@
 忘れるのが　大変だけどね▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_05">
 		<comment>♀
 ■d01r0101イベント前</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
@@ -413,7 +413,7 @@
 集めることが　できるようになるの！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_06">
 		<comment>♀
 ■d01r0101イベント前
 ・inventor_05表示後
@@ -442,7 +442,7 @@
 「ゆめのけむり」を　とってきてほしいな</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_07">
 		<comment>♀
 ■d01r0101イベント後
 ・メッセージ前にその場で2度ジャンプ
@@ -527,7 +527,7 @@
 なりますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_08">
 		<comment>♀
 ■d01r0101イベント後
 ・主人公に近づいてメッセージ表示
@@ -594,11 +594,11 @@
 ・続けてinventor_11</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
 		<language name="JPN" width="256">ごめんなさいね！
-ダメといっても　せつめい　しまーす▼
+うれしいから　せつめい　しまーす▼
 だって　あなたの　おかげで
 ものすごいことが　できるんだもの！！▼</language>
 		<language name="JPN_KANJI" width="256">ごめんなさいね！
-ダメといっても　説明しまーす▼
+うれしいから　説明しまーす▼
 だって　あなたの　おかげで
 ものすごいことが　できるんだもの！！▼</language>
 	</row>
