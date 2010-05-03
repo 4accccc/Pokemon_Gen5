@@ -78,6 +78,8 @@ enum {
 
   SEQ_BPL_BUTTON_WAIT,  // ボタンアニメ終了待ち
 
+	SEQ_BPL_WAZAINFOMODE_MAIN,
+
 //  SEQ_BPL_STRCV,      // ステータス回復
 //  SEQ_BPL_PPALLRCV,   // PP全回復
 
@@ -155,6 +157,7 @@ static int BPL_SeqEndSet( BPLIST_WORK * wk );
 static int BPL_SeqEndWait( BPLIST_WORK * wk );
 static BOOL BPL_SeqEnd( GFL_TCB* tcb, BPLIST_WORK * wk );
 static int BPL_SeqWazaSelect( BPLIST_WORK * wk );
+static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk );
 
 static int BPL_PokeItemUse( BPLIST_WORK * wk );
 
@@ -247,6 +250,8 @@ static const pBPlistFunc MainSeqFunc[] = {
   BPL_SeqWazaRcvSelect,
 
   BPL_SeqButtonWait,
+
+	BPL_SeqWazaInfoModeMain,
 
 //  BPL_SeqStRcv,
 //  BPL_SeqPPAllRcv,
@@ -500,9 +505,18 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
   wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
+//	wk->dat->mode = BPL_MODE_WAZAINFO;
+//	wk->dat->sel_wp = 3;
+
+	// 技忘れ
   if( wk->dat->mode == BPL_MODE_WAZASET ){
     wk->page = BPLIST_PAGE_WAZASET_BS;
     ret = SEQ_BPL_WAZADEL_SEL;
+	// 技説明
+	}else if( wk->dat->mode == BPL_MODE_WAZAINFO ){
+    wk->page = BPLIST_PAGE_SKILL;
+    ret = SEQ_BPL_WAZAINFOMODE_MAIN;
+	// その他
   }else{
     wk->page = BPLIST_PAGE_SELECT;
     ret = SEQ_BPL_SELECT;
@@ -553,7 +567,12 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
     }
     BPLISTUI_Init( wk, wk->page, wk->dat->sel_poke );
   }else{
-    BPLISTUI_Init( wk, wk->page, 0 );
+		// 技選択モードのとき
+		if( wk->dat->mode == BPL_MODE_WAZAINFO ){
+	    BPLISTUI_Init( wk, wk->page, wk->dat->sel_wp );
+		}else{
+	    BPLISTUI_Init( wk, wk->page, 0 );
+		}
   }
 
 //  BattlePokeList_CursorMoveSet( wk, wk->page );
@@ -1299,6 +1318,58 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
   return SEQ_BPL_ST_SKILL;
 }
 
+// 技説明モードメイン処理
+static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
+{
+  u32 ret;
+
+  if( CheckTimeOut( wk ) == TRUE ){
+    return SEQ_BPL_ENDSET;
+  }
+
+  ret = CURSORMOVE_MainCont( wk->cmwk );
+
+  switch( ret ){
+  case BPLIST_UI_WAZAINFO_SEL1:     // 技１
+  case BPLIST_UI_WAZAINFO_SEL2:     // 技２
+  case BPLIST_UI_WAZAINFO_SEL3:     // 技３
+  case BPLIST_UI_WAZAINFO_SEL4:     // 技４
+    if( wk->dat->sel_wp == ret ||
+      wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[ret].id == 0 ){
+      break;
+    }
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+    wk->dat->sel_wp = ret;
+    return SEQ_BPL_PAGECHG_WAZAINFO;
+
+  case BPLIST_UI_WAZAINFO_RETURN:   // もどる
+    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
+    return SEQ_BPL_ENDSET;
+
+  case CURSORMOVE_CANCEL:         // キャンセル
+    PMSND_PlaySE( SEQ_SE_CANCEL2 );
+    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
+    return SEQ_BPL_ENDSET;
+
+  case CURSORMOVE_CURSOR_MOVE:    // 移動
+    PMSND_PlaySE( SEQ_SE_SELECT1 );
+    break;
+
+  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
+  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
+  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
+  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
+  case CURSORMOVE_CURSOR_ON:      // カーソル表示
+  case CURSORMOVE_NONE:           // 動作なし
+    break;
+  }
+
+  return SEQ_BPL_WAZAINFOMODE_MAIN;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * ページ５のコントロールシーケンス
@@ -1749,6 +1820,10 @@ static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk )
   if( BPL_PageChange( wk, BPLIST_PAGE_SKILL ) == FALSE ){
     return SEQ_BPL_PAGECHG_WAZAINFO;
   }
+	// 技説明モードの場合
+	if( wk->dat->mode == BPL_MODE_WAZAINFO ){
+	  return SEQ_BPL_WAZAINFOMODE_MAIN;
+	}
   return SEQ_BPL_ST_SKILL;
 }
 
@@ -2156,6 +2231,8 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
   GFL_HEAP_FreeMemory( wk );
 
 //  GFL_HEAP_DeleteHeap( HEAPID_BATTLE_APP_TEST );
+
+//	OS_Printf( "waza pos = %d\n", wk->dat->sel_wp );
 
   return TRUE;
 }

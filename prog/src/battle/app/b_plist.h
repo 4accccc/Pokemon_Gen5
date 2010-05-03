@@ -36,6 +36,7 @@ enum {
   BPL_MODE_CHG_DEAD,    // 瀕死入れ替え選択
   BPL_MODE_ITEMUSE,     // アイテム使用
   BPL_MODE_WAZASET,     // 技忘れ
+  BPL_MODE_WAZAINFO,    // 技確認
 };
 
 // リストデータ
