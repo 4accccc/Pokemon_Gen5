@@ -1405,6 +1405,15 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   pWork->yoffset--;
   GFL_CLACT_SYS_Main();
 
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    NetErr_App_ReqErrorDisp();
+    pWork->selectType = GAMESYNC_RETURNMODE_NONE;
+    retCode = GFL_PROC_RES_FINISH;
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  }
+
+  
   return retCode;
 }
 
@@ -1419,6 +1428,10 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   GAMESYNC_MENU* pWork = mywk;
   EVENT_GSYNC_WORK* pParentWork =pwk;
   int i;
+
+  if(!WIPE_SYS_EndCheck()){
+    return GFL_PROC_RES_CONTINUE;
+  }
 
   for(i=0;i<_SELECTMODE_MAX; i++){
     GFL_CLACT_WK_Remove(pWork->buttonObj[i]);

@@ -61,7 +61,7 @@ FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(shinka_demo);
 //FS_EXTERN_OVERLAY(app_mail);
 
-#define _LOCALMATCHNO (100)
+#define _LOCALMATCHNO (110)
 #define _IRC_BATTEL_LEVEL (50)
 
 enum _EVENT_IRCBATTLE {
@@ -250,11 +250,22 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
         *seq = _CALL_TRADE;
         break;
+      case EVENTIRCBTL_ENTRYMODE_MULTH:
+/*        
+        OS_TPrintf("マルチ番号 %d %d %d %d\n",dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
+                   dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
+        dbw->irc_match.pNetParty[0] = dbw->pNetParty[dbw->irc_match.MultiNo[0]];
+        dbw->irc_match.pNetParty[1] = dbw->pNetParty[dbw->irc_match.MultiNo[1]];
+        dbw->irc_match.pNetParty[2] = dbw->pNetParty[dbw->irc_match.MultiNo[2]];
+        dbw->irc_match.pNetParty[3] = dbw->pNetParty[dbw->irc_match.MultiNo[3]];
+   */
+        //break; throw
       default:
         *seq = _BATTLE_MATCH_START;
         break;
       }
     }
+ 
     break;
   case _BATTLE_MATCH_START:
     {
@@ -300,13 +311,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       BTL_SETUP_Rotation_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
+      {
+        int commpos[]= {0,2,1,3};
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_MULTI_START;
       dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_MULTI_FREE;
       BTL_SETUP_Multi_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle(),
-                            BTL_COMM_DS, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ), HEAPID_PROC );
+                            BTL_COMM_DS,  commpos[dbw->irc_match.MultiNo[GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() )]]  , HEAPID_PROC );
       dbw->para->multiMode = 1;
       dbw->para->rule = BTL_RULE_DOUBLE;
-      _partySub3All(dbw);
+        _partySub3All(dbw);
+      }
       break;
     default:
       GF_ASSERT(0);
@@ -340,12 +354,12 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     {
       GMEVENT* next_event;
       EV_BATTLE_CALL_PARAM battlecall_param;
-
-#if 1
       int i;
+
+      NET_PRINT("マルチ番号 %d %d %d %d\n",dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1], dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
       for( i=0;i<4;i++){
-        dbw->demo_prm.trainer_data[i].party = dbw->pNetParty[i];
-        dbw->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+        dbw->demo_prm.trainer_data[i].party = dbw->pNetParty[dbw->irc_match.MultiNo[i]];
+        dbw->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),dbw->irc_match.MultiNo[i] );
       }
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
@@ -357,11 +371,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
                     EVENT_CallCommBattle, &battlecall_param );
 
       GMEVENT_CallEvent( event, next_event );
-#else
-      GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, dbw->para);
-#endif
     }
-    //    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
     (*seq)++;
     break;
   case _WAIT_BATTLE:

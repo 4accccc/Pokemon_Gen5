@@ -41,6 +41,7 @@ typedef struct {
   GAMEDATA* gamedata;         ///< ゲームデータ:必須
   POKEPARTY* pParty;          ///< 自分PARTY : バトル用
   POKEPARTY* pNetParty[4];    ///< NETParty : バトル用
+  u8 MultiNo[4];
   int selectType;             ///< EVENTIRCBTL_IBMODE_ENTRYの事 必須
   GFLNetInitializeStruct *netInitWork;  //ネット初期化構造体：ミュージカル用
 } IRC_MATCH_WORK;

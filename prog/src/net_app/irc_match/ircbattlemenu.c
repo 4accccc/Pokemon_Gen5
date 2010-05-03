@@ -2124,6 +2124,14 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
   GFL_CLACT_SYS_Main();
+
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    NetErr_App_ReqErrorDisp();
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+    retCode = GFL_PROC_RES_FINISH;
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  }
   
   return retCode;
 }
@@ -2138,6 +2146,10 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 {
   IRC_BATTLE_MENU* pWork = mywk;
   EVENT_IRCBATTLE_WORK* pParentWork =pwk;
+  
+  if(!WIPE_SYS_EndCheck()){
+    return GFL_PROC_RES_CONTINUE;
+  }
 
   _workEnd(pWork);
   EVENT_IrcBattleSetType(pParentWork, pWork->selectType);

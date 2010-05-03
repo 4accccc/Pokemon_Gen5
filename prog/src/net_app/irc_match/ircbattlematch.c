@@ -10,7 +10,7 @@
 #include <gflib.h>
 #include "arc_def.h"
 #include "net/network_define.h"
-
+#include "system/net_err.h"
 #include "ircbattlematch.h"
 #include "system/main.h"
 #include "system/wipe.h"
@@ -154,6 +154,8 @@ static BOOL _cancelButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork);
 static void _RecvMyStatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvPokePartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvMacAddr(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvMultiPartyNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static u8* _getPokePartyBuff(int netID, void* pWork, int size);
 static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork);
 static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork);
@@ -175,9 +177,11 @@ typedef enum {
 
 #define _TIMINGNO_CS (120)
 #define _TIMINGNO_DS (121)
+#define _TIMINGNO_POKEP (122)
 #define _TIMINGNO_DSF (123)
 #define _TIMINGNO_TYPECHECK (124)
-#define _TIMINGNO_POKEP (122)
+#define _TIMINGNO_MACADDR (125)
+#define _TIMINGNO_MULTISEND (126)
 
 //--------------------------------------------
 // 内部ワーク
@@ -232,6 +236,10 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_RecvMyStatusData,          NULL},  ///_NETCMD_MYSTATUSSEND
   {_RecvPokePartyData,       _getPokePartyBuff},  ///_NETCMD_POKEPARTY_SEND
   {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
+  {_recvMacAddr,         NULL},  //  _NETCMD_MACADDR,
+  {_recvMultiPartyNo,         NULL},  //  _NETCMD_MULTIPARTY_NO,
+
+  
 };
 
 
@@ -293,6 +301,7 @@ struct _IRC_BATTLE_MATCH {
   StateFunc* state;      ///< ハンドルのプログラム状態
   int selectType;   // 接続タイプ
   int selectTypeNet[_IRCMATCH_MAX];   // 接続タイプ
+  u8 macadd[4][6];
   HEAPID heapID;
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_MSGDATA *pMsgData;  //
@@ -761,6 +770,66 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   マックアドレス受信関数 _NETCMD_MACADDR
+ */
+//--------------------------------------------------------------
+static void _recvMacAddr(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+
+  IRC_BATTLE_MATCH *pWork = pWk;
+  MYSTATUS* pTargetSt;
+  GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
+  int no,i;
+  const u8* macadd = pData;
+  
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(GFL_NET_IsParentMachine()){
+
+      OS_TPrintf("MAC %2x%2x%2x%2x%2x%2x\n",
+                 macadd[0],
+                 macadd[1],
+                 macadd[2],
+                 macadd[3],
+                 macadd[4],
+                 macadd[5]
+                 );
+
+    for(i=0;i<4;i++){
+      if(0==GFL_STD_MemComp(pWork->macadd[i], macadd, 6)){
+        pWork->pBattleWork->MultiNo[ netID ] = i;
+        return;
+      }
+    }
+    GF_ASSERT(0);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   マルチでのパーティー並び順受信関数 _NETCMD_MULTIPARTY_NO
+ */
+//--------------------------------------------------------------
+static void _recvMultiPartyNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+
+  IRC_BATTLE_MATCH *pWork = pWk;
+  MYSTATUS* pTargetSt;
+  GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
+  int no;
+  
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
+  GFL_STD_MemCopy(pData , pWork->pBattleWork->MultiNo, 4);
+}
+
 
 
 
@@ -854,6 +923,38 @@ static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
 }
 
 
+
+static void _modeCheckStart42(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_MULTISEND, WB_NET_IRCBATTLE)){
+    if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, _NETCMD_POKEPARTY_SEND,
+                          PokeParty_GetWorkSize(), pWork->pBattleWork->pParty,
+                          FALSE,FALSE,TRUE)){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP,WB_NET_IRCBATTLE);
+      _CHANGE_STATE(pWork,_modeCheckStart5);
+    }
+  }
+}
+
+
+static void _modeCheckStart41(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_MACADDR, WB_NET_IRCBATTLE)){
+
+    if(GFL_NET_IsParentMachine()){
+      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_MULTIPARTY_NO,
+                          sizeof(pWork->pBattleWork->MultiNo), pWork->pBattleWork->MultiNo)){
+        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_MULTISEND,WB_NET_IRCBATTLE);
+        _CHANGE_STATE(pWork,_modeCheckStart42);
+      }
+    }
+    else{
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_MULTISEND,WB_NET_IRCBATTLE);
+      _CHANGE_STATE(pWork,_modeCheckStart42);
+    }
+  }
+}
+
 static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS, WB_NET_IRCBATTLE)){
@@ -864,11 +965,13 @@ static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
       _CHANGE_STATE(pWork,_modeFadeoutStart);
       break;
     default:
-      if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, _NETCMD_POKEPARTY_SEND,
-                            PokeParty_GetWorkSize(), pWork->pBattleWork->pParty,
-                            FALSE,FALSE,TRUE)){
-        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP,WB_NET_IRCBATTLE);
-        _CHANGE_STATE(pWork,_modeCheckStart5);
+      {
+        u8 macaddr[6];
+        OS_GetMacAddress(macaddr);
+        if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_MACADDR, sizeof(macaddr), macaddr)){
+          GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_MACADDR,WB_NET_IRCBATTLE);
+          _CHANGE_STATE(pWork,_modeCheckStart41);
+        }
       }
       break;
     }
@@ -978,8 +1081,13 @@ static void _modeCheckStart(IRC_BATTLE_MATCH* pWork)
 static void _wirelessConnectCallback(void* pWk)
 {
   IRC_BATTLE_MATCH *pWork = pWk;
+  int i;
 
-
+  if(GFL_NET_IsParentMachine()){
+    for(i=0;i<4;i++){
+      GFL_NET_IRCWIRELESS_GetMacAddress(pWork->macadd[i], i);
+    }
+  }
   _CHANGE_STATE(pWork, _modeCheckStart);
 }
 
@@ -2401,6 +2509,15 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
   GFL_CLACT_SYS_Main();
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
+
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    NetErr_App_ReqErrorDisp();
+    pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+    retCode = GFL_PROC_RES_FINISH;
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  }
+  
   return retCode;
 }
 
@@ -2414,8 +2531,10 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 {
   IRC_BATTLE_MATCH* pWork = mywk;
 
-//  pWork->pBattleWork->selectType = pWork->selectType;
-
+  if(!WIPE_SYS_EndCheck()){
+    return GFL_PROC_RES_CONTINUE;
+  }
+  
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
   }

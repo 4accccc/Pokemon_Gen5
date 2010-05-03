@@ -76,10 +76,6 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
       fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
-
-
-    
-    
     (*seq) ++;
     break;
   case _FIELD_FADE_CLOSE:
@@ -159,6 +155,9 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     GF_ASSERT(0);
     break;
   }
+
+//  NetErr_DispCall(FALSE);
+  
   return GMEVENT_RES_CONTINUE;
 }
 

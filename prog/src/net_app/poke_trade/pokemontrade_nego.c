@@ -763,7 +763,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     }
   }
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEÉlÉSÇÃÇ›ã≠êßêÿífèàóù
-    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);  //
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, FALSE, FALSE);  //
   }
 
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_DECIDE) &&
@@ -1291,15 +1291,15 @@ static void _select6PokeSubMask(POKEMON_TRADE_WORK* pWork)
       GX_WND_PLANEMASK_BG2|
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
-      FALSE );
-    G2S_SetWnd0Position( 0, 0, 128, 192-24+1 );
+      TRUE );
+    G2S_SetWnd0Position( 128,  0, 255, 192-24+1 );
     G2S_SetWndOutsidePlane(
       GX_WND_PLANEMASK_BG0|
       GX_WND_PLANEMASK_BG1|
       GX_WND_PLANEMASK_BG2|
       GX_WND_PLANEMASK_BG3|
       GX_WND_PLANEMASK_OBJ,
-      TRUE );
+      FALSE );
     GXS_SetVisibleWnd( GX_WNDMASK_W0 );
   }
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
@@ -1607,7 +1607,7 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
   pWork->pokemonGTSSeq[1]=POKEMONTORADE_SEQ_NONE;
   
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEÉlÉSÇÃÇ›ã≠êßêÿífèàóù
-    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);  //
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, FALSE, FALSE);  //
   }
 
   
