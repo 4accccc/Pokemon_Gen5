@@ -57,6 +57,24 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
 };
 
+// 名前入力後の設定
+static const GFL_DISP_VRAM sc_vramSetTable2 =
+{
+	GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			  // メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_32_H,					// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,				  // サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_01_CD,						// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_0123_E,				// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メイン画面OBJマッピングモード		
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// サブ画面OBJマッピングモード
+};
+
+
 //=============================================================================
 /**
  *					ＢＧ設定
@@ -84,19 +102,6 @@ static const struct
 }	sc_bgsetup[]	=
 {	
 	//MAIN------------------------
-#if 0	//3D設定のためいらない
-	{	
-		GFL_BG_FRAME0_M,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x128,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,	//BGの種類
-		TRUE,	//初期表示
-	},
-#endif
 	{	
 		GFL_BG_FRAME1_M,	//設定するフレーム
 		{
@@ -108,19 +113,6 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-/*	つかってない
-	{	
-		GFL_BG_FRAME2_M,	//設定するフレーム
-		{
-			0, 0, 0x0800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-*/
 	{	
 		GFL_BG_FRAME3_M,	//設定するフレーム
 		{
@@ -145,19 +137,6 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-/*	つかってない
-	{	
-		GFL_BG_FRAME1_S,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-*/
 	{	
 		GFL_BG_FRAME2_S,	//設定するフレーム
 		{
@@ -169,19 +148,6 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
-#if 0	//使わない場合は、このテーブルから消してください。(#if#endifじゃなくても大丈夫です)
-	{	
-		GFL_BG_FRAME3_S,	//設定するフレーム
-		{
-			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-			GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
-		},
-		GFL_BG_MODE_TEXT,//BGの種類
-		TRUE,	//初期表示
-	},
-#endif
 };
 
 #endif //GRAPHIC_BG_USE
@@ -395,6 +361,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
+static void GRAPHIC_BG_Init2( GRAPHIC_BG_WORK *p_wk, HEAPID heapID );
 #endif //GRAPHIC_BG_USE
 //-------------------------------------
 ///	OBJ
@@ -411,6 +378,7 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
 //=====================================
 #ifdef GRAPHIC_G3D_USE
 static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID );
+static void GRAPHIC_G3D_Init2( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk );
 static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk );
 static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk );
@@ -428,10 +396,11 @@ static void Graphic_3d_SetUp( void );
  *	@brief	グラフィック設定
  *
  *	@param	ディスプレイ選択	GX_DISP_SELECT_MAIN_SUB or GX_DISP_SELECT_SUB_MAIN
+ *	@param	scene		シーン
  *	@param	HEAPID heapID ヒープ
  */
 //-----------------------------------------------------------------------------
-INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, HEAPID heapID )
+INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, INTRO_SCENE_ID scene, HEAPID heapID )
 {	
 	INTRO_GRAPHIC_WORK * p_wk;
 	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(INTRO_GRAPHIC_WORK) );
@@ -446,9 +415,6 @@ INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, HEAPID heapID )
 	//VRAMクリアー
 	GFL_DISP_ClearVRAM( 0 );
 
-	//VRAMバンク設定
-	GFL_DISP_SetBank( &sc_vramSetTable );
-
 	//ディスプレイON
 	GFL_DISP_SetDispSelect( display_select );
 	GFL_DISP_SetDispOn();
@@ -457,19 +423,35 @@ INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, HEAPID heapID )
 	GFL_DISP_GX_InitVisibleControl();
 	GFL_DISP_GXS_InitVisibleControl();
 
-	//フォント初期化
-	GFL_FONTSYS_Init();
-
-	//モジュール初期化
+	// 前半と後半で設定を変える
+	if( scene == INTRO_SCENE_ID_05_RETAKE_YESNO ){
+		GFL_DISP_SetBank( &sc_vramSetTable2 );
+		//モジュール初期化
 #ifdef GRAPHIC_BG_USE
-	GRAPHIC_BG_Init( &p_wk->bg, heapID );
+		GRAPHIC_BG_Init2( &p_wk->bg, heapID );
 #endif //GRAPHIC_BG_USE
 #ifdef GRAPHIC_OBJ_USE
-	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+		GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 #endif //GRAPHIC_OBJ_USE
 #ifdef GRAPHIC_G3D_USE
-	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
+		GRAPHIC_G3D_Init2( &p_wk->g3d, heapID );
 #endif //GRAPHIC_G3D_USE
+	}else{
+		GFL_DISP_SetBank( &sc_vramSetTable );
+		//モジュール初期化
+#ifdef GRAPHIC_BG_USE
+		GRAPHIC_BG_Init( &p_wk->bg, heapID );
+#endif //GRAPHIC_BG_USE
+#ifdef GRAPHIC_OBJ_USE
+		GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+#endif //GRAPHIC_OBJ_USE
+#ifdef GRAPHIC_G3D_USE
+		GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
+#endif //GRAPHIC_G3D_USE
+	}
+
+	//フォント初期化
+	GFL_FONTSYS_Init();
 
 	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
@@ -661,6 +643,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 {	
+/*	GFL_BG_Exit()で呼ばれている
 	//BG面破棄
 	{	
 		int i;
@@ -669,6 +652,7 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 			GFL_BG_FreeBGControl( sc_bgsetup[i].frame );
 		}
 	}
+*/
 
 	//終了
 	GFL_BMPWIN_Exit();
@@ -685,7 +669,10 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk )
-{	
+{
+	if( GFL_DISP_GetMainVisible() & GX_PLANEMASK_BG2 ){
+		GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_INC, 1 );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -699,6 +686,70 @@ static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk )
 {	
 	GFL_BG_VBlankFunc();
 }
+
+// 後半部分の初期化
+static void GRAPHIC_BG_Init2( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
+{
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_BG_WORK) );
+	//初期化
+	GFL_BG_Init( heapID );
+	GFL_BMPWIN_Init( heapID );
+	//グラフィックモード設定
+	GFL_BG_SetBGMode( &sc_bgsys_header );
+
+  {	// メイン：ウィンドウ面
+    GFL_BG_BGCNT_HEADER cnth= {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
+  }
+  {	// メイン：演出面
+    GFL_BG_BGCNT_HEADER cnth= {
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
+  }
+  {	// メイン：背景面
+    GFL_BG_BGCNT_HEADER cnth= {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
+  }
+
+	// サブ画面の設定は前半と同じ
+  {
+    GFL_BG_BGCNT_HEADER cnth= {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &cnth, GFL_BG_MODE_TEXT );
+  }
+	{
+    GFL_BG_BGCNT_HEADER cnth= {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &cnth, GFL_BG_MODE_TEXT );
+	}
+
+	GFL_BG_SetVisible( GFL_BG_FRAME1_M, TRUE );
+	GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
+	GFL_BG_SetVisible( GFL_BG_FRAME0_S, TRUE );
+	GFL_BG_SetVisible( GFL_BG_FRAME2_S, TRUE );
+}
+
+
+
+
 #endif //GRAPHIC_BG_USE
 //=============================================================================
 /**
@@ -830,8 +881,42 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
     p_wk->p_lightset = GFL_G3D_LIGHT_Create( &light_setup, heapID );
     GFL_G3D_LIGHT_Switching( p_wk->p_lightset );
   }
-
 }
+
+// 後半部分の初期化（３Ｄ初期化以外は同じ）
+static void GRAPHIC_G3D_Init2( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
+{
+	GFL_G3D_Init(
+		GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GRAPHIC_G3D_PLTSIZE, 0, heapID, Graphic_3d_SetUp );
+
+  // カメラ生成
+	p_wk->p_camera = GRAPHIC_G3D_CAMERA_Create( &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+  
+  // カメラ設定
+  {
+    fx32 far = FX32_ONE * 2048;   ///< 最大値
+    fx32 near = FX32_CONST(0.1);  ///< 最低値
+    GFL_G3D_CAMERA_SetFar( p_wk->p_camera, &far );
+    GFL_G3D_CAMERA_SetNear( p_wk->p_camera, &near );
+  }
+
+  // ライト作成
+  {
+    //ライト初期設定データ
+    static const GFL_G3D_LIGHT_DATA light_data[] = {
+      { 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+      { 1, {{  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+      { 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+      { 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+    };
+
+    static const GFL_G3D_LIGHTSET_SETUP light_setup = { light_data, NELEMS(light_data) };
+
+    p_wk->p_lightset = GFL_G3D_LIGHT_Create( &light_setup, heapID );
+    GFL_G3D_LIGHT_Switching( p_wk->p_lightset );
+  }
+}
+
 
 //----------------------------------------------------------------------------
 /**

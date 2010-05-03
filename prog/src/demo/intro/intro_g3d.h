@@ -10,6 +10,8 @@
 //============================================================================
 #pragma once
 
+#include "demo/intro.h"
+
 //=============================================================================
 /**
  *								íËêîíËã`
@@ -45,7 +47,7 @@ enum {
 
 typedef struct _INTRO_G3D_WORK INTRO_G3D_WORK;
 
-extern INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id );
+extern INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID scene, HEAPID heap_id );
 extern void INTRO_G3D_Exit( INTRO_G3D_WORK* wk );
 extern void INTRO_G3D_Main( INTRO_G3D_WORK* wk );
 

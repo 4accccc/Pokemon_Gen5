@@ -32,6 +32,8 @@ enum
   UNIT_MAX = 1,   ///< ユニット最大値
 };
 
+#define	UNIT_NONE		( 0xffff )	///< ユニットなし
+
 //RES
 static const GFL_G3D_UTIL_RES res_unit_select[] = {
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbmd, GFL_G3D_UTIL_RESARC },
@@ -122,7 +124,7 @@ struct _INTRO_G3D_WORK {
  *	@retval
  */
 //-----------------------------------------------------------------------------
-INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
+INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID scene, HEAPID heap_id )
 {
   INTRO_G3D_WORK* wk;
 
@@ -143,10 +145,10 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
 									defaultCameraNear, defaultCameraFar, 0,
 									&sc_camera_pos, &sc_camera_up, &sc_camera_target, heap_id );
   
-  // ユニット追加
-  {
+	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO ){
     int i;
     
+	  // ユニット追加
     for( i=0; i<UNIT_MAX; i++ )
     {
       const GFL_G3D_UTIL_SETUP* setup;
@@ -155,11 +157,8 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
 
       wk->unit_idx[i] = GFL_G3D_UTIL_AddUnit( wk->g3d_util, setup );
     }
-  }
   
-  // アニメーション有効化
-  {
-    int i;
+	  // アニメーション有効化
     for( i=0; i<UNIT_MAX; i++ )
     {
       int j;
@@ -177,7 +176,12 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
         GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
       }
     }
-  }
+  }else{
+    int i;
+    for( i=0; i<UNIT_MAX; i++ ){
+      wk->unit_idx[i] = UNIT_NONE;
+    }
+	}
 
   wk->is_load = TRUE;
 
@@ -202,7 +206,9 @@ void INTRO_G3D_Exit( INTRO_G3D_WORK* wk )
 
   for( i=0; i<UNIT_MAX; i++ )
   {
-    GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
+		if( wk->unit_idx[i] != UNIT_NONE ){
+			GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
+		}
   }
 
   GFL_G3D_UTIL_Delete( wk->g3d_util );

@@ -31,7 +31,7 @@ extern const GFL_PROC_DATA IntroProcData;
  *								定数定義
  */
 //=============================================================================
-//@TODO cdatと公開ヘッダの連動は美しくない。
+// cdatと公開ヘッダの連動は美しくない。
 // src/demo/intro/intro_cmd_data.cdat と対応
 typedef enum
 { 

@@ -11,6 +11,7 @@
 #pragma once
 
 #include <gflib.h>
+#include "demo/intro.h"
 
 //=============================================================================
 /**
@@ -38,7 +39,7 @@ typedef struct _INTRO_GRAPHIC_WORK  INTRO_GRAPHIC_WORK;
 //	ディスプレイセレクトにはGX_DISP_SELECT_MAIN_SUB or GX_DISP_SELECT_SUB_MAINを
 //	渡してください。途中で書き換えたい場合、GFL_DISP_SetDispSelectを使用して下さい。
 //=====================================
-extern INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, HEAPID heapID );
+extern INTRO_GRAPHIC_WORK * INTRO_GRAPHIC_Init( int display_select, INTRO_SCENE_ID scene, HEAPID heapID );
 //-------------------------------------
 ///破棄
 //=====================================

@@ -12,6 +12,7 @@
 
 #include <gflib.h>
 #include "system/mcss.h"
+#include "demo/intro.h"
 
 typedef struct _INTRO_MCSS_WORK INTRO_MCSS_WORK;
 
@@ -35,7 +36,7 @@ typedef struct _INTRO_MCSS_WORK INTRO_MCSS_WORK;
 
 
 
-extern INTRO_MCSS_WORK* INTRO_MCSS_Create( HEAPID heap_id );
+extern INTRO_MCSS_WORK* INTRO_MCSS_Create( HEAPID heap_id, INTRO_SCENE_ID scene );
 
 extern void INTRO_MCSS_Exit( INTRO_MCSS_WORK* wk );
 

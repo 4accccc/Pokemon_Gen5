@@ -83,6 +83,7 @@ struct _INTRO_CMD_WORK {
   INTRO_MCSS_WORK* mcss;
   INTRO_G3D_WORK* g3d;
   INTRO_PARTICLE_WORK* ptc;
+	INTRO_GRAPHIC_WORK	*graphic;
   // [PRIVATE]
   
   // @TODO コマンドエンジンにぶら下げるべきではない > intro.cに下げるべき
@@ -95,6 +96,14 @@ struct _INTRO_CMD_WORK {
   INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
   int cmd_idx;
   INTR_SAVE_CONTROL* intr_save;
+
+	// ＢＧエフェクト用
+	u16	bgEffBuff[64*32];
+	// OBJ
+	GFL_CLWK * clwk[3];
+	u32	chrRes[3];
+	u32	palRes[3];
+	u32	celRes[3];
 };
 
 //=============================================================================
@@ -155,6 +164,14 @@ static BOOL CMD_G3D_SELECT_SEX_SET_FRAME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* 
 static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
+static BOOL CMD_BG_EFF_IN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BG_EFF_OUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_OBJ_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_OBJ_UNLOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_OBJ_IN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_OBJ_OUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+
 
 // セーブコマンド
 static BOOL CMD_SAVE_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -229,6 +246,13 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_SAVE_RESUME,
   CMD_SAVE_MYSTATUS,
   CMD_SAVE_CHECK_ALL_END,
+
+	CMD_BG_EFF_IN,
+	CMD_BG_EFF_OUT,
+	CMD_OBJ_LOAD,
+	CMD_OBJ_UNLOAD,
+	CMD_OBJ_IN,
+	CMD_OBJ_OUT,
   
   CMD_NONE,
 
@@ -493,7 +517,7 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
   handle  = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x40, heap_id );
   GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_intro_intro_bg_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
   
   //  ----- 下画面 -----
@@ -507,6 +531,23 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
             BG_FRAME_BACK_M, 0, 0, 0, heap_id );
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_intro_intro_bg_sub_NSCR,
             BG_FRAME_BACK_M, 0, 0, 0, heap_id );    
+
+	// 後半部分
+	if( param[0] == 1 ){
+		NNSG2dScreenData * scrn;
+		void * buf;
+
+	  GFL_ARCHDL_UTIL_TransVramBgCharacter(
+			handle, NARC_intro_intro_line_NCGR,
+	            BG_FRAME_LINE_M, 0, 0, 0, heap_id );
+/*
+	  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_intro_intro_line_NSCR,
+	            BG_FRAME_LINE_M, 0, 0, 0, heap_id );    
+*/
+		buf = GFL_ARCHDL_UTIL_LoadScreen( handle, NARC_intro_intro_line_NSCR, FALSE, &scrn, heap_id );
+	  GFL_STD_MemCopy16( (void *)scrn->rawData, wk->bgEffBuff, 64*32*2 );
+		GFL_HEAP_FreeMemory( buf );
+	}
   
   GFL_ARC_CloseDataHandle( handle );
 
@@ -1409,6 +1450,216 @@ static BOOL CMD_G3D_SELECT_SEX_RETURN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sda
   return FALSE;
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BOOL CMD_BG_EFF_IN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	switch( sdat->seq ){
+	case 0:
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 11, 64, 2, wk->bgEffBuff, 0, 11, 64, 32 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 1:
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 10, 64, 1, wk->bgEffBuff, 0, 10, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 13, 64, 1, wk->bgEffBuff, 0, 13, 64, 32 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 2:
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0,  9, 64, 1, wk->bgEffBuff, 0,  9, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 14, 64, 1, wk->bgEffBuff, 0, 14, 64, 32 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 3:
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0,  8, 64, 1, wk->bgEffBuff, 0,  8, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 15, 64, 1, wk->bgEffBuff, 0, 15, 64, 32 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 4:
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M, 0,  7, 64, 1, wk->bgEffBuff, 0,  7, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M, 0, 16, 64, 1, wk->bgEffBuff, 0, 16, 64, 32 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq = 0;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static BOOL CMD_BG_EFF_OUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	switch( sdat->seq ){
+	case 0:
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0,  7, 64, 1, 0 );
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0, 16, 64, 1, 0 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 1:
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0,  8, 64, 1, 0 );
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0, 15, 64, 1, 0 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 2:
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0,  6, 64, 1, 0 );
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0, 14, 64, 1, 0 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 3:
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0,  5, 64, 1, 0 );
+		GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0, 13, 64, 1, 0 );
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		sdat->seq++;
+		break;
+	case 4:
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, FALSE );
+		sdat->seq = 0;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static BOOL CMD_OBJ_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, wk->heap_id );
+
+	// 主人公
+	if( MyStatus_GetMySex( wk->init_param->mystatus ) == PTL_SEX_MALE ){
+		wk->chrRes[0] = GFL_CLGRP_CGR_Register(
+											ah, NARC_intro_intro_hero_NCGR,
+											FALSE, CLSYS_DRAW_MAIN, wk->heap_id );
+		wk->palRes[0] = GFL_CLGRP_PLTT_Register(
+											ah, NARC_intro_intro_hero_NCLR,
+											CLSYS_DRAW_MAIN, 0, wk->heap_id );
+		wk->celRes[0] = GFL_CLGRP_CELLANIM_Register(
+											ah, NARC_intro_intro_hero_NCER, NARC_intro_intro_hero_NANR, wk->heap_id );
+	}else{
+		wk->chrRes[0] = GFL_CLGRP_CGR_Register(
+											ah, NARC_intro_intro_heroine_NCGR,
+											FALSE, CLSYS_DRAW_MAIN, wk->heap_id );
+		wk->palRes[0] = GFL_CLGRP_PLTT_Register(
+											ah, NARC_intro_intro_heroine_NCLR,
+											CLSYS_DRAW_MAIN, 0, wk->heap_id );
+		wk->celRes[0] = GFL_CLGRP_CELLANIM_Register(
+											ah, NARC_intro_intro_heroine_NCER, NARC_intro_intro_heroine_NANR, wk->heap_id );
+	}
+	// ライバル
+	wk->chrRes[1] = GFL_CLGRP_CGR_Register(
+										ah, NARC_intro_intro_rival_NCGR,
+										FALSE, CLSYS_DRAW_MAIN, wk->heap_id );
+	wk->palRes[1] = GFL_CLGRP_PLTT_Register(
+										ah, NARC_intro_intro_rival_NCLR,
+										CLSYS_DRAW_MAIN, 0x20, wk->heap_id );
+	wk->celRes[1] = GFL_CLGRP_CELLANIM_Register(
+										ah, NARC_intro_intro_rival_NCER, NARC_intro_intro_rival_NANR, wk->heap_id );
+	// サポート
+	wk->chrRes[2] = GFL_CLGRP_CGR_Register(
+										ah, NARC_intro_intro_support_NCGR,
+										FALSE, CLSYS_DRAW_MAIN, wk->heap_id );
+	wk->palRes[2] = GFL_CLGRP_PLTT_Register(
+										ah, NARC_intro_intro_support_NCLR,
+										CLSYS_DRAW_MAIN, 0x40, wk->heap_id );
+	wk->celRes[2] = GFL_CLGRP_CELLANIM_Register(
+										ah, NARC_intro_intro_support_NCER, NARC_intro_intro_support_NANR, wk->heap_id );
+
+  GFL_ARC_CloseDataHandle( ah );
+
+	{
+		GFL_CLWK_DATA	dat[] = { { 128, 96, 0, 0, 1 }, { 64, 96, 0, 10, 1 }, { 192, 96, 0, 10, 1 } };
+		u32	i;
+		for( i=0; i<3; i++ ){
+			wk->clwk[i] = GFL_CLACT_WK_Create(
+											INTRO_GRAPHIC_GetClunit(wk->graphic),
+											wk->chrRes[i], wk->palRes[i], wk->celRes[i], &dat[i], CLSYS_DEFREND_MAIN, wk->heap_id );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+		}
+	}
+	return TRUE;
+}
+
+static BOOL CMD_OBJ_UNLOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	u32	i;
+
+	for( i=0; i<3; i++ ){
+		GFL_CLGRP_CGR_Release( wk->chrRes[i] );
+    GFL_CLGRP_PLTT_Release( wk->palRes[i] );
+    GFL_CLGRP_CELLANIM_Release( wk->celRes[i] );
+		GFL_CLACT_WK_Remove( wk->clwk[i] );
+	}
+
+	return TRUE;
+}
+
+static BOOL CMD_OBJ_IN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	u32	i;
+
+	switch( sdat->seq ){
+	case 0:
+		G2_SetBlendAlpha(
+			GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 0, 16 );
+		GFL_CLACT_WK_SetObjMode( wk->clwk[param[0]], GX_OAM_MODE_XLU );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[param[0]], TRUE );
+		sdat->seq++;
+		break;
+
+	case 16:
+		for( i=0; i<3; i++ ){
+			if( GFL_CLACT_WK_GetObjMode( wk->clwk[i] ) == GX_OAM_MODE_XLU ){
+				GFL_CLACT_WK_SetObjMode( wk->clwk[i], GX_OAM_MODE_NORMAL );
+			}
+		}
+		sdat->seq = 0;
+		return TRUE;
+
+	default:
+		sdat->seq++;
+		G2_ChangeBlendAlpha( sdat->seq, 16-sdat->seq );
+		break;
+	}
+
+	return FALSE;
+}
+
+static BOOL CMD_OBJ_OUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	u32	i;
+
+	switch( sdat->seq ){
+	case 0:
+		G2_SetBlendAlpha(
+			GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 16, 0 );
+		for( i=0; i<3; i++ ){
+			GFL_CLACT_WK_SetObjMode( wk->clwk[i], GX_OAM_MODE_XLU );
+		}
+		sdat->seq++;
+		break;
+
+	case 16:
+		for( i=0; i<3; i++ ){
+			GFL_CLACT_WK_SetObjMode( wk->clwk[i], GX_OAM_MODE_NORMAL );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+		}
+		sdat->seq = 0;
+		return TRUE;
+
+	default:
+		sdat->seq++;
+		G2_ChangeBlendAlpha( 16-sdat->seq, sdat->seq );
+		break;
+	}
+
+	return FALSE;
+}
+
 
 //=============================================================================
 // 判定関数
@@ -1462,6 +1713,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
   WORDSET_RegisterPlayerName( wordset, bufID, mystatus );
 }
 
+
 //=============================================================================
 /**
  *                外部公開関数
@@ -1478,7 +1730,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
  *  @retval
  */
 //-----------------------------------------------------------------------------
-INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, HEAPID heap_id )
+INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,INTRO_MCSS_WORK* mcss, INTRO_PARAM* init_param, INTRO_GRAPHIC_WORK	*graphic, HEAPID heap_id )
 {
   INTRO_CMD_WORK* wk;
 
@@ -1494,6 +1746,7 @@ INTRO_CMD_WORK* Intro_CMD_Init( INTRO_G3D_WORK* g3d, INTRO_PARTICLE_WORK* ptc ,I
   wk->mcss  = mcss;
   wk->g3d   = g3d;
   wk->ptc   = ptc;
+	wk->graphic = graphic;
 
   // セーブモジュール受け取り
   wk->intr_save = wk->init_param->intr_save;

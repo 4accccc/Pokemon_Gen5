@@ -190,7 +190,7 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
   wk->param       = param;
 	
 	//描画設定初期化
-	wk->graphic	= INTRO_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
+	wk->graphic	= INTRO_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->param->scene_id, wk->heapID );
 
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -204,14 +204,14 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
   // MCSS初期化
-  wk->mcss = INTRO_MCSS_Create( wk->heapID );
+  wk->mcss = INTRO_MCSS_Create( wk->heapID, wk->param->scene_id );
 
   // 3D関連初期化
-  wk->g3d = INTRO_G3D_Create( wk->graphic, wk->heapID );
+  wk->g3d = INTRO_G3D_Create( wk->graphic, wk->param->scene_id, wk->heapID );
   wk->ptc = INTRO_PARTICLE_Create( wk->graphic, wk->heapID );
 
   // コマンド初期化
-  wk->cmd = Intro_CMD_Init( wk->g3d, wk->ptc, wk->mcss, wk->param, wk->heapID );
+  wk->cmd = Intro_CMD_Init( wk->g3d, wk->ptc, wk->mcss, wk->param, wk->graphic, wk->heapID );
 
   // ブライドネス設定 真っ黒
 //  SetBrightness( -16, (PLANEMASK_BG0|PLANEMASK_BG2|PLANEMASK_BG3|PLANEMASK_OBJ), MASK_MAIN_DISPLAY );
