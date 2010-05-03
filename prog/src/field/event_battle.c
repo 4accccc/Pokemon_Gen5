@@ -493,6 +493,8 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
   bew->is_sub_event = TRUE;
   //エンカウントエフェクトとＢＧＭをセット
   ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_MINEZUMI, ENC_TYPE_DEMO, FALSE, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
+  //捕獲でもは野生弱エンカウントエフェクト固定
+  bew->EncEffNo = ENCEFFID_WILD_NORMAL;
 
   return event;
 }
