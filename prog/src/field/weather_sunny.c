@@ -296,7 +296,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Exit( WEATHER_TASK* p_wk, WEATHER_
 	if( WEATHER_TASK_IsZoneLight( p_wk ) )
 	{
 		// ƒ‰ƒCƒgŒ³‚É
-		WEATHER_TASK_LIGHT_Back( p_wk );
+		WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 	}
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;

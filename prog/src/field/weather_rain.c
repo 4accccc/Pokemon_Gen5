@@ -1386,7 +1386,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIN_Exit( WEATHER_TASK* p_wk, WEATHER_T
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1792,7 +1792,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SPARKRAIN_Exit( WEATHER_TASK* p_wk, WEAT
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	// スパーク初期化
 	WEATHER_PARK_Exit( &p_local_wk->spark );
@@ -2230,7 +2230,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_RAIKAMI_Exit( WEATHER_TASK* p_wk, WEATHE
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	// スパーク初期化
 	WEATHER_PARK_Exit( &p_local_wk->spark );
@@ -2626,7 +2626,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_KAZAKAMI_Exit( WEATHER_TASK* p_wk, WEATH
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -3425,7 +3425,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_EVENING_RAIN_Exit( WEATHER_TASK* p_wk, W
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	// スパーク初期化
 	WEATHER_PARK_Exit( &p_local_wk->spark );

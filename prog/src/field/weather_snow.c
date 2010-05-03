@@ -1198,7 +1198,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Exit( WEATHER_TASK* p_wk, WEATHER_T
 
 	
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -1605,7 +1605,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_Exit( WEATHER_TASK* p_wk, WEATHER_
 
 	
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -2033,7 +2033,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Exit( WEATHER_TASK* p_wk, WEATHER
 
 	
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -2441,7 +2441,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_ARARE_Exit( WEATHER_TASK* p_wk, WEATHER_
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -2828,7 +2828,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_DIAMONDDUST_Exit( WEATHER_TASK* p_wk, WE
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

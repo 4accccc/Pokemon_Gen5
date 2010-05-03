@@ -733,9 +733,11 @@ void WEATHER_TASK_LIGHT_Set( WEATHER_TASK* p_wk, u32 arcid, u32 dataid )
  *	@param	heapID		ƒq[ƒvID
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk )
+extern void WEATHER_TASK_LIGHT_Back( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont )
 {
-	FIELD_LIGHT_ReLoadDefault( p_wk->p_light );
+  if( fog_cont == WEATHER_TASK_FOG_USE ){
+    FIELD_LIGHT_ReLoadDefault( p_wk->p_light );
+  }
 }
 
 //----------------------------------------------------------------------------

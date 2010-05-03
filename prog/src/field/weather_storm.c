@@ -507,7 +507,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_Exit( WEATHER_TASK* p_wk, WEATHER_
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ƒ‰ƒCƒgŒ³‚É
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

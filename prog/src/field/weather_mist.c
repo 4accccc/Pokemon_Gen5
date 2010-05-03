@@ -563,7 +563,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_MIST_Exit( WEATHER_TASK* p_wk, WEATHER_T
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
@@ -828,7 +828,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_MIST_Exit( WEATHER_TASK* p_wk, WE
 	WEATHER_TASK_FogClear( p_wk, fog_cont );
 
 	// ライト元に
-	WEATHER_TASK_LIGHT_Back( p_wk );
+	WEATHER_TASK_LIGHT_Back( p_wk, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
