@@ -334,7 +334,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte\n";
   case DBGSTR_REC_SeekClient:           return "rec seek numClient=%d\n";
   case DBGSTR_REC_ReadActParam:         return "rec ReadPtr=%d, act=%d, waza=%d\n";
-
+  case DBGSTR_REC_CheckMatchClient:     return "rec Read-ClientID=%d, seeking-clientID=%d,  numAction=%d\n";
+  case DBGSTR_REC_ReadTimeOverCmd:      return "時間制限による終了コマンドを読み取った\n";
 
   case DBGSTR_csv:  return "%d,";
   case DBGSTR_done: return "done!";

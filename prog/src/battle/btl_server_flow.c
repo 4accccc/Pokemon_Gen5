@@ -387,7 +387,8 @@ static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WOR
 static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp );
 static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fActCmd );
-static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_Nigeru_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_NigeruSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -1281,9 +1282,8 @@ BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk )
 
   SCQUE_Init( wk->que );
 
-  if( scproc_NigeruCmd(wk, bpp) )
+  if( scproc_Nigeru_Root(wk, bpp) )
   {
-    BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
     return TRUE;
   }
   else
@@ -1629,6 +1629,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     case BTL_ACTION_MOVE:     actionPri = 0; break;
     case BTL_ACTION_FIGHT:    actionPri = 0; break;
     case BTL_ACTION_NULL: continue;
+    case BTL_ACTION_RECPLAY_TIMEOVER: continue;
     default:
       GF_ASSERT(0);
       actionPri = 0;
@@ -2066,26 +2067,12 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         break;
       case BTL_ACTION_ESCAPE:
         BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
-        if( scproc_NigeruCmd( wk, bpp ) )
-        {
+        if( scproc_Nigeru_Root( wk, bpp ) ){
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
-          BTL_ESCAPEINFO_Add( &wk->escInfo, actOrder->clientID );
-          if( !BTL_MAINUTIL_IsFriendClientID( actOrder->clientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
-          {
-            BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
-          }
         }
-        else
-        {
-          if( actOrder->clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
-          {
-            BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
-          }
-          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
-        }
-        if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
-          wk->nigeruCount = NIGERU_COUNT_MAX;
-        }
+        break;
+      case BTL_ACTION_RECPLAY_TIMEOVER:
+        wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
         break;
       case BTL_ACTION_MOVE:
         scproc_Move( wk, bpp );
@@ -2096,7 +2083,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
       case BTL_ACTION_NULL:
         BTL_N_Printf( DBGSTR_SVFL_ActOrder_Dead );
   //        scPut_CantAction( wk, bpp );
-          break;
+         break;
       }
 
       BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
@@ -2530,7 +2517,49 @@ static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 po
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「にげる」
 //-----------------------------------------------------------------------------------
-static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+/**
+ * 逃げる処理ルート
+ *
+ *  @retval 逃げられたらTRUE, 逃げ失敗でFALSE
+ */
+static BOOL scproc_Nigeru_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+  u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+
+  BOOL result = scproc_NigeruSub( wk, bpp );
+
+  if( result )
+  {
+    BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
+    if( !BTL_MAINUTIL_IsFriendClientID(clientID, playerClientID) ){
+      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
+    }
+    return TRUE;
+  }
+  else
+  {
+    if( clientID == playerClientID ){
+      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
+    }
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+  }
+
+  if( clientID == playerClientID )
+  {
+    if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
+      wk->nigeruCount = NIGERU_COUNT_MAX;
+    }
+  }
+
+  return result;
+}
+/**
+ * 逃げる処理下請け
+ *
+ *  @retval 逃げられたらTRUE, 逃げ失敗でFALSE
+ */
+static BOOL scproc_NigeruSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   BOOL fSkipNigeruCalc;
 
@@ -2906,7 +2935,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     {
       // シューター用
       BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
-      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, clientID, targetPokeID, itemID );
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Shooter, clientID, targetPokeID, itemID );
       if( pos != BTL_POS_NULL ){
         SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_SHOOTER_EFFECT );
       }

@@ -977,10 +977,23 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    SetAdapterCmd( server, BTL_ACMD_NOTIFY_TIMEUP );
-    (*seq)++;
+    {
+      void* recData;
+      u32   recDataSize;
+      recData = BTL_RECTOOL_PutTimeOverData( &server->recTool, &recDataSize );
+      TAYA_Printf("時間制限による終了コード[%x][%x] %d byte 送信\n", ((u8*)(recData))[0], ((u8*)(recData))[1], recDataSize);
+      SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
+      (*seq)++;
+    }
     break;
   case 1:
+    if( WaitAllAdapterReply(server) ){
+      ResetAdapterCmd( server );
+      SetAdapterCmd( server, BTL_ACMD_NOTIFY_TIMEUP );
+      (*seq)++;
+    }
+    break;
+  case 2:
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
@@ -988,6 +1001,7 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
     }
     break;
   }
+
   return FALSE;
 }
 //----------------------------------------------------------------------------------

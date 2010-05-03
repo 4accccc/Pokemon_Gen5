@@ -1260,8 +1260,11 @@ static BOOL CmdLimit_CheckOver( BTL_CLIENT* wk )
  */
 static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc )
 {
-  if( CmdLimit_CheckOver(wk) ){
-    ClientSubProc_Set( wk, nextProc );
+  if( CmdLimit_CheckOver(wk) )
+  {
+    if( nextProc ){
+      ClientSubProc_Set( wk, nextProc );
+    }
     return TRUE;
   }
   return FALSE;
@@ -1323,28 +1326,60 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 {
-  u8 numAction, fChapter;
+  switch( *seq ){
+  case 0:
+    {
+      u8 numAction, fChapter;
 
-  const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( wk->btlRecReader, wk->myID, &numAction, &fChapter );
-  if( fChapter ){
-    RecPlayer_TurnIncReq( &wk->recPlayer );
-  }
+      const BTL_ACTION_PARAM* act = BTL_RECREADER_ReadAction( wk->btlRecReader, wk->myID, &numAction, &fChapter );
+      if( fChapter ){
+        RecPlayer_TurnIncReq( &wk->recPlayer );
+      }
 
-  wk->returnDataPtr = act;
-  wk->returnDataSize = numAction * sizeof(BTL_ACTION_PARAM);
+      wk->returnDataPtr = act;
+      wk->returnDataSize = numAction * sizeof(BTL_ACTION_PARAM);
 
-  BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct, wk->myID, numAction);
-  if( act->gen.cmd  == BTL_ACTION_FIGHT ){
-    BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Fight, act->fight.waza);
-  }
-  if( act->gen.cmd  == BTL_ACTION_CHANGE ){
-    BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Change, act->change.memberIdx);
-  }
-  if( act->gen.cmd  == BTL_ACTION_MOVE ){
-    BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Move );
-  }
+      // 再生時タイムオーバー検出処理
+      if( act->gen.cmd == BTL_ACTION_RECPLAY_TIMEOVER )
+      {
+        if( wk->viewCore ){
+          TAYA_Printf("再生タイムオーバーコマンドチェック ... 描画クライアントなのでメッセージ\n");
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BattleTimeOver );
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          (*seq)++;
+        }else{
+          TAYA_Printf("再生タイムオーバーコマンドチェック ... 描画クライアントではないので終了\n");
+          wk->procAction = &wk->actionParam[ 0 ];
+          BTL_ACTION_SetNULL( wk->procAction );
+          wk->returnDataPtr = wk->procAction;
+          wk->returnDataSize = sizeof(BTL_ACTION_PARAM);
+          return TRUE;
+        }
+      }
+      else
+      {
+        BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct, wk->myID, numAction);
+        if( act->gen.cmd  == BTL_ACTION_FIGHT ){
+          BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Fight, act->fight.waza);
+        }
+        if( act->gen.cmd  == BTL_ACTION_CHANGE ){
+          BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Change, act->change.memberIdx);
+        }
+        if( act->gen.cmd  == BTL_ACTION_MOVE ){
+          BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Move );
+        }
+        return TRUE;
+      }
+    }
+    break;
 
-  return TRUE;
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
 }
 
 
@@ -3443,7 +3478,8 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 
           if( StoreSelectableWazaFlag(wk, wk->procPoke, usableWazaFlag) != PTL_WAZA_MAX )
           {
-            u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, wk->procPokeIdx );
+//            u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, wk->procPokeIdx );
+            u8  mypos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->procPoke) );
 
             TR_AI_Start( wk->AIHandle, usableWazaFlag, mypos );
             (*seq) = SEQ_WAZA_AI;
@@ -3984,6 +4020,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
   case 1:
     if( CmdLimit_CheckOver(wk) ){
       BTLV_ForceQuitPokeSelect( wk->viewCore );
+      TAYA_Printf("ポケ選択強制終了発動\n");
       (*seq) = 2;
       break;
     }
@@ -3997,6 +4034,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
   // コマンド制限時間による強制終了処理
   case 2:
+    TAYA_Printf("ポケ選択終了待ち\n");
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
       storePokeSelResult_ForceQuit( wk );

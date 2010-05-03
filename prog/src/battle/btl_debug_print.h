@@ -298,6 +298,8 @@ typedef enum {
   DBGSTR_REC_ReadActSkip,
   DBGSTR_REC_SeekClient,
   DBGSTR_REC_ReadActParam,
+  DBGSTR_REC_CheckMatchClient,
+  DBGSTR_REC_ReadTimeOverCmd,
 
   DBGSTR_csv,
   DBGSTR_done,

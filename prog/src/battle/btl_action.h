@@ -26,8 +26,10 @@ typedef enum {
   BTL_ACTION_ESCAPE,
   BTL_ACTION_MOVE,
   BTL_ACTION_ROTATION,
-
   BTL_ACTION_SKIP,      ///< 反動などで動けない
+
+  BTL_ACTION_RECPLAY_TIMEOVER,   ///< 録画データの時間制限による終了
+
 }BtlAction;
 
 
@@ -36,20 +38,20 @@ typedef union {
   u32 raw;
 
   struct {
-    u32 cmd   : 3;
-    u32 param : 29;
+    u32 cmd   : 4;
+    u32 param : 28;
   }gen;
 
   struct {
-    u32 cmd       : 3;
+    u32 cmd       : 4;
     u32 targetPos : 3;
     u32 waza      : 16;
     u32 rot_dir   : 3;
-    u32 _0        : 7;
+    u32 _0        : 6;
   }fight;
 
   struct {
-    u32 cmd       : 3;
+    u32 cmd       : 4;
     u32 targetIdx : 3;  ///< 対象ポケモンのパーティ内インデックス
     u32 number    : 16; ///< アイテムID
     u32 param     : 8;  ///< サブパラメータ（PP回復時、どのワザに適用するか、など）
@@ -57,27 +59,27 @@ typedef union {
   }item;
 
   struct {
-    u32 cmd         : 3;
+    u32 cmd         : 4;
     u32 posIdx      : 3;  // 入れ替え対象位置ID
     u32 memberIdx   : 3;  // 選ばれたポケモンのパーティ内インデックス
     u32 depleteFlag : 1;  // 入れ替えるポケモンがもういないことを通知するフラグ
-    u32 _2          : 22;
+    u32 _2          : 21;
   }change;
 
   struct {
-    u32 cmd     : 3;
-    u32 _3      : 29;
+    u32 cmd     : 4;
+    u32 _3      : 28;
   }escape;
 
   struct {
-    u32 cmd     : 3;
-    u32 _4      : 29;
+    u32 cmd     : 4;
+    u32 _4      : 28;
   }move;
 
   struct {
-    u32 cmd     : 3;
+    u32 cmd     : 4;
     u32 dir     : 3;
-    u32 _5      : 26;
+    u32 _5      : 25;
   }rotation;
 
 }BTL_ACTION_PARAM;
@@ -169,6 +171,12 @@ static inline WazaID BTL_ACTION_GetWazaID( const BTL_ACTION_PARAM* act )
     return act->fight.waza;
   }
   return WAZANO_NULL;
+}
+
+static inline void BTL_ACTION_SetRecPlayOver( BTL_ACTION_PARAM* act )
+{
+  act->gen.cmd = BTL_ACTION_RECPLAY_TIMEOVER;
+  act->gen.param = 0;
 }
 
 #endif

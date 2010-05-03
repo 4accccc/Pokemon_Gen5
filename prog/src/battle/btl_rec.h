@@ -13,8 +13,10 @@
 
 typedef enum {
   BTL_RECFIELD_NULL = 0,
-  BTL_RECFIELD_ACTION,        ///< 通常行動選択
-  BTL_RECFIELD_ROTATION,      ///< ローテーション
+  BTL_RECFIELD_ACTION,          ///< 通常行動選択
+  BTL_RECFIELD_ROTATION,        ///< ローテーション
+  BTL_RECFIELD_TIMEOVER,        ///< 時間制限が来たので終了
+  BTL_RECFIELD_SIZEOVER,        ///< これ以上コマンド記憶できないので終了
 //  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
 }BtlRecFieldType;
 
@@ -60,6 +62,7 @@ typedef struct {
 extern void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter );
 extern void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_ACTION_PARAM* action, u8 numAction );
 extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCode, u32* dataSize );
+extern void* BTL_RECTOOL_PutTimeOverData( BTL_RECTOOL* recTool, u32* dataSize );
 extern void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir );
 extern void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize );
 

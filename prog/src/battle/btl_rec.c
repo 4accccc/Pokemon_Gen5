@@ -209,7 +209,6 @@ void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize
     wk->readPtr[i] = 0;
   }
 
-  BTL_Printf("RECREADRE Init dataSize=%d\n", wk->dataSize);
 }
 
 //=============================================================================================
@@ -251,20 +250,22 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   BTL_N_Printf( DBGSTR_REC_ReadActStart, *rp );
   while( (*rp) < wk->dataSize )
   {
-    ReadRecFieldTag( wk->recordData[ (*rp)++ ], &type, &numClient, fChapter );
-    if( (*rp >= wk->dataSize) ){ break; }
-    if( type != BTL_RECFIELD_ACTION )
-    {
-      BTL_N_Printf( DBGSTR_REC_ReadActSkip, numClient);
-      (*rp) += numClient;
-    }
-    else
+    ReadRecFieldTag( wk->recordData[ (*rp) ], &type, &numClient, fChapter );
+
+//    TAYA_Printf( "rpCode = %02x, type=%d(action=%d), numClient=%d, fChapter=%d\n", wk->recordData[ (*rp) ],
+//              type, BTL_RECFIELD_ACTION, numClient, (*fChapter) );
+    (*rp)++;
+
+    if( (*rp) > wk->dataSize ){ break; }
+    if( type == BTL_RECFIELD_ACTION )
     {
       const BTL_ACTION_PARAM* returnPtr = NULL;
-      BTL_Printf( DBGSTR_REC_SeekClient, numClient);
+      BTL_N_Printf( DBGSTR_REC_SeekClient, numClient);
       for(i=0; i<numClient; ++i)
       {
         ReadClientActionTag( wk->recordData[ (*rp)++ ], &readClientID, &readNumAction );
+
+        BTL_N_Printf( DBGSTR_REC_CheckMatchClient, readClientID, clientID, readNumAction );
 
         if( ((*rp) >= wk->dataSize) ){ break; }
         if( readClientID != clientID )
@@ -284,6 +285,22 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
       if( returnPtr ){
         return returnPtr;
       }
+    }
+    else if( type == BTL_RECFIELD_TIMEOVER )
+    {
+      BTL_ACTION_PARAM* actionParam = (BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
+
+      BTL_N_Printf( DBGSTR_REC_ReadTimeOverCmd );
+
+      BTL_ACTION_SetRecPlayOver( actionParam );
+      *numAction = 1;
+      *fChapter = FALSE;
+      return actionParam;
+    }
+    else
+    {
+      BTL_N_Printf( DBGSTR_REC_ReadActSkip, numClient);
+      (*rp) += numClient;
     }
     if( ((*rp) >= wk->dataSize) ){ break; }
   }
@@ -446,6 +463,7 @@ void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_
 
       recTool->buffer[ recTool->writePtr ] = MakeClientActionTag( clientID, numAction );
       GFL_STD_MemCopy( action, &recTool->buffer[recTool->writePtr+1], sizeof(BTL_ACTION_PARAM)*numAction );
+      TAYA_Printf(" MakeClientActionTag : clientID=%d, %02x\n", clientID, recTool->buffer[ recTool->writePtr ] );
       recTool->writePtr = endPtr;
     }
     else
@@ -482,6 +500,25 @@ void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCod
   }
   return NULL;
 }
+
+//=============================================================================================
+/**
+ * RECTOOL タイムオーバー通知コードの書き込み処理
+ *
+ * @param   recTool
+ * @param   dataSize
+ *
+ * @retval  void*
+ */
+//=============================================================================================
+void* BTL_RECTOOL_PutTimeOverData( BTL_RECTOOL* recTool, u32* dataSize )
+{
+  recTool->buffer[ HEADER_TIMING_CODE ] = BTL_RECTIMING_None;
+  recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( BTL_RECFIELD_TIMEOVER, 1, FALSE );
+  *dataSize = HEADER_SIZE;
+  return recTool->buffer;
+}
+
 
 //=============================================================================================
 /**

@@ -403,8 +403,6 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 
   wk->lvupWin_frameCharPos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_lvup_w_NCGR, BGFRAME_TOKWIN_ENEMY );
 
-  OS_TPrintf("tokwinCharPos=%d, lvupWinCharPos=%d\n", wk->tokwin_CharPos, wk->lvupWin_frameCharPos );
-
   wk->lvupWin = GFL_BMPWIN_Create( BGFRAME_TOKWIN_ENEMY, LVUPWIN_ORG_X, LVUPWIN_ORG_Y+32, LVUPWIN_WIDTH, LVUPWIN_HEIGHT,
         PALIDX_LVUPWIN, GFL_BMP_CHRAREA_GET_F );
   wk->lvupBmp = GFL_BMPWIN_GetBmp( wk->lvupWin );
