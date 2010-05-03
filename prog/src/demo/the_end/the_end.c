@@ -364,10 +364,11 @@ static void TheEnd_BgInit( THE_END_WORK* work )
         work->heap_id );
     
   }
-#if PM_VERSION == VERSION_WHITE
+
   // ”’ƒo[ƒWƒ‡ƒ“‚Ì‚Í”wŒi”’‚Ì••¶š‚É‚·‚é
-  GFL_BG_ChangeScreenPalette( BG_FRAME_M_REAR, 0, 0, 32, 24, 1 );
-#endif
+  if(GetVersion()== VERSION_WHITE){
+    GFL_BG_ChangeScreenPalette( BG_FRAME_M_REAR, 0, 0, 32, 24, 1 );
+  }
 
   GFL_ARC_CloseDataHandle( handle );
 

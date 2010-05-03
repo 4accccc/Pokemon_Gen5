@@ -562,11 +562,12 @@ static void setup_bg_sys( HEAPID heapID )
                                 0x20*GAMECLEAR_BMPWIN_PL, 0x20, heapID );
 
   // ブラックバージョンでは背景を黒に・ホワイトでは白に
-#if PM_VERSION == VERSION_WHITE
-  GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0xffff );
-#else
-  GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0 );
-#endif
+  if(GetVersion()== VERSION_WHITE){
+    GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0xffff );
+  }else{
+    GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0 );
+  }
+  
   GFL_BMPWIN_Init( heapID );
 }
 //--------------------------------------------------------------
