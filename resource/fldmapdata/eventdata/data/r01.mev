@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 15:08:40
+#save date:2010/05/03 22:20:28
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #hold event type:
 1
 #hold event number:
-12
+10
 #event number: 0
 #type
 1
@@ -76,68 +76,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R01_RIVAL_01
-#OBJ CODE Number
-RIVEL
-#MOVE CODE Number
-MV_RIGHT
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_R01_RIVAL
-#Event Script Name
-SCRID_R01_POKE_GETDEMO_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-568 0 -600
-#event number: 3
-#type
-1
-#ID name
-R01_SUPPORT_01
-#OBJ CODE Number
-SUPPORT
-#MOVE CODE Number
-MV_LEFT
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_R01_SUPPORT
-#Event Script Name
-SCRID_R01_POKE_GETDEMO_01
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-600 0 -600
-#event number: 4
-#type
-1
-#ID name
 R01_HAKASE2_01
 #OBJ CODE Number
 HAKASE2
@@ -165,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 584 0 -584
-#event number: 5
+#event number: 3
 #type
 1
 #ID name
@@ -196,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 648 0 120
-#event number: 6
+#event number: 4
 #type
 1
 #ID name
@@ -227,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 616 0 184
-#event number: 7
+#event number: 5
 #type
 1
 #ID name
@@ -258,7 +196,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 216 0 -568
-#event number: 8
+#event number: 6
 #type
 1
 #ID name
@@ -289,7 +227,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -88 0 -712
-#event number: 9
+#event number: 7
 #type
 1
 #ID name
@@ -320,7 +258,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 88 0 -968
-#event number: 10
+#event number: 8
 #type
 1
 #ID name
@@ -351,7 +289,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -136 -16 -520
-#event number: 11
+#event number: 9
 #type
 1
 #ID name

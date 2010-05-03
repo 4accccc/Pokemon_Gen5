@@ -7,6 +7,7 @@
   .include  "scr_seq_def.h" //スクリプトコマンドに必要な定義が記述されたヘッダーファイルです
   .include  "msg_t01.h" //t01.gmmファイルを参照するヘッダーファイルです。
   .include  "t01.h" //t01に存在する動作モデルのIDが記載されています。
+  .include  "r01_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -31,7 +32,7 @@ _EVENT_DATA   ev_bg_t01_board_05
 _EVENT_DATA   ev_scene_t01_mama_01		//タウンマップ入手イベント
 _EVENT_DATA   ev_init_t01
 _EVENT_DATA   ev_pos_t01_firststep_01	//最初の一歩イベント
-_EVENT_DATA   ev_scene_t01_friends_01
+_EVENT_DATA   ev_scene_t01_friends_01	//クリア後 全国図鑑入手イベント
 _EVENT_DATA   ev_scene_t01_support_01	//ゲーム開始直後、サポートが自宅に向かう演出
 _EVENT_DATA_END //データ終端を指定しています。
 
@@ -55,8 +56,12 @@ INIT_EVENT_START   ev_init_t01
 	ELSIF $WK_SCENE_T01 == 2 THEN
 		//ママからタウンマップもらった直後なら、ライバルとサポートを１番道路手前に
 
-		_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
-		_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
+//		_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
+//		_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
+
+		//104027テスト
+		_OBJ_ADD_EX( 787, 737, DIR_UP, T01_R01_RIVAL, RIVEL, MV_DMY )
+		_OBJ_ADD_EX( 789, 737, DIR_DOWN, T01_R01_SUPPORT, SUPPORT, MV_DMY )
 
 	ELSIF $WK_SCENE_T01 == 4 THEN
 		//クリア後のハンサムイベント後なら、ライバルとサポートを自宅手前に
@@ -414,9 +419,17 @@ EVENT_START	ev_scene_t01_mama_01
 	_OBJ_ANIME( T01_SUPPORT_01, anm_scene_support_goaway_01 )
 	_OBJ_ANIME_WAIT()
 
+	//ライバル／サポート削除
+	_OBJ_DEL( T01_RIVAL_01 )
+	_OBJ_DEL( T01_SUPPORT_01 )
+
 	//ライバル＆サポート：次のイベント位置へ
-	_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
-	_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
+//	_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
+//	_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
+
+	//104027テスト
+	_OBJ_ADD_EX( 787, 737, DIR_UP, T01_R01_RIVAL, RIVEL, MV_DMY )
+	_OBJ_ADD_EX( 789, 737, DIR_DOWN, T01_R01_SUPPORT, SUPPORT, MV_DMY )
 
 	//================フラグ操作==================//
 	//イベント無効
@@ -424,6 +437,9 @@ EVENT_START	ev_scene_t01_mama_01
 	
 	//ママを非表示に
 	_FLAG_SET( FV_T01_MAMA_01 )
+	//サポート、ライバルを非表示に
+	_FLAG_SET( FV_T01_RIVAL )
+	_FLAG_SET( FV_T01_SUPPORT )
 	
 	//================フラグ操作==================//
 	
@@ -642,12 +658,16 @@ EVENT_START ev_pos_t01_firststep_01
 	DEFINE_LOCAL	lwk_pos_x
 	DEFINE_LOCAL	lwk_pos_z
 
+	//ライバル／サポートをゾーン切り替えで消えないＯＢＪとして登録する
+	_OBJ_SET_NOT_DEL_ZONECHG( T01_R01_RIVAL )
+	_OBJ_SET_NOT_DEL_ZONECHG( T01_R01_SUPPORT )
+
 	//サポート：！マーク
-	_OBJ_ANIME( T01_SUPPORT_01, anm_mark_gyoe )
+	_OBJ_ANIME( T01_R01_SUPPORT, anm_mark_gyoe )
 	_OBJ_ANIME_WAIT()
 
-	//【仮】友達集合イベント曲に差し替え予定
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	//友達集合イベント曲
+	_START_EVENT_BGM( SEQ_BGM_E_FRIEND )
 
 	_PLAYER_NAME( 0 )
 	_PLAINWIN_MSG_UP( msg_t01_white_04 )
@@ -671,56 +691,53 @@ EVENT_START ev_pos_t01_firststep_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル：主人公を見て
-	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME( T01_R01_RIVAL, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 
-	_BALLOONWIN_OBJMSG_POS( msg_t01_black_06, T01_RIVAL_01, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_06, T01_R01_RIVAL, POS_UL )
 	_MSGWIN_CLOSE()
 
 	//サポート：主人公横へ
-	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_support_move_01 )
-	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( T01_R01_SUPPORT, anm_1ststep_support_move_01 )
+	_TIME_WAIT( 8 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t01_white_05, T01_SUPPORT_01, POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_05, T01_R01_SUPPORT, POS_UR )
 	_MSGWIN_CLOSE()
 
 	//ライバル：前を向いて
-	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME( T01_R01_RIVAL, anm_stay_walk_u )
 	_OBJ_ANIME_WAIT()
 
 	//さ いこう！
-	_BALLOONWIN_OBJMSG_POS( msg_t01_black_07, T01_RIVAL_01, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_07, T01_R01_RIVAL, POS_UL )
 	_MSGWIN_CLOSE()
 
 	//主人公＆サポート：前を向いて
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_onestep_01 )
-	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_onestep_01 )
+	_OBJ_ANIME( T01_R01_SUPPORT, anm_1ststep_onestep_01 )
 	_OBJ_ANIME_WAIT()
 
 	//せーの！
-	_BALLOONWIN_OBJMSG_POS( msg_t01_white_06, T01_SUPPORT_01, POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_06, T01_R01_SUPPORT, POS_UR )
 	_MSGWIN_CLOSE()
 
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_onestep_01 )
-	_OBJ_ANIME( T01_RIVAL_01, anm_1ststep_rival_01 )
-	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_support_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_01 )
+	_OBJ_ANIME( T01_R01_RIVAL, anm_1ststep_rival_01 )
+	_OBJ_ANIME( T01_R01_SUPPORT, anm_1ststep_support_01 )
 	_OBJ_ANIME_WAIT()
 
-	_OBJ_DEL( T01_RIVAL_01 )
-	_OBJ_DEL( T01_SUPPORT_01 )
-
 	_END_EVENT_BGM()
+
+	//捕獲デモイベントを予約
+	_RESERVE_SCRIPT( SCRID_R01_POKE_GETDEMO_01 )
 
 	//========================================//
 	//POS無効
 	$WK_SCENE_T01 = 3
 	
-	//ライバル＆サポート非表示
-	_FLAG_SET( FV_T01_RIVAL )
-	_FLAG_SET( FV_T01_SUPPORT )
 	//========================================//
 
 	}
@@ -772,7 +789,6 @@ _ANIME_LABEL	anm_1ststep_support_move_01
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-
 //--------------------------------------------------------------------
 //一歩前へ
 //--------------------------------------------------------------------
@@ -784,10 +800,14 @@ _ANIME_LABEL	anm_1ststep_onestep_01
 //最初の一歩
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_1ststep_rival_01
-	_ANIME_DATA	AC_WALK_U_6F,11
+	_ANIME_DATA	AC_WALK_U_8F,11
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_1ststep_support_01
+	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_01
 	_ANIME_DATA	AC_WALK_U_8F,11
 	_ANIME_DATA	ACMD_END,0
 
