@@ -1473,7 +1473,10 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
 //  if(pWork->pAppWin){
 //    APP_TASKMENU_WIN_Update( pWork->pAppWin );
 //  }
-  _setTVTParentName(pWork);
+
+  if(pWork->selectType != CG_WIRELESS_RETURNMODE_TV){
+    _setTVTParentName(pWork);
+  }
 
   GFL_CLACT_SYS_Main();
 
