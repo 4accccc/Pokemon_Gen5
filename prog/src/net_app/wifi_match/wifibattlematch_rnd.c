@@ -214,6 +214,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 static void WbmRndSeq_Rate_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Rate_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void WbmRndSeq_Rate_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //フリー処理
 static void WbmRndSeq_Free_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -1162,9 +1163,21 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
+    //キャンセル処理
+    //対戦相手を探すのをやめますか？
     SEQ_START_SELECT_CANCEL_MSG,
     SEQ_START_SELECT_CANCEL,
     SEQ_WAIT_SELECT_CANCEL,
+
+    //今日の対戦をおわりにします
+    SEQ_START_SELECT_END_MSG,
+    SEQ_START_END_LIST,
+    SEQ_SELECT_END_LIST,
+
+    //たいせんをつづけますか？
+    SEQ_START_SELECT_CONTINUE_MSG,
+    SEQ_START_CONTINUE_LIST,
+    SEQ_SELECT_CONTINUE_LIST,
 
     SEQ_WAIT_MSG,
   };
@@ -1403,12 +1416,69 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         { 
         case 0:
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-          PMSND_PlaySE( WBM_SND_SE_MATCHING );
           WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupEnd );
+          *p_seq  = SEQ_START_SELECT_END_MSG;
           break;
         case 1:
-          *p_seq = SEQ_START_MATCHING_MSG;
+          *p_seq = SEQ_START_MATCHING;
+          break;
+        }
+      }
+    }
+    break;
+
+    //ランダムマッチをおわりにします
+  case SEQ_START_SELECT_END_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_016, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_END_LIST ); 
+    break;
+  case SEQ_START_END_LIST:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_SELECT_END_LIST;
+    break;
+  case SEQ_SELECT_END_LIST:
+    {
+      const u32 select  = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        switch( select )
+        { 
+        case 0: //はい
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_DisConnextSendTime );
+          break;
+        case 1: //いいえ
+          *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
+          break;
+        }
+      }
+    }
+    break;
+
+    //たいせんをつづけますか？
+  case SEQ_START_SELECT_CONTINUE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_015, WBM_TEXT_TYPE_STREAM );
+    *p_seq = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CONTINUE_LIST );
+    break;
+  case SEQ_START_CONTINUE_LIST:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_SELECT_CONTINUE_LIST;
+    break;
+  case SEQ_SELECT_CONTINUE_LIST:
+    {
+      const u32 select  = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        switch( select )
+        { 
+        case 0: //はい
+          *p_seq  = SEQ_START_MATCHING;
+          break;
+        case 1: //いいえ
+          *p_seq  = SEQ_START_SELECT_END_MSG;
           break;
         }
       }
@@ -1781,12 +1851,6 @@ static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_START_SELECT_CANCEL,
     SEQ_WAIT_SELECT_CANCEL,
 
-    SEQ_START_MSG_SAKE_TIME,
-    SEQ_START_SEND_SAKE_TIME,
-    SEQ_WAIT_SEND_SAKE_TIME,
-
-    SEQ_END,
-
     SEQ_WAIT_MSG,
   };
 
@@ -1818,7 +1882,8 @@ static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         { 
         case 0:
           WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
-          *p_seq  = SEQ_START_MSG_SAKE_TIME;
+
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_DisConnextSendTime );
           break;
         case 1:
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
@@ -1828,6 +1893,46 @@ static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
 
+
+    //-------------------------------------
+    ///	共通
+    //=====================================
+  case SEQ_WAIT_MSG:
+    if( WBM_TEXT_IsEnd( p_wk->p_text ) )
+    { 
+      WBM_SEQ_NextReservSeq( p_seqwk ); 
+    }
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチ  レーティングモード  サケに日時を送信して終了
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_peq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void WbmRndSeq_Rate_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_MSG_SAKE_TIME,
+    SEQ_START_SEND_SAKE_TIME,
+    SEQ_WAIT_SEND_SAKE_TIME,
+
+    SEQ_END,
+
+    SEQ_WAIT_MSG,
+  };
+
+  WIFIBATTLEMATCH_RND_WORK	  *p_wk	    = p_wk_adrs;
+  WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  switch( *p_seq )
+  { 
     //-------------------------------------
     /// サケへの日時書き込み
     //=====================================
@@ -1885,7 +1990,6 @@ static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
   }
-
 }
 //=============================================================================
 /**

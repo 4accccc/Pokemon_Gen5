@@ -933,6 +933,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_MOVE_BTLBOX,      //バトルボックス離脱
     SEQ_CHECK_REG,        //バトルボックスのポケモンがレギュレーションと一致するかチェック
     SEQ_START_MSG_DIRTY_REG,  //レギュレーションと一致しなかった
+    SEQ_START_MSG_EMPTY_BOX,  //バトルボックスが空だった
     SEQ_MOVEOUT_CARD,     //
     SEQ_LOCK_BTLBOX,      //バトルボックスをロック
 
@@ -1040,20 +1041,35 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       u32 failed_bit  = 0;
       REGULATION      *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
       UTIL_DATA_GetBtlBoxParty( p_wk, p_wk->p_party );
-      if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_party, &failed_bit) )
-      {
-        OS_TPrintf( "バトルボックスのポケモンレギュレーションOK\n" );
-        *p_seq  = SEQ_LOCK_BTLBOX;
+
+      if( PokeParty_GetPokeCountBattleEnable(p_wk->p_party) == 0 )
+      { 
+        OS_TPrintf( "バトルボックスにポケモン入っていない\n" );
+        *p_seq  = SEQ_START_MSG_EMPTY_BOX;
       }
       else
       { 
-        OS_TPrintf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", failed_bit );
-        *p_seq  = SEQ_START_MSG_DIRTY_REG;
+        if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_party, &failed_bit) )
+        {
+          OS_TPrintf( "バトルボックスのポケモンレギュレーションOK\n" );
+          *p_seq  = SEQ_LOCK_BTLBOX;
+        }
+        else
+        { 
+          OS_TPrintf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", failed_bit );
+          *p_seq  = SEQ_START_MSG_DIRTY_REG;
+        }
       }
     }
     break;
   case SEQ_START_MSG_DIRTY_REG:  //レギュレーションと一致しなかった
     UTIL_TEXT_Print( p_wk, LIVE_STR_08, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
+    break;
+
+  case SEQ_START_MSG_EMPTY_BOX:  //バトルボックスが空だった
+    UTIL_TEXT_Print( p_wk, LIVE_STR_30, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
     break;
