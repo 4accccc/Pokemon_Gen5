@@ -813,6 +813,7 @@ static const u16 StaticEntryList[] = {
 	SEQ_SE_DANSA ,
 	SEQ_SE_WALL_HIT,
 	SEQ_SE_BICYCLE ,
+	SEQ_SE_FLD_07,
 	SEQ_SE_FLD_08,
 	SEQ_SE_FLD_09,
 	SEQ_SE_FLD_10,
