@@ -835,6 +835,7 @@ static const u16 StaticEntryList[] = {
 	SEQ_SE_SYS_70,
 	SEQ_SE_SYS_11,
 	SEQ_SE_SYS_79,
+	SEQ_SE_SYS_100,
 };
 
 //---------------------------------------------------------------------------------
