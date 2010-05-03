@@ -49,6 +49,10 @@
 #define EYE_DEF_COUNT (80)
 #define EYE_RND_COUNT (20)
 
+#define EYE_WAIT_MAX    (2)
+#define MOUTH_WAIT_MAX_SLOW    (3)
+#define MOUTH_WAIT_MAX_NORMAL    (2)
+#define MOUTH_WAIT_MAX_FAST    (1)
 
 typedef struct ANM_PAT_tag
 {
@@ -60,7 +64,8 @@ typedef struct ANM_CNT_tag
 {
   BOOL Stop;
   BOOL TransReq;
-  u16 Wait;
+  u8 Wait;
+  u8  WaitMax;
   u16  PatIdx;
   u16 TransDat[TRANS_HEIGHT][TRNAS_WIDTH_MAX];
 }ANM_CNT;
@@ -165,13 +170,19 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, const BOOL inL
   ptr->BackNo = inBackNo;
   ptr->ScrCmdWork = scrCmdWork;
   ptr->Last = inLast;
-/**  
+
   {
-    CONFIG*  cfg = SaveData_GetConfig( (SAVE_CONTROL_WORK*)SaveCtrl );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+    CONFIG*  cfg = SaveData_GetConfig( save );
     MSGSPEED speed = CONFIG_GetMsgSpeed( cfg );
-    ;
+    if ( speed == MSGSPEED_SLOW) ptr->MouthAnm.WaitMax = MOUTH_WAIT_MAX_SLOW;
+    else if( speed == MSGSPEED_NORMAL ) ptr->MouthAnm.WaitMax = MOUTH_WAIT_MAX_NORMAL;
+    else ptr->MouthAnm.WaitMax = MOUTH_WAIT_MAX_FAST;
+
+    ptr->EyeAnm.WaitMax = EYE_WAIT_MAX;
   }
-*/
+
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, SetupEvt, 0 );
 
@@ -778,7 +789,7 @@ static void MoveAnm( const ANM_PAT *inPatDat,
         }
       }
       //転送後のウェイトセット
-      cnt->Wait = inPatDat[cnt->PatIdx].Wait;
+      cnt->Wait = cnt->WaitMax;
       //パターン更新
       cnt->PatIdx++;
 
