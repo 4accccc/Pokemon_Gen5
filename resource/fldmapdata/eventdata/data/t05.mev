@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/25 22:11:21
+#save date:2010/05/03 15:02:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t05.wms
 #SECTION START:OBJ_EVENT
@@ -510,7 +510,7 @@ SCRID_BG_T05_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 80 -344
+280 80 -344
 #event number: 2
 #Bg Event Label
 T05_HIDE_ITEM_01
