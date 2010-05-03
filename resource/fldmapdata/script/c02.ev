@@ -273,17 +273,17 @@ _ANIME_LABEL	anm_rival_01_saru
 /**************************************************************/
 EVENT_START   ev_pos_c02_boss_01
 
-	//プレイヤーがNにきづく
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe)
-	_OBJ_ANIME_WAIT()
-	
 	//Nを出現させる
 	//階段音と！マーク音とBGMがかぶらないように、ウェイトで調整
 	_SE_PLAY(SEQ_SE_KAIDAN)
 	_TIME_WAIT(4)
 	_OBJ_ADD_EX( 644, 581, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+	
+	//プレイヤーがNにきづく
+	_TIME_WAIT(12)
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe)
 	_SE_WAIT()
-
+	_OBJ_ANIME_WAIT()
 
 	//NのBGM再生
 	_TIME_WAIT(12)

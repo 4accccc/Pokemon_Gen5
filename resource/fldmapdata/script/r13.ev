@@ -209,36 +209,33 @@ EVENT_END
 /**************************************************************/
 //ガール1（イベント依頼人）
 EVENT_START   ev_r13_girl1_01
+{
+DEFINE_LOCAL LWK_DIR
 
 	_TALK_OBJ_START()
 	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
-	
+		
+		//========================================/
 		_FLAG_SET(FE_H04_DELIVERY_01)
 		_FLAG_RESET(FV_H04_ITEM_02)
 		_OBJ_ADD(R13_MONSTERBALL_01)
-		$WK_SCENE_H04_ITEMNUM = 0
-			
-		_BALLOONWIN_OBJMSG(msg_r13_poke_01,R13_POKE100_01)
+		$WK_SCENE_H04_ITEMNUM = 0 
+		//========================================/
+		
 		_VOICE_PLAY( MONSNO_278, 0 )
+		_BALLOONWIN_OBJMSG(msg_r13_poke_01,R13_POKE100_01)
 		_VOICE_WAIT()
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 		
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_l)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_r)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_l)
-		_OBJ_ANIME_WAIT()		
-		_TIME_WAIT(24)	
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_d)
+		_PLAYER_DIR_GET(LWK_DIR)
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_left)
+		ELSE
+			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_up)
+		ENDIF
 		_OBJ_ANIME_WAIT()
 		
-		_TIME_WAIT(16)
 		_BALLOONWIN_OBJMSG(msg_r13_girl1_01,R13_GIRL1_01)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -257,10 +254,8 @@ EVENT_START   ev_r13_girl1_01
 			_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_r)
 			_OBJ_ANIME_WAIT()
 
-			_TIME_WAIT(16)
 			_VOICE_PLAY( MONSNO_278, 0 )
-			_VOICE_WAIT()
-			_TIME_WAIT(8)			
+			_VOICE_WAIT()		
 			_OBJ_ANIME(R13_POKE100_01,anm_common_jump_d)
 			_BALLOONWIN_OBJMSG_POS(msg_r13_poke_02,R13_POKE100_01,POS_DEFAULT)
 			_MSGWIN_CLOSE()
@@ -284,13 +279,13 @@ EVENT_START   ev_r13_girl1_01
 				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_05,R13_GIRL1_01,POS_DEFAULT)
 				_MSGWIN_CLOSE()
 				
-				_TIME_WAIT(24)
+				_TIME_WAIT(16)
 				_VOICE_PLAY( MONSNO_278, 0 )
 				_VOICE_WAIT()
 				_BALLOONWIN_OBJMSG_POS(msg_r13_poke_03,R13_POKE100_01,POS_DEFAULT)
 				_MSGWIN_CLOSE()
 				
-				_TIME_WAIT(16)
+				_TIME_WAIT(8)
 				_OBJ_ANIME(R13_POKE100_01,anm_kyamome_wing)
 				_OBJ_ANIME_WAIT()
 
@@ -301,7 +296,7 @@ EVENT_START   ev_r13_girl1_01
     			_OBJ_DEL(R13_POKE100_01)
     			_FLAG_SET(FV_H04_POKE_01)
 				
-				_TIME_WAIT(24)
+				_TIME_WAIT(16)
 				_SE_PLAY(SEQ_SE_KAIDAN)
 				_SE_WAIT()
 				
@@ -311,7 +306,6 @@ EVENT_START   ev_r13_girl1_01
 			    _BLACK_IN()
 			    _DISP_FADE_END_CHECK()
     			
-    			_TIME_WAIT(16)
 				_SYSWIN_MSG( msg_r13_sys_01, POS_DEFAULT )
 				_MSGWIN_CLOSE()
 				
@@ -320,8 +314,10 @@ EVENT_START   ev_r13_girl1_01
 				
 			ENDIF
 			
+			//========================================/
 			_FLAG_RESET(FE_H04_ITEMHAVING_01)
-		
+			
+			//========================================/
 		ELSE			
 
 			//手紙を見つけていない
@@ -353,7 +349,7 @@ EVENT_START   ev_r13_girl1_01
 		ENDIF
 
 	ENDIF
-
+}
 EVENT_END
 
 //老人（手紙を持っている）
@@ -424,35 +420,36 @@ EVENT_END
 
 //キャモメ（依頼主）
 EVENT_START   ev_r13_poke100_01
+{
+DEFINE_LOCAL LWK_DIR
 
 	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
 		_TALK_OBJ_START()
+		
+		//========================================/
 		_FLAG_SET(FE_H04_DELIVERY_01)
 		_FLAG_RESET(FV_H04_ITEM_02)
 		_OBJ_ADD(R13_MONSTERBALL_01)
 		$WK_SCENE_H04_ITEMNUM = 0
-			
+		//========================================/
+
+		_VOICE_PLAY( MONSNO_278, 0 )			
 		_BALLOONWIN_OBJMSG_POS(msg_r13_poke_01,R13_POKE100_01,POS_DEFAULT)
-		_VOICE_PLAY( MONSNO_278, 0 )
 		_VOICE_WAIT()
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 		
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_l)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_r)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_l)
-		_OBJ_ANIME_WAIT()		
-		_TIME_WAIT(24)	
-		_OBJ_ANIME(R13_POKE100_01,anm_common_turn_d)
+		_PLAYER_DIR_GET(LWK_DIR)
+		IF $LWK_DIR == DIR_LEFT THEN
+			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_left)
+		ELSE
+			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_up)
+		ENDIF
 		_OBJ_ANIME_WAIT()
 		
-		_TIME_WAIT(16)
+		_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		
 		_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_01,R13_GIRL1_01,POS_DEFAULT)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
@@ -460,7 +457,7 @@ EVENT_START   ev_r13_poke100_01
 	ELSE
 		_EASY_TALK_POKEVOICE(MONSNO_278,msg_r13_poke_01)
 	ENDIF
-
+}
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -553,3 +550,69 @@ _ANIME_LABEL	anm_kyamome_wing
 	_ANIME_DATA AC_STAY_WALK_D_8F,3
 	_ANIME_DATA	AC_WARP_UP,1
 	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_kyamome_wing_a
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,3
+	_ANIME_DATA	AC_WARP_UP,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_kyamome_wing_b
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,3
+	_ANIME_DATA	AC_WARP_UP,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// キャモメ：うろうろ                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_kyamome_urouro_up
+
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+/*
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+*/
+_ANIME_LABEL	anm_kyamome_urouro_left
+
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+/*
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+*/	

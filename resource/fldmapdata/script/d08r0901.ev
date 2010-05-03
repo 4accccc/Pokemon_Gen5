@@ -260,7 +260,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	_TIME_WAIT(8)
 	_SE_PLAY(SEQ_SE_FLD_170)
-	_TIME_WAIT(8)
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke_idou_02)
 	//N‚Ì“®ìƒ‚ƒfƒ‹‚ðÁ‚·
 	_TIME_WAIT(23)

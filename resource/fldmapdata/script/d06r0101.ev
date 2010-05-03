@@ -408,24 +408,30 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01,POS_DR)
 	_BALLOONWIN_CLOSE()
 
-/*
-	//博士2がもとの位置に移動
-	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_02)
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_down)
-	_OBJ_ANIME_WAIT()
-*/
 	//博士2が喋る
 	//博士2:ちょっと　パパに　頼まれて
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01,POS_DR)
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
+	//博士2がアイテムをくれる
+	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_02)
+	_OBJ_ANIME_WAIT()
+
+	_ITEM_EVENT_KEYWAIT(ITEM_SIAWASETAMAGO,1)
+	
+	//博士2がもとの位置に戻る
+	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_05)
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03a,D06R0101_HAKASE2_01,POS_DR)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 	_END_EVENT_BGM()
 	
 //===============フラグ操作===============//
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 2
-
 
 //========================================//
 
@@ -522,14 +528,21 @@ _ANIME_LABEL	anm_hakase2_kuru_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//博士2: やってくる3                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_kuru_05
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //博士2:  少し上できょろきょろ                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kyorokyoro_01
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA AC_WAIT_8F,3
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-//	_ANIME_DATA AC_WAIT_8F,3
-//	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -631,14 +644,14 @@ _ANIME_LABEL	anm_heroine_kuru_02_a
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_heroine_kuru_02_b
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

@@ -30,7 +30,42 @@ _EVENT_DATA 	ev_r06r0101_poke25_01
 _EVENT_DATA 	ev_r06r0101_poke26_01
 _EVENT_DATA 	ev_r06r0101_poke27_01
 _EVENT_DATA 	ev_r06r0101_poke28_01
+
+_EVENT_DATA 	ev_init_r06r0101
+
 _EVENT_DATA_END
+
+//------------------------------注意--------------------------------//
+//シキジカ															//
+//	LOCALWORK0～2	まで使用しました。同マップ内の使用を禁止します。//
+//																	//
+//温度計															//
+//	LOCALWORK3	まで使用しました。同マップ内の使用を禁止します。	//
+//------------------------------------------------------------------//
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r06r0101
+{
+	DEFINE_LOCAL LWK_KISETU
+	_GET_SEASON_ID( LWK_KISETU )
+
+	IF $LWK_KISETU == 0 THEN
+		_GET_RND(LOCALWORK3,9)
+		$LOCALWORK3 += 11
+	ELSIF $LWK_KISETU == 1 THEN
+		_GET_RND(LOCALWORK3,16)
+		$LOCALWORK3 += 19
+	ELSIF $LWK_KISETU == 2 THEN
+		_GET_RND(LOCALWORK3,9)
+		$LOCALWORK3 += 11
+	ELSE
+		_GET_RND(LOCALWORK3,9)
+		$LOCALWORK3+= 1
+	ENDIF
+}	
+INIT_EVENT_END
 
 /**************************************************************/
 /*  R06 asseitantm1_01の会話のイベントスクリプト*/
@@ -269,15 +304,20 @@ EVENT_START  ev_bg_r06r0101_case_02
 	_TALK_START_SE_PLAY()
 	{
 	DEFINE_LOCAL LWK_KISETU
+	DEFINE_LOCAL LWK_NUM
 	_GET_SEASON_ID( LWK_KISETU )
-	
+
 	IF$LWK_KISETU == 0 THEN
+		_NUMBER( 0, LOCALWORK3, 2 )
 		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_01)
 	ELSIF$LWK_KISETU == 1 THEN
+		_NUMBER( 0, LOCALWORK3, 2 )
 		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_02)
 	ELSIF$LWK_KISETU == 2 THEN
+		_NUMBER( 0, LOCALWORK3, 2 )
 		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_03)
 	ELSE
+		_NUMBER( 0, LOCALWORK3, 2 )
 		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_04)
 	ENDIF
 	_LAST_KEYWAIT()
