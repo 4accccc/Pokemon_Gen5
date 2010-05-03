@@ -119,7 +119,7 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WiFi世界対戦コール
+ *	@brief  バトルレコーダーコール
  *
  *	@param	GAMESYS_WORK * gsys ゲームシステム
  *	@param	* fieldmap          フィールドマップ

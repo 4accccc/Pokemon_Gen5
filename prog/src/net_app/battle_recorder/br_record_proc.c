@@ -242,8 +242,14 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
     //アウトラインのヘッダを使う
     p_wk->p_header  = &p_wk->p_param->p_outline->data[ p_wk->p_param->p_outline->data_idx ].head;
     p_wk->p_profile  = &p_wk->p_param->p_outline->data[ p_wk->p_param->p_outline->data_idx ].profile;
-    p_wk->is_secure = p_wk->p_param->p_outline->is_secure[ p_wk->p_param->p_outline->data_idx ];
     p_wk->can_save  = TRUE;
+
+    //バトルから復帰時視聴完了してたらセキュアフラグを立てる
+    if( (*p_wk->p_param->cp_is_recplay_finish) && p_wk->p_param->is_return )
+    { 
+      p_wk->p_param->p_outline->is_secure[ p_wk->p_param->p_outline->data_idx ] = TRUE;
+    }
+    p_wk->is_secure = p_wk->p_param->p_outline->is_secure[ p_wk->p_param->p_outline->data_idx ];
     break;
 
   case BR_RECODE_PROC_MY:

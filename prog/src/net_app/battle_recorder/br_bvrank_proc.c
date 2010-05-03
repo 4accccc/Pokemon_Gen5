@@ -658,6 +658,19 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         if( is_exist )
         { 
           //取得できた
+        
+          //ついでにサーバー上のセキュアフラグを反映
+          { 
+            int i;
+            for( i = 0; i < p_wk->p_param->p_outline->data_num; i++ )
+            { 
+              p_wk->p_param->p_outline->is_secure[i] =
+                RecHeader_ParamGet( 
+                    &p_wk->p_param->p_outline->data[ i ].head,
+                    RECHEAD_IDX_SECURE, 0 );
+            }
+          }
+
           BR_SEQ_SetNext( p_seqwk, Br_Seq_NextRanking );
         }
         else
