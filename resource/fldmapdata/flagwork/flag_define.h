@@ -859,8 +859,8 @@
 #define FV_H05_MINEZUMI                    835 /* 0x0343 ワンダーブリッジ：ミネズミゲーム */
 #define FV_H04R0501_MINEZUMI               836 /* 0x0344 ビレッジブリッジ民家：ミネズミ */
 #define FV_H04R0501_GUEST                  837 /* 0x0345 ビレッジブリッジ民家：訪問客（２人） */
-		/* not used   838(0x0346) */
-		/* not used   839(0x0347) */
+#define FV_H03_NINJA_01                    838 /* 0x0346 シリンダーブリッジ：ゲーチスイベントで登場するダークトリニティ */
+#define FV_D06R0301_HAKAI_01               839 /* 0x0347 クリア後、七賢人イベントで登場するプラズマ団を非表示にする */
 		/* not used   840(0x0348) */
 		/* not used   841(0x0349) */
 		/* not used   842(0x034a) */
@@ -2400,7 +2400,7 @@
 #define SYS_FLAG_PALACE_MISSION_CLEAR     2432 /* 0x0980 ハイリンク：ミッションを初めてクリアしたフラグ */
 #define SYS_FLAG_PALACE_DPOWER            2433 /* 0x0981 ハイリンク：デルパワーを初めて登録したフラグ */
 #define SYS_FLAG_BGM_T01R0102             2434 /* 0x0982 自宅２F：３匹選択のBGM変更フラグ */
-		/* not used  2435(0x0983) */
+#define SYS_FLAG_BGM_C03R0402             2435 /* 0x0983 ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
 		/* not used  2436(0x0984) */
 		/* not used  2437(0x0985) */
 		/* not used  2438(0x0986) */
