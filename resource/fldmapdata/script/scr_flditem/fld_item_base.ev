@@ -7,7 +7,8 @@
 ev_fld_item2:
 {
   DEFINE_LOCAL item_check
-
+  DEFINE_LOCAL not_illegal_code
+  
   _TALK_OBJ_START()
 //  _SE_WAIT() //話しかけ開始音の終了待ち
   
@@ -23,6 +24,9 @@ ev_fld_item2:
   //アイテムを加えられるかチェック
   _ADD_ITEM_CHK( SCWK_TEMP0, SCWK_TEMP1, item_check )
   
+  //自機の表示コードが自機専用のものかどうか
+  _CHECK_PLAYER_ILLEGAL_OBJCODE( not_illegal_code )
+  
   IF $item_check == 1 THEN //アイテム追加可能
     //話し掛け対象のイベントフラグを取得しセット
     _GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
@@ -32,8 +36,10 @@ ev_fld_item2:
     _OBJ_DEL( SCWK_TARGET_OBJID )
     
     //自機ゲットポーズ
-    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
+    IF $not_illegal_code == TRUE THEN
+      _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
+    ENDIF
   ENDIF
 
   //○○をみつけた！
@@ -57,17 +63,26 @@ _RET
 //--------------------------------------------------------------------
 ev_itemget_flditem_true:
 {
+  DEFINE_LOCAL not_illegal_code
+  
+  //自機の表示コードが自機専用のものかどうか
+  _CHECK_PLAYER_ILLEGAL_OBJCODE( not_illegal_code )
+
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
   _BEACON_SET_REQ_ITEM_GET( SCWK_TEMP0 )
   
-  //ME、アニメ待ち
+  //ME待ち
   _ME_WAIT()
-  _OBJ_ANIME_WAIT()
   
-  //自機元に戻す
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
-
+  //自機の表示コードが正常であればアニメ待ち
+  IF $not_illegal_code == TRUE THEN
+    _OBJ_ANIME_WAIT()
+    
+    //自機元に戻す
+    _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+  ENDIF
+  
   //MSG キーウェイト
   _AB_KEYWAIT_MARK()
   

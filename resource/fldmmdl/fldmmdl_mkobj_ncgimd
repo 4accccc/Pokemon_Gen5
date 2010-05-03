@@ -509,9 +509,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/goddess1.ncg ./mmdl_res ./mmdl_dmy/ncg4x4nflip.imd 4 4 12
 
 #boss.imd
-./mmdl_res/boss.imd: ./mmdl_nchara/boss.ncg ./mmdl_nchara/boss.ncl ./mmdl_dmy/ncg4x4x20.imd fldmmdl_list.csv
+./mmdl_res/boss.imd: ./mmdl_nchara/boss.ncg ./mmdl_nchara/boss.ncl ./mmdl_dmy/ncg4x4x22.imd fldmmdl_list.csv
 	@echo convert ncg_imd boss
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/boss.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x20.imd 4 4 20
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/boss.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x22.imd 4 4 22
 
 #hakase1.imd
 ./mmdl_res/hakase1.imd: ./mmdl_nchara/hakase1.ncg ./mmdl_nchara/hakase1.ncl ./mmdl_dmy/ncg4x4nflip.imd fldmmdl_list.csv
