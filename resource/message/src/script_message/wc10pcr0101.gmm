@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-03T17:13:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T19:32:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_wc10pcr0101__backpackerm_01">
+	<row id="msg_wc10pcr0101_backpackerm_01">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラ指定">BACKPACKERM
