@@ -525,6 +525,14 @@ extern void GFL_NET_ReserveNetID_IRCWIRELESS(int netID);
 //==============================================================================
 extern void GFL_NET_IRCWIRELESS_SetChangeGSID(u8 gsid);
 
+//==============================================================================
+/**
+ * @brief   マックアドレスを得る
+ * @param   mac_address		調べるMACアドレス
+ * @param   no		調べるMACアドレスINDEX
+ */
+//==============================================================================
+extern void GFL_NET_IRCWIRELESS_GetMacAddress(u8 *mac_address, int no);
 
 //==============================================================================
 /**
