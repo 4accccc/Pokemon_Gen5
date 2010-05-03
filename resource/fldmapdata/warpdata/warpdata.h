@@ -19,8 +19,9 @@
 #define	WARP_ID_C11 (14)
 #define	WARP_ID_BC10 (15)
 #define	WARP_ID_WC10 (16)
+#define	WARP_ID_D09 (17)
 
-#define	WARP_ID_MAX		(17)
+#define	WARP_ID_MAX		(18)
 
 #endif	//__WARPDATA_H__
 //

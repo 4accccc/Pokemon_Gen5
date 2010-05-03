@@ -113,5 +113,12 @@ static const WARPDATA WarpData[] = {
 		ZONE_ID_WC10        , 100, 100,
 		ZONE_ID_WC10        , 100, 100,
 	},
+	{
+		SYS_FLAG_ARRIVE_D09,
+		FALSE,TRUE ,
+		ZONE_ID_D09         ,   0,   0,
+		ZONE_ID_D09         ,   0,   0,
+		ZONE_ID_D09         ,   0,   0,
+	},
 };
 //==================================
