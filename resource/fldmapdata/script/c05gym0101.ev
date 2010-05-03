@@ -114,10 +114,27 @@ EVENT_START		ev_c05gym0101_leader
 		//クエイクバッジ入手処理
 		_SET_BADGE_FLAG( BADGE_ID_05 )
 		
-		//入手音再生
+		{
+		
+		//バッジ入手演出再生
 		_ME_PLAY( SEQ_ME_BADGE )
-		_CALL_FLD3D_CUTIN( FLDCIID_GYM05 )
+		
+		//性別が格納されるローカル変数を定義
+		DEFINE_LOCAL SCWK_SEX
+		_GET_MY_SEX(SCWK_SEX)
+		
+		//男性だった場合
+		IF $SCWK_SEX == PM_MALE THEN
+			_CALL_FLD3D_CUTIN( FLDCIID_GYM05 )
+		//女性だった場合
+		ELSE
+			_CALL_FLD3D_CUTIN( FLDCIID_GYM05F )
+		ENDIF
+		
+		//ME待ち
 		_ME_WAIT()
+			
+	}
 		
 		//ヤーコンからクエイクバッジをもらった
 		_PLAYER_NAME( 0 )

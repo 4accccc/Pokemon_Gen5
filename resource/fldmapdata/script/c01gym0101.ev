@@ -782,11 +782,28 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
-	
+			
+			{
+			
 			//バッジ入手演出再生
 			_ME_PLAY( SEQ_ME_BADGE )
-			_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			
+			//性別が格納されるローカル変数を定義
+			DEFINE_LOCAL SCWK_SEX
+			_GET_MY_SEX(SCWK_SEX)
+			
+			//男性だった場合
+			IF $SCWK_SEX == PM_MALE THEN
+				_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			//女性だった場合
+			ELSE
+				_CALL_FLD3D_CUTIN( FLDCIID_GYM01F )
+			ENDIF
+			
+			//ME待ち
 			_ME_WAIT()
+				
+			}
 			
 			//～～は　コーンから　トライバッジを　もらった
 			_SYSWIN_MSG( msg_c01gym0101_leader1_07b , POS_DOWN )
@@ -934,10 +951,27 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
 
+			{
+			
 			//バッジ入手演出再生
 			_ME_PLAY( SEQ_ME_BADGE )
-			_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			
+			//性別が格納されるローカル変数を定義
+			DEFINE_LOCAL SCWK_SEX
+			_GET_MY_SEX(SCWK_SEX)
+			
+			//男性だった場合
+			IF $SCWK_SEX == PM_MALE THEN
+				_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			//女性だった場合
+			ELSE
+				_CALL_FLD3D_CUTIN( FLDCIID_GYM01F )
+			ENDIF
+			
+			//ME待ち
 			_ME_WAIT()
+				
+			}
 
 			//～～は　ポッドから　トライバッジを　もらった
 			_SYSWIN_MSG( msg_c01gym0101_leader1_07a , POS_DOWN )
@@ -1089,10 +1123,27 @@ _TALK_OBJ_START()
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
 					
+			{
+			
 			//バッジ入手演出再生
 			_ME_PLAY( SEQ_ME_BADGE )
-			_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			
+			//性別が格納されるローカル変数を定義
+			DEFINE_LOCAL SCWK_SEX
+			_GET_MY_SEX(SCWK_SEX)
+			
+			//男性だった場合
+			IF $SCWK_SEX == PM_MALE THEN
+				_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+			//女性だった場合
+			ELSE
+				_CALL_FLD3D_CUTIN( FLDCIID_GYM01F )
+			ENDIF
+			
+			//ME待ち
 			_ME_WAIT()
+				
+			}
 
 			//～～は　デントから　トライバッジを　もらった
 			_SYSWIN_MSG( msg_c01gym0101_leader1_07c , POS_DOWN )

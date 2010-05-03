@@ -169,7 +169,7 @@ EVENT_START		ev_t03r0401_businessman_01
     	_BALLOONWIN_CLOSE()
 	
 		//乱数で0～3のうちのひとつを選んで格納する
-		_GET_RND( LOCALWORK15,4 )
+		_GET_RND( LOCALWORK15,5 )
 		
 		//乱数の結果によって入手するアイテムを変更
 		IF $LOCALWORK15 == 0 THEN

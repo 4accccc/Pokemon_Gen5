@@ -16,6 +16,7 @@
 #define WC10PC0101_PCWOMAN                 4
 #define WC10PC0101_SHOPM1_01               5
 #define WC10PC0101_SHOPM1_02               6
+#define WC10PC0101_BACKPACKERM_01          7
 
 #endif //ZONE_WC10PCR0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/wc10pcr0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

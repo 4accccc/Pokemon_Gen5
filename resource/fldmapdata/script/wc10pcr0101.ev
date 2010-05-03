@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_wc10pc0101_shop
 _EVENT_DATA    ev_wc10pc0101_fix_shop
+_EVENT_DATA    ev_wc10pc0101_backpackerm_01
 _EVENT_DATA_END
 
 
@@ -38,4 +39,11 @@ EVENT_END
 EVENT_START ev_wc10pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C10_FS )
+EVENT_END
+
+//=============================================================
+//  BC10R0101 BACKPACKERMの会話用イベントスクリプト
+//=============================================================
+EVENT_START   ev_wc10pc0101_backpackerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10pcr0101_backpackerm_01 )
 EVENT_END
