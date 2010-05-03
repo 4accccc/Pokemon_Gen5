@@ -1636,8 +1636,9 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
     {
     case PALPARK_FINISH_NORMAL:    // (0)  //捕獲した
       //ハイスコア・エラー以外
-      if( state != PALPARK_FINISH_HIGHSOCRE && 
-          state != PALPARK_FINISH_ERROR )
+      if( nowState != PALPARK_FINISH_HIGHSOCRE && 
+          nowState != PALPARK_FINISH_ERROR &&
+          nowState != PALPARK_FINISH_ERROR_GET )
       {
         isSet = TRUE;
       }
@@ -1645,7 +1646,8 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 
     case PALPARK_FINISH_HIGHSOCRE: // (1)  //捕獲した＋ハイスコア
       //エラー以外
-      if( state != PALPARK_FINISH_ERROR )
+      if( nowState != PALPARK_FINISH_ERROR &&
+          nowState != PALPARK_FINISH_ERROR_GET )
       {
         isSet = TRUE;
       }
@@ -1653,9 +1655,10 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 
     case PALPARK_FINISH_NO_GET:    // (2)  //捕獲できなかった
       //キャンセルかエラーの時
-      if( state != PALPARK_FINISH_NORMAL &&
-          state != PALPARK_FINISH_HIGHSOCRE && 
-          state != PALPARK_FINISH_ERROR )
+      if( nowState != PALPARK_FINISH_NORMAL &&
+          nowState != PALPARK_FINISH_HIGHSOCRE && 
+          nowState != PALPARK_FINISH_ERROR &&
+          nowState != PALPARK_FINISH_ERROR_GET )
       {
         isSet = TRUE;
       }
@@ -1672,10 +1675,11 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 
     case PALPARK_FINISH_CANCEL:    // (4)  //キャンセル終了
       //一番優先度が低い
-      if( state != PALPARK_FINISH_NO_GET &&
-          state != PALPARK_FINISH_NORMAL &&
-          state != PALPARK_FINISH_HIGHSOCRE && 
-          state != PALPARK_FINISH_ERROR )
+      if( nowState != PALPARK_FINISH_NO_GET &&
+          nowState != PALPARK_FINISH_NORMAL &&
+          nowState != PALPARK_FINISH_HIGHSOCRE && 
+          nowState != PALPARK_FINISH_ERROR &&
+          nowState != PALPARK_FINISH_ERROR_GET )
       {
         isSet = TRUE;
       }
