@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-30T02:36:50" source="c03_slamp_01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-05-04T05:19:13" source="c03_slamp_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-30T02:36:50" source="c03_slamp_01.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-05-04T05:19:13" source="c03_slamp_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -127,7 +127,7 @@
 		alpha="18"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="12"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -199,7 +199,7 @@
 		alpha="22"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="12"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1785,9 +1785,9 @@
 	<polygon index="2" name="polygon2"
 		vertex_size="20" polygon_size="5"
 		triangle_size="0" quad_size="5"
-		volume_min="-7.450928 0.171875 -3.620361"
-		volume_max="7.386963 0.171875 7.313721"
-		volume_r="8.017822"
+		volume_min="-7.450928 0.093750 -3.620361"
+		volume_max="7.386963 0.093750 7.313721"
+		volume_r="8.016602"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -1798,7 +1798,7 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-4.052490 0.171875 6.171631"/>
+					<pos_xyz xyz="-4.052490 0.093750 6.171631"/>
 					<tex st="32.000000 32.000000"/>
 					<clr rgb="31 27 14"/>
 					<pos_xz xz="-3.278809 5.314941"/>
@@ -2074,7 +2074,7 @@
 		triangle_size="0" quad_size="230"
 		volume_min="-7.450928 0.089355 -3.620361"
 		volume_max="7.592529 1.192627 7.498291"
-		volume_r="8.017822"
+		volume_r="8.016602"
 	>
 		<display index="0" material="0" polygon="2" priority="0"/>
 		<display index="1" material="1" polygon="0" priority="0"/>
