@@ -152,7 +152,8 @@ struct _FIELD_CAMERA {
   fx32        angle_len;
 
   u16         fovy;
-  u16         globl_angle_yaw;  ///<カメラ座標、ターゲット座標計算後のカメラアングルYaw　カメラモードにも左右されず、常にFIELD_CAMERA_MODE_CALC_CAMERA_POSのアングルを返す
+  u16         global_angle_yaw;  ///<カメラ座標、ターゲット座標計算後のカメラアングルYaw　カメラモードにも左右されず、常にFIELD_CAMERA_MODE_CALC_CAMERA_POSのアングルを返す
+  u16         global_angle_pitch;
 
   // カメラ可動範囲
   FIELD_CAMERA_AREA camera_area[FIELD_CAMERA_AREA_DATA_MAX];  

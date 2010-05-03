@@ -60,7 +60,7 @@ static void modeChange_CalcDirectPos( FIELD_CAMERA * camera );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void updateGlobalAngleYaw( FIELD_CAMERA * camera, const VecFx32* cp_targetPos, const VecFx32* cp_cameraPos );
+static void updateGlobalAngle( FIELD_CAMERA * camera, const VecFx32* cp_targetPos, const VecFx32* cp_cameraPos );
 
 static void getGosaCalcAngleParam( const VecFx32* n_dist, u16 yaw, u16 pitch, u16* ret_yaw, u16* ret_pitch );
 
@@ -619,7 +619,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
 
   traceUpdate( camera );
-  updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
+  updateGlobalAngle( camera, &cameraTarget, &camera->campos_write );
 #else
 
   if( camera->debug_subscreen_type != FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
@@ -632,7 +632,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
 	  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &cameraPos );
 
-    updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
+    updateGlobalAngle( camera, &cameraTarget, &camera->campos_write );
 
 		if( !camera->debug_trace_off )
 		{
@@ -659,7 +659,7 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &camera->debug_target );
     GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
 
-    updateGlobalAngleYaw( camera, &cameraTarget, &camera->campos_write );
+    updateGlobalAngle( camera, &cameraTarget, &camera->campos_write );
   }
 
   // Far,Fovy座標の設定
@@ -917,14 +917,16 @@ static void modeChange_CalcDirectPos( FIELD_CAMERA * camera )
  *	@param	cp_camraPos     カメラ座標
  */
 //-----------------------------------------------------------------------------
-static void updateGlobalAngleYaw( FIELD_CAMERA * camera, const VecFx32* cp_targetPos, const VecFx32* cp_cameraPos )
+static void updateGlobalAngle( FIELD_CAMERA * camera, const VecFx32* cp_targetPos, const VecFx32* cp_cameraPos )
 {
   VecFx32 way;
 
   VEC_Subtract( cp_cameraPos, cp_targetPos, &way );
   VEC_Normalize( &way, &way );
 
-  camera->globl_angle_yaw = FX_Atan2Idx( way.x, way.z );
+  camera->global_angle_yaw = FX_Atan2Idx( way.x, way.z );
+
+  camera->global_angle_pitch = FX_Atan2Idx( way.y, way.z );
 }
 
 
@@ -1448,6 +1450,10 @@ void FIELD_CAMERA_SetAnglePitch(FIELD_CAMERA * camera, u16 angle )
 	camera->angle_pitch = angle;
 }
 
+const u16 * FIELD_CAMERA_GetAnglePitchAddress( const FIELD_CAMERA *camera )
+{
+  return( &camera->global_angle_pitch );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	カメラangle　水平方向回転
@@ -1466,7 +1472,7 @@ void FIELD_CAMERA_SetAngleYaw(FIELD_CAMERA * camera, u16 angle )
 
 const u16 * FIELD_CAMERA_GetAngleYawAddress( const FIELD_CAMERA *camera )
 {
-  return( &camera->globl_angle_yaw );
+  return( &camera->global_angle_yaw );
 }
 
 //----------------------------------------------------------------------------
