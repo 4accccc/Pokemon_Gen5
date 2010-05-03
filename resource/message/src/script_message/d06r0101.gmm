@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T18:54:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T20:37:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -572,10 +572,13 @@
 押せるわけじゃ　ないけど▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
-・再度、GRIDX=9、GRIDZ=47に移動して
-・メッセージ表示後、主人公操作可能に</comment>
+・メッセージ表示後
+　アイテム入手処理
+　No231「しあわせタマゴ」
+・続けてhakase2_03a
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">わたしはね　パパに　たのまれて
@@ -585,7 +588,9 @@
 うまれた　じきを　しらべているからって▽
 ひとづかいが　あらいよね……▼
 もっとも　わたしも　すきで
-しらべているから　たのしいんだけどね！</language>
+しらべているから　たのしいんだけどね！▼
+そうだ！　[1:00:トレーナー名:0]
+これを　もっていきなさいな！▼</language>
 		<language name="JPN_KANJI" width="256">わたしはね　パパに　頼まれて
 ギアルって　歯車みたいな▽
 ポケモンのこと　調べているの▼
@@ -593,23 +598,44 @@
 誕生時期を　調べているからって▽
 人使いが　荒いよね……▼
 もっとも　わたしも　好きで
-調べているから　楽しいんだけどね！</language>
+調べているから　楽しいんだけどね！▼
+そうだ！　[1:00:トレーナー名:0]
+これを　持っていきなさいな！▼</language>
 	</row>
 
-	<row id="msg_d06r0101_hakase2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_hakase2_03a" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
 		<comment>♀
-・シーン2まで繰り返し
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
+		<language name="JPN" width="256">アララギ『その　しあわせタマゴを
+ポケモンに　もたせておくと▼
+たたかいで　もらえる
+けいけんちが　ちょっぴり　ふえるわ！▼
+ポケモンが　たくましくなった　ほうが
+ずかんの　ページも　うめやすいでしょ</language>
+		<language name="JPN_KANJI" width="256">アララギ『その　しあわせタマゴを
+ポケモンに　持たせておくと▼
+戦いで　もらえる
+経験値が　ちょっぴり　増えるわ！▼
+ポケモンが　たくましくなった　ほうが
+図鑑の　ページも　埋めやすいでしょ</language>
+	</row>
+
+	<row id="msg_d06r0101_hakase2_04">
+		<comment>♀
+・hakase2_03a表示後からシーン2まで繰り返し
 　できればその場で四方を振り向きつつ待機</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『[1:00:トレーナー名:0]！
 ポケモンずかんは　うまってる？▼
 どんどん　ポケモンと　であって
-どんどん　ページを　うめてよね！</language>
+どんどん　ページを　うめてね！</language>
 		<language name="JPN_KANJI" width="256">アララギ『[1:00:トレーナー名:0]！
 ポケモン図鑑は　埋まってる？▼
 どんどん　ポケモンと　出会って
-どんどん　ページを　うめてよね！</language>
+どんどん　ページを　埋めてね！</language>
 	</row>
 
 	<row id="msg_d06r0101_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
