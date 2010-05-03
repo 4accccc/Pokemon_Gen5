@@ -753,15 +753,25 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
   //リソースロードのTCBが動いていたら一緒に削除する
   if( mcss->tcb_load_resource )
   { 
-    void* work = GFL_TCB_GetWork( mcss->tcb_load_resource );
-    GFL_HEAP_FreeMemory( work );
+	  TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)GFL_TCB_GetWork( mcss->tcb_load_resource );
+	  if( tlw->pBufChar )
+    {
+		  GFL_HEAP_FreeMemory( tlw->pBufChar );
+	  }
+	  if( tlw->pBufPltt )
+    {
+		  GFL_HEAP_FreeMemory( tlw->pBufPltt );
+    }
+    GFL_HEAP_FreeMemory( tlw );
     GFL_TCB_DeleteTask( mcss->tcb_load_resource );
   }
 
   if( mcss->tcb_load_palette )
   { 
-    void* work = GFL_TCB_GetWork( mcss->tcb_load_palette );
-    GFL_HEAP_FreeMemory( work );
+	  TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)GFL_TCB_GetWork( mcss->tcb_load_palette );
+	  GFL_HEAP_FreeMemory( tlw->pPlttData->pRawData );
+	  GFL_HEAP_FreeMemory( tlw->pPlttData );
+    GFL_HEAP_FreeMemory( tlw );
     GFL_TCB_DeleteTask( mcss->tcb_load_palette );
   }
 
