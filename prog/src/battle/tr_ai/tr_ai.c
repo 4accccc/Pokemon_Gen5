@@ -1753,7 +1753,6 @@ static  VMCMD_RESULT  AI_IF_FIRST( VMHANDLE* vmh, void* context_work )
   int cond  = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
 
-  //@todo これで良いか確認。
   u16 atk_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->atk_bpp, TRUE );
   u16 def_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->def_bpp, TRUE );
 
@@ -1761,9 +1760,23 @@ static  VMCMD_RESULT  AI_IF_FIRST( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_IF_FIRST\n");
 #endif
 
-  if( atk_agility > def_agility ){
-    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  switch( cond ){ 
+  case IF_FIRST_ATTACK:
+    cond = COND_OVER;
+    break;
+  case IF_FIRST_DEFENCE:
+    cond = COND_UNDER;
+    break;
+  case IF_FIRST_EQUAL:
+    cond = COND_EQUAL;
+    break;
+  default:
+    //未知の定義です
+    GF_ASSERT( 0 );
+    break;
   }
+
+  branch_act( vmh, cond, atk_agility, def_agility, adrs );
 
   return taw->vmcmd_result;
 }
