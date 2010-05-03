@@ -374,6 +374,10 @@ extern WazaWeather WAZADATA_GetWeather( WazaID id );
 // 状態異常効果
 extern WazaSick WAZADATA_GetSick( WazaID id );
 
+//キャッシュの生成
+extern  void  WAZADATA_CreateCache( int size, HEAPID heapID );
+//キャッシュの破棄
+extern  void  WAZADATA_DeleteCache( void );
 
 
 //=============================================================================================
