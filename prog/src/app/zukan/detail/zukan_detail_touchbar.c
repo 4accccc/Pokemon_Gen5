@@ -8,6 +8,9 @@
  *  モジュール名：ZUKAN_DETAIL_TOUCHBAR
  */
 //============================================================================
+//#define USE_MAP_DUMMY_ICON  // これが定義されているとき、MAPでダミーのアイコンを用意しておく
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -112,6 +115,9 @@ enum
 enum
 {
   MAP_ICON_RETURN,
+#ifdef USE_MAP_DUMMY_ICON
+  MAP_ICON_CUSTOM_DUMMY,  // ダミーのアイコン  // 常に非表示にしておく。これがないと、アイコンを削除して生成する際に、画面が乱れてしまう。
+#endif
   MAP_ICON_MAX,
 };
 // FORM 
@@ -166,6 +172,9 @@ static const GFL_CLACTPOS general_icon_const_pos_no_form[GENERAL_ICON_MAX] =
 static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
   { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_MAP_RETURN,     ZKNDTL_SCMD_MAP_RETURN,    },
+#ifdef USE_MAP_DUMMY_ICON
+  { MAP_CUSTOM_DUMMY,         { 104, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_NONE,           ZKNDTL_CMD_NONE,           },
+#endif
 };
 // FORM
 static const ICON_CONST_SET form_icon_const_set[FORM_ICON_MAX] =
@@ -1440,7 +1449,25 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
       icon_tbl[i].pos     = work->icon_set[i].cset->pos;
       icon_tbl[i].width   = work->icon_set[i].cset->width;
     }
-  
+#ifdef USE_MAP_DUMMY_ICON
+    // 以下カスタムボタンならば入れなくてはいけない情報
+    // カスタムボタン
+    {
+      u8 i;
+      for( i=MAP_ICON_CUSTOM_DUMMY; i<=MAP_ICON_CUSTOM_DUMMY; i++ )
+      {
+        icon_tbl[i].cg_idx            = work->map_ncg;   // キャラリソース
+        icon_tbl[i].plt_idx           = work->map_ncl;   // パレットリソース
+        icon_tbl[i].cell_idx          = work->map_nce;   // セルリソース
+        icon_tbl[i].active_anmseq     = 14;              // アクティブのときのアニメ
+        icon_tbl[i].noactive_anmseq   = 14;              // ノンアクティブのときのアニメ
+        icon_tbl[i].push_anmseq       = 20;              // 押したときのアニメ（STOPになっていること）
+        icon_tbl[i].key               = 0;               // キーで押したときに動作させたいならば、ボタン番号
+        icon_tbl[i].se                = 0;               // 押したときにSEならしたいならば、SEの番号
+      }
+    }
+#endif
+
     // 設定構造体
     // さきほどの窓情報＋リソース情報をいれる
     GFL_STD_MemClear( &setup, sizeof(ZKND_TBAR_SETUP) );
@@ -1464,6 +1491,13 @@ static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
       work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].cset->id );
     } 
   }
+
+#ifdef USE_MAP_DUMMY_ICON
+  // ダミーのアイコンを非表示にする
+  {
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[MAP_ICON_CUSTOM_DUMMY].cset->id, FALSE );
+  }
+#endif
 }
 static void Zukan_Detail_Touchbar_DeleteMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {

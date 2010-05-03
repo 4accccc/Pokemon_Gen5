@@ -209,9 +209,11 @@ typedef enum
   STATE_TOP,
   STATE_TOP_OSHIDASHI,
   STATE_TOP_TO_EXCHANGE,
+  STATE_TOP_TO_EXCHANGE_TOUCHBAR_CHANGE,
   STATE_EXCHANGE,
   STATE_EXCHANGE_IREKAE,
   STATE_EXCHANGE_TO_TOP,
+  STATE_EXCHANGE_TO_TOP_TOUCHBAR_CHANGE,
 }
 STATE;
 
@@ -2968,6 +2970,60 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       // 遷移後の状態
       switch(state)
       {
+/*
+      case STATE_EXCHANGE:
+        {
+          b_top_exchange = TRUE;
+
+          if( work->diff_num >= 2 )
+          {
+            VecFx32 p;
+
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+          }
+
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetType(
+              touchbar,
+              ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+          if( work->diff_num >= 3 )
+          {
+            ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, TRUE );
+          }
+          else
+          {
+            ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, FALSE );
+          }
+
+          // タイトルバー
+          ZUKAN_DETAIL_HEADBAR_SetType(
+              headbar,
+              ZUKAN_DETAIL_HEADBAR_TYPE_FORM_COMPARE );  
+        }
+        break;
+*/
+      case STATE_TOP_TO_EXCHANGE_TOUCHBAR_CHANGE:
+        {
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll(
+              touchbar,
+              FALSE );
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_TOP_TO_EXCHANGE_TOUCHBAR_CHANGE:
+    {
+      // 遷移後の状態
+      switch(state)
+      {
       case STATE_EXCHANGE:
         {
           b_top_exchange = TRUE;
@@ -3048,6 +3104,64 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
     }
     break;
   case STATE_EXCHANGE_TO_TOP:
+    {
+      // 遷移後の状態
+      switch(state)
+      {
+/*
+      case STATE_TOP:
+        {
+          b_top_exchange = TRUE;
+
+          if( work->diff_num >= 2 )
+          {
+            VecFx32 p;
+
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+      
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+          }
+
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetType(
+              touchbar,
+              ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+          {
+            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+            ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+                touchbar,
+                GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_FORM ) );
+          }
+          // タイトルバー
+          ZUKAN_DETAIL_HEADBAR_SetType(
+              headbar,
+              ZUKAN_DETAIL_HEADBAR_TYPE_FORM );
+
+          // 押し出し用関数を利用して位置設定
+          if( work->diff_num >= 2 ) 
+          {
+            work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+            Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
+          }
+        }
+        break;
+*/
+      case STATE_EXCHANGE_TO_TOP_TOUCHBAR_CHANGE:
+        {
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll(
+              touchbar,
+              FALSE );
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_EXCHANGE_TO_TOP_TOUCHBAR_CHANGE:
     {
       // 遷移後の状態
       switch(state)
@@ -4290,15 +4404,17 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
   const f32  base_y           =   -24.0f;
   const f32  base_z           =     0.0f;
 
-  if( work->diff_num < 2 )
+  if( work->diff_num < 2 )  // このif文は真になることはない気がする
   {
     if( work->state == STATE_TOP_TO_EXCHANGE )
     {
-      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+      //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_TO_EXCHANGE_TOUCHBAR_CHANGE );
     }
     else if( work->state == STATE_EXCHANGE_TO_TOP )
     {
-      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+      //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_TO_TOP_TOUCHBAR_CHANGE );
     }
     return;
   }
@@ -4337,8 +4453,13 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
     }
     if( work->kaisou_curr_end && work->kaisou_comp_end )
     {
-      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+      //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_TO_EXCHANGE_TOUCHBAR_CHANGE );
     }
+  }
+  else if( work->state == STATE_TOP_TO_EXCHANGE_TOUCHBAR_CHANGE )
+  {
+    Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
   }
   else if( work->state == STATE_EXCHANGE_TO_TOP )
   {
@@ -4374,8 +4495,13 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
     }
     if( work->kaisou_curr_end && work->kaisou_comp_end )
     {
-      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+      //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_TO_TOP_TOUCHBAR_CHANGE );
     }
+  }
+  else if( work->state == STATE_EXCHANGE_TO_TOP_TOUCHBAR_CHANGE )
+  {
+    Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
   }
 }
 
