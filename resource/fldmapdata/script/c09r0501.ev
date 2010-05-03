@@ -125,9 +125,11 @@ EVENT_START	ev_pos_c09r0501_n_01
 	
 	//Ｎ：ドラゴンたちにふさわしいのはココじゃない！
 	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_boss_07, C09R0501_N_01, POS_UL )
-	_MSGWIN_CLOSE()
 	
+	//ちより　いでよ！　プラズマだんの　しろ！
 	_OBJ_ANIME( C09R0501_N_01, anm_n_hand )
+	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_boss_07a, C09R0501_N_01, POS_UL )
+	_MSGWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
 	
 	//画面暗転、BGMフェード
