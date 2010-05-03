@@ -54,6 +54,8 @@ static GFL_PROC_RESULT StaffRollProc_Init( GFL_PROC * proc, int * seq, void * pw
 
 //	OS_Printf( "↓↓↓↓↓　スタッフロール処理開始　↓↓↓↓↓\n" );
 
+	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP) );
+
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_STAFF_ROLL, 0x120000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(SRMAIN_WORK), HEAPID_STAFF_ROLL );

@@ -76,6 +76,7 @@ enum {
 #define	BMPWIN_TRANS_MAIN_FLAG		( 1 )
 #define	BMPWIN_TRANS_SUB_FLAG			( 2 )
 
+#define	EXP_BUFF_SIZE		( 128 )		// メッセージ展開用バッファサイズ
 
 #define	ITEMLIST_MSG_NONE		( 0xffff )		// メッセージなし
 
@@ -564,7 +565,7 @@ static void InitMsg( SRMAIN_WORK * wk )
   
 //	wk->wset = WORDSET_Create( HEAPID_STAFF_ROLL );
 //	wk->que  = PRINTSYS_QUE_Create( HEAPID_STAFF_ROLL );
-	wk->exp  = GFL_STR_CreateBuffer( 64, HEAPID_STAFF_ROLL );
+	wk->exp  = GFL_STR_CreateBuffer( EXP_BUFF_SIZE, HEAPID_STAFF_ROLL );
 
 //	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 	wk->font[SRMAIN_FONT_NORMAL] = GFL_FONT_Create(

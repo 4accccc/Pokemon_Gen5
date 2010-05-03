@@ -510,6 +510,11 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 	case MAIN_SEQ_STAFF_ROLL:
 		wk->sr_data.fastMode = TRUE;
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+			wk->sr_data.mojiMode = MOJIMODE_KANJI;
+		}else{
+			wk->sr_data.mojiMode = MOJIMODE_HIRAGANA;
+		}
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, &wk->sr_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;
