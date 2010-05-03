@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T15:14:46"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T17:13:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1318" top="348" right="2020" bottom="972" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="165" right="2014" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="527"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="694"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,33 +292,33 @@
 	</lock>
 
 
-	<row id="msg_c09r0701_warp_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0701_warp_01">
 		<comment>♂
 ・はい/いいえの選択肢
 　はい→warp_02
-　いいえ→warp_03
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">……しろ　にいくか？</language>
-		<language name="JPN_KANJI" width="256">……城に　行くか？</language>
+　いいえ→warp_03</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">……プラズマだんのしろ　に　いくか？</language>
+		<language name="JPN_KANJI" width="256">……プラズマ団の城に　行くか？</language>
 	</row>
 
-	<row id="msg_c09r0701_warp_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0701_warp_02">
 		<comment>♂
 ・はい選択時
-　メッセージ、ワープ処理
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+　メッセージ、ワープ処理</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">……いけ！▼</language>
 		<language name="JPN_KANJI" width="256">……行け！▼</language>
 	</row>
 
-	<row id="msg_c09r0701_warp_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0701_warp_03">
 		<comment>♂
 ・いいえ選択時
-　再度会話するとwarp_01から
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+　再度会話するとwarp_01から</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">……そうか</language>
 		<language name="JPN_KANJI" width="256">……そうか</language>
 	</row>
