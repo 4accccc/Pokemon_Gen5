@@ -2409,10 +2409,12 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 // field_g3d_mapperのtopフレーム描画
 static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 {
+#ifdef PM_DEBUG
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ){
     return;
   }
+#endif
   
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定
@@ -2450,10 +2452,12 @@ static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 // ３D描画終了（スワップバッファ）
 static void fldmap_G3D_Draw_tail( FIELDMAP_WORK * fieldWork )
 {
+#ifdef PM_DEBUG
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ){
     return;
   }
+#endif
   
   {
     static const DRAW3DMODE_FUNC func[DRAW3DMODE_MAX] = {
@@ -3464,11 +3468,13 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
 
+#ifdef PM_DEBUG
     if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_A) )
     {
     }
     else
+#endif
     {
       SET_CHECK("update_tail:g3dobj draw");
       FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
