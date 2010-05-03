@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T11:56:41"/>
+	<create user="ohmori" host="W00223" date="2010-05-03T17:00:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1497" top="277" right="2202" bottom="897" maximized="no" rayout="Vertical2">
+	<dialog left="1497" top="277" right="1920" bottom="897" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="445"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="248"/>
+		<band id="3" index="4" style="0000" width="415"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -312,6 +312,36 @@
 ブラックシティへ　どうぞ</language>
 		<language name="JPN_KANJI" width="256">都会で　エネルギッシュに　暮らすなら
 ブラックシティへ　どうぞ</language>
+	</row>
+
+	<row id="msg_r14r0101_man1_01w">
+		<comment>♂
+・WHITEver</comment>
+		<attribute name="キャラ指定">MAN1
+青年：ホワイト</attribute>
+		<language name="JPN" width="256">ホワイトフォレストは
+しぜんで　いっぱい！▼
+ひとと　ポケモンが
+いっしょに　くらしているのだ</language>
+		<language name="JPN_KANJI" width="256">ホワイトフォレストは
+自然で　いっぱい！▼
+人と　ポケモンが
+一緒に　暮らしているのだ</language>
+	</row>
+
+	<row id="msg_r14r0101_man1_01b">
+		<comment>♂
+・BLACKver</comment>
+		<attribute name="キャラ指定">MAN1
+青年：ブラック</attribute>
+		<language name="JPN" width="256">この　まちにいる　やつら
+ハンパないぜ！▼
+はなしただけで　しょうぶを
+いどまれるから　ちゅういしろ！</language>
+		<language name="JPN_KANJI" width="256">この　街にいる　やつら
+ハンパないぜ！▼
+話しただけで　勝負を
+挑まれるから　注意しろ！</language>
 	</row>
 
 	<flowchart-group-list>
