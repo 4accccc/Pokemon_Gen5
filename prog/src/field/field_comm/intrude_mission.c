@@ -1222,6 +1222,27 @@ NetID MISSION_GetMissionTargetNetID(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM
   return mission->data.target_info.net_id;
 }
 
+//==================================================================
+/**
+ * 自分自身がミッションのターゲットになっているかを調べる
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		  TRUE:自分がターゲットになっている
+ * @retval  BOOL      FALSE:自分はターゲットではない
+ */
+//==================================================================
+BOOL MISSION_CheckTargetIsMine(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+
+  if(MISSION_CheckMissionTargetNetID(&intcomm->mission, GAMEDATA_GetIntrudeMyID(gamedata)) == TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 //--------------------------------------------------------------
 /**
  * 生のSTRCODEをWORDSETする

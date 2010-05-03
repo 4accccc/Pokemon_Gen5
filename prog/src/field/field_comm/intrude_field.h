@@ -71,6 +71,7 @@ extern void IntrudeField_MonolithStatus_Init(MONOLITH_STATUS *monost);
 extern BOOL IntrudeField_MonolithStatus_CheckOcc(const MONOLITH_STATUS *monost);
 extern void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork);
 extern BOOL IntrudeField_CheckIntrudeShutdown(GAMESYS_WORK *gsys, u16 zone_id);
+extern GMEVENT * EVENT_MissionTargetWarp(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 
 
 //--------------------------------------------------------------

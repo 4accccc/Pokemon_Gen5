@@ -92,10 +92,8 @@ static GFL_PROC_RESULT FieldMapProcInit
   case 1:
     //常時通信モード
     {
-      if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE){
-        GAMESYSTEM_CommBootAlways(gsys);
-      }
-      else{ //常時通信はOFFモード
+      if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == FALSE){
+        //常時通信はOFFモード
         GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
         GAME_COMM_NO comm_no = GameCommSys_BootCheck(game_comm);
         switch(comm_no){

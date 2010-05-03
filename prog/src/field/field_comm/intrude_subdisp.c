@@ -332,7 +332,8 @@ typedef struct{
   MISSION_STATUS m_status;  ///<ミッション状況
   s32 m_timer;              ///<ミッションタイマー
   const MISSION_DATA *p_md; ///<受信しているミッションデータへのポインタ
-  u8 target_palace_area;
+  u8 target_palace_area;    ///<ミッションターゲットがいるパレスエリア
+  u8 target_mine;           ///<自分自身がミッションのターゲットになっている
   u8 padding[3];
 }INTRUDE_COMM_PARAM;
 
@@ -1716,7 +1717,11 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_I
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
 
-  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+  if(intsub->comm.target_mine == TRUE){
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
+  }
+  else if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
     switch(intsub->comm.m_status){
     case MISSION_STATUS_NULL:
     case MISSION_STATUS_READY:
@@ -2323,6 +2328,7 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
     if(comm->p_md != NULL){
       comm->target_palace_area = intcomm->intrude_status[comm->p_md->target_info.net_id].palace_area;
     }
+    comm->target_mine = MISSION_CheckTargetIsMine(intcomm);
   }
 }
 

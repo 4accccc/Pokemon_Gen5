@@ -30,6 +30,7 @@
 
 #include "savedata/c_gear_data.h" //CGEAR_SV_GetCGearONOFF
 #include "field/field_comm/intrude_work.h"  //Intrude_Check_AlwaysBoot
+#include "field/fieldmap_call.h"
 
 
 //============================================================================================
@@ -92,6 +93,7 @@ static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
 
 static void GameSystem_UpdateDoEvent( GAMESYS_WORK * gsys );
+static void GameSysmte_FieldAlwaysBootWatch(GAMESYS_WORK *gsys);
 
 
 //============================================================================================
@@ -294,6 +296,8 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 		//PlayerController/Event Trigger
 		//イベント起動チェック処理（シチュエーションにより分岐）
 		GAMESYSTEM_EVENT_CheckSet(gsys, gsys->evcheck_func, gsys->evcheck_context);
+    //常時通信の起動を監視
+    GameSysmte_FieldAlwaysBootWatch(gsys);
 		//イベント実行処理
 		GAMESYSTEM_EVENT_Main(gsys);
 
@@ -348,6 +352,25 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 	{
 		return FALSE;
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールド上で常時通信を起動できるか監視し、必要であれば起動を行う
+ *
+ * @param   gsys		
+ */
+//--------------------------------------------------------------
+static void GameSysmte_FieldAlwaysBootWatch(GAMESYS_WORK *gsys)
+{
+  if(GAMESYSTEM_IsEventExists(gsys) == FALSE){
+    if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+      if(FIELDMAP_IsReady(fieldWork) == TRUE){
+        GAMESYSTEM_CommBootAlways( gsys );
+      }
+    }
+  }
 }
 
 //------------------------------------------------------------------

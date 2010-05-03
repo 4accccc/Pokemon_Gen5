@@ -105,6 +105,14 @@ typedef struct{
   INTRUDE_EVENT_DISGUISE_WORK ev_diswork;
 }EVENT_PALACE_BARRIER;
 
+///ミッションターゲットにされたので表フィールドへ強制ワープ
+typedef struct{
+  FIELDMAP_WORK *fieldmap;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN_STREAM *msgStream;
+	INTRUDE_EVENT_DISGUISE_WORK iedw;
+}EVENT_MISSIONTARGET_WARP;
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -119,6 +127,9 @@ static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork
 static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
 static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk );
+static void _ExitCallback_toInvasion(void *pWork);
+static void _InvasionCommBoot(GAMESYS_WORK *gsys);
+static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*work);
 
 
 //==============================================================================
@@ -946,6 +957,106 @@ static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work)
 	return GMEVENT_RES_CONTINUE;
 }
 
+//==================================================================
+/**
+ * ミッションターゲットにされたので表フィールドへ強制ワープ
+ *
+ * @param   gsys		
+ * @param   fieldmap		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_MissionTargetWarp(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+{
+  EVENT_MISSIONTARGET_WARP *emtw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EventMissionTargetWarp, sizeof(EVENT_MISSIONTARGET_WARP));
+	emtw = GMEVENT_GetEventWork(event);
+	emtw->fieldmap = fieldmap;
+	
+	OS_TPrintf("親機：通信切断イベント起動\n");
+	return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションターゲットにされたので表フィールドへ強制ワープ
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   work		
+ *
+ * @retval  GMEVENT_RESULT		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*work)
+{
+	EVENT_MISSIONTARGET_WARP * emtw = work;
+	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
+	FIELDMAP_WORK * fieldmap = emtw->fieldmap;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  enum{
+    SEQ_INIT,
+    SEQ_INIT_PRINT_WAIT,
+    SEQ_DISGUISE_INIT,
+    SEQ_DISGUISE_MAIN,
+    SEQ_MAP_WARP,
+    SEQ_MAP_WARP_FINISH,
+  };
+	
+	switch (*seq) {
+	case SEQ_INIT:
+	  {
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(emtw->fieldmap);
+      emtw->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+      emtw->msgStream = FLDMSGWIN_STREAM_AddTalkWin(msgBG, emtw->msgData );
+
+      FLDMSGWIN_STREAM_PrintStart(emtw->msgStream, 0, 0, plc_connect_07);
+      (*seq)++;
+    }
+	  break;
+  case SEQ_INIT_PRINT_WAIT:
+    if( FLDMSGWIN_STREAM_Print(emtw->msgStream) == TRUE){
+      FLDMSGWIN_STREAM_Delete(emtw->msgStream);
+      GFL_MSG_Delete( emtw->msgData );
+  	}
+  	break;
+
+  case SEQ_DISGUISE_INIT:  //変装をしていれば元に戻す
+    {
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+      
+      if(FIELDMAP_IsReady(fieldWork) == TRUE){
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        
+        if(FIELD_PLAYER_CheckIllegalOBJCode( fld_player ) == FALSE){
+          IntrudeEvent_Sub_DisguiseEffectSetup(&emtw->iedw, gsys, fieldWork, DISGUISE_NO_NULL, 0,0);
+          (*seq)++;
+        }
+        else{
+          *seq = SEQ_MAP_WARP;
+        }
+      }
+    }
+    break;
+  case SEQ_DISGUISE_MAIN:
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&emtw->iedw, NULL) == TRUE){
+      (*seq)++;
+    }
+    break;
+
+	case SEQ_MAP_WARP:
+  	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );
+    (*seq)++;
+    break;
+	case SEQ_MAP_WARP_FINISH:
+		return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * 自分のパレス島の中にいるか、橋側にいるかを判定
@@ -1026,20 +1137,7 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
   switch(comm_no){
   case GAME_COMM_NO_NULL:
     if(_PlayerPosCheck_PalaceBridge(&player_pos) == TRUE){
-      FIELD_INVALID_PARENT_WORK *invalid_parent;
-      
-      invalid_parent = GFL_HEAP_AllocClearMemory(
-          GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(FIELD_INVALID_PARENT_WORK));
-      invalid_parent->my_invasion = TRUE;
-      invalid_parent->gsys = gameSys;
-      invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
-      GameCommSys_Boot(game_comm, GAME_COMM_NO_INVASION, invalid_parent);
-
-      OS_TPrintf("パレス通信起動：親\n");
-    }
-    else{
-      GAMESYSTEM_CommBootAlways(gameSys);
-      OS_TPrintf("ビーコンサーチ通信起動\n");
+      _InvasionCommBoot(gameSys); //チュートリアルの時は常時通信が起動されないのでここで起動される
     }
     break;
   case GAME_COMM_NO_INVASION:
@@ -1049,18 +1147,60 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
       INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
       if(intcomm->comm_status != INTRUDE_COMM_STATUS_BOOT_CHILD){ //子として親を探しに行っている場合は通信終了にはまだいかない
         GameCommSys_ExitReq(game_comm);
-        OS_TPrintf("パレス通信終了：通信END\n");
+        OS_TPrintf("パレス通信終了\n");
       }
     }
     break;
   case GAME_COMM_NO_FIELD_BEACON_SEARCH:
-    //自分のパレス島にいて橋の上にいるならビーコンサーチをOFF
+    //自分のパレス島にいて橋の上にいるならビーコンサーチをOFFし、パレス通信へ
     if(_PlayerPosCheck_PalaceBridge(&player_pos) == TRUE){
-      GameCommSys_ExitReq(game_comm);
-      OS_TPrintf("ビーコンサーチ終了\n");
+      GameCommSys_ExitReqCallback(game_comm, _ExitCallback_toInvasion, gameSys);
+      OS_TPrintf("常時通信終了：パレス通信へ\n");
     }
     break;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 常時通信終了コールバック：侵入通信を起動
+ *
+ * @param   pWork		GAMESYS_WORK
+ */
+//--------------------------------------------------------------
+static void _ExitCallback_toInvasion(void *pWork)
+{
+  GAMESYS_WORK *gsys = pWork;
+  _InvasionCommBoot(gsys);
+}
+
+//--------------------------------------------------------------
+/**
+ * 侵入通信を親として起動
+ *
+ * @param   gsys		
+ *
+ * 単純に通信を起動する部分を共通化目的で関数にしただけなので、
+ * 起動してよいかのチェックなどは外側でやる事
+ */
+//--------------------------------------------------------------
+static void _InvasionCommBoot(GAMESYS_WORK *gsys)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  FIELD_INVALID_PARENT_WORK *invalid_parent;
+  
+  if(NetErr_App_CheckError()){
+    return;
+  }
+  
+  invalid_parent = GFL_HEAP_AllocClearMemory(
+      GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(FIELD_INVALID_PARENT_WORK));
+  invalid_parent->my_invasion = TRUE;
+  invalid_parent->gsys = gsys;
+  invalid_parent->game_comm = game_comm;
+  GameCommSys_Boot(game_comm, GAME_COMM_NO_INVASION, invalid_parent);
+
+  OS_TPrintf("パレス通信起動：親\n");
 }
 
 //==================================================================
