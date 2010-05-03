@@ -214,7 +214,7 @@ static GMEVENT_RESULT TrainerBeforeMsgEvt( GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
 /**
- * 対戦前メッセージ 呼び出し  @todo
+ * 対戦前メッセージ 呼び出し
  * @param
  * @retval
  */
