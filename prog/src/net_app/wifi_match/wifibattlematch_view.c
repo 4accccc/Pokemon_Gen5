@@ -564,6 +564,8 @@ void PLAYERINFO_RND_Exit( PLAYERINFO_WORK *p_wk )
 //-----------------------------------------------------------------------------
 PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, BOOL is_limit, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT	*p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, BOOL is_main, HEAPID heapID )
 { 
+  u16 card_frm;
+
   PLAYERINFO_WORK	*	p_wk;
 
   //ワーク作成
@@ -576,6 +578,8 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
   //メインとサブで読み込み先変更
   if( is_main )
   { 
+    card_frm  = BG_FRAME_M_CARD;
+
     p_wk->frm = PLAYERINFO_BG_FRAME_MAIN;
     p_wk->plt = PLAYERINFO_PLT_BG_FONT_MAIN;
     p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON_MAIN;
@@ -586,6 +590,8 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
   }
   else
   { 
+    card_frm  = BG_FRAME_S_CARD;
+
     p_wk->frm = PLAYERINFO_BG_FRAME;
     p_wk->plt = PLAYERINFO_PLT_BG_FONT;
     p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON;
@@ -598,14 +604,14 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
   switch( cp_data->bgm_no )
   { 
   case REGULATION_CARD_BGM_TRAINER:
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 3 );
-    GFL_BG_LoadScreenReq( p_wk->frm );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 3 );
+    GFL_BG_LoadScreenReq( card_frm );
     break;
   case REGULATION_CARD_BGM_WCS:
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 7 );
-    GFL_BG_LoadScreenReq( p_wk->frm );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 7 );
+    GFL_BG_LoadScreenReq( card_frm );
     break;
   }
 
@@ -771,6 +777,8 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
 //-----------------------------------------------------------------------------
 PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, const MYSTATUS* p_my, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, REGULATION_VIEWDATA * p_reg_view, BOOL is_main, HEAPID heapID )
 { 
+  u16 card_frm;
+
   PLAYERINFO_WORK	*	p_wk;
 
   //ワーク作成
@@ -783,6 +791,8 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   //メインとサブで読み込み先変更
   if( is_main )
   { 
+    card_frm  = BG_FRAME_M_CARD;
+
     p_wk->frm = PLAYERINFO_BG_FRAME_MAIN;
     p_wk->plt = PLAYERINFO_PLT_BG_FONT_MAIN;
     p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON_MAIN;
@@ -793,6 +803,8 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   }
   else
   { 
+    card_frm  = BG_FRAME_S_CARD;
+
     p_wk->frm = PLAYERINFO_BG_FRAME;
     p_wk->plt = PLAYERINFO_PLT_BG_FONT;
     p_wk->pokemonicon_plt = PLAYERINFO_PLT_OBJ_POKEICON;
@@ -805,14 +817,14 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   switch( cp_data->bgm_no )
   { 
   case REGULATION_CARD_BGM_TRAINER:
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 3 );
-    GFL_BG_LoadScreenReq( p_wk->frm );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 3 );
+    GFL_BG_LoadScreenReq( card_frm );
     break;
   case REGULATION_CARD_BGM_WCS:
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 0, 32, 5, 1 );
-    GFL_BG_ChangeScreenPalette( p_wk->frm, 0, 6, 32, 18, 7 );
-    GFL_BG_LoadScreenReq( p_wk->frm );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 7 );
+    GFL_BG_LoadScreenReq( card_frm );
     break;
   }
 
