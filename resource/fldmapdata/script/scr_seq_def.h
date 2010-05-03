@@ -9856,16 +9856,18 @@
 /**
  * @brief 顔アップ開始
  * @note      引数は、src/field/fld_faceup_def.hを参照のこと
- * @param back_idx    背景指定          FLD_FACEUP_BG～を指定
- * @param char_idx    キャラクター指定  FLD_FACEUP_CHAR～を指定
+ * @param back_idx    背景指定          FLD_FACEUP_BG～を指定     変数指定不可
+ * @param char_idx    キャラクター指定  FLD_FACEUP_CHAR～を指定   変数指定不可
+ * @param last        最終使用か　TRUEの場合、フェードインしない  変数指定不可
  */
 //--------------------------------------------------------------
-#define _START_FACEUP( back_idx, char_idx ) _ASM_START_FACEUP back_idx, char_idx
+#define _START_FACEUP( back_idx, char_idx, last ) _ASM_START_FACEUP back_idx, char_idx, last
 
-  .macro  _ASM_START_FACEUP back_idx, char_idx
+  .macro  _ASM_START_FACEUP back_idx, char_idx, last
   .short EV_SEQ_FACEUP_SATRT
   .short \back_idx
   .short \char_idx
+  .short \last
   .endm
 
 //--------------------------------------------------------------

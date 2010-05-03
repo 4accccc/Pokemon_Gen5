@@ -190,7 +190,7 @@ play_palpark:
       $result_msg = msg_palpark_12
     ELSE
       //ここにはこない
-      $result_msg = msg_palpark_12    //「ざんねん」メッセージをいれとく todo
+      $result_msg = msg_palpark_12    //「ざんねん」メッセージをいれとく
     ENDIF
 
     _BALLOONWIN_OBJMSG( result_msg, R15R0301_PARK )   //クローズいらず

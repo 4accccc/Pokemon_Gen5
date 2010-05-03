@@ -16,7 +16,7 @@
 #include "scrcmd_work.h"    //for SCRCMD_WORK
 
 
-extern GMEVENT *FLD_FACEUP_Start( const int inBackNo, const int inCharNo,
+extern GMEVENT *FLD_FACEUP_Start( const int inBackNo, const int inCharNo, const BOOL inLast,
                                   GAMESYS_WORK *gsys, SCRCMD_WORK * scrCmdWork );
 extern GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys);
 extern void FLD_FACEUP_Release( FIELDMAP_WORK *fieldmap );

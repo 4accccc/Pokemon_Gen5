@@ -85,6 +85,8 @@ typedef struct FACEUP_WORK_tag
   
   ANM_CNT EyeAnm;
   ANM_CNT MouthAnm;
+
+  BOOL Last;
 }FACEUP_WORK;
 
 
@@ -128,7 +130,18 @@ static const ANM_PAT MouthAnmPat[MOUTH_ANM_MAX] = {
   {0, 3},
 };
 
-GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *gsys, SCRCMD_WORK *scrCmdWork)
+//--------------------------------------------------------------
+/**
+ * セットアップイベント
+ * @param     inBackNo	    背景ナンバー
+ * @param     inCharNo      人物ナンバー    最終的にＮしかいなくなったので未使用
+ * @param     inLast        最終使用フラグ TRUEならば、終了時にフェードイン処理をしない
+ * @param     gsys          ゲームシステムポインタ
+ * @param     scrCmdWork    スクリプトコマンドワーク
+ * @return    GMEVENT_RESULT   イベント結果
+ */
+//--------------------------------------------------------------
+GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, const BOOL inLast, GAMESYS_WORK *gsys, SCRCMD_WORK *scrCmdWork)
 {
   GMEVENT * event;
   HEAPID heapID;
@@ -151,7 +164,14 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *
 //  ptr->HeapID = heapID;
   ptr->BackNo = inBackNo;
   ptr->ScrCmdWork = scrCmdWork;
-
+  ptr->Last = inLast;
+/**  
+  {
+    CONFIG*  cfg = SaveData_GetConfig( (SAVE_CONTROL_WORK*)SaveCtrl );
+    MSGSPEED speed = CONFIG_GetMsgSpeed( cfg );
+    ;
+  }
+*/
   //イベント作成
   event = GMEVENT_Create( gsys, NULL, SetupEvt, 0 );
 
@@ -371,6 +391,13 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------
+/**
+ * 終了関数
+ * @param     gsys    ゲームシステムポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
 GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys)
 {
   GMEVENT * event;
@@ -433,17 +460,30 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 2:
-    //転送タスク終了待ち
-    if (ptr->EyeAnm.TransReq || ptr->MouthAnm.TransReq)  break;
+    {
+      BOOL last;
+      //転送タスク終了待ち
+      if (ptr->EyeAnm.TransReq || ptr->MouthAnm.TransReq)  break;
 
-    //転送ＴＣＢ削除
-    GFL_TCB_DeleteTask( ptr->TransTcb );
-    //リリース
-    Release(fieldmap, ptr);
-    //ブラックイン開始
-    GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 0 );
-    (*seq)++;
+      //転送ＴＣＢ削除
+      GFL_TCB_DeleteTask( ptr->TransTcb );
+      //ラストフラグ保存
+      last = ptr->Last;
+      //リリース
+      Release(fieldmap, ptr);
+
+      if ( last )
+      {
+        return GMEVENT_RES_FINISH;
+      }
+      else
+      {
+        //ブラックイン開始
+        GFL_FADE_SetMasterBrightReq(
+              GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 0 );
+        (*seq)++;
+      }
+    }
     break;
   case 3:
     if ( GFL_FADE_CheckFade() == FALSE ){

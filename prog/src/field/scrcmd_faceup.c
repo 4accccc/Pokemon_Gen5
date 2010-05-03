@@ -42,6 +42,7 @@ VMCMD_RESULT EvCmdFaceup_Start( VMHANDLE *core, void *wk )
 {
   u8 back_idx;
   u8 char_idx;
+  u16 last;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -49,13 +50,14 @@ VMCMD_RESULT EvCmdFaceup_Start( VMHANDLE *core, void *wk )
 
   back_idx = VMGetU16( core );
   char_idx = VMGetU16( core );
+  last = VMGetU16( core );
 
   //終了チェックフラグをオン
   SCREND_CHK_SetBitOn(SCREND_CHK_FACEUP);
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(fld_faceup) );		//オーバーレイロード
 
-  call_event = FLD_FACEUP_Start(back_idx, char_idx, gsys, work);
+  call_event = FLD_FACEUP_Start(back_idx, char_idx, last, gsys, work);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;
