@@ -3126,23 +3126,20 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
           return FALSE;
         }
 
+        DWC_GdbProcess();
+
         state = DWC_GdbGetState();
-        if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
+        if( state == DWC_GDB_STATE_UNINITIALIZED || 
+            state == DWC_GDB_STATE_ERROR_OCCURED )
         { 
-          DWC_GdbProcess();
+          WIFIBATTLEMATCH_NETERR_SetGdbState( &p_wk->error, state );
+          return FALSE;
         }
-        else
+        
+        if( state == DWC_GDB_STATE_IDLE )
         { 
-          if( state != DWC_GDB_STATE_IDLE )
-          { 
-            WIFIBATTLEMATCH_NETERR_SetGdbState( &p_wk->error, state );
-            return FALSE;
-          }
-          else
-          { 
-            DEBUG_NET_Printf( "GDB:Get wait\n" );
-            p_wk->seq = WIFIBATTLEMATCH_GDB_SEQ_GET_END;
-          }
+          DEBUG_NET_Printf( "GDB:Get wait\n" );
+          p_wk->seq = WIFIBATTLEMATCH_GDB_SEQ_GET_END;
         }
       }
       break;
@@ -3750,24 +3747,20 @@ BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk )
           return TRUE;
         }
 
+        DWC_GdbProcess();
+
         state = DWC_GdbGetState();
-        if( DWC_GDB_STATE_IN_ASYNC_PROCESS == state )
+        if( state == DWC_GDB_STATE_UNINITIALIZED || 
+            state == DWC_GDB_STATE_ERROR_OCCURED )
         { 
-          DEBUG_NET_Printf( "GDBW:Get wait\n" );
-          DWC_GdbProcess();
+          WIFIBATTLEMATCH_NETERR_SetGdbState( &p_wk->error, state ); 
+          return TRUE;
         }
-        else
+
+        if( state == DWC_GDB_STATE_IDLE )
         { 
-          if( state != DWC_GDB_STATE_IDLE )
-          { 
-            WIFIBATTLEMATCH_NETERR_SetGdbState( &p_wk->error, state ); 
-            return TRUE;
-          }
-          else
-          { 
-            DEBUG_NET_Printf( "GDBW:Get wait end\n" );
-            p_wk->seq = SEQ_END;
-          }
+          DEBUG_NET_Printf( "GDBW:Get wait end\n" );
+          p_wk->seq = SEQ_END;
         }
       }
       break;

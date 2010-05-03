@@ -114,7 +114,7 @@ typedef enum
 //-------------------------------------
 ///	シンク
 //=====================================
-#define ENEMYDATA_WAIT_SYNC (60*5)
+#define ENEMYDATA_WAIT_SYNC (0)
 #define MATCHING_MSG_WAIT_SYNC (120)
 
 //-------------------------------------
@@ -2628,10 +2628,11 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
     break;
   case SEQ_START_OK_MATCHING_MSG:
-    PMSND_StopSE();
-    PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+
+    PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
+
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_32, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_DRAW_MATCHINFO ); 
@@ -3725,13 +3726,13 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
 
+    SEQ_START_UNLOCK_MSG,
     //GPF送信
     SEQ_START_SEND_MSG, 
     SEQ_UNLOCK,
     SEQ_SEND_GPF_CUPSTATUS,
     SEQ_WAIT_GPF_CUPSTATUS,
 
-    SEQ_START_UNLOCK_MSG,
     SEQ_END,
     SEQ_WAIT_MSG,
 
@@ -3837,13 +3838,20 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       if( ret == SAVE_RESULT_OK )
       { 
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE;
-        *p_seq  = SEQ_START_SEND_MSG;
+        *p_seq  = SEQ_START_UNLOCK_MSG;
       }
       else if( ret == SAVE_RESULT_NG )
       { 
         *p_seq  = SEQ_END;
       }
     }
+    break;
+
+  case SEQ_START_UNLOCK_MSG:
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_26, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SEND_MSG );
     break;
 
 
@@ -3878,19 +3886,13 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
-        *p_seq  = SEQ_START_UNLOCK_MSG;
+        *p_seq  = SEQ_END;
       }
       //ここはサブシーケンスなのでエラー処理はこの上で行う
     } 
     break;
 
 
-  case SEQ_START_UNLOCK_MSG:
-    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_26, WBM_TEXT_TYPE_STREAM );
-    *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END );
-    break;
   case SEQ_END:
     WBM_SEQ_End( p_seqwk );
     break;
