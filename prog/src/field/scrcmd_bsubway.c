@@ -68,6 +68,8 @@ extern const GFL_PROC_DATA IrcBattleMatchProcData;
 
 #include "item/itemsym.h"
 
+#include "system/net_err.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -1328,6 +1330,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_COMM_TIMSYNC:
     KAGAYA_Printf( "BSUBWAY 通信同期開始 No.%d\n", param0 );
     bsw_scr->comm_timing_no = param0;
+    bsw_scr->ret_work_id = retwk_id;
     BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
     VMCMD_SetWait( core, evCommTimingSync );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
@@ -1450,6 +1453,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           sex, PLAYER_DRAW_FORM_NORMAL );
     }
     break;
+  //通信エラー画面表示リクエスト
+  case BSWSUB_COMM_REQ_ERROR_DISP:
+    NetErr_App_ReqErrorDisp();
+    break;
+  //通信エラー画面常時リクエスト フィールドフリー時
+  case BSWSUB_COMM_REQ_ERROR_DISP_FLD:
+    GAMESYSTEM_SetFieldCommErrorReq( gsys, TRUE );
+    break;
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:
@@ -1500,11 +1511,19 @@ static BOOL evCommTimingSync( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  u16 retwk_id = bsw_scr->ret_work_id;
+  u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
   
-  if( BSUBWAY_COMM_IsTimingSync(bsw_scr->comm_timing_no) == TRUE ){
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
+    OS_Printf( "BSW NET ERROR!!\n" );
+    *ret_wk = FALSE;
+    return( TRUE );
+  }else if( BSUBWAY_COMM_IsTimingSync(bsw_scr->comm_timing_no) == TRUE ){
     KAGAYA_Printf("BSUBWAY 通信同期完了 No.%d\n",bsw_scr->comm_timing_no);
+    *ret_wk = TRUE;
     return( TRUE );
   }
+  
   return( FALSE );
 }
 

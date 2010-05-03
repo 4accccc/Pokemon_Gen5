@@ -120,7 +120,7 @@ struct _TAG_BSUBWAY_SCRWORK
   u8  first_btl_flag;    //初戦をおこなったかフラグ
   u8  comm_timing_no; //通信タイミング番号
   u16 comm_check_work;
-  u16 ret_work_id;
+  u16 ret_work_id; ///<スクリプトコマンド戻り値
   
   MYSTATUS mystatus_fr; //通信パートナーのMYSTATUS
   COMM_BTL_DEMO_PARAM comm_btl_demo_param;
