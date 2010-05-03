@@ -81,17 +81,11 @@ static GMEVENT_RESULT GMEVENT_Teleport(GMEVENT *event, int *seq, void *wk );
 static FLDSKILL_CHECK_FUNC GetCheckFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx );
 static FLDSKILL_USE_FUNC GetUseFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx );
 
-//static HIDEN_SCR_WORK * CreateHSW(
-//    const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
-//static void HSW_Delete(HIDEN_SCR_WORK * hsw);
 static void InitHSW( HIDEN_SCR_WORK *hsw,
     const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
 
 static BOOL IsEnableSkill(
     const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX skill_idx );
-static BOOL CheckPark( const FLDSKILL_CHECK_WORK *scwk );
-static BOOL CheckPokePark( const FLDSKILL_CHECK_WORK * scwk );
-static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk );
 
 static FLDSKILL_RET SkillCheck_Amaikaori( const FLDSKILL_CHECK_WORK * scwk );
 static GMEVENT* SkillUse_Amaikaori( const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );
@@ -124,7 +118,6 @@ void FLDSKILL_InitCheckWork(
   MMDL *mmdl;
   FIELD_PLAYER *fld_player;
   MAPATTR fattr,nattr;
-  s16 gx,gy,gz;
   
   MI_CpuClear8( scwk, sizeof(FLDSKILL_CHECK_WORK) );
   scwk->zone_id = FIELDMAP_GetZoneID( fieldmap );
@@ -146,11 +139,6 @@ void FLDSKILL_InitCheckWork(
     case TREE:
       scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_IAIGIRI );
       break;
-#if 0 //wb null
-    case BREAKROCK:
-      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_IWAKUDAKI );
-      break;
-#endif
     }
   }
   
@@ -164,17 +152,15 @@ void FLDSKILL_InitCheckWork(
     fattr = FIELD_PLAYER_GetDirMapAttr( fld_player, dir );
   }
   
-  if( FIELD_PLAYER_CheckAttrNaminori(fld_player,nattr,fattr) == TRUE ){
+  if( FIELD_PLAYER_CheckNaminoriUse(fld_player,nattr,fattr) == TRUE )
+  {
     scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_NAMINORI );
   }
-
-#if 0 //wb null
-  if (Player_EventAttrCheck_KabeNobori(fattr, Player_DirGet(fsys->player))) {
-    scwk->enable_skill |= (1 << FLD_SKILL_ROCKCLIMB);
+  if( FIELD_PLAYER_CheckTakinoboriUse( fld_player, nattr, fattr ) == TRUE )
+  {
+    scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_TAKINOBORI );
   }
-#endif
-  
-  //if (AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldmap ) ) != 0 )
+
   if ( ZONEDATA_FlyEnable( scwk->zone_id ) == TRUE )
   {
     scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_SORAWOTOBU );
@@ -185,13 +171,6 @@ void FLDSKILL_InitCheckWork(
     scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_ANAWOHORU );
   }
 
-  {
-    MAPATTR_VALUE val = MAPATTR_GetAttrValue( fattr );
-    
-    if( MAPATTR_VALUE_CheckWaterFall(val) == TRUE ){
-      scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_TAKINOBORI );
-    }
-  }
 
   {
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
@@ -241,6 +220,10 @@ void FLDSKILL_InitCheckWork(
   {
     scwk->enable_skill = 0;
   }
+  //ユニオン/コロシアムなどではフィールド技全面禁止
+  if( ZONEDATA_CheckFieldSkillUse( scwk->zone_id ) == FALSE ){
+    scwk->enable_skill = 0;
+  }
 }
 
 //--------------------------------------------------------------
@@ -255,6 +238,9 @@ FLDSKILL_RET FLDSKILL_CheckUseSkill(
     FLDSKILL_IDX idx, FLDSKILL_CHECK_WORK *scwk )
 {
   FLDSKILL_CHECK_FUNC func = GetCheckFunc( scwk, idx );
+  if( func == NULL ){
+    return FLDSKILL_RET_USE_NG;
+  }
   return func( scwk );
 }
 
@@ -268,15 +254,11 @@ FLDSKILL_RET FLDSKILL_CheckUseSkill(
  */
 //--------------------------------------------------------------
 void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
-    u16 poke_pos, u16 use_wazano,
-    u32 zoneID, u32 inGridX, u32 inGridY, u32 inGridZ)
+    u16 poke_pos, u16 use_wazano, u32 zoneID)
 {
   head->poke_pos = poke_pos;
   head->use_wazano = use_wazano;
   head->zoneID = zoneID;
-  head->GridX = inGridX;    //@todo 20091120現在未使用
-  head->GridY = inGridY;    //@todo 20091120現在未使用
-  head->GridZ = inGridZ;    //@todo 20091120現在未使用
 }
 
 //--------------------------------------------------------------
@@ -285,13 +267,18 @@ void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
  * @param idx 使用するFLDSKILL_IDX
  * @param head 内容がセットされたFLDSKILL_USE_HEADER
  * @param scwk FLDSKILL_InitCheckWork()で初期化済みのFLDSKILL_CHECK_WORK
- * @retval GMEVENT スキル使用イベント
+ * @retval  GMEVENT スキル使用イベント
+ * @retval  NULL  エラー値
+ * @note  
  */
 //--------------------------------------------------------------
 GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
     const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
 {
   FLDSKILL_USE_FUNC func = GetUseFunc( scwk, idx );
+  if( func == NULL ){
+    return NULL;
+  }
   return func( head, scwk );
 }
 
@@ -307,13 +294,6 @@ GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Iaigiri( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
-  }
-#endif
-
   if( IsEnableSkill(scwk,FLDSKILL_IDX_IAIGIRI) ){
     return FLDSKILL_RET_USE_OK;
   }
@@ -378,13 +358,6 @@ static GMEVENT_RESULT GMEVENT_Iaigiri(GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Naminori( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
-  }
-#endif
-
   //波乗り中
   if( scwk->moveform == PLAYER_MOVE_FORM_SWIM ){
     return FLDSKILL_RET_PLAYER_SWIM;
@@ -459,13 +432,6 @@ static GMEVENT_RESULT GMEVENT_Naminori(GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Takinobori( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
-  }
-#endif
-
   if( IsEnableSkill(scwk,FLDSKILL_IDX_TAKINOBORI) ){
     return FLDSKILL_RET_USE_OK;
   }
@@ -531,13 +497,6 @@ static GMEVENT_RESULT GMEVENT_Takinobori(
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Kairiki( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
-  }
-#endif
-
   if( IsEnableSkill(scwk,FLDSKILL_IDX_KAIRIKI) ){
     return FLDSKILL_RET_USE_OK;
   }
@@ -603,13 +562,10 @@ static GMEVENT_RESULT GMEVENT_Kairiki(
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Amaikaori( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
+  if( IsEnableSkill(scwk,FLDSKILL_IDX_AMAIKAORI) ){
+    return FLDSKILL_RET_USE_OK;
   }
-#endif
-  return FLDSKILL_RET_USE_OK;
+  return FLDSKILL_RET_USE_NG;
 }
 
 //--------------------------------------------------------------
@@ -662,13 +618,6 @@ static GMEVENT * SkillUse_Sorawotobu(
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Sorawotobu( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
-  }
-#endif
-
   if( IsEnableSkill(scwk,FLDSKILL_IDX_SORAWOTOBU) ){
     return FLDSKILL_RET_USE_OK;
   }
@@ -689,13 +638,6 @@ static FLDSKILL_RET SkillCheck_Sorawotobu( const FLDSKILL_CHECK_WORK * scwk)
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Flash( const FLDSKILL_CHECK_WORK * scwk)
 {
-#if 0
-	// コロシアム・ユニオンルームチェック
-	if( MapModeUseChack( scwk ) == FALSE ){
-		return FIELDSKILL_USE_FALSE;
-	}
-#endif
-
 	if (IsEnableSkill(scwk, FLDSKILL_IDX_FLASH)) {
 		return FLDSKILL_RET_USE_OK;
 	} else {
@@ -820,13 +762,6 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Anawohoru( const FLDSKILL_CHECK_WORK * scwk)
 {
-#if 0
-	// コロシアム・ユニオンルームチェック
-	if( MapModeUseChack( scwk ) == FALSE ){
-		return FIELDSKILL_USE_FALSE;
-	}
-#endif
-
 	if (IsEnableSkill(scwk, FLDSKILL_IDX_ANAWOHORU)) {
 		return FLDSKILL_RET_USE_OK;
 	} else {
@@ -905,13 +840,6 @@ static GMEVENT_RESULT GMEVENT_Anawohoru(GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Teleport( const FLDSKILL_CHECK_WORK * scwk)
 {
-#if 0
-	// コロシアム・ユニオンルームチェック
-	if( MapModeUseChack( scwk ) == FALSE ){
-		return FIELDSKILL_USE_FALSE;
-	}
-#endif
-
 	if (IsEnableSkill(scwk, FLDSKILL_IDX_TELEPORT)) {
 		return FLDSKILL_RET_USE_OK;
 	} else {
@@ -1041,13 +969,10 @@ static GMEVENT_RESULT GMEVENT_Diving( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static FLDSKILL_RET SkillCheck_Osyaberi( const FLDSKILL_CHECK_WORK * scwk)
 {
-  //コロシアム・ユニオンルームチェック
-#if 0 //wb 現状無視
-  if( CheckMapModeUse(scwk) == TRUE ){
-    return FLDSKILL_RET_USE_NG;
+  if( IsEnableSkill(scwk,FLDSKILL_IDX_OSYABERI) ){
+    return FLDSKILL_RET_USE_OK;
   }
-#endif
-  return FLDSKILL_RET_USE_OK;
+  return FLDSKILL_RET_USE_NG;
 }
 
 //--------------------------------------------------------------
@@ -1233,7 +1158,12 @@ static GMEVENT * SkillUse_Dummy(
 //--------------------------------------------------------------
 static FLDSKILL_CHECK_FUNC GetCheckFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx )
 {
-  GF_ASSERT( idx < FLDSKILL_IDX_MAX );
+  if( idx >= FLDSKILL_IDX_MAX ) {
+#ifdef PM_DEBUG
+    GF_ASSERT( idx < FLDSKILL_IDX_MAX );
+#endif
+    return NULL;
+  }
 
   // 海底神殿
   if( ZONEDATA_IsSeaTempleDungeon( scwk->zone_id ) ){
@@ -1252,7 +1182,12 @@ static FLDSKILL_CHECK_FUNC GetCheckFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKI
 //--------------------------------------------------------------
 static FLDSKILL_USE_FUNC GetUseFunc( const FLDSKILL_CHECK_WORK *scwk, FLDSKILL_IDX idx )
 {
-  GF_ASSERT_MSG( idx < FLDSKILL_IDX_MAX,"%d\n",idx );
+  if( idx >= FLDSKILL_IDX_MAX ){
+#ifdef PM_DEBUG
+    GF_ASSERT_MSG( idx < FLDSKILL_IDX_MAX,"%d\n",idx );
+#endif
+    return NULL;
+  }
 
   // 海底神殿
   if( ZONEDATA_IsSeaTempleDungeon( scwk->zone_id ) ){
@@ -1312,68 +1247,6 @@ static BOOL IsEnableSkill(
   }
 }
 
-//--------------------------------------------------------------
-/**
- * サファリ・ポケパークチェック
- * @param scwk FLDSKILL_CHECK_WORK
- * @retval TRUE=サファリ・ポケパーク
- */
-//--------------------------------------------------------------
-static BOOL CheckPark( const FLDSKILL_CHECK_WORK *scwk )
-{
-#if 0 //wb null
-  if( SysFlag_SafariCheck(
-        SaveData_GetEventWork(scwk->fsys->savedata) ) == TRUE ||
-    SysFlag_PokeParkCheck(
-      SaveData_GetEventWork(scwk->fsys->savedata)) == TRUE ){
-    return TRUE;
-  }
-  return FALSE;
-#else
-  return FALSE;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * ポケパークチェック
- * @param scwk FLDSKILL_CHECK_WORK
- * @retval TRUE=ポケパーク
- */
-//--------------------------------------------------------------
-static BOOL CheckPokePark( const FLDSKILL_CHECK_WORK * scwk )
-{
-#if 0 //wb null
-  if( SysFlag_PokeParkCheck(
-        SaveData_GetEventWork(scwk->fsys->savedata)) == TRUE ){
-    return TRUE;
-  }
-  return FALSE;
-#else
-  return FALSE;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * コロシアム・ユニオンルームチェック
- * @param scwk FLDSKILL_CHECK_WORK
- * @retval TRUE=コロシアム・ユニオンルーム
- */
-//--------------------------------------------------------------
-static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk )
-{
-#if 0 //wb null
-  if( scwk->fsys->MapMode == MAP_MODE_COLOSSEUM || scwk->fsys->MapMode == MAP_MODE_UNION ){
-    return FALSE;
-  }
-  return TRUE;
-#else
-  return FALSE;
-#endif
-}
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  海底神殿エリア内かをチェック
@@ -1425,17 +1298,13 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Naminori,SkillCheck_Naminori},    // 01 :なみのり 
   {SkillUse_Takinobori,SkillCheck_Takinobori},    // 02 :たきのぼり
   {SkillUse_Kairiki,SkillCheck_Kairiki},    // 03 :かいりき
-  
   {SkillUse_Sorawotobu,SkillCheck_Sorawotobu},    // 04 :そらをとぶ
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 05 :きりばらい
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
-  {SkillUse_Flash,SkillCheck_Flash},    // 08 :フラッシュ
-  {SkillUse_Teleport,SkillCheck_Teleport},    // 09 :テレポート
-  {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
-  {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
-  {SkillUse_Osyaberi,SkillCheck_Osyaberi},    // 12 :おしゃべり
-  {SkillUse_Diving, SkillCheck_Diving}, // 13 :ダイビング
+  {SkillUse_Flash,SkillCheck_Flash},    // 05 :フラッシュ
+  {SkillUse_Teleport,SkillCheck_Teleport},    // 06 :テレポート
+  {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 07 :あなをほる
+  {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 08 :あまいかおり
+  {SkillUse_Osyaberi,SkillCheck_Osyaberi},    // 09 :おしゃべり
+  {SkillUse_Diving, SkillCheck_Diving}, // 10 :ダイビング
 };
 
 
@@ -1455,15 +1324,11 @@ static const FLDSKILL_FUNC_DATA SeaTempleSkillFuncTable[FLDSKILL_IDX_MAX] =
   {SkillUse_Naminori,SkillCheck_Naminori},    // 01 :なみのり 
   {SkillUse_Takinobori,SkillCheck_Takinobori},    // 02 :たきのぼり
   {SkillUse_SeaTempleKairiki,SkillCheck_Kairiki},    // 海底神殿用かいりき
-  
   {SkillUse_Sorawotobu,SkillCheck_Sorawotobu},    // 04 :そらをとぶ
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 05 :きりばらい
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 06 :いわくだき
-  {SkillUse_Dummy,SkillCheck_Dummy},    // 07 :ロッククライム
-  {SkillUse_SeaTempleFlash,SkillCheck_Flash},    // 海底神殿用フラッシュ
-  {SkillUse_Teleport,SkillCheck_Teleport},    // 09 :テレポート
-  {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 10 :あなをほる
-  {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 11 :あまいかおり
-  {SkillUse_Osyaberi,SkillCheck_Osyaberi},    // 12 :おしゃべり
-  {SkillUse_Diving, SkillCheck_Diving}, // 13 :ダイビング
+  {SkillUse_SeaTempleFlash,SkillCheck_Flash},    //05 :海底神殿用フラッシュ
+  {SkillUse_Teleport,SkillCheck_Teleport},    // 06 :テレポート
+  {SkillUse_Anawohoru,SkillCheck_Anawohoru},    // 07 :あなをほる
+  {SkillUse_Amaikaori,SkillCheck_Amaikaori},   // 08 :あまいかおり
+  {SkillUse_Osyaberi,SkillCheck_Osyaberi},    // 09 :おしゃべり
+  {SkillUse_Diving, SkillCheck_Diving}, // 10 :ダイビング
 };

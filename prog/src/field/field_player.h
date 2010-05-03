@@ -205,7 +205,9 @@ extern PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( const FIELD_PLAYER *fld_player
 extern BOOL FIELD_PLAYER_CheckDrawFormWait( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
 extern BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player );
-extern BOOL FIELD_PLAYER_CheckAttrNaminori(
+extern BOOL FIELD_PLAYER_CheckNaminoriUse(
+    FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
+extern BOOL FIELD_PLAYER_CheckTakinoboriUse(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 extern void FIELD_PLAYER_CheckSpecialDrawForm(
     FIELD_PLAYER *fld_player, BOOL menu_open_flag );

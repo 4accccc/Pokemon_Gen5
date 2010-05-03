@@ -273,17 +273,15 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 				MMDLSYS_ClearPauseMoveProc( fldMdlSys );
 			}
 
-			//ITEMの場合はCallbackの中で戻されるので行わない
-			//FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
-
 			//技使用
-			{	
-				FLDSKILL_InitCheckWork( GAMESYSTEM_GetFieldMapWork(mwk->gmSys), &skillCheckWork ); //再初期化
-				FLDSKILL_InitUseHeader( &skillUseWork , mwk->link.select_poke, mwk->link.select_param,
-            mwk->link.zoneID, mwk->link.grid_x, mwk->link.grid_y, mwk->link.grid_z );
-				event = FLDSKILL_UseSkill( mwk->link.select_param, &skillUseWork , &skillCheckWork );
-				GMEVENT_ChangeEvent(mwk->gmEvent , event);
-			}
+		  FLDSKILL_InitCheckWork( GAMESYSTEM_GetFieldMapWork(mwk->gmSys), &skillCheckWork ); //再初期化
+			FLDSKILL_InitUseHeader( &skillUseWork , mwk->link.select_poke, mwk->link.select_param, mwk->link.zoneID);
+
+			event = FLDSKILL_UseSkill( mwk->link.select_param, &skillUseWork , &skillCheckWork );
+      if( event == NULL ){  //起動エラーチェック
+			  return( GMEVENT_RES_FINISH ); //なにもしないで終わる
+      }
+			GMEVENT_ChangeEvent(mwk->gmEvent , event);
     }
 		break;
 

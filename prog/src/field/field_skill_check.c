@@ -37,6 +37,16 @@
 //======================================================================
 #pragma mark [> proto
 
+static const u16 HidenTable[] = {
+  WAZANO_IAIGIRI,
+  WAZANO_KAIRIKI,
+  WAZANO_NAMINORI,
+  WAZANO_SORAWOTOBU,
+  WAZANO_DAIBINGU,
+  WAZANO_TAKINOBORI,
+};
+
+
 //--------------------------------------------------------------
 //	今使っている技ビットの取得
 //--------------------------------------------------------------
@@ -78,23 +88,26 @@ const u16 FIELD_SKILL_CHECK_GetUseSkillBit( GAMEDATA *gameData )
 }
 
 //--------------------------------------------------------------
+//	秘伝技チェック
+//--------------------------------------------------------------
+static BOOL isHiden( u16 wazano )
+{
+  int i;
+
+  for(i = 0;i < NELEMS(HidenTable);i++){
+    if(HidenTable[i] == wazano){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
 //	指定技が忘れられるか？
 //--------------------------------------------------------------
 const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameData , const u16 wazaNo , HEAPID heapId )
 {
-  switch( wazaNo )
-  {
-  case WAZANO_IAIGIRI:
-  case WAZANO_KAIRIKI:
-  case WAZANO_NAMINORI:
-  case WAZANO_SORAWOTOBU:
-  case WAZANO_DAIBINGU:
-  case WAZANO_TAKINOBORI:
-    return FSCR_HIDEN;
-    break;
-  }
-  
-  return FSCR_OK;
+  return (FSCR_OK+isHiden( wazaNo ));
 }
 
 //--------------------------------------------------------------
@@ -102,17 +115,11 @@ const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameDa
 //--------------------------------------------------------------
 const BOOL FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , HEAPID heapId )
 {
-  u8 i;
+  int i;
   for( i=0;i<4;i++ )
   {
     const u32 wazaNo = PPP_Get( ppp , ID_PARA_waza1+i , NULL );
-    if( wazaNo == WAZANO_IAIGIRI ||
-        wazaNo == WAZANO_KAIRIKI ||
-        wazaNo == WAZANO_NAMINORI ||
-        wazaNo == WAZANO_SORAWOTOBU ||
-        wazaNo == WAZANO_DAIBINGU ||
-        wazaNo == WAZANO_TAKINOBORI )
-    {
+    if( isHiden( wazaNo )){
       return FALSE;
     }
   }

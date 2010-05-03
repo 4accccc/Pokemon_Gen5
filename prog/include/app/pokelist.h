@@ -113,16 +113,12 @@ typedef enum
   
   PL_RET_BAG,         // バッグから呼ばれた場合で、バッグへ戻る
   
-/** ↓↓↓ field_skillや冒険ノートと同じ並びで！ ↓↓↓ **/
+/** ↓↓↓ field_skill.hのFLDSKILL_IDX_XXXと同じ並びで！ ↓↓↓ **/
   PL_RET_IAIGIRI,     // メニュー 技：いあいぎり
   PL_RET_NAMINORI,    // メニュー 技：なみのり
   PL_RET_TAKINOBORI,  // メニュー 技：たきのぼり
   PL_RET_KAIRIKI,     // メニュー 技：かいりき
   PL_RET_SORAWOTOBU,  // メニュー 技：そらをとぶ
-  PL_RET_KIRIBARAI,   // メニュー 技：きりばらい
-  PL_RET_IWAKUDAKI,   // メニュー 技：いわくだき
-  PL_RET_ROCKCLIMB,   // メニュー 技：ロッククライム
-
   PL_RET_FLASH,       // メニュー 技：フラッシュ
   PL_RET_TELEPORT,    // メニュー 技：テレポート
   PL_RET_ANAWOHORU,   // メニュー 技：あなをほる

@@ -1145,26 +1145,45 @@ BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player )
 
 //--------------------------------------------------------------
 /**
- * 自機波乗りアトリビュートチェック
+ * 自機波乗り開始可能かチェック
  * @param fld_player
  * @param nattr
  * @param fattr
- * @retval BOOL TRUE=波乗り可能アトリビュートである。
+ * @retval BOOL TRUE=波乗り可能である。
  */
 //--------------------------------------------------------------
-BOOL FIELD_PLAYER_CheckAttrNaminori(
+BOOL FIELD_PLAYER_CheckNaminoriUse(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr )
 {
-  MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( fattr );
-  MAPATTR_VALUE f_val = MAPATTR_GetAttrValue( fattr );
+  PLAYER_MOVE_FORM move_form = FIELD_PLAYER_GetMoveForm( fld_player );
   
-  if( ((attr_flag&MAPATTR_FLAGBIT_WATER) &&
-      MAPATTR_GetHitchFlag(fattr) == FALSE) ||
-    MAPATTR_VALUE_CheckShore(f_val) == TRUE ){
-    return( TRUE );
+  //既に波乗り中、ダイビング中であれば新規起動はできない
+  if( move_form == PLAYER_MOVE_FORM_SWIM ||
+      move_form == PLAYER_MOVE_FORM_DIVING ){
+    return FALSE;
   }
+  return MAPATTR_CheckNaminoriUse( nattr, fattr );
+}
+//--------------------------------------------------------------
+/**
+ * 自機滝登り開始可能かチェック
+ * @param fld_player
+ * @param nattr
+ * @param fattr
+ * @retval BOOL TRUE=滝登り可能である。
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckTakinoboriUse(
+    FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr )
+{
+  PLAYER_MOVE_FORM move_form = FIELD_PLAYER_GetMoveForm( fld_player );
   
-  return( FALSE );
+  //現在地が侵入可、且、波乗り中でないと起動できない
+  if( MAPATTR_GetHitchFlag( nattr ) ||
+      move_form != PLAYER_MOVE_FORM_SWIM ){
+    return FALSE;
+  }
+  return MAPATTR_VALUE_CheckWaterFall(MAPATTR_GetAttrValue( fattr ));
 }
 
 //--------------------------------------------------------------

@@ -993,11 +993,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_IAIGIRI:     // メニュー 技：いあいぎり
   case PL_RET_NAMINORI:    // メニュー 技：なみのり
   case PL_RET_TAKINOBORI:  // メニュー 技：たきのぼり
-  case PL_RET_KIRIBARAI:   // メニュー 技：きりばらい
   case PL_RET_KAIRIKI:     // メニュー 技：かいりき
-
-  case PL_RET_IWAKUDAKI:   // メニュー 技：いわくだき
-  case PL_RET_ROCKCLIMB:   // メニュー 技：ロッククライム
   case PL_RET_FLASH:       // メニュー 技：フラッシュ
   case PL_RET_TELEPORT:    // メニュー 技：テレポート
   case PL_RET_ANAWOHORU:   // メニュー 技：あなをほる

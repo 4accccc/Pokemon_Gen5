@@ -24,6 +24,7 @@
 //======================================================================
 //--------------------------------------------------------------
 /// FLDSKILL_IDX 技インデックス
+//  注意! include/app/pokelist.h の PL_RET_IAIGIRI...と同じ並びである必要があります！
 //--------------------------------------------------------------
 typedef enum
 {
@@ -32,9 +33,6 @@ typedef enum
   FLDSKILL_IDX_TAKINOBORI,    // たきのぼり
   FLDSKILL_IDX_KAIRIKI,    // かいりき
   FLDSKILL_IDX_SORAWOTOBU,    // そらをとぶ
-  FLDSKILL_IDX_KIRIBARAI,    // きりばらい
-  FLDSKILL_IDX_IWAKUDAKI,    // いわくだき
-  FLDSKILL_IDX_ROCKCLIMB,    // ロッククライム
   FLDSKILL_IDX_FLASH,    // フラッシュ
   FLDSKILL_IDX_TELEPORT,    // テレポート
   FLDSKILL_IDX_ANAWOHORU, // あなをほる
@@ -88,9 +86,6 @@ struct _TAG_FLDSKILL_USE_HEADER
   u16 poke_pos; //技を使用する手持ちポケモン位置番号
   u16 use_wazano; //使用する技番号
   u32 zoneID;
-  u32 GridX;
-  u32 GridY;
-  u32 GridZ;
 };
 
 //--------------------------------------------------------------
@@ -109,14 +104,11 @@ struct _TAG_FLDSKILL_CHECK_WORK
 //======================================================================
 //  proto
 //======================================================================
-//extern FLDSKILL_CHECK_FUNC FLDSKILL_GetCheckFunc( FLDSKILL_IDX );
-//extern FLDSKILL_USE_FUNC FLDSKILL_GetUseFunc( FLDSKILL_IDX idx );
 extern void FLDSKILL_InitCheckWork(
     FIELDMAP_WORK *fieldmap, FLDSKILL_CHECK_WORK *scwk );
 extern FLDSKILL_RET FLDSKILL_CheckUseSkill(
     FLDSKILL_IDX idx, FLDSKILL_CHECK_WORK *scwk );
 extern void FLDSKILL_InitUseHeader( FLDSKILL_USE_HEADER *head,
-    u16 poke_pos, u16 use_wazano,
-    u32 zoneID, u32 inGridX, u32 inGridY, u32 inGridZ);
+    u16 poke_pos, u16 use_wazano, u32 zoneID );
 extern GMEVENT * FLDSKILL_UseSkill( FLDSKILL_IDX idx,
     const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk );

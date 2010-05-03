@@ -28,6 +28,7 @@ typedef struct _FLD_ITEM_FUNCTION{
 //////////////////////////////////////////////////
 static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
+static BOOL itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static BOOL itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork );
 
@@ -68,14 +69,19 @@ static FLD_ITEM_FUNCTION const DATA_FldItemFunction[ EVENT_ITEMUSE_CALL_MAX ] =
 };
 
 //-------------------------------------
-/// フィールドアイテム使用チェック関数テーブル
-//=====================================
+/*
+ * フィールドアイテム使用チェック関数テーブル
+ *
+ * このテーブル登録とは別に、パレスでは「大切なもの」は使えないチェックが
+ * バッグ画面で行われている
+ */
+//-------------------------------------
 static ItemUseCheckFunc const DATA_ItemUseCheckFunc[ITEMCHECK_MAX] = {
   itemcheck_Cycle, // 自転車(乗っていない時はTRUEで乗れる、乗っている時はTRUEで降りれる)
   NULL, // タウンマップ
   NULL, // ともだち手帳
   itemcheck_Ananukenohimo, // あなぬけのヒモ
-  NULL, // あまいミツ
+  itemcheck_Amaimitu, // あまいミツ
   itemcheck_Turizao, // つりざお
   NULL, // バトルレコーダー
   NULL, // メール
@@ -221,6 +227,11 @@ static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, P
 {
 //  PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( gdata );
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
+  
+  //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
+  if( ZONEDATA_CheckFieldSkillUse(zone_id) == FALSE){
+    return FALSE;
+  }
 
   if(!ZONEDATA_EscapeEnable( zone_id )){
     return FALSE;
@@ -229,10 +240,27 @@ static BOOL itemcheck_Ananukenohimo( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, P
 }
 
 /*
+ *  @brief  あまいみつチェック
+ */
+static BOOL itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
+{
+  u16 zone_id = PLAYERWORK_getZoneID( playerWork );
+
+  //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
+  return !( ZONEDATA_CheckFieldSkillUse(zone_id));
+}
+
+/*
  *  @brief  釣竿使用チェック
  */
 static BOOL itemcheck_Turizao( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WORK* playerWork )
 {
+  u16 zone_id = PLAYERWORK_getZoneID( playerWork );
+
+  //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
+  if( ZONEDATA_CheckFieldSkillUse(zone_id) == FALSE){
+    return FALSE;
+  }
   //釣竿チェック
   return FieldFishingCheckPos( gdata, field_wk, NULL );
 }
@@ -244,8 +272,8 @@ static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, 
 {
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
-  // ユニオンルーム、通信対戦部屋、Wi-Fiクラブ、パルパーク、パレスでは使用できません。
-  return !( ZONEDATA_IsPalace(zone_id) || ZONEDATA_IsUnionRoom(zone_id) || ZONEDATA_IsColosseum(zone_id) );
+  //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
+  return !( ZONEDATA_CheckFieldSkillUse(zone_id));
 }
 
 //=============================================================================
