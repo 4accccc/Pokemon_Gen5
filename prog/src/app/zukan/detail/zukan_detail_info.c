@@ -8,7 +8,7 @@
  *  モジュール名：ZUKAN_DETAIL_INFO
  */
 //============================================================================
-#define DEBUG_KAWADA
+//#define DEBUG_KAWADA
 
 
 // インクルード
@@ -144,18 +144,25 @@ typedef struct
   // 終了命令
   END_CMD                     end_cmd;
 
+  // 入力可不可
+  BOOL                        input_enable;  // 入力可のときTRUE
+
   // 言語
   LANG_BUTTON                 lang_btn[ZUKAN_INFO_LANG_MAX];
+  ZUKAN_INFO_LANG             lang_btn_push;  // 今押しアニメしているボタン(ZUKAN_INFO_LANG_NONEのときなし)
   ZUKAN_INFO_LANG             lang;  // 上画面に今表示している言語
   u32                         lang_ncl;
   u32                         lang_ncg;
   u32                         lang_nce;
 
   // 言語ボタンのパレットアニメ
+  //u16           pal_anime_lang_default[0x10];  // pal_anime_lang_defaultを割り当てると押しアニメしなくなってしまったので、pal_anime_lang_pltt_offs_reqを使うことにした。
   u16           pal_anime_lang_start[0x10];
   u16           pal_anime_lang_end[0x10];
   u16           pal_anime_lang_now[0x10];
   int           pal_anime_lang_count;
+  
+  BOOL          pal_anime_lang_pltt_offs_req;  // 押しアニメしているときは、パレットアニメをしないように、パレットアニメの開始を遅らせる
 }
 ZUKAN_DETAIL_INFO_WORK;
 
@@ -198,11 +205,11 @@ static void Zukan_Detail_Info_GetCurrPokeInfo(
                 BOOL* a_lang_exist );  // a_lang_exist[ZUKAN_INFO_LANG_MAX]
 
 // 言語ボタンのパレットアニメ
-static void Zukan_Detail_Touchbar_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Touchbar_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Touchbar_AnimeInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Touchbar_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Touchbar_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Info_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Info_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Info_AnimeInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Info_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Info_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -280,7 +287,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcInit( ZKNDTL_PROC* proc, int* se
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Info_VBlankFunc, work, 1 );
 
   // 言語
+  work->lang_btn_push = ZUKAN_INFO_LANG_NONE;
   work->lang = ZUKAN_INFO_LANG_NONE;
+
+  work->pal_anime_lang_pltt_offs_req = FALSE;
 
   // フェード
   {
@@ -297,6 +307,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcInit( ZKNDTL_PROC* proc, int* se
   // 終了情報
   work->end_cmd = END_CMD_NONE;
 
+  // 入力可不可
+  work->input_enable = TRUE;
+
   return ZKNDTL_PROC_RES_FINISH;
 }
 
@@ -309,8 +322,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcExit( ZKNDTL_PROC* proc, int* se
   ZUKAN_DETAIL_INFO_WORK*     work     = (ZUKAN_DETAIL_INFO_WORK*)mywk;
 
   // 言語ボタンのパレットアニメ
-  Zukan_Detail_Touchbar_AnimeExitLang( param, work, cmn );
-  Zukan_Detail_Touchbar_AnimeBaseExitLang( param, work, cmn );
+  Zukan_Detail_Info_AnimeExitLang( param, work, cmn );
+  Zukan_Detail_Info_AnimeBaseExitLang( param, work, cmn );
 
   // 図鑑情報
   ZUKAN_INFO_Exit( work->info_wk_s );
@@ -451,8 +464,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
         }
 
         // 言語ボタンのパレットアニメ
-        Zukan_Detail_Touchbar_AnimeBaseInitLang( param, work, cmn );
-        Zukan_Detail_Touchbar_AnimeInitLang( param, work, cmn );
+        Zukan_Detail_Info_AnimeBaseInitLang( param, work, cmn );
+        Zukan_Detail_Info_AnimeInitLang( param, work, cmn );
       }
     }
     break;
@@ -479,6 +492,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
       }
+      ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
       {
         GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
         ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
@@ -502,6 +516,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
           && ZUKAN_DETAIL_HEADBAR_GetState( headbar ) == ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
 
         *seq = SEQ_MAIN;
       }
@@ -535,13 +550,16 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       }
       else
       {
-        // 言語ボタンのタッチ入力
-        BOOL is_input = Zukan_Detail_Info_TouchLangButton( param, work, cmn ); 
-        
-        // 言語ボタンのキー入力
-        if( !is_input )
+        if( work->input_enable )
         {
-          Zukan_Detail_Info_KeyLangButton( param, work, cmn );
+          // 言語ボタンのタッチ入力
+          BOOL is_input = Zukan_Detail_Info_TouchLangButton( param, work, cmn ); 
+        
+          // 言語ボタンのキー入力
+          if( !is_input )
+          {
+            Zukan_Detail_Info_KeyLangButton( param, work, cmn );
+          }
         }
       }
     }
@@ -583,7 +601,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
     ZUKAN_INFO_Main( work->info_wk_s );
 
     // 言語ボタンのパレットアニメ
-    Zukan_Detail_Touchbar_AnimeMainLang( param, work, cmn );
+    if( work->lang_btn_push == ZUKAN_INFO_LANG_NONE )  // 押しアニメしているときは、パレットアニメをしないように
+    {
+      Zukan_Detail_Info_AnimeMainLang( param, work, cmn );
+    }
   }
 
   // フェード
@@ -603,7 +624,43 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     ZUKAN_DETAIL_INFO_WORK*     work     = (ZUKAN_DETAIL_INFO_WORK*)mywk;
 
     ZUKAN_DETAIL_TOUCHBAR_WORK* touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
-  
+ 
+    BOOL b_valid_cmd = FALSE;  // cmdがZKNDTL_CMD_NONE以外のZKNDTL_CMD_???のときTRUE。ZKNDTL_CMD_NONEやZKNDTL_SCMD_???のときFALSE。
+
+    // 入力不可
+    switch( cmd )
+    {
+    case ZKNDTL_SCMD_CLOSE:
+    case ZKNDTL_SCMD_RETURN:
+    case ZKNDTL_SCMD_MAP:
+    case ZKNDTL_SCMD_VOICE:
+    case ZKNDTL_SCMD_FORM:
+    case ZKNDTL_SCMD_CUR_D:
+    case ZKNDTL_SCMD_CUR_U:
+    case ZKNDTL_SCMD_CHECK:
+      {
+        work->input_enable = FALSE;
+      }
+      break;
+    }
+    // 入力可
+    switch( cmd )
+    {
+    case ZKNDTL_CMD_CLOSE:
+    case ZKNDTL_CMD_RETURN:
+    case ZKNDTL_CMD_MAP:
+    case ZKNDTL_CMD_VOICE:
+    case ZKNDTL_CMD_FORM:
+    case ZKNDTL_CMD_CUR_D:
+    case ZKNDTL_CMD_CUR_U:
+    case ZKNDTL_CMD_CHECK:
+      {
+        work->input_enable = TRUE;
+        b_valid_cmd = TRUE;
+      }
+      break;
+    }
+
     switch( cmd )
     {
     case ZKNDTL_CMD_NONE:
@@ -663,7 +720,10 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     default:
       {
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        if( b_valid_cmd )
+        {
+          ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        }
       }
       break;
     }
@@ -689,34 +749,46 @@ static void Zukan_Detail_Info_VBlankFunc( GFL_TCB* tcb, void* wk )
 //=====================================
 static BOOL Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  ZUKAN_DETAIL_TOUCHBAR_WORK* touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
   BOOL is_input = FALSE;
-  u32 x, y;
 
-  // タッチ判定
-  if( GFL_UI_TP_GetPointTrg(&x, &y) )
+  if( work->lang_btn_push == ZUKAN_INFO_LANG_NONE )
   {
-    u8 i;
-    for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
-    {
-      if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[i].clwk ) )
-      {
-        if(    work->lang_btn[i].x <= x && x < work->lang_btn[i].x + work->lang_btn[i].w
-            && work->lang_btn[i].y <= y && y < work->lang_btn[i].y + work->lang_btn[i].h )
-        {
-          if( work->lang != i )
-          {
-            work->lang_btn[i].state = LANG_BTN_STATE_PUSH_START;
-            GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].push_anmseq );
-            PMSND_PlaySE( SEQ_SE_SELECT3 );
+    u32 x, y;
 
-            // 言語を変更する
-            Zukan_Detail_Info_ChangeLang( param, work, cmn, i );
-            is_input = TRUE;
+    // タッチ判定
+    if( GFL_UI_TP_GetPointTrg(&x, &y) )
+    {
+      u8 i;
+      for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+      {
+        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[i].clwk ) )
+        {
+          if(    work->lang_btn[i].x <= x && x < work->lang_btn[i].x + work->lang_btn[i].w
+              && work->lang_btn[i].y <= y && y < work->lang_btn[i].y + work->lang_btn[i].h )
+          {
+            if( work->lang != i )
+            {
+              work->lang_btn_push = i;
+              is_input = TRUE;
+            }
+            break;
           }
-          break;
         }
       }
     }
+  }
+
+  if( is_input )
+  {
+    // 言語を変更する
+    Zukan_Detail_Info_ChangeLang( param, work, cmn, work->lang_btn_push );
+    
+    work->lang_btn[work->lang_btn_push].state = LANG_BTN_STATE_PUSH_START;
+    GFL_CLACT_WK_SetAnmSeq( work->lang_btn[work->lang_btn_push].clwk, work->lang_btn[work->lang_btn_push].push_anmseq );
+    PMSND_PlaySE( SEQ_SE_SELECT3 );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
   }
 
   return is_input;
@@ -727,77 +799,79 @@ static BOOL Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, Z
 //=====================================
 static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  ZUKAN_DETAIL_TOUCHBAR_WORK* touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
   BOOL is_input = FALSE;
-  u8 i;
-
-  // キー判定
-  int rept = GFL_UI_KEY_GetRepeat();
-  int trg  = GFL_UI_KEY_GetTrg();
- 
-  if( work->lang == ZUKAN_INFO_LANG_NONE )  // まだどれも選んでいないとき
+  
+  if( work->lang_btn_push == ZUKAN_INFO_LANG_NONE )
   {
-    if(    ( rept & ( PAD_BUTTON_R | PAD_BUTTON_L ) )
-        || ( trg & PAD_BUTTON_A ) )
+    u8 i;
+
+    // キー判定
+    int rept = GFL_UI_KEY_GetRepeat();
+    int trg  = GFL_UI_KEY_GetTrg();
+ 
+    if( work->lang == ZUKAN_INFO_LANG_NONE )  // まだどれも選んでいないとき
     {
-      for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )  // 一番左にある言語ボタンを選ぶ
+      if(    ( rept & ( PAD_BUTTON_R | PAD_BUTTON_L ) )
+          || ( trg & PAD_BUTTON_A ) )
       {
-        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[i].clwk ) )
+        for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )  // 一番左にある言語ボタンを選ぶ
         {
-          work->lang_btn[i].state = LANG_BTN_STATE_PUSH_START;
-          GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].push_anmseq );
-          PMSND_PlaySE( SEQ_SE_SELECT3 );
-          
-          // 言語を変更する
-          Zukan_Detail_Info_ChangeLang( param, work, cmn, i );
-          is_input = TRUE;
-          break;
+          if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[i].clwk ) )
+          {
+            work->lang_btn_push = i;
+            is_input = TRUE;
+            break;
+          }
+        }
+      }
+    }
+    else  // 既にどれかを選んでいるとき
+    {
+      if(    ( rept & PAD_BUTTON_R )
+          || ( trg & PAD_BUTTON_A ) )
+      {
+        i = 1;
+        while( i < ZUKAN_INFO_LANG_MAX )
+        {
+          u8 j = ( work->lang + i ) % ZUKAN_INFO_LANG_MAX;
+          if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[j].clwk ) )
+          {
+            work->lang_btn_push = j;
+            is_input = TRUE;
+            break;
+          }
+          i++;
+        }
+      }
+      else if( rept & PAD_BUTTON_L )
+      {
+        i = 1;
+        while( i < ZUKAN_INFO_LANG_MAX )
+        {
+          u8 j = ( work->lang + ZUKAN_INFO_LANG_MAX - i ) % ZUKAN_INFO_LANG_MAX;
+          if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[j].clwk ) )
+          {
+            work->lang_btn_push = j;
+            is_input = TRUE;
+            break;
+          }
+          i++;
         }
       }
     }
   }
-  else  // 既にどれかを選んでいるとき
+
+  if( is_input )
   {
-    if(    ( rept & PAD_BUTTON_R )
-        || ( trg & PAD_BUTTON_A ) )
-    {
-      i = 1;
-      while( i < ZUKAN_INFO_LANG_MAX )
-      {
-        u8 j = ( work->lang + i ) % ZUKAN_INFO_LANG_MAX;
-        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[j].clwk ) )
-        {
-          work->lang_btn[j].state = LANG_BTN_STATE_PUSH_START;
-          GFL_CLACT_WK_SetAnmSeq( work->lang_btn[j].clwk, work->lang_btn[j].push_anmseq );
-          PMSND_PlaySE( SEQ_SE_SELECT3 );
-          
-          // 言語を変更する
-          Zukan_Detail_Info_ChangeLang( param, work, cmn, j );
-          is_input = TRUE;
-          break;
-        }
-        i++;
-      }
-    }
-    else if( rept & PAD_BUTTON_L )
-    {
-      i = 1;
-      while( i < ZUKAN_INFO_LANG_MAX )
-      {
-        u8 j = ( work->lang + ZUKAN_INFO_LANG_MAX - i ) % ZUKAN_INFO_LANG_MAX;
-        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[j].clwk ) )
-        {
-          work->lang_btn[j].state = LANG_BTN_STATE_PUSH_START;
-          GFL_CLACT_WK_SetAnmSeq( work->lang_btn[j].clwk, work->lang_btn[j].push_anmseq );
-          PMSND_PlaySE( SEQ_SE_SELECT3 );
-          
-          // 言語を変更する
-          Zukan_Detail_Info_ChangeLang( param, work, cmn, j );
-          is_input = TRUE;
-          break;
-        }
-        i++;
-      }
-    }
+    // 言語を変更する
+    Zukan_Detail_Info_ChangeLang( param, work, cmn, work->lang_btn_push );
+    
+    work->lang_btn[work->lang_btn_push].state = LANG_BTN_STATE_PUSH_START;
+    GFL_CLACT_WK_SetAnmSeq( work->lang_btn[work->lang_btn_push].clwk, work->lang_btn[work->lang_btn_push].push_anmseq );
+    PMSND_PlaySE( SEQ_SE_SELECT3 );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
   }
   
   return is_input;
@@ -841,7 +915,7 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
       else
       {
         // 言語ボタンのパレットアニメ
-        Zukan_Detail_Touchbar_AnimeExitLang( param, work, cmn );
+        Zukan_Detail_Info_AnimeExitLang( param, work, cmn );
 
         work->lang = ZUKAN_INFO_LANG_NONE;
       }
@@ -888,12 +962,12 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
   }
 
   // 言語ボタンのパレットアニメ
-  Zukan_Detail_Touchbar_AnimeExitLang( param, work, cmn );
+  Zukan_Detail_Info_AnimeExitLang( param, work, cmn );
 
   work->lang = lang;
   
   // 言語ボタンのパレットアニメ
-  Zukan_Detail_Touchbar_AnimeInitLang( param, work, cmn );
+  Zukan_Detail_Info_AnimeInitLang( param, work, cmn );
 }
 
 //-------------------------------------
@@ -980,9 +1054,12 @@ static void Zukan_Detail_Info_DeleteLangButton( ZUKAN_DETAIL_INFO_PARAM* param, 
 }
 static void Zukan_Detail_Info_MainLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  u8 i;
-  for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+  ZUKAN_DETAIL_TOUCHBAR_WORK* touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+  
+  if( work->lang_btn_push != ZUKAN_INFO_LANG_NONE )
   {
+    u8 i = work->lang_btn_push;
+
     switch( work->lang_btn[i].state )
     {
     case LANG_BTN_STATE_ACTIVE:
@@ -1007,6 +1084,9 @@ static void Zukan_Detail_Info_MainLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZU
       {
         GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].active_anmseq );
         work->lang_btn[i].state = LANG_BTN_STATE_ACTIVE;
+
+        work->lang_btn_push = ZUKAN_INFO_LANG_NONE;
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
       }
       break;
     }
@@ -1029,6 +1109,8 @@ static void Zukan_Detail_Info_SetupLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM
     work->lang_btn[i].state         = LANG_BTN_STATE_ACTIVE;
     GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].active_anmseq );
   }
+  
+  work->lang_btn_push = ZUKAN_INFO_LANG_NONE;
 }
 
 //-------------------------------------
@@ -1102,38 +1184,63 @@ static void Zukan_Detail_Info_GetCurrPokeInfo(
 //-------------------------------------
 /// 言語ボタンのパレットアニメ
 //=====================================
-static void Zukan_Detail_Touchbar_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Info_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   NNSG2dPaletteData* pal_data;
   void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_ZUKAN_GRA, NARC_zukan_gra_info_info_obj_NCLR, &pal_data, param->heap_id );
   u16* raw_data = pal_data->pRawData;
+  //GFL_STD_MemCopy( &raw_data[OBJ_PAL_OFFSET_LANG_ANIME_NONE*0x10], work->pal_anime_lang_default, 0x20 );
   GFL_STD_MemCopy( &raw_data[RES_PAL_POS_LANG_ANIME_START*0x10], work->pal_anime_lang_start, 0x20 );
   GFL_STD_MemCopy( &raw_data[RES_PAL_POS_LANG_ANIME_END*0x10], work->pal_anime_lang_end, 0x20 );
   GFL_HEAP_FreeMemory( buf );
   work->pal_anime_lang_count = 0;
 }
-static void Zukan_Detail_Touchbar_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Info_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 何もしない
 }
-static void Zukan_Detail_Touchbar_AnimeInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Info_AnimeInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   if( work->lang != ZUKAN_INFO_LANG_NONE )
   {
-    GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    // pal_anime_lang_defaultを割り当てると押しアニメしなくなってしまったので、pal_anime_lang_pltt_offs_reqを使うことにした。
+    /*
+    {
+      // 押しアニメしているときは、defaultの色にしておく
+      GFL_STD_MemCopy( work->pal_anime_lang_default, work->pal_anime_lang_now, 0x20 );
+      NNS_GfdRegisterNewVramTransferTask(
+          NNS_GFD_DST_2D_OBJ_PLTT_MAIN,
+          ( OBJ_PAL_POS_M_LANG_BTN + OBJ_PAL_OFFSET_LANG_ANIME_EXEC ) * 0x20,
+          work->pal_anime_lang_now,
+          0x20 );
+    }
+    */
+    //GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    work->pal_anime_lang_count = 0;
+    work->pal_anime_lang_pltt_offs_req = TRUE;  // 押しアニメしているときは、パレットアニメをしないように、パレットアニメの開始を遅らせる
   }
 }
-static void Zukan_Detail_Touchbar_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Info_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   if( work->lang != ZUKAN_INFO_LANG_NONE )
   {
     GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    work->pal_anime_lang_pltt_offs_req = FALSE;
   }
 }
-static void Zukan_Detail_Touchbar_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Info_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   u8 i;
   fx16 cos;
+
+  if( work->pal_anime_lang_pltt_offs_req )  // 押しアニメしているときは、パレットアニメをしないように、パレットアニメの開始を遅らせる
+  {
+    if( work->lang != ZUKAN_INFO_LANG_NONE )
+    {
+      GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    }
+    work->pal_anime_lang_pltt_offs_req = FALSE;
+  }
 
   if( work->pal_anime_lang_count + LANG_ANIME_ADD >= 0x10000 )
   {
