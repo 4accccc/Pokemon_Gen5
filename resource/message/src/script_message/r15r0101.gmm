@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-03T16:59:59"/>
+	<create user="ohmori" host="W00223" date="2010-05-03T17:17:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,7 +314,7 @@
 ブラックシティへ　どうぞ</language>
 	</row>
 
-	<row id="msg_r14r0101_backpackerw_01w">
+	<row id="msg_r15r0101_backpackerw_01w">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラ指定">BACKPACKERW
@@ -327,7 +327,7 @@
 よく　引っ越してくるのよ</language>
 	</row>
 
-	<row id="msg_r14r0101_backpackerw_01b">
+	<row id="msg_r15r0101_backpackerw_01b">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">BACKPACKERW
@@ -340,7 +340,7 @@
 よく　引っ越してくるのよ</language>
 	</row>
 
-	<row id="msg_r14r0101_middleman1_01w">
+	<row id="msg_r15r0101_middleman1_01w">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラ指定">MIDDLEMAN1
@@ -357,7 +357,7 @@
 同じ生き物だって　感じるね</language>
 	</row>
 
-	<row id="msg_r14r0101_middleman1_01b">
+	<row id="msg_r15r0101_middleman1_01b">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラ指定">MIDDLEMAN1
