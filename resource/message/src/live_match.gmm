@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-01T16:20:18"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-04T01:28:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,14 +346,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1105" top="388" right="1810" bottom="1016" maximized="no" rayout="Vertical2">
+	<dialog left="1030" top="368" right="1735" bottom="996" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="444" top="119" right="917" bottom="517" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -556,9 +556,9 @@
 	</row>
 
 	<row id="LIVE_STR_15">
-		<language name="JPN" width="256">ポケモンの　ロックを
+		<language name="JPN" width="256">バトルボックスの　ロックを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　ロックを
+		<language name="JPN_KANJI" width="256">バトルボックスの　ロックを
 解除しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -703,12 +703,12 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 	<row id="LIVE_STR_30" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>バトルボックスにポケモンが１匹もいない</comment>
 		<language name="JPN" width="256">バトルボックスに
-ポケモンが　いません[BE:01:ページ切り替え（クリア）]
+ポケモンが　１ひきも　いません[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールを　かくにんして
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
 おいてください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルボックスに
-ポケモンが　いません[BE:01:ページ切り替え（クリア）]
+ポケモンが　１匹も　いません[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールを　確認して
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
 おいてください[BE:01:ページ切り替え（クリア）]</language>
