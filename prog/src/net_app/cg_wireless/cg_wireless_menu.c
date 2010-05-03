@@ -89,7 +89,9 @@ typedef enum
 #define _UNIONROOM_NUM (5)
 #define _FUSHIGI_MSG (6)
 #define _FUSHIGI_ONOFF (7)
-#define _WINDOW_MAXNUM (8)   //ウインドウのパターン数
+#define _SURE_MSG   (8)
+#define _SURE_ONOFF (9)
+#define _WINDOW_MAXNUM (10)   //ウインドウのパターン数
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
@@ -202,6 +204,7 @@ struct _CG_WIRELESS_MENU {
   GAME_COMM_STATUS_BIT bitold;
   int unionnum;
   int unionnumOld;
+  int cross_change;
   u32 cellRes[CEL_RESOURCE_MAX];
   int TelTimer;
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
@@ -906,6 +909,15 @@ static void _MessageDisp(int i,int message,int change,BOOL expand ,CG_WIRELESS_M
 static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
 {
   BOOL bChange = FALSE;
+  int check_count=0;
+
+  //Beacon変更チェック
+  if( pWork->cross_change == FALSE ){
+    check_count = 0;
+    if( GAMEBEACON_Get_UpdateLogNo(&check_count) != GAMEBEACON_SYSTEM_LOG_MAX ){
+      pWork->cross_change = TRUE; // 変更あり
+    }
+  }
   
   if( pWork->unionnum != pWork->unionnumOld ){
      bChange = TRUE;
@@ -915,7 +927,8 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
   }
   _MessageDisp(_UNIONROOM_MSG, CGEAR_WIRLESS_003,FALSE,FALSE,pWork);
   _MessageDisp(_FUSHIGI_MSG,   CGEAR_WIRLESS_005,FALSE,FALSE,pWork);
-
+  _MessageDisp(_SURE_MSG,      CGEAR_WIRLESS_013,FALSE,FALSE,pWork);
+  
   {
     WORDSET_RegisterNumber( pWork->pWordSet, 0,  pWork->unionnum, 2,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     _MessageDisp(_UNIONROOM_NUM, CGEAR_WIRLESS_004, bChange,TRUE,pWork);
@@ -926,6 +939,13 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
   }
   else{
     _MessageDisp(_FUSHIGI_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
+  }
+
+  if(pWork->cross_change){
+    _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_006,bChange,TRUE,pWork);
+  }
+  else{
+    _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
   }
 
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
@@ -1470,6 +1490,15 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
 
+
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    NetErr_App_ReqErrorDisp();
+    pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
+    retCode = GFL_PROC_RES_FINISH;
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  }
+
   return retCode;
 }
 
@@ -1484,6 +1513,10 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   CG_WIRELESS_MENU* pWork = mywk;
   EVENT_CG_WIRELESS_WORK* pParentWork =pwk;
   int i;
+
+  if(!WIPE_SYS_EndCheck()){
+    return GFL_PROC_RES_CONTINUE;
+  }
   
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
