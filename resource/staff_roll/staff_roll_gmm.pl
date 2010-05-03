@@ -98,8 +98,14 @@ sub SUB_DataConv {
 	foreach $one ( @fp_csv ){
 		@line = split( ",", $one );		# ","で分割
 
+		$line[0] =~ s/&/&amp;/g;		# "&"を"&amp;"に置き換え
+		$line[0] =~ s/、/,/g;			# "、"を","に置き換え
+
+		print( $line[0] . "\t" );
+
 		if( $line[0] ne "" ){
-			$text = encode( "utf8", decode( "shiftjis", $line[0] ) );	# Shift-Jis > UTF8
+#			$text = encode( "utf8", decode( "shiftjis", $line[0] ) );	# Shift-Jis > UTF8
+			$text = encode( "utf8", decode( "cp932", $line[0] ) );	# Shift-Jis > UTF8
 			if( $cnt < 10 ){
 				print( FP_CNV "\t<row id=\"STAFF_ROLL_STR_00" . $cnt ."\">\n" );
 			}elsif( $cnt < 100 ){
