@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-03T15:05:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T19:59:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1424" top="275" right="2129" bottom="895" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -570,7 +570,7 @@
 		<language name="JPN_KANJI" width="256">ポケモンリーグ</language>
 	</row>
 
-	<row id="MAPNAME_N01">
+	<row id="MAPNAME_N01" back-color=",,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">Ｎのしろ</language>
 		<language name="JPN_KANJI" width="256">Ｎの城</language>
 	</row>
