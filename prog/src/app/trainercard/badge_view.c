@@ -2407,13 +2407,24 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
 
 #define MIN_SCRUCH  (3)
 #define MAX_SCRUCH  (40)
+#define BADGE_SE_CHANGE_LINE  (BADGE_POLISH_RATE*5+BADGE_POLISH_RATE/2)
 #define REV_SPEED (FX32_SHIFT - wk->RevSpeed)
 
-static void _play_scratch_se( SCRATCH_WORK *sc )
+//----------------------------------------------------------------------------------
+/**
+ * @brief –‚¢‚½SE‚ð–Â‚ç‚·i–‚«“x‡‚É‡‚í‚¹‚Ä•Ï‚í‚éj
+ *
+ * @param   sc    
+ * @param   polish    
+ */
+//----------------------------------------------------------------------------------
+static void _play_scratch_se( SCRATCH_WORK *sc, int polish )
 {
-
-  PMSND_PlaySE( SEQ_SE_SYS_33 );
-  
+  if(polish > BADGE_SE_CHANGE_LINE){
+    PMSND_PlaySE( SEQ_SE_SYS_34 );
+  }else{
+    PMSND_PlaySE( SEQ_SE_SYS_33 );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2502,7 +2513,7 @@ static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch )
           }
           if (sub<=MAX_SCRUCH){
             scruch = TRUE;      //‚±‚·‚Á‚½
-            _play_scratch_se( &wk->scratch );
+            _play_scratch_se( &wk->scratch, wk->badge.polish[touch] );
           }else{
             ClearScratchSndNow(&wk->scratch);
           }
@@ -2516,7 +2527,7 @@ static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch )
           }
           if ((sub>=MIN_SCRUCH)&&(sub<=MAX_SCRUCH)){
             scruch = TRUE;    //‚±‚·‚Á‚½
-            _play_scratch_se( &wk->scratch );
+            _play_scratch_se( &wk->scratch, wk->badge.polish[touch] );
           }else{
             ClearScratchSndNow(&wk->scratch);
           }
