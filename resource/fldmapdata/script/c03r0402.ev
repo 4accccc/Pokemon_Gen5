@@ -179,7 +179,6 @@ EVENT_START		ev_c03r0402_man1_01
 			//おっ　つよくなったね！
 			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
 			
 			//はいの場合
 			IF $SCWK_ANSWER == SCR_YES THEN
@@ -189,7 +188,9 @@ EVENT_START		ev_c03r0402_man1_01
 				_MSGWIN_CLOSE()
 			
 				_TRAINER_BTL_SP_SET( TRID_VETERANM_1_08, 0, SCR_BATTLE_MODE_NOLOSE )
-			
+				
+				_TRAINER_WIN()
+				
 				//回復処理
 				_TEMOTI_POKEMON_KAIFUKU()
 			
@@ -198,7 +199,10 @@ EVENT_START		ev_c03r0402_man1_01
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 				
+				//========================================//
+				//対戦済みにする（１日１回フラグ）
 				_FLAG_SET( TMFLG_C03R0402_BATTLE )
+				//========================================//
 			
 			//いいえの場合
 			ELSE
