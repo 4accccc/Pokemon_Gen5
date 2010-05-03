@@ -64,6 +64,8 @@ struct _MCSS_NCEN_WORK
 
 struct _MCSS_WORK
 {
+  GFL_TCB*                      tcb_load_resource;    //リソース読み込みtcb
+  GFL_TCB*                      tcb_load_palette;     //リソース読み込みtcb
 	void*													mcss_ncer_buf;				//ファイルデータ読み込みバッファ
 	NNSG2dCellDataBank*						mcss_ncer;						//ファイルデータ読み込みバッファからncerデータを抽出したデータ
 	void*													mcss_nmcr_buf;				//ファイルデータ読み込みバッファ

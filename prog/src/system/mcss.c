@@ -750,6 +750,21 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
 {
   MCSS_FreeResource( mcss );
 
+  //リソースロードのTCBが動いていたら一緒に削除する
+  if( mcss->tcb_load_resource )
+  { 
+    void* work = GFL_TCB_GetWork( mcss->tcb_load_resource );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( mcss->tcb_load_resource );
+  }
+
+  if( mcss->tcb_load_palette )
+  { 
+    void* work = GFL_TCB_GetWork( mcss->tcb_load_palette );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( mcss->tcb_load_palette );
+  }
+
 	mcss_sys->mcss[ mcss->index ] = NULL;
 	GFL_HEAP_FreeMemory( mcss );
 }
@@ -1544,7 +1559,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
     { 
       MCSS_CalcMosaic( mcss, tlw );
     }
-		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+		mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
 	}
 }
 
@@ -1564,11 +1579,13 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
     return;
   }
 
-	if( tlw->mcss ){
+	if( tlw->mcss )
+  {
     tlw->mcss->is_load_resource = 1;
 	}
 
-	if( tlw->pBufChar ){
+	if( tlw->pBufChar )
+  {
 		// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
 		NNS_G2dLoadImage2DMapping(
 			tlw->pCharData,
@@ -1579,7 +1596,8 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 		GFL_HEAP_FreeMemory( tlw->pBufChar );
 	}
 
-	if( tlw->pBufPltt ){
+	if( tlw->pBufPltt )
+  {
 		// Loading For 3D Graphics Engine.
 		NNS_G2dLoadPalette(
 			tlw->pPlttData,
@@ -1589,6 +1607,11 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 
 		GFL_HEAP_FreeMemory( tlw->pBufPltt );
 	}
+
+	if( tlw->mcss )
+  {
+    tlw->mcss->tcb_load_resource = NULL;
+  }
 
 	GFL_HEAP_FreeMemory( work );
 	GFL_TCB_DeleteTask( tcb );
@@ -1618,6 +1641,11 @@ static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work )
 		tlw->pal_ofs,
 		NNS_G2D_VRAM_TYPE_3DMAIN,
 		tlw->palette_p );
+
+	if( tlw->mcss )
+  {
+    tlw->mcss->tcb_load_palette = NULL;
+  }
 
 	GFL_HEAP_FreeMemory( tlw->pPlttData->pRawData );
 	GFL_HEAP_FreeMemory( tlw->pPlttData );
@@ -1692,6 +1720,7 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 	{	
 		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
 
+    tlw->mcss = mcss;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * mcss->index;
 
@@ -1708,7 +1737,7 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 							mcss->pal_fade_start_evy,
 							mcss->pal_fade_rgb );
 
-		GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+		mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
 
 	  if( mcss->pal_fade_start_evy == mcss->pal_fade_end_evy )
     { 
@@ -2137,7 +2166,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->pltt_data, tlw->pPlttData->szByte );
     }
 
-    GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
   }
 }
 
