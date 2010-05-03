@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-01T13:19:11"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-03T18:16:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1344" top="138" right="2049" bottom="766" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -7104,7 +7104,7 @@ BEAUTIFULは　美しいという　意味
 	<row id="msg_tv_03_66" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>内容未定
 ・ランダム表示
-・シロベアー使用（種族名称変更の際は修正）</comment>
+・【仮】シロベアー使用（種族名称変更の際は修正）</comment>
 		<language name="JPN" width="256">ナレーター『わたしのポケモン▼
 きょうの　わたしのポケモンは
 はしゃぐ　このコを　しょうかいします▼
@@ -7568,7 +7568,7 @@ BEAUTIFULは　美しいという　意味
 ゆきやまで　そうなんした　のち▼
 ふもとの　まちで　はっけんされた
 Ａさんの　インタビューです▼
-Ａさん『ぜったい　シロベアーよ！▼
+Ａさん『ぜったい　ツンベアーよ！▼
 たいりょくも　つきて　もう　ねむけに
 かてなくなってしまった　そのとき▽
 わたし　みたんです▼
@@ -7577,7 +7577,7 @@ BEAUTIFULは　美しいという　意味
 まちで　めを　さましました▼
 まちのひとは　わたしが　じぶんで
 たどりついたと　いうけれど▼
-あれは　ぜったいに　シロベアーよ！
+あれは　ぜったいに　ツンベアーよ！
 きっと　たすけてくれたんだわ▼
 イッシュニュース『いじょう
 Ａさんの　インタビューでした</language>
@@ -7594,7 +7594,7 @@ BEAUTIFULは　美しいという　意味
 街で　目を　さましました▼
 街の人は　私が　自分で
 たどり着いたと　いうけれど▼
-あれは　絶対に　シロベアーよ！
+あれは　絶対に　ツンベアーよ！
 きっと　助けてくれたんだわ▼
 イッシュニュース『以上
 Ａさんの　インタビューでした</language>
@@ -7669,8 +7669,6 @@ BEAUTIFULは　美しいという　意味
 びっくりして　はなしちゃったら
 にげちゃったんだけど▽
 あれは　ポケモンだったのかしら……？▼
-だったら　はなしたり　しないで
-しっかり　もっていれば　よかったわ▼
 アナウンサー『いじょう
 もくげきしゃの　インタビューでした</language>
 		<language name="JPN_KANJI" width="256">イッシュニュース『次の　ニュースは
@@ -7688,8 +7686,6 @@ BEAUTIFULは　美しいという　意味
 びっくりして　離しちゃったら
 逃げちゃったんだけど▽
 あれは　ポケモンだったのかしら……？▼
-だったら　離したり　しないで
-しっかり　持っていれば　良かったわ▼
 アナウンサー『以上
 目撃者の　インタビューでした</language>
 	</row>
