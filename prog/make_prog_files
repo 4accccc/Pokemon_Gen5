@@ -102,7 +102,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_location.c \
         field/field_status.c \
         field/event_fieldmap_control.c \
-        net_app/wificlub/wifi_p2pevent.c \
         field/field_light_status.c \
         system/mcss.c \
         system/mcss_tool.c \
@@ -213,6 +212,7 @@ SRCS  +=    $(SOUNDSRC) \
 				poke_tool/poke_memo.c \
 				field/field_skill_check.c \
         system/save_error_warning.c
+
 
 #================================================
 # ここから下はオーバーレイプログラム定義
