@@ -619,6 +619,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   POKEPARTY *party;
 
   party = PokeParty_AllocPartyWork( GFL_HEAP_LOWID(heapID) );
+   
   {
     int i;
 	  POKEMON_PARAM * pp;
@@ -629,7 +630,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       PokeParty_Add( party, pp );
     }
 	}
-
+  
   dst = FBI_TOOL_CreateBattleParam(
           gsys, party, wk->play_mode,
           wk->tr_data,

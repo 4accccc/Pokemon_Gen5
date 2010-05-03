@@ -237,11 +237,12 @@ GMEVENT * FBI_TOOL_CreateTrainerBeforeMsgEvt(
   
   work = GMEVENT_GetEventWork( event );
   work->gsys = gsys;
-  work->strBuf = GFL_STR_CreateBuffer( 92, HEAPID_PROC );
   
   if( tr_data->bt_trd.appear_word[0] == 0xffff ){ //ROM MSG
     GFL_MSGDATA *msgdata;
     
+    work->strBuf = GFL_STR_CreateBuffer( 92, HEAPID_PROC );
+
     msgdata =  GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
       NARC_message_tower_trainer_dat, HEAPID_PROC );
@@ -401,9 +402,85 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
   HEAPID heapID = HEAPID_PROC;
   play_mode = inPlayMode;
   
+#ifdef PM_DEBUG  
+  { //独自セットアップのメモリ開放忘れチェック
+    u32 size_before,size_after;
+    
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( heapID );
+    
+    BTL_FIELD_SITUATION_SetFromFieldStatus(
+        &sit, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
+    
+    size_before = GFL_HEAP_GetHeapFreeSize( heapID );
+    dst = BATTLE_PARAM_Create( heapID );
+    BTL_SETUP_Single_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+    BATTLE_PARAM_Delete( dst );
+    size_after = GFL_HEAP_GetHeapFreeSize( heapID );
+    
+    OS_Printf(
+        "BTL_SETUP_Single_Trainer() before=%xH, after=%xH\n",
+        size_before, size_after );
+    
+    if( size_before != size_after ){
+      GF_ASSERT( 0 );
+    }
+    
+    size_before = GFL_HEAP_GetHeapFreeSize( heapID );
+    dst = BATTLE_PARAM_Create( heapID );
+    BTL_SETUP_Double_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+    BATTLE_PARAM_Delete( dst );
+    size_after = GFL_HEAP_GetHeapFreeSize( heapID );
+    
+    OS_Printf(
+        "BTL_SETUP_Double_Trainer() before=%xH, after=%xH\n",
+        size_before, size_after );
+    
+    if( size_before != size_after ){
+      GF_ASSERT( 0 );
+    }
+    
+    size_before = GFL_HEAP_GetHeapFreeSize( heapID );
+    dst = BATTLE_PARAM_Create( heapID );
+    BTL_SETUP_AIMulti_Trainer( dst, gdata, &sit,
+          TRID_NULL, TRID_NULL, TRID_NULL, heapID );
+    BATTLE_PARAM_Delete( dst );
+    size_after = GFL_HEAP_GetHeapFreeSize( heapID );
+    
+    OS_Printf(
+        "BTL_SETUP_AIMulti_Trainer() before=%xH, after=%xH\n",
+        size_before, size_after );
+    
+    if( size_before != size_after ){
+      GF_ASSERT( 0 );
+    }
+
+    {
+      int commPos = 0;
+      GFL_NETHANDLE *netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      
+      size_before = GFL_HEAP_GetHeapFreeSize( heapID );
+      dst = BATTLE_PARAM_Create( heapID );
+      BTL_SETUP_AIMulti_Comm( dst, gdata,
+            netHandle, BTL_COMM_DS, commPos,
+            TRID_NULL, TRID_NULL, heapID );
+      BATTLE_PARAM_Delete( dst );
+      size_after = GFL_HEAP_GetHeapFreeSize( heapID );
+      
+      OS_Printf(
+          "BTL_SETUP_AIMulti_Comm() before=%xH, after=%xH\n",
+          size_before, size_after );
+    
+      if( size_before != size_after ){
+        GF_ASSERT( 0 );
+      }
+    }
+  }
+#endif
+  
   {
 //    BTL_FIELD_SITUATION_Init( &sit );
-    BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
+    BTL_FIELD_SITUATION_SetFromFieldStatus(
+        &sit, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
     dst = BATTLE_PARAM_Create( heapID );
 
     //初期化
@@ -444,12 +521,13 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     BTL_SETUP_AllocRecBuffer( dst, heapID );
 
   }
-
+  
+#if 0  
   { //トレーナーデータ確保
-    
     dst->tr_data[BTL_CLIENT_ENEMY1] = CreateBSPTrainerData( heapID );
   }
-
+#endif
+  
   { //プレイヤーセット
     BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
     MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
@@ -495,8 +573,6 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     }
   }
   
-  
-
   { //敵トレーナーセット
     PMS_DATA *pd;
     BSP_TRAINER_DATA *tr_data;
@@ -505,7 +581,8 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     BSUBWAY_TRAINER *bsw_trainer;
 
     //トレーナーデータ確保
-    dst->tr_data[client] = CreateBSPTrainerData( heapID );
+//バトルセットアップで生成されるようになったので不要となった
+//    dst->tr_data[client] = CreateBSPTrainerData( heapID );
     tr_data = dst->tr_data[client];
 
     bsw_partner = &partner_data[0];
@@ -554,6 +631,8 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     if( dst->multiMode != BTL_MULTIMODE_NONE ) //マルチ
     { //敵トレーナー２設定
       client = BTL_CLIENT_ENEMY2;
+//バトルセットアップで生成されるようになったので不要となった
+//    dst->tr_data[client] = CreateBSPTrainerData( heapID );
       tr_data = dst->tr_data[client];
       bsw_partner = &partner_data[1];
       bsw_trainer = &bsw_partner->bt_trd;
@@ -589,7 +668,8 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
       client = BTL_CLIENT_PARTNER;
       
       //トレーナーデータ
-      dst->tr_data[client] = CreateBSPTrainerData( heapID );
+//バトルセットアップで生成されるようになったので不要となった
+//      dst->tr_data[client] = CreateBSPTrainerData( heapID );
       tr_data = dst->tr_data[client];
       
       bsw_partner = ai_multi_data;

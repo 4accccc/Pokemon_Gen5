@@ -1906,6 +1906,20 @@
   .short EV_SEQ_OBJ_SET_NOT_DEL_ZONECHG
   .short \obj_id
   .endm
+  
+//--------------------------------------------------------------
+/**
+ * @brief 自機の表示コードが自機専用のものかどうか
+ * @param ret_wk チェック結果 TRUE=自機専用 FALSE=自機以外のコード
+ */
+//--------------------------------------------------------------
+#define _CHECK_PLAYER_ILLEGAL_OBJCODE( ret_wk ) \
+    _ASM_CHECK_PLAYER_ILLEGAL_OBJCODE ret_wk
+  
+  .macro _ASM_CHECK_PLAYER_ILLEGAL_OBJCODE ret_wk
+  .short EV_SEQ_CHECK_PLAYER_ILLEGAL_OBJCODE
+  .short \ret_wk
+  .endm
 
 //======================================================================
 //  動作モデル　イベント関連

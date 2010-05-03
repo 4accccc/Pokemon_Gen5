@@ -94,7 +94,7 @@ struct _TAG_BSUBWAY_SCRWORK
   BSUBWAY_PLAYDATA *playData;  ///<セーブデータへのポインタ
   BSUBWAY_SCOREDATA *scoreData;  ///<セーブデータへのポインタ
   BSUBWAY_WIFI_DATA *wifiData; ///<セーブデータへのポインタ
-
+  
   u8 pokelist_select_num[6]; ///<ポケモン選択で取得した手持ちNo
   u16 pokelist_result_select; ///<ポケモンリスト戻り値
   u16 pokelist_return_mode;

@@ -863,7 +863,10 @@
 
 	//フィールドBGMの復帰
   DEF_CMD( EvCmdBgmNowMapPlayEx, EV_SEQ_END_EVENT_BGM_EX )
-
+  
+  //自機の表示コードが自機専用のものかどうか。
+  DEF_CMD( EvCmdCheckPlayerIllegalOBJCode, EV_SEQ_CHECK_PLAYER_ILLEGAL_OBJCODE )
+  
   END_CMD
   //スクリプトコマンドテーブル終了
   
