@@ -55,6 +55,7 @@ DEBUG_UI_TYPE DEBUG_UI_GetType( void ){ return 0; }
 //=====================================
 typedef struct {
   u16 type;
+  u16 play;
   u32 count;
   u32 data_max;
   const GFL_UI_DEBUG_OVERWRITE* cp_data;
@@ -114,7 +115,7 @@ static const DEBUG_UI_KEY_TABLE* DebugUI_GetKeyTable( DEBUG_UI_TYPE type );
  *	@param	type  タイプ
  */
 //-----------------------------------------------------------------------------
-void DEBUG_UI_SetUp( DEBUG_UI_TYPE type )
+void DEBUG_UI_SetUp( DEBUG_UI_TYPE type, DEBUG_UI_PLAY_TYPE play )
 {
   const DEBUG_UI_KEY_TABLE* cp_keytable;
   if( type == s_DEBUG_UI_WORK.type ){
@@ -131,6 +132,7 @@ void DEBUG_UI_SetUp( DEBUG_UI_TYPE type )
  
   // 初期化
   s_DEBUG_UI_WORK.type  = type;
+  s_DEBUG_UI_WORK.play  = play;
   s_DEBUG_UI_WORK.count = 0;
   s_DEBUG_UI_WORK.data_max = 0;
   s_DEBUG_UI_WORK.cp_data = NULL;
@@ -166,6 +168,25 @@ DEBUG_UI_TYPE DEBUG_UI_GetType( void )
   return s_DEBUG_UI_WORK.type; 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  更新中かチェック
+ *  @retval TRUE    更新中
+ *  @retval FALSE   更新してない。
+ */
+//-----------------------------------------------------------------------------
+BOOL DEBUG_UI_IsUpdate( void )
+{
+  if( s_DEBUG_UI_WORK.type > DEBUG_UI_NONE ){
+    if( s_DEBUG_UI_WORK.count < s_DEBUG_UI_WORK.data_max ){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+
 
 
 
@@ -179,6 +200,11 @@ static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DE
   const GFL_UI_DEBUG_OVERWRITE* cp_tmp;
 
   if( DEBUGWIN_IsActive() ){
+    return FALSE;
+  }
+
+  if( s_DEBUG_UI_WORK.count >= s_DEBUG_UI_WORK.data_max ){
+    DEBUG_UI_SetUp( DEBUG_UI_NONE, 0 );
     return FALSE;
   }
 
@@ -221,7 +247,11 @@ static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DE
     }
   }
 
-  s_DEBUG_UI_WORK.count = (s_DEBUG_UI_WORK.count + 1) % s_DEBUG_UI_WORK.data_max;
+  if( s_DEBUG_UI_WORK.play == DEBUG_UI_PLAY_LOOP ){
+    s_DEBUG_UI_WORK.count = (s_DEBUG_UI_WORK.count + 1) % s_DEBUG_UI_WORK.data_max;
+  }else if( s_DEBUG_UI_WORK.play == DEBUG_UI_PLAY_ONE ){
+    s_DEBUG_UI_WORK.count += 1;
+  }
   return TRUE;
 }
 

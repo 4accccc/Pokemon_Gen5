@@ -447,16 +447,16 @@ static void DEBUG_UI_AutoKey( void  )
   if( (OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER)) ){
     // Ž©“® UPDOWN
     if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoUpDown ) ){
-      DEBUG_UI_SetUp( DEBUG_UI_AUTO_UPDOWN );
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_UPDOWN, DEBUG_UI_PLAY_LOOP );
     }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoLeftRight ) ){
-      DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT );
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_LEFTRIGHT, DEBUG_UI_PLAY_LOOP );
     }else if( DEBUG_FLG_GetFlg( DEBUG_FLG_AutoInputData ) ){
-      DEBUG_UI_SetUp( DEBUG_UI_AUTO_USER_INPUT );
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_USER_INPUT, DEBUG_UI_PLAY_LOOP );
     }else{
       if( (DEBUG_UI_GetType() == DEBUG_UI_AUTO_UPDOWN) ||
           (DEBUG_UI_GetType() == DEBUG_UI_AUTO_LEFTRIGHT) ||
           (DEBUG_UI_GetType() == DEBUG_UI_AUTO_USER_INPUT) ){
-        DEBUG_UI_SetUp( DEBUG_UI_NONE );
+        DEBUG_UI_SetUp( DEBUG_UI_NONE, 0 );
       }
     }
 

@@ -38,9 +38,9 @@
 #define PAUL_SOUND_PLAY_SPEED ( FX32_ONE*100 ) // 通過音を出すスピード
 #define PAUL_SOUND_Y_TMP_NUM ( 32 ) // 通過音　Y座標保持数
 #define PAUL_SOUND_NOTSE_STOP_POS_Z ( 1816<<FX32_SHIFT )        // 通過音をとめなくする座標
-#define PAUL_SOUND_PLAY_POS_Z_RUN ( 1858<<FX32_SHIFT )        // 通過音を出すZ座標
+#define PAUL_SOUND_PLAY_POS_Z_RUN ( 1884<<FX32_SHIFT )        // 通過音を出すZ座標
 #define PAUL_SOUND_PLAY_POS_Z_CYCLE ( 1980<<FX32_SHIFT )        // 通過音を出すZ座標
-#define PAUL_SOUND_PLAY_SE_RUN ( SEQ_SE_FLD_171 )        // 通過音 はしり
+#define PAUL_SOUND_PLAY_SE_RUN ( SEQ_SE_FLD_173 )        // 通過音 はしり
 #define PAUL_SOUND_PLAY_SE_CYCLE ( SEQ_SE_FLD_171 )      // 通過音 自転車
 #define PAUL_SOUND_FADE_SPEED ( 16 )      // フェードアウト　スピード　減算値
 #define PAUL_SOUND_FADE_START ( 127 )     // フェードアウト開始　ボリューム
