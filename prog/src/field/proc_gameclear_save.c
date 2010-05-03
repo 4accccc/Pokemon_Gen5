@@ -561,8 +561,12 @@ static void setup_bg_sys( HEAPID heapID )
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_systemwin_nclr, PALTYPE_MAIN_BG, 
                                 0x20*GAMECLEAR_BMPWIN_PL, 0x20, heapID );
 
-  GFL_BG_SetBackGroundColor(GAMECLEAR_BMPWIN_FRAME,0);
-
+  // ブラックバージョンでは背景を黒に・ホワイトでは白に
+#if PM_VERSION == VERSION_WHITE
+  GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0xffff );
+#else
+  GFL_BG_SetBackGroundColor( GAMECLEAR_BMPWIN_FRAME, 0 );
+#endif
   GFL_BMPWIN_Init( heapID );
 }
 //--------------------------------------------------------------
