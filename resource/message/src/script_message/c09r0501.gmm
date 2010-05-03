@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-03T17:12:18"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T17:30:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="165" right="2014" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -507,23 +507,31 @@
 ムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
-・メッセージ表示後
-　Nの芝居（両手を広げる）
-・その後、Nの出現デモ開始
-・終了するとboss_08</comment>
+・続けてboss_07a</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]……だけど！▼
 でんせつの　ドラゴンたちに
-ふさわしいのは　ここ　ではない！▼
-あらわれよ！　ボクの　しろ！▼
-この　ポケモンリーグを　かこめ！[BE:09:速度コントロール:0]▼</language>
+ふさわしいのは　ここ　ではない！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……だけど！▼
 伝説の　ドラゴンたちに
-相応しいのは　ここ　ではない！▼
-地より　いでよ！　ボクの　城！▼
-この　ポケモンリーグを　囲め！[BE:09:速度コントロール:0]▼</language>
+相応しいのは　ここ　ではない！▼[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c09r0501_boss_07a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・Nの芝居（片手を挙げる）
+　メッセージ表示
+・その後、Nの出現デモ開始
+・終了するとboss_08</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ちより　いでよ！
+プラズマだんの　しろ！▽
+この　ポケモンリーグを　かこめ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]地より　出でよ！
+プラズマ団の　城！▽
+このポケモンリーグを　囲め！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_08" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
