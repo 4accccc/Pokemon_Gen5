@@ -11,6 +11,8 @@
 #define ZONE_R15R0101_EVC_H
 
 #define R15R0101_INFORMATIONW_01           0
+#define R15R0101_BACKPACKERW_01            1
+#define R15R0101_MIDDLEMAN1_01             2
 
 #endif //ZONE_R15R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r15r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

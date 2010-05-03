@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_r15r0101_board_01
 _EVENT_DATA    ev_r15r0101_informationw_01
+_EVENT_DATA    ev_r15r0101_backpackerw_01
+_EVENT_DATA    ev_r15r0101_middleman1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -39,6 +41,28 @@ EVENT_START   ev_r15r0101_informationw_01
 	//WB分岐メッセージ
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_WB( msg_r15r0101_infomationw_01w , msg_r15r0101_infomationw_01b , R15R0101_INFORMATIONW_01 , POS_DEFAULT)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* BACKPACKERW_01                                             */
+/**************************************************************/
+EVENT_START   ev_r15r0101_backpackerw_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_r15r0101_backpackerw_01w , msg_r15r0101_backpackerw_01b , R15R0101_BACKPACKERW_01 , POS_DEFAULT)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/* MIDDLEMAN_01                                             */
+/**************************************************************/
+EVENT_START   ev_r15r0101_middleman1_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_r15r0101_middleman1_01w , msg_r15r0101_middleman1_01b , R15R0101_MIDDLEMAN1_01 , POS_DEFAULT)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 EVENT_END
