@@ -574,78 +574,78 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_036">
-		<language name="JPN" width="256">ポケモンジム　メイン　プログラム</language>
-		<language name="JPN_KANJI" width="256">ポケモンジム　メイン　プログラム</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_037">
-		<language name="JPN" width="256">さいとう　のぞむ</language>
-		<language name="JPN_KANJI" width="256">さいとう　のぞむ</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_038">
-		<language name="JPN" width="256">レールシステム　プログラム</language>
-		<language name="JPN_KANJI" width="256">レールシステム　プログラム</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_039">
-		<language name="JPN" width="256">たかはし　ともや</language>
-		<language name="JPN_KANJI" width="256">たかはし　ともや</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_040">
 		<language name="JPN" width="256">バトル　サーバー　プログラム</language>
 		<language name="JPN_KANJI" width="256">バトル　サーバー　プログラム</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_041">
+	<row id="STAFF_ROLL_STR_037">
 		<language name="JPN" width="256">たや　まさお</language>
 		<language name="JPN_KANJI" width="256">たや　まさお</language>
 	</row>
 
+	<row id="STAFF_ROLL_STR_038">
+		<language name="JPN" width="256">ポケモンジム　メイン　プログラム</language>
+		<language name="JPN_KANJI" width="256">ポケモンジム　メイン　プログラム</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_039">
+		<language name="JPN" width="256">さいとう　のぞむ</language>
+		<language name="JPN_KANJI" width="256">さいとう　のぞむ</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_040">
+		<language name="JPN" width="256">レールシステム　プログラム</language>
+		<language name="JPN_KANJI" width="256">レールシステム　プログラム</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_041">
+		<language name="JPN" width="256">たかはし　ともや</language>
+		<language name="JPN_KANJI" width="256">たかはし　ともや</language>
+	</row>
+
 	<row id="STAFF_ROLL_STR_042">
+		<language name="JPN" width="256">３D　ツール　プログラム</language>
+		<language name="JPN_KANJI" width="256">３D　ツール　プログラム</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_043">
+		<language name="JPN" width="256">いわさわ　みゆき</language>
+		<language name="JPN_KANJI" width="256">いわさわ　みゆき</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_044">
 		<language name="JPN" width="256">システム　プログラム</language>
 		<language name="JPN_KANJI" width="256">システム　プログラム</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_043">
+	<row id="STAFF_ROLL_STR_045">
 		<language name="JPN" width="256">わたなべ　てつや</language>
 		<language name="JPN_KANJI" width="256">わたなべ　てつや</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_044">
+	<row id="STAFF_ROLL_STR_046">
 		<language name="JPN" width="256">そがべ　ひさし</language>
 		<language name="JPN_KANJI" width="256">そがべ　ひさし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_045">
+	<row id="STAFF_ROLL_STR_047">
 		<language name="JPN" width="256">たまだ　そうすけ</language>
 		<language name="JPN_KANJI" width="256">たまだ　そうすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_046">
+	<row id="STAFF_ROLL_STR_048">
 		<language name="JPN" width="256">おおの　かつみ</language>
 		<language name="JPN_KANJI" width="256">おおの　かつみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_047">
+	<row id="STAFF_ROLL_STR_049">
 		<language name="JPN" width="256">たや　まさお</language>
 		<language name="JPN_KANJI" width="256">たや　まさお</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_048">
+	<row id="STAFF_ROLL_STR_050">
 		<language name="JPN" width="256">ポケモン　キャラクター　ディレクター</language>
 		<language name="JPN_KANJI" width="256">ポケモン　キャラクター　ディレクター</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_049">
-		<language name="JPN" width="256">すぎもり　けん</language>
-		<language name="JPN_KANJI" width="256">すぎもり　けん</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_050">
-		<language name="JPN" width="256">ポケモン　デザイン</language>
-		<language name="JPN_KANJI" width="256">ポケモン　デザイン</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_051">
@@ -654,608 +654,608 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_052">
+		<language name="JPN" width="256">ポケモン　デザイン</language>
+		<language name="JPN_KANJI" width="256">ポケモン　デザイン</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_053">
+		<language name="JPN" width="256">すぎもり　けん</language>
+		<language name="JPN_KANJI" width="256">すぎもり　けん</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_054">
 		<language name="JPN" width="256">うんの　たかお</language>
 		<language name="JPN_KANJI" width="256">うんの　たかお</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_053">
+	<row id="STAFF_ROLL_STR_055">
 		<language name="JPN" width="256">ふじわら　もとふみ</language>
 		<language name="JPN_KANJI" width="256">ふじわら　もとふみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_054">
+	<row id="STAFF_ROLL_STR_056">
 		<language name="JPN" width="256">よしだ　ひろのぶ</language>
 		<language name="JPN_KANJI" width="256">よしだ　ひろのぶ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_055">
+	<row id="STAFF_ROLL_STR_057">
 		<language name="JPN" width="256">とやま　けんきち</language>
 		<language name="JPN_KANJI" width="256">とやま　けんきち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_056">
+	<row id="STAFF_ROLL_STR_058">
 		<language name="JPN" width="256">ふちの　ひろき</language>
 		<language name="JPN_KANJI" width="256">ふちの　ひろき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_057">
+	<row id="STAFF_ROLL_STR_059">
 		<language name="JPN" width="256">おおむら　ゆうすけ</language>
 		<language name="JPN_KANJI" width="256">おおむら　ゆうすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_058">
+	<row id="STAFF_ROLL_STR_060">
 		<language name="JPN" width="256">つるた　さや</language>
 		<language name="JPN_KANJI" width="256">つるた　さや</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_059">
+	<row id="STAFF_ROLL_STR_061">
 		<language name="JPN" width="256">リ・ヒョンジョン</language>
 		<language name="JPN_KANJI" width="256">リ・ヒョンジョン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_060">
+	<row id="STAFF_ROLL_STR_062">
 		<language name="JPN" width="256">いべ　まな</language>
 		<language name="JPN_KANJI" width="256">いべ　まな</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_061">
+	<row id="STAFF_ROLL_STR_063">
 		<language name="JPN" width="256">たのうえ　れいこ</language>
 		<language name="JPN_KANJI" width="256">たのうえ　れいこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_062">
+	<row id="STAFF_ROLL_STR_064">
 		<language name="JPN" width="256">きたかぜ　ともひろ</language>
 		<language name="JPN_KANJI" width="256">きたかぜ　ともひろ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_063">
+	<row id="STAFF_ROLL_STR_065">
 		<language name="JPN" width="256">ふじわら　まいこ</language>
 		<language name="JPN_KANJI" width="256">ふじわら　まいこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_064">
+	<row id="STAFF_ROLL_STR_066">
 		<language name="JPN" width="256">みずたに　めぐみ</language>
 		<language name="JPN_KANJI" width="256">みずたに　めぐみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_065">
+	<row id="STAFF_ROLL_STR_067">
 		<language name="JPN" width="256">おおくぼ　ともひこ</language>
 		<language name="JPN_KANJI" width="256">おおくぼ　ともひこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_066">
+	<row id="STAFF_ROLL_STR_068">
 		<language name="JPN" width="256">ジェームス・ターナー</language>
 		<language name="JPN_KANJI" width="256">ジェームス・ターナー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_067">
+	<row id="STAFF_ROLL_STR_069">
 		<language name="JPN" width="256">もりつぐ　けいこ</language>
 		<language name="JPN_KANJI" width="256">もりつぐ　けいこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_068">
+	<row id="STAFF_ROLL_STR_070">
 		<language name="JPN" width="256">にしだ　あつこ</language>
 		<language name="JPN_KANJI" width="256">にしだ　あつこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_069">
+	<row id="STAFF_ROLL_STR_071">
 		<language name="JPN" width="256">２Ｄ　グラフィック　デザイン</language>
 		<language name="JPN_KANJI" width="256">２Ｄ　グラフィック　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_070">
+	<row id="STAFF_ROLL_STR_072">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_071">
+	<row id="STAFF_ROLL_STR_073">
 		<language name="JPN" width="256">よしだ　ひろのぶ</language>
 		<language name="JPN_KANJI" width="256">よしだ　ひろのぶ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_072">
+	<row id="STAFF_ROLL_STR_074">
 		<language name="JPN" width="256">ふじわら　もとふみ</language>
 		<language name="JPN_KANJI" width="256">ふじわら　もとふみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_073">
+	<row id="STAFF_ROLL_STR_075">
 		<language name="JPN" width="256">とやま　けんきち</language>
 		<language name="JPN_KANJI" width="256">とやま　けんきち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_074">
+	<row id="STAFF_ROLL_STR_076">
 		<language name="JPN" width="256">おおむら　ゆうすけ</language>
 		<language name="JPN_KANJI" width="256">おおむら　ゆうすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_075">
+	<row id="STAFF_ROLL_STR_077">
 		<language name="JPN" width="256">つるた　さや</language>
 		<language name="JPN_KANJI" width="256">つるた　さや</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_076">
+	<row id="STAFF_ROLL_STR_078">
 		<language name="JPN" width="256">きたかぜ　ともひろ</language>
 		<language name="JPN_KANJI" width="256">きたかぜ　ともひろ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_077">
+	<row id="STAFF_ROLL_STR_079">
 		<language name="JPN" width="256">みずたに　めぐみ</language>
 		<language name="JPN_KANJI" width="256">みずたに　めぐみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_078">
+	<row id="STAFF_ROLL_STR_080">
 		<language name="JPN" width="256">３Ｄ　グラフィック　デザイン</language>
 		<language name="JPN_KANJI" width="256">３Ｄ　グラフィック　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_079">
+	<row id="STAFF_ROLL_STR_081">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_080">
+	<row id="STAFF_ROLL_STR_082">
 		<language name="JPN" width="256">ふちの　ひろき</language>
 		<language name="JPN_KANJI" width="256">ふちの　ひろき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_081">
+	<row id="STAFF_ROLL_STR_083">
 		<language name="JPN" width="256">リ・ヒョンジョン</language>
 		<language name="JPN_KANJI" width="256">リ・ヒョンジョン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_082">
+	<row id="STAFF_ROLL_STR_084">
 		<language name="JPN" width="256">いべ　まな</language>
 		<language name="JPN_KANJI" width="256">いべ　まな</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_083">
+	<row id="STAFF_ROLL_STR_085">
 		<language name="JPN" width="256">たのうえ　れいこ</language>
 		<language name="JPN_KANJI" width="256">たのうえ　れいこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_084">
+	<row id="STAFF_ROLL_STR_086">
 		<language name="JPN" width="256">ふじわら　まいこ</language>
 		<language name="JPN_KANJI" width="256">ふじわら　まいこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_085">
+	<row id="STAFF_ROLL_STR_087">
 		<language name="JPN" width="256">おおくぼ　ともひこ</language>
 		<language name="JPN_KANJI" width="256">おおくぼ　ともひこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_086">
+	<row id="STAFF_ROLL_STR_088">
 		<language name="JPN" width="256">ジェームス・ターナー</language>
 		<language name="JPN_KANJI" width="256">ジェームス・ターナー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_087">
+	<row id="STAFF_ROLL_STR_089">
 		<language name="JPN" width="256">３D　グラフィック　システム　デザイン</language>
 		<language name="JPN_KANJI" width="256">３D　グラフィック　システム　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_088">
+	<row id="STAFF_ROLL_STR_090">
 		<language name="JPN" width="256">うんの　たかお</language>
 		<language name="JPN_KANJI" width="256">うんの　たかお</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_089">
-		<language name="JPN" width="256">トレーナー　メイン　デザイン</language>
-		<language name="JPN_KANJI" width="256">トレーナー　メイン　デザイン</language>
+	<row id="STAFF_ROLL_STR_091">
+		<language name="JPN" width="256">トレーナー　グラフィック　メイン　デザイン</language>
+		<language name="JPN_KANJI" width="256">トレーナー　グラフィック　メイン　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_090">
+	<row id="STAFF_ROLL_STR_092">
 		<language name="JPN" width="256">おおむら　ゆうすけ</language>
 		<language name="JPN_KANJI" width="256">おおむら　ゆうすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_091">
+	<row id="STAFF_ROLL_STR_093">
 		<language name="JPN" width="256">バトル　グラフィック　デザイン</language>
 		<language name="JPN_KANJI" width="256">バトル　グラフィック　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_092">
+	<row id="STAFF_ROLL_STR_094">
 		<language name="JPN" width="256">よしだ　ひろのぶ</language>
 		<language name="JPN_KANJI" width="256">よしだ　ひろのぶ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_093">
+	<row id="STAFF_ROLL_STR_095">
 		<language name="JPN" width="256">バトル　エフェクト　グラフィック　デザイン</language>
 		<language name="JPN_KANJI" width="256">バトル　エフェクト　グラフィック　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_094">
+	<row id="STAFF_ROLL_STR_096">
 		<language name="JPN" width="256">ふじわら　もとふみ</language>
 		<language name="JPN_KANJI" width="256">ふじわら　もとふみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_095">
+	<row id="STAFF_ROLL_STR_097">
 		<language name="JPN" width="256">デモ　ムービー　デザイン</language>
 		<language name="JPN_KANJI" width="256">デモ　ムービー　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_096">
+	<row id="STAFF_ROLL_STR_098">
 		<language name="JPN" width="256">ジェームス・ターナー</language>
 		<language name="JPN_KANJI" width="256">ジェームス・ターナー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_097">
+	<row id="STAFF_ROLL_STR_099">
 		<language name="JPN" width="256">コンセプト　イラストレーター</language>
 		<language name="JPN_KANJI" width="256">コンセプト　イラストレーター</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_098">
+	<row id="STAFF_ROLL_STR_100">
 		<language name="JPN" width="256">もりつぐ　けいこ</language>
 		<language name="JPN_KANJI" width="256">もりつぐ　けいこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_099">
+	<row id="STAFF_ROLL_STR_101">
 		<language name="JPN" width="256">ポケモン　せってい　＆　ずかん　テキスト</language>
 		<language name="JPN_KANJI" width="256">ポケモン　せってい　＆　ずかん　テキスト</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_100">
+	<row id="STAFF_ROLL_STR_102">
 		<language name="JPN" width="256">まつしま　けんじ</language>
 		<language name="JPN_KANJI" width="256">まつしま　けんじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_101">
+	<row id="STAFF_ROLL_STR_103">
 		<language name="JPN" width="256">おんがく</language>
 		<language name="JPN_KANJI" width="256">おんがく</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_102">
+	<row id="STAFF_ROLL_STR_104">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_103">
+	<row id="STAFF_ROLL_STR_105">
 		<language name="JPN" width="256">かげやま　しょうた</language>
 		<language name="JPN_KANJI" width="256">かげやま　しょうた</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_104">
+	<row id="STAFF_ROLL_STR_106">
 		<language name="JPN" width="256">いちのせ　ごう</language>
 		<language name="JPN_KANJI" width="256">いちのせ　ごう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_105">
+	<row id="STAFF_ROLL_STR_107">
 		<language name="JPN" width="256">さとう　ひとみ</language>
 		<language name="JPN_KANJI" width="256">さとう　ひとみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_106">
+	<row id="STAFF_ROLL_STR_108">
 		<language name="JPN" width="256">ますだ　じゅんいち</language>
 		<language name="JPN_KANJI" width="256">ますだ　じゅんいち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_107">
+	<row id="STAFF_ROLL_STR_109">
 		<language name="JPN" width="256">あだち　みなこ</language>
 		<language name="JPN_KANJI" width="256">あだち　みなこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_108">
+	<row id="STAFF_ROLL_STR_110">
 		<language name="JPN" width="256">ポケモン　ボイス</language>
 		<language name="JPN_KANJI" width="256">ポケモン　ボイス</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_109">
+	<row id="STAFF_ROLL_STR_111">
 		<language name="JPN" width="256">いちのせ　ごう</language>
 		<language name="JPN_KANJI" width="256">いちのせ　ごう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_110">
+	<row id="STAFF_ROLL_STR_112">
 		<language name="JPN" width="256">サウンド　エフェクト</language>
 		<language name="JPN_KANJI" width="256">サウンド　エフェクト</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_111">
+	<row id="STAFF_ROLL_STR_113">
 		<language name="JPN" width="256">あだち　みなこ</language>
 		<language name="JPN_KANJI" width="256">あだち　みなこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_112">
+	<row id="STAFF_ROLL_STR_114">
 		<language name="JPN" width="256">インタラクティブ　サウンド　システム</language>
 		<language name="JPN_KANJI" width="256">インタラクティブ　サウンド　システム</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_113">
+	<row id="STAFF_ROLL_STR_115">
 		<language name="JPN" width="256">いちのせ　ごう</language>
 		<language name="JPN_KANJI" width="256">いちのせ　ごう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_114">
+	<row id="STAFF_ROLL_STR_116">
 		<language name="JPN" width="256">ハイリンク・１０ばんどうろ・エンディングなど</language>
 		<language name="JPN_KANJI" width="256">ハイリンク・１０ばんどうろ・エンディングなど</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_115">
-		<language name="JPN" width="256">ソウリュウシティ・たそがれオヤジ・トレインタウンなど</language>
-		<language name="JPN_KANJI" width="256">ソウリュウシティ・たそがれオヤジ・トレインタウンなど</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_116">
-		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
-		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
-	</row>
-
 	<row id="STAFF_ROLL_STR_117">
-		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
-		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
+		<language name="JPN" width="256">ソウリュウシティ・たそがれオヤジ・カナワタウンなど</language>
+		<language name="JPN_KANJI" width="256">ソウリュウシティ・たそがれオヤジ・カナワタウンなど</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_118">
+		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
+		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_119">
+		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
+		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_120">
 		<language name="JPN" width="256">かげやま　しょうた</language>
 		<language name="JPN_KANJI" width="256">かげやま　しょうた</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_119">
+	<row id="STAFF_ROLL_STR_121">
 		<language name="JPN" width="256"> いちのせ　ごう</language>
 		<language name="JPN_KANJI" width="256"> いちのせ　ごう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_120">
+	<row id="STAFF_ROLL_STR_122">
 		<language name="JPN" width="256">じてんしゃ・シフトファクトリー・カゴメタウンなど</language>
 		<language name="JPN_KANJI" width="256">じてんしゃ・シフトファクトリー・カゴメタウンなど</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_121">
+	<row id="STAFF_ROLL_STR_123">
 		<language name="JPN" width="256">バトル</language>
 		<language name="JPN_KANJI" width="256">バトル</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_122">
-		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
-		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_123">
-		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
-		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
-	</row>
-
 	<row id="STAFF_ROLL_STR_124">
+		<language name="JPN" width="256">さっきょく　＆　へんきょく</language>
+		<language name="JPN_KANJI" width="256">さっきょく　＆　へんきょく</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_125">
+		<language name="JPN" width="256">さっきょく</language>
+		<language name="JPN_KANJI" width="256">さっきょく</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_126">
 		<language name="JPN" width="256">さとう　ひとみ</language>
 		<language name="JPN_KANJI" width="256">さとう　ひとみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_125">
+	<row id="STAFF_ROLL_STR_127">
 		<language name="JPN" width="256">ますだ　じゅんいち</language>
 		<language name="JPN_KANJI" width="256">ますだ　じゅんいち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_126">
+	<row id="STAFF_ROLL_STR_128">
 		<language name="JPN" width="256">ユーザーインターフェイス　システム　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">ユーザーインターフェイス　システム　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_127">
+	<row id="STAFF_ROLL_STR_129">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_128">
+	<row id="STAFF_ROLL_STR_130">
 		<language name="JPN" width="256">おおた　てつじ</language>
 		<language name="JPN_KANJI" width="256">おおた　てつじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_129">
+	<row id="STAFF_ROLL_STR_131">
 		<language name="JPN" width="256">しもやまだ　てるゆき</language>
 		<language name="JPN_KANJI" width="256">しもやまだ　てるゆき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_130">
+	<row id="STAFF_ROLL_STR_132">
 		<language name="JPN" width="256">いわお　かずまさ</language>
 		<language name="JPN_KANJI" width="256">いわお　かずまさ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_131">
+	<row id="STAFF_ROLL_STR_133">
 		<language name="JPN" width="256">ひろ　なかむら</language>
 		<language name="JPN_KANJI" width="256">ひろ　なかむら</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_132">
+	<row id="STAFF_ROLL_STR_134">
 		<language name="JPN" width="256">シナリオ　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">シナリオ　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_133">
+	<row id="STAFF_ROLL_STR_135">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_134">
+	<row id="STAFF_ROLL_STR_136">
 		<language name="JPN" width="256">まつみや　としのぶ</language>
 		<language name="JPN_KANJI" width="256">まつみや　としのぶ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_135">
+	<row id="STAFF_ROLL_STR_137">
 		<language name="JPN" width="256">さとう　ひとみ</language>
 		<language name="JPN_KANJI" width="256">さとう　ひとみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_136">
+	<row id="STAFF_ROLL_STR_138">
 		<language name="JPN" width="256">すぎなか　かつのり</language>
 		<language name="JPN_KANJI" width="256">すぎなか　かつのり</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_137">
+	<row id="STAFF_ROLL_STR_139">
 		<language name="JPN" width="256">スクリプト　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">スクリプト　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_138">
+	<row id="STAFF_ROLL_STR_140">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_139">
+	<row id="STAFF_ROLL_STR_141">
 		<language name="JPN" width="256">さいとう　まさふみ</language>
 		<language name="JPN_KANJI" width="256">さいとう　まさふみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_140">
+	<row id="STAFF_ROLL_STR_142">
 		<language name="JPN" width="256">みずぐち　まい</language>
 		<language name="JPN_KANJI" width="256">みずぐち　まい</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_141">
+	<row id="STAFF_ROLL_STR_143">
 		<language name="JPN" width="256">むらかみ　なおと</language>
 		<language name="JPN_KANJI" width="256">むらかみ　なおと</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_142">
+	<row id="STAFF_ROLL_STR_144">
 		<language name="JPN" width="256">バトル　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">バトル　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_143">
+	<row id="STAFF_ROLL_STR_145">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_144">
+	<row id="STAFF_ROLL_STR_146">
 		<language name="JPN" width="256">もりもと　しげき</language>
 		<language name="JPN_KANJI" width="256">もりもと　しげき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_145">
+	<row id="STAFF_ROLL_STR_147">
 		<language name="JPN" width="256">にしの　こうじ</language>
 		<language name="JPN_KANJI" width="256">にしの　こうじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_146">
+	<row id="STAFF_ROLL_STR_148">
 		<language name="JPN" width="256">とくしゅシステム　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">とくしゅシステム　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_147">
+	<row id="STAFF_ROLL_STR_149">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_148">
+	<row id="STAFF_ROLL_STR_150">
 		<language name="JPN" width="256">おおもり　しげる</language>
 		<language name="JPN_KANJI" width="256">おおもり　しげる</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_149">
+	<row id="STAFF_ROLL_STR_151">
 		<language name="JPN" width="256">ほずみ　ゆきこ</language>
 		<language name="JPN_KANJI" width="256">ほずみ　ゆきこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_150">
+	<row id="STAFF_ROLL_STR_152">
 		<language name="JPN" width="256">なかむら　あきら</language>
 		<language name="JPN_KANJI" width="256">なかむら　あきら</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_151">
+	<row id="STAFF_ROLL_STR_153">
 		<language name="JPN" width="256">マップ　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">マップ　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_152">
+	<row id="STAFF_ROLL_STR_154">
 		<language name="JPN" width="256">リーダー</language>
 		<language name="JPN_KANJI" width="256">リーダー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_153">
+	<row id="STAFF_ROLL_STR_155">
 		<language name="JPN" width="256">なかつい　すぐる</language>
 		<language name="JPN_KANJI" width="256">なかつい　すぐる</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_154">
+	<row id="STAFF_ROLL_STR_156">
 		<language name="JPN" width="256">たかはし　ただし</language>
 		<language name="JPN_KANJI" width="256">たかはし　ただし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_155">
+	<row id="STAFF_ROLL_STR_157">
 		<language name="JPN" width="256">いわお　かずまさ</language>
 		<language name="JPN_KANJI" width="256">いわお　かずまさ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_156">
+	<row id="STAFF_ROLL_STR_158">
 		<language name="JPN" width="256">すぎなか　かつのり</language>
 		<language name="JPN_KANJI" width="256">すぎなか　かつのり</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_157">
+	<row id="STAFF_ROLL_STR_159">
 		<language name="JPN" width="256">ほずみ　ゆきこ</language>
 		<language name="JPN_KANJI" width="256">ほずみ　ゆきこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_158">
+	<row id="STAFF_ROLL_STR_160">
 		<language name="JPN" width="256">むらかみ　なおと</language>
 		<language name="JPN_KANJI" width="256">むらかみ　なおと</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_159">
+	<row id="STAFF_ROLL_STR_161">
 		<language name="JPN" width="256">そうさ　メイン　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">そうさ　メイン　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_160">
+	<row id="STAFF_ROLL_STR_162">
 		<language name="JPN" width="256">おおた　てつじ</language>
 		<language name="JPN_KANJI" width="256">おおた　てつじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_161">
+	<row id="STAFF_ROLL_STR_163">
 		<language name="JPN" width="256">マップかんり　＆　せっけい　メイン　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">マップかんり　＆　せっけい　メイン　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_162">
+	<row id="STAFF_ROLL_STR_164">
 		<language name="JPN" width="256">なかつい　すぐる</language>
 		<language name="JPN_KANJI" width="256">なかつい　すぐる</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_163">
+	<row id="STAFF_ROLL_STR_165">
 		<language name="JPN" width="256">ちょうさレーダー　＆　すれちがい　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">ちょうさレーダー　＆　すれちがい　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_164">
+	<row id="STAFF_ROLL_STR_166">
 		<language name="JPN" width="256">おおもり　しげる</language>
 		<language name="JPN_KANJI" width="256">おおもり　しげる</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_165">
+	<row id="STAFF_ROLL_STR_167">
 		<language name="JPN" width="256">Wi-Fi　バトル　システム　メイン　ゲームデザイン</language>
 		<language name="JPN_KANJI" width="256">Wi-Fi　バトル　システム　メイン　ゲームデザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_166">
+	<row id="STAFF_ROLL_STR_168">
 		<language name="JPN" width="256">しもやまだ　てるゆき</language>
 		<language name="JPN_KANJI" width="256">しもやまだ　てるゆき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_167">
+	<row id="STAFF_ROLL_STR_169">
 		<language name="JPN" width="256">ポケモン　＆　トレーナー　パラメータ　デザイン</language>
 		<language name="JPN_KANJI" width="256">ポケモン　＆　トレーナー　パラメータ　デザイン</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_168">
+	<row id="STAFF_ROLL_STR_170">
 		<language name="JPN" width="256">にしの　こうじ</language>
 		<language name="JPN_KANJI" width="256">にしの　こうじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_169">
+	<row id="STAFF_ROLL_STR_171">
 		<language name="JPN" width="256">おおた　てつじ</language>
 		<language name="JPN_KANJI" width="256">おおた　てつじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_170">
+	<row id="STAFF_ROLL_STR_172">
 		<language name="JPN" width="256">しもやまだ　てるゆき</language>
 		<language name="JPN_KANJI" width="256">しもやまだ　てるゆき</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_171">
-		<language name="JPN" width="256">もりもと　しげき</language>
-		<language name="JPN_KANJI" width="256">もりもと　しげき</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_172">
-		<language name="JPN" width="256">バトルサブウェイ　パラメータ　デザイン</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイ　パラメータ　デザイン</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_173">
@@ -1264,506 +1264,521 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_174">
+		<language name="JPN" width="256">バトルサブウェイ　パラメータ　デザイン</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイ　パラメータ　デザイン</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_175">
+		<language name="JPN" width="256">もりもと　しげき</language>
+		<language name="JPN_KANJI" width="256">もりもと　しげき</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_176">
 		<language name="JPN" width="256">おおた　てつじ</language>
 		<language name="JPN_KANJI" width="256">おおた　てつじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_175">
+	<row id="STAFF_ROLL_STR_177">
 		<language name="JPN" width="256">いわお　かずまさ</language>
 		<language name="JPN_KANJI" width="256">いわお　かずまさ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_176">
+	<row id="STAFF_ROLL_STR_178">
 		<language name="JPN" width="256">Wi-Fiサーバ　かいはつ</language>
 		<language name="JPN_KANJI" width="256">Wi-Fiサーバ　かいはつ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_177">
+	<row id="STAFF_ROLL_STR_179">
 		<language name="JPN" width="256">やまぐち　たかひろ</language>
 		<language name="JPN_KANJI" width="256">やまぐち　たかひろ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_178">
+	<row id="STAFF_ROLL_STR_180">
 		<language name="JPN" width="256">やまぐち　りょう</language>
 		<language name="JPN_KANJI" width="256">やまぐち　りょう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_179">
+	<row id="STAFF_ROLL_STR_181">
 		<language name="JPN" width="256">にわ　かずとも</language>
 		<language name="JPN_KANJI" width="256">にわ　かずとも</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_180">
+	<row id="STAFF_ROLL_STR_182">
 		<language name="JPN" width="256">たけうち　たかあき</language>
 		<language name="JPN_KANJI" width="256">たけうち　たかあき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_181">
+	<row id="STAFF_ROLL_STR_183">
 		<language name="JPN" width="256">いしかわ　みきひろ</language>
 		<language name="JPN_KANJI" width="256">いしかわ　みきひろ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_182">
+	<row id="STAFF_ROLL_STR_184">
 		<language name="JPN" width="256">れんどう　Webサイト　ディレクター</language>
 		<language name="JPN_KANJI" width="256">れんどう　Webサイト　ディレクター</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_183">
-		<language name="JPN" width="256">たけし　かわちまる</language>
-		<language name="JPN_KANJI" width="256">たけし　かわちまる</language>
+	<row id="STAFF_ROLL_STR_185">
+		<language name="JPN" width="256">かわちまる　たけし</language>
+		<language name="JPN_KANJI" width="256">かわちまる　たけし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_184">
+	<row id="STAFF_ROLL_STR_186">
 		<language name="JPN" width="256">れんどう　Webサイト　せっけい</language>
 		<language name="JPN_KANJI" width="256">れんどう　Webサイト　せっけい</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_185">
+	<row id="STAFF_ROLL_STR_187">
 		<language name="JPN" width="256">みずぐち　まい</language>
 		<language name="JPN_KANJI" width="256">みずぐち　まい</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_186">
+	<row id="STAFF_ROLL_STR_188">
 		<language name="JPN" width="256">おりかた　たかし</language>
 		<language name="JPN_KANJI" width="256">おりかた　たかし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_187">
+	<row id="STAFF_ROLL_STR_189">
 		<language name="JPN" width="256">まつなが　みつよ</language>
 		<language name="JPN_KANJI" width="256">まつなが　みつよ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_188">
+	<row id="STAFF_ROLL_STR_190">
 		<language name="JPN" width="256">なかやま　ともこ</language>
 		<language name="JPN_KANJI" width="256">なかやま　ともこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_189">
+	<row id="STAFF_ROLL_STR_191">
 		<language name="JPN" width="256">ベースメントファクトリープロダクション</language>
 		<language name="JPN_KANJI" width="256">ベースメントファクトリープロダクション</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_190">
+	<row id="STAFF_ROLL_STR_192">
 		<language name="JPN" width="256">デバッグマネージメント</language>
 		<language name="JPN_KANJI" width="256">デバッグマネージメント</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_191">
+	<row id="STAFF_ROLL_STR_193">
 		<language name="JPN" width="256">たにかわ　ゆうき</language>
 		<language name="JPN_KANJI" width="256">たにかわ　ゆうき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_192">
+	<row id="STAFF_ROLL_STR_194">
 		<language name="JPN" width="256">ふるかわ　しゅうへい</language>
 		<language name="JPN_KANJI" width="256">ふるかわ　しゅうへい</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_193">
+	<row id="STAFF_ROLL_STR_195">
 		<language name="JPN" width="256">たなか よしかず</language>
 		<language name="JPN_KANJI" width="256">たなか よしかず</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_194">
+	<row id="STAFF_ROLL_STR_196">
 		<language name="JPN" width="256">にしざわ ひとし</language>
 		<language name="JPN_KANJI" width="256">にしざわ ひとし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_195">
+	<row id="STAFF_ROLL_STR_197">
 		<language name="JPN" width="256">ふくしま けいすけ</language>
 		<language name="JPN_KANJI" width="256">ふくしま けいすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_196">
+	<row id="STAFF_ROLL_STR_198">
 		<language name="JPN" width="256">なかじま もとき</language>
 		<language name="JPN_KANJI" width="256">なかじま もとき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_197">
+	<row id="STAFF_ROLL_STR_199">
 		<language name="JPN" width="256">デバッグ</language>
 		<language name="JPN_KANJI" width="256">デバッグ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_198">
+	<row id="STAFF_ROLL_STR_200">
 		<language name="JPN" width="256">マリオクラブ</language>
 		<language name="JPN_KANJI" width="256">マリオクラブ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_199">
+	<row id="STAFF_ROLL_STR_201">
 		<language name="JPN" width="256">B　＆　W　こうそう</language>
 		<language name="JPN_KANJI" width="256">B　＆　W　こうそう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_200">
+	<row id="STAFF_ROLL_STR_202">
 		<language name="JPN" width="256">ますだ　じゅんいち</language>
 		<language name="JPN_KANJI" width="256">ますだ　じゅんいち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_201">
+	<row id="STAFF_ROLL_STR_203">
 		<language name="JPN" width="256">グラフィック　＆　サウンド　スペシャルサンクス</language>
 		<language name="JPN_KANJI" width="256">グラフィック　＆　サウンド　スペシャルサンクス</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_202">
+	<row id="STAFF_ROLL_STR_204">
 		<language name="JPN" width="256">ながた　だいすけ</language>
 		<language name="JPN_KANJI" width="256">ながた　だいすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_203">
+	<row id="STAFF_ROLL_STR_205">
 		<language name="JPN" width="256">くにした　りか</language>
 		<language name="JPN_KANJI" width="256">くにした　りか</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_204">
+	<row id="STAFF_ROLL_STR_206">
 		<language name="JPN" width="256">にしはた　なつみ</language>
 		<language name="JPN_KANJI" width="256">にしはた　なつみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_205">
+	<row id="STAFF_ROLL_STR_207">
 		<language name="JPN" width="256">たかはし　ちひろ</language>
 		<language name="JPN_KANJI" width="256">たかはし　ちひろ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_206">
+	<row id="STAFF_ROLL_STR_208">
 		<language name="JPN" width="256">おおにし　しんいち</language>
 		<language name="JPN_KANJI" width="256">おおにし　しんいち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_207">
+	<row id="STAFF_ROLL_STR_209">
 		<language name="JPN" width="256">やすもと　しんご</language>
 		<language name="JPN_KANJI" width="256">やすもと　しんご</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_208">
+	<row id="STAFF_ROLL_STR_210">
 		<language name="JPN" width="256">スペシャルサンクス</language>
 		<language name="JPN_KANJI" width="256">スペシャルサンクス</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_209">
+	<row id="STAFF_ROLL_STR_211">
 		<language name="JPN" width="256">とみなが　けんじ</language>
 		<language name="JPN_KANJI" width="256">とみなが　けんじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_210">
+	<row id="STAFF_ROLL_STR_212">
 		<language name="JPN" width="256">もり　ゆういちろう</language>
 		<language name="JPN_KANJI" width="256">もり　ゆういちろう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_211">
+	<row id="STAFF_ROLL_STR_213">
 		<language name="JPN" width="256">たじり　よしお</language>
 		<language name="JPN_KANJI" width="256">たじり　よしお</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_212">
+	<row id="STAFF_ROLL_STR_214">
 		<language name="JPN" width="256">ささき　ていこ</language>
 		<language name="JPN_KANJI" width="256">ささき　ていこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_213">
+	<row id="STAFF_ROLL_STR_215">
 		<language name="JPN" width="256">えんどう　えみ</language>
 		<language name="JPN_KANJI" width="256">えんどう　えみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_214">
+	<row id="STAFF_ROLL_STR_216">
 		<language name="JPN" width="256">さとう　あさみ</language>
 		<language name="JPN_KANJI" width="256">さとう　あさみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_215">
+	<row id="STAFF_ROLL_STR_217">
 		<language name="JPN" width="256">はらぐち　しほ</language>
 		<language name="JPN_KANJI" width="256">はらぐち　しほ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_216">
+	<row id="STAFF_ROLL_STR_218">
 		<language name="JPN" width="256">はまの　さちこ</language>
 		<language name="JPN_KANJI" width="256">はまの　さちこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_217">
+	<row id="STAFF_ROLL_STR_219">
 		<language name="JPN" width="256">すなが　はるか</language>
 		<language name="JPN_KANJI" width="256">すなが　はるか</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_218">
+	<row id="STAFF_ROLL_STR_220">
 		<language name="JPN" width="256">いとう　ひろと</language>
 		<language name="JPN_KANJI" width="256">いとう　ひろと</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_219">
+	<row id="STAFF_ROLL_STR_221">
 		<language name="JPN" width="256">おのうえ　まさゆき</language>
 		<language name="JPN_KANJI" width="256">おのうえ　まさゆき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_220">
+	<row id="STAFF_ROLL_STR_222">
 		<language name="JPN" width="256">いちらく　かつひこ</language>
 		<language name="JPN_KANJI" width="256">いちらく　かつひこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_221">
+	<row id="STAFF_ROLL_STR_223">
 		<language name="JPN" width="256">おおたに　まよ</language>
 		<language name="JPN_KANJI" width="256">おおたに　まよ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_222">
+	<row id="STAFF_ROLL_STR_224">
 		<language name="JPN" width="256">かわもと　ゆき</language>
 		<language name="JPN_KANJI" width="256">かわもと　ゆき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_223">
+	<row id="STAFF_ROLL_STR_225">
 		<language name="JPN" width="256">いとう　けんじろう</language>
 		<language name="JPN_KANJI" width="256">いとう　けんじろう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_224">
+	<row id="STAFF_ROLL_STR_226">
 		<language name="JPN" width="256">こむら　ともたか</language>
 		<language name="JPN_KANJI" width="256">こむら　ともたか</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_225">
+	<row id="STAFF_ROLL_STR_227">
 		<language name="JPN" width="256">ふくなが　すすむ</language>
 		<language name="JPN_KANJI" width="256">ふくなが　すすむ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_226">
+	<row id="STAFF_ROLL_STR_228">
 		<language name="JPN" width="256">みやはら　としお</language>
 		<language name="JPN_KANJI" width="256">みやはら　としお</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_227">
+	<row id="STAFF_ROLL_STR_229">
 		<language name="JPN" width="256">すさい　がく</language>
 		<language name="JPN_KANJI" width="256">すさい　がく</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_228">
+	<row id="STAFF_ROLL_STR_230">
 		<language name="JPN" width="256">すずき　おさむ</language>
 		<language name="JPN_KANJI" width="256">すずき　おさむ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_229">
+	<row id="STAFF_ROLL_STR_231">
 		<language name="JPN" width="256">こが　じろう</language>
 		<language name="JPN_KANJI" width="256">こが　じろう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_230">
+	<row id="STAFF_ROLL_STR_232">
 		<language name="JPN" width="256">たきざわ　みちこ</language>
 		<language name="JPN_KANJI" width="256">たきざわ　みちこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_231">
+	<row id="STAFF_ROLL_STR_233">
 		<language name="JPN" width="256">のもと　がくじ</language>
 		<language name="JPN_KANJI" width="256">のもと　がくじ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_232">
+	<row id="STAFF_ROLL_STR_234">
 		<language name="JPN" width="256">かなやま　みすず</language>
 		<language name="JPN_KANJI" width="256">かなやま　みすず</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_233">
+	<row id="STAFF_ROLL_STR_235">
 		<language name="JPN" width="256">つみた　ゆういちろう</language>
 		<language name="JPN_KANJI" width="256">つみた　ゆういちろう</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_234">
+	<row id="STAFF_ROLL_STR_236">
 		<language name="JPN" width="256">ふじた　おさむ</language>
 		<language name="JPN_KANJI" width="256">ふじた　おさむ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_235">
+	<row id="STAFF_ROLL_STR_237">
 		<language name="JPN" width="256">そが　まさゆき</language>
 		<language name="JPN_KANJI" width="256">そが　まさゆき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_236">
+	<row id="STAFF_ROLL_STR_238">
 		<language name="JPN" width="256">たかはし　まきこ</language>
 		<language name="JPN_KANJI" width="256">たかはし　まきこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_237">
+	<row id="STAFF_ROLL_STR_239">
 		<language name="JPN" width="256">よこた　ふみえ</language>
 		<language name="JPN_KANJI" width="256">よこた　ふみえ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_238">
+	<row id="STAFF_ROLL_STR_240">
 		<language name="JPN" width="256">むらかわ　てるき</language>
 		<language name="JPN_KANJI" width="256">むらかわ　てるき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_239">
+	<row id="STAFF_ROLL_STR_241">
 		<language name="JPN" width="256">なかみち　きみこ</language>
 		<language name="JPN_KANJI" width="256">なかみち　きみこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_240">
+	<row id="STAFF_ROLL_STR_242">
 		<language name="JPN" width="256">やまもと　そういち</language>
 		<language name="JPN_KANJI" width="256">やまもと　そういち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_241">
+	<row id="STAFF_ROLL_STR_243">
 		<language name="JPN" width="256">いなげ　とおる</language>
 		<language name="JPN_KANJI" width="256">いなげ　とおる</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_242">
+	<row id="STAFF_ROLL_STR_244">
 		<language name="JPN" width="256">あくね　ひろし</language>
 		<language name="JPN_KANJI" width="256">あくね　ひろし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_243">
+	<row id="STAFF_ROLL_STR_245">
 		<language name="JPN" width="256">こまい　だいすけ</language>
 		<language name="JPN_KANJI" width="256">こまい　だいすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_244">
+	<row id="STAFF_ROLL_STR_246">
 		<language name="JPN" width="256">むかい　としお</language>
 		<language name="JPN_KANJI" width="256">むかい　としお</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_245">
+	<row id="STAFF_ROLL_STR_247">
 		<language name="JPN" width="256">たかはら　ちあき</language>
 		<language name="JPN_KANJI" width="256">たかはら　ちあき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_246">
+	<row id="STAFF_ROLL_STR_248">
 		<language name="JPN" width="256">アートワーク</language>
 		<language name="JPN_KANJI" width="256">アートワーク</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_247">
+	<row id="STAFF_ROLL_STR_249">
 		<language name="JPN" width="256">いたに　きよみ</language>
 		<language name="JPN_KANJI" width="256">いたに　きよみ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_248">
+	<row id="STAFF_ROLL_STR_250">
 		<language name="JPN" width="256">すぎやま　やすこ</language>
 		<language name="JPN_KANJI" width="256">すぎやま　やすこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_249">
+	<row id="STAFF_ROLL_STR_251">
 		<language name="JPN" width="256">すずき　りゅういち</language>
 		<language name="JPN_KANJI" width="256">すずき　りゅういち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_250">
+	<row id="STAFF_ROLL_STR_252">
 		<language name="JPN" width="256">なかみち　さちこ</language>
 		<language name="JPN_KANJI" width="256">なかみち　さちこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_251">
+	<row id="STAFF_ROLL_STR_253">
 		<language name="JPN" width="256">グローバライズ</language>
 		<language name="JPN_KANJI" width="256">グローバライズ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_252">
+	<row id="STAFF_ROLL_STR_254">
 		<language name="JPN" width="256">　きなし　あきら</language>
 		<language name="JPN_KANJI" width="256">　きなし　あきら</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_253">
+	<row id="STAFF_ROLL_STR_255">
 		<language name="JPN" width="256">　なかお　のりこ</language>
 		<language name="JPN_KANJI" width="256">　なかお　のりこ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_254">
+	<row id="STAFF_ROLL_STR_256">
 		<language name="JPN" width="256">　いちばやし　ひろのり</language>
 		<language name="JPN_KANJI" width="256">　いちばやし　ひろのり</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_255">
+	<row id="STAFF_ROLL_STR_257">
 		<language name="JPN" width="256">じょうほうかんり</language>
 		<language name="JPN_KANJI" width="256">じょうほうかんり</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_256">
+	<row id="STAFF_ROLL_STR_258">
 		<language name="JPN" width="256">さくらい　ゆうり</language>
 		<language name="JPN_KANJI" width="256">さくらい　ゆうり</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_257">
+	<row id="STAFF_ROLL_STR_259">
 		<language name="JPN" width="256">よねだ　とうや</language>
 		<language name="JPN_KANJI" width="256">よねだ　とうや</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_258">
+	<row id="STAFF_ROLL_STR_260">
 		<language name="JPN" width="256">コーディネーター</language>
 		<language name="JPN_KANJI" width="256">コーディネーター</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_259">
+	<row id="STAFF_ROLL_STR_261">
 		<language name="JPN" width="256">こほり　しゅんすけ</language>
 		<language name="JPN_KANJI" width="256">こほり　しゅんすけ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_260">
+	<row id="STAFF_ROLL_STR_262">
 		<language name="JPN" width="256">よしはら　かずき</language>
 		<language name="JPN_KANJI" width="256">よしはら　かずき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_261">
+	<row id="STAFF_ROLL_STR_263">
 		<language name="JPN" width="256">あんどう　かおり</language>
 		<language name="JPN_KANJI" width="256">あんどう　かおり</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_262">
+	<row id="STAFF_ROLL_STR_264">
 		<language name="JPN" width="256">あらき　ひであき</language>
 		<language name="JPN_KANJI" width="256">あらき　ひであき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_263">
+	<row id="STAFF_ROLL_STR_265">
 		<language name="JPN" width="256">プロデューサー</language>
 		<language name="JPN_KANJI" width="256">プロデューサー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_264">
+	<row id="STAFF_ROLL_STR_266">
 		<language name="JPN" width="256">ますだ　じゅんいち</language>
 		<language name="JPN_KANJI" width="256">ますだ　じゅんいち</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_265">
+	<row id="STAFF_ROLL_STR_267">
 		<language name="JPN" width="256">やまがみ　ひとし</language>
 		<language name="JPN_KANJI" width="256">やまがみ　ひとし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_266">
+	<row id="STAFF_ROLL_STR_268">
 		<language name="JPN" width="256">えがみ　しゅうさく</language>
 		<language name="JPN_KANJI" width="256">えがみ　しゅうさく</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_267">
+	<row id="STAFF_ROLL_STR_269">
 		<language name="JPN" width="256">つる　ひろあき</language>
 		<language name="JPN_KANJI" width="256">つる　ひろあき</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_268">
+	<row id="STAFF_ROLL_STR_270">
 		<language name="JPN" width="256">エグゼクティブ　プロデューサー</language>
 		<language name="JPN_KANJI" width="256">エグゼクティブ　プロデューサー</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_269">
+	<row id="STAFF_ROLL_STR_271">
 		<language name="JPN" width="256">たじり　さとし</language>
 		<language name="JPN_KANJI" width="256">たじり　さとし</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_270">
+	<row id="STAFF_ROLL_STR_272">
 		<language name="JPN" width="256">いわた　さとる</language>
 		<language name="JPN_KANJI" width="256">いわた　さとる</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_271">
+	<row id="STAFF_ROLL_STR_273">
 		<language name="JPN" width="256">いしはら　つねかず</language>
 		<language name="JPN_KANJI" width="256">いしはら　つねかず</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_272">
+	<row id="STAFF_ROLL_STR_274">
 		<language name="JPN" width="256">かいはつ</language>
 		<language name="JPN_KANJI" width="256">かいはつ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_273">
+	<row id="STAFF_ROLL_STR_275">
 		<language name="JPN" width="256">ゲームフリーク</language>
 		<language name="JPN_KANJI" width="256">ゲームフリーク</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_274">
+	<row id="STAFF_ROLL_STR_276">
+		<language name="JPN" width="256">ポケットモンスターブラック</language>
+		<language name="JPN_KANJI" width="256">ポケットモンスターブラック</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_277">
 		<language name="JPN" width="256">おわり</language>
 		<language name="JPN_KANJI" width="256">おわり</language>
 	</row>

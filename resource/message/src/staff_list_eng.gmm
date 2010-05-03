@@ -394,8 +394,8 @@
 
 
 	<row id="STAFF_ROLL_STR_000">
-		<language name="JPN" width="256">DIRECTED  BY</language>
-		<language name="JPN_KANJI" width="256">DIRECTED  BY</language>
+		<language name="JPN" width="256">DIRECTOR</language>
+		<language name="JPN_KANJI" width="256">DIRECTOR</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_001">
@@ -404,26 +404,1376 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_002">
-		<language name="JPN" width="256">gym  Main  Programer</language>
-		<language name="JPN_KANJI" width="256">gym  Main  Programer</language>
+		<language name="JPN" width="256">2D  ART  DIRECTOR</language>
+		<language name="JPN_KANJI" width="256">2D  ART  DIRECTOR</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_003">
+		<language name="JPN" width="256">KEN  SUGIMORI</language>
+		<language name="JPN_KANJI" width="256">KEN  SUGIMORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_004">
+		<language name="JPN" width="256">3D  ART  DIRECTOR</language>
+		<language name="JPN_KANJI" width="256">3D  ART  DIRECTOR</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_005">
+		<language name="JPN" width="256">TAKAO  UNNO</language>
+		<language name="JPN_KANJI" width="256">TAKAO  UNNO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_006">
+		<language name="JPN" width="256">PROGRAM  DIRECTOR</language>
+		<language name="JPN_KANJI" width="256">PROGRAM  DIRECTOR</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_007">
+		<language name="JPN" width="256">TETSUYA  WATANABE</language>
+		<language name="JPN_KANJI" width="256">TETSUYA  WATANABE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_008">
+		<language name="JPN" width="256">PLANNING  DIRECTOR</language>
+		<language name="JPN_KANJI" width="256">PLANNING  DIRECTOR</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_009">
+		<language name="JPN" width="256">TAKESHI  KAWACHIMARU</language>
+		<language name="JPN_KANJI" width="256">TAKESHI  KAWACHIMARU</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_010">
+		<language name="JPN" width="256">SCENARIO</language>
+		<language name="JPN_KANJI" width="256">SCENARIO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_011">
+		<language name="JPN" width="256">TOSHINOBU  MATSUMIYA</language>
+		<language name="JPN_KANJI" width="256">TOSHINOBU  MATSUMIYA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_012">
+		<language name="JPN" width="256">Wi-Fi,  WIRELESS  and  IR  SYSTEM  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">Wi-Fi,  WIRELESS  and  IR  SYSTEM  PROGRAMMING</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_013">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_014">
+		<language name="JPN" width="256">KATSUMI  OHNO</language>
+		<language name="JPN_KANJI" width="256">KATSUMI  OHNO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_015">
+		<language name="JPN" width="256">YOSHINORI  MATSUDA</language>
+		<language name="JPN_KANJI" width="256">YOSHINORI  MATSUDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_016">
+		<language name="JPN" width="256">TORU  NAGIHASHI</language>
+		<language name="JPN_KANJI" width="256">TORU  NAGIHASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_017">
+		<language name="JPN" width="256">NOBUHIKO  ARIIZUMI</language>
+		<language name="JPN_KANJI" width="256">NOBUHIKO  ARIIZUMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_018">
+		<language name="JPN" width="256">BATTLE  SYSTEM  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">BATTLE  SYSTEM  PROGRAMMING</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_019">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_020">
+		<language name="JPN" width="256">HISASHI  SOGABE</language>
+		<language name="JPN_KANJI" width="256">HISASHI  SOGABE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_021">
+		<language name="JPN" width="256">MASAO  TAYA</language>
+		<language name="JPN_KANJI" width="256">MASAO  TAYA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_022">
+		<language name="JPN" width="256">FIELD  SYSTEM  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">FIELD  SYSTEM  PROGRAMMING</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_023">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_024">
+		<language name="JPN" width="256">SOSUKE  TAMADA</language>
+		<language name="JPN_KANJI" width="256">SOSUKE  TAMADA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_025">
+		<language name="JPN" width="256">KEITA  KAGAYA</language>
+		<language name="JPN_KANJI" width="256">KEITA  KAGAYA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_026">
+		<language name="JPN" width="256">MIYUKI  IWASAWA</language>
+		<language name="JPN_KANJI" width="256">MIYUKI  IWASAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_027">
 		<language name="JPN" width="256">NOZOMU  SAITO</language>
 		<language name="JPN_KANJI" width="256">NOZOMU  SAITO</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_004">
-		<language name="JPN" width="256">Rail  System  Programer</language>
-		<language name="JPN_KANJI" width="256">Rail  System  Programer</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_005">
+	<row id="STAFF_ROLL_STR_028">
 		<language name="JPN" width="256">TOMOYA  TAKAHASHI</language>
 		<language name="JPN_KANJI" width="256">TOMOYA  TAKAHASHI</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_006">
+	<row id="STAFF_ROLL_STR_029">
+		<language name="JPN" width="256">TOSHIHIRO  OBATA</language>
+		<language name="JPN_KANJI" width="256">TOSHIHIRO  OBATA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_030">
+		<language name="JPN" width="256">UI  SYSTEM  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">UI  SYSTEM  PROGRAMMING</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_031">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_032">
+		<language name="JPN" width="256">AKITO  MORI</language>
+		<language name="JPN_KANJI" width="256">AKITO  MORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_033">
+		<language name="JPN" width="256">HIROYUKI  NAKAMURA</language>
+		<language name="JPN_KANJI" width="256">HIROYUKI  NAKAMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_034">
+		<language name="JPN" width="256">KOJI  KAWADA</language>
+		<language name="JPN_KANJI" width="256">KOJI  KAWADA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_035">
+		<language name="JPN" width="256">GENYA  HOSAKA</language>
+		<language name="JPN_KANJI" width="256">GENYA  HOSAKA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_036">
+		<language name="JPN" width="256">Battle  Server  Main  Programming</language>
+		<language name="JPN_KANJI" width="256">Battle  Server  Main  Programming</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_037">
+		<language name="JPN" width="256">MASAO  TAYA</language>
+		<language name="JPN_KANJI" width="256">MASAO  TAYA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_038">
+		<language name="JPN" width="256">gym  Main  Programming</language>
+		<language name="JPN_KANJI" width="256">gym  Main  Programming</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_039">
+		<language name="JPN" width="256">NOZOMU  SAITO</language>
+		<language name="JPN_KANJI" width="256">NOZOMU  SAITO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_040">
+		<language name="JPN" width="256">Rail  System  Programming</language>
+		<language name="JPN_KANJI" width="256">Rail  System  Programming</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_041">
+		<language name="JPN" width="256">TOMOYA  TAKAHASHI</language>
+		<language name="JPN_KANJI" width="256">TOMOYA  TAKAHASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_042">
+		<language name="JPN" width="256">3D  Tool  Programming</language>
+		<language name="JPN_KANJI" width="256">3D  Tool  Programming</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_043">
+		<language name="JPN" width="256">MIYUKI  IWASAWA</language>
+		<language name="JPN_KANJI" width="256">MIYUKI  IWASAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_044">
+		<language name="JPN" width="256">SYSYTEM  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">SYSYTEM  PROGRAMMING</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_045">
+		<language name="JPN" width="256">TETSUYA  WATANABE</language>
+		<language name="JPN_KANJI" width="256">TETSUYA  WATANABE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_046">
+		<language name="JPN" width="256">HISASHI  SOGABE</language>
+		<language name="JPN_KANJI" width="256">HISASHI  SOGABE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_047">
+		<language name="JPN" width="256">SOSUKE  TAMADA</language>
+		<language name="JPN_KANJI" width="256">SOSUKE  TAMADA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_048">
+		<language name="JPN" width="256">KATSUMI  OHNO</language>
+		<language name="JPN_KANJI" width="256">KATSUMI  OHNO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_049">
+		<language name="JPN" width="256">MASAO  TAYA</language>
+		<language name="JPN_KANJI" width="256">MASAO  TAYA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_050">
+		<language name="JPN" width="256">DIRECTOR  OF  POKE'MON  CHARACTERS</language>
+		<language name="JPN_KANJI" width="256">DIRECTOR  OF  POKE'MON  CHARACTERS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_051">
+		<language name="JPN" width="256">KEN  SUGIMORI</language>
+		<language name="JPN_KANJI" width="256">KEN  SUGIMORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_052">
+		<language name="JPN" width="256">POKE'MON  CHARACTER  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKE'MON  CHARACTER  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_053">
+		<language name="JPN" width="256">KEN  SUGIMORI</language>
+		<language name="JPN_KANJI" width="256">KEN  SUGIMORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_054">
+		<language name="JPN" width="256">TAKAO  UNNO</language>
+		<language name="JPN_KANJI" width="256">TAKAO  UNNO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_055">
+		<language name="JPN" width="256">MOTOFUMI  FUJIWARA</language>
+		<language name="JPN_KANJI" width="256">MOTOFUMI  FUJIWARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_056">
+		<language name="JPN" width="256">HIRONOBU  YOSHIDA</language>
+		<language name="JPN_KANJI" width="256">HIRONOBU  YOSHIDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_057">
+		<language name="JPN" width="256">KENKICHI  TOYAMA</language>
+		<language name="JPN_KANJI" width="256">KENKICHI  TOYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_058">
+		<language name="JPN" width="256">HIROKI  FUCHINO</language>
+		<language name="JPN_KANJI" width="256">HIROKI  FUCHINO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_059">
+		<language name="JPN" width="256">YUSUKE  OHMURA</language>
+		<language name="JPN_KANJI" width="256">YUSUKE  OHMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_060">
+		<language name="JPN" width="256">SAYA  TSURUTA</language>
+		<language name="JPN_KANJI" width="256">SAYA  TSURUTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_061">
+		<language name="JPN" width="256">LEE  HYUNJUNG</language>
+		<language name="JPN_KANJI" width="256">LEE  HYUNJUNG</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_062">
+		<language name="JPN" width="256">MANA  IBE</language>
+		<language name="JPN_KANJI" width="256">MANA  IBE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_063">
+		<language name="JPN" width="256">REIKO  TANOUE</language>
+		<language name="JPN_KANJI" width="256">REIKO  TANOUE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_064">
+		<language name="JPN" width="256">TOMOHIRO  KITAKAZE</language>
+		<language name="JPN_KANJI" width="256">TOMOHIRO  KITAKAZE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_065">
+		<language name="JPN" width="256">MAIKO  FUJIWARA</language>
+		<language name="JPN_KANJI" width="256">MAIKO  FUJIWARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_066">
+		<language name="JPN" width="256">MEGUMI  MIZUTANI</language>
+		<language name="JPN_KANJI" width="256">MEGUMI  MIZUTANI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_067">
+		<language name="JPN" width="256">MTOMOHIKO  OHKUBO</language>
+		<language name="JPN_KANJI" width="256">MTOMOHIKO  OHKUBO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_068">
+		<language name="JPN" width="256">JAMES  TURNER</language>
+		<language name="JPN_KANJI" width="256">JAMES  TURNER</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_069">
+		<language name="JPN" width="256">KEIKO  MORITSUGU</language>
+		<language name="JPN_KANJI" width="256">KEIKO  MORITSUGU</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_070">
+		<language name="JPN" width="256">ATSUKO  NISHIDA</language>
+		<language name="JPN_KANJI" width="256">ATSUKO  NISHIDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_071">
+		<language name="JPN" width="256">2D  DOT  GRAPHICS</language>
+		<language name="JPN_KANJI" width="256">2D  DOT  GRAPHICS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_072">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_073">
+		<language name="JPN" width="256">HIRONOBU  YOSHIDA</language>
+		<language name="JPN_KANJI" width="256">HIRONOBU  YOSHIDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_074">
+		<language name="JPN" width="256">MOTOFUMI  FUJIWARA</language>
+		<language name="JPN_KANJI" width="256">MOTOFUMI  FUJIWARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_075">
+		<language name="JPN" width="256">KENKICHI  TOYAMA</language>
+		<language name="JPN_KANJI" width="256">KENKICHI  TOYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_076">
+		<language name="JPN" width="256">YUSUKE  OHMURA</language>
+		<language name="JPN_KANJI" width="256">YUSUKE  OHMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_077">
+		<language name="JPN" width="256">SAYA  TSURUTA</language>
+		<language name="JPN_KANJI" width="256">SAYA  TSURUTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_078">
+		<language name="JPN" width="256">TOMOHIRO  KITAKAZE</language>
+		<language name="JPN_KANJI" width="256">TOMOHIRO  KITAKAZE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_079">
+		<language name="JPN" width="256">MEGUMI  MIZUTANI</language>
+		<language name="JPN_KANJI" width="256">MEGUMI  MIZUTANI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_080">
+		<language name="JPN" width="256">3D  MAP  GRAPHICS</language>
+		<language name="JPN_KANJI" width="256">3D  MAP  GRAPHICS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_081">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_082">
+		<language name="JPN" width="256">HIROKI  FUCHINO</language>
+		<language name="JPN_KANJI" width="256">HIROKI  FUCHINO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_083">
+		<language name="JPN" width="256">LEE  HYUNJUNG</language>
+		<language name="JPN_KANJI" width="256">LEE  HYUNJUNG</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_084">
+		<language name="JPN" width="256">MANA  IBE</language>
+		<language name="JPN_KANJI" width="256">MANA  IBE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_085">
+		<language name="JPN" width="256">REIKO  TANOUE</language>
+		<language name="JPN_KANJI" width="256">REIKO  TANOUE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_086">
+		<language name="JPN" width="256">MAIKO  FUJIWARA</language>
+		<language name="JPN_KANJI" width="256">MAIKO  FUJIWARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_087">
+		<language name="JPN" width="256">MTOMOHIKO  OHKUBO</language>
+		<language name="JPN_KANJI" width="256">MTOMOHIKO  OHKUBO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_088">
+		<language name="JPN" width="256">JAMES  TURNER</language>
+		<language name="JPN_KANJI" width="256">JAMES  TURNER</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_089">
+		<language name="JPN" width="256">3D  Graphics  System  Design</language>
+		<language name="JPN_KANJI" width="256">3D  Graphics  System  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_090">
+		<language name="JPN" width="256">TAKAO  UNNO</language>
+		<language name="JPN_KANJI" width="256">TAKAO  UNNO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_091">
+		<language name="JPN" width="256">Trainer  Graphics  Main  Design</language>
+		<language name="JPN_KANJI" width="256">Trainer  Graphics  Main  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_092">
+		<language name="JPN" width="256">YUSUKE  OHMURA</language>
+		<language name="JPN_KANJI" width="256">YUSUKE  OHMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_093">
+		<language name="JPN" width="256">Battle  Graphics  Design</language>
+		<language name="JPN_KANJI" width="256">Battle  Graphics  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_094">
+		<language name="JPN" width="256">HIRONOBU  YOSHIDA</language>
+		<language name="JPN_KANJI" width="256">HIRONOBU  YOSHIDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_095">
+		<language name="JPN" width="256">Battle  Effect  Graphics  Design</language>
+		<language name="JPN_KANJI" width="256">Battle  Effect  Graphics  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_096">
+		<language name="JPN" width="256">MOTOFUMI  FUJIWARA</language>
+		<language name="JPN_KANJI" width="256">MOTOFUMI  FUJIWARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_097">
+		<language name="JPN" width="256">Digital  Movie  Main  Design</language>
+		<language name="JPN_KANJI" width="256">Digital  Movie  Main  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_098">
+		<language name="JPN" width="256">JAMES  TURNER</language>
+		<language name="JPN_KANJI" width="256">JAMES  TURNER</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_099">
+		<language name="JPN" width="256">Concept  Illustration</language>
+		<language name="JPN_KANJI" width="256">Concept  Illustration</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_100">
+		<language name="JPN" width="256">KEIKO  MORITSUGU</language>
+		<language name="JPN_KANJI" width="256">KEIKO  MORITSUGU</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_101">
+		<language name="JPN" width="256">POKE'MON  CONCEPT  &amp;  POKE'DEX  TEXT</language>
+		<language name="JPN_KANJI" width="256">POKE'MON  CONCEPT  &amp;  POKE'DEX  TEXT</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_102">
+		<language name="JPN" width="256">KENJI  MATSUSHIMA</language>
+		<language name="JPN_KANJI" width="256">KENJI  MATSUSHIMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_103">
+		<language name="JPN" width="256">MUSIC</language>
+		<language name="JPN_KANJI" width="256">MUSIC</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_104">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_105">
+		<language name="JPN" width="256">SHOTA  KAGEYAMA</language>
+		<language name="JPN_KANJI" width="256">SHOTA  KAGEYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_106">
+		<language name="JPN" width="256">GO  ICHINOSE</language>
+		<language name="JPN_KANJI" width="256">GO  ICHINOSE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_107">
+		<language name="JPN" width="256">HITOMI  SATO</language>
+		<language name="JPN_KANJI" width="256">HITOMI  SATO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_108">
+		<language name="JPN" width="256">JUNICHI  MASUDA</language>
+		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_109">
+		<language name="JPN" width="256">MINAKO  ADACHI</language>
+		<language name="JPN_KANJI" width="256">MINAKO  ADACHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_110">
+		<language name="JPN" width="256">POKE'MON  VOICE  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKE'MON  VOICE  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_111">
+		<language name="JPN" width="256">GO  ICHINOSE</language>
+		<language name="JPN_KANJI" width="256">GO  ICHINOSE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_112">
+		<language name="JPN" width="256">SOUND  EFFECTS</language>
+		<language name="JPN_KANJI" width="256">SOUND  EFFECTS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_113">
+		<language name="JPN" width="256">MINAKO  ADACHI</language>
+		<language name="JPN_KANJI" width="256">MINAKO  ADACHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_114">
+		<language name="JPN" width="256">Interactive  Sound  System  Design</language>
+		<language name="JPN_KANJI" width="256">Interactive  Sound  System  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_115">
+		<language name="JPN" width="256">GO  ICHINOSE</language>
+		<language name="JPN_KANJI" width="256">GO  ICHINOSE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_116">
+		<language name="JPN" width="256">"Hilink, ""Road 10"", ""Ending Theme"""</language>
+		<language name="JPN_KANJI" width="256">"Hilink, ""Road 10"", ""Ending Theme"""</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_117">
+		<language name="JPN" width="256">"Soryu City, ""Tasogare Oyaji"", ""Kanawa Town"""</language>
+		<language name="JPN_KANJI" width="256">"Soryu City, ""Tasogare Oyaji"", ""Kanawa Town"""</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_118">
+		<language name="JPN" width="256">And More Musics</language>
+		<language name="JPN_KANJI" width="256">And More Musics</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_119">
+		<language name="JPN" width="256">And More Musics</language>
+		<language name="JPN_KANJI" width="256">And More Musics</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_120">
+		<language name="JPN" width="256">SHOTA  KAGEYAMA</language>
+		<language name="JPN_KANJI" width="256">SHOTA  KAGEYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_121">
+		<language name="JPN" width="256">GO  ICHINOSE</language>
+		<language name="JPN_KANJI" width="256">GO  ICHINOSE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_122">
+		<language name="JPN" width="256">"Bicycle, ""Shift Factory"", ""Kagome Town"""</language>
+		<language name="JPN_KANJI" width="256">"Bicycle, ""Shift Factory"", ""Kagome Town"""</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_123">
+		<language name="JPN" width="256">And More Musics</language>
+		<language name="JPN_KANJI" width="256">And More Musics</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_124">
+		<language name="JPN" width="256">All Battle Composition</language>
+		<language name="JPN_KANJI" width="256">All Battle Composition</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_125">
+		<language name="JPN" width="256">HITOMI  SATO</language>
+		<language name="JPN_KANJI" width="256">HITOMI  SATO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_126">
+		<language name="JPN" width="256">JUNICHI  MASUDA</language>
+		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_127">
+		<language name="JPN" width="256">GAME  UI  SYSTEM  DESIGN</language>
+		<language name="JPN_KANJI" width="256">GAME  UI  SYSTEM  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_128">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_129">
+		<language name="JPN" width="256">TETSUJI  OHTA</language>
+		<language name="JPN_KANJI" width="256">TETSUJI  OHTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_130">
+		<language name="JPN" width="256">TERUYUKI  SHIMOYAMADA</language>
+		<language name="JPN_KANJI" width="256">TERUYUKI  SHIMOYAMADA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_131">
+		<language name="JPN" width="256">KAZUMASA  IWAO</language>
+		<language name="JPN_KANJI" width="256">KAZUMASA  IWAO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_132">
+		<language name="JPN" width="256">HIRO  NAKAMURA</language>
+		<language name="JPN_KANJI" width="256">HIRO  NAKAMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_133">
+		<language name="JPN" width="256">GAME  DIALOG  DESIGN</language>
+		<language name="JPN_KANJI" width="256">GAME  DIALOG  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_134">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_135">
+		<language name="JPN" width="256">TOSHINOBU  MATSUMIYA</language>
+		<language name="JPN_KANJI" width="256">TOSHINOBU  MATSUMIYA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_136">
+		<language name="JPN" width="256">HITOMI  SATO</language>
+		<language name="JPN_KANJI" width="256">HITOMI  SATO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_137">
+		<language name="JPN" width="256">KATSUNORI  SUGINAKA</language>
+		<language name="JPN_KANJI" width="256">KATSUNORI  SUGINAKA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_138">
+		<language name="JPN" width="256">GAME  ACTION  SCRIPT  DESIGN</language>
+		<language name="JPN_KANJI" width="256">GAME  ACTION  SCRIPT  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_139">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_140">
+		<language name="JPN" width="256">MASAFUMI  SAITO</language>
+		<language name="JPN_KANJI" width="256">MASAFUMI  SAITO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_141">
+		<language name="JPN" width="256">MAI  MIZUGUCHI</language>
+		<language name="JPN_KANJI" width="256">MAI  MIZUGUCHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_142">
+		<language name="JPN" width="256">NAOTO  MURAKAMI</language>
+		<language name="JPN_KANJI" width="256">NAOTO  MURAKAMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_143">
+		<language name="JPN" width="256">GAME  BATTLE  SYSTEM  DESIGN</language>
+		<language name="JPN_KANJI" width="256">GAME  BATTLE  SYSTEM  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_144">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_145">
+		<language name="JPN" width="256">SHIGEKI  MORIMOTO</language>
+		<language name="JPN_KANJI" width="256">SHIGEKI  MORIMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_146">
+		<language name="JPN" width="256">KOJI  NISHINO</language>
+		<language name="JPN_KANJI" width="256">KOJI  NISHINO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_147">
+		<language name="JPN" width="256">GAME  DESIGN  OF  SPECIAL  ELEMENTS</language>
+		<language name="JPN_KANJI" width="256">GAME  DESIGN  OF  SPECIAL  ELEMENTS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_148">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_149">
+		<language name="JPN" width="256">SHIGERU  OHMORI</language>
+		<language name="JPN_KANJI" width="256">SHIGERU  OHMORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_150">
+		<language name="JPN" width="256">YUKIKO  HOZUMI</language>
+		<language name="JPN_KANJI" width="256">YUKIKO  HOZUMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_151">
+		<language name="JPN" width="256">AKIRA  NAKAMURA</language>
+		<language name="JPN_KANJI" width="256">AKIRA  NAKAMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_152">
+		<language name="JPN" width="256">GAME  MAP  DESIGN</language>
+		<language name="JPN_KANJI" width="256">GAME  MAP  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_153">
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_154">
+		<language name="JPN" width="256">SUGURU  NAKATSUI</language>
+		<language name="JPN_KANJI" width="256">SUGURU  NAKATSUI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_155">
+		<language name="JPN" width="256">TADASHI  TAKAHASHI</language>
+		<language name="JPN_KANJI" width="256">TADASHI  TAKAHASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_156">
+		<language name="JPN" width="256">KAZUMASA  IWAO</language>
+		<language name="JPN_KANJI" width="256">KAZUMASA  IWAO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_157">
+		<language name="JPN" width="256">KATSUNORI  SUGINAKA</language>
+		<language name="JPN_KANJI" width="256">KATSUNORI  SUGINAKA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_158">
+		<language name="JPN" width="256">YUKIKO  HOZUMI</language>
+		<language name="JPN_KANJI" width="256">YUKIKO  HOZUMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_159">
+		<language name="JPN" width="256">NAOTO  MURAKAMI</language>
+		<language name="JPN_KANJI" width="256">NAOTO  MURAKAMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_160">
+		<language name="JPN" width="256">User  Interface  Main  Design</language>
+		<language name="JPN_KANJI" width="256">User  Interface  Main  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_161">
+		<language name="JPN" width="256">TETSUJI  OHTA</language>
+		<language name="JPN_KANJI" width="256">TETSUJI  OHTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_162">
+		<language name="JPN" width="256">Map  Superviser  &amp;  Map  Set  Design</language>
+		<language name="JPN_KANJI" width="256">Map  Superviser  &amp;  Map  Set  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_163">
+		<language name="JPN" width="256">SUGURU  NAKATSUI</language>
+		<language name="JPN_KANJI" width="256">SUGURU  NAKATSUI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_164">
+		<language name="JPN" width="256">Chosa  Radar  And Surechigai  Design</language>
+		<language name="JPN_KANJI" width="256">Chosa  Radar  And Surechigai  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_165">
+		<language name="JPN" width="256">SHIGERU  OHMORI</language>
+		<language name="JPN_KANJI" width="256">SHIGERU  OHMORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_166">
+		<language name="JPN" width="256">Wi-Fi  Battle  System  Design</language>
+		<language name="JPN_KANJI" width="256">Wi-Fi  Battle  System  Design</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_167">
+		<language name="JPN" width="256">TERUYUKI  SHIMOYAMADA</language>
+		<language name="JPN_KANJI" width="256">TERUYUKI  SHIMOYAMADA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_168">
+		<language name="JPN" width="256">POKE'MON  &amp;  TRAINER  PARAMETER  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKE'MON  &amp;  TRAINER  PARAMETER  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_169">
+		<language name="JPN" width="256">KOJI  NISHINO</language>
+		<language name="JPN_KANJI" width="256">KOJI  NISHINO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_170">
+		<language name="JPN" width="256">TETSUJI  OHTA</language>
+		<language name="JPN_KANJI" width="256">TETSUJI  OHTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_171">
+		<language name="JPN" width="256">TERUYUKI  SHIMOYAMADA</language>
+		<language name="JPN_KANJI" width="256">TERUYUKI  SHIMOYAMADA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_172">
+		<language name="JPN" width="256">SHIGEKI  MORIMOTO</language>
+		<language name="JPN_KANJI" width="256">SHIGEKI  MORIMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_173">
+		<language name="JPN" width="256">BATTLE  SUBWAY  PARAMETER  DESIGN</language>
+		<language name="JPN_KANJI" width="256">BATTLE  SUBWAY  PARAMETER  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_174">
+		<language name="JPN" width="256">SHIGEKI  MORIMOTO</language>
+		<language name="JPN_KANJI" width="256">SHIGEKI  MORIMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_175">
+		<language name="JPN" width="256">TETSUJI  OHTA</language>
+		<language name="JPN_KANJI" width="256">TETSUJI  OHTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_176">
+		<language name="JPN" width="256">KAZUMASA  IWAO</language>
+		<language name="JPN_KANJI" width="256">KAZUMASA  IWAO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_177">
+		<language name="JPN" width="256">  Wi-Fi  SERVER  DEVELOPMENT</language>
+		<language name="JPN_KANJI" width="256">  Wi-Fi  SERVER  DEVELOPMENT</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_178">
+		<language name="JPN" width="256">TAKAHIRO  YAMAGUCHI</language>
+		<language name="JPN_KANJI" width="256">TAKAHIRO  YAMAGUCHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_179">
+		<language name="JPN" width="256">RYO  YAMAGUCHI</language>
+		<language name="JPN_KANJI" width="256">RYO  YAMAGUCHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_180">
+		<language name="JPN" width="256">KAZUTOMO  NIWA</language>
+		<language name="JPN_KANJI" width="256">KAZUTOMO  NIWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_181">
+		<language name="JPN" width="256">TAKAAKI  TAKEUCHI</language>
+		<language name="JPN_KANJI" width="256">TAKAAKI  TAKEUCHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_182">
+		<language name="JPN" width="256">MIKIHIRO  ISHIKAWA</language>
+		<language name="JPN_KANJI" width="256">MIKIHIRO  ISHIKAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_183">
+		<language name="JPN" width="256">DIRECTOR  OF  LINKED  WEB  SITE</language>
+		<language name="JPN_KANJI" width="256">DIRECTOR  OF  LINKED  WEB  SITE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_184">
+		<language name="JPN" width="256">TAKESHI  KAWACHIMARU</language>
+		<language name="JPN_KANJI" width="256">TAKESHI  KAWACHIMARU</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_185">
+		<language name="JPN" width="256">LINKED  WEB  SITE  DESIGN</language>
+		<language name="JPN_KANJI" width="256">LINKED  WEB  SITE  DESIGN</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_186">
+		<language name="JPN" width="256">MAI  MIZUGUCHI</language>
+		<language name="JPN_KANJI" width="256">MAI  MIZUGUCHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_187">
+		<language name="JPN" width="256">TAKASHI  ORIKATA</language>
+		<language name="JPN_KANJI" width="256">TAKASHI  ORIKATA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_188">
+		<language name="JPN" width="256">MITSUYO  MATSUNAGA</language>
+		<language name="JPN_KANJI" width="256">MITSUYO  MATSUNAGA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_189">
+		<language name="JPN" width="256">TOMOKO  NAKAYAMA</language>
+		<language name="JPN_KANJI" width="256">TOMOKO  NAKAYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_190">
+		<language name="JPN" width="256">BASEMENT  FACTORY  PRODUCTIONS  CO.,LTD.</language>
+		<language name="JPN_KANJI" width="256">BASEMENT  FACTORY  PRODUCTIONS  CO.,LTD.</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_191">
+		<language name="JPN" width="256">DEBUG  MANAGEMENT</language>
+		<language name="JPN_KANJI" width="256">DEBUG  MANAGEMENT</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_192">
+		<language name="JPN" width="256">YUKI  TANIKAWA</language>
+		<language name="JPN_KANJI" width="256">YUKI  TANIKAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_193">
+		<language name="JPN" width="256">SHUHEI  FURUKAWA</language>
+		<language name="JPN_KANJI" width="256">SHUHEI  FURUKAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_194">
+		<language name="JPN" width="256">YOSHIKAZU  TANAKA</language>
+		<language name="JPN_KANJI" width="256">YOSHIKAZU  TANAKA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_195">
+		<language name="JPN" width="256">HITOSHI  NISHIZAWA</language>
+		<language name="JPN_KANJI" width="256">HITOSHI  NISHIZAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_196">
+		<language name="JPN" width="256">KEISUKE  FUKUSHIMA</language>
+		<language name="JPN_KANJI" width="256">KEISUKE  FUKUSHIMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_197">
+		<language name="JPN" width="256">MOTOKI  NAKAJIMA</language>
+		<language name="JPN_KANJI" width="256">MOTOKI  NAKAJIMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_198">
+		<language name="JPN" width="256">DEBUG</language>
+		<language name="JPN_KANJI" width="256">DEBUG</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_199">
+		<language name="JPN" width="256">MARIO  CLUB</language>
+		<language name="JPN_KANJI" width="256">MARIO  CLUB</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_200">
+		<language name="JPN" width="256">B &amp; W  PLOT</language>
+		<language name="JPN_KANJI" width="256">B &amp; W  PLOT</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_201">
+		<language name="JPN" width="256">JUNICHI  MASUDA</language>
+		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_202">
+		<language name="JPN" width="256">GRAPHICS  &amp;  SOUND  DESIGN  SPECIAL  THANKS</language>
+		<language name="JPN_KANJI" width="256">GRAPHICS  &amp;  SOUND  DESIGN  SPECIAL  THANKS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_203">
+		<language name="JPN" width="256">DAISUKE  NAGATA</language>
+		<language name="JPN_KANJI" width="256">DAISUKE  NAGATA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_204">
+		<language name="JPN" width="256">RIKA  KUNISHITA</language>
+		<language name="JPN_KANJI" width="256">RIKA  KUNISHITA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_205">
+		<language name="JPN" width="256">NATSUMI  NISHIHATA</language>
+		<language name="JPN_KANJI" width="256">NATSUMI  NISHIHATA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_206">
+		<language name="JPN" width="256">CHIHIRO  TAKAHASHI</language>
+		<language name="JPN_KANJI" width="256">CHIHIRO  TAKAHASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_207">
+		<language name="JPN" width="256">SHINICHI  OHNISHI</language>
+		<language name="JPN_KANJI" width="256">SHINICHI  OHNISHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_208">
+		<language name="JPN" width="256">SHINGO  YASUMOTO</language>
+		<language name="JPN_KANJI" width="256">SHINGO  YASUMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_209">
+		<language name="JPN" width="256">SPECIAL  THANKS</language>
+		<language name="JPN_KANJI" width="256">SPECIAL  THANKS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_210">
+		<language name="JPN" width="256">KENJI  TOMINAGA</language>
+		<language name="JPN_KANJI" width="256">KENJI  TOMINAGA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_211">
+		<language name="JPN" width="256">YUICHIRO  MORI</language>
+		<language name="JPN_KANJI" width="256">YUICHIRO  MORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_212">
+		<language name="JPN" width="256">YOSHIO  TAJIRI</language>
+		<language name="JPN_KANJI" width="256">YOSHIO  TAJIRI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_213">
+		<language name="JPN" width="256">TEIKO  SASAKI</language>
+		<language name="JPN_KANJI" width="256">TEIKO  SASAKI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_214">
+		<language name="JPN" width="256">EMI  ENDO</language>
+		<language name="JPN_KANJI" width="256">EMI  ENDO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_215">
+		<language name="JPN" width="256">ASAMI  SATO</language>
+		<language name="JPN_KANJI" width="256">ASAMI  SATO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_216">
+		<language name="JPN" width="256">SHIHO  HARAGUCHI</language>
+		<language name="JPN_KANJI" width="256">SHIHO  HARAGUCHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_217">
+		<language name="JPN" width="256">SACHIKO  HAMANO</language>
+		<language name="JPN_KANJI" width="256">SACHIKO  HAMANO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_218">
+		<language name="JPN" width="256">HARUKA  SUNAGA</language>
+		<language name="JPN_KANJI" width="256">HARUKA  SUNAGA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_219">
+		<language name="JPN" width="256">HIROTO  ITO</language>
+		<language name="JPN_KANJI" width="256">HIROTO  ITO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_220">
+		<language name="JPN" width="256">MASAYUKI  ONOUE</language>
+		<language name="JPN_KANJI" width="256">MASAYUKI  ONOUE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_221">
+		<language name="JPN" width="256">KATSUHIKO  ICHIRAKU</language>
+		<language name="JPN_KANJI" width="256">KATSUHIKO  ICHIRAKU</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_222">
+		<language name="JPN" width="256">MAYO  OHTANI</language>
+		<language name="JPN_KANJI" width="256">MAYO  OHTANI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_223">
+		<language name="JPN" width="256">YUKI  KAWAMOTO</language>
+		<language name="JPN_KANJI" width="256">YUKI  KAWAMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_224">
+		<language name="JPN" width="256">KENJIRO  ITO</language>
+		<language name="JPN_KANJI" width="256">KENJIRO  ITO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_225">
+		<language name="JPN" width="256">TOMOTAKA  KOMURA</language>
+		<language name="JPN_KANJI" width="256">TOMOTAKA  KOMURA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_226">
+		<language name="JPN" width="256">SUSUMU  FUKUNAGA</language>
+		<language name="JPN_KANJI" width="256">SUSUMU  FUKUNAGA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_227">
+		<language name="JPN" width="256">TOSHIO  MIYAHARA</language>
+		<language name="JPN_KANJI" width="256">TOSHIO  MIYAHARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_228">
+		<language name="JPN" width="256">GAKU  SUSAI</language>
+		<language name="JPN_KANJI" width="256">GAKU  SUSAI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_229">
+		<language name="JPN" width="256">OSAMU  SUZUKI</language>
+		<language name="JPN_KANJI" width="256">OSAMU  SUZUKI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_230">
+		<language name="JPN" width="256">JIRO  KOGA</language>
+		<language name="JPN_KANJI" width="256">JIRO  KOGA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_231">
+		<language name="JPN" width="256">MICHIKO  TAKIZAWA</language>
+		<language name="JPN_KANJI" width="256">MICHIKO  TAKIZAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_232">
+		<language name="JPN" width="256">GAKUJI  NOMOTO</language>
+		<language name="JPN_KANJI" width="256">GAKUJI  NOMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_233">
+		<language name="JPN" width="256">MISUZU  KANAYAMA</language>
+		<language name="JPN_KANJI" width="256">MISUZU  KANAYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_234">
+		<language name="JPN" width="256">YUICHIRO  TSUMITA</language>
+		<language name="JPN_KANJI" width="256">YUICHIRO  TSUMITA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_235">
+		<language name="JPN" width="256">OSAMU  FUJITA</language>
+		<language name="JPN_KANJI" width="256">OSAMU  FUJITA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_236">
+		<language name="JPN" width="256">MASAYUKI  SOGA</language>
+		<language name="JPN_KANJI" width="256">MASAYUKI  SOGA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_237">
+		<language name="JPN" width="256">MAKIKO  TAKAHASHI</language>
+		<language name="JPN_KANJI" width="256">MAKIKO  TAKAHASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_238">
+		<language name="JPN" width="256">FUMIE  YOKOTA</language>
+		<language name="JPN_KANJI" width="256">FUMIE  YOKOTA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_239">
+		<language name="JPN" width="256">TERUKI  MURAKAWA</language>
+		<language name="JPN_KANJI" width="256">TERUKI  MURAKAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_240">
+		<language name="JPN" width="256">KIMIKO  NAKAMICHI</language>
+		<language name="JPN_KANJI" width="256">KIMIKO  NAKAMICHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_241">
+		<language name="JPN" width="256">SOICHI  YAMAMOTO</language>
+		<language name="JPN_KANJI" width="256">SOICHI  YAMAMOTO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_242">
+		<language name="JPN" width="256">TOHRU  INAGE</language>
+		<language name="JPN_KANJI" width="256">TOHRU  INAGE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_243">
+		<language name="JPN" width="256">HIROSHI  AKUNE</language>
+		<language name="JPN_KANJI" width="256">HIROSHI  AKUNE</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_244">
+		<language name="JPN" width="256">DAISUKE  KOMAI</language>
+		<language name="JPN_KANJI" width="256">DAISUKE  KOMAI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_245">
+		<language name="JPN" width="256">TOSHIO  MUKAI</language>
+		<language name="JPN_KANJI" width="256">TOSHIO  MUKAI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_246">
+		<language name="JPN" width="256">CHIAKI  TAKAHARA</language>
+		<language name="JPN_KANJI" width="256">CHIAKI  TAKAHARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_247">
+		<language name="JPN" width="256">ART  WORK</language>
+		<language name="JPN_KANJI" width="256">ART  WORK</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_248">
+		<language name="JPN" width="256">KIYOMI  ITANI</language>
+		<language name="JPN_KANJI" width="256">KIYOMI  ITANI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_249">
+		<language name="JPN" width="256">YASUKO  SUGIYAMA</language>
+		<language name="JPN_KANJI" width="256">YASUKO  SUGIYAMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_250">
+		<language name="JPN" width="256">RYUICHI  SUZUKI</language>
+		<language name="JPN_KANJI" width="256">RYUICHI  SUZUKI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_251">
+		<language name="JPN" width="256">SACHIKO  NAKAMICHI</language>
+		<language name="JPN_KANJI" width="256">SACHIKO  NAKAMICHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_252">
+		<language name="JPN" width="256">GLOBALIZER</language>
+		<language name="JPN_KANJI" width="256">GLOBALIZER</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_253">
+		<language name="JPN" width="256">AKIRA  KINASHI</language>
+		<language name="JPN_KANJI" width="256">AKIRA  KINASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_254">
+		<language name="JPN" width="256">NORIKO  NAKAO</language>
+		<language name="JPN_KANJI" width="256">NORIKO  NAKAO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_255">
+		<language name="JPN" width="256">HIRONORI  ICHIBAYASHI</language>
+		<language name="JPN_KANJI" width="256">HIRONORI  ICHIBAYASHI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_256">
+		<language name="JPN" width="256">INFORMATION  COORDINATORS</language>
+		<language name="JPN_KANJI" width="256">INFORMATION  COORDINATORS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_257">
+		<language name="JPN" width="256">YURI  SAKURAI</language>
+		<language name="JPN_KANJI" width="256">YURI  SAKURAI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_258">
+		<language name="JPN" width="256">TOYA  YONEDA</language>
+		<language name="JPN_KANJI" width="256">TOYA  YONEDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_259">
+		<language name="JPN" width="256">COORDINATORS</language>
+		<language name="JPN_KANJI" width="256">COORDINATORS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_260">
+		<language name="JPN" width="256">SYUNSUKE  KOHORI</language>
+		<language name="JPN_KANJI" width="256">SYUNSUKE  KOHORI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_261">
+		<language name="JPN" width="256">KAZUKI  YOSHIHARA</language>
+		<language name="JPN_KANJI" width="256">KAZUKI  YOSHIHARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_262">
+		<language name="JPN" width="256">KAORI  ANDO</language>
+		<language name="JPN_KANJI" width="256">KAORI  ANDO</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_263">
+		<language name="JPN" width="256">HIDEAKI  ARAKI</language>
+		<language name="JPN_KANJI" width="256">HIDEAKI  ARAKI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_264">
+		<language name="JPN" width="256">PRODUCED  BY</language>
+		<language name="JPN_KANJI" width="256">PRODUCED  BY</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_265">
+		<language name="JPN" width="256">JUNICHI  MASUDA</language>
+		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_266">
+		<language name="JPN" width="256">HITOSHI  YAMAGAMI</language>
+		<language name="JPN_KANJI" width="256">HITOSHI  YAMAGAMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_267">
+		<language name="JPN" width="256">SYUSAKU  EGAMI</language>
+		<language name="JPN_KANJI" width="256">SYUSAKU  EGAMI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_268">
+		<language name="JPN" width="256">HIROAKI  TSURU</language>
+		<language name="JPN_KANJI" width="256">HIROAKI  TSURU</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_269">
+		<language name="JPN" width="256">EXECTIVE  PRODUCERS</language>
+		<language name="JPN_KANJI" width="256">EXECTIVE  PRODUCERS</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_270">
+		<language name="JPN" width="256">SATOSHI  TAJIRI</language>
+		<language name="JPN_KANJI" width="256">SATOSHI  TAJIRI</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_271">
+		<language name="JPN" width="256">SATORU  IWATA</language>
+		<language name="JPN_KANJI" width="256">SATORU  IWATA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_272">
+		<language name="JPN" width="256">TSUNEKAZU  ISHIHARA</language>
+		<language name="JPN_KANJI" width="256">TSUNEKAZU  ISHIHARA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_273">
+		<language name="JPN" width="256">DEVELOPED BY</language>
+		<language name="JPN_KANJI" width="256">DEVELOPED BY</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_274">
+		<language name="JPN" width="256">GAME FREAK, inc.</language>
+		<language name="JPN_KANJI" width="256">GAME FREAK, inc.</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_275">
+		<language name="JPN" width="256">ポケットモンスターブラック</language>
+		<language name="JPN_KANJI" width="256">ポケットモンスターブラック</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_276">
 		<language name="JPN" width="256">THE  END</language>
 		<language name="JPN_KANJI" width="256">THE  END</language>
 	</row>
