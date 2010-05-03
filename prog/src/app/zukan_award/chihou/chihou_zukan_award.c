@@ -28,6 +28,9 @@
 #include "print/wordset.h"
 #include "app/app_nogear_subscreen.h"
 
+#include "sound/wb_sound_data.sadl"
+#include "sound/pm_sndsys.h"
+
 #include "chihou_zukan_award_graphic.h"
 #include "app/chihou_zukan_award.h"
 
@@ -87,11 +90,12 @@ enum
 };
 
 // ProcMainのシーケンス
-enum
+enum  // この並び順を利用しているところがあるので、並び順は変更しないこと。
 {
   SEQ_START          = 0,
   SEQ_FADE_IN,
-  SEQ_SCROLL,
+  SEQ_SCROLL,      // work->param->b_fixがFALSEのときしか来ない
+  SEQ_SOUND_WAIT,  // work->param->b_fixがFALSEのときしか来ない
   SEQ_MAIN,
   SEQ_FADE_OUT,
   SEQ_END,
@@ -386,13 +390,19 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   //GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
   // バックグラウンドカラー(透過色)まで色として使っているので、変更してはダメ。
 
-  // フェードイン(黒→見える)
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+  // フェードイン(ただちに真っ黒)
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
   GFL_NET_ReloadIcon();
 
+  // サウンド
+  if( !(work->param->b_fix) )
+  {
+    PMSND_FadeOutBGM( PMSND_FADE_FAST );
+  }
+  
   return GFL_PROC_RES_FINISH;
 }
 
@@ -445,7 +455,27 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
   {
   case SEQ_START:
     {
-      *seq = SEQ_FADE_IN;
+      BOOL  b_next  = TRUE;
+      // サウンド
+      if( !(work->param->b_fix) )
+      {
+        if( PMSND_CheckFadeOnBGM() )
+        {
+          b_next = FALSE;
+        }
+        else
+        {
+          PMSND_PauseBGM( TRUE );
+          PMSND_PushBGM();
+          PMSND_PlayBGM( SEQ_ME_HYOUKA6 );
+        }
+      }
+      if( b_next )
+      {
+        // フェードイン(黒→見える)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+        *seq = SEQ_FADE_IN;
+      }
     }
     break;
   case SEQ_FADE_IN:
@@ -457,10 +487,23 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
       }
     }
     break;
-  case SEQ_SCROLL:
+  case SEQ_SCROLL:  // work->param->b_fixがFALSEのときしか来ない
     {
       if( Chihou_Zukan_Award_ScrollIsEnd( work ) )
       {
+        *seq = SEQ_SOUND_WAIT;
+      }
+    }
+    break;
+  case SEQ_SOUND_WAIT:  // work->param->b_fixがFALSEのときしか来ない
+    {
+      // サウンド
+      if( !PMSND_CheckPlayBGM() )
+      {
+        PMSND_PopBGM();
+        PMSND_PauseBGM( FALSE );
+        PMSND_FadeInBGM( PMSND_FADE_FAST );
+        
         *seq = SEQ_MAIN;
       }
     }
@@ -625,7 +668,11 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
 
   // メイン
   Chihou_Zukan_Award_TextMain( work );
-  Chihou_Zukan_Award_ScrollMain( work );
+
+  if( SEQ_FADE_IN<=(*seq) && (*seq)<=SEQ_FADE_OUT )
+  {
+    Chihou_Zukan_Award_ScrollMain( work );
+  }
 
   // 2D描画
   CHIHOU_ZUKAN_AWARD_GRAPHIC_2D_Draw( work->graphic );
