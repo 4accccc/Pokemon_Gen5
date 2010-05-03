@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_n01r0304_poke_01
 _EVENT_DATA    ev_n01r0304_hakaiw_01
+_EVENT_DATA    ev_n01r0304_warpman_01
 _EVENT_DATA_END
 
 
@@ -48,6 +49,37 @@ EVENT_START		ev_n01r0304_hakaiw_01
 	//このポケモンNさまになついちゃって～
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0304_hakaiw_01 )
 	
+EVENT_END
+
+
+/************************************************************/
+/*				Ｎ城へワープさせてくれる人					*/
+/************************************************************/
+EVENT_START	ev_n01r0304_warpman_01
+	_TALK_OBJ_START()
+	
+	//Ｎの城に行くか？
+	_BALLOONWIN_TALKOBJ_MSG( msg_n01r0304_warp_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//いけ！
+		_BALLOONWIN_TALKOBJ_MSG( msg_n01r0304_warp_02 )
+		_MSGWIN_CLOSE()
+		
+		_TIME_WAIT( 8 )
+		
+		//ワープ演出込みマップ遷移
+		_MAP_CHANGE_WARP( ZONE_ID_C09R0701, 7, 14, DIR_DOWN )
+	
+	ELSE
+		//そうか
+		_BALLOONWIN_TALKOBJ_MSG( msg_n01r0304_warp_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
 EVENT_END
 
 

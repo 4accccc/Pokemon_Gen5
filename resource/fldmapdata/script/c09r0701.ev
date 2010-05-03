@@ -60,7 +60,7 @@ EVENT_START	ev_c09r0701_warpman_01
 		_TIME_WAIT( 8 )
 		
 		//ワープ演出込みマップ遷移
-		_MAP_CHANGE_WARP( ZONE_ID_N01R0101, 25, 18, DIR_UP )
+		_MAP_CHANGE_WARP( ZONE_ID_N01R0304, 9, 8, DIR_DOWN )
 	
 	ELSE
 		//そうか
