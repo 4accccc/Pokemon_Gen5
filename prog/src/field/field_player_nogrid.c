@@ -2874,11 +2874,13 @@ static void nogrid_KuruKuru_Start( KURUKURU_WORK* wk, KURUKURU_DIR left_or_right
 //-----------------------------------------------------------------------------
 static void nogrid_KuruKuru_Stop( KURUKURU_WORK* wk )
 {
-  wk->kurukuru_flag = FALSE;
-  wk->frame         = 0;
+  if( wk->kurukuru_flag ){
+    wk->kurukuru_flag = FALSE;
+    wk->frame         = 0;
 
-  // ‚­‚é‚­‚éSE’âŽ~
-  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( FIELD_PLAYER_SE_NOGRID_ICE_SPIN ) );
+    // ‚­‚é‚­‚éSE’âŽ~
+    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( FIELD_PLAYER_SE_NOGRID_ICE_SPIN ) );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2901,7 +2903,6 @@ static void nogrid_KuruKuru_Main( KURUKURU_WORK* wk, MMDL* player )
     return ;
   }
   wk->frame = (wk->frame + 1) % 4;
-
   MMDL_SetForceDirDisp( player, sc_DATA_KuruKuruTbl[wk->left_or_right][wk->frame] ); 
 }
 
