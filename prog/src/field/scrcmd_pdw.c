@@ -136,7 +136,7 @@ VMCMD_RESULT EvCmdPDW_FurnitureTools( VMHANDLE *core, void *wk )
       }
       else
       {
-        if( furData->id == DREAM_WORLD_INVALID_FURNITURE )
+        if( furData->id == 0 )
         {
           //ƒf[ƒ^‚ª–³‚¢
           *ret_wk = FALSE;
