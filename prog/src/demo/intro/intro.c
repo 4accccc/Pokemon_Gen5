@@ -117,12 +117,13 @@ const u32 Intro_Se_PresetData[] =
   SEQ_SE_NAGERU,
   SEQ_SE_BOWA2,
 	SEQ_SE_OPEN2,
+	SEQ_SE_KON,
 
 	SEQ_BGM_STARTING,
 	SEQ_BGM_STARTING2,
 };
 
-const u32 Intro_Se_PresetNum  = 5;
+const u32 Intro_Se_PresetNum  = 6;
 
 //=============================================================================
 /**
