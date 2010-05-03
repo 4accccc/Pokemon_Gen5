@@ -567,4 +567,6 @@
 #define		WAZANO_BAAKUAUTO			( 555 )		//バークアウト
 #define		WAZANO_TURARAOTOSI		( 556 )		//つららおとし
 #define		WAZANO_vJENEREETO			( 557 )		//Ｖジェネレート
-#define		WAZANO_MAX						( 558 )
+#define		WAZANO_HUREIMUSOURU		( 558 )		//フレイムソウル
+#define		WAZANO_SANDAASOURU		( 559 )		//サンダーソウル
+#define		WAZANO_MAX						( 560 )

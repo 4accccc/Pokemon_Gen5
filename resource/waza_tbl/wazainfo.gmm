@@ -5306,7 +5306,7 @@
 	<row id="WAZAINFO_546">
 		<language name="JPN" width="216">むすうの　こうだんを　あいてに
 ほうしゅつする。じぶんの　もつ
-プレートに　より　タイプが　かわる。</language>
+カセットに　より　タイプが　かわる。</language>
 		<language name="JPN_KANJI" width="216">無数の　光弾を　相手に　放出する。
 自分の　持つ
 カセットにより　タイプが　かわる。</language>
@@ -5409,6 +5409,24 @@
 		<language name="JPN_KANJI" width="216">しゃく熱の　炎を　額から
 発生させて　捨て身の　体当たり。
 防御　特防　素早さが　下がる。</language>
+	</row>
+
+	<row id="WAZAINFO_558">
+		<language name="JPN" width="216">きょだいな　ほのおを　たたきつける。
+きょだいな　いかずちの　えいきょうをうけ
+わざの　いりょくが　　あがる。</language>
+		<language name="JPN_KANJI" width="216">巨大な　炎を　叩き付ける。
+巨大な　雷の　影響を受け
+技の　威力が　上がる。</language>
+	</row>
+
+	<row id="WAZAINFO_559">
+		<language name="JPN" width="216">きょだいな　いかずちを　たたきつける。
+きょだいな　ほのおの　えいきょうをうけ
+わざの　いりょくが　　あがる。</language>
+		<language name="JPN_KANJI" width="216">巨大な　雷を　叩き付ける。
+巨大な　炎の　影響を受け
+技の　威力が　上がる。</language>
 	</row>
 
 	<flowchart-group-list>

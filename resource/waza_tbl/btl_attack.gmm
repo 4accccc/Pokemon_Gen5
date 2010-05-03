@@ -12105,6 +12105,48 @@
 Ｖジェネレート！</language>
 	</row>
 
+	<row id="ATKMSG_M_558">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+フレイムソウル！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]の
+フレイムソウル！</language>
+	</row>
+
+	<row id="ATKMSG_Y_558">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+フレイムソウル！</language>
+		<language name="JPN_KANJI" width="216">やせいの　[1:01:ニックネーム:0]の
+フレイムソウル！</language>
+	</row>
+
+	<row id="ATKMSG_E_558">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+フレイムソウル！</language>
+		<language name="JPN_KANJI" width="216">あいての　[1:01:ニックネーム:0]の
+フレイムソウル！</language>
+	</row>
+
+	<row id="ATKMSG_M_559">
+		<language name="JPN" width="216">[1:01:ニックネーム:0]の
+サンダーソウル！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ニックネーム:0]の
+サンダーソウル！</language>
+	</row>
+
+	<row id="ATKMSG_Y_559">
+		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]の
+サンダーソウル！</language>
+		<language name="JPN_KANJI" width="216">やせいの　[1:01:ニックネーム:0]の
+サンダーソウル！</language>
+	</row>
+
+	<row id="ATKMSG_E_559">
+		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]の
+サンダーソウル！</language>
+		<language name="JPN_KANJI" width="216">あいての　[1:01:ニックネーム:0]の
+サンダーソウル！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
