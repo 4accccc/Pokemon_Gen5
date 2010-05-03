@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T12:13:05"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-03T14:51:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1458" top="367" right="2163" bottom="995" maximized="no" rayout="Vertical2">
+	<dialog left="14" top="160" right="719" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -378,7 +378,7 @@
 
 
 	<row id="cg_power_01">
-		<language name="JPN" width="216">Ｃ－ＧＥＡＲの　でんげんを　いれて
+		<language name="JPN" width="216">Ｃギアの　でんげんを　いれて
 つうしんきのうを　オンにしますか？</language>
 		<language name="JPN_KANJI" width="216">Ｃ－ＧＥＡＲの　電源を入れて
 通信機能を　オンにしますか？</language>
@@ -394,7 +394,7 @@
 	</row>
 
 	<row id="cg_power_03">
-		<language name="JPN" width="216">Ｃ－ＧＥＡＲの　でんげんを　きって
+		<language name="JPN" width="216">Ｃギアの　でんげんを　きって
 つうしんきのうを　オフにしますか？</language>
 		<language name="JPN_KANJI" width="216">Ｃ－ＧＥＡＲの　電源を切って
 通信機能を　オフにしますか？</language>
@@ -404,7 +404,7 @@
 		<language name="JPN" width="216">[FF:00:色:1]ちゅうい！[FF:00:色:0]
 ひこうきや　びょういんなど
 むせんつうしんを　きんしに　している
-ばしょでは　Ｃ－ＧＥＡＲの　でんげんをきって
+ばしょでは　Ｃギアの　でんげんをきって
 つうしんきのうを　オフに　してください</language>
 		<language name="JPN_KANJI" width="216">[FF:00:色:1]注意！[FF:00:色:0]
 飛行機や　病院など
@@ -414,7 +414,7 @@
 	</row>
 
 	<row id="cg_power_05">
-		<language name="JPN" width="216">Ｃ－ＧＥＡＲの　でんげんを　オンにできません
+		<language name="JPN" width="216">Ｃギアの　でんげんを　オンにできません
 ＤＳほんたいの　むせんつうしんが
 オフに　なっています
 ほんたいせっていで　むせんつうしんを
