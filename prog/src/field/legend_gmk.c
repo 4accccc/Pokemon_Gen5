@@ -140,7 +140,7 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   gmk_wk->Count = 0;
   
   //必要なリソースの用意(バージョン分岐)
-  if ( GET_VERSION() == VERSION_WHITE )
+  if ( GetVersion() == VERSION_WHITE )
   {
     FLD_EXP_OBJ_AddUnit(ptr, &SetupWhite, LEGEND_UNIT_IDX );
   }
