@@ -425,7 +425,9 @@ void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_F
   else{
     OS_TPrintf("既に終了リクエストが発生している\n");
     //どちらもコールバックが設定されている場合は危険な為ASSERTにする
-    GF_ASSERT(gcsp->exitcallback_func != NULL && callback_func != NULL);
+    if(gcsp->exitcallback_func != NULL && callback_func != NULL){
+      GF_ASSERT(0);
+    }
     //先にかけていた終了リクエストに何もコールバックが設定されていないなら
     //今回の終了コールバックを設定する
     if(gcsp->exitcallback_func == NULL){
