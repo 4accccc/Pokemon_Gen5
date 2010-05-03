@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T17:46:25"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T20:11:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -348,9 +348,9 @@
 ・あわせてt01r0102にイッシュ図鑑の表彰状の動作モデル追加</comment>
 		<attribute name="キャラ指定">MAN2（暫定）</attribute>
 		<language name="JPN" width="256">この　ひょうしょうじょう　ですが
-きみの　いえにも　おくっておきますね！</language>
+きみの　いえに　おくっておきますね！</language>
 		<language name="JPN_KANJI" width="256">この　表彰状ですが
-きみの　家にも　送っておきますね！</language>
+きみの　家に　送っておきますね！</language>
 	</row>
 
 	<row id="msg_c03r0402_director_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -413,9 +413,9 @@
 ・あわせてt01r0102に全国図鑑の表彰状の動作モデル追加</comment>
 		<attribute name="キャラ指定">MAN2（暫定）</attribute>
 		<language name="JPN" width="256">この　ひょうしょうじょう　も
-きみの　いえにも　おくっておきますね！</language>
+きみの　いえに　おくっておきますね！</language>
 		<language name="JPN_KANJI" width="256">この　表彰状も
-きみの　家にも　送っておきますね！</language>
+きみの　家に　送っておきますね！</language>
 	</row>
 
 	<row id="msg_c03r0402_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
