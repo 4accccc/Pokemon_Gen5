@@ -3418,7 +3418,7 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   trg = GFL_UI_KEY_GetTrg();
   cont = GFL_UI_KEY_GetCont();
   state = fldMsgPrintStream_ProcPrint( plnwin->msgPrintStream );
-  plnwin->State = state;    //ステート保存
+  plnwin->State =  PRINTSYS_PrintStreamGetState( plnwin->msgPrintStream->printStream );    //ステート保存
   
   { //shake
     GFL_BG_SetScroll(
