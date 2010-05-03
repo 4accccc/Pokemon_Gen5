@@ -66,6 +66,7 @@ typedef struct {
 enum {
   GMCLEAR_SEQ_INIT,             // 初期化
   GMCLEAR_SEQ_FADEOUT,          // フェードアウト
+  GMCLEAR_SEQ_COMM_END_REQ,     // 通信終了リクエスト発行
   GMCLEAR_SEQ_COMM_END_WAIT,    // 通信終了待ち
   GMCLEAR_SEQ_FIELD_CLOSE_WAIT, // フィールドマップ終了待ち
   GMCLEAR_SEQ_DENDOU_DEMO,      // 殿堂入りデモ
@@ -114,7 +115,9 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
 
   switch( work->nowSeq ) {
   case GMCLEAR_SEQ_INIT:
-    ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
+    if( work->clear_mode == GAMECLEAR_MODE_DENDOU ) {
+      ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
+    }
     PMSND_FadeOutBGM( 30 );
     NowSeqFinish( work, seq );
     break;
@@ -122,8 +125,12 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   // フィールドマップをフェードアウト
   case GMCLEAR_SEQ_FADEOUT:
     GMEVENT_CallEvent( event, 
-        EVENT_FieldFadeOut_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+        EVENT_FieldFadeOut_Black( gsys, fieldmap, FIELD_FADE_WAIT ) ); 
+    NowSeqFinish( work, seq );
+    break;
 
+  // 通信終了リクエスト発行
+  case GMCLEAR_SEQ_COMM_END_REQ:
     //通信が動いている場合は終了させる
     if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
       GameCommSys_ExitReq(gameComm);
@@ -307,7 +314,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   default: GF_ASSERT(0);
   case GAMECLEAR_MODE_FIRST:
     work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
-    work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
@@ -320,6 +327,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     break;
   case GAMECLEAR_MODE_DENDOU:
     work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
     work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
     work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
