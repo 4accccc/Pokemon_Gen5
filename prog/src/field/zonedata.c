@@ -787,6 +787,23 @@ BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
+ * @brief  フィールド技を起動していいゾーンのチェック
+ * @param  zoneid ゾーン指定ID
+ * @return BOOL フィールド技が使えるゾーンならTRUE
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_CheckFieldSkillUse(u16 zone_id)
+{
+  if( ZONEDATA_IsUnionRoom(zone_id) ||
+      ZONEDATA_IsColosseum(zone_id) ||
+      ZONEDATA_IsPalaceField(zone_id)){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief グループの代表となるゾーンIDを取得する
  * @param  zoneid ゾーン指定ID
  * @return  ゾーンID
