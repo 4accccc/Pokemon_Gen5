@@ -527,6 +527,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
         CTVT_CAMERA_StopCapture( work , camWork );
+        callWork->barState = CCBS_NONE;
         callWork->state = CCS_FADEOUT_BOTH;
       }
     }
@@ -655,6 +656,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
         //CGEAR‚©‚çŒÄ‚Ño‚µ‚Å‚«‚½B
         CTVT_CAMERA_StopCapture( work , camWork );
+        callWork->barState = CCBS_NONE;
         callWork->state = CCS_FADEOUT_BOTH;
       }
       else

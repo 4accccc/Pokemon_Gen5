@@ -18,6 +18,7 @@
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 #include "savedata/etc_save.h"
+#include "field/field_sound.h"
 
 #include "arc_def.h"
 #include "comm_tvt.naix"
@@ -220,6 +221,10 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CHILD );
     CTVT_COMM_SetMacAddress( work , work->commWork , work->initWork->macAddress );
     work->nextMode = CTM_CALL;
+    {
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( work->initWork->gameData );
+      FSND_StopTVTRingTone( fsnd );
+    }
     break;
   case CTM_WIFI:   //Wifi‹N“®
     CTVT_COMM_SetMode( work , work->commWork , CCIM_CONNECTED );

@@ -1521,11 +1521,6 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
 //  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
-
-  {
-    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( pWork->gamedata );
-    FSND_StopTVTRingTone( fsnd);
-  }
   
   GFL_PROC_FreeWork(proc);
 
