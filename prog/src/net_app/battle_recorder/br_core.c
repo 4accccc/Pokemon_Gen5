@@ -387,10 +387,14 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   }
 
   //ブラウザモードのみボリュームを下げる
+  //バトルからの戻りのときはbr_main.cのBR_BATTLE_FreeParamで行っているので行わない
   if( p_wk->p_param->p_param->mode == BR_MODE_BROWSE )
   { 
-    FIELD_SOUND *p_fld_snd  = GAMEDATA_GetFieldSound( p_wk->p_param->p_param->p_gamedata );
-    FSND_HoldBGMVolume_inApp( p_fld_snd );
+    if( p_wk->p_param->mode != BR_CORE_MODE_RETURN )
+    { 
+      FIELD_SOUND *p_fld_snd  = GAMEDATA_GetFieldSound( p_wk->p_param->p_param->p_gamedata );
+      FSND_HoldBGMVolume_inApp( p_fld_snd );
+    }
   }
   else
   { 

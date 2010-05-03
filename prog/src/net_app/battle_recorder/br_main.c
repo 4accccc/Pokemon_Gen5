@@ -16,6 +16,7 @@
 //システム
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
+#include "src\field\field_sound.h"
 
 //プロセス
 #include "gamesystem/btl_setup.h"
@@ -598,10 +599,21 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   BR_SYS_WORK         *p_wk     = p_wk_adrs;
   BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
 
-  PMSND_PopBGM();
+  { 
+    FIELD_SOUND *p_fld_snd  = GAMEDATA_GetFieldSound( p_wk->p_param->p_gamedata );
+
+    PMSND_PopBGM();
+    PMSND_FadeInBGM( PMSND_FADE_SHORT );
+
+    if( p_wk->p_param->mode == BR_MODE_BROWSE )
+    { 
+      FSND_HoldBGMVolume_inApp( p_fld_snd );
+    }
+  }
+
 
   p_wk->data.is_recplay_finish = p_param->recPlayCompleteFlag;
-  OS_TPrintf( "バトルビデオ全部みたか？ %d", p_param->recPlayCompleteFlag );
+  OS_TPrintf( "バトルビデオ全部みたか？ %d\n", p_param->recPlayCompleteFlag );
 
   GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
   BTL_SETUP_QuitForRecordPlay( p_param );

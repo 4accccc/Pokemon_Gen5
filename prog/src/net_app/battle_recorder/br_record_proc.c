@@ -1032,10 +1032,11 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
     break;
   case SEQ_FADEOUT_END:
     //”jŠü
-
-    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
-
-    BR_SEQ_End( p_wk->p_seq );
+    if( !PMSND_CheckPlayingSEIdx( SEQ_SE_BREC_04 ) )
+    { 
+      Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+      BR_SEQ_End( p_wk->p_seq );
+    }
     break;
 
   case SEQ_FADEOUT_START_RET:
@@ -1344,11 +1345,14 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     }
     break;
   case SEQ_FADEOUT_END:
-    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+    if( !PMSND_CheckPlayingSEIdx( SEQ_SE_BREC_04 ) )
+    { 
+      Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
 
-    p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
-    BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
-    BR_SEQ_End( p_seqwk );
+      p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+      BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
+      BR_SEQ_End( p_seqwk );
+    }
     break;
   }
 }

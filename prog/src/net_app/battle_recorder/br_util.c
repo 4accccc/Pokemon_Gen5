@@ -2774,9 +2774,9 @@ static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt )
   //現在のアングルを取得
   angle = p_wk->init_angle + (diff_angle * cnt / p_wk->cnt_max);
   r     = p_wk->r + dir_r * ( MATH_IAbs(diff_r) * cnt / p_wk->cnt_max );
-  r     = MATH_IMax( r, 1 );
+  r     = MATH_IMax( r, 0 );
 
-  NAGI_Printf( "ang%d r%d\n", angle, r );
+  //NAGI_Printf( "ang%d r%d\n", angle, r );
 
   ///角度から座標を求める
   p_wk->now_pos.x = (FX_CosIdx( angle ) * r) >> FX32_SHIFT;
