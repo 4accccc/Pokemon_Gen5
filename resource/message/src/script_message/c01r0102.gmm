@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T15:06:00"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T14:48:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -481,7 +481,7 @@
 ＭＥ再生</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　てにいれた！</language>
+[FF:00:色:2]Ｃギア[FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　手に入れた！</language>
 	</row>
@@ -492,7 +492,7 @@
 ・はい→Ｃギアをアクティブで起動
 　いいえ→Ｃギアをパッシブで起動</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲの　でんげんを　いれて
+		<language name="JPN" width="256">Ｃギアの　でんげんを　いれて
 つうしんきのうを　オンにしますか？</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を入れて
 通信機能を　オンにしますか？</language>
@@ -534,11 +534,11 @@
 ・はい選択時
 ・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
-		<language name="JPN" width="256">ほら！　Ｃ－ＧＥＡＲが　きどうして
+		<language name="JPN" width="256">ほら！　Ｃギアが　きどうして
 がめんが　あらわれたでしょ！▼
 その　がめんの　みぎしたに　ある
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　せつめいが　よめるわ▼</language>
+Ｃギアの　せつめいが　よめるわ▼</language>
 		<language name="JPN_KANJI" width="256">ほら！　Ｃ－ＧＥＡＲが　起動して
 画面が　あらわれたでしょ！▼
 その　画面の　右下に　ある
@@ -553,13 +553,13 @@
 ・いいえ選択時
 ・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲの　でんげんを　いれるなら
+		<language name="JPN" width="256">Ｃギアの　でんげんを　いれるなら
 がめん　みぎしたの▽
 でんげんマークを　タッチするのよ▼
 そして　でんげんを　いれたあとは
 がめんの　みぎしたに　ある▽
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　せつめいが　よめます▼</language>
+Ｃギアの　せつめいが　よめます▼</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を　入れるなら
 画面　右下の▽
 電源マークを　タッチすれば　いいわ▼
@@ -1055,7 +1055,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1065,7 +1065,7 @@
 Ｗｉ－Ｆｉコネクションを　つうじて
 せかいじゅうの　トレーナーの▽
 レポートを　あつめる　システム▼
-Ｃ－ＧＥＡＲの　がめんに　ある
+Ｃギアの　がめんに　ある
 Ｗｉ－Ｆｉを　タッチして　あらわれる▽
 [FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで▼
 ねむらせる　ポケモンを　えらび
