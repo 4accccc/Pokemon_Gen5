@@ -8509,13 +8509,13 @@
 		<language name="JPN" width="256">FLD-172</language>
 		<language name="JPN_KANJI" width="256">FLD-172</language>
 	</row>
-	<row id="msg_seq_se_dmy_358">
-		<language name="JPN" width="256">DMY-358</language>
-		<language name="JPN_KANJI" width="256">DMY-358</language>
+	<row id="msg_seq_se_fld_173">
+		<language name="JPN" width="256">FLD-173</language>
+		<language name="JPN_KANJI" width="256">FLD-173</language>
 	</row>
-	<row id="msg_seq_se_dmy_359">
-		<language name="JPN" width="256">DMY-359</language>
-		<language name="JPN_KANJI" width="256">DMY-359</language>
+	<row id="msg_seq_se_end_01">
+		<language name="JPN" width="256">END-01</language>
+		<language name="JPN_KANJI" width="256">END-01</language>
 	</row>
 	<row id="msg_seq_se_dmy_360">
 		<language name="JPN" width="256">DMY-360</language>
