@@ -109,10 +109,11 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_03[] = {
 static const u16 res_c_cruiser_file_cdemo_04[] = {
  NARC_data_demo3d_cdemo_04_nsbmd,
  NARC_data_demo3d_cdemo_04_nsbtp,
+ NARC_data_demo3d_cdemo_04_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_file_unit_cdemo_04[] = {
- { res_c_cruiser_file_cdemo_04, 2 },
+ { res_c_cruiser_file_cdemo_04, 3 },
 };
 
 ///==================================
