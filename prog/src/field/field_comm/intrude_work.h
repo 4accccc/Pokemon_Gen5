@@ -48,4 +48,5 @@ extern BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const G
 extern GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata);
 extern BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm);
 extern BOOL Intrude_CheckZonePalaceConnect(u16 zone_id);
+extern BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata);
 

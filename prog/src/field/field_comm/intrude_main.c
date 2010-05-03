@@ -1076,3 +1076,4 @@ BOOL Intrude_CheckRecvOccupyResult(INTRUDE_COMM_SYS_PTR intcomm)
 {
   return intcomm->recv_occupy_result.occ;
 }
+

@@ -1959,7 +1959,8 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
     INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
     
-    if(intcomm == NULL){
+    //非通信 or チュートリアル未完了(この後通信OFFにする)場合は左端(エリア0)
+    if(intcomm == NULL || Intrude_CheckTutorialComplete(gamedata) == FALSE){
       palace_area = 0;
       map_offset = 0;
     }
@@ -2933,6 +2934,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
 static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk )
 {
   PALACE_JUMP* work = (PALACE_JUMP*)wk;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(work->gameSystem);
 
   switch(*seq){
   case 0:
@@ -2941,6 +2943,13 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     {   //進入可能
       //進入可能メッセージコール
       SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_SUCCESS, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+
+      //チュートリアルが全て完了していない場合は常時通信をOFF
+      //(子としてパレスに入るとチュートリアルで混乱する)
+      if(Intrude_CheckTutorialComplete(work->gameData) == FALSE){
+        GameCommSys_ExitReq( game_comm );
+      }
+
       //マップチェンジイベント変更シーケンスへ
       (*seq) = 1;
     }
@@ -2953,6 +2962,12 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     }
     break;
   case 1:
+    if(Intrude_CheckTutorialComplete(work->gameData) == FALSE){
+      if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_NULL){
+        break;
+      }
+    }
+    
     {
       GMEVENT* call_event;
       GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);

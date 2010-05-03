@@ -19,7 +19,7 @@
 #include "gamesystem/msgspeed.h"
 #include "monolith_snd_def.h"
 #include "field/eventwork.h"
-#include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 
 
 //==============================================================================

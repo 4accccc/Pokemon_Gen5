@@ -24,6 +24,9 @@
 #include "field/field_status.h"
 #include "field/field_status_local.h"
 #include "fieldmap/zone_id.h"
+#include "field/zonedata.h"
+#include "field/eventwork.h"
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 
 
 //==============================================================================
@@ -37,6 +40,7 @@
  * 侵入システムとして常時通信を起動してもよい状態かチェックする
  *
  * @param   gsys		
+ * @param   zone_id	
  *
  * @retval  BOOL		    TRUE:常時通信を起動してもよい
  * @retval  BOOL		    TRUE:起動してはいけない
@@ -47,13 +51,22 @@ BOOL Intrude_Check_AlwaysBoot(GAMESYS_WORK *gsys)
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   
-  //裏フィールドにいて、通信エラーステータスが何か残っている場合は
-  //侵入としてエラー処理、切断後のイベント処理などが残っているので
-  //常時通信をさせない
-  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE
-      && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL){
-    return FALSE;
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+    //裏フィールドにいて、通信エラーステータスが何か残っている場合は
+    //侵入としてエラー処理、切断後のイベント処理などが残っているので
+    //常時通信をさせない
+    if(GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL){
+      return FALSE;
+    }
+    
+    //チュートリアルが完了していなくて、裏フィールドにいる場合は「子」にならないように
+    //常時通信を起動してはいけない
+    if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
+      return FALSE;
+    }
   }
+  
+
   return TRUE;
 }
 
@@ -496,4 +509,31 @@ BOOL Intrude_CheckZonePalaceConnect(u16 zone_id)
     }
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * チュートリアルを全てこなしているかチェックする
+ *
+ * @param   gamedata		
+ *
+ * @retval  BOOL		TRUE:全てこなした　FALSE:こなしていないのが残っている
+ */
+//--------------------------------------------------------------
+BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata)
+{
+  EVENTWORK *evwork = GAMEDATA_GetEventWork(gamedata);
+  static const u16 check_flag_array[] = {
+    SYS_FLAG_PALACE_MISSION_START,
+    SYS_FLAG_PALACE_MISSION_CLEAR,
+    SYS_FLAG_PALACE_DPOWER,
+  };
+  int i;
+  
+  for(i = 0; i < NELEMS(check_flag_array); i++){
+    if(EVENTWORK_CheckEventFlag(evwork, check_flag_array[i]) == FALSE){
+      return FALSE;
+    }
+  }
+  return TRUE;
 }

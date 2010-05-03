@@ -53,6 +53,7 @@ static void  IntrudeComm_DisconnectCallBack(void* pWork);
 static void IntrudeComm_HardConnect(void* pWork,int hardID);
 static void _ExitCallback_toAlwaysSearch(void *pWork);
 static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level);
+static BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata);
 
 
 //==============================================================================
@@ -124,6 +125,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   NetID net_id;
   int i;
+  GFLNetInitializeStruct *pNetInitData;
   
   OS_TPrintf("intcomm alloc size = 0x%x\n", sizeof(INTRUDE_COMM_SYS));
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
@@ -150,7 +152,17 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
     MyStatus_Copy(myst, dest_myst);
   }
   
-  GFL_NET_Init( &aGFLNetInit, IntrudeComm_FinishInitCallback, intcomm );
+  pNetInitData = GFL_HEAP_AllocMemory(
+    GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(GFLNetInitializeStruct));
+  *pNetInitData = aGFLNetInit;
+  
+  if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
+    pNetInitData->maxConnectNum = 2; //チュートリアルをこなすまでは最大二人接続
+  }
+  GFL_NET_Init( pNetInitData, IntrudeComm_FinishInitCallback, intcomm );
+  
+  GFL_HEAP_FreeMemory(pNetInitData);
+  
   return intcomm;
 }
 
@@ -171,7 +183,7 @@ BOOL  IntrudeComm_InitCommSystemWait( int *seq, void *pwk, void *pWork )
     if(intcomm->comm_status >= INTRUDE_COMM_STATUS_INIT){
       if(invalid_parent->my_invasion == TRUE){
         OS_TPrintf("親として起動\n");
-        GFL_NET_ChangeoverConnect(NULL);
+        GFL_NET_ChangeoverParent(NULL);
         intcomm->comm_status = INTRUDE_COMM_STATUS_BOOT_PARENT;
       }
       else{
