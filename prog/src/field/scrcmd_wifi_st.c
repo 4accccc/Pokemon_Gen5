@@ -151,7 +151,7 @@ VMCMD_RESULT EvCmdWifiBattleRecorderEventCall( VMHANDLE* core, void* wk )
   
 
   SCRIPT_CallEvent( sc, GMEVENT_CreateOverlayEventCall( gsys,  
-        FS_OVERLAY_ID(event_wifibtlmatch), EVENT_CallWifiBattleRecorder, &param ) );
+        FS_OVERLAY_ID(event_btlrecorder), EVENT_CallWifiBattleRecorder, &param ) );
  
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }

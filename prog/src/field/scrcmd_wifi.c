@@ -126,7 +126,7 @@ VMCMD_RESULT EvCmdWifiClubEventCall( VMHANDLE* core, void* wk )
 
 //--------------------------------------------------------------------
 /**
- * @brief   GTSネゴシエーションイベントを呼び出す
+ * @brief   GTSイベントを呼び出す
  *
  * @param	core 仮想マシン制御構造体へのポインタ
  * @param wk   SCRCMD_WORKへのポインタ
