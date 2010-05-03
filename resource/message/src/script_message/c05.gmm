@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T18:31:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T13:17:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1140,7 +1140,7 @@
 ポケモンを　３びきずつ　だして▽
 たたかう　ポケモンしょうぶ　さ！▼
 そして　だした　ポケモンは
-まえに２ひき！　うしろに１ひきの▽
+まえに１ひき！　うしろに２ひきの▽
 ポジションで　セットされる▼
 この　ポジションは　１ターンごとに
 かわるというのが　ポイント……▼
@@ -1150,7 +1150,7 @@
 ポケモンを　３匹ずつ　だして▽
 戦う　ポケモン勝負　さ！▼
 そして　だした　ポケモンは
-前衛に２匹！　後衛に１匹の▽
+前衛に１匹！　後衛に２匹の▽
 ポジションで　セットされる▼
 この　ポジションは　１ターンごとに
 換わるというのが　ポイント……▼
