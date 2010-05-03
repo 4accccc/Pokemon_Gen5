@@ -1668,11 +1668,15 @@ static s32  FIELD_LIGHT_GetDataSecond( int season, const LIGHT_DATA* cp_data )
 static void RGB_FADE_Init( RGB_FADE* p_wk, GXRgb start, GXRgb end )
 {
   p_wk->r_start   = (start & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT;
-  p_wk->r_dist    = ((end & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT) - p_wk->r_start;
+  p_wk->r_dist    = (s16)((end & GX_RGB_R_MASK )>> GX_RGB_R_SHIFT) - p_wk->r_start;
   p_wk->g_start   = (start & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT;
-  p_wk->g_dist    = ((end & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT) - p_wk->g_start;
+  p_wk->g_dist    = (s16)((end & GX_RGB_G_MASK )>> GX_RGB_G_SHIFT) - p_wk->g_start;
   p_wk->b_start   = (start & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT;
-  p_wk->b_dist    = ((end & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT) - p_wk->b_start;
+  p_wk->b_dist    = (s16)((end & GX_RGB_B_MASK )>> GX_RGB_B_SHIFT) - p_wk->b_start;
+
+  TOMOYA_Printf( "r_start %d   r_dist %d\n", p_wk->r_start, p_wk->r_dist );
+  TOMOYA_Printf( "g_start %d   g_dist %d\n", p_wk->g_start, p_wk->g_dist );
+  TOMOYA_Printf( "b_start %d   b_dist %d\n", p_wk->b_start, p_wk->b_dist );
 }
 
 //----------------------------------------------------------------------------
@@ -1688,14 +1692,18 @@ static void RGB_FADE_Init( RGB_FADE* p_wk, GXRgb start, GXRgb end )
 //-----------------------------------------------------------------------------
 static GXRgb RGB_FADE_Calc( const RGB_FADE* cp_wk, u16 count, u16 count_max )
 {
-  u8 r, g, b;
+  s16 r, g, b;
 
-  r = (cp_wk->r_dist * count) / count_max;
+  r = (s32)(cp_wk->r_dist * count) / count_max;
   r += cp_wk->r_start;
-  g = (cp_wk->g_dist * count) / count_max;
+  g = (s32)(cp_wk->g_dist * count) / count_max;
   g += cp_wk->g_start;
-  b = (cp_wk->b_dist * count) / count_max;
+  b = (s32)(cp_wk->b_dist * count) / count_max;
   b += cp_wk->b_start;
+
+  TOMOYA_Printf( "r %d\n", r );
+  TOMOYA_Printf( "g %d\n", g );
+  TOMOYA_Printf( "b %d\n", b );
 
   return GX_RGB( r, g, b );
 }

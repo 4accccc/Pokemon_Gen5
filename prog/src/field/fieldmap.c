@@ -250,7 +250,7 @@ enum {
 //--------------------------------------------------------------
 ///	ヒープ用プログラム領域
 //--------------------------------------------------------------
-#define FIELD_PROG_AREA_HEAP_SIZE  (0xf000)
+#define FIELD_PROG_AREA_HEAP_SIZE  (0xf800)
 static u8 FIELD_PROG_AREA_HEAP_BUF[ FIELD_PROG_AREA_HEAP_SIZE ] ATTRIBUTE_ALIGN(4);  //<-4byteアライメント
 
 
