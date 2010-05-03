@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-05-01T19:29:51"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T14:55:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="693"/>
 		<band id="3" index="3" style="0000" width="693"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -464,7 +464,7 @@
 
 	<row id="GSYNC_016">
 		<comment>３つとも変更があった</comment>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
+		<language name="JPN" width="256">Ｃギアのスキンが変わりました
 ミュージカルの演目が変わりました
 図鑑のスキンが変わりました</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
@@ -474,7 +474,7 @@
 
 	<row id="GSYNC_017">
 		<comment>1つ変更があった</comment>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
+		<language name="JPN" width="256">Ｃギアのスキンが変わりました
 </language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
 </language>
@@ -496,7 +496,7 @@
 
 	<row id="GSYNC_020">
 		<comment>２つ変更があった</comment>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
+		<language name="JPN" width="256">Ｃギアのスキンが変わりました
 ミュージカルの演目が変わりました
 </language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
@@ -514,7 +514,7 @@
 
 	<row id="GSYNC_022">
 		<comment>２つ変更があった</comment>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
+		<language name="JPN" width="256">Ｃギアのスキンが変わりました
 図鑑のスキンが変わりました</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
 図鑑のスキンが変わりました</language>
