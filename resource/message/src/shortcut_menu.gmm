@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-26T18:56:48"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-03T17:05:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="32" top="240" right="738" bottom="861" maximized="no" rayout="Vertical2">
+	<dialog left="32" top="240" right="738" bottom="859" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="531"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="153"/>
 		<band id="4" index="0" style="0000" width="698"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -373,27 +373,27 @@
 
 	<row id="msg_shortcut_menu_02_01">
 		<language name="JPN" width="256">ポケモンじょうほう[FF:00:色:1]＞[FF:00:色:0]ステータス</language>
-		<language name="JPN_KANJI" width="256">ポケモンじょうほう[FF:00:色:1]＞[FF:00:色:0]ステータス</language>
+		<language name="JPN_KANJI" width="256">ポケモン情報[FF:00:色:1]＞[FF:00:色:0]ステータス</language>
 	</row>
 
 	<row id="msg_shortcut_menu_02_02">
 		<language name="JPN" width="256">ポケモンじょうほう[FF:00:色:1]＞[FF:00:色:0]のうりょく</language>
-		<language name="JPN_KANJI" width="256">ポケモンじょうほう[FF:00:色:1]＞[FF:00:色:0]のうりょく</language>
+		<language name="JPN_KANJI" width="256">ポケモン情報[FF:00:色:1]＞[FF:00:色:0]能力</language>
 	</row>
 
 	<row id="msg_shortcut_menu_02_03">
 		<language name="JPN" width="256">ポケモンじょうほう[FF:00:色:1]＞[FF:00:色:0]きねんリボン</language>
-		<language name="JPN_KANJI" width="256">ポケモンじょうほう[FF:00:色:1]＞[FF:00:色:0]きねんリボン</language>
+		<language name="JPN_KANJI" width="256">ポケモン情報[FF:00:色:1]＞[FF:00:色:0]記念リボン</language>
 	</row>
 
 	<row id="msg_shortcut_menu_03_01">
 		<language name="JPN" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]どうぐ</language>
-		<language name="JPN_KANJI" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]どうぐ</language>
+		<language name="JPN_KANJI" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]道具</language>
 	</row>
 
 	<row id="msg_shortcut_menu_03_02">
 		<language name="JPN" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]かいふく</language>
-		<language name="JPN_KANJI" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]かいふく</language>
+		<language name="JPN_KANJI" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]回復</language>
 	</row>
 
 	<row id="msg_shortcut_menu_03_03">
@@ -408,47 +408,47 @@
 
 	<row id="msg_shortcut_menu_03_05">
 		<language name="JPN" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]たいせつなもの</language>
-		<language name="JPN_KANJI" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]たいせつなもの</language>
+		<language name="JPN_KANJI" width="256">バッグ[FF:00:色:1]＞[FF:00:色:0]大切なもの</language>
 	</row>
 
 	<row id="msg_shortcut_menu_04_01">
 		<language name="JPN" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]リスト</language>
-		<language name="JPN_KANJI" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]リスト</language>
+		<language name="JPN_KANJI" width="256">図鑑[FF:00:色:1]＞[FF:00:色:0]リスト</language>
 	</row>
 
 	<row id="msg_shortcut_menu_04_02">
 		<language name="JPN" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]けんさく</language>
-		<language name="JPN_KANJI" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]けんさく</language>
+		<language name="JPN_KANJI" width="256">図鑑[FF:00:色:1]＞[FF:00:色:0]検索</language>
 	</row>
 
 	<row id="msg_shortcut_menu_04_03">
 		<language name="JPN" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　せつめい</language>
-		<language name="JPN_KANJI" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　せつめい</language>
+		<language name="JPN_KANJI" width="256">図鑑[FF:00:色:1]＞[FF:00:色:0]詳細　説明</language>
 	</row>
 
 	<row id="msg_shortcut_menu_04_04">
 		<language name="JPN" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　ぶんぷ</language>
-		<language name="JPN_KANJI" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　ぶんぷ</language>
+		<language name="JPN_KANJI" width="256">図鑑[FF:00:色:1]＞[FF:00:色:0]詳細　分布</language>
 	</row>
 
 	<row id="msg_shortcut_menu_04_05">
 		<language name="JPN" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　なきごえ　</language>
-		<language name="JPN_KANJI" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　なきごえ　</language>
+		<language name="JPN_KANJI" width="256">図鑑[FF:00:色:1]＞[FF:00:色:0]詳細　鳴き声</language>
 	</row>
 
 	<row id="msg_shortcut_menu_04_06">
 		<language name="JPN" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　すがた</language>
-		<language name="JPN_KANJI" width="256">ずかん[FF:00:色:1]＞[FF:00:色:0]しょうさい　すがた</language>
+		<language name="JPN_KANJI" width="256">図鑑[FF:00:色:1]＞[FF:00:色:0]詳細　姿</language>
 	</row>
 
 	<row id="msg_shortcut_menu_05_01">
 		<language name="JPN" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]ぜんめん</language>
-		<language name="JPN_KANJI" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]ぜんめん</language>
+		<language name="JPN_KANJI" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]前面</language>
 	</row>
 
 	<row id="msg_shortcut_menu_05_02">
 		<language name="JPN" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]うらめん</language>
-		<language name="JPN_KANJI" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]うらめん</language>
+		<language name="JPN_KANJI" width="256">トレーナーカード[FF:00:色:1]＞[FF:00:色:0]裏面</language>
 	</row>
 
 	<row id="msg_shortcut_menu_05_03">
@@ -458,7 +458,7 @@
 
 	<row id="msg_shortcut_menu_06_01">
 		<language name="JPN" width="256">せってい</language>
-		<language name="JPN_KANJI" width="256">せってい</language>
+		<language name="JPN_KANJI" width="256">設定</language>
 	</row>
 
 	<flowchart-group-list>
