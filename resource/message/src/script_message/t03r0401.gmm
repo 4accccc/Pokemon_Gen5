@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T20:41:58"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T17:11:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1670" top="260" right="2170" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<band id="0" index="1" style="0000" width="502"/>
 		<band id="1" index="2" style="0000" width="193"/>
 		<band id="2" index="3" style="0000" width="297"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="398"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -466,10 +466,9 @@
 	</row>
 
 	<row id="msg_t03r0401_waitress_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>※朝になるといなくなる
+		<comment>♀
+※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-♀
 </comment>
 		<attribute name="キャラ指定">waitress</attribute>
 		<language name="JPN" width="256">よのなか　たくさんの　ひとがいて
@@ -487,11 +486,10 @@
 	</row>
 
 	<row id="msg_t03r0401_babyboy2_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>※月曜日のみ出現
+		<comment>♂
+※月曜日のみ出現
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">BABYBOY2</attribute>
 		<language name="JPN" width="256">よるに　なると　おおきな　あなから
 こわーい　おばけが　でてくるから▽
@@ -510,11 +508,10 @@
 	</row>
 
 	<row id="msg_t03r0401_fishing_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>※火曜日のみ出現
+		<comment>♂
+※火曜日のみ出現
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">FISHING</attribute>
 		<language name="JPN" width="256">このさきの　どうろには　つりずきには
 たまらん　わんがんが　ひろがっとる▼
@@ -527,11 +524,10 @@
 	</row>
 
 	<row id="msg_t03r0401_badman_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>※水曜日のみ出現
+		<comment>♂
+※水曜日のみ出現
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">オイラの　バーちゃん
 むかしばなしが　すきでよ▽
@@ -548,11 +544,10 @@
 	</row>
 
 	<row id="msg_t03r0401_policeman_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>※木曜日のみ出現
+		<comment>♂
+※木曜日のみ出現
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">ほんかん　ここに　ふにんしてから
 なーんも　することが　ないのだ▼
@@ -565,11 +560,10 @@
 	</row>
 
 	<row id="msg_t03r0401_middleman2_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>※金曜日のみ出現
+		<comment>♂
+※金曜日のみ出現
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">middleman2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
 あそびに　いっちまうんだ▼
@@ -626,7 +620,8 @@
 	</row>
 
 	<row id="msg_t03r0401_businessman_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>・アイテム入手後</comment>
+		<comment>♂
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">あしたから　また　しゅっちょうさ
 いやあ　オレって　ビジネスマンの▽

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T17:55:34"/>
+	<create user="matsumiya" host="W00224" date="2010-05-03T17:09:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1670" top="119" right="2170" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="370"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,8 +305,7 @@
 		<comment>♀
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
- 
-GRIDX=６５４、GRIDZ=１８７辺り</comment>
+・GRIDX=６５４、GRIDZ=１８７辺り</comment>
 		<attribute name="キャラ指定">middlewoman1</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン▼
 おはようから　おやすみまで
@@ -326,8 +325,7 @@ GRIDX=６５４、GRIDZ=１８７辺り</comment>
 		<comment>♀
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６７０、GRIDZ=１６８辺り
+・GRIDX=６７０、GRIDZ=１６８辺り
 
 ※はい→02
 　いいえ→03</comment>
@@ -424,8 +422,7 @@ GRIDX=６７０、GRIDZ=１６８辺り
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６６１、GRIDZ=１８９辺り</comment>
+・GRIDX=６６１、GRIDZ=１８９辺り</comment>
 		<attribute name="キャラ指定">BABYBOY2</attribute>
 		<language name="JPN" width="256">よるに　なると　おおきな　あなから
 こわーい　おばけが　でてくるから▽
@@ -441,8 +438,7 @@ GRIDX=６６１、GRIDZ=１８９辺り</comment>
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６７０、GRIDZ=１８７辺り</comment>
+・GRIDX=６７０、GRIDZ=１８７辺り</comment>
 		<attribute name="キャラ指定">FISHING</attribute>
 		<language name="JPN" width="256">このさきの　どうろには　つりずきには
 たまらん　わんがんが　ひろがっとる▼
@@ -458,8 +454,7 @@ GRIDX=６７０、GRIDZ=１８７辺り</comment>
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６６５、GRIDZ=１６１辺り</comment>
+・GRIDX=６６５、GRIDZ=１６１辺り</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">オイラの　バーちゃん
 むかしばなしが　すきでよ▽
@@ -475,8 +470,7 @@ GRIDX=６６５、GRIDZ=１６１辺り</comment>
 		<comment>♀
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６５２、GRIDZ=１７８辺り
+・GRIDX=６５２、GRIDZ=１７８辺り
 
 ※このＯＢＪは立体交差の誘導のため
 　移動させません</comment>
@@ -493,8 +487,7 @@ GRIDX=６５２、GRIDZ=１７８辺り
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６６１、GRIDZ=１７７辺り</comment>
+・GRIDX=６６１、GRIDZ=１７７辺り</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">ほんかん　ここに　ふにんしてから
 なーんも　することが　ないのだ▼
@@ -510,9 +503,9 @@ GRIDX=６６１、GRIDZ=１７７辺り</comment>
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６４１、GRIDZ=１７1辺り</comment>
-		<attribute name="キャラ指定">POKE19</attribute>
+・GRIDX=６４１、GRIDZ=１７1辺り</comment>
+		<attribute name="キャラ指定">POKE19
+チラーミィ</attribute>
 		<language name="JPN" width="256">チラーミィ『グッグ！　グッグ！</language>
 		<language name="JPN_KANJI" width="256">チラーミィ『グッグ！　グッグ！</language>
 	</row>
@@ -521,8 +514,7 @@ GRIDX=６４１、GRIDZ=１７1辺り</comment>
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-
-GRIDX=６６２、GRIDZ=１７0辺り</comment>
+・GRIDX=６６２、GRIDZ=１７0辺り</comment>
 		<attribute name="キャラ指定">middleman2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
 あそびに　いっちまうんだよ</language>
