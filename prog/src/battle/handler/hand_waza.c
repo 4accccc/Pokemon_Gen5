@@ -140,6 +140,9 @@ enum {
   WAZANO_KARI_KOORUDOHUREA,
   WAZANO_KARI_DONARITUKERU,
   WAZANO_KARI_TURARAOTOSI,
+  WAZANO_KARI_BUIJENEREETO,
+  WAZANO_KARI_FUREIMUSOURU,
+  WAZANO_KARI_SANDAASOURU,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -704,6 +707,9 @@ static void handler_CombiWaza_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_TechnoBaster( u32* numElems );
 static void handler_TechnoBaster( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  ADD_FlameSoul( u32* numElems );
+static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+
 
 //=============================================================================================
 /**
@@ -982,6 +988,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_MIZUNOTIKAI,      ADD_MizuNoTikai     },
     { WAZANO_KARI_HONOONOTIKAI,     ADD_HonooNoTikai    },
     { WAZANO_KARI_KUSANOTIKAI,      ADD_KusaNoTikai     },
+    { WAZANO_KARI_FUREIMUSOURU,     ADD_FlameSoul       },
+    { WAZANO_KARI_SANDAASOURU,      ADD_FlameSoul       },
   };
 
   int i;
@@ -10265,4 +10273,44 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * フレイムソウル・サンダーソウル
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_FlameSoul( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,          handler_FlameSoul_Pow       }, // 威力計算
+  };
 
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // このターンに同じワザを使っていれば威力が倍
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
+    WazaID  myWazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    WazaID  combiWazaID;
+
+    switch( myWazaID ){
+    case WAZANO_KARI_FUREIMUSOURU: combiWazaID = WAZANO_KARI_SANDAASOURU; break;
+    case WAZANO_KARI_SANDAASOURU:  combiWazaID = WAZANO_KARI_FUREIMUSOURU; break;
+    default:
+      combiWazaID = WAZANO_NULL; break;
+    }
+
+    if( combiWazaID != WAZANO_NULL )
+    {
+      u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
+
+      if( BTL_WAZAREC_GetPrevEffectiveWaza(rec, thisTurn) == combiWazaID )
+      {
+        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      }
+    }
+  }
+}

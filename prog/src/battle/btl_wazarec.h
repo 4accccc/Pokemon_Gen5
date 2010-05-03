@@ -37,6 +37,7 @@ extern void BTL_WAZAREC_SetEffectiveLast( BTL_WAZAREC* rec );
 
 extern BOOL BTL_WAZAREC_IsUsedWaza( const BTL_WAZAREC* rec, WazaID waza, u32 turn );
 extern u32 BTL_WAZAREC_GetUsedWazaCount( const BTL_WAZAREC* rec, WazaID waza, u32 turn );
+extern WazaID BTL_WAZAREC_GetPrevEffectiveWaza( const BTL_WAZAREC* rec, u32 turn );
 
 
 

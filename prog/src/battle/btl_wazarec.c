@@ -133,3 +133,32 @@ u32 BTL_WAZAREC_GetUsedWazaCount( const BTL_WAZAREC* rec, WazaID waza, u32 turn 
   }
   return count;
 }
+
+//=============================================================================================
+/**
+ * 指定ターン、直前に有効だったワザのIDを返す
+ *
+ * @param   rec
+ * @param   turn
+ *
+ * @retval  WazaID
+ */
+//=============================================================================================
+WazaID BTL_WAZAREC_GetPrevEffectiveWaza( const BTL_WAZAREC* rec, u32 turn )
+{
+  int p = rec->ptr;
+
+  while( 1 )
+  {
+    if( --p < 0 ){
+      p = NELEMS(rec->record) - 1;
+    }
+    if( (p == rec->ptr) || (rec->record[p].wazaID == WAZANO_NULL) ){
+      break;
+    }
+    if( (rec->record[p].fEffective) && (rec->record[p].turn == turn) ){
+      return rec->record[p].wazaID;
+    }
+  }
+  return WAZANO_NULL;
+}
