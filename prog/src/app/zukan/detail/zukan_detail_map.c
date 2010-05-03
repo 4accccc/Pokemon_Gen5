@@ -2652,6 +2652,7 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         //    ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP,
         //    ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
         //‚±‚ÌŠÔLock‚µ‚Ä‚¨‚¢‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
+        ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll( touchbar, FALSE );
         work->vblank_req = 2;
       }
     }
@@ -2678,6 +2679,7 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         //    ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
         //    ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
         //‚±‚ÌŠÔLock‚µ‚Ä‚¨‚¢‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
+        ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll( touchbar, FALSE );
         work->vblank_req = 1;
         {
           GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);

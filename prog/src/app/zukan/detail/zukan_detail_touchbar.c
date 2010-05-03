@@ -648,6 +648,22 @@ void ZUKAN_DETAIL_TOUCHBAR_Unlock( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
  *  @retval          
  */
 //------------------------------------------------------------------
+void ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   BOOL                        is_visible )
+{
+  ZKND_TBAR_SetVisibleAll( work->tbwk, is_visible );
+}
+
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
 void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work,
                    ZUKAN_DETAIL_TOUCHBAR_DISP  disp )
@@ -1016,7 +1032,7 @@ static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
 
     // タッチバー破棄
     ZKND_TBAR_Exit( work->tbwk );
-
+    
     // リソース破棄
     {	
       GFL_CLGRP_PLTT_Release( work->general_ncl );

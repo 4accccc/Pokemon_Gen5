@@ -96,6 +96,10 @@ extern ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTrg( ZUKAN_DETAIL_TOUCHBAR_WORK* 
 extern ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTouch( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 extern void ZUKAN_DETAIL_TOUCHBAR_Unlock( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 
+extern void ZUKAN_DETAIL_TOUCHBAR_SetVisibleAll(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   BOOL                        is_visible );
+
 extern void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work,
                    ZUKAN_DETAIL_TOUCHBAR_DISP  disp );
