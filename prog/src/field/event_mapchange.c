@@ -1781,6 +1781,7 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
   MAPCHANGE_WORK* work;
   GAMEDATA* gameData;
   u16 warpID;
+  u16 warp_zone_id;
 
   // ワープID取得
   gameData = GAMESYSTEM_GetGameData( gameSystem );
@@ -1791,8 +1792,8 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  WARPDATA_GetWarpLocation( warpID, &(work->loc_req) );
-  LOCATION_SetDefaultPos( &(work->loc_req), work->loc_req.zone_id );
+  warp_zone_id = WARPDATA_GetWarpZoneID( warpID );
+  LOCATION_SetDefaultPos( &(work->loc_req), warp_zone_id );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
 
@@ -2290,7 +2291,8 @@ static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   {
     LOCATION esc;
     u16 warp_id = GAMEDATA_GetWarpID( gamedata );
-    WARPDATA_GetEscapeLocation( warp_id, &esc );
+    u16 warp_zone_id = WARPDATA_GetWarpZoneID( warp_id );
+    LOCATION_SetDefaultPos( &esc, warp_zone_id );
     GAMEDATA_SetEscapeLocation( gamedata, &esc );
   }
 

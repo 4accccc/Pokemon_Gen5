@@ -18,9 +18,8 @@
 //	ÉèÅ[ÉvÇ∆Ç—êÊ
 //--------------------------------------------------------------------------------------------
 extern BOOL WARPDATA_IsValidID( int warp_id );
-extern void WARPDATA_GetWarpLocation(int warp_id, LOCATION * loc);
+extern u16 WARPDATA_GetWarpZoneID( int warp_id );
 extern void WARPDATA_GetRevivalLocation(int warp_id, LOCATION * loc);
-extern void WARPDATA_GetEscapeLocation(int warp_id, LOCATION * loc);
 extern int WARPDATA_SearchByRoomID(int zone_id);
 extern int WARPDATA_SearchByFieldID(int zone_id);
 extern int WARPDATA_GetInitializeID(void);

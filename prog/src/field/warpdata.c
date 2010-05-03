@@ -91,20 +91,15 @@ BOOL WARPDATA_IsValidID( int warp_id )
 
 //------------------------------------------------------------------
 /**
- * @brief	ワープ場所の取得
+ * @brief ワープ先のゾーンID取得
  * @param	warp_id		ワープID
- * @param	loc			場所を受け取るLOCATIONへのポインタ
+ * @retval  u16     ゾーンID
  */
 //------------------------------------------------------------------
-void WARPDATA_GetWarpLocation(int warp_id, LOCATION * loc)
+u16 WARPDATA_GetWarpZoneID( int warp_id )
 {
-	warp_id = regulate_warp_id(warp_id);
-
-  set_location( loc,
-      WarpData[warp_id].fld_id,
-      DIR_DOWN, 
-      WarpData[warp_id].fld_gx,
-      WarpData[warp_id].fld_gz );
+  warp_id = regulate_warp_id( warp_id );
+  return WarpData[ warp_id ].fld_id;
 }
 
 //------------------------------------------------------------------
@@ -123,24 +118,6 @@ void WARPDATA_GetRevivalLocation(int warp_id, LOCATION * loc)
       DIR_UP, 
       WarpData[warp_id].room_gx,
       WarpData[warp_id].room_gz );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	出口座標の取得(Escapeフラグのないポイントなら空飛ぶ座標を返す)
- * @param	warp_id		ワープID
- * @param	loc			場所を受け取るLOCATIONへのポインタ
- */
-//------------------------------------------------------------------
-void WARPDATA_GetEscapeLocation(int warp_id, LOCATION * loc)
-{
-	int id = regulate_warp_id(warp_id);
-
-  set_location( loc,
-      WarpData[warp_id].escape_id,
-      DIR_DOWN, 
-      WarpData[warp_id].escape_gx,
-      WarpData[warp_id].escape_gz );
 }
 
 //------------------------------------------------------------------
