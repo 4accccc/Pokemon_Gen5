@@ -330,7 +330,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
 
   dst->shooterBitWork.shooter_use = TRUE;
   for(i=0; i<NELEMS(dst->shooterBitWork.bit_tbl); ++i){
-    dst->shooterBitWork.bit_tbl[i] = 0xff;
+    dst->shooterBitWork.bit_tbl[i] = 0;//0xff;このBitは使用禁止bitなので0だと全て使えるの間違いでしたnagihashi 5/3
   }
 
   dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
