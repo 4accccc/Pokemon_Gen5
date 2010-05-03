@@ -30,7 +30,7 @@ typedef enum {
   TRADE_DIGIT = 6,
 }TR_DIGIT;
 
-#define TR_DIGIT_MAX  (12)
+#define TR_DIGIT_MAX  (32)
 
 
 

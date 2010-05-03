@@ -252,8 +252,14 @@ static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
               STRBUF *buff,
               const StrNumberDispType inDisptype,
               int col);
-
-
+static void WriteNumDateYYMMDDHHMM( TR_CARD_WORK* wk,
+              GFL_BMPWIN *inWin,
+              const u32 inBmpWidth,
+              const u32 inRightSpace,
+              const u32 inStartY,
+              STRBUF *buff,
+              const StrNumberDispType inDisptype,
+              int col);
 static void WriteNumDataFill( TR_CARD_WORK* wk,
                 GFL_BMPWIN *inWin,
                 const u32 inBmpWidth,
@@ -579,34 +585,13 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
     break;
   case SCORE_LINE_FIRST_CHAMPION_1: // はじめてのでんどういり1行目
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_09], col );
-    if (inTrCardData->Clear_m != 0){  //月が0月でなければ、クリアしたとみなす
-      WriteNumData( wk, win,
-              BMP_WIDTH_TYPE3, 8*1, y, str, inTrCardData->Clear_d, DAY_DIGIT,
-              STR_NUM_DISP_ZERO,col);   //日
-      WriteNumData( wk, win,
-              BMP_WIDTH_TYPE3, 8*4, y, str, inTrCardData->Clear_m, MONTH_DIGIT,
-              STR_NUM_DISP_ZERO,col);   //月
-      WriteNumData( wk, win,
-              BMP_WIDTH_TYPE3, 8*7, y, str, inTrCardData->Clear_y, YEAR_DIGIT,
-              STR_NUM_DISP_ZERO,col);   //年
-    }else{
-      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*9), y, wk->CPrmBuf[MSG_TCARD_13], col );
-      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*6), y, wk->CPrmBuf[MSG_TCARD_13], col );
-      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*3), y, wk->CPrmBuf[MSG_TCARD_13], col );
-    }
-
     break;
   case SCORE_LINE_FIRST_CHAMPION_2: // はじめてのでんどういり2行目
     if (inTrCardData->Clear_m != 0){  //月が0月でなければ、クリアしたとみなす
-      WriteNumData( wk, win,
-              BMP_WIDTH_TYPE3, 0, y, str, inTrCardData->ClearTime_m, TIME_M_DIGIT,
-              STR_NUM_DISP_ZERO,col);   //分
-      WriteNumData( wk, win,
-              BMP_WIDTH_TYPE3, 8*3, y, str, inTrCardData->ClearTime_h, TIME_H_DIGIT,
-              STR_NUM_DISP_SPACE,col);  //時
+      WriteNumDateYYMMDDHHMM( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_LEFT, col );
     }else{
-      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*5), y, wk->CPrmBuf[MSG_TCARD_13], col );
-      LinePrint( win, wk, BMP_WIDTH_TYPE3-(8*2), y, wk->CPrmBuf[MSG_TCARD_13], col );
+      int length = PRINTSYS_GetStrWidth( wk->CPrmBuf[MSG_TCARD_13], wk->fontHandle, 0 );
+      LinePrint( win, wk, BMP_WIDTH_TYPE3-length, y, wk->CPrmBuf[MSG_TCARD_13], col );
     }
     break;
   case SCORE_LINE_COMM_NUM: // つうしんした回数
@@ -909,7 +894,7 @@ static void WriteNumDataWithCredit( TR_CARD_WORK* wk,
 
 //--------------------------------------------------------------------------------------------
 /**
- * 数字表示
+ * 数字表示(ゲーム開始年月日表示用）
  *
  * @param win       BmpWin
  * @param inBmpWidth    幅
@@ -938,6 +923,46 @@ static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
   WORDSET_RegisterNumber( wk->wordset, 1, wk->TrCardData->Start_m, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_RegisterNumber( wk->wordset, 2, wk->TrCardData->Start_d, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_YYMMDD] );
+  len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
+
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin) 
+        , inBmpWidth-(len+inRightSpace), inStartY
+        , buff, wk->fontHandle, col_tbl[col] );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 数字表示(ゲームクリア年月日時分表示用）
+ *
+ * @param win       BmpWin
+ * @param inBmpWidth    幅
+ * @param inRightSpace  右空白
+ * @param inStartY    表示開始Y位置
+ * @param buff      バッファ
+ * @param inNum     数字
+ * @param inDigit     桁数
+ * @param inDispType    表示タイプ
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void WriteNumDateYYMMDDHHMM( TR_CARD_WORK* wk,
+              GFL_BMPWIN *inWin,
+              const u32 inBmpWidth,
+              const u32 inRightSpace,
+              const u32 inStartY,
+              STRBUF *buff,
+              const StrNumberDispType inDisptype,
+              int col)
+{
+  u32 len;
+
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->TrCardData->Clear_y+2000, 4, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 1, wk->TrCardData->Clear_m,      2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 2, wk->TrCardData->Clear_d,      2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 3, wk->TrCardData->ClearTime_h,  2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 4, wk->TrCardData->ClearTime_m, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_YYMMDDHHMM] );
   len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
 
   PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin) 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-30T12:56:18"/>
+	<create user="mori" host="W00155" date="2010-05-04T02:30:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="163"/>
+		<id position="0" width="199"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1192" top="480" right="1600" bottom="1100" maximized="no" rayout="Vertical2">
+	<dialog left="1646" top="224" right="2330" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1102" top="80" right="1575" bottom="478" visible="yes"/>
-		<band id="0" index="0" style="0000" width="445"/>
+		<tag-palette left="807" top="80" right="1280" bottom="478" visible="yes"/>
+		<band id="0" index="0" style="0000" width="503"/>
 		<band id="1" index="1" style="0000" width="171"/>
-		<band id="2" index="2" style="0000" width="227"/>
-		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="676"/>
+		<band id="3" index="3" style="0000" width="676"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -467,8 +467,8 @@
 	<row id="MSG_TCARD_13" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
 		<comment>はじめての殿堂入り年月日の項目に代入する記号
 ※はじめての殿堂入りをするまで</comment>
-		<language name="JPN" width="256">ーー</language>
-		<language name="JPN_KANJI" width="256">ーー</language>
+		<language name="JPN" width="256">－－－－年 －－月 －－日 －－時 －－分</language>
+		<language name="JPN_KANJI" width="256">－－－－年 －－月 －－日 －－時 －－分</language>
 	</row>
 
 	<row id="MSG_TCARD_14" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
@@ -646,6 +646,11 @@
 	<row id="MSG_TCARD_NUM_YYMMDD">
 		<language name="JPN" width="256">[2:03:４桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日</language>
 		<language name="JPN_KANJI" width="256">[2:03:４桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日</language>
+	</row>
+
+	<row id="MSG_TCARD_NUM_YYMMDDHHMM">
+		<language name="JPN" width="256">[2:03:４桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日 [2:01:２桁:3]時 [2:01:２桁:4]分</language>
+		<language name="JPN_KANJI" width="256">[2:03:４桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日 [2:01:２桁:3]時 [2:01:２桁:4]分</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
