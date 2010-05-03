@@ -404,8 +404,8 @@
 	</row>
 
 	<row id="mini_01">
-		<language name="JPN" width="216">ミカ</language>
-		<language name="JPN_KANJI" width="216">ミカ</language>
+		<language name="JPN" width="216">マリ</language>
+		<language name="JPN_KANJI" width="216">マリ</language>
 	</row>
 
 	<row id="schoolb_01">
@@ -534,8 +534,8 @@
 	</row>
 
 	<row id="rangerm_02">
-		<language name="JPN" width="216">ジョルジュ</language>
-		<language name="JPN_KANJI" width="216">ジョルジュ</language>
+		<language name="JPN" width="216">ミゲル</language>
+		<language name="JPN_KANJI" width="216">ミゲル</language>
 	</row>
 
 	<row id="rangerw_02">
@@ -614,8 +614,8 @@
 	</row>
 
 	<row id="backpackerm_02">
-		<language name="JPN" width="216">ケビン</language>
-		<language name="JPN_KANJI" width="216">ケビン</language>
+		<language name="JPN" width="216">マイケル</language>
+		<language name="JPN_KANJI" width="216">マイケル</language>
 	</row>
 
 	<row id="backpackerw_02">
@@ -749,8 +749,8 @@
 	</row>
 
 	<row id="pilot_02">
-		<language name="JPN" width="216">シンタロウ</language>
-		<language name="JPN_KANJI" width="216">シンタロウ</language>
+		<language name="JPN" width="216">ヨシアキ</language>
+		<language name="JPN_KANJI" width="216">ヨシアキ</language>
 	</row>
 
 	<row id="worker1_01">
@@ -1629,8 +1629,8 @@
 	</row>
 
 	<row id="elitem_07">
-		<language name="JPN" width="216">アベル</language>
-		<language name="JPN_KANJI" width="216">アベル</language>
+		<language name="JPN" width="216">デビッド</language>
+		<language name="JPN_KANJI" width="216">デビッド</language>
 	</row>
 
 	<row id="karate_07">
@@ -1664,8 +1664,8 @@
 	</row>
 
 	<row id="battleg_08">
-		<language name="JPN" width="216">ミン</language>
-		<language name="JPN_KANJI" width="216">ミン</language>
+		<language name="JPN" width="216">シャオ</language>
+		<language name="JPN_KANJI" width="216">シャオ</language>
 	</row>
 
 	<row id="mount_06">
@@ -1689,8 +1689,8 @@
 	</row>
 
 	<row id="veteranm_03">
-		<language name="JPN" width="216">ムラマサ</language>
-		<language name="JPN_KANJI" width="216">ムラマサ</language>
+		<language name="JPN" width="216">タイガ</language>
+		<language name="JPN_KANJI" width="216">タイガ</language>
 	</row>
 
 	<row id="veteranw_03">
@@ -2124,8 +2124,8 @@
 	</row>
 
 	<row id="fanm_11">
-		<language name="JPN" width="216">テツとゴウ</language>
-		<language name="JPN_KANJI" width="216">テツとゴウ</language>
+		<language name="JPN" width="216">カツとゴウ</language>
+		<language name="JPN_KANJI" width="216">カツとゴウ</language>
 	</row>
 
 	<row id="fanw_03">
@@ -2379,8 +2379,8 @@
 	</row>
 
 	<row id="parasol_05">
-		<language name="JPN" width="216">キリエ</language>
-		<language name="JPN_KANJI" width="216">キリエ</language>
+		<language name="JPN" width="216">ヒヅキ</language>
+		<language name="JPN_KANJI" width="216">ヒヅキ</language>
 	</row>
 
 	<row id="mount_08">
@@ -3404,8 +3404,8 @@
 	</row>
 
 	<row id="dancer_06">
-		<language name="JPN" width="216">エリック</language>
-		<language name="JPN_KANJI" width="216">エリック</language>
+		<language name="JPN" width="216">エドモンド</language>
+		<language name="JPN_KANJI" width="216">エドモンド</language>
 	</row>
 
 	<row id="badrider_01_07">
