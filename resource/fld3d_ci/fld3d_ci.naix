@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-05-03T16:43:02
+	Update:2010-05-03T17:09:03
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -155,7 +155,39 @@ enum {
 	NARC_fld3d_ci_get1_659_nsbmd = 141,
 	NARC_fld3d_ci_get1_665_nsbmd = 142,
 	NARC_fld3d_ci_get1_660_nsbmd = 143,
-	NARC_fld3d_ci_get1_757_nsbmd = 144
+	NARC_fld3d_ci_get1_757_nsbmd = 144,
+	NARC_fld3d_ci_gymbadge1f_nsbmd = 145,
+	NARC_fld3d_ci_gymbadge1f_nsbca = 146,
+	NARC_fld3d_ci_gymbadge1f_nsbtp = 147,
+	NARC_fld3d_ci_gymbadge1f_nsbva = 148,
+	NARC_fld3d_ci_gymbadge2f_nsbmd = 149,
+	NARC_fld3d_ci_gymbadge2f_nsbca = 150,
+	NARC_fld3d_ci_gymbadge2f_nsbtp = 151,
+	NARC_fld3d_ci_gymbadge2f_nsbva = 152,
+	NARC_fld3d_ci_gymbadge3f_nsbmd = 153,
+	NARC_fld3d_ci_gymbadge3f_nsbca = 154,
+	NARC_fld3d_ci_gymbadge3f_nsbtp = 155,
+	NARC_fld3d_ci_gymbadge3f_nsbva = 156,
+	NARC_fld3d_ci_gymbadge4f_nsbmd = 157,
+	NARC_fld3d_ci_gymbadge4f_nsbca = 158,
+	NARC_fld3d_ci_gymbadge4f_nsbtp = 159,
+	NARC_fld3d_ci_gymbadge4f_nsbva = 160,
+	NARC_fld3d_ci_gymbadge5f_nsbmd = 161,
+	NARC_fld3d_ci_gymbadge5f_nsbca = 162,
+	NARC_fld3d_ci_gymbadge5f_nsbtp = 163,
+	NARC_fld3d_ci_gymbadge5f_nsbva = 164,
+	NARC_fld3d_ci_gymbadge6f_nsbmd = 165,
+	NARC_fld3d_ci_gymbadge6f_nsbca = 166,
+	NARC_fld3d_ci_gymbadge6f_nsbtp = 167,
+	NARC_fld3d_ci_gymbadge6f_nsbva = 168,
+	NARC_fld3d_ci_gymbadge7f_nsbmd = 169,
+	NARC_fld3d_ci_gymbadge7f_nsbca = 170,
+	NARC_fld3d_ci_gymbadge7f_nsbtp = 171,
+	NARC_fld3d_ci_gymbadge7f_nsbva = 172,
+	NARC_fld3d_ci_gymbadge8f_nsbmd = 173,
+	NARC_fld3d_ci_gymbadge8f_nsbca = 174,
+	NARC_fld3d_ci_gymbadge8f_nsbtp = 175,
+	NARC_fld3d_ci_gymbadge8f_nsbva = 176
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

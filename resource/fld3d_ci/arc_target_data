@@ -143,4 +143,36 @@ ARC_TARGET_DATA = \
 	get1_659.nsbmd \
 	get1_665.nsbmd \
 	get1_660.nsbmd \
-	get1_757.nsbmd
+	get1_757.nsbmd \
+	gymbadge1f.nsbmd \
+	gymbadge1f.nsbca \
+	gymbadge1f.nsbtp \
+	gymbadge1f.nsbva \
+	gymbadge2f.nsbmd \
+	gymbadge2f.nsbca \
+	gymbadge2f.nsbtp \
+	gymbadge2f.nsbva \
+	gymbadge3f.nsbmd \
+	gymbadge3f.nsbca \
+	gymbadge3f.nsbtp \
+	gymbadge3f.nsbva \
+	gymbadge4f.nsbmd \
+	gymbadge4f.nsbca \
+	gymbadge4f.nsbtp \
+	gymbadge4f.nsbva \
+	gymbadge5f.nsbmd \
+	gymbadge5f.nsbca \
+	gymbadge5f.nsbtp \
+	gymbadge5f.nsbva \
+	gymbadge6f.nsbmd \
+	gymbadge6f.nsbca \
+	gymbadge6f.nsbtp \
+	gymbadge6f.nsbva \
+	gymbadge7f.nsbmd \
+	gymbadge7f.nsbca \
+	gymbadge7f.nsbtp \
+	gymbadge7f.nsbva \
+	gymbadge8f.nsbmd \
+	gymbadge8f.nsbca \
+	gymbadge8f.nsbtp \
+	gymbadge8f.nsbva
