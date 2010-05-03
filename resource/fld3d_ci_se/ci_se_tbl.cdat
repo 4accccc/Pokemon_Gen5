@@ -102,12 +102,11 @@ const CI_SE_TBL Tbl10[] = {
 };
 
 const CI_SE_TBL Tbl11[] = {
-	{ SEQ_SE_FLD_01, 42 },
+	{ SEQ_SE_FLD_01, 24 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl12[] = {
-	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
@@ -141,17 +140,16 @@ const CI_SE_TBL Tbl16[] = {
 };
 
 const CI_SE_TBL Tbl17[] = {
-	{ SEQ_SE_FLD_01, 42 },
+	{ SEQ_SE_FLD_01, 24 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl18[] = {
-	{ SEQ_SE_FLD_01, 42 },
+	{ SEQ_SE_FLD_01, 24 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl19[] = {
-	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
@@ -254,7 +252,87 @@ const CI_SE_TBL Tbl41[] = {
 	{ CI_SE_NONE, 0 },
 };
 
-#define CI_SE_TBL_MAX  (42)
+const CI_SE_TBL Tbl42[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl43[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl44[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl45[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl46[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl47[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl48[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+const CI_SE_TBL Tbl49[] = {
+	{ SEQ_SE_TDEMO_006, 1 },
+	{ SEQ_SE_BGDEMO_01, 3 },
+	{ SEQ_SE_W319_01, 159 },
+	{ SEQ_SE_BGDEMO_02, 208 },
+	{ SEQ_SE_SYS_89, 272 },
+	{ SEQ_SE_ROTATION_B, 316 },
+	{ CI_SE_NONE, 0 },
+};
+
+#define CI_SE_TBL_MAX  (50)
 const CI_SE_TBL * const SeTbl[ CI_SE_TBL_MAX ] = {
 	Tbl0,
 	Tbl1,
@@ -298,4 +376,12 @@ const CI_SE_TBL * const SeTbl[ CI_SE_TBL_MAX ] = {
 	Tbl39,
 	Tbl40,
 	Tbl41,
+	Tbl42,
+	Tbl43,
+	Tbl44,
+	Tbl45,
+	Tbl46,
+	Tbl47,
+	Tbl48,
+	Tbl49,
 };
