@@ -72,7 +72,8 @@ enum {
 	NARC_local_tvt_tvt_script_02_bin = 58,
 	NARC_local_tvt_tvt_script_03_bin = 59,
 	NARC_local_tvt_tvt_script_04_bin = 60,
-	NARC_local_tvt_tvt_script_05_bin = 61
+	NARC_local_tvt_tvt_script_05_bin = 61,
+	NARC_local_tvt_tvt_script_06_bin = 62
 };
 
 /* NARC_LOCAL_TVT_NAIX_ */
