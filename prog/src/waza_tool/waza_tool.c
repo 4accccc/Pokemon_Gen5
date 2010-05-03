@@ -60,6 +60,13 @@ struct _WAZA_DATA {
 
 };
 
+typedef struct
+{ 
+  WAZA_DATA** wd;
+  WazaID*     wazaID;
+  int         cache_size;
+}WAZA_DATA_CACHE;
+
 /*------------------------------------------------------------------------------------*/
 /*  consts                                                                            */
 /*------------------------------------------------------------------------------------*/
@@ -76,15 +83,78 @@ enum {
  *  簡易版パラメータ取得処理で、ワザパラメータを読み込むために利用するテンポラリワーク
  */
 static WAZA_DATA  gWazaData = {0};
+static WAZA_DATA_CACHE* wd_cache = NULL;
+
+static inline WAZA_DATA* getCacheData( WazaID id )
+{ 
+  int i;
+
+  for( i = 0 ; i < wd_cache->cache_size ; i++ )
+  { 
+    if( wd_cache->wazaID[ i ] == WAZANO_NULL )
+    { 
+      wd_cache->wazaID[ i ] = id;
+      GFL_ARC_LoadData( wd_cache->wd[ i ], ARCID_WAZA_TBL, id );
+      break;
+    }
+    if( wd_cache->wazaID[ i ] == id )
+    { 
+      break;
+    }
+  }
+  if( i == wd_cache->cache_size )
+  { 
+    i--;
+    wd_cache->wazaID[ i ] = id;
+    GFL_ARC_LoadData( wd_cache->wd[ i ], ARCID_WAZA_TBL, id );
+  }
+
+  return wd_cache->wd[ i ];
+}
+
+static inline WAZA_DATA* getCacheDataByHandle( ARCHANDLE* handle, WazaID id )
+{ 
+  int i;
+
+  for( i = 0 ; i < wd_cache->cache_size ; i++ )
+  { 
+    if( wd_cache->wazaID[ i ] == WAZANO_NULL )
+    { 
+      wd_cache->wazaID[ i ] = id;
+      GFL_ARC_LoadDataByHandle( handle, id, wd_cache->wd[ i ] );
+      break;
+    }
+    if( wd_cache->wazaID[ i ] == id )
+    { 
+      break;
+    }
+  }
+  if( i == wd_cache->cache_size )
+  { 
+    i--;
+    wd_cache->wazaID[ i ] = id;
+    GFL_ARC_LoadDataByHandle( handle, id, wd_cache->wd[ i ] );
+  }
+
+  return wd_cache->wd[ i ];
+}
 
 static inline WAZA_DATA* loadWazaDataTmp( WazaID id )
 {
+  if( wd_cache )
+  { 
+    return getCacheData( id );
+  }
   GFL_ARC_LoadData( &gWazaData, ARCID_WAZA_TBL, id );
   return &gWazaData;
 }
 
 static inline WAZA_DATA* loadWazaDataTmpHandle( ARCHANDLE* handle, WazaID id )
 {
+  if( wd_cache )
+  { 
+    return getCacheDataByHandle( handle, id );
+  }
   GFL_ARC_LoadDataByHandle( handle, id, &gWazaData );
   return &gWazaData;
 }
@@ -484,4 +554,50 @@ BOOL WAZADATA_IsDamage( WazaID id )
   return WAZADATA_GetParam(id, WAZAPARAM_POWER) != 0;
 }
 
+
+//=============================================================================================
+/**
+ * キャッシュの生成
+ *
+ * @param[in] size    キャッシュサイズ（１で技1つ分のWAZA_DATAを確保します）
+ * @param[in] heapID  ヒープID
+ */
+//=============================================================================================
+void  WAZADATA_CreateCache( int size, HEAPID heapID )
+{ 
+  int i;
+
+  //すでにキャッシュが生成されていたらアサート
+  GF_ASSERT( wd_cache == NULL );
+
+  wd_cache              = GFL_HEAP_AllocMemory( heapID, sizeof( WAZA_DATA_CACHE ) );
+  wd_cache->wd          = GFL_HEAP_AllocMemory( heapID, sizeof( WAZA_DATA* ) * size );
+  wd_cache->wazaID      = GFL_HEAP_AllocMemory( heapID, sizeof( WazaID ) * size );
+  wd_cache->cache_size  = size;
+
+  for( i = 0 ; i < size ; i++ )
+  { 
+    wd_cache->wd[ i ] = GFL_HEAP_AllocMemory( heapID, sizeof( WAZA_DATA ) );
+    wd_cache->wazaID[ i ] = WAZANO_NULL;
+  }
+}
+
+//=============================================================================================
+/**
+ * キャッシュの破棄
+ */
+//=============================================================================================
+void  WAZADATA_DeleteCache( void )
+{ 
+  int i;
+
+  for( i = 0 ; i < wd_cache->cache_size ; i++ )
+  { 
+    GFL_HEAP_FreeMemory( wd_cache->wd[ i ] );
+  }
+  GFL_HEAP_FreeMemory( wd_cache->wazaID );
+  GFL_HEAP_FreeMemory( wd_cache->wd );
+  GFL_HEAP_FreeMemory( wd_cache );
+  wd_cache = NULL;
+}
 
