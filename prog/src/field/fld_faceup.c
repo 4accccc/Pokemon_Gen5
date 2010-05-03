@@ -785,7 +785,6 @@ static void MoveAnm( const ANM_PAT *inPatDat,
         for(i=0;i<inTransWidth;i++)
         {
           cnt->TransDat[j][i] = (j*inTransWidth)+base+i;
-          OS_Printf("%d %d %d \n",j,i,cnt->TransDat[j][i]);
         }
       }
       //転送後のウェイトセット
