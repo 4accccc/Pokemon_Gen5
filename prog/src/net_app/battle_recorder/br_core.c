@@ -56,6 +56,7 @@
 FS_EXTERN_OVERLAY( battle_recorder_browse );
 FS_EXTERN_OVERLAY( battle_recorder_musical_look );
 FS_EXTERN_OVERLAY( battle_recorder_musical_send );
+FS_EXTERN_OVERLAY( gds_comm );
 
 //=============================================================================
 /**
@@ -333,6 +334,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   }
 	p_wk->p_graphic	= BR_GRAPHIC_Init( graphic_type, GX_DISP_SELECT_MAIN_SUB, HEAPID_BATTLE_RECORDER_CORE );
 
+  //初期リソース読み込み
   {
     MISC  *p_misc = GAMEDATA_GetMiscWork( p_wk->p_param->p_param->p_gamedata );
     p_wk->p_res			= BR_RES_Init( 
@@ -340,7 +342,6 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
         p_wk->p_param->p_param->mode == BR_MODE_BROWSE,
         HEAPID_BATTLE_RECORDER_CORE );
   }
-
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_M, HEAPID_BATTLE_RECORDER_CORE );
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_S, HEAPID_BATTLE_RECORDER_CORE );
 
@@ -348,9 +349,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   p_wk->p_procsys	= BR_PROC_SYS_Init( BR_PROCID_START, sc_procdata_tbl, 
       BR_PROCID_MAX, p_wk, &p_wk->p_param->p_data->proc_recovery, HEAPID_BATTLE_RECORDER_CORE );
 
-  //フェードプロセス
+  //フェードプロセス(パレットフェードを使うのでリソースを読んだあとにコピーしたり色設定したりしている)
   p_wk->p_fade  = BR_FADE_Init( HEAPID_BATTLE_RECORDER_CORE );
-  BR_FADE_PALETTE_Copy( p_wk->p_fade );  //BR_RES_Initでよんでいるので
+  BR_FADE_PALETTE_Copy( p_wk->p_fade );  //BR_RES_InitでリソースをVRAMに読んでいるので、そこからコピー
   BR_FADE_PALETTE_SetColor( p_wk->p_fade, BR_RES_GetFadeColor( p_wk->p_res ) );
   if( p_wk->p_param->mode == BR_CORE_MODE_INIT )
   { 
@@ -363,7 +364,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     p_wk->p_sidebar = BR_SIDEBAR_Init( p_clunit, p_wk->p_fade, p_wk->p_res, HEAPID_BATTLE_RECORDER_CORE );
   }
 
-  //メニューで使用する録画データ(ミュージカルモードではしない)
+  //メニューで使用する録画データをチェック
   Br_Core_CheckSaveData( &p_wk->p_param->p_data->rec_saveinfo,
       TRUE, p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
 
@@ -375,6 +376,13 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
           p_wk->p_param->p_param->p_gamedata,
           p_wk->p_param->p_param->p_svl,
           HEAPID_BATTLE_RECORDER_CORE );
+    }
+    else
+    { 
+      //このオーバーレイはgdsモードのときに読まれるが、
+      //battle_rec操作があるため、通信を使わないときにでも
+      //オーバーレイに置く
+      GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_comm) );
     }
 
     //ブラウザモードでも通信アイコンをだす
@@ -435,6 +443,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
     FSND_ReleaseBGMVolume_inApp( p_fld_snd );
   }
 
+  //ネット破棄
   if( p_wk->p_net )
   { 
     if( BR_NET_SYSERR_RETURN_DISCONNECT == BR_NET_GetSysError( p_wk->p_net ) )
@@ -442,6 +451,10 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
       p_wk->p_param->p_param->result  = BR_RESULT_NET_ERROR;
     }
     BR_NET_Exit( p_wk->p_net );
+  }
+  else
+  { 
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( gds_comm ) );
   }
 
   //サイドバー破棄

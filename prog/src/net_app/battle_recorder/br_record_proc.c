@@ -284,25 +284,26 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   //シーケンス指定
   if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
   { 
-    //番号指定から来た場合はヘッダろプロファイルがないのですぐダウンロード
+    //番号指定から来た場合はヘッダとプロファイルがないのですぐダウンロード
     if( !p_wk->p_param->is_return )
     { 
       BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_NumberDownload );
     }
     else
     { 
-      //こちらも復帰時はそのままレコード画面へ
+      //復帰時はそのままレコード画面へ
       BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_FadeInBefore );
     }
   }
   else
   { 
-    //ブラウザモードのとき、戦闘から復帰し、かつ視聴完了した場合
-    //視聴済みセーブへ行く
+    //ブラウザモードのとき、戦闘から復帰し、視聴完了してセキュアがFALSEの場合
+    //セキュアをTRUEにしに視聴済みセーブへ行く
     if( (  p_wk->p_param->mode == BR_RECODE_PROC_OTHER_00
         || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_01
         || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_02
-        ) && p_wk->p_param->is_return && *p_wk->p_param->cp_is_recplay_finish )
+        ) && p_wk->p_param->is_return 
+        && (*p_wk->p_param->cp_is_recplay_finish && p_wk->is_secure == FALSE) )
     { 
       BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_SecureSave );
     }
@@ -1119,6 +1120,11 @@ static void Br_Record_Seq_SecureSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       result  = BattleRec_SecureSetSave( p_wk->p_param->p_gamedata, p_wk->p_param->mode, &p_wk->sv_wk0, &p_wk->sv_wk1, p_wk->heapID );
       if( result == SAVE_RESULT_OK )
       { 
+        //セーブの中で暗号化するため、復号化して引き続き使う
+        BattleRec_DataDecoded();
+
+        //セキュアセーブしたあとは再度セキュアチェック
+        p_wk->is_secure = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_SECURE, 0 );
         *p_seq  = SEQ_FADEOUT_START;
       }
     }
