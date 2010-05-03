@@ -969,6 +969,30 @@ BOOL MAPATTR_VALUE_CheckCycleNotUse( MAPATTR_VALUE val )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　四季変化無し草むら　弱
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckGrassAllYearLow( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_GRASS_LOW_02 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　四季変化無し草むら　強
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckGrassAllYearHigh( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_GRASS_HIGH_02 );
+}
+
 /*
  *  @breif  アトリビュート　エフェクトエンカウントタイプチェック
  */
@@ -1031,24 +1055,27 @@ BtlBgAttr MAPATTR_GetBattleAttrID( MAPATTR_VALUE value )
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー　チェック　四季変化無し草むら　弱
- * @param val MAPATTR_VALUE
+ * 波乗り可能アトリビュートチェック
+ * @param   now_attr    現在地のアトリビュート
+ * @param   front_attr  自機の一つ前のアトリビュート
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckGrassAllYearLow( const MAPATTR_VALUE val )
+BOOL MAPATTR_CheckNaminoriUse( const MAPATTR now_attr, const MAPATTR front_attr )
 {
-  return ( val == MATTR_E_GRASS_LOW_02 );
+  MAPATTR_FLAG  f_flag = MAPATTR_GetAttrFlag( front_attr );
+  MAPATTR_VALUE f_val = MAPATTR_GetAttrValue( front_attr );
+
+  if( MAPATTR_GetHitchFlag( now_attr ) ){
+    return FALSE;
+  }
+  //目の前が侵入可能な水系アトリビュートか
+  //岸アトリビュートならば波乗り可
+  if( ((f_flag&MAPATTR_FLAGBIT_WATER) && (!MAPATTR_GetHitchFlag(front_attr))) ||
+      MAPATTR_VALUE_CheckShore(f_val)
+    ){
+    return( TRUE );
+  }
+  return( FALSE );
 }
 
-//--------------------------------------------------------------
-/**
- * アトリビュートバリュー　チェック　四季変化無し草むら　強
- * @param val MAPATTR_VALUE
- * @retval BOOL FALSE=違う
- */
-//--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckGrassAllYearHigh( const MAPATTR_VALUE val )
-{
-  return ( val == MATTR_E_GRASS_HIGH_02 );
-}
