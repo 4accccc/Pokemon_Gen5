@@ -168,7 +168,6 @@ EVENT_START ev_waza_omoidashi
     IF $first_contact == TRUE THEN
       _FLAG_SET( FE_REMIND_FIRSTTALK )  // フラグセット
       _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_12, SCWK_TARGET_OBJID, POS_DOWN )
-      _AB_KEYWAIT()
     ENDIF
   }
   // ハートのうろこ所持チェック
@@ -193,7 +192,6 @@ EVENT_START ev_waza_omoidashi
   {
     DEFINE_LOCAL decide
     _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_14, SCWK_TARGET_OBJID, POS_DOWN )  //「どの ポケモンに します？」
-    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _SELECT_TEMOTI_POKE( decide, poke_pos, 0 )
     // キャンセル
@@ -223,7 +221,6 @@ EVENT_START ev_waza_omoidashi
     DEFINE_LOCAL tmp
     _TEMOTI_NICK_NAME( 0, poke_pos )
     _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_01, SCWK_TARGET_OBJID, POS_DOWN )  //「どの わざ？」
-    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _CALL_WAZA_REMAIND_PROC( result, poke_pos )
     SWITCH $result

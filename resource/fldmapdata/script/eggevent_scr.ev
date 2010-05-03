@@ -39,7 +39,6 @@ ev_egg_birth:
 
   //「おや？……」
   _SYSWIN_MSG( egg_evemt_01 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
   // 孵化デモ画面呼び出し

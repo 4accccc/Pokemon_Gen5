@@ -201,7 +201,6 @@ sub_report_event_call:
   //「すでに べつの レポートが…」
   IF ($do_save_flag == TRUE) && ($save_exists_flag == TRUE) && ($new_save_flag == TRUE) THEN
       _SYSWIN_MSG( msg_common_report_08 , POS_DOWN )
-    _AB_KEYWAIT()
     _SYSWIN_CLOSE()
     $do_save_flag = FALSE
   ENDIF
@@ -246,7 +245,6 @@ sub_report_event_call:
     ELSE
       //「かけませんでした」
       _SYSWIN_MSG( msg_common_report_06 , POS_DOWN )
-      _AB_KEYWAIT()
       _SYSWIN_CLOSE() 
       $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
     ENDIF
