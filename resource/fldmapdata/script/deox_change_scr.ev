@@ -26,6 +26,9 @@ EVENT_START ev_deox_change
 
   //ローカルワーク定義
   DEFINE_LOCAL DEO_NUM            // 手持ちデオキシスの数
+  
+  //話しかけＳＥ
+  _TALK_START_SE_PLAY()
 
   //デオキシスいるか
   _GET_PARTY_POKE_COUNT_BY_MONSNO(MONSNO_DEOKISISU, DEO_NUM)
@@ -111,7 +114,9 @@ form_change:
   //フォルムチェンジ(図鑑登録含む)
  _CHANGE_FORM_NO( SEL_POS, FORM_NO )
 
-  //フォルム別にメッセージを変更
+ //鳴き声
+ _VOICE_PLAY( MONSNO_DEOKISISU, 0 )   //フォルムによる鳴き声の違いは無いので、0で鳴らす
+   //フォルム別にメッセージを変更
   IF $FORM_NO == 0 THEN
     $FORM_MSG = msg_deoxys_05    //ノーマル
   ELSIF $FORM_NO == 1 THEN
@@ -125,8 +130,12 @@ form_change:
     $FORM_MSG = msg_deoxys_05    //ノーマルにしとく
   ENDIF
 
-  $END_MSG = $FORM_MSG
-  _CALL end_msg
+  //※ラストメッセージだけど、鳴き声待ちするのでend_msgを使用しない
+  _SYSWIN_MSG( FORM_MSG , POS_DOWN )
+  //鳴き声待ち
+  _VOICE_WAIT()
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
 _RET
 
 //最終メッセージ共通処理

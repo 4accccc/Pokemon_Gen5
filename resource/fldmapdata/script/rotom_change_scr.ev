@@ -37,6 +37,9 @@ EVENT_START ev_rotom_change
   //ローカルワーク定義
   DEFINE_LOCAL ROTO_NUM            // 手持ちロトムの数
 
+  //話しかけＳＥ
+  _TALK_START_SE_PLAY()
+
   //ロトムいるか
   _GET_PARTY_POKE_COUNT_BY_MONSNO(MONSNO_ROTOMU, ROTO_NUM)
 
@@ -84,6 +87,15 @@ EVENT_END
 //最終メッセージ共通処理
 end_msg:
   _SYSWIN_MSG( END_MSG , POS_DOWN )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+_RET
+
+//最終メッセージ共通処理ＭＥ待ち
+end_msg_me_wait:
+  _ME_PLAY(SEQ_ME_LVUP)
+  _SYSWIN_MSG( END_MSG , POS_DOWN )
+  _ME_WAIT()
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 _RET
@@ -164,8 +176,12 @@ select_elec:
     //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
     IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
       IF $FORM_NO == 0 THEN     //現在ノーマルフォルム
+        //ニックネームを0に格納
+        _TEMOTI_NICK_NAME( 0, SEL_POS )
         _SYSWIN_MSG(msg_rotom_10, POS_DOWN )      //モーターに入ってないよ    ループ先頭に戻るからクローズいらず
       ELSE
+        //ニックネームを0に格納
+        _TEMOTI_NICK_NAME( 0, SEL_POS )
         _SYSWIN_MSG(msg_rotom_08, POS_DOWN )      //既に入ってるよ   ループ先頭に戻るからクローズいらず
       ENDIF
     ELSE          //違う
@@ -176,11 +192,21 @@ select_elec:
   //選んだのが「元に戻る」
   IF $ELEC_TO_FORM_NO == 0 THEN
     _CALL decide_del_skill_norm
-    //モーターからでてきたラストメッセージ
-    $END_MSG = msg_rotom_09
+    //ニックネームを0に格納
+    _TEMOTI_NICK_NAME( 0, SEL_POS )
+    $END_MSG = msg_rotom_09   //モーターからでてきたラストメッセージ
     _CALL end_msg
     $SCWK_ANSWER = TRUE   //ノーマルフォルムへはいつでも戻れるのでチェンジ可
   ELSE
+    //ニックネームを0に格納
+    _TEMOTI_NICK_NAME( 0, SEL_POS )
+    //ロトム鳴き声
+    _VOICE_PLAY( MONSNO_ROTOMU, 0 )   //フォルムによる鳴き声の違いは無いので、0で鳴らす
+    _SYSWIN_MSG(msg_rotom_waza_00, POS_DOWN )      //家電に入り込んだ
+    //鳴き声待ち
+    _VOICE_WAIT()
+    //送りマークつける
+    _AB_KEYWAIT_MARK()
     //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
     $DEL_SKILL_POS = 0
     _CALL decide_del_skill
@@ -242,8 +268,8 @@ decide_del_skill_norm:
       $OLD_SKILL = $NORM_CHECK_SKILL   //忘れる技セット del_skill_msgをコールする準備
       _CALL del_skill_msg
     ELSE                            //2つ以上技ある
-      _TEMOTI_NICK_NAME( 0, SEL_POS )
-      _WAZA_NAME( 2, NORM_CHECK_SKILL )
+      _TEMOTI_NICK_NAME( 0, SEL_POS )   //ニックネームを０にセット
+      _WAZA_NAME( 2, NORM_CHECK_SKILL ) //技を2にセット
       //「旧固有技を忘れた・・」
       _SYSWIN_MSG( msg_rotom_waza_08 , POS_DOWN )   //msg_rotom_09がラストメッセージなのでクローズいらず
     ENDIF
@@ -284,16 +310,20 @@ decide_del_skill:
       _CALL select_del_skill
     ELSE
       $SCWK_ANSWER = TRUE               //技スロットに空きがあるので、チェンジ可
-      //「新固有技を覚えた」
+      //ニックネームを０にセット
+       _TEMOTI_NICK_NAME( 0, SEL_POS )
+       //技を２にセット
       _WAZA_NAME( 2, NEW_SKILL )
+      //「新固有技を覚えた」
       $END_MSG = msg_rotom_waza_07
-      _CALL end_msg
+      _CALL end_msg_me_wait
     ENDIF
   ENDIF
 _RET
 
 //技を忘れて、新固有技を覚えるメッセージを表示
 del_skill_msg:
+  //ニックネームを０にセット
   _TEMOTI_NICK_NAME( 0, SEL_POS )
   _WAZA_NAME( 1, OLD_SKILL )
   _WAZA_NAME( 2, NEW_SKILL )
@@ -301,14 +331,14 @@ del_skill_msg:
   _SYSWIN_MSG( msg_rotom_waza_06 , POS_DOWN )   //クローズいらず
   //「新固有技を覚えた」
   $END_MSG = msg_rotom_waza_07
-  _CALL end_msg
+  _CALL end_msg_me_wait
 _RET
 
 //ユーザーに忘れる技を選択させる
 select_del_skill:
   DEFINE_LOCAL DECIDE            // ループ脱出フラグ
   $DECIDE = FALSE
-  WHILE $DECIDE == FALSE
+  WHILE $DECIDE == FALSE  
     //ニックネームを0にセット
     _TEMOTI_NICK_NAME( 0, SEL_POS )
     //覚える技をタグ１にセット
@@ -338,8 +368,6 @@ select_del_skill:
         _SYSWIN_MSG( msg_rotom_waza_04 , POS_DOWN )
         _YES_NO_WIN( SCWK_ANSWER )    //クローズいらず
         IF $SCWK_ANSWER == 0 THEN     //忘れてOK
-          //「ポカン」
-          _SYSWIN_MSG( msg_rotom_waza_05 , POS_DOWN )//クローズいらず
           _CALL del_skill_msg
           $SCWK_ANSWER = TRUE
           $DECIDE = TRUE            //ループ終了
