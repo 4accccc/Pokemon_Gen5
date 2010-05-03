@@ -878,7 +878,7 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
     PLIST_SetupBgFunc( &header_sub1 , PLIST_BG_SUB_BATTLE_BAR , GFL_BG_MODE_TEXT );
     PLIST_SetupBgFunc( &header_sub0 , PLIST_BG_SUB_BATTLE_STR , GFL_BG_MODE_TEXT );
     
-    //とりあえず2Dで初期化
+    //最初は2Dで初期化
     PLIST_InitBG0_2DMenu( work );
     
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
@@ -1026,7 +1026,7 @@ static void PLIST_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , 
 //--------------------------------------------------------------------------
 static void PLIST_InitCell( PLIST_WORK *work )
 {
-  //TODO 個数は適当
+  //個数は適当
   work->cellUnit  = GFL_CLACT_UNIT_Create( 10 , PLIST_CELLUNIT_PRI_MAIN, work->heapId );
   GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   //セルの生成
@@ -2263,8 +2263,6 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work )
 static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work )
 {
   //今のところタマゴ産み・ミルク飲み処理のみ
-  
-  //TODO 無理処理
   PLIST_MSG_CloseWindow( work , work->msgWork );
 
   if( work->selectState == PSSEL_SELECT )
@@ -2695,7 +2693,6 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
   //リターンキャンセルとかと当たり
   if( ret == GFL_UI_TP_HIT_NONE )
   {
-    //FIXME 本当はモード分岐がいる
     GFL_UI_TP_HITTBL hitTbl[PSSEL_BUTTON_NUM+1] =
     {
       { 0,0,0,0 },
@@ -2907,8 +2904,7 @@ static void PLIST_SelectMenuInit( PLIST_WORK *work )
   //BG・プレート・パラメータを見えにくくする
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
   //戻るアイコンだけカラー効果がかからないようにWindowを使う
-  //戻るアイコンはBGに乗ったので対応不要。だけど通信アイコンのため残す
-  //FIXME 通信アイコン対応
+  //戻るアイコンはBGに乗ったので対応不要。
   G2_SetWnd0Position( PLIST_BARICON_RETURN_X_MENU , PLIST_BARICON_Y ,
                       PLIST_BARICON_RETURN_X_MENU + 24, PLIST_BARICON_Y + 24 );
   G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );

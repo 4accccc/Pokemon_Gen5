@@ -13,8 +13,7 @@
 #include "arc_def.h"
 
 #define		USE_SHADOW (0)
-//#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
-#include "musical_mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
+#include "musical_mcss.h"
 #include "musical_mcss_def.h"
 #include "system/mcss_tool.h"
 #include "musical_local.h"
@@ -114,10 +113,6 @@ static NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
 
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 
-#ifdef USE_RENDER
-static	void	MUS_MCSS_InitRenderer( MUS_MCSS_SYS_WORK *mcss_sys );
-#endif //USE_RENDER
-
 static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
 //影実験
@@ -142,10 +137,6 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 	mcss_sys->mcss =GFL_HEAP_AllocClearMemory( heapID, sizeof(MUS_MCSS_WORK *) * max );
   
   mcss_sys->befVCount = OS_GetVBlankCount();
-
-#ifdef USE_RENDER
-	MUS_MCSS_InitRenderer( mcss_sys );
-#endif //USE_RENDER
 
 	mcss_sys->texAdrs = MUS_MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MUS_MCSS_PAL_ADRS;
@@ -212,7 +203,6 @@ void	MUS_MCSS_Main( MUS_MCSS_SYS_WORK *mcss_sys )
 	mcss_sys->befVCount = nowVCount;
 }
 
-#ifndef USE_RENDER
 //独自描画
 //--------------------------------------------------------------------------
 /**
@@ -553,44 +543,6 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 	}
 	G3_PopMtx(1);
 }
-#else
-//レンダラシステムを用いた描画
-//--------------------------------------------------------------------------
-/**
- * 描画システム
- */
-//--------------------------------------------------------------------------
-void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys )
-{
-	MUS_MCSS_WORK	*mcss;
-	int			index;
-	int			cell;
-	VecFx32		pos,scale;
-
-	NNS_G2dSetupSoftwareSpriteCamera();
-	G3_MtxMode( GX_MTXMODE_TEXTURE );
-	G3_Identity();
-	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-
-	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
-		if( mcss_sys->mcss[index] != NULL ){
-			mcss=mcss_sys->mcss[index];
-			//暫定でRendererを使用しているが、実際は独自で描画処理を作成しなければならない
-			NNS_G2dBeginRendering( &mcss_sys->mcss_render );
-			NNS_G2dPushMtx();
-			NNS_G2dTranslate( mcss->pos.x,
-							  mcss->pos.y,
-							  mcss->pos.z);
-			NNS_G2dSetRendererImageProxy( &mcss_sys->mcss_render,
-										  &mcss->mcss_image_proxy,
-										  &mcss->mcss_palette_proxy );
-			NNS_G2dDrawMultiCellAnimation( &mcss->mcss_mcanim );
-			NNS_G2dPopMtx();
-			NNS_G2dEndRendering();
-		}
-	}
-}
-#endif
 
 //--------------------------------------------------------------------------
 /**
@@ -1255,40 +1207,6 @@ static	void	MUS_MCSS_MaterialSetup(void)
 					   );
 	}
 }
-
-#ifdef USE_RENDER
-/*---------------------------------------------------------------------------*
-  Name:         MUS_MCSS_InitRenderer
-
-  Description:  Renderer と Surface を初期化します。
-
-  Arguments:    pRenderer:  初期化する Renderer へのポインタ。
-                pSurface:   初期化する Surface へのポインタ。
-
-  Returns:      なし。
- *---------------------------------------------------------------------------*/
-static	void	MUS_MCSS_InitRenderer( MUS_MCSS_SYS_WORK *mcss_sys )
-{
-	NNSG2dViewRect* pRect = &(mcss_sys->mcss_surface.viewRect);
- 
-	NNS_G2dInitRenderer( &mcss_sys->mcss_render );
-	NNS_G2dInitRenderSurface( &mcss_sys->mcss_surface );
-
-	pRect->posTopLeft.x = FX32_ONE * 0;
-	pRect->posTopLeft.y = FX32_ONE * 0;
-	pRect->sizeView.x = FX32_ONE * SCREEN_WIDTH;
-	pRect->sizeView.y = FX32_ONE * SCREEN_HEIGHT;
-
-	//とりあえずOAM描画はしないので、コメントアウト
-//	pSurface->pFuncOamRegister       = CallBackAddOam;
-//	pSurface->pFuncOamAffineRegister = CallBackAddAffine;
-
-	NNS_G2dAddRendererTargetSurface( &mcss_sys->mcss_render, &mcss_sys->mcss_surface );
-	NNS_G2dSetRendererSpriteZoffset( &mcss_sys->mcss_render, DEFAULT_Z_OFFSET );
-
-	mcss_sys->mcss_surface.type = NNS_G2D_SURFACETYPE_MAIN3D;
-}
-#endif //USE_RENDER
 
 //神王蟲からいただき
 //----------------------------------------------------------------------------

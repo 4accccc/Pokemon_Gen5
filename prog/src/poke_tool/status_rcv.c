@@ -138,7 +138,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
       return TRUE;
     }
   }
-  //FIXME 進化チェック(でも今回違う処理にするかも
+  //進化チェック(でも今回pokeListで処理してます
 /*
   // 進化
   if( ITEM_GetBufParam( dat, ITEM_PRM_EVOLUTION ) != 0 ){
@@ -580,8 +580,6 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // なつき度１
   if( tmp[0] < 100 ){
     if( ITEM_GetBufParam( dat, ITEM_PRM_FRIEND1 ) != 0 ){
-      //TODO どうする機嫌値
-      //CalcHumor_ItemHumorUp(pp, item);  //機嫌値増減
       if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND1_POINT), item ,place, heap_id ) == FALSE ){
         GFL_HEAP_FreeMemory( dat );
         return use_flg;
@@ -590,8 +588,6 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // なつき度２
   }else if( tmp[0] >= 100 && tmp[0] < 200 ){
     if( ITEM_GetBufParam( dat, ITEM_PRM_FRIEND2 ) != 0 ){
-      //TODO どうする機嫌値
-      //CalcHumor_ItemHumorUp(pp, item);  //機嫌値増減
       if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND2_POINT), item ,place, heap_id ) == FALSE ){
         GFL_HEAP_FreeMemory( dat );
         return use_flg;
@@ -600,8 +596,6 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // なつき度３
   }else if( tmp[0] >= 200 && tmp[0] <= 255 ){
     if( ITEM_GetBufParam( dat, ITEM_PRM_FRIEND3 ) != 0 ){
-      //TODO どうする機嫌値
-      //CalcHumor_ItemHumorUp(pp, item);  //機嫌値増減
       if( Friend_Up( pp, tmp[0], ITEM_GetBufParam(dat,ITEM_PRM_FRIEND3_POINT), item ,place, heap_id ) == FALSE ){
         GFL_HEAP_FreeMemory( dat );
         return use_flg;

@@ -87,7 +87,7 @@
 #define PSTATUS_INFO_EXPBAR_HEIGHT  (3)
 #define PSTATUS_INFO_EXPBAR_WIDTH (64)
 
-#define PSTATUS_INFO_EXPBAR_COL (5) //とりあえずフォントの青
+#define PSTATUS_INFO_EXPBAR_COL (5) //フォントの青
 
 //上画面
 #define PSTATUS_INFO_MEMO_WIN_TOP  (5)
@@ -830,10 +830,8 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
 
     WORDSET_Delete( wordSet );
 
-    //TODO 許可制の関数
+    //※許可制の関数
     height += PRINTSYS_GetLineCount( dstStr )*16;
-    //TODO ずれてる・・・？
-    //height = 16*4;
     
     GFL_STR_DeleteBuffer( placeStr1 );
     GFL_STR_DeleteBuffer( placeStr2 );

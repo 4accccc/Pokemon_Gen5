@@ -1078,7 +1078,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
       work->musicalArc = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( work->heapId ) , work->arcSize );
       FS_ReadFile( &work->arcFile , work->musicalArc , work->arcSize );
       FS_CloseFile( &work->arcFile );
-      ARI_TPrintf("アーカイブ仮ロード size[%d]\n",work->arcSize);
+      ARI_TPrintf("アーカイブロード size[%d]\n",work->arcSize);
       work->distSaveSeq++;
     }
     break;
@@ -1255,7 +1255,7 @@ static void MusicalSetting_UpdatePoke( MUS_EDIT_LOCAL_WORK *work )
         }
         else
         {
-          pos.z = FX32_CONST(60.0f);  //とりあえずポケの前に出す
+          pos.z = FX32_CONST(60.0f);  //ポケの前に出す
         }
 
         MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
@@ -1588,7 +1588,7 @@ static void MusicalSetting_DrawEquipPos( MUS_EDIT_LOCAL_WORK *work )
 
       pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
       pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-      pos.z = FX32_CONST(120.0f); //とりあえずポケの前に出す
+      pos.z = FX32_CONST(120.0f); //ポケの前に出す
 
       G3_Translate( pos.x, pos.y, pos.z );
       G3_RotZ( -FX_SinIdx( itemRot-rotZ ), FX_CosIdx( itemRot-rotZ ) );

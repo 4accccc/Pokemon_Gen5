@@ -188,7 +188,7 @@ MB_CAP_DOWN* MB_CAP_DOWN_InitSystem( MB_CAPTURE_WORK *capWork )
     downWork->cellRes[MCDO_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
           NARC_mb_capture_gra_cap_objd_NCER , NARC_mb_capture_gra_cap_objd_NANR, heapId  );
 
-    //TODO ŒÂ”‚Í“K“–
+    //ŒÂ”‚Í“K“–
     downWork->cellUnit  = GFL_CLACT_UNIT_Create( 96 , 0, heapId );
     GFL_CLACT_UNIT_SetDefaultRend( downWork->cellUnit );
   }
@@ -800,7 +800,6 @@ static void MB_CAP_DOWN_UpdateTP( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWo
     }
     else
     {
-      //TODO‹——£‚È‚Ç‚ðŒ©‚Ä”ò‚Î‚·‚©‚Ì”»’è
       const fx32 subX = downWork->ballPosX - FX32_CONST(MB_CAP_DOWN_BOW_X);
       const fx32 subY = downWork->ballPosY - FX32_CONST(MB_CAP_DOWN_BOW_Y);
       

@@ -287,7 +287,6 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
       break;
 
     case PMIT_SET_JOIN:    //参加する・参加しない
-      //FIXME 取り消し処理チェック
       {
         const battleOrder = PLIST_PLATE_GetBattleOrder( work->plateWork[ work->pokeCursor ] );
         if( battleOrder == PPBO_JOIN_OK )

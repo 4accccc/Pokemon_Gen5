@@ -566,7 +566,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     cellSysInitData.CGR_RegisterMax = 110;
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
 
-    //TODO 個数は適当
+    //個数は適当
     work->cellUnit  = GFL_CLACT_UNIT_Create( 96 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
     
@@ -1065,13 +1065,6 @@ static void PSTATUS_UpdateUI( PSTATUS_WORK *work )
 #if USE_STATUS_DEBUG
   if( DEBUGWIN_IsActive() == TRUE ) return;
 #endif
-  
-  if( work->psData->mode != PST_MODE_WAZAADD )
-  {
-    //色々面倒なのでとりあえず保留
-    //技専用以外はページ切り替えを自由に(キーのみ
-    //isChangePage = PSTATUS_UpdateKey_Page( work );
-  }
   
   if( work->isActiveBarButton == TRUE &&
       PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )

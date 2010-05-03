@@ -63,7 +63,7 @@
 
 #define FIT_PAL_INFO    (0xE)
 
-#define FIT_MSGWIN_CHAR_TOP (128)  //‰¼”’lBGŒˆ’è‚µ‚Ä‚©‚ç
+#define FIT_MSGWIN_CHAR_TOP (128)
 
 #define FIT_ANIME_SPD (6)
 #define FIT_ANIME_MAX (192)

@@ -912,7 +912,7 @@ static void* MUS_COMM_GetUserData(void* pWork)
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   
-  //TODO ”O‚Ì‚½‚ß–¼‘O‚ª“ü‚Á‚Ä‚È‚¢‚Æ‚«‚É—Ž‚¿‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­
+  //”O‚Ì‚½‚ß–¼‘O‚ª“ü‚Á‚Ä‚È‚¢‚Æ‚«‚É—Ž‚¿‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­
   if( MyStatus_CheckNameClear( work->myStatus ) == TRUE )
   {
     u16 tempName[7] = { L'N',L'o',L'N',L'a',L'm',L'e',0xFFFF };

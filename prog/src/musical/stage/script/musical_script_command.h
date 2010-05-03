@@ -125,7 +125,7 @@
  * @brief システム：スクリプト全体で同期を取る
  *
  * #param_num 1
- * @param comment コメント(仮
+ * @param comment 同期番号
  *
  * #param VALUE_INT
  *

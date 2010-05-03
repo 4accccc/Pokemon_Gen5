@@ -34,8 +34,8 @@
 #include "savedata/musical_save.h"
 #include "savedata/musical_dist_save.h"
 
-#include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
-#include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
+#include "poke_tool/poke_tool.h"  //ドレスアップデータ用
+#include "poke_tool/monsno_def.h" //ドレスアップデータ用
 #include "event_fieldmap_control.h"
 #include "event_poke_status.h"
 

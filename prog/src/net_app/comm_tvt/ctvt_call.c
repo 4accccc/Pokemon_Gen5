@@ -40,9 +40,9 @@
 #pragma mark [> define
 
 //表示バーの個数
-#define CTVT_CALL_BAR_NUM (15) //とりあえず画面分
+#define CTVT_CALL_BAR_NUM (15) //画面分
 //データ個数
-#define CTVT_CALL_SEARCH_NUM (15) //とりあえず画面分
+#define CTVT_CALL_SEARCH_NUM (15) //画面分
 #define CTVT_CALL_INVALID_NO (0xFF)
 
 

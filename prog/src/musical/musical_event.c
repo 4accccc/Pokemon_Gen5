@@ -753,7 +753,6 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
       GFL_STR_DeleteBuffer( tmpBuf );
     }
     
-    //@TODO
     shotData->musVer = MUSICAL_VERSION;
     shotData->pmVersion = VERSION_BLACK;
     shotData->pmLang = LANG_JAPAN;
@@ -782,7 +781,6 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
       MYSTATUS *myStatus = NULL;
       u8 j;
       MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
-      //FIXME 性別とか
       shotData->shotPoke[i].monsno = musPoke->mcssParam.monsno;
       shotData->shotPoke[i].sex = musPoke->mcssParam.sex;
       shotData->shotPoke[i].rare = musPoke->mcssParam.rare;
@@ -969,7 +967,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
   u8 *rewardArr = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , MUS_REWARD_NUM );
   u32 checkPoint = 0;
   static const u16 totalPointArr[10] = {12000,8000,5500,3500,2000,1000,500,250,100,0};
-  //とりあえず初期化
+  //初期化
   for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
   {
     MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , i );
@@ -1088,41 +1086,6 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
           //現状アイテムは渡さない
           ARI_TPrintf("goods none!");
         }
-        
-#if 0 
-        u16 itemIdx;
-        //@todo 正しい抽選ルーチン
-        for( arrIdx = 0 ; arrIdx<100 ; arrIdx++ )
-        {
-          if( MUSICAL_SAVE_ChackHaveItem( evWork->musSave , itemIdx ) == FALSE )
-          {
-            u8 j;
-            BOOL isSame = FALSE;  //すでに抽選されたか？
-            for( j=0;j<i;j++ )
-            {
-              MUSICAL_FAN_STATE* befFanState = MUSICAL_SAVE_GetFanState( evWork->musSave , j );
-              if( befFanState->giftType == MUSICAL_GIFT_TYPE_GOODS &&
-                  befFanState->giftValue == itemIdx )
-              {
-                isSame = TRUE;
-              }
-            }
-            if( isSame == FALSE )
-            {
-              fanState->giftType = MUSICAL_GIFT_TYPE_GOODS;
-              fanState->giftValue = itemIdx;
-              break;
-            }
-          }
-        }
-        //グッズが無い！
-        if( fanState->giftType == MUSICAL_GIFT_TYPE_NONE )
-        {
-          fanState->giftType = MUSICAL_GIFT_TYPE_ITEM;
-          fanState->giftValue = 92; //金の玉
-        }
-        ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
-#endif
       }
       ARI_TPrintf("]\n");
     }
@@ -1430,7 +1393,6 @@ void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u
     GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
     STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
     
-    //@TODO 海外版男女対応
     WORDSET_RegisterWord( wordSet, wordIdx, tmpBuf, 0, TRUE, PM_LANG );
 
     GFL_STR_DeleteBuffer( tmpBuf );

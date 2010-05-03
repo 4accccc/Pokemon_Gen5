@@ -401,7 +401,6 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   	PMDSND_ReleaseExtraMusic();
   }
 
-  //フェードないので仮処理
   GX_SetMasterBrightness(-16);  
   GXS_SetMasterBrightness(-16);
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_NONE , 31 , 31 );
@@ -1932,7 +1931,7 @@ static void STA_ACT_InitTransEffect( ACTING_WORK *work )
 //  for( i=0;i<MUSICAL_POKE_MAX;i++ )
   for( i=0;i<1;i++ )
   {
-    //TODO ステータスでエフェクトの種類変わる？
+    //ステータスでエフェクトの種類変わる？
     work->transEffWork[i] = STA_EFF_CreateEffect( work->effSys , NARC_stage_gra_mus_eff_trans_1_spa );
   }
 }
@@ -1949,7 +1948,7 @@ static void STA_ACT_TermTransEffect( ACTING_WORK *work )
 
 void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
 {
-  //TODO エフェクトの種類変わったら再生エミッタも変わる。今は3個
+  //エフェクトの種類変わったら再生エミッタも変わる。今は3個
   u8 i;
   VecFx32 pos;
   //const VecFx32 *ofs = STA_POKE_GetRotOffset( work->pokeSys , work->pokeWork[idx] );

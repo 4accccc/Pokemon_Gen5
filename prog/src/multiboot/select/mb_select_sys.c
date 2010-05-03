@@ -1199,7 +1199,7 @@ static const BOOL MB_SELECT_CheckDropTray( MB_SELECT_WORK *work )
       u8 i;
       const u8 idx = MB_SEL_POKE_GetIdx( work->holdPoke );
       POKEMON_PASO_PARAM *ppp = work->initWork->boxData[work->boxPage][idx];
-      //TODO 置けるか？チェック！！
+      //置けるか？チェック！！
       const MB_UTIL_CHECK_PLAY_RET checkRet = MB_UTIL_CheckPlay_PalGate( ppp , work->initWork->cardType );
       
       if( checkRet == MUCPR_OK )

@@ -112,7 +112,6 @@ VMCMD_RESULT EvCmdGetPalparkValue( VMHANDLE *core, void *wk )
     *ret_wk = MISC_GetPalparkHighscore( miscSave );
     break;
   }
-  //âºèàóù
 
   return VMCMD_RESULT_CONTINUE;
 }

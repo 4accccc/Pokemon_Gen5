@@ -341,7 +341,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   {
     SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( work->initWork->gameData );
     work->miscSave = SaveData_GetMisc( svWork );
-    //とりあえずキャンセル(一番低いステート)にしておく
+    //キャンセル(一番低いステート)にしておく
     MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
   }
   else
@@ -1432,7 +1432,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
             MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING) ||
             MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE))
         {
-          //子機が来たらとりあえず始めてしまう
+          //子機が来たら始めてしまう
           {
             OS_TPrintf("[%d][%d][%d]\n",MBP_GetChildBmp(MBP_BMPTYPE_ENTRY)
                                        ,MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING)

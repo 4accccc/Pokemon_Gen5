@@ -490,7 +490,7 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
         }
         else
         {
-          pos.z = FX32_CONST(60.0f);  //とりあえずポケの前に出す
+          pos.z = FX32_CONST(60.0f);  //ポケの前に出す
         }
 
         MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
@@ -693,7 +693,7 @@ static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
 
         pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
         pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-        pos.z = FX32_CONST(120.0f); //とりあえずポケの前に出す
+        pos.z = FX32_CONST(120.0f); //ポケの前に出す
 
         G3_Translate( pos.x, pos.y, pos.z );
         G3_RotZ( -FX_SinIdx( itemRot-rotZ ), FX_CosIdx( itemRot-rotZ ) );
