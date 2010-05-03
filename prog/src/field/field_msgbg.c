@@ -63,7 +63,7 @@
 
 ///< 通信中などに使用する、自動メッセージ
 #define AUTO_MSG_WAIT      ( MSGSPEED_NORMAL ) ///<自動時のメッセージスピード
-#define AUTO_MSG_ONE_KEY_WAIT  ( 25 ) ///<キーウエイト
+#define AUTO_MSG_ONE_KEY_WAIT  ( 8 ) ///<キーウエイト
 #define AUTO_MSG_ALLCLEAR_KEY_WAIT  ( 50 ) ///<キーウエイト
 
 #define GIZA_SHAKE_Y (8) ///<ギザウィンドウ初期揺れ幅
