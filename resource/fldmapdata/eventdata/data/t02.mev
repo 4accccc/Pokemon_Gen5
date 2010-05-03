@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/21 21:33:06
+#save date:2010/05/03 15:26:44
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02.wms
 #SECTION START:OBJ_EVENT
@@ -987,7 +987,7 @@ FV_T02_SAGE
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -1018,7 +1018,7 @@ FV_T02_SAGE
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number

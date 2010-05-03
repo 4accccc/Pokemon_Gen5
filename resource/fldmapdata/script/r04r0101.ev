@@ -35,47 +35,18 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_r04r0101_middlewoman2_01
 _TALK_OBJ_START()
-	//手持ちポケモンの総数をカウント
-	DEFINE_LOCAL	LWK_TEMOCHI
-	DEFINE_LOCAL	LWK_POS
-	DEFINE_LOCAL	LWK_POKE
-	DEFINE_LOCAL	LWK_FULL
-	_GET_PARTY_POKE_COUNT( LWK_TEMOCHI  , POKECOUNT_MODE_TOTAL )
-	
-	$LWK_POS = 0 //LWK_POSを０に定義
-	$LWK_FULL = 0
-	
-	//手持ちポケモンのＨＰをチェック
-	WHILE $LWK_POS < $LWK_TEMOCHI
-		//LWK_KAIFUKUが手持ちの数と同じになるまで繰り返し
-		_CHECK_TEMOTI_HP( LWK_POKE, LWK_POS )
-		
-			//LWK_POSのポケモンが満タンの場合
-			IF $LWK_POKE == TRUE THEN
-				$LWK_POS += 1
-			//ポケモンのHPが減っていた場合
-			ELSE
-				_TEMOTI_POKEMON_KAIFUKU()
-				$LWK_POS += 1
-				$LWK_FULL += 1
-				
-			ENDIF
 
-	ENDWHILE
-	
-	//回復した場合
-	IF $LWK_FULL == 0 THEN
+	IF $LOCALWORK1 == 1 THEN
 	
 		_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_01 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
-
+	
 	ELSE
-
 
 		_BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_middlewoman2_02 )
 		_MSGWIN_CLOSE()
-
+	
 		//暗転して手持ちポケモンを回復
 		_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
@@ -85,8 +56,12 @@ _TALK_OBJ_START()
 		_BLACK_IN()
 		_DISP_FADE_END_CHECK()
 	
-	ENDIF
+		//========================================//
+		$LOCALWORK1 = 1
+		//========================================//
 	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
