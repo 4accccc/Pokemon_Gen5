@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-30T12:43:50"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-05-03T20:13:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -441,8 +441,8 @@
 	<row id="MUSICAL_EXTRA_NAME_16">
 		<comment>♀
 初級</comment>
-		<language name="JPN" width="240">コウ</language>
-		<language name="JPN_KANJI">コウ</language>
+		<language name="JPN" width="240">アミノ</language>
+		<language name="JPN_KANJI">アミノ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_17">
@@ -504,15 +504,15 @@
 	<row id="MUSICAL_EXTRA_NAME_25">
 		<comment>♂
 中級</comment>
-		<language name="JPN" width="240">ジェフ</language>
-		<language name="JPN_KANJI">ジェフ</language>
+		<language name="JPN" width="240">ヒダカ</language>
+		<language name="JPN_KANJI">ヒダカ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_26">
 		<comment>♂
 中級</comment>
-		<language name="JPN" width="240">シュウ</language>
-		<language name="JPN_KANJI">シュウ</language>
+		<language name="JPN" width="240">シュウジ</language>
+		<language name="JPN_KANJI">シュウジ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_27">
@@ -525,8 +525,8 @@
 	<row id="MUSICAL_EXTRA_NAME_28">
 		<comment>♂
 中級</comment>
-		<language name="JPN" width="240">ヤン</language>
-		<language name="JPN_KANJI">ヤン</language>
+		<language name="JPN" width="240">リュウキ</language>
+		<language name="JPN_KANJI">リュウキ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_29">
@@ -560,8 +560,8 @@
 	<row id="MUSICAL_EXTRA_NAME_33">
 		<comment>♀
 中級</comment>
-		<language name="JPN" width="240">ルミ</language>
-		<language name="JPN_KANJI">ルミ</language>
+		<language name="JPN" width="240">ルリ</language>
+		<language name="JPN_KANJI">ルリ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_34">
@@ -574,22 +574,22 @@
 	<row id="MUSICAL_EXTRA_NAME_35">
 		<comment>♀
 中級</comment>
-		<language name="JPN" width="240">カナ</language>
-		<language name="JPN_KANJI">カナ</language>
+		<language name="JPN" width="240">レイナ</language>
+		<language name="JPN_KANJI">レイナ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_36">
 		<comment>♀
 中級</comment>
-		<language name="JPN" width="240">ユウコ</language>
-		<language name="JPN_KANJI">ユウコ</language>
+		<language name="JPN" width="240">ヨリエ</language>
+		<language name="JPN_KANJI">ヨリエ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_37">
 		<comment>♀
 中級</comment>
-		<language name="JPN" width="240">マキ</language>
-		<language name="JPN_KANJI">マキ</language>
+		<language name="JPN" width="240">チカコ</language>
+		<language name="JPN_KANJI">チカコ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_38">
@@ -651,8 +651,8 @@
 	<row id="MUSICAL_EXTRA_NAME_46">
 		<comment>♀
 上級</comment>
-		<language name="JPN" width="240">ヨシミ</language>
-		<language name="JPN_KANJI">ヨシミ</language>
+		<language name="JPN" width="240">シズコ</language>
+		<language name="JPN_KANJI">シズコ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_47">
@@ -665,8 +665,8 @@
 	<row id="MUSICAL_EXTRA_NAME_48">
 		<comment>♀
 上級</comment>
-		<language name="JPN" width="240">ミナ</language>
-		<language name="JPN_KANJI">ミナ</language>
+		<language name="JPN" width="240">セイラ</language>
+		<language name="JPN_KANJI">セイラ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_49">
