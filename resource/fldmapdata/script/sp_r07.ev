@@ -16,6 +16,7 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _SCENE_CHANGE_LABEL		sp_r07_tbl
+_ZONE_CHANGE_LABEL		SCRID_ZONE_R07
 _SP_EVENT_DATA_END
 
 

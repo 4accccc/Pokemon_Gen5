@@ -27,14 +27,76 @@ _EVENT_DATA ev_bg_r07_board_03
 _EVENT_DATA ev_r07_fightrew_02
 _EVENT_DATA ev_pos_r07_movepoke_01
 _EVENT_DATA ev_scene_r07_movepoke_02
+_EVENT_DATA ev_zone_r07
+_EVENT_DATA ev_pos_r07_telephone_01
 _EVENT_DATA_END
 
 
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_r07
+{
+
+	//バージョンで表示の変わるトレーナーを非表示に
+	_FLAG_SET ( FV_R07_TRAINER_W )
+	_FLAG_SET ( FV_R07_TRAINER_B )
+	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//バージョン別にトレーナーを表示
+	//★Blackの場合（ローテーション）
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_FLAG_RESET ( FV_R07_TRAINER_B )
+	//★Whiteの場合（トリプル）
+	ELSE
+		_FLAG_RESET ( FV_R07_TRAINER_W )
+	ENDIF
+
+}
+INIT_EVENT_END
+
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  ライブキャスター着信                          */
 /**************************************************************/
-//ev_r07_flag_change:
-//  _END
+EVENT_START   ev_pos_r07_telephone_01
+	
+	//「！」
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r07_oldwoman_gyoe_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//TVT着信音を再生
+	_ME_PLAY( SEQ_ME_CALL )
+	
+	//ライブキャスターが 鳴っている
+	_SYSWIN_MSG( msg_r07_tvt_01, POS_DOWN )
+	
+	_ME_WAIT()
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//（プレイヤー名）はライブキャスターを取った
+	_SYSWIN_MSG( msg_r07_tvt_02 , POS_DOWN )
+	_SYSWIN_CLOSE()
+	
+	//TVトランシーバー起動
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
+	_CALL_TVT_DEMO( 6 )
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+	
+	//==================================//
+	
+	//R07テレビトランシーバーイベント終了
+	$WK_SCENE_R07 = 1
+
+	//==================================//
+	
+EVENT_END
 
 /**************************************************************/
 /*  わざマシンくれる格闘家女子                          */

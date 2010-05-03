@@ -302,7 +302,7 @@ EVENT_START   ev_debug_mizuguchi
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_01, 0 )	//アイスイベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_02, 1 )	//ネジ山チャンピオンイベント起動
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 2 )	//ムシャーナイベント起動
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_06, 2 )	//ツチノカミ演劇起動
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 3 )	//R01イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 4 )	//D07R0401イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 5 )	//C03R0301イベント初期化
@@ -316,14 +316,12 @@ EVENT_START   ev_debug_mizuguchi
 		ELSIF $SCWK_TEMP2 == 1 THEN
 			$WK_SCENE_D07_RIVAL_01 = 1
 		ELSIF $SCWK_TEMP2 == 2 THEN
-			$WK_SCENE_D01R0101_POKE = 1
-			_FLAG_SET(FV_D01R0101_SUPPORT_01)
-			//夢ポケモン非表示
-			_FLAG_SET(FV_D01R0101_POKE_01)
-			//アイテムOBJ非表示
-			_FLAG_SET( FV_D01R0101_ITEM_01 )
-			//ゲーヂス非表示
-			_FLAG_SET(FV_D01R0101_GCIS_01)
+		
+			$WK_SCENE_R14R0201_LEG = 1
+			_FLAG_RESET( FV_R14R0201_GIRL1 )
+			//神社前に移動
+			_MAP_CHANGE( ZONE_ID_R14R0201, 22, 20, DIR_UP )
+			
 		ELSIF $SCWK_TEMP2 == 3 THEN
 			//C07イベント初期化
 			_FLAG_RESET( FV_C07_HAKASE1 )
@@ -336,6 +334,27 @@ EVENT_START   ev_debug_mizuguchi
 				//***ワーク操作：C05のPOSを起動***
 				$WK_SCENE_C05 = 4
 		ELSIF $SCWK_TEMP2 == 6 THEN
+			
+			//D05
+			//$WK_SCENE_D05 = 0
+			//$WK_SCENE_D05_PLASMA = 0
+			/*
+			$WK_SCENE_D05_PLASMA = 6
+			_FLAG_RESET(FV_D05R0201_PLASMA)
+			_FLAG_RESET( FV_D05R0201_SAGE7 )
+			_FLAG_RESET( FV_D05R0201_RIVAL_01 )
+			
+			$WK_SCENE_D05_PLASMA = 3
+			_FLAG_RESET(FE_D05R0201_PLASMA_01)
+			_FLAG_RESET(FE_D05R0201_PLASMA_02)
+			_FLAG_RESET(FE_D05R0201_PLASMA_03)
+			_FLAG_RESET(FE_D05R0201_PLASMA_04)
+			*/
+			//D07R0201のフラグをSETして以降非表示に
+			//_FLAG_RESET(FV_D07R0201_GYMLEADER05_01)
+		
+			//***フラグ操作：D07R0201の全てのイベントを無効に***
+			$WK_SCENE_D07R0201 = 0
 			
 			//夢ポケモン受け取ってません
 			//$WK_SCENE_D01R0101 = 0
@@ -355,12 +374,63 @@ EVENT_START   ev_debug_mizuguchi
 
 			//R03のお礼イベントを起動
 			//$WK_SCENE_R03_PLASMA = 0
+			//$WK_SCENE_R03 = 0
+			//_FLAG_RESET(FV_R03_RIVAL_02)
 			
 			//_TRAINER_FLAG_RESET( TRID_VETERANM_04 )
 			
-			//$WK_SCENE_D01R0101_POKE = 4
+			//D01R0101夢イベント
+			/*
+			_FLAG_RESET(FV_D01R0101_SUPPORT_01)
+			_FLAG_SET( FV_D01R0101_POKE_01 )
+			$WK_SCENE_D01R0101_POKE = 4
+			*/
 			
-			$WK_SCENE_D07_RIVAL_01 = 1
+			//_FLAG_SET( FE_H05_LOOK_WANDERGIRL )
+			
+			//_FLAG_RESET ( FE_C05R0201_POKETRADE_01 )
+			
+			$WK_SCENE_R07 = 0
+			
+			//R05のライバルを表示に
+			//_FLAG_RESET( FV_R05_RIVAL_AFTER )
+			
+			//D09R1401本日の戦闘終了
+			//_FLAG_RESET ( TMFLG_D09R1401_RIVAL )
+			//初回話しかけ終了
+			//_FLAG_RESET ( FE_D09R1401_RIVAL_01 )
+			
+			//T04シロナ別荘設定
+			//_FLAG_RESET ( TMFLG_T04R0401_TALKSET )
+			
+			//C08R0101室内イベント起動
+			//$WK_SCENE_C08 = 3
+			//_FLAG_RESET( FV_C08R0101_LEADER8A_01 )
+			//_FLAG_RESET( FV_C08R0101_LEADER8B_01 )
+			
+			//C08GYM出た後イベント起動
+			//$WK_SCENE_C08_GYMCLEAR = 1
+			//_FLAG_SET( FV_C08_SUNGLASSES_01 )
+			
+			//R10イベント起動
+			//$WK_SCENE_C08_GYMCLEAR = 3
+			
+			//D01R0101七賢人イベント起動
+			//_FLAG_RESET( FV_D01R0101_SAGE )
+			
+			/*
+			//D05R0201七賢人イベント起動
+			$WK_SCENE_D05_PLASMA = 8
+			//D05R0201のイベントキャラクターを全て非表示にする
+			_FLAG_SET(FV_D05R0201_PLASMA)
+			_FLAG_SET(FV_D05R0201_WORKMAN_01)
+			_FLAG_RESET( FV_D05R0201_SAGE7 )
+			_FLAG_SET( FV_D05R0201_RIVAL_01 )
+			
+			$WK_SCENE_AFTER_SAGE = 1
+			*/
+			
+			//$WK_SCENE_D07_RIVAL_01 = 1
 	
 			//C03R0301
 			//会長を非表示
@@ -390,6 +460,11 @@ EVENT_START   ev_debug_mizuguchi
 			
 			//フラグ操作：D07R0401のPOSを無効に
 			//$WK_SCENE_D07R0401 = 0
+			//プラズマ団を非表示に
+			//_FLAG_RESET(FV_D07R0401PLASMA_01)
+			
+			//フラグ操作：D07R0401のPOSを無効に
+			//$WK_SCENE_D07R0401 = 0
 			
 			//プラズマ団を非表示に
 			//_FLAG_RESET(FV_D07R0401PLASMA_01)
@@ -401,16 +476,23 @@ EVENT_START   ev_debug_mizuguchi
 			//_FLAG_RESET( FV_R07R0105_CHAMPION_01 )
 			//$WK_SCENE_R07R0105_CHAMPION = 1
 			
-			//R070105のイベントを終了
-			//$WK_SCENE_C07R0105 = 1
+			//R070105のイベントを起動
+			//$WK_SCENE_C07R0105 = 0
 			//_FLAG_RESET( FV_R070105_LEADER6_01 )
 
 			//R07カザカミ・ライカミイベント起動
-			$WK_SCENE_R07_MOVEPOKE = 3
-			$WK_SCENE_C08_GYMCLEAR = 2
+			//$WK_SCENE_R07_MOVEPOKE = 1
+			//$WK_SCENE_C08_GYMCLEAR = 2
 			
 			//$WK_SCENE_D01R0101_POKE = 1
 			//_FLAG_SET(FV_D01R0101_SUPPORT_01)
+			
+			//T04の息子のOBJを非表示にする
+			//_FLAG_RESET(FV_T04_BOY3_01)
+			
+			//C05BADRIDER
+			//$WK_SCENE_C05_BTLRIDER = 1
+			
 		ENDIF
 	
 EVENT_END

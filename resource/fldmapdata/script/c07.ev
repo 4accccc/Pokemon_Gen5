@@ -21,7 +21,6 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_scene_c07_hakase1_01
 _EVENT_DATA    ev_scene_c07_leader7_01
-_EVENT_DATA    ev_c07_rival_01
 _EVENT_DATA    ev_c07_support_01
 _EVENT_DATA    ev_c07_girl2_01
 _EVENT_DATA    ev_c07_ambrella_01
@@ -42,10 +41,6 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_init_c07
 	
-	//リュウラセンイベント開始時に
-	IF $WK_SCENE_C07 == 3 THEN
-		_MOVE_CODE_CHANGE( C07_SUPPORT_01,MV_UP )
-	ENDIF
 
 INIT_EVENT_END
 
@@ -337,9 +332,6 @@ EVENT_START   ev_scene_c07_leader7_01
 	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 	
-	//サポートのMOVE CODEを変更
-	_MOVE_CODE_CHANGE( C07_SUPPORT_01,MV_RT2 )
-	
 	//自機にカメラを戻す
 	_CAMERA_DEF_MOVE (16) 
 	_CAMERA_WAIT_MOVE()
@@ -522,18 +514,11 @@ _ANIME_LABEL	anm_c07_support_to_player
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/* ライバル                                             */
-/**************************************************************/
-EVENT_START   ev_c07_rival_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_black_03 )
-EVENT_END
-
-
-/**************************************************************/
 /* サポート                                             */
 /**************************************************************/
 EVENT_START   ev_c07_support_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_white_03 )
+	_MOVE_CODE_CHANGE( C07_SUPPORT_01,MV_DMY )
 EVENT_END
 
 /**************************************************************/

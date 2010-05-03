@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/30 13:14:52
+#save date:2010/05/03 12:39:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r07.wms
 #SECTION START:OBJ_EVENT
@@ -443,7 +443,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -616
+40 0 -600
 #event number: 14
 #type
 1
@@ -456,7 +456,7 @@ MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_R07_TRAINER_B
 #Event Script Name
 SCRID_TRID_ELITEM_24
 #Direction Type Number
@@ -487,7 +487,7 @@ MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_R07_TRAINER_W
 #Event Script Name
 SCRID_TRID_ELITEM_23
 #Direction Type Number
@@ -564,7 +564,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_R07_MOVEPOKE_01
@@ -582,6 +582,23 @@ EVENTDATA_POSTYPE_GRID
 296 0 -56
 #size
 1 5
+#event number: 1
+#Pos Event Label
+POS_R07_TELEPHONE_01
+#Pos Script Name
+SCRID_POS_R07_TELEPHONE_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R07
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 16 -56
+#size
+1 3
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

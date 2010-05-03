@@ -25,6 +25,7 @@
 #define D06R0401_TR_GROUND_02              6
 #define D06R0401_TR_GROUND_03              7
 #define D07R0401_FLD_ITEM_02               8
+#define D07R0401_WORKMAN_01                9
 
 #endif //ZONE_D07R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
