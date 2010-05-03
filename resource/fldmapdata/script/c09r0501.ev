@@ -382,9 +382,6 @@ EVENT_START	ev_pos_c09r0501_champion_02
 		_MSGWIN_CLOSE()
 	ENDIF
 		
-	//主人公とチャンピオン、隣接
-	_OBJ_ANIME( C09R0501_CHAMPION_02, anm_vs_champion_champ_to_player_01 )
-	_OBJ_ANIME_WAIT()
 	
 	//戦闘処理
 	_TRAINER_BTL_SET( TRID_CHAMPION_01, 0 )
@@ -445,17 +442,10 @@ _ANIME_LABEL	anm_vs_champion_stairs_up_z17
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//チャンピオン：主人公に隣接
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_vs_champion_champ_to_player_01
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
 //チャンピオン：殿堂入り部屋へ01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_vs_champion_champ_walk_up_01
-	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

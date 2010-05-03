@@ -260,12 +260,6 @@ EVENT_START   ev_t04r0401_shirona_02
 				_TRAINER_WIN()
 				
 			ELSE
-				//======================================//
-				
-				//今日の戦闘イベントを終了
-				_FLAG_SET ( TMFLG_T04R0401_SHIRONA_BTL )
-				
-				//======================================//
 				_TRAINER_LOSE()
 				
 			ENDIF

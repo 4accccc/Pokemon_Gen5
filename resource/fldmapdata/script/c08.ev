@@ -282,6 +282,17 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_03 , C08_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 	
+	_TIME_WAIT( 16 )
+	
+	//プラズマ団旗をしまう
+	_OBJ_ANIME( C08_HAKAIM_01,anm_c08_hakai_away_01 )
+	_OBJ_ANIME( C08_HAKAIM_05,anm_c08_hakai_away_01 )
+	_OBJ_DEL( C08_FLAG_01 )
+	_OBJ_DEL( C08_FLAG_02 )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 16 )
+	
 	//後ろにいるプラズマ団ゲーヂスを囲む
 	_OBJ_ANIME( C08_HAKAIM_01,anm_c08_hakai_goodbye_01 )
 	_OBJ_ANIME( C08_HAKAIW_01,anm_c08_hakai_goodbye_02 )
@@ -385,9 +396,9 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//アイリスとシャガ
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_01 , C08_LEADER8B_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_01 , C08_LEADER8B_01 , POS_DOWN )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_01 , C08_LEADER8A_01 , POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_01 , C08_LEADER8A_01 , POS_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//自機にカメラを戻す
@@ -427,16 +438,16 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//男性だった場合
 	IF $SCWK_SEX == PM_MALE THEN
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_02 , C08_LEADER8B_01 , POS_DR )
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_02 , C08_LEADER8B_01 , POS_DOWN )
 		_BALLOONWIN_CLOSE()
 	//女性だった場合
 	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_02a , C08_LEADER8B_01 , POS_DR )
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_02a , C08_LEADER8B_01 , POS_DOWN )
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	
 	//リーダー：どうした
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_02 , C08_LEADER8A_01 , POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_02 , C08_LEADER8A_01 , POS_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン：ずばり！
@@ -451,20 +462,20 @@ EVENT_START   ev_pos_c08_champions_01
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 	
 		//アイリス：シンのこと？
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_03w , C08_LEADER8B_01 , POS_DR )
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_03w , C08_LEADER8B_01 , POS_DOWN )
 		_BALLOONWIN_CLOSE()
 		//シャガ：シンをふっかつさせたと
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_03w , C08_LEADER8A_01 , POS_UR )
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_03w , C08_LEADER8A_01 , POS_UP )
 		_BALLOONWIN_CLOSE()
 	
 	//black･ム
 	ELSE
 		
 		//アイリス：ムのこと？
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_03b , C08_LEADER8B_01 , POS_DR )
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_03b , C08_LEADER8B_01 , POS_DOWN )
 		_BALLOONWIN_CLOSE()
 		//シャガ：ムをふっかつさせたと
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_03b , C08_LEADER8A_01 , POS_UR )
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_03b , C08_LEADER8A_01 , POS_UP )
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
@@ -474,7 +485,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ：…わからんな
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_06 , C08_LEADER8A_01 , POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_06 , C08_LEADER8A_01 , POS_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//アイリスその場ジャンプ
@@ -482,7 +493,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//アイリス：えーっ！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_00 , C08_LEADER8B_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_00 , C08_LEADER8B_01 , POS_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン：そうだよなアイリス
@@ -520,11 +531,11 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//アイリス：あーあ いっちゃった
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_04 , C08_LEADER8B_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_04 , C08_LEADER8B_01 , POS_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ：アイリスしんぱいないよ
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_04 , C08_LEADER8A_01 , POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_04 , C08_LEADER8A_01 , POS_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//リーダー、チャンピオンを見る主人公を見る
@@ -533,7 +544,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//シャガ：さて
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_05 , C08_LEADER8A_01 , POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8a_05 , C08_LEADER8A_01 , POS_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ退場
@@ -543,7 +554,7 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	_TIME_WAIT( 20 )
 	
-	_BALLOONWIN_OBJMSG_WB( msg_c08_leader8b_05w , msg_c08_leader8b_05b , C08_LEADER8B_01 , POS_DR)
+	_BALLOONWIN_OBJMSG_WB( msg_c08_leader8b_05w , msg_c08_leader8b_05b , C08_LEADER8B_01 , POS_DOWN)
 	_BALLOONWIN_CLOSE()
 	
 	_OBJ_ANIME_WAIT()
@@ -562,14 +573,13 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//アイリス：あっち だよ！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_06 , C08_LEADER8B_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_06 , C08_LEADER8B_01 , POS_DOWN )
 	_BALLOONWIN_CLOSE()
 	
 	//アイリス去る
 	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaderb_lead_02 )
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_leadersb_look_a_01 )
 	_OBJ_ANIME_WAIT()
-	
 	
 	//======================================//
 	//C08到着フラグをセット ※そらとび問題のためイベント終了後に到着フラグをセットしています
@@ -756,6 +766,13 @@ _ANIME_LABEL	anm_c08_croud_panic_r
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（１）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakai_away_01
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------
 //	ゲーヂス演説イベント：プラズマ団ゲーヂスを囲む（１）
 //--------------------------------------------------------------

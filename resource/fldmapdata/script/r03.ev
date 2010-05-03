@@ -218,6 +218,9 @@ ev_r03_futago_batlle:
 	_BALLOONWIN_OBJMSG(msg_r03_futago_03,R03_FUTAGO_01)
 	_BALLOONWIN_CLOSE()
 	
+	_BALLOONWIN_OBJMSG(msg_r03_futago_03a,R03_FUTAGO_01_2)
+	_BALLOONWIN_CLOSE()
+	
 	//戦闘処理
 	_TRAINER_BTL_SET( TRID_FUTAGO_01, 0 )
 	//結果チェック

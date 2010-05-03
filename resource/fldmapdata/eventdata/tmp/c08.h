@@ -45,6 +45,8 @@
 #define C08_HAKAIM_05                     24
 #define C08_OLDMAN1_02                    25
 #define C08_MAN3_02                       26
+#define C08_FLAG_01                       27
+#define C08_FLAG_02                       28
 
 #endif //ZONE_C08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

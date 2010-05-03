@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 14:27:50
+#save date:2010/05/03 15:42:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08.wms
 #hold event type:
 1
 #hold event number:
-27
+29
 #event number: 0
 #type
 1
@@ -847,6 +847,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 56 0 -120
+#event number: 27
+#type
+1
+#ID name
+C08_FLAG_01
+#OBJ CODE Number
+FLAG
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_SAGE1_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 -488
+#event number: 28
+#type
+1
+#ID name
+C08_FLAG_02
+#OBJ CODE Number
+FLAG
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_SAGE1_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 -488
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
