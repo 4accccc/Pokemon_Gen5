@@ -18,9 +18,10 @@
 #include "system/main.h"
 
 #include "gamesystem/gamedata_def.h"
-#include "zukan_detail_graphic.h"
+#include "system/palanm.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
+#include "zukan_detail_graphic.h"
 #include "zukan_detail_touchbar.h"
 #include "zukan_detail_headbar.h"
 
@@ -115,6 +116,55 @@ extern void ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP fade_
 
 extern void ZKNDTL_COMMON_FadeSetPlane( ZKNDTL_COMMON_FADE_WORK* fade_wk, int plane1, int plane2 );
 extern void ZKNDTL_COMMON_FadeSetPlaneDefault( ZKNDTL_COMMON_FADE_WORK* fade_wk );
+
+
+// 一部分パレットフェード
+//=============================================================================
+/**
+*  定数定義
+*/
+//=============================================================================
+#define ZKNDTL_COMMON_PF_BRIGHT_WAIT  (-1)
+
+//=============================================================================
+/**
+*  構造体宣言
+*/
+//=============================================================================
+typedef struct _ZKNDTL_COMMON_PF_WORK ZKNDTL_COMMON_PF_WORK;  // MAINもSUBもこれ1つで扱う
+
+//=============================================================================
+/**
+*  関数のプロトタイプ宣言
+*/
+//=============================================================================
+extern ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInit( HEAPID heap_id );
+extern void ZKNDTL_COMMON_PfExit( ZKNDTL_COMMON_PF_WORK* pf_wk );
+
+extern void ZKNDTL_COMMON_PfMain( ZKNDTL_COMMON_PF_WORK* pf_wk );
+extern void ZKNDTL_COMMON_PfTrans( ZKNDTL_COMMON_PF_WORK* pf_wk );  // VBlank内で呼ぶこと
+
+extern BOOL ZKNDTL_COMMON_PfIsExecute( ZKNDTL_COMMON_PF_WORK* pf_wk );
+extern BOOL ZKNDTL_COMMON_PfIsColorless( ZKNDTL_COMMON_PF_WORK* pf_wk );
+extern BOOL ZKNDTL_COMMON_PfIsBlack( ZKNDTL_COMMON_PF_WORK* pf_wk );
+
+extern void ZKNDTL_COMMON_PfSetBlackToColorless( ZKNDTL_COMMON_PF_WORK* pf_wk );
+extern void ZKNDTL_COMMON_PfSetColorlessToBlack( ZKNDTL_COMMON_PF_WORK* pf_wk );
+
+extern void ZKNDTL_COMMON_PfSetColorlessImmediately( ZKNDTL_COMMON_PF_WORK* pf_wk );
+extern void ZKNDTL_COMMON_PfSetBlackImmediately( ZKNDTL_COMMON_PF_WORK* pf_wk );
+
+extern void ZKNDTL_COMMON_PfSetPaletteData( ZKNDTL_COMMON_PF_WORK* pf_wk, const void* dat, FADEREQ req, u16 pos, u16 siz );  // prog/src/system/palanm.cのPaletteWorkSet参照。
+extern void ZKNDTL_COMMON_PfSetPaletteDataFromArchandle(
+    ZKNDTL_COMMON_PF_WORK* pf_wk,
+    ARCHANDLE*             handle,
+    ARCDATID               dataIdx,
+    HEAPID                 heap,
+    FADEREQ                req,
+    u32                    trans_size,
+    u16                    pos,
+    u16                    read_pos );  // prog/src/system/palanm.cのPaletteWorkSetEx_ArcHandle参照。
+extern void ZKNDTL_COMMON_PfSetPaletteDataFromVram( ZKNDTL_COMMON_PF_WORK* pf_wk );
 
 
 // 最背面

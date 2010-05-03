@@ -222,6 +222,9 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   // タッチバー
   ZKND_TBAR_WORK*               tbwk;
 
+  // ユーザ指定の全体専用のアクティブフラグ
+  BOOL                          user_whole_is_active;  // TRUEのときアクティブ
+
   // カスタムボタン
   // GENERAL
   u32    general_ncl;
@@ -397,7 +400,7 @@ void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
           work->icon_ofs_pos_y = SCROLL_Y_APPEAR;
           Zukan_Detail_Touchbar_SetIconOfsPosY( work, work->icon_ofs_pos_y );
           work->state = ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR;
-          ZKND_TBAR_SetActiveWhole( work->tbwk, TRUE );
+          if( work->user_whole_is_active ) ZKND_TBAR_SetActiveWhole( work->tbwk, TRUE );
         }
         else
         {
@@ -734,6 +737,39 @@ BOOL ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral(
   return FALSE;
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+// 見た目をアクティブ状態にしたまま、ユーザ指定の全体専用のアクティブフラグの切り替えを行う
+void ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( ZUKAN_DETAIL_TOUCHBAR_WORK* work, BOOL is_active )  // TRUEのときアクティブ  // 切り替わったときのデフォルトはTRUE
+{
+  work->user_whole_is_active = is_active;
+
+  if( work->user_whole_is_active )
+  {
+    if( !ZKND_TBAR_GetActiveWhole( work->tbwk ) )
+    {
+      if( work->state == ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR )
+      {
+        ZKND_TBAR_SetActiveWhole( work->tbwk, TRUE );
+      }
+    }
+  }
+  else
+  {
+    if( ZKND_TBAR_GetActiveWhole( work->tbwk ) )
+    {
+      ZKND_TBAR_SetActiveWhole( work->tbwk, FALSE );
+    }
+  }
+}
+
 
 //=============================================================================
 /**
@@ -771,6 +807,9 @@ static void Zukan_Detail_Touchbar_Create( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     }
     break;
   }
+
+  // ユーザ指定の全体専用のアクティブフラグ
+  work->user_whole_is_active = TRUE;
 }
 static void Zukan_Detail_Touchbar_Delete( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {

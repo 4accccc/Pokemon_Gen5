@@ -418,6 +418,296 @@ static void Zkndtl_Common_FadeImmediately( ZKNDTL_COMMON_FADE_DISP fade_disp, ZK
 
 
 
+// 一部分パレットフェード
+//=============================================================================
+/**
+*  定数定義
+*/
+//=============================================================================
+#define PF_TCBSYS_TASK_MAX               (2)
+#define PF_MAIN_BG_REQ_BIT               (0x1FFF)  // 0001 1111 1111 1111  // 0<= <13
+#define PF_MAIN_OBJ_REQ_BIT              (0x00FF)  // 0000 0000 1111 1111  // 0<= <8
+#define PF_SUB_BG_REQ_BIT                (0x1FFF)  // 0001 1111 1111 1111  // 0<= <13
+#define PF_SUB_OBJ_REQ_BIT               (0x3FFF)  // 0011 1111 1111 1111  // 0<= <14
+#define PF_BLACK_TO_COLORLESS_START_EVY  (16)
+#define PF_BLACK_TO_COLORLESS_END_EVY    (0)
+#define PF_COLORLESS_TO_BLACK_START_EVY  (0)
+#define PF_COLORLESS_TO_BLACK_END_EVY    (16)
+#define PF_BLACK_RGB                     (0x0000)
+
+#define PF_MAIN_BG_DATA_SIZE   (ZKNDTL_BG_PAL_POS_M_TOUCHBAR*0x20)   // バイト単位  // PaletteFadeWorkAllocSetやPaletteWorkSet_VramCopyに渡すサイズ
+#define PF_MAIN_OBJ_DATA_SIZE  (ZKNDTL_OBJ_PAL_POS_M_TOUCHBAR*0x20)  // ZKNDTL_BG_PAL_POS_M_TOUCHBARから
+#define PF_SUB_BG_DATA_SIZE    (ZKNDTL_BG_PAL_POS_S_HEADBAR*0x20)    // フェードしてはならないものが使用ているので、
+#define PF_SUB_OBJ_DATA_SIZE   (ZKNDTL_OBJ_PAL_POS_S_HEADBAR*0x20)   // パレットフェードしてはならない。
+ 
+typedef enum
+{
+  PF_STATE_COLORLESS,           // 見えるで落ち着いている
+  PF_STATE_BLACK,               // 黒で落ち着いている
+  PF_STATE_BLACK_TO_COLORLESS,  // パレットフェード実行中なので、このとき命令しても無視される
+  PF_STATE_COLORLESS_TO_BLACK,  // パレットフェード実行中なので、このとき命令しても無視される
+}
+PF_STATE;
+
+//=============================================================================
+/**
+*  構造体宣言
+*/
+//=============================================================================
+struct _ZKNDTL_COMMON_PF_WORK
+{
+  GFL_TCBSYS*          tcbsys;
+  void*                tcbsys_wk;
+  PALETTE_FADE_PTR     pfp;
+
+  PF_STATE             state;
+};
+
+//=============================================================================
+/**
+*  ローカル関数のプロトタイプ宣言
+*/
+//=============================================================================
+static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
+    s8 wait, u8 start_evy, u8 end_evy );  // prog/src/system/palanm.cのPaletteFadeReq参照。
+
+//=============================================================================
+/**
+*  外部公開関数定義
+*/
+//=============================================================================
+ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInit( HEAPID heap_id )
+{
+  ZKNDTL_COMMON_PF_WORK* pf_wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ZKNDTL_COMMON_PF_WORK) );
+ 
+  // タスク
+  pf_wk->tcbsys_wk    = GFL_HEAP_AllocClearMemory( heap_id, GFL_TCB_CalcSystemWorkSize(PF_TCBSYS_TASK_MAX) );
+  pf_wk->tcbsys       = GFL_TCB_Init( PF_TCBSYS_TASK_MAX, pf_wk->tcbsys_wk );
+
+  // パレットフェード
+  pf_wk->pfp = PaletteFadeInit( heap_id );
+  PaletteTrans_AutoSet( pf_wk->pfp, TRUE );
+
+  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_MAIN_BG,  PF_MAIN_BG_DATA_SIZE,  heap_id ); 
+  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_MAIN_OBJ, PF_MAIN_OBJ_DATA_SIZE, heap_id ); 
+  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_SUB_BG,   PF_SUB_BG_DATA_SIZE,   heap_id );
+  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_SUB_OBJ,  PF_SUB_OBJ_DATA_SIZE,  heap_id );
+
+  // 状態
+  pf_wk->state = PF_STATE_COLORLESS;
+
+  return pf_wk;
+}
+void ZKNDTL_COMMON_PfExit( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  // パレットフェード
+  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_SUB_OBJ );
+  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_SUB_BG );
+  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_MAIN_OBJ );
+  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_MAIN_BG );
+  
+  PaletteFadeFree( pf_wk->pfp );
+
+  // タスク
+  GFL_TCB_Exit( pf_wk->tcbsys );
+  GFL_HEAP_FreeMemory( pf_wk->tcbsys_wk );
+  
+  GFL_HEAP_FreeMemory( pf_wk );
+}
+
+void ZKNDTL_COMMON_PfMain( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  // タスク
+  GFL_TCB_Main( pf_wk->tcbsys );
+
+  switch( pf_wk->state )
+  {
+  case PF_STATE_COLORLESS:
+    {
+      // 何もしない
+    }
+    break;
+  case PF_STATE_BLACK:
+    {
+      // 何もしない
+    }
+    break;
+  case PF_STATE_BLACK_TO_COLORLESS:
+    {
+      if( PaletteFadeCheck(pf_wk->pfp) == 0 )
+      {
+        pf_wk->state = PF_STATE_COLORLESS;
+      }
+    }
+    break;
+  case PF_STATE_COLORLESS_TO_BLACK:
+    {
+      if( PaletteFadeCheck(pf_wk->pfp) == 0 )
+      {
+        pf_wk->state = PF_STATE_BLACK;
+      }
+    }
+    break;
+  }
+}
+
+void ZKNDTL_COMMON_PfTrans( ZKNDTL_COMMON_PF_WORK* pf_wk )  // VBlank内で呼ぶこと
+{
+  PaletteFadeTrans( pf_wk->pfp );  // VBlank内で呼ぶこと
+}
+
+BOOL ZKNDTL_COMMON_PfIsExecute( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if(    pf_wk->state == PF_STATE_BLACK_TO_COLORLESS
+      || pf_wk->state == PF_STATE_COLORLESS_TO_BLACK )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+BOOL ZKNDTL_COMMON_PfIsColorless( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if( pf_wk->state == PF_STATE_COLORLESS )
+    return TRUE;
+  else
+    return FALSE;
+}
+BOOL ZKNDTL_COMMON_PfIsBlack( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if( pf_wk->state == PF_STATE_BLACK )
+    return TRUE;
+  else
+    return FALSE;
+}
+
+void ZKNDTL_COMMON_PfSetBlackToColorless( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if( !ZKNDTL_COMMON_PfIsExecute( pf_wk ) )
+  {
+    Zkndtl_Common_PfSetReq( pf_wk,
+        ZKNDTL_COMMON_PF_BRIGHT_WAIT, PF_BLACK_TO_COLORLESS_START_EVY, PF_BLACK_TO_COLORLESS_END_EVY );
+
+    pf_wk->state = PF_STATE_BLACK_TO_COLORLESS;
+  }
+}
+void ZKNDTL_COMMON_PfSetColorlessToBlack( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if( !ZKNDTL_COMMON_PfIsExecute( pf_wk ) )
+  {
+    Zkndtl_Common_PfSetReq( pf_wk,
+        ZKNDTL_COMMON_PF_BRIGHT_WAIT, PF_COLORLESS_TO_BLACK_START_EVY, PF_COLORLESS_TO_BLACK_END_EVY );
+
+    pf_wk->state = PF_STATE_COLORLESS_TO_BLACK;
+  }
+}
+
+void ZKNDTL_COMMON_PfSetColorlessImmediately( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if( !ZKNDTL_COMMON_PfIsExecute( pf_wk ) )
+  {
+    Zkndtl_Common_PfSetReq( pf_wk,
+        0, PF_COLORLESS_TO_BLACK_START_EVY, PF_COLORLESS_TO_BLACK_START_EVY );
+
+    pf_wk->state = PF_STATE_COLORLESS;
+  }
+}
+void ZKNDTL_COMMON_PfSetBlackImmediately( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  if( !ZKNDTL_COMMON_PfIsExecute( pf_wk ) )
+  {
+    Zkndtl_Common_PfSetReq( pf_wk,
+        0, PF_BLACK_TO_COLORLESS_START_EVY, PF_BLACK_TO_COLORLESS_START_EVY );
+
+    pf_wk->state = PF_STATE_BLACK;
+  }
+}
+
+void ZKNDTL_COMMON_PfSetPaletteData( ZKNDTL_COMMON_PF_WORK* pf_wk, const void* dat, FADEREQ req, u16 pos, u16 siz )  // prog/src/system/palanm.cのPaletteWorkSet参照。
+{
+  PaletteWorkSet( pf_wk->pfp, dat, req, pos, siz );
+}
+void ZKNDTL_COMMON_PfSetPaletteDataFromArchandle(
+    ZKNDTL_COMMON_PF_WORK* pf_wk,
+    ARCHANDLE*             handle,
+    ARCDATID               dataIdx,
+    HEAPID                 heap,
+    FADEREQ                req,
+    u32                    trans_size,
+    u16                    pos,
+    u16                    read_pos )  // prog/src/system/palanm.cのPaletteWorkSetEx_ArcHandle参照。
+{
+  PaletteWorkSetEx_ArcHandle(
+      pf_wk->pfp,
+      handle,
+      dataIdx,
+      heap,
+      req,
+      trans_size,
+      pos,
+      read_pos );
+}
+void ZKNDTL_COMMON_PfSetPaletteDataFromVram( ZKNDTL_COMMON_PF_WORK* pf_wk )
+{
+  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_MAIN_BG,  0, PF_MAIN_BG_DATA_SIZE  );
+  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_MAIN_OBJ, 0, PF_MAIN_OBJ_DATA_SIZE );
+  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_SUB_BG,   0, PF_SUB_BG_DATA_SIZE   );
+  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_SUB_OBJ,  0, PF_SUB_OBJ_DATA_SIZE  );
+}
+
+
+//=============================================================================
+/**
+*  ローカル関数定義
+*/
+//=============================================================================
+static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
+    s8 wait, u8 start_evy, u8 end_evy )  // prog/src/system/palanm.cのPaletteFadeReq参照。
+{
+    PaletteFadeReq(
+        pf_wk->pfp,
+        PF_BIT_MAIN_BG,
+        PF_MAIN_BG_REQ_BIT,
+        wait,
+        start_evy,
+        end_evy,
+        PF_BLACK_RGB,
+        pf_wk->tcbsys
+    );
+    PaletteFadeReq(
+        pf_wk->pfp,
+        PF_BIT_MAIN_OBJ,
+        PF_MAIN_OBJ_REQ_BIT,
+        wait,
+        start_evy,
+        end_evy,
+        PF_BLACK_RGB,
+        pf_wk->tcbsys
+    );
+    PaletteFadeReq(
+        pf_wk->pfp,
+        PF_BIT_SUB_BG,
+        PF_SUB_BG_REQ_BIT,
+        wait,
+        start_evy,
+        end_evy,
+        PF_BLACK_RGB,
+        pf_wk->tcbsys
+    );
+    PaletteFadeReq(
+        pf_wk->pfp,
+        PF_BIT_SUB_OBJ,
+        PF_SUB_OBJ_REQ_BIT,
+        wait,
+        start_evy,
+        end_evy,
+        PF_BLACK_RGB,
+        pf_wk->tcbsys
+    );
+}
+
+
+
+
 // 最背面
 //=============================================================================
 /**

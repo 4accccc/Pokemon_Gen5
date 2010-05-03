@@ -8,7 +8,7 @@
  *  モジュール名：ZUKAN_DETAIL_FORM
  */
 //============================================================================
-#define DEBUG_KAWADA
+//#define DEBUG_KAWADA
 
 
 // インクルード
@@ -99,7 +99,7 @@ FS_EXTERN_OVERLAY(ui_common);
 */
 //=============================================================================
 // MCSSポケモンのフェード
-#define POKE_MCSS_FADE_WAIT  (-1)  // 0のとき毎フレーム1進む; 1のときoxoxというふうに1フレームおきに1進む;
+#define POKE_MCSS_FADE_WAIT  (-2)//-1じゃ周りのフェードに比べて遅い(-1)  // 0のとき毎フレーム1進む; 1のときoxoxというふうに1フレームおきに1進む;
                                    // -1のとき毎フレーム2進む; -2のとき毎フレーム3進む;
 
 // メインBGフレーム
@@ -183,12 +183,14 @@ enum
 enum
 {
   SEQ_START      = 0,
+  SEQ_FADE_CHANGE_BEFORE,
   SEQ_PREPARE_0,
   SEQ_PREPARE,
   SEQ_FADE_IN,
   SEQ_MAIN,
   SEQ_POST,
   SEQ_FADE_OUT,
+  SEQ_FADE_CHANGE_AFTER,
   SEQ_END,
 };
 
@@ -282,12 +284,13 @@ enum
 enum
 {
   TEXT_POKENAME,
-  TEXT_UP_LABEL,
   TEXT_UP_NUM,
+  TEXT_UP_LABEL,
   TEXT_POKE_CURR,
   TEXT_POKE_COMP,
   TEXT_MAX,
 };
+static const u16 text_up_label_num_y[2] = { 1, 17 };
 // 文字数
 #define STRBUF_NUM_LENGTH       (  8 )  // ??  // 例：見つけた姿の数  99  ←この例の99の文字数
 #define STRBUF_POKENAME_LENGTH  ( 64 )  // [ポケモン種族名]のすがた  // buflen.hで確認する必要あり！
@@ -322,8 +325,8 @@ enum
 static const u8 obj_setup_info[OBJ_MAX][8] =
 {
   //  pos_x,  pos_y,  anmseq,  softpri,  bgpri,               ncg,                    ncl,                    nce
-  {    18*8,    7*8,      21,        1,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
-  { 18*8+12,    7*8,      22,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
+  {    18*8,    8*8,      21,        1,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
+  { 18*8+12,    8*8,      22,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
   {     0*8,    0*8,       0,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_FIELD_NCG,      OBJ_RES_FIELD_NCL,      OBJ_RES_FIELD_NCE      },
   {    16*8,    0*8,       0,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_FIELD_NCG,      OBJ_RES_FIELD_NCL,      OBJ_RES_FIELD_NCE      },
 };
@@ -347,21 +350,21 @@ typedef enum
   BUTTON_OBJ_MAX,
 
   // タッチ用
-  BUTTON_OBJ_NONE,        // ボタンをタッチしていない
-  BUTTON_OBJ_IGNORE,      // ボタンをタッチしたが無視された(押したアニメ中)
+  BUTTON_OBJ_NONE,        // ボタンを押していない
+  BUTTON_OBJ_IGNORE,      // ボタンを押したが無視された(先に他のボタンを押していたり、押したボタンが既に押し中だったりしたとき)
 }
 BUTTON_OBJ;
 
 // スクロールバー
 // バーカーソル
-#define  BAR_CURSOR_POS_Y      (7*8)
+#define  BAR_CURSOR_POS_Y      (8*8)
 #define  BAR_CURSOR_POS_X_MIN  (18*8+12)  // BAR_CURSOR_POS_X_MIN<= <=BAR_CURSOR_POS_X_MAX
 #define  BAR_CURSOR_POS_X_MAX  (18*8+12 +8*8)
 // スクロールバー
 #define  BAR_RANGE_TOUCH_X_MIN  (18*8)          // BAR_RANGE_TOUCH_X_MIN<= <=BAR_RANGE_TOUCH_X_MAX
 #define  BAR_RANGE_TOUCH_X_MAX  (18*8 +11*8-1)
-#define  BAR_RANGE_TOUCH_Y_MIN  (7*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
-#define  BAR_RANGE_TOUCH_Y_MAX  (7*8 +1*8-1)
+#define  BAR_RANGE_TOUCH_Y_MIN  (8*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
+#define  BAR_RANGE_TOUCH_Y_MAX  (8*8 +1*8-1)
 
 
 // 入れ替え
@@ -467,7 +470,7 @@ typedef struct
   // 他のところから借用するもの
   GFL_CLUNIT*                 clunit;
   GFL_FONT*                   font;
-  PRINT_QUE*                  print_que;
+  //PRINT_QUE*                  print_que;  // 専用のprint_queを用意することにした
 
   // ここで作成するもの
   MCSS_SYS_WORK*              mcss_sys_wk;
@@ -486,6 +489,8 @@ typedef struct
   u16                         diff_comp_no;  // diff_info_list[diff_comp_no]が比較フォルム
 
   GFL_BMPWIN*                 text_bmpwin[TEXT_MAX];
+  BOOL                        text_trans[TEXT_MAX];  // 転送する必要がある場合TRUE
+  PRINT_QUE*                  print_que[TEXT_MAX];
   GFL_MSGDATA*                text_msgdata;
 
   u16*                        next_form_pos_list;  // 次のフォルムデータの位置を参照できるリスト
@@ -500,6 +505,7 @@ typedef struct
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   obj_clwk[OBJ_MAX];
   BUTTON                      button[BUTTON_OBJ_MAX];
+  BUTTON_OBJ                  push_button;  // 現在押されているボタンがあるときBUTTON_OBJ_NONE以外となる。
   BOOL                        bar_cursor_move_by_key;    // TRUEのとき、キーでバーカーソルを動かした
   BOOL                        bar_cursor_move_by_touch;  // TRUEのとき、タッチでバーカーソルを動かし中
 
@@ -509,10 +515,15 @@ typedef struct
   // フェード
   ZKNDTL_COMMON_FADE_WORK*    fade_wk_m;
   ZKNDTL_COMMON_FADE_WORK*    fade_wk_s;
+  // パレットフェード
+  ZKNDTL_COMMON_PF_WORK*      pf_wk;
 
   // 終了命令
   END_CMD                     end_cmd;
-  
+
+  // 入力可不可
+  BOOL                        input_enable;  // 入力可のときTRUE
+
   // 状態
   STATE                       state;
 
@@ -542,9 +553,13 @@ static void Zukan_Detail_Form_VBlankFunc( GFL_TCB* tcb, void* wk );
 // テキスト
 static void Zukan_Detail_Form_CreateTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_DeleteTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_InitPrintQue( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_ExitPrintQue( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_MainPrintQue( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_MainText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn, u8 i );
 static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_WritePokeText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
-                GFL_BMPWIN* bmpwin, u16 diff_no );
+                u8 i, PRINT_QUE* print_que, GFL_BMPWIN* bmpwin, BOOL* trans_flag, u16 diff_no );
 static void Zukan_Detail_Form_WritePokeCurrText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_WritePokeCompText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_ScrollPokeText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -740,7 +755,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
     ZUKAN_DETAIL_GRAPHIC_WORK* graphic = ZKNDTL_COMMON_GetGraphic(cmn);
     work->clunit      = ZUKAN_DETAIL_GRAPHIC_GetClunit(graphic);
     work->font        = ZKNDTL_COMMON_GetFont(cmn);
-    work->print_que   = ZKNDTL_COMMON_GetPrintQue(cmn);
+    //work->print_que   = ZKNDTL_COMMON_GetPrintQue(cmn);  // 専用のprint_queを用意することにした
   }
 
   // NULL初期化
@@ -760,6 +775,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Form_VBlankFunc, work, 1 );
 
+  // テキスト
+  Zukan_Detail_Form_InitPrintQue( param, work, cmn );
+
   // フェード
   {
     work->fade_wk_m = ZKNDTL_COMMON_FadeInit( param->heap_id );
@@ -771,9 +789,16 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
     ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );
     ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
   }
+  // パレットフェード
+  {
+    work->pf_wk = ZKNDTL_COMMON_PfInit( param->heap_id );
+  }
 
   // 終了情報
   work->end_cmd = END_CMD_NONE;
+
+  // 入力可不可
+  work->input_enable = TRUE;
 
   // 状態
   work->state = STATE_TOP;
@@ -807,11 +832,18 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcExit( ZKNDTL_PROC* proc, int* se
   // テキスト
   Zukan_Detail_Form_DeleteTextBase( param, work, cmn );
 
+  // パレットフェード
+  {
+    ZKNDTL_COMMON_PfExit( work->pf_wk );
+  }
   // フェード
   {
     ZKNDTL_COMMON_FadeExit( work->fade_wk_s );
     ZKNDTL_COMMON_FadeExit( work->fade_wk_m );
   }
+
+  // テキスト
+  Zukan_Detail_Form_ExitPrintQue( param, work, cmn );
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
@@ -849,7 +881,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
   {
   case SEQ_START:
     {
-      *seq = SEQ_PREPARE_0;
+      *seq = SEQ_FADE_CHANGE_BEFORE;
 
       // 切り替え
       {
@@ -900,6 +932,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
      
       // 最初のポケモンを表示する
       Zukan_Detail_Form_ChangePoke( param, work, cmn );
+      // ポケアイコンの設定を変更しておく
+      GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
 
       // ポケモンを非表示にし黒にする
       MCSS_SetVanishFlag( work->poke_mcss_wk[POKE_CURR_F].poke_wk );
@@ -929,6 +963,25 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
           BG_FRAME_M_REAR, BG_PAL_POS_M_REAR +0, BG_PAL_POS_M_REAR +1 );
       work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_FORM,
           BG_FRAME_S_REAR, BG_PAL_POS_S_REAR +0, BG_PAL_POS_S_REAR +1 );
+
+      // パレットフェード
+      {
+        ZKNDTL_COMMON_PfSetPaletteDataFromVram( work->pf_wk );
+        ZKNDTL_COMMON_PfSetBlackImmediately( work->pf_wk );
+      }
+    }
+    break;
+  case SEQ_FADE_CHANGE_BEFORE:
+    {
+      *seq = SEQ_PREPARE_0;
+
+      // フェード
+      ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );
+      ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
+     
+      // ZKNDTL_COMMON_FadeSetColorlessImmediatelyでG2_SetBlendBrightnessExtやG2S_SetBlendBrightnessExtを設定しているので、
+      // その後でZukan_Detail_Form_AlphaInitを呼ぶこと
+      Zukan_Detail_Form_AlphaInit( param, work, cmn );
     }
     break;
   case SEQ_PREPARE_0:
@@ -959,9 +1012,14 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
       {
         *seq = SEQ_FADE_IN;
 
-        // フェード
-        ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_m );
-        ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_s );
+        //// フェード
+        //ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_m );
+        //ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_s );
+
+        // パレットフェード
+        {
+          ZKNDTL_COMMON_PfSetBlackToColorless( work->pf_wk );
+        }
 
         // タッチバー
         if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) != ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR )
@@ -978,6 +1036,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
         }
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
         {
           GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
           ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
@@ -1022,15 +1081,17 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
         }
       }
 
-      if(    (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
-          && (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+      if( //   (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
+          //&& (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+             (!ZKNDTL_COMMON_PfIsExecute( work->pf_wk ))
           && ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) == ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR
           && ZUKAN_DETAIL_HEADBAR_GetState( headbar ) == ZUKAN_DETAIL_HEADBAR_STATE_APPEAR
           && poke_fade )
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
 
-        Zukan_Detail_Form_AlphaInit( param, work, cmn );
+        //Zukan_Detail_Form_AlphaInit( param, work, cmn );
 
         *seq = SEQ_MAIN;
       }
@@ -1081,14 +1142,19 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
 
       if( poke_fade )
       {
-        Zukan_Detail_Form_AlphaExit( param, work, cmn );
+        //Zukan_Detail_Form_AlphaExit( param, work, cmn );
 
         *seq = SEQ_FADE_OUT;
 
-        // フェード
-        ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_m );
-        ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
-        
+        //// フェード
+        //ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_m );
+        //ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
+       
+        // パレットフェード
+        {
+          ZKNDTL_COMMON_PfSetColorlessToBlack( work->pf_wk );
+        }
+
         // タイトルバー
         ZUKAN_DETAIL_HEADBAR_Disappear( headbar );
         
@@ -1115,6 +1181,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
     break;
   case SEQ_FADE_OUT:
     {
+      BOOL b_next_seq = FALSE;
+
       // MCSSポケモン
       // ポケモンが黒になるのを待つ
       BOOL poke_fade = TRUE;
@@ -1133,8 +1201,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
         }
       }
 
-      if(    (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
-          && (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+      if( //   (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
+          //&& (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+             (!ZKNDTL_COMMON_PfIsExecute( work->pf_wk ))
           && ZUKAN_DETAIL_HEADBAR_GetState( headbar ) == ZUKAN_DETAIL_HEADBAR_STATE_DISAPPEAR
           && poke_fade )
       {
@@ -1142,14 +1211,32 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
         {
           if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) == ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR )
           {
-            *seq = SEQ_END;
+            b_next_seq = TRUE;
           }
         }
         else
         {
-          *seq = SEQ_END;
+          b_next_seq = TRUE;
         }
       }
+
+      if( b_next_seq )
+      {
+        *seq = SEQ_FADE_CHANGE_AFTER;
+      }
+    }
+    break;
+  case SEQ_FADE_CHANGE_AFTER:
+    {
+      *seq = SEQ_END;
+
+      // ZKNDTL_COMMON_FadeSetColorlessImmediatelyでG2_SetBlendBrightnessExtやG2S_SetBlendBrightnessExtを設定しているので、
+      // その前にZukan_Detail_Form_AlphaExitを呼ぶこと
+      Zukan_Detail_Form_AlphaExit( param, work, cmn );
+      
+      // フェード
+      ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );
+      ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
     }
     break;
   case SEQ_END:
@@ -1215,6 +1302,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
 
   // フェード
   ZKNDTL_COMMON_FadeMain( work->fade_wk_m, work->fade_wk_s );
+  // パレットフェード
+  {
+    ZKNDTL_COMMON_PfMain( work->pf_wk );
+  }
+
+  // テキスト
+  Zukan_Detail_Form_MainPrintQue( param, work, cmn );
 
   return ZKNDTL_PROC_RES_CONTINUE;
 }
@@ -1230,9 +1324,56 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     ZUKAN_DETAIL_FORM_WORK*     work     = (ZUKAN_DETAIL_FORM_WORK*)mywk;
 
     ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
-  
+
+    BOOL b_valid_cmd = FALSE;  // cmdがZKNDTL_CMD_NONE以外のZKNDTL_CMD_???のときTRUE。ZKNDTL_CMD_NONEやZKNDTL_SCMD_???のときFALSE。
+
     work->bar_cursor_move_by_key = FALSE;
 
+    // 入力不可
+    switch( cmd )
+    {
+    case ZKNDTL_SCMD_CLOSE:
+    case ZKNDTL_SCMD_RETURN:
+    case ZKNDTL_SCMD_INFO:
+    case ZKNDTL_SCMD_MAP:
+    case ZKNDTL_SCMD_VOICE:
+    case ZKNDTL_SCMD_CUR_D:
+    case ZKNDTL_SCMD_CUR_U:
+    case ZKNDTL_SCMD_CHECK:
+    case ZKNDTL_SCMD_FORM_CUR_D:
+    case ZKNDTL_SCMD_FORM_CUR_U:
+    case ZKNDTL_SCMD_FORM_CUR_R:
+    case ZKNDTL_SCMD_FORM_CUR_L:
+    case ZKNDTL_SCMD_FORM_EXCHANGE:
+      {
+        work->input_enable = FALSE;
+      }
+      break;
+    }
+    // 入力可
+    switch( cmd )
+    {
+    case ZKNDTL_CMD_CLOSE:
+    case ZKNDTL_CMD_RETURN:
+    case ZKNDTL_CMD_INFO:
+    case ZKNDTL_CMD_MAP:
+    case ZKNDTL_CMD_VOICE:
+    case ZKNDTL_CMD_CUR_D:
+    case ZKNDTL_CMD_CUR_U:
+    case ZKNDTL_CMD_CHECK:
+    case ZKNDTL_CMD_FORM_CUR_D:
+    case ZKNDTL_CMD_FORM_CUR_U:
+    case ZKNDTL_CMD_FORM_CUR_R:
+    case ZKNDTL_CMD_FORM_CUR_L:
+    case ZKNDTL_CMD_FORM_EXCHANGE:
+      {
+        work->input_enable = TRUE;
+        b_valid_cmd = TRUE;
+      }
+      break;
+    }
+
+    // コマンド
     switch( cmd )
     {
     case ZKNDTL_CMD_NONE:
@@ -1255,20 +1396,6 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     case ZKNDTL_CMD_CUR_D:
     case ZKNDTL_CMD_FORM_CUR_D:
       {
-#if 0
-        if( work->state == STATE_TOP || work->state == STATE_EXCHANGE )
-        {
-          u16 monsno_curr;
-          u16 monsno_go;
-          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-          ZKNDTL_COMMON_GoToNextPoke(cmn);
-          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
-          if( monsno_curr != monsno_go )
-          {
-            Zukan_Detail_Form_ChangePoke(param, work, cmn);
-          }
-        }
-#else
         if( work->state == STATE_TOP )
         {
           u16 monsno_curr;
@@ -1326,27 +1453,13 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
             }
           }
         }
-#endif
+        
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     case ZKNDTL_CMD_CUR_U:
     case ZKNDTL_CMD_FORM_CUR_U:
       {
-#if 0
-        if( work->state == STATE_TOP || work->state == STATE_EXCHANGE )
-        {
-          u16 monsno_curr;
-          u16 monsno_go;
-          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-          ZKNDTL_COMMON_GoToPrevPoke(cmn);
-          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
-          if( monsno_curr != monsno_go )
-          {
-            Zukan_Detail_Form_ChangePoke(param, work, cmn);
-          }
-        }
-#else
         if( work->state == STATE_TOP )
         {
           u16 monsno_curr;
@@ -1404,7 +1517,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
             }
           }
         }
-#endif
+        
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -1436,15 +1549,6 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
-    case ZKNDTL_CMD_FORM_RETURN:
-      {
-        //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
-        if( work->state == STATE_EXCHANGE )
-        {
-          Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_TO_TOP );
-        }
-      }
-      break;
     case ZKNDTL_CMD_FORM_CUR_L:
       {
         if( work->diff_num >= 3 )
@@ -1463,105 +1567,33 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
+    case ZKNDTL_CMD_FORM_RETURN:
+      {
+        //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+        if( work->state == STATE_EXCHANGE )
+        {
+          Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_TO_TOP );
+        }
+      }
+      break;
     case ZKNDTL_CMD_FORM_EXCHANGE:
       {
         if( work->diff_num >= 2 )
         {
           Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_IREKAE );
         }
-
-/*        
-        if( work->diff_num >= 2 )
+        else
         {
-          u16 no;
-          MCSS_WORK* mw;
-          POKE_MCSS_CALL_BACK_DATA* pmcbd;
-
-          // 位置入れ替え
-          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-          {
-            VecFx32 p;
-            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
-            
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );
-          }
-          
-          // 番号、ポインタ入れ替え
-          no = work->diff_curr_no;
-          work->diff_curr_no = work->diff_comp_no;
-          work->diff_comp_no = no;
-
-          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
-          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
-
-          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
-          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
-          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
-
-          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
-          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
-          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
-
-          // ポケアイコン変更
-          Zukan_Detail_Form_ChangePokeicon( param, work, cmn );
-
-          // テキスト
-          // テキストはOBJではなくBGなので、入れ替えできないので丸々書き直し
-          Zukan_Detail_Form_WritePokeCurrText( param, work, cmn );
-          Zukan_Detail_Form_WritePokeCompText( param, work, cmn );
-
-          // テキストに合わせて、フォルム名の背面フィールドを用意する
-          Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
-
-          // 図鑑セーブデータに閲覧中データ設定
-          {
-            u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-
-            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-            ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
-
-            u32  sex  = work->diff_info_list[work->diff_curr_no].sex;
-            BOOL rare = (work->diff_info_list[work->diff_curr_no].rare==0)?FALSE:TRUE;
-            u32  form = work->diff_info_list[work->diff_curr_no].form;
-
-            ZUKANSAVE_SetDrawData(  zkn_sv, monsno, sex, rare, form );
-
-#ifdef DEBUG_KAWADA
-            {
-              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, work->diff_curr_no, form, sex, rare );
-            }
-#endif
-#ifdef DEBUG_KAWADA
-            {
-              ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &form, param->heap_id );
-              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ZUKANSAVE_GetDrawData, f=%d, s=%d, r=%d\n", monsno, form, sex, rare );
-            }
-#endif
-          }
-
-          if( work->diff_num >= 3 )
-          {
-            work->bar_cursor_move_by_key = TRUE;
-          }
+          ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
         }
-*/
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     default:
       {
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        if( b_valid_cmd )
+        {
+          ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        }
       }
       break;
     }
@@ -1595,6 +1627,11 @@ static void Zukan_Detail_Form_Draw3DFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
 static void Zukan_Detail_Form_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   ZUKAN_DETAIL_FORM_WORK*     work     = (ZUKAN_DETAIL_FORM_WORK*)wk;
+
+  // パレットフェード
+  {
+    ZKNDTL_COMMON_PfTrans( work->pf_wk );
+  }
 }
 
 //-------------------------------------
@@ -1694,8 +1731,8 @@ static void Zukan_Detail_Form_CreateTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZU
   u8 bmpwin_setup[TEXT_MAX][7] =
   {
     { BG_FRAME_S_TEXT, 19, 16,  8,  2, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_B },
-    { BG_FRAME_S_TEXT,  3, 19, 23,  4, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_B },
     { BG_FRAME_S_TEXT, 27, 19,  2,  4, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_B },
+    { BG_FRAME_S_TEXT,  3, 19, 23,  4, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_B },
     { BG_FRAME_M_TEXT,  0,  1, 16,  4, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B },
     { BG_FRAME_M_TEXT, 16,  1, 16,  4, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B },
   };
@@ -1750,12 +1787,36 @@ static void Zukan_Detail_Form_CreateTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZU
 
     GF_ASSERT_MSG( next_form_pos_num > MONSNO_END+1+1, "ZUKAN_DETAIL_FORM : 次のフォルムのデータの位置を参照できる列の個数が足りません。\n" );
   }
+
+  // 変更されることのない固定テキスト TEXT_UP_LABEL
+  {
+    STRBUF* strbuf;
+    GFL_BMP_DATA*	bmp_data = GFL_BMPWIN_GetBmp( work->text_bmpwin[TEXT_UP_LABEL] );
+    
+    strbuf = GFL_MSG_CreateString( work->text_msgdata, ZKN_FORME_TEXT_01 );
+    PRINTSYS_PrintQueColor( work->print_que[TEXT_UP_LABEL], bmp_data,
+                            0, text_up_label_num_y[0], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    strbuf = GFL_MSG_CreateString( work->text_msgdata, ZKN_FORME_TEXT_02 );
+    PRINTSYS_PrintQueColor( work->print_que[TEXT_UP_LABEL], bmp_data,
+                            0, text_up_label_num_y[1], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    GFL_STR_DeleteBuffer( strbuf );
+
+    work->text_trans[TEXT_UP_LABEL] = TRUE;
+
+    // 既に済んでいるかもしれないので、Mainを1度呼んでおく
+    Zukan_Detail_Form_MainText( param, work, cmn, TEXT_UP_LABEL );
+  }
 }
 static void Zukan_Detail_Form_DeleteTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   u8 i;
   for( i=0; i<TEXT_MAX; i++ )
   {
+    work->text_trans[i] = FALSE;
+    PRINTSYS_QUE_Clear( work->print_que[i] );
+    
     GFL_BMPWIN_Delete( work->text_bmpwin[i] );
   }
 
@@ -1768,6 +1829,48 @@ static void Zukan_Detail_Form_DeleteTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZU
     GFL_HEAP_FreeMemory( work->next_form_pos_list );
   }
 }
+static void Zukan_Detail_Form_InitPrintQue( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  for( i=0; i<TEXT_MAX; i++ )
+  {
+    work->print_que[i] = PRINTSYS_QUE_Create( param->heap_id );
+
+    work->text_trans[i] = FALSE;
+  }
+}
+static void Zukan_Detail_Form_ExitPrintQue( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  for( i=0; i<TEXT_MAX; i++ )
+  {
+    work->text_trans[i] = FALSE;
+    
+    PRINTSYS_QUE_Clear( work->print_que[i] );
+    PRINTSYS_QUE_Delete( work->print_que[i] );
+  }
+}
+static void Zukan_Detail_Form_MainPrintQue( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  for( i=0; i<TEXT_MAX; i++ )
+  {
+    PRINTSYS_QUE_Main( work->print_que[i] );
+
+    Zukan_Detail_Form_MainText( param, work, cmn, i );
+  }
+}
+static void Zukan_Detail_Form_MainText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn, u8 i )
+{
+  if( work->text_trans[i] )
+  {
+    if( !PRINTSYS_QUE_IsExistTarget( work->print_que[i], GFL_BMPWIN_GetBmp(work->text_bmpwin[i]) ) )
+    {
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
+      work->text_trans[i] = FALSE;
+    }
+  }
+}
 static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   u8 i;
@@ -1776,20 +1879,22 @@ static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
   {
     for( i=TEXT_POKENAME; i<=TEXT_UP_NUM; i++ )
     {
+      work->text_trans[i] = FALSE;
+      PRINTSYS_QUE_Clear( work->print_que[i] );
+      
       // クリア
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->text_bmpwin[i] ), 0 );
-      GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[i] );
+      //GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[i] );  // ちらつくのでコメントアウト
     }
   }
 
   // 今回のテキストを描画
   {
     u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-    u16 label_num_y[2] = { 1, 17 };
     
     {
-      GFL_BMP_DATA*	bmp_data = GFL_BMPWIN_GetBmp( work->text_bmpwin[TEXT_POKENAME] );
-      
+      GFL_BMP_DATA*	bmp_data  = GFL_BMPWIN_GetBmp( work->text_bmpwin[TEXT_POKENAME] );
+
       STRBUF* strbuf = GFL_MSG_CreateString( GlobalMsg_PokeName, monsno );
 
       u16 str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
@@ -1803,24 +1908,10 @@ static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 */
       u16 y = 1;  // 計算で出した位置は中心より上に見えるので
 
-      PRINTSYS_PrintQueColor( work->print_que, bmp_data,
+      PRINTSYS_PrintQueColor( work->print_que[TEXT_POKENAME], bmp_data,
                               x, y, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+      work->text_trans[TEXT_POKENAME] = TRUE;
 
-      GFL_STR_DeleteBuffer( strbuf );
-    }
-
-    {
-      STRBUF* strbuf;
-      GFL_BMP_DATA*	bmp_data = GFL_BMPWIN_GetBmp( work->text_bmpwin[TEXT_UP_LABEL] );
-      
-      strbuf = GFL_MSG_CreateString( work->text_msgdata, ZKN_FORME_TEXT_01 );
-      PRINTSYS_PrintQueColor( work->print_que, bmp_data,
-                              0, label_num_y[0], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
-      GFL_STR_DeleteBuffer( strbuf );
-
-      strbuf = GFL_MSG_CreateString( work->text_msgdata, ZKN_FORME_TEXT_02 );
-      PRINTSYS_PrintQueColor( work->print_que, bmp_data,
-                              0, label_num_y[1], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
       GFL_STR_DeleteBuffer( strbuf );
     }
 
@@ -1835,8 +1926,8 @@ static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       strbuf = GFL_STR_CreateBuffer( STRBUF_NUM_LENGTH, param->heap_id );
       WORDSET_RegisterNumber( wordset, 0, work->diff_sugata_num, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
       WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
-      PRINTSYS_PrintQueColor( work->print_que, bmp_data,
-                              0, label_num_y[0], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+      PRINTSYS_PrintQueColor( work->print_que[TEXT_UP_NUM], bmp_data,
+                              0, text_up_label_num_y[0], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
       GFL_STR_DeleteBuffer( strbuf );
       GFL_STR_DeleteBuffer( src_strbuf );
       WORDSET_Delete( wordset );
@@ -1846,23 +1937,25 @@ static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       strbuf = GFL_STR_CreateBuffer( STRBUF_NUM_LENGTH, param->heap_id );
       WORDSET_RegisterNumber( wordset, 0, work->diff_irochigai_num, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
       WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
-      PRINTSYS_PrintQueColor( work->print_que, bmp_data,
-                              0, label_num_y[1], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+      PRINTSYS_PrintQueColor( work->print_que[TEXT_UP_NUM], bmp_data,
+                              0, text_up_label_num_y[1], strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
       GFL_STR_DeleteBuffer( strbuf );
       GFL_STR_DeleteBuffer( src_strbuf );
       WORDSET_Delete( wordset );
+
+      work->text_trans[TEXT_UP_NUM] = TRUE;
     }
 
     for( i=TEXT_POKENAME; i<=TEXT_UP_NUM; i++ )
     {
-      // スクリーン転送
-      GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
+      // 既に済んでいるかもしれないので、Mainを1度呼んでおく
+      Zukan_Detail_Form_MainText( param, work, cmn, i );
     }
   }
 }
 
 static void Zukan_Detail_Form_WritePokeText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
-                GFL_BMPWIN* bmpwin, u16 diff_no )
+                u8 i, PRINT_QUE* print_que, GFL_BMPWIN* bmpwin, BOOL* trans_flag, u16 diff_no )
 {
   GFL_BMP_DATA*	bmp_data = GFL_BMPWIN_GetBmp( bmpwin );
   u16 bmp_width = GFL_BMP_GetSizeX( bmp_data );
@@ -1891,42 +1984,50 @@ static void Zukan_Detail_Form_WritePokeText( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 
     str_width = (u16)( PRINTSYS_GetStrWidth( strbuf0, work->font, 0 ) );
     x = ( bmp_width - str_width ) / 2;
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data,
+    PRINTSYS_PrintQueColor( print_que, bmp_data,
                             x, y[0], strbuf0, work->font, PRINTSYS_LSB_Make(15,2,0) );
 
     if( strbuf1 )
     {
       str_width = (u16)( PRINTSYS_GetStrWidth( strbuf1, work->font, 0 ) );
       x = ( bmp_width - str_width ) / 2;
-      PRINTSYS_PrintQueColor( work->print_que, bmp_data,
+      PRINTSYS_PrintQueColor( print_que, bmp_data,
                               x, y[1], strbuf1, work->font, PRINTSYS_LSB_Make(15,2,0) );
     }
 
     if( strbuf0 ) GFL_STR_DeleteBuffer( strbuf0 );
     if( strbuf1 ) GFL_STR_DeleteBuffer( strbuf1 );
 
-    // スクリーン転送
-    GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
+    *trans_flag = TRUE;
+
+    // 既に済んでいるかもしれないので、Mainを1度呼んでおく
+    Zukan_Detail_Form_MainText( param, work, cmn, i );
   }
 }
 static void Zukan_Detail_Form_WritePokeCurrText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 前回のテキストをクリア
   {
+    work->text_trans[TEXT_POKE_CURR] = FALSE;
+    PRINTSYS_QUE_Clear( work->print_que[TEXT_POKE_CURR] );
+
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->text_bmpwin[TEXT_POKE_CURR] ), 0 );
-    GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_POKE_CURR] );
+    //GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_POKE_CURR] );  // ちらつくのでコメントアウト
   }
 
   // 今回のテキストを描画
   Zukan_Detail_Form_WritePokeText( param, work, cmn,
-               work->text_bmpwin[TEXT_POKE_CURR], work->diff_curr_no );
+               TEXT_POKE_CURR, work->print_que[TEXT_POKE_CURR], work->text_bmpwin[TEXT_POKE_CURR], &(work->text_trans[TEXT_POKE_CURR]), work->diff_curr_no );
  }
 static void Zukan_Detail_Form_WritePokeCompText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 前回のテキストをクリア
   {
+    work->text_trans[TEXT_POKE_COMP] = FALSE;
+    PRINTSYS_QUE_Clear( work->print_que[TEXT_POKE_COMP] );
+
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->text_bmpwin[TEXT_POKE_COMP] ), 0 );
-    GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_POKE_COMP] );
+    //GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_POKE_COMP] );  // ちらつくのでコメントアウト
   }
 
   // 今回のテキストを描画
@@ -1935,6 +2036,7 @@ static void Zukan_Detail_Form_WritePokeCompText( ZUKAN_DETAIL_FORM_PARAM* param,
   case STATE_TOP:
     {
       // 描画しない
+      GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_POKE_COMP] );  // 上でちらつくのでコメントアウトしていたので、ここで転送
     }
     break;
   case STATE_EXCHANGE:
@@ -1942,7 +2044,7 @@ static void Zukan_Detail_Form_WritePokeCompText( ZUKAN_DETAIL_FORM_PARAM* param,
       if( work->diff_num >= 2 )
       {
         Zukan_Detail_Form_WritePokeText( param, work, cmn,
-               work->text_bmpwin[TEXT_POKE_COMP], work->diff_comp_no );
+               TEXT_POKE_COMP, work->print_que[TEXT_POKE_COMP], work->text_bmpwin[TEXT_POKE_COMP], &(work->text_trans[TEXT_POKE_COMP]), work->diff_comp_no );
       }
       // 2姿以上なければ、描画しない
     }
@@ -2175,7 +2277,10 @@ static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID
     GFL_CLACT_WK_SetPlttOffs( clwk, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
   }
 
-  GFL_CLACT_WK_SetObjMode( clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+  //GFL_CLACT_WK_SetObjMode( clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+  GFL_CLACT_WK_SetObjMode( clwk, GX_OAM_MODE_NORMAL );  // BGとともにこのOBJも暗くしたいのは、フェードインとフェードアウトのときだけであり、
+                                                        // ポケモンを変更しただけのときは、暗くしたり半透明にしたりしたくない。
+                                                        // BGとともにこのOBJも暗くしたいときは、この関数の後に設定すること。
 
   return clwk;
 }
@@ -2481,357 +2586,6 @@ static void Zukan_Detail_Form_GetDiffInfo( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
                                             &work->diff_irochigai_num,
                                             &work->diff_curr_no,
                                             &work->diff_comp_no );
-
-#if 0  // Zukan_Detail_Form_GetDiffInfoWithoutWorkを使うのでコメントアウト
-  const u8 sex_tbl_max = 3;
-  const u32 sex_tbl[sex_tbl_max] =
-  {
-    PTL_SEX_MALE,
-    PTL_SEX_FEMALE,
-    PTL_SEX_UNKNOWN,
-  };
-  const u8 rare_tbl_max = 2;
-  const BOOL rare_tbl[rare_tbl_max] =
-  {
-    FALSE,
-    TRUE,
-  };
-
-  u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-
-  GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-  ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
-
-  // ポケモンパーソナルデータの情報
-  u32 ppd_form_num;  // フォルム数
-  u32 ppd_sex_vec;   // 性別ベクトル
-
-  // 現在表示する姿
-  u32  curr_sex;
-  BOOL curr_rare;
-  u32  curr_form;
-
-  // ポケモンパーソナルデータの情報
-  {
-    POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle( monsno, 0, param->heap_id );
-    ppd_form_num = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max );  // 別フォルムなしのときは1
-    ppd_sex_vec  = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );  // POKEPER_SEX_MALE, 1～253, POKEPER_SEX_FEMALE, POKEPER_SEX_UNKNOWN  // prog/include/poke_tool/poke_personal.h
-    POKE_PERSONAL_CloseHandle( ppd );
-
-#ifdef DEBUG_KAWADA
-    {
-      OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ppd f=%d s=%d\n", monsno, ppd_form_num, ppd_sex_vec );
-    }
-#endif
-  }
-
-  // 現在表示する姿
-  {
-    ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &curr_sex, &curr_rare, &curr_form, param->heap_id );
-
-#ifdef DEBUG_KAWADA
-    {
-      OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, curr f=%d, s=%d, r=%d\n", monsno, curr_form, curr_sex, curr_rare );
-    }
-#endif
-  }
-
-  // プレイヤーが入手した情報
-  {
-    u16 diff_num = 0;
-    u16 diff_curr_no = 0;
-
-    u32  sex;
-    BOOL rare;
-    u32  form;
-
-    u8 sex_tbl_idx;
-    u8 rare_tbl_idx;
-
-#if 0
-    性別がいい加減でも情報を取れてしまうので、性別の扱いを別フォルムありとなしで分けていたが、
-    どうやら図鑑にはきちんとした性別で登録されているようなので、
-    この部分はコメントアウトし、処理を分岐なしの1本化にする
-
-    // 別フォルムあり
-    if( ppd_form_num >= 2 )
-    {
-      for( form=0; form<ppd_form_num; form++ )
-      {
-        BOOL b_rare_finish_tbl[rare_tbl_max] =  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
-        {                                       // ために、ノーマル/レアそれぞれがどれかの性別で登録されていたら、
-          FALSE,                                // もう登録しないようにするためのフラグ
-          FALSE,
-        };
-        for( sex_tbl_idx=0; sex_tbl_idx<sex_tbl_max; sex_tbl_idx++ )
-        {
-          sex = sex_tbl[sex_tbl_idx];
-          for( rare_tbl_idx=0; rare_tbl_idx<rare_tbl_max; rare_tbl_idx++ )
-          {
-            BOOL b_regist = FALSE;
-            rare = rare_tbl[rare_tbl_idx];
-            if( curr_form == form && curr_rare == rare && curr_sex == sex )  // 現在表示する姿
-            {
-              diff_curr_no = diff_num;
-              b_regist = TRUE;
-            }
-            else if( curr_form == form && curr_rare == rare )  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
-            {
-              // 何もしない
-            }
-            else
-            {
-              if( ZUKANSAVE_CheckPokeSeeForm( zkn_sv, monsno, (int)sex, (int)rare, (int)form ) )
-              {
-                b_regist = TRUE;
-              }
-            }
-
-            if( b_regist )
-            {
-              if( !b_rare_finish_tbl[rare_tbl_idx] )  // まだこのノーマル/レアがどの性別でも登録されていないとき
-              {
-                GF_ASSERT_MSG( diff_num < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
-                
-                b_rare_finish_tbl[rare_tbl_idx] = TRUE;
-                work->diff_info_list[diff_num].looks_diff = LOOKS_DIFF_FORM;
-                work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
-                work->diff_info_list[diff_num].other_diff = (u16)form;
-                work->diff_info_list[diff_num].sex        = (u8)sex;
-                work->diff_info_list[diff_num].rare       = (u8)rare;
-                work->diff_info_list[diff_num].form       = (u16)form;
-
-#ifdef DEBUG_KAWADA
-                {
-                  OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, diff_num, form, sex, rare );
-                }
-#endif
-
-                diff_num++;
-              }
-            }
-          }
-        }
-      }
-    }
-    // 別フォルムなし
-    else
-    {
-      // 性別でチェックするしないを分ける
-      BOOL b_sex_check_tbl[sex_tbl_max] =
-      {
-        FALSE,
-        FALSE,
-        FALSE,
-      };
-      switch( ppd_sex_vec )
-      {
-        // 性別あり(オスのみ)
-      case POKEPER_SEX_MALE:
-        {
-          b_sex_check_tbl[0] = TRUE;
-        }
-        break;
-        // 性別あり(メスのみ)
-      case POKEPER_SEX_FEMALE:
-        {
-          b_sex_check_tbl[1] = TRUE;
-        }
-        break;
-        // 性別なし
-      case POKEPER_SEX_UNKNOWN:
-        {
-          b_sex_check_tbl[2] = TRUE;
-        }
-        break;
-        // 性別あり(オスメス)
-      default:  // 1～253
-        {
-          b_sex_check_tbl[0] = TRUE;
-          b_sex_check_tbl[1] = TRUE;
-        }
-        break;
-      }
-
-      form = 0;
-      for( sex_tbl_idx=0; sex_tbl_idx<sex_tbl_max; sex_tbl_idx++ )
-      {
-        if( !b_sex_check_tbl[sex_tbl_idx] ) continue;
-        sex = sex_tbl[sex_tbl_idx];
-        for( rare_tbl_idx=0; rare_tbl_idx<rare_tbl_max; rare_tbl_idx++ )
-        {
-          BOOL b_regist = FALSE;
-          rare = rare_tbl[rare_tbl_idx];
-          if( curr_form == form && curr_rare == rare && curr_sex == sex )  // 現在表示する姿
-          {
-            diff_curr_no = diff_num;
-            b_regist = TRUE;
-          }
-          else
-          {
-            if( ZUKANSAVE_CheckPokeSeeForm( zkn_sv, monsno, (int)sex, (int)rare, (int)form ) )
-            {
-              b_regist = TRUE;
-            }
-          }
-
-          if( b_regist )
-          {
-            GF_ASSERT_MSG( diff_num < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
-            
-            work->diff_info_list[diff_num].looks_diff = (ppd_sex_vec==POKEPER_SEX_UNKNOWN)?LOOKS_DIFF_ONE:LOOKS_DIFF_SEX;
-            work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
-            work->diff_info_list[diff_num].other_diff = (sex==PTL_SEX_FEMALE)?SEX_FEMALE:SEX_MALE;  // LOOKS_DIFF_ONEのときは使用されないので、何が入っていてもいい
-            work->diff_info_list[diff_num].sex        = (u8)sex;
-            work->diff_info_list[diff_num].rare       = (u8)rare;
-            work->diff_info_list[diff_num].form       = (u16)form;
-
-#ifdef DEBUG_KAWADA
-            {
-              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, diff_num, form, sex, rare );
-            }
-#endif
-            
-            diff_num++;
-          }
-        } 
-      }
-    }
-#else
-    {
-      // 性別でチェックするしないを分ける
-      BOOL b_sex_check_tbl[sex_tbl_max] =
-      {
-        FALSE,
-        FALSE,
-        FALSE,
-      };
-      switch( ppd_sex_vec )
-      {
-        // 性別あり(オスのみ)
-      case POKEPER_SEX_MALE:
-        {
-          b_sex_check_tbl[0] = TRUE;
-        }
-        break;
-        // 性別あり(メスのみ)
-      case POKEPER_SEX_FEMALE:
-        {
-          b_sex_check_tbl[1] = TRUE;
-        }
-        break;
-        // 性別なし
-      case POKEPER_SEX_UNKNOWN:
-        {
-          b_sex_check_tbl[2] = TRUE;
-        }
-        break;
-        // 性別あり(オスメス)
-      default:  // 1～253
-        {
-          b_sex_check_tbl[0] = TRUE;
-          b_sex_check_tbl[1] = TRUE;
-        }
-        break;
-      }
-
-      for( form=0; form<ppd_form_num; form++ )
-      {
-        BOOL b_rare_finish_tbl[rare_tbl_max] =  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
-        {                                       // ために、ノーマル/レアそれぞれがどれかの性別で登録されていたら、
-          FALSE,                                // もう登録しないようにするためのフラグ
-          FALSE,
-        };
-        for( sex_tbl_idx=0; sex_tbl_idx<sex_tbl_max; sex_tbl_idx++ )
-        {
-          if( !b_sex_check_tbl[sex_tbl_idx] ) continue;
-          sex = sex_tbl[sex_tbl_idx];
-          for( rare_tbl_idx=0; rare_tbl_idx<rare_tbl_max; rare_tbl_idx++ )
-          {
-            BOOL b_regist = FALSE;
-            rare = rare_tbl[rare_tbl_idx];
-            if( curr_form == form && curr_rare == rare && curr_sex == sex )  // 現在表示する姿
-            {
-              diff_curr_no = diff_num;
-              b_regist = TRUE;
-            }
-            else if( ( ppd_form_num >= 2 ) && curr_form == form && curr_rare == rare )  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
-            {
-              // 何もしない
-            }
-            else
-            {
-              if( ZUKANSAVE_CheckPokeSeeForm( zkn_sv, monsno, (int)sex, (int)rare, (int)form ) )
-              {
-                b_regist = TRUE;
-              }
-            }
-
-            if( b_regist )
-            {
-              if(    ( ( ppd_form_num >= 2 ) && ( !b_rare_finish_tbl[rare_tbl_idx] ) )    // フォルム違いがあるときは、まだこのノーマル/レアがどの性別でも登録されていないとき
-                  || ( ( ppd_form_num <  2 )                                         ) )  // フォルム違いがないときは、いつでも真
-              {
-                GF_ASSERT_MSG( diff_num < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
-                
-                b_rare_finish_tbl[rare_tbl_idx] = TRUE;
-
-                if( ppd_form_num >= 2 )
-                {
-                  work->diff_info_list[diff_num].looks_diff = LOOKS_DIFF_FORM;
-                  work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
-                  work->diff_info_list[diff_num].other_diff = (u16)form;
-                }
-                else
-                {
-                  work->diff_info_list[diff_num].looks_diff = (ppd_sex_vec==POKEPER_SEX_UNKNOWN)?LOOKS_DIFF_ONE:LOOKS_DIFF_SEX;
-                  work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
-                  work->diff_info_list[diff_num].other_diff = (sex==PTL_SEX_FEMALE)?SEX_FEMALE:SEX_MALE;  // LOOKS_DIFF_ONEのときは使用されないので、何が入っていてもいい
-                }
-                work->diff_info_list[diff_num].sex        = (u8)sex;
-                work->diff_info_list[diff_num].rare       = (u8)rare;
-                work->diff_info_list[diff_num].form       = (u16)form;
-
-#ifdef DEBUG_KAWADA
-                {
-                  OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, diff_num, form, sex, rare );
-                }
-#endif
-
-                diff_num++;
-              }
-            }
-          }
-        }
-      }
-    }
-#endif
-
-    GF_ASSERT_MSG( diff_num > 0,  "ZUKAN_DETAIL_FORM : 姿が何もありません。\n" );
-
-    work->diff_num = diff_num;
-    work->diff_curr_no = diff_curr_no;
-    work->diff_comp_no = (diff_curr_no!=0)?(0):(1%diff_num);
-  }
-
-  // 姿の数、色違いの数
-  {
-    u8 i;
-
-    work->diff_sugata_num = 0;
-    work->diff_irochigai_num = 0;
-
-    for( i=0; i<work->diff_num; i++ )
-    {
-      if( work->diff_info_list[i].color_diff == COLOR_DIFF_SPECIAL )
-      {
-        work->diff_irochigai_num++;
-      }
-    }
-
-    work->diff_sugata_num = work->diff_num - work->diff_irochigai_num;
-  }
-#endif  // Zukan_Detail_Form_GetDiffInfoWithoutWorkを使うのでコメントアウト
 }
 
 //-------------------------------------
@@ -3022,106 +2776,126 @@ static void Zukan_Detail_Form_ChangePokeicon( ZUKAN_DETAIL_FORM_PARAM* param, ZU
 //=====================================
 static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+  
   switch(work->state)
   {
   case STATE_TOP:
     {
-      u32 x, y;
-      BOOL change_state = FALSE;
-      BUTTON_OBJ push_button;
-
-      // 前後ボタン、再生ボタン  // トップ画面でフォルムを切り替えるための矢印
-      push_button = Zukan_Detail_Form_ObjButtonCheckPush( param, work, cmn );
-
-      if( push_button != BUTTON_OBJ_NONE )
+      if( work->input_enable )
       {
-        switch( push_button )
+        BUTTON_OBJ curr_push_button;
+
+        // 前後ボタン、再生ボタン  // トップ画面でフォルムを切り替えるための矢印
+        curr_push_button = Zukan_Detail_Form_ObjButtonCheckPush( param, work, cmn );
+        if( curr_push_button != BUTTON_OBJ_NONE )
         {
-        case BUTTON_OBJ_FRONT_BACK:
+          switch( curr_push_button )
           {
-            Zukan_Detail_Form_FlipFrontBack( param, work, cmn );
-          }
-          break;
-        case BUTTON_OBJ_PLAY:
-          {
-            u8 i;
-            for( i=0; i<POKE_MAX; i++ )
+          case BUTTON_OBJ_FRONT_BACK:
             {
-              PokeMcssAnimeStart( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
+              Zukan_Detail_Form_FlipFrontBack( param, work, cmn );
+            }
+            break;
+          case BUTTON_OBJ_PLAY:
+            {
+              u8 i;
+              for( i=0; i<POKE_MAX; i++ )
+              {
+                PokeMcssAnimeStart( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
+              }
+            }
+            break;
+          case BUTTON_OBJ_ARROW_L:
+            {
+              work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+              Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+              Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_OSHIDASHI );
+            }
+            break;
+          case BUTTON_OBJ_ARROW_R:
+            {
+              work->oshidashi_direct = OSHIDASHI_DIRECT_L_TO_R;
+              Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+              Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_OSHIDASHI );
+            }
+            break;
+          }
+        }
+        else
+        {
+          u32 x, y;
+          BOOL change_state = FALSE;
+          int tk;  // Touch or Key
+          
+          if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+          {
+            change_state = TRUE;
+            tk = GFL_APP_END_KEY;
+          }
+          else
+          {
+	  	      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+            {
+              if( 0<=y&&y<168)
+              {
+                change_state = TRUE;
+                tk = GFL_APP_END_TOUCH;
+              }
             }
           }
-          break;
-        case BUTTON_OBJ_ARROW_L:
+          if( change_state )
           {
-            work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
-            Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
-            Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_OSHIDASHI );
+            if( work->diff_num >= 2 )
+            {
+              //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+              Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_TO_EXCHANGE );
+              PMSND_PlaySE( SEQ_SE_DECIDE1 );
+              GFL_UI_SetTouchOrKey( tk );
+              ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
+            }
           }
-          break;
-        case BUTTON_OBJ_ARROW_R:
-          {
-            work->oshidashi_direct = OSHIDASHI_DIRECT_L_TO_R;
-            Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
-            Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_OSHIDASHI );
-          }
-          break;
-        }
-      }
-      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        change_state = TRUE;
-      }
-      else
-      {
-		    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-        {
-          if( 0<=y&&y<168) change_state = TRUE;
-        }
-      }
-      if( change_state )
-      {
-        if( work->diff_num >= 2 )
-        {
-          //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
-          Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_TO_EXCHANGE );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
         }
       }
     }
     break;
   case STATE_EXCHANGE:
     {
-      BUTTON_OBJ push_button;
-
-      // 前後ボタン、再生ボタン
-      push_button = Zukan_Detail_Form_ObjButtonCheckPush( param, work, cmn );
-
-      if( push_button != BUTTON_OBJ_NONE )
+      if( work->input_enable )
       {
-        switch( push_button )
+        // タッチ継続中の場合は、それが最優先となる
+        if( work->bar_cursor_move_by_touch )
         {
-        case BUTTON_OBJ_FRONT_BACK:
+          // スクロールバーの操作チェックは他の関数で行っているので、ここでは行わない
+        }
+        else
+        {
+          BUTTON_OBJ curr_push_button;
+
+          // 前後ボタン、再生ボタン
+          curr_push_button = Zukan_Detail_Form_ObjButtonCheckPush( param, work, cmn );
+          if( curr_push_button != BUTTON_OBJ_NONE )
           {
-            Zukan_Detail_Form_FlipFrontBack( param, work, cmn );
-          }
-          break;
-        case BUTTON_OBJ_PLAY:
-          {
-            u8 i;
-            for( i=0; i<POKE_MAX; i++ )
+            switch( curr_push_button )
             {
-              PokeMcssAnimeStart( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
+            case BUTTON_OBJ_FRONT_BACK:
+              {
+                Zukan_Detail_Form_FlipFrontBack( param, work, cmn );
+              }
+              break;
+            case BUTTON_OBJ_PLAY:
+              {
+                u8 i;
+                for( i=0; i<POKE_MAX; i++ )
+                {
+                  PokeMcssAnimeStart( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
+                }
+              }
+              break;
             }
           }
-          break;
         }
-
-        // タッチ継続中の場合は、それを止める
-        work->bar_cursor_move_by_touch = FALSE;
       }
-
-      // スクロールバーの操作チェックは他の関数で行っているので、ここでは行わない
-
     }
     break;
   }
@@ -3170,29 +2944,6 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
           }
         }
         break;
-      case STATE_EXCHANGE:
-        {
-          b_top_exchange = TRUE;
-          
-          if( work->diff_num >= 2 )
-          {
-            VecFx32 p;
-
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-
-            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
-          }
-
-          // タッチバー
-          ZUKAN_DETAIL_TOUCHBAR_SetType(
-              touchbar,
-              ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
-              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
-        }
-        break;
       }
     }
     break;
@@ -3203,7 +2954,10 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       {
       case STATE_TOP:
         {
-          // 何もしない
+          if( work->push_button == BUTTON_OBJ_NONE )  // ボタン押し中のときは、その押しがおさまってからアクティブに戻す
+          {
+            ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
+          }
         }
         break;
       }
@@ -3247,7 +3001,7 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
           // タイトルバー
           ZUKAN_DETAIL_HEADBAR_SetType(
               headbar,
-              ZUKAN_DETAIL_HEADBAR_TYPE_FORM_COMPARE );
+              ZUKAN_DETAIL_HEADBAR_TYPE_FORM_COMPARE );  
         }
         break;
       }
@@ -3258,35 +3012,6 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       // 遷移後の状態
       switch(state)
       {
-      case STATE_TOP:
-        {
-          b_top_exchange = TRUE;
-
-          if( work->diff_num >= 2 )
-          {
-            VecFx32 p;
-
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
-      
-            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
-          }
-
-          // タッチバー
-          ZUKAN_DETAIL_TOUCHBAR_SetType(
-              touchbar,
-              ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
-          {
-            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-            ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
-                touchbar,
-                GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_FORM ) );
-          }
-        }
-        break;
       case STATE_EXCHANGE_IREKAE:
         {
           if( work->irekae_state == IREKAE_STATE_NONE )
@@ -3316,7 +3041,7 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       {
       case STATE_EXCHANGE:
         {
-          // 何もしない
+          ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
         }
         break;
       }
@@ -3390,6 +3115,10 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 
     // 変更された状態用に、トップ画面でフォルムを切り替えるための矢印を用意する
     Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
+
+    // 入力可不可やボタン押し情報を元に戻す
+    work->push_button = BUTTON_OBJ_NONE;
+    ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
   }
 }
 
@@ -3533,7 +3262,7 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     work->button[BUTTON_OBJ_ARROW_L].set_nce                = OBJ_RES_ARROW_NCE;
     work->button[BUTTON_OBJ_ARROW_L].pos_x                  = 0;
     work->button[BUTTON_OBJ_ARROW_L].pos_y                  = 0;
-    work->button[BUTTON_OBJ_ARROW_L].size_x                 = 16;
+    work->button[BUTTON_OBJ_ARROW_L].size_x                 = 24;
     work->button[BUTTON_OBJ_ARROW_L].size_y                 = 16;
     work->button[BUTTON_OBJ_ARROW_L].anmseq_active          = 4;
     work->button[BUTTON_OBJ_ARROW_L].anmseq_push            = 5;
@@ -3542,14 +3271,14 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     work->button[BUTTON_OBJ_ARROW_L].state                  = BUTTON_STATE_ACTIVE;
     work->button[BUTTON_OBJ_ARROW_L].clwk                   = NULL;
 
-    work->button[BUTTON_OBJ_ARROW_R].set_pos_x              = 224;
+    work->button[BUTTON_OBJ_ARROW_R].set_pos_x              = 228;
     work->button[BUTTON_OBJ_ARROW_R].set_pos_y              = 96;
     work->button[BUTTON_OBJ_ARROW_R].set_ncg                = OBJ_RES_ARROW_NCG;
     work->button[BUTTON_OBJ_ARROW_R].set_ncl                = OBJ_RES_ARROW_NCL;
     work->button[BUTTON_OBJ_ARROW_R].set_nce                = OBJ_RES_ARROW_NCE;
-    work->button[BUTTON_OBJ_ARROW_R].pos_x                  = 240;
+    work->button[BUTTON_OBJ_ARROW_R].pos_x                  = 232;
     work->button[BUTTON_OBJ_ARROW_R].pos_y                  = 0;
-    work->button[BUTTON_OBJ_ARROW_R].size_x                 = 16;
+    work->button[BUTTON_OBJ_ARROW_R].size_x                 = 24;
     work->button[BUTTON_OBJ_ARROW_R].size_y                 = 16;
     work->button[BUTTON_OBJ_ARROW_R].anmseq_active          = 2;
     work->button[BUTTON_OBJ_ARROW_R].anmseq_push            = 3;
@@ -3584,6 +3313,8 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
       GFL_CLACT_WK_SetObjMode( work->button[i].clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     }
   }
+
+  work->push_button = BUTTON_OBJ_NONE;
 }
 static void Zukan_Detail_Form_ObjBaseDelete( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
@@ -3623,30 +3354,40 @@ static void Zukan_Detail_Form_ObjBaseDelete( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 
 static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // 呼び出し元には、押した瞬間にはwork->push_buttonと同じものを返し、そうでないときはBUTTON_OBJ_NONEやBUTTON_OBJ_IGNOREを返す。
+  
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+  
   u8 i;
   u32 x, y;
-  BUTTON_OBJ push_button = BUTTON_OBJ_NONE;
+  BUTTON_OBJ curr_push_button = BUTTON_OBJ_NONE;  // 今押したボタン  // 戻り値
+  int tk;  // Touch or Key
 
   // キー
-  for( i=0; i<BUTTON_OBJ_MAX; i++ )
+  if( curr_push_button == BUTTON_OBJ_NONE )
   {
-    BOOL on_off = GFL_CLACT_WK_GetDrawEnable( work->button[i].clwk );
-    if( on_off )
+    for( i=0; i<BUTTON_OBJ_MAX; i++ )
     {
-      if( GFL_UI_KEY_GetTrg() & work->button[i].key )
+      BOOL on_off = GFL_CLACT_WK_GetDrawEnable( work->button[i].clwk );
+      if( on_off )
       {
-        push_button = i;
-        break;
-      }
-      else
-      {
-        // キーリピートに対応したボタン
-        if( i == BUTTON_OBJ_ARROW_L || i == BUTTON_OBJ_ARROW_R )
+        if( GFL_UI_KEY_GetTrg() & work->button[i].key )
         {
-          if( GFL_UI_KEY_GetRepeat() & work->button[i].key )
+          tk = GFL_APP_END_KEY;
+          curr_push_button = i;
+          break;
+        }
+        else
+        {
+          // キーリピートに対応したボタン
+          if( i == BUTTON_OBJ_ARROW_L || i == BUTTON_OBJ_ARROW_R )
           {
-            push_button = i;
-            break;
+            if( GFL_UI_KEY_GetRepeat() & work->button[i].key )
+            {
+              tk = GFL_APP_END_KEY;
+              curr_push_button = i;
+              break;
+            }
           }
         }
       }
@@ -3654,11 +3395,10 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
   }
 
   // タッチ
-  if( push_button == BUTTON_OBJ_NONE )
+  if( curr_push_button == BUTTON_OBJ_NONE )
   {
     if( GFL_UI_TP_GetPointTrg( &x, &y ) )
     {
-      u8 i;
       for( i=0; i<BUTTON_OBJ_MAX; i++ )
       {
         BOOL on_off = GFL_CLACT_WK_GetDrawEnable( work->button[i].clwk );
@@ -3667,7 +3407,8 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
           if(    work->button[i].pos_x <= x && x < work->button[i].pos_x + work->button[i].size_x
               && work->button[i].pos_y <= y && y < work->button[i].pos_y + work->button[i].size_y )
           {
-            push_button = i;
+            tk = GFL_APP_END_TOUCH;
+            curr_push_button = i;
             break;
           }
         }
@@ -3675,21 +3416,46 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
     }
   }
 
-  if( push_button != BUTTON_OBJ_NONE )
+  if( curr_push_button != BUTTON_OBJ_NONE )
   {
-    if( work->button[push_button].state == BUTTON_STATE_ACTIVE )
+    // 2つのボタンは同時に押せない、かつ、押し中のボタンは押せない
+    if( work->push_button != BUTTON_OBJ_NONE )
     {
-      work->button[push_button].state = BUTTON_STATE_PUSH_START;
-      GFL_CLACT_WK_SetAnmSeq( work->button[push_button].clwk, work->button[push_button].anmseq_push );
-      PMSND_PlaySE( work->button[push_button].se );
+      curr_push_button = BUTTON_OBJ_IGNORE;
     }
     else
     {
-      push_button = BUTTON_OBJ_IGNORE;
+      // ボタン押し確定
+      GFL_UI_SetTouchOrKey( tk );
+      ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
+      
+      work->button[curr_push_button].state = BUTTON_STATE_PUSH_START;
+      GFL_CLACT_WK_SetAnmSeq( work->button[curr_push_button].clwk, work->button[curr_push_button].anmseq_push );
+      PMSND_PlaySE( work->button[curr_push_button].se );
+
+      // アニメーションを合わせておく必要があるボタン
+      {
+        BUTTON_OBJ curr_pair_button = BUTTON_OBJ_NONE;
+        if( curr_push_button == BUTTON_OBJ_ARROW_L )
+        {
+          curr_pair_button = BUTTON_OBJ_ARROW_R;
+        }
+        else if( curr_push_button == BUTTON_OBJ_ARROW_R )
+        {
+          curr_pair_button = BUTTON_OBJ_ARROW_L;
+        }
+        if( curr_pair_button != BUTTON_OBJ_NONE )
+        {
+          GFL_CLACT_WK_SetAutoAnmFlag( work->button[curr_pair_button].clwk, FALSE );
+          GFL_CLACT_WK_SetAnmFrame( work->button[curr_pair_button].clwk, 0 );
+        }
+      }
+
+      work->push_button = curr_push_button;
     }
   }
 
-  return push_button; 
+  return curr_push_button; 
 }
 
 static void Zukan_Detail_Form_ObjButtonAroowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -3728,10 +3494,15 @@ static void Zukan_Detail_Form_ObjButtonAroowSetup( ZUKAN_DETAIL_FORM_PARAM* para
 
 static void Zukan_Detail_Form_ObjButtonMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  u8 i;
-  for( i=0; i<BUTTON_OBJ_MAX; i++ )
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+
+  if( work->push_button == BUTTON_OBJ_NONE )
   {
-    switch( work->button[i].state )
+    return;
+  }
+
+  {
+    switch( work->button[work->push_button].state )
     {
     case BUTTON_STATE_ACTIVE:
       {
@@ -3740,21 +3511,50 @@ static void Zukan_Detail_Form_ObjButtonMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
       break;
     case BUTTON_STATE_PUSH_START:  // この関数の呼び出し位置によっては、この状態には1フレームもなっていないかも。
       {
-        work->button[i].state = BUTTON_STATE_PUSH_ANIME;
+        work->button[work->push_button].state = BUTTON_STATE_PUSH_ANIME;
       }
       break;
     case BUTTON_STATE_PUSH_ANIME:
       {
-        if( !GFL_CLACT_WK_CheckAnmActive( work->button[i].clwk ) )
+        if( !GFL_CLACT_WK_CheckAnmActive( work->button[work->push_button].clwk ) )
         {
-          work->button[i].state = BUTTON_STATE_PUSH_END;
+          work->button[work->push_button].state = BUTTON_STATE_PUSH_END;
         } 
       }
       break;
     case BUTTON_STATE_PUSH_END:
       {
-        GFL_CLACT_WK_SetAnmSeq( work->button[i].clwk, work->button[i].anmseq_active );
-        work->button[i].state = BUTTON_STATE_ACTIVE;
+        GFL_CLACT_WK_SetAnmSeq( work->button[work->push_button].clwk, work->button[work->push_button].anmseq_active );
+        work->button[work->push_button].state = BUTTON_STATE_ACTIVE;
+
+        // アニメーションを合わせておく必要があるボタン
+        {
+          BUTTON_OBJ pair_button = BUTTON_OBJ_NONE;
+          if( work->push_button == BUTTON_OBJ_ARROW_L )
+          {
+            pair_button = BUTTON_OBJ_ARROW_R;
+          }
+          else if( work->push_button == BUTTON_OBJ_ARROW_R )
+          {
+            pair_button = BUTTON_OBJ_ARROW_L;
+          }
+          if( pair_button != BUTTON_OBJ_NONE )
+          {
+            if( work->button[pair_button].state == BUTTON_STATE_ACTIVE )
+            {
+              GFL_CLACT_WK_SetAutoAnmFlag( work->button[pair_button].clwk, TRUE );
+              GFL_CLACT_WK_SetAnmSeq( work->button[pair_button].clwk, work->button[pair_button].anmseq_active );
+            }
+          }
+        }
+
+        work->push_button = BUTTON_OBJ_NONE;
+
+        if(    work->state == STATE_TOP
+            || work->state == STATE_EXCHANGE )  // 変動中の状態のときは、その変動がおさまってからアクティブに戻す
+        {
+          ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
+        }
       }
       break;
     }
@@ -3876,33 +3676,32 @@ static void Zukan_Detail_Form_ObjBarMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 {
   BOOL ret = FALSE;
 
-  if( work->state == STATE_EXCHANGE )
+  if(    work->state == STATE_EXCHANGE
+      && work->input_enable
+      && work->push_button == BUTTON_OBJ_NONE )
   {
+    // タッチ継続中の場合は、それが最優先となる
+    // だから、タッチ継続中の場合は、bar_cursor_move_by_keyはTRUEにならない。
+    // bar_cursor_move_by_keyがTRUEになっているということは、タッチしていないときにキー入力があったということ。
+    // だからそのときは、それを片付けてからタッチを調べるようにする。
+    
     // キー
     if( !ret )
     {
       ret = Zukan_Detail_Form_ObjBarMainKey( param, work, cmn );
     }
     // タッチ
-    if( !ret )  // キー入力がないので、タッチしていい
+    if( !ret )
     {
-      ret = Zukan_Detail_Form_ObjBarMainTouch( param, work, cmn );
+      ret = Zukan_Detail_Form_ObjBarMainTouch( param, work, cmn );    
     }
-    else  // キー入力があったので、タッチは無視
-    {
-      // タッチ継続中の場合は、それを止める
-      work->bar_cursor_move_by_touch = FALSE;
-    }
-  }
-  else
-  {
-    // タッチ継続中の場合は、それを止める
-    work->bar_cursor_move_by_touch = FALSE;
   }
 }
 
 static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+
   BOOL b_se = FALSE;  // TRUEのとき、タッチ音を鳴らす
   u32 x, y;
   
@@ -3916,6 +3715,7 @@ static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, Z
     else
     {
       work->bar_cursor_move_by_touch = FALSE;
+      ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
     }
   }
   // 新たにスクロールバーをタッチしたか検出する
@@ -3927,6 +3727,7 @@ static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, Z
           && BAR_RANGE_TOUCH_Y_MIN<=y&&y<=BAR_RANGE_TOUCH_Y_MAX )
       {
         work->bar_cursor_move_by_touch = TRUE;
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );
         b_se = TRUE;
       }
     }
@@ -3961,7 +3762,12 @@ static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, Z
   {
     PMSND_PlaySE( SEQ_SE_SYS_06 );
   }
-  
+ 
+  if( work->bar_cursor_move_by_touch )
+  {
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+  }
+
   return work->bar_cursor_move_by_touch;
 }
 static BOOL Zukan_Detail_Form_ObjBarMainKey( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -4584,6 +4390,8 @@ static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_D
   {
     u8 i;
 
+    GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_RANGE], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_CURSOR], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
 
@@ -4610,6 +4418,8 @@ static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_D
   // 半透明にしないOBJの設定を元に戻す
   {
     u8 i;
+
+    GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
 
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_RANGE], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_CURSOR], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので

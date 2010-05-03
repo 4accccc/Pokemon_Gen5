@@ -495,6 +495,8 @@ typedef struct
   GFL_FONT*                   font;
   PRINT_QUE*                  print_que;
 
+  ZKNDTL_COMMON_WORK*         cmn;  // 各関数に引数で渡されるcmnと同じもの。VBlank関数内から利用したいのでワークに持たせておく。
+
   // ここで作成するもの
   ZKNDTL_COMMON_REAR_WORK*    rear_wk_s;
 
@@ -543,7 +545,8 @@ typedef struct
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
-
+  u8                          vblank_req;  // 0=なし; 1=GENERAL; 2=MAP;
+  
   // フェード
   ZKNDTL_COMMON_FADE_WORK*    fade_wk_m;
   ZKNDTL_COMMON_FADE_WORK*    fade_wk_s;
@@ -733,6 +736,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
     work->clunit      = ZUKAN_DETAIL_GRAPHIC_GetClunit(graphic);
     work->font        = ZKNDTL_COMMON_GetFont(cmn);
     work->print_que   = ZKNDTL_COMMON_GetPrintQue(cmn);
+
+    work->cmn         = cmn;
   }
 
   // NULL初期化
@@ -761,6 +766,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Map_VBlankFunc, work, 1 );
+  work->vblank_req = 0;
 
   // フェード
   {
@@ -1266,7 +1272,40 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
 //=====================================
 static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
-  ZUKAN_DETAIL_MAP_WORK*     work     = (ZUKAN_DETAIL_MAP_WORK*)wk;
+  ZUKAN_DETAIL_MAP_WORK*       work     = (ZUKAN_DETAIL_MAP_WORK*)wk;
+
+  ZKNDTL_COMMON_WORK*          cmn      = work->cmn;
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+
+  switch( work->vblank_req )
+  {
+  case 0:
+    {
+      // リクエストなし
+    }
+    break;
+  case 1:
+    {
+      // タッチバー
+      ZUKAN_DETAIL_TOUCHBAR_SetType(
+          touchbar,
+          ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+          ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+      //ここでUnlockしたほうがいいかも。SetTypeってUnlockしたっけ?
+    }
+    break;
+  case 2:
+    {
+      // タッチバー
+      ZUKAN_DETAIL_TOUCHBAR_SetType(
+          touchbar,
+          ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP,
+          ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+      //ここでUnlockしたほうがいいかも。SetTypeってUnlockしたっけ?
+    }
+    break;
+  }
+  work->vblank_req = 0;
 }
 
 //-------------------------------------
@@ -2608,10 +2647,12 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         }
 
         // タッチバー
-        ZUKAN_DETAIL_TOUCHBAR_SetType(
-            touchbar,
-            ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+        //ZUKAN_DETAIL_TOUCHBAR_SetType(
+        //    touchbar,
+        //    ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP,
+        //    ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+        //この間Lockしておいたほうがいいかも
+        work->vblank_req = 2;
       }
     }
     break;
@@ -2632,10 +2673,12 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         }
 
         // タッチバー
-        ZUKAN_DETAIL_TOUCHBAR_SetType(
-            touchbar,
-            ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+        //ZUKAN_DETAIL_TOUCHBAR_SetType(
+        //    touchbar,
+        //    ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+        //    ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+        //この間Lockしておいたほうがいいかも
+        work->vblank_req = 1;
         {
           GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
           ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(

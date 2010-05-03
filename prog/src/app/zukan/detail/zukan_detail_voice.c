@@ -8,7 +8,7 @@
  *  モジュール名：ZUKAN_DETAIL_VOICE
  */
 //============================================================================
-#define DEBUG_KAWADA
+//#define DEBUG_KAWADA
 
 
 //#define DEBUG_SOUND_TEST  // これが定義されているとき、サウンドのテストが可能
@@ -144,11 +144,13 @@ enum
 // ProcMainのシーケンス
 enum
 {
-  SEQ_START      = 0,
+  SEQ_START                = 0,
+  SEQ_FADE_CHANGE_BEFORE,
   SEQ_PREPARE,
   SEQ_FADE_IN,
   SEQ_MAIN,
   SEQ_FADE_OUT,
+  SEQ_FADE_CHANGE_AFTER,
   SEQ_END,
 };
 
@@ -371,7 +373,8 @@ typedef struct
 
   // ここで作成するもの
   GFL_BMPWIN*                 name_bmpwin;
- 
+  BOOL                        name_trans;  // 転送する必要がある場合TRUE
+
 #ifdef TIME_BMPWIN
   GFL_BMPWIN*                 time_bmpwin;
   GFL_MSGDATA*                time_msgdata;
@@ -457,9 +460,14 @@ typedef struct
   // フェード
   ZKNDTL_COMMON_FADE_WORK*    fade_wk_m;
   ZKNDTL_COMMON_FADE_WORK*    fade_wk_s;
+  // パレットフェード
+  ZKNDTL_COMMON_PF_WORK*      pf_wk;
 
   // 終了命令
   END_CMD                     end_cmd;
+
+  // 入力可不可
+  BOOL                        input_enable;  // 入力可のときTRUE
 }
 ZUKAN_DETAIL_VOICE_WORK;
 
@@ -496,6 +504,7 @@ static void Zukan_Detail_Voice_CreateNameBase( ZUKAN_DETAIL_VOICE_PARAM* param, 
 static void Zukan_Detail_Voice_DeleteNameBase( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_CreateName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_DeleteName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_MainName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // ボイス再生時間
 static void Zukan_Detail_Voice_CreateTimeBase( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -635,9 +644,16 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcInit( ZKNDTL_PROC* proc, int* s
     ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );
     ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
   }
+  // パレットフェード
+  {
+    work->pf_wk = ZKNDTL_COMMON_PfInit( param->heap_id );
+  }
 
   // 終了情報
   work->end_cmd = END_CMD_NONE;
+
+  // 入力可不可
+  work->input_enable = TRUE;
 
   return ZKNDTL_PROC_RES_FINISH;
 }
@@ -670,6 +686,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcExit( ZKNDTL_PROC* proc, int* s
   Zukan_Detail_Voice_DeleteTime( param, work, cmn );
   Zukan_Detail_Voice_DeleteTimeBase( param, work, cmn );
 
+  // パレットフェード
+  {
+    ZKNDTL_COMMON_PfExit( work->pf_wk );
+  }
   // フェード
   {
     ZKNDTL_COMMON_FadeExit( work->fade_wk_s );
@@ -712,7 +732,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
   {
   case SEQ_START:
     {
-      *seq = SEQ_PREPARE;
+      *seq = SEQ_FADE_CHANGE_BEFORE;
 
       // BG
       {
@@ -771,16 +791,40 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
       Zukan_Detail_Voice_ObjTimeDisplay( param, work, cmn, 0, 0 );
       // グラフ
       Zukan_Detail_Voice_GraphInit( param, work, cmn );
+
+      // パレットフェード
+      {
+        ZKNDTL_COMMON_PfSetPaletteDataFromVram( work->pf_wk );
+        ZKNDTL_COMMON_PfSetBlackImmediately( work->pf_wk );
+      }
+    }
+    break;
+  case SEQ_FADE_CHANGE_BEFORE:
+    {
+      *seq = SEQ_PREPARE;
+      
+      // フェード
+      ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );
+      ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
+     
+      // ZKNDTL_COMMON_FadeSetColorlessImmediatelyでG2_SetBlendBrightnessExtやG2S_SetBlendBrightnessExtを設定しているので、
+      // その後でZukan_Detail_Voice_AlphaInitを呼ぶこと
+      Zukan_Detail_Voice_AlphaInit( param, work, cmn );
     }
     break;
   case SEQ_PREPARE:
     {
       *seq = SEQ_FADE_IN;
 
-      // フェード
-      ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_m );
-      ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_s );
-
+      //// フェード
+      //ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_m );
+      //ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_s );
+      
+      // パレットフェード
+      {
+        ZKNDTL_COMMON_PfSetBlackToColorless( work->pf_wk );
+      }
+ 
       // タッチバー
       if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) != ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR )
       {
@@ -796,6 +840,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE );
       }
+      ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
       {
         GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
         ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
@@ -814,14 +859,16 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
     break;
   case SEQ_FADE_IN:
     {
-      if(    (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
-          && (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+      if( //   (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
+          //&& (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+             (!ZKNDTL_COMMON_PfIsExecute( work->pf_wk ))
           && ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) == ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR
           && ZUKAN_DETAIL_HEADBAR_GetState( headbar ) == ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
 
-        Zukan_Detail_Voice_AlphaInit( param, work, cmn );
+        //Zukan_Detail_Voice_AlphaInit( param, work, cmn );
 
         *seq = SEQ_MAIN;
       }
@@ -831,14 +878,19 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
     {
       if( work->end_cmd != END_CMD_NONE )
       {
-        Zukan_Detail_Voice_AlphaExit( param, work, cmn );
+        //Zukan_Detail_Voice_AlphaExit( param, work, cmn );
         
         *seq = SEQ_FADE_OUT;
 
-        // フェード
-        ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_m );
-        ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
-        
+        //// フェード
+        //ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_m );
+        //ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
+
+        // パレットフェード
+        {
+          ZKNDTL_COMMON_PfSetColorlessToBlack( work->pf_wk );
+        }
+
         // タイトルバー
         ZUKAN_DETAIL_HEADBAR_Disappear( headbar );
         
@@ -860,22 +912,43 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
     break;
   case SEQ_FADE_OUT:
     {
-      if(    (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
-          && (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+      BOOL b_next_seq = FALSE;
+
+      if( //   (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_m ))
+          //&& (!ZKNDTL_COMMON_FadeIsExecute( work->fade_wk_s ))
+             (!ZKNDTL_COMMON_PfIsExecute( work->pf_wk ))
           && ZUKAN_DETAIL_HEADBAR_GetState( headbar ) == ZUKAN_DETAIL_HEADBAR_STATE_DISAPPEAR )
       {
         if( work->end_cmd == END_CMD_OUTSIDE )
         {
           if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) == ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR )
           {
-            *seq = SEQ_END;
+            b_next_seq = TRUE;
           }
         }
         else
         {
-          *seq = SEQ_END;
+          b_next_seq = TRUE;
         }
       }
+
+      if( b_next_seq )
+      {
+        *seq = SEQ_FADE_CHANGE_AFTER;
+      }
+    }
+    break;
+  case SEQ_FADE_CHANGE_AFTER:
+    {
+      *seq = SEQ_END;
+
+      // ZKNDTL_COMMON_FadeSetColorlessImmediatelyでG2_SetBlendBrightnessExtやG2S_SetBlendBrightnessExtを設定しているので、
+      // その前にZukan_Detail_Voice_AlphaExitを呼ぶこと
+      Zukan_Detail_Voice_AlphaExit( param, work, cmn );
+      
+      // フェード
+      ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );
+      ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
     }
     break;
   case SEQ_END:
@@ -908,15 +981,22 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
     Zukan_Detail_Voice_PokeCryMain( param, work, cmn );
   }
 
-  // 最背面
   if( *seq >= SEQ_PREPARE )
   {
+    // ポケモン名
+    Zukan_Detail_Voice_MainName( param, work, cmn );
+    
+    // 最背面
     ZKNDTL_COMMON_RearMain( work->rear_wk_m );
     ZKNDTL_COMMON_RearMain( work->rear_wk_s );
   }
 
   // フェード
   ZKNDTL_COMMON_FadeMain( work->fade_wk_m, work->fade_wk_s );
+  // パレットフェード
+  {
+    ZKNDTL_COMMON_PfMain( work->pf_wk );
+  }
 
   // BGM
   Zukan_Detail_Voice_BgmMain( param, work, cmn );
@@ -935,7 +1015,44 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
     ZUKAN_DETAIL_VOICE_WORK*     work     = (ZUKAN_DETAIL_VOICE_WORK*)mywk;
 
     ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
-  
+    
+    BOOL b_valid_cmd = FALSE;  // cmdがZKNDTL_CMD_NONE以外のZKNDTL_CMD_???のときTRUE。ZKNDTL_CMD_NONEやZKNDTL_SCMD_???のときFALSE。
+
+    // 入力不可
+    switch( cmd )
+    {
+    case ZKNDTL_SCMD_CLOSE:
+    case ZKNDTL_SCMD_RETURN:
+    case ZKNDTL_SCMD_INFO:
+    case ZKNDTL_SCMD_MAP:
+    case ZKNDTL_SCMD_FORM:
+    case ZKNDTL_SCMD_CUR_D:
+    case ZKNDTL_SCMD_CUR_U:
+    case ZKNDTL_SCMD_CHECK:
+      {
+        work->input_enable = FALSE;
+      }
+      break;
+    }
+    // 入力可
+    switch( cmd )
+    {
+    case ZKNDTL_CMD_CLOSE:
+    case ZKNDTL_CMD_RETURN:
+    case ZKNDTL_CMD_INFO:
+    case ZKNDTL_CMD_MAP:
+    case ZKNDTL_CMD_FORM:
+    case ZKNDTL_CMD_CUR_D:
+    case ZKNDTL_CMD_CUR_U:
+    case ZKNDTL_CMD_CHECK:
+      {
+        work->input_enable = TRUE;
+        b_valid_cmd = TRUE;
+      }
+      break;
+    }
+
+    // コマンド
     switch( cmd )
     {
     case ZKNDTL_CMD_NONE:
@@ -995,7 +1112,10 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
       break;
     default:
       {
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        if( b_valid_cmd )
+        {
+          ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        }
       }
       break;
     }
@@ -1025,6 +1145,11 @@ static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk )
     GFL_BG_LoadScreenReq( BG_FRAME_M_TIME );
     
     work->graph_req = FALSE;
+  }
+
+  // パレットフェード
+  {
+    ZKNDTL_COMMON_PfTrans( work->pf_wk );
   }
 }
 
@@ -1237,6 +1362,24 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
                          POKEGRA_DIR_FRONT, FALSE,
                          ZKNDTL_OBJ_MAPPING_S,
                          draw_type, param->heap_id );
+
+    // パレットフェード
+    {
+      ARCDATID arcdatid = POKEGRA_GetPalArcIndex(
+          (int)monsno, (int)form, (int)sex, (int)rare,
+          POKEGRA_DIR_FRONT, FALSE );
+
+      ZKNDTL_COMMON_PfSetPaletteDataFromArchandle(
+          work->pf_wk,
+          handle,
+          arcdatid,
+          param->heap_id,
+          FADE_SUB_OBJ,
+          OBJ_PAL_NUM_S_POKE * 0x20,
+          OBJ_PAL_POS_S_POKE * 0x20,
+          0 );
+    }
+
     GFL_ARC_CloseDataHandle( handle );
   }
 
@@ -1410,12 +1553,17 @@ static void Zukan_Detail_Voice_CreateNameBase( ZUKAN_DETAIL_VOICE_PARAM* param, 
                                          10, 5, 12, 4,
                                          BG_PAL_POS_S_NAME,
                                          GFL_BMP_CHRAREA_GET_B );
- 
+  work->name_trans = FALSE;
+
   // クリア
   Zukan_Detail_Voice_DeleteName( param, work, cmn );
+
+  GFL_BMPWIN_TransVramCharacter( work->name_bmpwin );  // ちらつくかもしれないので、コメントアウトしていたので、ここで転送
 }
 static void Zukan_Detail_Voice_DeleteNameBase( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  work->name_trans = FALSE;
+  PRINTSYS_QUE_Clear( work->print_que );
   GFL_BMPWIN_Delete( work->name_bmpwin );
 }
 static void Zukan_Detail_Voice_CreateName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -1441,16 +1589,34 @@ static void Zukan_Detail_Voice_CreateName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 
   GFL_STR_DeleteBuffer( strbuf );
 
-  // スクリーン転送
-  GFL_BMPWIN_MakeTransWindow_VBlank( work->name_bmpwin );
+  work->name_trans = TRUE;
+
+  // 済んでいないかもしれないが、1度呼んでおく
+  Zukan_Detail_Voice_MainName( param, work, cmn );
 }
 static void Zukan_Detail_Voice_DeleteName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  work->name_trans = FALSE;
+  PRINTSYS_QUE_Clear( work->print_que );
+  
   // クリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->name_bmpwin ), 0 );
 
-  GFL_BMPWIN_TransVramCharacter( work->name_bmpwin );
+  //GFL_BMPWIN_TransVramCharacter( work->name_bmpwin );  // ちらつくかもしれないので、コメントアウト
 }
+static void Zukan_Detail_Voice_MainName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // スクリーン転送
+  if( work->name_trans )
+  {
+    if( !PRINTSYS_QUE_IsExistTarget( work->print_que, GFL_BMPWIN_GetBmp(work->name_bmpwin) ) )
+    {
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->name_bmpwin );
+      work->name_trans = FALSE;
+    }
+  }
+}
+
 
 //-------------------------------------
 /// ボイス再生時間
@@ -1655,18 +1821,23 @@ static void Zukan_Detail_Voice_KeyTouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* par
   BOOL b_push = FALSE;
   u32  x, y;
 
-  // キー判定
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  if( work->input_enable )
   {
-    b_push = TRUE;
-  }
-  // タッチ判定
-  else if( GFL_UI_TP_GetPointTrg(&x, &y) )
-  {
-    if(    0<=x && x<256
-        && 0<=y && y<168 )
+    // キー判定
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       b_push = TRUE;
+    }
+    // タッチ判定
+    else if( GFL_UI_TP_GetPointTrg(&x, &y) )
+    {
+      if(    0<=x && x<256
+          && 0<=y && y<168 )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        b_push = TRUE;
+      }
     }
   }
 

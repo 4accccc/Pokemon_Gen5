@@ -207,6 +207,7 @@ extern void ZKND_TBAR_SetVisibleAll( ZKND_TBAR_WORK *p_wk, BOOL is_visible );
 // 見た目をアクティブ状態にしたまま、全体専用のアクティブフラグの切り替えを行う
 //=====================================
 extern void ZKND_TBAR_SetActiveWhole( ZKND_TBAR_WORK *p_wk, BOOL is_active );
+extern BOOL ZKND_TBAR_GetActiveWhole( ZKND_TBAR_WORK *p_wk );
 //-------------------------------------
 ///	全体のロックを解除する
 // 見た目をアクティブ状態にしたままかかっている全体専用のロックを解除する

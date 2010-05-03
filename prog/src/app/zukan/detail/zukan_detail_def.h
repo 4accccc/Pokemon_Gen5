@@ -49,7 +49,7 @@ enum
 // 位置
 enum
 {
-  ZKNDTL_OBJ_PAL_POS_M_TOUCHBAR    =   8,
+  ZKNDTL_OBJ_PAL_POS_M_TOUCHBAR    =   8,  // 14は通信アイコン、15はローカライズ用の空き
 };
 
 
@@ -79,7 +79,7 @@ enum
 // 位置
 enum
 {
-  ZKNDTL_OBJ_PAL_POS_S_HEADBAR    =  0,
+  ZKNDTL_OBJ_PAL_POS_S_HEADBAR    =  14,  // 14は通信アイコン、15はローカライズ用の空き
 };
 
 

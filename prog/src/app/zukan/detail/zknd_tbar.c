@@ -476,7 +476,10 @@ void ZKND_TBAR_SetActiveWhole( ZKND_TBAR_WORK *p_wk, BOOL is_active )
 {
   p_wk->whole_is_active = is_active;
 }
-
+BOOL ZKND_TBAR_GetActiveWhole( ZKND_TBAR_WORK *p_wk )
+{
+  return p_wk->whole_is_active;
+}
 //-------------------------------------
 ///	全体のロックを解除する
 // 見た目をアクティブ状態にしたままかかっている全体専用のロックを解除する

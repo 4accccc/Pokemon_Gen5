@@ -110,3 +110,6 @@ extern void ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
 extern BOOL ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 
+// 見た目をアクティブ状態にしたまま、ユーザ指定の全体専用のアクティブフラグの切り替えを行う
+extern void ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( ZUKAN_DETAIL_TOUCHBAR_WORK* work, BOOL is_active );  // TRUEのときアクティブ  // 切り替わったときのデフォルトはTRUE
+
