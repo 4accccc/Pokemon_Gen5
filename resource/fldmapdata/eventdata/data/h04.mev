@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 15:12:03
+#save date:2010/05/03 19:56:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -572,37 +572,6 @@ EVENTDATA_POSTYPE_RAIL
 #type
 1
 #ID name
-H04_GRASSSOUND_01
-#OBJ CODE Number
-GRASSSOUND
-#MOVE CODE Number
-MV_RAIL_DIR_RND_ALL
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_GRASSSOUND_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-11 1 -8
-#event number: 19
-#type
-1
-#ID name
 H04_GUITAR_01
 #OBJ CODE Number
 GUITAR
@@ -630,6 +599,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 8 0 72
+#event number: 19
+#type
+1
+#ID name
+H04_GRASSSOUND_01
+#OBJ CODE Number
+GRASSSOUND
+#MOVE CODE Number
+MV_RAIL_DIR_RND_ALL
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_GRASSSOUND_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1000 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

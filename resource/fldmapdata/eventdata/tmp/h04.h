@@ -34,8 +34,8 @@
 #define H04_LEADSINGER_01                 15
 #define H04_BACKPACKERW_01                16
 #define H04_VOICE_01                      17
-#define H04_GRASSSOUND_01                 18
-#define H04_GUITAR_01                     19
+#define H04_GUITAR_01                     18
+#define H04_GRASSSOUND_01                 19
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

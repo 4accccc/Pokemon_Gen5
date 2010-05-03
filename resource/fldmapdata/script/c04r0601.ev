@@ -32,7 +32,7 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_bg_c04r0601_board_01
 
-	_LOOK_ELBOARD( 36 )
+	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 
 EVENT_END
 

@@ -44,7 +44,7 @@ ev_r14r0101:
 /**************************************************************/
 EVENT_START   ev_bg_r14r0101_board_01
 
-	_LOOK_ELBOARD( 36 )
+	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 
 EVENT_END
 

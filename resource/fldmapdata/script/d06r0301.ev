@@ -26,6 +26,13 @@ _EVENT_DATA_END
 /*  d06r0301　七賢人 会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_d06r0301_sage3_01
+
+	//========================================//
+	//プラズマ団を表示
+	_FLAG_RESET(FV_D06R0301_HAKAI_01)
+	_OBJ_ADD(D06R0301_HAKAIM_01)
+	_OBJ_ADD(D06R0301_HAKAIW_01)
+	//========================================//
 	
 	DEFINE_LOCAL LWK_POSX
 	DEFINE_LOCAL LWK_POSZ
@@ -176,6 +183,8 @@ EVENT_START   ev_d06r0301_sage3_01
 	//七賢人非表示
 	_FLAG_SET(FV_D06R0301_SAGE)
 	
+	//プラズマ団非表示
+	_FLAG_SET(FV_D06R0301_HAKAI_01)
 	//========================================//
 
 EVENT_END

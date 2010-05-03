@@ -321,7 +321,13 @@ init_flags:
 	_FLAG_SET( FV_H04R0501_GUEST )
 
 	//電気石の洞穴のダークトリニティを非表示
-	_FLAG_SET(FV_D06R0101_HAKAI)
+	_FLAG_SET(FV_D06R0101_HAKAI) 
+
+	//シリンダーブリッジのダークトリニティを非表示
+	_FLAG_SET(FV_H03_NINJA_01)
+
+	//電気石の洞穴のプラズマ団を非表示
+	_FLAG_SET(FV_D06R0301_HAKAI_01)
 
 }
 _RET
