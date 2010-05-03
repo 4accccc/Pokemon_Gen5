@@ -34,9 +34,24 @@
 #define WIND_FADE_SPEED (16) // 風の音量のフェード速度
 #define WIND_MIN_VOLUME (0)   // 風の最小ボリューム
 #define WIND_MAX_VOLUME (127) // 風の最大ボリューム
+
 #define PAUL_SOUND_PLAY_SPEED ( FX32_ONE*100 ) // 通過音を出すスピード
 #define PAUL_SOUND_Y_TMP_NUM ( 32 ) // 通過音　Y座標保持数
-#define PAUL_SOUND_PLAY_POS_Z ( 1798<<FX32_SHIFT )        // 通過音を出すZ座標
+#define PAUL_SOUND_NOTSE_STOP_POS_Z ( 1816<<FX32_SHIFT )        // 通過音をとめなくする座標
+#define PAUL_SOUND_PLAY_POS_Z_RUN ( 1858<<FX32_SHIFT )        // 通過音を出すZ座標
+#define PAUL_SOUND_PLAY_POS_Z_CYCLE ( 1980<<FX32_SHIFT )        // 通過音を出すZ座標
+#define PAUL_SOUND_PLAY_SE_RUN ( SEQ_SE_FLD_171 )        // 通過音 はしり
+#define PAUL_SOUND_PLAY_SE_CYCLE ( SEQ_SE_FLD_171 )      // 通過音 自転車
+#define PAUL_SOUND_FADE_SPEED ( 16 )      // フェードアウト　スピード　減算値
+#define PAUL_SOUND_FADE_START ( 127 )     // フェードアウト開始　ボリューム
+
+//柱通過音SEPlayタイプ
+enum{
+  PAUL_SOUND_PLAY_NONE,
+  PAUL_SOUND_PLAY_PLAY,
+  PAUL_SOUND_PLAY_FADEOUT,
+};
+
 
 // 音源オブジェクトのインデックス
 typedef enum {
@@ -123,6 +138,11 @@ typedef struct {
   s16  tmp_start_index;
   s16  tmp_count;
 
+  // Volume fade out
+  s16 se_fadeout;
+  u16 se_play;
+  u16 se_no;
+
 } PAUL_SOUND;
 
 
@@ -162,7 +182,7 @@ static void WindVolumeUp( H01WORK* work, int max_volume ); // 風の音量を上げる
 static void WindVolumeDown( H01WORK* work, int min_volume ); // 風の音量を下げる
 // 柱の間を通る
 static void InitPaulSound( PAUL_SOUND* work );
-static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera );
+static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera, const FIELD_PLAYER* cp_player );
 
 
 //==========================================================================================
@@ -302,7 +322,7 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   }
 
   // 柱の間音データ
-  UpdatePaulSound(&work->paul_sound, fieldCamera);
+  UpdatePaulSound(&work->paul_sound, fieldCamera, FIELDMAP_GetFieldPlayer( fieldmap ));
 
 }
 
@@ -698,13 +718,39 @@ static void InitPaulSound( PAUL_SOUND* work )
  *	@param	camera    カメラ
  */
 //-----------------------------------------------------------------------------
-static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera )
+static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera, const FIELD_PLAYER* cp_player )
 {
   VecFx32 camera_pos;
+  fx32 dist_z;
+  fx32 check_z;
+  int se;
+  u32 draw_form;
+
+
+  // SEの停止チェック
+  if( (work->se_play == PAUL_SOUND_PLAY_PLAY) || (work->se_play == PAUL_SOUND_PLAY_FADEOUT) ){
+    if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_171 ) ) == FALSE ){
+      work->se_play = PAUL_SOUND_PLAY_NONE;
+    }
+    
+    // フェードアウト処理
+    if( work->se_play == PAUL_SOUND_PLAY_FADEOUT ){
+      work->se_fadeout -= PAUL_SOUND_FADE_SPEED;
+      if( work->se_fadeout < 0 ){
+        PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( work->se_no ) );// 停止
+        work->se_play = PAUL_SOUND_PLAY_NONE; //フェードアウト完了
+      }else{
+        PMSND_PlayerSetVolume( PMSND_GetSE_DefaultPlayerID( work->se_no ), work->se_fadeout );
+      }
+
+    }
+  }
+  
 
   // 移動スピード計測
   FIELD_CAMERA_GetCameraPos( camera, &camera_pos );
-  if( work->last_z != camera_pos.z ){
+  dist_z = MATH_ABS( camera_pos.z - work->last_z );
+  if( dist_z > 0 ){
     // 移動フレーム。
     s32 set_index;
 
@@ -723,13 +769,34 @@ static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera )
     // 全クリア
     work->tmp_count = 0;
     work->tmp_start_index = 0;
+
+    // SEフェードアウト開始
+    if( (work->se_play == PAUL_SOUND_PLAY_PLAY) && (camera_pos.z > PAUL_SOUND_NOTSE_STOP_POS_Z) ){
+      work->se_play = PAUL_SOUND_PLAY_FADEOUT;
+      work->se_fadeout = PAUL_SOUND_FADE_START;
+      TOMOYA_Printf( "fadeout On z %d\n", camera_pos.z>>FX32_SHIFT );
+    }
     //TOMOYA_Printf( "tmp y clear\n" );
   }
+
+
   
   // カメラ位置が鳴らす場所を通過したかチェック。
   if( work->tmp_count > 0 ){
-    if( ((camera_pos.z < PAUL_SOUND_PLAY_POS_Z) && (work->last_z > PAUL_SOUND_PLAY_POS_Z)) || 
-        ((camera_pos.z > PAUL_SOUND_PLAY_POS_Z) && (work->last_z < PAUL_SOUND_PLAY_POS_Z)) ){
+
+    // 移動スピードから、走り用と自転車用を切り替える。
+    draw_form = FIELD_PLAYER_GetDrawForm( cp_player );
+    if( draw_form == PLAYER_DRAW_FORM_NORMAL  ){
+      check_z = PAUL_SOUND_PLAY_POS_Z_RUN;
+      se     = PAUL_SOUND_PLAY_SE_RUN;
+    }else{
+      check_z = PAUL_SOUND_PLAY_POS_Z_CYCLE;
+      se     = PAUL_SOUND_PLAY_SE_CYCLE;
+    }
+
+    // 通過したときにだけ鳴らす。
+    if( ((camera_pos.z < check_z) && (work->last_z > check_z)) || 
+        ((camera_pos.z > check_z) && (work->last_z < check_z)) ){
       fx32 dist;
 
       // 一番昔の座標からどのくらいかわったのか？
@@ -737,7 +804,9 @@ static void UpdatePaulSound( PAUL_SOUND* work, const FIELD_CAMERA* camera )
     
       TOMOYA_Printf( "camera_speed 0x%x\n", dist );
       if( dist >= PAUL_SOUND_PLAY_SPEED ){
-        PMSND_PlaySE( SEQ_SE_FLD_171 );
+        PMSND_PlaySE( se );
+        work->se_play = PAUL_SOUND_PLAY_PLAY;
+        work->se_no = se;
         TOMOYA_Printf( "sound on\n" );
       }
     }

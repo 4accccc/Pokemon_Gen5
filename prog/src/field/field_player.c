@@ -1093,7 +1093,7 @@ void FIELD_PLAYER_ChangeDrawForm(
  * @retval PLAYER_DRAW_FORM
  */
 //--------------------------------------------------------------
-PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( FIELD_PLAYER *fld_player )
+PLAYER_DRAW_FORM FIELD_PLAYER_GetDrawForm( const FIELD_PLAYER *fld_player )
 {
   return FIELD_PLAYER_CORE_GetDrawForm( fld_player->corewk );
 }
