@@ -30,6 +30,41 @@
 
 #define ALPHA_COUNT_MAX (30)
 
+#define SCR_BYTE_SIZE (2)
+
+#define EYE_SRC_TRNAS_CHR_NO (16*22)
+#define MOUTH_SRC_TRNAS_CHR_NO (16*22+12*3)
+#define EYE_DST_TRNAS_SCR_POS (32*8+13)
+#define MOUTH_DST_TRNAS_SCR_POS (32*11+14)
+#define TRNAS_WIDTH_MAX (6)
+#define EYE_TRNAS_WIDTH ( TRNAS_WIDTH_MAX )
+#define MOUTH_TRNAS_WIDTH (4)
+#define FACE_WIDTH (16)
+#define TRANS_HEIGHT  (2)
+#define SCR_WIDTH (32)
+
+#define EYE_ANM_MAX (5)
+#define MOUTH_ANM_MAX (4)
+
+#define EYE_DEF_COUNT (80)
+#define EYE_RND_COUNT (20)
+
+
+typedef struct ANM_PAT_tag
+{
+  u16 No;
+  u16 Wait;
+}ANM_PAT;
+
+typedef struct ANM_CNT_tag
+{
+  BOOL Stop;
+  BOOL TransReq;
+  u16 Wait;
+  u16  PatIdx;
+  u16 TransDat[TRANS_HEIGHT][TRNAS_WIDTH_MAX];
+}ANM_CNT;
+
 typedef struct FACEUP_WORK_tag
 {
   //HEAPID HeapID;
@@ -41,11 +76,15 @@ typedef struct FACEUP_WORK_tag
 
   SCRCMD_WORK *ScrCmdWork;
   GFL_TCB* MainTcb;
+  GFL_TCB* TransTcb;
   BOOL MsgEnd;
+  BOOL EyeTransReq;
 
-  int AlphaCount;
-
-  //顔BG
+  u16 AlphaCount;
+  u16 EyeAnmWaitCount;
+  
+  ANM_CNT EyeAnm;
+  ANM_CNT MouthAnm;
 }FACEUP_WORK;
 
 
@@ -59,10 +98,35 @@ static void PushDisp(FACEUP_WK_PTR ptr);
 static void PopPriority(FACEUP_WK_PTR ptr);
 static void PopDisp(FACEUP_WK_PTR ptr);
 
-static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
+//static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
 static BOOL AlphaFunc(FACEUP_WK_PTR ptr);
 
 static void MainTcbFunc( GFL_TCB* tcb, void* work );
+static void TransTcbFunc( GFL_TCB* tcb, void* work );
+
+static void MoveAnm(  const ANM_PAT *inPatDat,
+                      const u32 inAnmMax,
+                      const u32 inTransChrNo,
+                      const u32 inTansSize,
+                      const u32 inTransWidth,
+                      ANM_CNT *cnt );
+
+//目アニメパターン
+static const ANM_PAT EyeAnmPat[EYE_ANM_MAX] = {
+  {0, 2},
+  {1, 2},
+  {2, 2},
+  {1, 2},
+  {0, 2},
+};
+
+//口アニメパターン
+static const ANM_PAT MouthAnmPat[MOUTH_ANM_MAX] = {
+  {1, 3},
+  {2, 3},
+  {1, 3},
+  {0, 3},
+};
 
 GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *gsys, SCRCMD_WORK *scrCmdWork)
 {
@@ -96,6 +160,7 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, GAMESYS_WORK *
 
     // TCBを追加
     ptr->MainTcb = GFL_TCB_AddTask( tcbsys, MainTcbFunc, ptr, 0 );
+    ptr->TransTcb = GFUser_VIntr_CreateTCB(TransTcbFunc, ptr, 1 );
 
     ptr->MsgEnd = FALSE;
   }
@@ -242,7 +307,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
       if( NNS_G2dGetUnpackedScreenData(buf,&scr) == FALSE ){
         GF_ASSERT( 0 );
       }
-      ChangeScreenPlt( scr->rawData, 0, 0, SCR_SIZE_W, SCR_SIZE_H, BG_PLT_NO );
+//      ChangeScreenPlt( scr->rawData, 0, 0, SCR_SIZE_W, SCR_SIZE_H, BG_PLT_NO );
       GFL_BG_LoadScreen( FLDBG_MFRM_EFF1, scr->rawData, scr->szByte, 0 );
       GFL_HEAP_FreeMemory( buf );
     }
@@ -321,6 +386,13 @@ GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys)
   return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * リリース
+ * @param     fieldmap    フィールドマップポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
 void FLD_FACEUP_Release( FIELDMAP_WORK *fieldmap )
 {
   FACEUP_WK_PTR ptr;
@@ -362,8 +434,10 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 2:
     //転送タスク終了待ち
-    if (0)  break;
+    if (ptr->EyeAnm.TransReq || ptr->MouthAnm.TransReq)  break;
 
+    //転送ＴＣＢ削除
+    GFL_TCB_DeleteTask( ptr->TransTcb );
     //リリース
     Release(fieldmap, ptr);
     //ブラックイン開始
@@ -479,7 +553,7 @@ static void PopDisp(FACEUP_WK_PTR ptr)
 }
 
 
-
+#if 0
 static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
 {
   u16 * scrn;
@@ -503,7 +577,7 @@ static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
     }
   }
 }
-
+#endif
 //------------------------------------------------------------------------------------------
 /**
  * @brief アルファコントロール実行関数
@@ -545,6 +619,7 @@ static void MainTcbFunc( GFL_TCB* tcb, void* work )
       if ( state == PRINTSTREAM_STATE_RUNNING )
       {
         NOZOMU_Printf("口パクしてＯＫ\n");
+        ptr->MouthAnm.Stop = FALSE;
       }
       else
       {
@@ -560,6 +635,122 @@ static void MainTcbFunc( GFL_TCB* tcb, void* work )
     else{
       NOZOMU_Printf("NOTHING WIN\n");
     }
+    
+    MoveAnm(  MouthAnmPat, MOUTH_ANM_MAX,
+              MOUTH_SRC_TRNAS_CHR_NO,
+              MOUTH_TRNAS_WIDTH*TRANS_HEIGHT,
+              MOUTH_TRNAS_WIDTH,
+              &ptr->MouthAnm );
+  }
+
+  //目パチ
+  {
+    if (ptr->EyeAnmWaitCount<=0){
+      ptr->EyeAnm.Stop = FALSE;
+      ptr->EyeAnmWaitCount = EYE_DEF_COUNT + GFUser_GetPublicRand( EYE_RND_COUNT );
+    }
+    else ptr->EyeAnmWaitCount--;
+    //アニメ
+    MoveAnm(  EyeAnmPat, EYE_ANM_MAX,
+              EYE_SRC_TRNAS_CHR_NO,
+              EYE_TRNAS_WIDTH*TRANS_HEIGHT,
+              EYE_TRNAS_WIDTH,
+              &ptr->EyeAnm );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief TCB実行関数
+ */
+//------------------------------------------------------------------------------------------
+static void TransTcbFunc( GFL_TCB* tcb, void* work )
+{
+  ANM_CNT *cnt;
+  FACEUP_WK_PTR ptr = (FACEUP_WK_PTR)work;
+
+  //目
+  cnt = &ptr->EyeAnm;
+  if ( cnt->TransReq )
+  {
+    //転送
+    int byte = EYE_TRNAS_WIDTH * SCR_BYTE_SIZE;
+    int ofs;
+    //転送
+    ofs = EYE_DST_TRNAS_SCR_POS;
+    GFL_BG_LoadScreen( FLDBG_MFRM_EFF2, cnt->TransDat[0], byte, ofs );
+    ofs += SCR_WIDTH;
+    GFL_BG_LoadScreen( FLDBG_MFRM_EFF2, cnt->TransDat[1], byte, ofs );
+    cnt->TransReq = FALSE;
+  }
+
+  //口
+  cnt = &ptr->MouthAnm;
+  if ( cnt->TransReq )
+  {
+    int byte = MOUTH_TRNAS_WIDTH * SCR_BYTE_SIZE;
+    int ofs;
+    //転送
+    ofs = MOUTH_DST_TRNAS_SCR_POS;
+    GFL_BG_LoadScreen( FLDBG_MFRM_EFF2, cnt->TransDat[0], byte, ofs );
+    ofs += SCR_WIDTH;
+    GFL_BG_LoadScreen( FLDBG_MFRM_EFF2, cnt->TransDat[1], byte, ofs );
+    cnt->TransReq = FALSE;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメ
+ * @param     inPatDat        アニメパターンデータポインタ
+ * @param     inAnmMax        アニメ数         
+ * @param     inTransChrNo    スクリーン転送位置
+ * @param     inTransSize     転送サイズ
+ * @param     inTransWidth    転送幅
+ * @param     cnt             アニメコントローラポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+static void MoveAnm( const ANM_PAT *inPatDat,
+                     const u32 inAnmMax,
+                     const u32 inTransChrNo,
+                     const u32 inTansSize,
+                     const u32 inTransWidth,
+                     ANM_CNT *cnt )
+{
+  int i,j;
+  int base;
+  if ( (!cnt->TransReq) )
+  {
+    if (cnt->Wait <= 0 )
+    {
+      //ストップがかかっている場合は処理しない
+      if ( (cnt->PatIdx == 0)&&cnt->Stop ) return;
+      //patarn番目の転送リクエスト
+      cnt->TransReq = TRUE;
+      base = inTransChrNo + inPatDat[cnt->PatIdx].No * inTansSize;
+      for (j=0;j<TRANS_HEIGHT;j++)
+      {
+        for(i=0;i<inTransWidth;i++)
+        {
+          cnt->TransDat[j][i] = (j*inTransWidth)+base+i;
+          OS_Printf("%d %d %d \n",j,i,cnt->TransDat[j][i]);
+        }
+      }
+      //転送後のウェイトセット
+      cnt->Wait = inPatDat[cnt->PatIdx].Wait;
+      //パターン更新
+      cnt->PatIdx++;
+
+      if ( cnt->PatIdx >= inAnmMax )
+      {
+        //開始フレームに戻す
+        cnt->PatIdx = 0;
+        //停止
+        cnt->Stop = TRUE;
+      }
+    }
+    else cnt->Wait--;
   }
 }
 
