@@ -73,14 +73,14 @@ EVENT_START		ev_c03r0402_director_01
 				_MSGWIN_CLOSE()
 
 				//========================================/
-			
+				
 				//フラグ操作
 				_FLAG_RESET( FV_T01R0102_AWARD_01 )
 				_FLAG_SET( FE_AWARD_LOCAL )
 				
 				//部長会話済
 				$LOCALWORK10 = 1
-
+				
 				//========================================/
 		
 			//地方図鑑は完成していない
@@ -232,17 +232,30 @@ EVENT_START		ev_c03r0402_trainerm_01
 	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	//クリア後
 		_TALK_OBJ_START()
-		//とくべつ だいサービス！
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_02 )
-		_MSGWIN_CLOSE()
 		
-		_START_EVENT_BGM( SEQ_BGM_E_SOUND_DESIGNER )
-		
-		_TIME_WAIT( 30 )
-		
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_03 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+		//ゾーンＢＧＭ変更チェック
+		IF FLAG_OFF( SYS_FLAG_BGM_C03R0402 ) THEN
+		//ゾーン曲かわる前
+			
+			//とくべつ だいサービス！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_02 )
+			_MSGWIN_CLOSE()
+			
+			_START_EVENT_BGM( SEQ_BGM_E_SOUND_DESIGNER )
+			
+			//========================================//
+			//ＢＧＭ変更フラグをセット
+			_FLAG_SET( SYS_FLAG_BGM_C03R0402 )
+			
+			//========================================//
+			
+		ELSE
+		//ゾーン曲がロケット団曲に変わっている
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
 	
 	ELSE
 	//クリア前

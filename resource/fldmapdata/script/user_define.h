@@ -63,4 +63,14 @@
 #define	T05_TRAIN_OLD			( 9 )	//レトロトレイン
 #define	T05_TRAIN_NEW			( 10 )	//ニュートレイン
 
+//======================================================================
+//	ＢＧＭフェード速度用の定義名 ※60=1秒
+//======================================================================
+#define	BGM_FADE_VSHORT			( 6 )
+#define	BGM_FADE_SHORT			( 30 )
+#define	BGM_FADE_MIDDLE			( 60 )
+#define	BGM_FADE_LONG			( 90 )
+#define	BGM_FADE_VLONG			( 120 )
+
+
 
