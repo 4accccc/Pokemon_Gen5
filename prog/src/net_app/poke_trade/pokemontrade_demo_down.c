@@ -127,6 +127,8 @@ void POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   //‹­§’âŽ~
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
+  MCSS_SetVanishFlag(pWork->pokeMcss[0]);
+  MCSS_SetVanishFlag(pWork->pokeMcss[1]);
 
   if(pWork->type==POKEMONTRADE_TYPE_GTSUP){  //ƒfƒ‚‚Ì‚Æ‚«‚Í^‚ñ’†‚©‚ç
     VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};

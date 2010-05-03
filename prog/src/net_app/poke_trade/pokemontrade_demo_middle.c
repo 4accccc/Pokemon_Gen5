@@ -471,7 +471,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   {
     int num = 3;
    // if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-      num=0;
+//      num=0;
     //}
     if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
       VecFx32 apos;

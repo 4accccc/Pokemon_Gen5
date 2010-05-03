@@ -247,6 +247,9 @@ BOOL POKEMONTRADEPROC_IsTriSelect(POKEMON_TRADE_WORK* pWork)
   switch(pWork->type){
   case POKEMONTRADE_TYPE_IRC:   ///< 赤外線
   case POKEMONTRADE_TYPE_EVENT:  ///< イベント用
+  case POKEMONTRADE_TYPE_GTSMID:
+  case POKEMONTRADE_TYPE_GTSUP:
+  case POKEMONTRADE_TYPE_GTSDOWN:
     break;
 //  case POKEMONTRADE_TYPE_WIFICLUB: ///< WIFIクラブ
 //  case POKEMONTRADE_TYPE_UNION: ///< ユニオン
@@ -3656,7 +3659,11 @@ static void _commonFunc(POKEMONTRADE_DEMO_PARAM* pParent, POKEMON_TRADE_WORK *pW
 {
   GFL_STD_MemCopy(pParent->pMyPoke, pWork->recvPoke[0] , POKETOOL_GetWorkSize());
   GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
+  
+//  OS_TPrintf("ポケモン自分 %d 相手%d \n",PP_Get(pParent->pMyPoke,ID_PARA_monsno_egg,NULL)
+  //           ,PP_Get(pParent->pNPCPoke,ID_PARA_monsno_egg,NULL));
 
+  
   IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke,TRUE);
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, pParent->pNPCPoke,TRUE);
   if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
