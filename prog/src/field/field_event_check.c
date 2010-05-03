@@ -460,7 +460,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 //☆☆☆会話チェック
 
   SET_CHECK("ev_check:game_comm");
-	///通信用会話処理(仮
+	///通信用会話処理
   {
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
     INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
@@ -472,6 +472,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return EVENT_IntrudeForceWarpMyPalace(gsys);
     }
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
+      //裏フィールドにいて自分がミッションターゲットにされているなら表へ戻す
+      if(GAMEDATA_GetIntrudeReverseArea(req.gamedata) == TRUE 
+          && IntrudeField_Check_Tutorial_OR_TargetMine(intcomm) == TRUE){
+        return EVENT_MissionTargetWarp(gsys, fieldWork );
+      }
       //シンボルマップにいて所有者の更新イベントが発動していないかチェック
       if(IntrudeSymbol_CheckSymbolDataChange(intcomm, req.map_id) == TRUE){
         return EVENT_SymbolMapWarpEasy( gsys, DIR_NOT, GAMEDATA_GetSymbolMapID( req.gamedata ) );

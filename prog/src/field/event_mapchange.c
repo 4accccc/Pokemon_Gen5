@@ -54,6 +54,7 @@
 #include "savedata/gimmickwork.h"           //for GIMMICKWORK
 #include "field_comm/intrude_main.h"
 #include "field_comm/intrude_work.h"
+#include "field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 #include "field_task.h"
@@ -2938,27 +2939,44 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
 
   switch(*seq){
   case 0:
-    //進入可能座標チェック
-    if ( PLC_WP_CHK_Check(work->gameSystem) )
-    {   //進入可能
-      //進入可能メッセージコール
-      SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_SUCCESS, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
-
-      //チュートリアルが全て完了していない場合は常時通信をOFF
-      //(子としてパレスに入るとチュートリアルで混乱する)
-      if(Intrude_CheckTutorialComplete(work->gameData) == FALSE){
-        GameCommSys_ExitReq( game_comm );
+    {
+      INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+      BOOL is_target = FALSE;
+      
+      if(intcomm != NULL){
+        is_target = IntrudeField_Check_Tutorial_OR_TargetMine(intcomm);
       }
+      
+      //進入可能座標チェック
+      if ( is_target == FALSE && PLC_WP_CHK_Check(work->gameSystem) )
+      {   //進入可能
+        //進入可能メッセージコール
+        SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_SUCCESS, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
 
-      //マップチェンジイベント変更シーケンスへ
-      (*seq) = 1;
-    }
-    else
-    {     //進入不可能
-      //進入不可能メッセージコール
-      SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_FAILED, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
-      //終了シーケンスへ
-      (*seq) = 2;
+        //チュートリアルが全て完了していない場合は常時通信をOFF
+        //(子としてパレスに入るとチュートリアルで混乱する)
+        if(Intrude_CheckTutorialComplete(work->gameData) == FALSE){
+          GameCommSys_ExitReq( game_comm );
+        }
+
+        //マップチェンジイベント変更シーケンスへ
+        (*seq) = 1;
+      }
+      else
+      {     //進入不可能
+        //進入不可能メッセージコール
+        u32 scr_id;
+        
+        if(is_target == FALSE){
+          scr_id = SCRID_FLD_EV_WARP_FAILED;
+        }
+        else{
+          scr_id = SCRID_FLD_EV_WARP_FAILED_MISSION_TARGET;
+        }
+        SCRIPT_CallScript( event, scr_id, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+        //終了シーケンスへ
+        (*seq) = 2;
+      }
     }
     break;
   case 1:
@@ -2966,6 +2984,7 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
       if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_NULL){
         break;
       }
+      GameCommSys_ClearLastStatus(game_comm);
     }
     
     {

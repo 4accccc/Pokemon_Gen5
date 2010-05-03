@@ -429,6 +429,32 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
 
 //==================================================================
 /**
+ * 次期バージョンも加味した侵入としてのROMバージョンを取得する
+ *    ※使用場所には注意すること！
+ *
+ * @param   pm_version		
+ * @param   trainer_id		
+ *
+ * @retval  u8		ROMバージョン
+ *
+ * 次期バージョンの場合はトレーナーIDから黒か白、どちらかのバージョンを返します
+ */
+//==================================================================
+u8 Intrude_GetIntrudeRomVersion(u8 pm_version, u32 trainer_id)
+{
+  if(pm_version != VERSION_BLACK && pm_version != VERSION_WHITE){
+    if(trainer_id & (1 << 16)){
+      pm_version = VERSION_WHITE;
+    }
+    else{
+      pm_version = VERSION_BLACK;
+    }
+  }
+  return pm_version;
+}
+
+//==================================================================
+/**
  * グレースケールに変更する必要があるマップかを調べる
  *
  * @param   game_comm		
@@ -441,6 +467,7 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
 {
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   u8 invasion_netid, pm_version;
+  const MYSTATUS *myst;
   
   if (FIELD_STATUS_GetMapMode( GAMEDATA_GetFieldStatus( gamedata) ) != MAPMODE_INTRUDE ) {
     return GRAYSCALE_TYPE_NULL;
@@ -457,7 +484,8 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
     return GRAYSCALE_TYPE_NULL;
   }
   
-  pm_version = GameCommStatus_GetPlayerStatus_RomVersion(game_comm, invasion_netid);
+  myst = GAMEDATA_GetMyStatusPlayer(gamedata, invasion_netid);
+  pm_version = Intrude_GetIntrudeRomVersion(MyStatus_GetRomCode(myst), MyStatus_GetID(myst));
   switch(pm_version){
   case VERSION_WHITE:
     return GRAYSCALE_TYPE_WHITE;

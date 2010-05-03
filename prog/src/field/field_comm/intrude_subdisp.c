@@ -337,6 +337,13 @@ typedef struct{
   u8 padding[2];
 }INTRUDE_COMM_PARAM;
 
+///処理の高速化用に記憶するプレイヤー毎のパラメータ
+typedef struct{
+  const PALACE_ZONE_SETTING *zonesetting;
+  u16 zone_id;
+  u8 padding[2];
+}SUBDISP_PLAYER_PARAM;
+
 ///侵入下画面制御ワーク
 typedef struct _INTRUDE_SUBDISP{
   GAMESYS_WORK *gsys;
@@ -379,11 +386,12 @@ typedef struct _INTRUDE_SUBDISP{
   u32 num_vram_address; //numchara_nnsg2dが転送されているVramアドレス
   
   INTRUDE_COMM_PARAM comm;  ///<intcommから取得出来るパラメータ類(非通信の時はソロ用の値)
+  SUBDISP_PLAYER_PARAM player_param[FIELD_COMM_MEMBER_MAX];
   
-  u8 my_net_id;
   u8 town_update_req;     ///<街アイコン更新リクエスト(TOWN_UPDATE_REQ_???)
   u8 now_bg_pal;          ///<現在のBGのパレット番号
   u8 wfbc_go;             ///<TRUE:WFBCへのワープを押した
+  u8 padding;
   
   s16 infomsg_wait;       ///<インフォメーションメッセージ更新ウェイト
   u8 wfbc_seq;
@@ -419,7 +427,7 @@ typedef struct _INTRUDE_SUBDISP{
   
   s16 print_time;         ///<表示されている時間
   u8 add_player_count;    ///<侵入下画面のInit後、増えたプレイヤーをカウント
-  u8 padding;
+  u8 padding2;
 }INTRUDE_SUBDISP;
 
 
@@ -526,16 +534,19 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   INTRUDE_SUBDISP_PTR intsub;
   ARCHANDLE *handle;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  int i;
   
   intsub = GFL_HEAP_AllocClearMemory(HEAPID_FIELD_SUBSCREEN, sizeof(INTRUDE_SUBDISP));
   intsub->gsys = gsys;
   intsub->now_bg_pal = 0xff;  //初回に必ず更新がかかるように0xff
   
-  intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   intsub->player_pal_tblno = PALACE_TOWN_DATA_NULL;
   intsub->print_touch_player = INTRUDE_NETID_NULL;
   intsub->mission_target_focus_netid = INTRUDE_NETID_NULL;
   intsub->print_time = -1;
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    intsub->player_param[i].zone_id = ZONE_ID_MAX;
+  }
   
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   intsub->add_player_count = intsub->comm.recv_num;
@@ -606,7 +617,6 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int i;
 
-  intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   _IntSub_CommParamUpdate(intsub, intcomm);
   if(intsub->add_player_count < intsub->comm.recv_num){
     //誰かのパレスと接続した音
@@ -1204,7 +1214,8 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   	SOFTPRI_CUR_L,               //ソフトプライオリティ
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
-  MYSTATUS *myst = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(intsub->gsys));
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   
   if(MyStatus_GetMySex(myst) == PM_FEMALE){
     head.anmseq = PALACE_ACT_ANMSEQ_CUR_L_FEMALE;
@@ -1213,7 +1224,7 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
-    INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    INTSUB_ACTOR_PAL_BASE_START + GAMEDATA_GetIntrudeMyID(gamedata), CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_CUR_L], FALSE);  //表示OFF
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_CUR_L], TRUE);  //オートアニメON
 }
@@ -1518,6 +1529,8 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   GFL_CLWK *act, *act_hate;
   GFL_CLACTPOS pos, pos_hate;
   INTRUDE_STATUS *ist;
+  const PALACE_ZONE_SETTING *zonesetting, *before_zonesetting;
+  u16 before_zone_id;
   
   my_area = intsub->comm.now_palace_area;
 
@@ -1526,6 +1539,14 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
 
   //座標移動や表示・非表示設定
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    zonesetting = NULL;
+    before_zonesetting = intsub->player_param[net_id].zonesetting;
+    before_zone_id = intsub->player_param[net_id].zone_id;
+    if(net_id != GAMEDATA_GetIntrudeMyID(gamedata)){
+      intsub->player_param[net_id].zonesetting = NULL;
+      intsub->player_param[net_id].zone_id = ZONE_ID_MAX;
+    }
+    
     act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
     act_hate = intsub->act[INTSUB_ACTOR_WARP_NG_0 + net_id];
     if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
@@ -1553,7 +1574,13 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
         pos.y = PALACE_CURSOR_POS_Y + WearOffset[net_id][1];
       }
       else{
-        const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
+        if(ist->zone_id != before_zone_id){
+          zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
+        }
+        else{
+          zonesetting = before_zonesetting;
+        }
+        
         if(zonesetting != NULL){
           pos.x = zonesetting->sub_x + WearOffset[net_id][0];
           pos.y = zonesetting->sub_y + WearOffset[net_id][1];
@@ -1569,6 +1596,8 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
         }
       }
       GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
+      intsub->player_param[net_id].zonesetting = zonesetting;
+      intsub->player_param[net_id].zone_id = ist->zone_id;
     }
     else{ //このプレイヤーがいるパレスエリアを指す
       int s;
@@ -1670,15 +1699,26 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
   player_town_tblno = PALACE_TOWN_DATA_NULL;
   
   if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
-    pos.x = PALACE_CURSOR_POS_X + WearOffset[intsub->my_net_id][0];
-    pos.y = PALACE_CURSOR_POS_Y + WearOffset[intsub->my_net_id][1];
+    pos.x = PALACE_CURSOR_POS_X + WearOffset[my_net_id][0];
+    pos.y = PALACE_CURSOR_POS_Y + WearOffset[my_net_id][1];
     player_town_tblno = PALACE_TOWN_DATA_PALACE;
+    intsub->player_param[my_net_id].zonesetting = NULL;
   }
   else{
-    const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(my_zone_id);
+    const PALACE_ZONE_SETTING *zonesetting;
+    
+    if(my_zone_id != intsub->player_param[my_net_id].zone_id){
+      zonesetting = IntrudeField_GetZoneSettingData(my_zone_id);
+    }
+    else{
+      zonesetting = intsub->player_param[my_net_id].zonesetting;
+    }
+    intsub->player_param[my_net_id].zonesetting = zonesetting;
+    intsub->player_param[my_net_id].zone_id = my_zone_id;
+    
     if(zonesetting != NULL){
-      pos.x = zonesetting->sub_x + WearOffset[intsub->my_net_id][0];
-      pos.y = zonesetting->sub_y + WearOffset[intsub->my_net_id][1];
+      pos.x = zonesetting->sub_x + WearOffset[my_net_id][0];
+      pos.y = zonesetting->sub_y + WearOffset[my_net_id][1];
       {
         int i;
         for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
@@ -1692,17 +1732,20 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
     }
     else{
       pos.x = NOTHING_ZONE_SUB_POS_X - 8;
-      pos.y = NOTHING_ZONE_SUB_POS_Y + NOTHING_ZONE_SUB_POS_Y_SPACE * intsub->my_net_id;
+      pos.y = NOTHING_ZONE_SUB_POS_Y + NOTHING_ZONE_SUB_POS_Y_SPACE * my_net_id;
       player_town_tblno = PALACE_TOWN_DATA_NULL;
+      intsub->player_param[my_net_id].zonesetting = NULL;
     }
   }
   act = intsub->act[INTSUB_ACTOR_CUR_L];
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
-    INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    INTSUB_ACTOR_PAL_BASE_START + my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
   
   _SetPalFade_PlayerTown(intsub, player_town_tblno);
+
+  intsub->player_param[my_net_id].zone_id = my_zone_id;
 }
 
 //--------------------------------------------------------------
@@ -1717,11 +1760,7 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_I
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
 
-  if(intsub->comm.target_mine == TRUE){
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
-  }
-  else if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+  if(intsub->comm.target_mine == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
     switch(intsub->comm.m_status){
     case MISSION_STATUS_NULL:
     case MISSION_STATUS_READY:
@@ -1854,7 +1893,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GAME_COMM_INFO_MESSAGE infomsg;
-  int k;
+  int k, my_netid;
   int print_mission_status_backup;
   BOOL msg_on = FALSE;
 #if 0
@@ -1868,6 +1907,9 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   
   print_mission_status_backup = intsub->print_mission_status;
   intsub->print_mission_status = MISSION_STATUS_NULL;
+  
+  my_netid = GAMEDATA_GetIntrudeMyID(gamedata);
+
   
   if(intcomm != NULL && GFL_NET_GetConnectNum() <= 1){
     if(intcomm->search_count > 0){
@@ -1885,8 +1927,21 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
 
   //表の世界にいて近くに誰かが来ている
   if(msg_on == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
-    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_020, intsub->strbuf_info );
-    msg_on = TRUE;
+    const PALACE_ZONE_SETTING *trg_zs, *my_zs;
+    int net_id;
+    my_zs = intsub->player_param[my_netid].zonesetting;
+    if(my_zs != NULL){
+      for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+        if(my_netid != net_id){
+          trg_zs = intsub->player_param[net_id].zonesetting;
+          if(trg_zs != NULL && my_zs->sub_x == trg_zs->sub_x && my_zs->sub_y == trg_zs->sub_y){
+            GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_020, intsub->strbuf_info );
+            msg_on = TRUE;
+            break;
+          }
+        }
+      }
+    }
   }
 
   if(msg_on == FALSE && intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
@@ -2328,7 +2383,7 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
     if(comm->p_md != NULL){
       comm->target_palace_area = intcomm->intrude_status[comm->p_md->target_info.net_id].palace_area;
     }
-    comm->target_mine = MISSION_CheckTargetIsMine(intcomm);
+    comm->target_mine = IntrudeField_Check_Tutorial_OR_TargetMine(intcomm);
   }
 }
 

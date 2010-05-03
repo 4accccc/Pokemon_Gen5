@@ -508,7 +508,6 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
     intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
   }
   intcomm->send_profile.status = intcomm->intrude_status_mine;
-  
 }
 
 //==================================================================
@@ -595,7 +594,7 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
         }
       }
       else{ //同じROM内にいてシンボルマップ以外
-        if(ZONEDATA_IsSameMatrixID(mine_st->zone_id, target_status->zone_id) == TRUE){
+        if(ZONEDATA_IsIntrudeSameMatrixID(mine_st->zone_id, target_status->zone_id) == TRUE){
           target_status->player_pack.vanish = FALSE;
         }
         else{

@@ -248,9 +248,10 @@ extern BOOL ZONEDATA_GetPlaceNameFlag(u16 zone_id);
 extern BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id);
 
 //------------------------------------------------------------------
-//  ２つの指定ゾーンが同じマトリックス指定かどうかを判定
+//  ２つの指定ゾーンが侵入している状態で
+//  表裏同じマトリックスと判定(姿が見えていい)してもよいかを判定
 //------------------------------------------------------------------
-extern BOOL ZONEDATA_IsSameMatrixID(u16 zone_id_a, u16 zone_id_b);
+extern BOOL ZONEDATA_IsIntrudeSameMatrixID(u16 zone_id_a, u16 zone_id_b);
 
 //------------------------------------------------------------------
 //  指定ゾーンのエンカウントデータIDを取得

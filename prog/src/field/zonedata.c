@@ -862,17 +862,29 @@ BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
 
 //------------------------------------------------------------------
 /**
- * @brief ２つの指定ゾーンが同じマトリックス指定かどうかを判定
+ * @brief ２つの指定ゾーンが侵入している状態で
+ *        表裏同じマトリックスと判定(姿が見えていい)してもよいかを判定
  * @param  zone_id_a 判定するゾーンのID
  * @param  zone_id_b 判定するゾーンのID
  * @return  BOOL TRUEのとき、同じマトリックス指定
  */
 //------------------------------------------------------------------
-BOOL ZONEDATA_IsSameMatrixID(u16 zone_id_a, u16 zone_id_b)
+BOOL ZONEDATA_IsIntrudeSameMatrixID(u16 zone_id_a, u16 zone_id_b)
 {
-  if(ZONEDATA_GetMatrixID(zone_id_a) == ZONEDATA_GetMatrixID(zone_id_b)){
+  u16 matrix_a, matrix_b;
+  
+  matrix_a = ZONEDATA_GetMatrixID(zone_id_a);
+  matrix_b = ZONEDATA_GetMatrixID(zone_id_b);
+
+  if(matrix_a == matrix_b){
     return TRUE;
   }
+  
+  if((matrix_a == NARC_map_matrix_wb_mat_bin && matrix_b == NARC_map_matrix_palacefield_mat_bin)
+      || (matrix_a == NARC_map_matrix_palacefield_mat_bin && matrix_b == NARC_map_matrix_wb_mat_bin)){
+    return TRUE;
+  }
+  
   return FALSE;
 }
 

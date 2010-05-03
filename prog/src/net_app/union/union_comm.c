@@ -823,6 +823,11 @@ void UnionAlloc_AllFree(UNION_SYSTEM_PTR unisys)
     UnionAppSystem_FreeAppWork(unisys->alloc.uniapp);
     unisys->alloc.uniapp = NULL;
   }
+
+  if(unisys->colosseum_sys != NULL){
+    Colosseum_ExitSystem(unisys->colosseum_sys);
+    unisys->colosseum_sys = NULL;
+  }
 }
 
 //==============================================================================

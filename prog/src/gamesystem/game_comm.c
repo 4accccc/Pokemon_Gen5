@@ -57,7 +57,6 @@ typedef struct{
   u8 pm_version;      ///<プレイヤー自身のPM_VERSION
   u8 invasion_netid;  ///<侵入先ROM
   u8 old_invasion_netid;  ///<前までいた侵入先ROM
-  u8 padding;
 }GAME_COMM_PLAYER_STATUS;
 
 //--------------------------------------------------------------
@@ -90,7 +89,8 @@ typedef struct{
 typedef struct{
   int func_seq;
   u8 seq;
-  u8 padding[3];
+  u8 func_seq_clear_req;    ///<TRUE:func_seqの初期化を行う
+  u8 padding[2];
 }GAME_COMM_SUB_WORK;
 
 ///ゲーム通信管理ワーク構造体
@@ -274,6 +274,11 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
   sub_work = &gcsp->sub_work;
   func_tbl = &GameFuncTbl[gcsp->game_comm_no];
   
+  if(sub_work->func_seq_clear_req == TRUE){
+    sub_work->func_seq = 0;
+    sub_work->func_seq_clear_req = FALSE;
+  }
+  
   switch(sub_work->seq){
   case GCSSEQ_INIT:
     if(func_tbl->init_func != NULL){
@@ -335,7 +340,7 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
 //==================================================================
 void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 {
-  if(gcsp->sub_work.seq == GCSSEQ_FINISH){
+  if(gcsp->sub_work.seq != GCSSEQ_UPDATE){
     return;
   }
   
@@ -353,7 +358,7 @@ void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 //==================================================================
 void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 {
-  if(gcsp->sub_work.seq == GCSSEQ_FINISH){
+  if(gcsp->sub_work.seq != GCSSEQ_UPDATE){
     return;
   }
 
@@ -624,7 +629,7 @@ GAME_COMM_LAST_STATUS GameCommSys_GetLastStatus(GAME_COMM_SYS_PTR gcsp)
 static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
 {
   sub_work->seq = seq;
-  sub_work->func_seq = 0;
+  sub_work->func_seq_clear_req = TRUE;
 }
 
 

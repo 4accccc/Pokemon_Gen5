@@ -4302,6 +4302,12 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
   case LEAVE_SEQ_WARP_UNION_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("ユニオン遷移のサブPROC終了\n");
+
+      if(unisys->colosseum_sys != NULL){
+        GF_ASSERT(0);
+        Colosseum_ExitSystem(unisys->colosseum_sys);
+        unisys->colosseum_sys = NULL;
+      }
       
       UnionComm_Req_Restarts(unisys);
       (*seq)++;

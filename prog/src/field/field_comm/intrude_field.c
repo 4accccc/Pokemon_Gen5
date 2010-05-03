@@ -975,8 +975,6 @@ GMEVENT * EVENT_MissionTargetWarp(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap 
 	event = GMEVENT_Create(gsys, NULL, EventMissionTargetWarp, sizeof(EVENT_MISSIONTARGET_WARP));
 	emtw = GMEVENT_GetEventWork(event);
 	emtw->fieldmap = fieldmap;
-	
-	OS_TPrintf("親機：通信切断イベント起動\n");
 	return event;
 }
 
@@ -1013,7 +1011,7 @@ static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*wor
       emtw->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       emtw->msgStream = FLDMSGWIN_STREAM_AddTalkWin(msgBG, emtw->msgData );
 
-      FLDMSGWIN_STREAM_PrintStart(emtw->msgStream, 0, 0, plc_connect_07);
+      FLDMSGWIN_STREAM_PrintStart(emtw->msgStream, 0, 0, plc_target_warp);
       (*seq)++;
     }
 	  break;
@@ -1021,6 +1019,7 @@ static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*wor
     if( FLDMSGWIN_STREAM_Print(emtw->msgStream) == TRUE){
       FLDMSGWIN_STREAM_Delete(emtw->msgStream);
       GFL_MSG_Delete( emtw->msgData );
+      (*seq)++;
   	}
   	break;
 
@@ -1732,6 +1731,22 @@ BOOL IntrudeField_CheckIntrudeShutdown(GAMESYS_WORK *gsys, u16 zone_id)
   }
 }
 
+//==================================================================
+/**
+ * 通信相手がチュートリアル or 自分がミッションターゲットにされている、かを調べる
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		  どちらか片方だけでも満たせばTRUE
+ */
+//==================================================================
+BOOL IntrudeField_Check_Tutorial_OR_TargetMine(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  if(intcomm->member_is_tutorial == TRUE || MISSION_CheckTargetIsMine(intcomm) == TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 #ifdef PM_DEBUG

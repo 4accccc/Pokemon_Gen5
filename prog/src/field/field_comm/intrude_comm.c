@@ -219,8 +219,9 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   }
   
   //通信エラーチェック
-  if(NetErr_App_CheckError()){
+  if(NetErr_App_CheckError() || intcomm->error == TRUE){
     intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
+    intcomm->error = TRUE;
     GameCommSys_ExitReq(intcomm->game_comm);
     return;
   }
@@ -255,6 +256,9 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
         intcomm->intrude_status_mine.pm_version = PM_VERSION;
         intcomm->intrude_status_mine.season = GAMEDATA_GetSeasonID(gamedata);
+        if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
+          intcomm->intrude_status_mine.tutorial = TRUE;
+        }
         OS_TPrintf("ネゴシエーション送信\n");
         GFL_NET_SetNoChildErrorCheck(TRUE);
         (*seq)++;
@@ -278,12 +282,16 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     //自分プロフィールを自分の受信バッファにセット
     Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
     Intrude_SetProfile(intcomm, GFL_NET_SystemGetCurrentID(), &intcomm->send_profile);
-    IntrudeSend_Profile(intcomm);           //送信
-    intcomm->comm_status = INTRUDE_COMM_STATUS_UPDATE;
     (*seq)++;
     break;
+  case 3:
+    if(IntrudeSend_Profile(intcomm) == TRUE){
+      intcomm->comm_status = INTRUDE_COMM_STATUS_UPDATE;
+      (*seq)++;
+    }
+    break;
 
-  case 3: //通常更新
+  case 4: //通常更新
     //表フィールドにいて季節が変わっていれば切断する
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE 
         && intcomm->intrude_status_mine.season != GAMEDATA_GetSeasonID(gamedata)
@@ -356,7 +364,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
     SEQ_FINISH,
   };
 
-  if(NetErr_App_CheckError()){
+  if(intcomm->error == TRUE){
     return TRUE;
   }
 
@@ -432,7 +440,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   
   switch(*seq){
   case 0:
-    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError()){
+    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE){
       COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
@@ -440,7 +448,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       CommPlayer_Exit(intcomm->cps);
       
       //切断する時の状態をLAST_STATUSにセット
-      if(NetErr_App_CheckError()){
+      if(intcomm->error == TRUE){
         GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
       }
       else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
@@ -478,7 +486,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       }
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);
-      if(NetErr_App_CheckError()){
+      if(intcomm->error == TRUE){
         GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
       }
       return TRUE;
@@ -502,7 +510,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
   GameServiceID id;
   
   if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX || GFL_NET_GetConnectNum() > 1
-      || NetErr_App_CheckError()){
+      || intcomm->error == TRUE){
     return;
   }
   
@@ -706,6 +714,7 @@ static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWor
 //  NetErr_ErrorSet();
 //  intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
   OS_TPrintf("intrude comm エラー！ errNo = %d\n");
+  intcomm->error = TRUE;
 }
 
 //--------------------------------------------------------------

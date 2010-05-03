@@ -41,7 +41,7 @@ extern BOOL MISSION_CheckRecvResult(const MISSION_SYSTEM *mission);
 extern BOOL MISSION_Talk_CheckAchieve(const MISSION_SYSTEM *mission, int talk_netid);
 extern MISSION_TYPE MISSION_GetMissionType(const MISSION_SYSTEM *mission);
 extern s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
-extern void MISSION_SetMissionClear(GAMEDATA *gamedata, const MISSION_RESULT *result);
+extern void MISSION_SetMissionClear(GAMEDATA *gamedata, INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result);
 extern BOOL MISSION_CheckResultMissionMine(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern BOOL MISSION_CheckResultTimeout(MISSION_SYSTEM *mission);
 extern void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int accept_netid, int palace_area);

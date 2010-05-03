@@ -170,7 +170,8 @@ typedef struct{
   u8 disguise_sex:1;  ///<変装中の性別
   u8 mission_entry:1; ///<TRUE:ミッションに参加している
   u8 season:2;        ///<四季(PMSEASON)
-  u8 pm_version;      ///<PM_VERSION
+  u8 pm_version:7;    ///<PM_VERSION
+  u8 tutorial:1;      ///<TRUE:チュートリアル中
 }INTRUDE_STATUS;
 
 ///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)
@@ -287,6 +288,8 @@ typedef struct _INTRUDE_COMM_SYS{
   s8 member_fix;              ///<TRUE:乱入禁止
   s8 other_monolith_count;    ///<他人のモノリス画面を見ているプレイヤー人数
   u8 send_occupy_result_send_req; ///<占拠結果送信リクエスト
-  u8 padding;
+  u8 member_is_tutorial:1;    //自分以外の通信相手がチュートリアル中
+  u8 error:1;                 ///<TRUE:エラー発生
+  u8      :6;
 }INTRUDE_COMM_SYS;
 

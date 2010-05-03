@@ -303,6 +303,7 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const INTRUDE_PROFILE *recv_profile = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   
   if(netID >= intcomm->member_num){
     //管理している人数よりも大きいIDから来た物は受け取らない。
@@ -310,7 +311,19 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
     OS_TPrintf("PROFILE RECV 管理人数よりも大きいIDの為、無視 net_id=%d, member_num=%d\n", netID, intcomm->member_num);
     return;
   }
+
   Intrude_SetProfile(intcomm, netID, recv_profile);
+
+  //自分が親ではなくて、通信相手(親)がチュートリアル中の場合。
+  //Intrude_SetProfileは非通信時に自分が呼び出しもしているので
+  //必ず受信データのみに行うようここで判定
+  if(netID != GAMEDATA_GetIntrudeMyID( gamedata ) && GFL_NET_IsParentMachine() == FALSE
+      && netID == GFL_NET_NO_PARENTMACHINE){
+    if(recv_profile->status.tutorial == TRUE){
+      intcomm->member_is_tutorial = TRUE;
+      OS_TPrintf("member_tutorial net_id=%d\n", netID);
+    }
+  }
 }
 
 //==================================================================
@@ -1372,6 +1385,8 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
   OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   BOOL complete = FALSE;
   u8 white_num, black_num;
+  int add_white = MISSION_ACHIEVE_ADD_LEVEL;
+  int add_black = MISSION_ACHIEVE_ADD_LEVEL;
   
 #if 0 //返事を返さないと求めている側が永遠の待ちになるので 2010.04.23(金)
   if((intcomm->recv_profile & (1 << netID)) == 0){
@@ -1389,7 +1404,7 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
       intcomm->send_occupy = TRUE;
     }
     else{ //達成者がいるので、ターゲットだった自分の占拠情報をクリア済みにする
-      MISSION_SetMissionClear(gamedata, mresult);
+      MISSION_SetMissionClear(gamedata, intcomm, mresult);
       intcomm->send_occupy = TRUE;
     }
   }
@@ -1400,15 +1415,17 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
     complete = TRUE;
   }
 
-  //自分が達成者 or ターゲットの場合はレベルアップ
-  if(MISSION_GetResultPoint(intcomm, &intcomm->mission) > 0 
-      || mresult->mission_data.target_info.net_id == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
-    int add_white = MISSION_ACHIEVE_ADD_LEVEL;
-    int add_black = MISSION_ACHIEVE_ADD_LEVEL;
-    
+  //自分が達成者の場合はレベルアップ
+  if(MISSION_GetResultPoint(intcomm, &intcomm->mission) > 0){
     if(complete == TRUE){
       add_white = white_num;
       add_black = black_num;
+      if(mresult->mission_data.monolith_type == MONOLITH_TYPE_BLACK){
+        add_black += MISSION_ACHIEVE_ADD_LEVEL;
+      }
+      else{
+        add_white += MISSION_ACHIEVE_ADD_LEVEL;
+      }
     }
     
     if(mresult->mission_data.monolith_type == MONOLITH_TYPE_BLACK){
@@ -1418,14 +1435,14 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
       OccupyInfo_LevelUpWhite(occupy, add_white);
     }
     intcomm->send_occupy = TRUE;
+  }
 
-    //ターゲットだった場合は占拠結果を達成者に対して送信
-    if(mresult->mission_data.target_info.net_id == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
-      intcomm->send_occupy_result.add_white = add_white;
-      intcomm->send_occupy_result.add_black = add_black;
-      intcomm->send_occupy_result.occ = TRUE;
-      intcomm->send_occupy_result_send_req = TRUE;
-    }
+  //ターゲットだった場合は占拠結果を達成者に対して送信
+  if(mresult->mission_data.target_info.net_id == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    intcomm->send_occupy_result.add_white = add_white;
+    intcomm->send_occupy_result.add_black = add_black;
+    intcomm->send_occupy_result.occ = TRUE;
+    intcomm->send_occupy_result_send_req = TRUE;
   }
   
   if(MISSION_RecvCheck(&intcomm->mission) == FALSE 

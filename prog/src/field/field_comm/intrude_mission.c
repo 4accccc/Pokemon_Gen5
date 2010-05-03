@@ -801,14 +801,19 @@ s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *m
  * @param   mission		
  */
 //==================================================================
-void MISSION_SetMissionClear(GAMEDATA *gamedata, const MISSION_RESULT *result)
+void MISSION_SetMissionClear(GAMEDATA *gamedata, INTRUDE_COMM_SYS_PTR intcomm, const MISSION_RESULT *result)
 {
   OCCUPY_INFO *mine_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  int achieve_version;
+  MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gamedata, result->achieve_netid[0]);
   
-  if(result->mission_data.monolith_type == MONOLITH_TYPE_WHITE){
+  achieve_version = intcomm->intrude_status[result->achieve_netid[0]].pm_version;
+  achieve_version = Intrude_GetIntrudeRomVersion(achieve_version, MyStatus_GetID(myst));
+  
+  if(achieve_version == VERSION_WHITE){
     mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_WHITE;
   }
-  else{
+  else if(achieve_version == VERSION_BLACK){
     mine_occupy->mlst.mission_clear[result->mission_data.cdata.type] = MISSION_CLEAR_BLACK;
   }
 }
@@ -978,7 +983,8 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
 {
   MISSION_CHOICE_LIST *list;
   const OCCUPY_INFO *occupy;
-  u8 monolith_type;
+  u8 monolith_type, pm_version;
+  const MYSTATUS *myst;
   
   list = &mission->list[palace_area];
   if(list->occ == TRUE){
@@ -986,7 +992,11 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   }
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
-  if(MyStatus_GetRomCode( Intrude_GetMyStatus(intcomm, palace_area) ) == VERSION_BLACK){
+  myst = Intrude_GetMyStatus(intcomm, palace_area);
+  pm_version = MyStatus_GetRomCode( myst );
+  pm_version = Intrude_GetIntrudeRomVersion(pm_version, MyStatus_GetID(myst));
+  
+  if(pm_version == VERSION_BLACK){
     monolith_type = MONOLITH_TYPE_BLACK;
   }
   else{
