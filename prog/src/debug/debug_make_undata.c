@@ -577,7 +577,6 @@ static BOOL MainCtrl( MAKE_WORK* wk )
         const STR_PARAM* p = &StrParams[ wk->BoxIdx ];
         if ( p->Type == STR_TYPE_EDITSTR)
         {
-          //@todo
           if( GFL_STR_GetBufferLength(wk->StrBuf) == 0 ){
             idx = 0;
           }
@@ -731,21 +730,7 @@ static void GetBoxStr( MAKE_WORK* wk, u32 inBoxID, STRBUF* buf )
   case STR_TYPE_NUM:
     {
       u8 keta = 1;
-#if 0     //@todo 
-      switch( p->arg ){
-      default:
-        keta = CalcDisit(p->arg);
-        break;
-      case INPUTBOX_NUM_ARG_EXP:
-        keta = 8;
-        break;
-      case INPUTBOX_NUM_ARG_DEPEND:
-        keta = CalcDisit( wk->BoxValue[p->arg2]/*box_getvalue(wk, p->arg2)*/ ); //@todo
-        break;
-      }
-#else
       keta = CalcDisit(p->arg);
-#endif      
       STRTOOL_SetUnsignedNumber( wk->StrBuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     }
     break;
@@ -798,26 +783,10 @@ static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL
   wk->ColorLetter = PRINTSYS_LSB_GetL( color );
 
   wk->Num = value;
-#if 0  //@todo
-  switch( strParam->arg ){
-  default:
-    wk->numMax = boxParam->arg;
-    wk->numMin = boxParam->arg2;
-    break;
-  case INPUTBOX_NUM_ARG_DEPEND:
-    wk->numMax = box_getvalue( mainWork, boxParam->arg2 );
-    wk->numMin = 0;
-    break;
-  case INPUTBOX_NUM_ARG_EXP:
-    wk->numMax = mainWork->pokeExpMax;
-    wk->numMin = mainWork->pokeExpMin;
-    break;
-  }
-#else
+
   wk->NumMax = strParam->arg;
   wk->NumMin = strParam->arg2;
   wk->DispNumWork = value;
-#endif
   wk->Disit = CalcDisit( wk->NumMax );
   wk->CurDisit = 0;
 
@@ -1252,7 +1221,7 @@ static void MakeData(MAKE_WORK *wk)
         GF_ASSERT_MSG(0,"ERROR placeidx over idx=%d max_idx=%d",place, count);
         place = 0;
       }
-      MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], place); //todo
+      MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], place);
     }
     //リージョン※
     //ロムコード※
