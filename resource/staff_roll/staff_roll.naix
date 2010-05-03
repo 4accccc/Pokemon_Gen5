@@ -12,7 +12,11 @@
 
 enum {
 	NARC_staff_roll_staff_list_jp_dat = 0,
-	NARC_staff_roll_staff_list_eng_dat = 1
+	NARC_staff_roll_staff_list_eng_dat = 1,
+	NARC_staff_roll_end_nclr = 2,
+	NARC_staff_roll_end_ncgr = 3,
+	NARC_staff_roll_end_nscr = 4,
+	NARC_staff_roll_end_e_nscr = 5
 };
 
 /* NARC_STAFF_ROLL_NAIX_ */
