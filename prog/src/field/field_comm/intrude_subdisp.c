@@ -334,7 +334,7 @@ typedef struct{
   const MISSION_DATA *p_md; ///<受信しているミッションデータへのポインタ
   u8 target_palace_area;    ///<ミッションターゲットがいるパレスエリア
   u8 target_mine;           ///<自分自身がミッションのターゲットになっている
-  u8 padding[3];
+  u8 padding[2];
 }INTRUDE_COMM_PARAM;
 
 ///侵入下画面制御ワーク
