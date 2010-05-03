@@ -70,7 +70,7 @@ grade_all_msg_routine:
     IF $point >= 70 THEN
       //ïΩãœ70à»è„
       _BALLOONWIN_OBJMSG( msg_mus_03_001_01 , C04R0202_WOMAN1_01 )
-    ELSIF $point >= 40 THEN
+    ELSIF $point >= 30 THEN
       //ïΩãœ40à»è„
       _BALLOONWIN_OBJMSG( msg_mus_03_001_02 , C04R0202_WOMAN1_01 )
     ELSE

@@ -229,6 +229,8 @@ typedef struct
   BOOL            isSendRom;
   MB_MSG_YESNO_RET yesNoRet;
   u16             localHighScore; //今回のハイスコア
+  u16             playNum;
+  u16             totalGet;
   
   //映画用
   BOOL isBoxNotEnough;
@@ -363,6 +365,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   work->isPostMoviePoke = FALSE;
   work->isPostMovieCapsule = FALSE;
   work->localHighScore = 0;
+  work->playNum = 0;
+  work->totalGet = 0;
 
 }
 
@@ -382,8 +386,11 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
   else
   {
     EVENTWORK *evWork = GAMEDATA_GetEventWork( work->initWork->gameData );
-    u16 *localWk = EVENTWORK_GetEventWorkAdrs( evWork, LOCALWORK0 );
-    *localWk = work->localHighScore;
+    u16 *localWk0 = EVENTWORK_GetEventWorkAdrs( evWork, LOCALWORK0 );
+    u16 *localWk1 = EVENTWORK_GetEventWorkAdrs( evWork, LOCALWORK1 );
+    *localWk0 = work->localHighScore;
+    *localWk1 = work->playNum;
+    ARI_TPrintf("PlayData[score:%3d][num:%2d][get:%2d]\n",work->localHighScore,work->playNum,work->totalGet);
   }
 
   if( work->gameData != NULL )
@@ -620,6 +627,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_GetChildState(work->commWork) == MCCS_SEND_POKE )
     {
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_06 , MSGSPEED_GetWait() );
+      work->playNum++;
       work->state = MPS_WAIT_SEND_POKE;
     }
     else
@@ -627,6 +635,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       //ここに来たということは捕まえていない！
       MB_PARENT_SetFinishState( work , PALPARK_FINISH_NO_GET );
+      work->playNum++;
       work->state = MPS_SEND_LEAST_BOX;
     }
     break;
@@ -1611,6 +1620,7 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
   if( work->mode == MPM_POKE_SHIFTER )
   {
     const u8 nowState = MISC_GetPalparkFinishState( work->miscSave );
+    u8 setState = state;
     BOOL isSet = FALSE;
 
 
@@ -1648,6 +1658,10 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
     case PALPARK_FINISH_ERROR:     // (3)  //エラー終了
       //エラーは絶対
       isSet = TRUE;
+      if( work->totalGet > 0 )
+      {
+        setState = PALPARK_FINISH_ERROR_GET;
+      }
       break;
 
     case PALPARK_FINISH_CANCEL:    // (4)  //キャンセル終了
@@ -1664,8 +1678,8 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
     
     if( isSet == TRUE )
     {
-      MB_TPrintf( "SetFinishState Set!!![%d->%d]\n",nowState,state );
-      MISC_SetPalparkFinishState( work->miscSave , state );
+      MB_TPrintf( "SetFinishState Set!!![%d->%d]\n",nowState,setState );
+      MISC_SetPalparkFinishState( work->miscSave , setState );
     }
   }
 }
@@ -1707,6 +1721,7 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
     {
       work->localHighScore = newScore;
     }
+    work->totalGet += pokeNum;
   }
   
   MB_TPrintf( "MB_Parent Save Init\n" );

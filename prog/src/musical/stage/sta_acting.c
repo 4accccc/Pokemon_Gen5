@@ -1542,7 +1542,7 @@ void STA_ACT_PlayCurtainCloseSe( ACTING_WORK *work )
     PMSND_PlaySE( STA_SE_CLAP_3 );
   }
   else
-  if( minPoint >= 40 )
+  if( minPoint >= 30 )
   {
     PMSND_PlaySE( STA_SE_CLAP_2 );
   }

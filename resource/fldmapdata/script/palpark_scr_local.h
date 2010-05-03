@@ -11,3 +11,4 @@
 #define PALPARK_FINISH_NO_GET    (2)  //捕獲できなかった
 #define PALPARK_FINISH_ERROR     (3)  //エラー終了
 #define PALPARK_FINISH_CANCEL    (4)  //キャンセル終了
+#define PALPARK_FINISH_ERROR_GET (5)  //エラー終了(捕獲あり)

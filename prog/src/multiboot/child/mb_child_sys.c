@@ -95,6 +95,7 @@ typedef enum
   MCS_TRANS_CONFIRM_INIT,
   MCS_TRANS_CONFIRM_WAIT,
   MCS_TRANS_CONFIRM_MAIN,
+  MCS_TRANS_CONFIRM_NO_MSG,
   
   MCS_TRANS_POKE_INIT,
   MCS_TRANS_POKE_SEND,
@@ -721,14 +722,23 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       else
       if( ret == MMYR_RET2 )
       {
-        work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
+        work->captureNum = 0;
+        work->state = MCS_TRANS_CONFIRM_NO_MSG;
         MB_COMM_SetChildState( work->commWork , MCCS_NEXT_GAME );
         MB_MSG_ClearYesNo( work->msgWork );
-        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_14 , work->initData->msgSpeed );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       }
     }
     break;
-
+  case MCS_TRANS_CONFIRM_NO_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
+    {
+      work->state = MCS_DIPS_NEXT_GAME_CONFIRM;
+      MB_MSG_MessageHide( work->msgWork );
+    }
+    break;
+  
   //“]‘—
   case MCS_TRANS_POKE_INIT:
     {

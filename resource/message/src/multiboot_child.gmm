@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-01T18:36:26"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-03T18:25:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="81" top="198" right="786" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="287" top="196" right="992" bottom="824" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -453,6 +453,16 @@
 		<language name="JPN_KANJI" width="208">連れてきた　ポケモンは
 もう元の地方には　戻せませんが▽
 本当に　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_14" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi追加0503
+
+転送 確認</comment>
+		<language name="JPN" width="208">ポケモンを　もとのちほうに
+かえしました　▼</language>
+		<language name="JPN_KANJI" width="208">ポケモンを　元の地方に　帰しました
+▼</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_SYS_01">
