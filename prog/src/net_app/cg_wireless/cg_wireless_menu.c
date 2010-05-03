@@ -727,7 +727,7 @@ static void _modeFadeoutStart(CG_WIRELESS_MENU* pWork)
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
   if(pWork->selectType == CG_WIRELESS_RETURNMODE_TV){
-    if(GFL_NET_IsInit()){
+    if(GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(pWork->gsys)) != GAME_COMM_NO_NULL){
       GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
     }
   }
