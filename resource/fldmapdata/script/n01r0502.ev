@@ -1361,7 +1361,7 @@ ev_last:
 	_TIME_WAIT( 30 )
 
 	//Ｎのアップ絵表示
-	_START_FACEUP( FLD_FACEUP_BG_CATSLE, FLD_FACEUP_CHAR_BOSS, FALSE )
+	_START_FACEUP( FLD_FACEUP_BG_CATSLE, FLD_FACEUP_CHAR_BOSS, TRUE )
 
 	//プレイヤー名！
 	_PLAYER_NAME( 0 )
@@ -1732,7 +1732,7 @@ sub_legend_add_loop:
           _TEMOTI_NICK_NAME( 2, LWK_SELPOS )
           _SYSWIN_MSG( msg_n01r0502_get_04, POS_DOWN )
           _YES_NO_WIN( SCWK_ANSWER )
-          IF $SCWK_ANSWER == TRUE THEN
+          IF $SCWK_ANSWER == SCR_YES THEN
               //ボックスの伝説ポケと選んだ手持ちを交換
               _CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_GET_FROM_BOX, LWK_SELPOS )
               //～を　てもちにくわえた！
