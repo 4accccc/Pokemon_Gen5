@@ -16,7 +16,7 @@
 //==========================================================================================
 // ¡’è”
 //==========================================================================================
-//#define DEBUG_PRINT_ENABLE
+//#define DEBUG_EVENT_ON
 #define PI (0x8000)   // ƒÎ[rad]
 
 // ‰ñ“]ƒ^ƒCƒv
@@ -185,13 +185,13 @@ static void UpdateAngle( ROT_WORK* work )
     switch( work->type ) {
     case CAMERA_ROT_TYPE_YAW:    
       FIELD_CAMERA_SetAngleYaw( camera, angle );    
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_EVENT_ON
       OBATA_Printf( "TASK-CAM-ROT: frame = %d, yaw = 0x%x\n", work->frame, angle );
 #endif
       break;
     case CAMERA_ROT_TYPE_PITCH:  
       FIELD_CAMERA_SetAnglePitch( camera, angle );  
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_EVENT_ON
       OBATA_Printf( "TASK-CAM-ROT: frame = %d, pitch = 0x%x\n", work->frame, angle ); 
 #endif
       break;

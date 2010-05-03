@@ -12,7 +12,7 @@
 #include "field/field_camera.h"
 #include "field_task_target_pos.h"
 
-//#define DEBUG_PRINT_ENABLE
+//#define DEBUG_EVENT_ON
 
 
 //==========================================================================================
@@ -98,7 +98,7 @@ static FIELD_TASK_RETVAL TargetPosMove( void* wk )
       float t = work->frame / (float)work->endFrame;
       VEC_MultAdd( FX_F32_TO_FX32(t), &work->moveVec, &work->startPos, &pos );
       FIELD_CAMERA_SetTargetPos( camera, &pos );
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_EVENT_ON
       OBATA_Printf( "TASK-TPOS: frame = %d, target = 0x%x, 0x%x, 0x%x\n", 
           work->frame, FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
 #endif

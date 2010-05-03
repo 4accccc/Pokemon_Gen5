@@ -12,7 +12,7 @@
 #include "field_task_player_drawoffset.h"
 #include "field_player.h"
 
-//#define DEBUG_PRINT_ENABLE
+//#define DEBUG_EVENT_ON
 
 typedef enum {
   TRANS_TYPE_PLUS = 0,
@@ -144,7 +144,7 @@ static void CalcDrawOffset( VecFx32* now, u16 nowFrame, VecFx32* max, u16 maxFra
   now->x = FX_Mul( max->x, rate );
   now->y = FX_Mul( max->y, rate );
   now->z = FX_Mul( max->z, rate );
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_EVENT_ON
   OS_Printf("NOW/MAX=%03d/%03d\n", nowFrame, maxFrame );
 #endif
 } 
