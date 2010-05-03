@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-03T16:55:41"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-03T18:26:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,8 +427,8 @@
 
 	<row id="CG_HELP_INFO_09">
 		<comment>見出し</comment>
-		<language name="JPN" width="184">「ちょうさたんちき」について</language>
-		<language name="JPN_KANJI" width="184">「調査探知機」について</language>
+		<language name="JPN" width="184">「ちょうさレーダー」について</language>
+		<language name="JPN_KANJI" width="184">「調査レーダー」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_10">
@@ -462,21 +462,6 @@
 	<row id="CG_HELP_MSG_02">
 		<comment>説明文
 「ワイヤレス」について</comment>
-		<language name="JPN" width="224">じぶんの　まわりで　げんざい
-ユニオンルームに　はいっている
-にんずうが　わかります
-また　ワイヤレスの　はいしんを
-おこなっているかも　わかります</language>
-		<language name="JPN_KANJI" width="224">自分の　周りで　現在
-ユニオンルームに　入っている
-人数が　わかります
-また　ワイヤレスの　配信を
-行っているかも　わかります</language>
-	</row>
-
-	<row id="CG_HELP_MSG_03">
-		<comment>説明文
-「ワイヤレス」について</comment>
 		<language name="JPN" width="224">ワイヤレスつうしんを　つかって
 ちかくにいる　ともだちと
 つぎの　あそびが　できます
@@ -489,7 +474,7 @@
 ・ハイリンク</language>
 	</row>
 
-	<row id="CG_HELP_MSG_04">
+	<row id="CG_HELP_MSG_03">
 		<comment>説明文
 「ワイヤレス」について</comment>
 		<language name="JPN" width="224">ライブキャスターは
@@ -505,7 +490,7 @@
 ライブキャスターで　遊べます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_05">
+	<row id="CG_HELP_MSG_04">
 		<comment>説明文
 「ワイヤレス」について</comment>
 		<language name="JPN" width="224">ハイリンクは　ボタンを　タッチすれば
@@ -514,11 +499,38 @@
 一瞬で　ハイリンクに　行けます</language>
 	</row>
 
+	<row id="CG_HELP_MSG_05">
+		<comment>説明文
+「ワイヤレス」について</comment>
+		<language name="JPN" width="224">じぶんの　まわりで　げんざい
+ユニオンルームに　はいっている
+にんずうが　わかります
+
+また　ワイヤレスの　はいしんを
+おこなっているかも　わかります</language>
+		<language name="JPN_KANJI" width="224">自分の　周りで　現在
+ユニオンルームに　入っている
+人数が　わかります
+
+また　ワイヤレスの　配信を
+行っているかも　わかります</language>
+	</row>
+
 	<row id="CG_HELP_MSG_06">
 		<comment>説明文
 「ワイヤレス」について</comment>
-		<language name="JPN" width="224">かり</language>
-		<language name="JPN_KANJI" width="224">かり</language>
+		<language name="JPN" width="224">それと　Ｃギアの　でんげんを
+オンにしている　ひとが
+まわりに　いるか　わかります
+ちかくに　ひとが　いると
+すれちがいや　ちょうさレーダーの
+つうしんを　キャッチ　しやすいです</language>
+		<language name="JPN_KANJI" width="224">それと　Ｃ－ＧＥＡＲの　電源を
+ＯＮにしている　人が
+周りに　いるか　わかります
+近くに　人が　いると
+すれ違いや　調査レーダーの
+通信を　キャッチ　しやすいです</language>
 	</row>
 
 	<row id="CG_HELP_MSG_07">
