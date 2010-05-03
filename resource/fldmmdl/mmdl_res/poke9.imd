@@ -128,7 +128,6 @@
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 c000 00cc 0000 0000 c000 00cc 0000 
 			0000 dc00 ccff cc00 0ccc fcc0 0cdf 0000 
 			0000 fdc0 ffff fecc ceff fffc cdff 0000 
@@ -158,11 +157,11 @@
 			0000 0000 ecc0 ebee bbee beee 000b 0000 
 			0000 0000 b000 b0bb 00bb 0bbb 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
 	<tex_image name='t4x4nflip.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='t4x4nflip.5.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -194,11 +193,11 @@
 			0000 c000 beee ffbb efff eeee 0bbe 0000 
 			0000 0000 eecc bbee beee beeb 000b 0000 
 			0000 0000 bc00 00bb 0bbb 0bb0 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
 	<tex_image name='t4x4nflip.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='t4x4nflip.6.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 c000 00cc 0000 0000 c000 00cc 0000 
 			0000 dc00 ccff cc00 0ccc fcc0 0cdf 0000 
@@ -228,6 +227,7 @@
 			0000 cc00 bbbe ffff eeff eeee 000b 0000 
 			0000 0000 eccc eebe ebbe bbee 0000 0000 
 			0000 0000 b000 bb0b b00b 00bb 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
