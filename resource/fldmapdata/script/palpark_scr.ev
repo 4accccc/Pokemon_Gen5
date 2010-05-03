@@ -169,11 +169,12 @@ play_palpark:
     _CALL connect_error                             //通信エラー
   ELSIF $palpark_retval == PALPARK_FINISH_CANCEL  THEN
     //何もしない
+  ELSIF $palpark_retval == PALPARK_FINISH_ERROR_GET  THEN
+    _CALL connect_error                             //通信エラー
+    _BALLOONWIN_OBJMSG( msg_palpark_11, R15R0301_PARK )   ////「捕まえたポケはボックスへ」クローズいらず
   ELSE
   {
     DEFINE_LOCAL result_msg
-    //パルパーク遊んだレコード追加
-    _ADD_RECORD( RECID_POKESHIFTER_COUNT, 1 )
     //「おつかれ」
     _BALLOONWIN_OBJMSG( msg_palpark_10, R15R0301_PARK )   //クローズいらず
 
