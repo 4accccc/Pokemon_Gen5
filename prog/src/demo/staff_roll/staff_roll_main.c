@@ -1057,7 +1057,7 @@ static void MakeScrollStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 	if( item->font == SRMAIN_FONT_NORMAL ){
 		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192 );
 	}else{
-		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192 );
+		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192+2 );
 	}
 }
 
