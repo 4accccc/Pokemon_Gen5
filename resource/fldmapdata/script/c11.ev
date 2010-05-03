@@ -78,8 +78,11 @@ EVENT_START	ev_c11_recept_01
 		_MAP_FADE_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
 		
+		_SE_PLAY( SEQ_SE_VDEMO_02 )
+		
 		_MAP_CHANGE_NO_FADE( ZONE_ID_C03P14, 12, 0, 14, DIR_RIGHT)
 		
+		_SE_WAIT()
 		
 	ELSE
 		//‚¢‚¢‚¦
