@@ -1503,6 +1503,8 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_CHECK_SHOW,       //みせあいはあるか
     SEQ_LIST_END,         //リストへ
 
+    SEQ_RETURN_MENU,
+
     SEQ_WAIT_MSG,         //メッセージ待ち 
   };
 
@@ -1657,7 +1659,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_START_MSG_NOCUP:  //大会が違うメッセージ
     UTIL_TEXT_Print( p_wk, LIVE_STR_18, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MATCHING );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_RETURN_MENU );
 		break;
 
   case SEQ_START_DISCONNECT_NOMATCH:  //大会が違うため切断
@@ -1675,7 +1677,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_START_MSG_NOMATCH: //同じ対戦相手と戦えないメッセージ
     UTIL_TEXT_Print( p_wk, LIVE_STR_29, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MATCHING );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_RETURN_MENU );
     break;
 
   case SEQ_START_MSG_OK:     //マッチング相手が見つかった！
@@ -1752,6 +1754,10 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_LIST_END:         //リストへ
     UTIL_FLOW_End( p_wk, LIVEBATTLEMATCH_FLOW_RET_BATTLE );
 		break;
+
+  case SEQ_RETURN_MENU:
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
+    break;
 
   case SEQ_WAIT_MSG:         //メッセージ待ち 
     if( UTIL_TEXT_IsEnd( p_wk ) )

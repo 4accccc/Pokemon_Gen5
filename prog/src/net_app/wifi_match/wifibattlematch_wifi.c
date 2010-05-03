@@ -3504,9 +3504,8 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
     SEQ_START_DATEBEFORE_MSG,
     SEQ_START_DATE_MSG,
-    SEQ_START_SAVE_MSG,
     SEQ_CHECK_LOCK,
-    SEQ_UNLOCK,
+    SEQ_START_SAVE_MSG,
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
     SEQ_START_UNLOCK_MSG,
@@ -3570,7 +3569,7 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret && ( now <= start ) )
       { 
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE;
-        *p_seq  = SEQ_START_DATE_MSG;
+        *p_seq  = SEQ_START_DATEBEFORE_MSG;
       }
       else if( ret && ( start <= now && now <= end ) )
       {
@@ -3616,20 +3615,18 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_START_SAVE_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_UNLOCK );
-    break;
-
-  case SEQ_UNLOCK:
-    { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
-      *p_seq  = SEQ_START_SAVE;
-    }
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
     break;
 
   case SEQ_START_SAVE:
     { 
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
+
+      //大会終了状態にしてセーブ
+      Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_END );
+
       GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
       *p_seq  = SEQ_WAIT_SAVE;
     }
@@ -3641,10 +3638,6 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( ret == SAVE_RESULT_OK )
       { 
         *p_seq  = SEQ_START_UNLOCK_MSG;
-      }
-      else if( ret == SAVE_RESULT_NG )
-      { 
-        *p_seq  = SEQ_END;
       }
     }
     break;
@@ -3729,7 +3722,6 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_START_UNLOCK_MSG,
     //GPF送信
     SEQ_START_SEND_MSG, 
-    SEQ_UNLOCK,
     SEQ_SEND_GPF_CUPSTATUS,
     SEQ_WAIT_GPF_CUPSTATUS,
 
@@ -3825,6 +3817,10 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   case SEQ_START_SAVE:
     {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
+
       //リタイヤ状態にしてセーブ
       Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
 
@@ -3858,16 +3854,9 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_START_SEND_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_18, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_UNLOCK );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SEND_GPF_CUPSTATUS );
     break;
-  case SEQ_UNLOCK:
-    { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
-      *p_seq  = SEQ_SEND_GPF_CUPSTATUS;
-    }
-    break;
+
   case SEQ_SEND_GPF_CUPSTATUS:
     { 
       DREAM_WORLD_SERVER_WORLDBATTLE_SET_DATA data;
