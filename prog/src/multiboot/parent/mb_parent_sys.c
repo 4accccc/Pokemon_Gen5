@@ -626,16 +626,22 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_WAIT_FINISH_CAPTURE:
     if( MB_COMM_GetChildState(work->commWork) == MCCS_SEND_POKE )
     {
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_06 , MSGSPEED_GetWait() );
+      RECORD *record = GAMEDATA_GetRecordPtr(work->initWork->gameData);
+      RECORD_Inc(record,RECID_POKESHIFTER_COUNT);
       work->playNum++;
+      
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_06 , MSGSPEED_GetWait() );
       work->state = MPS_WAIT_SEND_POKE;
     }
     else
     if( MB_COMM_GetChildState(work->commWork) == MCCS_NEXT_GAME )
     {
+      RECORD *record = GAMEDATA_GetRecordPtr(work->initWork->gameData);
+      RECORD_Inc(record,RECID_POKESHIFTER_COUNT);
+      work->playNum++;
+
       //‚±‚±‚É—ˆ‚½‚Æ‚¢‚¤‚±‚Æ‚Í•ß‚Ü‚¦‚Ä‚¢‚È‚¢I
       MB_PARENT_SetFinishState( work , PALPARK_FINISH_NO_GET );
-      work->playNum++;
       work->state = MPS_SEND_LEAST_BOX;
     }
     break;
