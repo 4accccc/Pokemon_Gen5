@@ -279,6 +279,8 @@ static const int CommandData_GFLogo[] = {
 // コマンドデータ
 static const int CommandData_OPMovie1[] = {
 
+    COMM_BGM_PLAY, SEQ_BGM_TITLE,
+
 	COMM_BLACK_IN,		1, 1,
 	COMM_FADE_MAIN,
 
