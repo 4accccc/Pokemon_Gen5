@@ -310,6 +310,19 @@ static void Mystery_Msgwin_CalcPosCore( MYSTERY_MSGWIN_POS type, const GFL_POINT
       p_pos->y  = y + cp_ofs->y;
     }
     break;
+
+  case MYSTERY_MSGWIN_POS_W_BACK: //X‚Ì‚İŒã‚ë‚©‚ç
+    { 
+      s32 x;
+
+      x = GFL_BMP_GetSizeX( p_bmp );
+      x -= PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 );
+      x = MATH_IMax( x, 0 );
+
+      p_pos->x  = x + cp_ofs->x;
+      p_pos->y  = cp_ofs->y;
+    }
+    break;
   }
 }
 

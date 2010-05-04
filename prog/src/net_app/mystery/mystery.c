@@ -296,7 +296,7 @@ typedef struct
 } MYSTERY_PTC_WORK;
 
 //-------------------------------------
-///	エフェクトワーク(光のためと背景のスクロール)
+///	エフェクトワーク(光の玉と背景のスクロール)
 //=====================================
 typedef struct _MYSTERY_EFFECT_WORK MYSTERY_EFFECT_WORK;
 typedef void (*MYSTERY_EFFECT_MOVE_FUNCTION)( MYSTERY_EFFECT_WORK *p_wk );
@@ -501,7 +501,6 @@ static void SEQFUNC_DisConnectEnd( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *
 static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
-static void SEQFUNC_RestrictUGC( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_EnableWireless( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
@@ -1455,13 +1454,6 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
               //DSの無線設定で通信不可のとき
               MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_EnableWireless );
             }
-#if 0
-            else if( DS_SYSTEM_IsRestrictUGC() )
-            { 
-              //ペアレンタルコントロールで送受信拒否しているとき
-              MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_RestrictUGC );
-            }
-#endif
             else
             { 
               //通常時なので受け取れる
@@ -1868,7 +1860,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
 
     //さがしています
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, MYSTERY_TEXT_TYPE_WAIT );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, MYSTERY_TEXT_TYPE_QUE );
     p_wk->cnt = 0;
     *p_seq  = SEQ_SEARCH;
     break;
@@ -2895,43 +2887,6 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   //終了
   MYSTERY_SEQ_End( p_seqwk );
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ペアレンタルコントロールでユーザー作成コンテンツの送受信を拒否していた場合
- *
- *	@param	MYSTERY_SEQ_WORK *p_seqwk	シーケンスワーク
- *	@param	*p_seq					シーケンス
- *	@param	*p_wk_adrs				ワーク
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_RestrictUGC( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{ 
-  enum
-  { 
-    SEQ_START_MSG,
-    SEQ_WAIT_MSG,
-  };
-
-  MYSTERY_WORK  *p_wk     = p_wk_adrs;
-
-  switch( *p_seq )
-  { 
-  case SEQ_START_MSG:
-    //@todo
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_err_msg, msg_common_wireless_off_keywait, MYSTERY_TEXT_TYPE_STREAM );
-
-    *p_seq  = SEQ_WAIT_MSG;
-    break;
-  
-  case SEQ_WAIT_MSG:
-    if( MYSTERY_TEXT_IsEndPrint(p_wk->p_text) )
-    {
-      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
-    }
-    break;
-  }
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief	DSの無線通信設定で通信負荷にしていた場合
@@ -3573,7 +3528,6 @@ static void Mystery_Demo_NormalMain( MYSTERY_DEMO_WORK *p_wk )
   switch( p_wk->seq )
   {
   case SEQ_INIT:
-    MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_DEMO );
     GFL_BG_SetVisible( BG_FRAME_M_BACK1, FALSE );
     BG_Load( p_wk->p_bg, BG_LOAD_TYPE_STAGE_M );
     p_wk->seq = SEQ_START_FADEIN;
@@ -3617,6 +3571,8 @@ static void Mystery_Demo_NormalMain( MYSTERY_DEMO_WORK *p_wk )
     if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
     { 
       G2_BlendNone();
+
+      MYSTERY_EFFECT_Start( p_wk->p_effect, MYSTERY_EFFECT_TYPE_DEMO );
       p_wk->sync  = 0;
       p_wk->seq = SEQ_INIT_WAIT;
     }

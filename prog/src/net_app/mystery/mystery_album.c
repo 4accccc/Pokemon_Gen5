@@ -3348,13 +3348,13 @@ MYSTERY_CARD_RES * MYSTERY_CARD_RES_Init( const MYSTERY_CARD_SETUP *cp_setup, HE
       },
       //日付
       { 
+        18,
         20,
-        20,
-        9,
+        11,
         2,
         0,
         NULL,
-        MYSTERY_MSGWIN_POS_ABSOLUTE,
+        MYSTERY_MSGWIN_POS_W_BACK,
         0, 0,
         MYSTERY_MSGWIN_WHITE_COLOR
       }
@@ -3370,7 +3370,7 @@ MYSTERY_CARD_RES * MYSTERY_CARD_RES_Init( const MYSTERY_CARD_SETUP *cp_setup, HE
     { 
       ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
 
-      //仮でプレゼントボックスを作る
+      //あとでCGXだけ読み替えるため、最初はプレゼントボックスを作っておく
       p_wk->res_icon_plt	= GFL_CLGRP_PLTT_Register( p_handle, 
             NARC_mystery_fushigi_box_NCLR, p_wk->draw_type, cp_setup->icon_obj_plt_num*0x20,heapID );
 
@@ -3401,7 +3401,7 @@ MYSTERY_CARD_RES * MYSTERY_CARD_RES_Init( const MYSTERY_CARD_SETUP *cp_setup, HE
     { 
       ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
 
-      //仮でフシギダネを作る
+      //あとでCGXだけ読み替えるためなんの絵でもよい
       p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, 1, 0, 0, 0, POKEGRA_DIR_FRONT, 0, p_wk->draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );
       p_wk->res_silhouette_cel	= POKE2DGRA_OBJ_CELLANM_Register( 1, 0, 0, 0, POKEGRA_DIR_FRONT, 0, APP_COMMON_MAPPING_128K, p_wk->draw_type, heapID );
       p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, 1, 0, 0, 0, POKEGRA_DIR_FRONT, 0, POKEGRA_DIR_FRONT, p_wk->draw_type, heapID );

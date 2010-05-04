@@ -248,7 +248,7 @@ static inline int Mystery_CreateItem(const GIFT_PACK_DATA* pPack)
 /**
  * @brief  不思議データからのGPower作成
  * @param  GIFT_PACK_DATA   セーブデータに格納されてる不思議データ
- * @retval @todo未定
+ * @retval GPowerID
  */
 //--------------------------------------------------------------
 static inline int Mystery_CreateGPower(const GIFT_PACK_DATA* pPack)
