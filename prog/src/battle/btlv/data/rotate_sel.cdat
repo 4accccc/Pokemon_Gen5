@@ -166,8 +166,8 @@ static  const int  rotate_camera_focus[][ 2 ] =
 { 
   //L                               R                 
   { BTLEFF_ROTATION_POS_A_TO_E,     BTLEFF_ROTATION_POS_A_TO_C,     },    //SCR_C
-  { BTLEFF_ROTATION_POS_C_TO_A,     NULL,                           },    //SCR_L
-  { NULL,                           BTLEFF_ROTATION_POS_E_TO_A,     },    //SCR_R
+  { BTLEFF_ROTATION_POS_A_FOCUS,    NULL,                           },    //SCR_L
+  { NULL,                           BTLEFF_ROTATION_POS_A_FOCUS,    },    //SCR_R
 };
 
 static  const BtlRotateDir  rotate_result[] =
