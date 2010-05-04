@@ -120,7 +120,7 @@ EVENT_START   ev_r01_poke_getdemo_01
 	_OBJ_ANIME_WAIT()
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
-/*
+
 
 	//捕獲デモ呼び出し[100216斉藤マ]
 	_CAPTURE_DEMO_SET()
@@ -134,7 +134,7 @@ EVENT_START   ev_r01_poke_getdemo_01
 	
 	//暗転終了
 	_WILD_WIN()
-*/
+
 
 	//博士戻ってくる・カメラ追従
 	_CAMERA_MOVE( 9688,0,970752,51675136,0,47415296,16 )
