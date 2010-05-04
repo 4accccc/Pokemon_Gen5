@@ -497,7 +497,10 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
   VM_Init( vmh, taw );
 
   //技データのキャッシュを生成
-  WAZADATA_CreateCache( TR_AI_WAZATBL_MAX, heapID );
+  if( WAZADATA_CheckCache() == FALSE )
+  { 
+    WAZADATA_CreateCache( TR_AI_WAZATBL_MAX, heapID );
+  }
 
   return vmh;
 }
