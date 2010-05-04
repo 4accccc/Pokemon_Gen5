@@ -157,7 +157,6 @@ static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
 //u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
-static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item );
 static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl );
 static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork);
 int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
@@ -1022,7 +1021,6 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
-      // スプレー音が見当たらないのでとりあえずテキトーな音
       PMSND_PlaySE( SE_BAG_SPRAY );
     }
     else
@@ -1107,7 +1105,6 @@ static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
 
-      // 音が見当たらないのでとりあえずテキトーな音
       PMSND_PlaySE( SE_BAG_RAITOSUTOON );
       _CHANGE_STATE(pWork,_itemInnerUseRightStoneWait);
       
@@ -2285,9 +2282,6 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
     return;
   }
 
-  // @TODO バーアイコンなどタッチ対応も含めるのでラップする
-  // 強制終了
-
   ret = CheckNumSelTouch();
   if( ret == GFL_UI_TP_HIT_NONE ){
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -2581,7 +2575,6 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
     }
   };
 
-  //@TODO BTN/TP
 //  GFL_BMN_Main( pWork->pButton );
 
   // タッチ入力
@@ -3296,27 +3289,6 @@ int (*MenuFuncTbl[])( FIELD_ITEMMENU_WORK *pWork)={
 
 #if 1
 
-//@TODO 不要？
-//-----------------------------------------------------------------------------
-/**
- *  @brief  きのみプランター判定
- *
- *  @param  u16 pocket
- *  @param  item 
- *
- *  @retval
- */
-//-----------------------------------------------------------------------------
-static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item )
-{
-  if( pocket == BAG_POKE_NUTS ||
-      ( item >= COMPOST_START_ITEMNUM && item < (COMPOST_START_ITEMNUM+ITEM_COMPOST_MAX) ) ){
-    return TRUE;
-  }
-  return FALSE;
-}
-
-
 //----------------------------------------------------------------------------------
 /**
  * @brief 「つかう」「おりる」「みる」「ひらく」「うめる」「とめる」項目追加
@@ -3767,7 +3739,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   HOSAKA_Printf("bag mode =%d \n", pWork->mode );
 
-// @TODO 保坂のみデバッグ押しながら起動でショップから起動したことにする
+// 保坂のみデバッグ押しながら起動でショップから起動したことにする
 #ifdef DEBUG_ONLY_FOR_genya_hosaka
   if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) )
   {

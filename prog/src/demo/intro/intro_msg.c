@@ -131,7 +131,6 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   // メンバ初期化
   wk->heap_id = heap_id;
   wk->wordset = WORDSET_Create( heap_id );
-  // @TODO intro.cに既にある。統合する。
   wk->print_que = PRINTSYS_QUE_Create( heap_id );
 
   wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 2, 0 );
@@ -150,7 +149,6 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   wk->exp_strbuf  = GFL_STR_CreateBuffer( STRBUF_SIZE, wk->heap_id );
 
   // ウィンドウ生成
-  // @TODO リストを出す場所指定
   wk->win_list = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, 22, 13, 9, 4, PLTID_BG_TEXT_M, GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリアしておく
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win_list );

@@ -953,7 +953,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemNum.win);
   GFL_BMPWIN_Delete(pWork->winWaza.win);
 
-  //@TODO 下画面
+  // 下画面
   GFL_BMPWIN_Delete(pWork->winNumFrame.win);
   GFL_BMPWIN_Delete(pWork->winSellGold.win);
   GFL_BMPWIN_Delete(pWork->winPocketNone.win);
@@ -1470,7 +1470,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 			s32	type;
 			PRINTSYS_LSB color;
 
-      //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
+      // ※ページ切替時にロードするようにすれば、負荷が軽減される
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
 			type     = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
 

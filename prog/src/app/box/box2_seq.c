@@ -10669,7 +10669,6 @@ static int MainSeq_ArrangeBoxThemaButtonIn( BOX2_SYS_WORK * syswk )
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_PTIN_MAIN, BOX2UI_PTIN_MAIN_NAME );
 //		return VFuncSet( syswk, BOX2MAIN_VFuncExitButtonMove, BOX2SEQ_MAINSEQ_PARTYIN_MAIN_RCV );
 		return VFuncSet( syswk, BOX2MAIN_VFuncExitButtonMove, BOX2SEQ_MAINSEQ_PARTYIN_MAIN );
-//	↑仮だけど、たぶんこの関数は消えるので。
 	}
 
 	if( syswk->dat->callMode == BOX_MODE_ITEM ){
@@ -12905,7 +12904,7 @@ static int BoxPartyButtonOutSet( BOX2_SYS_WORK * syswk )
 
 //	return VFuncSet( syswk, BOX2MAIN_VFuncUnderButtonMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTYPOKE_FRMIN );
 //	return BOX2SEQ_MAINSEQ_ARRANGE_PARTYPOKE_FRMIN;
-	return 0;	// ↑上を消したので、とりあえず。
+	return 0;
 }
 */
 

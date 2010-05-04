@@ -86,13 +86,11 @@ struct _INTRO_CMD_WORK {
 	INTRO_GRAPHIC_WORK	*graphic;
   // [PRIVATE]
   
-  // @TODO コマンドエンジンにぶら下げるべきではない > intro.cに下げるべき
   INTRO_MSG_WORK* wk_msg;
 
   INTRO_SCENE_ID scene_id;
   const INTRO_CMD_DATA* store[ STORE_NUM ];
-  // @TODO 時間があったらリファクタ
-  // INTRO_STORE_DATAをINTRO_STORE_DATAに内包する形式の方がスッキリする。
+
   INTRO_STORE_DATA store_data[ STORE_NUM ]; // 各コマンド用ワーク
   int cmd_idx;
   INTR_SAVE_CONTROL* intr_save;
@@ -509,11 +507,6 @@ static BOOL CMD_LOAD_BG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
 
   heap_id = wk->heap_id;
 
-  // @TODO このコマンド全体に現状、汎用性がない
-  // パラメータ化するには要素が多すぎる。
-  // 案A:コマンドを複数に分ける。◎有力
-  // 案B:イントロデモ専用コマンドにしてしまう。
-  
   handle  = GFL_ARC_OpenDataHandle( ARCID_INTRO_GRA, heap_id );
 
   // 上下画面ＢＧパレット転送
@@ -1266,8 +1259,6 @@ static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* par
 //-----------------------------------------------------------------------------
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  //@TODO モジュール外部で設定されたパラメータをロードしている > 汎用性・セキュリティ性に欠ける。
-  
   // ロードしておいた鳴き声を再生
   PMVOICE_PlayOnly( wk->init_param->voice_load_id );
 

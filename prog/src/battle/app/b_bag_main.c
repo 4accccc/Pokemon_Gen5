@@ -239,9 +239,6 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 {
   BBAG_WORK * wk;
 
-  // メモリリークをチェックするために仮エリアを作成
-//  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_APP_TEST, 0x70000 );
-//  dat->heap = HEAPID_BATTLE_APP_TEST;
   // シューターモードテスト
 //  dat->mode = BBAG_MODE_SHOOTER;
 	// ポケモンドリームキャッチモードテスト

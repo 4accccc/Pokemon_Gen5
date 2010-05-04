@@ -18,7 +18,7 @@
 
 // SE用定義
 //#define WIFINOTE_MOVE_SE		(SEQ_SE_SELECT)
-#define WIFINOTE_MOVE_SE		(SEQ_SE_SELECT1)  //仮
+#define WIFINOTE_MOVE_SE		(SEQ_SE_SELECT1)
 
 #define WIFINOTE_MENU_MOVE_SE	(SEQ_SE_SELECT1)	// メニューの移動音
 

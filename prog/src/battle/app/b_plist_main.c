@@ -286,10 +286,6 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 {
   BPLIST_WORK * wk;
 
-  // メモリリークをチェックするために仮エリアを作成
-//  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_APP_TEST, 0x50000 );
-//  dat->heap = HEAPID_BATTLE_APP_TEST;
-
   if( dat->sel_poke > 5 ){ dat->sel_poke = 0; }
 
   dat->sel_wp = 0;

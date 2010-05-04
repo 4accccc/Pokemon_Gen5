@@ -93,7 +93,7 @@ typedef struct
 	GFL_FONT									*font;
 
 	//プリントキュー
-	PRINT_QUE									*print_que;
+//	PRINT_QUE									*print_que;
 	GFL_MSGDATA								*msg;
 
   INTRO_CMD_WORK*   cmd;
@@ -201,7 +201,7 @@ static GFL_PROC_RESULT IntroProc_Init( GFL_PROC *proc, int *seq, void *pwk, void
 			NARC_message_mictest_dat, wk->heapID );
 
 	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
+//	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
   // MCSS初期化
   wk->mcss = INTRO_MCSS_Create( wk->heapID, wk->param->scene_id );
@@ -261,7 +261,7 @@ static GFL_PROC_RESULT IntroProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void
 	GFL_MSG_Delete( wk->msg );
 
 	//PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
+//	PRINTSYS_QUE_Delete( wk->print_que );
 
 	//FONT
 	GFL_FONT_Delete( wk->font );
@@ -323,7 +323,7 @@ static GFL_PROC_RESULT IntroProc_Main( GFL_PROC *proc, int *seq, void *pwk, void
   }
 
 	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
+//	PRINTSYS_QUE_Main( wk->print_que );
 
 	//2D描画
 	INTRO_GRAPHIC_2D_Draw( wk->graphic );

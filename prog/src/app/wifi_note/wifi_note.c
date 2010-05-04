@@ -4658,7 +4658,7 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
           p_draw->celRes[CEL_RES_WOR],
           &clearadd, CLSYS_DEFREND_MAIN,
           heapID );
-    // とりあえず非表示
+    // 非表示
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clearact, FALSE );
   }
   // ページ番号アクターの作成
@@ -4675,7 +4675,7 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
           p_draw->celRes[CEL_RES_WOR],
           &clearadd, CLSYS_DEFREND_MAIN,
           heapID );
-    // とりあえず非表示
+    // 非表示
 //    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clearact, FALSE );
   }
 }
@@ -6771,11 +6771,7 @@ static void MyCode_BackButtonDraw( WFNOTE_MYCODE* p_wk, WFNOTE_DRAW* p_draw ,BOO
 //-----------------------------------------------------------------------------
 static void FInfo_Init( WFNOTE_FRIENDINFO* p_wk, WFNOTE_DATA* p_data, WFNOTE_DRAW* p_draw, HEAPID heapID )
 {
-  // SaveDataからフロンティアを表示するかチェックする
-  // 今は常に表示
-//FIXME 正しいチェックを ↑はGS移植時の話
-  //p_wk->frontier_draw = SysFlag_ArriveGet(SaveData_GetEventWork(p_data->p_save),FLAG_ARRIVE_D32R0101);
-  p_wk->frontier_draw = TRUE;
+  p_wk->frontier_draw = TRUE;		// 今回はフロンティアの表示がない
 
   FInfo_DrawInit( p_wk, p_data, p_draw, heapID );
 }
