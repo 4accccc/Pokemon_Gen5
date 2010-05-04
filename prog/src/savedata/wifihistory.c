@@ -385,32 +385,12 @@ void WIFIHISTORY_SetUnInfo(WIFI_HISTORY * wh, const int inIdx, const UN_INFO_TYP
   un = &wh->aUnitedPeople[inIdx];
   switch(inType){
   case UN_INFO_RECV_POKE:       //もらったポケモン
-    //@todo 2010/02/02 今のところ未使用
-/**    
-    if ( (0 < inInfo) && (inInfo <= MONSNO_END) ) un->recvPokemon = inInfo;
-    else GF_ASSERT_MSG(0,"monsno error %d", inInfo);
-*/    
     break;
   case UN_INFO_SEND_POKE:      //あげたポケモン
-    //@todo 2010/02/02 今のところ未使用
-/**
-    if ( (0 < inInfo) && (inInfo <= MONSNO_END) ) un->sendPokemon = inInfo;
-    else GF_ASSERT_MSG(0,"monsno error %d", inInfo);
-*/    
     break;
   case UN_INFO_FAVORITE:       //趣味
-    //@todo 2010/02/02 今のところ未使用
-/**    
-    if (inInfo < 5) un->favorite = inInfo;
-    else GF_ASSERT_MSG(0,"favorite error %d", inInfo);
-*/    
     break;
   case UN_INFO_COUNTRY_NUM:    //交換した国の数
-    //@todo 2010/02/02 今のところ未使用
-/**    
-    if (inInfo <= WIFI_COUNTRY_MAX) un->countryCount = inInfo;
-    else GF_ASSEERT_MSG(0,"contry error %d", inInfo);
-*/    
     break;
   case UN_INFO_NATURE:         //性格
     if (inInfo < 5 ) un->nature = inInfo;
