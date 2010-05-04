@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-04T11:51:44"/>
+	<create user="nakamura_akira" host="W00161" date="2010-05-04T11:56:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -808,7 +808,7 @@ assistantm_01_06へ続く
 人数調査　⇒　assistantm_01_14d</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">おとことと　おんな　おおいのは？</language>
-		<language name="JPN_KANJI" width="256">少年と　少女　多いのは？</language>
+		<language name="JPN_KANJI" width="256">男と　女　多いのは？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1172,7 +1172,7 @@ assistantm_01_15へ続く
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　新聞社　からの　依頼だな▼
 ４時間　以上　調査して
-少年と　少女▽
+男と　女▽
 どっちが　多いかを▽
 調べてくる　調査だ▼
 調査の　結果を
@@ -1959,7 +1959,7 @@ assistantm_01_23○へ続く
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　新聞社　からの　依頼だな▼
 １０人　以上と　すれ違って
-少年と　少女▽
+男と　女▽
 どっちが　多いかを▽
 調べてくる　調査だ▼
 調査の　結果を
@@ -2724,7 +2724,7 @@ assistantm_01_17へ続く
 おおいのは？』の▽
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『少年と　少女　多いのは？』の▽
+『男と　女　多いのは？』の▽
 調査　依頼を　受けた！▼</language>
 	</row>
 
@@ -3243,7 +3243,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『少年と　少女
+		<language name="JPN_KANJI" width="256">まだ　『男と　女
 多いのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
@@ -3958,7 +3958,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『少年と　少女
+		<language name="JPN_KANJI" width="256">まだ　『男と　女
 多いのは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
@@ -4658,7 +4658,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『少年と　少女
+		<language name="JPN_KANJI" width="256">まだ　『男と　女
 多いのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
@@ -5334,7 +5334,7 @@ assistantm_01_17へ続く
 		<language name="JPN" width="256">『おとことと　おんな
 おおいのは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</language>
-		<language name="JPN_KANJI" width="256">『少年と　少女　多いのは？』の
+		<language name="JPN_KANJI" width="256">『男と　女　多いのは？』の
 調査を　隊長に　報告した！▼</language>
 	</row>
 
