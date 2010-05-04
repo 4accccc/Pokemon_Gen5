@@ -54,6 +54,8 @@
 #define RECOVER_FRAMES (30) // アニメーションフレーム数
 #define RECOVER_MIN_EVY (0) // 最小フェード係数[0, 16]
 #define RECOVER_MAX_EVY (7) // 最大フェード係数[0, 16]
+// 非アクティブ状態
+#define NOT_ACTIVE_EVY (7) // フェード係数[0, 16]
 
 
 //=============================================================================
@@ -93,6 +95,7 @@ static void UpdateAnime_BLINK_LONG( PALETTE_ANIME* work ); // アニメーションを更
 static void UpdateAnime_BLINK_BRIGHT( PALETTE_ANIME* work ); // アニメーションを更新する ( 明 )
 static void UpdateAnime_HOLD( PALETTE_ANIME* work ); // アニメーションを更新する ( 暗転 )
 static void UpdateAnime_RECOVER( PALETTE_ANIME* work ); // アニメーションを更新する ( 暗転からの復帰 )
+static void UpdateAnime_NOT_ACTIVE( PALETTE_ANIME* work ); // アニメーションを更新する ( 非アクティブ状態 )
 //-----------------------------------------------------------------------------
 // ◆LAYER 1 制御
 //-----------------------------------------------------------------------------
@@ -293,6 +296,7 @@ static void UpdateAnime( PALETTE_ANIME* work )
   case ANIME_TYPE_BLINK_BRIGHT:  UpdateAnime_BLINK_BRIGHT( work );  break;
   case ANIME_TYPE_HOLD:          UpdateAnime_HOLD( work );          break;
   case ANIME_TYPE_RECOVER:       UpdateAnime_RECOVER( work );       break;
+  case ANIME_TYPE_NOT_ACTIVE:    UpdateAnime_NOT_ACTIVE( work );    break;
   default: GF_ASSERT(0);
   }
 }
@@ -593,6 +597,25 @@ static void UpdateAnime_RECOVER( PALETTE_ANIME* work )
     StopAnime( work );
     ResetPalette( work );
   }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーションを更新する ( 非アクティブ状態 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_NOT_ACTIVE( PALETTE_ANIME* work )
+{
+  GF_ASSERT( work->animeFlag ); // アニメーション停止中
+  GF_ASSERT( work->setupFlag ); // セットアップされていない
+
+  // パレット書き換え
+  SoftFade( work->originalColor, work->transDest, work->colorNum, NOT_ACTIVE_EVY, work->fadeColor ); 
+
+  // アニメーションフレーム数をインクリメント
+  work->frameCount++;
 }
 
 //-----------------------------------------------------------------------------

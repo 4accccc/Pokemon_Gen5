@@ -339,9 +339,9 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     // 元データのアドレス
     (u16*)( HW_BG_PLTT + 
             (MAIN_BG_PALETTE_WINDOW_OFF_CHANGE * ONE_PALETTE_SIZE) ),
-    16, // 転送カラー数
-    ANIME_TYPE_HOLD,               // アニメーションタイプ
-    0x0000,                         // フェードカラー
+    16,                      // 転送カラー数
+    ANIME_TYPE_NOT_ACTIVE,   // アニメーションタイプ
+    0x0000,                  // フェードカラー
   },
   //『調査を決める』ボタンを非アクティブにする
   { 
@@ -351,9 +351,9 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     // 元データのアドレス
     (u16*)( HW_BG_PLTT + 
             (MAIN_BG_PALETTE_FONT_NOT_ACTIVE * ONE_PALETTE_SIZE) ),
-    16, // 転送カラー数
-    ANIME_TYPE_HOLD,               // アニメーションタイプ
-    0x0000,                         // フェードカラー
+    16,                      // 転送カラー数
+    ANIME_TYPE_NOT_ACTIVE,   // アニメーションタイプ
+    0x0000,                  // フェードカラー
   },
 };
 

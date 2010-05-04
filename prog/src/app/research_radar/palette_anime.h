@@ -28,8 +28,9 @@ typedef enum {
   ANIME_TYPE_BLINK_SHORT,   // 点滅 ( 短 )
   ANIME_TYPE_BLINK_LONG,    // 点滅 ( 長 )
   ANIME_TYPE_BLINK_BRIGHT,  // 点滅 ( 明 )
-  ANIME_TYPE_HOLD,          // 暗転
-  ANIME_TYPE_RECOVER,       // 暗転からの復帰
+  ANIME_TYPE_HOLD,          // 暗転 ( フェード )
+  ANIME_TYPE_RECOVER,       // 暗転からの復帰 ( フェード )
+  ANIME_TYPE_NOT_ACTIVE,    // 非アクティブ状態
 } ANIME_TYPE;
 
 
