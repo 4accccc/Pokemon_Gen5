@@ -690,9 +690,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_Init( WEATHER_TASK* p_
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
-
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
   p_local_wk->weather_no = WEATHER_NO_PALACE_WHITE_MIST;
@@ -705,6 +702,9 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_Init( WEATHER_TASK* p_
   p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
   p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
 
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, p_local_wk->slope, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_wk, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
@@ -714,9 +714,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_
 
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
-
-	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
@@ -729,6 +726,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_Init( WEATHER_TASK* p_
   p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
   p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
 
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, p_local_wk->slope, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -739,9 +740,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_HIGH_Init( WEATHER_TAS
 
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
-
-	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
@@ -754,6 +752,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_WHITE_MIST_HIGH_Init( WEATHER_TAS
   p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
   p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
 
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, p_local_wk->slope, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
+
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }
 
@@ -765,9 +767,6 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_HIGH_Init( WEATHER_TAS
 	// ローカルワーク取得
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 
-	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
-
 	p_local_wk->work[0] = 0;	// 同じくフォグ用
 
   p_local_wk->weather_no = WEATHER_NO_PALACE_BLACK_MIST_HIGH;
@@ -778,6 +777,10 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_PALACE_BLACK_MIST_HIGH_Init( WEATHER_TAS
   // slope と offsを求める
   p_local_wk->slope = sc_PALACE_MIST_FOG_SLOPE[ camera_type ];
   p_local_wk->offs  = sc_PALACE_MIST_FOG_OFFS[ camera_type ];
+
+
+	// フォグの設定
+	WEATHER_TASK_FogSet( p_wk, p_local_wk->slope, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
 
 	return WEATHER_TASK_FUNC_RESULT_FINISH;
 }

@@ -256,12 +256,6 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_storm)
 	},
 
-	// 霧
-	{
-		&c_WEATHER_TASK_DATA_MIST,
-		FS_OVERLAY_ID(field_weather_mist)
-	},
-
 
 	// パレスホワイト霧 HIGH
 	{
@@ -343,6 +337,9 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 {
 	FIELD_WEATHER* p_sys;
 	int i;
+
+  // データ数と定義が一致するかチェック
+  GF_ASSERT( NELEMS(sc_FIELD_WEATHER_DATA) == WEATHER_NO_NUM );
 
 	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WEATHER) );
 
