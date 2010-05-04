@@ -1069,12 +1069,14 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
     return FALSE;
   }
   
+#if 0 //ターゲットを強制的に表に戻すようにしたので必要なくなった 2010.05.04(火)
   if(ZONEDATA_IsPalaceField(intcomm->intrude_status[entry_req->target_info.net_id].zone_id)==TRUE
       || ZONEDATA_IsPalace(intcomm->intrude_status[entry_req->target_info.net_id].zone_id)==TRUE){
     OS_TPrintf("NG:ターゲットが裏にいる\n");
     mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG_TARGET_REVERSE;
     return FALSE;
   }
+#endif
   
   if(entry_req->cdata.type == MISSION_TYPE_VICTORY){
     if(GFL_NET_SystemGetConnectNum() != 2 || GFL_NET_GetConnectNum() != 2){
