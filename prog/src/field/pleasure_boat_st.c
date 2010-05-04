@@ -85,7 +85,7 @@ GMEVENT * PL_BOAT_CreateDemoEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work, u16 *
   //現在の船内経過時間を取得してデモパラメータにセット
   DEMO3D_PARAM_SetFromRTC( &evt_work->Param, gsys, DEMO3D_ID_C_CRUISER, 0);
   evt_work->Param.start_frame = PL_BOAT_GetTime( work );
-  OS_Printf("start_frame = %d\n",evt_work->Param.start_frame);
+  NOZOMU_Printf("start_frame = %d\n",evt_work->Param.start_frame);
 
   return event;
 }
@@ -136,7 +136,7 @@ static GMEVENT_RESULT DemoCallEvt( GMEVENT* event, int* seq, void* work )
     //経過時間セット
     PL_BOAT_SetTime(evt_work->Ptr, evt_work->Param.end_frame);
 
-    OS_Printf("end_frame = %d\n",evt_work->Param.end_frame);
+    NOZOMU_Printf("end_frame = %d\n",evt_work->Param.end_frame);
     //イベント終了
     return GMEVENT_RES_FINISH;
   }
