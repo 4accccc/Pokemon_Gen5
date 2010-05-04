@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-05-04T03:00:08"/>
+	<create user="ohmori" host="W00223" date="2010-05-04T11:18:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="174"/>
 		<band id="2" index="2" style="0000" width="767"/>
 		<band id="3" index="3" style="0000" width="767"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1049,10 +1049,12 @@
 	<row id="plc_target_warp">
 		<comment>ミッションのターゲットにされたため、裏フィールドから
 強制的に表フィールドへ戻されるときのメッセージ</comment>
-		<language name="JPN" width="256">ミッションターゲットにされたため
-おもての　せかいに　もどります▼</language>
-		<language name="JPN_KANJI" width="256">ミッションターゲットにされたため
-おもての　せかいに　もどります▼</language>
+		<language name="JPN" width="256">じぶんを　たすけるための
+ミッションが　かいししたので▽
+もとのせかいに　もどります▼</language>
+		<language name="JPN_KANJI" width="256">自分を　助ける為の
+ミッションが　開始したので▽
+元の世界に　戻ります▼</language>
 	</row>
 
 	<flowchart-group-list>
