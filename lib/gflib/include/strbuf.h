@@ -1,16 +1,16 @@
 //=============================================================================================
 /**
- * @file	strbuf.h
- * @brief	汎用文字列バッファ型オブジェクト
+ * @file  strbuf.h
+ * @brief 汎用文字列バッファ型オブジェクト
  */
 //=============================================================================================
 #ifndef __STRBUF_H__
 #define __STRBUF_H__
 
-typedef	u16 STRCODE;
-typedef struct _STRBUF	STRBUF;
+typedef u16 STRCODE;
+typedef struct _STRBUF  STRBUF;
 
-#define EOM_CODESIZE			(1)
+#define EOM_CODESIZE      (1)
 
 
 #ifdef __cplusplus
@@ -22,9 +22,9 @@ extern "C" {
 /**
  * EOMコードを設定する
  *
- * @param   code	終端コード	
+ * @param   code  終端コード
  *
- * @brief	文字列埋め込みコマンドの仕様によっては、
+ * @brief 文字列埋め込みコマンドの仕様によっては、
  *          EOMコードが固定だと不都合なことがあるために用意した。
  *          通常、プログラム起動直後に１度だけ呼ばれることを想定している。
  */
@@ -35,106 +35,120 @@ extern void GFL_STR_SetEOMCode( STRCODE code );
 /**
  * 指定されたポインタがSTRBUFとして有効なものであるかチェック
  *
- * @param   ptr		ポインタ
+ * @param   ptr   ポインタ
  *
- * @retval  BOOL	TRUEで有効である
+ * @retval  BOOL  TRUEで有効である
  */
 //------------------------------------------------------------------
 extern BOOL
-	GFL_STR_CheckBufferValid
-		(const void* ptr);
+  GFL_STR_CheckBufferValid
+    (const void* ptr);
 
 //------------------------------------------------------------------
 /**
  * 文字列バッファオブジェクト作成
  *
- * @param   size		格納できる文字数（EOMを含む）
- * @param   heapID		作成先ヒープID
+ * @param   size    格納できる文字数（EOMを含む）
+ * @param   heapID    作成先ヒープID
  *
- * @retval  STRBUF*		オブジェクトへのポインタ
+ * @retval  STRBUF*   オブジェクトへのポインタ
  */
 //------------------------------------------------------------------
 extern STRBUF*
-	GFL_STR_CreateBuffer
-		( u32 size, HEAPID heapID );
+  GFL_STR_CreateBuffer
+    ( u32 size, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
  * 文字列バッファオブジェクト削除
  *
- * @param   strbuf		オブジェクトへのポインタ
+ * @param   strbuf    オブジェクトへのポインタ
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_DeleteBuffer
-		( STRBUF* strbuf );
+  GFL_STR_DeleteBuffer
+    ( STRBUF* strbuf );
 
 //------------------------------------------------------------------
 /**
  * 内容をクリアして空文字列にする
  * （Create 直後はクリアされているので呼ぶ必要は無い）
  *
- * @param   strbuf		オブジェクトへのポインタ
+ * @param   strbuf    オブジェクトへのポインタ
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_ClearBuffer
-		( STRBUF* strbuf );
+  GFL_STR_ClearBuffer
+    ( STRBUF* strbuf );
 
 //------------------------------------------------------------------
 /**
  * バッファ間の文字列コピー
  *
- * @param   dst		コピー先バッファオブジェクト
- * @param   src		コピー元バッファオブジェクト
+ * @param   dst   コピー先バッファオブジェクト
+ * @param   src   コピー元バッファオブジェクト
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_CopyBuffer
-		( STRBUF* dst, const STRBUF* src );
+  GFL_STR_CopyBuffer
+    ( STRBUF* dst, const STRBUF* src );
 
 //------------------------------------------------------------------
 /**
  * 同じ内容のバッファを複製する
  *
- * @param   strbuf		複製元のバッファオブジェクト
+ * @param   strbuf    複製元のバッファオブジェクト
  *
- * @retval  STRBUF*		複製されたバッファオブジェクト
+ * @retval  STRBUF*   複製されたバッファオブジェクト
  */
 //------------------------------------------------------------------
 extern STRBUF*
-	GFL_STR_CreateCopyBuffer
-		( const STRBUF* origin, HEAPID heapID );
+  GFL_STR_CreateCopyBuffer
+    ( const STRBUF* origin, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
  * 文字列を比較する
  *
- * @param   str1		文字列１
- * @param   str2		文字列２
+ * @param   str1    文字列１
+ * @param   str2    文字列２
  *
- * @retval  BOOL		TRUEで一致
+ * @retval  BOOL    TRUEで一致
  */
 //------------------------------------------------------------------
 extern BOOL
-	GFL_STR_CompareBuffer
-		( const STRBUF* str1, const STRBUF* str2 );
+  GFL_STR_CompareBuffer
+    ( const STRBUF* str1, const STRBUF* str2 );
 
 //------------------------------------------------------------------
 /**
  * 格納されている文字数を返す
  *
- * @param   strbuf		文字列バッファオブジェクト
+ * @param   strbuf    文字列バッファオブジェクト
  *
- * @retval  u32		文字数
+ * @retval  u32   文字数
  */
 //------------------------------------------------------------------
 extern u32
-	GFL_STR_GetBufferLength
-		( const STRBUF* str );
+  GFL_STR_GetBufferLength
+    ( const STRBUF* str );
+
+
+//------------------------------------------------------------------
+/**
+ * 指定位置にEOMコードを設定する（！！使用は許可制です！！）
+ *
+ * @param   buf     文字列バッファオブジェクト
+ * @param   eom_pos EOMコードをセットする位置（文字数Index）
+ *
+ */
+//------------------------------------------------------------------
+void
+  GFL_STR_SetBufferLength
+    ( STRBUF* buf, u32 eom_pos );
 
 
 //==============================================================================================
@@ -145,7 +159,7 @@ extern u32
 /**
  * EOMコードを取得
  *
- * @retval  STRCODE		EOMコード
+ * @retval  STRCODE   EOMコード
  */
 //------------------------------------------------------------------
 extern STRCODE GFL_STR_GetEOMCode( void );
@@ -154,56 +168,56 @@ extern STRCODE GFL_STR_GetEOMCode( void );
 /**
  * 生の文字列（EOM終端）をバッファオブジェクトにセットする
  *
- * @param   strbuf		[out] バッファオブジェクトへのポインタ
- * @param   sz			[in]  EOM で終わる文字配列
+ * @param   strbuf    [out] バッファオブジェクトへのポインタ
+ * @param   sz      [in]  EOM で終わる文字配列
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_SetStringCode
-		( STRBUF* strbuf, const STRCODE* sz );
+  GFL_STR_SetStringCode
+    ( STRBUF* strbuf, const STRCODE* sz );
 
 //------------------------------------------------------------------
 /**
  * 生の文字列（長さ指定）をバッファオブジェクトにセットする
  *
- * @param   strbuf		[out] バッファオブジェクトへのポインタ
- * @param   str			[in]  文字配列の先頭ポインタ
- * @param   len			[in]  セットする文字数（EOMを含む）
+ * @param   strbuf    [out] バッファオブジェクトへのポインタ
+ * @param   str     [in]  文字配列の先頭ポインタ
+ * @param   len     [in]  セットする文字数（EOMを含む）
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_SetStringCodeOrderLength
-		( STRBUF* strbuf, const STRCODE* str, u32 len );
+  GFL_STR_SetStringCodeOrderLength
+    ( STRBUF* strbuf, const STRCODE* str, u32 len );
 
 //------------------------------------------------------------------
 /**
  * バッファから生の文字配列をコピーする
  *
- * @param   strbuf		[in]  バッファオブジェクトへのポインタ
- * @param   ary			[out] コピー先配列
- * @param   arysize		[in]  コピー先配列の要素数
+ * @param   strbuf    [in]  バッファオブジェクトへのポインタ
+ * @param   ary     [out] コピー先配列
+ * @param   arysize   [in]  コピー先配列の要素数
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_GetStringCode
-		( const STRBUF* strbuf, STRCODE* ary, u32 arysize );
+  GFL_STR_GetStringCode
+    ( const STRBUF* strbuf, STRCODE* ary, u32 arysize );
 
 //------------------------------------------------------------------
 /**
  * バッファオブジェクトが内包する文字配列のアドレスを返す
  * ※この関数を呼び出す箇所は超限定。たぶん文字出力系のみ。
  *
- * @param   strbuf				[in] バッファオブジェクトへのポインタ
+ * @param   strbuf        [in] バッファオブジェクトへのポインタ
  *
- * @retval  const STRCODE*		文字配列のアドレス
+ * @retval  const STRCODE*    文字配列のアドレス
  */
 //------------------------------------------------------------------
-extern const STRCODE* 
-	GFL_STR_GetStringCodePointer
-		( const STRBUF* strbuf );
+extern const STRCODE*
+  GFL_STR_GetStringCodePointer
+    ( const STRBUF* strbuf );
 
 
 //==============================================================================================
@@ -214,39 +228,39 @@ extern const STRCODE*
 /**
  * 文字列連結
  *
- * @param   dst		連結されるバッファオブジェクト
- * @param   src		連結する文字列を持つバッファオブジェクト
+ * @param   dst   連結されるバッファオブジェクト
+ * @param   src   連結する文字列を持つバッファオブジェクト
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_AddString
-		( STRBUF* dst, const STRBUF* src );
+  GFL_STR_AddString
+    ( STRBUF* dst, const STRBUF* src );
 
 //------------------------------------------------------------------
 /**
  * １文字連結
  *
- * @param   dst			連結されるバッファオブジェクト
- * @param   code		連結する文字コード
+ * @param   dst     連結されるバッファオブジェクト
+ * @param   code    連結する文字コード
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_AddCode
-		( STRBUF* dst, STRCODE code );
+  GFL_STR_AddCode
+    ( STRBUF* dst, STRCODE code );
 
 //------------------------------------------------------------------
 /**
  * １文字削除
  *
- * @param   dst			対象バッファオブジェクト
+ * @param   dst     対象バッファオブジェクト
  *
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_DelCode
-		( STRBUF* dst );
+  GFL_STR_DelCode
+    ( STRBUF* dst );
 
 #ifdef __cplusplus
 }/* extern "C" */
