@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-04T12:03:40"/>
+	<create user="nakamura_akira" host="W00161" date="2010-05-04T13:54:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="141" right="2013" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -983,12 +983,12 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんにんきのある　スポーツは？』　
+『いちばんにんきの　スポーツは？』　
 時間調査　⇒　assistantm_01_13s
 人数調査　⇒　assistantm_01_14s</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばん　にんきのある　スポーツは？</language>
-		<language name="JPN_KANJI" width="256">１番　人気のある　スポーツは？</language>
+		<language name="JPN" width="256">いちばん　にんきの　スポーツは？</language>
+		<language name="JPN_KANJI" width="256">１番　人気の　スポーツは？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1019,12 +1019,12 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんにんきのある　ジムリーダーは？』　
+『いちばんにんきの　ジムリーダーは？』　
 時間調査　⇒　assistantm_01_13v
 人数調査　⇒　assistantm_01_14v</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">いちばん　にんきのある　ジムリーダーは？</language>
-		<language name="JPN_KANJI" width="256">１番　人気のある　ジムリーダーは？</language>
+		<language name="JPN" width="256">いちばん　にんきの　ジムリーダーは？</language>
+		<language name="JPN_KANJI" width="256">１番　人気の　ジムリーダーは？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2995,11 +2995,11 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばん　にんきのある▽
+『いちばん　にんきの▽
 スポーツは？』の▽
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番　人気のある　スポーツは？』の▽
+『１番　人気の　スポーツは？』の▽
 調査　依頼を　受けた！▼</language>
 	</row>
 
@@ -3050,11 +3050,11 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『いちばん　にんきのある▽
+『いちばん　にんきの▽
 ジムリーダーは？』の▽
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『１番　人気のある▽
+『１番　人気の▽
 ジムリーダーは？』の▽
 調査　依頼を　受けた！▼</language>
 	</row>
@@ -3696,7 +3696,7 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+		<language name="JPN" width="256">まだ　『いちばん　にんきの
 スポーツは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
@@ -3705,7 +3705,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気の
 スポーツは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
@@ -3789,7 +3789,7 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+		<language name="JPN" width="256">まだ　『いちばん　にんきの
 ジムリーダーは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
@@ -3798,7 +3798,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気の
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
@@ -4395,7 +4395,7 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+		<language name="JPN" width="256">まだ　『いちばん　にんきの
 スポーツは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
@@ -4404,7 +4404,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気の
 スポーツは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
@@ -4485,7 +4485,7 @@ assistantm_01_17へ続く
 『いいえ』　⇒　assistantm_01_12へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+		<language name="JPN" width="256">まだ　『いちばん　にんきの
 ジムリーダーは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
@@ -4494,7 +4494,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気の
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
@@ -5109,7 +5109,7 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+		<language name="JPN" width="256">まだ　『いちばん　にんきの
 スポーツは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
@@ -5118,7 +5118,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
+		<language name="JPN_KANJI" width="256">まだ　『１番　人気の
 スポーツは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
@@ -5202,7 +5202,7 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『いちばん　にんきのある
+		<language name="JPN" width="256">まだ　『いちばん　にんきの
 ジムリーダーは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
@@ -5211,7 +5211,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『一番　人気のある
+		<language name="JPN_KANJI" width="256">まだ　『一番　人気の
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
@@ -5564,10 +5564,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24sへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばん　にんきのある
+		<language name="JPN" width="256">『いちばん　にんきの
 スポーツは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</language>
-		<language name="JPN_KANJI" width="256">『１番　人気のある　スポーツは？』の
+		<language name="JPN_KANJI" width="256">『１番　人気の　スポーツは？』の
 調査を　隊長に　報告した！▼</language>
 	</row>
 
@@ -5612,10 +5612,10 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24vへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『いちばん　にんきのある
+		<language name="JPN" width="256">『いちばん　にんきの
 ジムリーダーは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</language>
-		<language name="JPN_KANJI" width="256">『１番　人気のある
+		<language name="JPN_KANJI" width="256">『１番　人気の
 ジムリーダーは？』の▽
 調査を　隊長に　報告した！▼</language>
 	</row>
