@@ -231,6 +231,9 @@ typedef void (*NetDeleteFriendListCallback)(int deletedIndex, int srcIndex, void
 typedef void* (*NetGetDWCUserDataCallback)(void* pWork); ///< DWCのユーザデータ（自分のデータ）を得るDWCUserData
 typedef void* (*NetGetDWCFriendDataCallback)(void* pWork); ///< DWC形式の友達リストDWCFriendData
 
+/// 比較コールバック
+typedef BOOL (IrcGSIDCallback)(u8 mygsid,u8 friendgsid);
+
 
 /// @brief 通信の初期化用構造体
 typedef struct{
@@ -533,6 +536,14 @@ extern void GFL_NET_IRCWIRELESS_SetChangeGSID(u8 gsid);
  */
 //==============================================================================
 extern void GFL_NET_IRCWIRELESS_GetMacAddress(u8 *mac_address, int no);
+
+//==============================================================================
+/**
+ * @brief   GSID設定コールバック
+ * @param   callback
+ */
+//==============================================================================
+extern void GFL_NET_IRCWIRELESS_SetGSIDCallback(IrcGSIDCallback* callback);
 
 //==============================================================================
 /**

@@ -82,6 +82,8 @@ typedef void (*DevSetClientConnectFunc)(BOOL bEnable); ///< 子機がつながってよい
 typedef BOOL (*DevCrossScanFunc)(void); ///< すれ違い通信開始
 typedef void (*DevCrossScanChangeSpeedFunc)(int num); ///< すれ違い速度変更
 typedef void (*DevSetTimeOutFunc)(int time); ///< タイムアウト時間
+typedef void (*DevSetGSIDCheckFunc)(IrcGSIDCallback* gsidchk); ///< チェック
+
 
 typedef BOOL (*DevLobbyLoginFunc)(const void* cp_loginprofile); ///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 typedef void (*DevDebugSetRoomFunc)( u32 locktime, u32 random, u8 roomtype, u8 season ); ///<デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
@@ -154,6 +156,7 @@ typedef struct{
   DevCrossScanFunc DevCrossScan; ///<  すれ違い通信開始
   DevCrossScanChangeSpeedFunc DevCrossScanChangeSpeed; ///<  すれ違い通信速度変更
   DevSetTimeOutFunc DevSetTimeOut;  ///< タイムアウト
+  DevSetGSIDCheckFunc DevSetGSIDCheck;  ///< チェック
 
 #if 0
   //-- 以下、Wi-Fi広場専用
