@@ -454,6 +454,11 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->isFinish = FALSE;
   drawWork->reqStopCamera = FALSE;
   drawWork->palCalAnm = 0;
+  {
+    //ƒyƒ“‚ÌF“]‘—
+    u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 0*32 + 2*0xd);
+    *spoitColAdr = (drawWork->penCol&0x7FFF);
+  }
 
   CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
   
