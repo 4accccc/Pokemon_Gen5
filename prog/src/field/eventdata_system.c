@@ -202,6 +202,8 @@ void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
 	EVENTDATA_SYS_Clear(evdata);
 	evdata->now_zone_id = zone_id;
 
+  OS_Printf("イベントデータロード zone %d season %d\n", zone_id, season_id);
+
   loadSpecialScriptData( evdata, zone_id );
   loadEventDataTableNormal(evdata, zone_id);
   loadEncountDataTable( evdata, zone_id, season_id );
