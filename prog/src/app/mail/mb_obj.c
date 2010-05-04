@@ -623,50 +623,6 @@ static void PokeIconResFree( MAILBOX_APP_WORK * appwk )
 }
 */
 
-#if 0
-//--------------------------------------------------------------------------------------------
-/**
- * ポケモンアイコン表示
- *
- * @param syswk システムワーク
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-void MBOBJ_PokeIconPut( MAILBOX_SYS_WORK * syswk )
-{
-  MAIL_DATA * md;
-  NNSG2dCharacterData * chr;
-  NNSG2dImageProxy * ipc;
-  void * buf;
-  u32 cgx;
-  u32 i;
-  MAIL_ICON mi;
-  
-  md = syswk->app->mail[ syswk->lst_pos ];
-
-  for( i=0; i<MAILDAT_ICONMAX; i++ ){
-    mi.dat = MailData_GetIconParamByIndex( md, i, MAIL_ICONPRM_ALL, MailData_GetFormBit(md) );
-    if( mi.dat == MAIL_ICON_NULL || mi.cgxID == NARC_poke_icon_poke_icon_000_m_NCGR ){
-      MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON1+i, FALSE );
-      continue;
-    }
-
-//    ipc = CLACT_ImageProxyGet( syswk->app->clwk[MBMAIN_OBJ_POKEICON1+i]->act );
-//    cgx = NNS_G2dGetImageLocation( ipc, NNS_G2D_VRAM_TYPE_2DSUB );
-    cgx = GFL_CLGRP_CGR_GetAddr( syswk->app->clres[RES_CGR][CHR_ID_POKEICON1+i], CLSYS_DRAW_SUB );
-    buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( syswk->app->pokeicon_ah, mi.cgxID, 0, &chr, HEAPID_MAILBOX_APP );
-    DC_FlushRange( chr->pRawData, POKEICON_CGX_SIZE );
-    GXS_LoadOBJ( chr->pRawData, cgx, POKEICON_CGX_SIZE );
-    GFL_HEAP_FreeMemory( buf );
-
-    GFL_CLACT_WK_SetPlttOffs( syswk->app->clwk[MBMAIN_OBJ_POKEICON1+i], mi.palID, 
-                              CLWK_PLTTOFFS_MODE_PLTT_TOP );
-    MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON1+i, TRUE );
-  }
-}
-
-#endif
 
 //============================================================================================
 //  その他のＯＢＪ
