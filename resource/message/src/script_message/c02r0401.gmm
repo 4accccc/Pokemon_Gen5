@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T12:54:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-04T12:40:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -326,7 +326,7 @@
 		<language name="JPN_KANJI" width="256">クリティカッター？　イッシュじゃ
 クリティカットって　名称なんだよ▼
 勝負のとき　技が　急所に
-当たるって　かなり　協力だぜ！</language>
+当たるって　かなり　強力だぜ！</language>
 	</row>
 
 	<row id="msg_c02r0401_shopm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -335,10 +335,10 @@
 ・購入できるのは
 　クリティカットなど</comment>
 		<attribute name="キャラ指定">SHOPM</attribute>
-		<language name="JPN" width="256">この　そうこで　おみせを　はじめたんだ
-よければ　なにか　かっていってよ！▼</language>
-		<language name="JPN_KANJI" width="256">この倉庫で　お店を　始めたんだ
-よければ　なにか　買っていってよ！▼</language>
+		<language name="JPN" width="256">この　そうこで
+おみせを　はじめたんだ！▼</language>
+		<language name="JPN_KANJI" width="256">この倉庫で
+お店を　始めたんだ！▼</language>
 	</row>
 
 	<flowchart-group-list>
