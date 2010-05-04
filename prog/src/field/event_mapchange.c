@@ -74,7 +74,7 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"    // SYS_FLAG_SPEXIT_REQUEST
 #include "../../../resource/fldmapdata/flagwork/work_define.h"    // WK_SYS_SCENE_COMM 
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h"  // SCRID_POKECEN_ELEVATOR_OUT
-
+#include "sheimi_normalform.h"    //for SHEIMI_NFORM_ChangeNormal
 
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
@@ -542,7 +542,6 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
  * @brief ゲームコンティニューイベント生成
  *
  * @todo  LOCATION_SetDirectを使用していて問題ないか調査する
- * @todo  ペナルティ適用時にシェイミのフォルムを戻す処理を入れる
  */
 //------------------------------------------------------------------
 static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
@@ -572,6 +571,12 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
     {
       //ペナルティ時間を設定する
       GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
+      //シェイミのフォルムを戻す
+      {
+        POKEPARTY *ppt;
+        ppt = SaveData_GetTemotiPokemon(svdt);
+        SHEIMI_NFORM_ChangeNormal(ppt);
+      }
     }
     //現在のDS本体情報を今後の設定とする
     SYSTEMDATA_Update( sysdt );
