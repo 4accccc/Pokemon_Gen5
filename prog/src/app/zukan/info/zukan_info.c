@@ -20,8 +20,6 @@
 #include "print/wordset.h"
 #include "print/global_msg.h"
 
-#include "ui/ui_easy_clwk.h"
-
 #include "system/poke2dgra.h"
 
 #include "poke_tool/pokefoot.h"
@@ -413,17 +411,21 @@ struct _ZUKAN_INFO_WORK
   u32          ncl_poke2d[OBJ_SWAP_MAX];   // clwk_poke2d[i]がNULLでないときncl_poke2d[i]は有効
   u32          nce_poke2d[OBJ_SWAP_MAX];   // clwk_poke2d[i]がNULLでないときnce_poke2d[i]は有効
   GFL_CLWK*    clwk_poke2d[OBJ_SWAP_MAX];  // ないときはclwk_poke2d[i]はNULL
-  OBJ_SWAP     curr_swap_poke2d;           // 今表示しているclwk_poke2dはclwk_poke2d[curr_poke2d]
+  OBJ_SWAP     curr_swap_poke2d;           // 今表示しているclwk_poke2dはclwk_poke2d[curr_swap_poke2d]
 
   // タイプアイコン
-  u32       typeicon_cg_idx[2];
+  u32       typeicon_cg_idx[OBJ_SWAP_MAX][2];  // ないときはtypeicon_cg_idx[i][j]はGFL_CLGRP_REGISTER_FAILED
   u32       typeicon_cl_idx;
   u32       typeicon_cean_idx;
-  GFL_CLWK* typeicon_clwk[2];
+  GFL_CLWK* typeicon_clwk[OBJ_SWAP_MAX][2];    // typeicon_cg_idx[i][j]がGFL_CLGRP_REGISTER_FAILEDでないときtypeicon_clwk[i][j]は有効  // これをNULLにはしていないので注意して。
+  OBJ_SWAP  curr_swap_typeicon;                // 今表示しているtypeicon_clwkはtypeicon_clwk[curr_swap_typeicon][j]
 
   // ポケモンの足跡
-  UI_EASY_CLWK_RES clres_pokefoot;
-  GFL_CLWK* clwk_pokefoot;
+  u32       ncg_pokefoot[OBJ_SWAP_MAX];   // clwk_pokefoot[i]がNULLでないときncg_pokefoot[i]は有効
+  u32       ncl_pokefoot;
+  u32       nce_pokefoot;
+  GFL_CLWK* clwk_pokefoot[OBJ_SWAP_MAX];  // ないときはclwk_pokefoot[i]はNULL
+  OBJ_SWAP  curr_swap_pokefoot;           // 今表示しているclwk_pokefootはclwk_pokefoot[curr_swap_pokefoot]
 
   // パレットアニメーション
   u16 anm_cnt;
@@ -456,29 +458,41 @@ static void Zukan_Info_DeleteBall( ZUKAN_INFO_WORK* work );
 static void Zukan_Info_TransBall_VBlank( ZUKAN_INFO_WORK* work );
 
 //ポケモン2D
+static void Zukan_Info_Poke2dLoadCreate( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y, OBJ_SWAP swap_idx );
+static void Zukan_Info_Poke2dDeleteUnload( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
 static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
 static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
 static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y, OBJ_SWAP swap_idx );
 static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
+static void Zukan_Info_DrawOffNotCurrPoke2d( ZUKAN_INFO_WORK* work );
 
 // タイプアイコン
-static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang );
-static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2 );
-static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, ZUKAN_INFO_LANG lang );
-static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_CreateTypeiconBase( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_DeleteTypeiconBase( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang, OBJ_SWAP swap_idx );
+static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, OBJ_SWAP swap_idx );
+static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, ZUKAN_INFO_LANG lang, OBJ_SWAP swap_idx );
+static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
+static void Zukan_Info_DrawOffNotCurrTypeicon( ZUKAN_INFO_WORK* work );
 
 // ポケモンの足跡
-static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno );
-static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_CreatePokefootBase( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_DeletePokefootBase( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SWAP swap_idx );
+static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
+static void Zukan_Info_DrawOffNotCurrPokefoot( ZUKAN_INFO_WORK* work );
 
 // ポケモン2D以外をまとめて
 static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_CreateForeignOthers( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang );
 
 // パレットアニメーション
 static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work );
 
+// タイプアイコンとポケモンの足跡の表示/非表示を設定する
+static void Zukan_Info_SetDrawEnableTypeiconPokefoot( ZUKAN_INFO_WORK* work, BOOL on_off );
 // 全OBJの表示/非表示を設定する
-void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off );
+static void Zukan_Info_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off );
 
 
 //=============================================================================
@@ -768,6 +782,11 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
   // TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Info_VBlankFunc, work, ZUKAN_INFO_VBLANK_TCB_PRI );
 
+  // タイプアイコンOBJの初期化と不変物の生成
+  Zukan_Info_CreateTypeiconBase( work ); 
+  // ポケモンの足跡OBJの初期化と不変物生成
+  Zukan_Info_CreatePokefootBase( work ); 
+
   // ポケモン2D以外
   if(    work->launch == ZUKAN_INFO_LAUNCH_TOROKU
       || work->launch == ZUKAN_INFO_LAUNCH_LIST )
@@ -803,8 +822,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
       }
       break;
     }
-    Zukan_Info_Poke2dLoadResourceObj( work, work->curr_swap_poke2d );
-    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
+    Zukan_Info_Poke2dLoadCreate( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
   }
 
   // WND
@@ -856,12 +874,7 @@ void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
     u8 i;
     for( i=0; i<OBJ_SWAP_MAX; i++ )
     {
-      if( work->clwk_poke2d[i] )
-      {
-        Zukan_Info_Poke2dDeleteCLWK( work, i );
-        Zukan_Info_Poke2dUnloadResourceObj( work, i );
-        work->clwk_poke2d[i] = NULL;
-      }
+      Zukan_Info_Poke2dDeleteUnload( work, i );
     }
   }
 
@@ -870,6 +883,11 @@ void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
   {
     ZUKAN_INFO_DeleteOthers( work );
   }
+
+  // ポケモンの足跡OBJの後処理と不変物の破棄
+  Zukan_Info_DeletePokefootBase( work ); 
+  // タイプアイコンOBJの後処理と不変物の破棄
+  Zukan_Info_DeleteTypeiconBase( work ); 
 
   // TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
@@ -1042,13 +1060,11 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
 //-----------------------------------------------------------------------------
 void ZUKAN_INFO_DeleteOthers( ZUKAN_INFO_WORK* work )
 {
-  if( work->get_flag )
-  {
-    // ポケモンの足跡
-    Zukan_Info_DeletePokefoot( work );
-    // タイプアイコン
-    Zukan_Info_DeleteTypeicon( work ); 
-  } 
+  // ポケモンの足跡
+  Zukan_Info_DeletePokefoot( work, work->curr_swap_pokefoot );
+  // タイプアイコン
+  Zukan_Info_DeleteTypeicon( work, work->curr_swap_typeicon ); 
+
   // Message
   Zukan_Info_DeleteMessage( work );
 }
@@ -1147,18 +1163,13 @@ void ZUKAN_INFO_ChangePoke(
   // OBJ交互の更新
   {
     work->curr_swap_poke2d = (work->curr_swap_poke2d +1) %OBJ_SWAP_MAX;
+    work->curr_swap_typeicon = (work->curr_swap_typeicon +1) %OBJ_SWAP_MAX;
+    work->curr_swap_pokefoot = (work->curr_swap_pokefoot +1) %OBJ_SWAP_MAX;
   }
 
   // 前のを削除する
   // ポケモン2D
-  {
-    if( work->clwk_poke2d[work->curr_swap_poke2d] )
-    {
-      Zukan_Info_Poke2dDeleteCLWK( work, work->curr_swap_poke2d );
-      Zukan_Info_Poke2dUnloadResourceObj( work, work->curr_swap_poke2d );
-      work->clwk_poke2d[work->curr_swap_poke2d] = NULL;
-    }
-  }
+  Zukan_Info_Poke2dDeleteUnload( work, work->curr_swap_poke2d );
 
   // ポケモン2D以外
   ZUKAN_INFO_DeleteOthers( work );
@@ -1176,6 +1187,7 @@ void ZUKAN_INFO_ChangePoke(
 
   // ポケモン2D以外
   Zukan_Info_CreateOthers( work );
+
   //ポケモン2D
   {
     u16 pos_x, pos_y;
@@ -1195,12 +1207,11 @@ void ZUKAN_INFO_ChangePoke(
       }
       break;
     }
-    Zukan_Info_Poke2dLoadResourceObj( work, work->curr_swap_poke2d );
-    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
+    Zukan_Info_Poke2dLoadCreate( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
   }
 
   // 全OBJの表示/非表示を設定する
-  ZUKAN_INFO_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
+  Zukan_Info_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
 }
 
 //-------------------------------------
@@ -1209,30 +1220,26 @@ void ZUKAN_INFO_ChangePoke(
 void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
                 ZUKAN_INFO_LANG lang )
 {
-  // 前のを削除する
-  if( work->get_flag )
+  // OBJ交互の更新
   {
-    Zukan_Info_DeleteTypeicon( work );
+    work->curr_swap_typeicon = (work->curr_swap_typeicon +1) %OBJ_SWAP_MAX;
   }
+
+  // 前のを削除する
+  Zukan_Info_DeleteTypeicon( work, work->curr_swap_typeicon );
   Zukan_Info_DeleteMessage( work );
   
   // 次のを生成する
   if( lang == ZUKAN_INFO_LANG_NONE || work->monsno > FOREIGN_MONSNO_MAX )
   {
     Zukan_Info_CreateMessage( work );
-    if( work->get_flag )
-    {
-      Zukan_Info_CreateMultiLangTypeicon( work, lang );
-    }
   }
   else
   {
     Zukan_Info_CreateForeignMessage( work, lang );
-    if( work->get_flag )
-    {
-      Zukan_Info_CreateMultiLangTypeicon( work, lang );
-    }
   }
+  Zukan_Info_CreateMultiLangTypeicon( work, lang, work->curr_swap_typeicon );
+  Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
 }
 
 //-------------------------------------
@@ -1248,8 +1255,73 @@ void ZUKAN_INFO_ChangePokeAndLang(
                 BOOL             get_flag,
                 ZUKAN_INFO_LANG  lang )
 {
+#if 0
+この手抜きだと、一瞬日本語が見えてから、その日本語が外国語に変わる。
   ZUKAN_INFO_ChangePoke( work, monsno, formno, sex, rare, personal_rnd, get_flag );
   ZUKAN_INFO_ChangeLang( work, lang );
+#else
+
+  // OBJ交互の更新
+  {
+    work->curr_swap_poke2d = (work->curr_swap_poke2d +1) %OBJ_SWAP_MAX;
+    work->curr_swap_typeicon = (work->curr_swap_typeicon +1) %OBJ_SWAP_MAX;
+    work->curr_swap_pokefoot = (work->curr_swap_pokefoot +1) %OBJ_SWAP_MAX;
+  }
+
+  // 前のを削除する
+  // ポケモン2D
+  Zukan_Info_Poke2dDeleteUnload( work, work->curr_swap_poke2d );
+
+  // ポケモン2D以外
+  ZUKAN_INFO_DeleteOthers( work );
+
+  // 次のを生成する
+  work->monsno         = monsno;
+  work->formno         = formno;
+  work->sex            = sex;   
+  work->rare           = rare; 
+  work->personal_rnd   = personal_rnd;
+  work->get_flag       = get_flag;
+
+  // モンスターボールのマーク
+  Zukan_Info_TransBall_VBlank( work );
+
+  // ポケモン2D以外
+  if( lang == ZUKAN_INFO_LANG_NONE || work->monsno > FOREIGN_MONSNO_MAX )
+  {
+    Zukan_Info_CreateOthers( work );
+  }
+  else
+  {
+    Zukan_Info_CreateForeignOthers( work, lang );
+  }
+  
+  //ポケモン2D
+  {
+    u16 pos_x, pos_y;
+    switch(work->launch)
+    {
+    case ZUKAN_INFO_LAUNCH_TOROKU:
+    case ZUKAN_INFO_LAUNCH_LIST:
+      {
+        pos_x = ZUKAN_INFO_START_POKEMON_POS_X;
+        pos_y = ZUKAN_INFO_START_POKEMON_POS_Y;
+      }
+      break;
+    case ZUKAN_INFO_LAUNCH_NICKNAME:
+      {
+        pos_x = ZUKAN_INFO_CENTER_POKEMON_POS_X;
+        pos_y = ZUKAN_INFO_CENTER_POKEMON_POS_Y;
+      }
+      break;
+    }
+    Zukan_Info_Poke2dLoadCreate( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
+  }
+
+  // 全OBJの表示/非表示を設定する
+  Zukan_Info_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
+
+#endif
 }
 
 //-------------------------------------
@@ -1270,7 +1342,7 @@ void ZUKAN_INFO_DisplayBackNone( ZUKAN_INFO_WORK* work )
   GFL_BG_SetScrollReq( work->back_bg_frame, GFL_BG_SCROLL_Y_SET, -32*8 );
 
   // 全OBJの表示/非表示を設定する
-  ZUKAN_INFO_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
+  Zukan_Info_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
 }
 
 //-------------------------------------
@@ -1291,7 +1363,7 @@ void ZUKAN_INFO_DisplayNormal( ZUKAN_INFO_WORK* work )
   GFL_BG_SetScrollReq( work->back_bg_frame, GFL_BG_SCROLL_Y_SET, - work->y_offset );
 
   // 全OBJの表示/非表示を設定する
-  ZUKAN_INFO_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
+  Zukan_Info_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
 }
 
 
@@ -1820,6 +1892,27 @@ static void Zukan_Info_TransBall_VBlank( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
+/// ポケモン2Dの生成と破棄
+//=====================================
+static void Zukan_Info_Poke2dLoadCreate( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y, OBJ_SWAP swap_idx )
+{
+  Zukan_Info_Poke2dLoadResourceObj( work, swap_idx );
+  Zukan_Info_Poke2dCreateCLWK( work, pos_x, pos_y, swap_idx );
+
+  // 今表示するものでないポケモン2DのOBJを非表示にする
+  Zukan_Info_DrawOffNotCurrPoke2d( work );
+}
+static void Zukan_Info_Poke2dDeleteUnload( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
+{
+  if( work->clwk_poke2d[swap_idx] )
+  {
+    Zukan_Info_Poke2dDeleteCLWK( work, swap_idx );
+    Zukan_Info_Poke2dUnloadResourceObj( work, swap_idx );
+
+    work->clwk_poke2d[swap_idx] = NULL;
+  }
+}
+//-------------------------------------
 /// ポケモン2Dのリソースを読み込む
 //=====================================
 static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
@@ -1851,7 +1944,6 @@ static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP sw
                          draw_type, work->heap_id );
   GFL_ARC_CloseDataHandle( handle );
 }
-
 //-------------------------------------
 /// ポケモン2Dのリソース破棄
 //=====================================
@@ -1864,7 +1956,6 @@ static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP 
   GFL_CLGRP_CGR_Release( work->ncg_poke2d[swap_idx] );
   GFL_CLGRP_CELLANIM_Release( work->nce_poke2d[swap_idx] );
 }
-
 //-------------------------------------
 /// ポケモン2DのOBJを生成する
 //=====================================
@@ -1899,7 +1990,21 @@ static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 p
     }
     POKE_PERSONAL_CloseHandle( ppd );
   }
+}
+//-------------------------------------
+/// ポケモン2DのOBJを破棄する
+//=====================================
+static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
+{
+  // 呼び出し元でwork->clwk_poke2d[swap_idx]のNULL判定をしてから、呼んで下さい。
 
+  GFL_CLACT_WK_Remove( work->clwk_poke2d[swap_idx] );
+}
+//-------------------------------------
+/// 今表示するものでないポケモン2DのOBJを非表示にする
+//=====================================
+static void Zukan_Info_DrawOffNotCurrPoke2d( ZUKAN_INFO_WORK* work )
+{
   // OBJ交互の表示切替
   {
     u8 i;
@@ -1917,19 +2022,68 @@ static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 p
 }
 
 //-------------------------------------
-/// ポケモン2DのOBJを破棄する
+/// タイプアイコンOBJの初期化と不変物の生成
 //=====================================
-static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
+static void Zukan_Info_CreateTypeiconBase( ZUKAN_INFO_WORK* work )
 {
-  // 呼び出し元でwork->clwk_poke2d[swap_idx]のNULL判定をしてから、呼んで下さい。
+  // 初期化
+  {
+    // GFL_CLGRP_REGISTER_FAILEDで初期化
+    u8 i, j;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      for( j=0; j<2; j++ )
+      {
+        work->typeicon_cg_idx[i][j] = GFL_CLGRP_REGISTER_FAILED;
+      }
+    }
+    work->curr_swap_typeicon = OBJ_SWAP_0;
+  }
+ 
+  // 不変物の生成
+  {
+    CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
 
-  GFL_CLACT_WK_Remove( work->clwk_poke2d[swap_idx] );
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), work->heap_id );
+
+    work->typeicon_cl_idx = GFL_CLGRP_PLTT_RegisterEx( handle,
+                                                       APP_COMMON_GetPokeTypePltArcIdx(),
+                                                       draw_type,
+                                                       ZUKAN_INFO_OBJ_PAL_POS_TYPEICON * ZUKAN_INFO_PAL_LINE_SIZE,
+                                                       0, ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON, work->heap_id );
+
+    work->typeicon_cean_idx = GFL_CLGRP_CELLANIM_Register( handle,
+                                                           APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K ),
+                                                           APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K ),
+                                                           work->heap_id );
+
+    GFL_ARC_CloseDataHandle( handle );
+  }
 }
+//-------------------------------------
+/// タイプアイコンOBJの後処理と不変物の破棄
+//=====================================
+static void Zukan_Info_DeleteTypeiconBase( ZUKAN_INFO_WORK* work )
+{
+  // 後処理
+  {
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      Zukan_Info_DeleteTypeicon( work, i );
+    }
+  }
 
+  // 不変物の破棄
+  {
+    GFL_CLGRP_CELLANIM_Release( work->typeicon_cean_idx );
+    GFL_CLGRP_PLTT_Release( work->typeicon_cl_idx );
+  }
+}
 //-------------------------------------
 /// タイプアイコンOBJを生成する
 //=====================================
-static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang )
+static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang, OBJ_SWAP swap_idx )
 {
   // タイプアイコン
 
@@ -1948,14 +2102,17 @@ static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INF
 
   if( lang == ZUKAN_INFO_LANG_NONE )  // 日本語
   {
-    Zukan_Info_CreateTypeicon( work, type1, type2 );
+    Zukan_Info_CreateTypeicon( work, type1, type2, swap_idx );
   }
   else
   {
-    Zukan_Info_CreateForeignTypeicon( work, type1, type2, lang );
+    Zukan_Info_CreateForeignTypeicon( work, type1, type2, lang, swap_idx );
   }
+
+  // 今表示するものでないタイプアイコンOBJを非表示にする
+  Zukan_Info_DrawOffNotCurrTypeicon( work );
 }
-static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2 )
+static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, OBJ_SWAP swap_idx )
 {
   s32 i;
   PokeType type[2];
@@ -1978,27 +2135,16 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
 
     for( i=0; i<2; i++ )
     {
-      work->typeicon_cg_idx[i] = GFL_CLGRP_REGISTER_FAILED;
+      work->typeicon_cg_idx[swap_idx][i] = GFL_CLGRP_REGISTER_FAILED;
       if( type[i] == POKETYPE_NULL )
       {
         continue;
       }
-      work->typeicon_cg_idx[i] = GFL_CLGRP_CGR_Register( handle,
+      work->typeicon_cg_idx[swap_idx][i] = GFL_CLGRP_CGR_Register( handle,
                                                          APP_COMMON_GetPokeTypeCharArcIdx(type[i]),
                                                          FALSE, draw_type, work->heap_id );
     }
 
-    work->typeicon_cl_idx = GFL_CLGRP_PLTT_RegisterEx( handle,
-                                                       APP_COMMON_GetPokeTypePltArcIdx(),
-                                                       draw_type,
-                                                       ZUKAN_INFO_OBJ_PAL_POS_TYPEICON * ZUKAN_INFO_PAL_LINE_SIZE,
-                                                       0, ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON, work->heap_id );
-
-    work->typeicon_cean_idx = GFL_CLGRP_CELLANIM_Register( handle,
-                                                           APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K ),
-                                                           APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K ),
-                                                           work->heap_id );
-  
     GFL_ARC_CloseDataHandle( handle );
   }
 
@@ -2006,25 +2152,24 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
   {
     for( i=0; i<2; i++ )
     {
-      if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+      if( work->typeicon_cg_idx[swap_idx][i] == GFL_CLGRP_REGISTER_FAILED )
       {
         continue;
       }
-      work->typeicon_clwk[i] = GFL_CLACT_WK_Create( work->clunit,
-                                                    work->typeicon_cg_idx[i],
+      work->typeicon_clwk[swap_idx][i] = GFL_CLACT_WK_Create( work->clunit,
+                                                    work->typeicon_cg_idx[swap_idx][i],
                                                     work->typeicon_cl_idx,
                                                     work->typeicon_cean_idx,
                                                     &(data[i]),
                                                     defrend_type, work->heap_id );
-      GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[i], APP_COMMON_GetPokeTypePltOffset(type[i]),
+      GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[swap_idx][i], APP_COMMON_GetPokeTypePltOffset(type[i]),
                                 CLWK_PLTTOFFS_MODE_PLTT_TOP );
-      GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
-      GFL_CLACT_WK_SetObjMode( work->typeicon_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[swap_idx][i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
+      GFL_CLACT_WK_SetObjMode( work->typeicon_clwk[swap_idx][i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     }
   }
 }
-
-static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, ZUKAN_INFO_LANG lang )
+static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, ZUKAN_INFO_LANG lang, OBJ_SWAP swap_idx )
 {
   s32 i;
   PokeType type[2];
@@ -2055,33 +2200,22 @@ static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType ty
 
     for( i=0; i<2; i++ )
     {
-      work->typeicon_cg_idx[i] = GFL_CLGRP_REGISTER_FAILED;
+      work->typeicon_cg_idx[swap_idx][i] = GFL_CLGRP_REGISTER_FAILED;
       if( type[i] == POKETYPE_NULL )
       {
         continue;
       }
-      work->typeicon_cg_idx[i] = GFL_CLGRP_CGR_Register( handle,
+      work->typeicon_cg_idx[swap_idx][i] = GFL_CLGRP_CGR_Register( handle,
                                                          APP_COMMON_GetPokeTypeCharArcIdx(type[i]),
                                                          FALSE, draw_type, work->heap_id );
       {
         u8 yoko = typeicon_pos_tbl[ type[i] ].yoko;
         u8 tate = typeicon_pos_tbl[ type[i] ].tate;
-        GFL_CLGRP_CGR_ReplaceEx( work->typeicon_cg_idx[i], &chara_raw_data[32*32*2 *tate + 32*4 *yoko], 32*4, 0, draw_type );  // 上段
-        GFL_CLGRP_CGR_ReplaceEx( work->typeicon_cg_idx[i], &chara_raw_data[32*32*2 *tate + 32*32 + 32*4 *yoko], 32*4, 32*4, draw_type );  // 下段
+        GFL_CLGRP_CGR_ReplaceEx( work->typeicon_cg_idx[swap_idx][i], &chara_raw_data[32*32*2 *tate + 32*4 *yoko], 32*4, 0, draw_type );  // 上段
+        GFL_CLGRP_CGR_ReplaceEx( work->typeicon_cg_idx[swap_idx][i], &chara_raw_data[32*32*2 *tate + 32*32 + 32*4 *yoko], 32*4, 32*4, draw_type );  // 下段
       }
     }
-
-    work->typeicon_cl_idx = GFL_CLGRP_PLTT_RegisterEx( handle,
-                                                       APP_COMMON_GetPokeTypePltArcIdx(),
-                                                       draw_type,
-                                                       ZUKAN_INFO_OBJ_PAL_POS_TYPEICON * ZUKAN_INFO_PAL_LINE_SIZE,
-                                                       0, ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON, work->heap_id );
-
-    work->typeicon_cean_idx = GFL_CLGRP_CELLANIM_Register( handle,
-                                                           APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K ),
-                                                           APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K ),
-                                                           work->heap_id );
-  
+ 
     GFL_ARC_CloseDataHandle( handle );
 
     GFL_HEAP_FreeMemory( buf );
@@ -2091,93 +2225,207 @@ static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType ty
   {
     for( i=0; i<2; i++ )
     {
-      if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+      if( work->typeicon_cg_idx[swap_idx][i] == GFL_CLGRP_REGISTER_FAILED )
       {
         continue;
       }
-      work->typeicon_clwk[i] = GFL_CLACT_WK_Create( work->clunit,
-                                                    work->typeicon_cg_idx[i],
+      work->typeicon_clwk[swap_idx][i] = GFL_CLACT_WK_Create( work->clunit,
+                                                    work->typeicon_cg_idx[swap_idx][i],
                                                     work->typeicon_cl_idx,
                                                     work->typeicon_cean_idx,
                                                     &(data[i]),
                                                     defrend_type, work->heap_id );
-      GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[i], APP_COMMON_GetPokeTypePltOffset(type[i]),
+      GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[swap_idx][i], APP_COMMON_GetPokeTypePltOffset(type[i]),
                                 CLWK_PLTTOFFS_MODE_PLTT_TOP );
-      GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
-      GFL_CLACT_WK_SetObjMode( work->typeicon_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[swap_idx][i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
+      GFL_CLACT_WK_SetObjMode( work->typeicon_clwk[swap_idx][i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     }
   }
 }
-
-
 //-------------------------------------
 /// タイプアイコンOBJを破棄する
 //=====================================
-static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work )
+static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
 {
   s32 i=0;
 
   // CLWK破棄
   for( i=0; i<2; i++ )
   {
-    if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+    if( work->typeicon_cg_idx[swap_idx][i] == GFL_CLGRP_REGISTER_FAILED )
     {
       continue;
     }
-    GFL_CLACT_WK_Remove( work->typeicon_clwk[i] );
+    GFL_CLACT_WK_Remove( work->typeicon_clwk[swap_idx][i] );
   }
 
   // リソース破棄
-  GFL_CLGRP_PLTT_Release( work->typeicon_cl_idx );
   for( i=0; i<2; i++ )
   {
-    if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+    if( work->typeicon_cg_idx[swap_idx][i] == GFL_CLGRP_REGISTER_FAILED )
     {
       continue;
     }
-    GFL_CLGRP_CGR_Release( work->typeicon_cg_idx[i] );
+    GFL_CLGRP_CGR_Release( work->typeicon_cg_idx[swap_idx][i] );
+    work->typeicon_cg_idx[swap_idx][i] = GFL_CLGRP_REGISTER_FAILED;
   }
-  GFL_CLGRP_CELLANIM_Release( work->typeicon_cean_idx );
+}
+//-------------------------------------
+/// 今表示するものでないタイプアイコンOBJを非表示にする
+//=====================================
+static void Zukan_Info_DrawOffNotCurrTypeicon( ZUKAN_INFO_WORK* work )
+{
+  // OBJ交互の表示切替
+  {
+    u8 i, j;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( i != work->curr_swap_typeicon )
+      {
+        for( j=0; j<2; j++ )
+        {
+          if( work->typeicon_cg_idx[i][j] != GFL_CLGRP_REGISTER_FAILED )
+          {
+            GFL_CLACT_WK_SetDrawEnable( work->typeicon_clwk[i][j], FALSE );
+          }
+        }
+      }
+    }
+  }
 }
 
+
+//-------------------------------------
+/// ポケモンの足跡OBJの初期化と不変物の生成
+//=====================================
+static void Zukan_Info_CreatePokefootBase( ZUKAN_INFO_WORK* work )
+{
+  // 初期化
+  {
+    // NULLで初期化
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      work->clwk_pokefoot[i] = NULL;
+    }
+    work->curr_swap_pokefoot = OBJ_SWAP_0;
+  }
+
+  // 不変物の生成
+  {
+    CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
+
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( PokeFootArcFileGet(), work->heap_id );
+
+    work->ncl_pokefoot = GFL_CLGRP_PLTT_RegisterEx( handle,
+                                                    PokeFootPlttDataIdxGet(),
+                                                    draw_type,
+                                                    ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT * ZUKAN_INFO_PAL_LINE_SIZE,
+                                                    0, ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT, work->heap_id );
+
+    work->nce_pokefoot = GFL_CLGRP_CELLANIM_Register( handle,
+                                                      PokeFootCellDataIdxGet(),
+                                                      PokeFootCellAnmDataIdxGet(),
+                                                      work->heap_id );
+
+    GFL_ARC_CloseDataHandle( handle );
+  }
+}
+//-------------------------------------
+/// ポケモンの足跡OBJの後処理と不変物の破棄
+//=====================================
+static void Zukan_Info_DeletePokefootBase( ZUKAN_INFO_WORK* work )
+{
+  // 後処理
+  {
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      Zukan_Info_DeletePokefoot( work, i );
+    }
+  }
+
+  // 不変物の破棄
+  {
+    GFL_CLGRP_CELLANIM_Release( work->nce_pokefoot );
+    GFL_CLGRP_PLTT_Release( work->ncl_pokefoot );
+  }
+}
 //-------------------------------------
 /// ポケモンの足跡OBJを生成する
 //=====================================
-static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno )
+static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SWAP swap_idx )
 {
-  UI_EASY_CLWK_RES_PARAM prm;
   CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
+  CLSYS_DEFREND_TYPE defrend_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
+  
+  GFL_CLWK_DATA cldata;
+
+  // リソース読みこみ
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( PokeFootArcFileGet(), work->heap_id );
 
   if( monsno > MONSNO_ARUSEUSU ) monsno = 1;  // 開発中だけの処理
-
-  prm.draw_type = draw_type;
-  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCGR;  // NCLR非圧縮、NCGR圧縮、NCER非圧縮、NANR非圧縮
-  prm.arc_id    = PokeFootArcFileGet();
-  prm.pltt_id   = PokeFootPlttDataIdxGet();
-  prm.ncg_id    = PokeFootCharDataIdxGet((int)monsno);
-  prm.cell_id   = PokeFootCellDataIdxGet();
-  prm.anm_id    = PokeFootCellAnmDataIdxGet();
-  prm.pltt_line = ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT;
-  prm.pltt_src_ofs = 0;
-  prm.pltt_src_num = ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT;
   
-  UI_EASY_CLWK_LoadResource( &work->clres_pokefoot, &prm, work->clunit, work->heap_id );
+  work->ncg_pokefoot[swap_idx] = GFL_CLGRP_CGR_Register( handle,  // ncgは圧縮されている
+                                     PokeFootCharDataIdxGet((int)monsno),
+                                     TRUE, draw_type, work->heap_id );
 
-  work->clwk_pokefoot = UI_EASY_CLWK_CreateCLWK( &work->clres_pokefoot, work->clunit, 8*15, (u8)( 8*11 + work->y_offset ), 0, work->heap_id );
-  GFL_CLACT_WK_SetSoftPri( work->clwk_pokefoot, 1 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
-  GFL_CLACT_WK_SetObjMode( work->clwk_pokefoot, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+  GFL_ARC_CloseDataHandle( handle );
+
+  // CLWK作成
+  cldata.pos_x   = 8*15;
+  cldata.pos_y   = (s16)( 8*11 + work->y_offset );
+  cldata.anmseq  = 0;
+  cldata.softpri = 1;
+  cldata.bgpri   = 0;
+
+  work->clwk_pokefoot[swap_idx] = GFL_CLACT_WK_Create( work->clunit, 
+                                      work->ncg_pokefoot[swap_idx],
+                                      work->ncl_pokefoot,
+                                      work->nce_pokefoot,
+                                      &cldata, 
+                                      defrend_type, work->heap_id );
+  
+  GFL_CLACT_WK_SetSoftPri( work->clwk_pokefoot[swap_idx], 1 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
+  GFL_CLACT_WK_SetObjMode( work->clwk_pokefoot[swap_idx], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+
+  // 今表示するものでないポケモンの足跡OBJを非表示にする
+  Zukan_Info_DrawOffNotCurrPokefoot( work );
 }
-
 //-------------------------------------
 /// ポケモンの足跡OBJを破棄する
 //=====================================
-static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work )
+static void Zukan_Info_DeletePokefoot( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
 {
-  //CLWK破棄
-  GFL_CLACT_WK_Remove( work->clwk_pokefoot );
-  //リソース破棄
-  UI_EASY_CLWK_UnLoadResource( &work->clres_pokefoot );
+  if( work->clwk_pokefoot[swap_idx] )
+  {
+    //CLWK破棄
+    GFL_CLACT_WK_Remove( work->clwk_pokefoot[swap_idx] );
+    //リソース破棄
+    GFL_CLGRP_CGR_Release( work->ncg_pokefoot[swap_idx] );
+
+    work->clwk_pokefoot[swap_idx] = NULL;
+  }
 }
+//-------------------------------------
+/// 今表示するものでないポケモンの足跡OBJを非表示にする
+//=====================================
+static void Zukan_Info_DrawOffNotCurrPokefoot( ZUKAN_INFO_WORK* work )
+{
+  // OBJ交互の表示切替
+  u8 i;
+  for( i=0; i<OBJ_SWAP_MAX; i++ )
+  {
+    if( i != work->curr_swap_pokefoot )
+    {
+      if( work->clwk_pokefoot[i] )
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->clwk_pokefoot[i], FALSE );
+      }
+    }
+  }
+}
+
 
 //-------------------------------------
 /// ポケモン2D以外のものを生成する
@@ -2187,17 +2435,26 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
   // Message
   Zukan_Info_CreateMessage( work );
 
-  if( work->get_flag )
-  {
-    // タイプアイコン
-    Zukan_Info_CreateMultiLangTypeicon( work, ZUKAN_INFO_LANG_NONE );
-
-    // ポケモンの足跡
-    {
-      Zukan_Info_CreatePokefoot( work, work->monsno );
-    }
-  }
+  // タイプアイコン
+  Zukan_Info_CreateMultiLangTypeicon( work, ZUKAN_INFO_LANG_NONE, work->curr_swap_typeicon );
+  // ポケモンの足跡
+  Zukan_Info_CreatePokefoot( work, work->monsno, work->curr_swap_pokefoot );
+  // タイプアイコンとポケモンの足跡の表示/非表示を設定する
+  Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
 }
+static void Zukan_Info_CreateForeignOthers( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang )
+{
+  // Message
+  Zukan_Info_CreateForeignMessage( work, lang );
+
+  // タイプアイコン
+  Zukan_Info_CreateMultiLangTypeicon( work, lang, work->curr_swap_typeicon );
+  // ポケモンの足跡
+  Zukan_Info_CreatePokefoot( work, work->monsno, work->curr_swap_pokefoot );
+  // タイプアイコンとポケモンの足跡の表示/非表示を設定する
+  Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
+}
+
 
 //-------------------------------------
 /// パレットアニメーションの更新
@@ -2251,28 +2508,41 @@ static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work )
 }
 
 //-------------------------------------
-/// 全OBJの表示/非表示を設定する
+/// タイプアイコンとポケモンの足跡の表示/非表示を設定する
 //=====================================
-void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off )
+static void Zukan_Info_SetDrawEnableTypeiconPokefoot( ZUKAN_INFO_WORK* work, BOOL on_off )
 {
   u8 i;
+
+  // ポケモンの足跡
+  GFL_CLACT_WK_SetDrawEnable( work->clwk_pokefoot[work->curr_swap_pokefoot], on_off );
+ 
+  // タイプアイコン
+  for( i=0; i<2; i++ )
+  {
+    if( work->typeicon_cg_idx[work->curr_swap_typeicon][i] == GFL_CLGRP_REGISTER_FAILED )
+    {
+      continue;
+    }
+    GFL_CLACT_WK_SetDrawEnable( work->typeicon_clwk[work->curr_swap_typeicon][i], on_off );
+  }
+}
+
+//-------------------------------------
+/// 全OBJの表示/非表示を設定する
+//=====================================
+static void Zukan_Info_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off )
+{
+  BOOL typeicon_pokefoot_on_off = on_off;
 
   // ポケモン2D
   GFL_CLACT_WK_SetDrawEnable( work->clwk_poke2d[work->curr_swap_poke2d], on_off );
  
-  if( work->get_flag )
+  // タイプアイコンとポケモンの足跡の表示/非表示を設定する
+  if( !(work->get_flag) )
   {
-    // タイプアイコン
-    GFL_CLACT_WK_SetDrawEnable( work->clwk_pokefoot, on_off );
- 
-    // ポケモンの足跡
-    for( i=0; i<2; i++ )
-    {
-      if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
-      {
-        continue;
-      }
-      GFL_CLACT_WK_SetDrawEnable( work->typeicon_clwk[i], on_off );
-    }
+    typeicon_pokefoot_on_off = FALSE;
   }
+  Zukan_Info_SetDrawEnableTypeiconPokefoot( work, typeicon_pokefoot_on_off );
 }
+
