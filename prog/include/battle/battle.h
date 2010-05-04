@@ -222,6 +222,7 @@ typedef enum {
   BTL_DEBUGFLAG_DMG_RAND_OFF,   ///< ダメージのランダム補正をオフ
   BTL_DEBUGFLAG_SKIP_BTLIN,     ///< 入場エフェクトスキップ（非通信時のみ）
   BTL_DEBUGFLAG_AI_CTRL,        ///< AIを起動せずにプレイヤーが操作する
+  BTL_DEBUGFLAG_SHOOTER_MODE,   ///< 非通信時もシューターモードでバッグ画面を起動
 
   BTL_DEBUGFLAG_MAX,
 

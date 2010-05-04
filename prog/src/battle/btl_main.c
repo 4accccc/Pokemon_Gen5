@@ -520,6 +520,12 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
  */
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
 {
+  #ifdef PM_DEBUG
+  if( BTL_SETUP_GetDebugFlag(wk->setupParam, BTL_DEBUGFLAG_SHOOTER_MODE) ){
+    return BBAG_MODE_SHOOTER;
+  }
+  #endif
+
   switch( setup->competitor ){
   case BTL_COMPETITOR_WILD:
     return BBAG_MODE_NORMAL;
