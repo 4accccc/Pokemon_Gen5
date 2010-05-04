@@ -29,6 +29,7 @@
 #include "savedata/regulation.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
+#include "field/zonedata.h"
 
 #include "plist_sys.h"
 #include "plist_plate.h"
@@ -3188,27 +3189,34 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       const u32 selSkill = PLIST_UTIL_CheckFieldWaza( work->selectPokePara , work->menuRet-PMIT_WAZA_1 );
       if( selSkill == PL_RET_MILKNOMI || selSkill == PL_RET_TAMAGOUMI )
       {
-        //タマゴうみとミルクのみは回復処理
-        const u32 hpMax = PP_Get( work->selectPokePara , ID_PARA_hpmax , NULL );
-        const u32 hpNow = PP_Get( work->selectPokePara , ID_PARA_hp , NULL );
-        if( hpNow > hpMax/5 )
+        if( ZONEDATA_CheckFieldSkillUse( work->plData->zone_id ) == FALSE )
         {
-          PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-          PLIST_SelectPokeSetCursor_Change( work , work->pokeCursor );
-
-          work->selectPokePara = NULL;
-          work->useTarget = work->pokeCursor;
-          work->mainSeq = PSMS_USE_POKE;
-          work->canExit = FALSE;
-          
-          PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
-          PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_08 );
-          //ここはモード別処理ではなく、ただのセレクト初期化
-          PLIST_SelectPokeInit( work );
+          PLIST_MessageWaitInit( work , mes_pokelist_04_44 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
         }
         else
         {
-          PLIST_MessageWaitInit( work , mes_pokelist_04_71 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+          //タマゴうみとミルクのみは回復処理
+          const u32 hpMax = PP_Get( work->selectPokePara , ID_PARA_hpmax , NULL );
+          const u32 hpNow = PP_Get( work->selectPokePara , ID_PARA_hp , NULL );
+          if( hpNow > hpMax/5 )
+          {
+            PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+            PLIST_SelectPokeSetCursor_Change( work , work->pokeCursor );
+
+            work->selectPokePara = NULL;
+            work->useTarget = work->pokeCursor;
+            work->mainSeq = PSMS_USE_POKE;
+            work->canExit = FALSE;
+            
+            PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+            PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_08 );
+            //ここはモード別処理ではなく、ただのセレクト初期化
+            PLIST_SelectPokeInit( work );
+          }
+          else
+          {
+            PLIST_MessageWaitInit( work , mes_pokelist_04_71 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+          }
         }
       }
       else
