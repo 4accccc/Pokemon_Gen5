@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T18:09:39"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-05-04T11:55:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -463,13 +463,13 @@
 ・msg_union_connect_01_02_2　　国が同じ
 ・msg_union_connect_01_02_3　　国を入力してない
 ・msg_union_connect_01_03　断った</comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　トレーナーケースを
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]が　トレーナーカードを
 みせて　きました[BE:01:ページ切り替え（クリア）]
-こちらも　トレーナーケースを
+こちらも　トレーナーカードを
 みせますか？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　トレーナーケースを
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]が　トレーナーカードを
 みせて　きました[BE:01:ページ切り替え（クリア）]
-こちらも　トレーナーケースを
+こちらも　トレーナーカードを
 みせますか？</language>
 	</row>
 
@@ -482,11 +482,11 @@
 		<language name="JPN" width="216" line="2">[1:24:国名:3]
 [1:25:地域名:4][BE:01:ページ切り替え（クリア）]
 に　すんでいる　[1:00:トレーナー名:0]の
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:24:国名:3]
 [1:25:地域名:4][BE:01:ページ切り替え（クリア）]
 に　住んでいる　[1:00:トレーナー名:0]の
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 	</row>
 
 	<row id="msg_union_connect_01_02_1" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -497,10 +497,10 @@
 　・「国が違い地域がない」</comment>
 		<language name="JPN" width="216" line="2">[1:24:国名:3]
 に　すんでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:24:国名:3]
 に　住んでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 	</row>
 
 	<row id="msg_union_connect_01_02_2" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -511,10 +511,10 @@
 　・「国が同じ」</comment>
 		<language name="JPN" width="216" line="2">[1:25:地域名:4]
 に　すんでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:25:地域名:4]
 に　住んでいる　[1:00:トレーナー名:0]の[BE:00:ページ切り替え（行送り）]
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 	</row>
 
 	<row id="msg_union_connect_01_02_3" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -524,9 +524,9 @@
 　
 　・「国を入力してない」</comment>
 		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の
-トレーナーケースを　みせてもらった</language>
+トレーナーカードを　みせてもらった</language>
 	</row>
 
 	<row id="msg_union_connect_01_02_4" text-color="#000000,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -1137,9 +1137,9 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_connect_01_02_3　　「国を入力してない」
 </comment>
 		<language name="JPN" width="216" line="2">わかった！　じゃあ　あいさつがわりに
-トレーナーケースを　みせてあげるよ</language>
+トレーナーカードを　みせてあげるよ</language>
 		<language name="JPN_KANJI" width="216" line="2">わかった！　じゃあ　あいさつがわりに
-トレーナーケースを　みせてあげるよ</language>
+トレーナーカードを　みせてあげるよ</language>
 	</row>
 
 	<row id="msg_union_talkgirl_01_01" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -1153,9 +1153,9 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_connect_01_02_3　　「国を入力してない」
 </comment>
 		<language name="JPN" width="216" line="2">じゃあ　あいさつの　かわりに
-トレーナーケース　みせてあげるね</language>
+トレーナーカード　みせてあげるね</language>
 		<language name="JPN_KANJI" width="216" line="2">じゃあ　あいさつの　かわりに
-トレーナーケース　みせてあげるね</language>
+トレーナーカード　みせてあげるね</language>
 	</row>
 
 	<row id="msg_union_talkboy_01_02" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -1163,10 +1163,10 @@ msg_connect_union_08からの分岐メッセージ
 　「あいさつ」で相手が断った後のメッセージ
 　msg_union_talkboy_01_01からの分岐
 　　→END</comment>
-		<language name="JPN" width="216" line="2">あれ！？　トレーナーケースが
+		<language name="JPN" width="216" line="2">あれ！？　トレーナーカードが
 みあたらない　なあ[BE:01:ページ切り替え（クリア）]
 ごめん！　またこんどね</language>
-		<language name="JPN_KANJI" width="216" line="2">あれ！？　トレーナーケースが
+		<language name="JPN_KANJI" width="216" line="2">あれ！？　トレーナーカードが
 みあたらない　なあ[BE:01:ページ切り替え（クリア）]
 ごめん！　また今度ね</language>
 	</row>
@@ -1176,10 +1176,10 @@ msg_connect_union_08からの分岐メッセージ
 　「あいさつ」で相手が断った後のメッセージ
 　msg_union_talkgirl_01_01からの分岐
 　　→END</comment>
-		<language name="JPN" width="216" line="2">あれ！？　トレーナーケース
+		<language name="JPN" width="216" line="2">あれ！？　トレーナーカード
 どこ　いったかな？……[BE:01:ページ切り替え（クリア）]
 ごめん！　またこんどね</language>
-		<language name="JPN_KANJI" width="216" line="2">あれ！？　トレーナーケース
+		<language name="JPN_KANJI" width="216" line="2">あれ！？　トレーナーカード
 どこ　いったかな？……[BE:01:ページ切り替え（クリア）]
 ごめん！　また今度ね</language>
 	</row>
@@ -1188,18 +1188,18 @@ msg_connect_union_08からの分岐メッセージ
 		<comment>あいさつ中の男OBJに話し掛けた時 、ランダムその１
 　　→END</comment>
 		<language name="JPN" width="216" line="2">いま　あいさつがわりに
-トレーナーケースを　みせてるんだ</language>
+トレーナーカードを　みせてるんだ</language>
 		<language name="JPN_KANJI" width="216" line="2">今　あいさつがわりに
-トレーナーケースを　みせてるんだ</language>
+トレーナーカードを　みせてるんだ</language>
 	</row>
 
 	<row id="msg_union_talkgirl_01_03" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>あいさつ中の女OBJに話し掛けた時 、ランダムその１
 　　→END</comment>
 		<language name="JPN" width="216" line="2">いま　あいさつの　かわりに
-トレーナーケースを　みせあってるの</language>
+トレーナーカードを　みせあってるの</language>
 		<language name="JPN_KANJI" width="216" line="2">今　あいさつの　かわりに
-トレーナーケースを　みせあってるの</language>
+トレーナーカードを　みせあってるの</language>
 	</row>
 
 	<row id="msg_union_talkboy_01_04" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
