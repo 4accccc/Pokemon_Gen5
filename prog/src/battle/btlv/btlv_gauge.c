@@ -2153,7 +2153,7 @@ static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work )
     bgdew->pltt_bit = 0;
     for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
     {
-      if( bgdew->bgw->bgcl[ i ].hp_calc_req )
+      if( ( bgdew->bgw->bgcl[ i ].hp_calc_req ) && ( bgdew->bgw->bgcl[ i ].damage > 0 ) )
       {
         bgdew->pltt_bit |= pltt_bit_tbl[ i ];
       }
