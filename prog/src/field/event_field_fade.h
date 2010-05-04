@@ -15,6 +15,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "map_change_type.h"
+#include "event_season_display.h"
 
 
 //==================================================================================
@@ -189,6 +190,23 @@ extern GMEVENT* EVENT_FieldFadeIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
 // ■例外的なフェード関数
 //==================================================================================
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	コールバック付き季節フェードイン イベント生成
+ *
+ * @param	gameSystem
+ * @param	fieldmap 
+ * @param startSeason     最初に表示する季節 ( 季節フェード時のみ有効 )
+ * @param endSeason       最後に表示する季節 ( 季節フェード時のみ有効 )
+ * @param callback_func   コールバック関数
+ * @param callback_param  コールバック関数に渡すワーク
+ *
+ * @return 生成したイベント
+ */
+//----------------------------------------------------------------------------------
+extern GMEVENT* EVENT_SeasonIn_Callback( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
+                                   u8 startSeason, u8 endSeason,
+                                   SEASON_DISP_CALLBACK_FUNC callback_func, void* callback_param ); 
 //----------------------------------------------------------------------------------
 /**
  * @brief	空を飛ぶ 輝度フェードアウト イベント生成

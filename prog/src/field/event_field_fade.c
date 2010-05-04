@@ -73,6 +73,7 @@ static GMEVENT_RESULT BrightInEvent( GMEVENT* event, int* seq, void* wk ); // 輝
 static GMEVENT_RESULT CrossOutEvent( GMEVENT* event, int* seq, void* wk ); // クロスフェードアウト
 static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk ); // クロスフェードイン
 static GMEVENT_RESULT SeasonInEvent( GMEVENT* event, int* seq, void* wk ); // 季節フェードイン
+static GMEVENT_RESULT SeasonInEvent_Callback( GMEVENT* event, int* seq, void* wk ); // 季節フェードイン ( コールバック呼び出し+ )
 static GMEVENT_RESULT HoleOutEvent( GMEVENT* event, int* seq, void* wk ); // ホールアウト
 static GMEVENT_RESULT ShutterDownOutEvent( GMEVENT* event, int* seq, void* wk ); // シャッターアウト(↓)
 static GMEVENT_RESULT ShutterDownInEvent( GMEVENT* event, int* seq, void* wk ); // シャッターイン(↓)
@@ -110,6 +111,8 @@ typedef struct
   // 季節フェード
   u8 startSeason;  // 最初に表示する季節
   u8 endSeason;    // 最後に表示する季節
+  SEASON_DISP_CALLBACK_FUNC callback_func; // コールバック関数
+  void* callback_param; // コールバック関数に渡すワーク
 
 } FADE_EVENT_WORK;
 
@@ -269,6 +272,43 @@ GMEVENT* EVENT_FieldFadeIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
     break;
   }
 	return event; 
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	コールバック付き 季節フェードイン イベント生成
+ *
+ * @param	gameSystem
+ * @param	fieldmap 
+ * @param startSeason     最初に表示する季節 ( 季節フェード時のみ有効 )
+ * @param endSeason       最後に表示する季節 ( 季節フェード時のみ有効 )
+ * @param callback_func   コールバック関数
+ * @param callback_param  コールバック関数に渡すワーク
+ *
+ * @return 生成したイベント
+ */
+//----------------------------------------------------------------------------------
+GMEVENT* EVENT_SeasonIn_Callback( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
+                                  u8 startSeason, u8 endSeason,
+                                  SEASON_DISP_CALLBACK_FUNC callback_func, void* callback_param )
+{
+	GMEVENT* event;
+	FADE_EVENT_WORK* work;
+
+	event = GMEVENT_Create( gameSystem, NULL, SeasonInEvent_Callback, sizeof(FADE_EVENT_WORK) );
+	work  = GMEVENT_GetEventWork(event);
+
+  // イベントワーク初期化
+  work->gameSystem     = gameSystem;
+  work->fieldmap       = fieldmap;
+	work->fadeType       = FIELD_FADE_SEASON;
+  work->startSeason    = startSeason;
+  work->endSeason      = endSeason;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
+  work->callback_func  = callback_func;
+  work->callback_param = callback_param;
+
+	return event;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -628,12 +668,14 @@ static GMEVENT* EVENT_SeasonIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldma
 	work  = GMEVENT_GetEventWork(event);
 
   // イベントワーク初期化
-  work->gameSystem  = gameSystem;
-  work->fieldmap    = fieldmap;
-	work->fadeType    = FIELD_FADE_SEASON;
-  work->startSeason = startSeason;
-  work->endSeason   = endSeason;
+  work->gameSystem     = gameSystem;
+  work->fieldmap       = fieldmap;
+	work->fadeType       = FIELD_FADE_SEASON;
+  work->startSeason    = startSeason;
+  work->endSeason      = endSeason;
   work->brightFadeMode = GetBrightFadeMode( work->fadeType );
+  work->callback_func  = NULL;
+  work->callback_param = NULL;
 
 	return event;
 }
@@ -1187,6 +1229,32 @@ static GMEVENT_RESULT SeasonInEvent( GMEVENT* event, int* seq, void* wk )
     // 季節表示イベント
     GMEVENT_CallEvent( event, 
         EVENT_SeasonDisplay( gameSystem, fieldmap, work->startSeason, work->endSeason ) );
+		(*seq)++;
+		break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+	} 
+	return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 季節フェードイン イベント ( コールバック呼び出し＋ )
+ */ 
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT SeasonInEvent_Callback( GMEVENT* event, int* seq, void* wk )
+{
+	FADE_EVENT_WORK* work       = wk;
+  GAMESYS_WORK*    gameSystem = work->gameSystem;
+  FIELDMAP_WORK*   fieldmap   = work->fieldmap;
+
+	switch( *seq ) {
+	case 0:
+    // 季節表示イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_SeasonDisplay_Callback( 
+          gameSystem, fieldmap, work->startSeason, work->endSeason,
+          work->callback_func, work->callback_param ) );
 		(*seq)++;
 		break;
   case 1:
