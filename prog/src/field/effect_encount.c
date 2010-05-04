@@ -196,6 +196,11 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
 {
   EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  
+  //エンカウントデータチェック
+  if( !enc->encdata->enable_f ){
+    return;
+  }
 
   //最初のジムバッジ入手前は起動しない
   if( !MISC_GetBadgeFlag( GAMEDATA_GetMiscWork(enc->gdata), BADGE_ID_01 )){
@@ -217,10 +222,6 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   //確率チェック
   if( GFUser_GetPublicRand0( 1000 ) >= (eff_wk->prob*10) ){
     effenc_WalkCtClear( ewk );
-    return;
-  }
-  //エンカウントデータチェック
-  if( !enc->encdata->enable_f ){
     return;
   }
 
@@ -553,9 +554,9 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   vec.y = 0;
   blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
   for(i = esw.sz; i <= esw.ez;i++){
-    vec.z = FX32_CONST(i*16); 
+    vec.z = FX32_CONST(i*16)+FX32_CONST(8); 
     for(j = esw.sx; j <= esw.ex;j++){
-      vec.x = FX32_CONST(j*16); 
+      vec.x = FX32_CONST(j*16)+FX32_CONST(8); 
       FLDMAPPER_GetGridDataForEffectEncount( g3dMapper, blockIdx, &vec, &gridData );
 //    IWASAWA_Printf("0x%02x,",gridData.attr&0xFFFF);
       id = MAPATTR_GetEffectEncountType( gridData.attr );
@@ -607,6 +608,7 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   ep->zone_id = FIELDMAP_GetZoneID( enc->fwork );
   ep->valid_f = TRUE;
 
+  IWASAWA_Printf("EffEncAdd (%d,%d,%d)\n",ep->gx,ep->gy,ep->gz);
   //カウンタークリア
   effenc_WalkCtClear( ewk );
 
