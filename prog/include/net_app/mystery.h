@@ -62,7 +62,7 @@ extern int MYSTERY_CreateItem(const GIFT_PACK_DATA* pGift);
 /**
  * @brief  不思議データからのGPower作成
  * @param  GIFT_PACK_DATA   セーブデータに格納されてる不思議データ
- * @retval @todo 未定
+ * @retval GPowerID
  */
 //--------------------------------------------------------------
 extern int MYSTERY_CreateGPower(const GIFT_PACK_DATA* pGift);

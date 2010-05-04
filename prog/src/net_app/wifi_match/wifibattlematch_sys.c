@@ -394,11 +394,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   switch( p_wk->param.mode )
   { 
   case WIFIBATTLEMATCH_MODE_MAINMENU:  //タイトルから進む、メインメニュー
-    p_wk->type  = WIFIBATTLEMATCH_TYPE_WIFICUP; //まだ決まっていないがとりあえずいれておく
+    p_wk->type  = WIFIBATTLEMATCH_TYPE_WIFICUP; //まだ決まっていないが、設定しないと０のままなのでいれておく
     WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_MAINMENU );
     break;
   case WIFIBATTLEMATCH_MODE_RANDOM:    //ポケセンのWIFIカウンターからすすむ、ランダム対戦
-    p_wk->type  = WIFIBATTLEMATCH_TYPE_RNDRATE; //まだ決まっていないがとりあえずいれておく
+    p_wk->type  = WIFIBATTLEMATCH_TYPE_RNDRATE; //まだ決まっていないが、設定しないと０のままなのでいれておく
     WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
     break;
   default:
@@ -1084,7 +1084,6 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
     switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
     {
-      //@todo BTL_COMM_WIFI?
     case REGULATION_BATTLE_SINGLE:    ///< シングル
       BTL_SETUP_Single_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
           GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_WIFI, heapID );

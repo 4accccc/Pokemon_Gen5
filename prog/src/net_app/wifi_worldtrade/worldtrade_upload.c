@@ -471,7 +471,6 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 {
 	// 上画面ＢＧパレット転送
 	//GFL_ARC_UTIL_TransVramPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_conect_nclr, PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
-  //@todo　使っていないようだが・・・
 	
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_MAIN_BG, WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );

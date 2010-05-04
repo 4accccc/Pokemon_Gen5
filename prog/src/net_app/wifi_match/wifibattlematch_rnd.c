@@ -95,6 +95,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define ENEMYDATA_WAIT_SYNC    (60*5)
 #define ENEMYDATA_WAIT_SYNC_RATE    (0)
 #define MATCHING_MSG_WAIT_SYNC (120)
+#define SELECTPOKE_MSG_WAIT_SYNC (30)
 
 //-------------------------------------
 ///	ヒープサイズ
@@ -1383,14 +1384,18 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_END_MATCHING_MSG:
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_STREAM );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_WAIT );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END_MATCHING );
     break;
 
   case SEQ_END_MATCHING:
-    p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
-    WBM_SEQ_End( p_seqwk );
+    if( p_wk->cnt++ > SELECTPOKE_MSG_WAIT_SYNC )
+    { 
+      p_wk->cnt = 0;
+      p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
+      WBM_SEQ_End( p_seqwk );
+    }
     break;
 
     //-------------------------------------
@@ -2336,14 +2341,18 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_END_MATCHING_MSG:
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_STREAM );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_WAIT );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END_MATCHING );
     break;
 
   case SEQ_END_MATCHING:
-    p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
-    WBM_SEQ_End( p_seqwk );
+    if( p_wk->cnt++ > SELECTPOKE_MSG_WAIT_SYNC )
+    { 
+      p_wk->cnt = 0;
+      p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
+      WBM_SEQ_End( p_seqwk );
+    }
     break;
 
     //-------------------------------------

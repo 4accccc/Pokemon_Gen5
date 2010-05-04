@@ -25,7 +25,6 @@
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
 //#include "savedata/zukanwork.h"
-//TODO
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
 #include "src\net_app\wifi_login\wifilogin_local.h"//コールバック作成のため

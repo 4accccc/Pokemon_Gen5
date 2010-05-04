@@ -275,7 +275,6 @@ BOOL DWCRAP_SC_Process( DWCRAP_SC_GDB_WORK *p_wk, const DWCUserData *cp_user_dat
   
   *p_result = DWC_SC_RESULT_NO_ERROR;
 
-  //@todo Ž¸”s‚µ‚½‚ç‘ŠŽè‚ÉŽ¸”s‚ð‘—‚é•K—v‚ª‚ ‚éH
   if( p_wk->is_sc_start )
   { 
     switch( p_wk->seq )
@@ -284,7 +283,7 @@ BOOL DWCRAP_SC_Process( DWCRAP_SC_GDB_WORK *p_wk, const DWCUserData *cp_user_dat
     case DWCRAP_SC_SEQ_INIT:
       p_wk->wait_cnt  = 0;
       { 
-        ret = DWC_GdbInitialize( GAME_ID, cp_user_data, DWC_GDB_SSL_TYPE_NONE );
+        ret = DWC_GdbInitialize( GAME_ID, cp_user_data, GF_DWC_GDB_AUTH_TYPE );
         if( *p_result != DWC_GDB_ERROR_NONE )
         { 
           *p_result = ret;
@@ -908,8 +907,7 @@ BOOL DWCRAP_GDB_Process( DWCRAP_SC_GDB_WORK *p_wk, const DWCUserData *cp_user_da
     switch( p_wk->seq )
     { 
     case DWCRAP_GDB_SEQ_INIT:
-      //@todo»•i”Å‚Í DWC_GDB_SSL_TYPE_SERVER_AUTH
-      *p_result = DWC_GdbInitialize( GAME_ID, cp_user_data, DWC_GDB_SSL_TYPE_NONE );
+      *p_result = DWC_GdbInitialize( GAME_ID, cp_user_data, GF_DWC_GDB_AUTH_TYPE );
       if( *p_result != DWC_GDB_ERROR_NONE )
       { 
         p_wk->is_gdb_start  = FALSE;

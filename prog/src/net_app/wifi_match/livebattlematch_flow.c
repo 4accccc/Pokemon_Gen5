@@ -79,6 +79,7 @@
 //=====================================
 #define ENEMYDATA_WAIT_SYNC    (180+300)
 #define MATCHING_MSG_WAIT_SYNC (120)
+#define SELECTPOKE_MSG_WAIT_SYNC (30)
 
 //=============================================================================
 /**
@@ -1500,6 +1501,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_TIMING,
     SEQ_WAIT_TIMING,
 
+    SEQ_SELECT_POKE_MSG,
     SEQ_CHECK_SHOW,       //‚Ý‚¹‚ ‚¢‚Í‚ ‚é‚©
     SEQ_LIST_END,         //ƒŠƒXƒg‚Ö
 
@@ -1706,6 +1708,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_SYNC:
     if( p_wk->cnt++ > ENEMYDATA_WAIT_SYNC )
     {  
+      p_wk->cnt = 0;
       *p_seq  = SEQ_START_MSG_WAIT;
     }
 		break;
@@ -1731,13 +1734,23 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_TIMING:
     if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),71, WB_NET_IRC_BATTLE) )
     { 
-      *p_seq  = SEQ_CHECK_SHOW;
+      *p_seq  = SEQ_SELECT_POKE_MSG;
     }
     break;
 
+  case SEQ_SELECT_POKE_MSG:
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_31, WBM_TEXT_TYPE_WAIT );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_CHECK_SHOW );
+		break;
+
   case SEQ_CHECK_SHOW:        //Œ©‚¹‡‚¢‚Í‚ ‚é‚©
+    if( p_wk->cnt++ > ENEMYDATA_WAIT_SYNC )
     { 
       REGULATION      *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
+
+      p_wk->cnt = 0;
       if( Regulation_GetParam( p_reg, REGULATION_SHOW_POKE) )
       { 
         //‚ ‚è

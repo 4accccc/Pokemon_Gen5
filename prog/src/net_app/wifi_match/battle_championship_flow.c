@@ -111,7 +111,6 @@ static void SEQFUNC_LiveDigitalCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_LiveInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
-static void SEQFUNC_RestrictUGC( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
@@ -516,11 +515,6 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             //DSの無線設定で通信不可のとき
             WBM_SEQ_SetNext( p_seqwk, SEQFUNC_EnableWireless );
           }
-          else if( DS_SYSTEM_IsRestrictUGC() )
-          { 
-            //ペアレンタルコントロールで送受信拒否しているとき
-            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RestrictUGC );
-          }
           else
           { 
             //接続できるとき
@@ -795,11 +789,6 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             //DSの無線設定で通信不可のとき
             WBM_SEQ_SetNext( p_seqwk, SEQFUNC_EnableWireless );
           }
-          else if( DS_SYSTEM_IsRestrictUGC() )
-          { 
-            //ペアレンタルコントロールで送受信拒否しているとき
-            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RestrictUGC );
-          }
           else
           { 
             //接続できるとき
@@ -891,42 +880,6 @@ static void SEQFUNC_LiveInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
     {
       WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveMenu );
-    }
-    break;
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ペアレンタルコントロールでユーザー作成コンテンツの送受信を拒否していた場合
- *
- *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
- *	@param	*p_seq					シーケンス
- *	@param	*p_wk_adrs				ワーク
- */
-//-----------------------------------------------------------------------------
-static void SEQFUNC_RestrictUGC( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{ 
-  enum
-  { 
-    SEQ_START_MSG,
-    SEQ_WAIT_MSG,
-  };
-
-  BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk = p_wk_adrs;
-
-  switch( *p_seq )
-  { 
-  case SEQ_START_MSG:
-    //@todo
-    UTIL_TEXT_PrintErr( p_wk, msg_common_wireless_off_keywait );
-    *p_seq  = SEQ_WAIT_MSG;
-    break;
-  
-    break;
-  case SEQ_WAIT_MSG:
-    if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
-    {
-      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
     }
     break;
   }

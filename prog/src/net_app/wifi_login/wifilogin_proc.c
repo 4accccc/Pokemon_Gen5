@@ -63,7 +63,7 @@
 // 画面構成定義
 //--------------------------------------------
 
-//BG面とパレット番号(仮設定
+//BG面とパレット番号
 #define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME3_S)
 #define _SUBSCREEN_PALLET	(0xE)
 

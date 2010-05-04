@@ -510,8 +510,8 @@ PLAYERINFO_WORK *PLAYERINFO_RND_Init( const PLAYERINFO_RANDOMMATCH_DATA *cp_data
   PlayerInfo_STAR_Cleate( p_wk, cp_data, p_unit, cp_res, heapID );
 
   { 
-    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 0, 32, 6, 1 );
-    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 6, 32, 18, 3 + rank );
+    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 5, 32, 18, 3 + rank );
     GFL_BG_LoadScreenReq( BG_FRAME_S_CARD );
   }
 
@@ -604,13 +604,13 @@ PLAYERINFO_WORK *PLAYERINFO_WIFI_Init( const PLAYERINFO_WIFICUP_DATA *cp_data, B
   switch( cp_data->bgm_no )
   { 
   case REGULATION_CARD_BGM_TRAINER:
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 3 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 5, 32, 18, 3 );
     GFL_BG_LoadScreenReq( card_frm );
     break;
   case REGULATION_CARD_BGM_WCS:
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 7 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 5, 32, 18, 7 );
     GFL_BG_LoadScreenReq( card_frm );
     break;
   }
@@ -817,13 +817,13 @@ PLAYERINFO_WORK *PLAYERINFO_LIVE_Init( const PLAYERINFO_LIVECUP_DATA *cp_data, c
   switch( cp_data->bgm_no )
   { 
   case REGULATION_CARD_BGM_TRAINER:
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 3 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 5, 32, 18, 3 );
     GFL_BG_LoadScreenReq( card_frm );
     break;
   case REGULATION_CARD_BGM_WCS:
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 6, 1 );
-    GFL_BG_ChangeScreenPalette( card_frm, 0, 6, 32, 18, 7 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 0, 32, 5, 1 );
+    GFL_BG_ChangeScreenPalette( card_frm, 0, 5, 32, 18, 7 );
     GFL_BG_LoadScreenReq( card_frm );
     break;
   }

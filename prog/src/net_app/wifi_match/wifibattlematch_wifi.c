@@ -116,6 +116,7 @@ typedef enum
 //=====================================
 #define ENEMYDATA_WAIT_SYNC (0)
 #define MATCHING_MSG_WAIT_SYNC (120)
+#define SELECTPOKE_MSG_WAIT_SYNC (30)
 
 //-------------------------------------
 ///	ヒープサイズ
@@ -2238,6 +2239,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     SEQ_WAIT_CNT,
     SEQ_START_SESSION,
     SEQ_WAIT_SESSION,
+    SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
     //キャンセル処理
@@ -2685,14 +2687,25 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       DWC_RAPCOMMON_ResetSubHeapID();
       GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
-      *p_seq  = SEQ_END_MATCHING;
+      *p_seq  = SEQ_END_MATCHING_MSG;
     }
     break;
 
-  case SEQ_END_MATCHING:
+  case SEQ_END_MATCHING_MSG:
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
-    p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
-    WBM_SEQ_End( p_seqwk );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_WAIT );
+    *p_seq = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END_MATCHING );
+    break;
+
+
+  case SEQ_END_MATCHING:
+    if( p_wk->cnt++ > SELECTPOKE_MSG_WAIT_SYNC )
+    { 
+      p_wk->cnt = 0;
+      p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
+      WBM_SEQ_End( p_seqwk );
+    }
     break;
 
     //-------------------------------------
