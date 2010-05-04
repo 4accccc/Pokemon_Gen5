@@ -130,7 +130,7 @@ EVENT_START ev_palace01_monolith
     	  _CALL sub_get_area_oldman_objid
 
       	//パレスじじい：主人公横へ
-      	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+      	_OBJ_ANIME( area_oldman_objid, anm_oldman1_move_01 )
       	_OBJ_ANIME_WAIT()
       	
       	//主人公：じじいを見る
@@ -143,11 +143,11 @@ EVENT_START ev_palace01_monolith
       	_MSGWIN_CLOSE()
 
       	//パレスじじい：元の位置へ
-      	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_02 )
+      	_OBJ_ANIME( area_oldman_objid, anm_oldman1_move_02 )
       	_OBJ_ANIME_WAIT()
 
       	//パレスじじい：下を向く
-      	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_d )
+      	_OBJ_ANIME( area_oldman_objid, anm_stay_walk_d )
       	_OBJ_ANIME_WAIT()
     	ENDIF
     	
