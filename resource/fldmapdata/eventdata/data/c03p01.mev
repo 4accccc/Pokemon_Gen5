@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 20:55:15
+#save date:2010/05/04 12:31:27
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p01.wms
 #SECTION START:OBJ_EVENT
@@ -282,9 +282,9 @@ EXIT_TYPE_SP30
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-1 5 -4
+1 5 -3
 #size
-1 9
+1 8
 #rail way
 DIR_DOWN
 #event number: 2
@@ -320,9 +320,9 @@ EXIT_TYPE_SP30
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 6 -3
+5 6 -2
 #size
-1 7
+1 5
 #rail way
 DIR_DOWN
 #event number: 4
@@ -339,9 +339,9 @@ EXIT_TYPE_SP30
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-7 5 -5
+7 5 -4
 #size
-1 10
+1 9
 #rail way
 DIR_DOWN
 #Map Event List Data End
