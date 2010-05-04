@@ -678,6 +678,23 @@ BOOL ZONEDATA_IsColosseum(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+//  @brief  サブウェイマップかどうか？
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsSubway(u16 zone_id)
+{
+  zone_id = ControlZoneID(zone_id);
+
+  if ( (zone_id == ZONE_ID_C04R0110) || (zone_id == ZONE_ID_C04R0111) )
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 /**
  * @brief  遊覧船内マップかどうかのチェック
@@ -790,12 +807,15 @@ BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id)
  * @brief  フィールド技を起動していいゾーンのチェック
  * @param  zoneid ゾーン指定ID
  * @return BOOL フィールド技が使えるゾーンならTRUE
+ *
+ * @note  現在の対象は、ユニオン、コロシアム、サブウェイ、パレス
  */
 //------------------------------------------------------------------
 BOOL ZONEDATA_CheckFieldSkillUse(u16 zone_id)
 {
   if( ZONEDATA_IsUnionRoom(zone_id) ||
       ZONEDATA_IsColosseum(zone_id) ||
+      ZONEDATA_IsSubway(zone_id) ||
       ZONEDATA_IsPalaceField(zone_id)){
     return FALSE;
   }
