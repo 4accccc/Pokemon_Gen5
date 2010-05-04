@@ -3034,10 +3034,10 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
     wk->bookJoin = 1;
     //乱入しようとしている人のビットを取得
     wk->joinBit = wk->shareBit^_get_connect_bit(wk);
-    GF_ASSERT( (wk->joinBit == 2)||
-          (wk->joinBit == 4)||
-          (wk->joinBit == 8)||
-          (wk->joinBit == 16) );
+//    GF_ASSERT( (wk->joinBit == 2)||
+//          (wk->joinBit == 4)||
+//          (wk->joinBit == 8)||
+//          (wk->joinBit == 16) );
     
   }
 
