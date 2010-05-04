@@ -224,6 +224,7 @@ struct _BTLV_GAUGE_CLWK
   u32                         :11;
 
   u32           add_dec;
+  u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
 };
 
 struct _BTLV_GAUGE_WORK
@@ -270,7 +271,7 @@ typedef struct
  */
 //============================================================================================
 
-static  void  Gauge_InitCalcHP( BTLV_GAUGE_CLWK* bgcl, int value );
+static  void  Gauge_InitCalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int value );
 static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp );
 static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
@@ -283,6 +284,7 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
+static  void  PutGaugeDamageObj( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int put_dot );
 static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 static  void  Gauge_Yure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 
@@ -293,7 +295,9 @@ static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work );
 
 static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, PokeSick sick );
 static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp );
+static  void  init_damage_dot( BTLV_GAUGE_CLWK* bgcl );
 static  void  bgm_pause( BOOL flag );
+static  u32   get_num_dotto( u32 prm_now, u32 prm_max, u8 dot_max );
 
 //============================================================================================
 /**
@@ -526,6 +530,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
       }
     }
   }
+  init_damage_dot( &bgw->bgcl[ pos ] );
   gauge_init_view( bgw, type, pos, BPP_GetViewSrcData( bpp ) );
 }
 
@@ -587,6 +592,7 @@ void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const PO
       }
     }
   }
+  init_damage_dot( &bgw->bgcl[ pos ] );
   gauge_init_view( bgw, type, pos, pp );
 }
 
@@ -726,6 +732,28 @@ static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvM
   bgw->bgcl[ pos ].move_cnt = MOVE_COUNT;
 
   GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_Move, &bgw->bgcl[ pos ], 0 );
+}
+
+//============================================================================================
+/**
+ *  @brief  damage_dot初期化
+ *
+ *  @param[in] bgcl  ゲージワークへのポインタ
+ */
+//============================================================================================
+static  void  init_damage_dot( BTLV_GAUGE_CLWK* bgcl )
+{ 
+  u8  dot_max = BTLV_GAUGE_HP_CHARMAX * BTLV_GAUGE_DOTTO;
+
+  if( bgcl->hpmax < dot_max )
+  { 
+    bgcl->damage_dot = get_num_dotto( ( bgcl->hp << 8 ), bgcl->hpmax, dot_max );
+    bgcl->damage_dot >>= 8;
+  }
+  else
+  { 
+    bgcl->damage_dot = get_num_dotto( bgcl->hp, bgcl->hpmax, dot_max );
+  }
 }
 
 //============================================================================================
@@ -885,7 +913,7 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* of
 //============================================================================================
 void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 {
-  Gauge_InitCalcHP( &bgw->bgcl[ pos ], value );
+  Gauge_InitCalcHP( bgw, &bgw->bgcl[ pos ], value );
   bgw->bgcl[ pos ].add_dec = 1;
 }
 
@@ -900,7 +928,7 @@ void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 //============================================================================================
 void  BTLV_GAUGE_CalcHPAtOnce( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 {
-  Gauge_InitCalcHP( &bgw->bgcl[ pos ], value );
+  Gauge_InitCalcHP( bgw, &bgw->bgcl[ pos ], value );
   bgw->bgcl[ pos ].add_dec = 0;
 }
 
@@ -1008,13 +1036,14 @@ BOOL  BTLV_GAUGE_CheckExist( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
 /**
  * @brief   HPバーの計算を開始する前に作業用ワーク等の初期化を行う
  *
- * @param[in] bgw   ゲージワークへのポインタ
+ * @param[in] bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param[in] bgcl  ゲージワークへのポインタ
  * @param[in] value 最終的に到達する値
  *
  * Gauge_CalcHPを実行する前に必ず呼び出して置く必要があります。
  */
 //--------------------------------------------------------------
-static  void  Gauge_InitCalcHP( BTLV_GAUGE_CLWK* bgcl, int value )
+static  void  Gauge_InitCalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int value )
 {
   bgcl->hp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
 
@@ -1026,6 +1055,16 @@ static  void  Gauge_InitCalcHP( BTLV_GAUGE_CLWK* bgcl, int value )
     bgcl->hp = bgcl->hpmax;
   }
   bgcl->hp_calc_req = 1;
+  { 
+    GFL_CLACTPOS  pos;
+
+    init_damage_dot( bgcl );
+    GFL_CLACT_WK_GetPos( bgcl->hp_clwk, &pos, CLSYS_DEFREND_MAIN );
+    pos.x -= ( ( BTLV_GAUGE_HP_CHARMAX * BTLV_GAUGE_DOTTO ) - bgcl->damage_dot );
+    GFL_CLACT_WK_SetPos( bgcl->hp_damage_clwk, &pos, CLSYS_DEFREND_MAIN );
+    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_damage_clwk, TRUE );
+    PutGaugeDamageObj( bgw, bgcl, bgcl->damage_dot );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1049,6 +1088,7 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     PutHPNumOBJ( bgw, bgcl, bgcl->hp );
     bgcl->hp_calc_req = 0;
     bgcl->hp_work = 0;
+    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_damage_clwk, FALSE );
   }
   else{
     PutHPNumOBJ( bgw, bgcl, calc_hp );
@@ -1510,6 +1550,7 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
                     image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                     0x20 );
     }
+    PutGaugeDamageObj( bgw, bgcl, put_dot );
     break;
 
   case BTLV_GAUGE_REQ_EXP:
@@ -1743,6 +1784,54 @@ static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
 
 //--------------------------------------------------------------
 /**
+ * @brief  ダメージゲージ描画
+ *
+ * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param bgcl    ゲージワークへのポインタ
+ * @param put_dot 描画ドット数
+ */
+//--------------------------------------------------------------
+static  void  PutGaugeDamageObj( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int put_dot )
+{ 
+  int i;
+  void *obj_vram;
+  NNSG2dImageProxy image;
+  u8  gauge_chr[ BTLV_GAUGE_HP_CHARMAX ];
+  int dot = bgcl->damage_dot - put_dot;
+
+  obj_vram = G2_GetOBJCharPtr();
+
+  for( i = 0 ; i < BTLV_GAUGE_HP_CHARMAX ; i++ )
+  {
+    gauge_chr[ i ] = 8;
+  }
+
+  for( i = BTLV_GAUGE_HP_CHARMAX - 1 ; i>= 0 ; i-- )
+  { 
+    if( dot >= BTLV_GAUGE_DOTTO )
+    { 
+      gauge_chr[ i ] = 0;
+      dot -= BTLV_GAUGE_DOTTO;
+    }
+    else
+    { 
+      gauge_chr[ i ] = BTLV_GAUGE_DOTTO - dot;
+      break;
+    }
+  }
+
+  GFL_CLACT_WK_GetImgProxy( bgcl->hp_damage_clwk, &image );
+  for( i = 0 ; i < BTLV_GAUGE_HP_CHARMAX ; i++ )
+  {
+    MI_CpuCopy16( &bgw->parts_address[ GP_HPBAR_DAMAGE + ( gauge_chr[ i ] << 5 ) ],
+                  (void*)( (u32)obj_vram + ( i + BTLV_GAUGE_HP_DAMAGE_CHARSTART ) * 0x20 +
+                  image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                  0x20 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   ゲージレベルアップ処理
  *
  * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
@@ -1959,57 +2048,6 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
     }
   }
 }
-#if 0
-static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
-{
-  int i;
-
-  if( bgw->bgm_fade_flag )
-  {
-    if( PMSND_CheckFadeOnBGM() == FALSE )
-    {
-      bgw->bgm_fade_flag = 0;
-      if( bgw->now_bgm_no != PMSND_GetBGMsoundNo() )
-      {
-        OS_TPrintf("PopBGM\n");
-        PMSND_PopBGM();
-        PMSND_FadeInBGM( 24 );
-      }
-      else
-      {
-        PMSND_PushBGM();
-        PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
-        PMSND_FadeInBGM( 8 );
-      }
-    }
-  }
-  else
-  {
-    BOOL  pinch_flag = FALSE;
-
-    for( i = 0 ; i < BTLV_GAUGE_NUM_MAX ; i++ )
-    {
-      if( ( bgw->bgcl[ i ].gauge_dir == 0 ) &&
-          ( bgw->bgcl[ i ].gauge_enable ) &&
-          ( bgw->bgcl[ i ].gauge_type != BTLV_GAUGE_TYPE_SAFARI ) )
-      {
-        u8  color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
-
-        if( color == GAUGETOOL_HP_DOTTO_RED )
-        {
-          pinch_flag = TRUE;
-        }
-      }
-    }
-    if( ( ( bgw->now_bgm_no != PMSND_GetBGMsoundNo() ) && ( pinch_flag == FALSE ) ) ||
-        ( ( bgw->now_bgm_no == PMSND_GetBGMsoundNo() ) && ( pinch_flag == TRUE ) ) )
-    {
-      bgw->bgm_fade_flag = 1;
-      PMSND_FadeOutBGM( 8 );
-    }
-  }
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -2144,3 +2182,25 @@ static  void  bgm_pause( BOOL flag )
   PMSND_PauseBGM( flag );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		現在値のゲージドット数を取得
+ *
+ * @param		prm_now		現在値
+ * @param		prm_max		最大値
+ * @param		dot_max		最大ドット数
+ *
+ * @return	ドット数
+ */
+//--------------------------------------------------------------------------------------------
+static  u32 get_num_dotto( u32 prm_now, u32 prm_max, u8 dot_max )
+{
+	u32 put_dot;
+	
+	put_dot = prm_now * dot_max / prm_max;
+	if( put_dot == 0 && prm_now > 0 )   // ﾄﾞｯﾄ計算では0でも実際の値が1以上なら1ﾄﾞｯﾄにする
+  {
+		put_dot = 1;
+	}
+	return put_dot;
+}
