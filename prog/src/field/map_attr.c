@@ -998,8 +998,8 @@ BOOL MAPATTR_VALUE_CheckGrassAllYearHigh( const MAPATTR_VALUE val )
  */
 EFFENC_TYPE_ID MAPATTR_GetEffectEncountType( MAPATTR attr )
 {
-  MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
-  MAPATTR_VALUE value = MAPATTR_GetAttrValue( attr );
+  MAPATTR_VALUE value = attr & 0xffff;
+  MAPATTR_FLAG flag = (attr >> 16) & 0xffff;
 
   if( value == MATTR_BRIDGE_01 ){
     return EFFENC_TYPE_BRIDGE;
