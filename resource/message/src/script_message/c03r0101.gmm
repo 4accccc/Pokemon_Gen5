@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-04T11:56:39"/>
+	<create user="nakamura_akira" host="W00161" date="2010-05-04T11:59:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1172,8 +1172,7 @@ assistantm_01_15へ続く
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　新聞社　からの　依頼だな▼
 ４時間　以上　調査して
-男と　女▽
-どっちが　多いかを▽
+男と　女　どっちが　多いかを▽
 調べてくる　調査だ▼
 調査の　結果を
 明日の朝刊に　したいそうだ▼</language>
@@ -1959,8 +1958,7 @@ assistantm_01_23○へ続く
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　新聞社　からの　依頼だな▼
 １０人　以上と　すれ違って
-男と　女▽
-どっちが　多いかを▽
+男と　女　どっちが　多いかを▽
 調べてくる　調査だ▼
 調査の　結果を
 明日の　朝刊に　したいそうだ▼</language>
@@ -3243,8 +3241,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『男と　女
-多いのは？』の▽
+		<language name="JPN_KANJI" width="256">まだ　『男と　女　多いのは？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3958,8 +3955,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『男と　女
-多いのは？』の▽
+		<language name="JPN_KANJI" width="256">まだ　『男と　女　多いのは？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -4658,8 +4654,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『男と　女
-多いのは？』の▽
+		<language name="JPN_KANJI" width="256">まだ　『男と　女　多いのは？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -5728,7 +5723,7 @@ assistantm_01_25へ続く
 ポケモンは　だれでも　たのしめる！
 みんなが　たのしんで　ほしいな▼</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
-少年のと　少女では
+男と　女では
 『[1:13:アンケート回答:0]』が　多いようだな▼
 ポケモンは　だれでも　楽しめる！
 みんなが　楽しんで　欲しいな▼</language>
