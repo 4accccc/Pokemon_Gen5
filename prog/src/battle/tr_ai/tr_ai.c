@@ -574,7 +574,10 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   VM_Delete( vmh );
 
   //技データキャッシュ破棄
-  WAZADATA_DeleteCache();
+  if( WAZADATA_CheckCache() == TRUE )
+  { 
+    WAZADATA_DeleteCache();
+  }
 }
 
 //============================================================================================
@@ -2548,7 +2551,14 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_POW( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_CHECK_WORKWAZA_POW\n");
 #endif
 
-  taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_POWER );
+  if( taw->calc_work != WAZANO_NULL )
+  { 
+    taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_POWER );
+  }
+  else
+  { 
+    taw->calc_work = 0;
+  }
 
   return taw->vmcmd_result;
 }
@@ -2564,7 +2574,14 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work
   OS_TPrintf("AI_CHECK_WORKWAZA_SEQNO\n");
 #endif
 
-  taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_AI_SEQNO );
+  if( taw->calc_work != WAZANO_NULL )
+  { 
+    taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_AI_SEQNO );
+  }
+  else
+  { 
+    taw->calc_work = -1;
+  }
 
   return taw->vmcmd_result;
 }
