@@ -26,6 +26,7 @@
 #include "font/font.naix"
 #include "script_message.naix"
 #include "staff_roll.naix"
+#include "title.naix"
 
 // サウンド
 
@@ -40,8 +41,8 @@
 #define HEAP_SIZE              (0x30000)               ///< ヒープサイズ
 
 // メインBGフレーム
-#define BG_FRAME_M_REAR        (GFL_BG_FRAME1_M)
-#define BG_FRAME_M_FRONT       (GFL_BG_FRAME2_M)
+#define BG_FRAME_M_REAR       (GFL_BG_FRAME1_M)
+#define BG_FRAME_M_LOGO       (GFL_BG_FRAME2_M)
 
 // メインBGフレームのプライオリティ
 #define BG_FRAME_PRI_M_REAR    (1)
@@ -78,6 +79,9 @@ enum
   SEQ_FADE_IN,
   SEQ_MAIN,
   SEQ_FADE_OUT,
+  SEQ_FADE_IN2,
+  SEQ_MAIN2,
+  SEQ_FADE_OUT2,
   SEQ_END,
 };
 
@@ -124,6 +128,7 @@ static void TheEnd_VBlankFunc( GFL_TCB* tcb, void* wk );
 // BG
 static void TheEnd_BgInit( THE_END_WORK* work );
 static void TheEnd_BgExit( THE_END_WORK* work );
+static void TheEnd_LogoInit( THE_END_WORK* work );
 
 
 //=============================================================================
@@ -181,13 +186,15 @@ static GFL_PROC_RESULT TheEnd_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
 
   // メインBG
   GFL_BG_SetPriority( BG_FRAME_M_REAR,   BG_FRAME_PRI_M_REAR  );
-  GFL_BG_SetPriority( BG_FRAME_M_FRONT,  BG_FRAME_PRI_M_FRONT );
+  GFL_BG_SetPriority( BG_FRAME_M_LOGO,  BG_FRAME_PRI_M_FRONT );
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( TheEnd_VBlankFunc, work, 1 );
 
   // 生成
-  TheEnd_BgInit( work );
+//  TheEnd_BgInit( work );
+  TheEnd_LogoInit(work);
+
 
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
@@ -289,10 +296,34 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
     {
       if( !GFL_FADE_CheckFade() )
       {
-        *seq = SEQ_END;
+        TheEnd_BgInit(work);
+        // フェードイン(黒→見える)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+        *seq = SEQ_FADE_IN2;
       }
     }
     break;
+  case SEQ_FADE_IN2:
+    if( !GFL_FADE_CheckFade() )
+    {
+      work->wait = 0;
+      *seq = SEQ_MAIN2;
+    }
+    break;
+  case SEQ_MAIN2:
+    if(++work->wait>THE_END_APPEAR_WAIT){
+      *seq = SEQ_FADE_OUT2;
+      // フェードアウト(見える→黒)
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
+    }
+    break;
+  case SEQ_FADE_OUT2:
+    if( !GFL_FADE_CheckFade() )
+    {
+      *seq = SEQ_END;
+    }
+    break;
+
   case SEQ_END:
     {
       return GFL_PROC_RES_FINISH;
@@ -379,11 +410,74 @@ static void TheEnd_BgInit( THE_END_WORK* work )
   }
 
   GFL_ARC_CloseDataHandle( handle );
-
   GFL_BG_LoadScreenReq( BG_FRAME_M_REAR );
+
+  GFL_BG_SetVisible( BG_FRAME_M_REAR, VISIBLE_ON );
+  GFL_BG_SetVisible( BG_FRAME_M_LOGO, VISIBLE_OFF );
+
 }
 static void TheEnd_BgExit( THE_END_WORK* work )
 {
   // 何もしない
 }
 
+
+// タイトルロゴ素材
+static const int logo_tbl[][3]={
+  {
+    NARC_title_wht_logo_NCLR,
+    NARC_title_wht_logo_NCGR,
+    NARC_title_wht_logo_NSCR,
+  },
+  {
+    NARC_title_blk_logo_NCLR,
+    NARC_title_blk_logo_NCGR,
+    NARC_title_blk_logo_NSCR,
+  }
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タイトルロゴグラフィックを読み込み
+ *
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
+static void TheEnd_LogoInit( THE_END_WORK* work )
+{
+  int version = GetVersion()-VERSION_WHITE;
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_TITLE, work->heap_id );
+
+  // 共通
+  GFL_ARCHDL_UTIL_TransVramPalette(
+      handle,
+      logo_tbl[version][0],
+      PALTYPE_MAIN_BG,
+      BG_PAL_POS_M_GRA * 0x20,
+      BG_PAL_NUM_M_GRA * 0x20,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(
+      handle,
+      logo_tbl[version][1],
+      BG_FRAME_M_LOGO,  
+      0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramScreen(
+      handle,
+      logo_tbl[version][2],
+      BG_FRAME_M_LOGO,
+      0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+   
+  GFL_ARC_CloseDataHandle( handle );
+  
+  GFL_BG_SetVisible( BG_FRAME_M_LOGO, VISIBLE_ON );
+  GFL_BG_SetVisible( BG_FRAME_M_REAR, VISIBLE_OFF );
+
+}
