@@ -259,7 +259,7 @@ extern  int               BTLV_EFFECT_GetTrType( int pos );
 extern  const BTL_MAIN_MODULE* BTLV_EFFECT_GetMainModule( void );
 extern  const BTLV_SCU*   BTLV_EFFECT_GetScu( void );
 extern  int               BTLV_EFFECT_GetPinchBGMFlag( void );
-extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( void );
+extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no );
 extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
 
 #ifdef PM_DEBUG

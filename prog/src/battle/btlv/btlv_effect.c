@@ -1386,11 +1386,15 @@ int BTLV_EFFECT_GetPinchBGMFlag( void )
 //============================================================================================
 /**
  * @brief  トレーナー曲チェンジフラグをセット
+ *
+ * @param[in] bgm_no    チェンジするトレーナー曲
  */
 //============================================================================================
-void  BTLV_EFFECT_SetTrainerBGMChangeFlag( void )
+void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
 {
   bew->trainer_bgm_change_flag = TRUE;
+
+  BTLV_GAUGE_SetNowBGMNo( bew->bgw, bgm_no );
 }
 
 //============================================================================================

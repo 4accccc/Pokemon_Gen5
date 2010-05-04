@@ -1073,6 +1073,7 @@ static  void  Gauge_InitCalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int
     bgcl->hp = bgcl->hpmax;
   }
   bgcl->hp_calc_req = 1;
+  if( bgcl->damage > 0 )
   { 
     GFL_CLACTPOS  pos;
 
@@ -1569,7 +1570,10 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
                     image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
                     0x20 );
     }
-    PutGaugeDamageObj( bgw, bgcl, put_dot );
+    if( bgcl->damage > 0 )
+    { 
+      PutGaugeDamageObj( bgw, bgcl, put_dot );
+    }
     break;
 
   case BTLV_GAUGE_REQ_EXP:
@@ -1990,6 +1994,19 @@ int  BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw )
 
 //--------------------------------------------------------------
 /**
+ * @brief   ゲージゆれリクエスト
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param pos   リクエストするポケモンの立ち位置
+ */
+//--------------------------------------------------------------
+void  BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no )
+{ 
+  bgw->now_bgm_no = bgm_no;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   ピンチBGM再生チェック
  *
  * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ
@@ -2010,7 +2027,6 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
         PMSND_PopBGM();
         if( ( bgw->trainer_bgm_change_flag == 0 ) && ( BTLV_EFFECT_GetTrainerBGMChangeFlag() ) )
         { 
-          bgw->now_bgm_no = SEQ_BGM_BATTLESUPERIOR;
           PMSND_PlayBGM( bgw->now_bgm_no );
           bgw->trainer_bgm_change_flag = 1;
         }
