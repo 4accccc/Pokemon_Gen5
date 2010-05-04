@@ -33,22 +33,7 @@ void UNSV_Init(UNSV_WORK * work)
 {
 	MI_CpuClear8(work, sizeof(UNSV_WORK));
 }
-#if 0
-//----------------------------------------------------------
-/**
- * @brief	入室する部屋の国コードセット
- * @param	sv			セーブデータ保持ワークへのポインタ
- * @return	none
- */
-//----------------------------------------------------------
-void UNSV_SetCountryCode(const UNSV_WORK * inWork, const u8 inCountryCode)
-{
-  //@todo カントリーコード上限チェック
 
-  //コードセット
-  inWork->TargetCountryCode = inCountryCode;
-}
-#endif
 //----------------------------------------------------------
 /**
  * @brief	セーブワークへデータをコピー
