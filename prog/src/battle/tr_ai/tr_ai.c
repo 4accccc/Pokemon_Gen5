@@ -2289,11 +2289,14 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond 
   case CHECK_DEFENCE:
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
-      int have_seqno = get_waza_param( taw, taw->use_waza[ pos ][ i ], WAZAPARAM_AI_SEQNO );
-      if( have_seqno == seqno )
-      {
-        ret = TRUE;
-        break;
+      if( taw->use_waza[ pos ][ i ] != WAZANO_NULL )
+      { 
+        int have_seqno = get_waza_param( taw, taw->use_waza[ pos ][ i ], WAZAPARAM_AI_SEQNO );
+        if( have_seqno == seqno )
+        {
+          ret = TRUE;
+          break;
+        }
       }
     }
     break;
