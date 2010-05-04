@@ -1861,6 +1861,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         #ifdef ROTATION_NEW_SYSTEM
         if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
         {
+          dir = wk->rotWazaSelParam.actRotation.rotation.dir;
           pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
           procPoke = wk->rotWazaSelParam.poke[ pokeIdx ].bpp;
           BTL_N_Printf( DBGSTR_CLIENT_ROT_Determine, dir, pokeIdx, BPP_GetID(procPoke) );
