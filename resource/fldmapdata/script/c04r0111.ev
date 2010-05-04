@@ -165,10 +165,6 @@ sub_challenge_continue:
 {
   DEFINE_LOCAL play_mode
    
-//  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_02 ) //ご案内する前にレポート
-//  _AB_KEYWAIT()
-//  _MSGWIN_CLOSE()
-  
   //受付をエラー状態に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
   
@@ -212,7 +208,7 @@ sub_challenge_continue_comm_multi:
   DEFINE_LOCAL play_mode
   
   //お友達の選択を待っています
-  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_19 )
+  _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
   
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -220,8 +216,9 @@ sub_challenge_continue_comm_multi:
   //選択結果送信開始同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, comm_ret )
   
+  _MSGWIN_CLOSE()
+  
   IF $comm_ret == FALSE THEN
-    _MSGWIN_CLOSE()
     _CALL sub_challenge_continue_comm_multi_error
     _RET
   ENDIF
@@ -244,7 +241,7 @@ sub_challenge_continue_comm_multi:
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SIO_END, BSW_NULL, comm_ret )
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-
+    
     //受付対応　ゲーム後へ
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
     
@@ -260,10 +257,7 @@ sub_challenge_continue_comm_multi:
     //受付へと戻る
     _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
   ELSE //相手続ける
-    //ご案内する前にレポート
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_02 )
-    _AB_KEYWAIT()
-    _MSGWIN_CLOSE()
+    _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
 
     //受付をエラー状態に
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
@@ -284,6 +278,7 @@ sub_challenge_continue_comm_multi:
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_BTL_TRAINER_SET, BSW_NULL, comm_ret )
     
     IF $comm_ret == FALSE THEN
+      _MSGWIN_CLOSE()
       _CALL sub_challenge_continue_comm_multi_error
       _RET
     ENDIF
@@ -305,6 +300,7 @@ sub_challenge_continue_comm_multi:
   
     //レポート
     _REPORT_CALL( SCWK_ANSWER )
+    _MSGWIN_CLOSE()
     
     //通信同期待ち
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_AUTO_SAVE, BSW_NULL, comm_ret )
@@ -316,7 +312,7 @@ sub_challenge_continue_comm_multi:
     
     //電車発車デモ
     _CALL sub_demo_train_starting
-  
+    
     //ホーム制御　無しに
     $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
     

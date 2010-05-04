@@ -656,7 +656,7 @@ _ANIME_LABEL anm_battle_win_clear_multi_partner
   _ANIME_DATA  AC_WALK_R_8F,5
   _ANIME_DATA  AC_WAIT_8F,3 //Ž©‹@‚ð‘Ò‚Â
   _ANIME_DATA  AC_WALK_R_8F,1
-  _ANIME_DATA  AC_WALK_D_8F,1
+  _ANIME_DATA  AC_WALK_D_8F,2
   _ANIME_DATA  ACMD_END,0
 
 //Ž©‹@AŽŸ‚ÌŽÔ—¼‚ÖˆÚ“®
