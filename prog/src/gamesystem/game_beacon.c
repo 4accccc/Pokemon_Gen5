@@ -23,6 +23,7 @@
 #include "savedata/playtime.h"
 #include "field/research_team_def.h"
 
+#include "game_beacon_local.h"
 
 //==============================================================================
 //  定数定義
@@ -43,47 +44,12 @@ SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
 //==============================================================================
 //  構造体定義
 //==============================================================================
-///1件のログデータ
-typedef struct{
-  GAMEBEACON_INFO info;
-  u16 time;                           ///<最新のデータを受け取ってから経過しているフレーム数
-  u16 padding;
-}GAMEBEACON_LOG;
-
-///送信ビーコン管理
-typedef struct{
-  GAMEBEACON_INFO info;               ///<送信ビーコン
-  s16 life;                           ///<送信寿命
-  u8 beacon_update;                   ///<TRUE:送信ビーコン更新
-  u8 padding;
-}GAMEBEACON_SEND_MANAGER;
-
-///ゲームビーコン管理システムのポインタ
-typedef struct{
-  GAMEDATA *gamedata;
-  GAMEBEACON_SEND_MANAGER send;       ///<送信ビーコン管理
-  GAMEBEACON_LOG log[GAMEBEACON_SYSTEM_LOG_MAX]; ///<ログ(チェーンバッファ)
-  u32 update_log;                     ///<更新のあったログ番号をbitで管理(32を超えたら変える)
-  u32 log_count;                      ///<ログ全体の受信件数をカウント
-  s8 start_log;                       ///<ログのチェーン開始位置
-  s8 end_log;                         ///<ログのチェーン終端位置
-  s8 log_num;                         ///<ログ件数
-  u8 new_entry;                       ///<TRUE:新しい人物とすれ違った
-  u16 backup_hour;                    ///<プレイ時間バックアップ
-  u16 padding;
-  
-#ifdef PM_DEBUG
-  BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
-#endif
-}GAMEBEACON_SYSTEM;
-
 
 //==============================================================================
-//  ローカル変数
+//  変数
 //==============================================================================
 ///ゲームビーコン管理システムのポインタ
-static GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
-
+GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -92,74 +58,6 @@ static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
-static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send);
-static void GAMEBEACON_Set_ThanksRecvCount(u32 count);
-static void GAMEBEACON_Set_SuretigaiCount(u32 count);
-
-void BEACONINFO_Set_BattleWildPokeStart(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_BattleWildPokeVictory(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_BattleSpPokeStart(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const STRBUF *nickname);
-void BEACONINFO_Set_GPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id);
-void BEACONINFO_Set_SpItemGet(GAMEBEACON_INFO *info, u16 item);
-void BEACONINFO_Set_PlayTime(GAMEBEACON_INFO *info, u32 hour);
-void BEACONINFO_Set_ZukanComplete(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_ThankyouOver(GAMEBEACON_INFO *info, u32 thankyou_count);
-void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info);
-#ifdef PM_DEBUG
-void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
-void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id);
-#endif
-void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no);
-void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano);
-void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno );
-void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count);
-void BEACONINFO_Set_SubwayTrophyGet(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_TrialHouse(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank);
-void BEACONINFO_Set_FerrisWheel(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id);
-void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
-void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word);
-void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
-void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
-void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
-
-void BEACONINFO_Set_Details_BattleWildPoke(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_Details_BattleSpPoke(GAMEBEACON_INFO *info, u16 monsno);
-void BEACONINFO_Set_Details_BattleTrainer(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_Details_BattleLeader(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_Details_BattleSpTrainer(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_Details_Walk(GAMEBEACON_INFO *info);
-void BEACONINFO_Set_Details_IntroductionPms(GAMEBEACON_INFO *info, const PMS_DATA *pms);
-
-static BOOL beacon_PokeBeaconTypeIsSpecial(const monsno );
 
 #ifdef PM_DEBUG
 GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
@@ -636,6 +534,28 @@ BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info)
   return FALSE;
 }
 
+//==================================================================
+/**
+ * 受信ビーコンバッファから指定トレーナーIDのビーコンを検索し、最後のデータを受信してから何フレーム経過しているかを取得する
+ *
+ * @param   trainer_id		検索対象のトレーナーID(下位2バイト)
+ *
+ * @retval  u16		最後のデータを受信してからの経過フレーム数
+ *                受信バッファに指定したユーザーが居ない場合は0xffff
+ */
+//==================================================================
+u16 GAMEBEACON_Get_RecvBeaconTime(u16 trainer_id)
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+  int i;
+  
+  for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
+    if(bsys->log[i].info.version_bit != 0 && bsys->log[i].info.trainer_id == trainer_id){
+      return bsys->log[i].time;
+    }
+  }
+  return 0xffff;
+}
 
 
 
@@ -739,7 +659,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
  * @param   info		
  */
 //--------------------------------------------------------------
-static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
+void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata);
   PLAYTIME *sv_playtime = SaveData_GetPlayTime( sv_ctrl );
@@ -756,27 +676,87 @@ static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
   send->beacon_update = TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * アクション番号のプライオリティチェック
+ *
+ * @param   action_no		
+ *
+ * @retval  BOOL		    TRUE:プライオリティが同等以上。　FALSE:プライオリティが下
+ */
+//--------------------------------------------------------------
+BOOL GAMEBEACON_SUB_CheckPriority(u16 action_no)
+{
+#ifdef PM_DEBUG
+  if(GameBeaconSys->deb_beacon_priority_egnore){
+    //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
+    return TRUE;
+  }
+#endif
+  if(CrossCommData[action_no].priority < CrossCommData[GameBeaconSys->send.info.action.action_no].priority){
+    return FALSE;
+  }
+  return TRUE;
+}
+
 //==================================================================
 /**
- * 受信ビーコンバッファから指定トレーナーIDのビーコンを検索し、最後のデータを受信してから何フレーム経過しているかを取得する
+ * ポケモン関連ビーコン タイプチェック
  *
- * @param   trainer_id		検索対象のトレーナーID(下位2バイト)
- *
- * @retval  u16		最後のデータを受信してからの経過フレーム数
- *                受信バッファに指定したユーザーが居ない場合は0xffff
+ * @param   monsno
  */
 //==================================================================
-u16 GAMEBEACON_Get_RecvBeaconTime(u16 trainer_id)
+BOOL GAMEBEACON_SUB_PokeBeaconTypeIsSpecial(const monsno )
 {
-  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
-  
-  for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
-    if(bsys->log[i].info.version_bit != 0 && bsys->log[i].info.trainer_id == trainer_id){
-      return bsys->log[i].time;
+  static const u16 sp_poke[] = {
+    MONSNO_ATOSU, 
+    MONSNO_PORUTOSU, 
+    MONSNO_ARAMISU, 
+    MONSNO_KAZAKAMI, 
+    MONSNO_RAIKAMI, 
+    MONSNO_SIN, 
+    MONSNO_MU, 
+    MONSNO_TUTINOKAMI, 
+    MONSNO_RAI, 
+    MONSNO_DARUTANISU, 
+    MONSNO_MERODHIA, 
+    MONSNO_INSEKUTA, 
+    MONSNO_BIKUTHI, 
+  };
+
+  for(i = 0;i < NELEMS(sp_poke);i++){
+    if( sp_poke[i] == monsno ){
+      return TRUE;
     }
   }
-  return 0xffff;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ニックネームのコピー　※文字数がFullの場合はEOMを差し込まないので独自コピー処理
+ *
+ * @param   nickname		    コピー元ニックネーム
+ * @param   dest_nickname		ニックネームコピー先
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_SUB_StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nickname)
+{
+  STRCODE temp_name[BUFLEN_POKEMON_NAME];
+  STRCODE code_eom = GFL_STR_GetEOMCode();
+  int i;
+
+  //文字数がFullの場合はEOMを差し込まないので独自コピー
+
+  //STRBUFに入っているSTRCODEをEOMも込みで展開できる一時バッファに取り出す
+  GFL_STR_GetStringCode(nickname, temp_name, BUFLEN_POKEMON_NAME);
+  for(i = 0; i < MONS_NAME_SIZE; i++){
+    dest_nickname[i] = temp_name[i];
+    if(temp_name[i] == code_eom){
+      break;
+    }
+  }
 }
 
 //==============================================================================
@@ -915,40 +895,6 @@ void GAMEBEACON_SendDataUpdate_SelfIntroduction(void)
   send->beacon_update = TRUE;
 }
 
-//==================================================================
-/**
- * デバッグ用：強制で新しい人物とすれ違ったフラグを立てる
- */
-//==================================================================
-#ifdef PM_DEBUG
-void DEBUG_GAMEBEACON_Set_NewEntry(void)
-{
-  GameBeaconSys->new_entry = TRUE;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * アクション番号のプライオリティチェック
- *
- * @param   action_no		
- *
- * @retval  BOOL		    TRUE:プライオリティが同等以上。　FALSE:プライオリティが下
- */
-//--------------------------------------------------------------
-static BOOL _CheckPriority(u16 action_no)
-{
-#ifdef PM_DEBUG
-  if(GameBeaconSys->deb_beacon_priority_egnore){
-    //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
-    return TRUE;
-  }
-#endif
-  if(CrossCommData[action_no].priority < CrossCommData[GameBeaconSys->send.info.action.action_no].priority){
-    return FALSE;
-  }
-  return TRUE;
-}
 
 
 //==============================================================================
@@ -958,360 +904,6 @@ static BOOL _CheckPriority(u16 action_no)
 //==============================================================================
 //==================================================================
 /**
- * 送信ビーコンセット：ポケモンと対戦を開始しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattlePokeStart(u16 monsno)
-{
-  if( beacon_PokeBeaconTypeIsSpecial( monsno )){
-    GAMEBEACON_Set_BattleSpPokeStart(monsno);
-  }else{
-    GAMEBEACON_Set_BattleWildPokeStart(monsno);
-  }
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：ポケモンとの対戦に勝利しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattlePokeVictory(u16 monsno)
-{
-  if( beacon_PokeBeaconTypeIsSpecial( monsno )){
-    GAMEBEACON_Set_BattleSpPokeVictory(monsno);
-  }else{
-    GAMEBEACON_Set_BattleWildPokeVictory(monsno);
-  }
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：野生ポケモンと対戦を開始しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleWildPokeStart(u16 monsno)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_WILD_POKE_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleWildPokeStart(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：野生のポケモンと対戦を開始しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleWildPokeStart(GAMEBEACON_INFO *info, u16 monsno)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
-  info->action.monsno = monsno;
- 
-  BEACONINFO_Set_Details_BattleWildPoke(info, monsno);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：野生のポケモンとの対戦に勝利しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleWildPokeVictory(u16 monsno)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleWildPokeVictory(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：野生のポケモンとの対戦に勝利しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleWildPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY;
-  info->action.monsno = monsno;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：特別なポケモンと対戦を開始しました
- * @param   tr_no   ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleSpPokeStart(u16 monsno)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_POKE_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpPokeStart(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：特別なポケモンと対戦を開始しました
- * @param   tr_no   ポケモン番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleSpPokeStart(GAMEBEACON_INFO *info, u16 monsno)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_POKE_START;
-  info->action.monsno = monsno;
-
-  BEACONINFO_Set_Details_BattleSpPoke(info, monsno);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：特別なポケモンとの対戦に勝利しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleSpPokeVictory(u16 monsno)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpPokeVictory(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：特別なポケモンとの対戦に勝利しました
- * @param   monsno   ポケモン番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY;
-  info->action.monsno = monsno;
-  
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：トレーナーと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleTrainerStart(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：トレーナーと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_START;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_BattleTrainer(info, tr_no);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：トレーナーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：トレーナーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：ジムリーダーと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleLeaderStart(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：トレーナーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_START;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_BattleLeader(info, tr_no);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：ジムリーダーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleLeaderVictory(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：ジムリーダーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：特別なトレーナーと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpTrainerStart(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：特別なトレーナーと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：特別なトレーナーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：特別なトレーナーとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：チャンピオンと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：チャンピオンと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：チャンピオンとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：チャンピオンとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
  * 送信ビーコンセット：ポケモン捕獲
  *
  * @param   monsno    ポケモン番号
@@ -1319,7 +911,7 @@ void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_PokemonGet(u16 monsno)
 {
-  if( beacon_PokeBeaconTypeIsSpecial( monsno )){
+  if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_SpecialPokemonGet(monsno);
   }else{
     GAMEBEACON_Set_WildPokemonGet(monsno);
@@ -1335,9 +927,9 @@ void GAMEBEACON_Set_PokemonGet(u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_WildPokemonGet(u16 monsno)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_POKE_GET) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_GET) == FALSE){ return; };
   BEACONINFO_Set_WildPokemonGet(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1364,9 +956,9 @@ void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_SP_POKE_GET) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SP_POKE_GET) == FALSE){ return; };
   BEACONINFO_Set_SpecialPokemonGet(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1384,31 +976,6 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
   BEACONINFO_Set_Details_Walk(info);
 }
 
-//--------------------------------------------------------------
-/**
- * ニックネームのコピー　※文字数がFullの場合はEOMを差し込まないので独自コピー処理
- *
- * @param   nickname		    コピー元ニックネーム
- * @param   dest_nickname		ニックネームコピー先
- */
-//--------------------------------------------------------------
-static void _StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nickname)
-{
-  STRCODE temp_name[BUFLEN_POKEMON_NAME];
-  STRCODE code_eom = GFL_STR_GetEOMCode();
-  int i;
-
-  //文字数がFullの場合はEOMを差し込まないので独自コピー
-
-  //STRBUFに入っているSTRCODEをEOMも込みで展開できる一時バッファに取り出す
-  GFL_STR_GetStringCode(nickname, temp_name, BUFLEN_POKEMON_NAME);
-  for(i = 0; i < MONS_NAME_SIZE; i++){
-    dest_nickname[i] = temp_name[i];
-    if(temp_name[i] == code_eom){
-      break;
-    }
-  }
-}
 
 //==================================================================
 /**
@@ -1419,9 +986,9 @@ static void _StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nickname)
 //==================================================================
 void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_POKE_LVUP) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_LVUP) == FALSE){ return; };
   BEACONINFO_Set_PokemonLevelUp(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1434,7 +1001,7 @@ void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
 void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname)
 {
   info->action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+  GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 }
 
 //==================================================================
@@ -1447,9 +1014,9 @@ void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname
 //==================================================================
 void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_POKE_EVOLUTION) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_EVOLUTION) == FALSE){ return; };
   BEACONINFO_Set_PokemonEvolution(&GameBeaconSys->send.info, monsno, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1464,65 +1031,7 @@ void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const ST
 {
   info->action.action_no = GAMEBEACON_ACTION_POKE_EVOLUTION;
   info->action.monsno = monsno;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信Gパワー発動
- *
- * @param   g_power_id		GパワーID
- */
-//==================================================================
-void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_GPOWER) == FALSE){ return; };
-  BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * Gパワー発動
- *
- * @param   g_power_id		GパワーID
- */
-//==================================================================
-void BEACONINFO_Set_GPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id)
-{
-  info->action.action_no = GAMEBEACON_ACTION_GPOWER;
-  info->g_power_id = g_power_id;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：貴重品をプレイヤーが入手
- *
- * @param   item		アイテム番号
- */
-//==================================================================
-void GAMEBEACON_Set_SpItemGet(u16 item)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_SP_ITEM_GET) == FALSE){ return; };
-  BEACONINFO_Set_SpItemGet(&GameBeaconSys->send.info, item);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：貴重品をプレイヤーが入手
- *
- * @param   item		アイテム番号
- */
-//==================================================================
-void BEACONINFO_Set_SpItemGet(GAMEBEACON_INFO *info, u16 item)
-{
-  info->action.action_no = GAMEBEACON_ACTION_SP_ITEM_GET;
-  info->action.itemno = item;
+  GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -1536,9 +1045,9 @@ void BEACONINFO_Set_SpItemGet(GAMEBEACON_INFO *info, u16 item)
 //==================================================================
 void GAMEBEACON_Set_PlayTime(u32 hour)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_PLAYTIME) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_PLAYTIME) == FALSE){ return; };
   BEACONINFO_Set_PlayTime(&GameBeaconSys->send.info, hour);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1556,87 +1065,6 @@ void BEACONINFO_Set_PlayTime(GAMEBEACON_INFO *info, u32 hour)
   BEACONINFO_Set_Details_Walk(info);
 }
 
-//==================================================================
-/**
- * 送信ビーコンセット：ポケモン図鑑が完成
- */
-//==================================================================
-void GAMEBEACON_Set_ZukanComplete(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_ZUKAN_COMPLETE) == FALSE){ return; };
-  BEACONINFO_Set_ZukanComplete(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：ポケモン図鑑が完成
- */
-//==================================================================
-void BEACONINFO_Set_ZukanComplete(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_ZUKAN_COMPLETE;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：お礼を受けた回数が規定数を超えた
- * @param   thankyou_count	お礼回数
- */
-//==================================================================
-void GAMEBEACON_Set_ThankyouOver(u32 thankyou_count)
-{
-  static const u8 regu_count[] = {10, 30, 50, 100, 200};
-  int i;
-  if(_CheckPriority(GAMEBEACON_ACTION_THANKYOU_OVER) == FALSE){ return; };
-  for(i = 0; i < NELEMS(regu_count); i++){
-    if(thankyou_count == regu_count[i]){
-      BEACONINFO_Set_ThankyouOver(&GameBeaconSys->send.info, thankyou_count);
-      SendBeacon_SetCommon(&GameBeaconSys->send);
-      return;
-    }
-  }
-}
-
-//==================================================================
-/**
- * ビーコンセット：お礼を受けた回数が規定数を超えた
- * @param   thankyou_count	お礼回数
- */
-//==================================================================
-void BEACONINFO_Set_ThankyouOver(GAMEBEACON_INFO *info, u32 thankyou_count)
-{
-  info->action.action_no = GAMEBEACON_ACTION_THANKYOU_OVER;
-  info->action.thankyou_count = thankyou_count;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：ユニオンルーム入室
- */
-//==================================================================
-void GAMEBEACON_Set_UnionIn(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_UNION_IN) == FALSE){ return; };
-  BEACONINFO_Set_UnionIn(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：ユニオンルーム入室
- */
-//==================================================================
-void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_UNION_IN;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
 
 #ifdef PM_DEBUG //イベント用の配布ROMでしか発信はしないのでテスト用
 //==================================================================
@@ -1648,9 +1076,9 @@ void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Set_DistributionPoke(u16 monsno)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_POKE) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_POKE) == FALSE){ return; };
   BEACONINFO_Set_DistributionPoke(&GameBeaconSys->send.info, monsno);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1678,9 +1106,9 @@ void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_DistributionItem(u16 item)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ITEM) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ITEM) == FALSE){ return; };
   BEACONINFO_Set_DistributionItem(&GameBeaconSys->send.info, item);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1706,9 +1134,9 @@ void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item)
 //==================================================================
 void GAMEBEACON_Set_DistributionEtc(void)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ETC) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ETC) == FALSE){ return; };
   BEACONINFO_Set_DistributionEtc(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1733,9 +1161,9 @@ void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
 //==================================================================
 void GAMEBEACON_Set_DistributionGPower(GPOWER_ID g_power_id)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER) == FALSE){ return; };
   BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1764,9 +1192,9 @@ void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_
 //==================================================================
 void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_CRITICAL_HIT) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_CRITICAL_HIT) == FALSE){ return; };
   BEACONINFO_Set_CriticalHit(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1780,7 +1208,7 @@ void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname)
 void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname)
 {
   info->action.action_no = GAMEBEACON_ACTION_CRITICAL_HIT;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+  GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
 //  詳細は直前のを維持
 //  BEACONINFO_Set_Details_Walk(info);
@@ -1795,9 +1223,9 @@ void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname)
 //==================================================================
 void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_CRITICAL_DAMAGE) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_CRITICAL_DAMAGE) == FALSE){ return; };
   BEACONINFO_Set_CriticalDamage(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1811,151 +1239,7 @@ void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname)
 void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname)
 {
   info->action.action_no = GAMEBEACON_ACTION_CRITICAL_DAMAGE;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-//  詳細は直前のを維持
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘から逃げ出した
- */
-//==================================================================
-void GAMEBEACON_Set_Escape(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_ESCAPE) == FALSE){ return; };
-  BEACONINFO_Set_Escape(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：戦闘から逃げ出した
- */
-//==================================================================
-void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_ESCAPE;
-
-//  詳細は直前のを維持
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、先頭のポケモンのHPが5割以上少なくなっている
- *
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void GAMEBEACON_Set_HPLittle(const STRBUF *nickname)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_HP_LITTLE) == FALSE){ return; };
-  BEACONINFO_Set_HPLittle(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、先頭のポケモンのHPが5割以上少なくなっている
- *
- * @param   info		
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
-{
-  info->action.action_no = GAMEBEACON_ACTION_HP_LITTLE;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-//  詳細は直前のを維持
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、先頭のポケモンのPPが1つでも0になっている
- *
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void GAMEBEACON_Set_PPLittle(const STRBUF *nickname)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_PP_LITTLE) == FALSE){ return; };
-  BEACONINFO_Set_PPLittle(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、先頭のポケモンのPPが1つでも0になっている
- *
- * @param   info		
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
-{
-  info->action.action_no = GAMEBEACON_ACTION_PP_LITTLE;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-//  詳細は直前のを維持
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、戦闘のポケモンが瀕死
- *
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void GAMEBEACON_Set_Dying(const STRBUF *nickname)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_DYING) == FALSE){ return; };
-  BEACONINFO_Set_Dying(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、先頭のポケモンが瀕死
- *
- * @param   info		
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname)
-{
-  info->action.action_no = GAMEBEACON_ACTION_DYING;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-//  詳細は直前のを維持
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、戦闘のポケモンが状態異常
- *
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void GAMEBEACON_Set_StateIsAbnormal(const STRBUF *nickname)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_STATE_IS_ABNORMAL) == FALSE){ return; };
-  BEACONINFO_Set_StateIsAbnormal(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：戦闘後、先頭のポケモンが状態異常
- *
- * @param   info		
- * @param   nickname		対象のポケモンのニックネーム
- */
-//==================================================================
-void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nickname)
-{
-  info->action.action_no = GAMEBEACON_ACTION_STATE_IS_ABNORMAL;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+  GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
 //  詳細は直前のを維持
 }
@@ -1969,9 +1253,9 @@ void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nicknam
 //==================================================================
 void GAMEBEACON_Set_UseItem(u16 item_no)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_USE_ITEM) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_USE_ITEM) == FALSE){ return; };
   BEACONINFO_Set_UseItem(&GameBeaconSys->send.info, item_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
@@ -1988,423 +1272,6 @@ void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no)
   info->action.itemno = item_no;
   
 //  詳細は直前のを維持
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：フィールド技を使用
- *
- * @param   wazano    技番号
- */
-//==================================================================
-void GAMEBEACON_Set_FieldSkill(u16 wazano)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_FIELD_SKILL) == FALSE){ return; };
-  BEACONINFO_Set_FieldSkill(&GameBeaconSys->send.info, wazano);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：フィールド技を使用
- *
- * @param   info		
- * @param   wazano		技番号
- */
-//==================================================================
-void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano)
-{
-  info->action.action_no = GAMEBEACON_ACTION_FIELD_SKILL;
-  info->action.wazano = wazano;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：タマゴを育て屋から受け取った
- */
-//==================================================================
-void GAMEBEACON_Set_SodateyaEgg( void )
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_SODATEYA_EGG) == FALSE){ return; };
-  BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：タマゴを育て屋から受け取った
- *
- * @param   info		
- */
-//==================================================================
-void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_SODATEYA_EGG;
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：タマゴが孵化
- *
- * @param   monsno		孵化したタマゴのポケモン番号
- */
-//==================================================================
-void GAMEBEACON_Set_EggHatch( u16 monsno )
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_EGG_HATCH) == FALSE){ return; };
-  BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, monsno );
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：タマゴが孵化
- *
- * @param   info		
- * @param   monsno		孵化したタマゴのポケモン番号
- */
-//==================================================================
-void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno )
-{
-  info->action.action_no = GAMEBEACON_ACTION_EGG_HATCH;
-  info->action.monsno = monsno;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：買い物中
- */
-//==================================================================
-void GAMEBEACON_Set_Shoping(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_SHOPING) == FALSE){ return; };
-  BEACONINFO_Set_Shoping(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：買い物中
- */
-//==================================================================
-void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_SHOPING;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：バトルサブウェイ挑戦中
- */
-//==================================================================
-void GAMEBEACON_Set_Subway(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_SUBWAY) == FALSE){ return; };
-  BEACONINFO_Set_Subway(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：バトルサブウェイ挑戦中
- */
-//==================================================================
-void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_SUBWAY;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：バトルサブウェイ連勝中
- *
- * @param   victory_count		連勝数
- */
-//==================================================================
-void GAMEBEACON_Set_SubwayStraightVictories(u32 victory_count)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES) == FALSE){ return; };
-  BEACONINFO_Set_SubwayStraightVictories(&GameBeaconSys->send.info, victory_count);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：バトルサブウェイ連勝中(ラウンド数)
- *
- * @param   victory_count		勝ち進んだラウンド数
- *
- * 記録として伸びていく<連勝数>ではなく、7戦1セットの何勝目かを1～7で渡してください
- */
-//==================================================================
-void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count)
-{
-  info->action.action_no = GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES;
-  info->action.victory_count = victory_count;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：バトルサブウェイでトロフィー取得
- *
- * @param   victory_count		連勝数
- */
-//==================================================================
-void GAMEBEACON_Set_SubwayTrophyGet( void )
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_SUBWAY_TROPHY_GET) == FALSE){ return; };
-  BEACONINFO_Set_SubwayTrophyGet(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：バトルサブウェイでトロフィーゲット
- *
- * @param   victory_count		連勝数
- */
-//==================================================================
-void BEACONINFO_Set_SubwayTrophyGet( GAMEBEACON_INFO *info )
-{
-  info->action.action_no = GAMEBEACON_ACTION_SUBWAY_TROPHY_GET;
-  info->action.victory_count = 0;
-  
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：トライアルハウスに挑戦中
- */
-//==================================================================
-void GAMEBEACON_Set_TrialHouse(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_TRIALHOUSE) == FALSE){ return; };
-  BEACONINFO_Set_TrialHouse(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：トライアルハウスに挑戦中
- */
-//==================================================================
-void BEACONINFO_Set_TrialHouse(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_TRIALHOUSE;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：トライアルハウスでランク確定
- *
- * @param   rank      TH_RANK_xxx
- */
-//==================================================================
-void GAMEBEACON_Set_TrialHouseRank(u8 rank)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_TRIALHOUSE_RANK) == FALSE){ return; };
-  BEACONINFO_Set_TrialHouseRank(&GameBeaconSys->send.info, rank);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：トライアルハウスでランク確定
- *
- * @param   info		
- * @param   rank		TH_RANK_xxx
- */
-//==================================================================
-void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank)
-{
-  info->action.action_no = GAMEBEACON_ACTION_TRIALHOUSE_RANK;
-  info->action.trial_house_rank = rank;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：観覧車に乗った
- */
-//==================================================================
-void GAMEBEACON_Set_FerrisWheel(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_FERRIS_WHEEL) == FALSE){ return; };
-  BEACONINFO_Set_FerrisWheel(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：観覧車に乗った
- */
-//==================================================================
-void BEACONINFO_Set_FerrisWheel(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_FERRIS_WHEEL;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：ポケシフター入室
- */
-//==================================================================
-void GAMEBEACON_Set_PokeShifter(void)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_POKESHIFTER) == FALSE){ return; };
-  BEACONINFO_Set_PokeShifter(&GameBeaconSys->send.info);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：ポケシフター入室
- */
-//==================================================================
-void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info)
-{
-  info->action.action_no = GAMEBEACON_ACTION_POKESHIFTER;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：ミュージカル入室
- *
- * @param   nickname		参加したポケモンのニックネーム
- */
-//==================================================================
-void GAMEBEACON_Set_Musical(const STRBUF *nickname)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_MUSICAL) == FALSE){ return; };
-  BEACONINFO_Set_Musical(&GameBeaconSys->send.info, nickname);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：ミュージカル入室
- *
- * @param   info		
- * @param   nickname		参加したポケモンのニックネーム
- */
-//==================================================================
-void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname)
-{
-  info->action.action_no = GAMEBEACON_ACTION_MUSICAL;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：他人のプレイヤーから受け取ったGパワーを使用
- *
- * @param   gpower_id		GパワーID
- */
-//==================================================================
-void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_OTHER_GPOWER_USE) == FALSE){ return; };
-  BEACONINFO_Set_OtherGPowerUse(&GameBeaconSys->send.info, gpower_id);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：他人のプレイヤーから受け取ったGパワーを使用
- *
- * @param   info		
- * @param   gpower_id		GパワーID
- */
-//==================================================================
-void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id)
-{
-  info->action.action_no = GAMEBEACON_ACTION_OTHER_GPOWER_USE;
-  info->action.gpower_id = gpower_id;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：「ありがとう！」
- *
- * @param   gamedata		
- * @param   target_trainer_id   お礼をする相手のトレーナーID
- */
-//==================================================================
-void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_THANKYOU) == FALSE){ return; };
-  BEACONINFO_Set_Thankyou(&GameBeaconSys->send.info, gamedata, target_trainer_id);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：「ありがとう！」
- *
- * @param   gamedata		
- * @param   target_trainer_id   お礼をする相手のトレーナーID
- */
-//==================================================================
-void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id)
-{
-  const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
-
-  STRTOOL_Copy(MISC_CrossComm_GetThankyouMessage(misc), 
-  info->action.thanks.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
-  info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
-  info->action.thanks.target_trainer_id = target_trainer_id;
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：一言メッセージ
- *
- * @param   gamedata		
- * @param   free_word   一言メッセージ
- */
-//==================================================================
-void GAMEBEACON_Set_FreeWord( const STRBUF *free_word )
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_FREEWORD) == FALSE){ return; };
-  BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：一言メッセージ
- *
- * @param   gamedata		
- * @param   free_word   一言メッセージ
- */
-//==================================================================
-void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word)
-{
-  GFL_STR_GetStringCode(free_word, info->action.freeword_message, GAMEBEACON_FREEWORD_MESSAGE_LEN);
-  info->action.action_no = GAMEBEACON_ACTION_FREEWORD;
 }
 
 //==================================================================
@@ -2432,54 +1299,6 @@ void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAME
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
   info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信その他セット：お礼を受けた回数
- *
- * @param   count		
- */
-//==================================================================
-static void GAMEBEACON_Set_ThanksRecvCount(u32 count)
-{
-  BEACONINFO_Set_ThanksRecvCount(&GameBeaconSys->send.info, count);
-}
-
-//==================================================================
-/**
- * その他セット：お礼を受けた回数
- *
- * @param   count		
- */
-//==================================================================
-void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count)
-{
-  info->thanks_recv_count = count;
-}
-
-//==================================================================
-/**
- * 送信その他セット：すれ違った人数
- *
- * @param   count		
- */
-//==================================================================
-static void GAMEBEACON_Set_SuretigaiCount(u32 count)
-{
-  BEACONINFO_Set_SuretigaiCount(&GameBeaconSys->send.info, count);
-}
-
-//==================================================================
-/**
- * その他セット：すれ違った人数
- *
- * @param   count		
- */
-//==================================================================
-void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
-{
-  info->suretigai_count = count;
 }
 
 //==============================================================================
@@ -2590,44 +1409,22 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
   BEACONINFO_Set_Details_IntroductionPms(&GameBeaconSys->send.info, pms);
 }
 
-//==================================================================
-/**
- * ポケモン関連ビーコン タイプチェック
- *
- * @param   monsno
- */
-//==================================================================
-static BOOL beacon_PokeBeaconTypeIsSpecial(const monsno )
-{
-  int i;
-  static const u16 sp_poke[] = {
-    MONSNO_ATOSU, 
-    MONSNO_PORUTOSU, 
-    MONSNO_ARAMISU, 
-    MONSNO_KAZAKAMI, 
-    MONSNO_RAIKAMI, 
-    MONSNO_SIN, 
-    MONSNO_MU, 
-    MONSNO_TUTINOKAMI, 
-    MONSNO_RAI, 
-    MONSNO_DARUTANISU, 
-    MONSNO_MERODHIA, 
-    MONSNO_INSEKUTA, 
-    MONSNO_BIKUTHI, 
-  };
-
-  for(i = 0;i < NELEMS(sp_poke);i++){
-    if( sp_poke[i] == monsno ){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
 
 
 
 
 #ifdef PM_DEBUG
+
+//==================================================================
+/**
+ * デバッグ用：強制で新しい人物とすれ違ったフラグを立てる
+ */
+//==================================================================
+void DEBUG_GAMEBEACON_Set_NewEntry(void)
+{
+  GameBeaconSys->new_entry = TRUE;
+}
+
 //==================================================================
 /**
  * デバッグ用：自分の送信ビーコン情報バッファのポインタを取得する
