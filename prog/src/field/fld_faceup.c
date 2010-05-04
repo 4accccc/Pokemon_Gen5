@@ -50,9 +50,9 @@
 #define EYE_RND_COUNT (20)
 
 #define EYE_WAIT_MAX    (2)
-#define MOUTH_WAIT_MAX_SLOW    (2)
-#define MOUTH_WAIT_MAX_NORMAL    (1)
-#define MOUTH_WAIT_MAX_FAST    (0)
+#define MOUTH_WAIT_MAX_SLOW    (3)
+#define MOUTH_WAIT_MAX_NORMAL    (2)
+#define MOUTH_WAIT_MAX_FAST    (1)
 
 typedef struct ANM_PAT_tag
 {
