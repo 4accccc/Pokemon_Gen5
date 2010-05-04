@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-29T00:12:30"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-05-04T12:33:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -868,23 +868,23 @@
 
 	<row id="msg_musical_program_01">
 		<attribute name="キャラ指定">デフォルト演目名</attribute>
-		<language name="JPN" width="256">クールきょく</language>
-		<language name="JPN_KANJI" width="256">クール曲</language>
+		<language name="JPN" width="256">Ｓｔａｒｄｏｍ！</language>
+		<language name="JPN_KANJI" width="256">Ｓｔａｒｄｏｍ！</language>
 	</row>
 
 	<row id="msg_musical_program_02">
-		<language name="JPN" width="256">キュートきょく</language>
-		<language name="JPN_KANJI" width="256">キュート曲</language>
+		<language name="JPN" width="256">もりでおさんぽ</language>
+		<language name="JPN_KANJI" width="256">もりでおさんぽ</language>
 	</row>
 
 	<row id="msg_musical_program_03">
-		<language name="JPN" width="256">エレガントきょく</language>
-		<language name="JPN_KANJI" width="256">エレガント曲</language>
+		<language name="JPN" width="256">イブニングパーティ</language>
+		<language name="JPN_KANJI" width="256">イブニングパーティ</language>
 	</row>
 
 	<row id="msg_musical_program_04">
-		<language name="JPN" width="256">ユニークきょく</language>
-		<language name="JPN_KANJI" width="256">ユニーク曲</language>
+		<language name="JPN" width="256">ライモンタンゴ</language>
+		<language name="JPN_KANJI" width="256">ライモンタンゴ</language>
 	</row>
 
 	<row id="msg_musical_program_05">
