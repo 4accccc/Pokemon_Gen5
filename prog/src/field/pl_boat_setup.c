@@ -187,12 +187,7 @@ void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
   CreateTrTbl(
       TRAINER_MAX, tr_num, tr_tbl, entry_work.Trainer
       );
-/**  
-  //ダブルバトルを抽選する場合、トレーナーテーブルの先頭のものを上書き
-  if(1){//@todo
-    entry_work.Trainer[0] = TRAINER_MAX-1;
-  }
-*/  
+  
    //テーブルから非トレーナー（長話）をエントリ
   CreateTrTbl(
       LONG_TALKER_MAX, ENTRY_LONG_TALKER_MAX, long_tbl, entry_work.LongTalker
@@ -394,30 +389,7 @@ static BOOL EntryRoom(ENTRY_WORK *work)
   right = FALSE;
 
   entry_room_num = ROOM_NUM;
-/**
-  //ダブルバトルできる部屋を選択
-  if(1)    //ダブルバトル抽選する @todo
-  {
-    if ( GFUser_GetPublicRand(2) ){
-      room_idx = 2; //三号室
-      left = TRUE;
-      work->DblBtl[0] = TRUE;
-    }else{
-      room_idx = 7; //八号室
-      right = TRUE;
-      work->DblBtl[1] = TRUE;
-    }
-    del_idx = SearchRoomIdx(work, room_idx);
-    //エントリ対象から抽選したインデックッスを除く
-    rc = DelEntry(work, del_idx);
-    if (!rc) return FALSE;
-    //エントリテーブルに格納
-    work->RoomEntry[work->EntryCount] = room_idx;
-    work->EntryCount++;
 
-    entry_room_num--;   //抽選総数デクリメント
-  }
-*/
   //ダブル型の部屋を1つ選択
   idx = GFUser_GetPublicRand(DOUBLE_ROOM_NUM);
   room_idx = DoubleRoom[idx];
