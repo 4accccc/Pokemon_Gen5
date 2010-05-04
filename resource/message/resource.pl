@@ -25,6 +25,7 @@ my @MsgLen = ();
 my @MsgBody = ();
 my @AreaWidth = ();
 my $MsgCount = 0;
+my $MsgIndex = -1;
 
 
 # メッセージエディタのタグ機能でカラー変更する際、
@@ -58,7 +59,8 @@ sub init {
 	@MsgLenTotal = ();
 	@MsgBody = ();
 	@AreaWidth = ();
-	$MsgCount = ();
+	$MsgCount = 0;
+	$MsgIndex = -1;
 }
 #===============================================================
 # メッセージ追加
@@ -82,6 +84,10 @@ sub add_msg {
 	$LatestColorChangeParam = 0;
 
 	&encode_init();
+
+	if( $lang_idx == 0 ){
+		$MsgIndex++;
+	}
 
 	while($pos_o >= 0)
 	{
@@ -159,6 +165,9 @@ sub add_msg {
 	# 個別文字列長はカンマ区切り文字列でグローバルに保存
 	$len .= ",";
 	$MsgLen[$lang_idx] .= $len;
+
+	# 暗号化
+	$data = &encode_wb( $data, $MsgIndex );
 
 	# 文字列本体もグローバルに保存
 	$MsgBody[$lang_idx] .= $data;
@@ -398,6 +407,48 @@ sub encode_game_strcode {	# source local
 
 # utf16-le そのまま使うならこれだけでよい
 #	return &tool::enc_u16($str);
+}
+
+#===============================================================
+# 暗号（WB用）
+# input 0: 暗号前の文字列データ
+#       1: データ内文字列Index
+# return 暗号された文字列データ
+#===============================================================
+sub encode_wb {
+	my  $src = shift;
+	my  $index = shift;
+
+	my  $code_size = 2;	# 1文字あたりバイト数
+
+	my  $mask = ( 0x2983 * ($index+3) ) & 0xffff;
+	my  $ret = "";
+	my  $code;
+	my  $encode;
+#	my  @ary = split( / /, $src );
+
+#	if( $index == 336 ){ printf( "Index=%d : mask-start=%04x\n", $index, $mask ); }
+
+	my $len = length($src);
+	for($i=0; $i<$len; $i+=$code_size)
+	{
+		$code = substr( $src, $i, $code_size );
+		$code = unpack( 'S', $code );
+		$encode = $code ^ $mask;
+#		if( $index == 0 ){ printf( "%04x(%04x), ", $code, $encode ); }
+#		if( $index == 0 ){ printf( "$code," ); }
+		$ret .= pack( 'S', $encode );
+
+#		$mask = (($mask & 0xe000) >> 13) | (($mask & 0x1fff) << 3);
+#		if( $index==336 ){
+#			printf("mask=%02x\n", $mask);
+#		}
+
+	}
+
+	if( $index == 0 ){ printf "\n"; }
+
+	return $ret;
 }
 
 #===============================================================
