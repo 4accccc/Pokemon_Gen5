@@ -39,7 +39,7 @@
 //============================================================================================
 #ifdef PM_DEBUG
 
-//#define DEBUG_EVENTDATA_PRINT // 読み込んだイベントデータを出力
+#define DEBUG_EVENTDATA_PRINT // 読み込んだイベントデータを出力
 
 #endif  // PM_DEBUG
 
@@ -610,6 +610,7 @@ static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id)
     // サイズオーバーチェック
     GF_ASSERT( EVDATA_SIZE > size );
     GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, evdata->load_buffer);
+    OS_Printf("event arcid %d size %x\n",arcID, size);
   }
   
   table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
