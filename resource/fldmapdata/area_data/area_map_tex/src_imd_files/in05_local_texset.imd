@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2009-10-27T19:11:38"/>
+	<create user="james_turner" host="W00212" date="2010-05-04T15:42:12"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="backparts_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/backparts.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/backparts.tga"
 	>
 		<bitmap size="256">
 			ddbb eeed eeee eeee eeee eeee 9999 9999
@@ -89,7 +89,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="black_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/black.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/black.tga"
 	>
 		<bitmap size="8">
 			5555 5555 5555 5555 5555 5555 5555 5555
@@ -215,7 +215,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="candle_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/candle.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/candle.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 1100 0011 0000
@@ -342,7 +342,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="colors_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/colors.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/colors.tga"
 	>
 		<bitmap size="16">
 			2255 aabb 2255 aabb 4411 cc66 4411 cc66
@@ -354,7 +354,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="cup_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/cup.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/cup.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -487,7 +487,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="floor2_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor2.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/floor2.tga"
 	>
 		<bitmap size="256">
 			88c7 2888 44e7 d444 1136 7111 99b6 9999
@@ -529,7 +529,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="floor3_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor3.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/floor3.tga"
 	>
 		<bitmap size="256">
 			997b 3999 558b c555 33e1 2333 44f1 4444
@@ -571,7 +571,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="floor4_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor4.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/floor4.tga"
 	>
 		<bitmap size="256">
 			1111 1111 2221 2222 3332 3333 3333 6c33
@@ -613,7 +613,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="floor5_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/floor5.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/floor5.tga"
 	>
 		<bitmap size="128">
 			150a 50a8 2a05 a054 150a 50a8 2a05 a054
@@ -638,7 +638,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="glow1_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/glow1.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/glow1.tga"
 	>
 		<bitmap size="128">
 			0101 0101 0101 1101 0111 0101 0101 0101
@@ -682,7 +682,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gold_tile2_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/gold_tile2.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/gold_tile2.tga"
 	>
 		<bitmap size="64">
 			9999 9999 9904 6699 6669 6666 6604 6666
@@ -699,7 +699,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="light_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/light.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/light.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -922,7 +922,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="paintings_all_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/paintings_all.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/paintings_all.tga"
 	>
 		<bitmap size="256">
 			3333 3333 3333 3333 3333 3333 3333 3333
@@ -986,7 +986,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="placematt1_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/placematt1.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/placematt1.tga"
 	>
 		<bitmap size="8">
 			5555 7ffd 755d 769d 769d 755d 7ffd 5555
@@ -1186,7 +1186,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="wall1_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall1.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/wall1.tga"
 	>
 		<bitmap size="256">
 			eefe eeee eeee eeee eeee eeee eeee eefe
@@ -1228,7 +1228,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="wall2_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall2.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/wall2.tga"
 	>
 		<bitmap size="128">
 			aaae aaaa aaaa aeaa fffe ffff ffff afff
@@ -1296,7 +1296,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="wall3_4_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall3_4.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/wall3_4.tga"
 	>
 		<bitmap size="256">
 			7777 7777 7777 7777 7777 7777 2672 8762
@@ -1380,7 +1380,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="wall5_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall5.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/wall5.tga"
 	>
 		<bitmap size="256">
 			cccc cccc cccc cccc cccc cccc cccc cccc
@@ -1420,43 +1420,43 @@
 	<tex_image index="57" name="wall5_2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="transparency"
+		color0_mode="color"
 		palette_name="wall5_2_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall5_2.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/wall5_2.tga"
 	>
 		<bitmap size="256">
-			4444 4444 4444 4444 cccc cccc cccc cccc
-			4444 4444 4444 4444 dddc dddd dddd cddd
-			4444 4444 4444 4444 eedc eeee eeee cdee
+			9999 9999 9999 9999 cccc cccc cccc cccc
+			9999 9999 9999 9999 dddc dddd dddd cddd
+			7777 7777 7777 7777 eedc eeee eeee cdee
+			b777 bbbb bbbb 777b aedc aaaa aaaa cdea
+			b888 8888 8888 888b aedc dddd dddd cdea
+			b888 bbb8 8bbb 888b aedc aaad daaa cdea
+			b888 88b8 8b88 888b aedc aaad daaa cdea
+			b222 88b8 8b88 222b aedc aaad daaa cdea
+			b222 88b8 8b88 222b aedc aaad daaa cdea
+			b222 88b8 8b88 222b aedc aaad daaa cdea
+			b222 88b8 8b88 222b aedc aaad daaa cdea
+			b222 88b8 8b88 222b aedc aaad daaa cdea
+			b222 88b8 8b88 222b aedc aaad daaa cdea
+			b222 88b2 2b88 222b aedc aaad daaa cdea
+			b222 88b2 2b88 222b aedc aaad daaa cdea
+			b222 88b1 1b88 222b aedc aaad daaa cdea
+			b222 88b0 0b88 222b aedc aaad daaa cdea
+			b222 88b6 6b88 222b aedc aaad daaa cdea
+			b222 88b5 5b88 222b aedc aaad daaa cdea
+			b222 88b4 4b88 222b aedc aaad daaa cdea
+			b111 88b3 3b88 111b aedc aaad daaa cdea
+			b111 88b3 3b88 111b aedc aaad daaa cdea
+			b000 88b4 4b88 000b aedc aaad daaa cdea
+			b000 88b5 5b88 000b aedc aaad daaa cdea
+			b666 88b6 6b88 666b aedc aaad daaa cdea
+			b666 88b0 0b88 666b aedc aaad daaa cdea
+			b555 bbb1 1bbb 555b aedc aaad daaa cdea
+			b555 8882 2888 555b aedc dddd dddd cdea
 			b444 bbbb bbbb 444b aedc aaaa aaaa cdea
-			b444 9999 9999 444b aedc dddd dddd cdea
-			b444 bbb9 9bbb 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b9 9b99 444b aedc aaad daaa cdea
-			b444 99b4 4b99 444b aedc aaad daaa cdea
-			b444 99b4 4b99 444b aedc aaad daaa cdea
-			b444 99b3 3b99 444b aedc aaad daaa cdea
-			b444 99b2 2b99 444b aedc aaad daaa cdea
-			b444 99b8 8b99 444b aedc aaad daaa cdea
-			b444 99b7 7b99 444b aedc aaad daaa cdea
-			b444 99b6 6b99 444b aedc aaad daaa cdea
-			b444 99b5 5b99 444b aedc aaad daaa cdea
-			b333 99b5 5b99 333b aedc aaad daaa cdea
-			b333 99b6 6b99 333b aedc aaad daaa cdea
-			b222 99b7 7b99 222b aedc aaad daaa cdea
-			b222 99b8 8b99 222b aedc aaad daaa cdea
-			b222 99b2 2b99 222b aedc aaad daaa cdea
-			b111 bbb3 3bbb 111b aedc aaad daaa cdea
-			b111 9994 4999 111b aedc dddd dddd cdea
-			b888 bbbb bbbb 888b aedc aaaa aaaa cdea
-			8888 8888 8888 8888 eedc eeee eeee cdee
-			7777 7777 7777 7777 dddc dddd dddd cddd
-			7777 7777 7777 7777 cccc cccc cccc cccc
+			4444 4444 4444 4444 eedc eeee eeee cdee
+			3333 3333 3333 3333 dddc dddd dddd cddd
+			3333 3333 3333 3333 cccc cccc cccc cccc
 		</bitmap>
 	</tex_image>
 	<tex_image index="58" name="wall5_3"
@@ -1464,7 +1464,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="wall5_3_pl"
-		path="C:/pokemon_projects/WB/field/gym_1/3d/tex/wall5_3.tga"
+		path="C:/home/wb_data3d/field/in05/chip/tex/wall5_3.tga"
 	>
 		<bitmap size="32">
 			aaaa 5555 aaaa 5555 aaaa 5555 aaaa 5555
@@ -1676,14 +1676,14 @@
 		3656 2190 1d6e 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="56" name="wall5_2_pl" color_size="16">
-		7fff 3256 3255 3234 2e13 3efd 3aba 3699
-		3677 29f3 2190 2590 192c 1d4d 192b 7fff
+		3255 3234 2e13 3efd 3aba 3699 3677 29d2
+		29f3 25d1 2190 2590 192c 1d4d 192b 7fff
 	</tex_palette>
 	<tex_palette index="57" name="wall5_3_pl" color_size="4">
 		7fff 150b 1d6e 14ea
 	</tex_palette>
 	<tex_palette index="58" name="wall5_pl" color_size="16">
-		7fff 3afd 3adc 3abb 3699 3699 3677 3256
+		7fff 433f 3f1f 3aff 36bb 36bb 3699 3677
 		29f3 2e13 3234 29b1 258f 25b0 25b0 25b0
 	</tex_palette>
 	<tex_palette index="59" name="wall6_pl" color_size="4">
