@@ -723,8 +723,8 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     {
       VecFx32 pos, tar;
       BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &tar );
-      OS_TPrintf("cam_pos_x:0x%08x cam_pos_y:0x%08x cam_pos_z:0x%08x\n",pos.x,pos.y,pos.z);
-      OS_TPrintf("cam_tar_x:0x%08x cam_tar_y:0x%08x cam_tar_z:0x%08x\n",tar.x,tar.y,tar.z);
+      OS_TPrintf("cam_pos_x:0x%08x cam_pos_y:0x%08x cam_pos_z:0x%08x\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
+      OS_TPrintf("cam_tar_x:0x%08x cam_tar_y:0x%08x cam_tar_z:0x%08x\n",FX_FX32_TO_F32(tar.x),FX_FX32_TO_F32(tar.y),FX_FX32_TO_F32(tar.z));
       evw->seq_no = evw->ret_seq_no;
     }
     break;
