@@ -438,15 +438,13 @@ sub encode_wb {
 #		if( $index == 0 ){ printf( "%04x(%04x), ", $code, $encode ); }
 #		if( $index == 0 ){ printf( "$code," ); }
 		$ret .= pack( 'S', $encode );
+		$mask = (($mask & 0xe000) >> 13) | (($mask & 0x1fff) << 3);
 
-#		$mask = (($mask & 0xe000) >> 13) | (($mask & 0x1fff) << 3);
 #		if( $index==336 ){
 #			printf("mask=%02x\n", $mask);
 #		}
 
 	}
-
-	if( $index == 0 ){ printf "\n"; }
 
 	return $ret;
 }
