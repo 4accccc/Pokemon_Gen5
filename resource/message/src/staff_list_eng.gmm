@@ -1768,16 +1768,6 @@
 		<language name="JPN_KANJI" width="256">GAME FREAK, inc.</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_275">
-		<language name="JPN" width="256">ポケットモンスターブラック</language>
-		<language name="JPN_KANJI" width="256">ポケットモンスターブラック</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_276">
-		<language name="JPN" width="256">THE  END</language>
-		<language name="JPN_KANJI" width="256">THE  END</language>
-	</row>
-
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
