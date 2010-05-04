@@ -445,9 +445,9 @@ extern void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork );
 extern void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id );
 extern BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork);
 
-extern int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
-extern BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
-extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+extern BOOL ITEMMENU_CheckCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+//extern BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+//extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMDISP_SetVisible(void);
 extern void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork );

@@ -145,10 +145,12 @@ void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMy
  * @return	アイテム番号
  */
 //------------------------------------------------------------------
+/*
 u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index )
 {
 	return myitem->cnv_button[index];
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -158,11 +160,13 @@ u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index )
  * @return	アイテム番号
  */
 //------------------------------------------------------------------
+/*
 void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index , u32 setitem )
 {
   GF_ASSERT(index < DUMMY_SHORTCUT_MAX);
 	myitem->cnv_button[index] = setitem;
 }
+*/
 
 //------------------------------------------------------------------
 /**

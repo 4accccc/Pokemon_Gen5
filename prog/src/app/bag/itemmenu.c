@@ -159,9 +159,6 @@ static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
 static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl );
 static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork);
-int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
-BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
-void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
 static void _VBlank( GFL_TCB *tcb, void *work );
 static void _startState(FIELD_ITEMMENU_WORK* pWork);
@@ -3053,33 +3050,21 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
   pos += pWork->oamlistpos + 1;
 
   if(pWork->pocketno == BAG_POKE_EVENT){
-    int length = ITEMMENU_GetItemPocketNumber( pWork );
-    ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
-    SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
-
-    if(length <= pos){
+    if( ITEMMENU_GetItemPocketNumber(pWork) <= pos ){
       return;
-    }
+    }else{
+	    ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
+			SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
+			// 登録可能かチェック
+			if( shortcut_id == SHORTCUT_ID_NULL ){
+				return;
+			}
 
-    // 登録可能かチェック
-    {
-      void * itemdata;
-      int ret;
-      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-      ret = ITEM_GetBufParam( itemdata, ITEM_PRM_CNV );
-      GFL_HEAP_FreeMemory( itemdata );
-      if( ret == 0 ){
-        return;
-      }
-    }
-
-    if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)!=-1){//チェックつき
-      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
-      ITEMMENU_RemoveCnvButtonItem(pWork,item->id);
-    }
-    else{
-      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
-      ITEMMENU_AddCnvButtonItem(pWork,item->id);
+			if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == TRUE ){
+	      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
+	    }else{
+	      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
+			}
     }
 
     PMSND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
@@ -3380,7 +3365,7 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   // とうろく
   // かいじょ
   if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
-    if( ITEMMENU_GetPosCnvButtonItem( pWork, item->id  ) != -1 ){
+    if( ITEMMENU_CheckCnvButtonItem( pWork, item->id  ) == TRUE ){
       tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
     }else{
       tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
@@ -3453,19 +3438,13 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  便利登録されていたら順番を返す
+ *  @brief  便利登録されているか
  */
 //-----------------------------------------------------------------------------
 
-int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
+BOOL ITEMMENU_CheckCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 {
-  int i;
-  for(i = 0 ; i < DUMMY_SHORTCUT_MAX ; i++){
-    if(no == MYITEM_CnvButtonItemGet( pWork->pMyItem, i)){
-      return i;
-    }
-  }
-  return -1;
+	return GAMEDATA_GetShortCut( pWork->gamedata, SHORTCUT_DATA_GetItemToShortcutID(no) );
 }
 
 //----------------------------------------------------------------------------
@@ -3473,7 +3452,7 @@ int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
  *  @brief  チェックを追加
  */
 //-----------------------------------------------------------------------------
-
+/*
 BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 {
   int i;
@@ -3485,13 +3464,14 @@ BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
   }
   return FALSE;
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
  *  @brief  チェックを消す
  */
 //-----------------------------------------------------------------------------
-
+/*
 void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 {
   int i=ITEMMENU_GetPosCnvButtonItem(pWork,no);
@@ -3500,7 +3480,7 @@ void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
     MYITEM_CnvButtonItemSet( pWork->pMyItem, i, 0);
   }
 }
-
+*/
 
 
 //----------------------------------------------------------------------------

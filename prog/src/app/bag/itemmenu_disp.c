@@ -1527,7 +1527,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
 				pWork->nListEnable[i] = 3;
 			// “o˜^‚³‚ê‚Ä‚¢‚È‚¢
-			}else if( ITEMMENU_GetPosCnvButtonItem(pWork,item->id) == -1 ){
+			}else if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == FALSE ){
 				pWork->nListEnable[i] = 2;
 			// ‚»‚Ì‘¼
 			}else{
@@ -1613,7 +1613,7 @@ void ITEMDISP_CellMessageScroll( FIELD_ITEMMENU_WORK * wk, int mv )
 			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
 				wk->nListEnable[ap] = 3;
 			// “o˜^‚³‚ê‚Ä‚¢‚È‚¢
-			}else if( ITEMMENU_GetPosCnvButtonItem(wk,item->id) == -1 ){
+			}else if( ITEMMENU_CheckCnvButtonItem(wk,item->id) == FALSE ){
 				wk->nListEnable[ap] = 2;
 			// ‚»‚Ì‘¼
 			}else{
