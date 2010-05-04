@@ -46,6 +46,9 @@
 //数値の桁数
 #define BTLV_GAUGE_NUM_MAX ( 3 )
 
+//ダメージゲージを消去するまでのウエイト
+#define BTLV_GAUGE_DAMAGE_WAIT  ( 18 )
+
 //ゲージパーツ
 enum
 {
@@ -213,15 +216,17 @@ struct _BTLV_GAUGE_CLWK
   u8            status;
   u8            getball;
 
-  u32           hp_calc_req   :1;
-  u32           exp_calc_req  :1;
-  u32           level_up_req  :1;
-  u32           gauge_enable  :1;
-  u32           seq_no        :4;
-  u32           se_wait       :8;
-  u32           move_cnt      :4;
-  u32           yure_req      :1;
-  u32                         :11;
+  u32           hp_calc_req       :1;
+  u32           exp_calc_req      :1;
+  u32           level_up_req      :1;
+  u32           gauge_enable      :1;
+  u32           seq_no            :4;
+  u32           se_wait           :8;
+  u32           move_cnt          :4;
+  u32           yure_req          :1;
+  u32           damage_wait       :5;
+  u32           damage_wait_flag  :1;
+  u32                             :5;
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
@@ -451,6 +456,19 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     if( bgw->bgcl[ i ].yure_req )
     { 
       Gauge_Yure( bgw, i );
+    }
+    //@todo　ちゃんとした処理をつくるまでの暫定処理
+    if( ( bgw->bgcl[ i ].hp_damage_clwk ) && ( bgw->bgcl[ i ].damage_wait_flag ) )
+    { 
+      if( bgw->bgcl[ i ].damage_wait == 0 )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ i ].hp_damage_clwk, FALSE );
+        bgw->bgcl[ i ].damage_wait_flag = 0;
+      }
+      else
+      { 
+        bgw->bgcl[ i ].damage_wait--;
+      }
     }
   }
   //ピンチBGM再生チェック
@@ -1088,7 +1106,8 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     PutHPNumOBJ( bgw, bgcl, bgcl->hp );
     bgcl->hp_calc_req = 0;
     bgcl->hp_work = 0;
-    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_damage_clwk, FALSE );
+    bgcl->damage_wait = BTLV_GAUGE_DAMAGE_WAIT;
+    bgcl->damage_wait_flag = 1;
   }
   else{
     PutHPNumOBJ( bgw, bgcl, calc_hp );
