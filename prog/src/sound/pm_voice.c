@@ -24,7 +24,7 @@
  *
  */
 //============================================================================================
-#define PMVOICE_WAVESIZE_MAX	(26000)
+#define PMVOICE_WAVESIZE_MAX	(23600)
 
 #define VOICE_RATE_DEFAULT		(13379)
 #define VOICE_SPEED_DEFAULT		(25825)	//seqÉfÅ[É^(pm_voice.sseq)ì‡((u16)0x1c)Çî≤êà
