@@ -530,6 +530,16 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )
     { 
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       *p_seq  = SEQ_FADEOUT_START;
     }
     break;

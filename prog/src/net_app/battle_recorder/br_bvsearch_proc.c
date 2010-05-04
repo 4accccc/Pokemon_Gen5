@@ -917,6 +917,17 @@ static BOOL Br_BvSearch_Seq_Place_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
   //Œˆ’è
   if( select != BR_LIST_SELECT_NONE )
   { 
+
+    { 
+      u32 x, y;
+      GFL_POINT pos;
+
+      GFL_UI_TP_GetPointTrg( &x, &y );
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+    }
+
     p_param->search_data.battle_mode_no = select;
     Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_PLACE );
     p_wk->next_sub_seq  = SUBSEQ_MENU;
@@ -926,6 +937,16 @@ static BOOL Br_BvSearch_Seq_Place_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
   //ƒLƒƒƒ“ƒZƒ‹
   if( cancel )
   { 
+    { 
+      u32 x, y;
+      GFL_POINT pos;
+
+      GFL_UI_TP_GetPointTrg( &x, &y );
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+    }
+
     p_wk->next_sub_seq  = SUBSEQ_MENU;
     return TRUE;
   }

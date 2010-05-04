@@ -831,6 +831,16 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
   case SEQ_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )
     { 
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
       *p_seq  = SEQ_FADEOUT_START_EXIT;
     }
@@ -1023,6 +1033,17 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
   case SEQ_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )
     { 
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
+
       *p_seq  = SEQ_FADEOUT_START_RET;
     }
     break;

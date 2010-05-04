@@ -599,8 +599,6 @@ static void Br_Net_Seq_WaitReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   { 
     BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_Nop );
   }
-
-  //@todo タイムアウト入れる？
 }
 //----------------------------------------------------------------------------
 /**

@@ -407,7 +407,18 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
 
   case SEQ_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )
-    { 
+    {
+
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       *p_seq  = SEQ_FADEOUT_START_RET;
     }
     break;
@@ -835,6 +846,16 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_TRG:
     if( GFL_UI_TP_GetTrg() )
     { 
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       (*p_seq)++;
     }
     break;
@@ -890,8 +911,8 @@ static void Br_BvSave_OverWrite_CreateDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_P
     STRBUF  *p_dst  = GFL_STR_CreateCopyBuffer( p_src, p_wk->heapID );
 
     WORDSET_RegisterWord( p_word, 0, 
-        p_param->cp_rec_saveinfo->p_name[p_wk->save_btn_idx],
-        p_param->cp_rec_saveinfo->sex[p_wk->save_btn_idx], 
+        p_param->cp_rec_saveinfo->p_name[ BR_SAVEDATA_OTHER_00 + p_wk->save_btn_idx],
+        p_param->cp_rec_saveinfo->sex[ BR_SAVEDATA_OTHER_00 + p_wk->save_btn_idx], 
         TRUE, PM_LANG );
 
     WORDSET_ExpandStr( p_word, p_dst, p_src );

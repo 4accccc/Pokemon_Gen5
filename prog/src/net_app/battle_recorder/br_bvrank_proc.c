@@ -374,7 +374,6 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     //バトルビデオさいしん３０件
     p_wk->p_title = BR_MSGWIN_Init( BG_FRAME_M_FONT, 3, 3, 26, 4, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
     BR_MSGWIN_PrintColor( p_wk->p_title, p_msg, msg_605+p_wk->p_param->mode, p_font, BR_PRINT_COL_NORMAL );
-    //todo
   }
 
   //ダウンロードしてアウトラインがきまってからランクを作成
@@ -690,6 +689,16 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_FADEOUT_START:
     if( GFL_UI_TP_GetTrg() )
     { 
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
       *p_seq  = SEQ_FADEOUT_WAIT;
     }
@@ -1236,7 +1245,7 @@ static void Br_Rank_SortPoke( const BATTLE_REC_OUTLINE_RECV *cp_recv, BR_RANK_SO
     int formno;
     int gender;
     idx = 0;
-    //@todo ダブルとシングルで詰め方が違う
+
     for( i = 0; i < TEMOTI_POKEMAX; i++ )
     { 
 

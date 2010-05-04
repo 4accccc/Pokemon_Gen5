@@ -46,7 +46,7 @@ typedef struct
   BR_SEQ_WORK           *p_seq;
 	HEAPID                heapID;
   BR_TEXT_WORK          *p_text;
-  BR_BALLEFF_WORK       *p_balleff;
+  BR_BALLEFF_WORK       *p_balleff[ CLSYS_DRAW_MAX ];
   BR_BVSEND_PROC_PARAM	*p_param;
   u32                   cnt;
 } BR_BVSEND_WORK;
@@ -128,14 +128,21 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_que   = PRINTSYS_QUE_Create( p_wk->heapID );
   p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_716 );
-  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i] = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, i, p_wk->heapID );
+    }
+  }
   { 
     GFL_POINT pos = 
     { 
       256/2,
       192/2,
     };
-    BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
   }
 
 	return GFL_PROC_RES_FINISH;
@@ -158,7 +165,13 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVSEND_PROC_PARAM	*p_param	= p_param_adrs;
 
 	//モジュール破棄
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
   BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BR_SEQ_Exit( p_wk->p_seq );
@@ -199,7 +212,13 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   }
 
   //ボール演出
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
 
   //表示
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -391,7 +410,7 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       { 
         BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
       }
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_MSG_WAIT;
     }
     break;
@@ -403,6 +422,16 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )
     { 
+      { 
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+      }
+
       *p_seq  = SEQ_UPLOAD_END;
     }
     break;

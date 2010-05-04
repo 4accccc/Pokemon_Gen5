@@ -763,6 +763,16 @@ static void BR_MENU_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
   BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
 	BR_CORE_WORK				*p_wk			= p_wk_adrs;
 
+  //「バトルビデオを送る」からの戻りは
+  //はい、いいえではなく、その前に戻る
+  {
+    u16 stack_num = p_param->p_btn_recovery->stack_num - 1;
+    if( p_param->p_btn_recovery->stack[ stack_num ].menuID == BR_MENUID_BVSEND_YESNO )
+    { 
+      p_param->p_btn_recovery->stack_num--;
+    }
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
