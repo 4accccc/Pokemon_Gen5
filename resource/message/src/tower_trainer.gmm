@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-29T21:38:33"/>
+	<create user="morimoto" host="W00220" date="2010-05-03T19:26:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2830,7 +2830,7 @@
 	</row>
 
 	<row id="mes_tower_tr_098_02">
-		<comment>サダ</comment>
+		<comment>ヨド</comment>
 		<language name="JPN">付き合ってくれて　ありがと！
 ちょっと　スッキリできたよー</language>
 		<language name="JPN_KANJI">付き合ってくれて　ありがと！
@@ -2838,7 +2838,7 @@
 	</row>
 
 	<row id="mes_tower_tr_098_03">
-		<comment>サダ</comment>
+		<comment>ヨド</comment>
 		<language name="JPN">かいしゃは　えらんだほうが　いいよ
 じょうしは　えらべないんだもん</language>
 		<language name="JPN_KANJI">会社は　選んだほうが　いいよ
@@ -6338,7 +6338,7 @@
 	<row id="mes_tower_tr_236_01">
 		<comment>ベテラントレーナー♂４
 
-シンエモン</comment>
+シンマル</comment>
 		<language name="JPN">あー　ゴホゴホ　ちょうしが　わるいの
 ちょっとは　いたわってほしいのー</language>
 		<language name="JPN_KANJI">あー　ゴホゴホ　調子が　悪いのー
@@ -6346,7 +6346,7 @@
 	</row>
 
 	<row id="mes_tower_tr_236_02">
-		<comment>シンエモン</comment>
+		<comment>シンマル</comment>
 		<language name="JPN">ちょうし　わるいとか　ウソじゃー！
 ベテランは　しゅだんを　えらばん！</language>
 		<language name="JPN_KANJI">調子　悪いとか　ウソじゃー！
@@ -6354,7 +6354,7 @@
 	</row>
 
 	<row id="mes_tower_tr_236_03">
-		<comment>シンエモン</comment>
+		<comment>シンマル</comment>
 		<language name="JPN">わたしの　おしばいに　だまされんとは
 おぬし　なかなか　きれものじゃな</language>
 		<language name="JPN_KANJI">わたしの　お芝居に　ダマされんとは
