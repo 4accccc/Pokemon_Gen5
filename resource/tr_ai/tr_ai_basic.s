@@ -477,6 +477,9 @@ BasicAI_01:
 	ADRS  BasicAI_331	// 	フリーズボルト
 	ADRS  BasicAI_332	// 	コールドフレア
 	ADRS  BasicAI_333	// 	どなりつける
+	ADRS  BasicAI_Dummy	//	  Ｖジェネレート
+	ADRS  BasicAI_Dummy	//	  フレイムソウル
+	ADRS  BasicAI_Dummy	//	  サンダーソウル
 
 BasicAI_Dummy:	//	  ダミー
 BasicAISeq_end:

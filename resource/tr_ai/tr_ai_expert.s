@@ -390,6 +390,9 @@ ExpertAISeq:
 	ADRS  ExpertAI_331	// 	フリーズボルト
 	ADRS  ExpertAI_332	// 	コールドフレア
 	ADRS  ExpertAI_333	// 	どなりつける
+	ADRS  ExpertAI_Dummy	// 	Ｖジェネレート
+	ADRS  ExpertAI_Dummy	// 	フレイムソウル
+	ADRS  ExpertAI_Dummy	// 	サンダーソウル
 
 ExpertAI_Dummy:		// ダミー	
 ExpertAISeq_end:
