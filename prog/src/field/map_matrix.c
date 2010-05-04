@@ -384,13 +384,11 @@ static void MapMatrix_SetData(
     }
 	}else{ //ゾーンID指定無し
     MI_CpuFill16( pZoneTbl, zone_id, sizeof(u16)*MAP_MATRIX_MAX );
-    OS_Printf("ゾーン指定無し\n");
 	}
 	
 //#ifdef DEBUG_ONLY_FOR_kagaya
 	OS_Printf( "マトリクス情報 ID=%d,X=%d,Z=%d,FLAG=%d\n",
 		matrix_id, pMat->size_w, pMat->size_h, pMat->status_flag );
-  OS_Printf("ゾーン %d\n",zone_id);
 //#endif
 }
 
