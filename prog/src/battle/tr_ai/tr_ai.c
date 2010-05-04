@@ -3023,12 +3023,20 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_LAST_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  WazaID  waza = BPP_GetPrevWazaID( taw->def_bpp );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_CHECK_LAST_WAZA_KIND\n");
 #endif
 
-  taw->calc_work = get_waza_param( taw, BPP_GetPrevWazaID( taw->def_bpp ), WAZAPARAM_DAMAGE_TYPE );
+  if( waza != WAZANO_NULL )
+  { 
+    taw->calc_work = get_waza_param( taw, waza, WAZAPARAM_DAMAGE_TYPE );
+  }
+  else
+  { 
+    taw->calc_work = WAZADATA_DMG_NONE;
+  }
 
   return taw->vmcmd_result;
 }
