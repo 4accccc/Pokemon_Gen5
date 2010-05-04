@@ -939,11 +939,11 @@ sub_train_battle_win_next_menu_comm_multi:
       _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_SELECT, BSW_NULL, comm_ret )
 
       IF $comm_ret == FALSE THEN
+        _SYSWIN_CLOSE()
         _CALL sub_common_retmap_comm_error //受付へ
         _RET
       ENDIF
-
-    _CALL sub_common_retmap_comm_error //受付へ
+      
       $LOCALWORK0 = BSWAY_COMM_ROUND_SEL_NEXT
       
       //選択結果送信
@@ -1020,6 +1020,7 @@ sub_train_battle_win_next_menu_comm_multi:
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_SELECT, BSW_NULL, comm_ret )
 
         IF $comm_ret == FALSE THEN
+          _SYSWIN_CLOSE()
           _CALL sub_common_retmap_comm_error //受付へ
           _RET
         ENDIF
