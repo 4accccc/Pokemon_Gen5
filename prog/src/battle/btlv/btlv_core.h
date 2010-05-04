@@ -259,6 +259,11 @@ extern void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* p
 extern BOOL BTLV_WaitPokeSelect( BTLV_CORE* core );
 
 /**
+ *  ワザ説明（ショートカット）画面の呼び出し
+ */
+extern void BTLV_StartWazaInfoView( BTLV_CORE* wk, u8 pokeIdx, u8 wazaIdx );
+
+/**
  *  ポケモン選択処理の強制終了（コマンド制限時間による）
  */
 extern void BTLV_ForceQuitPokeSelect( BTLV_CORE* wk );

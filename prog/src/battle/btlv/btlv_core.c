@@ -1044,9 +1044,10 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
     plist->multiPos = 0;
   }
   plist->mode = bplMode;
-  plist->sel_poke = ( bplMode == BPL_MODE_WAZASET )? pos_index : 0;
+  plist->sel_poke = ( (bplMode == BPL_MODE_WAZASET) || (bplMode==BPL_MODE_WAZAINFO) )? pos_index : 0;
   plist->sel_pos_index = pos_index;
   plist->chg_waza = chg_waza_param;
+  plist->sel_wp = 0;
   plist->heap = wk->heapID;
   plist->font = wk->largeFontHandle;
   plist->rule = BTL_MAIN_GetRule( wk->mainModule );
@@ -1056,7 +1057,6 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->gamedata = BTL_MAIN_GetGameData( wk->mainModule );
   plist->time_out_flg = FALSE;
   plist->end_flg = FALSE;
-
 }
 //=============================================================================================
 /**
@@ -1136,9 +1136,11 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     {
       BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd );
 
-      // 制限時間による強制終了でないなら、選択されたポケモンデータを格納
-      if( !(wk->plistData.time_out_flg) )
-      {
+      // ワザせつめい（ショートカット）モードではない & 制限時間による強制終了でないなら、
+      // 選択されたポケモンデータを格納
+      if( (wk->plistData.mode != BPL_MODE_WAZAINFO)
+      &&  (!(wk->plistData.time_out_flg))
+      ){
         u32 i;
         for(i=0; i<NELEMS(wk->plistData.sel_pos); ++i)
         {
@@ -1174,6 +1176,35 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
     return TRUE;
   }
   return FALSE;
+}
+//=============================================================================================
+/**
+ * ワザ説明画面（ショートカット）呼び出し
+ *
+ * @param   wk
+ * @param   pokeIdx
+ * @param   wazaIdx
+ */
+//=============================================================================================
+void BTLV_StartWazaInfoView( BTLV_CORE* wk, u8 pokeIdx, u8 wazaIdx )
+{
+  SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_WAZAINFO, pokeIdx, 0 );
+  wk->plistData.sel_wp = wazaIdx;
+  TAYA_Printf(" View : wazaInfo-idx=%d\n", wk->plistData.sel_wp );
+  wk->selectItemSeq = 0;
+}
+//=============================================================================================
+/**
+ * ワザ説明画面（ショートカット）終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_WaitWazaInfoView( BTLV_CORE* wk )
+{
+  return BTLV_WaitPokeSelect( wk );
 }
 
 

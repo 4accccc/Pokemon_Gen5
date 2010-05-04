@@ -189,12 +189,13 @@ struct _BTL_CLIENT {
   u8   commWaitInfoOn;
   u8   bagMode;
   u8   shooterEnergy;
-  u8   escapeClientID;
   u8   change_escape_code;
   u8   fForceQuitSelAct;
   u8   cmdCheckTimingCode;
   u8   fAITrainerBGMChanged;
   u8   actionAddCount;
+  u8   wazaInfoPokeIdx;
+  u8   wazaInfoWazaIdx;
   u16  EnemyPokeHPBase;
   u16  AITrainerMsgID;
 
@@ -244,6 +245,7 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq );
 static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
 static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* param );
+static BOOL selact_WazaInfoView( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
@@ -484,7 +486,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
-  wk->escapeClientID = BTL_CLIENTID_NULL;
   BTL_ESCAPEINFO_Clear( &wk->escapeInfo );
 
   RecPlayer_Init( &wk->recPlayer );
@@ -1855,17 +1856,28 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         const BTL_POKEPARAM* procPoke = wk->procPoke;
         BTL_ACTION_PARAM*    procAction = wk->procAction;
         BtlRotateDir dir = BTL_ROTATEDIR_NONE;
+        u8 pokeIdx = wk->procPokeIdx;
 
         #ifdef ROTATION_NEW_SYSTEM
         if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
         {
-          u8 pokeIdx;
-          dir = wk->rotWazaSelParam.actRotation.rotation.dir;
           pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
           procPoke = wk->rotWazaSelParam.poke[ pokeIdx ].bpp;
           BTL_N_Printf( DBGSTR_CLIENT_ROT_Determine, dir, pokeIdx, BPP_GetID(procPoke) );
         }
         #endif
+
+        // ワザ説明ショートカットへ
+        if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+        {
+          wk->wazaInfoPokeIdx = pokeIdx;
+          wk->wazaInfoWazaIdx = BPP_WAZA_SearchIdx( procPoke, procAction->fight.waza );
+          TAYA_Printf("WazaInfo- wazaID=%d, wazaIndex=%d\n", procAction->fight.waza, wk->wazaInfoWazaIdx);
+          if( wk->wazaInfoWazaIdx != PTL_WAZA_MAX ){
+            ClientSubProc_Set( wk, selact_WazaInfoView );
+            return FALSE;
+          }
+        }
 
         if( is_unselectable_waza(wk, procPoke, procAction->fight.waza, &wk->strParam) )
         {
@@ -1972,7 +1984,40 @@ static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* pa
     }
   }
 }
+//----------------------------------------------------------------------
+/**
+ *  ワザ説明画面（ショートカットモード）
+ */
+//----------------------------------------------------------------------
+static BOOL selact_WazaInfoView( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_StartWazaInfoView( wk->viewCore, wk->wazaInfoPokeIdx, wk->wazaInfoWazaIdx );
+    (*seq)++;
+    break;
+  case 1:
+    // 制限時間による強制終了（ポケモン選択画面の終了通知）
+    if( CheckSelactForceQuit(wk, NULL) ){
+      BTLV_ForceQuitPokeSelect( wk->viewCore );
+      (*seq) = 2;
+      return FALSE;
+    }
 
+    if( BTLV_WaitPokeSelect(wk->viewCore) )
+    {
+      ClientSubProc_Set( wk, selact_Fight );
+    }
+    break;
+
+  case 2:
+    if( BTLV_WaitPokeSelect(wk->viewCore) ){
+      ClientSubProc_Set( wk, selact_ForceQuit );
+    }
+    break;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------------------
 /**
  *  「ポケモン」選択後のいれかえポケモン選択

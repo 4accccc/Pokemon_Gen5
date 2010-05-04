@@ -600,7 +600,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
       if( BPP_IsDead( bpp ) == FALSE )
       {
         if( BPP_GetPokeSick( bpp ) != POKESICK_NULL )
-        { 
+        {
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NG;
         }
         else
