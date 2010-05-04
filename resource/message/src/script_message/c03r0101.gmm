@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-04T10:59:46"/>
+	<create user="nakamura_akira" host="W00161" date="2010-05-04T11:51:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2776,11 +2776,10 @@ assistantm_01_17へ続く
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
 『たいせんと　こうかん▽
-にんきが　あるのは？』の▽
+にんきなのは？』の▽
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
-『対戦と　交換▽
-人気が　あるのは？』の▽
+『対戦と　交換　人気なのは？』の▽
 調査　依頼を　受けた！▼</language>
 	</row>
 
@@ -3330,7 +3329,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『たいせんと　こうかん
-にんきが　あるのは？』の▽
+にんきなのは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
 ちょうさが　ひつようだ▼
@@ -3339,7 +3338,7 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
-人気が　あるのは？』の▽
+人気なのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -4042,7 +4041,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『たいせんと　こうかん
-にんきが　あるのは？』の▽
+にんきなのは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -4051,7 +4050,7 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
-人気が　あるのは？』の▽
+人気なのは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
@@ -4745,7 +4744,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『たいせんと　こうかん
-にんきが　あるのは？』の▽
+にんきなのは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
@@ -4754,7 +4753,7 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
-人気が　あるのは？』の▽
+人気なのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
@@ -5380,12 +5379,11 @@ assistantm_01_17へ続く
 依頼報告　⇒　assistantm_01_24gへ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">『たいせんと　こうかん　にんきが
-あるのは？』の　ちょうさを▽
+		<language name="JPN" width="256">『たいせんと　こうかん
+にんきなのは？』の　ちょうさを▽
 たいちょうに　ほうこくした！▼</language>
-		<language name="JPN_KANJI" width="256">『対戦と　交換　人気が
-あるのは？』の　調査を▽
-隊長に　報告した！▼</language>
+		<language name="JPN_KANJI" width="256">『対戦と　交換　人気なのは？』の
+調査を　隊長に　報告した！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_23h" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
