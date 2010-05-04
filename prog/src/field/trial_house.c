@@ -538,17 +538,17 @@ void TRIAL_HOUSE_CalcBtlResult( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, u1
   point = &ptr->PointWork;
   val = 0;
   val += (point->WinTrainerNum * 1000);     //倒したトレーナー数 x 1000
-  val += (point->WinPokeNum * 100);         //倒したポケモン数 x 100
+  val += (point->WinPokeNum * 80);         //倒したポケモン数 x 80
   val += (point->PokeChgNum * 5);           //交代回数 x 5
   val += (point->WeakAtcNum * 1);           //ばつぐんの技を出した回数 x 1
   val += (point->VoidNum * 5);              //効果がない技を受けた回数 x 5
   val += (point->ResistNum * 2);            //いまひとつの技を受けた回数 x 2
-  val += (point->UseWazaNum * 1);           //使用した技の数 x 1
+  val += (point->UseWazaNum * 15);           //使用した技の数 x 15
 
   val -= (point->TurnNum * 10);              //かかったターン数 x 10
   val -= (point->VoidAtcNum * 10);          //効果がない技を出した回数 x 10
   val -= (point->ResistAtcNum * 2);         //いまひとつの技を出した回数 x 2
-  val -= (point->LosePokeNum * 100);        //倒されたポケモン数 x 100
+  val -= (point->LosePokeNum * 80);        //倒されたポケモン数 x 80
   val -= ( ((500 - point->RestHpPer) * 100) / 500 );     //残りＨＰ割合(最大-100)
 
   if (val < 0) val = 0;
