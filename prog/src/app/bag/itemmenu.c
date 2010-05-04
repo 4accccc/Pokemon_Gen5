@@ -1808,13 +1808,15 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
-    GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
-    MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
-    ITEMDISP_ChangeMoveModeButton( pWork, FALSE );
-    pWork->moveMode = TRUE;
-//    _CHANGE_STATE(pWork,_itemMovePosition);
-    ChangeStateItemMovePosition( pWork );
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
+	    GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
+	    MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
+	    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
+	    ITEMDISP_ChangeMoveModeButton( pWork, FALSE );
+	    pWork->moveMode = TRUE;
+//	    _CHANGE_STATE(pWork,_itemMovePosition);
+	    ChangeStateItemMovePosition( pWork );
+		}
     return;
   }
   // タッチスクロール
