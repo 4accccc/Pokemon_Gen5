@@ -514,6 +514,8 @@ struct _BTLV_INPUT_WORK
 
   int                   hit;
 
+  BTLV_INPUT_DIR_PARAM  bidp[ 2 ][ BTLV_INPUT_DIR_MAX ];
+
   //OBJリソース
   u32                   objcharID;
   u32                   objplttID;
@@ -678,6 +680,7 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
                                                BOOL main_loop_tcb_flag, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
+static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work );
@@ -722,7 +725,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw );
-static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_COMMAND_PARAM *bicp, BALL_GAUGE_TYPE type );
+static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, BALL_GAUGE_TYPE type );
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
@@ -1248,6 +1251,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->center_button_type = bicp->center_button_type;
       ttw->biw = biw;
       ttw->pos = bicp->pos;
+      for( i = 0 ; i < BTLV_INPUT_DIR_MAX ; i++ )
+      { 
+        biw->bidp[ 0 ][ i ] = bicp->bidp[ 0 ][ i ];
+        biw->bidp[ 1 ][ i ] = bicp->bidp[ 1 ][ i ];
+      }
 
       for( i = 0 ; i < 4 ; i++ )
       {
@@ -1306,10 +1314,10 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
-        BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_MINE );
+        BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_MINE );
         if( bicp->trainer_flag )
         {
-          BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_ENEMY );
+          BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_ENEMY );
         }
         biw->trainer_flag = bicp->trainer_flag;
 #ifdef ROTATION_NEW_SYSTEM
@@ -1346,6 +1354,15 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformDir2Waza, ttw, 1 );
+      }
+      else if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
+      { 
+        BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_MINE );
+        if( biw->trainer_flag )
+        {
+          BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_ENEMY );
+        }
+        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Waza, ttw, 1 );
       }
       else
       {
@@ -1384,8 +1401,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_ROTATE_PARAM* birp = ( BTLV_INPUT_ROTATE_PARAM * )param;
       int i, j;
 
-      biw->rotate_flag = 0;
-      biw->rotate_scr = 0;
+      if( biw->scr_type != BTLV_INPUT_SCRTYPE_STANDBY )
+      { 
+        biw->rotate_flag = 0;
+        biw->rotate_scr = 0;
+      }
 
       for( i = 0 ; i < BTL_ROTATE_NUM ; i++ )
       {
@@ -1400,7 +1420,19 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
-      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Rotate, ttw, 1 );
+      if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
+      { 
+        BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_MINE );
+        if( biw->trainer_flag )
+        {
+          BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_ENEMY );
+        }
+        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 );
+      }
+      else
+      { 
+        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Rotate, ttw, 1 );
+      }
     }
 #else
     {
@@ -1885,6 +1917,74 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
 
 //============================================================================================
 /**
+ *  @brief  下画面変形タスク（待機→技選択）
+ */
+//============================================================================================
+static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
+{ 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    ttw->seq_no++;
+    break;
+  case 1:
+    if( ttw->biw->tcb_execute_count == 0 )
+    { 
+      if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
+      {
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+      else
+      {
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+      GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+      SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+      SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
+      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+      SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
+      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      ttw->seq_no++;
+    }
+    break;
+  case 2:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
  *  @brief  下画面変形タスク（コマンド選択→技選択）
  */
 //============================================================================================
@@ -2236,7 +2336,60 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
 {
-#ifndef ROTATION_NEW_SYSTEM
+#ifdef ROTATION_NEW_SYSTEM
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
+    SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+    SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
+    PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    ttw->seq_no++;
+    break;
+  case 1:
+    if( ttw->biw->tcb_execute_count == 0 )
+    { 
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+      GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+      SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
+                     rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+      SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
+      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+      SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
+      GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      ttw->seq_no++;
+    }
+    break;
+  case 2:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+#else
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -3954,11 +4107,10 @@ static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw )
  * @brief   ボールゲージ生成
  *
  * @param[in] biw   システム管理構造体のポインタ
- * @param[in] bidp  ボールゲージ生成用パラメータのポインタ
  * @param[in] type  ボールゲージタイプ
  */
 //--------------------------------------------------------------
-static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_COMMAND_PARAM *bicp, BALL_GAUGE_TYPE type )
+static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, BALL_GAUGE_TYPE type )
 {
   BTLV_INPUT_CLWK*  bib;
   int               i;
@@ -3990,7 +4142,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
                                           &obj_param, CLSYS_DEFREND_SUB, biw->heapID );
     GFL_CLACT_WK_SetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
     GFL_CLACT_WK_SetAutoAnmFlag( bib[ i ].clwk, TRUE );
-    GFL_CLACT_WK_SetAnmSeq( bib[ i ].clwk, bicp->bidp[ type ][ i ].status + anm_ofs );
+    GFL_CLACT_WK_SetAnmSeq( bib[ i ].clwk, biw->bidp[ type ][ i ].status + anm_ofs );
     pos.x += pos_ofs;
   }
 }
