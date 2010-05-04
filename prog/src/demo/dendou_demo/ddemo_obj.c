@@ -414,7 +414,9 @@ void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk )
 
 	ah = POKE2DGRA_OpenHandle( HEAPID_DENDOU_DEMO );
 
-	ppp = PP_GetPPPPointer( PokeParty_GetMemberPointer(wk->dat->party,wk->pokePos) );
+//	ppp = PP_GetPPPPointer( PokeParty_GetMemberPointer(wk->dat->party,wk->pokePos) );
+	ppp = PP_GetPPPPointer( wk->pp[wk->pokePos] );
+
 	fast = PPP_FastModeOn( ppp );
 	// ³–Ê
 	wk->chrRes[DDEMOOBJ_CHRRES_POKE] = POKE2DGRA_OBJ_CGR_RegisterPPP(
@@ -533,7 +535,8 @@ void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
 	u32	x;
 	BOOL	fast;
 
-	ppp  = PP_GetPPPPointer( PokeParty_GetMemberPointer(wk->dat->party,wk->pokePos) );
+//	ppp  = PP_GetPPPPointer( PokeParty_GetMemberPointer(wk->dat->party,wk->pokePos) );
+	ppp = PP_GetPPPPointer( wk->pp[wk->pokePos] );
 	fast = PPP_FastModeOn( ppp );
 
 	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_INFO].bmp, 0 );

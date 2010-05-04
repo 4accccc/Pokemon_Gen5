@@ -73,6 +73,7 @@ typedef struct {
 	BMPOAM_SYS_PTR	fntoam;
 	DDEMO_FONTOAM	fobj[DDEMOOBJ_FOAM_MAX];
 
+	POKEMON_PARAM * pp[6];
 	u16	monsno;
 	u16	type;
 	u8	form;

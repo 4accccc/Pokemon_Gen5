@@ -358,7 +358,22 @@ void DDEMOMAIN_ExitSound( DDEMOMAIN_WORK * wk )
 
 void DDEMOMAIN_GetPokeMax( DDEMOMAIN_WORK * wk )
 {
-	wk->pokeMax = PokeParty_GetPokeCount( wk->dat->party );
+	POKEMON_PARAM * pp;
+	BOOL	fast;
+	u32	i;
+
+	wk->pokeMax = 0;
+	for( i=0; i<PokeParty_GetPokeCount(wk->dat->party); i++ ){
+		pp = PokeParty_GetMemberPointer( wk->dat->party, i );
+		fast = PP_FastModeOn( pp );
+		if( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == 0 ){
+			wk->pp[wk->pokeMax] = pp;
+			wk->pokeMax++;
+		}
+		PP_FastModeOff( pp, fast );
+	}
+
+//	wk->pokeMax = PokeParty_GetPokeCount( wk->dat->party );
 }
 
 void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk )
@@ -366,7 +381,8 @@ void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk )
 	POKEMON_PARAM * pp;
 	BOOL	fast;
 	
-	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
+//	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
+	pp = wk->pp[wk->pokePos];
 
 	fast = PP_FastModeOn( pp );
 
@@ -932,7 +948,8 @@ void DDEMOMAIN_AddMcss( DDEMOMAIN_WORK * wk )
 	VecFx32 scale = { FX_F32_TO_FX32(16), FX_F32_TO_FX32(16), FX32_ONE };
 //	VecFx32 scale = { FX32_ONE, FX32_ONE, FX32_ONE };
 
-	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
+//	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
+	pp = wk->pp[wk->pokePos];
 
 	MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
 
