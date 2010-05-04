@@ -567,7 +567,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 
     //BMPWIN作成
     CG2d->bmpwin = GFL_BMPWIN_Create
-                    (FRAME_MSG, 0, 17, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
+                    (FRAME_MSG, 0, 19, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
     CG2d->bmp = GFL_BMPWIN_GetBmp( CG2d->bmpwin );
     GFL_BMP_Clear( CG2d->bmp, 0x00 );
     GFL_BMPWIN_MakeScreen( CG2d->bmpwin );
@@ -589,9 +589,12 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
               ( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_title_dat, heapID );
     CG2d->strbufENG = GFL_STR_CreateBuffer( 64, heapID );
     GFL_MSG_GetString(CG2d->mm, TITLE_STR_001, CG2d->strbufENG);
-    //メッセージ表示
-    PRINTSYS_PrintQueColor(CG2d->printQue, CG2d->bmp, 64, 0, CG2d->strbufENG, 
-      CG2d->fontHandle, PRINTSYS_MACRO_LSB(1,2,0));
+    {
+      int length = PRINTSYS_GetStrWidth( CG2d->strbufENG, CG2d->fontHandle, 0 );
+      //メッセージ表示
+      PRINTSYS_PrintQueColor(CG2d->printQue, CG2d->bmp, 128-(length/2), 0, CG2d->strbufENG, 
+        CG2d->fontHandle, PRINTSYS_MACRO_LSB(1,2,0));
+    }
     CG2d->message_req = TRUE;
   }
 }
