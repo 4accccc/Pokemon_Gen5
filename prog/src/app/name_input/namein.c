@@ -374,6 +374,18 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //モジュール作成
   SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
+
+
+  //もしポケモンモードでポケモン名が入っていなかったら、
+  //ニックネームを入れる
+  if( p_wk->p_param->mode == NAMEIN_POKEMON && GFL_STR_GetBufferLength( p_param->strbuf ) == 0 )
+  { 
+    STRBUF  *p_default;
+    p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
+    GFL_STR_CopyBuffer( p_param->strbuf, p_default );
+    GFL_STR_DeleteBuffer( p_default ) ;
+  }
+
   STRINPUT_Init( &p_wk->strinput, p_param->strbuf, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
   KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, &p_wk->obj, HEAPID_NAME_INPUT );
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
