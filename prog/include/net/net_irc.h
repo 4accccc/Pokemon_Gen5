@@ -6,11 +6,10 @@
  * @date	2008.10.15(水)
  */
 //==============================================================================
-#ifndef __NET_IRC_H__
-#define __NET_IRC_H__
+#pragma once
 
-//#include <irc.h>
 #include <nitro/irc.h>
+#include <gflib.h>
 
 
 //==============================================================================
@@ -32,8 +31,6 @@ enum{
 //==============================================================================
 /// 受信コールバックの書式指定
 typedef BOOL (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
-/// 比較コールバック
-typedef BOOL (IrcGSIDCallback)(u8 mygsid,u8 friendgsid);
 
 //==============================================================================
 //	外部関数宣言
@@ -61,5 +58,4 @@ extern BOOL GFL_NET_IRC_IsConnectSystem(void);
 extern void GFL_NET_IRC_Move(void);
 
 
-#endif	//__NET_IRC_H__
 

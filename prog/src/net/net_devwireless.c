@@ -119,6 +119,7 @@ static GFLNetDevTable netDevTbl={
   _DevCrossScan, //すれ違い通信
   _DevCrossScanChangeSpeed, //すれ違い速度変更
   NULL, //DevSetTimeOutFunc
+  NULL, //DevSetGSIDCheckFunc
 
 #if 0
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login

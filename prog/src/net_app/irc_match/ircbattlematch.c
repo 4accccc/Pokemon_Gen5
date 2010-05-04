@@ -1754,12 +1754,12 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
 
     switch(pWork->selectType){
     case EVENTIRCBTL_ENTRYMODE_MUSICAL:
-      GFL_NET_IRC_SetGSIDCallback(_gsidcallback);
+      GFL_NET_IRCWIRELESS_SetGSIDCallback(_gsidcallback);
       GFL_NET_ReserveNetID_IRCWIRELESS(1);
       GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_MUSICAL);
       break;
     case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
-      GFL_NET_IRC_SetGSIDCallback(_gsidcallback);
+      GFL_NET_IRCWIRELESS_SetGSIDCallback(_gsidcallback);
       GFL_NET_ReserveNetID_IRCWIRELESS(0);
       GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_MUSICAL);
       break;

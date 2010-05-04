@@ -51,6 +51,7 @@ static BOOL _DevIsConnectSystemFunc(void);
 static BOOL _DevGetSendLockFlagFunc(void);
 static void _DevConnectWorkInitFunc(void);
 static void _DevSetTimeOutFunc(int time);
+static void _DevSetGSIDCheckFunc(IrcGSIDCallback* callback);
 
 
 
@@ -108,6 +109,7 @@ static GFLNetDevTable netDevTbl={
   NULL, //DevCrossScanFunc
   NULL, //DevCrossScanChangeSpeedFunc
   _DevSetTimeOutFunc, //DevSetTimeOutFunc
+  _DevSetGSIDCheckFunc, //DevSetGSIDCheckFunc
   
 #if 0
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-FiLê‚ÉƒƒOƒCƒ“	DWC_LOBBY_Login
@@ -309,6 +311,10 @@ static void _DevSetTimeOutFunc(int time)
   GFL_NET_IRC_ChangeTimeoutTime(time);
 }
 
+static void _DevSetGSIDCheckFunc(IrcGSIDCallback* callback)
+{
+  GFL_NET_IRC_SetGSIDCallback(callback);
+}
 
 //------------------------------------------------------------------------------
 /**

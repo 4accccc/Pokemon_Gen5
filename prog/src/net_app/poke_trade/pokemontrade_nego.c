@@ -602,7 +602,7 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   }
 
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEÉlÉSÇÃÇ›ã≠êßêÿífèàóù
-    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, FALSE, FALSE);
   }
 
   

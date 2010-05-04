@@ -115,6 +115,7 @@ static GFLNetDevTable netDevTbl={
   NULL, //DevCrossScanFunc
   NULL, //DevCrossScanChangeSpeedFunc
   NULL, //DevSetTimeOutFunc
+  NULL, //DevSetGSIDCheckFunc
 
 #if 0
   //-- à»â∫ÅAWi-FiçLèÍêÍóp
