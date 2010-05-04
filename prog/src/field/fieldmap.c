@@ -3340,7 +3340,7 @@ void *GMK_TMP_WK_AllocWork
 /**
  * ギミックテンポラリワークメモリ解放関数
  *
- * @todo  使用の際はgmk_tmp_wk.hを参照のこと
+ * @note  使用の際はgmk_tmp_wk.hを参照のこと
  *
  * @param   fieldWork   フィールドワークポインタ
  * @param   inAssinID   アサインＩＤ
@@ -3370,7 +3370,7 @@ void GMK_TMP_WK_FreeWork
 /**
  * ギミックテンポラリワーク取得関数
  *
- * @todo  使用の際はgmk_tmp_wk.hを参照のこと
+ * @note  使用の際はgmk_tmp_wk.hを参照のこと
  *
  * @param   fieldWork   フィールドワークポインタ
  * @param   inAssinID   アサインＩＤ
