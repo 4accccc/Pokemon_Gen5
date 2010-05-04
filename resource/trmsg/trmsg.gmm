@@ -2439,10 +2439,10 @@
 	</row>
 
 	<row id="TRID_BACKPACKERW_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">アララギはかせも
+		<language name="JPN" width="216">アララギはかせ　って　おやこともに
 わかいころは　バックパッカーって▽
 ウワサ　きいたこと　あるんだけどな</language>
-		<language name="JPN_KANJI" width="216">アララギ博士も
+		<language name="JPN_KANJI" width="216">アララギ博士って　親子ともに
 若いころは　バックパッカーって▽
 ウワサ　聞いたこと　あるんだけどな</language>
 	</row>
@@ -7172,14 +7172,14 @@
 	</row>
 
 	<row id="TRID_BACKPACKERM_07_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せかいの　どこにいっても
+		<language name="JPN" width="216">せかいの　どこに　いっても
 ポケモンしょうぶ！▼
 すきな　ポケモンを
 しつもんすれば　すぐに　なかよしさ！</language>
-		<language name="JPN_KANJI" width="216">世界の　どこにいっても
+		<language name="JPN_KANJI" width="216">世界の　どこに　行っても
 ポケモン勝負！▼
 好きな　ポケモンを
-たずねれば　すぐに　仲良しさ！</language>
+尋ねれば　すぐに　仲良しさ！</language>
 	</row>
 
 	<row id="TRID_WORKER2_16_TRMSG_FIGHT_START">
@@ -7221,8 +7221,10 @@
 	</row>
 
 	<row id="TRID_OL_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">フフフ……　キミ　つよいね……</language>
-		<language name="JPN_KANJI" width="216">フフフ……　キミ　強いね……</language>
+		<language name="JPN" width="216">フフフ……
+キミ　つよいね……</language>
+		<language name="JPN_KANJI" width="216">フフフ……
+キミ　強いね……</language>
 	</row>
 
 	<row id="TRID_PRINCE_05_TRMSG_FIGHT_LOSE">
@@ -7339,7 +7341,7 @@
 きっと　満足していないわよね▼
 おばさん　試合を　みていて
 そう　感じるんだよね▼
-理由？　おばさんに　かてたら
+理由？　おばさんに　勝てたら
 話してあげるわよ！▼</language>
 	</row>
 
@@ -7417,10 +7419,10 @@
 
 	<row id="TRID_BREEDERM_02_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">かって　わかること　より
-まけて　わかることが　おおい▽
+まけて　わかることが　おおいの！▽
 スポーツも　おなじだと　おもうなー</language>
 		<language name="JPN_KANJI" width="216">勝って　わかること　より
-負けて　わかることが　多い▽
+負けて　わかることが　多いの！▽
 スポーツも　同じだと　思うなー</language>
 	</row>
 
@@ -7510,9 +7512,9 @@
 
 	<row id="TRID_CHILDCARE_02_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">スターに　なりそうな　こどもには
-いまから　サインもらっとくべき？</language>
+いまから　サイン　もらっとくべき？</language>
 		<language name="JPN_KANJI" width="216">スターに　なりそうな　子供には
-今から　サインもらっとくべき？</language>
+今から　サイン　もらっとくべき？</language>
 	</row>
 
 	<row id="TRID_CLEANING_02_TRMSG_FIGHT_START">
@@ -7612,7 +7614,7 @@
 		<language name="JPN" width="216">しあい　みてると
 テンション　あがっちゃって！▽
 もう　じっとなんか　してらんねえっ！</language>
-		<language name="JPN_KANJI" width="216">試合　見てると
+		<language name="JPN_KANJI" width="216">試合　観てると
 テンション　上がっちゃって！▽
 もう　じっとなんか　してらんねえっ！</language>
 	</row>
@@ -7703,9 +7705,9 @@
 
 	<row id="TRID_ELITEW_15_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
 		<language name="JPN" width="216">これ　あげるからさ　わるいけど
-ほっておいて　くれない？▼</language>
+そっと　しておいてくれる？▼</language>
 		<language name="JPN_KANJI" width="216">これ　あげるからさ　悪いけど
-ほっておいて　くれない？▼</language>
+そっと　しておいてくれる？▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_15_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
@@ -7892,11 +7894,11 @@
 
 	<row id="TRID_KARATE_09_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">オンボロ　どうじょうで　あたりからは
-オスやウスの　かけごえ　のみ……▽
+オスや　ウスの　かけごえ　のみ……▽
 こんなことなら　スポーツせんしゅに▽
 なれば　よかったっス……</language>
 		<language name="JPN_KANJI" width="216">オンボロ道場で　あたりからは
-オスやウスの　かけ声　のみ……▽
+オスや　ウスの　かけ声　のみ……▽
 こんなことなら　スポーツ選手に▽
 なれば　よかったっス……</language>
 	</row>
@@ -8263,10 +8265,10 @@
 	</row>
 
 	<row id="TRID_SCHOOLB_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">たまに　こうやって　あそびにくると
-べんきょうが　かえって　はかどるんだ！</language>
-		<language name="JPN_KANJI" width="216">たまに　こうやって　遊びにくると
-勉強が　かえって　はかどるんだ！</language>
+		<language name="JPN" width="216">たまに　こうして　あそびにくると
+かえって　べんきょうが　はかどるんだ！</language>
+		<language name="JPN_KANJI" width="216">たまに　こうして　遊びにくると
+かえって　勉強が　はかどるんだ！</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_05_TRMSG_FIGHT_START">
