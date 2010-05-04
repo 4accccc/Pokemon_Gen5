@@ -8247,7 +8247,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		1,
 		3,
-		1,
+		0,
 	},
 	{//ZONE_ID_D20R0201 = 250
 		RSC_NOGRID_DEFAULT,
@@ -8280,7 +8280,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		1,
 		3,
-		1,
+		0,
 	},
 	{//ZONE_ID_D20R0301 = 251
 		RSC_NOGRID_DEFAULT,
@@ -8313,7 +8313,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		1,
 		3,
-		1,
+		0,
 	},
 	{//ZONE_ID_D20R0401 = 252
 		RSC_NOGRID_DEFAULT,
@@ -8346,7 +8346,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		1,
 		3,
-		1,
+		0,
 	},
 	{//ZONE_ID_D20R0501 = 253
 		RSC_GRID_DEFAULT,
