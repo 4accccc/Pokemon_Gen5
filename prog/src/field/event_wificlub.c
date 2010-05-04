@@ -441,7 +441,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     PMSND_PlayBGM(SEQ_BGM_VS_TRAINER_WIFI);
     PMSND_FadeInBGM(PMSND_FADE_NORMAL);
 
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
+    //GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
 #if 0
     GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, ep2p->para);
 #else
@@ -460,7 +460,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
         ep2p->prm.demo_prm = &ep2p->demo_prm;
         
         GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-        GMEVENT_CallProc(pClub->event, NO_OVERLAY_ID, &CommBattleCommProcData, &ep2p->prm);
+        GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(event_battlecall), &CommBattleCommProcData, &ep2p->prm);
       }
     }
 #endif

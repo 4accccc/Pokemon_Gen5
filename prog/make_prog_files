@@ -336,7 +336,7 @@ SRCS_OVERLAY_EVENT_WIFICLUB = field/event_wificlub.c
 SRCS_OVERLAY_EVENT_WIFIBSUBWAY  = field/event_wifi_bsubway.c
 
 #’ÊMƒoƒgƒ‹
-#===> main
+#===> SRCS_OVERLAY_EVENT_WIFICLUB
 #GROUP_OVERLAY_MAINEVENT
 SRCS_OVERLAY_EVENT_BATTLECALL = field/event_battle_call.c
 
