@@ -528,7 +528,7 @@ static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup )
     return BBAG_MODE_NORMAL;
 
   case BTL_COMPETITOR_SUBWAY:
-    return BBAG_MODE_SHOOTER;
+    return BBAG_MODE_NORMAL;
 
   case BTL_COMPETITOR_COMM:
     return BBAG_MODE_SHOOTER;
