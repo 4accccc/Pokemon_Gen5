@@ -380,6 +380,7 @@ static void DEBUG_INTRUDE_MakeSecretItem( GAMEDATA * gamedata, HEAPID heapID )
 //--------------------------------------------------------------
 static void DEBUG_IntrudeParam( GAMEDATA *gamedata, HEAPID heapID )
 {
+#if 0
   INTRUDE_SAVE_WORK * intsave;
   OCCUPY_INFO *occupy;
   
@@ -389,6 +390,7 @@ static void DEBUG_IntrudeParam( GAMEDATA *gamedata, HEAPID heapID )
   
   intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
   ISC_SAVE_SetGPowerID( intsave, GFUser_GetPublicRand( GPOWER_ID_MAX - 1) + 1 );
+#endif
 }
 
 //--------------------------------------------------------------
