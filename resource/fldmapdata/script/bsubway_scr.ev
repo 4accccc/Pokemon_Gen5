@@ -621,15 +621,15 @@ sub_receipt_challenge_multi:
   //フラグ初期化
   _CALL sub_receipt_flag_set_geton_first
   
-  //レポート
-  _CALL sub_bsw_common_report
-  
-  IF $SCWK_ANSWER == 1 THEN //キャンセル
-    _CALL sub_bsw_common_exit
-    _RET
-  ENDIF
-  
-  IF $play_mode == BSWAY_MODE_MULTI THEN //AIマルチ
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    //AIマルチ
+    _CALL sub_bsw_common_report //レポート
+
+    IF $SCWK_ANSWER == 1 THEN //キャンセル
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
+    
     _CALL sub_receipt_challenge_multi_ai
   ELSE //通信マルチ
     //赤外線通信フラグ初期化
@@ -645,7 +645,6 @@ sub_receipt_challenge_multi:
     
     //結果(0,1)をフラグにセット
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_IRC_FLAG, SCWK_ANSWER, BSW_NULL, BSW_NULL )
-    
     _CALL sub_receipt_challenge_multi_comm
   ENDIF
 }
