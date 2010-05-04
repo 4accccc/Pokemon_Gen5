@@ -364,15 +364,15 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
     SEQ_FINISH,
   };
 
-  if(intcomm->error == TRUE){
+  if(intcomm->error == TRUE || NetErr_App_CheckError()){
     return TRUE;
   }
 
   switch(*seq){
   case SEQ_INIT:
     intcomm->comm_status = INTRUDE_COMM_STATUS_EXIT_START;
-    //親は自分一人なら即終了
-    if((GFL_NET_IsParentMachine() == TRUE) && (GFL_NET_GetConnectNum() <= 1)){
+    //自分一人なら即終了
+    if(GFL_NET_GetConnectNum() <= 1){
       *seq = SEQ_FINISH;
     }
     else{
@@ -440,7 +440,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   
   switch(*seq){
   case 0:
-    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE){
+    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE || NetErr_App_CheckError()){
       COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
@@ -448,7 +448,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       CommPlayer_Exit(intcomm->cps);
       
       //切断する時の状態をLAST_STATUSにセット
-      if(intcomm->error == TRUE){
+      if(intcomm->error == TRUE || NetErr_App_CheckError()){
         GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
       }
       else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
@@ -490,7 +490,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       }
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);
-      if(intcomm->error == TRUE){
+      if(intcomm->error == TRUE || NetErr_App_CheckError()){
         GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
       }
       return TRUE;
@@ -514,7 +514,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
   GameServiceID id;
   
   if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX || GFL_NET_GetConnectNum() > 1
-      || intcomm->error == TRUE){
+      || intcomm->error == TRUE || NetErr_App_CheckError()){
     return;
   }
   
