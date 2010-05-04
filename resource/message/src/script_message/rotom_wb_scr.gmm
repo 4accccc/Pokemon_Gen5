@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-05-03T15:33:45"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-05-04T11:53:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -597,9 +597,9 @@
 ・2＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:2]を　わすれた……</language>
+[1:07:わざ名:2]を　わすれた……▼</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:2]を　忘れた……</language>
+[1:07:わざ名:2]を　忘れた……▼</language>
 	</row>
 
 	<row id="msg_rotom_08">
@@ -626,9 +626,9 @@
 ・0＝ロトムのニックネーム</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
-モーターから　でてきた！[BE:01:ページ切り替え（クリア）]</language>
+モーターから　でてきた！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-モーターから　でてきた！[BE:01:ページ切り替え（クリア）]</language>
+モーターから　でてきた！</language>
 	</row>
 
 	<row id="msg_rotom_10">
