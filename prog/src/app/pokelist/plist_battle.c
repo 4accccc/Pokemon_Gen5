@@ -196,6 +196,10 @@ void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work )
   {
     PLIST_BATTLE_UpdateTimeLimit( work );
   }
+  if( work->plData->isNetErr == TRUE )
+  {
+    PLIST_ForceExit_Timeup( work );
+  }
 }
 
 #pragma mark graphic
