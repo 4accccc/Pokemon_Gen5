@@ -93,7 +93,7 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_heroine[] = {
 
 static const u16 res_f_wheel_file_boss[] = {
  NARC_data_demo3d_fmdl_boss_nsbmd,
- NARC_data_demo3d_fmdl_t4x4x20_u_nsbtp,
+ NARC_data_demo3d_fmdl_t4x4x22_u_nsbtp,
  NARC_data_demo3d_sub_obj_nsbca,
 };
 
