@@ -816,7 +816,8 @@ BOOL ZONEDATA_CheckFieldSkillUse(u16 zone_id)
   if( ZONEDATA_IsUnionRoom(zone_id) ||
       ZONEDATA_IsColosseum(zone_id) ||
       ZONEDATA_IsSubway(zone_id) ||
-      ZONEDATA_IsPalaceField(zone_id)){
+      ZONEDATA_IsPalace(zone_id) || 
+      ZONEDATA_IsPalaceField(zone_id) ){
     return FALSE;
   }
   return TRUE;
