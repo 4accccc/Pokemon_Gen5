@@ -1457,31 +1457,31 @@ static BOOL CMD_BG_EFF_IN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 	switch( sdat->seq ){
 	case 0:
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 11, 64, 2, wk->bgEffBuff, 0, 11, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 11-3, 64, 2, wk->bgEffBuff, 0, 11-3, 64, 32 );
 		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
 		sdat->seq++;
 		break;
 	case 1:
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 10, 64, 1, wk->bgEffBuff, 0, 10, 64, 32 );
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 13, 64, 1, wk->bgEffBuff, 0, 13, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 10-3, 64, 1, wk->bgEffBuff, 0, 10-3, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 13-3, 64, 1, wk->bgEffBuff, 0, 13-3, 64, 32 );
 		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
 		sdat->seq++;
 		break;
 	case 2:
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0,  9, 64, 1, wk->bgEffBuff, 0,  9, 64, 32 );
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 14, 64, 1, wk->bgEffBuff, 0, 14, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0,  9-3, 64, 1, wk->bgEffBuff, 0,  9-3, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 14-3, 64, 1, wk->bgEffBuff, 0, 14-3, 64, 32 );
 		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
 		sdat->seq++;
 		break;
 	case 3:
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0,  8, 64, 1, wk->bgEffBuff, 0,  8, 64, 32 );
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 15, 64, 1, wk->bgEffBuff, 0, 15, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0,  8-3, 64, 1, wk->bgEffBuff, 0,  8-3, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M,  0, 15-3, 64, 1, wk->bgEffBuff, 0, 15-3, 64, 32 );
 		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
 		sdat->seq++;
 		break;
 	case 4:
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M, 0,  7, 64, 1, wk->bgEffBuff, 0,  7, 64, 32 );
-		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M, 0, 16, 64, 1, wk->bgEffBuff, 0, 16, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M, 0,  7-3, 64, 1, wk->bgEffBuff, 0,  7-3, 64, 32 );
+		GFL_BG_WriteScreenFree( GFL_BG_FRAME2_M, 0, 16-3, 64, 1, wk->bgEffBuff, 0, 16-3, 64, 32 );
 		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
 		sdat->seq = 0;
 		return TRUE;
@@ -1572,7 +1572,7 @@ static BOOL CMD_OBJ_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
   GFL_ARC_CloseDataHandle( ah );
 
 	{
-		GFL_CLWK_DATA	dat[] = { { 128, 96, 0, 0, 1 }, { 64, 96, 0, 10, 1 }, { 192, 96, 0, 10, 1 } };
+		GFL_CLWK_DATA	dat[] = { { 128, 72, 0, 0, 1 }, { 64, 72, 0, 10, 1 }, { 192, 72, 0, 10, 1 } };
 		u32	i;
 		for( i=0; i<3; i++ ){
 			wk->clwk[i] = GFL_CLACT_WK_Create(
