@@ -1162,7 +1162,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       }
 
     }
-    //*/
+    */
   }
 
 
@@ -3175,53 +3175,50 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
     { MAPATTR_VALUE_CheckShopShelf1,    DIR_NOT, SCRID_BG_MSG_SHOPRACK1_01 },
     { MAPATTR_VALUE_CheckShopShelf2,    DIR_NOT, SCRID_BG_MSG_SHOPRACK2_01 },
     { MAPATTR_VALUE_CheckShopShelf3,    DIR_NOT, SCRID_BG_MSG_SHOPRACK3_01 },
-    { MAPATTR_VALUE_CheckWaterFall,     DIR_NOT, SCRID_HIDEN_TAKINOBORI },
     { MAPATTR_VALUE_CheckVendorMachine, DIR_UP,  SCRID_VENDING_MACHINE01 },
   };
   int i;
 
-  VecFx32 pos;
-  s16 gx,gy,gz;
-  FLDMAPPER *mapper;
-  MAPATTR attr;
-  MAPATTR_VALUE attr_val;
-  
-  FIELD_PLAYER_GetFrontGridPos( req->field_player, &gx, &gy, &gz );
-  MMDL_TOOL_GridPosToVectorPos( gx, gy, gz, &pos );
-  
-  mapper = FIELDMAP_GetFieldG3Dmapper( fieldMap );
-  attr = MAPATTR_GetAttribute( mapper, &pos );
-  attr_val = MAPATTR_GetAttrValue( attr );
+  MAPATTR nattr,fattr;
+  MAPATTR_VALUE fattr_val;
+
+  nattr = FIELD_PLAYER_GetMapAttr( req->field_player );
+  fattr = FIELD_PLAYER_GetDirMapAttr( req->field_player, req->player_dir );
+  fattr_val = MAPATTR_GetAttrValue( fattr );
 
   for (i = 0; i < NELEMS(check_attr_data); i++)
   {
     if ( check_attr_data[i].dir_code == req->player_dir || check_attr_data[i].dir_code == DIR_NOT )
     {
-      if ( check_attr_data[i].attr_check_func(attr_val) )
+      if ( check_attr_data[i].attr_check_func(fattr_val) )
       {
         return check_attr_data[i].script_id;
       }
     }
   }
-  
-  //波乗りアトリビュート話し掛けチェック
 
-  if( (FIELD_PLAYER_GetMoveForm( req->field_player ) != PLAYER_MOVE_FORM_SWIM) &&
-      (FIELD_PLAYER_GetMoveForm( req->field_player ) != PLAYER_MOVE_FORM_DIVING) )  // ダイビング状態であれば、波に乗るかきかない。
-  {
-    MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );
-    
-    if( MAPATTR_VALUE_CheckShore(attr_val) == TRUE ||
-        (MAPATTR_GetHitchFlag(attr) == FALSE &&
-         (attr_flag&MAPATTR_FLAGBIT_WATER) ) )
-    {
-      //本来はバッジチェックも入る。
-      if( checkPokeWazaGroup(req->gamedata,WAZANO_NAMINORI) != 6 ){
-        return SCRID_HIDEN_NAMINORI;
-      }
+  ////////////////////////////////////////////////
+  //ここから下フィールド技チェック
+
+  //ユニオン/コロシアム/パレスでは起動しない
+  if( ZONEDATA_CheckFieldSkillUse( req->map_id ) == FALSE ||
+      GAMEDATA_GetIntrudeReverseArea( req->gamedata ) == TRUE ){
+    return EVENTDATA_ID_NONE;
+  }
+
+  //波乗りアトリビュート話し掛けチェック
+  if( FIELD_PLAYER_CheckNaminoriUse( req->field_player, nattr, fattr )){
+    if( checkPokeWazaGroup(req->gamedata,WAZANO_NAMINORI) != 6 ){
+      return SCRID_HIDEN_NAMINORI;
     }
   }
-  
+  //滝登りアトリビュート話しかけチェック
+  if( FIELD_PLAYER_CheckTakinoboriUse( req->field_player, nattr, fattr ) )
+  {
+    //滝は話しかけ時のメッセージがあるので、技の所持チェックはスクリプト側に任せる
+    return SCRID_HIDEN_TAKINOBORI;
+  }
+ 
   return EVENTDATA_ID_NONE;
 }
 
