@@ -3805,6 +3805,7 @@ ExpertAI_239_end:
 	AIEND
 
 ExpertAI_239_Table:
+	.long	TOKUSYU_NOOGAADO  	      //ノーガード
 	.long	TOKUSYU_ITAZURAGOKORO  	  //いたずらごころ
 	.long	TOKUSYU_MIRAKURUSUKIN  	  //ミラクルスキン
 	.long	TOKUSYU_SYUUKAKU  		    //しゅうかく
@@ -3818,6 +3819,8 @@ ExpertAI_239_Table:
 	.long	TOKUSYU_HUSIGINAMAMORI		//ふしぎなまもり
 	.long	TOKUSYU_KAGEHUMI		      //かげふみ
 	.long	0xffffffff
+
+	IF_EQUAL	TOKUSYU_NOOGAADO,ExpertAI_1_4	  	// ノーガード
 
 //---------------------------------------------------------------------------
 
