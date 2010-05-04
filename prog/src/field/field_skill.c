@@ -193,6 +193,7 @@ void FLDSKILL_InitCheckWork(
   }
 
 
+
   //海底神殿の設定
   {
     if( ZONEDATA_IsSeaTempleDungeon( scwk->zone_id ) ){
@@ -214,14 +215,17 @@ void FLDSKILL_InitCheckWork(
       }
     }
   }
+  //ユニオン/コロシアムなどではフィールド技全面禁止
+  if( ZONEDATA_CheckFieldSkillUse( scwk->zone_id ) == FALSE ){
+    scwk->enable_skill = 0;
+  }else{
+    scwk->enable_skill |= ( 1 << FLDSKILL_IDX_AMAIKAORI );
+    scwk->enable_skill |= ( 1 << FLDSKILL_IDX_OSYABERI );
+  }
 
   //パレス＆裏フィールドにいるときは、すべてのフィールド技を使えないようにする
   if ( GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData( scwk->gsys ) ) == TRUE )
   {
-    scwk->enable_skill = 0;
-  }
-  //ユニオン/コロシアムなどではフィールド技全面禁止
-  if( ZONEDATA_CheckFieldSkillUse( scwk->zone_id ) == FALSE ){
     scwk->enable_skill = 0;
   }
 }
