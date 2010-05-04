@@ -50,28 +50,7 @@ FLD_PRTCL_SYS_PTR FLD_PRTCL_Init(const HEAPID inHeapID)
 
 	//パーティクルメモリ確保
 	sys->PrtclBuff = GFL_HEAP_AllocClearMemory(inHeapID, PARTICLE_LIB_HEAP_SIZE);
-#if 0
-	sys->PrtclPtr = GFL_PTC_Create(
-											  sys->PrtclBuff, 
-											  PARTICLE_LIB_HEAP_SIZE, TRUE, inHeapID);
-  camera_ptr = GFL_PTC_GetCameraPtr(sys->PrtclPtr);
 
-  {
-    fx32 near = BP_NEAR;
-    fx32 far = BP_FAR;
-    GFL_G3D_CAMERA_SetNear( camera_ptr, &near );
-    GFL_G3D_CAMERA_SetFar( camera_ptr, &far );
-  }
-
-  //@todo
-  {
-    void *resource;
-    resource = FLD_PRTCL_LoadResource(sys,
-			ARCID_FLD_SPA, /*NARC_particledata_title_part_spa*/0);
-
-    FLD_PRTCL_SetResource(sys, resource, TRUE, NULL);
-  }
-#endif
   return sys;
 }
 
