@@ -378,7 +378,8 @@ extern WazaSick WAZADATA_GetSick( WazaID id );
 extern  void  WAZADATA_CreateCache( int size, HEAPID heapID );
 //キャッシュの破棄
 extern  void  WAZADATA_DeleteCache( void );
-
+//キャッシュが作られているかチェック
+extern  BOOL  WAZADATA_CheckCache( void );
 
 //=============================================================================================
 /**
