@@ -2327,13 +2327,11 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
   GF_ASSERT(line->name);
   if (work->type == FIELD_RAIL_TYPE_LINE)
   {
-    TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n",
-        work->line->name, debugGetRailKeyName(key), line->name);
+    //TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n", work->line->name, debugGetRailKeyName(key), line->name);
   }
   else
   {
-    TAMADA_Printf("RAIL: POINT \"%s\" to %s \"%s\"\n",
-        work->point->name, debugGetRailKeyName(key), line->name);
+    //TAMADA_Printf("RAIL: POINT \"%s\" to %s \"%s\"\n", work->point->name, debugGetRailKeyName(key), line->name);
   }
 
   //TOMOYA_Printf( "l_ofs %d w_ofs %d l_ofs_max %d w_ofs_max %d\n", l_ofs, w_ofs, l_ofs_max, w_ofs_max );
@@ -2654,7 +2652,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getClockwiseKey(key), work->rail_dat, work->line_switch, FALSE);
     BOOL width_over = FALSE;
     //const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, getReverseKey(key), work->rail_dat, work->line_switch);
-    TAMADA_Printf("↑");
+    //TAMADA_Printf("↑");
     calcLineSwitchLineOfs( work->line_switch, work, count_up, 0, key );
     if (work->line_ofs < nLine_ofs_max) {   // nLine_ofs_max == 次のラインのline_ofs 0
       // 今の道幅チェック オーバーしてなければ、通常の更新
@@ -2791,7 +2789,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     const RAIL_LINE * right = RAILPOINT_getLineByKey(nPoint, getAntiClockwiseKey(key), work->rail_dat, work->line_switch, FALSE);
     const RAIL_LINE * back = RAILPOINT_getLineByKey(nPoint, key, work->rail_dat, work->line_switch, FALSE);
     BOOL width_over = FALSE;
-    TAMADA_Printf("↓");
+    //TAMADA_Printf("↓");
     calcLineSwitchLineOfs( work->line_switch, work, -count_up, 0, key );
     if (work->line_ofs >= 0) {
 
@@ -2919,7 +2917,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   }
   else if (key == getClockwiseKey(nLine->key))
   {//時計回り隣方向キーの場合
-    TAMADA_Printf("→");
+    //TAMADA_Printf("→");
     calcLineSwitchLineOfs( work->line_switch, work, 0, count_up, key );
     if( (work->width_ofs > 0) && ((work->width_ofs % RAIL_WALK_OFS) == 0) ) // 右サイドに移っていたら
     { 
@@ -3029,7 +3027,7 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
   }
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
-    TAMADA_Printf("←");
+    //TAMADA_Printf("←");
     calcLineSwitchLineOfs( work->line_switch, work, 0, -count_up, key );
     if( (work->width_ofs < 0) && ((MATH_ABS(work->width_ofs) % RAIL_WALK_OFS) == 0) )
     {
