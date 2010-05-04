@@ -89,12 +89,15 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BtlRule rule, int index, u8 season, HEAPID hea
   bfw->heapID = heapID;
 
   //リソース読み込み
+#if 0
   if( rule == BTL_RULE_ROTATION )
   {
     //ローテーションバトルは専用背景
     bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_fd_vs3_nsbmd );
   }
-  else if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
+#endif
+//  else if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
+  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] != BATT_BG_TBL_NO_FILE )
   {
     bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season ] );
   }
