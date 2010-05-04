@@ -5973,9 +5973,9 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           FLDSYSWIN_ClearWindow( work->sysWin );
 
           if( (flag & BSW_DEBUG_FLAG_REGU_OFF) ){
-            FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_38 );
-          }else{
             FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_25 );
+          }else{
+            FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_38 );
           }
         }
         break;
