@@ -58,32 +58,32 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 立ち位置チェック	POS_TR_C	いない	NO_ANIME_C
 トレーナーアニメセット	POS_C	1
 ラベル	NO_ANIME_C
-タイマーによるウエイト	46
+タイマーによるウエイト	30
 SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
 制御モード変更	継続
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_2
 ボールモード	捕獲ボールAA
 パーティクルデータロード	be_m_ball_01_kaiten
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	8:4:15	POS_AA	3:35:5	1:1:0
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	-2.5:1.199951:12	POS_AA	2:30:3	1:1:0
 ラベル	NO_EXIST_AA_2
 立ち位置チェック	POS_A	いない	NO_EXIST_A_2
 ボールモード	捕獲ボールA
 パーティクルデータロード	be_m_ball_01_kaiten
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	8:4:15	POS_A	3:35:5	1:1:0
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	-2.5:1.199951:12	POS_A	2:30:3	1:1:0
 ラベル	NO_EXIST_A_2
 立ち位置チェック	POS_C	いない	NO_EXIST_C_2
 ボールモード	捕獲ボールC
 パーティクルデータロード	be_m_ball_01_kaiten
 立ち位置チェック	POS_TR_C	いる	THROW_TR_C
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	8:4:15	POS_C	3:35:5	1:1:0
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	-2.5:1.199951:12	POS_C	2:30:3	1:1:0
 ジャンプ	NO_EXIST_C_2
 ラベル	THROW_TR_C
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	8:4:15	POS_C	3:35:5	1:1:0
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	-2.5:1.199951:12	POS_C	2:30:3	1:1:0
 ラベル	NO_EXIST_C_2
 立ち位置チェック	POS_E	いない	NO_EXIST_E_2
 ボールモード	捕獲ボールE
 パーティクルデータロード	be_m_ball_01_kaiten
-エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	8:4:15	POS_E	3:35:5	1:1:0
+エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	放物線（半分）	-2.5:1.199951:12	POS_E	2:30:3	1:1:0
 ラベル	NO_EXIST_E_2
 タイマーによるウエイト	30
 制御モード変更	継続
