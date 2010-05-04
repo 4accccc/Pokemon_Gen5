@@ -34,9 +34,11 @@
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
 #define AI_SEQ_PRINT
-//#define AI_SPEEDUP
+//#define TR_AI_WAZA_CACHE    //技AI内で技データのキャッシュを持つ
 #endif
 #endif
+
+#define AI_SPEEDUP
 
 //=========================================================================
 //
@@ -82,8 +84,10 @@ typedef struct{
   BtlRule       rule;
   BtlCompetitor competitor;
 
-  WazaID        wazaID[TR_AI_WAZATBL_MAX ];
+#ifdef TR_AI_WAZA_CACHE
+  WazaID        wazaID[ TR_AI_WAZATBL_MAX ];
   WAZA_DATA     *wd[ TR_AI_WAZATBL_MAX ];
+#endif
 
   HEAPID        heapID;
   ARCHANDLE*    handle;
@@ -289,7 +293,9 @@ static  const BTL_POKEPARAM*  get_bpp( TR_AI_WORK* taw, BtlPokePos pos );
 static  const BTL_POKEPARAM*  get_bpp_from_party( const BTL_PARTY* pty, u8 idx );
 static  void  waza_point_init( TR_AI_WORK* taw );
 static  void  waza_no_stock( TR_AI_WORK* taw );
+#ifdef TR_AI_WAZA_CACHE
 static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no );
+#endif
 static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param );
 static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag );
 static  u32   get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag );
@@ -469,6 +475,7 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
   taw->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
   taw->waza_handle = WAZADATA_OpenDataHandle( heapID );
 
+#ifdef TR_AI_WAZA_CACHE
   {
     int i;
 
@@ -477,6 +484,7 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
       taw->wd[ i ] = GFL_HEAP_AllocMemory( heapID, WAZADATA_GetWorkSize() );
     }
   }
+#endif
 
   taw->wk = wk;
   taw->svfWork = svfWork;
@@ -487,6 +495,9 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
 
   vmh = VM_Create( heapID, &vm_init );
   VM_Init( vmh, taw );
+
+  //技データのキャッシュを生成
+  WAZADATA_CreateCache( TR_AI_WAZATBL_MAX, heapID );
 
   return vmh;
 }
@@ -514,10 +525,22 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   {
     ret = waza_ai_plural( vmh, taw );
   }
-  //@todo ローテーションはとりあえず野生と同等にする
   else 
   { 
-    taw->ai_bit = 0;
+    int def[ 3 ];
+    int def_cnt = 0;
+    const BTL_POKEPARAM* bpp;
+    
+    for( taw->def_btl_poke_pos = 0 ; taw->def_btl_poke_pos < 6 ; taw->def_btl_poke_pos++ )
+    { 
+      if( taw->def_btl_poke_pos == taw->atk_btl_poke_pos ) { continue; }
+      if( ( taw->def_btl_poke_pos & 1 ) == ( taw->atk_btl_poke_pos & 1 ) ) { continue; }
+      bpp = get_bpp( taw, taw->def_btl_poke_pos );
+      if( BPP_IsDead( bpp ) == TRUE ) { continue; }
+      def[ def_cnt++ ] = taw->def_btl_poke_pos;
+    }
+    taw->def_btl_poke_pos = def[ GFL_STD_MtRand( def_cnt ) ];
+    ret = waza_ai_single( vmh, taw );
   }
 
   return ret;
@@ -538,12 +561,17 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   GFL_ARC_CloseDataHandle( taw->handle );
   GFL_ARC_CloseDataHandle( taw->waza_handle );
 
+#ifdef TR_AI_WAZA_CACHE
   for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
   {
     GFL_HEAP_FreeMemory ( taw->wd[ i ] );
   }
+#endif
   GFL_HEAP_FreeMemory ( taw );
   VM_Delete( vmh );
+
+  //技データキャッシュ破棄
+  WAZADATA_DeleteCache();
 }
 
 //============================================================================================
@@ -3809,6 +3837,7 @@ static  void  waza_no_stock( TR_AI_WORK* taw )
   }
 }
 
+#ifdef TR_AI_WAZA_CACHE
 //============================================================================================
 /**
  *  技のパラメータインデックス取得
@@ -3880,6 +3909,27 @@ static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
 
   return WAZADATA_PTR_GetFlag( taw->wd[ index ], flag );
 }
+#else
+//============================================================================================
+/**
+ *  技のパラメータを読み出し
+ */
+//============================================================================================
+static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param )
+{
+  return WAZADATA_GetParam( waza_no, param );
+}
+
+//============================================================================================
+/**
+ *  技のフラグを読み出し
+ */
+//============================================================================================
+static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
+{
+  return WAZADATA_GetFlag( waza_no, flag );
+}
+#endif
 
 //============================================================================================
 /**
