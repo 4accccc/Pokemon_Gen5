@@ -26,9 +26,11 @@
 #include "field_task_player_drawoffset.h"
 #include "field_task_fade.h"
 #include "field_task_wait.h"
+#include "field_task_anahori_effect.h"
 #include "field_buildmodel.h"
 #include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
 #include "field_camera_anime.h"
+#include "event_field_fade.h" // for EVENT_FieldFadeOut_xxxx
 
 
 //==========================================================================================
@@ -43,20 +45,24 @@
 //==========================================================================================
 // ■イベントワーク
 //==========================================================================================
-typedef struct
-{
-  int                    frame;   // フレーム数カウンタ
-  FIELDMAP_WORK*      fieldmap;   // 動作フィールドマップ
-  FIELD_CAMERA_MODE cameraMode;   // イベント開始時のカメラモード
+typedef struct {
+
+  GAMESYS_WORK*     gameSystem;
+  FIELDMAP_WORK*    fieldmap;
+  FIELD_CAMERA_MODE camera_mode; // イベント開始時のカメラモード
+  int               frame;       // フレーム数カウンタ
 
   // 流砂イベント
-  VecFx32      sandStreamPos;  // 流砂中心部の位置
+  VecFx32       sandStreamPos; // 流砂中心部の位置
   FIELD_BMODEL* bmSandStream;  // 流砂の配置モデル
 
-  //-----------------------
-  FCAM_ANIME_DATA FCamAnimeData;
+  // カメラアニメーション
+  FCAM_ANIME_DATA  FCamAnimeData;
   FCAM_ANIME_WORK* FCamAnimeWork;
-  //-----------------------
+
+  // フェードアウト
+  int  wait_count;         // フェードアウト開始待ちカウンタ
+  BOOL season_change_flag; // 季節が変化したかどうか
 
 } EVENT_WORK;
 
@@ -69,6 +75,17 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void* wk );
+
+// あなぬけのヒモ
+static void RegisterPlayerEffectTask_Ananukenohimo( EVENT_WORK* work ); // 自機の演出タスクを登録する
+static void StartCameraAnime_Ananukenohimo( EVENT_WORK* work ); // カメラ演出を開始する
+static void FinishCameraAnime_Ananukenohimo( EVENT_WORK* work ); // カメラ演出を終了する
+static GMEVENT* GetFadeOutEvent_Ananukenohimo( EVENT_WORK* work ); // フェードアウトのイベントを取得する
+// あなをほる
+static void RegisterPlayerEffectTask_Anawohoru( EVENT_WORK* work ); // 自機の演出タスクを登録する
+static void StartCameraAnime_Anawohoru( EVENT_WORK* work ); // カメラ演出を開始する
+static void FinishCameraAnime_Anawohoru( EVENT_WORK* work ); // カメラ演出を終了する
+static GMEVENT* GetFadeOutEvent_Anawohoru( EVENT_WORK* work ); // フェードアウトのイベントを取得する
 
 
 //========================================================================================== 
@@ -97,13 +114,13 @@ GMEVENT* EVENT_DISAPPEAR_FallInSand(
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_FallInSand, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
-  work               = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem   = gsys;
   work->fieldmap     = fieldmap;
   work->frame        = 0;
   work->bmSandStream = NULL;
   VEC_Set( &work->sandStreamPos, stream_pos->x, stream_pos->y, stream_pos->z );
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -111,15 +128,16 @@ GMEVENT* EVENT_DISAPPEAR_FallInSand(
 /**
  * @brief 退場イベントを作成する( あなぬけのヒモ )
  *
- * @param parent     親イベント
- * @param gsys       ゲームシステム
- * @param fieldmap   フィールドマップ
+ * @param parent             親イベント
+ * @param gsys               ゲームシステム
+ * @param fieldmap           フィールドマップ
+ * @param season_change_flag 季節が変化したかどうか
  *
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_Ananukenohimo( GMEVENT* parent, 
-                                        GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_DISAPPEAR_Ananukenohimo( 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, BOOL season_change_flag )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -128,11 +146,13 @@ GMEVENT* EVENT_DISAPPEAR_Ananukenohimo( GMEVENT* parent,
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Ananukenohimo, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
-  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap  = fieldmap;
-  work->frame     = 0;
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem         = gsys;
+  work->fieldmap           = fieldmap;
+  work->frame              = 0;
+  work->wait_count         = 0;
+  work->season_change_flag = season_change_flag;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -140,15 +160,16 @@ GMEVENT* EVENT_DISAPPEAR_Ananukenohimo( GMEVENT* parent,
 /**
  * @brief 退場イベントを作成する( あなをほる )
  *
- * @param parent     親イベント
- * @param gsys       ゲームシステム
- * @param fieldmap   フィールドマップ
+ * @param parent             親イベント
+ * @param gsys               ゲームシステム
+ * @param fieldmap           フィールドマップ
+ * @param season_change_flag 季節が変化したかどうか
  *
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_Anawohoru( GMEVENT* parent, 
-                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_DISAPPEAR_Anawohoru( 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, BOOL season_change_flag )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -157,11 +178,13 @@ GMEVENT* EVENT_DISAPPEAR_Anawohoru( GMEVENT* parent,
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Anawohoru, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
-  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap = fieldmap;
-  work->frame     = 0;
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem         = gsys;
+  work->fieldmap           = fieldmap;
+  work->frame              = 0;
+  work->wait_count         = 0;
+  work->season_change_flag = season_change_flag;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -176,8 +199,7 @@ GMEVENT* EVENT_DISAPPEAR_Anawohoru( GMEVENT* parent,
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent, 
-                                   GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -186,11 +208,11 @@ GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent,
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Teleport, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
-  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap  = fieldmap;
-  work->frame     = 0;
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem = gsys;
+  work->fieldmap   = fieldmap;
+  work->frame      = 0;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -215,11 +237,11 @@ GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent,
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Warp, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
-  work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap  = fieldmap;
-  work->frame     = 0;
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->gameSystem = gsys;
+  work->fieldmap   = fieldmap;
+  work->frame      = 0;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -237,8 +259,7 @@ GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent,
 #define SAND_ANM_IDX (0)  
 
 // シーケンス番号
-enum
-{
+enum {
   SEQ_INIT,                       // 初期設定
   SEQ_SAND_ANIME_START,           // 流砂アニメ開始
   SEQ_PLAYER_DRAW_ANIME_START,    // 自機が引き込まれる移動開始
@@ -256,14 +277,14 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
   FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case SEQ_INIT:
     // カメラモードの設定
-    work->cameraMode = FIELD_CAMERA_GetMode( camera );
+    work->camera_mode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     *seq = SEQ_SAND_ANIME_START;
     break;
+
   // 流砂アニメーション開始
   case SEQ_SAND_ANIME_START:
     // SE
@@ -282,19 +303,18 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       rect.bottom = work->sandStreamPos.z + (FIELD_CONST_GRID_SIZE*2 << FX32_SHIFT);
       objst = FIELD_BMODEL_MAN_CreateObjStatusList( taskMan, &rect, BM_SEARCH_ID_SANDSTREAM, &objnum ); 
       // 配置モデルを複製し, アニメーション再生
-      if( objst[0] )
-      {
+      if( objst[0] ) {
         work->bmSandStream = FIELD_BMODEL_Create( taskMan, objst[0] );        // 複製
         FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );  // 再生
       }
-      else
-      {
+      else {
         work->bmSandStream = NULL;
       }
       GFL_HEAP_FreeMemory( objst );
     }
     *seq = SEQ_PLAYER_DRAW_ANIME_START;
     break;
+
   // 自機が引き込まれる移動開始
   case SEQ_PLAYER_DRAW_ANIME_START:
     // 自機移動タスク登録
@@ -320,8 +340,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
         else{ animeFrame = 120; }
       }
       // タスク登録
-      if( 0 < animeFrame )
-      {
+      if( 0 < animeFrame ) {
         FIELD_TASK* move;
         FIELD_TASK_MAN* taskMan;
         move = FIELD_TASK_TransPlayer( work->fieldmap, animeFrame, &work->sandStreamPos );
@@ -329,20 +348,18 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
         FIELD_TASK_MAN_AddTask( taskMan, move, NULL );
         *seq = SEQ_PLAYER_DRAW_ANIME_WAIT;
       }
-      else
-      {
+      else {
         *seq = SEQ_PLAYER_SALLOW_ANIME_START;
       }
     }
     work->frame = 0;
     break;
+
   // タスク終了待ち&砂埃
   case SEQ_PLAYER_DRAW_ANIME_WAIT:
     // 流砂アニメが終了したら再生する
-    if( work->bmSandStream )
-    {
-      if( FIELD_BMODEL_GetAnimeStatus( work->bmSandStream, SAND_ANM_IDX ) )  // if(停止中)
-      {
+    if( work->bmSandStream ) {
+      if( FIELD_BMODEL_GetAnimeStatus( work->bmSandStream, SAND_ANM_IDX ) ) {
         FIELD_BMODEL_SetAnime( work->bmSandStream, SAND_ANM_IDX, BMANM_REQ_START );
       }
     }
@@ -355,20 +372,19 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
       if( key & PAD_KEY_RIGHT ) { MMDL_SetAcmd( mmdl, AC_STAY_WALK_R_4F ); }
     }
     // 砂埃
-    if( work->frame++ % 10 == 0 )
-    {
+    if( work->frame++ % 10 == 0 ) {
       FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
     }
     // タスク終了チェック
     {
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
-      {
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
         *seq = SEQ_PLAYER_SALLOW_ANIME_START;
       }
     }
     break;
+
   // 自機が飲み込まれるアニメーション開始
   case SEQ_PLAYER_SALLOW_ANIME_START:
     // SE再生
@@ -397,26 +413,24 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     work->frame = 0;
     *seq = SEQ_PLAYER_SALLOW_ANIME_WAIT;
     break;
+
   // タスクの終了待ち
   case SEQ_PLAYER_SALLOW_ANIME_WAIT:
     { 
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
-      {
-        *seq = SEQ_EXIT;
-      }
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) { *seq = SEQ_EXIT; }
     }
     break;
+
   // 終了
   case SEQ_EXIT:
     // SE 停止
     PMSND_StopSE();
     // カメラモードの復帰
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    FIELD_CAMERA_ChangeMode( camera, work->camera_mode );
     // 登録した配置モデルを消去
-    if( work->bmSandStream )
-    {
+    if( work->bmSandStream ) {
       FIELD_BMODEL_Delete( work->bmSandStream );
     }
     return GMEVENT_RES_FINISH;
@@ -425,62 +439,42 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
 }
 
 
-//------------------------------------------------------------------------------------------
+//==========================================================================================
 /**
- * @brief 退場イベント処理関数( あなぬけのヒモ )
+ * @brief 退場イベント処理関数 ( あなぬけのヒモ )
  */
-//------------------------------------------------------------------------------------------
+//==========================================================================================
 static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* seq, void* wk )
 {
-  EVENT_WORK*     work     = (EVENT_WORK*)wk;
-  FIELDMAP_WORK*  fieldmap = work->fieldmap;
-  FIELD_PLAYER*   player   = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  FIELD_CAMERA*   camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
-  FIELD_TASK_MAN* taskMan  = FIELDMAP_GetTaskManager( fieldmap );
+  EVENT_WORK*     work    = (EVENT_WORK*)wk;
+  FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
 
   switch( *seq ) {
   case 0:
-    // タスク登録
-    { 
-      FIELD_TASK* rot_up;
-      FIELD_TASK* rot;
-      FIELD_TASK* wait;
-      FIELD_TASK* fade_out;
-      rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 3 );
-      rot      = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
-      wait     = FIELD_TASK_Wait( fieldmap, ZOOM_IN_FRAME );
-      fade_out = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1 );
-      FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
-      FIELD_TASK_MAN_AddTask( taskMan, wait, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
-    }
-    // カメラ演出開始
-    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
-    work->FCamAnimeData.frame = 60;
-    work->FCamAnimeData.targetBindOffFlag = TRUE;
-    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
-    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
-    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
-    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
-    work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
-    work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
-    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
-    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
+    // 演出開始
+    RegisterPlayerEffectTask_Ananukenohimo( work ); // 自機の演出タスクを登録
+    StartCameraAnime_Ananukenohimo( work ); // カメラ演出開始
     (*seq)++;
     break;
 
   case 1:
-    // 全タスク終了
+    // フェードアウト開始待ち
+    if( 35 < work->wait_count++ ) {
+      GMEVENT_CallEvent( event, GetFadeOutEvent_Ananukenohimo( work ) );
+      (*seq)++;
+      break;
+    }
+
+  case 2:
+    // 全演出タスクの終了待ち
     if( FIELD_TASK_MAN_IsAllTaskEnd( taskMan ) ) {
       PMSND_PlaySE( SEQ_SE_KAIDAN ); //「ザッザッザッ」
       (*seq)++;
     }
     break;
     
-  case 2:
-    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
-    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+  case 3:
+    FinishCameraAnime_Ananukenohimo( work ); // カメラ演出終了
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -488,61 +482,115 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 退場イベント処理関数( あなをほる )
+ * @brief 自機の演出タスクを登録する ( あなぬけのヒモ )
+ *
+ * @param work
  */
 //------------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk )
+static void RegisterPlayerEffectTask_Ananukenohimo( EVENT_WORK* work )
 {
-  EVENT_WORK*     work     = (EVENT_WORK*)wk;
   FIELDMAP_WORK*  fieldmap = work->fieldmap;
-  FIELD_PLAYER*   player   = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  FIELD_CAMERA*   camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
   FIELD_TASK_MAN* taskMan  = FIELDMAP_GetTaskManager( fieldmap );
 
-  switch( *seq )
-  {
+  FIELD_TASK* rot_up;
+  FIELD_TASK* rot;
+
+  rot_up = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 3 );
+  rot    = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
+  FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
+  FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラ演出を開始する ( あなぬけのヒモ )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void StartCameraAnime_Ananukenohimo( EVENT_WORK* work )
+{
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+
+  work->FCamAnimeWork = FCAM_ANIME_CreateWork( work->fieldmap );
+  work->FCamAnimeData.frame = 60;
+  work->FCamAnimeData.targetBindOffFlag = TRUE;
+  work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+  FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+  FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+  FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
+  work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
+  work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
+  FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+  FCAM_ANIME_StartAnime( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラ演出を終了する ( あなぬけのヒモ )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void FinishCameraAnime_Ananukenohimo( EVENT_WORK* work )
+{
+  FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+  FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief フェードアウトのイベントを呼び出す ( あなぬけのヒモ )
+ *
+ * @param work
+ *
+ * @return フェードアウトイベント
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT* GetFadeOutEvent_Ananukenohimo( EVENT_WORK* work )
+{
+  GAMESYS_WORK*  gameSystem = work->gameSystem;
+  FIELDMAP_WORK* fieldmap   = work->fieldmap;
+  GMEVENT* event;
+
+  // 季節が変化
+  if( work->season_change_flag ) { 
+    event = EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ); // 季節フェード
+  }
+  else { 
+    event = EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ); // ホワイトアウト
+  }
+
+  return event;
+}
+
+//==========================================================================================
+/**
+ * @brief 退場イベント処理関数( あなをほる )
+ */
+//==========================================================================================
+static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_WORK*     work    = (EVENT_WORK*)wk;
+  FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( work->fieldmap );
+
+  switch( *seq ) {
   case 0:
-    // タスク登録
-    {
-      FIELD_TASK* rot_up;
-      FIELD_TASK* rot;
-      FIELD_TASK* wait;
-      FIELD_TASK* fade_out;
-      rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 4 );
-      rot      = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
-      wait     = FIELD_TASK_Wait( fieldmap, ZOOM_IN_FRAME );
-      fade_out = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1 );
-      FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
-      FIELD_TASK_MAN_AddTask( taskMan, wait, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
-      // SE再生
-      PMSND_PlaySE( SEQ_SE_FLD_80 );
-    }
-    // カメラ演出開始
-    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
-    work->FCamAnimeData.frame = 60;
-    work->FCamAnimeData.targetBindOffFlag = TRUE;
-    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
-    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
-    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
-    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
-    work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
-    work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
-    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
-    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
-    work->frame = 0;
+    RegisterPlayerEffectTask_Anawohoru( work ); // 自機の演出タスクを登録
+    StartCameraAnime_Anawohoru( work ); // カメラ演出開始
+    PMSND_PlaySE( SEQ_SE_FLD_80 ); // SE 再生
     (*seq)++;
     break;
 
   case 1:
-    // 岩砕きエフェクト表示
-    if( ++work->frame % ANAHORI_EFF_INTVL == 0 )
-    {
-      MMDL*          mmdl = FIELD_PLAYER_GetMMdl( player );
-      FLDEFF_CTRL* fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
-      FLDEFF_IWAKUDAKI_SetMMdl( mmdl, fectrl );
+    // フェードアウト開始待ち
+    if( 35 < work->wait_count++ ) {
+      GMEVENT_CallEvent( event, GetFadeOutEvent_Anawohoru( work ) );
+      (*seq)++;
+      break;
     }
+
+  case 2:
     // 全タスク終了
     if( FIELD_TASK_MAN_IsAllTaskEnd( taskMan ) ) {
       PMSND_PlaySE( SEQ_SE_KAIDAN ); //「ザッザッザッ」
@@ -550,12 +598,101 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, 
     }
     break;
 
-  case 2:
-    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
-    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+  case 3:
+    FinishCameraAnime_Anawohoru( work ); // カメラ演出終了
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 自機の演出タスクを登録する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void RegisterPlayerEffectTask_Anawohoru( EVENT_WORK* work )
+{
+  FIELDMAP_WORK*  fieldmap = work->fieldmap;
+  FIELD_TASK_MAN* taskMan  = FIELDMAP_GetTaskManager( fieldmap );
+  FIELD_PLAYER*   player   = FIELDMAP_GetFieldPlayer( fieldmap );
+  MMDL*           mmdl     = FIELD_PLAYER_GetMMdl( player );
+
+  FIELD_TASK* effect;
+  FIELD_TASK* rot_up;
+  FIELD_TASK* rot;
+
+  effect = FIELD_TASK_AnahoriEffect( fieldmap, mmdl, 40, ANAHORI_EFF_INTVL );
+  rot_up = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 4 );
+  rot    = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
+
+  FIELD_TASK_MAN_AddTask( taskMan, effect, NULL );
+  FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
+  FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラ演出を開始する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void StartCameraAnime_Anawohoru( EVENT_WORK* work )
+{
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+
+  work->FCamAnimeWork = FCAM_ANIME_CreateWork( work->fieldmap );
+  work->FCamAnimeData.frame = 60;
+  work->FCamAnimeData.targetBindOffFlag = TRUE;
+  work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+  FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+  FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+  FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
+  work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
+  work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
+  FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+  FCAM_ANIME_StartAnime( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラ演出を終了する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void FinishCameraAnime_Anawohoru( EVENT_WORK* work )
+{
+  FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+  FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief フェードアウトのイベントを呼び出す ( あなをほる )
+ *
+ * @param work
+ *
+ * @return フェードアウトイベント
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT* GetFadeOutEvent_Anawohoru( EVENT_WORK* work )
+{
+  GAMESYS_WORK*  gameSystem = work->gameSystem;
+  FIELDMAP_WORK* fieldmap   = work->fieldmap;
+  GMEVENT* event;
+
+  // 季節が変化
+  if( work->season_change_flag ) { 
+    event = EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ); // 季節フェード
+  }
+  else { 
+    event = EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ); // ホワイトアウト
+  }
+
+  return event;
 }
 
 //------------------------------------------------------------------------------------------
@@ -634,7 +771,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void*
   switch( *seq ) {
   case 0:
     // カメラモードの設定
-    work->cameraMode = FIELD_CAMERA_GetMode( camera );
+    work->camera_mode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // タスク登録
     { 
@@ -666,7 +803,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void*
     break;
   case 2:
     // カメラモードの復帰
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
+    FIELD_CAMERA_ChangeMode( camera, work->camera_mode );
     (*seq)++;
     break;
   case 3:

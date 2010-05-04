@@ -51,6 +51,7 @@ typedef struct {
   GAMESYS_WORK*     gameSystem;
   GAMEDATA*         gameData;
   FIELDMAP_WORK*    fieldmap;
+
   LOCATION          nextLocation;      // 遷移先指定
   EXIT_TYPE         exitType;          // 出入り口タイプ
   BOOL              seasonDisplayFlag; // 季節表示を行うかどうか

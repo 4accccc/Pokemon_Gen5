@@ -715,7 +715,7 @@ typedef enum{
  * @param work
  */
 //------------------------------------------------------------------
-static void SetSeasonUpdate( MAPCHANGE_WORK* work )
+static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
 {
   BOOL nextZoneIsOutdoor;
   u16 prevSeason, nextSeason;
@@ -738,8 +738,7 @@ static void SetSeasonUpdate( MAPCHANGE_WORK* work )
   }
 
   // 季節が変化 && 遷移先が屋外
-  if( (nextSeason != prevSeason) && (nextZoneIsOutdoor) )
-  { 
+  if( (nextSeason != prevSeason) && (nextZoneIsOutdoor) ) { 
     work->seasonUpdateOccur = TRUE; 
     work->prevSeason = prevSeason;
     work->nextSeason = nextSeason;
@@ -891,7 +890,7 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
   {
   case 0:
     // 季節更新の有無を決定
-    SetSeasonUpdate( work );
+    JudgeSeasonUpdateOccur( work );
     // 動作モデルの移動を止める
     {
       MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
@@ -1020,7 +1019,7 @@ static GMEVENT_RESULT EVENT_MapChangeBGMKeep( GMEVENT* event, int* seq, void* wk
   switch( *seq ) {
   case 0:
     // 季節更新の有無を決定
-    SetSeasonUpdate( work );
+    JudgeSeasonUpdateOccur( work );
 
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
@@ -1199,19 +1198,22 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
   FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
+    // 季節更新の有無を決定
+    JudgeSeasonUpdateOccur( work ); 
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
+
   case 1: 
     // 退場イベント
     GMEVENT_CallEvent( event, 
-        EVENT_DISAPPEAR_Ananukenohimo( event, gameSystem, fieldmap ) );
+        EVENT_DISAPPEAR_Ananukenohimo( event, gameSystem, fieldmap, work->seasonUpdateOccur ) );
     (*seq)++;
     break;
+
   case 2:
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
@@ -1220,16 +1222,20 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
+
   case 3: 
     // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
+
   case 4: 
     // 登場イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Ananukenohimo( event, gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, 
+        EVENT_APPEAR_Ananukenohimo( event, gameSystem, fieldmap, work->seasonUpdateOccur, work->prevSeason, work->nextSeason ) );
     (*seq)++;
     break;
+
   case 5:
     return GMEVENT_RES_FINISH; 
   }
@@ -1249,18 +1255,22 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
   FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
+    // 季節更新の有無を決定
+    JudgeSeasonUpdateOccur( work ); 
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gameSystem, fieldmap) );
     (*seq) ++;
     break;
+
   case 1: 
     // 退場イベント
-    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Anawohoru( event, gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, 
+        EVENT_DISAPPEAR_Anawohoru( event, gameSystem, fieldmap, work->seasonUpdateOccur ) );
     (*seq)++;
     break;
+
   case 2:
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
@@ -1269,15 +1279,19 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
+
   case 3: // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_ESCAPE ) );
     (*seq)++;
     break;
+
   case 4: 
     // 登場イベント
-    GMEVENT_CallEvent( event, EVENT_APPEAR_Anawohoru( event, gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, 
+        EVENT_APPEAR_Anawohoru( event, gameSystem, fieldmap, work->seasonUpdateOccur, work->prevSeason, work->nextSeason ) );
     (*seq)++;
     break;
+
   case 5:
     return GMEVENT_RES_FINISH; 
   }

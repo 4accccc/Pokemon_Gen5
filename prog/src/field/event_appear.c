@@ -1,11 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 /**
- *
- * @brief  退場＆登場イベント
+ * @brief  登場イベント
  * @file   event_appear.c
  * @author obata
  * @date   2009.08.28
- *
  */
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include "include/field/fieldmap_proc.h"
@@ -15,18 +13,16 @@
 #include "field_player.h"
 #include "sound/pm_sndsys.h"
 
-#include "field_task.h"
-#include "field_task_manager.h"
-#include "field_task_camera_zoom.h"
+#include "field_task.h"  // for FIELD_TASK
+#include "field_task_manager.h" // for FIELD_TASK_MAN
 #include "field_task_player_rot.h"
 #include "field_task_player_fall.h"
-#include "field_task_wait.h"
 #include "field_task_player_drawoffset.h"
-#include "field_camera_anime.h"
-
+#include "field_camera_anime.h" 
 #include "fldeff_kemuri.h"  // for FLDEFF_KEMURI_SetMMdl
 #include "event_fieldmap_control.h"  // for EVENT_FieldFadeIn
 #include "event_season_display.h"  // for GetSeasonDispEventFrame
+#include "event_field_fade.h" // for EVENT_FieldFadeIn_xxxx
 
 
 //==========================================================================================
@@ -42,18 +38,19 @@
 //==========================================================================================
 typedef struct { 
 
+  GAMESYS_WORK*  gsys; 
+  FIELDMAP_WORK* fieldmap;
+
+  // カメラアニメーション
   FIELD_CAMERA_MODE cameraMode;   // イベント開始時のカメラモード
-  FIELDMAP_WORK*      fieldmap;   // 動作フィールドマップ
-  GAMESYS_WORK*           gsys;   // ゲームシステム
+  FCAM_ANIME_DATA   FCamAnimeData;
+  FCAM_ANIME_WORK*  FCamAnimeWork;
 
-  // カメラ復帰パラメータ
-  fx32 length;
-
-  //-----------------------
-  FCAM_ANIME_DATA FCamAnimeData;
-  FCAM_ANIME_WORK* FCamAnimeWork;
-  //-----------------------
-
+  // フェードイン
+  BOOL season_change_flag; // 季節が変化したかどうか
+  int  prev_season; // 変更前の季節
+  int  now_season;  // 変更後の季節
+  
 } EVENT_WORK;
 
 
@@ -66,6 +63,19 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_UnionIn( GMEVENT* event, int* seq, void* wk );
+
+// あなぬけのヒモ
+static void StartCameraAnime_Ananukenohimo( EVENT_WORK* work ); // カメラの演出を開始する
+static void FinishCameraAnime_Ananukenohimo( EVENT_WORK* work ); // カメラの演出を終了する
+static void RegisterPlayerEffectTask_Ananukenohimo( EVENT_WORK* work ); // 自機の演出タスクを登録する
+static GMEVENT* GetFadeInEvent_Ananukenohimo( EVENT_WORK* work ); // フェードインイベントを取得する
+static void CallbackFunc_bySeasonDisp_Ananukenohimo( void* wk ); // 季節表示からのコールバック関数
+// あなをほる
+static void StartCameraAnime_Anawohoru( EVENT_WORK* work ); // カメラの演出を開始する
+static void FinishCameraAnime_Anawohoru( EVENT_WORK* work ); // カメラの演出を終了する
+static void RegisterPlayerEffectTask_Anawohoru( EVENT_WORK* work ); // 自機の演出タスクを登録する
+static GMEVENT* GetFadeInEvent_Anawohoru( EVENT_WORK* work ); // フェードインイベントを取得する
+static void CallbackFunc_bySeasonDisp_Anawohoru( void* wk ); // 季節表示からのコールバック関数
 
 
 //========================================================================================== 
@@ -96,7 +106,6 @@ GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
   work->fieldmap = fieldmap;
   work->gsys     = gsys;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -104,15 +113,19 @@ GMEVENT* EVENT_APPEAR_Fall( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* 
 /**
  * @brief 登場イベントを作成する( あなぬけのヒモ )
  *
- * @param parent   親イベント
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
+ * @param parent             親イベント
+ * @param gsys               ゲームシステム
+ * @param fieldmap           フィールドマップ
+ * @param season_change_flag 季節が変化したかどうか
+ * @param prev_season        変更前の季節
+ * @param now_season         変更後の季節
  *
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_APPEAR_Ananukenohimo( GMEVENT* parent, 
-                                     GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_APPEAR_Ananukenohimo( 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, 
+    BOOL season_change_flag, int prev_season, int now_season )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -121,11 +134,13 @@ GMEVENT* EVENT_APPEAR_Ananukenohimo( GMEVENT* parent,
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Ananukenohimo, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  work           = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap = fieldmap;
-  work->gsys     = gsys;
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->fieldmap           = fieldmap;
+  work->gsys               = gsys;
+  work->season_change_flag = season_change_flag;
+  work->prev_season        = prev_season;
+  work->now_season         = now_season;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -133,15 +148,19 @@ GMEVENT* EVENT_APPEAR_Ananukenohimo( GMEVENT* parent,
 /**
  * @brief 登場イベントを作成する( あなをほる )
  *
- * @param parent   親イベント
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
+ * @param parent             親イベント
+ * @param gsys               ゲームシステム
+ * @param fieldmap           フィールドマップ
+ * @param season_change_flag 季節が変化したかどうか
+ * @param prev_season        変更前の季節
+ * @param now_season         変更後の季節
  *
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_APPEAR_Anawohoru( GMEVENT* parent, 
-                                 GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_APPEAR_Anawohoru( 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, 
+    BOOL season_change_flag, int prev_season, int now_season )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -150,11 +169,13 @@ GMEVENT* EVENT_APPEAR_Anawohoru( GMEVENT* parent,
   event = GMEVENT_Create( gsys, parent, EVENT_FUNC_APPEAR_Anawohoru, sizeof( EVENT_WORK ) );
 
   // イベントワークを初期化
-  work           = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->fieldmap = fieldmap;
-  work->gsys     = gsys;
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->fieldmap           = fieldmap;
+  work->gsys               = gsys;
+  work->season_change_flag = season_change_flag;
+  work->prev_season        = prev_season;
+  work->now_season         = now_season;
 
-  // 作成したイベントを返す
   return event;
 }
 
@@ -308,11 +329,11 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wk
   return GMEVENT_RES_CONTINUE;
 } 
 
-//------------------------------------------------------------------------------------------
+//==========================================================================================
 /**
  * @brief 登場イベント処理関数( あなぬけのヒモ )
  */
-//------------------------------------------------------------------------------------------
+//==========================================================================================
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq, void* wk )
 {
   EVENT_WORK*     work       = (EVENT_WORK*)wk;
@@ -333,31 +354,17 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     break;
 
   case 2:
-    // タスクの追加
-    {
-      FIELD_TASK* rot;
-      rot = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
-      FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
+    // 季節表示が有効な場合は, コールバック関数で処理する
+    if( work->season_change_flag == FALSE ) {
+      RegisterPlayerEffectTask_Ananukenohimo( work ); // 自機の演出タスクの追加
+      StartCameraAnime_Ananukenohimo( work ); // カメラ演出開始
     }
-    // カメラ演出開始
-    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
-    work->FCamAnimeData.frame = 60;
-    work->FCamAnimeData.targetBindOffFlag = TRUE;
-    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
-    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
-    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
-    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.endParam );
-    work->FCamAnimeData.startParam = work->FCamAnimeData.endParam;
-    work->FCamAnimeData.startParam.length -= (100 << FX32_SHIFT);
-    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
-    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
     (*seq)++;
     break;
 
   case 3:
     // 画面フェードイン開始
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldFadeIn_White( gameSystem, fieldmap,  FIELD_FADE_NO_WAIT ) );
+    GMEVENT_CallEvent( event, GetFadeInEvent_Ananukenohimo( work ) );
     (*seq)++;
     break;
 
@@ -367,8 +374,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
     break;
 
   case 5:
-    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
-    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+    FinishCameraAnime_Ananukenohimo( work ); // カメラ演出終了
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -376,9 +382,105 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 登場イベント処理関数( あなをほる )
+ * @brief カメラの演出を開始する ( あなぬけのヒモ )
+ *
+ * @param work
  */
 //------------------------------------------------------------------------------------------
+static void StartCameraAnime_Ananukenohimo( EVENT_WORK* work )
+{
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+
+  work->FCamAnimeWork = FCAM_ANIME_CreateWork( work->fieldmap );
+  work->FCamAnimeData.frame = 60;
+  work->FCamAnimeData.targetBindOffFlag = TRUE;
+  work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+  FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+  FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+  FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.endParam );
+  work->FCamAnimeData.startParam = work->FCamAnimeData.endParam;
+  work->FCamAnimeData.startParam.length -= (100 << FX32_SHIFT);
+  FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+  FCAM_ANIME_StartAnime( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラの演出を終了する ( あなぬけのヒモ )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void FinishCameraAnime_Ananukenohimo( EVENT_WORK* work )
+{
+  FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+  FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 自機の演出タスクを登録する ( あなぬけのヒモ )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void RegisterPlayerEffectTask_Ananukenohimo( EVENT_WORK* work )
+{
+  FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( work->fieldmap ); 
+  FIELD_TASK* rot;
+
+  rot = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
+  FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief フェードインイベントを取得する ( あなぬけのヒモ )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT* GetFadeInEvent_Ananukenohimo( EVENT_WORK* work )
+{
+  GAMESYS_WORK*  gameSystem = work->gsys;
+  FIELDMAP_WORK* fieldmap   = work->fieldmap;
+  GMEVENT* event;
+
+  // 季節が変化
+  if( work->season_change_flag ) {
+    event = EVENT_SeasonIn_Callback( 
+        gameSystem, fieldmap, work->prev_season, work->now_season,
+        CallbackFunc_bySeasonDisp_Ananukenohimo, work ); // 季節フェード
+  }
+  // 季節そのまま
+  else {
+    event = EVENT_FieldFadeIn_White( gameSystem, fieldmap,  FIELD_FADE_NO_WAIT ); // ホワイトフェード
+  }
+
+  return event;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 季節表示からのコールバック関数
+ *
+ * @param wk EVENT_WORK*
+ */
+//------------------------------------------------------------------------------------------
+static void CallbackFunc_bySeasonDisp_Ananukenohimo( void* wk )
+{
+  EVENT_WORK* work = wk;
+
+  RegisterPlayerEffectTask_Ananukenohimo( work );
+  StartCameraAnime_Ananukenohimo( work );
+}
+
+
+//========================================================================================== 
+/**
+ * @brief 登場イベント処理関数( あなをほる )
+ */
+//========================================================================================== 
 static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, void* wk )
 {
   EVENT_WORK*     work       = (EVENT_WORK*)wk;
@@ -399,31 +501,17 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     break;
 
   case 2:
-    // タスクの追加
-    {
-      FIELD_TASK* rot;
-      rot = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
-      FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
+    // 季節表示が有効な場合は, コールバック関数で処理する
+    if( work->season_change_flag == FALSE ) {
+      RegisterPlayerEffectTask_Anawohoru( work ); // 自機の演出タスクを登録
+      StartCameraAnime_Anawohoru( work ); // カメラ演出開始
     }
-    // カメラ演出開始
-    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
-    work->FCamAnimeData.frame = 60;
-    work->FCamAnimeData.targetBindOffFlag = TRUE;
-    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
-    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
-    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
-    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.endParam );
-    work->FCamAnimeData.startParam = work->FCamAnimeData.endParam;
-    work->FCamAnimeData.startParam.length -= (100 << FX32_SHIFT);
-    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
-    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
     (*seq)++;
     break;
 
   case 3:
     // 画面フェードイン開始
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldFadeIn_White( gameSystem, fieldmap,  FIELD_FADE_NO_WAIT ) );
+    GMEVENT_CallEvent( event, GetFadeInEvent_Anawohoru( work ) );
     (*seq)++;
     break;
 
@@ -433,11 +521,105 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
     break;
 
   case 5:
-    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
-    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+    FinishCameraAnime_Anawohoru( work ); // カメラ演出終了
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラの演出を開始する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void StartCameraAnime_Anawohoru( EVENT_WORK* work )
+{
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+
+  work->FCamAnimeWork = FCAM_ANIME_CreateWork( work->fieldmap );
+  work->FCamAnimeData.frame = 60;
+  work->FCamAnimeData.targetBindOffFlag = TRUE;
+  work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+  FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+  FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+  FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.endParam );
+  work->FCamAnimeData.startParam = work->FCamAnimeData.endParam;
+  work->FCamAnimeData.startParam.length -= (100 << FX32_SHIFT);
+  FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+  FCAM_ANIME_StartAnime( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief カメラの演出を終了する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void FinishCameraAnime_Anawohoru( EVENT_WORK* work )
+{
+  FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+  FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 自機の演出タスクを登録する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void RegisterPlayerEffectTask_Anawohoru( EVENT_WORK* work )
+{
+  FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( work->fieldmap ); 
+  FIELD_TASK* rot;
+
+  rot = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
+  FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief フェードインイベントを取得する ( あなをほる )
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static GMEVENT* GetFadeInEvent_Anawohoru( EVENT_WORK* work )
+{
+  GAMESYS_WORK*  gameSystem = work->gsys;
+  FIELDMAP_WORK* fieldmap   = work->fieldmap;
+  GMEVENT* event;
+
+  // 季節が変化
+  if( work->season_change_flag ) {
+    event = EVENT_SeasonIn_Callback( 
+        gameSystem, fieldmap, work->prev_season, work->now_season,
+        CallbackFunc_bySeasonDisp_Anawohoru, work ); // 季節フェード
+  }
+  // 季節そのまま
+  else {
+    event = EVENT_FieldFadeIn_White( gameSystem, fieldmap,  FIELD_FADE_NO_WAIT ); // ホワイトフェード
+  }
+
+  return event;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 季節表示からのコールバック関数
+ *
+ * @param wk EVENT_WORK*
+ */
+//------------------------------------------------------------------------------------------
+static void CallbackFunc_bySeasonDisp_Anawohoru( void* wk )
+{
+  EVENT_WORK* work = wk;
+
+  RegisterPlayerEffectTask_Anawohoru( work ); // 自機の演出タスクを登録
+  StartCameraAnime_Anawohoru( work ); // カメラ演出開始
 }
 
 //------------------------------------------------------------------------------------------
