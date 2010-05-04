@@ -102,6 +102,7 @@ typedef struct _PROCLINK_WORK PROCLINK_WORK;
 typedef void (* PROCLINK_EVENT_FUNC)( PROCLINK_WORK* wk, u32 param );
 typedef void * (* PROCLINK_CALL_PROC_FUNC)( PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 typedef RETURNFUNC_RESULT (* PROCLINK_RETURN_PROC_FUNC)( PROCLINK_WORK *wk, void *param_adrs );
+typedef void (* PROCLINK_RELEASE_FUNC)( void *param_adrs );
 
 //-------------------------------------
 /// 開き閉じる関数
@@ -141,6 +142,7 @@ struct _PROCLINK_WORK
   int                       lv_cnt;   // ステータスで引き継げないので用意 レベルアップカウンタ
   PROCLINK_TAKEOVER_MODE    mode;     // メール画面で引き継げないので用意
   BOOL                      is_shortcut;  //ポケリスト画面の初期化で設定し、破棄で使用
+  MAIL_PARAM *mail_param;
 };
 
 
@@ -194,12 +196,19 @@ static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_
 //メール画面
 static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs);
+static void FMenuReleaseProc_ReleaseMailWork( void *param_adrs );
+
 //進化画面
 static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param_adrs);
 //バトルレコーダー
 static void * FMenuCallProc_BattleRecorder(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CALL_TYPE pre, const void* pre_param_adrs );
 static RETURNFUNC_RESULT FMenuReturnProc_BattleRecorder(PROCLINK_WORK* wk,void* param_adrs);
+
+//呼び出しワークが単純な構造体だった時の共通解放処理
+static void FMenuReleaseProc_ReleaseSimpleWork( void *param_adrs );
+
+
 
 //-------------------------------------
 /// レポートと図鑑のイベント
@@ -226,11 +235,12 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 //=====================================
 static const struct 
 {
-  FSOverlayID               ovId;       //オーバーレイID
-  const GFL_PROC_DATA       *proc_data; //プロセス
-  PROCLINK_CALL_PROC_FUNC   call_func;    //開始前関数
-  PROCLINK_RETURN_PROC_FUNC return_func;  //終了時関数
-  PROCLINK_EVENT_FUNC       event_func;   //アプリがイベントだった場合
+  FSOverlayID               ovId;         // オーバーレイID
+  const GFL_PROC_DATA       *proc_data;   // プロセス
+  PROCLINK_CALL_PROC_FUNC   call_func;    // 開始前関数
+  PROCLINK_RETURN_PROC_FUNC return_func;  // 終了時関数
+  PROCLINK_EVENT_FUNC       event_func;   // アプリがイベントだった場合
+  PROCLINK_RELEASE_FUNC     release_func; // 呼び出しワークを開放する処理
 } ProcLinkData[ EVENT_PROCLINK_CALL_MAX ] =
 { 
 
@@ -241,6 +251,7 @@ static const struct
     FMenuCallProc_PokeList ,
     FMenuReturnProc_PokeList ,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_ZUKAN,
   { 
@@ -250,6 +261,7 @@ static const struct
     FMenuReturnProc_Zukan,
 //    FMenuEvent_Zukan,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_BAG,          
   { 
@@ -258,6 +270,7 @@ static const struct
     FMenuCallProc_Bag,
     FMenuReturnProc_Bag,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_TRAINERCARD,  
   { 
@@ -266,11 +279,13 @@ static const struct
     FMenuCallProc_TrainerCard,
     FMenuReturnProc_TrainerCard,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_REPORT
   { 
     0 , NULL , NULL, NULL, 
     FMenuEvent_Report,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_CONFIG,       
   { 
@@ -279,6 +294,7 @@ static const struct
     FMenuCallProc_Config,
     FMenuReturnProc_Config,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
 
   //EVENT_PROCLINK_CALL_STATUS
@@ -288,6 +304,7 @@ static const struct
     FMenuCallProc_PokeStatus,
     FMenuReturnProc_PokeStatus,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
 
   //EVENT_PROCLINK_CALL_TOWNMAP
@@ -297,6 +314,7 @@ static const struct
     FMenuCallProc_TownMap,
     FMenuReturnProc_TownMap,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
 
   //EVENT_PROCLINK_CALL_WIFINOTE
@@ -306,6 +324,7 @@ static const struct
     FMenuCallProc_WifiNote,
     FMenuReturnProc_WifiNote,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_MAIL
   { 
@@ -314,6 +333,7 @@ static const struct
     FMenuCallProc_Mail,
     FMenuReturnProc_Mail,
     NULL,
+    FMenuReleaseProc_ReleaseMailWork,
   },
   //EVENT_PROCLINK_CALL_EVOLUTION
   { 
@@ -322,6 +342,7 @@ static const struct
     FMenuCallProc_Evolution,
     FMenuReturnProc_Evolution,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
   //EVENT_PROCLINK_CALL_BTLRECORDER
   { 
@@ -330,6 +351,7 @@ static const struct
     FMenuCallProc_BattleRecorder,
     FMenuReturnProc_BattleRecorder,
     NULL,
+    FMenuReleaseProc_ReleaseSimpleWork,
   },
 };
 
@@ -571,7 +593,18 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
       //前のプロセスパラメータ破棄
       if( wk->proc_param )
       { 
-        GFL_HEAP_FreeMemory(wk->proc_param);
+        // メール呼び出しワークは２重にアロケーションされているので解放関数を呼ぶ必要がある
+        ProcLinkData[wk->pre_type].release_func( wk->proc_param );
+#if 0
+        if(wk->pre_type==EVENT_PROCLINK_CALL_MAIL){
+          GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+          MailSys_ReleaseCallWork( wk->proc_param );
+          GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
+        }else{
+          // その他の呼び出しワークは通常通り解放する
+          GFL_HEAP_FreeMemory( wk->proc_param );
+        }
+#endif
         wk->proc_param = NULL;
       }
 
@@ -863,14 +896,14 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     }
   }
   else
-  if( pre == EVENT_PROCLINK_CALL_MAIL )
+  if( pre == EVENT_PROCLINK_CALL_MAIL )   // メール関連呼び出し
   {
     MAIL_PARAM *mailParam  = (MAIL_PARAM*)pre_param_adrs;
     BOOL isCreate;
     GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
     isCreate = MailSys_IsDataCreate( mailParam );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
-    if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
+    if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )   //メールから呼び出された
     {
       //メールを持たせる処理(書かなかった場合はメールのTermで分岐してる
       plistData->mode = PL_MODE_MAILSET;
@@ -878,15 +911,15 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
       plistData->item = wk->item_no;
     }
     else
-    if( wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE )
+    if( wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE )    //メール作成画面から呼び出された
     {
-      if( isCreate == TRUE )
+      if( isCreate == TRUE )                        //メールは作成されている
       {
         plistData->mode    = PL_MODE_MAILSET_BAG;
         plistData->ret_sel = wk->sel_poke;
         plistData->item    = wk->item_no;
       }
-      else
+      else                                           //作成されていない
       {
         plistData->mode = PL_MODE_FIELD;
         plistData->ret_sel = wk->sel_poke;
@@ -1771,6 +1804,14 @@ static RETURNFUNC_RESULT FMenuReturnProc_WifiNote(PROCLINK_WORK* wk,void* param_
 //-------------------------------------
 /// メール画面
 //=====================================
+
+static void _mail_param_release( MAIL_PARAM *param )
+{
+  if(param!=NULL){
+    MailSys_ReleaseCallWork( param );
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  CALL関数
@@ -1832,6 +1873,7 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
     }
   }
 
+
   return mailParam;
 }
 //----------------------------------------------------------------------------
@@ -1852,7 +1894,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
 { 
   GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
   MAIL_PARAM *mailParam = (MAIL_PARAM*)param_adrs;
-  
+
   if( wk->pre_type == EVENT_PROCLINK_CALL_POKELIST )
   { 
     if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
@@ -1908,6 +1950,26 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
   return RETURNFUNC_RESULT_NEXT;
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メール呼び出しワークを解放する処理
+ *
+ * @param   param_adrs    解放するワークのアドレス
+ */
+//----------------------------------------------------------------------------------
+static void FMenuReleaseProc_ReleaseMailWork( void *param_adrs )
+{
+  // メールの呼び出しワークは二重にアロケーションしてあるので専用関数での
+  // 解放が必要
+  MAIL_PARAM *mailParam = param_adrs;
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+  MailSys_ReleaseCallWork( mailParam );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
+  
+}
+
 
 //-------------------------------------
 /// 進化画面
@@ -2237,4 +2299,17 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 呼び出しワークが単純な構造体だった時の共通解放処理
+ *
+ * @param   param_adrs    解放するワークのアドレス
+ */
+//----------------------------------------------------------------------------------
+static void FMenuReleaseProc_ReleaseSimpleWork( void *param_adrs )
+{
+  // 通常アプリの呼び出しワークは普通解放する
+  GFL_HEAP_FreeMemory( param_adrs );
 }
