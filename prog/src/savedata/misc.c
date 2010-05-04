@@ -90,8 +90,8 @@ void MISC_Init( MISC *p_msc )
     STRBUF* strbuf;
 
     msg = GFL_MSG_Create( 
-        GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, 
-        NARC_script_message_c03r0101_dat, HEAPID_SAVE );
+        GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+        NARC_script_message_c03r0101_dat, GetHeapLowID(HEAPID_SAVE) );
 
     // ˆ¥ŽA
     strbuf = GFL_MSG_CreateString( msg, msg_c03r0101_input_a );
