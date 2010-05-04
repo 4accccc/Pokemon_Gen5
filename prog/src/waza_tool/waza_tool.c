@@ -569,6 +569,10 @@ void  WAZADATA_CreateCache( int size, HEAPID heapID )
 
   //すでにキャッシュが生成されていたらアサート
   GF_ASSERT( wd_cache == NULL );
+  if( wd_cache )
+  { 
+    return;
+  }
 
   wd_cache              = GFL_HEAP_AllocMemory( heapID, sizeof( WAZA_DATA_CACHE ) );
   wd_cache->wd          = GFL_HEAP_AllocMemory( heapID, sizeof( WAZA_DATA* ) * size );
@@ -593,6 +597,10 @@ void  WAZADATA_DeleteCache( void )
 
   //すでにキャッシュが破棄されていたらアサート
   GF_ASSERT( wd_cache != NULL );
+  if( wd_cache == NULL )
+  { 
+    return;
+  }
 
   for( i = 0 ; i < wd_cache->cache_size ; i++ )
   { 
