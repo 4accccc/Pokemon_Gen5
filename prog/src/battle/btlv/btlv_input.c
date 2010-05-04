@@ -1337,7 +1337,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
       ttw->pos = biwp->pos;
 
-      if( ( biw->main_loop_tcb_flag == TRUE ) && ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) )
+      if( ( biw->main_loop_tcb_flag == TRUE ) &&
+        ( ( biw->type == BTLV_INPUT_TYPE_DOUBLE ) || ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ) )
       { 
         BTLV_EFFECT_Add( BTLEFF_3vs3_CAMERA_ZOOMOUT );
       }
