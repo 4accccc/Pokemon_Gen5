@@ -156,7 +156,7 @@ static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] =
     TITLE_WINDOW_HEIGHT,           // yサイズ (キャラクター単位)
     TITLE_WINDOW_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
     TITLE_WINDOW_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
-    MAIN_BG_PALETTE_FONT,          // 使用パレット番号
+    MAIN_BG_PALETTE_FONT_ACTIVE,   // 使用パレット番号
     TITLE_WINDOW_STRING_COLOR_L,   // 文字のカラー番号
     TITLE_WINDOW_STRING_COLOR_S,   // 影のカラー番号
     TITLE_WINDOW_STRING_COLOR_B,   // 背景のカラー番号
@@ -172,7 +172,7 @@ static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] =
     CHANGE_BUTTON_HEIGHT,          // yサイズ (キャラクター単位)
     CHANGE_BUTTON_STRING_OFFSET_X, // 書き込み先x座標 (ドット単位)
     CHANGE_BUTTON_STRING_OFFSET_Y, // 書き込み先y座標 (ドット単位)
-    MAIN_BG_PALETTE_FONT,          // 使用パレット番号
+    MAIN_BG_PALETTE_FONT_ACTIVE,   // 使用パレット番号
     CHANGE_BUTTON_STRING_COLOR_L,  // 文字のカラー番号
     CHANGE_BUTTON_STRING_COLOR_S,  // 影のカラー番号
     CHANGE_BUTTON_STRING_COLOR_B,  // 背景のカラー番号
@@ -188,7 +188,7 @@ static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] =
     CHECK_BUTTON_HEIGHT,           // yサイズ (キャラクター単位)
     CHECK_BUTTON_STRING_OFFSET_X,  // 書き込み先x座標 (ドット単位)
     CHECK_BUTTON_STRING_OFFSET_Y,  // 書き込み先y座標 (ドット単位)
-    MAIN_BG_PALETTE_FONT,          // 使用パレット番号
+    MAIN_BG_PALETTE_FONT_ACTIVE,   // 使用パレット番号
     CHECK_BUTTON_STRING_COLOR_L,   // 文字のカラー番号
     CHECK_BUTTON_STRING_COLOR_S,   // 影のカラー番号
     CHECK_BUTTON_STRING_COLOR_B,   // 背景のカラー番号
@@ -330,6 +330,30 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     PALETTE_ANIME_SELECT_COLOR_NUM, // 転送カラー数
     ANIME_TYPE_BLINK,               // アニメーションタイプ
     0xffff,                         // フェードカラー
+  },
+  //『調査を決める』ボタンを非アクティブにする
+  { 
+    // 転送先アドレス
+    (u16*)( HW_BG_PLTT + 
+            (MAIN_BG_PALETTE_WINDOW_OFF_CHANGE * ONE_PALETTE_SIZE) ),
+    // 元データのアドレス
+    (u16*)( HW_BG_PLTT + 
+            (MAIN_BG_PALETTE_WINDOW_OFF_CHANGE * ONE_PALETTE_SIZE) ),
+    16, // 転送カラー数
+    ANIME_TYPE_HOLD,               // アニメーションタイプ
+    0x0000,                         // フェードカラー
+  },
+  //『調査を決める』ボタンを非アクティブにする
+  { 
+    // 転送先アドレス
+    (u16*)( HW_BG_PLTT + 
+            (MAIN_BG_PALETTE_FONT_NOT_ACTIVE * ONE_PALETTE_SIZE) ),
+    // 元データのアドレス
+    (u16*)( HW_BG_PLTT + 
+            (MAIN_BG_PALETTE_FONT_NOT_ACTIVE * ONE_PALETTE_SIZE) ),
+    16, // 転送カラー数
+    ANIME_TYPE_HOLD,               // アニメーションタイプ
+    0x0000,                         // フェードカラー
   },
 };
 

@@ -47,6 +47,8 @@ typedef enum {
   PALETTE_ANIME_CURSOR_ON,   // カーソルON
   PALETTE_ANIME_CURSOR_SET,  // カーソルセット時の点滅
   PALETTE_ANIME_SELECT,      // 選択時の点滅
+  PALETTE_ANIME_CHANGE_BUTTON_HOLD_WINDOW, //『調査を決める』ボタンを非アクティブにする 
+  PALETTE_ANIME_CHANGE_BUTTON_HOLD_FONT, //『調査を決める』ボタンを非アクティブにする 
   PALETTE_ANIME_NUM,         // 総数
 } PALETTE_ANIME_INDEX;
 

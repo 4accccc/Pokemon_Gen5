@@ -45,9 +45,11 @@
 // Å†ÉpÉåÉbÉgî‘çÜ
 //---------------------------------------------------------------------
 // MAIN-BG
-#define MAIN_BG_PALETTE_WINDOW_ON  (0xa)
-#define MAIN_BG_PALETTE_WINDOW_OFF (0x6)
-#define MAIN_BG_PALETTE_FONT       (0xf)
+#define MAIN_BG_PALETTE_WINDOW_ON         (0xa)
+#define MAIN_BG_PALETTE_WINDOW_OFF_CHANGE (0x5)
+#define MAIN_BG_PALETTE_WINDOW_OFF_CHECK  (0x6)
+#define MAIN_BG_PALETTE_FONT_ACTIVE       (0xe)
+#define MAIN_BG_PALETTE_FONT_NOT_ACTIVE   (0xf)
 // SUB-BG
 #define SUB_BG_PALETTE_BACK_0 (0x0)
 #define SUB_BG_PALETTE_BACK_1 (0x1)

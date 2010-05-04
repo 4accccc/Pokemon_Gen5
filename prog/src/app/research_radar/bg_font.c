@@ -22,6 +22,7 @@ struct _BG_FONT
   GFL_FONT*     font;     // 使用するフォント
   GFL_MSGDATA*  message;  // 参照するメッセージデータ
   GFL_BMPWIN*   bmpWin;   // ビットマップウィンドウ
+  BOOL          draw_enable_flag; // 描画フラグ
 };
 
 
@@ -62,6 +63,7 @@ BG_FONT* BG_FONT_Create( const BG_FONT_PARAM* param,
                                        param->sizeX, param->sizeY,
                                        param->paletteNo,
                                        GFL_BMP_CHRAREA_GET_F ); 
+  BGFont->draw_enable_flag = TRUE;
   return BGFont;
 }
 
@@ -139,8 +141,10 @@ void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
   // 書き込み
   PRINTSYS_PrintColor( bmpData, xOffset, yOffset, strbuf, BGFont->font, color ); 
 
-  // VRAMへ転送
-  GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
+  if( BGFont->draw_enable_flag ) {
+    // VRAMへ転送
+    GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
+  }
 }
 
 //-------------------------------------------------------------------------------
@@ -153,17 +157,16 @@ void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
 //-------------------------------------------------------------------------------
 void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable )
 {
+  BGFont->draw_enable_flag = enable;
+
   if( enable ) {
     // スクリーンを作成
-    GFL_BMPWIN_MakeScreen( BGFont->bmpWin );
+    GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
   }
   else {
     // スクリーンをクリア
-    GFL_BMPWIN_ClearScreen( BGFont->bmpWin );
+    GFL_BMPWIN_ClearTransWindow( BGFont->bmpWin );
   }
-
-  // VRAMへ転送
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) );
 }
 
 //-------------------------------------------------------------------------------
@@ -187,7 +190,10 @@ extern void BG_FONT_SetPalette( BG_FONT* BGFont, u8 palnum )
       GFL_BMPWIN_GetScreenSizeX( BGFont->bmpWin ),
       GFL_BMPWIN_GetScreenSizeY( BGFont->bmpWin ),
       palnum ); // 該当スクリーンのパレットを変更
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) ); // VRAMへ転送
+
+  if( BGFont->draw_enable_flag ) {
+    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) ); // VRAMへ転送
+  }
 }
 
 

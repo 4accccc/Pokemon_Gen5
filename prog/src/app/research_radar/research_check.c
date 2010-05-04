@@ -636,7 +636,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   //「円グラフ」タッチ
   if( touch == TOUCH_AREA_GRAPH ) {
-    if( GetCountOfQuestion(work) != 0 ) {
+    if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
       work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
@@ -650,7 +650,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   }
   //「ほうこくをみる」ボタン
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
-    if( GetCountOfQuestion(work) != 0 ) {
+    if( (work->analyzeFlag == FALSE) && (GetCountOfQuestion(work) != 0) ) {
       work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
@@ -668,16 +668,19 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   //「質問」ボタン
   if( touch == TOUCH_AREA_QUESTION ) {
-    MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
       work->analyzeByTouchFlag = TRUE;
       BlinkAnalyzeButton( work );
+      MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_STANDBY );
       FinishCurrentSeq( work );
+    }
+    else {
+      MoveMenuCursorDirect( work, MENU_ITEM_QUESTION );
     }
     return;
   }
@@ -1624,7 +1627,9 @@ static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
     MoveMenuCursorSilent( work, MENU_ITEM_ANSWER ); // カーソル位置を『回答』に合わせる
   }
   else {
-    MoveMenuCursorSilent( work, MENU_ITEM_QUESTION ); // カーソル位置を『質問』に合わせる
+    SetMenuCursorPos( work, MENU_ITEM_ANSWER ); // カーソル位置を『回答』に合わせる
+    UpdateControlCursor( work ); // 左右カーソルを更新
+    UpdateTouchArea( work ); // タッチ範囲を更新
   }
 
   ChangeAnswerToTop( work ); // 先頭の回答を表示
@@ -2953,6 +2958,7 @@ static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
 
   // BG ( フォント面 ) に対し, 文字列を書き込む
   BG_FONT_SetString( BGFont, strbuf_expand );
+  BG_FONT_SetDrawEnable( BGFont, TRUE );
 
   GFL_STR_DeleteBuffer( strbuf_plain );
   GFL_STR_DeleteBuffer( strbuf_expand );
@@ -2995,6 +3001,7 @@ static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
   }
 
   // BG ( フォント面 ) に対し, 文字列を書き込む
+  BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_MY_ANSWER ], TRUE );
   BG_FONT_SetString( work->BGFont[ MAIN_BG_FONT_MY_ANSWER ], strbuf_expand );
 
   GFL_STR_DeleteBuffer( strbuf_plain );

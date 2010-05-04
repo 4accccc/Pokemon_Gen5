@@ -32,6 +32,8 @@
 #include "msg/msg_research_radar.h"         // for str_xxxx
 #include "obj_NANR_LBLDEFS.h"               // for NANR_obj_xxxx
 
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h" // for FE_xxxx
+
 
 //====================================================================================
 // ¡’²¸‰Šú‰æ–Ê ƒ[ƒN
@@ -122,6 +124,7 @@ static void MoveCursorDirect( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem ); //
 // ƒƒjƒ…[€–Úƒ{ƒ^ƒ“
 static void MenuItemSetCursorOn( MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void MenuItemSetCursorOff( MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+static void SetChangeButtonNotActive( RESEARCH_MENU_WORK* work ); //w’²¸‚ğŒˆ‚ß‚éxƒ{ƒ^ƒ“‚ğ”ñƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
 // "new" ƒAƒCƒRƒ“
 static void NewIconDispOn( const RESEARCH_MENU_WORK* work ); // "new" ƒAƒCƒRƒ“‚ğ•\¦‚·‚é
 static void NewIconDispOff( const RESEARCH_MENU_WORK* work ); // "new" ƒAƒCƒRƒ“‚ğ”ñ•\¦‚É‚·‚é
@@ -132,6 +135,7 @@ static void NewIconDispOff( const RESEARCH_MENU_WORK* work ); // "new" ƒAƒCƒRƒ“‚
 static void SetupCursorPos( RESEARCH_MENU_WORK* work ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğƒZƒbƒgƒAƒbƒv‚·‚é
 static void ShiftCursorPos( RESEARCH_MENU_WORK* work, int offset ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é ( ƒIƒtƒZƒbƒgw’è )
 static void SetCursorPos( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é ( ’¼’lw’è )
+static BOOL CheckCursorSetEnable( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ğw’èˆÊ’u‚ÉƒZƒbƒg‚Å‚«‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
 // ’²¸‰Šú‰æ–Êƒ[ƒN
 static void CreateMenuWork( HEAPID heapID ); // ’²¸‰Šú‰æ–Êƒ[ƒN‚ğ¶¬‚·‚é
 static void DeleteMenuWork( RESEARCH_MENU_WORK* work ); // ’²¸‰Šú‰æ–Êƒ[ƒN‚ğ”jŠü‚·‚é
@@ -198,6 +202,8 @@ static void StopPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX inde
 static void UpdatePaletteAnime( RESEARCH_MENU_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
 // ’ÊMƒAƒCƒRƒ“
 static void SetupWirelessIcon( const RESEARCH_MENU_WORK* work ); // ’ÊMƒAƒCƒRƒ“‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+// ’²¸€–Ú
+static u8 GetSelectableTopicNum( const RESEARCH_MENU_WORK* work ); // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğæ“¾‚·‚é
 //------------------------------------------------------------------------------------
 // ŸLAYER 0 ƒfƒoƒbƒO
 //------------------------------------------------------------------------------------
@@ -525,6 +531,10 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
       16, 0, 0);
 
+  //w’²¸‚ğŒˆ‚ß‚éxƒ{ƒ^ƒ“‚ğ”ñƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
+  if( CheckCursorSetEnable( work, MENU_ITEM_CHANGE_RESEARCH ) == FALSE ) {
+    SetChangeButtonNotActive( work );
+  }
 
   SetNextSeq( work, GetFirstSeq(work) ); // Ÿ‚ÌƒV[ƒPƒ“ƒX‚ğƒZƒbƒg
   FinishCurrentSeq( work ); // ƒV[ƒPƒ“ƒXI—¹
@@ -573,35 +583,45 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
   //-------------------------------------
   //u’²¸“à—e‚ğ•ÏX‚·‚évƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`
   if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
-    RESEARCH_COMMON_SetSeqChangeTrig( 
-        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
-    MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-    MenuItemSetCursorOn( work->cursorPos );              // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ìƒƒjƒ…[€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
-    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );   // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
-    StartPaletteAnime( work, PALETTE_ANIME_SELECT );     // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                      // Œˆ’è‰¹
-    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+    if( CheckCursorSetEnable(work, MENU_ITEM_CHANGE_RESEARCH) ) {
+      RESEARCH_COMMON_SetSeqChangeTrig( 
+          work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
+      MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
+      MenuItemSetCursorOn( work->cursorPos );              // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ìƒƒjƒ…[€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
+      StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );   // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
+      StartPaletteAnime( work, PALETTE_ANIME_SELECT );     // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );                      // Œˆ’è‰¹
+      SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
+      SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+      FinishCurrentSeq( work );
+    }
+    else {
+      PMSND_PlaySE( SEQ_SE_BEEP );
+    }
     return;
   }
   //-------------------------------------
   //u’²¸•ñ‚ğŠm”F‚·‚évƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`
   if( touch == TOUCH_AREA_CHECK_BUTTON ) {
-    RESEARCH_COMMON_SetSeqChangeTrig( 
-        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
-    MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-    MenuItemSetCursorOn( work->cursorPos );             // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ìƒƒjƒ…[€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
-    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
-    StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // Œˆ’è‰¹
-    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+    if( CheckCursorSetEnable(work, MENU_ITEM_CHECK_RESEARCH) ) {
+      RESEARCH_COMMON_SetSeqChangeTrig( 
+          work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
+      MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
+      MenuItemSetCursorOn( work->cursorPos );             // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ìƒƒjƒ…[€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
+      StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
+      StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // Œˆ’è‰¹
+      SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
+      SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+      FinishCurrentSeq( work );
+    }
+    else {
+      PMSND_PlaySE( SEQ_SE_BEEP );
+    }
     return;
   }
 
@@ -677,33 +697,43 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------------------------
   //u’²¸“à—e‚ğ•ÏX‚·‚évƒ{ƒ^ƒ“
   if( touch == TOUCH_AREA_CHANGE_BUTTON ) {
-    RESEARCH_COMMON_SetSeqChangeTrig( 
-        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
-    MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH );  // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );    // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
-    StartPaletteAnime( work, PALETTE_ANIME_SELECT );      // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                       // Œˆ’è‰¹
-    SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );    // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );     // ¨ ‘Ò‚¿
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );       // ¨ ƒtƒF[ƒhƒAƒEƒg
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );       // ¨ ƒNƒŠ[ƒ“ƒAƒbƒv
-    FinishCurrentSeq( work );
+    if( CheckCursorSetEnable(work, MENU_ITEM_CHANGE_RESEARCH) ) {
+      RESEARCH_COMMON_SetSeqChangeTrig( 
+          work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
+      MoveCursorDirect( work, MENU_ITEM_CHANGE_RESEARCH );  // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
+      StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );    // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
+      StartPaletteAnime( work, PALETTE_ANIME_SELECT );      // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );                       // Œˆ’è‰¹
+      SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );    // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );     // ¨ ‘Ò‚¿
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );       // ¨ ƒtƒF[ƒhƒAƒEƒg
+      SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );       // ¨ ƒNƒŠ[ƒ“ƒAƒbƒv
+      FinishCurrentSeq( work );
+    }
+    else {
+      PMSND_PlaySE( SEQ_SE_BEEP );
+    }
     return;
   }
   //----------------------------
   //u’²¸•ñ‚ğŠm”F‚·‚évƒ{ƒ^ƒ“
   if( touch == TOUCH_AREA_CHECK_BUTTON ) {
-    RESEARCH_COMMON_SetSeqChangeTrig( 
-        work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
-    MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-    StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
-    StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // Œˆ’è‰¹
-    SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );   // ¨ ‘Ò‚¿
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );     // ¨ ƒtƒF[ƒhƒAƒEƒg
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );     // ¨ ƒNƒŠ[ƒ“ƒAƒbƒv
-    FinishCurrentSeq( work );
+    if( CheckCursorSetEnable(work, MENU_ITEM_CHECK_RESEARCH) ) {
+      RESEARCH_COMMON_SetSeqChangeTrig( 
+          work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
+      MoveCursorDirect( work, MENU_ITEM_CHECK_RESEARCH ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
+      StopPaletteAnime( work, PALETTE_ANIME_CURSOR_ON );  // ƒJ[ƒ\ƒ‹ONƒpƒŒƒbƒgƒAƒjƒI—¹
+      StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // Œˆ’è‰¹
+      SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );   // ¨ ‘Ò‚¿
+      SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );     // ¨ ƒtƒF[ƒhƒAƒEƒg
+      SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );     // ¨ ƒNƒŠ[ƒ“ƒAƒbƒv
+      FinishCurrentSeq( work );
+    }
+    else {
+      PMSND_PlaySE( SEQ_SE_BEEP );
+    }
     return;
   }
 
@@ -1091,6 +1121,16 @@ static void SetupCursorPos( RESEARCH_MENU_WORK* work )
     }
     SetCursorPos( work, cursor_pos );
   }
+  else {
+    //w’²¸‚ğŒˆ‚ß‚éx‚ğ‘I‘ğ‰Â
+    if( CheckCursorSetEnable( work, MENU_ITEM_CHANGE_RESEARCH ) ) {
+      SetCursorPos( work, MENU_ITEM_CHANGE_RESEARCH );
+    }
+    //w’²¸‚ğŒˆ‚ß‚éx‚ğ‘I‘ğ•s‰Â
+    else {
+      SetCursorPos( work, MENU_ITEM_CHECK_RESEARCH );
+    }
+  }
 }
 
 //------------------------------------------------------------------------------------
@@ -1106,9 +1146,13 @@ static void ShiftCursorPos( RESEARCH_MENU_WORK* work, int offset )
   int nowPos;
   int nextPos;
 
-  // XVŒã‚ÌƒJ[ƒ\ƒ‹ˆÊ’u‚ğZo
   nowPos  = work->cursorPos;
-  nextPos = (nowPos + offset + MENU_ITEM_NUM) % MENU_ITEM_NUM;
+  nextPos = nowPos;
+
+  // XVŒã‚ÌƒJ[ƒ\ƒ‹ˆÊ’u‚ğŒˆ’è
+  do {
+    nextPos = (nextPos + offset + MENU_ITEM_NUM) % MENU_ITEM_NUM;
+  } while( CheckCursorSetEnable( work, nextPos ) == FALSE );
 
   // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
   work->cursorPos = nextPos;
@@ -1132,6 +1176,34 @@ static void SetCursorPos( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set cursor pos ==> %d\n", menuItem );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒJ[ƒ\ƒ‹‚ğw’èˆÊ’u‚ÉƒZƒbƒg‚Å‚«‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
+ *
+ * @param work
+ * @param menuItem ƒ`ƒFƒbƒN‘ÎÛ‚Ì€–Ú
+ *
+ * @return w’è‚µ‚½ƒƒjƒ…[€–Ú‚ÉƒJ[ƒ\ƒ‹‚ğƒZƒbƒg‚Å‚«‚éê‡ TRUE
+ *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
+ */
+//------------------------------------------------------------------------------------
+static BOOL CheckCursorSetEnable( RESEARCH_MENU_WORK* work, MENU_ITEM menuItem )
+{
+  //w’²¸‚ğŒˆ‚ß‚éx
+  if( menuItem == MENU_ITEM_CHANGE_RESEARCH ) {
+    // ‘I‘ğ‰Â”\‚È€–Ú‚ª‚QŒÂˆÈã
+    if( 1 < GetSelectableTopicNum(work) ) {
+      return TRUE;
+    }
+    // ‘I‘ğ‰Â”\‚È€–Ú‚Í‚P‚Â‚¾‚¯
+    else {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
 }
 
 
@@ -1822,8 +1894,7 @@ static void MenuItemSetCursorOff( MENU_ITEM menuItem )
   u8 paletteNo;
 
   // ƒpƒ‰ƒ[ƒ^‚ğŒˆ’è
-  switch( menuItem )
-  {
+  switch( menuItem ) {
   //u’²¸“à—e‚ğ•ÏX‚·‚év
   case MENU_ITEM_CHANGE_RESEARCH:
     BGFrame   = MAIN_BG_WINDOW;
@@ -1831,7 +1902,7 @@ static void MenuItemSetCursorOff( MENU_ITEM menuItem )
     y         = CHANGE_BUTTON_Y;
     width     = CHANGE_BUTTON_WIDTH;
     height    = CHANGE_BUTTON_HEIGHT;
-    paletteNo = MAIN_BG_PALETTE_WINDOW_OFF;
+    paletteNo = MAIN_BG_PALETTE_WINDOW_OFF_CHANGE;
     break;
 
   //u’²¸•ñ‚ğŠm”F‚·‚év
@@ -1841,7 +1912,7 @@ static void MenuItemSetCursorOff( MENU_ITEM menuItem )
     y         = CHECK_BUTTON_Y;
     width     = CHECK_BUTTON_WIDTH;
     height    = CHECK_BUTTON_HEIGHT;
-    paletteNo = MAIN_BG_PALETTE_WINDOW_OFF;
+    paletteNo = MAIN_BG_PALETTE_WINDOW_OFF_CHECK;
     break;
 
   // ƒGƒ‰[
@@ -1852,6 +1923,20 @@ static void MenuItemSetCursorOff( MENU_ITEM menuItem )
   // ƒXƒNƒŠ[ƒ“XV
   GFL_BG_ChangeScreenPalette( BGFrame, x, y, width, height, paletteNo );
   GFL_BG_LoadScreenReq( BGFrame );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @briefw’²¸‚ğŒˆ‚ß‚éxƒ{ƒ^ƒ“‚ğ”ñƒAƒNƒeƒBƒuó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetChangeButtonNotActive( RESEARCH_MENU_WORK* work )
+{
+  BG_FONT_SetPalette( work->BGFont[ BG_FONT_CHANGE_BUTTON ], MAIN_BG_PALETTE_FONT_NOT_ACTIVE );
+  StartPaletteAnime( work, PALETTE_ANIME_CHANGE_BUTTON_HOLD_WINDOW );
+  StartPaletteAnime( work, PALETTE_ANIME_CHANGE_BUTTON_HOLD_FONT );
 }
 
 //====================================================================================
@@ -2478,6 +2563,37 @@ static void SetupWirelessIcon( const RESEARCH_MENU_WORK* work )
   GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
   GFL_NET_ReloadIcon();
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”
+ */
+//------------------------------------------------------------------------------------
+static u8 GetSelectableTopicNum( const RESEARCH_MENU_WORK* work )
+{
+  EVENTWORK* evwork;
+  int num;
+
+  evwork = GAMEDATA_GetEventWork( work->gameData );
+
+  // ƒAƒ“ƒP[ƒg‚É“š‚¦‚½”‚ğƒJƒEƒ“ƒg
+  num = 1; // æ“ª€–Ú‚ÍÅ‰‚©‚ç‘I‚×‚é
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_YOU      ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_FAVARITE ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_WISH     ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_PARTNER  ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_TASTE    ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_HOBBY    ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_SCHOOL   ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_PLAY     ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_POKEMON  ) == TRUE ) { num++; }
+
+  return num;
 }
 
 //------------------------------------------------------------------------------------

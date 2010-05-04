@@ -234,6 +234,8 @@ static int CalcDisplayBottomOfTopicButton ( const RESEARCH_SELECT_WORK* work, u8
 static void UpdateTopicButtonMask( const RESEARCH_SELECT_WORK* work ); // 調査項目ボタンのスクロール回り込みを隠すためのウィンドウを更新する
 // 上画面の表示
 static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work ); // 上画面のカーソル依存文字列表示を更新する
+static void TopicDetailStringHide( RESEARCH_SELECT_WORK* work ); // 上画面の調査項目説明文の表示を隠す
+static void TopicDetailStringDispStart( RESEARCH_SELECT_WORK* work ); // 上画面の調査項目説明文の表示を開始する
 // スクロールバー
 static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work ); // 現在のスクロール実効値に合わせて, スクロールバーのつまみ部分の位置を更新する
 static int CalcScrollControlPos_byScrollValue( const RESEARCH_SELECT_WORK* work ); // スクロール実効値から, スクロールバーのつまみ部分の位置を計算する
@@ -507,6 +509,8 @@ static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work )
 
   // 文字列描画オブジェクト 準備
   CreateBGFonts( work );
+  UpdateSubDisplayStrings( work );
+  TopicDetailStringHide( work );
 
   // OBJ 準備
   CreateClactSystem( work );
@@ -603,8 +607,9 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
       StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
       MoveTopicCursorDirect( work, touchTrg );            // カーソル移動
       SetSelectedTopicID( work, work->topicCursorPos );   // カーソル位置の調査項目を選択
-      UpdateSubDisplayStrings( work );                    // 上画面のカーソル依存文字列を更新
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // 決定音
+      UpdateSubDisplayStrings( work );                    // 上画面のカーソル依存文字列を更新
+      TopicDetailStringDispStart( work );                 // 上画面の詳細表示開始
       SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_STANDBY );
       FinishCurrentSeq( work );
     }
@@ -679,7 +684,6 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
       StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
       MoveTopicCursorDirect( work, touchTrg );          // カーソル移動
-      UpdateSubDisplayStrings( work );                  // 上画面のカーソル依存文字列を更新
       SetSelectedTopicID( work, work->topicCursorPos ); // カーソル位置の調査項目を選択
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // 決定音
       SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_STANDBY );
@@ -1380,6 +1384,9 @@ static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
 
+  // 上画面の詳細表示開始
+  TopicDetailStringDispStart( work );
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq KEY_WAIT\n" );
 }
@@ -1759,7 +1766,7 @@ static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work )
 {
-  // DEBUG:
+// DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq STANDBY\n" );
 }
 
@@ -1772,6 +1779,8 @@ static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 {
+  UpdateSubDisplayStrings( work ); // 上画面のカーソル依存文字列を更新
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq KEY_WAIT\n" );
 }
@@ -2549,7 +2558,45 @@ static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
   BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update sub display strings \n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update sub display strings\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 上画面の調査項目説明文の表示を隠す
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void TopicDetailStringHide( RESEARCH_SELECT_WORK* work )
+{
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_TITLE ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_CAPTION ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_1 ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_2 ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_3 ], FALSE );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic detail string hide\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 上画面の調査項目説明文の表示を開始する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void TopicDetailStringDispStart( RESEARCH_SELECT_WORK* work )
+{
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_TITLE ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_CAPTION ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_1 ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_2 ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_3 ], TRUE );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic detail string disp start\n" );
 }
 
 //-----------------------------------------------------------------------------------------
