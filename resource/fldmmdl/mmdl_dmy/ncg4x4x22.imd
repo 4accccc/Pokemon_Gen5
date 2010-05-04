@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-05-03T18:47:01" source="ncg4x4nflipact.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-05-04T12:14:14" source="ncg4x4nflipact.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-05-03T18:47:01" source="ncg4x4nflipact.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-05-04T12:14:14" source="ncg4x4nflipact.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,9 +20,9 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="2 2"
-	compress_material="off" material_size="1 1"
-	output_texture="all"
+	compress_node="merge" node_size="2 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -991,7 +991,7 @@
 </material_array>
 
 <matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
 <polygon_array size="1">
@@ -1024,23 +1024,9 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="2">
-	<node index="0" name="group" kind="null"
+<node_array size="1">
+	<node index="0" name="pPlane1" kind="mesh"
 		parent="-1"
-		child="1"
-		brother_next="-1"
-		brother_prev="-1"
-		draw_mtx="off"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 32.000000 0.000000"
-		visibility="on"
-		display_size="0"
-	>
-	</node>
-	<node index="1" name="pPlane1" kind="mesh"
-		parent="0"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
@@ -1048,7 +1034,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 -32.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
