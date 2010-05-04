@@ -83,8 +83,10 @@ enum
 
 // フェード
 #define FADE_IN_WAIT  (0)
-#define FADE_OUT_WAIT (-2)
+#define FADE_OUT_WAIT (0)
 
+#define THE_END_APPEAR_WAIT ( 240 )
+#define LOGO_APPEAR_WAIT    ( 240 )
 
 //=============================================================================
 /**
@@ -106,6 +108,7 @@ typedef struct
   THE_END_PARAM*        param;
   // VBlank中TCB
   GFL_TCB*              vblank_tcb;
+  int                   wait;
 }
 THE_END_WORK;
 
@@ -258,6 +261,7 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
     {
       BOOL b_end = FALSE;
       u32 x, y;
+/*
       if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
@@ -266,6 +270,10 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
       else if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        b_end = TRUE;
+      }
+*/
+      if(++work->wait>THE_END_APPEAR_WAIT){
         b_end = TRUE;
       }
 
