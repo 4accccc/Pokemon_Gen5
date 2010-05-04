@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+// コールバック関数の型
+typedef void (*SEASON_DISP_CALLBACK_FUNC)(void* callback_param);
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief 四季表示イベントを生成する
@@ -22,6 +26,11 @@
 //------------------------------------------------------------------------------
 extern GMEVENT* EVENT_SeasonDisplay( 
     GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, u8 start, u8 end );
+
+// コールバック関数ありver. ( フィールド画面がフェードインする直前にコールされる )
+extern GMEVENT* EVENT_SeasonDisplay_Callback( 
+    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, u8 start, u8 end,
+    SEASON_DISP_CALLBACK_FUNC callback_func, void* callback_param );
 
 //------------------------------------------------------------------------------
 /**

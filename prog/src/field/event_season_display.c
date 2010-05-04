@@ -131,6 +131,9 @@ typedef struct {
   u8         dispSeason; // •\Ž¦’†‚Ì‹Gß
   u32        count;      // ƒJƒEƒ“ƒ^
   u32        maxCount;   // ƒJƒEƒ“ƒ^Å‘å’l
+
+  SEASON_DISP_CALLBACK_FUNC callback_func;  // ƒR[ƒ‹ƒoƒbƒNŠÖ”
+  void*                     callback_param; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚É“n‚·ƒpƒ‰ƒ[ƒ^
 } EVENT_WORK;
 
 
@@ -159,6 +162,7 @@ static BOOL CheckCountOver( const EVENT_WORK* work ); // ƒJƒEƒ“ƒ^‚ªÅ‘å’l‚ðƒI[ƒ
 static int GetMaxCountOfFadeIn( const EVENT_WORK* work ); // ƒtƒF[ƒhƒCƒ“‚ÌÅ‘åƒtƒŒ[ƒ€”‚ðŽæ“¾‚·‚é
 static int GetMaxCountOfFadeOut( const EVENT_WORK* work ); // ƒtƒF[ƒhƒAƒEƒg‚ÌÅ‘åƒtƒŒ[ƒ€”‚ðŽæ“¾‚·‚é
 static int GetMaxCountOfWait( const EVENT_WORK* work ); // ‘Ò‹@ƒV[ƒPƒ“ƒX‚ÌÅ‘åƒtƒŒ[ƒ€”‚ðŽæ“¾‚·‚é
+static void CallCallbackFunc( const EVENT_WORK* work ); // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ðŒÄ‚Ô
 
 
 //==============================================================================
@@ -246,6 +250,53 @@ GMEVENT* EVENT_SeasonDisplay(
   work->skipFlag   = FALSE;
   work->endSeason  = end;
   work->dispSeason = PMSEASON_GetPrevSeasonID( start );
+  work->callback_func  = NULL;
+  work->callback_param = NULL;
+
+  // ƒV[ƒPƒ“ƒX‰Šú‰»
+  SetSeq( work, seq, SEQ_INIT );
+
+  return event;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief Žl‹G•\Ž¦ƒCƒxƒ“ƒg‚ð¶¬‚·‚é
+ *        ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ ‚èver. ( ƒtƒB[ƒ‹ƒh‰æ–Ê‚ªƒtƒF[ƒhƒCƒ“‚·‚é’¼‘O‚ÉƒR[ƒ‹‚³‚ê‚é )
+ *
+ * @param gameSystem
+ * @param fieldmap 
+ * @param start          ŠJŽn‹Gß
+ * @param end            ÅI‹Gß 
+ * @param callback_func  ƒR[ƒ‹ƒoƒbƒNŠÖ”
+ * @param callback_param ƒR[ƒ‹ƒoƒbƒNŠÖ”‚É“n‚·ƒ[ƒN
+ *
+ * @return ƒ}ƒbƒvƒ`ƒFƒ“ƒW‚Æ‚µ‚Ä‹@”\‚·‚éŽl‹G•\Ž¦ƒCƒxƒ“ƒg
+ */
+//------------------------------------------------------------------------------
+GMEVENT* EVENT_SeasonDisplay_Callback( 
+    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, u8 start, u8 end,
+    SEASON_DISP_CALLBACK_FUNC callback_func, void* callback_param )
+{
+  GMEVENT* event;
+  EVENT_WORK* work;
+  int* seq;
+
+  // ƒCƒxƒ“ƒg¶¬
+  event = GMEVENT_Create( gameSystem, NULL, SeasonDisplay, sizeof(EVENT_WORK) ); 
+  work  = GMEVENT_GetEventWork( event );
+  seq   = GMEVENT_GetSequenceWork( event );
+
+  // ƒCƒxƒ“ƒgƒ[ƒN‰Šú‰»
+  work->gameSystem = gameSystem;
+  work->fieldmap   = fieldmap;
+  work->heapID     = FIELDMAP_GetHeapID( fieldmap );
+  work->mode       = EVENT_MODE_MAPCHANGE;
+  work->skipFlag   = FALSE;
+  work->endSeason  = end;
+  work->dispSeason = PMSEASON_GetPrevSeasonID( start );
+  work->callback_func  = callback_func;
+  work->callback_param = callback_param;
 
   // ƒV[ƒPƒ“ƒX‰Šú‰»
   SetSeq( work, seq, SEQ_INIT );
@@ -283,6 +334,8 @@ GMEVENT* EVENT_SimpleSeasonDisplay( GAMESYS_WORK* gameSystem, u8 start, u8 end )
   work->skipFlag   = FALSE;
   work->endSeason  = end;
   work->dispSeason = PMSEASON_GetPrevSeasonID( start );
+  work->callback_func  = NULL;
+  work->callback_param = NULL;
 
   // ƒV[ƒPƒ“ƒX‰Šú‰»
   SetSeq( work, seq, SEQ_INIT );
@@ -677,11 +730,13 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
   case SEQ_FADEOUT:
     // ƒtƒF[ƒhŽžŠÔ‚ðŒˆ’è
     work->maxCount = GetMaxCountOfFadeOut( work );
-    // ÅŒã‚Ì•\Ž¦‚ðƒtƒF[ƒhƒAƒEƒg‚³‚¹‚éŽž‚Í, — ‚ÉƒtƒB[ƒ‹ƒh‚ð•\Ž¦‚·‚é
-    if( (GetMode(work) == EVENT_MODE_MAPCHANGE) && 
-        (work->dispSeason == work->endSeason) ) {
+    // ÅŒã‚Ì•\Ž¦‚ðƒtƒF[ƒhƒAƒEƒgŠJŽn
+    if( (GetMode(work) == EVENT_MODE_MAPCHANGE) && (work->dispSeason == work->endSeason) ) {
+      // — ‚ÉƒtƒB[ƒ‹ƒh‚ð•\Ž¦‚·‚é
       FIELDMAP_InitBG( work->fieldmap );
       GFL_BG_SetVisible( BG_FRAME_SEASON, VISIBLE_ON ); 
+      // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ðŒÄ‚Ô
+      CallCallbackFunc( work );
     }
     break;
 
@@ -876,5 +931,19 @@ static int GetMaxCountOfWait( const EVENT_WORK* work )
   }
   else {
     return MAPCHANGE_WAIT_FRAME_SHORT; // ˆÚ‚ë‚¤‹Gß‚Í’Z‚ß 
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ðŒÄ‚Ô
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------
+static void CallCallbackFunc( const EVENT_WORK* work )
+{
+  if( work->callback_func ) {
+    work->callback_func( work->callback_param );
   }
 }
