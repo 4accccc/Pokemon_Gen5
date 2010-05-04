@@ -587,6 +587,12 @@ static void _Load_PlayCategory_to_Regulation(UNION_SYSTEM_PTR unisys, u32 play_c
   
   reg_no = Union_GetPlayCategory_to_RegulationNo(play_category);
   PokeRegulation_LoadData(reg_no, unisys->alloc.regulation);
+  if(Union_GetPlayCategory_to_Shooter(play_category) == TRUE){
+    Regulation_SetParam(unisys->alloc.regulation, REGULATION_SHOOTER, REGULATION_SHOOTER_VALID);
+  }
+  else{
+    Regulation_SetParam(unisys->alloc.regulation, REGULATION_SHOOTER, REGULATION_SHOOTER_INVALID);
+  }
 }
 
 //--------------------------------------------------------------
