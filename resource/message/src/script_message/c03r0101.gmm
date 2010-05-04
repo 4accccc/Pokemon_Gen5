@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-04T13:54:48"/>
+	<create user="nakamura_akira" host="W00161" date="2010-05-04T14:00:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="141" right="2013" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1330" top="170" right="2035" bottom="798" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -935,7 +935,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんすきな　おんがくは？』　
+『いちばん　すきな　おんがくは？』　
 時間調査　⇒　assistantm_01_13o
 人数調査　⇒　assistantm_01_14o</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -959,7 +959,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんすきな　がっこうの　じかんは？』　
+『いちばん　すきな　がっこうの　じかんは？』　
 時間調査　⇒　assistantm_01_13q
 人数調査　⇒　assistantm_01_14q</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -983,7 +983,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんにんきの　スポーツは？』　
+『いちばん　にんきの　スポーツは？』　
 時間調査　⇒　assistantm_01_13s
 人数調査　⇒　assistantm_01_14s</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1007,7 +1007,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんなりたいものは？』　
+『いちばん　なりたいものは？』　
 時間調査　⇒　assistantm_01_13u
 人数調査　⇒　assistantm_01_14u</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1019,7 +1019,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『いちばんにんきの　ジムリーダーは？』　
+『いちばん　にんきの　ジムリーダーは？』　
 時間調査　⇒　assistantm_01_13v
 人数調査　⇒　assistantm_01_14v</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1641,7 +1641,7 @@ assistantm_01_15へ続く
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『じかんちょうさ』を選択し、
-『いちばんにんきのある　スポーツは？』を選択
+『いちばん　にんきの　スポーツは？』を選択
 
 隊員ランクがSにあがると出現
 
@@ -1740,7 +1740,7 @@ assistantm_01_15へ続く
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『じかんちょうさ』を選択し、
-『いちばんにんきのある　ジムリーダーは？』を選択
+『いちばん　にんきの　ジムリーダーは？』を選択
 
 隊員ランクがSSにあがると出現
 
@@ -2442,7 +2442,7 @@ assistantm_01_23○へ続く
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『にんずうちょうさ』を選択し、
-『いちばんにんきのある　スポーツは？』を選択
+『いちばん　にんきの　スポーツは？』を選択
 
 隊員ランクがSにあがると出現
 
@@ -2543,7 +2543,7 @@ assistantm_01_23○へ続く
 		<comment>・隊長
 『いらいをうける』を選択し、
 依頼一覧から『にんずうちょうさ』を選択し、
-『いちばんにんきのある　ジムリーダーは？』を選択
+『いちばん　にんきの　ジムリーダーは？』を選択
 
 隊員ランクがSSにあがると出現
 
