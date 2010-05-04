@@ -826,6 +826,9 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BPP_GetID( subwk->pp );
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
@@ -834,9 +837,11 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 6:
     if( BTLV_SCU_WaitMsg(wk) )
     {
+      msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-      msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#endif
       (*seq)++;
     }
     break;
@@ -1000,6 +1005,9 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
       subwk->pokeID = BPP_GetID( subwk->pp );
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
@@ -1008,8 +1016,10 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 9:
     if( BTLV_SCU_WaitMsg(wk) )
     {
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+#endif
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
@@ -1169,6 +1179,10 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
         }
       }
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutDouble, 2, subwk->pokeID[0], subwk->pokeID[1] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
@@ -1179,9 +1193,12 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
     {
 //      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+#endif:
+
       (*seq)++;
     }
     break;
@@ -1978,6 +1995,9 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
       subwk->bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pos );
       subwk->pokeID = BPP_GetID( subwk->bpp );
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp), subwk->vpos );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
@@ -1989,8 +2009,10 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
     {
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp), subwk->vpos );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+#endif
       (*seq)++;
     }
     break;
@@ -2090,6 +2112,12 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
         }
       }
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
+      if( subwk->aliveCnt > 1){
+        BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
+      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       strID = ( subwk->aliveCnt == 2 )? BTL_STRID_STD_PutDouble : BTL_STRID_STD_PutSingle;
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, subwk->pokeID[0], subwk->pokeID[1] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
@@ -2102,11 +2130,13 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
     {
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       if( subwk->aliveCnt > 1){
         BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       }
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+#endif
       (*seq)++;
     }
     break;
@@ -2181,6 +2211,10 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
         subwk->pokeID[i] = BPP_GetID( subwk->bpp[i] );
       }
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       strID = (BTL_MAIN_IsClientNPC(wk->mainModule, clientID_2))? BTL_STRID_STD_PutSingle_NPC : BTL_STRID_STD_PutSingle_Player;
 
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_2, subwk->pokeID[pokeIdx] );
@@ -2196,9 +2230,11 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
 
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+#endif
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID[pokeIdx] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
@@ -2284,6 +2320,15 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
         }
       }
 
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
+      if( subwk->aliveCnt > 1){
+        BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
+      }
+      if( subwk->aliveCnt > 2){
+        BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[2]), subwk->vpos[2] );
+      }
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+
       if( subwk->aliveCnt == 3 ){
         strID = BTL_STRID_STD_PutTriple;
       }else{
@@ -2300,6 +2345,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
     {
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
+#if 0
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       if( subwk->aliveCnt > 1){
         BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
@@ -2308,6 +2354,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
         BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[2]), subwk->vpos[2] );
       }
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       if( subwk->aliveCnt > 1){
         statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
