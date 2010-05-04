@@ -173,7 +173,7 @@ static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID );
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
 
 //‚»‚Ì‘¼
-static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, BtlResult result, WIFIBATTLEMATCH_TYPE type );
+static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, const BATTLE_SETUP_PARAM *cp_btl_param, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score, WIFIBATTLEMATCH_TYPE type );
 
 //=============================================================================
 /**
@@ -1262,12 +1262,12 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     REGULATION          *p_reg    = RegulationData_GetRegulation( p_reg_card );
     u32                 cupNO     = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_CUPNO );
 
-    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, cupNO, p_btl_param->result, WIFIBATTLEMATCH_TYPE_WIFICUP );
+    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, cupNO, p_btl_param, &p_wk->btl_score, WIFIBATTLEMATCH_TYPE_WIFICUP );
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE )
   { 
     REGULATION          *p_reg    = (REGULATION*)PokeRegulation_LoadDataAlloc( REG_RND_SINGLE + p_wk->param.btl_rule, HEAPID_WIFIBATTLEMATCH_SYS );
-    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, 0, p_btl_param->result, WIFIBATTLEMATCH_TYPE_RNDRATE );
+    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, 0, p_btl_param, &p_wk->btl_score,WIFIBATTLEMATCH_TYPE_RNDRATE );
     GFL_HEAP_FreeMemory( p_reg );
   }
 
@@ -1737,7 +1737,7 @@ static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
  *	@param	WIFIBATTLEMATCH_RECORD_DATA *p_data ƒ[ƒN
  */
 //-----------------------------------------------------------------------------
-static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, BtlResult result, WIFIBATTLEMATCH_TYPE type )
+static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, const BATTLE_SETUP_PARAM *cp_btl_param, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score, WIFIBATTLEMATCH_TYPE type )
 { 
   int i;
   GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_RECORD_DATA) );
@@ -1787,7 +1787,9 @@ static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEP
     p_data->minute= time.minute;
   }
   p_data->cupNO   = cupNO;
-  p_data->result  = result;
+  p_data->result  = cp_btl_param->result;
+  p_data->rest_my_poke    = PokeParty_GetPokeCountBattleEnable( cp_my_poke );
+  p_data->rest_you_poke   = cp_btl_score->enemy_rest_poke;
   p_data->btl_type= Regulation_GetParam( cp_reg, REGULATION_BATTLETYPE );
 }
 

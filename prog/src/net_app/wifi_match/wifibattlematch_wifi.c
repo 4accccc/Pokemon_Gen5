@@ -2790,7 +2790,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_START_CUPDATE_MSG_RET:
 //    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_000, WBM_TEXT_TYPE_WAIT );
 //    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SUBSEQ_CUPDATE_RET );
-    *p_seq  = SEQ_WAIT_MSG; 
+//    *p_seq  = SEQ_WAIT_MSG; 
+    *p_seq = SEQ_START_SUBSEQ_CUPDATE_RET;
     break;
   case SEQ_START_SUBSEQ_CUPDATE_RET:
     Util_SubSeq_Start( p_wk, WbmWifiSubSeq_CheckDate );
@@ -3566,7 +3567,7 @@ static void WbmWifiSubSeq_CheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
                         now_date.year, now_date.month, now_date.day, now,
                         end_date.year, end_date.month, end_date.day, end );
 
-      if( ret && ( now <= start ) )
+      if( ret && ( now < start ) )
       { 
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEBEFORE;
         *p_seq  = SEQ_START_DATEBEFORE_MSG;

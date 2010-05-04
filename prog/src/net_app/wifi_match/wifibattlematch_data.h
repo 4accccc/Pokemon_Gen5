@@ -97,7 +97,8 @@ typedef struct
   u32 cupNO;    //大会No.
   u8  result;   //対戦結果
   u8  btl_type; //対戦タイプ
-  u8  padding2;
+  u8  rest_my_poke: 4;    //相手残りポケモン
+  u8  rest_you_poke: 4;   //自分残りポケモン
   u8  padding3;
 } WIFIBATTLEMATCH_RECORD_DATA;
 

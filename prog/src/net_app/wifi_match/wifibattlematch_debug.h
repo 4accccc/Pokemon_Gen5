@@ -19,35 +19,23 @@
 //=============================================================================
 //デバッグウィンドウ使用するかどうか
 #define DEBUGWIN_REG_USE
+#define DEBUGWIN_SAKE_RECORD_DATA_USE
 
 #define DEBUGWIN_GROUP_REG (41)
 #define DEBUGWIN_GROUP_REG_DATE (42)
+
+#define DEBUGWIN_GROUP_SAKE_RECORD (51)
+#define DEBUGWIN_GROUP_SAKE_RECORD_YOUPROFILE (52)
+#define DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE (53)
+#define DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE (54)
+#define DEBUGWIN_GROUP_SAKE_RECORD_DATE  (55)
+#define DEBUGWIN_GROUP_SAKE_RECORD_RESULT  (55)
+
 //=============================================================================
 /**
- *  デバッグ
+ *  デバッグ汎用
  */
 //=============================================================================
-
-#ifdef DEBUGWIN_REG_USE
-
-typedef struct 
-{ 
-  REGULATION_CARDDATA *p_regulation;
-  int page;
-
-  int cup_no;
-  int start_year;
-  int start_month;
-  int start_day;
-  int end_year;
-  int end_month;
-  int end_day;
-  int status;
-  int bgm;
-  int same_match;
-} DEBUGWIN_REGULATION_DATA;
-
-static DEBUGWIN_REGULATION_DATA debug_data  = {0};
 static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, int min, int max )
 { 
   BOOL is_update  = FALSE;
@@ -74,6 +62,116 @@ static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, 
     DEBUGWIN_RefreshScreen();
   }
 }
+
+static inline void DebugWin_Util_ChangeDataU32( DEBUGWIN_ITEM* item, u32 *p_param, u32 min, u32 max )
+{ 
+  BOOL is_update  = FALSE;
+
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
+  { 
+    if( *p_param > min )
+    { 
+      (*p_param)--;
+      is_update = TRUE;
+    }
+  }
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  { 
+    if( *p_param  < max )
+    { 
+      (*p_param)++;
+      is_update = TRUE;
+    }
+  }
+
+  if( is_update )
+  { 
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static inline void DebugWin_Util_ChangeDataU16( DEBUGWIN_ITEM* item, u16 *p_param, u16 min, u16 max )
+{ 
+  BOOL is_update  = FALSE;
+
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
+  { 
+    if( *p_param > min )
+    { 
+      (*p_param)--;
+      is_update = TRUE;
+    }
+  }
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  { 
+    if( *p_param  < max )
+    { 
+      (*p_param)++;
+      is_update = TRUE;
+    }
+  }
+
+  if( is_update )
+  { 
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static inline void DebugWin_Util_ChangeDataU8( DEBUGWIN_ITEM* item, u8 *p_param, u8 min, u8 max )
+{ 
+  BOOL is_update  = FALSE;
+
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
+  { 
+    if( *p_param > min )
+    { 
+      (*p_param)--;
+      is_update = TRUE;
+    }
+  }
+  if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+  { 
+    if( *p_param  < max )
+    { 
+      (*p_param)++;
+      is_update = TRUE;
+    }
+  }
+
+  if( is_update )
+  { 
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+
+//=============================================================================
+/**
+ *  デバッグレギュレーション変更
+ *     DEBUGWIN_REG_InitとDEBUGWIN_REG_Exitを呼ぶだけでおKです
+ */
+//=============================================================================
+#ifdef DEBUGWIN_REG_USE
+
+typedef struct 
+{ 
+  REGULATION_CARDDATA *p_regulation;
+  int page;
+
+  int cup_no;
+  int start_year;
+  int start_month;
+  int start_day;
+  int end_year;
+  int end_month;
+  int end_day;
+  int status;
+  int bgm;
+  int same_match;
+} DEBUGWIN_REGULATION_DATA;
+
+static DEBUGWIN_REGULATION_DATA debug_data  = {0};
+
 
 static inline void DebugWin_Reg_U_ChangeNo( void* userWork , DEBUGWIN_ITEM* item )
 { 
@@ -203,6 +301,10 @@ static inline void DebugWin_Reg_D_ChangeSameMatch( void* userWork , DEBUGWIN_ITE
 
 }
 
+
+//-------------------------------------
+///	反映
+//=====================================
 static inline void DebugWin_Reg_U_Get( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
@@ -240,6 +342,9 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
 }
 
 
+//-------------------------------------
+///	public
+//=====================================
 static inline void DEBUGWIN_REG_Init( REGULATION_CARDDATA *p_regulation, HEAPID heapID )
 { 
   debug_data.p_regulation = p_regulation;
@@ -289,4 +394,391 @@ static inline void DEBUGWIN_REG_Exit( void )
 #define DEBUGWIN_REG_Exit( ... )  /*  */
 
 #endif  //DEBUGWIN_REG_USE
+
+//=============================================================================
+/**
+ *  サケに置くデータ
+ */
+//=============================================================================
+#ifdef DEBUGWIN_SAKE_RECORD_DATA_USE
+
+typedef struct
+{ 
+  WIFIBATTLEMATCH_RECORD_DATA *p_src;
+  WIFIBATTLEMATCH_RECORD_DATA data;
+  int my_poke_idx;
+  int you_poke_idx;
+} DEBUGWIN_SAKERECORD_DATA;
+
+static DEBUGWIN_SAKERECORD_DATA s_debug_record_data = {0};
+
+//-------------------------------------
+///	プロフィール
+//=====================================
+static inline void DebugWin_SakeRec_U_GameSyncID( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU32( item, &p_wk->data.your_gamesyncID, 0, 0xFFFFFFFF );
+}
+static inline void DebugWin_SakeRec_D_GameSyncID( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "SyncID[%x]", p_wk->data.your_gamesyncID );  
+}
+static inline void DebugWin_SakeRec_U_ProfileID( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU32( item, &p_wk->data.your_profileID, 0, 0xFFFFFFFF );
+}
+static inline void DebugWin_SakeRec_D_ProfileID( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "proID[%x]", p_wk->data.your_profileID );  
+}
+//-------------------------------------
+///	じぶんポケ
+//=====================================
+static inline void DebugWin_SakeRec_U_Mypoke_Page( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->my_poke_idx, 0, TEMOTI_POKEMAX );
+}
+static inline void DebugWin_SakeRec_D_MyPoke_page( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ポケ[%d]", p_wk->my_poke_idx );  
+}
+static inline void DebugWin_SakeRec_U_Mypoke_MonsNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU16( item, &p_wk->data.my_monsno[ p_wk->my_poke_idx ], 0, MONSNO_MAX );
+}
+static inline void DebugWin_SakeRec_D_MyPoke_MonNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ばんごう[%d]", p_wk->data.my_monsno[ p_wk->my_poke_idx ] );  
+}
+
+static inline void DebugWin_SakeRec_U_Mypoke_FormNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.my_form[ p_wk->my_poke_idx ], 0, 31 );
+}
+static inline void DebugWin_SakeRec_D_MyPoke_FormNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "フォルム[%d]", p_wk->data.my_form[ p_wk->my_poke_idx ] );  
+}
+
+static inline void DebugWin_SakeRec_U_Mypoke_Lv( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.my_lv[ p_wk->my_poke_idx ], 0, 31 );
+}
+static inline void DebugWin_SakeRec_D_MyPoke_Lv( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "LV[%d]", p_wk->data.my_lv[ p_wk->my_poke_idx ] );  
+}
+
+static inline void DebugWin_SakeRec_U_Mypoke_Sex( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.my_sex[ p_wk->my_poke_idx ], 0, 31 );
+}
+static inline void DebugWin_SakeRec_D_MyPoke_Sex( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "せいべつ[%d]", p_wk->data.my_sex[ p_wk->my_poke_idx ] );  
+}
+
+//-------------------------------------
+///	あいてポケ
+//=====================================
+static inline void DebugWin_SakeRec_U_Youpoke_Page( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->you_poke_idx, 0, TEMOTI_POKEMAX );
+}
+static inline void DebugWin_SakeRec_D_YouPoke_page( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ポケ[%d]", p_wk->you_poke_idx );  
+}
+static inline void DebugWin_SakeRec_U_Youpoke_MonsNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU16( item, &p_wk->data.your_monsno[ p_wk->you_poke_idx ], 0, MONSNO_MAX );
+}
+static inline void DebugWin_SakeRec_D_YouPoke_MonNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ばんごう[%d]", p_wk->data.your_monsno[ p_wk->you_poke_idx ] );  
+}
+
+static inline void DebugWin_SakeRec_U_Youpoke_FormNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.your_form[ p_wk->you_poke_idx ], 0, 31 );
+}
+static inline void DebugWin_SakeRec_D_YouPoke_FormNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "フォルム[%d]", p_wk->data.your_form[ p_wk->you_poke_idx ] );  
+}
+
+static inline void DebugWin_SakeRec_U_Youpoke_Lv( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.your_lv[ p_wk->you_poke_idx ], 0, 31 );
+}
+static inline void DebugWin_SakeRec_D_YouPoke_Lv( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "LV[%d]", p_wk->data.your_lv[ p_wk->you_poke_idx ] );  
+}
+
+static inline void DebugWin_SakeRec_U_Youpoke_Sex( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.your_sex[ p_wk->you_poke_idx ], 0, 31 );
+}
+static inline void DebugWin_SakeRec_D_YouPoke_Sex( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "せいべつ[%d]", p_wk->data.your_sex[ p_wk->you_poke_idx ] );  
+}
+
+//-------------------------------------
+///	対戦日
+//=====================================
+static inline void DebugWin_SakeRec_U_Date_Y( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8 year = p_wk->data.year;
+
+  DebugWin_Util_ChangeDataU8( item, &year, 0, 99 );
+
+  p_wk->data.year = year;
+}
+static inline void DebugWin_SakeRec_D_Date_Y( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ねん[%d]", p_wk->data.year );  
+}
+
+static inline void DebugWin_SakeRec_U_Date_M( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8 month = p_wk->data.month;
+
+  DebugWin_Util_ChangeDataU8( item, &month, 1, 12 );
+
+  p_wk->data.month = month;
+}
+static inline void DebugWin_SakeRec_D_Date_M( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "つき[%d]", p_wk->data.month );  
+}
+static inline void DebugWin_SakeRec_U_Date_D( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8 day = p_wk->data.day;
+
+  DebugWin_Util_ChangeDataU8( item, &day, 1, 31 );
+
+  p_wk->data.day = day;
+}
+static inline void DebugWin_SakeRec_D_Date_D( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ひ[%d]", p_wk->data.day );  
+}
+static inline void DebugWin_SakeRec_U_Date_H( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8 hour = p_wk->data.hour;
+
+  DebugWin_Util_ChangeDataU8( item, &hour, 0, 24 );
+
+  p_wk->data.hour = hour;
+}
+static inline void DebugWin_SakeRec_D_Date_H( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "じ[%d]", p_wk->data.hour );  
+}
+static inline void DebugWin_SakeRec_U_Date_Mi( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8 minute = p_wk->data.minute;
+
+  DebugWin_Util_ChangeDataU8( item, &minute, 0, 60 );
+
+  p_wk->data.minute = minute;
+}
+static inline void DebugWin_SakeRec_D_Date_Mi( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ふん[%d]", p_wk->data.minute );  
+}
+
+//-------------------------------------
+///	結果
+//=====================================
+static inline void DebugWin_SakeRec_U_Result_CupNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU32( item, &p_wk->data.cupNO, 0, 0xFFFFFFFF );
+}
+static inline void DebugWin_SakeRec_D_Result_CupNo( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "たいかいNO[%d]", p_wk->data.cupNO );  
+}
+static inline void DebugWin_SakeRec_U_Result_Result( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.result, 0, 0xFF );
+}
+static inline void DebugWin_SakeRec_D_Result_Result( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "けっか[%d]", p_wk->data.result );  
+}
+static inline void DebugWin_SakeRec_U_Result_BtlType( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeDataU8( item, &p_wk->data.btl_type, 0, 0xFF );
+}
+static inline void DebugWin_SakeRec_D_Result_BtlType( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "タイプ[%d]", p_wk->data.btl_type );  
+}
+static inline void DebugWin_SakeRec_U_Result_RestMyPoke( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8  rest  = p_wk->data.rest_my_poke;
+  DebugWin_Util_ChangeDataU8( item, &rest, 0, 0xFF );
+  p_wk->data.rest_my_poke = rest;
+}
+static inline void DebugWin_SakeRec_D_Result_RestMyPoke( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "じぶんのこり[%d]", p_wk->data.rest_my_poke );  
+}
+static inline void DebugWin_SakeRec_U_Result_RestYouPoke( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  u8  rest  = p_wk->data.rest_you_poke;
+  DebugWin_Util_ChangeDataU8( item, &rest, 0, 0xFF );
+  p_wk->data.rest_you_poke = rest;
+}
+static inline void DebugWin_SakeRec_D_Result_RestYouPoke( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "あいてのこり[%d]", p_wk->data.rest_you_poke );  
+}
+
+
+//-------------------------------------
+///	反映
+//=====================================
+static inline void DebugWin_SakeRec_U_Get( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  { 
+    p_wk->data  = *p_wk->p_src;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static inline void DebugWin_SakeRec_U_Set( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_SAKERECORD_DATA  *p_wk = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    *p_wk->p_src  = p_wk->data;
+  }
+}
+
+//-------------------------------------
+///	public
+//=====================================
+static inline void DEBUGWIN_SAKERECORD_Init( WIFIBATTLEMATCH_RECORD_DATA *p_record, HEAPID heapID )
+{ 
+  s_debug_record_data.p_src = p_record;
+
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_SAKE_RECORD, "サケレコード", heapID );
+  DEBUGWIN_AddItemToGroup( "しゅとく", DebugWin_SakeRec_U_Get, &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD, heapID ); 
+  DEBUGWIN_AddItemToGroup( "せってい", DebugWin_SakeRec_U_Set, &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD, heapID ); 
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_YOUPROFILE, "プロフィール", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_GameSyncID, DebugWin_SakeRec_D_GameSyncID,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPROFILE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_ProfileID, DebugWin_SakeRec_D_ProfileID,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_YOUPROFILE, heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, "じぶんポケ", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Mypoke_Page, DebugWin_SakeRec_D_MyPoke_page,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Mypoke_MonsNo, DebugWin_SakeRec_D_MyPoke_MonNo,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Mypoke_FormNo, DebugWin_SakeRec_D_MyPoke_FormNo,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Mypoke_Lv, DebugWin_SakeRec_D_MyPoke_Lv,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Mypoke_Sex, DebugWin_SakeRec_D_MyPoke_Sex,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE, "あいてポケ", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_Page, DebugWin_SakeRec_D_YouPoke_page,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_MonsNo, DebugWin_SakeRec_D_YouPoke_MonNo,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_FormNo, DebugWin_SakeRec_D_YouPoke_FormNo,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_Lv, DebugWin_SakeRec_D_YouPoke_Lv,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Youpoke_Sex, DebugWin_SakeRec_D_YouPoke_Sex,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_MYPOKE, heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_DATE, "たいせんび", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Date_Y, DebugWin_SakeRec_D_Date_Y,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_DATE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Date_M, DebugWin_SakeRec_D_Date_M,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_DATE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Date_D, DebugWin_SakeRec_D_Date_D,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_DATE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Date_H, DebugWin_SakeRec_D_Date_H,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_DATE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Date_Mi, DebugWin_SakeRec_D_Date_Mi,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_DATE, heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_SAKE_RECORD_RESULT, "けっか", DEBUGWIN_GROUP_SAKE_RECORD, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_CupNo, DebugWin_SakeRec_D_Result_CupNo,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_Result, DebugWin_SakeRec_D_Result_Result,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_BtlType, DebugWin_SakeRec_D_Result_BtlType,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_RestMyPoke, DebugWin_SakeRec_D_Result_RestMyPoke,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_SakeRec_U_Result_RestYouPoke, DebugWin_SakeRec_D_Result_RestYouPoke,
+       &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD_RESULT, heapID );
+
+
+}
+static inline void DEBUGWIN_SAKERECORD_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_SAKE_RECORD );
+}
+
+#else
+#define DEBUGWIN_SAKERECORD_Init( ... )  /*  */
+#define DEBUGWIN_SAKERECORD_Exit( ... )  /*  */
+#endif //DEBUGWIN_SAKE_RECORD_DATA_USE
+
 #endif  //PM_DEBUG
