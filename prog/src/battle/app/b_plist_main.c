@@ -288,6 +288,11 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 
   if( dat->sel_poke > 5 ){ dat->sel_poke = 0; }
 
+	// ‹Zà–¾ƒ‚[ƒhˆÈŠO‚Ì‚Æ‚«
+	if( dat->mode != BPL_MODE_WAZAINFO ){
+		dat->sel_wp = 0;
+	}
+
   wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BPLIST_WORK) );
 
   GFL_TCB_AddTask( dat->tcb_sys, BattlePokeList_Main, wk, 100 );
