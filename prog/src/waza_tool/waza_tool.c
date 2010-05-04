@@ -591,6 +591,9 @@ void  WAZADATA_DeleteCache( void )
 { 
   int i;
 
+  //すでにキャッシュが破棄されていたらアサート
+  GF_ASSERT( wd_cache != NULL );
+
   for( i = 0 ; i < wd_cache->cache_size ; i++ )
   { 
     GFL_HEAP_FreeMemory( wd_cache->wd[ i ] );
