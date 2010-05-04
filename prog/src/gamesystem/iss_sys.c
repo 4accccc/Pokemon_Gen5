@@ -97,6 +97,29 @@ static void BGMChange( ISS_SYS* system ); // BGM変更処理
 
 
 //=============================================================================
+// ■関数テーブル
+//=============================================================================
+typedef struct {
+  u8 iss_type;                   // ISSタイプ
+  void (*boot_func)( ISS_SYS* ); // 起動関数
+  void (*stop_func)( ISS_SYS* ); // 停止関数
+} ISS_FUNC_DATA;
+
+static const ISS_FUNC_DATA ISS_FuncTable[ ISS_TYPE_NUM ] = 
+{
+  { ISS_TYPE_NORMAL,  NULL,      NULL },
+  { ISS_TYPE_SEASON,  NULL,      NULL },
+  { ISS_TYPE_LOAD,    BootISS_R, StopISS_R },
+  { ISS_TYPE_CITY,    BootISS_C, StopISS_C },
+  { ISS_TYPE_BRIDGE,  BootISS_B, StopISS_B },
+  { ISS_TYPE_DUNGEON, BootISS_D, StopISS_D },
+  { ISS_TYPE_BATTLE,  NULL,      NULL },
+  { ISS_TYPE_SWITCH,  BootISS_S, StopISS_S },
+  { ISS_TYPE_ZONE,    BootISS_Z, StopISS_Z },
+};
+
+
+//=============================================================================
 // ■ISSシステムワーク
 //=============================================================================
 struct _ISS_SYS
@@ -155,6 +178,8 @@ ISS_SYS* ISS_SYS_Create( GAMEDATA* gameData, HEAPID heapID )
 //-----------------------------------------------------------------------------
 void ISS_SYS_Delete( ISS_SYS* system )
 { 
+  GF_ASSERT( system );
+
   // システムをクリーンアップ
   CleanUpISS( system );
 
@@ -172,6 +197,8 @@ void ISS_SYS_Delete( ISS_SYS* system )
 void ISS_SYS_Update( ISS_SYS* system )
 { 
 #ifdef ISS_ENABLE
+  GF_ASSERT( system );
+
 	// BGMが変化
   if( CheckBGMChange( system ) == TRUE ) {
     BGMChange( system ); // BGM変更処理
@@ -204,6 +231,8 @@ void ISS_SYS_ZoneChange( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_ENABLE
 	PLAYER_MOVE_FORM form;
+
+  GF_ASSERT( system );
 
   // 自機のフォームを取得
 	form = PLAYERWORK_GetMoveForm( GetPlayerWork(system) ); 
@@ -316,9 +345,6 @@ static void InitISS( ISS_SYS* system )
 //-----------------------------------------------------------------------------
 static void SetupISS( ISS_SYS* system, GAMEDATA* gameData, HEAPID heapID )
 { 
-  GF_ASSERT( system );
-  GF_ASSERT( gameData );
-
 	system->heapID   = heapID;
 	system->gameData = gameData;
 	system->soundIdx = INVALID_BGM_NO;
@@ -344,9 +370,7 @@ static void SetupISS( ISS_SYS* system, GAMEDATA* gameData, HEAPID heapID )
  */
 //-----------------------------------------------------------------------------
 static void CleanUpISS( ISS_SYS* system )
-{
-  GF_ASSERT( system );
-
+{ 
   DeleteISS_R( system );
   DeleteISS_C( system );
   DeleteISS_D( system );
@@ -371,8 +395,6 @@ static void CreateISS_R( ISS_SYS* system )
   PLAYER_WORK* player;
 
 #ifdef ISS_R_ENABLE
-  GF_ASSERT( system );
-  GF_ASSERT( system->gameData );
   GF_ASSERT( system->issR == NULL );
 
 	player = GetPlayerWork( system );
@@ -395,12 +417,10 @@ static void CreateISS_C( ISS_SYS* system )
 {
 #ifdef ISS_C_ENABLE
 	PLAYER_WORK* player;
-	player = GetPlayerWork( system );
 
-  GF_ASSERT( system );
-  GF_ASSERT( system->gameData );
   GF_ASSERT( system->issC == NULL ); 
 
+	player = GetPlayerWork( system );
 	system->issC = ISS_CITY_SYS_Create( player, system->heapID );
 
 #ifdef PRINT_ENABLE
@@ -420,12 +440,10 @@ static void CreateISS_D( ISS_SYS* system )
 {
 #ifdef ISS_D_ENABLE
 	PLAYER_WORK* player;
-	player = GetPlayerWork( system );
 
-  GF_ASSERT( system );
-  GF_ASSERT( system->gameData );
   GF_ASSERT( system->issD == NULL );
 
+	player = GetPlayerWork( system );
 	system->issD = 
     ISS_DUNGEON_SYS_Create( system->gameData, player, system->heapID );
 
@@ -445,7 +463,6 @@ static void CreateISS_D( ISS_SYS* system )
 static void CreateISS_Z( ISS_SYS* system )
 {
 #ifdef ISS_Z_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issZ == NULL );
 
   system->issZ = ISS_ZONE_SYS_Create( system->heapID );
@@ -466,7 +483,6 @@ static void CreateISS_Z( ISS_SYS* system )
 static void CreateISS_S( ISS_SYS* system )
 {
 #ifdef ISS_S_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issS == NULL );
 
   system->issS = ISS_SWITCH_SYS_Create( system->heapID );
@@ -487,7 +503,6 @@ static void CreateISS_S( ISS_SYS* system )
 static void CreateISS_B( ISS_SYS* system )
 {
 #ifdef ISS_B_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issB == NULL );
 
   system->issB = ISS_3DS_SYS_Create( system->heapID );
@@ -531,7 +546,6 @@ static void DeleteISS_R( ISS_SYS* system )
 static void DeleteISS_C( ISS_SYS* system )
 {
 #ifdef ISS_C_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issC );
 
 	ISS_CITY_SYS_Delete( system->issC );
@@ -553,7 +567,6 @@ static void DeleteISS_C( ISS_SYS* system )
 static void DeleteISS_D( ISS_SYS* system )
 {
 #ifdef ISS_D_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issD );
 
 	ISS_DUNGEON_SYS_Delete( system->issD );
@@ -575,7 +588,6 @@ static void DeleteISS_D( ISS_SYS* system )
 static void DeleteISS_Z( ISS_SYS* system )
 {
 #ifdef ISS_Z_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issZ );
 
   ISS_ZONE_SYS_Delete( system->issZ );
@@ -597,7 +609,6 @@ static void DeleteISS_Z( ISS_SYS* system )
 static void DeleteISS_S( ISS_SYS* system )
 {
 #ifdef ISS_S_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issS );
 
   ISS_SWITCH_SYS_Delete( system->issS );
@@ -619,7 +630,6 @@ static void DeleteISS_S( ISS_SYS* system )
 static void DeleteISS_B( ISS_SYS* system )
 {
 #ifdef ISS_B_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issB );
 
   ISS_3DS_SYS_Delete( system->issB );
@@ -641,7 +651,6 @@ static void DeleteISS_B( ISS_SYS* system )
 static void MainISS_R( ISS_SYS* system )
 {
 #ifdef ISS_R_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issR );
 
   // 秒間30フレームで動作させる
@@ -661,7 +670,6 @@ static void MainISS_R( ISS_SYS* system )
 static void MainISS_C( ISS_SYS* system )
 {
 #ifdef ISS_C_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issC );
 
   // 秒間30フレームで動作させる
@@ -681,7 +689,6 @@ static void MainISS_C( ISS_SYS* system )
 static void MainISS_D( ISS_SYS* system )
 {
 #ifdef ISS_D_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issD );
 
 	ISS_DUNGEON_SYS_Update( system->issD );
@@ -698,7 +705,6 @@ static void MainISS_D( ISS_SYS* system )
 static void MainISS_Z( ISS_SYS* system )
 {
 #ifdef ISS_Z_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issZ );
 
   ISS_ZONE_SYS_Update( system->issZ );
@@ -715,7 +721,6 @@ static void MainISS_Z( ISS_SYS* system )
 static void MainISS_S( ISS_SYS* system )
 {
 #ifdef ISS_S_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issS );
 
   ISS_SWITCH_SYS_Update( system->issS );
@@ -732,7 +737,6 @@ static void MainISS_S( ISS_SYS* system )
 static void MainISS_B( ISS_SYS* system )
 {
 #ifdef ISS_B_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issB );
 
   // 秒間30フレームで動作させる
@@ -752,7 +756,6 @@ static void MainISS_B( ISS_SYS* system )
 static void BootISS_R( ISS_SYS* system )
 {
 #ifdef ISS_R_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issR );
 
   ISS_ROAD_SYS_On( system->issR );
@@ -769,7 +772,6 @@ static void BootISS_R( ISS_SYS* system )
 static void BootISS_C( ISS_SYS* system )
 {
 #ifdef ISS_C_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issC );
 
   ISS_CITY_SYS_On( system->issC );
@@ -786,7 +788,6 @@ static void BootISS_C( ISS_SYS* system )
 static void BootISS_D( ISS_SYS* system )
 {
 #ifdef ISS_D_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issD );
 
   ISS_DUNGEON_SYS_On( system->issD );
@@ -803,7 +804,6 @@ static void BootISS_D( ISS_SYS* system )
 static void BootISS_Z( ISS_SYS* system )
 {
 #ifdef ISS_Z_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issZ );
 
   ISS_ZONE_SYS_On( system->issZ, GetCurrentZoneID( system ) );
@@ -820,7 +820,6 @@ static void BootISS_Z( ISS_SYS* system )
 static void BootISS_S( ISS_SYS* system )
 {
 #ifdef ISS_S_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issS );
 
   ISS_SWITCH_SYS_On( system->issS );
@@ -837,7 +836,6 @@ static void BootISS_S( ISS_SYS* system )
 static void BootISS_B( ISS_SYS* system )
 {
 #ifdef ISS_B_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issB );
 
   ISS_3DS_SYS_On( system->issB );
@@ -854,7 +852,6 @@ static void BootISS_B( ISS_SYS* system )
 static void StopISS_R( ISS_SYS* system )
 {
 #ifdef ISS_R_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issR );
 
   ISS_ROAD_SYS_Off( system->issR );
@@ -871,7 +868,6 @@ static void StopISS_R( ISS_SYS* system )
 static void StopISS_C( ISS_SYS* system )
 {
 #ifdef ISS_C_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issC );
 
   ISS_CITY_SYS_Off( system->issC );
@@ -888,7 +884,6 @@ static void StopISS_C( ISS_SYS* system )
 static void StopISS_D( ISS_SYS* system )
 {
 #ifdef ISS_D_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issD );
 
   ISS_DUNGEON_SYS_Off( system->issD );
@@ -905,7 +900,6 @@ static void StopISS_D( ISS_SYS* system )
 static void StopISS_Z( ISS_SYS* system )
 {
 #ifdef ISS_Z_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issZ );
 
   ISS_ZONE_SYS_Off( system->issZ );
@@ -922,7 +916,6 @@ static void StopISS_Z( ISS_SYS* system )
 static void StopISS_S( ISS_SYS* system )
 {
 #ifdef ISS_S_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issS );
 
   ISS_SWITCH_SYS_Off( system->issS );
@@ -939,7 +932,6 @@ static void StopISS_S( ISS_SYS* system )
 static void StopISS_B( ISS_SYS* system )
 {
 #ifdef ISS_B_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issB );
 
   ISS_3DS_SYS_Off( system->issB );
@@ -958,7 +950,6 @@ static void StopISS_B( ISS_SYS* system )
 static void ZoneChangeISS_R( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_R_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issR );
 #endif
 }
@@ -974,7 +965,6 @@ static void ZoneChangeISS_R( ISS_SYS* system, u16 nextZoneID )
 static void ZoneChangeISS_C( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_C_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issC );
 
 	ISS_CITY_SYS_ZoneChange( system->issC, nextZoneID );
@@ -992,7 +982,6 @@ static void ZoneChangeISS_C( ISS_SYS* system, u16 nextZoneID )
 static void ZoneChangeISS_D( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_D_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issD );
 
 	ISS_DUNGEON_SYS_ZoneChange( system->issD, nextZoneID );
@@ -1010,7 +999,6 @@ static void ZoneChangeISS_D( ISS_SYS* system, u16 nextZoneID )
 static void ZoneChangeISS_Z( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_Z_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issZ );
 
   ISS_ZONE_SYS_ZoneChange( system->issZ, nextZoneID );
@@ -1028,7 +1016,6 @@ static void ZoneChangeISS_Z( ISS_SYS* system, u16 nextZoneID )
 static void ZoneChangeISS_S( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_S_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issS );
 
   ISS_SWITCH_SYS_ZoneChange( system->issS, nextZoneID );
@@ -1046,7 +1033,6 @@ static void ZoneChangeISS_S( ISS_SYS* system, u16 nextZoneID )
 static void ZoneChangeISS_B( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_B_ENABLE
-  GF_ASSERT( system );
   GF_ASSERT( system->issB );
 
   ISS_3DS_SYS_ZoneChange( system->issB );
@@ -1064,9 +1050,6 @@ static void ZoneChangeISS_B( ISS_SYS* system, u16 nextZoneID )
 //-----------------------------------------------------------------------------
 static PLAYER_WORK* GetPlayerWork( const ISS_SYS* system )
 {
-  GF_ASSERT( system );
-  GF_ASSERT( system->gameData );
-
 	return GAMEDATA_GetMyPlayerWork( system->gameData );
 }
 
@@ -1081,8 +1064,6 @@ static PLAYER_WORK* GetPlayerWork( const ISS_SYS* system )
 //-----------------------------------------------------------------------------
 static u16 GetCurrentZoneID( const ISS_SYS* system )
 {
-  GF_ASSERT( system );
-
   return PLAYERWORK_getZoneID( GetPlayerWork(system) );
 }
 
@@ -1112,9 +1093,6 @@ static u8 GetISSTypeOfPlayingBGM( const ISS_SYS* system )
 	u8 type;
 	BGM_INFO_SYS* BGMInfo;
 
-  GF_ASSERT( system );
-  GF_ASSERT( system->gameData );
-  
 	// 再生中のBGMのISSタイプを取得
 	BGMInfo = GAMEDATA_GetBGMInfoSys( system->gameData ); 
 	type    = BGM_INFO_GetIssType( BGMInfo, GetPlayingBGM() ); 
@@ -1133,14 +1111,14 @@ static u8 GetISSTypeOfPlayingBGM( const ISS_SYS* system )
 //-----------------------------------------------------------------------------
 static BOOL CheckBGMChange( ISS_SYS* system )
 {
-  GF_ASSERT( system );
-
   // BGM変化なし
   if( system->soundIdx == GetPlayingBGM() ) { return FALSE; }
 
   // BGM変化あり
   return TRUE;
 }
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -1152,10 +1130,27 @@ static BOOL CheckBGMChange( ISS_SYS* system )
 static void BGMChange( ISS_SYS* system )
 {
 	u8 ISSType;
+  int i;
 
 	// 再生中のBGMのISSタイプを取得
 	ISSType = GetISSTypeOfPlayingBGM( system );
 
+  // 各ISSシステムを停止
+  for( i=0; i<ISS_TYPE_NUM; i++ )
+  {
+    if( ISS_FuncTable[i].iss_type != ISSType ) {
+      if( ISS_FuncTable[i].stop_func ) {
+        ISS_FuncTable[i].stop_func( system );
+      }
+    }
+  }
+
+  // 再生中のBGMに対応するISSを起動
+  if( ISS_FuncTable[ ISSType ].boot_func ) {
+    ISS_FuncTable[ ISSType ].boot_func( system );
+  }
+
+#if 0
   // 各ISSシステムを停止
   switch( ISSType ) {
   case ISS_TYPE_LOAD:
@@ -1191,4 +1186,5 @@ static void BGMChange( ISS_SYS* system )
   case ISS_TYPE_SWITCH:  BootISS_S( system ); break;
   case ISS_TYPE_BRIDGE:  BootISS_B( system ); break;
   } 
+#endif
 }
