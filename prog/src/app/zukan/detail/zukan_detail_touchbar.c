@@ -795,6 +795,39 @@ void ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( ZUKAN_DETAIL_TOUCHBAR_WORK* work,
   }
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+// カスタムボタンのパレットを読み込んだ場所を得る
+u32 ZUKAN_DETAIL_TOUCHBAR_GetCustomIconPlttRegIdx( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  switch( work->type )
+  {
+  case ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL:
+    {
+      return work->general_ncl;
+    }
+    break;
+  case ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP:
+    {
+      return work->map_ncl;
+    }
+    break;
+  case ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM:
+    {
+      return work->form_ncl;
+    }
+    break;
+  }
+  return GFL_CLGRP_REGISTER_FAILED;  // 登録失敗
+}
+
 
 //=============================================================================
 /**

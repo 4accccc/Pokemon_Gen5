@@ -42,6 +42,8 @@ FS_EXTERN_OVERLAY(ui_common);
 */
 //=============================================================================
 // メインOBJパレット
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
 // 本数
 enum
 {
@@ -50,12 +52,23 @@ enum
 // 位置
 enum
 {
-  OBJ_PAL_POS_M_LANG_BTN             = 5,
+  OBJ_PAL_POS_M_LANG_BTN             = 6,
 };
+*/
 
 // 言語ボタンのパレットアニメ用にパレットを変更する
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
 #define OBJ_PAL_OFFSET_LANG_ANIME_NONE  (0)
 #define OBJ_PAL_OFFSET_LANG_ANIME_EXEC  (2)
+*/
+#define OBJ_PAL_POS_M_LANG_ANIME_NONE   (ZKNDTL_OBJ_PAL_POS_M_TOUCHBAR + ZKND_TBAR_OBJ_PLT_NUM)  // zukan/detail/zukan_detail_touchbar.c OBJ_PAL_POS_M_CUSTOM から  // パレットを直で変えるってできないっぽいから、結局これは使用せず、zukan/detail/zukan_detail_touchbar.c OBJ_PAL_OFFSET_GENERAL_ANIME_NONEを流用することにした。
+#define OBJ_PAL_POS_M_LANG_ANIME_EXEC   (6)  // zukan/info/zukan_info.c ZUKAN_INFO_BG_PAL_POS_MAX から  // パレットを直で変えるってできないっぽいから、結局これは使用せず、zukan/detail/zukan_detail_touchbar.c OBJ_PAL_OFFSET_GENERAL_ANIME_EXECを流用することにした。
+
+#define OBJ_PAL_OFFSET_LANG_ANIME_NONE  (0)  // zukan/detail/zukan_detail_touchbar.c OBJ_PAL_OFFSET_GENERAL_ANIME_NONE から
+#define OBJ_PAL_OFFSET_LANG_ANIME_EXEC  (2)  // zukan/detail/zukan_detail_touchbar.c OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC から
+// zukan/detail/zukan_detail_touchbar.c OBJ_PAL_OFFSET_GENERAL_ANIME_NONEやOBJ_PAL_OFFSET_GENERAL_ANIME_EXECを利用するようにしたので、このソース中のパレットアニメ関連の記述は削除しても構わない。
+
 #define RES_PAL_POS_LANG_ANIME_START    (1)  // リソースのパレットの列番号
 #define RES_PAL_POS_LANG_ANIME_END      (3)  // リソースのパレットの列番号
 #define LANG_ANIME_ADD              (0x400)  // FX_CosIdxを使用するので0<= <0x10000
@@ -151,7 +164,7 @@ typedef struct
   LANG_BUTTON                 lang_btn[ZUKAN_INFO_LANG_MAX];
   ZUKAN_INFO_LANG             lang_btn_push;  // 今押しアニメしているボタン(ZUKAN_INFO_LANG_NONEのときなし)
   ZUKAN_INFO_LANG             lang;  // 上画面に今表示している言語
-  u32                         lang_ncl;
+  u32                         lang_ncl;  // タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
   u32                         lang_ncg;
   u32                         lang_nce;
 
@@ -390,6 +403,41 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
         }
       }
 
+    // タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
+    // というのがあるので、タッチバーを先に生成しておく。
+    {
+      // タッチバー
+      if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) != ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR )
+      {
+        ZUKAN_DETAIL_TOUCHBAR_SetType(
+            touchbar,
+            ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+            ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
+        ZUKAN_DETAIL_TOUCHBAR_Appear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
+      }
+      else
+      {
+        ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
+            touchbar,
+            ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
+      }
+      ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
+      {
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+            touchbar,
+            GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_INFO ) );
+      }
+      // タイトルバー
+      if( ZUKAN_DETAIL_HEADBAR_GetState( headbar ) != ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
+      {
+        ZUKAN_DETAIL_HEADBAR_SetType(
+            headbar,
+            ZUKAN_DETAIL_HEADBAR_TYPE_INFO );
+        ZUKAN_DETAIL_HEADBAR_Appear( headbar );
+      }
+    }
+
       // 言語ボタン
       Zukan_Detail_Info_CreateLangButton( param, work, cmn );
 
@@ -476,7 +524,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       // フェード
       ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_m );
       ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_s );  // 何も表示しないとき用の背景のみを表示するモードを用意したので
-      
+
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
+というのがあるので、タッチバーを先に生成しておく。
       // タッチバー
       if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) != ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR )
       {
@@ -507,6 +558,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
             ZUKAN_DETAIL_HEADBAR_TYPE_INFO );
         ZUKAN_DETAIL_HEADBAR_Appear( headbar );
       }
+*/
+
     }
     break;
   case SEQ_FADE_IN:
@@ -975,6 +1028,8 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 //=====================================
 static void Zukan_Detail_Info_CreateLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  ZUKAN_DETAIL_TOUCHBAR_WORK* touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+
   ZUKAN_DETAIL_GRAPHIC_WORK* graphic = ZKNDTL_COMMON_GetGraphic(cmn);
   GFL_CLUNIT* clunit = ZUKAN_DETAIL_GRAPHIC_GetClunit(graphic);
 
@@ -985,12 +1040,16 @@ static void Zukan_Detail_Info_CreateLangButton( ZUKAN_DETAIL_INFO_PARAM* param, 
   // リソース読み込み
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, param->heap_id );
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
     work->lang_ncl = GFL_CLGRP_PLTT_RegisterEx(
                             handle,
                             NARC_zukan_gra_info_info_obj_NCLR,
                             draw_type,
                             OBJ_PAL_POS_M_LANG_BTN * 0x20, 0, OBJ_PAL_NUM_M_LANG_BTN,
-                            param->heap_id );	
+                            param->heap_id );
+*/
+    work->lang_ncl = ZUKAN_DETAIL_TOUCHBAR_GetCustomIconPlttRegIdx( touchbar );  // タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
     work->lang_ncg = GFL_CLGRP_CGR_Register(
                             handle,
                             NARC_zukan_gra_info_info_obj_NCGR,
@@ -1046,8 +1105,11 @@ static void Zukan_Detail_Info_DeleteLangButton( ZUKAN_DETAIL_INFO_PARAM* param, 
   }
 
   // リソース破棄
-  {	
+  {
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
     GFL_CLGRP_PLTT_Release( work->lang_ncl );
+*/
     GFL_CLGRP_CGR_Release( work->lang_ncg );
     GFL_CLGRP_CELLANIM_Release( work->lang_nce );
   }
@@ -1194,6 +1256,21 @@ static void Zukan_Detail_Info_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param,
   GFL_STD_MemCopy( &raw_data[RES_PAL_POS_LANG_ANIME_END*0x10], work->pal_anime_lang_end, 0x20 );
   GFL_HEAP_FreeMemory( buf );
   work->pal_anime_lang_count = 0;
+
+  // 初期化
+  {
+    GFL_STD_MemCopy( work->pal_anime_lang_start, work->pal_anime_lang_now, 0x20 );
+
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_OBJ_PLTT_MAIN,
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
+        ( OBJ_PAL_POS_M_LANG_BTN + OBJ_PAL_OFFSET_LANG_ANIME_EXEC ) * 0x20,
+*/
+        OBJ_PAL_POS_M_LANG_ANIME_EXEC * 0x20,
+        work->pal_anime_lang_now,
+        0x20 );
+  }
 }
 static void Zukan_Detail_Info_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
@@ -1224,6 +1301,11 @@ static void Zukan_Detail_Info_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
 {
   if( work->lang != ZUKAN_INFO_LANG_NONE )
   {
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない 
+    GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+*/
+    //GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_POS_M_LANG_ANIME_NONE, CLWK_PLTTOFFS_MODE_PLTT_TOP );パレットを直で変えるってできないっぽい
     GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     work->pal_anime_lang_pltt_offs_req = FALSE;
   }
@@ -1237,6 +1319,11 @@ static void Zukan_Detail_Info_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
   {
     if( work->lang != ZUKAN_INFO_LANG_NONE )
     {
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない 
+      GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+*/
+      //GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_POS_M_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_PLTT_TOP );パレットを直で変えるってできないっぽい
       GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     }
     work->pal_anime_lang_pltt_offs_req = FALSE;
@@ -1271,7 +1358,11 @@ static void Zukan_Detail_Info_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
   {
     NNS_GfdRegisterNewVramTransferTask(
         NNS_GFD_DST_2D_OBJ_PLTT_MAIN,
+/*
+タッチバーで読み込んだパレットを流用するので、ここでは読み込まない
         ( OBJ_PAL_POS_M_LANG_BTN + OBJ_PAL_OFFSET_LANG_ANIME_EXEC ) * 0x20,
+*/
+        OBJ_PAL_POS_M_LANG_ANIME_EXEC * 0x20,
         work->pal_anime_lang_now,
         0x20 );
   }

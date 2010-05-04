@@ -92,6 +92,15 @@
  *  定数定義
  */
 //=============================================================================
+// OBJを差し替える際に乱れないように、2つを交互に表示する
+typedef enum
+{
+  OBJ_SWAP_0,
+  OBJ_SWAP_1,
+  OBJ_SWAP_MAX,
+}
+OBJ_SWAP;
+
 // BGフレーム
 #define ZUKAN_INFO_BG_FRAME_M_MSG    (GFL_BG_FRAME3_M)
 #define ZUKAN_INFO_BG_FRAME_M_FORE   (GFL_BG_FRAME2_M)
@@ -122,7 +131,7 @@ enum
 // 本数
 enum
 {
-  ZUKAN_INFO_OBJ_PAL_NUM_POKE2D    =  1,
+  ZUKAN_INFO_OBJ_PAL_NUM_POKE2D    =  1,  // ZUKAN_INFO_OBJ_PAL_NUM_POKE2D * OBJ_SWAP_MAX 本使用する
   ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON  =  3,
   ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT  =  1,
 };
@@ -130,9 +139,9 @@ enum
 enum
 {
   ZUKAN_INFO_OBJ_PAL_POS_POKE2D    = 0,
-  ZUKAN_INFO_OBJ_PAL_POS_TYPEICON  = ZUKAN_INFO_OBJ_PAL_POS_POKE2D   + ZUKAN_INFO_OBJ_PAL_NUM_POKE2D   ,  // 1
-  ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT  = ZUKAN_INFO_OBJ_PAL_POS_TYPEICON + ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON ,  // 4
-  ZUKAN_INFO_OBJ_PAL_POS_MAX       = ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT + ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT ,  // 5  // ここから空き
+  ZUKAN_INFO_OBJ_PAL_POS_TYPEICON  = ZUKAN_INFO_OBJ_PAL_POS_POKE2D   + ZUKAN_INFO_OBJ_PAL_NUM_POKE2D * OBJ_SWAP_MAX ,  // 2 
+  ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT  = ZUKAN_INFO_OBJ_PAL_POS_TYPEICON + ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON              ,  // 5 
+  ZUKAN_INFO_OBJ_PAL_POS_MAX       = ZUKAN_INFO_OBJ_PAL_POS_POKEFOOT + ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT              ,  // 6  // ここから空き
 };
 
 // 色について
@@ -400,10 +409,11 @@ struct _ZUKAN_INFO_WORK
   GFL_BMPWIN*  ball_no_bmpwin;
 
   // ポケモン2D
-  u32          ncg_poke2d;
-  u32          ncl_poke2d;
-  u32          nce_poke2d;
-  GFL_CLWK*    clwk_poke2d;
+  u32          ncg_poke2d[OBJ_SWAP_MAX];   // clwk_poke2d[i]がNULLでないときncg_poke2d[i]は有効
+  u32          ncl_poke2d[OBJ_SWAP_MAX];   // clwk_poke2d[i]がNULLでないときncl_poke2d[i]は有効
+  u32          nce_poke2d[OBJ_SWAP_MAX];   // clwk_poke2d[i]がNULLでないときnce_poke2d[i]は有効
+  GFL_CLWK*    clwk_poke2d[OBJ_SWAP_MAX];  // ないときはclwk_poke2d[i]はNULL
+  OBJ_SWAP     curr_swap_poke2d;           // 今表示しているclwk_poke2dはclwk_poke2d[curr_poke2d]
 
   // タイプアイコン
   u32       typeicon_cg_idx[2];
@@ -446,10 +456,10 @@ static void Zukan_Info_DeleteBall( ZUKAN_INFO_WORK* work );
 static void Zukan_Info_TransBall_VBlank( ZUKAN_INFO_WORK* work );
 
 //ポケモン2D
-static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work );
-static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work );
-static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y );
-static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
+static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
+static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y, OBJ_SWAP swap_idx );
+static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx );
 
 // タイプアイコン
 static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang );
@@ -767,6 +777,15 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
 
   //ポケモン2D
   {
+    // NULLで初期化
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      work->clwk_poke2d[i] = NULL;
+    }
+    work->curr_swap_poke2d = OBJ_SWAP_0;
+  }
+  {
     u16 pos_x, pos_y;
     switch(work->launch)
     {
@@ -784,8 +803,8 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
       }
       break;
     }
-    Zukan_Info_Poke2dLoadResourceObj( work );
-    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ) );
+    Zukan_Info_Poke2dLoadResourceObj( work, work->curr_swap_poke2d );
+    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
   }
 
   // WND
@@ -833,8 +852,18 @@ void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
   }
 
   // ポケモン2D
-  Zukan_Info_Poke2dDeleteCLWK( work );
-  Zukan_Info_Poke2dUnloadResourceObj( work );
+  {
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( work->clwk_poke2d[i] )
+      {
+        Zukan_Info_Poke2dDeleteCLWK( work, i );
+        Zukan_Info_Poke2dUnloadResourceObj( work, i );
+        work->clwk_poke2d[i] = NULL;
+      }
+    }
+  }
 
   // ポケモン2D以外
   if( work->launch == ZUKAN_INFO_LAUNCH_LIST )  // TOROKUの場合は既に破棄されている
@@ -951,7 +980,7 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
 
       // ポケモン2D
       GFL_CLACTPOS pos;
-      GFL_CLACT_WK_GetWldPos( work->clwk_poke2d, &pos );
+      GFL_CLACT_WK_GetWldPos( work->clwk_poke2d[work->curr_swap_poke2d], &pos );
       pos.x += 1;
       pos.y += 1;
       if( pos.x > ZUKAN_INFO_CENTER_POKEMON_POS_X )
@@ -964,7 +993,7 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
         pos.y = ZUKAN_INFO_CENTER_POKEMON_POS_Y;
         goal_y = TRUE;
       }
-      GFL_CLACT_WK_SetWldPos( work->clwk_poke2d, &pos );
+      GFL_CLACT_WK_SetWldPos( work->clwk_poke2d[work->curr_swap_poke2d], &pos );
             
       if(goal_x && goal_y)
       {
@@ -1115,10 +1144,22 @@ void ZUKAN_INFO_ChangePoke(
                 u32              personal_rnd,
                 BOOL             get_flag )
 {
+  // OBJ交互の更新
+  {
+    work->curr_swap_poke2d = (work->curr_swap_poke2d +1) %OBJ_SWAP_MAX;
+  }
+
   // 前のを削除する
   // ポケモン2D
-  Zukan_Info_Poke2dDeleteCLWK( work );
-  Zukan_Info_Poke2dUnloadResourceObj( work );
+  {
+    if( work->clwk_poke2d[work->curr_swap_poke2d] )
+    {
+      Zukan_Info_Poke2dDeleteCLWK( work, work->curr_swap_poke2d );
+      Zukan_Info_Poke2dUnloadResourceObj( work, work->curr_swap_poke2d );
+      work->clwk_poke2d[work->curr_swap_poke2d] = NULL;
+    }
+  }
+
   // ポケモン2D以外
   ZUKAN_INFO_DeleteOthers( work );
 
@@ -1154,8 +1195,8 @@ void ZUKAN_INFO_ChangePoke(
       }
       break;
     }
-    Zukan_Info_Poke2dLoadResourceObj( work );
-    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ) );
+    Zukan_Info_Poke2dLoadResourceObj( work, work->curr_swap_poke2d );
+    Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ), work->curr_swap_poke2d );
   }
 
   // 全OBJの表示/非表示を設定する
@@ -1781,7 +1822,7 @@ static void Zukan_Info_TransBall_VBlank( ZUKAN_INFO_WORK* work )
 //-------------------------------------
 /// ポケモン2Dのリソースを読み込む
 //=====================================
-static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work )
+static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
 {
   ARCHANDLE*            handle;
 
@@ -1790,19 +1831,20 @@ static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work )
   // ハンドル
   handle = POKE2DGRA_OpenHandle( work->heap_id );
   // リソース読みこみ
-  work->ncg_poke2d = POKE2DGRA_OBJ_CGR_Register(
+  work->ncg_poke2d[swap_idx] = POKE2DGRA_OBJ_CGR_Register(
                          handle,
                          work->monsno, work->formno, work->sex, work->rare,
                          POKEGRA_DIR_FRONT, FALSE,
                          work->personal_rnd,
                          draw_type, work->heap_id );
-  work->ncl_poke2d = POKE2DGRA_OBJ_PLTT_Register(
+  work->ncl_poke2d[swap_idx] = POKE2DGRA_OBJ_PLTT_Register(
                          handle,
                          work->monsno, work->formno, work->sex, work->rare,
                          POKEGRA_DIR_FRONT, FALSE,
                          draw_type,
-                         ZUKAN_INFO_OBJ_PAL_POS_POKE2D * ZUKAN_INFO_PAL_LINE_SIZE, work->heap_id );
-  work->nce_poke2d = POKE2DGRA_OBJ_CELLANM_Register(
+                         ( ZUKAN_INFO_OBJ_PAL_POS_POKE2D + ZUKAN_INFO_OBJ_PAL_NUM_POKE2D * swap_idx ) * ZUKAN_INFO_PAL_LINE_SIZE,
+                         work->heap_id );
+  work->nce_poke2d[swap_idx] = POKE2DGRA_OBJ_CELLANM_Register(
                          work->monsno, work->formno, work->sex, work->rare,
                          POKEGRA_DIR_FRONT, FALSE,
                          APP_COMMON_MAPPING_128K,
@@ -1813,18 +1855,20 @@ static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work )
 //-------------------------------------
 /// ポケモン2Dのリソース破棄
 //=====================================
-static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work )
+static void Zukan_Info_Poke2dUnloadResourceObj( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
 {
+  // 呼び出し元でwork->clwk_poke2d[swap_idx]のNULL判定をしてから、呼んで下さい。
+
   //リソース破棄
-  GFL_CLGRP_PLTT_Release( work->ncl_poke2d );
-  GFL_CLGRP_CGR_Release( work->ncg_poke2d );
-  GFL_CLGRP_CELLANIM_Release( work->nce_poke2d );
+  GFL_CLGRP_PLTT_Release( work->ncl_poke2d[swap_idx] );
+  GFL_CLGRP_CGR_Release( work->ncg_poke2d[swap_idx] );
+  GFL_CLGRP_CELLANIM_Release( work->nce_poke2d[swap_idx] );
 }
 
 //-------------------------------------
 /// ポケモン2DのOBJを生成する
 //=====================================
-static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y )
+static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 pos_y, OBJ_SWAP swap_idx )
 {
   GFL_CLWK_DATA cldata;
 
@@ -1833,36 +1877,53 @@ static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 p
   GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
   cldata.pos_x = pos_x;
   cldata.pos_y = pos_y;
-  work->clwk_poke2d = GFL_CLACT_WK_Create( work->clunit, 
-                                           work->ncg_poke2d,
-                                           work->ncl_poke2d,
-                                           work->nce_poke2d,
+  work->clwk_poke2d[swap_idx] = GFL_CLACT_WK_Create( work->clunit, 
+                                           work->ncg_poke2d[swap_idx],
+                                           work->ncl_poke2d[swap_idx],
+                                           work->nce_poke2d[swap_idx],
                                            &cldata, 
                                            defrend_type, work->heap_id );
   
-  GFL_CLACT_WK_SetSoftPri( work->clwk_poke2d, 0 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
+  GFL_CLACT_WK_SetSoftPri( work->clwk_poke2d[swap_idx], 0 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
   
   if( work->launch == ZUKAN_INFO_LAUNCH_LIST )
   {
-    GFL_CLACT_WK_SetObjMode( work->clwk_poke2d, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    GFL_CLACT_WK_SetObjMode( work->clwk_poke2d[swap_idx], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
   }
 
   {
     POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle( work->monsno, work->formno, work->heap_id );
     if( POKE_PERSONAL_GetParam( ppd, POKEPER_ID_reverse ) == 0 )
     {
-      GFL_CLACT_WK_SetFlip( work->clwk_poke2d, CLWK_FLIP_H, TRUE );
+      GFL_CLACT_WK_SetFlip( work->clwk_poke2d[swap_idx], CLWK_FLIP_H, TRUE );
     }
     POKE_PERSONAL_CloseHandle( ppd );
+  }
+
+  // OBJ交互の表示切替
+  {
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( i != work->curr_swap_poke2d )
+      {
+        if( work->clwk_poke2d[i] )
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->clwk_poke2d[i], FALSE );
+        }
+      }
+    }
   }
 }
 
 //-------------------------------------
 /// ポケモン2DのOBJを破棄する
 //=====================================
-static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work )
+static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work, OBJ_SWAP swap_idx )
 {
-  GFL_CLACT_WK_Remove( work->clwk_poke2d );
+  // 呼び出し元でwork->clwk_poke2d[swap_idx]のNULL判定をしてから、呼んで下さい。
+
+  GFL_CLACT_WK_Remove( work->clwk_poke2d[swap_idx] );
 }
 
 //-------------------------------------
@@ -2197,7 +2258,7 @@ void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off )
   u8 i;
 
   // ポケモン2D
-  GFL_CLACT_WK_SetDrawEnable( work->clwk_poke2d, on_off );
+  GFL_CLACT_WK_SetDrawEnable( work->clwk_poke2d[work->curr_swap_poke2d], on_off );
  
   if( work->get_flag )
   {
