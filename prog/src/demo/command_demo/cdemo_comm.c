@@ -525,7 +525,8 @@ static int Comm_BGMPlay( CDEMO_WORK * wk, const int * comm )
 		Snd_BgmPlay( comm[1] );
 	}
 */
-	PMSND_PlayBGM( comm[1] );
+//	PMSND_PlayBGM( comm[1] );
+	PMSND_PlayBGM_WideChannel( comm[1] );
 
 	return CDEMOCOMM_RET_FALSE;
 }
