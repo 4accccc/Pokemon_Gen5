@@ -38,6 +38,9 @@
 ///切断同期待ちのタイムアウト
 #define COMM_EXIT_WAIT_TIMEOUT     (60*5)
 
+///子機として立ち上がった場合、この時間を経過しても親機に接続出来なかった場合、終了する
+#define PARENT_SEARCH_TIMEOUT     (60 * 10)
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -266,7 +269,14 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     }
     else if(intcomm->comm_status == INTRUDE_COMM_STATUS_BOOT_CHILD){
       //※check　ここに子の場合、一定時間経過しても親との接続が確立できなかったら
-      //         通信をあきらめる処理を入れる
+      //         通信をあきらめる処理を入れたので要確認。確認が出来たらこのコメントを削除
+      //          2010.05.04(火)
+      intcomm->exit_wait++;
+      if(intcomm->exit_wait > PARENT_SEARCH_TIMEOUT){
+        intcomm->exit_wait = 0;
+        GameCommSys_ExitReq(intcomm->game_comm);
+        return;
+      }
     }
     break;
   case 1:
