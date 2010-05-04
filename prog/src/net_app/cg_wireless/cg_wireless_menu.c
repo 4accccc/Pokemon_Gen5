@@ -95,13 +95,13 @@ typedef enum
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
-#define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
+#define _SUBLIST_NORMAL_PAL   (13)   //サブメニューの通常パレット
 #define _BUTTON_WIN_CENTERX (16)   // 真ん中
 #define _BUTTON_WIN_CENTERY (13)   //
 #define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
 #define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
+#define _BUTTON_WIN_PAL   (11)  // ウインドウ
+#define _BUTTON_MSG_PAL   (12)  // メッセージフォント
 
 //BG面とパレット番号
 #define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME1_S)

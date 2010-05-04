@@ -97,6 +97,7 @@ static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side );
 static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork);
 static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch);
 static int _boxScrollLine2Num(int line);
+static void _notWazaChangePoke2(POKEMON_TRADE_WORK* pWork);
 
 static u8* _setThreePokemon(int netID, void* pWk, int size);
 static void _recvThreePokemon1(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -1582,6 +1583,8 @@ static BOOL _SerchTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, int* boxno,int* 
 }
 
 
+
+
 static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
 {
   BOOL bChange=FALSE;
@@ -1599,10 +1602,11 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
         if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
 
           if(POKE_GTS_BanPokeCheck(pWork,ppp)){
-            
+
             GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_09, pWork->pMessageStrBuf );
-            POKETRADE_MESSAGE_WindowOpen(pWork);
-            
+            POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
+            _CHANGE_STATE(pWork, _notWazaChangePoke2);
+            return 2;
           }
           else{
             OS_TPrintf("IsTouchCLACTPosition %d \n",line);
@@ -3035,9 +3039,13 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  if(IsTouchCLACTPosition(pWork,FALSE)){
+  switch(IsTouchCLACTPosition(pWork,FALSE)){
+  case 2:
+    return;
+  case 1:
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
     pWork->bStatusDisp=TRUE;
+    break;
   }
 
 
