@@ -412,12 +412,6 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   
   STA_SCRIPT_ExitSystem( work->scriptSys );
 
-  if( SND_STRM_CheckSetUp() == TRUE &&
-      SND_STRM_CheckPlay() == TRUE )
-  {
-    STA_ACT_StopBgm( work );
-  }
-
   if( work->msgStr != NULL )
   {
     GFL_STR_DeleteBuffer( work->msgStr );
