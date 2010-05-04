@@ -111,16 +111,6 @@ extern void MailData_SetCountryCode(MAIL_DATA* dat,const u8 code);
 extern u8 MailData_GetCasetteVersion(const MAIL_DATA* dat);
 extern void MailData_SetCasetteVersion(MAIL_DATA* dat,const u8 version);
 
-/**
- *  @brief  メールデータ　メールアイコンパラメータの取得(インデックス指定版)
- *
- *  @param  mode  MAIL_ICONPRM_CGX:cgxNoの取得
- *          MAIL_ICONPRM_PLT:pltNoの取得
- *          MAIL_ICONPRM_ALL:u16型(MAIL_ICON型へキャスト可)で双方の値を返す
- *
- *  ＊アイコンCgxIDとモンスターNoは同一ではありません。注意！
- */
-extern u16  MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form_bit);
 
 /**
  *  @brief  メールデータ　form_bit取得
@@ -132,7 +122,7 @@ extern void MailData_SetFormBit( MAIL_DATA* dat, u16 word );
  *  @brief  メールデータ　簡易文取得(インデックス指定版)
  */
 extern PMS_DATA*  MailData_GetMsgByIndex(MAIL_DATA* dat,u8 index);
-extern void MailData_SetMsgByIndex(MAIL_DATA* dat,PMS_DATA* pms,u8 index);
+extern void MailData_SetMsgByIndex(MAIL_DATA* dat, const PMS_DATA* pms,u8 index);
 
 /**
  *  @brief  メールデータ　簡易文文字列取得(インデックス指定)
@@ -148,5 +138,9 @@ extern void MailData_SetMsgByIndex(MAIL_DATA* dat,PMS_DATA* pms,u8 index);
  */
 extern BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,HEAPID heapID);
 
+/**
+  * @brief 簡易ワードセット(数値のみ）
+  */
+extern void MailData_SetPmsWord( MAIL_DATA *dat, PMS_WORD word );
 
 
