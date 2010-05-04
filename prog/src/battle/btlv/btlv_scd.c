@@ -596,19 +596,20 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
     for(i=0; i<members; ++i)
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
-      pp  = BPP_GetSrcData( bpp );
-      hp = PP_Get( pp, ID_PARA_hp, NULL );
 
-      if( hp )
+      if( BPP_IsDead( bpp ) == FALSE )
       {
-        if( PP_Get( pp, ID_PARA_condition, NULL ) ){
+        if( BPP_GetPokeSick( bpp ) != POKESICK_NULL )
+        { 
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NG;
         }
-        else{
+        else
+        {
           bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_ALIVE;
         }
       }
-      else{
+      else
+      {
         bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_DEAD;
       }
     }
