@@ -4670,7 +4670,9 @@ static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp )
 { 
-  if( bicp->bagMode != BBAG_MODE_SHOOTER )
+  const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( BTLV_EFFECT_GetMainModule() );
+  //バッグがシューターモードではないか、使用できない場合はエネルギー表示なし
+  if( ( bicp->bagMode != BBAG_MODE_SHOOTER ) || ( shooter->shooter_use == FALSE ) )
   { 
     return;
   }
