@@ -96,7 +96,6 @@ EVENT_END
 EVENT_START ev_fld_ev_fishing_success
 {
   _SYSWIN_MSG( msg_fld_ev_fishing_01 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
@@ -105,7 +104,6 @@ EVENT_END
 EVENT_START ev_fld_ev_fishing_failed_encount
 {
   _SYSWIN_MSG( msg_fld_ev_fishing_02 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
@@ -114,7 +112,6 @@ EVENT_END
 EVENT_START ev_fld_ev_fishing_failed_too_early
 {
   _SYSWIN_MSG( msg_fld_ev_fishing_03 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
@@ -123,7 +120,6 @@ EVENT_END
 EVENT_START ev_fld_ev_fishing_failed_too_slow
 {
   _SYSWIN_MSG( msg_fld_ev_fishing_04 , POS_DOWN )
-  _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
