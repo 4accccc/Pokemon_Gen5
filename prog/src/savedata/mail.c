@@ -51,7 +51,7 @@ typedef struct _MAIL_DATA{
   u8  design;   //<デザインナンバー 1                     8
   STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  // 16        24
   u16     padding[3];                       //< パディング６バイト   30
-  u16 form_bit;                             // padding領域をプラチナから3体のポケモンの    32
+  u16     form_bit;                         // padding領域をプラチナから3体のポケモンの    32
                                             // フォルム番号として使用(5bit単位)
   PMS_DATA  msg[MAILDAT_MSGMAX];            //<文章データ 56
 }_MAIL_DATA;
@@ -70,61 +70,6 @@ typedef struct _MAIL_BLOCK{
 ///ポケモンアイコンの最大CGXID(金銀でアイコンが増えるならここも変える必要がある)
 #define ICON_CGXID_MAX    (NARC_poke_icon_poke_icon_656_freeze_f_NCGR)
 
-#if 0
-///プラチナ以降で追加されたポケモンのcgx_id変換テーブル
-///(金銀でアイコンが増えるならこのテーブルも増やす必要がある)
-static const struct{
-  u16 normal_cgx_id;    ///<フォルム0の時のcgxID
-  u16 form_cgx_id;    ///<フォルムが変わっている時のcgxID
-  u16 monsno;       ///<ポケモン番号
-  u8 form_no;       ///<form_cgx_idはフォルムNoいくつのcgxIDなのか
-  u8 padding;     //ダミー
-} MailIcon_CgxID_ConvTbl[] = {
-  {
-    NARC_poke_icon_poke_icon_509_NCGR,
-    NARC_poke_icon_poke_icon_509_01_NCGR,
-    MONSNO_GIRATHINA,
-    1,
-  },
-  {
-    NARC_poke_icon_poke_icon_516_NCGR,
-    NARC_poke_icon_poke_icon_516_01_NCGR,
-    MONSNO_SHEIMI,
-    1,
-  },
-  {
-    NARC_poke_icon_poke_icon_519_NCGR,
-    NARC_poke_icon_poke_icon_519_01_NCGR,
-    MONSNO_ROTOMU,
-    1,
-  },
-  {
-    NARC_poke_icon_poke_icon_519_NCGR,
-    NARC_poke_icon_poke_icon_519_02_NCGR,
-    MONSNO_ROTOMU,
-    2,
-  },
-  {
-    NARC_poke_icon_poke_icon_519_NCGR,
-    NARC_poke_icon_poke_icon_519_03_NCGR,
-    MONSNO_ROTOMU,
-    3,
-  },
-  {
-    NARC_poke_icon_poke_icon_519_NCGR,
-    NARC_poke_icon_poke_icon_519_04_NCGR,
-    MONSNO_ROTOMU,
-    4,
-  },
-  {
-    NARC_poke_icon_poke_icon_519_NCGR,
-    NARC_poke_icon_poke_icon_519_05_NCGR,
-    MONSNO_ROTOMU,
-    5,
-  },
-};
-#endif
-
 /**
  *  @brief  メールデータサイズ取得
  *
@@ -142,17 +87,13 @@ void MailData_Clear(MAIL_DATA* dat)
   int i;
   
   dat->writerID = 0;
-  dat->sex = PM_MALE;
-//  dat->region = CasetteLanguage;  //@todo定義が無い
-//  dat->version = CasetteVersion;  //@todo定義が無い
-  dat->design = MAIL_DESIGN_NULL;
+  dat->sex      = PM_MALE;
+  dat->region   = CasetteLanguage;  
+  dat->version  = CasetteVersion;   
+  dat->design   = MAIL_DESIGN_NULL;
 
-  GFL_STD_MemFill16(dat->name, GFL_STR_GetEOMCode(),sizeof(dat->name));
-/*
-  for(i = 0;i < MAILDAT_ICONMAX;i++){
-    dat->icon[i].dat = MAIL_ICON_NULL;
-  }
-*/
+  GFL_STD_MemFill16(dat->name, GFL_STR_GetEOMCode(), sizeof(dat->name));
+
   dat->form_bit = 0;
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     PMSDAT_Clear(&dat->msg[i]);
@@ -186,7 +127,7 @@ MAIL_DATA* MailData_CreateWork(HEAPID heapID)
 {
   MAIL_DATA* p;
 
-  p = GFL_HEAP_AllocMemoryLo(heapID,sizeof(MAIL_DATA)); //sys_AllocMemoryLo(heapID,sizeof(MAIL_DATA));
+  p = GFL_HEAP_AllocMemoryLo(heapID,sizeof(MAIL_DATA)); 
   MailData_Clear(p);
 
   return p;
@@ -223,13 +164,6 @@ BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
   if( GFL_STD_MemComp( src1->name,src2->name,sizeof(src1->name) ) != 0){
     return FALSE;
   }
-/*
-  for(i = 0;i < MAILDAT_ICONMAX;i++){
-    if(src1->icon[i].dat != src2->icon[i].dat){
-      return FALSE;
-    }
-  }
-*/
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     if(!PMSDAT_Compare( &src1->msg[i], &src2->msg[i] )){
       return FALSE;
@@ -357,54 +291,6 @@ void MailData_SetCasetteVersion(MAIL_DATA* dat,const u8 version)
   dat->version = version;
 }
 
-/**
- *  @brief  メールデータ　メールアイコンパラメータの取得(インデックス指定版)
- *
- *  @param  mode  MAIL_ICONPRM_CGX:cgxNoの取得
- *          MAIL_ICONPRM_PAL:pltNoの取得
- *          MAIL_ICONPRM_ALL:u16型(MAIL_ICON型へキャスト可)で双方の値を返す
- *
- *  ＊アイコンCgxIDとモンスターNoは同一ではありません。注意！
- */
-u16 MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form_bit)
-{
-//  MAIL_ICON mi;
-  int s;
-  
-#if 0   //@todo 移植できていない
-  if(index < MAILDAT_ICONMAX){
-    mi = dat->icon[index];
-    //プラチナ以降で追加されたアイコンのフォルムIndexへ変換
-    for(s = 0; s < NELEMS(MailIcon_CgxID_ConvTbl); s++){
-      if(MailIcon_CgxID_ConvTbl[s].normal_cgx_id == mi.cgxID && 
-          MailIcon_CgxID_ConvTbl[s].form_no == ((form_bit >> (index*5)) & 0x1f)){
-        mi.cgxID = MailIcon_CgxID_ConvTbl[s].form_cgx_id;
-        mi.palID = PokeIconPalNumGet( 
-          MailIcon_CgxID_ConvTbl[s].monsno, MailIcon_CgxID_ConvTbl[s].form_no, 0 );
-        break;
-      }
-    }
-    if(mi.cgxID > ICON_CGXID_MAX){
-      mi.cgxID = NARC_poke_icon_poke_icon_000_m_NCGR;
-      mi.palID = 0;
-    }
-    switch(mode){
-    case MAIL_ICONPRM_CGX:
-      return mi.cgxID;
-    case MAIL_ICONPRM_PAL:
-      return mi.palID;
-    case MAIL_ICONPRM_ALL:
-    default:
-      return mi.dat;
-    }
-  }else{
-    return 0;
-  }
-#else
-  return 0;
-#endif
-
-}
 
 /**
  *  @brief  メールデータ　form_bit取得
@@ -433,7 +319,7 @@ PMS_DATA* MailData_GetMsgByIndex(MAIL_DATA* dat,u8 index)
 /**
  *  @brief  メールデータ　簡易文セット(インデックス指定版)
  */
-void MailData_SetMsgByIndex(MAIL_DATA* dat,PMS_DATA* pms,u8 index)
+void MailData_SetMsgByIndex(MAIL_DATA* dat, const PMS_DATA* pms,u8 index)
 {
   if(index >= MAILDAT_MSGMAX){
     return;
