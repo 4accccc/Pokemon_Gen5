@@ -246,6 +246,7 @@ enum{
   _TITLE_PRINT_OTHER_PALACE1,     ///<通信相手のパレスにいます
   _TITLE_PRINT_OTHER_PALACE2,     ///<通信相手のパレスにいます
   _TITLE_PRINT_OTHER_PALACE3,     ///<通信相手のパレスにいます
+  _TITLE_PRINT_CLEAR,             ///<クリア
 };
 
 ///参加ボタンの表示タイプ
@@ -334,7 +335,8 @@ typedef struct{
   const MISSION_DATA *p_md; ///<受信しているミッションデータへのポインタ
   u8 target_palace_area;    ///<ミッションターゲットがいるパレスエリア
   u8 target_mine;           ///<自分自身がミッションのターゲットになっている
-  u8 padding[2];
+  u8 my_area_intrude;       ///<TRUE:誰かが自分と同じパレスエリアにいる
+  u8 padding;
 }INTRUDE_COMM_PARAM;
 
 ///処理の高速化用に記憶するプレイヤー毎のパラメータ
@@ -464,7 +466,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
 static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, ZONEID my_zone_id);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
-static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
 static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
@@ -476,6 +478,7 @@ static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno);
 static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub);
 static void _TimeScrn_Clear(void);
 static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub);
+static BOOL _TutorialMissionNoRecv(INTRUDE_SUBDISP_PTR intsub);
 
 
 //==============================================================================
@@ -615,6 +618,8 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
+  ZONEID my_zone_id = PLAYERWORK_getZoneID(player_work);
   int i;
 
   _IntSub_CommParamUpdate(intsub, intcomm);
@@ -653,7 +658,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 
   if(bActive == TRUE){
     //タッチ判定チェック
-    _IntSub_TouchUpdate(intcomm, intsub);
+    _IntSub_TouchUpdate(intcomm, intsub, my_zone_id);
   }
   
   //WFBCへのワープチェック
@@ -1374,7 +1379,15 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int i, palofs;
   
-  if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+  if(_TutorialMissionNoRecv(intsub) == TRUE){
+    //自分が親でチュートリアルが完了していなくて、ミッションも受注していないなら
+    //どこもタッチできない
+    for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], FALSE);
+    }
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], FALSE);
+  }
+  else if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
     BOOL palace_enable;
     //自分のエリアの為、パレス島しかタッチ出来ない
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
@@ -1388,19 +1401,25 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
       palace_enable = FALSE;
     }
     
+  #if 0
     GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
       INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  #endif
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], palace_enable);
   }
   else{
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], TRUE);
+  #if 0
       GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], 
         INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  #endif
     }
     
+  #if 0
     GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
       INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  #endif
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);
   }
   
@@ -1846,7 +1865,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int print_type = _TITLE_PRINT_NULL;
-  int msg_id;
+  u32 msg_id;
   
   if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
     if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
@@ -1859,14 +1878,25 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
     }
   }
   else{
-    print_type = _TITLE_PRINT_PALACE_GO;
-    msg_id = msg_invasion_title_000;
+    if(intsub->comm.target_mine == TRUE){
+      print_type = _TITLE_PRINT_CLEAR;
+    }
+    else{
+      print_type = _TITLE_PRINT_PALACE_GO;
+      msg_id = msg_invasion_title_000;
+    }
   }
   
   if(intsub->title_print_type == print_type || print_type == _TITLE_PRINT_NULL){
     return; //既に表示済み
   }
   intsub->title_print_type = print_type;
+  
+  if(print_type == _TITLE_PRINT_CLEAR){
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(intsub->printutil_title.win), 0 );
+  	GFL_BMPWIN_TransVramCharacter( intsub->printutil_title.win );
+    return;
+  }
   
   if(print_type >= _TITLE_PRINT_OTHER_PALACE0 && print_type <= _TITLE_PRINT_OTHER_PALACE3){
     const MYSTATUS *myst;
@@ -1941,6 +1971,18 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
           }
         }
       }
+    }
+
+    //だれかがあなたを助けに来ています
+    if(msg_on == FALSE && intsub->comm.target_mine == TRUE){
+      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_023, intsub->strbuf_info );
+      msg_on = TRUE;
+    }
+    
+    //誰かがこの世界に入り込んでいます
+    if(msg_on == FALSE && intsub->comm.my_area_intrude == TRUE){
+      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_021, intsub->strbuf_info );
+      msg_on = TRUE;
     }
   }
 
@@ -2152,7 +2194,7 @@ static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect)
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id)
 {
   u32 x, y;
   int i, my_net_id, net_id;
@@ -2166,7 +2208,8 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
 
   if(intsub->event_req != _EVENT_REQ_NO_NULL || intsub->wfbc_go == TRUE 
       || GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
-      || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE){
+      || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE
+      || _TutorialMissionNoRecv(intsub) == TRUE){
     return;
   }
   
@@ -2208,6 +2251,13 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
       _SetRect(PalaceTownData[i].subscreen_x, PalaceTownData[i].subscreen_y, 
         TOWN_ICON_HITRANGE_HALF, TOWN_ICON_HITRANGE_HALF, &rect);
       if(_CheckRectHit(x, y, &rect) == TRUE){
+        if(PalaceTownData[i].front_zone_id == my_zone_id 
+            || PalaceTownData[i].reverse_zone_id == my_zone_id 
+            || (ZONEDATA_IsWfbc(my_zone_id) == TRUE 
+            && ZONEDATA_IsWfbc(PalaceTownData[i].front_zone_id) == TRUE)){
+          PMSND_PlaySE( SEQ_SE_BEEP );
+          return;
+        }
         if(i == PALACE_TOWN_WFBC){
           intsub->wfbc_go = TRUE;
           intsub->wfbc_seq = 0;
@@ -2229,6 +2279,10 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, 
       PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){
+      if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
+        PMSND_PlaySE( SEQ_SE_BEEP );
+        return;
+      }
       intsub->warp_zone_id = ZONE_ID_PALACE01;
       intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
       intsub->decide_town_tblno = PALACE_TOWN_DATA_PALACE;
@@ -2372,7 +2426,9 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
   }
   else{
     const MISSION_DATA *md;
-
+    int i, my_netid;
+    
+    my_netid = GAMEDATA_GetIntrudeMyID(gamedata);
     comm->now_palace_area = intcomm->intrude_status_mine.palace_area;
     comm->recv_profile = intcomm->recv_profile;
     comm->recv_num = MATH_CountPopulation((u32)(comm->recv_profile));
@@ -2384,6 +2440,13 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
       comm->target_palace_area = intcomm->intrude_status[comm->p_md->target_info.net_id].palace_area;
     }
     comm->target_mine = IntrudeField_Check_Tutorial_OR_TargetMine(intcomm);
+    comm->my_area_intrude = FALSE;
+    for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+      if(i != my_netid && comm->now_palace_area == intcomm->intrude_status[i].palace_area){
+        comm->my_area_intrude = TRUE;
+        break;
+      }
+    }
   }
 }
 
@@ -2511,4 +2574,24 @@ static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub)
     BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y,
     intsub->scrnbuf_time, 0, 0, BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y);
   GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
+}
+
+//--------------------------------------------------------------
+/**
+ * 親機でありチュートリアル実行中でミッションも受信していない状態か判定
+ *
+ * @param   intsub		
+ *
+ * @retval  BOOL		TRUE:その状態。
+ */
+//--------------------------------------------------------------
+static BOOL _TutorialMissionNoRecv(INTRUDE_SUBDISP_PTR intsub)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  
+  if(intsub->comm.p_md == NULL && GAMEDATA_GetIntrudeMyID(gamedata) == 0 
+      && Intrude_CheckTutorialComplete(gamedata) == FALSE){
+    return TRUE;
+  }
+  return FALSE;
 }

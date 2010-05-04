@@ -480,6 +480,10 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       else{ //エラーでもなくミッションの終了でもない。退出による終了
         GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
       }
+
+      if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+        GAMEDATA_SetIntrudeMyID(gamedata, 0); //既に表にいる場合はこのタイミングでセット
+      }
       
       for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
         GFL_STR_DeleteBuffer(intcomm->search_child[i]);
