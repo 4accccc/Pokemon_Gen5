@@ -1395,6 +1395,11 @@ void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
   bew->trainer_bgm_change_flag = TRUE;
 
   BTLV_GAUGE_SetNowBGMNo( bew->bgw, bgm_no );
+
+  if( BTLV_GAUGE_GetPinchBGMFlag( bew->bgw ) == 0 )
+  { 
+    BTLV_GAUGE_SetTrainerBGMChangeFlag( bew->bgw, 1 );
+  }
 }
 
 //============================================================================================

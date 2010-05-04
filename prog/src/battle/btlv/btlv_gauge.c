@@ -2007,6 +2007,19 @@ void  BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no )
 
 //--------------------------------------------------------------
 /**
+ * @brief   ゲージゆれリクエスト
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param pos   リクエストするポケモンの立ち位置
+ */
+//--------------------------------------------------------------
+void  BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value )
+{ 
+  bgw->trainer_bgm_change_flag = value;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   ピンチBGM再生チェック
  *
  * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ

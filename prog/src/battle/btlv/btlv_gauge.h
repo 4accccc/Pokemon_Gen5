@@ -58,4 +58,5 @@ extern  void              BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick s
 extern  void              BTLV_GAUGE_RequestYure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 extern  int               BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw );
 extern  void              BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no );
+extern  void              BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value );
 
