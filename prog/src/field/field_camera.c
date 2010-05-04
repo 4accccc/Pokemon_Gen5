@@ -926,7 +926,39 @@ static void updateGlobalAngle( FIELD_CAMERA * camera, const VecFx32* cp_targetPo
 
   camera->global_angle_yaw = FX_Atan2Idx( way.x, way.z );
 
-  camera->global_angle_pitch = FX_Atan2Idx( way.y, way.z );
+  {
+    fx32 dot;
+    fx32 dot2;
+    u16 new_pitch;
+
+    { //XZ平面への法線とカメラベクトルの内積
+      VecFx32 xz_normal = { 0, FX32_ONE, 0 };
+      dot = VEC_DotProduct( &xz_normal, &way );
+    }
+
+    { //カメラベクトルをXZ平面に射影したベクトルとカメラベクトルの内積
+      VecFx32 xz_vec;
+      xz_vec = way;
+      xz_vec.y = 0;
+      VEC_Normalize( &xz_vec, &xz_vec );
+      dot2 = VEC_DotProduct( &xz_vec, &way );
+    }
+
+    if ( dot2 != 0 ) {
+      new_pitch = FX_Atan2Idx( dot, dot2 );
+    } else {
+      new_pitch = 0;
+    }
+#if 0
+    if ( camera->global_angle_pitch != new_pitch )
+    {
+      OS_Printf("new pitch = %04x (x = %f y=%f, z =%f)\n", new_pitch,
+          FX_FX32_TO_F32(way.x), FX_FX32_TO_F32(way.y), FX_FX32_TO_F32(way.z) );
+      OS_Printf("dot = %f dot2 = %f\n", FX_FX32_TO_F32(dot), FX_FX32_TO_F32(dot2) );
+    }
+#endif
+    camera->global_angle_pitch = new_pitch;
+  }
 }
 
 

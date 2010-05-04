@@ -247,6 +247,12 @@ enum {
 #define EXP_OBJ_MAX   (35)
 
 
+///動作モデル描画時の高さ係数
+enum {
+  MMDL_BBD_OFFS_Y_VALUE = FX32_CONST(4),
+  MMDL_BBD_OFFS_POS_Y   = FX32_CONST(-4),
+};
+
 //--------------------------------------------------------------
 ///	ヒープ用プログラム領域
 //--------------------------------------------------------------
@@ -345,6 +351,8 @@ struct _FIELDMAP_WORK
   const VecFx32 *target_now_pos_p;
 	VecFx32 now_pos;
   
+  fx32 bbdact_y_offs;      ///<動作モデルBLACT描画時のYオフセット
+
 	const DEPEND_FUNCTIONS *func_tbl;
 	void *mapCtrlWork;
 	
@@ -428,6 +436,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork );
 static void fldmapMain_MMDL_Finish( FIELDMAP_WORK *fieldWork );
 static void fldmap_MMDL_InitList(
 		MMDL_LIST *mlist, int list_id, HEAPID heapID );
+static fx32 calcBbdActYOffset( const FIELDMAP_WORK * fieldmap );
 
 //zonechange
 static BOOL fldmapMain_UpdateMoveZone( FIELDMAP_WORK *fieldWork );
@@ -1157,6 +1166,8 @@ static void DrawTop(FIELDMAP_WORK *fieldWork)
 #endif  
   GFL_G3D_ClearG3dInfo();
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
+
+  fieldWork->bbdact_y_offs = calcBbdActYOffset( fieldWork );
 
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
   fldmap_G3D_Draw_top( fieldWork );
@@ -2624,8 +2635,8 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 
 	//動作モデル描画　セットアップ
   {
-    const u16 *pAngle = FIELD_CAMERA_GetAngleYawAddress( fieldWork->camera_control );
-	  MMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys, pAngle );
+    const u16 *pAngleYaw = FIELD_CAMERA_GetAngleYawAddress( fieldWork->camera_control );
+	  MMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys, pAngleYaw );
 	}
 
 	//動作モデル　復帰
@@ -3807,5 +3818,32 @@ void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOL inFlg)
 FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork)
 {
   return &fieldWork->FaceUpWkPtr;
+}
+
+//==================================================================
+/**
+ * @brief 動作モデル描画時のY方向オフセット取得
+ */
+//==================================================================
+fx32 FIELDMAP_GetBbdActYOffs( const FIELDMAP_WORK * fieldmap )
+{
+  return fieldmap->bbdact_y_offs;
+}
+
+//==================================================================
+/**
+ * @brief 動作モデル描画時のY方向オフセット計算
+ */
+//==================================================================
+static fx32 calcBbdActYOffset( const FIELDMAP_WORK * fieldmap )
+{
+  u16 angle;
+  fx32 offs;
+  angle = *FIELD_CAMERA_GetAnglePitchAddress( fieldmap->camera_control );
+  offs = MMDL_BBD_OFFS_POS_Y + FX_Mul( MMDL_BBD_OFFS_Y_VALUE, MATH_ABS(FX_CosIdx(angle)) );
+  if ( offs < FX32_CONST(-2) ) {
+    offs = FX32_CONST(-2);
+  }
+  return offs;
 }
 

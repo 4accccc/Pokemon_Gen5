@@ -9,13 +9,14 @@
 #include "fldmmdl.h"
 #include "fldmmdl_procdraw.h"
 
+#include "fieldmap.h" //FIELDMAP_GetBbdActYOffs
 //======================================================================
 //  define
 //======================================================================
 //--------------------------------------------------------------
 /// ビルボード共通オフセット表示座標
 //--------------------------------------------------------------
-#define MMDL_BBD_OFFS_POS_Y (-FX32_ONE*2)  //(FX32_ONE*4)
+//#define MMDL_BBD_OFFS_POS_Y (-FX32_ONE*2)  //(FX32_ONE*4)
 #define MMDL_BBD_OFFS_POS_Z (FX32_ONE*4)  //(-FX32_ONE*8)
 
 //--------------------------------------------------------------
@@ -69,7 +70,7 @@ static void comManAnmCtrl_Init( COMMAN_ANMCTRL_WORK *work );
 static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
     MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID );
 
-static void blact_SetCommonOffsPos( VecFx32 *pos );
+static void blact_SetCommonOffsPos( MMDL *mmdl, VecFx32 *pos );
 static u16 blact_GetDrawDir( MMDL *mmdl );
 static void blact_UpdatePauseVanish(
     MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID,
@@ -212,7 +213,7 @@ static void DrawHero_Draw( MMDL *mmdl )
   comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -313,7 +314,7 @@ static void DrawCycleHero_Draw( MMDL *mmdl )
   }
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
@@ -394,7 +395,7 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -477,7 +478,7 @@ static void DrawBlAct_Draw( MMDL *mmdl )
   comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -529,7 +530,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
 
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -582,7 +583,7 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
   }
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -635,7 +636,7 @@ static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
   }
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -754,7 +755,7 @@ static void DrawItemGetHero_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -818,7 +819,7 @@ static void DrawPCAzukeHero_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -916,7 +917,7 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
 
   {
     VecFx32 offs;
@@ -986,7 +987,7 @@ static void DrawYureHero_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -1096,7 +1097,7 @@ static void DrawBlAct_DrawOnePatternLoop( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, FALSE, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -1162,7 +1163,7 @@ static void DrawBlAct_DrawOnePattern( MMDL *mmdl )
 #endif
 
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -1258,7 +1259,7 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
     
     MMDL_GetDrawVectorPos( mmdl, &pos );
     
-    blact_SetCommonOffsPos( &pos );
+    blact_SetCommonOffsPos( mmdl, &pos );
     GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
     
@@ -1415,12 +1416,12 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
     
     MMDL_GetDrawVectorPos( mmdl, &pos );
 
-    blact_SetCommonOffsPos( &pos );
+    blact_SetCommonOffsPos( mmdl, &pos );
     GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
     
 //    MMDL_GetDrawVectorPos( mmdl, &pos );
-//    blact_SetCommonOffsPos( &pos );
+//    blact_SetCommonOffsPos( mmdl, &pos );
     blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   }
 }
@@ -1586,7 +1587,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
       mmdl, actSys, work->actID, init_flag, TRUE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
   GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -1686,7 +1687,7 @@ static void DrawBlActSpider_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -1757,7 +1758,7 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
   blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
   
   MMDL_GetDrawVectorPos( mmdl, &pos );
-  blact_SetCommonOffsPos( &pos );
+  blact_SetCommonOffsPos( mmdl, &pos );
   GFL_BBD_SetObjectTrans(
     GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
@@ -1970,11 +1971,14 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void blact_SetCommonOffsPos( VecFx32 *pos )
+static void blact_SetCommonOffsPos( MMDL * mmdl, VecFx32 *pos )
 {
-#ifdef MMDL_BBD_OFFS_POS_Y
-  pos->y += MMDL_BBD_OFFS_POS_Y;
-#endif
+  MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  FIELDMAP_WORK * fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );
+  fx32 y_offs = FIELDMAP_GetBbdActYOffs( fieldmap );
+  pos->y += y_offs;
+  //pos->y += MMDL_BBD_OFFS_POS_Y;
+
 #ifdef MMDL_BBD_DRAW_OFFS_Z_USE
   pos->z += MMDL_BBD_OFFS_POS_Z;
 #endif
