@@ -398,6 +398,99 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_PALACE_BLACK_MIST = {
 };
 
 
+// パレス霧
+WEATHER_TASK_DATA c_WEATHER_TASK_DATA_PALACE_WHITE_MIST_HIGH = {
+	//	グラフィック情報
+	ARCID_FIELD_WEATHER,			// アークID
+	FALSE,		// OAMを使用するか？
+	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	0,			// OAM CG
+	0,			// OAM PLTT
+	0,			// OAM CELL
+	0,			// OAM CELLANM
+  {
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+  },
+
+	// ワークサイズ
+	sizeof(WEATHER_PALACE_MIST_WORK),
+
+	// 管理関数
+	WEATHER_PALACE_WHITE_MIST_HIGH_Init,		// 初期化
+	WEATHER_PALACE_MIST_FadeIn,		// フェードイン
+	WEATHER_PALACE_MIST_NoFade,		// フェードなし
+	WEATHER_PALACE_MIST_Main,		// メイン処理
+	WEATHER_PALACE_MIST_InitFadeOut,	// フェードアウト
+	WEATHER_PALACE_MIST_FadeOut,		// フェードアウト
+	WEATHER_PALACE_MIST_Exit,		// 破棄
+
+	// オブジェ動作関数
+	WEATHER_PALACE_MIST_OBJ_Move,
+};
+
+WEATHER_TASK_DATA c_WEATHER_TASK_DATA_PALACE_BLACK_MIST_HIGH = {
+	//	グラフィック情報
+	ARCID_FIELD_WEATHER,			// アークID
+	FALSE,		// OAMを使用するか？
+	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	0,			// OAM CG
+	0,			// OAM PLTT
+	0,			// OAM CELL
+	0,			// OAM CELLANM
+  {
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+    {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+    },
+  },
+
+	// ワークサイズ
+	sizeof(WEATHER_PALACE_MIST_WORK),
+
+	// 管理関数
+	WEATHER_PALACE_BLACK_MIST_HIGH_Init,		// 初期化
+	WEATHER_PALACE_MIST_FadeIn,		// フェードイン
+	WEATHER_PALACE_MIST_NoFade,		// フェードなし
+	WEATHER_PALACE_MIST_Main,		// メイン処理
+	WEATHER_PALACE_MIST_InitFadeOut,	// フェードアウト
+	WEATHER_PALACE_MIST_FadeOut,		// フェードアウト
+	WEATHER_PALACE_MIST_Exit,		// 破棄
+
+	// オブジェ動作関数
+	WEATHER_PALACE_MIST_OBJ_Move,
+};
+
 
 
 

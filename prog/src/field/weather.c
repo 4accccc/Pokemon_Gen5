@@ -263,9 +263,15 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 	},
 
 
-	// パレスホワイト霧
+	// パレスホワイト霧 HIGH
 	{
-		&c_WEATHER_TASK_DATA_PALACE_WHITE_MIST,
+		&c_WEATHER_TASK_DATA_PALACE_WHITE_MIST_HIGH,
+		FS_OVERLAY_ID(field_weather_mist)
+	},
+
+	// パレスブラック霧　HIGH
+	{
+		&c_WEATHER_TASK_DATA_PALACE_BLACK_MIST_HIGH,
 		FS_OVERLAY_ID(field_weather_mist)
 	},
 

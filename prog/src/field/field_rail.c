@@ -2238,6 +2238,13 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
         work->line->name, 
         RAIL_OFS_TO_GRID(work->line_ofs), 
         RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(width_ofs_max) );
+
+    
+    OS_TPrintf("zonetable 座標用のデータ\n" );
+    OS_TPrintf("RAIL:%s :front_grid=%d side_grid=%d \n",
+        work->line->name, 
+        RAIL_OFS_TO_GRID(work->line_ofs), 
+        RAIL_OFS_TO_GRID(work->width_ofs) );
   }
 
 }
