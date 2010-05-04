@@ -372,9 +372,12 @@ typedef enum
 //--------------------------------------------------------------
 enum
 {
-	MMDL_TCBPRI_OFFS_ST = 32,		///<基本
-	MMDL_TCBPRI_OFFS_PAIR,			///<ペア動作
-	MMDL_TCBPRI_OFFS_AFTER,			///<フィールド動作モデルよりも後
+	MMDL_TCBPRI_STANDARD = 128,		///<基本
+  
+  //MMDL_TCBPRI_STANDARDに加えるプライオリティオフセット
+  MMDL_TCBPRI_OFFS_PLAYER = -1,   ///<自機
+	MMDL_TCBPRI_OFFS_PAIR = 1,			///<ペア動作
+	MMDL_TCBPRI_OFFS_AFTER = 2,			///<フィールド動作モデルよりも後
 };
 
 //--------------------------------------------------------------

@@ -1437,7 +1437,7 @@ static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_BossN1[] = {
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 
-static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT1_ANMNO_MAX] =
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT2_ANMNO_MAX] =
 {
   DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
   DATA_BlActAnmNonFlip_StopD,
@@ -1482,6 +1482,7 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT1_ANMN
   
   DATA_BlActAnmNonFlip_BossN0, //DRAW_STA_ACT0
   DATA_BlActAnmNonFlip_BossN1, //DRAW_STA_ACT1
+  DATA_BlActAnmNonFlip_BossN1, //DRAW_STA_ACT2
 };
 
 //--------------------------------------------------------------
@@ -2864,7 +2865,7 @@ const MMDL_BBDACT_ANMTBL
   //MMDL_BLACT_ANMTBLNO_SUPPORT
   {DATA_BlActAnmNonFlipSupportTbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_BOSS_N
-  {DATA_BlActAnmNonFlipBossN,DRAW_STA_ACT1_ANMNO_MAX},
+  {DATA_BlActAnmNonFlipBossN,DRAW_STA_ACT2_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_SAGE1
   {DATA_BlActAnmNonFlipSage1,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_NINJA

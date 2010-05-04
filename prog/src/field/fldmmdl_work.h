@@ -37,7 +37,7 @@ struct _TAG_MMDLSYS
   HEAPID sysHeapID;        ///<システム用 ヒープID
   HEAPID heapID;          ///<ヒープID
   
-  u16 tcb_pri;          ///<TCBプライオリティ
+  s16 tcb_pri;          ///<TCBプライオリティ
   u8 padding0;
   u8 padding1;
   

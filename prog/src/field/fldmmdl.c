@@ -177,6 +177,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
   fos->mmdl_max = max;
   fos->sysHeapID = heapID;
   fos->rockpos = rockpos;
+  fos->tcb_pri = MMDL_TCBPRI_STANDARD;
   mmdlsys_InitOBJCodeParam( fos, heapID );
   return( fos );
 }
@@ -3915,18 +3916,24 @@ void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *fos )
 //--------------------------------------------------------------
 static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
 {
-  int pri,code;
+  int pri,code,offs;
   GFL_TCB * tcb;
   
+  offs = 0;
   pri = MMDLSYS_GetTCBPriority( sys );
   code = MMDL_GetMoveCode( mmdl );
   
   if( code == MV_PAIR || code == MV_TR_PAIR ){
-    pri += MMDL_TCBPRI_OFFS_PAIR;
+    offs = MMDL_TCBPRI_OFFS_PAIR;
+  }else if( MMDL_GetOBJID(mmdl) == MMDL_ID_PLAYER ){
+    offs = MMDL_TCBPRI_OFFS_PLAYER;
   }
   
+  pri += offs;
+  GF_ASSERT( pri >= 0 );
+
   tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS((MMDLSYS*)sys),
-      mmdl_TCB_MoveProc, mmdl, pri );
+      mmdl_TCB_MoveProc, mmdl, (u32)pri );
   GF_ASSERT( tcb != NULL );
   
   mmdl->pTCB = tcb;

@@ -338,6 +338,10 @@
 #define DRAW_STA_ACT1 (DRAW_STA_ACT0+1)
 #define DRAW_STA_ACT1_ANMNO_MAX (DRAW_STA_ACT0_ANMNO_MAX+1)
 
+//３種類
+#define DRAW_STA_ACT2 (DRAW_STA_ACT0+2)
+#define DRAW_STA_ACT2_ANMNO_MAX (DRAW_STA_ACT0_ANMNO_MAX+2)
+
 //--------------------------------------------------------------
 ///  PC受付専用ステータス
 //--------------------------------------------------------------
