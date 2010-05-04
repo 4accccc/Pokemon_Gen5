@@ -37,6 +37,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/system_data.h"
 #include "savedata/bsubway_savedata.h"
+#include "savedata/my_pms_data.h"
 
 #include "app/codein.h"
 
@@ -1241,6 +1242,8 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
   WIFI_HISTORY* p_history       = SaveData_GetWifiHistory( p_savedata );
   WIFI_LIST* p_wifilist         = GAMEDATA_GetWiFiList( p_gamedata );
   BSUBWAY_SCOREDATA* p_score    = GAMEDATA_GetBSubwayScoreData( p_gamedata );
+  MYPMS_DATA* p_pms             = SaveData_GetMyPmsData( p_savedata );
+  int i;
 
   GFL_STD_MemClear( p_player, sizeof(Dpw_Bt_Player) );
 
@@ -1262,13 +1265,10 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
   p_player->trainerType = MyStatus_GetTrainerView( p_mystatus );
  
   //メッセージデータ取得
-  //@TODO メッセージを格納
-  /*
   for(i = 0;i < 3;i++){
-    GFL_STD_MemCopy(TowerPlayerMsg_Get(sv,BTWR_MSG_PLAYER_READY+i),&(p_player->message[8*i]),8);
+    MYPMS_GetPms( p_pms, MYPMS_PMS_TYPE_BATTLE_READY+i, (PMS_DATA*)&(p_player->message[8*i]) );
   }
-  GFL_STD_MemCopy(TowerPlayerMsg_Get(sv,BTWR_MSG_LEADER),p_player->leaderMessage,8);
-  */
+  MYPMS_GetPms( p_pms, MYPMS_PMS_TYPE_BATTLE_TOP, (PMS_DATA*)p_player->leaderMessage );
 
   //タワーセーブデータ取得
   p_player->result =  BSUBWAY_SCOREDATA_GetWifiScore( p_score );
@@ -1516,7 +1516,7 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
     if( p_wk->timeout == BSUBWAY_TIMEOUT_TIME ){
       // 過去策↓
       // CommFatalErrorFunc_NoNumber(); //強制ふっとばし
-      // @TODO ふっとばし　SERVERタイムアウトと同様の処理を行う。
+      // 今作では、SERVERタイムアウトと同様の処理を行う。
       // キャンセルコール
       Dpw_Bt_CancelAsync();
 
@@ -1580,7 +1580,7 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
     if( p_wk->timeout == BSUBWAY_TIMEOUT_TIME ){
       // 過去策↓
       // CommFatalErrorFunc_NoNumber(); //強制ふっとばし
-      // @TODO ふっとばし　SERVERタイムアウトと同様の処理を行う。
+      // 今作では、SERVERタイムアウトと同様の処理を行う。
       // キャンセルコール
       Dpw_Bt_CancelAsync();
 
@@ -1667,9 +1667,6 @@ static BOOL ERROR_DATA_IsError( const WIFI_BSUBWAY_ERROR* cp_wk )
 static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
 {
   int msgno =0;
-
-  // @TODO エラーメッセージ仮です。
-  //
 
   // BtError
   if( cp_wk->error_code < 0 ){
