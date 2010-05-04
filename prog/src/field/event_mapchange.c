@@ -2055,7 +2055,9 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
   }
   
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
-  GAMEDATA_SetIntrudeMyID(gamedata, 0);
+  if(Intrude_Check_CommConnect(GAMESYSTEM_GetGameCommSysPtr(gameSystem)) == NULL){
+    GAMEDATA_SetIntrudeMyID(gamedata, 0);
+  }
 //  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
 
   return event;

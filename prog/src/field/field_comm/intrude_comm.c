@@ -478,7 +478,13 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
         }
       }
       else{ //エラーでもなくミッションの終了でもない。退出による終了
-        GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
+        if(intcomm->recv_profile > 1){ //誰かと繋がっていた状態で終了
+          GameCommSys_SetLastStatus(
+            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
+        }
+        else{  //誰とも接続していない状態で終了
+          ;
+        }
       }
 
       if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){

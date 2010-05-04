@@ -831,8 +831,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
       case GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT:           //誰かの退出による終了
       case GAME_COMM_LAST_STATUS_INTRUDE_ERROR:            //通信エラー
       default:
-        *seq = SEQ_FINISH;
-        return GMEVENT_RES_CONTINUE;
+        break;
       case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS:  //ミッション成功で終了
         scr_id = SCRID_PALACE01_OLDMAN_MISSION_FIRST_CLEAR;
         break;
@@ -843,9 +842,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
       }
       SCRIPT_CallScript( event, scr_id, NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     }
-    else{
-      *seq = SEQ_FINISH;
-    }
+    *seq = SEQ_FINISH;
     break;
     
   case SEQ_FINISH:
