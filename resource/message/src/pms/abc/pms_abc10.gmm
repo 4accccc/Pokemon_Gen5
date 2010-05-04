@@ -604,26 +604,31 @@
 	</row>
 
 	<row id="search_abc_42">
+		<language name="JPN" width="216">さんたーそうる</language>
+		<language name="JPN_KANJI" width="216">さんたーそうる</language>
+	</row>
+
+	<row id="search_abc_43">
 		<language name="JPN" width="216">さんと</language>
 		<language name="JPN_KANJI" width="216">さんと</language>
 	</row>
 
-	<row id="search_abc_43">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">さんとはん</language>
 		<language name="JPN_KANJI" width="216">さんとはん</language>
 	</row>
 
-	<row id="search_abc_44">
+	<row id="search_abc_45">
 		<language name="JPN" width="216">さんねん</language>
 		<language name="JPN_KANJI" width="216">さんねん</language>
 	</row>
 
-	<row id="search_abc_45">
+	<row id="search_abc_46">
 		<language name="JPN" width="216">さんはわー</language>
 		<language name="JPN_KANJI" width="216">さんはわー</language>
 	</row>
 
-	<row id="search_abc_46">
+	<row id="search_abc_47">
 		<language name="JPN" width="216">さんほ</language>
 		<language name="JPN_KANJI" width="216">さんほ</language>
 	</row>
