@@ -35,8 +35,10 @@ extern GMEVENT *FLD3D_CI_CreateEncCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr
 extern GMEVENT *FLD3D_CI_CreateNpcFlyCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const int inObjID );
 
 #ifdef PM_DEBUG
+#if 0
 extern void FLD3D_CI_FlySkyCameraDebug(
     GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player, FLDNOGRID_MAPPER *mapper);
+#endif
 extern void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo );
 extern void FLD3D_CI_CallPokeCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr );
 extern void FLD3D_CI_CallEncCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr );

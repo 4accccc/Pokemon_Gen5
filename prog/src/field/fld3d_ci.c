@@ -219,7 +219,9 @@ static void ReqCapture(FLD3D_CI_PTR ptr);
 static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
 
 #ifdef PM_DEBUG
+#if 0
 static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
+#endif
 #endif  //PM_DEBUG
 
 static GMEVENT_RESULT PokeGraTransEvt( GMEVENT* event, int* seq, void* work );
@@ -1380,12 +1382,12 @@ static void DeleteRes(RES_SETUP_DAT *ioDat)
   }
 }
 
+#if 0
 #ifdef PM_DEBUG
 #define FLYSKY_CAM_MOVE_FRAME (10)
 //--------------------------------------------------------------
 /**
  * @brief	空を飛ぶカメラアングルになるイベントを作成する
- * @todo　この機能はこのファイルから切り離す
  *
  * @param	
  *
@@ -1529,6 +1531,7 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
 }
 
 #endif  //PM_DEBUG
+#endif
 
 //----------------------------------------------------------------------------
 /**
