@@ -1237,7 +1237,6 @@ typedef struct {
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
     GMEVENT *event, int *seq, void *wk );
-static void setupTouchCameraSubscreen(DMESSWORK * dmess);
 static void setupSoundViewerSubscreen(DMESSWORK * dmess);
 static void setupNormalSubscreen(DMESSWORK * dmess);
 static void setupTopMenuSubscreen(DMESSWORK * dmess);
@@ -1279,7 +1278,6 @@ static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[] =
 {
-  { DEBUG_FIELD_STR_SUBSCRN01, (void*)setupTouchCameraSubscreen },
   { DEBUG_FIELD_STR_SUBSCRN02, (void*)setupSoundViewerSubscreen },
   { DEBUG_FIELD_STR_SUBSCRN03, (void*)setupNormalSubscreen },
   { DEBUG_FIELD_STR_SUBSCRN04, (void*)setupTopMenuSubscreen },
@@ -1344,24 +1342,6 @@ static GMEVENT_RESULT debugMenuSubscreenSelectEvent(
   }
 
   return GMEVENT_RES_CONTINUE ;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief サブスクリーンのカメラ操作に同期させる
- *
- * @todo  カメラをバインドしてから、どのように切り離すか？を確定させる
- */
-//--------------------------------------------------------------
-static void setupTouchCameraSubscreen(DMESSWORK * dmess)
-{
-  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
-  {
-    void * inner_work;
-    FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(dmess->fieldWork);
-    inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(dmess->subscreen);
-    FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS, dmess->heapID);
-  }
 }
 
 //--------------------------------------------------------------

@@ -327,7 +327,7 @@ extern void FIELD_RAIL_MAN_GetBindWorkPos( const FIELD_RAIL_MAN * man, VecFx32* 
 extern BOOL FIELD_RAIL_MAN_IsBindWorkMove( const FIELD_RAIL_MAN * man );
 
 #ifdef PM_DEBUG
-// 仮処理 色々な部分で、RAILMANからLocationなどを取得しているため、作成
+//  色々な部分で、RAILMANからLocationなどを取得しているため、作成
 // これを使用している部分は後々は、PLAYERの情報から取得できるようになるはず
 extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_DEBUG_GetBindWork( const FIELD_RAIL_MAN * man );
 

@@ -13,6 +13,9 @@
 
 #include "gflib.h"
 
+
+#include "system/main.h"
+
 #include "arc/arc_def.h"
 #include "arc/field_wfbc_data.naix"
 
@@ -24,6 +27,9 @@
 #include "field_status_local.h"
 
 #include "eventwork_def.h"
+
+
+#include "net/dwc_tool.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -289,18 +295,30 @@ void FIELD_WFBC_CORE_Management( FIELD_WFBC_CORE* p_wk )
   int i;
 
   GF_ASSERT( p_wk );
+
+  // TRUE以上の値がはいっているばあい。
+  if( p_wk->data_in > TRUE ){
+    p_wk->data_in = TRUE;
+  }
   
   // 一応データがない状態も管理しておく
   if( (p_wk->data_in == FALSE) && (p_wk->type != FIELD_WFBC_CORE_TYPE_MAX) )
   {
     p_wk->type = FIELD_WFBC_CORE_TYPE_MAX;
+    TOMOYA_Printf( "OverWrite max\n" );
   }
 
   // 街タイプの調整
   if( (p_wk->data_in == TRUE) && (p_wk->type >= FIELD_WFBC_CORE_TYPE_MAX) )
   {
-    // @TODO 自分か通信相手のROMコードに合わせるべき
-    p_wk->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+    // 不正データ 自分のROMコードに合わせる
+    if( GET_VERSION() == VERSION_BLACK ){
+      p_wk->type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+    }else{
+      p_wk->type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+    }
+
+    TOMOYA_Printf( "OverWrite city\n" );
   }
 
   // 人物情報の調整
@@ -764,6 +782,50 @@ void FIELD_WFBC_CORE_SetShopData( const FIELD_WFBC_CORE* cp_wk, SHOP_ITEM* p_buf
 //-------------------------------------
 ///	FIELD_WFBC_CORE_PEOPLE用関数
 //=====================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ調整  不正データの場合は、正常な情報に書き換えます。
+ *
+ *	@param	p_wk  人物ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk )
+{
+  int i;
+  STRCODE eom = GFL_STR_GetEOMCode();
+  BOOL ok;
+  
+  GF_ASSERT( p_wk );
+
+  // npc_idが範囲内？
+  if( p_wk->npc_id >= FIELD_WFBC_NPCID_MAX ){
+    p_wk->npc_id = 0;
+    TOMOYA_Printf("OverWrite npc_id\n");
+  }
+
+  // 機嫌値が最大値以上？
+  if( p_wk->mood > FIELD_WFBC_MOOD_MAX ){
+    p_wk->mood = 0; // おかしなあたいなので最低にする。
+    TOMOYA_Printf("OverWrite mood\n");
+  }
+
+  // 親の名前に終端コードがある？
+  if( p_wk->parent_in ){
+    ok = FALSE;
+    for( i=0; i<(PERSON_NAME_SIZE + EOM_SIZE); i++ ){
+      if( p_wk->parent[i] == eom ){
+        ok = TRUE;
+      }
+    }
+
+    if( ok == FALSE ){
+      DWC_TOOL_SetBadNickName( p_wk->parent, (PERSON_NAME_SIZE + EOM_SIZE), GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+      TOMOYA_Printf("OverWrite parent name\n");
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  話しかけたときの計算

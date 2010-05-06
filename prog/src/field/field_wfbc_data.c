@@ -251,28 +251,37 @@ void FIELD_WFBC_CORE_PEOPLE_Clear( FIELD_WFBC_CORE_PEOPLE* p_wk )
 //-----------------------------------------------------------------------------
 BOOL FIELD_WFBC_CORE_PEOPLE_IsConfomity( const FIELD_WFBC_CORE_PEOPLE* cp_wk )
 {
+  int i;
+  STRCODE eom = GFL_STR_GetEOMCode();
+  BOOL ok;
+  
   GF_ASSERT( cp_wk );
 
-  return TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  データ調整  不正データの場合は、正常な情報に書き換えます。
- *
- *	@param	p_wk  人物ワーク
- */
-//-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk )
-{
-  GF_ASSERT( p_wk );
-
   // npc_idが範囲内？
+  if( cp_wk->npc_id >= FIELD_WFBC_NPCID_MAX ){
+    return FALSE;
+  }
 
   // 機嫌値が最大値以上？
+  if( cp_wk->mood > FIELD_WFBC_MOOD_MAX ){
+    return FALSE;
+  }
 
   // 親の名前に終端コードがある？
+  if( cp_wk->parent_in ){
+    ok = FALSE;
+    for( i=0; i<(PERSON_NAME_SIZE + EOM_SIZE); i++ ){
+      if( cp_wk->parent[i] == eom ){
+        ok = TRUE;
+      }
+    }
 
+    if( ok == FALSE ){
+      return FALSE;
+    }
+  }
+
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------

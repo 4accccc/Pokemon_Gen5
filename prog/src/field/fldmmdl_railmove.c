@@ -53,7 +53,6 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl );
 
 
 // アトリビュート関係
-// @TODO 形だけで、中身は未実装　090826 tomoya
 static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl );
 static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl );
 static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl );

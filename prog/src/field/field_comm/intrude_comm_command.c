@@ -1984,6 +1984,7 @@ static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   
   dest_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
+  FIELD_WFBC_CORE_Management( (FIELD_WFBC_CORE*)wfbc_core );  //不正データ書き換え
   GFL_STD_MemCopy(wfbc_core, dest_wfbc, sizeof(FIELD_WFBC_CORE));
   GAMEDATA_SetUpPalaceWFBCCoreData( gamedata, wfbc_core );
   
@@ -2010,7 +2011,7 @@ BOOL IntrudeSend_Wfbc(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit, const FI
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
-  
+
   ret = GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_netid_bit, INTRUDE_CMD_WFBC, sizeof(FIELD_WFBC_CORE), wfbc_core,
     FALSE, FALSE, FALSE);
