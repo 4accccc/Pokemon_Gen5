@@ -629,6 +629,7 @@ void FIELD_SOUND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
     // ループサウンドなら保存
     if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
       SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
+      GF_ASSERT( (player_ID == SEPLAYER_SE1) || (player_ID == SEPLAYER_SE2) );
       fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = soundIdx;
       fieldSound->envse.envse_vol_tbl[ player_ID - SEPLAYER_SE1 ] = FSND_ENVSE_VOL_NONE;
     }
@@ -661,6 +662,7 @@ void FIELD_SOUND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
     // ループサウンドなら保存
     if( FLD_ENVSE_DATA_IsLoopSE( soundIdx ) ){
       SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
+      GF_ASSERT( (player_ID == SEPLAYER_SE1) || (player_ID == SEPLAYER_SE2) );
       fieldSound->envse.envse_tbl[ player_ID - SEPLAYER_SE1 ] = soundIdx;
       fieldSound->envse.envse_vol_tbl[ player_ID - SEPLAYER_SE1 ] = vol;
     }
@@ -714,6 +716,7 @@ void FIELD_SOUND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
 void FIELD_SOUND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
 {
   SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( soundIdx );
+  GF_ASSERT( (player_ID == SEPLAYER_SE1) || (player_ID == SEPLAYER_SE2) );
 
   // 環境音SEかチェック
   if( FLD_ENVSE_DATA_IsEnvSE( soundIdx ) == FALSE ){

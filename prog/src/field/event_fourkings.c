@@ -24,6 +24,8 @@
 #include "arc/fourkings_scene.naix"
 
 #include "field/field_const.h"
+#include "field/eventwork.h"
+#include "eventwork_def.h"
 
 #include "event_fourkings.h"
 
@@ -1607,12 +1609,16 @@ static void ESPERT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fiel
 //=====================================
 typedef struct 
 {
-  int dummy;
+  u16*  p_localwk_1;
+  u16   se_stop;
+  EVENTWORK* p_evwork;
+  FIELD_SOUND* p_fieldsound;
 } BAD_SOUND;
 
 
 static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void BAD_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 
 
 const FLDMAPFUNC_DATA c_FLDMAPFUNC_BAD_SOUND = 
@@ -1621,7 +1627,7 @@ const FLDMAPFUNC_DATA c_FLDMAPFUNC_BAD_SOUND =
   sizeof(BAD_SOUND),
   BAD_SOUND_Create,
   BAD_SOUND_Delete,
-  NULL,
+  BAD_SOUND_Update,
   NULL,
 };
 
@@ -1634,13 +1640,20 @@ const FLDMAPFUNC_DATA c_FLDMAPFUNC_BAD_SOUND =
 //-----------------------------------------------------------------------------
 static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
-  // ループ再生開始
-  {
-    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
-    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  BAD_SOUND* p_wk = p_work;
 
-    FSND_PlayEnvSE( p_fieldsound, SEQ_SE_FLD_116 );
+  p_wk->p_evwork      = GAMEDATA_GetEventWork( p_gdata );
+  p_wk->p_fieldsound  = GAMEDATA_GetFieldSound( p_gdata );
+  p_wk->p_localwk_1   = EVENTWORK_GetEventWorkAdrs( p_wk->p_evwork, LOCALWORK1 );
+  
+  // ループ再生開始
+  if( *p_wk->p_localwk_1 == FALSE ){
+    FSND_PlayEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_116 );
+    p_wk->se_stop = FALSE;
+  }else{
+    p_wk->se_stop = TRUE;
   }
 }
 
@@ -1652,13 +1665,27 @@ static void BAD_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 //-----------------------------------------------------------------------------
 static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
-  // ループ停止
-  {
-    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
-    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+  BAD_SOUND* p_wk = p_work;
 
-    FSND_StopEnvSE( p_fieldsound, SEQ_SE_FLD_116 );
+  if( p_wk->se_stop == FALSE ){
+    FSND_StopEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_116 );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  悪SEシステム  アップデート
+ */
+//-----------------------------------------------------------------------------
+static void BAD_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  BAD_SOUND* p_wk = p_work;
+
+  if( *p_wk->p_localwk_1 ){
+    if( p_wk->se_stop == FALSE ){
+      FSND_StopEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_116 );
+      p_wk->se_stop = FALSE;
+    }
   }
 }
 
@@ -1673,12 +1700,16 @@ static void BAD_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 //=====================================
 typedef struct 
 {
-  int dummy;
+  u16*  p_localwk_1;
+  u16   se_stop;
+  EVENTWORK* p_evwork;
+  FIELD_SOUND* p_fieldsound;
 } FIGHT_SOUND;
 
 
 static void FIGHT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 static void FIGHT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
+static void FIGHT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 
 
 const FLDMAPFUNC_DATA c_FLDMAPFUNC_FIGHT_SOUND = 
@@ -1687,7 +1718,7 @@ const FLDMAPFUNC_DATA c_FLDMAPFUNC_FIGHT_SOUND =
   sizeof(FIGHT_SOUND),
   FIGHT_SOUND_Create,
   FIGHT_SOUND_Delete,
-  NULL,
+  FIGHT_SOUND_Update,
   NULL,
 };
 
@@ -1700,6 +1731,21 @@ const FLDMAPFUNC_DATA c_FLDMAPFUNC_FIGHT_SOUND =
 //-----------------------------------------------------------------------------
 static void FIGHT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
+  FIGHT_SOUND* p_wk = p_work;
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys ); 
+  
+  p_wk->p_evwork      = GAMEDATA_GetEventWork( p_gdata );
+  p_wk->p_fieldsound  = GAMEDATA_GetFieldSound( p_gdata );
+  p_wk->p_localwk_1   = EVENTWORK_GetEventWorkAdrs( p_wk->p_evwork, LOCALWORK1 );
+
+  if( *p_wk->p_localwk_1 == FALSE ){
+    FSND_PlayEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_174 );
+    //TOMOYA_Printf( "EnvSe Start\n" );
+    p_wk->se_stop = FALSE;
+  }else{
+    p_wk->se_stop = TRUE;
+  }
 }
 
 
@@ -1710,4 +1756,32 @@ static void FIGHT_SOUND_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_field
 //-----------------------------------------------------------------------------
 static void FIGHT_SOUND_Delete(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
 {
+  FIGHT_SOUND* p_wk = p_work;
+
+  if( p_wk->se_stop == FALSE ){
+    FSND_StopEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_174 );
+    //TOMOYA_Printf( "EnvSe Stop del\n" );
+  }
 }
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  格闘SEシステム  更新
+ */
+//-----------------------------------------------------------------------------
+static void FIGHT_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work )
+{
+  FIGHT_SOUND* p_wk = p_work;
+
+  if( *p_wk->p_localwk_1 ){
+    if( p_wk->se_stop == FALSE ){
+      FSND_StopEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_174 );
+      //TOMOYA_Printf( "EnvSe Stop\n" );
+      p_wk->se_stop = TRUE;
+    }
+  }
+}
+
