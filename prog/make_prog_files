@@ -480,7 +480,9 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/straw_poke_form.c \
         field/event_battle.c \
         app/trainercard/trcard_sys.c \
-        system/g3d_tool.c
+        system/g3d_tool.c \
+        field/scrcmd_t01_gmk.c \
+        field/field_gimmick_t01_st.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)

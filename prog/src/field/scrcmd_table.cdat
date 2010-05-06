@@ -869,6 +869,9 @@
 
   //ポケモン鳴き声再生 ( ペラップ録音データ適用 ver. )
   DEF_CMD( EvCmdVoicePlay_forMine, EV_SEQ_VOICE_PLAY_FOR_MINE )
+
+  //Ｔ01ギミック発動トリガーセット
+  DEF_CMD( EvCmdT01Gmk_Start, EV_SEQ_T01_GMK_START )
   
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -21,7 +21,7 @@
  * @param fieldmap ギミック動作フィールドマップ
  */
 //------------------------------------------------------------------------------------------
-void T01_GIMMICK_Start( GAMESYS_WORK *gsys  )
+void T01_GIMMICK_Start( GAMESYS_WORK *gsys )
 {
   T01_SV_WORK *gmk_sv_work;
   {

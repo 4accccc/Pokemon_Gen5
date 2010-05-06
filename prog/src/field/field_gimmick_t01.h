@@ -11,3 +11,5 @@
 extern void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap );
 extern void T01_GIMMICK_End( FIELDMAP_WORK* fieldmap );
 extern void T01_GIMMICK_Move( FIELDMAP_WORK* fieldmap );
+
+extern void T01_GIMMICK_Start( GAMESYS_WORK *gsys );
