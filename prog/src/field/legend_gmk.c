@@ -26,13 +26,13 @@
 #define STONE_ANM_NUM  (4)
 
 #define FLASH_FRAME_FX32  ( FLASH_FRAME*FX32_ONE )
-#define LOOP_START_FRAME_FX32 ( LOOP_START_FRAME*FX32_ONE )
+//#define LOOP_START_FRAME_FX32 ( LOOP_START_FRAME*FX32_ONE )
 
 #define FADE_SPEED    (0)
 
 typedef struct LEG_GMK_WK_tag
 {
-  BOOL OneLoop;   //アニメが１順したか
+//  BOOL OneLoop;   //アニメが１順したか
   u32 Fade;
   int Count;
   BOOL Se0;
@@ -136,7 +136,7 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   //汎用ワーク確保
   gmk_wk = GMK_TMP_WK_AllocWork
       (fieldWork, LEGEND_GMK_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(LEG_GMK_WK));
-  gmk_wk->OneLoop = FALSE;
+//  gmk_wk->OneLoop = FALSE;
   gmk_wk->Count = 0;
   
   //必要なリソースの用意(バージョン分岐)
@@ -156,8 +156,8 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   {
     EXP_OBJ_ANM_CNT_PTR anm;
     anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, OBJ_STONE, i);
-    //ループ再生
-    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 1);
+    //1回再生
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
     //アニメ停止
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     //無効化
@@ -198,7 +198,7 @@ void LEGEND_GMK_Move(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
-
+#if 0
   //ループ制御
   {
     LEG_GMK_WK *gmk_wk;
@@ -220,6 +220,7 @@ void LEGEND_GMK_Move(FIELDMAP_WORK *fieldWork)
       }
     }
   }
+#endif  
 }
 
 //--------------------------------------------------------------
@@ -360,10 +361,10 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   //終了していいフレームか？
   if (frm >= last_frm)
   {
-    LEG_GMK_WK *gmk_wk;
+//    LEG_GMK_WK *gmk_wk;
     NOZOMU_Printf("アニメ終了\n");
-    gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
-    gmk_wk->OneLoop = TRUE;
+//    gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
+//    gmk_wk->OneLoop = TRUE;
     //イベント終了
     return GMEVENT_RES_FINISH;
   }
