@@ -21,6 +21,7 @@
 #include "font/font.naix"
 
 #include "system/ds_system.h"
+#include "system/rtc_tool.h"
 
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
@@ -119,6 +120,30 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
 
   LOCAL_TVT_LoadResource( work );
   LOCAL_TVT_MSG_InitMessage( work );
+
+  {
+    RTCTime time;
+    const u8 season = GAMEDATA_GetSeasonID( work->initWork->gameData );
+    const int morning = PM_RTC_GetTimeZoneChangeHour( season , TIMEZONE_MORNING );
+    const int evening = PM_RTC_GetTimeZoneChangeHour( season , TIMEZONE_EVENING );
+    const int night   = PM_RTC_GetTimeZoneChangeHour( season , TIMEZONE_NIGHT );
+
+    GFL_RTC_GetTime( &time );
+    
+    if( time.hour >= morning && time.hour < evening )
+    {
+      work->timeZone = LTTZ_NOON;
+    }
+    else
+    if( time.hour >= evening && time.hour < night )
+    {
+      work->timeZone = LTTZ_EVENING;
+    }
+    else
+    {
+      work->timeZone = LTTZ_NIGHT;
+    }
+  }
 
   for( i=0 ; i<work->mode ; i++ )
   {

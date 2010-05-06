@@ -89,10 +89,8 @@ static const u8 charaResList[LTCT_MAX][3] = {
 
 
 static const u8 bgResList[][2] = {
-    { NARC_local_tvt_back_01_NCLR , NARC_local_tvt_back_01_01_NCGR },
-    { NARC_local_tvt_back_02_NCLR , NARC_local_tvt_back_02_01_NCGR },
-    { NARC_local_tvt_back_03_NCLR , NARC_local_tvt_back_03_01_NCGR },
-    { NARC_local_tvt_back_04_NCLR , NARC_local_tvt_back_04_01_NCGR },
+    { NARC_local_tvt_back_01a_NCLR , NARC_local_tvt_back_01a_01_NCGR },
+    { NARC_local_tvt_back_02a_NCLR , NARC_local_tvt_back_02a_01_NCGR },
 };
 
 //======================================================================
@@ -198,7 +196,7 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_BG1:
     charaWork->transIdx = 0;
-    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + charaWork->bgAnmIdx );
+    LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + charaWork->bgAnmIdx + (work->timeZone*2) );
     charaWork->state = LTCTS_BG2;
     break;
   case LTCTS_BG2:
@@ -306,7 +304,7 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
                                       (2*16*16) ,
                                       work->heapId );
   GFL_ARCHDL_UTIL_TransVramPaletteEx( work->arcHandle , 
-                                      bgResList[charaWork->bgType][0] ,
+                                      bgResList[charaWork->bgType][0] + work->timeZone,
                                       PALTYPE_MAIN_BG_EX ,
                                       0 ,
                                       (2*16*16) * charaWork->charaIdx + 0x6000 ,
@@ -353,7 +351,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
   
-  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] );
+  LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + (work->timeZone*2) );
   LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
                                     0 ,
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,

@@ -77,6 +77,12 @@ typedef enum
   
 }LOCAL_TVT_CELL_RES;
 
+typedef enum
+{
+  LTTZ_NOON,
+  LTTZ_EVENING,
+  LTTZ_NIGHT,
+}LOCAL_TVT_TIME_ZONE;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -89,6 +95,7 @@ typedef struct
   u8 chara[LOCAL_TVT_MEMBER_MAX];
   u8 back[LOCAL_TVT_MEMBER_MAX];
 }LOCAL_TVT_SCRIPT_HEADER;
+
 typedef struct
 {
   u8  comNo;
@@ -106,6 +113,7 @@ struct _LOCAL_TVT_WORK
   u8 state;
   u8 bufNo;
   u8 transCnt;
+  LOCAL_TVT_TIME_ZONE timeZone;
   
   LOCAL_TVT_TRANS_STATE transState;
   
