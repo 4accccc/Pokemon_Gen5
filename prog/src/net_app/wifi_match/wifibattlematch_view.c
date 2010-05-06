@@ -31,6 +31,7 @@
 #include "app/app_menu_common.h"
 #include "wifi_unionobj_plt.cdat"
 #include "wifi_unionobj.naix"
+#include "msg/msg_print_tool.h"
 
 
 //	print
@@ -72,6 +73,10 @@ typedef enum
 //=====================================
 static WBM_CARD_RANK CalcRank( u32 btl_cnt, u32 win, u32 lose );
 static void BG_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 *p_cnt, u16 add, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
+
+static void Wbm_View_PrintFraction(
+					PRINT_UTIL * wk, PRINT_QUE * que, GFL_FONT * font,
+					u32 nowPrm, u32 maxPrm, HEAPID heapID );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -355,6 +360,64 @@ static void BG_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 *p_cnt, u16 a
                                         plt_num * 32 + plt_col * 2,
                                         p_buff, 2 );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ?? / ?? を表示
+ *
+ *	@param	PRINT_UTIL *p_util  PRINT_UTIL
+ *	@param	*p_que              PRINT_QUE
+ *	@param	*p_font             フォント
+ *	@param	now                 現在値
+ *	@param	max                 最大値
+ *	@param	heapID              ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Wbm_View_PrintFraction(
+					PRINT_UTIL * wk, PRINT_QUE * que, GFL_FONT * font,
+					u32 nowPrm, u32 maxPrm, HEAPID heapID )
+{ 
+	GFL_MSGDATA * mman;
+	WORDSET * wset;
+	STRBUF * str;
+	STRBUF * buf;
+	u16	slash_size, now_size, max_size;
+  u16 x, y;
+
+	mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_print_tool_dat, heapID );
+	wset = WORDSET_Create( heapID );
+	buf  = GFL_STR_CreateBuffer( 32, heapID );
+
+  x = GFL_BMPWIN_GetSizeX( wk->win ) * 8;
+  y = 0;
+
+	// maxPrm
+	str = GFL_MSG_CreateString( mman, str_max_param );
+	WORDSET_RegisterNumber( wset, 0, maxPrm, 8, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wset, buf, str );
+	max_size = PRINTSYS_GetStrWidth( buf, font, 0 );
+	PRINT_UTIL_Print( wk, que, x-max_size, y, buf, font );
+	GFL_STR_DeleteBuffer( str );
+
+	//「／」
+	str = GFL_MSG_CreateString( mman, str_slash );
+	slash_size = PRINTSYS_GetStrWidth( str, font, 0 );
+	PRINT_UTIL_Print( wk, que, x-max_size-slash_size, y, str, font );
+	GFL_STR_DeleteBuffer( str );
+
+	// nowPrm
+	str = GFL_MSG_CreateString( mman, str_now_param );
+	WORDSET_RegisterNumber( wset, 0, nowPrm, 8, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wset, buf, str );
+	now_size = PRINTSYS_GetStrWidth( buf, font, 0 );
+	PRINT_UTIL_Print( wk, que, x-max_size-slash_size-now_size, y, buf, font );
+	GFL_STR_DeleteBuffer( str );
+
+	GFL_STR_DeleteBuffer( buf );
+	WORDSET_Delete( wset );
+	GFL_MSG_Delete( mman );
+
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -1479,9 +1542,9 @@ static void PlayerInfo_Bmpwin_Wifi_Create( PLAYERINFO_WORK * p_wk, BOOL is_limit
 			case PLAYERINFO_CUP_BMPWIN_BTLCNT_NUM:
 				if( is_limit )
 				{	
-					PRINTTOOL_PrintFraction(
+					Wbm_View_PrintFraction(
 					&p_wk->print_util[i], p_que, p_font,
-					sc_bmpwin_range[i].w*4, 0, cp_data->btl_cnt, cp_data->btl_max, heapID );
+					cp_data->btl_cnt, cp_data->btl_max, heapID );
 					is_print =FALSE;
 				}
 				else
@@ -1682,9 +1745,9 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_010, p_str );
 				break;
 			case PLAYERINFO_LIVE_BMPWIN_BTLCNT_NUM:
-				PRINTTOOL_PrintFraction(
+				Wbm_View_PrintFraction(
 						&p_wk->print_util[i], p_que, p_font,
-						sc_bmpwin_range[i].w*8/2, 0, cp_data->btl_cnt, cp_data->btl_max, heapID );
+						cp_data->btl_cnt, cp_data->btl_max, heapID );
 				is_print =FALSE;
 				break;
 			case PLAYERINFO_LIVE_BMPWIN_REGPOKE:
