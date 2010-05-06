@@ -84,7 +84,8 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BtlRule rule, int index, u8 season, HEAPID hea
 {
   BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
   BOOL  ret;
-  BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin, heapID );
+  BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin,
+                                                       GFL_HEAP_LOWID( heapID ) );
 
   bfw->heapID = heapID;
 

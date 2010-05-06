@@ -892,7 +892,7 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
 //============================================================================================
 void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count )
 {
-  BTLV_MCSS_TCB_WORK  *pmtw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_TCB_WORK ) );
+  BTLV_MCSS_TCB_WORK  *pmtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_TCB_WORK ) );
 
   pmtw->bmw           = bmw;
   pmtw->position      = position;
@@ -957,7 +957,8 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
 //============================================================================================
 void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp )
 {
-  BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp_p = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_MOVE_CIRCLE_PARAM ) );
+  BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp_p = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ),
+                                                               sizeof( BTLV_MCSS_MOVE_CIRCLE_PARAM ) );
 
   bmmcp_p->bmw                      = bmw;
   bmmcp_p->position                 = bmmcp->position;
@@ -1010,7 +1011,8 @@ void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bm
 //============================================================================================
 void  BTLV_MCSS_MoveSin( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_SIN_PARAM* bmmsp )
 {
-  BTLV_MCSS_MOVE_SIN_PARAM* bmmsp_p = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_MOVE_SIN_PARAM ) );
+  BTLV_MCSS_MOVE_SIN_PARAM* bmmsp_p = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ),
+                                                            sizeof( BTLV_MCSS_MOVE_SIN_PARAM ) );
   int index = BTLV_MCSS_GetIndex( bmw, bmmsp->position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
 
@@ -1502,7 +1504,7 @@ u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volum
 //============================================================================================
 void  BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir )
 {
-  BTLV_MCSS_ROTATION_WORK* bmrw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_ROTATION_WORK ) );
+  BTLV_MCSS_ROTATION_WORK* bmrw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_ROTATION_WORK ) );
 
   bmrw->bmw     = bmw;
   bmrw->seq_no  = 0;
@@ -1612,7 +1614,7 @@ static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 //============================================================================================
 static  void  BTLV_MCSS_TCBInitialize( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func, int reverse_flag )
 {
-  BTLV_MCSS_TCB_WORK  *pmtw = GFL_HEAP_AllocMemory( bmw->heapID, sizeof( BTLV_MCSS_TCB_WORK ) );
+  BTLV_MCSS_TCB_WORK  *pmtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_TCB_WORK ) );
 
   pmtw->bmw               = bmw;
   pmtw->position          = position;

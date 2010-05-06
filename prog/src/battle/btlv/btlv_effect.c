@@ -243,7 +243,7 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   {
     BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,
                                                                   NARC_batt_bg_tbl_zone_spec_table_bin,
-                                                                  bew->heapID );
+                                                                  GFL_HEAP_LOWID( bew->heapID ) );
     u8  season = 0;
 
     if( bbtzst[ besp->bfs.bgType ].season )
@@ -481,7 +481,7 @@ void BTLV_EFFECT_Restart( void )
 //=============================================================================================
 void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
 {
-  BTLV_EFFECT_DAMAGE_TCB *bedt = GFL_HEAP_AllocMemory( bew->heapID, sizeof(BTLV_EFFECT_DAMAGE_TCB) );
+  BTLV_EFFECT_DAMAGE_TCB *bedt = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bew->heapID ), sizeof(BTLV_EFFECT_DAMAGE_TCB) );
 
   bedt->seq_no = 0;
   bedt->target = target;
@@ -569,7 +569,7 @@ void BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no )
 //=============================================================================================
 void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
 {
-  BTLV_EFFECT_HENGE_TCB *beht = GFL_HEAP_AllocMemory( bew->heapID, sizeof(BTLV_EFFECT_HENGE_TCB) );
+  BTLV_EFFECT_HENGE_TCB *beht = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bew->heapID ), sizeof(BTLV_EFFECT_HENGE_TCB) );
 
   beht->seq_no = 0;
   beht->vpos = vpos;
@@ -1011,7 +1011,7 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
 //============================================================================================
 void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
 {
-  TCB_ROTATION *tr = GFL_HEAP_AllocMemory( bew->heapID, sizeof( TCB_ROTATION ) );
+  TCB_ROTATION *tr = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bew->heapID ), sizeof( TCB_ROTATION ) );
   GF_ASSERT( dir != BTL_ROTATEDIR_NONE )
   if( dir == BTL_ROTATEDIR_STAY )
   {

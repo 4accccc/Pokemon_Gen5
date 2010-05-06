@@ -1133,7 +1133,7 @@ void BTLV_INPUT_FreeFrame( void )
 //============================================================================================
 void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
 {
-  TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
+  TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_FADE_ACT ) );
 
   PaletteFadeReq( biw->pfd, PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
   biw->fade_flag = BTLV_INPUT_FADE_OUT;
@@ -1149,7 +1149,7 @@ void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
 //============================================================================================
 void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
 {
-  TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
+  TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_FADE_ACT ) );
 
   BTLV_INPUT_InitBG( biw );
 
@@ -1212,7 +1212,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     else
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
 
@@ -1239,7 +1239,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     {
       BTLV_INPUT_COMMAND_PARAM* bicp = ( BTLV_INPUT_COMMAND_PARAM * )param;
       int i;
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
 
       biw->focus_pos = bicp->pos;
 
@@ -1340,7 +1340,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_WAZA:
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_WAZA_PARAM* biwp = ( BTLV_INPUT_WAZA_PARAM * )param;
 
       BTLV_INPUT_CreateWazaScreen( biw, ( const BTLV_INPUT_WAZA_PARAM * )param );
@@ -1376,7 +1376,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_DIR:
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_SCENE_PARAM* bisp = ( BTLV_INPUT_SCENE_PARAM * )param;
 
       BTLV_INPUT_CreateDirScreen( biw, ttw, ( const BTLV_INPUT_SCENE_PARAM * )param );
@@ -1388,7 +1388,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_YES_NO:
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_YESNO_PARAM* biyp = ( BTLV_INPUT_YESNO_PARAM * )param;
 
       BTLV_INPUT_CreateYesNoScreen( biw, ( const BTLV_INPUT_YESNO_PARAM * )param );
@@ -1401,7 +1401,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   case BTLV_INPUT_SCRTYPE_ROTATE:
 #ifdef ROTATION_NEW_SYSTEM
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_ROTATE_PARAM* birp = ( BTLV_INPUT_ROTATE_PARAM * )param;
       int i, j;
 
@@ -1440,7 +1440,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
 #else
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_ROTATE_PARAM* birp = ( BTLV_INPUT_ROTATE_PARAM * )param;
       int i;
 
@@ -1476,7 +1476,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
       {
-        TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+        TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
         biw->tcb_execute_flag = 1;
         ttw->biw = biw;
         if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
@@ -1501,7 +1501,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_PDC:
     {
-      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
       GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2PDC, ttw, 1 );
@@ -2626,7 +2626,7 @@ static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y )
 {
-  TCB_SCALE_UP* tsu = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCALE_UP ) );
+  TCB_SCALE_UP* tsu = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_SCALE_UP ) );
 
   tsu->biw          = biw;
   tsu->start_scale  = start_scale;
@@ -2683,7 +2683,7 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, int scroll_speed, int scroll_count )
 {
-  TCB_SCROLL_UP* tsu = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCROLL_UP ) );
+  TCB_SCROLL_UP* tsu = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_SCROLL_UP ) );
 
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, scroll_x );
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, scroll_y );
@@ -2730,7 +2730,7 @@ static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DIR dir )
 {
-  TCB_SCREEN_ANIME* tsa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_SCREEN_ANIME ) );
+  TCB_SCREEN_ANIME* tsa = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_SCREEN_ANIME ) );
 
   tsa->biw    = biw;
   tsa->count  = 0;
@@ -2792,7 +2792,7 @@ static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_ANIME_TYPE anm_type )
 {
-  TCB_BUTTON_ANIME* tba = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BUTTON_ANIME ) );
+  TCB_BUTTON_ANIME* tba = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BUTTON_ANIME ) );
   GFL_CLWK_DATA button = {
     0, 0,     //x, y
     0, 0, 2,  //アニメ番号、優先順位、BGプライオリティ
@@ -2903,7 +2903,7 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir )
 {
-  TCB_BALL_GAUGE_MOVE* tbgm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BALL_GAUGE_MOVE ) );
+  TCB_BALL_GAUGE_MOVE* tbgm = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BALL_GAUGE_MOVE ) );
 
   tbgm->biw           = biw;
   tbgm->move_dir      = dir;
@@ -3031,7 +3031,7 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
 static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 {
 #ifdef ROTATION_NEW_SYSTEM
-  TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+  TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
   int eff = rotate_camera_focus[ biw->rotate_scr ][ dir - 5 ];
 
   BTLV_INPUT_ClearScreen( biw );
@@ -3051,7 +3051,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 #else
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
-  TCB_ROTATE_ACTION*  tra = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_ROTATE_ACTION ) );
+  TCB_ROTATE_ACTION*  tra = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_ROTATE_ACTION ) );
 
   BTLV_INPUT_ClearScreen( biw );
 
@@ -3276,7 +3276,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
 
         arc_data = GFL_ARC_UTIL_LoadOBJCharacter( APP_COMMON_GetArcId(),
                                                   APP_COMMON_GetPokeTypeCharArcIdx( waza_type ), WAZATYPEICON_COMP_CHAR,
-                                                  &char_data, biw->heapID );
+                                                  &char_data, GFL_HEAP_LOWID( biw->heapID ) );
 
         GFL_CLACT_WK_SetPlttOffs( biw->wazatype_wk[ i ], APP_COMMON_GetPokeTypePltOffset( waza_type ), CLWK_PLTTOFFS_MODE_PLTT_TOP );
         obj_vram = G2S_GetOBJCharPtr();
@@ -3324,7 +3324,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
     }
     {
       NNSG2dPaletteData* palData;
-      void* dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, datID, &palData, biw->heapID );
+      void* dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, datID, &palData, GFL_HEAP_LOWID( biw->heapID ) );
 
       PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, WAZATYPE_PLTT + i * 0x10, 0x20 );
 
@@ -3540,13 +3540,13 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
 
     for( i = 0 ; i < max ; i++ )
     {
-      dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_up_NCLR, &palData, biw->heapID );
+      dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_up_NCLR, &palData, GFL_HEAP_LOWID( biw->heapID ) );
       PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, DIR_PLTT + i * 0x10, 0x20 );
       GFL_HEAP_FreeMemory( dat );
     }
     for( ; i < max * 2 ; i++ )
     {
-      dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_down_NCLR, &palData, biw->heapID );
+      dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_down_NCLR, &palData, GFL_HEAP_LOWID( biw->heapID ) );
       PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, DIR_PLTT + i * 0x10, 0x20 );
       GFL_HEAP_FreeMemory( dat );
     }
@@ -4078,7 +4078,7 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
   //GFL_CLACT_WK_SetDrawEnable( biw->weather_wk[ 1 ], FALSE );
 
   {
-    TCB_WEATHER_ICON_MOVE*  twim = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WEATHER_ICON_MOVE ) );
+    TCB_WEATHER_ICON_MOVE*  twim = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_WEATHER_ICON_MOVE ) );
     twim->biw = biw;
 
     GFL_TCB_AddTask( biw->tcbsys, TCB_WeatherIconMove, twim, 0 );
@@ -4630,7 +4630,7 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
   biw->hit = hit;
 
   {
-    TCB_BUTTON_REACTION*  tbr = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BUTTON_REACTION ) );
+    TCB_BUTTON_REACTION*  tbr = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BUTTON_REACTION ) );
 
     biw->button_reaction = ( ( pltt & 0x10000 ) == 0 );
 

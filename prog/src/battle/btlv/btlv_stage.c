@@ -98,7 +98,8 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
 {
 	BTLV_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_STAGE_WORK ) );
 	BOOL	ret;
-  BATT_BG_TBL_STAGE_TABLE* bbtst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_stage_bin, heapID );
+  BATT_BG_TBL_STAGE_TABLE* bbtst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_stage_bin,
+                                                          GFL_HEAP_LOWID( heapID ) );
 
 	bsw->heapID = heapID;
 

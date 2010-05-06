@@ -1141,7 +1141,8 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                    sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
@@ -1191,7 +1192,8 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
@@ -1243,7 +1245,8 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                    sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
@@ -1315,7 +1318,8 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_ALL( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw_src = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                    sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       spr_max = EFFVM_GetSprMax( bevw, ptc_no );
@@ -1396,7 +1400,8 @@ static VMCMD_RESULT VMEC_PARTICLE_DELETE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
@@ -1447,7 +1452,8 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
@@ -2496,7 +2502,8 @@ static VMCMD_RESULT VMEC_BG_VISIBLE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_WINDOW_MOVE( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_WINDOW_MOVE *bevwm = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_WINDOW_MOVE ) );
+  BTLV_EFFVM_WINDOW_MOVE *bevwm = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                             sizeof( BTLV_EFFVM_WINDOW_MOVE ) );
 
   bevwm->bevw     = bevw;
 	bevwm->type     = ( int )VMGetU32( vmh );
@@ -2776,7 +2783,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
   }
   else
   {
-    BTLV_EFFVM_SEPLAY*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEPLAY ) );
+    BTLV_EFFVM_SEPLAY*  bes = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_SEPLAY ) );
     bes->bevw       = bevw;
     bes->se_no      = se_no;
     bes->player     = player;
@@ -3299,7 +3306,7 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
 
       for( i = 0 ; i < pos_cnt ; i++ )
       { 
-        BTLV_EFFVM_NAKIGOE*  ben = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_NAKIGOE ) );
+        BTLV_EFFVM_NAKIGOE*  ben = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_NAKIGOE ) );
         ben->bevw         = bevw;
         ben->pos          = pos[ i ];
         ben->pitch        = pitch;
@@ -4621,7 +4628,8 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     MtxFx43 rot_xz, rot_y;
     u16     angle, angle_xz, angle_y;
 
-    bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_MOVE_WORK ) );
+    bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                     sizeof( BTLV_EFFVM_EMITTER_MOVE_WORK ) );
     beemw = ( BTLV_EFFVM_EMITTER_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
     //エミッタにテンポラリワークを設定
     GFL_PTC_SetUserData( emit, bevw->temp_work[ bevw->temp_work_count ] );
@@ -5186,7 +5194,8 @@ static void EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_
 
         for( i = 0 ; i < pos_cnt ; i++ )
         {
-          BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+          BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                        sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
 
           *beeiw = *beeiw_src;
           beeiw->src = pos[ i ];
@@ -5202,7 +5211,8 @@ static void EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_EMIT_INIT_
   }
   else
   {
-    BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+    BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                  sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
 
     *beeiw = *beeiw_src;
 
@@ -5257,7 +5267,8 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
       GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
     }
 
-    bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
+    bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                     sizeof( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK ) );
     beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
     bevw->temp_work_count++;
 
@@ -5524,7 +5535,7 @@ static  void  EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 en
     bevw->volume_down_flag = 0;
   }
 
-  becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
+  becv = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
 
   becv->tcb_index = EFFVM_GetTcbIndex( bevw );
   becv->start_vol = start_vol;
@@ -5958,7 +5969,8 @@ void  BTLV_EFFVM_StartThrough( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, 
 void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, int src, int dst, fx32 ofs_y, fx32 angle )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
-  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
+  BTLV_EFFVM_EMIT_INIT_WORK *beeiw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bevw->heapID ),
+                                                                sizeof( BTLV_EFFVM_EMIT_INIT_WORK ) );
 
   beeiw->vmh = vmh;
   beeiw->src = src;
@@ -5994,7 +6006,7 @@ void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, i
 void  BTLV_EFFVM_DebugSeEffect( VMHANDLE *vmh, int player, int type, int param, int start, int end, int start_wait, int frame, int wait, int count )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
-  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEEFFECT ) );
+  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_SEEFFECT ) );
 
   bes->bevw     = bevw;
 

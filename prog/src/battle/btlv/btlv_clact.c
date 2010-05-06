@@ -400,7 +400,7 @@ BOOL  BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index )
 //============================================================================================
 static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func )
 {
-  BTLV_CLACT_TCB_WORK *bctw = GFL_HEAP_AllocMemory( bclw->heapID, sizeof( BTLV_CLACT_TCB_WORK ) );
+  BTLV_CLACT_TCB_WORK *bctw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bclw->heapID ), sizeof( BTLV_CLACT_TCB_WORK ) );
 
   GF_ASSERT( index < BTLV_CLACT_CLWK_MAX );
 
