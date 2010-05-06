@@ -3624,6 +3624,8 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   }
   bevw->temp_work_count = 0;
 
+  EFFVM_FreeTcb( bevw );
+
   //‰¼‘zƒ}ƒVƒ“’â~
   VM_End( vmh );
 
