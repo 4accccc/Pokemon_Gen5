@@ -745,12 +745,13 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk
     }
     break;
   case 2:
-    // 砂埃を出す
+    // 着地SE・砂埃を出す
     {
       FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
       MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
       FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
       FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
+      PMSND_PlaySE( SEQ_SE_FLD_10 );
     }
     (*seq)++;
     break;
