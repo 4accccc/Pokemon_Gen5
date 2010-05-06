@@ -527,7 +527,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_FREE_WORD, 1, 0, NAMEIN_FREE_WORD_LENGTH, NULL, p_misc );
+	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_FRIENDNAME, NAMEIN_TRAINER_VIEW_UNKNOWN, 0, NAMEIN_FREE_WORD_LENGTH, NULL, p_misc );
 
   NAGI_Printf( "pokeparty size=[%d]\n", PokeParty_GetWorkSize() );
 
@@ -1026,7 +1026,7 @@ static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugTemplate_ProcData, &p_wk->template_param );
+//	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugTemplate_ProcData, &p_wk->template_param );
 }
 //----------------------------------------------------------------------------
 /**
