@@ -189,8 +189,7 @@ static const BGM_PARAM* GetBGMParam( const BGM_PARAMSET* paramset, u16 zone_id )
 	for( i=0; i<paramset->dataNum; i++ )
 	{
 		// 発見
-		if( paramset->param[i].zoneID == zone_id )
-		{
+		if( paramset->param[i].zoneID == zone_id ) {
 			return &paramset->param[i];
 		}
 	}
@@ -239,7 +238,7 @@ struct _ISS_DUNGEON_SYS
 static void SetupDefaultParam( ISS_DUNGEON_SYS* sys );
 static void BootSystem( ISS_DUNGEON_SYS* sys );
 static void StopSystem( ISS_DUNGEON_SYS* sys );
-static void UpdateBGMParam( ISS_DUNGEON_SYS* sys );
+static void UpdateBGMParam( ISS_DUNGEON_SYS* sys, u16 zone_id );
 
 
 //=========================================================================================
@@ -321,8 +320,11 @@ void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* sys )
   // 起動してない
   if( !sys->boot_flag ){ return; }
 
-  // 更新
-  UpdateBGMParam( sys );
+  // ゾーンの切り替わりを検出
+	if( sys->currentZoneID != sys->nextZoneID ) {
+    sys->currentZoneID = sys->nextZoneID;
+    UpdateBGMParam( sys, sys->currentZoneID );
+  }
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -447,6 +449,7 @@ static void BootSystem( ISS_DUNGEON_SYS* sys )
 
   // 起動
 	sys->boot_flag = TRUE;
+  UpdateBGMParam( sys, sys->currentZoneID );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-D: boot\n" );
@@ -468,9 +471,6 @@ static void StopSystem( ISS_DUNGEON_SYS* sys )
 	// 停止
 	sys->boot_flag = FALSE;
 
-  // デフォルト・パラメータに戻す
-  //SetBGMParam( &sys->defaultParam, 0 );
-
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "ISS-D: stop\n" );
 #endif
@@ -480,30 +480,24 @@ static void StopSystem( ISS_DUNGEON_SYS* sys )
 /**
  * @brief BGMパラメータを更新する
  *
- * @param sys ダンジョンISSシステム
+ * @param sys      ダンジョンISSシステム
+ * @param zone_id  パラメータを適用するゾーンID
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGMParam( ISS_DUNGEON_SYS* sys )
+static void UpdateBGMParam( ISS_DUNGEON_SYS* sys, u16 zone_id )
 {
 	// 起動していない
   GF_ASSERT( sys->boot_flag );
 
-	// ゾーン切り替えが通知された場合
-	if( sys->currentZoneID != sys->nextZoneID )
-	{
-		// 更新
-		sys->currentZoneID = sys->nextZoneID;
+  // 新ゾーンIDのBGMパラメータを検索
+  sys->pActiveParam = GetBGMParam( sys->paramset, zone_id );
 
-		// 新ゾーンIDのBGMパラメータを検索
-		sys->pActiveParam = GetBGMParam( sys->paramset, sys->nextZoneID );
+  // BGMパラメータが設定されていない
+  if( sys->pActiveParam == NULL ){ return; }
 
-    // BGMパラメータが設定されていない
-    if( sys->pActiveParam == NULL ){ return; }
-
-		// BGMの設定を反映させる
-    {
-      u8 season = GAMEDATA_GetSeasonID( sys->gdata );
-      SetBGMParam( sys->pActiveParam, season ); 
-    }
-	} 
+  // BGMの設定を反映させる
+  {
+    u8 season = GAMEDATA_GetSeasonID( sys->gdata );
+    SetBGMParam( sys->pActiveParam, season ); 
+  }
 } 
