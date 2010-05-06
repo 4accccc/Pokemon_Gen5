@@ -65,6 +65,7 @@ typedef enum{
   FLD_GIMMICK_C04R0109,
   FLD_GIMMICK_D12,
   FLD_GIMMICK_LEGEND,
+  FLD_GIMMICK_T01,
   FLD_GIMMICK_MAX,			//ギミック最大数(ギミック無しを含めた数)
 
 }FLD_GYMMICK_ID;
