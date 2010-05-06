@@ -89,7 +89,7 @@
 #include "scrcmd_movepoke.h"
 #include "scrcmd_subscreen.h"
 #include "scrcmd_quiz.h"
-#include "scrcmd_sppoke_trio.h"
+#include "scrcmd_sppoke_mero.h"
 #include "scrcmd_sppoke.h"
 #include "scrcmd_symbol.h"
 #include "scrcmd_poke_win.h"
