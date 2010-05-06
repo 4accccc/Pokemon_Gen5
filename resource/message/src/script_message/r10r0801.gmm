@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T14:55:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T15:16:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,7 +304,7 @@
 開く　カギは　レジェンドバッジ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r10r0801_badge_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_r10r0801_badge_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、もんが開く処理</comment>
 		<language name="JPN" width="256">うむ！　よろしい！
@@ -337,7 +337,7 @@
 レジェンドバッジを　手に入れるのだ！</language>
 	</row>
 
-	<row id="msg_r10r0801_badge_05">
+	<row id="msg_r10r0801_badge_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ストッパー用</comment>
 		<attribute name="キャラ指定">ストッパー用</attribute>
