@@ -3554,6 +3554,7 @@ static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos )
     return FALSE;
   }
 
+/*
   switch( wk->dat->rule ){
   case BTL_RULE_SINGLE:   // シングル
     if( pos == 0 ){
@@ -3573,11 +3574,16 @@ static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos )
       return TRUE;
     }
   }
+*/
+	if( pos < wk->dat->fight_poke_max ){
+		return TRUE;
+	}
   return FALSE;
 }
 
 static BOOL FightPosCheck( BPLIST_WORK * wk, u32 pos )
 {
+/*
   switch( wk->dat->rule ){
   case BTL_RULE_SINGLE:   // シングル
     if( pos == 0 ){
@@ -3597,6 +3603,10 @@ static BOOL FightPosCheck( BPLIST_WORK * wk, u32 pos )
       return TRUE;
     }
   }
+*/
+	if( pos < wk->dat->fight_poke_max ){
+		return TRUE;
+	}
   return FALSE;
 }
 
@@ -3604,6 +3614,7 @@ static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
 {
   pos = BPLISTMAIN_GetListRow( wk, pos );
 
+/*
   switch( wk->dat->rule ){
   case BTL_RULE_SINGLE:   // シングル
     break;
@@ -3616,6 +3627,13 @@ static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
     }
     return CheckListRow( wk, pos );
   }
+*/
+	if( wk->dat->fight_poke_max != 1 ){
+    if( pos == wk->dat->change_sel[0] || pos == wk->dat->change_sel[1] ){
+      return TRUE;
+    }
+    return CheckListRow( wk, pos );
+	}
   return FALSE;
 }
 
@@ -4119,6 +4137,7 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk )
     return FALSE;
   }
 
+/*
   if( wk->dat->rule == BTL_RULE_SINGLE ){
     return FALSE;
   }else if( wk->dat->rule == BTL_RULE_DOUBLE ){
@@ -4126,6 +4145,12 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk )
   }else{
     max = 3;
   }
+*/
+	if( wk->dat->fight_poke_max == 1 ){
+		return FALSE;
+	}else{
+		max = wk->dat->fight_poke_max;
+	}
 
   // 空きが複数ある
   cnt = 0;
@@ -4165,6 +4190,7 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
     return FALSE;
   }
 
+/*
   if( wk->dat->rule == BTL_RULE_SINGLE ){
     return FALSE;
   }else if( wk->dat->rule == BTL_RULE_DOUBLE ){
@@ -4172,6 +4198,12 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
   }else{
     max = 3;
   }
+*/
+	if( wk->dat->fight_poke_max == 1 ){
+		return FALSE;
+	}else{
+		max = wk->dat->fight_poke_max;
+	}
 
   // 入れ替え可能なポケモンがいるか
   for( i=max; i<TEMOTI_POKEMAX; i++ ){
