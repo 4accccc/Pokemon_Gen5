@@ -6806,7 +6806,7 @@ static const BtlEventHandlerTable*  ADD_Oikaze( u32* numElems )
 }
 static void handler_Oikaze( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 3 );
+  BPP_SICK_CONT  cont = BPP_SICKCONT_MakeTurn( 4 );
   BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
   common_SideEffect( myHandle, flowWk, pokeID, work, side, BTL_SIDEEFF_OIKAZE, cont, BTL_STRID_STD_Oikaze );
 }
