@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-03T15:17:03"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T12:27:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1926" top="97" right="2631" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1086" top="292" right="1559" bottom="916" visible="yes"/>
+		<tag-palette left="807" top="292" right="1280" bottom="916" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -646,7 +646,7 @@
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ホドモシティの
 テントのうらの　いえのまえにかくせ！</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ホドモシティの
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ホドモエシティの
 テントの裏の　家の前に隠せ！</language>
 	</row>
 
@@ -671,7 +671,7 @@
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
 じどうはんばいきの　まえに　かくせ</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
-じどうはんばいきの　前に　隠せ</language>
+自動販売機の　前に　隠せ</language>
 	</row>
 
 	<row id="plc_mis_05_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -719,15 +719,15 @@
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　８ばんどうろ　の
 どうろかんばんの　まえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　８番道路　の
-どうろ看板の　前に　隠せ！</language>
+道路看板の　前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_12" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　９ばんどうろ　の
-ごみばこの　てまえに　かくせ！</language>
+ゴミばこの　てまえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　９番道路　の
-ごみ箱の　手前に　隠せ！</language>
+ゴミ箱の　手前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_13" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -765,9 +765,9 @@
 	<row id="plc_mis_05_17" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　１５ばんどうろ　の
-ごみばこの　てまえに　かくせ！</language>
+ゴミばこの　てまえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　１５番道路　の
-ごみ箱の　手前に　隠せ！</language>
+ゴミ箱の　手前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_18" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -815,7 +815,7 @@
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
 じどうはんばいきの　まえに　かくせ</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
-じどうはんばいきの　前に　隠せ</language>
+自動販売機の　前に　隠せ</language>
 	</row>
 
 	<row id="plc_mis_05_24" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -863,15 +863,15 @@
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　８ばんどうろ　の
 どうろかんばんの　まえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　８番道路　の
-どうろ看板の　前に　隠せ！</language>
+道路看板の　前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_30" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　９ばんどうろ　の
-ごみばこの　てまえに　かくせ！</language>
+ゴミばこの　てまえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　９番道路　の
-ごみ箱の　手前に　隠せ！</language>
+ゴミ箱の　手前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_31" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -909,9 +909,9 @@
 	<row id="plc_mis_05_35" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　１５ばんどうろ　の
-ごみばこの　てまえに　かくせ！</language>
+ゴミばこの　てまえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　１５番道路　の
-ごみ箱の　手前に　隠せ！</language>
+ゴミ箱の　手前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_36" back-color="#ffff80,,,,,,,,,,,,,,,,,">
