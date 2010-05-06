@@ -11937,9 +11937,9 @@
 じゃなかった
 ポケモンの　あしを　みせてくれ！▼</language>
 		<language name="JPN_KANJI" width="216">きみ！　頼むから
-きみの　あしを　みせてくれ！▼
+きみの　足を　みせてくれ！▼
 じゃなかった
-ポケモンの　あしを　みせてくれ！▼</language>
+ポケモンの　足を　みせてくれ！▼</language>
 	</row>
 
 	<row id="TRID_BREEDERM_03_TRMSG_FIGHT_LOSE">
@@ -14472,6 +14472,69 @@
 おなじ　１コ　なのに……</language>
 		<language name="JPN_KANJI" width="216">ジムバッジの　数は
 同じ　１コ　なのに……</language>
+	</row>
+
+	<row id="TRID_SUPPORT_13_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">あたし
+きたえたから！</language>
+		<language name="JPN_KANJI" width="216">あたし
+鍛えたから！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_13_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ううう……
+ピンチ　なのかな……？</language>
+		<language name="JPN_KANJI" width="216">ううう……
+ピンチ　なのかな……？</language>
+	</row>
+
+	<row id="TRID_SUPPORT_13_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……やっぱり
+かてなかったね</language>
+		<language name="JPN_KANJI" width="216">……やっぱり
+勝てなかったね</language>
+	</row>
+
+	<row id="TRID_SUPPORT_14_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">あたし
+きたえたから！</language>
+		<language name="JPN_KANJI" width="216">あたし
+鍛えたから！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_14_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ううう……
+ピンチ　なのかな……？</language>
+		<language name="JPN_KANJI" width="216">ううう……
+ピンチ　なのかな……？</language>
+	</row>
+
+	<row id="TRID_SUPPORT_14_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……やっぱり
+かてなかったね</language>
+		<language name="JPN_KANJI" width="216">……やっぱり
+勝てなかったね</language>
+	</row>
+
+	<row id="TRID_SUPPORT_15_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">あたし
+きたえたから！</language>
+		<language name="JPN_KANJI" width="216">あたし
+鍛えたから！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_15_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ううう……
+ピンチ　なのかな……？</language>
+		<language name="JPN_KANJI" width="216">ううう……
+ピンチ　なのかな……？</language>
+	</row>
+
+	<row id="TRID_SUPPORT_15_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……やっぱり
+かてなかったね</language>
+		<language name="JPN_KANJI" width="216">……やっぱり
+勝てなかったね</language>
 	</row>
 
 	<flowchart-group-list>
