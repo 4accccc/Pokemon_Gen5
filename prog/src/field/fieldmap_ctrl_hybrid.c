@@ -561,6 +561,8 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   MMDL* p_mmdl;
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
   FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  u16 animeFrame;
+  u16 animeIndex;
 
   if( p_wk->base_type == type )
   {
@@ -574,6 +576,10 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
     // アニメーションの停止
     MMDL_FreeAcmd( p_mmdl );
   }
+
+  // アニメーションフレーム取得
+  MMDL_DrawBlactWork_GetAnimeFrame( p_mmdl, &animeIndex, &animeFrame );
+
   
   if( type == FLDMAP_BASESYS_GRID )
   {
@@ -626,7 +632,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
     FLDNOGRID_MAPPER_BindCameraWork( p_mapper, FIELD_PLAYER_GetNoGridRailWork( p_wk->p_player ) );
 
     // カメラのがくつき回避
-    // カメラトレースのリセット
+    // カメラトレースデータ今の位置で上書き。
     FIELD_CAMERA_RestartTrace( p_camera );
 
   }
@@ -634,6 +640,9 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   // 方向を合わせる
   MMDL_SetDirDisp( p_mmdl, dir );
   MMDL_SetDirMove( p_mmdl, dir );
+
+  // アニメーションフレーム設定
+  MMDL_DrawBlactWork_SetAnimeFrame( p_mmdl, animeIndex, animeFrame );
 
   p_wk->base_type = type;
 }

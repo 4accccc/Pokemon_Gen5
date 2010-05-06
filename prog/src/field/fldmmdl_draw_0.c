@@ -154,6 +154,74 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Non =
   NULL,
 };
 
+
+
+//======================================================================
+//  DRAW_BLACT_WORK 共通
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DRAW_BLACT_WORK アニメーションフレームの取得
+ *
+ *	@param	mmdl        モデルワーク
+ *	@parma  outIdx      アニメーションインデックス
+ *	@parma  outFrmIdx   アニメーションフレームインデックス
+ *
+ */
+//-----------------------------------------------------------------------------
+void MMDL_DrawBlactWork_GetAnimeFrame( MMDL *mmdl, u16* outIdx, u16* outFrmIdx )
+{
+  DRAW_BLACT_WORK *work;
+  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
+      MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
+  GFL_BBDACT_SYS *actSys;
+  
+
+  if(prm->draw_type == MMDL_DRAWTYPE_BLACT){
+    work = MMDL_GetDrawProcWork( mmdl );
+    if( work->actID != MMDL_BLACTID_NULL ){
+      actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+      *outIdx     = GFL_BBDACT_GetAnimeIdx( actSys,work->actID );
+      *outFrmIdx  = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
+    }else{
+      *outIdx     = 0;
+      *outFrmIdx  = 0;
+    }
+  }else{
+    GF_ASSERT( prm->draw_type == MMDL_DRAWTYPE_BLACT );
+    *outIdx     = 0;
+    *outFrmIdx  = 0;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DRAW_BLACT_WORK アニメーションフレームの設定
+ *
+ *	@param	mmdl      モデルワーク
+ *	@param  Idx       アニメーションインデックス
+ *	@param	FrmIdx    フレームインデックス
+ */
+//-----------------------------------------------------------------------------
+extern void MMDL_DrawBlactWork_SetAnimeFrame( MMDL *mmdl, u16 Idx, u16 FrmIdx )
+{
+  DRAW_BLACT_WORK *work;
+  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
+      MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
+  GFL_BBDACT_SYS *actSys;
+
+  if(prm->draw_type == MMDL_DRAWTYPE_BLACT){
+    work = MMDL_GetDrawProcWork( mmdl );
+    if( work->actID != MMDL_BLACTID_NULL ){
+      actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, Idx );
+      GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, FrmIdx );
+    }
+  }
+}
+
+
+
 //======================================================================
 //  描画処理　ビルボード　自機専用
 //======================================================================
