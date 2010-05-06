@@ -51,6 +51,8 @@
 #include "event_debug_numinput.h"
 #include "event_debug_numinput_research.h"
 #include "event_debug_numinput_record.h"
+#include "event_debug_menu_fskill.h"
+#include "event_debug_menu_mystery_card.h"
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
 #include  "item/item.h"  //ITEM_CheckEnable
@@ -195,7 +197,6 @@ static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugReWritePoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
@@ -218,7 +219,6 @@ static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_RecordNumInput( DEBUG_MENU_EVENT_WORK *wk );
 
-static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
@@ -235,10 +235,6 @@ static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_BattleRecorder( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_Diving( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
@@ -261,11 +257,6 @@ static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work );
 
 static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
@@ -2444,33 +2435,6 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
   return( GMEVENT_RES_CONTINUE );
 }
 
-//======================================================================
-//  デバッグメニュー　波乗り
-//======================================================================
-//--------------------------------------------------------------
-/**
- * 波乗りイベント呼び出し
- * @param wk DEBUG_MENU_EVENT_WORK*
- * @retval BOOL TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_Naminori( DEBUG_MENU_EVENT_WORK *wk )
-{
-  if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID )
-  {
-    // レールのとき
-    FIELD_PLAYER* p_fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
-    if( FIELD_PLAYER_GetMoveForm( p_fld_player ) != PLAYER_MOVE_FORM_SWIM ){
-      FIELD_PLAYER_SetNaminori( p_fld_player );
-    }else{
-      FIELD_PLAYER_SetNaminoriEnd( p_fld_player );
-    }
-    return( FALSE );
-  }
-
-  FIELD_EVENT_ChangeNaminoriStart( wk->gmEvent, wk->gmSys, wk->fieldWork );
-  return( TRUE );
-}
 
 //======================================================================
 //  デバッグメニュー ポケモン作成
@@ -3501,23 +3465,6 @@ static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p
   return GMEVENT_RES_CONTINUE ;
 }
 
-//======================================================================
-//  怪力
-//======================================================================
-//--------------------------------------------------------------
-/**
- * 怪力実行
- * @param wk DEBUG_MENU_EVENT_WORK*
- * @retval BOOL TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GAMESYS_WORK *gsys = wk->gmSys;
-  EVENTWORK *evwork = GAMEDATA_GetEventWork( wk->gdata );
-  EVENTWORK_SetEventFlag( evwork, SYS_FLAG_KAIRIKI );
-  return( FALSE );
-}
 
 //--------------------------------------------------------------
 /**
@@ -4523,67 +4470,8 @@ static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk )
   return FALSE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  あなぬけのヒモ
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_Ananukenohimo( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GMEVENT*      parent = wk->gmEvent;
-  GAMESYS_WORK* gsys = wk->gmSys;
-  FIELDMAP_WORK* fieldmap = wk->fieldWork;
 
-  GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByAnanukenohimo( fieldmap, gsys ) );
-  return TRUE;
-}
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  あなをほる
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_Anawohoru( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GMEVENT*      parent = wk->gmEvent;
-  GAMESYS_WORK* gsys = wk->gmSys;
-
-  GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByAnawohoru( gsys ) );
-  return TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  テレポート
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_Teleport( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GMEVENT*      parent = wk->gmEvent;
-  GAMESYS_WORK* gsys = wk->gmSys;
-
-  GMEVENT_ChangeEvent( parent, EVENT_ChangeMapByTeleport( gsys ) );
-  return TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  フィールド技：ダイビング
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_Diving( DEBUG_MENU_EVENT_WORK *wk )
-{
-  if( FIELDMAP_GetMapControlType(wk->fieldWork) != FLDMAP_CTRLTYPE_GRID )
-  {
-    FIELD_PLAYER* p_fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
-
-    // レール上ではこっち
-    FIELD_PLAYER_SetRequest( p_fld_player, FIELD_PLAYER_REQBIT_DIVING );
-    return FALSE;
-  }
-  SCRIPT_ChangeScript( wk->gmEvent, SCRID_HIDEN_DIVING_MENU, NULL, HEAPID_FIELDMAP );
-  return TRUE;
-}
 
 //-----------------------------------------------------------------------------
 /**
@@ -6239,6 +6127,7 @@ static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work )
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk );
 
+#if 0
 static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[] =
 {
   { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },              //波乗り
@@ -6258,6 +6147,7 @@ static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {
   NULL,
   NULL
 };
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -6268,6 +6158,16 @@ static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
 {
+  GMEVENT* event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_fskill ), DEBUG_EVENT_DebugMenu_Fskill, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return TRUE;
+
+#if 0
   GMEVENT *event = wk->gmEvent;
   DEBUG_MENU_EVENT_WORK   temp  = *wk;
   DEBUG_MENU_EVENT_WORK   *work;
@@ -6284,8 +6184,10 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
   work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubFieldSkillListSelectData );
 
   return( TRUE );
+#endif
 }
 
+#if 1
 //--------------------------------------------------------------
 /**
  * イベント：フィールド技リスト
@@ -6336,7 +6238,9 @@ static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, voi
 
   return( GMEVENT_RES_CONTINUE );
 }
+#endif
 
+#if 0
 //======================================================================
 //  デバッグメニュー　ふしぎなおくりもの作成
 //======================================================================
@@ -6362,10 +6266,21 @@ static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
   NULL,
   NULL
 };
+#endif
 
 
 static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
 {
+  GMEVENT* event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_mystery_card ), DEBUG_EVENT_DebugMenu_MakeMysteryCard, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return TRUE;
+#if 0
+
   GMEVENT *event = wk->gmEvent;
   DEBUG_MENU_EVENT_WORK   temp  = *wk;
   DEBUG_MENU_EVENT_WORK   *work;
@@ -6383,8 +6298,10 @@ static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
   work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubMysteryCardMakeData );
 
   return( TRUE );
+#endif
 }
 
+#if 0
 static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   DOWNLOAD_GIFT_DATA  dl_data;
@@ -6575,6 +6492,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk )
 
   return FALSE;
 }
+#endif
 
 //======================================================================
 //
