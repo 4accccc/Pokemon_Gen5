@@ -13698,10 +13698,11 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
     u32 i;
     for(i=0; i<param->poke_cnt; ++i)
     {
-      if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID[i]) )
+      // 場にいるポケモンに限定してしまうと「アロマセラピー」などが効かない
+//      if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID[i]) )
       {
         BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
-        if( !BPP_IsDead(pp_target) )
+        if( BPP_IsFightEnable(pp_target) )
         {
           BtlWazaSickEx exCode;
           BPP_SICK_CONT oldCont;
