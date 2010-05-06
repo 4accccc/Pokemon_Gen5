@@ -1,0 +1,7 @@
+DATA_LIST = \
+    t01_bird01.nsbmd \
+    t01_bird01.nsbca \
+    t01_bird01.nsbtp \
+    t01_bird02.nsbmd \
+    t01_bird02.nsbca \
+    t01_bird02.nsbtp

@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: t01_gmk.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-05-06T19:22:55
+ *****************************************************************************/
+
+#ifndef NARC_T01_GMK_NAIX_
+#define NARC_T01_GMK_NAIX_
+
+enum {
+	NARC_t01_gmk_t01_bird01_nsbmd = 0,
+	NARC_t01_gmk_t01_bird01_nsbca = 1,
+	NARC_t01_gmk_t01_bird01_nsbtp = 2,
+	NARC_t01_gmk_t01_bird02_nsbmd = 3,
+	NARC_t01_gmk_t01_bird02_nsbca = 4,
+	NARC_t01_gmk_t01_bird02_nsbtp = 5
+};
+
+/* NARC_T01_GMK_NAIX_ */
+#endif
