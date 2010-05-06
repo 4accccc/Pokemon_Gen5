@@ -237,7 +237,6 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_paint_bg_NSCR , 
                     CTVT_FRAME_SUB_BG ,  0 , 0, FALSE , heapId );
   GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_BG );
-  GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -24 );
   GFL_BG_SetVisible( CTVT_FRAME_SUB_BAR , FALSE );
   GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 
@@ -245,12 +244,12 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
     //MSGと共用なのでここでスクリーンを読む
     ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , heapId );
     GFL_BG_ClearScreen( CTVT_FRAME_MAIN_MSG );
-    GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
-                      CTVT_FRAME_MAIN_MSG ,  0 , 0, FALSE , heapId );
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+                      CTVT_FRAME_MAIN_MSG , 32*3 , 0 , 0x2*32*24, FALSE , heapId );
     GFL_BG_ChangeScreenPalette( CTVT_FRAME_MAIN_MSG , 0 , 21 , 32 , 3 , CTVT_PAL_BG_MAIN_BAR );
     GFL_BG_LoadScreenReq( CTVT_FRAME_MAIN_MSG );
     
-    GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -24 );
+    GFL_BG_SetScroll( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , 0 );
 
     GFL_ARC_CloseDataHandle( commonArcHandle );
   }
@@ -417,10 +416,8 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->infoWin = NULL;
 
   //MakeScreenは文字表示の時
-  drawWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
-                                        1 , 1 , 30 , 4 ,
-                                        CTVT_PAL_BG_SUB_FONT ,
-                                        GFL_BMP_CHRAREA_GET_B );
+  //Createは文字描画の時
+  drawWork->msgWin = NULL;
   
   {
     GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
@@ -496,8 +493,12 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   GFL_BMPWIN_Delete( drawWork->infoWin );
   GFL_BMPWIN_ClearTransWindow( drawWork->titleWin );
   GFL_BMPWIN_Delete( drawWork->titleWin );
-  GFL_BMPWIN_ClearTransWindow( drawWork->msgWin );
-  GFL_BMPWIN_Delete( drawWork->msgWin );
+  if( drawWork->msgWin != NULL )
+  {
+    GFL_BMPWIN_ClearTransWindow( drawWork->msgWin );
+    GFL_BMPWIN_Delete( drawWork->msgWin );
+    drawWork->msgWin = NULL;
+  }
   
   for( i=0;i<CDEX_MAX;i++ )
   {
@@ -761,7 +762,8 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     }
   }
   
-  if( drawWork->isUpdateMsgWin == TRUE )
+  if( drawWork->isUpdateMsgWin == TRUE &&
+      drawWork->msgWin != NULL )
   {
     PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
     if( PRINTSYS_QUE_IsExistTarget( printQue , GFL_BMPWIN_GetBmp( drawWork->msgWin )) == FALSE )
@@ -1369,7 +1371,7 @@ static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork 
   if( isUpdate == TRUE )
   {
     u8 i;
-    GFL_BG_SetScrollReq( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -drawWork->dispBarScroll );
+    GFL_BG_SetScrollReq( CTVT_FRAME_MAIN_MSG , GFL_BG_SCROLL_Y_SET , -drawWork->dispBarScroll+24 );
     for( i=0;i<CDED_MAX;i++ )
     {
       GFL_CLACTPOS pos;
@@ -1586,6 +1588,23 @@ static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
   STRBUF *str;
+  u8 posy;
+  if( drawWork->msgWin != NULL )
+  {
+    GFL_BMPWIN_Delete( drawWork->msgWin );
+  }
+  if( drawWork->barScroll == 0 )
+  {
+    posy = 4;
+  }
+  else
+  {
+    posy = 1;
+  }
+  drawWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_MAIN_MSG , 
+                                        1 , posy , 30 , 4 ,
+                                        CTVT_PAL_BG_SUB_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( drawWork->msgWin) , 0xF );
   str = GFL_MSG_CreateString( msgHandle , msgId );
