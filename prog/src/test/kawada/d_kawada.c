@@ -157,7 +157,7 @@ typedef struct {
 
   // }ŠÓÚ×
   ZUKAN_DETAIL_PARAM* zukan_detail_param;
-  u16                 poke_list[5];
+  u16                 poke_list[9];
 
   // ƒeƒXƒg
   D_KAWADA_TEST_PARAM*  d_test_param;
@@ -1188,7 +1188,7 @@ static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk )
 // }ŠÓÚ×
 static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
 {
-  u16 poke_list_num = 5;
+  u16 poke_list_num = 9;
   const u8 lang_code[6] =
   {
     LANG_ENGLISH,
@@ -1212,7 +1212,11 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   wk->poke_list[1] = 202;
   wk->poke_list[2] = 151;
   wk->poke_list[3] = 487;
-  wk->poke_list[4] = 582;  // MONSNO_TURUTTO
+  wk->poke_list[4] = 582;  // MONSNO_TURURI
+  wk->poke_list[5] = 583;  // MONSNO_TURUTTO
+  wk->poke_list[6] = 584;  // MONSNO_TURUTURUDA
+  wk->poke_list[7] = 585;  // MONSNO_SIKIZIKA
+  wk->poke_list[8] = 586;  // MONSNO_ANTORESU
 
   for( i=0; i<poke_list_num; i++ )
   {

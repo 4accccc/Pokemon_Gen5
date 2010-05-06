@@ -459,7 +459,7 @@ struct _ZKNDTL_COMMON_PF_WORK
   GFL_TCBSYS*          tcbsys;
   void*                tcbsys_wk;
   PALETTE_FADE_PTR     pfp;
-
+  u16                  req_bit;
   PF_STATE             state;
 };
 
@@ -476,7 +476,7 @@ static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
 *  外部公開関数定義
 */
 //=============================================================================
-ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInit( HEAPID heap_id )
+ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInitPart( HEAPID heap_id, u16 req_bit )  // req_bitはPF_BIT_MAIN_BG,PF_BIT_MAIN_OBJ,PF_BIT_SUB_BG,PF_BIT_SUB_OBJを|でつないだもの
 {
   ZKNDTL_COMMON_PF_WORK* pf_wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ZKNDTL_COMMON_PF_WORK) );
  
@@ -488,23 +488,31 @@ ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInit( HEAPID heap_id )
   pf_wk->pfp = PaletteFadeInit( heap_id );
   PaletteTrans_AutoSet( pf_wk->pfp, TRUE );
 
-  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_MAIN_BG,  PF_MAIN_BG_DATA_SIZE,  heap_id ); 
-  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_MAIN_OBJ, PF_MAIN_OBJ_DATA_SIZE, heap_id ); 
-  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_SUB_BG,   PF_SUB_BG_DATA_SIZE,   heap_id );
-  PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_SUB_OBJ,  PF_SUB_OBJ_DATA_SIZE,  heap_id );
+  // 対象
+  pf_wk->req_bit = req_bit;
+
+  if( pf_wk->req_bit & PF_BIT_MAIN_BG  ) PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_MAIN_BG,  PF_MAIN_BG_DATA_SIZE,  heap_id ); 
+  if( pf_wk->req_bit & PF_BIT_MAIN_OBJ ) PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_MAIN_OBJ, PF_MAIN_OBJ_DATA_SIZE, heap_id ); 
+  if( pf_wk->req_bit & PF_BIT_SUB_BG   ) PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_SUB_BG,   PF_SUB_BG_DATA_SIZE,   heap_id );
+  if( pf_wk->req_bit & PF_BIT_SUB_OBJ  ) PaletteFadeWorkAllocSet( pf_wk->pfp, FADE_SUB_OBJ,  PF_SUB_OBJ_DATA_SIZE,  heap_id );
 
   // 状態
   pf_wk->state = PF_STATE_COLORLESS;
 
   return pf_wk;
 }
+
+ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInit( HEAPID heap_id )
+{
+  return ZKNDTL_COMMON_PfInitPart( heap_id, PF_BIT_MAIN_BG | PF_BIT_MAIN_OBJ | PF_BIT_SUB_BG | PF_BIT_SUB_OBJ );
+}
 void ZKNDTL_COMMON_PfExit( ZKNDTL_COMMON_PF_WORK* pf_wk )
 {
   // パレットフェード
-  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_SUB_OBJ );
-  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_SUB_BG );
-  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_MAIN_OBJ );
-  PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_MAIN_BG );
+  if( pf_wk->req_bit & PF_BIT_SUB_OBJ  ) PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_SUB_OBJ );
+  if( pf_wk->req_bit & PF_BIT_SUB_BG   ) PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_SUB_BG );
+  if( pf_wk->req_bit & PF_BIT_MAIN_OBJ ) PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_MAIN_OBJ );
+  if( pf_wk->req_bit & PF_BIT_MAIN_BG  ) PaletteFadeWorkAllocFree( pf_wk->pfp, FADE_MAIN_BG );
   
   PaletteFadeFree( pf_wk->pfp );
 
@@ -648,10 +656,10 @@ void ZKNDTL_COMMON_PfSetPaletteDataFromArchandle(
 }
 void ZKNDTL_COMMON_PfSetPaletteDataFromVram( ZKNDTL_COMMON_PF_WORK* pf_wk )
 {
-  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_MAIN_BG,  0, PF_MAIN_BG_DATA_SIZE  );
-  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_MAIN_OBJ, 0, PF_MAIN_OBJ_DATA_SIZE );
-  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_SUB_BG,   0, PF_SUB_BG_DATA_SIZE   );
-  PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_SUB_OBJ,  0, PF_SUB_OBJ_DATA_SIZE  );
+  if( pf_wk->req_bit & PF_BIT_MAIN_BG  ) PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_MAIN_BG,  0, PF_MAIN_BG_DATA_SIZE  );
+  if( pf_wk->req_bit & PF_BIT_MAIN_OBJ ) PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_MAIN_OBJ, 0, PF_MAIN_OBJ_DATA_SIZE );
+  if( pf_wk->req_bit & PF_BIT_SUB_BG   ) PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_SUB_BG,   0, PF_SUB_BG_DATA_SIZE   );
+  if( pf_wk->req_bit & PF_BIT_SUB_OBJ  ) PaletteWorkSet_VramCopy( pf_wk->pfp, FADE_SUB_OBJ,  0, PF_SUB_OBJ_DATA_SIZE  );
 }
 
 
@@ -663,6 +671,7 @@ void ZKNDTL_COMMON_PfSetPaletteDataFromVram( ZKNDTL_COMMON_PF_WORK* pf_wk )
 static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
     s8 wait, u8 start_evy, u8 end_evy )  // prog/src/system/palanm.cのPaletteFadeReq参照。
 {
+  if( pf_wk->req_bit & PF_BIT_MAIN_BG  )
     PaletteFadeReq(
         pf_wk->pfp,
         PF_BIT_MAIN_BG,
@@ -673,6 +682,7 @@ static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
         PF_BLACK_RGB,
         pf_wk->tcbsys
     );
+  if( pf_wk->req_bit & PF_BIT_MAIN_OBJ )
     PaletteFadeReq(
         pf_wk->pfp,
         PF_BIT_MAIN_OBJ,
@@ -683,6 +693,7 @@ static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
         PF_BLACK_RGB,
         pf_wk->tcbsys
     );
+  if( pf_wk->req_bit & PF_BIT_SUB_BG   )
     PaletteFadeReq(
         pf_wk->pfp,
         PF_BIT_SUB_BG,
@@ -693,6 +704,7 @@ static void Zkndtl_Common_PfSetReq( ZKNDTL_COMMON_PF_WORK* pf_wk,
         PF_BLACK_RGB,
         pf_wk->tcbsys
     );
+  if( pf_wk->req_bit & PF_BIT_SUB_OBJ  )
     PaletteFadeReq(
         pf_wk->pfp,
         PF_BIT_SUB_OBJ,

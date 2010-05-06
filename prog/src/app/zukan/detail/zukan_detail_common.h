@@ -138,6 +138,7 @@ typedef struct _ZKNDTL_COMMON_PF_WORK ZKNDTL_COMMON_PF_WORK;  // MAINもSUBもこれ
 *  関数のプロトタイプ宣言
 */
 //=============================================================================
+extern ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInitPart( HEAPID heap_id, u16 req_bit );  // req_bitはPF_BIT_MAIN_BG,PF_BIT_MAIN_OBJ,PF_BIT_SUB_BG,PF_BIT_SUB_OBJを|でつないだもの
 extern ZKNDTL_COMMON_PF_WORK* ZKNDTL_COMMON_PfInit( HEAPID heap_id );
 extern void ZKNDTL_COMMON_PfExit( ZKNDTL_COMMON_PF_WORK* pf_wk );
 
