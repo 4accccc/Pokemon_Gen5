@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:24:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T13:46:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -389,7 +389,7 @@
 はい！　アナタは
 その　しかくを　えましたよ▼
 ちゅうおうの　ひろばに　もどり
-エレベータを　しらべてくださいね</language>
+ぞうを　しらべてくださいね</language>
 		<language name="JPN_KANJI" width="256">あの……
 挑戦者の　方▼
 ポケモンリーグは
@@ -398,7 +398,7 @@
 はい！　アナタは
 その　資格を　得ましたよ▼
 中央の　広場に　戻り
-エレベータを　調べてくださいね</language>
+像を　調べてくださいね</language>
 	</row>
 
 	<row id="msg_c09r0101_bigfour1_05a">
