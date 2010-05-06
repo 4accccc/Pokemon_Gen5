@@ -2487,16 +2487,18 @@ static BOOL subprocRotateMember( int* seq, void* wk_adrs )
  * はい／いいえ選択
  *
  * @param   wk
- * @param   yes_msg はいのボタンに出すメッセージ
- * @param   no_msg  いいえのボタンに出すメッセージ
+ * @param   yes_msg   はいのボタンに出すメッセージ
+ * @param   no_msg    いいえのボタンに出すメッセージ
+ * @param   b_cancel  Bでいいえを押したことにするかどうか
  */
 //=============================================================================================
-void BTLV_YESNO_Start( BTLV_CORE* wk, BTLV_STRPARAM* yes_msg, BTLV_STRPARAM* no_msg )
+void BTLV_YESNO_Start( BTLV_CORE* wk, BTLV_STRPARAM* yes_msg, BTLV_STRPARAM* no_msg, BOOL b_cancel )
 {
   BTLV_INPUT_YESNO_PARAM* yesnoParam = getGenericWork( wk, sizeof( BTLV_INPUT_YESNO_PARAM ) );
 
   yesnoParam->yes_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, GFL_HEAP_LOWID(wk->heapID) );
   yesnoParam->no_msg = GFL_STR_CreateBuffer( BTL_YESNO_MSG_LENGTH, GFL_HEAP_LOWID(wk->heapID) );
+  yesnoParam->b_cancel_flag = b_cancel;
 
   StrParamToString( yes_msg, yesnoParam->yes_msg );
   StrParamToString( no_msg,  yesnoParam->no_msg );

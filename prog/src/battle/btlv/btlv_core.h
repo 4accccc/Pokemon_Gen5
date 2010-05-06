@@ -380,7 +380,7 @@ extern void BTLV_UI_SelectRotation_ForceQuit( BTLV_CORE* wk );
 extern void BTLV_RotationMember_Start( BTLV_CORE* wk, u8 clientID, BtlRotateDir dir );
 extern BOOL BTLV_RotationMember_Wait( BTLV_CORE* wk );
 
-extern void BTLV_YESNO_Start( BTLV_CORE* wk, BTLV_STRPARAM* yes_msg, BTLV_STRPARAM* no_msg );
+extern void BTLV_YESNO_Start( BTLV_CORE* wk, BTLV_STRPARAM* yes_msg, BTLV_STRPARAM* no_msg, BOOL b_cancel );
 extern BOOL BTLV_YESNO_Wait( BTLV_CORE* wk, BtlYesNo* result );
 
 extern void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza );
