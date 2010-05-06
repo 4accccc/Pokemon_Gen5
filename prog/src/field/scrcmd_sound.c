@@ -732,11 +732,33 @@ VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*  work = wk;
-  u16 monsno  = SCRCMD_GetVMWorkValue(core, wk);
+  SCRCMD_WORK* work = wk;
+  u16 monsno = SCRCMD_GetVMWorkValue(core, wk);
   u16 formno = SCRCMD_GetVMWorkValue(core, wk);
   u32 player; 
+
   player = PMV_PlayVoice( monsno, formno );
+  SCRCMD_WORK_SetPMVoiceIndex( work, player );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 鳴き声を鳴らす ( ペラップ録音データ再生ver. )
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdVoicePlay_forMine( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK* work = wk;
+  u16 monsno = SCRCMD_GetVMWorkValue(core, wk);
+  u16 formno = SCRCMD_GetVMWorkValue(core, wk);
+  u32 player; 
+
+  player = PMV_PlayVoice_forMine( monsno, formno );
   SCRCMD_WORK_SetPMVoiceIndex( work, player );
 
   return VMCMD_RESULT_CONTINUE;

@@ -307,7 +307,7 @@ sodateya_adopt_pokemon_core:
       // 鳴き声SE
       _GET_PARTY_POKE_MONSNO( monsno, select_party_pos )
       _GET_PARTY_POKE_FORMNO( formno, select_party_pos )
-      _VOICE_PLAY( monsno, formno )
+      _VOICE_PLAY_FOR_MINE( monsno, formno )
 
       //「[ニックネーム]を しばらく預かるぞ」
       _TEMOTI_NICK_NAME( 0, select_party_pos )
@@ -549,7 +549,7 @@ take_back_pokemon_core:
   // 鳴き声SE
   _GET_SODATEYA_POKE_MONSNO( monsno, select_sodateya_pos )
   _GET_SODATEYA_POKE_FORMNO( formno, select_sodateya_pos )
-  _VOICE_PLAY( monsno, formno )
+  _VOICE_PLAY_FOR_MINE( monsno, formno )
 
   //「[ニックネーム]を引き取った！」
   _SODATEYA_NICK_NAME( 0, select_sodateya_pos )

@@ -42,6 +42,7 @@ extern VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk );
 
 //ñ¬Ç´ê∫
 extern VMCMD_RESULT EvCmdVoicePlay(VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdVoicePlay_forMine(VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdVoiceWait(VMHANDLE *core, void *wk );
 
 // ISS

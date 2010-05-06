@@ -866,6 +866,9 @@
   
   //自機の表示コードが自機専用のものかどうか。
   DEF_CMD( EvCmdCheckPlayerIllegalOBJCode, EV_SEQ_CHECK_PLAYER_ILLEGAL_OBJCODE )
+
+  //ポケモン鳴き声再生 ( ペラップ録音データ適用 ver. )
+  DEF_CMD( EvCmdVoicePlay_forMine, EV_SEQ_VOICE_PLAY_FOR_MINE )
   
   END_CMD
   //スクリプトコマンドテーブル終了
