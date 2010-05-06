@@ -361,7 +361,7 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
   //目パチ口パク素材
   charaWork->cellRes[0] = GFL_CLGRP_PLTT_RegisterComp( work->arcHandle , 
         charaResList[charaWork->charaType][2] , CLSYS_DRAW_MAIN , 
-        (LTVT_PLT_OBJ_CHARA+charaWork->charaIdx)*32 , work->heapId  );
+        (LTVT_PLT_OBJ_CHARA+(charaWork->charaIdx*2))*32 , work->heapId  );
   charaWork->cellRes[1] = GFL_CLGRP_CGR_Register( work->arcHandle , 
         charaResList[charaWork->charaType][2]+1 , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   charaWork->cellRes[2] = GFL_CLGRP_CELLANIM_Register( work->arcHandle , 

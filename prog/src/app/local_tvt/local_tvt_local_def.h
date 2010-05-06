@@ -39,7 +39,7 @@
 #define LTVT_PLT_MAIN_WINFRAME (13)
 
 #define LTVT_PLT_OBJ_MAIN     (0)
-#define LTVT_PLT_OBJ_CHARA     (4)  //1*4ñ{
+#define LTVT_PLT_OBJ_CHARA     (4)  //2*4ñ{
 
 //ägí£BGÇÕñ Ç≤Ç∆Ç…éùÇ¬ÇÃÇ≈óºï˚0Ç©ÇÁÇ≈OK
 #define LTVT_PLT_CHARA (0)
