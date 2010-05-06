@@ -66,6 +66,13 @@ BtlWeather BTL_FIELD_GetWeather( void )
 {
   return Work.weather;
 }
+u32 BTL_FIELD_GetWeatherTurn( void )
+{
+  if( Work.weather != BTL_WEATHER_NONE ){
+    return Work.weatherTurn;
+  }
+  return 0;
+}
 
 //=============================================================================================
 /**

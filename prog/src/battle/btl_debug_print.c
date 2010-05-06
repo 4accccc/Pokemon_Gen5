@@ -154,7 +154,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面 モード=%d すでに%d体選択, 今回選択=%d\n";
   case DBGSTR_VCORE_SelPokeEnd:         return "ポケ選択おわった\n";
-  case DBGSTR_VCORE_SelPokeEnd_Sel:     return "  [%d]番目 選択された -> %d体 格納\n";
+  case DBGSTR_VCORE_SelPokeEnd_Sel:     return "  [%d]番目 選択された -> Idx=%d, (%d体 格納)\n";
   case DBGSTR_VCORE_SelPokeEnd_Unsel:   return "  [%d]番目 選択されていない\n";
   case DBGSTR_VCORE_PluralDamageInfo:   return "複数体ダメージ処理 (%d体) wazaID=%d\n";
   case DBGSTR_VCORE_PluralDamagePoke:   return "  対象ポケID=%d\n";

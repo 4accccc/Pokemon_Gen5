@@ -1150,7 +1150,8 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
             BTL_POKESELECT_RESULT_Push( wk->pokeselResult, i, wk->plistData.sel_pos[i] );
             {
               u8 storeCnt = BTL_POKESELECT_RESULT_GetCount( wk->pokeselResult );
-              BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, storeCnt);
+              TAYA_Printf("FightPokeMax=%d\n", wk->plistData.fight_poke_max );
+              BTL_N_Printf( DBGSTR_VCORE_SelPokeEnd_Sel, i, wk->plistData.sel_pos[i], storeCnt);
               wk->pokeselResult->fCancel = FALSE;
             }
           }

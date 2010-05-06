@@ -604,7 +604,9 @@ static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker );
-static BOOL scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static BOOL scproc_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static BOOL scproc_ChangeWeatherCheck( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static void scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
 static u8 scEvent_WazaWeatherTurnUp( BTL_SVFLOW_WORK* wk, BtlWeather weather, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn );
 static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam );
@@ -930,7 +932,7 @@ SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
     const BTL_FIELD_SITUATION* fSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
     if( fSit->weather != BTL_WEATHER_NONE )
     {
-      scproc_ChangeWeatherCore( wk, fSit->weather, BTL_WEATHER_TURN_PERMANENT );
+      scproc_ChangeWeather( wk, fSit->weather, BTL_WEATHER_TURN_PERMANENT );
     }
   }
 
@@ -5980,13 +5982,13 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
 
   for(i=0, hitCount=0; i<wk->hitCheckParam->countMax; ++i)
   {
-    dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, targets, affRec,
-                    wk->hitCheckParam, BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE );
-    ++hitCount;
-
     // ワザエフェクトコマンド生成
     SCQUE_PUT_ACT_WazaEffect( wk->que,
         wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
+
+    dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, targets, affRec,
+                    wk->hitCheckParam, BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE );
+    ++hitCount;
 
     if( !BPP_IsDead(bpp) )
     {
@@ -5994,8 +5996,7 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
         break;
       }
     }
-    else
-    {
+    else{
       break;
     }
   }
@@ -8266,7 +8267,7 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   {
     u8 turn_upcnt = scEvent_WazaWeatherTurnUp( wk, weather, attacker );
 
-    if( scproc_ChangeWeatherCore( wk, weather, BTL_WEATHER_TURN_DEFAULT+turn_upcnt ) ){
+    if( scproc_ChangeWeather( wk, weather, BTL_WEATHER_TURN_DEFAULT+turn_upcnt ) ){
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
     }else{
       scPut_WazaFail( wk, attacker, wazaParam->wazaID );
@@ -8288,28 +8289,50 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   }
 }
 /**
- *  天候変化コア
+ *  天候変化処理
  */
-static BOOL scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
+static BOOL scproc_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
 {
-  if( BTL_FIELD_GetWeather() == weather ){
-    return FALSE;
-  }
-  else if( weather<BTL_WEATHER_MAX )
+  if( scproc_ChangeWeatherCheck(wk, weather, turn) )
   {
-//    BOOL result = scEvent_CheckChangeWeather( wk, weather, &turn );
-    BTL_FIELD_SetWeather( weather, turn );
-    SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
-
-    {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_AfterChangeWeather( wk, weather );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-    }
+    scproc_ChangeWeatherCore( wk, weather, turn );
     return TRUE;
   }
   return FALSE;
+}
+/**
+ *  天候変化可否チェック
+ */
+static BOOL scproc_ChangeWeatherCheck( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
+{
+  if( weather >= BTL_WEATHER_MAX ){
+    return FALSE;
+  }
+
+  if( BTL_FIELD_GetWeather() == weather )
+  {
+    if( (turn != BTL_WEATHER_TURN_PERMANENT)
+    ||  (BTL_FIELD_GetWeatherTurn() == BTL_WEATHER_TURN_PERMANENT)
+    ){
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+/**
+ *  天候変化コア
+ */
+static void scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn )
+{
+  BTL_FIELD_SetWeather( weather, turn );
+  SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
+    scEvent_AfterChangeWeather( wk, weather );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -14122,22 +14145,37 @@ static u8 scproc_HandEx_changeWeather( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   const BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
   BOOL result;
 
-  if( param_header->tokwin_flag ){
-    scPut_TokWin_In( wk, pp_user );
-  }
-
   if( param->weather != BTL_WEATHER_NONE )
   {
-    result = scproc_ChangeWeatherCore( wk, param->weather, param->turn );
+    if( scproc_ChangeWeatherCheck(wk, param->weather, param->turn) )
+    {
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_In( wk, pp_user );
+      }
+      scproc_ChangeWeatherCore( wk, param->weather, param->turn );
+      result = TRUE;
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_Out( wk, pp_user );
+      }
+    }
   }
   else
   {
     BtlWeather prevWeather = BTL_FIELD_GetWeather();
     if( prevWeather != BTL_WEATHER_NONE )
     {
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_In( wk, pp_user );
+      }
+
       BTL_FIELD_ClearWeather();
       SCQUE_PUT_ACT_WeatherEnd( wk->que, prevWeather );
       result = TRUE;
+
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_In( wk, pp_user );
+      }
+
     }
     else{
       result = FALSE;
@@ -14147,9 +14185,6 @@ static u8 scproc_HandEx_changeWeather( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     handexSub_putString( wk, &param->exStr );
   }
 
-  if( param_header->tokwin_flag ){
-    scPut_TokWin_Out( wk, pp_user );
-  }
 
   return result;
 }

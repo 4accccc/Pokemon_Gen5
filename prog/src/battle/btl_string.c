@@ -24,6 +24,10 @@
 #include "msg\msg_btl_ui.h"
 #include "msg\msg_wazaname.h"
 
+#ifdef PM_DEBUG
+#include "script_message.naix"
+#include "msg\script\msg_n01r0502.h"
+#endif
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
