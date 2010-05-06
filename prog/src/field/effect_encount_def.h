@@ -7,6 +7,12 @@
 
 #pragma once
 
+typedef enum{
+  EFFENC_SIT_NORMAL,
+  EFFENC_SIT_CAVE,
+  EFFENC_SIT_BRIDGE,
+}EFFENC_SIT_TYPE;
+
 #define EFFENC_NORMAL_INTERVAL (20)  //エフェクト抽選デフォルトインターバル
 #define EFFENC_NORMAL_PROB (10)  //エフェクト抽選確率デフォルト
 #define EFFENC_CAVE_INTERVAL (20)  //エフェクト抽選洞窟インターバル

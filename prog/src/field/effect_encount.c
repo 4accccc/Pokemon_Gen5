@@ -48,6 +48,7 @@ typedef struct _EFFENC_SEARCH{
   s16 player_lx;
   s16 player_lz;
   s16 block_x,block_z;
+  u16 block_ox,block_oz;
   s16 sx,sz,ex,ez;
 }EFFENC_SEARCH;
 
@@ -487,6 +488,15 @@ static void effenc_WalkCtClear( ENCOUNT_WORK* ewk )
 static void effect_SearchAreaGet( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EFFENC_SEARCH* esw )
 {
   s16 sx,ex,sz,ez;
+  const s8* tbl;
+  static const s8 DATA_SearchTbl[][4] = {
+    { -EFFENC_SEARCH_OX, EFFENC_SEARCH_OX, -EFFENC_SEARCH_OZ, EFFENC_SEARCH_OZ }, //All
+    { 0, EFFENC_SEARCH_OX, -EFFENC_SEARCH_OZ, EFFENC_SEARCH_OZ }, //‰E
+    { -EFFENC_SEARCH_OX, 0, -EFFENC_SEARCH_OZ, EFFENC_SEARCH_OZ }, //¶
+    { -EFFENC_SEARCH_OX, EFFENC_SEARCH_OX, -EFFENC_SEARCH_OZ, 0 }, //ã
+    { -EFFENC_SEARCH_OX, EFFENC_SEARCH_OX, 0, EFFENC_SEARCH_OZ }, //‰º
+  };
+
   {
     FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
     MMDL* mmdl = FIELD_PLAYER_GetMMdl( fplayer );
@@ -497,33 +507,36 @@ static void effect_SearchAreaGet( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EF
     esw->player_lz = esw->player_z % GRID_MAP_W;
     esw->block_x = esw->player_x / GRID_MAP_W;
     esw->block_z = esw->player_z / GRID_MAP_W;
+    esw->block_ox = esw->player_x-esw->player_lx;
+    esw->block_oz = esw->player_z-esw->player_lz;
+
+    if( enc->encdata->effenc_type != EFFENC_SIT_BRIDGE ){
+      tbl = DATA_SearchTbl[GFUser_GetPublicRand0( 4 )+1];
+    }else{
+      tbl = DATA_SearchTbl[0];
+    }
   }
-  sx = esw->player_lx - EFFENC_SEARCH_OX;
+  sx = esw->player_lx + tbl[0];
   if( sx < 0 ){
     sx = 0;
   }
-  ex = esw->player_lx + EFFENC_SEARCH_OX;
+  ex = esw->player_lx + tbl[1];
   if( ex >= GRID_MAP_W){
     ex = GRID_MAP_W-1;
   }
-  sz = esw->player_lz - EFFENC_SEARCH_OZ;
+  sz = esw->player_lz + tbl[2];
   if( sz < 0 ){
     sz = 0;
   }
-  ez = esw->player_lz + EFFENC_SEARCH_OZ;
+  ez = esw->player_lz + tbl[3];
   if( ez >= GRID_MAP_W){
     ez = GRID_MAP_W-1;
   }
 
-  {
-    s16 block;
-    block = esw->block_x*32;
-    esw->sx = sx + block;
-    esw->ex = ex + block;
-    block = esw->block_z*32;
-    esw->sz = sz + block;
-    esw->ez = ez + block;
-  }
+  esw->sx = sx + esw->block_ox;
+  esw->ex = ex + esw->block_ox;
+  esw->sz = sz + esw->block_oz;
+  esw->ez = ez + esw->block_oz; 
 }
 
 /*
@@ -544,23 +557,24 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   OSTick start_tick,end_tick;
 #endif
 
+  MI_CpuClear8(&eff_wk->attr_map,sizeof(EFFENC_ATTR_MAP));
+  vec.y = 0;
+  blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
+ 
+  if( !FLDMAPPER_IsGridDataEnableForEffectEncount(g3dMapper, blockIdx)){
+    return;
+  }
   //ŒŸõ—ÌˆæŽæ“¾
   effect_SearchAreaGet( enc, eff_wk, &esw );
 /*
   IWASAWA_Printf("EffSearch\nPlayer(%d,%d), x(%d`%d), z(%d`%d)\n",
       esw.player_x,esw.player_z,esw.sx,esw.ex,esw.sz,esw.ez);
 */
-  MI_CpuClear8(&eff_wk->attr_map,sizeof(EFFENC_ATTR_MAP));
-  vec.y = 0;
-  blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
- 
+
 #ifdef DEBUG_ONLY_FOR_iwasawa
   start_tick = OS_GetTick();
 #endif
   
-  if( !FLDMAPPER_IsGridDataEnableForEffectEncount(g3dMapper, blockIdx)){
-    return;
-  }
  
   vec.z = FX32_CONST(esw.sz*16)+FX32_CONST(8);
   vx = FX32_CONST(esw.sx*16)+FX32_CONST(8);
@@ -582,7 +596,10 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
     vec.z += FX32_CONST(16); 
   }
 #ifdef DEBUG_ONLY_FOR_iwasawa
-  IWASAWA_Printf("EncEffAttrSearch tick = %d count %d\n",OS_GetTick()-start_tick,eff_wk->attr_map.count);
+  {
+    end_tick = OS_GetTick()-start_tick;
+    IWASAWA_Printf("EncEffAttrSearch tick = %d count %d\n",end_tick,eff_wk->attr_map.count);
+  }
 #endif
 }
 
