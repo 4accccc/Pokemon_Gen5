@@ -100,7 +100,8 @@ typedef struct{
   u32               volume_down_flag      :1;     //ボリュームダウン中かどうかフラグ
   u32               volume_already_down   :1;     //すでにボリュームダウンだったフラグ
   u32               nakigoe_wait_flag     :1;     //鳴き声再生ウエイト中
-  u32                                     :20;
+  u32               se_play_flag          :1;     //SEPLAYされたかフラグ
+  u32                                     :19;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -732,6 +733,9 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 
   //汎用ワークを初期化
   bevw->sequence_work = 0;
+
+  //SE再生フラグを初期化
+  bevw->se_play_flag = 0;
 
   //ボールモードを初期化
   bevw->ball_mode = BTLEFF_USE_BALL;
@@ -2765,6 +2769,9 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_SE_PLAY\n");
 #endif DEBUG_OS_PRINT
 
+  //SE再生フラグをセット
+  bevw->se_play_flag = 1;
+
   if( pan == BTLEFF_SEPAN_FLAT )
   {
     pan = 0;
@@ -3702,7 +3709,10 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   GF_ASSERT( bevw->call_count == 0 );
 
   //SEを強制的にストップ
-  PMSND_StopSE();
+  if( bevw->se_play_flag )
+  { 
+    PMSND_StopSE();
+  }
 #ifdef DEBUG_SE_END_PRINT
   { 
     BOOL  se_end_flag = FALSE;
