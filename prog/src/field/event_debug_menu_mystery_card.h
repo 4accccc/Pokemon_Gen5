@@ -25,5 +25,3 @@ FS_EXTERN_OVERLAY( debug_mystery_card );
 extern GMEVENT * DEBUG_EVENT_DebugMenu_MakeMysteryCard( GAMESYS_WORK *gsys, void* wk );
 
 #endif // PM_DEBUG 
-
-

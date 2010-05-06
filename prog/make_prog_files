@@ -1755,6 +1755,10 @@ SRCS_OVERLAY_DEBUG_FSKILL = field/event_debug_menu_fskill.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MYSTERY_CARD = field/event_debug_menu_mystery_card.c
 
+#DEBUG_BBD_COLOR
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_BBD_COLOR = field/event_debug_bbd_color.c
+
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c

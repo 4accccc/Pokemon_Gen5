@@ -42,9 +42,9 @@
 #include  "weather.h"
 #include  "msg/msg_d_tomoya.h"
 
-#include "field_debug.h"
-
+#include "field_debug.h" 
 #include "field_event_check.h"
+
 #include "event_debug_menu_connect_check.h"
 #include "event_debug_menu_research.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
@@ -53,6 +53,8 @@
 #include "event_debug_numinput_record.h"
 #include "event_debug_menu_fskill.h"
 #include "event_debug_menu_mystery_card.h"
+#include "event_debug_bbd_color.h"
+
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
 #include  "item/item.h"  //ITEM_CheckEnable
@@ -4768,6 +4770,7 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk )
 // ビルボードカラー　の調整
 //-----------------------------------------------------------------------------
 
+#if 0
 //--------------------------------------------------------------
 /// DEBUG_CTLIGHT_WORK ライト操作ワーク
 //--------------------------------------------------------------
@@ -4786,6 +4789,7 @@ typedef struct
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuControlBbdColor(
     GMEVENT *event, int *seq, void *wk );
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -4794,6 +4798,16 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk )
 {
+  GMEVENT* event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_bbd_color ), DEBUG_EVENT_DebugMenu_BBD_Color, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return TRUE;
+
+#if 0
   DEBUG_BBDCOLOR_WORK *work;
   GAMESYS_WORK *gsys = wk->gmSys;
   GMEVENT *event = wk->gmEvent;
@@ -4809,9 +4823,11 @@ static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk )
   work->heapID = heapID;
   work->fieldWork = fieldWork;
   return( TRUE );
+#endif
 }
 
 
+#if 0
 static GMEVENT_RESULT debugMenuControlBbdColor(
     GMEVENT *event, int *seq, void *wk )
 {
@@ -4900,6 +4916,7 @@ static GMEVENT_RESULT debugMenuControlBbdColor(
 
   return( GMEVENT_RES_CONTINUE );
 }
+#endif
 
 
 //======================================================================
@@ -6122,32 +6139,6 @@ static u16 DEBUG_GetGPowerMax( GAMESYS_WORK* gsys, void* cb_work )
 //======================================================================
 //  デバッグメニュー　フィールドわざ
 //======================================================================
-//--------------------------------------------------------------
-/// proto
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk );
-
-#if 0
-static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[] =
-{
-  { DEBUG_FIELD_STR31, debugMenuCallProc_Naminori },              //波乗り
-  { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },               //怪力
-  { DEBUG_FIELD_ANANUKENOHIMO, debugMenuCallProc_Ananukenohimo }, //穴ヌケの紐
-  { DEBUG_FIELD_ANAWOHORU, debugMenuCallProc_Anawohoru },         //穴を掘る
-  { DEBUG_FIELD_TELEPORT, debugMenuCallProc_Teleport },           //テレポート
-  { DEBUG_FIELD_FSKILL_01, debugMenuCallProc_Diving },            //ダイビング
-};
-
-static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {
-  NARC_message_d_field_dat,
-  NELEMS(DATA_SubFieldSkillList),
-  DATA_SubFieldSkillList,
-  &DATA_DebugMenuList_Default, //流用
-  1, 1, 16, 17,
-  NULL,
-  NULL
-};
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -6165,110 +6156,21 @@ static BOOL debugMenuCallProc_FieldSkillList( DEBUG_MENU_EVENT_WORK *wk )
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
-  return TRUE;
-
-#if 0
-  GMEVENT *event = wk->gmEvent;
-  DEBUG_MENU_EVENT_WORK   temp  = *wk;
-  DEBUG_MENU_EVENT_WORK   *work;
-
-  GMEVENT_Change( event,
-    debugMenuFieldSkillListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
-
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
-
-  *work  = temp;
-  work->call_proc = NULL;
-
-  work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubFieldSkillListSelectData );
-
-  return( TRUE );
-#endif
+  return TRUE; 
 }
 
-#if 1
+
+//======================================================================
+//  デバッグメニュー　不思議データ作成
+//======================================================================
+
 //--------------------------------------------------------------
 /**
- * イベント：フィールド技リスト
- * @param event GMEVENT
- * @param seq   シーケンス
- * @param wk    event work
- * @retval  GMEVENT_RESULT
+ * デバッグメニュー呼び出し　不思議データ作成
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuFieldSkillListEvent(GMEVENT *event, int *seq, void *wk )
-{
-  DEBUG_MENU_EVENT_WORK *work = wk;
-
-  switch( (*seq) ){
-  case 0:
-    (*seq)++;
-    break;
-  case 1:
-    {
-      u32 ret;
-      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-
-      if( ret == FLDMENUFUNC_NULL ){  //操作無し
-        break;
-      }else if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
-        (*seq)++;
-      }else if( ret != FLDMENUFUNC_CANCEL ){  //決定
-        work->call_proc = (DEBUG_MENU_CALLPROC)ret;
-        (*seq)++;
-      }
-    }
-    break;
-
-  case 2:
-    {
-      FLDMENUFUNC_DeleteMenu( work->menuFunc );
-
-      if( work->call_proc != NULL ){
-        if( work->call_proc(work) == TRUE ){
-          return( GMEVENT_RES_CONTINUE );
-        }
-      }
-
-      return( GMEVENT_RES_FINISH );
-    }
-    break;
-  }
-
-  return( GMEVENT_RES_CONTINUE );
-}
-#endif
-
-#if 0
-//======================================================================
-//  デバッグメニュー　ふしぎなおくりもの作成
-//======================================================================
-//--------------------------------------------------------------
-/// proto
-//--------------------------------------------------------------
-//#define MYSTERY_DLDATA_DEBUG_PRINT
-static const FLDMENUFUNC_LIST DATA_SubMysteryCardMakeList[] =
-{
-  { DEBUG_FIELD_MYSTERY_01, debugMenuCallProc_MakeMysteryCardPoke },              //ポケモン作成
-  { DEBUG_FIELD_MYSTERY_02, debugMenuCallProc_MakeMysteryCardItem },               //道具作成
-  { DEBUG_FIELD_MYSTERY_03, debugMenuCallProc_MakeMysteryCardGPower },              //Gパワー作成
-  { DEBUG_FIELD_MYSTERY_04, debugMenuCallProc_MakeMysteryCardGLiberty },              //リバティ作成
-  { DEBUG_FIELD_MYSTERY_05, debugMenuCallProc_MakeMysteryCardEgg },              //タマゴ作成
-};
-
-static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
-  NARC_message_d_field_dat,
-  NELEMS(DATA_SubMysteryCardMakeList),
-  DATA_SubMysteryCardMakeList,
-  &DATA_DebugMenuList_Default, //流用
-  1, 1, 16, 17,
-  NULL,
-  NULL
-};
-#endif
-
-
 static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
 {
   GMEVENT* event;
@@ -6279,220 +6181,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
   return TRUE;
-#if 0
-
-  GMEVENT *event = wk->gmEvent;
-  DEBUG_MENU_EVENT_WORK   temp  = *wk;
-  DEBUG_MENU_EVENT_WORK   *work;
-
-  //イベント流用
-  GMEVENT_Change( event,
-    debugMenuFieldSkillListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
-
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
-
-  *work  = temp;
-  work->call_proc = NULL;
-
-  work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubMysteryCardMakeData );
-
-  return( TRUE );
-#endif
 }
-
-#if 0
-static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  DOWNLOAD_GIFT_DATA  dl_data;
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
-  GIFT_PACK_DATA  data;
-  int i;
-
-  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
-
-  for( i = 1; i < 2048; i++ )
-  {
-    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    {
-      DEBUG_MYSTERY_SetGiftPokeData( &data );
-      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE );
-      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
-
-      DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
-      dl_data.data  = data;
-#ifdef MYSTERY_DLDATA_DEBUG_PRINT
-      {
-        int j;
-        const u8 * cp_data  = (const u8*)&dl_data;
-        for( j = 0; j < sizeof(DOWNLOAD_GIFT_DATA); j++ )
-        {
-          OS_TFPrintf( 3, "0x%x ", cp_data[j] );
-          if( j % 0x10 == 0xF )
-          {
-            OS_TFPrintf( 3, "\n" );
-          }
-        }
-      }
-#endif
-      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
-      break;
-    }
-  }
-
-  MYSTERY_DATA_UnLoad( p_mystery_sv );
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  DOWNLOAD_GIFT_DATA  dl_data;
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
-  GIFT_PACK_DATA  data;
-  int i;
-
-  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
-  for( i = 1; i < 2048; i++ )
-  {
-    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    {
-      DEBUG_MYSTERY_SetGiftItemData( &data, ITEM_MONSUTAABOORU );
-      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE );
-      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
-
-      DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
-      dl_data.data  = data;
-#ifdef MYSTERY_DLDATA_DEBUG_PRINT
-      {
-        int j;
-        const u8 * cp_data  = (const u8*)&dl_data;
-        for( j = 0; j < sizeof(DOWNLOAD_GIFT_DATA); j++ )
-        {
-          OS_TFPrintf( 3, "0x%x ", cp_data[j] );
-          if( j % 0x10 == 0xF )
-          {
-            OS_TFPrintf( 3, "\n" );
-          }
-        }
-      }
-#endif
-      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
-      break;
-    }
-  }
-  MYSTERY_DATA_UnLoad( p_mystery_sv );
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  DOWNLOAD_GIFT_DATA  dl_data;
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL, GFL_HEAPID_APP );
-  GIFT_PACK_DATA  data;
-  int i;
-
-  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
-  for( i = 1; i < 2048; i++ )
-  {
-    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    {
-      DEBUG_MYSTERY_SetGiftGPowerData( &data );
-      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE );
-      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
-
-      DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
-      dl_data.data  = data;
-#ifdef MYSTERY_DLDATA_DEBUG_PRINT
-      {
-        int j;
-        const u8 * cp_data  = (const u8*)&dl_data;
-        for( j = 0; j < sizeof(DOWNLOAD_GIFT_DATA); j++ )
-        {
-          OS_TFPrintf( 3, "0x%x ", cp_data[j] );
-          if( j % 0x10 == 0xF )
-          {
-            OS_TFPrintf( 3, "\n" );
-          }
-        }
-      }
-#endif
-      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
-      break;
-    }
-  }
-  MYSTERY_DATA_UnLoad( p_mystery_sv );
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  DOWNLOAD_GIFT_DATA  dl_data;
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL, GFL_HEAPID_APP );
-  GIFT_PACK_DATA  data;
-  int i;
-
-  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
-  DEBUG_MYSTERY_SetGiftItemData( &data, ITEM_RIBATHITIKETTO );
-  DEBUG_MYSTERY_SetGiftCommonData( &data, MYSTERY_DATA_EVENT_LIBERTY, FALSE );
-  MYSTERYDATA_SetCardData( p_mystery_sv, &data );
-
-  DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
-  dl_data.data  = data;
-
-
-  MYSTERY_DATA_UnLoad( p_mystery_sv );
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  DOWNLOAD_GIFT_DATA  dl_data;
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
-  GIFT_PACK_DATA  data;
-  int i;
-
-  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
-
-  for( i = 1; i < 2048; i++ )
-  {
-    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
-    {
-      DEBUG_MYSTERY_SetGiftPokeData( &data );
-      data.data.pokemon.egg = 1;
-      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE );
-      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
-
-      DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
-      dl_data.data  = data;
-#ifdef MYSTERY_DLDATA_DEBUG_PRINT
-      {
-        int j;
-        const u8 * cp_data  = (const u8*)&dl_data;
-        for( j = 0; j < sizeof(DOWNLOAD_GIFT_DATA); j++ )
-        {
-          OS_TFPrintf( 3, "0x%x ", cp_data[j] );
-          if( j % 0x10 == 0xF )
-          {
-            OS_TFPrintf( 3, "\n" );
-          }
-        }
-      }
-#endif
-      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
-      break;
-    }
-  }
-
-  MYSTERY_DATA_UnLoad( p_mystery_sv );
-
-  return FALSE;
-}
-#endif
 
 //======================================================================
 //
