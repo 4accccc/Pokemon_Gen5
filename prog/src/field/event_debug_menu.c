@@ -54,6 +54,8 @@
 #include "event_debug_menu_fskill.h"
 #include "event_debug_menu_mystery_card.h"
 #include "event_debug_bbd_color.h"
+#include "event_debug_make_poke.h"
+#include "event_debug_rewrite_poke.h"
 
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
@@ -102,6 +104,7 @@
 
 #include "gamesystem/pm_weather.h"
 
+#include "debug/debug_makepoke.h"
 #include "debug/debug_mystery_card.h"
 
 #include "bsubway_scr.h"
@@ -2441,21 +2444,6 @@ static GMEVENT_RESULT debugMenuControlTimeListEvent(
 //======================================================================
 //  デバッグメニュー ポケモン作成
 //======================================================================
-#include "debug/debug_makepoke.h"
-FS_EXTERN_OVERLAY(debug_makepoke);
-static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
-//-------------------------------------
-/// デバッグポケモン作成用ワーク
-//=====================================
-typedef struct
-{
-  HEAPID heapID;
-  GAMESYS_WORK    *p_gamesys;
-  GMEVENT         *p_event;
-  FIELDMAP_WORK *p_field;
-  PROCPARAM_DEBUG_MAKEPOKE p_mp_work;
-  POKEMON_PARAM *pp;
-} DEBUG_MAKEPOKE_EVENT_WORK;
 
 //----------------------------------------------------------------------------
 /**
@@ -2468,99 +2456,20 @@ typedef struct
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
-  GMEVENT       *p_event    = p_wk->gmEvent;
-  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
-  HEAPID heapID = HEAPID_PROC;
-  DEBUG_MAKEPOKE_EVENT_WORK *p_mp_work;
+  GMEVENT *event;
 
-  //イヴェント
-  GMEVENT_Change( p_event, debugMenuMakePoke, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
-  p_mp_work = GMEVENT_GetEventWork( p_event );
-  GFL_STD_MemClear( p_mp_work, sizeof(DEBUG_MAKEPOKE_EVENT_WORK) );
+  event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+    FS_OVERLAY_ID( debug_menu_makepoke ), DEBUG_EVENT_DebugMenu_MakePoke, p_wk );
 
-  //ワーク設定
-  p_mp_work->p_gamesys  = p_gamesys;
-  p_mp_work->p_event    = p_event;
-  p_mp_work->p_field    = p_field;
-  p_mp_work->heapID     = heapID;
-  p_mp_work->pp = PP_Create( 1,1,PTL_SETUP_ID_AUTO,p_mp_work->heapID );
-  p_mp_work->p_mp_work.dst = p_mp_work->pp;
-  p_mp_work->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
 
-  return TRUE;
+  return( TRUE );
 }
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  デバッグポケモン作成イベント
- *
- *  @param  GMEVENT *event  GMEVENT
- *  @param  *seq            シーケンス
- *  @param  *work           ワーク
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_CALL_PROC,
-    SEQ_PROC_END,
-  };
+//======================================================================
+//  デバッグメニュー ポケモン書き換え
+//======================================================================
 
-  DEBUG_MAKEPOKE_EVENT_WORK *p_wk = p_wk_adrs;
-
-  switch(*p_seq )
-  {
-  case SEQ_CALL_PROC:
-    GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &p_wk->p_mp_work ) );
-    *p_seq  = SEQ_PROC_END;
-    break;
-
-  case SEQ_PROC_END:
-    if( p_wk->pp != NULL )
-    {
-      GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
-      POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
-
-      {
-        u16 oyaName[6] = {L'で',L'ば',L'ぐ',L'ぽ',L'け',0xFFFF};
-        PP_Put( p_wk->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-        PP_Put( p_wk->pp , ID_PARA_oyasex , PTL_SEX_MALE );
-      }
-      //手持ちに空きがあれば入れる
-      if( PokeParty_GetPokeCount( party ) < 6 )
-      {
-        PokeParty_Add( party , p_wk->pp );
-      }
-
-      GFL_HEAP_FreeMemory( p_wk->pp );
-    }
-    return GMEVENT_RES_FINISH;
-    break;
-  }
-
-  return GMEVENT_RES_CONTINUE ;
-}
-
-
-//-------------------------------------
-/// デバッグポケモン作成用ワーク
-//=====================================
-typedef struct
-{
-  HEAPID heapID;
-  GAMESYS_WORK    *p_gamesys;
-  GMEVENT         *p_event;
-  FIELDMAP_WORK *p_field;
-  PROCPARAM_DEBUG_MAKEPOKE p_mp_work;
-  POKEMON_PARAM *pp;
-  POKEMON_PARAM *p_src_pp;
-} DEBUG_REWRITEPOKE_EVENT_WORK;
-static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //----------------------------------------------------------------------------
 /**
  *  @brief  ポケモン書き換え
@@ -2572,167 +2481,14 @@ static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugReWritePoke( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
-  GMEVENT       *p_event    = p_wk->gmEvent;
-  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
-  HEAPID heapID = HEAPID_PROC;
-  DEBUG_REWRITEPOKE_EVENT_WORK *p_ev_wk;
+  GMEVENT *event;
 
-  //イヴェント
-  GMEVENT_Change( p_event, debugMenuReWritePoke, sizeof(DEBUG_REWRITEPOKE_EVENT_WORK) );
-  p_ev_wk = GMEVENT_GetEventWork( p_event );
-  GFL_STD_MemClear( p_ev_wk, sizeof(DEBUG_REWRITEPOKE_EVENT_WORK) );
+  event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+    FS_OVERLAY_ID( debug_menu_rewrite_poke ), DEBUG_EVENT_DebugMenu_ReWritePoke, p_wk );
 
-  //ワーク設定
-  p_ev_wk->p_gamesys  = p_gamesys;
-  p_ev_wk->p_event    = p_event;
-  p_ev_wk->p_field    = p_field;
-  p_ev_wk->heapID     = heapID;
-  p_ev_wk->p_src_pp   = PP_Create( 1, 1, 1, heapID );
-  {
-    POKEPARTY *p_party  = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
-    p_ev_wk->pp =  PokeParty_GetMemberPointer( p_party, 0 );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
 
-    POKETOOL_CopyPPtoPP( p_ev_wk->pp, p_ev_wk->p_src_pp );
-  }
-  p_ev_wk->p_mp_work.dst  = p_ev_wk->pp;
-  p_ev_wk->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
-
-  return TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  デバッグポケモン書き換えイベント
- *
- *  @param  GMEVENT *event  GMEVENT
- *  @param  *seq            シーケンス
- *  @param  *work           ワーク
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_CALL_PROC,
-    SEQ_PROC_END,
-  };
-
-  DEBUG_REWRITEPOKE_EVENT_WORK *p_wk = p_wk_adrs;
-
-  switch(*p_seq )
-  {
-  case SEQ_CALL_PROC:
-    GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &p_wk->p_mp_work ) );
-    *p_seq  = SEQ_PROC_END;
-    break;
-
-  case SEQ_PROC_END:
-    {
-      //書き換えないデータ
-      static const u16 sc_id_tbl[]  =
-      {
-       ID_PARA_pref_code,
-       ID_PARA_get_cassette,
-       ID_PARA_get_year,
-       ID_PARA_get_month,
-       ID_PARA_get_day,
-       ID_PARA_birth_year,
-       ID_PARA_birth_month,
-       ID_PARA_birth_day,
-       ID_PARA_get_place,
-       ID_PARA_birth_place,
-       ID_PARA_pokerus,
-       ID_PARA_get_ball,
-       ID_PARA_get_level,
-       ID_PARA_oyasex,
-       ID_PARA_get_ground_id,
-       ID_PARA_country_code,
-       ID_PARA_style,                    //かっこよさ
-       ID_PARA_beautiful,                //うつくしさ
-       ID_PARA_cute,                     //かわいさ
-       ID_PARA_clever,                   //かしこさ
-       ID_PARA_strong,                   //たくましさ
-       ID_PARA_fur,                      //毛艶
-       ID_PARA_sinou_champ_ribbon,       //シンオウチャンプリボン
-       ID_PARA_sinou_battle_tower_ttwin_first,     //シンオウバトルタワータワータイクーン勝利1回目
-       ID_PARA_sinou_battle_tower_ttwin_second,    //シンオウバトルタワータワータイクーン勝利2回目
-       ID_PARA_sinou_battle_tower_2vs2_win50,      //シンオウバトルタワータワーダブル50連勝
-       ID_PARA_sinou_battle_tower_aimulti_win50,   //シンオウバトルタワータワーAIマルチ50連勝
-       ID_PARA_sinou_battle_tower_siomulti_win50,  //シンオウバトルタワータワー通信マルチ50連勝
-       ID_PARA_sinou_battle_tower_wifi_rank5,      //シンオウバトルタワーWifiランク５入り
-       ID_PARA_sinou_syakki_ribbon,        //シンオウしゃっきリボン
-       ID_PARA_sinou_dokki_ribbon,         //シンオウどっきリボン
-       ID_PARA_sinou_syonbo_ribbon,        //シンオウしょんぼリボン
-       ID_PARA_sinou_ukka_ribbon,          //シンオウうっかリボン
-       ID_PARA_sinou_sukki_ribbon,         //シンオウすっきリボン
-       ID_PARA_sinou_gussu_ribbon,         //シンオウぐっすリボン
-       ID_PARA_sinou_nikko_ribbon,         //シンオウにっこリボン
-       ID_PARA_sinou_gorgeous_ribbon,      //シンオウゴージャスリボン
-       ID_PARA_sinou_royal_ribbon,         //シンオウロイヤルリボン
-       ID_PARA_sinou_gorgeousroyal_ribbon, //シンオウゴージャスロイヤルリボン
-       ID_PARA_sinou_ashiato_ribbon,       //シンオウあしあとリボン
-       ID_PARA_sinou_record_ribbon,        //シンオウレコードリボン
-       ID_PARA_sinou_history_ribbon,       //シンオウヒストリーリボン
-       ID_PARA_sinou_legend_ribbon,        //シンオウレジェンドリボン
-       ID_PARA_sinou_red_ribbon,           //シンオウレッドリボン
-       ID_PARA_sinou_green_ribbon,         //シンオウグリーンリボン
-       ID_PARA_sinou_blue_ribbon,          //シンオウブルーリボン
-       ID_PARA_sinou_festival_ribbon,      //シンオウフェスティバルリボン
-       ID_PARA_sinou_carnival_ribbon,      //シンオウカーニバルリボン
-       ID_PARA_sinou_classic_ribbon,       //シンオウクラシックリボン
-       ID_PARA_sinou_premiere_ribbon,      //シンオウプレミアリボン
-       ID_PARA_stylemedal_normal,          //かっこよさ勲章(ノーマル)AGBコンテスト
-       ID_PARA_stylemedal_super,         //かっこよさ勲章(スーパー)AGBコンテスト
-       ID_PARA_stylemedal_hyper,         //かっこよさ勲章(ハイパー)AGBコンテスト
-       ID_PARA_stylemedal_master,          //かっこよさ勲章(マスター)AGBコンテスト
-       ID_PARA_beautifulmedal_normal,        //うつくしさ勲章(ノーマル)AGBコンテスト
-       ID_PARA_beautifulmedal_super,       //うつくしさ勲章(スーパー)AGBコンテスト
-       ID_PARA_beautifulmedal_hyper,       //うつくしさ勲章(ハイパー)AGBコンテスト
-       ID_PARA_beautifulmedal_master,        //うつくしさ勲章(マスター)AGBコンテスト
-       ID_PARA_cutemedal_normal,         //かわいさ勲章(ノーマル)AGBコンテスト
-       ID_PARA_cutemedal_super,          //かわいさ勲章(スーパー)AGBコンテスト
-       ID_PARA_cutemedal_hyper,          //かわいさ勲章(ハイパー)AGBコンテスト
-       ID_PARA_cutemedal_master,         //かわいさ勲章(マスター)AGBコンテスト
-       ID_PARA_clevermedal_normal,         //かしこさ勲章(ノーマル)AGBコンテスト
-       ID_PARA_clevermedal_super,          //かしこさ勲章(スーパー)AGBコンテスト
-       ID_PARA_clevermedal_hyper,          //かしこさ勲章(ハイパー)AGBコンテスト
-       ID_PARA_clevermedal_master,         //かしこさ勲章(マスター)AGBコンテスト
-       ID_PARA_strongmedal_normal,         //たくましさ勲章(ノーマル)AGBコンテスト
-       ID_PARA_strongmedal_super,          //たくましさ勲章(スーパー)AGBコンテスト
-       ID_PARA_strongmedal_hyper,          //たくましさ勲章(ハイパー)AGBコンテスト
-       ID_PARA_strongmedal_master,         //たくましさ勲章(マスター)AGBコンテスト
-       ID_PARA_champ_ribbon,           //チャンプリボン
-       ID_PARA_winning_ribbon,           //ウィニングリボン
-       ID_PARA_victory_ribbon,           //ビクトリーリボン
-       ID_PARA_bromide_ribbon,           //ブロマイドリボン
-       ID_PARA_ganba_ribbon,           //がんばリボン
-       ID_PARA_marine_ribbon,            //マリンリボン
-       ID_PARA_land_ribbon,            //ランドリボン
-       ID_PARA_sky_ribbon,             //スカイリボン
-       ID_PARA_country_ribbon,           //カントリーリボン
-       ID_PARA_national_ribbon,          //ナショナルリボン
-       ID_PARA_earth_ribbon,           //アースリボン
-       ID_PARA_condition,              //コンディション
-      };
-      int i;
-      int id;
-      //書き換えて欲しくないデータを入れる
-
-      for( i = 0; i < NELEMS(sc_id_tbl); i++ )
-      {
-        id  = sc_id_tbl[i];
-        PP_Put( p_wk->pp, id, PP_Get( p_wk->p_src_pp, id, NULL ) );
-      }
-    }
-    GFL_HEAP_FreeMemory( p_wk->p_src_pp );
-    return GMEVENT_RES_FINISH;
-  }
-
-  return GMEVENT_RES_CONTINUE ;
+  return( TRUE );
 }
 
 
@@ -4770,27 +4526,6 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk )
 // ビルボードカラー　の調整
 //-----------------------------------------------------------------------------
 
-#if 0
-//--------------------------------------------------------------
-/// DEBUG_CTLIGHT_WORK ライト操作ワーク
-//--------------------------------------------------------------
-typedef struct
-{
-  GAMESYS_WORK *gsys;
-  GMEVENT *event;
-  HEAPID heapID;
-  FIELDMAP_WORK *fieldWork;
-
-  GFL_BMPWIN* p_win;
-}DEBUG_BBDCOLOR_WORK;
-
-//--------------------------------------------------------------
-/// proto
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuControlBbdColor(
-    GMEVENT *event, int *seq, void *wk );
-#endif
-
 //----------------------------------------------------------------------------
 /**
  *  @brief  ビルボードカラーを指定
@@ -4805,118 +4540,8 @@ static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk )
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
-  return TRUE;
-
-#if 0
-  DEBUG_BBDCOLOR_WORK *work;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-
-  GMEVENT_Change( event, debugMenuControlBbdColor, sizeof(DEBUG_BBDCOLOR_WORK) );
-  work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_BBDCOLOR_WORK) );
-
-  work->gsys = gsys;
-  work->event = event;
-  work->heapID = heapID;
-  work->fieldWork = fieldWork;
-  return( TRUE );
-#endif
+  return TRUE; 
 }
-
-
-#if 0
-static GMEVENT_RESULT debugMenuControlBbdColor(
-    GMEVENT *event, int *seq, void *wk )
-{
-  DEBUG_BBDCOLOR_WORK *work = wk;
-
-  switch( (*seq) ){
-  case 0:
-    {
-      HEAPID heapID = FIELDMAP_GetHeapID( work->fieldWork );
-      FLD_BBD_COLOR* p_color = FLD_BBD_COLOR_Create( heapID );
-      GFL_BBDACT_SYS* p_bbd_act = FIELDMAP_GetBbdActSys( work->fieldWork );
-      GFL_BBD_SYS* p_bbd_sys = GFL_BBDACT_GetBBDSystem( p_bbd_act );
-      AREADATA* p_areadata = FIELDMAP_GetAreaData( work->fieldWork );
-
-      FLD_BBD_COLOR_Load( p_color, AREADATA_GetBBDColor(p_areadata) );
-
-      // モデル管理開始
-      FLD_BBD_COLOR_DEBUG_Init( p_bbd_sys, p_color, work->heapID );
-
-      FLD_BBD_COLOR_Delete( p_color );
-    }
-
-    // インフォーバーの非表示
-    FIELD_SUBSCREEN_Exit(FIELDMAP_GetFieldSubscreenWork(work->fieldWork));
-    GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_OFF );
-
-    // ビットマップウィンドウ初期化
-    {
-      static const GFL_BG_BGCNT_HEADER header_sub3 = {
-        0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
-        GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x7000,
-        GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
-      };
-
-      GFL_BG_SetBGControl( FIELD_SUBSCREEN_BGPLANE, &header_sub3, GFL_BG_MODE_TEXT );
-      GFL_BG_ClearFrame( FIELD_SUBSCREEN_BGPLANE );
-      GFL_BG_SetVisible( FIELD_SUBSCREEN_BGPLANE, VISIBLE_ON );
-
-      // パレット情報を転送
-      GFL_ARC_UTIL_TransVramPalette(
-        ARCID_FONT, NARC_font_default_nclr,
-        PALTYPE_SUB_BG, FIELD_SUBSCREEN_PALLET*32, 32, work->heapID );
-
-      // ビットマップウィンドウを作成
-      work->p_win = GFL_BMPWIN_Create( FIELD_SUBSCREEN_BGPLANE,
-        1, 1, 30, 22,
-        FIELD_SUBSCREEN_PALLET, GFL_BMP_CHRAREA_GET_B );
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->p_win ), 0xf );
-      GFL_BMPWIN_MakeScreen( work->p_win );
-      GFL_BMPWIN_TransVramCharacter( work->p_win );
-      GFL_BG_LoadScreenReq( FIELD_SUBSCREEN_BGPLANE );
-
-      // ウィンドウ
-      BmpWinFrame_GraphicSet( FIELD_SUBSCREEN_BGPLANE, 1, 15, 0, work->heapID );
-      BmpWinFrame_Write( work->p_win, TRUE, 1, 15 );
-    }
-
-    FLD_BBD_COLOR_DEBUG_PrintData( work->p_win );
-
-    (*seq)++;
-  case 1:
-    // ライト管理メイン
-    FLD_BBD_COLOR_DEBUG_Control();
-    FLD_BBD_COLOR_DEBUG_PrintData( work->p_win );
-
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-      (*seq)++;
-    }
-    break;
-  case 2:
-    FLD_BBD_COLOR_DEBUG_Exit();
-
-    // ビットマップウィンドウ破棄
-    {
-      GFL_BG_FreeBGControl(FIELD_SUBSCREEN_BGPLANE);
-      GFL_BMPWIN_Delete( work->p_win );
-    }
-
-    // インフォーバーの表示
-    FIELDMAP_SetFieldSubscreenWork(work->fieldWork,
-        FIELD_SUBSCREEN_Init( work->heapID, work->fieldWork, FIELD_SUBSCREEN_NORMAL ));
-
-    return( GMEVENT_RES_FINISH );
-  }
-
-  return( GMEVENT_RES_CONTINUE );
-}
-#endif
 
 
 //======================================================================

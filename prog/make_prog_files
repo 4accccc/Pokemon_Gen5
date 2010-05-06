@@ -1763,6 +1763,14 @@ SRCS_OVERLAY_DEBUG_MYSTERY_CARD = field/event_debug_menu_mystery_card.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_BBD_COLOR = field/event_debug_bbd_color.c
 
+#DEBUG_MENU_MAKEPOKE
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MENU_MAKEPOKE = field/event_debug_make_poke.c
+
+#DEBUG_MENU_REWRITE_POKE
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MENU_REWRITE_POKE = field/event_debug_rewrite_poke.c
+
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
