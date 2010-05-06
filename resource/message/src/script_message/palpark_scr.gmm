@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-04T12:46:19"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-06T12:29:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1344" top="138" right="2049" bottom="766" maximized="no" rayout="Vertical2">
+	<dialog left="193" top="146" right="898" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="682" top="69" right="1155" bottom="467" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -652,9 +652,9 @@ BOXに6匹以上の空きがある</comment>
 	<row id="msg_palpark_first_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>激しいふきだし</comment>
 		<language name="JPN" width="256">ちょちょ　ちょっと　あなた！
-バッジ　ぜんぶ　もってるの？！▼</language>
+ジムバッジ　ぜんぶ　もってるの？！▼</language>
 		<language name="JPN_KANJI" width="256">ちょっちょ　ちょっと　あなた！
-バッジ　全部　持ってるの？！▼</language>
+ジムバッジ　全部　持ってるの？！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_21_b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -726,9 +726,9 @@ msg_palpark_first_19に続く</comment>
 	<row id="msg_palpark_first_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>激しいふきだし</comment>
 		<language name="JPN" width="256">って
-バッジ　ぜんぶ？！▼</language>
+ジムバッジ　ぜんぶ？！▼</language>
 		<language name="JPN_KANJI" width="256">って
-バッジ　全部？！▼</language>
+ジムバッジ　全部？！▼</language>
 	</row>
 
 	<row id="msg_palpark_first_05_b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
