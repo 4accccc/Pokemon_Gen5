@@ -30,6 +30,7 @@
 #define LTVT_CHARA_NAME_HEIGHT (2)
 
 #define LTVT_CHARA_EYE_BLINK_CNT (150)
+#define LTVT_CHARA_OFFSET (7)
 //======================================================================
 //	enum
 //======================================================================
@@ -374,6 +375,10 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
     cellInitData.bgpri = 1;
     cellInitData.pos_x = 64 + (charaWork->charaIdx%2)*128;
     cellInitData.pos_y = 48 + (charaWork->charaIdx/2)*96;
+    if( work->mode == LTM_2_MEMBER )
+    {
+      cellInitData.pos_y += LTVT_CHARA_OFFSET*8;
+    }
     cellInitData.anmseq = 0;
 
     charaWork->clwkEye = GFL_CLACT_WK_Create( work->cellUnit ,
