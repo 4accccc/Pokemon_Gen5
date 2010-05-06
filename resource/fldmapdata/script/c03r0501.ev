@@ -70,6 +70,7 @@ _TALK_OBJ_START()
 	
 		//よのなか　Cギアを　つかって
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_middlewoman2_01 )
+		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
 	//フィーリングチェックをしたことがある場合
