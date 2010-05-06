@@ -60,10 +60,13 @@ static void CallBackFunc_byHelloMsgIn( void* wk );
  */
 //--------------------------------------------------------------
 typedef struct {
-  GAMEDATA*                gdata;  // ゲームデータ
-  u16*                     retWk;  // ボックス終了モードの格納先
-  BOX2_GFL_PROC_PARAM* box_param;  // ボックスパラメータ
+
+  GAMEDATA*            gdata;     // ゲームデータ
+  u16*                 retWk;     // ボックス終了モードの格納先
+  BOX2_GFL_PROC_PARAM* box_param; // ボックスパラメータ
+
 } BOX_CALLBACK_WORK; 
+
 //--------------------------------------------------------------
 /**
  * @brief ボックスプロセス終了後に呼ばれるコールバック関数
@@ -71,27 +74,31 @@ typedef struct {
 //--------------------------------------------------------------
 static void callback_BoxProc( void* work )
 {
-  BOX_CALLBACK_WORK* cw = (BOX_CALLBACK_WORK*)work;
+  BOX_CALLBACK_WORK* callback_work = (BOX_CALLBACK_WORK*)work;
 
   // バトルボックスのセーブデータに反映
-  if( cw->box_param->callMode == BOX_MODE_BATTLE )
-  {
-    SAVE_CONTROL_WORK*      sv = GAMEDATA_GetSaveControlWork( cw->gdata );
-    BATTLE_BOX_SAVE* bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
-    BATTLE_BOX_SAVE_SetPokeParty( bbox_save, cw->box_param->pokeparty );
+  if( callback_work->box_param->callMode == BOX_MODE_BATTLE ) {
+    SAVE_CONTROL_WORK* save      = GAMEDATA_GetSaveControlWork( callback_work->gdata );
+    BATTLE_BOX_SAVE*   bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( save );
+    BATTLE_BOX_SAVE_SetPokeParty( bbox_save, callback_work->box_param->pokeparty );
+  }
+
+  // ポケパーティを解放
+  if( callback_work->box_param->callMode == BOX_MODE_BATTLE ) {
+    GFL_HEAP_FreeMemory( callback_work->box_param->pokeparty );
   }
 
   // ボックス終了モードを返す
-  switch( cw->box_param->retMode )
-  {
+  switch( callback_work->box_param->retMode ) {
   default:
-  case BOX_END_MODE_MENU:   *(cw->retWk) = SCR_BOX_END_MODE_MENU;   break;
-  case BOX_END_MODE_C_GEAR: *(cw->retWk) = SCR_BOX_END_MODE_C_GEAR; break;
+  case BOX_END_MODE_MENU:   *(callback_work->retWk) = SCR_BOX_END_MODE_MENU;   break;
+  case BOX_END_MODE_C_GEAR: *(callback_work->retWk) = SCR_BOX_END_MODE_C_GEAR; break;
   }
 
   // 後始末
-  GFL_HEAP_FreeMemory( cw->box_param );
+  GFL_HEAP_FreeMemory( callback_work->box_param );
 } 
+
 //--------------------------------------------------------------
 /**
  * @brief   ボックスプロセスを呼び出します
@@ -101,17 +108,17 @@ static void callback_BoxProc( void* work )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*              work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*               scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*             gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*                gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*          sv = GAMEDATA_GetSaveControlWork( gdata );
-  FIELDMAP_WORK*        fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  u16*                    ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
-  u16                   box_mode = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
-  BOX2_GFL_PROC_PARAM* box_param = NULL;
-  BOX_CALLBACK_WORK*          cw = NULL;
-  GMEVENT*                 event = NULL;
+  SCRCMD_WORK*         work          = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*         script        = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*        gsys          = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*            gdata         = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK*   save          = GAMEDATA_GetSaveControlWork( gdata );
+  FIELDMAP_WORK*       fieldmap      = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16*                 ret_wk        = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
+  u16                  box_mode      = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
+  BOX2_GFL_PROC_PARAM* box_param     = NULL;
+  BOX_CALLBACK_WORK*   callback_work = NULL;
+  GMEVENT*             event         = NULL;
   
   // ボックスのプロセスパラメータを作成
   box_param            = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX2_GFL_PROC_PARAM) );
@@ -120,32 +127,32 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   box_param->pokeparty = GAMEDATA_GetMyPokemon( gdata );
   box_param->myitem    = GAMEDATA_GetMyItem( gdata );
   box_param->mystatus  = GAMEDATA_GetMyStatus( gdata );
-  box_param->cfg       = SaveData_GetConfig( sv );
+  box_param->cfg       = SaveData_GetConfig( save );
   box_param->zknMode   = 0;
   box_param->callMode  = box_mode;
 	box_param->bbRockFlg = FALSE;
   
   // バトルボックスのパーティーをセット
-  if( box_mode == BOX_MODE_BATTLE )
-  {
+  if( box_mode == BOX_MODE_BATTLE ) {
     BATTLE_BOX_SAVE* bbox_save;
-    bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
+    bbox_save = BATTLE_BOX_SAVE_GetBattleBoxSave( save );
     box_param->pokeparty = BATTLE_BOX_SAVE_MakePokeParty( bbox_save, HEAPID_PROC );
 		box_param->bbRockFlg = BATTLE_BOX_SAVE_GetLockType( bbox_save, BATTLE_BOX_LOCK_BIT_BOTH );
   }
 
   // コールバックのパラメータを作成
-  cw = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX_CALLBACK_WORK) );
-  cw->gdata     = gdata;
-  cw->retWk     = ret_wk;
-  cw->box_param = box_param;
+  callback_work = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX_CALLBACK_WORK) );
+  callback_work->gdata     = gdata;
+  callback_work->retWk     = ret_wk;
+  callback_work->box_param = box_param;
 
-  // イベントを呼び出す
-  event = EVENT_FieldSubProcNoFade_Callback(
-      gsys, fieldmap, 
+  // イベントを生成
+  event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap, 
       FS_OVERLAY_ID(box), &BOX2_ProcData, box_param, // 呼び出すプロセスを指定
-      callback_BoxProc, cw );  // コールバック関数と, その引数を指定
-  SCRIPT_CallEvent( scw, event );
+      callback_BoxProc, callback_work );  // コールバック関数と, その引数を指定
+
+  SCRIPT_CallEvent( script, event );
+
   return VMCMD_RESULT_SUSPEND;
 }
 
