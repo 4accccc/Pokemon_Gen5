@@ -292,7 +292,7 @@ static void EggCordinate_tokusei(
   if( 3 <= speabi_mother_idx ) { 
     OS_Printf( "母ポケモンの特性に誤りがあります。\n" );
     GF_ASSERT(0);
-    speabi_mother_idx = 0; // とりあえず, 特性1を継承することにする
+    speabi_mother_idx = 0; // 不正値なら, 特性1を継承することにする
   }
 
   // 継承する特性を決定
@@ -1076,7 +1076,7 @@ static u16 GetSeedMonsNo( u16 monsno )
   if( MONSNO_END <= monsno ) {
     OBATA_Printf( "GetSeedMonsNo: 無効なモンスターナンバーが指定されました。\n" );
     GF_ASSERT(0);
-    return monsno; // とりあえず, そのまま返す
+    return monsno; // 不正値なら, そのまま返す
   } 
 
   // 種ポケモンNoを取得

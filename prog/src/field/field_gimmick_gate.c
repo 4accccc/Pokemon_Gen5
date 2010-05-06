@@ -1920,8 +1920,6 @@ static void AddNews_CM( GATEWORK* work )
  *
  * @param work     ギミック管理ワーク
  * @param news_idx ニュースの追加場所を指定
- *
- * @todo ポケモン名を正しくセットする
  */
 //------------------------------------------------------------------------------------------
 static void AddNews_CHAMPION( GATEWORK* work )
