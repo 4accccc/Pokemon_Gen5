@@ -56,6 +56,7 @@
 #include "event_debug_bbd_color.h"
 #include "event_debug_make_poke.h"
 #include "event_debug_rewrite_poke.h"
+#include "event_debug_menu_zone_jump.h"
 
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
@@ -5979,6 +5980,7 @@ static GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag )
 
 
 
+#if 0
 //======================================================================
 //  デバッグメニュー ゾーンジャンプ
 //======================================================================
@@ -5996,6 +5998,7 @@ typedef struct
   FIELDMAP_WORK *FieldWork;
   PROCPARAM_DEBUG_ZONE_JUMP p_work;
 } DEBUG_ZONE_JUMP_EVENT_WORK;
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -6008,6 +6011,15 @@ typedef struct
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk )
 {
+  GMEVENT* event;
+
+  event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+      FS_OVERLAY_ID( debug_menu_zone_jump ), DEBUG_EVENT_DebugMenu_ZoneJump, p_wk );
+
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+
+  return TRUE;
+#if 0
   GAMESYS_WORK  *gsys  = p_wk->gmSys;
   GMEVENT       *event    = p_wk->gmEvent;
   FIELDMAP_WORK *fieldWork  = p_wk->fieldWork;
@@ -6027,8 +6039,10 @@ static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk )
   evt_work->HeapID = heapID;
 
   return TRUE;
+#endif
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *  @brief  デバッグゾーンジャンプイベント
@@ -6075,6 +6089,7 @@ static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_w
 
   return GMEVENT_RES_CONTINUE;
 }
+#endif
 
 //======================================================================================
 //

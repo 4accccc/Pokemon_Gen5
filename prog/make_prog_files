@@ -1771,6 +1771,10 @@ SRCS_OVERLAY_DEBUG_MENU_MAKEPOKE = field/event_debug_make_poke.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MENU_REWRITE_POKE = field/event_debug_rewrite_poke.c
 
+#DEBUG_MENU_ZONE_JUMP
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MENU_ZONE_JUMP = field/event_debug_menu_zone_jump.c
+
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
