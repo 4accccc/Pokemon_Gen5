@@ -60,7 +60,7 @@ typedef struct {
   u8  sel_poke;       // 選択されたポケモン or 戻る　（初期位置用）
 	u8	sel_pos_index;	//「いれかえ」が押されたときに、sel_pos[ sel_pos_index ] に選択されたポケモン位置が入る
 
-	u8	fight_poke_max;	// 戦闘に出ている数（マルチのときは参照しない）
+	u8	fight_poke_max;	// 戦闘に出ている数
 
   u16 item;           // アイテム
   u16 chg_waza;       // いれかえ禁止技・新しく覚える技
