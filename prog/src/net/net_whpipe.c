@@ -213,7 +213,7 @@ static void _setBeacon(void* buff, int size);
 
 static void _changeState(GFL_NETWL* pState, PTRStateFunc state);  // ステートを変更する
 
-#ifdef GFL_NET_DEBUG
+#if PM_DEBUG
 static void _changeStateDebug(GFL_NETWL* pState, PTRStateFunc state, int line);  // ステートを変更する
 #define   _CHANGE_STATE(state)  _changeStateDebug(_pNetWL ,state, __LINE__)
 #else  //GFL_NET_DEBUG
@@ -246,9 +246,7 @@ static void _changeState(GFL_NETWL* pState,PTRStateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(GFL_NETWL* pState,PTRStateFunc state, int line)
 {
-#ifdef DEBUG_WH_BEACON_PRINT_ON
-	NET_PRINT("whpipe: %d\n",line);
-#endif
+	NET_PRINT("pipe: %d\n",line);
 	_changeState(pState, state);
 }
 #endif
@@ -732,6 +730,53 @@ BOOL GFL_NET_WLSwitchParentChild(void)
 	return FALSE;
 }
 
+
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   終了開放
+ * @param
+ * @retval
+ */
+//-------------------------------------------------------------
+
+static void _whEndErrResetFunc(GFL_NETWL* pNetWL);
+
+static void _whEndErrResetFunc2(GFL_NETWL* pNetWL)
+{
+	if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
+    WH_Finalize();
+    _CHANGE_STATE(_whEndErrResetFunc);
+	}
+	if(WH_GetSystemState() == WH_SYSSTATE_ERROR){
+    _CHANGE_STATE(_whEndErrResetFunc);
+  }
+}
+
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   終了開放
+ * @param
+ * @retval
+ */
+//-------------------------------------------------------------
+
+static void _whEndErrResetFunc(GFL_NETWL* pNetWL)
+{
+	if(WH_GetSystemState() == WH_SYSSTATE_ERROR){
+		WH_Reset();
+    _CHANGE_STATE(_whEndErrResetFunc2);
+	}
+	if(WH_GetSystemState() == WH_SYSSTATE_STOP || WH_GetSystemState() == WH_SYSSTATE_IDLE){
+    _CHANGE_STATE(NULL);
+  }
+}
+
+
+
 //-------------------------------------------------------------
 /**
  * @brief   通信切断を行う  ここではあくまで通信終了手続きに入るだけ
@@ -745,12 +790,13 @@ BOOL GFL_NET_WLFinalize(void)
 	GFL_NETWL* pNetWL = _pNetWL;
 	if(pNetWL){
 		if(pNetWL->disconnectType == _DISCONNECT_NONE){
-      _CHANGE_STATE(NULL);
-			return WH_Finalize();
+			//            pNetWL->disconnectType = _DISCONNECT_END;
+      _CHANGE_STATE(_whEndErrResetFunc);
+			WH_Finalize();
+			return TRUE;
 		}
-    return FALSE;
 	}
-	return TRUE;
+	return FALSE;
 }
 
 //-------------------------------------------------------------

@@ -1932,8 +1932,9 @@ static void WH_StateOutStartChild(void *arg)
 		WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
 		if (!WH_StateInStartChildMP())
 		{
+			/* FIXME : ここは BUSY のまま置いておいて良いのか? */
 			WH_TRACE("WH_StateInStartChildMP failed\n");
-			WH_ChangeSysState(WH_SYSSTATE_ERROR);
+			WH_ChangeSysState(WH_SYSSTATE_BUSY);
 			return;
 		}
 
@@ -3646,29 +3647,20 @@ void WH_Reset(void)
    Arguments:   None.
    Returns:     None.
    ---------------------------------------------------------------------- */
-BOOL WH_Finalize(void)
+void WH_Finalize(void)
 {
 	if ((_pWmInfo==NULL) || (_pWmInfo->sSysState == WH_SYSSTATE_IDLE)){
 		WH_TRACE("already WH_SYSSTATE_IDLE\n");
-		return TRUE;
+		return;
 	}
 	WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
 	if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
 		if (!WH_EndScan()){
 			WH_Reset();
 		}
-		return TRUE;
+		return;
 	}
-	if (_pWmInfo->sSysState == WH_SYSSTATE_ERROR)
-	{
-		// エラー状態などの場合はリセットしておく。
-		WH_ChangeSysState(WH_SYSSTATE_BUSY);
-		WH_Reset();
-		return TRUE;
-	}
-  if(_pWmInfo->sSysState==WH_SYSSTATE_BUSY){  //BUSYの時はBUSYにならなくなるまで待つ
-    return FALSE;
-  }
+
 
 	if (
 		(_pWmInfo->sSysState != WH_SYSSTATE_DATASHARING) && (_pWmInfo->sSysState != WH_SYSSTATE_CONNECTED))
@@ -3676,7 +3668,7 @@ BOOL WH_Finalize(void)
 		// 接続していない・エラー状態などの場合はリセットしておく。
 		WH_ChangeSysState(WH_SYSSTATE_BUSY);
 		WH_Reset();
-		return TRUE;
+		return;
 	}
 
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);
@@ -3713,9 +3705,7 @@ BOOL WH_Finalize(void)
 		{
 			WH_Reset();
 		}
-    break;
 	}
-  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*

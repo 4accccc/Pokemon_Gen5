@@ -722,7 +722,7 @@ extern void WH_Reset(void);
    Arguments:   None.
    Returns:     None.
    ---------------------------------------------------------------------- */
-extern BOOL WH_Finalize(void);
+extern void WH_Finalize(void);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_End
