@@ -40,6 +40,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\be_000_ec001_1a.spa
 カメラ移動	追従	初期位置	20	0	20
 エフェクト終了待ち	カメラ
 エフェクト終了待ち	ポケモン
+エフェクト終了待ち	鳴き声
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_3
 指定されたワークを見て条件分岐	POS_BB_RARE	==	0	NO_EXIST_BB_3
 サブルーチンコール	BTLEFF_RARE	POS_BB	POS_BB
