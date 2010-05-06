@@ -301,10 +301,6 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_START_LIST_CONFIRM1,
     SEQ_WAIT_LIST_CONFIRM1,
 
-    SEQ_START_MSG_CONFIRM2,
-    SEQ_START_LIST_CONFIRM2,
-    SEQ_WAIT_LIST_CONFIRM2,
-
     SEQ_START_MSG_UNREGISTER,
     SEQ_RETIRE,
     SEQ_START_SAVE,
@@ -386,32 +382,6 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         Util_List_Delete( p_wk );
         if( select == 0 )   //‚Í‚¢
         { 
-          *p_seq  = SEQ_START_MSG_CONFIRM2;
-        }
-        else if( select == 1 )  //‚¢‚¢‚¦
-        { 
-          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
-        }
-      }
-    }
-    break;
-  case SEQ_START_MSG_CONFIRM2:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_03, WBM_TEXT_TYPE_STREAM  );
-    *p_seq  = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM2 );
-    break;
-  case SEQ_START_LIST_CONFIRM2:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
-    *p_seq  = SEQ_WAIT_LIST_CONFIRM2;
-    break;
-  case SEQ_WAIT_LIST_CONFIRM2:
-    { 
-      const u32 select = Util_List_Main( p_wk );
-      if( select != WBM_LIST_SELECT_NULL )
-      { 
-        Util_List_Delete( p_wk );
-        if( select == 0 )   //‚Í‚¢
-        { 
           *p_seq  = SEQ_START_MSG_UNREGISTER;
         }
         else if( select == 1 )  //‚¢‚¢‚¦
@@ -420,7 +390,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         }
       }
     }
-    break;    
+    break;
 
   case SEQ_START_MSG_UNREGISTER:
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_04, WBM_TEXT_TYPE_WAIT );
@@ -463,7 +433,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     }
     break;
   case SEQ_START_MSG_UNLOCK:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_05, WBM_TEXT_TYPE_STREAM  );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_12, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_MOVEOUT_PLAYERINFO );
     break;
@@ -511,10 +481,6 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_MSG_CONFIRM1,
     SEQ_START_LIST_CONFIRM1,
     SEQ_WAIT_LIST_CONFIRM1,
-
-    SEQ_START_MSG_CONFIRM2,
-    SEQ_START_LIST_CONFIRM2,
-    SEQ_WAIT_LIST_CONFIRM2,
 
     SEQ_START_MSG_UNREGISTER,
     SEQ_RETIRE,
@@ -597,32 +563,6 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         Util_List_Delete( p_wk );
         if( select == 0 )   //‚Í‚¢
         { 
-          *p_seq  = SEQ_START_MSG_CONFIRM2;
-        }
-        else if( select == 1 )  //‚¢‚¢‚¦
-        { 
-          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
-        }
-      }
-    }
-    break;
-  case SEQ_START_MSG_CONFIRM2:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_03, WBM_TEXT_TYPE_STREAM  );
-    *p_seq  = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM2 );
-    break;
-  case SEQ_START_LIST_CONFIRM2:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
-    *p_seq  = SEQ_WAIT_LIST_CONFIRM2;
-    break;
-  case SEQ_WAIT_LIST_CONFIRM2:
-    { 
-      const u32 select = Util_List_Main( p_wk );
-      if( select != WBM_LIST_SELECT_NULL )
-      { 
-        Util_List_Delete( p_wk );
-        if( select == 0 )   //‚Í‚¢
-        { 
           *p_seq  = SEQ_START_MSG_UNREGISTER;
         }
         else if( select == 1 )  //‚¢‚¢‚¦
@@ -631,7 +571,8 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
       }
     }
-    break;    
+    break;
+  
 
   case SEQ_START_MSG_UNREGISTER:
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_04, WBM_TEXT_TYPE_WAIT );
