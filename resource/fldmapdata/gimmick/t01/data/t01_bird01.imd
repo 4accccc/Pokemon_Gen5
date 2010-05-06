@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2010-05-06T17:46:42" source="t01_bird01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="fuchino" host="W00152" date="2010-05-06T17:46:42" source="t01_bird01.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="11 11"
+	compress_material="on" material_size="5 5"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="5" xyz="-2.531250 0.125000 -0.593750" whd="3.031250 1.312500 4.375000"/>
+
+<tex_image_array size="13">
+	<tex_image index="0" name="mamepato01.1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.1_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.1.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 a000 0000 0000 0000 0000
+			0000 0000 0000 7a00 000a 0000 0000 0000
+			0000 0000 a000 8aaa 00aa 0000 0000 0000
+			0000 0000 8a00 7777 0a79 0000 0000 0000
+			0000 0000 78a0 7777 00a8 0000 0000 0000
+			0000 0000 778a 7777 0987 0000 0000 0000
+			0000 0000 777a 3237 0a77 cca0 000c 0000
+			0000 0000 111c 2b57 ab77 aaaa 000c 0000
+			0000 0000 14ac 2b27 8b77 c777 000c 0000
+			0000 c000 4aaa 3237 7a77 b777 000c 0000
+			0000 c000 8bbb 7777 7777 ba77 000c 0000
+			0000 0000 788c 7777 a877 bb9a 00cb 0000
+			0000 c000 7887 8888 7aa8 bb87 00cb 0000
+			0000 c000 6766 8766 78ba bb77 00cb 0000
+			0000 c000 6666 8666 7bbc b977 00cb 0000
+			0000 c000 6667 8666 8bbc b877 000c 0000
+			0000 0000 666c 8666 bbbc b887 000c 0000
+			0000 0000 667c 8766 bbbc c888 0000 0000
+			0000 0000 67cc 8766 bbc9 0c89 0000 0000
+			0000 0000 cc4c 7777 cca9 00cc 0000 0000
+			0000 0000 cccc cccc c4cc 0000 0000 0000
+			0000 0000 0000 c000 c444 0000 0000 0000
+			0000 0000 0000 0000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="mamepato01.10"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.10_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.10.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 ccc0 0000 0000 0000 0000 0000
+			0000 0000 cbbc 0000 0000 0000 0000 0000
+			0000 0000 bbbc 000c 0000 0000 0000 0000
+			0000 0000 bbbc 000a 0000 0000 0000 0000
+			0000 0000 abbc 00a7 0000 0000 ccc0 0ccc
+			0000 0000 aaaa 0aa8 0000 c000 bbbc 0cbb
+			0000 a000 7778 a797 0000 bc00 79bb 0c77
+			0000 8a00 7777 0a87 ba00 b8ac 7779 0c77
+			0000 78a0 7777 9877 78aa 687a 6666 00c7
+			0000 77a0 2377 a773 a78a 6687 7766 000c
+			0000 11c0 b571 7772 b77b 6668 cb76 0000
+			0000 4ac0 b271 7772 ac9a 7668 00b7 0000
+			0000 aaac 2374 7773 ab99 7777 00c7 0000
+			0000 bbbc 7778 7777 8b99 7777 00c7 0000
+			0000 cc00 7777 8887 a998 b778 000c 0000
+			0000 0000 88cc 6678 9998 cba9 0000 0000
+			0000 0000 66c0 6666 9987 0c99 0000 0000
+			0000 0000 67c0 6666 9987 00c9 0000 0000
+			0000 0000 7c00 7666 c987 000c 0000 0000
+			0000 0000 c000 778c 0cc8 0000 0000 0000
+			0000 0000 0000 ccc0 000c 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="mamepato01.11"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.11_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.11.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0b00 0000
+			0000 0000 0000 0000 0000 b000 0bbb 0000
+			0000 0000 0000 0000 0000 bb00 0bbb 0000
+			0000 0000 0000 0000 0000 bbb0 0b0b 0000
+			0000 0000 0000 000a 0000 bbbb 0b0b 0000
+			0000 0000 a000 00a7 bb00 bbbb 00bb 0000
+			0000 0000 aaaa 0aa8 bb00 bbbb 00bb 0000
+			0000 a000 7778 a797 bb00 bbbb 000b 0000
+			0000 8a00 7777 0a87 bb00 bbbb 000b 0000
+			0000 78a0 7777 a876 bbba bbbb 000b 0000
+			0000 73a0 7777 b766 bbbb bbbb 0000 0000
+			0000 73c0 6b77 bb66 bbbb 0bbb 0000 0000
+			0000 77c0 6b77 bb66 b777 00bb 0000 0000
+			0000 77cc 6b77 7b66 7777 00bb 0000 0000
+			0000 7cbc 6b77 7b66 7777 0bb7 0000 0000
+			0000 7c00 6b77 7b66 7777 cb77 0000 0000
+			0000 c000 7777 bb66 7777 b777 0000 0000
+			0000 b000 777c b7b7 7777 b777 000c 0000
+			0000 0000 777c b777 7777 b777 00cc 0000
+			0000 0000 7bcc 7777 8787 8777 0cca 0000
+			0000 0000 cc00 8ccc 8887 aac8 0ccb 0000
+			0000 0000 0000 ccc0 cccc bbcc 0cbb 0000
+			0000 0000 0000 4c00 00c4 ccc0 0ccc 0000
+			0000 0000 0000 cc00 00cc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="mamepato01.12"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.12_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.12.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 000a 0000 0000 0000 0000
+			0000 0000 a000 00a7 0000 0000 0000 0000
+			0000 0000 aaaa 0aa8 0000 0000 0000 0000
+			0000 a000 7778 a797 0000 0000 0000 0000
+			0000 8a00 7777 0a87 0000 0000 0000 0000
+			0000 78a0 7777 a877 000a 0000 0000 0000
+			0000 73a0 7777 b777 000b 0000 0000 0000
+			0000 73c0 7777 bb77 bbbb 0000 0000 0000
+			0000 77c0 7777 bbb7 b777 000b 0000 0000
+			0000 77cc a777 7bbb 7777 00bb 0000 0000
+			0000 7cbc ba77 777b 7777 0bb7 0000 0000
+			0000 7c00 7777 7777 7777 cb77 0000 0000
+			0000 c000 bbb7 777b 7777 b777 0000 0000
+			0000 b000 bbbb 77bb 7777 b777 000c 0000
+			0000 b000 bbbb 77bb 7777 b777 00cc 0000
+			0000 bb00 bbbb 77bb 8787 8777 0cca 0000
+			0000 7b00 b777 8cbb 8888 aac8 0ccb 0000
+			0000 77b0 7777 cccb cccc bbcc 0cbb 0000
+			0000 77b0 7777 4c0b 00c4 ccc0 0ccc 0000
+			0000 7bb0 7777 cc0b 00cc 0000 0000 0000
+			0000 bb00 bbbb 0000 0000 0000 0000 0000
+			0000 bb00 bbbb 0000 0000 0000 0000 0000
+			0000 bb00 bbbb 0000 0000 0000 0000 0000
+			0000 b000 bbbb 0000 0000 0000 0000 0000
+			0000 0000 0bbb 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="mamepato01.2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.2_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.2.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0ccc 0000 0000
+			0000 0000 0000 0000 a000 0caa 0000 0000
+			0000 0000 a000 0000 7acc 0ca7 0000 0000
+			0000 0000 70a0 c00a 77ac 0cc7 0000 0000
+			0000 0000 7a7a aaaa 7788 0cc7 0000 0000
+			0000 a000 787b aa77 7789 cbca 0000 0000
+			0000 a000 7778 8777 778b bbbc 000c 0000
+			0000 8a00 7777 7777 888b bbbc 000c 0000
+			0000 7a00 7777 7777 9887 bb98 000c 0000
+			0000 7a00 7777 7777 8a87 b977 000c 0000
+			0000 8a00 7777 7777 78a8 b777 000c 0000
+			0000 8a00 7778 7723 7bc8 b777 0000 0000
+			0000 a000 8888 83c3 8bca c877 0000 0000
+			0000 a000 8888 83b8 bbca c888 0000 0000
+			0000 0000 841a a888 bbc8 0c8b 0000 0000
+			0000 0000 41ac 7aaa bca7 0cbb 0000 0000
+			0000 0000 cac0 7778 cb87 00cc 0000 0000
+			0000 0000 cac0 778c cba7 0000 0000 0000
+			0000 0000 cc00 bcc0 c4bb 0000 0000 0000
+			0000 0000 0000 c000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="mamepato01.3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.3_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.3.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0ccc 0000 0000
+			0000 0000 0000 0000 a000 0caa 0000 0000
+			0000 0000 0000 0000 7acc 0ca7 0000 0000
+			0000 0000 a000 c000 77ac 0cc7 0000 0000
+			0000 0000 70a0 aa0a 7788 0cc7 0000 0000
+			0000 0000 7a7a aaaa 7789 cbca 0000 0000
+			0000 a000 787b aa77 778a bbbc 000c 0000
+			0000 a000 7778 8777 888b bbbc 000c 0000
+			0000 8a00 7777 7777 988b bb98 000c 0000
+			0000 7a00 7777 7777 8a87 b977 000c 0000
+			0000 7a00 7777 7777 78a7 b777 000c 0000
+			0000 8a00 7777 7777 7bc8 b777 0000 0000
+			0000 8a00 7778 7723 8bc8 c877 0000 0000
+			0000 a000 8888 83c3 bbca c888 0000 0000
+			0000 a000 8888 83b8 bbca 0c8b 0000 0000
+			0000 0000 841a a888 bca8 0cbb 0000 0000
+			0000 0000 41ac 7aaa cb87 00cc 0000 0000
+			0000 0000 cac0 778c cba7 0000 0000 0000
+			0000 0000 cac0 bcc0 c4bb 0000 0000 0000
+			0000 0000 cc00 c000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="mamepato01.4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.4_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.4.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 000a 0000 0000 0000 0000
+			0000 0000 a000 00a7 0000 0000 0000 0000
+			0000 0000 aa00 aaa8 000a 0000 0000 0000
+			0000 0000 97a0 7777 00a8 0000 0000 0000
+			0000 0000 8a00 7777 0a87 0000 0000 0000
+			0000 0000 7890 7777 a877 0000 0000 0000
+			0000 0000 77a0 7323 a777 cca0 000c 0000
+			0000 0000 77b0 75b2 c111 aaaa 000c 0000
+			0000 0000 77b0 72b2 ca41 c777 000c 0000
+			0000 0000 77a0 7323 aaa4 b77c 000c 0000
+			0000 0000 788c 7777 bbb8 ba7c 000c 0000
+			0000 0000 888c 7777 a887 bb9a 00cb 0000
+			0000 c000 7887 8888 7aa8 bb87 00cb 0000
+			0000 c000 6766 8766 78ba bb77 00cb 0000
+			0000 c000 6666 8666 7bbc b977 00cb 0000
+			0000 c000 6667 8666 8bbc b877 000c 0000
+			0000 0000 666c 8666 bbbc b887 000c 0000
+			0000 0000 667c 8766 bbbc c888 0000 0000
+			0000 0000 67cc 8766 bbc9 0c89 0000 0000
+			0000 0000 cc4c 7777 cca9 00cc 0000 0000
+			0000 0000 cccc cccc c4cc 0000 0000 0000
+			0000 0000 0000 c000 c444 0000 0000 0000
+			0000 0000 0000 0000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="mamepato01.5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.5_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.5.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 00a0 0000 0000 0000 0000
+			0000 0000 0000 0a7a 0000 0000 0000 0000
+			0000 0000 aaa0 aa8a 0000 0000 0000 0000
+			0000 0000 778a 7977 000a 0000 0000 0000
+			0000 a000 7778 a877 0000 0000 0000 0000
+			0000 8a00 7777 8777 0009 0000 0000 0000
+			0000 7a00 3777 7732 000a cca0 000c 0000
+			0000 1c00 5711 772b a0bb aaaa 00cc 0000
+			0000 ac00 2714 772b 8aba c777 0ccb 0000
+			0000 aac0 374a 7732 7aa7 ba77 0cbb 0000
+			0000 bbc0 778b 7777 a877 777a cbbb 0000
+			0000 cc00 7887 8888 bbb8 7777 cbb7 0000
+			0000 ccc0 6766 8766 bbba 77bb cbb7 0000
+			0000 ccc0 6666 8666 bbbc 7bbb cc77 0000
+			0000 c000 6667 8666 bcc9 7bbb 0c77 0000
+			0000 0000 666c 8666 cc98 bbbb 0ccc 0000
+			0000 0000 667c 8766 9998 cccc 000c 0000
+			0000 0000 67cc 8766 9999 00cc 0000 0000
+			0000 0000 ccc0 7777 cc99 0000 0000 0000
+			0000 0000 444c cccc c4cc 0000 0000 0000
+			0000 0000 44cc c00c c444 0000 0000 0000
+			0000 0000 ccc0 c00c c44c 0000 0000 0000
+			0000 0000 0000 0000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="mamepato01.6"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.6_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.6.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 00a0 0000 0000 0000 0000
+			0000 0000 0000 0a7a 0000 0000 0000 0000
+			0000 0000 aaa0 aa8a 0000 0000 0000 0000
+			0000 0ccc 778a 7977 000a 0000 0000 0000
+			0000 abbc 7778 a877 0000 0000 0000 0000
+			c000 8abb 7777 8777 0009 cc00 cccc 000c
+			c000 7abb 3777 7732 000a b8cc bbbb 00cb
+			c000 1c8a 5711 772b c0bb 8877 6666 0c66
+			c000 ac78 2714 772b ccba 6687 6666 0c77
+			c000 aac7 374a 7732 bca7 6668 c766 00cc
+			0000 bbcc 778b 7777 bb77 6666 c777 0000
+			0000 ca8c 7887 8888 7bc8 7766 0ccc 0000
+			0000 cac0 6766 8766 77ba 7777 000c 0000
+			0000 cc00 6666 8666 77bc 7777 000c 0000
+			0000 c000 6667 8666 77c9 cc77 0000 0000
+			0000 0000 666c 8666 7c98 0cb7 0000 0000
+			0000 0000 667c 8766 9998 c999 000c 0000
+			0000 0000 67cc 8766 9999 ccb9 0000 0000
+			0000 0000 ccc0 7777 cc99 00cc 0000 0000
+			0000 0000 444c cccc c4cc 0000 0000 0000
+			0000 0000 44cc c00c c444 0000 0000 0000
+			0000 0000 ccc0 c00c c44c 0000 0000 0000
+			0000 0000 0000 0000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="mamepato01.7"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.7_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.7.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0a00 0000 0000 0000 0000
+			0000 0000 0000 a7a0 0000 0000 0000 0000
+			0000 0000 aa00 a8aa 000a 0000 0000 0000
+			0000 0000 78a0 9777 00a7 0000 0000 0000
+			0000 0000 778a 8777 000a 0000 0000 0000
+			0000 a000 7778 7777 0098 0000 0000 0000
+			0000 a000 7777 7323 00a7 0000 0000 0000
+			0000 c000 7111 72b5 0bb7 0000 0000 0000
+			0000 c000 714a 72b2 aba7 0000 0000 0000
+			0000 ac00 74aa 7323 8a77 000a 0000 0000
+			0000 bc00 78bb 7777 8777 00a8 0000 0000
+			0000 0000 887c 8887 bb88 0a88 0000 0000
+			0000 a000 766c 7666 bbc8 a8cb 0000 0000
+			0000 a000 666c 6666 b77c acbb 0000 0000
+			0000 7a00 667c 6666 777c cbb7 000a 0000
+			0000 7a00 66c7 6666 777c cb77 000a 0000
+			0000 77a0 67c7 7666 7bbc c777 000a 0000
+			0000 77a0 7cc7 7666 bbbc c777 000c 0000
+			0000 77c0 cccc 777c bbbc cc7b 00cc 0000
+			0000 c7c0 c00c ccc4 bbbc cccb 0ccc 0000
+			0000 c7c0 ccc0 00c4 bbc0 cccb 0ccc 0000
+			0000 cc00 444c c00c bbcc ccbb 0000 0000
+			0000 0000 44cc c00c bcc4 0cbb 0000 0000
+			0000 0000 ccc0 c00c bccc 0cbb 0000 0000
+			0000 0000 0000 0000 cccc 0cbb 0000 0000
+			0000 0000 0000 0000 0000 00cc 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="mamepato01.8"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.8_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.8.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0a00 0000 0000 0000 0000
+			0000 0000 0000 a7a0 0000 0000 0000 0000
+			0000 0000 aa00 a8aa 000a 0000 0000 0000
+			0000 ccc0 78a0 9777 00a7 0000 0000 0000
+			0000 bbc0 778a 8777 000a 0000 0000 0000
+			0000 abbc 7778 7777 0098 c000 cccc 00cc
+			0000 abbc 7777 7323 00a7 8cc0 bbbb 0cbb
+			0000 c8ac 7111 72b5 0bb7 877c 6668 c666
+			0000 c78c 714a 72b2 cba7 687c 6666 c776
+			0000 ac7c 74aa 7323 ca77 668b 7666 0ccc
+			0000 bcc0 78bb 7777 b777 666b 7776 000c
+			0000 a8c0 887c 8887 bc88 7667 ccc7 0000
+			0000 ac00 766c 7666 7ba8 7777 00c7 0000
+			0000 c000 666c 6666 7bc8 7777 00c7 0000
+			0000 0000 667c 6666 7c98 c777 000c 0000
+			0000 0000 66c0 6666 c988 cb77 0000 0000
+			0000 0000 67c0 7666 9988 a999 0000 0000
+			0000 0000 7cc0 7666 9998 cb99 000c 0000
+			0000 0000 cc00 777c c997 aacc 00cc 0000
+			0000 0000 c000 ccc4 cccc caaa 0ccc 0000
+			0000 0000 ccc0 c0c4 c4cc cccc 0ccc 0000
+			0000 0000 444c c00c c4cc cccc 0000 0000
+			0000 0000 44cc c00c c444 0000 0000 0000
+			0000 0000 ccc0 c00c c44c 0000 0000 0000
+			0000 0000 0000 0000 0ccc 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="mamepato01.9"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato01.9_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato01.9.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 000a 0000 0000 0000 0000
+			0000 0000 a000 00a7 0000 0000 0000 0000
+			0000 0000 aaaa 0aa8 0000 0000 0000 0000
+			0000 a000 7778 a797 0000 bb00 00bb 0000
+			0000 8a00 7777 0a87 aa00 aabb 00ba 0000
+			0000 78a0 7777 9877 78aa 7777 00ca 0000
+			0000 77a0 2377 a773 778a 7777 00ca 0000
+			0000 11c0 b571 7772 777b 8777 000c 0000
+			0000 4ac0 b271 7772 877a 88bb 000c 0000
+			0000 aaac 2374 7773 bb88 8bbb 000c 0000
+			0000 bbbc 7778 7777 bbb8 cbbb 0000 0000
+			0000 cc00 7777 8887 bbc8 c8bb 0000 0000
+			0000 a000 88cc 6678 bbc8 c778 0000 0000
+			0000 a000 66c7 6666 7bc8 7777 000c 0000
+			0000 a000 67c7 6666 7c87 7777 00c8 0000
+			0000 c000 7c87 7666 8c87 8777 0cbb 0000
+			0000 c000 c877 778c ccc8 bb88 0cbb 0000
+			0000 0000 c87c ccc0 c00c bbbc 0cbb 0000
+			0000 0000 ccc0 0000 0000 ccc0 0ccc 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="mamepato_kage"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="mamepato_kage_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/intro_bird/tex/mamepato_kage.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 1110 0111 0000
+			1000 1111 1111 0001 1100 1111 1111 0011
+			1110 1111 1111 0111 1110 1111 1111 0111
+			1110 1111 1111 0111 1100 1111 1111 0011
+			1000 1111 1111 0001 0000 1110 0111 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="13">
+	<tex_palette index="0" name="mamepato01.10_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="mamepato01.11_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="mamepato01.12_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="mamepato01.1_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="4" name="mamepato01.2_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="mamepato01.3_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="mamepato01.4_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="mamepato01.5_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="8" name="mamepato01.6_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="mamepato01.7_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="10" name="mamepato01.8_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="mamepato01.9_pl" color_size="16">
+		7c1f 4a3e 1eff 42d9 39f5 7fff 6f7b 56b5
+		4a52 4210 2d6b 2108 18c6 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="12" name="mamepato_kage_pl" color_size="8">
+		3ab9 294a 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="5">
+	<material index="0" name="lambert78"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="19"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="12" tex_palette_idx="12"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="lambert79"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="lambert81"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="lambert82"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="1"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="lambert83"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="10">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
+	<matrix index="2" mtx_weight="1" node_idx="3"/>
+	<matrix index="3" mtx_weight="1" node_idx="4"/>
+	<matrix index="4" mtx_weight="1" node_idx="5"/>
+	<matrix index="5" mtx_weight="1" node_idx="6"/>
+	<matrix index="6" mtx_weight="1" node_idx="7"/>
+	<matrix index="7" mtx_weight="1" node_idx="8"/>
+	<matrix index="8" mtx_weight="1" node_idx="9"/>
+	<matrix index="9" mtx_weight="1" node_idx="10"/>
+</matrix_array>
+
+<polygon_array size="10">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.000000 0.250000 0.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="2.000000 0.250000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="2.000000 4.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 4.250000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-2.000000 0.000000 2.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="2.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="2.000000 -2.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="2" name="polygon2"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">2</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.000000 0.250000 0.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="2.000000 0.250000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="2.000000 4.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 4.250000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="3" name="polygon3"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">3</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-2.000000 0.000000 2.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="2.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="2.000000 -2.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="4" name="polygon4"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">4</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.000000 0.250000 0.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="2.000000 0.250000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="2.000000 4.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 4.250000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="5" name="polygon5"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">5</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-2.000000 0.000000 2.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="2.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="2.000000 -2.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="6" name="polygon6"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">6</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="32.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.000000 0.250000 0.000000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="2.000000 0.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="2.000000 4.250000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="-2.000000 4.250000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="7" name="polygon7"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">7</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-2.000000 0.000000 2.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="2.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="2.000000 -2.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="8" name="polygon8"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">8</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="32.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-2.000000 0.250000 0.000000"/>
+					<tex st="0.000000 32.000000"/>
+					<pos_xy xy="2.000000 0.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="2.000000 4.250000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="-2.000000 4.250000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="9" name="polygon9"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-1.600098 0.000000 -1.600098"
+		volume_max="1.600098 0.000000 1.600098"
+		volume_r="2.262695"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">9</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="-1.600098 0.000000 1.600098"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="1.600098 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="1.600098 -1.600098"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-1.600098 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="11">
+	<node index="0" name="locator1" kind="null"
+		parent="-1"
+		child="1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="P01" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-10.000000 3.000000 -7.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+	>
+		<display index="0" material="2" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="P01s" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="3"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-10.000000 4.000000 -11.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+	</node>
+	<node index="3" name="P02" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="4"
+		brother_prev="2"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="7.000000 29.000000 61.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+	>
+		<display index="0" material="3" polygon="2" priority="0"/>
+	</node>
+	<node index="4" name="P02s" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="5"
+		brother_prev="3"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.800049 0.800049 0.800049"
+		rotate="0.000000 0.000000 0.000000"
+		translate="7.000000 4.000000 57.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+	>
+		<display index="0" material="0" polygon="3" priority="0"/>
+	</node>
+	<node index="5" name="P03" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="6"
+		brother_prev="4"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-64.000000 3.000000 2.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+	>
+		<display index="0" material="1" polygon="4" priority="0"/>
+	</node>
+	<node index="6" name="P03s" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="7"
+		brother_prev="5"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.699951 0.699951 0.699951"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-64.000000 4.000000 -2.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+	>
+		<display index="0" material="0" polygon="5" priority="0"/>
+	</node>
+	<node index="7" name="P04" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="8"
+		brother_prev="6"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="8.000000 3.000000 32.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+	>
+		<display index="0" material="4" polygon="6" priority="0"/>
+	</node>
+	<node index="8" name="P04s" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="9"
+		brother_prev="7"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="8.000000 4.000000 28.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.000000 -2.000000"
+		volume_max="2.000000 0.000000 2.000000"
+		volume_r="2.828369"
+	>
+		<display index="0" material="0" polygon="7" priority="0"/>
+	</node>
+	<node index="9" name="P05" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="10"
+		brother_prev="8"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-73.000000 29.000000 121.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 0.250000 0.000000"
+		volume_max="2.000000 4.250000 0.000000"
+		volume_r="4.697021"
+	>
+		<display index="0" material="3" polygon="8" priority="0"/>
+	</node>
+	<node index="10" name="P05s" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="9"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.500000 0.500000 0.500000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-73.000000 4.000000 117.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-1.600098 0.000000 -1.600098"
+		volume_max="1.600098 0.000000 1.600098"
+		volume_r="2.262695"
+	>
+		<display index="0" material="0" polygon="9" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="40" polygon_size="10"
+	triangle_size="0" quad_size="10"/>
+
+</body>
+
+</imd>
