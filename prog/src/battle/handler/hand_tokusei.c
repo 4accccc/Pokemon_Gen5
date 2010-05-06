@@ -813,8 +813,7 @@ static void handler_AtuiSibou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   // ダメージ対象が自分
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   {
-    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    PokeType  type = WAZADATA_GetType( waza );
+    PokeType  type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
     // ワザタイプが氷か炎
     if( (type == POKETYPE_KOORI) || (type == POKETYPE_HONOO) )
     {
@@ -3669,8 +3668,7 @@ static void handler_Tainetsu_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   // 自分が防御側の時、炎ワザの威力を半分に
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_GetType(waza) == POKETYPE_HONOO )
+    if( BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE ) == POKETYPE_HONOO )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
     }
