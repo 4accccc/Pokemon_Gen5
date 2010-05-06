@@ -136,7 +136,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/wipe_sub.c \
         system/wipe_wnd.c \
         system/brightness.c \
-        app/trainercard/trcard_sys.c \
         app/pms_input/pmsi_param.c \
         system/laster.c \
         system/pms_data.c \
@@ -480,6 +479,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/fldmmdl.c \
         field/straw_poke_form.c \
         field/event_battle.c \
+        app/trainercard/trcard_sys.c \
         system/g3d_tool.c
 
 
