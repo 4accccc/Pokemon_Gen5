@@ -84,8 +84,8 @@ EVENT_START     ev_pos_r10r0601_limitter_01
   _OBJ_ANIME_WAIT()
   //_TURN_HERO_SITE()
 
-    //待てい！
-  _BALLOONWIN_OBJMSG( msg_r10r0601_badge_05, R10R0601_VETERANM )
+  //待てい！2010.05.06 テンポを良くするためカット
+  //_BALLOONWIN_OBJMSG( msg_r10r0601_badge_05, R10R0601_VETERANM )
 
   _CALL ev_sub_gate_event
 
