@@ -54,9 +54,12 @@ ARC_TARGET_DATA = \
 	gymbadge7.nsbva \
 	fly_out.spa \
 	fly_out1.nsbmd \
+	fly_bg.nsbmd \
 	fly_out1.nsbca \
 	fly_out1.nsbma \
 	fly_out1.nsbtp \
+	fly_bg.nsbca \
+	fly_bg.nsbta \
 	fly_in.spa \
 	fly_in1.nsbmd \
 	fly_in1.nsbca \
