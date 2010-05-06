@@ -2355,6 +2355,12 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
       }
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
 #endif
+      (*seq)++;
+    }
+    break;
+
+  case 4:
+    if( !BTLV_EFFECT_CheckExecute() ){
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       if( subwk->aliveCnt > 1){
         statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
@@ -2362,13 +2368,6 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
       if( subwk->aliveCnt > 1){
         statwin_disp_start( &wk->statusWin[ subwk->pos[2] ] );
       }
-      (*seq)++;
-    }
-    break;
-
-  case 4:
-    if( !BTLV_EFFECT_CheckExecute() ){
-
       (*seq)++;
     }
     break;
