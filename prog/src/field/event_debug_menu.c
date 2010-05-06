@@ -1653,8 +1653,9 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SUPPORT_ACT0;
                 break;
               case MMDL_BLACT_ANMTBLNO_BOSS_N:
-                ac_act_u = ac_act_d = AC_N_ACT0;
-                ac_act_l = ac_act_r = AC_N_ACT1;
+                ac_act_u = AC_N_ACT0;
+                ac_act_d = AC_N_ACT1;
+                ac_act_l = ac_act_r = AC_N_ACT2;
                 break;
               case MMDL_BLACT_ANMTBLNO_SAGE1:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SAGE1_ACT0;
@@ -1668,7 +1669,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 break;
               }
             }
-
+            
             if( key_cont & PAD_KEY_UP ){
               if( ac_act_u != ACMD_NOT ){
                 ac = ac_act_u;

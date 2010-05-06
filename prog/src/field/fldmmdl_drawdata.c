@@ -927,6 +927,8 @@ enum
   TEXIDX_NFLIP_ACT5,
   TEXIDX_NFLIP_ACT6,
   TEXIDX_NFLIP_ACT7,
+  TEXIDX_NFLIP_ACT8, //20
+  TEXIDX_NFLIP_ACT9,
 };
 static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_StopU[] =
 {
@@ -1437,6 +1439,14 @@ static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_BossN1[] = {
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_BossN2[] = {
+  {TEXIDX_NFLIP_D_WALK0,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_NFLIP_ACT9,ANMFLIP_OFF,ANMFLIP_OFF,5},
+  {TEXIDX_NFLIP_ACT7,ANMFLIP_OFF,ANMFLIP_OFF,2},
+  {TEXIDX_NFLIP_ACT8,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
 static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT2_ANMNO_MAX] =
 {
   DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
@@ -1482,7 +1492,7 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT2_ANMN
   
   DATA_BlActAnmNonFlip_BossN0, //DRAW_STA_ACT0
   DATA_BlActAnmNonFlip_BossN1, //DRAW_STA_ACT1
-  DATA_BlActAnmNonFlip_BossN1, //DRAW_STA_ACT2
+  DATA_BlActAnmNonFlip_BossN2, //DRAW_STA_ACT2
 };
 
 //--------------------------------------------------------------

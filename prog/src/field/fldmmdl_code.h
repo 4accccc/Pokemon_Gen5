@@ -155,24 +155,6 @@
 #define MV_HIDE_SNOWMAN    ///<隠れ蓑　雪だるま
 */
 
-/*
- サブ動作で対応するもの
-　1:とまってきょろきょろ ok
-　　ランダム移動
-　　ルート２，３，４　
-　2：とまってくるくる ok
-　　ランダム移動
-　　ルート２，３，４　
-  
-　3：くるくる移動 ok
-　　ランダム移動
-　　ルート２，３，４　
-　4：逃げる ok
-　　ルート４　
-　5：横泳ぎ
-　　ルート２?
- * */
-
 //======================================================================
 //  フィールド動作モデル イベントタイプ
 //  タイプを増やした際は以下の変更が必要。
@@ -610,7 +592,7 @@
 #define AC_JUMPGL_L_1G_8F 0x87 ///<左壁 左向きにジャンプ 1grid 8フレーム
 #define AC_JUMPGL_R_1G_8F 0x88 ///<左壁 右向きにジャンプ 1grid 8フレーム
 #define AC_JUMPGR_U_1G_8F 0x89 ///<右壁 上向きにジャンプ 1grid 8フレーム
-#define AC_JUMPGR_D_1G_8F 0x8a ///<右壁 下向きにジャンプ 1grid 8フレーム
+#define AC_JUMPGR_D_1G_8F 0x8a ///<右壁 下向きにジャンプ 1grid 8フレ2ーム
 #define AC_JUMPGR_L_1G_8F 0x8b ///<右壁 左向きにジャンプ 1grid 8フレーム
 #define AC_JUMPGR_R_1G_8F 0x8c ///<右壁 右向きにジャンプ 1grid 8フレーム
 #define AC_JUMPGU_U_1G_8F 0x8d ///<上壁 上向きにジャンプ 1grid 8フレーム
@@ -657,7 +639,10 @@
 #define AC_ACT1_STOP 0xb6 ///<演技(特定OBJ専用
 #define AC_ACT1_LOOP 0xb7 ///<演技(特定OBJ専用
 #define AC_NINJA_ACT0 0xb8 ///<演技(NINJA専用 出現アニメ
-#define ACMD_MAX 0xb9 ///<アニメーションコマンド最大数
+#define AC_NINJA_ACT1 0xb9 ///<演技(NINJA専用 消去アニメ
+#define AC_ACT2_STOP 0xba ///<演技(特定OBJ専用
+#define AC_ACT2_LOOP 0xbb ///<演技(特定OBJ専用
+#define ACMD_MAX 0xbc ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド
@@ -669,7 +654,7 @@
 #define AC_N_ACT0 (AC_ACT0_STOP) ///<N専用 両手アニメ
 #define AC_N_ACT1 (AC_ACT1_STOP) ///<N専用 首アニメ
 #define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
-#define AC_NINJA_ACT1 (AC_ACT1_LOOP) ///<NINJA専用 消去アニメ
 #define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 加味揺れアニメ
+#define AC_N_ACT2 (AC_ACT2_LOOP) ///<N専用 腕アニメ
 
 #endif //MMDL_CODE_H_FILE

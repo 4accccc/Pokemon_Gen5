@@ -494,7 +494,8 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
 {
   VecFx32 pos;
   BOOL init_flag = FALSE;
-  u16 dir,anm_id;
+  BOOL anm_pause_only = FALSE;
+  u16 dir,anm_id,code;
   DRAW_BLACT_WORK *work;
   GFL_BBDACT_SYS *actSys;
   
@@ -506,10 +507,16 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   dir = blact_GetDrawDir( mmdl );
+  code = MMDL_GetOBJCode( mmdl );
+  
+  if( code == FLAG ){
+    anm_pause_only = TRUE;
+  }
   
   {
-    const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
-        MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
+    const OBJCODE_PARAM *prm =
+      MMDLSYS_GetOBJCodeParam( MMDL_GetMMdlSys(mmdl), code );
+    
     if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLACTALWAYSANIME_32 ){
       anm_id = DRAW_STA_WALK_32F * DIR_MAX4;
     }else if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLACTALWAYSANIME_16 ){
@@ -518,7 +525,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
       anm_id = DRAW_STA_WALK_4F * DIR_MAX4;
     }
   }
-
+  
   anm_id += dir;
   
   if( work->anmcnt.set_anm_dir != dir ){ //•ûŒüXV
@@ -527,7 +534,8 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
     init_flag = TRUE;
   }
   
-  blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
+  blact_UpdatePauseVanish(
+      mmdl, actSys, work->actID, init_flag, anm_pause_only );
 
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( mmdl, &pos );
