@@ -6402,7 +6402,8 @@ static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p
 
   // 名前入力画面初期化dataチェック
   if( p_data->namein_init.init == TRUE ){
-//@todo 言語対応
+// 言語対応
+/*
     #if( PM_LANG == LANG_JAPAN )
     {
       //if( IsJapaneseCode( *p_data->namein_init.cp_str ) ){
@@ -6422,6 +6423,9 @@ static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p
       }
     }
     #endif
+*/
+		// WBでは、名前入力画面で使用言語をチェックしてもらう
+		GFL_STR_SetStringCode( p_param->strbuf, p_data->namein_init.cp_str );
     p_data->namein_init.init = FALSE;
   }
   return p_param;
