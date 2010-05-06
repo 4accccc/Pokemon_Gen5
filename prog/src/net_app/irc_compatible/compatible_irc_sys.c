@@ -342,12 +342,14 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 	case SEQ_INIT_WAIT:
 		if(GFL_NET_IsInit())
 		{
+      OS_TPrintf( "NET_Init\n" );
 			p_sys->seq	= SEQ_INIT_MENU;
 		}
 		break;
 
 	case SEQ_INIT_MENU:
 		MENUNET_Init( &p_sys->menu, p_sys, p_sys->heapID );
+    OS_TPrintf( "MENU_NET初期化\n" );
 		p_sys->is_init			= TRUE;
 		p_sys->seq	= SEQ_INIT_END;
 		break;
@@ -391,13 +393,20 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 	switch(p_sys->seq)
 	{
 	case SEQ_MENUNET_EXIT:
-		MENUNET_Exit( &p_sys->menu );
+    if( p_sys->is_init )
+    { 
+      MENUNET_Exit( &p_sys->menu );
+      p_sys->is_init	= FALSE;
+      OS_TPrintf( "MENU_NET解放\n" );
+    }
+    p_sys->is_exit  = FALSE;
 		p_sys->seq	= SEQ_EXIT_START;
 		break;
 
 	case SEQ_EXIT_START:
 		if( GFL_NET_Exit(NET_EXIT_ExitCallBack ) )
 		{
+      OS_TPrintf( "NET_Exit\n" );
 			p_sys->seq	= SEQ_EXIT_WAIT;
 		}
 		else
@@ -415,7 +424,6 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 
 	case SEQ_EXIT_END:
 		p_sys->seq	= 0;
-		p_sys->is_init	= FALSE;
 		return TRUE;
 
 	default:
@@ -471,6 +479,8 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		GFL_NET_ChangeoverConnect( NULL );
 		p_sys->seq	= SEQ_CONNECT_WAIT;
     p_sys->is_cancel  = TRUE;
+    p_sys->is_connect	= FALSE;
+    p_sys->connect_bit  = 0;
 		break;
 
 	case SEQ_CONNECT_WAIT:
@@ -604,25 +614,6 @@ BOOL COMPATIBLE_IRC_IsConnext( const COMPATIBLE_IRC_SYS *cp_sys )
 	return cp_sys->is_connect;
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	初期化したかチェック
- *
- *	@param	const COMPATIBLE_IRC_SYS *cp_sys	ワーク
- *
- *	@retval	TRUE	初期化した
- *	@retval	FALSE	していない
- */
-//-----------------------------------------------------------------------------
-BOOL COMPATIBLE_IRC_IsInit( const COMPATIBLE_IRC_SYS *cp_sys )
-{	
-	if( cp_sys->is_only_play )
-	{	
-		return TRUE;
-	}
-
-	return cp_sys->is_init;
-}
 
 //----------------------------------------------------------------------------
 /**

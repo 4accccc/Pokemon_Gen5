@@ -427,19 +427,11 @@ static void SEQFUNC_Start( IRC_COMPATIBLE_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum
 	{	
-	//	SEQ_NET_INIT,
 		SEQ_CHANGE_MENU,
 	};
 
 	switch( *p_seq )
 	{	
-/*	case SEQ_NET_INIT:
-		if( COMPATIBLE_IRC_InitWait( p_wk->p_irc ) )
-		{	
-			*p_seq	= SEQ_CHANGE_MENU;
-		}
-		break;
-	*/	
 	case SEQ_CHANGE_MENU:
 		SEQ_Change( p_wk, SEQFUNC_MenuProc );
 		break;
@@ -847,7 +839,7 @@ static void *SUBPROC_ALLOC_Menu( HEAPID heapID, void *p_wk_adrs )
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
 
-	if( p_wk->is_init )
+	if( p_wk->is_init == TRUE )
 	{	
 		p_param->mode				= IRCMENU_MODE_INIT;
 		p_wk->is_init				= FALSE;
