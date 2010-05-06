@@ -1016,6 +1016,7 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
           Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_MONTH ), 
           Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_DAY ),
           0);
+      info_setup.bgm_no = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_BGM );
 
       p_wk->p_playerinfo	= PLAYERINFO_WIFI_Init( &info_setup, FALSE, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, TRUE, p_wk->heapID );
     }
@@ -1045,6 +1046,7 @@ static void Util_PlayerInfo_Create( DIGITALCARD_CHECK_WORK *p_wk )
           Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_MONTH ), 
           Regulation_GetCardParam( p_reg_card, REGULATION_CARD_END_DAY ),
           0);
+      info_setup.bgm_no = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_BGM );
 
       p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_msg, p_wk->p_word, p_reg_view, TRUE, p_wk->heapID );
     }
