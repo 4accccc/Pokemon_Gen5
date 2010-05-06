@@ -950,13 +950,13 @@ static void balloonWin_GetDispOffsetPos(
 #else
   x >>= 3; //chara size
 
-  if( x < 10 ){ // < 80
+  if( x < 10 ){   // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
     x = 0;
-  }else if( x >= 10 && x <= 15 ){
+  }else if( x >= 10 && x <= 15 ){ //10,11,12,13,14,15
     x = 1;
-  }else if( x >= 16 && x <= 22 ){
+  }else if( x >= 16 && x < 22 ){  //16,17,18,19,20,21
     x = 2;
-  }else{
+  }else{          //22,23,24,25,26,27,28,29,30,31
     x = 3;
   }
   
