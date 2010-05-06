@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T14:19:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T14:57:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1314" top="140" right="2019" bottom="768" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,9 +298,13 @@
 　所有→デモ後、_badge_03
 　未所有→badge_04</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">この　とざされた　もんを
+		<language name="JPN" width="256">まてい！　しかく　なきもの
+この　もんは　とおさん！[BE:01:ページ切り替え（クリア）]
+この　とざされた　もんを
 ひらく　カギは　トライバッジ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　閉ざされた　門を
+		<language name="JPN_KANJI" width="256">待てい！　資格なき者
+この　門は　通さん！[BE:01:ページ切り替え（クリア）]
+この　閉ざされた　門を
 開く　カギは　トライバッジ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
