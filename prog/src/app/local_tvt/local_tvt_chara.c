@@ -31,6 +31,7 @@
 
 #define LTVT_CHARA_EYE_BLINK_CNT (150)
 #define LTVT_CHARA_OFFSET (7)
+#define LTVT_CHARA_OFFSET_SIZE (LTVT_CHARA_OFFSET*16*0x40)
 //======================================================================
 //	enum
 //======================================================================
@@ -172,6 +173,7 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
   const u32 charSize = (work->mode == LTM_2_MEMBER?0x6000:0x3000);
   const u32 bufOfs = (work->bufNo==0?0:LTVT_VRAM_PAGE_SIZE);
+  const u32 transOfs = (work->mode == LTM_2_MEMBER?0:LTVT_CHARA_OFFSET_SIZE);
 
   switch( charaWork->state )
   {
@@ -184,7 +186,7 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_CHARA2:
     LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
-                                      charaWork->transIdx * LTVT_TRANS_SIZE ,
+                                      charaWork->transIdx * LTVT_TRANS_SIZE + transOfs,
                                       LTVT_VRAM_ADR_CHARA + charSize * charaWork->charaIdx + charaWork->transIdx * LTVT_TRANS_SIZE + bufOfs ,
                                       LTVT_TRANS_SIZE );
     charaWork->transIdx++;
@@ -202,7 +204,7 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     break;
   case LTCTS_BG2:
     LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
-                                      charaWork->transIdx * LTVT_TRANS_SIZE ,
+                                      charaWork->transIdx * LTVT_TRANS_SIZE + transOfs,
                                       LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx + charaWork->transIdx * LTVT_TRANS_SIZE + bufOfs ,
                                       LTVT_TRANS_SIZE );
     charaWork->transIdx++;
@@ -336,25 +338,28 @@ static void LOCAL_TVT_CHARA_LoadCommonResource( LOCAL_TVT_WORK *work , LOCAL_TVT
 static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
   u32 charSize;
+  u32 transOfs;
   if( work->mode == LTM_2_MEMBER )
   {
     charSize = 0x6000;
+    transOfs = 0;
   }
   else
   {
     charSize = 0x3000;
+    transOfs = LTVT_CHARA_OFFSET_SIZE;
   }
 
   LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , charaResList[charaWork->charaType][1] );
   LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
-                                    0 ,
+                                    transOfs ,
                                     LTVT_VRAM_ADR_CHARA + charSize * charaWork->charaIdx ,
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
   
   LOCAL_TVT_CHARA_LoadNcgResource( work , charaWork , bgResList[charaWork->bgType][1] + (work->timeZone*2) );
   LOCAL_TVT_CHARA_TransNcgResource( work , charaWork ,
-                                    0 ,
+                                    transOfs ,
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
