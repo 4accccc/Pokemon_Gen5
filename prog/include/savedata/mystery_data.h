@@ -90,11 +90,11 @@ typedef struct {
 
 // ポケモン
 typedef struct {
-	u32	id_no;			// 親のID
-  u32 version;    // ROMバージョン
-  u32 rnd;        // 固体乱数
+	u32	id_no;			// 親のID 0ならばプレイヤーのIDを入れる
+  u32 version;    // ROMバージョン  0ならば自分のROMバージョンが入る
+  u32 rnd;        // 固体乱数　0ならば性別、特性、レアのパラメータを使う。0以外ならばそれらを使わず個体乱数直指定
   u16 ribbon_no;        //リボンビット 16本
-  u16 get_ball;  //捕まえたボール
+  u16 get_ball;  //捕まえたボール 0ならば指定しない
   u16 item;      //もちもの
   u16 waza1;     //技1
   u16 waza2;     //技2
@@ -102,12 +102,12 @@ typedef struct {
   u16 waza4;     //技4
   u16 mons_no;   //モンスターNo
   u8 form_no;    //フォルムNo
-  u8 country_code;  //国コード
+  u8 country_code;  //国コード 0ならばROMの言語コードを入れる
 	STRCODE	nickname[MONS_NAME_SIZE+EOM_SIZE];	//16h	ニックネーム(MONS_NAME_SIZE=10)+(EOM_SIZE=1)=11  最初がEOMならデフォルト
-  u8 seikaku;          //性格
-  u8 sex;              //性別
+  u8 seikaku;          //性格 0xFFでランダム
+  u8 sex;              //性別 0xFFでランダム
   u8 speabino;         //とくせい
-  u8 rare;             //レアにするかどうか 0=ランダムレアない  1=ランダム 2=レア
+  u8 rare;             //レアにするかどうか 0=レアない  1=ランダム 2=レア
   u16 get_place;        //捕まえた場所
   u16 birth_place;      //生まれた場所
   u8 get_level;         //捕まえたLEVEL
@@ -117,15 +117,15 @@ typedef struct {
   u8 clever;                   //かしこさ
   u8 strong;                   //たくましさ
   u8 fur;                      //毛艶
-  u8 hp_rnd;               //HP乱数
-  u8 pow_rnd;              //攻撃力乱数
-  u8 def_rnd;              //防御力乱数
-  u8 agi_rnd;              //素早さ乱数
-  u8 spepow_rnd;             //特攻乱数
-  u8 spedef_rnd;             //特防乱数
-  STRCODE	oyaname[PERSON_NAME_SIZE+EOM_SIZE];	//10h	親の名前(PERSON_NAME_SIZE=7)+(EOM_SIZE_=1)=8*2(STRCODE=u16)
-  u8 oyasex;      //親の性別 0 1 2 
-  u8 level;     //ポケモンレベル
+  u8 hp_rnd;               //HP乱数        0xFFでランダム 
+  u8 pow_rnd;              //攻撃力乱数    0xFFでランダム 
+  u8 def_rnd;              //防御力乱数    0xFFでランダム 
+  u8 agi_rnd;              //素早さ乱数    0xFFでランダム 
+  u8 spepow_rnd;             //特攻乱数    0xFFでランダム 
+  u8 spedef_rnd;             //特防乱数    0xFFでランダム 
+  STRCODE	oyaname[PERSON_NAME_SIZE+EOM_SIZE];	//10h	親の名前(PERSON_NAME_SIZE=7)+(EOM_SIZE_=1)=8*2(STRCODE=u16)　1文字目がEOMならばプレイヤーの名前をいれる
+  u8 oyasex;      //親の性別 0は男性 1は女性 2 はプレイヤーの性別をいれる
+  u8 level;     //ポケモンレベル　0ならばランダム
   u8 egg;       //タマゴかどうか TRUE＝たまご
   u8 speabino_flag;   //特性固定フラグ
 } GIFT_PRESENT_POKEMON;

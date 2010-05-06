@@ -36,6 +36,17 @@
 
 static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID, GAMEDATA* pGameData)
 {
+  enum
+  { 
+    RND_TBL_HP,
+    RND_TBL_POW,
+    RND_TBL_DEF,
+    RND_TBL_SPEPOW,
+    RND_TBL_SPEDEF,
+    RND_TBL_AGI,
+    RND_TBL_MAX,
+  };
+
   POKEMON_PARAM* pp;
   const GIFT_PRESENT_POKEMON* pGift= &pPack->data.pokemon;
   u16 level=pGift->level;
@@ -44,8 +55,25 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   PtlSetupPow pow=0;
   u64 rand;
   u32 buff;
+  u8  sex = pGift->sex;
   u8 tokusei = pGift->speabino & 0x7f;
   BOOL tokuseiBit = (pGift->speabino & 0x80) ? TRUE : FALSE;
+  u8 rnd_tbl[ RND_TBL_MAX ];
+  u16 waza_tbl[ PTL_WAZA_MAX ];
+
+  //for文で処理を共通化させるために
+  //テーブルに入れる
+  rnd_tbl[RND_TBL_HP] = pGift->hp_rnd;
+  rnd_tbl[RND_TBL_POW]  = pGift->pow_rnd;
+  rnd_tbl[RND_TBL_DEF]  = pGift->def_rnd;
+  rnd_tbl[RND_TBL_SPEPOW] = pGift->spepow_rnd;
+  rnd_tbl[RND_TBL_SPEDEF] = pGift->spedef_rnd;
+  rnd_tbl[RND_TBL_AGI]  = pGift->agi_rnd;
+  //↑と同じ
+  waza_tbl[ 0 ] = pGift->waza1;
+  waza_tbl[ 1 ] = pGift->waza2;
+  waza_tbl[ 2 ] = pGift->waza3;
+  waza_tbl[ 3 ] = pGift->waza4;
 
   if(pPack->gift_type != MYSTERYGIFT_TYPE_POKEMON){
     return NULL;
@@ -67,55 +95,77 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   
   
   if(pGift->level == 0){  //レベル０指定は乱数
-    level = GFUser_GetPublicRand(99)+1;
+    level = GFUser_GetPublicRand(100)+1;
   }
   if(pGift->id_no == 0){  //ID０指定は自分が親
     id = MyStatus_GetID(GAMEDATA_GetMyStatus(pGameData));
   }
+  if( sex == 0xFF )
+  { 
+    //POKETOOL_CalcPersonalRandSpecの仕様で、雄雌がある場合、PTL_SEX_UNKNOWNを指定するとランダム
+    sex = PTL_SEX_UNKNOWN;
+  }
 
-
+  {
+    int i;
+    for( i = 0; i < RND_TBL_MAX; i++ )
+    { 
+      if( rnd_tbl[i] == 0xFF )
+      { 
+        rnd_tbl[i]  = GFUser_GetPublicRand(32);
+      }
+    }
+  }
 
   pp = PP_Create( monsno, level, id, heapID );
 
-  pow = PTL_SETUP_POW_PACK(pGift->hp_rnd,pGift->pow_rnd,
-                           pGift->def_rnd,
-                           pGift->spepow_rnd,pGift->spedef_rnd,pGift->agi_rnd);
-
+  pow = PTL_SETUP_POW_PACK(
+      rnd_tbl[ RND_TBL_HP ],rnd_tbl[ RND_TBL_POW ],rnd_tbl[ RND_TBL_DEF ],
+      rnd_tbl[ RND_TBL_SPEPOW ],rnd_tbl[ RND_TBL_SPEDEF ],rnd_tbl[ RND_TBL_AGI ] );
 
   PP_Put(pp, ID_PARA_speabino, pGift->speabino);  
 
-  if(pow==0){
-    pow = PTL_SETUP_POW_AUTO;
-  }
+  //個体乱数が設定していれば、その値を指定したい＝性別等は無視したいはずなので、
+  //直接設定する
   if(pGift->rnd != 0){
     rand = pGift->rnd;
   }
-  else if(pGift->rare == 0){
-    rand = POKETOOL_CalcPersonalRandEx( id, monsno, pGift->form_no, pGift->sex, tokuseiBit, FALSE);
-  }
-  else if(pGift->rare == 1){
-    rand = PTL_SETUP_ID_AUTO;
-  }
-  else if(pGift->rare == 2){
-    rand = POKETOOL_CalcPersonalRandEx( id, monsno, pGift->form_no, pGift->sex, tokuseiBit, TRUE);
+  else
+  { 
+    //個体乱数が設定されていないときだけ、以下の設定を行なう
+    if(pGift->rare == 0){
+      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiBit, PTL_RARE_SPEC_FALSE );
+    }
+    else if(pGift->rare == 1){
+      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiBit, PTL_RARE_SPEC_BOTH );
+    }
+    else if(pGift->rare == 2){
+      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiBit, PTL_RARE_SPEC_TRUE );
+    }
   }
 
   PP_SetupEx( pp, pGift->mons_no, level, id, pow, rand );
 
   PP_Put(pp, ID_PARA_item, pGift->item);
 
-  if(pGift->waza1!=0 && pGift->waza1<WAZANO_MAX){
-    PP_SetWazaPush(pp, pGift->waza1);
+  //一旦デフォルト技を設定し、技設定
+  //技は押出式に覚える
+  {
+    int i;
+    PP_SetWazaDefault( pp );
+
+    for( i = 0; i < PTL_WAZA_MAX; i++ )
+    { 
+      if( waza_tbl[i] != 0 && waza_tbl[i] < WAZANO_MAX )
+      { 
+        if( PTL_WAZASET_FAIL == PP_SetWaza( pp, waza_tbl[i] ) )
+        { 
+          PP_SetWazaPush( pp, waza_tbl[i] );
+        }
+      }
+    }
   }
-  if(pGift->waza2!=0 && pGift->waza2<WAZANO_MAX){
-    PP_SetWazaPush(pp, pGift->waza2);
-  }
-  if(pGift->waza3!=0 && pGift->waza3<WAZANO_MAX){
-    PP_SetWazaPush(pp, pGift->waza3);
-  }
-  if(pGift->waza4!=0 && pGift->waza4<WAZANO_MAX){
-    PP_SetWazaPush(pp, pGift->waza4);
-  }
+
   PP_Put(pp, ID_PARA_form_no, pGift->form_no);  //フォルム番号はすべて許す
   
   if(pGift->get_ball!=0){
@@ -147,11 +197,23 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   }
 
 
-  if(pGift->version!=0){
+  //バージョン指定が０ならば自分のROM
+  if(pGift->version==0){
+    PP_Put(pp, ID_PARA_get_cassette, CasetteVersion );
+  }
+  else
+  { 
     PP_Put(pp, ID_PARA_get_cassette, pGift->version);
   }
-    
-  PP_Put(pp, ID_PARA_country_code, pGift->country_code);  
+   
+  if( pGift->country_code == 0)
+  { 
+    PP_Put(pp, ID_PARA_country_code, CasetteLanguage );  
+  }
+  else
+  { 
+    PP_Put(pp, ID_PARA_country_code, pGift->country_code);  
+  }
 
   if( pGift->nickname[0]==0){ 
     GFL_HEAP_FreeMemory(pp);
@@ -163,7 +225,14 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   }
   
 
-  PP_Put(pp, ID_PARA_seikaku, pGift->seikaku);  
+  { 
+    u8 seikaku = pGift->seikaku;
+    if( seikaku == 0xFF )
+    { 
+      seikaku = GFUser_GetPublicRand(PTL_SEIKAKU_MAX);
+    }
+    PP_Put(pp, ID_PARA_seikaku, seikaku);  
+  }
   PP_Put(pp, ID_PARA_get_place, pGift->get_place);  
   PP_Put(pp, ID_PARA_birth_place, pGift->birth_place);  
 

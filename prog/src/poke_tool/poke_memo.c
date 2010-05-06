@@ -171,7 +171,7 @@ void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u
     POKE_MEMO_SetPlaceTimeEx( ppp , place , year , month , day , PMDT_2 );
   }
   POKE_MEMO_SetGetLevel( ppp );
-  POKE_MEMO_SetRomVersion( ppp );
+  //POKE_MEMO_SetRomVersion( ppp );
 
   PPP_Put( ppp , ID_PARA_event_get_flag , 1 );
 }

@@ -55,17 +55,28 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data )
     p_poke->mons_no = 1;
     p_poke->form_no = 0;
     p_poke->waza1   = 1;
+    p_poke->hp_rnd  = 1;               //HP乱数        0xFFでランダム 
+    p_poke->pow_rnd = 2;              //攻撃力乱数    0xFFでランダム 
+    p_poke->def_rnd = 3;              //防御力乱数    0xFFでランダム 
+    p_poke->agi_rnd = 0xFF;              //素早さ乱数    0xFFでランダム 
+    p_poke->spepow_rnd  = 0xFF;             //特攻乱数    0xFFでランダム 
+    p_poke->spedef_rnd  = 0xFF;             //特防乱数    0xFFでランダム 
+    p_poke->rnd   = 0;
     p_poke->egg		= 0;
+    p_poke->rare  = 2;
+    p_poke->level = 3;
     p_poke->oyaname[0]  = L'デ';
     p_poke->oyaname[1]  = L'バ';
     p_poke->oyaname[2]  = L'ッ';
     p_poke->oyaname[3]  = L'グ';
-    p_poke->oyaname[4]  = 0xffff;
-    p_poke->oyaname[4]  = 0xffff;
+    p_poke->oyaname[4]  = GFL_STR_GetEOMCode();
 
-    p_poke->nickname[0]  = 0xffff;
+    p_poke->nickname[0]  = L'デ';
+    p_poke->nickname[1]  = GFL_STR_GetEOMCode();
 
     p_poke->birth_place = 40001;
+    p_poke->get_place   = 1;
+    p_poke->version     = 0;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POKEMON;
 }
