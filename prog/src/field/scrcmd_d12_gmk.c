@@ -27,13 +27,9 @@
 #include "scrcmd_d12_gmk.h"
 #include "field_gimmick_d12.h"
 
-FS_EXTERN_OVERLAY(fld_faceup);
-
-static GMEVENT_RESULT EndEvt( GMEVENT* event, int* seq, void* work );
-
 //--------------------------------------------------------------
 /**
- * 顔アップ開始
+ * ギミック非表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
