@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T11:26:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T12:35:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -971,11 +971,11 @@
 		<language name="JPN" width="256">その　ポケモンは
 とくべつな　わざを　おぼえへんよ▼
 どの　ポケモンが　おぼえるかは
-ごめんやけど　はりがみを　よんでみて</language>
+ごめんやけど　おねえさんに　きいて！</language>
 		<language name="JPN_KANJI" width="256">その　ポケモンは
 特別な　技を　覚えへんよ▼
 どの　ポケモンが　覚えるかは
-ごめんやけど　張り紙を　読んでみて</language>
+ごめんやけど　お姉さんに　きいて！</language>
 	</row>
 
 	<row id="msg_skillteach_coalescence_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
