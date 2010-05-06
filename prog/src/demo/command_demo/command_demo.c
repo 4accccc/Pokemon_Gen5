@@ -95,7 +95,7 @@ static GFL_PROC_RESULT CommDemoProc_Init( GFL_PROC * proc, int * seq, void * pwk
 	wk->dat = pwk;
 	wk->init_flg = FALSE;
 
-	OS_InitTick();
+//	OS_InitTick();
 
 	return GFL_PROC_RES_FINISH;
 }

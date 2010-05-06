@@ -148,6 +148,11 @@ typedef struct {
 //	int	bgsa_chr;
 //	int	bgsa_pal;
 //	int	bgsa_scr;
+//	OSTick	dfTick;
+	OSTick	bfTick;
+	OSTick	afTick;
+	OSTick	stTick;
+//	s64	stTick;
 
 	int	main_seq;
 	int	next_seq;

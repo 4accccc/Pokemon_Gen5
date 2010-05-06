@@ -23,6 +23,8 @@
 //============================================================================================
 #define	CDEMO_SKIP_KEY		(PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_START)		// スキップボタン
 
+#define	BGFRM_ANM_FILE_OPEN_TICK	( 56862 )		// 一つのファイルを読み込むための時間
+
 typedef struct {
 	u16	arcID;					// アークＩＤ
 	u16	frmMax;					// フレーム数
@@ -430,6 +432,19 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 {
 	const BGFRM_ANM_DATA * dat = &ModeData[wk->dat->mode];
 
+	if( wk->bfTick == 0 ){
+		wk->bfTick = OS_GetTick();
+	}else{
+		wk->afTick = OS_GetTick();
+		wk->stTick = wk->stTick + OS_TicksToMicroSeconds( wk->afTick - wk->bfTick );
+		wk->bfTick = wk->afTick;
+		if( wk->stTick < BGFRM_ANM_FILE_OPEN_TICK ){
+			return CDEMOSEQ_MAIN_BG_SCRN_ANM;
+		}else{
+			wk->stTick -= BGFRM_ANM_FILE_OPEN_TICK;
+		}
+	}
+
 	switch( wk->bgsa_seq ){
 	case 0:
 		{
@@ -495,6 +510,8 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		wk->bgsa_cnt++;
 		break;
 	}
+
+//	OS_Printf( "seq tick = %d\n", OS_TicksToMicroSeconds( OS_GetTick() ) );
 
 	return CDEMOSEQ_MAIN_BG_SCRN_ANM;
 }
