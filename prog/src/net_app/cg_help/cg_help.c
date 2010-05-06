@@ -78,6 +78,7 @@ typedef enum
   CG_HELP_PAGE_WIRELESS4,
   CG_HELP_PAGE_WIRELESS5,
   CG_HELP_PAGE_WIFI,
+  CG_HELP_PAGE_WIFI2,
   CG_HELP_PAGE_SURETIGAI,
   CG_HELP_PAGE_RESARCH,
   CG_HELP_PAGE_CUSTOM,
@@ -654,6 +655,7 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
       NANR_c_gear_obj_CellAnime_WIRELESS,
       NANR_c_gear_obj_CellAnime_WIRELESS,
       NANR_c_gear_obj_CellAnime_WIFI,
+      NANR_c_gear_obj_CellAnime_WIFI,
       NANR_c_gear_obj_CellAnime_sure_sample,
       NANR_c_gear_obj_CellAnime_radar,
       NANR_c_gear_obj_CellAnime_cus_on,
@@ -662,10 +664,10 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
   
   //BMPê›íË
-  if( page <= CG_HELP_PAGE_WIFI )
+  if( page < CG_HELP_PAGE_SURETIGAI )
   {
-    static const colArr[CG_HELP_PAGE_WIFI+1] = {1,1,1,1,1,1};
-    static const posArr[CG_HELP_PAGE_WIFI+1] = {0x0c,0x10,0x10,0x10,0x10,0x10,0x14};
+    static const colArr[CG_HELP_PAGE_SURETIGAI] = {1,1,1,1,1,1,1,1};
+    static const posArr[CG_HELP_PAGE_SURETIGAI] = {0x0c,0x10,0x10,0x10,0x10,0x10,0x14,0x14};
     void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(colArr[page]));
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
                                         CG_HELP_PLT_MAIN_ICONBASE * 32 ,
