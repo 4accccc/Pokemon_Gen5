@@ -106,7 +106,7 @@ typedef struct {
 	STRCODE	nickname[MONS_NAME_SIZE+EOM_SIZE];	//16h	ニックネーム(MONS_NAME_SIZE=10)+(EOM_SIZE=1)=11  最初がEOMならデフォルト
   u8 seikaku;          //性格 0xFFでランダム
   u8 sex;              //性別 0xFFでランダム
-  u8 speabino;         //とくせい
+  u8 speabino;         //とくせい 0=特性１,1=特性２,2=特性３,3=特性1or2ランダム,4=特性1or2or3ランダム
   u8 rare;             //レアにするかどうか 0=レアない  1=ランダム 2=レア
   u16 get_place;        //捕まえた場所
   u16 birth_place;      //生まれた場所
@@ -127,7 +127,7 @@ typedef struct {
   u8 oyasex;      //親の性別 0は男性 1は女性 2 はプレイヤーの性別をいれる
   u8 level;     //ポケモンレベル　0ならばランダム
   u8 egg;       //タマゴかどうか TRUE＝たまご
-  u8 speabino_flag;   //特性固定フラグ
+  u8 speabino_flag;   //特性固定フラグ(未使用です)
 } GIFT_PRESENT_POKEMON;
 
 

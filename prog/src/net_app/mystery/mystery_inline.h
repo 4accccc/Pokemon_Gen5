@@ -56,8 +56,9 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   u64 rand;
   u32 buff;
   u8  sex = pGift->sex;
-  u8 tokusei = pGift->speabino & 0x7f;
-  BOOL tokuseiBit = (pGift->speabino & 0x80) ? TRUE : FALSE;
+  u8 tokusei = pGift->speabino;
+  PtlTokuseiSpec  tokuseiSpec;
+
   u8 rnd_tbl[ RND_TBL_MAX ];
   u16 waza_tbl[ PTL_WAZA_MAX ];
 
@@ -106,6 +107,7 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
     sex = PTL_SEX_UNKNOWN;
   }
 
+  //個体値
   {
     int i;
     for( i = 0; i < RND_TBL_MAX; i++ )
@@ -116,14 +118,36 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
       }
     }
   }
-
   pp = PP_Create( monsno, level, id, heapID );
 
   pow = PTL_SETUP_POW_PACK(
       rnd_tbl[ RND_TBL_HP ],rnd_tbl[ RND_TBL_POW ],rnd_tbl[ RND_TBL_DEF ],
       rnd_tbl[ RND_TBL_SPEPOW ],rnd_tbl[ RND_TBL_SPEDEF ],rnd_tbl[ RND_TBL_AGI ] );
 
-  PP_Put(pp, ID_PARA_speabino, pGift->speabino);  
+
+  if( tokusei == 4) //4は特性1or2or3
+  { 
+    tokusei = GFUser_GetPublicRand(3);
+  }
+  switch( tokusei )
+  { 
+  case 0: //特性１
+    tokuseiSpec = PTL_TOKUSEI_SPEC_1;
+    break;
+  case 1: //特性２
+    tokuseiSpec = PTL_TOKUSEI_SPEC_2;
+    break;
+  case 2: //特性３
+    tokuseiSpec = PTL_TOKUSEI_SPEC_1; //pp作成後設定するのでPOKETOOL_CalcPersonalRandSpecに渡す値は何でもよい
+    break;
+  case 3: //特性１or２
+    tokuseiSpec = PTL_TOKUSEI_SPEC_BOTH;
+    break;
+
+  default:
+    return NULL;
+
+  }
 
   //個体乱数が設定していれば、その値を指定したい＝性別等は無視したいはずなので、
   //直接設定する
@@ -134,13 +158,13 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   { 
     //個体乱数が設定されていないときだけ、以下の設定を行なう
     if(pGift->rare == 0){
-      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiBit, PTL_RARE_SPEC_FALSE );
+      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiSpec, PTL_RARE_SPEC_FALSE );
     }
     else if(pGift->rare == 1){
-      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiBit, PTL_RARE_SPEC_BOTH );
+      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiSpec, PTL_RARE_SPEC_BOTH );
     }
     else if(pGift->rare == 2){
-      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiBit, PTL_RARE_SPEC_TRUE );
+      rand = POKETOOL_CalcPersonalRandSpec( id, monsno, pGift->form_no, sex, tokuseiSpec, PTL_RARE_SPEC_TRUE );
     }
   }
 
@@ -166,11 +190,25 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
     }
   }
 
+  //ランダム直接指定ではないときのみ特性を指定する
+  if(pGift->rnd == 0)
+  {
+    if( tokusei == 2 )
+    { 
+      PP_SetTokusei3( pp, monsno, pGift->form_no );
+    }
+  }
+
   PP_Put(pp, ID_PARA_form_no, pGift->form_no);  //フォルム番号はすべて許す
   
   if(pGift->get_ball!=0){
     PP_Put(pp, ID_PARA_get_ball, pGift->get_ball);
   }
+  else
+  { 
+    PP_Put(pp, ID_PARA_get_ball, ITEM_MONSUTAABOORU );
+  }
+
   if(pGift->get_level!=0){
     PP_Put(pp, ID_PARA_get_level, pGift->get_level);  
   }
@@ -223,7 +261,6 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
     OS_TPrintf( "ニックネーム先頭　%d\n", pGift->nickname[0] );
     PP_Put(pp, ID_PARA_nickname_raw, (u32)pGift->nickname);
   }
-  
 
   { 
     u8 seikaku = pGift->seikaku;
