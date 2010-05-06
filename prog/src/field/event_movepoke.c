@@ -273,6 +273,13 @@ static void MOVEPOKE_Update( FLDMAPFUNC_WORK* p_taskwk, FIELDMAP_WORK* p_fieldma
           MMDL_OffMoveBit( p_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
         }
       }
+
+
+
+      // アニメーション再生
+      // 特別に移動ポケモンのみ動かす。
+      GF_ASSERT( MMDL_CheckMoveBitCompletedDrawInit(p_wk->p_poke) );
+      MMDL_CallDrawProc(p_wk->p_poke);
     }
     break;
 
