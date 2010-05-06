@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T14:14:51"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T19:14:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,22 +292,21 @@
 	</lock>
 
 
-	<row id="msg_r01_white_00">
+	<row id="msg_r01_white_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♀
-・捕獲デモ用のposを踏んだときに
-　下を向いてメッセージ表示(チェレンも下を向く）
-・表示後、主人公、所定の位置へ
+・移動デモ中(表示タイミングはお任せ）
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『おうい！
-[1:00:トレーナー名:0]　こっち！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！
-[1:00:トレーナー名:0]　こっち！▼</language>
+		<language name="JPN" width="256">ベル『ああ！　なんだろう
+どきどき　ワクワク　しちゃうね</language>
+		<language name="JPN_KANJI" width="256">ベル『ああ！　なんだろう
+どきどき　ワクワク　しちゃうね</language>
 	</row>
 
 	<row id="msg_r01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・オート移動で捕獲デモの所定位置に到達したとき
 ・画面上（博士）をみながらメッセージ表示
 　ついで主人公を向き合いながら
 　次のメッセージ表示</comment>
