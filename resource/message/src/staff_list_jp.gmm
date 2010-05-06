@@ -974,13 +974,13 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_116">
-		<language name="JPN" width="256">ハイリンク・１０ばんどうろ・エンディングなど</language>
-		<language name="JPN_KANJI" width="256">ハイリンク・１０ばんどうろ・エンディングなど</language>
+		<language name="JPN" width="256">ハイリンク・エンディングなど</language>
+		<language name="JPN_KANJI" width="256">ハイリンク・エンディングなど</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_117">
-		<language name="JPN" width="256">ソウリュウシティ・たそがれオヤジ・カナワタウンなど</language>
-		<language name="JPN_KANJI" width="256">ソウリュウシティ・たそがれオヤジ・カナワタウンなど</language>
+		<language name="JPN" width="256">ソウリュウシティ・カナワタウンなど</language>
+		<language name="JPN_KANJI" width="256">ソウリュウシティ・カナワタウンなど</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_118">
@@ -1004,8 +1004,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_122">
-		<language name="JPN" width="256">じてんしゃ・シフトファクトリー・カゴメタウンなど</language>
-		<language name="JPN_KANJI" width="256">じてんしゃ・シフトファクトリー・カゴメタウンなど</language>
+		<language name="JPN" width="256">じてんしゃ・カゴメタウンなど</language>
+		<language name="JPN_KANJI" width="256">じてんしゃ・カゴメタウンなど</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_123">
