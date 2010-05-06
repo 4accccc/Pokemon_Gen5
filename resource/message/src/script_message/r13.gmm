@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T12:53:14"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T11:54:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1318" top="188" right="2023" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -370,16 +370,16 @@
 いろいろ　変化します！</language>
 	</row>
 
-	<row id="msg_r13_poke_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13_poke_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ポケモン
 ・OBJをウロウロさせる
 　会話後、GIRL1が通訳をする</comment>
 		<attribute name="キャラ指定">POKE</attribute>
-		<language name="JPN" width="256">キャモメ『キュルル……ルー……</language>
-		<language name="JPN_KANJI" width="256">キャモメ『キュルル……ルー……</language>
+		<language name="JPN" width="256">キュルル……ルー……</language>
+		<language name="JPN_KANJI" width="256">キュルル……ルー……</language>
 	</row>
 
-	<row id="msg_r13_poke_02" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13_poke_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ポケモン
 ・msg_r13_girl1_02後に表示
 　その後個数によって
@@ -387,16 +387,16 @@
 　msg_r13_girl1_04
 　msg_r13_girl1_05に分岐</comment>
 		<attribute name="キャラ指定">POKE</attribute>
-		<language name="JPN" width="256">キャモメ『キュルルー！</language>
-		<language name="JPN_KANJI" width="256">キャモメ『キュルルー！</language>
+		<language name="JPN" width="256">キュルルー！</language>
+		<language name="JPN_KANJI" width="256">キュルルー！</language>
 	</row>
 
-	<row id="msg_r13_poke_03" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13_poke_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジャンプアニメをしてメッセージ表示</comment>
 		<attribute name="キャラ指定">POKE</attribute>
-		<language name="JPN" width="256">キャモメ『キャル！　キャルルー！</language>
-		<language name="JPN_KANJI" width="256">キャモメ『キャル！　キャルルー！</language>
+		<language name="JPN" width="256">キャル！　キャルルー！</language>
+		<language name="JPN_KANJI" width="256">キャル！　キャルルー！</language>
 	</row>
 
 	<row id="msg_r13_sys_01" text-color=",,,,,,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
