@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T15:40:06"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T20:07:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -318,7 +318,7 @@
 だれかのせかいに　いけるはずだ▼</language>
 		<language name="JPN_KANJI" width="256">だれかの世界　に
 行って　みたかな？▼
-島にかかる　架け橋から
+島に架かる　架け橋から
 だれかの世界に　行けるはずだ▼</language>
 	</row>
 
@@ -637,7 +637,7 @@ plc_girl4_02_06,7,8</comment>
 だれかのせかいが　みつかれば
 はしを　わたることが　できるはずです</language>
 		<language name="JPN_KANJI" width="256">さあ　架け橋の上に
-乗ってみて　下さい▼
+乗ってみて　ください▼
 だれかの世界が　見つかれば
 橋を　わたることが　できるはずです</language>
 	</row>
