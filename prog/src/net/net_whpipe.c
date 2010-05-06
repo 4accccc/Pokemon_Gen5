@@ -745,13 +745,12 @@ BOOL GFL_NET_WLFinalize(void)
 	GFL_NETWL* pNetWL = _pNetWL;
 	if(pNetWL){
 		if(pNetWL->disconnectType == _DISCONNECT_NONE){
-			//            pNetWL->disconnectType = _DISCONNECT_END;
       _CHANGE_STATE(NULL);
-			WH_Finalize();
-			return TRUE;
+			return WH_Finalize();
 		}
+    return FALSE;
 	}
-	return FALSE;
+	return TRUE;
 }
 
 //-------------------------------------------------------------
