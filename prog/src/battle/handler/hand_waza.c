@@ -3423,9 +3423,8 @@ static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     if( work[WORKIDX_STICK] != 0)
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK)
-      &&  !BPP_CheckSick(bpp, WAZASICK_KONRAN)
-      ){
+      if( !BPP_CheckSick(bpp, WAZASICK_WAZALOCK) )
+      {
         BTL_HANDEX_PARAM_ADD_SICK* param;
 
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
