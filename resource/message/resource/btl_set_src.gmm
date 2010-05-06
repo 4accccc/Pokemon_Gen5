@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-01T16:57:04"/>
+	<create user="taya" host="W00146" date="2010-05-06T18:06:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2611,7 +2611,7 @@
 こおりじょうたいが　なおった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-氷状態が　治った！</language>
+こおり状態が　治った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_CureYakedo">
