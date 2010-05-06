@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T12:45:48"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T15:40:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1498" top="146" right="2072" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="566"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="245"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -326,9 +326,9 @@
 		<comment>ハイリンクの老人：分岐メッセージ
 選択肢表示、plc_oldman1_01_07,8,9</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">さて　こどもよ　ハイリンクについて
+		<language name="JPN" width="256">さて　ハイリンクについて
 ききたいことは　あるかな？</language>
-		<language name="JPN_KANJI" width="256">さて　子供よ　ハイリンクについて
+		<language name="JPN_KANJI" width="256">さて　ハイリンクについて
 聞きたいことは　あるかな？</language>
 	</row>
 
@@ -469,7 +469,7 @@
 その　ぼうけんしゃを▽
 たすけることが　できるのだ▼
 ……　……　……
-こどもよ▼
+……おぬし！▼
 もし　その　ぼうけんしゃを
 たすけたいと　おもうなら▽
 このしまの　かけはしを　わたり▽
@@ -480,7 +480,7 @@
 その　冒険者を▽
 助けることが　できるのだ▼
 ……　……　……
-子供よ▼
+……おぬし！▼
 もし　その冒険者を
 助けたいと　思うなら▽
 この島の　架け橋を　わたり▽
@@ -804,10 +804,10 @@ plc_girl4_03_06,7,8</comment>
 選択肢表示、plc_oldman1_02_07,8,9</comment>
 		<attribute name="キャラ指定">OLDMAN1：
 (侵入先）</attribute>
-		<language name="JPN" width="256">……さて　こどもよ
-なにか　ききたいことは　あるかな？</language>
-		<language name="JPN_KANJI" width="256">……さて　子供よ
-なにか　聞きたいことは　あるかな？</language>
+		<language name="JPN" width="256">……さて　なにか
+ききたいことは　あるかな？</language>
+		<language name="JPN_KANJI" width="256">……さて　なにか
+聞きたいことは　あるかな？</language>
 	</row>
 
 	<row id="plc_oldman1_02_03" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
@@ -1020,9 +1020,8 @@ plc_girl4_03_06,7,8</comment>
 ハイリンクで　おおくの
 ぼうけんしゃを　たすけ▽
 たくさんの　しあわせを　あつめるのだ▼
-……　……　……
-……こどもよ▽
-ハイリンクの　パワーは▽
+……　……　……▼
+ハイリンクの　パワーは
 すべて　おぬしの　ものだ▼
 この　イッシュの　しあわせを
 おぬしに　たくしたぞ！</language>
@@ -1043,9 +1042,8 @@ plc_girl4_03_06,7,8</comment>
 ハイリンクで　多くの
 冒険者を　助け▽
 たくさんの　幸せを　集めるのだ▼
-……　……　……
-……子供よ▽
-ハイリンクの　パワーは▽
+……　……　……▼
+ハイリンクの　パワーは
 全て　おぬしの　ものだ▼
 この　イッシュの　幸せを
 おぬしに　託したぞ！</language>
