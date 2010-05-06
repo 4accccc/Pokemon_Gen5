@@ -6678,7 +6678,8 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
   enum {
     SEQ_INIT,
     SEQ_SEEK_ID,
-    SEQ_WAIT
+    SEQ_WAIT,
+    SEQ_FLY_CHECK,
   };
   switch ( *seq )
   {
@@ -6708,15 +6709,24 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
         DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
     *seq = SEQ_WAIT;
     break;
-
   case SEQ_WAIT:
     amcw->wait ++;
     if ( amcw->wait > 120 )
     {
       amcw->wait = 0;
-      *seq = SEQ_SEEK_ID;
+      *seq = SEQ_FLY_CHECK/*SEQ_SEEK_ID*/;
     }
     break;
+  case SEQ_FLY_CHECK:
+    fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
+    {
+      GMEVENT *call_evt;
+      FLD3D_CI_PTR ptr = FIELDMAP_GetFld3dCiPtr(fieldmap);
+      call_evt = FLD3D_CI_CreateCutInEvt(amcw->gsys, ptr, FLDCIID_FLY_OUT);
+      GMEVENT_CallEvent( event, call_evt );
+      *seq = SEQ_SEEK_ID;
+    }
+    break;  
   }
 
   return GMEVENT_RES_CONTINUE;
