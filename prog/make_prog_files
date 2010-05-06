@@ -463,7 +463,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
 		    field/report_event.c \
         field/sheimi_normalform.c \
         field/scrcmd_trial_house.c \
-        field/scrcmd_sppoke_trio.c \
+        field/scrcmd_sppoke_mero.c \
         field/seasonpoke_form.c \
         field/scrcmd_symbol.c \
         field/event_symbol.c \
