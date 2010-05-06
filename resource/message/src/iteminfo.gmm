@@ -3677,8 +3677,8 @@
 まえの　ターンに　たおされて
 いると　いりょくが　あがる。　</language>
 		<language name="JPN_KANJI" width="256">たおれた　味方の　敵を　討つ。
-前の　ターンに　味方が　たおされていると
-威力が　あがる。　</language>
+前の　ターンに　味方が
+倒されていると　威力が　あがる。　</language>
 	</row>
 
 	<row id="ITEMINFO_395">
