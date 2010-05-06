@@ -509,7 +509,7 @@ static BOOL HITCHECK_CheckWazaEffectPuttable( HITCHECK_PARAM* param );
 static void HITCHECK_SetPluralHitAffinity( HITCHECK_PARAM* param, BtlTypeAff affinity );
 static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker,
   BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, HITCHECK_PARAM* hitCheckParam, fx32 dmg_ratio, BOOL fTargetPlural );
-static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
+static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, BTL_POKESET* targets, BtlTypeAff* affAry,
     const SVFL_WAZAPARAM* wazaParam, HITCHECK_PARAM* hitCheckParam, fx32 dmg_ratio, BOOL fTargetPlural );
 static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
@@ -5927,6 +5927,8 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   fx32 dmg_ratio = (BTL_POKESET_GetCount(wk->psetTargetOrg) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
   u32 dmg_sum = 0;
 
+  TAYA_Printf("OrgTargetCount=%d, ratio=%08x\n", BTL_POKESET_GetCount(wk->psetTargetOrg), dmg_ratio );
+
 
   // 複数対象のワザか判定
   fTargetPlural = (BTL_POKESET_GetCount(targets) > 1);
@@ -5949,6 +5951,8 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
       wk->hitCheckParam, dmg_ratio, fTargetPlural );
   }
 
+  wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
+
   return dmg_sum;
 }
 /**
@@ -5970,7 +5974,6 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   {
     targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
     if( targetPos != BTL_POS_NULL ){
-      TAYA_Printf("Zoom In to pos=%d\n", targetPos );
       SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_ZOOM_IN );
     }
   }
@@ -5980,6 +5983,10 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, targets, affRec,
                     wk->hitCheckParam, BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE );
     ++hitCount;
+
+    // ワザエフェクトコマンド生成
+    SCQUE_PUT_ACT_WazaEffect( wk->que,
+        wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
 
     if( !BPP_IsDead(bpp) )
     {
@@ -6051,7 +6058,7 @@ static void HITCHECK_SetPluralHitAffinity( HITCHECK_PARAM* param, BtlTypeAff aff
  * @param   targets
  * @param   dmg_ratio
  *
- * @retval  BOOL  ダメージが発生したらTRUE
+ * @retval  u32  発生したダメージ量
  */
 //----------------------------------------------------------------------------------
 static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker,
@@ -6077,7 +6084,7 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
 
   if( damaged_poke_cnt )
   {
-    u32 dmg_sum = scproc_Fight_damage_side_plural( wk, attacker, targets, affAry, wazaParam,
+    u32 dmg_sum = scproc_Fight_damage_side_core( wk, attacker, targets, affAry, wazaParam,
                   hitCheckParam, dmg_ratio, fTargetPlural );
     if( dmg_sum ){
       scproc_WazaDamageSideAfter( wk, attacker, wazaParam, dmg_sum );
@@ -6088,15 +6095,15 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   return 0;
 }
 /**
- *  複数体ヒット同時処理
+ *  １陣営ダメージ処理コア
  */
-static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
+static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, BTL_POKESET* targets, BtlTypeAff* affAry,
     const SVFL_WAZAPARAM* wazaParam, HITCHECK_PARAM* hitCheckParam, fx32 dmg_ratio, BOOL fTargetPlural )
 {
   BTL_POKEPARAM *bpp[ BTL_POSIDX_MAX ];
   u16 dmg[ BTL_POSIDX_MAX ];
-  u32 dmg_sum;
+  u32 dmg_sum, dmg_tmp;
   u8  critical_flg[ BTL_POSIDX_MAX ];
   u8  koraeru_cause[ BTL_POSIDX_MAX ];
   u8  poke_cnt, migawari_cnt, fFixDamage;
@@ -6116,15 +6123,17 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
       affAry[i] = BTL_TYPEAFF_100;
       critical_flg[i] = FALSE;
     }
+    dmg_tmp = dmg[i];
     dmg[i] = MarumeDamage( bpp[i], dmg[i] );
     koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
     dmg_sum += dmg[i];
-    if( dmg[i] ){
+    if( dmg_tmp ){
       AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp[i], affAry[i] );
     }
   }
 
   // ワザエフェクト生成
+  #if 0
   if( HITCHECK_CheckWazaEffectPuttable(hitCheckParam) )
   {
     if( HITCHECK_IsFirstTime(hitCheckParam) ){
@@ -6135,6 +6144,7 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
         wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
     }
   }
+  #endif
 
   // 身代わり判定
   for(i=0, migawari_cnt=0; i<poke_cnt; ++i)
@@ -11837,7 +11847,7 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   BTL_EVENTVAR_Push();
   {
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, f_match );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_TYPEMATCH_CHECK );
     f_match = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
 
