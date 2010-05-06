@@ -39,6 +39,7 @@
 #define D20_FLD_ITEM_19                   24
 #define D20_FLD_ITEM_06                   25
 #define D20_FLD_ITEM_23                   26
+#define D20_FLD_ITEM_11                   27
 
 #endif //ZONE_D20R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d20r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

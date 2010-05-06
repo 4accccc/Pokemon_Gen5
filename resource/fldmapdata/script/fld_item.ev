@@ -1774,10 +1774,10 @@ EVENT_START ev_fld_item_182
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=つららのプレート FLAG=183
+// MAP=D20R0501 X= Y= ITEM=こだいのぎんか FLAG=183
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_183
-  _FLD_ITEM_EVENT ITEM_TURARANOPUREETO,1
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1830,10 +1830,10 @@ EVENT_START ev_fld_item_190
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=もののけプレート FLAG=191
+// MAP=D20R0501 X= Y= ITEM=つららのプレート FLAG=191
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_191
-  _FLD_ITEM_EVENT ITEM_MONONOKEPUREETO,1
+  _FLD_ITEM_EVENT ITEM_TURARANOPUREETO,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1900,10 +1900,10 @@ EVENT_START ev_fld_item_202
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのぎんか FLAG=203
+// MAP=D20R0501 X= Y= ITEM=もののけプレート FLAG=203
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_203
-  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+  _FLD_ITEM_EVENT ITEM_MONONOKEPUREETO,1
 EVENT_END
 
 //--------------------------------------------------------------
