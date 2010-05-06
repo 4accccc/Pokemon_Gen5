@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-03T21:37:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T12:45:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="975" top="293" right="1609" bottom="1034" maximized="no" rayout="Vertical2">
+	<dialog left="1498" top="146" right="2072" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="459"/>
+		<band id="0" index="1" style="0000" width="566"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="299"/>
-		<band id="4" index="0" style="0000" width="626"/>
+		<band id="2" index="3" style="0000" width="245"/>
+		<band id="3" index="4" style="0000" width="152"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -318,7 +318,7 @@
 だれかのせかいに　いけるはずだ▼</language>
 		<language name="JPN_KANJI" width="256">だれかの世界　に
 行って　みたかな？▼
-島にかかる　かけ橋から
+島にかかる　架け橋から
 だれかの世界に　行けるはずだ▼</language>
 	</row>
 
@@ -337,7 +337,7 @@
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">もし　わからないことが　あれば
 むすめたちにも　はなしを　きくといい</language>
-		<language name="JPN_KANJI" width="256">もし　分からないことが　あれば
+		<language name="JPN_KANJI" width="256">もし　わからないことが　あれば
 娘たちにも　話しを　聞くといい</language>
 	</row>
 
@@ -362,8 +362,8 @@
 たすけることが　できるはずだ▼</language>
 		<language name="JPN_KANJI" width="256">ハイリンクは　だれかの世界と
 つながる　不思議な　場所▼
-このハイリンクに　かかる
-かけ橋を　わたれば▽
+このハイリンクに　架かる
+架け橋を　わたれば▽
 だれかの世界に　行けるだろう▼
 そこで　その世界の　冒険者を
 助けることが　できるはずだ▼</language>
@@ -377,7 +377,7 @@
 デルパワーとよんでいる▼
 もし　このきから　デルパワーを
 うけとることが　できれば▼
-C-GEARの
+Ｃギアの
 「すれちがいログ」から▽
 すれちがった　あいてにむけて▼
 そのデルパワーを　つかうことが
@@ -391,7 +391,7 @@ C-GEARの
 デルパワーとよんでいる▼
 もし　この木から　デルパワーを
 うけとることが　できれば▼
-C-GEARの
+Ｃ－ＧＥＡＲの
 「すれちがいログ」から▽
 すれ違った　相手にむけて▼
 そのデルパワーを　使うことが
@@ -430,15 +430,15 @@ C-GEARの
 ようこそ　ハイリンクへ▼
 ……　……　……
 ……うむ？▽
-そのようすだと　ここがどこか▽
+そのようすだと　ここが　どこか▽
 わからない　ようだな▼</language>
 		<language name="JPN_KANJI" width="256">おやおや
 だれか　来たな……▽
 ようこそ　ハイリンクへ▼
 ……　……　……
 ……うむ？▽
-その様子だと　ここがどこか▽
-分からない　ようだな▼</language>
+その様子だと　ここが　どこか▽
+わからない　ようだな▼</language>
 	</row>
 
 	<row id="plc_oldman1_01_11" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -483,7 +483,7 @@ C-GEARの
 子供よ▼
 もし　その冒険者を
 助けたいと　思うなら▽
-この島の　かけ橋を　わたり▽
+この島の　架け橋を　わたり▽
 だれかの世界に　行ってみるのだ▼
 そこに　おぬしを待っている
 だれかが　いるはずだ</language>
@@ -494,7 +494,7 @@ C-GEARの
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは
 だれかのせかいと　つながってます▼</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は
+		<language name="JPN_KANJI" width="256">この　架け橋は
 だれかの世界と　つながってます▼</language>
 	</row>
 
@@ -504,7 +504,7 @@ plc_girl4_01_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしに　ついて
 しりたいことは　ありますか？</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋に　ついて
+		<language name="JPN_KANJI" width="256">この　架け橋に　ついて
 知りたいことは　ありますか？</language>
 	</row>
 
@@ -517,12 +517,12 @@ plc_girl4_01_06,7,8</comment>
 もし　だれかを
 たすけに　いきたいなら▽
 この　かけはしを　わたってください▼</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は
+		<language name="JPN_KANJI" width="256">この　架け橋は
 私たちの　世界とは　違う▽
 だれかの世界と　つながってます▼
 もし　だれかを
 助けに　行きたいなら▽
-この　かけ橋を　わたって下さい▼</language>
+この　架け橋を　わたってください▼</language>
 	</row>
 
 	<row id="plc_girl4_01_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -534,7 +534,7 @@ plc_girl4_01_06,7,8</comment>
 ぼうけんしゃが　いたとき▼
 その　ぼうけんしゃの　いる
 せかいと　つながります▼</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は
+		<language name="JPN_KANJI" width="256">この　架け橋は
 ハイリンクの　周りを　囲む▽
 街と　道路に▽
 冒険者が　いた時▼
@@ -549,8 +549,8 @@ plc_girl4_01_06,7,8</comment>
 のってみて　ください▼
 だれかのせかいが　みつかれば
 はしを　わたることが　できるはずです</language>
-		<language name="JPN_KANJI" width="256">さあ　かけ橋の上に
-乗ってみて　下さい▼
+		<language name="JPN_KANJI" width="256">さあ　架け橋の　上に
+乗ってみて　ください▼
 だれかの世界が　見つかれば
 橋を　わたることが　できるはずです</language>
 	</row>
@@ -559,7 +559,7 @@ plc_girl4_01_06,7,8</comment>
 		<comment>双子娘１：モノリスとは？選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは？</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は？</language>
+		<language name="JPN_KANJI" width="256">この　架け橋は？</language>
 	</row>
 
 	<row id="plc_girl4_01_07" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -581,7 +581,7 @@ plc_girl4_01_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは
 だれかのせかいと　つながってます▼</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は
+		<language name="JPN_KANJI" width="256">この　架け橋は
 だれかの世界と　つながってます▼</language>
 	</row>
 
@@ -591,7 +591,7 @@ plc_girl4_02_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしに　ついて
 しりたいことは　ありますか？</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋に　ついて
+		<language name="JPN_KANJI" width="256">この　架け橋に　ついて
 知りたいことは　ありますか？</language>
 	</row>
 
@@ -604,12 +604,12 @@ plc_girl4_02_06,7,8</comment>
 もし　だれかを
 たすけに　いきたいなら▽
 この　かけはしを　わたってください▼</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は
+		<language name="JPN_KANJI" width="256">この　架け橋は
 私たちの　世界とは　違う▽
 だれかの世界と　つながってます▼
 もし　だれかを
 助けに　行きたいなら▽
-この　かけ橋を　わたって下さい▼</language>
+この　架け橋を　わたってください▼</language>
 	</row>
 
 	<row id="plc_girl4_02_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -621,7 +621,7 @@ plc_girl4_02_06,7,8</comment>
 ぼうけんしゃが　いたとき▼
 その　ぼうけんしゃの　いる
 せかいと　つながります▼</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は
+		<language name="JPN_KANJI" width="256">この　架け橋は
 ハイリンクの　周りを　囲む▽
 街と　道路に▽
 冒険者が　いた時▼
@@ -636,7 +636,7 @@ plc_girl4_02_06,7,8</comment>
 のってみて　ください▼
 だれかのせかいが　みつかれば
 はしを　わたることが　できるはずです</language>
-		<language name="JPN_KANJI" width="256">さあ　かけ橋の上に
+		<language name="JPN_KANJI" width="256">さあ　架け橋の上に
 乗ってみて　下さい▼
 だれかの世界が　見つかれば
 橋を　わたることが　できるはずです</language>
@@ -646,7 +646,7 @@ plc_girl4_02_06,7,8</comment>
 		<comment>双子娘2：かけはしは？選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは？</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は？</language>
+		<language name="JPN_KANJI" width="256">この　架け橋は？</language>
 	</row>
 
 	<row id="plc_girl4_02_07" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -673,7 +673,7 @@ plc_girl4_02_06,7,8</comment>
 		<language name="JPN_KANJI" width="256">夢と　現実を　つなぐ
 ハイリンクの森▼
 ここでは　夢が
-現実になると　言われています▼</language>
+現実になると　いわれています▼</language>
 	</row>
 
 	<row id="plc_girl4_03_02" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
@@ -738,7 +738,7 @@ plc_girl4_03_06,7,8</comment>
 		<language name="JPN" width="256">ポケモンが　ゆめから　さめたとき
 このもりに　きてください</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　夢から　覚めた時
-この森に　来て下さい</language>
+この森に　来てください</language>
 	</row>
 
 	<row id="plc_girl4_03_06" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
@@ -776,7 +776,7 @@ plc_girl4_03_06,7,8</comment>
 戻ることが　できます▼
 もし　もとの世界に
 戻りたく　なったら▽
-いつでも　ここに来て下さい</language>
+いつでも　ここに来てください</language>
 	</row>
 
 	<row id="plc_oldman1_02_01" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
@@ -909,7 +909,7 @@ plc_girl4_03_06,7,8</comment>
 そこに　おぬしをまつ
 だれかが　いるはずだ</language>
 		<language name="JPN_KANJI" width="256">まずは　ハイリンクに
-かかる　かけ橋を　わたり▽
+架かる　架け橋を　わたり▽
 だれかの世界に　行ってみるのだ▼
 そこに　おぬしを待つ
 だれかが　いるはずだ</language>
@@ -1011,7 +1011,7 @@ plc_girl4_03_06,7,8</comment>
 その　デルパワーは
 すれちがった　あいてを▽
 たすけることができる　パワーだ▼
-あとで　C-GEARの
+あとで　Ｃギアの
 「すれちがいログ」を　みるといい▼
 ……　……　……
 ……　……　……▽
@@ -1034,7 +1034,7 @@ plc_girl4_03_06,7,8</comment>
 その　デルパワーは
 すれ違った　相手を▽
 助けることができる　パワーだ▼
-後で　C-GEARの
+あとで　Ｃ－ＧＥＡＲの
 「すれ違いログ」を　見るといい▼
 ……　……　……
 ……　……　……▽
