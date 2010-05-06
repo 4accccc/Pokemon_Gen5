@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-29T23:38:49" source="winter07_05c_002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-30T15:50:26" source="winter07_05.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-29T23:38:49" source="winter07_05c_002.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-30T15:50:26" source="winter07_05.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2156,9 +2156,9 @@
 					<pos_xy xy="-3.750000 0.875000"/>
 					<tex st="-64.000000 0.000000"/>
 					<pos_xz xz="-3.750000 -4.000000"/>
-					<tex st="0.000000 128.000000"/>
+					<tex st="0.000000 64.000000"/>
 					<pos_s xyz="-0.500000 0.046875 -3.750000"/>
-					<tex st="-224.000000 128.000000"/>
+					<tex st="-224.000000 64.000000"/>
 					<pos_xy xy="-4.000000 0.046875"/>
 					<tex st="-224.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.875000"/>
@@ -4164,7 +4164,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface969" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
