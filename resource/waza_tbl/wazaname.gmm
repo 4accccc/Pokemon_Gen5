@@ -3184,13 +3184,13 @@
 	</row>
 
 	<row id="WAZANAME_558">
-		<language name="JPN" width="216">フレイムソウル</language>
-		<language name="JPN_KANJI" width="216">フレイムソウル</language>
+		<language name="JPN" width="216">クロスフレイム</language>
+		<language name="JPN_KANJI" width="216">クロスフレイム</language>
 	</row>
 
 	<row id="WAZANAME_559">
-		<language name="JPN" width="216">サンダーソウル</language>
-		<language name="JPN_KANJI" width="216">サンダーソウル</language>
+		<language name="JPN" width="216">クロスサンダー</language>
+		<language name="JPN_KANJI" width="216">クロスサンダー</language>
 	</row>
 
 	<flowchart-group-list>

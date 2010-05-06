@@ -4639,10 +4639,10 @@
 
 	<row id="WAZAINFO_472">
 		<language name="JPN" width="216">まかふしぎな　くうかんを　つくる。
-５ターンの　あいだ　すべての　ポケモンの
+５ターンのあいだ　すべてのポケモンの
 ぼうぎょと　とくぼうが　いれかわる。</language>
 		<language name="JPN_KANJI" width="216">まかふしぎな　空間を　つくる。
-５ターンの　あいだ　すべての　ポケモンの
+５ターンのあいだ　すべてのポケモンの
 防御と　特防が　いれかわる。</language>
 	</row>
 
@@ -4693,10 +4693,10 @@
 
 	<row id="WAZAINFO_478">
 		<language name="JPN" width="216">まかふしぎな　くうかんを　つくる。
-５ターンの　あいだ　すべての　ポケモンの
+５ターンのあいだ　すべてのポケモンの
 どうぐの　こうかが　なくなる。</language>
 		<language name="JPN_KANJI" width="216">まかふしぎな　空間を　つくる。
-５ターンの　あいだ　すべての　ポケモンの
+５ターンのあいだ　すべてのポケモンの
 道具の　効果が　なくなる。</language>
 	</row>
 
@@ -5019,9 +5019,9 @@
 		<language name="JPN" width="216">たおれた　みかたの　かたきを　うつ。
 まえの　ターンに　みかたが　たおされて
 いると　いりょくが　あがる。　</language>
-		<language name="JPN_KANJI" width="216">たおれた　味方の　敵を　討つ。
-前の　ターンに　味方が　たおされていると
-威力が　あがる。　</language>
+		<language name="JPN_KANJI" width="216">倒れた　味方の　かたきを　討つ。
+前の　ターンに　味方が
+倒されていると　威力が　あがる。　</language>
 	</row>
 
 	<row id="WAZAINFO_515">
