@@ -52,6 +52,10 @@ ARC_TARGET_DATA = \
 	gymbadge7.nsbca \
 	gymbadge7.nsbtp \
 	gymbadge7.nsbva \
+	gymbadge8.nsbmd \
+	gymbadge8.nsbca \
+	gymbadge8.nsbtp \
+	gymbadge8.nsbva \
 	fly_out.spa \
 	fly_out1.nsbmd \
 	fly_bg.nsbmd \
@@ -170,4 +174,8 @@ ARC_TARGET_DATA = \
 	gymbadge7f.nsbmd \
 	gymbadge7f.nsbca \
 	gymbadge7f.nsbtp \
-	gymbadge7f.nsbva
+	gymbadge7f.nsbva \
+	gymbadge8f.nsbmd \
+	gymbadge8f.nsbca \
+	gymbadge8f.nsbtp \
+	gymbadge8f.nsbva
