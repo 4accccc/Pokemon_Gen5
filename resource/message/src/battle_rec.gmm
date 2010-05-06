@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-03T19:58:37"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-06T13:19:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1150,11 +1150,21 @@
 	</row>
 
 	<row id="msg_1000">
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]はい</language>
+	</row>
+
+	<row id="msg_1001">
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]いいえ</language>
+	</row>
+
+	<row id="msg_1002">
 		<language name="JPN" font=" 1:small" width="216">はい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">はい</language>
 	</row>
 
-	<row id="msg_1001">
+	<row id="msg_1003">
 		<language name="JPN" font=" 1:small" width="216">いいえ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">いいえ</language>
 	</row>
