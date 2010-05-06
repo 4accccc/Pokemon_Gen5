@@ -228,12 +228,11 @@ static inline u32 MAPPER_ResizeBlockIndx( u32 block_index, u32 old_mapsizx, u32 
  */
 //------------------------------------------------------------------
 static const FLD_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
-	{ WBGRIDPACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile },
-	{ WBGCROSSPACK_HEADER, FieldLoadMapData_WBCrossFile, FieldGetAttr_WBCrossFile },
-  { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile },
-	{ WBRANDOMPACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate },
-	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_WBCrossFile, FieldGetAttr_WBCrossFile },	//TableEnd&default	
-	//{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
+	{ WBGRIDPACK_HEADER, FieldLoadMapData_WBNormalFile, FieldGetAttr_WBNormalFile, FieldGetAttr_WBNormalFile },
+	{ WBGCROSSPACK_HEADER, FieldLoadMapData_WBCrossFile, FieldGetAttr_WBCrossFile, FieldGetAttr_WBCrossFileForEffEnc },
+  { NOGRIDPACK_HEADER, FieldLoadMapData_NoGridFile, FieldGetAttr_NoGridFile, FieldGetAttr_NoGridFile },
+	{ WBRANDOMPACK_HEADER, FieldLoadMapData_RandomGenerate, FieldGetAttr_RandomGenerate, FieldGetAttr_RandomGenerate },
+	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_WBCrossFile, FieldGetAttr_WBCrossFile, FieldGetAttr_WBCrossFile },	//TableEnd&default	
 };
 
 //------------------------------------------------------------------
@@ -1488,6 +1487,7 @@ BOOL FLDMAPPER_GetGridInfo
 {
 	FLD_G3D_MAP_ATTRINFO attrInfo;
 	VecFx32 trans;
+  fx32  b_width_h;
 	int		i, p;
 
 	GF_ASSERT( g3Dmapper );
@@ -1499,17 +1499,17 @@ BOOL FLDMAPPER_GetGridInfo
 	FLDMAPPER_GRIDINFO_Init( gridInfo );
 	
 	p = 0;
-
+  b_width_h = g3Dmapper->blockWidth>>1;
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
 		if( FLD_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[i].g3Dmap ) == TRUE ){
 			fx32 min_x, min_z, max_x, max_z;
 
 			FLD_G3D_MAP_GetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
 
-			min_x = trans.x - g3Dmapper->blockWidth/2;
-			min_z = trans.z - g3Dmapper->blockWidth/2;
-			max_x = trans.x + g3Dmapper->blockWidth/2;
-			max_z = trans.z + g3Dmapper->blockWidth/2;
+			min_x = trans.x - b_width_h;
+			min_z = trans.z - b_width_h;
+			max_x = trans.x + b_width_h;
+			max_z = trans.z + b_width_h;
 
 			//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
 			if(	(pos->x >= min_x)&&(pos->x < max_x)&&(pos->z >= min_z)&&(pos->z < max_z) ){
@@ -1576,31 +1576,27 @@ BOOL FLDMAPPER_GetGridData
   target = 0;
   o_diff = FX32_CONST(4095);//gridInfo.gridData[0].height - pos->y;
 
-//  IWASAWA_Printf("CrossGrid %d pos = %08x\n",gridInfo.count,pos->y);
-
 	for( i=0; i<gridInfo.count; i++ ){
     fx32  diff;
 
     //アトリビュートValueが無効のデータは候補にいれない
     if( MAPATTR_IsEnable(gridInfo.gridData[i].attr) == FALSE){
-    //if( MAPATTR_GetHitchFlag(gridInfo.gridData[i].attr) == TRUE){
       continue;
     }
     diff = gridInfo.gridData[i].height - pos->y;
     if(diff < 0){
       diff = FX_Mul(diff,FX32_CONST(-1));
     }
-//    IWASAWA_Printf("idx = %d diff %08x , o_diff %08x\n",i,diff,o_diff);
     
 		if( diff < o_diff ){
       target  = i;  //ターゲット変更
       o_diff = diff;
     }
 	}
-//  IWASAWA_Printf("TargetIs %d Y = %08x, attr = %08x\n",target,gridInfo.gridData[target].height,gridInfo.gridData[target].attr);
   *pGridData = gridInfo.gridData[target];
 	return TRUE;
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -1617,28 +1613,31 @@ BOOL FLDMAPPER_GetGridDataForEffectEncount
 	( const FLDMAPPER* g3Dmapper, int blockIdx, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData )
 {
 	FLD_G3D_MAP_ATTRINFO attrInfo;
-  FLD_G3D_MAP* map;
 
+	FLD_G3D_MAP_GetAttrForEffectEncount( &attrInfo, g3Dmapper->blockWk[blockIdx].g3Dmap, pos, g3Dmapper->blockWidth );
+	pGridData->attr = attrInfo.mapAttr[0].attr;
+	pGridData->height = attrInfo.mapAttr[0].height;
+	return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	マップブロックからグリッド情報を取得できる状態かチェック(エフェクトエンカウント専用！　他では使わないで！)
+ *
+ * @param g3Dmapper 
+ */
+//------------------------------------------------------------------
+BOOL FLDMAPPER_IsGridDataEnableForEffectEncount( const FLDMAPPER* g3Dmapper, int blockIdx)
+{
 	GF_ASSERT( g3Dmapper );
 	if( g3Dmapper->blocks == NULL ){
 		OS_Printf("データが読み込まれていない\n");
 		return FALSE;
 	}
-
-  FLDMAPPER_GRIDINFODATA_Init(pGridData);
-	
-  map = g3Dmapper->blockWk[blockIdx].g3Dmap;
-  if( FLD_G3D_MAP_GetDrawSw( map ) == FALSE ){
+  if( FLD_G3D_MAP_GetDrawSw( g3Dmapper->blockWk[blockIdx].g3Dmap ) == FALSE ){
     return FALSE;
   }
-	FLD_G3D_MAP_GetAttr( &attrInfo, map, pos, g3Dmapper->blockWidth );
-	if( attrInfo.mapAttrCount == 0 ){
-    return FALSE;
-  }
-	pGridData->vecN = attrInfo.mapAttr[0].vecN;
-	pGridData->attr = attrInfo.mapAttr[0].attr;
-	pGridData->height = attrInfo.mapAttr[0].height;
-	return TRUE;
+  return FLD_G3D_MAP_IsAttrEnable( g3Dmapper->blockWk[blockIdx].g3Dmap );
 }
 
 //------------------------------------------------------------------

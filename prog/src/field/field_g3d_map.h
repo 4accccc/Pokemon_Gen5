@@ -144,6 +144,7 @@ typedef struct {
 	u32							signature;
 	FLD_G3D_MAP_FILELOAD_FUNC*	loadFunc; 
 	FLD_G3D_MAP_FILEATTR_FUNC*	attrFunc; 
+	FLD_G3D_MAP_FILEATTR_FUNC*	attrFuncForEffEnc;  //エフェクトエンカウント専用 
 }FLD_G3D_MAP_FILE_FUNC;
 //------------------------------------------------------------------
 //セットアップ定義
@@ -295,8 +296,11 @@ extern void	FLD_G3D_MAP_GetTrans( FLD_G3D_MAP* g3Dmap, VecFx32* trans );
  */
 //------------------------------------------------------------------
 extern void FLD_G3D_MAP_InitAttr( FLD_G3D_MAP_ATTRINFO* attrInfo );
+extern BOOL FLD_G3D_MAP_IsAttrEnable( FLD_G3D_MAP* g3Dmap );
 extern void FLD_G3D_MAP_GetAttr( FLD_G3D_MAP_ATTRINFO* attrInfo,
 								FLD_G3D_MAP* g3Dmap, const VecFx32* pos, const fx32 map_width );
+extern void FLD_G3D_MAP_GetAttrForEffectEncount( FLD_G3D_MAP_ATTRINFO* attrInfo, FLD_G3D_MAP* g3Dmap,
+							const VecFx32* pos, const fx32 map_width );
 
 
 //============================================================================================

@@ -28,4 +28,7 @@ extern BOOL FieldLoadMapData_WBCrossFile( FLD_G3D_MAP* g3Dmap, void * exWork );
 extern void FieldGetAttr_WBCrossFile( FLD_G3D_MAP_ATTRINFO* attrInfo,
 									const void* mapdata, const VecFx32* posInBlock, 
 									const fx32 map_width, const fx32 map_height );
+extern void FieldGetAttr_WBCrossFileForEffEnc( FLD_G3D_MAP_ATTRINFO* attrInfo,
+									const void* mapdata, const VecFx32* posInBlock, 
+									const fx32 map_width, const fx32 map_height );
 

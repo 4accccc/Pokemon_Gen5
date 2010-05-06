@@ -1078,6 +1078,22 @@ void FLD_G3D_MAP_InitAttr( FLD_G3D_MAP_ATTRINFO* attrInfo )
 
 //------------------------------------------------------------------
 /**
+ * @brief	アトリビュートデータが有効かチェック
+ */
+//------------------------------------------------------------------
+BOOL FLD_G3D_MAP_IsAttrEnable( FLD_G3D_MAP* g3Dmap )
+{
+	GF_ASSERT( g3Dmap );
+
+	if( g3Dmap->ldst.attrLoaded == FALSE ||
+	    g3Dmap->mapFileFunc[g3Dmap->fileType].attrFunc == NULL){
+		return FALSE;
+	}
+  return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	アトリビュート取得
  */
 //------------------------------------------------------------------
@@ -1090,8 +1106,8 @@ void FLD_G3D_MAP_GetAttr( FLD_G3D_MAP_ATTRINFO* attrInfo, FLD_G3D_MAP* g3Dmap,
 
 	GF_ASSERT( g3Dmap );
 
+	attrInfo->mapAttrCount = 0;
 	if( g3Dmap->ldst.attrLoaded == FALSE ){
-		attrInfo->mapAttrCount = 0;
 		return;
 	}
 	map_height = g3Dmap->trans.y;
@@ -1104,6 +1120,25 @@ void FLD_G3D_MAP_GetAttr( FLD_G3D_MAP_ATTRINFO* attrInfo, FLD_G3D_MAP* g3Dmap,
 	if( attrFunc != NULL ){
 		attrFunc( attrInfo, g3Dmap->mapData, &posInBlock, map_width, map_height );
 	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	アトリビュート取得(エフェクトエンカウント専用)
+ *
+ * @note  立体交差のEX階層をロードしません！
+ */
+//------------------------------------------------------------------
+void FLD_G3D_MAP_GetAttrForEffectEncount( FLD_G3D_MAP_ATTRINFO* attrInfo, FLD_G3D_MAP* g3Dmap,
+							const VecFx32* pos, const fx32 map_width )
+{
+	VecFx32 posInBlock;
+
+	//ブロック内情報取得
+	VEC_Subtract( pos, &g3Dmap->trans, &posInBlock );
+
+	(g3Dmap->mapFileFunc[g3Dmap->fileType].attrFuncForEffEnc)( attrInfo,
+      g3Dmap->mapData, &posInBlock, map_width, g3Dmap->trans.y );
 }
 
 

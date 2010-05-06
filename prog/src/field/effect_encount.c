@@ -534,6 +534,7 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   int blockIdx;
   s16 i,j;
   VecFx32 vec;
+  fx32  vx;
   EFFENC_TYPE_ID id;
   EFFENC_SEARCH esw;
   FLDMAPPER_GRIDINFODATA gridData;
@@ -541,7 +542,6 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 
 #ifdef DEBUG_ONLY_FOR_iwasawa
   OSTick start_tick,end_tick;
-  start_tick = OS_GetTick();
 #endif
 
   //検索領域取得
@@ -553,27 +553,33 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   MI_CpuClear8(&eff_wk->attr_map,sizeof(EFFENC_ATTR_MAP));
   vec.y = 0;
   blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
+ 
+  start_tick = OS_GetTick();
+  
+  if( !FLDMAPPER_IsGridDataEnableForEffectEncount(g3dMapper, blockIdx)){
+    return;
+  }
+ 
+  vec.z = FX32_CONST(esw.sz*16)+FX32_CONST(8);
+  vx = FX32_CONST(esw.sx*16)+FX32_CONST(8);
+
   for(i = esw.sz; i <= esw.ez;i++){
-    vec.z = FX32_CONST(i*16)+FX32_CONST(8); 
+    vec.x = vx; 
     for(j = esw.sx; j <= esw.ex;j++){
-      vec.x = FX32_CONST(j*16)+FX32_CONST(8); 
       FLDMAPPER_GetGridDataForEffectEncount( g3dMapper, blockIdx, &vec, &gridData );
-//    IWASAWA_Printf("0x%02x,",gridData.attr&0xFFFF);
+      
       id = MAPATTR_GetEffectEncountType( gridData.attr );
       if(id != EFFENC_TYPE_MAX ){
         eff_wk->attr_map.attr[eff_wk->attr_map.count].type = id;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gx = j;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gz = i;
-        eff_wk->attr_map.attr[eff_wk->attr_map.count].gy = SIZE_GRID_FX32( gridData.height );
         eff_wk->attr_map.attr[eff_wk->attr_map.count++].height = gridData.height;
       }
+      vec.x += FX32_CONST(16); 
     }
-//    IWASAWA_Printf("\n");
+    vec.z += FX32_CONST(16); 
   }
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  end_tick = OS_GetTick();
-  IWASAWA_Printf("EncEffAttrSearch tick = %d\n",end_tick-start_tick);
-#endif
+  IWASAWA_Printf("EncEffAttrSearch tick = %d count %d\n",OS_GetTick()-start_tick,eff_wk->attr_map.count);
 }
 
 /*
@@ -591,13 +597,13 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   attr = debug_EffectPosAdjust( enc, eff_wk, &ewk->effect_encount, idx);
 #endif
 
+  attr->gy = SIZE_GRID_FX32( attr->height );
+
   //フィールドモデルの位置をチェック
   if( effect_CheckMMdlHit( enc, attr->gx, attr->gy, attr->gz )){
     IWASAWA_Printf("HitCancel FieldModelHit\n");
     return;
   }
-
-//  effect_EffectDelete( enc, eff_wk );
 
   //パラメータセット
   ep->gx = attr->gx;
@@ -608,7 +614,6 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   ep->zone_id = FIELDMAP_GetZoneID( enc->fwork );
   ep->valid_f = TRUE;
 
-  IWASAWA_Printf("EffEncAdd (%d,%d,%d)\n",ep->gx,ep->gy,ep->gz);
   //カウンタークリア
   effenc_WalkCtClear( ewk );
 

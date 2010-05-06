@@ -30,6 +30,7 @@
 #include "effect_encount.h"
 
 #include "sound/wb_sound_data.sadl"
+#include "debug/debug_flg.h"
 
 //--------------------------------------------------------------
 /**
@@ -45,8 +46,13 @@ ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID )
 
 #ifdef PM_DEBUG
    #ifdef DEBUG_ONLY_FOR_iwasawa
-    wp->effect_encount.deb_interval = 10;
+    wp->effect_encount.deb_interval = 1;
     wp->effect_encount.deb_prob = 100;
+    wp->effect_encount.deb_ofsx = 1;
+    wp->effect_encount.deb_ofsz = 1;
+    wp->effect_encount.deb_prob_fix = 1;
+    DEBUG_FLG_FlgOn( DEBUG_FLG_DisableEncount );
+
   #else
     wp->effect_encount.deb_interval = EFFENC_NORMAL_INTERVAL;
     wp->effect_encount.deb_prob = EFFENC_NORMAL_PROB;

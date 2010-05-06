@@ -54,8 +54,6 @@ enum{
 
 
 ///プロトタイプ
-static void fgr_WBCrossFileCore( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
-    const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height );
 
 BOOL FieldLoadMapData_WBCrossFile( FLD_G3D_MAP* g3Dmap, void * exWork )
 {
@@ -159,50 +157,36 @@ void FieldGetAttr_WBCrossFile( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapda
   MI_CpuClear8(&attr,sizeof(FLD_G3D_MAP_ATTRINFO));
 
   //デフォルト階層ロード
-  fgr_WBCrossFileCore( &attr, CROSS_LAYER_DEF, (u32)mapdata + fileHeader->vertexOffset,
+  MAPDATA_ATR_GetAttrFunc( &attr, CROSS_LAYER_DEF, (u32)mapdata + fileHeader->vertexOffset,
     posInBlock, map_width, map_height );
   
   //立体交差階層ロード
-  fgr_WBCrossFileCore( &attr, CROSS_LAYER_EX, (u32)mapdata + fileHeader->exAttrOffset,
+  MAPDATA_ATR_GetAttrFunc( &attr, CROSS_LAYER_EX, (u32)mapdata + fileHeader->exAttrOffset,
     posInBlock, map_width, map_height );
-#if 0
-  {
-    int i;
-    u8 target = CROSS_LAYER_DEF;
-    fx32 diff[CROSS_LAYER_NUM] = {0,0};
 
-    //Exが進入可能の時
-    if(!MAPATTR_GetHitchFlag(attr.mapAttr[CROSS_LAYER_EX].attr)){
-      //Defが進入不可ならExを取る
-      if(MAPATTR_GetHitchFlag(attr.mapAttr[CROSS_LAYER_DEF].attr)){
-        target = CROSS_LAYER_EX;
-      }else{
-        //両方進入可能なら、高さの差分の絶対値を見て近い方をターゲットとする
-        for(i = 0;i < CROSS_LAYER_NUM;i++){
-          diff[i] = posInBlock->y - attr.mapAttr[i].height;
-          if(diff[i] < 0){
-            diff[i] *= -1;
-          }
-        }
-        if(diff[CROSS_LAYER_EX] < diff[CROSS_LAYER_DEF]){
-          target = CROSS_LAYER_EX;
-        }
-      }
-    }
-    attrInfo->mapAttr[0] = attr.mapAttr[target];
-  }
-#else
   *attrInfo = attr;
-#endif
   attrInfo->mapAttrCount = CROSS_LAYER_NUM;
 }
 
-/**
-  @brief  アトリビュートファイルの解釈
+/*
+ *  @brief  エフェクトエンカウント専用
+ *
+ *  @note 立体交差階層を読みません！
  */
-static void fgr_WBCrossFileCore( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, const u32 attrAdrs,
-    const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
+void FieldGetAttr_WBCrossFileForEffEnc( FLD_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
+					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
-  MAPDATA_ATR_GetAttrFunc( attrInfo, idx, attrAdrs, posInBlock, map_width, map_height );
+  FLD_G3D_MAP_ATTRINFO attr;
+
+	WBGridCrossMapPackHeaderSt* fileHeader = (WBGridCrossMapPackHeaderSt*)mapdata;
+
+  MI_CpuClear8(&attr,sizeof(FLD_G3D_MAP_ATTRINFO));
+
+  //デフォルト階層ロード
+  MAPDATA_ATR_GetAttrFunc( &attr, CROSS_LAYER_DEF, (u32)mapdata + fileHeader->vertexOffset,
+    posInBlock, map_width, map_height );
+  
+  *attrInfo = attr;
+  attrInfo->mapAttrCount = 1;
 }
 
