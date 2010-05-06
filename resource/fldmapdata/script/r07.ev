@@ -556,7 +556,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	_TIME_WAIT ( 80 )
 	
 	//天気を晴れに戻す
-	_WEATHER_CHANGE( WEATHER_NO_SUNNY ) 
+	_WEATHER_CHANGE( SCR_WEATHER_NO_ZONE_DEF ) 
 	//BGM再開
 	//イベント曲停止
 	_END_EVENT_BGM()

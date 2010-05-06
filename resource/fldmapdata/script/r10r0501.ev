@@ -24,6 +24,7 @@ _EVENT_DATA     ev_pos_r10r0501_limitter_01
 _EVENT_DATA     ev_zone_r10r0501
 _EVENT_DATA     ev_init_r10r0501
 _EVENT_DATA     ev_recover_r10r0501
+_EVENT_DATA     ev_r10r0501_trainerm_01
 _EVENT_DATA_END
 
 
@@ -229,3 +230,10 @@ _ANIME_LABEL  anm_walkout_hero_other
 _ANIME_LABEL  anm_turn_to_hero
   _ANIME_DATA AC_DIR_L, 1
   _ANIME_DATA ACMD_END, 0
+
+/**************************************************************/
+/*  R10R0501 TRAINERMの会話用イベントスクリプト               */
+/**************************************************************/
+EVENT_START   ev_r10r0501_trainerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r10r0501_trainerm_01)
+EVENT_END

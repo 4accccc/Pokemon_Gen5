@@ -11,6 +11,7 @@
 #define ZONE_R10R0501_EVC_H
 
 #define R10R0501_VETERANM                  0
+#define R10R0501_TRAINERM_01               1
 
 #endif //ZONE_R10R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r10r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
