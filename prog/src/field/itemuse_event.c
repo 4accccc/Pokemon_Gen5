@@ -247,7 +247,7 @@ static BOOL itemcheck_Amaimitu( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
-  return !( ZONEDATA_CheckFieldSkillUse(zone_id));
+  return ( ZONEDATA_CheckFieldSkillUse(zone_id));
 }
 
 /*
@@ -273,7 +273,7 @@ static BOOL itemcheck_DowsingMachine( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, 
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
 
   //フィールド技が使えない場所では使えない(ユニオンルーム、通信対戦部屋、パレス)
-  return !( ZONEDATA_CheckFieldSkillUse(zone_id));
+  return ( ZONEDATA_CheckFieldSkillUse(zone_id));
 }
 
 //=============================================================================
