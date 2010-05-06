@@ -51,18 +51,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
 static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *src);
 static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVEDATA * src);
 static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
-static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
-static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
-static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
-static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
-static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer );
-static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer );
-static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
-static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
+
 
 
 //==============================================================================
@@ -216,22 +205,7 @@ void BattleRec_DataDecoded(void)
     brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   認証キーを除いた戦闘録画ワークのアドレスを取得
- *
- * @retval  brsに格納されているワークアドレス(認証キー除く)
- */
-//--------------------------------------------------------------
-void * BattleRec_RecWorkAdrsGet( void )
-{
-  u8 *work;
 
-  GF_ASSERT(brs);
-
-  work = (u8*)brs;
-  return work;
-}
 
 //--------------------------------------------------------------
 /**
@@ -517,68 +491,6 @@ SAVE_RESULT BattleRec_Save(GAMEDATA *gamedata, HEAPID heap_id, BATTLE_MODE rec_m
 
 //--------------------------------------------------------------
 /**
- * @brief   指定位置の録画データを削除(初期化)してセーブ実行
- *
- * @param   sv
- * @param   heap_id   削除用テンポラリ(録画データを展開できるだけのヒープが必要です)
- * @param   num
- * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
- * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
- *
- *
- * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
- *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
- *            ->分割セーブにしましたnagihashi100331
- */
-//--------------------------------------------------------------
-void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num)
-{
-  LOAD_RESULT load_result;
-  BATTLE_REC_SAVEDATA *all;
-  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
-
-  load_result = SaveControl_Extra_Load(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id);
-  all = SaveControl_Extra_DataPtrGet(sv, SAVE_EXTRA_ID_REC_MINE + num, 0);
-  BattleRec_WorkInit(all);
-
-  GAMEDATA_ExtraSaveAsyncStart(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   指定位置の録画データを削除(初期化)してセーブ実行
- *
- * @param   sv
- * @param   num
- * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
- * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
- *
- * @retval  SAVE_RESULT_CONTINUE  セーブ処理継続中
- * @retval  SAVE_RESULT_LAST    セーブ処理継続中、最後の一つ前
- * @retval  SAVE_RESULT_OK      セーブ正常終了
- * @retval  SAVE_RESULT_NG      セーブ失敗終了
- *
- * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
- *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
- *            ->分割セーブにしましたnagihashi100331
- */
-//--------------------------------------------------------------
-SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num)
-{
-  SAVE_RESULT result;
-  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
-
-  result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
-
-  if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
-  {
-    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
-  }
-  return result;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief   録画モードからクライアント数と手持ち数の上限を取得
  *
  * @param   rec_mode      録画モードのbit定義(BattleRecModeBitTblの内容物)
@@ -708,7 +620,19 @@ static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVED
 
   return TRUE;
 }
-
+//============================================================================================
+/**
+ *  復号処理
+ *
+ * @param[in] data  復号するデータのポインタ
+ * @param[in] size  復号するデータのサイズ
+ * @param[in] code  暗号化キーの初期値
+ */
+//============================================================================================
+static  void  BattleRec_Decoded(void *data,u32 size,u32 code)
+{
+  GFL_STD_CODED_Decoded(data,size,code);
+}
 //============================================================================================
 /**
  *  暗号処理
@@ -723,131 +647,6 @@ void  BattleRec_Coded(void *data,u32 size,u32 code)
   GFL_STD_CODED_Coded(data, size, code);
 }
 
-//============================================================================================
-/**
- *  復号処理
- *
- * @param[in] data  復号するデータのポインタ
- * @param[in] size  復号するデータのサイズ
- * @param[in] code  暗号化キーの初期値
- */
-//============================================================================================
-static  void  BattleRec_Decoded(void *data,u32 size,u32 code)
-{
-  GFL_STD_CODED_Decoded(data,size,code);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   サーバーバージョン更新処理
- *
- * @param   id_no       ID
- * @param   server_version    サーバーバージョン
- */
-//--------------------------------------------------------------
-void BattleRec_ServerVersionUpdate(int id_no, u32 server_version)
-{
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-  BATTLE_REC_WORK *rec;
-  REC_BATTLE_PARAM *rbp;
-
-  if(brs==NULL){
-    return;
-  }
-
-  rec = &brs->rec;
-  rbp = &rec->rbp;
-  rbp->server_version[id_no] = server_version;
-//  OS_TPrintf("sio server_version = %x\n", rbp->server_version[id_no]);
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   自分のROMのサーバーバージョンよりも高いサーバーバージョンが記録されているか確認
- *
- * @retval  TRUE:全て自分と同じか以下のサーバーバージョン
- * @retval  FALSE:自分のROMよりも高いサーバーバージョンが記録されている
- */
-//--------------------------------------------------------------
-BOOL BattleRec_ServerVersionCheck(void)
-{
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-  int i;
-  BATTLE_REC_WORK *rec;
-  REC_BATTLE_PARAM *rbp;
-
-  if(brs == NULL){
-    return TRUE;
-  }
-
-  rec = &brs->rec;
-  rbp = &rec->rbp;
-  for(i = 0; i < BTL_CLIENT_MAX; i++){
-    if(rbp->server_version[i] > BTL_NET_SERVER_VERSION){
-      return FALSE;
-    }
-  }
-  return TRUE;
-#else
-  return TRUE;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   POKEPARTYをREC_POKEPARTYに変換する
- *
- * @param   party     変換元データへのポインタ
- * @param   rec_party   変換後のデータ代入先
- */
-//--------------------------------------------------------------
-static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party )
-{
-  int i;
-  POKEMON_PARAM *pp;
-
-  GFL_STD_MemClear(rec_party, sizeof(REC_POKEPARTY));
-
-  if(PokeParty_GetPokeCount(party) == 0){  //不正チェック用に空の時は全て0でクリアされたまま終了
-    return;
-  }
-
-  rec_party->PokeCountMax = PokeParty_GetPokeCountMax(party);
-  rec_party->PokeCount = PokeParty_GetPokeCount(party);
-
-  for(i=0; i < rec_party->PokeCount; i++){
-    pp = PokeParty_GetMemberPointer(party, i);
-    POKETOOL_PokePara_to_RecPokePara(pp, &rec_party->member[i]);
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   REC_POKEPARTYをPOKEPARTYに変換する
- *
- * @param   rec_party   変換元データへのポインタ
- * @param   party     変換後のデータ代入先
- */
-//--------------------------------------------------------------
-static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID )
-{
-  int i;
-  POKEMON_PARAM *pp;
-  u8 cb_id_para = 0;
-
-  pp = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKETOOL_GetWorkSize() );
-  TAYA_Printf("RecParty pokeCnt=%d\n", rec_party->PokeCount);
-
-  PokeParty_Init(party, rec_party->PokeCountMax);
-  for(i = 0; i < rec_party->PokeCount; i++){
-    POKETOOL_RecPokePara_to_PokePara(&rec_party->member[i], pp);
-    PP_Put(pp, ID_PARA_cb_id, cb_id_para);  //カスタムボールは出ないようにする
-    PokeParty_Add(party, pp);
-  }
-
-  GFL_HEAP_FreeMemory( pp );
-}
 
 //==============================================================================
 //
@@ -862,73 +661,8 @@ BTLREC_OPERATION_BUFFER*  BattleRec_GetOperationBufferPtr( void )
   return &(brs->rec.opBuffer);
 }
 
-BTLREC_SETUP_SUBSET*  BattleRec_GetSetupSubsetPtr( void )
-{
-  GF_ASSERT(brs);
-  return &(brs->rec.setupSubset);
-}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//--------------------------------------------------------------
-/**
- * @brief   戦闘録画データから、ヘッダーを別途確保したワークにコピーする
- *
- * @param   heap_id ヒープID
- *
- * @retval  確保されたヘッダーデータへのポインタ
- *
- * BattleRec_Loadを使用してデータをロードしている必要があります。
- */
-//--------------------------------------------------------------
-BATTLE_REC_HEADER_PTR BattleRec_HeaderAllocCopy(HEAPID heap_id)
-{
-  BATTLE_REC_HEADER_PTR head;
-
-  GF_ASSERT(brs != NULL);
-
-  head = GFL_HEAP_AllocMemory(heap_id, sizeof(BATTLE_REC_HEADER));
-  GFL_STD_MemCopy32(&brs->head, head, sizeof(BATTLE_REC_HEADER));
-  return head;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   戦闘録画データから、GDSプロフィールを別途確保したワークにコピーする
- *
- * @param   src   戦闘録画セーブデータへのポインタ
- * @param   heap_id ヒープID
- *
- * @retval  確保されたGDSプロフィールデータへのポインタ
- *
- * BattleRec_Loadを使用してbrsにデータをロードしている必要があります。
- */
-//--------------------------------------------------------------
-GDS_PROFILE_PTR BattleRec_GDSProfileAllocCopy(HEAPID heap_id)
-{
-  GDS_PROFILE_PTR profile;
-
-  GF_ASSERT(brs != NULL);
-
-  profile = GFL_HEAP_AllocMemory(heap_id, sizeof(GDS_PROFILE));
-  GFL_STD_MemCopy32(&brs->profile, profile, sizeof(GDS_PROFILE));
-  return profile;
-
-}
 
 //--------------------------------------------------------------
 /**
@@ -1070,44 +804,6 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
   return 0;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   戦闘録画ヘッダをAllocする
- *
- * @param   heap_id   ヒープID
- *
- * @retval  GDSプロフィールワークへのポインタ
- */
-//--------------------------------------------------------------
-BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id)
-{
-  BATTLE_REC_HEADER_PTR brhp;
-
-  brhp = GFL_HEAP_AllocMemory(heap_id, sizeof(BATTLE_REC_HEADER));
-  GFL_STD_MemClear(brhp, sizeof(BATTLE_REC_HEADER));
-  return brhp;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   戦闘録画ヘッダを解放
- *
- * @param   brhp    GDSプロフィールへのポインタ
- */
-//--------------------------------------------------------------
-void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp)
-{
-  GFL_HEAP_FreeMemory(brhp);
-}
-
-
-
-
-
-
-//=====================================================================================================
-// 録画データの格納・復元ツール
-//=====================================================================================================
 FS_EXTERN_OVERLAY(battle_recorder_tools);
 
 //=============================================================================================
@@ -1127,304 +823,5 @@ void BattleRec_LoadToolModule( void )
 void BattleRec_UnloadToolModule( void )
 {
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(battle_recorder_tools) );
-}
-
-
-
-
-//=============================================================================================
-/**
- * バトルセットアップパラメータを録画セーブデータに変換して録画セーブバッファに格納する
- *
- * ※事前に BattleRec_LoadToolModule の呼び出しが必要。
- *    使い終わったら BattleRec_UnoadToolModule を呼び出してください。
- *
- * @param   setup   バトルセットアップパラメータ
- */
-//=============================================================================================
-void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
-{
-  BATTLE_REC_WORK  *rec = &brs->rec;
-
-  store_Party( setup, rec );
-  store_ClientStatus( setup, rec );
-  store_OperationBuffer( setup, rec );
-  store_SetupSubset( setup, rec );
-}
-
-//=============================================================================================
-/**
- * 録画セーブバッファからバトルセットアップパラメータを復元する
- *
- * ※事前に BattleRec_LoadToolModule の呼び出しが必要。
- *    使い終わったら BattleRec_UnoadToolModule を呼び出してください。
- *
- * @param   setup   [out] 復元先
- */
-//=============================================================================================
-void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
-{
-  BATTLE_REC_WORK  *rec = &brs->rec;
-
-  TAYA_Printf("*** Rec Info ***\n");
-  TAYA_Printf(" recWorkSize = %d byte\n", sizeof(BATTLE_REC_WORK));
-  TAYA_Printf("   ->setupSubset  = %d byte\n", sizeof(rec->setupSubset) );
-  TAYA_Printf("   ->opBuffer     = %d byte\n", sizeof(rec->opBuffer) );
-  TAYA_Printf("   ->clientStatus = %d byte\n", sizeof(rec->clientStatus) );
-  TAYA_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
-
-
-  restore_Party( setup, rec, heapID );
-  restore_ClientStatus( setup, rec );
-  restore_OperationBuffer( setup, rec );
-  restore_SetupSubset( setup, rec );
-}
-
-//----------------------------------------------------------------------------------
-/**
- * パーティデータ：録画セーブデータ化して格納
- *
- * @param   setup
- * @param   rec
- */
-//----------------------------------------------------------------------------------
-static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
-{
-  u32 i;
-
-  //不正チェック用に未使用領域は全て0で埋める必要がある為、一旦バッファ全体を0クリアしておく
-  GFL_STD_MemClear(rec->rec_party, sizeof(REC_POKEPARTY) * BTL_CLIENT_MAX);
-
-  for(i=0; i<BTL_CLIENT_NUM; ++i)
-  {
-    if( setup->party[i] ){
-      PokeParty_to_RecPokeParty( setup->party[i], &(rec->rec_party[i]) );
-    }
-  }
-}
-//----------------------------------------------------------------------------------
-/**
- * パーティデータ：録画セーブデータ復元
- *
- * @param   setup
- * @param   rec
- */
-//----------------------------------------------------------------------------------
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
-{
-  u32 i;
-  for(i=0; i<BTL_CLIENT_NUM; ++i)
-  {
-    if( setup->party[i] ){
-      RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i], heapID );
-    }
-  }
-}
-
-//----------------------------------------------------------------------------------
-/**
- * クライアントステータス：録画セーブデータ化して格納
- *
- * @param   setup
- * @param   rec
- */
-//----------------------------------------------------------------------------------
-static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
-{
-  u32 i;
-  for(i=0; i<NELEMS(setup->playerStatus); ++i)
-  {
-    if( setup->playerStatus[i] ){
-      MyStatus_Copy( setup->playerStatus[i], &rec->clientStatus[i].player );
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_PLAYER;
-    }
-    else if( setup->tr_data[i] ){
-      store_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
-    }
-    else{
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
-    }
-  }
-}
-//----------------------------------------------------------------------------------
-/**
- * クライアントステータス：録画セーブデータから復元
- *
- * @param   setup
- * @param   rec
- */
-//----------------------------------------------------------------------------------
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
-{
-  u32 i;
-  for(i=0; i<NELEMS(setup->playerStatus); ++i)
-  {
-    switch( rec->clientStatus[i].type ){
-    case BTLREC_CLIENTSTATUS_PLAYER:
-      GF_ASSERT(setup->playerStatus[i]!=NULL);
-      MyStatus_Copy( &rec->clientStatus[i].player, (MYSTATUS*)setup->playerStatus[i] );
-      break;
-
-    case BTLREC_CLIENTSTATUS_TRAINER:
-      GF_ASSERT(setup->tr_data[i]!=NULL);
-      restore_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
-      break;
-    }
-  }
-}
-
-/**
- *  トレーナーデータ：録画セーブデータ用に変換して格納
- */
-static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer )
-{
-  u32 i;
-
-  recTrainer->tr_id     = bspTrainer->tr_id;
-  recTrainer->tr_type   = bspTrainer->tr_type;
-  recTrainer->ai_bit    = bspTrainer->ai_bit;
-  recTrainer->win_word  = bspTrainer->win_word;
-  recTrainer->lose_word = bspTrainer->lose_word;
-
-  for(i=0; i<NELEMS(recTrainer->use_item); ++i){
-    recTrainer->use_item[i] = bspTrainer->use_item[i];
-  }
-
-  GFL_STR_GetStringCode( bspTrainer->name, recTrainer->name, NELEMS(recTrainer->name) );
-}
-/**
- *  トレーナーデータ：録画セーブデータから復元
- */
-static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer )
-{
-  u32 i;
-
-  bspTrainer->tr_id     = recTrainer->tr_id;
-  bspTrainer->tr_type   = recTrainer->tr_type;
-  bspTrainer->ai_bit    = recTrainer->ai_bit;
-  bspTrainer->win_word  = recTrainer->win_word;
-  bspTrainer->lose_word = recTrainer->lose_word;
-
-  for(i=0; i<NELEMS(bspTrainer->use_item); ++i){
-    bspTrainer->use_item[i] = recTrainer->use_item[i];
-  }
-
-  GFL_STR_SetStringCode( bspTrainer->name, recTrainer->name );
-
-  {
-    const STRCODE* sp = GFL_STR_GetStringCodePointer( bspTrainer->name );
-    OS_TPrintf("Rec -> Btl  trID=%d, trType=%d, name= ", bspTrainer->tr_id, bspTrainer->tr_type);
-    while( (*sp) != GFL_STR_GetEOMCode() ){
-      OS_TPrintf( "%04x,", (*sp) );
-      ++sp;
-    }
-  }
-}
-//----------------------------------------------------------------------------------
-/**
- * 操作バッファ：録画セーブデータ用に変換して格納
- *
- * @param   setup
- * @param   rec
- *
- * @retval  BOOL
- */
-//----------------------------------------------------------------------------------
-static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
-{
-  if( (setup->recBuffer != NULL)
-  &&  (setup->recDataSize < sizeof(rec->opBuffer.buffer))
-  ){
-    rec->opBuffer.size = setup->recDataSize;
-    GFL_STD_MemCopy( setup->recBuffer, rec->opBuffer.buffer, setup->recDataSize );
-    TAYA_Printf("Store Operation Buffer %dbyte\n", rec->opBuffer.size);
-    return TRUE;
-  }
-  return FALSE;
-}
-//----------------------------------------------------------------------------------
-/**
- * 操作バッファ：録画セーブデータから復元
- *
- * @param   setup
- * @param   rec
- *
- * @retval  BOOL
- */
-//----------------------------------------------------------------------------------
-static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
-{
-  setup->recDataSize = rec->opBuffer.size;
-  TAYA_Printf("Restore Operation Buffer %dbyte\n", setup->recDataSize );
-  GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
-  return TRUE;
-}
-//----------------------------------------------------------------------------------
-/**
- * セットアップパラメータ復元データを録画セーブデータ変換して格納
- *
- * @param   setup
- * @param   rec
- *
- * @retval  BOOL
- */
-//----------------------------------------------------------------------------------
-static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
-{
-  rec->setupSubset.fieldSituation = setup->fieldSituation;
-  rec->setupSubset.randomContext = setup->recRandContext;
-  rec->setupSubset.musicDefault = setup->musicDefault;
-  rec->setupSubset.musicWin = setup->musicWin;
-
-  rec->setupSubset.competitor = setup->competitor;
-  rec->setupSubset.rule = setup->rule;
-  rec->setupSubset.fMultiMode = setup->multiMode;
-  rec->setupSubset.debugFlagBit = setup->DebugFlagBit;
-  rec->setupSubset.myCommPos = setup->commPos;
-
-  CONFIG_Copy( setup->configData, &rec->setupSubset.config );
-
-  {
-    u32 i;
-    const u8* p = (u8*)(&(rec->setupSubset.randomContext));
-    TAYA_Printf("*** 書き戻したRandomContext ***\n");
-    for(i=0; i<sizeof(setup->recRandContext); ++i)
-    {
-      TAYA_Printf("%02x ", p[i]);
-      if( (i+1)%8 == 0 ){
-        TAYA_Printf("\n");
-      }
-    }
-  }
-
-  return TRUE;
-}
-//----------------------------------------------------------------------------------
-/**
- * セットアップパラメータ復元
- *
- * @param   setup
- * @param   rec
- *
- * @retval  BOOL
- */
-//----------------------------------------------------------------------------------
-static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
-{
-  setup->fieldSituation = rec->setupSubset.fieldSituation;
-  setup->recRandContext = rec->setupSubset.randomContext;
-  setup->musicDefault = rec->setupSubset.musicDefault;
-  setup->musicWin = rec->setupSubset.musicWin;
-
-  setup->competitor = rec->setupSubset.competitor;
-  setup->rule = rec->setupSubset.rule;
-  setup->multiMode = rec->setupSubset.fMultiMode;
-  setup->DebugFlagBit = rec->setupSubset.debugFlagBit;
-  setup->commPos = rec->setupSubset.myCommPos;
-
-  CONFIG_Copy( &rec->setupSubset.config, (CONFIG*)(setup->configData) );
-
-  return TRUE;
 }
 

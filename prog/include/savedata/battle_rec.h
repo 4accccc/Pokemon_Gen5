@@ -12,6 +12,7 @@
 #include "savedata/gds_profile.h" //GDS_PROFILE_PTR定義
 #include "battle/battle.h"
 
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -42,7 +43,6 @@ typedef u64 DATA_NUMBER;
 #define RECLOAD_RESULT_ERROR  (3) ///<ロードで読み出し失敗(セーブデータが破壊されている場合など)
 
 #define REC_COUNTER_MAX     ( 9999 )  ///< 連勝記録最大値
-
 
 //--------------------------------------------------------------
 //  戦闘モード(施設一覧)
@@ -161,22 +161,14 @@ extern BOOL BattleRec_DataExistCheck(void);
 extern BOOL BattleRec_DataSetCheck(void);
 extern void BattleRec_DataClear(void);
 extern void BattleRec_DataDecoded(void);
-extern void * BattleRec_RecWorkAdrsGet( void );
 extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);
 extern SAVE_RESULT BattleRec_Save(GAMEDATA *gamedata, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
-extern void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num);
-extern SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num);
 extern void BattleRec_ClientTemotiGet(u16 mode_bit, int *client_max, int *temoti_max);
-extern void BattleRec_ServerVersionUpdate(int id_no, u32 server_version);
-extern BOOL BattleRec_ServerVersionCheck(void);
-extern BATTLE_REC_HEADER_PTR BattleRec_HeaderAllocCopy(HEAPID heap_id);
-extern GDS_PROFILE_PTR BattleRec_GDSProfileAllocCopy(HEAPID heap_id);
 extern GDS_PROFILE_PTR BattleRec_GDSProfilePtrGet(void);
 extern BATTLE_REC_WORK_PTR BattleRec_WorkPtrGet(void);
 extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGet(void);
 extern BTLREC_OPERATION_BUFFER* BattleRec_GetOperationBufferPtr( void );
-extern BTLREC_SETUP_SUBSET*     BattleRec_GetSetupSubsetPtr( void );
 
 extern void BattleRec_ExitWork(BATTLE_REC_SAVEDATA *wk_brs);
 extern BATTLE_REC_SAVEDATA * BattleRec_LoadAlloc( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
@@ -184,10 +176,11 @@ extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_
 
 extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, SAVE_CONTROL_WORK *sv);
 extern u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param);
-extern BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id);
-extern void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp);
 
 
+//==============================================================================
+//  BattleRec_LoadToolModuleを行わないと使えない関数（battle_rec_tool.オーバーレイに配置！）
+//==============================================================================
 extern void BattleRec_LoadToolModule( void );
 extern void BattleRec_UnloadToolModule( void );
 extern void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup );
@@ -207,6 +200,10 @@ extern SAVE_RESULT BattleRec_GDS_RecvData_Save(GAMEDATA *gamedata, int num, u8 s
 extern void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv);
 extern SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(GAMEDATA *gamedata, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id);
 extern SAVE_RESULT BattleRec_SecureSetSave(GAMEDATA *gamedata, int num, u16 *work0, u16 *work1, HEAPID heap_id);
+extern void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num);
+extern SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num);
+
+extern void * BattleRec_RecWorkAdrsGet( void );
 
 #ifdef PM_DEBUG
 extern void DEBUG_BattleRec_SecureFlagSet(SAVE_CONTROL_WORK *sv);

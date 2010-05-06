@@ -194,7 +194,84 @@ SAVE_RESULT BattleRec_SecureSetSave(GAMEDATA *gamedata, int num, u16 *work0, u16
 	return SAVE_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   指定位置の録画データを削除(初期化)してセーブ実行
+ *
+ * @param   sv
+ * @param   heap_id   削除用テンポラリ(録画データを展開できるだけのヒープが必要です)
+ * @param   num
+ * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ *
+ *
+ * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
+ *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
+ *            ->分割セーブにしましたnagihashi100331
+ */
+//--------------------------------------------------------------
+void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num)
+{
+  LOAD_RESULT load_result;
+  BATTLE_REC_SAVEDATA *all;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
 
+  load_result = SaveControl_Extra_Load(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id);
+  all = SaveControl_Extra_DataPtrGet(sv, SAVE_EXTRA_ID_REC_MINE + num, 0);
+  BattleRec_WorkInit(all);
+
+  GAMEDATA_ExtraSaveAsyncStart(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   指定位置の録画データを削除(初期化)してセーブ実行
+ *
+ * @param   sv
+ * @param   num
+ * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ *
+ * @retval  SAVE_RESULT_CONTINUE  セーブ処理継続中
+ * @retval  SAVE_RESULT_LAST    セーブ処理継続中、最後の一つ前
+ * @retval  SAVE_RESULT_OK      セーブ正常終了
+ * @retval  SAVE_RESULT_NG      セーブ失敗終了
+ *
+ * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
+ *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
+ *            ->分割セーブにしましたnagihashi100331
+ */
+//--------------------------------------------------------------
+SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num)
+{
+  SAVE_RESULT result;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+
+  result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
+
+  if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
+  {
+    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+  }
+  return result;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   認証キーを除いた戦闘録画ワークのアドレスを取得
+ *
+ * @retval  brsに格納されているワークアドレス(認証キー除く)
+ */
+//--------------------------------------------------------------
+void * BattleRec_RecWorkAdrsGet( void )
+{
+  u8 *work;
+
+  GF_ASSERT(brs);
+
+  work = (u8*)brs;
+  return work;
+}
 
 #ifdef PM_DEBUG
 //--------------------------------------------------------------
