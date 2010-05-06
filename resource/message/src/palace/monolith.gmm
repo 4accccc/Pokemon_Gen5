@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-04T12:02:34"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T11:51:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1062" top="411" right="1767" bottom="1039" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="205" right="2029" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="479" top="576" right="952" bottom="1200" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="479" top="400" right="952" bottom="1024" visible="yes"/>
+		<band id="0" index="0" style="0000" width="568"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="735"/>
+		<band id="3" index="3" style="0000" width="735"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -383,13 +383,13 @@
 	<row id="msg_mono_mis_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション画面</comment>
 		<language name="JPN" width="256">ミッションを　じっしちゅう</language>
-		<language name="JPN_KANJI" width="256">ミッションを　じっし中</language>
+		<language name="JPN_KANJI" width="256">ミッションを　実施中</language>
 	</row>
 
 	<row id="msg_mono_mis_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション画面</comment>
 		<language name="JPN" width="256">ミッションを　かいし　します！</language>
-		<language name="JPN_KANJI" width="256">ミッションを　開始　します！</language>
+		<language name="JPN_KANJI" width="256">ミッションを　開始します！</language>
 	</row>
 
 	<row id="msg_mono_mis_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -411,7 +411,7 @@
 	<row id="msg_mono_mis_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション画面</comment>
 		<language name="JPN" width="256">ミッションを　えらんでください</language>
-		<language name="JPN_KANJI" width="256">ミッションを　選んで下さい</language>
+		<language name="JPN_KANJI" width="256">ミッションを　選んでください</language>
 	</row>
 
 	<row id="msg_mono_mis_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -503,11 +503,11 @@
 		<language name="JPN" width="256">『[1:1C:簡易会話単語:0]』　を
 ハイルツリーから　うけとった！▼
 うけとった『[1:1C:簡易会話単語:0]』を
-C-GEARに　とうろくした！</language>
+Ｃギアに　とうろくした！</language>
 		<language name="JPN_KANJI" width="256">『[1:1C:簡易会話単語:0]』　を
 ハイルツリーから　受け取った！▼
 受け取った『[1:1C:簡易会話単語:0]』を
-C-GEARに　登録した！</language>
+Ｃ－ＧＥＡＲに　登録した！</language>
 	</row>
 
 	<row id="msg_mono_pow_012" back-color="#ffff80,,,,,,,,,,,,,,,,,">
