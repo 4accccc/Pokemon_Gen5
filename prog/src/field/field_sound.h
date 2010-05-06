@@ -14,11 +14,16 @@
 #include "gamesystem/game_event.h"    // for GMEVENT
 #include "gamesystem/iss_sys.h"       // for ISS_SYS
 #include "field_sound_proc.h"         // for FIELD_SOUND
+#include "field_sound_system.h"       // for FIELD_SOUND_xxxx
 
 
 //=================================================================================
 // ■定数
 //================================================================================= 
+#define MAX_VOLUME       (127)         // 最大ボリューム
+#define APP_HOLD_VOLUME  (64)          // アプリ時のボリューム
+#define APP_FADE_FRAME   (6)           // アプリ時のフェード フレーム数
+
 // フェード フレーム数
 #define FSND_FADE_NONE   (0)                 // 無
 #define FSND_FADE_FAST   (PMSND_FADE_FAST)   // 短
@@ -86,8 +91,14 @@ extern void FSND_ReleaseBGMVolume_fromApp( FIELD_SOUND* fieldSound, ISS_SYS* iss
 
 // アプリ内での操作
 // ※プレイヤーボリュームのみを操作します。
-extern void FSND_HoldBGMVolume_inApp   ( FIELD_SOUND* fieldSound );
-extern void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound );
+inline void FSND_HoldBGMVolume_inApp( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, APP_HOLD_VOLUME, 0 );  
+}
+inline void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, 0 );  
+}
 
 
 //=================================================================================
@@ -104,20 +115,43 @@ extern u32 FSND_GetTrainerEyeBGM( u32 trType );
 // ■環境音
 //=================================================================================
 // 環境音の再生
-extern void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
-extern void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol );
+inline void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
+{
+  FIELD_SOUND_PlayEnvSE( fieldSound, soundIdx );
+}
+inline void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
+{
+  FIELD_SOUND_PlayEnvSEVol( fieldSound, soundIdx, vol );
+}
 // 環境音のボリューム操作
-extern void FSND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol );
+inline void FSND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
+{
+  FIELD_SOUND_SetEnvSEVol( fieldSound, soundIdx, vol );
+}
 // 環境音の停止
-extern void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx );
+inline void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
+{
+  FIELD_SOUND_StopEnvSE( fieldSound, soundIdx );
+}
 // 環境音の一時停止
-extern void FSND_PauseEnvSE( FIELD_SOUND* fieldSound );
+inline void FSND_PauseEnvSE( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_PauseEnvSE( fieldSound );
+}
 // 環境音の再始動
-extern void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound );
+inline void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_RePlayEnvSE( fieldSound );
+}
 
 //=================================================================================
 // ■TVトランシーバー着信音
 //=================================================================================
-extern void FSND_RequestTVTRingTone( FIELD_SOUND* fieldSound );
-extern void FSND_StopTVTRingTone( FIELD_SOUND* fieldSound );
-
+inline void FSND_RequestTVTRingTone( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_PlayTVTRingTone( fieldSound );
+}
+inline void FSND_StopTVTRingTone( FIELD_SOUND* fieldSound )
+{
+  FIELD_SOUND_StopTVTRingTone( fieldSound );
+} 

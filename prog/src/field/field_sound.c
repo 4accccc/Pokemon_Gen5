@@ -21,9 +21,6 @@
 // ■定数
 //================================================================================= 
 #define SPECIAL_BGM_NONE (0xffffffff)  // 特殊BGMなし
-#define MAX_VOLUME       (127)         // 最大ボリューム
-#define APP_HOLD_VOLUME  (64)          // アプリ時のボリューム
-#define APP_FADE_FRAME   (6)           // アプリ時のフェード フレーム数
 
 
 //================================================================================= 
@@ -1176,6 +1173,7 @@ void FSND_ReleaseBGMVolume_fromApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
   FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, APP_FADE_FRAME );
 }
 
+#if 0
 //---------------------------------------------------------------------------------
 /**
  * @brief アプリ内における BGMボリューム操作 ( 下げる場合 )
@@ -1201,6 +1199,7 @@ void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
   // プレイヤーボリュームを即時設定
   FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, 0 );  
 }
+#endif
 
 
 //=================================================================================
@@ -1374,6 +1373,7 @@ static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
 //=================================================================================
 // ■環境音
 //=================================================================================
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  環境音の再生
@@ -1452,10 +1452,12 @@ void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound )
 {
   FIELD_SOUND_RePlayEnvSE( fieldSound );
 }
+#endif
 
 //=================================================================================
 // ■TVトランシーバー着信音
 //=================================================================================
+#if 0
 //-----------------------------------------------------------------------------
 /**
  * @brief TVトランシーバー着信音リクエスト
@@ -1479,4 +1481,4 @@ void FSND_StopTVTRingTone( FIELD_SOUND* fieldSound )
 {
   FIELD_SOUND_StopTVTRingTone( fieldSound );
 }
-
+#endif
