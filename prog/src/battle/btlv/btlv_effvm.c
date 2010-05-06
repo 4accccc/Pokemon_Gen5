@@ -99,7 +99,8 @@ typedef struct{
   u32               window_move_flag      :1;     //ウインドウ操作フラグ
   u32               volume_down_flag      :1;     //ボリュームダウン中かどうかフラグ
   u32               volume_already_down   :1;     //すでにボリュームダウンだったフラグ
-  u32                                     :21;
+  u32               nakigoe_wait_flag     :1;     //鳴き声再生ウエイト中
+  u32                                     :20;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -236,6 +237,20 @@ typedef struct
   fx32              vec_vol;
   int               tcb_index;
 }BTLV_EFFVM_CHANGE_VOLUME;
+
+//鳴き声再生
+typedef struct
+{ 
+  BTLV_EFFVM_WORK*  bevw;
+  BtlvMcssPos       pos;
+  int               pitch;
+  int               volume;
+  int               chorus_vol;
+  int               chorus_speed;
+  BOOL              play_dir;
+  int               wait;
+  int               tcb_index;
+}BTLV_EFFVM_NAKIGOE;
 
 //SPAデータ（SPAに含まれるsprの数を取りたい）
 typedef struct
@@ -376,10 +391,12 @@ static  int           EFFVM_GetTcbIndex( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw );
 static  ARCDATID      EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID );
 static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame );
+static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_NAKIGOE( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work );
@@ -3249,28 +3266,57 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
   //立ち位置情報がないときは、コマンド実行しない
   if( pos_cnt )
   {
-    int i;
-
-    for( i = 0 ; i < pos_cnt ; i++ )
-    {
-      bevw->voiceplayerIndex[ i ] = BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), pos[ i ], pitch, volume,
-                                                         chorus_vol, chorus_speed, play_dir );
-    }
-    //BGMのマスターボリュームを下げる
-    {
-      fx32  start_vol = 127 << FX32_SHIFT;
-#ifdef KAGEYAMA_DEBUG
-      fx32  end_vol = ( 127 * volume_down_ratio_pv / 100 ) << FX32_SHIFT;
-      int   frame = volume_down_frame_pv;
-#else
-      fx32  end_vol = EFFVM_CHANGE_VOLUME_PV;
-      int   frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME_PV;
-#endif
-      EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
-    }
-    if( bevw->volume_already_down == 0 )
+    if( wait == 0 )
     { 
-      GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, bevw, 0 );
+      int i;
+
+      for( i = 0 ; i < pos_cnt ; i++ )
+      {
+        int index = EFFVM_GetVoicePlayerIndex( bevw );
+        bevw->voiceplayerIndex[ index ] = BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), pos[ i ], pitch, volume,
+                                                               chorus_vol, chorus_speed, play_dir );
+      }
+      //BGMのマスターボリュームを下げる
+      {
+        fx32  start_vol = 127 << FX32_SHIFT;
+#ifdef KAGEYAMA_DEBUG
+        fx32  end_vol = ( 127 * volume_down_ratio_pv / 100 ) << FX32_SHIFT;
+        int   frame = volume_down_frame_pv;
+#else
+        fx32  end_vol = EFFVM_CHANGE_VOLUME_PV;
+        int   frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME_PV;
+#endif
+        EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
+      }
+      if( bevw->volume_already_down == 0 )
+      { 
+        GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, bevw, 0 );
+      }
+    }
+    else
+    { 
+      int i;
+
+      for( i = 0 ; i < pos_cnt ; i++ )
+      { 
+        BTLV_EFFVM_NAKIGOE*  ben = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_NAKIGOE ) );
+        ben->bevw         = bevw;
+        ben->pos          = pos[ i ];
+        ben->pitch        = pitch;
+        ben->volume       = volume;
+        ben->chorus_vol   = chorus_vol;
+        ben->chorus_speed = chorus_speed;
+        ben->play_dir     = play_dir;
+        ben->wait         = wait;
+
+        bevw->nakigoe_wait_flag = 1;
+
+        ben->tcb_index = EFFVM_GetTcbIndex( bevw );
+
+        bevw->tcb[ ben->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NAKIGOE, ben, 0 );
+
+      }
+
     }
   }
 
@@ -3870,6 +3916,10 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     int i;
     for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
     {
+      if( bevw->nakigoe_wait_flag )
+      { 
+        return FALSE;
+      }
       if( bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
       { 
         if( PMVOICE_CheckPlay( bevw->voiceplayerIndex[ i ] ) )
@@ -5484,6 +5534,37 @@ static  void  EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 en
   bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  voicePlayIndexの空いているINDEXを返す
+ *
+ *  @param[in]  bevw      システム管理構造体
+ *
+ *  @retval ARCDATID  オフセット計算をしたARCDATID
+ */
+//-----------------------------------------------------------------------------
+static  int EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw )
+{ 
+  int i;
+
+  for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+  { 
+    if( bevw->voiceplayerIndex[ i ] == EFFVM_VOICEPLAYER_INDEX_NONE )
+    { 
+      break;
+    }
+  }
+
+  //マックスオーバー
+  GF_ASSERT( i != TEMOTI_POKEMAX );
+  if( i == TEMOTI_POKEMAX )
+  { 
+    i = 0;
+  }
+
+  return i;
+}
+
 //TCB関数
 //============================================================================================
 /**
@@ -5610,6 +5691,43 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
     bes->bevw->se_effect_enable_flag = 0;
     bes->bevw->tcb[ bes->tcb_index ] = NULL;
     GFL_HEAP_FreeMemory( bes );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief 鳴き声再生
+ */
+//============================================================================================
+static  void  TCB_EFFVM_NAKIGOE( GFL_TCB* tcb, void* work )
+{
+  BTLV_EFFVM_NAKIGOE* ben = ( BTLV_EFFVM_NAKIGOE* )work;
+
+  if( --ben->wait == 0 )
+  {
+    int index = EFFVM_GetVoicePlayerIndex( ben->bevw );
+    ben->bevw->nakigoe_wait_flag = 0;
+    ben->bevw->tcb[ ben->tcb_index ] = NULL;
+    ben->bevw->voiceplayerIndex[ index ] = BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), ben->pos, ben->pitch, ben->volume,
+                                                                ben->chorus_vol, ben->chorus_speed, ben->play_dir );
+    //BGMのマスターボリュームを下げる
+    {
+      fx32  start_vol = 127 << FX32_SHIFT;
+#ifdef KAGEYAMA_DEBUG
+      fx32  end_vol = ( 127 * volume_down_ratio_pv / 100 ) << FX32_SHIFT;
+      int   frame = volume_down_frame_pv;
+#else
+      fx32  end_vol = EFFVM_CHANGE_VOLUME_PV;
+      int   frame = EFFVM_CHANGE_VOLUME_DOWN_FRAME_PV;
+#endif
+      EFFVM_ChangeVolume( ben->bevw, start_vol, end_vol, frame );
+    }
+    if( ben->bevw->volume_already_down == 0 )
+    { 
+      GFL_TCB_AddTask( ben->bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, ben->bevw, 0 );
+    }
+    GFL_HEAP_FreeMemory( ben );
     GFL_TCB_DeleteTask( tcb );
   }
 }
