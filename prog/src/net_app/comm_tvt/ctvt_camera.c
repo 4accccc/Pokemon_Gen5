@@ -214,6 +214,12 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   const BOOL isDouble = COMM_TVT_IsDoubleMode( work );
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
 
+  if( COMM_TVT_GetConnectNum(work) < 2 )
+  {
+    //Œq‚ª‚é‚Ü‚Åo‚³‚È‚¢
+    return;
+  }
+
   if( mode == CTDM_SINGLE )
   {
     if( camWork->isUpdateBit != 0 )
@@ -428,6 +434,12 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
 
   if( COMM_TVT_GetSusspend(work) == TRUE )
   {
+    return;
+  }
+  
+  if( COMM_TVT_GetConnectNum(work) < 2 )
+  {
+    //Œq‚ª‚é‚Ü‚Åo‚³‚È‚¢
     return;
   }
 

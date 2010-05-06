@@ -326,7 +326,10 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     }
     break;
   case CTM_ERROR: //終了
-    return TRUE;
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      return TRUE;
+    }
     break;
   }
   
@@ -758,8 +761,11 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
   case CTM_DRAW: //落書き
     CTVT_DRAW_InitMode( work , work->drawWork );
     break;
-  case CTM_END: //終了
   case CTM_ERROR: //終了
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    //break throught;
+  case CTM_END: //終了
     CTVT_COMM_ExitComm( work , work->commWork );
     break;
   }

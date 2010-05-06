@@ -366,11 +366,15 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     if( initWork->mode == CTM_CHILD ||
         initWork->mode == CTM_WIFI )
     {
-      //CGEARから呼び出しできた。
-      GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
-      CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
-      callWork->reqDispTimeIcon = TRUE;
-      callWork->barState = CCBS_JOIN_PARENT_DIRECT;
+      if( COMM_TVT_IsReqWarn( work ) == FALSE )
+      {
+        //ペアコンある時は出さない
+        //CGEARから呼び出しできた。
+        GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
+        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
+        callWork->reqDispTimeIcon = TRUE;
+        callWork->barState = CCBS_JOIN_PARENT_DIRECT;
+      }
     }
     else
     {
@@ -706,7 +710,10 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       {
         //CGEARから呼び出しできた。
         GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
-        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
+        if( COMM_TVT_GetConnectNum( work ) < 2 )
+        {
+          CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
+        }
         callWork->reqDispTimeIcon = TRUE;
         callWork->barState = CCBS_JOIN_PARENT_DIRECT;
         callWork->state = CCS_WAIT_CONNECT_JOIN_DIRECT;

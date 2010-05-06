@@ -76,7 +76,7 @@
 #define CTVT_FONT_COLOR_NAME   (PRINTSYS_MACRO_LSB(1,0xf,0))
 
 #define CTVT_BMPWIN_CGX_MAIN (32*16)
-#define CTVT_BMPWIN_CGX (32*12)
+#define CTVT_BMPWIN_CGX (32*10)
 
 //スクリーンのバッファサイズ
 #define CTVT_BUFFER_SCR_SIZE (256*192*2)  //0x18000
