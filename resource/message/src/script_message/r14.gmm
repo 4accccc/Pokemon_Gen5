@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T13:08:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T15:46:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
+		<tag-palette left="681" top="123" right="1154" bottom="521" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -501,23 +501,43 @@
 	<row id="msg_r14_sign2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">ちょっぴり
-おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
-・仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">ちょっぴり
-お得な　掲示板！[BE:01:ページ切り替え（クリア）]
-・仮メッセージ</language>
+		<language name="JPN" width="256">おとくな　けいじばん！
+[BE:01:ページ切り替え（クリア）]
+パソコンの　ボックスは
+さいだい　２４こまで　ふえます！[BE:01:ページ切り替え（クリア）]
+つまり　７２０ひき
+あずけることが　できます！</language>
+		<language name="JPN_KANJI" width="256">おとくな　けいじばん！
+[BE:01:ページ切り替え（クリア）]
+パソコンの　ボックスは
+最大　２４個まで　増えます！[BE:01:ページ切り替え（クリア）]
+つまり　７２０匹
+預けることが　できます！</language>
 	</row>
 
-	<row id="msg_r14_sign3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_r14_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">ちょっぴり
 おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
-・仮メッセージ</language>
+トレーナーカードで
+かたがきを　へんこう　すると[BE:01:ページ切り替え（クリア）]
+ユニオンルームや
+ライブつうしんで[BE:01:ページ切り替え（クリア）]
+たにんから　みたときの　みためが
+かたがきどおりに　なります！[BE:01:ページ切り替え（クリア）]
+じこしょうかいや　せいかくに　あわせ
+あなたの　こせいを　アピールしましょう</language>
 		<language name="JPN_KANJI" width="256">ちょっぴり
 お得な　掲示板！[BE:01:ページ切り替え（クリア）]
-・仮メッセージ</language>
+トレーナーカードで
+肩書きを　変更すると[BE:01:ページ切り替え（クリア）]
+ユニオンルームや
+ライブ通信で[BE:01:ページ切り替え（クリア）]
+他人から　みたときの　みためが
+肩書きどおりに　なります！[BE:01:ページ切り替え（クリア）]
+自己紹介や　性格に　あわせ
+あなたの　個性を　アピールしましょう</language>
 	</row>
 
 	<flowchart-group-list>
