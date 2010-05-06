@@ -607,6 +607,7 @@ static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
 static BOOL scproc_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
 static BOOL scproc_ChangeWeatherCheck( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
 static void scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
+static void scproc_ChangeWeatherAfter( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 static u8 scEvent_WazaWeatherTurnUp( BTL_SVFLOW_WORK* wk, BtlWeather weather, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn );
 static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam );
@@ -8327,12 +8328,17 @@ static void scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u
 {
   BTL_FIELD_SetWeather( weather, turn );
   SCQUE_PUT_ACT_WeatherStart( wk->que, weather );
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    scEvent_AfterChangeWeather( wk, weather );
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
-  }
+  scproc_ChangeWeatherAfter( wk, weather );
+}
+/**
+ *  天候変化直後イベント呼び出し
+ */
+static void scproc_ChangeWeatherAfter( BTL_SVFLOW_WORK* wk, BtlWeather weather )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+  scEvent_AfterChangeWeather( wk, weather );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -8961,6 +8967,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
   if( weather != BTL_WEATHER_NONE )
   {
     SCQUE_PUT_ACT_WeatherEnd( wk->que, weather );
+    scproc_ChangeWeatherAfter( wk, BTL_WEATHER_NONE );
     return;
   }
   // 天候が継続
