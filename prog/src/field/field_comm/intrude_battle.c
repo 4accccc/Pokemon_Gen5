@@ -20,6 +20,12 @@
 #include "field/intrude_snd_def.h"
 #include "poke_tool/pokeparty.h"
 
+#include "gamesystem/game_event.h"
+#include "field/field_sound.h"
+#include "field/event_fieldmap_control.h"
+#include "field/fieldmap.h"
+#include "field/enceff.h"
+
 
 //==============================================================================
 //  構造体定義
@@ -32,6 +38,11 @@ typedef struct{
   POKEPARTY *pokeparty;
 }INTRUDE_BATTLE_SYS;
 
+typedef struct{
+  GAMESYS_WORK *gsys;
+  INTRUDE_BATTLE_PARENT *p_ibp;
+}EVENT_INTRUDEBATTLE_CALL;
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -40,11 +51,13 @@ static GFL_PROC_RESULT IntrudeBattleProc_Init(GFL_PROC * proc, int * seq, void *
 static GFL_PROC_RESULT IntrudeBattleProc_Main(GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static GFL_PROC_RESULT IntrudeBattleProc_End(GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 
+static GMEVENT_RESULT EventIntrudeBattle_CallBattle( GMEVENT* event, int* seq, void* wk );
+
 
 //==============================================================================
 //  データ
 //==============================================================================
-const GFL_PROC_DATA IntrudeBattleProcData = {
+static const GFL_PROC_DATA IntrudeBattleProcData = {
   IntrudeBattleProc_Init,
   IntrudeBattleProc_Main,
   IntrudeBattleProc_End,
@@ -190,3 +203,94 @@ static GFL_PROC_RESULT IntrudeBattleProc_End( GFL_PROC * proc, int * seq, void *
   return GFL_PROC_RES_FINISH;
 }
 
+
+//==============================================================================
+//
+//  バトル呼び出しイベント：常駐に配置すべき共通イベント部分
+//
+//==============================================================================
+//---------------------------------------------------------------------------------
+/**
+ * @brief バトル呼び出しイベント：常駐に配置すべき共通イベント部分
+ *
+ * @param gameSystem
+ * @param soundIdx   再生する戦闘BGM
+ * 
+ * @return BGM 退避イベント
+ */
+//---------------------------------------------------------------------------------
+GMEVENT* EVENT_IntrudeBattle_CallBattle( GAMESYS_WORK* gsys, INTRUDE_BATTLE_PARENT *ibp )
+{
+  GMEVENT* event;
+  EVENT_INTRUDEBATTLE_CALL *eic;
+
+  event = GMEVENT_Create( 
+    gsys, NULL, EventIntrudeBattle_CallBattle, sizeof(EVENT_INTRUDEBATTLE_CALL) );
+  eic = GMEVENT_GetEventWork( event );
+  eic->p_ibp = ibp;
+  eic->gsys = gsys;
+  return event;
+} 
+//---------------------------------------------------------------------------------
+/**
+ * @brief バトル呼び出しイベント：常駐に配置すべき共通イベント部分
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT EventIntrudeBattle_CallBattle( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_INTRUDEBATTLE_CALL *eic = wk;
+	FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(eic->gsys);
+  enum{
+    SEQ_BATTLE_BGM,
+    SEQ_ENCEFF,
+    SEQ_FIELD_CLOSE,
+    SEQ_BATTLE_PROC,
+    SEQ_BATTLE_AFTER,
+    SEQ_FIELD_OPEN,
+    SEQ_BGM_POP_WAIT,
+    SEQ_FADEIN_WAIT,
+  };
+
+  switch( *seq ) {
+  case SEQ_BATTLE_BGM:
+    // 戦闘用ＢＧＭセット
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(eic->gsys, SND_INTRUDE_BATTLE_BGM));
+    (*seq)++;
+    break;
+  case SEQ_ENCEFF:
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldWork), event, ENCEFFID_TR_NORMAL);
+    (*seq)++;
+    break;
+  case SEQ_FIELD_CLOSE:
+    // フィールドマップ終了
+    GMEVENT_CallEvent(event, EVENT_FieldClose(eic->gsys, fieldWork));
+    (*seq)++;
+    break;
+  case SEQ_BATTLE_PROC:
+    GMEVENT_CallProc(event, NO_OVERLAY_ID, &IntrudeBattleProcData, eic->p_ibp);
+	  (*seq)++;
+  	break;
+  case SEQ_BATTLE_AFTER:
+    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(eic->gsys));
+    (*seq)++;
+    break;
+  case SEQ_FIELD_OPEN:
+    GMEVENT_CallEvent(event, EVENT_FieldOpen(eic->gsys));
+    (*seq)++;
+    break;
+  case SEQ_BGM_POP_WAIT:
+    // BGMの復帰待ち
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( eic->gsys ) );
+    (*seq)++;
+    break;
+  case SEQ_FADEIN_WAIT:
+    GMEVENT_CallEvent( 
+      event, EVENT_FieldFadeIn_Black( eic->gsys, fieldWork, FIELD_FADE_WAIT ) );
+    (*seq)++;
+    break;
+
+  default:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+} 

@@ -18,7 +18,8 @@ typedef struct{
   u8 padding[2];
 }INTRUDE_BATTLE_PARENT;
 
+
 //==============================================================================
-//  外部データ
+//  外部関数宣言
 //==============================================================================
-extern const GFL_PROC_DATA IntrudeBattleProcData;
+extern GMEVENT* EVENT_IntrudeBattle_CallBattle( GAMESYS_WORK* gsys, INTRUDE_BATTLE_PARENT *ibp );

@@ -175,13 +175,19 @@ static const struct{
 //==================================================================
 void EVENTCHANGE_CommMissionBattle_MtoT_Talk(GMEVENT *event, const COMMTALK_COMMON_EVENT_WORK *ccew)
 {
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   EVENT_MISSION_BATTLE *talk;
+  const MISSION_TYPEDATA_VICTORY *d_vic = (void*)ccew->mdata.cdata.data;
   
   GMEVENT_Change(event, CommMissionBattle_MtoT_Talk, sizeof(EVENT_MISSION_BATTLE));
 	talk = GMEVENT_GetEventWork( event );
   GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 
   talk->first_talked = FALSE;
+
+  talk->ibp.gsys = gsys;
+  talk->ibp.target_netid = ccew->talk_netid;
+  talk->ibp.flat_level = d_vic->battle_level;
 }
 
 //--------------------------------------------------------------
@@ -198,7 +204,6 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
-  const MISSION_TYPEDATA_VICTORY *d_vic = (void*)talk->ccew.mdata.cdata.data;
 	enum{
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
@@ -207,10 +212,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     SEQ_RECV_WAIT,
     SEQ_BATTLE_START_WAIT,
     SEQ_BATTLE_START_TIMING_WAIT,
-    SEQ_BATTLE_BGM,
-    SEQ_ENCEFF,
-    SEQ_BATTLE_PROC,
-    SEQ_BATTLE_AFTER,
+    SEQ_BATTLE_COMMON_EVENT,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
     SEQ_TALK_CANCEL,
@@ -300,32 +302,13 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       (*seq)++;
     }
     break;
-  case SEQ_BATTLE_BGM:
-    // 戦闘用ＢＧＭセット
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, SND_INTRUDE_BATTLE_BGM));
+
+  case SEQ_BATTLE_COMMON_EVENT:
+    // 侵入通信対戦：共通イベント呼び出し
+    GMEVENT_CallEvent(event, EVENT_IntrudeBattle_CallBattle( gsys, &talk->ibp ));
     (*seq)++;
     break;
-  case SEQ_ENCEFF:
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(talk->ccew.fieldWork), event, ENCEFFID_TR_NORMAL);
-    (*seq)++;
-    break;
-  case SEQ_BATTLE_PROC:
-    {
-      GMEVENT *child_event;
-      
-      talk->ibp.gsys = gsys;
-      talk->ibp.target_netid = talk->ccew.talk_netid;
-      talk->ibp.flat_level = d_vic->battle_level;
-      child_event = EVENT_FieldSubProc(
-        gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
-      GMEVENT_CallEvent(event, child_event);
-    }
-	  *seq = SEQ_BATTLE_AFTER;
-  	break;
-  case SEQ_BATTLE_AFTER:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
-    (*seq)++;
-    break;
+
   case SEQ_BATTLE_AFTER_NEXT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
@@ -378,13 +361,19 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
 //==================================================================
 void EVENTCHANGE_CommMissionBattle_TtoM_Talk(GMEVENT *event, const COMMTALK_COMMON_EVENT_WORK *ccew)
 {
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   EVENT_MISSION_BATTLE *talk;
+  const MISSION_TYPEDATA_VICTORY *d_vic = (void*)ccew->mdata.cdata.data;
 
   GMEVENT_Change(event, CommMissionBattle_TtoM_Talk, sizeof(EVENT_MISSION_BATTLE));
 	talk = GMEVENT_GetEventWork( event );
   GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
   
   talk->first_talked = FALSE;
+
+  talk->ibp.gsys = gsys;
+  talk->ibp.target_netid = talk->ccew.talk_netid;
+  talk->ibp.flat_level = d_vic->battle_level;
 }
 
 //--------------------------------------------------------------
@@ -401,7 +390,6 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
-  const MISSION_TYPEDATA_VICTORY *d_vic = (void*)talk->ccew.mdata.cdata.data;
 	enum{
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
@@ -410,10 +398,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     SEQ_BATTLE_YES_MSG,
     SEQ_BATTLE_YES_WAIT,
     SEQ_BATTLE_START_TIMING_WAIT,
-    SEQ_BATTLE_BGM,
-    SEQ_ENCEFF,
-    SEQ_BATTLE_PROC,
-    SEQ_BATTLE_AFTER,
+    SEQ_BATTLE_COMMON_EVENT,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
     SEQ_BATTLE_NG_MSG,
@@ -498,32 +483,13 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
       (*seq)++;
     }
     break;
-  case SEQ_BATTLE_BGM:
-    // 戦闘用ＢＧＭセット
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, SND_INTRUDE_BATTLE_BGM));
+
+  case SEQ_BATTLE_COMMON_EVENT:
+    // 侵入通信対戦：共通イベント呼び出し
+    GMEVENT_CallEvent(event, EVENT_IntrudeBattle_CallBattle( gsys, &talk->ibp ));
     (*seq)++;
     break;
-  case SEQ_ENCEFF:
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(talk->ccew.fieldWork), event, ENCEFFID_TR_NORMAL);
-    (*seq)++;
-    break;
-  case SEQ_BATTLE_PROC:
-    {
-      GMEVENT *child_event;
-      
-      talk->ibp.gsys = gsys;
-      talk->ibp.target_netid = talk->ccew.talk_netid;
-      talk->ibp.flat_level = d_vic->battle_level;
-      child_event = EVENT_FieldSubProc(
-        gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
-      GMEVENT_CallEvent(event, child_event);
-    }
-	  *seq = SEQ_BATTLE_AFTER;
-    break;
-  case SEQ_BATTLE_AFTER:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
-    (*seq)++;
-    break;
+
   case SEQ_BATTLE_AFTER_NEXT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
@@ -579,6 +545,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
 //==================================================================
 void EVENTCHANGE_CommMissionBattle_MtoT_Talked(GMEVENT *event, const COMMTALK_COMMON_EVENT_WORK *ccew)
 {
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  const MISSION_TYPEDATA_VICTORY *d_vic = (void*)ccew->mdata.cdata.data;
   EVENT_MISSION_BATTLE *talk;
   
   GMEVENT_Change(event, CommMissionBattle_MtoT_Talk, sizeof(EVENT_MISSION_BATTLE));
@@ -586,6 +554,10 @@ void EVENTCHANGE_CommMissionBattle_MtoT_Talked(GMEVENT *event, const COMMTALK_CO
   GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 
   talk->first_talked = TRUE;
+
+  talk->ibp.gsys = gsys;
+  talk->ibp.target_netid = talk->ccew.talk_netid;
+  talk->ibp.flat_level = d_vic->battle_level;
 }
 
 
@@ -602,6 +574,8 @@ void EVENTCHANGE_CommMissionBattle_MtoT_Talked(GMEVENT *event, const COMMTALK_CO
 //==================================================================
 void EVENTCHANGE_CommMissionBattle_TtoM_Talked(GMEVENT *event, const COMMTALK_COMMON_EVENT_WORK *ccew)
 {
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  const MISSION_TYPEDATA_VICTORY *d_vic = (void*)ccew->mdata.cdata.data;
   EVENT_MISSION_BATTLE *talk;
 
   GMEVENT_Change(event, CommMissionBattle_TtoM_Talk, sizeof(EVENT_MISSION_BATTLE));
@@ -609,5 +583,9 @@ void EVENTCHANGE_CommMissionBattle_TtoM_Talked(GMEVENT *event, const COMMTALK_CO
   GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
   
   talk->first_talked = TRUE;
+
+  talk->ibp.gsys = gsys;
+  talk->ibp.target_netid = talk->ccew.talk_netid;
+  talk->ibp.flat_level = d_vic->battle_level;
 }
 

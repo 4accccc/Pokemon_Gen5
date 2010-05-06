@@ -36,10 +36,8 @@
 #include "rail_editor.h"
 #include "script.h"     //SCRIPT_SetEventScript
 #include "net_app/union/union_event_check.h"
-#include "event_comm_talk.h"      //EVENT_CommTalk
-#include "event_comm_talked.h"      //EVENT_CommWasTalkedTo
 #include "event_comm_common.h"
-#include "event_comm_result.h"      //EVENT_CommWasTalkedTo
+#include "event_comm_result.h"
 #include "event_rail_slipdown.h"    //EVENT_RailSlipDown
 #include "event_intrude_subscreen.h"
 #include "event_subscreen.h"      //EVENT_ChangeSubScreen
