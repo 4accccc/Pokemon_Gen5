@@ -191,6 +191,21 @@ extern void
   GFL_STR_SetStringCodeOrderLength
     ( STRBUF* strbuf, const STRCODE* str, u32 len );
 
+
+//------------------------------------------------------------------
+/**
+ * 生の暗号化された文字列をバッファオブジェクトにセットする
+ *
+ * @param   strbuf    [out] バッファオブジェクトへのポインタ
+ * @param   str       [in]  暗号化された文字配列の先頭ポインタ
+ * @param   len       [in]  セットする文字数（EOMを含む）
+ *
+ */
+//------------------------------------------------------------------
+extern void
+  GFL_STR_SetEncodedString
+    ( STRBUF* strbuf, const STRCODE* str, u32 len );
+
 //------------------------------------------------------------------
 /**
  * バッファから生の文字配列をコピーする
