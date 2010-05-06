@@ -272,6 +272,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
             //i‰»ƒfƒ‚
 #ifndef DEBUG_DEMO_NONE
+            GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ));
+
             GAMESYSTEM_CallProc( wk->param->gamesys,
                 FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
 #endif
