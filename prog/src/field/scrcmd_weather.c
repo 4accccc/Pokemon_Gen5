@@ -63,6 +63,11 @@ VMCMD_RESULT EvCmdWeatherChange( VMHANDLE *core, void *wk )
   u16 weather_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
   u16 is_notenvse = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
 
+  // ゾーンの基本天気チェック
+  if( weather_no == SCR_WEATHER_NO_ZONE_DEF ){
+    weather_no = PM_WEATHER_GetZoneWeatherNo( gsys, FIELDMAP_GetZoneID( fieldWork ) );
+  }
+
   if(is_notenvse){
     // 通常SE再生で天気を起動
     FIELD_WEATHER_ChangeNotEnvSe( weather, weather_no );

@@ -9846,6 +9846,9 @@
  * @brief 天気変更    通常
  * @param weather_id  WEATHER_NO_RAIKAMI：ライカミ  WEATHER_NO_KAZAKAMI：カザカミ 
  * prog/include/field/weather_no.h　参照
+ *
+ * ゾーンの基本天気に戻す。
+ * SCR_WEATHER_NO_ZONE_DEF
  */
 //--------------------------------------------------------------
 #define _WEATHER_CHANGE( weather_id ) \
