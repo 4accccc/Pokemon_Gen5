@@ -512,6 +512,8 @@ struct _BTLV_INPUT_WORK
   u32                   demo_cursor_pos     :4;
   u32                   button_reaction     :1;
 
+  BOOL                  b_button_flag;
+
   int                   hit;
 
   BTLV_INPUT_DIR_PARAM  bidp[ 2 ][ BTLV_INPUT_DIR_MAX ];
@@ -1191,6 +1193,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   BTLV_INPUT_ClearScreen( biw );
 
   biw->seq_no = 0;
+  biw->b_button_flag = TRUE;
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
@@ -1391,6 +1394,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreateYesNoScreen( biw, ( const BTLV_INPUT_YESNO_PARAM * )param );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+      biw->b_button_flag = biyp->b_cancel_flag;
       GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2YesNo, ttw, 1 );
     }
     break;
@@ -1854,7 +1858,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
     int         i;
 
     //技タイプアイコン
-    hdl = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), biw->heapID );
+    hdl = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), GFL_HEAP_LOWID( biw->heapID ) );
     biw->wazatype_cellID = GFL_CLGRP_CELLANIM_Register( hdl,
                                                         APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_32K ),
                                                         APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_32K ),
@@ -2043,6 +2047,8 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
@@ -3684,7 +3690,7 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
 {
 #ifndef ROTATION_NEW_SYSTEM
   int i;
-  ARCHANDLE*  hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
+  ARCHANDLE*  hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID( biw->heapID ) );
 
   biw->pokeicon_cellID = GFL_CLGRP_CELLANIM_Register( hdl, POKEICON_GetCellSubArcIndex(), POKEICON_GetAnmSubArcIndex(),
                                                         biw->heapID );
@@ -3905,7 +3911,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     }
 #endif
 
-    hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
+    hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID( biw->heapID ) );
 
     biw->pokeicon_cellID = GFL_CLGRP_CELLANIM_Register( hdl, POKEICON_GetCellSubArcIndex(), POKEICON_GetAnmSubArcIndex(),
                                                         biw->heapID );
@@ -4362,6 +4368,12 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
   int trg = GFL_UI_KEY_GetTrg();
   BOOL decide_flag = FALSE;
 
+  //Bボタン無効ならBボタンを押していないことにする
+  if( biw->b_button_flag == FALSE )
+  { 
+    trg &= ( PAD_BUTTON_B ^ 0xffffffff );
+  }
+
   if( biw->cursor_decide )
   {
     biw->cursor_decide = 0;
@@ -4740,6 +4752,8 @@ static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 {
   if( biw->comp != BTL_COMPETITOR_COMM )
   {
+    OS_TPrintf("SEQ_SE_DECIDE2\n");
+    PMSND_StopSE();
     PMSND_PlaySE( SEQ_SE_DECIDE2 );
   }
 }

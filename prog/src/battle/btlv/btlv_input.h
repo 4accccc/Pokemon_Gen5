@@ -70,8 +70,9 @@ typedef struct{
 
 ///YES/NO選択画面構成用のSceneワーク
 typedef struct{
-  STRBUF*   yes_msg;    //YESに相当するメッセージ
-  STRBUF*   no_msg;     //NOに相当するメッセージ
+  STRBUF*   yes_msg;        //YESに相当するメッセージ
+  STRBUF*   no_msg;         //NOに相当するメッセージ
+  BOOL      b_cancel_flag;  //Bキャンセル有効か無効か？
 }BTLV_INPUT_YESNO_PARAM;
 
 enum
