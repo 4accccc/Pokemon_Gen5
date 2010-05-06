@@ -10215,7 +10215,6 @@ static void handler_CombiWaza_TypeMatch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   {
     if( work[0] )
     {
-      TAYA_Printf("合体ワザ発動につき、かならずタイプ一致あつかい\n");
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
   }
