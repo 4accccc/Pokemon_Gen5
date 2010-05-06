@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T18:09:30"/>
+	<create user="morimoto" host="W00220" date="2010-05-06T22:28:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="113" right="1985" bottom="741" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="yes"/>
+		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -313,7 +313,7 @@
 レポートを　書きます</language>
 	</row>
 
-	<row id="msg_c04r0111_03">
+	<row id="msg_c04r0111_03" back-color=",,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">おめでとう　ございます！
 みごと　７にんぬき　たっせいです！[BE:01:ページ切り替え（クリア）]
 ７にんぬきを　たっせい　しましたので
@@ -324,7 +324,7 @@
 バトルポイントを　進呈します！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0111_04">
+	<row id="msg_c04r0111_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
 ７れんしょうを　たっせいし
 みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
@@ -337,42 +337,42 @@
 進呈いたします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04r0111_05">
+	<row id="msg_c04r0111_05" back-color=",,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">そして　[1:00:トレーナー名:0]さまは
 スーパーシングルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
-できるように　なりました！</language>
+できるように　なりました！▼</language>
 		<language name="JPN_KANJI" width="256">そして　[1:00:トレーナー名:0]さまは
 スーパーシングルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
-できるように　なりました！</language>
+できるように　なりました！▼</language>
 	</row>
 
-	<row id="msg_c04r0111_06">
+	<row id="msg_c04r0111_06" back-color=",,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">そして　[1:00:トレーナー名:0]さまは
 スーパーダブルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
-できるように　なりました！</language>
+できるように　なりました！▼</language>
 		<language name="JPN_KANJI" width="256">そして　[1:00:トレーナー名:0]さまは
 スーパーダブルトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
-できるように　なりました！</language>
+できるように　なりました！▼</language>
 	</row>
 
-	<row id="msg_c04r0111_07">
+	<row id="msg_c04r0111_07" back-color=",,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">そして　[1:00:トレーナー名:0]さまは
 スーパーマルチトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
-できるように　なりました！</language>
+できるように　なりました！▼</language>
 		<language name="JPN_KANJI" width="256">そして　[1:00:トレーナー名:0]さまは
 スーパーマルチトレインに　チャレンジ[BE:00:ページ切り替え（行送り）]
-できるように　なりました！</language>
+できるように　なりました！▼</language>
 	</row>
 
-	<row id="msg_c04r0111_08">
+	<row id="msg_c04r0111_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">そして　みごと　サブウェイマスターを
 たおしましたので[BE:01:ページ切り替え（クリア）]
 きねんに　トロフィを　さしあげます
-ごじたくに　おかざり　ください！</language>
+ごじたくに　おかざり　ください！▼</language>
 		<language name="JPN_KANJI" width="256">そして　みごと　サブウェイマスターに
 勝利しましたので[BE:01:ページ切り替え（クリア）]
 記念に　トロフィを　さしあげます
-ご自宅に　お飾りください！</language>
+ご自宅に　お飾りください！▼</language>
 	</row>
 
 	<row id="msg_c04r0111_09">
@@ -430,9 +430,9 @@
 		<language name="JPN_KANJI" width="256">ライモンシティに　もどりますか？</language>
 	</row>
 
-	<row id="msg_c04r0111_14">
-		<language name="JPN" width="256">では　ライモンシティへ　もどります</language>
-		<language name="JPN_KANJI" width="256">では　ライモンシティへ　もどります</language>
+	<row id="msg_c04r0111_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">では　ライモンシティへ　もどります▼</language>
+		<language name="JPN_KANJI" width="256">では　ライモンシティへ　もどります▼</language>
 	</row>
 
 	<row id="msg_c04r0111_15">
@@ -477,9 +477,9 @@
 	<row id="msg_c04r0111_21">
 		<comment>WiFi</comment>
 		<language name="JPN" width="256">そして　[1:00:トレーナー名:0]さんは
-ランク[2:01:２桁:1]に　なりました！</language>
+ランク[2:01:２桁:1]に　なりました！▼</language>
 		<language name="JPN_KANJI" width="256">そして　[1:00:トレーナー名:0]さんは
-ランク[2:01:２桁:1]に　なりました！</language>
+ランク[2:01:２桁:1]に　なりました！▼</language>
 	</row>
 
 	<row id="msg_c04r0111_22">
@@ -1832,7 +1832,7 @@ no.206
 		<language name="JPN_KANJI" width="256">オレも　アンタも　１００連勝
 オレもヒマだが　アンタも　ヒマねえ▼
 そんな　同類の　アンタに
-お近づきの　記念だ　取っとけよ</language>
+お近づきの　記念だ　取っとけよ▼</language>
 	</row>
 
 	<row id="msg_c04r0111_businessman_4_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
