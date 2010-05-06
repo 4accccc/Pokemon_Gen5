@@ -309,3 +309,4 @@
   ARCID_GF_LOGO_MOVIE   "gf_logo_movie.narc" # ゲームフリークロゴムービー
   ARCID_OP_DEMO2_MOVIE  "op_demo2.narc" # オープニングムービー２
   ARCID_SYMBOL_LV  "symbol_lv_tbl.narc" # シンボルポケモンの出現レベルテーブル
+  ARCID_T01_GMK "fieldmap/t01_gmk.narc" # T01ギミックアーカイブ
