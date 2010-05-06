@@ -1190,23 +1190,8 @@ void BTLV_StartWazaInfoView( BTLV_CORE* wk, u8 pokeIdx, u8 wazaIdx )
 {
   SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_WAZAINFO, pokeIdx, 0 );
   wk->plistData.sel_wp = wazaIdx;
-  TAYA_Printf(" View : wazaInfo-idx=%d\n", wk->plistData.sel_wp );
   wk->selectItemSeq = 0;
 }
-//=============================================================================================
-/**
- * ワザ説明画面（ショートカット）終了待ち
- *
- * @param   wk
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTLV_WaitWazaInfoView( BTLV_CORE* wk )
-{
-  return BTLV_WaitPokeSelect( wk );
-}
-
 
 //=============================================================================================
 /**

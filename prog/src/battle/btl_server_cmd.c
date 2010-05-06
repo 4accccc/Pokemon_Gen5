@@ -157,6 +157,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_ACT_FAKE_DISABLE
+  SC_ARGFMT_2byte,            // SC_ACT_EFFECT_SIMPLE
   SC_ARGFMT_12byte,           // SC_ACT_EFFECT_BYPOS
   SC_ARGFMT_112byte,          // SC_ACT_EFFECT_BYVECTOR
   SC_ARGFMT_11byte,           // SC_ACT_CHANGE_FORM
@@ -430,6 +431,9 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
   case SC_ARGFMT_1byte:
     scque_put1byte( que, args[0] );
     break;
+  case SC_ARGFMT_2byte:
+    scque_put2byte( que, args[0] );
+    break;
   case SC_ARGFMT_11byte:
     scque_put1byte( que, args[0] );
     scque_put1byte( que, args[1] );
@@ -586,6 +590,9 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
   switch( fmt ) {
   case SC_ARGFMT_1byte:
     args[0] = scque_read1byte( que );
+    break;
+  case SC_ARGFMT_2byte:
+    args[0] = scque_read2byte( que );
     break;
   case SC_ARGFMT_11byte:
     args[0] = scque_read1byte( que );

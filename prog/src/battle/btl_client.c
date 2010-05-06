@@ -347,6 +347,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_EffectSimple( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args );
@@ -4868,6 +4869,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
     { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
+    { SC_ACT_EFFECT_SIMPLE,     scProc_ACT_EffectSimple   },
     { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
     { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector },
     { SC_ACT_CHANGE_FORM,       scProc_ACT_ChangeForm     },
@@ -6585,6 +6587,31 @@ static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args )
  *  args .. [0]:位置指定  [1]:エフェクト指定
  */
 //---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_EffectSimple( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+    BTLV_EFFECT_Add( args[0] );
+    (*seq)++;
+    break;
+
+  default:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  指定位置にエフェクト発動
+ *  args .. [0]:位置指定  [1]:エフェクト指定
+ */
+//---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BtlvMcssPos vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
@@ -6593,6 +6620,10 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
       return TRUE;
+    }
+
+    if( args[1] == BTLEFF_ZOOM_IN ){
+      OS_TPrintf("zoom in to pos=%d (vpos=%d)\n", args[0], vpos);
     }
 
     BTLV_AddEffectByPos( wk->viewCore, vpos, args[1] );

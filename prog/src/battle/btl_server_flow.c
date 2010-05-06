@@ -159,6 +159,7 @@ typedef struct {
   BTL_POKESET     RobTarget;
   WAZAEFF_CTRL    effCtrl;
   SVFL_WAZAPARAM  wazaParam;
+  HITCHECK_PARAM  hitCheck;
 
 }POKESET_STACK_UNIT;
 
@@ -285,7 +286,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_DEADREC             deadRec;
   ARCHANDLE*              sinkaArcHandle;
   WAZAEFF_CTRL*           wazaEffCtrl;
-  HITCHECK_PARAM          hitCheckParam;
+  HITCHECK_PARAM*         hitCheckParam;
   BTL_ESCAPEINFO          escInfo;
 
   HEAPID  heapID;
@@ -498,6 +499,10 @@ static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
 static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume );
 static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
    BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec );
+static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec );
+static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec );
 static BOOL HITCHECK_IsFirstTime( const HITCHECK_PARAM* param );
 static BOOL HITCHECK_IsPluralHitWaza( const HITCHECK_PARAM* param );
 static BOOL HITCHECK_CheckWazaEffectPuttable( HITCHECK_PARAM* param );
@@ -5304,7 +5309,7 @@ static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, 
  * @param   defender
  * @param   waza
  *
- * @retval  BOOL
+ * @retval  BOOL  当たる場合はTRUE
  */
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
@@ -5886,68 +5891,24 @@ static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 waza
 static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
    BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec )
 {
-  fx32 dmg_ratio;
-  BOOL fTargetPlural;
-  u32  dmg_sum, dmg_tmp, i;
+  u32  dmg_sum;
 
   FlowFlg_Clear( wk, FLOWFLG_SET_WAZAEFFECT );
-
-  dmg_ratio = (BTL_POKESET_GetCount(targets) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
 
   // ダメージ受けポケモンワークをクリアしておく
   BTL_POKESET_Clear( wk->psetDamaged );
 
-  // 複数対象のワザか判定
-  fTargetPlural = (BTL_POKESET_GetCount(targets) > 1);
+  scEvent_HitCheckParam( wk, attacker, wazaParam->wazaID, wk->hitCheckParam );
 
-  // 敵・味方を別々のSetにコピー
-  BTL_POKESET_CopyFriends( targets, attacker, wk->psetFriend );
-  BTL_POKESET_CopyEnemys( targets, attacker, wk->psetEnemy );
-
-  scEvent_HitCheckParam( wk, attacker, wazaParam->wazaID, &wk->hitCheckParam );
-
-  wk->hitCheckParam.count = 0;
-  wk->hitCheckParam.pluralHitAffinity = BTL_TYPEAFF_100;
   dmg_sum = 0;
 
-  for(i=0; i<wk->hitCheckParam.countMax; ++i)
-  {
-    if( (BTL_POKESET_GetCount(wk->psetFriend) == 0)
-    &&  (BTL_POKESET_GetCount(wk->psetEnemy) == 0)
-    ){
-      break;
-    }
-    if( BPP_IsDead(attacker) ){ break; }
-
-    wk->hitCheckParam.count++;
-    wk->hitCheckParam.fPutEffectCmd = FALSE;
-    dmg_tmp = 0;
-
-    if( BTL_POKESET_GetCount( wk->psetFriend ) ){
-      dmg_tmp += scproc_Fight_Damage_side( wk, wazaParam, attacker, wk->psetFriend, affRec,
-                    &wk->hitCheckParam, dmg_ratio, fTargetPlural );
-      if( dmg_tmp ){
-        BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_TEMOTI_MAKIZOE );
-      }
-      BTL_POKESET_RemoveDeadPoke( wk->psetFriend );
-    }
-
-//    if( !BPP_IsDead(attacker) )
-    {
-      if( BTL_POKESET_GetCount( wk->psetEnemy ) ){
-        dmg_tmp += scproc_Fight_Damage_side( wk, wazaParam, attacker, wk->psetEnemy, affRec,
-          &wk->hitCheckParam, dmg_ratio, fTargetPlural );
-        BTL_POKESET_RemoveDeadPoke( wk->psetEnemy );
-      }
-    }
-
-    dmg_sum += dmg_tmp;
+  if( HITCHECK_IsPluralHitWaza(wk->hitCheckParam)
+  &&  (BTL_POKESET_GetCountMax(targets) == 1)
+  ){
+    dmg_sum = scproc_Fight_Damage_PluralCount( wk, wazaParam, attacker, targets, affRec );
   }
-
-  if( HITCHECK_IsPluralHitWaza(&wk->hitCheckParam) && (i>0) )
-  {
-    scPut_DamageAff( wk, wk->hitCheckParam.pluralHitAffinity );
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, i );
+  else{
+    dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec );
   }
 
   if( dmg_sum ){
@@ -5956,6 +5917,95 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
 
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged );
 }
+/**
+* １回ヒットワザ（対象は１体以上）
+*/
+static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec )
+{
+  BOOL fTargetPlural;
+  fx32 dmg_ratio = (BTL_POKESET_GetCount(wk->psetTargetOrg) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
+  u32 dmg_sum = 0;
+
+
+  // 複数対象のワザか判定
+  fTargetPlural = (BTL_POKESET_GetCount(targets) > 1);
+
+  // 敵・味方を別々のSetにコピー
+  BTL_POKESET_CopyFriends( targets, attacker, wk->psetFriend );
+  BTL_POKESET_CopyEnemys( targets, attacker, wk->psetEnemy );
+
+  if( BTL_POKESET_GetCount( wk->psetFriend ) )
+  {
+    dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, wk->psetFriend, affRec,
+                  wk->hitCheckParam, dmg_ratio, fTargetPlural );
+    if( dmg_sum ){
+      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_TEMOTI_MAKIZOE );
+    }
+  }
+  if( BTL_POKESET_GetCount( wk->psetEnemy ) )
+  {
+    dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, wk->psetEnemy, affRec,
+      wk->hitCheckParam, dmg_ratio, fTargetPlural );
+  }
+
+  return dmg_sum;
+}
+/**
+* 複数回ヒットワザ（対象は１体のみ）
+*/
+static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec )
+{
+  BTL_POKEPARAM* bpp;
+  u32 i, hitCount;
+  u32 dmg_sum = 0;
+  BtlPokePos  targetPos = BTL_POS_NULL;
+
+
+  bpp = BTL_POKESET_Get( targets, 0 );
+
+  // 複数回ヒットはエフェクトにカメラ演出を入れず、ズームインコマンドを生成する
+  if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
+  {
+    targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
+    if( targetPos != BTL_POS_NULL ){
+      TAYA_Printf("Zoom In to pos=%d\n", targetPos );
+      SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_ZOOM_IN );
+    }
+  }
+
+  for(i=0, hitCount=0; i<wk->hitCheckParam->countMax; ++i)
+  {
+    dmg_sum += scproc_Fight_Damage_side( wk, wazaParam, attacker, targets, affRec,
+                    wk->hitCheckParam, BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE );
+    ++hitCount;
+
+    if( !BPP_IsDead(bpp) )
+    {
+      if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam) ){
+        break;
+      }
+    }
+    else
+    {
+      break;
+    }
+  }
+
+  if( hitCount>0 ){
+    scPut_DamageAff( wk, wk->hitCheckParam->pluralHitAffinity );
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hitCount );
+  }
+
+  // カメラズームインをリセット
+  if( targetPos != BTL_POS_NULL ){
+    SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );
+  }
+
+  return dmg_sum;
+}
+
 /**
  *  最初のヒットか判定
  */
@@ -11555,6 +11605,7 @@ static BOOL scEvent_HitCheckParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
   u8 max = WAZADATA_GetParam( waza, WAZAPARAM_HITCOUNT_MAX );
 
   param->count = 0;
+  param->pluralHitAffinity = BTL_TYPEAFF_100;
 
   if( max > 1 )
   {
@@ -13281,6 +13332,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->psetRobTarget = &unit->RobTarget;
   wk->wazaEffCtrl   = &unit->effCtrl;
   wk->wazaParam     = &unit->wazaParam;
+  wk->hitCheckParam = &unit->hitCheck;
 
   if( fClear ){
     BTL_POKESET_Clear( wk->psetTargetOrg );
@@ -13291,6 +13343,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
     BTL_POKESET_Clear( wk->psetRobTarget );
     wazaEffCtrl_Init( wk->wazaEffCtrl );
     GFL_STD_MemClear( wk->wazaParam, sizeof(*(wk->wazaParam)) );
+    GFL_STD_MemClear( wk->hitCheckParam, sizeof(*(wk->hitCheckParam)) );
   }
 }
 
