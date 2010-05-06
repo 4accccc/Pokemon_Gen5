@@ -581,7 +581,9 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
     }
     vec.z += FX32_CONST(16); 
   }
+#ifdef DEBUG_ONLY_FOR_iwasawa
   IWASAWA_Printf("EncEffAttrSearch tick = %d count %d\n",OS_GetTick()-start_tick,eff_wk->attr_map.count);
+#endif
 }
 
 /*
