@@ -69,9 +69,23 @@
 #define GIZA_SHAKE_Y (8) ///<ギザウィンドウ初期揺れ幅
 
 ///システムウィンドウデフォルト位置と幅
+#define SYSWIN_POS_100506 //定義で位置合わせたい要望反映
+
+#ifdef SYSWIN_POS_100506
+#define SYSWIN_WRITE_OFFS_X (8)
+#else
+#define SYSWIN_WRITE_OFFS_X (0)
+#endif
+
+#ifdef SYSWIN_POS_100506
+#define SYSWIN_DEF_PX (1)
+#define SYSWIN_DEF_SX (30)
+#define SYSWIN_DEF_SY (4)
+#else
 #define SYSWIN_DEF_PX (2)
 #define SYSWIN_DEF_SX (27)
 #define SYSWIN_DEF_SY (4)
+#endif
 
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
@@ -1415,6 +1429,9 @@ void FLDSYSWIN_Delete( FLDSYSWIN *sysWin )
 //--------------------------------------------------------------
 void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 {
+#if SYSWIN_WRITE_OFFS_X
+  x += SYSWIN_WRITE_OFFS_X;
+#endif
   FLDMSGPRINT_Print( sysWin->msgPrint, x, y, strID );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(sysWin->bmpwin) );
 }
@@ -1431,6 +1448,9 @@ void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 //--------------------------------------------------------------
 void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
 {
+#if SYSWIN_WRITE_OFFS_X
+  x += SYSWIN_WRITE_OFFS_X;
+#endif
   FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
 }
 
@@ -1448,6 +1468,9 @@ void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
 void FLDSYSWIN_PrintStrBufColor( FLDSYSWIN *sysWin,
     u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color )
 {
+#if SYSWIN_WRITE_OFFS_X
+  x += SYSWIN_WRITE_OFFS_X;
+#endif
   FLDMSGPRINT_PrintStrBufColor( sysWin->msgPrint, x, y, strBuf, color );
 }
 
@@ -2563,6 +2586,10 @@ void FLDSYSWIN_STREAM_PrintStart(
   
   GF_ASSERT( sysWin->msgData );
   GFL_MSG_GetString( sysWin->msgData, strID, sysWin->strBuf );
+
+#if SYSWIN_WRITE_OFFS_X
+  x += SYSWIN_WRITE_OFFS_X;
+#endif
   
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
     sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, Control_GetMsgWait( &sysWin->fmb->print_cont ) );
@@ -2585,6 +2612,10 @@ void FLDSYSWIN_STREAM_PrintStrBufStart(
     FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
   }
   
+#if SYSWIN_WRITE_OFFS_X
+  x += SYSWIN_WRITE_OFFS_X;
+#endif
+
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
     sysWin->fmb, strBuf, sysWin->bmpwin, x, y, Control_GetMsgWait( &sysWin->fmb->print_cont ) );
 }
@@ -2713,6 +2744,10 @@ void FLDSYSWIN_STREAM_AllPrintStrBuf(
   
   sysWin->msgPrint = FLDMSGPRINT_SetupPrint(
       sysWin->fmb, NULL, sysWin->bmpwin );
+  
+#if SYSWIN_WRITE_OFFS_X
+  x += SYSWIN_WRITE_OFFS_X;
+#endif
   
   FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
 }
@@ -4730,6 +4765,7 @@ static void syswin_InitGraphic( HEAPID heapID )
  * @retval
  */
 //--------------------------------------------------------------
+#ifdef SYSWIN_POS_100506
 static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
 {
   u16 cgx = CHARNO_SYSWIN;
@@ -4740,28 +4776,53 @@ static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
   u8 pal = PANO_MENU_B;
   u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
   
-  GFL_BG_FillScreen( frm, cgx, px-2, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+1, px-1, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+2, px, py-1, sx, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+3, px+sx, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+4, px+sx+1, py-1, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+5, px+sx+2, py-1, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx,    px-1,     py-1,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+1,  px,       py-1, sx,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+5,  px+sx,    py-1,  1,  1, pal );
   
-  GFL_BG_FillScreen( frm, cgx+6, px-2, py, 1, sy, pal );
-  GFL_BG_FillScreen( frm, cgx+7, px-1, py, 1, sy, pal );
-  GFL_BG_FillScreen( frm, cgx+9, px+sx, py, 1, sy, pal );
-  GFL_BG_FillScreen( frm, cgx+10, px+sx+1, py, 1, sy, pal );
-  GFL_BG_FillScreen( frm, cgx+11, px+sx+2, py, 1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+6,  px-1,       py,  1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+11, px+sx,      py,  1, sy, pal );
   
-  GFL_BG_FillScreen( frm, cgx+12, px-2, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+13, px-1, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+14, px, py+sy, sx, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+15, px+sx, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy, 1, 1, pal );
-  GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy, 1, 1, pal );
+  GFL_BG_FillScreen( frm, cgx+12, px-1,    py+sy,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+14, px,      py+sy, sx,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+17, px+sx,   py+sy,  1,  1, pal );
+   
+  GFL_BG_LoadScreenReq( frm );
+}
+#else //old 100506
+static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
+{
+  u16 cgx = CHARNO_SYSWIN;
+  u8 px = GFL_BMPWIN_GetPosX( bmpwin );
+  u8 py = GFL_BMPWIN_GetPosY( bmpwin );
+  u8 sx = GFL_BMPWIN_GetSizeX( bmpwin );
+  u8 sy = GFL_BMPWIN_GetSizeY( bmpwin );
+  u8 pal = PANO_MENU_B;
+  u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
+  
+  GFL_BG_FillScreen( frm, cgx,    px-2,     py-1,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+1,  px-1,     py-1,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+2,  px,       py-1, sx,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+3,  px+sx,    py-1,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+4,  px+sx+1,  py-1,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+5,  px+sx+2,  py-1,  1,  1, pal );
+  
+  GFL_BG_FillScreen( frm, cgx+6,  px-2,       py,  1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+7,  px-1,       py,  1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+9,  px+sx,      py,  1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+10, px+sx+1,    py,  1, sy, pal );
+  GFL_BG_FillScreen( frm, cgx+11, px+sx+2,    py,  1, sy, pal );
+  
+  GFL_BG_FillScreen( frm, cgx+12, px-2,    py+sy,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+13, px-1,    py+sy,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+14, px,      py+sy, sx,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+15, px+sx,   py+sy,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+16, px+sx+1, py+sy,  1,  1, pal );
+  GFL_BG_FillScreen( frm, cgx+17, px+sx+2, py+sy,  1,  1, pal );
   
   GFL_BG_LoadScreenReq( frm );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4798,6 +4859,22 @@ static GFL_BMPWIN * syswin_InitBmp( u8 pos_x, u8 pos_y, u8 sx, u8 sy, HEAPID hea
  * @retval  nothing
  */
 //--------------------------------------------------------------
+#ifdef SYSWIN_POS_100506
+static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
+{
+  u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
+  
+  GFL_BG_FillScreen(
+    frm, CHARNO_CLEAR,
+    GFL_BMPWIN_GetPosX( bmpwin ) - 1,
+    GFL_BMPWIN_GetPosY( bmpwin ) - 1,
+    GFL_BMPWIN_GetSizeX( bmpwin ) + 2,
+    GFL_BMPWIN_GetSizeY( bmpwin ) + 2,
+    0 );
+  
+  GFL_BG_LoadScreenReq( frm );
+}
+#else //old 100506
 static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
 {
   u8 frm = GFL_BMPWIN_GetFrame( bmpwin );
@@ -4812,6 +4889,7 @@ static void syswin_ClearBmp( GFL_BMPWIN *bmpwin )
   
   GFL_BG_LoadScreenReq( frm );
 }
+#endif
 
 //--------------------------------------------------------------
 /**

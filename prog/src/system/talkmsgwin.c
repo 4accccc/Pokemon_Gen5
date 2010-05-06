@@ -37,6 +37,8 @@
 //============================================================================================
 #define TALKWIN_MODE (0)
 
+#define TALKMSGWIN_POS_100506 //定義で位置合わせたい要望反映
+
 #define MSGPOS_090730ROM //定義でメッセージ位置を修正
 
 //------------------------------------------------------------------
@@ -762,7 +764,11 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 		}
 	}
 #else
+#ifdef TALKMSGWIN_POS_100506
+	tmsgwin->writex = 8;
+#else //old 100506
 	tmsgwin->writex = 2;
+#endif
 //tmsgwin->writey = 2; //縦サイズ32dot、１文字縦サイズ16で被ってしまう。
 	tmsgwin->writey = 0;
 #endif
