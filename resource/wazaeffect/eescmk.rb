@@ -321,6 +321,11 @@ end
 
 	data_pos = 0
 
+#技エフェクトコンバート用処理ここから
+  nakigoe_com_cnt = 0
+  nakigoe_wait_cnt = 0
+#技エフェクトコンバート用処理ここまで
+
 	#シーケンス
 	SEQ_SIGNATURE_SEARCH = 0
 	SEQ_FILE_LIST_SEARCH = 1
@@ -381,6 +386,7 @@ end
 				dir_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr
 				seq_str = "\nWE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + ":\n"
 				sequence << seq_str
+#技エフェクトコンバート用処理
 =begin
 #ため技補正処理はいらなくなった
         if seq_cnt == 0
@@ -394,6 +400,16 @@ end
 =end
 				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + " - WE_" + num_str + 0.to_s(10) + "\t//" + dir_table[ dir_str.to_i ] + "\n"
 			else
+#技エフェクトコンバート用処理ここから
+				if split_data[ ESF_COM_STR_POS ] == "ポケモン鳴き声"
+          nakigoe_com_cnt += 1
+        end
+				if split_data[ ESF_COM_STR_POS ] == "エフェクト終了待ち"
+				  if split_data[ ESF_COM_STR_POS + 1 ] == "鳴き声"
+            nakigoe_wait_cnt += 1
+          end
+        end
+#技エフェクトコンバート用処理ここまで
 				str = ""
 				str += "\t" + com_list.get_com_str( split_data[ ESF_COM_STR_POS ] ).get_com_label + "\t"
 				param_num = 1
@@ -510,6 +526,13 @@ end
 		end
 		data_pos += 1
 	end
+
+#技エフェクトコンバート用処理ここから
+  if nakigoe_com_cnt != 0 && nakigoe_wait_cnt == 0
+    printf( "%s:ポケモン鳴き声コマンドを使用しているのに、終了待ちをしていません\n", ARGV[ ARGV_ESF_FILE ] )
+    exit( 1 )
+  end
+#技エフェクトコンバート用処理ここまで
 
   #シーケンスファイル書き出し
 	fp_w = open( write_file, "w" )
