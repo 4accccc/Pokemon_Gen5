@@ -51,10 +51,19 @@ EVENT_START   ev_r02_boy1_01
 		IF $SCWK_ANSWER == 0 THEN
 			_FLAG_SET(FH_16)
 			_BALLOONWIN_OBJMSG(msg_r02_boy2a_02,R02_BOY1_01)
+			_MSGWIN_CLOSE()
+			
+			_OBJ_ANIME(R02_BOY1_01,anm_common_turn_d)
+			_OBJ_ANIME_WAIT()
 			_TIME_WAIT(16)
 			_CAMERA_START()		//カメラ操作開始
 			_CAMERA_PURGE()		//カメラのバインドを解く
-
+			
+			//掛け声を少し間表示して、自動で消す
+			_BALLOONWIN_OBJMSG(msg_r02_boy2a_02a,R02_BOY1_01)
+			_TIME_WAIT(8)
+			_MSGWIN_CLOSE()
+						
 			_OBJ_ANIME( R02_BOY1_01,test01anime )
 			_TIME_WAIT(4)
 			_CAMERA_MOVE( 9685,0,970770,49512448,0,42135552,16 )	//一番最後の引数は移動にかかるフレーム数			
