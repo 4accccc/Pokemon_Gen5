@@ -41,6 +41,13 @@
 //======================================================================
 //  struct
 //======================================================================
+typedef struct VOICE_PLAY_WORK_tag
+{
+  u16 MonsNo;
+  u16 FormNo;
+  BOOL Mine;
+  SCRCMD_WORK* scr_work;
+}VOICE_PLAY_WORK;
 
 //======================================================================
 //  proto
@@ -49,6 +56,8 @@
 static void SoundSeFlag_CheckSeStop( SCRIPT_WORK * sc );
 static void SoundSeFlag_SetPlay( SCRIPT_WORK * sc, u32 se_no );
 static BOOL SoundSeFlag_IsSePlay( SCRIPT_WORK * sc );
+
+static GMEVENT_RESULT PlayVoiceEvent( GMEVENT* event, int* seq, void* wk );
 
 //======================================================================
 //  コマンド BGM
@@ -733,14 +742,23 @@ VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK* work = wk;
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
   u16 monsno = SCRCMD_GetVMWorkValue(core, wk);
   u16 formno = SCRCMD_GetVMWorkValue(core, wk);
-  u32 player; 
+  {
+    VOICE_PLAY_WORK* vpw;
+    GMEVENT* event;
+    event = GMEVENT_Create( gsys, NULL, PlayVoiceEvent, sizeof(VOICE_PLAY_WORK) );
+    vpw = GMEVENT_GetEventWork( event );
+    vpw->MonsNo = monsno;
+    vpw->FormNo = formno;
+    vpw->Mine = FALSE;
+    vpw->scr_work = work;
+    SCRIPT_CallEvent( sc, event );
+  }
 
-  player = PMV_PlayVoice( monsno, formno );
-  SCRCMD_WORK_SetPMVoiceIndex( work, player );
-
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -754,14 +772,23 @@ VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdVoicePlay_forMine( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK* work = wk;
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
   u16 monsno = SCRCMD_GetVMWorkValue(core, wk);
   u16 formno = SCRCMD_GetVMWorkValue(core, wk);
-  u32 player; 
+  {
+    VOICE_PLAY_WORK* vpw;
+    GMEVENT* event;
+    event = GMEVENT_Create( gsys, NULL, PlayVoiceEvent, sizeof(VOICE_PLAY_WORK) );
+    vpw = GMEVENT_GetEventWork( event );
+    vpw->MonsNo = monsno;
+    vpw->FormNo = formno;
+    vpw->Mine = TRUE;
+    vpw->scr_work = work;
+    SCRIPT_CallEvent( sc, event );
+  }
 
-  player = PMV_PlayVoice_forMine( monsno, formno );
-  SCRCMD_WORK_SetPMVoiceIndex( work, player );
-
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -851,6 +878,26 @@ extern VMCMD_RESULT EvCmdIssSwitchCheck( VMHANDLE* core, void* wk )
 
   *ret_wk = ISS_SWITCH_SYS_IsSwitchOn( iss_s, idx );
   return VMCMD_RESULT_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 鳴き声再生イベント
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PlayVoiceEvent( GMEVENT* event, int* seq, void* wk )
+{
+  u32 player;
+  VOICE_PLAY_WORK* vpw = wk;
+  //ＢＧＭロード中ならロードし終わるのを待つ
+  if ( PMSND_IsLoading() ) return GMEVENT_RES_CONTINUE;
+
+  if (vpw->Mine) player = PMV_PlayVoice_forMine( vpw->MonsNo, vpw->FormNo );
+  else player = PMV_PlayVoice( vpw->MonsNo, vpw->FormNo );
+  
+  SCRCMD_WORK_SetPMVoiceIndex( vpw->scr_work, player );
+
+  return GMEVENT_RES_FINISH;
 }
 
 //======================================================================
