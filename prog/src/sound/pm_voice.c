@@ -8,6 +8,8 @@
 //============================================================================================
 #include "gflib.h"
 
+#include "sound/pm_sndsys.h"
+
 #include "sound/pm_voice.h"
 //============================================================================================
 /**
@@ -524,7 +526,12 @@ u32		PMVOICE_Play
 			u32			userParam		// ユーザーパラメーター	
 		)		
 {
-	u16		voicePlayerIdx = PMVOICE_LoadOnly
+	u16		voicePlayerIdx;
+
+  // ロードスレッド動作中は終了待ち(pm_sndsys参照)
+	while( PMSND_IsLoading() == TRUE ) { OS_Sleep(2); }
+
+	voicePlayerIdx = PMVOICE_LoadOnly
 		(pokeNo, pokeFormNo, pan, chorus, chorusVolOfs, chorusSpOfs, reverse, userParam);
 	PMVOICE_PlayOnly(voicePlayerIdx);
 

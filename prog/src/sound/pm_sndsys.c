@@ -151,6 +151,7 @@ static u32 heapRemainsAfterPresetSE;
 OSThread    soundLoadThread;
 static u64  threadStack[ THREAD_STACKSIZ / sizeof(u64) ];
 THREAD_ARG  threadArg;
+OSThread*   pSoundLoadThread;
 
 static void PMSND_InitCore( BOOL systemSEload );
 
@@ -253,6 +254,7 @@ static void PMSND_InitCore( BOOL systemSEload )
   trackActiveBit = 0; 
   bgmFadeCounter = 0;
 
+  pSoundLoadThread = NULL;
   playableCallBackFunc = NULL;
 }
 
@@ -395,6 +397,7 @@ u8 PMSND_GetBGMTrackVolume( int trackNo )
 
 BOOL PMSND_IsLoading( void )
 {
+  if(pSoundLoadThread == NULL){ return FALSE; }
   return OS_IsThreadTerminated(&soundLoadThread) == FALSE;
 }
 
@@ -1290,17 +1293,21 @@ static void createSoundPlayThread( u32 soundIdx, THREADLOAD_MODE mode )
     break;
   }
   OS_WakeupThreadDirect(&soundLoadThread);
+  pSoundLoadThread = &soundLoadThread;
 }
 
 static void deleteSoundPlayThread( void )
 {
+  if(pSoundLoadThread == NULL){ return; }
   if( OS_IsThreadTerminated(&soundLoadThread) == FALSE ){
     OS_DestroyThread(&soundLoadThread);
+    pSoundLoadThread = NULL;
   }
 }
 
 static BOOL checkEndSoundPlayThread( void )
 {
+  if(pSoundLoadThread == NULL){ return TRUE; }
   return OS_IsThreadTerminated(&soundLoadThread);
 }
 
