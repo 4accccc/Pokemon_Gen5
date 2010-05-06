@@ -12165,37 +12165,35 @@
 	</row>
 
 	<row id="TRID_FISHING_07_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">おれは　みずを　あいしている！▼
-なぜなら　みずのなかには
-もっと　あいすべき　ポケモンが▽
-わんさかと　いるからだ！</language>
-		<language name="JPN_KANJI" width="216">おれは　水を　愛している！▼
-なぜなら　水中には
-もっと　愛すべき　ポケモンが▽
-わんさかと　いるからだ！</language>
+		<language name="JPN" width="216">ヒウンシティから　でる
+ロイヤルイッシュごうを　つかって▽
+うみづりを　してみたいぞ！</language>
+		<language name="JPN_KANJI" width="216">ヒウンシティから　出航する
+ロイヤルイッシュ号を　使って▽
+海釣りを　してみたいぞ！</language>
 	</row>
 
 	<row id="TRID_FISHING_08_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">あー！！
-つれないぞー！▽
-もう　ポケモンしょうぶ　しような▼</language>
-		<language name="JPN_KANJI" width="216">あー！！
-釣れないぞー！▽
-もう　ポケモン勝負　しような▼</language>
+		<language name="JPN" width="216">おれさまの　ポケモンたちを　みて
+あっとう　されるなよ！▼</language>
+		<language name="JPN_KANJI" width="216">おれさまの　ポケモンたちを　みて
+圧倒されるなよ！▼</language>
 	</row>
 
 	<row id="TRID_FISHING_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">あー！！
-なんで　まけたんだ！</language>
-		<language name="JPN_KANJI" width="216">あー！！
-なんで　負けたんだ！</language>
+		<language name="JPN" width="216">あっとう　されて
+こえも　でない……！</language>
+		<language name="JPN_KANJI" width="216">圧倒されて
+声も　でない……！</language>
 	</row>
 
 	<row id="TRID_FISHING_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あっ！！
-いまさら　つりざおが　ひいてるぞ</language>
-		<language name="JPN_KANJI" width="216">あっ！！
-いまさら　つりざおが　引いてるぞ</language>
+		<language name="JPN" width="216">つりざおが　わるいのか
+おれの　うでが　わるいのか……▽
+おなじ　ポケモンばかり　つれるぜ</language>
+		<language name="JPN_KANJI" width="216">つりざおが　悪いのか
+おれの　腕が　悪いのか……▽
+同じ　ポケモンばかり　釣れるぜ</language>
 	</row>
 
 	<row id="TRID_FISHING_09_TRMSG_FIGHT_START">
