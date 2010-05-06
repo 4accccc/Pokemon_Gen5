@@ -425,9 +425,10 @@ sub encode_wb {
 	my  $ret = "";
 	my  $code;
 	my  $encode;
-#	my  @ary = split( / /, $src );
 
-#	if( $index == 336 ){ printf( "Index=%d : mask-start=%04x\n", $index, $mask ); }
+#	my  $debug_print_flag = (($index==33)||($index==34));
+
+#	if( $debug_print_flag ){ printf( "Index=%d : mask-start=%04x\n", $index, $mask ); }
 
 	my $len = length($src);
 	for($i=0; $i<$len; $i+=$code_size)
@@ -435,14 +436,15 @@ sub encode_wb {
 		$code = substr( $src, $i, $code_size );
 		$code = unpack( 'S', $code );
 		$encode = $code ^ $mask;
-#		if( $index == 0 ){ printf( "%04x(%04x), ", $code, $encode ); }
-#		if( $index == 0 ){ printf( "$code," ); }
+
+#		if( $debug_print_flag ){
+#			printf(" code=%04x -> %04x (mask=%04x)\n", $code, $encode, $mask);
+#		}
+
 		$ret .= pack( 'S', $encode );
+
 		$mask = (($mask & 0xe000) >> 13) | (($mask & 0x1fff) << 3);
 
-#		if( $index==336 ){
-#			printf("mask=%02x\n", $mask);
-#		}
 
 	}
 
