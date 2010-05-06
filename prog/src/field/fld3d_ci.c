@@ -776,7 +776,12 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 6:
+  case 6: //ＢＧＭロード完了待ち
+    if ( PMSND_IsLoading() ) break;    //ロード中なら TRUE
+    
+    (*seq)++;   //次のシーケンスへ
+    //not break;
+  case 7:
     {
       BOOL rc1,rc2,rc3,main_rc;
       rc1 = FALSE;
@@ -833,7 +838,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       if ( main_rc ) (*seq)++;
     }
     break;
-  case 7:
+  case 8:
     //フィールドモード戻し
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
@@ -870,7 +875,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
     (*seq)++;
     break;
-  case 8:
+  case 9:
     //バックカラー設定
     {
       FIELD_LIGHT *light = FIELDMAP_GetFieldLight( fieldmap );
@@ -935,7 +940,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     
     (*seq)++;
     break;
-  case 9:
+  case 10:
     //終了
     return GMEVENT_RES_FINISH;
   }
@@ -1700,7 +1705,13 @@ static BOOL VoiceMain(GMEVENT* event, FLD3D_CI_PTR ptr)
     poke_work->SePlayWait--;
     if ( poke_work->SePlayWait == 0 )
     {
-      poke_work->VoicePlayerIdx = PMV_PlayVoice( poke_work->MonsNo, poke_work->FormNo );
+      if ( poke_work->MonsNo == MONSNO_PERAPPU )    //ペラップ対応
+      {
+        PMV_REF pmvRef;
+        PMV_MakeRefDataMine( &pmvRef );
+        poke_work->VoicePlayerIdx = PMVOICE_Play(poke_work->MonsNo, poke_work->FormNo, PMV_PAN_C, FALSE, 0, 0, FALSE, (u32)&pmvRef);
+      }
+      else poke_work->VoicePlayerIdx = PMV_PlayVoice( poke_work->MonsNo, poke_work->FormNo );
     }
   }
 
