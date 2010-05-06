@@ -157,7 +157,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
     GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(GFLNetInitializeStruct));
   *pNetInitData = aGFLNetInit;
   
-  if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
+  if(invalid_parent->my_invasion == TRUE && Intrude_CheckTutorialComplete(gamedata) == FALSE){
     pNetInitData->maxConnectNum = 2; //チュートリアルをこなすまでは最大二人接続
   }
   GFL_NET_Init( pNetInitData, IntrudeComm_FinishInitCallback, intcomm );
