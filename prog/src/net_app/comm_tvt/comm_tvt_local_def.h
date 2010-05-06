@@ -88,6 +88,7 @@
 #define CTVT_PITCH_NUM (9)
 
 #define CTVT_CALL_TIME (20*60)
+#define CTVT_WIFI_WIFITCNT (5*60)
 //======================================================================
 //	enum
 //======================================================================
@@ -287,4 +288,6 @@ extern void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx );
 extern void COMM_TVT_EraseTalkIcon( COMM_TVT_WORK *work );
 
 extern void COMM_TVT_RegistPerson( COMM_TVT_WORK *work , MYSTATUS *myStatus );
+extern void COMM_TVT_CreateTimerIcon( COMM_TVT_WORK *work , GFL_BMPWIN *bmpWin );
+extern void COMM_TVT_DeleteTimerIcon( COMM_TVT_WORK *work );
 

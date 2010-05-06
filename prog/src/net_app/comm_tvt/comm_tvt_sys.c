@@ -15,6 +15,7 @@
 #include "system/bmp_winframe.h"
 #include "system/net_err.h"
 #include "system/ds_system.h"
+#include "system/time_icon.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 #include "savedata/etc_save.h"
@@ -92,6 +93,9 @@ struct _COMM_TVT_WORK
   PRINT_QUE *printQue;
 
   APP_TASKMENU_RES *taskMenuRes;
+
+  GFL_TCBLSYS   *tcblSys;
+  TIMEICON_WORK *timeIcon;
 
   //各ワーク
   CTVT_CAMERA_WORK *camWork;
@@ -370,6 +374,8 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
                                           &work->palAnmData[anmIdx] , 32 );
     }
   }
+
+  GFL_TCBL_Main( work->tcblSys );
 
   //上画面ノイズ
   GFL_BG_SetScroll( CTVT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , GFUser_GetPublicRand0(256) );
@@ -696,7 +702,8 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
                           0 , work->heapId );
   BmpWinFrame_GraphicSet( CTVT_FRAME_MAIN_MSG , CTVT_BMPWIN_CGX_MAIN , CTVT_PAL_BG_MAIN_WINFRAME ,
                           0 , work->heapId );
-
+  work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 1 , 0 );
+  work->timeIcon = NULL;
 }
 
 //--------------------------------------------------------------------------
@@ -704,6 +711,12 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
 //--------------------------------------------------------------------------
 static void COMM_TVT_TermMessage( COMM_TVT_WORK *work )
 {
+  if( work->timeIcon != NULL )
+  {
+    TIMEICON_Exit( work->timeIcon );
+    work->timeIcon = NULL;
+  }
+  GFL_TCBL_Exit( work->tcblSys );
   PRINTSYS_QUE_Clear( work->printQue );
   PRINTSYS_QUE_Delete( work->printQue );
   GFL_MSG_Delete( work->msgHandle );
@@ -1200,6 +1213,24 @@ void COMM_TVT_RegistPerson( COMM_TVT_WORK *work , MYSTATUS *myStatus )
   
   EtcSave_SetAcquaintance( etcSave, id );
   CTVT_TPrintf("set person[%8x(%5d)]\n",id,(id&0x0000FFFF));
+}
+
+void COMM_TVT_CreateTimerIcon( COMM_TVT_WORK *work , GFL_BMPWIN *bmpWin )
+{
+  if( work->timeIcon != NULL )
+  {
+    COMM_TVT_DeleteTimerIcon( work );
+  }
+  work->timeIcon = TIMEICON_CreateTcbl( work->tcblSys , bmpWin , 0x0F , TIMEICON_DEFAULT_WAIT , work->heapId );
+}
+
+void COMM_TVT_DeleteTimerIcon( COMM_TVT_WORK *work )
+{
+  if( work->timeIcon != NULL )
+  {
+    TIMEICON_Exit( work->timeIcon );
+    work->timeIcon = NULL;
+  }
 }
 
 #pragma mark [>proc func

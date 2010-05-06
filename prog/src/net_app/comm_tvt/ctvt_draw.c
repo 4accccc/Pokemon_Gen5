@@ -162,7 +162,8 @@ struct _CTVT_DRAW_WORK
   GFL_BMPWIN *infoWin;  //上画面用
   GFL_BMPWIN *titleWin; //上画面用
   GFL_BMPWIN *msgWin;   //下画面用
-  
+  u16        wifiExitCnt;  //Wifiの終了リクエストの自動切断
+
   //セル関係
   GFL_CLWK    *clwkEditButton[CDED_MAX];
   GFL_CLWK    *clwkExplainButton[CDEX_MAX];
@@ -647,11 +648,14 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       
       CTVT_DRAW_DispMessage( work , drawWork , COMM_TVT_SYS_06 );
       drawWork->state = CDS_END_WIFI_REQ_DISP;
+      drawWork->wifiExitCnt = 0;
     }
     break;
   case CDS_END_WIFI_REQ_DISP:
+    drawWork->wifiExitCnt++;
     if( GFL_UI_TP_GetTrg() == TRUE ||
-        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ||
+        drawWork->wifiExitCnt >= CTVT_WIFI_WIFITCNT )
     {
       drawWork->state = CDS_END_WIFI_REQ_INIT;
     }

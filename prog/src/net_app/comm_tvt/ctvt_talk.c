@@ -157,6 +157,8 @@ struct _CTVT_TALK_WORK
 
   GFL_BMPWIN *msgWin;
   APP_TASKMENU_WORK *yesNoWork;
+  BOOL          reqDispTimeIcon;
+  u16           wifiExitCnt;  //Wifiの終了リクエストの自動切断
   
   //再生波形描画チェック
   BOOL isDrawPlayWave;
@@ -346,6 +348,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
 
   talkWork->yesNoWork = NULL;
+  talkWork->reqDispTimeIcon = FALSE;
   talkWork->isUpdateMsgWin = FALSE;
   GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
 
@@ -597,12 +600,15 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       
       CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_06 );
       talkWork->state = CTS_END_WIFI_REQ_DISP;
+      talkWork->wifiExitCnt = 0;
     }
     break;
     
   case CTS_END_WIFI_REQ_DISP:
+    talkWork->wifiExitCnt++;
     if( GFL_UI_TP_GetTrg() == TRUE ||
-        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+        GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ||
+        talkWork->wifiExitCnt >= CTVT_WIFI_WIFITCNT )
     {
       talkWork->state = CTS_END_WIFI_REQ_INIT;
     }
@@ -623,6 +629,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       {
         talkWork->subState = CTSS_GO_END;
         talkWork->state = CTS_FADEOUT_BOTH;
+        COMM_TVT_DeleteTimerIcon( work );
         COMM_TVT_SetSusspend( work , TRUE );
         {
           CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
@@ -671,6 +678,12 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       GFL_BMPWIN_MakeScreen( talkWork->msgWin );
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
       talkWork->isUpdateMsgWin = FALSE;
+
+      if( talkWork->reqDispTimeIcon == TRUE )
+      {
+        talkWork->reqDispTimeIcon = FALSE;
+        COMM_TVT_CreateTimerIcon( work , talkWork->msgWin );
+      }
     }
   }
 
@@ -1297,6 +1310,8 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
       {
         //Wifi終了確認
         talkWork->state = CTS_END_WIFI_REQ_SEND;
+        talkWork->reqDispTimeIcon = TRUE;
+        CTVT_TALK_DispMessage( work , talkWork , COMM_TVT_SYS_11 );
       }
       else
       if( COMM_TVT_GetSelfIdx( work ) == 0 &&

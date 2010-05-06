@@ -177,9 +177,8 @@ struct _CTVT_CALL_WORK
   u16 connectTimeOutCnt;
   u16 callSeCnt;
 
-  GFL_TCBLSYS *tcblSys;
   BOOL          reqDispTimeIcon;
-  TIMEICON_WORK *timeIcon;
+  GFL_TCBLSYS   *tcblSys;
 
   CTVT_CALL_BAR_WORK barWork[CTVT_CALL_BAR_NUM];
   CTVT_CALL_MEMBER_WORK memberData[CTVT_CALL_SEARCH_NUM];
@@ -214,7 +213,6 @@ CTVT_CALL_WORK* CTVT_CALL_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 {
   u8 i;
   CTVT_CALL_WORK* callWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_CALL_WORK) );
-  callWork->tcblSys = GFL_TCBL_Init( heapId , heapId , 1 , 0 );
 
   return callWork;
 }
@@ -224,8 +222,6 @@ CTVT_CALL_WORK* CTVT_CALL_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 //--------------------------------------------------------------
 void CTVT_CALL_TermSystem( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
-  GFL_TCBL_Exit( callWork->tcblSys );
-  
   GFL_HEAP_FreeMemory( callWork );
 }
 //--------------------------------------------------------------
@@ -339,7 +335,6 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
                                         2 , 9 , 28 , 2 ,
                                         CTVT_PAL_BG_SUB_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
-  callWork->timeIcon = NULL;
   callWork->reqDispTimeIcon = FALSE;
   callWork->callSeCnt = 0;
   {
@@ -399,11 +394,6 @@ void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   
   GFL_BMPWIN_ClearTransWindow( callWork->msgWin );
   GFL_BMPWIN_Delete( callWork->msgWin );
-  if( callWork->timeIcon != NULL )
-  {
-    TIMEICON_Exit( callWork->timeIcon );
-    callWork->timeIcon = NULL;
-  }
   GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
   GFL_BMPWIN_Delete( callWork->callMsgWin );
   
@@ -439,8 +429,6 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
   
-  GFL_TCBL_Main( callWork->tcblSys );
-
   switch( callWork->state )
   {
   case CCS_FADEIN:
@@ -671,11 +659,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         callWork->state = CCS_MAIN;
         BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
         GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
-        if( callWork->timeIcon != NULL )
-        {
-          TIMEICON_Exit( callWork->timeIcon );
-          callWork->timeIcon = NULL;
-        }
+        COMM_TVT_DeleteTimerIcon( work );
 
         GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
         //メッセージのアップデートで出す
@@ -837,7 +821,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       if( callWork->reqDispTimeIcon == TRUE )
       {
         callWork->reqDispTimeIcon = FALSE;
-        callWork->timeIcon = TIMEICON_CreateTcbl( callWork->tcblSys , callWork->callMsgWin , 0x0F , TIMEICON_DEFAULT_WAIT , heapId );
+        COMM_TVT_CreateTimerIcon( work , callWork->callMsgWin );
       }
     }
   }
@@ -1614,11 +1598,7 @@ static void CTVT_CALL_UpdateNoMemberMsg( COMM_TVT_WORK *work , CTVT_CALL_WORK *c
     {
       CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
 
-      if( callWork->timeIcon != NULL )
-      {
-        TIMEICON_Exit( callWork->timeIcon );
-        callWork->timeIcon = NULL;
-      }
+      COMM_TVT_DeleteTimerIcon( work );
       BmpWinFrame_Clear( callWork->callMsgWin , WINDOW_TRANS_ON_V );
       GFL_BMPWIN_ClearTransWindow( callWork->callMsgWin );
     }
@@ -1682,11 +1662,7 @@ static void CTVT_CALL_DispCallMessage( COMM_TVT_WORK *work , CTVT_CALL_WORK *cal
   callWork->isUpdateCallMsgWin = TRUE;
 
   callWork->reqDispTimeIcon = FALSE;
-  if( callWork->timeIcon != NULL )
-  {
-    TIMEICON_Exit( callWork->timeIcon );
-    callWork->timeIcon = NULL;
-  }
+  COMM_TVT_DeleteTimerIcon( work );
 
 }
 
