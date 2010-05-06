@@ -554,7 +554,9 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   vec.y = 0;
   blockIdx = FLDMAPPER_GetCurrentBlockAccessIdx( g3dMapper );
  
+#ifdef DEBUG_ONLY_FOR_iwasawa
   start_tick = OS_GetTick();
+#endif
   
   if( !FLDMAPPER_IsGridDataEnableForEffectEncount(g3dMapper, blockIdx)){
     return;
