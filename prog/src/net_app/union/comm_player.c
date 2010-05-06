@@ -371,28 +371,38 @@ void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_P
 BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack)
 {
   MINE_PLAYER *mine = &cps->mine;
+#if 0
   FIELDMAP_WORK *fieldWork;
   FIELD_PLAYER * player;
   VecFx32 pos;
+#else
+  PLAYER_WORK * player;
+  const VecFx32 *p_pos;
+#endif
   u16 dir;
   
   if(cps->update_stop == TRUE || GAMESYSTEM_CheckFieldMapWork(cps->gsys) == FALSE){
     return FALSE;
   }
 
+#if 0
   fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
   player = FIELDMAP_GetFieldPlayer(fieldWork);
-
   FIELD_PLAYER_GetPos(player, &pos);
   dir = FIELD_PLAYER_GetDir(player);
-  
+#else
+  player = GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(cps->gsys));
+  p_pos = PLAYERWORK_getPosition(player);
+  dir = PLAYERWORK_getDirection_Type(player);
+#endif
+
   pack->dir = dir;
-  pack->pos = pos;
+  pack->pos = *p_pos;
   pack->vanish = FALSE;
 
-  if(dir != mine->dir || GFL_STD_MemComp(&pos, &mine->pos, sizeof(VecFx32)) != 0){
+  if(dir != mine->dir || GFL_STD_MemComp(p_pos, &mine->pos, sizeof(VecFx32)) != 0){
     mine->dir = dir;
-    mine->pos = pos;
+    mine->pos = *p_pos;
     return TRUE;
   }
   return FALSE;
