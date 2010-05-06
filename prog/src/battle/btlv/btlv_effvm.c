@@ -3240,6 +3240,7 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
   int chorus_vol    = ( int )VMGetU32( vmh );
   int chorus_speed  = ( int )VMGetU32( vmh );
   BOOL play_dir     = ( BOOL )VMGetU32( vmh );
+  int wait          = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_NAKIGOE:\npos:%d\n",pos_cnt);

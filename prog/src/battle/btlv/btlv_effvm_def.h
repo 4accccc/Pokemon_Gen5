@@ -2194,13 +2194,14 @@ ex)
 /**
  * @brief	ポケモン鳴き声
  *
- * #param_num	6
+ * #param_num	7
  * @param pos           鳴き声を出すポケモンの立ち位置
  * @param pitch         鳴き声のピッチ（相対）
  * @param volume        鳴き声のボリューム（相対）
  * @param chorus_vol    鳴き声のコーラス設定（ボリューム差）
  * @param chorus_speed  鳴き声のコーラス設定（再生速度差）
  * @param play_dir      再生方向
+ * @param wait          再生までのウエイト
  *
  * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK	BTLEFF_POKEMON_SIDE_DEFENCE	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F
@@ -2210,10 +2211,11 @@ ex)
  * #param VALUE_INT コーラス設定（再生速度差）
  * #param	COMBOBOX_TEXT	正再生	逆再生
  * #param	COMBOBOX_VALUE	BTLEFF_NAKIGOE_NORMAL	BTLEFF_NAKIGOE_REVERSE
+ * #param VALUE_INT 再生までのウエイト
  *
  */
 //======================================================================
-	.macro	NAKIGOE pos, pitch, volume, chorus_vol, chorus_speed, play_dir
+	.macro	NAKIGOE pos, pitch, volume, chorus_vol, chorus_speed, play_dir, wait
   .short  EC_NAKIGOE
 	.long		\pos
 	.long		\pitch
@@ -2221,6 +2223,7 @@ ex)
 	.long		\chorus_vol
 	.long		\chorus_speed
 	.long		\play_dir
+	.long		\wait
 	.endm
 
 //======================================================================
