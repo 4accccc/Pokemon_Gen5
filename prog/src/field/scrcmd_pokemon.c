@@ -1413,7 +1413,7 @@ VMCMD_RESULT EvCmdAddPokemonToBoxEx( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * タマゴを手持ちに追加
+ * タマゴを手持ちに追加　１８番道路でもらうイベント専用
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -1480,6 +1480,11 @@ VMCMD_RESULT EvCmdAddTamagoToParty( VMHANDLE *core, void *wk )
   } 
 
   PP_Renew( pp );
+
+  // トレーナーメモ
+  {
+    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_FIRST, status, POKE_MEMO_PERSON_TOREZYAHANTA, heap_id );
+  }
 
   // 手持ちに追加
   PokeParty_Add( party, pp );
