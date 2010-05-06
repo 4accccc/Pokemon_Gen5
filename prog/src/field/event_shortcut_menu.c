@@ -268,16 +268,20 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		{	
 			SHORTCUT_ID	shortcutID;
 			SHORTCUTMENU_INPUT	input;
+
 			SHORTCUTMENU_Main( p_wk->p_menu );
 			input	= SHORTCUTMENU_GetInput( p_wk->p_menu, &shortcutID );
+
 			if( input == SHORTCUTMENU_INPUT_SELECT )
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
 				BOOL	item_use_err = FALSE;
         BOOL  ribbon_status_err = FALSE;
+				CALLTYPE	call_type;
 
 				BOOL reverse_use, check_item;
 				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
+				call_type = ShortCutMenu_SetCallType( p_wk->p_link, shortcutID );
 
 				if(reverse_use == FALSE 
 				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE){
@@ -328,7 +332,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
         else
         {
           // 起動
-					switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
+					switch( call_type )
 					{	
 					case CALLTYPE_PROC:
 						*p_seq	= SEQ_EVENT_CALL;
@@ -536,12 +540,14 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 			GAMEDATA					*p_gdata;
 			SAVE_CONTROL_WORK	*p_sv;
 			const SHORTCUT		*cp_shortcut;
+			CALLTYPE	call_type;
 
 			p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_gamesys );
 			p_sv		= GAMEDATA_GetSaveControlWork( p_gdata );
 			cp_shortcut	= SaveData_GetShortCutConst( p_sv );
-	
 			shortcutID	= SHORTCUT_GetType( cp_shortcut, 0 );
+			call_type   = ShortCutMenu_SetCallType( p_wk->p_link, shortcutID );
+
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
 				BOOL	err = FALSE;
@@ -563,7 +569,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 					*p_seq = SEQ_ITEM_ERROR;
 				// 起動
 				}else{
-					switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
+					switch( call_type )
 					{	
 					case CALLTYPE_PROC:
 						*p_seq	= SEQ_EVENT_CALL;
