@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T12:29:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T15:24:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1569" top="208" right="2270" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="1314" top="140" right="2019" bottom="768" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="245" right="1280" bottom="869" visible="yes"/>
-		<band id="0" index="0" style="0000" width="526"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="693"/>
-		<band id="3" index="3" style="0000" width="693"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1346,7 +1346,7 @@
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">だれにも　つかまらないように
 [1:09:どうぐ名:0]を　９ばんどうろ　の
-ごみばこの　てまえに　かくせ！
+ゴミばこの　てまえに　かくせ！
 
 
 せいげんじかん　[2:02:３桁:2]びょう
@@ -1354,7 +1354,7 @@
 ごほうび　：　デルダマ　１２こ</language>
 		<language name="JPN_KANJI" width="256">だれにも　捕まらないように
 [1:09:どうぐ名:0]を　９番道路　の
-ごみ箱の　手前に　隠せ！
+ゴミ箱の　手前に　隠せ！
 
 
 制限時間　[2:02:３桁:2]秒
@@ -1446,7 +1446,7 @@
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">だれにも　つかまらないように
 [1:09:どうぐ名:0]を　１５ばんどうろ　の
-ごみばこの　てまえに　かくせ！
+ゴミばこの　てまえに　かくせ！
 
 
 せいげんじかん　[2:02:３桁:2]びょう
@@ -1454,7 +1454,7 @@
 ごほうび　：　デルダマ　１２こ</language>
 		<language name="JPN_KANJI" width="256">だれにも　捕まらないように
 [1:09:どうぐ名:0]を　１５番道路　の
-ごみ箱の　手前に　隠せ！
+ゴミ箱の　手前に　隠せ！
 
 
 制限時間　[2:02:３桁:2]秒
@@ -1706,7 +1706,7 @@
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">だれにも　つかまらないように
 [1:09:どうぐ名:0]を　９ばんどうろ　の
-ごみばこの　てまえに　かくせ！
+ゴミばこの　てまえに　かくせ！
 
 
 せいげんじかん　[2:02:３桁:2]びょう
@@ -1714,7 +1714,7 @@
 ごほうび　：　デルダマ　６こ</language>
 		<language name="JPN_KANJI" width="256">だれにも　捕まらないように
 [1:09:どうぐ名:0]を　９番道路　の
-ごみ箱の　手前に　隠せ！
+ゴミ箱の　手前に　隠せ！
 
 
 制限時間　[2:02:３桁:2]秒
