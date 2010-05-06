@@ -324,13 +324,14 @@ enum
   OBJ_FIELD_COMP,         // フォルム名の背面フィールド
   OBJ_MAX,
 };
+#define BAR_Y_BASE (6)
 static const u8 obj_setup_info[OBJ_MAX][8] =
 {
-  //  pos_x,  pos_y,  anmseq,  softpri,  bgpri,               ncg,                    ncl,                    nce
-  {    18*8,    8*8,      21,        1,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
-  { 18*8+12,    8*8,      22,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
-  {     0*8,    0*8,       0,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_FIELD_NCG,      OBJ_RES_FIELD_NCL,      OBJ_RES_FIELD_NCE      },
-  {    16*8,    0*8,       0,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_FIELD_NCG,      OBJ_RES_FIELD_NCL,      OBJ_RES_FIELD_NCE      },
+  //  pos_x,         pos_y,  anmseq,  softpri,  bgpri,               ncg,                    ncl,                    nce
+  {    18*8,  BAR_Y_BASE*8,      21,        1,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
+  { 18*8+12,  BAR_Y_BASE*8,      22,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_BUTTON_BAR_NCG, OBJ_RES_BUTTON_BAR_NCL, OBJ_RES_BUTTON_BAR_NCE },
+  {     0*8,           0*8,       0,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_FIELD_NCG,      OBJ_RES_FIELD_NCL,      OBJ_RES_FIELD_NCE      },
+  {    16*8,           0*8,       0,        0,  BG_FRAME_PRI_M_REAR, OBJ_RES_FIELD_NCG,      OBJ_RES_FIELD_NCL,      OBJ_RES_FIELD_NCE      },
 };
 
 // ボタンの状態
@@ -359,14 +360,14 @@ BUTTON_OBJ;
 
 // スクロールバー
 // バーカーソル
-#define  BAR_CURSOR_POS_Y      (8*8)
-#define  BAR_CURSOR_POS_X_MIN  (18*8+12)  // BAR_CURSOR_POS_X_MIN<= <=BAR_CURSOR_POS_X_MAX
+#define  BAR_CURSOR_POS_Y      (BAR_Y_BASE*8)
+#define  BAR_CURSOR_POS_X_MIN  (18*8+12)                 // BAR_CURSOR_POS_X_MIN<= <=BAR_CURSOR_POS_X_MAX
 #define  BAR_CURSOR_POS_X_MAX  (18*8+12 +8*8)
 // スクロールバー
-#define  BAR_RANGE_TOUCH_X_MIN  (18*8)          // BAR_RANGE_TOUCH_X_MIN<= <=BAR_RANGE_TOUCH_X_MAX
+#define  BAR_RANGE_TOUCH_X_MIN  (18*8)                   // BAR_RANGE_TOUCH_X_MIN<= <=BAR_RANGE_TOUCH_X_MAX
 #define  BAR_RANGE_TOUCH_X_MAX  (18*8 +11*8-1)
-#define  BAR_RANGE_TOUCH_Y_MIN  (8*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
-#define  BAR_RANGE_TOUCH_Y_MAX  (8*8 +1*8-1)
+#define  BAR_RANGE_TOUCH_Y_MIN  (BAR_Y_BASE*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
+#define  BAR_RANGE_TOUCH_Y_MAX  (BAR_Y_BASE*8 +1*8-1)
 
 
 // 入れ替え

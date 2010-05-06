@@ -151,7 +151,9 @@ enum
   SEQ_FADE_CHANGE_BEFORE,
   SEQ_PREPARE,
   SEQ_FADE_IN,
+  SEQ_BEFORE_MAIN,
   SEQ_MAIN,
+  SEQ_AFTER_MAIN,
   SEQ_FADE_OUT,
   SEQ_FADE_CHANGE_AFTER,
   SEQ_END,
@@ -299,11 +301,23 @@ typedef enum
   STATE_TOP,
   STATE_TOP_TO_SELECT,
   STATE_TOP_TO_SELECT_TOUCHBAR_CHANGE,
+  STATE_TOP_DRAW_SEASON_AREA,
+  STATE_TOP_BEFORE_FADE_OUT,
   STATE_SELECT,
   STATE_SELECT_TO_TOP,
   STATE_SELECT_TO_TOP_TOUCHBAR_CHANGE,
+  STATE_SELECT_DRAW_SEASON_AREA,
 }
 STATE;
+
+typedef enum
+{
+  DRAW_SEASON_AREA_STEP_NONE,
+  DRAW_SEASON_AREA_STEP_OBJ_OFF,
+  DRAW_SEASON_AREA_STEP_ALPHA_SET,
+  DRAW_SEASON_AREA_STEP_OBJ_ON,
+}
+DRAW_SEASON_AREA_STEP;
 
 typedef enum
 {
@@ -440,10 +454,11 @@ static u8 place_icon_screen_chr[PLACE_ICON_MAX][4] =  // 0=X, 1=Y, 2=W, 3=H
 enum
 {
   VBLANK_REQ_NONE,
-  VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT,
-  VBLANK_REQ_OBJ_UNKNOWN_ALPHA_EXIT,
+  //VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT,
+  //VBLANK_REQ_OBJ_UNKNOWN_ALPHA_EXIT,
   VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT_AND_OBJ_UNKNOWN_ALPHA_INIT,
   VBLANK_REQ_OBJ_UNKNOWN_ALPHA_EXIT_AND_OBJ_EXIST_ALPHA_INIT,
+  VBLANK_REQ_OBJ_ALL_ALPHA_EXIT_AND_FADE_SET_COLORLESS_IMMEDIATELY,
 };
 
 
@@ -537,6 +552,9 @@ typedef struct
   int                         top_to_select_ktst;  // STATE_TOP_TO_SELECTにしたのはGFL_APP_KTST_TOUCHかGFL_APP_KTST_KEYか覚えておく。
   u8                          top_to_select_x;     // top_to_select_ktst==GFL_APP_KTST_TOUCHのときのみ有効。
   u8                          top_to_select_y;     // タッチ入力でSTATE_TOP_TO_SELECTとなったときのタッチ座標x,yを覚えておく。
+
+  DRAW_SEASON_AREA_STEP       draw_season_area_step;  // STATE_TOP_DRAW_SEASON_AREAとSTATE_TOP_BEFORE_FADE_OUTとSTATE_SELECT_DRAW_SEASON_AREAのときのみ有効。
+  BOOL                        draw_season_area_set_user_active_whole;  // TRUEのとき、STATE_TOP_DRAW_SEASON_AREAとSTATE_TOP_BEFORE_FADE_OUTとSTATE_SELECT_DRAW_SEASON_AREAから変更される際に、ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWholeを呼ぶ必要あり。
 
   // 各ポケモンの情報
   APPEAR_RULE                 appear_rule;
@@ -689,6 +707,13 @@ static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUK
 static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSet( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOn( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOffCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSetCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOnCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 // アルファ設定
 static void Zukan_Detail_Map_AlphaMainInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_AlphaMainExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -796,6 +821,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
     work->pokeicon_scroll_state    = SCROLL_STATE_DOWN;
     work->season_id                = GAMEDATA_GetSeasonID(gamedata);
     work->select_data_idx          = DATA_IDX_NONE;
+
+    work->draw_season_area_step                  = DRAW_SEASON_AREA_STEP_NONE;
+    work->draw_season_area_set_user_active_whole = TRUE;
   }
 
   // タウンマップデータ
@@ -1005,7 +1033,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
      
       // ZKNDTL_COMMON_FadeSetColorlessImmediatelyでG2_SetBlendBrightnessExtやG2S_SetBlendBrightnessExtを設定しているので、
       // その後でZukan_Detail_Map_AlphaInitを呼ぶこと
-      Zukan_Detail_Map_AlphaMainInit( param, work, cmn );
+      //Zukan_Detail_Map_AlphaMainInit( param, work, cmn );
       Zukan_Detail_Map_AlphaSubInit( param, work, cmn );
     }
     break;
@@ -1038,6 +1066,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
             ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
       }
       ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
+      work->draw_season_area_set_user_active_whole = FALSE;
       {
         GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
         ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
@@ -1063,13 +1092,27 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
           && ZUKAN_DETAIL_HEADBAR_GetState( headbar ) == ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
-        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
+        //1フレーム待つことにしたZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
 
         //Zukan_Detail_Map_ObjExistAlphaInit( param, work, cmn );
         //Zukan_Detail_Map_AlphaInit( param, work, cmn );
 
+        Zukan_Detail_Map_AlphaMainInit( param, work, cmn );
+        
         Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
 
+        *seq = SEQ_BEFORE_MAIN;
+      }
+    }
+    break;
+  case SEQ_BEFORE_MAIN:
+    {
+      //if( work->vblank_req == VBLANK_REQ_NONE )
+      if( work->draw_season_area_step == DRAW_SEASON_AREA_STEP_NONE )
+      {
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );  // ZUKAN_DETAIL_TOUCHBAR_SetTypeのときはUnlock状態なので
+        work->draw_season_area_set_user_active_whole = TRUE;
+        
         *seq = SEQ_MAIN;
       }
     }
@@ -1083,6 +1126,46 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
         //Zukan_Detail_Map_AlphaExit( param, work, cmn );
         //Zukan_Detail_Map_ObjExistAlphaExit( param, work, cmn );
 
+        *seq = SEQ_AFTER_MAIN;
+
+/*
+1フレーム待つことにした
+        // フェード
+        ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_m );
+        //ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
+       
+        // パレットフェード
+        {
+          ZKNDTL_COMMON_PfSetColorlessToBlack( work->pf_wk );
+        }
+
+        // タイトルバー
+        ZUKAN_DETAIL_HEADBAR_Disappear( headbar );
+        
+        if( work->end_cmd == END_CMD_OUTSIDE )
+        {
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_Disappear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
+        }
+*/
+      }
+      else
+      {
+        if( work->habitat == HABITAT_KNOWN )  // 生息地が判明しているとき
+          Zukan_Detail_Map_ObjExistAlphaMain( work );
+
+        // 操作
+        Zukan_Detail_Map_Input( param, work, cmn );
+      }
+    }
+    break;
+  case SEQ_AFTER_MAIN:
+    {
+      //if( work->vblank_req == VBLANK_REQ_NONE )
+      if( work->draw_season_area_step == DRAW_SEASON_AREA_STEP_NONE )
+      {
+        Zukan_Detail_Map_AlphaMainExit( param, work, cmn );
+        
         *seq = SEQ_FADE_OUT;
 
         // フェード
@@ -1102,14 +1185,6 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
           // タッチバー
           ZUKAN_DETAIL_TOUCHBAR_Disappear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
         }
-      }
-      else
-      {
-        if( work->habitat == HABITAT_KNOWN )  // 生息地が判明しているとき
-          Zukan_Detail_Map_ObjExistAlphaMain( work );
-
-        // 操作
-        Zukan_Detail_Map_Input( param, work, cmn );
       }
     }
     break;
@@ -1147,7 +1222,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
 
       // ZKNDTL_COMMON_FadeSetColorlessImmediatelyでG2_SetBlendBrightnessExtやG2S_SetBlendBrightnessExtを設定しているので、
       // その前にZukan_Detail_Map_AlphaExitを呼ぶこと
-      Zukan_Detail_Map_AlphaMainExit( param, work, cmn );
+      //Zukan_Detail_Map_AlphaMainExit( param, work, cmn );
       Zukan_Detail_Map_AlphaSubExit( param, work, cmn );
       
       // フェード
@@ -1386,7 +1461,7 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
           Zukan_Detail_Map_ChangePoke( param, work, cmn );
           Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
         }
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        //ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     case ZKNDTL_CMD_CUR_U:
@@ -1401,7 +1476,7 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
           Zukan_Detail_Map_ChangePoke( param, work, cmn );
           Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
         }
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        //ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     case ZKNDTL_CMD_CHECK:
@@ -1446,6 +1521,7 @@ static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk )
 
   switch( work->vblank_req )
   {
+/*
   case VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT:
     {
       Zukan_Detail_Map_ObjExistAlphaExit( work );
@@ -1456,6 +1532,7 @@ static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk )
       Zukan_Detail_Map_ObjUnknownAlphaExit( work );
     }
     break;
+*/
   case VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT_AND_OBJ_UNKNOWN_ALPHA_INIT:
     {
       Zukan_Detail_Map_ObjExistAlphaExit( work );
@@ -1466,6 +1543,13 @@ static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk )
     {
       Zukan_Detail_Map_ObjUnknownAlphaExit( work );
       Zukan_Detail_Map_ObjExistAlphaInit( work );
+    }
+    break;
+  case VBLANK_REQ_OBJ_ALL_ALPHA_EXIT_AND_FADE_SET_COLORLESS_IMMEDIATELY:
+    {
+      Zukan_Detail_Map_ObjExistAlphaExit( work );
+      Zukan_Detail_Map_ObjUnknownAlphaExit( work );
+      ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );  // すぐにAlphaの設定を反映してやらないと、BGとともにこのOBJも暗くしたいというOBJに、前のAlphaが当たってしまう。
     }
     break;
   }
@@ -2165,9 +2249,14 @@ static void Zukan_Detail_Map_SeasonArrowMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUK
 
       GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[pair_button], TRUE );
       GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[pair_button], pair_anmseq );
-      ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
 
       work->push_button = OBJ_PUSH_BUTTON_NONE;
+
+      if(    work->state == STATE_TOP       // 矢印アニメの点滅の終了とOBJの表示OFFから表示ONまでの一連の流れの終了とどちらが先か分からないので。
+          || work->state == STATE_SELECT )
+      {
+        ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
+      }
     }
   }
 }
@@ -2444,6 +2533,8 @@ static u8 Zukan_Detail_Map_PullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
 //=====================================
 static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+
   if( (!(work->input_enable)) || (work->push_button != OBJ_PUSH_BUTTON_NONE) ) return;
 
   switch(work->state)
@@ -2565,6 +2656,9 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
         {
           Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP_TO_SELECT );
           PMSND_PlaySE( SEQ_SE_DECIDE1 );
+
+          ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, FALSE );  // タッチバーが有効のままなので、無効にしておく。
+                                                                        // ここからの状態遷移の最後STATE_SELECTになるときに、SetTypeで有効になる。
         }
       }
     }
@@ -2880,6 +2974,57 @@ static void Zukan_Detail_Map_StateMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DET
       Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT );
     }
     break;
+  case STATE_TOP_DRAW_SEASON_AREA:
+    {
+      switch(work->draw_season_area_step)
+      {
+      case DRAW_SEASON_AREA_STEP_OBJ_OFF:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaObjOff( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_ALPHA_SET;
+        }
+        break;
+      case DRAW_SEASON_AREA_STEP_ALPHA_SET:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSet( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_OBJ_ON;
+        }
+        break;
+      case DRAW_SEASON_AREA_STEP_OBJ_ON:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaObjOn( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_NONE;
+          Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP );
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_TOP_BEFORE_FADE_OUT:
+    {
+      switch(work->draw_season_area_step)
+      {
+      case DRAW_SEASON_AREA_STEP_OBJ_OFF:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaObjOffCompleteOff( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_ALPHA_SET;
+        }
+        break;
+      case DRAW_SEASON_AREA_STEP_ALPHA_SET:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSetCompleteOff( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_OBJ_ON;
+        }
+        break;
+      case DRAW_SEASON_AREA_STEP_OBJ_ON:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaObjOnCompleteOff( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_NONE;  // Zukan_Detail_Map_ChangeStateせずに、終わっていい
+        }
+        break;
+      }
+    }
+    break;
   case STATE_SELECT:
     {
       // 何もしない
@@ -2893,6 +3038,32 @@ static void Zukan_Detail_Map_StateMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DET
   case STATE_SELECT_TO_TOP_TOUCHBAR_CHANGE:
     {
       Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP );
+    }
+    break;
+  case STATE_SELECT_DRAW_SEASON_AREA:
+    {
+      switch(work->draw_season_area_step)
+      {
+      case DRAW_SEASON_AREA_STEP_OBJ_OFF:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaObjOff( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_ALPHA_SET;
+        }
+        break;
+      case DRAW_SEASON_AREA_STEP_ALPHA_SET:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSet( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_OBJ_ON;
+        }
+        break;
+      case DRAW_SEASON_AREA_STEP_OBJ_ON:
+        {
+          Zukan_Detail_Map_UtilDrawSeasonAreaObjOn( param, work, cmn );
+          work->draw_season_area_step = DRAW_SEASON_AREA_STEP_NONE;
+          Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT );
+        }
+        break;
+      }
     }
     break;
   }
@@ -2914,6 +3085,14 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       if( state == STATE_TOP_TO_SELECT )  // 遷移後の状態
       {
         // 何もしない
+      }
+      else if( state == STATE_TOP_DRAW_SEASON_AREA )  // 遷移後の状態
+      {
+        work->draw_season_area_step = DRAW_SEASON_AREA_STEP_OBJ_OFF;
+      }
+      else if( state == STATE_TOP_BEFORE_FADE_OUT )  // 遷移後の状態
+      {
+        work->draw_season_area_step = DRAW_SEASON_AREA_STEP_OBJ_OFF;
       }
     }
     break;
@@ -2966,11 +3145,33 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       }
     }
     break;
+  case STATE_TOP_DRAW_SEASON_AREA:
+    {
+      if( state == STATE_TOP )  // 遷移後の状態
+      {
+        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        if( work->push_button == OBJ_PUSH_BUTTON_NONE )  // 矢印アニメの点滅の終了とOBJの表示OFFから表示ONまでの一連の流れの終了とどちらが先か分からないので。
+        {
+          if( work->draw_season_area_set_user_active_whole )
+            ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
+        }
+      }
+    }
+    break;
+  case STATE_TOP_BEFORE_FADE_OUT:
+    {
+      // この状態のときに、stateを変更する要求をかけることはない
+    }
+    break;
   case STATE_SELECT:
     {
       if( state == STATE_SELECT_TO_TOP )  // 遷移後の状態
       {
         // 何もしない
+      }
+      else if( state == STATE_SELECT_DRAW_SEASON_AREA )  // 遷移後の状態
+      {
+        work->draw_season_area_step = DRAW_SEASON_AREA_STEP_OBJ_OFF;
       }
     }
     break;
@@ -3009,6 +3210,19 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
           ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
               touchbar,
               GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_MAP ) );
+        }
+      }
+    }
+    break;
+  case STATE_SELECT_DRAW_SEASON_AREA:
+    {
+      if( state == STATE_SELECT )  // 遷移後の状態
+      {
+        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+        if( work->push_button == OBJ_PUSH_BUTTON_NONE )  // 矢印アニメの点滅の終了とOBJの表示OFFから表示ONまでの一連の流れの終了とどちらが先か分からないので。
+        {
+          if( work->draw_season_area_set_user_active_whole )
+            ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( touchbar, TRUE );
         }
       }
     }
@@ -3164,6 +3378,7 @@ static void Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( ZUKAN_DETAIL_MAP_PAR
 // Map画面から切り替わる直前に生息地を非表示にしたいので、このような生息地非表示専門の関数を用意した。
 static void Zukan_Detail_Map_OffSeasonAreaBeforeFadeOut( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#if 0
   BOOL b_disp_unknown = GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_UNKNOWN] );  // 今の今まで生息地不明を表示しているとき、b_disp_unknownはTRUEになる
 
   u8 i;
@@ -3189,6 +3404,10 @@ static void Zukan_Detail_Map_OffSeasonAreaBeforeFadeOut( ZUKAN_DETAIL_MAP_PARAM*
       GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
     }
   }
+#endif
+
+  // 今は( work->state == STATE_TOP )である。
+  Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP_BEFORE_FADE_OUT );
 }
 
 static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -3426,6 +3645,7 @@ static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUK
 
 static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#if 0
   BOOL b_disp_unknown = GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_UNKNOWN] );  // 今の今まで生息地不明を表示しているとき、b_disp_unknownはTRUEになる
 
   u8 i;
@@ -3461,8 +3681,8 @@ static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, 
 
       GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], TRUE );
 
-      //Zukan_Detail_Map_ObjExistAlphaExit( work );
-      //Zukan_Detail_Map_ObjUnknownAlphaInit( work );
+      //Zukan_Detail_Map_ObjExistAlphaExit( work ); 
+      //Zukan_Detail_Map_ObjUnknownAlphaInit( work ); 
       work->vblank_req = VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT_AND_OBJ_UNKNOWN_ALPHA_INIT;
     } 
   }
@@ -3499,6 +3719,170 @@ static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, 
     //Zukan_Detail_Map_ObjExistAlphaInit( work );
     work->vblank_req = VBLANK_REQ_OBJ_UNKNOWN_ALPHA_EXIT_AND_OBJ_EXIST_ALPHA_INIT;
   }
+#endif
+ 
+  if( work->state == STATE_TOP )
+  {
+    Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP_DRAW_SEASON_AREA );
+  }
+  else if( work->state == STATE_SELECT )
+  {
+    Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT_DRAW_SEASON_AREA );
+  }
+}
+
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL b_disp_unknown = GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_UNKNOWN] );  // 今の今まで生息地不明を表示しているとき、b_disp_unknownはTRUEになる
+ 
+  // 今の今まで生息地不明を表示している
+  if( b_disp_unknown )
+  {
+    // これからの季節の生息地が判明しているとき
+    if( work->habitat == HABITAT_KNOWN )
+    {
+      work->text_trans[TEXT_UNKNOWN] = FALSE;
+      PRINTSYS_QUE_Clear( work->print_que[TEXT_UNKNOWN] );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]), 0 );
+      GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_UNKNOWN] );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], FALSE );
+    }
+  }
+  // 今の今まで生息地判明しているとき
+  else
+  {
+    u8 i;
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )  // 生息地は、ポケモン、季節によって変わるので、毎回1度消す。
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
+    }
+  }
+}
+static void Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSet( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL b_disp_unknown = GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_UNKNOWN] );  // 生息地不明が表示されたままのとき、b_disp_unknownはTRUEになる
+
+  // 生息地不明を表示している(即ち、今の今までも、これからも、生息地不明のまま変わらないとき)
+  if( b_disp_unknown )
+  {
+    // 生息地不明のまま変わらないので、何もしなくてよい
+  }
+  // 生息地判明しているとき or 「今の今までは生息地が判明していたが、これからは生息地が不明になるとき」
+  else
+  {
+    // 初めてMapに来たときは、必ずここを通るように、obj_clwk[OBJ_UNKNOWN]を非表示で初期化してある。
+
+    // これからの季節の生息地が不明のとき
+    if( work->habitat == HABITAT_UNKNOWN )
+    {
+/*
+      Zukan_Detail_Map_ObjExistAlphaExit( work );
+      Zukan_Detail_Map_ObjUnknownAlphaInit( work );
+      // Zukan_Detail_Map_ObjUnknownAlphaInitはすぐにAlphaの設定を反映してくれる。
+*/
+      work->vblank_req = VBLANK_REQ_OBJ_EXIST_ALPHA_EXIT_AND_OBJ_UNKNOWN_ALPHA_INIT;  // vblankでやっても完全不透明OBJの乱れは直らなかった。
+    }
+    // これからの季節の生息地が判明しているとき
+    else
+    {
+/*
+      Zukan_Detail_Map_ObjUnknownAlphaExit( work );
+      Zukan_Detail_Map_ObjExistAlphaInit( work );  // 最初のAlpha設定を適切に行いたいので、Zukan_Detail_Map_ObjExistAlphaResetでは不十分。
+      // Zukan_Detail_Map_ObjExistAlphaInitはZukan_Detail_Map_ObjExistAlphaResetですぐにAlphaの設定を反映してくれる。
+*/ 
+      work->vblank_req = VBLANK_REQ_OBJ_UNKNOWN_ALPHA_EXIT_AND_OBJ_EXIST_ALPHA_INIT;  // vblankでやっても完全不透明OBJの乱れは直らなかった。
+    }
+  }
+}
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOn( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL b_disp_unknown = GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_UNKNOWN] );  // 生息地不明が表示されたままのとき、b_disp_unknownはTRUEになる
+
+  // これからの季節の生息地が不明のとき
+  if( work->habitat == HABITAT_UNKNOWN )
+  {
+    // 生息地不明を表示していないとき、これから表示する
+    if( !b_disp_unknown )
+    {
+      STRBUF* strbuf;
+      u16     str_width;
+      u16     bmp_width;
+      u16     x;
+      strbuf = GFL_MSG_CreateString( work->msgdata[MSG_ZUKAN], ZNK_RANGE_00 );
+      str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+      bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]) );
+      x = ( bmp_width - str_width ) / 2;
+      PRINTSYS_PrintQueColor( work->print_que[TEXT_UNKNOWN], GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]),
+                            x, 1, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+      GFL_STR_DeleteBuffer( strbuf );
+      work->text_trans[TEXT_UNKNOWN] = TRUE;
+
+      // 既に済んでいるかもしれないので、Mainを1度呼んでおく
+      Zukan_Detail_Map_TextMain( param, work, cmn, TEXT_UNKNOWN );
+
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], TRUE );
+    } 
+  }
+  // これからの季節の生息地が判明しているとき
+  else
+  {
+    // 生息場所にOBJを表示する
+    u8 season_id = ( work->appear_rule == APPEAR_RULE_YEAR )?(PMSEASON_SPRING):(work->season_id);  // 一年中同じときは春のデータしか見ない
+    u8 i;
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+    {
+      u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[i];
+      if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] != PLACE_BITFLAG_NONE )
+      {
+        if( work->hide_spot[i].state != HIDE_STATE_HIDE_TRUE )  // 隠しマップなら絶対にあたらない
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], TRUE );
+        }
+      }
+    }
+  }
+}
+
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOffCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL b_disp_unknown = GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_UNKNOWN] );  // 今の今まで生息地不明を表示しているとき、b_disp_unknownはTRUEになる
+ 
+  // 今の今まで生息地不明を表示している
+  if( b_disp_unknown )
+  {
+    // とにかく消す
+    if( 1 )
+    {
+      work->text_trans[TEXT_UNKNOWN] = FALSE;
+      PRINTSYS_QUE_Clear( work->print_que[TEXT_UNKNOWN] );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_UNKNOWN]), 0 );
+      GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_UNKNOWN] );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_UNKNOWN], FALSE );
+    }
+  }
+  // 今の今まで生息地判明しているとき
+  else
+  {
+    u8 i;
+    for( i=0; i<TOWNMAP_DATA_MAX; i++ )  // 生息地は、ポケモン、季節によって変わるので、毎回1度消す。
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
+    }
+  }
+}
+static void Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSetCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+/*
+  // 今の今までのAlpha設定がどちらか分からないので、両方呼んでおく
+  Zukan_Detail_Map_ObjExistAlphaExit( work );
+  Zukan_Detail_Map_ObjUnknownAlphaExit( work );
+  ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_M, work->fade_wk_m );  // すぐにAlphaの設定を反映してやらないと、BGとともにこのOBJも暗くしたいというOBJに、前のAlphaが当たってしまう。
+*/
+  work->vblank_req = VBLANK_REQ_OBJ_ALL_ALPHA_EXIT_AND_FADE_SET_COLORLESS_IMMEDIATELY;  // vblankでやっても完全不透明OBJの乱れは直らなかった。
+}
+static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOnCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 何もしない
 }
 
 static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -3553,6 +3937,11 @@ static void Zukan_Detail_Map_ObjUnknownAlphaInit( ZUKAN_DETAIL_MAP_WORK* work )
 {
   int ev1 = 12;
 
+#if 0
+  何かUnknownとExistを変えるたびにここを変えると完全不透明のOBJの表示が乱れるので、
+  完全不透明のOBJはZukan_Detail_Map_AlphaMainInitとZukan_Detail_Map_AlphaMainExitだけで
+  Map表示中1回しか変更しないようにした。
+  
   u8 i;
 
   // 半透明にしないOBJの設定を変更する
@@ -3568,6 +3957,7 @@ static void Zukan_Detail_Map_ObjUnknownAlphaInit( ZUKAN_DETAIL_MAP_WORK* work )
       GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
     }
   }
+#endif
 
   G2_SetBlendAlpha(
         GX_BLEND_PLANEMASK_NONE,
@@ -3577,6 +3967,11 @@ static void Zukan_Detail_Map_ObjUnknownAlphaInit( ZUKAN_DETAIL_MAP_WORK* work )
 }
 static void Zukan_Detail_Map_ObjUnknownAlphaExit( ZUKAN_DETAIL_MAP_WORK* work )
 {
+#if 0
+  何かUnknownとExistを変えるたびにここを変えると完全不透明のOBJの表示が乱れるので、
+  完全不透明のOBJはZukan_Detail_Map_AlphaMainInitとZukan_Detail_Map_AlphaMainExitだけで
+  Map表示中1回しか変更しないようにした。
+  
   u8 i;
 
   // 半透明にしないOBJの設定を元に戻す
@@ -3592,6 +3987,7 @@ static void Zukan_Detail_Map_ObjUnknownAlphaExit( ZUKAN_DETAIL_MAP_WORK* work )
       GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     }
   }
+#endif
 
   // 一部分フェードの設定を元に戻す
   ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_m );
@@ -3602,6 +3998,11 @@ static void Zukan_Detail_Map_ObjUnknownAlphaExit( ZUKAN_DETAIL_MAP_WORK* work )
 //=====================================
 static void Zukan_Detail_Map_ObjExistAlphaInit( ZUKAN_DETAIL_MAP_WORK* work )
 {
+#if 0
+  何かUnknownとExistを変えるたびにここを変えると完全不透明のOBJの表示が乱れるので、
+  完全不透明のOBJはZukan_Detail_Map_AlphaMainInitとZukan_Detail_Map_AlphaMainExitだけで
+  Map表示中1回しか変更しないようにした。
+  
   u8 i;
 
   // 半透明にしないがwndに入ってしまうOBJの設定を変更する
@@ -3616,6 +4017,7 @@ static void Zukan_Detail_Map_ObjExistAlphaInit( ZUKAN_DETAIL_MAP_WORK* work )
       GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
     }
   }
+#endif
 
   // wnd
   GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
@@ -3641,6 +4043,11 @@ static void Zukan_Detail_Map_ObjExistAlphaExit( ZUKAN_DETAIL_MAP_WORK* work )
   // wnd
   GX_SetVisibleWnd( GX_WNDMASK_NONE );
 
+#if 0
+  何かUnknownとExistを変えるたびにここを変えると完全不透明のOBJの表示が乱れるので、
+  完全不透明のOBJはZukan_Detail_Map_AlphaMainInitとZukan_Detail_Map_AlphaMainExitだけで
+  Map表示中1回しか変更しないようにした。
+
   // 半透明にしないがwndに入ってしまうOBJの設定を元に戻す
   for( i=0; i<OBJ_MAX; i++ )
   {
@@ -3653,6 +4060,7 @@ static void Zukan_Detail_Map_ObjExistAlphaExit( ZUKAN_DETAIL_MAP_WORK* work )
       GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     }
   }
+#endif
 
   // 一部分フェードの設定を元に戻す
   ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_m );
@@ -3696,6 +4104,16 @@ static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_WORK* work )
 {
   work->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
   work->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
+
+  // さっそくこのリセットした値でAlphaを
+  // 更新
+  {
+    G2_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_NONE,/*GX_BLEND_PLANEMASK_OBJ,*/
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        work->obj_exist_ev1,
+        16 - work->obj_exist_ev1 );
+  }
 }
 
 //-------------------------------------
@@ -3704,12 +4122,42 @@ static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_WORK* work )
 static void Zukan_Detail_Map_AlphaMainInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // Main画面
-  // 何もしない
+
+  u8 i;
+
+  // 半透明にしないOBJの設定を変更する
+  for( i=0; i<OBJ_MAX; i++ )
+  {
+    if( i != OBJ_UNKNOWN )
+      GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+  }
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    if( work->hide_spot[i].state == HIDE_STATE_HIDE_FALSE )
+    {
+      GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    }
+  }
 }
 static void Zukan_Detail_Map_AlphaMainExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // Main画面
-  // 何もしない
+
+  u8 i;
+
+  // 半透明にしないOBJの設定を元に戻す
+  for( i=0; i<OBJ_MAX; i++ )
+  {
+    if( i != OBJ_UNKNOWN )
+      GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+  }
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    if( work->hide_spot[i].state == HIDE_STATE_HIDE_FALSE )
+    {
+      GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+  }
 }
 
 static void Zukan_Detail_Map_AlphaSubInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
