@@ -2231,7 +2231,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
     {
       BTLV_STRPARAM_Setup( &wk->strParam,    BTL_STRTYPE_UI, BTLMSG_UI_SEL_YES );
       BTLV_STRPARAM_Setup( &wk->strParamSub, BTL_STRTYPE_UI, BTLMSG_UI_SEL_NO );
-      BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub );
+      BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub, TRUE );
       (*seq) = SEQ_WAIT_CONFIRM_YESNO;
     }
     break;
@@ -3827,7 +3827,7 @@ static BOOL SubProc_UI_SelectChangeOrEscape( BTL_CLIENT* wk, int* seq )
   case 0:
     BTLV_STRPARAM_Setup( &wk->strParam,    BTL_STRTYPE_UI, BTLMSG_UI_SEL_NEXT_POKE );
     BTLV_STRPARAM_Setup( &wk->strParamSub, BTL_STRTYPE_UI, BTLMSG_UI_SEL_ESCAPE );
-    BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub );
+    BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub, FALSE );
     (*seq)++;
     break;
 
@@ -4179,7 +4179,7 @@ static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq )
     {
       BTLV_STRPARAM_Setup( &wk->strParam,    BTL_STRTYPE_UI, BTLMSG_UI_SEL_IREKAE_YES );
       BTLV_STRPARAM_Setup( &wk->strParamSub, BTL_STRTYPE_UI, BTLMSG_UI_SEL_IREKAE_NO );
-      BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub );
+      BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub, TRUE );
       (*seq) = SEQ_WAIT_CONFIRM;
     }
     break;
@@ -6243,7 +6243,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       BTLV_STRPARAM   noParam;
       BTLV_STRPARAM_Setup( &yesParam, BTL_STRTYPE_YESNO, msgid_yesno_wazawasureru );
       BTLV_STRPARAM_Setup( &noParam, BTL_STRTYPE_YESNO, msgid_yesno_wazawasurenai );
-      BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
+      BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam, TRUE );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq) = SEQ_WASURE_YESNO_WAIT;
@@ -6320,7 +6320,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       BTLV_STRPARAM_AddArg( &yesParam, wazaoboe_no );
       BTLV_STRPARAM_Setup( &noParam, BTL_STRTYPE_YESNO, msgid_yesno_wazaakiramenai );
       BTLV_STRPARAM_AddArg( &noParam, wazaoboe_no );
-      BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
+      BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam, TRUE );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq) = SEQ_AKIRAME_YESNO_WAIT;
