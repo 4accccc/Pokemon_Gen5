@@ -1044,6 +1044,7 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
     plist->multiPos = 0;
   }
   plist->mode = bplMode;
+  plist->fight_poke_max = BTL_MAIN_GetClientCoverPosCount( wk->mainModule, clientID );
   plist->sel_poke = ( (bplMode == BPL_MODE_WAZASET) || (bplMode==BPL_MODE_WAZAINFO) )? pos_index : 0;
   plist->sel_pos_index = pos_index;
   plist->chg_waza = chg_waza_param;
