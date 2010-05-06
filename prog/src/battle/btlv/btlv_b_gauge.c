@@ -114,7 +114,7 @@ static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work );
 BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp, HEAPID heapID )
 {
   BTLV_BALL_GAUGE_WORK* bbgw    = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_BALL_GAUGE_WORK ) );
-  ARCHANDLE*            handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, heapID );
+  ARCHANDLE*            handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID( heapID ) );
 
   bbgw->heapID = heapID;
   bbgw->clunit = GFL_CLACT_UNIT_Create( BTLV_BALL_GAUGE_CLWK_MAX, 0, bbgw->heapID );

@@ -197,7 +197,7 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
 	  CLSYS_AFFINETYPE_NORMAL,  // 上書きアフィンタイプ（CLSYS_AFFINETYPE）
   };
 
-  hdl = GFL_ARC_OpenDataHandle( arcID, bclw->heapID );
+  hdl = GFL_ARC_OpenDataHandle( arcID, GFL_HEAP_LOWID( bclw->heapID ) );
 
   for( index = 0 ; index < BTLV_CLACT_CLWK_MAX ; index++ )
   {

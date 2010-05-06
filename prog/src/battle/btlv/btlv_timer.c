@@ -115,7 +115,7 @@ BTLV_TIMER_WORK*  BTLV_TIMER_Init( HEAPID heapID )
   ARCHANDLE*      handle;
 
   btw->heapID = heapID;
-  handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, btw->heapID );
+  handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID( btw->heapID ) );
 
   btw->clunit[ BTLV_TIMER_TYPE_GAME_TIME ] = GFL_CLACT_UNIT_Create( BTLV_TIMER_CLWK_MAX, 0, btw->heapID );
   btw->clunit[ BTLV_TIMER_TYPE_COMMAND_TIME ] = GFL_CLACT_UNIT_Create( BTLV_TIMER_CLWK_MAX, 0, btw->heapID );

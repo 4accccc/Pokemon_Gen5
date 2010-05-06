@@ -335,7 +335,7 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
     }
   }
   {
-    ARCHANDLE*  handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), bgw->heapID );
+    ARCHANDLE*  handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), GFL_HEAP_LOWID( bgw->heapID ) );
 
     bgw->status_charID = GFL_CLGRP_CGR_Register( handle, APP_COMMON_GetStatusIconCharArcIdx(),
                                                  FALSE, CLSYS_DRAW_MAIN, bgw->heapID );
