@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T13:55:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T14:18:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,19 +299,19 @@
 　所有→デモ後、_badge_03
 　未所有→badge_04</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">この　とざされた　ゲートを
+		<language name="JPN" width="256">この　とざされた　もんを
 ひらく　カギは　レジェンドバッジ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　閉ざされた　ゲートを
+		<language name="JPN_KANJI" width="256">この　閉ざされた　門を
 開く　カギは　レジェンドバッジ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r10r0801_badge_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・メッセージ表示後、ゲートが開く処理</comment>
+・メッセージ表示後、もんが開く処理</comment>
 		<language name="JPN" width="256">うむ！　よろしい！
-では　ゲートを　あけよう！[BE:01:ページ切り替え（クリア）]</language>
+では　もんを　あけよう！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">うむ！　よろしい！
-では　ゲートを　開けよう！[BE:01:ページ切り替え（クリア）]</language>
+では　門を　開けよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r10r0801_badge_03">
