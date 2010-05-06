@@ -795,18 +795,19 @@ void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk )
   int i;
   STRCODE eom = GFL_STR_GetEOMCode();
   BOOL ok;
-  
+
+
   GF_ASSERT( p_wk );
 
   // npc_idが範囲内？
   if( p_wk->npc_id >= FIELD_WFBC_NPCID_MAX ){
-    p_wk->npc_id = 0;
+    FIELD_WFBC_CORE_PEOPLE_Clear( p_wk );
     TOMOYA_Printf("OverWrite npc_id\n");
   }
 
   // 機嫌値が最大値以上？
   if( p_wk->mood > FIELD_WFBC_MOOD_MAX ){
-    p_wk->mood = 0; // おかしなあたいなので最低にする。
+    FIELD_WFBC_CORE_PEOPLE_Clear( p_wk );
     TOMOYA_Printf("OverWrite mood\n");
   }
 
@@ -820,7 +821,7 @@ void FIELD_WFBC_CORE_PEOPLE_Management( FIELD_WFBC_CORE_PEOPLE* p_wk )
     }
 
     if( ok == FALSE ){
-      DWC_TOOL_SetBadNickName( p_wk->parent, (PERSON_NAME_SIZE + EOM_SIZE), GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+      FIELD_WFBC_CORE_PEOPLE_Clear( p_wk );
       TOMOYA_Printf("OverWrite parent name\n");
     }
   }
