@@ -177,14 +177,16 @@ sub_club_counter_check_connect:
   _WIFI_GET_FRIEND_NUM( i_friend_num )
   //$i_friend_num = 1
 
+  //友達が一人以上いるなら、必ず繋いでいい
+  IF $i_friend_num > 0 THEN
+    $reg_return = SEQ_CONNECT
+    _RET
+  ENDIF
+
   IF $i_id_state == TRUE THEN
-    //本ID取得済みの時
-    IF $i_friend_num == 0 THEN
-      _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_06, SCWK_TARGET_OBJID, POS_DL ) //友だちを登録していないと利用できません
-      $reg_return = SEQ_GOODBYE
-    ELSE
-      $reg_return = SEQ_CONNECT
-    ENDIF
+    //本ID取得済みだけど、友達がいない
+    _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_06, SCWK_TARGET_OBJID, POS_DL ) //友だちを登録していないと利用できません
+    $reg_return = SEQ_GOODBYE
     _RET
   ENDIF
 
