@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T17:18:25"/>
+	<create user="matsumiya" host="W00224" date="2010-05-06T17:26:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -571,8 +571,8 @@
 	</row>
 
 	<row id="MAPNAME_N01" back-color=",,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">プラズマだんのしろ</language>
-		<language name="JPN_KANJI" width="256">プラズマ団の城</language>
+		<language name="JPN" width="256">Ｎのしろ</language>
+		<language name="JPN_KANJI" width="256">Ｎの城</language>
 	</row>
 
 	<row id="MAPNAME_C03R08" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,#0000ff,,,,,,">
