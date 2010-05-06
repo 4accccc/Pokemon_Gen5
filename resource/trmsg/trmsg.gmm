@@ -616,9 +616,9 @@
 
 	<row id="TRID_FUTAGO_01_TRMSG_POKE_ONE_2">
 		<language name="JPN" width="216">ポケモン　１ひき　だけなの？
-それでも　トレーナー　ですか？</language>
+それでも　トレーナー？</language>
 		<language name="JPN_KANJI" width="216">ポケモン　１ひき　だけなの？
-それでも　トレーナー　ですか？</language>
+それでも　トレーナー？</language>
 	</row>
 
 	<row id="TRID_KINDERGARTENM_01_TRMSG_FIGHT_START">
@@ -1848,11 +1848,11 @@
 	<row id="TRID_MINI_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">アタシたち！
 ここで　しゅぎょう　してるの！▼
-いいよ！　アナタも いっしょに
+ね！　アナタも いっしょに
 ポケモン　きたえましょ！▼</language>
 		<language name="JPN_KANJI" width="216">アタシたち！
 ここで　修行してるの！▼
-いいよ！　アナタも　一緒に
+ね！　アナタも　一緒に
 ポケモン　鍛えましょ！▼</language>
 	</row>
 
@@ -1911,9 +1911,9 @@
 
 	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">さいきょうを　めざして　まいにち
-ポケモンと　トレーニング　しているよ！</language>
+ポケモンと　トレーニングしているよ！</language>
 		<language name="JPN_KANJI" width="216">最強を　目指して　毎日
-ポケモンと　トレーニング　しているよ！</language>
+ポケモンと　トレーニングしているよ！</language>
 	</row>
 
 	<row id="TRID_TENNIS_01_TRMSG_FIGHT_START">
@@ -2997,9 +2997,9 @@
 
 	<row id="TRID_ELITEM_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">げきせんを　かちぬいたのは
-おまえの　ほうか！？</language>
+オマエの　ほうか！？</language>
 		<language name="JPN_KANJI" width="216">激戦を　勝ち抜いたのは
-おまえの　ほうか！？</language>
+オマエの　ほうか！？</language>
 	</row>
 
 	<row id="TRID_ELITEM_01_TRMSG_FIGHT_AFTER">
@@ -3606,10 +3606,10 @@
 	</row>
 
 	<row id="TRID_FANW_02_TRMSG_POKE_ONE_1">
-		<language name="JPN" width="216">１ｖｓ２では
-しょうぶ　できないわ</language>
-		<language name="JPN_KANJI" width="216">１ｖｓ２では
-勝負できないわ</language>
+		<language name="JPN" width="216">えっ！？　たたかえる
+ポケモンが　１ひきだけ！？</language>
+		<language name="JPN_KANJI" width="216">えっ！？　戦える
+ポケモンが　１匹だけ！？</language>
 	</row>
 
 	<row id="TRID_FANW_02_TRMSG_FIGHT_START_2">
@@ -10823,28 +10823,28 @@
 	<row id="TRID_JUGGLING_09_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">オイラ　いっぽんばし　だーいすき！▼
 バランス　とるのが　おもしろくて
-なんども　あしを　はこんじゃうんだ▼</language>
+なんども　あしを　はこんじゃうよん▼</language>
 		<language name="JPN_KANJI" width="216">オイラ　一本橋　だーいすき！▼
 バランス　とるのが　おもしろくて
-何度も　足を　運んじゃうんだ▼</language>
+何度も　足を　運んじゃうよん▼</language>
 	</row>
 
 	<row id="TRID_JUGGLING_09_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけたけど
-オイラ　たちどまらない！</language>
+オイラ　たちどまらないよん！</language>
 		<language name="JPN_KANJI" width="216">負けたけど
-オイラ　立ち止まらない！</language>
+オイラ　立ち止まらないよん！</language>
 	</row>
 
 	<row id="TRID_JUGGLING_09_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">はしのうえを　あるけば　やせいの
 ポケモンに　あわずに　すすめる！▼
 だけど　しばらく　たちどまると
-いっぽんばしから　おっこちるんだ！</language>
+いっぽんばしから　おっこちるよん！</language>
 		<language name="JPN_KANJI" width="216">橋の上を　歩けば　野生の
 ポケモンに　会わずに　すすめる！▼
 だけど　しばらく　立ち止まると
-一本橋から　落っこちるんだ！</language>
+一本橋から　落っこちるよん！</language>
 	</row>
 
 	<row id="TRID_ELITEM_19_TRMSG_FIGHT_START">
@@ -11095,9 +11095,10 @@
 		<language name="JPN" width="216">まちのなかも　やまみちも
 はしれはしれ！▼
 はしって　からだぜんたいで
-まわりを　かんじろ！</language>
-		<language name="JPN_KANJI" width="216">都会も　山道も　走れ走れ！
-走って　全身で　周りを　感じろ！</language>
+まわり　すべてを　かんじろ！</language>
+		<language name="JPN_KANJI" width="216">都会も　山道も　走れ走れ！▼
+走って　全身で
+周りすべてを　感じろ！</language>
 	</row>
 
 	<row id="TRID_FISHING_11_TRMSG_FIGHT_START">
