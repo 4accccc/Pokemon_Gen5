@@ -9,6 +9,9 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_087_cloud.NSCR
 %00
 BGのロード	bg_087_cloud
 BGの表示/非表示	エフェクト	表示
+制御モード変更	継続
+SE再生	SEQ_SE_FLD_34	SE1	真ん中	0:0:80	0:0:0
+制御モード変更	逐次
 BGのパレットフェード	すべて	0	14	0	0:0:0
 タイマーによるウエイト	6
 カメラ移動	追従	防御側	32	0	12

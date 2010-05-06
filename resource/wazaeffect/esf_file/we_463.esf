@@ -4,6 +4,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_463.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_463_maguma.NSCR
 #001
 %00
+制御モード変更	継続
+SE再生	SEQ_SE_SDEMO_03	SE1	防御側	0:0:127	0:0:0
+制御モード変更	逐次
 BGのロード	bg_463_maguma
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	13	1	0:0:0

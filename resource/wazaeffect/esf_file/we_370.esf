@@ -4,6 +4,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_370.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_370_speed.NSCR
 #001
 %00
+制御モード変更	継続
+SE再生	SEQ_SE_W010_01	SE1	防御側	10:-1000:100	0:0:0
+制御モード変更	逐次
 カメラ移動	追従	防御側	16	0	8
 BGのロード	bg_370_speed
 BGの表示/非表示	エフェクト	表示
