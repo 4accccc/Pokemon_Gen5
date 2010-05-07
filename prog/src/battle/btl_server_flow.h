@@ -271,6 +271,7 @@ typedef enum {
   BTL_HANDEX_EFFECT_BY_POS,       ///< 位置指定してエフェクト発動
   BTL_HANDEX_CHANGE_FORM,         ///< フォルムナンバーチェンジ
   BTL_HANDEX_SET_EFFECT_IDX,      ///< ワザエフェクトインデックス変更
+  BTL_HANDEX_WAZAEFFECT_ENABLE,   ///< 強制ワザエフェクト有効
 
   BTL_HANDEX_MAX,
 
@@ -835,6 +836,13 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8     effIndex;
 }BTL_HANDEX_PARAM_SET_EFFECT_IDX;
+
+/**
+ *  ワザエフェクトを強制的に有効にする
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+}BTL_HANDEX_PARAM_WAZAEFFECT_ENABLE;
 
 
 
