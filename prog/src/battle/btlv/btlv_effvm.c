@@ -56,7 +56,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -3841,7 +3841,7 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
   {
     BtlvMcssPos pos;
 
-    for( pos = 0 ; pos < BTLV_MCSS_POS_TOTAL ; pos++ )
+    for( pos = BTLV_MCSS_POS_TR_AA ; pos < BTLV_MCSS_POS_TOTAL ; pos++ )
     {
       if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) )
       { 
