@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-01-26T16:40:52"/>
+	<create user="taya" host="W00146" date="2010-04-17T17:42:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -77,6 +82,14 @@
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
 			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -86,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -108,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -182,6 +196,22 @@
 				<comment language="japanese">スペイン語の挨拶</comment>
 				<comment language="english">スペイン語の挨拶</comment>
 			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -213,6 +243,12 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -234,6 +270,20 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
@@ -254,11 +304,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -305,13 +365,13 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="571"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="404"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,263 +394,263 @@
 
 
 	<row id="USA00">
-		<language name="JPN">なし</language>
-		<language name="JPN_KANJI">なし</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="USA01">
-		<language name="JPN">アラバマ</language>
-		<language name="JPN_KANJI">アラバマ</language>
+		<language name="JPN" width="216">アラバマ</language>
+		<language name="JPN_KANJI" width="216">アラバマ</language>
 	</row>
 
 	<row id="USA02">
-		<language name="JPN">アラスカ</language>
-		<language name="JPN_KANJI">アラスカ</language>
+		<language name="JPN" width="216">アラスカ</language>
+		<language name="JPN_KANJI" width="216">アラスカ</language>
 	</row>
 
 	<row id="USA03">
-		<language name="JPN">アリゾナ</language>
-		<language name="JPN_KANJI">アリゾナ</language>
+		<language name="JPN" width="216">アリゾナ</language>
+		<language name="JPN_KANJI" width="216">アリゾナ</language>
 	</row>
 
 	<row id="USA04">
-		<language name="JPN">アーカンソー</language>
-		<language name="JPN_KANJI">アーカンソー</language>
+		<language name="JPN" width="216">アーカンソー</language>
+		<language name="JPN_KANJI" width="216">アーカンソー</language>
 	</row>
 
 	<row id="USA05">
-		<language name="JPN">カリフォルニア</language>
-		<language name="JPN_KANJI">カリフォルニア</language>
+		<language name="JPN" width="216">カリフォルニア</language>
+		<language name="JPN_KANJI" width="216">カリフォルニア</language>
 	</row>
 
 	<row id="USA06">
-		<language name="JPN">コロラド</language>
-		<language name="JPN_KANJI">コロラド</language>
+		<language name="JPN" width="216">コロラド</language>
+		<language name="JPN_KANJI" width="216">コロラド</language>
 	</row>
 
 	<row id="USA07">
-		<language name="JPN">コネチカット</language>
-		<language name="JPN_KANJI">コネチカット</language>
+		<language name="JPN" width="216">コネチカット</language>
+		<language name="JPN_KANJI" width="216">コネチカット</language>
 	</row>
 
 	<row id="USA08">
-		<language name="JPN">デラウェア</language>
-		<language name="JPN_KANJI">デラウェア</language>
+		<language name="JPN" width="216">デラウェア</language>
+		<language name="JPN_KANJI" width="216">デラウェア</language>
 	</row>
 
 	<row id="USA09">
-		<language name="JPN">フロリダ</language>
-		<language name="JPN_KANJI">フロリダ</language>
+		<language name="JPN" width="216">フロリダ</language>
+		<language name="JPN_KANJI" width="216">フロリダ</language>
 	</row>
 
 	<row id="USA10">
-		<language name="JPN">ジョージア</language>
-		<language name="JPN_KANJI">ジョージア</language>
+		<language name="JPN" width="216">ジョージア</language>
+		<language name="JPN_KANJI" width="216">ジョージア</language>
 	</row>
 
 	<row id="USA11">
-		<language name="JPN">ハワイ</language>
-		<language name="JPN_KANJI">ハワイ</language>
+		<language name="JPN" width="216">ハワイ</language>
+		<language name="JPN_KANJI" width="216">ハワイ</language>
 	</row>
 
 	<row id="USA12">
-		<language name="JPN">アイダホ</language>
-		<language name="JPN_KANJI">アイダホ</language>
+		<language name="JPN" width="216">アイダホ</language>
+		<language name="JPN_KANJI" width="216">アイダホ</language>
 	</row>
 
 	<row id="USA13">
-		<language name="JPN">イリノイ</language>
-		<language name="JPN_KANJI">イリノイ</language>
+		<language name="JPN" width="216">イリノイ</language>
+		<language name="JPN_KANJI" width="216">イリノイ</language>
 	</row>
 
 	<row id="USA14">
-		<language name="JPN">インディアナ</language>
-		<language name="JPN_KANJI">インディアナ</language>
+		<language name="JPN" width="216">インディアナ</language>
+		<language name="JPN_KANJI" width="216">インディアナ</language>
 	</row>
 
 	<row id="USA15">
-		<language name="JPN">アイオワ</language>
-		<language name="JPN_KANJI">アイオワ</language>
+		<language name="JPN" width="216">アイオワ</language>
+		<language name="JPN_KANJI" width="216">アイオワ</language>
 	</row>
 
 	<row id="USA16">
-		<language name="JPN">カンザス</language>
-		<language name="JPN_KANJI">カンザス</language>
+		<language name="JPN" width="216">カンザス</language>
+		<language name="JPN_KANJI" width="216">カンザス</language>
 	</row>
 
 	<row id="USA17">
-		<language name="JPN">ケンタッキー</language>
-		<language name="JPN_KANJI">ケンタッキー</language>
+		<language name="JPN" width="216">ケンタッキー</language>
+		<language name="JPN_KANJI" width="216">ケンタッキー</language>
 	</row>
 
 	<row id="USA18">
-		<language name="JPN">ルイジアナ</language>
-		<language name="JPN_KANJI">ルイジアナ</language>
+		<language name="JPN" width="216">ルイジアナ</language>
+		<language name="JPN_KANJI" width="216">ルイジアナ</language>
 	</row>
 
 	<row id="USA19">
-		<language name="JPN">メイン</language>
-		<language name="JPN_KANJI">メイン</language>
+		<language name="JPN" width="216">メイン</language>
+		<language name="JPN_KANJI" width="216">メイン</language>
 	</row>
 
 	<row id="USA20">
-		<language name="JPN">メリーランド</language>
-		<language name="JPN_KANJI">メリーランド</language>
+		<language name="JPN" width="216">メリーランド</language>
+		<language name="JPN_KANJI" width="216">メリーランド</language>
 	</row>
 
 	<row id="USA21">
-		<language name="JPN">マサチューセッツ</language>
-		<language name="JPN_KANJI">マサチューセッツ</language>
+		<language name="JPN" width="216">マサチューセッツ</language>
+		<language name="JPN_KANJI" width="216">マサチューセッツ</language>
 	</row>
 
 	<row id="USA22">
-		<language name="JPN">ミシガン</language>
-		<language name="JPN_KANJI">ミシガン</language>
+		<language name="JPN" width="216">ミシガン</language>
+		<language name="JPN_KANJI" width="216">ミシガン</language>
 	</row>
 
 	<row id="USA23">
-		<language name="JPN">ミネソタ</language>
-		<language name="JPN_KANJI">ミネソタ</language>
+		<language name="JPN" width="216">ミネソタ</language>
+		<language name="JPN_KANJI" width="216">ミネソタ</language>
 	</row>
 
 	<row id="USA24">
-		<language name="JPN">ミシシッピ</language>
-		<language name="JPN_KANJI">ミシシッピ</language>
+		<language name="JPN" width="216">ミシシッピ</language>
+		<language name="JPN_KANJI" width="216">ミシシッピ</language>
 	</row>
 
 	<row id="USA25">
-		<language name="JPN">ミズーリ</language>
-		<language name="JPN_KANJI">ミズーリ</language>
+		<language name="JPN" width="216">ミズーリ</language>
+		<language name="JPN_KANJI" width="216">ミズーリ</language>
 	</row>
 
 	<row id="USA26">
-		<language name="JPN">モンタナ</language>
-		<language name="JPN_KANJI">モンタナ</language>
+		<language name="JPN" width="216">モンタナ</language>
+		<language name="JPN_KANJI" width="216">モンタナ</language>
 	</row>
 
 	<row id="USA27">
-		<language name="JPN">ネブラスカ</language>
-		<language name="JPN_KANJI">ネブラスカ</language>
+		<language name="JPN" width="216">ネブラスカ</language>
+		<language name="JPN_KANJI" width="216">ネブラスカ</language>
 	</row>
 
 	<row id="USA28">
-		<language name="JPN">ネバダ</language>
-		<language name="JPN_KANJI">ネバダ</language>
+		<language name="JPN" width="216">ネバダ</language>
+		<language name="JPN_KANJI" width="216">ネバダ</language>
 	</row>
 
 	<row id="USA29">
-		<language name="JPN">ニューハンプシャー</language>
-		<language name="JPN_KANJI">ニューハンプシャー</language>
+		<language name="JPN" width="216">ニューハンプシャー</language>
+		<language name="JPN_KANJI" width="216">ニューハンプシャー</language>
 	</row>
 
 	<row id="USA30">
-		<language name="JPN">ニュージャージー</language>
-		<language name="JPN_KANJI">ニュージャージー</language>
+		<language name="JPN" width="216">ニュージャージー</language>
+		<language name="JPN_KANJI" width="216">ニュージャージー</language>
 	</row>
 
 	<row id="USA31">
-		<language name="JPN">ニューメキシコ</language>
-		<language name="JPN_KANJI">ニューメキシコ</language>
+		<language name="JPN" width="216">ニューメキシコ</language>
+		<language name="JPN_KANJI" width="216">ニューメキシコ</language>
 	</row>
 
 	<row id="USA32">
-		<language name="JPN">ニューヨーク</language>
-		<language name="JPN_KANJI">ニューヨーク</language>
+		<language name="JPN" width="216">ニューヨーク</language>
+		<language name="JPN_KANJI" width="216">ニューヨーク</language>
 	</row>
 
 	<row id="USA33">
-		<language name="JPN">ノースカロライナ</language>
-		<language name="JPN_KANJI">ノースカロライナ</language>
+		<language name="JPN" width="216">ノースカロライナ</language>
+		<language name="JPN_KANJI" width="216">ノースカロライナ</language>
 	</row>
 
 	<row id="USA34">
-		<language name="JPN">ノースダコタ</language>
-		<language name="JPN_KANJI">ノースダコタ</language>
+		<language name="JPN" width="216">ノースダコタ</language>
+		<language name="JPN_KANJI" width="216">ノースダコタ</language>
 	</row>
 
 	<row id="USA35">
-		<language name="JPN">オハイオ</language>
-		<language name="JPN_KANJI">オハイオ</language>
+		<language name="JPN" width="216">オハイオ</language>
+		<language name="JPN_KANJI" width="216">オハイオ</language>
 	</row>
 
 	<row id="USA36">
-		<language name="JPN">オクラホマ</language>
-		<language name="JPN_KANJI">オクラホマ</language>
+		<language name="JPN" width="216">オクラホマ</language>
+		<language name="JPN_KANJI" width="216">オクラホマ</language>
 	</row>
 
 	<row id="USA37">
-		<language name="JPN">オレゴン</language>
-		<language name="JPN_KANJI">オレゴン</language>
+		<language name="JPN" width="216">オレゴン</language>
+		<language name="JPN_KANJI" width="216">オレゴン</language>
 	</row>
 
 	<row id="USA38">
-		<language name="JPN">ペンシルバニア</language>
-		<language name="JPN_KANJI">ペンシルバニア</language>
+		<language name="JPN" width="216">ペンシルバニア</language>
+		<language name="JPN_KANJI" width="216">ペンシルバニア</language>
 	</row>
 
 	<row id="USA39">
-		<language name="JPN">ロードアイランド</language>
-		<language name="JPN_KANJI">ロードアイランド</language>
+		<language name="JPN" width="216">ロードアイランド</language>
+		<language name="JPN_KANJI" width="216">ロードアイランド</language>
 	</row>
 
 	<row id="USA40">
-		<language name="JPN">サウスカロライナ</language>
-		<language name="JPN_KANJI">サウスカロライナ</language>
+		<language name="JPN" width="216">サウスカロライナ</language>
+		<language name="JPN_KANJI" width="216">サウスカロライナ</language>
 	</row>
 
 	<row id="USA41">
-		<language name="JPN">サウスダコタ</language>
-		<language name="JPN_KANJI">サウスダコタ</language>
+		<language name="JPN" width="216">サウスダコタ</language>
+		<language name="JPN_KANJI" width="216">サウスダコタ</language>
 	</row>
 
 	<row id="USA42">
-		<language name="JPN">テネシー</language>
-		<language name="JPN_KANJI">テネシー</language>
+		<language name="JPN" width="216">テネシー</language>
+		<language name="JPN_KANJI" width="216">テネシー</language>
 	</row>
 
 	<row id="USA43">
-		<language name="JPN">テキサス</language>
-		<language name="JPN_KANJI">テキサス</language>
+		<language name="JPN" width="216">テキサス</language>
+		<language name="JPN_KANJI" width="216">テキサス</language>
 	</row>
 
 	<row id="USA44">
-		<language name="JPN">ユタ</language>
-		<language name="JPN_KANJI">ユタ</language>
+		<language name="JPN" width="216">ユタ</language>
+		<language name="JPN_KANJI" width="216">ユタ</language>
 	</row>
 
 	<row id="USA45">
-		<language name="JPN">バーモント</language>
-		<language name="JPN_KANJI">バーモント</language>
+		<language name="JPN" width="216">バーモント</language>
+		<language name="JPN_KANJI" width="216">バーモント</language>
 	</row>
 
 	<row id="USA46">
-		<language name="JPN">バージニア</language>
-		<language name="JPN_KANJI">バージニア</language>
+		<language name="JPN" width="216">バージニア</language>
+		<language name="JPN_KANJI" width="216">バージニア</language>
 	</row>
 
 	<row id="USA47">
-		<language name="JPN">ワシントン</language>
-		<language name="JPN_KANJI">ワシントン</language>
+		<language name="JPN" width="216">ワシントン</language>
+		<language name="JPN_KANJI" width="216">ワシントン</language>
 	</row>
 
 	<row id="USA48">
-		<language name="JPN">ワシントンＤ．Ｃ．</language>
-		<language name="JPN_KANJI">ワシントンＤ．Ｃ．</language>
+		<language name="JPN" width="216">ワシントンＤ．Ｃ．</language>
+		<language name="JPN_KANJI" width="216">ワシントンＤ．Ｃ．</language>
 	</row>
 
 	<row id="USA49">
-		<language name="JPN">ウェストバージニア</language>
-		<language name="JPN_KANJI">ウェストバージニア</language>
+		<language name="JPN" width="216">ウェストバージニア</language>
+		<language name="JPN_KANJI" width="216">ウェストバージニア</language>
 	</row>
 
 	<row id="USA50">
-		<language name="JPN">ウィスコンシン</language>
-		<language name="JPN_KANJI">ウィスコンシン</language>
+		<language name="JPN" width="216">ウィスコンシン</language>
+		<language name="JPN_KANJI" width="216">ウィスコンシン</language>
 	</row>
 
 	<row id="USA51">
-		<language name="JPN">ワイオミング</language>
-		<language name="JPN_KANJI">ワイオミング</language>
+		<language name="JPN" width="216">ワイオミング</language>
+		<language name="JPN_KANJI" width="216">ワイオミング</language>
 	</row>
 
 	<flowchart-group-list>
