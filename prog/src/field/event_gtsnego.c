@@ -130,7 +130,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       }
       else
       { 
-        (*seq)  = _WAIT_NET_END;
+        (*seq)  = _FIELD_OPEN;
       }
     }
     break;
