@@ -42,8 +42,9 @@
 
 #define	MCSS_DEFAULT_SHADOW_OFFSET	( -0x1000 )	//影位置のZ方向のオフセット値
 
-#define MCSS_VCOUNT_BORDER          ( 213 )     //テクスチャ転送するときのVCOUNTの境界
-                                                //(192~213がレンダリングエンジンのブランク期間）
+#define MCSS_VCOUNT_BORDER_LOW          ( 192 )   //テクスチャ転送するときのVCOUNTの境界
+#define MCSS_VCOUNT_BORDER_HIGH         ( 213 )   //テクスチャ転送するときのVCOUNTの境界
+                                                  //(192~213がレンダリングエンジンのブランク期間）
 
 #define MCSS_FLIP_NONE	(0)  //そのまま
 #define MCSS_FLIP_X		(1)   //X反転
@@ -59,7 +60,7 @@
  * プロトタイプ宣言
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
+static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss, 
 							  fx32 pos_x,
 							  fx32 pos_y,
 							  fx32 scale_x,
@@ -136,11 +137,12 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 
 	// load palette data
 	{
-		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
 
 		tlw->palette_p = &mcss_sys->shadow_palette_proxy;
 		tlw->pal_ofs = MCSS_PAL_ADRS + 0x100;
-		tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData, heapID );
+		tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData,
+                                              GFL_HEAP_LOWID( heapID ) );
 		GF_ASSERT( tlw->pBufPltt != NULL);
 
 		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
@@ -185,7 +187,7 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
     { 
       if( mcss_sys->mcss[ index ]->anm_stop_flag == 0 ){
   			// アニメーションを更新します
-  			NNS_G2dTickMCAnimation( &mcss_sys->mcss[ index ]->mcss_mcanim, FX32_ONE );
+  			NNS_G2dTickMCAnimation( &mcss_sys->mcss[ index ]->mcss_mcanim, mcss_sys->mcss[ index ]->mcss_anm_frame );
       }
 			//パレットフェードチェック
 			if( mcss_sys->mcss[ index ]->pal_fade_flag )
@@ -310,6 +312,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			mcss		= mcss_sys->mcss[index];
 			image_p		= &mcss->mcss_image_proxy;
 			pos_z_default = 0;
+      mcss_sys->scale_offset_work = FX32_ONE;
 
 			anim_ctrl_mc= NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim);
 			MC_Array = (NNSG2dMCNodeCellAnimArray*)&mcss->mcss_mcanim.multiCellInstance.pCellAnimInstasnces;
@@ -473,7 +476,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				//メパチ処理
 				if( ncec->mepachi_size_x ){
 					if( mcss->mepachi_flag ){
-						MCSS_DrawAct( mcss,
+						MCSS_DrawAct( mcss_sys, mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -485,7 +488,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  &pos_z_default,flipFlg );
 					}
 					else{
-						MCSS_DrawAct( mcss,
+						MCSS_DrawAct( mcss_sys, mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -497,7 +500,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  &pos_z_default,flipFlg );
 					}
 				}
-				MCSS_DrawAct( mcss,
+				MCSS_DrawAct( mcss_sys, mcss,
 							  ncec->pos_x,
 							  ncec->pos_y,
 							  ncec->size_x,
@@ -573,7 +576,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
  * @param[in]  pos_z_default    セルを描画する度にずらずZ方向のオフセット値
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_DrawAct( MCSS_WORK *mcss,
+static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
 							  fx32 pos_x,
 							  fx32 pos_y,
 							  fx32 scale_x,
@@ -613,6 +616,11 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 	}
+  else
+  { 
+    scale_x = FX_Mul( scale_x, mcss_sys->scale_offset_work );
+    scale_y = FX_Mul( scale_y, mcss_sys->scale_offset_work );
+  }
 
 	G3_RestoreMtx( MCSS_NORMAL_MTX );
 
@@ -708,6 +716,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 
 	if( mcss_ortho_mode == 0 ){
 		*pos_z_default -= MCSS_DEFAULT_Z;
+    mcss_sys->scale_offset_work += mcss_sys->scale_offset;
 	}
 	else{
 		*pos_z_default -= MCSS_DEFAULT_Z_ORTHO;
@@ -756,6 +765,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
 			mcss_sys->mcss[ count ]->maw = *maw;
+			mcss_sys->mcss[ count ]->mcss_anm_frame = FX32_ONE;
 			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
@@ -1504,6 +1514,19 @@ void	MCSS_SetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys, const fx32 rate )
 
 //--------------------------------------------------------------------------
 /**
+ * @brief マルチセルアニメフレームセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  frame    セットするフレーム数
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAnimeFrame( MCSS_WORK *mcss, const fx32 frame )
+{ 
+  mcss->mcss_anm_frame = frame;
+}
+
+//--------------------------------------------------------------------------
+/**
  * @brief マルチセルアニメーションの設定されている数を取得
  *
  * @param[in] mcss  MCSSワーク構造体のポインタ
@@ -1512,6 +1535,19 @@ void	MCSS_SetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys, const fx32 rate )
 u16 MCSS_GetAnimeNum( MCSS_WORK* mcss )
 { 
   return mcss->mcss_nmar->numSequences;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief マルチセルアニメフレームセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  scale    セットするフレーム数
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetScaleOffset( MCSS_SYS_WORK* mcss_sys, const fx32 scale )
+{ 
+  mcss_sys->scale_offset = scale;
 }
 
 //--------------------------------------------------------------------------
@@ -1624,7 +1660,8 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
   u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
 
   //VCountを確認してちらつきを防ぐ
-  if( *v_count > MCSS_VCOUNT_BORDER )
+  if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
+      ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
   { 
     return;
   }
@@ -1678,7 +1715,8 @@ static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work )
   u16 *v_count = (u16 *)REG_VCOUNT_ADDR;
 
   //VCountを確認してちらつきを防ぐ
-  if( *v_count > MCSS_VCOUNT_BORDER )
+  if( ( *v_count < MCSS_VCOUNT_BORDER_LOW ) ||
+      ( *v_count > MCSS_VCOUNT_BORDER_HIGH ) )
   { 
     return;
   }
@@ -2132,6 +2170,7 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
+			mcss_sys->mcss[ count ]->mcss_anm_frame = FX32_ONE;
 			MCSS_LoadResourceDebug( mcss_sys, count, madw );
 			break;
 		}
@@ -2193,7 +2232,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
   // VRAM 関連の初期化
   //
   {
-		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
 		tlw->image_p = &mcss->mcss_image_proxy;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;

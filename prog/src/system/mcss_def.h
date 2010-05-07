@@ -108,6 +108,8 @@ struct _MCSS_WORK
 	int														heapID;								//使用するヒープID
   MCSS_ADD_WORK                 maw;
 
+  fx32                          mcss_anm_frame;       //アニメーションを進めるフレーム数
+
   u16     shadow_rotate;
   VecFx32 shadow_offset;
 };
@@ -130,5 +132,7 @@ struct _MCSS_SYS_WORK
 	int											heapID;								//使用するヒープID
 	
 	fx32                    mcAnimRate; //マルチセルアニメ倍率
+  fx32                    scale_offset;
+  fx32                    scale_offset_work;
 };
 
