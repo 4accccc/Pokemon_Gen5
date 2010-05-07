@@ -1024,6 +1024,11 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
 
       // プレイヤーの位置にOBJを配置する
       Zukan_Detail_Map_SetPlayer( param, work, cmn );
+      // プレイヤーの位置にOBJを表示
+      if( work->habitat == HABITAT_KNOWN )  // 生息地が判明しているときは、TOPでもSELECTでも表示しておく。
+      {
+        Zukan_Detail_Map_DrawPlayer( param, work, cmn, TRUE );
+      }
 
       // パレットフェード
       {
@@ -3212,7 +3217,7 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
           Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
 
           // プレイヤーの位置にOBJを表示
-          Zukan_Detail_Map_DrawPlayer( param, work, cmn, TRUE );
+          //Zukan_Detail_Map_DrawPlayer( param, work, cmn, TRUE );  // 生息地が判明しているときは、TOPでもSELECTでも表示しておく。
         }
 
         // タッチバー
@@ -3279,7 +3284,7 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         }
 
         // プレイヤーの位置のOBJを非表示
-        Zukan_Detail_Map_DrawPlayer( param, work, cmn, FALSE );
+        //Zukan_Detail_Map_DrawPlayer( param, work, cmn, FALSE );  // 生息地が判明しているときは、TOPでもSELECTでも表示しておく。
 
         // タッチバー
         ZUKAN_DETAIL_TOUCHBAR_SetType(
@@ -3938,7 +3943,7 @@ static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOn( ZUKAN_DETAIL_MAP_PARAM* pa
       }
     }
 
-    if( work->state == STATE_SELECT_DRAW_SEASON_AREA )
+    //if( work->state == STATE_SELECT_DRAW_SEASON_AREA )  // 生息地が判明しているときは、TOPでもSELECTでも表示しておく。
     {
       // プレイヤーの位置に配置するOBJを現在表示していない場合
       if( !Zukan_Detail_Map_IsDrawPlayer( param, work, cmn ) )
@@ -3974,6 +3979,8 @@ static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOffCompleteOff( ZUKAN_DETAIL_M
     {
       GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
     }
+    
+    //Zukan_Detail_Map_DrawPlayer( param, work, cmn, FALSE );は呼ばなくてもよい
   }
 }
 static void Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSetCompleteOff( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )

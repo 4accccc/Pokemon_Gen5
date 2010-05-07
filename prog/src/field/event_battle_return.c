@@ -267,7 +267,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         }
 
         // 全国図鑑か否か
-        zenkoku_flag = ZUKANSAVE_GetZukanMode( zukan_savedata );  // TRUEのとき全国図鑑
+        //zenkoku_flag = ZUKANSAVE_GetZukanMode( zukan_savedata );  // TRUEのとき全国図鑑として扱っている
+        zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zukan_savedata );  // TRUEのとき全国図鑑を持っている
 
         // 図鑑登録画面 or ニックネーム命名確認画面 へ
         GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
