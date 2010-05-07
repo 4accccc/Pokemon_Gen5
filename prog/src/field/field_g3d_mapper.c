@@ -499,8 +499,6 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
   u32 totalSize;            // 新マップの総ブロック数
   FLDMAPPER_MAPDATA* blocks;// 新マップの実マップデータ
 
-  OBATA_Printf( "FLDMAPPER_Connect: start\n" );
-
   // 追加マップのサイズを取得
   add_sizex     = MAP_MATRIX_GetMapBlockSizeWidth( matrix );
   add_sizez     = MAP_MATRIX_GetMapBlockSizeHeight( matrix );
@@ -594,7 +592,6 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
 
   // 後始末
   GFL_HEAP_FreeMemory( blocks );
-  OBATA_Printf( "FLDMAPPER_Connect: end\n" );
   return TRUE;
 }
 
