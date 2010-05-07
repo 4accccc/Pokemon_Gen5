@@ -67,7 +67,8 @@ GMEVENT* EVENT_GameManual( GAMESYS_WORK* gameSystem, u16* ret_wk )
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
   work->gameSystem = gameSystem;
-  work->fieldmap = fieldmap;
+  work->fieldmap   = fieldmap;
+  work->ret_wk     = ret_wk;
 
   // マニュアル呼び出し準備
   work->manualParam = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MANUAL_PARAM) );
@@ -104,6 +105,7 @@ static GMEVENT_RESULT GameManualEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 1:
+    OBATA_Printf( "result = %d\n", work->manualParam->result );
     // 終了結果を格納
     ReturnManualResult( work );
     // 後片付け
