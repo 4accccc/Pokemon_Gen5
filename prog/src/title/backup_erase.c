@@ -683,7 +683,8 @@ static void StartMessage( BACKUP_ERASE_WORK * wk, int strIdx )
 								wk->win,
 								0, 0, wk->exp,
 								wk->font,
-								MSGSPEED_GetWait(),
+//								MSGSPEED_GetWait(),
+								MSGSPEED_GetWaitByConfigParam( MSGSPEED_SLOW ),		// Ý’è‚Ìu’x‚¢vŒÅ’è
 								wk->tcbl,
 								10,		// tcbl pri
 								HEAPID_BACKUP_ERASE,
@@ -711,9 +712,11 @@ static BOOL MainMessage( BACKUP_ERASE_WORK * wk )
 
   switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
   case PRINTSTREAM_STATE_RUNNING: //ŽÀs’†
+/*
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
       PRINTSYS_PrintStreamShortWait( wk->stream, 0 );
     }
+*/
 		wk->stream_clear_flg = FALSE;
     break;
 
