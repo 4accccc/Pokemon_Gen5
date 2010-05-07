@@ -1254,9 +1254,7 @@ void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
 
 
 static const GFL_UI_TP_HITTBL _CancelBtnTbl[] = {
-  {	192-32,   192 ,
-    128-32,  128+32  },
-
+  { 24*8-32 , 24*8, 128-48, 128+48},
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 

@@ -1021,7 +1021,7 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
 //------------------------------------------------------------------
 
 const static GFL_UI_TP_HITTBL _tp_data[]={
-  { 24*8-32 , 24*8, 128-32, 128+32},
+  { 24*8-32 , 24*8, 128-48, 128+48},
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 

@@ -391,8 +391,14 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   else if(ret == 0){ // ‚Í‚¢‚ð‘I‘ð‚µ‚½ê‡
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
-    EndMessageWindowOff(wk);
+    if(FALSE == _tradeNumCheck(wk) && (wk->directmode == WIFIP2PMATCH_PLAYERDIRECT_TRADE)){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
+    }
+    else{
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
+      EndMessageWindowOff(wk);
+    }
   }
   else{  // ‚¢‚¢‚¦‚ð‘I‘ð‚µ‚½ê‡
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
@@ -402,6 +408,26 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief   ŒðŠ·Žž‚É”‚ª‘«‚è‚È‚¢ê‡  WIFIP2PMATCH_PLAYERDIRECT_SUB23
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectSub23( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(!WifiP2PMatchMessageEndCheck(wk)){
+    return seq;
+  }
+  if(!GFL_UI_KEY_GetTrg()){
+    return seq;
+  }
+  wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  return seq;
+}
 
 
 //------------------------------------------------------------------
@@ -1103,14 +1129,14 @@ static int _playerDirectBattleGO1( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
-
+//WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2
 static int _playerDirectBattleGO2( WIFIP2PMATCH_WORK *wk, int seq )
 {
 //  if( !WifiP2PMatchMessageEndCheck(wk) ){
   //  return seq;
 //  }
   _yenowinCreateM2(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3);
   return seq;
 }
 

@@ -1009,7 +1009,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   WifiP2PMatch_VCTDisconnectSend2,  //WIFIP2PMATCH_VCTEND_COMMSEND2
   WifiP2PMatch_VCTDisconnectSend3, //WIFIP2PMATCH_VCTEND_COMMSEND3
   WifiP2PMatch_VCTConnectMain, //WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN
-
+  _playerDirectSub23, //  WIFIP2PMATCH_PLAYERDIRECT_SUB23
 };
 
 #define _MAXNUM   (2)         // ç≈ëÂê⁄ë±êlêî
@@ -1165,6 +1165,12 @@ static BOOL _is2pokeMode(int status,int gamemode)
 static BOOL _tradeNumCheck(WIFIP2PMATCH_WORK * wk)
 {
   BOX_MANAGER * pManager = GAMEDATA_GetBoxManager(wk->pGameData);
+
+  /*
+  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT){
+    return FALSE;
+  }
+   */
   if((PokeParty_GetPokeCount(GAMEDATA_GetMyPokemon(wk->pGameData))==1) && ( BOXDAT_GetPokeExistCountTotal(pManager)==0 )){
     return FALSE;
   }
@@ -4172,9 +4178,18 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;
   case WIFI_GAME_VCT:
-  case WIFI_GAME_TRADE:
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    break;
+  case WIFI_GAME_TRADE:
+    if(!_tradeNumCheck(wk)){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
+      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+    }
+    else{
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    }
     break;
   case WIFI_GAME_TVT:
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
@@ -4220,6 +4235,11 @@ static int MessageEndReturnList( WIFIP2PMATCH_WORK *wk, int seq )
   }
   if(GFL_UI_KEY_GetTrg()){
     EndMessageWindowOff(wk);
+    GFL_NET_StateWifiMatchEnd(TRUE);
+    _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+    wk->preConnect = -1;
+    // éÂêlåˆÇÃìÆçÏÇãñâ¬
+    FriendRequestWaitOff( wk );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
   }
   return seq;
@@ -4775,6 +4795,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       if(!_tradeNumCheck(wk)){
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
         _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+        break;
       }
     }
     if(_modeIsBattleStatus(gamemode)){
