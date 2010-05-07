@@ -1574,7 +1574,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
   u32   hem_state;
   u16 agility;
   u8  actionPri, wazaPri;
-  u8  i, j, p, numAction, pokeIdx;
+  u8  i, j, p, numAction, pokeIdx, action;
 
 // 全ポケモンの行動内容をワークに格納
   for(i=0, p=0; i<BTL_CLIENT_MAX; ++i)
@@ -1592,7 +1592,9 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
         break;
       }
 
-      switch( BTL_ACTION_GetAction(&order[p].action) ){
+      action = BTL_ACTION_GetAction( &order[p].action );
+
+      switch( action ){
       case BTL_ACTION_ROTATION:
         {
           pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( order[p].action.rotation.dir );
@@ -1608,6 +1610,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
 
       default:
         order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, pokeIdx );
+        BTL_N_Printf ( DBGSTR_SVFL_ActionSortGen, pokeIdx, BPP_GetID(order[p].bpp), action );
         ++pokeIdx;
         break;
       }

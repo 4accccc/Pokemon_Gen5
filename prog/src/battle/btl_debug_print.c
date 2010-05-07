@@ -86,9 +86,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
   case DBGSTR_CLIENT_SelectActionSkip:       return "Act選択(%d体目）スキップ\n";
+  case DBGSTR_CLIENT_SelectActionRoot:       return "Act選択（%d体目）開始 .. pokeID=%d, actAdrs=%p\n";
   case DBGSTR_CLIENT_SelActPokeDead:         return "死んでてスキップなのでCheckedCntそのまま\n";
   case DBGSTR_CLIENT_SelectActionStart:      return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
   case DBGSTR_CLIENT_SelectActionDone:       return "カバー位置数(%d)終了、アクション送信へ\n";
+  case DBGSTR_CLIENT_SelectActionBacktoRoot: return "カバー位置未達、次のポケ(Idx=%d）アクション選択ルートへ\n";
   case DBGSTR_CLIENT_SelectAction_Pokemon:   return "「ポケモン」を選んだ->選択画面へ\n";
   case DBGSTR_CLIENT_SelectAction_Fight:     return "「たたかう」を選んだ->選択画面へ\n";
   case DBGSTR_CLIENT_SelectChangePoke:       return " ポケモン選んだ ... idx=%d\n";
@@ -264,7 +266,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_AddSickFixed:        return "状態異常決定：コード=%d\n";
   case DBGSTR_SVFL_WazaExeStart:        return "ポケ[%d], waza=%dのワザ出し処理開始\n";
   case DBGSTR_SVFL_ActionSortInfo:      return "アクションソート:Client(%d), actionCnt=%d\n";
-  case DBGSTR_SVFL_ActionSortRotation:  return ".. rotate action nextPokeIdx = %d\n";
+  case DBGSTR_SVFL_ActionSortRotation:  return ".. Action Sort Rot nextPokeIdx = %d\n";
+  case DBGSTR_SVFL_ActionSortGen:       return ".. Action Sort pokeIdx=%d, pokeID=%d, action=%d\n";
   case DBGSTR_SVFL_TrainerItemTarget:   return "トレーナーアイテム使用：tgtIdx=%d, tgtPokeID=%d\n";
   case DBGSTR_SVFL_DoubleTargetIntr:    return "ダブル敵１体ターゲット…割り込みポケ=%d\n";
   case DBGSTR_SVFL_DoubleTargetRegister:return "ダブル敵１体ターゲット…確定ポケ=%d\n";

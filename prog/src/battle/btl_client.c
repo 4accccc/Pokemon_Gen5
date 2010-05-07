@@ -721,13 +721,14 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_READ_ACMD:
     {
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
+
+      setDummyReturnData( wk );
       if( cmd == BTL_ACMD_QUIT_BTL )
       {
         const BTL_ESCAPEINFO* p;
         BTL_ADAPTER_GetRecvData( wk->adapter, (const void**)&p );
         wk->escapeInfo = *p;
         BTL_N_Printf( DBGSTR_CLIENT_RecvedQuitCmd, wk->myID );
-        setDummyReturnData( wk );
         wk->subSeq = 0;
         wk->myState = SEQ_RETURN_TO_SV_QUIT;
         break;
@@ -742,7 +743,6 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
         }
         else
         {
-          setDummyReturnData( wk );
           wk->subSeq = 0;
           wk->myState = SEQ_RETURN_TO_SV;
         }
@@ -1054,6 +1054,7 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
       {
         BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
       }
+
       return TRUE;
     }
     break;
@@ -1344,13 +1345,13 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
       // 再生時タイムオーバー検出処理
       if( act->gen.cmd == BTL_ACTION_RECPLAY_TIMEOVER )
       {
+        // 描画クライアントなのでメッセージ表示へ
         if( wk->viewCore ){
-          TAYA_Printf("再生タイムオーバーコマンドチェック ... 描画クライアントなのでメッセージ\n");
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BattleTimeOver );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq)++;
+        // 描画クライアントではないので終了
         }else{
-          TAYA_Printf("再生タイムオーバーコマンドチェック ... 描画クライアントではないので終了\n");
           wk->procAction = &wk->actionParam[ 0 ];
           BTL_ACTION_SetNULL( wk->procAction );
           wk->returnDataPtr = wk->procAction;
@@ -1494,6 +1495,8 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
     wk->actionAddCount = 0;
     BTL_ACTION_SetNULL( wk->procAction );
+
+    BTL_N_Printf( DBGSTR_CLIENT_SelectActionRoot, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->procAction );
 
     if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
       BTL_N_Printf( DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
@@ -1874,7 +1877,6 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         {
           wk->wazaInfoPokeIdx = pokeIdx;
           wk->wazaInfoWazaIdx = BPP_WAZA_SearchIdx( procPoke, procAction->fight.waza );
-          TAYA_Printf("WazaInfo- wazaID=%d, wazaIndex=%d\n", procAction->fight.waza, wk->wazaInfoWazaIdx);
           if( wk->wazaInfoWazaIdx != PTL_WAZA_MAX ){
             ClientSubProc_Set( wk, selact_WazaInfoView );
             return FALSE;
@@ -2057,9 +2059,10 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
       if( !BTL_POKESELECT_IsCancel(&wk->pokeSelResult) )
       {
         u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
-        if( idx < BTL_PARTY_MEMBER_MAX ){
+        if( idx < BTL_PARTY_MEMBER_MAX )
+        {
           BTL_N_Printf( DBGSTR_CLIENT_SelectChangePoke, idx);
-          BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
+          BTL_ACTION_SetChangeParam( wk->procAction, wk->procPokeIdx, idx );
           ClientSubProc_Set( wk, selact_CheckFinish );
           break;
         }
@@ -2244,8 +2247,6 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
       {
         if( result == BTL_YESNO_YES )
         {
-          setupPokeSelParam( wk, BPL_MODE_NORMAL, 1, &wk->pokeSelParam, &wk->pokeSelResult );
-          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, 0, FALSE, &wk->pokeSelResult );
           (*seq) = SEQ_RETURN_ESCAPE;
         }
         else
@@ -2257,9 +2258,9 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_RETURN_ESCAPE:
-    BTL_ACTION_SetEscapeParam( &(wk->actionParam[0]) );
+    BTL_ACTION_SetEscapeParam( wk->procAction );
     wk->returnDataPtr = &(wk->actionParam[0]);
-    wk->returnDataSize = sizeof(wk->actionParam[0]);
+    wk->returnDataSize = sizeof(BTL_ACTION_PARAM) * (wk->procPokeIdx + 1);
     ClientSubProc_Set( wk, selact_Finish );
     break;
 
@@ -2286,7 +2287,7 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
       if( wk->procPokeIdx >= wk->numCoverPos )
       {
         u8 actionCnt = wk->numCoverPos + wk->actionAddCount;
-        BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
+        BTL_N_Printf( DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
 
         wk->actionAddCount = 0;
         wk->returnDataPtr = &(wk->actionParam[0]);
@@ -2294,6 +2295,7 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
         ClientSubProc_Set( wk, selact_Finish );
       }
       else{
+        BTL_N_Printf( DBGSTR_CLIENT_SelectActionBacktoRoot, wk->procPokeIdx );
         ClientSubProc_Set( wk, selact_Root );
       }
     }
@@ -2331,7 +2333,7 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
 
   case 2:
     if( !BTLV_EFFECT_CheckExecute() ){
-      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_ReturnSeqDone );
+      BTL_N_Printf( DBGSTR_CLIENT_ReturnSeqDone );
 
       CmdLimit_End( wk );
       (*seq)++;
@@ -4067,7 +4069,6 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
   case 1:
     if( CmdLimit_CheckOver(wk) ){
       BTLV_ForceQuitPokeSelect( wk->viewCore );
-      TAYA_Printf("ポケ選択強制終了発動\n");
       (*seq) = 2;
       break;
     }
@@ -4081,7 +4082,6 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
   // コマンド制限時間による強制終了処理
   case 2:
-    TAYA_Printf("ポケ選択終了待ち\n");
     if( BTLV_WaitPokeSelect(wk->viewCore) )
     {
       storePokeSelResult_ForceQuit( wk );
@@ -5105,7 +5105,8 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+    // 入場前にカメラ位置を適正に戻す（3vs3 という名前だが問題ない）
+    BTLV_EFFECT_Add( BTLEFF_3vs3_CAMERA_ZOOMOUT );
     (*seq)++;
     break;
   case 1:
@@ -5401,7 +5402,6 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_ACT_DamageEffectSingle_Wait(wk->viewCore) )
     {
-      TAYA_Printf("おわり２\n");
       return TRUE;
     }
     break;
@@ -5433,7 +5433,6 @@ static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args
   case 1:
     if( BTLV_ACT_DamageEffectPlural_Wait(wk->viewCore) )
     {
-      TAYA_Printf("おわり\n");
       return TRUE;
     }
     break;

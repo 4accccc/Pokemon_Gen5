@@ -2029,6 +2029,33 @@ static void handler_TriAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BPP_SICK_CONT cont;
     u8 rand = BTL_CALC_GetRand( NELEMS(sick_tbl) );
 
+    #if 0
+    {
+      u32 cnt[3];
+      u32 i = 0;
+      u32 max = 50;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
+        max = 10000;
+      }
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+        max = 30000;
+      }
+      cnt[0] = cnt[1] = cnt[2] = 0;
+      while(1){
+        rand = BTL_CALC_GetRand( NELEMS(sick_tbl) );
+        if( BTL_CALC_GetRand(100) < 20 ){
+          cnt[ rand ]++;
+          if( ++i >= max ){
+            break;
+          }
+        }
+      }
+      for(i=0; i<NELEMS(cnt); ++i){
+        TAYA_Printf(" cnt[%d] = %d\n", i, cnt[i]);
+      }
+    }
+    #endif
+
     sick = sick_tbl[ rand ];
     cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
 
