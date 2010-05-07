@@ -16,11 +16,12 @@
 
 #include "arc/arc_def.h"
 #include "arc/fieldmap/t01_gmk.naix"
+#include "gmk_tmp_wk.h"
+#include "system/rtc_tool.h"  //for PM_RTC_GetTimeZone
 #include "field_gimmick_t01_sv.h"
 
-#include "system/rtc_tool.h"  //for PM_RTC_GetTimeZone
-
 #define EXPOBJ_UNIT_IDX (0)
+#define T01_TMP_ASSIGN_ID  (1)
 
 #define BIRD_X  (FIELD_CONST_GRID_FX32_SIZE * 784)
 #define BIRD_Y  (FX32_ONE * 0)
@@ -87,6 +88,14 @@ static const GFL_G3D_UTIL_SETUP SetupNight = {
 	NELEMS(obj_table),		//オブジェクト数
 };
 
+typedef struct
+{ 
+  BOOL Move;
+} T01_GMK_WORK;
+
+static GMEVENT_RESULT EndChkEvt( GMEVENT* event, int* seq, void* work );
+
+
 //------------------------------------------------------------------------------------------
 /**
  * @brief 初期化関数
@@ -98,13 +107,23 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 {
   int i;
   T01_SV_WORK *gmk_sv_work;
+  T01_GMK_WORK* gmk_work;  // ギミック管理ワーク
   FLD_EXP_OBJ_CNT_PTR exobj_cnt;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldmap ) );
   {
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_T01 );
   }
+
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  //汎用ワーク確保
+  GMK_TMP_WK_AllocWork
+      (fieldmap, T01_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldmap), sizeof(T01_GMK_WORK));
+  gmk_work = GMK_TMP_WK_GetWork(fieldmap, T01_TMP_ASSIGN_ID);
+
+  //セットアップ時はギミックを動作させない
+  gmk_work->Move = FALSE;
 
   //時間帯で分岐
   {
@@ -130,15 +149,11 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, 0, TRUE);
     //アニメ再生
     FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, 0, 0, TRUE);
-    if ( gmk_sv_work->Move )
     {
-      //表示
-      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, FALSE);
-    }
-    else
-    {
-      //非表示
-      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, TRUE);
+      BOOL vanish;
+      if ( gmk_sv_work->Disp ) vanish = FALSE;   //表示
+      else vanish = TRUE;                      //非表示
+      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, vanish);
     }
   }
 
@@ -149,20 +164,10 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i);
     //1回再生
     FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-    if ( gmk_sv_work->Move )
-    {
-      //アニメ再生
-      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-      //有効
-      FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, TRUE);
-    }
-    else
-    {
-      //アニメ停止
-      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
-      //無効化
-      FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, FALSE);
-    }
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, FALSE);
   }
 }
 
@@ -176,9 +181,10 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 void T01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-
   //ユニット破棄
-  FLD_EXP_OBJ_DelUnit( exobj_cnt, EXPOBJ_UNIT_IDX );  
+  FLD_EXP_OBJ_DelUnit( exobj_cnt, EXPOBJ_UNIT_IDX );
+  //汎用ワーク解放
+  GMK_TMP_WK_FreeWork(fieldmap, T01_TMP_ASSIGN_ID);
 }
 
 //------------------------------------------------------------------------------------------
@@ -191,12 +197,9 @@ void T01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 void T01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  T01_SV_WORK *gmk_sv_work;
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldmap ) );
-  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
-  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_T01 );
+  T01_GMK_WORK* gmk_work = GMK_TMP_WK_GetWork(fieldmap, T01_TMP_ASSIGN_ID);
 
-  if ( gmk_sv_work->Move )
+  if ( gmk_work->Move )
   {
     EXP_OBJ_ANM_CNT_PTR anm;
     //アニメーション再生
@@ -209,7 +212,82 @@ void T01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     {
       //ＯＢＪ非表示
       FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, TRUE);
-      gmk_sv_work->Move = FALSE;    //ギミック停止
+      gmk_work->Move = FALSE;    //ギミック停止
+      {
+        T01_SV_WORK *gmk_sv_work;
+        GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldmap ) );
+        GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+        gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_T01 );
+        gmk_sv_work->Disp = FALSE;    //非表示
+      }
     }    
   }
 }
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックアニメ開始
+ *
+ * @param fieldmap フィールドマップポインタ
+ */
+//------------------------------------------------------------------------------------------
+void T01_GIMMICK_Start( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  T01_GMK_WORK* gmk_work;
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+  gmk_work = GMK_TMP_WK_GetWork(fieldmap, T01_TMP_ASSIGN_ID);
+  gmk_work->Move = TRUE;    //動作開始
+  //表示
+  FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, FALSE);
+  //アニメの状態を初期化
+  for (i=0;i<BIRD_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i);
+    //アニメ再生
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //有効
+    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, TRUE);
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックアニメ終了監視イベント作成
+ *
+ * @param gsys ゲームシステムポインタ
+ */
+//------------------------------------------------------------------------------------------
+GMEVENT *T01_GIMMICK_CreateEndChkEvt( GAMESYS_WORK *gsys )
+{
+  GMEVENT * event;
+  event = GMEVENT_Create( gsys, NULL, EndChkEvt, 0 );
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメ終了監視イベント
+ * @param     event	            イベントポインタ
+ * @param     seq               シーケンサ
+ * @param     work              ワークポインタ
+ * @return    GMEVENT_RESULT   イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EndChkEvt( GMEVENT* event, int* seq, void* work )
+{
+  EXP_OBJ_ANM_CNT_PTR anm;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  T01_GMK_WORK* gmk_work = GMK_TMP_WK_GetWork(fieldWork, T01_TMP_ASSIGN_ID);
+
+  //終了チェック
+  if ( gmk_work->Move == FALSE ) return GMEVENT_RES_FINISH;    //アニメ終了
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
+

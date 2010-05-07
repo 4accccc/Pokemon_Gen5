@@ -10,6 +10,6 @@
 //セーブワーク
 typedef struct T01_SV_WORK_tag
 {
-  BOOL Move;
+  BOOL Disp;
 }T01_SV_WORK;
 

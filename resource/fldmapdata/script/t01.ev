@@ -34,8 +34,18 @@ _EVENT_DATA   ev_init_t01
 _EVENT_DATA   ev_pos_t01_firststep_01	//最初の一歩イベント
 _EVENT_DATA   ev_scene_t01_friends_01	//クリア後 全国図鑑入手イベント
 _EVENT_DATA   ev_scene_t01_support_01	//ゲーム開始直後、サポートが自宅に向かう演出
+_EVENT_DATA   ev_zone_t01             //ギミック表示用          
 _EVENT_DATA_END //データ終端を指定しています。
 
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_t01
+  IF $WK_SCENE_T01_SUPPORT == 1 THEN
+		//ギミック表示開始
+    _T01_GMK_DISP()
+	ENDIF
+INIT_EVENT_END
 
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/
@@ -124,11 +134,17 @@ EVENT_END
 /*				ゲーム開始直後：サポートイベント			*/
 /************************************************************/
 EVENT_START ev_scene_t01_support_01
+  //ギミックスタート
+  _T01_GMK_START()
+
 	_OBJ_ANIME( T01_SUPPORT_01, anm_first_support_move_01 )
 	_OBJ_ANIME_WAIT()
 	_TIME_WAIT( 8 )
 	
 	_OBJ_DEL( T01_SUPPORT_01 )
+
+  //ギミック終了待ち
+  _T01_GMK_WAIT_END()
 	
 	//========================================//
 	$WK_SCENE_T01_SUPPORT = 2

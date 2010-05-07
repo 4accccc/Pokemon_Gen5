@@ -29,7 +29,23 @@
 
 //--------------------------------------------------------------
 /**
- * ギミック発動トリガーセット
+ * ギミック表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdT01Gmk_Disp( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  T01_GIMMICK_StartDisp( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ギミック発動
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
@@ -38,10 +54,31 @@ VMCMD_RESULT EvCmdT01Gmk_Start( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  T01_GIMMICK_Start( gsys );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  T01_GIMMICK_Start( fieldWork );
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * ギミック終了待ち
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdT01Gmk_WaitEnd( VMHANDLE *core, void *wk )
+{
+  GMEVENT *event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  event = T01_GIMMICK_CreateEndChkEvt( gsys );
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 
 

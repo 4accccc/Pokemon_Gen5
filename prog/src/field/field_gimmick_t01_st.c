@@ -16,12 +16,12 @@
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief ギミックを発動状態にする
+ * @brief ギミックを表示状態にするためのフラグをセット
  *
  * @param fieldmap ギミック動作フィールドマップ
  */
 //------------------------------------------------------------------------------------------
-void T01_GIMMICK_Start( GAMESYS_WORK *gsys )
+void T01_GIMMICK_StartDisp( GAMESYS_WORK *gsys )
 {
   T01_SV_WORK *gmk_sv_work;
   {
@@ -30,7 +30,7 @@ void T01_GIMMICK_Start( GAMESYS_WORK *gsys )
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_T01 );
   }
 
-  gmk_sv_work->Move = TRUE;
+  gmk_sv_work->Disp = TRUE;
 
 }
 
