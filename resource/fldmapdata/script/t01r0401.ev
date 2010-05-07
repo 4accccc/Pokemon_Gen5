@@ -234,6 +234,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//ああ 図鑑を完成させながら…
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_black_04,T01R0401_RIVAL_01, POS_DR )  //ライバル
+	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 //=====================フラグ操作========================//
