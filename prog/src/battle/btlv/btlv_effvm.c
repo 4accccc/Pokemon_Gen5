@@ -2169,7 +2169,10 @@ static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_TRAINER_ANIME_SET\n");
 #endif DEBUG_OS_PRINT
 
-  BTLV_MCSS_SetAnime( BTLV_EFFECT_GetMcssWork(), position, anm_no );
+  if( BTLV_MCSS_SetAnime( BTLV_EFFECT_GetMcssWork(), position, anm_no ) == TRUE )
+  { 
+    BTLV_MCSS_SetAnimeEndCheck( BTLV_EFFECT_GetMcssWork(), position );
+  }
 
   return bevw->control_mode;
 #endif
@@ -5868,6 +5871,10 @@ static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work )
       if( PMVOICE_CheckPlay( bevw->voiceplayerIndex[ i ] ) )
       { 
         return;
+      }
+      else
+      { 
+        bevw->voiceplayerIndex[ i ] = EFFVM_VOICEPLAYER_INDEX_NONE;
       }
     }
   }

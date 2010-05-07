@@ -79,6 +79,7 @@ struct  _BTLV_MCSS
   BTLV_MCSS_PARAM param;
   int             capture_ball;
   u32             status_flag;
+  BOOL            anm_execute_flag;
   BtlvMcssPos     position;
 };
 
@@ -155,6 +156,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work );
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
 static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyData* pNodeData,
                                        NNSG2dCellAnimation* pCellAnim, u16 nodeIdx );
+static  void  BTLV_MCSS_AnmEndCheck( u32 data, fx32 currentFrame );
 
 static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMcssPos position );
 static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos position, BTLV_MCSS_PROJECTION proj );
@@ -1069,11 +1071,13 @@ void  BTLV_MCSS_MoveMosaic( BTLV_MCSS_WORK *bmw, int position, int type, int mos
 BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
 {
   BOOL  pal_fade_flag = FALSE;
+  BOOL  anm_execute_flag = FALSE;
 
   if( BTLV_MCSS_CheckExist( bmw, position ) )
   {
     int index = BTLV_MCSS_GetIndex( bmw, position );
     pal_fade_flag = MCSS_CheckExecutePaletteFade( bmw->btlv_mcss[ index ].mcss );
+    anm_execute_flag = bmw->btlv_mcss[ index ].anm_execute_flag;
   }
 
   return ( ( bmw->mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
@@ -1083,6 +1087,7 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
        ( bmw->mcss_tcb_alpha_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_mosaic_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_rotation_execute ) ||
+       ( anm_execute_flag ) ||
        ( pal_fade_flag ) );
 }
 
@@ -1551,16 +1556,61 @@ void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int positi
  * @brief アニメーションをセット
  *
  * @param[in]   position  ポケモンの立ち位置
+ *
+ * @retval  TRUE:セット成功   FALSE:セット失敗
  */
 //============================================================================================
-void  BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no )
+BOOL  BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no )
 {
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  BOOL  ret = FALSE;
+
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss );
+
+  if( anm_no < MCSS_GetAnimeNum( bmw->btlv_mcss[ index ].mcss ) )
+  { 
+    MCSS_SetAnimeIndex( bmw->btlv_mcss[ index ].mcss, anm_no );
+    bmw->btlv_mcss[ index ].anm_execute_flag = TRUE;
+    ret = TRUE;
+  }
+  return ret;
+}
+
+//============================================================================================
+/**
+ * @brief アニメーション終了チェックをセット
+ *
+ * @param[in]   position  ポケモンの立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_SetAnimeEndCheck( BTLV_MCSS_WORK* bmw, int position )
+{ 
   int index = BTLV_MCSS_GetIndex( bmw, position );
 
   GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss );
 
-  MCSS_SetAnimeIndex( bmw->btlv_mcss[ index ].mcss, anm_no );
+  MCSS_SetAnimCtrlCallBack( bmw->btlv_mcss[ index ].mcss, index, BTLV_MCSS_AnmEndCheck, 1 );
+}
+
+//============================================================================================
+/**
+ * @brief アニメーションが起動中かチェック
+ *
+ * @param[in]   position  ポケモンの立ち位置
+ *
+ * @retval  TRUE:起動中 FALSE:終了
+ */
+//============================================================================================
+BOOL  BTLV_MCSS_CheckAnimeExecute( BTLV_MCSS_WORK* bmw, int position )
+{ 
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss );
+
+  return bmw->btlv_mcss[ index ].anm_execute_flag;
 }
 
 //============================================================================================
@@ -2272,6 +2322,18 @@ static  BOOL  BTLV_MCSS_CallBackNodes( u32 data, const NNSG2dMultiCellHierarchyD
     NNS_G2dStartAnimCtrl( NNS_G2dGetCellAnimAnimCtrl( pCellAnim ) );
   }
   return TRUE;
+}
+
+//============================================================================================
+/**
+ * @brief アニメ終了チェック
+ */
+//============================================================================================
+static  void  BTLV_MCSS_AnmEndCheck( u32 data, fx32 currentFrame )
+{ 
+  BTLV_MCSS_WORK *bmw = BTLV_EFFECT_GetMcssWork();
+
+  bmw->btlv_mcss[ data ].anm_execute_flag = FALSE;
 }
 
 //============================================================================================
