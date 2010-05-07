@@ -2236,6 +2236,12 @@ static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const Vec
   // ‹——£‚ğ‹‚ß‚é
   len = VEC_Mag( &way );
 
+  // ‹——£‚ÌŒë·‚ğ’ù³
+  // Ø‚èã‚°B
+  if( FX_Modf( len, &len ) > 0 ){
+    len += FX32_ONE;
+  }
+
   VEC_Normalize( &way, &way );
 
   // start end‚Æ‚ÌŠOÏ‚ğ‹‚ß‚é
