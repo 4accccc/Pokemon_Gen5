@@ -638,7 +638,7 @@ sub WriteCommentFile
   }
   if( $version eq "b" || $version eq "wb" )
   {
-    &WriteGmmFileMonsnoFormno( $comment_b_file_name, $comment_b_row_id, $form_col_offset_b_jpn, $form_col_offset_b_jpn_kanji, $commen_no_value );
+    &WriteGmmFileMonsnoFormno( $comment_b_file_name, $comment_b_row_id, $form_col_offset_b_jpn, $form_col_offset_b_jpn_kanji, $comment_no_value );
   }
 }
 

@@ -267,11 +267,19 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         b_end = TRUE;
+        work->param->result = MANUAL_RESULT_RETURN;
+      }
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        b_end = TRUE;
+        work->param->result = MANUAL_RESULT_CLOSE;
       }
       else if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
         b_end = TRUE;
+        work->param->result = MANUAL_RESULT_RETURN;
       }
 
       if( b_end )

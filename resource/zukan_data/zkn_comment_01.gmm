@@ -346,8 +346,8 @@
 
 
 	<row id="ZKN_COMMENT_01_000_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN"> </language>
+		<language name="JPN_KANJI"> </language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_001_000">
@@ -5840,8 +5840,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_650_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN"> </language>
+		<language name="JPN_KANJI"> </language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_201_001">
