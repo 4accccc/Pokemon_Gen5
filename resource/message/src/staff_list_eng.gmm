@@ -604,8 +604,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_042">
-		<language name="JPN" width="256">3D  Tool  Programming</language>
-		<language name="JPN_KANJI" width="256">3D  Tool  Programming</language>
+		<language name="JPN" width="256">3D  Graphics  Support  Programming</language>
+		<language name="JPN_KANJI" width="256">3D  Graphics  Support  Programming</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_043">
@@ -1349,58 +1349,58 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_191">
-		<language name="JPN" width="256">DEBUG  MANAGEMENT</language>
-		<language name="JPN_KANJI" width="256">DEBUG  MANAGEMENT</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_192">
-		<language name="JPN" width="256">YUKI  TANIKAWA</language>
-		<language name="JPN_KANJI" width="256">YUKI  TANIKAWA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_193">
-		<language name="JPN" width="256">SHUHEI  FURUKAWA</language>
-		<language name="JPN_KANJI" width="256">SHUHEI  FURUKAWA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_194">
-		<language name="JPN" width="256">YOSHIKAZU  TANAKA</language>
-		<language name="JPN_KANJI" width="256">YOSHIKAZU  TANAKA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_195">
-		<language name="JPN" width="256">HITOSHI  NISHIZAWA</language>
-		<language name="JPN_KANJI" width="256">HITOSHI  NISHIZAWA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_196">
-		<language name="JPN" width="256">KEISUKE  FUKUSHIMA</language>
-		<language name="JPN_KANJI" width="256">KEISUKE  FUKUSHIMA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_197">
-		<language name="JPN" width="256">MOTOKI  NAKAJIMA</language>
-		<language name="JPN_KANJI" width="256">MOTOKI  NAKAJIMA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_198">
-		<language name="JPN" width="256">DEBUG</language>
-		<language name="JPN_KANJI" width="256">DEBUG</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_199">
-		<language name="JPN" width="256">MARIO  CLUB</language>
-		<language name="JPN_KANJI" width="256">MARIO  CLUB</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_200">
 		<language name="JPN" width="256">B &amp; W  PLOT</language>
 		<language name="JPN_KANJI" width="256">B &amp; W  PLOT</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_201">
+	<row id="STAFF_ROLL_STR_192">
 		<language name="JPN" width="256">JUNICHI  MASUDA</language>
 		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_193">
+		<language name="JPN" width="256">DEBUG  MANAGEMENT</language>
+		<language name="JPN_KANJI" width="256">DEBUG  MANAGEMENT</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_194">
+		<language name="JPN" width="256">YUKI  TANIKAWA</language>
+		<language name="JPN_KANJI" width="256">YUKI  TANIKAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_195">
+		<language name="JPN" width="256">SHUHEI  FURUKAWA</language>
+		<language name="JPN_KANJI" width="256">SHUHEI  FURUKAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_196">
+		<language name="JPN" width="256">YOSHIKAZU  TANAKA</language>
+		<language name="JPN_KANJI" width="256">YOSHIKAZU  TANAKA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_197">
+		<language name="JPN" width="256">HITOSHI  NISHIZAWA</language>
+		<language name="JPN_KANJI" width="256">HITOSHI  NISHIZAWA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_198">
+		<language name="JPN" width="256">KEISUKE  FUKUSHIMA</language>
+		<language name="JPN_KANJI" width="256">KEISUKE  FUKUSHIMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_199">
+		<language name="JPN" width="256">MOTOKI  NAKAJIMA</language>
+		<language name="JPN_KANJI" width="256">MOTOKI  NAKAJIMA</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_200">
+		<language name="JPN" width="256">DEBUG</language>
+		<language name="JPN_KANJI" width="256">DEBUG</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_201">
+		<language name="JPN" width="256">MARIO  CLUB</language>
+		<language name="JPN_KANJI" width="256">MARIO  CLUB</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_202">
@@ -1759,11 +1759,16 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_273">
+		<language name="JPN" width="256">POKET  MONSTERS  BLACK  VERSION</language>
+		<language name="JPN_KANJI" width="256">POKET  MONSTERS  BLACK  VERSION</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_274">
 		<language name="JPN" width="256">DEVELOPED BY</language>
 		<language name="JPN_KANJI" width="256">DEVELOPED BY</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_274">
+	<row id="STAFF_ROLL_STR_275">
 		<language name="JPN" width="256">GAME FREAK, inc.</language>
 		<language name="JPN_KANJI" width="256">GAME FREAK, inc.</language>
 	</row>
