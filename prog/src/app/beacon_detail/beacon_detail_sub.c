@@ -308,6 +308,7 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
       WORDSET_RegisterTrTypeName_byTrID( wordset, 0, tr_id );
       WORDSET_RegisterTrainerName( wordset, 1, tr_id );
     }
+    break;
   case GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER:
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER:
     break;
