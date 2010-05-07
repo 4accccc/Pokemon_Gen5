@@ -10,6 +10,7 @@
 //îwåiéwíË
 #define FLD_FACEUP_BG_WHEEL  (0)
 #define FLD_FACEUP_BG_CATSLE  (1)
+#define FLD_FACEUP_BG_CATSLE2  (2)
 
 //êlï®éwíË
 #define FLD_FACEUP_CHAR_BOSS  (0)

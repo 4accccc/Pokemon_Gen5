@@ -308,11 +308,17 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
     nscr = NARC_fld_faceup_faceup_bg_wheel_nscr;
     nclr = NARC_fld_faceup_faceup_bg_wheel_nclr;
   }
-  else
+  else if (ptr->BackNo == FLD_FACEUP_BG_CATSLE)
   {
     ncgr = NARC_fld_faceup_faceup_bg_catsle_ncgr;
     nscr = NARC_fld_faceup_faceup_bg_catsle_nscr;
     nclr = NARC_fld_faceup_faceup_bg_catsle_nclr;
+  }
+  else
+  {
+    ncgr = NARC_fld_faceup_faceup_bg_catsle2_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_catsle2_nscr;
+    nclr = NARC_fld_faceup_faceup_bg_catsle2_nclr;
   }
   
   //タイプごとの背景、顔BGをロード

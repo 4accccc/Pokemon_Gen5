@@ -1,11 +1,14 @@
 ARC_TARGET_DATA = \
 data/faceup_bg_wheel.nclr \
 data/faceup_bg_catsle.nclr \
+data/faceup_bg_catsle2.nclr \
 data/faceup.nclr \
 data/faceup_bg_wheel.ncgr \
 data/faceup_bg_catsle.ncgr \
+data/faceup_bg_catsle2.ncgr \
 data/faceup.ncgr \
 data/faceup_bg_wheel.nscr \
 data/faceup_bg_catsle.nscr \
+data/faceup_bg_catsle2.nscr \
 data/faceup.nscr
 
