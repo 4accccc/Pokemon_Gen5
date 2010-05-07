@@ -188,7 +188,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 	
   switch (*seq) {
   case SEQ_FISHING_START:
-    if(wk->enc_error){ //‰¼ˆ—
+    if(wk->enc_error){
       *seq = SEQ_END;
       break;
     }
