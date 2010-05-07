@@ -60,8 +60,8 @@ INIT_EVENT_START   ev_init_t01
 //		_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
 
 		//104027テスト
-		_OBJ_ADD_EX( 787, 737, DIR_UP, T01_R01_RIVAL, RIVEL, MV_DMY )
-		_OBJ_ADD_EX( 789, 737, DIR_DOWN, T01_R01_SUPPORT, SUPPORT, MV_DMY )
+		_OBJ_ADD_EX( 787, 736, DIR_UP, T01_R01_RIVAL, RIVEL, MV_DMY )
+		_OBJ_ADD_EX( 789, 736, DIR_DOWN, T01_R01_SUPPORT, SUPPORT, MV_DMY )
 
 	ELSIF $WK_SCENE_T01 == 4 THEN
 		//クリア後のハンサムイベント後なら、ライバルとサポートを自宅手前に
@@ -423,13 +423,9 @@ EVENT_START	ev_scene_t01_mama_01
 	_OBJ_DEL( T01_RIVAL_01 )
 	_OBJ_DEL( T01_SUPPORT_01 )
 
-	//ライバル＆サポート：次のイベント位置へ
-//	_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
-//	_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
-
-	//104027テスト
-	_OBJ_ADD_EX( 787, 737, DIR_UP, T01_R01_RIVAL, RIVEL, MV_DMY )
-	_OBJ_ADD_EX( 789, 737, DIR_DOWN, T01_R01_SUPPORT, SUPPORT, MV_DMY )
+	//１番道路手前にゾーンまたぎＯＢＪを配置する
+	_OBJ_ADD_EX( 787, 736, DIR_UP, T01_R01_RIVAL, RIVEL, MV_DMY )
+	_OBJ_ADD_EX( 789, 736, DIR_DOWN, T01_R01_SUPPORT, SUPPORT, MV_DMY )
 
 	//================フラグ操作==================//
 	//イベント無効
@@ -724,12 +720,38 @@ EVENT_START ev_pos_t01_firststep_01
 	_BALLOONWIN_OBJMSG_POS( msg_t01_white_06, T01_R01_SUPPORT, POS_UR )
 	_MSGWIN_CLOSE()
 
+	//最初の一歩
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_01 )
 	_OBJ_ANIME( T01_R01_RIVAL, anm_1ststep_rival_01 )
 	_OBJ_ANIME( T01_R01_SUPPORT, anm_1ststep_support_01 )
 	_OBJ_ANIME_WAIT()
-
-	_END_EVENT_BGM()
+	
+	_TIME_WAIT( 16 )
+	
+	//友達：顔を見合わせて
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	_OBJ_ANIME( T01_R01_RIVAL, anm_stay_walk_r )
+	_OBJ_ANIME( T01_R01_SUPPORT, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//ドキドキしちゃうね！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_00, T01_R01_SUPPORT, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：先を見て
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME( T01_R01_RIVAL, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ドキドキしちゃうね！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_00, T01_R01_RIVAL, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//友達：博士前へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_player_02 )
+	_OBJ_ANIME( T01_R01_RIVAL, anm_1ststep_rival_02 )
+	_OBJ_ANIME( T01_R01_SUPPORT, anm_1ststep_support_02 )
+	_OBJ_ANIME_WAIT()
 
 	//捕獲デモイベントを予約
 	_RESERVE_SCRIPT( SCRID_R01_POKE_GETDEMO_01 )
@@ -800,15 +822,30 @@ _ANIME_LABEL	anm_1ststep_onestep_01
 //最初の一歩
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_1ststep_rival_01
-	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_1ststep_support_01
-	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_1ststep_player_01
-	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_1ststep_rival_02
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_support_02
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1ststep_player_02
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 
