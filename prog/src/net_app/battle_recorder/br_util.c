@@ -673,7 +673,10 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
       //タッチモードならばリストが直接動く
       if( p_wk->move_callback( p_wk, p_wk->value ) )
       { 
-        PMSND_PlaySE( BR_SND_SE_SLIDE );
+        if( !PMSND_CheckPlayingSEIdx(BR_SND_SE_SLIDE) )
+        {
+          PMSND_PlaySE( BR_SND_SE_SLIDE );
+        }
         Br_List_Write( p_wk, p_wk->list );
       }
 
