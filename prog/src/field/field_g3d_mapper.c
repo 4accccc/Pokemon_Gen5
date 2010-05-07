@@ -601,81 +601,6 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
 
 //--------------------------------------------------------------
 /**
- * @brief デバッグ出力関数
- *
- * @param g3Dmapper 状態を出力したいマッパー
- */
-//--------------------------------------------------------------
-void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper )
-{
-  int ix, iz, i, index; 
-
-  OS_Printf( "================================================\n" );
-
-  OS_Printf( "blockWidth  = %d\n", FX_Whole(g3Dmapper->blockWidth) );
-  OS_Printf( "blockHeight = %d\n", FX_Whole(g3Dmapper->blockHeight) );
-  switch( g3Dmapper->mode )
-  {
-  case FLDMAPPER_MODE_SCROLL_NONE:    OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_NONE\n" ); break;
-  case FLDMAPPER_MODE_SCROLL_XZ:      OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_XZ\n" ); break;
-  case FLDMAPPER_MODE_SCROLL_XZ_LOOP: OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_XZ_LOOP\n" ); break;
-  case FLDMAPPER_MODE_SCROLL_Y:       OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_Y\n" ); break;
-  default:                            OS_Printf( "mode = error\n" ); break;
-  }
-  OS_Printf( "sizex  = %d\n", g3Dmapper->sizex );
-  OS_Printf( "sizez  = %d\n", g3Dmapper->sizez );
-  OS_Printf( "totalSize  = %d\n", g3Dmapper->totalSize );
-
-  OS_Printf( "blocks-------------------\n" );
-  index = 0;
-  for( iz=0; iz<g3Dmapper->sizez; iz++ ) {
-    for( ix=0; ix<g3Dmapper->sizex; ix++ ) {
-      OS_Printf( "%d ", g3Dmapper->blocks[ index++ ] ); 
-    }
-    OS_Printf( "\n" );
-  }
-
-  OS_Printf( "blockXNum = %d\n", g3Dmapper->blockXNum );
-  OS_Printf( "blockZNum = %d\n", g3Dmapper->blockZNum );
-  OS_Printf( "blockNum = %d\n", g3Dmapper->blockNum );
-
-  OS_Printf( "nowBlockIdx = %d\n", g3Dmapper->nowBlockIdx );
-  OS_Printf( "posCont = %d, %d, %d\n", 
-      FX_Whole(g3Dmapper->posCont.x), FX_Whole(g3Dmapper->posCont.y), FX_Whole(g3Dmapper->posCont.z) );
-
-  OS_Printf( "blockWk-----------------------\n" );
-  index = 0;
-  for( iz=0; iz<g3Dmapper->sizez; iz++ )
-  {
-    for( ix=0; ix<g3Dmapper->sizex; ix++ )
-    {
-      BOOL on_memory = FALSE;
-      for( i=0; i<g3Dmapper->blockNum; i++ )
-      {
-        if( g3Dmapper->blockWk[i].blockInfo.blockIdx == index )
-        {
-          on_memory = TRUE;
-          break;
-        }
-      }
-      if( on_memory )
-      {
-        OS_Printf( "■" );
-      }
-      else
-      {
-        OS_Printf( "□" );
-      }
-      index++;
-    }
-    OS_Printf( "\n" );
-  }
-
-  OS_Printf( "================================================\n" );
-}
-
-//--------------------------------------------------------------
-/**
  * @brief 拡張高さデータリストポインタ取得
  *
  * @param g3Dmapper 状態を出力したいマッパー
@@ -2285,6 +2210,82 @@ static inline u32 MAPPER_ResizeBlockIndx( u32 block_index, u32 old_mapsizx, u32 
 {
   return ((block_index / old_mapsizx) * new_mapsizx) + (block_index % old_mapsizx);
 
+} 
+
+
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * @brief デバッグ出力関数
+ *
+ * @param g3Dmapper 状態を出力したいマッパー
+ */
+//--------------------------------------------------------------
+void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper )
+{
+  int ix, iz, i, index; 
+
+  OS_Printf( "================================================\n" );
+
+  OS_Printf( "blockWidth  = %d\n", FX_Whole(g3Dmapper->blockWidth) );
+  OS_Printf( "blockHeight = %d\n", FX_Whole(g3Dmapper->blockHeight) );
+  switch( g3Dmapper->mode )
+  {
+  case FLDMAPPER_MODE_SCROLL_NONE:    OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_NONE\n" ); break;
+  case FLDMAPPER_MODE_SCROLL_XZ:      OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_XZ\n" ); break;
+  case FLDMAPPER_MODE_SCROLL_XZ_LOOP: OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_XZ_LOOP\n" ); break;
+  case FLDMAPPER_MODE_SCROLL_Y:       OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_Y\n" ); break;
+  default:                            OS_Printf( "mode = error\n" ); break;
+  }
+  OS_Printf( "sizex  = %d\n", g3Dmapper->sizex );
+  OS_Printf( "sizez  = %d\n", g3Dmapper->sizez );
+  OS_Printf( "totalSize  = %d\n", g3Dmapper->totalSize );
+
+  OS_Printf( "blocks-------------------\n" );
+  index = 0;
+  for( iz=0; iz<g3Dmapper->sizez; iz++ ) {
+    for( ix=0; ix<g3Dmapper->sizex; ix++ ) {
+      OS_Printf( "%d ", g3Dmapper->blocks[ index++ ] ); 
+    }
+    OS_Printf( "\n" );
+  }
+
+  OS_Printf( "blockXNum = %d\n", g3Dmapper->blockXNum );
+  OS_Printf( "blockZNum = %d\n", g3Dmapper->blockZNum );
+  OS_Printf( "blockNum = %d\n", g3Dmapper->blockNum );
+
+  OS_Printf( "nowBlockIdx = %d\n", g3Dmapper->nowBlockIdx );
+  OS_Printf( "posCont = %d, %d, %d\n", 
+      FX_Whole(g3Dmapper->posCont.x), FX_Whole(g3Dmapper->posCont.y), FX_Whole(g3Dmapper->posCont.z) );
+
+  OS_Printf( "blockWk-----------------------\n" );
+  index = 0;
+  for( iz=0; iz<g3Dmapper->sizez; iz++ )
+  {
+    for( ix=0; ix<g3Dmapper->sizex; ix++ )
+    {
+      BOOL on_memory = FALSE;
+      for( i=0; i<g3Dmapper->blockNum; i++ )
+      {
+        if( g3Dmapper->blockWk[i].blockInfo.blockIdx == index )
+        {
+          on_memory = TRUE;
+          break;
+        }
+      }
+      if( on_memory )
+      {
+        OS_Printf( "■" );
+      }
+      else
+      {
+        OS_Printf( "□" );
+      }
+      index++;
+    }
+    OS_Printf( "\n" );
+  }
+
+  OS_Printf( "================================================\n" );
 }
-
-
+#endif

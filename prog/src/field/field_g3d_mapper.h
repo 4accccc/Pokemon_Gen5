@@ -207,15 +207,6 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
 
 //--------------------------------------------------------------
 /**
- * @brief デバッグ出力関数
- *
- * @param g3Dmapper 状態を出力したいマッパー
- */
-//--------------------------------------------------------------
-extern void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper );
-
-//--------------------------------------------------------------
-/**
  * @brief 拡張高さデータリストポインタ取得
  *
  * @param g3Dmapper 状態を出力したいマッパー
@@ -224,3 +215,15 @@ extern void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper );
  */
 //--------------------------------------------------------------
 extern EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper );
+
+
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * @brief デバッグ出力関数
+ *
+ * @param g3Dmapper 状態を出力したいマッパー
+ */
+//--------------------------------------------------------------
+extern void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper );
+#endif
