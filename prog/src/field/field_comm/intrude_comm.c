@@ -27,6 +27,8 @@
 #include "net/net_whpipe.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "intrude_work.h"
+#include "field/zonedata.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 
 //==============================================================================
@@ -447,10 +449,27 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   int i;
+  BOOL exit_ok = FALSE;
   
   switch(*seq){
   case 0:
-    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE || NetErr_App_CheckError()){
+    if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){  //表フィールドにいる場合は即解放
+      if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE || NetErr_App_CheckError()){
+        exit_ok = TRUE;
+      }
+    }
+    else{ //裏フィールドにいる場合はパレスへ戻ってから解放
+      if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID( GAMEDATA_GetMyPlayerWork(gamedata) ) ) == TRUE
+          && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE
+          && FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(invalid_parent->gsys)) == TRUE){
+        //フィールドマップの存在チェックはOverlayFieldがないと
+        //FIELD_COMM_ACTOR_CTRL_Deleteが出来ない為
+        exit_ok = TRUE;
+      }
+    }
+
+    if(exit_ok == TRUE){
+      OS_TPrintf("intcomm free\n");
       COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
