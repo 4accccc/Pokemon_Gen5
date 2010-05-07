@@ -5970,6 +5970,7 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   BTL_POKEPARAM* bpp;
   u32 i, hitCount;
   u32 dmg_sum = 0;
+  WazaSick  pokeSick;
   BtlPokePos  targetPos = BTL_POS_NULL;
 
 
@@ -5986,6 +5987,8 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
 
   for(i=0, hitCount=0; i<wk->hitCheckParam->countMax; ++i)
   {
+    pokeSick = BPP_GetPokeSick( attacker );
+
     // ワザエフェクトコマンド生成
     SCQUE_PUT_ACT_WazaEffect( wk->que,
         wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
@@ -5994,14 +5997,20 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
                     wk->hitCheckParam, BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE );
     ++hitCount;
 
-    if( !BPP_IsDead(bpp) )
-    {
-      if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam) ){
-        break;
-      }
-    }
-    else{
+    if( BPP_IsDead(bpp) ){ break; }
+    if( BPP_IsDead(attacker) ){ break; }
+
+    // 攻撃したことにより眠ってしまったらブレイク
+    if( (BPP_GetPokeSick(attacker) == POKESICK_NEMURI)
+    &&  (pokeSick != POKESICK_NEMURI)
+    ){
       break;
+    }
+
+    // 毎回ヒットチェックを行うワザは外れたらブレイク
+    if( wk->hitCheckParam->fCheckEveryTime
+    ){
+      if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam) ){ break; }
     }
   }
 
