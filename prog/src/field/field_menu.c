@@ -322,9 +322,6 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   GFL_ARC_CloseDataHandle(arcHandle);
 
 
-  // 上画面に輝度オフを掛ける
-  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
-                            0 , 0 , -6 );
   GFL_BG_SetVisible( FIELD_MENU_BG_PLATE_M, VISIBLE_ON );
   
   if( isScrollIn == TRUE )
@@ -359,7 +356,7 @@ static void _return_brightness( FIELD_MENU_WORK *work )
   // フィールドメニューをキャンセルしたか、レポート画面決定で終了するのでなければ
   if( work->isCancel==TRUE ){
     // 上画面に掛けていた輝度オフを戻す
-    FIELD_SUBSCREEN_MainDispBrightnessOff( work->heapId );
+    FIELD_SUBSCREEN_MainDispBrightnessOff( work->subScrWork, work->heapId );
     OS_Printf("上画面解放した isCancel=%d, funcType=%d\n", work->isCancel, work->funcType);
   }
 }
@@ -681,7 +678,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                       FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
 
   // 上画面に「下画面をみてね」プレートを表示
-  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( work->tempHeapId );
+  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( work->subScrWork, work->tempHeapId );
 
   // セルアクターリソース転送(カーソル）
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle, NARC_field_menu_menu_obj_common_NCLR, 

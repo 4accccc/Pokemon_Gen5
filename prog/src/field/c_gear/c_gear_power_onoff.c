@@ -416,7 +416,7 @@ static void PowerOnOff_InitGraphic( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
 
 
   // 上画面にパネルを出す。
-  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( heapID );
+  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( p_sys->p_subscreen, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -429,7 +429,7 @@ static void PowerOnOff_InitGraphic( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
 static void PowerOnOff_ExitGraphic( CGEAR_POWER_ONOFF* p_sys )
 {
   // 
-  FIELD_SUBSCREEN_MainDispBrightnessOff( p_sys->heapID );
+  FIELD_SUBSCREEN_MainDispBrightnessOff( p_sys->p_subscreen, p_sys->heapID );
   
   // Win
   PowerOnOff_ExitWin( p_sys );

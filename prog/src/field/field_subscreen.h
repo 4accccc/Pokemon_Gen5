@@ -113,7 +113,7 @@ extern FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_GetMode(const FIELD_SUBSCREEN_WORK *
 
 extern FIELD_SUBSCREEN_ACTION FIELD_SUBSCREEN_GetAction( FIELD_SUBSCREEN_WORK* pWork);
 extern void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork);
-extern void FIELD_SUBSCREEN_MainDispBrightnessOff( HEAPID heapId );
+extern void FIELD_SUBSCREEN_MainDispBrightnessOff( FIELD_SUBSCREEN_WORK* pWork, HEAPID heapId );
 extern void FIELD_SUBSCREEN_SetAction( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno);
 extern void FIELD_SUBSCREEN_GrantPermission( FIELD_SUBSCREEN_WORK* pWork);
 
@@ -129,7 +129,7 @@ extern void FIELD_SUBSCREEN_SetReportBreak( FIELD_SUBSCREEN_WORK * pWork );
 extern BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork );
 
 extern BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork );
-extern void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID );
+extern void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( FIELD_SUBSCREEN_WORK* pWork, HEAPID heapID );
 
 
 #ifdef  PM_DEBUG

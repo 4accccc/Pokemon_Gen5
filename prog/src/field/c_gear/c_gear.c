@@ -455,6 +455,7 @@ enum{
 #define POS_POWERMARK_Y    (POS_SCANRADAR_Y)
 
 #define _SLEEP_START_TIME_WAIT (16)
+#define _SLEEP_COLOR_CHANGE_WAIT (8)
 
 
 // スリープ復帰アニメ
@@ -784,6 +785,7 @@ struct _C_GEAR_WORK {
   u8 sleep_mode;  // イベント中のスリープモード
   u8 net_sleep_mode;  // ネットスリープモード
   u8 sleep_color_req;
+  u8 sleep_color_chenage_wait;
 
   u8 ex_col_change;  // wireless強制カラー変更
   u8 ex_col_flag;  // wireless強制カラー変更
@@ -4230,8 +4232,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     if( SleepMode_IsSleep( pWork ) == FALSE ){
       _CHANGE_STATE(pWork,_modeSelectMenuWait1);
     }else{
+      FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( pWork->pGameSys );
       // スリープ中は簡単に終わらす。
-      WIPE_ResetBrightness(WIPE_DISP_SUB);
+      FLD_VREQ_GXS_SetMasterBrightness( FIELDMAP_GetFldVReq( fieldmap ), 0);
     }
   }
   {
@@ -4577,6 +4580,7 @@ static void SleepMode_Start( C_GEAR_WORK* pWork )
   if( pWork->sleep_mode == FALSE ){
     pWork->sleep_mode = TRUE;
     pWork->sleep_color_req = TRUE;
+    pWork->sleep_color_chenage_wait = 0;
   }
 }
 
@@ -4592,6 +4596,7 @@ static void SleepMode_NetSleepStart( C_GEAR_WORK* pWork )
   if( pWork->net_sleep_mode == FALSE ){
     pWork->net_sleep_mode = TRUE;
     pWork->sleep_color_req = TRUE;
+    pWork->sleep_color_chenage_wait = 0;
   }
 }
 
@@ -4607,6 +4612,7 @@ static void SleepMode_NetSleepEnd( C_GEAR_WORK* pWork )
   if( pWork->net_sleep_mode ){
     pWork->net_sleep_mode = FALSE;
     pWork->sleep_color_req = TRUE;
+    pWork->sleep_color_chenage_wait = 0;
   }
 }
 
@@ -4622,6 +4628,7 @@ static void SleepMode_End( C_GEAR_WORK* pWork )
   if( pWork->sleep_mode == TRUE ){
     pWork->sleep_mode = FALSE;
     pWork->sleep_color_req = TRUE;
+    pWork->sleep_color_chenage_wait = 0;
   }
 }
 
@@ -4636,8 +4643,13 @@ static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork )
 {
   BOOL sleep_mode;
   if( pWork->sleep_color_req ){
-    _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
-    pWork->sleep_color_req = FALSE;
+
+    pWork->sleep_color_chenage_wait++;
+    if( pWork->sleep_color_chenage_wait >= _SLEEP_COLOR_CHANGE_WAIT ){
+      // 
+      _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
+      pWork->sleep_color_req = FALSE;
+    }
   }
 }
 

@@ -104,6 +104,7 @@
 #include "fld_particle.h"
 
 #include "field_wfbc.h"
+#include "fld_vreq.h"
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
@@ -380,8 +381,9 @@ struct _FIELDMAP_WORK
 
   BOOL seasonDispFlag; // 季節を表示中かどうか
 
-
   FACEUP_WK_PTR FaceUpWkPtr;
+
+  FLD_VREQ* fldVReq;  ///<フィールドVBlank反映
 
 #ifdef  PM_DEBUG
 	FIELD_DEBUG_WORK *debugWork;
@@ -626,6 +628,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 
   // タスクマネージャ
   fieldWork->taskManager = FIELD_TASK_MAN_Create( 10, fieldWork->heapID );
+
+  // VBLANK反映管理
+  fieldWork->fldVReq = FLD_VREQ_Create( fieldWork->heapID );
 
   //ユニオンと侵入で読み込むオーバーレイを分ける
   if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
@@ -1413,6 +1418,11 @@ static MAINSEQ_RESULT mainSeqFunc_end(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWo
   // TCB
   GFL_TCB_Exit( fieldWork->fieldmapTCB );
   GFL_HEAP_FreeMemory( fieldWork->fieldmapTCBSysWork );
+
+  // VBLANK反映管理
+  FLD_VREQ_Delete( fieldWork->fldVReq );
+  fieldWork->fldVReq = NULL;
+
   // タスクマネージャ
   FIELD_TASK_MAN_Delete( fieldWork->taskManager );
 
@@ -2227,6 +2237,16 @@ void FIELDMAP_InitBgNoTrans( FIELDMAP_WORK* fieldWork )
 #endif
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  VBLANK期間レジスタ反映管理システムの取得
+ */
+//-----------------------------------------------------------------------------
+FLD_VREQ *FIELDMAP_GetFldVReq(FIELDMAP_WORK *fieldWork)
+{
+  return fieldWork->fldVReq;
+}
+
 #ifdef PM_DEBUG
 //--------------------------------------------------------------
 /**
@@ -2528,6 +2548,11 @@ static void	fldmap_G3D_VBlank( GFL_TCB *tcb, void *work )
   }
 
 	GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+
+  //VREQ
+  if(fieldWork->fldVReq){
+    FLD_VREQ_VBlank( fieldWork->fldVReq );
+  }
 }
 
 //--------------------------------------------------------------

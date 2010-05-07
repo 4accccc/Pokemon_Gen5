@@ -36,6 +36,7 @@
 #include "fld_exp_obj.h"
 #include "field_g3dobj.h"
 #include "fieldskill_mapeff.h"
+#include "fld_vreq.h"
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
@@ -157,6 +158,7 @@ extern BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork );
 extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 extern void FIELDMAP_InitBgNoTrans( FIELDMAP_WORK* fieldWork );
+extern FLD_VREQ *FIELDMAP_GetFldVReq(FIELDMAP_WORK *fieldWork);
 
 extern void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);
 extern FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork);

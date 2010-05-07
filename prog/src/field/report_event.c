@@ -413,7 +413,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
     break;
 
   case REPORT_SEQ_SAVE_COMP_END:        // 終了（セーブ実行）
-    FIELD_SUBSCREEN_MainDispBrightnessOff( wk->heapID );
+    FIELD_SUBSCREEN_MainDispBrightnessOff( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), wk->heapID );
     return REPORTEVENT_RET_SAVE;
 
 /*

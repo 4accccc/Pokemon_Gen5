@@ -678,9 +678,9 @@ void FIELD_SUBSCREEN_ResetAction( FIELD_SUBSCREEN_WORK* pWork)
  * @param  mode
  */
 //----------------------------------------------------------------------------
-void FIELD_SUBSCREEN_MainDispBrightnessOff( HEAPID heapId )
+void FIELD_SUBSCREEN_MainDispBrightnessOff( FIELD_SUBSCREEN_WORK* pWork, HEAPID heapId )
 {
-  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
+  FLD_VREQ_G2_SetBlendBrightnessExt( FIELDMAP_GetFldVReq( pWork->fieldmap ), GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_NONE, 0, 0, 0 );
   FLDMSGBG_SetBlendAlpha( FALSE );
   GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
   FLDMSGBG_TransResource( FLDBG_MFRM_MSG, heapId );   // FLDBG_MFRM_MSG = GFL_BG_FRAME1_M
@@ -1073,7 +1073,7 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
  *
  */
 //=============================================================================================
-void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID )
+void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( FIELD_SUBSCREEN_WORK* pWork, HEAPID heapID )
 {
   ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU, heapID );
 
@@ -1092,9 +1092,9 @@ void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID )
 
 
   // ã‰æ–Ê‚É‹P“xƒIƒt‚ðŠ|‚¯‚é
-  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
+  FLD_VREQ_G2_SetBlendBrightnessExt( FIELDMAP_GetFldVReq(pWork->fieldmap), GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
                             0 , 0 , -6 );
-  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  FLD_VREQ_GFL_BG_SetVisible( FIELDMAP_GetFldVReq(pWork->fieldmap), GFL_BG_FRAME1_M, VISIBLE_ON );
 }
 
 //=============================================================================
