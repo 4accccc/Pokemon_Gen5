@@ -307,6 +307,10 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
       if( wk->sub_proc_wk )
       {
         SHINKA_DEMO_PARAM *p_param  = wk->sub_proc_wk;
+				POKEMON_PARAM *pp     = RecvPokemonParamPointerGet( wk, wk->sub_process_mode );
+        POKEMON_PARAM *shinka_pp   = PokeParty_GetMemberPointer( p_param->ppt, 0 );  // 0番に格納したので0番から取得
+        // ppを進化後のもので上書きする
+        POKETOOL_CopyPPtoPP( shinka_pp, pp );
         GFL_HEAP_FreeMemory( (void*)p_param->ppt );
         //パラメータクリア
         GFL_HEAP_FreeMemory(wk->sub_proc_wk);
