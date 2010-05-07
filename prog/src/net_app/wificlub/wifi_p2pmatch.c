@@ -2120,6 +2120,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
     if(wk->pParentWork->btalk && (!GFL_NET_DWC_IsDisconnect())){  //˜b‚µ‚©‚¯Ú‘±Žž
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
+      //‚±‚±‚ÅVCTØ’f
+      DWCRAP_StopVChat();
       WifiP2PMatch_FriendListInit2( wk, seq );
       wk->friendNo = wk->pParentWork->friendNo;
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
@@ -3752,6 +3754,8 @@ static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
   wk->VChatModeOff = FALSE;
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_VCTEND, WB_NET_WIFICLUB)){
     if(wk->pParentWork->btalk){
+      //‚±‚±‚ÅVCTØ’f
+      DWCRAP_StopVChat();
       _changeBGMVol( wk, _VOL_DEFAULT );
       EndMessageWindowOff(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
@@ -5111,9 +5115,6 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 
     if(wk->timer==0){
       if(GFL_NET_HANDLE_IsNegotiation(GFL_NET_HANDLE_GetCurrentHandle())){
-
-
-
         GFL_STD_MemClear(&wk->matchGameMode,sizeof(wk->matchGameMode));
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK2,WB_NET_WIFICLUB);
         wk->bRetryBattle = FALSE;
@@ -5286,7 +5287,7 @@ void WifiP2PMatchRecvGameStatus(const int netID, const int size, const void* pDa
   const u16 *pRecvData = pData;
 
   wk->matchGameMode[netID] = pRecvData[0];
-  wk->VCTOn[netID] = pRecvData[1];
+  wk->pParentWork->VCTOn[netID] = pRecvData[1];
 }
 
 //

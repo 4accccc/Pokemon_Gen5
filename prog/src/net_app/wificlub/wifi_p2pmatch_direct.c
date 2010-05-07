@@ -2,7 +2,7 @@
 
 static void _vctcheckCommon( WIFIP2PMATCH_WORK *pWork)
 {
-  if(pWork->VCTOn[0] && pWork->VCTOn[1]){
+  if(pWork->pParentWork->VCTOn[0] && pWork->pParentWork->VCTOn[1]){
     GFL_NET_DWC_SetVChat(TRUE);
     GFL_NET_DWC_StartVChat();
     DWCRAP_StartVChat();
@@ -10,7 +10,7 @@ static void _vctcheckCommon( WIFIP2PMATCH_WORK *pWork)
   }
 #if PM_DEBUG
   else{
-    NET_PRINT("VCTOFF %d %d\n",pWork->VCTOn[0] ,pWork->VCTOn[1] );
+    NET_PRINT("VCTOFF %d %d\n",pWork->pParentWork->VCTOn[0] ,pWork->pParentWork->VCTOn[1] );
   }
 #endif
 }
@@ -219,7 +219,7 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
     break;
   case WIFI_GAME_VCT:
-    if(wk->VCTOn[1]==FALSE ){
+    if(wk->pParentWork->VCTOn[1]==FALSE ){
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1033 , FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_RETURN);
     }
@@ -239,7 +239,7 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
         _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_RETURN);
       }
       else{
-        if(wk->VCTOn[0]!=wk->VCTOn[1]){  //Ž©•ª‚Æ‘ŠŽè‚ÌVCT‚ªˆá‚¤
+        if(wk->pParentWork->VCTOn[0]!=wk->pParentWork->VCTOn[1]){  //Ž©•ª‚Æ‘ŠŽè‚ÌVCT‚ªˆá‚¤
           wk->keepGameMode=WIFI_GAME_TRADE;
           _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE1);
         }
@@ -966,7 +966,7 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
   }
   
   wk->keepGameMode = WIFI_GAME_BATTLE_SINGLE_ALL;
-  if(wk->VCTOn[0]!=wk->VCTOn[1]){  //Ž©•ª‚Æ‘ŠŽè‚ÌVCT‚ªˆá‚¤
+  if(wk->pParentWork->VCTOn[0]!=wk->pParentWork->VCTOn[1]){  //Ž©•ª‚Æ‘ŠŽè‚ÌVCT‚ªˆá‚¤
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE1);
   }
   else{
@@ -1621,7 +1621,7 @@ static int _playerDirectVCTChange1( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int msg;
   
-  if( wk->VCTOn[1]){
+  if( wk->pParentWork->VCTOn[1]){
     msg = msg_wifilobby_069;
   }
   else{

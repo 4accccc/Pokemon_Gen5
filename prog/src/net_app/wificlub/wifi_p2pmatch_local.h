@@ -472,7 +472,6 @@ struct _WIFIP2PMATCH_WORK{
   BOOL bInitMessage;		// 初回接続か
   GFL_PROC*		subProc;
   u16 matchGameMode[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
-  u16 VCTOn[WIFIP2PMATCH_MEMBER_MAX];   ///<CNM_WFP2PMF_STATUS
   int preConnect;			// 新しく来た友達(-1=なし)
   u16 singleCur[_MENUTYPE_MAX];			// バトルタイプ選択メニューカーソル
 //  u16 singleCur[3];			// バトルの詳細部分のメニューカーソル

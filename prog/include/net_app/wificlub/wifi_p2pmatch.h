@@ -34,10 +34,13 @@ typedef struct {
   POKEPARTY* pPokeParty[2];   //お互いのPartyを受信
   REGULATION* pRegulation;    //ROMから読み込み
   u8 matchno[WIFILIST_FRIEND_MAX];   //前回マッチングした時のno
+  u8 VCTOn[2];   ///<CNM_WFP2PMF_STATUS  
   u8 vchatMain;  // VCHATをONOFFするメインフラグ 内部は相手によって変化する為
   u8 btalk;    // 話しかけたのか、掲示板なのかで戻った際の分岐がある
   u8 friendNo;  //対戦している人の番号
-  u8 dummy; 
+  u8 dummy1; 
+  u8 dummy2; 
+  u8 dummy3; 
 }WIFIP2PMATCH_PROC_PARAM;
 
 extern const GFL_PROC_DATA WifiP2PMatchProcData;
