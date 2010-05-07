@@ -18,6 +18,9 @@ extern void FIELDDATA_SetMapperData(u16 mapid, const AREADATA * areadata,
 extern const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid);
 extern FLDMAP_CTRLTYPE FIELDDATA_GetFieldCtrlType(u16 mapid);
 
+///フィールド用ヒープサイズの取得
+extern u32 FIELDDATA_GetFieldHeapSize( u16 zone_id );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const DEPEND_FUNCTIONS FieldBaseFunctions;

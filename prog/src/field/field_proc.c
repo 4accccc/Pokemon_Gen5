@@ -14,6 +14,7 @@
 
 #include "field/zonedata.h" //ZONEDATA_IsUnionRoom
 #include "system/net_err.h"
+#include "field_data.h"   //FIELDDATA_GetFieldHeapSize
 
 //======================================================================
 //	define
@@ -67,18 +68,7 @@ static GFL_PROC_RESULT FieldMapProcInit
   case 0:
     {
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
-      if (ZONEDATA_IsUnionRoom(zone_id) || ZONEDATA_IsColosseum(zone_id) )
-      {
-        heap_size = 0x140000 - 0x18000;
-      }
-      else if ( ZONEDATA_IsMusicalWaitingRoom(zone_id) )
-      {
-        heap_size = 0xC0000 - 0x18000;
-      }
-      else
-      {
-        heap_size = 0x148000 - 0x18000;
-      }
+      heap_size = FIELDDATA_GetFieldHeapSize( zone_id );
     }
     heap_size -= HEAP_FIELD_SUBSCREEN_SIZE;
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );

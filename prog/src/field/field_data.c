@@ -22,14 +22,29 @@
 #include "fieldmap_ctrl_nogrid.h"
 #include "fieldmap_ctrl_hybrid.h"
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  HEAPSIZE_FIELDMAP_NORMAL = 0x130000,
+  HEAPSIZE_FIELDMAP_COMM   = 0x128000,
+  HEAPSIZE_FIELDMAP_MUSICAL = 0xa8000,
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
-	FLDMAPPER_RESISTDATA	mapperData;
-	const DEPEND_FUNCTIONS * dep_funcs;
-	BOOL isMatrixMapFlag;
+	FLDMAPPER_RESISTDATA	mapperData;   ///<各タイプごとのデータ
+	const DEPEND_FUNCTIONS * dep_funcs; ///<使用するフィールドメイン制御プログラム指定
+	BOOL isMatrixMapFlag;               ///<マトリックスデータを読み込むか？のチェック（現在未使用）
+  u32 heap_size;                      ///<フィールドマップが確保するヒープのサイズ
 }SCENE_DATA;
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 const SCENE_DATA	resistMapTbl[];
 const unsigned int resistMapTblCount;
 
@@ -92,6 +107,19 @@ FLDMAP_CTRLTYPE FIELDDATA_GetFieldCtrlType(u16 mapid)
 	return resistMapTbl[resid].dep_funcs->type;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief フィールド用ヒープサイズの取得
+ * @param zone_id ゾーンID
+ * @return  u32 フィールド用ヒープのサイズ
+ */
+//-----------------------------------------------------------------------------
+u32 FIELDDATA_GetFieldHeapSize( u16 zone_id )
+{
+  u16 resid = MapID2ResistID( zone_id );
+  return resistMapTbl[resid].heap_size;
+}
+
 //============================================================================================
 //============================================================================================
 
@@ -123,6 +151,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_NOGRID_BRIDGE = 1,
 	{	//実験マップ　橋
@@ -143,6 +172,7 @@ const SCENE_DATA resistMapTbl[] = {
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_NOGRID_C3 = 2,
 	{	//実験マップ　C3
@@ -163,6 +193,7 @@ const SCENE_DATA resistMapTbl[] = {
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_PALACE = 3,
 	{	//実験マップ グリッド移動   パレス
@@ -183,6 +214,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_RANDOMMAP = 4,
 	{	//実験マップ グリッド移動   ランダム生成マップ
@@ -203,6 +235,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_NOGRID_LEAGUE = 5,
 	{	//実験マップ チャンピオンリーグ
@@ -223,6 +256,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_UNION = 6,
 	{	//実験マップ グリッド移動
@@ -242,6 +276,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_COMM,
 	},
   //RSC_NOGRID_DEFAULT = 7,
 	{	//実験マップ レール移動
@@ -262,6 +297,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_NOGRID_C03P02 = 8,
 	{	//実験マップ レール移動
@@ -282,6 +318,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_MUSICAL = 9,
 	{	//実験マップ グリッド移動
@@ -302,6 +339,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_MUSICAL,
 	},
   //RSC_GRID_GYM_ELEC = 10,
 	{	//実験マップ グリッド移動
@@ -322,6 +360,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_GRID_WIDE = 11,
@@ -343,6 +382,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_NOGRID_D09 = 12,
@@ -364,6 +404,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_GRID_BRIDGE_H03 = 13,
@@ -385,6 +426,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_HYBRID = 14,
@@ -406,6 +448,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_HybridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_GRID_FOURKINGS = 15,
@@ -427,6 +470,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_GRID_NOSCROLL = 16,
@@ -448,6 +492,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_GRID_CABIN = 17,
@@ -469,6 +514,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
   //RSC_GRID_H04 = 18,
@@ -490,6 +536,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_HybridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_DEF_TAILDRAW = 19,
 	{ //トップ描画しないテイル描画のみ通常マップ
@@ -510,6 +557,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_LEAGIN02 = 20,
 	{	//ポケモンリーグフロント２専用　グリッド移動
@@ -530,6 +578,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
 };
