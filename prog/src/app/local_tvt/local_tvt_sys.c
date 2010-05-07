@@ -435,6 +435,13 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     work->cellUnit  = GFL_CLACT_UNIT_Create( 16 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
+
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0 , 
+                    GX_BLEND_PLANEMASK_OBJ|
+                    GX_BLEND_PLANEMASK_BG3|
+                    GX_BLEND_PLANEMASK_BG2|
+                    GX_BLEND_PLANEMASK_BG1 , 
+                    16 , 4 );
 }
 
 static void LOCAL_TVT_TermGraphic( LOCAL_TVT_WORK *work )
@@ -599,8 +606,14 @@ static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
   work->talkMsgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_tvt_event_01_dat + (work->initWork->scriptId-1) , work->heapId );
   
   BmpWinFrame_GraphicSet( LTVT_FRAME_MESSAGE , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME , 0 , work->heapId );
+  {
+    //•‚¢‚Ù‚¤‚ð“Ç‚Þ
+    u32 arc = BmpWinFrame_WinPalArcGet(MENU_TYPE_SYSTEM);
+    GFL_ARC_UTIL_TransVramPaletteEx( ARCID_FLDMAP_WINFRAME,
+        arc, PALTYPE_MAIN_BG, 0x20*1, LTVT_PLT_MAIN_WINFRAME*0x20, 0x20, work->heapId );
+  }
 
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , LTVT_PLT_MAIN_FONT*0x20, 16*2, work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_systemwin_nclr , PALTYPE_MAIN_BG , LTVT_PLT_MAIN_FONT*0x20, 16*2, work->heapId );
   GFL_FONTSYS_SetDefaultColor();
   
   work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
@@ -610,7 +623,7 @@ static void LOCAL_TVT_MSG_InitMessage( LOCAL_TVT_WORK *work )
   work->wordSet = NULL;
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
 
-  work->cursorWork = APP_KEYCURSOR_Create( 0x0f , TRUE , TRUE , work->heapId );
+  work->cursorWork = APP_KEYCURSOR_Create( 0xf , TRUE , TRUE , work->heapId );
   GFL_FONTSYS_SetColor( 1,2,0xf );
   
 }
@@ -704,7 +717,7 @@ static void LOCAL_TVT_MSG_OpenWindow( LOCAL_TVT_WORK *work , LOCAL_TVT_MSG_POS p
   }
   
   BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , LTVT_MSG_MSGWIN_CGX , LTVT_PLT_MAIN_WINFRAME );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0F );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0f );
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
   GFL_BMPWIN_MakeScreen( work->msgWin );
   GFL_BG_LoadScreenV_Req( LTVT_FRAME_MESSAGE );
