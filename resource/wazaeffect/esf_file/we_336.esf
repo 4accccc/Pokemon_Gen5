@@ -3,6 +3,7 @@ $0001
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_336.spa
 #001
 %00
+ポケモン鳴き声	攻撃側	192	127	30	16	正再生	0
 射影モード	透視射影
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_336
@@ -12,5 +13,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_336.spa
 エフェクト終了待ち	すべて
 射影モード	正射影
 エフェクト終了待ち	すべて
+エフェクト終了待ち	鳴き声
 エフェクト終了
 &
