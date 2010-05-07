@@ -302,7 +302,6 @@ sub_bsw_receipt_guide_wifi:
   _NUMBER( 1, ret, 2 )
   $SCWK_TEMP0 = msg_bsw_scr_49
   _CALL sub_bsw_common_bwin_receipt
-  _AB_KEYWAIT()
   
   //選択メニュー
   _CALL sub_receipt_menu_challenge_wifi
@@ -394,13 +393,14 @@ sub_receipt_rekidai_download:
       _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
       
       //○○の歴代情報をダウンロードしました
-      _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
-      _NUMBER( 0, ret, 2 )
-      _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_ROOM, BSW_NULL, BSW_NULL, ret )
-      _NUMBER( 1, ret, 3 )
-      $SCWK_TEMP0 = msg_bsw_scr_52
-      _CALL sub_bsw_common_bwin_receipt
-      _AB_KEYWAIT()
+      IF $ret == TRUE THEN
+        _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
+        _NUMBER( 0, ret, 2 )
+        _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_ROOM, BSW_NULL, BSW_NULL, ret )
+        _NUMBER( 1, ret, 3 )
+        $SCWK_TEMP0 = msg_bsw_scr_52
+        _CALL sub_bsw_common_bwin_receipt
+      ENDIF
     ENDIF
   ENDIF
   
@@ -691,7 +691,6 @@ sub_receipt_challenge_multi_ai:
     $SCWK_TEMP0 = msg_bsw_scr_72
     $SCWK_TEMP1 = msg_bsw_scr_73
     _CALL sub_bsw_common_bwin_partner
-    _AB_KEYWAIT()
     _MSGWIN_CLOSE()
     
     //サポート退場、終了
@@ -701,7 +700,6 @@ sub_receipt_challenge_multi_ai:
   ENDSWITCH
   
   _CALL sub_bsw_common_bwin_partner
-  _AB_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //パートナーナンバーセット
@@ -1109,7 +1107,6 @@ ev_bsw_game_continue:
   //それでは中断した所まで案内します
   $SCWK_TEMP0 = msg_bsw_scr_34
   _CALL sub_bsw_common_bwin_receipt
-  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //バトルサブウェイ挑戦中のビーコンセット
@@ -1198,7 +1195,6 @@ ev_bsw_game_after:
   IF $SCWK_ANSWER == TRUE THEN
     $SCWK_TEMP0 = msg_bsw_scr_35
     _CALL sub_bsw_common_bwin_receipt
-    _AB_KEYWAIT()
   ENDIF
   
   //またのご利用を
@@ -1285,7 +1281,6 @@ sub_receipt_msg_greet:
   ENDSWITCH
   
   _CALL sub_bsw_common_bwin_receipt
-  _AB_KEYWAIT()
   
   $SCWK_ANSWER = $flag
   
@@ -1369,8 +1364,6 @@ sub_receipt_msg_account:
     $SCWK_TEMP0 = msg_bsw_scr_11_1
     _CALL sub_bsw_common_bwin_receipt
   ENDSWITCH
-  
-  _AB_KEYWAIT()
 }
 _RET
 
@@ -1404,7 +1397,6 @@ sub_receipt_msg_geton_train:
   ENDSWITCH
   
   _CALL sub_bsw_common_bwin_receipt
-  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 }
 _RET
@@ -1594,7 +1586,6 @@ sub_receipt_demo_partner_in:
   ENDIF
   
   _CALL sub_bsw_common_bwin_partner
-  _AB_KEYWAIT()
 }
 _RET
 
@@ -2128,7 +2119,6 @@ sub_bsw_common_report_error_exit:
   //お客様！
   $SCWK_TEMP0 = msg_bsw_scr_37
   _CALL sub_bsw_common_bwin_receipt
-  _AB_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //不正終了時のパラメータ処理
@@ -2182,7 +2172,6 @@ sub_bsw_common_pokemon_select:
   //それでは参加するポケモンを
   $SCWK_TEMP0 = msg_bsw_scr_23
   _CALL sub_bsw_common_bwin_receipt
-  _AB_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //ポケモン選択
@@ -2216,7 +2205,6 @@ sub_bsw_common_renshou_msg:
       _NUMBER( 1, count, 4 )
       $SCWK_TEMP0 = msg_bsw_scr_08
       _CALL sub_bsw_common_bwin_receipt
-      _AB_KEYWAIT()
     ENDIF
   ENDIF
 }

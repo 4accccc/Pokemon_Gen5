@@ -363,7 +363,6 @@ sub_mapchg_receipt:
   IF $SCWK_ANSWER == 0 THEN
     //戻ります
     _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_14 )
-    _LAST_KEYWAIT()
     
     //プレイモード取得
     _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
@@ -571,7 +570,6 @@ EVENT_START ev_c04r0111_home
     IF $SCWK_ANSWER == TRUE THEN //スーパーボスである
       //おめでとうございます
       _BALLOONWIN_OBJMSG_POS( msg_c04r0111_04, obj_id, POS_DOWN )
-      _AB_KEYWAIT()
       _MSGWIN_CLOSE()
       
       _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
@@ -588,7 +586,6 @@ EVENT_START ev_c04r0111_home
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
         //トロフィを差し上げます
         _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
-        _AB_KEYWAIT()
         _MSGWIN_CLOSE()
 
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
@@ -611,7 +608,6 @@ EVENT_START ev_c04r0111_home
     ELSE  //ノーマルボスである
       //おめでとうございます
       _BALLOONWIN_OBJMSG_POS( msg_c04r0111_04, obj_id, POS_DOWN )
-      _AB_KEYWAIT()
       _MSGWIN_CLOSE()
       
       _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
@@ -640,7 +636,6 @@ EVENT_START ev_c04r0111_home
           _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
         ENDSWITCH
         
-        _AB_KEYWAIT()
         _MSGWIN_CLOSE()
         
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
@@ -649,9 +644,8 @@ EVENT_START ev_c04r0111_home
   ELSE //ボス倒していない
     //おめでとうございます
     _BALLOONWIN_OBJMSG_POS( msg_c04r0111_03, obj_id, POS_DOWN )
-    _AB_KEYWAIT()
     _MSGWIN_CLOSE()
-
+    
     _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
     _PLAYER_NAME( 0 )
     _NUMBER( 1, point, 2 )
