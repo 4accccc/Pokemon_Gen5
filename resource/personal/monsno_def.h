@@ -823,3 +823,6 @@
 
 //フォルム違いトータル
 #define OTHER_FORM_MAX  ( 62 )
+
+//イッシュ図鑑トータル
+#define ZUKANNO_ISSHU_END  ( 155 )
