@@ -3819,6 +3819,7 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     }
   }
 
+#if 0
   //トレーナー移動終了？
   if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
       ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_TRAINER ) )
@@ -3830,6 +3831,24 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
       if( BTLV_CLACT_CheckTCBExecute( BTLV_EFFECT_GetCLWK(), index ) == TRUE )
       {
         return FALSE;
+      }
+    }
+  }
+#endif
+  //MCSSアニメ終了？
+  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ANIME ) )
+  {
+    BtlvMcssPos pos;
+
+    for( pos = 0 ; pos < BTLV_MCSS_POS_TOTAL ; pos++ )
+    {
+      if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) )
+      { 
+        if( BTLV_MCSS_CheckAnimeExecute( BTLV_EFFECT_GetMcssWork(), pos ) == TRUE )
+        {
+          return FALSE;
+        }
       }
     }
   }

@@ -1077,7 +1077,6 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
   {
     int index = BTLV_MCSS_GetIndex( bmw, position );
     pal_fade_flag = MCSS_CheckExecutePaletteFade( bmw->btlv_mcss[ index ].mcss );
-    anm_execute_flag = bmw->btlv_mcss[ index ].anm_execute_flag;
   }
 
   return ( ( bmw->mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
@@ -1087,7 +1086,6 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
        ( bmw->mcss_tcb_alpha_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_mosaic_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( bmw->mcss_tcb_rotation_execute ) ||
-       ( anm_execute_flag ) ||
        ( pal_fade_flag ) );
 }
 
