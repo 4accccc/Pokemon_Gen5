@@ -14419,6 +14419,29 @@
 くすりの　準備は　ばっちり？</language>
 	</row>
 
+	<row id="TRID_SCIENTISTM_10_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ポケモンと　ともに　たたかうほどに
+さらに　ハッピーに　なれるのです！▼　</language>
+		<language name="JPN_KANJI" width="216">ポケモンと　ともに　戦うほどに
+さらに　ハッピーに　なれるのです！▼　</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけたが　ハッピー！
+なぜなら　ちしきが　ふえたから！</language>
+		<language name="JPN_KANJI" width="216">負けたが　ハッピー！
+なぜなら　知識が　増えたから！</language>
+	</row>
+
+	<row id="TRID_SCIENTISTM_10_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ハッピーに　なることを　かんがえ
+ハッピーを　げんじつに　していく……▽
+これも　かがく　なのです</language>
+		<language name="JPN_KANJI" width="216">ハッピーに　なることを　考え
+ハッピーを　現実に　していく……▽
+これも　科学なのです</language>
+	</row>
+
 	<row id="TRID_RIVAL_04_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">クッ！　あいかわらず
 いい　わざを　えらぶよね</language>
