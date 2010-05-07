@@ -3836,8 +3836,7 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
   }
 #endif
   //MCSSアニメ終了？
-  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
-      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ANIME ) )
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ANIME )
   {
     BtlvMcssPos pos;
 
