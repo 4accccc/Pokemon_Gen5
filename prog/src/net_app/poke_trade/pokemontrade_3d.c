@@ -900,6 +900,7 @@ void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int b
   }
   pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
+  MCSS_SetShadowVanishFlag(pWork->pokeMcss[no] ,TRUE);
 }
 
 

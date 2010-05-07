@@ -1587,7 +1587,7 @@ void IRC_POKETRADE_3DGraphicSetUp( POKEMON_TRADE_WORK* pWork )
     GFL_G3D_CAMERA_Switching( pWork->pCamera );
     //エッジマーキングカラーセット
     G3X_SetEdgeColorTable( edge_color_table );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
 
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
 
