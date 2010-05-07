@@ -1,0 +1,188 @@
+//-----------------------------------------------------------------
+/*
+/* @file gts_country_list.cdat
+ */
+//-----------------------------------------------------------------
+#ifndef __GTS_COUNTRY_LIST_CDAT__
+#define __GTS_COUNTRY_LIST_CDAT__
+
+///国検索：50音順リスト
+ALIGN4 static const u16 CountryListTbl[] = {
+	country095,
+	country100,
+	country001,
+	country222,
+	country223,
+	country219,
+	country003,
+	country009,
+	country002,
+	country006,
+	country008,
+	country220,
+	country029,
+	country102,
+	country103,
+	country099,
+	country096,
+	country097,
+	country217,
+	country224,
+	country062,
+	country063,
+	country064,
+	country012,
+	country013,
+	country158,
+	country147,
+	country080,
+	country090,
+	country036,
+	country076,
+	country035,
+	country172,
+	country034,
+	country088,
+	country053,
+	country082,
+	country087,
+	country085,
+	country112,
+	country048,
+	country083,
+	country084,
+	country051,
+	country110,
+	country049,
+	country045,
+	country047,
+	country183,
+	country190,
+	country081,
+	country104,
+	country191,
+	country203,
+	country202,
+	country197,
+	country200,
+	country198,
+	country192,
+	country193,
+	country201,
+	country187,
+	country188,
+	country207,
+	country205,
+	country221,
+	country054,
+	country040,
+	country043,
+	country212,
+	country042,
+	country058,
+	country079,
+	country208,
+	country060,
+	country061,
+	country213,
+	country153,
+	country151,
+	country152,
+	country106,
+	country149,
+	country150,
+	country157,
+	country016,
+	country091,
+	country159,
+	country162,
+	country226,
+	country015,
+	country163,
+	country023,
+	country018,
+	country094,
+	country017,
+	country071,
+	country166,
+	country072,
+	country028,
+	country073,
+	country074,
+	country031,
+	country033,
+	country229,
+	country022,
+	country228,
+	country021,
+	country165,
+	country020,
+	country168,
+	country027,
+	country025,
+	country169,
+	country093,
+	country092,
+	country123,
+	country130,
+	country132,
+	country127,
+	country196,
+	country143,
+	country136,
+	country134,
+	country141,
+	country140,
+	country107,
+	country119,
+	country118,
+	country175,
+	country122,
+	country116,
+	country176,
+};
+const u32 CountryListTblNum = NELEMS(CountryListTbl);
+
+// アイウエオ順で国名CountryListが何番目に出現するかを
+// 格納しているリスト
+// {  CountryListの添え字,   アイウエオの添え字（ア=0,カ=5,ヤ=35,ラ=38)
+static const u8 CountrySortList[][2]={
+	{  0,  1 }, // あ
+	{ 11,  2 }, // い
+	{ 18,  3 }, // う
+	{ 20,  4 }, // え
+	{ 23,  5 }, // お
+	{ 27,  6 }, // か
+	{ 34,  7 }, // き
+	{ 37,  8 }, // く
+	{ 44,  9 }, // け
+	{ 45, 10 }, // こ
+	{ 48, 11 }, // さ
+	{ 49, 12 }, // し
+	{ 53, 13 }, // す
+	{ 61, 14 }, // せ
+	{ 63, 16 }, // た
+	{ 66, 17 }, // ち
+	{ 71, 19 }, // て
+	{ 72, 20 }, // と
+	{ 77, 21 }, // な
+	{ 78, 22 }, // に
+	{ 83, 25 }, // の
+	{ 84, 26 }, // は
+	{ 95, 28 }, // ふ
+	{ 103, 29 }, // へ
+	{ 109, 30 }, // ほ
+	{ 115, 31 }, // ま
+	{ 119, 32 }, // み
+	{ 121, 34 }, // め
+	{ 122, 35 }, // も
+	{ 125, 38 }, // よ
+	{ 126, 40 }, // り
+	{ 128, 41 }, // る
+	{ 130, 42 }, // れ
+	{ 131, 43 }, // ろ
+	{ 132, 255 }, // 番兵
+};
+
+static const COUNTRY_SORT_HEAD_MAX	= NELEMS(CountrySortList);
+#endif
