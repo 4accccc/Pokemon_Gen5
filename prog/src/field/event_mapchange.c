@@ -55,6 +55,7 @@
 #include "field_comm/intrude_main.h"
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_mission.h"
+#include "field_comm/intrude_comm_command.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 #include "field_task.h"
@@ -924,6 +925,101 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
     break;
   case 3:
     return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 侵入用のEVENT_MapChange
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeIntrude( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( work->gameSystem );
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  enum{
+    SEQ_INIT,
+    SEQ_ENTRANCE_IN,
+    SEQ_MAPCHANGE_CORE,
+    SEQ_ENTRANCE_OUT,
+    SEQ_FINISH,
+    SEQ_WFBC_REQ,
+    SEQ_WFBC_WAIT,
+    SEQ_COMM_ERROR,
+  };
+
+  switch(*seq)
+  {
+  case SEQ_INIT:
+    // 動作モデルの移動を止める
+    {
+      MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDLSYS_PauseMoveProc( fmmdlsys );
+    }
+
+    if(ZONEDATA_IsWfbc(work->loc_req.zone_id) == TRUE){
+      *seq = SEQ_WFBC_REQ;
+    }
+    else{
+      *seq = SEQ_ENTRANCE_IN;
+    }
+    break;
+    
+  case SEQ_ENTRANCE_IN:
+    // 入口進入イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_EntranceIn( event, gameSystem, gameData, fieldmap, 
+                          work->loc_req, work->exit_type, work->seasonUpdateOccur ) );
+    (*seq)++;
+    return GMEVENT_RES_CONTINUE_DIRECT;
+    break;
+  case SEQ_MAPCHANGE_CORE:
+    // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
+    (*seq)++;
+    break;
+  case SEQ_ENTRANCE_OUT:
+    // 入口退出イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_EntranceOut( event, gameSystem, gameData, fieldmap, work->loc_req, work->before_zone_id,
+                           work->seasonUpdateOccur, 
+                           PMSEASON_GetNextSeasonID(work->prevSeason), work->nextSeason ) );
+    (*seq)++;
+    break;
+  case SEQ_FINISH:
+    return GMEVENT_RES_FINISH; 
+  
+  //------------------------ WFBC要求 ---------------------------
+  case SEQ_WFBC_REQ:
+    if(intcomm == NULL){
+      *seq = SEQ_COMM_ERROR;
+    }
+    else if(IntrudeSend_WfbcReq(intcomm, Intrude_GetPalaceArea(intcomm)) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_WFBC_WAIT:
+    if(intcomm == NULL){
+      *seq = SEQ_COMM_ERROR;
+    }
+    else if(Intrude_GetRecvWfbc(intcomm) == TRUE){
+      *seq = SEQ_ENTRANCE_IN;
+    }
+    break;
+  
+  case SEQ_COMM_ERROR:
+    // 動作モデルの移動を再開
+    {
+      MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDLSYS_ClearPauseMoveProc( fmmdlsys );
+    }
+    return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -2128,6 +2224,33 @@ GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
     // 特別脱出先設定
     Escape_SetSPEscapeLocation( gameData, &work->loc_req );
   }
+  return event;
+}
+
+//==================================================================
+/**
+ * 侵入用のEVENT_ChangeMapByConnect
+ */
+//==================================================================
+GMEVENT* EVENT_ChangeMapByConnectIntrude( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                   const CONNECT_DATA* connectData, LOC_EXIT_OFS exitOfs )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+  GAMEDATA* gameData;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeIntrude, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  MAPCHANGE_WORK_init( work, gameSystem );
+  work->seasonUpdateEnable = TRUE;
+
+  CONNECTDATA_SetNextLocation( connectData, &(work->loc_req), exitOfs );
+
+  work->exit_type = CONNECTDATA_GetExitType( connectData );
+
   return event;
 }
 

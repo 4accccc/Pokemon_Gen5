@@ -2211,6 +2211,9 @@ static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * field
     exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   }
 
+  if(CONNECTDATA_GetExitType( cnct ) == EXIT_TYPE_INTRUDE){
+    return EVENT_ChangeMapByConnectIntrude(req->gsys, fieldWork, cnct, exit_ofs);
+  }
   return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct, exit_ofs);
 }
 

@@ -38,6 +38,8 @@ extern GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * f
 //------------------------------------------------------------------
 extern GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                           const CONNECT_DATA* connectData, LOC_EXIT_OFS exitOfs );
+extern GMEVENT* EVENT_ChangeMapByConnectIntrude( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                   const CONNECT_DATA* connectData, LOC_EXIT_OFS exitOfs );
 
 //------------------------------------------------------------------
 /**
