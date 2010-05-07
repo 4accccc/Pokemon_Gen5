@@ -554,6 +554,7 @@ end
   pokelist = []
   chihou_zukan = []
   chihou_zukan << 999
+  issyu_max = 0
   
   form[ 0 ] = FORM::new
   read_data.size.times {|i|
@@ -682,6 +683,9 @@ end
         chihou_zukan << 999
       else
         chihou_zukan << split_data[ PARA::CHIHOU_NO ].to_i
+        if issyu_max < split_data[ PARA::CHIHOU_NO ].to_i
+          issyu_max = split_data[ PARA::CHIHOU_NO ].to_i
+        end
       end
 
       fp_monsno.print( "#define\t\t" )
@@ -1312,7 +1316,9 @@ end
   }
 
   fp_monsno.printf( "//フォルム違いトータル\n" )
-  fp_monsno.printf( "#define OTHER_FORM_MAX  ( %d )\n",form_gra_index )
+  fp_monsno.printf( "#define OTHER_FORM_MAX  ( %d )\n\n",form_gra_index )
+  fp_monsno.printf( "//イッシュ図鑑トータル\n" )
+  fp_monsno.printf( "#define ZUKANNO_ISSHU_END  ( %d )\n",issyu_max )
   fp_monsno.close
 
   #技覚えハッシュテーブル生成
