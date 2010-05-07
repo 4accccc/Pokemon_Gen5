@@ -515,7 +515,7 @@ VMCMD_RESULT EvCmdSysWinMsg( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 up_down = VMGetU16( core );
-  
+
   sysWin_AddWindow( work, up_down );
   msgbuf = SetExpandWord( work, sc, msg_id );
   sysWin = (FLDSYSWIN_STREAM*)SCRCMD_WORK_GetMsgWinPtr( work );
