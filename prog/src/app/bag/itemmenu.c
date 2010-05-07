@@ -3129,6 +3129,12 @@ static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork )
 {
   SHORTCUT_ID id;
   BOOL is_active;
+
+	// “ü‚ê‘Ö‚¦‚Íˆ—‚µ‚È‚¢
+	if( pWork->moveMode == TRUE ){
+		return;
+	}
+
   id = SHORTCUT_GetPocket( pWork->pocketno );
   is_active = GAMEDATA_GetShortCut( pWork->gamedata, id );
 
