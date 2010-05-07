@@ -578,12 +578,11 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
   dat = ENC_CUTIN_NO_GetDat(inEncCutinNo);
 
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, dat->CutinNo);
-  //OBJのポーズとポーズ解除を行わないフェードアウトは引数指定
+  
   {
     FLD3D_CI_EVENT_WORK *work;
     work = GMEVENT_GetEventWork(event);
     InitCutinEvtWork(ptr, work);
-    work->ObjPause = FALSE;
     work->MainHook = FALSE;
     work->IsWhiteOut = inWhiteFade;
   }
@@ -2518,7 +2517,7 @@ static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work)
   size = sizeof(FLD3D_CI_EVENT_WORK);
   MI_CpuClear8( work, size );
   work->CiPtr = ptr;
-  work->ObjPause = TRUE;
+  work->ObjPause = FALSE;
   work->MainHook = TRUE;
   work->IsWhiteOut = FALSE;
 }

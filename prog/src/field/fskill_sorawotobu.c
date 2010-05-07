@@ -154,6 +154,11 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     if ( !FIELD_CAMERA_CheckMvFunc(camera) )
     {
       GMEVENT *child;
+      //OBJポーズ
+      {
+        MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+        MMDLSYS_PauseMoveProc(mmdlsys);
+      }
       //カットイン演出開始
       child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, wk->OutCutinNo);
       GMEVENT_CallEvent(event, child);
@@ -161,6 +166,11 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     }
     break;
   case 3:
+    //ＯＢＪのポーズ解除
+    {
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+      MMDLSYS_ClearPauseMoveProc(mmdlsys);
+    }
     //自機非表示
     {
       MMDL * mmdl;
@@ -260,6 +270,11 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
   case 8:
     {
       GMEVENT *child;
+      //OBJポーズ
+      {
+        MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+        MMDLSYS_PauseMoveProc(mmdlsys);
+      }
       //カットイン演出開始
       child = FLD3D_CI_CreateCutInEvt(wk->gsys, ciPtr, wk->InCutinNo);
       GMEVENT_CallEvent(event, child);
@@ -267,6 +282,11 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     }
     break;
   case 9:
+    //ＯＢＪのポーズ解除
+    {
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+      MMDLSYS_ClearPauseMoveProc(mmdlsys);
+    }
     //地名表示開始
     {
        FIELD_PLACE_NAME * p_sys = FIELDMAP_GetPlaceNameSys( fieldWork );
