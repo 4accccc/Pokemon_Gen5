@@ -210,6 +210,7 @@ static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugSecretItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugPDWItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_1BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk );
@@ -338,6 +339,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR33, debugMenuCallProc_DebugSecretItem }, //隠されアイテム作成
   { DEBUG_FIELD_STR34, debugMenuCallProc_DebugPDWItem },    //PDWアイテム作成
   { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },          //ボックス最大
+  { DEBUG_FIELD_STR72, debugMenuCallProc_1BoxMax },         //ボックス１つ分最大
   { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },       //アイテム最大
   { DEBUG_FIELD_MAKE_EGG, debugMenuCallProc_MakeEgg },      //タマゴ作成
   { DEBUG_FIELD_SODATEYA, debugMenuCallProc_Sodateya },     //育て屋
@@ -2253,13 +2255,10 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
   pp = PP_Create(100, 100, 123456, HEAPID_FIELDMAP);
 
   {
-    int i,j,k=1;
+    int i,j,k=BOX_MAX_TRAY;
     int monsno=1;
     BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gameSys));
 
-    if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-      k=BOX_MAX_TRAY;
-    }
     BOXDAT_AddTrayMax( pBox );
     BOXDAT_AddTrayMax( pBox );
     for(i=0;i < k;i++){
@@ -2285,6 +2284,58 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 #endif
   return( FALSE );
 }
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンボックス１つ分をポケモンでいっぱいにする
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_1BoxMax( DEBUG_MENU_EVENT_WORK *wk )
+{
+#if 1
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  MYSTATUS *myStatus;
+  POKEMON_PARAM *pp;
+  POKEMON_PASO_PARAM  *ppp;
+  const STRCODE *name;
+
+  myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
+  name = MyStatus_GetMyName( myStatus );
+
+  pp = PP_Create(100, 100, 123456, HEAPID_FIELDMAP);
+
+  {
+    int i,j,k=1;
+    int monsno=1;
+    BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gameSys));
+
+    BOXDAT_AddTrayMax( pBox );
+    BOXDAT_AddTrayMax( pBox );
+    for(i=0;i < k;i++){
+      for(j=0;j < 30;j++){
+        OS_TPrintf("%d  %d %d作成\n",monsno, i, j);
+        PP_Setup(pp,  monsno , 100, MyStatus_GetID( myStatus ));
+
+        ppp = (POKEMON_PASO_PARAM  *)PP_GetPPPPointerConst( pp );
+        PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
+        PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+
+        BOXDAT_PutPokemonBox(pBox, i, ppp);
+
+        monsno++;
+        if( monsno > MONSNO_END ){
+          monsno = 1;
+        }
+      }
+    }
+  }
+
+  GFL_HEAP_FreeMemory(pp);
+#endif
+  return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   バッグにアイテムを限界までいれる
