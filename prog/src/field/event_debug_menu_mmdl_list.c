@@ -304,8 +304,14 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 
           if( ac != ACMD_NOT ){
             MMDL_SetAcmd( mmdl, ac );
+            (*seq)++;
           }
         }
+      }
+      break;
+    case 3:
+      if( MMDL_EndAcmd( work->fmmdl )){
+        (*seq) = 2;
       }
       break;
     }

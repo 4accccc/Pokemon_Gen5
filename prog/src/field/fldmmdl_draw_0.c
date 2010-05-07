@@ -1331,11 +1331,10 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
     }
     
     TsurePoke_SetAnmAndOffset( mmdl, work, dir );
-//    IWASAWA_Printf( "anm_frm = %d, offs = %d\n", GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID ), work->offs_frame);
     
     MMDL_GetDrawVectorPos( mmdl, &pos );
-    
     blact_SetCommonOffsPos( mmdl, &pos );
+
     GFL_BBD_SetObjectTrans(
       GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
     
@@ -1356,7 +1355,18 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   pause_f = MMDL_CheckDrawPause( mmdl );
   anmcmd_f = MMDL_CheckMoveBitAcmd( mmdl );
   
+  /*
+   *  金銀で必要だったanmcmd_fによる分岐
+   *  アニメコマンド発行中(ジャンプ中など)は上下アニメを止める処理が必要だった
+   *  WBでは連れ歩きOBJに対して、アニメコマンドを発行することがないので、
+   *  分岐をフックしている
+   */
+
+#if 0 //wb_none
   if( pause_f || anmcmd_f ){
+#else
+  if( pause_f ){
+#endif
     //Yオフセットのみ引き継ぐ
     MMDL_GetVectorDrawOffsetPos( mmdl, &vec );
     vec.x = vec.z = 0;
@@ -1364,9 +1374,8 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
 
   //向きから描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
-  
-  //ジャンプオフセットセット
-  
+
+#if 0 //wb_none
   if( anmcmd_f ){
     work->offs_frame++; 
   }else if( !pause_f ){
@@ -1375,6 +1384,14 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
       vec.y -= FX32_CONST(2);
     }
   }
+#else
+ if( !pause_f ){
+    work->offs_frame++; 
+    if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
+      vec.y -= FX32_CONST(2);
+    }
+  }
+#endif
   MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 }
 
@@ -1389,14 +1406,9 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
 		case DIR_DOWN:
 			outVec->z -= MMDL_POKE_OFS_UPDOWN;
 			break;
-		case DIR_LEFT:
-//			outVec->x += MMDL_POKE_OFS_RIGHTLEFT;
-			break;
-		case DIR_RIGHT:
-//			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT;
-			break;
     }
 	}else{
+#if 0
 		switch(dir){
 		case DIR_LEFT:
 			outVec->x += MMDL_POKE_OFS_RIGHTLEFT_S;
@@ -1405,6 +1417,7 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
 			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT_S;
 			break;
 		}
+#endif
 	}
 }
 
@@ -1412,94 +1425,24 @@ static BOOL TsurePoke_CheckUpDown( DRAW_BLACT_POKE_WORK* work, u8 dir, const OBJ
 {
   int frame;
 
-  frame = work->offs_frame % 40;
+  frame = work->offs_frame % 20;
   work->offs_frame = frame;
-//  frame = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
-//  IWASAWA_Printf( "PairPokeAnmFrame = %d\n",frame );
-
+  
   if( obj_prm->draw_proc_no == MMDL_DRAWPROCNO_TPOKE_FLY){
     //スピード半分
     if( dir == DIR_DOWN){
-      if( (frame < 10) || ( 30 <= frame )){
+      if( (frame < 5) || ( 15 <= frame )){
         return TRUE;
       }
-    }else if(frame < 20){
+    }else if(frame < 10){
       return TRUE;
     }
   }else{
-    if ( ((10<=frame)&&(frame<20)) || (30<=frame) ){
+    if ( ((5<=frame)&&(frame<10)) || (15<=frame) ){
 			return TRUE;
 		}
   }
   return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * 描画処理　ビルボード　連れ歩きポケモン　縦揺れ付き　描画
- * @param  mmdl  MMDL
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void DrawTsurePokeFly_Draw( MMDL *mmdl )
-{
-  DRAW_BLACT_POKE_WORK *work;
-  
-  work = MMDL_GetDrawProcWork( mmdl );
-  
-  if( work->actID != MMDL_BLACTID_NULL ){
-    VecFx32 pos;
-    u16 dir,init_flag;
-    GFL_BBDACT_SYS *actSys;
-  
-    init_flag = FALSE;
-
-    actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
-    dir = MMDL_GetDirDisp( mmdl );
-  
-    if( dir != work->set_anm_dir ){
-      init_flag = TRUE;
-      work->set_anm_dir = dir;
-      work->offs_frame = 0;
-      work->offs_y = 0; //描画オフセットもクリア
-      GFL_BBDACT_SetAnimeIdx(
-          actSys, work->actID, work->set_anm_dir );
-
-      { //描画オフセットもクリア
-        VecFx32 offs = {0,0,0};
-        MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
-      }
-    }
-#if 0
-    if( MMDL_CheckDrawPause(mmdl) == FALSE ){ //to GS
-      work->offs_frame++;
-      work->offs_frame %= 20;
-      if( work->offs_frame >= 15 || //5-9 or 15-19
-          (work->offs_frame >= 5 && work->offs_frame < 10) ){
-        work->offs_y -= FX32_ONE * 2;
-      }else{
-        work->offs_y += FX32_ONE * 2;
-      }
-    }
-    
-    pos.x = 0;
-    pos.y = work->offs_y;
-    pos.z = 0;
-	  MMDL_SetVectorDrawOffsetPos( mmdl, &pos );
-#endif
-    
-    TsurePoke_SetAnmAndOffset( mmdl, work, dir );
-    
-    MMDL_GetDrawVectorPos( mmdl, &pos );
-
-    blact_SetCommonOffsPos( mmdl, &pos );
-    GFL_BBD_SetObjectTrans(
-      GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
-    
-//    MMDL_GetDrawVectorPos( mmdl, &pos );
-//    blact_SetCommonOffsPos( mmdl, &pos );
-    blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag, FALSE );
-  }
 }
 
 //--------------------------------------------------------------
@@ -1525,16 +1468,6 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePoke =
 {
   DrawTsurePoke_Init,
   DrawTsurePoke_Draw,
-  DrawTsurePoke_Delete,
-  DrawTsurePoke_Delete,  //退避
-  DrawTsurePoke_Init,    //本当は復帰
-  DrawTsurePoke_GetBlActID,
-};
-
-const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePokeFly =
-{
-  DrawTsurePoke_Init,
-  DrawTsurePokeFly_Draw,
   DrawTsurePoke_Delete,
   DrawTsurePoke_Delete,  //退避
   DrawTsurePoke_Init,    //本当は復帰
