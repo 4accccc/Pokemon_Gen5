@@ -25,6 +25,8 @@
 //============================================================================================
 //============================================================================================
 
+// x = CAMERA_TRACE*
+#define TRACEDATA_GET_FIRST_POINT(x) ((x)->Delay)
 
 
 static void createTraceData(const int inHistNum, const int inDelay,
@@ -34,6 +36,7 @@ static void deleteTraceData(FIELD_CAMERA * camera_ptr);
 static void updateTraceData(CAMERA_TRACE * trace,
     const VecFx32 * inTarget, const VecFx32 * inCamPos, VecFx32 * outTarget, VecFx32 * outCamPos);
 static void traceUpdate(FIELD_CAMERA * camera);
+static void traceStop( CAMERA_TRACE * trace );
 
 
 //------------------------------------------------------------------
@@ -1574,6 +1577,11 @@ void FIELD_CAMERA_SetFovy(FIELD_CAMERA * camera, u16 fovy )
 //---------------------------------------------------------------------------
 /**
  * @brief
+ *
+ *10.05.06 tomoya 
+ * 動きをSMOOTHにするため、
+ * バッファにカメラ、ターゲット座標がたまりきるまでは、
+ * 最初に格納された座標を返し続けるように変更
  */
 //---------------------------------------------------------------------------
 static void updateTraceData(CAMERA_TRACE * trace,
@@ -1598,6 +1606,16 @@ static void updateTraceData(CAMERA_TRACE * trace,
   cam_ofs = trace->CamPoint;    // 参照位置
   tgt_ofs = trace->TargetPoint; // 格納位置
 
+  // 格納処理
+  if( !trace->StopReq ){
+    //履歴に積む
+    trace->targetBuffer[tgt_ofs] = *inTarget;
+    trace->camPosBuffer[tgt_ofs] = *inCamPos;
+    //書き換え位置更新
+    tgt_ofs = (tgt_ofs+1) % trace->bufsize;
+  }
+
+  // 設定情報を取得
   if (trace->UpdateFlg){
     //履歴データから座標取得
     *outTarget = trace->targetBuffer[cam_ofs];
@@ -1605,12 +1623,14 @@ static void updateTraceData(CAMERA_TRACE * trace,
   }
   else
   {
-		*outTarget = *inTarget;
-		*outCamPos = *inCamPos;
-    if (cam_ofs==trace->Delay){
+    // たまっている間は、TRACEDATA_GET_FIRST_POINTの位置のカメラを渡す。
+    *outTarget = trace->targetBuffer[ TRACEDATA_GET_FIRST_POINT(trace) ];
+    *outCamPos = trace->camPosBuffer[ TRACEDATA_GET_FIRST_POINT(trace) ];
+    if ( cam_ofs==TRACEDATA_GET_FIRST_POINT(trace) ){
       trace->UpdateFlg = TRUE;
     }
   }
+
 
   //ストップリクエストが出ている場合
   if (trace->StopReq)
@@ -1623,9 +1643,7 @@ static void updateTraceData(CAMERA_TRACE * trace,
       if( cam_ofs == tgt_ofs )
       {
         //トレースをストップする
-        trace->StopReq = FALSE;
-        trace->Valid = FALSE;
-        trace->UpdateFlg = FALSE;
+        traceStop( trace );
       }
     }
   }
@@ -1633,11 +1651,6 @@ static void updateTraceData(CAMERA_TRACE * trace,
   {
     //参照位置更新
     cam_ofs = (cam_ofs+1) % trace->bufsize;
-    //履歴に積む
-    trace->targetBuffer[tgt_ofs] = *inTarget;
-    trace->camPosBuffer[tgt_ofs] = *inCamPos;
-    //書き換え位置更新
-    tgt_ofs = (tgt_ofs+1) % trace->bufsize;
   }
 
   trace->CamPoint = cam_ofs;    // 参照位置
@@ -1696,13 +1709,14 @@ void createTraceData(const int inHistNum, const int inDelay,
 	}
 	
 	trace->bufsize = inHistNum;
-	//０番目にカメラ参照位置をセット
-	trace->CamPoint = 0;
-	//対象物参照位置セット
-	trace->TargetPoint = 0+inDelay;
 	
 	trace->Delay = inDelay;
 	trace->UpdateFlg = FALSE;
+
+	//０番目にカメラ参照位置をセット
+	trace->CamPoint = 0;
+	//対象物参照位置セット
+	trace->TargetPoint = TRACEDATA_GET_FIRST_POINT(trace);
 	
 	trace->ValidX = FALSE;
 	trace->ValidY = FALSE;
@@ -1766,6 +1780,18 @@ static void traceUpdate(FIELD_CAMERA * camera)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  TRACEストップ
+ */
+//-----------------------------------------------------------------------------
+static void traceStop( CAMERA_TRACE * trace )
+{
+  trace->StopReq = FALSE;
+  trace->Valid = FALSE;
+  trace->UpdateFlg = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  トレース処理の再開
  *
  *	@param	camera_ptr  カメラポインタ
@@ -1791,12 +1817,14 @@ void FIELD_CAMERA_RestartTrace(FIELD_CAMERA * camera_ptr)
     //０番目にカメラ参照位置をセット
     trace->CamPoint = 0;
     //対象物参照位置セット
-    trace->TargetPoint = 0+trace->Delay;
+    trace->TargetPoint = TRACEDATA_GET_FIRST_POINT(trace);
   }
 
   trace->UpdateFlg = FALSE;
   //メイン有効フラグをＯＮ
   trace->Valid = TRUE;
+  //Stopリクエストを初期化
+  trace->StopReq = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1815,6 +1843,20 @@ void FIELD_CAMERA_StopTraceRequest(FIELD_CAMERA * camera_ptr)
     GF_ASSERT(0);
     return;
   }
+
+  // 即終了状態チェック
+  // ためている状態でまた１つもたまっていない場合、
+  // 即停止状態に。
+  if( trace->UpdateFlg == FALSE ){
+    if( (trace->TargetPoint == TRACEDATA_GET_FIRST_POINT(trace)) &&
+        (trace->CamPoint == 0) ){
+      //トレースをストップする
+      traceStop( trace );
+      return ;
+    }
+  }
+  
+  // その他の場合では停止リクエスト
   trace->StopReq = TRUE;
 }
 
