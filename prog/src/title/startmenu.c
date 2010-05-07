@@ -29,6 +29,7 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "msg/msg_startmenu.h"
+#include "msg/msg_wifi_system.h"
 #include "field/zonedata.h"
 #include "net/dwc_raputil.h"
 #include "net_app/mystery.h"
@@ -145,6 +146,7 @@ enum {
 	MAINSEQ_CONTINUE,
 	MAINSEQ_NEWGAME,
 //	MAINSEQ_HUSHIGI,
+	MAINSEQ_WIFISET,
 
 	MAINSEQ_SAVE_BREAK,
 
@@ -175,6 +177,7 @@ static int MainSeq_Scroll( START_MENU_WORK * wk );
 static int MainSeq_Continue( START_MENU_WORK * wk );
 static int MainSeq_NewGame( START_MENU_WORK * wk );
 //static int MainSeq_Hushigi( START_MENU_WORK * wk );
+static int MainSeq_WiFiSet( START_MENU_WORK * wk );
 static int MainSeq_SaveBreak( START_MENU_WORK * wk );
 static int MainSeq_EndSet( START_MENU_WORK * wk );
 
@@ -212,6 +215,7 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec );
 static void VanishListObj( START_MENU_WORK * wk, BOOL flg );
 static void PutNewGameWarrning( START_MENU_WORK * wk );
 static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg );
+static void PutWiFiWarrning( START_MENU_WORK * wk );
 static void StartMessage( START_MENU_WORK * wk, int strIdx );
 static void ClearMessage( START_MENU_WORK * wk );
 static BOOL MainMessage( START_MENU_WORK * wk );
@@ -274,6 +278,7 @@ static const pSTARTMENU_FUNC MainSeq[] = {
 	MainSeq_Continue,
 	MainSeq_NewGame,
 //	MainSeq_Hushigi,
+	MainSeq_WiFiSet,
 
 	MainSeq_SaveBreak,
 
@@ -793,6 +798,10 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 			return SetButtonAnm( wk, MAINSEQ_END_SET );
 
 		case LIST_ITEM_WIFI_SET:		// Wi-Fi設定
+//			wk->listResult = wk->list[wk->listPos];
+//			return SetButtonAnm( wk, MAINSEQ_END_SET );
+			return SetButtonAnm( wk, MAINSEQ_WIFISET );
+
 		case LIST_ITEM_MIC_TEST:		// マイクテスト
 			wk->listResult = wk->list[wk->listPos];
 			return SetButtonAnm( wk, MAINSEQ_END_SET );
@@ -1108,6 +1117,54 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 	return MAINSEQ_HUSHIGI;
 }
 */
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		Wi-Fi設定
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	次の処理
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_WiFiSet( START_MENU_WORK * wk )
+{
+	// DSi
+	if( DS_SYSTEM_IsRunOnTwl() == TRUE ){
+		switch( wk->subSeq ){
+		case 0:
+			PutWiFiWarrning( wk );
+			wk->subSeq++;
+			break;
+
+		case 1:
+			if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+				wk->subSeq++;
+			}
+			break;
+
+		case 2:
+			if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+				PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+				ClearNewGameWarrning( wk, FALSE );
+				ChangeListItemPalette(
+					wk, wk->list[wk->listPos], GetListPutY(wk,wk->cursorPutPos), CURSOR_PALETTE );
+				wk->subSeq = 0;
+				return MAINSEQ_MAIN;
+			}
+			break;
+		}
+
+		PRINTSYS_QUE_Main( wk->que );
+		PRINT_UTIL_Trans( &wk->utilWin, wk->que );
+
+		return MAINSEQ_WIFISET;
+	}
+
+	wk->listResult = wk->list[wk->listPos];
+	return MAINSEQ_END_SET;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2515,14 +2572,54 @@ static void PutContinueInfo( START_MENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void ClearContinueInfo( START_MENU_WORK * wk )
 {
-/*
-	ClearWarrningWindow(
-		CONTINUE_INFO_WIN_PX, CONTINUE_INFO_WIN_PY,
-		CONTINUE_INFO_WIN_SX, CONTINUE_INFO_WIN_SY, GFL_BG_FRAME1_S );
-	GFL_BG_ClearScreenCodeVReq( BMPWIN_CONTINUE_WIN_FRM, 0 );
-*/
-
 	GFL_BMPWIN_Delete( wk->utilWin.win );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「Wi-Fi設定」の警告ウィンドウ表示
+ *
+ * @param		wk		タイトルメニューワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void PutWiFiWarrning( START_MENU_WORK * wk )
+{
+	GFL_MSGDATA * mman;
+	STRBUF * str;
+
+	mman = GFL_MSG_Create(
+							GFL_MSG_LOAD_NORMAL,
+							ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_STARTMENU_L );
+
+	wk->utilWin.win = GFL_BMPWIN_Create(
+											BMPWIN_NEWGAME_WIN_FRM,
+											BMPWIN_NEWGAME_WIN_PX, BMPWIN_NEWGAME_WIN_PY,
+											BMPWIN_NEWGAME_WIN_SX, BMPWIN_NEWGAME_WIN_SY,
+											BMPWIN_NEWGAME_WIN_PAL, GFL_BMP_CHRAREA_GET_B );
+
+	str = GFL_MSG_CreateString( mman, dwc_message_0017 );
+	PRINT_UTIL_PrintColor( &wk->utilWin, wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+	GFL_STR_DeleteBuffer( str );
+
+	GFL_MSG_Delete( mman );
+
+	GFL_BMPWIN_MakeScreen( wk->utilWin.win );
+	GFL_BG_LoadScreenV_Req( BMPWIN_NEWGAME_WIN_FRM );
+
+	// ウィンドウ描画
+	PutWarrningWindow(
+		NEW_GAME_WARRNING_WIN_PX, NEW_GAME_WARRNING_WIN_PY,
+		NEW_GAME_WARRNING_WIN_SX, NEW_GAME_WARRNING_WIN_SY, GFL_BG_FRAME2_M );
+
+	// リストを退避
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_X_SET, 256 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, 256 );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+
+	VanishListObj( wk, FALSE );
 }
 
 //--------------------------------------------------------------------------------------------
