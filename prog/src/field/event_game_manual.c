@@ -105,7 +105,6 @@ static GMEVENT_RESULT GameManualEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 1:
-    OBATA_Printf( "result = %d\n", work->manualParam->result );
     // I—¹Œ‹‰Ê‚ğŠi”[
     ReturnManualResult( work );
     // Œã•Ğ•t‚¯
