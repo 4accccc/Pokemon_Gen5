@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 
+#include "app/app_menu_common.h"
 #include "poke_tool/gauge_tool.h"
 #include "system/gfl_use.h"
 #include "system/mcss_tool.h"
@@ -81,6 +82,8 @@ struct  _BTLV_MCSS
   u32             status_flag;
   BOOL            anm_execute_flag;
   BtlvMcssPos     position;
+  u32             mepachi_always_flag :1;
+  u32                                 :31;
 };
 
 struct _BTLV_MCSS_WORK
@@ -359,7 +362,6 @@ void  BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw )
 void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
 {
   MCSS_Main( bmw->mcss_sys );
-  //まばたき
   {
     BtlvMcssPos pos;
 
@@ -367,11 +369,45 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
     {
       for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
       {
+        //まばたき
         if( ( BTLV_MCSS_CheckExist( bmw, pos ) ) && ( GFL_STD_MtRand( 100 ) == 0 ) )
         {
           if( ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 )
           {
             BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
+          }
+        }
+        //目を瞑る＆アニメーション速度制御
+        if( BTLV_MCSS_CheckExist( bmw, pos ) )
+        { 
+          int color;
+          int sick_anm;
+
+          if( BTLV_EFFECT_GetGaugeStatus( pos, &color, &sick_anm ) )
+          { 
+            switch( sick_anm ){ 
+            case APP_COMMON_ST_ICON_NEMURI:      // 眠り
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_ON );
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_HALF );
+              break;
+            case APP_COMMON_ST_ICON_MAHI:        // 麻痺
+            case APP_COMMON_ST_ICON_KOORI:       // 氷
+            case APP_COMMON_ST_ICON_YAKEDO:      // 火傷
+            case APP_COMMON_ST_ICON_DOKU:        // 毒
+            case APP_COMMON_ST_ICON_DOKUDOKU:    // どくどく
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_HALF );
+              break;
+            case APP_COMMON_ST_ICON_NONE:        // なし（アニメ番号的にもなし）
+            default:
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
+              break;
+            }
+            if( color == GAUGETOOL_HP_DOTTO_RED )
+            { 
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_HALF );
+            }
           }
         }
       }
@@ -601,13 +637,33 @@ void  BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
-  if( flag == BTLV_MCSS_MEPACHI_FLIP ){
+
+  if( flag == BTLV_MCSS_MEPACHI_ALWAYS_OFF )
+  { 
+    MCSS_ResetMepachiFlag( bmw->btlv_mcss[ index ].mcss );
+    bmw->btlv_mcss[ index ].mepachi_always_flag = 0;
+  }
+
+  //常に目をつぶるフラグが立っているときは何もせずにリターン
+  if( bmw->btlv_mcss[ index ].mepachi_always_flag )
+  { 
+    return;
+  }
+
+  if( flag == BTLV_MCSS_MEPACHI_FLIP )
+  {
     MCSS_FlipMepachiFlag( bmw->btlv_mcss[ index ].mcss );
   }
   else if( flag == BTLV_MCSS_MEPACHI_ON ){
     MCSS_SetMepachiFlag( bmw->btlv_mcss[ index ].mcss );
   }
-  else{
+  else if( flag == BTLV_MCSS_MEPACHI_ALWAYS_ON )
+  {
+    MCSS_SetMepachiFlag( bmw->btlv_mcss[ index ].mcss );
+    bmw->btlv_mcss[ index ].mepachi_always_flag = 1;
+  }
+  else
+  {
     MCSS_ResetMepachiFlag( bmw->btlv_mcss[ index ].mcss );
   }
 }
@@ -772,7 +828,8 @@ void  BTLV_MCSS_SetAnmSpeed( BTLV_MCSS_WORK *bmw, int position, fx32 speed )
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
-  //MCSS_SetAnmSpeed( bmw->btlv_mcss[ index ].mcss, speed );
+
+  MCSS_SetAnimeFrame( bmw->btlv_mcss[ index ].mcss, speed );
 }
 
 //============================================================================================
