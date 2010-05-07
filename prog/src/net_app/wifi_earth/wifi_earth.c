@@ -62,7 +62,7 @@ BOOL  WIFI_LocalAreaExistCheck(int nationID);
 //============================================================================================
 #ifdef PM_DEBUG
 //#define WIFI_ERATH_DEBUG
-//#define WIFI_ERATH_DEBUG_ALL_DRAW
+#define WIFI_ERATH_DEBUG_ALL_DRAW
 #endif
 
 //地点登録最大数
@@ -986,7 +986,7 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       switch(list_result){
       case 0:   //「はい」
         if(wk->Japan_ROM_mode == TRUE){
-          wk->my_nation_tmp = country103; //日本語版限定処理（国入力スキップ）
+          wk->my_nation_tmp = country106; //日本語版限定処理（国入力スキップ）
           *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_AREA; //地域別登録リスト選択へ
         }else{
           *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION;//国別登録リスト選択へ
@@ -1437,6 +1437,7 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
     listp++;  //1originのため読み飛ばし
     for(i=1;i<listcount;i++){
       if(listp->flag != 2){ //2の場合は地域リストが存在する
+        OS_Printf("pre y=%d,", listp->y);
         EarthListSet(wk,wk->placelist.listcount,listp->x,listp->y,i,0);
         wk->placelist.listcount++;
       }
@@ -1482,6 +1483,7 @@ static void EarthListSet( EARTH_DEMO_WORK * wk,u32 index,s16 x,s16 y,u16 nationI
 {
   MtxFx33 rotMtx = {FX32_ONE,0,0,0,FX32_ONE,0,0,0,FX32_ONE};
   VecFx32 rotVec;
+  OS_Printf(" func in y=%d\n", y);
 
   wk->placelist.place[index].x = x; //Ｘ回転オフセット取得
   wk->placelist.place[index].y = y; //Ｙ回転オフセット取得
