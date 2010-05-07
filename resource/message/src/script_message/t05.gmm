@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-30T10:06:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T20:41:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="530" top="161" right="1235" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="1612" top="235" right="2316" bottom="856" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="27" top="139" right="500" bottom="537" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -585,7 +585,7 @@ Sダブル</comment>
 だんさを　すくなく　したんだ</language>
 		<language name="JPN_KANJI" width="256">走行能力に　環境対策
 全てにおいて　最高クラスの　信頼性！▽
-つぎの時代の　標準車両として▽
+次の時代の　標準車両として▽
 開発された　期待の新型車両なんだ！</language>
 	</row>
 
@@ -714,7 +714,7 @@ Sシングル</comment>
 ぼくたち　だけじゃなく▼
 しぜんや　ポケモンも
 よろこぶ　うつくしい　でんしゃさ</language>
-		<language name="JPN_KANJI" width="256">さいきんの　電車は
+		<language name="JPN_KANJI" width="256">最近の　電車は
 機能だけでなく▽
 環境も　考えているんだ▼
 スーパーシングルトレインは
@@ -1016,7 +1016,7 @@ Wi-Fi</comment>
 		<language name="JPN_KANJI" width="256">わたしは　[1:09:どうぐ名:0]コレクター！▼
 そこの　きみ！
 わたしと　ビジネスライクな▽
-どうぐ交換を　しようじゃないか▼
+道具交換を　しようじゃないか▼
 [1:09:どうぐ名:0]　[2:01:２桁:1]コと
 [1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
 交換しないかい？</language>
@@ -1199,7 +1199,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">ぶつぶつこうかん
 やってみたら　いがいと　たのしいわ！</language>
 		<language name="JPN_KANJI" width="256">ぶつぶつ交換
-やってみたら　いがいと　たのしいわ！</language>
+やってみたら　意外と　楽しいわ！</language>
 	</row>
 
 	<row id="msg_t05_mountman_01">
@@ -1294,7 +1294,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">たくさんの　しゃりょうが
 ここで　やすんでいくんだよ</language>
 		<language name="JPN_KANJI" width="256">たくさんの　車両が
-ここで　やすんでいくんだよ</language>
+ここで　休んでいくんだよ</language>
 	</row>
 
 	<row id="msg_t05_railman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
