@@ -73,7 +73,7 @@ VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
 
     VEC_Set(&appear_pos,
         GRID_TO_FX32(next_x),
-        GRID_TO_FX32(0),      //todo 高さ（Y）も指定するべきかどうか？
+        GRID_TO_FX32(0),
         GRID_TO_FX32(next_z)
         ); 
     
@@ -113,7 +113,7 @@ VMCMD_RESULT EvCmdMapChangeBGMKeep( VMHANDLE *core, void *wk )
 
     VEC_Set(&appear_pos,
         GRID_TO_FX32(next_x),
-        GRID_TO_FX32(0),      //todo 高さ（Y）も指定するべきかどうか？
+        GRID_TO_FX32(0),
         GRID_TO_FX32(next_z)
         ); 
     

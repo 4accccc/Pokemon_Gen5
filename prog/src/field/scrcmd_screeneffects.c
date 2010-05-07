@@ -442,12 +442,10 @@ VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * PC起動アニメ
+ * @brief PC起動アニメ
  * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo  配置モデルを検索し、その位置にアニメを適用したい。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk )
@@ -467,12 +465,10 @@ VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * PC起動中アニメ
+ * @brief PC起動中アニメ
  * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo  配置モデルを検索し、その位置にアニメを適用したい。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPokecenPcRun( VMHANDLE * core, void *wk )
@@ -492,12 +488,10 @@ VMCMD_RESULT EvCmdPokecenPcRun( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * PC停止アニメ
+ * @brief PC停止アニメ
  * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
- *
- * @todo  配置モデルを検索し、その位置にアニメを適用したい。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk )
