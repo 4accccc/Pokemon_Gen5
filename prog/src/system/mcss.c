@@ -45,6 +45,9 @@
 #define MCSS_VCOUNT_BORDER          ( 213 )     //テクスチャ転送するときのVCOUNTの境界
                                                 //(192~213がレンダリングエンジンのブランク期間）
 
+#define MCSS_FLIP_NONE	(0)  //そのまま
+#define MCSS_FLIP_X		(1)   //X反転
+
 //--------------------------------------------------------------------------
 /**
  * 構造体宣言
@@ -68,7 +71,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default );
+							  fx32 *pos_z_default,const u8 isFlip 
+                            );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
@@ -264,6 +268,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	VecFx32										pos,anim_pos;
 	MtxFx44										inv_camera;
 	u16												rotate;
+	u8							flipFlg;
 
 	G3_PushMtx();
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
@@ -384,6 +389,12 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				G3_Scale( FX_Mul( scale.x, mcss->ofs_scale.x ), FX_Mul( scale.y, mcss->ofs_scale.y ), FX32_ONE );
 			}
 
+			flipFlg = MCSS_FLIP_NONE;
+			if( mcss->scale.x < 0 )
+			{
+				flipFlg += MCSS_FLIP_X;
+			}
+      
 			G3_StoreMtx( MCSS_NORMAL_MTX );
 
 			//影描画用の行列生成
@@ -416,7 +427,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							 image_p->attr.sizeS,
 							 image_p->attr.sizeT,
 							 GX_TEXREPEAT_ST,
-							 GX_TEXFLIP_NONE,
+							 GX_TEXFLIP_ST,  ///< ここ
 							 image_p->attr.plttUse,
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
 			for( i = 0 ; i < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; i++ ){
@@ -471,7 +482,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 									  mcss_sys->mcss_ortho_mode,
-									  &pos_z_default );
+									  &pos_z_default,flipFlg );
 					}
 					else{
 						MCSS_DrawAct( mcss,
@@ -483,7 +494,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 									  mcss_sys->mcss_ortho_mode,
-									  &pos_z_default );
+									  &pos_z_default,flipFlg );
 					}
 				}
 				MCSS_DrawAct( mcss,
@@ -495,7 +506,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->tex_t,
 							  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 							  mcss_sys->mcss_ortho_mode,
-							  &pos_z_default );
+							  &pos_z_default,flipFlg );
 			}
 			G3_PopMtx(1);
 		}
@@ -574,7 +585,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default )
+							  fx32 *pos_z_default,
+                            const u8 isFlip )
 {
 	VecFx32	pos;
   int polyID;
@@ -622,11 +634,27 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 
 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
-	G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+  if( isFlip == MCSS_FLIP_NONE )
+	{
+		G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
 
-	G3_Translate( pos_x, pos_y, 0 );
+		G3_Translate( pos_x, pos_y, 0 );
 
-	G3_Scale( scale_x, scale_y, FX32_ONE );
+		G3_Scale( scale_x, scale_y, FX32_ONE );
+	}
+	else
+	if( isFlip & MCSS_FLIP_X )
+	{
+		//反転による調整
+		G3_Scale(-anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+
+		G3_Translate( -pos_x, pos_y, 0 );
+
+		G3_Scale( scale_x, scale_y, FX32_ONE );
+		G3_Translate( -MCSS_DEFAULT_LINE, 0, 0 );
+		//テクスチャのリピートでフリップした所を使う
+		tex_s = FX32_CONST(256.0f) + FX32_CONST(256.0f) - tex_s - scale_x;
+	}
 
 	G3_Begin(GX_BEGIN_QUADS);
 	G3_TexCoord( tex_s,				tex_t );
