@@ -1981,10 +1981,9 @@ void  BTLV_GAUGE_RequestYure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
 
 //--------------------------------------------------------------
 /**
- * @brief   ゲージゆれリクエスト
+ * @brief pinch_bgm_flagの取得
  *
  * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
- * @param pos   リクエストするポケモンの立ち位置
  */
 //--------------------------------------------------------------
 int  BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw )
@@ -1994,10 +1993,10 @@ int  BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw )
 
 //--------------------------------------------------------------
 /**
- * @brief   ゲージゆれリクエスト
+ * @brief   now_bgm_noに曲ナンバーをセット
  *
- * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
- * @param pos   リクエストするポケモンの立ち位置
+ * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param bgm_no  セットする曲ナンバー
  */
 //--------------------------------------------------------------
 void  BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no )
@@ -2007,15 +2006,41 @@ void  BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no )
 
 //--------------------------------------------------------------
 /**
- * @brief   ゲージゆれリクエスト
+ * @brief   trainer_bgm_change_flagをセット
  *
  * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
- * @param pos   リクエストするポケモンの立ち位置
+ * @param value セットする値
  */
 //--------------------------------------------------------------
 void  BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value )
 { 
   bgw->trainer_bgm_change_flag = value;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージの状態を取得（HPゲージの色とステータスアイコンの状態）
+ *
+ * @param[in]   bgw       BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param[in]   pos       取得するポジション
+ * @param[out]  color     HPゲージの色
+ * @param[out]  sick_anm  ステータスアイコンのアニメナンバー
+ *
+ * @retval  TRUE:取得成功 FALSE:取得失敗
+ */
+//--------------------------------------------------------------
+BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm )
+{ 
+  //ゲージが存在しないときはなにもせずにリターン
+  if( bgw->bgcl[ pos ].base_clwk == NULL )
+  {
+    return FALSE;
+  }
+
+  *color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
+  *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -2028,7 +2053,6 @@ void  BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value )
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
 {
   int i;
-  BOOL  not_check_flag = FALSE;
 
   if( bgw->bgm_fade_flag )
   {
@@ -2060,9 +2084,10 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
   }
   else
   {
+    BOOL  not_check_flag = FALSE;
     BOOL  pinch_flag = FALSE;
 
-    for( i = 0 ; i < BTLV_GAUGE_NUM_MAX ; i++ )
+    for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
     {
       //いずれかの計算最中はチェックをしない
       if( ( bgw->bgcl[ i ].hp_calc_req ) ||

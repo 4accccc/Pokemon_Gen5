@@ -717,13 +717,13 @@ void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp,
 {
   switch( bew->besp.rule ){
   case BTL_RULE_TRIPLE:
-    BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), BTLV_GAUGE_TYPE_3vs3, position );
+    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_3vs3, position );
     break;
   case BTL_RULE_ROTATION:
-    BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), BTLV_GAUGE_TYPE_ROTATE, position );
+    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_ROTATE, position );
     break;
   default:
-    BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), BTLV_GAUGE_TYPE_1vs1, position );
+    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_1vs1, position );
     break;
   }
 }
@@ -872,6 +872,22 @@ void  BTLV_EFFECT_SetGaugeYure( BtlvMcssPos pos )
 BOOL  BTLV_EFFECT_CheckExistGauge( BtlvMcssPos pos )
 {
   return BTLV_GAUGE_CheckExist( bew->bgw, pos );
+}
+
+//============================================================================================
+/**
+ *  @brief  ゲージの状態を取得
+ *
+ *  @param[in]  pos       取得するポジション
+ *  @param[out] color     取得したHPゲージカラー
+ *  @param[out] sick_anm  取得した状態異常アニメナンバー
+ *
+ *  @retval TRUE:取得成功 FALSE:取得失敗
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_GetGaugeStatus( BtlvMcssPos pos, int* color, int* sick_anm )
+{
+  return BTLV_GAUGE_GetGaugeStatus( bew->bgw, pos, color, sick_anm );
 }
 
 //============================================================================================
