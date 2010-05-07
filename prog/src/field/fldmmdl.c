@@ -3948,9 +3948,16 @@ static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
 //--------------------------------------------------------------
 static void mmdl_DeleteTCB( MMDL *mmdl )
 {
+#if 0 //tcb’Ç‰Á‚³‚ê‚¸íœ‚³‚ê‚éŽ–‚à‚ ‚é
   GF_ASSERT( mmdl->pTCB );
   GFL_TCB_DeleteTask( mmdl->pTCB );
   mmdl->pTCB = NULL;
+#else
+  if( mmdl->pTCB != NULL ){
+    GFL_TCB_DeleteTask( mmdl->pTCB );
+    mmdl->pTCB = NULL;
+  }
+#endif
 }
 
 //--------------------------------------------------------------
