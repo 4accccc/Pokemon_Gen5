@@ -4,6 +4,6 @@
 # 3Dリソースの編集もするユーザーは ALL_USERSに追加
 #------------------------------------------------------------------------------
 CMD_USERS	= adachi_minako kageyama_shota iwao_kazumasa
-ALL_USERS = genya_hosaka unno james_turner fujiwara_maiko lee_hyunjung iwasawa
+ALL_USERS = genya_hosaka unno james_turner fujiwara_maiko lee_hyunjung ohkubo_tomohiko iwasawa
 USERS	= $(ALL_USERS) $(CMD_USERS)
 
