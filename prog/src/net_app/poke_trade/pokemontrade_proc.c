@@ -3892,7 +3892,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
       if(GFL_NET_IsWifiConnect()){
         GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
       }
-      else{
+      else if(pWork->type != POKEMONTRADE_TYPE_UNION){  //ユニオンルームでのエラーはユニオンルーム側で管理するため画面を終了させる事だけを行う
         NetErr_App_ReqErrorDisp();
       }
       retCode = GFL_PROC_RES_FINISH;
