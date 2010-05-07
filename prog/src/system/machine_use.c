@@ -11,11 +11,15 @@
 #include <gflib.h> // gflib/include/dma.hを参照するため
 
 #include "system\machine_use.h"
+#include "system\ds_system.h"
 //=============================================================================================
 //=============================================================================================
 // ファイルシステムで利用するDMA番号の定義
 #define FS_DMA_NUMBER	(GFL_DMA_FS_NO)
 
+//ARM9優先の場合に必要なリセットの為の処理
+static PMExitCallbackInfo myInfo;
+static void myExitCallback(void *arg);
 
 
 //VRAM転送マネージャ定義(NNS関数)
@@ -96,6 +100,13 @@ void MachineSystem_Init(void)
     OS_SetIrqStackWarningOffset(0x100);
 #endif
 
+#if (defined(SDK_TWL))
+  if(DS_SYSTEM_IsRunOnTwl()){
+    //ARM9優先の場合に必要なハードリセットの為の処理
+    PM_SetExitCallbackInfo( &myInfo, myExitCallback, (void*)0 );
+    PM_AppendPostExitCallback( &myInfo );
+  }
+#endif
 }
 
 //------------------------------------------------------------------
@@ -265,3 +276,18 @@ static void MachineSystem_MbInitFile(void)
   }
 #endif
 }
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	ハードリセット時に呼ばれる関数
+ */
+//------------------------------------------------------------------
+static void myExitCallback(void *arg)
+{
+#pragma unused(arg)
+  //優先権を変更する事でハードリセット処理がうまくいく
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+}
+
+
