@@ -3040,7 +3040,9 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //-----------------------------------------------------------------------------
 BOOL ITEMMENU_CheckShortCutSetMode( FIELD_ITEMMENU_WORK* pWork )
 {
-	if( pWork->mode == BAG_MODE_FIELD ){
+	if( pWork->mode == BAG_MODE_FIELD ||
+			pWork->mode == BAG_MODE_UNION ||
+			pWork->mode == BAG_MODE_COLOSSEUM ){
 		return TRUE;
 	}
 	return FALSE;
