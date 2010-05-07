@@ -86,7 +86,7 @@ static const u8 charaResList[LTCT_MAX][3] = {
     { NARC_local_tvt_chara_doctor_d_NCLR , NARC_local_tvt_chara_doctor_d_1_NCGR , NARC_local_tvt_obj_doctor_d_NCLR },
     { NARC_local_tvt_chara_mother_NCLR   , NARC_local_tvt_chara_mother_1_NCGR   , NARC_local_tvt_obj_mother_NCLR },
     //主人公分岐用・主人公(女)素材
-    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR , NARC_local_tvt_obj_player_m_NCLR },
+    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR , NARC_local_tvt_obj_player_f_NCLR },
 };
 
 
