@@ -76,6 +76,10 @@
 //#define _DEBUG_ALONETEST (18)
 #elif DEBUG_ONLY_FOR_palace_debug
 #define _DEBUG_ALONETEST (19)
+#elif DEBUG_ONLY_FOR_palace_debug_white
+#define _DEBUG_ALONETEST (20)
+#elif DEBUG_ONLY_FOR_palace_debug_black
+#define _DEBUG_ALONETEST (21)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
 #define _DEBUG_ALONETEST (_DEBUG_ALONETEST_DEFAULT)
