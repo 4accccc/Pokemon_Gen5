@@ -821,14 +821,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_PALACE:
     {
-      if(pWork->dbw->bPalaceJump){
+//      if(pWork->dbw->bPalaceJump){
         pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
         PMSND_PlaySystemSE(_SE_DESIDE);
         _CHANGE_STATE(pWork,_modeAppWinFlash);
-      }
-      else{
-        PMSND_PlaySystemSE(_SE_CANCEL);
-      }
+//      }
+  //    else{
+    //    PMSND_PlaySystemSE(_SE_CANCEL);
+//      }
     }
     break;
   case _SELECTMODE_TV:

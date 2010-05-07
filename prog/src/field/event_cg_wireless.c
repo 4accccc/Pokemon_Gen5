@@ -182,7 +182,7 @@ GMEVENT* EVENT_CG_Wireless(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
   dbw->gsys = gsys;
-  dbw->bPalaceJump = FIELD_SUBSCREEN_EnablePalaceUse(subscreen);
+//  dbw->bPalaceJump = FIELD_SUBSCREEN_EnablePalaceUse(subscreen);
   return event;
 }
 
