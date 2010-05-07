@@ -3070,15 +3070,13 @@ static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( !BPP_IsDead(bpp) )
     {
       PokeType wazaType = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
-      PokeTypePair  myType = BPP_GetPokeType( bpp );
-      PokeTypePair  nextType = PokeTypePair_MakePure( wazaType );
 
-      if( (wazaType != POKETYPE_NULL) && (myType != nextType) )
+      if( (wazaType != POKETYPE_NULL) && (!BPP_IsMatchType(bpp, wazaType)) )
       {
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
         {
           BTL_HANDEX_PARAM_CHANGE_TYPE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TYPE, pokeID );
-          param->next_type = nextType;
+          param->next_type = PokeTypePair_MakePure( wazaType );
           param->pokeID = pokeID;
         }
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
