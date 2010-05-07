@@ -1091,16 +1091,16 @@ EVENT_END
 EVENT_START ev_debug_obata
 
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-	_BMPMENU_MAKE_LIST( msg_debug_obata_1, 1 ) // 初回クリア
-	_BMPMENU_MAKE_LIST( msg_debug_obata_2, 2 ) // 殿堂入り
-	_BMPMENU_MAKE_LIST( msg_debug_obata_3, 3 ) // リーグ・エレベータチェック
-	_BMPMENU_MAKE_LIST( msg_debug_obata_4, 4 ) // 育て屋オープン
-	_BMPMENU_MAKE_LIST( msg_debug_obata_5, 5 ) // 育て屋ポケセット
-	_BMPMENU_MAKE_LIST( msg_debug_obata_6, 6 ) // 育て屋ポケクリア
-	_BMPMENU_MAKE_LIST( msg_debug_obata_7, 7 ) // 育て屋ジャンプ
-	_BMPMENU_MAKE_LIST( msg_debug_obata_8, 8 ) // SEQ_BGM_SILENCE_FIELD
-	_BMPMENU_MAKE_LIST( msg_debug_obata_9, 9 ) // 調査項目全オープン
-	_BMPMENU_MAKE_LIST( msg_debug_obata_7, 0 ) // TEST
+	_BMPMENU_MAKE_LIST( msg_debug_obata_1,   1 ) // 初回クリア
+	_BMPMENU_MAKE_LIST( msg_debug_obata_2,   2 ) // 殿堂入り
+	_BMPMENU_MAKE_LIST( msg_debug_obata_3,   3 ) // リーグ・エレベータチェック
+	_BMPMENU_MAKE_LIST( msg_debug_obata_4,   4 ) // 育て屋オープン
+	_BMPMENU_MAKE_LIST( msg_debug_obata_5,   5 ) // 育て屋ポケセット
+	_BMPMENU_MAKE_LIST( msg_debug_obata_6,   6 ) // 育て屋ポケクリア
+	_BMPMENU_MAKE_LIST( msg_debug_obata_7,   7 ) // 育て屋ジャンプ
+	_BMPMENU_MAKE_LIST( msg_debug_obata_8,   8 ) // 無音曲再生
+	_BMPMENU_MAKE_LIST( msg_debug_obata_9,   9 ) // 調査項目全オープン
+	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 10 ) // テスト
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1135,8 +1135,7 @@ EVENT_START ev_debug_obata
     _FLAG_SET( FE_RES_QUESTION_SCHOOL )
     _FLAG_SET( FE_RES_QUESTION_PLAY )
     _FLAG_SET( FE_RES_QUESTION_POKEMON )
-  CASE 0 THEN 
-    _VOICE_PLAY( MONSNO_PERAPPU, 0 )
+  CASE 10 THEN
   ENDSWITCH
 
 EVENT_END

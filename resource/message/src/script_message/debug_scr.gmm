@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-05-03T20:25:09"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-05-07T20:26:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -759,13 +759,18 @@
 	</row>
 
 	<row id="msg_debug_obata_8" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
-		<language name="JPN" width="256">SEQ_BGM_SILENCE_FIELD</language>
-		<language name="JPN_KANJI" width="256">SEQ_BGM_SILENCE_FIELD</language>
+		<language name="JPN" width="256">無音曲再生</language>
+		<language name="JPN_KANJI" width="256">無音曲再生</language>
 	</row>
 
 	<row id="msg_debug_obata_9" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<language name="JPN" width="256">調査項目全オープン</language>
 		<language name="JPN_KANJI" width="256">調査項目全オープン</language>
+	</row>
+
+	<row id="msg_debug_obata_10" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<language name="JPN" width="256">テスト</language>
+		<language name="JPN_KANJI" width="256">テスト</language>
 	</row>
 
 	<row id="msg_debug_masafumi_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
