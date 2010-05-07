@@ -2591,13 +2591,21 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   u16 buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
-
+  enum{
+    _SEQ_INIT,
+    _SEQ_MAIN,
+    _SEQ_INTRUDE_NG_MSG,
+    _SEQ_INTRUDE_MSG_WAIT_FINISH,
+    _SEQ_MEMBER_OVER,
+    _SEQ_MEMBER_OVER_SHUTDOWN_WAIT,
+  };
+  
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
     return TRUE;
   }
 
   switch(*seq){
-  case 0:
+  case _SEQ_INIT:
     {
       OS_TPrintf("乱入開始します\n");
       OS_TPrintf("ChangeOver モード切替：子固定\n");
@@ -2607,7 +2615,7 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     situ->wait = 0;
     (*seq)++;
     break;
-  case 1:
+  case _SEQ_MAIN:
     if(UnionMsg_TalkStream_Check(unisys) == FALSE){
       break;
     }
@@ -2615,6 +2623,13 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
       GFL_NET_SetNoChildErrorCheck(TRUE);
+
+      if(UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select) <= GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+        //自分の通信IDが参加出来るゲームの人数よりも大きい数字なら切断する
+        *seq = _SEQ_MEMBER_OVER;
+        break;
+      }
+
       UnionMySituation_SetParam(
         unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, &unisys->receive_beacon[buf_no]);
       situ->mycomm.intrude = TRUE;
@@ -2643,7 +2658,7 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
         GF_ASSERT(0);
         break;
       }
-      (*seq)++;
+      *seq = _SEQ_INTRUDE_MSG_WAIT_FINISH;
     }
     else{
       situ->wait++;
@@ -2651,34 +2666,48 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
-        (*seq)++;
-        switch(situ->mycomm.mainmenu_select){
-        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
-        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
-        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
-        case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
-          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-            UnionMsg_GetMsgID_MultiIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
-          break;
-        case UNION_PLAY_CATEGORY_PICTURE:
-          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-            UnionMsg_GetMsgID_PictureIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
-          break;
-        case UNION_PLAY_CATEGORY_GURUGURU:
-          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-            UnionMsg_GetMsgID_GuruguruIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
-          break;
-        default:
-          OS_TPrintf("設定されていないcategory = %d\n", situ->mycomm.mainmenu_select);
-          GF_ASSERT(0);
-          break;
-        }
+        *seq = _SEQ_INTRUDE_NG_MSG;
       }
     }
     break;
-  case 2:
+  case _SEQ_INTRUDE_NG_MSG:
+    switch(situ->mycomm.mainmenu_select){
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_MultiIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+      break;
+    case UNION_PLAY_CATEGORY_PICTURE:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_PictureIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+      break;
+    case UNION_PLAY_CATEGORY_GURUGURU:
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
+        UnionMsg_GetMsgID_GuruguruIntrudeParentNG(situ->mycomm.talk_pc->beacon.sex));
+      break;
+    default:
+      OS_TPrintf("設定されていないcategory = %d\n", situ->mycomm.mainmenu_select);
+      GF_ASSERT(0);
+      break;
+    }
+    (*seq) = _SEQ_INTRUDE_MSG_WAIT_FINISH;
+    break;
+    
+  case _SEQ_INTRUDE_MSG_WAIT_FINISH:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
+    }
+    break;
+  
+  case _SEQ_MEMBER_OVER:
+    UnionComm_Req_ShutdownRestarts(unisys);
+    (*seq)++;
+    break;
+  case _SEQ_MEMBER_OVER_SHUTDOWN_WAIT:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      *seq = _SEQ_INTRUDE_NG_MSG;
     }
     break;
   }
