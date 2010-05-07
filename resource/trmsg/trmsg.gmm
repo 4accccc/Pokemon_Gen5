@@ -1044,23 +1044,23 @@
 
 	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">きのむくまま　かぜがふくまま
-しせんが　あうのも　うんめい　だよね▼</language>
+しせんが　あうのも　うんめい　やん▼</language>
 		<language name="JPN_KANJI" width="216">気の向くまま　風が吹くまま
-視線が　あうのも　運命だよね▼</language>
+視線が　あうのも　運命やん▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">うぅっ
-むかいかぜ……</language>
+むかいかぜ　かいな……</language>
 		<language name="JPN_KANJI" width="216">うぅっ
-向かい風……</language>
+向かい風　かいな……</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">このまま　かぜにふかれて
-イッシュちほうを　とびまわりたい</language>
+		<language name="JPN" width="216">このまま　かぜに　ふかれて
+イッシュちほうを　とびまわりたいわ！</language>
 		<language name="JPN_KANJI" width="216">このまま　風に吹かれて
-イッシュ地方を　飛び回りたい</language>
+イッシュ地方を　飛び回りたいわ！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_02_TRMSG_FIGHT_START">
@@ -1087,10 +1087,10 @@
 	</row>
 
 	<row id="TRID_BAKER_01_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">さあて！　いつもは　じょうずに
-パンを　やいてくれる　ポケモンだよ！▼</language>
-		<language name="JPN_KANJI" width="216">さあて！　いつもは　上手に
-パンを　焼いてくれる　ポケモンだよ！▼</language>
+		<language name="JPN" width="216">さあて！　いつもは　パンづくりを
+てつだってくれる　ポケモンたちだよ！▼</language>
+		<language name="JPN_KANJI" width="216">さあて！　いつもは　パンづくりを
+手伝ってくれる　ポケモンたちだよ！▼</language>
 	</row>
 
 	<row id="TRID_BAKER_01_TRMSG_FIGHT_LOSE">
@@ -5540,11 +5540,11 @@
 	<row id="TRID_BATTLEG_05_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">うまくいくか　じしんが　ないときは
 いきおいを　つけて　とびだすの！▼
-だいじょうぶ！　だって　あなたには
+へいきよ！　だって　あなたには
 ポケモンが　いてくれるじゃん！！</language>
 		<language name="JPN_KANJI" width="216">うまくいくか　自信がないときは
 勢いをつけて　飛びだすの！▼
-だいじょうぶ！　だって　あなたには
+平気よ！　だって　あなたには
 ポケモンが　いてくれるじゃん！！</language>
 	</row>
 
@@ -5700,7 +5700,7 @@
 	</row>
 
 	<row id="TRID_KARATE_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">わしが　にがてなのは
+		<language name="JPN" width="216">わしが　にがて　なのは
 じつは　ポケモン　である……</language>
 		<language name="JPN_KANJI" width="216">わしが　苦手なのは
 実は　ポケモン　である……</language>
@@ -5974,10 +5974,10 @@
 	</row>
 
 	<row id="TRID_DOCTOR_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">グーッド！！
-わたしに　ふさわしい　かんじゃだ！！</language>
-		<language name="JPN_KANJI" width="216">グーッド！！
-わたしに　ふさわしい　患者だ！！</language>
+		<language name="JPN" width="216">きみの　つよさは　そこしれない！
+……かなり　かんどう　したよ</language>
+		<language name="JPN_KANJI" width="216">きみの　強さは　底知れない！
+……かなり　感動したよ</language>
 	</row>
 
 	<row id="TRID_DOCTOR_03_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
@@ -6598,12 +6598,12 @@
 	</row>
 
 	<row id="TRID_VETERANW_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">つよくなるとは……▼
+		<language name="JPN" width="216">つよくなる　とは……▼
 どれだけ　たたかいつづけても
 おわることの　ない　みち……▼
 それが　この　ドラゴンジム
 りゅうの　せなかの　いみ……</language>
-		<language name="JPN_KANJI" width="216">強くなるとは……▼
+		<language name="JPN_KANJI" width="216">強くなる　とは……▼
 どれだけ　戦い続けても
 終わることの　ない　道……▼
 それが　この　ドラゴンジム
