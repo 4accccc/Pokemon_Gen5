@@ -31,14 +31,8 @@
 //======================================================================
 //  define
 //======================================================================
-#ifdef DEBUG_ONLY_FOR_yoshida
-#define TEST_TALKMSGWIN_TYPE (TALKMSGWIN_TYPE_GIZA)
-#else
-#define TEST_TALKMSGWIN_TYPE (TALKMSGWIN_TYPE_NORMAL)
-#endif
-
 #ifdef PM_DEBUG
-#define DEBUG_FLDMSGBG
+#define DEBUG_FLDMSGBG //debug処理有効
 #endif
 
 #define FLDMSGBG_BGFRAME (FLDBG_MFRM_MSG) ///<使用BGフレーム
@@ -62,7 +56,7 @@
 #define BGFRAME_ERROR (0xff)
 
 ///< 通信中などに使用する、自動メッセージ
-#define AUTO_MSG_WAIT      ( MSGSPEED_NORMAL ) ///<自動時のメッセージスピード
+#define AUTO_MSG_WAIT (MSGSPEED_NORMAL) ///<自動時のメッセージスピード
 #define AUTO_MSG_ONE_KEY_WAIT  ( 8 ) ///<キーウエイト
 #define AUTO_MSG_ALLCLEAR_KEY_WAIT  ( 50 ) ///<キーウエイト
 
@@ -401,37 +395,6 @@ static void DEBUG_CheckCountPrintTCB( FLDMSGBG *fmb );
 //  FLDMSGBG  フィールドメッセージBG関連
 //======================================================================
 //--------------------------------------------------------------
-//  10月ROM用 仮対処 ウィンドウの縁カラーを無効に 0x50001a0
-//--------------------------------------------------------------
-#if 0
-static void debug_ROM091030_WindowColorOFF( HEAPID heapID )
-{
-  u16 *buf = GFL_HEAP_AllocMemoryLo( heapID, 32 );
-  u32 offs = HW_BG_PLTT + (32*PANO_MENU);
-  DC_FlushRange( (void*)offs, 32 );
-  MI_CpuCopy( (void*)offs, buf, 32 );
-  buf[1] = 0;
-  DC_FlushRange( (void*)buf, 32 );
-  GX_LoadBGPltt( (void*)buf, offs-HW_BG_PLTT, 32 );
-  GFL_HEAP_FreeMemory( buf );
-}
-#endif
-
-#if 0
-static void debug_ROM091030_WindowColorON( HEAPID heapID )
-{
-  u16 *buf = GFL_HEAP_AllocMemoryLo( heapID, 32 );
-  u32 offs = HW_BG_PLTT + (32*PANO_MENU);
-  DC_FlushRange( (void*)offs, 32 );
-  MI_CpuCopy( (void*)offs, buf, 32 );
-  buf[1] = 0x7fff;
-  DC_FlushRange( (void*)buf, 32 );
-  GX_LoadBGPltt( (void*)buf, offs-HW_BG_PLTT, 32 );
-  GFL_HEAP_FreeMemory( buf );
-}
-#endif
-
-//--------------------------------------------------------------
 /**
  * FLDMSGBG 作成
  * @param heapID  HEAPID
@@ -446,14 +409,8 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
   fmb->heapID = heapID;
 
-#if 1  
   fmb->bgFrame = BGFRAME_ERROR;
   fmb->bgFrameBld = BGFRAME_ERROR;
-#else
-  fmb->bgFrame = FLDMSGBG_BGFRAME;
-  fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
-#endif
-  
   fmb->g3Dcamera = g3Dcamera;
   
   { //font
@@ -3323,7 +3280,7 @@ void FLDPLAINMSGWIN_ClearWindow( FLDPLAINMSGWIN *plnwin )
 //--------------------------------------------------------------
 void FLDPLAINMSGWIN_WriteWindow( FLDPLAINMSGWIN *plnwin )
 {
-  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
+  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
   TALKMSGWIN_WriteBmpWindow(
       plnwin->talkMsgWinSys, plnwin->bmpwin, type );
 }
@@ -3565,7 +3522,7 @@ static void fldSubMsgWin_Add(
     FLDMSGBG *fmb, FLDSUBMSGWIN *subwin,
     STRBUF *strBuf, u16 idx, u8 x, u8 y, u8 sx, u8 sy, int id )
 {
-  TALKMSGWIN_TYPE type = TEST_TALKMSGWIN_TYPE;
+  TALKMSGWIN_TYPE type = TALKMSGWIN_TYPE_NORMAL;
 
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   

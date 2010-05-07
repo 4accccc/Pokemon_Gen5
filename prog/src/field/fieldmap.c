@@ -2319,6 +2319,11 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
     GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( fieldWork->effBbdActSys );
     VecFx32 scale = {FX32_ONE+0xc00,FX32_ONE+0xc00,FX32_ONE+0xc00};
     GFL_BBD_SetScale( bbdSys, &scale );
+    
+    { //Poligon ID
+      u8 id = 0;
+      GFL_BBD_SetPolID( bbdSys, &id );
+    }
   }
   
   fieldmap_G3D_BBDSetColorParam( fieldWork ); // êFê›íË

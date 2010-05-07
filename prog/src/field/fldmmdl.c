@@ -545,9 +545,6 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
   MMDL *mmdl;
   
   while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) ){
-#if 0 //マップ遷移からの呼び出しでハングアップするためとりあえず対処
-    MMDL_Delete( mmdl );
-#else
     if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
       MMDL_CallDrawDeleteProc( mmdl );
     }
@@ -559,7 +556,6 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
     
     mmdlsys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
     mmdl_ClearWork( mmdl );
-#endif
   }
 }
 

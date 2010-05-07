@@ -169,7 +169,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
           0,  ///<イベントタイプ
           0,  ///<イベントフラグ
           0,  ///<イベントID
-          0,  ///<指定方向
+          DIR_DOWN,  ///<指定方向
           0,  ///<指定パラメタ 0
           0,  ///<指定パラメタ 1
           0,  ///<指定パラメタ 2
@@ -204,7 +204,13 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         int key_cont = GFL_UI_KEY_GetCont();
         u16 code = MMDL_GetOBJCode( mmdl );
         u16 ac = ACMD_NOT;
-
+        
+        if( MMDL_CheckMoveBitAcmd(mmdl) ){
+          if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
+            MMDL_EndAcmd( mmdl );
+          }
+        }
+        
         if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
           if( (key_cont & PAD_BUTTON_B) ){
             MMDL_Delete( work->fmmdl );
