@@ -1422,6 +1422,7 @@ static BOOL LinerCamKeyContCtl(DEBUG_CTL_LINERCAMERA_WORK *work, const fx32 inAd
 //======================================================================
 //  デバッグメニュー　動作モデル一覧
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /// DEBUG_MMDL_LIST_EVENT_WORK 動作モデルリスト処理用ワーク
 //--------------------------------------------------------------
@@ -1482,6 +1483,7 @@ static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
   DEBUG_SetMenuWorkMMdlList,
   NULL,
 };
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1492,6 +1494,14 @@ static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 {
+  GMEVENT *event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+    FS_OVERLAY_ID( debug_menu_mmdl_list ), DEBUG_EVENT_DebugMenu_MmdlList, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+#if 0
   GAMESYS_WORK *gsys = wk->gmSys;
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
@@ -1515,8 +1525,10 @@ static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
   }
 
   return( TRUE );
+#endif
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * イベント：動作モデル一覧
@@ -1772,6 +1784,7 @@ static void DEBUG_SetMenuWorkMMdlList(
 
   GFL_HEAP_FreeMemory( strBuf );
 }
+#endif
 
 //======================================================================
 //  デバッグメニュー　ライト操作
