@@ -172,6 +172,40 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int fram
   return task;
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 自機の減速回転タスクを作成する
+ *
+ * @param fieldmap タスクを追加するフィールドマップ
+ * @param frame    動作フレーム数
+ * @param rot_num  回転回数
+ * @param endDir   タスク終了時の自機の向き ( DIR_xxxx )
+ */
+//------------------------------------------------------------------------------------------
+FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDownDir( FIELDMAP_WORK* fieldmap, int frame, int rot_num, int endDir )
+{
+  FIELD_PLAYER* player;
+  FIELD_TASK* task;
+  TASK_WORK* work;
+  HEAPID heap_id;
+
+  heap_id = FIELDMAP_GetHeapID( fieldmap );
+  player  = FIELDMAP_GetFieldPlayer( fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), RotatePlayer_SpeedDown );
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->fieldmap  = fieldmap;
+  work->mmdl      = FIELD_PLAYER_GetMMdl( player ); 
+  work->frame     = 0;
+  work->endFrame  = frame;
+  work->rotateNum = rot_num;
+  work->initDir   = endDir;
+
+  return task;
+}
+
 
 //========================================================================================== 
 // ■非公開関数

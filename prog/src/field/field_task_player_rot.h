@@ -41,3 +41,4 @@ extern FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int
  */
 //------------------------------------------------------------------------------------------
 extern FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
+extern FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDownDir( FIELDMAP_WORK* fieldmap, int frame, int rot_num , int endDir );

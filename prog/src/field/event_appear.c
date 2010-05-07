@@ -429,7 +429,7 @@ static void RegisterPlayerEffectTask_Ananukenohimo( EVENT_WORK* work )
   FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( work->fieldmap ); 
   FIELD_TASK* rot;
 
-  rot = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
+  rot = FIELD_TASK_PlayerRotate_SpeedDownDir( work->fieldmap, 60, 8, DIR_DOWN );
   FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
 }
 
@@ -576,7 +576,7 @@ static void RegisterPlayerEffectTask_Anawohoru( EVENT_WORK* work )
   FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( work->fieldmap ); 
   FIELD_TASK* rot;
 
-  rot = FIELD_TASK_PlayerRotate_SpeedDown( work->fieldmap, 60, 8 );
+  rot = FIELD_TASK_PlayerRotate_SpeedDownDir( work->fieldmap, 60, 8, DIR_DOWN );
   FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
 }
 
@@ -650,7 +650,7 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
     // タスクの追加
     { 
       FIELD_TASK* rot;
-      rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
+      rot  = FIELD_TASK_PlayerRotate_SpeedDownDir( fieldmap, 60, 8, DIR_DOWN );
       FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
     }
     // カメラ演出開始
