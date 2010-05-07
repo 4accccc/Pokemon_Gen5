@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-03T17:00:27"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T20:57:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1497" top="277" right="1920" bottom="897" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="445"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="248"/>
-		<band id="3" index="4" style="0000" width="415"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="447"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r14r0101_infomationw_01w">
+	<row id="msg_r14r0101_infomationw_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラ指定">INFORMATIONW
@@ -303,7 +303,7 @@
 ホワイトフォレストへ　どうぞ</language>
 	</row>
 
-	<row id="msg_r14r0101_infomationw_01b">
+	<row id="msg_r14r0101_infomationw_01b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">INFORMATIONW
@@ -314,7 +314,7 @@
 ブラックシティへ　どうぞ</language>
 	</row>
 
-	<row id="msg_r14r0101_man1_01w">
+	<row id="msg_r14r0101_man1_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラ指定">MAN1
@@ -329,7 +329,7 @@
 一緒に　暮らしているのだ</language>
 	</row>
 
-	<row id="msg_r14r0101_man1_01b">
+	<row id="msg_r14r0101_man1_01b" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラ指定">MAN1
