@@ -14,6 +14,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 
 #include "font/font.naix"
 #include "message.naix"
@@ -37,6 +38,7 @@ enum {
 	MAINSEQ_WIPE,
 	MAINSEQ_RELEASE,
 
+	MAINSEQ_START_SE_PLAY,
 	MAINSEQ_MAIN,
 
 	MAINSEQ_END,
@@ -115,6 +117,7 @@ typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 static int MainSeq_Init( SRMAIN_WORK * wk );
 static int MainSeq_Wipe( SRMAIN_WORK * wk );
 static int MainSeq_Release( SRMAIN_WORK * wk );
+static int MainSeq_StartSePlay( SRMAIN_WORK * wk );
 static int MainSeq_Main( SRMAIN_WORK * wk );
 
 static void InitVram(void);
@@ -175,6 +178,7 @@ static const pSRMAIN_FUNC	MainSeq[] = {
 	MainSeq_Wipe,
 	MainSeq_Release,
 
+	MainSeq_StartSePlay,
 	MainSeq_Main,
 };
 
@@ -274,7 +278,7 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	InitVBlank( wk );
 
-	return SetFadeIn( wk, MAINSEQ_MAIN );
+	return SetFadeIn( wk, MAINSEQ_START_SE_PLAY );
 }
 
 static int MainSeq_Wipe( SRMAIN_WORK * wk )
@@ -311,6 +315,13 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
 	return MAINSEQ_END;
+}
+
+// äJénéûÇÃÇrÇdçƒê∂
+static int MainSeq_StartSePlay( SRMAIN_WORK * wk )
+{
+	PMSND_PlaySE( SEQ_SE_END_01 );
+	return MAINSEQ_MAIN;
 }
 
 static int MainSeq_Main( SRMAIN_WORK * wk )
