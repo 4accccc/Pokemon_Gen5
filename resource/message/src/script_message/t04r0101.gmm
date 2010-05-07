@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:31:41"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T20:18:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -322,7 +322,7 @@
 遺跡の　道具に　夢中だし……▼</language>
 	</row>
 
-	<row id="msg_t04r0101_boy3_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_boy3_03a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続き。
 ・以降、本日中はmsg_t04r0101_boy3_03を
@@ -351,7 +351,7 @@
 ボクが　相手してやっても　いいぞ！</language>
 	</row>
 
-	<row id="msg_t04r0101_boy3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_boy3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回以降、息子に話し書ける時。
 ・この後にはい／いいえの選択肢。
@@ -371,7 +371,7 @@
 してやっても　いいぞ！</language>
 	</row>
 
-	<row id="msg_t04r0101_boy3_02a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_t04r0101_boy3_02a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">息子
@@ -380,7 +380,7 @@
 		<language name="JPN_KANJI" width="256">いざ　じんじょうに　勝負っ！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_boy3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_boy3_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_t04r0101_boy3_02で「いいえ」の場合</comment>
 		<attribute name="キャラ指定">息子
@@ -389,7 +389,7 @@
 		<language name="JPN_KANJI" width="256">なんだよう　暇じゃないのか……</language>
 	</row>
 
-	<row id="msg_t04r0101_boy3_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_boy3_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
@@ -422,7 +422,7 @@
 		<language name="JPN_KANJI" width="256">あら　楽しそうね▼</language>
 	</row>
 
-	<row id="msg_t04r0101_girl4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_girl4_02">
 		<comment>♀
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
@@ -438,7 +438,7 @@
 あたくしも　まぜてくださる？▼</language>
 	</row>
 
-	<row id="msg_t04r0101_girl4_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_girl4_02a">
 		<comment>♀
 ・初回以降
 ・この後戦闘に入る。</comment>
@@ -450,7 +450,7 @@
 今日は　負けませんわよ▼</language>
 	</row>
 
-	<row id="msg_t04r0101_girl4_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_girl4_03a">
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">姉
@@ -465,7 +465,7 @@
 お相手　いたしますわ▼</language>
 	</row>
 
-	<row id="msg_t04r0101_girl4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_girl4_03">
 		<comment>♀
 ・本日の連戦終了後、
 　自らはなしかけた時のメッセージ</comment>
@@ -481,7 +481,7 @@
 お相手　いたしますわ</language>
 	</row>
 
-	<row id="msg_t04r0101_girl4_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_girl4_04a">
 		<comment>♀
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
@@ -537,7 +537,7 @@
 なにやら　にぎやかですわねぇ▼</language>
 	</row>
 
-	<row id="msg_t04r0101_lady_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_lady_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
@@ -555,7 +555,7 @@
 見せていただこうかしら▼</language>
 	</row>
 
-	<row id="msg_t04r0101_lady_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_lady_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・初回以降
 ・この後戦闘に入る。</comment>
@@ -567,7 +567,7 @@
 自信は　おあり？▼</language>
 	</row>
 
-	<row id="msg_t04r0101_lady_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_lady_03a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">おばあちゃん
@@ -606,7 +606,7 @@
 孫も　喜ぶでしょう</language>
 	</row>
 
-	<row id="msg_t04r0101_lady_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_lady_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
@@ -658,7 +658,7 @@
 ポケモン　勝負とは　なつかしい！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_gentleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_gentleman_02">
 		<comment>♂
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
@@ -670,7 +670,7 @@
 ……お相手　お願いできますかな？▼</language>
 	</row>
 
-	<row id="msg_t04r0101_gentleman_02a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_gentleman_02a">
 		<comment>♂
 ・初回以降
 ・この後戦闘に入る。</comment>
@@ -682,7 +682,7 @@
 今日も　お相手　願いますぞ！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_gentleman_03a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_gentleman_03a">
 		<comment>♂
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">おじいちゃん
@@ -730,7 +730,7 @@
 刺激があって　よいですな</language>
 	</row>
 
-	<row id="msg_t04r0101_gentleman_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_gentleman_04a">
 		<comment>♂
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
@@ -767,7 +767,7 @@
 随分と　にぎやかね▼</language>
 	</row>
 
-	<row id="msg_t04r0101_veteranw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_veteranw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
@@ -779,7 +779,7 @@
 ならば　私を　倒してごらんなさい！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_veteranw_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_veteranw_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・初回以降
 ・この後戦闘に入る。</comment>
@@ -791,7 +791,7 @@
 さあ　わたくしを　倒してごらんなさい！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_veteranw_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_veteranw_03a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">母
@@ -832,7 +832,7 @@
 今日こそ　お見せ　いたしますわ！</language>
 	</row>
 
-	<row id="msg_t04r0101_veteranw_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0101_veteranw_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
@@ -869,7 +869,7 @@
 ブルジョワール家の　一員かい？▼</language>
 	</row>
 
-	<row id="msg_t04r0101_boy4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_boy4_02">
 		<comment>♂
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
@@ -885,7 +885,7 @@
 この　ボクが　護ろう！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_boy4_02a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t04r0101_boy4_02a">
 		<comment>♂
 ・初回以降
 ・この後戦闘に入る。</comment>
@@ -950,7 +950,7 @@
 早い……　そういう　ことか</language>
 	</row>
 
-	<row id="msg_t04r0101_boy4_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_boy4_03a">
 		<comment>♂
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">兄

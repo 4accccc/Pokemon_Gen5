@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T11:01:16"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T20:18:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,7 +306,7 @@
 独り言を　きかないで　くれるかな？</language>
 	</row>
 
-	<row id="msg_t04r0201_boy4_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t04r0201_boy4_01">
 		<comment>♂
 ・夏だけ出現</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
@@ -316,7 +316,7 @@
 なにもしないことを　楽しむことだね</language>
 	</row>
 
-	<row id="msg_t04r0201_diet_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0201_diet_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・夏だけ出現
 ・ポケモン交換前
@@ -342,7 +342,7 @@
 [1:01:ポケモン種族名:0]を　交換してよぉ？▼</language>
 	</row>
 
-	<row id="msg_t04r0201_diet_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0201_diet_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
@@ -363,7 +363,7 @@
 ダイエットに　はげむよぉ……</language>
 	</row>
 
-	<row id="msg_t04r0201_diet_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0201_diet_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・チラーチィ以外を選択</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
@@ -373,7 +373,7 @@
 [1:01:ポケモン種族名:0]　だよぉ</language>
 	</row>
 
-	<row id="msg_t04r0201_diet_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0201_diet_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</comment>
@@ -382,7 +382,7 @@
 		<language name="JPN_KANJI" width="256">ふぅ……　残念だよぉ</language>
 	</row>
 
-	<row id="msg_t04r0201_diet_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t04r0201_diet_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換後</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
