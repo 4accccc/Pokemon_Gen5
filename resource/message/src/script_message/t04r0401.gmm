@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T22:29:27"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T20:42:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="115" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -578,7 +578,7 @@
 出会ってほしい　って▼
 きみに　そっくりの　トレーナーに
 伝えたことが　あるの▼
-あたしも　とおく　イッシュまで　きて
+あたしも　遠く　イッシュまで　来て
 本当に　よかったと　思ってるの▼
 だって　キミに　会えて
 あたしの　世界は　広がったから！</language>
@@ -1087,7 +1087,7 @@
 かもつきを　つかえば　ひとっとび！▼
 アタシは　ポケモンの　そらをとぶも
 きもちよくて　だいすき　だけど</language>
-		<language name="JPN_KANJI" width="256">フウロ『はるか　と奥の　シンオウも
+		<language name="JPN_KANJI" width="256">フウロ『はるか　遠くの　シンオウも
 貨物機を　使えば　ひとっとび！▼
 アタシは　ポケモンの　そらをとぶも
 気持ちよくて　大好き　だけど</language>
@@ -1112,7 +1112,7 @@
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
 		<language name="JPN" width="256">カミツレ『……ポケモンの　みりょくを
-ひきだすには　ひきだすがわにも▽
+ひきだすには　ひきだす　がわにも▽
 みりょくが　ないと　むずかしいわね</language>
 		<language name="JPN_KANJI" width="256">カミツレ『……ポケモンの　魅力を
 ひきだすには　ひきだす側にも▽
