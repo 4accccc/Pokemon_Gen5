@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-23T12:46:05"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T19:56:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -463,8 +463,8 @@
 ・話しかけて戦闘に入るときも、
 このメッセージを使います。</comment>
 		<attribute name="キャラ指定">ツチノカミ</attribute>
-		<language name="JPN" width="256">どろるるるるっ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">どろるるるるっ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">どろるるるるっ！！</language>
+		<language name="JPN_KANJI" width="256">どろるるるるっ！！</language>
 	</row>
 
 	<row id="msg_r14r0201_narration_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

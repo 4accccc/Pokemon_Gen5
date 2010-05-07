@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T19:50:54"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T19:54:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -546,7 +546,7 @@
 		<language name="JPN" width="256">ポケットモンスターは
 ちぢめて　なんと　いうかな？▼</language>
 		<language name="JPN_KANJI" width="256">ポケットモンスターは
-ちぢめて　なんと　言うかな？▼</language>
+ちぢめて　なんと　いうかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -637,7 +637,7 @@
 		<language name="JPN" width="256">ポケモン　２たい２で　たたかうのは
 なんと　いうかな？▼</language>
 		<language name="JPN_KANJI" width="256">ポケモン　２対２で　戦うのは
-なんと　言うかな？▼</language>
+なんと　いうかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -645,16 +645,16 @@
 		<attribute name="キャラ指定">クイズその12</attribute>
 		<language name="JPN" width="256">しゃしんを　とる　ときに
 つかう　どうぐは？▼</language>
-		<language name="JPN_KANJI" width="256">写真を　とる　ときに
-使う　どうぐは？▼</language>
+		<language name="JPN_KANJI" width="256">写真を　撮るときに
+使う　道具は？▼</language>
 	</row>
 
 	<row id="msg_quiz_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>おふろ</comment>
 		<attribute name="キャラ指定">クイズその13</attribute>
-		<language name="JPN" width="256">からだを　あらう　ために
+		<language name="JPN" width="256">からだを　あらうために
 はいる　ところは　どこ？▼</language>
-		<language name="JPN_KANJI" width="256">体を　洗う　ために
+		<language name="JPN_KANJI" width="256">体を　洗うために
 入る　ところは　どこ？▼</language>
 	</row>
 
@@ -663,8 +663,8 @@
 		<attribute name="キャラ指定">クイズその14</attribute>
 		<language name="JPN" width="256">ポケモンを　かいふく　して
 くれる　しせつは　どこかな？▼</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　回復　して
-くれる　施設は　どこかな？▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　回復してくれる
+施設は　どこかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -764,9 +764,9 @@
 	<row id="msg_quiz_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>アーケン</comment>
 		<attribute name="キャラ指定">クイズその25</attribute>
-		<language name="JPN" width="256">はねのかせき　は
+		<language name="JPN" width="256">はねのカセキ　は
 なんの　ポケモンに　なるかな？▼</language>
-		<language name="JPN_KANJI" width="256">はねのかせき　は
+		<language name="JPN_KANJI" width="256">はねのカセキ　は
 なんの　ポケモンに　なるかな？▼</language>
 	</row>
 

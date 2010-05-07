@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T11:09:32"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T19:55:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -711,14 +711,14 @@ TVT着信演出の統一に伴い未使用になっています</comment>
 たいりょくが　へると[BE:00:ページ切り替え（行送り）]
 たいへんだから　これを　あげる[BE:01:ページ切り替え（クリア）]
 あなたの　バッグの
-かいふくポケットに　いれておいてね！</language>
+かいふくポケットに　いれておいてね！▼</language>
 		<language name="JPN_KANJI" width="256">あなたの　ポケモンさん
 体力は　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]
 道路の　真ん中で
 ポケモンさんの　体力が　減ると[BE:00:ページ切り替え（行送り）]
 大変だから　これを　あげる[BE:01:ページ切り替え（クリア）]
 あなたの　バッグの
-回復ポケットに　いれておいてね！</language>
+回復ポケットに　いれておいてね！▼</language>
 	</row>
 
 	<row id="msg_r01_girl1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T19:00:14"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T19:57:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1489" top="348" right="2194" bottom="976" maximized="no" rayout="Vertical2">
+	<dialog left="1449" top="190" right="2154" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="134" right="1280" bottom="532" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,12 +359,12 @@
 		<comment>♂
 ・分岐なし</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
-		<language name="JPN" width="256">しろいボール　ひとつで
+		<language name="JPN" width="256">ボール　ひとつで
 ひとも　ポケモンも　えがおになれる[BE:01:ページ切り替え（クリア）]
-やきゅうとは　ふしぎな　ものだ</language>
-		<language name="JPN_KANJI" width="256">白いボール　ひとつで
+スポーツとは　ふしぎな　ものだ</language>
+		<language name="JPN_KANJI" width="256">ボール　ひとつで
 人も　ポケモンも　笑顔になれる[BE:01:ページ切り替え（クリア）]
-野球とは　不思議な　ものだ</language>
+スポーツとは　不思議な　ものだ</language>
 	</row>
 
 	<row id="msg_c04r0302_woman2_01">
@@ -373,7 +373,7 @@
 ・練習中は非表示</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">きゃー　こっちむいてー！</language>
-		<language name="JPN_KANJI" width="256">きゃー　こっち向いててー！</language>
+		<language name="JPN_KANJI" width="256">きゃー　こっち向いてー！</language>
 	</row>
 
 	<row id="msg_c04r0302_man3_01">
