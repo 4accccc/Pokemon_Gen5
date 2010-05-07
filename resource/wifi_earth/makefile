@@ -7,12 +7,12 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= matsuda
+USERS	= matsuda mori
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = wifi_earth
+targetname  = wifi_earth
 targetname2 = wifi_earth_place
 
 #------------------------------------------------------------------------------
@@ -34,6 +34,7 @@ gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
 psources:=$(wildcard *.spa)
+dsources:=$(wildcard *.dat)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -42,29 +43,38 @@ sobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc
-
-endif
 
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
 
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+# サフィックスルールを定義することで 依存関係を自動で判断してくれる
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .dat
+$(targetname2).narc: $(dsources) countrylist.xls
+	copy ..\message\template.gmm .\
+	conv.bat
+	conv2.bat
+	ruby sort_listmake.rb aiueo.txt gts_country_list.cdat
+	copy gts_country_list.cdat ..\..\prog\src\net_app\wifi_worldtrade
+	nnsarc -r -l -n -i $(targetname2).narc -S placename.script
+endif
+
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc $(targetname2).narc
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
+
+$(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
 	$(COPY) $(targetname2).narc $(TARGETDIR)
 	$(COPY) $(targetname2).naix $(TARGETDIR) 
-
 
 #------------------------------------------------------------------------------
 #	make clean ルール

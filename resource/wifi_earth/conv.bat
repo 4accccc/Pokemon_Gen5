@@ -1,0 +1,21 @@
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 0 countrylist.xls >world.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 2 countrylist.xls >aiueo.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 3 countrylist.xls >USA.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 4 countrylist.xls >SWE.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 5 countrylist.xls >RUS.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 6 countrylist.xls >POL.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 7 countrylist.xls >NOR.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 8 countrylist.xls >JPN.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 9 countrylist.xls >ITA.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 10 countrylist.xls >IND.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 11 countrylist.xls >GBR.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 12 countrylist.xls >FRA.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 13 countrylist.xls >FIN.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 14 countrylist.xls >ESP.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 15 countrylist.xls >DEU.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 16 countrylist.xls >CHN.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 17 countrylist.xls >CAN.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 18 countrylist.xls >BRA.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 19 countrylist.xls >AUS.txt
+ruby ..\..\tools\exceltool\xls2xml\tab_out_sheet.rb -c -n 20 countrylist.xls >ARG.txt
+
