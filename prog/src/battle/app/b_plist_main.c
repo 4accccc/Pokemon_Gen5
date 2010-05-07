@@ -886,6 +886,7 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
       // 通常の入れ替え
       if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
         wk->dat->sel_pos[wk->dat->sel_pos_index] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+				OS_Printf( "wk->dat->sel_pos[%d] = %d\n", wk->dat->sel_pos_index, wk->dat->sel_pos[wk->dat->sel_pos_index] );
         return SEQ_BPL_ENDSET;
       }
       // 瀕死時の入れ替え
@@ -2155,12 +2156,15 @@ static int BPL_SeqEndSet( BPLIST_WORK * wk )
 {
   // マルチモード時の選択位置補正
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
+/*
     u32 i;
     for( i=0; i<BPL_SELNUM_MAX; i++ ){
       if( wk->dat->sel_pos[i] != BPL_SELPOS_NONE ){
         wk->dat->sel_pos[i] /= 2;
       }
+			OS_Printf( "ENDSET : wk->dat->sel_pos[%d] = %d\n", i, wk->dat->sel_pos[i] );
     }
+*/
     wk->dat->sel_poke /= 2;
   }
 /*
@@ -4221,7 +4225,8 @@ static void SetDeadChangeData( BPLIST_WORK * wk )
 {
   // マルチの場合は立ち位置が関係するので、確実に０に入れる
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-    wk->dat->sel_pos[0] = wk->dat->sel_poke;
+//    wk->dat->sel_pos[0] = wk->dat->sel_poke;
+		wk->dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
   }else{
     u32 i;
 
