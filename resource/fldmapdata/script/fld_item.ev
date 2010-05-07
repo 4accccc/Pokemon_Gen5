@@ -1711,10 +1711,10 @@ EVENT_START ev_fld_item_115
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r18 X=634 Y=710 ITEM=‚Ð‚Å‚ñƒ}ƒVƒ“‚O‚T FLAG=117
+// MAP=r18 X=634 Y=710 ITEM=‚í‚´ƒ}ƒVƒ“‚P‚X FLAG=117
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_117
-  _FLD_ITEM_EVENT ITEM_HIDENMASIN05,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN19,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1732,10 +1732,10 @@ EVENT_START ev_fld_item_119
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r18 X=613 Y=753 ITEM=‚í‚´ƒ}ƒVƒ“‚P‚X FLAG=120
+// MAP=r18 X=613 Y=753 ITEM=‚Ð‚Å‚ñƒ}ƒVƒ“‚O‚T FLAG=120
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_120
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN19,1
+  _FLD_ITEM_EVENT ITEM_HIDENMASIN05,1
 EVENT_END
 
 //--------------------------------------------------------------
