@@ -2394,6 +2394,7 @@ BOOL FLDMSGWIN_STREAM_Print( FLDMSGWIN_STREAM *msgWin )
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( Control_GetAutoPrintFlag(&msgWin->fmb->print_cont) == FALSE )//オート表示中はカーソルを出さない。
     {
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( msgWin->bmpwin );
       FLDKEYWAITCURSOR_Write( &msgWin->cursor_work, bmp, 0x0f );
@@ -2645,6 +2646,7 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( Control_GetAutoPrintFlag(&sysWin->fmb->print_cont) == FALSE )//オート表示中はカーソルを出さない。
     {
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
       FLDKEYWAITCURSOR_Write( &sysWin->cursor_work, bmp, 0x0f );
@@ -2667,9 +2669,12 @@ BOOL FLDSYSWIN_STREAM_Print( FLDSYSWIN_STREAM *sysWin )
 //--------------------------------------------------------------
 void FLDSYSWIN_WriteKeyWaitCursor( FLDSYSWIN_STREAM *sysWin )
 {
-  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
-  FLDKEYWAITCURSOR_Write( &sysWin->cursor_work, bmp, 0x0f );
-  GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
+  if( Control_GetAutoPrintFlag(&sysWin->fmb->print_cont) == FALSE )//オート表示中はカーソルを出さない。
+  {
+    GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( sysWin->bmpwin );
+    FLDKEYWAITCURSOR_Write( &sysWin->cursor_work, bmp, 0x0f );
+    GFL_BMPWIN_TransVramCharacter( sysWin->bmpwin );
+  }
 }
 
 //--------------------------------------------------------------
@@ -3147,11 +3152,14 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 void FLDTALKMSGWIN_WriteKeyWaitCursor( FLDTALKMSGWIN *tmsg )
 {
-  GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
-    tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
-  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
-  FLDKEYWAITCURSOR_Write( &tmsg->cursor_work, bmp, 0x0f );
-  GFL_BMPWIN_TransVramCharacter( twin_bmp );
+  if( Control_GetAutoPrintFlag(&tmsg->fmb->print_cont) == FALSE ){//オート表示中はキーカーソルをださない。
+  
+    GFL_BMPWIN *twin_bmp = TALKMSGWIN_GetBmpWin(
+      tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
+    GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
+    FLDKEYWAITCURSOR_Write( &tmsg->cursor_work, bmp, 0x0f );
+    GFL_BMPWIN_TransVramCharacter( twin_bmp );
+  }
 }
 
 //======================================================================
@@ -3479,6 +3487,7 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
+    if( Control_GetAutoPrintFlag(&plnwin->fmb->print_cont) == FALSE )//オート表示中はカーソルを出さない。
     {
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
       FLDKEYWAITCURSOR_Write( &plnwin->cursor_work, bmp, 0x0f );
@@ -3506,9 +3515,12 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
 //--------------------------------------------------------------
 void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin )
 {
-  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
-  FLDKEYWAITCURSOR_Write( &plnwin->cursor_work, bmp, 0x0f );
-  GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
+  if( Control_GetAutoPrintFlag(&plnwin->fmb->print_cont) == FALSE )//オート表示中はカーソルを出さない。
+  {
+    GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plnwin->bmpwin );
+    FLDKEYWAITCURSOR_Write( &plnwin->cursor_work, bmp, 0x0f );
+    GFL_BMPWIN_TransVramCharacter( plnwin->bmpwin );
+  }
 }
 
 //--------------------------------------------------------------
