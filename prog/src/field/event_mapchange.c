@@ -1755,10 +1755,11 @@ GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK*
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
+  work->loc_req = *(GAMEDATA_GetEscapeLocation( work->gameData ));
   Escape_GetSPEscapeLocation( work->gameData, &work->loc_req );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
-  work->exit_type    = EXIT_TYPE_NONE;
+  work->exit_type = EXIT_TYPE_NONE;
+  work->seasonUpdateEnable = TRUE; // 季節更新を有効にする
 
   return event;
 }
@@ -1780,10 +1781,11 @@ GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem )
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
+  work->loc_req = *(GAMEDATA_GetEscapeLocation( work->gameData ));
   Escape_GetSPEscapeLocation( work->gameData, &work->loc_req );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
-  work->exit_type    = EXIT_TYPE_NONE;
+  work->exit_type = EXIT_TYPE_NONE;
+  work->seasonUpdateEnable = TRUE; // 季節更新を有効にする
 
   return event;
 }
