@@ -1348,7 +1348,7 @@ void BEACONINFO_Set_Details_BattleTrainer(GAMEBEACON_INFO *info, u16 tr_no)
 //--------------------------------------------------------------
 void BEACONINFO_Set_Details_BattleLeader(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER;
   info->details.battle_trainer = tr_no;
 }
 

@@ -863,7 +863,7 @@ u16 GAMEBEACON_Get_Details_BattleTrainer(const GAMEBEACON_INFO *info)
 {
   switch(info->details.details_no){
   case GAMEBEACON_DETAILS_NO_BATTLE_TRAINER:
-  case GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER:
+  case GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER:
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER:
     return info->details.battle_trainer;
   }

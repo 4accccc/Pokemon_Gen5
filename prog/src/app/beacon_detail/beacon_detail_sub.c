@@ -85,18 +85,18 @@ static const BEACON_WIN_COLOR DATA_BeaconWinColor[] = {
 #define FCOL_BEACON_COL( n )  ( DATA_BeaconWinColor[n].color )
 
 typedef struct _BEACON_DETAIL{
-  u8  action;
+  u8  detail_no;
   u8  msg_id;
   u8  icon;
 }BEACON_DETAIL;
 
-static const BEACON_DETAIL DATA_BeaconDetail[] = {
-  { GAMEBEACON_ACTION_SEARCH, msg_beacon_000, 0 },
-  { GAMEBEACON_ACTION_BATTLE_WILD_POKE_START, msg_beacon_001, 1 },
-  { GAMEBEACON_ACTION_BATTLE_SP_POKE_START, msg_beacon_002, 1 },
-  { GAMEBEACON_ACTION_BATTLE_TRAINER_START, msg_beacon_003, 2 },
-  { GAMEBEACON_ACTION_BATTLE_LEADER_START, msg_beacon_004, 2 },
-  { GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START, msg_beacon_005, 2 },
+static const BEACON_DETAIL DATA_BeaconDetail[GAMEBEACON_DETAILS_NO_MAX] = {
+  { GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE, msg_beacon_000, 1 },  ///<野生ポケモンと対戦中
+  { GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE,   msg_beacon_001, 1 },  ///<特別なポケモンと対戦中
+  { GAMEBEACON_DETAILS_NO_BATTLE_TRAINER,   msg_beacon_002, 2 },  ///<トレーナーと対戦中
+  { GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER, msg_beacon_003, 2 },  ///<ジムリーダーと対戦中
+  { GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER,msg_beacon_004, 2 },  ///<特別なトレーナーと対戦中
+  { GAMEBEACON_DETAILS_NO_WALK,             msg_beacon_005, 0 },  ///<移動中
 };
 
 #define BEACON_DETAIL_PARAM_NUM (NELEMS(DATA_BeaconDetail))
@@ -109,7 +109,7 @@ static void sub_PlaySE( u16 se_no );
 static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num );
 static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk );
 static u8 sub_WinFrameColorGet( GAMEBEACON_INFO* info );
-static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action );
+static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_DETAILS_NO detail_no );
 static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset );
 
 static void act_AnmStart( GFL_CLWK* act, u8 anm_no );
@@ -272,12 +272,12 @@ static u8 sub_WinFrameColorGet( GAMEBEACON_INFO* info )
 /*
  *  @brief  アクションナンバーから詳細描画タイプを取得
  */
-static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_ACTION action )
+static const BEACON_DETAIL* sub_GetBeaconDetailParam( GAMEBEACON_DETAILS_NO detail_no )
 {
   int i;
 
   for(i = 0;i < BEACON_DETAIL_PARAM_NUM; i++){
-    if( action == DATA_BeaconDetail[i].action ){
+    if( detail_no == DATA_BeaconDetail[i].detail_no ){
       return &DATA_BeaconDetail[i];
     }
   }
@@ -308,7 +308,7 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
       WORDSET_RegisterTrTypeName_byTrID( wordset, 0, tr_id );
       WORDSET_RegisterTrainerName( wordset, 1, tr_id );
     }
-  case GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER:
+  case GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER:
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER:
     break;
   default:
@@ -598,12 +598,12 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
 static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
 {
   u16 zone;
-  GAMEBEACON_ACTION action;
+  GAMEBEACON_DETAILS_NO detail_no;
   const BEACON_DETAIL* pd;
 
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[wk->list_top]);
-  action = GAMEBEACON_Get_Action_ActionNo( wk->tmpInfo );
-  pd = sub_GetBeaconDetailParam( action );
+  detail_no = GAMEBEACON_Get_Details_DetailsNo( wk->tmpInfo );
+  pd = sub_GetBeaconDetailParam( detail_no );
 
   draw_UnionObjUpdate( wk, GAMEBEACON_Get_TrainerView( wk->tmpInfo ) );
   zone = GAMEBEACON_Get_ZoneID( wk->tmpInfo );

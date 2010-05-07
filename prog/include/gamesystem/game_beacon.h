@@ -28,7 +28,7 @@ typedef enum{
   GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE,       ///<野生ポケモンと対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE,         ///<特別なポケモンと対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_TRAINER,         ///<トレーナーと対戦中
-  GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER,       ///<ジムリーダーと対戦中
+  GAMEBEACON_DETAILS_NO_BATTLE_JYMLEADER,       ///<ジムリーダーと対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER,      ///<特別なトレーナーと対戦中
   GAMEBEACON_DETAILS_NO_WALK,                   ///<移動中
   
