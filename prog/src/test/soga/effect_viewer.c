@@ -13,6 +13,7 @@
 
 #include "system/main.h"
 #include "print/printsys.h"
+#include "print/wordset.h"
 #include "arc_def.h"
 
 #include "battle/btlv/btlv_effect.h"
@@ -497,18 +498,21 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         evw->mons_no++;
         del_pokemon( evw );
         set_pokemon( evw );
+        evw->draw_req = DRAW_REQ_MENU_LIST;
       }
       if( ( rep & PAD_KEY_DOWN ) && ( evw->mons_no ) )
       { 
         evw->mons_no--;
         del_pokemon( evw );
         set_pokemon( evw );
+        evw->draw_req = DRAW_REQ_MENU_LIST;
       }
       if( ( rep & PAD_KEY_RIGHT ) && ( evw->mons_no + 10 <=  MONSNO_END ) )
       { 
         evw->mons_no += 10;
         del_pokemon( evw );
         set_pokemon( evw );
+        evw->draw_req = DRAW_REQ_MENU_LIST;
       }
       if( rep & PAD_KEY_LEFT )
       { 
@@ -519,6 +523,7 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         }
         del_pokemon( evw );
         set_pokemon( evw );
+        evw->draw_req = DRAW_REQ_MENU_LIST;
       }
       if( trg & PAD_BUTTON_DEBUG )
       { 
@@ -1299,6 +1304,26 @@ static  void  EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
     strbuf = GFL_MSG_CreateString( evw->msg,  msd_p->strID );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->label_x, msd_p->label_y, strbuf, evw->font );
     GFL_STR_DeleteBuffer( strbuf );
+  }
+  if( evw->menu_list == MENULIST_TITLE )
+  { 
+    STRBUF  *str_src;
+    STRBUF  *str_dst = GFL_STR_CreateBuffer( 100, evw->heapID );
+    WORDSET*  mons_info = WORDSET_Create( evw->heapID );
+
+    WORDSET_RegisterNumber( mons_info, 0, evw->mons_no, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    if( evw->mons_no <= MONSNO_END )
+    {
+      WORDSET_RegisterPokeMonsNameNo( mons_info, 1, evw->mons_no );
+    }
+    str_src = GFL_MSG_CreateString( evw->msg,  PVMSG_MONSNAME );
+    WORDSET_ExpandStr( mons_info, str_dst, str_src );
+    GFL_HEAP_FreeMemory( str_src );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), TITLE_LABEL_X, TITLE_LABEL_Y + 24, str_dst, evw->font );
+
+    GFL_HEAP_FreeMemory( str_src );
+    GFL_HEAP_FreeMemory( str_dst );
+    WORDSET_Delete( mons_info );
   }
 }
 
