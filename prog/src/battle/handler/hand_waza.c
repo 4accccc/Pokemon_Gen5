@@ -7865,10 +7865,15 @@ static void handler_SolarBeam_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 }
 static void handler_SolarBeam_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  ( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_RAIN )
-  ){
-    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BtlWeather weather = BTL_SVFTOOL_GetWeather( flowWk );
+    if( (weather == BTL_WEATHER_RAIN)
+    ||  (weather == BTL_WEATHER_SNOW)
+    ||  (weather == BTL_WEATHER_SAND)
+    ){
+      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(0.5) );
+    }
   }
 }
 //----------------------------------------------------------------------------------
