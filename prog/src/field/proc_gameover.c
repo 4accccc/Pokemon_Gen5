@@ -96,7 +96,7 @@ typedef struct{
 #define GAME_OVER_MSG_BUF_SIZE		(1024)			//メッセージバッファサイズ
 #define GAME_OVER_FADE_SYNC			(8)				//フェードsync数
 
-enum { //コンパイルを通すためにとりあえず
+enum {
 
   FLD_SYSFONT_PAL = 13,
 
