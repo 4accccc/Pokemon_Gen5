@@ -30,6 +30,12 @@
 //============================================================================================
 //============================================================================================
 
+#ifdef PM_DEBUG
+#define	LOCAL_VERSION		( VERSION_BLACK )		// デバッグ用（コミット時はブラックにすること！）
+#else
+#define	LOCAL_VERSION		( VERSION_BLACK )		// 製品版はブラックを基本とする
+#endif	// PM_DEBUG
+
 // 後方確保用ヒープＩＤ
 #define	HEAPID_STAFF_ROLL_L		( GFL_HEAP_LOWID(HEAPID_STAFF_ROLL) )
 
@@ -56,7 +62,7 @@ enum {
 };
 
 
-#if	PM_VERSION == VERSION_BLACK
+#if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
 #define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(15,2,0) )	// フォントカラー：デフォルト
 //#define	BG_COLOR		( 0x7fff )											// バックグラウンドカラー
@@ -302,9 +308,15 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 	ExitMsg( wk );
 	ExitBg();
 
-	// 輝度を最低にしておく
+#if	PM_VERSION == LOCAL_VERSION
+	// 輝度を最低にしておく（ブラック）
 	GX_SetMasterBrightness( -16 );
 	GXS_SetMasterBrightness( -16 );
+#else
+	// 輝度を最高にしておく（ホワイト）
+	GX_SetMasterBrightness( 16 );
+	GXS_SetMasterBrightness( 16 );
+#endif
 	// ブレンド初期化
 	G2_BlendNone();
 	G2S_BlendNone();
@@ -493,7 +505,7 @@ static void LoadBgGraphic(void)
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL_L );
 
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == LOCAL_VERSION
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_title_blk_logo_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramScreen(
@@ -524,7 +536,7 @@ static void LoadLogoPalette( SRMAIN_WORK * wk, BOOL flg )
 {
 	if( flg == TRUE ){
 		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL );
-#if PM_VERSION == VERSION_BLACK
+#if PM_VERSION == LOCAL_VERSION
 		GFL_ARCHDL_UTIL_TransVramPalette(
 			ah, NARC_title_blk_logo_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
 #else
@@ -703,7 +715,7 @@ static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work );
 // リソーステーブル
 static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
 {
-#if	PM_VERSION == VERSION_BLACK
+#if	PM_VERSION == LOCAL_VERSION
 	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_b_02_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
 	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_b_02_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
 #else
@@ -948,9 +960,17 @@ static int SetFadeIn( SRMAIN_WORK * wk, int next )
 
 static int SetFadeOut( SRMAIN_WORK * wk, int next )
 {
+#if	PM_VERSION == LOCAL_VERSION
+	// ブラックアウト
 	WIPE_SYS_Start(
 		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STAFF_ROLL );
+#else
+	// ホワイトアウト
+	WIPE_SYS_Start(
+		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+		WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STAFF_ROLL );
+#endif
 	wk->nextSeq = next;
 	return MAINSEQ_WIPE;
 }
