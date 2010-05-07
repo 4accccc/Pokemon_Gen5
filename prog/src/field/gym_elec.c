@@ -773,12 +773,9 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
 
   //ＳＥ鳴らしっぱなし
   {
-//    SEPLAYER_ID player_id;
-//    player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
     FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
     //始めはボリューム0
     FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
-//    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
   }
 }
 
@@ -1655,13 +1652,11 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->RadeRaleIdx = RIDE_NONE;
       
       {
-        SEPLAYER_ID player_id;
         //カプセル近接ＳＥのためGYM_ELEC_SE_DRIVEは鳴らし続ける
         FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
         //始めはボリューム0
         FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
         //加速音はストップする
-        player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
         PMSND_StopSE_byPlayerID( player_id );
       }
       
