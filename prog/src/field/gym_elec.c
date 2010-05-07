@@ -934,7 +934,6 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
   }
   //ＳＥストップ
   FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
-  PMSND_StopSE();
 /**
   for(i=0;i<RALE_NUM_MAX;i++){
     ICA_ANIME_Delete( tmp->IcaAnmPtr2[i] );
