@@ -130,48 +130,6 @@ VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
-#if 0
-//--------------------------------------------------------------
-/**
- * BGM停止
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk )
-{
-  PMSND_StopBGM();
-
-  // フィールドサウンド。
-  // 環境SE再生。
-  {
-    SCRCMD_WORK*  work = wk;
-    GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
-    FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
-    FSND_RePlayEnvSE( fsound );
-  }
-
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
-
-#if 0
-//--------------------------------------------------------------
-/**
- * シーケンスを一時停止または再開
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk )
-{
-  BOOL flag = VMGetU8(core);
-  PMSND_PauseBGM( flag );
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * BGM終了待ち
@@ -220,71 +178,6 @@ VMCMD_RESULT EvCmdBgmWait( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 
 }
-
-#if 0 //wb
-//--------------------------------------------------------------
-/**
- * マップ内限定のBGM指定がセットされる
- * 自転車BGMの制御などに使用
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdBgmSpecialSet( VMHANDLE *core, void *wk )
-{
-  Snd_FieldBgmSetSpecial( core->fsys, VMGetU16(core) );
-  return VMCMD_RESULT_CONTINUE;
-}
-#endif
-
-#if 0
-//--------------------------------------------------------------
-/**
- * BGMフェードアウト待ち
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*  work   = wk;
-  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK*  script = SCRCMD_WORK_GetScriptWork( work );
-  u16           vol    = VMGetU16( core ); // @todo 引数削除
-  u16           frame  = VMGetU16( core );
-
-	GMEVENT* event;
-
-	event = EVENT_FSND_FadeOutBGM( gsys, frame );
-	SCRIPT_CallEvent( script, event );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-#endif
-
-#if 0
-//--------------------------------------------------------------
-/**
- * BGMフェードイン待ち(フェードアウトしたものが再開する)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*  work   = wk;
-  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK*  script = SCRCMD_WORK_GetScriptWork( work );
-  u16           frame  = VMGetU16( core );
-
-	GMEVENT* event;
-
-	event = EVENT_FSND_FadeInBGM( gsys, frame ); 
-	SCRIPT_CallEvent( script, event );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-#endif
 
 //--------------------------------------------------------------
 /**
