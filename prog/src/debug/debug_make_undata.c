@@ -1214,6 +1214,7 @@ static void MakeData(MAKE_WORK *wk)
         {
           //GF_ASSERT_MSG(0,"ERROR placeidx is 0 place_num=%d",count);
           OS_Printf("ERROR placeidx is 0 place_num=%d\n",count);
+          return;
         }
       }
 
@@ -1221,7 +1222,7 @@ static void MakeData(MAKE_WORK *wk)
       {
         //GF_ASSERT_MSG(0,"ERROR placeidx over idx=%d max_idx=%d",place, count);
         OS_Printf("ERROR placeidx over idx=%d max_idx=%d",place, count);
-        place = 0;
+        return;
       }
       MyStatus_SetMyNationArea(my, wk->BoxValue[EDITBOX_ID_COUNTRY], place);
     }
