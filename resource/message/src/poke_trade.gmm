@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-07T19:48:00"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-07T20:52:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="692"/>
 		<band id="3" index="3" style="0000" width="692"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,7 +335,7 @@
 
 	<row id="POKETRADE_STR_01">
 		<language name="JPN" width="256">こうかんにだす</language>
-		<language name="JPN_KANJI" width="256">こうかんにだす</language>
+		<language name="JPN_KANJI" width="256">交換にだす</language>
 	</row>
 
 	<row id="POKETRADE_STR_02">
@@ -345,7 +345,7 @@
 
 	<row id="POKETRADE_STR_03">
 		<language name="JPN" width="256">あいてにみせる</language>
-		<language name="JPN_KANJI" width="256">あいてにみせる</language>
+		<language name="JPN_KANJI" width="256">相手にみせる</language>
 	</row>
 
 	<row id="POKETRADE_STR_04">
@@ -355,7 +355,7 @@
 
 	<row id="POKETRADE_STR_05">
 		<language name="JPN" width="256">こうかんする</language>
-		<language name="JPN_KANJI" width="256">こうかんする</language>
+		<language name="JPN_KANJI" width="256">交換する</language>
 	</row>
 
 	<row id="POKETRADE_STR_06">
@@ -423,7 +423,7 @@
 
 	<row id="POKETRADE_STR_19">
 		<language name="JPN" width="256">てもち</language>
-		<language name="JPN_KANJI" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">手持ち</language>
 	</row>
 
 	<row id="POKETRADE_STR_20">
@@ -1019,7 +1019,7 @@
 
 	<row id="POKETRADE_STR2_26">
 		<language name="JPN" width="256">けってい</language>
-		<language name="JPN_KANJI" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">決定</language>
 	</row>
 
 	<row id="POKETRADE_STR2_27">
@@ -1260,7 +1260,7 @@
 	<row id="gtsnego_info_21" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSネゴでの強制切断</comment>
 		<language name="JPN" width="256">せつぞくを　きる</language>
-		<language name="JPN_KANJI" width="256">せつぞくを　きる</language>
+		<language name="JPN_KANJI" width="256">接続を　きる</language>
 	</row>
 
 	<row id="gtsnego_info_22" back-color="#ffff00,,,,,,,,,,,,,,,,,">
