@@ -19,7 +19,10 @@
 #include "pokeicon/pokeicon.h"
 #include "font/font.naix"
 #include "field/zonedata.h"
+#include "field/eventwork.h"
 #include "savedata/playtime.h"
+
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "report.h"
 #include "report_gra.naix"
@@ -661,14 +664,19 @@ static void InitBmp( REPORT_WORK * wk )
 	GFL_STR_DeleteBuffer( str );
 
 	// }ŠÓ
-	str = GFL_MSG_CreateString( mman, REPORT_STR_07 );
 	{
-		u16	num = ZUKANSAVE_GetZukanPokeGetCount( GAMEDATA_GetZukanSave(gd), wk->heapID );
-		WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		EVENTWORK * ev = GAMEDATA_GetEventWork( GAMESYSTEM_GetGameData(wk->gameSys) );
+		if( EVENTWORK_CheckEventFlag( ev, SYS_FLAG_ZUKAN_GET ) == TRUE ){
+			str = GFL_MSG_CreateString( mman, REPORT_STR_07 );
+			{
+				u16	num = ZUKANSAVE_GetZukanPokeGetCount( GAMEDATA_GetZukanSave(gd), wk->heapID );
+				WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+			}
+			WORDSET_ExpandStr( wset, exp, str );
+			PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
+			GFL_STR_DeleteBuffer( str );
+		}
 	}
-	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
-	GFL_STR_DeleteBuffer( str );
 
 	// ƒvƒŒƒCŽžŠÔ
 	str = GFL_MSG_CreateString( mman, REPORT_STR_09 );
