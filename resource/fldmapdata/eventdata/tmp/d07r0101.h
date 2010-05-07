@@ -26,14 +26,14 @@
 #define ZONE_D07R0101_EVC_H
 
 #define D07R0101_WORKMAN1_01               0
-#define TR_ELITEM_19                       1
-#define D07R0101_FLD_ITEM_02               2
-#define D07R0101_FLD_ITEM_03               3
-#define TR_ELITEW_19                       4
-#define D07R0101_FLD_ITEM_01               5
-#define TR_WORKER2_15                      6
-#define D07R0101_FLD_ITEM_04               7
-#define D07R0101_WORKMAN1_02               8
+#define D07R0101_FLD_ITEM_02               1
+#define D07R0101_FLD_ITEM_03               2
+#define TR_ELITEW_19                       3
+#define D07R0101_FLD_ITEM_01               4
+#define TR_WORKER2_15                      5
+#define D07R0101_FLD_ITEM_04               6
+#define D07R0101_WORKMAN1_02               7
+#define TR_DOCTOR_02                       8
 
 #endif //ZONE_D07R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

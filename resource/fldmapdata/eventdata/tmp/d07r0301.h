@@ -20,7 +20,7 @@
 
 #define TR_WORKER2_04                      0
 #define TR_WORKER2_05                      1
-#define TR_DOCTOR_02                       2
+#define TR_ELITEM_19                       2
 #define TR_MOUNT_05                        3
 #define D07R0301_FLD_ITEM_01               4
 #define D07R0301_TR_GROUND_01              5

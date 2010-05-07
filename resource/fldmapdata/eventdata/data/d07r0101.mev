@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/26 14:07:03
+#save date:2010/05/07 20:50:42
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0101.wms
 #SECTION START:OBJ_EVENT
@@ -45,37 +45,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_ELITEM_19
-#OBJ CODE Number
-TRAINERM
-#MOVE CODE Number
-MV_RT2
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_ELITEM_19
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-2
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-4
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 -40 -200
-#event number: 2
-#type
-1
-#ID name
 D07R0101_FLD_ITEM_02
 #OBJ CODE Number
 MONSTERBALL
@@ -103,7 +72,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 552 -40 -312
-#event number: 3
+#event number: 2
 #type
 1
 #ID name
@@ -134,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 8 -40 -280
-#event number: 4
+#event number: 3
 #type
 1
 #ID name
@@ -165,7 +134,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 456 40 -536
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -196,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 392 40 -536
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -227,7 +196,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 600 40 -424
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -258,7 +227,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 72 40 56
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,6 +258,37 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 104 -88 -56
+#event number: 8
+#type
+1
+#ID name
+TR_DOCTOR_02
+#OBJ CODE Number
+DOCTOR
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_DOCTOR_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 -40 -200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

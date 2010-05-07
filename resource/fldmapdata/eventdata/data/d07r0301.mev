@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 19:36:08
+#save date:2010/05/07 20:45:49
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0301.wms
 #SECTION START:OBJ_EVENT
@@ -76,21 +76,21 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_DOCTOR_02
+TR_ELITEM_19
 #OBJ CODE Number
-DOCTOR
+TRAINERM
 #MOVE CODE Number
-MV_DOWN
+MV_RND_LR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_DOCTOR_02
+SCRID_TRID_ELITEM_19
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
-0
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-472 16 -72
+440 16 -88
 #event number: 3
 #type
 1
