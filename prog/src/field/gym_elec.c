@@ -2112,7 +2112,7 @@ BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
 
   {
     //イベントセット
-    GMEVENT * event = GMEVENT_Create( gsys, NULL, ChangePointEvt, 0/*sizeof(ENCEFF_WORK)*/ );
+    GMEVENT * event = GMEVENT_Create( gsys, NULL, ChangePointEvt, 0);
     GAMESYSTEM_SetEvent(gsys, event);
     //操作予定レバーインデックスをセット
     tmp->LeverIdx = inLeverIdx;
