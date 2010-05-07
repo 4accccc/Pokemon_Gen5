@@ -2521,7 +2521,9 @@ static void ClearNewGameWarrning( START_MENU_WORK * wk, BOOL flg )
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_X_SET, 0 );
 	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, wk->bgScroll );
 
-	VanishListObj( wk, TRUE );
+	if( wk->list[0] == LIST_ITEM_CONTINUE ){
+		VanishListObj( wk, TRUE );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
