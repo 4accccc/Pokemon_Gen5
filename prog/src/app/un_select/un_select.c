@@ -1996,12 +1996,8 @@ static BOOL SceneConfirm_Init( UI_SCENE_CNT_PTR cnt, void* work )
       //リスト位置を国コードに変換
 ///>      code = g_FloorTable[(UN_LIST_MAX-1) - wk->ListSelPos];
       code = g_FloorTable[wk->ListSelPos];
-      if ( (0<code)&&(code<UN_LIST_MAX) )
-      {
-        //国名タグ展開
-        WORDSET_RegisterCountryName( wk->cnt_msg->wordset, 0, code );
-      }
-      else GF_ASSERT_MSG(0,"listpos = %d code = %d",wk->ListSelPos, code);
+      //国名タグ展開
+      WORDSET_RegisterCountryName( wk->cnt_msg->wordset, 0, code );
     }
     MSG_CNT_SetPrint( wk->cnt_msg, un_reception_msg_01 );
     UI_SCENE_CNT_IncSubSeq( cnt );
