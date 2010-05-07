@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T19:14:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T11:09:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,16 +292,32 @@
 	</lock>
 
 
-	<row id="msg_r01_white_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r01_white_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
-・移動デモ中(表示タイミングはお任せ）
-・0＝主人公名前</comment>
+・移動デモ中(1番道路の表示が出たあと、３人止まって）
+　主人公、ライバルは右向き
+　サポートは左向き
+・続けてblack_00</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『ああ！　なんだろう
-どきどき　ワクワク　しちゃうね</language>
+どきどき　ワクワク　しちゃうね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ああ！　なんだろう
-どきどき　ワクワク　しちゃうね</language>
+どきどき　ワクワク　しちゃうね▼</language>
+	</row>
+
+	<row id="msg_r01_black_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ライバル、上向き
+　主人公、サポート、左向き
+・メッセージ表示後、移動再開
+　black_01へ</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『そうだね
+さ　はかせが　まってる▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『そうだね
+さ　博士が　待ってる▼</language>
 	</row>
 
 	<row id="msg_r01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -411,7 +427,7 @@
 		<comment>♂
 ・画面上（博士）をみながらメッセージ表示
 　ついで主人公を向き合いながら
-　次のmsg_r01_black_03表示</comment>
+　black_03表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ちなみに　ポケモンが
@@ -422,7 +438,7 @@
 
 	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_r01_white_01表示</comment>
+・続けてwhite_01表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">じゃ　ぼくも
@@ -435,7 +451,7 @@
 		<comment>♀
 ・メッセージ表示後
 　「！」マーク表示
-・続けてmsg_r01_white_02</comment>
+・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『そうだよね
@@ -493,7 +509,7 @@
 
 	<row id="msg_r01_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてmsg_r01_white_06表示</comment>
+・続けてwhite_06表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『なるほどね
@@ -533,7 +549,7 @@
 
 	<row id="msg_r01_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・msg_r01_white_06表示後
+・white_06表示後
 　T02側に出現</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
@@ -554,10 +570,10 @@
 　T02側に出現
 ・はい/いいえの選択肢表示
 ・はい選択時で捕まえた数が
-　　3匹以上→msg_r01_white_12
-　　2匹　　　→msg_r01_white_13
-　　1匹以下→msg_r01_white_14
-・いいえ選択時→msg_r01_white_11</comment>
+　　3匹以上→white_12
+　　2匹　　　→_white_13
+　　1匹以下→white_14
+・いいえ選択時→white_11</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『どう？　[1:00:トレーナー名:0]
@@ -650,16 +666,16 @@ TVT着信演出の統一に伴い未使用になっています</comment>
 さあ　つなげようか▼</language>
 	</row>
 
-	<row id="msg_r01_tvt_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・着信MEの再生と同時に表示
-　続けてmsg_r01_black_11aへ</comment>
+　続けてblack_11aへ</comment>
 		<attribute name="キャラ指定">システム
 ライブキャスター</attribute>
 		<language name="JPN" width="256">ライブキャスターが　なっている</language>
 		<language name="JPN_KANJI" width="256">ライブキャスターが　なっている</language>
 	</row>
 
-	<row id="msg_r01_tvt_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_tvt_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・続けて
 　tvt.gmmのmsg_transceiver_r01_01呼び出し
 ・0＝主人公名前</comment>
