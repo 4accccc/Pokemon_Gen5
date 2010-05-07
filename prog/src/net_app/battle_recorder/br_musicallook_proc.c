@@ -557,6 +557,7 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
         pos.x = x;
         pos.y = y;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
       }
 
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ReturnSearch );

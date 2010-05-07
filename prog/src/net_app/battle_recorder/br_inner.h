@@ -111,7 +111,7 @@ typedef struct
 //-------------------------------------
 ///	バトルレコーダー  ボタン管理復帰データ
 //=====================================
-#define BR_BTN_RECORVER_STACK_MAX 4
+#define BR_BTN_RECORVER_STACK_MAX 6
 typedef struct 
 {
   struct

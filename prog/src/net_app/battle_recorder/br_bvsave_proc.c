@@ -417,6 +417,7 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
         pos.x = x;
         pos.y = y;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
       }
 
       *p_seq  = SEQ_FADEOUT_START_RET;
@@ -854,6 +855,7 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         pos.x = x;
         pos.y = y;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
       }
 
       (*p_seq)++;

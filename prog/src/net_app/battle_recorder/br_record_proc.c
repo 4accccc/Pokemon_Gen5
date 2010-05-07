@@ -839,6 +839,7 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
         pos.x = x;
         pos.y = y;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
       }
 
       BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
@@ -1041,6 +1042,7 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
         pos.x = x;
         pos.y = y;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
       }
 
 

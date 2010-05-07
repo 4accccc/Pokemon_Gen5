@@ -87,7 +87,8 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 ///	画面作成
 //=====================================
 static void Br_BvDelete_CreateDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param );
-static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param );
+static void Br_BvDelete_DeleteMainDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param );
+static void Br_BvDelete_DeleteSubDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param );
 
 //-------------------------------------
 ///	その他
@@ -187,7 +188,17 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
       BR_BALLEFF_Exit( p_wk->p_balleff[i] );
     }
   }
-  Br_BvDelete_DeleteDisplay( p_wk, p_param );
+
+  //削除してあれば、下画面は破棄している
+  if( p_wk->p_param->is_delete )
+  { 
+    Br_BvDelete_DeleteMainDisplay( p_wk, p_param );
+  }
+  else
+  { 
+    Br_BvDelete_DeleteMainDisplay( p_wk, p_param );
+    Br_BvDelete_DeleteSubDisplay( p_wk, p_param );
+  }
 
 	//モジュール破棄
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -321,15 +332,7 @@ static void Br_BvDelete_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   { 
   case SEQ_FADEOUT_START:
-    if( p_wk->p_param->is_delete )
-    { 
-      //消去してならばサブ画面はすでにFADEしているので、メインだけ
-      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
-    }
-    else
-    { 
-      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
-    }
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_FADEOUT_WAIT;
     break;
 
@@ -364,6 +367,8 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
     SEQ_FADEOUT_SUB_INIT,
     SEQ_FADEOUT_SUB_WAIT,
+    SEQ_FADEIN_SUB_INIT,
+    SEQ_FADEIN_SUB_WAIT,
 
     SEQ_DELETE_INIT,
     SEQ_DELETE_MAIN,
@@ -427,6 +432,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_FADEOUT_SUB_WAIT:
     if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
     { 
+      Br_BvDelete_DeleteSubDisplay( p_wk, p_wk->p_param );
       BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_015 );
 
 
@@ -438,6 +444,18 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
       p_wk->cnt = 0;
 
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_FADEIN_SUB_INIT:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_SUB, BR_FADE_DIR_IN );
+    (*p_seq)++;
+    break;
+
+  case SEQ_FADEIN_SUB_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
       (*p_seq)++;
     }
     break;
@@ -471,6 +489,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       *p_seq  = SEQ_DELETE_MSG_WAIT;
     }
     break;
+
   case SEQ_DELETE_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )
     { 
@@ -482,6 +501,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         pos.x = x;
         pos.y = y;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
       }
 
       *p_seq  = SEQ_RETURN;
@@ -570,14 +590,33 @@ static void Br_BvDelete_CreateDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  ワーク
+ *	@brief  画面破棄
  *
  *	@param	BR_BVDELETE_WORK *p_wk  ワーク
  *	@param	*p_param                引数
  */
 //-----------------------------------------------------------------------------
-static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param )
+static void Br_BvDelete_DeleteMainDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param )
 { 
+
+  //上画面破棄
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サブ画面破棄
+ *
+ *	@param	BR_BVDELETE_WORK *p_wk    ワーク
+ *	@param	*p_param                  引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_BvDelete_DeleteSubDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param )
+{ 
+
   //メッセージウィンドウ
   {
     int i;
@@ -594,13 +633,6 @@ static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
 
   //下画面破棄
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_BVDELETE_S );
-
-  //上画面破棄
-  if( p_wk->p_text )
-  { 
-    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
-    p_wk->p_text  = NULL;
-  }
 }
 
 //----------------------------------------------------------------------------
