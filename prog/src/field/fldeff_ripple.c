@@ -203,8 +203,8 @@ static void rippleTask_Init( FLDEFF_TASK *task, void *wk )
     GFL_BBDACT_SYS *bbdact_sys = ripple->bbdact_sys;
     
     actData.resID = ripple->res_idx_ripple;
-    actData.sizX = FX16_ONE*4+0xa00-1;
-    actData.sizY = FX16_ONE*4+0xa00-1;
+    actData.sizX = FX16_ONE*1;
+    actData.sizY = FX16_ONE*1;
     actData.alpha = 31;
     actData.drawEnable = TRUE;
     actData.lightMask = GFL_BBD_LIGHTMASK_0;

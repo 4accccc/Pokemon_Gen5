@@ -237,8 +237,8 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
     pos.z += SPLASH_DRAW_Z_OFFSET;
 
     actData.resID = splash->res_idx_splash;
-    actData.sizX = FX16_ONE*4+0xa00-1;
-    actData.sizY = FX16_ONE*4+0xa00-1;
+    actData.sizX = FX16_ONE*1;
+    actData.sizY = FX16_ONE*1;
     actData.alpha = 31;
     actData.drawEnable = TRUE;
     actData.lightMask = GFL_BBD_LIGHTMASK_0;

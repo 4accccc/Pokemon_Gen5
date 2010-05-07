@@ -2316,10 +2316,10 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
       FIELD_G3D_EFFBBDACT_RESMAX, FIELD_G3D_EFFBBDACT_ACTMAX,
       fldmap_G3D_BBDTrans, fieldWork->heapID );
   {
+    #define BBD_EFF_SCALE ((FX32_ONE+0xc00)*4)
     GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( fieldWork->effBbdActSys );
-    VecFx32 scale = {FX32_ONE+0xc00,FX32_ONE+0xc00,FX32_ONE+0xc00};
+    VecFx32 scale = {BBD_EFF_SCALE,BBD_EFF_SCALE,BBD_EFF_SCALE};
     GFL_BBD_SetScale( bbdSys, &scale );
-    
     { //Poligon ID
       u8 id = 0;
       GFL_BBD_SetPolID( bbdSys, &id );

@@ -236,7 +236,7 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
     /*
     pos.y += NUM_FX32(10); //‚Ò‚Á‚½‚è‚¾‚ª”í‚é
     */
-    pos.y += NUM_FX32(7);
+    pos.y += NUM_FX32(9);
     pos.z += NUM_FX32(-2);
   }
   
@@ -271,8 +271,8 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
   type = work->head.type;
   
   actData.resID = work->head.eff_grass->res_idx_tbl[type];
-  actData.sizX = FX16_ONE*8-1;
-  actData.sizY = FX16_ONE*8-1;
+  actData.sizX = FX16_ONE*2;
+  actData.sizY = FX16_ONE*2;
   actData.alpha = 31;
   actData.drawEnable = TRUE;
   actData.lightMask = GFL_BBD_LIGHTMASK_0;
