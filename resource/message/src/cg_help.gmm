@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-06T21:27:23"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-07T18:34:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,9 +349,9 @@
 		</language>
 	</columns>
 
-	<dialog left="319" top="145" right="1024" bottom="773" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+	<dialog left="1160" top="459" right="1865" bottom="1087" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -453,16 +453,16 @@
 「ＩＲ」について</comment>
 		<language name="JPN" width="224">せきがいせんを　つかって
 めのまえにいる　ともだちと　きがるに
-たいせんや　こうかんが　できます
+たいせんや　こうかんが　できます。
 また　あいしょうが　わかる
 フィーリングチェックや
-ともだちコードの　こうかんも　できます</language>
+ともだちコードの　こうかんも　できます。</language>
 		<language name="JPN_KANJI" width="224">赤外線を　使用して
 目の前にいる　友達と　気軽に
-ポケモン対戦や　交換が　できます
+ポケモン対戦や　交換が　できます。
 また　相性が　わかる
 フィーリングチェックや
-ともだちコードの　交換も　できます</language>
+ともだちコードの　交換も　できます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_02">
@@ -470,12 +470,12 @@
 「ワイヤレス」について</comment>
 		<language name="JPN" width="224">ワイヤレスつうしんを　つかって
 ちかくにいる　ともだちと
-つぎの　あそびが　できます
+つぎの　あそびが　できます。
 ・ライブキャスター
 ・ハイリンク</language>
 		<language name="JPN_KANJI" width="224">ワイヤレス通信を　使って
 近くにいる　友達と
-次の　遊びが　できます
+次の　遊びが　できます。
 ・ライブキャスター
 ・ハイリンク</language>
 	</row>
@@ -488,21 +488,21 @@
 こうかんしたり　Ｗｉ－Ｆｉクラブで
 いっしょに　あそんだことの　ある
 ともだちと　ライブキャスターを
-つかって　あそべます</language>
+つかって　あそべます。</language>
 		<language name="JPN_KANJI" width="224">ライブキャスターは
 Ｃ－ＧＥＡＲで　ともだちコードを
 交換したり　Ｗｉ－Ｆｉクラブで
 一緒に　遊んだことの　ある　友達と
-ライブキャスターで　遊べます</language>
+ライブキャスターで　遊べます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_04">
 		<comment>説明文
 「ワイヤレス」について</comment>
 		<language name="JPN" width="224">ハイリンクは　ボタンを　タッチすれば
-いっしゅんで　ハイリンクに　いけます</language>
+いっしゅんで　ハイリンクに　いけます。</language>
 		<language name="JPN_KANJI" width="224">ハイリンクは　ボタンを　タッチすれば
-一瞬で　ハイリンクに　行けます</language>
+一瞬で　ハイリンクに　行けます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_05">
@@ -510,16 +510,16 @@
 「ワイヤレス」について</comment>
 		<language name="JPN" width="224">じぶんの　まわりで　げんざい
 ユニオンルームに　はいっている
-にんずうが　わかります
+にんずうが　わかります。
 また　ちかくで　ワイヤレスの
 はいしんを　おこなっているかも
-わかります</language>
+わかります。</language>
 		<language name="JPN_KANJI" width="224">自分の　周りで　現在
 ユニオンルームに　入っている
-人数が　わかります
+人数が　わかります。
 また　近くで　ワイヤレスの
 配信を　行っているかも
-わかります</language>
+わかります。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_06">
@@ -527,16 +527,16 @@
 「ワイヤレス」について</comment>
 		<language name="JPN" width="224">それと　Ｃギアの　でんげんを
 オンにしている　ひとが
-まわりに　いるか　わかります
+まわりに　いるか　わかります。
 ちかくに　ひとが　いると
 すれちがいや　ちょうさレーダーの
-つうしんを　キャッチ　しやすいです</language>
+つうしんを　キャッチ　しやすいです。</language>
 		<language name="JPN_KANJI" width="224">それと　Ｃ－ＧＥＡＲの　電源を
 ＯＮにしている　人が
-周りに　いるか　わかります
+周りに　いるか　わかります。
 近くに　人が　いると
 すれ違いや　調査レーダーの
-通信を　キャッチ　しやすいです</language>
+通信を　キャッチ　しやすいです。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_07">
@@ -545,11 +545,11 @@
 		<language name="JPN" width="224">ゲームシンクという　ボタンで
 ねむらせる　ポケモンを　えらび
 Ｗｉ－Ｆｉコネクションで
-レポートを　おくることが　できます</language>
+レポートを　おくることが　できます。</language>
 		<language name="JPN_KANJI" width="224">ＧａｍｅＳｙｎｃという　ボタンで
 眠らせる　ポケモンを　選び
 Ｗｉ－Ｆｉコネクションで
-レポートを　送信することが　できます</language>
+レポートを　送信することが　できます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_08">
@@ -558,15 +558,15 @@
 		<language name="JPN" width="224">Ｗｉ－Ｆｉの　でんぱを　キャッチしても
 ほんたいせっていが　できて　いないか
 ＷＥＰキーが　みとうろく　だと
-Ｗｉ－Ｆｉに　せつぞく　できません
+Ｗｉ－Ｆｉに　せつぞく　できません。
 そのばあい　ボタンの　いろは
-あかいろで　てんめつ　します</language>
+あかいろで　てんめつ　します。</language>
 		<language name="JPN_KANJI" width="224">Ｗｉ－Ｆｉの　電波を　キャッチしても
 本体設定が　できて　いないか
 ＷＥＰキーが　未登録だと
-Ｗｉ－Ｆｉに　接続　できません
+Ｗｉ－Ｆｉに　接続　できません。
 その場合　ボタンの　色は
-赤色で　点滅　します</language>
+赤色で　点滅　します。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_09">
@@ -574,33 +574,33 @@
 「すれちがいログ」について</comment>
 		<language name="JPN" width="224">すれちがった　ひとが
 どんなことを　しているのかが
-リアルタイムで　ひょうじされます
+リアルタイムで　ひょうじされます。
 タッチすることで　あいてについて
 くわしく　みたり
-じゆうに　はつげん　できます</language>
+じゆうに　はつげん　できます。</language>
 		<language name="JPN_KANJI" width="224">すれ違った　人が
 どんなことを　しているのかが
-リアルタイムで　表示されます
+リアルタイムで　表示されます。
 タッチすることで
 相手についての　詳細を　みたり
-自由に　発言することが　できます</language>
+自由に　発言することが　できます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_10">
 		<comment>説明文
 「ちょうさたんちき」について</comment>
 		<language name="JPN" width="224">すれちがった　ひとの
-このみや　しゅみを　ちょうさできます
+このみや　しゅみを　ちょうさできます。
 ちょうさしたい　ないようを　きめれば
 きょう　すれちがった　ひとの　データ
 いままでに　すれちがった　ひとの
-データを　みることが　できます</language>
+データを　みることが　できます。</language>
 		<language name="JPN_KANJI" width="224">すれ違った　人の
-好みや　趣味を　調査できます
+好みや　趣味を　調査できます。
 調査したい　内容を　決定すれば
 今日　すれ違った　人の　データと
 今までに　すれ違った　人の
-データを　みることが　できます</language>
+データを　みることが　できます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_11">
@@ -608,17 +608,17 @@
 「カスタム」について
 ・何の色が変わる？</comment>
 		<language name="JPN" width="224">カスタムマークを　タッチすると
-マークが　てんめつ　します
+マークが　てんめつ　します。
 その　じょうたいで　ボタンを
-タッチすると　いろが　へんか　します
+タッチすると　いろが　へんか　します。
 いろの　ボタンを　ならべて
-すきな　もようを　つくれます</language>
+すきな　もようを　つくれます。</language>
 		<language name="JPN_KANJI" width="224">カスタムマークを　タッチすると
-マークが　点滅　します
+マークが　点滅　します。
 その　状態で　ボタンを
-タッチすると　色が　変化します
+タッチすると　色が　変化します。
 色の　ボタンを　ならべて
-好きな　模様を　作れます</language>
+好きな　模様を　作れます。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_12">
@@ -626,16 +626,16 @@
 「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について</comment>
 		<language name="JPN" width="224">でんげんマークを　タッチすると
 オンと　オフを　きりかえるかの
-かくにんがめんに　かわります
+かくにんがめんに　かわります。
 オフにすると　タッチぶぶんが
 くらくなり　どうじに
-むせんの　つうしんが　オフになります</language>
+むせんの　つうしんが　オフになります。</language>
 		<language name="JPN_KANJI" width="224">Ｃ－ＧＥＡＲの　右下にある
 電源マークを　タッチすると
 ＯＮと　ＯＦＦを　切り替えるかの
-確認画面に　移行します
+確認画面に　移行します。
 ＯＦＦにすると　タッチ部分が　暗くなり
-同時に　無線通信が　ＯＦＦになります</language>
+同時に　無線通信が　ＯＦＦになります。</language>
 	</row>
 
 	<row id="CG_HELP_SYS_01">
