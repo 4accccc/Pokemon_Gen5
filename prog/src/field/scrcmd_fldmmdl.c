@@ -968,7 +968,7 @@ static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * 方向起動ＰＯＳ用向き直り処理   @todo
+ * 方向起動ＰＯＳ用向き直り処理
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk
  * @retval  VMCMD_RESULT
