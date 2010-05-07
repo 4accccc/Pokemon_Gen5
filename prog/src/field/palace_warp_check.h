@@ -11,5 +11,5 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 
-extern PLC_WP_CHK_Check(GAMESYS_WORK * gsys);
+extern BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys);
 

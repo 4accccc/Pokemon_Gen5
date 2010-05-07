@@ -12,10 +12,22 @@
 #include "fieldmap.h"
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
+#include "field/zonedata.h" //ZONEDATA_EnablePalaceUse
 
 #include "palace_warp_check.h"
 
-PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
+//------------------------------------------------------------------
+/**
+ * @brief パレスへのワープ可否チェック
+ * @param gsys  GAMESYSTEMへのポインタ
+ * @return  BOOL  TRUEの時、パレスにワープ可能
+ *
+ * @note
+ * パレスから復帰したとき、NPCと重なる位置に出現する条件であればワープ不可とする
+ * マップ管理表でパレスへのワープを許可されていないゾーンであれば、ワープ不可とする
+ */
+//------------------------------------------------------------------
+BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
 {
   GAMEDATA *gdata =  GAMESYSTEM_GetGameData(gsys);
   EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gdata );
@@ -26,6 +38,9 @@ PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
   int i;
+
+  //マップ管理表の登録情報チェック
+  if (ZONEDATA_EnablePalaceUse( FIELDMAP_GetZoneID( fieldWork ) ) == FALSE) return FALSE;
 
   if (tbl == NULL || max == 0) return TRUE;
 
