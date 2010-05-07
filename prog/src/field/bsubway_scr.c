@@ -467,18 +467,18 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   BSUBWAY_SCOREDATA_UpdateRenshouMax( scoreData, play_mode,
       BSUBWAY_SCOREDATA_GetRenshou(scoreData,play_mode) );
   
-  //周回数リセット
-  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-  
-  //ステージ数をエラーに
-  BSUBWAY_SCOREDATA_ErrorStageNo( bsw_scr->scoreData, play_mode );
-  
   { //勝ち負け共通データ作成
     SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
     u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
         bsw_scr->scoreData, play_mode );
     bsw_SetCommonScore( bsw_scr, save, TRUE, renshou );
   }
+
+  //周回数リセット
+  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+  
+  //ステージ数をエラーに
+  BSUBWAY_SCOREDATA_ErrorStageNo( bsw_scr->scoreData, play_mode );
 }
 
 #if 0 //wb null
@@ -892,15 +892,15 @@ void BSUBWAY_SCRWORK_SetClearScore(
   //周回数プラス
   BSUBWAY_SCOREDATA_IncStageNo( bsw_scr->scoreData, play_mode );
   
-  //ラウンド数リセット
-  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-  
   { //勝ち負け共通データ作成
     SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
     u16 renshou = BSUBWAY_SCOREDATA_GetRenshou(
         bsw_scr->scoreData, play_mode );
     bsw_SetCommonScore( bsw_scr, save, TRUE, renshou );
   }
+  
+  //ラウンド数リセット
+  BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
 }
 
 //--------------------------------------------------------------

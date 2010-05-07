@@ -84,7 +84,8 @@ extern void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 																			u8								winsy,			
 																			u8								colIdx,
                                       TALKMSGWIN_TYPE   winType,
-                                      int               wait );
+                                      int               wait,
+                                      u8 writex, u8 writey );
 
 extern void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
 																							int								tmsgwinIdx,

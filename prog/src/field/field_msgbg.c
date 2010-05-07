@@ -3538,6 +3538,9 @@ PRINTSTREAM_STATE FLDPLAINMSGWIN_GetStreamState( FLDPLAINMSGWIN *plnwin )
 //======================================================================
 //  サブウィンドウ
 //======================================================================
+#define SUBWIN_WRITE_X (2)
+#define SUBWIN_WRITE_Y (0)
+
 //--------------------------------------------------------------
 /// FLDSUBMSGWIN
 //--------------------------------------------------------------
@@ -3577,7 +3580,9 @@ static void fldSubMsgWin_Add(
   
   TALKMSGWIN_CreateWindowAlone(
     subwin->talkMsgWinSys, subwin->talkMsgWinIdx,
-    strBuf, x, y, sx, sy, GX_RGB(31,31,31), type, Control_GetMsgWait( &fmb->print_cont ) );
+    strBuf, x, y, sx, sy, GX_RGB(31,31,31), type,
+    Control_GetMsgWait( &fmb->print_cont ),
+    SUBWIN_WRITE_X, SUBWIN_WRITE_Y );
   
   TALKMSGWIN_OpenWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
 }
@@ -3592,10 +3597,10 @@ static void fldSubMsgWin_Add(
 void FLDSPWIN_GetNeedWindowCharaSize(
     FLDMSGBG *fmb, const STRBUF *strbuf, u8 *sizeX, u8 *sizeY )
 {
-  u32 l_space = 2; //TALKMSGWINのX描画開始位置
-  u32 u_space = 0; //TALKMSGWINのY描画開始位置
-  u32 w = PRINTSYS_GetStrWidth(strbuf,fmb->fontHandle,0) + l_space;
-  u32 h = PRINTSYS_GetStrHeight(strbuf,fmb->fontHandle) + u_space;
+  u32 start_x = SUBWIN_WRITE_X; //TALKMSGWINのX描画開始位置
+  u32 start_y = SUBWIN_WRITE_Y; //TALKMSGWINのY描画開始位置
+  u32 w = PRINTSYS_GetStrWidth(strbuf,fmb->fontHandle,0) + start_x;
+  u32 h = PRINTSYS_GetStrHeight(strbuf,fmb->fontHandle) + start_y;
   u32 c = w;
   w >>= 3;
   if( (c&0x07) ){
