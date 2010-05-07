@@ -29,15 +29,17 @@ typedef enum {
 //==========================================================================================
 // ■タスクワーク
 //==========================================================================================
-typedef struct
-{
+typedef struct {
+
+  FIELDMAP_WORK*  fieldmap;
+  FIELD_CAMERA*   camera;
+
+  CAMERA_ROT_TYPE rot_type;    // 回転タイプ
   u8              seq;         // シーケンス
-  FIELDMAP_WORK*  fieldmap;    // 処理対象のフィールドマップ
-  CAMERA_ROT_TYPE type;        // 回転タイプ
-  u16             frame;       // 経過フレーム数
-  u16             endFrame;    // 終了フレーム
-  u32             startAngle;  // 回転角初期値(2πラジアンを65536分割した値を単位とする数)
-  u32             endAngle;    // 回転角最終値(2πラジアンを65536分割した値を単位とする数)
+  u16             now_frame;   // 経過フレーム数
+  u16             end_frame;   // 終了フレーム
+  u32             start_angle; // 回転角初期値(2πラジアンを65536分割した値を単位とする数)
+  u32             end_angle;   // 回転角最終値(2πラジアンを65536分割した値を単位とする数)
 
 } ROT_WORK;
 
@@ -45,7 +47,7 @@ typedef struct
 //==========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //==========================================================================================
-static void SetupAngle( ROT_WORK* work );
+static void SetupStartAngle( ROT_WORK* work );
 static void UpdateAngle( ROT_WORK* work );
 static FIELD_TASK_RETVAL RotateCamera( void* wk );
 
@@ -64,18 +66,19 @@ FIELD_TASK* FIELD_TASK_CameraRot_Yaw( FIELDMAP_WORK* fieldmap, int frame, u16 an
   ROT_WORK* work;
   FIELD_TASK* task;
   HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FIELD_CAMERA* cam = FIELDMAP_GetFieldCamera( fieldmap );
 
-  // 生成
+  // タスクを生成
   task = FIELD_TASK_Create( heap_id, sizeof(ROT_WORK), RotateCamera );
-  // 初期化
+
+  // タスクワークを初期化
   work = FIELD_TASK_GetWork( task );
-  work->seq        = 0;
-  work->fieldmap   = fieldmap;
-  work->type       = CAMERA_ROT_TYPE_YAW;
-  work->frame      = 0;
-  work->endFrame   = frame;
-  work->endAngle   = angle;
+  work->fieldmap  = fieldmap;
+  work->camera    = FIELDMAP_GetFieldCamera( fieldmap );
+  work->seq       = 0;
+  work->rot_type  = CAMERA_ROT_TYPE_YAW;
+  work->now_frame = 0;
+  work->end_frame = frame;
+  work->end_angle = angle;
   
   return task;
 }
@@ -94,18 +97,19 @@ FIELD_TASK* FIELD_TASK_CameraRot_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 
   ROT_WORK* work;
   FIELD_TASK* task;
   HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FIELD_CAMERA* cam = FIELDMAP_GetFieldCamera( fieldmap );
 
-  // 生成
+  // タスクを生成
   task = FIELD_TASK_Create( heap_id, sizeof(ROT_WORK), RotateCamera );
-  // 初期化
+
+  // タスクワークを初期化
   work = FIELD_TASK_GetWork( task );
-  work->seq        = 0;
   work->fieldmap   = fieldmap;
-  work->type       = CAMERA_ROT_TYPE_PITCH;
-  work->frame      = 0;
-  work->endFrame   = frame;
-  work->endAngle   = angle;
+  work->camera     = FIELDMAP_GetFieldCamera( fieldmap );
+  work->seq        = 0;
+  work->rot_type   = CAMERA_ROT_TYPE_PITCH;
+  work->now_frame  = 0;
+  work->end_frame  = frame;
+  work->end_angle  = angle;
   
   return task;
 }
@@ -122,37 +126,35 @@ FIELD_TASK* FIELD_TASK_CameraRot_Pitch( FIELDMAP_WORK* fieldmap, int frame, u16 
  * @param work 設定対象のワーク
  */
 //------------------------------------------------------------------------------------------
-static void SetupAngle( ROT_WORK* work )
+static void SetupStartAngle( ROT_WORK* work )
 {
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
+  FIELD_CAMERA* camera = work->camera;
+  u32 end_angle = work->end_angle;
+  u32 start_angle;
 
-  // 初期角度・最終角度を設定
-  switch( work->type )
-  {
-  case CAMERA_ROT_TYPE_YAW:
-    work->startAngle = FIELD_CAMERA_GetAngleYaw( camera );
-    break;
-  case CAMERA_ROT_TYPE_PITCH:
-    work->startAngle = FIELD_CAMERA_GetAnglePitch( camera );
-    break;
+  // 初期角度を設定
+  switch( work->rot_type ) {
+  default: GF_ASSERT(0);
+  case CAMERA_ROT_TYPE_YAW:   start_angle = FIELD_CAMERA_GetAngleYaw( camera ); break;
+  case CAMERA_ROT_TYPE_PITCH: start_angle = FIELD_CAMERA_GetAnglePitch( camera ); break;
   }
 
   // 正の方向に回したとき, 180度以上の回転が必要になる場合, 負の方向に回転させる必要がある.
   // 回転の方向を逆にするために, 小さい方の角度を360度分の下駄を履かせる.
-  if( work->startAngle < work->endAngle )
-  {
-    if( PI < (work->endAngle - work->startAngle) )
-    {
-      work->startAngle += 2*PI;
+  if( start_angle < end_angle ) {
+    if( PI < (end_angle - start_angle) ) {
+      start_angle += 2*PI;
     }
   }
-  else if( work->endAngle < work->startAngle )
-  {
-    if( PI < (work->startAngle - work->endAngle) )
-    {
-      work->endAngle += 2*PI;
+  else if( end_angle < start_angle ) {
+    if( PI < (start_angle - end_angle) ) {
+      end_angle += 2*PI;
     }
   } 
+
+  // ワークの値を更新
+  work->start_angle = start_angle;
+  work->end_angle   = end_angle;
 }
 
 //------------------------------------------------------------------------------------------
@@ -164,40 +166,36 @@ static void SetupAngle( ROT_WORK* work )
 //------------------------------------------------------------------------------------------
 static void UpdateAngle( ROT_WORK* work )
 {
-  float t;
-  u16 angle;
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
-  FIELD_CAMERA_MODE cam_mode;
+  FIELD_CAMERA* camera = work->camera;
+  FIELD_CAMERA_MODE camera_mode;
 
   // 更新
-  work->frame++;
-  if( work->frame <= work->endFrame )
-  { 
+  work->now_frame++;
+
+  if( work->now_frame <= work->end_frame ) { 
+    float t;
+    u16 angle;
+
     // 角度を算出
-    //  計算式f(t)=-2t^3+3t^2 
-    t     = work->frame / (float)work->endFrame;
+    t     = work->now_frame / (float)work->end_frame;
     t     = t*t*( -2*t + 3 );
-    angle = (u16)( ( (1-t) * work->startAngle ) + ( t * work->endAngle ) );
+    angle = (u16)( ( (1-t) * work->start_angle ) + ( t * work->end_angle ) );
+
+    camera_mode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
     // タイプに応じた更新を行う
-    cam_mode = FIELD_CAMERA_GetMode( camera );
-    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-    switch( work->type ) {
-    case CAMERA_ROT_TYPE_YAW:    
-      FIELD_CAMERA_SetAngleYaw( camera, angle );    
-#ifdef DEBUG_EVENT_ON
-      OBATA_Printf( "TASK-CAM-ROT: frame = %d, yaw = 0x%x\n", work->frame, angle );
-#endif
-      break;
-    case CAMERA_ROT_TYPE_PITCH:  
-      FIELD_CAMERA_SetAnglePitch( camera, angle );  
-#ifdef DEBUG_EVENT_ON
-      OBATA_Printf( "TASK-CAM-ROT: frame = %d, pitch = 0x%x\n", work->frame, angle ); 
-#endif
-      break;
+    switch( work->rot_type ) {
+    case CAMERA_ROT_TYPE_YAW:    FIELD_CAMERA_SetAngleYaw( camera, angle );    break;
+    case CAMERA_ROT_TYPE_PITCH:  FIELD_CAMERA_SetAnglePitch( camera, angle );  break;
     }
-    FIELD_CAMERA_ChangeMode( camera, cam_mode );
+
+    FIELD_CAMERA_ChangeMode( camera, camera_mode ); 
   }
+
+#ifdef DEBUG_EVENT_ON
+  OBATA_Printf( "TASK-CAM-ROT: now_frame = %d, pitch = 0x%x\n", work->now_frame, angle ); 
+#endif
 }
 
 //==========================================================================================
@@ -213,16 +211,15 @@ static FIELD_TASK_RETVAL RotateCamera( void* wk )
 {
   ROT_WORK* work = (ROT_WORK*)wk;
 
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case 0:
-    SetupAngle( work );
+    SetupStartAngle( work );
     work->seq++;
     break;
+
   case 1:
     UpdateAngle( work );
-    if( work->endFrame <= work->frame )
-    {
+    if( work->end_frame <= work->now_frame ) {
       return FIELD_TASK_RETVAL_FINISH;
     }
     break;

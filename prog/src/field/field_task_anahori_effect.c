@@ -13,6 +13,7 @@
 #include "fldeff_iwakudaki.h"
 #include "field_task_anahori_effect.h"
 
+
 //#define DEBUG_PRINT_ON
 
 
@@ -21,22 +22,26 @@
 //========================================================================================== 
 typedef struct {
 
-  u8             seq;       // シーケンス
   FIELDMAP_WORK* fieldmap;  // 動作対象のフィールドマップ
   FLDEFF_CTRL*   fectrl;    // フィールドエフェクト
-  u16            nowFrame;  // 動作フレーム数
-  u16            endFrame;  // 最大フレーム数
-  u16            interval;  // エフェクト表示間隔
   MMDL*          mmdl;      // 操作対象の動作モデル
+  u8             seq;       // シーケンス
+  u16            now_frame; // 動作フレーム数
+  u16            end_frame; // 最終フレーム数
+  u16            interval;  // エフェクト表示間隔
 
 } TASK_WORK;
 
 
 //========================================================================================== 
-// ■非公開関数のプロトタイプ宣言
+// ■prototype
 //========================================================================================== 
 static FIELD_TASK_RETVAL AnahoriEffectUpdate( void* wk );
 
+
+//========================================================================================== 
+// ■public function
+//========================================================================================== 
 
 //------------------------------------------------------------------------------------------
 /**
@@ -52,40 +57,36 @@ static FIELD_TASK_RETVAL AnahoriEffectUpdate( void* wk );
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_AnahoriEffect( FIELDMAP_WORK* fieldmap, MMDL* mmdl, int frame, int interval )
 {
+  HEAPID        heap_id = FIELDMAP_GetHeapID( fieldmap );
+  FIELD_PLAYER* player  = FIELDMAP_GetFieldPlayer( fieldmap );
+
   FIELD_TASK* task;
   TASK_WORK* work;
-  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
 
   // タスクを生成
   task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), AnahoriEffectUpdate );
 
   // タスクワークを初期化
   work = FIELD_TASK_GetWork( task );
-  work->seq      = 0;
-  work->fieldmap = fieldmap;
-  work->fectrl   = FIELDMAP_GetFldEffCtrl( fieldmap );
-  work->mmdl     = FIELD_PLAYER_GetMMdl( player ); 
-  work->nowFrame = 0;
-  work->endFrame = frame;
-  work->interval = interval;
+  work->fieldmap  = fieldmap;
+  work->fectrl    = FIELDMAP_GetFldEffCtrl( fieldmap );
+  work->mmdl      = FIELD_PLAYER_GetMMdl( player ); 
+  work->seq       = 0;
+  work->now_frame = 0;
+  work->end_frame = frame;
+  work->interval  = interval;
 
   return task;
 }
 
 
 //========================================================================================== 
-// ■非公開関数
-//========================================================================================== 
-
-
-//========================================================================================== 
-// ■タスク処理関数
+// ■private function
 //========================================================================================== 
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 穴掘りエフェクト更新処理
+ * @brief 穴掘りエフェクト タスク更新処理
  */
 //------------------------------------------------------------------------------------------
 static FIELD_TASK_RETVAL AnahoriEffectUpdate( void* wk )
@@ -95,11 +96,11 @@ static FIELD_TASK_RETVAL AnahoriEffectUpdate( void* wk )
   switch( work->seq ) {
   case 0:
     // 岩砕きエフェクト表示
-    if( work->nowFrame % work->interval == 0 ) {
+    if( work->now_frame % work->interval == 0 ) {
       FLDEFF_IWAKUDAKI_SetMMdl( work->mmdl, work->fectrl );
     }
     // 終了チェック
-    if( work->endFrame <= work->nowFrame++ ) { 
+    if( work->end_frame <= work->now_frame++ ) { 
       return FIELD_TASK_RETVAL_FINISH;
     }
     break;
