@@ -16,8 +16,9 @@
  * @brief ゲーム内マニュアルの呼び出しイベントを生成する
  *
  * @param gameSystem
+ * @param ret_wk     終了結果を格納するワークへのポインタ
  *
  * @return ゲーム内マニュアル呼び出しイベント
  */
 //-------------------------------------------------------------------------
-extern GMEVENT* EVENT_GameManual( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_GameManual( GAMESYS_WORK* gameSystem, u16* ret_wk );

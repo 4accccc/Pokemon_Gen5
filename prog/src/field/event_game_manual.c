@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "app/manual.h"
 #include "fieldmap.h"
+#include "script_def.h"
 #include "event_fieldmap_control.h"
 #include "event_game_manual.h"
 
@@ -24,6 +25,7 @@ typedef struct {
   GAMESYS_WORK*  gameSystem;
   FIELDMAP_WORK* fieldmap;
   MANUAL_PARAM*  manualParam;
+  u16*           ret_wk;  // 終了結果の格納先
 
 } EVENT_WORK;
 
@@ -32,6 +34,7 @@ typedef struct {
 // ■prototype
 //=========================================================================
 static GMEVENT_RESULT GameManualEvent( GMEVENT* event, int* seq, void* wk );
+static void ReturnManualResult( EVENT_WORK* work ); // ゲームマニュアルの終了結果を返す
 
 
 //=========================================================================
@@ -43,11 +46,12 @@ static GMEVENT_RESULT GameManualEvent( GMEVENT* event, int* seq, void* wk );
  * @brief ゲーム内マニュアルの呼び出しイベントを生成する
  *
  * @param gameSystem
+ * @param ret_wk     終了結果を格納するワークへのポインタ
  *
  * @return ゲーム内マニュアル呼び出しイベント
  */
 //-------------------------------------------------------------------------
-GMEVENT* EVENT_GameManual( GAMESYS_WORK* gameSystem )
+GMEVENT* EVENT_GameManual( GAMESYS_WORK* gameSystem, u16* ret_wk )
 {
   GMEVENT* event;
   EVENT_WORK* work;
@@ -100,9 +104,28 @@ static GMEVENT_RESULT GameManualEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 1:
+    // 終了結果を格納
+    ReturnManualResult( work );
     // 後片付け
     GFL_HEAP_FreeMemory( work->manualParam );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+//-------------------------------------------------------------------------
+/**
+ * @brief ゲームマニュアルの終了結果を返す
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------
+static void ReturnManualResult( EVENT_WORK* work )
+{
+  if( work->manualParam->result == MANUAL_RESULT_CLOSE ) {
+    *(work->ret_wk) = SCR_MANUAL_RESULT_CLOSE;
+  }
+  else {
+    *(work->ret_wk) = SCR_MANUAL_RESULT_RETURN;
+  }
 }

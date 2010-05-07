@@ -338,8 +338,7 @@ VMCMD_RESULT EvCmdCallGameManual( VMHANDLE *core, void *wk )
   SCRIPT_WORK*  script     = SCRCMD_WORK_GetScriptWork( work );
   u16*          ret_wk     = SCRCMD_GetVMWork( core, work ); // コマンド第一引数
 
-  // @todo 終了モードを返す
-  event = EVENT_GameManual( gameSystem );
+  event = EVENT_GameManual( gameSystem, ret_wk );
   SCRIPT_CallEvent( script, event );
 
   return VMCMD_RESULT_SUSPEND;
