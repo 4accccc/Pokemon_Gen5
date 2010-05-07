@@ -988,11 +988,28 @@ static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct )
 //------------------------------------------------------------
 static BOOL print_PopupWindowTimeWaitCheck( u8* p_wait )
 {
-  if( (*p_wait)-- > 0 && (!GFL_UI_TP_GetTrg()) ){
-    return FALSE; 
+  u32 x,y;
+  u16 pat = 0xFFFE; 
+
+  if( (*p_wait)-- == 0 ){ //タイムアウト
+    *p_wait = 0;
+    return TRUE; 
   }
-  *p_wait = 0;
-  return TRUE;
+ 
+  //タッチチェック
+#if 0
+  if( GFL_UI_TP_GetPointTrg( &x, &y ) &&
+      GFL_BG_CheckDot( FRM_POPUP, x, y, &pat )){
+#else
+  if( GFL_UI_TP_GetPointTrg( &x, &y )){
+    //スクロールのため、スクリーンが実座標+64dotの位置にあるので、ちょっと位置補正してチェック
+    if( GFL_BG_CheckDot( FRM_POPUP, x, y+64, &pat )){
+#endif
+    *p_wait = 0;
+    return TRUE; 
+    }
+  }
+  return FALSE;
 }
 
 /*
