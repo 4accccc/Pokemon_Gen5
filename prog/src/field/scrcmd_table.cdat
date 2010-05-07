@@ -876,6 +876,9 @@
   DEF_CMD( EvCmdT01Gmk_Start, EV_SEQ_T01_GMK_START )
   //Ｔ01ギミック終了待ち
   DEF_CMD( EvCmdT01Gmk_WaitEnd, EV_SEQ_T01_GMK_WAIT_END )
+
+  //育て屋特殊チェック
+  DEF_CMD( EvCmdSodateyaCheck, EV_SEQ_SODATEYA_CHECK )
   
   END_CMD
   //スクリプトコマンドテーブル終了

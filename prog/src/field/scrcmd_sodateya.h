@@ -192,3 +192,13 @@ VMCMD_RESULT EvCmdGetSodateyaPokeGrowUpLv( VMHANDLE* core, void* wk );
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdGetSodateyaPokeTakeBackCharge( VMHANDLE* core, void* wk ); 
+
+//--------------------------------------------------------------------
+/**
+ * @brief 育て屋ポケモン特殊チェック
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdSodateyaCheck( VMHANDLE* core, void* wk );

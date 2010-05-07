@@ -556,3 +556,14 @@
 //--------------------------------------------------------------
 #define SCR_WEATHER_NO_ZONE_DEF ( 0xffff )
 
+//--------------------------------------------------------------
+// 育て屋: 特殊チェック項目
+//--------------------------------------------------------------
+#define SCR_SODATEYA_CHECK_ID_TAKEBACK_MENU (0) // 引き取りメニューの分類
+//--------------------------------------------------------------
+// 育て屋: 特殊チェックの結果
+//--------------------------------------------------------------
+// 引き取りメニューの分類 ( SCR_SODATEYA_CHECK_ID_TAKEBACK_MENU )
+#define SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_UNKNOWN (0) // 性別なし
+#define SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_MALE    (1) // ♂
+#define SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_FEMALE  (2) // ♀

@@ -20,6 +20,8 @@
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
 #include "fieldmap.h"
+#include "script_def.h"
+#include "poke_tool/poke_tool.h"
 
 FS_EXTERN_OVERLAY(pokelist);
 
@@ -29,6 +31,8 @@ FS_EXTERN_OVERLAY(pokelist);
 //====================================================================
 static GMEVENT* EVENT_SodatePokeSelect( 
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16* ret_wk );
+
+static int SodateyaCheck_TakeBackMenu( const POKEMON_PARAM* poke );
 
 
 //====================================================================
@@ -54,7 +58,6 @@ VMCMD_RESULT EvCmdCheckSodateyaHaveEgg( VMHANDLE* core, void* wk )
   SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
 
   *ret_wk = (u16)SODATEYA_HaveEgg( sodateya );
-  OBATA_Printf( "EvCmdCheckSodateyaHaveEgg : %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -99,7 +102,6 @@ VMCMD_RESULT EvCmdDeleteSodateyaEgg( VMHANDLE* core, void* wk )
   SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
 
   SODATEYA_DeleteEgg( sodateya );
-  OBATA_Printf( "EvCmdDeleteSodateyaEgg\n" );
   return VMCMD_RESULT_CONTINUE;
 } 
 
@@ -137,7 +139,6 @@ VMCMD_RESULT EvCmdSodateyaSelectTemotiPokemon( VMHANDLE* core, void* wk )
     SCRIPT_CallEvent( sw, event );
   }
 
-  OBATA_Printf( "EvcmdSodateyaSelectTemotiPokemon\n" );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -213,7 +214,6 @@ VMCMD_RESULT EvCmdGetSodateyaPokemonNum( VMHANDLE* core, void* wk )
   SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
 
   *ret_wk = (u16)SODATEYA_GetPokemonNum( sodateya );
-  OBATA_Printf( "EvCmdGetSodateyaPokemonNum : %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -238,8 +238,6 @@ VMCMD_RESULT EvCmdSodateyaLoveCheck( VMHANDLE* core, void* wk )
   *ret_wk = (u16)SODATEYA_GetLoveLevel( sodateya );
   return VMCMD_RESULT_CONTINUE;
 }
-
-
 
 //--------------------------------------------------------------------
 /**
@@ -331,7 +329,6 @@ VMCMD_RESULT EvCmdGetSodateyaPokeLv( VMHANDLE* core, void* wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
-  const POKEMON_PARAM* param = SODATEYA_GetPokemonParam( sodateya, pos );
 
   *ret_wk = (u16)SODATEYA_GetPokeLv_Current( sodateya, pos );
   return VMCMD_RESULT_CONTINUE;
@@ -385,6 +382,79 @@ VMCMD_RESULT EvCmdGetSodateyaPokeTakeBackCharge( VMHANDLE* core, void* wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief 育て屋ポケモン特殊チェック
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdSodateyaCheck( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
+
+  u16* ret_wk;
+  u16 poke_pos, check_id;
+  const POKEMON_PARAM* poke;
+
+  // コマンド引数を受け取る
+  ret_wk   = SCRCMD_GetVMWork( core, work );      // 第一引数: 結果の格納先
+  check_id = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: チェックID
+  poke_pos = SCRCMD_GetVMWorkValue( core, work ); // 第三引数: 預けポケモンIndex
+
+  // 引数チェック
+  GF_ASSERT( poke_pos < SODATEYA_GetPokemonNum(sodateya) );
+
+  poke = SODATEYA_GetPokemonParam( sodateya, poke_pos );
+
+  // チェックIDごとに判定
+  switch( check_id ) {
+    case SCR_SODATEYA_CHECK_ID_TAKEBACK_MENU:
+      *ret_wk = SodateyaCheck_TakeBackMenu( poke );
+      break;
+    default:
+      GF_ASSERT(0);
+      *ret_wk = 0;
+      break;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 育て屋特殊チェック ( 引き取りメニューの分類 )
+ *
+ * @param poke チェック対象のポケモン
+ *
+ * @return 引き取りメニューの分類
+ */
+//------------------------------------------------------------------
+static int SodateyaCheck_TakeBackMenu( const POKEMON_PARAM* poke )
+{
+  u32 monsno = PP_Get( poke, ID_PARA_monsno, NULL );
+  u32 sex    = PP_Get( poke, ID_PARA_sex, NULL );
+
+  // ニドラン♂ or ニドラン♀
+  if( (monsno == MONSNO_NIDORAN_M) || (monsno == MONSNO_NIDORAN_F) ) {
+    // ニックネームが無い場合は, 性別なし用のメニューを使用する
+    if( PP_Get( poke, ID_PARA_nickname_flag, NULL ) == FALSE ) {
+      return SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_UNKNOWN;
+    }
+  }
+
+  // 性別ごとに分岐
+  switch( sex ) {
+    default: GF_ASSERT(0);
+    case PTL_SEX_SPEC_UNKNOWN: return SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_UNKNOWN;
+    case PTL_SEX_SPEC_MALE:    return SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_MALE;
+    case PTL_SEX_SPEC_FEMALE:  return SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_FEMALE;
+  }
+}
 
 
 //====================================================================
@@ -416,8 +486,7 @@ static GMEVENT_RESULT EVENT_FUNC_SodatePokeSelect(GMEVENT * event, int * seq, vo
 	GAMESYS_WORK *gsys = psw->gsys;
 
   // シーケンスの定義
-  enum
-  {
+  enum {
     SEQ_FADE_OUT,
     SEQ_FIELDMAP_CLOSE,
     SEQ_SELECT_POKEMON,
@@ -426,8 +495,7 @@ static GMEVENT_RESULT EVENT_FUNC_SodatePokeSelect(GMEVENT * event, int * seq, vo
     SEQ_END,
   };
 
-	switch( *seq ) 
-  {
+	switch( *seq ) {
 	case SEQ_FADE_OUT: //// フェードアウト
 		GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys, psw->fieldmap, FIELD_FADE_WAIT));
     *seq = SEQ_FIELDMAP_CLOSE;
@@ -511,4 +579,4 @@ static GMEVENT * EVENT_SodatePokeSelect(
   psw->psData    = ps_data;
   psw->retWork   = ret_wk;
 	return event;
-}
+} 

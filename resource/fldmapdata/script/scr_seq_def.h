@@ -7352,6 +7352,28 @@
   .short \pos
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _SODATEYA_CHECK
+ * @brief 育て屋特殊チェック
+ * 
+ * @param ret_wk   結果の格納先
+ * @param check_id チェックID ( SCR_SODATEYA_CHECK_ID_xxxx )
+ * @param poke_pos 預けポケモンのインデックス
+ *
+ * @return チェックの結果 ( SCR_SODATEYA_CHECK_RESULT_xxxx )
+ */
+//--------------------------------------------------------------
+#define _SODATEYA_CHECK( ret_wk, check_id, poke_pos ) \
+    _ASM_SODATEYA_CHECK ret_wk, check_id, poke_pos
+
+  .macro _ASM_SODATEYA_CHECK ret_wk, check_id, poke_pos
+  .short EV_SEQ_SODATEYA_CHECK
+  .short \ret_wk
+  .short \check_id
+  .short \poke_pos
+  .endm
+
 //======================================================================
 //  サブプロセスコール関連
 //======================================================================
