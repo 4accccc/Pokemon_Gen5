@@ -368,6 +368,8 @@ SCROLL_STATE;
 #define PLACE_PULL_STRONG		(FX32_CONST(1))	 // 吸い込む強さ（カーソルCURSOR_ADD_SPEEDより弱く）
 #define PLACE_PULL_FORCE    (FX32_SQRT3)     // カーソルが動いていないとき、これ未満の距離なら強制的に吸い込ませる(sqrt(2)< <2を満たす値)
 
+// プレイヤーの位置に配置するOBJのアニメ
+#define HERO_ANMSEQ     (6)
 // リングのアニメ
 #define RING_CUR_ANMSEQ (5)
 
@@ -668,6 +670,12 @@ static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
 static u8 Zukan_Detail_Map_GetPlayerPosDataIdx( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 // プレイヤーの位置にOBJを配置する
 static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// プレイヤーの位置に配置するOBJの表示/非表示を切り替える
+static void Zukan_Detail_Map_DrawPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                         BOOL on_off );
+// プレイヤーの位置に配置するOBJを現在表示しているか否か
+static BOOL Zukan_Detail_Map_IsDrawPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 // カーソルを配置する
 static void Zukan_Detail_Map_SetCursor( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 // プレイヤーの位置にカーソルを配置する
@@ -1738,7 +1746,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
       // OBJ_TM_
       4,
       RING_CUR_ANMSEQ,
-      6,
+      HERO_ANMSEQ,
     };
     u8 bgpri[OBJ_MAX] =
     {
@@ -2367,8 +2375,36 @@ static void Zukan_Detail_Map_SetPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DET
     pos.x = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, player_pos_data_idx, TOWNMAP_DATA_PARAM_POS_X );
     pos.y = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, player_pos_data_idx, TOWNMAP_DATA_PARAM_POS_Y );
     GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_HERO], &pos, CLSYS_DEFREND_MAIN );
-    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_HERO], TRUE );
+    // 表示はZukan_Detail_Map_DrawPlayerに任せる
   }
+}
+//-------------------------------------
+/// プレイヤーの位置に配置するOBJの表示/非表示を切り替える
+//=====================================
+static void Zukan_Detail_Map_DrawPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                         BOOL on_off )
+{
+  // この関数より前に1度、Zukan_Detail_Map_SetPlayer関数を呼び出して、配置場所を設定しておくこと。
+  if( on_off )
+  {
+    u8 player_pos_data_idx = Zukan_Detail_Map_GetPlayerPosDataIdx( param, work, cmn );
+    if( player_pos_data_idx != DATA_IDX_NONE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_HERO], HERO_ANMSEQ );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_HERO], TRUE );
+    }
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_HERO], FALSE );
+  }
+}
+//-------------------------------------
+/// プレイヤーの位置に配置するOBJを現在表示しているか否か
+//=====================================
+static BOOL Zukan_Detail_Map_IsDrawPlayer( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  return GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_HERO] );
 }
 
 //-------------------------------------
@@ -2652,6 +2688,10 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       // 状態変更
       if( change_state )
       {
+        // タッチorキーを切り替えているのに、一年中生息地不明の場合はここでその入力を無効にしている。
+        // しかし、この図鑑分布画面を抜けるにはこの後にタッチorキー入力が必要だし、
+        // このSTATE_TOPの1階層下のSTATE_SELECTに行くにはタッチorキー入力が必要だから、
+        // もう一度何かしら入力があるはずだから、ここでは無効にしたままでいい。
         if( !( work->appear_rule == APPEAR_RULE_YEAR && work->habitat == HABITAT_UNKNOWN ) )  // 一年中生息地不明の場合はトップから降りられない
         {
           Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_TOP_TO_SELECT );
@@ -2672,7 +2712,14 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       // キー入力
       if( !is_input )
       {
-        if( work->appear_rule != APPEAR_RULE_YEAR )
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )  // タッチバーの戻るボタンのとき
+        {
+          work->input_enable = FALSE;  // Zukan_Detail_Map_CommandFuncでinput_enableをFALSEにするのはここより2フレームも遅れるので、ここでFALSEにしておく。
+          
+          is_input = TRUE;
+          select_enable = FALSE;
+        }
+        else if( work->appear_rule != APPEAR_RULE_YEAR )
         {
           if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
           {
@@ -2710,7 +2757,19 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       {
         if( GFL_UI_TP_GetPointTrg( &x, &y ) )
         {
-          if( work->appear_rule == APPEAR_RULE_SEASON )
+          if( work->appear_rule == APPEAR_RULE_YEAR )
+          {
+            if( 0<=y&&y<168)
+            {
+              // 何もしない
+            }
+            else
+            {
+              // タッチバーを表示している場所をタッチしたときは、マップ上の拠点の選択操作はしていないものとする
+              select_enable = FALSE;
+            }
+          }
+          else if( work->appear_rule == APPEAR_RULE_SEASON )
           {
             if(    SEASON_R_ARROW_POS_X<=x&&x<SEASON_R_ARROW_POS_X+SEASON_R_ARROW_SIZE_X
                 && SEASON_R_ARROW_POS_Y<=y&&y<SEASON_R_ARROW_POS_Y+SEASON_R_ARROW_SIZE_Y )
@@ -2742,6 +2801,15 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
               // 季節名を表示している場所をタッチしたときは、マップ上の拠点の選択操作はしていないものとする
               select_enable = FALSE;
             }
+            else if( 0<=y&&y<168)
+            {
+              // 何もしない
+            }
+            else
+            {
+              // タッチバーを表示している場所をタッチしたときは、マップ上の拠点の選択操作はしていないものとする
+              select_enable = FALSE;
+            }
           }
         }
         if( is_input )  // タッチ入力確定
@@ -2770,6 +2838,10 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
   // 生息地が不明のときは、マップ上の拠点を選べないことにしておく 
   if( work->habitat == HABITAT_UNKNOWN ) return;
 
+  // ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )が真となる
+  // タッチバーの戻るボタンのときは、
+  // Zukan_Detail_Map_Inputで処理を済ませているので、ここには来ない。
+
   // キー or タッチの変更
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
   {
@@ -2787,17 +2859,14 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
   {
     if( GFL_UI_KEY_GetTrg() )
     {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )  // 戻るボタンのときは何もしないで戻る
-      {
-        GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
-        return;
-      }
-      else
       {
         GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
         // カーソルを配置する
         Zukan_Detail_Map_SetCursor( param, work, cmn );
         Zukan_Detail_Map_ChangePlace( param, work, cmn );
+        // 草原、水、釣りのアイコンの明るさを変更する
+        Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
+
         // キーに変更になった場合は、キーに変更しただけで処理を終える
         return;
       }
@@ -2924,7 +2993,9 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       {
         // 場所更新
         Zukan_Detail_Map_ChangePlace( param, work, cmn );
- 
+        // 草原、水、釣りのアイコンの明るさを変更する
+        Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
+
         if( work->select_data_idx != DATA_IDX_NONE )
         {
           PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -2942,7 +3013,9 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 
       // 場所更新
       Zukan_Detail_Map_ChangePlace( param, work, cmn );
-      
+      // 草原、水、釣りのアイコンの明るさを変更する
+      Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
+
       if( work->select_data_idx != DATA_IDX_NONE )
       {
         PMSND_PlaySE( SEQ_SE_DECIDE1 );
@@ -3135,6 +3208,11 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
             }
           }
           Zukan_Detail_Map_ChangePlace( param, work, cmn );
+          // 草原、水、釣りのアイコンの明るさを変更する
+          Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
+
+          // プレイヤーの位置にOBJを表示
+          Zukan_Detail_Map_DrawPlayer( param, work, cmn, TRUE );
         }
 
         // タッチバー
@@ -3199,6 +3277,9 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         {
           GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], FALSE );
         }
+
+        // プレイヤーの位置のOBJを非表示
+        Zukan_Detail_Map_DrawPlayer( param, work, cmn, FALSE );
 
         // タッチバー
         ZUKAN_DETAIL_TOUCHBAR_SetType(
@@ -3453,9 +3534,6 @@ static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
     GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_PLACENAME] );  // クリア状態を転送して何も表示されないようにしておく
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], FALSE );
   }
-
-  // 草原、水、釣りのアイコンの明るさを変更する
-  Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
 }
 
 static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn, BOOL b_next, int ktst )
@@ -3521,9 +3599,13 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
   // キー入力されてここに来た場合は、カーソルを現在の位置 or プレイヤーの位置に表示する
   else
   {
-    if( work->state == STATE_SELECT )  // マップの拠点を選べる状態でなければ、カーソルは表示しなくていい
+    if(    work->state == STATE_SELECT       // マップの拠点を選べる状態でなければ、カーソルは表示しなくていい
+        && work->habitat == HABITAT_KNOWN )  // 生息地が不明のときは、カーソルは表示しなくていい
     {
       Zukan_Detail_Map_SetCursor( param, work, cmn );
+
+      // 場所更新
+      Zukan_Detail_Map_ChangePlace( param, work, cmn );
     }
   }
 
@@ -3756,6 +3838,21 @@ static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOff( ZUKAN_DETAIL_MAP_PARAM* p
     {
       GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], FALSE );
     }
+
+    // これからの季節の生息地が不明のとき 
+    if( work->habitat == HABITAT_UNKNOWN )
+    {
+      Zukan_Detail_Map_DrawPlayer( param, work, cmn, FALSE );
+  
+      // カーソルもリングも非表示にするので、どこの拠点も選択していない状態にしておく
+      work->select_data_idx = DATA_IDX_NONE;
+
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], FALSE );
+      Zukan_Detail_Map_ChangePlace( param, work, cmn );
+      // 草原、水、釣りのアイコンの明るさを変更する
+      Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
+    }
   }
 }
 static void Zukan_Detail_Map_UtilDrawSeasonAreaAlphaSet( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -3838,6 +3935,15 @@ static void Zukan_Detail_Map_UtilDrawSeasonAreaObjOn( ZUKAN_DETAIL_MAP_PARAM* pa
         {
           GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], TRUE );
         }
+      }
+    }
+
+    if( work->state == STATE_SELECT_DRAW_SEASON_AREA )
+    {
+      // プレイヤーの位置に配置するOBJを現在表示していない場合
+      if( !Zukan_Detail_Map_IsDrawPlayer( param, work, cmn ) )
+      {
+        Zukan_Detail_Map_DrawPlayer( param, work, cmn, TRUE );
       }
     }
   }
