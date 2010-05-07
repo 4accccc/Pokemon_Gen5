@@ -5858,9 +5858,11 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamem
     WIFI_STATUS_SetGameMode(wk->pMatch,gamemode);
     if(gamemode == WIFI_GAME_TVT && status == WIFI_STATUS_PLAYING){
     }
-    else if(status == WIFI_STATUS_PLAYING){
+    else if(status == WIFI_STATUS_PLAYING ){
       // ボリュームを落す
-      _changeBGMVol( wk, _VOL_DEFAULT/3 );
+      if(gamemode != WIFI_GAME_UNIONMATCH){
+        _changeBGMVol( wk, _VOL_DEFAULT/3 );
+      }
     }
     else{
       //  ボリュームを戻す
