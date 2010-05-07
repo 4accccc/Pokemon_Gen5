@@ -68,7 +68,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
-  work->initDir   = FIELD_PLAYER_GetDir( player );
+  work->initDir   = MMDL_GetDirDisp( work->mmdl );
 
   return task;
 }
@@ -134,7 +134,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame,
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
-  work->initDir   = FIELD_PLAYER_GetDir( player );
+  work->initDir   = MMDL_GetDirDisp( work->mmdl );
 
   return task;
 }
@@ -167,7 +167,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int fram
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
-  work->initDir   = FIELD_PLAYER_GetDir( player );
+  work->initDir   = MMDL_GetDirDisp( work->mmdl );
 
   return task;
 }
@@ -364,7 +364,8 @@ static FIELD_TASK_RETVAL RotatePlayer_SpeedDown( void *wk )
     case DIR_LEFT:  anm_cmd = AC_DIR_L; break;
     case DIR_RIGHT: anm_cmd = AC_DIR_R; break;
     }
-    MMDL_SetAcmd( mmdl, anm_cmd );
+    //MMDL_SetAcmd( mmdl, anm_cmd );
+    MMDL_SetDirDisp( mmdl, work->initDir );
     return FIELD_TASK_RETVAL_FINISH;
   }
   return FIELD_TASK_RETVAL_CONTINUE;
