@@ -10263,7 +10263,7 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
         BTL_HANDEX_PARAM_SIDEEFF_ADD* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_ADD, pokeID );
         param->effect = eff;
         param->side = side;
-        param->cont = BPP_SICKCONT_MakeTurn( 3 );
+        param->cont = BPP_SICKCONT_MakeTurn( 4 );
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, strID );
         HANDEX_STR_AddArg( &param->exStr, side );
       }
@@ -10287,7 +10287,7 @@ static const BtlEventHandlerTable*  ADD_FlameSoul( u32* numElems )
 }
 static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // このターンに同じワザを使っていれば威力が倍
+  // このターン、直前に対になるワザを誰かが使っていたら威力が倍
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
