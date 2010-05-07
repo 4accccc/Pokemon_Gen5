@@ -773,12 +773,12 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
 
   //ÇrÇdñ¬ÇÁÇµÇ¡ÇœÇ»Çµ
   {
-    SEPLAYER_ID player_id;
-    player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
+//    SEPLAYER_ID player_id;
+//    player_id = PMSND_GetSE_DefaultPlayerID( GYM_ELEC_SE_SPEED );
     FSND_PlayEnvSE( fs, GYM_ELEC_SE_DRIVE );
     //énÇﬂÇÕÉ{ÉäÉÖÅ[ÉÄ0
     FSND_SetEnvSEVol( fs, GYM_ELEC_SE_DRIVE, 0 );
-    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
+//    NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( player_id ), 0 );
   }
 }
 
