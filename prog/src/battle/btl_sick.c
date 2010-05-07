@@ -570,6 +570,7 @@ BOOL BTL_SICK_CheckBatonTouch( WazaSick sick )
     WAZASICK_FLYING,
     WAZASICK_TOOSENBOU,
     WAZASICK_NOROI,
+    WAZASICK_TELEKINESIS,
   };
   u32 i;
   for(i=0; i<NELEMS(sickTbl); ++i){
