@@ -403,6 +403,12 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     p_wk->min       = 0;
     p_wk->max       = cp_param->list_max;
     p_wk->line_max  = cp_param->h / cp_param->str_line;
+
+    if( cp_param->p_pos )
+    { 
+      p_wk->list      = cp_param->p_pos->list;
+      p_wk->cursor    = cp_param->p_pos->cursor;
+    }
   }
 
   //タイプ別設定
@@ -557,6 +563,29 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     else
     { 
       p_wk->is_allow_visible  =   TRUE;
+
+      //一番上まできたら、↑の矢印を
+      //一番下まできたら、↓の矢印を消す
+      if( p_wk->is_allow_visible )
+      { 
+        if( 0 == p_wk->list )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_U], FALSE );
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_U], TRUE );
+        }
+
+        if( p_wk->list + p_wk->line_max == p_wk->param.list_max )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_D], FALSE );
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[BR_LIST_CLWK_ALLOW_D], TRUE );
+        }
+      }
     }
   }
 
@@ -613,6 +642,13 @@ void BR_LIST_Exit( BR_LIST_WORK* p_wk )
   else
   { 
     BR_RES_UnLoadOBJ( p_wk->param.p_res, BR_RES_OBJ_ALLOW_S );
+  }
+
+
+  if( p_wk->param.p_pos )
+  { 
+    p_wk->param.p_pos->list   = p_wk->list;
+    p_wk->param.p_pos->cursor = p_wk->cursor;
   }
 
   GFL_HEAP_FreeMemory( p_wk );

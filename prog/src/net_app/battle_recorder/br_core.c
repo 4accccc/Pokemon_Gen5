@@ -97,7 +97,6 @@ typedef struct
 
   //以下プロセス間の繋ぎ
   BR_BVRANK_MODE  rank_mode;
-
 } BR_CORE_WORK;
 
 //=============================================================================
@@ -1002,6 +1001,7 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
   p_param->p_outline      = &p_wk->p_param->p_data->outline;
+  p_param->p_list_pos     = &p_wk->p_param->p_data->rank_pos;
 
   if( preID == BR_PROCID_MENU )
   { 
@@ -1009,6 +1009,10 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
     p_param->mode       = cp_menu_param->next_mode;
 
     p_wk->rank_mode = p_param->mode;
+
+    //カーソル位置はレコード画面とランク画面の間しか保持しない（厳密にはバトルの行き戻りも）ので、
+    //他から来た場合クリアする
+    GFL_STD_MemClear( p_param->p_list_pos, sizeof(BR_LIST_POS) );
   }
   else if( preID == BR_PROCID_BV_SEARCH )
   {
@@ -1017,6 +1021,10 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
     p_param->search_data  = cp_search_param->search_data;
     
     p_wk->rank_mode = p_param->mode;
+
+    //カーソル位置はレコード画面とランク画面の間しか保持しない（厳密にはバトルの行き戻りも）ので、
+    //他から来た場合クリアする
+    GFL_STD_MemClear( p_param->p_list_pos, sizeof(BR_LIST_POS) );
   }
   else if( preID == BR_PROCID_RECORD )
   {

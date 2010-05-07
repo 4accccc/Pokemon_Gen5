@@ -121,7 +121,7 @@ static void Br_Seq_NextRanking( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 //-------------------------------------
 ///	ランキングワーク
 //=====================================
-static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, BR_BALLEFF_WORK *p_balleff_main, BR_BALLEFF_WORK *p_balleff_sub, HEAPID heapID );
+static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, BR_BALLEFF_WORK *p_balleff_main, BR_BALLEFF_WORK *p_balleff_sub, BR_LIST_POS *p_list_pos, HEAPID heapID );
 static void BR_RANK_Exit( BR_RANK_WORK *p_wk );
 static void BR_RANK_Main( BR_RANK_WORK *p_wk, HEAPID heapID );
 static u32  BR_RANK_GetSelect( const BR_RANK_WORK *cp_wk );
@@ -377,9 +377,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   }
 
   //ダウンロードしてアウトラインがきまってからランクを作成
-  BR_RANK_Init( &p_wk->rank, p_wk->p_param->p_outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->p_balleff[ CLSYS_DRAW_MAIN ], p_wk->p_balleff[ CLSYS_DRAW_SUB ], p_wk->heapID );
-  //アイコン作成
-  Br_Rank_CreatePokeIcon( &p_wk->rank, p_wk->p_param->p_unit, p_wk->heapID );
+  BR_RANK_Init( &p_wk->rank, p_wk->p_param->p_outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->p_balleff[ CLSYS_DRAW_MAIN ], p_wk->p_balleff[ CLSYS_DRAW_SUB ], p_wk->p_param->p_list_pos, p_wk->heapID );
 
   BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeIn );
 }
@@ -397,7 +395,6 @@ static void Br_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
 
   //ランク破棄
-  Br_Rank_DeletePokeIcon( &p_wk->rank );
   BR_RANK_Exit( &p_wk->rank );  
   
   BR_MSGWIN_Exit( p_wk->p_title );
@@ -633,27 +630,26 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
       err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
 
-      switch( p_wk->p_param->mode )
-      { 
-      case BR_BVRANK_MODE_NEW:       //最新３０件
-        is_exist  = BR_NET_GetDownloadNewRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
-        break;
-      case BR_BVRANK_MODE_FAVORITE:  //通信対戦ランキング
-        is_exist  = BR_NET_GetDownloadNewRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num);
-        break;
-      case BR_BVRANK_MODE_SUBWAY:    //サブウェイ
-        is_exist  = BR_NET_GetDownloadFavoriteRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num);
-        break;
-      case BR_BVRANK_MODE_SEARCH:    //検索結果
-        is_exist  = BR_NET_GetDownloadBattleSearch( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
-        break;
-      default:
-        GF_ASSERT(0);
-      }
-
-
       if( err == BR_NET_ERR_RETURN_NONE )
       { 
+        switch( p_wk->p_param->mode )
+        { 
+        case BR_BVRANK_MODE_NEW:       //最新３０件
+          is_exist  = BR_NET_GetDownloadNewRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
+          break;
+        case BR_BVRANK_MODE_FAVORITE:  //通信対戦ランキング
+          is_exist  = BR_NET_GetDownloadNewRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num);
+          break;
+        case BR_BVRANK_MODE_SUBWAY:    //サブウェイ
+          is_exist  = BR_NET_GetDownloadFavoriteRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num);
+          break;
+        case BR_BVRANK_MODE_SEARCH:    //検索結果
+          is_exist  = BR_NET_GetDownloadBattleSearch( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
+          break;
+        default:
+          GF_ASSERT(0);
+        }
+
         if( is_exist )
         { 
           //取得できた
@@ -830,7 +826,7 @@ static void Br_Seq_NextRanking( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
  *	@param	heapID  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, BR_BALLEFF_WORK *p_balleff_main, BR_BALLEFF_WORK *p_balleff_sub, HEAPID heapID )
+static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, BR_BALLEFF_WORK *p_balleff_main, BR_BALLEFF_WORK *p_balleff_sub, BR_LIST_POS *p_list_pos, HEAPID heapID )
 { 
   GFL_FONT    *p_font;
   GFL_MSGDATA *p_msg;
@@ -885,6 +881,7 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
     list_param.p_unit   = p_unit;
     list_param.p_balleff_main = p_wk->p_balleff[ CLSYS_DRAW_MAIN ];
     list_param.p_balleff_sub  = p_wk->p_balleff[ CLSYS_DRAW_SUB ];
+    list_param.p_pos  = p_list_pos;
 
     //リスト作成
     p_wk->p_list  = BR_LIST_Init( &list_param, heapID );
@@ -922,6 +919,18 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
   }
 
   BR_LIST_Write( p_wk->p_list );
+
+  //アイコン作成
+  Br_Rank_CreatePokeIcon( p_wk, p_unit, heapID );
+
+  //位置が既に動いていた分だけランクを動かす
+  { 
+    int i;
+    for( i = 0; i < p_list_pos->list; i++ ) 
+    { 
+      Br_Rank_ScrollPokeIcon( p_wk, i+1, 1, heapID );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -933,6 +942,9 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
 static void BR_RANK_Exit( BR_RANK_WORK *p_wk )
 { 
   int i;
+
+  Br_Rank_DeletePokeIcon( p_wk );
+
   for( i = 0; i < BR_LIST_GetParam( p_wk->p_list,BR_LIST_PARAM_IDX_LIST_MAX); i++ )
   { 
     GFL_BMP_DATA *p_bmp = BR_LIST_GetBmp( p_wk->p_list, i );

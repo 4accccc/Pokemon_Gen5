@@ -406,13 +406,14 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
   //poke_netからのエラー
   if( p_wk->error_info.occ )
   { 
-    int ret = BR_NET_ERR_RETURN_NONE;
+    int ret = BR_NET_ERR_RETURN_ONCE;//BR_NET_ERR_RETURN_NONE;poke_netがエラーがあると言っている以上、
+                                    //かならずエラーを返すようにする
 	  if( p_wk->error_info.type == GDS_ERROR_TYPE_LIB )
     { 
       //ライブラリのエラー
       if( p_wk->error_info.result == POKE_NET_GDS_LASTERROR_NONE )
       { 
-        ret = BR_NET_ERR_RETURN_NONE;
+        ret = BR_NET_ERR_RETURN_ONCE;
       }
       else
       { 
@@ -437,7 +438,7 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
       }
       else
       { 
-        ret = BR_NET_ERR_RETURN_NONE;
+        ret = BR_NET_ERR_RETURN_ONCE;
       }
     }
     else if( p_wk->error_info.type == GDS_ERROR_TYPE_APP )
@@ -513,6 +514,8 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
         break;
       }
     }
+
+    OS_TPrintf( "BR_NET エラー発生！occ%d type%d result%d ret%d\n", p_wk->error_info.occ, p_wk->error_info.type, p_wk->error_info.result, ret );
 
     //エラー消去
     GDSRAP_ErrorInfoClear( &p_wk->gdsrap );

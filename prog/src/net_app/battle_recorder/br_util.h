@@ -64,7 +64,6 @@ typedef enum
   BR_BALLEFF_MOVE_CIRCLE_CONT,   //場所を変えて円を描くLOOP
   BR_BALLEFF_MOVE_EMIT_FOLLOW,   //放射に動き、ついて行く STOP
   BR_BALLEFF_MOVE_OPENING_TOUCH, //開始時のタッチ     　STOP
-
 }BR_BALLEFF_MOVE;
 //-------------------------------------
 ///	カーソルワーク
@@ -119,8 +118,9 @@ typedef struct
   BR_LIST_TYPE    type;
   BR_RES_WORK     *p_res;
   GFL_CLUNIT      *p_unit;
-  BR_BALLEFF_WORK *p_balleff_main;  //リストカーソル用
-  BR_BALLEFF_WORK *p_balleff_sub;   //タッチ演出用
+  BR_BALLEFF_WORK *p_balleff_main;  //[in]リストカーソル用
+  BR_BALLEFF_WORK *p_balleff_sub;   //[in]タッチ演出用
+  BR_LIST_POS     *p_pos; //[in/out]リスト位置（br_inner.hに定義してある）
 } BR_LIST_PARAM;
 
 //-------------------------------------

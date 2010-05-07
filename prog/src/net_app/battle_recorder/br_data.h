@@ -47,4 +47,5 @@ typedef struct
   BR_SAVE_INFO              rec_saveinfo;       //自分の録画保存状況
   BR_BTN_SYS_RECOVERY_DATA  btn_recovery;       //ボタンの繋がり復帰データ
   BOOL                      is_recplay_finish;  //最後まで録画を見終わった
+  BR_LIST_POS               rank_pos;           //ランクのカーソル位置
 } BR_DATA;

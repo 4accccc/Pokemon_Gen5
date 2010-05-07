@@ -14,6 +14,7 @@
 #include "br_fade.h"
 #include "br_net.h"
 #include "br_data.h"
+#include "br_inner.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -52,6 +53,7 @@ typedef struct
   BR_NET_WORK     *p_net;       //[in ]ネット管理
   BR_OUTLINE_DATA *p_outline;   //[in ]常駐データ
   BR_NET_VIDEO_SEARCH_DATA  search_data;  //[in]検索項目（modeがBR_BVRANK_MODE_SEARCHのとき入れる）
+  BR_LIST_POS     *p_list_pos;  //[in ]常駐データ
 } BR_BVRANK_PROC_PARAM;
 
 

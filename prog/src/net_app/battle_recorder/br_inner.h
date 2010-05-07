@@ -123,6 +123,15 @@ typedef struct
 } BR_BTN_SYS_RECOVERY_DATA;
 
 //-------------------------------------
+///	リスト位置
+//=====================================
+typedef struct 
+{
+  u16 list;
+  u16 cursor;
+} BR_LIST_POS;
+
+//-------------------------------------
 ///	汎用
 //=====================================
 #define BR_VIDEO_NUMBER_FIG         12 //バトルビデオナンバーの桁
@@ -145,7 +154,6 @@ static inline void BR_TOOL_GetVideoNumberToBlock( u64 number, u32 tbl[], u32 blo
   number /= 100000;
   tbl[ 2 ] = number;				    ///< 1block
 }
-
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
