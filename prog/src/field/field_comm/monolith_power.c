@@ -145,8 +145,6 @@ typedef struct{
   GFL_CLWK *act_arrow_up;       ///<上矢印
   GFL_CLWK *act_arrow_down;     ///<下矢印
   
-  MONOLITH_BMPSTR bmpstr_point; ///<所持ポイントBMPOAM
-  
   GFL_MSGDATA *mm_power;        ///<パワー名gmm
   GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
   GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
@@ -202,9 +200,6 @@ static void _BmpOamDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _DecidePanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static void _DecidePanelDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _DecidePanelUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw);
-static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
-static void _HavePointDelete(MONOLITH_PWSELECT_WORK *mpw);
-static void _HavePointUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconDelete(MONOLITH_PWSELECT_WORK *mpw);
 static void _CancelIconUpdate(MONOLITH_PWSELECT_WORK *mpw);
@@ -303,7 +298,6 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
     _Setup_BmpWinCreate(mpw, appwk->setup);
     _ScrollPos_BGReflection(mpw);
     //OBJ
-    _HavePointCreate(appwk, mpw);
     _CancelIconCreate(appwk, mpw);
     _BmpOamCreate(mpw, appwk->setup);
     _DecidePanelCreate(appwk, mpw);
@@ -402,7 +396,6 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_BG);
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_OBJ);
-  _HavePointUpdate(appwk->setup, mpw);
   _CancelIconUpdate(mpw);
   _DecidePanelUpdate(appwk->setup, mpw);
   for(i = 0; i < _PRINTUTIL_MAX; i++){
@@ -662,7 +655,6 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   MonolithTool_TaskMenuDelete(mpw->app_menu_res);
 
   //OBJ
-  _HavePointDelete(mpw);
   _DecidePanelDelete(mpw);
   _BmpOamDelete(mpw);
   _CancelIconDelete(mpw);
@@ -1161,50 +1153,6 @@ static void _DecidePanelDelete(MONOLITH_PWSELECT_WORK *mpw)
 static void _DecidePanelUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
 {
   MonolithTool_PanelOBJ_TransUpdate(setup, &mpw->panel);
-}
-
-//--------------------------------------------------------------
-/**
- * 所持ポイントBMPOAM作成
- *
- * @param   appwk		
- * @param   mpw		
- */
-//--------------------------------------------------------------
-static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
-{
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  
-  WORDSET_RegisterNumber(appwk->setup->wordset, 0, 0, 4,//occupy->intrude_point, 4, 
-    STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
-  MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_point, COMMON_RESOURCE_INDEX_DOWN, 
-    128+48, 192-_MENU_BAR_Y_LEN/2, 13, 2, msg_mono_pow_013, appwk->setup->wordset);
-  MonolithTool_Bmpoam_BGPriSet(appwk->setup, &mpw->bmpstr_point, BGPRI_BMPOAM_HAVE_POINT);
-}
-
-//==================================================================
-/**
- * 所持ポイントBMPOAM削除
- *
- * @param   mpw		
- */
-//==================================================================
-static void _HavePointDelete(MONOLITH_PWSELECT_WORK *mpw)
-{
-  MonolithTool_Bmpoam_Delete(&mpw->bmpstr_point);
-}
-
-//==================================================================
-/**
- * 所持ポイントBMPOAM更新処理
- *
- * @param   mpw		
- */
-//==================================================================
-static void _HavePointUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
-{
-  MonolithTool_Bmpoam_TransUpdate(setup, &mpw->bmpstr_point);
 }
 
 //==================================================================
