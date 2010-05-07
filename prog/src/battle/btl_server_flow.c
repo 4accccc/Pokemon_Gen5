@@ -639,6 +639,7 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
 static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
 static u32 checkExistEnemyMaxLevel( BTL_SVFLOW_WORK* wk );
 static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* poke );
+static void scEvent_BeforeDead( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaSick sickID, u8 dependPokeID );
 static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
@@ -9187,6 +9188,8 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
   BTL_POKEPARAM* bpp;
   u8 dead_pokeID = BPP_GetID( poke );
 
+  scEvent_BeforeDead( wk, poke );
+
   BTL_HANDLER_TOKUSEI_Remove( poke );
   BTL_HANDLER_ITEM_Remove( poke );
   BTL_HANDLER_Waza_RemoveForceAll( poke );
@@ -9198,6 +9201,22 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
   }
   BTL_FIELD_RemoveDependPokeEffect( dead_pokeID );
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 死亡直前通知
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_BeforeDead( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_NOTIFY_DEAD );
+  BTL_EVENTVAR_Pop();
+}
+
 /**
  * 特定ポケモン依存の状態異常が治るごとに呼び出されるコールバック
  */

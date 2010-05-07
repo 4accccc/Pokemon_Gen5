@@ -313,6 +313,7 @@ static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, Pok
 static void handler_Kyuuban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kyuuban( u32* numElems );
 static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HedoroEki_Dead( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems );
 static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4818,10 +4819,19 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }
 }
+// 死亡通知ハンドラ
+static void handler_HedoroEki_Dead( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
+  }
+}
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_DRAIN,    handler_HedoroEki   },  // ドレイン量計算ハンドラ
+    { BTL_EVENT_CALC_DRAIN,    handler_HedoroEki      },  // ドレイン量計算ハンドラ
+    { BTL_EVENT_NOTIFY_DEAD,   handler_HedoroEki_Dead },  // 死亡通知ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
