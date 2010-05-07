@@ -79,7 +79,7 @@
 //=====================================
 #define ENEMYDATA_WAIT_SYNC    (180+300)
 #define MATCHING_MSG_WAIT_SYNC (120)
-#define SELECTPOKE_MSG_WAIT_SYNC (30)
+#define SELECTPOKE_MSG_WAIT_SYNC (60)
 
 //=============================================================================
 /**

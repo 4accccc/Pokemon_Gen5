@@ -573,8 +573,8 @@ PLAYERINFO_WORK *PLAYERINFO_RND_Init( const PLAYERINFO_RANDOMMATCH_DATA *cp_data
   PlayerInfo_STAR_Cleate( p_wk, cp_data, p_unit, cp_res, heapID );
 
   { 
-    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 0, 32, 5, 1 );
-    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 5, 32, 18, 3 + rank );
+    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 0, 32, 6, 1 );
+    GFL_BG_ChangeScreenPalette( BG_FRAME_S_CARD, 0, 6, 32, 18, 3 + rank );
     GFL_BG_LoadScreenReq( BG_FRAME_S_CARD );
   }
 
@@ -2271,6 +2271,8 @@ enum
 	MATCHINFO_BMPWIN_PLAYER,
 	MATCHINFO_BMPWIN_RATE_LABEL,
 	MATCHINFO_BMPWIN_RATE_NUM,
+	MATCHINFO_BMPWIN_WIN_LABEL,
+	MATCHINFO_BMPWIN_WIN_NUM,
 	MATCHINFO_BMPWIN_COMEFROM,
 	MATCHINFO_BMPWIN_CONTRY,
 	MATCHINFO_BMPWIN_PLACE,
@@ -2306,6 +2308,8 @@ struct _MATCHINFO_WORK
 
   u16 clwk_x;
   u16 star_x[PLAYERINFO_STAR_MAX];
+
+  WIFIBATTLEMATCH_TYPE mode;
 };
 //=============================================================================
 /**
@@ -2358,6 +2362,7 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
 	p_wk	= GFL_HEAP_AllocMemory( heapID, sizeof(MATCHINFO_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(MATCHINFO_WORK) );
   p_wk->is_rate = is_rate;
+  p_wk->mode    = mode;
 	p_wk->p_pms	= PMS_DRAW_Init( p_unit, CLSYS_DRAW_MAIN, p_que, p_font, MATCHINFO_PLT_OBJ_PMS, 1, heapID );
   PMS_DRAW_SetCLWKAutoScrollFlag( p_wk->p_pms, TRUE );
 
@@ -2564,6 +2569,8 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
 		{	
 			8,5,8,2,
 		},
+
+    /*  ↓　レーティングモードのみ  */
 		//レーティング
 		{	
 			15,5,10,2,
@@ -2572,6 +2579,17 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
 		{	
 			25, 5, 5, 2,
 		},
+    /*  ↑　レーティングモードのみ  */
+    /*  ↓　ランダムマッチフリーモードのみ  */
+		//勝ったかず
+		{	
+			15,5,10,2,
+		},
+		//勝った数の数値
+		{	
+			25, 5, 5, 2,
+		},
+    /*  ↑　ランダムマッチフリーモードのみ  */
 		//住んでいるところ
 		{	
 			2,9,28,2,
@@ -2659,6 +2677,31 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
           is_print  = FALSE;
         }
 				break;
+
+      case MATCHINFO_BMPWIN_WIN_LABEL:
+        if( p_wk->mode == WIFIBATTLEMATCH_TYPE_RNDFREE )
+        { 
+          GFL_MSG_GetString( p_msg, WIFIMATCH_STR_012, p_str );
+          color = PLAYERINFO_STR_COLOR_WHITE;
+        }
+        else
+        { 
+          is_print  = FALSE;
+        }
+        break;
+      case MATCHINFO_BMPWIN_WIN_NUM:
+        if( p_wk->mode == WIFIBATTLEMATCH_TYPE_RNDFREE )
+        { 
+          GFL_MSG_GetString( p_msg, WIFIMATCH_STR_013, p_src );
+          WORDSET_RegisterNumber( p_word, 0, cp_data->win_cnt, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_str, p_src );
+          color = PLAYERINFO_STR_COLOR_WHITE;
+        }
+        else
+        { 
+          is_print  = FALSE;
+        }
+        break;
 			case MATCHINFO_BMPWIN_COMEFROM:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_018, p_str );
         color = PLAYERINFO_STR_COLOR_WHITE;

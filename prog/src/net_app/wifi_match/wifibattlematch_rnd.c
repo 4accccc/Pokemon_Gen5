@@ -95,7 +95,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define ENEMYDATA_WAIT_SYNC    (60*5)
 #define ENEMYDATA_WAIT_SYNC_RATE    (0)
 #define MATCHING_MSG_WAIT_SYNC (120)
-#define SELECTPOKE_MSG_WAIT_SYNC (30)
+#define SELECTPOKE_MSG_WAIT_SYNC (60)
 
 //-------------------------------------
 ///	ヒープサイズ
@@ -2983,10 +2983,22 @@ static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBAT
 { 
   if( p_wk->p_matchinfo == NULL )
   { 
-    BOOL is_rate  = p_wk->p_param->retmode  == WIFIBATTLEMATCH_CORE_RETMODE_RATE;
-
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_RNDRATE, is_rate, HEAPID_WIFIBATTLEMATCH_CORE );
+    WIFIBATTLEMATCH_TYPE type;
+    BOOL is_rate;
+
+    if( p_wk->p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_RATE )
+    { 
+      is_rate = TRUE;
+      type  = WIFIBATTLEMATCH_TYPE_RNDRATE;
+    }
+    else if( p_wk->p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_FREE )
+    { 
+      is_rate = FALSE;
+      type  = WIFIBATTLEMATCH_TYPE_RNDFREE;
+    }
+
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, type, is_rate, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------
