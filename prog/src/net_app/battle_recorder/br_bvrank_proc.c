@@ -870,8 +870,8 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
       NULL,
       NULL, 
     };
+
     int i;
-    STRBUF  *p_colon;
     STRBUF  *p_str1;
     STRBUF  *p_str2;
     STRBUF  *p_str_name;
@@ -885,14 +885,15 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
     list_param.p_unit   = p_unit;
     list_param.p_balleff_main = p_wk->p_balleff[ CLSYS_DRAW_MAIN ];
     list_param.p_balleff_sub  = p_wk->p_balleff[ CLSYS_DRAW_SUB ];
+
     //リスト作成
     p_wk->p_list  = BR_LIST_Init( &list_param, heapID );
 
     //リストを拡張  BMPを外部から設定する
-    p_colon     = GFL_MSG_CreateString( p_msg, msg_607 );
     p_str1      = GFL_STR_CreateBuffer( 255, heapID );
     p_str2      = GFL_MSG_CreateString( p_msg, msg_727 );
     p_str_name  = GFL_STR_CreateBuffer( 255, heapID );
+
     for( i = 0; i < cp_data->data_num; i++ )
     { 
       GFL_BMP_DATA  *p_bmp;
@@ -909,7 +910,6 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
 
       //書き込み
       PRINTSYS_PrintColor( p_bmp, 16-w, 4, p_str1, p_font, BR_PRINT_COL_NORMAL );
-      PRINTSYS_PrintColor( p_bmp, 16, 4, p_colon, p_font, BR_PRINT_COL_NORMAL );
       PRINTSYS_PrintColor( p_bmp, 20, 4, p_str_name, p_font, BR_PRINT_COL_NORMAL );
 
       //リストに設定
@@ -919,7 +919,6 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
     GFL_STR_DeleteBuffer( p_str_name );
     GFL_STR_DeleteBuffer( p_str1 );
     GFL_STR_DeleteBuffer( p_str2 );
-    GFL_STR_DeleteBuffer( p_colon );
   }
 
   BR_LIST_Write( p_wk->p_list );
