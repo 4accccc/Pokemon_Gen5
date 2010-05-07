@@ -776,19 +776,23 @@ void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
   // 簡易会話文章表示
   for(i=0;i<3;i++){
     pms = MailData_GetMsgByIndex( syswk->app->mail[syswk->lst_pos], i );
-    PMS_DRAW_Print( syswk->app->pms_draw_work, 
-                    syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i], pms, i );
-    GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i] );
+    if(PMSDAT_IsEnabled(pms)  ){
+      PMS_DRAW_Print( syswk->app->pms_draw_work, 
+                      syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i], pms, i );
+      GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i] );
+    }
   }
 
   // 簡易単語表示
   syswk->app->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
   syswk->app->tmpPms.sentence_id   = pmss_system_01;
   syswk->app->tmpPms.word[0]       = MailData_GetFormBit( syswk->app->mail[syswk->lst_pos] );
-  PMS_DRAW_Print( syswk->app->pms_draw_work, 
-                  syswk->app->win[MBMAIN_BMPWIN_ID_PMSWORD], 
-                  &syswk->app->tmpPms, 3 );
-  
+
+  if(syswk->app->tmpPms.word[0]!=0){
+    PMS_DRAW_Print( syswk->app->pms_draw_work, 
+                    syswk->app->win[MBMAIN_BMPWIN_ID_PMSWORD], 
+                    &syswk->app->tmpPms, 3 );
+  }
   
   // 名前表示
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_NAME]), 0 );
@@ -800,9 +804,7 @@ void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
     &syswk->app->printUtil[MBMAIN_BMPWIN_ID_NAME],syswk->app->printQue,
     0, 2, syswk->font, FCOL_SYS_BKN_S00, STRPRINT_MODE_LEFT );
 
-
-
-//  GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_NAME] );
+  GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_NAME] );
 }
 
 //--------------------------------------------------------------------------------------------

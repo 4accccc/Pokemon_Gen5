@@ -1115,9 +1115,21 @@ static void SubDispMailWrite( MAILBOX_SYS_WORK * syswk )
 static void SubDispMailClear( MAILBOX_SYS_WORK * syswk )
 {
   int i;
-  for(i=0;i<MAIL_PMS_NUM;i++){
+  PMS_DATA * pms;
+
+  // 簡易会話描画を行っていたらクリア
+  for(i=0;i<MAIL_PMS_NUM-1;i++){
+    pms = MailData_GetMsgByIndex( syswk->app->mail[syswk->lst_pos], i );
+    if(PMSDAT_IsEnabled(pms)  ){
+      PMS_DRAW_Clear( syswk->app->pms_draw_work, i, FALSE );
+    }
+  }
+  // 簡易単語描画を行っていたらクリア
+  if(syswk->app->tmpPms.word[0]!=0){
     PMS_DRAW_Clear( syswk->app->pms_draw_work, i, FALSE );
   }
+  
+  
   GFL_BG_ClearScreen( MBMAIN_BGF_MAILMES_S );
   GFL_BG_ClearScreen( MBMAIN_BGF_MAIL_S );
 }
