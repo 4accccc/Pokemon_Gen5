@@ -289,51 +289,33 @@
 	</row>
 
 	<row id="ITEMINFO_018">
-		<language name="JPN" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　どくの
-じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　薬。
-ポケモン　１匹の　どくの
-状態を　回復する。</language>
+		<language name="JPN" width="256">スプレーしきの　キズぐすり。
+ポケモン　１ひきの　ＨＰを
+５０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+５０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_019">
-		<language name="JPN" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　やけどの
-じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　薬。
-ポケモン　１匹の　やけどの
-状態を　回復する。</language>
+		<language name="JPN" width="256">スプレーしきの　キズぐすり。
+ポケモン　１ひきの　ＨＰを
+２００だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+２００だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_020">
-		<language name="JPN" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　こおりの
-じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　薬。
-ポケモン　１匹の　こおりの
-状態を　回復する。</language>
+		<language name="JPN" width="256">スプレーしきの　キズぐすり。
+ポケモン　１ひきの　ＨＰを
+すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_021">
-		<language name="JPN" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　ねむりの
-じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　薬。
-ポケモン　１匹の　ねむりの
-状態を　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_022">
-		<language name="JPN" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　まひの
-じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　薬。
-ポケモン　１匹の　まひの
-状態を　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_023">
 		<language name="JPN" width="256">ポケモン　１ひきの　ＨＰと
 じょうたい　いじょうを　すべて
 かいふくする。</language>
@@ -342,43 +324,7 @@
 回復する。</language>
 	</row>
 
-	<row id="ITEMINFO_024">
-		<language name="JPN" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
-ポケモン　１匹の　ＨＰを
-すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_025">
-		<language name="JPN" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-２００だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
-ポケモン　１匹の　ＨＰを
-２００だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_026">
-		<language name="JPN" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-５０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
-ポケモン　１匹の　ＨＰを
-５０だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_027">
-		<language name="JPN" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレー式の　薬。
-ポケモン　１匹の　状態の
-異常を　すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_028">
+	<row id="ITEMINFO_022">
 		<language name="JPN" width="256">ひんしに　なってしまった
 ポケモン　１ひきの　ＨＰを
 はんぶんまで　かいふくする。</language>
@@ -387,7 +333,7 @@
 半分まで　回復する。</language>
 	</row>
 
-	<row id="ITEMINFO_029">
+	<row id="ITEMINFO_023">
 		<language name="JPN" width="256">ひんしに　なってしまった
 ポケモン　１ひきの　ＨＰを
 すべて　かいふくする。</language>
@@ -396,124 +342,7 @@
 すべて　回復する。</language>
 	</row>
 
-	<row id="ITEMINFO_030">
-		<language name="JPN" width="256">ミネラル　たっぷりの　みず。
-ポケモン　１ひきの　ＨＰを
-５０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ミネラル　たっぷりの　水。
-ポケモン　１匹の　ＨＰを
-５０だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_031">
-		<language name="JPN" width="256">シュワっと　はじける　ソーダ。
-ポケモン　１ひきの　ＨＰを
-６０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">シュワっと　はじける　ソーダ。
-ポケモン　１匹の　ＨＰを
-６０だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_032">
-		<language name="JPN" width="256">とても　あまい　ジュース。
-ポケモン　１ひきの　ＨＰを
-８０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">とても　あまい　ジュース。
-ポケモン　１匹の　ＨＰを
-８０だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_033">
-		<language name="JPN" width="256">えいよう　まんてんの　ミルク。
-ポケモン　１ひきの　ＨＰを
-１００だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">栄養満点の　ミルク。
-ポケモン　１匹の　ＨＰを
-１００だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_034">
-		<language name="JPN" width="256">とても　にがい　こなぐすり。
-ポケモン　１ひきの　ＨＰを
-５０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">とても　にがい　粉薬。
-ポケモン　１匹の　ＨＰを
-５０だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_035">
-		<language name="JPN" width="256">とても　にがい　ねっこ。
-ポケモン　１ひきの　ＨＰを
-２００だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">とても　にがい　ねっこ。
-ポケモン　１匹の　ＨＰを
-２００だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_036">
-		<language name="JPN" width="256">とても　にがい　こなぐすり。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">とても　にがい　粉薬。
-ポケモン　１匹の　状態の
-異常を　すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_037">
-		<language name="JPN" width="256">とても　にがい　やくそう。
-ひんしの　ポケモン　１ひきの
-ＨＰを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">とても　にがい　薬草。
-ひんしの　ポケモン　１匹の
-ＨＰを　すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_038">
-		<language name="JPN" width="256">ポケモンが　おぼえている
-わざのうち　１つの　ＰＰを
-１０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
-技のうち　１つの　ＰＰを
-１０だけ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_039">
-		<language name="JPN" width="256">ポケモンが　おぼえている
-わざのうち　１つの　ＰＰを
-すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
-技のうち　１つの　ＰＰを
-すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_040">
-		<language name="JPN" width="256">ポケモンが　おぼえている
-４つの　わざの　ＰＰを
-１０ずつ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
-４つの　技の　ＰＰを
-１０ずつ　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_041">
-		<language name="JPN" width="256">ポケモンが　おぼえている
-４つの　わざの　ＰＰを
-すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
-４つの　技の　ＰＰを
-すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_042">
-		<language name="JPN" width="256">フエンめいぶつの　せんべい。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">フエン名物の　せんべい。
-ポケモン　１匹の　状態の
-異常を　すべて　回復する。</language>
-	</row>
-
-	<row id="ITEMINFO_043">
+	<row id="ITEMINFO_024">
 		<language name="JPN" width="256">きのみ　１００％の　ジュース。
 ポケモン　１ひきの　ＨＰを
 ２０だけ　かいふくする。</language>
@@ -522,7 +351,79 @@
 ２０だけ　回復する。</language>
 	</row>
 
-	<row id="ITEMINFO_044">
+	<row id="ITEMINFO_025">
+		<language name="JPN" width="256">とても　あまったるい　チョコレート。
+ポケモン　１ひきの　ＨＰを
+２０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">とても　甘ったるい　チョコレート。
+ポケモン　１匹の　ＨＰを
+２０だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_026">
+		<language name="JPN" width="256">ミネラル　たっぷりの　みず。
+ポケモン　１ひきの　ＨＰを
+５０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ミネラル　たっぷりの　水。
+ポケモン　１匹の　ＨＰを
+５０だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_027">
+		<language name="JPN" width="256">シュワっと　はじける　ソーダ。
+ポケモン　１ひきの　ＨＰを
+６０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">シュワっと　はじける　ソーダ。
+ポケモン　１匹の　ＨＰを
+６０だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_028">
+		<language name="JPN" width="256">とても　あまい　ジュース。
+ポケモン　１ひきの　ＨＰを
+８０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">とても　あまい　ジュース。
+ポケモン　１匹の　ＨＰを
+８０だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_029">
+		<language name="JPN" width="256">えいよう　まんてんの　ミルク。
+ポケモン　１ひきの　ＨＰを
+１００だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">栄養満点の　ミルク。
+ポケモン　１匹の　ＨＰを
+１００だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_030">
+		<language name="JPN" width="256">とても　にがい　こなぐすり。
+ポケモン　１ひきの　ＨＰを
+５０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">とても　にがい　粉薬。
+ポケモン　１匹の　ＨＰを
+５０だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_031">
+		<language name="JPN" width="256">とても　にがい　ねっこ。
+ポケモン　１ひきの　ＨＰを
+２００だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">とても　にがい　ねっこ。
+ポケモン　１匹の　ＨＰを
+２００だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_032">
+		<language name="JPN" width="256">とても　にがい　やくそう。
+ひんしの　ポケモン　１ひきの
+ＨＰを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">とても　にがい　薬草。
+ひんしの　ポケモン　１匹の
+ＨＰを　すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_033">
 		<language name="JPN" width="256">ひんしに　なってしまった
 ポケモン　ぜんいんの　ＨＰを
 すべて　かいふくする。</language>
@@ -531,7 +432,142 @@
 すべて　回復する。</language>
 	</row>
 
+	<row id="ITEMINFO_034">
+		<language name="JPN" width="256">スプレーしきの　くすり。
+ポケモン　１ひきの　どくの
+じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　薬。
+ポケモン　１匹の　どくの
+状態を　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_035">
+		<language name="JPN" width="256">スプレーしきの　くすり。
+ポケモン　１ひきの　まひの
+じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　薬。
+ポケモン　１匹の　まひの
+状態を　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_036">
+		<language name="JPN" width="256">スプレーしきの　くすり。
+ポケモン　１ひきの　やけどの
+じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　薬。
+ポケモン　１匹の　やけどの
+状態を　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_037">
+		<language name="JPN" width="256">スプレーしきの　くすり。
+ポケモン　１ひきの　こおりの
+じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　薬。
+ポケモン　１匹の　こおりの
+状態を　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_038">
+		<language name="JPN" width="256">スプレーしきの　くすり。
+ポケモン　１ひきの　ねむりの
+じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　薬。
+ポケモン　１匹の　ねむりの
+状態を　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_039">
+		<language name="JPN" width="256">スプレーしきの　くすり。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　薬。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_040">
+		<language name="JPN" width="256">とても　にがい　こなぐすり。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">とても　にがい　粉薬。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_041">
+		<language name="JPN" width="256">フエンめいぶつの　せんべい。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">フエン名物の　せんべい。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_042">
+		<language name="JPN" width="256">ハクタイの　かくれた　めいぶつ。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ハクタイの　隠れた　名物。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_043">
+		<language name="JPN" width="256">ヒウンシティの　めいぶつアイス。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティの　名物アイス。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_044">
+		<language name="JPN" width="256">チョウジめいぶつの　まんじゅう。
+おおみやげひん　として　ゆうめい。
+</language>
+		<language name="JPN_KANJI" width="256">ジョウト地方　にある
+チョウジタウン名物の　まんじゅう。
+お土産品として　有名。</language>
+	</row>
+
 	<row id="ITEMINFO_045">
+		<language name="JPN" width="256">ポケモンが　おぼえている
+わざのうち　１つの　ＰＰを
+１０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+技のうち　１つの　ＰＰを
+１０だけ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_046">
+		<language name="JPN" width="256">ポケモンが　おぼえている
+わざのうち　１つの　ＰＰを
+すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+技のうち　１つの　ＰＰを
+すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_047">
+		<language name="JPN" width="256">ポケモンが　おぼえている
+４つの　わざの　ＰＰを
+１０ずつ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+４つの　技の　ＰＰを
+１０ずつ　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_048">
+		<language name="JPN" width="256">ポケモンが　おぼえている
+４つの　わざの　ＰＰを
+すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+４つの　技の　ＰＰを
+すべて　回復する。</language>
+	</row>
+
+	<row id="ITEMINFO_049">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　ＨＰの
 きそポイントを　あげる。</language>
@@ -540,7 +576,7 @@
 基礎ポイントを　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_046">
+	<row id="ITEMINFO_050">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　こうげきの
 きそポイントを　あげる。</language>
@@ -549,7 +585,7 @@
 基礎ポイントを　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_047">
+	<row id="ITEMINFO_051">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　ぼうぎょの
 きそポイントを　あげる。</language>
@@ -558,16 +594,7 @@
 基礎ポイントを　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_048">
-		<language name="JPN" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　すばやさの
-きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
-ポケモン　１匹の　素早さの
-基礎ポイントを　あげる。</language>
-	</row>
-
-	<row id="ITEMINFO_049">
+	<row id="ITEMINFO_052">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　とくこうの
 きそポイントを　あげる。</language>
@@ -576,25 +603,7 @@
 基礎ポイントを　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_050">
-		<language name="JPN" width="256">エネルギーの　つまった　アメ。
-あたえると　ポケモン　１ひきの
-レベルが　１だけ　あがる。</language>
-		<language name="JPN_KANJI" width="256">エネルギーの　つまった　アメ。
-あたえると　ポケモン　１匹の
-レベルが　１だけ　あがる。</language>
-	</row>
-
-	<row id="ITEMINFO_051">
-		<language name="JPN" width="256">ポケモンが　おぼえている
-わざのうち　１つの　ＰＰの
-さいだいちを　すこし　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
-技のうち　１つの　ＰＰの
-最大値を　少し　あげる。</language>
-	</row>
-
-	<row id="ITEMINFO_052">
+	<row id="ITEMINFO_053">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　あげる。</language>
@@ -603,22 +612,13 @@
 基礎ポイントを　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_053">
-		<language name="JPN" width="256">おぼえている　わざのうち
-１つの　ＰＰの　さいだいちを
-さいこうまで　あげる。</language>
-		<language name="JPN_KANJI" width="256">覚えている　技のうち
-１つの　ＰＰの　最大値を
-最高まで　あげる。</language>
-	</row>
-
 	<row id="ITEMINFO_054">
-		<language name="JPN" width="256">ハクタイの　かくれた　めいぶつ。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ハクタイの　隠れた　名物。
-ポケモン　１匹の　状態の
-異常を　すべて　回復する。</language>
+		<language name="JPN" width="256">ポケモンの　えいようドリンク。
+ポケモン　１ひきの　すばやさの
+きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　素早さの
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_055">
@@ -1261,12 +1261,12 @@
 	</row>
 
 	<row id="ITEMINFO_126">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　ＨＰの
+きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　ＨＰの
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_127">
@@ -1333,12 +1333,12 @@
 	</row>
 
 	<row id="ITEMINFO_134">
-		<language name="JPN" width="256">とても　あまったるい　チョコレート。
-ポケモン　１ひきの　ＨＰを
-２０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">とても　甘ったるい　チョコレート。
-ポケモン　１匹の　ＨＰを
-２０だけ　回復する。</language>
+		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　こうげきの
+きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　攻撃の
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_135">
@@ -4663,12 +4663,12 @@
 	</row>
 
 	<row id="ITEMINFO_504">
-		<language name="JPN" width="256">チョウジめいぶつの　まんじゅう。
-おおみやげひん　として　ゆうめい。
-</language>
-		<language name="JPN_KANJI" width="256">ジョウト地方　にある
-チョウジタウン名物の　まんじゅう。
-お土産品として　有名。</language>
+		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　ぼうぎょの
+きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　防御の
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_505">
@@ -5213,33 +5213,6 @@
 
 	<row id="ITEMINFO_565">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　ＨＰの
-きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
-ポケモン　１匹の　ＨＰの
-基礎ポイントを　ちょっと　あげる。</language>
-	</row>
-
-	<row id="ITEMINFO_566">
-		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　こうげきの
-きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
-ポケモン　１匹の　攻撃の
-基礎ポイントを　ちょっと　あげる。</language>
-	</row>
-
-	<row id="ITEMINFO_567">
-		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　ぼうぎょの
-きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
-ポケモン　１匹の　防御の
-基礎ポイントを　ちょっと　あげる。</language>
-	</row>
-
-	<row id="ITEMINFO_568">
-		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくこうの
 きそポイントを　ちょっと　あげる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
@@ -5247,7 +5220,7 @@
 基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_569">
+	<row id="ITEMINFO_566">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　ちょっと　あげる。</language>
@@ -5256,13 +5229,40 @@
 基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_570">
+	<row id="ITEMINFO_567">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　すばやさの
 きそポイントを　ちょっと　あげる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
 ポケモン　１匹の　素早さの
 基礎ポイントを　ちょっと　あげる。</language>
+	</row>
+
+	<row id="ITEMINFO_568">
+		<language name="JPN" width="256">ポケモンが　おぼえている
+わざのうち　１つの　ＰＰの
+さいだいちを　すこし　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+技のうち　１つの　ＰＰの
+最大値を　少し　あげる。</language>
+	</row>
+
+	<row id="ITEMINFO_569">
+		<language name="JPN" width="256">おぼえている　わざのうち
+１つの　ＰＰの　さいだいちを
+さいこうまで　あげる。</language>
+		<language name="JPN_KANJI" width="256">覚えている　技のうち
+１つの　ＰＰの　最大値を
+最高まで　あげる。</language>
+	</row>
+
+	<row id="ITEMINFO_570">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_571">
@@ -5446,12 +5446,12 @@
 	</row>
 
 	<row id="ITEMINFO_591">
-		<language name="JPN" width="256">ヒウンシティの　めいぶつアイス。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティの　名物アイス。
-ポケモン　１匹の　状態の
-異常を　すべて　回復する。</language>
+		<language name="JPN" width="256">エネルギーの　つまった　アメ。
+あたえると　ポケモン　１ひきの
+レベルが　１だけ　あがる。</language>
+		<language name="JPN_KANJI" width="256">エネルギーの　つまった　アメ。
+あたえると　ポケモン　１匹の
+レベルが　１だけ　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_592">
