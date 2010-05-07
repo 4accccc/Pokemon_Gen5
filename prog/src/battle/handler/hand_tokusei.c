@@ -6463,7 +6463,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicMirror( u32* numElems )
  * きのみを使ってもターンエンドに復活する。
  */
 //------------------------------------------------------------------------------
-// ターンチェック開始ハンドラ
+// ターンチェック終了ハンドラ
 static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -6500,7 +6500,7 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Syuukaku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN,        handler_Syuukaku },  // ターンチェック開始ハンドラ
+    { BTL_EVENT_TURNCHECK_END,        handler_Syuukaku },  // ターンチェック終了ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
