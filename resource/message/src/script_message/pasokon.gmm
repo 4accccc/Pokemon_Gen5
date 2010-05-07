@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-05-06T23:12:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-07T16:24:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -478,7 +478,7 @@
 		<comment>■選択肢ウインドウ
 ・msg_pc_box_04表示</comment>
 		<language name="JPN" width="256">ボックスを　せいりする</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　整理する</language>
+		<language name="JPN_KANJI" width="256">ボックスを　整理する</language>
 	</row>
 
 	<row id="msg_pc_box_window_04" back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,">
