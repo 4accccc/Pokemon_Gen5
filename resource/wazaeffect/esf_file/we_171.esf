@@ -6,8 +6,8 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_171_nightmare.NSCR
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_W379_POWER	SE3	真ん中	0:-200:60	0:0:0
-SE再生	SEQ_SE_DUMMY5	SE3	真ん中	220:0:0	0:0:0
+SE再生	SEQ_SE_W379_POWER	SYSTEM	真ん中	0:-200:60	0:0:0
+SE再生	SEQ_SE_DUMMY5	SYSTEM	真ん中	220:0:0	0:0:0
 SE動的変化	SE3	追従	ボリューム	60	0	200	20:0:0
 制御モード変更	逐次
 ポケモンアニメ	攻撃側	アニメストップ

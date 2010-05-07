@@ -4,7 +4,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_167.spa
 #001
 %00
 制御モード変更	継続
-SE再生	SEQ_SE_BE_SE_015	SE3	防御側	0:0:120	0:0:0
+SE再生	SEQ_SE_BE_SE_015	SYSTEM	防御側	0:0:120	0:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_167
 パーティクル再生	w_167	W_167_167_TRPLKICK_FOOT01	防御側	方向無し	2:3:0	1:1:1	1
