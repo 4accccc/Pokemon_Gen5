@@ -10,7 +10,6 @@
 #include "research_common.h"
 #include "research_common_def.h"
 #include "research_common_data.cdat"
-#include "research_test.h"
 #include "research_menu.h"
 #include "research_select.h"
 #include "research_check.h"
@@ -83,28 +82,9 @@ static const GFL_BG_BGCNT_HEADER MainBGControl_BACK =
 //===============================================================================
 // ■各種プロセス シーケンス番号
 //===============================================================================
-// 初期化プロセス
-typedef enum{
-  PROC_INIT_SEQ_ALLOC_WORK,        // プロセスワーク確保
-  PROC_INIT_SEQ_INIT_WORK,         // プロセスワーク初期化
-  PROC_INIT_SEQ_SETUP_DISPLAY,     // 表示準備
-  PROC_INIT_SEQ_SETUP_BG,          // BG 準備
-  PROC_INIT_SEQ_SETUP_COMMON_WORK, // 全画面共通ワークの準備
-  PROC_INIT_SEQ_FINISH,            // 終了
-} PROC_INIT_SEQ;
-
-// 終了プロセス
-typedef enum {
-  PROC_END_SEQ_CLEAN_UP_COMMON_WORK, // 全画面共通ワークの後片付け
-  PROC_END_SEQ_CLEAN_UP_BG,          // BG後片付け
-  PROC_END_SEQ_FREE_WORK,            // プロセスワーク解放
-  PROC_END_SEQ_FINISH,               // 終了
-} PROC_END_SEQ;
-
 // メインプロセス
 typedef enum{
   PROC_MAIN_SEQ_SETUP,   // 初期画面準備
-  PROC_MAIN_SEQ_TEST,    // テスト画面
   PROC_MAIN_SEQ_MENU,    // 調査初期画面
   PROC_MAIN_SEQ_SELECT,  // 調査内容変更画面
   PROC_MAIN_SEQ_CHECK,   // 調査報告確認画面
@@ -115,8 +95,8 @@ typedef enum{
 //===============================================================================
 // ■調査レーダー プロセス ワーク
 //===============================================================================
-typedef struct
-{
+typedef struct {
+
   HEAPID        heapID;
   GAMESYS_WORK* gameSystem;
 
@@ -127,7 +107,6 @@ typedef struct
   RESEARCH_COMMON_WORK* commonWork;
 
   // 各画面専用ワーク
-  RESEARCH_TEST_WORK*   testWork;   // テスト画面
   RESEARCH_MENU_WORK*   menuWork;   // 調査初期画面 ( メニュー画面 )
   RESEARCH_SELECT_WORK* selectWork; // 調査内容変更画面 
   RESEARCH_CHECK_WORK*  checkWork;  // 調査報告確認画面
@@ -136,29 +115,34 @@ typedef struct
 
 
 //===============================================================================
-// ■非公開関数
+// ■prototype
 //===============================================================================
 // プロセス動作
 static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* prm, void* wk );
 static GFL_PROC_RESULT ResearchRadarProcEnd ( GFL_PROC* proc, int* seq, void* prm, void* wk );
 static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* prm, void* wk );
 // メインプロセス シーケンス制御
-static void SwitchMainProcSeq    ( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq );
-static void ChangeMainProcSeq    ( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq );
+static void ChangeMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq );
 static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq );
-static void SetMainProcSeq       ( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq );
+static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq );
 // メインプロセス シーケンス動作
-static PROC_MAIN_SEQ ProcMain_SETUP ( RESEARCH_WORK* work );
-static PROC_MAIN_SEQ ProcMain_TEST  ( RESEARCH_WORK* work );
-static PROC_MAIN_SEQ ProcMain_MENU  ( RESEARCH_WORK* work );
+static PROC_MAIN_SEQ ProcMain_SETUP( RESEARCH_WORK* work );
+static PROC_MAIN_SEQ ProcMain_MENU( RESEARCH_WORK* work );
 static PROC_MAIN_SEQ ProcMain_SELECT( RESEARCH_WORK* work );
-static PROC_MAIN_SEQ ProcMain_CHECK ( RESEARCH_WORK* work );
-// BG
-static void SetupBG  ( HEAPID heapID );
+static PROC_MAIN_SEQ ProcMain_CHECK( RESEARCH_WORK* work );
+// フレームカウンタ
+static u32 GetFrameCount( const RESEARCH_WORK* work );
+static void CountUpFrame( RESEARCH_WORK* work );
+// プロセスワークの生成・破棄
+static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem );
+static void CreateCommonWork( RESEARCH_WORK* work );
+static void DeleteCommonWork( RESEARCH_WORK* work );
+// BG のセットアップ・クリーンアップ
+static void SetupBG( HEAPID heapID );
 static void CleanUpBG( void );
-static void LoadSubBGResources ( HEAPID heapID );
+static void LoadSubBGResources( HEAPID heapID );
 static void LoadMainBGResources( HEAPID heapID );
-static void SUB_BG_RADAR_UpdatePaletteAnime( const RESEARCH_WORK* work );
+static void UpdateRingAnime( const RESEARCH_WORK* work );
 
 
 //===============================================================================
@@ -191,56 +175,32 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
   RESEARCH_PARAM* param = prm;
   RESEARCH_WORK*  work  = wk;
 
-  switch( *seq )
-  {
-  // プロセスワーク確保
-  case PROC_INIT_SEQ_ALLOC_WORK:
-    GFL_PROC_AllocWork( proc, sizeof(RESEARCH_WORK), GFL_HEAPID_APP );
-    (*seq)++;
-    break;
+  switch( *seq ) {
+    case 0:
+      // プロセスワーク確保
+      GFL_PROC_AllocWork( proc, sizeof(RESEARCH_WORK), GFL_HEAPID_APP ); 
+      (*seq)++;
+      break;
 
-  // プロセスワーク初期化
-  case PROC_INIT_SEQ_INIT_WORK:
-    work->heapID     = GFL_HEAPID_APP;
-    work->gameSystem = param->gameSystem;
-    work->frameCount = 0;
-    work->commonWork = NULL;
-    work->testWork   = NULL;
-    work->menuWork   = NULL;
-    work->selectWork = NULL;
-    work->checkWork  = NULL;
-    (*seq)++;
-    break;
+    case 1: 
+      // プロセスワークを初期化
+      InitProcWork( work, param->gameSystem );
 
-  // 表示準備
-  case PROC_INIT_SEQ_SETUP_DISPLAY:
-    GFL_DISP_SetBank( &VRAMBankSettings );         // VRAM-Bank 割り当て
-    GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );  // 下画面がメイン
-    (*seq)++;
-    break;
+      // 表示準備
+      GFL_DISP_SetBank( &VRAMBankSettings );         // VRAM-Bank 割り当て
+      GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );  // 下画面がメイン
 
-  // BG準備
-  case PROC_INIT_SEQ_SETUP_BG:
-    SetupBG( work->heapID );
-    LoadMainBGResources( work->heapID ); 
-    LoadSubBGResources ( work->heapID ); 
-    (*seq)++;
-    break;
+      // BG準備
+      SetupBG( work->heapID );
+      LoadMainBGResources( work->heapID ); 
+      LoadSubBGResources ( work->heapID ); 
 
-  // 全画面共通ワークの準備
-  case PROC_INIT_SEQ_SETUP_COMMON_WORK:
-    work->commonWork = RESEARCH_COMMON_CreateWork( work->heapID, work->gameSystem );
-    (*seq)++;
-    break;
+      // 全画面共通ワークを生成
+      CreateCommonWork( work );
 
-  // 終了
-  case PROC_INIT_SEQ_FINISH:
-    return GFL_PROC_RES_FINISH;
-
-  // エラー
-  default:
-    GF_ASSERT(0);
+      return GFL_PROC_RES_FINISH;
   }
+
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -259,35 +219,11 @@ static GFL_PROC_RESULT ResearchRadarProcEnd( GFL_PROC* proc, int* seq, void* prm
 {
   RESEARCH_WORK* work = wk;
 
-  switch( *seq )
-  {
-  // 全画面共通ワークの後片付け
-  case PROC_END_SEQ_CLEAN_UP_COMMON_WORK:
-    RESEARCH_COMMON_DeleteWork( work->commonWork );
-    (*seq)++;
-  break;
+  DeleteCommonWork( work ); // 全画面共通ワークを破棄
+  CleanUpBG(); // BG をクリーンアップ
+  GFL_PROC_FreeWork( proc ); // プロセスワークを破棄
 
-  // BG後片付け
-  case PROC_END_SEQ_CLEAN_UP_BG:
-    CleanUpBG();
-    (*seq)++;
-    break;
-
-  // プロセスワーク解放
-  case PROC_END_SEQ_FREE_WORK:
-    GFL_PROC_FreeWork( proc );
-    (*seq)++;
-    break;
-
-  // 終了
-  case PROC_END_SEQ_FINISH:
-    return GFL_PROC_RES_FINISH;
-
-  // エラー
-  default:
-    GF_ASSERT(0);
-  }
-  return GFL_PROC_RES_CONTINUE;
+  return GFL_PROC_RES_FINISH;
 }
 
 
@@ -304,28 +240,25 @@ static GFL_PROC_RESULT ResearchRadarProcEnd( GFL_PROC* proc, int* seq, void* prm
 static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* prm, void* wk )
 { 
   RESEARCH_WORK* work = wk;
-  PROC_MAIN_SEQ  nextSeq;
+  PROC_MAIN_SEQ  next_seq;
 
   switch( *seq ) {
-  case PROC_MAIN_SEQ_SETUP:   nextSeq = ProcMain_SETUP ( work );  break;
-  case PROC_MAIN_SEQ_TEST:    nextSeq = ProcMain_TEST  ( work );  break;
-  case PROC_MAIN_SEQ_MENU:    nextSeq = ProcMain_MENU  ( work );  break;
-  case PROC_MAIN_SEQ_SELECT:  nextSeq = ProcMain_SELECT( work );  break;
-  case PROC_MAIN_SEQ_CHECK:   nextSeq = ProcMain_CHECK ( work );  break;
+  case PROC_MAIN_SEQ_SETUP:   next_seq = ProcMain_SETUP ( work );  break;
+  case PROC_MAIN_SEQ_MENU:    next_seq = ProcMain_MENU  ( work );  break;
+  case PROC_MAIN_SEQ_SELECT:  next_seq = ProcMain_SELECT( work );  break;
+  case PROC_MAIN_SEQ_CHECK:   next_seq = ProcMain_CHECK ( work );  break;
   case PROC_MAIN_SEQ_FINISH:  return GFL_PROC_RES_FINISH;
   default:  GF_ASSERT(0);
   }
 
-  // SUB-BG レーダー面のパレットアニメーション更新
-  SUB_BG_RADAR_UpdatePaletteAnime( work );
+  UpdateRingAnime( work ); // 上画面のリングアニメーションを更新
+  CountUpFrame( work ); // フレームカウンタ更新
 
-  // フレームカウンタ更新
-  work->frameCount++; 
+  // シーケンスを更新
+  if( *seq != next_seq ) {
+    ChangeMainProcSeq( work, seq, next_seq );
+  }
 
-  // シーケンスの更新
-  SwitchMainProcSeq( work, seq, nextSeq );
-
-  // メインプロセス継続
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -333,24 +266,6 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
 //===============================================================================
 // ■メインプロセス シーケンス制御
 //===============================================================================
-
-//-------------------------------------------------------------------------------
-/**
- * @brief シーケンスのスイッチ制御を行う
- *
- * @param work    プロセスワーク
- * @param seq     シーケンスワーク
- * @param nextSeq 次のシーケンス
- */
-//-------------------------------------------------------------------------------
-static void SwitchMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq )
-{
-  // 変更なし
-  if( *seq == nextSeq ){ return; }
-
-  // 変更
-  ChangeMainProcSeq( work, seq, nextSeq );
-}
 
 //-------------------------------------------------------------------------------
 /**
@@ -380,7 +295,6 @@ static void ChangeMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ next
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-PROC-MAIN: chenge seq ==> " );
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   OS_TFPrintf( PRINT_TARGET, "SETUP(%d)\n",  *seq );  break;
-  case PROC_MAIN_SEQ_TEST:    OS_TFPrintf( PRINT_TARGET, "TEST(%d)\n",   *seq );  break;
   case PROC_MAIN_SEQ_MENU:    OS_TFPrintf( PRINT_TARGET, "MENU(%d)\n",   *seq );  break;
   case PROC_MAIN_SEQ_SELECT:  OS_TFPrintf( PRINT_TARGET, "SELECT(%d)\n", *seq );  break;
   case PROC_MAIN_SEQ_CHECK:   OS_TFPrintf( PRINT_TARGET, "CHECK(%d)\n",  *seq );  break;
@@ -400,10 +314,8 @@ static void ChangeMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ next
 static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
 {
   // 現在のシーケンスの専用ワークを破棄
-  switch( *seq )
-  {
+  switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:  break;
-  case PROC_MAIN_SEQ_TEST:   DeleteResearchTestWork  ( work->testWork );    break;
   case PROC_MAIN_SEQ_MENU:   DeleteResearchMenuWork  ( work->menuWork );    break;
   case PROC_MAIN_SEQ_SELECT: DeleteResearchSelectWork( work->selectWork );  break;
   case PROC_MAIN_SEQ_CHECK:  DeleteResearchCheckWork ( work->checkWork );   break;
@@ -412,10 +324,8 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   }
 
   // 専用ワークポインタをクリア
-  switch( *seq )
-  {
+  switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_TEST:    work->testWork   = NULL;  break;
   case PROC_MAIN_SEQ_MENU:    work->menuWork   = NULL;  break;
   case PROC_MAIN_SEQ_SELECT:  work->selectWork = NULL;  break;
   case PROC_MAIN_SEQ_CHECK:   work->checkWork  = NULL;  break;
@@ -442,7 +352,6 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   switch( *seq )
   {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_TEST:    GF_ASSERT( work->testWork   == NULL );  break;
   case PROC_MAIN_SEQ_MENU:    GF_ASSERT( work->menuWork   == NULL );  break;
   case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->selectWork == NULL );  break;
   case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->checkWork  == NULL );  break;
@@ -454,7 +363,6 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   switch( nextSeq )
   {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_TEST:    work->testWork   = CreateResearchTestWork  ( work->heapID );  break;
   case PROC_MAIN_SEQ_MENU:    work->menuWork   = CreateResearchMenuWork  ( work->commonWork );  break;
   case PROC_MAIN_SEQ_SELECT:  work->selectWork = CreateResearchSelectWork( work->commonWork );  break;
   case PROC_MAIN_SEQ_CHECK:   work->checkWork  = CreateResearchCheckWork ( work->commonWork );  break;
@@ -486,35 +394,6 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
 static PROC_MAIN_SEQ ProcMain_SETUP( RESEARCH_WORK* work )
 {
   return PROC_MAIN_SEQ_MENU;
-  //return PROC_MAIN_SEQ_TEST;
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief メインプロセス テスト画面
- *
- * @param work プロセスワーク
- *
- * @return テスト画面が終了した場合 次のシーケンス
- *         そうでなければ 現在のシーケンス
- */
-//-------------------------------------------------------------------------------
-static PROC_MAIN_SEQ ProcMain_TEST( RESEARCH_WORK* work )
-{ 
-  RESEARCH_TEST_RESULT result;
-  PROC_MAIN_SEQ  nextSeq;
-
-  // テスト画面メイン処理
-  result = ResearchTestMain( work->testWork );
-  
-  // 次のシーケンスを決定
-  switch( result )
-  {
-  case RESEARCH_TEST_RESULT_CONTINUE:  nextSeq = PROC_MAIN_SEQ_TEST;  break;
-  case RESEARCH_TEST_RESULT_END:       nextSeq = PROC_MAIN_SEQ_MENU;  break;
-  default:  GF_ASSERT(0);
-  } 
-  return nextSeq;
 }
 
 //-------------------------------------------------------------------------------
@@ -603,6 +482,81 @@ static PROC_MAIN_SEQ ProcMain_CHECK( RESEARCH_WORK* work )
   return nextSeq;
 } 
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief フレームカウンタの値を取得する
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+static u32 GetFrameCount( const RESEARCH_WORK* work )
+{
+  return work->frameCount;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief フレームカウンタをインクリメントする
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+static void CountUpFrame( RESEARCH_WORK* work )
+{
+  work->frameCount++;
+}
+
+//===============================================================================
+// ■プロセスワーク
+//===============================================================================
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief プロセスワークを初期化する
+ *
+ * @param work
+ * @param gameSystem
+ */
+//-------------------------------------------------------------------------------
+static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem )
+{
+  work->heapID     = GFL_HEAPID_APP;
+  work->gameSystem = gameSystem;
+  work->frameCount = 0;
+  work->commonWork = NULL;
+  work->menuWork   = NULL;
+  work->selectWork = NULL;
+  work->checkWork  = NULL;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 全画面共通ワークを生成する
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+static void CreateCommonWork( RESEARCH_WORK* work )
+{
+  GF_ASSERT( work->commonWork == NULL );
+
+  work->commonWork = RESEARCH_COMMON_CreateWork( work->heapID, work->gameSystem );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 全画面共通ワークを破棄する
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+static void DeleteCommonWork( RESEARCH_WORK* work )
+{
+  GF_ASSERT( work->commonWork );
+
+  RESEARCH_COMMON_DeleteWork( work->commonWork );
+  work->commonWork = NULL;
+}
 
 //===============================================================================
 // ■BG
@@ -729,13 +683,15 @@ static void LoadSubBGResources( HEAPID heapID )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void SUB_BG_RADAR_UpdatePaletteAnime( const RESEARCH_WORK* work )
+static void UpdateRingAnime( const RESEARCH_WORK* work )
 { 
+  u32 frame;
   u8 paletteOffset;
   u8 paletteNo;
 
   // 設定するパレット番号を決定
-  paletteOffset = ( (work->frameCount / SUB_BG_RADAR_PLT_ANIME_FRAME) % SUB_BG_RADAR_PLT_NUM );
+  frame         = GetFrameCount( work );
+  paletteOffset = ( (frame / SUB_BG_RADAR_PLT_ANIME_FRAME) % SUB_BG_RADAR_PLT_NUM );
   paletteNo     = SUB_BG_RADAR_FIRST_PLT_IDX + paletteOffset;
 
   // スクリーンデータを更新
