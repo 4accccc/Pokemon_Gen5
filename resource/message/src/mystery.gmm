@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-30T19:39:34"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-08T19:30:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,7 +462,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1105" top="388" right="1810" bottom="1016" maximized="no" rayout="Vertical2">
+	<dialog left="1024" top="397" right="1729" bottom="1025" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="yes"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1486,8 +1486,7 @@
 ふしぎなおくりものを　うけとった[BE:00:ページ切り替え（行送り）]
 きねんの　しるしとして[BE:00:ページ切り替え（行送り）]
 ふしぎカードが　かざられます[BE:01:ページ切り替え（クリア）]
-ポケモンセンターに　いる
-はいたついんから[BE:00:ページ切り替え（行送り）]
+はいたついんから
 おくりものを　もらった　カードには[BE:00:ページ切り替え（行送り）]
 スタンプが　おされます[BE:01:ページ切り替え（クリア）]
 スタンプが　おされていないものは
@@ -1501,8 +1500,7 @@
 ふしぎなおくりものを　受け取った[BE:00:ページ切り替え（行送り）]
 記念の　印として[BE:00:ページ切り替え（行送り）]
 ふしぎカードが　飾られます[BE:01:ページ切り替え（クリア）]
-ポケモンセンターに　いる
-配達員から[BE:00:ページ切り替え（行送り）]
+配達員から
 おくりものを　もらった　カードには[BE:00:ページ切り替え（行送り）]
 スタンプが　押されます[BE:01:ページ切り替え（クリア）]
 スタンプが　押されていないものは

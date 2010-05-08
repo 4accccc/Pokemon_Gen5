@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T20:50:45"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-08T18:12:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1153" top="381" right="1858" bottom="1009" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="yes"/>
 		<band id="0" index="1" style="0000" width="453"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="242"/>
 		<band id="3" index="4" style="0000" width="453"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -893,7 +893,8 @@ C-Gear入手前</comment>
 フリーモードは　だれでも
 さんか　できます[BE:01:ページ切り替え（クリア）]
 レーティングモードは
-ＰＧＬに　とうろく　しないと[BE:00:ページ切り替え（行送り）]
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
+とうろく　しないと[BE:00:ページ切り替え（行送り）]
 さんか　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチでは
 遠くにいる　見知らぬ人と[BE:00:ページ切り替え（行送り）]
@@ -907,8 +908,8 @@ C-Gear入手前</comment>
 フリーモードは　だれでも
 参加できます[BE:01:ページ切り替え（クリア）]
 レーティングモードは
-ＰＧＬに　登録しないと[BE:00:ページ切り替え（行送り）]
-参加できません[BE:01:ページ切り替え（クリア）]</language>
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
+登録しないと　参加できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1010,9 +1011,9 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードは
-ＰＧＬに　とうろくすると[BE:00:ページ切り替え（行送り）]
-えらぶことが　できる[BE:00:ページ切り替え（行送り）]
-たいせんを　きわめたい　ひとに[BE:00:ページ切り替え（行送り）]
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
+とうろくすると　えらぶことが　できる[BE:01:ページ切り替え（クリア）]
+たいせんを　きわめたい　ひとに
 おすすめの　モードです[BE:01:ページ切り替え（クリア）]
 つうしんを　つなげると
 レーティングの　ちかい　ひとと[BE:00:ページ切り替え（行送り）]
@@ -1035,9 +1036,9 @@ C-Gear入手前</comment>
 さんかちゅう　ＤＳほんたいを
 かえるときは　ごちゅうい　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">レーティングモードは
-ＰＧＬに　登録すると[BE:00:ページ切り替え（行送り）]
-選ぶことが　できる[BE:00:ページ切り替え（行送り）]
-対戦を　極めたい人に[BE:00:ページ切り替え（行送り）]
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
+登録すると　選ぶことが　できる[BE:01:ページ切り替え（クリア）]
+対戦を　極めたい人に
 おすすめの　モードです[BE:01:ページ切り替え（クリア）]
 通信を　つなげたとき
 レーティングの　近い人と[BE:00:ページ切り替え（行送り）]

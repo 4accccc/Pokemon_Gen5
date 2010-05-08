@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-04T01:29:28"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-08T17:43:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1030" top="368" right="1735" bottom="996" maximized="no" rayout="Vertical2">
+	<dialog left="1141" top="556" right="1846" bottom="1184" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -628,15 +628,15 @@
 
 	<row id="WIFIMATCH_WIFI_STR_02">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">ポケモンバトル　Ｗｉ－Ｆｉたいかいは
-ＰＧＬの　ホームページで[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいは
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
 とうろく　すると　さんか　できます[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールや
 かいさい　きかんは[BE:00:ページ切り替え（行送り）]
 ＰＧＬ　ホームページで[BE:00:ページ切り替え（行送り）]
 かくにん　してください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポケモンバトル　Ｗｉ－Ｆｉ大会は
-ＰＧＬの　ホームページで[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会は
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
 登録すると　参加できます[BE:01:ページ切り替え（クリア）]
 大会のルールや　開催期間は
 ＰＧＬ　ホームページで[BE:00:ページ切り替え（行送り）]
@@ -673,15 +673,17 @@
 
 	<row id="WIFIMATCH_WIFI_STR_05">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">ＰＧＬに　ゲームシンクコードが
+		<language name="JPN" width="256">ポケモングローバルリンクに
+ゲームシンクコードが[BE:00:ページ切り替え（行送り）]
 とうろく　されていません[BE:01:ページ切り替え（クリア）]
 ゲームシンク　せっていを　おこない
-ＰＧＬ　ホームページで[BE:00:ページ切り替え（行送り）]
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
 とうろくを　おこなってください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ＰＧＬに　ゲームシンクコードが
+		<language name="JPN_KANJI" width="256">ポケモングローバルリンクに
+ゲームシンクコードが[BE:00:ページ切り替え（行送り）]
 登録　されていません[BE:01:ページ切り替え（クリア）]
 ゲームシンク設定を　行い
-ＰＧＬ　ホームページで[BE:00:ページ切り替え（行送り）]
+ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
 登録を　おこなってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
