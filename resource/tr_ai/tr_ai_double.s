@@ -16,6 +16,7 @@
 DoubleAISeq:
   CHECK_BTL_RULE
 	IF_EQUAL		BTL_RULE_DOUBLE,DoubleAISeq_next
+	IF_EQUAL		BTL_RULE_TRIPLE,DoubleAISeq_next
 
   AIEND
 
