@@ -1962,18 +1962,22 @@ static void common_RankDownGuard_Fixed( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int*
  *  とくせい「たんじゅん」
  */
 //------------------------------------------------------------------------------
-// ワザによるランク増減効果チェックハンドラ
+// ランク増減値修正ハンドラ
 static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, 2 );
+    int value = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
+    value *= 2;
+    if( value < -4 ){ value = -4; }
+    if( value > 4 ){ value = 4; }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, value );
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tanjun( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_GET_RANKEFF_VALUE, handler_Tanjun },  // ワザによるランク増減効果チェックハンドラ
+    { BTL_EVENT_RANKVALUE_CHANGE, handler_Tanjun },  // ランク増減値修正ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
