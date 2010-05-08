@@ -6923,10 +6923,10 @@ static BOOL scProc_OP_UpdateUseWaza( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
 
   {
-    BTL_N_Printf( DBGSTR_CLIENT_UpdateWazaProcResult, args[0], args[4], args[1], args[2], args[3] );
+    BTL_N_Printf( DBGSTR_CLIENT_UpdateWazaProcResult, args[0], args[5], args[4], args[3], args[1],  args[2] );
   }
 
-  BPP_UpdateWazaProcResult( bpp, args[1], args[2], args[3], args[4] );
+  BPP_UpdateWazaProcResult( bpp, args[1], args[2], args[3], args[4], args[5] );
   return TRUE;
 }
 /**

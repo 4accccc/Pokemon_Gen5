@@ -131,6 +131,7 @@ struct _BTL_POKEPARAM {
   u8  formNo;
   u8  criticalRank;
   u8  usedWazaCount;
+  u8  prevWazaType;
 
   u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
   u16 appearedTurn;     ///< 戦闘に出たターンを記録
@@ -241,6 +242,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->migawariHP = 0;
   bpp->prevSelectWazaID = WAZANO_NULL;
   bpp->prevActWazaID    = WAZANO_NULL;
+  bpp->prevWazaType     = POKETYPE_NULL;
   bpp->wazaContCounter   = 0;
   bpp->combiWazaID = WAZANO_NULL;
   bpp->combiPokeID = BTL_POKEID_NULL;
@@ -343,6 +345,7 @@ static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
 
   bpp->prevSelectWazaID = WAZANO_NULL;
   bpp->prevActWazaID    = WAZANO_NULL;
+  bpp->prevWazaType     = POKETYPE_NULL;
   bpp->wazaContCounter  = 0;
 }
 //----------------------------------------------------------------------------------
@@ -2212,13 +2215,14 @@ u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp )
  * @param   orgWaza       クライアントが選択したワザ（ゆびをふる等、派生ワザの場合のみ actWaza と異なる）
  */
 //=============================================================================================
-void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL fActEnable, WazaID actWaza, WazaID orgWaza )
+void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL fActEnable, PokeType actWazaType, WazaID actWaza, WazaID orgWaza )
 {
   WazaID  prevActWaza = bpp->prevActWazaID;
 
   bpp->prevSelectWazaID = orgWaza;
   bpp->prevActWazaID = actWaza;
   bpp->prevTargetPos = actTargetPos;
+  bpp->prevWazaType  = actWazaType;
 
   if( prevActWaza == actWaza )
   {
@@ -2258,6 +2262,19 @@ u32 BPP_GetWazaContCounter( const BTL_POKEPARAM* bpp )
 WazaID BPP_GetPrevWazaID( const BTL_POKEPARAM* bpp )
 {
   return bpp->prevActWazaID;
+}
+//=============================================================================================
+/**
+ * 直近に実行されたワザタイプを返す（場に出てから使ったワザが無い場合は POKETYPE_NULL ）
+ *
+ * @param   bpp
+ *
+ * @retval  PokeType
+ */
+//=============================================================================================
+PokeType BPP_GetPrevWazaType( const BTL_POKEPARAM* bpp )
+{
+  return bpp->prevWazaType;
 }
 //=============================================================================================
 /**
@@ -2764,6 +2781,7 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
     bpp->turnCount = 0;
     bpp->prevSelectWazaID = WAZANO_NULL;
     bpp->prevActWazaID = WAZANO_NULL;
+    bpp->prevWazaType = POKETYPE_NULL;
     bpp->wazaContCounter = 0;
 
     bpp->coreParam.fHensin = TRUE;

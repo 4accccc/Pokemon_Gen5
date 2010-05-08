@@ -3883,8 +3883,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   // ワザプロセス修了した
   BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_WAZAPROC_DONE );
-  BPP_UpdateWazaProcResult( attacker, actTargetPos, fWazaEnable, actWaza, orgWaza );
-  SCQUE_PUT_OP_UpdateWazaProcResult( wk->que, BPP_GetID(attacker), actTargetPos, fWazaEnable, actWaza, orgWaza );
+  BPP_UpdateWazaProcResult( attacker, actTargetPos, fWazaEnable, wk->wazaParam->wazaType, actWaza, orgWaza );
+  SCQUE_PUT_OP_UpdateWazaProcResult( wk->que, BPP_GetID(attacker), actTargetPos, fWazaEnable,
+                          wk->wazaParam->wazaType, actWaza, orgWaza );
 
   // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
   if( (!fWazaLock) && fPPDecrement ){

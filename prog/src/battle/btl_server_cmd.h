@@ -260,9 +260,10 @@ static inline void SCQUE_PUT_OP_ConsumeItem( BTL_SERVER_CMD_QUE* que, u8 pokeID 
 }
 
 static inline void SCQUE_PUT_OP_UpdateWazaProcResult( BTL_SERVER_CMD_QUE* que,
-    u8 pokeID, BtlPokePos actTargetPos, BOOL fActEnable, WazaID actWaza, WazaID orgWaza )
+    u8 pokeID, BtlPokePos actTargetPos, BOOL fActEnable, PokeType actWazaType, WazaID actWaza, WazaID orgWaza )
 {
-  SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, actTargetPos, fActEnable, actWaza, orgWaza );
+  SCQUE_PUT_Common( que, SC_OP_UPDATE_USE_WAZA, pokeID, actTargetPos, fActEnable, actWazaType, actWaza, orgWaza );
+
 }
 
 

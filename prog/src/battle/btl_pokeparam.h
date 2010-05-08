@@ -377,9 +377,12 @@ extern void BPP_ConsumeItem( BTL_POKEPARAM* pp );
 extern void BPP_ClearConsumedItem( BTL_POKEPARAM* bpp );
 extern u16 BPP_GetConsumedItem( const BTL_POKEPARAM* bpp );
 
-extern void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL fActEnable, WazaID actWaza, WazaID orgWaza );
+extern void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL fActEnable,
+  PokeType actWazaType, WazaID actWaza, WazaID orgWaza );
+
 
 extern WazaID  BPP_GetPrevWazaID( const BTL_POKEPARAM* bpp );
+extern PokeType BPP_GetPrevWazaType( const BTL_POKEPARAM* bpp );
 extern WazaID  BPP_GetPrevOrgWazaID( const BTL_POKEPARAM* bpp );
 extern BtlPokePos  BPP_GetPrevTargetPos( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_GetBtlInFlag( const BTL_POKEPARAM* bpp );

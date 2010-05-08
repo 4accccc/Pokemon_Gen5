@@ -6010,11 +6010,10 @@ static void handler_Texture2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
-    WazaID  waza = BPP_GetPrevWazaID( bpp );
-    if( waza != WAZANO_NULL )
+    PokeType  type = BPP_GetPrevWazaType( bpp );
+    if( type != POKETYPE_NULL )
     {
       // íÔçRëäê´ÇóÒãì
-      PokeType type = WAZADATA_GetType( waza );
       PokeType *typeArray = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(PokeType)* POKETYPE_NUMS );
       u32 cnt = BTL_CALC_GetResistTypes( type, typeArray );
       if( cnt )
