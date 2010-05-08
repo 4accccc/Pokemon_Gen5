@@ -5128,8 +5128,6 @@ static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   }
 }
 
-
-
 //------------------------------------------------------------------------------
 /**
  * Ç∆Ç≠ÇπÇ¢ÅuÇ‡ÇÃÇ–ÇÎÇ¢Åv

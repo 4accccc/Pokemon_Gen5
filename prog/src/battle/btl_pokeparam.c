@@ -1489,9 +1489,9 @@ BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza )
  *
  */
 //=============================================================================================
-void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID )
+void BPP_TURNFLAG_Set( BTL_POKEPARAM* bpp, BppTurnFlag flagID )
 {
-  flgbuf_set( pp->turnFlag, flagID );
+  flgbuf_set( bpp->turnFlag, flagID );
 }
 //=============================================================================================
 /**
@@ -1502,12 +1502,9 @@ void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID )
  *
  */
 //=============================================================================================
-void BPP_CONTFLAG_Set( BTL_POKEPARAM* pp, BppContFlag flagID )
+void BPP_CONTFLAG_Set( BTL_POKEPARAM* bpp, BppContFlag flagID )
 {
-  if( flagID == BPP_CONTFLG_POWERTRICK ){
-    BTL_Printf("ポケ[%d]にパワートリックフラグ\n", pp->coreParam.myID);
-  }
-  flgbuf_set( pp->contFlag, flagID );
+  flgbuf_set( bpp->contFlag, flagID );
 }
 //=============================================================================================
 /**
@@ -2027,6 +2024,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
 void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 {
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
+
   /*
    * ※バトンタッチで引き継ぐ情報を記録しているため、
    * 退場時に継続フラグクリアはさせてはいけない
@@ -2734,7 +2732,6 @@ static inline void flgbuf_reset( u8* buf, u32 flagID )
 }
 static inline BOOL flgbuf_get( const u8* buf, u32 flagID )
 {
-//  GF_ASSERT(flagID<BPP_TURNFLG_MAX);
   {
     u8 byte = flagID / 8;
     u8 bit = (1 << (flagID%8));

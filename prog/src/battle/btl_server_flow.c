@@ -7061,13 +7061,13 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     scEvent_ItemEquip( wk, bpp );
 
     scPut_UseItemAct( wk, bpp );
+    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
+      scproc_ConsumeItem( wk, bpp, itemID );
+    }
+
     scproc_HandEx_Root( wk, itemID );
 
     Hem_PopState( &wk->HEManager, hem_state_2nd );
-    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) )
-    {
-      scproc_ConsumeItem( wk, bpp, itemID );
-    }
   }
   else
   {
