@@ -16,9 +16,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA ev_c04r0105_game_continue
-_EVENT_DATA ev_c04r0105_game_cancel 
 _EVENT_DATA ev_c04r0105_game_continue_error
 _EVENT_DATA ev_c04r0105_game_after
+_EVENT_DATA ev_c04r0105_game_after_lose
 _EVENT_DATA ev_c04r0105_bpshop_waza
 _EVENT_DATA ev_c04r0105_bpshop_item
 _EVENT_DATA ev_bg_c04r0105_sign1_01
@@ -37,15 +37,6 @@ EVENT_START ev_c04r0105_game_continue
 EVENT_END
 
 //--------------------------------------------------------------
-//  バトルサブウェイ　受付　ゲームキャンセル
-//--------------------------------------------------------------
-EVENT_START ev_c04r0105_game_cancel
-{
-  _CHG_COMMON_SCR SCRID_BSW_GAME_CANCEL
-}
-EVENT_END
-
-//--------------------------------------------------------------
 //  バトルサブウェイ　受付　再開エラー
 //--------------------------------------------------------------
 EVENT_START ev_c04r0105_game_continue_error
@@ -60,6 +51,15 @@ EVENT_END
 EVENT_START ev_c04r0105_game_after
 {
   _CHG_COMMON_SCR SCRID_BSW_GAME_AFTER
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　受付　ゲーム終了　負け、キャンセル
+//--------------------------------------------------------------
+EVENT_START ev_c04r0105_game_after_lose
+{
+  _CHG_COMMON_SCR SCRID_BSW_GAME_AFTER_LOSE
 }
 EVENT_END
 

@@ -26,8 +26,8 @@ _EVENT_DATA ev_bsw_posev_receipt_stopper
 _EVENT_DATA ev_bsw_receipt_talk
 _EVENT_DATA ev_bsw_game_continue
 _EVENT_DATA ev_bsw_report_error
-_EVENT_DATA ev_bsw_game_cancel
 _EVENT_DATA ev_bsw_game_after
+_EVENT_DATA ev_bsw_game_after_lose
 _EVENT_DATA ev_bsw_retmap_receipt
 _EVENT_DATA ev_init_bsw_ttown
 _EVENT_DATA ev_bsw_ttown_receipt_talk
@@ -189,8 +189,8 @@ INIT_EVENT_START ev_recover_bsw_receipt
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
     _CALL sub_bsw_common_del_partner  //パートナーOBJ削除
   /*
-  CASE BSWAY_SCENE_RECEIPT_CANCEL THEN    //キャンセル
   CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
+  CASE BSWAY_SCENE_RECEIPT_AFTER_LOSE THEN    //ゲーム後　負け
   CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
   */
   ENDSWITCH
@@ -352,7 +352,18 @@ sub_bsw_receipt_guide_wifi_upload:
       
       //アップロード
       _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
-      _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
+      
+      IF $ret == TRUE THEN
+        //成績を送りました！
+        $SCWK_TEMP0 = msg_bsw_scr_51
+        _CALL sub_bsw_common_bwin_receipt
+        _MSGWIN_CLOSE()
+        
+        _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
+        
+        //レポート
+        _CALL sub_bsw_common_auto_save
+      ENDIF
     ENDIF
   ENDIF
   
@@ -1145,37 +1156,6 @@ ev_bsw_report_error:
 }
 _END
 
-//=====================================================================
-//  受付　対戦キャンセル、負け戻り
-//=====================================================================
-//--------------------------------------------------------------
-//  受付　チャレンジキャンセル、負け戻り
-//--------------------------------------------------------------
-ev_bsw_game_cancel:
-{
-  //電車到着デモ
-  _CALL sub_receipt_demo_train_arrival
-  
-  //フラグクリア
-  _CALL sub_receipt_flag_clear
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
-  //負けた際のスコアセット
-  _BSUBWAY_TOOL( BSWSUB_SET_LOSE_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
-  
-  //成績をレポートに
-  _SYSWIN_MSG( msg_bsw_scr_36 , POS_DOWN )
-  _REPORT_CALL( SCWK_ANSWER )
-  _MSGWIN_CLOSE()
-  
-  //またのご利用を
-  _CALL sub_bsw_common_exit
-  
-  _CHG_LOCAL_SCR
-}
-_END
 
 //=====================================================================
 //  受付　対戦終了後の戻り
@@ -1202,6 +1182,105 @@ ev_bsw_game_after:
     _CALL sub_bsw_common_bwin_receipt
   ENDIF
   
+  //またのご利用を
+  _CALL sub_bsw_common_exit
+  
+  _CHG_LOCAL_SCR
+}
+_END
+
+//=====================================================================
+//  受付　対戦キャンセル、負け戻り
+//=====================================================================
+//--------------------------------------------------------------
+//  受付　チャレンジキャンセル、負け戻り
+//--------------------------------------------------------------
+ev_bsw_game_after_lose:
+{
+  //電車到着デモ
+  _CALL sub_receipt_demo_train_arrival
+  
+  //フラグクリア
+  _CALL sub_receipt_flag_clear
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //負けた際のスコアセット
+  _BSUBWAY_TOOL( BSWSUB_SET_LOSE_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //WiFiモードであればランク操作
+  IF $play_mode == BSWAY_MODE_WIFI THEN
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, ret )
+    
+    IF $ret == TRUE THEN //新規プレイである
+      //ランクダウン処理
+      _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+    
+      IF $ret == TRUE THEN //ランク下がった
+        _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+        //ランク文字列に
+        _NUMBER( 0, ret, 2 )
+        //ランクが下がった
+        $SCWK_TEMP0 = msg_bsw_scr_79
+        _CALL sub_bsw_common_bwin_receipt
+        _AB_KEYWAIT()
+        _MSGWIN_CLOSE()
+      ENDIF
+      
+      //未アップロードフラグセット
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
+    ENDIF
+  ENDIF
+  
+  //成績をレポートに
+  _SYSWIN_MSG( msg_bsw_scr_36 , POS_DOWN )
+  _REPORT_CALL( SCWK_ANSWER )
+  _MSGWIN_CLOSE()
+  
+  //WiFiモードであれば成績アップロード
+  IF $play_mode == BSWAY_MODE_WIFI THEN
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, ret )
+    
+    IF $ret == TRUE THEN //新規プレイである
+      _SYSWIN_MSG( msg_bsw_scr_100, POS_DOWN )
+      _YES_NO_WIN( ret )
+      _SYSWIN_CLOSE()
+
+      IF $ret == SCR_YES THEN //送る
+        //フィールド通信切断
+        _FIELD_COMM_EXIT_EVENT_CALL( ret )
+        
+        IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+          $ret = FALSE
+        ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+          $ret = FALSE
+        ELSE
+          $ret = TRUE
+        ENDIF
+    
+        IF $ret == FALSE THEN //切断失敗
+          $SCWK_TEMP0 = msg_bsw_scr_77
+          _CALL sub_bsw_common_bwin_receipt
+          _AB_KEYWAIT()
+        ELSE
+          _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
+          
+          IF $ret == TRUE THEN
+            //成績を送りました！
+            $SCWK_TEMP0 = msg_bsw_scr_51
+            _CALL sub_bsw_common_bwin_receipt
+            _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
+            //レポート
+            _CALL sub_bsw_common_auto_save
+          ELSE //送れなかった
+            _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
+          ENDIF
+        ENDIF
+      ENDIF
+    ENDIF
+  ENDIF
+
   //またのご利用を
   _CALL sub_bsw_common_exit
   
@@ -2130,18 +2209,22 @@ sub_bsw_common_report_error_exit:
   _BSUBWAY_TOOL( BSWTOOL_SET_NG_SCORE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   IF $play_mode == BSWAY_MODE_WIFI THEN
-    //ランクダウン処理
-    _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, ret )
     
-    IF $ret == TRUE THEN //ランク下がった
-      _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
-      //ランク文字列に
-      _NUMBER( 0, ret, 2 )
-      //ランクが下がった
-      $SCWK_TEMP0 = msg_bsw_scr_79
-      _CALL sub_bsw_common_bwin_receipt
-      _AB_KEYWAIT()
-      _MSGWIN_CLOSE()
+    IF $ret == TRUE THEN //新規プレイである
+      //ランクダウン処理
+      _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+    
+      IF $ret == TRUE THEN //ランク下がった
+        _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+        //ランク文字列に
+        _NUMBER( 0, ret, 2 )
+        //ランクが下がった
+        $SCWK_TEMP0 = msg_bsw_scr_79
+        _CALL sub_bsw_common_bwin_receipt
+        _AB_KEYWAIT()
+        _MSGWIN_CLOSE()
+      ENDIF
     ENDIF
     
     //レポート

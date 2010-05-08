@@ -140,8 +140,8 @@
 //受付制御
 #define BSWAY_SCENE_RECEIPT_NON (0) //何も無し
 #define BSWAY_SCENE_RECEIPT_CONTINUE (1) //コンテニュー
-#define BSWAY_SCENE_RECEIPT_CANCEL (2) //キャンセル
-#define BSWAY_SCENE_RECEIPT_AFTER (3) //ゲームクリア
+#define BSWAY_SCENE_RECEIPT_AFTER (2) //ゲーム後　クリア
+#define BSWAY_SCENE_RECEIPT_AFTER_LOSE (3) //ゲーム後　負け、キャンセル
 #define BSWAY_SCENE_RECEIPT_ERROR (4) //エラー
 
 //列車内制御
