@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-05-07T20:43:25"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-08T16:15:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -286,7 +286,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="141"/>
+		<comment position="1" width="237"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="298"/>
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-1100" top="237" right="-600" bottom="865" maximized="no" rayout="Vertical2">
+	<dialog left="1049" top="372" right="1754" bottom="1000" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="70" top="18" right="543" bottom="416" visible="yes"/>
-		<band id="0" index="0" style="0000" width="492"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="325"/>
-		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -590,52 +590,52 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">写真</language>
 	</row>
 
-	<row id="msg_400">
+	<row id="msg_400" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ボックスをおくる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスを送る</language>
 	</row>
 
-	<row id="msg_401">
+	<row id="msg_401" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ボックスをみる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスをみる</language>
 	</row>
 
-	<row id="msg_402">
+	<row id="msg_402" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">だいすき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">だいすき</language>
 	</row>
 
-	<row id="msg_403">
+	<row id="msg_403" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">かっこいい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">かっこいい</language>
 	</row>
 
-	<row id="msg_404">
+	<row id="msg_404" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">かわいい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">かわいい</language>
 	</row>
 
-	<row id="msg_405">
+	<row id="msg_405" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">おすすめ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">おすすめ</language>
 	</row>
 
-	<row id="msg_406">
+	<row id="msg_406" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">おもしろい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">おもしろい</language>
 	</row>
 
-	<row id="msg_407">
+	<row id="msg_407" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">こだわり</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">こだわり</language>
 	</row>
 
-	<row id="msg_408">
+	<row id="msg_408" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ボックス</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ボックス</language>
 	</row>
 
-	<row id="msg_409">
+	<row id="msg_409" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">くわしくみる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">詳しくみる</language>
 	</row>
@@ -690,37 +690,37 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">ワ</language>
 	</row>
 
-	<row id="msg_500">
+	<row id="msg_500" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">こんしゅうのランキング</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">今週のランキング</language>
 	</row>
 
-	<row id="msg_501">
+	<row id="msg_501" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">せんしゅうのランキング</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">先週のランキング</language>
 	</row>
 
-	<row id="msg_502">
+	<row id="msg_502" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ランキングきりかえ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ランキング切り替え</language>
 	</row>
 
-	<row id="msg_503">
+	<row id="msg_503" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">チームきりかえ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">チーム切り替え</language>
 	</row>
 
-	<row id="msg_504">
+	<row id="msg_504" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">チーム：トレーナータイプ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">チーム：トレーナータイプ</language>
 	</row>
 
-	<row id="msg_505">
+	<row id="msg_505" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">チーム：うまれたつき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">チーム：生まれた月</language>
 	</row>
 
-	<row id="msg_506">
+	<row id="msg_506" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">チーム：すきなポケモン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">チーム：好きなポケモン</language>
 	</row>
@@ -984,12 +984,12 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]</language>
 	</row>
 
-	<row id="msg_728" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_728">
 		<language name="JPN" font=" 1:small" width="216">つうしんたいせん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">通信対戦</language>
 	</row>
 
-	<row id="msg_729" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_729">
 		<language name="JPN" font=" 1:small" width="216">バトルサブウェイ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルサブウェイ</language>
 	</row>
@@ -1176,7 +1176,7 @@
 切断　しても　よろしいですか？</language>
 	</row>
 
-	<row id="msg_rule_000" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　シングル
 せいげんなし</language>
@@ -1184,7 +1184,7 @@
 制限なし</language>
 	</row>
 
-	<row id="msg_rule_000_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000_01">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　シングル
 フラット</language>
@@ -1192,7 +1192,7 @@
 フラット</language>
 	</row>
 
-	<row id="msg_rule_000_02" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000_02">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　シングル
 せいげんなし　シューターあり</language>
@@ -1200,7 +1200,7 @@
 制限なし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_000_03" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000_03">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　シングル
 フラット　シューターあり</language>
@@ -1208,7 +1208,7 @@
 フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_000_04" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000_04">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ダブル
 せいげんなし</language>
@@ -1216,7 +1216,7 @@
 制限なし</language>
 	</row>
 
-	<row id="msg_rule_000_05" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000_05">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ダブル
 フラット</language>
@@ -1224,7 +1224,7 @@
 フラット</language>
 	</row>
 
-	<row id="msg_rule_000_06" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_000_06">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ダブル
 せいげんなし　シューターあり</language>
@@ -1232,7 +1232,7 @@
 制限なし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ダブル
 フラット　シューターあり</language>
@@ -1240,7 +1240,7 @@
 フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001_01">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　トリプル
 せいげんなし</language>
@@ -1248,7 +1248,7 @@
 制限なし</language>
 	</row>
 
-	<row id="msg_rule_001_02" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001_02">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　トリプル
 フラット</language>
@@ -1256,7 +1256,7 @@
 フラット</language>
 	</row>
 
-	<row id="msg_rule_001_03" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001_03">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　トリプル
 せいげんなし　シューターあり</language>
@@ -1264,7 +1264,7 @@
 制限なし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001_04" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001_04">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　トリプル
 フラット　シューターあり</language>
@@ -1272,7 +1272,7 @@
 フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_001_05" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001_05">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ローテーション
 せいげんなし</language>
@@ -1280,7 +1280,7 @@
 制限なし</language>
 	</row>
 
-	<row id="msg_rule_001_06" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_001_06">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ローテーション
 フラット</language>
@@ -1288,7 +1288,7 @@
 フラット</language>
 	</row>
 
-	<row id="msg_rule_002" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_002">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ローテーション
 せいげんなし　シューターあり</language>
@@ -1296,7 +1296,7 @@
 制限なし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_003" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_003">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　ローテーション
 フラット　シューターあり</language>
@@ -1304,7 +1304,7 @@
 フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_004" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_004">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　マルチ
 せいげんなし</language>
@@ -1312,7 +1312,7 @@
 制限なし</language>
 	</row>
 
-	<row id="msg_rule_005" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_005">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　マルチ
 フラット</language>
@@ -1320,7 +1320,7 @@
 フラット</language>
 	</row>
 
-	<row id="msg_rule_006" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_006">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　マルチ
 せいげんなし　シューターあり</language>
@@ -1328,7 +1328,7 @@
 制限なし　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_007" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_007">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">コロシアム　マルチ
 フラット　シューターあり</language>
@@ -1336,7 +1336,7 @@
 フラット　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_008" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_008">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">バトルサブウェイ
 シングル</language>
@@ -1344,7 +1344,7 @@
 シングル</language>
 	</row>
 
-	<row id="msg_rule_009" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_009">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">バトルサブウェイ
 ダブル</language>
@@ -1352,7 +1352,7 @@
 ダブル</language>
 	</row>
 
-	<row id="msg_rule_010" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_010">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">バトルサブウェイ
 マルチ</language>
@@ -1360,7 +1360,7 @@
 マルチ</language>
 	</row>
 
-	<row id="msg_rule_011" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_011">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　フリー
 シングル</language>
@@ -1368,7 +1368,7 @@
 シングル</language>
 	</row>
 
-	<row id="msg_rule_012" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_012">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　フリー
 ダブル</language>
@@ -1376,7 +1376,7 @@
 ダブル</language>
 	</row>
 
-	<row id="msg_rule_013" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_013">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　フリー
 トリプル</language>
@@ -1384,7 +1384,7 @@
 トリプル</language>
 	</row>
 
-	<row id="msg_rule_014" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_014">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　フリー
 ローテーション</language>
@@ -1392,7 +1392,7 @@
 ローテーション</language>
 	</row>
 
-	<row id="msg_rule_015" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_015">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　フリー
 シューターバトル</language>
@@ -1400,7 +1400,7 @@
 シューターバトル</language>
 	</row>
 
-	<row id="msg_rule_016" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_016">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　レーティング
 シングル</language>
@@ -1408,7 +1408,7 @@
 シングル</language>
 	</row>
 
-	<row id="msg_rule_017" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_017">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　レーティング
 ダブル</language>
@@ -1416,7 +1416,7 @@
 ダブル</language>
 	</row>
 
-	<row id="msg_rule_018" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_018">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　レーティング
 トリプル</language>
@@ -1424,7 +1424,7 @@
 トリプル</language>
 	</row>
 
-	<row id="msg_rule_019" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_019">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　レーティング
 ローテーション</language>
@@ -1432,7 +1432,7 @@
 ローテーション</language>
 	</row>
 
-	<row id="msg_rule_020" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_020">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">ランダムマッチ　レーティング
 シューターバトル</language>
@@ -1440,7 +1440,7 @@
 シューターバトル</language>
 	</row>
 
-	<row id="msg_rule_021" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_021">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　シングル
 シューターなし</language>
@@ -1448,7 +1448,7 @@
 シューターなし</language>
 	</row>
 
-	<row id="msg_rule_022" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_022">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　シングル
 シューターあり</language>
@@ -1456,7 +1456,7 @@
 シューターあり</language>
 	</row>
 
-	<row id="msg_rule_023" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_023">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　ダブル
 シューターなし</language>
@@ -1464,7 +1464,7 @@
 シューターなし</language>
 	</row>
 
-	<row id="msg_rule_024" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_024">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　ダブル
 シューターあり</language>
@@ -1472,7 +1472,7 @@
 シューターあり</language>
 	</row>
 
-	<row id="msg_rule_025" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_025">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　トリプル
 シューターなし</language>
@@ -1480,7 +1480,7 @@
 シューターなし</language>
 	</row>
 
-	<row id="msg_rule_026" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_026">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　トリプル
 シューターあり</language>
@@ -1488,7 +1488,7 @@
 シューターあり</language>
 	</row>
 
-	<row id="msg_rule_027" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_027">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　ローテーション
 シューターなし</language>
@@ -1496,7 +1496,7 @@
 シューターなし</language>
 	</row>
 
-	<row id="msg_rule_028" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_028">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">たいかい　ローテーション
 シューターあり</language>
@@ -1504,7 +1504,7 @@
 シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_000" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_000">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０１：コロシアム　シングル
 　　　シューターなし</language>
@@ -1512,7 +1512,7 @@
 　　　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_000_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_000_01">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０２：コロシアム　シングル
 　　　シューターあり</language>
@@ -1520,7 +1520,7 @@
 　　　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_001" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_001">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０３：コロシアム　ダブル
 　　　シューターなし </language>
@@ -1528,7 +1528,7 @@
 　　　シューターなし </language>
 	</row>
 
-	<row id="msg_rule_no_001_01" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_001_01">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０４：コロシアム　ダブル
 　　　シューターあり</language>
@@ -1536,7 +1536,7 @@
 　　　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_002" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_002">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０５：コロシアム　トリプル
 　　　シューターなし</language>
@@ -1544,7 +1544,7 @@
 　　　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_003" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_003">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０６：コロシアム　トリプル
 　　　シューターあり</language>
@@ -1552,7 +1552,7 @@
 　　　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_004" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_004">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０７：コロシアム　ローテーション
 　　　シューターなし</language>
@@ -1560,7 +1560,7 @@
 　　　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_005" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_005">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０８：コロシアム　ローテーション
 　　　シューターあり</language>
@@ -1568,7 +1568,7 @@
 　　　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_006" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_006">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">０９：コロシアム　マルチ
 　　　シューターなし</language>
@@ -1576,7 +1576,7 @@
 　　　シューターなし</language>
 	</row>
 
-	<row id="msg_rule_no_007" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_007">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">１０：コロシアム　マルチ
 　　　シューターあり</language>
@@ -1584,7 +1584,7 @@
 　　　シューターあり</language>
 	</row>
 
-	<row id="msg_rule_no_008" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_008">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">１１：バトルサブウェイ
 　　　シングル</language>
@@ -1592,7 +1592,7 @@
 　　　シングル</language>
 	</row>
 
-	<row id="msg_rule_no_009" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_009">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">１２：バトルサブウェイ
 　　　ダブル</language>
@@ -1600,7 +1600,7 @@
 　　　ダブル</language>
 	</row>
 
-	<row id="msg_rule_no_010" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_010">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176" line="2">１３：バトルサブウェイ
 　　　マルチ</language>
@@ -1608,7 +1608,7 @@
 　　　マルチ</language>
 	</row>
 
-	<row id="msg_rule_no_011" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_011">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">１４：ランダムマッチ
 　　　シングル</language>
@@ -1616,7 +1616,7 @@
 　　　シングル</language>
 	</row>
 
-	<row id="msg_rule_no_012" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_012">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">１５：ランダムマッチ
 　　　ダブル</language>
@@ -1624,7 +1624,7 @@
 　　　ダブル</language>
 	</row>
 
-	<row id="msg_rule_no_013" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_013">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">１６：ランダムマッチ
 　　　トリプル</language>
@@ -1632,7 +1632,7 @@
 　　　トリプル</language>
 	</row>
 
-	<row id="msg_rule_no_014" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_014">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">１７：ランダムマッチ
 　　　ローテーション</language>
@@ -1640,7 +1640,7 @@
 　　　ローテーション</language>
 	</row>
 
-	<row id="msg_rule_no_015" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_015">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">１８：ランダムマッチ
 　　　シューターバトル</language>
@@ -1648,7 +1648,7 @@
 　　　シューターバトル</language>
 	</row>
 
-	<row id="msg_rule_no_016" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_rule_no_016">
 		<comment>シャチ用の置換</comment>
 		<language name="JPN" font=" 1:small" width="176">１９：バトルたいかい
 </language>
@@ -1696,477 +1696,594 @@
 切断しても　よろしいですか？</language>
 	</row>
 
-	<row id="msg_err_000">
-		<comment>ミュージカルショット送信時</comment>
+	<row id="msg_err_000" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+成功</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_001">
-		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
-すこし　まってから　せつぞくしてください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
-すこし　待ってから　接続してください</language>
+	<row id="msg_err_001" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+ユーザー認証エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">にんしょうエラーで
+せつぞく　できませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">認証エラーで
+接続　できませんでした</language>
 	</row>
 
-	<row id="msg_err_002">
+	<row id="msg_err_002" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+登録されている</comment>
 		<language name="JPN" font=" 1:small" width="216">すでに　とうろくされています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">すでに　登録されています</language>
 	</row>
 
-	<row id="msg_err_003" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_err_003" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+不正なデータ</comment>
 		<language name="JPN" font=" 1:small" width="216">ミュージカルショットの　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ミュージカルショットの　内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_004">
+	<row id="msg_err_003_01" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+不正なポケモンデータ</comment>
+		<language name="JPN" font=" 1:small" width="216">ミュージカルショットの　ポケモンに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ミュージカルショットの　ポケモンに
+問題が　あるようです</language>
+	</row>
+
+	<row id="msg_err_004" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+不正なプロフィール</comment>
 		<language name="JPN" font=" 1:small" width="216">プロフィールの　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールの　内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_005">
+	<row id="msg_err_005" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット登録時：
+その他エラー</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_006">
-		<comment>ドレス取得時</comment>
+	<row id="msg_err_006" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット取得：
+取得成功</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_007">
-		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
-すこし　まってから　せつぞくしてください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
-すこし　待ってから　接続してください</language>
+	<row id="msg_err_007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット取得：
+ユーザー認証エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">にんしょうエラーで
+せつぞく　できませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">認証エラーで
+接続　できませんでした</language>
 	</row>
 
-	<row id="msg_err_008">
+	<row id="msg_err_008" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット取得：
+ポケモン番号エラー</comment>
 		<language name="JPN" font=" 1:small" width="216">えらんだ　ポケモンに
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">選んだ　ポケモンに
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_009">
+	<row id="msg_err_009" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>ミュージカルショット取得：
+その他エラー</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_010" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
-		<comment>ミュージカルショット送信時</comment>
+	<row id="msg_err_010" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+		<comment>ボックスショット送信時</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_011" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_011" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
 すこし　まってから　せつぞくしてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
 すこし　待ってから　接続してください</language>
 	</row>
 
-	<row id="msg_err_012" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_012" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">すでに　とうろくされています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">すでに　登録されています</language>
 	</row>
 
-	<row id="msg_err_013" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#ffff80,,#c0c0c0,#c0c0c0,,,#ffff80,,">
+	<row id="msg_err_013" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ミュージカルショットの　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ミュージカルショットの　内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_014" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_014" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">プロフィールの　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールの　内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_015" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_015" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">あなたの　チームに
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　チームに
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_016" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_016" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_017" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_017" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ボックスショット受信時</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_018" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_018" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
 すこし　まってから　せつぞくしてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
 すこし　待ってから　接続してください</language>
 	</row>
 
-	<row id="msg_err_019" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_019" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">あなたの　チームに
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　チームに
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_020" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_err_020" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_021">
+	<row id="msg_err_021" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ランキングタイプ取得時</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_022">
+	<row id="msg_err_022" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
 すこし　まってから　せつぞくしてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
 すこし　待ってから　接続してください</language>
 	</row>
 
-	<row id="msg_err_023">
+	<row id="msg_err_023" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_024">
+	<row id="msg_err_024" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ランキング受信</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_025">
+	<row id="msg_err_025" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーが　はっせいしました
 さいどじかんを　おいて　せつぞくしてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーが　発生しました
 再度時間を　おいて　接続してください</language>
 	</row>
 
-	<row id="msg_err_026">
+	<row id="msg_err_026" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ランキングの　うけとりに
 しっぱいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ランキングの　受け取りに
 失敗しました</language>
 	</row>
 
-	<row id="msg_err_027">
+	<row id="msg_err_027" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">あなたの　ランキングの　せいせきに
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">あなたの　ランキングの　成績に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_028">
+	<row id="msg_err_028" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">プロフィールに
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールに
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_029">
+	<row id="msg_err_029" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_030">
-		<comment>バトルビデオ送信時</comment>
+	<row id="msg_err_030" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+登録成功</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_031">
-		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
-すこし　まってから　せつぞくしてください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
-すこし　待ってから　接続してください</language>
+	<row id="msg_err_031" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+ユーザー認証エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">にんしょうエラーで
+せつぞく　できませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">認証エラーで
+接続　できませんでした</language>
 	</row>
 
-	<row id="msg_err_032">
+	<row id="msg_err_032" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+すでに登録されている</comment>
 		<language name="JPN" font=" 1:small" width="216">すでに　とうろくされています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">すでに　登録されています</language>
 	</row>
 
-	<row id="msg_err_033">
+	<row id="msg_err_033" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+不正なデータ</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルビデオの　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_034">
+	<row id="msg_err_034" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+不正なランキング種別</comment>
 		<language name="JPN" font=" 1:small" width="216">バトルビデオの　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_035">
+	<row id="msg_err_035" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+不正なユーザープロフィール</comment>
 		<language name="JPN" font=" 1:small" width="216">プロフィールに
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">プロフィールに
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_036_0">
-		<language name="JPN" font=" 1:small" width="216">ポケモンに
-もんだいがあり　おくれませんでした</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンに
-問題があり　送れませんでした</language>
+	<row id="msg_err_036_0" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+署名でエラー</comment>
+		<language name="JPN" font=" 1:small" width="216">バトルビデオの　ポケモンに
+もんだいが　あるようです</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　ポケモンに
+問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_036_1">
+	<row id="msg_err_036_1" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ登録時：
+その他エラー</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーがはっせいしました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_err_036">
-		<comment>バトルビデオ検索取得時</comment>
+	<row id="msg_err_036" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ検索取得：
+取得成功</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_037">
-		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
-すこし　まってから　せつぞくしてください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
-すこし　待ってから　接続してください</language>
+	<row id="msg_err_037" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ検索取得：
+ユーザー認証エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">にんしょうエラーで
+せつぞく　できませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">認証エラーで
+接続　できませんでした</language>
 	</row>
 
-	<row id="msg_err_038">
+	<row id="msg_err_038" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ検索取得：
+検索パラメーターエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">けんさく　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">検索内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_038_01">
+	<row id="msg_err_038_01" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>バトルビデオ検索取得：
+ランキング種別が不正</comment>
 		<language name="JPN" font=" 1:small" width="216">けんさく　ないように
 もんだいが　あるようです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">検索内容に
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_err_039">
-		<language name="JPN" font=" 1:small" width="216">エラーがはっせいしました</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
+	<row id="msg_err_039" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ検索取得：
+その他エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">けんさく　できませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">検索　できませんでした</language>
 	</row>
 
-	<row id="msg_err_040">
-		<comment>バトルビデオ取得</comment>
+	<row id="msg_err_040" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ取得：
+取得成功</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_041">
-		<language name="JPN" font=" 1:small" width="216">ユーザーにんしょうエラーです
-すこし　まってから　せつぞくしてください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ユーザー認証エラーです
-すこし　待ってから　接続してください</language>
+	<row id="msg_err_041" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ取得：
+ユーザー認証エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">にんしょうエラーで
+せつぞく　できませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">認証エラーで
+接続　できませんでした</language>
 	</row>
 
-	<row id="msg_err_042">
+	<row id="msg_err_042" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ取得：
+コードエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">あてはまる　バトルビデオが　ありません……</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">あてはまる　バトルビデオが　ありません……</language>
 	</row>
 
-	<row id="msg_err_042_01">
-		<language name="JPN" font=" 1:small" width="216">バージョンが　ことなるようです</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バージョンが　異なるようです</language>
+	<row id="msg_err_042_01" back-color=",,,#ffff00,,,,,,,,,,,,,,">
+		<comment>バトルビデオ取得：
+バージョンエラー</comment>
+		<language name="JPN" font=" 1:small" width="216">バトルビデオの　バージョンが
+ことなるため　うけとれませんでした</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　バージョンが
+異なるため　受け取れませんでした</language>
 	</row>
 
-	<row id="msg_err_043">
-		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました</language>
+	<row id="msg_err_043" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>バトルビデオ取得：
+その他エラー</comment>
+		<language name="JPN" font=" 1:small" width="216">バトルビデオの　うけとりに
+しっぱい　しました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　受け取りに
+失敗　しました</language>
 	</row>
 
-	<row id="msg_err_044">
-		<comment>お気に入り登録</comment>
+	<row id="msg_err_044" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>お気に入り登録：
+成功</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_045">
+	<row id="msg_err_045" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>お気に入り登録：
+ユーザー認証エラー</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_046">
+	<row id="msg_err_046" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>お気に入り登録：
+コードエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_err_047">
+	<row id="msg_err_047" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>お気に入り登録：
+その他エラー</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_lib_err_000">
-		<comment>ライブラリのエラー</comment>
+	<row id="msg_lib_err_000" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+特になし</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_lib_err_001">
+	<row id="msg_lib_err_001" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+初期化されていない</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０１</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０１</language>
 	</row>
 
-	<row id="msg_lib_err_002">
+	<row id="msg_lib_err_002" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+リクエストが異常</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０２</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０２</language>
 	</row>
 
-	<row id="msg_lib_err_003">
+	<row id="msg_lib_err_003" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+ソケット生成に失敗</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０３</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０３</language>
 	</row>
 
-	<row id="msg_lib_err_004">
+	<row id="msg_lib_err_004" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+ソケットのノンブロッキング化に失敗</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０４</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０４</language>
 	</row>
 
-	<row id="msg_lib_err_005">
+	<row id="msg_lib_err_005" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+ネットワーク設定失敗</comment>
 		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
 エラー１０６０５</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">接続に　失敗しました
 エラー１０６０５</language>
 	</row>
 
-	<row id="msg_lib_err_006">
+	<row id="msg_lib_err_006" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+スレッド生成失敗</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０６</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０６</language>
 	</row>
 
-	<row id="msg_lib_err_007">
+	<row id="msg_lib_err_007" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+接続失敗</comment>
 		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
 エラー１０６０７</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">接続に　失敗しました
 エラー１０６０７</language>
 	</row>
 
-	<row id="msg_lib_err_008">
+	<row id="msg_lib_err_008" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+リクエストエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０８</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０８</language>
 	</row>
 
-	<row id="msg_lib_err_009">
+	<row id="msg_lib_err_009" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+レスポンスエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">エラーが　はっせいしました
 エラー１０６０９</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エラーが　発生しました
 エラー１０６０９</language>
 	</row>
 
-	<row id="msg_lib_err_010">
+	<row id="msg_lib_err_010" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+接続タイムアウト</comment>
 		<language name="JPN" font=" 1:small" width="216">おうとうが　ありません
 エラー１０６１０</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">応答が　ありません
 エラー１０６１０</language>
 	</row>
 
-	<row id="msg_lib_err_011">
+	<row id="msg_lib_err_011" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+送信タイムアウト</comment>
 		<language name="JPN" font=" 1:small" width="216">おうとうが　ありません
 エラー１０６１１</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">応答が　ありません
 エラー１０６１１</language>
 	</row>
 
-	<row id="msg_lib_err_012">
+	<row id="msg_lib_err_012" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+受信タイムアウト</comment>
 		<language name="JPN" font=" 1:small" width="216">おうとうが　ありません
 エラー１０６１２</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">応答が　ありません
 エラー１０６１２</language>
 	</row>
 
-	<row id="msg_lib_err_013">
+	<row id="msg_lib_err_013" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリのエラー：
+中断終了</comment>
 		<language name="JPN" font=" 1:small" width="216">つうしんが　ちゅうだんされました
 エラー１０６１３</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">通信が　中断されました
 エラー１０６１３</language>
 	</row>
 
-	<row id="msg_lib_err_014">
+	<row id="msg_lib_err_014" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">せつぞくに　しっぱいしました
 エラー１０６１４</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">接続に　失敗しました
 エラー１０６１４</language>
 	</row>
 
-	<row id="msg_st_err_000">
-		<comment>ライブラリの状態エラー</comment>
+	<row id="msg_st_err_000" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+非稼動中</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_001">
+	<row id="msg_st_err_001" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+初期化済</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_002">
+	<row id="msg_st_err_002" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+リクエスト発行済</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_003">
+	<row id="msg_st_err_003" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+ネットワーク設定中</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_004">
+	<row id="msg_st_err_004" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+接続中</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_005">
+	<row id="msg_st_err_005" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+送信中</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_006">
+	<row id="msg_st_err_006" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+受信中</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_007">
+	<row id="msg_st_err_007" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+中断終了</comment>
 		<language name="JPN" font=" 1:small" width="216">サーバーとの　せつぞくが　ちゅうだん　しました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーとの　接続が　中断しました</language>
 	</row>
 
-	<row id="msg_st_err_008">
+	<row id="msg_st_err_008" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+正常終了</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
 
-	<row id="msg_st_err_009">
+	<row id="msg_st_err_009" back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>ライブラリの状態：
+エラー終了</comment>
 		<language name="JPN" font=" 1:small" width="216">　</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">　</language>
 	</row>
@@ -2272,12 +2389,12 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">ミュージカルショットを　受け取っています……</language>
 	</row>
 
-	<row id="msg_info_019">
+	<row id="msg_info_019" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ボックスショットを　おくっています……</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスショットを　送っています……</language>
 	</row>
 
-	<row id="msg_info_020">
+	<row id="msg_info_020" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" font=" 1:small" width="216">ボックスショットを　うけとっています……</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスショットを　受け取っています……</language>
 	</row>
