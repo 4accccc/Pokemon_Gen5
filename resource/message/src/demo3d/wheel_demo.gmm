@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-28T23:17:55"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-08T15:47:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -457,9 +457,9 @@
 ・観覧車その２</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">お！　ちょっと　こっち　きてみろよ！
-って　あっ……　……　……　……</language>
+ほらアレ　って　あっ……　……　……</language>
 		<language name="JPN_KANJI" width="256">お！　ちょっと　こっち　きてみろよ！
-って　あっ……　……　……　……</language>
+ほらアレ　って　あっ……　……　……</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">

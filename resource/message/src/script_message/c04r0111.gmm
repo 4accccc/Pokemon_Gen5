@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-05-06T22:28:20"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-08T14:17:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="113" right="1985" bottom="741" maximized="no" rayout="Vertical2">
+	<dialog left="250" top="487" right="750" bottom="1115" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1461,9 +1461,9 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
-		<language name="JPN" width="256">そうじ　してたら　ひろったのよ
+		<language name="JPN" width="256">そうじ　してたら　ひろったのよー
 おめーさん　よかったら　もってきな▼</language>
-		<language name="JPN_KANJI" width="256">掃除　してたら　拾ったのよ
+		<language name="JPN_KANJI" width="256">掃除　してたら　拾ったのよー
 おめーさん　よかったら　持っていきな▼</language>
 	</row>
 
@@ -1494,9 +1494,9 @@ no.051
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
 		<language name="JPN" width="256">せいそういんでも　じつりょくには
-じしん　ありじゃ！</language>
+おおいに　じしん　ありじゃ！</language>
 		<language name="JPN_KANJI" width="256">清掃員でも　実力には
-自信　ありじゃ！</language>
+大いに　自信　ありじゃ！</language>
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_3">
@@ -1505,9 +1505,9 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
-		<language name="JPN" width="256">ボールを　もていィ！
+		<language name="JPN" width="256">さあ　ボールを　もていィ！
 いまこそ　しょうぶの　ときじゃ！</language>
-		<language name="JPN_KANJI" width="256">ボールを　持ていィ！
+		<language name="JPN_KANJI" width="256">さあ　ボールを　持ていィ！
 今こそ　勝負の　ときじゃ！</language>
 	</row>
 
@@ -1721,12 +1721,12 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
-		<language name="JPN" width="256">ここが　しゅうちゃくえき　か……▼
+		<language name="JPN" width="256">ここが　しゅうてんなのか……▼
 ポケモンしょうぶの　たびも
-ひとまず　おわりと　いうことかな</language>
-		<language name="JPN_KANJI" width="256">ここが　終着駅　か……▼
+ひとまず　おしまいと　いうことか</language>
+		<language name="JPN_KANJI" width="256">ここが　終点なのか……▼
 ポケモン勝負の　旅も
-ひとまず　終わりと　いうことかな</language>
+ひとまず　おしまいと　いうことか</language>
 	</row>
 
 	<row id="msg_c04r0111_gentleman_2">
@@ -1827,11 +1827,11 @@ no.206
 ビジネスマン</attribute>
 		<language name="JPN" width="256">オレも　アンタも　１００れんしょう
 オレもヒマだが　アンタも　ヒマねえ▼
-そんな　どうるいの　アンタに
+そんな　オレと　どうるいの　アンタに
 おちかづきの　きねんだ　とっとけよ▼</language>
 		<language name="JPN_KANJI" width="256">オレも　アンタも　１００連勝
 オレもヒマだが　アンタも　ヒマねえ▼
-そんな　同類の　アンタに
+そんな　オレと　同類の　アンタに
 お近づきの　記念だ　取っとけよ▼</language>
 	</row>
 
