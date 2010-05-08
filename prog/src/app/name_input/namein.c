@@ -225,6 +225,7 @@ static void PS_SetupBox( PS_WORK* p_wk, MSGWND_WORK* p_msgwnd_wk, NAMEIN_PARAM* 
 static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, GFL_CLUNIT *p_unit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, BMPOAM_SYS_PTR p_bmpoam_sys, HEAPID heapID );
 static void ICON_Exit( ICON_WORK *p_wk );
 static void ICON_Main( ICON_WORK *p_wk );
+static void ICON_PrintMain( ICON_WORK *p_wk );
 static BOOL ICON_IsTrg( const ICON_WORK *cp_wk );
 static void Icon_StartMove( ICON_WORK *p_wk );
 static BOOL Icon_MainMove( ICON_WORK *p_wk );
@@ -234,7 +235,7 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 );
 /// その他
 //=====================================
 static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_pos );
-static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID );
+static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID );
 static void FinishInput( NAMEIN_WORK *p_wk );
 static BOOL CanDecide( NAMEIN_WORK *p_wk );
 //-------------------------------------
@@ -327,6 +328,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   //イントロ以外で呼び出したときヒープが足りないことを想定して切り替えられるようにしたのですが、
   //ヒープサイズが変わってしまうとデバッグ時に影響がでるため、
   //切り替えがなしになりました。その名残です。
+  //次回作ではもっとヒープがきつくなることを予想して切り分けるしくみだけは残しておきます。
   if( 1 )
   { 
     heap_size = NAMEIN_HEAP_HIGH_SIZE;
@@ -372,21 +374,23 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   }
   p_wk->p_keymap_handle = NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID_NAME_INPUT );
 
-  //モジュール作成
-  SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
-
-
-  //もしポケモンモードでポケモン名が入っていなかったら、
-  //ニックネームを入れる
-  if( p_wk->p_param->mode == NAMEIN_POKEMON && GFL_STR_GetBufferLength( p_param->strbuf ) == 0 )
+  //初期表示文字
   { 
-    STRBUF  *p_default;
-    p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
-    GFL_STR_CopyBuffer( p_param->strbuf, p_default );
-    GFL_STR_DeleteBuffer( p_default ) ;
+    p_wk->p_initdraw_str  = GFL_STR_CreateCopyBuffer( p_param->strbuf, HEAPID_NAME_INPUT );
+
+    if( GFL_STR_GetBufferLength( p_wk->p_initdraw_str ) > 0 )
+    { 
+      if( !NAMEIN_DATA_CheckInputStr( 
+            GFL_STR_GetStringCodePointer( p_wk->p_initdraw_str ), HEAPID_NAME_INPUT ) )
+      { 
+        GFL_STR_ClearBuffer( p_wk->p_initdraw_str );
+      }
+    }
   }
 
-  STRINPUT_Init( &p_wk->strinput, p_param->strbuf, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
+  //モジュール作成
+  SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
+  STRINPUT_Init( &p_wk->strinput, p_wk->p_initdraw_str, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
   KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, &p_wk->obj, HEAPID_NAME_INPUT );
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
   PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
@@ -447,6 +451,8 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   PS_Exit( &p_wk->ps );
   MSGWND_Exit( &p_wk->msgwnd );
   KEYBOARD_Exit( &p_wk->keyboard );
+
+  GFL_STR_DeleteBuffer( p_wk->p_initdraw_str );
   NAMEIN_KEYMAP_HANDLE_Free( p_wk->p_keymap_handle );
   STRINPUT_Exit( &p_wk->strinput );
   SEQ_Exit( &p_wk->seq );
@@ -498,6 +504,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //プリント
   PRINTSYS_QUE_Main( p_wk->p_que );
+  ICON_PrintMain( &p_wk->icon );
 
   //終了
   if( SEQ_IsEnd( &p_wk->seq ) )
@@ -1103,6 +1110,28 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
   p_wk->strlen  = strlen;
   p_wk->p_que   = p_que;
 
+
+  //BMPWIN作成
+  p_wk->p_bmpwin  = GFL_BMPWIN_Create( BG_FRAME_STR_M, STRINPUT_BMPWIN_X, STRINPUT_BMPWIN_Y, STRINPUT_BMPWIN_W, STRINPUT_BMPWIN_H, PLT_BG_FONT_M, GFL_BMP_CHRAREA_GET_B );
+  GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  //プリントキュー設定
+  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+
+
+  //文字バッファ
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( STRINPUT_STR_LEN + STRINPUT_CHANGE_LEN + 1, heapID );
+
+  //検索用データ読みこみ
+  { 
+    int i;
+    for( i = 0; i < NAMEIN_STRCHANGETYPE_MAX; i++ )
+    { 
+      p_wk->p_changedata[i] = NAMEIN_STRCHANGE_Alloc( i, heapID );
+    }
+  }
+  p_wk->p_changedata_ex = NAMEIN_STRCHANGE_EX_Alloc( heapID );
+
+
   //CLWK取得
   {  
     int i;
@@ -1117,30 +1146,10 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
     p_wk->input_str[0]  = GFL_STR_GetEOMCode();
   }
   else
-  { 
+  {
     GFL_STR_GetStringCode( cp_default_str, p_wk->input_str, strlen + 1 );
     p_wk->input_idx = GFL_STR_GetBufferLength( cp_default_str );
   }
-
-  //BMPWIN作成
-  p_wk->p_bmpwin  = GFL_BMPWIN_Create( BG_FRAME_STR_M, STRINPUT_BMPWIN_X, STRINPUT_BMPWIN_Y, STRINPUT_BMPWIN_W, STRINPUT_BMPWIN_H, PLT_BG_FONT_M, GFL_BMP_CHRAREA_GET_B );
-  GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
-
-  //プリントキュー設定
-  PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
-
-  //文字バッファ
-  p_wk->p_strbuf  = GFL_STR_CreateBuffer( STRINPUT_STR_LEN + STRINPUT_CHANGE_LEN + 1, heapID );
-
-  //検索用データ読みこみ
-  { 
-    int i;
-    for( i = 0; i < NAMEIN_STRCHANGETYPE_MAX; i++ )
-    { 
-      p_wk->p_changedata[i] = NAMEIN_STRCHANGE_Alloc( i, heapID );
-    }
-  }
-  p_wk->p_changedata_ex = NAMEIN_STRCHANGE_EX_Alloc( heapID );
 
   //CLWK設定
   {  
@@ -1416,22 +1425,6 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
   case STRINPUT_SP_CHANGE_HANDAKUTEN: //半濁点
     //検索文字サーチ
     p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_HANDAKUTEN];
-    break;
-  case STRINPUT_SP_CHANGE_HAN_SEION:      //静音
-    //検索文字サーチ
-    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_HAN_SEION];
-    break;
-  case STRINPUT_SP_CHANGE_DAKU_SEION:      //静音
-    //検索文字サーチ
-    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_DAKU_SEION];
-    break;
-  case STRINPUT_SP_CHANGE_DAKUTEN2:      //半濁点→濁点
-    //検索文字サーチ
-    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_DAKUTEN2];
-    break;
-  case STRINPUT_SP_CHANGE_HANDAKUTEN2: //濁点→半濁点
-    //検索文字サーチ
-    p_data  =  p_wk->p_changedata[NAMEIN_STRCHANGETYPE_HANDAKUTEN2];
     break;
   default:
     GF_ASSERT(0);
@@ -4412,14 +4405,7 @@ static void ICON_Main( ICON_WORK *p_wk )
     SEQ_ANM,  //アイコンアニメ
   };
 
-  if( p_wk->is_trans_req )
-  { 
-    if( !PRINTSYS_QUE_IsExistTarget( p_wk->p_que, p_wk->p_bmp ) )
-    { 
-      BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
-      p_wk->is_trans_req  = FALSE;
-    } 
-  }
+
 
   switch( p_wk->seq )
   { 
@@ -4461,6 +4447,24 @@ static void ICON_Main( ICON_WORK *p_wk )
       p_wk->seq = SEQ_MAIN;
     }
     break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示メイン（性別の文字表示のため）
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ICON_PrintMain( ICON_WORK *p_wk )
+{ 
+  if( p_wk->is_trans_req )
+  { 
+    if( !PRINTSYS_QUE_IsExistTarget( p_wk->p_que, p_wk->p_bmp ) )
+    { 
+      BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
+      p_wk->is_trans_req  = FALSE;
+    } 
   }
 }
 //----------------------------------------------------------------------------
@@ -4594,6 +4598,7 @@ static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_p
   return ( ((u32)( cp_pos->x - cp_rect->left) <= (u32)(cp_rect->right - cp_rect->left))
             & ((u32)( cp_pos->y - cp_rect->top) <= (u32)(cp_rect->bottom - cp_rect->top)));
 }
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  デフォルト名  を作成し返す
@@ -4604,7 +4609,7 @@ static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_p
  *  @retval STRBUF
  */
 //-----------------------------------------------------------------------------
-static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID )
+static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID )
 { 
   STRBUF *p_msg_str;
   switch( mode )
@@ -4613,23 +4618,33 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
     return NULL;//GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
   case NAMEIN_POKEMON:
-    return GFL_MSG_CreateString( GlobalMsg_PokeName, cp_wk->p_param->mons_no );
+    if( GFL_STR_GetBufferLength(cp_wk->p_initdraw_str) == 0 )
+    { 
+      return GFL_MSG_CreateString( GlobalMsg_PokeName, cp_wk->p_param->mons_no );
+    }
+    else
+    { 
+      return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
+    }
 
   case NAMEIN_BOX:
-    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_RIVALNAME:
-    //ライバル名 //ライバル名入力はなくなりました(まだ)
+    //ライバル名 //ライバル名入力はなくなりました
     return NULL;//GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
+  case NAMEIN_FRIENDNAME:
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
+
   case NAMEIN_GREETING_WORD:
-    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
     
   case NAMEIN_THANKS_WORD:
-    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_FREE_WORD:
-    return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
   }
 
   return NULL;
@@ -4686,7 +4701,7 @@ static void FinishInput( NAMEIN_WORK *p_wk )
     if( p_wk->p_param->mode == NAMEIN_MYNAME ||
         p_wk->p_param->mode == NAMEIN_RIVALNAME )
     {
-      GF_ASSERT( 0 );
+      GF_ASSERT( 0 ); //デフォルト名をいれず、決定できないことになった
     }
     else
     { 
@@ -5015,9 +5030,26 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     //不正文字メッセージを消す処理
     if( p_wk->is_illegal_msg == TRUE )
     { 
-      if( input != KEYBOARD_INPUT_NONE || ICON_IsTrg( &p_wk->icon ) || GFL_UI_KEY_GetTrg() )
+      if( input != KEYBOARD_INPUT_NONE || ICON_IsTrg( &p_wk->icon ) || (GFL_UI_KEY_GetTrg() & ~PAD_BUTTON_A) )
       { 
-        MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_wk->p_param->mode );
+        //文字描画
+        if( p_wk->p_param->mode == NAMEIN_POKEMON )
+        { 
+          //ポケモンの場合は、種族名を単語登録
+          if( p_wk->p_param->pp == NULL )
+          { 
+            MSGWND_ExpandPrintPoke( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_wk->p_param->mode, p_wk->p_param->param1, p_wk->p_param->param2, HEAPID_NAME_INPUT );
+          }
+          else
+          { 
+            MSGWND_ExpandPrintPP( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_wk->p_param->mode, p_wk->p_param->pp );
+          }
+        }
+        else
+        { 
+          //他は通常
+          MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_wk->p_param->mode );
+        }
         p_wk->is_illegal_msg = FALSE;
       }
     }
@@ -5050,13 +5082,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         BOOL is_change  = TRUE;
         if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN ) )
         { 
-          if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKUTEN2 ) )
-          { 
-            if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_DAKU_SEION ) )
-            { 
-              is_change = FALSE;
-            }
-          }
+          is_change = FALSE;
         }
 
         if( is_change )
@@ -5074,13 +5100,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         BOOL is_change  = TRUE;
         if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN ) )
         { 
-          if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HANDAKUTEN2 ) )
-          { 
-            if( !STRINPUT_SetChangeSP( &p_wk->strinput, STRINPUT_SP_CHANGE_HAN_SEION ) )
-            { 
-              is_change = FALSE;
-            }
-          }
+          is_change = FALSE;
         }
 
         if( is_change )
@@ -5153,29 +5173,6 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
         PMSND_PlaySE( NAMEIN_SE_DECIDE );
 
-        //->以前は消してた
-        //STRINPUT_DeleteChangeStr( &p_wk->strinput );
-        //自分の名前とライバル名入力で、何もいれなかったら、
-        //デフォルト名をいれる
-#if 0
-        if( p_wk->p_param->mode == NAMEIN_MYNAME ||
-            p_wk->p_param->mode == NAMEIN_RIVALNAME )
-        { 
-          if( STRINPUT_GetStrLength( &p_wk->strinput ) == 0 )
-          { 
-            STRBUF  *p_default;
-            p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
-
-            //デフォルト名入力
-            if( p_default != NULL )
-            { 
-              STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
-              GFL_STR_DeleteBuffer( p_default );
-            }
-          }
-        }
-#endif
-
         // 入力が終了したときの 文字列を確定する or キャンセルを確定する 処理
         FinishInput( p_wk );
 
@@ -5201,7 +5198,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       if( ICON_IsTrg( &p_wk->icon ) )
       { 
         STRBUF  *p_default;
-        p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
+        p_default = INITNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
 
         //一端全てけす
         STRINPUT_Delete( &p_wk->strinput );

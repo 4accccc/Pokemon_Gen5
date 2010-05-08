@@ -172,18 +172,10 @@ GMEVENT* EVENT_NameInput_PartyPoke(
     MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
     u32        monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     u32        formno = PP_Get( pp, ID_PARA_form_no, NULL ) | ( PP_Get( pp, ID_PARA_sex, NULL ) << 8 );
-    STRBUF     *name   = GFL_STR_CreateBuffer( NAMEIN_POKEMON_LENGTH + 1, GFL_HEAP_LOWID(HEAPID_PROC) );
-    PP_Get( pp, ID_PARA_nickname, name );
-
-    //もともとつけてある名前をデフォルトとして名前入力に渡すように致しました
-    //nagihashi 100504
-
     work->nameInParam = NAMEIN_AllocParam( 
-        HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, name, misc );
+        HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL, misc );
     work->pokeParam   = pp;
 
-
-    GFL_STR_DeleteBuffer( name );
   }
 
   // 作成したイベントを返す

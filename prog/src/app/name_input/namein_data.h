@@ -87,6 +87,8 @@ extern u16 NAMEIN_KEYMAP_GetWidth( const NAMEIN_KEYMAP *cp_wk );
 extern u16 NAMEIN_KEYMAP_GetHeight( const NAMEIN_KEYMAP *cp_wk );
 extern STRCODE NAMEIN_KEYMAP_GetStr( const NAMEIN_KEYMAP *cp_wk, u16 x, u16 y );
 
+//以下は入力できる文字をチェックするため、使用するキー配列を全て渡す必要がある
+extern BOOL NAMEIN_KEYMAP_CheckInputStr( NAMEIN_KEYMAP ** const cp_keymap_tbl, u16 tbl_max, const STRCODE *cp_code );
 
 //=============================================================================
 /**
@@ -100,10 +102,6 @@ typedef enum
 {
 	NAMEIN_STRCHANGETYPE_DAKUTEN,     //濁点
 	NAMEIN_STRCHANGETYPE_HANDAKUTEN,  //半濁点
-	NAMEIN_STRCHANGETYPE_DAKU_SEION,  //濁点→静音
-	NAMEIN_STRCHANGETYPE_HAN_SEION,   //半濁点→静音
-	NAMEIN_STRCHANGETYPE_DAKUTEN2,    //半濁点→濁点
-	NAMEIN_STRCHANGETYPE_HANDAKUTEN2, //濁点→半濁点
 	NAMEIN_STRCHANGETYPE_QWERTY,      //ローマ字変換
 	NAMEIN_STRCHANGETYPE_MAX,
 } NAMEIN_STRCHANGETYPE;
@@ -169,3 +167,12 @@ extern void NAMEIN_STRCHANGE_EX_Free( NAMEIN_STRCHANGE_EX *p_wk );
 extern u16 NAMEIN_STRCHANGE_EX_GetNum( const NAMEIN_STRCHANGE_EX *cp_wk );
 
 extern BOOL NAMEIN_STRCHANGE_EX_GetChangeStr( const NAMEIN_STRCHANGE_EX *cp_wk, const STRCODE *cp_code, STRCODE *p_code );
+
+
+//=============================================================================
+/**
+ *					ここの複数のモジュールを使用する版
+ *					  内部で上記モジュールのロード、アンロードを行います
+*/
+//=============================================================================
+extern BOOL NAMEIN_DATA_CheckInputStr( const STRCODE *cp_code, HEAPID heapID );

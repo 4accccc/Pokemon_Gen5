@@ -244,6 +244,7 @@ STRCODE NAMEIN_KEYMAP_GetStr( const NAMEIN_KEYMAP *cp_wk, u16 x, u16 y )
 
 	return cp_wk->str[  y * NAMEIN_KEYMAP_GetWidth( cp_wk ) + x ];
 }
+
 //=============================================================================
 /**
  *				変換
@@ -509,6 +510,22 @@ u16 NAMEIN_STRCHANGE_EX_GetNum( const NAMEIN_STRCHANGE_EX *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  変換文字を取得
+ *
+ *	@param	const NAMEIN_STRCHANGE_EX *cp_wk  ワーク
+ *	@param	index   インデックス（0～NAMEIN_STRCHANGE_EX_GetNumまで）
+ *	@param	num     0～3まで
+ *
+ *	@return もじ
+ */
+//-----------------------------------------------------------------------------
+static STRCODE NAMEIN_STRCHANGE_EX_GetWord( const NAMEIN_STRCHANGE_EX *cp_wk, u16 index, u16 num )
+{ 
+  return cp_wk->word[ index ].change[ num ];
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  変換変換  変換出来る場合変換先文字列を返す
  *
  *	@param	const NAMEIN_STRCHANGE_EX *cp_wk  ワーク
@@ -531,7 +548,7 @@ BOOL NAMEIN_STRCHANGE_EX_GetChangeStr( const NAMEIN_STRCHANGE_EX *cp_wk, const S
   { 
     for( j = 0; j < NAMEIN_STRCHANGE_EX_STR_MAX; j++ )
     { 
-      if( cp_wk->word[ i ].change[ j ] == *cp_code )
+      if( NAMEIN_STRCHANGE_EX_GetWord( cp_wk, i, j ) == *cp_code )
       { 
         //一致したので、変換先を返す
         //ただし空文字の場合次の変換
@@ -548,4 +565,102 @@ BOOL NAMEIN_STRCHANGE_EX_GetChangeStr( const NAMEIN_STRCHANGE_EX *cp_wk, const S
   }
 
   return FALSE;
+}
+
+//=============================================================================
+/**
+ *					ここの複数のモジュールを使用する版
+ *					  内部で上記モジュールのロード、アンロードを行います
+*/
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入力できる文字かどうかチェックする
+ *	        （海外文字対応として、初期表示文字に入力不可能文字があった場合クリアするため）
+ *
+ *	@param	STRCODE *cp_code            検知する文字列(EOMを必ず含んでいること！)
+ *	@param	heapID                      ヒープID
+ *
+ *
+ *	@return TRUEならば入力可能文字のみ  FALSEならば入力不可能な文字が入っている
+ */
+//-----------------------------------------------------------------------------
+BOOL NAMEIN_DATA_CheckInputStr( const STRCODE *cp_code, HEAPID heapID )
+{ 
+  BOOL ret;
+  NAMEIN_KEYMAP   *p_keymap[NAMEIN_KEYMAPTYPE_MAX-1]; //NAMEIN_KEYMAPTYPE_QWERTYはチェックしなくても良い
+  NAMEIN_STRCHANGE_EX *p_changeex;  //本来Rボタンで巡回するだけの表だが＝変換が全てはいっているので
+
+
+  //読み込み
+  {
+    int i;
+    for( i = 0; i < NAMEIN_KEYMAPTYPE_MAX-1; i++ )
+    { 
+      p_keymap[i]  = NAMEIN_KEYMAP_Alloc( i, GFL_HEAP_LOWID(heapID) );
+    }
+
+    p_changeex  = NAMEIN_STRCHANGE_EX_Alloc( GFL_HEAP_LOWID(heapID) );
+  }
+
+
+  //チェック
+  { 
+    int i,j,k,l;
+    BOOL exist;
+
+    ret = TRUE;
+    for( k = 0; cp_code[k] != GFL_STR_GetEOMCode(); k++ )
+    { 
+      exist = FALSE;
+
+      //キー配列をチェック
+      for( l = 0; l < NELEMS(p_keymap); l++ )
+      { 
+        for( i = 0; i < NAMEIN_KEYMAP_GetHeight(p_keymap[l]) && exist == FALSE; i++ )
+        { 
+          for( j = 0; j < NAMEIN_KEYMAP_GetWidth(p_keymap[l]) && exist == FALSE; j++ )
+          {
+            if( cp_code[k] == NAMEIN_KEYMAP_GetStr( p_keymap[l], j, i ) )
+            {
+              exist = TRUE;
+            }
+          }
+        }
+      }
+      //変換文字をチェック
+      for( l = 0; l < NAMEIN_STRCHANGE_EX_GetNum( p_changeex ); l++ )
+      { 
+        for( j = 0; j < NAMEIN_STRCHANGE_EX_STR_MAX; j++ )
+        { 
+          if( NAMEIN_STRCHANGE_EX_GetWord( p_changeex, l, j ) == cp_code[k] )
+          { 
+            exist = TRUE;
+          }
+        }
+      }
+
+      if( exist == FALSE )
+      { 
+        ret = FALSE;
+        break;
+      }
+    }
+  }
+
+
+  //破棄
+  {
+    int i;
+
+    NAMEIN_STRCHANGE_EX_Free( p_changeex );
+
+    for( i = 0; i < NAMEIN_KEYMAPTYPE_MAX-1; i++ )
+    { 
+      NAMEIN_KEYMAP_Free( p_keymap[i] );
+    }
+  }
+
+
+  return ret;
 }

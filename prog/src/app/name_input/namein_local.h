@@ -108,7 +108,7 @@ enum
   //メインOBJ
   PLT_OBJ_CURSOR_M    = 0,  //文字列の下のバーOBJ
   PLT_OBJ_ICON_M      = 2,  //アイコン
-  PLT_OBJ_SEX_M      = 3,  //性別文字色
+  PLT_OBJ_SEX_M      = PLT_OBJ_ICON_M+POKEICON_PAL_MAX,  //性別文字色
 
   //サブBG
   PLT_BG_BACK_S       = 0,  //背景
@@ -178,13 +178,8 @@ typedef enum
 //特殊文字変換
 typedef enum
 { 
-  STRINPUT_SP_CHANGE_DAKUTEN,     //静音→濁点
-  STRINPUT_SP_CHANGE_HANDAKUTEN,  //静音→半濁点
-  STRINPUT_SP_CHANGE_DAKU_SEION,  //濁点→静音
-  STRINPUT_SP_CHANGE_HAN_SEION,   //半濁点→静音
-  STRINPUT_SP_CHANGE_HANSEION,    //半濁点→静音
-  STRINPUT_SP_CHANGE_DAKUTEN2,    //半濁点→濁点
-  STRINPUT_SP_CHANGE_HANDAKUTEN2, //濁点→半濁点
+  STRINPUT_SP_CHANGE_DAKUTEN,     //濁点変換
+  STRINPUT_SP_CHANGE_HANDAKUTEN,  //半濁点変換
 } STRINPUT_SP_CHANGE;
 
 //-------------------------------------
@@ -584,5 +579,10 @@ typedef struct
 
   //不正文字チェックルーチン
   PROF_WORD_WORK  *p_prof;
+
+  //初期表示文字列（キャンセル時に使うデフォルト文字とは別）
+  //海外文字等入力できない文字があったときは、デフォルト文字は存在していても
+  //ここは無しになる
+  STRBUF  *p_initdraw_str;
 
 } NAMEIN_WORK;
