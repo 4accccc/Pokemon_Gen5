@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T12:24:55"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-08T19:11:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1744" top="246" right="2449" bottom="866" maximized="no" rayout="Vertical2">
+	<dialog left="16" top="159" right="721" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="67" top="119" right="540" bottom="517" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -665,13 +665,13 @@ msg_waza_omoi_01へ
 
 	<row id="msg_exp_decide" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" font=" 1:small" width="216">おぼえる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">おぼえる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">覚える</language>
 	</row>
 
 	<row id="msg_waza_oboe_exp_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>どのわざを　おぼえさせる？</comment>
 		<language name="JPN" font=" 1:small" width="216" line="216">どのわざを　おぼえさせる？</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="216">どのわざを　おぼえさせる？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="216">どのわざを　覚えさせる？</language>
 	</row>
 
 	<row id="msg_param_name" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -687,7 +687,7 @@ msg_waza_omoi_01へ
 
 	<row id="msg_param_exp" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="216">おぼえている　わざ</language>
-		<language name="JPN_KANJI" width="216">おぼえている　わざ</language>
+		<language name="JPN_KANJI" width="216">覚えている　わざ</language>
 	</row>
 
 	<row id="msg_wazaoshie_yes" back-color="#8080ff,,,,,,,,,,,,,,,,,">
