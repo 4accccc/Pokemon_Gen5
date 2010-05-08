@@ -8136,17 +8136,21 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_IsDead(bpp) )
     {
-      BTL_HANDEX_PARAM_KILL* kill_param;
-      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+      u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      if( !BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
+      {
+        BTL_HANDEX_PARAM_KILL* kill_param;
+        BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-      kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-      kill_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+        kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+        kill_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MichidureDone );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MichidureDone );
+        HANDEX_STR_AddArg( &msg_param->str, pokeID );
 
-      BTL_EVENT_FACTOR_Remove( myHandle );  // “¹˜A‚ê¬Œ÷‚Å©E
+        BTL_EVENT_FACTOR_Remove( myHandle );  // “¹˜A‚ê¬Œ÷‚Å©E
+      }
     }
   }
 }
