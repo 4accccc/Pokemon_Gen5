@@ -25,7 +25,8 @@
 #define LIST_EXPAND_STRBUF_SIZE      (64)
 ///NUM EXPANDで展開するメッセージバッファのサイズ
 #define NUM_EXPAND_STRBUF_SIZE      (32)
-
+///ゲーム開始前の同期番号
+#define GAMESTART_SYNC_NO (1) 
 ///ユーザーステータス
 enum{
   USER_STATUS_NULL,         ///<ユーザーがいない
@@ -90,7 +91,13 @@ typedef enum{
   PARENT_SEARCH_LIST_SELECT_CANCEL,     ///<キャンセルした
 }PARENT_SEARCH_LIST_SELECT;
 
-
+///_ParentWait_UpdateCnacel戻り値
+typedef enum
+{
+  PARENT_WAIT_CANCEL_NULL,    //操作無し
+  PARENT_WAIT_CANCEL_SELECT,  //選択中
+  PARENT_WAIT_CANCEL_CANCEL,  //キャンセル
+}PARENT_WAIT_CANCEL_STATE;
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -151,7 +158,7 @@ typedef struct{
   u8 local_seq;
   u8 list_update_req;
   u8 list_strbuf_create;
-  u8 padding;
+  u8 return_seq;
 }PARENTSEARCH_LIST;
 
 ///参加募集管理システム
@@ -206,7 +213,8 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   u8 draw_mac[COMM_ENTRY_USER_MAX][6];  ///<リストに名前が書かれているプレイヤーのMacAddress
   
   s8 draw_player_num;             ///<残り人数」の現在
-  s8 padding[3];
+  u8 game_start_num;              ///<開始時の人数
+  s8 padding[2];
 }COMM_ENTRY_MENU_SYSTEM;
 
 
@@ -250,6 +258,8 @@ static void _ParentSearchList_BeaconUpdate(COMM_ENTRY_MENU_PTR em);
 static void _ParentSearchList_SetNewParent(COMM_ENTRY_MENU_PTR em, const u8 *mac_address, const MYSTATUS *myst);
 static void _ParentSearchList_DeleteParent(COMM_ENTRY_MENU_PTR em, int parent_no);
 static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em);
+static PARENT_WAIT_CANCEL_STATE _ParentWait_UpdateCnacel( COMM_ENTRY_MENU_PTR em );
+static void _ParentWait_ExitCnacel( COMM_ENTRY_MENU_PTR em );
 
 
 //==============================================================================
@@ -344,7 +354,14 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
   em->strbuf_expand = GFL_STR_CreateBuffer(EXPAND_STRBUF_SIZE, heap_id);
   em->strbuf_list_template = GFL_MSG_CreateString( em->msgdata, msg_connect_01_04_4 );
   em->strbuf_list_expand = GFL_STR_CreateBuffer(LIST_EXPAND_STRBUF_SIZE, heap_id);
-  em->strbuf_num_template = GFL_MSG_CreateString( em->msgdata, msg_connect_01_03 );
+  if( game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
+  {
+    em->strbuf_num_template = GFL_MSG_CreateString( em->msgdata, msg_connect_01_03_01 );
+  }
+  else
+  {
+    em->strbuf_num_template = GFL_MSG_CreateString( em->msgdata, msg_connect_01_03 );
+  }
   em->strbuf_num_expand = GFL_STR_CreateBuffer(NUM_EXPAND_STRBUF_SIZE, heap_id);
   em->min_num = min_num;
   em->max_num = max_num;
@@ -474,8 +491,11 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     _SEQ_ENTRY,
     _SEQ_FINAL_CHECK,
     _SEQ_BREAKUP_CHECK,
+    _SEQ_SEND_GAMESTART_SYNC,
     _SEQ_SEND_GAMESTART,
     _SEQ_SEND_GAMECANCEL,
+    _SEQ_CANCEL_MSG,
+    _SEQ_CANCEL_MSG_WAIT,
     _SEQ_FINISH,
   };
 
@@ -547,7 +567,6 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       DECIDE_TYPE type;
       type = CommEntryMenu_DecideUpdate(em);
       if(type == DECIDE_TYPE_OK){
-        GFL_NET_SetNoChildErrorCheck(TRUE);
         GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
         em->seq = _SEQ_SEND_GAMESTART;
       }
@@ -579,6 +598,26 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
   case _SEQ_SEND_GAMESTART:
     if(CemSend_GameStart(em->mp_mode) == TRUE){
       em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
+      em->seq = _SEQ_SEND_GAMESTART_SYNC;
+      em->game_start_num = GFL_NET_SystemGetConnectNum();
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
+    }
+    break;
+
+  case _SEQ_SEND_GAMESTART_SYNC:
+    if( em->game_start_num != GFL_NET_SystemGetConnectNum() )
+    {
+      //誰かが抜けた・・・
+      if(CemSend_GameCancel(em->mp_mode) == TRUE){
+        em->entry_result = COMM_ENTRY_RESULT_CANCEL;
+        em->seq = _SEQ_CANCEL_MSG;
+      }
+    }
+    else
+    if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
+    {
+      GFL_NET_SetNoChildErrorCheck(TRUE);
+      em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
       em->seq = _SEQ_FINISH;
     }
     break;
@@ -588,6 +627,18 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       em->seq = _SEQ_FINISH;
     }
     break;
+
+  case _SEQ_CANCEL_MSG:
+    _StreamMsgSet(em, _GameTypeMsgPack[em->game_type].msgid_breakup_game);
+    em->seq = _SEQ_CANCEL_MSG_WAIT;
+    break;
+  case _SEQ_CANCEL_MSG_WAIT:
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      em->seq = _SEQ_FINISH;
+    }
+    break;
+  
   case _SEQ_FINISH:   //終了処理
     _MemberInfo_Exit(em);
     return TRUE;
@@ -653,7 +704,22 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
       switch(list_select){
       case PARENT_SEARCH_LIST_SELECT_OK:
         _ParentSearchList_Exit(em);
-        em->seq = _SEQ_MEMBER_INIT;
+        //終了待ちの間に親が進んだ！
+        if(em->game_start == TRUE)
+        {
+          em->seq = _SEQ_GAME_START;
+        }
+        else
+        if(em->game_cancel == TRUE)
+        {
+          em->seq = _SEQ_GAME_CANCEL;
+        }
+        else
+        {
+          WORDSET_RegisterPlayerName( em->wordset, 0, &em->parentsearch.connect_parent->mystatus );
+          _StreamMsgSet(em, msg_game_connect);
+          em->seq = _SEQ_MEMBER_INIT;
+        }
         break;
       case PARENT_SEARCH_LIST_SELECT_NG:
         _ParentSearchList_Exit(em);
@@ -668,29 +734,55 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
     
   case _SEQ_MEMBER_INIT:      //他のメンバーの参加完了待ち
-    _MemberInfo_Setup(em);
-    em->seq++;
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      _StreamMsgSet(em, msg_game_wait_member);
+      _MemberInfo_Setup(em);
+      em->seq++;
+    }
     break;
   case _SEQ_MEMBER_WAIT:
-    _ChildEntryMember_ListRewriteUpdate(em);
-    if(em->game_start == TRUE){
+    if( _ParentWait_UpdateCnacel(em) == PARENT_WAIT_CANCEL_CANCEL )
+    {
+      //メッセージ無しで抜ける
       _MemberInfo_Exit(em);
-      em->seq = _SEQ_GAME_START;
+      _ParentWait_ExitCnacel(em);
+      em->seq = _SEQ_CANCEL_INIT;
     }
-    else if(em->game_cancel == TRUE){
-      _MemberInfo_Exit(em);
-      em->seq = _SEQ_GAME_CANCEL;
+    else
+    {
+      _ChildEntryMember_ListRewriteUpdate(em);
+      if(em->game_start == TRUE){
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_GAME_START;
+      }
+      else if(em->game_cancel == TRUE){
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_GAME_CANCEL;
+      }
     }
     break;
   
   case _SEQ_GAME_START:
     _StreamMsgSet(em, msg_game_start);
     em->seq = _SEQ_GAME_START_WAIT;
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     break;
   case _SEQ_GAME_START_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
-      em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
-      em->seq = _SEQ_FINISH;
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
+      {
+        em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
+        em->seq = _SEQ_FINISH;
+      }
+      else
+      if(em->game_cancel == TRUE)
+      {
+        em->seq = _SEQ_GAME_CANCEL;
+      }
     }
     break;
     
@@ -734,7 +826,6 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     em->entry_result = COMM_ENTRY_RESULT_CANCEL;
     em->seq = _SEQ_FINISH;
     break;
-    
   case _SEQ_FINISH:
     _ParentSearchList_Exit(em);
     _MemberInfo_Exit(em);
@@ -786,25 +877,47 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     em->seq++;
     break;
   case _SEQ_MEMBER_WAIT:
-    _ChildEntryMember_ListRewriteUpdate(em);
-    if(em->game_start == TRUE){
+    if( _ParentWait_UpdateCnacel(em) == PARENT_WAIT_CANCEL_CANCEL )
+    {
+      //メッセージ無しで抜ける
       _MemberInfo_Exit(em);
-      em->seq = _SEQ_GAME_START;
+      _ParentWait_ExitCnacel(em);
+      em->seq = _SEQ_CANCEL_INIT;
     }
-    else if(em->game_cancel == TRUE){
-      _MemberInfo_Exit(em);
-      em->seq = _SEQ_GAME_CANCEL;
+    else
+    {
+      _ChildEntryMember_ListRewriteUpdate(em);
+      if(em->game_start == TRUE){
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_GAME_START;
+      }
+      else if(em->game_cancel == TRUE){
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_GAME_CANCEL;
+      }
     }
     break;
   
   case _SEQ_GAME_START:
     _StreamMsgSet(em, msg_game_start);
     em->seq = _SEQ_GAME_START_WAIT;
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     break;
   case _SEQ_GAME_START_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
-      em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
-      em->seq = _SEQ_FINISH;
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
+      {
+        em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
+        em->seq = _SEQ_FINISH;
+      }
+      else
+      if(em->game_cancel == TRUE)
+      {
+        em->seq = _SEQ_GAME_CANCEL;
+      }
     }
     break;
     
@@ -884,11 +997,39 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     }
     break;
   case _SEQ_PARENT_ANSWER_WAIT:
-    if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
-      em->seq = _SEQ_MEMBER_INIT;
-    }
-    else if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG){
-      em->seq = _SEQ_NG_INIT;
+    {
+      const PARENT_WAIT_CANCEL_STATE ret = _ParentWait_UpdateCnacel(em);
+      if( ret == PARENT_WAIT_CANCEL_CANCEL )
+      {
+        //メッセージ無しで抜ける
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_CANCEL_INIT;
+      }
+      else
+      if( ret == PARENT_WAIT_CANCEL_SELECT )
+      {
+        //選択中なので基本進まない。
+        //親が最終決定をしたらすすむ
+        if( em->game_start == TRUE ||
+            em->game_cancel == TRUE)
+        {
+          em->seq = _SEQ_MEMBER_INIT;
+          _ParentWait_ExitCnacel(em);
+        }
+      }
+      else
+      {
+        if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
+          em->seq = _SEQ_MEMBER_INIT;
+          _ParentWait_ExitCnacel(em);
+        }
+        else if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG){
+          em->seq = _SEQ_NG_INIT;
+          _ParentWait_ExitCnacel(em);
+        }
+      }
     }
     break;
   
@@ -897,25 +1038,47 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     em->seq++;
     break;
   case _SEQ_MEMBER_WAIT:
-    _ChildEntryMember_ListRewriteUpdate(em);
-    if(em->game_start == TRUE){
+    if( _ParentWait_UpdateCnacel(em) == PARENT_WAIT_CANCEL_CANCEL )
+    {
+      //メッセージ無しで抜ける
       _MemberInfo_Exit(em);
-      em->seq = _SEQ_GAME_START;
+      _ParentWait_ExitCnacel(em);
+      em->seq = _SEQ_CANCEL_INIT;
     }
-    else if(em->game_cancel == TRUE){
-      _MemberInfo_Exit(em);
-      em->seq = _SEQ_GAME_CANCEL;
+    else
+    {
+      _ChildEntryMember_ListRewriteUpdate(em);
+      if(em->game_start == TRUE){
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_GAME_START;
+      }
+      else if(em->game_cancel == TRUE){
+        _MemberInfo_Exit(em);
+        _ParentWait_ExitCnacel(em);
+        em->seq = _SEQ_GAME_CANCEL;
+      }
     }
     break;
   
   case _SEQ_GAME_START:
     _StreamMsgSet(em, msg_game_start);
     em->seq = _SEQ_GAME_START_WAIT;
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     break;
   case _SEQ_GAME_START_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
-      em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
-      em->seq = _SEQ_FINISH;
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
+      {
+        em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
+        em->seq = _SEQ_FINISH;
+      }
+      else
+      if(em->game_cancel == TRUE)
+      {
+        em->seq = _SEQ_GAME_CANCEL;
+      }
     }
     break;
     
@@ -1057,7 +1220,12 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
       _ParentEntry_NameErase(em, &em->user[net_id], net_id);
     }
   }
-  
+  if( player_num == 0 )
+  {
+    //自分は必ず出しておく
+    _MemberInfo_NameDraw(em, &em->mine_mystatus, 0);
+    player_num++;
+  }
   if(em->draw_player_num != player_num){
     _ParentEntry_NumDraw(em, player_num);
     em->draw_player_num = player_num;
@@ -1844,6 +2012,8 @@ static void _ParentSearchList_Exit(COMM_ENTRY_MENU_PTR em)
 //--------------------------------------------------------------
 static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em)
 {
+  FLDMSGBG *fldmsg_bg;
+  COMM_ENTRY_YESNO *yesno = &em->yesno;
   PARENTSEARCH_LIST *psl = &em->parentsearch;
   BOOL ret;
   enum{
@@ -1851,6 +2021,9 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
     _SEQ_NEGO_WAIT,
     _SEQ_PARENT_ANSWER_WAIT,
     _SEQ_FINISH,
+    
+    _SEQ_YESNO_INIT,
+    _SEQ_YESNO_MAIN,
   };
   
   switch(psl->local_seq){
@@ -1878,6 +2051,10 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
         }
       }
       else{
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+          psl->return_seq = psl->local_seq;
+          psl->local_seq = _SEQ_YESNO_INIT;
+        }
         //※check　ここに一定時間経っても親機に接続出来なかったらキャンセル扱いにする処理を入れる
       }
     }
@@ -1891,6 +2068,11 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
         OS_TPrintf("親にエントリーを送信\n");
       }
     }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+      psl->return_seq = psl->local_seq;
+      psl->local_seq = _SEQ_YESNO_INIT;
+    }
     break;
   case _SEQ_PARENT_ANSWER_WAIT: 
     if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
@@ -1903,9 +2085,58 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
       psl->final_select = PARENT_SEARCH_LIST_SELECT_NG;
       psl->local_seq = _SEQ_FINISH;
     }
+    else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+      psl->return_seq = psl->local_seq;
+      psl->local_seq = _SEQ_YESNO_INIT;
+    }
     break;
   case _SEQ_FINISH:
     return psl->final_select;
+    
+  case _SEQ_YESNO_INIT:
+    _StreamMsgSet(em, msg_game_exit);
+    {
+      fldmsg_bg = FIELDMAP_GetFldMsgBG(em->fieldWork);
+      yesno->menufunc = FLDMENUFUNC_AddYesNoMenu(fldmsg_bg, FLDMENUFUNC_YESNO_YES);
+    }
+    psl->local_seq = _SEQ_YESNO_MAIN;
+    break;
+
+  case _SEQ_YESNO_MAIN:
+  
+    {
+      FLDMENUFUNC_YESNO ret;
+      ret = FLDMENUFUNC_ProcYesNoMenu(yesno->menufunc);
+      if(ret == FLDMENUFUNC_YESNO_NULL)
+      {
+        //終了待ちの間に親が進んだ！
+        if(em->game_start == TRUE||
+           em->game_cancel == TRUE)
+        {
+          FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+          psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
+          psl->local_seq = _SEQ_FINISH;
+        }
+      }
+      else
+      {
+        FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+        yesno->menufunc = NULL;
+        
+        if(ret == FLDMENUFUNC_YESNO_NO)
+        {
+          psl->local_seq = psl->return_seq;
+          _StreamMsgSet(em, msg_game_wait_parent);
+        }
+        else
+        {
+          psl->final_select = PARENT_SEARCH_LIST_SELECT_CANCEL;
+          psl->local_seq = _SEQ_FINISH;
+        }
+      }
+    }
+    break;
   }
   
   return PARENT_SEARCH_LIST_SELECT_NULL;
@@ -1936,6 +2167,8 @@ static BOOL _ParentSearchList_ListSelectUpdate(COMM_ENTRY_MENU_PTR em)
       GF_ASSERT(psl->connect_parent == NULL);
       psl->connect_parent = &psl->parentuser[select_ret];
       GFL_NET_ConnectToParent(psl->connect_parent->mac_address);
+      WORDSET_RegisterPlayerName( em->wordset, 0, &psl->connect_parent->mystatus );
+      _StreamMsgSet(em, msg_game_wait_parent);
     }
     break;
   }
@@ -2088,6 +2321,68 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
 	em->parentsearch.list_strbuf_create = TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 親機待ちの間のキャンセル管理
+ *
+ * @param   em		
+ */
+//--------------------------------------------------------------
+static PARENT_WAIT_CANCEL_STATE _ParentWait_UpdateCnacel( COMM_ENTRY_MENU_PTR em )
+{
+  COMM_ENTRY_YESNO *yesno = &em->yesno;
+
+  enum{
+    _SEQ_WAIT,
+    _SEQ_SELECT
+  };
+  switch( yesno->seq )
+  {
+  case _SEQ_WAIT:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(em->fieldWork);
+      yesno->menufunc = FLDMENUFUNC_AddYesNoMenu(fldmsg_bg, FLDMENUFUNC_YESNO_YES);
+      _StreamMsgSet(em, msg_game_exit);
+
+      yesno->seq = _SEQ_SELECT;
+    }
+    break;
+  case _SEQ_SELECT:
+    {
+      FLDMENUFUNC_YESNO ret;
+      ret = FLDMENUFUNC_ProcYesNoMenu(yesno->menufunc);
+      if(ret != FLDMENUFUNC_YESNO_NULL)
+      {
+        FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+        yesno->menufunc = NULL;
+        
+        if(ret == FLDMENUFUNC_YESNO_NO)
+        {
+          yesno->seq = _SEQ_WAIT;
+          _StreamMsgSet(em, msg_game_wait_member);
+        }
+        else
+        {
+          return PARENT_WAIT_CANCEL_CANCEL;
+        }
+      }
+      return PARENT_WAIT_CANCEL_SELECT;
+    }
+    break;
+  }
+  
+  return PARENT_WAIT_CANCEL_NULL;
+}
+
+static void _ParentWait_ExitCnacel( COMM_ENTRY_MENU_PTR em )
+{
+  COMM_ENTRY_YESNO *yesno = &em->yesno;
+  if( yesno->menufunc != NULL )
+  {
+    FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+  }
+}
 //==================================================================
 /**
  * エントリー時の親機からの結果をセット

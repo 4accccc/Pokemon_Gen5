@@ -151,6 +151,7 @@ struct _MUS_COMM_WORK
   HEAPID heapId;
   
   BOOL isErr;
+  BOOL isInitMusical;
   BOOL isInitIrc;
   BOOL isInitComm;
   BOOL isRefreshUserData;
@@ -317,6 +318,7 @@ void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR 
   work->gameData = gameData;
   work->gameComm = gameComm;
   work->isErr = FALSE;
+  work->isInitMusical = FALSE;
 
   GameCommSys_Boot( gameComm , GAME_COMM_NO_MUSICAL , work );
 }
@@ -370,10 +372,18 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
       {
         GFL_NET_DelCommandTable( GFL_NET_CMD_MUSICAL );
       }
-
-      GFL_NET_SetNoChildErrorCheck( FALSE );
-      MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM );
-      *seq = 1;
+      if( work->isInitMusical == TRUE )
+      {
+        GFL_NET_SetNoChildErrorCheck( FALSE );
+        MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_EXIT_COMM );
+        *seq = 1;
+      }
+      else
+      {
+        //ミュージカル前なら受付キャンセルなので
+        //タイミング同期をとらない
+        *seq = 2;
+      }
     }
     break;
   case 1:
@@ -385,8 +395,17 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
   case 2:
     if( GFL_NET_IsParentMachine() == FALSE )
     {
-      if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+      if( work->isInitMusical == TRUE )
       {
+        if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
+        {
+          return TRUE;
+        }
+      }
+      else
+      {
+        //ミュージカル前なら勝手に切る
+        GFL_NET_Exit( NULL );
         return TRUE;
       }
     }
@@ -499,6 +518,7 @@ void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , POKEMON_PA
   work->isReqSendState = FALSE;
   work->isReqSendAppealBonus = FALSE;
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
+  work->isInitMusical = TRUE;
   for( i=0;i<MUS_COMM_SEND_APPEALBONUS_BUFF;i++ )
   {
     work->sendAppealBonusData[i] = 0xFFFF;
