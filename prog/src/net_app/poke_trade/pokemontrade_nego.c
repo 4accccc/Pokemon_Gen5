@@ -241,6 +241,9 @@ void POKE_GTS_DeletePokemonDirect(POKEMON_TRADE_WORK* pWork,int side,int index)
 {
   pWork->GTSSelectIndex[side][index] = -1;
   pWork->GTSSelectBoxno[side][index] = -1;
+  GFL_HEAP_FreeMemory(pWork->GTSSelectPP[side][index]);
+  pWork->GTSSelectPP[side][index] = NULL;
+
 }
 
 

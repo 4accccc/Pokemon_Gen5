@@ -4147,6 +4147,18 @@ static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
+
+
+static void _windelandSEcall(WIFIP2PMATCH_WORK *wk)
+{
+  wk->SubListWin = _BmpWinDel(wk->SubListWin);
+  BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
+  BmpMenuWork_ListDelete( wk->submenulist );
+  EndMessageWindowOff(wk);
+  PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+}
+
+
 //------------------------------------------------------------------
 /**
  * $brief   待機状態になる為の選択メニュー WIFIP2PMATCH_MODE_SELECT_WAIT
@@ -4166,65 +4178,51 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   ret = BmpMenuList_Main(wk->sublw);
 
-  if( 0 !=  _checkParentNewPlayer(wk)){ // 接続してきた場合はメニューを閉じた扱いにして次
-    ret = BMPMENULIST_CANCEL;
-  }
-
-  if(ret != BMPMENULIST_NULL ){
-    wk->SubListWin = _BmpWinDel(wk->SubListWin);
-    BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
-    BmpMenuWork_ListDelete( wk->submenulist );
-    EndMessageWindowOff(wk);
-  }
-
   switch(ret){
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    _windelandSEcall(wk);
     FriendRequestWaitOff(wk);
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    _windelandSEcall(wk);
     _battleCustomSelectMenu(wk);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;
   case WIFI_GAME_VCT:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    if( 0==WIFI_STATUS_GetVChatStatus(wk->pMatch) ){
+      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+      return seq;
+    }
+    else{
+      _windelandSEcall(wk);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    }
     break;
   case WIFI_GAME_TRADE:
     if(!_tradeNumCheck(wk)){
+      wk->SubListWin = _BmpWinDel(wk->SubListWin);
+      BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
+      BmpMenuWork_ListDelete( wk->submenulist );
+      EndMessageWindowOff(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
     }
     else{
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
     break;
   case WIFI_GAME_TVT:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-
-//#if defined(SDK_TWL)
-//    if(OS_IsRunOnTwl() && OS_IsRestrictPhotoExchange()){   // ペアレンタルコントロール
-//      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1012, FALSE);
-//      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
-//    }
-//#else
-//    if(0){
-//    }
-//#endif
-//    else{
+    _windelandSEcall(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-//    }
     break;
   }
   WifiP2PMatch_CommWifiBattleStart( wk, -1 );
   _myStatusChange(wk, WIFI_STATUS_RECRUIT, ret );
-//  _commStateChange(wk, WIFI_STATUS_RECRUIT, ret );
   if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){
     FriendRequestWaitOn( wk, TRUE );       // 動作停止させる
   }

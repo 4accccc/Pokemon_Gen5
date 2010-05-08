@@ -597,23 +597,6 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     if(ITEM_CheckMail(item)){
       MAIL_BLOCK* pMailBlock = GAMEDATA_GetMailBlock(pWork->pGameData);
       MailSys_MoveMailPoke2Paso(pMailBlock, pp, pWork->heapID);
-
-      {
-        int i;
-        MAIL_DATA *mailData  = MailData_CreateWork(pWork->heapID);
-        int no = PP_Get( pp , ID_PARA_monsno ,NULL);
-        u8* buff=(u8*)mailData;
-
-        OS_TPrintf("ƒ|ƒPƒ‚ƒ“”Ô† %d ‚Ìƒ[ƒ‹\n",no);
-        PP_Get( pp , ID_PARA_mail_data , mailData );
-
-        for(i=0;i < MailData_GetDataWorkSize();i++){
-          OS_TPrintf("%x",buff[i]);
-        }
-        OS_TPrintf("\n");
-        GFL_HEAP_FreeMemory( mailData );
-      }
-
     }
   }
 

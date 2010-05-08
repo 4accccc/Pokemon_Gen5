@@ -75,7 +75,6 @@
 
 static void _recvSelectPokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangePokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void _recvChangeCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 static void _touchState(POKEMON_TRADE_WORK* pWork);
@@ -126,7 +125,6 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvChangePokemon,   NULL},    ///_NETCMD_CHANGE_POKEMON   3 こうかんけってい
   {_recvGTSSelectPokemonIndex, NULL },     ///_NETCMD_POKEMONSELECT_GTS 
   {_recvLookAtPoke, NULL},       ///_NETCMD_LOOKATPOKE   2 ポケモン見せ合う
-  {_recvChangeCancel,   NULL},    ///_NETCMD_CHANGE_CANCEL  3 最後にキャンセルする
   {_recvEnd, NULL},         //_NETCMD_END           1 おわり
   {_recvCancelPokemon, NULL},         //  _NETCMD_CANCEL_POKEMON
   {_recvThreePokemon1,   _setThreePokemon},    ///_NETCMD_THREE_SELECT1 ポケモン３匹みせあい
@@ -525,27 +523,6 @@ static POKEMON_PARAM* _CreatePokeData(BOX_MANAGER* boxData , int trayNo, int ind
       if(index < PokeParty_GetPokeCount(party) && (index != -1)){
         pp = PP_Create(1,1,1,pWork->heapID);
         GFL_STD_MemCopy( PokeParty_GetMemberPointer( party , index ), pp, POKETOOL_GetWorkSize());
-
-
-  {
-    int i;
-    POKEMON_PARAM* pp = (POKEMON_PARAM*)PokeParty_GetMemberPointer( party , index );
-    MAIL_DATA *mailData  = MailData_CreateWork(pWork->heapID);
-    int no = PP_Get( pp , ID_PARA_monsno ,NULL);
-    u8* buff=(u8*)mailData;
-    
-    OS_TPrintf("yポケモン番号 %d のメール\n",no);
-    PP_Get( pp , ID_PARA_mail_data , mailData );
-    
-    for(i=0;i < MailData_GetDataWorkSize();i++){
-      OS_TPrintf("%x",buff[i]);
-    }
-    OS_TPrintf("\n");
-    GFL_HEAP_FreeMemory( mailData );
-  }
-
-
-
       }
     }
   }
@@ -722,23 +699,6 @@ static void _recvSelectPokemon(const int netID, const int size, const void* pDat
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは今は受け取らない
   }
-  {
-    int i;
-    POKEMON_PARAM* pp = (POKEMON_PARAM*)pData;
-    MAIL_DATA *mailData  = MailData_CreateWork(pWork->heapID);
-    int no = PP_Get( pp , ID_PARA_monsno ,NULL);
-    u8* buff=(u8*)mailData;
-    
-    OS_TPrintf("xポケモン番号 %d のメール\n",no);
-    PP_Get( pp , ID_PARA_mail_data , mailData );
-    
-    for(i=0;i < MailData_GetDataWorkSize();i++){
-      OS_TPrintf("%x",buff[i]);
-    }
-    OS_TPrintf("\n");
-    GFL_HEAP_FreeMemory( mailData );
-  }
-
  
   //ポケモンセットをコール  処理が重いためここではやらない
   pWork->pokemonsetCall = netID+1;
@@ -907,7 +867,6 @@ static void _recvThreePokemonCancel(const int netID, const int size, const void*
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは今は受け取らない
   }
-
   POKE_GTS_DeletePokemonDirect(pWork, 1, pNo[0]);
   POKETRADE_2D_GTSPokemonIconReset(pWork,1, pNo[0]);
 }
@@ -1015,16 +974,6 @@ static void _recvGTSSelectPokemonIndex(const int netID, const int size, const vo
   pWork->pokemonselectnoGTS = pBuff[0];
 }
 
-//_NETCMD_CHANGE_CANCEL
-static void _recvChangeCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
-{
-  POKEMON_TRADE_WORK *pWork = pWk;
-
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-  }
-//  pWork->userNetCommand[netID] = _NETCMD_CHANGE_CANCEL;
-}
 
 //_NETCMD_END
 static void _recvEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
