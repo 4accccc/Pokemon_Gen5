@@ -624,8 +624,6 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
   { 
     scale_x = FX_Mul( size_x, *scale_offset_work );
     scale_y = FX_Mul( size_y, *scale_offset_work );
-
-    OS_TPrintf("scale_x:0x%08x scale_y:0x%08x\n",scale_x,scale_y);
   }
 
 	G3_RestoreMtx( MCSS_NORMAL_MTX );
