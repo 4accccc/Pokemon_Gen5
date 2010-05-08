@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-08T19:53:37"/>
+	<create user="ohmori" host="W00223" date="2010-05-08T22:08:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="2202" top="162" right="2849" bottom="1117" maximized="no" rayout="Vertical2">
+	<dialog left="1019" top="271" right="1724" bottom="891" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
-		<band id="0" index="0" style="0000" width="472"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="639"/>
-		<band id="3" index="3" style="0000" width="639"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -447,12 +447,12 @@
 たすけに　きてくれたようだ▼
 ……おや？▼
 たすけにきた　[1:00:トレーナー名:0]が
-どうぐを　おいていったようだ</language>
+どうぐを　おいていったようだ▼</language>
 		<language name="JPN_KANJI" width="256">どうやら　[1:00:トレーナー名:0]が
 助けに　来てくれたようだ▼
 ……おや？▼
 助けに来た　[1:00:トレーナー名:0]が
-道具を　置いていったようだ</language>
+道具を　置いていったようだ▼</language>
 	</row>
 
 	<row id="msg_invasion_mission000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
@@ -2997,14 +2997,16 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 がんばってますか？▼
 もし　ポケモンと　たたかってたら
 すぐに　たすけにいきます！▼
-ぜひ　あんしんして　ポケモンと
-たたかって　ください！</language>
+……おっと！
+わたしを　よぶこえが　きこえる▽
+それじゃあ　また！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
 がんばってますか？▼
 もし　ポケモンと　戦ってたら
 すぐに　助けにいきます！▼
-ぜひ　安心して　ポケモンと
-戦って　ください！</language>
+……おっと！
+私を　呼ぶ声が　聞こえる▽
+それじゃあ　また！</language>
 	</row>
 
 	<row id="mis_m04_03_t5" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -3017,14 +3019,16 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 がんばってますか？▼
 もし　ポケモンと　たたかってたら
 すぐに　たすけにいきますね！▼
-ぜひ　あんしんして　ポケモンと
-たたかって　くださいませ！</language>
+……やや！
+わたしを　よぶこえが　きこえます▽
+それじゃあ　また！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
 がんばってますか？▼
 もし　ポケモンと　戦ってたら
 すぐに　助けにいきますね！▼
-ぜひ　安心して　ポケモンと
-戦って　くださいませ！</language>
+……やや！
+私を　呼ぶ声が　聞こえます▽
+それじゃあ　また！</language>
 	</row>
 
 	<row id="mis_m04_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
@@ -3061,13 +3065,21 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
-がんばってるかい？▼
+こんにちは！▼
 ちかくに　いてくれると
-なんだか　たのもしいぜ！</language>
+なんだか　たのもしいぜ！▼
+……あれ？
+どこか　いっちゃうの？▼
+なんだか　たいへんそうだね！
+また　どこかで！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
-がんばってるかい？▼
+こんにちは！▼
 近くに　いてくれると
-なんだか　たのもしいぜ！</language>
+なんだか　たのもしいぜ！▼
+……あれ？
+どこか　行っちゃうの？▼
+なんだか　大変そうだね！
+また　どこかで！</language>
 	</row>
 
 	<row id="mis_m04_03_m5" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -3077,13 +3089,21 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
-がんばってる？▼
+こんにちは！▼
 ちかくに　いてくれると
-なんだが　ほっとするね！</language>
+なんだが　ほっとするね！▼
+……あれ？
+もう　どこか　いっちゃうの？▼
+なんだか　たいへんそうですね
+また　あいましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
-がんばってる？▼
+こんにちは！▼
 近くに　いてくれると
-なんだが　ほっとするね！</language>
+なんだが　ほっとするね！▼
+……あれ？
+もう　どこか　いっちゃうの？▼
+なんだか　大変そうですね
+また　会いましょう！</language>
 	</row>
 
 	<row id="mis_m04_04_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
@@ -3186,12 +3206,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 相手が戦闘じゃない状態で、話しかけたとき、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
-がんばってるかい？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『あ！
+こんにちは！▼
 ちかくに　いてくれると
 なんだか　たのもしいぜ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
-がんばってるかい？▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あ！
+こんにちは！▼
 近くに　いてくれると
 なんだか　たのもしいぜ！</language>
 	</row>
@@ -3203,11 +3223,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
-がんばってる？▼
+こんにちは！▼
 ちかくに　いてくれると
 なんだが　ほっとするね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
-がんばってる？▼
+こんにちは！▼
 近くに　いてくれると
 なんだが　ほっとするね！</language>
 	</row>
