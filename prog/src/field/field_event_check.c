@@ -207,8 +207,6 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static GMEVENT * checkSubScreenEvent(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 
@@ -691,16 +689,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
-	/*
-   * 旧サブスクリーンからのイベント起動チェック
-   *
-   * @todo
-   * 新サブスクリーンからのイベント起動チェックが全て完成したら消す予定です
-   */
-	event = checkSubScreenEvent(gsys, fieldWork);
-	if( event != NULL ){
-		return event;
-	}
 
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
@@ -1231,17 +1219,6 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
-	/*
-   * 旧サブスクリーンからのイベント起動チェック
-   *
-   * @todo
-   * 新サブスクリーンからのイベント起動チェックが全て完成したら消す予定です
-   */
-	event = checkSubScreenEvent(gsys, fieldWork);
-	if( event != NULL )
-  {
-		return event;
-	}
 
 #ifdef  DEBUG_SPEED_CHECK_ENABLE
   if ( (req.key_trg & PAD_BUTTON_R) || (req.key_cont & PAD_BUTTON_L) )
@@ -2573,47 +2550,6 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
 
 //======================================================================
 //======================================================================
-//--------------------------------------------------------------
-/**
- * サブスクリーンからのイベント起動チェック
- * @param gsys GAMESYS_WORK
- * @param	fieldWork FIELDMAP_WORK
- * @retval GMEVENT NULL イベント無し
- */
-//--------------------------------------------------------------
-static GMEVENT * checkSubScreenEvent(
-		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-  GMEVENT* event=NULL;
-  FIELD_SUBSCREEN_WORK * subscreen;
-
-  subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-  
-  switch(FIELD_SUBSCREEN_GetAction(subscreen)){
-  case FIELD_SUBSCREEN_ACTION_PALACE_WARP:
-    event = EVENT_IntrudeTownWarp(gsys, fieldWork, PALACE_TOWN_DATA_PALACE);
-    break;
-  
-  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_INTRUDE:
-    event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_INTRUDE);
-    break;
-#if 0
-  case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
-		event = DEBUG_PalaceJamp(fieldWork , gsys, FIELDMAP_GetFieldPlayer(fieldWork));
-		break;
-#endif
-	}
-	if(event)
-	{
-		FIELD_SUBSCREEN_GrantPermission(subscreen);
-	}
-	else
-	{
-		FIELD_SUBSCREEN_ResetAction(subscreen);
-	}
-  return event;
-}
-
 //--------------------------------------------------------------
 /**
  * フィールドノーマルエンカウントイベント起動チェック
