@@ -254,6 +254,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
 		break;
   case 4:
     if( work->scene->bgm_change ){
+      PMSND_PauseBGM(TRUE);
       PMSND_PushBGM();
     }
     DEMO3D_PARAM_SetFromRTC( &work->param, work->gsys, work->scene->demo_id, work->scene->scene_id );
@@ -267,6 +268,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
     GAMESYSTEM_CommBootAlways(work->gsys);
     if( work->scene->bgm_change ){
       PMSND_PopBGM();
+      PMSND_PauseBGM(FALSE);
       PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     }
     if( work->scene->fadein_type == FADE_BLACK ){
