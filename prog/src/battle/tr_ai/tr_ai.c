@@ -3735,10 +3735,34 @@ static  BtlPokePos  get_poke_pos( TR_AI_WORK* taw, int side )
     btl_poke_pos = taw->def_btl_poke_pos;
     break;
   case CHECK_ATTACK_FRIEND:
-    btl_poke_pos = taw->atk_btl_poke_pos ^ 2;
+    switch( taw->rule ){ 
+    case BTL_RULE_SINGLE:
+    case BTL_RULE_ROTATION:
+      btl_poke_pos = taw->atk_btl_poke_pos;
+      break;
+    case BTL_RULE_DOUBLE:
+      btl_poke_pos = taw->atk_btl_poke_pos ^ 2;
+      break;
+    case BTL_RULE_TRIPLE:
+      BTL_MAINUTIL_GetFriendPokePos( taw->atk_btl_poke_pos,
+                                     ( ( taw->atk_btl_poke_pos / 2 ) != 2 ) ? ( taw->atk_btl_poke_pos / 2 ) + 1 : 1 );
+      break;
+    }
     break;
   case CHECK_DEFENCE_FRIEND:
-    btl_poke_pos = taw->def_btl_poke_pos ^ 2;
+    switch( taw->rule ){ 
+    case BTL_RULE_SINGLE:
+    case BTL_RULE_ROTATION:
+      btl_poke_pos = taw->def_btl_poke_pos;
+      break;
+    case BTL_RULE_DOUBLE:
+      btl_poke_pos = taw->def_btl_poke_pos ^ 2;
+      break;
+    case BTL_RULE_TRIPLE:
+      BTL_MAINUTIL_GetFriendPokePos( taw->def_btl_poke_pos,
+                                     ( ( taw->def_btl_poke_pos / 2 ) != 2 ) ? ( taw->def_btl_poke_pos / 2 ) + 1 : 1 );
+      break;
+    }
     break;
   }
   return btl_poke_pos;
