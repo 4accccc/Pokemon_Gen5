@@ -1796,6 +1796,7 @@ static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork)
       break;
     case PRINTSTREAM_STATE_PAUSE:
       if(GFL_UI_TP_GetTrg()){
+        PMSND_PlaySystemSE(SEQ_SE_MESSAGE);
         PRINTSYS_PrintStreamReleasePause( pWork->pStream );
       }
       break;
