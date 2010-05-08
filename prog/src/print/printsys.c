@@ -357,6 +357,32 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     OSTick start, diff;
     u8 endFlag = FALSE;
 
+    // 初回書き込み前にグローバルカラー情報をリセット
+    {
+      u8 colL, colS, colB;
+      u8 fReset = FALSE;
+
+      switch( que->runningJob->colorState ){
+      case JOB_COLORSTATE_IGNORE:
+        PRINTSYS_LSB_GetLSB( que->runningJob->defColor, &colL, &colS, &colB );
+        fReset = TRUE;
+        break;
+      case JOB_COLORSTATE_CHANGE_DONE:
+        PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
+        fReset = TRUE;
+        break;
+      default:
+        break;
+      }
+
+      if( fReset )
+      {
+        if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) ){
+          GFL_FONTSYS_SetColor( colL, colS, colB );
+        }
+      }
+    }
+
     start = OS_GetTick();
 
     while( que->runningJob )
@@ -377,8 +403,8 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
             que->fColorChanged = TRUE;
           }
           GFL_FONTSYS_SetColor( colL, colS, colB );
-          que->runningJob->colorState = JOB_COLORSTATE_CHANGE_DONE;
         }
+        que->runningJob->colorState = JOB_COLORSTATE_CHANGE_DONE;
       }
 
       while( *(que->sp) != EOM_CODE )
