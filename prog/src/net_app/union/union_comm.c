@@ -152,7 +152,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
  * @param   unisys		ユニオンシステムワークへのポインタ
  */
 //==================================================================
-static void Union_ExitSystem(UNION_SYSTEM_PTR unisys)
+static void Union_ExitSystem(UNION_PARENT_WORK *uniparent, UNION_SYSTEM_PTR unisys)
 {
   if(unisys->alloc.regulation != NULL){
     GFL_HEAP_FreeMemory(unisys->alloc.regulation);
@@ -161,6 +161,7 @@ static void Union_ExitSystem(UNION_SYSTEM_PTR unisys)
   GFL_HEAP_FreeMemory(unisys);
   GFL_HEAP_DeleteHeap(HEAPID_UNION);
   
+  GFL_HEAP_FreeMemory(uniparent);
 //  GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_room ) );
 }
 
@@ -264,7 +265,7 @@ BOOL UnionComm_ExitWait(int *seq, void *pwk, void *pWork)
   UNION_SYSTEM_PTR unisys = pWork;
 
   if(unisys->comm_status == UNION_COMM_STATUS_EXIT){
-    Union_ExitSystem(unisys);
+    Union_ExitSystem(pwk, unisys);
     return TRUE;
   }
   return FALSE;
