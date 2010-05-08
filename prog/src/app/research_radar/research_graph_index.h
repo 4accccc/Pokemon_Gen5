@@ -62,12 +62,12 @@ typedef enum {
   PALETTE_ANIME_NUM,       // 総数
 } PALETTE_ANIME_INDEX;
 
-// 調査データの表示タイプ
+// グラフの表示モード
 typedef enum {
-  DATA_DISP_TYPE_TODAY, // 今日のデータを表示 
-  DATA_DISP_TYPE_TOTAL, // 合計のデータを表示
-  DATA_DISP_TYPE_NUM,   // 総数
-} DATA_DISP_TYPE;
+  GRAPH_DISP_MODE_TODAY, // 今日のデータを表示 
+  GRAPH_DISP_MODE_TOTAL, // 合計のデータを表示
+  GRAPH_DISP_MODE_NUM,   // 総数
+} GRAPH_DISP_MODE;
 
 // メッセージデータ
 typedef enum {
