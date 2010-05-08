@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T20:15:17"/>
+	<create user="ohmori" host="W00223" date="2010-05-08T19:53:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1461" top="34" right="2379" bottom="989" maximized="no" rayout="Vertical2">
+	<dialog left="2202" top="162" right="2849" bottom="1117" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="0" top="207" right="473" bottom="831" visible="no"/>
-		<band id="0" index="0" style="0000" width="524"/>
+		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
+		<band id="0" index="0" style="0000" width="472"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="217"/>
-		<band id="3" index="3" style="0000" width="910"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="639"/>
+		<band id="3" index="3" style="0000" width="639"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2224,14 +2224,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『なあ！
 いきなりだけど　たいせんしないか？▼
 たいりょくも　かいふくさせて
-レベルフラットで　せいせいどうどう▽
+レベル[2:02:３桁:1]フラットで　せいせいどうどう▽
 きみと　たたかいたいぜ！▼
 どうだ！？
 たいせん　しようぜ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『なあ！
 いきなりだけど　対戦しないか？▼
 体力も　回復させて
-レベルフラットで　正々堂々▽
+レベル[2:02:３桁:1]フラットで　正々堂々▽
 君と　戦いたいぜ！▼
 どうだ！？
 対戦　しようぜ！</language>
@@ -2247,14 +2247,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ねえ！
 いきなりだけど　たいせんしない？▼
 たいりょくも　かいふくさせて
-レベルフラットで　せいせいどうどう▽
+レベル[2:02:３桁:1]フラットで　せいせいどうどう▽
 きみと　たたかいたいわ！▼
 どう！？
 たいせん　しましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ねえ！
 いきなりだけど　対戦しない？▼
 体力も　回復させて
-レベルフラットで　正々堂々▽
+レベル[2:02:３桁:1]フラットで　正々堂々▽
 君と　戦いたいわ！▼
 どう！？
 対戦　しましょう！</language>
@@ -2297,8 +2297,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん？
+レベル[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまってて！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん？
+レベル[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待ってて！</language>
 	</row>
 
@@ -2311,8 +2313,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『え？
+レベル[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまっててね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『え？
+レベル[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待っててね！</language>
 	</row>
 

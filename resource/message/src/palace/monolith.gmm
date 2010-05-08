@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-05-07T12:08:56"/>
+	<create user="ohmori" host="W00223" date="2010-05-08T20:30:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,9 +260,9 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="116" right="718" bottom="744" maximized="no" rayout="Vertical2">
+	<dialog left="502" top="467" right="1207" bottom="1094" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="719" top="313" right="1192" bottom="937" visible="yes"/>
+		<tag-palette left="1221" top="9" right="1694" bottom="633" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -374,13 +374,13 @@
 		<language name="JPN_KANJI" width="256">ハイルツリーの状態</language>
 	</row>
 
-	<row id="msg_mono_mis_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_mono_mis_000" back-color="#ffff80,,,#ffffff,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション画面</comment>
-		<language name="JPN" width="256">ミッションを　うける</language>
-		<language name="JPN_KANJI" width="256">ミッションを　受ける</language>
+		<language name="JPN" width="256">ミッションを　かいしする</language>
+		<language name="JPN_KANJI" width="256">ミッションを　開始する</language>
 	</row>
 
-	<row id="msg_mono_mis_001" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_mono_mis_001" back-color="#ffff80,,,#ffffff,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション画面</comment>
 		<language name="JPN" width="256">ミッションを　じっしちゅう</language>
 		<language name="JPN_KANJI" width="256">ミッションを　実施中</language>
@@ -415,19 +415,44 @@
 	</row>
 
 	<row id="msg_mono_mis_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション画面：３人接続時に、バトルミッションをはじく</comment>
+		<comment>ミッション画面：３人接続時に、バトルミッションと、
+買い物ミッションをはじく</comment>
 		<language name="JPN" width="256">せかいが３つ　つながっているときは
 このミッションを　うけられません</language>
 		<language name="JPN_KANJI" width="256">世界が３つ　つながっているときは
 このミッションを　受けられません</language>
 	</row>
 
-	<row id="msg_mono_mis_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_mono_mis_007" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>ミッション画面：ターゲットが冒険中ではない</comment>
 		<language name="JPN" width="256">ぼうけんしゃが　ハイリンクにいるので
 ミッションを　うけることが　できません</language>
 		<language name="JPN_KANJI" width="256">冒険者が　ハイリンクにいるので
 ミッションを　受けることが　できません</language>
+	</row>
+
+	<row id="msg_mono_mis_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション画面：チュートリアル中のメッセージ</comment>
+		<language name="JPN" width="256">このせかいの　ぼうけんしゃを
+たすける　ミッションを　えらびます▼
+まずは『サポート　ミッション』をえらび
+ミッションをかいしして　ください</language>
+		<language name="JPN_KANJI" width="256">この世界の　冒険者を　助ける
+ミッションを　選びます▼
+まずは『サポート　ミッション』を選び
+ミッションを開始して　ください</language>
+	</row>
+
+	<row id="msg_mono_mis_009" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>ミッション画面：チュートリアル中のメッセージ</comment>
+		<language name="JPN" width="256">べつの　ミッションを
+えらんで　います▼
+『サポート　ミッション』を
+えらんで　かいしして　ください</language>
+		<language name="JPN_KANJI" width="256">別の　ミッションを
+選んで　います▼
+『サポート　ミッション』を
+選んで　開始してください</language>
 	</row>
 
 	<row id="msg_mono_pow_000" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
