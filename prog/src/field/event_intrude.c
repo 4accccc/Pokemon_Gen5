@@ -704,7 +704,8 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   enum{
-    SEQ_INIT,
+    SEQ_WARP_MY_PALACE,
+    SEQ_COMM_EXIT_REQ,
     SEQ_COMM_WAIT,
     SEQ_FIELD_INIT,
     SEQ_ME_WAIT,
@@ -718,7 +719,12 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   
   switch( *seq )
   {
-  case SEQ_INIT:
+  case SEQ_WARP_MY_PALACE:  //自分のパレスへワープ
+    GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_Mine(gsys) );
+    (*seq)++;
+    break;
+
+  case SEQ_COMM_EXIT_REQ:
     if(NetErr_App_CheckError() || GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
       //通信が接続されている場合は切断もする
       if(NetErr_App_CheckError() == NET_ERR_CHECK_NONE 
@@ -730,7 +736,6 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     break;
   case SEQ_COMM_WAIT:
     if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
-      GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_Mine(gsys) );
       (*seq)++;
     }
     break;

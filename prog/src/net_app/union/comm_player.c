@@ -114,7 +114,7 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
  * @param   cps		
  */
 //==================================================================
-void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps)
+void CommPlayer_Exit(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps)
 {
   int i;
   
@@ -124,7 +124,13 @@ void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps)
     for(i = 0; i < COMM_PLAYER_MAX; i++){
       CommPlayer_Del(cps, i);
     }
-    FIELD_COMM_ACTOR_CTRL_Delete(cps->act_ctrl);
+    
+    if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){ //念のためフィールド存在チェック
+      FIELD_COMM_ACTOR_CTRL_Delete(cps->act_ctrl);
+    }
+    else{
+      GF_ASSERT(0); //フィールドOverlayが存在しない為、FIELD_COMM_ACTOR_CTRL_Deleteが呼び出せない
+    }
   }
   
   GFL_HEAP_FreeMemory(cps);

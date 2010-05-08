@@ -4345,7 +4345,7 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
 
       if(unisys->colosseum_sys != NULL){
         GF_ASSERT(0);
-        Colosseum_ExitSystem(unisys->colosseum_sys);
+        Colosseum_ExitSystem(unisys->colosseum_sys, unisys->uniparent->gsys);
         unisys->colosseum_sys = NULL;
       }
       

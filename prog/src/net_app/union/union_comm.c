@@ -826,7 +826,7 @@ void UnionAlloc_AllFree(UNION_SYSTEM_PTR unisys)
   }
 
   if(unisys->colosseum_sys != NULL){
-    Colosseum_ExitSystem(unisys->colosseum_sys);
+    Colosseum_ExitSystem(unisys->colosseum_sys, unisys->uniparent->gsys);
     unisys->colosseum_sys = NULL;
   }
 }

@@ -340,7 +340,7 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
 //==================================================================
 void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 {
-  if(gcsp->sub_work.seq != GCSSEQ_UPDATE){
+  if(gcsp->sub_work.seq == GCSSEQ_FINISH){
     return;
   }
   
@@ -358,7 +358,7 @@ void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 //==================================================================
 void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 {
-  if(gcsp->sub_work.seq != GCSSEQ_UPDATE){
+  if(gcsp->sub_work.seq == GCSSEQ_FINISH){
     return;
   }
 

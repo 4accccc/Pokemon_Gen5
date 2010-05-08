@@ -451,86 +451,78 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   int i;
   BOOL exit_ok = FALSE;
   
-  switch(*seq){
-  case 0:
+  if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE || NetErr_App_CheckError()){
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){  //表フィールドにいる場合は即解放
-      if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE || NetErr_App_CheckError()){
-        exit_ok = TRUE;
-      }
+      exit_ok = TRUE;
     }
     else{ //裏フィールドにいる場合はパレスへ戻ってから解放
-      if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID( GAMEDATA_GetMyPlayerWork(gamedata) ) ) == TRUE
-          && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE
-          && FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(invalid_parent->gsys)) == TRUE){
-        //フィールドマップの存在チェックはOverlayFieldがないと
-        //FIELD_COMM_ACTOR_CTRL_Deleteが出来ない為
+      if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata)) ) == TRUE){
         exit_ok = TRUE;
       }
     }
+  }
 
-    if(exit_ok == TRUE){
-      OS_TPrintf("intcomm free\n");
-      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
-      FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
-      GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
-      //GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
-      CommPlayer_Exit(intcomm->cps);
-      
-      //切断する時の状態をLAST_STATUSにセット
-      if(intcomm->error == TRUE || NetErr_App_CheckError()){
-        GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
-      }
-      else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
-        if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
-          //自分が達成者
-          GameCommSys_SetLastStatus(
-            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS);
-        }
-        else{
-          MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
-          int i;
-          
-          for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-            if(mresult->achieve_netid[i] != INTRUDE_NETID_NULL){
-              break;
-            }
-          }
-          if(i < FIELD_COMM_MEMBER_MAX){
-            //他に達成者がいた
-            GameCommSys_SetLastStatus(
-              invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL);
-          }
-          else{ //達成者がいないのでタイムアウト
-            GameCommSys_SetLastStatus(
-              invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
-          }
-        }
-      }
-      else{ //エラーでもなくミッションの終了でもない。退出による終了
-        if(intcomm->recv_profile > 1){ //誰かと繋がっていた状態で終了
-          GameCommSys_SetLastStatus(
-            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
-        }
-        else{  //誰とも接続していない状態で終了
-          ;
-        }
-      }
-
-      if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
-        GAMEDATA_SetIntrudeMyID(gamedata, 0); //既に表にいる場合はこのタイミングでセット
-      }
-      
-      for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
-        GFL_STR_DeleteBuffer(intcomm->search_child[i]);
-      }
-      GFL_HEAP_FreeMemory(intcomm);
-      GFL_HEAP_FreeMemory(pwk);
-      if(intcomm->error == TRUE || NetErr_App_CheckError()){
-        GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
-      }
-      return TRUE;
+  if(exit_ok == TRUE){
+    OS_TPrintf("intcomm free\n");
+    COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
+    FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
+    GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
+    //GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
+    CommPlayer_Exit(invalid_parent->gsys, intcomm->cps);
+    
+    //切断する時の状態をLAST_STATUSにセット
+    if(intcomm->error == TRUE || NetErr_App_CheckError()){
+      GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
     }
-    break;
+    else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
+      if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
+        //自分が達成者
+        GameCommSys_SetLastStatus(
+          invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS);
+      }
+      else{
+        MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
+        int i;
+        
+        for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+          if(mresult->achieve_netid[i] != INTRUDE_NETID_NULL){
+            break;
+          }
+        }
+        if(i < FIELD_COMM_MEMBER_MAX){
+          //他に達成者がいた
+          GameCommSys_SetLastStatus(
+            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL);
+        }
+        else{ //達成者がいないのでタイムアウト
+          GameCommSys_SetLastStatus(
+            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
+        }
+      }
+    }
+    else{ //エラーでもなくミッションの終了でもない。退出による終了
+      if(intcomm->recv_profile > 1){ //誰かと繋がっていた状態で終了
+        GameCommSys_SetLastStatus(
+          invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
+      }
+      else{  //誰とも接続していない状態で終了
+        ;
+      }
+    }
+
+    if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+      GAMEDATA_SetIntrudeMyID(gamedata, 0); //既に表にいる場合はこのタイミングでセット
+    }
+    
+    for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
+      GFL_STR_DeleteBuffer(intcomm->search_child[i]);
+    }
+    GFL_HEAP_FreeMemory(intcomm);
+    GFL_HEAP_FreeMemory(pwk);
+    if(intcomm->error == TRUE || NetErr_App_CheckError()){
+      GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
+    }
+    return TRUE;
   }
   return FALSE;
 }

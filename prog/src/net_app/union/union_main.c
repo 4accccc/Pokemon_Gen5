@@ -188,7 +188,7 @@ void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fi
 
   if(clsys != NULL){
     if(clsys->colosseum_leave == TRUE){ //コロシアム退出処理
-      Colosseum_ExitSystem(unisys->colosseum_sys);
+      Colosseum_ExitSystem(unisys->colosseum_sys, unisys->uniparent->gsys);
       unisys->colosseum_sys = NULL;
     }
     else{

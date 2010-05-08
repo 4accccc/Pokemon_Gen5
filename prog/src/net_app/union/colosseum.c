@@ -89,7 +89,7 @@ COLOSSEUM_SYSTEM_PTR Colosseum_InitSystem(GAMEDATA *game_data, GAMESYS_WORK *gsy
  * @param   clsys   
  */
 //==================================================================
-void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys)
+void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *gsys)
 {
   int i;
   
@@ -97,7 +97,7 @@ void Colosseum_ExitSystem(COLOSSEUM_SYSTEM_PTR clsys)
     GFL_HEAP_FreeMemory(clsys->recvbuf.tr_card[i]);
     GFL_HEAP_FreeMemory(clsys->recvbuf.pokeparty[i]);
   }
-  CommPlayer_Exit(clsys->cps);
+  CommPlayer_Exit(gsys, clsys->cps);
   GFL_HEAP_FreeMemory(clsys);
 }
 
