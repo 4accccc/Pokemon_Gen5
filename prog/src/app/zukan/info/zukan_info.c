@@ -2364,7 +2364,7 @@ static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SW
   // リソース読みこみ
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( PokeFootArcFileGet(), work->heap_id );
 
-  if( monsno > MONSNO_ARUSEUSU ) monsno = 1;  // 開発中だけの処理
+  //if( monsno > MONSNO_ARUSEUSU ) monsno = 1;  // 開発中だけの処理
   
   work->ncg_pokefoot[swap_idx] = GFL_CLGRP_CGR_Register( handle,  // ncgは圧縮されている
                                      PokeFootCharDataIdxGet((int)monsno),

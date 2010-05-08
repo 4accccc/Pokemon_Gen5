@@ -19,6 +19,9 @@ targetname = pokefoot
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
 
+# 読み込むファイル
+input_personal            = $(PROJECT_RSCDIR)/personal/personal_wb.csv
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -54,7 +57,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lsources) $(gsources) $(esources) makefile
+$(targetname).narc: $(lsources) $(gsources) $(esources) makefile $(input_personal)
 	@$(MAKE_SUBDIR)
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -66,6 +69,8 @@ endif
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	@$(MAKE_SUBDIR)
+	rm -f $(targetname).narc
+	rm -f $(targetname).naix
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix

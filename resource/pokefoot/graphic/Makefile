@@ -24,13 +24,16 @@ LDIRT_CLEAN	= $(POKEGRA:.nce=.NCGR) \
 			$(POKECOL:.ncl=.NCLR) \
 			pokefoot.narc pokefoot.naix
 
+# 読み込むファイル
+input_personal            = $(PROJECT_RSCDIR)/personal/personal_wb.csv
+
 #----------------------------------------------------------------------------
 
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 .suffixes:.nce.ncl.NCER.NCLR
 
-do-build:pokefoot.narc
+do-build:pokefoot.narc pokefoot.scr
 
 poke_foot_000.NCER: poke_foot_000.nce
 	g2dcvtr poke_foot_000.nce
@@ -52,6 +55,10 @@ poke_foot_000.NCER: poke_foot_000.nce
 	g2dcvtr $<
 
 #do-build: pokefoot.narc
+
+pokefoot.scr: $(input_personal)
+	perl monsno_order.pl $(input_personal)
+
 pokefoot.narc: $(POKEGRA:.nce=.NCER) $(POKECOL:.ncl=.NCLR) pokefoot.scr
 	nnsarc -c -l -n -i pokefoot.narc -S pokefoot.scr
 	xcopy /d /y pokefoot.narc .\\..\\
@@ -65,5 +72,6 @@ pokefoot.narc: $(POKEGRA:.nce=.NCER) $(POKECOL:.ncl=.NCLR) pokefoot.scr
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	@$(MAKE_SUBDIR)
+	rm -f pokefoot.scr
 endif
 	rm -f *.N??R
