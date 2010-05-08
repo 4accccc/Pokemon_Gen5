@@ -3886,10 +3886,12 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-      if(pWork->bBackupStart){
+      if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
         NetErr_DispCall( TRUE );
       }
-      if(GFL_NET_IsWifiConnect()){
+      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+      }
+      else if(GFL_NET_IsWifiConnect()){
         GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
       }
       else if(pWork->type != POKEMONTRADE_TYPE_UNION){  //ユニオンルームでのエラーはユニオンルーム側で管理するため画面を終了させる事だけを行う

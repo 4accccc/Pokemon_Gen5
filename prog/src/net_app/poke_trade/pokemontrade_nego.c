@@ -404,7 +404,7 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
 
   for(side = 0 ; side < GTS_PLAYER_WORK_NUM; side++){
     if(aStBuf[side]){
-      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO && (pWork->GTStype[side]!=-1)){
         msgno = POKETRADE_STR2_16;
       }
       else{

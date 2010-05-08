@@ -143,11 +143,15 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-    if(dbw->gts.result != EVENT_GTSNEGO_EXIT){
-      (*seq)++;
+    if(dbw->gts.result == EVENT_GTSNEGO_EXIT){
+      (*seq) = _WAIT_NET_END;
+    }
+    else if(dbw->gts.result == EVENT_GTSNEGO_ERROR){
+      dbw->login.mode = WIFILOGIN_MODE_ERROR;
+      (*seq) = _CALL_WIFILOGIN;
     }
     else{
-      (*seq) = _WAIT_NET_END;
+      (*seq)++;
     }
     break;
   case _CALL_TRADE:

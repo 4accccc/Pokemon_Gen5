@@ -837,6 +837,8 @@ static void _matchingState( GTSNEGO_WORK *pWork )
     GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_021);
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
     GTSNEGO_MESSAGE_CancelButtonDeleteForce(pWork->pMessageWork);
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
     _CHANGE_STATE(pWork, _lookatDownState);
   }
 }
@@ -1308,19 +1310,6 @@ static void _cancelFlash(GTSNEGO_WORK* pWork)
   _CHANGE_STATE(pWork,_cancelFlash2);
 }
 
-
-
-#if 0
-
-
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
-    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
-    GTSNEGO_DISP_FriendSelectFree(pWork->pDispWork);
-    GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
-    _CHANGE_STATE(pWork,_friendSelectBack);
-
-#endif
 
 
 //------------------------------------------------------------------------------
@@ -1984,6 +1973,23 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   もしマッチングしてるなら適切な処理をしてトップに戻る
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _checkReturnState(GTSNEGO_WORK* pWork)
+{
+  if(pWork->dbw->result != EVENT_GTSNEGO_EXIT){
+    GFL_NET_SetAutoErrorCheck(FALSE);
+    GFL_NET_SetNoChildErrorCheck(FALSE);
+    GFL_NET_StateWifiMatchEnd(TRUE);
+pWork->dbw->result=EVENT_GTSNEGO_EXIT;
+    _CHANGE_STATE(pWork,_modeSelectMenuInit);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   PROCスタート
  * @retval  none
  */
@@ -2005,7 +2011,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->pGameData = pEv->gamedata;
   pWork->pSave = GAMEDATA_GetSaveControlWork(pEv->gamedata);
   pWork->pList = GAMEDATA_GetWiFiList(pEv->gamedata);
-
+  pWork->dbw->result = EVENT_GTSNEGO_EXIT;
   pWork->key1=_CROSSCUR_TYPE_MAINUP;
   pWork->key2=_CROSSCUR_TYPE_ANY1;
   pWork->key3=_CROSSCUR_TYPE_FRIEND1;
@@ -2055,15 +2061,25 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(GFL_NET_IsInit()){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
-      retCode = GFL_PROC_RES_FINISH;
-      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+
+      GFL_NET_DWC_ERROR_RESULT  result;
+      result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+      switch( result ){
+      case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
+        _checkReturnState(pWork);
+        break;
+      case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
+        pWork->dbw->result = EVENT_GTSNEGO_ERROR;
+        retCode = GFL_PROC_RES_FINISH;
+        WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+        WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+        break;
+      case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
+        NetErr_App_FatalDispCall();
+        break;
+      }
     }
   }
-
-  //INFOWIN_Update();
-
   return retCode;
 }
 
