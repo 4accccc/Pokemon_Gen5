@@ -14,6 +14,7 @@
 #include "field_buildmodel.h"
 #include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
 #include "fieldmap.h"
+#include "script_def.h"
 
 
 //=========================================================================================
@@ -25,6 +26,7 @@ typedef struct
   FIELDMAP_WORK* fieldmap;
   G3DMAPOBJST*   pcStatus;
   int            count;
+  int            off_mode; // PC停止方法
 
 } EVENT_WORK;
 
@@ -226,7 +228,9 @@ static GMEVENT_RESULT PcOffEvent( GMEVENT* event, int* seq, void* wk )
   {
   // アニメ, SE再生
   case 0:
-    PMSND_PlaySE( SEQ_SE_PC_LOGOFF );
+    if( work->off_mode == SCR_PASOKON_OFF_NORMAL ) {
+      PMSND_PlaySE( SEQ_SE_PC_LOGOFF );
+    }
     {
       FIELD_PLAYER* player;
       VecFx32 pos;
@@ -255,14 +259,19 @@ static GMEVENT_RESULT PcOffEvent( GMEVENT* event, int* seq, void* wk )
     }
     ++(*seq);
     break;
+
   // アニメ, SE待ち
   case 1:
-    {
+    if( work->off_mode == SCR_PASOKON_OFF_NORMAL ) {
       SEPLAYER_ID player_id;
       player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_PC_LOGOFF );
       if( PMSND_CheckPlaySE_byPlayerID(player_id) == FALSE ){ ++(*seq); }
     }
+    else {
+      (*seq)++;
+    }
     break;
+
   case 2:
     return GMEVENT_RES_FINISH;
   }
@@ -276,11 +285,13 @@ static GMEVENT_RESULT PcOffEvent( GMEVENT* event, int* seq, void* wk )
  * @param parent   親イベント
  * @param gsys     ゲームシステム
  * @param fieldmap フィールドマップ
+ * @param off_mode PC停止方法 ( SCR_PASOKON_OFF_xxxx )
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------
-GMEVENT* EVENT_PokecenPcOff( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_PokecenPcOff( 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, int off_mode )
 {
   GMEVENT* event;
   EVENT_WORK* work;
@@ -293,5 +304,6 @@ GMEVENT* EVENT_PokecenPcOff( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK*
   work->gsys     = gsys;
   work->fieldmap = fieldmap;
   work->pcStatus = NULL;
+  work->off_mode = off_mode;
   return event;
 } 

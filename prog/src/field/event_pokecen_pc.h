@@ -46,9 +46,11 @@ extern GMEVENT* EVENT_PokecenPcRun( GMEVENT* parent,
  * @param parent   親イベント
  * @param gsys     ゲームシステム
  * @param fieldmap フィールドマップ
+ * @param off_mode PC停止方法 ( SCR_PASOKON_OFF_xxxx )
  *
  * @return 作成したイベント
  */
 //-----------------------------------------------------------------------------------------
 extern GMEVENT* EVENT_PokecenPcOff( GMEVENT* parent, 
-                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );
+                                    GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,
+                                    int off_mode );

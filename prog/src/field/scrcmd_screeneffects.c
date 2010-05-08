@@ -502,9 +502,10 @@ VMCMD_RESULT EvCmdPokecenPcOff( VMHANDLE * core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16            off_mode = SCRCMD_GetVMWorkValue( core, work ); // ëÊàÍà¯êî: PCí‚é~ï˚ñ@
   
   parent = SCRIPT_GetEvent( sc );
-  event = EVENT_PokecenPcOff( parent, gsys, fieldmap );
+  event = EVENT_PokecenPcOff( parent, gsys, fieldmap, off_mode );
   SCRIPT_CallEvent( sc, event );
   return VMCMD_RESULT_SUSPEND;
 }

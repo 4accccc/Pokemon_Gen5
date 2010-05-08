@@ -567,3 +567,9 @@
 #define SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_UNKNOWN (0) // 性別なし
 #define SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_MALE    (1) // ♂
 #define SCR_SODATEYA_CHECK_RESULT_TAKEBACK_MENU_FEMALE  (2) // ♀
+
+//--------------------------------------------------------------
+// パソコン: 停止方法
+//--------------------------------------------------------------
+#define SCR_PASOKON_OFF_NORMAL (0) // 通常
+#define SCR_PASOKON_OFF_QUICK  (1) // XBREAK

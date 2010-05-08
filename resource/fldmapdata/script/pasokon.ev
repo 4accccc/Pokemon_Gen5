@@ -27,6 +27,7 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 // パソコン終了フラグ
 DEFINE_LOCAL log_out 
+DEFINE_LOCAL pc_off_mode 
 DEFINE_LOCAL f_game_clear
 DEFINE_LOCAL dendou_check
 
@@ -44,7 +45,8 @@ EVENT_START ev_pc
   DEFINE_LOCAL f_zukan_get
 
   // ローカル変数の初期化
-  $log_out = FALSE
+  $log_out   = FALSE
+  $pc_off_mode = SCR_PASOKON_OFF_NORMAL
   _FLAG_CHECK( SYS_FLAG_PCNAME, f_pcname )
   _FLAG_CHECK( SYS_FLAG_ZUKAN_GET, f_zukan_get )
   _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, f_game_clear )
@@ -91,11 +93,12 @@ EVENT_START ev_pc
     CASE msg_pc_window_06 THEN $log_out = TRUE
     CASE EV_WIN_B_CANCEL  THEN $log_out = TRUE
     CASE EV_WIN_X_BREAK   THEN $log_out = TRUE
+                               $pc_off_mode = SCR_PASOKON_OFF_QUICK
     ENDSWITCH
   ENDWHILE
 
   // PC停止イベント
-  _POKECEN_PC_OFF()
+  _POKECEN_PC_OFF( pc_off_mode )
 }
 EVENT_END 
 
@@ -166,6 +169,7 @@ pc_box:
     CASE msg_pc_box_window_05 THEN _RET
     CASE EV_WIN_B_CANCEL      THEN _RET
     CASE EV_WIN_X_BREAK       THEN $log_out = TRUE
+                                   $pc_off_mode = SCR_PASOKON_OFF_QUICK
                                    _RET
     ENDSWITCH
     // ボックス呼び出し
@@ -188,6 +192,7 @@ pc_box:
     ELSE
       $exit    = TRUE             // パソコンを切る
       $log_out = TRUE             //
+      $pc_off_mode = SCR_PASOKON_OFF_QUICK           //
     ENDIF
   ENDWHILE
 }
@@ -222,6 +227,7 @@ pc_mail_box:
     CASE msg_pc_mail_window_02 THEN _RET
     CASE EV_WIN_B_CANCEL       THEN _RET
     CASE EV_WIN_X_BREAK        THEN $log_out = TRUE
+                                    $pc_off_mode = SCR_PASOKON_OFF_QUICK
                                     _RET
     ENDSWITCH
     // メールボックス呼び出し
@@ -290,6 +296,7 @@ pc_record:
       // ×ボタン終了ならログアウト
       IF $SCWK_ANSWER == 1 THEN
         $log_out = TRUE
+        $pc_off_mode = SCR_PASOKON_OFF_QUICK
         $loop = FALSE
       ENDIF
 
@@ -300,6 +307,7 @@ pc_record:
         // ×ボタン終了ならログアウト
         IF $SCWK_ANSWER == 1 THEN
           $log_out = TRUE
+          $pc_off_mode = SCR_PASOKON_OFF_QUICK
           $loop = FALSE
         ENDIF
       // データが正常でない場合
@@ -317,6 +325,7 @@ pc_record:
     CASE EV_WIN_X_BREAK THEN 
       $loop = FALSE
       $log_out = TRUE // ログアウト
+      $pc_off_mode = SCR_PASOKON_OFF_QUICK
     ENDSWITCH 
 
   ENDWHILE
@@ -340,6 +349,7 @@ pc_help:
   // ×ボタンで終了
   IF $SCWK_ANSWER == SCR_MANUAL_RESULT_CLOSE THEN
     $log_out = TRUE // ログアウト
+    $pc_off_mode = SCR_PASOKON_OFF_QUICK
   ENDIF
 }
 _RET

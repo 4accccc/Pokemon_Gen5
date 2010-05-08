@@ -6862,13 +6862,16 @@
 /**
  * @def _POKECEN_PC_OFF
  * @brief ポケセンPC停止アニメ
+ *
+ * @param off_mode PC停止方法 ( SCR_PASOKON_OFF_xxxx )
  */
 //--------------------------------------------------------------
-#define _POKECEN_PC_OFF()  \
-  _ASM_POKECEN_PC_OFF
+#define _POKECEN_PC_OFF( off_mode )  \
+  _ASM_POKECEN_PC_OFF off_mode
 
-  .macro  _ASM_POKECEN_PC_OFF
+  .macro  _ASM_POKECEN_PC_OFF off_mode
   .short  EV_SEQ_POKECEN_PC_OFF
+  .short  \off_mode
   .endm
 
 //--------------------------------------------------------------
