@@ -568,6 +568,9 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
     MI_CpuCopy8( &(wk->fake_prm[TR_PAT_FAKE][0]), &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
   }
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
+  
+  //送信バッファを初期化しておく
+  GAMEBEACON_Setting( wk->gdata );
 }
 
 //-----------------------------------------------------------------
@@ -818,10 +821,15 @@ static void sub_GetStringCode( STRBUF* buf, STRCODE* code, int len )
 static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
 {
   int i;
+  u8  old_detail;
   GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
   int* fake = &wk->fake_prm[pat][0]; 
 
+  //直前のdetail_noだけは引き継ぐ
+  old_detail = info->details.details_no;
   GAMEBEACON_Setting( wk->gdata );
+  info->details.details_no = old_detail;
+
   switch(pat){
   case TR_PAT_MINE:
     return;
@@ -833,9 +841,9 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
       const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[i];
 
       range = (f_prm->max-f_prm->min)+1;
-      fake[i] = (GFUser_GetPublicRand0( 0xFFFFFFFF )%range)+f_prm->min;
+      fake[i] = (GFUser_GetPublicRand0( range ))+f_prm->min;
     }
-    info->trainer_view = GFUser_GetPublicRand0( 0xFFFFFFFF )%8;
+    info->trainer_view = GFUser_GetPublicRand0( 8 );
     if( fake[FAKE_LANG] == 6 ){ //無効値にしていると言語バージョン固定
       fake[FAKE_LANG] = wk->fake_prm[TR_PAT_FAKE][FAKE_LANG];
     }
