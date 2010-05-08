@@ -3511,7 +3511,7 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
       u8 turns;
 
-      turns = BTL_CALC_RandRange( 2, 5 );
+      turns = 3;
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_WAZALOCK;
       param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, BTL_EVENT_FACTOR_GetSubID(myHandle) );
