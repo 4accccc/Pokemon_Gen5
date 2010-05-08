@@ -72,7 +72,7 @@ class RegulationBin
     @HashONOFF = {"OFF"=>0,"ON"=>1, "MANUAL"=>2}
     @HashBATTLE = {"SINGLE"=>0,"DOUBLE"=>1, "TRIPLE"=>2, "ROTATION"=>3, "MULTI"=>4}
 
-    @HashCOUNTRY = {"JAPAN"=>1,"ENGLISH"=>1, "FRANCE"=>2, "ITALY"=>3, "GERMANY"=>4, "SPAIN"=>5, "KOREA"=>6}
+    @HashCOUNTRY = {"JAPAN"=>1,"ENGLISH"=>2, "FRANCE"=>3, "ITALY"=>4, "GERMANY"=>5, "SPAIN"=>7, "KOREA"=>8}
     @HashROM = {"ALL"=>0xffffffff,"SAPPHIRE"=>0x2, "RUBY"=>0x4, "EMERALD"=>0x08, "RED"=>0x10,
       "GREEN"=>0x20, "GOLD"=>0x80, "SILVER"=>0x100,"DIAMOND"=>0x800, "PEARL"=>0x1000, "PLATINUM"=>0x2000,
       "COLOSSEUM"=>0x10000, "WHITE"=>0x100000, "BLACK"=>0x200000}
