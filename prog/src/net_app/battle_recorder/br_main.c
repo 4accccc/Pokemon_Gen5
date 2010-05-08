@@ -544,8 +544,8 @@ static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   BattleRec_RestoreSetupParam( p_param, heapID );
   BattleRec_UnloadToolModule();
 
+  PMSND_PauseBGM(TRUE);
   PMSND_PushBGM();
-
 
   //アッパーバージョンで増える可能性があるので、
   //今回録画される曲にすべて置換する
@@ -603,6 +603,7 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
     FIELD_SOUND *p_fld_snd  = GAMEDATA_GetFieldSound( p_wk->p_param->p_gamedata );
 
     PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
     PMSND_FadeInBGM( PMSND_FADE_SHORT );
 
     if( p_wk->p_param->mode == BR_MODE_BROWSE )

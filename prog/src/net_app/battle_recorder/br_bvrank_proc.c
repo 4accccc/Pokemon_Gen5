@@ -670,7 +670,16 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         }
         else
         { 
-          BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_031 );
+          //検索からきた＝ランキングを見に来るわけではないので、
+          //取得できなかったときは、あてはまるビデオがありませんと表示する
+          if( p_wk->p_param->mode == BR_BVRANK_MODE_SEARCH )
+          { 
+            BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_err_042 );
+          }
+          else
+          { 
+            BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_031 );
+          }
           *p_seq  = SEQ_FADEOUT_START;
         }
       }
@@ -744,7 +753,16 @@ static void Br_Seq_NextDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     { 
       p_wk->p_text    = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
     }
-    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_010 );
+    //検索からきた＝ランキングを見に来るわけではないので、
+    //取得用メッセージは、ビデオをうけとっていますと表示する
+    if( p_wk->p_param->mode == BR_BVRANK_MODE_SEARCH )
+    { 
+      BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_023 );
+    }
+    else
+    { 
+      BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_010 );
+    }
 
     {
       GFL_POINT pos;

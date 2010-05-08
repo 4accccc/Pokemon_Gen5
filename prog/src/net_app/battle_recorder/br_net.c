@@ -402,7 +402,6 @@ BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV
 //-----------------------------------------------------------------------------
 BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 { 
-
   //poke_net‚©‚ç‚ÌƒGƒ‰[
   if( p_wk->error_info.occ )
   { 
@@ -465,7 +464,7 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
         { 
           if( p_msg_no )
           { 
-            *p_msg_no = msg_err_007 + p_wk->error_info.result;
+            *p_msg_no = msg_err_006 + p_wk->error_info.result;
           }
           ret = BR_NET_ERR_RETURN_TOPMENU;
         }
