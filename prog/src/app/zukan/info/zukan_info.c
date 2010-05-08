@@ -423,7 +423,8 @@ struct _ZUKAN_INFO_WORK
   // ポケモンの足跡
   u32       ncg_pokefoot[OBJ_SWAP_MAX];   // clwk_pokefoot[i]がNULLでないときncg_pokefoot[i]は有効
   u32       ncl_pokefoot;
-  u32       nce_pokefoot;
+  u32       nce_pokefoot;      // POKEFOOT_MONS_NO_OLD_MAXまで(含む)
+  u32       nce_pokefoot_new;  // POKEFOOT_MONS_NO_OLD_MAXから(含まない)
   GFL_CLWK* clwk_pokefoot[OBJ_SWAP_MAX];  // ないときはclwk_pokefoot[i]はNULL
   OBJ_SWAP  curr_swap_pokefoot;           // 今表示しているclwk_pokefootはclwk_pokefoot[curr_swap_pokefoot]
 
@@ -2324,9 +2325,13 @@ static void Zukan_Info_CreatePokefootBase( ZUKAN_INFO_WORK* work )
                                                     0, ZUKAN_INFO_OBJ_PAL_NUM_POKEFOOT, work->heap_id );
 
     work->nce_pokefoot = GFL_CLGRP_CELLANIM_Register( handle,
-                                                      PokeFootCellDataIdxGet(),
-                                                      PokeFootCellAnmDataIdxGet(),
+                                                      PokeFootCellDataIdxGet(0),
+                                                      PokeFootCellAnmDataIdxGet(0),
                                                       work->heap_id );
+    work->nce_pokefoot_new = GFL_CLGRP_CELLANIM_Register( handle,
+                                                          PokeFootCellDataIdxGet(POKEFOOT_MONS_NO_OLD_MAX+1),
+                                                          PokeFootCellAnmDataIdxGet(POKEFOOT_MONS_NO_OLD_MAX+1),
+                                                          work->heap_id );
 
     GFL_ARC_CloseDataHandle( handle );
   }
@@ -2347,6 +2352,7 @@ static void Zukan_Info_DeletePokefootBase( ZUKAN_INFO_WORK* work )
 
   // 不変物の破棄
   {
+    GFL_CLGRP_CELLANIM_Release( work->nce_pokefoot_new );
     GFL_CLGRP_CELLANIM_Release( work->nce_pokefoot );
     GFL_CLGRP_PLTT_Release( work->ncl_pokefoot );
   }
@@ -2379,12 +2385,24 @@ static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SW
   cldata.softpri = 1;
   cldata.bgpri   = 0;
 
-  work->clwk_pokefoot[swap_idx] = GFL_CLACT_WK_Create( work->clunit, 
-                                      work->ncg_pokefoot[swap_idx],
-                                      work->ncl_pokefoot,
-                                      work->nce_pokefoot,
-                                      &cldata, 
-                                      defrend_type, work->heap_id );
+  if( monsno <= POKEFOOT_MONS_NO_OLD_MAX )
+  {
+    work->clwk_pokefoot[swap_idx] = GFL_CLACT_WK_Create( work->clunit, 
+                                        work->ncg_pokefoot[swap_idx],
+                                        work->ncl_pokefoot,
+                                        work->nce_pokefoot,
+                                        &cldata, 
+                                        defrend_type, work->heap_id );
+  }
+  else
+  {
+    work->clwk_pokefoot[swap_idx] = GFL_CLACT_WK_Create( work->clunit, 
+                                        work->ncg_pokefoot[swap_idx],
+                                        work->ncl_pokefoot,
+                                        work->nce_pokefoot_new,
+                                        &cldata, 
+                                        defrend_type, work->heap_id );
+  }
   
   GFL_CLACT_WK_SetSoftPri( work->clwk_pokefoot[swap_idx], 1 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
   GFL_CLACT_WK_SetObjMode( work->clwk_pokefoot[swap_idx], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので

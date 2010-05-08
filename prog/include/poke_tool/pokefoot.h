@@ -23,11 +23,15 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+#define POKEFOOT_MONS_NO_OLD_MAX  (493)  // <=493までが前世代のデータ
+
 #define POKEFOOT_ARC_PLTT		( 0 )		// パレットインデックス
-#define POKEFOOT_ARC_CELL		( 2 )		// セルインデックス
+#define POKEFOOT_ARC_CELL		( 2 )		// セルインデックス(mons_noが0<= <=POKEFOOT_MONS_NO_OLD_MAX)
 #define POKEFOOT_ARC_CELLANM	( 1 )		// セルアニメインデックス
-#define POKEFOOT_ARC_CHAR_DMMY	( 3 )		// poke_foot_000
-#define POKEFOOT_ARC_CHAR_START	( 4	)		// キャラクタ開始インデックス
+#define POKEFOOT_ARC_CELL_NEW       ( 4 )		// セルインデックス(mons_noがPOKEFOOT_MONS_NO_OLD_MAX< )
+#define POKEFOOT_ARC_CELLANM_NEW    ( 3 )		// セルアニメインデックス
+#define POKEFOOT_ARC_CHAR_DMMY	( 5 )		// poke_foot_000
+#define POKEFOOT_ARC_CHAR_START	( 6	)		// キャラクタ開始インデックス
 
 //-----------------------------------------------------------------------------
 /**
@@ -79,7 +83,8 @@ GLOBAL void* PokeFootPlttPtrGet( HEAPID heap );
  *		ALLOC_BOTTOM	ヒープ後方から確保
  */
 //-----------------------------------------------------------------------------
-GLOBAL void* PokeFootCellPtrGet( HEAPID heap );
+//GLOBAL void* PokeFootCellPtrGet( HEAPID heap );
+GLOBAL void* PokeFootCellPtrGet( int mons_no, HEAPID heap );
 //----------------------------------------------------------------------------
 /**
  *	@brief	足跡セルアニメデータ取得
@@ -92,15 +97,18 @@ GLOBAL void* PokeFootCellPtrGet( HEAPID heap );
  *		ALLOC_BOTTOM	ヒープ後方から確保
  */
 //-----------------------------------------------------------------------------
-GLOBAL void* PokeFootCellAnmPtrGet( HEAPID heap );
+//GLOBAL void* PokeFootCellAnmPtrGet( HEAPID heap );
+GLOBAL void* PokeFootCellAnmPtrGet( int mons_no, HEAPID heap );
 
 // アーカイブファイルIDX　データIDX
 // キャラクタ　セル　セルアニメデータは圧縮されています
 GLOBAL int PokeFootArcFileGet( void );
 GLOBAL int PokeFootCharDataIdxGet( int mons_no );
 GLOBAL int PokeFootPlttDataIdxGet( void );
-GLOBAL int PokeFootCellDataIdxGet( void );
-GLOBAL int PokeFootCellAnmDataIdxGet( void );
+//GLOBAL int PokeFootCellDataIdxGet( void );
+GLOBAL int PokeFootCellDataIdxGet( int mons_no );
+//GLOBAL int PokeFootCellAnmDataIdxGet( void );
+GLOBAL int PokeFootCellAnmDataIdxGet( int mons_no );
 
 
 #undef	GLOBAL

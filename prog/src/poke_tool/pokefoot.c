@@ -100,11 +100,22 @@ void* PokeFootPlttPtrGet( HEAPID heap )
  *	@return	ファイルデータ
  */
 //-----------------------------------------------------------------------------
-void* PokeFootCellPtrGet( HEAPID heap )
+//void* PokeFootCellPtrGet( HEAPID heap )
+void* PokeFootCellPtrGet( int mons_no, HEAPID heap )
 {
 	void* p_buff;
-	
-	p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELL, TRUE, heap );
+
+	GF_ASSERT( mons_no <= MONSNO_END );
+
+	//p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELL, TRUE, heap );
+  if( mons_no <= POKEFOOT_MONS_NO_OLD_MAX )
+  {
+    p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELL, TRUE, heap );
+  }
+  else
+  {
+    p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELL_NEW, TRUE, heap );
+  }
 
 	// 取得失敗
 	GF_ASSERT( p_buff );
@@ -121,11 +132,20 @@ void* PokeFootCellPtrGet( HEAPID heap )
  *	@return	ファイルデータ
  */
 //-----------------------------------------------------------------------------
-void* PokeFootCellAnmPtrGet( HEAPID heap )
+//void* PokeFootCellAnmPtrGet( HEAPID heap )
+void* PokeFootCellAnmPtrGet( int mons_no, HEAPID heap )
 {
 	void* p_buff;
 	
-	p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELLANM, TRUE, heap );
+	//p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELLANM, TRUE, heap );
+  if( mons_no <= POKEFOOT_MONS_NO_OLD_MAX )
+  {
+	  p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELLANM, TRUE, heap );
+  }
+  else
+  {
+	  p_buff = GFL_ARC_UTIL_Load( ARCID_POKEFOOT_GRA, POKEFOOT_ARC_CELLANM_NEW, TRUE, heap );
+  }
 
 	// 取得失敗
 	GF_ASSERT( p_buff );
@@ -185,9 +205,17 @@ int PokeFootPlttDataIdxGet( void )
  *	@return	セルデータIDX
  */
 //-----------------------------------------------------------------------------
-int PokeFootCellDataIdxGet( void )
+//int PokeFootCellDataIdxGet( void )
+int PokeFootCellDataIdxGet( int mons_no )
 {
-	return POKEFOOT_ARC_CELL;
+  if( mons_no <= POKEFOOT_MONS_NO_OLD_MAX )
+  {
+	  return POKEFOOT_ARC_CELL;
+  }
+  else
+  {
+	  return POKEFOOT_ARC_CELL_NEW;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -198,8 +226,16 @@ int PokeFootCellDataIdxGet( void )
  *	@return	セルアニメデータIDX
  */
 //-----------------------------------------------------------------------------
-int PokeFootCellAnmDataIdxGet( void )
+//int PokeFootCellAnmDataIdxGet( void )
+int PokeFootCellAnmDataIdxGet( int mons_no )
 {
-	return POKEFOOT_ARC_CELLANM;
+  if( mons_no <= POKEFOOT_MONS_NO_OLD_MAX )
+  {
+	  return POKEFOOT_ARC_CELLANM;
+  }
+  else
+  {
+	  return POKEFOOT_ARC_CELLANM_NEW;
+  }
 }
 
