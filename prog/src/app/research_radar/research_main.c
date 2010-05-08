@@ -11,8 +11,8 @@
 #include "research_common_def.h"
 #include "research_common_data.cdat"
 #include "research_top.h"
-#include "research_select.h"
-#include "research_check.h"
+#include "research_list.h"
+#include "research_graph.h"
 
 #include "system/main.h"                    // for HEAPID_xxxx
 #include "arc/arc_def.h"                    // for ARCID_xxxx
@@ -108,7 +108,7 @@ typedef struct {
 
   // 各画面専用ワーク
   RRT_WORK*   topWork;   // トップ画面
-  RESEARCH_SELECT_WORK* selectWork; // 調査内容変更画面 
+  RRL_WORK* listWork; // リスト画面
   RESEARCH_CHECK_WORK*  checkWork;  // 調査報告確認画面
 
 } RESEARCH_WORK;
@@ -317,7 +317,7 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:  break;
   case PROC_MAIN_SEQ_MENU:   RRT_DeleteWork( work->topWork );    break;
-  case PROC_MAIN_SEQ_SELECT: DeleteResearchSelectWork( work->selectWork );  break;
+  case PROC_MAIN_SEQ_SELECT: RRL_DeleteWork( work->listWork );  break;
   case PROC_MAIN_SEQ_CHECK:  DeleteResearchCheckWork ( work->checkWork );   break;
   case PROC_MAIN_SEQ_FINISH: break;
   default:  GF_ASSERT(0);
@@ -327,7 +327,7 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    work->topWork   = NULL;  break;
-  case PROC_MAIN_SEQ_SELECT:  work->selectWork = NULL;  break;
+  case PROC_MAIN_SEQ_SELECT:  work->listWork = NULL;  break;
   case PROC_MAIN_SEQ_CHECK:   work->checkWork  = NULL;  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
@@ -353,7 +353,7 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   {
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    GF_ASSERT( work->topWork   == NULL );  break;
-  case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->selectWork == NULL );  break;
+  case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->listWork == NULL );  break;
   case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->checkWork  == NULL );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
@@ -364,7 +364,7 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   {
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    work->topWork   = RRT_CreateWork( work->commonWork );  break;
-  case PROC_MAIN_SEQ_SELECT:  work->selectWork = CreateResearchSelectWork( work->commonWork );  break;
+  case PROC_MAIN_SEQ_SELECT:  work->listWork = RRL_CreateWork( work->commonWork );  break;
   case PROC_MAIN_SEQ_CHECK:   work->checkWork  = CreateResearchCheckWork ( work->commonWork );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
@@ -416,12 +416,12 @@ static PROC_MAIN_SEQ ProcMain_MENU( RESEARCH_WORK* work )
     RRT_RESULT result = RRT_GetResult( work->topWork );
 
     switch( result ) {
-      case RRT_RESULT_TO_LIST:  return PROC_MAIN_SEQ_SELECT;
-      case RRT_RESULT_TO_GRAPH: return PROC_MAIN_SEQ_CHECK;
-      case RRT_RESULT_EXIT:     return PROC_MAIN_SEQ_FINISH;
-      default:
-        GF_ASSERT(0);
-        return PROC_MAIN_SEQ_FINISH;
+    case RRT_RESULT_TO_LIST:  return PROC_MAIN_SEQ_SELECT;
+    case RRT_RESULT_TO_GRAPH: return PROC_MAIN_SEQ_CHECK;
+    case RRT_RESULT_EXIT:     return PROC_MAIN_SEQ_FINISH;
+    default:
+      GF_ASSERT(0);
+      return PROC_MAIN_SEQ_FINISH;
     }
   } 
 
@@ -440,20 +440,24 @@ static PROC_MAIN_SEQ ProcMain_MENU( RESEARCH_WORK* work )
 //-------------------------------------------------------------------------------
 static PROC_MAIN_SEQ ProcMain_SELECT( RESEARCH_WORK* work )
 {
-  RESEARCH_SELECT_RESULT result;
   PROC_MAIN_SEQ  nextSeq;
 
-  // 調査項目変更画面メイン処理
-  result = ResearchSelectMain( work->selectWork );
-  
-  // 次のシーケンスを決定
-  switch( result )
-  {
-  case RESEARCH_SELECT_RESULT_CONTINUE:  nextSeq = PROC_MAIN_SEQ_SELECT;  break;
-  case RESEARCH_SELECT_RESULT_TO_MENU:   nextSeq = PROC_MAIN_SEQ_MENU;    break;
-  default:  GF_ASSERT(0);
-  } 
-  return nextSeq;
+  RRL_Main( work->listWork );
+
+  // リスト画面が終了
+  if( RRL_IsFinished( work->listWork ) ) {
+
+    RRL_RESULT result = RRL_GetResult( work->listWork );
+
+    switch( result ) {
+    case RRL_RESULT_TO_TOP: return PROC_MAIN_SEQ_MENU; break;
+    default:
+      GF_ASSERT(0);
+      return PROC_MAIN_SEQ_FINISH;
+    }
+  }
+
+  return PROC_MAIN_SEQ_SELECT;
 }
 
 //-------------------------------------------------------------------------------
@@ -527,7 +531,7 @@ static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem )
   work->frameCount = 0;
   work->commonWork = NULL;
   work->topWork   = NULL;
-  work->selectWork = NULL;
+  work->listWork = NULL;
   work->checkWork  = NULL;
 }
 

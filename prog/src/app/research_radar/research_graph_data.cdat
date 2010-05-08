@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 調査内容確認画面のデータ定義
- * @file   research_check_data.cdat
+ * @file   research_graph_data.cdat
  * @author obata
  * @date   2010.02.13
  */
@@ -12,7 +12,7 @@
 #include "research_common.h"
 #include "research_common_def.h"
 #include "research_common_index.h"
-#include "research_check_index.h"
+#include "research_graph_index.h"
 
 #include "arc/arc_def.h"                    // for ARCID_xxxx
 #include "topic_id.h"                       // for TOPIC_ID_xxxx

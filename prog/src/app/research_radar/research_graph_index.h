@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 調査内報告確認画面のインデックス定義
- * @file   research_check_index.h
+ * @file   research_graph_index.h
  * @author obata
  * @date   2010.02.20
  */

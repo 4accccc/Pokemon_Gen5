@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 調査報告確認画面
- * @file   research_check.c
+ * @file   research_graph.c
  * @author obata
  * @date   2010.02.20
  */
@@ -14,10 +14,10 @@
 #include "bg_font.h"
 #include "palette_anime.h"
 #include "research_data.h"
-#include "research_check.h"
-#include "research_check_index.h"
-#include "research_check_def.h"
-#include "research_check_data.cdat"
+#include "research_graph.h"
+#include "research_graph_index.h"
+#include "research_graph_def.h"
+#include "research_graph_data.cdat"
 #include "research_common.h"
 #include "research_common_data.cdat"
 

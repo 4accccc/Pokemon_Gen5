@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 調査内容変更画面
- * @file   research_select.c
+ * @file   research_list.c
  * @author obata
  * @date   2010.02.03
  */
@@ -11,10 +11,10 @@
 #include "bg_font.h"
 #include "queue.h"
 #include "palette_anime.h"
-#include "research_select.h"
-#include "research_select_index.h"
-#include "research_select_def.h"
-#include "research_select_data.cdat"
+#include "research_list.h"
+#include "research_list_index.h"
+#include "research_list_def.h"
+#include "research_list_data.cdat"
 #include "research_common.h"
 #include "research_common_data.cdat"
 #include "research_data.h"
@@ -51,7 +51,7 @@
 //=========================================================================================
 // ■調査内容変更画面ワーク
 //=========================================================================================
-struct _RESEARCH_SELECT_WORK
+struct _RESEARCH_RADAR_LIST_WORK
 { 
   RESEARCH_COMMON_WORK* commonWork; // 全画面共通ワーク
   HEAPID                heapID;
@@ -65,7 +65,6 @@ struct _RESEARCH_SELECT_WORK
   RESEARCH_SELECT_SEQ    seq;           // 現在のシーケンス
   u32                    seqCount;      // シーケンスカウンタ
   BOOL                   seqFinishFlag; // 現在のシーケンスが終了したかどうか
-  RESEARCH_SELECT_RESULT result;        // 画面終了結果
   u32                    waitFrame;     // フレーム経過待ちシーケンスの待ち時間
 
   // メニュー項目
@@ -113,6 +112,9 @@ struct _RESEARCH_SELECT_WORK
   // カラーパレット
   PALETTE_FADE_PTR paletteFadeSystem; // パレットフェード処理システム
   BOOL             palFadeOutFlag;    // フェードアウト中かどうか
+
+  BOOL finishFlag;
+  RRL_RESULT finishResult;
 };
 
 
@@ -125,226 +127,226 @@ struct _RESEARCH_SELECT_WORK
 // ◆LAYER 3 シーケンス
 //-----------------------------------------------------------------------------------------
 // シーケンス初期化処理
-static void InitSeq_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void InitSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void InitSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void InitSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
-static void InitSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
-static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void InitSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
-static void InitSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
-static void InitSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void InitSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
+static void InitSeq_SETUP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void InitSeq_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void InitSeq_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void InitSeq_SCROLL_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void InitSeq_SCROLL_CONTROL( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
+static void InitSeq_CONFIRM_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
+static void InitSeq_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
+static void InitSeq_DETERMINE( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void InitSeq_FADE_IN( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void InitSeq_FADE_OUT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void InitSeq_FRAME_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
+static void InitSeq_SCROLL_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
+static void InitSeq_PALETTE_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void InitSeq_CLEAN_UP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
 // シーケンス処理
-static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void MainSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void MainSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
-static void MainSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
-static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void MainSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
-static void MainSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
-static void MainSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
+static void MainSeq_SETUP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void MainSeq_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void MainSeq_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void MainSeq_SCROLL_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void MainSeq_SCROLL_CONTROL( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
+static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
+static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
+static void MainSeq_DETERMINE( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void MainSeq_FADE_IN( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void MainSeq_FADE_OUT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void MainSeq_FRAME_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
+static void MainSeq_SCROLL_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
+static void MainSeq_PALETTE_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void MainSeq_CLEAN_UP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
 // シーケンス終了処理
-static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void FinishSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void FinishSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
-static void FinishSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
-static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void FinishSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
-static void FinishSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
-static void FinishSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void FinishSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
+static void FinishSeq_SETUP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
+static void FinishSeq_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
+static void FinishSeq_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
+static void FinishSeq_SCROLL_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
+static void FinishSeq_SCROLL_CONTROL( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
+static void FinishSeq_CONFIRM_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
+static void FinishSeq_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
+static void FinishSeq_DETERMINE( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
+static void FinishSeq_FADE_IN( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
+static void FinishSeq_FADE_OUT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void FinishSeq_FRAME_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
+static void FinishSeq_SCROLL_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
+static void FinishSeq_PALETTE_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
+static void FinishSeq_CLEAN_UP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
 // シーケンス制御
-static void CountUpSeqCount( RESEARCH_SELECT_WORK* work ); // シーケンスカウンタを更新する
-static void SetNextSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 次のシーケンスをキューに登録する
-static void FinishCurrentSeq( RESEARCH_SELECT_WORK* work ); // 現在のシーケンスを終了する
-static void SwitchSeq( RESEARCH_SELECT_WORK* work ); // 処理シーケンスを変更する
-static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 処理シーケンスを設定する
-static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // 画面終了結果を設定する
-static void SetWaitFrame( RESEARCH_SELECT_WORK* work, u32 frame ); // フレーム経過待ちシーケンスの待ち時間を設定する
-static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work ); // フレーム経過待ちシーケンスの待ち時間を取得する
-static void SetFirstSeq( RESEARCH_SELECT_WORK* work ); // 最初のシーケンスをセットする
+static void CountUpSeqCount( RRL_WORK* work ); // シーケンスカウンタを更新する
+static void SetNextSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 次のシーケンスをキューに登録する
+static void FinishCurrentSeq( RRL_WORK* work ); // 現在のシーケンスを終了する
+static void SwitchSeq( RRL_WORK* work ); // 処理シーケンスを変更する
+static void SetSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // 処理シーケンスを設定する
+static void SetResult( RRL_WORK* work, RRL_RESULT result ); // 画面終了結果を設定する
+static void SetWaitFrame( RRL_WORK* work, u32 frame ); // フレーム経過待ちシーケンスの待ち時間を設定する
+static u32 GetWaitFrame( const RRL_WORK* work ); // フレーム経過待ちシーケンスの待ち時間を取得する
+static void SetFirstSeq( RRL_WORK* work ); // 最初のシーケンスをセットする
 // VBlankタスク
-static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work ); // VBlankタスクを登録する
-static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work ); // VBlankタスクの登録を解除する
+static void RegisterVBlankTask( RRL_WORK* work ); // VBlankタスクを登録する
+static void ReleaseVBlankTask ( RRL_WORK* work ); // VBlankタスクの登録を解除する
 static void VBlankFunc( GFL_TCB* tcb, void* wk ); // VBlank中の処理
 //-----------------------------------------------------------------------------------------
 // ◆LAYER 2 機能
 //-----------------------------------------------------------------------------------------
 // メニュー項目カーソル
-static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work ); // 上へ移動する
-static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work ); // 下へ移動する
-static void MoveMenuCursorDirect( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // 直接移動する
+static void MoveMenuCursorUp( RRL_WORK* work ); // 上へ移動する
+static void MoveMenuCursorDown( RRL_WORK* work ); // 下へ移動する
+static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem ); // 直接移動する
 // 調査項目カーソル
-static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work ); // 上へ移動する
-static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work ); // 下へ移動する
-static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID ); // 直接移動する
+static void MoveTopicCursorUp( RRL_WORK* work ); // 上へ移動する
+static void MoveTopicCursorDown( RRL_WORK* work ); // 下へ移動する
+static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID ); // 直接移動する
 //-----------------------------------------------------------------------------------------
 // ◆LAYER 1 個別操作
 //-----------------------------------------------------------------------------------------
 // セーブデータ
-static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // 現在調査中の調査項目IDを取得する
-static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work ); // 調査する項目を更新する
+static u8 GetInvestigatingTopicID( const RRL_WORK* work ); // 現在調査中の調査項目IDを取得する
+static void UpdateInvestigatingTopicID( const RRL_WORK* work ); // 調査する項目を更新する
 // メニュー項目カーソル
-static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride ); // メニュー項目カーソル位置を変更する ( オフセット指定 )
-static void SetMenuCursorPos( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // メニュー項目カーソル位置を変更する ( 直値指定 ) 
+static void ShiftMenuCursorPos( RRL_WORK* work, int stride ); // メニュー項目カーソル位置を変更する ( オフセット指定 )
+static void SetMenuCursorPos( RRL_WORK* work, MENU_ITEM menuItem ); // メニュー項目カーソル位置を変更する ( 直値指定 ) 
 // 調査項目カーソル
-static void SetTopicCursorPosDirect( RESEARCH_SELECT_WORK* work, int topciID ); // 調査項目カーソルの移動先を設定する ( ダイレクト移動 ) 
-static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride ); // 調査項目カーソルの移動先を設定する ( オフセット移動 )
+static void SetTopicCursorPosDirect( RRL_WORK* work, int topciID ); // 調査項目カーソルの移動先を設定する ( ダイレクト移動 ) 
+static void SetTopicCursorNextPos( RRL_WORK* work, int stride ); // 調査項目カーソルの移動先を設定する ( オフセット移動 )
 // タッチ範囲
-static void UpdateTopicTouchArea( RESEARCH_SELECT_WORK* work ); // タッチ範囲を更新する
+static void UpdateTopicTouchArea( RRL_WORK* work ); // タッチ範囲を更新する
 // 調査項目
-static int GetNextTopicID( const RESEARCH_SELECT_WORK* work, int topicID ); // 次の調査項目IDを取得する
-static int GetPrevTopicID( const RESEARCH_SELECT_WORK* work, int topicID ); // 前の調査項目IDを取得する
-static void SetupSelectableTopicNum( RESEARCH_SELECT_WORK* work ); // 選択可能な調査項目の数をセットアップする
-static u8 GetSelectableTopicNum( const RESEARCH_SELECT_WORK* work ); // 選択可能な調査項目の数を取得する
-static u8 GetSelectedTopicID( const RESEARCH_SELECT_WORK* work ); // 選択中の調査項目IDを取得する
-static void SetSelectedTopicID( RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目IDを選択する
-static void ResetSelectedTopicID( RESEARCH_SELECT_WORK* work ); // 調査項目IDの選択を解除する
-static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work ); // 選択済みかを判定する
-static BOOL CheckTopicCanSelect( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目を選択可能かどうかをチェックする
+static int GetNextTopicID( const RRL_WORK* work, int topicID ); // 次の調査項目IDを取得する
+static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // 前の調査項目IDを取得する
+static void SetupSelectableTopicNum( RRL_WORK* work ); // 選択可能な調査項目の数をセットアップする
+static u8 GetSelectableTopicNum( const RRL_WORK* work ); // 選択可能な調査項目の数を取得する
+static u8 GetSelectedTopicID( const RRL_WORK* work ); // 選択中の調査項目IDを取得する
+static void SetSelectedTopicID( RRL_WORK* work, u8 topicID ); // 調査項目IDを選択する
+static void ResetSelectedTopicID( RRL_WORK* work ); // 調査項目IDの選択を解除する
+static BOOL IsTopicIDSelected( const RRL_WORK* work ); // 選択済みかを判定する
+static BOOL CheckTopicCanSelect( const RRL_WORK* work, u8 topicID ); // 調査項目を選択可能かどうかをチェックする
 // メニュー項目の表示
-static void SetMenuItemCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // カーソルが乗っている状態にする
-static void SetMenuItemCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // カーソルが乗っていない状態にする
+static void SetMenuItemCursorOn( RRL_WORK* work, MENU_ITEM menuItem ); // カーソルが乗っている状態にする
+static void SetMenuItemCursorOff( RRL_WORK* work, MENU_ITEM menuItem ); // カーソルが乗っていない状態にする
 // 調査項目の表示
-static void SetTopicButtonCursorOn( const RESEARCH_SELECT_WORK* work ); // カーソルが乗っている状態にする
-static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work ); // カーソルが乗っていない状態にする
-static void SetTopicButtonInvestigating( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査中の状態にする
-static void SetTopicButtonNotInvestigating( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査中でない状態に戻す
-static u8 CalcScreenLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目の左上x座標を算出する ( スクリーン単位 )
-static u8 CalcScreenTopOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目の左上y座標を算出する ( スクリーン単位 )
-static int CalcDisplayLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目ボタンの左上x座標を算出する ( ディスプレイ座標系・ドット単位 )
-static int CalcDisplayTopOfTopicButton ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目ボタンの左上y座標を算出する ( ディスプレイ座標系・ドット単位 ) 
-static int CalcDisplayBottomOfTopicButton ( const RESEARCH_SELECT_WORK* work, u8 topicID ); // 調査項目ボタンの右下y座標を算出する ( ディスプレイ座標系・ドット単位 ) 
-static void UpdateTopicButtonMask( const RESEARCH_SELECT_WORK* work ); // 調査項目ボタンのスクロール回り込みを隠すためのウィンドウを更新する
+static void SetTopicButtonCursorOn( const RRL_WORK* work ); // カーソルが乗っている状態にする
+static void SetTopicButtonCursorOff( const RRL_WORK* work ); // カーソルが乗っていない状態にする
+static void SetTopicButtonInvestigating( const RRL_WORK* work, u8 topicID ); // 調査中の状態にする
+static void SetTopicButtonNotInvestigating( const RRL_WORK* work, u8 topicID ); // 調査中でない状態に戻す
+static u8 CalcScreenLeftOfTopicButton( const RRL_WORK* work, u8 topicID ); // 調査項目の左上x座標を算出する ( スクリーン単位 )
+static u8 CalcScreenTopOfTopicButton( const RRL_WORK* work, u8 topicID ); // 調査項目の左上y座標を算出する ( スクリーン単位 )
+static int CalcDisplayLeftOfTopicButton( const RRL_WORK* work, u8 topicID ); // 調査項目ボタンの左上x座標を算出する ( ディスプレイ座標系・ドット単位 )
+static int CalcDisplayTopOfTopicButton ( const RRL_WORK* work, u8 topicID ); // 調査項目ボタンの左上y座標を算出する ( ディスプレイ座標系・ドット単位 ) 
+static int CalcDisplayBottomOfTopicButton ( const RRL_WORK* work, u8 topicID ); // 調査項目ボタンの右下y座標を算出する ( ディスプレイ座標系・ドット単位 ) 
+static void UpdateTopicButtonMask( const RRL_WORK* work ); // 調査項目ボタンのスクロール回り込みを隠すためのウィンドウを更新する
 // 上画面の表示
-static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work ); // 上画面のカーソル依存文字列表示を更新する
-static void TopicDetailStringHide( RESEARCH_SELECT_WORK* work ); // 上画面の調査項目説明文の表示を隠す
-static void TopicDetailStringDispStart( RESEARCH_SELECT_WORK* work ); // 上画面の調査項目説明文の表示を開始する
+static void UpdateSubDisplayStrings( RRL_WORK* work ); // 上画面のカーソル依存文字列表示を更新する
+static void TopicDetailStringHide( RRL_WORK* work ); // 上画面の調査項目説明文の表示を隠す
+static void TopicDetailStringDispStart( RRL_WORK* work ); // 上画面の調査項目説明文の表示を開始する
 // スクロールバー
-static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work ); // 現在のスクロール実効値に合わせて, スクロールバーのつまみ部分の位置を更新する
-static int CalcScrollControlPos_byScrollValue( const RESEARCH_SELECT_WORK* work ); // スクロール実効値から, スクロールバーのつまみ部分の位置を計算する
-static int CalcScrollCursorPos_byScrollControlPos( const RESEARCH_SELECT_WORK* work, int controlPos ); // スクロールバーのつまみ部分の表示位置から, スクロールカーソル位置を算出する
-static int GetScrollControlPos( const RESEARCH_SELECT_WORK* work ); // スクロールバーのつまみ部分の表示位置を取得する
+static void UpdateScrollControlPos( const RRL_WORK* work ); // 現在のスクロール実効値に合わせて, スクロールバーのつまみ部分の位置を更新する
+static int CalcScrollControlPos_byScrollValue( const RRL_WORK* work ); // スクロール実効値から, スクロールバーのつまみ部分の位置を計算する
+static int CalcScrollCursorPos_byScrollControlPos( const RRL_WORK* work, int controlPos ); // スクロールバーのつまみ部分の表示位置から, スクロールカーソル位置を算出する
+static int GetScrollControlPos( const RRL_WORK* work ); // スクロールバーのつまみ部分の表示位置を取得する
 // スクロール
-static void StartScroll( RESEARCH_SELECT_WORK* work, int startPos, int endPos, int frames ); // スクロールを開始する
-static void UpdateScroll( RESEARCH_SELECT_WORK* work ); // スクロールを更新する
-static BOOL CheckScrollEnd( RESEARCH_SELECT_WORK* work ); // スクロールが終了したかどうかを判定する
-static void ShiftScrollCursorPos( RESEARCH_SELECT_WORK* work, int offset ); // スクロールカーソル位置を変更する ( オフセット指定 )
-static void SetScrollCursorPos( RESEARCH_SELECT_WORK* work, int pos ); // スクロールカーソル位置を変更する ( 直値指定 )
-static void SetScrollCursorPosForce( RESEARCH_SELECT_WORK* work, int pos ); // スクロールカーソル位置を変更する ( 直値指定・範囲限定なし )
-static void AdjustScrollCursor( RESEARCH_SELECT_WORK* work ); // スクロール実効値に合わせ, スクロールカーソル位置を補正する
-static void UpdateScrollValue( const RESEARCH_SELECT_WORK* work ); // スクロール実効値を更新する
-static void AdjustScrollValue( const RESEARCH_SELECT_WORK* work ); // スクロール実効値をスクロールカーソル位置に合わせて更新する
+static void StartScroll( RRL_WORK* work, int startPos, int endPos, int frames ); // スクロールを開始する
+static void UpdateScroll( RRL_WORK* work ); // スクロールを更新する
+static BOOL CheckScrollEnd( RRL_WORK* work ); // スクロールが終了したかどうかを判定する
+static void ShiftScrollCursorPos( RRL_WORK* work, int offset ); // スクロールカーソル位置を変更する ( オフセット指定 )
+static void SetScrollCursorPos( RRL_WORK* work, int pos ); // スクロールカーソル位置を変更する ( 直値指定 )
+static void SetScrollCursorPosForce( RRL_WORK* work, int pos ); // スクロールカーソル位置を変更する ( 直値指定・範囲限定なし )
+static void AdjustScrollCursor( RRL_WORK* work ); // スクロール実効値に合わせ, スクロールカーソル位置を補正する
+static void UpdateScrollValue( const RRL_WORK* work ); // スクロール実効値を更新する
+static void AdjustScrollValue( const RRL_WORK* work ); // スクロール実効値をスクロールカーソル位置に合わせて更新する
 static int GetScrollValue(); // スクロール実効値を取得する
 static int GetMinScrollCursorMarginPos(); // スクロールカーソル余白範囲の最小値を取得する
 static int GetMaxScrollCursorMarginPos(); // スクロールカーソル余白範囲の最大値を取得する
 static int CalcTopicID_byScrollCursorPos( int pos ); // 指定したスクロールカーソル位置にあるボタンの調査項目IDを計算する
 static int CalcScrollCursorPosOfTopicButtonTop( int topicID ); // 指定した調査項目ボタンの上辺に該当するスクロールカーソル位置を計算する
 static int CalcScrollCursorPosOfTopicButtonBottom( int topicID ); // 指定した調査項目ボタンの底辺に該当するスクロールカーソル位置を計算する
-static int GetMaxScrollValue( const RESEARCH_SELECT_WORK* work ); // 最大スクロール値を取得する
-static int GetMaxScrollCursorPos( const RESEARCH_SELECT_WORK* work ); // スクロールカーソルの最大値を取得する
-static BOOL CheckScrollControlCan( const RESEARCH_SELECT_WORK* work ); // スクロール操作が可能かどうかを判定する
+static int GetMaxScrollValue( const RRL_WORK* work ); // 最大スクロール値を取得する
+static int GetMaxScrollCursorPos( const RRL_WORK* work ); // スクロールカーソルの最大値を取得する
+static BOOL CheckScrollControlCan( const RRL_WORK* work ); // スクロール操作が可能かどうかを判定する
 // 調査中アイコン
-static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work ); // 調査中アイコンの表示状態を更新する
+static void UpdateTopicSelectIcon( const RRL_WORK* work ); // 調査中アイコンの表示状態を更新する
 // シーケンスキュー
-static void InitSeqQueue( RESEARCH_SELECT_WORK* work ); // シーケンスキューを初期化する
-static void CreateSeqQueue( RESEARCH_SELECT_WORK* work ); // シーケンスキューを生成する
-static void DeleteSeqQueue( RESEARCH_SELECT_WORK* work ); // シーケンスキューを破棄する
+static void InitSeqQueue( RRL_WORK* work ); // シーケンスキューを初期化する
+static void CreateSeqQueue( RRL_WORK* work ); // シーケンスキューを生成する
+static void DeleteSeqQueue( RRL_WORK* work ); // シーケンスキューを破棄する
 // タッチ領域
-static void SetupTouchArea( RESEARCH_SELECT_WORK* work ); // タッチ領域をセットアップする
+static void SetupTouchArea( RRL_WORK* work ); // タッチ領域をセットアップする
 // フォントデータ
-static void InitFont( RESEARCH_SELECT_WORK* work ); // フォントデータを初期化する
-static void CreateFont( RESEARCH_SELECT_WORK* work ); // フォントデータを生成する
-static void DeleteFont( RESEARCH_SELECT_WORK* work ); // フォントデータを破棄する
+static void InitFont( RRL_WORK* work ); // フォントデータを初期化する
+static void CreateFont( RRL_WORK* work ); // フォントデータを生成する
+static void DeleteFont( RRL_WORK* work ); // フォントデータを破棄する
 // メッセージデータ
-static void InitMessages( RESEARCH_SELECT_WORK* work ); // メッセージデータを初期化する
-static void CreateMessages( RESEARCH_SELECT_WORK* work ); // メッセージデータを生成する
-static void DeleteMessages( RESEARCH_SELECT_WORK* work ); // メッセージデータを破棄する
+static void InitMessages( RRL_WORK* work ); // メッセージデータを初期化する
+static void CreateMessages( RRL_WORK* work ); // メッセージデータを生成する
+static void DeleteMessages( RRL_WORK* work ); // メッセージデータを破棄する
 // BG
-static void SetupBG( RESEARCH_SELECT_WORK* work ); // BG全般のセットアップを行う
-static void SetupSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ウィンドウ面 ) をセットアップする
-static void SetupSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( フォント面 ) をセットアップする
-static void SetupMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( バー面 ) をセットアップする
-static void SetupMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ウィンドウ面 ) をセットアップする
-static void SetupMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( フォント面 ) をセットアップする
-static void CleanUpBG( RESEARCH_SELECT_WORK* work ); // BG全般のクリーンアップを行う
-static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work ); // SUB-BG ( ウィンドウ面 ) をクリーンアップする
-static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work ); // SUB-BG ( フォント面 ) をクリーンアップする
-static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( バー面 ) をクリーンアップする
-static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( ウィンドウ面 ) をクリーンアップする
-static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work ); // MAIN-BG ( フォント面 ) をクリーンアップする
+static void SetupBG( RRL_WORK* work ); // BG全般のセットアップを行う
+static void SetupSubBG_WINDOW( RRL_WORK* work ); // SUB-BG ( ウィンドウ面 ) をセットアップする
+static void SetupSubBG_FONT( RRL_WORK* work ); // SUB-BG ( フォント面 ) をセットアップする
+static void SetupMainBG_BAR( RRL_WORK* work ); // MAIN-BG ( バー面 ) をセットアップする
+static void SetupMainBG_WINDOW( RRL_WORK* work ); // MAIN-BG ( ウィンドウ面 ) をセットアップする
+static void SetupMainBG_FONT( RRL_WORK* work ); // MAIN-BG ( フォント面 ) をセットアップする
+static void CleanUpBG( RRL_WORK* work ); // BG全般のクリーンアップを行う
+static void CleanUpSubBG_WINDOW( RRL_WORK* work ); // SUB-BG ( ウィンドウ面 ) をクリーンアップする
+static void CleanUpSubBG_FONT( RRL_WORK* work ); // SUB-BG ( フォント面 ) をクリーンアップする
+static void CleanUpMainBG_BAR( RRL_WORK* work ); // MAIN-BG ( バー面 ) をクリーンアップする
+static void CleanUpMainBG_WINDOW( RRL_WORK* work ); // MAIN-BG ( ウィンドウ面 ) をクリーンアップする
+static void CleanUpMainBG_FONT( RRL_WORK* work ); // MAIN-BG ( フォント面 ) をクリーンアップする
 // 文字列描画オブジェクト
-static void InitBGFonts( RESEARCH_SELECT_WORK* work ); // 文字列描画オブジェクトを初期化する
-static void CreateBGFonts( RESEARCH_SELECT_WORK* work ); // 文字列描画オブジェクトを生成する
-static void DeleteBGFonts( RESEARCH_SELECT_WORK* work ); // 文字列描画オブジェクトを破棄する
+static void InitBGFonts( RRL_WORK* work ); // 文字列描画オブジェクトを初期化する
+static void CreateBGFonts( RRL_WORK* work ); // 文字列描画オブジェクトを生成する
+static void DeleteBGFonts( RRL_WORK* work ); // 文字列描画オブジェクトを破棄する
 // OBJ
-static void CreateClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ システムを生成する
-static void DeleteClactSystem( RESEARCH_SELECT_WORK* work ); // OBJ システムを破棄する
-static void InitOBJResources( RESEARCH_SELECT_WORK* work ); // OBJ リソースを初期化する
-static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ リソースを登録する
-static void ReleaseSubObjResources( RESEARCH_SELECT_WORK* work ); // SUB-OBJ リソースを解放する
-static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ リソースを登録する
-static void ReleaseMainObjResources( RESEARCH_SELECT_WORK* work ); // MAIN-OBJ リソースを解放する
-static void InitClactUnits( RESEARCH_SELECT_WORK* work ); // セルアクターユニットを初期化する
-static void CreateClactUnits( RESEARCH_SELECT_WORK* work ); // セルアクターユニットを生成する
-static void DeleteClactUnits( RESEARCH_SELECT_WORK* work ); // セルアクターユニットを破棄する
-static void InitClactWorks( RESEARCH_SELECT_WORK* work ); // セルアクターワークを初期化する
-static void CreateClactWorks( RESEARCH_SELECT_WORK* work ); // セルアクターワークを生成する
-static void DeleteClactWorks( RESEARCH_SELECT_WORK* work ); // セルアクターワークを破棄する
-static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID ); // OBJリソースの登録インデックスを取得する
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx ); // セルアクターユニットを取得する
-static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワークを取得する
+static void CreateClactSystem( RRL_WORK* work ); // OBJ システムを生成する
+static void DeleteClactSystem( RRL_WORK* work ); // OBJ システムを破棄する
+static void InitOBJResources( RRL_WORK* work ); // OBJ リソースを初期化する
+static void RegisterSubObjResources( RRL_WORK* work ); // SUB-OBJ リソースを登録する
+static void ReleaseSubObjResources( RRL_WORK* work ); // SUB-OBJ リソースを解放する
+static void RegisterMainObjResources( RRL_WORK* work ); // MAIN-OBJ リソースを登録する
+static void ReleaseMainObjResources( RRL_WORK* work ); // MAIN-OBJ リソースを解放する
+static void InitClactUnits( RRL_WORK* work ); // セルアクターユニットを初期化する
+static void CreateClactUnits( RRL_WORK* work ); // セルアクターユニットを生成する
+static void DeleteClactUnits( RRL_WORK* work ); // セルアクターユニットを破棄する
+static void InitClactWorks( RRL_WORK* work ); // セルアクターワークを初期化する
+static void CreateClactWorks( RRL_WORK* work ); // セルアクターワークを生成する
+static void DeleteClactWorks( RRL_WORK* work ); // セルアクターワークを破棄する
+static u32 GetObjResourceRegisterIndex( const RRL_WORK* work, OBJ_RESOURCE_ID resID ); // OBJリソースの登録インデックスを取得する
+static GFL_CLUNIT* GetClactUnit( const RRL_WORK* work, CLUNIT_INDEX unitIdx ); // セルアクターユニットを取得する
+static GFL_CLWK* GetClactWork( const RRL_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワークを取得する
 // BMP-OAM
-static void InitBitmapDatas( RESEARCH_SELECT_WORK* work ); // ビットマップデータを初期化する
-static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work ); // ビットマップデータを作成する
-static void SetupBitmapData_forDefault( RESEARCH_SELECT_WORK* work ); // ビットマップデータをセットアップする ( デフォルト )
-static void SetupBitmapData_forOK( RESEARCH_SELECT_WORK* work ); // ビットマップデータをセットアップする (「けってい」)
-static void SetupBitmapData_forCANCEL( RESEARCH_SELECT_WORK* work ); // ビットマップデータをセットアップする (「やめる」)
-static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work ); // ビットマップデータを破棄する
-static void SetupBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM システムをセットアップする
-static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work ); // BMP-OAM システムをクリーンアップする
-static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM アクターを作成する
-static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work ); // BMP-OAM アクターを破棄する
-static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable ); // 表示するかどうかを設定する
-static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem ); // メニュー項目に対応するBMP-OAMアクターを取得する
+static void InitBitmapDatas( RRL_WORK* work ); // ビットマップデータを初期化する
+static void CreateBitmapDatas( RRL_WORK* work ); // ビットマップデータを作成する
+static void SetupBitmapData_forDefault( RRL_WORK* work ); // ビットマップデータをセットアップする ( デフォルト )
+static void SetupBitmapData_forOK( RRL_WORK* work ); // ビットマップデータをセットアップする (「けってい」)
+static void SetupBitmapData_forCANCEL( RRL_WORK* work ); // ビットマップデータをセットアップする (「やめる」)
+static void DeleteBitmapDatas( RRL_WORK* work ); // ビットマップデータを破棄する
+static void SetupBmpOamSystem( RRL_WORK* work ); // BMP-OAM システムをセットアップする
+static void CleanUpBmpOamSystem( RRL_WORK* work ); // BMP-OAM システムをクリーンアップする
+static void CreateBmpOamActors( RRL_WORK* work ); // BMP-OAM アクターを作成する
+static void DeleteBmpOamActors( RRL_WORK* work ); // BMP-OAM アクターを破棄する
+static void BmpOamSetDrawEnable( RRL_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable ); // 表示するかどうかを設定する
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM menuItem ); // メニュー項目に対応するBMP-OAMアクターを取得する
 // パレットフェード
-static void InitPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // パレットフェードシステムを初期化する
-static void SetupPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // パレットフェードシステムをセットアップする
-static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work ); // パレットフェードシステムをクリーンアップする
-static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work ); // パレットのフェードアウトを開始する
-static void StartPaletteFadeIn ( RESEARCH_SELECT_WORK* work ); // パレットのフェードインを開始する
-static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work ); // パレットのフェードが完了したかどうかを判定する
+static void InitPaletteFadeSystem( RRL_WORK* work ); // パレットフェードシステムを初期化する
+static void SetupPaletteFadeSystem( RRL_WORK* work ); // パレットフェードシステムをセットアップする
+static void CleanUpPaletteFadeSystem( RRL_WORK* work ); // パレットフェードシステムをクリーンアップする
+static void StartPaletteFadeOut( RRL_WORK* work ); // パレットのフェードアウトを開始する
+static void StartPaletteFadeIn ( RRL_WORK* work ); // パレットのフェードインを開始する
+static BOOL IsPaletteFadeEnd( RRL_WORK* work ); // パレットのフェードが完了したかどうかを判定する
 // パレットアニメーション
-static void InitPaletteAnime( RESEARCH_SELECT_WORK* work ); // パレットアニメーションワークを初期化する
-static void CreatePaletteAnime( RESEARCH_SELECT_WORK* work ); // パレットアニメーションワークを生成する
-static void DeletePaletteAnime( RESEARCH_SELECT_WORK* work ); // パレットアニメーションワークを破棄する
-static void SetupPaletteAnime( RESEARCH_SELECT_WORK* work ); // パレットアニメーションワークをセットアップする
-static void CleanUpPaletteAnime( RESEARCH_SELECT_WORK* work );  // パレットアニメーションワークをクリーンアップする
-static void StartPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
-static void StopPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
-static void UpdatePaletteAnime( RESEARCH_SELECT_WORK* work );  // パレットアニメーションを更新する
+static void InitPaletteAnime( RRL_WORK* work ); // パレットアニメーションワークを初期化する
+static void CreatePaletteAnime( RRL_WORK* work ); // パレットアニメーションワークを生成する
+static void DeletePaletteAnime( RRL_WORK* work ); // パレットアニメーションワークを破棄する
+static void SetupPaletteAnime( RRL_WORK* work ); // パレットアニメーションワークをセットアップする
+static void CleanUpPaletteAnime( RRL_WORK* work );  // パレットアニメーションワークをクリーンアップする
+static void StartPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
+static void StopPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
+static void UpdatePaletteAnime( RRL_WORK* work );  // パレットアニメーションを更新する
 // 通信アイコン
-static void SetupWirelessIcon( const RESEARCH_SELECT_WORK* work ); // 通信アイコンをセットアップする
+static void SetupWirelessIcon( const RRL_WORK* work ); // 通信アイコンをセットアップする
 //-----------------------------------------------------------------------------------------
 // ◆LAYER 0 デバッグ
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work ); // シーケンスキューの中身を表示する
+static void DebugPrint_seqQueue( const RRL_WORK* work ); // シーケンスキューの中身を表示する
 
 
 
@@ -362,16 +364,16 @@ static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work ); // シーケン
  * @return 調査内容変更画面ワーク
  */
 //-----------------------------------------------------------------------------------------
-RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork )
+RRL_WORK* RRL_CreateWork( RESEARCH_COMMON_WORK* commonWork )
 {
   int i;
-  RESEARCH_SELECT_WORK* work;
+  RRL_WORK* work;
   HEAPID heapID;
 
   heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
   // 生成
-  work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_SELECT_WORK) );
+  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRL_WORK) );
 
   // 初期化
   work->commonWork            = commonWork;
@@ -381,7 +383,6 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork
   work->seq                   = RESEARCH_SELECT_SEQ_SETUP;
   work->seqCount              = 0;
   work->seqFinishFlag         = FALSE;
-  work->result                = RESEARCH_SELECT_RESULT_NONE;
   work->waitFrame             = WAIT_FRAME_BUTTON;
   work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
   work->topicCursorPos        = 0;
@@ -395,6 +396,8 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork
   work->scrollFrames          = 0;
   work->scrollFrameCount      = 0;
   work->palFadeOutFlag        = FALSE;
+  work->finishResult          = RRL_RESULT_TO_TOP;
+  work->finishFlag            = FALSE;
 
   InitSeqQueue( work );
   InitMessages( work );
@@ -422,7 +425,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork
  * @param heapID
  */
 //-----------------------------------------------------------------------------------------
-void DeleteResearchSelectWork( RESEARCH_SELECT_WORK* work )
+void RRL_DeleteWork( RRL_WORK* work )
 {
   if( work == NULL )
   {
@@ -443,7 +446,7 @@ void DeleteResearchSelectWork( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
+void RRL_Main( RRL_WORK* work )
 {
   // シーケンスごとの処理
   switch( work->seq ) {
@@ -461,7 +464,7 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   case RESEARCH_SELECT_SEQ_SCROLL_RESET:      MainSeq_SCROLL_RESET( work );      break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:     MainSeq_PALETTE_RESET( work );     break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:          MainSeq_CLEAN_UP( work );          break;
-  case RESEARCH_SELECT_SEQ_FINISH:            return work->result; // 終了
+  case RESEARCH_SELECT_SEQ_FINISH:            break;
   default:  GF_ASSERT(0);
   }
 
@@ -471,12 +474,19 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
 
   CountUpSeqCount( work ); // シーケンスカウンタ更新
   SwitchSeq( work );  // シーケンス更新
-
-  // 継続
-  return RESEARCH_SELECT_RESULT_CONTINUE;
 }
 
 
+// 終了判定
+RRL_IsFinished( const RRL_WORK* work )
+{
+  return work->finishFlag;
+}
+// 終了結果の取得
+RRL_RESULT RRL_GetResult( const RRL_WORK* work )
+{
+  return work->finishResult;
+}
 
 
 
@@ -491,7 +501,7 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work )
+static void MainSeq_SETUP( RRL_WORK* work )
 {
   CreateFont( work );
   CreateMessages( work );
@@ -551,7 +561,7 @@ static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
+static void MainSeq_STANDBY( RRL_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -624,7 +634,7 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_KEY_WAIT( RRL_WORK* work )
 { 
   int trg;
   int touchTrg;
@@ -726,7 +736,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_SCROLL_WAIT( RRL_WORK* work )
 {
   // スクロール処理
   UpdateScroll( work );           // スクロールを更新
@@ -749,7 +759,7 @@ static void MainSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
+static void MainSeq_SCROLL_CONTROL( RRL_WORK* work )
 {
   u32 x, y;
   BOOL touch;
@@ -795,7 +805,7 @@ static void MainSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
+static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -858,7 +868,7 @@ static void MainSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -940,7 +950,7 @@ static void MainSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void MainSeq_DETERMINE( RRL_WORK* work )
 {
   // 一定時間が経過
   if( SEQ_DETERMINE_WAIT_FRAMES <= work->seqCount ) {
@@ -958,7 +968,7 @@ static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
+static void MainSeq_FADE_IN( RRL_WORK* work )
 {
   // フェードが終了
   if( GFL_FADE_CheckFade() == FALSE ) {
@@ -973,7 +983,7 @@ static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_FADE_OUT( RRL_WORK* work )
 {
   // フェードが終了
   if( GFL_FADE_CheckFade() == FALSE ) {
@@ -988,7 +998,7 @@ static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
+static void MainSeq_FRAME_WAIT( RRL_WORK* work )
 {
   // 待ち時間が経過
   if( GetWaitFrame(work) < work->seqCount ) {
@@ -1003,7 +1013,7 @@ static void MainSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+static void MainSeq_PALETTE_RESET( RRL_WORK* work )
 {
   // パレットフェード完了
   if( IsPaletteFadeEnd( work ) ) {
@@ -1018,7 +1028,7 @@ static void MainSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work )
+static void MainSeq_SCROLL_RESET( RRL_WORK* work )
 {
   // スクロール処理
   UpdateScroll( work );           // スクロールを更新
@@ -1041,7 +1051,7 @@ static void MainSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void MainSeq_CLEAN_UP( RRL_WORK* work )
 { 
   // VBlankタスクを解除
   ReleaseVBlankTask( work );
@@ -1084,7 +1094,7 @@ static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
   DeleteFont( work );
 
   // 画面終了結果を決定
-  SetResult( work, RESEARCH_SELECT_RESULT_TO_MENU );  
+  SetResult( work, RRL_RESULT_TO_TOP );  
   SetNextSeq( work, RESEARCH_SELECT_SEQ_FINISH );
   FinishCurrentSeq( work );
 }
@@ -1096,7 +1106,7 @@ static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CountUpSeqCount( RESEARCH_SELECT_WORK* work )
+static void CountUpSeqCount( RRL_WORK* work )
 {
   u32 maxCount;
 
@@ -1135,7 +1145,7 @@ static void CountUpSeqCount( RESEARCH_SELECT_WORK* work )
  * @param nextSeq 登録するシーケンス
  */
 //-----------------------------------------------------------------------------------------
-static void SetNextSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static void SetNextSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
 {
   // シーケンスキューに追加する
   QUEUE_EnQueue( work->seqQueue, nextSeq );
@@ -1152,7 +1162,7 @@ static void SetNextSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq 
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishCurrentSeq( RESEARCH_SELECT_WORK* work )
+static void FinishCurrentSeq( RRL_WORK* work )
 {
   // すでに終了済み
   GF_ASSERT( work->seqFinishFlag == FALSE );
@@ -1172,13 +1182,10 @@ static void FinishCurrentSeq( RESEARCH_SELECT_WORK* work )
  * @param result 結果
  */
 //-----------------------------------------------------------------------------------------
-static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result )
+static void SetResult( RRL_WORK* work, RRL_RESULT result )
 {
-  // 多重設定
-  GF_ASSERT( work->result == RESEARCH_SELECT_RESULT_NONE );
-
   // 設定
-  work->result = result;
+  work->finishResult = result;
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set result (%d)\n", result );
@@ -1192,7 +1199,7 @@ static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result
  * @param frame 設定する待ちフレーム数
  */
 //-----------------------------------------------------------------------------------------
-static void SetWaitFrame( RESEARCH_SELECT_WORK* work, u32 frame )
+static void SetWaitFrame( RRL_WORK* work, u32 frame )
 {
   work->waitFrame = frame;
 }
@@ -1206,7 +1213,7 @@ static void SetWaitFrame( RESEARCH_SELECT_WORK* work, u32 frame )
  * @return 待ちフレーム数
  */
 //-----------------------------------------------------------------------------------------
-static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work )
+static u32 GetWaitFrame( const RRL_WORK* work )
 {
   return work->waitFrame;
 }
@@ -1218,7 +1225,7 @@ static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetFirstSeq( RESEARCH_SELECT_WORK* work )
+static void SetFirstSeq( RRL_WORK* work )
 {
   RESEARCH_COMMON_WORK* commonWork;
   RADAR_SEQ prev_seq;
@@ -1248,7 +1255,7 @@ static void SetFirstSeq( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SwitchSeq( RESEARCH_SELECT_WORK* work )
+static void SwitchSeq( RRL_WORK* work )
 {
   RESEARCH_SELECT_SEQ nextSeq;
 
@@ -1271,7 +1278,7 @@ static void SwitchSeq( RESEARCH_SELECT_WORK* work )
  * @parma nextSeq 設定するシーケンス
  */
 //-----------------------------------------------------------------------------------------
-static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static void SetSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
 { 
   // シーケンスの終了処理
   switch( work->seq ) {
@@ -1347,7 +1354,7 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SETUP( RESEARCH_SELECT_WORK* work )
+static void InitSeq_SETUP( RRL_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SETUP\n" );
@@ -1360,7 +1367,7 @@ static void InitSeq_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_STANDBY( RESEARCH_SELECT_WORK* work )
+static void InitSeq_STANDBY( RRL_WORK* work )
 {
   SetTopicButtonCursorOff( work ); // カーソルが乗っていない状態にする
 
@@ -1375,7 +1382,7 @@ static void InitSeq_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_KEY_WAIT( RRL_WORK* work )
 {
   SetTopicButtonCursorOn( work ); // カーソルが乗っている状態にする
 
@@ -1398,7 +1405,7 @@ static void InitSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_SCROLL_WAIT( RRL_WORK* work )
 {
   // スクロール開始
   {
@@ -1454,7 +1461,7 @@ static void InitSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
+static void InitSeq_SCROLL_CONTROL( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_CONTROL\n" );
@@ -1467,7 +1474,7 @@ static void InitSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
+static void InitSeq_CONFIRM_STANDBY( RRL_WORK* work )
 {
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // カーソルが乗っていない状態にする
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_OK );     // カーソルが乗っていない状態にする
@@ -1513,7 +1520,7 @@ static void InitSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
 {
   SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );         // カーソル位置を初期化
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // カーソルが乗っていない状態にする
@@ -1561,7 +1568,7 @@ static void InitSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void InitSeq_DETERMINE( RRL_WORK* work )
 {
   // 調査中だった項目のボタンを, 調査していない状態に戻す
   SetTopicButtonNotInvestigating( work, GetInvestigatingTopicID(work) );
@@ -1590,7 +1597,7 @@ static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
+static void InitSeq_FADE_IN( RRL_WORK* work )
 {
   // フェードイン開始
   GFL_FADE_SetMasterBrightReq(
@@ -1607,7 +1614,7 @@ static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_FADE_OUT( RRL_WORK* work )
 {
   // フェードアウト開始
   GFL_FADE_SetMasterBrightReq(
@@ -1624,7 +1631,7 @@ static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
+static void InitSeq_FRAME_WAIT( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FRAME WAIT\n" );
@@ -1637,7 +1644,7 @@ static void InitSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+static void InitSeq_PALETTE_RESET( RRL_WORK* work )
 {
   // パレットのフェードインを開始する
   StartPaletteFadeIn( work );
@@ -1653,7 +1660,7 @@ static void InitSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work )
+static void InitSeq_SCROLL_RESET( RRL_WORK* work )
 {
   // スクロール開始
   {
@@ -1707,7 +1714,7 @@ static void InitSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void InitSeq_CLEAN_UP( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CLEAN_UP\n" );
@@ -1720,7 +1727,7 @@ static void InitSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_SETUP( RRL_WORK* work )
 {
   u8 nowTopicID;
 
@@ -1764,7 +1771,7 @@ static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_STANDBY( RRL_WORK* work )
 {
 // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq STANDBY\n" );
@@ -1777,7 +1784,7 @@ static void FinishSeq_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_KEY_WAIT( RRL_WORK* work )
 {
   UpdateSubDisplayStrings( work ); // 上画面のカーソル依存文字列を更新
 
@@ -1792,7 +1799,7 @@ static void FinishSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_SCROLL_WAIT( RRL_WORK* work )
 {
   SetTopicCursorPosDirect( work, work->topicCursorNextPos ); // 調査項目カーソル位置を更新
   UpdateSubDisplayStrings( work ); // 上画面のカーソル依存文字列を更新
@@ -1809,7 +1816,7 @@ static void FinishSeq_SCROLL_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_SCROLL_CONTROL( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SCROLL_CONTROL\n" );
@@ -1822,7 +1829,7 @@ static void FinishSeq_SCROLL_CONTROL( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_CONFIRM_STANDBY( RRL_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM_STANDBY\n" );
@@ -1835,7 +1842,7 @@ static void FinishSeq_CONFIRM_STANDBY( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM_KEY_WAIT\n" );
@@ -1848,7 +1855,7 @@ static void FinishSeq_CONFIRM_KEY_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_DETERMINE( RRL_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq DETERMINE\n" );
@@ -1861,7 +1868,7 @@ static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_FADE_IN( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_IN\n" );
@@ -1874,7 +1881,7 @@ static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_FADE_OUT( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_OUT\n" );
@@ -1887,7 +1894,7 @@ static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_FRAME_WAIT( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FRAME_WAIT\n" );
@@ -1900,7 +1907,7 @@ static void FinishSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_PALETTE_RESET( RRL_WORK* work )
 {
   // フォントのパレットを元に戻す
   BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xf); 
@@ -1916,7 +1923,7 @@ static void FinishSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_SCROLL_RESET( RRL_WORK* work )
 {
   UpdateTopicButtonMask( work ); // ウィンドウを切る
 
@@ -1931,8 +1938,9 @@ static void FinishSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
+static void FinishSeq_CLEAN_UP( RRL_WORK* work )
 {
+  work->finishFlag = TRUE;
   GX_SetVisibleWnd( GX_WNDMASK_NONE ); //ウィンドウを無効に
 
   // DEBUG:
@@ -1949,7 +1957,7 @@ static void FinishSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void VBlankFunc( GFL_TCB* tcb, void* wk )
 {
-  RESEARCH_SELECT_WORK* work = (RESEARCH_SELECT_WORK*)wk;
+  RRL_WORK* work = (RRL_WORK*)wk;
 
   GFL_BG_VBlankFunc();
   GFL_CLACT_SYS_VBlankFunc();
@@ -1969,7 +1977,7 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
+static void MoveMenuCursorUp( RRL_WORK* work )
 { 
   SetMenuItemCursorOff( work, work->menuCursorPos );// カーソルが乗っていない状態にする
   ShiftMenuCursorPos( work, -1 );                   // カーソル移動
@@ -1985,7 +1993,7 @@ static void MoveMenuCursorUp( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
+static void MoveMenuCursorDown( RRL_WORK* work )
 {
   SetMenuItemCursorOff( work, work->menuCursorPos );// カーソルが乗っていない状態にする
   ShiftMenuCursorPos( work, 1 );                    // カーソル移動
@@ -2002,7 +2010,7 @@ static void MoveMenuCursorDown( RESEARCH_SELECT_WORK* work )
  * @param menuItem 移動先のメニュー項目
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorDirect( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem )
 {
   SetMenuItemCursorOff( work, work->menuCursorPos );// カーソルが乗っていない状態にする
   SetMenuCursorPos( work, menuItem );               // カーソル移動
@@ -2018,7 +2026,7 @@ static void MoveMenuCursorDirect( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
+static void MoveTopicCursorUp( RRL_WORK* work )
 {
   SetTopicButtonCursorOff( work );   // 移動前の項目を元に戻す
   SetTopicCursorNextPos( work, -1 ); // 移動先を設定
@@ -2033,7 +2041,7 @@ static void MoveTopicCursorUp( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
+static void MoveTopicCursorDown( RRL_WORK* work )
 {
   SetTopicButtonCursorOff( work );   // 移動前の項目を元に戻す
   SetTopicCursorNextPos( work, 1 );  // 移動先を設定
@@ -2049,7 +2057,7 @@ static void MoveTopicCursorDown( RESEARCH_SELECT_WORK* work )
  * @param topicID 移動先の調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID )
+static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID )
 {
   SetTopicButtonCursorOff( work );          // 移動前の項目を元に戻す
   SetTopicCursorPosDirect( work, topicID ); // カーソル位置を更新
@@ -2073,7 +2081,7 @@ static void MoveTopicCursorDirect( RESEARCH_SELECT_WORK* work, u8 topicID )
  * @param stride 移動量
  */
 //-----------------------------------------------------------------------------------------
-static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride )
+static void ShiftMenuCursorPos( RRL_WORK* work, int stride )
 {
   int nowPos;
   int nextPos;
@@ -2095,7 +2103,7 @@ static void ShiftMenuCursorPos( RESEARCH_SELECT_WORK* work, int stride )
  * @param menuItem 設定するメニュー項目位置
  */
 //-----------------------------------------------------------------------------------------
-static void SetMenuCursorPos( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static void SetMenuCursorPos( RRL_WORK* work, MENU_ITEM menuItem )
 {
   // カーソル位置を更新
   work->menuCursorPos = menuItem;
@@ -2112,7 +2120,7 @@ static void SetMenuCursorPos( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
  * @param stride 移動量
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride )
+static void SetTopicCursorNextPos( RRL_WORK* work, int stride )
 {
   int nowPos, nextPos;
 
@@ -2135,7 +2143,7 @@ static void SetTopicCursorNextPos( RESEARCH_SELECT_WORK* work, int stride )
  * @param topicID 設定する調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicCursorPosDirect( RESEARCH_SELECT_WORK* work, int topicID )
+static void SetTopicCursorPosDirect( RRL_WORK* work, int topicID )
 {
   // カーソル位置を更新
   work->topicCursorPos = topicID;
@@ -2151,7 +2159,7 @@ static void SetTopicCursorPosDirect( RESEARCH_SELECT_WORK* work, int topicID )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateTopicTouchArea( RESEARCH_SELECT_WORK* work )
+static void UpdateTopicTouchArea( RRL_WORK* work )
 {
   int idx;
   
@@ -2179,7 +2187,7 @@ static void UpdateTopicTouchArea( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupSelectableTopicNum( RESEARCH_SELECT_WORK* work )
+static void SetupSelectableTopicNum( RRL_WORK* work )
 {
   EVENTWORK* evwork;
   int num;
@@ -2212,7 +2220,7 @@ static void SetupSelectableTopicNum( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetSelectableTopicNum( const RESEARCH_SELECT_WORK* work )
+static u8 GetSelectableTopicNum( const RRL_WORK* work )
 {
   return work->selectableTopicNum;
 }
@@ -2227,7 +2235,7 @@ static u8 GetSelectableTopicNum( const RESEARCH_SELECT_WORK* work )
  *         未選択の場合 TOPIC_ID_DUMMY
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetSelectedTopicID( const RESEARCH_SELECT_WORK* work )
+static u8 GetSelectedTopicID( const RRL_WORK* work )
 {
   return work->selectedTopicID;
 }
@@ -2240,7 +2248,7 @@ static u8 GetSelectedTopicID( const RESEARCH_SELECT_WORK* work )
  * @param topicID 選択する調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-static void SetSelectedTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
+static void SetSelectedTopicID( RRL_WORK* work, u8 topicID )
 {
   work->selectedTopicID = topicID;
 
@@ -2255,7 +2263,7 @@ static void SetSelectedTopicID( RESEARCH_SELECT_WORK* work, u8 topicID )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ResetSelectedTopicID( RESEARCH_SELECT_WORK* work )
+static void ResetSelectedTopicID( RRL_WORK* work )
 {
   work->selectedTopicID = TOPIC_ID_DUMMY;
 
@@ -2273,7 +2281,7 @@ static void ResetSelectedTopicID( RESEARCH_SELECT_WORK* work )
  *         そうでなければ FALSE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work )
+static BOOL IsTopicIDSelected( const RRL_WORK* work )
 {
   return (work->selectedTopicID != TOPIC_ID_DUMMY);
 }
@@ -2289,7 +2297,7 @@ static BOOL IsTopicIDSelected( const RESEARCH_SELECT_WORK* work )
  *         そうでないなら FALSE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL CheckTopicCanSelect( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static BOOL CheckTopicCanSelect( const RRL_WORK* work, u8 topicID )
 {
   if( topicID < GetSelectableTopicNum( work ) ) {
     return TRUE;
@@ -2307,7 +2315,7 @@ static BOOL CheckTopicCanSelect( const RESEARCH_SELECT_WORK* work, u8 topicID )
  * @param menuItem メニュー項目
  */
 //-----------------------------------------------------------------------------------------
-static void SetMenuItemCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static void SetMenuItemCursorOn( RRL_WORK* work, MENU_ITEM menuItem )
 {
   BMPOAM_ACT_PTR BmpOamActor;
 
@@ -2326,7 +2334,7 @@ static void SetMenuItemCursorOn( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem 
  * @param menuItem メニュー項目
  */
 //-----------------------------------------------------------------------------------------
-static void SetMenuItemCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static void SetMenuItemCursorOff( RRL_WORK* work, MENU_ITEM menuItem )
 {
   BMPOAM_ACT_PTR BmpOamActor;
 
@@ -2344,7 +2352,7 @@ static void SetMenuItemCursorOff( RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicButtonCursorOn( const RESEARCH_SELECT_WORK* work )
+static void SetTopicButtonCursorOn( const RRL_WORK* work )
 {
   u8 topicID;
   u8 BGFrame;
@@ -2372,7 +2380,7 @@ static void SetTopicButtonCursorOn( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work )
+static void SetTopicButtonCursorOff( const RRL_WORK* work )
 {
   u8 topicID;
   u8 BGFrame;
@@ -2401,7 +2409,7 @@ static void SetTopicButtonCursorOff( const RESEARCH_SELECT_WORK* work )
  * @param topicID 調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicButtonInvestigating( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static void SetTopicButtonInvestigating( const RRL_WORK* work, u8 topicID )
 {
   u16* screenBuffer1;
   u16* screenBuffer2;
@@ -2472,7 +2480,7 @@ static void SetTopicButtonInvestigating( const RESEARCH_SELECT_WORK* work, u8 to
  * @param topicID 調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicButtonNotInvestigating( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static void SetTopicButtonNotInvestigating( const RRL_WORK* work, u8 topicID )
 {
   u16* screenBuffer1;
   u16* screenBuffer2;
@@ -2542,7 +2550,7 @@ static void SetTopicButtonNotInvestigating( const RESEARCH_SELECT_WORK* work, u8
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
+static void UpdateSubDisplayStrings( RRL_WORK* work )
 {
   int nowPos;
 
@@ -2568,7 +2576,7 @@ static void UpdateSubDisplayStrings( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void TopicDetailStringHide( RESEARCH_SELECT_WORK* work )
+static void TopicDetailStringHide( RRL_WORK* work )
 {
   BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_TITLE ], FALSE );
   BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_CAPTION ], FALSE );
@@ -2587,7 +2595,7 @@ static void TopicDetailStringHide( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void TopicDetailStringDispStart( RESEARCH_SELECT_WORK* work )
+static void TopicDetailStringDispStart( RRL_WORK* work )
 {
   BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_TITLE ], TRUE );
   BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_CAPTION ], TRUE );
@@ -2609,7 +2617,7 @@ static void TopicDetailStringDispStart( RESEARCH_SELECT_WORK* work )
  * @return 指定した調査項目IDが該当するスクリーン範囲の左上x座標 (スクリーン単位)
  */
 //-----------------------------------------------------------------------------------------
-static u8 CalcScreenLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static u8 CalcScreenLeftOfTopicButton( const RRL_WORK* work, u8 topicID )
 {
   u8 left;
 
@@ -2632,7 +2640,7 @@ static u8 CalcScreenLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topi
  * @return 指定した調査項目IDが該当するスクリーン範囲の左上y座標 (スクリーン単位)
  */
 //-----------------------------------------------------------------------------------------
-static u8 CalcScreenTopOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static u8 CalcScreenTopOfTopicButton( const RRL_WORK* work, u8 topicID )
 {
   u8 top;
 
@@ -2652,7 +2660,7 @@ static u8 CalcScreenTopOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topic
  * @return 指定した調査項目の左上x座標 (ドット単位)
  */
 //-----------------------------------------------------------------------------------------
-static int CalcDisplayLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static int CalcDisplayLeftOfTopicButton( const RRL_WORK* work, u8 topicID )
 {
   int left;
 
@@ -2675,7 +2683,7 @@ static int CalcDisplayLeftOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 to
  * @return 指定した調査項目の左上y座標 (ドット単位)
  */
 //-----------------------------------------------------------------------------------------
-static int CalcDisplayTopOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static int CalcDisplayTopOfTopicButton( const RRL_WORK* work, u8 topicID )
 {
   int top;
 
@@ -2698,7 +2706,7 @@ static int CalcDisplayTopOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 top
  * @return 指定した調査項目の左上y座標 (ドット単位)
  */
 //-----------------------------------------------------------------------------------------
-static int CalcDisplayBottomOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 topicID )
+static int CalcDisplayBottomOfTopicButton( const RRL_WORK* work, u8 topicID )
 {
   int bottom;
 
@@ -2718,7 +2726,7 @@ static int CalcDisplayBottomOfTopicButton( const RESEARCH_SELECT_WORK* work, u8 
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateTopicButtonMask( const RESEARCH_SELECT_WORK* work )
+static void UpdateTopicButtonMask( const RRL_WORK* work )
 {
   int top, bottom;
   BOOL wndEnable = FALSE;
@@ -2773,7 +2781,7 @@ static void UpdateTopicButtonMask( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupTouchArea( RESEARCH_SELECT_WORK* work )
+static void SetupTouchArea( RRL_WORK* work )
 {
   int idx;
 
@@ -2818,7 +2826,7 @@ static void SetupTouchArea( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeqQueue( RESEARCH_SELECT_WORK* work )
+static void InitSeqQueue( RRL_WORK* work )
 {
   // 初期化
   work->seqQueue = NULL;
@@ -2834,7 +2842,7 @@ static void InitSeqQueue( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateSeqQueue( RESEARCH_SELECT_WORK* work )
+static void CreateSeqQueue( RRL_WORK* work )
 {
   GF_ASSERT( work->seqQueue == NULL );
 
@@ -2852,7 +2860,7 @@ static void CreateSeqQueue( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteSeqQueue( RESEARCH_SELECT_WORK* work )
+static void DeleteSeqQueue( RRL_WORK* work )
 {
   GF_ASSERT( work->seqQueue );
 
@@ -2871,7 +2879,7 @@ static void DeleteSeqQueue( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitFont( RESEARCH_SELECT_WORK* work )
+static void InitFont( RRL_WORK* work )
 {
   // 初期化
   work->font = NULL;
@@ -2887,7 +2895,7 @@ static void InitFont( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateFont( RESEARCH_SELECT_WORK* work )
+static void CreateFont( RRL_WORK* work )
 {
   GF_ASSERT( work->font == NULL );
 
@@ -2906,7 +2914,7 @@ static void CreateFont( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteFont( RESEARCH_SELECT_WORK* work )
+static void DeleteFont( RRL_WORK* work )
 {
   GF_ASSERT( work->font );
 
@@ -2929,7 +2937,7 @@ static void DeleteFont( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitMessages( RESEARCH_SELECT_WORK* work )
+static void InitMessages( RRL_WORK* work )
 {
   int msgIdx;
 
@@ -2950,7 +2958,7 @@ static void InitMessages( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateMessages( RESEARCH_SELECT_WORK* work )
+static void CreateMessages( RRL_WORK* work )
 {
   int msgIdx;
 
@@ -2977,7 +2985,7 @@ static void CreateMessages( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteMessages( RESEARCH_SELECT_WORK* work )
+static void DeleteMessages( RRL_WORK* work )
 {
   int msgIdx;
 
@@ -3005,7 +3013,7 @@ static void DeleteMessages( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBG( RESEARCH_SELECT_WORK* work )
+static void SetupBG( RRL_WORK* work )
 { 
   // BG モード
   GFL_BG_SetBGMode( &BGSysHeader2D );
@@ -3047,7 +3055,7 @@ static void SetupBG( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpBG( RESEARCH_SELECT_WORK* work )
+static void CleanUpBG( RRL_WORK* work )
 {
   GFL_BMPWIN_Exit();
 
@@ -3073,7 +3081,7 @@ static void CleanUpBG( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupSubBG_WINDOW( RESEARCH_SELECT_WORK* work )
+static void SetupSubBG_WINDOW( RRL_WORK* work )
 {
   ARCHANDLE* handle;
 
@@ -3107,7 +3115,7 @@ static void SetupSubBG_WINDOW( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work )
+static void CleanUpSubBG_WINDOW( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up SUB-BG-WINDOW\n" );
@@ -3125,7 +3133,7 @@ static void CleanUpSubBG_WINDOW( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupSubBG_FONT( RESEARCH_SELECT_WORK* work )
+static void SetupSubBG_FONT( RRL_WORK* work )
 {
   // NULLキャラ確保
   GFL_BG_FillCharacter( SUB_BG_FONT, 0, 1, 0 );
@@ -3144,7 +3152,7 @@ static void SetupSubBG_FONT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work )
+static void CleanUpSubBG_FONT( RRL_WORK* work )
 { 
   // NULLキャラ解放
   GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
@@ -3161,7 +3169,7 @@ static void CleanUpSubBG_FONT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupMainBG_BAR( RESEARCH_SELECT_WORK* work )
+static void SetupMainBG_BAR( RRL_WORK* work )
 {
   // データ読み込み
   {
@@ -3198,7 +3206,7 @@ static void SetupMainBG_BAR( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work )
+static void CleanUpMainBG_BAR( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up MAIN-BG-BAR\n" );
@@ -3215,7 +3223,7 @@ static void CleanUpMainBG_BAR( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupMainBG_WINDOW( RESEARCH_SELECT_WORK* work )
+static void SetupMainBG_WINDOW( RRL_WORK* work )
 {
   ARCHANDLE* handle;
 
@@ -3254,7 +3262,7 @@ static void SetupMainBG_WINDOW( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work )
+static void CleanUpMainBG_WINDOW( RRL_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up MAIN-BG-WINDOW\n" );
@@ -3272,7 +3280,7 @@ static void CleanUpMainBG_WINDOW( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupMainBG_FONT( RESEARCH_SELECT_WORK* work )
+static void SetupMainBG_FONT( RRL_WORK* work )
 { 
   // NULLキャラ確保
   GFL_BG_FillCharacter( MAIN_BG_FONT, 0, 1, 0 );
@@ -3291,7 +3299,7 @@ static void SetupMainBG_FONT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work )
+static void CleanUpMainBG_FONT( RRL_WORK* work )
 { 
   // NULLキャラ解放
   GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
@@ -3312,7 +3320,7 @@ static void CleanUpMainBG_FONT( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitBGFonts( RESEARCH_SELECT_WORK* work )
+static void InitBGFonts( RRL_WORK* work )
 {
   int idx;
 
@@ -3335,7 +3343,7 @@ static void InitBGFonts( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateBGFonts( RESEARCH_SELECT_WORK* work )
+static void CreateBGFonts( RRL_WORK* work )
 {
   int i;
 
@@ -3414,7 +3422,7 @@ static void CreateBGFonts( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteBGFonts( RESEARCH_SELECT_WORK* work )
+static void DeleteBGFonts( RRL_WORK* work )
 {
   int i;
   
@@ -3449,7 +3457,7 @@ static void DeleteBGFonts( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
+static void CreateClactSystem( RRL_WORK* work )
 {
   // システム作成
   //GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
@@ -3465,7 +3473,7 @@ static void CreateClactSystem( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactSystem( RESEARCH_SELECT_WORK* work )
+static void DeleteClactSystem( RRL_WORK* work )
 { 
   // システム破棄
   //GFL_CLACT_SYS_Delete();
@@ -3483,7 +3491,7 @@ static void DeleteClactSystem( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitOBJResources( RESEARCH_SELECT_WORK* work )
+static void InitOBJResources( RRL_WORK* work )
 {
   int i;
 
@@ -3503,7 +3511,7 @@ static void InitOBJResources( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work )
+static void RegisterSubObjResources( RRL_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
@@ -3543,7 +3551,7 @@ static void RegisterSubObjResources( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ReleaseSubObjResources( RESEARCH_SELECT_WORK* work )
+static void ReleaseSubObjResources( RRL_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ] );
@@ -3565,7 +3573,7 @@ static void ReleaseSubObjResources( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work )
+static void RegisterMainObjResources( RRL_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
@@ -3614,7 +3622,7 @@ static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ReleaseMainObjResources( RESEARCH_SELECT_WORK* work )
+static void ReleaseMainObjResources( RRL_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
@@ -3637,7 +3645,7 @@ static void ReleaseMainObjResources( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitClactUnits( RESEARCH_SELECT_WORK* work )
+static void InitClactUnits( RRL_WORK* work )
 {
   int unitIdx;
 
@@ -3657,7 +3665,7 @@ static void InitClactUnits( RESEARCH_SELECT_WORK* work )
  * @param
  */
 //-----------------------------------------------------------------------------------------
-static void CreateClactUnits( RESEARCH_SELECT_WORK* work )
+static void CreateClactUnits( RRL_WORK* work )
 {
   int unitIdx;
   u16 workNum;
@@ -3683,7 +3691,7 @@ static void CreateClactUnits( RESEARCH_SELECT_WORK* work )
  * @param
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactUnits( RESEARCH_SELECT_WORK* work )
+static void DeleteClactUnits( RRL_WORK* work )
 {
   int unitIdx;
 
@@ -3709,7 +3717,7 @@ static void DeleteClactUnits( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitClactWorks( RESEARCH_SELECT_WORK* work )
+static void InitClactWorks( RRL_WORK* work )
 {
   int wkIdx;
 
@@ -3730,7 +3738,7 @@ static void InitClactWorks( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateClactWorks( RESEARCH_SELECT_WORK* work )
+static void CreateClactWorks( RRL_WORK* work )
 {
   int wkIdx;
 
@@ -3775,7 +3783,7 @@ static void CreateClactWorks( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactWorks( RESEARCH_SELECT_WORK* work )
+static void DeleteClactWorks( RRL_WORK* work )
 {
   int wkIdx;
 
@@ -3799,7 +3807,7 @@ static void DeleteClactWorks( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitBitmapDatas( RESEARCH_SELECT_WORK* work )
+static void InitBitmapDatas( RRL_WORK* work )
 {
   int idx;
 
@@ -3820,7 +3828,7 @@ static void InitBitmapDatas( RESEARCH_SELECT_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work )
+static void CreateBitmapDatas( RRL_WORK* work )
 {
   int idx;
 
@@ -3846,7 +3854,7 @@ static void CreateBitmapDatas( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forDefault( RESEARCH_SELECT_WORK* work )
+static void SetupBitmapData_forDefault( RRL_WORK* work )
 {
   int idx;
 
@@ -3893,7 +3901,7 @@ static void SetupBitmapData_forDefault( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forOK( RESEARCH_SELECT_WORK* work )
+static void SetupBitmapData_forOK( RRL_WORK* work )
 {
   int x, y;
   GFL_BMP_DATA* srcBMP; 
@@ -3954,7 +3962,7 @@ static void SetupBitmapData_forOK( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forCANCEL( RESEARCH_SELECT_WORK* work )
+static void SetupBitmapData_forCANCEL( RRL_WORK* work )
 {
   int x, y;
   GFL_BMP_DATA* srcBMP; 
@@ -4015,7 +4023,7 @@ static void SetupBitmapData_forCANCEL( RESEARCH_SELECT_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work )
+static void DeleteBitmapDatas( RRL_WORK* work )
 {
   int idx;
 
@@ -4036,7 +4044,7 @@ static void DeleteBitmapDatas( RESEARCH_SELECT_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBmpOamSystem( RESEARCH_SELECT_WORK* work )
+static void SetupBmpOamSystem( RRL_WORK* work )
 {
   // BMP-OAM システムを作成
   work->BmpOamSystem = BmpOam_Init( work->heapID, work->clactUnit[ CLUNIT_BMPOAM ] );
@@ -4052,7 +4060,7 @@ static void SetupBmpOamSystem( RESEARCH_SELECT_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work )
+static void CleanUpBmpOamSystem( RRL_WORK* work )
 {
   // BMP-OAM システムを破棄
   BmpOam_Exit( work->BmpOamSystem );
@@ -4068,7 +4076,7 @@ static void CleanUpBmpOamSystem( RESEARCH_SELECT_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work )
+static void CreateBmpOamActors( RRL_WORK* work )
 {
   int idx;
   BMPOAM_ACT_DATA head;
@@ -4107,7 +4115,7 @@ static void CreateBmpOamActors( RESEARCH_SELECT_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work )
+static void DeleteBmpOamActors( RRL_WORK* work )
 {
   int idx;
 
@@ -4127,7 +4135,7 @@ static void DeleteBmpOamActors( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void InitPaletteAnime( RESEARCH_SELECT_WORK* work )
+static void InitPaletteAnime( RRL_WORK* work )
 {
   int idx;
 
@@ -4147,7 +4155,7 @@ static void InitPaletteAnime( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void CreatePaletteAnime( RESEARCH_SELECT_WORK* work )
+static void CreatePaletteAnime( RRL_WORK* work )
 {
   int idx;
 
@@ -4169,7 +4177,7 @@ static void CreatePaletteAnime( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void DeletePaletteAnime( RESEARCH_SELECT_WORK* work )
+static void DeletePaletteAnime( RRL_WORK* work )
 {
   int idx;
 
@@ -4191,7 +4199,7 @@ static void DeletePaletteAnime( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void SetupPaletteAnime( RESEARCH_SELECT_WORK* work )
+static void SetupPaletteAnime( RRL_WORK* work )
 {
   int idx;
 
@@ -4216,7 +4224,7 @@ static void SetupPaletteAnime( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void CleanUpPaletteAnime( RESEARCH_SELECT_WORK* work )
+static void CleanUpPaletteAnime( RRL_WORK* work )
 {
   int idx;
 
@@ -4239,7 +4247,7 @@ static void CleanUpPaletteAnime( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void StartPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index )
+static void StartPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Start( work->paletteAnime[ index ], 
                        PaletteAnimeData[ index ].animeType,
@@ -4255,7 +4263,7 @@ static void StartPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX i
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void StopPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index )
+static void StopPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
 
@@ -4270,7 +4278,7 @@ static void StopPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX in
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void UpdatePaletteAnime( RESEARCH_SELECT_WORK* work )
+static void UpdatePaletteAnime( RRL_WORK* work )
 {
   int idx;
 
@@ -4289,7 +4297,7 @@ static void UpdatePaletteAnime( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work )
+static void RegisterVBlankTask( RRL_WORK* work )
 {
   work->VBlankTask = GFUser_VIntr_CreateTCB( VBlankFunc, work, 0 );
 
@@ -4304,7 +4312,7 @@ static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ReleaseVBlankTask( RESEARCH_SELECT_WORK* work )
+static void ReleaseVBlankTask( RRL_WORK* work )
 { 
   GFL_TCB_DeleteTask( work->VBlankTask );
 
@@ -4319,7 +4327,7 @@ static void ReleaseVBlankTask( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
+static void InitPaletteFadeSystem( RRL_WORK* work )
 { 
   // 初期化
   work->paletteFadeSystem = NULL;
@@ -4335,7 +4343,7 @@ static void InitPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
+static void SetupPaletteFadeSystem( RRL_WORK* work )
 {
   u32 tcbWorkSize;
 
@@ -4364,7 +4372,7 @@ static void SetupPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
+static void CleanUpPaletteFadeSystem( RRL_WORK* work )
 { 
   // パレットフェードのリクエストワークを破棄
   PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
@@ -4392,7 +4400,7 @@ static void CleanUpPaletteFadeSystem( RESEARCH_SELECT_WORK* work )
  * @return 指定したリソースの登録インデックス
  */
 //-----------------------------------------------------------------------------------------
-static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RESOURCE_ID resID )
+static u32 GetObjResourceRegisterIndex( const RRL_WORK* work, OBJ_RESOURCE_ID resID )
 {
   return work->objResRegisterIdx[ resID ];
 }
@@ -4407,7 +4415,7 @@ static u32 GetObjResourceRegisterIndex( const RESEARCH_SELECT_WORK* work, OBJ_RE
  * @return 指定したセルアクターユニット
  */
 //-----------------------------------------------------------------------------------------
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX unitIdx )
+static GFL_CLUNIT* GetClactUnit( const RRL_WORK* work, CLUNIT_INDEX unitIdx )
 {
   return work->clactUnit[ unitIdx ];
 }
@@ -4422,7 +4430,7 @@ static GFL_CLUNIT* GetClactUnit( const RESEARCH_SELECT_WORK* work, CLUNIT_INDEX 
  * @return 指定したセルアクターワーク
  */
 //-----------------------------------------------------------------------------------------
-static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkIdx )
+static GFL_CLWK* GetClactWork( const RRL_WORK* work, CLWK_INDEX wkIdx )
 {
   return work->clactWork[ wkIdx ];
 }
@@ -4437,7 +4445,7 @@ static GFL_CLWK* GetClactWork( const RESEARCH_SELECT_WORK* work, CLWK_INDEX wkId
  * @return 指定したメニュー項目に対応するBMP-OAM アクター
  */
 //-----------------------------------------------------------------------------------------
-static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work, MENU_ITEM menuItem )
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM menuItem )
 {
   BMPOAM_ACTOR_INDEX BmpOamActorIdx;
 
@@ -4457,7 +4465,7 @@ static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work
  * @return 現在調査中の調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
+static u8 GetInvestigatingTopicID( const RRL_WORK* work )
 {
   int qIdx;
   SAVE_CONTROL_WORK* save;
@@ -4494,7 +4502,7 @@ static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
+static void UpdateInvestigatingTopicID( const RRL_WORK* work )
 {
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
@@ -4525,7 +4533,7 @@ static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
+static void UpdateScrollControlPos( const RRL_WORK* work )
 {
   GFL_CLWK* clactWork;
 
@@ -4564,7 +4572,7 @@ static void UpdateScrollControlPos( const RESEARCH_SELECT_WORK* work )
  * @return 指定したスクロール実効値から求めた, スクロールバーつまみ部分のy座標
  */
 //-----------------------------------------------------------------------------------------
-static int CalcScrollControlPos_byScrollValue( const RESEARCH_SELECT_WORK* work )
+static int CalcScrollControlPos_byScrollValue( const RRL_WORK* work )
 {
   int controlRange;
   int valueRange;
@@ -4591,7 +4599,7 @@ static int CalcScrollControlPos_byScrollValue( const RESEARCH_SELECT_WORK* work 
  * @return スクロールカーソルの位置
  */
 //-----------------------------------------------------------------------------------------
-static int CalcScrollCursorPos_byScrollControlPos( const RESEARCH_SELECT_WORK* work, 
+static int CalcScrollCursorPos_byScrollControlPos( const RRL_WORK* work, 
                                                    int controlPos )
 {
   float rate;
@@ -4618,7 +4626,7 @@ static int CalcScrollCursorPos_byScrollControlPos( const RESEARCH_SELECT_WORK* w
  * @return スクロールバーのつまみ部分の表示位置
  */
 //-----------------------------------------------------------------------------------------
-static int GetScrollControlPos( const RESEARCH_SELECT_WORK* work )
+static int GetScrollControlPos( const RRL_WORK* work )
 {
   int controlPos;
   GFL_CLWK* clwk;
@@ -4643,7 +4651,7 @@ static int GetScrollControlPos( const RESEARCH_SELECT_WORK* work )
  * @param frames   フレーム数
  */
 //-----------------------------------------------------------------------------------------
-static void StartScroll( RESEARCH_SELECT_WORK* work, int startPos, int endPos, int frames )
+static void StartScroll( RRL_WORK* work, int startPos, int endPos, int frames )
 {
   // スクロールパラメータを設定
   work->scrollStartPos   = startPos;
@@ -4664,7 +4672,7 @@ static void StartScroll( RESEARCH_SELECT_WORK* work, int startPos, int endPos, i
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateScroll( RESEARCH_SELECT_WORK* work )
+static void UpdateScroll( RRL_WORK* work )
 {
   int maxFrame, nowFrame;
   int startPos, endPos, nowPos;
@@ -4696,7 +4704,7 @@ static void UpdateScroll( RESEARCH_SELECT_WORK* work )
  *         そうでなければ FALSE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL CheckScrollEnd( RESEARCH_SELECT_WORK* work )
+static BOOL CheckScrollEnd( RRL_WORK* work )
 {
   int maxFrame, nowFrame;
 
@@ -4718,7 +4726,7 @@ static BOOL CheckScrollEnd( RESEARCH_SELECT_WORK* work )
  * @param offset 移動オフセット値
  */
 //-----------------------------------------------------------------------------------------
-static void ShiftScrollCursorPos( RESEARCH_SELECT_WORK* work, int offset )
+static void ShiftScrollCursorPos( RRL_WORK* work, int offset )
 {
   int now;
   int next;
@@ -4744,7 +4752,7 @@ static void ShiftScrollCursorPos( RESEARCH_SELECT_WORK* work, int offset )
  * @param pos 設定するカーソル位置
  */
 //-----------------------------------------------------------------------------------------
-static void SetScrollCursorPos( RESEARCH_SELECT_WORK* work, int pos )
+static void SetScrollCursorPos( RRL_WORK* work, int pos )
 {
   // 引数を補正
   if( pos < MIN_SCROLL_CURSOR_POS ) { pos = MIN_SCROLL_CURSOR_POS; } // 最小値補正
@@ -4765,7 +4773,7 @@ static void SetScrollCursorPos( RESEARCH_SELECT_WORK* work, int pos )
  * @param pos 設定するカーソル位置
  */
 //-----------------------------------------------------------------------------------------
-static void SetScrollCursorPosForce( RESEARCH_SELECT_WORK* work, int pos )
+static void SetScrollCursorPosForce( RRL_WORK* work, int pos )
 {
   // カーソル位置を更新
   work->scrollCursorPos = pos;
@@ -4781,7 +4789,7 @@ static void SetScrollCursorPosForce( RESEARCH_SELECT_WORK* work, int pos )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void AdjustScrollCursor( RESEARCH_SELECT_WORK* work )
+static void AdjustScrollCursor( RRL_WORK* work )
 {
   int minPos, maxPos, adjustPos;
 
@@ -4807,7 +4815,7 @@ static void AdjustScrollCursor( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateScrollValue( const RESEARCH_SELECT_WORK* work )
+static void UpdateScrollValue( const RRL_WORK* work )
 {
   int nowPos, minPos, maxPos;
   int value;
@@ -4836,7 +4844,7 @@ static void UpdateScrollValue( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void AdjustScrollValue( const RESEARCH_SELECT_WORK* work )
+static void AdjustScrollValue( const RRL_WORK* work )
 {
   int value;
 
@@ -4942,7 +4950,7 @@ static int CalcScrollCursorPosOfTopicButtonBottom( int topicID )
  * @return 最大スクロール値
  */
 //-----------------------------------------------------------------------------------------
-static int GetMaxScrollValue( const RESEARCH_SELECT_WORK* work )
+static int GetMaxScrollValue( const RRL_WORK* work )
 {
   int pos;
 
@@ -4963,7 +4971,7 @@ static int GetMaxScrollValue( const RESEARCH_SELECT_WORK* work )
  * @return スクロールカーソルの最大値
  */
 //-----------------------------------------------------------------------------------------
-static int GetMaxScrollCursorPos( const RESEARCH_SELECT_WORK* work )
+static int GetMaxScrollCursorPos( const RRL_WORK* work )
 {
   int pos;
 
@@ -4982,7 +4990,7 @@ static int GetMaxScrollCursorPos( const RESEARCH_SELECT_WORK* work )
  *         そうでないなら FALSE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL CheckScrollControlCan( const RESEARCH_SELECT_WORK* work )
+static BOOL CheckScrollControlCan( const RRL_WORK* work )
 {
   int height;
   int min;
@@ -5010,7 +5018,7 @@ static BOOL CheckScrollControlCan( const RESEARCH_SELECT_WORK* work )
  * @return 次の調査項目ID ( 端はループする )
  */
 //-----------------------------------------------------------------------------------------
-static int GetNextTopicID( const RESEARCH_SELECT_WORK* work, int topicID )
+static int GetNextTopicID( const RRL_WORK* work, int topicID )
 {
   return (topicID + 1) % GetSelectableTopicNum( work );
 }
@@ -5025,7 +5033,7 @@ static int GetNextTopicID( const RESEARCH_SELECT_WORK* work, int topicID )
  * @return 前の調査項目ID ( 端はループする )
  */
 //-----------------------------------------------------------------------------------------
-static int GetPrevTopicID( const RESEARCH_SELECT_WORK* work, int topicID )
+static int GetPrevTopicID( const RRL_WORK* work, int topicID )
 {
   return (topicID - 1 + GetSelectableTopicNum(work)) % GetSelectableTopicNum(work);
 }
@@ -5037,7 +5045,7 @@ static int GetPrevTopicID( const RESEARCH_SELECT_WORK* work, int topicID )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work )
+static void UpdateTopicSelectIcon( const RRL_WORK* work )
 {
   int topicID;
   GFL_CLWK* clactWork;
@@ -5073,7 +5081,7 @@ static void UpdateTopicSelectIcon( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work )
+static void StartPaletteFadeOut( RRL_WORK* work )
 {
   // MAIN-BG
   PaletteFadeReq( work->paletteFadeSystem, 
@@ -5109,7 +5117,7 @@ static void StartPaletteFadeOut( RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void StartPaletteFadeIn( RESEARCH_SELECT_WORK* work )
+static void StartPaletteFadeIn( RRL_WORK* work )
 {
   // MAIN-BG
   PaletteFadeReq( work->paletteFadeSystem, 
@@ -5148,7 +5156,7 @@ static void StartPaletteFadeIn( RESEARCH_SELECT_WORK* work )
  *         そうでなければ FALSE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work )
+static BOOL IsPaletteFadeEnd( RRL_WORK* work )
 {
   return (PaletteFadeCheck( work->paletteFadeSystem ) == 0);
 }
@@ -5162,7 +5170,7 @@ static BOOL IsPaletteFadeEnd( RESEARCH_SELECT_WORK* work )
  * @param enable   表示するかどうか
  */
 //-----------------------------------------------------------------------------------------
-static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BOOL enable )
+static void BmpOamSetDrawEnable( RRL_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BOOL enable )
 {
   // インデックスエラー
   GF_ASSERT( actorIdx < BMPOAM_ACTOR_NUM );
@@ -5183,7 +5191,7 @@ static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX 
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void SetupWirelessIcon( const RESEARCH_SELECT_WORK* work )
+static void SetupWirelessIcon( const RRL_WORK* work )
 {
   GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
@@ -5201,7 +5209,7 @@ static void SetupWirelessIcon( const RESEARCH_SELECT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work )
+static void DebugPrint_seqQueue( const RRL_WORK* work )
 {
   int i;
   int dataNum;

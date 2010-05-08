@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 調査内容変更画面のインデックス定義
- * @file   research_select_index.h
+ * @file   research_list_index.h
  * @author obata
  * @date   2010.02.15
  */
