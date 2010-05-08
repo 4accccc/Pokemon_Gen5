@@ -413,7 +413,7 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
-static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
     u8* yure_cnt, u8* fCritical );
 static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk );
@@ -2971,8 +2971,9 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   // ボール投げならボール投げシーケンスへ
   if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
   {
-    BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
-    scproc_TrainerItem_BallRoot( wk, bpp, itemID );
+    if( scproc_TrainerItem_BallRoot( wk, bpp, itemID ) ){
+      BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
+    }
     return;
   }
 
@@ -3037,38 +3038,38 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
  * @param   wk
  * @param   bpp
  * @param   itemID
+ *
+ * @retval  ボールを消費する場合はTRUE
  */
 //----------------------------------------------------------------------------------
-static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
 {
-  if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
-  &&  (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
-  ){
-    BTL_POKEPARAM* targetPoke;
-    BtlPokePos  targetPos = BTL_POS_NULL;
+  BtlPokePos  targetPos = BTL_POS_NULL;
+  BTL_POKEPARAM* targetPoke = NULL;
 
+  // 投げる位置（生きているポケモンをシークして最初のヒット位置）を決める
+  {
+    BtlExPos exPos;
+    u8 posAry[ BTL_POSIDX_MAX ];
+    u8 basePos, posCnt, i;
+
+    basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
+    exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, basePos );
+    posCnt = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, posAry );
+
+    for(i=0; i<posCnt; ++i)
     {
-      BtlExPos exPos;
-      u8 posAry[ BTL_POSIDX_MAX ];
-      u8 basePos;
-      u8 posCnt, i;
-
-      basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
-
-      exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, basePos );
-      posCnt = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, posAry );
-
-      for(i=0; i<posCnt; ++i)
-      {
-        targetPoke = BTL_POKECON_GetFrontPokeData( wk->pokeCon, posAry[i] );
-        if( !BPP_IsDead(targetPoke) )
-        {
-          targetPos = posAry[i];
-          break;
-        }
+      targetPoke = BTL_POKECON_GetFrontPokeData( wk->pokeCon, posAry[i] );
+      if( !BPP_IsDead(targetPoke) ){
+        targetPos = posAry[i];
+        break;
       }
     }
+  }
 
+  // 野生戦 = 通常処理
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD )
+  {
     if( targetPos != BTL_POS_NULL )
     {
       u8 yure_cnt, fSuccess, fCritical, fZukanRegister;
@@ -3089,6 +3090,16 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 
       SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess, fZukanRegister, fCritical, itemID );
     }
+
+    return TRUE;
+  }
+  // トレーナー戦では失敗（ボールは減らない）
+  else
+  {
+    if( targetPos != BTL_POS_NULL ){
+      SCQUE_PUT_ACT_BallThrowTrainer( wk->que, targetPos, itemID );
+    }
+    return FALSE;
   }
 }
 //----------------------------------------------------------------------------------

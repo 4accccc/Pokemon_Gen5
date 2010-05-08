@@ -92,6 +92,7 @@ typedef enum {
   SC_ACT_MOVE,              ///< ムーブ
   SC_ACT_EXP,               ///< 経験値取得
   SC_ACT_BALL_THROW,        ///< ボール投げ
+  SC_ACT_BALL_THROW_TR,     ///< ボール投げ（トレーナー戦）
   SC_ACT_ROTATION,          ///< ローテーション
   SC_ACT_CHANGE_TOKUSEI,    ///< とくせい変更
   SC_ACT_FAKE_DISABLE,      ///< イリュージョン解除
@@ -478,6 +479,10 @@ static inline void SCQUE_PUT_ACT_BallThrow( BTL_SERVER_CMD_QUE* que, BtlPokePos 
     u8 fSuccess, u8 fZukanRegister, u8 fCritical, u16 ballItemID )
 {
   SCQUE_PUT_Common( que, SC_ACT_BALL_THROW, pos, yureCnt, fSuccess, fZukanRegister, fCritical, ballItemID );
+}
+static inline void SCQUE_PUT_ACT_BallThrowTrainer( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u16 ballItemID )
+{
+  SCQUE_PUT_Common( que, SC_ACT_BALL_THROW_TR, pos, ballItemID );
 }
 static inline void SCQUE_PUT_ACT_Rotation( BTL_SERVER_CMD_QUE* que, u8 clientID, BtlRotateDir dir )
 {

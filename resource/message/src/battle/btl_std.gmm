@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-05-04T16:39:28"/>
+	<create user="taya" host="W00146" date="2010-05-08T20:20:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -366,8 +366,8 @@
 
 
 	<row id="BTL_STRID_STD_NULL">
-		<language name="JPN" width="216">●よういされていないメッセージ●</language>
-		<language name="JPN_KANJI" width="216">●用意されていないメッセージ●</language>
+		<language name="JPN" width="216">●●</language>
+		<language name="JPN_KANJI" width="216">●●</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_Wild1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -886,6 +886,14 @@
 ポケモンずかんに　とうろく　されます！</language>
 		<language name="JPN_KANJI" width="216">[1:01:ポケモン種族名:0]のデータが　新しく
 ポケモン図鑑に　登録されます！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BallThrowTrainer" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>トレーナー戦でボールを投げておこられる</comment>
+		<language name="JPN" width="216">トレーナーに　ボールをはじかれた！▼
+ひとのものを　とったら　どろぼう！</language>
+		<language name="JPN_KANJI" width="216">トレーナーに　ボールをはじかれた！▼
+人のものを取ったら　泥棒！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NoEffect" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">

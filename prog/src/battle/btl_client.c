@@ -346,6 +346,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL msgPokanCallback( u32 arg );
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_BallThrowTrainer( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
@@ -4892,6 +4893,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MOVE,              scProc_ACT_Move           },
     { SC_ACT_EXP,               scProc_ACT_Exp            },
     { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
+    { SC_ACT_BALL_THROW_TR,     scProc_ACT_BallThrowTrainer },
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
     { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
@@ -6384,7 +6386,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
 }
 //---------------------------------------------------------------------------------------
 /**
- *  モンスターボール投げつけ
+ *  モンスターボール投げつけ（野生）
  *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ [3]: 図鑑登録フラグ [4]:クリティカルフラグ
  *           [5]:ボールのアイテムナンバー
  */
@@ -6475,6 +6477,38 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   default:
       return TRUE;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  モンスターボール投げつけ（トレーナー戦）
+ *  args .. [0]:対象ポケ位置  [1]:ボールのアイテムナンバー
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_BallThrowTrainer( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      BTLV_EFFECT_BallThrowTrainer( vpos, args[1] );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowTrainer );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }

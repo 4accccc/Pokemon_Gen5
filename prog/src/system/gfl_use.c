@@ -65,7 +65,12 @@ typedef struct {
 //------------------------------------------------------------------
 static const HEAP_INIT_HEADER hih[]={
   { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
+#ifdef DEBUG_ONLY_FOR_taya
+  { 0x182000,   OS_ARENA_MAIN },
+//  { HEAPSIZE_APP,   OS_ARENA_MAIN },
+#else
   { HEAPSIZE_APP,   OS_ARENA_MAIN },
+#endif
 };
 
 static const HEAP_INIT_HEADER hihDSi[]={  //DSI—p

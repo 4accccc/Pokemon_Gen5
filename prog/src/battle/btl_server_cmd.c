@@ -154,6 +154,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_555bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
   SC_ARGFMT_32111bit_2byte,   // SC_ACT_BALL_THROW
+  SC_ARGFMT_12byte,           // SC_ACT_BALL_THROW_TR
   SC_ARGFMT_44bit,            // SC_ACT_ROTATION
   SC_ARGFMT_12byte,           // SC_ACT_CHANGE_TOKUSEI
   SC_ARGFMT_1byte,            // SC_ACT_FAKE_DISABLE
