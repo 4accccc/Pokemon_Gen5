@@ -334,7 +334,9 @@ static void common_wallEffect( BTL_SVFLOW_WORK* flowWk, u8 mySide, WazaDamageTyp
     if( (BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == dmgType)
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_FLAG) == FALSE)
     ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
+      BtlRule rule = BTL_SVFTOOL_GetRule( flowWk );
+      fx32 ratio = ((rule==BTL_RULE_SINGLE)||(rule==BTL_RULE_ROTATION))? FX32_CONST(0.5f) : FX32_CONST(0.66f);
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
     }
   }
 }
