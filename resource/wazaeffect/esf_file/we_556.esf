@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_556.spa
 SE再生	SEQ_SE_W556_KAZE	SE1	防御側	20:0:127	0:0:0
 SE再生	SEQ_SE_DUMMY5	SE1	防御側	60:0:0	0:0:0
 SE再生	SEQ_SE_FLD_03	SE2	防御側	40:0:127	0:0:0
-SE再生	SEQ_SE_FLD_03	SE3	防御側	60:0:127	0:0:0
+SE再生	SEQ_SE_FLD_03	SE1	防御側	60:0:127	0:0:0
 制御モード変更	逐次
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_556
