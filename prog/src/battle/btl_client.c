@@ -101,8 +101,10 @@ typedef struct {
   u8   seq;
   u8   ctrlCode;
   u8   fChapterSkip    : 1;
+  u8   fFadeOutStart   : 1;
   u8   fFadeOutDone    : 1;
   u8   fTurnIncrement  : 1;
+  u8   fLock           : 1;
   u16  handlingTimer;
   u16  turnCount;
   u16  nextTurnCount;
@@ -219,7 +221,7 @@ static void ChangeMainProc( BTL_CLIENT* wk, ClientMainProc proc );
 static BOOL ClientMain_Normal( BTL_CLIENT* wk );
 static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk );
 static void setDummyReturnData( BTL_CLIENT* wk );
-static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
+static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd, BOOL* fRecCtrlLock );
 static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq );
 static void EnemyPokeHPBase_Update( BTL_CLIENT* wk );
@@ -409,6 +411,8 @@ static void RecPlayer_ChapterSkipOn( RECPLAYER_CONTROL* ctrl, u32 nextTurnNum );
 static void RecPlayer_ChapterSkipOff( RECPLAYER_CONTROL* ctrl );
 static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl );
 static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl );
+static BOOL RecPlayerCtrl_Lock( RECPLAYER_CONTROL* ctrl );
+static void RecPlayerCtrl_Unlock( RECPLAYER_CONTROL* ctrl );
 static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl );
 static void AICtrl_Init( void );
 static void AICtrl_Delegate( BTL_CLIENT* wk );
@@ -711,7 +715,7 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     SEQ_RETURN_TO_SV_QUIT,
     SEQ_RECPLAY_CTRL,
     SEQ_BGM_FADEOUT,
-    SEQ_IDLE,
+    SEQ_WAIT_RECPLAY_FADEOUT,
     SEQ_QUIT,
   };
 
@@ -735,8 +739,18 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
       }
       if( cmd != BTL_ACMD_NONE )
       {
-        wk->subProc = getSubProc( wk, cmd );
-        if( wk->subProc != NULL ){
+        BOOL fRecCtrlLock;
+        wk->subProc = getSubProc( wk, cmd, &fRecCtrlLock );
+        if( fRecCtrlLock ){
+          if( !RecPlayerCtrl_Lock(&wk->recPlayer) ){  // 既にフェード中でロックできない->フェード待ちへ
+            wk->myState = SEQ_WAIT_RECPLAY_FADEOUT;
+            break;
+          }
+        }else{
+          RecPlayerCtrl_Unlock( &wk->recPlayer );
+        }
+        if( wk->subProc != NULL )
+        {
           BTL_N_Printf( DBGSTR_CLIENT_StartCmd, wk->myID, cmd );
           wk->myState = SEQ_EXEC_CMD;
           wk->subSeq = 0;
@@ -777,6 +791,13 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = SEQ_QUIT;
       BTL_N_Printf( DBGSTR_CLIENT_ReplyToQuitCmd, wk->myID );
+    }
+    break;
+
+  // 録画再生コントロール：ブラックアウト待ち
+  case SEQ_WAIT_RECPLAY_FADEOUT:
+    if( RecPlayer_CheckBlackOut(&wk->recPlayer) ){
+      wk->myState = SEQ_RECPLAY_CTRL;
     }
     break;
 
@@ -843,7 +864,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
         BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd( wk->adapter );
         if( cmd != BTL_ACMD_NONE )
         {
-          wk->subProc = getSubProc( wk, cmd );
+          wk->subProc = getSubProc( wk, cmd, NULL );
           if( wk->subProc != NULL ){
             wk->myState = SEQ_RECPLAY_EXEC_CMD;
             wk->subSeq = 0;
@@ -913,61 +934,63 @@ static void setDummyReturnData( BTL_CLIENT* wk )
   wk->returnDataSize = sizeof(wk->dummyReturnData);
 }
 
-static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
+static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd, BOOL* fRecCtrlLock )
 {
   static const struct {
     BtlAdapterCmd   cmd;                            ///< コマンド
+    u8              fRecCtrlLock;                   ///< 録画再生コントロールをロックする（コマンド処理中）
     ClientSubProc   proc[ BTL_CLIENT_TYPE_MAX ];    ///< コマンド処理関数ポインタテーブル
   }procTbl[] = {
 
-    { BTL_ACMD_WAIT_SETUP,
-      { SubProc_UI_Setup,          NULL,                      SubProc_REC_Setup          } },
+    { BTL_ACMD_WAIT_SETUP,        TRUE,
+      { SubProc_UI_Setup,         NULL,                      SubProc_REC_Setup          } },
 
-    { BTL_ACMD_SELECT_ROTATION,
+    { BTL_ACMD_SELECT_ROTATION,    FALSE,
       { SubProc_UI_SelectRotation, SubProc_AI_SelectRotation, SubProc_REC_SelectRotation } },
 
 #if 1
-    { BTL_ACMD_SELECT_ACTION,
-     { SubProc_UI_SelectAction,    SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
+    { BTL_ACMD_SELECT_ACTION,     FALSE,
+     { SubProc_UI_SelectAction,   SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 #else
 // AIにテスト駆動させる
     { BTL_ACMD_SELECT_ACTION,   FALSE,
        { SubProc_AI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 #endif
-    { BTL_ACMD_SELECT_CHANGE_OR_ESCAPE,
+
+    { BTL_ACMD_SELECT_CHANGE_OR_ESCAPE,   FALSE,
        { SubProc_UI_SelectChangeOrEscape, NULL,  NULL  }
     },
 
-    { BTL_ACMD_SELECT_POKEMON_FOR_COVER,
-       { SubProc_UI_SelectPokemonForCover, SubProc_AI_SelectPokemon,   SubProc_REC_SelectPokemon  }
+    { BTL_ACMD_SELECT_POKEMON_FOR_COVER,    FALSE,
+       { SubProc_UI_SelectPokemonForCover,  SubProc_AI_SelectPokemon,   SubProc_REC_SelectPokemon  }
     },
 
-    { BTL_ACMD_SELECT_POKEMON_FOR_CHANGE,
+    { BTL_ACMD_SELECT_POKEMON_FOR_CHANGE,   FALSE,
        { SubProc_UI_SelectPokemonForChange, SubProc_AI_SelectPokemon,  SubProc_REC_SelectPokemon  } },
 
-    { BTL_ACMD_CONFIRM_IREKAE,
+    { BTL_ACMD_CONFIRM_IREKAE,          FALSE,
        { SubProc_UI_ConfirmIrekae,      NULL,  SubProc_REC_SelectPokemon  } },
 
-    { BTL_ACMD_SERVER_CMD,
-       { SubProc_UI_ServerCmd,     NULL,                      SubProc_REC_ServerCmd      } },
+    { BTL_ACMD_SERVER_CMD,        FALSE,
+       { SubProc_UI_ServerCmd,    NULL,                      SubProc_REC_ServerCmd      } },
 
-    { BTL_ACMD_RECORD_DATA,
-       { SubProc_UI_RecordData,    NULL,                      NULL                       } },
+    { BTL_ACMD_RECORD_DATA,       FALSE,
+       { SubProc_UI_RecordData,   NULL,                      NULL                       } },
 
-    { BTL_ACMD_EXIT_NPC,
-      { SubProc_UI_ExitForNPC,               NULL,  SubProc_REC_ExitForNPC }, },
+    { BTL_ACMD_EXIT_NPC,          TRUE,
+      { SubProc_UI_ExitForNPC,    NULL,     SubProc_REC_ExitForNPC }, },
 
-    { BTL_ACMD_EXIT_SUBWAY_TRAINER,
-        { SubProc_UI_ExitForSubwayTrainer,   NULL,  SubProc_REC_ExitForSubwayTrainer }, },
+    { BTL_ACMD_EXIT_SUBWAY_TRAINER,         TRUE,
+        { SubProc_UI_ExitForSubwayTrainer,  NULL,   SubProc_REC_ExitForSubwayTrainer }, },
 
-    { BTL_ACMD_EXIT_LOSE_WILD,
+    { BTL_ACMD_EXIT_LOSE_WILD,    TRUE,
       { SubProc_UI_LoseWild,   NULL,  NULL }, },
 
-    { BTL_ACMD_EXIT_COMM,
+    { BTL_ACMD_EXIT_COMM,         TRUE,
       { SubProc_UI_ExitCommTrainer,   NULL,  SubProc_REC_ExitCommTrainer }, },
 
-    { BTL_ACMD_NOTIFY_TIMEUP,
-      { SubProc_UI_NotifyTimeUp,   NULL,  NULL }, },
+    { BTL_ACMD_NOTIFY_TIMEUP,     TRUE,
+      { SubProc_UI_NotifyTimeUp,  NULL,  NULL }, },
   };
 
   int i;
@@ -976,6 +999,9 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
   {
     if( procTbl[i].cmd == cmd )
     {
+      if( fRecCtrlLock != NULL ){
+        *fRecCtrlLock = procTbl[i].fRecCtrlLock;
+      }
       return procTbl[i].proc[ wk->myType ];
     }
   }
@@ -6621,10 +6647,6 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
       return TRUE;
     }
 
-    if( args[1] == BTLEFF_ZOOM_IN ){
-      OS_TPrintf("zoom in to pos=%d (vpos=%d)\n", args[0], vpos);
-    }
-
     BTLV_AddEffectByPos( wk->viewCore, vpos, args[1] );
     (*seq)++;
     break;
@@ -7307,8 +7329,10 @@ static void RecPlayer_Init( RECPLAYER_CONTROL* ctrl )
   ctrl->ctrlCode = RECCTRL_NONE;
   ctrl->seq = 0;
   ctrl->fTurnIncrement = FALSE;
+  ctrl->fFadeOutStart = FALSE;
   ctrl->fFadeOutDone = FALSE;
   ctrl->fChapterSkip = FALSE;
+  ctrl->fLock = FALSE;
   ctrl->turnCount = 0;
   ctrl->nextTurnCount = 0;
   ctrl->maxTurnCount = 0;
@@ -7349,10 +7373,11 @@ static RecCtrlCode RecPlayer_GetCtrlCode( const RECPLAYER_CONTROL* ctrl )
  */
 static void RecPlayer_ChapterSkipOn( RECPLAYER_CONTROL* ctrl, u32 nextTurnNum )
 {
-  ctrl->fChapterSkip = TRUE;
+  ctrl->fChapterSkip  = TRUE;
   ctrl->skipTurnCount = 0;
   ctrl->nextTurnCount = nextTurnNum;
-  ctrl->fFadeOutDone = FALSE;
+  ctrl->fFadeOutStart = FALSE;
+  ctrl->fFadeOutDone  = FALSE;
 }
 /**
  *
@@ -7376,7 +7401,26 @@ static u32 RecPlayer_GetNextTurn( const RECPLAYER_CONTROL* ctrl )
 {
   return ctrl->nextTurnCount;
 }
-
+/**
+ *  キー・タッチパネル操作ロック
+ *
+ *  @retval BOOL  既にフェード中でロック不可の場合、FALSEを返す
+ */
+static BOOL RecPlayerCtrl_Lock( RECPLAYER_CONTROL* ctrl )
+{
+  if( ctrl->fFadeOutStart ){
+    return FALSE;
+  }
+  ctrl->fLock = TRUE;
+  return TRUE;
+}
+/**
+ *  キー・タッチパネル操作アンロック
+ */
+static void RecPlayerCtrl_Unlock( RECPLAYER_CONTROL* ctrl )
+{
+  ctrl->fLock = FALSE;
+}
 /**
  *  メインコントロール（キー・タッチパネルに反応、状態遷移する）
  */
@@ -7387,6 +7431,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
   };
 
   if( (wk->myType == BTL_CLIENT_TYPE_RECPLAY)
+  &&  (ctrl->fLock == FALSE)
   &&  (ctrl->maxTurnCount)
   ){
     enum {
@@ -7449,6 +7494,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
         case  BTLV_INPUT_BR_SEL_STOP:     //停止
           ctrl->ctrlCode = RECCTRL_QUIT;
           BTLV_RecPlayFadeOut_Start( wk->viewCore );
+          ctrl->fFadeOutStart = TRUE;
           ctrl->seq = SEQ_FADEOUT;
           break;
 
@@ -7479,6 +7525,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           {
             ctrl->ctrlCode = RECCTRL_CHAPTER;
             BTLV_RecPlayFadeOut_Start( wk->viewCore );
+            ctrl->fFadeOutStart = TRUE;
             ctrl->seq = SEQ_FADEOUT;
           }
           break;
