@@ -1180,6 +1180,9 @@ sub_common_retmap_lose_retire:
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
   
+  //‚¿‚å‚Á‚ÆŠÔ‚ð’u‚­
+  _TIME_WAIT( 30 )
+  
   //“dŽÔ—h‚ê’âŽ~
   _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
   
