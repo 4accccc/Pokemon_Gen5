@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////
 /**
- * @brief  調査レーダー 調査内報告確認画面のインデックス定義
+ * @brief  調査レーダー グラフ画面
  * @file   research_graph_index.h
  * @author obata
  * @date   2010.02.20
@@ -9,21 +9,21 @@
 #pragma once
 
 
-// 処理シーケンス
+// グラフ画面の状態
 typedef enum {
-  RESEARCH_CHECK_SEQ_SETUP,     // 準備
-  RESEARCH_CHECK_SEQ_STANDBY,   // 最初のキー入力待ち
-  RESEARCH_CHECK_SEQ_KEY_WAIT,  // キー入力待ち
-  RESEARCH_CHECK_SEQ_ANALYZE,   // 解析
-  RESEARCH_CHECK_SEQ_PERCENTAGE,// ％表示
-  RESEARCH_CHECK_SEQ_FLASH_OUT, // 画面フラッシュ ( アウト )
-  RESEARCH_CHECK_SEQ_FLASH_IN,  // 画面フラッシュ ( イン )
-  RESEARCH_CHECK_SEQ_UPDATE,    // 更新
-  RESEARCH_CHECK_SEQ_FADE_OUT,  // フェードアウト
-  RESEARCH_CHECK_SEQ_FRAME_WAIT,// フレーム経過待ち
-  RESEARCH_CHECK_SEQ_CLEAN_UP,  // 後片付け
-  RESEARCH_CHECK_SEQ_FINISH,    // 終了
-} RESEARCH_CHECK_SEQ;
+  RRG_STATE_SETUP,     // 準備
+  RRG_STATE_STANDBY,   // 最初のキー入力待ち
+  RRG_STATE_KEYWAIT,  // キー入力待ち
+  RRG_STATE_ANALYZE,   // 解析
+  RRG_STATE_PERCENTAGE,// ％表示
+  RRG_STATE_FLASHOUT, // 画面フラッシュ ( アウト )
+  RRG_STATE_FLASHIN,  // 画面フラッシュ ( イン )
+  RRG_STATE_UPDATE,    // 更新
+  RRG_STATE_FADEOUT,  // フェードアウト
+  RRG_STATE_WAIT,// フレーム経過待ち
+  RRG_STATE_CLEANUP,  // 後片付け
+  RRG_STATE_FINISH,    // 終了
+} RRG_STATE;
 
 // 選択項目
 typedef enum {

@@ -273,16 +273,16 @@
 //-------------------------------------------------------------------------------
 // □データサイズ
 //-------------------------------------------------------------------------------
-#define SEQ_QUEUE_SIZE (10)  // シーケンスキューのサイズ
+#define STATE_QUEUE_SIZE (10)  // シーケンスキューのサイズ
 #define PERCENTAGE_NUM (10)  // ％表示オブジェクトの数
 #define MIN_PERCENTAGE (10)  // 数値を表示する最小のパーセンテージ
 //-------------------------------------------------------------------------------
 // □シーケンスの動作フレーム数
 //-------------------------------------------------------------------------------
-#define SEQ_ANALYZE_FRAMES   (120) // RESEARCH_CHECK_SEQ_ANALYZE
-#define SEQ_FLASH_OUT_FRAMES (30)  // RESEARCH_CHECK_SEQ_FLASH_OUT
-#define SEQ_FLASH_IN_FRAMES  (30)  // RESEARCH_CHECK_SEQ_FLASH_IN
-#define SEQ_UPDATE_FRAMES    (60)  // RESEARCH_CHECK_SEQ_UPDATE
+#define STATE_ANALYZE_FRAMES   (120) // RESEARCH_CHECK_STATE_ANALYZE
+#define STATE_FLASHOUT_FRAMES (30)  // RESEARCH_CHECK_STATE_FLASHOUT
+#define STATE_FLASHIN_FRAMES  (30)  // RESEARCH_CHECK_STATE_FLASHIN
+#define STATE_UPDATE_FRAMES    (60)  // RESEARCH_CHECK_STATE_UPDATE
 //-------------------------------------------------------------------------------
 // □矢印
 //-------------------------------------------------------------------------------
@@ -292,56 +292,56 @@
 // □パレットフェード ( フェードアウト・フェードイン )
 //-------------------------------------------------------------------------------
 // フェードアウト ( MAIN-BG )
-#define MAIN_BG_PALETTE_FADE_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
-#define MAIN_BG_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
-#define MAIN_BG_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+#define MAIN_BG_PALETTE_FADEOUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADEOUT_WAIT           (2)      // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADEOUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADEOUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADEOUT_COLOR          (0x0000) // 変更後の色
 // フェードアウト ( MAIN-OBJ ) 
-#define MAIN_OBJ_PALETTE_FADE_OUT_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク
-#define MAIN_OBJ_PALETTE_FADE_OUT_WAIT           (2)      // フェード計算待ち時間
-#define MAIN_OBJ_PALETTE_FADE_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_OUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_OUT_COLOR          (0x0000) // 変更後の色
+#define MAIN_OBJ_PALETTE_FADEOUT_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADEOUT_WAIT           (2)      // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADEOUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADEOUT_END_STRENGTH   (10)     // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADEOUT_COLOR          (0x0000) // 変更後の色
 // フェードイン ( MAIN-BG )
-#define MAIN_BG_PALETTE_FADE_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
-#define MAIN_BG_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
-#define MAIN_BG_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+#define MAIN_BG_PALETTE_FADEIN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADEIN_WAIT           (2)       // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADEIN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADEIN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADEIN_COLOR          (0x0000)  // 変更後の色
 // フェードイン ( MAIN-OBJ )
-#define MAIN_OBJ_PALETTE_FADE_IN_TARGET_BITMASK (0x0001)  // フェード対象パレット番号のマスク
-#define MAIN_OBJ_PALETTE_FADE_IN_WAIT           (2)       // フェード計算待ち時間
-#define MAIN_OBJ_PALETTE_FADE_IN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_IN_COLOR          (0x0000)  // 変更後の色
+#define MAIN_OBJ_PALETTE_FADEIN_TARGET_BITMASK (0x0001)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADEIN_WAIT           (2)       // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADEIN_START_STRENGTH (10)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADEIN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADEIN_COLOR          (0x0000)  // 変更後の色
 //-------------------------------------------------------------------------------
 // □パレットフェード ( フラッシュアウト・フラッシュイン )
 //-------------------------------------------------------------------------------
 // フラッシュ・アウト ( BG )
-#define MAIN_BG_PALETTE_FADE_FLASH_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
-#define MAIN_BG_PALETTE_FADE_FLASH_OUT_WAIT           (3)      // フェード計算待ち時間
-#define MAIN_BG_PALETTE_FADE_FLASH_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_FLASH_OUT_END_STRENGTH   (7)     // フェード最終濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_FLASH_OUT_COLOR          (0xffff) // 変更後の色
+#define MAIN_BG_PALETTE_FADE_FLASHOUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_FLASHOUT_WAIT           (3)      // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADE_FLASHOUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_FLASHOUT_END_STRENGTH   (7)     // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_FLASHOUT_COLOR          (0xffff) // 変更後の色
 // フラッシュ・アウト ( OBJ ) 
-#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
-#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_WAIT           (3)      // フェード計算待ち時間
-#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_END_STRENGTH   (7)     // フェード最終濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_COLOR          (0xffff) // 変更後の色
+#define MAIN_OBJ_PALETTE_FADE_FLASHOUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_FLASHOUT_WAIT           (3)      // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_FLASHOUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_FLASHOUT_END_STRENGTH   (7)     // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_FLASHOUT_COLOR          (0xffff) // 変更後の色
 // フラッシュ・イン ( BG )
-#define MAIN_BG_PALETTE_FADE_FLASH_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
-#define MAIN_BG_PALETTE_FADE_FLASH_IN_WAIT           (3)       // フェード計算待ち時間
-#define MAIN_BG_PALETTE_FADE_FLASH_IN_START_STRENGTH (7)      // フェード初期濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_FLASH_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
-#define MAIN_BG_PALETTE_FADE_FLASH_IN_COLOR          (0xffff)  // 変更後の色
+#define MAIN_BG_PALETTE_FADE_FLASHIN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
+#define MAIN_BG_PALETTE_FADE_FLASHIN_WAIT           (3)       // フェード計算待ち時間
+#define MAIN_BG_PALETTE_FADE_FLASHIN_START_STRENGTH (7)      // フェード初期濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_FLASHIN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_BG_PALETTE_FADE_FLASHIN_COLOR          (0xffff)  // 変更後の色
 // フラッシュ・イン ( OBJ ) 
-#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
-#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_WAIT           (3)       // フェード計算待ち時間
-#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_START_STRENGTH (7)      // フェード初期濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
-#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_COLOR          (0xffff)  // 変更後の色
+#define MAIN_OBJ_PALETTE_FADE_FLASHIN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_FLASHIN_WAIT           (3)       // フェード計算待ち時間
+#define MAIN_OBJ_PALETTE_FADE_FLASHIN_START_STRENGTH (7)      // フェード初期濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_FLASHIN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
+#define MAIN_OBJ_PALETTE_FADE_FLASHIN_COLOR          (0xffff)  // 変更後の色
 
 
 //===============================================================================
