@@ -3744,7 +3744,7 @@ static  BtlPokePos  get_poke_pos( TR_AI_WORK* taw, int side )
       btl_poke_pos = taw->atk_btl_poke_pos ^ 2;
       break;
     case BTL_RULE_TRIPLE:
-      BTL_MAINUTIL_GetFriendPokePos( taw->atk_btl_poke_pos,
+      btl_poke_pos = BTL_MAINUTIL_GetFriendPokePos( taw->atk_btl_poke_pos,
                                      ( ( taw->atk_btl_poke_pos / 2 ) != 2 ) ? ( taw->atk_btl_poke_pos / 2 ) + 1 : 1 );
       break;
     }
@@ -3759,7 +3759,7 @@ static  BtlPokePos  get_poke_pos( TR_AI_WORK* taw, int side )
       btl_poke_pos = taw->def_btl_poke_pos ^ 2;
       break;
     case BTL_RULE_TRIPLE:
-      BTL_MAINUTIL_GetFriendPokePos( taw->def_btl_poke_pos,
+      btl_poke_pos = BTL_MAINUTIL_GetFriendPokePos( taw->def_btl_poke_pos,
                                      ( ( taw->def_btl_poke_pos / 2 ) != 2 ) ? ( taw->def_btl_poke_pos / 2 ) + 1 : 1 );
       break;
     }
