@@ -147,6 +147,16 @@ typedef struct {
 }WAZAEFF_CTRL;
 
 /**
+ *  ワザ乗っ取りパラメータ
+ */
+typedef struct {
+  u8  robberCount;                    ///< 乗っ取るポケモン数
+  u8  robberPokeID[ BTL_POS_MAX ];    ///< 乗っ取り側ポケモンID
+  u8  fReflect[ BTL_POS_MAX ];        ///< 跳ね返しフラグ
+  u8  targetPos[ BTL_POS_MAX ];
+}WAZA_ROB_PARAM;
+
+/**
  * ポケセットのスタック構造１件分
  */
 typedef struct {
@@ -160,6 +170,7 @@ typedef struct {
   WAZAEFF_CTRL    effCtrl;
   SVFL_WAZAPARAM  wazaParam;
   HITCHECK_PARAM  hitCheck;
+  WAZA_ROB_PARAM  wazaRobParam;
 
 }POKESET_STACK_UNIT;
 
@@ -286,6 +297,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_DEADREC             deadRec;
   ARCHANDLE*              sinkaArcHandle;
   WAZAEFF_CTRL*           wazaEffCtrl;
+  WAZA_ROB_PARAM*         wazaRobParam;
   HITCHECK_PARAM*         hitCheckParam;
   BTL_ESCAPEINFO          escInfo;
 
@@ -450,8 +462,8 @@ static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
 static void scEvent_WazaReflect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
-static u8 scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
-  BTL_POKESET* rec, BtlPokePos* targetPos, u8 *fReflect );
+static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
+  BTL_POKESET* rec, WAZA_ROB_PARAM* robParam );
 static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
   BTL_POKESET* targetRec, u8* robberPokeID, u8* robTargetPokeID, u8* fReflect );
 static BOOL scproc_Fight_CheckReqWazaFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID orgWazaID );
@@ -598,6 +610,7 @@ static void scproc_Ichigeki_Succeed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
 static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAffAbout affAbout, BppKoraeruCause korae_cause, u16 damage );
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
+static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* defaultTarget );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
   BOOL fForceChange, BOOL* fFailMsgDisped, BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
@@ -3852,82 +3865,19 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     BTL_Printf( "ポケ[%d]がワザ_%dを出す\n", BPP_GetID(attacker), actWaza );
     scproc_WazaExe_Decide( wk, attacker, wk->wazaParam );
 
+    // ワザ乗っ取り判定
+    if( scproc_Check_WazaRob(wk, attacker, actWaza, wk->psetTarget, wk->wazaRobParam) )
     {
-      // ワザ乗っ取り判定
-      u8 robPokeID, fReflect;
-      BtlPokePos robTargetPos;
-      robPokeID = scproc_Check_WazaRob(wk, attacker, actWaza, wk->psetTarget, &robTargetPos, &fReflect );
-
-      // 誰かが乗っ取った
-      if( robPokeID != BTL_POKEID_NULL )
-      {
-        BTL_POKEPARAM* robPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, robPokeID );
-
-        // 乗っ取り（乗っ取ったポケが主体になり、指定されたターゲットにワザを出す）
-        if( !fReflect )
-        {
-          u32 hem_state = Hem_PushState( &wk->HEManager );
-          scEvent_WazaRob( wk, robPoke, attacker, actWaza );
-          scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-          Hem_PopState( &wk->HEManager, hem_state );
-
-          // ワザパラメータ差し替え
-          scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
-          registerWazaTargets( wk, robPoke, actTargetPos, wk->wazaParam, wk->psetRobTarget );
-
-          BTL_HANDLER_Waza_Add( robPoke, actWaza );
-          scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
-          BTL_HANDLER_Waza_Remove( robPoke, actWaza );
-        }
-        // 跳ね返し（乗っ取られる前のワザを出させた後で、跳ね返す）
-        else
-        {
-          // 跳ね返すポケをターゲットから除外
-          BTL_POKESET_Remove( wk->psetTarget, robPoke );
-
-          // まだターゲットが残ってたらまずは普通に出す
-          if( BTL_POKESET_GetCount(wk->psetTarget) ){
-            scproc_Fight_WazaExe( wk, attacker, actWaza, wk->psetTarget );
-          }
-          // 残ってなかったら、跳ね返しポケをターゲットに戻してエフェクトだけ発動させる
-          else
-          {
-            WAZAEFF_CTRL  effCtrl;
-            u16 que_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
-
-            BTL_POKESET_Add( wk->psetTarget, robPoke );
-            wazaEffCtrl_Init( &effCtrl );
-            wazaEffCtrl_Setup( &effCtrl, wk, attacker, wk->psetTarget );
-            wazaEffCtrl_SetEnable( &effCtrl );
-            scPut_WazaEffect( wk, actWaza, &effCtrl, que_pos );
-          }
-
-          // 跳ね返し確定イベント
-          {
-            u32 hem_state = Hem_PushState( &wk->HEManager );
-            scEvent_WazaReflect( wk, robPoke, attacker, actWaza );
-            scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-            Hem_PopState( &wk->HEManager, hem_state );
-          }
-          // その後、跳ね返し処理
-          // ワザパラメータ差し替え
-          scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
-          registerWazaTargets( wk, robPoke, robTargetPos, wk->wazaParam, wk->psetRobTarget );
-
-          BTL_HANDLER_Waza_Add( robPoke, actWaza );
-          scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
-          BTL_HANDLER_Waza_Remove( robPoke, actWaza );
-        }
-      }
-      // 乗っ取られず通常処理
-      else
-      {
-        fWazaEnable = scproc_Fight_WazaExe( wk, attacker, actWaza, wk->psetTarget );
-      }
-
-      wk->prevExeWaza = actWaza;
-      fWazaExecute = TRUE;
+      scproc_WazaRobRoot( wk, attacker, actWaza, wk->psetTarget );
     }
+    // 乗っ取られず通常処理
+    else
+    {
+      fWazaEnable = scproc_Fight_WazaExe( wk, attacker, actWaza, wk->psetTarget );
+    }
+
+    wk->prevExeWaza = actWaza;
+    fWazaExecute = TRUE;
 
   }while(0);
 
@@ -3955,6 +3905,84 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   BTL_HANDLER_Waza_Remove( attacker, orgWaza );
   scEvent_EndWazaSeq( wk, attacker, orgWaza );
 }
+//----------------------------------------------------------------------------------
+/**
+ * ワザ乗っ取り処理ルート
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ * @param   defaultTarget
+ */
+//----------------------------------------------------------------------------------
+static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID actWaza, BTL_POKESET* defaultTarget )
+{
+  BtlPokePos robTargetPos;
+
+  // 誰かが乗っ取った
+  if( wk->wazaRobParam->robberCount )
+  {
+    u8 robPokeID = wk->wazaRobParam->robberPokeID[ 0 ];
+    BTL_POKEPARAM* robPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, robPokeID );
+
+    // 乗っ取り（乗っ取ったポケが主体になり、指定されたターゲットにワザを出す）
+    if( wk->wazaRobParam->fReflect[0] )
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_WazaRob( wk, robPoke, attacker, actWaza );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
+
+      // ワザパラメータ差し替え
+      scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
+      registerWazaTargets( wk, robPoke, wk->wazaRobParam->targetPos[0], wk->wazaParam, wk->psetRobTarget );
+
+      BTL_HANDLER_Waza_Add( robPoke, actWaza );
+      scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
+      BTL_HANDLER_Waza_Remove( robPoke, actWaza );
+    }
+    // 跳ね返し（乗っ取られる前のワザを出させた後で、跳ね返す）
+    else
+    {
+      // 跳ね返すポケをターゲットから除外
+      BTL_POKESET_Remove( wk->psetTarget, robPoke );
+
+      // まだターゲットが残ってたらまずは普通に出す
+      if( BTL_POKESET_GetCount(wk->psetTarget) ){
+        scproc_Fight_WazaExe( wk, attacker, actWaza, wk->psetTarget );
+      }
+      // 残ってなかったら、跳ね返しポケをターゲットに戻してエフェクトだけ発動させる
+      else
+      {
+        WAZAEFF_CTRL  effCtrl;
+        u16 que_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
+
+        BTL_POKESET_Add( wk->psetTarget, robPoke );
+        wazaEffCtrl_Init( &effCtrl );
+        wazaEffCtrl_Setup( &effCtrl, wk, attacker, wk->psetTarget );
+        wazaEffCtrl_SetEnable( &effCtrl );
+        scPut_WazaEffect( wk, actWaza, &effCtrl, que_pos );
+      }
+
+      // 跳ね返し確定イベント
+      {
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        scEvent_WazaReflect( wk, robPoke, attacker, actWaza );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
+      }
+      // その後、跳ね返し処理
+      // ワザパラメータ差し替え
+      scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
+      registerWazaTargets( wk, robPoke, wk->wazaRobParam->targetPos[0], wk->wazaParam, wk->psetRobTarget );
+
+      BTL_HANDLER_Waza_Add( robPoke, actWaza );
+      scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
+      BTL_HANDLER_Waza_Remove( robPoke, actWaza );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] 合体ワザの成立チェック
@@ -4280,27 +4308,27 @@ static void scEvent_WazaReflect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPo
  * @retval  u8    乗っ取ったポケモンのID／乗っ取ったポケがいない場合はBTL_POKEID_NULL
  */
 //----------------------------------------------------------------------------------
-static u8 scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
-  BTL_POKESET* rec, BtlPokePos* targetPos, u8 *fReflect )
+static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
+  BTL_POKESET* rec, WAZA_ROB_PARAM* robParam )
 {
   u8 robberPokeID = BTL_POKEID_NULL;
   u8 robTargetPokeID = BTL_POKEID_NULL;
 
-  scEvent_CheckWazaRob( wk, attacker, waza, rec, &robberPokeID, &robTargetPokeID, fReflect );
+  scEvent_CheckWazaRob( wk, attacker, waza, rec, &robberPokeID, &robTargetPokeID, &robParam->fReflect[0] );
   if( robberPokeID != BTL_POKEID_NULL )
   {
     if( robTargetPokeID != BTL_POKEID_NULL ){
-      *targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, robTargetPokeID );
+      robParam->targetPos[0] = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, robTargetPokeID );
     }else{
-      *targetPos = BTL_POS_NULL;
+      robParam->targetPos[0] = BTL_POS_NULL;
     }
 
-    // 跳ね返しフラグ @todo 跳ね返すが対象ポケIDは指定しないケースもあり
-    *fReflect = (robberPokeID != robTargetPokeID);
-    return robberPokeID;
+    robParam->robberCount = 1;
+
+    return TRUE;
   }
 
-  return BTL_POKEID_NULL;
+  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6713,12 +6741,13 @@ static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
       damage = BTL_POKESET_GetDamage( targets, bpp );
       total_damage += damage;
       recoverHP = (WAZADATA_GetParam(waza, WAZAPARAM_DAMAGE_RECOVER_RATIO) * damage) / 100;
-      //最低でも1は回復するようにする
-      if( recoverHP == 0 ) recoverHP = 1;
 
-      if( scproc_DrainCore(wk, attacker, bpp, recoverHP) )
+      if( recoverHP > 0 )
       {
-        scPut_Message_Set( wk, bpp, BTL_STRID_SET_Drain );
+        if( scproc_DrainCore(wk, attacker, bpp, recoverHP) )
+        {
+          scPut_Message_Set( wk, bpp, BTL_STRID_SET_Drain );
+        }
       }
     }
   }
@@ -6728,18 +6757,12 @@ static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* waza
 {
   if( WAZADATA_GetCategory(wazaParam->wazaID) == WAZADATA_CATEGORY_DRAIN )
   {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-
     u32 recoverHP = (WAZADATA_GetParam(wazaParam->wazaID, WAZAPARAM_DAMAGE_RECOVER_RATIO) * damage) / 100;
-    //最低でも1は回復するようにする
-    if( recoverHP == 0 ) recoverHP = 1;
 
     if( scproc_DrainCore(wk, attacker, defender, recoverHP) )
     {
       scPut_Message_Set( wk, defender, BTL_STRID_SET_Drain );
     }
-
-    Hem_PopState( &wk->HEManager, hem_state );
   }
 }
 
@@ -6757,7 +6780,7 @@ static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* waza
 //----------------------------------------------------------------------------------
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP )
 {
-  if( !BPP_IsDead(attacker) )
+  if( !BPP_IsDead(attacker) && (drainHP > 0) )
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
     BOOL result = FALSE;
@@ -13416,6 +13439,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->wazaEffCtrl   = &unit->effCtrl;
   wk->wazaParam     = &unit->wazaParam;
   wk->hitCheckParam = &unit->hitCheck;
+  wk->wazaRobParam  = &unit->wazaRobParam;
 
   if( fClear ){
     BTL_POKESET_Clear( wk->psetTargetOrg );
@@ -13427,6 +13451,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
     wazaEffCtrl_Init( wk->wazaEffCtrl );
     GFL_STD_MemClear( wk->wazaParam, sizeof(*(wk->wazaParam)) );
     GFL_STD_MemClear( wk->hitCheckParam, sizeof(*(wk->hitCheckParam)) );
+    GFL_STD_MemClear( wk->wazaRobParam, sizeof(*(wk->wazaRobParam)) );
   }
 }
 
