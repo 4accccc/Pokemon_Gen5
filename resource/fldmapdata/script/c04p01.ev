@@ -29,7 +29,7 @@ _EVENT_DATA    ev_zone_c04p01
 _EVENT_DATA_END
 
 /************************************************************/
-/*			FIELD_INIT_LABEL		*/
+/*			ZONE_CHANGE_LABEL		*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04p01
 {
