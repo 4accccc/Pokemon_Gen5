@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-04T11:18:08"/>
+	<create user="ohmori" host="W00223" date="2010-05-08T14:36:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="492" top="160" right="1267" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1084" top="127" right="1859" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="291" right="473" bottom="915" visible="yes"/>
 		<band id="0" index="0" style="0000" width="591"/>
@@ -291,37 +291,37 @@
 	<row id="msg_invasion_test01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff00,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ハイリンク接続時
 ・親プレイヤー</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけはしが　つながりました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけ橋が　つながりました！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
+せつぞく　しました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+接続　しました！</language>
 	</row>
 
 	<row id="msg_invasion_test01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff00,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ハイリンク接続時
 ・子プレイヤー１</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけはしが　つながりました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけ橋が　つながりました！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
+せつぞく　しました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+接続　しました！</language>
 	</row>
 
 	<row id="msg_invasion_test01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff00,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ハイリンク接続時
 ・子プレイヤー２</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけはしが　つながりました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけ橋が　つながりました！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
+せつぞく　しました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+接続　しました！</language>
 	</row>
 
 	<row id="msg_invasion_test01_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff00,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ハイリンク接続時
 ・子プレイヤー３</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけはしが　つながりました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけ橋が　つながりました！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
+せつぞく　しました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+接続　しました！</language>
 	</row>
 
 	<row id="msg_invasion_test02_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -363,37 +363,37 @@
 	<row id="msg_invasion_test03_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>侵入ＯＫ時
 ・親プレイヤー</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
-いくことが　できます</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　世界に
-行くことが　できます</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに
+はいることが　できます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に
+入ることが　できます</language>
 	</row>
 
 	<row id="msg_invasion_test03_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>侵入ＯＫ時
 ・子プレイヤー１</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
-いくことが　できます</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　世界に
-いくことが　できます</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに
+はいることが　できます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に
+入ることが　できます</language>
 	</row>
 
 	<row id="msg_invasion_test03_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>侵入ＯＫ時
 ・子プレイヤー２</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
-いくことが　できます</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　世界に
-いくことが　できます</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに
+はいることが　できます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に
+入ることが　できます</language>
 	</row>
 
 	<row id="msg_invasion_test03_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>侵入ＯＫ時
 ・子プレイヤー３</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
-いくことが　できます</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　世界に
-いくことが　できます</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに
+はいることが　できます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に
+入ることが　できます</language>
 	</row>
 
 	<row id="msg_invasion_test04_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -517,17 +517,17 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:3]の　ハイリンクに　います</language>
 	</row>
 
-	<row id="msg_invasion_info_000" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_000" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]が　[1:00:トレーナー名:1]の
-ハイリンクに　はいりこみました</language>
+ハイリンクに　はいりました</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　[1:00:トレーナー名:1]の
-ハイリンクに　入り込みました</language>
+ハイリンクに　入りました</language>
 	</row>
 
-	<row id="msg_invasion_info_001" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_001" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -537,17 +537,17 @@
 自分のハイリンクに　戻りました</language>
 	</row>
 
-	<row id="msg_invasion_info_002" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_info_002" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけはしが　つながりました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ハイリンクと　
-かけ橋が　つながりました</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
+せつぞく　しました！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+接続　しました！</language>
 	</row>
 
-	<row id="msg_invasion_info_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_003" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -557,7 +557,7 @@
 帰っていきました</language>
 	</row>
 
-	<row id="msg_invasion_info_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_004" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -567,7 +567,7 @@
 参加者は　参加を　押してください</language>
 	</row>
 
-	<row id="msg_invasion_info_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_005" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -577,7 +577,7 @@
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="msg_invasion_info_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_006" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -585,7 +585,7 @@
 		<language name="JPN_KANJI" width="256">ミッションを　しているようです</language>
 	</row>
 
-	<row id="msg_invasion_info_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_007" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -593,7 +593,7 @@
 		<language name="JPN_KANJI" width="256">ミッションを　達成しました</language>
 	</row>
 
-	<row id="msg_invasion_info_008" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_008" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -601,7 +601,7 @@
 		<language name="JPN_KANJI" width="256">ミッションを　失敗しました</language>
 	</row>
 
-	<row id="msg_invasion_info_009" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_009" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -611,7 +611,7 @@
 ハイリンクから　デルパワーをもらった</language>
 	</row>
 
-	<row id="msg_invasion_info_010" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_010" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -621,7 +621,7 @@
 ハイリンクから　デルパワーをもらった</language>
 	</row>
 
-	<row id="msg_invasion_info_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_011" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
@@ -631,25 +631,25 @@
 [1:00:トレーナー名:0]が　います</language>
 	</row>
 
-	<row id="msg_invasion_info_012" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_012" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：近くに居るプレイヤー</comment>
-		<language name="JPN" width="256">ちかくに　[1:00:トレーナー名:0]の
-ハイリンクが　あります</language>
-		<language name="JPN_KANJI" width="256">近くに　[1:00:トレーナー名:0]の
-ハイリンクが　あります</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と
+せつぞく　しています……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と
+接続　しています……</language>
 	</row>
 
-	<row id="msg_invasion_info_013" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_013" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：近くに居るプレイヤー</comment>
-		<language name="JPN" width="256">ちかくに　[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]の
-ハイリンクが　あります</language>
-		<language name="JPN_KANJI" width="256">近くに　[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]の
-ハイリンクが　あります</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]のせかい　と
+せつぞく　しています……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]の世界　と
+接続　しています……</language>
 	</row>
 
-	<row id="msg_invasion_info_014" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_014" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">「↑」　[1:00:トレーナー名:0]は　このばしょの
@@ -658,7 +658,7 @@
 　　　　奥の方に　います！</language>
 	</row>
 
-	<row id="msg_invasion_info_015" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_015" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">「↓」　[1:00:トレーナー名:0]は　このばしょの
@@ -667,7 +667,7 @@
 　　　　手前の方に　います！</language>
 	</row>
 
-	<row id="msg_invasion_info_016" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_016" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">「→」　[1:00:トレーナー名:0]は　このばしょの
@@ -676,7 +676,7 @@
 　　　　右の方に　います！</language>
 	</row>
 
-	<row id="msg_invasion_info_017" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_017" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">「←」　[1:00:トレーナー名:0]は　このばしょの
@@ -685,7 +685,7 @@
 　　　　左の方に　います！</language>
 	</row>
 
-	<row id="msg_invasion_info_018" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_018" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">「？」　[1:00:トレーナー名:0]を　みうしないました！
@@ -694,7 +694,7 @@
 　　　　この近くのどこかに　隠れています</language>
 	</row>
 
-	<row id="msg_invasion_info_019" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_019" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">このばしょは　まだ
@@ -703,42 +703,44 @@
 行ったことのない　場所です</language>
 	</row>
 
-	<row id="msg_invasion_info_020" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_020" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
-		<language name="JPN" width="256">「！」　だれかが　ちかくに　きています！</language>
-		<language name="JPN_KANJI" width="256">「！」　だれかが　近くに　来ています！</language>
+		<language name="JPN" width="256">だれかが　ちかくまで
+あそびに　きています</language>
+		<language name="JPN_KANJI" width="256">だれかが　近くまで
+遊びに　きています</language>
 	</row>
 
-	<row id="msg_invasion_info_021" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_021" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
 		<language name="JPN" width="256">だれかが　このせかいに
-はいりこんで　います</language>
+あそびに　きています</language>
 		<language name="JPN_KANJI" width="256">だれかが　この世界に
-入り込んで　います</language>
+遊びに　来ています</language>
 	</row>
 
-	<row id="msg_invasion_info_022" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_022" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：橋の上で近くにだれかがいるとき、
 チュートリアル専用のメッセージ</comment>
-		<language name="JPN" width="256">かけはしの　うえに　いると
-ちかくの　ハイリンクと　つながります</language>
-		<language name="JPN_KANJI" width="256">かけ橋の　上にいると
-近くの　ハイリンクと　つながります</language>
+		<language name="JPN" width="256">つうしんちゅう……　このちずの　まち
+どうろに　いるひとを　さがしています</language>
+		<language name="JPN_KANJI" width="256">通信中……　この地図の　街
+道路に　いる人を　探しています</language>
 	</row>
 
-	<row id="msg_invasion_info_023" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_023" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0：ターゲットプレイヤー</comment>
-		<language name="JPN" width="256">「！」　だれかが　あなたを
-　　　　たすけに　きています！</language>
-		<language name="JPN_KANJI" width="256">「！」　だれかが　あなたを
-　　　　助けに　来ています！</language>
+		<language name="JPN" width="256">だれかが　このせかいに
+あそびにきています</language>
+		<language name="JPN_KANJI" width="256">だれかが　この世界に
+遊びに来ています</language>
 	</row>
 
-	<row id="msg_invasion_info_m01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_m01" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
@@ -746,7 +748,7 @@
 いる場所に　ワープして下さい</language>
 	</row>
 
-	<row id="msg_invasion_info_m02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_m02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
@@ -754,7 +756,7 @@
 いる場所に　ワープして下さい</language>
 	</row>
 
-	<row id="msg_invasion_info_m03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_m03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
@@ -762,7 +764,7 @@
 いる場所に　ワープして下さい</language>
 	</row>
 
-	<row id="msg_invasion_info_m04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_m04" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
@@ -770,7 +772,7 @@
 いる場所に　ワープして下さい</language>
 	</row>
 
-	<row id="msg_invasion_info_m05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_m05" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">タッチで　どうぐをかくす
 ばしょに　ワープしてください</language>
@@ -778,7 +780,7 @@
 場所に　ワープして下さい</language>
 	</row>
 
-	<row id="msg_invasion_info_m06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_m06" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
 		<language name="JPN" width="256">タッチで　ぼうけんしゃの
 いるばしょに　ワープしてください</language>
@@ -792,59 +794,59 @@
 		<language name="JPN_KANJI" width="256">ミッション中　です</language>
 	</row>
 
-	<row id="msg_invasion_intrude_001" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_intrude_001" back-color="#808080,,,#808080,,#808080,#808080,,,,,#808080,#808080,,,,,">
 		<comment>侵入時
  ・親プレイヤー（未使用）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　はいりこみました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　入り込みました</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　あそびにきています</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　遊びに来ています</language>
 	</row>
 
-	<row id="msg_invasion_intrude_002" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_intrude_002" back-color="#808080,,,#808080,,#808080,#808080,,,,,#808080,#808080,,,,,">
 		<comment>侵入時
 ・子プレイヤー１（未使用）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　はいりこみました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　入り込みました</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　あそびにきています</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　遊びに来ています</language>
 	</row>
 
-	<row id="msg_invasion_intrude_003" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_intrude_003" back-color="#808080,,,#808080,,#808080,#808080,,,,,#808080,#808080,,,,,">
 		<comment>侵入時
 ・子プレイヤー２（未使用）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　はいりこみました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　入り込みました</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　あそびにきています</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　遊びに来ています</language>
 	</row>
 
-	<row id="msg_invasion_intrude_004" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_intrude_004" back-color="#808080,,,#808080,,#808080,#808080,,,,,#808080,#808080,,,,,">
 		<comment>侵入時
 ・子プレイヤー３（未使用）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　はいりこみました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　入り込みました</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　あそびにきています</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　遊びに来ています</language>
 	</row>
 
-	<row id="msg_invasion_title_000" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_title_000" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>タイトルメッセージ</comment>
 		<language name="JPN" width="256">タッチをすると　ハイリンクにいけます</language>
 		<language name="JPN_KANJI" width="256">タッチをすると　ハイリンクにいけます</language>
 	</row>
 
-	<row id="msg_invasion_title_001" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_title_001" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>タイトルメッセージ</comment>
 		<language name="JPN" width="256">じぶんのせかい</language>
 		<language name="JPN_KANJI" width="256">自分の世界</language>
 	</row>
 
-	<row id="msg_invasion_title_002" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_title_002" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>タイトルメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界</language>
 	</row>
 
-	<row id="msg_invasion_subdisp_000" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_subdisp_000" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>下画面：参加ボタン</comment>
 		<language name="JPN" width="256">さんか</language>
 		<language name="JPN_KANJI" width="256">参加</language>
 	</row>
 
-	<row id="msg_invasion_subdisp_001" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
+	<row id="msg_invasion_subdisp_001" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>下画面：もどるボタン</comment>
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">戻る</language>
@@ -864,13 +866,13 @@
 		<language name="JPN_KANJI" width="256">CONNECTION</language>
 	</row>
 
-	<row id="plc_mono_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="plc_mono_01" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>モノリスに話しかけたときのメッセージ</comment>
 		<language name="JPN" width="256">じぶんの　ハイルツリーを　しらべた</language>
 		<language name="JPN_KANJI" width="256">自分の　ハイルツリーを　調べた</language>
 	</row>
 
-	<row id="plc_mono_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="plc_mono_02" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>モノリスに話しかけたときのメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の
 ハイルツリーを　しらべた</language>
@@ -878,7 +880,7 @@
 ハイルツリーを　調べた</language>
 	</row>
 
-	<row id="plc_connect_01_01" back-color="#ffff80,,,#ff8080,,#404040,,,,,,#404040,,,,,,">
+	<row id="plc_connect_01_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>通信接続メッセージ：通信成功
 （ホワイトバージョン）</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ホワイトハイリンクと
@@ -887,7 +889,7 @@
 つながった！</language>
 	</row>
 
-	<row id="plc_connect_01_02" back-color="#ffff80,,,#ff8080,,#404040,,,,,,#404040,,,,,,">
+	<row id="plc_connect_01_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>通信接続メッセージ：通信成功
 （ブラックバージョン）</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ブラックハイリンクと
@@ -896,13 +898,13 @@
 つながった！</language>
 	</row>
 
-	<row id="plc_connect_01_03" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_01_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>通信接続メッセージ：通信成功
 （別バージョン）</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ハイリンクと
-つながった！</language>
+せつぞく　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ハイリンクと
-つながった！</language>
+接続　しました！</language>
 	</row>
 
 	<row id="plc_connect_02" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
@@ -931,18 +933,18 @@
 
 	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：侵入成功</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　はいりこみ
+		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかいに　はいり
 すがたが　かわった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　入り込み
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界に　入り
 姿が　変わった！</language>
 	</row>
 
 	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>通信接続メッセージ：侵入できない</comment>
-		<language name="JPN" width="256">この　かけはしは　まだ
-どのせかいにも　つながっていない</language>
-		<language name="JPN_KANJI" width="256">この　かけ橋は　まだ
-どの世界にも　つながっていない</language>
+		<language name="JPN" width="256">まだ　どのせかいとも
+せつぞく　できていません</language>
+		<language name="JPN_KANJI" width="256">まだ　どの世界とも
+接続　出来ていません</language>
 	</row>
 
 	<row id="plc_connect_07" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
