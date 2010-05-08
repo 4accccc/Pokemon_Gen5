@@ -960,6 +960,7 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
   pReg->end_month   = 12;
   pReg->end_day     = 24;
   pReg->status      = 0;
+  pReg->bgm_no      = 1;
   pReg->code        = LANG_JAPAN;
   pReg->crc         = GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
 }

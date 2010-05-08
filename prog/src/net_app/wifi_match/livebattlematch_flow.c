@@ -957,7 +957,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   { 
   case SEQ_START_DRAW_CARD:  //選手証とバトルボックス表示
     UTIL_PLAYERINFO_Create( p_wk );
-    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
     UTIL_BTLBOX_Create( p_wk );
     *p_seq  = SEQ_WAIT_DRAW_CARD;
     break;
@@ -1398,7 +1398,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     } 
 		break;
   case SEQ_START_MSG_UNLOCK:
-    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     UTIL_TEXT_Print( p_wk, LIVE_STR_15, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
@@ -2610,7 +2610,7 @@ static void UTIL_DATA_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBAT
   }
   //大会番号
   { 
-    p_my_data->wificup_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS);
+    p_my_data->wificup_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO);
   }
 }
 //----------------------------------------------------------------------------
@@ -2625,7 +2625,7 @@ static void UTIL_DATA_SetupMyData_Debug( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, L
 { 
   //大会番号
   { 
-    p_my_data->wificup_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS);
+    p_my_data->wificup_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO);
   }
 }
 

@@ -1048,6 +1048,25 @@ static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  { 
+    STRCODE def[2];
+
+    def[0]  = 0x00C0;
+    def[1]  = GFL_STR_GetEOMCode();
+
+    GFL_STR_SetStringCode( p_wk->p_namein_param->strbuf, def );
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  { 
+    STRCODE def[2];
+
+    def[0]  = 0x3042;
+    def[1]  = GFL_STR_GetEOMCode();
+
+    GFL_STR_SetStringCode( p_wk->p_namein_param->strbuf, def );
+  }
+
   DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_namein_param );
 }
 
