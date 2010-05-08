@@ -2043,6 +2043,9 @@ static void _touchState_BeforeTimeing12(POKEMON_TRADE_WORK* pWork)
 {
 
   //  WIPE_ResetBrightness(WIPE_DISP_SUB);
+  if(!WIPE_SYS_EndCheck()){
+    return;
+  }
 
   PokemonTrade_SetMyPokeColor(pWork);
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
