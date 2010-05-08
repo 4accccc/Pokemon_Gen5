@@ -1011,6 +1011,7 @@ extern void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray);
 extern void POKE_GTS_InitFaceIcon(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_DeleteFaceIcon(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_FaceIconDeleteFunc(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_TouchFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo);
 extern void POKEMONTRADE_StartEruptedGTS(POKEMON_TRADE_WORK* pWork, int faceNo, int index);
 extern void POKEMONTRADE_RemoveEruptedGTS(POKEMON_TRADE_WORK* pWork,int index);

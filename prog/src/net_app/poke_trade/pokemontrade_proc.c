@@ -3842,6 +3842,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     //“Ç‚Ýž‚ÞŽ–‚ª‚Å‚«‚È‚¢ê‡‚Í‘‚©‚È‚¢
   }
   POKEMONTRADE_DEMOBGMChange(pWork);
+  POKE_GTS_FaceIconDeleteFunc(pWork);
   GFL_CLACT_SYS_Main(); // CLSYSƒƒCƒ“
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);

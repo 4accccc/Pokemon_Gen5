@@ -1410,26 +1410,27 @@ static void _friendSelectBack( GTSNEGO_WORK *pWork )
 
 
 
-static BOOL _upScrollFunc(GTSNEGO_WORK *pWork)
+static int _upScrollFunc(GTSNEGO_WORK *pWork)
 {
-  BOOL bHit=FALSE;
-  
-  if( GTSNEGO_DISP_FriendListUpChk(pWork->pDispWork, &pWork->scrollPanelCursor) ){
+  int retcode = GTSNEGO_DISP_FriendListUpChk(pWork->pDispWork, &pWork->scrollPanelCursor);
+
+  switch(retcode){
+  case 0:
+    break;
+  case 1:
+    if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
+      pWork->key3--;
+    }
+    break;
+  case 2:
     GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_UPSCROLL_);
     if(pWork->scrollPanelCursor.oamlistpos - 1 >= 0){
       GTSNEGO_MESSAGE_FriendListUpStart(pWork->pMessageWork, pWork->pGameData,
                                         pWork->scrollPanelCursor.oamlistpos-1 );
-     }
-    bHit=TRUE;
+    }
+    break;
   }
-  else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
-    pWork->key3--;
-    bHit=TRUE;
-  }
-  else{
-    //ÉãÅ[ÉvÇ∑ÇÈÅH
-  }
-  return bHit;
+  return retcode;
 }
 
 static int _downScrollFunc(GTSNEGO_WORK *pWork)
@@ -1517,6 +1518,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_R){
     int i,ret;
     bHit = FALSE;
+    
     for(i = 0; i < 3; i++){
       ret = _downScrollFunc(pWork);
       bHit |= ret;
@@ -1524,19 +1526,16 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       if(ret == 0){
         break;
       }
-
-//      if((ret == 2) && (i<2)){
-        GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,TRUE);
-        GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
-        GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
-
+      if(ret == 1){
+        i--;
+        continue;
+      }
+      GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,TRUE);
+      GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
+      GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
       OHNO_Printf("PAD_BUTTON_R %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
-
       GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
-      //  bHit = FALSE;
-//      }
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
-
     }
   }
   if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_L){
@@ -1549,11 +1548,13 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       if(ret == 0){
         break;
       }
+      if(ret == 1){
+        i--;
+        continue;
+      }
 
-  //    if(i<2){
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
       {
-      //  bHit = FALSE;
         GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,FALSE);
         GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
         GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);

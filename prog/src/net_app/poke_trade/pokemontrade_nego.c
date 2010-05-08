@@ -2071,8 +2071,6 @@ void POKE_GTS_DeleteFaceIcon(POKEMON_TRADE_WORK* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   アイコンタッチ判定
- * @param   
- * @param   
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -2104,6 +2102,22 @@ void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork)    //顔アイコンの処理
       }
     }
   }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイコン消去判定
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_FaceIconDeleteFunc(POKEMON_TRADE_WORK* pWork)    //顔アイコンの処理
+{
+  int i;
+
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    return;
+  }
   for(i=0;i< 2;i++){
     if(pWork->timerErupted[i]!=0){
       pWork->timerErupted[i]--;
@@ -2111,7 +2125,6 @@ void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork)    //顔アイコンの処理
         POKEMONTRADE_RemoveEruptedGTS(pWork, i);
       }
     }
-    
   }
 }
 

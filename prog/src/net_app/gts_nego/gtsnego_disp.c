@@ -1184,20 +1184,20 @@ void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork)
  */
 //-----------------------------------------------------------------------------
 
-BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
+int GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
 {
-  BOOL bChange = 0;
+  int ChangeCode = 0;
 
   if((pCur->curpos < 2) && ( pCur->curpos < (pCur->listmax-1) )){
     pCur->curpos++;
-    bChange = 1;
+    ChangeCode = 1;
   }
   else if((pCur->curpos==2) && ((pCur->oamlistpos+3) < pCur->listmax)){
     //カーソルはそのままでリストが移動
     pCur->oamlistpos++;
-    bChange = 2;
+    ChangeCode = 2;
   }
-  return bChange;
+  return ChangeCode;
 }
 
 //----------------------------------------------------------------------------
@@ -1208,20 +1208,21 @@ BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR*
  */
 //-----------------------------------------------------------------------------
 
-BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
+int GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
 {
-  BOOL bChange = FALSE;
+  int ChangeCode = 0;
 
   if(pCur->curpos > 0){
     pCur->curpos--;
+    ChangeCode = 1;
   }
   else if((pCur->curpos==0) && (pCur->oamlistpos!=0)){
     //カーソルはそのままでリストが移動
     pCur->oamlistpos--;
-    bChange = TRUE;
+    ChangeCode = 2;
   }
 
-  return bChange;
+  return ChangeCode;
 }
 
 

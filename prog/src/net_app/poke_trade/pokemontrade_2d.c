@@ -2183,8 +2183,8 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
       prm.pltt_line = PLTID_OBJ_POKEITEM_S;
       break;
     case 2:
-      x = 16;
-      y = 192-24;
+      x = 32;
+      y = 192-20;
       prm.draw_type = CLSYS_DRAW_MAIN;
       prm.pltt_line = PLTID_OBJ_POKEITEM_M;
       break;

@@ -1111,6 +1111,16 @@ static BOOL _modeIsBattleStatus(int gamemode)
   return FALSE;
 }
 
+//接続可能モードかどうか
+static BOOL _modeIsConnectStatus(int gamemode)
+{
+  if((gamemode < WIFI_GAME_UNKNOWN)  && (gamemode > WIFI_GAME_UNIONMATCH)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 
 // ステートがBATTLEWAITかどうか
 static BOOL _modeBattleWait(int status,int gamemode)
@@ -4364,7 +4374,7 @@ static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  int gmmno,gmmidx;
+  int gmmno,gmmidx=0;
   u16 friendNo,status,gamemode;
   WIFI_STATUS* p_status = &wk->targetStatus;
   MCR_MOVEOBJ* p_player;
@@ -4389,16 +4399,16 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   _friendNameExpand(wk, friendNo - 1);
 
   if(WIFI_GAME_TRADE == gamemode){
-    gmmidx = 0;
-  }
-  else if(WIFI_GAME_TVT == gamemode){
     gmmidx = 1;
   }
-  else if(WIFI_GAME_VCT == gamemode){
+  else if(WIFI_GAME_TVT == gamemode){
     gmmidx = 2;
   }
-  else if(_modeIsBattleStatus(gamemode)){
+  else if(WIFI_GAME_VCT == gamemode){
     gmmidx = 3;
+  }
+  else if(_modeIsBattleStatus(gamemode)){
+    gmmidx = 4;
   }
 
   switch(status){
@@ -4412,13 +4422,13 @@ static int _childModeMatchMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case WIFI_STATUS_RECRUIT:    // 募集中
     {
-      u32 msgbuff[]={msg_wifilobby_004,msg_wifilobby_080,msg_wifilobby_078,msg_wifilobby_003};
+      u32 msgbuff[]={msg_wifilobby_077, msg_wifilobby_004,msg_wifilobby_080,msg_wifilobby_078,msg_wifilobby_003};
       gmmno = msgbuff[gmmidx];
     }
     break;
   case WIFI_STATUS_PLAYING:      // 他の人と接続中
     {
-      u32 msgbuff[]={msg_wifilobby_049,msg_wifilobby_079,msg_wifilobby_050,msg_wifilobby_048};
+      u32 msgbuff[]={msg_wifilobby_077, msg_wifilobby_049,msg_wifilobby_079,msg_wifilobby_050,msg_wifilobby_048};
       gmmno = msgbuff[gmmidx];
     }
     break;
@@ -4465,17 +4475,21 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
   }
   {
     status = _WifiMyStatusGet( wk, p_status );
+    gamemode = _WifiMyGameModeGet( wk, p_status );
 
     switch(status){
-    case WIFI_STATUS_RECRUIT:
-    case WIFI_STATUS_PLAY_AND_RECRUIT:
-      _ChildModeMatchMenuDisp(wk);
-      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_WAIT);
-      break;
     case WIFI_STATUS_WAIT:   //相手指定で呼びかけるモードにいく
       _ChildModeMatchMenuDisp(wk);
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_PLAYERDIRECT_INIT);
       break;
+    case WIFI_STATUS_RECRUIT:
+    case WIFI_STATUS_PLAY_AND_RECRUIT:
+      if(_modeIsConnectStatus(gamemode)){
+        _ChildModeMatchMenuDisp(wk);
+        _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_WAIT);
+        break;
+      }
+      //break throw
     case WIFI_STATUS_PLAYING:
     default:
       //メッセージ出して終了
@@ -4483,9 +4497,7 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk,WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
       break;
     }
-
   }
-
   return seq;
 }
 
