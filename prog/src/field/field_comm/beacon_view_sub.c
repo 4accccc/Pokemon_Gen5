@@ -2483,6 +2483,8 @@ void DEBUG_BEACON_VIEW_MemberListClear( BEACON_VIEW_PTR wk )
   
   wk->init_f = TRUE;  //•¶Žš—ñ‘¦Žž”½‰f‚Ì‚½‚ß
 
+  GAMEBEACON_InfoTbl_Clear( wk->infoLog );
+
   for(i = 0;i < PANEL_MAX;i++){
     panel_Clear( &wk->panel[i] );
   }
