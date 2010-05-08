@@ -93,6 +93,7 @@ typedef struct
   BOOL  isUseMcs;
   BOOL  isRefresh;
   BOOL  isRefreshName;
+  BOOL  isRefreshItem;
   u16   isDispBit;
   
   u16 monsno;
@@ -111,8 +112,8 @@ typedef struct
   u16  startForm;
   u16  cnt;
   u8   posState[MUS_POKE_EQUIP_MAX];
-  u8   posStateRot;
-  u8   posStateShadow;
+  u8   posStateRot[2];
+  u8   posStateShadow[2];
   
 }MUS_VIEW_LOCAL_WORK;
 
@@ -124,6 +125,8 @@ static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work );
+static void MUSICAL_VIEW_LoadItem( MUS_VIEW_LOCAL_WORK *work );
+static void MUSICAL_VIEW_UnLoadItem( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work );
@@ -293,7 +296,6 @@ static void MUSICAL_VIEW_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgP
 static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
 {
 
-  u8 ePos;  //equipPos
   MUSICAL_POKE_PARAM *musPoke = work->musPoke;
   VecFx32 pos1 = {MUSICAL_POS_X( 64.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
   VecFx32 pos2 = {MUSICAL_POS_X(192.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
@@ -311,6 +313,32 @@ static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
     MUS_POKE_DRAW_SetFrontBack( work->pokeWorkBack , FALSE );
   }
 
+
+  MUS_POKE_DRAW_StartAnime( work->pokeWork );
+  MUS_POKE_DRAW_StartAnime( work->pokeWorkBack );
+  
+}
+
+static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work )
+{
+  if( work->pokeWork != NULL )
+  {
+    MUS_POKE_DRAW_Del( work->pokeSys , work->pokeWork );
+    work->pokeWork = NULL;
+  }
+  if( work->pokeWorkBack != NULL )
+  {
+    MUS_POKE_DRAW_Del( work->pokeSys , work->pokeWorkBack );
+    work->pokeWorkBack = NULL;
+  }
+}
+
+static void MUSICAL_VIEW_LoadItem( MUS_VIEW_LOCAL_WORK *work )
+{
+  u8 ePos;  //equipPos
+  MUSICAL_POKE_PARAM *musPoke = work->musPoke;
+  VecFx32 pos1 = {MUSICAL_POS_X( 64.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
+  VecFx32 pos2 = {MUSICAL_POS_X(192.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
     const u16 itemNo = musPoke->equip[ePos].itemNo;
@@ -326,24 +354,11 @@ static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
       work->itemWork[ePos] = NULL;
     }
   }
-  MUS_POKE_DRAW_StartAnime( work->pokeWork );
-  MUS_POKE_DRAW_StartAnime( work->pokeWorkBack );
-  
 }
 
-static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work )
+static void MUSICAL_VIEW_UnLoadItem( MUS_VIEW_LOCAL_WORK *work )
 {
   u8 i;
-  if( work->pokeWork != NULL )
-  {
-    MUS_POKE_DRAW_Del( work->pokeSys , work->pokeWork );
-    work->pokeWork = NULL;
-  }
-  if( work->pokeWorkBack != NULL )
-  {
-    MUS_POKE_DRAW_Del( work->pokeSys , work->pokeWorkBack );
-    work->pokeWorkBack = NULL;
-  }
   for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
   {
     if( work->itemRes[i] != NULL )
@@ -473,7 +488,7 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
     case 15:
     case 16:
       MUSICAL_VIEW_ChangeEquip( work , ret-12);
-      work->isRefresh = TRUE;
+      work->isRefreshItem = TRUE;
       break;
 
     case 17:
@@ -506,6 +521,7 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
   {
     u8 i;
     work->isRefresh = TRUE;
+    work->isRefreshName = TRUE;
     work->isTest = TRUE;
     work->isQuickTest = FALSE;
     work->startNo = work->monsno;
@@ -515,8 +531,10 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
     {
       work->posState[i] = 0;
     }
-    work->posStateRot = 0;
-    work->posStateShadow = 0;
+    work->posStateRot[0] = 0;
+    work->posStateRot[1] = 0;
+    work->posStateShadow[0] = 0;
+    work->posStateShadow[1] = 0;
     MUS_VIEW_TPrintf( "---Start Musical view auto test!---\n" );
   }
   if( (GFL_UI_KEY_GetTrg() & MUS_VIEW_TEST_KEY_TRG_Q) &&
@@ -524,6 +542,7 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
   {
     u8 i;
     work->isRefresh = TRUE;
+    work->isRefreshName = TRUE;
     work->isTest = TRUE;
     work->isQuickTest = TRUE;
     work->startNo = work->monsno;
@@ -533,8 +552,10 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
     {
       work->posState[i] = 0;
     }
-    work->posStateRot = 0;
-    work->posStateShadow = 0;
+    work->posStateRot[0] = 0;
+    work->posStateRot[1] = 0;
+    work->posStateShadow[0] = 0;
+    work->posStateShadow[1] = 0;
     MUS_VIEW_TPrintf( "---Start Musical view auto quick test!---\n" );
   }
 
@@ -551,16 +572,16 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(work->pokeWork);
       if( *flg == TRUE )
       {
-        if( work->posStateRot == 0 )
+        if( work->posStateRot[0] == 0 )
         {
-          work->posStateRot = 1;
+          work->posStateRot[0] = 1;
         }
       }
       else
       {
-        if( work->posStateRot != 0 )
+        if( work->posStateRot[0] != 0 )
         {
-          work->posStateRot = 2;
+          work->posStateRot[0] = 2;
         }
       }
       *flg = FALSE;
@@ -569,16 +590,52 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(work->pokeWork);
       if( *flg == TRUE )
       {
-        if( work->posStateShadow == 0 )
+        if( work->posStateShadow[0] == 0 )
         {
-          work->posStateShadow = 1;
+          work->posStateShadow[0] = 1;
         }
       }
       else
       {
-        if( work->posStateShadow != 0 )
+        if( work->posStateShadow[0] != 0 )
         {
-          work->posStateShadow = 2;
+          work->posStateShadow[0] = 2;
+        }
+      }
+      *flg = FALSE;
+    }
+    {
+      BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(work->pokeWorkBack);
+      if( *flg == TRUE )
+      {
+        if( work->posStateRot[1] == 0 )
+        {
+          work->posStateRot[1] = 1;
+        }
+      }
+      else
+      {
+        if( work->posStateRot[1] != 0 )
+        {
+          work->posStateRot[1] = 2;
+        }
+      }
+      *flg = FALSE;
+    }
+    {
+      BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(work->pokeWorkBack);
+      if( *flg == TRUE )
+      {
+        if( work->posStateShadow[1] == 0 )
+        {
+          work->posStateShadow[1] = 1;
+        }
+      }
+      else
+      {
+        if( work->posStateShadow[1] != 0 )
+        {
+          work->posStateShadow[1] = 2;
         }
       }
       *flg = FALSE;
@@ -617,12 +674,14 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
     
     //À•W•\Ž¦
     MUS_VIEW_TPrintf( "[%3d][%2d]",work->monsno,work->form );
-    MUS_VIEW_TPrintf( "[%2s]",strArr[work->posStateRot] );
-    MUS_VIEW_TPrintf( "[%2s]",strArr[work->posStateShadow] );
+    MUS_VIEW_TPrintf( "[%2s]",strArr[work->posStateRot[0]] );
+    MUS_VIEW_TPrintf( "[%2s]|",strArr[work->posStateShadow[0]] );
     for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
     {
       MUS_VIEW_TPrintf( "[%2s]",strArr[work->posState[i]] );
     }
+    MUS_VIEW_TPrintf( "|[%2s]",strArr[work->posStateRot[1]] );
+    MUS_VIEW_TPrintf( "[%2s]",strArr[work->posStateShadow[1]] );
     MUS_VIEW_TPrintf( "\n" );
 
     if( work->form == formNum-1 )
@@ -642,14 +701,17 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       work->form++;
     }
     work->isRefresh = TRUE;
+    work->isRefreshName = TRUE;
     work->cnt = 0;
 
     for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
     {
       work->posState[i] = 0;
     }
-    work->posStateRot = 0;
-    work->posStateShadow = 0;
+    work->posStateRot[0] = 0;
+    work->posStateRot[1] = 0;
+    work->posStateShadow[0] = 0;
+    work->posStateShadow[1] = 0;
     if( work->startNo == work->monsno &&
         work->startForm == work->form )
     {
@@ -746,6 +808,13 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
     MUSICAL_VIEW_UnLoadPoke( work );
     MUSICAL_VIEW_LoadPoke( work );
     work->isRefresh = FALSE;
+    work->isRefreshItem = TRUE;
+  }
+  if( work->isRefreshItem == TRUE )
+  {
+    MUSICAL_VIEW_UnLoadItem( work );
+    MUSICAL_VIEW_LoadItem( work );
+    work->isRefreshItem = FALSE;
   }
   if( work->isRefreshName == TRUE )
   {
@@ -965,6 +1034,8 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
 
   work->heapId = HEAPID_MUSICAL_VIEW;
   work->isRefresh = FALSE;
+  work->isRefreshItem = FALSE;
+  work->isRefreshName = TRUE;
   work->monsno = 1;
   work->sex = 0;
   work->form = 0;
@@ -993,6 +1064,7 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   }
 
   MUSICAL_VIEW_LoadPoke( work );
+  MUSICAL_VIEW_LoadItem( work );
   
   return GFL_PROC_RES_FINISH;
 }
@@ -1021,6 +1093,7 @@ static GFL_PROC_RESULT MusicalViewProc_Main( GFL_PROC * proc, int * seq , void *
   MUSICAL_VIEW_UpdatePoke( work );
   
   MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
+
   if( work->isTest == FALSE )
   {
     MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
