@@ -10,7 +10,7 @@
 #include "research_common.h"
 #include "research_common_def.h"
 #include "research_common_data.cdat"
-#include "research_menu.h"
+#include "research_top.h"
 #include "research_select.h"
 #include "research_check.h"
 
@@ -107,7 +107,7 @@ typedef struct {
   RESEARCH_COMMON_WORK* commonWork;
 
   // 各画面専用ワーク
-  RESEARCH_MENU_WORK*   menuWork;   // 調査初期画面 ( メニュー画面 )
+  RRT_WORK*   topWork;   // トップ画面
   RESEARCH_SELECT_WORK* selectWork; // 調査内容変更画面 
   RESEARCH_CHECK_WORK*  checkWork;  // 調査報告確認画面
 
@@ -316,7 +316,7 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   // 現在のシーケンスの専用ワークを破棄
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:  break;
-  case PROC_MAIN_SEQ_MENU:   DeleteResearchMenuWork  ( work->menuWork );    break;
+  case PROC_MAIN_SEQ_MENU:   RRT_DeleteWork( work->topWork );    break;
   case PROC_MAIN_SEQ_SELECT: DeleteResearchSelectWork( work->selectWork );  break;
   case PROC_MAIN_SEQ_CHECK:  DeleteResearchCheckWork ( work->checkWork );   break;
   case PROC_MAIN_SEQ_FINISH: break;
@@ -326,7 +326,7 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   // 専用ワークポインタをクリア
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_MENU:    work->menuWork   = NULL;  break;
+  case PROC_MAIN_SEQ_MENU:    work->topWork   = NULL;  break;
   case PROC_MAIN_SEQ_SELECT:  work->selectWork = NULL;  break;
   case PROC_MAIN_SEQ_CHECK:   work->checkWork  = NULL;  break;
   case PROC_MAIN_SEQ_FINISH:  break;
@@ -352,7 +352,7 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   switch( *seq )
   {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_MENU:    GF_ASSERT( work->menuWork   == NULL );  break;
+  case PROC_MAIN_SEQ_MENU:    GF_ASSERT( work->topWork   == NULL );  break;
   case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->selectWork == NULL );  break;
   case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->checkWork  == NULL );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
@@ -363,7 +363,7 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   switch( nextSeq )
   {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_MENU:    work->menuWork   = CreateResearchMenuWork  ( work->commonWork );  break;
+  case PROC_MAIN_SEQ_MENU:    work->topWork   = RRT_CreateWork( work->commonWork );  break;
   case PROC_MAIN_SEQ_SELECT:  work->selectWork = CreateResearchSelectWork( work->commonWork );  break;
   case PROC_MAIN_SEQ_CHECK:   work->checkWork  = CreateResearchCheckWork ( work->commonWork );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
@@ -407,23 +407,25 @@ static PROC_MAIN_SEQ ProcMain_SETUP( RESEARCH_WORK* work )
  */
 //-------------------------------------------------------------------------------
 static PROC_MAIN_SEQ ProcMain_MENU( RESEARCH_WORK* work )
-{
-  RESEARCH_MENU_RESULT result;
-  PROC_MAIN_SEQ  nextSeq;
+{ 
+  RRT_Main( work->topWork );
 
-  // 調査レーダー初期画面メイン処理
-  result = ResearchMenuMain( work->menuWork );
-  
-  // 次のシーケンスを決定
-  switch( result )
-  {
-  case RESEARCH_MENU_RESULT_CONTINUE:  nextSeq = PROC_MAIN_SEQ_MENU;    break;
-  case RESEARCH_MENU_RESULT_TO_SELECT: nextSeq = PROC_MAIN_SEQ_SELECT;  break;
-  case RESEARCH_MENU_RESULT_TO_CHECK:  nextSeq = PROC_MAIN_SEQ_CHECK;   break;
-  case RESEARCH_MENU_RESULT_EXIT:      nextSeq = PROC_MAIN_SEQ_FINISH;  break;
-  default:  GF_ASSERT(0);
+  // トップ画面が終了
+  if( RRT_IsFinished( work->topWork ) ) {
+
+    RRT_RESULT result = RRT_GetResult( work->topWork );
+
+    switch( result ) {
+      case RRT_RESULT_TO_LIST:  return PROC_MAIN_SEQ_SELECT;
+      case RRT_RESULT_TO_GRAPH: return PROC_MAIN_SEQ_CHECK;
+      case RRT_RESULT_EXIT:     return PROC_MAIN_SEQ_FINISH;
+      default:
+        GF_ASSERT(0);
+        return PROC_MAIN_SEQ_FINISH;
+    }
   } 
-  return nextSeq;
+
+  return PROC_MAIN_SEQ_MENU;
 }
 
 //-------------------------------------------------------------------------------
@@ -524,7 +526,7 @@ static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem )
   work->gameSystem = gameSystem;
   work->frameCount = 0;
   work->commonWork = NULL;
-  work->menuWork   = NULL;
+  work->topWork   = NULL;
   work->selectWork = NULL;
   work->checkWork  = NULL;
 }

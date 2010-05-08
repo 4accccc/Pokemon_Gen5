@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 初期画面の定数定義
- * @file   research_menu_def.h
+ * @file   research_top_def.h
  * @author obata
  * @date   2010.02.13
  */

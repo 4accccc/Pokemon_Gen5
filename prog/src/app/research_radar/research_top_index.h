@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 初期画面のインデックス定義
- * @file   research_menu_index.h
+ * @file   research_top_index.h
  * @author obata
  * @date   2010.02.13
  */
@@ -11,14 +11,15 @@
 
 // 処理シーケンス
 typedef enum {
-  RESEARCH_MENU_SEQ_SETUP,      // 準備
-  RESEARCH_MENU_SEQ_STAND_BY,   // 最初のキー入力待ち
-  RESEARCH_MENU_SEQ_KEY_WAIT,   // キー入力待ち
-  RESEARCH_MENU_SEQ_FRAME_WAIT, // フレーム経過待ち
-  RESEARCH_MENU_SEQ_FADE_OUT,   // フェードアウト
-  RESEARCH_MENU_SEQ_CLEAN_UP,   // 後片付け
-  RESEARCH_MENU_SEQ_FINISH,     // 終了
-} RESEARCH_MENU_SEQ;
+  RRT_STATE_SETUP,    // 準備
+  RRT_STATE_STANDBY,  // 最初のキー入力待ち
+  RRT_STATE_KEYWAIT,  // キー入力待ち
+  RRT_STATE_WAIT,     // フレーム経過待ち
+  RRT_STATE_FADEOUT,  // フェードアウト
+  RRT_STATE_CLEANUP,  // 後片付け
+  RRT_STATE_FINISH,   // 終了
+  RRT_STATE_NUM,
+} RRT_STATE;
 
 // メッセージデータ
 typedef enum {

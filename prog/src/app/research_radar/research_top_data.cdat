@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 /**
  * @brief  調査レーダー 初期画面のデータ定義
- * @file   research_menu_data.cdat
+ * @file   research_top_data.cdat
  * @author obata
  * @date   2010.02.13
  */
@@ -11,7 +11,7 @@
 #include "palette_anime.h"
 #include "research_common.h"
 #include "research_common_def.h"
-#include "research_menu_index.h"
+#include "research_top_index.h"
 
 #include "obj_NANR_LBLDEFS.h"        // for NANR_obj_xxxx
 #include "arc/message.naix"          // for NARC_message_xxxx

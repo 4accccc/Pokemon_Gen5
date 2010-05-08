@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 /**
- * @brief  調査レーダー 初期画面 ( メニュー画面 )
- * @file   research_menu.h
+ * @brief  調査レーダー トップ画面
+ * @file   research_top.h
  * @author obata
  * @date   2010.02.03
  */
@@ -15,32 +15,30 @@
 //===============================================================================
 // ■定数
 //=============================================================================== 
-// メイン関数の終了結果
+// トップ画面の終了結果
 typedef enum {
-  RESEARCH_MENU_RESULT_NONE,       // ダミー
-  RESEARCH_MENU_RESULT_CONTINUE,   // 画面継続
-  RESEARCH_MENU_RESULT_TO_SELECT,  // 調査内容変更画面へ
-  RESEARCH_MENU_RESULT_TO_CHECK,   // 調査報告確認画面へ
-  RESEARCH_MENU_RESULT_EXIT,       // 調査レーダー終了
-} RESEARCH_MENU_RESULT;
+  RRT_RESULT_TO_LIST,  // リスト画面へ
+  RRT_RESULT_TO_GRAPH, // グラフ画面へ
+  RRT_RESULT_EXIT,     // 調査レーダー終了
+} RRT_RESULT;
 
 
 //=============================================================================== 
-// ■調査初期画面ワークの不完全型
+// ■トップ画面ワークの不完全型
 //=============================================================================== 
-typedef struct _RESEARCH_MENU_WORK RESEARCH_MENU_WORK;
+typedef struct _RESEARCH_RADAR_TOP_WORK RRT_WORK;
 
 
 //=============================================================================== 
-// ■調査初期画面ワークの生成・破棄
+// ■
 //=============================================================================== 
 // ワークを生成する
-RESEARCH_MENU_WORK* CreateResearchMenuWork( RESEARCH_COMMON_WORK* commonWork );
+extern RRT_WORK* RRT_CreateWork( RESEARCH_COMMON_WORK* commonWork );
 // ワークを破棄する
-void DeleteResearchMenuWork( RESEARCH_MENU_WORK* work ); 
-
-//=============================================================================== 
-// ■調査初期画面の動作
-//=============================================================================== 
+extern void RRT_DeleteWork( RRT_WORK* work ); 
 // メイン動作
-RESEARCH_MENU_RESULT ResearchMenuMain( RESEARCH_MENU_WORK* work );
+extern void RRT_Main( RRT_WORK* work );
+// 終了判定
+extern BOOL RRT_IsFinished( const RRT_WORK* work );
+// 終了結果の取得
+extern RRT_RESULT RRT_GetResult( const RRT_WORK* work );
