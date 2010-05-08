@@ -70,16 +70,16 @@ def convGraFileFunc( mainFolder , subFolder )
     when fileType == '.ncg'
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NCGR'
       if( CompFileDate( fileName , convFile ) == 1 )
-        system( "perl " + PERL_TOOL_DIR + "comp/ncg.pl " + fileName + " " + TEMP_DIR )
-        system( "cp " + TEMP_DIR + "*.NCGR" + " " + OUTPUT_DIR )
-        system( "rm " + TEMP_DIR + "*.*" )
+        system( "perl " + PERL_TOOL_DIR + "comp/ncg.pl " + fileName + " " + OUTPUT_DIR )
+        #system( "cp " + TEMP_DIR + "*.NCGR" + " " + OUTPUT_DIR )
+        #system( "rm " + TEMP_DIR + "*.*" )
         $isRefresh = TRUE
       end
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NCBR'
       if( CompFileDate( fileName , convFile ) == 1 )
-        system( "perl " + PERL_TOOL_DIR + "comp/ncgc.pl " + fileName + " " + TEMP_DIR )
-        system( "cp " + TEMP_DIR + "*.NCBR" + " " + OUTPUT_DIR )
-        system( "rm " + TEMP_DIR + "*.*" )
+        system( "perl " + PERL_TOOL_DIR + "comp/ncgc.pl " + fileName + " " + OUTPUT_DIR )
+        #system( "cp " + TEMP_DIR + "*.NCBR" + " " + OUTPUT_DIR )
+        #system( "rm " + TEMP_DIR + "*.*" )
         $isRefresh = TRUE
       end
 
@@ -105,8 +105,8 @@ def convGraFileFunc( mainFolder , subFolder )
         system( "rm " + TEMP_DIR + "*.*" )
         $isRefresh = TRUE
       end
-
     end
+    system( "pause" )
   }
 end
 
