@@ -425,6 +425,7 @@ static void tcb_BgmChangeReq( GFL_TCBL *tcb , void* tcb_wk)
   case 1:
     if( twk->push_f ){
       if( !twk->cmd->bgm_push_f ){
+        PMSND_PauseBGM(TRUE);
         PMSND_PushBGM();
         twk->cmd->bgm_push_f = TRUE;
       }else{
@@ -439,6 +440,7 @@ static void tcb_BgmChangeReq( GFL_TCBL *tcb , void* tcb_wk)
     if( twk->pop_f ){
       if( twk->cmd->bgm_push_f ) {
         PMSND_PopBGM();
+        PMSND_PauseBGM(FALSE);
         twk->cmd->bgm_push_f = FALSE;
       }else{
         GF_ASSERT_MSG(0,"BGM‚ªpush‚³‚ê‚¸‚Épop‚³‚ê‚æ‚¤‚Æ‚µ‚Ä‚¢‚Ü‚·\nƒRƒ}ƒ“ƒh—ñ‚ðŒ©’¼‚µ‚Ä‚­‚¾‚³‚¢\n");

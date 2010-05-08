@@ -253,6 +253,7 @@ static void cmd_SystemWorkRelease( DEMO3D_CMD_WORK* wk )
       GF_ASSERT_MSG(0,"BGMがpopされずに終了します\nX+Y+L+R同時押しでアサートを抜けて、コマンド列を見直してください\n");
     }
     PMSND_PopBGM();
+    PMSND_PauseBGM(FALSE);
     PMSND_FadeInBGM( 60 );
   }
 
