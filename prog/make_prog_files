@@ -2174,7 +2174,7 @@ SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
 # ‚·‚êˆá‚¢’²¸ƒŒ[ƒ_[‰æ–Ê
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_RESEARCH_RADAR = app/research_radar/research_main.c \
-                              app/research_radar/research_menu.c \
+                              app/research_radar/research_top.c \
                               app/research_radar/research_select.c \
                               app/research_radar/research_check.c \
                               app/research_radar/research_test.c \
