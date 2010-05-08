@@ -91,13 +91,13 @@ void	MCSS_TOOL_MakeMAWPPP( const POKEMON_PASO_PARAM *ppp, MCSS_ADD_WORK *maw, in
 void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, BOOL egg, MCSS_ADD_WORK *maw, int dir )
 {
 	maw->arcID = POKEGRA_GetArcID();
-	maw->ncbr = POKEGRA_GetCbrArcIndex( mons_no, form_no, sex, rare,  dir, egg );
-	maw->nclr = POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare,  dir, egg );
-	maw->ncer = POKEGRA_GetCelArcIndex( mons_no, form_no, sex, rare,  dir, egg );
-	maw->nanr = POKEGRA_GetAnmArcIndex( mons_no, form_no, sex, rare,  dir, egg );
-	maw->nmcr = POKEGRA_GetMCelArcIndex( mons_no, form_no, sex, rare,  dir, egg );
-	maw->nmar = POKEGRA_GetMAnmArcIndex( mons_no, form_no, sex, rare,  dir, egg );
-	maw->ncec = POKEGRA_GetNcecArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncbr = POKEGRA_GetCbrArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nclr = POKEGRA_GetPalArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncer = POKEGRA_GetCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nanr = POKEGRA_GetAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmcr = POKEGRA_GetMCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmar = POKEGRA_GetMAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncec = POKEGRA_GetNcecArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
 }
 
 //============================================================================================

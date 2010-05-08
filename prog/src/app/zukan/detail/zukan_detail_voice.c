@@ -1366,6 +1366,7 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     // パレットフェード
     {
       ARCDATID arcdatid = POKEGRA_GetPalArcIndex(
+          POKEGRA_GetArcID(), 
           (int)monsno, (int)form, (int)sex, (int)rare,
           POKEGRA_DIR_FRONT, FALSE );
 

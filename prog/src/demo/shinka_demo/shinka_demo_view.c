@@ -1717,8 +1717,8 @@ static INDEPENDENT_POKE_WORK* IndependentPokeInit(
   {
     u32 cgr, clr;
     // リソース受け取り
-    cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
-    clr = POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
+    cgr	= POKEGRA_GetCgrArcIndex( POKEGRA_GetArcID(), mons_no, form_no, sex, rare, dir, egg );
+    clr = POKEGRA_GetPalArcIndex( POKEGRA_GetArcID(), mons_no, form_no, sex, rare, dir, egg );
     wk->chr = NULL;
     wk->pal = NULL;
     // リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない

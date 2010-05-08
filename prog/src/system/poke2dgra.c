@@ -82,7 +82,7 @@ void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int mons_no, int 
 	void *p_buf;
 
 	//リソース受け取り
-	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
+	cgr	= POKEGRA_GetCgrArcIndex( POKEGRA_GetArcID(), mons_no, form_no, sex, rare, dir, egg );
 
 
 	//リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
@@ -195,7 +195,7 @@ void POKE2DGRA_BG_TransResource( int mons_no, int form_no, int sex, int rare, in
 	//リソース受け取り
 	{	
 		arc	= POKEGRA_GetArcID();
-		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
+		plt	= POKEGRA_GetPalArcIndex( arc , mons_no, form_no, sex, rare, dir, egg );
 	}
 
 	//リソース読み込み
@@ -255,7 +255,7 @@ GFL_ARCUTIL_TRANSINFO POKE2DGRA_BG_TransResourceByAreaMan( int mons_no, int form
 	//リソース受け取り
 	{	
 		arc	= POKEGRA_GetArcID();
-		plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
+		plt	= POKEGRA_GetPalArcIndex( arc , mons_no, form_no, sex, rare, dir, egg );
 	}
 
 	//リソース読み込み
@@ -369,7 +369,7 @@ ARCHANDLE *POKE2DGRA_OpenHandle( HEAPID heapID )
 u32 POKE2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, BOOL egg, CLSYS_DRAW_TYPE vramType, u16 byteOffs, HEAPID heapID )
 {	
 	u32 plt;
-	plt	= POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
+	plt	= POKEGRA_GetPalArcIndex( POKEGRA_GetArcID(), mons_no, form_no, sex, rare, dir, egg );
 
 	//読み込み
 	return GFL_CLGRP_PLTT_RegisterEx( p_handle, plt, vramType, byteOffs, 0, POKEGRA_POKEMON_PLT_NUM, heapID );
@@ -396,7 +396,7 @@ u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, i
 
   u32 idx;
 
-	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
+	cgr	= POKEGRA_GetCgrArcIndex( POKEGRA_GetArcID(), mons_no, form_no, sex, rare, dir, egg );
 
 	//読み込み
 #ifdef	POKEGRA_LZ

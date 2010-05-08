@@ -3615,6 +3615,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const GIFT_PACK_DATA *cp_data, MYSTERY_CA
       //ƒpƒŒƒbƒg“]‘—
       { 
 	      u16 plt	= POKEGRA_GetPalArcIndex( 
+	          POKEGRA_GetArcID(), 
             PP_Get( p_pp, ID_PARA_monsno, NULL ),
             PP_Get( p_pp, ID_PARA_form_no, NULL ), 
             PP_Get( p_pp, ID_PARA_sex, NULL ),

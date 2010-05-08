@@ -1765,8 +1765,8 @@ static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
     POKE_WORK *pwk;
     pwk = (POKE_WORK*)ptr->Work;
     //リソース受け取り
-    cgr	= POKEGRA_GetCgrArcIndex( pwk->MonsNo, pwk->FormNo, pwk->Sex, pwk->Rare, POKEGRA_DIR_FRONT, pwk->Egg );
-    pal = POKEGRA_GetPalArcIndex( pwk->MonsNo, pwk->FormNo, pwk->Sex, pwk->Rare, POKEGRA_DIR_FRONT, pwk->Egg );
+    cgr	= POKEGRA_GetCgrArcIndex( POKEGRA_GetArcID(), pwk->MonsNo, pwk->FormNo, pwk->Sex, pwk->Rare, POKEGRA_DIR_FRONT, pwk->Egg );
+    pal = POKEGRA_GetPalArcIndex( POKEGRA_GetArcID(), pwk->MonsNo, pwk->FormNo, pwk->Sex, pwk->Rare, POKEGRA_DIR_FRONT, pwk->Egg );
     ptr->chr = NULL;
     ptr->plt = NULL;
     //リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない

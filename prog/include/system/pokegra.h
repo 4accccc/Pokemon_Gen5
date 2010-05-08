@@ -91,21 +91,21 @@ extern ARCID POKEGRA_GetArcID( void );
 ///	リソース取得
 //=====================================
 //NCGR
-extern ARCDATID POKEGRA_GetCgrArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetCgrArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NCBR
-extern ARCDATID POKEGRA_GetCbrArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetCbrArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NCLR
-extern ARCDATID POKEGRA_GetPalArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetPalArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NCER	-> マルチセル用のパーツです。
-extern ARCDATID POKEGRA_GetCelArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetCelArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NANR
-extern ARCDATID POKEGRA_GetAnmArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetAnmArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NMCR
-extern ARCDATID POKEGRA_GetMCelArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetMCelArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NMAR
-extern ARCDATID POKEGRA_GetMAnmArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetMAnmArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 //NCEC MCSS用ファイル
-extern ARCDATID POKEGRA_GetNcecArcIndex( int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
+extern ARCDATID POKEGRA_GetNcecArcIndex( ARCID arc_id , int mons_no, int form_no, int sex, int rare, int dir, BOOL egg );
 
 
 //-------------------------------------

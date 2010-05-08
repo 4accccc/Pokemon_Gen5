@@ -1114,7 +1114,8 @@ void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 	// ƒpƒŒƒbƒg“]‘—
   { 
     ARCDATID  pal = POKEGRA_GetPalArcIndex( 
-        PP_Get( pp, ID_PARA_monsno,	NULL ), 
+          POKEGRA_GetArcID(), 
+          PP_Get( pp, ID_PARA_monsno,	NULL ), 
           PP_Get( pp, ID_PARA_form_no,NULL ),
           PP_Get( pp, ID_PARA_sex,	NULL ),
           PP_CheckRare( pp ),
