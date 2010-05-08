@@ -3291,8 +3291,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HikariNoNendo( u32* numElems )
 }
 static void handler_HikariNoNendo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BtlSide  mySide = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_SIDE) == mySide )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BtlSideEffect sideEff = BTL_EVENTVAR_GetValue( BTL_EVAR_SIDE_EFFECT );
     if( (sideEff == BTL_SIDEEFF_HIKARINOKABE) || (sideEff == BTL_SIDEEFF_REFRECTOR) )

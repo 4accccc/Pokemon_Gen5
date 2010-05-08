@@ -783,7 +783,7 @@ static void scEvent_ItemSetDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp
 static void scEvent_ItemSetFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 tokuseiID );
 static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID );
-static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont );
+static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, u8 userPokeID, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont );
 static void AffCounter_Clear( WAZA_AFF_COUNTER* cnt );
 static void AffCounter_CountUp( WAZA_AFF_COUNTER* cnt, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BtlTypeAff affinity );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
@@ -12322,9 +12322,10 @@ static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID )
  * @param   &param->cont
  */
 //----------------------------------------------------------------------------------
-static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont )
+static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, u8 userPokeID, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont )
 {
   BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, userPokeID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_SIDE, side );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_SIDE_EFFECT, effect );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, cont->raw );
@@ -14148,7 +14149,7 @@ static u8 scproc_HandEx_sideEffectAdd( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   const BTL_HANDEX_PARAM_SIDEEFF_ADD* param = (const BTL_HANDEX_PARAM_SIDEEFF_ADD*)(param_header);
   BPP_SICK_CONT cont = param->cont;
 
-  scEvent_CheckSideEffectParam( wk, param->effect, param->side, &cont );
+  scEvent_CheckSideEffectParam( wk, param_header->userPokeID, param->effect, param->side, &cont );
 
   if( BTL_HANDLER_SIDE_Add(param->side, param->effect, cont) )
   {
