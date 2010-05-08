@@ -64,9 +64,7 @@
 struct _RESEARCH_RADAR_GRAPH_WORK
 { 
   RESEARCH_COMMON_WORK* commonWork; // ‘S‰æ–Ê‹¤’Êƒ[ƒN
-  HEAPID                heapID;
-  GAMESYS_WORK*         gameSystem;
-  GAMEDATA*             gameData;
+  HEAPID heapID;
 
   GFL_FONT*    font;                   // ƒtƒHƒ“ƒg
   GFL_MSGDATA* message[ MESSAGE_NUM ]; // ƒƒbƒZ[ƒW
@@ -144,7 +142,7 @@ struct _RESEARCH_RADAR_GRAPH_WORK
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
-// LAYER 4 ó‘Ô
+// LAYER 6 ó‘Ô
 //-----------------------------------------------------------------------------------------
 // ó‘Ôˆ—
 static void MainSeq_SETUP( RRG_WORK* work ); // RRG_STATE_SETUP
@@ -172,7 +170,7 @@ static void SetWaitFrame( RRG_WORK* work, u32 frame ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì
 static u32 GetWaitFrame( const RRG_WORK* work ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğæ“¾‚·‚é
 RRG_STATE GetFirstState( const RRG_WORK* work ); // Å‰‚Ìó‘Ô‚ğæ“¾‚·‚é    
 //-----------------------------------------------------------------------------------------
-// LAYER 3 ‹@”\
+// LAYER 5 ‹@”\
 //-----------------------------------------------------------------------------------------
 // ƒJ[ƒ\ƒ‹
 static void MoveMenuCursorUp( RRG_WORK* work ); // ã‚ÖˆÚ“®‚·‚é
@@ -189,7 +187,7 @@ static void ChangeAnswerToTop( RRG_WORK* work ); // æ“ª‚Ì‰ñ“š‚É•ÏX‚·‚é
 // ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv
 static void SwitchDataDisplayType( RRG_WORK* work ); // ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğØ‚è‘Ö‚¦‚é
 //-----------------------------------------------------------------------------------------
-// LAYER 2 ŒÂ•Ê‘€ì
+// LAYER 4 ŒÂ•Ê‘€ì
 //-----------------------------------------------------------------------------------------
 // ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹
 static void ShiftMenuCursorPos( RRG_WORK* work, int stride ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é
@@ -202,8 +200,6 @@ static void ShiftQuestionIdx( RRG_WORK* work, int stride ); // •\¦‚·‚é¿–â‚ÌƒCƒ
 // ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX
 static void ShiftAnswerIdx( RRG_WORK* work, int stride ); // ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğ•ÏX‚·‚é
 static void ResetAnswerIdx( RRG_WORK* work );             // ‘I‘ğ’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğƒŠƒZƒbƒg‚·‚é
-// ’²¸ƒf[ƒ^•\¦ƒ^ƒCƒv
-static void SetDataDisplayType( RRG_WORK* work, DATA_DISP_TYPE dispType ); // ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğİ’è‚·‚é
 //u•ñ‚ğŒ©‚évƒ{ƒ^ƒ“
 static void UpdateAnalyzeButton( RRG_WORK* work ); //u•ñ‚ğŒ©‚évƒ{ƒ^ƒ“‚ğXV‚·‚é
 static void BlinkAnalyzeButton( RRG_WORK* work ); //u•ñ‚ğŒ©‚évƒ{ƒ^ƒ“‚ğ“_–Å‚³‚¹‚é
@@ -222,9 +218,6 @@ static void SetupSubCircleGraph ( RRG_WORK* work, DATA_DISP_TYPE dispType ); // 
 static void InterchangeCircleGraph( RRG_WORK* work ); // ƒTƒu‰~ƒOƒ‰ƒt‚ÆƒƒCƒ“‰~ƒOƒ‰ƒt‚ğ“ü‚ê‘Ö‚¦‚é
 static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component ); // ƒOƒ‰ƒt\¬—v‘f‚Ì’†S“_ƒJƒ‰[‚ğƒZƒbƒgƒAƒbƒv‚·‚é
 static void AdjustCircleGraphLayer( RRG_WORK* work ); // ƒƒCƒ“‰~ƒOƒ‰ƒt, ƒTƒu‰~ƒOƒ‰ƒt‚Ìd‚È‚è•û‚ğ’²®‚·‚é
-static CIRCLE_GRAPH* GetMainGraph( const RRG_WORK* work ); // Œ»İ•\¦’†‚ÌƒƒCƒ“‰~ƒOƒ‰ƒt‚ğæ“¾‚·‚é
-static CIRCLE_GRAPH* GetSubGraph( const RRG_WORK* work ); // Œ»İ•\¦’†‚ÌƒTƒu‰~ƒOƒ‰ƒt‚ğæ“¾‚·‚é
-static BOOL CheckAllGraphAnimeEnd( const RRG_WORK* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“’†‚Ì‰~ƒOƒ‰ƒt‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 // ‰ñ“šƒ}[ƒJ[
 static void DrawAnswerMarker( const RRG_WORK* work ); // ‰ñ“šƒ}[ƒJ[‚ğ•`‰æ‚·‚é
 // –îˆó
@@ -266,6 +259,22 @@ static void StartPaletteFadeFlashIn ( RRG_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ‚É‚æ‚éƒ
 static BOOL IsPaletteFadeEnd( RRG_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 // VBlankƒ^ƒXƒN
 static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank’†‚Ìˆ—
+//-----------------------------------------------------------------------------------------
+// LAYER 3 æ“¾Eİ’èE”»’è
+//-----------------------------------------------------------------------------------------
+// ƒVƒXƒeƒ€Eƒ[ƒN
+static GAMESYS_WORK* GetGameSystem( const RRG_WORK* work ); // ƒQ[ƒ€ƒVƒXƒeƒ€‚ğæ“¾‚·‚é
+static GAMEDATA* GetGameData( const RRG_WORK* work ); // ƒQ[ƒ€ƒf[ƒ^‚ğæ“¾‚·‚é
+static HEAPID GetHeapID( const RRG_WORK* work ); // ƒq[ƒvID‚ğæ“¾‚·‚é
+static void SetHeapID( RRG_WORK* work, HEAPID heapID );// ƒq[ƒvID‚ğİ’è‚·‚é
+static RESEARCH_COMMON_WORK* GetCommonWork( const RRG_WORK* work ); // ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ğæ“¾‚·‚é
+static void SetCommonWork( RRG_WORK* work, RESEARCH_COMMON_WORK* commonWork ); // ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ğİ’è‚·‚é
+// ’²¸ƒf[ƒ^•\¦ƒ^ƒCƒv
+static void SetDataDisplayType( RRG_WORK* work, DATA_DISP_TYPE dispType ); // ’²¸ƒf[ƒ^‚Ì•\¦ƒ^ƒCƒv‚ğİ’è‚·‚é
+// ‰~ƒOƒ‰ƒt
+static CIRCLE_GRAPH* GetMainGraph( const RRG_WORK* work ); // Œ»İ•\¦’†‚ÌƒƒCƒ“‰~ƒOƒ‰ƒt‚ğæ“¾‚·‚é
+static CIRCLE_GRAPH* GetSubGraph( const RRG_WORK* work ); // Œ»İ•\¦’†‚ÌƒTƒu‰~ƒOƒ‰ƒt‚ğæ“¾‚·‚é
+static BOOL CheckAllGraphAnimeEnd( const RRG_WORK* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“’†‚Ì‰~ƒOƒ‰ƒt‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 // ’²¸ƒf[ƒ^
 static u8 GetTopicID( const RRG_WORK* work ); // Œ»İ•\¦’†‚Ì’²¸€–ÚID
 static u8 GetQuestionID( const RRG_WORK* work ); // Œ»İ•\¦’†‚Ì¿–âID
@@ -287,6 +296,9 @@ static GFL_CLWK* GetClactWork( const RRG_WORK* work, CLWK_INDEX wkIdx ); // ƒZƒ‹
 //-----------------------------------------------------------------------------------------
 // LAYER 2 ¶¬E‰Šú‰»E”jŠü
 //-----------------------------------------------------------------------------------------
+static RRG_WORK* CreateGraphWork( HEAPID heapID ); // ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN ¶¬
+static void InitGraphWork( RRG_WORK* work ); // ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN ‰Šú‰»
+static void DeleteGraphWork( RRG_WORK* work ); // ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN ”jŠü
 static void InitStateQueue( RRG_WORK* work ); // ó‘ÔƒLƒ…[ ‰Šú‰»
 static void CreateStateQueue( RRG_WORK* work ); // ó‘ÔƒLƒ…[ ì¬
 static void DeleteStateQueue( RRG_WORK* work ); // ó‘ÔƒLƒ…[ ”jŠü
@@ -299,9 +311,6 @@ static void DeleteMessages( RRG_WORK* work ); // ƒƒbƒZ[ƒW ”jŠü
 static void InitWordset( RRG_WORK* work ); // ƒ[ƒhƒZƒbƒg ‰Šú‰»
 static void CreateWordset( RRG_WORK* work ); // ƒ[ƒhƒZƒbƒg ¶¬
 static void DeleteWordset( RRG_WORK* work ); // ƒ[ƒhƒZƒbƒg ”jŠü
-static void InitBGFonts( RRG_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ‰Šú‰»
-static void CreateBGFonts( RRG_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ¶¬
-static void DeleteBGFonts( RRG_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ”jŠü
 static void InitCircleGraphs( RRG_WORK* work ); // ‰~ƒOƒ‰ƒt ‰Šú‰»
 static void CreateCircleGraph( RRG_WORK* work ); // ‰~ƒOƒ‰ƒt ¶¬
 static void DeleteCircleGraph( RRG_WORK* work ); // ‰~ƒOƒ‰ƒt ”jŠü
@@ -325,8 +334,9 @@ static void CleanUpSubBG_WINDOW( RRG_WORK* work ); // SUB-BG ( ƒEƒBƒ“ƒhƒE–Ê ) Œã
 static void CleanUpSubBG_FONT( RRG_WORK* work ); // SUB-BG ( ƒtƒHƒ“ƒg–Ê ) Œã•Ğ•t‚¯
 static void CleanUpMainBG_WINDOW( RRG_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) Œã•Ğ•t‚¯
 static void CleanUpMainBG_FONT( RRG_WORK* work ); // MAIN-BG ( ƒtƒHƒ“ƒg–Ê ) Œã•Ğ•t‚¯
-static void CreateClactSystem( RRG_WORK* work ); // OBJ ƒVƒXƒeƒ€ ¶¬
-static void DeleteClactSystem( RRG_WORK* work ); // OBJ ƒVƒXƒeƒ€ ”jŠü
+static void InitBGFonts( RRG_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ‰Šú‰»
+static void CreateBGFonts( RRG_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ¶¬
+static void DeleteBGFonts( RRG_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ”jŠü
 static void RegisterSubObjResources( RRG_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX “o˜^
 static void ReleaseSubObjResources( RRG_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX ‰ğ•ú
 static void RegisterMainObjResources( RRG_WORK* work ); // MAIN-OBJ ƒŠƒ\[ƒX “o˜^
@@ -390,49 +400,13 @@ RRG_WORK* RRG_CreateWork( RESEARCH_COMMON_WORK* commonWork )
 
   heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
-  // ¶¬
-  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRG_WORK) );
+  // ƒ[ƒN‚ğ¶¬
+  work = CreateGraphWork( heapID );
 
-  // ‰Šú‰»
-  work->commonWork         = commonWork;
-  work->heapID             = heapID;
-  work->gameSystem         = RESEARCH_COMMON_GetGameSystem( commonWork );
-  work->gameData           = RESEARCH_COMMON_GetGameData( commonWork );
-  work->state                = RRG_STATE_SETUP;
-  work->stateEndFlag      = FALSE;
-  work->stateCount           = 0;
-  work->waitFrame          = WAIT_FRAME_BUTTON;
-  work->cursorPos          = MENU_ITEM_QUESTION;
-  work->analyzeFlag        = FALSE;
-  work->analyzeByTouchFlag = FALSE;
-  work->updateFlag         = FALSE;
-  work->questionIdx        = 0;
-  work->answerIdx          = 0;
-  work->dispType           = DATA_DISP_TYPE_TODAY;
-  work->VBlankTCBSystem    = GFUser_VIntr_GetTCBSYS();
-  work->percentageNum      = 0;
-  work->percentageDispNum  = 0;
-  work->finishResult       = RRG_RESULT_TO_TOP;
-  work->finishFlag         = FALSE;
-
-  for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
-
-  InitResearchData( work );
-  InitStateQueue( work );
-  InitCircleGraphs( work );
-  InitArrow( work );
-  InitPercentage( work );
-  InitMessages( work );
-  InitWordset( work );
-  InitFont( work );
-  InitBGFonts( work );
-  InitClactUnits( work );
-  InitClactWorks( work );
-  InitBitmapDatas( work );
-  InitPaletteFadeSystem( work );
-  InitPaletteAnime( work );
-
-  CreateStateQueue( work );
+  // ƒ[ƒN‚ğ‰Šú‰»
+  InitGraphWork( work );
+  SetHeapID( work, heapID );
+  SetCommonWork( work, commonWork );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create work\n" );
@@ -449,13 +423,8 @@ RRG_WORK* RRG_CreateWork( RESEARCH_COMMON_WORK* commonWork )
 //-----------------------------------------------------------------------------------------
 void RRG_DeleteWork( RRG_WORK* work )
 {
-  if( work == NULL )
-  {
-    GF_ASSERT(0);
-    return;
-  }
-  DeleteStateQueue( work ); // ó‘ÔƒLƒ…[
-  GFL_HEAP_FreeMemory( work );
+  DeleteStateQueue( work );
+  DeleteGraphWork( work );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete work\n" );
@@ -516,7 +485,7 @@ RRG_RESULT RRG_GetResult( const RRG_WORK* work )
 
 
 //=========================================================================================
-// ¡LAYER 4 ó‘Ô“®ì
+// ¡LAYER 6 ó‘Ô“®ì
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
@@ -528,6 +497,7 @@ RRG_RESULT RRG_GetResult( const RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MainSeq_SETUP( RRG_WORK* work )
 {
+  CreateStateQueue( work );
   CreateFont( work );
   CreateMessages( work );
   CreateWordset( work );
@@ -548,7 +518,6 @@ static void MainSeq_SETUP( RRG_WORK* work )
   CreateBGFonts( work );
 
   // OBJ €”õ
-  //CreateClactSystem( work );
   RegisterSubObjResources( work );
   RegisterMainObjResources( work );
   CreateClactUnits( work );
@@ -1272,7 +1241,6 @@ static void MainSeq_CLEANUP( RRG_WORK* work )
   DeleteClactUnits( work );
   ReleaseSubObjResources ( work );
   ReleaseMainObjResources( work );
-  //DeleteClactSystem ( work );
 
   // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg Œã•Ğ•t‚¯
   DeleteBGFonts( work );
@@ -1631,27 +1599,10 @@ static void DrawAnswerMarker( const RRG_WORK* work )
   G3_End();
 }
 
-//-----------------------------------------------------------------------------------------
-/**
- * @brief VBlank Š„‚è‚İˆ—
- *
- * @param tcb
- * @parma wk
- */
-//-----------------------------------------------------------------------------------------
-static void VBlankFunc( GFL_TCB* tcb, void* wk )
-{
-  RRG_WORK* work = (RRG_WORK*)wk;
-
-  GFL_BG_VBlankFunc(); // BG
-  GFL_CLACT_SYS_VBlankFunc(); // OBJ
-  PaletteFadeTrans( work->paletteFadeSystem ); // ƒpƒŒƒbƒgƒtƒF[ƒh
-}
-
 
 
 //=========================================================================================
-// ¡LAYER 3 ‹@”\
+// ¡LAYER 5 ‹@”\
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
@@ -2014,10 +1965,6 @@ static void SwitchDataDisplayType( RRG_WORK* work )
   PMSND_PlaySE( SEQ_SE_SELECT1 );
 }
 
-
-//=========================================================================================
-//  LAYER 2 ŒÂ•Ê‘€ì
-//=========================================================================================
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -3052,6 +2999,996 @@ static void BmpOamSetDrawEnable( RRG_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BO
               "RESEARCH-CHECK: set draw enable BMP-OAM [%d] ==> %d\n", actorIdx, enable );
 }
 
+
+
+
+
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Start( work->paletteAnime[ index ], 
+                       PaletteAnimeData[ index ].animeType,
+                       PaletteAnimeData[ index ].fadeColor );
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
+ *
+ * @param work
+ * @param index ’â~‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğw’è
+ */
+//------------------------------------------------------------------------------------
+static void StopPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: stop palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“’†‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
+ *
+ * @param work
+ * @param index ƒ`ƒFƒbƒN‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğw’è
+ *
+ * @return ƒAƒjƒ[ƒVƒ‡ƒ“’†‚È‚ç TRUE
+ *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
+ */
+//------------------------------------------------------------------------------------
+static BOOL CheckPaletteAnime( const RRG_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  return PALETTE_ANIME_CheckAnime( work->paletteAnime[ index ] );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void UpdatePaletteAnime( RRG_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Update( work->paletteAnime[ idx ] );
+  }
+}
+
+
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚ÌƒƒCƒ“‰~ƒOƒ‰ƒt ‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚ÌƒƒCƒ“‰~ƒOƒ‰ƒt
+ */
+//-----------------------------------------------------------------------------------------
+static CIRCLE_GRAPH* GetMainGraph( const RRG_WORK* work )
+{
+  return work->mainGraph[ work->dispType ];
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚ÌƒTƒu‰~ƒOƒ‰ƒt
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚ÌƒTƒu‰~ƒOƒ‰ƒt
+ */
+//-----------------------------------------------------------------------------------------
+static CIRCLE_GRAPH* GetSubGraph ( const RRG_WORK* work )
+{
+  return work->subGraph[ work->dispType ];
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒAƒjƒ[ƒVƒ‡ƒ“’†‚Ì‰~ƒOƒ‰ƒt‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒAƒjƒ[ƒVƒ‡ƒ“‚µ‚Ä‚¢‚éƒOƒ‰ƒt‚ª‚ ‚éê‡ FALSE
+ *         ‚·‚×‚Ä‚ÌƒOƒ‰ƒt‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªI—¹‚µ‚Ä‚¢‚éê‡ TRUE
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL CheckAllGraphAnimeEnd( const RRG_WORK* work )
+{
+  if( CIRCLE_GRAPH_IsAnime( work->mainGraph[ DATA_DISP_TYPE_TODAY ] ) ||
+      CIRCLE_GRAPH_IsAnime( work->mainGraph[ DATA_DISP_TYPE_TOTAL ] ) ||
+      CIRCLE_GRAPH_IsAnime( work->subGraph[ DATA_DISP_TYPE_TODAY ] ) ||
+      CIRCLE_GRAPH_IsAnime( work->subGraph[ DATA_DISP_TYPE_TOTAL ] ) ) { return FALSE; }
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartPaletteFadeOut( RRG_WORK* work )
+{
+#if 0
+  // MAIN-BG
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_BG,
+                  MAIN_BG_PALETTE_FADEOUT_TARGET_BITMASK,
+                  MAIN_BG_PALETTE_FADEOUT_WAIT,
+                  MAIN_BG_PALETTE_FADEOUT_START_STRENGTH,
+                  MAIN_BG_PALETTE_FADEOUT_END_STRENGTH,
+                  MAIN_BG_PALETTE_FADEOUT_COLOR,
+                  work->VBlankTCBSystem );
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_OBJ,
+                  MAIN_OBJ_PALETTE_FADEOUT_TARGET_BITMASK,
+                  MAIN_OBJ_PALETTE_FADEOUT_WAIT,
+                  MAIN_OBJ_PALETTE_FADEOUT_START_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADEOUT_END_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADEOUT_COLOR,
+                  work->VBlankTCBSystem );
+#endif 
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade out\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartPaletteFadeIn( RRG_WORK* work )
+{
+#if 0
+  // MAIN-BG
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_BG,
+                  MAIN_BG_PALETTE_FADEIN_TARGET_BITMASK,
+                  MAIN_BG_PALETTE_FADEIN_WAIT,
+                  MAIN_BG_PALETTE_FADEIN_START_STRENGTH,
+                  MAIN_BG_PALETTE_FADEIN_END_STRENGTH,
+                  MAIN_BG_PALETTE_FADEIN_COLOR,
+                  work->VBlankTCBSystem );
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_OBJ,
+                  MAIN_OBJ_PALETTE_FADEIN_TARGET_BITMASK,
+                  MAIN_OBJ_PALETTE_FADEIN_WAIT,
+                  MAIN_OBJ_PALETTE_FADEIN_START_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADEIN_END_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADEIN_COLOR,
+                  work->VBlankTCBSystem );
+#endif
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade in\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ‚É‚æ‚éƒtƒ‰ƒbƒVƒ… ( ƒAƒEƒg ) ‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartPaletteFadeFlashOut( RRG_WORK* work )
+{
+  // MAIN-BG
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_BG,
+                  MAIN_BG_PALETTE_FADE_FLASHOUT_TARGET_BITMASK,
+                  MAIN_BG_PALETTE_FADE_FLASHOUT_WAIT,
+                  MAIN_BG_PALETTE_FADE_FLASHOUT_START_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_FLASHOUT_END_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_FLASHOUT_COLOR,
+                  work->VBlankTCBSystem );
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_OBJ,
+                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_TARGET_BITMASK,
+                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_WAIT,
+                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_START_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_END_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_COLOR,
+                  work->VBlankTCBSystem );
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade flash out\n" );
+} 
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ‚É‚æ‚éƒtƒ‰ƒbƒVƒ… ( ƒCƒ“ ) ‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartPaletteFadeFlashIn( RRG_WORK* work )
+{
+  // MAIN-BG
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_BG,
+                  MAIN_BG_PALETTE_FADE_FLASHIN_TARGET_BITMASK,
+                  MAIN_BG_PALETTE_FADE_FLASHIN_WAIT,
+                  MAIN_BG_PALETTE_FADE_FLASHIN_START_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_FLASHIN_END_STRENGTH,
+                  MAIN_BG_PALETTE_FADE_FLASHIN_COLOR,
+                  work->VBlankTCBSystem );
+
+  // MAIN-OBJ
+  PaletteFadeReq( work->paletteFadeSystem, 
+                  PF_BIT_MAIN_OBJ,
+                  MAIN_OBJ_PALETTE_FADE_FLASHIN_TARGET_BITMASK,
+                  MAIN_OBJ_PALETTE_FADE_FLASHIN_WAIT,
+                  MAIN_OBJ_PALETTE_FADE_FLASHIN_START_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_FLASHIN_END_STRENGTH,
+                  MAIN_OBJ_PALETTE_FADE_FLASHIN_COLOR,
+                  work->VBlankTCBSystem );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade flash in\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒpƒŒƒbƒgƒtƒF[ƒh‚ªŠ®—¹‚µ‚Ä‚¢‚éê‡ TRUE
+ *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL IsPaletteFadeEnd( RRG_WORK* work )
+{
+  return (PaletteFadeCheck( work->paletteFadeSystem ) == 0 );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒTƒu‰~ƒOƒ‰ƒt‚ÆƒƒCƒ“‰~ƒOƒ‰ƒt‚ğ“ü‚ê‘Ö‚¦‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InterchangeCircleGraph( RRG_WORK* work )
+{
+  int typeIdx;
+  CIRCLE_GRAPH* temp;
+
+  for( typeIdx=0; typeIdx < DATA_DISP_TYPE_NUM; typeIdx++ )
+  {
+    CIRCLE_GRAPH* temp         = work->mainGraph[ typeIdx ];
+    work->mainGraph[ typeIdx ] = work->subGraph[ typeIdx ];
+    work->subGraph[ typeIdx ]  = temp;
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: interchange circle graph\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒCƒ“‰~ƒOƒ‰ƒt‚ğŒ»İ‚Ìƒf[ƒ^‚Å\¬‚·‚é
+ *
+ * @param work
+ * @param dispType •\¦ƒ^ƒCƒv
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupMainCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType )
+{
+  int aIdx;
+  CIRCLE_GRAPH* graph;
+  GRAPH_COMPONENT_ADD_DATA components[ MAX_ANSWER_NUM_PER_QUESTION ];
+  u8 answerNum;
+  const QUESTION_DATA* questionData;
+  const ANSWER_DATA* answerData;
+
+  graph        = work->mainGraph[ dispType ];
+  answerNum    = GetAnswerNum( work );
+  questionData = &( work->researchData.questionData[ work->questionIdx ] );
+
+  // ƒOƒ‰ƒt‚Ì\¬—v‘fƒf[ƒ^‚ğì¬
+  for( aIdx=0; aIdx < answerNum; aIdx++ )
+  {
+    answerData = &( questionData->answerData[ aIdx ] );
+    components[ aIdx ].ID = answerData->ID;
+    components[ aIdx ].outerColorR = answerData->colorR;
+    components[ aIdx ].outerColorG = answerData->colorG;
+    components[ aIdx ].outerColorB = answerData->colorB;
+    OS_TFPrintf( PRINT_TARGET, "color = %d, %d, %d\n", answerData->colorR, answerData->colorG, answerData->colorB );
+    SetupCenterColorOfGraphComponent( &components[ aIdx ] );
+    switch( dispType ) {
+    case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
+    case DATA_DISP_TYPE_TOTAL: components[ aIdx ].value = answerData->totalCount; break;
+    default: GF_ASSERT(0);
+    }
+  }
+
+  // ƒOƒ‰ƒt‚Ì\¬—v‘f‚ğƒZƒbƒg
+  CIRCLE_GRAPH_SetupComponents( graph, components, answerNum );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup main circle graph\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒTƒu‰~ƒOƒ‰ƒt‚ğŒ»İ‚Ìƒf[ƒ^‚Å\¬‚·‚é
+ *
+ * @param work
+ * @param dispType •\¦ƒ^ƒCƒv
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupSubCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType )
+{
+  int aIdx;
+  CIRCLE_GRAPH* graph;
+  GRAPH_COMPONENT_ADD_DATA components[ MAX_ANSWER_NUM_PER_QUESTION ];
+  u8 answerNum;
+  const QUESTION_DATA* questionData;
+  const ANSWER_DATA* answerData;
+
+  graph        = work->subGraph[ dispType ];
+  answerNum    = GetAnswerNum( work );
+  questionData = &( work->researchData.questionData[ work->questionIdx ] );
+
+  // ƒOƒ‰ƒt‚Ì\¬—v‘fƒf[ƒ^‚ğì¬
+  for( aIdx=0; aIdx < answerNum; aIdx++ )
+  {
+    answerData = &( questionData->answerData[ aIdx ] );
+    components[ aIdx ].ID = answerData->ID;
+    components[ aIdx ].outerColorR = answerData->colorR;
+    components[ aIdx ].outerColorG = answerData->colorG;
+    components[ aIdx ].outerColorB = answerData->colorB;
+    SetupCenterColorOfGraphComponent( &components[ aIdx ] );
+    switch( dispType ) {
+    case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
+    case DATA_DISP_TYPE_TOTAL: components[ aIdx ].value = answerData->totalCount; break;
+    default: GF_ASSERT(0);
+    }
+  }
+
+  // ƒOƒ‰ƒt‚Ì\¬—v‘f‚ğƒZƒbƒg
+  CIRCLE_GRAPH_SetupComponents( graph, components, answerNum );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup sub circle graph\n" );
+} 
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @breif ƒOƒ‰ƒt\¬—v‘f‚Ì’†S“_ƒJƒ‰[‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+ *
+ * @param component ƒOƒ‰ƒt\¬—v‘f‚Ì’Ç‰Áƒf[ƒ^
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component )
+{
+  const int min = 0; // ƒJƒ‰[¬•ª‚ÌÅ¬’l
+  const int max = 31; // ƒJƒ‰[¬•ª‚ÌÅ‘å’l
+  const int brightness = 3; // ’†S“_ƒJƒ‰[‚Ì–¾‚é‚³
+  int R, G, B;
+  int cR, cG, cB;
+
+  // ŠOü‚ÌF‚ğæ“¾
+  R = component->outerColorR;
+  G = component->outerColorG;
+  B = component->outerColorB;
+
+  // ’lˆæƒ`ƒFƒbƒN
+  GF_ASSERT( min<=R && R<=max );
+  GF_ASSERT( min<=G && G<=max );
+  GF_ASSERT( min<=B && B<=max );
+
+  // ’†S“_‚ÌF‚ğŒˆ’è
+  cR = (R + max * (brightness - 1)) / brightness;
+  cG = (G + max * (brightness - 1)) / brightness;
+  cB = (B + max * (brightness - 1)) / brightness;
+
+  // ’lˆæƒ`ƒFƒbƒN
+  GF_ASSERT( min<=cR && cR<=max );
+  GF_ASSERT( min<=cG && cG<=max );
+  GF_ASSERT( min<=cB && cB<=max );
+
+  // ’†S‚ÌF‚ğƒZƒbƒg
+  component->centerColorR = cR;
+  component->centerColorG = cG;
+  component->centerColorB = cB;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒCƒ“‰~ƒOƒ‰ƒt, ƒTƒu‰~ƒOƒ‰ƒt‚Ìd‚È‚è•û‚ğ’²®‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void AdjustCircleGraphLayer( RRG_WORK* work )
+{
+  // ƒTƒu‰~ƒOƒ‰ƒt‚ªè‘O‚É•\¦‚³‚ê‚é‚æ‚¤‚ÉzÀ•W‚ğİ’è‚·‚é
+  CIRCLE_GRAPH_SetCenterZ( GetMainGraph(work), FX16_CONST(-2.0f) );
+  CIRCLE_GRAPH_SetCenterZ( GetSubGraph(work), FX16_CONST(0.0f) );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: adjust circle graph layer\n" );
+}
+
+//=========================================================================================
+// LAYER 4 ŒÂ•Ê‘€ì
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief VBlank Š„‚è‚İˆ—
+ *
+ * @param tcb
+ * @parma wk
+ */
+//-----------------------------------------------------------------------------------------
+static void VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  RRG_WORK* work = (RRG_WORK*)wk;
+
+  GFL_BG_VBlankFunc(); // BG
+  GFL_CLACT_SYS_VBlankFunc(); // OBJ
+  PaletteFadeTrans( work->paletteFadeSystem ); // ƒpƒŒƒbƒgƒtƒF[ƒh
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì’²¸€–ÚID
+ */
+//-----------------------------------------------------------------------------------------
+static u8 GetTopicID( const RRG_WORK* work )
+{
+  return work->researchData.topicID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–âID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–âID
+ */
+//-----------------------------------------------------------------------------------------
+static u8 GetQuestionID( const RRG_WORK* work )
+{
+  u8 qIdx;
+  qIdx = work->questionIdx;
+  return work->researchData.questionData[ qIdx ].ID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é‰ñ“š‘I‘ğˆ‚Ì” ‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‰ñ“š‚Ì‘I‘ğˆ‚Ì”
+ */
+//------------------------------------------------------------------------------------------
+static u8 GetAnswerNum( const RRG_WORK* work )
+{
+  u8 questionIdx;
+
+  questionIdx = work->questionIdx;
+
+  return work->researchData.questionData[ questionIdx ].answerNum;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“šID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“šID
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetAnswerID( const RRG_WORK* work )
+{
+  u8 qIdx;
+  u8 aIdx;
+
+  qIdx = work->questionIdx;
+  aIdx = work->answerIdx;
+
+  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].ID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl” ‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl”
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetCountOfQuestion( const RRG_WORK* work )
+{
+  u16 count = 0;
+
+  switch( work->dispType ) {
+  case DATA_DISP_TYPE_TODAY:  count = GetTodayCountOfQuestion( work ); break;
+  case DATA_DISP_TYPE_TOTAL:  count = GetTotalCountOfQuestion( work ); break;
+  default: GF_ASSERT(0);
+  }
+
+  return count;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetTodayCountOfQuestion( const RRG_WORK* work )
+{
+  u8 qIdx;
+
+  qIdx = work->questionIdx;
+
+  return work->researchData.questionData[ qIdx ].todayCount;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetTotalCountOfQuestion( const RRG_WORK* work )
+{
+  u8 qIdx;
+
+  qIdx = work->questionIdx;
+
+  return work->researchData.questionData[ qIdx ].totalCount;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl” ‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl”
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetCountOfAnswer( const RRG_WORK* work )
+{
+  switch( work->dispType )
+  {
+  case DATA_DISP_TYPE_TODAY: return GetTodayCountOfAnswer( work ); break;
+  case DATA_DISP_TYPE_TOTAL: return GetTotalCountOfAnswer( work ); break;
+  default: GF_ASSERT(0);
+  }
+
+  // ƒGƒ‰[
+  GF_ASSERT(0);
+  return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetTodayCountOfAnswer( const RRG_WORK* work )
+{
+  u8 qIdx;
+  u8 aIdx;
+
+  qIdx = work->questionIdx;
+  aIdx = work->answerIdx;
+
+  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ *
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
+ */
+//-----------------------------------------------------------------------------------------
+static u16 GetTotalCountOfAnswer( const RRG_WORK* work )
+{
+  u8 qIdx;
+  u8 aIdx;
+
+  qIdx = work->questionIdx;
+  aIdx = work->answerIdx;
+
+  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ’²¸’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»İ’²¸’†‚Ì’²¸€–ÚID
+ */
+//-----------------------------------------------------------------------------------------
+static u8 GetInvestigatingTopicID( const RRG_WORK* work )
+{
+  int qIdx;
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+  u8 questionID[ QUESTION_NUM_PER_TOPIC ];
+  u8 topicID;
+
+  gameData = GetGameData( work );
+  save  = GAMEDATA_GetSaveControlWork( gameData );
+  QSave = SaveData_GetQuestionnaire( save );
+
+  // ’²¸’†‚Ì¿–âID‚ğæ“¾
+  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
+  {
+    questionID[ qIdx ] = QuestionnaireWork_GetInvestigatingQuestion( QSave, qIdx );
+  }
+
+  // ¿–âID‚©‚ç, ’²¸€–ÚID‚ğ‹‚ß‚é
+  for( topicID=0; topicID < TOPIC_ID_NUM; topicID++ )
+  {
+    if( (questionID[0] == Question1_topic[ topicID ]) &&
+        (questionID[1] == Question2_topic[ topicID ]) &&
+        (questionID[2] == Question3_topic[ topicID ]) ) { return topicID; }
+  }
+
+  // ¿–â‚Ì‘g‚İ‡‚í‚¹‚ÉŠY“–‚·‚é’²¸€–Ú‚ª‘¶İ‚µ‚È‚¢
+  GF_ASSERT(0);
+  return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šID‚ğæ“¾‚·‚é 
+ * 
+ * @param work
+ *
+ * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šID
+ *         –³‰ñ“š‚Ìê‡, ANSWER_ID_000
+ */
+//-----------------------------------------------------------------------------------------
+u8 GetMyAnswerID( const RRG_WORK* work )
+{
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+  QUESTIONNAIRE_ANSWER_WORK* myAnswer;
+  const RESEARCH_DATA* researchData;
+  u8 questionID, questionIdx;
+  u16 answerID, answerIdx;
+
+  // ƒZ[ƒuƒf[ƒ^‚ğæ“¾
+  gameData = GetGameData( work );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save );
+  myAnswer = Questionnaire_GetAnswerWork( QSave );
+
+  // ¿–âID‚ğæ“¾
+  questionID = GetQuestionID( work );
+
+  // ¿–â‚ªwƒvƒŒƒCŠÔ‚ÍHx‚È‚çŒÂ•Ê‘Îˆ
+  if( questionID == QUESTION_ID_PLAY_TIME ) {
+    return GetMyAnswerID_PlayTime( work );
+  }
+
+  // Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+  answerIdx = QuestionnaireAnswer_ReadBit( myAnswer, questionID );
+
+  // –³‰ñ“š‚ğl—¶‚·‚é
+  if( answerIdx == 0 ) {
+    return ANSWER_ID_000;
+  }
+  else {
+    answerIdx--;
+  }
+
+  // ‰ñ“šID‚ğæ“¾
+  researchData = &( work->researchData );
+  questionIdx  = work->questionIdx;
+  answerID     = RESEARCH_DATA_GetAnswerID_byIndex( researchData, questionIdx, answerIdx );
+
+  return answerID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ¿–âwƒvƒŒƒCŠÔ‚ÍHx‚É‘Î‚·‚é©•ª‚Ì‰ñ“šID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ¿–âwƒvƒŒƒCŠÔ‚ÍHx‚É‘Î‚·‚é©•ª‚Ì‰ñ“šID ( ANSWER_ID_xxxx )
+ */
+//-----------------------------------------------------------------------------------------
+static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work )
+{
+  GAMEDATA* gameData;
+  PLAYTIME* time;
+  u16 hour;
+
+  gameData = GetGameData( work );
+  time     = GAMEDATA_GetPlayTimeWork( gameData );
+  hour     = PLAYTIME_GetHour( time );
+
+  if( hour <=10 ) { return ANSWER_ID_135; }
+  else if( hour <=  20 ) { return ANSWER_ID_136; }
+  else if( hour <=  30 ) { return ANSWER_ID_137; }
+  else if( hour <=  40 ) { return ANSWER_ID_138; }
+  else if( hour <=  50 ) { return ANSWER_ID_139; }
+  else if( hour <=  60 ) { return ANSWER_ID_140; }
+  else if( hour <=  70 ) { return ANSWER_ID_141; }
+  else if( hour <=  80 ) { return ANSWER_ID_142; }
+  else if( hour <=  90 ) { return ANSWER_ID_143; }
+  else if( hour <= 100 ) { return ANSWER_ID_144; }
+  else { return ANSWER_ID_145; }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief OBJ ƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
+ *
+ * @param work
+ * @param resID ƒŠƒ\[ƒXID
+ *
+ * @return w’è‚µ‚½ƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
+ */
+//-----------------------------------------------------------------------------------------
+static u32 GetObjResourceRegisterIndex( const RRG_WORK* work, OBJ_RESOURCE_ID resID )
+{
+  return work->objResRegisterIdx[ resID ];
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğæ“¾‚·‚é
+ *
+ * @param work
+ * @param unitIdx ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ÌƒCƒ“ƒfƒbƒNƒX
+ *
+ * @return w’è‚µ‚½ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
+ */
+//-----------------------------------------------------------------------------------------
+static GFL_CLUNIT* GetClactUnit( const RRG_WORK* work, CLUNIT_INDEX unitIdx )
+{
+  return work->clactUnit[ unitIdx ];
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğæ“¾‚·‚é
+ *
+ * @param work
+ * @param unitIdx ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ÌƒCƒ“ƒfƒbƒNƒX
+ *
+ * @return w’è‚µ‚½ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------------------
+static GFL_CLWK* GetClactWork( const RRG_WORK* work, CLWK_INDEX wkIdx )
+{
+  return work->clactWork[ wkIdx ];
+}
+
+
+//=========================================================================================
+// LAYER 3 æ“¾Eİ’èE”»’è
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒQ[ƒ€ƒVƒXƒeƒ€‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒQ[ƒ€ƒVƒXƒeƒ€
+ */
+//-----------------------------------------------------------------------------------------
+static GAMESYS_WORK* GetGameSystem( const RRG_WORK* work )
+{
+  return RESEARCH_COMMON_GetGameSystem( work->commonWork );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒQ[ƒ€ƒf[ƒ^‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒQ[ƒ€ƒf[ƒ^
+ */
+//-----------------------------------------------------------------------------------------
+static GAMEDATA* GetGameData( const RRG_WORK* work )
+{
+  return RESEARCH_COMMON_GetGameData( work->commonWork );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒq[ƒvID‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒq[ƒvID
+ */
+//-----------------------------------------------------------------------------------------
+static HEAPID GetHeapID( const RRG_WORK* work )
+{
+  return work->heapID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒq[ƒvID‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param heapID
+ */
+//-----------------------------------------------------------------------------------------
+static void SetHeapID( RRG_WORK* work, HEAPID heapID )
+{
+  work->heapID = heapID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ‘S‰æ–Ê‹¤’Êƒ[ƒN
+ */
+//-----------------------------------------------------------------------------------------
+static RESEARCH_COMMON_WORK* GetCommonWork( const RRG_WORK* work )
+{
+  return work->commonWork;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param commonWork
+ */
+//-----------------------------------------------------------------------------------------
+static void SetCommonWork( RRG_WORK* work, RESEARCH_COMMON_WORK* commonWork )
+{
+  work->commonWork = commonWork;
+}
+
+
+//=========================================================================================
+// LAYER 2 ¶¬E‰Šú‰»E”jŠü
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN ¶¬
+ *
+ * @param work
+ *
+ * @return ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------------------
+static RRG_WORK* CreateGraphWork( HEAPID heapID )
+{
+  RRG_WORK* work;
+
+  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRG_WORK) );
+
+  return work;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN ‰Šú‰»
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitGraphWork( RRG_WORK* work )
+{
+  int i;
+
+  work->state              = RRG_STATE_SETUP;
+  work->stateEndFlag       = FALSE;
+  work->stateCount         = 0;
+  work->waitFrame          = WAIT_FRAME_BUTTON;
+  work->cursorPos          = MENU_ITEM_QUESTION;
+  work->analyzeFlag        = FALSE;
+  work->analyzeByTouchFlag = FALSE;
+  work->updateFlag         = FALSE;
+  work->questionIdx        = 0;
+  work->answerIdx          = 0;
+  work->dispType           = DATA_DISP_TYPE_TODAY;
+  work->VBlankTCBSystem    = GFUser_VIntr_GetTCBSYS();
+  work->percentageNum      = 0;
+  work->percentageDispNum  = 0;
+  work->finishResult       = RRG_RESULT_TO_TOP;
+  work->finishFlag         = FALSE;
+
+  for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
+
+  InitResearchData( work );
+  InitStateQueue( work );
+  InitCircleGraphs( work );
+  InitArrow( work );
+  InitPercentage( work );
+  InitMessages( work );
+  InitWordset( work );
+  InitFont( work );
+  InitBGFonts( work );
+  InitClactUnits( work );
+  InitClactWorks( work );
+  InitBitmapDatas( work );
+  InitPaletteFadeSystem( work );
+  InitPaletteAnime( work );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒOƒ‰ƒt‰æ–ÊŠÇ—ƒ[ƒN ”jŠü
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteGraphWork( RRG_WORK* work )
+{
+  GFL_HEAP_FreeMemory( work );
+}
+
 //-----------------------------------------------------------------------------------------
 /**
  * @brief ó‘ÔƒLƒ…[‚ğ‰Šú‰»‚·‚é
@@ -3061,7 +3998,6 @@ static void BmpOamSetDrawEnable( RRG_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BO
 //-----------------------------------------------------------------------------------------
 static void InitStateQueue( RRG_WORK* work )
 {
-  // ‰Šú‰»
   work->stateQueue = NULL;
 
   // DEBUG:
@@ -3282,471 +4218,6 @@ static void DeleteWordset( RRG_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Œ»İ’²¸’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ’²¸’†‚Ì’²¸€–ÚID
- */
-//-----------------------------------------------------------------------------------------
-static u8 GetInvestigatingTopicID( const RRG_WORK* work )
-{
-  int qIdx;
-  SAVE_CONTROL_WORK* save;
-  QUESTIONNAIRE_SAVE_WORK* QSave;
-  u8 questionID[ QUESTION_NUM_PER_TOPIC ];
-  u8 topicID;
-
-  save  = GAMEDATA_GetSaveControlWork( work->gameData );
-  QSave = SaveData_GetQuestionnaire( save );
-
-  // ’²¸’†‚Ì¿–âID‚ğæ“¾
-  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
-  {
-    questionID[ qIdx ] = QuestionnaireWork_GetInvestigatingQuestion( QSave, qIdx );
-  }
-
-  // ¿–âID‚©‚ç, ’²¸€–ÚID‚ğ‹‚ß‚é
-  for( topicID=0; topicID < TOPIC_ID_NUM; topicID++ )
-  {
-    if( (questionID[0] == Question1_topic[ topicID ]) &&
-        (questionID[1] == Question2_topic[ topicID ]) &&
-        (questionID[2] == Question3_topic[ topicID ]) ) { return topicID; }
-  }
-
-  // ¿–â‚Ì‘g‚İ‡‚í‚¹‚ÉŠY“–‚·‚é’²¸€–Ú‚ª‘¶İ‚µ‚È‚¢
-  GF_ASSERT(0);
-  return 0;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šID‚ğæ“¾‚·‚é 
- * 
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šID
- *         –³‰ñ“š‚Ìê‡, ANSWER_ID_000
- */
-//-----------------------------------------------------------------------------------------
-u8 GetMyAnswerID( const RRG_WORK* work )
-{
-  SAVE_CONTROL_WORK* save;
-  QUESTIONNAIRE_SAVE_WORK* QSave;
-  QUESTIONNAIRE_ANSWER_WORK* myAnswer;
-  const RESEARCH_DATA* researchData;
-  u8 questionID, questionIdx;
-  u16 answerID, answerIdx;
-
-  // ƒZ[ƒuƒf[ƒ^‚ğæ“¾
-  save  = GAMEDATA_GetSaveControlWork( work->gameData );
-  QSave = SaveData_GetQuestionnaire( save );
-  myAnswer = Questionnaire_GetAnswerWork( QSave );
-
-  // ¿–âID‚ğæ“¾
-  questionID = GetQuestionID( work );
-
-  // ¿–â‚ªwƒvƒŒƒCŠÔ‚ÍHx‚È‚çŒÂ•Ê‘Îˆ
-  if( questionID == QUESTION_ID_PLAY_TIME ) {
-    return GetMyAnswerID_PlayTime( work );
-  }
-
-  // Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ©•ª‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
-  answerIdx = QuestionnaireAnswer_ReadBit( myAnswer, questionID );
-
-  // –³‰ñ“š‚ğl—¶‚·‚é
-  if( answerIdx == 0 ) {
-    return ANSWER_ID_000;
-  }
-  else {
-    answerIdx--;
-  }
-
-  // ‰ñ“šID‚ğæ“¾
-  researchData = &( work->researchData );
-  questionIdx  = work->questionIdx;
-  answerID     = RESEARCH_DATA_GetAnswerID_byIndex( researchData, questionIdx, answerIdx );
-
-  return answerID;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ¿–âwƒvƒŒƒCŠÔ‚ÍHx‚É‘Î‚·‚é©•ª‚Ì‰ñ“šID‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return ¿–âwƒvƒŒƒCŠÔ‚ÍHx‚É‘Î‚·‚é©•ª‚Ì‰ñ“šID ( ANSWER_ID_xxxx )
- */
-//-----------------------------------------------------------------------------------------
-static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work )
-{
-  PLAYTIME* time;
-  u16 hour;
-
-  time = GAMEDATA_GetPlayTimeWork( work->gameData );
-  hour = PLAYTIME_GetHour( time );
-
-  if( hour <=10 ) { return ANSWER_ID_135; }
-  else if( hour <=  20 ) { return ANSWER_ID_136; }
-  else if( hour <=  30 ) { return ANSWER_ID_137; }
-  else if( hour <=  40 ) { return ANSWER_ID_138; }
-  else if( hour <=  50 ) { return ANSWER_ID_139; }
-  else if( hour <=  60 ) { return ANSWER_ID_140; }
-  else if( hour <=  70 ) { return ANSWER_ID_141; }
-  else if( hour <=  80 ) { return ANSWER_ID_142; }
-  else if( hour <=  90 ) { return ANSWER_ID_143; }
-  else if( hour <= 100 ) { return ANSWER_ID_144; }
-  else { return ANSWER_ID_145; }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BG ‚Ì€”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupBG( RRG_WORK* work )
-{ 
-  // BG ƒ‚[ƒh
-  GFL_BG_SetBGMode( &BGSysHeader3D );
-
-  // BG ƒRƒ“ƒgƒ[ƒ‹
-  GFL_BG_SetBGControl3D( MAIN_BG_3D_PRIORITY );
-  GFL_BG_SetBGControl( SUB_BG_WINDOW,  &SubBGControl_WINDOW,  GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( SUB_BG_FONT,    &SubBGControl_FONT,    GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( MAIN_BG_WINDOW, &MainBGControl_WINDOW, GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( MAIN_BG_FONT,   &MainBGControl_FONT,   GFL_BG_MODE_TEXT );
-
-  // ‰Â‹İ’è
-  GFL_BG_SetVisible( SUB_BG_BACK,    VISIBLE_ON );
-  GFL_BG_SetVisible( SUB_BG_RADAR,   VISIBLE_ON );
-  GFL_BG_SetVisible( SUB_BG_WINDOW,  VISIBLE_ON );
-  GFL_BG_SetVisible( SUB_BG_FONT,    VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_3D,     VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_BACK,   VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_WINDOW, VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_FONT,   VISIBLE_ON );
-
-  // ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒO
-  G2S_SetBlendAlpha( SUB_BG_BLEND_TARGET_1, SUB_BG_BLEND_TARGET_2, 
-                     SUB_BG_BLEND_WEIGHT_1, SUB_BG_BLEND_WEIGHT_2 );
-  G2_SetBlendAlpha( MAIN_BG_BLEND_TARGET_1, MAIN_BG_BLEND_TARGET_2, 
-                    MAIN_BG_BLEND_WEIGHT_1, MAIN_BG_BLEND_WEIGHT_2 );
-
-  // ƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE ƒVƒXƒeƒ€‰Šú‰»
-  GFL_BMPWIN_Init( work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup BG\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BG ‚ÌŒã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpBG( RRG_WORK* work )
-{
-  GFL_BMPWIN_Exit();
-
-  GFL_BG_FreeBGControl( MAIN_BG_3D );
-  GFL_BG_FreeBGControl( MAIN_BG_FONT );
-  GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
-  GFL_BG_FreeBGControl( SUB_BG_FONT );
-  GFL_BG_FreeBGControl( SUB_BG_WINDOW );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up BG\n" );
-}
-
-
-//=========================================================================================
-// ¡ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupSubBG_WINDOW( RRG_WORK* work )
-{
-  // ƒf[ƒ^“Ç‚İ‚İ
-  {
-    ARCHANDLE* handle;
-
-    // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
-
-    // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
-    {
-      void* src;
-      ARCDATID datID;
-      NNSG2dScreenData* data;
-      datID = NARC_research_radar_graphic_bgu_win1_NSCR;
-      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
-      NNS_G2dGetUnpackedScreenData( src, &data );
-      GFL_BG_WriteScreen( SUB_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
-      GFL_BG_LoadScreenReq( SUB_BG_WINDOW );
-      GFL_HEAP_FreeMemory( src );
-    }
-
-    // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
-    GFL_ARC_CloseDataHandle( handle );
-  } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup SUB-BG-WINDOW\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_WINDOW( RRG_WORK* work )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-WINDOW\n" );
-}
-
-
-//=========================================================================================
-// ¡ã‰æ–Ê ƒtƒHƒ“ƒgBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚Ì€”õ
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupSubBG_FONT( RRG_WORK* work )
-{
-  // NULLƒLƒƒƒ‰Šm•Û
-  GFL_BG_FillCharacter( SUB_BG_FONT, 0, 1, 0 );
-
-  // ƒNƒŠƒA
-  GFL_BG_ClearScreen( SUB_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup SUB-BG-FONT\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚ÌŒã•Ğ•t‚¯
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_FONT( RRG_WORK* work )
-{ 
-  // NULLƒLƒƒƒ‰‰ğ•ú
-  GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-FONT\n" );
-}
-
-
-//=========================================================================================
-// ¡‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupMainBG_WINDOW( RRG_WORK* work )
-{
-  // ƒf[ƒ^“Ç‚İ‚İ
-  {
-    ARCHANDLE* handle;
-
-    // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
-
-    // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
-    {
-      void* src;
-      ARCDATID datID;
-      NNSG2dScreenData* data;
-      datID = NARC_research_radar_graphic_bgd_graphbtn2_NSCR;
-      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
-      NNS_G2dGetUnpackedScreenData( src, &data );
-      GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, 32, 32 );
-      GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
-      GFL_HEAP_FreeMemory( src );
-    }
-
-    // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
-    GFL_ARC_CloseDataHandle( handle );
-  } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-WINDOW\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_WINDOW( RRG_WORK* work )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-WINDOW\n" );
-}
-
-
-//=========================================================================================
-// ¡‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê €”õ
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupMainBG_FONT( RRG_WORK* work )
-{ 
-  // NULLƒLƒƒƒ‰Šm•Û
-  GFL_BG_FillCharacter( MAIN_BG_FONT, 0, 1, 0 );
-
-  // ƒNƒŠƒA
-  GFL_BG_ClearScreen( MAIN_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-FONT\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê Œã•Ğ•t‚¯
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_FONT( RRG_WORK* work )
-{ 
-  // NULLƒLƒƒƒ‰‰ğ•ú
-  GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-FONT\n" );
-}
-
-
-//=========================================================================================
-// ¡•¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitBGFonts( RRG_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < BG_FONT_NUM; idx++ )
-  {
-    work->BGFont[ idx ] = NULL; 
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateBGFonts( RRG_WORK* work )
-{
-  int i;
-
-  // ’Êí‚ÌBGFont
-  for( i=0; i<BG_FONT_NUM; i++ )
-  {
-    BG_FONT_PARAM param;
-    GFL_MSGDATA* msgData;
-    u32 strID;
-
-    GF_ASSERT( work->BGFont[i] == NULL ); 
-
-    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
-    param.BGFrame       = BGFontInitData[i].BGFrame;
-    param.posX          = BGFontInitData[i].posX;
-    param.posY          = BGFontInitData[i].posY;
-    param.sizeX         = BGFontInitData[i].sizeX;
-    param.sizeY         = BGFontInitData[i].sizeY;
-    param.offsetX       = BGFontInitData[i].offsetX;
-    param.offsetY       = BGFontInitData[i].offsetY;
-    param.paletteNo     = BGFontInitData[i].paletteNo;
-    param.colorNo_L     = BGFontInitData[i].colorNo_L;
-    param.colorNo_S     = BGFontInitData[i].colorNo_S;
-    param.colorNo_B     = BGFontInitData[i].colorNo_B;
-    param.centeringFlag = BGFontInitData[i].softCentering;
-    msgData             = work->message[ BGFontInitData[i].messageIdx ];
-    strID               = BGFontInitData[i].stringIdx;
-
-    // ¶¬
-    work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
-
-    // •¶š—ñ‚ğİ’è
-    BG_FONT_SetMessage( work->BGFont[i], strID );
-  } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create BGFonts\n" ); 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteBGFonts( RRG_WORK* work )
-{
-  int i;
-  
-  // ’Êí‚ÌBGFont
-  for( i=0; i < BG_FONT_NUM; i++ )
-  {
-    GF_ASSERT( work->BGFont[i] );
-    BG_FONT_Delete( work->BGFont[i] );
-    work->BGFont[i] = NULL;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete BGFonts\n" ); 
-} 
-
-//-----------------------------------------------------------------------------------------
-/**
  * @brief ‰~ƒOƒ‰ƒt‚ğ‰Šú‰»‚·‚é
  *
  * @param work
@@ -3850,11 +4321,13 @@ static void SetupResearchData( RRG_WORK* work )
   u16 answerID[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   u16 todayCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   u16 totalCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
+  GAMEDATA* gameData;
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
 
   // ƒZ[ƒuƒf[ƒ^æ“¾
-  save = GAMEDATA_GetSaveControlWork( work->gameData );
+  gameData = GetGameData( work );
+  save = GAMEDATA_GetSaveControlWork( gameData );
   QSave = SaveData_GetQuestionnaire( save );
   topicID = GetInvestigatingTopicID( work ); // ’²¸€–ÚID
   questionID[0] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 ); // ¿–âID
@@ -3939,7 +4412,6 @@ static void SetupTouchArea( RRG_WORK* work )
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create touch hit table\n" );
 }
-
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -4084,48 +4556,345 @@ static void DeletePercentage( RRG_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete percentage\n" );
 }
 
-
-
-//=========================================================================================
-// ¡OBJ
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
 /**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€‚ğì¬‚·‚é
- *
- * @param work
+ * @brief 3D ‰Šúİ’è
  */
-//-----------------------------------------------------------------------------------------
-static void CreateClactSystem( RRG_WORK* work )
+//-------------------------------------------------------------------------------
+static void Setup3D( void )
 {
-  // ƒVƒXƒeƒ€ì¬
-  GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
+  G3X_Init();
+  G3X_InitMtxStack();
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create clact system\n" );
+  G3_MtxMode( GX_MTXMODE_PROJECTION );
+  G3_Identity();
+  G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+  G3_Identity(); 
+
+  G3X_AntiAlias( TRUE );   // ƒAƒ“ƒ`ƒGƒCƒŠƒAƒX
+  G3X_EdgeMarking( TRUE ); // ƒGƒbƒWƒ}[ƒLƒ“ƒO
+  G3X_SetEdgeColorTable( EdgeColor );  // ƒGƒbƒWƒJƒ‰[
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€‚ğ”jŠü‚·‚é
+ * @brief BG ‚Ì€”õ
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactSystem( RRG_WORK* work )
+static void SetupBG( RRG_WORK* work )
 { 
-  // ƒVƒXƒeƒ€”jŠü
-  GFL_CLACT_SYS_Delete();
+  // BG ƒ‚[ƒh
+  GFL_BG_SetBGMode( &BGSysHeader3D );
+
+  // BG ƒRƒ“ƒgƒ[ƒ‹
+  GFL_BG_SetBGControl3D( MAIN_BG_3D_PRIORITY );
+  GFL_BG_SetBGControl( SUB_BG_WINDOW,  &SubBGControl_WINDOW,  GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( SUB_BG_FONT,    &SubBGControl_FONT,    GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( MAIN_BG_WINDOW, &MainBGControl_WINDOW, GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( MAIN_BG_FONT,   &MainBGControl_FONT,   GFL_BG_MODE_TEXT );
+
+  // ‰Â‹İ’è
+  GFL_BG_SetVisible( SUB_BG_BACK,    VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_RADAR,   VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_WINDOW,  VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_FONT,    VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_3D,     VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_BACK,   VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_WINDOW, VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_FONT,   VISIBLE_ON );
+
+  // ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒO
+  G2S_SetBlendAlpha( SUB_BG_BLEND_TARGET_1, SUB_BG_BLEND_TARGET_2, 
+                     SUB_BG_BLEND_WEIGHT_1, SUB_BG_BLEND_WEIGHT_2 );
+  G2_SetBlendAlpha( MAIN_BG_BLEND_TARGET_1, MAIN_BG_BLEND_TARGET_2, 
+                    MAIN_BG_BLEND_WEIGHT_1, MAIN_BG_BLEND_WEIGHT_2 );
+
+  // ƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE ƒVƒXƒeƒ€‰Šú‰»
+  GFL_BMPWIN_Init( work->heapID );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete clact system\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup BG\n" );
 }
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BG ‚ÌŒã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpBG( RRG_WORK* work )
+{
+  GFL_BMPWIN_Exit();
 
-//=========================================================================================
-// ¡SUB-OBJ ƒŠƒ\[ƒX
-//=========================================================================================
+  GFL_BG_FreeBGControl( MAIN_BG_3D );
+  GFL_BG_FreeBGControl( MAIN_BG_FONT );
+  GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
+  GFL_BG_FreeBGControl( SUB_BG_FONT );
+  GFL_BG_FreeBGControl( SUB_BG_WINDOW );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up BG\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupSubBG_WINDOW( RRG_WORK* work )
+{
+  // ƒf[ƒ^“Ç‚İ‚İ
+  {
+    ARCHANDLE* handle;
+
+    // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
+
+    // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
+    {
+      void* src;
+      ARCDATID datID;
+      NNSG2dScreenData* data;
+      datID = NARC_research_radar_graphic_bgu_win1_NSCR;
+      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
+      NNS_G2dGetUnpackedScreenData( src, &data );
+      GFL_BG_WriteScreen( SUB_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
+      GFL_BG_LoadScreenReq( SUB_BG_WINDOW );
+      GFL_HEAP_FreeMemory( src );
+    }
+
+    // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
+    GFL_ARC_CloseDataHandle( handle );
+  } 
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup SUB-BG-WINDOW\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpSubBG_WINDOW( RRG_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-WINDOW\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚Ì€”õ
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupSubBG_FONT( RRG_WORK* work )
+{
+  // NULLƒLƒƒƒ‰Šm•Û
+  GFL_BG_FillCharacter( SUB_BG_FONT, 0, 1, 0 );
+
+  // ƒNƒŠƒA
+  GFL_BG_ClearScreen( SUB_BG_FONT );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup SUB-BG-FONT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚ÌŒã•Ğ•t‚¯
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpSubBG_FONT( RRG_WORK* work )
+{ 
+  // NULLƒLƒƒƒ‰‰ğ•ú
+  GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-FONT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupMainBG_WINDOW( RRG_WORK* work )
+{
+  // ƒf[ƒ^“Ç‚İ‚İ
+  {
+    ARCHANDLE* handle;
+
+    // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
+
+    // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
+    {
+      void* src;
+      ARCDATID datID;
+      NNSG2dScreenData* data;
+      datID = NARC_research_radar_graphic_bgd_graphbtn2_NSCR;
+      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
+      NNS_G2dGetUnpackedScreenData( src, &data );
+      GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, 32, 32 );
+      GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
+      GFL_HEAP_FreeMemory( src );
+    }
+
+    // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
+    GFL_ARC_CloseDataHandle( handle );
+  } 
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-WINDOW\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpMainBG_WINDOW( RRG_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-WINDOW\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê €”õ
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupMainBG_FONT( RRG_WORK* work )
+{ 
+  // NULLƒLƒƒƒ‰Šm•Û
+  GFL_BG_FillCharacter( MAIN_BG_FONT, 0, 1, 0 );
+
+  // ƒNƒŠƒA
+  GFL_BG_ClearScreen( MAIN_BG_FONT );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-FONT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê Œã•Ğ•t‚¯
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpMainBG_FONT( RRG_WORK* work )
+{ 
+  // NULLƒLƒƒƒ‰‰ğ•ú
+  GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-FONT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitBGFonts( RRG_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BG_FONT_NUM; idx++ )
+  {
+    work->BGFont[ idx ] = NULL; 
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğì¬‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateBGFonts( RRG_WORK* work )
+{
+  int i;
+
+  // ’Êí‚ÌBGFont
+  for( i=0; i<BG_FONT_NUM; i++ )
+  {
+    BG_FONT_PARAM param;
+    GFL_MSGDATA* msgData;
+    u32 strID;
+
+    GF_ASSERT( work->BGFont[i] == NULL ); 
+
+    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
+    param.BGFrame       = BGFontInitData[i].BGFrame;
+    param.posX          = BGFontInitData[i].posX;
+    param.posY          = BGFontInitData[i].posY;
+    param.sizeX         = BGFontInitData[i].sizeX;
+    param.sizeY         = BGFontInitData[i].sizeY;
+    param.offsetX       = BGFontInitData[i].offsetX;
+    param.offsetY       = BGFontInitData[i].offsetY;
+    param.paletteNo     = BGFontInitData[i].paletteNo;
+    param.colorNo_L     = BGFontInitData[i].colorNo_L;
+    param.colorNo_S     = BGFontInitData[i].colorNo_S;
+    param.colorNo_B     = BGFontInitData[i].colorNo_B;
+    param.centeringFlag = BGFontInitData[i].softCentering;
+    msgData             = work->message[ BGFontInitData[i].messageIdx ];
+    strID               = BGFontInitData[i].stringIdx;
+
+    // ¶¬
+    work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
+
+    // •¶š—ñ‚ğİ’è
+    BG_FONT_SetMessage( work->BGFont[i], strID );
+  } 
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create BGFonts\n" ); 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteBGFonts( RRG_WORK* work )
+{
+  int i;
+  
+  // ’Êí‚ÌBGFont
+  for( i=0; i < BG_FONT_NUM; i++ )
+  {
+    GF_ASSERT( work->BGFont[i] );
+    BG_FONT_Delete( work->BGFont[i] );
+    work->BGFont[i] = NULL;
+  }
+
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete BGFonts\n" ); 
+} 
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -4183,11 +4952,6 @@ static void ReleaseSubObjResources( RRG_WORK* work )
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: release SUB-OBJ resources\n" );
 }
-
-
-//=========================================================================================
-// ¡MAIN-OBJ ƒŠƒ\[ƒX
-//=========================================================================================
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -4256,11 +5020,6 @@ static void ReleaseMainObjResources( RRG_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: release MAIN-OBJ resources\n" );
 }
 
-
-//=========================================================================================
-// ¡ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
-//=========================================================================================
-
 //-----------------------------------------------------------------------------------------
 /**
  * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ‰Šú‰»‚·‚é
@@ -4327,11 +5086,6 @@ static void DeleteClactUnits( RRG_WORK* work )
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete clact units\n" );
 }
-
-
-//=========================================================================================
-//  ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
-//=========================================================================================
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -4690,6 +5444,71 @@ static void DeleteBmpOamActors( RRG_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete BMP-OAM actors\n" );
 }
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitPaletteFadeSystem( RRG_WORK* work )
+{ 
+  // ‰Šú‰»
+  work->paletteFadeSystem = NULL;
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init palette fade system\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ€”õ‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupPaletteFadeSystem( RRG_WORK* work )
+{
+  u32 tcbWorkSize;
+
+  // ‘½d¶¬
+  GF_ASSERT( work->paletteFadeSystem == NULL );
+
+  // ƒtƒF[ƒhˆ—ƒVƒXƒeƒ€ì¬
+  work->paletteFadeSystem = PaletteFadeInit( work->heapID ); 
+
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ¶¬
+  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_BG,  FULL_PALETTE_SIZE, work->heapID );
+  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_OBJ, FULL_PALETTE_SIZE, work->heapID );
+
+  // ƒŠƒNƒGƒXƒgƒ[ƒN‰Šú‰»
+  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_BG,  0, FULL_PALETTE_SIZE );
+  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup palette fade system\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpPaletteFadeSystem( RRG_WORK* work )
+{ 
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ”jŠü
+  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
+  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_OBJ );
+
+  // ƒtƒF[ƒhŠÇ—ƒVƒXƒeƒ€‚ğ”jŠü
+  PaletteFadeFree( work->paletteFadeSystem );
+
+  // DEBUG;
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up palette fade system\n" );
+}
+
 //------------------------------------------------------------------------------------
 /**
  * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ‰Šú‰»‚·‚é
@@ -4801,766 +5620,6 @@ static void CleanUpPaletteAnime( RRG_WORK* work )
   // DEBUG;
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up palette anime\n" );
 }
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
-{
-  PALETTE_ANIME_Start( work->paletteAnime[ index ], 
-                       PaletteAnimeData[ index ].animeType,
-                       PaletteAnimeData[ index ].fadeColor );
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette anime [%d]\n", index );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
- *
- * @param work
- * @param index ’â~‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğw’è
- */
-//------------------------------------------------------------------------------------
-static void StopPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
-{
-  PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: stop palette anime [%d]\n", index );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“’†‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
- *
- * @param work
- * @param index ƒ`ƒFƒbƒN‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğw’è
- *
- * @return ƒAƒjƒ[ƒVƒ‡ƒ“’†‚È‚ç TRUE
- *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
- */
-//------------------------------------------------------------------------------------
-static BOOL CheckPaletteAnime( const RRG_WORK* work, PALETTE_ANIME_INDEX index )
-{
-  return PALETTE_ANIME_CheckAnime( work->paletteAnime[ index ] );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void UpdatePaletteAnime( RRG_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
-  {
-    GF_ASSERT( work->paletteAnime[ idx ] );
-
-    PALETTE_ANIME_Update( work->paletteAnime[ idx ] );
-  }
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 3D ‰Šúİ’è
- */
-//-------------------------------------------------------------------------------
-static void Setup3D( void )
-{
-  G3X_Init();
-  G3X_InitMtxStack();
-
-  G3_MtxMode( GX_MTXMODE_PROJECTION );
-  G3_Identity();
-  G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
-  G3_Identity(); 
-
-  G3X_AntiAlias( TRUE );   // ƒAƒ“ƒ`ƒGƒCƒŠƒAƒX
-  G3X_EdgeMarking( TRUE ); // ƒGƒbƒWƒ}[ƒLƒ“ƒO
-  G3X_SetEdgeColorTable( EdgeColor );  // ƒGƒbƒWƒJƒ‰[
-}
-
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitPaletteFadeSystem( RRG_WORK* work )
-{ 
-  // ‰Šú‰»
-  work->paletteFadeSystem = NULL;
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init palette fade system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ€”õ‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupPaletteFadeSystem( RRG_WORK* work )
-{
-  u32 tcbWorkSize;
-
-  // ‘½d¶¬
-  GF_ASSERT( work->paletteFadeSystem == NULL );
-
-  // ƒtƒF[ƒhˆ—ƒVƒXƒeƒ€ì¬
-  work->paletteFadeSystem = PaletteFadeInit( work->heapID ); 
-
-  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ¶¬
-  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_BG,  FULL_PALETTE_SIZE, work->heapID );
-  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_OBJ, FULL_PALETTE_SIZE, work->heapID );
-
-  // ƒŠƒNƒGƒXƒgƒ[ƒN‰Šú‰»
-  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_BG,  0, FULL_PALETTE_SIZE );
-  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup palette fade system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpPaletteFadeSystem( RRG_WORK* work )
-{ 
-  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ”jŠü
-  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
-  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_OBJ );
-
-  // ƒtƒF[ƒhŠÇ—ƒVƒXƒeƒ€‚ğ”jŠü
-  PaletteFadeFree( work->paletteFadeSystem );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up palette fade system\n" );
-}
-
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì’²¸€–ÚID
- */
-//-----------------------------------------------------------------------------------------
-static u8 GetTopicID( const RRG_WORK* work )
-{
-  return work->researchData.topicID;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì¿–âID‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì¿–âID
- */
-//-----------------------------------------------------------------------------------------
-static u8 GetQuestionID( const RRG_WORK* work )
-{
-  u8 qIdx;
-  qIdx = work->questionIdx;
-  return work->researchData.questionData[ qIdx ].ID;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é‰ñ“š‘I‘ğˆ‚Ì” ‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‰ñ“š‚Ì‘I‘ğˆ‚Ì”
- */
-//------------------------------------------------------------------------------------------
-static u8 GetAnswerNum( const RRG_WORK* work )
-{
-  u8 questionIdx;
-
-  questionIdx = work->questionIdx;
-
-  return work->researchData.questionData[ questionIdx ].answerNum;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì‰ñ“šID‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì‰ñ“šID
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetAnswerID( const RRG_WORK* work )
-{
-  u8 qIdx;
-  u8 aIdx;
-
-  qIdx = work->questionIdx;
-  aIdx = work->answerIdx;
-
-  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].ID;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl” ‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl”
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetCountOfQuestion( const RRG_WORK* work )
-{
-  u16 count = 0;
-
-  switch( work->dispType ) {
-  case DATA_DISP_TYPE_TODAY:  count = GetTodayCountOfQuestion( work ); break;
-  case DATA_DISP_TYPE_TOTAL:  count = GetTotalCountOfQuestion( work ); break;
-  default: GF_ASSERT(0);
-  }
-
-  return count;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetTodayCountOfQuestion( const RRG_WORK* work )
-{
-  u8 qIdx;
-
-  qIdx = work->questionIdx;
-
-  return work->researchData.questionData[ qIdx ].todayCount;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì¿–â‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetTotalCountOfQuestion( const RRG_WORK* work )
-{
-  u8 qIdx;
-
-  qIdx = work->questionIdx;
-
-  return work->researchData.questionData[ qIdx ].totalCount;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl” ‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, •\¦‚Ì‰ñ“šl”
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetCountOfAnswer( const RRG_WORK* work )
-{
-  switch( work->dispType )
-  {
-  case DATA_DISP_TYPE_TODAY: return GetTodayCountOfAnswer( work ); break;
-  case DATA_DISP_TYPE_TOTAL: return GetTotalCountOfAnswer( work ); break;
-  default: GF_ASSERT(0);
-  }
-
-  // ƒGƒ‰[
-  GF_ASSERT(0);
-  return 0;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetTodayCountOfAnswer( const RRG_WORK* work )
-{
-  u8 qIdx;
-  u8 aIdx;
-
-  qIdx = work->questionIdx;
-  aIdx = work->answerIdx;
-
-  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚Ì‰ñ“š‚É‘Î‚·‚é, ‡Œv‚Ì‰ñ“šl”
- */
-//-----------------------------------------------------------------------------------------
-static u16 GetTotalCountOfAnswer( const RRG_WORK* work )
-{
-  u8 qIdx;
-  u8 aIdx;
-
-  qIdx = work->questionIdx;
-  aIdx = work->answerIdx;
-
-  return work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚ÌƒƒCƒ“‰~ƒOƒ‰ƒt ‚ğæ“¾‚·‚é
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚ÌƒƒCƒ“‰~ƒOƒ‰ƒt
- */
-//-----------------------------------------------------------------------------------------
-static CIRCLE_GRAPH* GetMainGraph( const RRG_WORK* work )
-{
-  return work->mainGraph[ work->dispType ];
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief Œ»İ•\¦’†‚ÌƒTƒu‰~ƒOƒ‰ƒt
- *
- * @param work
- *
- * @return Œ»İ•\¦’†‚ÌƒTƒu‰~ƒOƒ‰ƒt
- */
-//-----------------------------------------------------------------------------------------
-static CIRCLE_GRAPH* GetSubGraph ( const RRG_WORK* work )
-{
-  return work->subGraph[ work->dispType ];
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒAƒjƒ[ƒVƒ‡ƒ“’†‚Ì‰~ƒOƒ‰ƒt‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
- *
- * @param work
- *
- * @return ƒAƒjƒ[ƒVƒ‡ƒ“‚µ‚Ä‚¢‚éƒOƒ‰ƒt‚ª‚ ‚éê‡ FALSE
- *         ‚·‚×‚Ä‚ÌƒOƒ‰ƒt‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªI—¹‚µ‚Ä‚¢‚éê‡ TRUE
- */
-//-----------------------------------------------------------------------------------------
-static BOOL CheckAllGraphAnimeEnd( const RRG_WORK* work )
-{
-  if( CIRCLE_GRAPH_IsAnime( work->mainGraph[ DATA_DISP_TYPE_TODAY ] ) ||
-      CIRCLE_GRAPH_IsAnime( work->mainGraph[ DATA_DISP_TYPE_TOTAL ] ) ||
-      CIRCLE_GRAPH_IsAnime( work->subGraph[ DATA_DISP_TYPE_TODAY ] ) ||
-      CIRCLE_GRAPH_IsAnime( work->subGraph[ DATA_DISP_TYPE_TOTAL ] ) ) { return FALSE; }
-
-  return TRUE;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief OBJ ƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
- *
- * @param work
- * @param resID ƒŠƒ\[ƒXID
- *
- * @return w’è‚µ‚½ƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
- */
-//-----------------------------------------------------------------------------------------
-static u32 GetObjResourceRegisterIndex( const RRG_WORK* work, OBJ_RESOURCE_ID resID )
-{
-  return work->objResRegisterIdx[ resID ];
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğæ“¾‚·‚é
- *
- * @param work
- * @param unitIdx ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ÌƒCƒ“ƒfƒbƒNƒX
- *
- * @return w’è‚µ‚½ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
- */
-//-----------------------------------------------------------------------------------------
-static GFL_CLUNIT* GetClactUnit( const RRG_WORK* work, CLUNIT_INDEX unitIdx )
-{
-  return work->clactUnit[ unitIdx ];
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğæ“¾‚·‚é
- *
- * @param work
- * @param unitIdx ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ÌƒCƒ“ƒfƒbƒNƒX
- *
- * @return w’è‚µ‚½ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
- */
-//-----------------------------------------------------------------------------------------
-static GFL_CLWK* GetClactWork( const RRG_WORK* work, CLWK_INDEX wkIdx )
-{
-  return work->clactWork[ wkIdx ];
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void StartPaletteFadeOut( RRG_WORK* work )
-{
-#if 0
-  // MAIN-BG
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_BG,
-                  MAIN_BG_PALETTE_FADEOUT_TARGET_BITMASK,
-                  MAIN_BG_PALETTE_FADEOUT_WAIT,
-                  MAIN_BG_PALETTE_FADEOUT_START_STRENGTH,
-                  MAIN_BG_PALETTE_FADEOUT_END_STRENGTH,
-                  MAIN_BG_PALETTE_FADEOUT_COLOR,
-                  work->VBlankTCBSystem );
-
-  // MAIN-OBJ
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_OBJ,
-                  MAIN_OBJ_PALETTE_FADEOUT_TARGET_BITMASK,
-                  MAIN_OBJ_PALETTE_FADEOUT_WAIT,
-                  MAIN_OBJ_PALETTE_FADEOUT_START_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADEOUT_END_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADEOUT_COLOR,
-                  work->VBlankTCBSystem );
-#endif 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade out\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void StartPaletteFadeIn( RRG_WORK* work )
-{
-#if 0
-  // MAIN-BG
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_BG,
-                  MAIN_BG_PALETTE_FADEIN_TARGET_BITMASK,
-                  MAIN_BG_PALETTE_FADEIN_WAIT,
-                  MAIN_BG_PALETTE_FADEIN_START_STRENGTH,
-                  MAIN_BG_PALETTE_FADEIN_END_STRENGTH,
-                  MAIN_BG_PALETTE_FADEIN_COLOR,
-                  work->VBlankTCBSystem );
-
-  // MAIN-OBJ
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_OBJ,
-                  MAIN_OBJ_PALETTE_FADEIN_TARGET_BITMASK,
-                  MAIN_OBJ_PALETTE_FADEIN_WAIT,
-                  MAIN_OBJ_PALETTE_FADEIN_START_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADEIN_END_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADEIN_COLOR,
-                  work->VBlankTCBSystem );
-#endif
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade in\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ‚É‚æ‚éƒtƒ‰ƒbƒVƒ… ( ƒAƒEƒg ) ‚ğŠJn‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void StartPaletteFadeFlashOut( RRG_WORK* work )
-{
-  // MAIN-BG
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_BG,
-                  MAIN_BG_PALETTE_FADE_FLASHOUT_TARGET_BITMASK,
-                  MAIN_BG_PALETTE_FADE_FLASHOUT_WAIT,
-                  MAIN_BG_PALETTE_FADE_FLASHOUT_START_STRENGTH,
-                  MAIN_BG_PALETTE_FADE_FLASHOUT_END_STRENGTH,
-                  MAIN_BG_PALETTE_FADE_FLASHOUT_COLOR,
-                  work->VBlankTCBSystem );
-
-  // MAIN-OBJ
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_OBJ,
-                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_TARGET_BITMASK,
-                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_WAIT,
-                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_START_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_END_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADE_FLASHOUT_COLOR,
-                  work->VBlankTCBSystem );
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade flash out\n" );
-} 
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ‚É‚æ‚éƒtƒ‰ƒbƒVƒ… ( ƒCƒ“ ) ‚ğŠJn‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void StartPaletteFadeFlashIn( RRG_WORK* work )
-{
-  // MAIN-BG
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_BG,
-                  MAIN_BG_PALETTE_FADE_FLASHIN_TARGET_BITMASK,
-                  MAIN_BG_PALETTE_FADE_FLASHIN_WAIT,
-                  MAIN_BG_PALETTE_FADE_FLASHIN_START_STRENGTH,
-                  MAIN_BG_PALETTE_FADE_FLASHIN_END_STRENGTH,
-                  MAIN_BG_PALETTE_FADE_FLASHIN_COLOR,
-                  work->VBlankTCBSystem );
-
-  // MAIN-OBJ
-  PaletteFadeReq( work->paletteFadeSystem, 
-                  PF_BIT_MAIN_OBJ,
-                  MAIN_OBJ_PALETTE_FADE_FLASHIN_TARGET_BITMASK,
-                  MAIN_OBJ_PALETTE_FADE_FLASHIN_WAIT,
-                  MAIN_OBJ_PALETTE_FADE_FLASHIN_START_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADE_FLASHIN_END_STRENGTH,
-                  MAIN_OBJ_PALETTE_FADE_FLASHIN_COLOR,
-                  work->VBlankTCBSystem );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade flash in\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
- *
- * @param work
- *
- * @return ƒpƒŒƒbƒgƒtƒF[ƒh‚ªŠ®—¹‚µ‚Ä‚¢‚éê‡ TRUE
- *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
- */
-//-----------------------------------------------------------------------------------------
-static BOOL IsPaletteFadeEnd( RRG_WORK* work )
-{
-  return (PaletteFadeCheck( work->paletteFadeSystem ) == 0 );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒTƒu‰~ƒOƒ‰ƒt‚ÆƒƒCƒ“‰~ƒOƒ‰ƒt‚ğ“ü‚ê‘Ö‚¦‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InterchangeCircleGraph( RRG_WORK* work )
-{
-  int typeIdx;
-  CIRCLE_GRAPH* temp;
-
-  for( typeIdx=0; typeIdx < DATA_DISP_TYPE_NUM; typeIdx++ )
-  {
-    CIRCLE_GRAPH* temp         = work->mainGraph[ typeIdx ];
-    work->mainGraph[ typeIdx ] = work->subGraph[ typeIdx ];
-    work->subGraph[ typeIdx ]  = temp;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: interchange circle graph\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒƒCƒ“‰~ƒOƒ‰ƒt‚ğŒ»İ‚Ìƒf[ƒ^‚Å\¬‚·‚é
- *
- * @param work
- * @param dispType •\¦ƒ^ƒCƒv
- */
-//-----------------------------------------------------------------------------------------
-static void SetupMainCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType )
-{
-  int aIdx;
-  CIRCLE_GRAPH* graph;
-  GRAPH_COMPONENT_ADD_DATA components[ MAX_ANSWER_NUM_PER_QUESTION ];
-  u8 answerNum;
-  const QUESTION_DATA* questionData;
-  const ANSWER_DATA* answerData;
-
-  graph        = work->mainGraph[ dispType ];
-  answerNum    = GetAnswerNum( work );
-  questionData = &( work->researchData.questionData[ work->questionIdx ] );
-
-  // ƒOƒ‰ƒt‚Ì\¬—v‘fƒf[ƒ^‚ğì¬
-  for( aIdx=0; aIdx < answerNum; aIdx++ )
-  {
-    answerData = &( questionData->answerData[ aIdx ] );
-    components[ aIdx ].ID = answerData->ID;
-    components[ aIdx ].outerColorR = answerData->colorR;
-    components[ aIdx ].outerColorG = answerData->colorG;
-    components[ aIdx ].outerColorB = answerData->colorB;
-    OS_TFPrintf( PRINT_TARGET, "color = %d, %d, %d\n", answerData->colorR, answerData->colorG, answerData->colorB );
-    SetupCenterColorOfGraphComponent( &components[ aIdx ] );
-    switch( dispType ) {
-    case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
-    case DATA_DISP_TYPE_TOTAL: components[ aIdx ].value = answerData->totalCount; break;
-    default: GF_ASSERT(0);
-    }
-  }
-
-  // ƒOƒ‰ƒt‚Ì\¬—v‘f‚ğƒZƒbƒg
-  CIRCLE_GRAPH_SetupComponents( graph, components, answerNum );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup main circle graph\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒTƒu‰~ƒOƒ‰ƒt‚ğŒ»İ‚Ìƒf[ƒ^‚Å\¬‚·‚é
- *
- * @param work
- * @param dispType •\¦ƒ^ƒCƒv
- */
-//-----------------------------------------------------------------------------------------
-static void SetupSubCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType )
-{
-  int aIdx;
-  CIRCLE_GRAPH* graph;
-  GRAPH_COMPONENT_ADD_DATA components[ MAX_ANSWER_NUM_PER_QUESTION ];
-  u8 answerNum;
-  const QUESTION_DATA* questionData;
-  const ANSWER_DATA* answerData;
-
-  graph        = work->subGraph[ dispType ];
-  answerNum    = GetAnswerNum( work );
-  questionData = &( work->researchData.questionData[ work->questionIdx ] );
-
-  // ƒOƒ‰ƒt‚Ì\¬—v‘fƒf[ƒ^‚ğì¬
-  for( aIdx=0; aIdx < answerNum; aIdx++ )
-  {
-    answerData = &( questionData->answerData[ aIdx ] );
-    components[ aIdx ].ID = answerData->ID;
-    components[ aIdx ].outerColorR = answerData->colorR;
-    components[ aIdx ].outerColorG = answerData->colorG;
-    components[ aIdx ].outerColorB = answerData->colorB;
-    SetupCenterColorOfGraphComponent( &components[ aIdx ] );
-    switch( dispType ) {
-    case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
-    case DATA_DISP_TYPE_TOTAL: components[ aIdx ].value = answerData->totalCount; break;
-    default: GF_ASSERT(0);
-    }
-  }
-
-  // ƒOƒ‰ƒt‚Ì\¬—v‘f‚ğƒZƒbƒg
-  CIRCLE_GRAPH_SetupComponents( graph, components, answerNum );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup sub circle graph\n" );
-} 
-
-//-----------------------------------------------------------------------------------------
-/**
- * @breif ƒOƒ‰ƒt\¬—v‘f‚Ì’†S“_ƒJƒ‰[‚ğƒZƒbƒgƒAƒbƒv‚·‚é
- *
- * @param component ƒOƒ‰ƒt\¬—v‘f‚Ì’Ç‰Áƒf[ƒ^
- */
-//-----------------------------------------------------------------------------------------
-static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component )
-{
-  const int min = 0; // ƒJƒ‰[¬•ª‚ÌÅ¬’l
-  const int max = 31; // ƒJƒ‰[¬•ª‚ÌÅ‘å’l
-  const int brightness = 3; // ’†S“_ƒJƒ‰[‚Ì–¾‚é‚³
-  int R, G, B;
-  int cR, cG, cB;
-
-  // ŠOü‚ÌF‚ğæ“¾
-  R = component->outerColorR;
-  G = component->outerColorG;
-  B = component->outerColorB;
-
-  // ’lˆæƒ`ƒFƒbƒN
-  GF_ASSERT( min<=R && R<=max );
-  GF_ASSERT( min<=G && G<=max );
-  GF_ASSERT( min<=B && B<=max );
-
-  // ’†S“_‚ÌF‚ğŒˆ’è
-  cR = (R + max * (brightness - 1)) / brightness;
-  cG = (G + max * (brightness - 1)) / brightness;
-  cB = (B + max * (brightness - 1)) / brightness;
-
-  // ’lˆæƒ`ƒFƒbƒN
-  GF_ASSERT( min<=cR && cR<=max );
-  GF_ASSERT( min<=cG && cG<=max );
-  GF_ASSERT( min<=cB && cB<=max );
-
-  // ’†S‚ÌF‚ğƒZƒbƒg
-  component->centerColorR = cR;
-  component->centerColorG = cG;
-  component->centerColorB = cB;
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒƒCƒ“‰~ƒOƒ‰ƒt, ƒTƒu‰~ƒOƒ‰ƒt‚Ìd‚È‚è•û‚ğ’²®‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void AdjustCircleGraphLayer( RRG_WORK* work )
-{
-  // ƒTƒu‰~ƒOƒ‰ƒt‚ªè‘O‚É•\¦‚³‚ê‚é‚æ‚¤‚ÉzÀ•W‚ğİ’è‚·‚é
-  CIRCLE_GRAPH_SetCenterZ( GetMainGraph(work), FX16_CONST(-2.0f) );
-  CIRCLE_GRAPH_SetCenterZ( GetSubGraph(work), FX16_CONST(0.0f) );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: adjust circle graph layer\n" );
-}
-
-
-//=========================================================================================
-// LAYER 2 ¶¬E‰Šú‰»E”jŠü
-//=========================================================================================
 
 //------------------------------------------------------------------------------------
 /**
