@@ -186,7 +186,6 @@ SRCS  +=    $(SOUNDSRC) \
 				system/tr2dgra.c \
         system/nsbtx_to_clwk.c \
         system/pms_draw.c \
-	      app/waza_oshie/waza_oshie.c \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
         app/codein/codein_param.c\
@@ -482,7 +481,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         app/trainercard/trcard_sys.c \
         system/g3d_tool.c \
         field/scrcmd_t01_gmk.c \
-        field/field_gimmick_t01_st.c
+        field/field_gimmick_t01_st.c \
+	      app/waza_oshie/waza_oshie.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
