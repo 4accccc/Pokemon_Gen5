@@ -109,7 +109,7 @@ typedef struct {
   // 各画面専用ワーク
   RRT_WORK*   topWork;   // トップ画面
   RRL_WORK* listWork; // リスト画面
-  RESEARCH_CHECK_WORK*  checkWork;  // 調査報告確認画面
+  RRG_WORK*  graphWork;  // 調査報告確認画面
 
 } RESEARCH_WORK;
 
@@ -318,7 +318,7 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   case PROC_MAIN_SEQ_SETUP:  break;
   case PROC_MAIN_SEQ_MENU:   RRT_DeleteWork( work->topWork );    break;
   case PROC_MAIN_SEQ_SELECT: RRL_DeleteWork( work->listWork );  break;
-  case PROC_MAIN_SEQ_CHECK:  DeleteResearchCheckWork ( work->checkWork );   break;
+  case PROC_MAIN_SEQ_CHECK:  RRG_DeleteWork ( work->graphWork );   break;
   case PROC_MAIN_SEQ_FINISH: break;
   default:  GF_ASSERT(0);
   }
@@ -328,7 +328,7 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    work->topWork   = NULL;  break;
   case PROC_MAIN_SEQ_SELECT:  work->listWork = NULL;  break;
-  case PROC_MAIN_SEQ_CHECK:   work->checkWork  = NULL;  break;
+  case PROC_MAIN_SEQ_CHECK:   work->graphWork  = NULL;  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
   }
@@ -354,7 +354,7 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    GF_ASSERT( work->topWork   == NULL );  break;
   case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->listWork == NULL );  break;
-  case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->checkWork  == NULL );  break;
+  case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->graphWork  == NULL );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
   } 
@@ -365,7 +365,7 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    work->topWork   = RRT_CreateWork( work->commonWork );  break;
   case PROC_MAIN_SEQ_SELECT:  work->listWork = RRL_CreateWork( work->commonWork );  break;
-  case PROC_MAIN_SEQ_CHECK:   work->checkWork  = CreateResearchCheckWork ( work->commonWork );  break;
+  case PROC_MAIN_SEQ_CHECK:   work->graphWork  = RRG_CreateWork ( work->commonWork );  break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
   } 
@@ -450,7 +450,7 @@ static PROC_MAIN_SEQ ProcMain_SELECT( RESEARCH_WORK* work )
     RRL_RESULT result = RRL_GetResult( work->listWork );
 
     switch( result ) {
-    case RRL_RESULT_TO_TOP: return PROC_MAIN_SEQ_MENU; break;
+    case RRL_RESULT_TO_TOP: return PROC_MAIN_SEQ_MENU;
     default:
       GF_ASSERT(0);
       return PROC_MAIN_SEQ_FINISH;
@@ -472,20 +472,22 @@ static PROC_MAIN_SEQ ProcMain_SELECT( RESEARCH_WORK* work )
 //-------------------------------------------------------------------------------
 static PROC_MAIN_SEQ ProcMain_CHECK( RESEARCH_WORK* work )
 {
-  RESEARCH_CHECK_RESULT result;
-  PROC_MAIN_SEQ  nextSeq;
+  RRG_Main( work->graphWork );
 
-  // 調査報告確認画面メイン処理
-  result = ResearchCheckMain( work->checkWork );
-  
-  // 次のシーケンスを決定
-  switch( result )
-  {
-  case RESEARCH_CHECK_RESULT_CONTINUE:  nextSeq = PROC_MAIN_SEQ_CHECK;  break;
-  case RESEARCH_CHECK_RESULT_TO_MENU:   nextSeq = PROC_MAIN_SEQ_MENU;   break;
-  default:  GF_ASSERT(0);
-  } 
-  return nextSeq;
+  // グラフ画面が終了
+  if( RRG_IsFinished( work->graphWork ) ) {
+
+    RRG_RESULT result = RRG_GetResult( work->graphWork );
+
+    switch( result ) {
+    case RRG_RESULT_TO_TOP: return PROC_MAIN_SEQ_MENU;
+    default:  
+      GF_ASSERT(0);
+      return PROC_MAIN_SEQ_FINISH;
+    } 
+  }
+
+  return PROC_MAIN_SEQ_CHECK;
 } 
 
 //-------------------------------------------------------------------------------
@@ -532,7 +534,7 @@ static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem )
   work->commonWork = NULL;
   work->topWork   = NULL;
   work->listWork = NULL;
-  work->checkWork  = NULL;
+  work->graphWork  = NULL;
 }
 
 //-------------------------------------------------------------------------------

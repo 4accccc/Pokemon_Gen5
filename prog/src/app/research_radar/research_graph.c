@@ -61,7 +61,7 @@
 //=========================================================================================
 // Å°í≤ç∏ïÒçêämîFâÊñ  ÉèÅ[ÉN
 //=========================================================================================
-struct _RESEARCH_CHECK_WORK
+struct _RESEARCH_RADAR_GRAPH_WORK
 { 
   RESEARCH_COMMON_WORK* commonWork; // ëSâÊñ ã§í ÉèÅ[ÉN
   HEAPID                heapID;
@@ -77,7 +77,6 @@ struct _RESEARCH_CHECK_WORK
   RESEARCH_CHECK_SEQ    seq;           // åªç›ÇÃèàóùÉVÅ[ÉPÉìÉX
   BOOL                  seqFinishFlag; // åªç›ÇÃÉVÅ[ÉPÉìÉXÇ™èIóπÇµÇΩÇ©Ç«Ç§Ç©
   u32                   seqCount;      // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^
-  RESEARCH_CHECK_RESULT result;        // âÊñ èIóπåãâ 
   u32                   waitFrame;     // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘
 
   // ÉJÅ[É\Éã
@@ -131,6 +130,9 @@ struct _RESEARCH_CHECK_WORK
   // VBlank
   GFL_TCBSYS* VBlankTCBSystem; // VBlankä˙ä‘íÜÇÃÉ^ÉXÉNä«óùÉVÉXÉeÉÄ
   GFL_TCB*    VBlankTask;      // VBlankÉ^ÉCÉ~ÉìÉOíÜÇ…çsÇ§É^ÉXÉN
+
+  RRG_RESULT finishResult;        // âÊñ èIóπåãâ 
+  BOOL finishFlag;
 };
 
 
@@ -144,237 +146,237 @@ struct _RESEARCH_CHECK_WORK
 // ÅûLAYER 4 ÉVÅ[ÉPÉìÉX
 //-----------------------------------------------------------------------------------------
 // ÉVÅ[ÉPÉìÉXèâä˙âªèàóù
-static void InitSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
-static void InitSeq_STANDBY( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
-static void InitSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
-static void InitSeq_ANALYZE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
-static void InitSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
-static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
-static void InitSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
-static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
-static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
-static void InitSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
-static void InitSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
+static void InitSeq_SETUP( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
+static void InitSeq_STANDBY( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
+static void InitSeq_KEY_WAIT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
+static void InitSeq_ANALYZE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
+static void InitSeq_PERCENTAGE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
+static void InitSeq_FLASH_OUT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
+static void InitSeq_FLASH_IN( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
+static void InitSeq_UPDATE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void InitSeq_FADE_OUT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void InitSeq_FRAME_WAIT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
+static void InitSeq_CLEAN_UP( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 // ÉVÅ[ÉPÉìÉXèàóù
-static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
-static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
-static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
-static void MainSeq_ANALYZE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
-static void MainSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
-static void MainSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
-static void MainSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
-static void MainSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
-static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
-static void MainSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
-static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP 
+static void MainSeq_SETUP( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
+static void MainSeq_STANDBY( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
+static void MainSeq_KEY_WAIT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
+static void MainSeq_ANALYZE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
+static void MainSeq_PERCENTAGE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
+static void MainSeq_FLASH_OUT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
+static void MainSeq_FLASH_IN( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
+static void MainSeq_UPDATE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void MainSeq_FADE_OUT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void MainSeq_FRAME_WAIT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
+static void MainSeq_CLEAN_UP( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXèIóπèàóù
-static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
-static void FinishSeq_STANDBY( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
-static void FinishSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
-static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
-static void FinishSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
-static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
-static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
-static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
-static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
-static void FinishSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
-static void FinishSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
+static void FinishSeq_SETUP( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
+static void FinishSeq_STANDBY( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_STANDBY
+static void FinishSeq_KEY_WAIT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_KEY_WAIT
+static void FinishSeq_ANALYZE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_ANALYZE
+static void FinishSeq_PERCENTAGE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_PERCENTAGE
+static void FinishSeq_FLASH_OUT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_OUT
+static void FinishSeq_FLASH_IN( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
+static void FinishSeq_UPDATE( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
+static void FinishSeq_FADE_OUT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void FinishSeq_FRAME_WAIT( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
+static void FinishSeq_CLEAN_UP( RRG_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 // ÉVÅ[ÉPÉìÉXêßå‰
-static void CountUpSeqCount( RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^ÇçXêVÇ∑ÇÈ
-static void SetNextSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // éüÇÃÉVÅ[ÉPÉìÉXÇÉLÉÖÅ[Ç…ìoò^Ç∑ÇÈ
-static void FinishCurrentSeq( RESEARCH_CHECK_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇèIóπÇ∑ÇÈ
-static void SwitchSeq( RESEARCH_CHECK_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
-static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
-static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
-static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
-static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
-RESEARCH_CHECK_SEQ GetFirstSeq( const RESEARCH_CHECK_WORK* work ); // ç≈èâÇÃÉVÅ[ÉPÉìÉXÇéÊìæÇ∑ÇÈ    
+static void CountUpSeqCount( RRG_WORK* work ); // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^ÇçXêVÇ∑ÇÈ
+static void SetNextSeq( RRG_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // éüÇÃÉVÅ[ÉPÉìÉXÇÉLÉÖÅ[Ç…ìoò^Ç∑ÇÈ
+static void FinishCurrentSeq( RRG_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇèIóπÇ∑ÇÈ
+static void SwitchSeq( RRG_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
+static void SetSeq( RRG_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
+static void SetResult( RRG_WORK* work, RRG_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
+static void SetWaitFrame( RRG_WORK* work, u32 frame ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+static u32 GetWaitFrame( const RRG_WORK* work ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
+RESEARCH_CHECK_SEQ GetFirstSeq( const RRG_WORK* work ); // ç≈èâÇÃÉVÅ[ÉPÉìÉXÇéÊìæÇ∑ÇÈ    
 //-----------------------------------------------------------------------------------------
 // ÅûLAYER 3 ã@î\
 //-----------------------------------------------------------------------------------------
 // ÉJÅ[É\Éã
-static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work ); // è„Ç÷à⁄ìÆÇ∑ÇÈ
-static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work ); // â∫Ç÷à⁄ìÆÇ∑ÇÈ
-static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // íºê⁄à⁄ìÆÇ∑ÇÈ
-static void MoveMenuCursorSilent( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // íºê⁄à⁄ìÆÇ∑ÇÈ ( ì_ñ≈ÅESEÇ»Çµ )
+static void MoveMenuCursorUp( RRG_WORK* work ); // è„Ç÷à⁄ìÆÇ∑ÇÈ
+static void MoveMenuCursorDown( RRG_WORK* work ); // â∫Ç÷à⁄ìÆÇ∑ÇÈ
+static void MoveMenuCursorDirect( RRG_WORK* work, MENU_ITEM menuItem ); // íºê⁄à⁄ìÆÇ∑ÇÈ
+static void MoveMenuCursorSilent( RRG_WORK* work, MENU_ITEM menuItem ); // íºê⁄à⁄ìÆÇ∑ÇÈ ( ì_ñ≈ÅESEÇ»Çµ )
 // ï\é¶Ç∑ÇÈéøñ‚
-static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work ); // éüÇÃéøñ‚Ç…ïœçXÇ∑ÇÈ
-static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work ); // ëOÇÃéøñ‚Ç…ïœçXÇ∑ÇÈ
+static void ChangeQuestionToNext( RRG_WORK* work ); // éüÇÃéøñ‚Ç…ïœçXÇ∑ÇÈ
+static void ChangeQuestionToPrev( RRG_WORK* work ); // ëOÇÃéøñ‚Ç…ïœçXÇ∑ÇÈ
 // ï\é¶Ç∑ÇÈâÒìö
-static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work ); // éüÇÃâÒìöÇ…ïœçXÇ∑ÇÈ
-static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work ); // ëOÇÃâÒìöÇ…ïœçXÇ∑ÇÈ
-static void ChangeAnswerToTop( RESEARCH_CHECK_WORK* work ); // êÊì™ÇÃâÒìöÇ…ïœçXÇ∑ÇÈ
+static void ChangeAnswerToNext( RRG_WORK* work ); // éüÇÃâÒìöÇ…ïœçXÇ∑ÇÈ
+static void ChangeAnswerToPrev( RRG_WORK* work ); // ëOÇÃâÒìöÇ…ïœçXÇ∑ÇÈ
+static void ChangeAnswerToTop( RRG_WORK* work ); // êÊì™ÇÃâÒìöÇ…ïœçXÇ∑ÇÈ
 // í≤ç∏ÉfÅ[É^ÇÃï\é¶É^ÉCÉv
-static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work ); // í≤ç∏ÉfÅ[É^ÇÃï\é¶É^ÉCÉvÇêÿÇËë÷Ç¶ÇÈ
+static void SwitchDataDisplayType( RRG_WORK* work ); // í≤ç∏ÉfÅ[É^ÇÃï\é¶É^ÉCÉvÇêÿÇËë÷Ç¶ÇÈ
 //-----------------------------------------------------------------------------------------
 // ÅûLAYER 2 å¬ï ëÄçÏ
 //-----------------------------------------------------------------------------------------
 // ÉÅÉjÉÖÅ[çÄñ⁄ÉJÅ[É\Éã
-static void ShiftMenuCursorPos( RESEARCH_CHECK_WORK* work, int stride ); // ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ
-static void SetMenuCursorPos( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ
+static void ShiftMenuCursorPos( RRG_WORK* work, int stride ); // ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ
+static void SetMenuCursorPos( RRG_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É\Éãà íuÇïœçXÇ∑ÇÈ
 // ÉÅÉjÉÖÅ[çÄñ⁄ÇÃï\é¶
-static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+static void SetMenuCursorOn( RRG_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+static void SetMenuCursorOff( RRG_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
 // ï\é¶Ç∑ÇÈéøñ‚ÉCÉìÉfÉbÉNÉX
-static void ShiftQuestionIdx( RESEARCH_CHECK_WORK* work, int stride ); // ï\é¶Ç∑ÇÈéøñ‚ÇÃÉCÉìÉfÉbÉNÉXÇïœçXÇ∑ÇÈ
+static void ShiftQuestionIdx( RRG_WORK* work, int stride ); // ï\é¶Ç∑ÇÈéøñ‚ÇÃÉCÉìÉfÉbÉNÉXÇïœçXÇ∑ÇÈ
 // ëIëíÜÇÃâÒìöÉCÉìÉfÉbÉNÉX
-static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride ); // ëIëíÜÇÃâÒìöÉCÉìÉfÉbÉNÉXÇïœçXÇ∑ÇÈ
-static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work );             // ëIëíÜÇÃâÒìöÉCÉìÉfÉbÉNÉXÇÉäÉZÉbÉgÇ∑ÇÈ
+static void ShiftAnswerIdx( RRG_WORK* work, int stride ); // ëIëíÜÇÃâÒìöÉCÉìÉfÉbÉNÉXÇïœçXÇ∑ÇÈ
+static void ResetAnswerIdx( RRG_WORK* work );             // ëIëíÜÇÃâÒìöÉCÉìÉfÉbÉNÉXÇÉäÉZÉbÉgÇ∑ÇÈ
 // í≤ç∏ÉfÅ[É^ï\é¶É^ÉCÉv
-static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // í≤ç∏ÉfÅ[É^ÇÃï\é¶É^ÉCÉvÇê›íËÇ∑ÇÈ
+static void SetDataDisplayType( RRG_WORK* work, DATA_DISP_TYPE dispType ); // í≤ç∏ÉfÅ[É^ÇÃï\é¶É^ÉCÉvÇê›íËÇ∑ÇÈ
 //ÅuïÒçêÇå©ÇÈÅvÉ{É^Éì
-static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
-static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇì_ñ≈Ç≥ÇπÇÈ
-static void SetAnalyzeButtonCursorOn( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-static void SetAnalyzeButtonCursorOff( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
-static void SetAnalyzeButtonCursorSet( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉJÅ[É\ÉãÇÉZÉbÉgÇµÇΩèÛë‘Ç…Ç∑ÇÈ
-static void SetAnalyzeButtonActive( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉAÉNÉeÉBÉuèÛë‘Ç…Ç∑ÇÈ
-static void SetAnalyzeButtonNotActive( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇîÒÉAÉNÉeÉBÉuèÛë‘Ç…Ç∑ÇÈ
+static void UpdateAnalyzeButton( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
+static void BlinkAnalyzeButton( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇì_ñ≈Ç≥ÇπÇÈ
+static void SetAnalyzeButtonCursorOn( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+static void SetAnalyzeButtonCursorOff( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+static void SetAnalyzeButtonCursorSet( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉJÅ[É\ÉãÇÉZÉbÉgÇµÇΩèÛë‘Ç…Ç∑ÇÈ
+static void SetAnalyzeButtonActive( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÉAÉNÉeÉBÉuèÛë‘Ç…Ç∑ÇÈ
+static void SetAnalyzeButtonNotActive( RRG_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇîÒÉAÉNÉeÉBÉuèÛë‘Ç…Ç∑ÇÈ
 //ÅuñﬂÇÈÅvÉ{É^Éì
-static void BlinkReturnButton( RESEARCH_CHECK_WORK* work ); //ÅuñﬂÇÈÅvÉ{É^ÉìÇì_ñ≈Ç≥ÇπÇÈ
+static void BlinkReturnButton( RRG_WORK* work ); //ÅuñﬂÇÈÅvÉ{É^ÉìÇì_ñ≈Ç≥ÇπÇÈ
 // â~ÉOÉâÉt
-static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work ); // Ç∑Ç◊ÇƒÇÃâ~ÉOÉâÉtÇçXêVÇ∑ÇÈ
-static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work ); // Ç∑Ç◊ÇƒÇÃâ~ÉOÉâÉtÇï`âÊÇ∑ÇÈ
-static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // ÉÅÉCÉìâ~ÉOÉâÉtÇåªç›ÇÃí≤ç∏ÉfÅ[É^Ç≈ç\ê¨Ç∑ÇÈ
-static void SetupSubCircleGraph ( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // ÉTÉuâ~ÉOÉâÉtÇåªç›ÇÃí≤ç∏ÉfÅ[É^Ç≈ç\ê¨Ç∑ÇÈ
-static void InterchangeCircleGraph( RESEARCH_CHECK_WORK* work ); // ÉTÉuâ~ÉOÉâÉtÇ∆ÉÅÉCÉìâ~ÉOÉâÉtÇì¸ÇÍë÷Ç¶ÇÈ
+static void UpdateCircleGraphs( RRG_WORK* work ); // Ç∑Ç◊ÇƒÇÃâ~ÉOÉâÉtÇçXêVÇ∑ÇÈ
+static void DrawCircleGraphs( const RRG_WORK* work ); // Ç∑Ç◊ÇƒÇÃâ~ÉOÉâÉtÇï`âÊÇ∑ÇÈ
+static void SetupMainCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType ); // ÉÅÉCÉìâ~ÉOÉâÉtÇåªç›ÇÃí≤ç∏ÉfÅ[É^Ç≈ç\ê¨Ç∑ÇÈ
+static void SetupSubCircleGraph ( RRG_WORK* work, DATA_DISP_TYPE dispType ); // ÉTÉuâ~ÉOÉâÉtÇåªç›ÇÃí≤ç∏ÉfÅ[É^Ç≈ç\ê¨Ç∑ÇÈ
+static void InterchangeCircleGraph( RRG_WORK* work ); // ÉTÉuâ~ÉOÉâÉtÇ∆ÉÅÉCÉìâ~ÉOÉâÉtÇì¸ÇÍë÷Ç¶ÇÈ
 static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component ); // ÉOÉâÉtç\ê¨óvëfÇÃíÜêSì_ÉJÉâÅ[ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void AdjustCircleGraphLayer( RESEARCH_CHECK_WORK* work ); // ÉÅÉCÉìâ~ÉOÉâÉt, ÉTÉuâ~ÉOÉâÉtÇÃèdÇ»ÇËï˚Çí≤êÆÇ∑ÇÈ
-static CIRCLE_GRAPH* GetMainGraph( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃÉÅÉCÉìâ~ÉOÉâÉtÇéÊìæÇ∑ÇÈ
-static CIRCLE_GRAPH* GetSubGraph( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃÉTÉuâ~ÉOÉâÉtÇéÊìæÇ∑ÇÈ
-static BOOL CheckAllGraphAnimeEnd( const RESEARCH_CHECK_WORK* work ); // ÉAÉjÉÅÅ[ÉVÉáÉìíÜÇÃâ~ÉOÉâÉtÇ™Ç†ÇÈÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
+static void AdjustCircleGraphLayer( RRG_WORK* work ); // ÉÅÉCÉìâ~ÉOÉâÉt, ÉTÉuâ~ÉOÉâÉtÇÃèdÇ»ÇËï˚Çí≤êÆÇ∑ÇÈ
+static CIRCLE_GRAPH* GetMainGraph( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃÉÅÉCÉìâ~ÉOÉâÉtÇéÊìæÇ∑ÇÈ
+static CIRCLE_GRAPH* GetSubGraph( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃÉTÉuâ~ÉOÉâÉtÇéÊìæÇ∑ÇÈ
+static BOOL CheckAllGraphAnimeEnd( const RRG_WORK* work ); // ÉAÉjÉÅÅ[ÉVÉáÉìíÜÇÃâ~ÉOÉâÉtÇ™Ç†ÇÈÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
 // âÒìöÉ}Å[ÉJÅ[
-static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work ); // âÒìöÉ}Å[ÉJÅ[Çï`âÊÇ∑ÇÈ
+static void DrawAnswerMarker( const RRG_WORK* work ); // âÒìöÉ}Å[ÉJÅ[Çï`âÊÇ∑ÇÈ
 // ñÓàÛ
-static void UpdateArrow( RESEARCH_CHECK_WORK* work ); // ñÓàÛÇÃï\é¶ÇçXêVÇ∑ÇÈ
+static void UpdateArrow( RRG_WORK* work ); // ñÓàÛÇÃï\é¶ÇçXêVÇ∑ÇÈ
 // % ï\é¶
-static void SetupPercentages( RESEARCH_CHECK_WORK* work ); // åªç›ÇÃí≤ç∏ÉfÅ[É^Ç…Ç†ÇÌÇπÇƒÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void VanishAllPercentage( RESEARCH_CHECK_WORK* work ); // ëSÇƒÇÃÅìï\é¶Çè¡ãéÇ∑ÇÈ
-static void DispPercentage( RESEARCH_CHECK_WORK* work, u8 index ); // ÅìÉIÉuÉWÉFÉNÉgÇï\é¶Ç∑ÇÈ
-static void DispAllPercentage( RESEARCH_CHECK_WORK* work ); // ëSÇƒÇÃÅìÉIÉuÉWÉFÉNÉgÇï\é¶Ç∑ÇÈ
+static void SetupPercentages( RRG_WORK* work ); // åªç›ÇÃí≤ç∏ÉfÅ[É^Ç…Ç†ÇÌÇπÇƒÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void VanishAllPercentage( RRG_WORK* work ); // ëSÇƒÇÃÅìï\é¶Çè¡ãéÇ∑ÇÈ
+static void DispPercentage( RRG_WORK* work, u8 index ); // ÅìÉIÉuÉWÉFÉNÉgÇï\é¶Ç∑ÇÈ
+static void DispAllPercentage( RRG_WORK* work ); // ëSÇƒÇÃÅìÉIÉuÉWÉFÉNÉgÇï\é¶Ç∑ÇÈ
 // É^ÉbÉ`îÕàÕ
-static void UpdateTouchArea( RESEARCH_CHECK_WORK* work ); // É^ÉbÉ`îÕàÕÇçXêVÇ∑ÇÈ
+static void UpdateTouchArea( RRG_WORK* work ); // É^ÉbÉ`îÕàÕÇçXêVÇ∑ÇÈ
 // BG
-static void SetupBG( RESEARCH_CHECK_WORK* work ); // BGëSî Ç…Ç©Ç©ÇÌÇÈÉZÉbÉgÉAÉbÉvÇçsÇ§
-static void SetupSubBG_WINDOW( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void SetupSubBG_FONT( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void SetupMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void SetupMainBG_FONT( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void CleanUpBG( RESEARCH_CHECK_WORK* work ); // BGëSî Ç…Ç©Ç©ÇÌÇÈÉNÉäÅ[ÉìÉAÉbÉvÇçsÇ§
-static void CleanUpSubBG_WINDOW( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-static void CleanUpSubBG_FONT( RESEARCH_CHECK_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-static void CleanUpMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-static void CleanUpMainBG_FONT( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇçXêVÇ∑ÇÈ
+static void SetupBG( RRG_WORK* work ); // BGëSî Ç…Ç©Ç©ÇÌÇÈÉZÉbÉgÉAÉbÉvÇçsÇ§
+static void SetupSubBG_WINDOW( RRG_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupSubBG_FONT( RRG_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupMainBG_WINDOW( RRG_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupMainBG_FONT( RRG_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void CleanUpBG( RRG_WORK* work ); // BGëSî Ç…Ç©Ç©ÇÌÇÈÉNÉäÅ[ÉìÉAÉbÉvÇçsÇ§
+static void CleanUpSubBG_WINDOW( RRG_WORK* work ); // SUB-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpSubBG_FONT( RRG_WORK* work ); // SUB-BG ( ÉtÉHÉìÉgñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpMainBG_WINDOW( RRG_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CleanUpMainBG_FONT( RRG_WORK* work ); // MAIN-BG ( ÉtÉHÉìÉgñ  ) ÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void UpdateMainBG_WINDOW( RRG_WORK* work ); // MAIN-BG ( ÉEÉBÉìÉhÉEñ  ) ÇçXêVÇ∑ÇÈ
 // BGFont
-static void UpdateBGFont_TopicTitle( RESEARCH_CHECK_WORK* work ); // í≤ç∏çÄñ⁄ñºÇçXêVÇ∑ÇÈ
-static void UpdateBGFont_QuestionCaption( RESEARCH_CHECK_WORK* work ); // éøñ‚ÇÃï‚ë´ï∂ÇçXêVÇ∑ÇÈ
-static void UpdateBGFont_Question( RESEARCH_CHECK_WORK* work ); // éøñ‚ÇçXêVÇ∑ÇÈ 
-static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work ); // âÒìöÇçXêVÇ∑ÇÈ
-static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work ); // é©ï™ÇÃâÒìöÇçXêVÇ∑ÇÈ
-static void UpdateBGFont_Count( RESEARCH_CHECK_WORK* work ); // âÒìöêlêîÇçXêVÇ∑ÇÈ
-static void UpdateBGFont_NoData( RESEARCH_CHECK_WORK* work ); //ÅuÇΩÇæÇ¢Ç‹ ÇøÇÂÇ§Ç≥ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
-static void UpdateBGFont_DataReceiving( RESEARCH_CHECK_WORK* work ); //ÅuÉfÅ[É^ÇµÇ„Ç∆Ç≠ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_TopicTitle( RRG_WORK* work ); // í≤ç∏çÄñ⁄ñºÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_QuestionCaption( RRG_WORK* work ); // éøñ‚ÇÃï‚ë´ï∂ÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_Question( RRG_WORK* work ); // éøñ‚ÇçXêVÇ∑ÇÈ 
+static void UpdateBGFont_Answer( RRG_WORK* work ); // âÒìöÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_MyAnswer( RRG_WORK* work ); // é©ï™ÇÃâÒìöÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_Count( RRG_WORK* work ); // âÒìöêlêîÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_NoData( RRG_WORK* work ); //ÅuÇΩÇæÇ¢Ç‹ ÇøÇÂÇ§Ç≥ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
+static void UpdateBGFont_DataReceiving( RRG_WORK* work ); //ÅuÉfÅ[É^ÇµÇ„Ç∆Ç≠ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
 // OBJ
-static void UpdateControlCursor( RESEARCH_CHECK_WORK* work ); // ëÄçÏÉJÅ[É\ÉãÇÃï\é¶ÇçXêVÇ∑ÇÈ
-static void UpdateMyAnswerIconOnButton( RESEARCH_CHECK_WORK* work ); // é©ï™ÇÃâÒìöÉAÉCÉRÉì ( É{É^Éìè„ ) ÇçXêVÇ∑ÇÈ
-static void UpdateMyAnswerIconOnGraph( RESEARCH_CHECK_WORK* work ); // é©ï™ÇÃâÒìöÉAÉCÉRÉì ( ÉOÉâÉtè„ ) ÇçXêVÇ∑ÇÈ
+static void UpdateControlCursor( RRG_WORK* work ); // ëÄçÏÉJÅ[É\ÉãÇÃï\é¶ÇçXêVÇ∑ÇÈ
+static void UpdateMyAnswerIconOnButton( RRG_WORK* work ); // é©ï™ÇÃâÒìöÉAÉCÉRÉì ( É{É^Éìè„ ) ÇçXêVÇ∑ÇÈ
+static void UpdateMyAnswerIconOnGraph( RRG_WORK* work ); // é©ï™ÇÃâÒìöÉAÉCÉRÉì ( ÉOÉâÉtè„ ) ÇçXêVÇ∑ÇÈ
 // BMP-OAM
-static void InitBitmapDatas( RESEARCH_CHECK_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çèâä˙âªÇ∑ÇÈ
-static void CreateBitmapDatas( RESEARCH_CHECK_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çê∂ê¨Ç∑ÇÈ
-static void SetupBitmapData_forDefault( RESEARCH_CHECK_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ ( ÉfÉtÉHÉãÉg ) 
-static void SetupBitmapData_forANALYZE_BUTTON( RESEARCH_CHECK_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ (ÅuïÒçêÇå©ÇÈÅvÉ{É^Éì ) 
-static void DeleteBitmapDatas( RESEARCH_CHECK_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çîjä¸Ç∑ÇÈ
-static void SetupBmpOamSystem( RESEARCH_CHECK_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void CleanUpBmpOamSystem( RESEARCH_CHECK_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-static void CreateBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[Çê∂ê¨Ç∑ÇÈ
-static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[Çîjä¸Ç∑ÇÈ
-static void BmpOamSetDrawEnable( RESEARCH_CHECK_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // ï\é¶Ç∑ÇÈÇ©Ç«Ç§Ç©Çê›íËÇ∑ÇÈ
+static void InitBitmapDatas( RRG_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çèâä˙âªÇ∑ÇÈ
+static void CreateBitmapDatas( RRG_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çê∂ê¨Ç∑ÇÈ
+static void SetupBitmapData_forDefault( RRG_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ ( ÉfÉtÉHÉãÉg ) 
+static void SetupBitmapData_forANALYZE_BUTTON( RRG_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^ÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ (ÅuïÒçêÇå©ÇÈÅvÉ{É^Éì ) 
+static void DeleteBitmapDatas( RRG_WORK* work ); // ÉrÉbÉgÉ}ÉbÉvÉfÅ[É^Çîjä¸Ç∑ÇÈ
+static void SetupBmpOamSystem( RRG_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void CleanUpBmpOamSystem( RRG_WORK* work ); // BMP-OAM ÉVÉXÉeÉÄÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void CreateBmpOamActors( RRG_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[Çê∂ê¨Ç∑ÇÈ
+static void DeleteBmpOamActors( RRG_WORK* work ); // BMP-OAM ÉAÉNÉ^Å[Çîjä¸Ç∑ÇÈ
+static void BmpOamSetDrawEnable( RRG_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // ï\é¶Ç∑ÇÈÇ©Ç«Ç§Ç©Çê›íËÇ∑ÇÈ
 // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉì
-static void InitPaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇèâä˙âªÇ∑ÇÈ
-static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇê∂ê¨Ç∑ÇÈ
-static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇîjä¸Ç∑ÇÈ
-static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
-static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇäJénÇ∑ÇÈ
-static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇí‚é~Ç∑ÇÈ
-static BOOL CheckPaletteAnime( const RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìíÜÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
-static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçXêVÇ∑ÇÈ
+static void InitPaletteAnime( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇèâä˙âªÇ∑ÇÈ
+static void CreatePaletteAnime( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇê∂ê¨Ç∑ÇÈ
+static void DeletePaletteAnime( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇîjä¸Ç∑ÇÈ
+static void SetupPaletteAnime( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void CleanUpPaletteAnime( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
+static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇäJénÇ∑ÇÈ
+static void StopPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇí‚é~Ç∑ÇÈ
+static BOOL CheckPaletteAnime( const RRG_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìíÜÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
+static void UpdatePaletteAnime( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçXêVÇ∑ÇÈ
 // ÉpÉåÉbÉgÉtÉFÅ[Éh
-static void InitPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èâä˙âª
-static void SetupPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èÄîı
-static void CleanUpPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ å„ï–ïtÇØ
-static void StartPaletteFadeOut( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉAÉEÉgÇäJénÇ∑ÇÈ
-static void StartPaletteFadeIn ( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉCÉìÇäJénÇ∑ÇÈ
-static void StartPaletteFadeFlashOut( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÇ…ÇÊÇÈÉtÉâÉbÉVÉÖ ( ÉAÉEÉg ) ÇäJénÇ∑ÇÈ
-static void StartPaletteFadeFlashIn ( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÇ…ÇÊÇÈÉtÉâÉbÉVÉÖ ( ÉCÉì ) ÇäJénÇ∑ÇÈ
-static BOOL IsPaletteFadeEnd( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÇ™äÆóπÇµÇΩÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
+static void InitPaletteFadeSystem( RRG_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èâä˙âª
+static void SetupPaletteFadeSystem( RRG_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èÄîı
+static void CleanUpPaletteFadeSystem( RRG_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ å„ï–ïtÇØ
+static void StartPaletteFadeOut( RRG_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉAÉEÉgÇäJénÇ∑ÇÈ
+static void StartPaletteFadeIn ( RRG_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÉCÉìÇäJénÇ∑ÇÈ
+static void StartPaletteFadeFlashOut( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÇ…ÇÊÇÈÉtÉâÉbÉVÉÖ ( ÉAÉEÉg ) ÇäJénÇ∑ÇÈ
+static void StartPaletteFadeFlashIn ( RRG_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÇ…ÇÊÇÈÉtÉâÉbÉVÉÖ ( ÉCÉì ) ÇäJénÇ∑ÇÈ
+static BOOL IsPaletteFadeEnd( RRG_WORK* work ); // ÉpÉåÉbÉgÇÃÉtÉFÅ[ÉhÇ™äÆóπÇµÇΩÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
 // VBlankÉ^ÉXÉN
-static void RegisterVBlankTask( RESEARCH_CHECK_WORK* work ); // VBlank É^ÉXÉNÇìoò^Ç∑ÇÈ
-static void ReleaseVBlankTask( RESEARCH_CHECK_WORK* work ); // VBlank É^ÉXÉNÇÃìoò^ÇâèúÇ∑ÇÈ
+static void RegisterVBlankTask( RRG_WORK* work ); // VBlank É^ÉXÉNÇìoò^Ç∑ÇÈ
+static void ReleaseVBlankTask( RRG_WORK* work ); // VBlank É^ÉXÉNÇÃìoò^ÇâèúÇ∑ÇÈ
 static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlankíÜÇÃèàóù
 // í≤ç∏ÉfÅ[É^
-static u8 GetTopicID( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃí≤ç∏çÄñ⁄ID
-static u8 GetQuestionID( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚ID
-static u8 GetAnswerNum( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈâÒìöëIëéàÇÃêî
-static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöID
-static u16 GetCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, ï\é¶íÜÇÃâÒìöêlêî
-static u16 GetTodayCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, ç°ì˙ÇÃâÒìöêlêî
-static u16 GetTotalCountOfQuestion( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, çáåvÇÃâÒìöêlêî
-static u16 GetCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, ï\é¶íÜÇÃâÒìöêlêî
-static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, ç°ì˙ÇÃâÒìöêlêî
-static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, çáåvÇÃâÒìöêlêî
-static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work ); // åªç›í≤ç∏íÜÇÃí≤ç∏çÄñ⁄IDÇéÊìæÇ∑ÇÈ
-static u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, é©ï™ÇÃâÒìöIDÇéÊìæÇ∑ÇÈ
-static u8 GetMyAnswerID_PlayTime( const RESEARCH_CHECK_WORK* work ); // éøñ‚ÅwÉvÉåÉCéûä‘ÇÕÅHÅxÇ…ëŒÇ∑ÇÈé©ï™ÇÃâÒìöIDÇéÊìæÇ∑ÇÈ
+static u8 GetTopicID( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃí≤ç∏çÄñ⁄ID
+static u8 GetQuestionID( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚ID
+static u8 GetAnswerNum( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈâÒìöëIëéàÇÃêî
+static u16 GetAnswerID( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöID
+static u16 GetCountOfQuestion( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, ï\é¶íÜÇÃâÒìöêlêî
+static u16 GetTodayCountOfQuestion( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, ç°ì˙ÇÃâÒìöêlêî
+static u16 GetTotalCountOfQuestion( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, çáåvÇÃâÒìöêlêî
+static u16 GetCountOfAnswer( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, ï\é¶íÜÇÃâÒìöêlêî
+static u16 GetTodayCountOfAnswer( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, ç°ì˙ÇÃâÒìöêlêî
+static u16 GetTotalCountOfAnswer( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, çáåvÇÃâÒìöêlêî
+static u8 GetInvestigatingTopicID( const RRG_WORK* work ); // åªç›í≤ç∏íÜÇÃí≤ç∏çÄñ⁄IDÇéÊìæÇ∑ÇÈ
+static u8 GetMyAnswerID( const RRG_WORK* work ); // åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, é©ï™ÇÃâÒìöIDÇéÊìæÇ∑ÇÈ
+static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work ); // éøñ‚ÅwÉvÉåÉCéûä‘ÇÕÅHÅxÇ…ëŒÇ∑ÇÈé©ï™ÇÃâÒìöIDÇéÊìæÇ∑ÇÈ
 // OBJ
-static void CreateClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ ÉVÉXÉeÉÄÇê∂ê¨Ç∑ÇÈ
-static void DeleteClactSystem( RESEARCH_CHECK_WORK* work ); // OBJ ÉVÉXÉeÉÄÇîjä¸Ç∑ÇÈ
-static void RegisterSubObjResources( RESEARCH_CHECK_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉXÇìoò^Ç∑ÇÈ
-static void ReleaseSubObjResources( RESEARCH_CHECK_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉX âï˙Ç∑ÇÈ
-static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉXÇìoò^Ç∑ÇÈ
-static void ReleaseMainObjResources( RESEARCH_CHECK_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉXÇâï˙Ç∑ÇÈ
-static void InitClactUnits( RESEARCH_CHECK_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇèâä˙âªÇ∑ÇÈ
-static void CreateClactUnits( RESEARCH_CHECK_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇê∂ê¨Ç∑ÇÈ
-static void DeleteClactUnits( RESEARCH_CHECK_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇîjä¸Ç∑ÇÈ
-static void InitClactWorks( RESEARCH_CHECK_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇèâä˙âªÇ∑ÇÈ
-static void CreateClactWorks( RESEARCH_CHECK_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇê∂ê¨Ç∑ÇÈ
-static void DeleteClactWorks( RESEARCH_CHECK_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇîjä¸Ç∑ÇÈ
-static u32 GetObjResourceRegisterIndex( const RESEARCH_CHECK_WORK* work, OBJ_RESOURCE_ID resID ); // OBJÉäÉ\Å[ÉXÇÃìoò^ÉCÉìÉfÉbÉNÉXÇéÊìæÇ∑ÇÈ
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX unitIdx ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇéÊìæÇ∑ÇÈ
-static GFL_CLWK* GetClactWork( const RESEARCH_CHECK_WORK* work, CLWK_INDEX wkIdx ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇéÊìæÇ∑ÇÈ
+static void CreateClactSystem( RRG_WORK* work ); // OBJ ÉVÉXÉeÉÄÇê∂ê¨Ç∑ÇÈ
+static void DeleteClactSystem( RRG_WORK* work ); // OBJ ÉVÉXÉeÉÄÇîjä¸Ç∑ÇÈ
+static void RegisterSubObjResources( RRG_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉXÇìoò^Ç∑ÇÈ
+static void ReleaseSubObjResources( RRG_WORK* work ); // SUB-OBJ ÉäÉ\Å[ÉX âï˙Ç∑ÇÈ
+static void RegisterMainObjResources( RRG_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉXÇìoò^Ç∑ÇÈ
+static void ReleaseMainObjResources( RRG_WORK* work ); // MAIN-OBJ ÉäÉ\Å[ÉXÇâï˙Ç∑ÇÈ
+static void InitClactUnits( RRG_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇèâä˙âªÇ∑ÇÈ
+static void CreateClactUnits( RRG_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇê∂ê¨Ç∑ÇÈ
+static void DeleteClactUnits( RRG_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇîjä¸Ç∑ÇÈ
+static void InitClactWorks( RRG_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇèâä˙âªÇ∑ÇÈ
+static void CreateClactWorks( RRG_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇê∂ê¨Ç∑ÇÈ
+static void DeleteClactWorks( RRG_WORK* work ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇîjä¸Ç∑ÇÈ
+static u32 GetObjResourceRegisterIndex( const RRG_WORK* work, OBJ_RESOURCE_ID resID ); // OBJÉäÉ\Å[ÉXÇÃìoò^ÉCÉìÉfÉbÉNÉXÇéÊìæÇ∑ÇÈ
+static GFL_CLUNIT* GetClactUnit( const RRG_WORK* work, CLUNIT_INDEX unitIdx ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇéÊìæÇ∑ÇÈ
+static GFL_CLWK* GetClactWork( const RRG_WORK* work, CLWK_INDEX wkIdx ); // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉNÇéÊìæÇ∑ÇÈ
 // 3D
 static void Setup3D(); // 3D ï`âÊÇÃÉZÉbÉgÉAÉbÉvÇçsÇ§
 // í êMÉAÉCÉRÉì
-static void SetupWirelessIcon( const RESEARCH_CHECK_WORK* work ); // í êMÉAÉCÉRÉìÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static void SetupWirelessIcon( const RRG_WORK* work ); // í êMÉAÉCÉRÉìÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
 // ÉfÅ[É^ÇÃèâä˙âª/ê∂ê¨/îjä¸
-static void InitSeqQueue( RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ èâä˙âª
-static void CreateSeqQueue( RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ çÏê¨
-static void DeleteSeqQueue( RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ îjä¸
-static void InitFont( RESEARCH_CHECK_WORK* work ); // ÉtÉHÉìÉg èâä˙âª
-static void CreateFont( RESEARCH_CHECK_WORK* work ); // ÉtÉHÉìÉg ê∂ê¨
-static void DeleteFont( RESEARCH_CHECK_WORK* work ); // ÉtÉHÉìÉg îjä¸
-static void InitMessages( RESEARCH_CHECK_WORK* work ); // ÉÅÉbÉZÅ[ÉW èâä˙âª
-static void CreateMessages( RESEARCH_CHECK_WORK* work ); // ÉÅÉbÉZÅ[ÉW ê∂ê¨
-static void DeleteMessages( RESEARCH_CHECK_WORK* work ); // ÉÅÉbÉZÅ[ÉW îjä¸
-static void InitWordset( RESEARCH_CHECK_WORK* work ); // ÉèÅ[ÉhÉZÉbÉg èâä˙âª
-static void CreateWordset( RESEARCH_CHECK_WORK* work ); // ÉèÅ[ÉhÉZÉbÉg ê∂ê¨
-static void DeleteWordset( RESEARCH_CHECK_WORK* work ); // ÉèÅ[ÉhÉZÉbÉg îjä¸
-static void InitBGFonts( RESEARCH_CHECK_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg èâä˙âª
-static void CreateBGFonts( RESEARCH_CHECK_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg ê∂ê¨
-static void DeleteBGFonts( RESEARCH_CHECK_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg îjä¸
-static void InitCircleGraphs( RESEARCH_CHECK_WORK* work ); // â~ÉOÉâÉt èâä˙âª
-static void CreateCircleGraph( RESEARCH_CHECK_WORK* work ); // â~ÉOÉâÉt ê∂ê¨
-static void DeleteCircleGraph( RESEARCH_CHECK_WORK* work ); // â~ÉOÉâÉt îjä¸
-static void InitResearchData( RESEARCH_CHECK_WORK* work ); // í≤ç∏ÉfÅ[É^ èâä˙âª
-static void SetupResearchData( RESEARCH_CHECK_WORK* work ); // í≤ç∏ÉfÅ[É^ éÊìæ
-static void SetupTouchArea( RESEARCH_CHECK_WORK* work ); // É^ÉbÉ`óÃàÊ èÄîı
-static void InitArrow( RESEARCH_CHECK_WORK* work ); // ñÓàÛ èâä˙âª
-static void CreateArrow( RESEARCH_CHECK_WORK* work ); // ñÓàÛ ê∂ê¨
-static void DeleteArrow( RESEARCH_CHECK_WORK* work ); // ñÓàÛ îjä¸
-static void InitPercentage( RESEARCH_CHECK_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg èâä˙âª
-static void CreatePercentage( RESEARCH_CHECK_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg ê∂ê¨
-static void DeletePercentage( RESEARCH_CHECK_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg îjä¸
+static void InitSeqQueue( RRG_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ èâä˙âª
+static void CreateSeqQueue( RRG_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ çÏê¨
+static void DeleteSeqQueue( RRG_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ îjä¸
+static void InitFont( RRG_WORK* work ); // ÉtÉHÉìÉg èâä˙âª
+static void CreateFont( RRG_WORK* work ); // ÉtÉHÉìÉg ê∂ê¨
+static void DeleteFont( RRG_WORK* work ); // ÉtÉHÉìÉg îjä¸
+static void InitMessages( RRG_WORK* work ); // ÉÅÉbÉZÅ[ÉW èâä˙âª
+static void CreateMessages( RRG_WORK* work ); // ÉÅÉbÉZÅ[ÉW ê∂ê¨
+static void DeleteMessages( RRG_WORK* work ); // ÉÅÉbÉZÅ[ÉW îjä¸
+static void InitWordset( RRG_WORK* work ); // ÉèÅ[ÉhÉZÉbÉg èâä˙âª
+static void CreateWordset( RRG_WORK* work ); // ÉèÅ[ÉhÉZÉbÉg ê∂ê¨
+static void DeleteWordset( RRG_WORK* work ); // ÉèÅ[ÉhÉZÉbÉg îjä¸
+static void InitBGFonts( RRG_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg èâä˙âª
+static void CreateBGFonts( RRG_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg ê∂ê¨
+static void DeleteBGFonts( RRG_WORK* work ); // ï∂éöóÒï`âÊÉIÉuÉWÉFÉNÉg îjä¸
+static void InitCircleGraphs( RRG_WORK* work ); // â~ÉOÉâÉt èâä˙âª
+static void CreateCircleGraph( RRG_WORK* work ); // â~ÉOÉâÉt ê∂ê¨
+static void DeleteCircleGraph( RRG_WORK* work ); // â~ÉOÉâÉt îjä¸
+static void InitResearchData( RRG_WORK* work ); // í≤ç∏ÉfÅ[É^ èâä˙âª
+static void SetupResearchData( RRG_WORK* work ); // í≤ç∏ÉfÅ[É^ éÊìæ
+static void SetupTouchArea( RRG_WORK* work ); // É^ÉbÉ`óÃàÊ èÄîı
+static void InitArrow( RRG_WORK* work ); // ñÓàÛ èâä˙âª
+static void CreateArrow( RRG_WORK* work ); // ñÓàÛ ê∂ê¨
+static void DeleteArrow( RRG_WORK* work ); // ñÓàÛ îjä¸
+static void InitPercentage( RRG_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg èâä˙âª
+static void CreatePercentage( RRG_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg ê∂ê¨
+static void DeletePercentage( RRG_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg îjä¸
 //-----------------------------------------------------------------------------------------
 // ÅûLAYER 0 ÉÜÅ[ÉeÉBÉäÉeÉB
 //-----------------------------------------------------------------------------------------
@@ -382,9 +384,9 @@ static u8 BindU8( int num ); // u8 Ç…é˚Ç‹ÇÈÇÊÇ§Ç…ä€ÇﬂÇÈ
 //-----------------------------------------------------------------------------------------
 // ÅûLAYER -1 ÉfÉoÉbÉO
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ÇÃíÜêgÇï\é¶Ç∑ÇÈ
-static void DebugPrint_researchData( const RESEARCH_CHECK_WORK* work ); // í≤ç∏ÉfÅ[É^Çï\é¶Ç∑ÇÈ
-static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work ); // ÉfÉoÉbÉOópí≤ç∏ÉfÅ[É^Çê›íËÇ∑ÇÈ
+static void DebugPrint_seqQueue( const RRG_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ÇÃíÜêgÇï\é¶Ç∑ÇÈ
+static void DebugPrint_researchData( const RRG_WORK* work ); // í≤ç∏ÉfÅ[É^Çï\é¶Ç∑ÇÈ
+static void Debug_SetupResearchData( RRG_WORK* work ); // ÉfÉoÉbÉOópí≤ç∏ÉfÅ[É^Çê›íËÇ∑ÇÈ
 
 
 //=========================================================================================
@@ -400,16 +402,16 @@ static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work ); // ÉfÉoÉbÉOópí
  * @return í≤ç∏ïÒçêämîFâÊñ ÉèÅ[ÉN
  */
 //-----------------------------------------------------------------------------------------
-RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
+RRG_WORK* RRG_CreateWork( RESEARCH_COMMON_WORK* commonWork )
 {
   int i;
-  RESEARCH_CHECK_WORK* work;
+  RRG_WORK* work;
   HEAPID heapID;
 
   heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
   // ê∂ê¨
-  work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_CHECK_WORK) );
+  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRG_WORK) );
 
   // èâä˙âª
   work->commonWork         = commonWork;
@@ -419,7 +421,6 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
   work->seq                = RESEARCH_CHECK_SEQ_SETUP;
   work->seqFinishFlag      = FALSE;
   work->seqCount           = 0;
-  work->result             = RESEARCH_CHECK_RESULT_NONE;
   work->waitFrame          = WAIT_FRAME_BUTTON;
   work->cursorPos          = MENU_ITEM_QUESTION;
   work->analyzeFlag        = FALSE;
@@ -431,6 +432,8 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
   work->VBlankTCBSystem    = GFUser_VIntr_GetTCBSYS();
   work->percentageNum      = 0;
   work->percentageDispNum  = 0;
+  work->finishResult       = RRG_RESULT_TO_TOP;
+  work->finishFlag         = FALSE;
 
   for( i=0; i<OBJ_RESOURCE_NUM; i++ ){ work->objResRegisterIdx[i] = 0; }
 
@@ -464,7 +467,7 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
  * @param heapID
  */
 //-----------------------------------------------------------------------------------------
-void DeleteResearchCheckWork( RESEARCH_CHECK_WORK* work )
+void RRG_DeleteWork( RRG_WORK* work )
 {
   if( work == NULL )
   {
@@ -485,7 +488,7 @@ void DeleteResearchCheckWork( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
+void RRG_Main( RRG_WORK* work )
 {
   // ÉVÅ[ÉPÉìÉXÇ≤Ç∆ÇÃèàóù
   switch( work->seq ) {
@@ -500,7 +503,7 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
   case RESEARCH_CHECK_SEQ_FADE_OUT:     MainSeq_FADE_OUT( work );     break;
   case RESEARCH_CHECK_SEQ_FRAME_WAIT:   MainSeq_FRAME_WAIT( work );   break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP:     MainSeq_CLEAN_UP( work );     break;
-  case RESEARCH_CHECK_SEQ_FINISH:       return work->result;
+  case RESEARCH_CHECK_SEQ_FINISH:       return;
   default: GF_ASSERT(0);
   }
 
@@ -517,11 +520,19 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
   DrawCircleGraphs( work ); // â~ÉOÉâÉtÇï`âÊ
   DrawAnswerMarker( work ); // âÒìöÉ}Å[ÉJÅ[Çï`âÊ
   G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
-
-  return RESEARCH_CHECK_RESULT_CONTINUE;
 }
 
 
+// èIóπîªíË
+BOOL RRG_IsFinished( const RRG_WORK* work )
+{
+  return work->finishFlag;
+}
+// èIóπåãâ ÇÃéÊìæ
+RRG_RESULT RRG_GetResult( const RRG_WORK* work )
+{
+  return work->finishResult;
+}
 
 
 //=========================================================================================
@@ -535,7 +546,7 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
+static void MainSeq_SETUP( RRG_WORK* work )
 {
   CreateFont( work );
   CreateMessages( work );
@@ -600,7 +611,7 @@ static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
+static void MainSeq_STANDBY( RRG_WORK* work )
 {
   int key;
   int trg;
@@ -758,7 +769,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_KEY_WAIT( RRG_WORK* work )
 {
   int key;
   int trg;
@@ -934,7 +945,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
+static void MainSeq_ANALYZE( RRG_WORK* work )
 { 
   // SE Ç™í‚é~ÇµÇƒÇ¢ÇÈ
   if( PMSND_CheckPlaySE() == FALSE ) { 
@@ -956,7 +967,7 @@ static void MainSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
+static void MainSeq_PERCENTAGE( RRG_WORK* work )
 { 
   // êVÇΩÇ»ÅìÇï\é¶
   if( work->seqCount % 10 == 0 ) {
@@ -976,7 +987,7 @@ static void MainSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FLASH_OUT( RRG_WORK* work )
 {
   // ÉpÉåÉbÉgÉtÉFÅ[ÉhèIóπ
   if( IsPaletteFadeEnd( work ) ) {
@@ -991,7 +1002,7 @@ static void MainSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FLASH_IN( RRG_WORK* work )
 {
   // ÉpÉåÉbÉgÉtÉFÅ[ÉhèIóπ
   if( IsPaletteFadeEnd( work ) ) {
@@ -1006,7 +1017,7 @@ static void MainSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_UPDATE( RESEARCH_CHECK_WORK* work )
+static void MainSeq_UPDATE( RRG_WORK* work )
 {
   // SE Ç™í‚é~ÇµÇƒÇ¢ÇÈ
   if( PMSND_CheckPlaySE() == FALSE ) { 
@@ -1027,7 +1038,7 @@ static void MainSeq_UPDATE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FADE_OUT( RRG_WORK* work )
 {
   // ÉtÉFÅ[ÉhÇ™èIóπ
   if( GFL_FADE_CheckFade() == FALSE ) {
@@ -1042,7 +1053,7 @@ static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
+static void MainSeq_FRAME_WAIT( RRG_WORK* work )
 {
   // ë“Çøéûä‘Ç™åoâﬂ
   if( GetWaitFrame(work) < work->seqCount ) {
@@ -1060,7 +1071,7 @@ static void MainSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
  *         ÉVÅ[ÉPÉìÉXÇ™åpë±Ç∑ÇÈèÍçá åªç›ÇÃÉVÅ[ÉPÉìÉXî‘çÜ
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
+static void MainSeq_CLEAN_UP( RRG_WORK* work )
 { 
   // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉN
   CleanUpPaletteAnime( work );
@@ -1103,7 +1114,7 @@ static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
   DeleteFont( work );
 
   // âÊñ èIóπåãâ ÇåàíË
-  SetResult( work, RESEARCH_CHECK_RESULT_TO_MENU );  
+  SetResult( work, RRG_RESULT_TO_TOP );  
 
   // ÉVÅ[ÉPÉìÉXèIóπ
   SetNextSeq( work, RESEARCH_CHECK_SEQ_FINISH );
@@ -1117,7 +1128,7 @@ static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishCurrentSeq( RESEARCH_CHECK_WORK* work )
+static void FinishCurrentSeq( RRG_WORK* work )
 {
   // Ç∑Ç≈Ç…èIóπçœÇ›
   GF_ASSERT( work->seqFinishFlag == FALSE );
@@ -1137,13 +1148,10 @@ static void FinishCurrentSeq( RESEARCH_CHECK_WORK* work )
  * @param result åãâ 
  */
 //-----------------------------------------------------------------------------------------
-static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result )
+static void SetResult( RRG_WORK* work, RRG_RESULT result )
 {
-  // ëΩèdê›íË
-  GF_ASSERT( work->result == RESEARCH_CHECK_RESULT_NONE );
-
   // ê›íË
-  work->result = result;
+  work->finishResult = result;
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set result (%d)\n", result );
@@ -1157,7 +1165,7 @@ static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result )
  * @param frame ê›íËÇ∑ÇÈë“ÇøÉtÉåÅ[ÉÄêî
  */
 //-----------------------------------------------------------------------------------------
-static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame )
+static void SetWaitFrame( RRG_WORK* work, u32 frame )
 {
   work->waitFrame = frame;
 }
@@ -1171,7 +1179,7 @@ static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame )
  * @return ë“ÇøÉtÉåÅ[ÉÄêî
  */
 //-----------------------------------------------------------------------------------------
-static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work )
+static u32 GetWaitFrame( const RRG_WORK* work )
 {
   return work->waitFrame;
 }
@@ -1185,7 +1193,7 @@ static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work )
  * @return ÉZÉbÉgÉAÉbÉvå„ÇÃç≈èâÇÃÉVÅ[ÉPÉìÉX
  */
 //-----------------------------------------------------------------------------------------
-RESEARCH_CHECK_SEQ GetFirstSeq( const RESEARCH_CHECK_WORK* work )
+RESEARCH_CHECK_SEQ GetFirstSeq( const RRG_WORK* work )
 {
   RESEARCH_COMMON_WORK* commonWork;
   RADAR_SEQ prev_seq;
@@ -1211,7 +1219,7 @@ RESEARCH_CHECK_SEQ GetFirstSeq( const RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CountUpSeqCount( RESEARCH_CHECK_WORK* work )
+static void CountUpSeqCount( RRG_WORK* work )
 {
   u32 maxCount;
 
@@ -1250,7 +1258,7 @@ static void CountUpSeqCount( RESEARCH_CHECK_WORK* work )
  * @param nextSeq ìoò^Ç∑ÇÈÉVÅ[ÉPÉìÉX
  */
 //-----------------------------------------------------------------------------------------
-static void SetNextSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
+static void SetNextSeq( RRG_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 {
   // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[Ç…í«â¡Ç∑ÇÈ
   QUEUE_EnQueue( work->seqQueue, nextSeq );
@@ -1267,7 +1275,7 @@ static void SetNextSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SwitchSeq( RESEARCH_CHECK_WORK* work )
+static void SwitchSeq( RRG_WORK* work )
 {
   RESEARCH_CHECK_SEQ nextSeq;
 
@@ -1290,7 +1298,7 @@ static void SwitchSeq( RESEARCH_CHECK_WORK* work )
  * @parma nextSeq ê›íËÇ∑ÇÈÉVÅ[ÉPÉìÉX
  */
 //-----------------------------------------------------------------------------------------
-static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
+static void SetSeq( RRG_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
 { 
   // ÉVÅ[ÉPÉìÉXÇÃèIóπèàóù
   switch( work->seq ) {
@@ -1358,7 +1366,7 @@ static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SETUP( RESEARCH_CHECK_WORK* work )
+static void InitSeq_SETUP( RRG_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq SETUP\n" );
@@ -1371,7 +1379,7 @@ static void InitSeq_SETUP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_STANDBY( RESEARCH_CHECK_WORK* work )
+static void InitSeq_STANDBY( RRG_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq STANDBY\n" );
@@ -1384,7 +1392,7 @@ static void InitSeq_STANDBY( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_KEY_WAIT( RRG_WORK* work )
 {
   SetMenuCursorOn( work );     // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
   UpdateAnalyzeButton( work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
@@ -1400,7 +1408,7 @@ static void InitSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
+static void InitSeq_ANALYZE( RRG_WORK* work )
 {
   //ÅuÅcÇ©Ç¢ÇπÇ´ÇøÇ„Ç§ÅcÅvÇï\é¶
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, TRUE );
@@ -1427,7 +1435,7 @@ static void InitSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
+static void InitSeq_PERCENTAGE( RRG_WORK* work )
 {
   SetupPercentages( work ); // Åìï\é¶ÉIÉuÉWÉFÉNÉgÇÉZÉbÉgÉAÉbÉv
 
@@ -1442,7 +1450,7 @@ static void InitSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FLASH_OUT( RRG_WORK* work )
 {
   StopPaletteAnime( work, PALETTE_ANIME_HOLD ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÃà√ì]ÉAÉjÉÅÇí‚é~
   StartPaletteFadeFlashOut( work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhäJén
@@ -1458,7 +1466,7 @@ static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FLASH_IN( RRG_WORK* work )
 {
   // ÉpÉåÉbÉgÉtÉFÅ[ÉhäJén
   StartPaletteFadeFlashIn( work );
@@ -1474,7 +1482,7 @@ static void InitSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work )
+static void InitSeq_UPDATE( RRG_WORK* work )
 {
   GF_ASSERT( work->updateFlag == FALSE ); // ïsê≥åƒÇ—èoÇµ
 
@@ -1516,7 +1524,7 @@ static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FADE_OUT( RRG_WORK* work )
 { 
   // ÉtÉFÅ[ÉhÉAÉEÉgäJén
   GFL_FADE_SetMasterBrightReq(
@@ -1533,7 +1541,7 @@ static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
+static void InitSeq_FRAME_WAIT( RRG_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq FRAME_WAIT\n" );
@@ -1546,7 +1554,7 @@ static void InitSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
+static void InitSeq_CLEAN_UP( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq CLEAN_UP\n" );
@@ -1559,7 +1567,7 @@ static void InitSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_SETUP( RRG_WORK* work )
 {
   UpdateBGFont_TopicTitle( work );      // í≤ç∏çÄñ⁄ñºÇçXêVÇ∑ÇÈ
   UpdateBGFont_QuestionCaption( work ); // éøñ‚ÇÃï‚ë´ï∂ÇçXêVÇ∑ÇÈ
@@ -1588,7 +1596,7 @@ static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_STANDBY( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_STANDBY( RRG_WORK* work )
 {
   UpdateBGFont_DataReceiving( work ); //ÅuÉfÅ[É^ÇµÇ„Ç∆Ç≠ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
   UpdateBGFont_Answer( work );        //ÅuâÒìöÅvï∂éöóÒÇÃï\é¶ÇçXêVÇ∑ÇÈ
@@ -1604,7 +1612,7 @@ static void FinishSeq_STANDBY( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_KEY_WAIT( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq KEY_WAIT\n" );
@@ -1617,7 +1625,7 @@ static void FinishSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_ANALYZE( RRG_WORK* work )
 {
   // âêÕçœÇ›ÉtÉâÉOÇóßÇƒÇÈ
   work->analyzeFlag = TRUE;
@@ -1655,7 +1663,7 @@ static void FinishSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_PERCENTAGE( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq PERCENTAGE\n" );
@@ -1668,7 +1676,7 @@ static void FinishSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FLASH_OUT( RRG_WORK* work )
 { 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FLASH_OUT\n" );
@@ -1681,7 +1689,7 @@ static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FLASH_IN( RRG_WORK* work )
 {
   UpdateAnalyzeButton( work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
 
@@ -1696,7 +1704,7 @@ static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_UPDATE( RRG_WORK* work )
 {
   GF_ASSERT( work->updateFlag == TRUE ); // ïsê≥åƒÇ—èoÇµ
 
@@ -1732,7 +1740,7 @@ static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FADE_OUT( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FADE_OUT\n" );
@@ -1745,7 +1753,7 @@ static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_FRAME_WAIT( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FRAME_WAIT\n" );
@@ -1758,8 +1766,10 @@ static void FinishSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
+static void FinishSeq_CLEAN_UP( RRG_WORK* work )
 {
+  work->finishFlag = TRUE;
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq CLEAN_UP\n" );
 }
@@ -1771,7 +1781,7 @@ static void FinishSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work )
+static void UpdateCircleGraphs( RRG_WORK* work )
 {
   int typeIdx;
 
@@ -1789,7 +1799,7 @@ static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work )
+static void DrawCircleGraphs( const RRG_WORK* work )
 {
   int typeIdx;
 
@@ -1807,7 +1817,7 @@ static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work )
+static void DrawAnswerMarker( const RRG_WORK* work )
 {
   int colorR, colorG, colorB;
   GXRgb color;
@@ -1851,7 +1861,7 @@ static void DrawAnswerMarker( const RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void VBlankFunc( GFL_TCB* tcb, void* wk )
 {
-  RESEARCH_CHECK_WORK* work = (RESEARCH_CHECK_WORK*)wk;
+  RRG_WORK* work = (RRG_WORK*)wk;
 
   GFL_BG_VBlankFunc(); // BG
   GFL_CLACT_SYS_VBlankFunc(); // OBJ
@@ -1871,7 +1881,7 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
+static void MoveMenuCursorUp( RRG_WORK* work )
 { 
   BOOL loop = TRUE;
 
@@ -1933,7 +1943,7 @@ static void MoveMenuCursorUp( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
+static void MoveMenuCursorDown( RRG_WORK* work )
 {
   BOOL loop = TRUE;
 
@@ -1996,7 +2006,7 @@ static void MoveMenuCursorDown( RESEARCH_CHECK_WORK* work )
  * @param menuItem à⁄ìÆêÊÇÃÉÅÉjÉÖÅ[çÄñ⁄
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
+static void MoveMenuCursorDirect( RRG_WORK* work, MENU_ITEM menuItem )
 {
   MoveMenuCursorSilent( work, menuItem );
 
@@ -2015,7 +2025,7 @@ static void MoveMenuCursorDirect( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem 
  * @param menuItem à⁄ìÆêÊÇÃÉÅÉjÉÖÅ[çÄñ⁄
  */
 //-----------------------------------------------------------------------------------------
-static void MoveMenuCursorSilent( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
+static void MoveMenuCursorSilent( RRG_WORK* work, MENU_ITEM menuItem )
 {
   // à⁄ìÆêÊÇ™ÅuâÒìöÅvÅué©ï™ÇÃâÒìöÅvÇÃèÍçá
   if( (menuItem == MENU_ITEM_ANSWER) || (menuItem == MENU_ITEM_MY_ANSWER) )
@@ -2049,7 +2059,7 @@ static void MoveMenuCursorSilent( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem 
  * @param work
  */
 //------------------------------------------------------------------------------------------
-static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
+static void ChangeQuestionToNext( RRG_WORK* work )
 {
   // ï\é¶íÜÇÃâ~ÉOÉâÉtÇè¡ãéÇ∑ÇÈ
   if( work->analyzeFlag && GetCountOfQuestion(work) != 0 ) {
@@ -2085,7 +2095,7 @@ static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work )
+static void ChangeQuestionToPrev( RRG_WORK* work )
 {
   // ï\é¶íÜÇÃâ~ÉOÉâÉtÇè¡ãéÇ∑ÇÈ
   if( work->analyzeFlag && GetCountOfQuestion(work) != 0 ) {
@@ -2121,7 +2131,7 @@ static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work )
+static void ChangeAnswerToNext( RRG_WORK* work )
 {
   ShiftAnswerIdx( work, 1 ); // ï\é¶Ç∑ÇÈâÒìöÉCÉìÉfÉbÉNÉXÇïœçX
 
@@ -2140,7 +2150,7 @@ static void ChangeAnswerToNext( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work )
+static void ChangeAnswerToPrev( RRG_WORK* work )
 {
   ShiftAnswerIdx( work, -1 ); // ï\é¶Ç∑ÇÈâÒìöÉCÉìÉfÉbÉNÉXÇïœçX
 
@@ -2159,7 +2169,7 @@ static void ChangeAnswerToPrev( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ChangeAnswerToTop( RESEARCH_CHECK_WORK* work )
+static void ChangeAnswerToTop( RRG_WORK* work )
 {
   ResetAnswerIdx( work ); // ï\é¶Ç∑ÇÈâÒìöÉCÉìÉfÉbÉNÉXÇÉäÉZÉbÉg
 
@@ -2175,7 +2185,7 @@ static void ChangeAnswerToTop( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work )
+static void SwitchDataDisplayType( RRG_WORK* work )
 {
   CIRCLE_GRAPH* graph;
   DATA_DISP_TYPE nextType;
@@ -2237,7 +2247,7 @@ static void SwitchDataDisplayType( RESEARCH_CHECK_WORK* work )
  * @param stride à⁄ìÆó 
  */
 //-----------------------------------------------------------------------------------------
-static void ShiftMenuCursorPos( RESEARCH_CHECK_WORK* work, int stride )
+static void ShiftMenuCursorPos( RRG_WORK* work, int stride )
 {
   int nowPos;
   int nextPos;
@@ -2259,7 +2269,7 @@ static void ShiftMenuCursorPos( RESEARCH_CHECK_WORK* work, int stride )
  * @param menuItem ïœçXå„ÇÃÉJÅ[É\Éãà íu
  */
 //-----------------------------------------------------------------------------------------
-static void SetMenuCursorPos( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
+static void SetMenuCursorPos( RRG_WORK* work, MENU_ITEM menuItem )
 {
   // ÉJÅ[É\Éãà íuÇçXêV
   work->cursorPos = menuItem;
@@ -2276,7 +2286,7 @@ static void SetMenuCursorPos( RESEARCH_CHECK_WORK* work, MENU_ITEM menuItem )
  * @param stride à⁄ìÆó 
  */
 //-----------------------------------------------------------------------------------------
-static void ShiftQuestionIdx( RESEARCH_CHECK_WORK* work, int stride )
+static void ShiftQuestionIdx( RRG_WORK* work, int stride )
 {
   int nowIdx;
   int nextIdx;
@@ -2298,7 +2308,7 @@ static void ShiftQuestionIdx( RESEARCH_CHECK_WORK* work, int stride )
  * @param stride ÉâÉìÉNïœçXó 
  */
 //-----------------------------------------------------------------------------------------
-static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride )
+static void ShiftAnswerIdx( RRG_WORK* work, int stride )
 {
   int questionID;
   int answerID, nextAnswerID;
@@ -2335,7 +2345,7 @@ static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work )
+static void ResetAnswerIdx( RRG_WORK* work )
 {
   work->answerIdx = 0;
 
@@ -2351,7 +2361,7 @@ static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work )
  * @param dispType ê›íËÇ∑ÇÈï\é¶É^ÉCÉv
  */
 //-----------------------------------------------------------------------------------------
-static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType )
+static void SetDataDisplayType( RRG_WORK* work, DATA_DISP_TYPE dispType )
 {
   work->dispType = dispType;
 
@@ -2373,7 +2383,7 @@ static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispTy
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work )
+static void UpdateAnalyzeButton( RRG_WORK* work )
 {
   // É{É^ÉìÇ™âüÇπÇ»Ç¢
   if( (work->analyzeFlag == TRUE) || // âêÕçœÇ›
@@ -2400,7 +2410,7 @@ static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work )
+static void BlinkAnalyzeButton( RRG_WORK* work )
 {
   // ìKópÇ∑ÇÈÉpÉåÉbÉgî‘çÜÇïœçX
   BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 0 );
@@ -2417,7 +2427,7 @@ static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetAnalyzeButtonCursorOn( RESEARCH_CHECK_WORK* work )
+static void SetAnalyzeButtonCursorOn( RRG_WORK* work )
 {
   // ìKópÇ∑ÇÈÉpÉåÉbÉgî‘çÜÇïœçX
   BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 0 );
@@ -2433,7 +2443,7 @@ static void SetAnalyzeButtonCursorOn( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetAnalyzeButtonCursorOff( RESEARCH_CHECK_WORK* work )
+static void SetAnalyzeButtonCursorOff( RRG_WORK* work )
 {
   // ìKópÇ∑ÇÈÉpÉåÉbÉgî‘çÜÇïœçX
   BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 1 );
@@ -2449,7 +2459,7 @@ static void SetAnalyzeButtonCursorOff( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetAnalyzeButtonCursorSet( RESEARCH_CHECK_WORK* work )
+static void SetAnalyzeButtonCursorSet( RRG_WORK* work )
 {
   // ìKópÇ∑ÇÈÉpÉåÉbÉgî‘çÜÇïœçX
   BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 0 );
@@ -2465,7 +2475,7 @@ static void SetAnalyzeButtonCursorSet( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetAnalyzeButtonActive( RESEARCH_CHECK_WORK* work )
+static void SetAnalyzeButtonActive( RRG_WORK* work )
 {
   // ìKópÇ∑ÇÈÉpÉåÉbÉgî‘çÜÇïœçX
   BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 1 );
@@ -2484,7 +2494,7 @@ static void SetAnalyzeButtonActive( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetAnalyzeButtonNotActive( RESEARCH_CHECK_WORK* work )
+static void SetAnalyzeButtonNotActive( RRG_WORK* work )
 {
   // ìKópÇ∑ÇÈÉpÉåÉbÉgî‘çÜÇïœçX
   BmpOam_ActorSetPaletteOffset( work->BmpOamActor[ BMPOAM_ACTOR_ANALYZE_BUTTON ], 1 );
@@ -2500,7 +2510,7 @@ static void SetAnalyzeButtonNotActive( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void BlinkReturnButton( RESEARCH_CHECK_WORK* work )
+static void BlinkReturnButton( RRG_WORK* work )
 {
   RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN );
 }
@@ -2512,7 +2522,7 @@ static void BlinkReturnButton( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work )
+static void SetMenuCursorOn( RRG_WORK* work )
 {
   // äYìñÇ∑ÇÈÉXÉNÉäÅ[ÉìÇçXêV
   switch( work->cursorPos ) {
@@ -2564,7 +2574,7 @@ static void SetMenuCursorOn( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work )
+static void SetMenuCursorOff( RRG_WORK* work )
 {
   // äYìñÇ∑ÇÈÉXÉNÉäÅ[ÉìÇçXêV
   switch( work->cursorPos )
@@ -2616,7 +2626,7 @@ static void SetMenuCursorOff( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateArrow( RESEARCH_CHECK_WORK* work )
+static void UpdateArrow( RRG_WORK* work )
 {
   // è¡ãé
   ARROW_Vanish( work->arrow );
@@ -2649,7 +2659,7 @@ static void UpdateArrow( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupPercentages( RESEARCH_CHECK_WORK* work )
+static void SetupPercentages( RRG_WORK* work )
 {
   int rank;
   int answerNum;
@@ -2699,7 +2709,7 @@ static void SetupPercentages( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void VanishAllPercentage( RESEARCH_CHECK_WORK* work )
+static void VanishAllPercentage( RRG_WORK* work )
 {
   int idx;
 
@@ -2722,7 +2732,7 @@ static void VanishAllPercentage( RESEARCH_CHECK_WORK* work )
  * @param index ï\é¶Ç∑ÇÈÅìÉIÉuÉWÉFÉNÉgÇÃÉCÉìÉfÉbÉNÉX
  */
 //-----------------------------------------------------------------------------------------
-static void DispPercentage( RESEARCH_CHECK_WORK* work, u8 index )
+static void DispPercentage( RRG_WORK* work, u8 index )
 {
   PERCENTAGE_SetDrawEnable( work->percentage[ index ], TRUE );
 
@@ -2737,7 +2747,7 @@ static void DispPercentage( RESEARCH_CHECK_WORK* work, u8 index )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DispAllPercentage( RESEARCH_CHECK_WORK* work )
+static void DispAllPercentage( RRG_WORK* work )
 {
   int idx;
   int num;
@@ -2760,7 +2770,7 @@ static void DispAllPercentage( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateTouchArea( RESEARCH_CHECK_WORK* work )
+static void UpdateTouchArea( RRG_WORK* work )
 {
   const MENU_ITEM_DRAW_PARAM* menu;
   GFL_UI_TP_HITTBL* area;
@@ -2792,7 +2802,7 @@ static void UpdateTouchArea( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
+static void UpdateMainBG_WINDOW( RRG_WORK* work )
 {
   ARCHANDLE* handle;
   ARCDATID datID;
@@ -2839,7 +2849,7 @@ static void UpdateMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_TopicTitle( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_TopicTitle( RRG_WORK* work )
 {
   u32 topicID;
   u32 strID;
@@ -2862,7 +2872,7 @@ static void UpdateBGFont_TopicTitle( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_QuestionCaption( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_QuestionCaption( RRG_WORK* work )
 {
   u32 questionID;
   u32 strID;
@@ -2885,7 +2895,7 @@ static void UpdateBGFont_QuestionCaption( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_Question( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_Question( RRG_WORK* work )
 {
   u32 questionID;
   u32 strID;
@@ -2911,7 +2921,7 @@ static void UpdateBGFont_Question( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_Answer( RRG_WORK* work )
 {
   u16 answerID;
   u8 answerRank;
@@ -2975,7 +2985,7 @@ static void UpdateBGFont_Answer( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_MyAnswer( RRG_WORK* work )
 {
   u16 answerID;
   STRBUF* strbuf_plain;  // ìWäJëOÇÃï∂éöóÒ
@@ -3019,7 +3029,7 @@ static void UpdateBGFont_MyAnswer( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_Count( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_Count( RRG_WORK* work )
 {
   u32 strID; 
   STRBUF* strbuf_plain;  // ìWäJëOÇÃï∂éöóÒ
@@ -3073,7 +3083,7 @@ static void UpdateBGFont_Count( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_NoData( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_NoData( RRG_WORK* work )
 {
   if( GetCountOfQuestion(work) == 0 ) { 
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_NO_DATA ], TRUE ); // ï\é¶
@@ -3093,7 +3103,7 @@ static void UpdateBGFont_NoData( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateBGFont_DataReceiving( RESEARCH_CHECK_WORK* work )
+static void UpdateBGFont_DataReceiving( RRG_WORK* work )
 {
   if( work->seq == RESEARCH_CHECK_SEQ_UPDATE ) {
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_DATA_RECEIVING ], TRUE ); // ï\é¶  
@@ -3113,7 +3123,7 @@ static void UpdateBGFont_DataReceiving( RESEARCH_CHECK_WORK* work )
  * @param work 
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateControlCursor( RESEARCH_CHECK_WORK* work )
+static void UpdateControlCursor( RRG_WORK* work )
 {
   const MENU_ITEM_DRAW_PARAM* menuParam;
   GFL_CLACTPOS pos;
@@ -3165,7 +3175,7 @@ static void UpdateControlCursor( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateMyAnswerIconOnButton( RESEARCH_CHECK_WORK* work )
+static void UpdateMyAnswerIconOnButton( RRG_WORK* work )
 {
   // ñ¢âêÕÇ»ÇÁï\é¶ÇµÇ»Ç¢
   if( work->analyzeFlag == FALSE ) {
@@ -3187,7 +3197,7 @@ static void UpdateMyAnswerIconOnButton( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-void UpdateMyAnswerIconOnGraph( RESEARCH_CHECK_WORK* work )
+void UpdateMyAnswerIconOnGraph( RRG_WORK* work )
 {
   int x, y;
   GFL_CLACTPOS pos;
@@ -3249,7 +3259,7 @@ void UpdateMyAnswerIconOnGraph( RESEARCH_CHECK_WORK* work )
  * @param enable   ï\é¶Ç∑ÇÈÇ©Ç«Ç§Ç©
  */
 //-----------------------------------------------------------------------------------------
-static void BmpOamSetDrawEnable( RESEARCH_CHECK_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BOOL enable )
+static void BmpOamSetDrawEnable( RRG_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BOOL enable )
 {
   // ÉCÉìÉfÉbÉNÉXÉGÉâÅ[
   GF_ASSERT( actorIdx < BMPOAM_ACTOR_NUM );
@@ -3269,7 +3279,7 @@ static void BmpOamSetDrawEnable( RESEARCH_CHECK_WORK* work, BMPOAM_ACTOR_INDEX a
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeqQueue( RESEARCH_CHECK_WORK* work )
+static void InitSeqQueue( RRG_WORK* work )
 {
   // èâä˙âª
   work->seqQueue = NULL;
@@ -3285,7 +3295,7 @@ static void InitSeqQueue( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateSeqQueue( RESEARCH_CHECK_WORK* work )
+static void CreateSeqQueue( RRG_WORK* work )
 {
   GF_ASSERT( work->seqQueue == NULL );
 
@@ -3303,7 +3313,7 @@ static void CreateSeqQueue( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteSeqQueue( RESEARCH_CHECK_WORK* work )
+static void DeleteSeqQueue( RRG_WORK* work )
 {
   GF_ASSERT( work->seqQueue );
 
@@ -3321,7 +3331,7 @@ static void DeleteSeqQueue( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitFont( RESEARCH_CHECK_WORK* work )
+static void InitFont( RRG_WORK* work )
 {
   // èâä˙âª
   work->font = NULL;
@@ -3337,7 +3347,7 @@ static void InitFont( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateFont( RESEARCH_CHECK_WORK* work )
+static void CreateFont( RRG_WORK* work )
 {
   GF_ASSERT( work->font == NULL );
 
@@ -3356,7 +3366,7 @@ static void CreateFont( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteFont( RESEARCH_CHECK_WORK* work )
+static void DeleteFont( RRG_WORK* work )
 {
   GF_ASSERT( work->font );
 
@@ -3375,7 +3385,7 @@ static void DeleteFont( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitMessages( RESEARCH_CHECK_WORK* work )
+static void InitMessages( RRG_WORK* work )
 {
   int msgIdx;
 
@@ -3396,7 +3406,7 @@ static void InitMessages( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateMessages( RESEARCH_CHECK_WORK* work )
+static void CreateMessages( RRG_WORK* work )
 {
   int msgIdx;
 
@@ -3423,7 +3433,7 @@ static void CreateMessages( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteMessages( RESEARCH_CHECK_WORK* work )
+static void DeleteMessages( RRG_WORK* work )
 {
   int msgIdx;
 
@@ -3446,7 +3456,7 @@ static void DeleteMessages( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitWordset( RESEARCH_CHECK_WORK* work )
+static void InitWordset( RRG_WORK* work )
 {
   // èâä˙âª
   work->wordset = NULL;
@@ -3462,7 +3472,7 @@ static void InitWordset( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateWordset( RESEARCH_CHECK_WORK* work )
+static void CreateWordset( RRG_WORK* work )
 {
   // ëΩèdê∂ê¨
   GF_ASSERT( work->wordset == NULL );
@@ -3481,7 +3491,7 @@ static void CreateWordset( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteWordset( RESEARCH_CHECK_WORK* work )
+static void DeleteWordset( RRG_WORK* work )
 {
   // çÌèú
   WORDSET_Delete( work->wordset );
@@ -3499,7 +3509,7 @@ static void DeleteWordset( RESEARCH_CHECK_WORK* work )
  * @return åªç›í≤ç∏íÜÇÃí≤ç∏çÄñ⁄ID
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
+static u8 GetInvestigatingTopicID( const RRG_WORK* work )
 {
   int qIdx;
   SAVE_CONTROL_WORK* save;
@@ -3539,7 +3549,7 @@ static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
  *         ñ≥âÒìöÇÃèÍçá, ANSWER_ID_000
  */
 //-----------------------------------------------------------------------------------------
-u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work )
+u8 GetMyAnswerID( const RRG_WORK* work )
 {
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
@@ -3589,7 +3599,7 @@ u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work )
  * @return éøñ‚ÅwÉvÉåÉCéûä‘ÇÕÅHÅxÇ…ëŒÇ∑ÇÈé©ï™ÇÃâÒìöID ( ANSWER_ID_xxxx )
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetMyAnswerID_PlayTime( const RESEARCH_CHECK_WORK* work )
+static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work )
 {
   PLAYTIME* time;
   u16 hour;
@@ -3617,7 +3627,7 @@ static u8 GetMyAnswerID_PlayTime( const RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBG( RESEARCH_CHECK_WORK* work )
+static void SetupBG( RRG_WORK* work )
 { 
   // BG ÉÇÅ[Éh
   GFL_BG_SetBGMode( &BGSysHeader3D );
@@ -3659,7 +3669,7 @@ static void SetupBG( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpBG( RESEARCH_CHECK_WORK* work )
+static void CleanUpBG( RRG_WORK* work )
 {
   GFL_BMPWIN_Exit();
 
@@ -3685,7 +3695,7 @@ static void CleanUpBG( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupSubBG_WINDOW( RESEARCH_CHECK_WORK* work )
+static void SetupSubBG_WINDOW( RRG_WORK* work )
 {
   // ÉfÅ[É^ì«Ç›çûÇ›
   {
@@ -3722,7 +3732,7 @@ static void SetupSubBG_WINDOW( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_WINDOW( RESEARCH_CHECK_WORK* work )
+static void CleanUpSubBG_WINDOW( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-WINDOW\n" );
@@ -3740,7 +3750,7 @@ static void CleanUpSubBG_WINDOW( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupSubBG_FONT( RESEARCH_CHECK_WORK* work )
+static void SetupSubBG_FONT( RRG_WORK* work )
 {
   // NULLÉLÉÉÉâämï€
   GFL_BG_FillCharacter( SUB_BG_FONT, 0, 1, 0 );
@@ -3759,7 +3769,7 @@ static void SetupSubBG_FONT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_FONT( RESEARCH_CHECK_WORK* work )
+static void CleanUpSubBG_FONT( RRG_WORK* work )
 { 
   // NULLÉLÉÉÉââï˙
   GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
@@ -3780,7 +3790,7 @@ static void CleanUpSubBG_FONT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
+static void SetupMainBG_WINDOW( RRG_WORK* work )
 {
   // ÉfÅ[É^ì«Ç›çûÇ›
   {
@@ -3817,7 +3827,7 @@ static void SetupMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
+static void CleanUpMainBG_WINDOW( RRG_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-WINDOW\n" );
@@ -3835,7 +3845,7 @@ static void CleanUpMainBG_WINDOW( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupMainBG_FONT( RESEARCH_CHECK_WORK* work )
+static void SetupMainBG_FONT( RRG_WORK* work )
 { 
   // NULLÉLÉÉÉâämï€
   GFL_BG_FillCharacter( MAIN_BG_FONT, 0, 1, 0 );
@@ -3854,7 +3864,7 @@ static void SetupMainBG_FONT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_FONT( RESEARCH_CHECK_WORK* work )
+static void CleanUpMainBG_FONT( RRG_WORK* work )
 { 
   // NULLÉLÉÉÉââï˙
   GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
@@ -3875,7 +3885,7 @@ static void CleanUpMainBG_FONT( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitBGFonts( RESEARCH_CHECK_WORK* work )
+static void InitBGFonts( RRG_WORK* work )
 {
   int idx;
 
@@ -3892,7 +3902,7 @@ static void InitBGFonts( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateBGFonts( RESEARCH_CHECK_WORK* work )
+static void CreateBGFonts( RRG_WORK* work )
 {
   int i;
 
@@ -3939,7 +3949,7 @@ static void CreateBGFonts( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteBGFonts( RESEARCH_CHECK_WORK* work )
+static void DeleteBGFonts( RRG_WORK* work )
 {
   int i;
   
@@ -3962,7 +3972,7 @@ static void DeleteBGFonts( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitCircleGraphs( RESEARCH_CHECK_WORK* work )
+static void InitCircleGraphs( RRG_WORK* work )
 {
   int idx;
 
@@ -3983,7 +3993,7 @@ static void InitCircleGraphs( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateCircleGraph( RESEARCH_CHECK_WORK* work )
+static void CreateCircleGraph( RRG_WORK* work )
 {
   int idx;
 
@@ -4008,7 +4018,7 @@ static void CreateCircleGraph( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteCircleGraph( RESEARCH_CHECK_WORK* work )
+static void DeleteCircleGraph( RRG_WORK* work )
 {
   int idx;
 
@@ -4033,7 +4043,7 @@ static void DeleteCircleGraph( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitResearchData( RESEARCH_CHECK_WORK* work )
+static void InitResearchData( RRG_WORK* work )
 {
   // 0ÉNÉäÉA
   GFL_STD_MemClear( &( work->researchData ), sizeof(RESEARCH_DATA) );
@@ -4049,7 +4059,7 @@ static void InitResearchData( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupResearchData( RESEARCH_CHECK_WORK* work )
+static void SetupResearchData( RRG_WORK* work )
 {
   int qIdx, aIdx;
   u8 topicID;
@@ -4134,7 +4144,7 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupTouchArea( RESEARCH_CHECK_WORK* work )
+static void SetupTouchArea( RRG_WORK* work )
 {
   int idx;
 
@@ -4158,7 +4168,7 @@ static void SetupTouchArea( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitArrow( RESEARCH_CHECK_WORK* work )
+static void InitArrow( RRG_WORK* work )
 {
   work->arrow = NULL;
 
@@ -4173,7 +4183,7 @@ static void InitArrow( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateArrow( RESEARCH_CHECK_WORK* work )
+static void CreateArrow( RRG_WORK* work )
 {
   ARROW_DISP_PARAM dispParam;
 
@@ -4202,7 +4212,7 @@ static void CreateArrow( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteArrow( RESEARCH_CHECK_WORK* work )
+static void DeleteArrow( RRG_WORK* work )
 {
   GF_ASSERT( work->arrow );
 
@@ -4220,7 +4230,7 @@ static void DeleteArrow( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitPercentage( RESEARCH_CHECK_WORK* work )
+static void InitPercentage( RRG_WORK* work )
 {
   int idx;
 
@@ -4240,7 +4250,7 @@ static void InitPercentage( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreatePercentage( RESEARCH_CHECK_WORK* work )
+static void CreatePercentage( RRG_WORK* work )
 {
   int idx; 
   PERCENTAGE_DISP_PARAM param;
@@ -4277,7 +4287,7 @@ static void CreatePercentage( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeletePercentage( RESEARCH_CHECK_WORK* work )
+static void DeletePercentage( RRG_WORK* work )
 {
   int idx;
 
@@ -4307,7 +4317,7 @@ static void DeletePercentage( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateClactSystem( RESEARCH_CHECK_WORK* work )
+static void CreateClactSystem( RRG_WORK* work )
 {
   // ÉVÉXÉeÉÄçÏê¨
   GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
@@ -4323,7 +4333,7 @@ static void CreateClactSystem( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactSystem( RESEARCH_CHECK_WORK* work )
+static void DeleteClactSystem( RRG_WORK* work )
 { 
   // ÉVÉXÉeÉÄîjä¸
   GFL_CLACT_SYS_Delete();
@@ -4344,7 +4354,7 @@ static void DeleteClactSystem( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterSubObjResources( RESEARCH_CHECK_WORK* work )
+static void RegisterSubObjResources( RRG_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
@@ -4384,7 +4394,7 @@ static void RegisterSubObjResources( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ReleaseSubObjResources( RESEARCH_CHECK_WORK* work )
+static void ReleaseSubObjResources( RRG_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ] );
@@ -4406,7 +4416,7 @@ static void ReleaseSubObjResources( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work )
+static void RegisterMainObjResources( RRG_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
@@ -4455,7 +4465,7 @@ static void RegisterMainObjResources( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ReleaseMainObjResources( RESEARCH_CHECK_WORK* work )
+static void ReleaseMainObjResources( RRG_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
@@ -4478,7 +4488,7 @@ static void ReleaseMainObjResources( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitClactUnits( RESEARCH_CHECK_WORK* work )
+static void InitClactUnits( RRG_WORK* work )
 {
   int unitIdx;
 
@@ -4498,7 +4508,7 @@ static void InitClactUnits( RESEARCH_CHECK_WORK* work )
  * @param
  */
 //-----------------------------------------------------------------------------------------
-static void CreateClactUnits( RESEARCH_CHECK_WORK* work )
+static void CreateClactUnits( RRG_WORK* work )
 {
   int unitIdx;
   u16 workNum;
@@ -4524,7 +4534,7 @@ static void CreateClactUnits( RESEARCH_CHECK_WORK* work )
  * @param
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactUnits( RESEARCH_CHECK_WORK* work )
+static void DeleteClactUnits( RRG_WORK* work )
 {
   int unitIdx;
 
@@ -4550,7 +4560,7 @@ static void DeleteClactUnits( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitClactWorks( RESEARCH_CHECK_WORK* work )
+static void InitClactWorks( RRG_WORK* work )
 {
   int wkIdx;
 
@@ -4571,7 +4581,7 @@ static void InitClactWorks( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateClactWorks( RESEARCH_CHECK_WORK* work )
+static void CreateClactWorks( RRG_WORK* work )
 {
   int wkIdx;
 
@@ -4616,7 +4626,7 @@ static void CreateClactWorks( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteClactWorks( RESEARCH_CHECK_WORK* work )
+static void DeleteClactWorks( RRG_WORK* work )
 {
   int wkIdx;
 
@@ -4640,7 +4650,7 @@ static void DeleteClactWorks( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitBitmapDatas( RESEARCH_CHECK_WORK* work )
+static void InitBitmapDatas( RRG_WORK* work )
 {
   int idx;
 
@@ -4661,7 +4671,7 @@ static void InitBitmapDatas( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateBitmapDatas( RESEARCH_CHECK_WORK* work )
+static void CreateBitmapDatas( RRG_WORK* work )
 {
   int idx;
 
@@ -4687,7 +4697,7 @@ static void CreateBitmapDatas( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forDefault( RESEARCH_CHECK_WORK* work )
+static void SetupBitmapData_forDefault( RRG_WORK* work )
 {
   int idx;
 
@@ -4734,7 +4744,7 @@ static void SetupBitmapData_forDefault( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forANALYZE_BUTTON( RESEARCH_CHECK_WORK* work )
+static void SetupBitmapData_forANALYZE_BUTTON( RRG_WORK* work )
 {
   int x, y;
   GFL_BMP_DATA* srcBMP; 
@@ -4795,7 +4805,7 @@ static void SetupBitmapData_forANALYZE_BUTTON( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteBitmapDatas( RESEARCH_CHECK_WORK* work )
+static void DeleteBitmapDatas( RRG_WORK* work )
 {
   int idx;
 
@@ -4816,7 +4826,7 @@ static void DeleteBitmapDatas( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupBmpOamSystem( RESEARCH_CHECK_WORK* work )
+static void SetupBmpOamSystem( RRG_WORK* work )
 {
   // BMP-OAM ÉVÉXÉeÉÄÇçÏê¨
   work->BmpOamSystem = BmpOam_Init( work->heapID, work->clactUnit[ CLUNIT_BMPOAM ] );
@@ -4832,7 +4842,7 @@ static void SetupBmpOamSystem( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpBmpOamSystem( RESEARCH_CHECK_WORK* work )
+static void CleanUpBmpOamSystem( RRG_WORK* work )
 {
   // BMP-OAM ÉVÉXÉeÉÄÇîjä¸
   BmpOam_Exit( work->BmpOamSystem );
@@ -4848,7 +4858,7 @@ static void CleanUpBmpOamSystem( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void CreateBmpOamActors( RESEARCH_CHECK_WORK* work )
+static void CreateBmpOamActors( RRG_WORK* work )
 {
   int idx;
   BMPOAM_ACT_DATA head;
@@ -4887,7 +4897,7 @@ static void CreateBmpOamActors( RESEARCH_CHECK_WORK* work )
  * @parma work
  */
 //-----------------------------------------------------------------------------------------
-static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work )
+static void DeleteBmpOamActors( RRG_WORK* work )
 {
   int idx;
 
@@ -4907,7 +4917,7 @@ static void DeleteBmpOamActors( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void InitPaletteAnime( RESEARCH_CHECK_WORK* work )
+static void InitPaletteAnime( RRG_WORK* work )
 {
   int idx;
 
@@ -4927,7 +4937,7 @@ static void InitPaletteAnime( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work )
+static void CreatePaletteAnime( RRG_WORK* work )
 {
   int idx;
 
@@ -4949,7 +4959,7 @@ static void CreatePaletteAnime( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work )
+static void DeletePaletteAnime( RRG_WORK* work )
 {
   int idx;
 
@@ -4971,7 +4981,7 @@ static void DeletePaletteAnime( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work )
+static void SetupPaletteAnime( RRG_WORK* work )
 {
   int idx;
 
@@ -4996,7 +5006,7 @@ static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work )
+static void CleanUpPaletteAnime( RRG_WORK* work )
 {
   int idx;
 
@@ -5019,7 +5029,7 @@ static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
+static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Start( work->paletteAnime[ index ], 
                        PaletteAnimeData[ index ].animeType,
@@ -5036,7 +5046,7 @@ static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX in
  * @param index í‚é~Ç∑ÇÈÉAÉjÉÅÅ[ÉVÉáÉìÇéwíË
  */
 //------------------------------------------------------------------------------------
-static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
+static void StopPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
 
@@ -5055,7 +5065,7 @@ static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX ind
  *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
  */
 //------------------------------------------------------------------------------------
-static BOOL CheckPaletteAnime( const RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
+static BOOL CheckPaletteAnime( const RRG_WORK* work, PALETTE_ANIME_INDEX index )
 {
   return PALETTE_ANIME_CheckAnime( work->paletteAnime[ index ] );
 }
@@ -5067,7 +5077,7 @@ static BOOL CheckPaletteAnime( const RESEARCH_CHECK_WORK* work, PALETTE_ANIME_IN
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work )
+static void UpdatePaletteAnime( RRG_WORK* work )
 {
   int idx;
 
@@ -5106,7 +5116,7 @@ static void Setup3D()
  * @param work
  */
 //------------------------------------------------------------------------------------
-static void SetupWirelessIcon( const RESEARCH_CHECK_WORK* work )
+static void SetupWirelessIcon( const RRG_WORK* work )
 {
   GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
@@ -5121,7 +5131,7 @@ static void SetupWirelessIcon( const RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterVBlankTask( RESEARCH_CHECK_WORK* work )
+static void RegisterVBlankTask( RRG_WORK* work )
 {
   work->VBlankTask = GFUser_VIntr_CreateTCB( VBlankFunc, work, 0 );
 
@@ -5136,7 +5146,7 @@ static void RegisterVBlankTask( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ReleaseVBlankTask( RESEARCH_CHECK_WORK* work )
+static void ReleaseVBlankTask( RRG_WORK* work )
 { 
   GFL_TCB_DeleteTask( work->VBlankTask );
 
@@ -5151,7 +5161,7 @@ static void ReleaseVBlankTask( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
+static void InitPaletteFadeSystem( RRG_WORK* work )
 { 
   // èâä˙âª
   work->paletteFadeSystem = NULL;
@@ -5167,7 +5177,7 @@ static void InitPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetupPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
+static void SetupPaletteFadeSystem( RRG_WORK* work )
 {
   u32 tcbWorkSize;
 
@@ -5196,7 +5206,7 @@ static void SetupPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CleanUpPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
+static void CleanUpPaletteFadeSystem( RRG_WORK* work )
 { 
   // ÉpÉåÉbÉgÉtÉFÅ[ÉhÇÃÉäÉNÉGÉXÉgÉèÅ[ÉNÇîjä¸
   PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
@@ -5219,7 +5229,7 @@ static void CleanUpPaletteFadeSystem( RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃí≤ç∏çÄñ⁄ID
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetTopicID( const RESEARCH_CHECK_WORK* work )
+static u8 GetTopicID( const RRG_WORK* work )
 {
   return work->researchData.topicID;
 }
@@ -5233,7 +5243,7 @@ static u8 GetTopicID( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃéøñ‚ID
  */
 //-----------------------------------------------------------------------------------------
-static u8 GetQuestionID( const RESEARCH_CHECK_WORK* work )
+static u8 GetQuestionID( const RRG_WORK* work )
 {
   u8 qIdx;
   qIdx = work->questionIdx;
@@ -5249,7 +5259,7 @@ static u8 GetQuestionID( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, âÒìöÇÃëIëéàÇÃêî
  */
 //------------------------------------------------------------------------------------------
-static u8 GetAnswerNum( const RESEARCH_CHECK_WORK* work )
+static u8 GetAnswerNum( const RRG_WORK* work )
 {
   u8 questionIdx;
 
@@ -5267,7 +5277,7 @@ static u8 GetAnswerNum( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃâÒìöID
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work )
+static u16 GetAnswerID( const RRG_WORK* work )
 {
   u8 qIdx;
   u8 aIdx;
@@ -5287,7 +5297,7 @@ static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, ï\é¶ÇÃâÒìöêlêî
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetCountOfQuestion( const RESEARCH_CHECK_WORK* work )
+static u16 GetCountOfQuestion( const RRG_WORK* work )
 {
   u16 count = 0;
 
@@ -5309,7 +5319,7 @@ static u16 GetCountOfQuestion( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, ç°ì˙ÇÃâÒìöêlêî
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTodayCountOfQuestion( const RESEARCH_CHECK_WORK* work )
+static u16 GetTodayCountOfQuestion( const RRG_WORK* work )
 {
   u8 qIdx;
 
@@ -5327,7 +5337,7 @@ static u16 GetTodayCountOfQuestion( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃéøñ‚Ç…ëŒÇ∑ÇÈ, çáåvÇÃâÒìöêlêî
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTotalCountOfQuestion( const RESEARCH_CHECK_WORK* work )
+static u16 GetTotalCountOfQuestion( const RRG_WORK* work )
 {
   u8 qIdx;
 
@@ -5345,7 +5355,7 @@ static u16 GetTotalCountOfQuestion( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, ï\é¶ÇÃâÒìöêlêî
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetCountOfAnswer( const RESEARCH_CHECK_WORK* work )
+static u16 GetCountOfAnswer( const RRG_WORK* work )
 {
   switch( work->dispType )
   {
@@ -5368,7 +5378,7 @@ static u16 GetCountOfAnswer( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, ç°ì˙ÇÃâÒìöêlêî
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work )
+static u16 GetTodayCountOfAnswer( const RRG_WORK* work )
 {
   u8 qIdx;
   u8 aIdx;
@@ -5388,7 +5398,7 @@ static u16 GetTodayCountOfAnswer( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃâÒìöÇ…ëŒÇ∑ÇÈ, çáåvÇÃâÒìöêlêî
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work )
+static u16 GetTotalCountOfAnswer( const RRG_WORK* work )
 {
   u8 qIdx;
   u8 aIdx;
@@ -5408,7 +5418,7 @@ static u16 GetTotalCountOfAnswer( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃÉÅÉCÉìâ~ÉOÉâÉt
  */
 //-----------------------------------------------------------------------------------------
-static CIRCLE_GRAPH* GetMainGraph( const RESEARCH_CHECK_WORK* work )
+static CIRCLE_GRAPH* GetMainGraph( const RRG_WORK* work )
 {
   return work->mainGraph[ work->dispType ];
 }
@@ -5422,7 +5432,7 @@ static CIRCLE_GRAPH* GetMainGraph( const RESEARCH_CHECK_WORK* work )
  * @return åªç›ï\é¶íÜÇÃÉTÉuâ~ÉOÉâÉt
  */
 //-----------------------------------------------------------------------------------------
-static CIRCLE_GRAPH* GetSubGraph ( const RESEARCH_CHECK_WORK* work )
+static CIRCLE_GRAPH* GetSubGraph ( const RRG_WORK* work )
 {
   return work->subGraph[ work->dispType ];
 }
@@ -5437,7 +5447,7 @@ static CIRCLE_GRAPH* GetSubGraph ( const RESEARCH_CHECK_WORK* work )
  *         Ç∑Ç◊ÇƒÇÃÉOÉâÉtÇÃÉAÉjÉÅÅ[ÉVÉáÉìÇ™èIóπÇµÇƒÇ¢ÇÈèÍçá TRUE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL CheckAllGraphAnimeEnd( const RESEARCH_CHECK_WORK* work )
+static BOOL CheckAllGraphAnimeEnd( const RRG_WORK* work )
 {
   if( CIRCLE_GRAPH_IsAnime( work->mainGraph[ DATA_DISP_TYPE_TODAY ] ) ||
       CIRCLE_GRAPH_IsAnime( work->mainGraph[ DATA_DISP_TYPE_TOTAL ] ) ||
@@ -5457,7 +5467,7 @@ static BOOL CheckAllGraphAnimeEnd( const RESEARCH_CHECK_WORK* work )
  * @return éwíËÇµÇΩÉäÉ\Å[ÉXÇÃìoò^ÉCÉìÉfÉbÉNÉX
  */
 //-----------------------------------------------------------------------------------------
-static u32 GetObjResourceRegisterIndex( const RESEARCH_CHECK_WORK* work, OBJ_RESOURCE_ID resID )
+static u32 GetObjResourceRegisterIndex( const RRG_WORK* work, OBJ_RESOURCE_ID resID )
 {
   return work->objResRegisterIdx[ resID ];
 }
@@ -5472,7 +5482,7 @@ static u32 GetObjResourceRegisterIndex( const RESEARCH_CHECK_WORK* work, OBJ_RES
  * @return éwíËÇµÇΩÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉg
  */
 //-----------------------------------------------------------------------------------------
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX unitIdx )
+static GFL_CLUNIT* GetClactUnit( const RRG_WORK* work, CLUNIT_INDEX unitIdx )
 {
   return work->clactUnit[ unitIdx ];
 }
@@ -5487,7 +5497,7 @@ static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX u
  * @return éwíËÇµÇΩÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN
  */
 //-----------------------------------------------------------------------------------------
-static GFL_CLWK* GetClactWork( const RESEARCH_CHECK_WORK* work, CLWK_INDEX wkIdx )
+static GFL_CLWK* GetClactWork( const RRG_WORK* work, CLWK_INDEX wkIdx )
 {
   return work->clactWork[ wkIdx ];
 }
@@ -5499,7 +5509,7 @@ static GFL_CLWK* GetClactWork( const RESEARCH_CHECK_WORK* work, CLWK_INDEX wkIdx
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void StartPaletteFadeOut( RESEARCH_CHECK_WORK* work )
+static void StartPaletteFadeOut( RRG_WORK* work )
 {
 #if 0
   // MAIN-BG
@@ -5533,7 +5543,7 @@ static void StartPaletteFadeOut( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void StartPaletteFadeIn( RESEARCH_CHECK_WORK* work )
+static void StartPaletteFadeIn( RRG_WORK* work )
 {
 #if 0
   // MAIN-BG
@@ -5568,7 +5578,7 @@ static void StartPaletteFadeIn( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void StartPaletteFadeFlashOut( RESEARCH_CHECK_WORK* work )
+static void StartPaletteFadeFlashOut( RRG_WORK* work )
 {
   // MAIN-BG
   PaletteFadeReq( work->paletteFadeSystem, 
@@ -5600,7 +5610,7 @@ static void StartPaletteFadeFlashOut( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void StartPaletteFadeFlashIn( RESEARCH_CHECK_WORK* work )
+static void StartPaletteFadeFlashIn( RRG_WORK* work )
 {
   // MAIN-BG
   PaletteFadeReq( work->paletteFadeSystem, 
@@ -5636,7 +5646,7 @@ static void StartPaletteFadeFlashIn( RESEARCH_CHECK_WORK* work )
  *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
  */
 //-----------------------------------------------------------------------------------------
-static BOOL IsPaletteFadeEnd( RESEARCH_CHECK_WORK* work )
+static BOOL IsPaletteFadeEnd( RRG_WORK* work )
 {
   return (PaletteFadeCheck( work->paletteFadeSystem ) == 0 );
 }
@@ -5648,7 +5658,7 @@ static BOOL IsPaletteFadeEnd( RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InterchangeCircleGraph( RESEARCH_CHECK_WORK* work )
+static void InterchangeCircleGraph( RRG_WORK* work )
 {
   int typeIdx;
   CIRCLE_GRAPH* temp;
@@ -5672,7 +5682,7 @@ static void InterchangeCircleGraph( RESEARCH_CHECK_WORK* work )
  * @param dispType ï\é¶É^ÉCÉv
  */
 //-----------------------------------------------------------------------------------------
-static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType )
+static void SetupMainCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType )
 {
   int aIdx;
   CIRCLE_GRAPH* graph;
@@ -5717,7 +5727,7 @@ static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE disp
  * @param dispType ï\é¶É^ÉCÉv
  */
 //-----------------------------------------------------------------------------------------
-static void SetupSubCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType )
+static void SetupSubCircleGraph( RRG_WORK* work, DATA_DISP_TYPE dispType )
 {
   int aIdx;
   CIRCLE_GRAPH* graph;
@@ -5801,7 +5811,7 @@ static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* componen
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void AdjustCircleGraphLayer( RESEARCH_CHECK_WORK* work )
+static void AdjustCircleGraphLayer( RRG_WORK* work )
 {
   // ÉTÉuâ~ÉOÉâÉtÇ™éËëOÇ…ï\é¶Ç≥ÇÍÇÈÇÊÇ§Ç…zç¿ïWÇê›íËÇ∑ÇÈ
   CIRCLE_GRAPH_SetCenterZ( GetMainGraph(work), FX16_CONST(-2.0f) );
@@ -5834,7 +5844,7 @@ static u8 BindU8( int num )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work )
+static void DebugPrint_seqQueue( const RRG_WORK* work )
 {
   int i;
   int dataNum;
@@ -5875,7 +5885,7 @@ static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_researchData( const RESEARCH_CHECK_WORK* work )
+static void DebugPrint_researchData( const RRG_WORK* work )
 {
   const RESEARCH_DATA* research = &( work->researchData );
   int qIdx, aIdx;
@@ -5913,7 +5923,7 @@ static void DebugPrint_researchData( const RESEARCH_CHECK_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void Debug_SetupResearchData( RESEARCH_CHECK_WORK* work )
+static void Debug_SetupResearchData( RRG_WORK* work )
 {
   int qIdx, aIdx;
   u8 topicID;
