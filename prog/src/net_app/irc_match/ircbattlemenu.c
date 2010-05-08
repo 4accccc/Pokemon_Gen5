@@ -268,7 +268,7 @@ static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
 static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork);
 static void _infoMessageDisp(IRC_BATTLE_MENU* pWork);
-static void _hitAnyKey(IRC_BATTLE_MENU* pWork);
+static void _hitAnyKeyWaitMode(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -1897,21 +1897,21 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   キーを押したらぬける
+ * @brief   キーを押したらもどる
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-static void _hitAnyKey(IRC_BATTLE_MENU* pWork)
+static void _hitAnyKeyWaitMode(IRC_BATTLE_MENU* pWork)
 {
   if(!_infoMessageEndCheck(pWork)){
     return;
   }
 	if(GFL_UI_TP_GetTrg()){
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
     _infoMessageEnd(pWork);
-    PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    _CHANGE_STATE(pWork,  _modeFadeoutStart);
+    _CHANGE_STATE(pWork,_modeSelectMenuWait);
   }
 }
 
@@ -1933,7 +1933,7 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
       if(SaveControl_IsOverwritingOtherData( GAMEDATA_GetSaveControlWork(pWork->pGameData))){
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_46, pWork->pStrBuf );
         _infoMessageDisp(pWork);
-        _CHANGE_STATE(pWork,  _hitAnyKey);
+        _CHANGE_STATE(pWork,  _hitAnyKeyWaitMode);
       }
       else{
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );

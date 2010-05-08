@@ -792,6 +792,7 @@ static void _hitAnyKey(GAMESYNC_MENU* pWork)
   }
   if(GFL_UI_TP_GetTrg()){
     _infoMessageEnd(pWork);
+    pWork->bitold = 0;   //ビットをリセットする事で表示を元に戻す
     PMSND_PlaySystemSE(_SE_DESIDE);
     //    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
     //    pWork->pAppWin = NULL;
@@ -1225,7 +1226,7 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME1_S);
       pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-      _CHANGE_STATE(pWork,  _modeFadeoutStart );
+      _CHANGE_STATE(pWork, _modeSelectMenuInit); //戻る
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
