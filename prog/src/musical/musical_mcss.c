@@ -512,8 +512,8 @@ void	MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb 
 						//ARI_TPrintf("mcss[%d:%d]:[%d:%d]:[%d:%d]\n",ofsx,ofsy,(int)F32_CONST(itemOfsx),(int)F32_CONST(itemOfsy),anim_SRT.px,anim_SRT.py);
 						cellData.pos = pos;
 						cellData.pos.y = -cellData.pos.y;
-						cellData.ofs.x	= FX_Mul( FX32_CONST(ofsx + anim_SRT.px) + itemOfsx , mcss->scale.x/16 );
-						cellData.ofs.y	= FX_Mul( FX32_CONST(ofsy + anim_SRT.py) + itemOfsy , mcss->scale.y/16 );
+						cellData.ofs.x	= FX_Mul( FX32_CONST(ofsx + anim_SRT.px + anim_SRT_mc.px ) + itemOfsx , mcss->scale.x/16 );
+						cellData.ofs.y	= FX_Mul( FX32_CONST(ofsy + anim_SRT.py + anim_SRT_mc.py ) + itemOfsy , mcss->scale.y/16 );
 						cellData.ofs.z	= pos_z_default;
 //						cellData.rotOfs.x = FX_Mul( mcss->rotOfs.x , mcss->scale.x );
 //						cellData.rotOfs.y = FX_Mul( mcss->rotOfs.y , mcss->scale.y );
