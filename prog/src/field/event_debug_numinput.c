@@ -146,6 +146,8 @@ static u32 DebugGetMyTrainerID_low(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
 static void DebugSetMyTrainerID_low(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMyProfileID(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMyProfileID(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPlayTimeHour(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetPlayTimeHour(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
@@ -1167,6 +1169,16 @@ static void DebugSetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u
 {
   MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
   MyStatus_SetID( mystatus, value );
+}
+static u32 DebugGetMyProfileID(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  return MyStatus_GetProfileID( mystatus );
+}
+static void DebugSetMyProfileID(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  MyStatus_SetProfileID( mystatus, value );
 }
 
 //--------------------------------------------------------------
