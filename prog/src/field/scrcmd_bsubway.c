@@ -548,6 +548,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_GET_WIFI_RANK:
     *ret_wk = BSUBWAY_SCRWORK_SetWifiRank(
             scoreData, gsys, BSWAY_SETMODE_get );
+    
+    if( (s16)*ret_wk <= 0 ){
+      *ret_wk = 1;
+    }
     break;
   //WiFiランクアップ
   case BSWTOOL_UP_WIFI_RANK:

@@ -34,6 +34,7 @@ _EVENT_DATA ev_bsw_ttown_receipt_talk
 _EVENT_DATA ev_bsw_ttown_receipt_stopper
 _EVENT_DATA ev_bsw_ttown_demo_train_arrival
 _EVENT_DATA ev_bsw_debug_map_chg_train
+_EVENT_DATA ev_bsw_upload_wifi_score
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -281,7 +282,8 @@ sub_bsw_receipt_guide_wifi:
     $SCWK_TEMP0 = msg_bsw_scr_50 //アップロードするか？
     _CALL sub_bsw_common_bwin_receipt
     _YES_NO_WIN( ret )
-    
+    _MSGWIN_CLOSE()
+
     IF $ret == SCR_YES THEN //アップロードする
       _CALL sub_bsw_receipt_guide_wifi_upload
       _RET
@@ -326,44 +328,16 @@ _RET
 //--------------------------------------------------------------
 sub_bsw_receipt_guide_wifi_upload:
 {
-  $SCWK_TEMP0 = msg_bsw_scr_50
-  _CALL sub_bsw_common_bwin_receipt
-  _YES_NO_WIN( ret )
-  
   IF $ret == SCR_YES THEN
-    //フィールド通信切断
-    _FIELD_COMM_EXIT_EVENT_CALL( ret )
+    _CALL sub_common_wifi_upload_score
     
-    IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
-      $ret = FALSE
-    ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-      $ret = FALSE
-    ELSE
-      $ret = TRUE
-    ENDIF
-    
-    IF $ret == FALSE THEN //切断失敗
-      $SCWK_TEMP0 = msg_bsw_scr_77
+    IF $SCWK_ANSWER == TRUE THEN  //成績を送りました！
+      $SCWK_TEMP0 = msg_bsw_scr_51
       _CALL sub_bsw_common_bwin_receipt
-      _AB_KEYWAIT()
-    ELSE
-      //メッセージウィンドウ閉じる
       _MSGWIN_CLOSE()
-      
-      //アップロード
-      _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
-      
-      IF $ret == TRUE THEN
-        //成績を送りました！
-        $SCWK_TEMP0 = msg_bsw_scr_51
-        _CALL sub_bsw_common_bwin_receipt
-        _MSGWIN_CLOSE()
-        
-        _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
-        
-        //レポート
-        _CALL sub_bsw_common_auto_save
-      ENDIF
+       
+      //レポート
+      _CALL sub_bsw_common_auto_save
     ENDIF
   ENDIF
   
@@ -379,38 +353,31 @@ sub_receipt_rekidai_download:
   $SCWK_TEMP0 = msg_bsw_scr_33
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( ret )
+  _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
-    //メッセージ閉じる
-    _MSGWIN_CLOSE()
-    
     //フィールド通信切断
-    _FIELD_COMM_EXIT_EVENT_CALL( ret )
+    _CALL sub_common_exit_field_comm
     
-    IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
-      $ret = FALSE
-    ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-      $ret = FALSE
-    ELSE
-      $ret = TRUE
-    ENDIF
-    
-    IF $ret == FALSE THEN //切断失敗
+    IF $SCWK_ANSWER == FALSE THEN //切断失敗
       $SCWK_TEMP0 = msg_bsw_scr_77
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
     ELSE
       //歴代データダウンロード
       _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
       
       //○○の歴代情報をダウンロードしました
       IF $ret == TRUE THEN
-        _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
+        _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
         _NUMBER( 0, ret, 2 )
         _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_ROOM, BSW_NULL, BSW_NULL, ret )
         _NUMBER( 1, ret, 3 )
         $SCWK_TEMP0 = msg_bsw_scr_52
         _CALL sub_bsw_common_bwin_receipt
+        
+        _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
       ENDIF
     ENDIF
   ENDIF
@@ -765,17 +732,9 @@ sub_receipt_challenge_multi_comm:
   _MSGWIN_CLOSE()
   
   //フィールド通信切断
-  _FIELD_COMM_EXIT_EVENT_CALL( ret )
+  _CALL sub_common_exit_field_comm
   
-  IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
-    $ret = FALSE
-  ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-    $ret = FALSE
-  ELSE
-    $ret = TRUE
-  ENDIF
-  
-  IF $ret == FALSE THEN //切断失敗
+  IF $SCWK_ANSWER == FALSE THEN //切断失敗
     $SCWK_TEMP0 = msg_bsw_scr_77
     _CALL sub_bsw_common_bwin_receipt
     _CALL sub_bsw_common_exit
@@ -1216,7 +1175,7 @@ ev_bsw_game_after_lose:
     IF $ret == TRUE THEN //新規プレイである
       //ランクダウン処理
       _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
-    
+      
       IF $ret == TRUE THEN //ランク下がった
         _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
         //ランク文字列に
@@ -1224,7 +1183,6 @@ ev_bsw_game_after_lose:
         //ランクが下がった
         $SCWK_TEMP0 = msg_bsw_scr_79
         _CALL sub_bsw_common_bwin_receipt
-        _AB_KEYWAIT()
         _MSGWIN_CLOSE()
       ENDIF
       
@@ -1238,49 +1196,31 @@ ev_bsw_game_after_lose:
   _REPORT_CALL( SCWK_ANSWER )
   _MSGWIN_CLOSE()
   
-  //WiFiモードであれば成績アップロード
+  //WiFiモードで新規プレイであれば成績アップロード
   IF $play_mode == BSWAY_MODE_WIFI THEN
     _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, ret )
     
-    IF $ret == TRUE THEN //新規プレイである
-      _SYSWIN_MSG( msg_bsw_scr_100, POS_DOWN )
+    IF $ret == TRUE THEN
+      $SCWK_TEMP0 = msg_bsw_scr_100
+      _CALL sub_bsw_common_bwin_receipt
       _YES_NO_WIN( ret )
-      _SYSWIN_CLOSE()
-
+      _MSGWIN_CLOSE()
+      
       IF $ret == SCR_YES THEN //送る
-        //フィールド通信切断
-        _FIELD_COMM_EXIT_EVENT_CALL( ret )
+        _CALL sub_common_wifi_upload_score
         
-        IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
-          $ret = FALSE
-        ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
-          $ret = FALSE
-        ELSE
-          $ret = TRUE
-        ENDIF
-    
-        IF $ret == FALSE THEN //切断失敗
-          $SCWK_TEMP0 = msg_bsw_scr_77
+        IF $SCWK_ANSWER == TRUE THEN  //成績を送りました！
+          $SCWK_TEMP0 = msg_bsw_scr_51
           _CALL sub_bsw_common_bwin_receipt
-          _AB_KEYWAIT()
-        ELSE
-          _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
+          _MSGWIN_CLOSE()
           
-          IF $ret == TRUE THEN
-            //成績を送りました！
-            $SCWK_TEMP0 = msg_bsw_scr_51
-            _CALL sub_bsw_common_bwin_receipt
-            _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
-            //レポート
-            _CALL sub_bsw_common_auto_save
-          ELSE //送れなかった
-            _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
-          ENDIF
+          //レポート
+          _CALL sub_bsw_common_auto_save
         ENDIF
       ENDIF
     ENDIF
   ENDIF
-
+  
   //またのご利用を
   _CALL sub_bsw_common_exit
   
@@ -2608,6 +2548,57 @@ sub_bsw_common_check_jiki_talkpos:
 }
 _RET
 
+//--------------------------------------------------------------
+//  バトルサブウェイ　フィールド通信切断
+//  @retval SCWK_ANSWER TRUE=切断した FALSE=切断できない
+//--------------------------------------------------------------
+sub_common_exit_field_comm:
+{
+  //フィールド通信切断
+  _FIELD_COMM_EXIT_EVENT_CALL( SCWK_ANSWER )
+    
+  IF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_OK THEN
+    $SCWK_ANSWER = TRUE
+  ELSE
+    $SCWK_ANSWER = FALSE
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　WiFi成績アップロード
+//  @retval SCWK_ANSWER TRUE=アップロード FALSE=アップロード出来ない
+//--------------------------------------------------------------
+sub_common_wifi_upload_score:
+{
+  //アップロードフラグセット
+  _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
+  
+  //フィールド通信切断
+  _CALL sub_common_exit_field_comm
+  
+  IF $SCWK_ANSWER == FALSE THEN //切断失敗
+    _SYSWIN_MSG( msg_bsw_scr_77, POS_DOWN )
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  
+  //アップロード
+  _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
+  
+  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+  
+  IF $ret == TRUE THEN //送れた
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
+    $SCWK_ANSWER = TRUE
+  ELSE
+    $SCWK_ANSWER = FALSE
+  ENDIF
+}
+_RET
+
 //=====================================================================
 //  バトルサブウェイ共通処理
 //=====================================================================
@@ -2642,6 +2633,17 @@ ev_bsw_retmap_receipt:
     _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0102, 11, 0, 15, DIR_RIGHT )
   ENDSWITCH
   
+  _CHG_LOCAL_SCR
+}
+_RET
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　wifi成績アップロード
+//  @retval SCWK_ANSWER TRUE=アップロード FALSE=未アップロード
+//--------------------------------------------------------------
+ev_bsw_upload_wifi_score:
+{
+  _CALL sub_common_wifi_upload_score
   _CHG_LOCAL_SCR
 }
 _RET

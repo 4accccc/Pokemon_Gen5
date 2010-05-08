@@ -673,20 +673,14 @@ EVENT_START ev_c04r0111_home
         //ランク？になりました
         _BALLOONWIN_OBJMSG_POS( msg_c04r0111_21, obj_id, POS_DOWN )
       ENDIF
-
+      
       //今回の成績をWifiに送るか？
       _BALLOONWIN_OBJMSG_POS( msg_c04r0111_22, obj_id, POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _MSGWIN_CLOSE()
         
       IF $SCWK_ANSWER == SCR_YES THEN //送る
-        _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
-        
-        IF $ret == TRUE THEN
-          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
-        ELSE //送れなかった
-          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
-        ENDIF
+        _CHG_COMMON_SCR SCRID_BSW_UPLOAD_WIFI_SCORE
       ELSE //送らない 未ダウンロードフラグセット
         _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
       ENDIF
