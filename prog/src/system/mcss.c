@@ -27,6 +27,7 @@
 #define	MCSS_DEFAULT_LINE		( 1 << MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
 #define	MCSS_DEFAULT_Z			( 1 << 8 )
 #define	MCSS_DEFAULT_Z_ORTHO	( 1 << 10 )
+#define MCSS_SCALE_OFFSET   ( 0x1c )
 
 #define	MCSS_CONST(x)	( x << MCSS_DEFAULT_SHIFT )
 
@@ -60,7 +61,7 @@
  * プロトタイプ宣言
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss, 
+static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
 							  fx32 pos_x,
 							  fx32 pos_y,
 							  fx32 scale_x,
@@ -72,7 +73,7 @@ static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
 							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default,const u8 isFlip 
+							  fx32 *pos_z_default,const u8 isFlip, fx32* scale_offset_work
                             );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
@@ -259,7 +260,6 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	NNSG2dImagePaletteProxy		*palette_p;
 	int												index;
 	int												i,node,cell;
-	fx32											pos_z_default;
 	NNSG2dAnimController			*anim_ctrl_mc;
 	NNSG2dAnimDataSRT					anim_SRT_mc;
 	NNSG2dAnimController			*anim_ctrl_c;
@@ -306,13 +306,13 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 		if( ( mcss_sys->mcss[index] != NULL ) && 
 		    ( mcss_sys->mcss[index]->vanish_flag == 0 ) &&
 		    ( mcss_sys->mcss[index]->is_load_resource == 1 ) ){
+	    fx32  pos_z_default = 0;
+      fx32  scale_offset_work = FX32_ONE;
 
 			G3_PushMtx();
 
 			mcss		= mcss_sys->mcss[index];
 			image_p		= &mcss->mcss_image_proxy;
-			pos_z_default = 0;
-      mcss_sys->scale_offset_work = FX32_ONE;
 
 			anim_ctrl_mc= NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim);
 			MC_Array = (NNSG2dMCNodeCellAnimArray*)&mcss->mcss_mcanim.multiCellInstance.pCellAnimInstasnces;
@@ -476,7 +476,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				//メパチ処理
 				if( ncec->mepachi_size_x ){
 					if( mcss->mepachi_flag ){
-						MCSS_DrawAct( mcss_sys, mcss,
+						MCSS_DrawAct( mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -485,10 +485,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 									  mcss_sys->mcss_ortho_mode,
-									  &pos_z_default,flipFlg );
+									  &pos_z_default, flipFlg, &scale_offset_work);
 					}
 					else{
-						MCSS_DrawAct( mcss_sys, mcss,
+						MCSS_DrawAct( mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
@@ -497,10 +497,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 									  mcss_sys->mcss_ortho_mode,
-									  &pos_z_default,flipFlg );
+									  &pos_z_default, flipFlg, &scale_offset_work);
 					}
 				}
-				MCSS_DrawAct( mcss_sys, mcss,
+				MCSS_DrawAct( mcss,
 							  ncec->pos_x,
 							  ncec->pos_y,
 							  ncec->size_x,
@@ -509,7 +509,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->tex_t,
 							  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 							  mcss_sys->mcss_ortho_mode,
-							  &pos_z_default,flipFlg );
+							  &pos_z_default, flipFlg, &scale_offset_work);
 			}
 			G3_PopMtx(1);
 		}
@@ -564,8 +564,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
  * @param[in]  mcss             MCSSワーク構造体のポインタ
  * @param[in]  pos_x            描画X座標
  * @param[in]  pos_y            描画Y座標
- * @param[in]  scale_x          X方向スケール
- * @param[in]  scale_y          Y方向スケール
+ * @param[in]  size_x           X方向サイズ
+ * @param[in]  size_y           Y方向サイズ
  * @param[in]  tex_s            テクスチャS値
  * @param[in]  tex_t            テクスチャT値
  * @param[in]  anm_SRT_c        セルアニメデータ構造体のポインタ
@@ -576,11 +576,11 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
  * @param[in]  pos_z_default    セルを描画する度にずらずZ方向のオフセット値
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
+static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 pos_x,
 							  fx32 pos_y,
-							  fx32 scale_x,
-							  fx32 scale_y,
+							  fx32 size_x,
+							  fx32 size_y,
 							  fx32 tex_s,
 							  fx32 tex_t,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
@@ -589,12 +589,14 @@ static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
 							  int node,
 							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default,
-                            const u8 isFlip )
+                const u8 isFlip,
+							  fx32* scale_offset_work )
 {
 	VecFx32	pos;
   int polyID;
 	//影のアルファ値計算
   const u8 shadow_alpha = (mcss->shadow_alpha == MCSS_SHADOW_ALPHA_AUTO ?(mcss->alpha/2):mcss->shadow_alpha); 
+  fx32  scale_x, scale_y;
 
   if( mcss->alpha == 31 )
   { 
@@ -615,11 +617,15 @@ static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
 				   FX32_ONE,
 				   NULL );
 		G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+    scale_x = size_x;
+    scale_y = size_y;
 	}
   else
   { 
-    scale_x = FX_Mul( scale_x, mcss_sys->scale_offset_work );
-    scale_y = FX_Mul( scale_y, mcss_sys->scale_offset_work );
+    scale_x = FX_Mul( size_x, *scale_offset_work );
+    scale_y = FX_Mul( size_y, *scale_offset_work );
+
+    OS_TPrintf("scale_x:0x%08x scale_y:0x%08x\n",scale_x,scale_y);
   }
 
 	G3_RestoreMtx( MCSS_NORMAL_MTX );
@@ -661,17 +667,17 @@ static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
 		G3_Scale( scale_x, scale_y, FX32_ONE );
 		G3_Translate( -MCSS_DEFAULT_LINE, 0, 0 );
 		//テクスチャのリピートでフリップした所を使う
-		tex_s = FX32_CONST(256.0f) + FX32_CONST(256.0f) - tex_s - scale_x;
+		tex_s = FX32_CONST(256.0f) + FX32_CONST(256.0f) - tex_s - size_x;
 	}
 
 	G3_Begin(GX_BEGIN_QUADS);
 	G3_TexCoord( tex_s,				tex_t );
 	G3_Vtx( 0, 0, 0 );
-	G3_TexCoord( tex_s + scale_x,	tex_t );
+	G3_TexCoord( tex_s + size_x,	tex_t );
 	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-	G3_TexCoord( tex_s + scale_x,	tex_t + scale_y );
+	G3_TexCoord( tex_s + size_x,	tex_t + size_y );
 	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
-	G3_TexCoord( tex_s,				tex_t + scale_y );
+	G3_TexCoord( tex_s,				tex_t + size_y );
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 
@@ -705,18 +711,18 @@ static	void	MCSS_DrawAct( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss,
   	G3_Begin(GX_BEGIN_QUADS);
   	G3_TexCoord( tex_s,				tex_t );
   	G3_Vtx( 0, 0, 0 );
-  	G3_TexCoord( tex_s + scale_x,	tex_t );
+  	G3_TexCoord( tex_s + size_x,	tex_t );
   	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-  	G3_TexCoord( tex_s + scale_x,	tex_t + scale_y );
+  	G3_TexCoord( tex_s + size_x,	tex_t + size_y );
   	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
-  	G3_TexCoord( tex_s,				tex_t + scale_y );
+  	G3_TexCoord( tex_s,				tex_t + size_y );
   	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
   	G3_End();
   }
 
 	if( mcss_ortho_mode == 0 ){
 		*pos_z_default -= MCSS_DEFAULT_Z;
-    mcss_sys->scale_offset_work += mcss_sys->scale_offset;
+    *scale_offset_work += MCSS_SCALE_OFFSET;
 	}
 	else{
 		*pos_z_default -= MCSS_DEFAULT_Z_ORTHO;
@@ -1535,19 +1541,6 @@ void	MCSS_SetAnimeFrame( MCSS_WORK *mcss, const fx32 frame )
 u16 MCSS_GetAnimeNum( MCSS_WORK* mcss )
 { 
   return mcss->mcss_nmar->numSequences;
-}
-
-//--------------------------------------------------------------------------
-/**
- * @brief マルチセルアニメフレームセット
- *
- * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
- * @param[in]  scale    セットするフレーム数
- */
-//--------------------------------------------------------------------------
-void	MCSS_SetScaleOffset( MCSS_SYS_WORK* mcss_sys, const fx32 scale )
-{ 
-  mcss_sys->scale_offset = scale;
 }
 
 //--------------------------------------------------------------------------
