@@ -2085,19 +2085,17 @@ void POKE_GTS_FaceIconFunc(POKEMON_TRADE_WORK* pWork)    //顔アイコンの処理
     return;
   }
     
-  if(GFL_UI_TP_GetPointCont(&x,&y)){     // パネルスクロール
-    if(pWork->touchON){
-      if((x >=  GTSFACEICON_POSX) && ((GTS_FACE_BUTTON_NUM*GTSFACEICON_WIDTH+GTSFACEICON_POSX) > x)){
-        if((y >=  GTSFACEICON_POSY) && ((GTSFACEICON_POSY+GTSFACEICON_HEIGHT) > y)){
-          index = (x-GTSFACEICON_POSX)/GTSFACEICON_WIDTH;
-          if(index >= GTS_FACE_BUTTON_NUM){
-            index = GTS_FACE_BUTTON_NUM-1;
-          }
-          POKEMONTRADE_TouchFaceButtonGTS( pWork, index);
-          POKE_GTS_InitEruptedIcon(pWork,index,0);
-          if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-            GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FACEICON, 1, &index);
-          }
+  if(GFL_UI_TP_GetPointTrg(&x,&y)){     // パネルスクロール
+    if((x >=  GTSFACEICON_POSX) && ((GTS_FACE_BUTTON_NUM*GTSFACEICON_WIDTH+GTSFACEICON_POSX) > x)){
+      if((y >=  GTSFACEICON_POSY) && ((GTSFACEICON_POSY+GTSFACEICON_HEIGHT) > y)){
+        index = (x-GTSFACEICON_POSX)/GTSFACEICON_WIDTH;
+        if(index >= GTS_FACE_BUTTON_NUM){
+          index = GTS_FACE_BUTTON_NUM-1;
+        }
+        POKEMONTRADE_TouchFaceButtonGTS( pWork, index);
+        POKE_GTS_InitEruptedIcon(pWork,index,0);
+        if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+          GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_FACEICON, 1, &index);
         }
       }
     }
@@ -2144,7 +2142,10 @@ void POKE_GTS_InitEruptedIcon(POKEMON_TRADE_WORK* pWork,int faceNo, int index)
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     POKEMONTRADE_StartEruptedGTS(pWork, faceNo, index);
     pWork->timerErupted[index] = _TIMER_ERUPTED_NUM;
-    PMSND_PlaySystemSE(SEQ_SE_SELECT3);
+
+    if(!PMSND_CheckPlayingSEIdx(SEQ_SE_SELECT3)){
+      PMSND_PlaySystemSE(SEQ_SE_SELECT3);
+    }
   }
 }
 
