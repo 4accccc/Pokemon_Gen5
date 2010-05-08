@@ -542,6 +542,32 @@ static void _menuFriendPokemonStart(POKEMON_TRADE_WORK* pWork)
 
 
 
+static void _NEGO_BackSelect8(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
+                                 POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID)){
+      return;
+    }
+  }
+  POKETRADE_MESSAGE_WindowClear(pWork);
+  _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
+}
+
+
+
+static void _NEGO_BackSelect7(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,pWork);
+  _CHANGE_STATE(pWork,_NEGO_BackSelect8);
+}
 
 
 static void _NEGO_BackSelect6(POKEMON_TRADE_WORK* pWork)
@@ -552,16 +578,10 @@ static void _NEGO_BackSelect6(POKEMON_TRADE_WORK* pWork)
     return;
   }
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-    POKETRADE_MESSAGE_WindowClear(pWork);
-    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-      if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
-                                   POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID)){
-        _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
-      }
-    }
-    else{
-      _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
-    }
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
+    _CHANGE_STATE(pWork,_NEGO_BackSelect7);
   }
 }
 
@@ -637,7 +657,6 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
   pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
   
-  _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,pWork);
   _CHANGE_STATE(pWork, _NEGO_BackSelect6);
 
 }
@@ -1693,42 +1712,6 @@ static void _Select6MessageInit6(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork, _Select6MessageInit81);
   }
 }
-
-
-
-static void _Select6MessageInitEndNoSend(POKEMON_TRADE_WORK* pWork)
-{
-  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
-  }
-  else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID)){
-    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
-  }
-}
-
-
-
-
-static void _Select6MessageInitEndNoSend3(POKEMON_TRADE_WORK* pWork)
-{
-  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    u8 flg = POKEMONTORADE_SEQ_WAIT;
-    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&flg)){
-      _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
-    }
-  }
-  else{
-    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
-  }
-}
-
 
 static void _Select6MessageInitEndNoSend2(POKEMON_TRADE_WORK* pWork)
 {

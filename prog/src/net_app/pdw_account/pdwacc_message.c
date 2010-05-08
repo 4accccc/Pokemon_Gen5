@@ -639,22 +639,8 @@ void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u32 profileID,int n
   pwin = pWork->noTitleDispWin;
   GFL_FONTSYS_SetColor(1, 2, 0);
 
-#if PM_DEBUG
-#if DEBUG_ONLY_FOR_none
   GFL_MSG_GetString( pWork->pMsgData, PDWACC_009, pWork->pStrBuf );
-#else
 
-  GFL_MSG_GetString( pWork->pMsgData, PDWACC_DEBUG001, pWork->pStrExBuf );
-  WORDSET_RegisterNumber(pWork->pWordSet, 0, no%100000 ,
-                         5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber(pWork->pWordSet, 1, (no/100000),
-                         5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pStrExBuf );
-
-#endif
-#else
-  GFL_MSG_GetString( pWork->pMsgData, PDWACC_009, pWork->pStrBuf );
-#endif
   PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle);
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);

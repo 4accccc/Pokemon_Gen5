@@ -589,6 +589,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
   }
   //---
     // メール登録
+  if(pWork->pParentWork->selectBoxno != BOXDAT_GetTrayMax(pWork->pBox)) //てもちの交換の場合
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
@@ -596,6 +597,23 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     if(ITEM_CheckMail(item)){
       MAIL_BLOCK* pMailBlock = GAMEDATA_GetMailBlock(pWork->pGameData);
       MailSys_MoveMailPoke2Paso(pMailBlock, pp, pWork->heapID);
+
+      {
+        int i;
+        MAIL_DATA *mailData  = MailData_CreateWork(pWork->heapID);
+        int no = PP_Get( pp , ID_PARA_monsno ,NULL);
+        u8* buff=(u8*)mailData;
+
+        OS_TPrintf("ポケモン番号 %d のメール\n",no);
+        PP_Get( pp , ID_PARA_mail_data , mailData );
+
+        for(i=0;i < MailData_GetDataWorkSize();i++){
+          OS_TPrintf("%x",buff[i]);
+        }
+        OS_TPrintf("\n");
+        GFL_HEAP_FreeMemory( mailData );
+      }
+
     }
   }
 
@@ -694,11 +712,13 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 
 static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
 {
-
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  _CHANGE_STATE(pWork,_saveStart);
+
+  if(pWork->anmCount > 180){
+    _CHANGE_STATE(pWork,_saveStart);
+  }
 }
 
 
@@ -736,6 +756,7 @@ static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
 
 
   // メールがあったらボックスに
+  if(pWork->pParentWork->selectBoxno != BOXDAT_GetTrayMax(pWork->pBox)) //BOXの交換の場合
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
@@ -744,6 +765,7 @@ static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       _CHANGE_STATE(pWork,_mailBoxStart);
+      pWork->anmCount=0;
       return;
     }
   }

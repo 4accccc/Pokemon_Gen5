@@ -2177,7 +2177,7 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     switch(side){
     case 0:
     case 1:
-      x = 2 * 8 + side * 16 * 8 + 4;
+      x = 2 * 8 + side * 16 * 8;
       y = 17*8-4;
       prm.draw_type = CLSYS_DRAW_SUB;
       prm.pltt_line = PLTID_OBJ_POKEITEM_S;
@@ -2529,10 +2529,6 @@ void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int Ringline, int pos,i
   cellInitData.bgpri = 0;
 
 
-  OS_TPrintf("pokeIconNcgRes %d %d %d \n",Ringline,pos,pWork->pokeIconNcgRes[Ringline][pos]);
-//  pWork->pokeIconNcgRes[line][pos]
-
-  
   pWork->curIcon[CELL_CUR_POKE_KEY] =
     GFL_CLACT_WK_Create( pWork->cellUnit ,
                          pWork->pokeIconNcgRes[Ringline][pos],
