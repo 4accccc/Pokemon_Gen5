@@ -822,7 +822,9 @@ sub_receipt_challenge_multi_comm:
     ENDIF
     
     IF $SCWK_ANSWER == FALSE THEN //失敗
-      _CALL sub_bsw_common_comm_exit
+      _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
+      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+      _CALL sub_bsw_common_exit
       _RET
     ENDIF
   ENDIF    
@@ -960,6 +962,8 @@ sub_receipt_challenge_multi_comm_connect_leader:
     $SCWK_ANSWER = FALSE
   CASE BSWAY_COMM_PERENT_ENTRY_ERROR THEN //エラー
     $SCWK_ANSWER = FALSE
+  DEFAULT
+    $SCWK_ANSWER = FALSE
   ENDSWITCH
 }
 _RET
@@ -972,12 +976,13 @@ sub_receipt_challenge_multi_comm_connect_group:
 {
   //子参加メニュー
   _BSUBWAY_TOOL( BSWSUB_COMM_ENTRY_CHILD_MENU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-  $SCWK_ANSWER = BSWAY_COMM_PERENT_ENTRY_ERROR
   
   SWITCH $SCWK_ANSWER
   CASE BSWAY_COMM_CHILD_ENTRY_OK THEN //OK
     $SCWK_ANSWER = TRUE
   CASE BSWAY_COMM_CHILD_ENTRY_NG THEN //NG
+    $SCWK_ANSWER = FALSE
+  DEFAULT
     $SCWK_ANSWER = FALSE
   ENDSWITCH
 }
@@ -1025,7 +1030,7 @@ sub_receipt_challenge_wifi:
   //wifi接続
   IF $dl_play == TRUE THEN
     _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, ret )
-    _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_DL_DATA, BSW_NULL, BSW_NULL, ret )
+//  _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_DL_DATA, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == FALSE THEN
       _CALL sub_bsw_common_exit

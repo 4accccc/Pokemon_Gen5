@@ -1558,18 +1558,19 @@ static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk )
   if( entry_ret != COMM_ENTRY_RESULT_NULL ){
     CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
     bsw_scr->pCommEntryMenu = NULL;
-  }
-  
-  switch( entry_ret ){
-  case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
-    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_OK;
-    return( TRUE );
-  case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
-    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_CANCEL;
-    return( TRUE );
-  case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
-    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_ERROR;
-    return( TRUE );
+    
+    switch( entry_ret ){
+    case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
+      (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_OK;
+      return( TRUE );
+    case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
+      (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_CANCEL;
+      return( TRUE );
+    case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
+    default:
+      (*bsw_scr->pCommEntryResult) = BSWAY_COMM_PERENT_ENTRY_ERROR;
+      return( TRUE );
+    }
   }
   
   return( FALSE );
@@ -1606,17 +1607,18 @@ static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk )
   if( entry_ret != COMM_ENTRY_RESULT_NULL ){
     CommEntryMenu_Exit( bsw_scr->pCommEntryMenu );
     bsw_scr->pCommEntryMenu = NULL;
+
+    switch( entry_ret ){
+    case ENTRY_PARENT_ANSWER_OK:      //エントリーOK
+      (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_OK;
+      return( TRUE );
+    case ENTRY_PARENT_ANSWER_NG:    //エントリーNG
+    default:
+      (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_NG ;
+      return( TRUE );
+    }
   }
-  
-  switch( entry_ret ){
-  case ENTRY_PARENT_ANSWER_OK:      //エントリーOK
-    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_OK;
-    return( TRUE );
-  case ENTRY_PARENT_ANSWER_NG:    //エントリーNG
-    (*bsw_scr->pCommEntryResult) = BSWAY_COMM_CHILD_ENTRY_NG ;
-    return( TRUE );
-  }
-  
+
   return( FALSE );
 }
 
