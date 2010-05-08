@@ -293,7 +293,6 @@ void WIPE_SYS_Start(int pattern, int wipe_m, int wipe_s, u16 color, int division
 		resetMstBrightnessCheck_Do( &scw->wipe_s );
 		scw->effect_flg_s = TRUE;
 	}
-
 }
 
 

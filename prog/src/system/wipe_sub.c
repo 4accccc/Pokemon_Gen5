@@ -61,6 +61,9 @@ typedef struct {
 	int end_num;
 	int add_num;
 	int disp;
+
+  int set_brightness;
+	GFL_TCB * VBtcb;
 	
 } WIPE_BRIGHTNESS_FADE;
 
@@ -610,6 +613,7 @@ static void scchg_h_VMoveWnd_Main( void* p_work );
 static void scchg_FadeInit(WIPE_SYS_WIPE_WORK* wipe, int fade_flag);
 static BOOL scchg_FadePack(WIPE_SYS_WIPE_WORK* wipe);
 static BOOL scchg_FadeCalcMain( WIPE_BRIGHTNESS_FADE* data );
+static void scchg_FadeVBlank( GFL_TCB* p_tcb, void* p_work );
 
 // 四角表示ウィンドウ処理用
 static void scchg_WndMovePackInit( WIPE_SYS_WIPE_WORK* wipe, const WIPE_TYPE_WND_MOVE_FP* pram );
@@ -2517,8 +2521,12 @@ static void scchg_FadeInit(WIPE_SYS_WIPE_WORK* wipe, int fade_flag)
 	data->end_num		= end * SUM_NUM_MINI;
 	data->add_num		= sum_add_num( start, end, wipe->division );
 	data->disp			= wipe->disp;
-
+  data->set_brightness = start;
+  
 	wipe->sequence++;
+
+  //ぶらいとねすVBlank反映
+  data->VBtcb = GFUser_VIntr_CreateTCB( scchg_FadeVBlank, data, 128 );
 }
 
 
@@ -2550,6 +2558,7 @@ static BOOL scchg_FadePack(WIPE_SYS_WIPE_WORK* wipe)
 		break;
 
 	case WIPE_END:
+    GFL_TCB_DeleteTask( data->VBtcb );
 		GFL_HEAP_FreeMemory(wipe->wipe_work);
 		wipe->wipe_work = NULL;
 		wipe->sequence++;
@@ -2594,10 +2603,22 @@ static BOOL scchg_FadeCalcMain( WIPE_BRIGHTNESS_FADE* data )
 			data->set_num = data->end_num;
 			ret = TRUE;
 		}
-		WIPE_SetMstBrightness( data->disp, data->set_num / SUM_NUM_MINI );
+    data->set_brightness = data->set_num / SUM_NUM_MINI;
+		//WIPE_SetMstBrightness( data->disp, data->set_num / SUM_NUM_MINI );
 	}
 
 	return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  VBlankマスターブライトネス操作
+ */
+//-----------------------------------------------------------------------------
+static void scchg_FadeVBlank( GFL_TCB* p_tcb, void* p_work )
+{
+  WIPE_BRIGHTNESS_FADE* p_wk = p_work;
+  WIPE_SetMstBrightness( p_wk->disp, p_wk->set_brightness );
 }
 
 // Hブランク専用

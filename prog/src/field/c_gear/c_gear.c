@@ -924,6 +924,7 @@ static void SleepMode_NetSleepStart( C_GEAR_WORK* pWork );
 static void SleepMode_NetSleepEnd( C_GEAR_WORK* pWork );
 static void SleepMode_End( C_GEAR_WORK* pWork );
 static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork );
+static void SleepMode_ColorUpdateEx( C_GEAR_WORK* pWork );
 static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork );
 
 // パレットフェード
@@ -944,6 +945,10 @@ static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk );
 // CGEAR演出イベント
 static GMEVENT* EVENT_ButtonEffectWaitCall( C_GEAR_WORK* pWork, u32 createEvent );
 static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk );
+
+
+//スリープチェック
+static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction );
 
 
 #ifdef _NET_DEBUG
@@ -3183,6 +3188,11 @@ static void _gearAllObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
   if( pWork->cellRadar && pWork->power_flag ){
     GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, bFlg );
   }
+
+  // 時計再設定
+  if( bFlg == TRUE ){
+    _timeAnimation( pWork );
+  }
   
 }
 
@@ -4096,9 +4106,27 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   _gearCrossObjMain( pWork );
 
 
+  //初期設定を行う。
+  {
+    if( power_effect == FALSE ){
+
+      // スリープチェック
+      _cgear_SleepCheck( pWork, !(GAMESYSTEM_IsEventExists( pGameSys )) );
+      // スリープカラー反映
+      SleepMode_ColorUpdateEx( pWork );
+    }
+    
+    // 時計を合わせる。
+    _timeAnimation(pWork);
+  }
+
+
   //  _PFadeToBlack(pWork);
   //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
 
+  //SleepMode_ColorUpdateExの結果を実行
+  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+  
   return pWork;
 }
 
@@ -4156,26 +4184,8 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
 
 void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
-  // 通信OFF時は強制スリープ
-  if( (GFL_NET_IsInit() ==FALSE) && pWork->power_flag ){
-    // スリープ
-    SleepMode_NetSleepStart( pWork );
-  }else{
-    // スリープOFF
-    SleepMode_NetSleepEnd( pWork );
-  }
-  
-  if(pWork->bAction != bAction){
-
-    // イベント中は、画面を暗く
-    if( bAction == FALSE ){
-      SleepMode_Start( pWork );
-    }else{
-      SleepMode_End( pWork );
-    }
-
-    pWork->bAction = bAction;
-  }
+  // スリープチェック
+  _cgear_SleepCheck( pWork, bAction );
 
   // スリープ時は強制停止
   if( SleepMode_IsSleep( pWork ) && 
@@ -4243,9 +4253,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
       state(pWork);
     }
   }
+
+
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
-
-
 }
 
 
@@ -4566,8 +4576,6 @@ static void _modeEventWait( C_GEAR_WORK* pWork )
 }
 
 
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  スリープモード開始
@@ -4641,7 +4649,6 @@ static void SleepMode_End( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork )
 {
-  BOOL sleep_mode;
   if( pWork->sleep_color_req ){
 
     pWork->sleep_color_chenage_wait++;
@@ -4650,6 +4657,15 @@ static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork )
       _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
       pWork->sleep_color_req = FALSE;
     }
+  }
+}
+
+// 強制色変換処理
+static void SleepMode_ColorUpdateEx( C_GEAR_WORK* pWork )
+{
+  if( pWork->sleep_color_req ){
+    _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
+    pWork->sleep_color_req = FALSE;
   }
 }
 
@@ -4975,6 +4991,36 @@ static void _modeStateSelectNgAnimeWait( C_GEAR_WORK* pWork )
     _modeSelectNgAnimExit( pWork );
     // 完了
     _CHANGE_STATE(pWork, _modeSelectMenuWait);
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープチェック
+ */
+//-----------------------------------------------------------------------------
+static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction )
+{
+  // 通信OFF時は強制スリープ
+  if( (GFL_NET_IsInit() ==FALSE) && pWork->power_flag ){
+    // スリープ
+    SleepMode_NetSleepStart( pWork );
+  }else{
+    // スリープOFF
+    SleepMode_NetSleepEnd( pWork );
+  }
+  
+  if(pWork->bAction != bAction){
+
+    // イベント中は、画面を暗く
+    if( bAction == FALSE ){
+      SleepMode_Start( pWork );
+    }else{
+      SleepMode_End( pWork );
+    }
+
+    pWork->bAction = bAction;
   }
 }
 
