@@ -74,8 +74,13 @@ enum
 #define FOOTMARK_VANISH_START_FRAME (16)			///<点滅開始フレーム(赤緑40)
 #define FOOTMARK_VANISH_END_FRAME (28)				///<点滅終了フレーム(赤緑56)
 
-#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*4+0xa00-1)
-#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*4+0xa00-1)
+#if 0
+#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*1+0x200)
+#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*1+0x200)
+#else
+#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*1+0x300)
+#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*1+0x300)
+#endif
 
 //======================================================================
 //  struct
@@ -239,6 +244,9 @@ static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
     no = FOOTMARK_WALK_UP + now_dir;
     break;
   case FOOTMARK_TYPE_CYCLE:
+    if( old_dir != now_dir ){
+      OS_Printf( "CYCLE OLD %d, NOW %d\n", old_dir, now_dir );
+    }
     no = data_FootMarkCycleDirTbl[old_dir][now_dir];
     break;
   case FOOTMARK_TYPE_HUMAN_SNOW:
@@ -286,7 +294,7 @@ void FLDEFF_FOOTMARK_SetMMdl(
   MMDL_GetVectorPos( mmdl, &pos ); //y
   MMDL_TOOL_GetCenterGridPos(
       MMDL_GetOldGridPosX(mmdl), MMDL_GetOldGridPosZ(mmdl), &pos );
-
+  
   pos.y += FOOTMARK_OFFSPOS_Y;
   
   if( type == FOOTMARK_TYPE_HUMAN &&
@@ -470,8 +478,18 @@ static const u16 data_FootMarkArcIdx[FOOTMARK_ALL_MAX] =
 //--------------------------------------------------------------
 static const u8 data_FootMarkCycleDirTbl[DIR_MAX4][DIR_MAX4] =
 {
+	{FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_DR,FOOTMARK_CYCLE_DL},
+	{FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_UR,FOOTMARK_CYCLE_UL},
+	{FOOTMARK_CYCLE_UL,FOOTMARK_CYCLE_DL,FOOTMARK_CYCLE_LR,FOOTMARK_CYCLE_LR},
+	{FOOTMARK_CYCLE_UR,FOOTMARK_CYCLE_DR,FOOTMARK_CYCLE_LR,FOOTMARK_CYCLE_LR},
+};
+
+#if 0
+static const u8 data_FootMarkCycleDirTbl[DIR_MAX4][DIR_MAX4] =
+{
 	{FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_UR,FOOTMARK_CYCLE_UL},
 	{FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_UD,FOOTMARK_CYCLE_DR,FOOTMARK_CYCLE_DL},
 	{FOOTMARK_CYCLE_DL,FOOTMARK_CYCLE_UL,FOOTMARK_CYCLE_LR,FOOTMARK_CYCLE_LR},
 	{FOOTMARK_CYCLE_DR,FOOTMARK_CYCLE_UR,FOOTMARK_CYCLE_LR,FOOTMARK_CYCLE_LR},
 };
+#endif
