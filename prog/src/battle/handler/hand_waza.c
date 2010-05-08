@@ -1441,12 +1441,16 @@ static void handler_Kawarawari_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVF
     ||  BTL_HANDER_SIDE_IsExist(side, BTL_SIDEEFF_HIKARINOKABE)
     ){
       BTL_HANDEX_PARAM_SIDEEFF_REMOVE* param;
+      BTL_HANDEX_PARAM_SET_EFFECT_IDX* eff_param;
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
       param->side = side;
       BTL_CALC_BITFLG_Construction( param->flags, sizeof(param->flags) );
       BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_REFRECTOR );
       BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_HIKARINOKABE );
+
+      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_EFFECT_IDX, pokeID );
+      eff_param->effIndex = BTLV_WAZAEFF_KAWARAWARI_BREAK;
     }
   }
 }
@@ -5395,7 +5399,6 @@ static const BtlEventHandlerTable*  ADD_Gaman( u32* numElems )
     { BTL_EVENT_DECIDE_TARGET,             handler_Gaman_Target   },
     { BTL_EVENT_WAZA_DMG_PROC1,            handler_Gaman_Damage   },
     { BTL_EVENT_WAZA_EXECUTE_FAIL,         handler_Gaman_Fail     },
-//  { BTL_EVENT_WAZA_DMG_DETERMINE,        handler_Gaman_DamageDetermine }
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

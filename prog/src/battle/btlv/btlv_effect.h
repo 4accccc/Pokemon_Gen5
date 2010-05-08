@@ -151,6 +151,10 @@ typedef enum {
   BTLV_WAZAEFF_PRESENT_DAMAGE = 0,  ///< ダメージ
   BTLV_WAZAEFF_PRESENT_RECOVER,     ///< HP回復
 
+  // かわらわり
+  BTLV_WAZAEFF_KAWARAWARI_DEFAULT = 0, ///< 通常
+  BTLV_WAZAEFF_KAWARAWARI_BREAK,       ///< リフレクター等を破壊
+
   // ウェザーボール
   BTLV_WAZAEFF_WEATHERBALL_NORMAL = 0,  ///< ノーマル
   BTLV_WAZAEFF_WEATHERBALL_SHINE,       ///< にほんばれ

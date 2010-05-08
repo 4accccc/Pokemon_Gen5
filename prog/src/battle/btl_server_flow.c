@@ -6139,10 +6139,8 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   {
     u32 dmg_sum = scproc_Fight_damage_side_core( wk, attacker, targets, affAry, wazaParam,
                   hitCheckParam, dmg_ratio, fTargetPlural );
-    if( dmg_sum ){
-      scproc_WazaDamageSideAfter( wk, attacker, wazaParam, dmg_sum );
-      return dmg_sum;
-    }
+    scproc_WazaDamageSideAfter( wk, attacker, wazaParam, dmg_sum );
+    return dmg_sum;
   }
 
   return 0;
@@ -6224,7 +6222,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   if( HITCHECK_IsFirstTime(hitCheckParam) )
   {
     for(i=0; i<poke_cnt; ++i){
-      if( dmg[i] ){ scproc_Fight_Damage_Determine( wk, attacker, bpp[i], wazaParam ); }
+      scproc_Fight_Damage_Determine( wk, attacker, bpp[i], wazaParam );
     }
   }
 
@@ -6241,11 +6239,9 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   // ダメージ記録
   for(i=0; i<poke_cnt; ++i)
   {
-    if( dmg[i] ){
-      BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], dmg[i] );
-      wazaDmgRec_Add( wk, atkPos, attacker, bpp[i], wazaParam, dmg[i] );
-      BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );
-    }
+    BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], dmg[i] );
+    wazaDmgRec_Add( wk, atkPos, attacker, bpp[i], wazaParam, dmg[i] );
+    BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );
   }
 
   // こらえ
