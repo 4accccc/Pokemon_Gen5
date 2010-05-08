@@ -61,7 +61,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 ///	デバッグマクロ
 //=====================================
 #ifdef PM_DEBUG
-//#define DEBUGWIN_USE
+#define DEBUGWIN_USE
 
 //#if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
 //#define DEBUG_GPF_PASS
@@ -76,13 +76,20 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 #endif //PM_DEBUG
 
+
+
+
 //デバッグWINインクルード
 #ifdef DEBUGWIN_USE
 //デバッグ
 #include "debug/debugwin_sys.h"
+#include "wifibattlematch_debug.h"
+
+
+#define DEBUGWIN_GROUP_CARD (20)
+#define DEBUGWIN_GROUP_SCORE (30)
+
 #endif//DEBUGWIN_USE
-
-
 
 //=============================================================================
 /**
@@ -274,11 +281,8 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
 ///	デバッグ
 //=====================================
 #ifdef DEBUGWIN_USE
-static void DEBUGWIN_VisiblePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBUGWIN_VisibleMatchInfo( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBUGWIN_ChangePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBUGWIN_ChangeMatchInfo( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBUGWIN_ChangeWaitIcon( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBUGWIN_CARD_Init( WIFIBATTLEMATCH_RND_WORK *p_wk );
+static void DEBUGWIN_CARD_Exit( WIFIBATTLEMATCH_RND_WORK *p_wk );
 #endif //DEBUGWIN_USE
 //=============================================================================
 /**
@@ -380,36 +384,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
 
 #ifdef DEBUGWIN_USE
   DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
-  DEBUGWIN_AddGroupToTop( 0, "ランダムマッチ", HEAPID_WIFIBATTLEMATCH_CORE );
-  DEBUGWIN_AddItemToGroup( "じぶんカード", 
-                              DEBUGWIN_VisiblePlayerInfo,
-                              p_wk, 
-                              0, 
-                              HEAPID_WIFIBATTLEMATCH_CORE );
-
-  DEBUGWIN_AddItemToGroup( "あいてカード", 
-                              DEBUGWIN_VisibleMatchInfo, 
-                              p_wk, 
-                              0, 
-                              HEAPID_WIFIBATTLEMATCH_CORE );
-
-  DEBUGWIN_AddItemToGroup( "じぶんランク", 
-                              DEBUGWIN_ChangePlayerInfo, 
-                              p_wk, 
-                              0, 
-                              HEAPID_WIFIBATTLEMATCH_CORE );
-
-  DEBUGWIN_AddItemToGroup( "あいてランク", 
-                              DEBUGWIN_ChangeMatchInfo, 
-                              p_wk, 
-                              0, 
-                              HEAPID_WIFIBATTLEMATCH_CORE );
-
-  DEBUGWIN_AddItemToGroup( "ぐるぐる[ON]", 
-                              DEBUGWIN_ChangeWaitIcon, 
-                              p_wk, 
-                              0, 
-                              HEAPID_WIFIBATTLEMATCH_CORE );
+  DEBUGWIN_ChangeLetterColor( 0,31,0 );
+  DEBUGWIN_WIFISCORE_Init( HEAPID_WIFIBATTLEMATCH_CORE );
 #endif
 
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
@@ -437,7 +413,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, FALSE );
 
 #ifdef DEBUGWIN_USE
-  DEBUGWIN_RemoveGroup( 0 );
+  DEBUGWIN_WIFISCORE_Exit();
   DEBUGWIN_ExitProc();
 #endif
 
@@ -2998,7 +2974,7 @@ static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBAT
       type  = WIFIBATTLEMATCH_TYPE_RNDFREE;
     }
 
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, type, is_rate, HEAPID_WIFIBATTLEMATCH_CORE );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, type, is_rate, REGULATION_CARD_BGM_TRAINER, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------
@@ -3429,7 +3405,53 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
  *    DEBUG
  */
 //=============================================================================
+static void DEBUGWIN_VisiblePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBUGWIN_VisibleMatchInfo( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBUGWIN_ChangePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBUGWIN_ChangeMatchInfo( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBUGWIN_ChangeWaitIcon( void* userWork , DEBUGWIN_ITEM* item );
+
+
 #ifdef DEBUGWIN_USE
+static void DEBUGWIN_CARD_Init( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{ 
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_CARD, "カード", HEAPID_WIFIBATTLEMATCH_CORE );
+  DEBUGWIN_AddItemToGroup( "じぶんカード", 
+                              DEBUGWIN_VisiblePlayerInfo,
+                              p_wk, 
+                              DEBUGWIN_GROUP_CARD, 
+                              HEAPID_WIFIBATTLEMATCH_CORE );
+
+  DEBUGWIN_AddItemToGroup( "あいてカード", 
+                              DEBUGWIN_VisibleMatchInfo, 
+                              p_wk, 
+                              DEBUGWIN_GROUP_CARD, 
+                              HEAPID_WIFIBATTLEMATCH_CORE );
+
+  DEBUGWIN_AddItemToGroup( "じぶんランク", 
+                              DEBUGWIN_ChangePlayerInfo, 
+                              p_wk, 
+                              DEBUGWIN_GROUP_CARD, 
+                              HEAPID_WIFIBATTLEMATCH_CORE );
+
+  DEBUGWIN_AddItemToGroup( "あいてランク", 
+                              DEBUGWIN_ChangeMatchInfo, 
+                              p_wk, 
+                              DEBUGWIN_GROUP_CARD, 
+                              HEAPID_WIFIBATTLEMATCH_CORE );
+
+  DEBUGWIN_AddItemToGroup( "ぐるぐる[ON]", 
+                              DEBUGWIN_ChangeWaitIcon, 
+                              p_wk, 
+                              DEBUGWIN_GROUP_CARD, 
+                              HEAPID_WIFIBATTLEMATCH_CORE );
+}
+
+static void DEBUGWIN_CARD_Exit( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{ 
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_CARD );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  自分のカード表示
@@ -3672,5 +3694,8 @@ static void DEBUGWIN_ChangeWaitIcon( void* userWork , DEBUGWIN_ITEM* item )
     DEBUGWIN_RefreshScreen();
   }
 }
+
+
+
 
 #endif //DEBUGWIN_USE

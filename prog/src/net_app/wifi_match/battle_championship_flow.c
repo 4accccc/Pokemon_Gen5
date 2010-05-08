@@ -49,7 +49,8 @@
 ///	DEBUG
 //=====================================
 #ifdef PM_DEBUG
-#define DEBUG_REGULATION_R_LOST //メニューでRを押すとレギュレーションを消す
+//#define DEBUG_REGULATION_R_LOST //メニューでRを押すとレギュレーションを消す
+#define DEBUGWIN_USE                  //デバッグウィンドウを使用する
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -135,6 +136,18 @@ static BOOL UTIL_TEXT_IsEnd( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk );
 
 //フロー終了
 static void UTIL_FLOW_End( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET ret );
+
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef DEBUGWIN_USE
+#include "debug/debugwin_sys.h"
+#include "wifibattlematch_debug.h"
+static void DEBUGWIN_WIFI_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heapID );
+static void DEBUGWIN_WIFI_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk );
+static void DEBUGWIN_LIVE_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heapID );
+static void DEBUGWIN_LIVE_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk );
+#endif //DEBUGWIN_USE
 
 //=============================================================================
 /**
@@ -472,6 +485,10 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_START_WIFIMSG:
+#ifdef DEBUGWIN_USE
+    DEBUGWIN_WIFI_Init( p_wk, p_wk->heapID );
+#endif //DEBUGWIN_USE 
+
     UTIL_TEXT_Print( p_wk, BC_STR_04 );
     *p_seq = SEQ_WAIT_WIFIMSG;
     break;
@@ -520,6 +537,9 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             //接続できるとき
             UTIL_FLOW_End( p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET_WIFICUP );
           }
+#ifdef DEBUGWIN_USE
+    DEBUGWIN_WIFI_Exit( p_wk );
+#endif //DEBUGWIN_USE 
           break;
         case 1: //説明を聞く
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiInfo );
@@ -530,6 +550,11 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         case 3: //やめる
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
           //*p_seq  = SEQ_START_CANCELMSG;
+
+#ifdef DEBUGWIN_USE
+    DEBUGWIN_WIFI_Exit( p_wk );
+#endif //DEBUGWIN_USE 
+
           break;
         }
         UTIL_LIST_Delete( p_wk );
@@ -748,6 +773,10 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_START_LIVEMSG:
+#ifdef DEBUGWIN_USE
+    DEBUGWIN_LIVE_Init( p_wk, p_wk->heapID );
+#endif //DEBUGWIN_USE 
+
     UTIL_TEXT_Print( p_wk, BC_STR_06 );
     *p_seq = SEQ_WAIT_LIVEMSG;
     break;
@@ -794,6 +823,9 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             //接続できるとき
             UTIL_FLOW_End( p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET_LIVECUP );
           }
+#ifdef DEBUGWIN_USE
+    DEBUGWIN_LIVE_Exit( p_wk );
+#endif //DEBUGWIN_USE 
           break;
         case 1: //説明を聞く
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveInfo );
@@ -804,6 +836,10 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         case 3: //やめる
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
           //*p_seq  = SEQ_START_CANCELMSG;
+
+#ifdef DEBUGWIN_USE
+    DEBUGWIN_LIVE_Exit( p_wk );
+#endif //DEBUGWIN_USE 
           break;
         }
         UTIL_LIST_Delete( p_wk );
@@ -1116,3 +1152,44 @@ static void UTIL_FLOW_End( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BATTLE_CHAMPIONS
   p_wk->retcode = ret;
   WBM_SEQ_SetNext( p_wk->p_seq, SEQFUNC_End );
 }
+
+//=============================================================================
+/**
+ *    デバッグウィンドウ
+ */
+//=============================================================================
+#ifdef DEBUGWIN_USE
+
+static void DEBUGWIN_WIFI_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heapID )
+{ 
+  REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( SaveControl_GetPointer() );
+  REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI ); 
+
+  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
+  DEBUGWIN_ChangeLetterColor( 0,31,0 );
+  DEBUGWIN_REG_Init( p_reg, heapID );
+  DEBUGWIN_WIFISCORE_Init( heapID );
+}
+static void DEBUGWIN_WIFI_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
+{ 
+  DEBUGWIN_WIFISCORE_Exit();
+  DEBUGWIN_REG_Exit();
+  DEBUGWIN_ExitProc();
+}
+static void DEBUGWIN_LIVE_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heapID )
+{ 
+  REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( SaveControl_GetPointer() );
+  REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE ); 
+
+  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
+  DEBUGWIN_ChangeLetterColor( 0,31,0 );
+  DEBUGWIN_REG_Init( p_reg, heapID );
+  DEBUGWIN_LIVESCORE_Init( heapID );
+}
+static void DEBUGWIN_LIVE_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
+{ 
+  DEBUGWIN_LIVESCORE_Exit();
+  DEBUGWIN_REG_Exit();
+  DEBUGWIN_ExitProc();
+}
+#endif //DEBUGWIN_USE

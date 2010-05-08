@@ -1526,7 +1526,8 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
       BOOL                is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
       REGULATION_BATTLE_TYPE  battle_type  = Regulation_GetParam( p_reg, REGULATION_BATTLETYPE );
 
-      battle_mode = battle_type * 2 + is_shooter;
+      battle_mode = BATTLE_MODE_COMPETITION_SINGLE + battle_type * 2 + is_shooter;
+
     }
   }
 

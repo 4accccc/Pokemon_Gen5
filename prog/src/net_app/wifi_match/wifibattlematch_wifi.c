@@ -4154,7 +4154,8 @@ static void Util_MatchInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, const WIFIBA
   if( p_wk->p_matchinfo == NULL )
   { 
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_WIFICUP, TRUE, HEAPID_WIFIBATTLEMATCH_CORE );
+    REGULATION_CARD_BGM_TYPE type = Regulation_GetCardParam( p_wk->p_reg, REGULATION_CARD_BGM );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->p_res, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_WIFICUP, TRUE, type, HEAPID_WIFIBATTLEMATCH_CORE );
   }
 }
 //----------------------------------------------------------------------------
@@ -4557,10 +4558,13 @@ static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
   DEBUGWIN_ChangeLetterColor( 0,31,0 );
 
   DEBUGWIN_REG_Init( p_wk->p_reg, heapID );
-
+  DEBUGWIN_WIFISCORE_Init( heapID );
+  DEBUGWIN_SAKERECORD_Init( p_wk->p_param->p_record_data, heapID );
 }
 static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 { 
+  DEBUGWIN_SAKERECORD_Exit();
+  DEBUGWIN_WIFISCORE_Exit();
   DEBUGWIN_REG_Exit();
 
   DEBUGWIN_ExitProc();

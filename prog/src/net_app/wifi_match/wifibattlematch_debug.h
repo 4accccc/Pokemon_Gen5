@@ -20,6 +20,9 @@
 //デバッグウィンドウ使用するかどうか
 #define DEBUGWIN_REG_USE
 #define DEBUGWIN_SAKE_RECORD_DATA_USE
+#define DEBUGWIN_WIFISCORE_USE
+#define DEBUGWIN_LIVESCORE_USE
+
 
 #define DEBUGWIN_GROUP_REG (41)
 #define DEBUGWIN_GROUP_REG_DATE (42)
@@ -30,6 +33,11 @@
 #define DEBUGWIN_GROUP_SAKE_RECORD_YOUPOKE (54)
 #define DEBUGWIN_GROUP_SAKE_RECORD_DATE  (55)
 #define DEBUGWIN_GROUP_SAKE_RECORD_RESULT  (55)
+
+#define DEBUGWIN_GROUP_WIFISCORE  (60)
+#define DEBUGWIN_GROUP_LIVESCORE  (65)
+#define DEBUGWIN_GROUP_LIVESCORE_MY  (66)
+#define DEBUGWIN_GROUP_LIVESCORE_FOE  (67)
 
 //=============================================================================
 /**
@@ -340,7 +348,24 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH, p_wk->same_match );
   }
 }
-
+static inline void DebugWin_Reg_U_Clear( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  { 
+    p_wk->cup_no  = 0;
+    p_wk->start_year = 0;
+    p_wk->start_month = 0;
+    p_wk->start_day = 0;
+    p_wk->end_year = 0;
+    p_wk->end_month = 0;
+    p_wk->end_day = 0;
+    p_wk->status = 0;
+    p_wk->bgm = 0;
+    p_wk->same_match = 0;
+    DEBUGWIN_RefreshScreen();
+  }
+}
 
 //-------------------------------------
 ///	public
@@ -353,6 +378,7 @@ static inline void DEBUGWIN_REG_Init( REGULATION_CARDDATA *p_regulation, HEAPID 
 
   DEBUGWIN_AddItemToGroup( "しゅとく", DebugWin_Reg_U_Get, &debug_data, DEBUGWIN_GROUP_REG, heapID ); 
   DEBUGWIN_AddItemToGroup( "せってい", DebugWin_Reg_U_Set, &debug_data, DEBUGWIN_GROUP_REG, heapID ); 
+  DEBUGWIN_AddItemToGroup( "けす", DebugWin_Reg_U_Clear, &debug_data, DEBUGWIN_GROUP_REG, heapID ); 
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_REG_DATE, "かいさいきかん", DEBUGWIN_GROUP_REG, heapID );
 
 
@@ -780,5 +806,281 @@ static inline void DEBUGWIN_SAKERECORD_Exit( void )
 #define DEBUGWIN_SAKERECORD_Init( ... )  /*  */
 #define DEBUGWIN_SAKERECORD_Exit( ... )  /*  */
 #endif //DEBUGWIN_SAKE_RECORD_DATA_USE
+
+
+#ifdef DEBUGWIN_WIFISCORE_USE
+#include "savedata/save_control.h"
+#include "savedata/battlematch_savedata.h"
+#include "savedata/rndmatch_savedata.h"
+
+static int s_score_page = 0;
+
+//=============================================================================
+/**
+ *    WIFISCORE
+ */
+//=============================================================================
+static inline void DebugWin_WifiScore_U_Page( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DebugWin_Util_ChangeData( item, &s_score_page, 0, RNDMATCH_TYPE_MAX-1 );
+}
+static inline void DebugWin_WifiScore_D_Page( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *sc_tbl[] =
+  { 
+    "フリーシングル",
+    "フリーダブル",
+    "フリートリプル",
+    "フリーローテ",
+    "フリーシュータ",
+    "レートシングル",
+    "レートダブル",
+    "レートトリプル",
+    "レートローテ",
+    "レートシュータ",
+    "WIFIたいかい"
+  };
+
+  DEBUGWIN_ITEM_SetNameV( item , "タイプ[%s]", sc_tbl[ s_score_page ] );  
+}
+
+
+static inline void DebugWin_WifiScore_U_Win( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  RNDMATCH_DATA *p_sv = userWork;
+  u16 param = RNDMATCH_GetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_WIN );
+
+  DebugWin_Util_ChangeDataU16( item, &param, 0, 0xFFFF );
+
+  RNDMATCH_SetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_WIN, param ); 
+}
+
+static inline void DebugWin_WifiScore_D_Win( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  RNDMATCH_DATA *p_sv = userWork;
+  u16 param = RNDMATCH_GetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_WIN );
+
+  DEBUGWIN_ITEM_SetNameV( item , "かち[%d]", param );  
+}
+
+static inline void DebugWin_WifiScore_U_Lose( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  RNDMATCH_DATA *p_sv = userWork;
+  u16 param = RNDMATCH_GetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_LOSE );
+
+  DebugWin_Util_ChangeDataU16( item, &param, 0, 0xFFFF );
+
+  RNDMATCH_SetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_LOSE, param ); 
+}
+
+static inline void DebugWin_WifiScore_D_Lose( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  RNDMATCH_DATA *p_sv = userWork;
+  u16 param = RNDMATCH_GetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_LOSE );
+
+  DEBUGWIN_ITEM_SetNameV( item , "まけ[%d]", param );  
+}
+
+static inline void DebugWin_WifiScore_U_Rate( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  RNDMATCH_DATA *p_sv = userWork;
+  u16 param = RNDMATCH_GetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_RATE );
+
+  DebugWin_Util_ChangeDataU16( item, &param, 0, 0xFFFF );
+
+  RNDMATCH_SetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_RATE, param ); 
+}
+
+static inline void DebugWin_WifiScore_D_Rate( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  RNDMATCH_DATA *p_sv = userWork;
+  u16 param = RNDMATCH_GetParam( p_sv, s_score_page, RNDMATCH_PARAM_IDX_RATE );
+
+  DEBUGWIN_ITEM_SetNameV( item , "レート[%d]", param );
+}
+
+
+static inline void DEBUGWIN_WIFISCORE_Init( HEAPID heapID )
+{ 
+  RNDMATCH_DATA *p_sv  = BATTLEMATCH_GetRndMatch( SaveData_GetBattleMatch(SaveControl_GetPointer()) );
+
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_WIFISCORE, "WiFIスコア", heapID );
+
+
+  DEBUGWIN_AddItemToGroupEx( DebugWin_WifiScore_U_Page, DebugWin_WifiScore_D_Page,
+       p_sv, DEBUGWIN_GROUP_WIFISCORE, heapID );
+
+  DEBUGWIN_AddItemToGroupEx( DebugWin_WifiScore_U_Win, DebugWin_WifiScore_D_Win,
+       p_sv, DEBUGWIN_GROUP_WIFISCORE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_WifiScore_U_Lose, DebugWin_WifiScore_D_Lose,
+       p_sv, DEBUGWIN_GROUP_WIFISCORE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_WifiScore_U_Rate, DebugWin_WifiScore_D_Rate,
+       p_sv, DEBUGWIN_GROUP_WIFISCORE, heapID );
+}
+
+static inline void DEBUGWIN_WIFISCORE_Exit( void )
+{ 
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_WIFISCORE );
+
+}
+#else
+
+#define DEBUGWIN_WIFISCORE_Init( ... )  /*  */
+#define DEBUGWIN_WIFISCORE_Exit( ... )  /*  */
+
+#endif // DEBUGWIN_WIFISCORE_USE
+
+
+#ifdef DEBUGWIN_WIFISCORE_USE
+#include "savedata/save_control.h"
+#include "savedata/battlematch_savedata.h"
+#include "savedata/livematch_savedata.h"
+
+static int s_livescore_page = 0;
+
+//=============================================================================
+/**
+ *    WIFISCORE
+ */
+//=============================================================================
+static inline void DebugWin_LiveScore_U_MyMacAddr( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+//  DebugWin_Util_ChangeData( item, &s_livescore_page, 0, LIVEMATCH_FOEDATA_MAX-1 );
+}
+static inline void DebugWin_LiveScore_D_MyMacAddr( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 mac_address[7];
+  LIVEMATCH_DATA_GetMyMacAddr( p_sv, mac_address );
+  mac_address[6]  = '\n';
+  DEBUGWIN_ITEM_SetNameV( item , "mac[%s]", mac_address );  
+}
+static inline void DebugWin_LiveScore_U_MyWin( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_WIN );
+  DebugWin_Util_ChangeDataU8( item, &param, 0, 0xFF );
+  LIVEMATCH_DATA_SetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_WIN, param );
+}
+static inline void DebugWin_LiveScore_D_MyWin( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_WIN );
+  DEBUGWIN_ITEM_SetNameV( item , "かち[%d]", param );  
+}
+static inline void DebugWin_LiveScore_U_MyLose( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_LOSE );
+  DebugWin_Util_ChangeDataU8( item, &param, 0, 0xFF );
+  LIVEMATCH_DATA_SetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_LOSE, param );
+}
+static inline void DebugWin_LiveScore_D_MyLose( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_LOSE );
+  DEBUGWIN_ITEM_SetNameV( item , "まけ[%d]", param );  
+}
+static inline void DebugWin_LiveScore_U_MyCnt( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+  DebugWin_Util_ChangeDataU8( item, &param, 0, 0xFF );
+  LIVEMATCH_DATA_SetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_BTLCNT, param );
+}
+static inline void DebugWin_LiveScore_D_MyCnt( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetMyParam( p_sv, LIVEMATCH_MYDATA_PARAM_BTLCNT );
+  DEBUGWIN_ITEM_SetNameV( item , "かいすう[%d]", param );  
+}
+
+static inline void DebugWin_LiveScore_U_FoePage( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DebugWin_Util_ChangeData( item, &s_livescore_page, 0, LIVEMATCH_FOEDATA_MAX-1 );
+}
+static inline void DebugWin_LiveScore_D_FoePage( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_ITEM_SetNameV( item , "たいせんしゃ[%d]", s_livescore_page );  
+}
+static inline void DebugWin_LiveScore_U_FoeMacAddr( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+}
+static inline void DebugWin_LiveScore_D_FoeMacAddr( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 mac_address[7];
+  LIVEMATCH_DATA_GetFoeMacAddr( p_sv, s_livescore_page, mac_address );
+  mac_address[6]  = '\n';
+  DEBUGWIN_ITEM_SetNameV( item , "mac[%s]", mac_address );  
+}
+static inline void DebugWin_LiveScore_U_FoePoke( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_POKE );
+  DebugWin_Util_ChangeDataU8( item, &param, 0, 0xFF );
+  LIVEMATCH_DATA_SetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_POKE, param );
+}
+static inline void DebugWin_LiveScore_D_FoePoke( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_POKE );
+  DEBUGWIN_ITEM_SetNameV( item , "のこりポケ[%d]", param );  
+}
+static inline void DebugWin_LiveScore_U_FoeHp( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_HP );
+  DebugWin_Util_ChangeDataU8( item, &param, 0, 0xFF );
+  LIVEMATCH_DATA_SetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_HP, param );
+}
+static inline void DebugWin_LiveScore_D_FoeHp( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+  u8 param = LIVEMATCH_DATA_GetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_HP );
+  DEBUGWIN_ITEM_SetNameV( item , "HP[%d]", param );  
+}
+
+
+static inline void DEBUGWIN_LIVESCORE_Init( HEAPID heapID )
+{ 
+  LIVEMATCH_DATA *p_sv  = BATTLEMATCH_GetLiveMatch( SaveData_GetBattleMatch(SaveControl_GetPointer()) );
+
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_LIVESCORE, "LIVEスコア", heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_LIVESCORE_MY, "じぶんのスコア", DEBUGWIN_GROUP_LIVESCORE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_MyMacAddr, DebugWin_LiveScore_D_MyMacAddr,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_MY, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_MyWin, DebugWin_LiveScore_D_MyWin,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_MY, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_MyLose, DebugWin_LiveScore_D_MyLose,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_MY, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_MyCnt, DebugWin_LiveScore_D_MyCnt,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_MY, heapID );
+
+  DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUP_LIVESCORE_FOE, "たいせんあいて", DEBUGWIN_GROUP_LIVESCORE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoePage, DebugWin_LiveScore_D_FoePage,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoeMacAddr, DebugWin_LiveScore_D_FoeMacAddr,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoePoke, DebugWin_LiveScore_D_FoePoke,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoeHp, DebugWin_LiveScore_D_FoeHp,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
+}
+
+static inline void DEBUGWIN_LIVESCORE_Exit( void )
+{ 
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_LIVESCORE );
+
+}
+#else
+
+#define DEBUGWIN_LIVESCORE_Init( ... )  /*  */
+#define DEBUGWIN_LIVESCORE_Exit( ... )  /*  */
+
+#endif // DEBUGWIN_WIFISCORE_USE
+
+
 
 #endif  //PM_DEBUG

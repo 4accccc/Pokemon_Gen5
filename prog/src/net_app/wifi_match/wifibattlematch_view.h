@@ -321,7 +321,7 @@ typedef struct _MATCHINFO_WORK MATCHINFO_WORK;
  *					äOïîéQè∆
 */
 //=============================================================================
-extern MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_TYPE mode, BOOL is_rate, HEAPID heapID );
+extern MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_TYPE mode, BOOL is_rate, REGULATION_CARD_BGM_TYPE type, HEAPID heapID );
 extern void MATCHINFO_Exit( MATCHINFO_WORK *p_wk );
 extern BOOL MATCHINFO_PrintMain( MATCHINFO_WORK *p_wk, PRINT_QUE *p_que );
 extern BOOL MATCHINFO_MoveMain( MATCHINFO_WORK * p_wk );

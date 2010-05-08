@@ -1151,13 +1151,14 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
 
   int value=0;
   int rate, disconnect, cup, btlcnt;
-  rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, -1 );
+
+  int you_rate      = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_RATE].keyStr, -1 );
   disconnect= DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].keyStr, -1 );
   btlcnt    = DWC_GetMatchIntValue(index, p_wk->key_wk[MATCHMAKE_KEY_BTLCNT].keyStr, -1 );
   cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, -1 );
 
   //指標キーが反映されていないので、無視する
-  if( rate == -1 && disconnect == -1 && cup == -1 && btlcnt == -1 )
+  if( you_rate == -1 && disconnect == -1 && cup == -1 && btlcnt == -1 )
   { 
     return 0;
   }
@@ -1177,6 +1178,7 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
       (p_wk->key_wk[MATCHMAKE_KEY_BTLCNT].ivalue + MATCHMAKE_EVAL_CALC_DISCONNECT_REVISE);
 
     //差を求める
+    rate        = you_rate;
     rate        -= p_wk->key_wk[MATCHMAKE_KEY_RATE].ivalue;
     rate        = MATH_ABS( rate );
     disconnect_rate  = you_disconnect_rate - my_disconnect_rate;
@@ -1188,7 +1190,16 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
       - disconnect_rate * MATCHMAKE_EVAL_CALC_DISCONNECT_WEIGHT;
 
     value = MATH_IMax( value, 0 );
-    OS_TPrintf( "▼評価値！ %d レート%d 切断比率(自) %d切断比率（相）%d \n", value, rate, my_disconnect_rate, you_disconnect_rate );
+    OS_TPrintf( "▼---------------評価--------------▼\n" );
+    OS_TPrintf( "自分の情報 レート%d 切断回数 %d 試合回数%d カップ%d\n", 
+        p_wk->key_wk[MATCHMAKE_KEY_RATE].ivalue, p_wk->key_wk[MATCHMAKE_KEY_DISCONNECT].ivalue, 
+        p_wk->key_wk[MATCHMAKE_KEY_BTLCNT].ivalue, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].ivalue );
+    OS_TPrintf( "相手の情報 レート%d 切断回数 %d 試合回数%d カップ%d\n", 
+        you_rate, disconnect, 
+        btlcnt, cup );
+
+    OS_TPrintf( "計算結果 評価値%d レート%d 切断比率(自) %d切断比率（相）%d \n", value, rate, my_disconnect_rate, you_disconnect_rate );
+    OS_TPrintf( "▲---------------------------------▲\n" );
   }
   else
   { 

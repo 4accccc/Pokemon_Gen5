@@ -216,7 +216,6 @@ static void UTIL_DATA_SetupMyData_Debug( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, L
 //=====================================
 #ifdef DEBUGWIN_USE
 #include "debug/debugwin_sys.h"
-#define DEBUGWIN_GROUP_LIVEMATCH (60)
 
 
 static void DEBUGWIN_Init( LIVEBATTLEMATCH_FLOW_WORK *p_wk, HEAPID heapID );
@@ -544,6 +543,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_START_MOVEIN_CARD:  //以前の大会カードを表示
     UTIL_PLAYERINFO_Create( p_wk );
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     *p_seq  = SEQ_WAIT_MOVEIN_CARD;
     break;
   case SEQ_WAIT_MOVEIN_CARD:
@@ -957,7 +957,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   { 
   case SEQ_START_DRAW_CARD:  //選手証とバトルボックス表示
     UTIL_PLAYERINFO_Create( p_wk );
-    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
+    UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     UTIL_BTLBOX_Create( p_wk );
     *p_seq  = SEQ_WAIT_DRAW_CARD;
     break;
@@ -2432,7 +2432,8 @@ static void UTIL_MATCHINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, const WIFIBA
   if( p_wk->p_matchinfo == NULL )
   { 
     GFL_CLUNIT  *p_unit	= WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
-    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_LIVECUP, FALSE, p_wk->heapID );
+    REGULATION_CARD_BGM_TYPE type = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
+    p_wk->p_matchinfo		= MATCHINFO_Init( cp_enemy_data, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, WIFIBATTLEMATCH_TYPE_LIVECUP, FALSE, type, p_wk->heapID );
   }
 }
 
@@ -2640,16 +2641,16 @@ static void DEBUGWIN_Init( LIVEBATTLEMATCH_FLOW_WORK *p_wk, HEAPID heapID )
 { 
   DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
   DEBUGWIN_ChangeLetterColor( 0,31,0 );
- // DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_LIVEMATCH, "ライブたいかい", heapID );
 
   DEBUGWIN_REG_Init( p_wk->p_regulation, heapID );
+  DEBUGWIN_LIVESCORE_Init( heapID );
 
 }
 static void DEBUGWIN_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 { 
+  DEBUGWIN_LIVESCORE_Exit();
   DEBUGWIN_REG_Exit();
 
-  //DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_LIVEMATCH );
   DEBUGWIN_ExitProc();
 }
 #endif

@@ -2355,7 +2355,7 @@ static void MatchInfo_STAR_Delete( MATCHINFO_WORK * p_wk );
  *	@return	ƒ[ƒN
  */
 //-----------------------------------------------------------------------------
-MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_TYPE mode, BOOL is_rate, HEAPID heapID )
+MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_CLUNIT *p_unit, const WIFIBATTLEMATCH_VIEW_RESOURCE *cp_res, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, WORDSET *p_word, WIFIBATTLEMATCH_TYPE mode, BOOL is_rate, REGULATION_CARD_BGM_TYPE type, HEAPID heapID )
 {	
 	MATCHINFO_WORK	*	p_wk;
   WBM_CARD_RANK rank;
@@ -2371,7 +2371,6 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
   rank = CalcRank( cp_data->btl_cnt, cp_data->win_cnt, cp_data->lose_cnt );
 	MatchInfo_Bmpwin_Create( p_wk, cp_data, p_font, p_que, p_msg, p_word, rank == WBM_CARD_RANK_BLACK, heapID );
 	MatchInfo_TRAINER_Create( p_wk, MyStatus_GetTrainerView( (MYSTATUS*)cp_data->mystatus ), p_unit, heapID );
-  MatchInfo_STAR_Cleate( p_wk, cp_data, p_unit, cp_res, heapID );
 
 
   {
@@ -2380,17 +2379,41 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
 
     switch( mode )
     { 
+    case WIFIBATTLEMATCH_TYPE_RNDRATE:
+    case WIFIBATTLEMATCH_TYPE_RNDFREE:
+      MatchInfo_STAR_Cleate( p_wk, cp_data, p_unit, cp_res, heapID );
+
+
+      GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 0, 32, 2, 1 );
+      GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 32, 32, 3 + rank );
+      GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 1, 2, 1 );
+      GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 31, 3, 1, 2, 1 );
+      break;
+
     case WIFIBATTLEMATCH_TYPE_WIFICUP:
       /* fallthr */
     case WIFIBATTLEMATCH_TYPE_LIVECUP:
       GFL_BG_WriteScreenExpand( BG_FRAME_M_CARD, 0, 0, 32, 2,
         GFL_BG_GetScreenBufferAdrs(BG_FRAME_M_CARD), 0, 24, 32, 32 );
+
+      switch(type)
+      { 
+      case REGULATION_CARD_BGM_TRAINER: //SEQ_BGM_VS_TRAINER_WIFI
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 0, 32, 2, 1 );
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 32, 32, 3);
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 1, 2, 1 );
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 31, 3, 1, 2, 1 );
+        break;
+      case REGULATION_CARD_BGM_WCS:  //SEQ_BGM_WCS
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 0, 32, 2, 1 );
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 32, 32, 7 );
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 1, 2, 1 );
+        GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 31, 3, 1, 2, 1 );
+        break;
+      }
+
     }
 
-    GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 0, 32, 2, 1 );
-    GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 32, 32, 3 + rank );
-    GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 0, 3, 1, 2, 1 );
-    GFL_BG_ChangeScreenPalette( BG_FRAME_M_CARD, 31, 3, 1, 2, 1 );
     GFL_BG_LoadScreenReq( BG_FRAME_M_CARD );
   }
 
@@ -2411,7 +2434,19 @@ void MATCHINFO_Exit( MATCHINFO_WORK *p_wk )
 {	
   G2_BlendNone();
 
-  MatchInfo_STAR_Delete( p_wk );
+  switch( p_wk->mode )
+  { 
+  case WIFIBATTLEMATCH_TYPE_RNDRATE:
+  case WIFIBATTLEMATCH_TYPE_RNDFREE:
+    MatchInfo_STAR_Delete( p_wk );
+    break;
+
+  case WIFIBATTLEMATCH_TYPE_WIFICUP:
+    /* fallthr */
+  case WIFIBATTLEMATCH_TYPE_LIVECUP:
+    break;
+  }
+
 	MatchInfo_TRAINER_Delete( p_wk );
 	MatchInfo_Bmpwin_Delete( p_wk );
 
