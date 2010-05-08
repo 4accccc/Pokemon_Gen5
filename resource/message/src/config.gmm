@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T12:14:18"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-08T21:04:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1376" top="222" right="2081" bottom="850" maximized="no" rayout="Vertical2">
+	<dialog left="16" top="159" right="721" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -384,11 +384,11 @@
 		<language name="JPN_KANJI" width="216" line="2">ＩＲの　レポート</language>
 	</row>
 
-	<row id="mes_config_menu08" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_menu08" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>メニュー項目「決定」
 ※WBで追加</comment>
 		<language name="JPN" width="216" line="2">けってい</language>
-		<language name="JPN_KANJI" width="216" line="2">けってい</language>
+		<language name="JPN_KANJI" width="216" line="2">決定</language>
 	</row>
 
 	<row id="mes_config_menu09" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -428,16 +428,16 @@
 		<language name="JPN_KANJI" width="216" line="2">見ない</language>
 	</row>
 
-	<row id="mes_config_sm03_00" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_sm03_00" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「試合のルール」-&gt;いれかえ</comment>
 		<language name="JPN" width="216" line="2">いれかえ</language>
-		<language name="JPN_KANJI" width="216" line="2">いれかえ</language>
+		<language name="JPN_KANJI" width="216" line="2">入れ替え</language>
 	</row>
 
-	<row id="mes_config_sm03_01" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_sm03_01" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「試合のルール」-&gt;かちぬき</comment>
 		<language name="JPN" width="216" line="2">かちぬき</language>
-		<language name="JPN_KANJI" width="216" line="2">かちぬき</language>
+		<language name="JPN_KANJI" width="216" line="2">勝ち抜き</language>
 	</row>
 
 	<row id="mes_config_sm04_00" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
