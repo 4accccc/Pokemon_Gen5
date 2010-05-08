@@ -68,6 +68,7 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade24(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade25(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade26(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork);
@@ -82,6 +83,7 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork);
 
 static void _changeTimingSaveStartT1(POKEMON_TRADE_WORK* pWork);
 static void _changeTimingSaveStartT2(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork);
 
 
 
@@ -144,17 +146,28 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-
-
   POKETRADE_MESSAGE_HeapInit(pWork);
 
   PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
-  PMSND_PlayBGM( SEQ_ME_POKEGET );
-  PMSND_FadeInBGM( 8 );
+  PMSND_FadeOutBGM( PMSND_FADE_FAST );
+
+  pWork->anmCount = 0;
+  _CHANGE_STATE(pWork,_changeDemo_ModelTradeMeWait);
+}
 
 
+static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMON_PARAM* pp;
   
+  if(pWork->anmCount < PMSND_FADE_FAST){
+    return;
+  }
+
+  PMSND_PlayBGM( SEQ_ME_POKEGET );
+  PMSND_FadeInBGM( PMSND_FADE_FAST );
+
   if(pWork->type == POKEMONTRADE_TYPE_GTSDOWN){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_20, pWork->pMessageStrBufEx );
   }
@@ -884,8 +897,22 @@ static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
 static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 {
+
+  PMSND_FadeOutBGM( PMSND_FADE_FAST );
+  pWork->anmCount=0;
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade31);
+}
+
+
+static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->anmCount < PMSND_FADE_FAST){
+    return;
+  }
+
   _endBGM(pWork);
 
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
