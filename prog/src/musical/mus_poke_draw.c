@@ -47,6 +47,8 @@ struct _MUS_POKE_DRAW_WORK
 	MUS_POKE_EQUIP_DATA	equipData[MUS_POKE_EQUIP_MAX];
 	VecFx32 shadowOfs;
 	VecFx32 rotateOfs;
+	BOOL isEnableShadow;
+	BOOL isEnableRot;
 };
 
 //描画システム
@@ -150,6 +152,8 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	{
 		work->musMcss[idx].equipData[i].isEnable = FALSE;
 	}
+	work->musMcss[idx].isEnableShadow = FALSE;
+	work->musMcss[idx].isEnableRot = FALSE;
 	VEC_Set( &work->musMcss[idx].shadowOfs ,0,0,0);
 	VEC_Set( &work->musMcss[idx].rotateOfs ,0,0,0);
 	
@@ -299,6 +303,17 @@ VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
 	return &drawWork->rotateOfs;
 }
 
+//デバッグ用
+BOOL* MUS_POKE_DRAW_GetEnableRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
+{
+	return &drawWork->isEnableRot;
+}
+
+BOOL* MUS_POKE_DRAW_GetEnableShadowOfs( MUS_POKE_DRAW_WORK *drawWork )
+{
+	return &drawWork->isEnableShadow;
+}
+
 static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work )
 {
 	MUS_POKE_DRAW_WORK *drawWork = work;
@@ -318,10 +333,12 @@ static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellDat
 	else if( pltNo == MUS_POKE_PLT_SHADOW )
 	{
 		VEC_Set( &drawWork->shadowOfs , cellData->ofs.x ,cellData->ofs.y ,0 );
+	  drawWork->isEnableShadow = TRUE;
 	}
 	else if( pltNo == MUS_POKE_PLT_ROTATE )
 	{
 		VEC_Set( &drawWork->rotateOfs , cellData->ofs.x ,cellData->ofs.y ,0 );
+	  drawWork->isEnableRot = TRUE;
 	}
 	
 	//	ARI_TPrintf("[%d:%d]:[%d:%d]\n"	,(int)F32_CONST(cellData->pos->x),(int)F32_CONST(cellData->pos->y)

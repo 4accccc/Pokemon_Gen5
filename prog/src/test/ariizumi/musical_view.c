@@ -39,6 +39,13 @@
 #define HEAPID_MUSICAL_VIEW (HEAPID_MUSICAL_STAGE)
 #if USE_MUSICAL_EDIT
 
+//デバッグ用マクロ
+#if 1
+#define MUS_VIEW_TPrintf(...) (void)((OS_TFPrintf(3,__VA_ARGS__)))
+#else
+#define MUS_VIEW_TPrintf(...) ((void)0)
+#endif //DEB_ARI
+
 //======================================================================
 //  define
 //======================================================================
@@ -49,6 +56,11 @@
 #define MUS_VIEW_BG_SUB  (GFL_BG_FRAME1_S)
 #define MUS_VIEW_BG_STR  (GFL_BG_FRAME2_S)
 
+#define MUS_VIEW_TEST_KEY_CONT (PAD_BUTTON_L|PAD_BUTTON_R)
+#define MUS_VIEW_TEST_KEY_TRG (PAD_BUTTON_X)
+#define MUS_VIEW_TEST_KEY_TRG_Q (PAD_BUTTON_Y)
+#define MUS_VIEW_TEST_TIME (5*60)
+#define MUS_VIEW_TEST_TIME_QUICK (5)
 //======================================================================
 //  enum
 //======================================================================
@@ -87,8 +99,20 @@ typedef struct
   u16 sex;
   u16 form;
   u16 rare;
+  
+  u8 bgColIdx;
 
   MUSICAL_POKE_PARAM *musPoke;
+  
+  //AutoTest関係
+  BOOL isTest;
+  BOOL isQuickTest;
+  u16  startNo;
+  u16  startForm;
+  u16  cnt;
+  u8   posState[MUS_POKE_EQUIP_MAX];
+  u8   posStateRot;
+  u8   posStateShadow;
   
 }MUS_VIEW_LOCAL_WORK;
 
@@ -101,6 +125,7 @@ static void MUSICAL_VIEW_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgP
 static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work );
+static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_ChangeEquip( MUS_VIEW_LOCAL_WORK *work , const u8 no );
 static void MUSICAL_VIEW_UpdateNumberFunc( const s32 num , const u8 digit , const u8 x , const u8 y );
@@ -366,6 +391,9 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
       {  8 , 24 ,202 ,218 },
       {  8 , 24 ,218 ,234 },
       {  8 , 24 ,234 ,250 },
+      //特殊ボタン(追加分
+      { 72 , 88 , 104 , 120 },
+      { 72 , 88 , 128 , 144 },
 
       { GFL_UI_TP_HIT_END ,0,0,0},
     };
@@ -447,9 +475,195 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
       MUSICAL_VIEW_ChangeEquip( work , ret-12);
       work->isRefresh = TRUE;
       break;
+
+    case 17:
+      {
+        VecFx32 scale;
+        MUS_POKE_DRAW_GetScale( work->pokeWork , &scale );
+        scale.x *= -1;
+        MUS_POKE_DRAW_SetScale( work->pokeWork , &scale );
+        MUS_POKE_DRAW_SetScale( work->pokeWorkBack , &scale );
+      }
+      break;
+
+    case 18:
+      {
+        const u16 bgColArr[] = {0x0000,0x7fff,0x7c1f,0x03e0};
+        work->bgColIdx++;
+        if( work->bgColIdx >= 4 )
+        {
+          work->bgColIdx = 0;
+        }
+        *((u16 *)HW_BG_PLTT) = bgColArr[work->bgColIdx];
+        
+      }
+      
+      break;
+    }
+  }
+  if( (GFL_UI_KEY_GetTrg() & MUS_VIEW_TEST_KEY_TRG) &&
+      (GFL_UI_KEY_GetCont() & MUS_VIEW_TEST_KEY_CONT) )
+  {
+    u8 i;
+    work->isRefresh = TRUE;
+    work->isTest = TRUE;
+    work->isQuickTest = FALSE;
+    work->startNo = work->monsno;
+    work->startForm = work->form;
+    work->cnt = 0;
+    for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+    {
+      work->posState[i] = 0;
+    }
+    work->posStateRot = 0;
+    work->posStateShadow = 0;
+    MUS_VIEW_TPrintf( "---Start Musical view auto test!---\n" );
+  }
+  if( (GFL_UI_KEY_GetTrg() & MUS_VIEW_TEST_KEY_TRG_Q) &&
+      (GFL_UI_KEY_GetCont() & MUS_VIEW_TEST_KEY_CONT) )
+  {
+    u8 i;
+    work->isRefresh = TRUE;
+    work->isTest = TRUE;
+    work->isQuickTest = TRUE;
+    work->startNo = work->monsno;
+    work->startForm = work->form;
+    work->cnt = 0;
+    for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+    {
+      work->posState[i] = 0;
+    }
+    work->posStateRot = 0;
+    work->posStateShadow = 0;
+    MUS_VIEW_TPrintf( "---Start Musical view auto quick test!---\n" );
+  }
+
+}
+
+static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
+{
+  work->cnt++;
+
+  //座標チェック
+  {
+    u8 i;
+    {
+      BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(work->pokeWork);
+      if( *flg == TRUE )
+      {
+        if( work->posStateRot == 0 )
+        {
+          work->posStateRot = 1;
+        }
+      }
+      else
+      {
+        if( work->posStateRot != 0 )
+        {
+          work->posStateRot = 2;
+        }
+      }
+      *flg = FALSE;
+    }
+    {
+      BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(work->pokeWork);
+      if( *flg == TRUE )
+      {
+        if( work->posStateShadow == 0 )
+        {
+          work->posStateShadow = 1;
+        }
+      }
+      else
+      {
+        if( work->posStateShadow != 0 )
+        {
+          work->posStateShadow = 2;
+        }
+      }
+      *flg = FALSE;
+    }
+
+    for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+    {
+      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->pokeWork , i );
+      if( equipData->isEnable == TRUE )
+      {
+        if( work->posState[i] == 0 )
+        {
+          work->posState[i] = 1;
+        }
+      }
+      else
+      {
+        //座標が一瞬あった
+        if( work->posState[i] != 0 )
+        {
+          work->posState[i] = 2;
+        }
+      }
+    }
+  }
+  
+  //リロード
+  if( work->cnt >= MUS_VIEW_TEST_TIME ||
+      (work->cnt >= MUS_VIEW_TEST_TIME_QUICK && work->isQuickTest == TRUE ))
+  {
+    u8 i;
+    char strArr[3][3] ={"×","○","▲"};
+    POKEMON_PERSONAL_DATA *perData = POKE_PERSONAL_OpenHandle( work->monsno, 0, work->heapId );
+    const u8 formNum = POKE_PERSONAL_GetParam( perData , POKEPER_ID_form_max );
+    POKE_PERSONAL_CloseHandle( perData );
+    
+    //座標表示
+    MUS_VIEW_TPrintf( "[%3d][%2d]",work->monsno,work->form );
+    MUS_VIEW_TPrintf( "[%2s]",strArr[work->posStateRot] );
+    MUS_VIEW_TPrintf( "[%2s]",strArr[work->posStateShadow] );
+    for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+    {
+      MUS_VIEW_TPrintf( "[%2s]",strArr[work->posState[i]] );
+    }
+    MUS_VIEW_TPrintf( "\n" );
+
+    if( work->form == formNum-1 )
+    {
+      work->form = 0;
+      if( work->monsno == MONSNO_MAX-2 )  //たまごもあるから-2
+      {
+        work->monsno = 1;
+      }
+      else
+      {
+        work->monsno++;
+      }
+    }
+    else
+    {
+      work->form++;
+    }
+    work->isRefresh = TRUE;
+    work->cnt = 0;
+
+    for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+    {
+      work->posState[i] = 0;
+    }
+    work->posStateRot = 0;
+    work->posStateShadow = 0;
+    if( work->startNo == work->monsno &&
+        work->startForm == work->form )
+    {
+      work->isTest = FALSE;
+      MUS_VIEW_TPrintf( "---Finish Musical view auto test!---\n" );
     }
   }
 
+  if( (GFL_UI_KEY_GetTrg() & MUS_VIEW_TEST_KEY_TRG) &&
+      (GFL_UI_KEY_GetCont() & MUS_VIEW_TEST_KEY_CONT) )
+  {
+    MUS_VIEW_TPrintf( "---Cancel Musical view auto test!---\n" );
+    work->isTest = FALSE;
+  }
 }
 
 static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
@@ -755,12 +969,17 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   work->sex = 0;
   work->form = 0;
   work->rare = 0;
+  work->isDispBit = 0;
+  work->bgColIdx = 0;
   
   work->musPoke = MUSICAL_SYSTEM_InitMusPokeParam( work->monsno , work->sex , work->form , work->rare , 0 , work->heapId );
   work->pokeWork = NULL;
   work->pokeWorkBack = NULL;
   
   work->isUseMcs = FALSE;
+  
+  work->isTest = FALSE;
+  work->isQuickTest = FALSE;
 
   MUSICAL_VIEW_InitGraphic( work );
   if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) )
@@ -790,11 +1009,23 @@ static GFL_PROC_RESULT MusicalViewProc_Term( GFL_PROC * proc, int * seq , void *
 static GFL_PROC_RESULT MusicalViewProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   MUS_VIEW_LOCAL_WORK *work = mywk;
-
-  MUSICAL_VIEW_UpdateUI( work );
+  
+  if( work->isTest == FALSE )
+  {
+    MUSICAL_VIEW_UpdateUI( work );
+  }
+  else
+  {
+    MUSICAL_VIEW_UpdateAutoTest( work );
+  }
   MUSICAL_VIEW_UpdatePoke( work );
   
   MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
+  if( work->isTest == FALSE )
+  {
+    MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
+    MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
+  }
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
   
   {
