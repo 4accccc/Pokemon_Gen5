@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:09:36"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T19:42:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -858,9 +858,9 @@
 覚えさせるのじゃな！　カッ！！</language>
 	</row>
 
-	<row id="msg_skillteach_poster_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_skillteach_poster_01">
 		<comment>ＢＧメッセージ
-・今後WBの最初3匹（の進化系)を追加</comment>
+・未使用</comment>
 		<attribute name="キャラ指定">ポスター</attribute>
 		<language name="JPN" width="256">ここに　しるした　ポケモンに
 きゅうきょくの　わざを　おしえる！▼
