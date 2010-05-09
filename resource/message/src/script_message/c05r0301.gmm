@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T18:32:33"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:56:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c05r0301_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0301_trainerm_01">
 		<comment>♂
 ・合体技教えのメッセージは
  skill_teach_scr.gmm</comment>
@@ -301,9 +301,8 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0301_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c05r0301_woman2_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">みずのちかい
 ほのおのちかい▽
