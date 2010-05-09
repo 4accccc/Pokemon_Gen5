@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T22:35:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:58:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="137" right="2005" bottom="765" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -399,7 +399,7 @@
 モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c05r0601_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_waitress_07" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・waitress_01表示後の選択肢</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -408,7 +408,7 @@
 		<language name="JPN_KANJI" width="256">１本</language>
 	</row>
 
-	<row id="msg_c05r0601_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_waitress_08" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・waitress_01表示後の選択肢</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -417,7 +417,7 @@
 		<language name="JPN_KANJI" width="256">１ダース</language>
 	</row>
 
-	<row id="msg_c05r0601_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_waitress_09" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・waitress_01表示後の選択肢</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -437,9 +437,8 @@
 ぜーんぶ　買ってっちゃったの</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c05r0601_sunglasses_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">あなたー　よくきたー！
 いっぱい　みていけー！</language>
@@ -526,16 +525,16 @@
 どこかに　つながっているんだよな</language>
 	</row>
 
-	<row id="msg_c05r0601_hakaim_end_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_hakaim_end_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・クリア後に出現
 　GRIDX=4、GRIDZ=9
 ・続けて、道具屋の処理（shop_okou）へ</comment>
 		<attribute name="キャラ指定">hakaim</attribute>
-		<language name="JPN" width="256">ぼく　もとプラズマだん　ですが
-おこうは　いりませんか？▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　元プラズマ団　ですが
-おこうは　いりませんか？▼</language>
+		<language name="JPN" width="256">ぼく　もとプラズマだん　です
+いろんな　おこうを　もっています▼</language>
+		<language name="JPN_KANJI" width="256">ぼく　元プラズマ団　です
+いろんな　おこうを　持っています▼</language>
 	</row>
 
 	<flowchart-group-list>
