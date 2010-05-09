@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-05-04T18:55:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:47:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,14 +349,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1092" top="423" right="1592" bottom="1051" maximized="no" rayout="Vertical2">
+	<dialog left="1378" top="211" right="2014" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1104" top="16" right="1577" bottom="414" visible="yes"/>
-		<band id="0" index="1" style="0000" width="492"/>
-		<band id="1" index="2" style="0000" width="185"/>
+		<tag-palette left="807" top="16" right="1280" bottom="414" visible="yes"/>
+		<band id="0" index="1" style="0000" width="461"/>
+		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="305"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="321"/>
+		<band id="4" index="0" style="0000" width="628"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -882,7 +882,7 @@
 これからも　われわれを
 たのしませてくれると　うれしいな</language>
 		<language name="JPN_KANJI" width="256">きみの　ポケモンは　すばらしいね
-いつも　みているんだよ▼
+いつも　拝見しているんだよ▼
 これからも　われわれを
 楽しませてくれると　うれしいな</language>
 	</row>
@@ -898,7 +898,7 @@
 じつに　すばらしい！▽
 ごくじょうの　エンターテイメントだ！</language>
 		<language name="JPN_KANJI" width="256">きみが　参加する　演目は
-すべて　みさせて　もらっている！▼
+すべて　拝見させて　もらっている！▼
 お金持ちな　わたしから　みても
 じつに　すばらしい！▽
 極上の　エンターテイメントだ！</language>
