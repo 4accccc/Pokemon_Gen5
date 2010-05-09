@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:14:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T15:15:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="1024" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -301,7 +301,7 @@
 カゴメは　編んでできた　三角形</language>
 	</row>
 
-	<row id="msg_t03_middlewoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_middlewoman1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -321,7 +321,7 @@
 夜も　ぐっすり　眠れるわ</language>
 	</row>
 
-	<row id="sg_t03_oldwoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="sg_t03_oldwoman1_01">
 		<comment>♀
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -342,7 +342,7 @@
 ちと　長くなるがな▼</language>
 	</row>
 
-	<row id="sg_t03_oldwoman1_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="sg_t03_oldwoman1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けてsg_t03_oldwoman1_02_01</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
@@ -386,7 +386,7 @@
 町の　おきてに　したそうじゃ▼</language>
 	</row>
 
-	<row id="msg_t03_oldwoman1_02_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t03_oldwoman1_02_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 イベント終了</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
@@ -414,7 +414,7 @@
 与えとる　っちゅうことかのう</language>
 	</row>
 
-	<row id="sg_t03_oldwoman1_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="sg_t03_oldwoman1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 イベント終了</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
@@ -424,7 +424,7 @@
 ヒマに　なったら　また　来るとええ</language>
 	</row>
 
-	<row id="msg_t03_babyboy2_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_babyboy2_01">
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -440,7 +440,7 @@
 してないと　ダメなんだって！</language>
 	</row>
 
-	<row id="msg_t03_fishing_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_fishing_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -456,7 +456,7 @@
 サオが　ビンビンと　うなるわい！</language>
 	</row>
 
-	<row id="msg_t03_badman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_badman_01">
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -472,7 +472,7 @@
 付き合わされるんだぜ</language>
 	</row>
 
-	<row id="msg_t03_waitress_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_waitress_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -489,7 +489,7 @@
 考えが　あるんだよね</language>
 	</row>
 
-	<row id="msg_t03_policeman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_policeman_01">
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -505,7 +505,7 @@
 平和　そのもの　だからなー</language>
 	</row>
 
-	<row id="msg_t03_poke_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t03_poke_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -516,7 +516,7 @@
 		<language name="JPN_KANJI" width="256">グッグ！　グッグ！</language>
 	</row>
 
-	<row id="msg_t03_middleman2_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t03_middleman2_01">
 		<comment>♂
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
