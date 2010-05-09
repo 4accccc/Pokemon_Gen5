@@ -9,7 +9,7 @@
 # 引数２：出力するcdatファイル名
 #
 # 使用例）
-# ruby sortlist_make.rb aiueo.txt gts_coutrylist.cdat
+# ruby sort_listmake.rb aiueo.txt gts_country_list.cdat
 #
 #==================================================
 require "csv"
@@ -47,7 +47,7 @@ csv.each{|row|
 
 # 頭文字の出現回数を数え上げる
 headlist.each{|head|
-	a = searchstr.index(head)/2+1
+	a = searchstr.index(head)/2
 	headcount[a] = headcount[a]+1
 #	printf("%d,\n",searchstr.index(head))
 }
@@ -89,7 +89,7 @@ static const u8 CountrySortList[][2]={\n")
 
 50.times{|i|
 	if headcount[i]!=0 then
-		file.printf("\t{ %2d, %2d }, // %s\n", headstart[i], i, searchstr[i-1])
+		file.printf("\t{ %2d, %2d }, // %s\n", headstart[i], i, searchstr[i])
 	end
 }
 file.printf("\t{ %3d, %3d }, // 番兵\n", headstart[49], 255)

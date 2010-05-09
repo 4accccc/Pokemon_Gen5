@@ -59,11 +59,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .dat
 $(targetname2).narc: $(dsources) countrylist.xls
-	copy ..\message\template.gmm .\
+	$(COPY) ../message/template.gmm ./
 	conv.bat
 	conv2.bat
 	ruby sort_listmake.rb aiueo.txt gts_country_list.cdat
-	copy gts_country_list.cdat ..\..\prog\src\net_app\wifi_worldtrade
 	nnsarc -r -l -n -i $(targetname2).narc -S placename.script
 endif
 
@@ -75,6 +74,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 $(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
 	$(COPY) $(targetname2).narc $(TARGETDIR)
 	$(COPY) $(targetname2).naix $(TARGETDIR) 
+	$(COPY) gts_country_list.cdat ../..\prog/src/net_app/wifi_worldtrade
 
 #------------------------------------------------------------------------------
 #	make clean ルール
