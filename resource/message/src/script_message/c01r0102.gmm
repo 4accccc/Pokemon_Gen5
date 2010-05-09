@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T20:24:16"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:12:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -457,9 +457,9 @@
 あつめられるように　なったわ！▽
 ほんとうに　ありがとうね！▼
 かんしゃの　きもち　として
-Ｃ－ＧＥＡＲを▽
+Ｃギアを▽
 つかえるように　するね！▼
-Ｃ－ＧＥＡＲとは　せきがいせんや
+Ｃギアとは　せきがいせんや
 むせん　Ｗｉ－Ｆｉなど▽
 つうしんに　かんけいする　デバイスよ▼</language>
 		<language name="JPN_KANJI" width="256">マコモ『じゃじゃーん！▼
@@ -738,14 +738,14 @@
 発明家</attribute>
 		<language name="JPN" width="256">マコモ『[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]で　ねかせた
 ポケモンを　おこしたら▼
-Ｃギアで　パレスに　いくと
+Ｃギアで　ハイリンクに　いくと
 ポケモンが　みた　ゆめが▽
 げんじつに　なってるわ！▼
 ポケモンたちは　いったい
 どんな　ゆめを　みるのかしらね？</language>
 		<language name="JPN_KANJI" width="256">マコモ『[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]で　寝かせた
 ポケモンを　起こしたあと▼
-Ｃギアで　パレスに　行くと
+Ｃ－ＧＥＡＲで　ハイリンクに　行くと
 ポケモンが　みた　夢が▽
 現実に　なってるわ！▼
 ポケモンたちは　いったい
@@ -1006,7 +1006,7 @@
 		<language name="JPN" width="256">Ｃギア　マニュアル▼
 そうさに　こまったら
 がめんの　？を　タッチ！</language>
-		<language name="JPN_KANJI" width="256">Ｃギア　マニュアル▼
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲ　マニュアル▼
 操作に　困ったら
 画面の　？を　タッチ！</language>
 	</row>
