@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T13:50:49"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T19:45:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -396,16 +396,15 @@
 鳴き声とか　聞こえてきたわよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_02" text-color="#000000,,,,,#000000,,,,,,,,,,,,,">
 		<comment>♀
 ・別方向を向いてメッセージ表示
-・続けてmama_03
-・仮メッセージ</comment>
+・続けてmama_03</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
-		<language name="JPN" width="256">いいなー！
-みんなと　ポケモンしょうぶ▼</language>
-		<language name="JPN_KANJI" width="256">いいなー！
-みんなと　ポケモン勝負▼</language>
+		<language name="JPN" width="256">おもいだしちゃうなー
+はじめての　ポケモンしょうぶ！▼</language>
+		<language name="JPN_KANJI" width="256">思い出しちゃうなー
+初めての　ポケモン勝負！▼</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
@@ -945,21 +944,22 @@
 よろしく　頼んだよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_t01r0101_mama_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♀
-・icpo_end_12表示後、家を出るまで繰り返し
-・仮メッセージ</comment>
+・icpo_end_12表示後、家を出るまで繰り返し</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『とっても　ユニークなのね
 こくさいけいさつの　ひとって▼
 まあ　きにしないで
 あなたの　したいように　すれば▽
-いいと　おもうな！　ママは</language>
+いいと　おもうな！　ママは▼
+だって　もう　おとな　でしょ！？</language>
 		<language name="JPN_KANJI" width="256">ママ『とっても　ユニークなのね
 国際警察の　人って▼
 まあ　気にしないで
 あなたの　したいように　すれば▽
-いいと　思うな！　ママは</language>
+いいと　思うな！　ママは▼
+だって　もう　おとな　でしょ！？</language>
 	</row>
 
 	<flowchart-group-list>
