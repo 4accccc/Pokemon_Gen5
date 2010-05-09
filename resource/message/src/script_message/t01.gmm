@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T11:29:18"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T16:19:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -324,13 +324,13 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『もうしわけないけれど
 ベルの　いえまで　いってくれる？[BE:01:ページ切り替え（クリア）]
-きっと　まだ
-のんびりしていると　おもうんだ▽
+きっと　また　いつものように
+のんびりしているじゃ　ないかな▽
 ほんとう　マイペースだよね</language>
 		<language name="JPN_KANJI" width="256">チェレン『申し訳ないけれど
 ベルの　家まで　行ってくれる？[BE:01:ページ切り替え（クリア）]
-きっと　まだ
-のんびりしていると　思うんだ▽
+きっと　また　いつものように
+のんびりしているじゃ　ないかな▽
 本当　マイペースだよね</language>
 	</row>
 
@@ -357,7 +357,7 @@
 博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01_white_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：図鑑入手後
 ・主人公がt01に来ると自動で表示
 ・0＝主人公名前</comment>
@@ -463,11 +463,11 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『あと　[1:00:トレーナー名:0]の　へやは
 アタシが　かたづけておくから▽
-ベルたちは　きにしなくて　いいのよ▼
+ベルたちは　きにしなくて　いいのよ▽
 ねっ　[1:00:トレーナー名:0]▼</language>
 		<language name="JPN_KANJI" width="256">ママ『あと　[1:00:トレーナー名:0]の　部屋は
 アタシが　片付けておくから▽
-ベルたちは　気にしなくて　いいのよ▼
+ベルたちは　気にしなくて　いいのよ▽
 ねっ　[1:00:トレーナー名:0]▼</language>
 	</row>
 
@@ -524,12 +524,12 @@
 		<language name="JPN" width="256">チェレン『タウンマップを　つかえば
 じぶんが　どこにいるか　わかる……▽
 これは　うれしいね▼
-じゃ　１ばんどうろに　いこう
+じゃ　１ばんどうろに　いこうか
 はかせが　まってる▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『タウンマップを　使えば
 自分が　どこにいるか　わかる……▽
 これは　うれしいね▼
-じゃ　１番道路に　行こう
+じゃ　１番道路に　行こうか
 博士が　待ってる▼</language>
 	</row>
 
@@ -669,7 +669,7 @@
 あなたは　漢字が　好きなのね</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">babygirl1</attribute>
@@ -683,7 +683,7 @@
 あたし　ワクワクしちゃうよー！！</language>
 	</row>
 
-	<row id="msg_t01_white_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_white_00">
 		<comment>♀
 ・移動デモ中(1番道路の表示が出たあと、３人止まって）
 　主人公、ライバルは右向き
@@ -697,7 +697,7 @@
 どきどき　ワクワク　しちゃうね▼</language>
 	</row>
 
-	<row id="msg_t01_black_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_black_00">
 		<comment>♂
 ・ライバル、上向き
 　主人公、サポート、左向き
@@ -848,7 +848,7 @@
 ブラックシティに　行くつもり！▼</language>
 	</row>
 
-	<row id="msg_t01_black_end_04" text-color="#0000ff,,,#ff0000,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてhakase1_end_01</comment>
 		<attribute name="キャラ指定">友達♂
