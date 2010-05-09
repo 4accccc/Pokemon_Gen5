@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T13:52:33"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:35:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,8 +408,8 @@
 限界を決めるのは　自分ってことだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>･仮メッセージ</comment>
+	<row id="msg_d06_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">でんきいしの　ほらあな
 でんきを　おびると　ビリビリビリ！</language>
