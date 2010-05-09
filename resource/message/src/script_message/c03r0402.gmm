@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-05-03T21:00:49"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:29:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c03r0402_director_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・全国版フラグ・増田部長フラグ
 　どちらもまだで話しかけた
-
 ※テキストはプラチナのまま</comment>
 		<attribute name="キャラ指定">MAN2（暫定）</attribute>
 		<language name="JPN" width="256">やあ！
@@ -313,7 +312,7 @@
 ぼくにも　みせて　ほしいな！</language>
 	</row>
 
-	<row id="msg_c03r0402_director_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・イッシュ図鑑完成＝全国版フラグ
 ・以上の条件で話しかけた
@@ -353,7 +352,7 @@
 きみの　家に　送っておきますね！</language>
 	</row>
 
-	<row id="msg_c03r0402_director_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・全国図鑑完成＝増田部長フラグ
 ・2を見た事がある
@@ -384,7 +383,7 @@
 ぜひ　表彰させてください！！▼</language>
 	</row>
 
-	<row id="msg_c03r0402_director_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・2か3の話を終えたら、部屋を出るまで</comment>
 		<attribute name="キャラ指定">MAN2（暫定）</attribute>
@@ -418,9 +417,8 @@
 きみの　家に　送っておきますね！</language>
 	</row>
 
-	<row id="msg_c03r0402_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r0402_01_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">プログラムってのは……▼
 ながく　なるから　やめておきますが
@@ -430,9 +428,8 @@
 スパゲッティは　苦手です</language>
 	</row>
 
-	<row id="msg_c03r0402_02_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c03r0402_02_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">あたし　グラフィッカーなの
 １ドットに　たましいを　こめるの！</language>
@@ -537,7 +534,7 @@
 きみ　いくつ　気がついた？</language>
 	</row>
 
-	<row id="msg_c03r0402_05_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_05_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリア後</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
@@ -553,7 +550,7 @@
 音楽は　どない？▼</language>
 	</row>
 
-	<row id="msg_c03r0402_05_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_05_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリア後＋曲変更後</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
