@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T18:07:06"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:41:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,20 +292,18 @@
 	</lock>
 
 
-	<row id="msg_c04r0101_railman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c04r0101_railman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">RAILMAN
 鉄道員</attribute>
-		<language name="JPN" width="256">こちら　ギアステーションからは
+		<language name="JPN" width="256">こちら　ギアステーションから
 バトルサブウェイに　のれますよ！</language>
-		<language name="JPN_KANJI" width="256">こちら　ギアステーションからは
+		<language name="JPN_KANJI" width="256">こちら　ギアステーションから
 バトルサブウェイに　乗れますよ！</language>
 	</row>
 
-	<row id="msg_c04r0101_railman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c04r0101_railman2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">RAILMAN
 鉄道員</attribute>
 		<language name="JPN" width="256">バトルサブウェイ！[BE:01:ページ切り替え（クリア）]
@@ -339,15 +337,11 @@
 格闘家</attribute>
 		<language name="JPN" width="256">バトルサブウェイは
 ぜんぶで　７ろせん！[BE:01:ページ切り替え（クリア）]
-わたしのいる　ところから
-とおくなるに　つれて▼
-てごわい　トレーナーが　まちかまえる
-トレインに　のれるぞ！</language>
+スーパー　がつく　トレインは
+ちょっと　ふんばらないと　のれないよ</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイは　全７路線！[BE:01:ページ切り替え（クリア）]
-わたしのいる　ところから
-遠くなるに　つれて▼
-てごわい　トレーナーが　待ちかまえる
-トレインに　乗れるぞ！</language>
+スーパー　がつく　トレインは
+ちょっと　ふんばらないと　乗れないよ</language>
 	</row>
 
 	<row id="msg_touroku_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -556,9 +550,8 @@
 		<language name="JPN_KANJI" width="256">カナワタウン行き　トレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_bsboard_01" text-color=",,,#ff0000,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_bsboard_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">バトルサブウェイ
 歴代リーダー画面</attribute>
 		<language name="JPN" width="256">ただいま　ちょうせいちゅう　です</language>
