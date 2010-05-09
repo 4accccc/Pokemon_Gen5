@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T17:40:14"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:05:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1312" top="122" right="2017" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -722,9 +722,8 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c07_girl2_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ
 ・WHITEver</comment>
 		<attribute name="キャラクター">GIRL2
 少女（活発）</attribute>
@@ -747,9 +746,8 @@
 そう　いわれているのよ</language>
 	</row>
 
-	<row id="msg_c07_girl2_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・仮メッセージ
 ・BALCKver</comment>
 		<attribute name="キャラクター">GIRL2
 少女（活発）</attribute>
@@ -772,9 +770,8 @@
 そう　いわれているのよ</language>
 	</row>
 
-	<row id="msg_c07_ambrella_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c07_ambrella_01">
+		<comment>♀</comment>
 		<attribute name="キャラクター">AMBRELLA
 パラソル</attribute>
 		<language name="JPN" width="256">かぜや　ゆきに　さらされても
@@ -821,9 +818,8 @@
 英雄の　誕生を　待つという……</language>
 	</row>
 
-	<row id="msg_c07_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c07_fighterm_01">
+		<comment>♂</comment>
 		<attribute name="キャラクター">FIGHTERM
 格闘家</attribute>
 		<language name="JPN" width="256">ジムリーダー　ハチクさまの
@@ -885,7 +881,7 @@
 すべてが　ゆるされる♪</language>
 	</row>
 
-	<row id="msg_c07_ambrella1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07_ambrella1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・冬以外
 ・GRIDX=202、GRIDZ=203、下向き</comment>
@@ -897,7 +893,7 @@
 驚いた　ポケモンが　でてくるよ！</language>
 	</row>
 
-	<row id="msg_c07_ambrella1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07_ambrella1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・冬</comment>
 		<attribute name="キャラクター">AMBRELLA
