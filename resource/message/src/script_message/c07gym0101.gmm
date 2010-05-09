@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T14:49:38"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:06:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -353,7 +353,7 @@
 それが　「こおりのいぶき」</language>
 	</row>
 
-	<row id="msg_c07gym0101_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c07gym0101_leader_06">
 		<comment>♂
 ・msg_c07gym0101_leader_05
 　表示後に表示
@@ -371,7 +371,7 @@
 なにか　答えを　みつけるやもな</language>
 	</row>
 
-	<row id="msg_c07gym0101_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c07gym0101_leader_07">
 		<comment>♂
 ・竜の塔イベント後からクリアまで</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
@@ -381,7 +381,7 @@
 弱い　ものが　することだ</language>
 	</row>
 
-	<row id="msg_c07gym0101_leader_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c07gym0101_leader_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリア後</comment>
 		<attribute name="キャラ指定">LEADER7</attribute>
@@ -470,7 +470,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c07gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c07gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・c02でストーン入手後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
