@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T21:13:55"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T19:26:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -324,7 +324,7 @@
 ・はじめて話しかけたときのみ
 ・続けてassistantm3_01a
 
-・0＝バンビーナ</comment>
+・0＝シキジカ（旧バンビーナ）</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 助手♂</attribute>
 		<language name="JPN" width="256">われわれは　きせつに　よる
@@ -598,7 +598,7 @@ assistantm3_07</comment>
 大変　助かるのですが……　</language>
 	</row>
 
-	<row id="msg_r06r0101_assistantm3_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06r0101_assistantm3_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・四季イベント
 ・すべてのフォルムを見せてから話しかけ
