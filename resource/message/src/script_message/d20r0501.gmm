@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-27T15:44:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:48:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1356" top="157" right="2061" bottom="729" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,7 @@
 	</lock>
 
 
-	<row id="msg_d20r0501_bg1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>勇気　あるものよ
 王の　言葉に　耳を　かたむけよ</comment>
 		<attribute name="キャラ指定">BG</attribute>
@@ -304,7 +304,7 @@ PUOFUTJM</language>
 PUOFUTJM</language>
 	</row>
 
-	<row id="msg_d20r0501_bg2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>素数を　理解する者は
 世界の　真理を　理解する</comment>
 		<attribute name="キャラ指定">BG</attribute>
@@ -314,7 +314,7 @@ FNJSQ</language>
 FNJSQ</language>
 	</row>
 
-	<row id="msg_d20r0501_bg3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　ゆうきを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">FWBSC
@@ -323,7 +323,7 @@ TJHOJL</language>
 TJHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　きぼうを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">FQPITFTPMSFWFO
@@ -332,21 +332,21 @@ HOJL</language>
 HOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　やさしさを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">EOJLTJHOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">EOJLTJHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　ゆめを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">NBFSEBTBIHOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">NBFSEBTBIHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg7_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg7_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　ぼうけんしんを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">TVPSVUOFWEB
@@ -355,14 +355,14 @@ TJHOJL</language>
 TJHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg8_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg8_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　すべてを　うけいれた</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">MMBTUQFDDBHOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">MMBTUQFDDBHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg9_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg9_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　２ばんめの　かどを　まがり</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">SFOSPDEO2TOSVU
@@ -371,7 +371,7 @@ HOJL</language>
 HOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg10_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg10_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　３ばんめの　かどを　まがり</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">SFOSPDES3TOSVU
@@ -380,7 +380,7 @@ HOJL</language>
 HOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg11_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg11_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　５ばんめの　かどを　まがり</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">SFOSPDIU5TOSVU
@@ -389,7 +389,7 @@ HOJL</language>
 HOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg12_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg12_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　７ばんめの　かどを　まがった</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">SFOSPDIU7TOSVU
@@ -398,7 +398,7 @@ HOJL</language>
 HOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうの　こころを　もて</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">HOJLGPUSBFIFIU
@@ -407,14 +407,14 @@ FWBI</language>
 FWBI</language>
 	</row>
 
-	<row id="msg_d20r0501_bg14_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg14_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ここは　おうを　たたえる　ばしょ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">HOJLFTJBSQFXFSFI</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">HOJLFTJBSQFXFSFI</language>
 	</row>
 
-	<row id="msg_d20r0501_bg15_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg15_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは
 たみを　てらす　ひかりを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
@@ -422,7 +422,7 @@ FWBI</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">FMQPFQTFOJITHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg16_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg16_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは
 たみを　うごかす　ちからを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
@@ -432,21 +432,21 @@ HOJL</language>
 HOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　じあいの　こころで　つつんだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">FWPMIUJXTUDBHOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">FWPMIUJXTUDBHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg18_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg18_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>おうは　にくしみに　ながされなかった</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">EFSUBIUIHVPGHOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">EFSUBIUIHVPGHOJL</language>
 	</row>
 
-	<row id="msg_d20r0501_bg19_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg19_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>王の　歩みに　迷いは　無い
 迷い子に　王の　資格無し</comment>
 		<attribute name="キャラ指定">BG</attribute>
@@ -454,7 +454,7 @@ HOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">UTPMTUFHHOJLPO</language>
 	</row>
 
-	<row id="msg_d20r0501_bg19_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d20r0501_bg19_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>王の　歩みに　迷いは　無い
 勇気ある　王よ　先に　進め▼</comment>
 		<attribute name="キャラ指定">BG</attribute>
@@ -462,7 +462,7 @@ HOJL</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">HOJLFWBSCOPPH[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d20r0501_sys_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_d20r0501_sys_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>システム</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">かべが　うごき
@@ -471,11 +471,11 @@ HOJL</language>
 先に　進めるように　なった！</language>
 	</row>
 
-	<row id="msg_d20r0501_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_d20r0501_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">ここから　うえに　のぼれそうだ！▼
+		<language name="JPN" width="256">ここから　のぼれそうだ！▼
 うえの　かいに　すすみますか？</language>
-		<language name="JPN_KANJI" width="256">ここから　上に　昇れそうだ！▼
+		<language name="JPN_KANJI" width="256">ここから　昇れそうだ！▼
 上の階に　進みますか？</language>
 	</row>
 
