@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-03T14:51:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T19:22:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
+	<dialog left="1444" top="208" right="2149" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -524,8 +524,10 @@
 ・続けてblack_08_01</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『はやく　いいなよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『はやく　いいなよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『それを
+はやく　いいなよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『それを
+はやく　いいなよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_black_08_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
@@ -688,7 +690,7 @@
 友達で　よかった！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r03_babygirl1_03">
 		<comment>♀
 ・主人公性別：♂
 ・アイテム入手処理
@@ -704,7 +706,7 @@
 おれいに　これを　あげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r03_babygirl1_04">
 		<comment>♀
 ・主人公性別：♀
 ・アイテム入手処理
@@ -761,10 +763,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">あっちの　いろの　こい　くさむら……[BE:01:ページ切り替え（クリア）]
 まれにだけど　ポケモンが
-２ひき　どうじに　とびだしてくるね▼</language>
+２ひき　どうじに　とびだしてくる▼</language>
 		<language name="JPN_KANJI" width="256">あっちの　色の濃い　草むら……[BE:01:ページ切り替え（クリア）]
 まれにだけど　ポケモンが
-２匹同時に　飛びだしてくるね▼</language>
+２匹同時に　飛びだしてくる▼</language>
 	</row>
 
 	<row id="msg_r03_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -774,12 +776,14 @@
 　画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">つまり　こちらの　くさむらに
-はいるなら　ちゅうい　しなってこと[BE:01:ページ切り替え（クリア）]
-ぼくは　シッポウシティに　いくから[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">つまり　こちらの　草むらに
-はいるなら　注意しなってこと[BE:01:ページ切り替え（クリア）]
-ぼくは　シッポウシティに　行くから[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">つまり　いろのこい　くさむらに
+はいるなら　ちゅうい　しなってこと▼
+じゃ　ぼくは
+シッポウシティに　いくよ▼</language>
+		<language name="JPN_KANJI" width="256">つまり　色の濃い　草むらに
+はいるなら　注意しなってこと▼
+じゃ　ぼくは
+シッポウシティに　行くよ▼</language>
 	</row>
 
 	<row id="msg_r03_sodateya_01m" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -850,9 +854,9 @@
 		<attribute name="キャラ指定">BABYBOY1
 男の子</attribute>
 		<language name="JPN" width="256">ときどき　ポケモンと
-あそばせて　もらってるよ</language>
+あそばせて　もらってる！</language>
 		<language name="JPN_KANJI" width="256">ときどき　ポケモンと
-あそばせて　もらってるよ</language>
+あそばせて　もらってる！</language>
 	</row>
 
 	<row id="msg_r03_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -871,14 +875,14 @@
 
 	<row id="msg_r03_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">ちょっぴり
-おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+
 ポケモンリストの　ひだりうえに
 セットする　ポケモンは　だいじです！[BE:01:ページ切り替え（クリア）]
 ポケモンしょうぶのとき　とびだすのは
 そこに　セットされた　ポケモンです！</language>
-		<language name="JPN_KANJI" width="256">ちょっぴり
-お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+
 ポケモンリストの　左上に
 セットする　ポケモンは　大事です！[BE:01:ページ切り替え（クリア）]
 ポケモン勝負のとき　飛び出すのは
@@ -896,8 +900,8 @@
 	</row>
 
 	<row id="msg_r03_oldwoman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
