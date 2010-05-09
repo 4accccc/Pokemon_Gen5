@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T21:26:35"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T14:16:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,7 +300,7 @@
 		<attribute name="キャラ指定">システム
 TVトランシーバー</attribute>
 		<language name="JPN" width="256">ライブキャスターが　なっている</language>
-		<language name="JPN_KANJI" width="256">ライブキャスターが　なっている</language>
+		<language name="JPN_KANJI" width="256">ライブキャスターが　鳴っている</language>
 	</row>
 
 	<row id="msg_r02_tvt_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -372,7 +372,7 @@ TVトランシーバー</attribute>
 		<language name="JPN" width="256">ランニングシューズを　はいていれば
 どこにいくのも　あっ　というま！[BE:01:ページ切り替え（クリア）]
 では　とりあつかい　せつめいしょを
-よむから　きいてて[BE:01:ページ切り替え（クリア）]
+よむから　きいてなさいね[BE:01:ページ切り替え（クリア）]
 「ランニングシューズは
  Ｂボタンを　おすことで　いままでより[BE:00:ページ切り替え（行送り）]
  はやく　はしれるように　なります![BE:01:ページ切り替え（クリア）]
@@ -385,7 +385,7 @@ TVトランシーバー</attribute>
 		<language name="JPN_KANJI" width="256">ランニングシューズを　履いていれば
 どこに行くのも　あっ　というま！[BE:01:ページ切り替え（クリア）]
 では　取り扱い説明書を
-読むから　聞いててね[BE:01:ページ切り替え（クリア）]
+読むから　聞いてなさいね[BE:01:ページ切り替え（クリア）]
 「ランニングシューズは
  Ｂボタンを　押すことで　今までより[BE:00:ページ切り替え（行送り）]
  速く　走れるように　なります![BE:01:ページ切り替え（クリア）]
