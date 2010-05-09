@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-06T12:29:22"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T19:12:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="193" top="146" right="898" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="1391" top="163" right="2096" bottom="791" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="682" top="69" right="1155" bottom="467" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -435,7 +435,7 @@ BOXに6匹以上の空きがある</comment>
 わたしのめは　ごまかせんよ！
 [1:00:トレーナー名:0]くんは▽
 まだまだ　ちからを▽
-かくしもっているだろう！▼
+かくしもって　いるだろう！▼
 きみほどの　トレーナーなら
 もっともっと　ポケシフターを▽
 つかいこなせる　はずだ！▼</language>
@@ -445,10 +445,10 @@ BOXに6匹以上の空きがある</comment>
 わたしの目は　ごまかせんよ！
 [1:00:トレーナー名:0]くんは▽
 まだまだ　力を▽
-隠し持っているだろう！▼
+隠し持って　いるだろう！▼
 きみほどの　トレーナーなら
 もっともっと　ポケシフターを▽
-使いこなせるはずだ！▼</language>
+使いこなせる　はずだ！▼</language>
 	</row>
 
 	<row id="msg_palpark_score_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -459,7 +459,7 @@ BOXに6匹以上の空きがある</comment>
 これでこそ
 われわれ　サインティストも▼
 けんきゅうの　しがいが
-あるってものだ！▼
+あるって　ものだ！▼
 だが　[1:00:トレーナー名:0]くん！
 きみほどの　トレーナーなら▼
 もっと　エレガントに
@@ -473,7 +473,7 @@ BOXに6匹以上の空きがある</comment>
 きみの　腕は　大したものだ！▼
 これでこそ　我々サインティストも
 研究の　しがいが▽
-あるってものだ！▼
+あるって　ものだ！▼
 だが　[1:00:トレーナー名:0]くん！
 君ほどの　トレーナーなら▼
 もっと　エレガントに
