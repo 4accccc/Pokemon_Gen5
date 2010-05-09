@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T13:55:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T16:07:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1493" top="279" right="2198" bottom="907" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t04pc0101_middleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04pc0101_middleman_01">
 		<comment>♂：オールシーズンいる
 ・主人公性別：♂
 ・アイテム入手処理
@@ -310,7 +310,7 @@
 コレを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04pc0101_middleman_02">
 		<comment>♂
 ・主人公性別：♀</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -326,7 +326,7 @@
 コレを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_t04pc0101_middleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t04pc0101_middleman_03">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
@@ -337,45 +337,33 @@
 	</row>
 
 	<row id="msg_t04pc0101_middleman_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">てにいれた　コイキングに
-ニックネームを　つけますか？</language>
-		<language name="JPN_KANJI" width="256">手に入れた　コイキングに
-ニックネームを　つけますか？</language>
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t04pc0101_middleman_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい＆金額不足</comment>
-		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">おかね　たりない　みたいだねえ</language>
-		<language name="JPN_KANJI" width="256">お金　足りない　みたいだねえ</language>
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t04pc0101_middleman_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい＆手持ち一杯</comment>
-		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">ポケモン　いっぱいで　もてないな</language>
-		<language name="JPN_KANJI" width="256">ポケモン　一杯で　持てないな</language>
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t04pc0101_middleman_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">そお　ざんねんだねえ…</language>
-		<language name="JPN_KANJI" width="256">そお　残念だねえ…</language>
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t04pc0101_middleman_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・コイキング購入後</comment>
-		<attribute name="キャラ指定">MIDDLEMAN</attribute>
-		<language name="JPN" width="256">おじさん『そうそう　ポケモンの
-へんぴんは　おことわり　だからな</language>
-		<language name="JPN_KANJI" width="256">おじさん『そうそう　ポケモンの
-返品は　お断り　だからな</language>
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
