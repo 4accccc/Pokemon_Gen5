@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T14:05:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:24:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -368,26 +368,20 @@
 		<language name="JPN_KANJI" width="256">またの　お越しを　お待ちしてますね！</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_06" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
-		<comment>♀
-・選択肢</comment>
-		<attribute name="キャラ指定">INFORMATIONW</attribute>
+	<row id="msg_c03p14_infomationw_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">はい</language>
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_07" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
-		<comment>♀
-・選択肢</comment>
-		<attribute name="キャラ指定">INFORMATIONW</attribute>
+	<row id="msg_c03p14_infomationw_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_08" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
-		<comment>♀
-・選択肢</comment>
-		<attribute name="キャラ指定">INFORMATIONW</attribute>
+	<row id="msg_c03p14_infomationw_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">なにそれ？</language>
 		<language name="JPN_KANJI" width="256">なにそれ？</language>
 	</row>
@@ -435,7 +429,7 @@
 オレと　ポケモン勝負　だぜ！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_dancer3_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、トレーナー戦闘に
@@ -447,7 +441,7 @@
 ばっちり　なんだぜ！▼</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_dancer3_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度会話は、dancer3_02から</comment>
@@ -458,7 +452,7 @@
 誘うなら　強くないとねー！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_dancer3_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・戦闘後、フィールド復帰時に

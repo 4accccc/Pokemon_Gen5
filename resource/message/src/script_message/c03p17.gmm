@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T13:03:03"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T16:50:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1377" top="199" right="2082" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -354,35 +354,35 @@
 いろいろ　あるらしいね</language>
 	</row>
 
-	<row id="msg_c03p17_select_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_01" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_06</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ヤナップ</language>
 		<language name="JPN_KANJI" width="256">ヤナップ</language>
 	</row>
 
-	<row id="msg_c03p17_select_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_02" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_07</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">バオップ</language>
 		<language name="JPN_KANJI" width="256">バオップ</language>
 	</row>
 
-	<row id="msg_c03p17_select_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_03" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_08</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ヒヤップ</language>
 		<language name="JPN_KANJI" width="256">ヒヤップ</language>
 	</row>
 
-	<row id="msg_c03p17_select_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_04" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_10</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p17_assistantm_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 ・はい→assistantm_02
@@ -392,7 +392,7 @@
 		<language name="JPN_KANJI" width="256">ヤオップ　なんだね？</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p17_assistantm_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 ・はい→assistantm_03
@@ -402,7 +402,7 @@
 		<language name="JPN_KANJI" width="256">バオップ　なんだね？</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p17_assistantm_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 ・はい→assistantm_04
@@ -412,7 +412,7 @@
 		<language name="JPN_KANJI" width="256">ヒヤップ　なんだね？</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p17_assistantm_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手前
 ・選択肢表示
@@ -428,7 +428,9 @@
 進化させて　みたい？▼</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_10" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p17_assistantm_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・やめる選択時</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">うん　そうだね▼
 えらぶのは　むずかしいよね

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T17:34:25"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T14:01:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -537,9 +537,8 @@
 		<language name="JPN_KANJI" width="256">アトリエ　ヒウン</language>
 	</row>
 
-	<row id="msg_c03p09_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>アイス屋の看板
-・仮メッセージ</comment>
+	<row id="msg_c03p09_sign2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>アイス屋の看板</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ヒウンめいぶつ　ヒウンアイス
 はつ　なつ　あきの　かようびはつばい</language>
