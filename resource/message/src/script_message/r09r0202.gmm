@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-11-18T15:37:06"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T13:16:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,10 @@
 	</lock>
 
 
-	<row id="msg_r09r0202_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r09r0202_cleaningm_01">
 		<comment>♂
 ・ロトムのフォルムチェンジ関連は
-　wb_rotom.gmmで
-・仮メッセージ</comment>
+　wb_rotom.gmmで</comment>
 		<attribute name="キャラ指定">CLEANINGM
 清掃員</attribute>
 		<language name="JPN" width="256">この　ダンボールの　やま……[BE:01:ページ切り替え（クリア）]
