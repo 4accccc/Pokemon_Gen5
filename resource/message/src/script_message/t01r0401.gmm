@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-25T17:48:17"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T12:39:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1432" top="295" right="2137" bottom="923" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -624,7 +624,7 @@
 探しても　いいんだよね？▼</language>
 	</row>
 
-	<row id="msg_t01r0401_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公フリームーブ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -636,7 +636,7 @@
 好きなように　旅すれば　いい</language>
 	</row>
 
-	<row id="msg_t01r0401_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_white_06" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・研究所をでるまで繰り返し
 ・0＝主人公名前
@@ -650,7 +650,7 @@
 [1:01:ポケモン種族名:1]と　なにするの？</language>
 	</row>
 
-	<row id="msg_t01r0401_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_black_07" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・研究所をでるまで繰り返し</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -866,7 +866,7 @@
 もっと　わかるから！</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・月曜日
 ・日付が変わるまで繰り返し</comment>
@@ -879,7 +879,7 @@
 しんか　するんだって！　すごいよね▼
 ポケモンって　ほんとうに
 ふしぎな　いきものだ　よね！</language>
-		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　知ってる？▼
 ヒンバスって　ポケモンは
 きれいなウロコを　持たせて▼
 人と　交換すると
@@ -888,7 +888,7 @@
 不思議な　生き物　だよね！</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・火曜日
 ・日付が変わるまで繰り返し
@@ -900,14 +900,14 @@
 しんかする　ポケモンが　いるんだよ！▼
 ポケモンって　ほんとうに
 ふしぎな　いきものだ　よね！</language>
-		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　知ってる？▼
 ヤグルマの森で　レベルアップすると
 進化する　ポケモンが　いるんだよ！▼
 ポケモンって　本当に
 不思議な　生き物　だよね！</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・水曜日
 ・日付が変わるまで繰り返し
@@ -919,7 +919,7 @@
 しんかする　ポケモンが　いるんだよ！▼
 ポケモンって　ほんとうに
 ふしぎな　いきものだ　よね！</language>
-		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　知ってる？▼
 ネジ山で　レベルアップすると
 進化する　ポケモンが　いるんだよ！▼
 ポケモンって　本当に
@@ -933,8 +933,18 @@
 ※仮メッセージ</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">ベル『仮メッセージ</language>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
+とくていの　わざを　おぼえた
+じょうたいで　レベルアップすると▽
+しんかする　ポケモンが　いるんだよ！▼
+ポケモンって　ほんとうに
+ふしぎな　いきものだ　よね！</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　知ってる？▼
+特定の　技を　覚えた
+状態で　レベルアップすると▽
+進化する　ポケモンが　いるんだよ！▼
+ポケモンって　本当に
+不思議な　生き物　だよね！</language>
 	</row>
 
 	<row id="msg_t01r0401_white_end_10" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -944,8 +954,18 @@
 ※仮メッセージ</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">ベル『仮メッセージ</language>
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
+きまった　どうぐを　もたせておいて
+よるに　レベルアップすると▽
+しんかする　ポケモンが　いるんだよ！▼
+ポケモンって　ほんとうに
+ふしぎな　いきものだ　よね！</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]　知ってる？▼
+決まった　道具を　持たせておいて
+夜に　レベルアップすると▽
+進化する　ポケモンが　いるんだよ！▼
+ポケモンって　本当に
+不思議な　生き物　だよね！</language>
 	</row>
 
 	<row id="msg_t01r0401_white_end_20" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
