@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T13:01:00"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T17:20:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1351" top="256" right="2056" bottom="884" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -318,7 +318,7 @@
 アーティさんは　おれらの　あこがれ！</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手前
 ・選択肢表示</comment>
@@ -427,7 +427,7 @@
 		<language name="JPN_KANJI" width="256">ポカブ</language>
 	</row>
 
-	<row id="msg_c02r0501_select_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0501_select_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・選ぶとtrainerw_10</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">やめる</language>
@@ -464,7 +464,7 @@
 		<language name="JPN_KANJI" width="256">ポカブなの？</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手前
 ・選択肢表示</comment>
@@ -475,7 +475,7 @@
 ポケモンは　なーにー？▼</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0501_trainerw_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">おしえてくれる　きになったら
 また　はなしかけてね！</language>
