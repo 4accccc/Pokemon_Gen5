@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-28T19:05:33"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:34:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -452,7 +452,7 @@
 震えていたら　勝てるわけ……▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim2_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_hakaim2_01">
 		<comment>♀
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩW
@@ -463,7 +463,7 @@
 かなり　強ーい　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim2_02" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_hakaim2_02">
 		<comment>♀
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩW
@@ -473,13 +473,13 @@
 よなかの　コンテナまえに
 あつまっていた　ところ……▼
 ヤーコンの　おっさんに　みつかり
-つかまっていたのよ……</language>
+とらえられていたのよ……</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……奪い集めた
 ポケモンを　まとめて　運ぶため▼
 夜中の　コンテナ前に
 集まっていた　ところ……▼
 ヤーコンの　おっさんに　みつかり
-つかまっていたのよ……▼</language>
+とらえられていたのよ……</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim2_03">
@@ -493,13 +493,13 @@
 よなかの　コンテナまえに
 あつまっていた　ところ……▼
 ヤーコンの　おっさんに　みつかり
-つかまっていたのよ……▼</language>
+とらえられていたのよ……▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……奪い集めた
 ポケモンを　まとめて　運ぶため▼
 夜中の　コンテナ前に
 集まっていた　ところ……▼
 ヤーコンの　おっさんに　みつかり
-つかまっていたのよ……</language>
+とらえられていたのよ……▼</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -730,6 +730,7 @@
 それって　この　せかいから
 ポケモンが　いなくなることと▽
 おなじ　じゃないか……▼
+……いみが　わからないね！▼
 [1:00:トレーナー名:0]
 そとに　でるよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『やれやれ……
@@ -739,6 +740,7 @@
 それって　この世界から
 ポケモンが　いなくなることと▽
 同じじゃ　ないか……▼
+……意味不明だね！▼
 [1:00:トレーナー名:0]
 外に　でるよ▼</language>
 	</row>
