@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:36:35"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T20:00:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2020" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -5114,7 +5114,7 @@ HAVE A NICE DAY！</language>
 えいごで　いうと　コレ！▼
 「Where did you come from?」
 ウェーァディッジュゥ　カムフロム？▼
-このあと　ごとうちじまんの
+このあと　ごとうち　じまんの
 トークで　もりあがること▽
 まちがいなしね！　キャッ！▼
 ハーイ　それじゃ
@@ -5822,8 +5822,8 @@ OHHHH！　バッチリ　おめかしした
 パッションを　だして　いうことだ！▼
 たとえば　はを　くいしばりながら
 いうのも　かっこいいね！▼
-しょうり　せんげんで　いかくも
-できちゃうぜ！▼
+しょうり　せんげんで
+いかくも　できちゃうぜ！▼
 ということで　きょうは　ここまで！
 また　あおうぜ　SEE YOU！</language>
 		<language name="JPN_KANJI" width="256">ボブ『HELLO EVERY ONE OF YOU！
@@ -5839,8 +5839,8 @@ OHHHH！　バッチリ　おめかしした
 パッションを　だして　いうことだ！▼
 例えば　歯を　くいしばりながら
 いうのも　かっこいいね！▼
-勝利宣言で　威嚇も
-できちゃうぜ！▼
+勝利宣言で
+威嚇も　できちゃうぜ！▼
 ということで　今日は　ここまで！
 また　会おうぜ　SEE YOU！</language>
 	</row>
@@ -7275,7 +7275,8 @@ BEAUTIFULは　美しいという　意味
 	<row id="msg_tv_03_69" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>内容未定
 ・ランダム表示
-・担当杉中</comment>
+・担当杉中
+・ジヘッド使用（種族名称変更の際は修正）</comment>
 		<language name="JPN" width="256">ナレーター『アナタのポケモン！▼
 きょうの　アナタのポケモンは
 たべる　このコを　しょうかいします▼
@@ -7327,7 +7328,8 @@ BEAUTIFULは　美しいという　意味
 	<row id="msg_tv_03_70" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>内容未定
 ・ランダム表示
-・担当杉中</comment>
+・担当杉中
+・ナゲキ使用（種族名称変更の際は修正）</comment>
 		<language name="JPN" width="256">ナレーター『アナタのポケモン！▼
 きょうの　アナタのポケモンは
 すごい　このコを　しょうかいします▼
