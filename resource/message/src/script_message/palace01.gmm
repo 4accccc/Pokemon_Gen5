@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-08T18:34:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T15:41:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1278" top="500" right="1912" bottom="1128" maximized="no" rayout="Vertical2">
+	<dialog left="1412" top="250" right="2042" bottom="774" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="459"/>
+		<band id="0" index="1" style="0000" width="455"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="477"/>
-		<band id="3" index="4" style="0000" width="147"/>
-		<band id="4" index="0" style="0000" width="626"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="468"/>
+		<band id="3" index="4" style="0000" width="152"/>
+		<band id="4" index="0" style="0000" width="622"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -382,7 +382,7 @@
 すれちがった　あいてにむけて▼
 そのデルパワーを　つかうことが
 できるはずだ▼
-デルパワーを　つかうには
+いいか？　デルパワーを　つかうには
 デルダマが　ひつようだ▼
 だれかのせかいで　ミッションを
 おこない　デルダマを　あつめるのだ▼</language>
@@ -396,7 +396,7 @@
 すれ違った　相手にむけて▼
 そのデルパワーを　使うことが
 できるはずだ▼
-デルパワーを　使うには
+いいか？　デルパワーを　使うには
 デルダマが　必要だ▼
 だれかの世界で　ミッションを行い
 デルダマを　集めるのだ▼</language>
@@ -520,7 +520,7 @@ plc_girl4_01_06,7,8</comment>
 いくことが　できるでしょう▼</language>
 		<language name="JPN_KANJI" width="256">架け橋の　上に乗ると
 橋を　接続する　相手を▽
-探し　はじめます▼
+探しはじめます▼
 相手を　見つけ
 橋が　接続　できれば▽
 橋を　わたり　相手の世界へ▽
@@ -551,11 +551,11 @@ plc_girl4_01_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">さあ　かけはしの　うえに
 のって　ください▼
-しばらくし　あいてと　つながれば
+しばらくして　あいてと　つながれば
 はしを　わたることが　できます</language>
 		<language name="JPN_KANJI" width="256">さあ　架け橋の上に
 乗って　ください▼
-しばらくし　相手と　つながれば
+しばらくして　相手と　つながれば
 橋を　わたることが　できます</language>
 	</row>
 
@@ -642,11 +642,11 @@ plc_girl4_02_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">さあ　かけはしの　うえに
 のって　ください▼
-しばらくし　あいてと　つながれば
+しばらくして　あいてと　つながれば
 はしを　わたることが　できます</language>
 		<language name="JPN_KANJI" width="256">さあ　架け橋の上に
 乗って　ください▼
-しばらくし　相手と　つながれば
+しばらくして　相手と　つながれば
 橋を　わたることが　できます</language>
 	</row>
 
@@ -1022,12 +1022,13 @@ plc_girl4_03_06,7,8</comment>
 あとで　Ｃギアの
 「すれちがいログ」を　みるといい▼
 ……　……　……
-……　……　……▽
-……さて　これで▽
+……　……　……▼
+……さて　これで
 おしえられることは　なくなった▼
 ハイリンクで　おおくの
 ぼうけんしゃを　たすけ▽
 たくさんの　しあわせを　あつめるのだ▼
+……　……　……
 ……　……　……▼
 ハイリンクの　パワーは
 すべて　おぬしの　ものだ▼
@@ -1044,12 +1045,13 @@ plc_girl4_03_06,7,8</comment>
 あとで　Ｃ－ＧＥＡＲの
 「すれ違いログ」を　見るといい▼
 ……　……　……
-……　……　……▽
-……さて　これで▽
+……　……　……▼
+……さて　これで
 教えられることは　なくなった▼
 ハイリンクで　多くの
 冒険者を　助け▽
 たくさんの　幸せを　集めるのだ▼
+……　……　……
 ……　……　……▼
 ハイリンクの　パワーは
 全て　おぬしの　ものだ▼
