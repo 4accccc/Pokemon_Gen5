@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-25T14:09:07"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:13:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -435,10 +435,9 @@
 最初から　やりなおし　だからな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c09_veteranm1_stop" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c09_veteranm1_stop">
 		<comment>♂
-・N城で敗北
-・仮メッセージ</comment>
+・Nの城で敗北</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">いま　ポケモンリーグに
 はいることは　まかりならん！[BE:01:ページ切り替え（クリア）]</language>
