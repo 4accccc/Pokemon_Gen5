@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:57:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T16:20:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="681" top="123" right="1154" bottom="521" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -498,17 +498,17 @@
 		<language name="JPN_KANJI" width="256">１４番道路</language>
 	</row>
 
-	<row id="msg_r14_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・仮メッセージ</comment>
+	<row id="msg_r14_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！
-[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+
 パソコンの　ボックスは
 さいだい　２４こまで　ふえます！[BE:01:ページ切り替え（クリア）]
 つまり　７２０ひき
 あずけることが　できます！</language>
-		<language name="JPN_KANJI" width="256">おとくな　けいじばん！
-[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+
 パソコンの　ボックスは
 最大　２４個まで　増えます！[BE:01:ページ切り替え（クリア）]
 つまり　７２０匹
@@ -518,8 +518,8 @@
 	<row id="msg_r14_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">ちょっぴり
-おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+
 トレーナーカードで
 かたがきを　へんこう　すると[BE:01:ページ切り替え（クリア）]
 ユニオンルームや
@@ -528,8 +528,8 @@
 かたがきどおりに　なります！[BE:01:ページ切り替え（クリア）]
 じこしょうかいや　せいかくに　あわせ
 あなたの　こせいを　アピールしましょう</language>
-		<language name="JPN_KANJI" width="256">ちょっぴり
-お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+
 トレーナーカードで
 肩書きを　変更すると[BE:01:ページ切り替え（クリア）]
 ユニオンルームや
