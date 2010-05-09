@@ -178,6 +178,8 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
 
   IWASAWA_Printf("PlayerPos ( 0x%08x, 0x%08x, 0x%08x)\n", wk->player_pos.x, wk->player_pos.y, wk->player_pos.z );
   IWASAWA_Printf("TargetPos ( 0x%08x, 0x%08x, 0x%08x)\n", wk->target_pos.x, wk->target_pos.y, wk->target_pos.z );
+
+  MMDLSYS_PauseMoveProc( wk->mmdl_sys );
   return event;
 }
 
@@ -192,7 +194,6 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       *seq = SEQ_END;
       break;
     }
-//    MMDLSYS_PauseMoveProc( wk->mmdl_sys );
 
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
@@ -268,6 +269,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 
 	case SEQ_END:
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, wk->player_form );
+    MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 		return GMEVENT_RES_FINISH;
 
   //エンカウントイベントへ移行
