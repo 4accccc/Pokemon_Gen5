@@ -95,8 +95,6 @@ enum{
 #define SCREEN_SUBMENU_AND_INFOWIN  ( 0 )
 #define SCREEN_SUBMENU_ONLY         ( 1 )
 
-// ショップに並ぶ最大数
-#define SHOP_ITEM_MAX   ( 30 )
 
 #define SHOP_TYPE_NORMAL  ( 0 )   // どうぐを扱う
 #define SHOP_TYPE_WAZA    ( 1 )   // 技マシンを扱う
@@ -619,7 +617,13 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   // 「買えませんよ！」
   }else if(gold<wk->price)
   {
-    ShopPrintMsg( wk, mes_shop_02_01, wk->selectitem );
+    if(wk->payment==SHOP_PAYMENT_MONEY){
+      // お金が足りない
+      ShopPrintMsg( wk, mes_shop_02_01, wk->selectitem );
+    }else{
+      // BPが足りない
+      ShopPrintMsg( wk, mes_shop_02_09, wk->selectitem );
+    }
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_BACK;
 
@@ -962,6 +966,9 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
   itemnum = shop_itemnum_table[offset];
   wk->list = BmpMenuWork_ListCreate( itemnum+1, wk->heapId );
   OS_Printf("type=%d, offset=%d, badge=%d,itemnum=%d\n", type, offset, badge, itemnum);
+  GF_ASSERT_MSG( itemnum<SHOP_ITEM_MAX, "ショップに一度に並べられる最大数を超えています\n" )
+
+
   for(i=0;i<itemnum;i++)
   {
       int id = shop_data_table[offset][i];
@@ -982,6 +989,7 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
       wk->lineup[i].price =  GPOWER_Calc_Sale(ITEM_GetParam( id, ITEM_PRM_PRICE, wk->heapId ));
   }
   wk->lineup_num = i;
+  
   
   // どうぐか？技マシンか？（混在は×）
   _lineup_check( wk->lineup, wk->lineup_num );
@@ -1020,6 +1028,9 @@ static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type )
 
   wk->list = BmpMenuWork_ListCreate( itemnum+1, wk->heapId );
   OS_Printf("type=%d, itemnum=%d\n", type, itemnum);
+  GF_ASSERT_MSG( itemnum<SHOP_ITEM_MAX, "ショップに一度に並べられる最大数を超えています\n" )
+
+
   for(i=0;i<itemnum;i++)
   {
       int id = itemlist[i].id;
