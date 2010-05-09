@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-17T12:34:32"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:58:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1474" top="304" right="2179" bottom="924" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="179" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -468,7 +468,7 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">ちなみに　いちばん　いい　かんじなのは
 ＨＰ　でしょうか▼</language>
-		<language name="JPN_KANJI" width="256">一番　いい　感じなのは
+		<language name="JPN_KANJI" width="256">ちなみに　一番　いい　感じなのは
 ＨＰ　でしょうか▼</language>
 	</row>
 
@@ -480,8 +480,8 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">ちなみに　いちばん　いい　かんじなのは
 こうげき　でしょうか▼</language>
-		<language name="JPN_KANJI" width="256">一番　いい　感じなのは
-こうげき　でしょうか▼</language>
+		<language name="JPN_KANJI" width="256">ちなみに　一番　いい　感じなのは
+攻撃　でしょうか▼</language>
 	</row>
 
 	<row id="msg_judge_10">
@@ -492,8 +492,8 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">ちなみに　いちばん　いい　かんじなのは
 ぼうぎょ　でしょうか▼</language>
-		<language name="JPN_KANJI" width="256">一番　いい　感じなのは
-ぼうぎょ　でしょうか▼</language>
+		<language name="JPN_KANJI" width="256">ちなみに　一番　いい　感じなのは
+防御　でしょうか▼</language>
 	</row>
 
 	<row id="msg_judge_11">
@@ -504,8 +504,8 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">ちなみに　いちばん　いい　かんじなのは
 とくこう　でしょうか▼</language>
-		<language name="JPN_KANJI" width="256">一番　いい　感じなのは
-とくこう　でしょうか▼</language>
+		<language name="JPN_KANJI" width="256">ちなみに　一番　いい　感じなのは
+特攻　でしょうか▼</language>
 	</row>
 
 	<row id="msg_judge_12">
@@ -516,8 +516,8 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">ちなみに　いちばん　いい　かんじなのは
 とくぼう　でしょうか▼</language>
-		<language name="JPN_KANJI" width="256">一番　いい　感じなのは
-とくぼう　でしょうか▼</language>
+		<language name="JPN_KANJI" width="256">ちなみに　一番　いい　感じなのは
+特防　でしょうか▼</language>
 	</row>
 
 	<row id="msg_judge_13">
@@ -528,7 +528,7 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">ちなみに　いちばん　いい　かんじなのは
 すばやさ　でしょうか▼</language>
-		<language name="JPN_KANJI" width="256">一番　いい　感じなのは
+		<language name="JPN_KANJI" width="256">ちなみに　一番　いい　感じなのは
 すばやさ　でしょうか▼</language>
 	</row>
 
@@ -540,7 +540,7 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">それと　こうげきも
 いい　かんじ　ですね▼</language>
-		<language name="JPN_KANJI" width="256">それと　こうげきも
+		<language name="JPN_KANJI" width="256">それと　攻撃も
 いい　感じ　ですね▼</language>
 	</row>
 
@@ -552,7 +552,7 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">なるほど　ぼうぎょも
 いい　かんじ　ですね▼</language>
-		<language name="JPN_KANJI" width="256">なるほど　ぼうぎょも
+		<language name="JPN_KANJI" width="256">なるほど　防御も
 いい　感じ　ですね▼</language>
 	</row>
 
@@ -564,7 +564,7 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">とくこうも　まけずおとらず
 いい　かんじ　ですね▼</language>
-		<language name="JPN_KANJI" width="256">とくこうも　負けず劣らず
+		<language name="JPN_KANJI" width="256">特攻も　負けず劣らず
 いい　感じ　ですね▼</language>
 	</row>
 
@@ -576,7 +576,7 @@
 		<attribute name="キャラ指定">個体値判定</attribute>
 		<language name="JPN" width="256">とくぼうも　おなじように
 いい　かんじ　ですね▼</language>
-		<language name="JPN_KANJI" width="256">とくぼうも　同じように
+		<language name="JPN_KANJI" width="256">特防も　同じように
 いい　感じ　ですね▼</language>
 	</row>
 
