@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T17:16:03"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T18:18:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="108" right="2018" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="141" right="1280" bottom="539" visible="yes"/>
-		<band id="0" index="1" style="0000" width="526"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="539"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="693"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_d01r0101_girl_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・初回会話時
 ・続けてmsg_d01r0101_girl_02表示
@@ -357,7 +357,7 @@
 じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモンをもらわずに２回目以降の会話
 ・はい/いいえの選択肢
@@ -380,7 +380,7 @@
 この　[1:01:ポケモン種族名:1]が　ほしい？</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・はい選択、でも手持ちがいっぱい</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -394,7 +394,7 @@
 パソコンに　預けてきてね</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・いいえ選択
 ・次回会話時はmsg_d01r0101_girl_02から</comment>
@@ -405,7 +405,7 @@
 また　話しかけてね！</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_05" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_05" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・はい選択時
 ・t01r0102で、みずタイプ選択時</comment>
@@ -418,7 +418,7 @@
 くさタイプに　相性　いいわよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_06" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_06" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・はい選択時
 ・t01r0102で、くさタイプ選択時</comment>
@@ -431,7 +431,7 @@
 ほのおタイプに　相性　いいわよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_07" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_07" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・はい選択時
 ・t01r0102で、ほのおタイプ選択時</comment>
@@ -444,7 +444,7 @@
 みずタイプに　相性　いいわよ▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_08" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d01r0101_girl_08" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>・0＝主人公名
 ・1=ポケモン名</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -454,7 +454,7 @@
 [1:01:ポケモン種族名:1]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_09" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d01r0101_girl_09" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>・はい／いいえの選択肢表示
 　はい　→名前入力画面に
 　いいえ→終了
@@ -466,7 +466,7 @@
 ニックネームを　つけますか？</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_10" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_girl_10" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモン入手後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
