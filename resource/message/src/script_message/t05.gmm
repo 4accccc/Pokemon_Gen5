@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:41:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T19:52:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1612" top="235" right="2316" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="27" top="139" right="500" bottom="537" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1207,8 +1207,8 @@ Wi-Fi</comment>
 見物人
 週末のみ表示</comment>
 		<attribute name="キャラ指定">MOUNTMAN</attribute>
-		<language name="JPN" width="256">くうきが　うまい！</language>
-		<language name="JPN_KANJI" width="256">くうきが　うまい！</language>
+		<language name="JPN" width="256">なんと　デリシャスな　くうき！</language>
+		<language name="JPN_KANJI" width="256">なんと　デリシャスな　空気！</language>
 	</row>
 
 	<row id="msg_t05_middlewoman2_01">
