@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T12:09:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-09T13:41:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1456" top="254" right="2161" bottom="874" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,12 +297,14 @@
 ・橋ゲート</comment>
 		<attribute name="キャラ指定">BOY2
 活発</attribute>
-		<language name="JPN" width="256">……ここだけの　はなし[BE:01:ページ切り替え（クリア）]
-ショッピングモールには
-ひみつの　そうこが　あるんだって！</language>
-		<language name="JPN_KANJI" width="256">……ここだけの　話[BE:01:ページ切り替え（クリア）]
-ショッピングモールには
-秘密の　倉庫が　あるんだって！</language>
+		<language name="JPN" width="256">９ばんどうろは　みじかいのに
+トレーナーが　たくさん　いるんだよ▼
+はしれる　ばしょが　あると
+にたような　ひとが　あつまるんだね！</language>
+		<language name="JPN_KANJI" width="256">９番道路は　短いのに
+トレーナーが　たくさん　いるんだよ▼
+走れる　場所が　あると
+似たような　人が　集まるんだね！</language>
 	</row>
 
 	<row id="msg_r09r0101_woman2_01">
