@@ -45,6 +45,7 @@
 
 #include "savedata/undata_update.h"
 #include "savedata/etc_save.h"
+#include "net/dwc_error.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 #include "savedata/perapvoice.h"
@@ -1519,14 +1520,33 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 			break;
 	// -----------------------------------------
 		}
-		
 
 	}
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
+      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
 		}
+
+    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+    {
+    case GFL_NET_DWC_ERROR_RESULT_NONE:        //エラーはおきていない
+      /* なにもしない */
+      break;
+    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
+			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
+      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      break; 
+    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
+      NetErr_ExitNetSystem();
+			wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
+      wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+      break;
+    case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
+			NetErr_DispCallFatal();
+      break;
+    }
 	}
 	return SEQ_MAIN;
 }
@@ -1656,8 +1676,30 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-      NetErr_DispCallFatal();
+			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
+      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
 		}
+
+    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+    {
+    case GFL_NET_DWC_ERROR_RESULT_NONE:        //エラーはおきていない
+      /* なにもしない */
+      break;
+    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
+			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
+      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      break; 
+    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
+      NetErr_ExitNetSystem();
+			wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
+      wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+      break;
+    case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
+			NetErr_DispCallFatal();
+      break;
+    }
+
+
 	}
 	return SEQ_MAIN;
 }
@@ -2469,7 +2511,8 @@ static int Subseq_End( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int Subseq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( &wk->print )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0
+      && GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) {
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;

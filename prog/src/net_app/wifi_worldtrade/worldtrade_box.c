@@ -493,7 +493,7 @@ static const GFL_UI_TP_HITTBL BoxTouchTable[]={
                      
 	{  123, 148, 186,  245},			// もどる
 	{  16-12,  16+12, 154-8,  154+8, },	// 右矢印
-	{  16-12,  16+12,  10-8,   10+8, },	// 左矢印
+	{  16-12,  16+12,  18-8,   18+8, },	// 左矢印
 	
 	{GFL_UI_TP_HIT_END,0,0,0},		// 終了データ
 };
@@ -2268,6 +2268,28 @@ POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_MANAGER *box,  
 	// ボックス
 	return BOXDAT_GetPokeDataAddress( box, tray, pos );
 }
+
+//==============================================================================
+/**
+ * @brief   番号からてもちかボックスの中のPOKEMON_PASO_PARAMへの構造体を返す
+ *
+ * @param   party	POKEPARTYポインタ
+ * @param   box		ボックスのセーブデータ
+ * @param   tray	0-17:ボックスNO、18:手持ち
+ *
+ * @retval  int 総数
+ */
+//==============================================================================
+int WorldTrade_GetPokeMax( POKEPARTY *party, BOX_MANAGER *box,  int  tray )
+{
+	// てもち
+	if(WorldTrade_GetPPorPPP( tray )){
+    return PokeParty_GetPokeCount(party);
+  }else{
+    return BOXDAT_GetPokeExistCount( box, tray );
+  }
+}
+
 
 //==============================================================================
 /**

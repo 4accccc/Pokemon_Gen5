@@ -329,6 +329,7 @@ enum{
 ///< ユニオンキャラの総数
 #define UNIONCHARA_ALL_NUM  (16)
 
+#define WORLDTRADE_BOX_TEMOTI (0xFF)
 
 ///< 検索条件のレベル指定の使用するメッセージテーブルを指定する
 enum{
@@ -457,6 +458,7 @@ typedef struct _WORLDTRADE_WORK{
 	u16				PartnerPageInfo;					///< 左・右ページのどちらをみているか？
 	u16				BoxTrayNo;							///< 何番ボックスを見ているか？
 	u16				BoxCursorPos;						///< ボックス上でのカーソルの位置
+  u32       BoxTrayMax;             //ボックストレイ最大数
 	POKEMON_PASO_PARAM	*deposit_ppp;					///< 一旦預ける指定になったポケモンのポインタ
 	int				SearchResult;						///< 検索の結果返ってきた数
 	int				TouchTrainerPos;					///< 検索結果の誰をタッチしたか
@@ -731,6 +733,7 @@ extern int WorldTrade_Box_Init(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Box_Main(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Box_End(WORLDTRADE_WORK *wk, int seq);
 extern POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos );
+extern int WorldTrade_GetPokeMax( POKEPARTY *party, BOX_MANAGER *box,  int  tray );
 extern int WorldTrade_GetPPorPPP( int tray );
 extern BOOL WorldTrade_PokemonMailCheck( POKEMON_PARAM *pp );
 

@@ -1241,25 +1241,6 @@ static int SubSeq_DepositOkYesNoWait( WORLDTRADE_WORK *wk )
     wk->subprocess_seq  = SUBSEQ_END;
   }
 
-/*
-  int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
-
-  if(ret!=BMPMENU_NULL){
-    if(ret==BMPMENU_CANCEL){
-      // いいえ→ポケモン選択からやり直し
-      WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, MODE_DEPOSIT_SELECT );
-      wk->subprocess_seq  = SUBSEQ_END;
-    }else{
-      // はい→ポケモンをあずける
-      WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_UPLOAD );
-      wk->subprocess_seq  = SUBSEQ_END;
-      wk->sub_out_flg = 1;
-
-      // サーバーアップロード用のデータを作成
-      DepositPokemonDataMake( &wk->UploadPokemonData, wk );
-    }
-  }
-*/
   return SEQ_MAIN;
   
 }
