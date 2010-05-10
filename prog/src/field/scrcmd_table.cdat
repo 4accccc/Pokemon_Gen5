@@ -879,6 +879,9 @@
 
   //育て屋特殊チェック
   DEF_CMD( EvCmdSodateyaCheck, EV_SEQ_SODATEYA_CHECK )
+
+  //地名表示リクエスト発行
+  DEF_CMD( EvCmdPlaceNameDisplay, EV_SEQ_PLACE_NAME_DISPLAY )
   
   END_CMD
   //スクリプトコマンドテーブル終了

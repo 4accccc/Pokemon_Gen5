@@ -43,6 +43,8 @@
 
 #include "event_field_fade.h" //FIELD_FADE_DEFAULT_WAIT
 
+#include "field_place_name.h" // for FIELD_PLACE_NAME_DisplayForce
+
 typedef enum {
   FADE_IN,
   FADE_OUT,
@@ -978,4 +980,23 @@ VMCMD_RESULT EvCmdMapFade_InitBG( VMHANDLE * core, void *wk )
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief 地名表示リクエスト発行
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlaceNameDisplay( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*      work          = wk;
+  GAMESYS_WORK*     gameSystem    = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK*    fieldmap      = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  FIELD_PLACE_NAME* placeNameSys  = FIELDMAP_GetPlaceNameSys( fieldmap );
+  u16               zone_id       = FIELDMAP_GetZoneID( fieldmap );
 
+  FIELD_PLACE_NAME_DisplayForce( placeNameSys, zone_id );
+
+  return VMCMD_RESULT_CONTINUE;
+}

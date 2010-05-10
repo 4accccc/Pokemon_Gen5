@@ -6408,6 +6408,19 @@
   .short  \dir
   .endm  
 
+//--------------------------------------------------------------
+/**
+ * @def _PLACE_NAME_DISPLAY
+ * @brief ’n–¼‚ð•\Ž¦‚·‚é
+ */
+//--------------------------------------------------------------
+#define _PLACE_NAME_DISPLAY() \
+    _ASM_PLACE_NAME_DISPLAY
+
+  .macro  _ASM_PLACE_NAME_DISPLAY
+  .short  EV_SEQ_PLACE_NAME_DISPLAY
+  .endm  
+
 //======================================================================
 //
 //
