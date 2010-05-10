@@ -118,7 +118,6 @@ EVENT_START		ev_bg_d02_rock_01
 				_PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
 				_PLAINWIN_CLOSE()
 				
-				//【仮】アイテムは未定　とりあえずほしのかけら
 				_ITEM_EVENT_KEYWAIT( ITEM_HOSINOKAKERA, 1 )
 				
 				//========================================/
