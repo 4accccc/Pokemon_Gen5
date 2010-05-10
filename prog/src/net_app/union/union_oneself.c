@@ -832,7 +832,6 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
       if(unisys->receive_beacon[buf_no].beacon.play_category == UNION_PLAY_CATEGORY_UNION){
         UnionMySituation_SetParam(unisys, 
           UNION_MYSITU_PARAM_IDX_CALLING_PC, &unisys->receive_beacon[buf_no]);
-        situ->last_calling_pc = &unisys->receive_beacon[buf_no];
         UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_REQ);
       }
       else{

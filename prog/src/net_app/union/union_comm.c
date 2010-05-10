@@ -552,7 +552,7 @@ static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys)
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
   	bcon_buff = GFL_NET_GetBeaconData(i);
 #if 0
-  #ifdef PM_DEBUG //ibe mana 専用 ※check　後で消す
+  #ifdef PM_DEBUG //自分のキャラでNPCを全てAddするデバッグ機能
     if(bcon_buff == NULL && (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)){
       int i;
       UNION_BEACON_PC *dest = unisys->receive_beacon;

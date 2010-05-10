@@ -420,7 +420,7 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, ETC_SAVE_WORK *e
           UnionEff_App_ReqFriendMark(unieff, mmdl, FRIENDMARK_TYPE_ACQUAINTANCE);
         }
     #if 0
-      #ifdef PM_DEBUG   //ibe mana 専用 ※check　後で消す
+      #ifdef PM_DEBUG   //ランダムで友達か知り合いマークを表示するデバッグ機能
         else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
           UnionEff_App_ReqFriendMark(unieff, mmdl, GFUser_GetPublicRand(2));
         }
