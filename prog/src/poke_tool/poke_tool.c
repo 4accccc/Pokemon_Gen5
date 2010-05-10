@@ -4108,3 +4108,28 @@ const u32 POKETOOL_GetPokeInsekutaFromItem( const u16 item )
   }
   return FORMNO_656_NORMAL;
 }
+
+//============================================================================================
+/**
+ *	指定されたポケモンナンバーから不正なフォルムナンバーかどうかチェックする
+ *
+ * @param[in]	mons_no	チェックするポケモンナンバー
+ * @param[in]	form_no	チェックするためのフォルムナンバー
+ *
+ * @retval 正しい：そのままform_noを返す　不正：０を返す
+ */
+//============================================================================================
+u8	POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
+{ 
+  int form_max = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_form_max );
+
+  if( form_no < form_max )
+  { 
+    return form_no;
+  }
+  else
+  { 
+    return 0;
+  }
+}
+
