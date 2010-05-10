@@ -305,7 +305,7 @@ void HUGEBEACON_Main(void)
 	case HBSEQ_CONTINUE:
 		break;
 	case HBSEQ_ERROR:
-		GF_ASSERT(0);	//とりあえず今はアサートで停止 ※check
+		GF_ASSERT(0);
 		break;	//エラー処理へ流す
 	default:
 		hb->seq = ret;
@@ -490,7 +490,7 @@ static int _HUGEBEACON_ChildStartWait(HUGEBEACON_SYS *hb)
 				for ( i = 0; i < hb->cm.wsec.bssDescCount; i++ ){
 					WMBssDesc* bd = hb->cm.wsec.bssDesc[i];
 					
-					OS_TPrintf("length = %d, WMBssDescのサイズ=%d\n", bd->length, sizeof(WMBssDesc));	//※check
+					OS_TPrintf("length = %d, WMBssDescのサイズ=%d\n", bd->length, sizeof(WMBssDesc));
 					//GF_ASSERT(sizeof(WMBssDesc) == bd->length);
 					
 					OS_TPrintf(" Ch%2d %02x:%02x:%02x:%02x:%02x:%02x ",
