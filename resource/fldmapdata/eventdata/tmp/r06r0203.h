@@ -14,7 +14,8 @@
 #define R06R0203_POKE4_01                  2
 #define R06R0203_FLD_ITEM_02               3
 #define R06R0203_FLD_ITEM_01               4
-#define R06R0202_FLD_ITEM_03               5
+#define R06R0203_FLD_ITEM_03               5
+#define R06R0203_OLDMAN1_01                6
 
 #endif //ZONE_R06R0203_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06r0203.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
