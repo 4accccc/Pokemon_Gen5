@@ -2854,16 +2854,17 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
   //         変更もそのスクリプト内で行うようにする
   //         ミュージカル控え室も同じように処理するAri100329
-  switch(loc_req->zone_id){
-  case ZONE_ID_UNION:
+  if ( ZONEDATA_IsUnionRoom( loc_req->zone_id ) )
+  {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
-    break;
-  case ZONE_ID_CLOSSEUM:
-  case ZONE_ID_CLOSSEUM02:
-  case ZONE_ID_C04R0202:
+  }
+  else if ( ZONEDATA_IsColosseum( loc_req->zone_id )
+      || ZONEDATA_IsMusicalWaitingRoom( loc_req->zone_id ) )
+  {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
-    break;
-  default:
+  }
+  else
+  {
     //裏フィールドにいるのに下画面が侵入になっていない場合は侵入にする
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
         && GAMEDATA_GetSubScreenMode(gamedata) != FIELD_SUBSCREEN_INTRUDE){
@@ -2882,7 +2883,6 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
         GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
       }
     }
-    break;
   }
 
   //イベント起動データの読み込み
