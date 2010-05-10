@@ -307,7 +307,7 @@ static  void  GameInit(void)
 
   //通信エラー画面管理システム初期化
   NetErr_SystemInit();
-  NetErr_SystemCreate(HEAPID_NET_ERR);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
+  NetErr_SystemCreate(HEAPID_NET_ERR);
 
   /* グローバルメッセージデータ＆フォント初期化 */
   GLOBALMSG_Init( GFL_HEAPID_SYSTEM );
