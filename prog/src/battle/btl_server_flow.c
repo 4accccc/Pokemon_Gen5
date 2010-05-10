@@ -9663,6 +9663,14 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
         SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
 
+        {
+          u32 restExp = exp;
+          while(1){
+            if( !BPP_AddExp(bpp, &restExp, NULL) ){
+              break;
+            }
+          }
+        }
         SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
 
         BTL_MAIN_RECORDDATA_Add( wk->mainModule, RECID_DAYCNT_EXP, exp );

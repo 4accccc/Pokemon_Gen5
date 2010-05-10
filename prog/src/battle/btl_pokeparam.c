@@ -2528,11 +2528,15 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
     {
       u32 expAdd = (expBorder - expNow);
       u16 prevHP   = bpp->coreParam.hpMax;
-      info->atk    = bpp->baseParam.attack;
-      info->def    = bpp->baseParam.defence;
-      info->sp_atk = bpp->baseParam.sp_attack;
-      info->sp_def = bpp->baseParam.sp_defence;
-      info->agi    = bpp->baseParam.agility;
+      u16 diffHP;
+
+      if( info ){
+        info->atk    = bpp->baseParam.attack;
+        info->def    = bpp->baseParam.defence;
+        info->sp_atk = bpp->baseParam.sp_attack;
+        info->sp_def = bpp->baseParam.sp_defence;
+        info->agi    = bpp->baseParam.agility;
+      }
 
       bpp->coreParam.exp = (expNow + expAdd);
       PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->coreParam.exp );
@@ -2545,16 +2549,19 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       bpp->baseParam.sp_attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
       bpp->baseParam.sp_defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
       bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
+      diffHP = bpp->coreParam.hpMax - prevHP;
 
-      info->level  = bpp->baseParam.level;
-      info->hp     = bpp->coreParam.hpMax - prevHP;
-      info->atk    = bpp->baseParam.attack - info->atk;
-      info->def    = bpp->baseParam.defence - info->def;
-      info->sp_atk = bpp->baseParam.sp_attack - info->sp_atk;
-      info->sp_def = bpp->baseParam.sp_defence - info->sp_def;
-      info->agi    = bpp->baseParam.agility - info->agi;
+      if( info ){
+        info->level  = bpp->baseParam.level;
+        info->hp     = diffHP;
+        info->atk    = bpp->baseParam.attack - info->atk;
+        info->def    = bpp->baseParam.defence - info->def;
+        info->sp_atk = bpp->baseParam.sp_attack - info->sp_atk;
+        info->sp_def = bpp->baseParam.sp_defence - info->sp_def;
+        info->agi    = bpp->baseParam.agility - info->agi;
+      }
 
-      bpp->coreParam.hp += info->hp;
+      bpp->coreParam.hp += diffHP;
       PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
 
 //      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
@@ -2572,7 +2579,9 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
     }
   }
 
-  GFL_STD_MemClear( info, sizeof(*info) );
+  if( info ){
+    GFL_STD_MemClear( info, sizeof(*info) );
+  }
   return FALSE;
 }
 //=============================================================================================
