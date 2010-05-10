@@ -559,12 +559,10 @@ static void GameBeacon_DisconnectCallBack(void* pWork)
 //--------------------------------------------------------------
 static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a , const GBS_BEACON *beacon_b )
 {
-  //¦check@“d”gó‹µ‚Ì‰Á–¡‚ÍŒã‚Å“ü‚ê‚é
-  
   if(beacon_a->error > 0){
     return beacon_b;
   }
-  if(beacon_a->member_num >= beacon_b->member_num){
+  if(beacon_a->member_num < beacon_a->member_max && beacon_a->member_num >= beacon_b->member_num){
     return beacon_a;  //l”‚ª‘½‚¢•û‚ğ—Dæ
   }
   return beacon_b;
