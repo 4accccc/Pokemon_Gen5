@@ -66,6 +66,8 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
         { 
           NetErr_DispCallPushPop();
           GFL_NET_StateClearWifiError();
+          NetErr_ErrWorkInit();
+          GFL_NET_StateResetError();
           return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
         }
         /* fallthru */
@@ -91,8 +93,10 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
 
     if( cp_error->errorUser == STEPMATCH_DISCONNECT )
     { 
-      NetErr_DispCallPushPop();
-      GFL_NET_StateClearWifiError();
+      NetErr_DispCallPushPop();       //エラーメッセージ表示
+      GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
+      NetErr_ErrWorkInit();           //エラーシステム情報クリア
+      GFL_NET_StateResetError();      //NET内エラー情報クリア
       return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
   }
