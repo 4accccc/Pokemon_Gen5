@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-02-18T22:59:39" source="m_ncastle08_00_00matome.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-10T22:02:05" source="m_ncastle08_00_00matome.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-02-18T22:59:39" source="m_ncastle08_00_00matome.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-10T22:02:05" source="m_ncastle08_00_00matome.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -144,12 +144,12 @@
 			4442 1112 1111 1111 1111 1111 1111 1111
 			6666 6666 6666 6666 6666 6666 6666 6666
 			2222 2222 2222 2222 2222 2222 2222 2222
-			0000 0000 0000 0000 0000 0000 0000 0000
-			2124 2244 4222 1244 4211 2244 4222 2124
-			2127 6426 2466 6126 2167 6426 2466 2126
-			2127 6426 2466 6126 2167 6426 2466 2126
-			2127 6426 2466 6126 2167 6426 2466 2126
-			2124 2244 4222 1244 4211 2244 4222 2124
+			1111 1111 1111 1111 1111 1111 1111 1111
+			2124 1244 4212 1244 4212 1244 4212 2124
+			2127 6226 2266 6126 2167 6226 2266 2126
+			2127 6416 1466 6216 1267 6416 1466 2126
+			2127 6226 2266 6126 2167 6226 2266 2126
+			2124 1244 4212 1244 4212 1244 4212 2124
 			0000 0000 0000 0000 0000 0000 0000 0000
 			6777 6666 6666 7766 6777 6666 6666 6666
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -164,70 +164,70 @@
 		path="C:/home/wb_data3d/field/in39/chip/tex/n/n_kabe3.tga"
 	>
 		<bitmap size="512">
-			eeee eeee eeee eeee a9ce bbbb 2e9b dd62
-			cccc cccc cccc cccc a9ce bbbb 2e9b dd32
-			bbbb bbbb bbbb abbb a9ce bbbb 2e9b dd62
-			6666 6666 6666 6666 a9ce bbbb 2e9b dd62
-			7777 7777 7777 7777 a9ce bbbb 2e9b dd62
-			6666 6666 6666 6666 a9ce bbbb 2e9b dd62
-			bbbb bbbb bbbb bbbb a9ce bbbb 2e9b dd62
-			6666 6666 6666 6666 a9ce 3333 2e93 dd62
-			0746 0000 0000 6470 54ce 1115 2e91 dd62
-			0746 0000 0000 6470 54ce 5554 2e95 dd62
-			7746 7777 7777 6477 44ce 5554 2e95 dd62
-			4446 4444 4444 6444 66ce 4446 2e94 dd62
-			63bb 6666 6666 bb36 99ce bbb9 2e9b dd62
-			4446 4444 4444 6444 aace 333b 8e93 dd68
-			7746 7777 7777 6477 aace 333b 8e93 dd68
-			7746 7777 7777 6477 3ace 3646 8e96 dd68
-			7746 7777 7777 6477 3ace 4556 8e91 dd68
-			7746 5577 7755 6477 3ace 4156 8e91 dd68
-			7746 a577 775a 6477 3ace 4156 8e91 dd68
-			0746 3500 0053 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4116 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 5577 7755 6477 3ace 4556 8e91 dd68
-			4446 4444 4444 6444 3ace 4556 8e91 dd68
-			33bb 3333 3333 bb33 3ace 4556 8e95 dd68
-			5555 5555 5555 5555 3ace 4556 8e95 dd68
-			0000 0000 0000 0000 3ace 6556 8e95 dd68
-			0000 0000 0000 0000 3ace 6666 8e96 dd68
-			5455 5545 4554 5455 3ace 1155 8e91 dd68
-			33bb 3333 3333 bb33 3ace 1154 8e91 dd38
-			6666 6666 6666 6666 3ace 3333 8e93 dd88
-			7666 7577 7757 6667 ccce cccc 8ecc dd88
-			7666 7577 7757 6667 888e 8366 8e88 dd88
-			7666 0700 0070 6667 fffe ffff 8eff dd88
-			7666 0700 0070 6667 eeee eeee 8eee dd88
-			7666 7577 7757 6667 3ace 3333 2e93 dd22
-			33bb 3333 3333 bb33 aace aaaa de9a dddd
-			cccc cccc cccc cccc ccce cccc fecc ddff
-			eeee eeee eeee eeee eeee eeee eeee eeee
-			eeee eeee eeee eeee eeee eeee eeee eeee
+			0000 0000 0000 0000 8530 9999 4139 2274
+			3333 3333 3333 3333 8530 9999 4139 2274
+			9999 9999 9999 8999 8530 9999 4139 2274
+			bbbb bbbb bbbb bbbb 8530 9999 4139 2274
+			eeee eeee eeee eeee 8530 9999 4139 2274
+			bbbb bbbb bbbb bbbb 8530 9999 4139 2274
+			9999 9999 9999 9999 8530 9999 4139 2274
+			bbbb bbbb bbbb bbbb 8530 aaaa 413a 2274
+			fecb ffff ffff bcef dc30 eeed 4139 2274
+			fecb ffff ffff bcef dc30 dddc 4139 2274
+			eecb eeee eeee bcee cc30 dddc 4139 2274
+			cccb cccc cccc bccc bb30 bbbb 4139 2274
+			ba99 bbbb bbbb 99ab 5530 5555 4135 2274
+			cccb cccc cccc bccc 8830 9999 6139 2276
+			eecb eeee eeee bcee 8830 9999 6139 2276
+			eecb eeee eeee bcee a830 bbbb 6139 2276
+			eecb eeee eeee bcee a830 cddb 6139 2276
+			eecb ddee eedd bcee a830 cedb 6139 2276
+			eecb 8dee eed8 bcee a830 cedb 6139 2276
+			fecb adff ffda bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb ddee eedd bcee a830 cddb 6139 2276
+			cccb cccc cccc bccc a830 cddb 6139 2276
+			aa99 aaaa aaaa 99aa a830 cddb 6139 2276
+			dddd dddd dddd dddd a830 cddb 6139 2276
+			ffff ffff ffff ffff a830 bddb 6139 2276
+			ffff ffff ffff ffff a830 bbbb 6139 2276
+			dcdd ddcd cddc dcdd a830 eedd 6139 2276
+			aa99 aaaa aaaa 99aa a830 eddc 6139 2276
+			bbbb bbbb bbbb bbbb a830 aaaa 6139 2266
+			ebbb edee eede bbbe 3330 3333 6133 2266
+			ebbb edee eede bbbe 6610 6bbb 6016 2266
+			ebbb feff ffef bbbe 1110 1111 6011 2266
+			ebbb feff ffef bbbe 0000 0000 6000 2266
+			ebbb edee eede bbbe a830 aaaa 415a 2244
+			aa99 aaaa aaaa 99aa 8830 8888 2158 2222
+			3333 3333 3333 3333 3330 3333 1133 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="n_kaidan"
@@ -282,38 +282,38 @@
 		path="C:/home/wb_data3d/field/in39/chip/tex/n/n_logo.tga"
 	>
 		<bitmap size="256">
-			2100 eeee eeee eeee eeee eeee eeee 0012
-			2100 ddde dddd 73bd eeee beee ebbb 0012
-			2100 caae 4444 4644 4444 e734 ebbb 0012
-			2100 aaae 644c 6666 6666 7466 ebbe 0012
-			2100 aaae 4dca 4664 4444 4666 ebe7 0012
-			2100 aaae caaa 464d eeee 6664 ebe4 0012
-			2100 aaae aaaa 464d bbbe 664e ee76 0012
-			2100 aaae aaaa 464d bbbe 64ee ee36 0012
-			2100 aaae aaaa 464d bbbe 63eb ee36 0012
-			2100 aaae aaaa 464d bbbe 63eb ee36 0012
-			2100 aaae aaaa 464d bbbe 63eb ebe6 0012
-			2100 ccce cccc 464d eeee 64ee eee4 0012
-			2100 444e 4444 4644 4447 4644 4435 0012
-			2100 633e 6666 4643 6668 5466 4666 0012
-			2100 3dce 4664 4643 eeee 6877 ee46 0012
-			2100 dcae 6433 4643 eeee 43ee ebe7 0012
-			2100 aaae 33dc 4643 bbee e7eb ebbe 0012
-			2100 aaae ddaa 464d ee77 beeb ebbb 0012
-			2100 aaae ccaa 464d 7348 bbee ebbb 0012
-			2100 aaae 33cc 4643 6647 ee73 ebbb 0012
-			2100 cace 6633 4643 6649 7566 ebbe 0012
-			2100 3cce 4444 4643 4449 3444 ebe7 0012
-			1000 53e2 5555 4645 eeee eeee 2eee 0001
-			0000 dde2 dddd 464d bbbe bbbb 2ebb 0001
-			0000 c721 aaaa 463d bbbe bbbb 12eb 0000
-			0000 7210 aaac 463d bbbe bbbb 012e 0000
-			0000 2100 aac7 463c bbbe ebbb 0012 0000
-			0000 1000 ac72 43da bbbe 2ebb 0001 0000
-			0000 0000 c721 43dc bbbe 12eb 0000 0000
-			0000 0000 b210 53dd bbbe 012e 0000 0000
-			0000 0000 2100 5dbb eebe 0012 0000 0000
-			0000 0000 0000 ee21 12ee 0000 0000 0000
+			aa00 aaaa aaaa 9aaa 9999 9999 9999 0099
+			ba00 bbbb bbbb 474b 9999 9999 9999 0099
+			ba00 eeee 444b 7874 4444 9654 9999 0099
+			ba00 eeee 8874 8888 8888 5778 9999 0099
+			ba00 eeee 744e 8887 8888 7888 9995 0099
+			ba00 eeee 4bee 7844 7444 8888 9957 0099
+			ba00 eeee beee 784b 9994 8884 9958 0099
+			ba00 eeee eeee 784b 9994 8849 9578 0099
+			4a00 4444 3444 7843 3364 8866 6578 0033
+			ba00 8883 8888 7847 8874 8767 8578 0037
+			ba00 883b 8888 7847 8874 8767 8578 0037
+			ba00 83be 3788 7843 3364 8766 6637 0033
+			ba00 3bee 7888 7843 9994 8831 9967 0099
+			ba00 beee 8883 7847 c994 7886 9993 0099
+			ba00 eeee 873b 7847 6294 3778 9999 0099
+			ba00 eeee 73be 7847 7694 9937 9999 0099
+			ba00 eeee 3bee 7847 3364 9996 9999 0099
+			ba00 eeee beee 7843 6664 9999 9999 0099
+			ba00 eeee 3bee 7847 7774 9996 9999 0099
+			a000 eeee 73be 7847 8734 9d67 9999 0009
+			a000 eeeb 873b 7847 8734 9678 9999 0009
+			0000 beea 8873 7847 8874 6888 9999 0000
+			0000 3bba 7777 7847 7774 7777 9996 0000
+			0000 34a0 3333 7843 3334 3333 0963 0000
+			0000 bba0 bbbb 784b 9994 9999 0999 0000
+			0000 ba00 eeee 784e 9994 9999 0099 0000
+			0000 a000 eeeb 784e 9994 9999 0009 0000
+			0000 0000 eeba 784e 9994 9999 0000 0000
+			0000 0000 eba0 74ee 9994 0999 0000 0000
+			0000 0000 ba00 74ee 9994 0099 0000 0000
+			0000 0000 a000 4eeb 9994 0009 0000 0000
+			0000 0000 0000 9aaa 9999 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="n_yuka1"
@@ -368,11 +368,11 @@
 		1e13 1e33 2697 3b1a 433c 47bf 537c 7fff
 	</tex_palette>
 	<tex_palette index="2" name="n_kabe3_pl" color_size="16">
-		7fff 73de 2ed7 4f3a 679d 6fbe 5b7c 73df
-		3b1a 3ad7 42f8 4b19 2e54 2697 118e 19f3
+		118e 19f3 2697 2e54 2ed7 3ad7 3b1a 3b7e
+		42f8 4b19 4f3a 5b7c 679d 6fbe 73df 7fff
 	</tex_palette>
 	<tex_palette index="3" name="n_kabe_pl" color_size="16">
-		116e 1e13 2697 3ed7 475b 4f5c 53bc 63dd
+		116e 19f3 2697 3ed7 475b 4f5c 53bc 63dd
 		67be 6bfe 73fe 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="n_kaidan_pl" color_size="8">
@@ -383,8 +383,8 @@
 		4fff 53ff 5bff 67ff 6fff 7bff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="n_logo_pl" color_size="16">
-		24c1 1ca1 1461 24e2 3122 1ca1 4183 1060
-		1481 0c61 52b5 0c63 3df1 252a 0421 7fff
+		4c13 0000 0400 20c0 28e1 24e1 0c40 4181
+		49e1 0000 1ce7 3def 0021 0421 4e73 7fff
 	</tex_palette>
 	<tex_palette index="7" name="n_yuka1_pl" color_size="16">
 		0000 0400 0800 0c20 1040 1440 1461 1862
@@ -412,7 +412,31 @@
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
 	/>
-	<material index="1" name="n_fuch_1"
+	<material index="1" name="n_colum_a_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="2"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="n_fuch_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -436,7 +460,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="n_kabe3_1"
+	<material index="3" name="n_kabe3_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -460,7 +484,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="n_kabe3_2"
+	<material index="4" name="n_kabe3_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -484,7 +508,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="n_kabe_1"
+	<material index="5" name="n_kabe_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -508,7 +532,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="n_kaidan_1"
+	<material index="6" name="n_kaidan_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -532,7 +556,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="n_kon_1"
+	<material index="7" name="n_kon_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -556,7 +580,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="n_logo"
+	<material index="8" name="n_logo_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -580,7 +604,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="n_yuka1_1"
+	<material index="9" name="n_yuka1_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -598,30 +622,6 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="7" tex_palette_idx="7"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="9" name="pasted__n_colum_a_1"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="2"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3339,15 +3339,15 @@
 		volume_r="8.895264"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="1" polygon="6" priority="0"/>
-		<display index="2" material="2" polygon="1" priority="0"/>
-		<display index="3" material="3" polygon="2" priority="0"/>
-		<display index="4" material="4" polygon="3" priority="0"/>
-		<display index="5" material="5" polygon="4" priority="0"/>
-		<display index="6" material="6" polygon="5" priority="0"/>
-		<display index="7" material="7" polygon="9" priority="0"/>
-		<display index="8" material="8" polygon="7" priority="0"/>
-		<display index="9" material="9" polygon="8" priority="0"/>
+		<display index="1" material="1" polygon="8" priority="0"/>
+		<display index="2" material="2" polygon="6" priority="0"/>
+		<display index="3" material="3" polygon="1" priority="0"/>
+		<display index="4" material="4" polygon="2" priority="0"/>
+		<display index="5" material="5" polygon="3" priority="0"/>
+		<display index="6" material="6" polygon="4" priority="0"/>
+		<display index="7" material="7" polygon="5" priority="0"/>
+		<display index="8" material="8" polygon="9" priority="0"/>
+		<display index="9" material="9" polygon="7" priority="0"/>
 	</node>
 </node_array>
 
