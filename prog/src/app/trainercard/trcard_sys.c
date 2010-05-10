@@ -648,9 +648,21 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->TrianHouseFlag  = 1;    
   }
   
+
   //図鑑処理
-  cardData->PokeBookFlg = TRUE;
-  cardData->PokeBook    = ZUKANSAVE_GetZukanPokeGetCount( zukan, heapId );
+  {
+    EVENTWORK * ev = GAMEDATA_GetEventWork( gameData );
+    if( EVENTWORK_CheckEventFlag( ev, SYS_FLAG_ZUKAN_GET ) == TRUE ){
+      cardData->PokeBookFlg = 1;
+    }else{
+      cardData->PokeBookFlg = 0;
+    }
+    cardData->PokeBook    = ZUKANSAVE_GetZukanPokeGetCount( zukan, heapId );
+  }
+
+  
+  
+  
 
   //サインデータの取得
   //サインデータの有効/無効フラグを取得(金銀ローカルでのみ有効)
