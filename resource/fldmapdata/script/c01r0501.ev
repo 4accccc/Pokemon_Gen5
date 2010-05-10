@@ -75,16 +75,15 @@ _TALK_OBJ_START()
 	IF FLAG_OFF ( FE_C01R0501_QUIZ ) THEN
 
 		//よろしければ　ポケモンの　じょうたいいじょうに　ついて
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0501_boy3_01 )
+		_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_01, C01R0501_BOY3_01 ,POS_DOWN)
 		//はい・いいえ分岐
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 	
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
 			
 			//どくを　なおす　ポケモンの　どうぐは？
-			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_02, C01R0501_BOY3_01 ,POS_DL)
+			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_02, C01R0501_BOY3_01 ,POS_DOWN)
 			
 			//分岐・どくけし・まひなおし・ねむけざまし
 			_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_01 )
@@ -95,17 +94,16 @@ _TALK_OBJ_START()
 		
 			//メニュー表示
 			_BMPMENU_START()
-			_MSGWIN_CLOSE()
 			
 			//選択結果で分岐
 			SWITCH $LWK_QUESTION_01	
 			CASE 0 THEN
 			//どくけしを選んだ場合
 				//せいかいです　つぎのもんだいです
-				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_03, C01R0501_BOY3_01 ,POS_DL)
+				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_03, C01R0501_BOY3_01 ,POS_DOWN)
 				
 				//ねむった　ポケモンを　おこす
-				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_04, C01R0501_BOY3_01 ,POS_DL)
+				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_04, C01R0501_BOY3_01 ,POS_DOWN)
 				
 				//分岐・どくけし・まひなおし・ねむけざまし
 				_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_02 )
@@ -116,32 +114,31 @@ _TALK_OBJ_START()
 		
 				//メニュー表示
 				_BMPMENU_START()
-				_MSGWIN_CLOSE()
 				
 				//選択結果で分岐
 				SWITCH $LWK_QUESTION_02
 				CASE 0 THEN		//どくけしを選んだ場合
 					//はずれです
-					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01 ,POS_DL)
+					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01 ,POS_DOWN)
 					_LAST_KEYWAIT()
 					_MSGWIN_CLOSE()
 				//まひなおしを選んだ場合
 				CASE 1 THEN
 					//はずれです
-					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01 ,POS_DL)
+					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_08, C01R0501_BOY3_01 ,POS_DOWN)
 					_LAST_KEYWAIT()
 					_MSGWIN_CLOSE()
 				//ねむけざましを選んだ場合
 				CASE 2 THEN
 					//大正解です
-					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_05, C01R0501_BOY3_01 ,POS_DL)
+					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_05, C01R0501_BOY3_01 ,POS_DOWN)
 					_MSGWIN_CLOSE()
 					
 					//なんでもなおし入手処理
 					_ITEM_EVENT_KEYWAIT( ITEM_NANDEMONAOSI, 1 )
 					
 					//なんでもなおしは　そのなのとおり
-					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_06, C01R0501_BOY3_01 ,POS_DL)
+					_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_06, C01R0501_BOY3_01 ,POS_DOWN)
 					_LAST_KEYWAIT()
 					_MSGWIN_CLOSE()
 					
@@ -272,7 +269,6 @@ _TALK_START_TURN_NOT()
 
 		//ポケモンに　きのみを
 		_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_06,C01R0501_RIVAL_01 , POS_UP )
-		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 		_OBJ_ANIME( C01R0501_RIVAL_01 ,anm_dir_up )
@@ -408,7 +404,6 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	
 	//ポケモンに　きのみを
 	_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_06,C01R0501_RIVAL_01 , POS_UP )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 		
 	_OBJ_ANIME( C01R0501_RIVAL_01, anm_dir_up )
