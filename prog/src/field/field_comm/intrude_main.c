@@ -21,7 +21,6 @@
 #include "intrude_comm_command.h"
 #include "field/field_player.h"
 #include "intrude_main.h"
-#include "bingo_system.h"
 #include "fieldmap/zone_id.h"
 #include "field/zonedata.h"
 #include "intrude_field.h"
@@ -226,8 +225,6 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   }
   //ミッション更新処理
   MISSION_Update(intcomm, &intcomm->mission);
-  //ビンゴの送信リクエストがあれば送信
-  Bingo_SendUpdate(intcomm, Bingo_GetBingoSystemWork(intcomm));
   //占拠情報送信リクエストがあれば送信
   if(intcomm->send_occupy == TRUE){
     if(IntrudeSend_OccupyInfo(intcomm) == TRUE){

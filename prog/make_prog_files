@@ -419,7 +419,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_geonet.c \
         field/event_demo3d.c \
         demo/demo3d/demo3d_param.c \
-        field/field_comm/bingo_system.c \
         field/field_wfbc_data.c \
         field/eventdata_system.c \
         field/fldmmdl_move.c \

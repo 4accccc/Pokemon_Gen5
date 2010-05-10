@@ -19,7 +19,6 @@
 #include "field/field_comm/intrude_work.h"
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_comm_command.h"
-#include "field/field_comm/bingo_system.h"
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"

@@ -21,7 +21,6 @@
 #include "intrude_comm_command.h"
 #include "intrude_main.h"
 #include "savedata/mystatus.h"
-#include "bingo_system.h"
 #include "intrude_field.h"
 #include "intrude_mission.h"
 #include "net/net_whpipe.h"
@@ -138,7 +137,6 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   intcomm->member_num = 1;
   intcomm->connect_map_count = 1; //パレスマップに入った時点で1つは自動で連結している為
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
-  Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
   MISSION_Init(&intcomm->mission);
   IntrudeComm_CreateBeaconData(gamedata, &intcomm->send_beacon);
   FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);

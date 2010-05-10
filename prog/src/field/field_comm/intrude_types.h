@@ -11,7 +11,6 @@
 #include "field\game_beacon_search.h"
 #include "net_app/union/comm_player.h"
 #include "field/intrude_common.h"
-#include "field/field_comm/bingo_types.h"
 #include "savedata/intrude_save.h"  //OCCUPY_INFO
 #include "field/field_comm/mission_types.h"
 #include "field/field_wfbc_data.h"
@@ -231,7 +230,6 @@ typedef struct _INTRUDE_COMM_SYS{
   INTRUDE_PROFILE send_profile;   ///<自分プロフィール送信バッファ(受信はgamedata内なので不要)
   
   MISSION_SYSTEM mission;     ///<ミッションシステム
-  BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
   INTRUDE_OCCUPY_RESULT send_occupy_result;     ///<ミッション後の占拠結果
   INTRUDE_OCCUPY_RESULT recv_occupy_result;     ///<ミッション後の占拠結果受信バッファ
   

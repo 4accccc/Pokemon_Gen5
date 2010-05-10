@@ -19,7 +19,6 @@
 #include "intrude_types.h"
 #include "intrude_comm_command.h"
 #include "intrude_main.h"
-#include "bingo_types.h"
 #include "intrude_work.h"
 #include "field/field_status.h"
 #include "field/field_status_local.h"
