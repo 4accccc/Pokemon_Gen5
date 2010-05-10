@@ -360,17 +360,17 @@ EVENT_START ev_fld_item_2
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r02 X=765 Y=626 ITEM=げんきのかたまり FLAG=3
+// MAP=r02 X=765 Y=626 ITEM=いいキズぐすり FLAG=3
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_3
-  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r02 X=753 Y=618 ITEM=かいふくのくすり FLAG=4
+// MAP=r02 X=753 Y=618 ITEM=スーパーボール FLAG=4
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_4
-  _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+  _FLD_ITEM_EVENT ITEM_SUUPAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
