@@ -165,12 +165,16 @@ EVENT_START ev_debug_masafumi
 
 	ELSIF $SCWK_TEMP1 == 3 THEN
 		//テスト03
-		
-		//古代の城：ライバルPOSイベント
-		$WK_SCENE_D03R0101 = 1
-		_FLAG_SET(FV_D03R0101_RIVAL_01)
-		_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
+		_FLAG_RESET( FV_C09R0701_WARPMAN )
 
+		_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
+		_AB_KEYWAIT()
+		_SUBWIN_CLOSE( 1 )
+
+//クリア後ダークトリニティ
+//		$WK_SCENE_H05 = 0
+//		_MAP_CHANGE( ZONE_ID_H05, 37, 33, DIR_DOWN )
+		
 	ELSIF $SCWK_TEMP1 == 4 THEN
 		//観覧車トレーナー
 		_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
@@ -1223,8 +1227,8 @@ EVENT_START ev_debug_common
 			
 		ELSIF $SCWK_ANSWER == 1 THEN
 			
-			//殿堂入り後にかかる処理を呼び出す（２回呼ぶことで殿堂入り後の処理になる）
-			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			//殿堂入り後にかかる処理を呼び出す（シナリオクリアフラグをセットした状態でクリア後処理をよぶ）
+			_FLAG_SET( SYS_FLAG_GAME_CLEAR )
 			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			
 		ELSIF $SCWK_ANSWER == 10 THEN
@@ -1250,8 +1254,11 @@ EVENT_START ev_debug_common
 			_FLAG_SET( SYS_FLAG_ARRIVE_C06 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_C07 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_C08 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D09 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_C09 )
 			_FLAG_SET( SYS_FLAG_ARRIVE_T03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C11 )
 			
 		ELSIF $SCWK_ANSWER == 70 THEN
 			//イベントジャンプ
