@@ -52,33 +52,27 @@ int GDS_RAP_RESPONSE_MusicalShot_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
 		break;
 	//!< ユーザー認証エラー
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_AUTH:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット登録エラー！:ユーザー認証エラー\n");
 		break;
 	//!< すでに登録されている
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ALREADY:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット登録エラー！:既に登録されている\n");
 		break;
 	//!< 不正なデータ
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ILLEGAL:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット登録エラー！:不正データ\n");
 		break;
 	//!< 不正なポケモン番号
   case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ILLEGALPOKEMON:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット登録エラー！:不正なポケモン番号\n");
 		break;
 	//!< 不正なユーザープロフィール
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ILLEGALPROFILE:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット登録エラー！:不正プロフィール\n");
 		break;
 	//!< その他エラー
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_UNKNOWN:
 	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット登録エラー！:その他のエラー\n");
 		break;
 	}
@@ -111,18 +105,15 @@ int GDS_RAP_RESPONSE_MusicalShot_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONS
 		break;
 	//!< ユーザー認証エラー
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_ERROR_AUTH:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット受信エラー！:ユーザー認証エラー\n");
 		break;
 	//!< ポケモン番号エラー
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_ERROR_ILLEGALPOKEMON:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット受信エラー！:ポケモン番号エラー\n");
 		break;
 	//!< その他エラー
 	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_ERROR_UNKNOWN:
 	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("ミュージカルショット受信エラー！:その他のエラー\n");
 		break;
 	}
@@ -193,22 +184,18 @@ int GDS_RAP_RESPONSE_BattleVideo_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
 		ret = TRUE;
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_AUTH:		//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:ユーザー認証エラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ALREADY:	//!< すでに登録されている
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:既に登録されている\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL:	//!< 不正なデータ
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:不正データ\n");
 		break;
   case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL_RANKINGTYPE:  //!< 不正なランキング種別
     OS_TPrintf("バトルビデオ登録受信エラー！:不正なランキング種別\n");
     break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPROFILE:	//!< 不正なユーザープロフィール
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:不正なユーザー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_VERIFY: //!< ポケモン署名でエラー
@@ -216,7 +203,6 @@ int GDS_RAP_RESPONSE_BattleVideo_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
 	  break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_UNKNOWN:	//!< その他エラー
 	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:その他のエラー %d\n", res->Result);
 		break;
 	}
@@ -266,20 +252,16 @@ int GDS_RAP_RESPONSE_BattleVideo_Search_Download(GDS_RAP_WORK *gdsrap, POKE_NET_
 		ret = TRUE;
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_ERROR_AUTH:		//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ検索受信エラー！:ユーザー認証エラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_ERROR_ILLEGALPARAM:	//!< 検索パラメータエラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ検索受信エラー！:検索パラメータエラー\n");
 		break;
   case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_ERROR_ILLEGALRANKINGTYPE: //!< 検索パラメータエラー(ランキング種別が不正)
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ検索受信エラー！:ランキング種別エラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_ERROR_UNKNOWN:	//!< その他エラー
 	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ検索受信エラー！:その他のエラー\n");
 		break;
 	}
@@ -404,16 +386,13 @@ int GDS_RAP_RESPONSE_BattleVideo_Data_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RE
 		ret = TRUE;
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_AUTH:		//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオデータ取得受信エラー！:ユーザー認証エラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_ILLEGALCODE:	//!< コードエラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオデータ取得受信エラー！:コードエラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_UNKNOWN:		//!< その他エラー
 	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオデータ取得受信エラー！:その他のエラー\n");
 		break;
 	}
@@ -474,16 +453,13 @@ int GDS_RAP_RESPONSE_BattleVideo_Favorite_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_
 		ret = TRUE;
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_FAVORITE_ERROR_AUTH:		//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオお気に入り登録受信エラー！:ユーザー認証エラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_FAVORITE_ERROR_ILLEGALCODE:	//!< コードエラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオお気に入り登録受信エラー！:コードエラー\n");
 		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_FAVORITE_ERROR_UNKNOWN:	//!< その他エラー
 	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオお気に入り登録受信エラー！:その他のエラー\n");
 		break;
 	}
