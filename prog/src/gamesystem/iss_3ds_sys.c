@@ -373,7 +373,7 @@ static void LoadSystemData( ISS_3DS_SYS* system )
   GF_ASSERT( system->systemData == NULL );
 
   heapID  = system->heapID;
-  handle  = GFL_ARC_OpenDataHandle( ARCID_ISS_BRIDGE, heapID );
+  handle  = GFL_ARC_OpenDataHandle( ARCID_ISS_BRIDGE, GetHeapLowID(heapID) );
   dataNum = GFL_ARC_GetDataFileCntByHandle( handle );
 
   // ƒ[ƒN‚ğŠm•Û

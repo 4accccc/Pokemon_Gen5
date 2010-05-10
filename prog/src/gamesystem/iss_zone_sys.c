@@ -200,7 +200,7 @@ static void LoadZoneData( ISS_ZONE_SYS* sys, HEAPID heap_id )
 {
   int data_idx;
   int num;
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ISS_ZONE, heap_id );
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ISS_ZONE, GetHeapLowID(heap_id) );
 
   // ƒf[ƒ^”‚ğæ“¾
   num = GFL_ARC_GetDataFileCntByHandle( handle );
