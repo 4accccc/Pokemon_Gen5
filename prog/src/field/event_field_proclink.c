@@ -1503,6 +1503,9 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
   int zoneId = GAMEDATA_GetMyPlayerWork(gdata)->zoneID; 
   BOOL edit = TRUE;
 
+  FSND_HoldBGMVolume_forApp(
+    GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
+
   // ユニオンルームとコロシアム内では自分のトレーナーカードを編集できない
   if(ZONEDATA_IsUnionRoom(zoneId) || ZONEDATA_IsColosseum(zoneId)){
     edit = FALSE;
@@ -1537,6 +1540,10 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
 static RETURNFUNC_RESULT FMenuReturnProc_TrainerCard(PROCLINK_WORK* wk,void* param_adrs)
 { 
   TRCARD_CALL_PARAM * tr_param  = param_adrs;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( wk->param->gsys );
+
+  FSND_ReleaseBGMVolume_fromApp(
+    GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
 
   OS_Printf("next_proc=%d\n", tr_param->next_proc);
   // フィールドに直接戻る
