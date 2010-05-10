@@ -403,19 +403,6 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     bsys->log_count++;
     MATSUDA_Printf("セット完了 %d件目 id=%d\n", bsys->log_count, info->trainer_id);
   }
-  
-#if 0
-  //ログのパワー情報反映　※check ある程度パワーが決まってきたらフォーマット化する
-  switch(info->action.action_no){
-  case GAMEBEACON_ACTION_ENCOUNT_DOWN:
-    {
-      SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
-      ENC_SV_PTR evc_sv = EncDataSave_GetSaveDataPtr(sv_ctrl);
-      EncDataSave_SetSprayCnt(evc_sv, 100);
-    }
-    break;
-  }
-#endif
 
   return TRUE;
 }
