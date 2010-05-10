@@ -80,16 +80,9 @@ static int GDSRAP_MAIN_Recv(GDS_RAP_WORK *gdsrap);
 
 static int Local_GetResponse(GDS_RAP_WORK *gdsrap);
 
-static void LIB_Heap_Init(int heap_id);
-static void LIB_Heap_Exit(void);
-
 static BOOL RecvSubProccess_Normal(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_work);
-
-static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
-static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
-
 
 
 
@@ -133,10 +126,6 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	gdsrap->wordset = WORDSET_Create(init_data->heap_id);	//単語バッファ作成
 	gdsrap->ErrorString = GFL_STR_CreateBuffer(DWC_ERROR_BUF_NUM, init_data->heap_id);
 	
-	//※check　暫定ヒープ作成
-//	gdsrap->areanaLo = LIB_Heap_Init(init_data->heap_id);
-	LIB_Heap_Init(init_data->heap_id);
-
 	gdsrap->pokenet_auth.PID = init_data->gs_profile_id;
 	gdsrap->pokenet_auth.ROMCode = PM_VERSION;
 	gdsrap->pokenet_auth.LangCode = PM_LANG;
@@ -173,10 +162,6 @@ void GDSRAP_Exit(GDS_RAP_WORK *gdsrap)
 	GFL_MSG_Delete(gdsrap->msgman_wifisys);
 
 	GFL_HEAP_FreeMemory(gdsrap->response);
-
-	//※check　暫定ヒープ解放
-	LIB_Heap_Exit();
-	//GFL_HEAP_FreeMemory(gdsrap->areanaLo);
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 }
@@ -680,8 +665,6 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 		gdsrap->recv_wait_req = gdsrap->send_req;
 	}
 	else{
-		//※check 送信失敗時、現状は成功するまで毎フレーム挑戦し続けているが、
-		//        それでいいのか、エラーメッセージを出す必要があるのか確認
 		OS_TPrintf("送信失敗。send_req = %d\n", gdsrap->send_req);
 	}
 	return ret;
@@ -973,87 +956,3 @@ void DEBUG_GDSRAP_SaveFlagReset(GDS_RAP_WORK *gdsrap)
 #endif
 }
 
-//==============================================================================
-//
-//	※check　暫定　GDSライブラリがOS_AllocFromMain関数を使用しているので
-//				一時的にヒープを作成する
-//
-//==============================================================================
-#if 0 //WBで変更 2010.03.20(土)
-#define ROUND(n, a)		(((u32)(n)+(a)-1) & ~((a)-1))
-static OSHeapHandle sHandle;
-#else
-static HEAPID GdsHeapID;
-#endif
-
-static void LIB_Heap_Init(int heap_id)
-{
-#if 0 //WBで変更 2010.03.20(土)
-	void*    arenaLo;
-	void*    arenaHi;
-	void*	alloc_ptr;
-	
-	int heap_size = 0x2000;
-	
-	arenaLo = sys_AllocMemory(heap_id, heap_size);
-	alloc_ptr = arenaLo;
-	arenaHi = (void*)((u32)arenaLo + heap_size);
-	
-    arenaLo = OS_InitAlloc(OS_ARENA_MAIN, arenaLo, arenaHi, 1);
-    OS_SetArenaLo(OS_ARENA_MAIN, arenaLo);
-
-    // [nakata] ポインタを32bit境界にアラインする
-    arenaLo = (void*)ROUND(arenaLo, 32);
-    arenaHi = (void*)ROUND(arenaHi, 32);
-
-    // [nakata] ヒープ領域の作成
-    sHandle = OS_CreateHeap(OS_ARENA_MAIN, arenaLo, arenaHi);
-    OS_SetCurrentHeap(OS_ARENA_MAIN, sHandle );
-
-    // From here on out, OS_Alloc and OS_Free behave like malloc and free respectively
-//    OS_SetArenaLo(OS_ARENA_MAIN, arenaHi);
-
-	return alloc_ptr;
-#else
-  GdsHeapID = heap_id;
-//  DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
-#endif
-}
-
-static void LIB_Heap_Exit(void)
-{
-	;
-}
-
-/*---------------------------------------------------------------------------*
-  メモリ確保関数
- *---------------------------------------------------------------------------*/
-static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
-{
-#pragma unused( name )
-  void * ptr;
-  OSIntrMode old;
-
-  GF_ASSERT(align <= 32);  // これをこえたら再対応
-  old = OS_DisableInterrupts();
-  ptr = GFL_NET_Align32Alloc(GdsHeapID, size);
-  OS_RestoreInterrupts( old );
-
-  return ptr;
-}
-
-/*---------------------------------------------------------------------------*
-  メモリ開放関数
- *---------------------------------------------------------------------------*/
-static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
-{
-#pragma unused( name, size )
-  OSIntrMode old;
-
-  if ( !ptr ){
-    return;  //NULL開放を認める
-  }
-  old = OS_DisableInterrupts();
-  GFL_NET_Align32Free(ptr);
-  OS_RestoreInterrupts( old );
-}

@@ -179,9 +179,6 @@ typedef struct _GDS_RAP_WORK{
 	GDS_RAP_RESPONSE_CALLBACK response_callback;	///データ受信時のコールバック関数
 	GDS_RAP_ERROR_INFO error_info;			///<エラー情報格納用ワーク
 	
-	//※check　暫定
-//	void *areanaLo;
-	
 	//送信データ
 	GDS_RAP_SEND_WORK send_buf;				///<送信データ
 	//受信データ
