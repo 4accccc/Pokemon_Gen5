@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-03T14:51:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T11:13:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,14 +349,14 @@
 		</language>
 	</columns>
 
-	<dialog left="14" top="160" right="719" bottom="788" maximized="no" rayout="Vertical2">
+	<dialog left="1437" top="197" right="2142" bottom="825" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -381,7 +381,7 @@
 		<language name="JPN" width="216">Ｃギアの　でんげんを　いれて
 つうしんきのうを　オンにしますか？</language>
 		<language name="JPN_KANJI" width="216">Ｃ－ＧＥＡＲの　電源を入れて
-通信機能を　オンにしますか？</language>
+通信機能を　ＯＮにしますか？</language>
 	</row>
 
 	<row id="cg_power_02">
@@ -397,7 +397,7 @@
 		<language name="JPN" width="216">Ｃギアの　でんげんを　きって
 つうしんきのうを　オフにしますか？</language>
 		<language name="JPN_KANJI" width="216">Ｃ－ＧＥＡＲの　電源を切って
-通信機能を　オフにしますか？</language>
+通信機能を　ＯＦＦにしますか？</language>
 	</row>
 
 	<row id="cg_power_04">
@@ -410,7 +410,7 @@
 飛行機や　病院など
 無線通信を　禁止にしている
 場所では　Ｃ－ＧＥＡＲの　電源を切って
-通信機能を　オフに　してください</language>
+通信機能を　ＯＦＦに　してください</language>
 	</row>
 
 	<row id="cg_power_05">
@@ -419,11 +419,11 @@
 オフに　なっています
 ほんたいせっていで　むせんつうしんを
 オンに　してください</language>
-		<language name="JPN_KANJI" width="216">Ｃ－ＧＥＡＲの　電源を　オンにできません
+		<language name="JPN_KANJI" width="216">Ｃ－ＧＥＡＲの　電源を　ＯＮにできません
 ＤＳ本体の　無線通信が
-オフに　なっています
+ＯＦＦに　なっています
 本体設定で　無線通信を
-オンに　してください</language>
+ＯＮに　してください</language>
 	</row>
 
 	<row id="cg_power_yes">
