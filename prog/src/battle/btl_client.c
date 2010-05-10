@@ -5133,16 +5133,6 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
-    // 入場前にカメラ位置を適正に戻す（3vs3 という名前だが問題ない）
-    BTLV_EFFECT_Add( BTLEFF_3vs3_CAMERA_ZOOMOUT );
-    (*seq)++;
-    break;
-  case 1:
-    if(!BTLV_EFFECT_CheckExecute()){
-      (*seq)++;
-    }
-    break;
-  case 2:
     if( fPutMsg )
     {
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, posIdx );
@@ -5185,7 +5175,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
     (*seq)++;
     break;
 
-  case 3:
+  case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
@@ -5197,7 +5187,7 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       (*seq)++;
     }
     break;
-  case 4:
+  case 2:
     if( BTLV_WaitMemberChangeAct(wk->viewCore) )
     {
       EnemyPokeHPBase_Update( wk );
@@ -6041,9 +6031,9 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 
   // レベルアップ処理ルート
   case SEQ_LVUP_ROOT:
-    BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
+    BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
     BPP_ReflectByPP( bpp );
-    BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
+    BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
     BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, pokeID );
     {
        // 場に出ているならゲージ演出
