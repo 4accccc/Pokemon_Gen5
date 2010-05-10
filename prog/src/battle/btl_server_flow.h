@@ -413,9 +413,8 @@ typedef struct {
  WazaSick       sickID;              ///< 状態異常ID
  BPP_SICK_CONT  sickCont;            ///< 状態異常継続パラメータ
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
- u8   poke_cnt;                      ///< 対象ポケモン数
  u8   fStdMsgDisable;                ///< 標準メッセージオフ
- u8   pokeID[ BTL_POS_MAX ];         ///< 対象ポケモンID
+ u8   pokeID;                        ///< 対象ポケモンID
  BTL_HANDEX_STR_PARAMS  exStr;       ///< 特殊メッセージ表示（標準メッセージはオフ）
 }BTL_HANDEX_PARAM_ADD_SICK;
 

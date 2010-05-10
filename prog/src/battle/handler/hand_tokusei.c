@@ -2338,8 +2338,6 @@ static void common_TokuseiWake_CureSickCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID,
   }
 }
 
-
-
 //------------------------------------------------------------------------------
 /**
  *  とくせい「あめふらし」
@@ -2851,7 +2849,7 @@ static void handler_Seidenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   PokeSick sick = POKESICK_MAHI;
   BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( sick );
-  common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_DOKUNOTOGE_PER );
+  common_touchAddSick( flowWk, pokeID, sick, cont, BTL_CALC_TOK_SEIDENKI_PER );
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Seidenki( u32* numElems )
 {
@@ -2977,8 +2975,7 @@ static void common_touchAddSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick si
         param->sickID = sick;
         param->sickCont = sickCont;
         param->fAlmost = FALSE;
-        param->poke_cnt = 1;
-        param->pokeID[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+        param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       }
     }
   }
@@ -3120,8 +3117,8 @@ static void handler_Syncro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
 
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-        param->poke_cnt = 1;
-        param->pokeID[0] = attackPokeID;
+
+        param->pokeID = attackPokeID;
         param->sickID = sick;
         // もうどくは継続パラメータをそのままにする必要がある
         if( (sick == POKESICK_DOKU) && (BPP_SICKCONT_IsMoudokuCont(cont)) ){
@@ -4023,8 +4020,8 @@ static void handler_NoGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   if( !BPP_CheckSick(attacker, WAZASICK_MUSTHIT) )
   {
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-    param->poke_cnt = 1;
-    param->pokeID[0] = atkID;
+
+    param->pokeID = atkID;
     param->sickID = WAZASICK_MUSTHIT;;
     param->sickCont = BPP_SICKCONT_MakeTurn( 1 );
   }
@@ -5056,9 +5053,7 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 /**
  * とくせい「あくしゅう」
  *
- *
- * 道具をまた持つと下がる。
- * 最初から道具がない場合は発動しない。
+ * ひるみ確率０の打撃ワザを、確率10％に押し上げる。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Akusyuu( u32* numElems )
@@ -5081,9 +5076,7 @@ static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, 10 );
     }
   }
-
 }
-
 
 //------------------------------------------------------------------------------
 /**
@@ -5287,8 +5280,8 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
           }
           param->sickID = WAZASICK_KANASIBARI;
           param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
-          param->poke_cnt = 1;
-          param->pokeID[0] = targetPokeID;
+
+          param->pokeID = targetPokeID;
           param->header.tokwin_flag = TRUE;
         }
       }
@@ -5872,13 +5865,13 @@ static void handler_Dokusyu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->header.tokwin_flag = TRUE;
-        param->poke_cnt = 1;
-        param->pokeID[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+
+        param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
         param->sickID = WAZASICK_DOKU;
         param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( WAZASICK_DOKU );
 
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dokusyu );
-        HANDEX_STR_AddArg( &param->exStr, param->pokeID[0] );
+        HANDEX_STR_AddArg( &param->exStr, param->pokeID );
       }
     }
   }

@@ -1720,8 +1720,8 @@ static void handler_KumoNoSu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( !BPP_CheckSick(bpp, WAZASICK_TOOSENBOU) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      param->poke_cnt = 1;
-      param->pokeID[0] = targetPokeID;
+
+      param->pokeID = targetPokeID;
       param->sickID = WAZASICK_TOOSENBOU;
       param->sickCont = BTL_CALC_MakeWazaSickCont_Poke( targetPokeID );
 
@@ -1832,8 +1832,8 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
           BTL_HANDEX_PARAM_SHIFT_HP* hp_param;
 
           param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-          param->poke_cnt = 1;
-          param->pokeID[0] = targetPokeID;
+
+          param->pokeID = targetPokeID;
           param->sickID = WAZASICK_NOROI;
           param->sickCont = BPP_SICKCONT_MakePermanent();
           HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Noroi );
@@ -2158,8 +2158,8 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       case METHOD_SICK:
         {
           BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-          param->poke_cnt = 1;
-          param->pokeID[0] = targetPokeID;
+
+          param->pokeID = targetPokeID;
           param->sickID = method_arg;
           BTL_CALC_MakeDefaultWazaSickCont( param->sickID, attacker, &param->sickCont );
         }
@@ -3384,8 +3384,8 @@ static void handler_AquaRing( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
       param->sickID = WAZASICK_AQUARING;
       param->sickCont = BPP_SICKCONT_MakePermanent();
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+
+      param->pokeID = pokeID;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRing );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
     }
@@ -3449,8 +3449,7 @@ static void handler_Abareru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       param->sickID = WAZASICK_WAZALOCK;
       param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       param->fAlmost = FALSE;
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+      param->pokeID = pokeID;
 
       work[ WORKIDX_STICK ] = 1;
     }
@@ -3471,9 +3470,8 @@ static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         param->sickID = WAZASICK_KONRAN;
         BTL_CALC_MakeDefaultWazaSickCont( param->sickID, bpp, &param->sickCont );
         param->fAlmost = FALSE;
-        param->poke_cnt = 1;
-        param->pokeID[0] = pokeID;
-        param->poke_cnt = 1;
+
+        param->pokeID = pokeID;
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_KonranAbare );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
 
@@ -3516,8 +3514,7 @@ static void handler_Sawagu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       param->sickID = WAZASICK_WAZALOCK;
       param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       param->fAlmost = FALSE;
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+      param->pokeID = pokeID;
 
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Sawagu );
@@ -3619,8 +3616,7 @@ static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
       param->sickID = WAZASICK_WAZALOCK;
       param->sickCont = BPP_SICKCONT_MakeTurnParam( KOROGARU_TURNS, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       param->fAlmost = FALSE;
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
+      param->pokeID = pokeID;
 
       work[0] = 0;
       work[1] = KOROGARU_TURNS;
@@ -5414,8 +5410,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->sickID = WAZASICK_WAZALOCK;
         param->sickCont = BPP_SICKCONT_MakePermanentParam( BTL_EVENT_FACTOR_GetSubID(myHandle) );
-        param->poke_cnt = 1;
-        param->pokeID[0] = pokeID;
+        param->pokeID = pokeID;
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
         work[WORKIDX_STICK] = 1;
         work[0] = GAMAN_STATE_2ND;
@@ -5615,8 +5610,7 @@ static void handler_PsycoShift( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
           defaultCont = BTL_CALC_MakeDefaultPokeSickCont( sick );
         }
         sick_param->sickCont = defaultCont;
-        sick_param->poke_cnt = 1;
-        sick_param->pokeID[0] = target_pokeID;
+        sick_param->pokeID = target_pokeID;
         sick_param->fAlmost = TRUE;
 
         cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
@@ -5946,8 +5940,7 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       }
 
       sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      sick_param->poke_cnt = 1;
-      sick_param->pokeID[0] = pokeID;
+      sick_param->pokeID = pokeID;
       sick_param->sickID = WAZASICK_NEMURI;
       sick_param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
 
@@ -6086,8 +6079,7 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 //      u8 turns = BTL_CALC_RandRange( 3, 7 );
       param->sickID = WAZASICK_ENCORE;
       param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
-      param->poke_cnt = 1;
-      param->pokeID[0] = targetPokeID;
+      param->pokeID = targetPokeID;
       param->fAlmost = FALSE;
 
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Encore );
@@ -6129,16 +6121,7 @@ static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
       param->sickID = WAZASICK_TYOUHATSU;
       param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( turns );
-      param->poke_cnt = 1;
-      param->pokeID[0] = targetPokeID;
-
-/*
-      param->fExMsg = TRUE;
-      param->exStr.type = BTL_STRTYPE_SET;
-      param->exStr.ID = BTL_STRID_SET_Chouhatu;
-      param->exStr.argCnt = 1;
-      param->exStr.args[0] = targetPokeID;
-*/
+      param->pokeID = targetPokeID;
     }
   }
 }
@@ -6168,8 +6151,7 @@ static void handler_Ichamon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->sickID = WAZASICK_ICHAMON;
       param->sickCont = BPP_SICKCONT_MakePermanent();
-      param->poke_cnt = 1;
-      param->pokeID[0] = targetPokeID;
+      param->pokeID = targetPokeID;
     }
   }
 }
@@ -6211,8 +6193,7 @@ static void handler_Kanasibari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
         BTL_Printf("‚Ó‚¤‚¶‚±‚ß‚éƒƒU‚Í %d\n", prevWaza);
         param->sickID = WAZASICK_KANASIBARI;
         param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, prevWaza );
-        param->poke_cnt = 1;
-        param->pokeID[0] = targetPokeID;
+        param->pokeID = targetPokeID;
       }
     }
   }
@@ -6741,8 +6722,7 @@ static void handler_LockON( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
+    param->pokeID = pokeID;
     param->sickID = WAZASICK_MUSTHIT_TARGET;
     param->sickCont = BPP_SICKCONT_MakeTurnParam( 2, targetPokeID );
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_LockOn );
@@ -7198,8 +7178,7 @@ static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
     sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-    sick_param->poke_cnt = 1;
-    sick_param->pokeID[0] = target_pokeID;
+    sick_param->pokeID = target_pokeID;
     sick_param->sickID = WAZASICK_IEKI;
     sick_param->sickCont = BPP_SICKCONT_MakePermanent();
     HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Ieki );
@@ -7498,8 +7477,7 @@ static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     BTL_HANDEX_PARAM_ADD_SICK*  param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
+    param->pokeID = pokeID;
     param->sickID = WAZASICK_FLYING;
     param->sickCont = BPP_SICKCONT_MakeTurn( 5 );
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DenjiFuyu );
@@ -8294,8 +8272,7 @@ static void handler_Haneyasume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     BTL_HANDEX_PARAM_ADD_SICK* sick_param;
 
     sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-    sick_param->poke_cnt = 1;
-    sick_param->pokeID[0] = pokeID;
+    sick_param->pokeID = pokeID;
     sick_param->fStdMsgDisable = TRUE;
     sick_param->sickID = WAZASICK_HANEYASUME;
     sick_param->sickCont = BPP_SICKCONT_MakeTurnParam( 1, POKETYPE_HIKOU );
@@ -9343,8 +9320,7 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-      param->poke_cnt = 1;
-      param->pokeID[0] = targetPokeID;
+      param->pokeID = targetPokeID;
       param->sickID = WAZASICK_FLYING_CANCEL;
       param->sickCont = BPP_SICKCONT_MakePermanent();
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Utiotosu );
@@ -9980,8 +9956,7 @@ static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 
     {
       BTL_HANDEX_PARAM_ADD_SICK* sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      sick_param->poke_cnt = 1;
-      sick_param->pokeID[0] = targetPokeID;
+      sick_param->pokeID = targetPokeID;
       sick_param->sickID = WAZASICK_FREEFALL;
       sick_param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
     }

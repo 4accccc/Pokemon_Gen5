@@ -5805,8 +5805,8 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args )
 }
 //---------------------------------------------------------------------------------------
 /**
- *  とくせい「トレース」の発動処理
- *  args .. [0]:トレース持ちのポケID  [1]:コピー対象のポケID  [2]:コピーするとくせい
+ *  装備アイテム使用エフェクト
+ *  args .. [0]:対象ポケID
  */
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args )
@@ -5816,6 +5816,10 @@ static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+    else
     {
       BTLV_KinomiAct_Start( wk->viewCore, pos );
       (*seq)++;

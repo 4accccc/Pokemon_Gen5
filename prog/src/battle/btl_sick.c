@@ -253,8 +253,7 @@ static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
     param->fAlmost = TRUE;
     param->sickID = WAZASICK_NEMURI;
     param->sickCont = BPP_SICKCONT_MakeTurn( turns );
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
+    param->pokeID = pokeID;
   }
 }
 

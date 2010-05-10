@@ -655,8 +655,7 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
           param->sickCont = BPP_SICKCONT_MakePermanent();
         }
 
-        param->poke_cnt = 1;
-        param->pokeID[0] = pokeID;
+        param->pokeID = pokeID;
       }
     }
   }
