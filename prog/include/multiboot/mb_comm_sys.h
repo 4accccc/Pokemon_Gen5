@@ -89,6 +89,7 @@ typedef struct
 {
   int  msgSpeed;
   u16  highScore;
+  u8   strMode;
 }MB_COMM_INIT_DATA;
 
 //======================================================================

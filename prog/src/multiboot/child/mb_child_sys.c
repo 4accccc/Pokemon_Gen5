@@ -372,6 +372,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       if( MB_COMM_IsPostInitData( work->commWork ) == TRUE )
       {
         work->initData = MB_COMM_GetInitData( work->commWork );
+        GFL_MSGSYS_SetLangID( work->initData->strMode );
         work->state = MCS_CHECK_ROM;
       }
     }
