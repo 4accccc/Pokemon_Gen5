@@ -7009,8 +7009,10 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">うひゃあ！</language>
-		<language name="JPN_KANJI" width="216">うひゃあ！</language>
+		<language name="JPN" width="216">プラーズマー！
+うひゃあ！！</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+うひゃあ！！</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_09_TRMSG_FIGHT_LOSE">
@@ -10202,8 +10204,10 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_18_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">むねん……</language>
-		<language name="JPN_KANJI" width="216">無念……</language>
+		<language name="JPN" width="216">プラーズマー！
+むねん……だ！</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+無念……だ！</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_18_TRMSG_FIGHT_AFTER">
