@@ -703,7 +703,10 @@ enum {
 	NARC_spa_w_554_1_spa = 689,
 	NARC_spa_w_554_2_spa = 690,
 	NARC_spa_w_555_spa = 691,
-	NARC_spa_w_556_spa = 692
+	NARC_spa_w_556_spa = 692,
+	NARC_spa_w_557_spa = 693,
+	NARC_spa_w_558_spa = 694,
+	NARC_spa_w_559_spa = 695
 };
 
 /* NARC_SPA_NAIX_ */

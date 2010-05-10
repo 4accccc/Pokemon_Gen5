@@ -694,5 +694,8 @@
 #define	W_554_2_SPA					(690)
 #define	W_555_SPA					(691)
 #define	W_556_SPA					(692)
+#define	W_557_SPA					(693)
+#define	W_558_SPA					(694)
+#define	W_559_SPA					(695)
 
 #endif
