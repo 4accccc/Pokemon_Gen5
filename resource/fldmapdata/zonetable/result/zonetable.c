@@ -7969,7 +7969,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D10,
 		MAPNAME_D10,
 		0,
-		WEATHER_NO_SNOW,
+		WEATHER_NO_SNOWSTORM,
 		0,
 		MC_TYPE_FIELD,
 		5,
