@@ -115,7 +115,7 @@ void GAMEBEACON_Update(void)
   }
 
   if(bsys->gamedata != NULL){//ƒvƒŒƒCŽžŠÔ‚ª‹K’è”‚ð’´‚¦‚Ä‚¢‚ê‚Î‘—M
-    PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(bsys->gamedata) );
+    PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( bsys->gamedata );
     u16 play_hour = PLAYTIME_GetHour( sv_playtime );
     if(bsys->backup_hour != play_hour){
       switch(play_hour){
@@ -158,7 +158,7 @@ void GAMEBEACON_Setting(GAMEDATA *gamedata)
   SendBeacon_Init(send, gamedata);
 
   {
-    PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gamedata) );
+    PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( gamedata );
     GameBeaconSys->backup_hour = PLAYTIME_GetHour( sv_playtime );
   }
 }
@@ -594,7 +594,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
   
   {
-    PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gamedata) );
+    PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( gamedata );
     info->play_hour = PLAYTIME_GetHour( sv_playtime );
     info->play_min = PLAYTIME_GetMinute( sv_playtime );
   }
@@ -649,7 +649,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata);
-  PLAYTIME *sv_playtime = SaveData_GetPlayTime( sv_ctrl );
+  PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( GameBeaconSys->gamedata );
   const MISC *misc = SaveData_GetMisc( sv_ctrl );
   
   send->info.play_hour = PLAYTIME_GetHour( sv_playtime );
