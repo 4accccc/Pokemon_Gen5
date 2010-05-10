@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:26:49"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T10:48:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,10 +292,9 @@
 	</lock>
 
 
-	<row id="msg_d03r0101_hakase2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_hakase2_01" text-color="#0000ff,,,#ff0000,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-※d08r0901イベント後から
-　c02のストーン入手まで、このイベントは発生しない（暫定）
+・クリア後から発生
 ・遺跡の入り口前のpos（GRIDX=61、GRIDZ=30）を
 　踏むと遺跡から出現
 ・主人公、一歩下がり、続けてhakase2_02
@@ -305,19 +304,17 @@
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_hakase2_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_03</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
-		<language name="JPN" width="256">いせきの　いりぐちと　ともに
-ポケモンの　ぞうが　みつかったので▽
-きげんを　しらべに　きたんだ！▼</language>
-		<language name="JPN_KANJI" width="256">遺跡の　入り口と　ともに
-ポケモンの　像が　発見されたので▽
-起源を　調べに　来たんだ！▼</language>
+		<language name="JPN" width="256">ポケモンぞうの　ことを　しって
+きげんを　しらべに　きたの！▼</language>
+		<language name="JPN_KANJI" width="256">ポケモン像の　ことを　知って
+起源を　調べに　来たの！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_hakase2_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・GRIDX=60、GRIDZ=31に
 　移動してからメッセージ表示
@@ -334,7 +331,7 @@
 眠って　固まっている　状態なの▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_hakase2_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公のほうを向いてメッセージ表示
 ・続けてhakase2_05</comment>
@@ -358,19 +355,19 @@
 街を　守っていたのかも▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_hakase2_05" text-color="#0000ff,,,#ff0000,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・さらにGRIDX=63、GRIDZ=33に
 　移動してメッセージ表示
 ・アイテム入手処理
-　No504「いかりまんじゅう」×５個入手
+　No504「いかりまんじゅう」×１個入手
 ・続けてhakase2_06
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
 		<language name="JPN" width="256">この　ポケモンたち……▼
 ねむっている　というか
-メイソウしている　じょうたいだから▽
-おきれば　ふたたび　かつどうするわよ▼
+めいそう　している　じょうたいだから▽
+おきれば　ふたたび　かつどうするわね▼
 で　ヒヒダルマを　おこす
 どうぐが　なんと　この！▼
 いかりまんじゅう　なのです！！▼
@@ -378,8 +375,8 @@
 わけてあげまーす！▼</language>
 		<language name="JPN_KANJI" width="256">この　ポケモンたち……▼
 眠っている　というか
-メイソウしている　状態だから▽
-起きれば　再び　活動するわよ▼
+めいそう　している　状態だから▽
+起きれば　再び　活動するわね▼
 で　ヒヒダルマを　起こすための
 道具が　なんと　この！▼
 いかりまんじゅう　なのです！！▼
@@ -387,17 +384,17 @@
 わけてあげまーす！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_hakase2_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d03r0101_hakase2_06" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公と向き合ってメッセージ表示
 ・メッセージ表示後、画面下に移動
 　画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">博士（娘）</attribute>
-		<language name="JPN" width="256">じゃあ　アタシは
-ポケモンけんきゅうじょに　もどるから▽
+		<language name="JPN" width="256">じゃあ　わたしは
+ポケモンけんきゅうじょに　もどります▽
 バイバーイ！！▼</language>
-		<language name="JPN_KANJI" width="256">じゃあ　アタシは
-ポケモン研究所に　戻るから▽
+		<language name="JPN_KANJI" width="256">じゃあ　わたしは
+ポケモン研究所に　もどります▽
 バイバーイ！！▼</language>
 	</row>
 
