@@ -96,7 +96,6 @@ _TALK_OBJ_START()
 		ENDIF
 		
 		_BALLOONWIN_OBJMSG(msg_d01r0101_girl_01,D01R0101_GIRL_01)
-		_BALLOONWIN_CLOSE()
 		
 		//======================================//
 			
@@ -165,7 +164,6 @@ ev_d01r0101_pokecount:
 	//ポケモン必要か質問
 	DEFINE_LOCAL SCWK_ANSWER01
 	_YES_NO_WIN( SCWK_ANSWER01 )
-	_BALLOONWIN_CLOSE()
 	
 	//回答により分岐
 	IF $SCWK_ANSWER01 == 0 THEN
