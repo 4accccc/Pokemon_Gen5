@@ -26,6 +26,7 @@ DEFINE_LOCAL ItemGet
 DEFINE_LOCAL ItemNo
 
 EVENT_START ev_id_present
+  _TALK_OBJ_START()
   //‰‰ñH
   IF FLAG_OFF( FE_POKEID_FIRSTTALK ) THEN   //‰‰ñ
     //uŒðŠ·‚µ‚Ä‚é?v
