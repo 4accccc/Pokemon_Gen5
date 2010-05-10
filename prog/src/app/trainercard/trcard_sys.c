@@ -535,7 +535,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   //’ÊM—p‚©‚Å•ªŠò
   if( isSendData == TRUE )
   {
-    PLAYTIME *playTime = SaveData_GetPlayTime( sv );
+    PLAYTIME *playTime  = GAMEDATA_GetPlayTimeWork( gameData );
     cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate = FALSE;
     cardData->PlayTime = NULL;
@@ -546,7 +546,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   {
     cardData->UnionTrNo   = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate  = TRUE;
-    cardData->PlayTime    = SaveData_GetPlayTime( sv );
+    cardData->PlayTime    = GAMEDATA_GetPlayTimeWork( gameData );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
     cardData->SignAnimeOn = TRCSave_GetSignAnime(  trc_ptr );
     MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &cardData->Pms );
