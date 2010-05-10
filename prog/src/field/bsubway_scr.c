@@ -641,13 +641,20 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
   u16 point = 0;
   
   if( bsw_scr->play_mode == BSWAY_MODE_WIFI ){ //ランクごと
-    s8 rank = BSUBWAY_SCOREDATA_GetWifiRank( bsw_scr->scoreData );
-    if( rank < 0 ){
-      rank = 0;
-    }else if( rank >= 10 ){
-      rank = 9;
+    u16 dl_play = (u16)BSUBWAY_PLAYDATA_GetData(
+        bsw_scr->playData, BSWAY_PLAYDATA_ID_sel_wifi_dl_play, NULL );
+    
+    if( dl_play == TRUE ){ //ダウンロードによる新規プレイである
+      s8 rank = BSUBWAY_SCOREDATA_GetWifiRank( bsw_scr->scoreData );
+      if( rank < 0 ){
+        rank = 0;
+      }else if( rank >= 10 ){
+        rank = 9;
+      }
+      point = bpoint_tbl[BTP_WIFI][rank];
+    }else{ //以前のデータ
+      point = 5; //一律5
     }
-    point = bpoint_tbl[BTP_WIFI][rank];
   }else{ //周回数ごと
     u16 type;
     BOOL super = FALSE;
