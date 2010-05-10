@@ -645,14 +645,12 @@ static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work )
 //-----------------------------------------------------------------------------
 static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work )
 {
-  SAVE_CONTROL_WORK* save;
   RECORD* record;
   PLAYTIME* ptime;
   u32 hour, minute, second, time;
 
-  save   = GAMEDATA_GetSaveControlWork( work->gamedata );
   record = GAMEDATA_GetRecordPtr( work->gamedata );
-  ptime  = GAMEDATA_GetPlayTimeWork( save );
+  ptime  = GAMEDATA_GetPlayTimeWork( work->gamedata );
 
   // プレイ時間を取得
   hour   = PLAYTIME_GetHour( ptime );
@@ -697,10 +695,8 @@ static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work )
 //-----------------------------------------------------------------------------
 static void SaveFirstDendouiriTime( GAMECLEAR_MSG_WORK* work )
 {
-  SAVE_CONTROL_WORK* save;
   RECORD* record;
 
-  save = GAMEDATA_GetSaveControlWork( work->gamedata );
   record = GAMEDATA_GetRecordPtr( work->gamedata );
 
   // 「殿堂入り」がはじめての場合
