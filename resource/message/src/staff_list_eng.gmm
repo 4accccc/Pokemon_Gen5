@@ -584,8 +584,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_038">
-		<language name="JPN" width="256">gym  Main  Programming</language>
-		<language name="JPN_KANJI" width="256">gym  Main  Programming</language>
+		<language name="JPN" width="256">GYM  Main  Programming</language>
+		<language name="JPN_KANJI" width="256">GYM  Main  Programming</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_039">
@@ -979,13 +979,13 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_117">
-		<language name="JPN" width="256">"Hilink, ""Road 10"""</language>
-		<language name="JPN_KANJI" width="256">"Hilink, ""Road 10"""</language>
+		<language name="JPN" width="256">Hilink, 'Road 10'</language>
+		<language name="JPN_KANJI" width="256">Hilink, 'Road 10'</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_118">
-		<language name="JPN" width="256">"Soryu City,""Kanawa Town"""</language>
-		<language name="JPN_KANJI" width="256">"Soryu City,""Kanawa Town"""</language>
+		<language name="JPN" width="256">Soryu City,'Kanawa Town'</language>
+		<language name="JPN_KANJI" width="256">Soryu City,'Kanawa Town'</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_119">
@@ -994,8 +994,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_120">
-		<language name="JPN" width="256">"""Tasogare Oyaji"""</language>
-		<language name="JPN_KANJI" width="256">"""Tasogare Oyaji"""</language>
+		<language name="JPN" width="256">Tasogare Oyaji'</language>
+		<language name="JPN_KANJI" width="256">Tasogare Oyaji'</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_121">
@@ -1019,13 +1019,13 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_125">
-		<language name="JPN" width="256">"Bicycle, ""Shift Factory"""</language>
-		<language name="JPN_KANJI" width="256">"Bicycle, ""Shift Factory"""</language>
+		<language name="JPN" width="256">Bicycle, 'Shift Factory'</language>
+		<language name="JPN_KANJI" width="256">Bicycle, 'Shift Factory'</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_126">
-		<language name="JPN" width="256">"""Kagome Town"""</language>
-		<language name="JPN_KANJI" width="256">"""Kagome Town"""</language>
+		<language name="JPN" width="256">Kagome Town'</language>
+		<language name="JPN_KANJI" width="256">Kagome Town'</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_127">
@@ -1034,8 +1034,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_128">
-		<language name="JPN" width="256">All Battle Composition</language>
-		<language name="JPN_KANJI" width="256">All Battle Composition</language>
+		<language name="JPN" width="256">All  Battle  Composition</language>
+		<language name="JPN_KANJI" width="256">All  Battle  Composition</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_129">
@@ -1369,58 +1369,58 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_195">
-		<language name="JPN" width="256">B &amp; W  PLOT</language>
-		<language name="JPN_KANJI" width="256">B &amp; W  PLOT</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_196">
-		<language name="JPN" width="256">JUNICHI  MASUDA</language>
-		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_197">
 		<language name="JPN" width="256">DEBUG  MANAGEMENT</language>
 		<language name="JPN_KANJI" width="256">DEBUG  MANAGEMENT</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_198">
+	<row id="STAFF_ROLL_STR_196">
 		<language name="JPN" width="256">YUKI  TANIKAWA</language>
 		<language name="JPN_KANJI" width="256">YUKI  TANIKAWA</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_199">
+	<row id="STAFF_ROLL_STR_197">
 		<language name="JPN" width="256">SHUHEI  FURUKAWA</language>
 		<language name="JPN_KANJI" width="256">SHUHEI  FURUKAWA</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_200">
+	<row id="STAFF_ROLL_STR_198">
 		<language name="JPN" width="256">YOSHIKAZU  TANAKA</language>
 		<language name="JPN_KANJI" width="256">YOSHIKAZU  TANAKA</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_201">
+	<row id="STAFF_ROLL_STR_199">
 		<language name="JPN" width="256">HITOSHI  NISHIZAWA</language>
 		<language name="JPN_KANJI" width="256">HITOSHI  NISHIZAWA</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_202">
+	<row id="STAFF_ROLL_STR_200">
 		<language name="JPN" width="256">KEISUKE  FUKUSHIMA</language>
 		<language name="JPN_KANJI" width="256">KEISUKE  FUKUSHIMA</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_203">
+	<row id="STAFF_ROLL_STR_201">
 		<language name="JPN" width="256">MOTOKI  NAKAJIMA</language>
 		<language name="JPN_KANJI" width="256">MOTOKI  NAKAJIMA</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_204">
+	<row id="STAFF_ROLL_STR_202">
 		<language name="JPN" width="256">DEBUG</language>
 		<language name="JPN_KANJI" width="256">DEBUG</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_205">
+	<row id="STAFF_ROLL_STR_203">
 		<language name="JPN" width="256">MARIO  CLUB</language>
 		<language name="JPN_KANJI" width="256">MARIO  CLUB</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_204">
+		<language name="JPN" width="256">B &amp; W  PLOT</language>
+		<language name="JPN_KANJI" width="256">B &amp; W  PLOT</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_205">
+		<language name="JPN" width="256">JUNICHI  MASUDA</language>
+		<language name="JPN_KANJI" width="256">JUNICHI  MASUDA</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_206">
@@ -1779,8 +1779,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_277">
-		<language name="JPN" width="256">POKET  MONSTERS  BLACK  VERSION</language>
-		<language name="JPN_KANJI" width="256">POKET  MONSTERS  BLACK  VERSION</language>
+		<language name="JPN" width="256">POCKETMONSTERS  BLACK  VERSION</language>
+		<language name="JPN_KANJI" width="256">POCKETMONSTERS  BLACK  VERSION</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_278">
