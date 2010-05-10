@@ -103,6 +103,56 @@ class MAPEDITOR_BINFILE_LOADER
     }
   end
 
+  def CheckWater( result_file )
+    @attr_tbl.each_with_index{ |t, idx|
+      #水チェック
+      if IsWater( idx ) == true then
+        u = idx - @header[0]
+        l = idx - 1
+        r = idx + 1
+        d = idx + @header[0]
+
+        pass = 0;
+      
+        if u >= 0 then
+          if IsWater( u ) == true && IsHit(u)==1 then
+            pass+=1
+          end
+        else
+          pass+=1
+        end
+
+        if (l>=0) && ( (l/@header[1]) == (idx/@header[1]) ) then
+          if IsWater( l ) == true && IsHit(l)==1 then
+            pass+=1
+          end
+        else
+          pass+=1
+        end
+
+        if d < @header[0]*@header[1] then
+          if IsWater( d ) == true && IsHit(d)==1 then
+            pass+=1
+          end
+        else
+          pass+=1
+        end
+
+        if (r < @header[0]*@header[1]) && ( (r/@header[1]) == (idx/@header[1]) ) then
+          if IsWater( r ) == true && IsHit(r)==1 then
+            pass+=1
+          end
+        else
+          pass+=1
+        end
+
+        if pass != 4 then
+          result_file.printf("X=%d Z=%d WaterError\n",idx % @header[0] , idx / @header[0])
+        end
+      end
+    }
+  end
+
   def IsWater( idx )
     atr = @attr_tbl[idx]
     rc = @WaterTbl.include?(atr)
@@ -170,7 +220,7 @@ while line = water_file.gets
   water << Integer(num)
 end
 
-result_file = File.open( "result.txt", "w" );
+result_file = File.open( ARGV[1], "w" );
 
 #ディレクトリ内binファイルリストアップ
 bin_ary = Dir.glob("../land_res/*.bin")
@@ -181,8 +231,11 @@ bin_ary.each{ | i |
   bin_loader = MAPEDITOR_BINFILE_LOADER.new( file, water )
   bin_loader.MakeAttrTbl
 
-  bin_loader.Check(result_file, fbd)
-
+  if ARGV[0] == 0 then
+    bin_loader.Check(result_file, fbd)
+  else
+    bin_loader.CheckWater(result_file)
+  end
   p "clear"
 }
 
