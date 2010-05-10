@@ -643,6 +643,11 @@ VMCMD_RESULT EvCMdBmodelDirectChangeModelID( VMHANDLE * core, void * wk )
 //
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * @brief   配置モデルアニメ終了待ち対象のキーを保持するワーク
+ *
+ * @note  単一のワークなので複数アニメの終了待ちができないことに注意
+ */
 //--------------------------------------------------------------
 static u16 bmodel_unique_key;
 
@@ -806,9 +811,6 @@ VMCMD_RESULT EvCmdBModelAnimeStop( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo
- * オブジェクト管理機構をどうするか？考える
- * キーを持ったリスト構造でワーク管理する？
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk )
