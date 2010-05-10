@@ -64,5 +64,7 @@ extern void INTRO_MCSS_SetPaletteFade( INTRO_MCSS_WORK* wk, u8 id, u8 start_evy,
 
 extern BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px );
 
+extern BOOL INTRO_MCSS_PokeFall( INTRO_MCSS_WORK * wk, fx32 my, fx32 end );
+
 extern void INTRO_MCSS_PokeAnime( INTRO_MCSS_WORK * wk );
 

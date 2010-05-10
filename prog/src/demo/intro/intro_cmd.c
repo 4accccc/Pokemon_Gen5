@@ -135,6 +135,7 @@ static BOOL CMD_BRIGHTNESS_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
 static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_BGM_FADEIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_BGM_CHANGE_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_SE_STOP( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param);
@@ -208,6 +209,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_BRIGHTNESS_WAIT,
   CMD_BGM,
   CMD_BGM_FADEOUT,
+  CMD_BGM_FADEIN,
   CMD_BGM_CHANGE_WAIT,
   CMD_SE,
   CMD_SE_STOP,
@@ -719,6 +721,12 @@ static BOOL CMD_BGM_FADEOUT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
 {
   PMSND_FadeOutBGM( param[0] );
 
+  return TRUE;
+}
+
+static BOOL CMD_BGM_FADEIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+  PMSND_FadeInBGM( param[0] );
   return TRUE;
 }
 
@@ -1259,10 +1267,39 @@ static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* par
 //-----------------------------------------------------------------------------
 static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  // ロードしておいた鳴き声を再生
-  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
+	switch( sdat->seq ){
+	case 0:
+		if( sdat->cnt == 3 ){
+			sdat->cnt = 0;
+			sdat->seq++;
+		}else{
+			sdat->cnt++;
+		}
+		break;
 
-  return TRUE;
+	case 1:
+		if( INTRO_MCSS_PokeFall( wk->mcss, FX32_CONST(1.0), -FX32_CONST(11.5) ) == TRUE ){
+			sdat->seq++;
+		}
+		break;
+
+	case 2:
+		if( sdat->cnt == 16 ){
+		  // ロードしておいた鳴き声を再生
+		  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
+			sdat->cnt = 0;
+			sdat->seq = 0;
+			return TRUE;
+		}else{
+			sdat->cnt++;
+		}
+		break;
+  }
+
+  // ロードしておいた鳴き声を再生
+//  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
+
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------

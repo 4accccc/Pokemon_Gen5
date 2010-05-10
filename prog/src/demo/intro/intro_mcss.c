@@ -442,6 +442,24 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 	return flg;
 }
 
+BOOL INTRO_MCSS_PokeFall( INTRO_MCSS_WORK * wk, fx32 my, fx32 end )
+{
+	BOOL	flg;
+	VecFx32	pos;
+
+	MCSS_GetPosition( wk->mcss_work[1], &pos );
+	pos.y -= my;
+	if( pos.y <= end ){
+		pos.y = end;
+		flg = TRUE;
+	}else{
+		flg = FALSE;
+	}
+	MCSS_SetPosition( wk->mcss_work[1], &pos );
+
+	return flg;
+}
+
 // ポケモンアニメ監視
 void INTRO_MCSS_PokeAnime( INTRO_MCSS_WORK * wk )
 {

@@ -265,7 +265,7 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, int win_id )
   const u8 clear_color = 15;
   GFL_BMPWIN* win;
   int msgspeed;
-  
+
   msgspeed  = MSGSPEED_GetWait();
   win       = wk->win_dispwin;
 
