@@ -39,7 +39,7 @@ begin
   totalsize = 0
   
   writer.write(outFileHeaderMsg)
-  writer.putc(0)
+  writer.putc( counter )
   writer.putc(0)
   
   totalsize = (counter + 2) * 4

@@ -16,7 +16,7 @@ NSBMD_DIR = ARGV[4] #NSBMDの格納されているディレクトリ
 BMINFO_DIR = ARGV[5] #BMINFOの格納されているディレクトリ
 
 
-CONVERTER = "$(PROJECT_ROOT)/tools/binlinker2.rb"
+CONVERTER = "$(PROJECT_ROOT)/tools/binlinker.rb"
 
 book = Array.new
 sheet = Array.new

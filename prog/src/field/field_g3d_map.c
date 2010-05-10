@@ -508,7 +508,7 @@ BOOL	FLD_G3D_MAP_GetGlobalDDobjectID( FLD_G3D_MAP* g3Dmap, const u32 datID, u32*
 //------------------------------------------------------------------
 void	FLD_G3D_MAP_SetLoadReq( FLD_G3D_MAP* g3Dmap, const u32 datID )
 {
-	u32 signature;
+	u16 signature;
 	int i;
 
 	GF_ASSERT( g3Dmap );
@@ -522,7 +522,7 @@ void	FLD_G3D_MAP_SetLoadReq( FLD_G3D_MAP* g3Dmap, const u32 datID )
 
 	g3Dmap->datID = datID;
 
-	GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, datID, 0, sizeof(u32), &signature ); 
+	GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, datID, 0, sizeof(u16), &signature ); 
 
 	i = 0;
 	while( g3Dmap->mapFileFunc[i].signature != MAPFILE_FUNC_DEFAULT ){

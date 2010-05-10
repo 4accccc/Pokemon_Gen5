@@ -344,12 +344,10 @@ static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
 static const BMINFO * BMODELMAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id);
 
 static void BMINFO_Load(FIELD_BMODEL_MAN * man);
-static void BMINFO_init(BMINFO * bmInfo);
 //アニメデータの取得処理
 static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo);
 
 static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data);
-static void BMANIME_init(FIELD_BMANIME_DATA * data);
 static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data);
 
 //------------------------------------------------------------------
@@ -639,6 +637,7 @@ int FIELD_BMODEL_MAN_ResistAllMapObjects
 {
   FLD_G3D_MAP_GLOBALOBJ_ST status;
   int dataCount, resistCount, count;
+
 
   for( dataCount=0, resistCount = 0, count = objCount; dataCount<count ; resistCount++, dataCount++ )
   {
@@ -1019,20 +1018,6 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data)
 static void BMINFO_Load(FIELD_BMODEL_MAN * man)
 {
   man->bmInfo = BM_AREA_HEADER_getBMINFOBuff(man->bm_areadata);
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void BMINFO_init(BMINFO * bmInfo)
-{
-  bmInfo->bm_id = 0;
-  bmInfo->prog_id = BM_PROG_ID_NONE;
-  bmInfo->sub_bm_id = BM_SUBMODEL_NULL_ID;
-  bmInfo->sx = 0;
-  bmInfo->sy = 0;
-  bmInfo->sz = 0;
-  bmInfo->anm_id = 0xffff;
-  BMANIME_init(&bmInfo->animeData);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
