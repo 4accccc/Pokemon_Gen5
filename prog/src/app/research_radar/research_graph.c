@@ -372,12 +372,6 @@ static void ReleaseVBlankTask( RRG_WORK* work ); // VBlank タスク 解除
 // ◇LAYER 1 ユーティリティ
 //-----------------------------------------------------------------------------------------
 static u8 Bind_u8( int num ); // u8 に収まるように丸める
-//-----------------------------------------------------------------------------------------
-// ◇LAYER 0 デバッグ
-//-----------------------------------------------------------------------------------------
-static void DebugPrint_stateQueue( const RRG_WORK* work ); // 状態キューの中身を表示する
-static void DebugPrint_researchData( const RRG_WORK* work ); // 調査データを表示する
-static void Debug_SetupResearchData( RRG_WORK* work ); // デバッグ用調査データを設定する
 
 
 
@@ -410,9 +404,6 @@ RRG_WORK* RRG_CreateWork( RRC_WORK* commonWork )
   SetHeapID( work, heapID );
   SetCommonWork( work, commonWork );
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create work\n" );
-
   return work;
 }
 
@@ -427,9 +418,6 @@ void RRG_DeleteWork( RRG_WORK* work )
 {
   DeleteStateQueue( work );
   DeleteGraphWork( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete work\n" );
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -1307,9 +1295,6 @@ static void FinishCurrentState( RRG_WORK* work )
 
   // 終了フラグを立てる
   work->stateEndFlag = TRUE;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish current state\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1336,9 +1321,6 @@ static void SetFinishReason( RRG_WORK* work, SEQ_CHANGE_TRIG reason )
 static void SetFinishResult( RRG_WORK* work, RRG_RESULT result )
 {
   work->finishResult = result;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set result (%d)\n", result );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1420,10 +1402,6 @@ static void RegisterNextState( RRG_WORK* work, RRG_STATE nextSeq )
 {
   // 状態キューに追加する
   QUEUE_EnQueue( work->stateQueue, nextSeq );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set next state\n" );
-  DebugPrint_stateQueue( work );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1443,9 +1421,6 @@ static void SwitchState( RRG_WORK* work )
   // 状態を変更
   nextSeq = QUEUE_DeQueue( work->stateQueue );
   SetState( work, nextSeq ); 
-
-  // DEBUG: 状態キューを表示
-  DebugPrint_stateQueue( work );
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -1462,25 +1437,6 @@ static void SetState( RRG_WORK* work, RRG_STATE nextSeq )
   work->stateSeq     = 0;
   work->stateCount   = 0;
   work->stateEndFlag = FALSE;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set state ==> " );
-  switch( nextSeq ) {
-  case RRG_STATE_SETUP:      OS_TFPrintf( PRINT_TARGET, "SETUP" );       break;
-  case RRG_STATE_STANDBY:    OS_TFPrintf( PRINT_TARGET, "STANDBY" );     break;
-  case RRG_STATE_KEYWAIT:    OS_TFPrintf( PRINT_TARGET, "KEYWAIT" );     break;
-  case RRG_STATE_ANALYZE:    OS_TFPrintf( PRINT_TARGET, "ANALYZE" );     break;
-  case RRG_STATE_PERCENTAGE: OS_TFPrintf( PRINT_TARGET, "PERCENTAGE" );  break;
-  case RRG_STATE_FLASHOUT:   OS_TFPrintf( PRINT_TARGET, "FLASHOUT" );    break;
-  case RRG_STATE_FLASHIN:    OS_TFPrintf( PRINT_TARGET, "FLASHIN" );     break;
-  case RRG_STATE_UPDATE:     OS_TFPrintf( PRINT_TARGET, "UPDATE" );      break;
-  case RRG_STATE_FADEOUT:    OS_TFPrintf( PRINT_TARGET, "FADEOUT" );     break;
-  case RRG_STATE_WAIT:       OS_TFPrintf( PRINT_TARGET, "WAIT" );        break;
-  case RRG_STATE_CLEANUP:    OS_TFPrintf( PRINT_TARGET, "CLEANUP" );     break;
-  case RRG_STATE_FINISH:     OS_TFPrintf( PRINT_TARGET, "FINISH" );      break;
-  default:                   GF_ASSERT(0);
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1932,9 +1888,6 @@ static void ShiftMenuCursorPos( RRG_WORK* work, int stride )
   nowPos  = work->cursorPos;
   nextPos = (nowPos + stride + MENU_ITEM_NUM) % MENU_ITEM_NUM;
   work->cursorPos = nextPos; 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: shift menu cursor ==> %d\n", nextPos );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1949,9 +1902,6 @@ static void SetMenuCursorPos( RRG_WORK* work, MENU_ITEM menuItem )
 {
   // カーソル位置を更新
   work->cursorPos = menuItem;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set menu cursor ==> %d\n", menuItem );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2001,9 +1951,6 @@ static void SetMenuCursorOn( RRG_WORK* work )
 
   // スクリーン転送リクエスト
   GFL_BG_LoadScreenReq( MAIN_BG_WINDOW ); 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set menu cursor on (%d)\n", work->cursorPos );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2053,9 +2000,6 @@ static void SetMenuCursorOff( RRG_WORK* work )
 
   // スクリーン転送リクエスト
   GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set menu cursor off (%d)\n", work->cursorPos );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2075,9 +2019,6 @@ static void ShiftQuestionIdx( RRG_WORK* work, int stride )
   nowIdx  = work->questionIdx;
   nextIdx = ( nowIdx + stride + QUESTION_NUM_PER_TOPIC ) % QUESTION_NUM_PER_TOPIC;
   work->questionIdx = nextIdx;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: shift question index ==> %d\n", nextIdx );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2113,9 +2054,6 @@ static void ShiftAnswerIdx( RRG_WORK* work, int stride )
 
   // インデックスを変更
   work->answerIdx = nextAnswerIdx;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: shift answer index ==> %d\n", nextAnswerIdx );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2128,9 +2066,6 @@ static void ShiftAnswerIdx( RRG_WORK* work, int stride )
 static void ResetAnswerIdx( RRG_WORK* work )
 {
   work->answerIdx = 0;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: reset answer index ==> %d\n", work->answerIdx );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2290,9 +2225,6 @@ static void InterchangeCircleGraph( RRG_WORK* work )
     work->mainGraph[ typeIdx ] = work->subGraph[ typeIdx ];
     work->subGraph[ typeIdx ]  = temp;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: interchange circle graph\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2348,9 +2280,6 @@ static void AdjustCircleGraphLayer( RRG_WORK* work )
   // サブ円グラフが手前に表示されるようにz座標を設定する
   CIRCLE_GRAPH_SetCenterZ( GetMainGraph(work), FX16_CONST(-2.0f) );
   CIRCLE_GRAPH_SetCenterZ( GetSubGraph(work), FX16_CONST(0.0f) );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: adjust circle graph layer\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2382,7 +2311,6 @@ static void SetupMainCircleGraph( RRG_WORK* work, GRAPH_DISP_MODE graphMode )
     components[ aIdx ].outerColorR = answerData->colorR;
     components[ aIdx ].outerColorG = answerData->colorG;
     components[ aIdx ].outerColorB = answerData->colorB;
-    OS_TFPrintf( PRINT_TARGET, "color = %d, %d, %d\n", answerData->colorR, answerData->colorG, answerData->colorB );
     SetupCenterColorOfGraphComponent( &components[ aIdx ] );
     switch( graphMode ) {
     case GRAPH_DISP_MODE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
@@ -2393,9 +2321,6 @@ static void SetupMainCircleGraph( RRG_WORK* work, GRAPH_DISP_MODE graphMode )
 
   // グラフの構成要素をセット
   CIRCLE_GRAPH_SetupComponents( graph, components, answerNum );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup main circle graph\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2437,9 +2362,6 @@ static void SetupSubCircleGraph( RRG_WORK* work, GRAPH_DISP_MODE graphMode )
 
   // グラフの構成要素をセット
   CIRCLE_GRAPH_SetupComponents( graph, components, answerNum );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup sub circle graph\n" );
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -2547,9 +2469,6 @@ static void UpdateArrow( RRG_WORK* work )
     ARROW_Setup( work->arrow, ARROW_START_X, ARROW_START_Y, endX, endY );
     ARROW_StartAnime( work->arrow );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update arrow\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2597,9 +2516,6 @@ static void SetupPercentages( RRG_WORK* work )
 
   // 有効な％オブジェクトの数を記憶
   work->percentageNum = percentageCount;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup percentages\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2619,9 +2535,6 @@ static void VanishAllPercentage( RRG_WORK* work )
     PERCENTAGE_SetDrawEnable( work->percentage[ idx ], FALSE );
   }
   work->percentageDispNum = 0;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: vanish all percentage\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2635,9 +2548,6 @@ static void VanishAllPercentage( RRG_WORK* work )
 static void DispPercentage( RRG_WORK* work, u8 index )
 {
   PERCENTAGE_SetDrawEnable( work->percentage[ index ], TRUE );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: disp percentage[%d]\n", index );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2658,9 +2568,6 @@ static void DispAllPercentage( RRG_WORK* work )
   {
     DispPercentage( work, idx );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: disp all percentage\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2690,9 +2597,6 @@ static void UpdateTouchArea( RRG_WORK* work )
   area->rect.top    = Bind_u8( menu->top_dot  + menu->rightCursorOffsetY - CLWK_CONTROL_CURSOR_R_HEIGHT/2 );
   area->rect.right  = Bind_u8( area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH );
   area->rect.bottom = Bind_u8( area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update touch area\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2737,9 +2641,6 @@ static void UpdateMainBG_WINDOW( RRG_WORK* work )
 
   // ハンドルクローズ
   GFL_ARC_CloseDataHandle( handle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-WINDOW\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2760,9 +2661,6 @@ static void UpdateBGFont_TopicTitle( RRG_WORK* work )
 
   // BG ( フォント面 ) に対し, 文字列を書き込む
   BG_FONT_SetMessage( work->BGFont[ SUB_BG_FONT_TOPIC_TITLE ], strID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont topic title\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2783,9 +2681,6 @@ static void UpdateBGFont_QuestionCaption( RRG_WORK* work )
 
   // BG ( フォント面 ) に対し, 文字列を書き込む
   BG_FONT_SetMessage( work->BGFont[ SUB_BG_FONT_QUESTION_CAPTION ], strID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont question caption\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2809,9 +2704,6 @@ static void UpdateBGFont_Question( RRG_WORK* work )
 
   // BG ( フォント面 ) に対し, 文字列を書き込む
   BG_FONT_SetMessage( BGFont, strID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont question\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2873,9 +2765,6 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
   GFL_STR_DeleteBuffer( strbuf_plain );
   GFL_STR_DeleteBuffer( strbuf_expand );
   GFL_STR_DeleteBuffer( strbuf_answer );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont answer\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2917,9 +2806,6 @@ static void UpdateBGFont_MyAnswer( RRG_WORK* work )
   GFL_STR_DeleteBuffer( strbuf_plain );
   GFL_STR_DeleteBuffer( strbuf_expand );
   GFL_STR_DeleteBuffer( strbuf_myAnswer );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont my answer\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2971,9 +2857,6 @@ static void UpdateBGFont_Count( RRG_WORK* work )
 
   GFL_STR_DeleteBuffer( strbuf_plain );
   GFL_STR_DeleteBuffer( strbuf_expand );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont count\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2991,9 +2874,6 @@ static void UpdateBGFont_NoData( RRG_WORK* work )
   else { 
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_NO_DATA ], FALSE ); // クリア
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont no data\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3011,9 +2891,6 @@ static void UpdateBGFont_DataReceiving( RRG_WORK* work )
   else {
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_DATA_RECEIVING ], FALSE ); // クリア
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update BGFont data receiving\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3063,9 +2940,6 @@ static void UpdateControlCursor( RRG_WORK* work )
     GFL_CLACT_WK_SetAutoAnmFlag( cursorL, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( cursorR, TRUE );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update control cursor\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3085,9 +2959,6 @@ static void UpdateMyAnswerIconOnButton( RRG_WORK* work )
 
   // 表示
   GFL_CLACT_WK_SetDrawEnable( work->clactWork[ CLWK_MY_ANSWER_ICON_ON_BUTTON ], TRUE );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update my answer icon on button\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3145,9 +3016,6 @@ void UpdateMyAnswerIconOnGraph( RRG_WORK* work )
   // アニメーション開始
   GFL_CLACT_WK_SetAutoAnmFlag( clwk, TRUE );
   GFL_CLACT_WK_SetAnmMode( clwk, CLSYS_ANMPM_FORWARD_L );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update my answer icon on graph\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3166,10 +3034,6 @@ static void BmpOamSetDrawEnable( RRG_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BO
 
   // 表示状態を変更
   BmpOam_ActorSetDrawEnable( work->BmpOamActor[ actorIdx ], enable );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, 
-              "RESEARCH-CHECK: set draw enable BMP-OAM [%d] ==> %d\n", actorIdx, enable );
 }
 
 //------------------------------------------------------------------------------------
@@ -3184,8 +3048,6 @@ static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
   PALETTE_ANIME_Start( work->paletteAnime[ index ], 
                        PaletteAnimeData[ index ].animeType,
                        PaletteAnimeData[ index ].fadeColor );
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette anime [%d]\n", index );
 }
 
 //------------------------------------------------------------------------------------
@@ -3199,9 +3061,6 @@ static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
 static void StopPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: stop palette anime [%d]\n", index );
 }
 
 //------------------------------------------------------------------------------------
@@ -3279,8 +3138,6 @@ static void StartPaletteFadeFlashOut( RRG_WORK* work )
                   MAIN_OBJ_PALETTE_FADE_FLASHOUT_END_STRENGTH,
                   MAIN_OBJ_PALETTE_FADE_FLASHOUT_COLOR,
                   work->VBlankTCBSystem );
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade flash out\n" );
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -3311,9 +3168,6 @@ static void StartPaletteFadeFlashIn( RRG_WORK* work )
                   MAIN_OBJ_PALETTE_FADE_FLASHIN_END_STRENGTH,
                   MAIN_OBJ_PALETTE_FADE_FLASHIN_COLOR,
                   work->VBlankTCBSystem );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: start palette fade flash in\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3446,15 +3300,6 @@ static void SetCommonWork( RRG_WORK* work, RRC_WORK* commonWork )
 static void SetDataDisplayType( RRG_WORK* work, GRAPH_DISP_MODE graphMode )
 {
   work->graphMode = graphMode;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: set data display type ==> " );
-  switch( graphMode ) {
-  case GRAPH_DISP_MODE_TODAY: OS_TFPrintf( PRINT_TARGET, "TODAY" ); break;
-  case GRAPH_DISP_MODE_TOTAL: OS_TFPrintf( PRINT_TARGET, "TOTAL" ); break;
-  default: GF_ASSERT(0);
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3955,9 +3800,6 @@ static void DeleteGraphWork( RRG_WORK* work )
 static void InitStateQueue( RRG_WORK* work )
 {
   work->stateQueue = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init state queue\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3973,9 +3815,6 @@ static void CreateStateQueue( RRG_WORK* work )
 
   // 作成
   work->stateQueue = QUEUE_Create( STATE_QUEUE_SIZE, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create state queue\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3991,9 +3830,6 @@ static void DeleteStateQueue( RRG_WORK* work )
 
   // 削除
   QUEUE_Delete( work->stateQueue );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete state queue\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4007,9 +3843,6 @@ static void InitFont( RRG_WORK* work )
 {
   // 初期化
   work->font = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init font\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4026,9 +3859,6 @@ static void CreateFont( RRG_WORK* work )
   // 生成
   work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
                                 GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create font\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4044,9 +3874,6 @@ static void DeleteFont( RRG_WORK* work )
 
   // 削除
   GFL_FONT_Delete( work->font );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete font\n" );
 }
 
 
@@ -4066,9 +3893,6 @@ static void InitMessages( RRG_WORK* work )
   {
     work->message[ msgIdx ] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init messages\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4093,9 +3917,6 @@ static void CreateMessages( RRG_WORK* work )
                                               MessageDataID[ msgIdx ],
                                               work->heapID ); 
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create messages\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4116,9 +3937,6 @@ static void DeleteMessages( RRG_WORK* work )
     // 削除
     GFL_MSG_Delete( work->message[ msgIdx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete messages\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4132,9 +3950,6 @@ static void InitWordset( RRG_WORK* work )
 {
   // 初期化
   work->wordset = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init wordset\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4151,9 +3966,6 @@ static void CreateWordset( RRG_WORK* work )
 
   // 作成
   work->wordset = WORDSET_Create( work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create wordset\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4167,9 +3979,6 @@ static void DeleteWordset( RRG_WORK* work )
 {
   // 削除
   WORDSET_Delete( work->wordset );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete wordset\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4188,9 +3997,6 @@ static void InitCircleGraphs( RRG_WORK* work )
     work->mainGraph[ idx ] = NULL;
     work->subGraph[ idx ]  = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init circle graph\n" ); 
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4213,9 +4019,6 @@ static void CreateCircleGraph( RRG_WORK* work )
     work->mainGraph[ idx ] = CIRCLE_GRAPH_Create( work->heapID );
     work->subGraph[ idx ]  = CIRCLE_GRAPH_Create( work->heapID );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create circle graph\n" ); 
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4238,9 +4041,6 @@ static void DeleteCircleGraph( RRG_WORK* work )
     CIRCLE_GRAPH_Delete( work->mainGraph[ idx ] );
     CIRCLE_GRAPH_Delete( work->subGraph[ idx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete circle graph\n" ); 
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4254,9 +4054,6 @@ static void InitResearchData( RRG_WORK* work )
 {
   // 0クリア
   GFL_STD_MemClear( &( work->researchData ), sizeof(RESEARCH_DATA) );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init research data\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4364,9 +4161,6 @@ static void SetupTouchArea( RRG_WORK* work )
     work->touchHitTable[ idx ].rect.top    = TouchAreaInitData[ idx ].top;
     work->touchHitTable[ idx ].rect.bottom = TouchAreaInitData[ idx ].bottom;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create touch hit table\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4379,9 +4173,6 @@ static void SetupTouchArea( RRG_WORK* work )
 static void InitArrow( RRG_WORK* work )
 {
   work->arrow = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init arrow\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4408,9 +4199,6 @@ static void CreateArrow( RRG_WORK* work )
   dispParam.anmseqCorner  = NANR_obj_corner;
   dispParam.anmseqEnd     = NANR_obj_point;
   work->arrow = ARROW_Create( work->heapID, &dispParam );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create arrow\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4426,9 +4214,6 @@ static void DeleteArrow( RRG_WORK* work )
 
   // 破棄
   ARROW_Delete( work->arrow );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete arrow\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4446,9 +4231,6 @@ static void InitPercentage( RRG_WORK* work )
   {
     work->percentage[ idx ] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init percentage\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4483,9 +4265,6 @@ static void CreatePercentage( RRG_WORK* work )
     // 非表示に設定
     PERCENTAGE_SetDrawEnable( work->percentage[ idx ], FALSE );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create percentage\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4507,9 +4286,6 @@ static void DeletePercentage( RRG_WORK* work )
     // 破棄
     PERCENTAGE_Delete( work->percentage[ idx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete percentage\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -4569,9 +4345,6 @@ static void SetupBG( RRG_WORK* work )
 
   // ビットマップウィンドウ システム初期化
   GFL_BMPWIN_Init( work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup BG\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4590,9 +4363,6 @@ static void CleanUpBG( RRG_WORK* work )
   GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
   GFL_BG_FreeBGControl( SUB_BG_FONT );
   GFL_BG_FreeBGControl( SUB_BG_WINDOW );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up BG\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4627,9 +4397,6 @@ static void SetupSubBG_WINDOW( RRG_WORK* work )
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( handle );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup SUB-BG-WINDOW\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4641,8 +4408,6 @@ static void SetupSubBG_WINDOW( RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void CleanUpSubBG_WINDOW( RRG_WORK* work )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-WINDOW\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4659,9 +4424,6 @@ static void SetupSubBG_FONT( RRG_WORK* work )
 
   // クリア
   GFL_BG_ClearScreen( SUB_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup SUB-BG-FONT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4675,9 +4437,6 @@ static void CleanUpSubBG_FONT( RRG_WORK* work )
 { 
   // NULLキャラ解放
   GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up SUB-BG-FONT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4712,9 +4471,6 @@ static void SetupMainBG_WINDOW( RRG_WORK* work )
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( handle );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-WINDOW\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4726,8 +4482,6 @@ static void SetupMainBG_WINDOW( RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void CleanUpMainBG_WINDOW( RRG_WORK* work )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-WINDOW\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4744,9 +4498,6 @@ static void SetupMainBG_FONT( RRG_WORK* work )
 
   // クリア
   GFL_BG_ClearScreen( MAIN_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup MAIN-BG-FONT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4760,9 +4511,6 @@ static void CleanUpMainBG_FONT( RRG_WORK* work )
 { 
   // NULLキャラ解放
   GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up MAIN-BG-FONT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4824,9 +4572,6 @@ static void CreateBGFonts( RRG_WORK* work )
     // 文字列を設定
     BG_FONT_SetMessage( work->BGFont[i], strID );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create BGFonts\n" ); 
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4847,9 +4592,6 @@ static void DeleteBGFonts( RRG_WORK* work )
     BG_FONT_Delete( work->BGFont[i] );
     work->BGFont[i] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete BGFonts\n" ); 
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -4887,9 +4629,6 @@ static void RegisterSubObjResources( RRG_WORK* work )
   work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] = cellAnime;
 
   GFL_ARC_CloseDataHandle( arcHandle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: register SUB-OBJ resources\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4904,9 +4643,6 @@ static void ReleaseSubObjResources( RRG_WORK* work )
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ] );
   GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: release SUB-OBJ resources\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4953,9 +4689,6 @@ static void RegisterMainObjResources( RRG_WORK* work )
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ]    = palette;
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_COMMON_PALETTE ]    = commonPalette;
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] = cellAnime;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: register MAIN-OBJ resources\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4971,9 +4704,6 @@ static void ReleaseMainObjResources( RRG_WORK* work )
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_COMMON_PALETTE ] );
   GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: release MAIN-OBJ resources\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4991,9 +4721,6 @@ static void InitClactUnits( RRG_WORK* work )
   {
     work->clactUnit[ unitIdx ] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init clact units\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5017,9 +4744,6 @@ static void CreateClactUnits( RRG_WORK* work )
     priority = ClactUnitPriority[ unitIdx ];
     work->clactUnit[ unitIdx ] = GFL_CLACT_UNIT_Create( workNum, priority, work->heapID );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create clact units\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5038,9 +4762,6 @@ static void DeleteClactUnits( RRG_WORK* work )
     GF_ASSERT( work->clactUnit[ unitIdx ] );
     GFL_CLACT_UNIT_Delete( work->clactUnit[ unitIdx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete clact units\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5059,9 +4780,6 @@ static void InitClactWorks( RRG_WORK* work )
   {
     work->clactWork[ wkIdx ] = NULL;
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init clact works\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5104,9 +4822,6 @@ static void CreateClactWorks( RRG_WORK* work )
     // 非表示に設定
     GFL_CLACT_WK_SetDrawEnable( work->clactWork[ wkIdx ], FALSE );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create clact works\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5128,9 +4843,6 @@ static void DeleteClactWorks( RRG_WORK* work )
     // 破棄
     GFL_CLACT_WK_Remove( work->clactWork[ wkIdx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete clact works\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5149,9 +4861,6 @@ static void InitBitmapDatas( RRG_WORK* work )
   {
     work->BmpData[ idx ] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init bitmap datas\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5175,9 +4884,6 @@ static void CreateBitmapDatas( RRG_WORK* work )
     // 作成
     work->BmpData[ idx ] = GFL_BMP_Create( data->width, data->height, data->colorMode, work->heapID );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create bitmap datas\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5222,9 +4928,6 @@ static void SetupBitmapData_forDefault( RRG_WORK* work )
     GFL_HEAP_FreeMemory( strbuf );
     GFL_BMP_Delete( bmp );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup bitmap data for Default\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5283,9 +4986,6 @@ static void SetupBitmapData_forANALYZE_BUTTON( RRG_WORK* work )
                        strbuf, work->font, color ); 
 
   GFL_HEAP_FreeMemory( strbuf );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup bitmap data for ANALYZE_BUTTON\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5304,9 +5004,6 @@ static void DeleteBitmapDatas( RRG_WORK* work )
   {
     GFL_BMP_Delete( work->BmpData[ idx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete bitmap datas\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5320,9 +5017,6 @@ static void SetupBmpOamSystem( RRG_WORK* work )
 {
   // BMP-OAM システムを作成
   work->BmpOamSystem = BmpOam_Init( work->heapID, work->clactUnit[ CLUNIT_BMPOAM ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup BMP-OAM system\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5336,9 +5030,6 @@ static void CleanUpBmpOamSystem( RRG_WORK* work )
 {
   // BMP-OAM システムを破棄
   BmpOam_Exit( work->BmpOamSystem );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up BMP-OAM system\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5375,9 +5066,6 @@ static void CreateBmpOamActors( RRG_WORK* work )
     BmpOam_ActorBmpTrans( work->BmpOamActor[ idx ] );
 
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create BMP-OAM actors\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5395,9 +5083,6 @@ static void DeleteBmpOamActors( RRG_WORK* work )
   {
     BmpOam_ActorDel( work->BmpOamActor[ idx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete BMP-OAM actors\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5411,9 +5096,6 @@ static void InitPaletteFadeSystem( RRG_WORK* work )
 { 
   // 初期化
   work->paletteFadeSystem = NULL;
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init palette fade system\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5440,9 +5122,6 @@ static void SetupPaletteFadeSystem( RRG_WORK* work )
   // リクエストワーク初期化
   PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_BG,  0, FULL_PALETTE_SIZE );
   PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup palette fade system\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5460,9 +5139,6 @@ static void CleanUpPaletteFadeSystem( RRG_WORK* work )
 
   // フェード管理システムを破棄
   PaletteFadeFree( work->paletteFadeSystem );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up palette fade system\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -5480,9 +5156,6 @@ static void InitPaletteAnime( RRG_WORK* work )
   {
     work->paletteAnime[ idx ] = NULL;
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -5502,9 +5175,6 @@ static void CreatePaletteAnime( RRG_WORK* work )
 
     work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: create palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -5524,9 +5194,6 @@ static void DeletePaletteAnime( RRG_WORK* work )
 
     PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: delete palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -5549,9 +5216,6 @@ static void SetupPaletteAnime( RRG_WORK* work )
                          PaletteAnimeData[ idx ].srcAdrs,
                          PaletteAnimeData[ idx ].colorNum);
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -5572,9 +5236,6 @@ static void CleanUpPaletteAnime( RRG_WORK* work )
     // 操作していたパレットを元に戻す
     PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: clean up palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -5601,9 +5262,6 @@ static void SetupWirelessIcon( const RRG_WORK* work )
 static void RegisterVBlankTask( RRG_WORK* work )
 {
   work->VBlankTask = GFUser_VIntr_CreateTCB( VBlankFunc, work, 0 );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: register VBlank task\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -5616,9 +5274,6 @@ static void RegisterVBlankTask( RRG_WORK* work )
 static void ReleaseVBlankTask( RRG_WORK* work )
 { 
   GFL_TCB_DeleteTask( work->VBlankTask );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: release VBlank task\n" );
 }
 
 
@@ -5640,159 +5295,4 @@ static u8 Bind_u8( int num )
   if( num < 0 ) { return 0; }
   if( 0xff < num ) { return 0xff; } 
   return num;
-}
-
-
-//=========================================================================================
-// ◇LAYER 0 デバッグ
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief 状態キューの中身を表示する
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DebugPrint_stateQueue( const RRG_WORK* work )
-{
-  int i;
-  int dataNum;
-  int value;
-
-  // キュー内のデータの個数を取得
-  dataNum = QUEUE_GetDataNum( work->stateQueue );
-
-  // 全てのデータを出力
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: state queue = " );
-  for( i=0; i < dataNum; i++ )
-  { 
-    value = QUEUE_PeekData( work->stateQueue, i );
-    
-    switch( value ) {
-    case RRG_STATE_SETUP:      OS_TFPrintf( PRINT_TARGET, "SETUP " );      break;
-    case RRG_STATE_STANDBY:    OS_TFPrintf( PRINT_TARGET, "STANDBY " );    break;
-    case RRG_STATE_KEYWAIT:   OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " );   break;
-    case RRG_STATE_ANALYZE:    OS_TFPrintf( PRINT_TARGET, "ANALYZE " );    break;
-    case RRG_STATE_PERCENTAGE: OS_TFPrintf( PRINT_TARGET, "PERCENTAGE " ); break;
-    case RRG_STATE_FLASHOUT:  OS_TFPrintf( PRINT_TARGET, "FLASHOUT " );  break;
-    case RRG_STATE_FLASHIN:   OS_TFPrintf( PRINT_TARGET, "FLASHIN " );   break;
-    case RRG_STATE_UPDATE:     OS_TFPrintf( PRINT_TARGET, "UPDATE " );     break;
-    case RRG_STATE_FADEOUT:   OS_TFPrintf( PRINT_TARGET, "FADEOUT " );   break;
-    case RRG_STATE_WAIT: OS_TFPrintf( PRINT_TARGET, "WAIT " ); break;
-    case RRG_STATE_CLEANUP:   OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " );   break;
-    case RRG_STATE_FINISH:     OS_TFPrintf( PRINT_TARGET, "FINISH " );     break;
-    default: GF_ASSERT(0);
-    }
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
-} 
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief 調査データを表示する
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DebugPrint_researchData( const RRG_WORK* work )
-{
-  const RESEARCH_DATA* research = &( work->researchData );
-  int qIdx, aIdx;
-
-  // 調査項目ID
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: topicID = %d\n", research->topicID );
-
-  // 質問データ
-  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
-  {
-    const QUESTION_DATA* question = &( research->questionData[ qIdx ] );
-    OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: questionID = %d\n", question->ID );
-    OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: answerNum = %d\n",  question->answerNum );
-    OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: todayCount = %d\n", question->todayCount );
-    OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: totalCount = %d\n", question->totalCount );
-
-    // 回答データ
-    for( aIdx=0; aIdx < MAX_ANSWER_NUM_PER_QUESTION; aIdx++ )
-    {
-      const ANSWER_DATA* answer = &( question->answerData[ aIdx ] );
-      OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: answerID = %d\n", answer->ID );
-      OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: colorR = %d\n", answer->colorR );
-      OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: colorG = %d\n", answer->colorG );
-      OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: colorB = %d\n", answer->colorB );
-      OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: todayCount = %d\n", answer->todayCount );
-      OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: totalCount = %d\n", answer->totalCount );
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @breif 調査データを設定する
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void Debug_SetupResearchData( RRG_WORK* work )
-{
-  int qIdx, aIdx;
-  u8 topicID;
-  u8 questionID[ QUESTION_NUM_PER_TOPIC ];
-  u16 answerID[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
-  u8 answerNum[ QUESTION_NUM_PER_TOPIC ];
-  u16 todayCount_question[ QUESTION_NUM_PER_TOPIC ] = { 0, 200, 300 };
-  u16 totalCount_question[ QUESTION_NUM_PER_TOPIC ] = { 300, 500, 900 };
-  u16 todayCount_answer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ] = 
-  {
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-  };
-  u16 totalCount_answer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ] = 
-  {
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-  };
-
-  topicID = TOPIC_ID_STYLE; // 調査項目ID
-  questionID[0] = Question1_topic[ topicID ]; // 質問ID
-  questionID[1] = Question2_topic[ topicID ]; // 質問ID
-  questionID[2] = Question3_topic[ topicID ]; // 質問ID
-  answerNum[0] = AnswerNum_question[ questionID[0] ]; // 回答選択肢の数
-  answerNum[1] = AnswerNum_question[ questionID[1] ]; // 回答選択肢の数
-  answerNum[2] = AnswerNum_question[ questionID[2] ]; // 回答選択肢の数
-  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
-  {
-    u8 qID = questionID[ qIdx ];
-    todayCount_question[ qIdx ] = GFUser_GetPublicRand( 10 );
-    totalCount_question[ qIdx ] = GFUser_GetPublicRand( 9999 );
-    for( aIdx=0; aIdx < answerNum[ qIdx ]; aIdx++ )
-    {
-      answerID[ qIdx ][ aIdx ] = AnswerID_question[ qID ][ aIdx ]; // 回答ID
-      todayCount_answer[ qIdx ][ aIdx ] = GFUser_GetPublicRand( 10 ); 
-      totalCount_answer[ qIdx ][ aIdx ] = GFUser_GetPublicRand( 500 ); 
-    }
-  }
-
-  // データ設定
-  work->researchData.topicID = topicID; // 調査項目ID
-  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
-  {
-    work->researchData.questionData[ qIdx ].ID         = questionID[ qIdx ];           // 質問ID
-    work->researchData.questionData[ qIdx ].answerNum  = answerNum[ qIdx ];            // 回答選択肢の数
-    work->researchData.questionData[ qIdx ].todayCount = todayCount_question[ qIdx ];  // 今日の回答人数
-    work->researchData.questionData[ qIdx ].totalCount = totalCount_question[ qIdx ];  // いままでの回答人数
-
-    for( aIdx=0; aIdx < MAX_ANSWER_NUM_PER_QUESTION; aIdx++ )
-    {
-      u16 aID = answerID[ qIdx ][ aIdx ];
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].ID = aID; // 回答ID
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorR = ColorR_answer[ aID ]; // 表示カラー(R)
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorG = ColorG_answer[ aID ]; // 表示カラー(G)
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorB = ColorB_answer[ aID ]; // 表示カラー(B)
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount = todayCount_answer[ qIdx ][ aIdx ]; // 今日の回答人数
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = totalCount_answer[ qIdx ][ aIdx ];  // いままでの回答人数
-    }
-  }
 }

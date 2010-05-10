@@ -286,20 +286,9 @@ static void ChangeMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ next
 
   // 画面の遷移を登録する
   switch( *seq ) {
-  case PROC_MAIN_SEQ_MENU:    RRC_SetNowSeq( work->commonWork, RADAR_SEQ_MENU ); break;
+  case PROC_MAIN_SEQ_MENU:    RRC_SetNowSeq( work->commonWork, RADAR_SEQ_MENU );   break;
   case PROC_MAIN_SEQ_SELECT:  RRC_SetNowSeq( work->commonWork, RADAR_SEQ_SELECT ); break;
-  case PROC_MAIN_SEQ_CHECK:   RRC_SetNowSeq( work->commonWork, RADAR_SEQ_CHECK ); break;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-PROC-MAIN: chenge seq ==> " );
-  switch( *seq ) {
-  case PROC_MAIN_SEQ_SETUP:   OS_TFPrintf( PRINT_TARGET, "SETUP(%d)\n",  *seq );  break;
-  case PROC_MAIN_SEQ_MENU:    OS_TFPrintf( PRINT_TARGET, "MENU(%d)\n",   *seq );  break;
-  case PROC_MAIN_SEQ_SELECT:  OS_TFPrintf( PRINT_TARGET, "SELECT(%d)\n", *seq );  break;
-  case PROC_MAIN_SEQ_CHECK:   OS_TFPrintf( PRINT_TARGET, "CHECK(%d)\n",  *seq );  break;
-  case PROC_MAIN_SEQ_FINISH:  OS_TFPrintf( PRINT_TARGET, "FINISH(%d)\n", *seq );  break;
-  default:  GF_ASSERT(0);
+  case PROC_MAIN_SEQ_CHECK:   RRC_SetNowSeq( work->commonWork, RADAR_SEQ_CHECK );  break;
   }
 }
 
@@ -317,24 +306,21 @@ static void EndCurrentMainProcSeq( RESEARCH_WORK* work, int* seq )
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:  break;
   case PROC_MAIN_SEQ_MENU:   RRT_DeleteWork( work->topWork );    break;
-  case PROC_MAIN_SEQ_SELECT: RRL_DeleteWork( work->listWork );  break;
-  case PROC_MAIN_SEQ_CHECK:  RRG_DeleteWork ( work->graphWork );   break;
+  case PROC_MAIN_SEQ_SELECT: RRL_DeleteWork( work->listWork );   break;
+  case PROC_MAIN_SEQ_CHECK:  RRG_DeleteWork ( work->graphWork ); break;
   case PROC_MAIN_SEQ_FINISH: break;
   default:  GF_ASSERT(0);
   }
 
   // 専用ワークポインタをクリア
   switch( *seq ) {
-  case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_MENU:    work->topWork   = NULL;  break;
-  case PROC_MAIN_SEQ_SELECT:  work->listWork = NULL;  break;
-  case PROC_MAIN_SEQ_CHECK:   work->graphWork  = NULL;  break;
-  case PROC_MAIN_SEQ_FINISH:  break;
+  case PROC_MAIN_SEQ_SETUP:  break;
+  case PROC_MAIN_SEQ_MENU:   work->topWork   = NULL;  break;
+  case PROC_MAIN_SEQ_SELECT: work->listWork  = NULL;  break;
+  case PROC_MAIN_SEQ_CHECK:  work->graphWork = NULL;  break;
+  case PROC_MAIN_SEQ_FINISH: break;
   default:  GF_ASSERT(0);
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-PROC-MAIN: end current seq(%d)\n", *seq );
 }
 
 //-------------------------------------------------------------------------------
@@ -353,8 +339,8 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   {
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    GF_ASSERT( work->topWork   == NULL );  break;
-  case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->listWork == NULL );  break;
-  case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->graphWork  == NULL );  break;
+  case PROC_MAIN_SEQ_SELECT:  GF_ASSERT( work->listWork == NULL );   break;
+  case PROC_MAIN_SEQ_CHECK:   GF_ASSERT( work->graphWork  == NULL ); break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
   } 
@@ -364,17 +350,14 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   {
   case PROC_MAIN_SEQ_SETUP:   break;
   case PROC_MAIN_SEQ_MENU:    work->topWork   = RRT_CreateWork( work->commonWork );  break;
-  case PROC_MAIN_SEQ_SELECT:  work->listWork = RRL_CreateWork( work->commonWork );  break;
-  case PROC_MAIN_SEQ_CHECK:   work->graphWork  = RRG_CreateWork ( work->commonWork );  break;
+  case PROC_MAIN_SEQ_SELECT:  work->listWork  = RRL_CreateWork( work->commonWork );  break;
+  case PROC_MAIN_SEQ_CHECK:   work->graphWork = RRG_CreateWork ( work->commonWork ); break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
   } 
 
   // シーケンスを変更
   *seq = nextSeq; 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-PROC-MAIN: set seq(%d)\n", *seq );
 }
 
 
@@ -593,9 +576,6 @@ static void SetupBG( HEAPID heapID )
   // MAIN-BG
   GFL_BG_SetBGControl( MAIN_BG_BACK, &MainBGControl_BACK, GFL_BG_MODE_TEXT );
   GFL_BG_SetVisible( MAIN_BG_BACK, VISIBLE_ON );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: setup BG\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -608,9 +588,6 @@ static void CleanUpBG()
   GFL_BG_FreeBGControl( MAIN_BG_BACK );
   GFL_BG_FreeBGControl( SUB_BG_BACK );
   GFL_BG_Exit();
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: clean up BG\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -679,9 +656,6 @@ static void LoadSubBGResources( HEAPID heapID )
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( handle );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: load SUB-BG resources\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -721,7 +695,7 @@ static void LoadMainBGResources( HEAPID heapID )
     ARCHANDLE* handle;
 
     // ハンドルオープン
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID ); 
+    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, GetHeapLowID(heapID) ); 
 
     // パレットデータ
     {
@@ -761,7 +735,4 @@ static void LoadMainBGResources( HEAPID heapID )
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( handle );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH: load MAIN-BG resources\n" );
 }

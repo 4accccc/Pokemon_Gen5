@@ -207,10 +207,6 @@ static void SetVBlankFunc( RRT_WORK* work ); // VBlank 割り込みを設定
 static void ResetVBlankFunc( RRT_WORK* work ); // VBlank 割り込みを解除
 // 通信アイコン
 static void SetupWirelessIcon( const RRT_WORK* work ); // 通信アイコンをセットアップする
-//------------------------------------------------------------------------------------
-// ◆LAYER 0 デバッグ
-//------------------------------------------------------------------------------------
-static void DebugPrint_stateQueue( const RRT_WORK* work ); // 状態キューを出力する
 
 
 
@@ -242,9 +238,6 @@ RRT_WORK* RRT_CreateWork( RRC_WORK* commonWork )
   SetHeapID( work, heapID );
   SetCommonWork( work, commonWork );
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: RRT_CreateWork\n" );
-
   return work;
 }
 
@@ -259,9 +252,6 @@ void RRT_DeleteWork( RRT_WORK* work )
 {
   DeleteStateQueue( work );
   DeleteTopWork( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: RRT_DeleteWork\n" );
 } 
 
 //------------------------------------------------------------------------------------
@@ -738,10 +728,6 @@ static void RegisterNextState( RRT_WORK* work, RRT_STATE nextState )
 {
   // 状態キューに追加する
   QUEUE_EnQueue( work->stateQueue, nextState );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set next seq\n" );
-  DebugPrint_stateQueue( work );
 }
 
 //------------------------------------------------------------------------------------
@@ -758,9 +744,6 @@ static void FinishNowState( RRT_WORK* work )
 
   // 終了フラグを立てる
   work->nowStateEndFlag = TRUE;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish current sequence\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -782,9 +765,6 @@ static void SwitchState( RRT_WORK* work )
 
   // 状態を更新
   SetState( work, next_seq ); 
-
-  // DEBUG: 状態キューを表示
-  DebugPrint_stateQueue( work );
 } 
 
 //------------------------------------------------------------------------------------
@@ -802,20 +782,6 @@ static void SetState( RRT_WORK* work, RRT_STATE nextState )
   work->stateSeq        = 0;
   work->stateCount      = 0;
   work->nowStateEndFlag = FALSE;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set seq ==> " );
-  switch( nextState ) {
-  case RRT_STATE_SETUP:   OS_TFPrintf( PRINT_TARGET, "SETUP" );    break;
-  case RRT_STATE_STANDBY: OS_TFPrintf( PRINT_TARGET, "STANDBY" );  break;
-  case RRT_STATE_KEYWAIT: OS_TFPrintf( PRINT_TARGET, "KEYWAIT" );  break;
-  case RRT_STATE_WAIT:    OS_TFPrintf( PRINT_TARGET, "WAIT" );     break;
-  case RRT_STATE_FADEOUT: OS_TFPrintf( PRINT_TARGET, "FADEOUT" );  break;
-  case RRT_STATE_CLEANUP: OS_TFPrintf( PRINT_TARGET, "CLEANUP" );  break;
-  case RRT_STATE_FINISH:  OS_TFPrintf( PRINT_TARGET, "FINISH" );   break;
-  default:  GF_ASSERT(0);
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -894,9 +860,6 @@ static void SetFinishReason( const RRT_WORK* work, SEQ_CHANGE_TRIG reason )
 static void SetFinishResult( RRT_WORK* work, RRT_RESULT result )
 {
   work->finishResult = result;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish! result = %d\n", result );
 }
 
 
@@ -945,9 +908,6 @@ static void MoveCursorUp( RRT_WORK* work )
 
   // パレットアニメーションを開始
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor up\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -973,9 +933,6 @@ static void MoveCursorDown( RRT_WORK* work )
 
   // パレットアニメーションを開始
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor down\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1002,9 +959,6 @@ static void MoveCursorDirect( RRT_WORK* work, MENU_ITEM menuItem )
 
   // パレットアニメーションを開始
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_SET );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: move cursor direct\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1142,9 +1096,6 @@ static void NewIconDispOn( const RRT_WORK* work )
   GFL_CLACT_WK_SetAutoAnmFlag( clactWork, TRUE );
   GFL_CLACT_WK_SetAutoAnmSpeed( clactWork, FX32_ONE );
   GFL_CLACT_WK_SetAnmFrame( clactWork, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: new icon disp on\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1160,9 +1111,6 @@ static void NewIconDispOff( const RRT_WORK* work )
 
   clactWork = GetClactWork( work, CLWK_NEW_ICON );
   GFL_CLACT_WK_SetDrawEnable( clactWork, FALSE );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: new icon disp off\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1280,9 +1228,6 @@ static void ShiftCursorPos( RRT_WORK* work, int offset )
 
   // カーソル位置を更新
   work->cursorPos = nextPos;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: shift cursor pos ==> %d\n", nextPos );
 }
 
 //------------------------------------------------------------------------------------
@@ -1297,9 +1242,6 @@ static void SetCursorPos( RRT_WORK* work, MENU_ITEM menuItem )
 {
   // カーソル位置を更新
   work->cursorPos = menuItem;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set cursor pos ==> %d\n", menuItem );
 }
 
 //------------------------------------------------------------------------------------
@@ -1388,8 +1330,6 @@ static void StartPaletteAnime( RRT_WORK* work, PALETTE_ANIME_INDEX index )
   PALETTE_ANIME_Start( work->paletteAnime[ index ], 
                        PaletteAnimeData[ index ].animeType,
                        PaletteAnimeData[ index ].fadeColor );
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: start palette anime [%d]\n", index );
 }
 
 //------------------------------------------------------------------------------------
@@ -1402,9 +1342,6 @@ static void StartPaletteAnime( RRT_WORK* work, PALETTE_ANIME_INDEX index )
 static void StopPaletteAnime( RRT_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: stop palette anime [%d]\n", index );
 }
 
 //------------------------------------------------------------------------------------
@@ -1627,9 +1564,6 @@ static void SetupCursorPos( RRT_WORK* work )
 static void InitFont( RRT_WORK* work )
 {
   work->font = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init font\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1645,8 +1579,6 @@ static void CreateFont( RRT_WORK* work )
 
   work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
                                 GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID ); 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create font\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1661,9 +1593,6 @@ static void DeleteFont( RRT_WORK* work )
   GF_ASSERT( work->font ); // 生成されていない
 
   GFL_FONT_Delete( work->font );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete font\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1681,9 +1610,6 @@ static void InitMessages( RRT_WORK* work )
   {
     work->message[i] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init messages\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1706,9 +1632,6 @@ static void CreateMessages( RRT_WORK* work )
                                        MessageDataID[i],
                                        work->heapID ); 
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create messages\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1728,9 +1651,6 @@ static void DeleteMessages( RRT_WORK* work )
 
     GFL_MSG_Delete( work->message[i] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete messages\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1751,9 +1671,6 @@ static void SetupTouchArea( RRT_WORK* work )
     work->touchHitTable[i].rect.top    = TouchAreaInitData[i].top;
     work->touchHitTable[i].rect.bottom = TouchAreaInitData[i].bottom;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create touch hit table\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1766,9 +1683,6 @@ static void SetupTouchArea( RRT_WORK* work )
 static void InitStateQueue( RRT_WORK* work )
 {
   work->stateQueue = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq queue\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1783,9 +1697,6 @@ static void CreateStateQueue( RRT_WORK* work )
   GF_ASSERT( work->stateQueue == NULL ); // 初期化されていない
 
   work->stateQueue = QUEUE_Create( SEQ_QUEUE_SIZE, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create seq queue\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1800,9 +1711,6 @@ static void DeleteStateQueue( RRT_WORK* work )
   GF_ASSERT( work->stateQueue ); // 生成されていない
 
   QUEUE_Delete( work->stateQueue );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete seq queue\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1840,9 +1748,6 @@ static void SetupBG( RRT_WORK* work )
 
   // ビットマップウィンドウ システム初期化
   GFL_BMPWIN_Init( work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup BG\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1860,9 +1765,6 @@ static void CleanUpBG( RRT_WORK* work )
   GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
   GFL_BG_FreeBGControl( SUB_BG_FONT );
   GFL_BG_FreeBGControl( SUB_BG_WINDOW );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up BG\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1897,9 +1799,6 @@ static void SetupSubBG_WINDOW( RRT_WORK* work )
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( handle );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup SUB-BG-WINDOW\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1911,8 +1810,6 @@ static void SetupSubBG_WINDOW( RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static void CleanUpSubBG_WINDOW( RRT_WORK* work )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up SUB-BG-WINDOW\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1929,9 +1826,6 @@ static void SetupSubBG_FONT( RRT_WORK* work )
 
   // クリア
   GFL_BG_ClearScreen( SUB_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup SUB-BG-FONT\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1945,9 +1839,6 @@ static void CleanUpSubBG_FONT( RRT_WORK* work )
 { 
   // NULLキャラ解放
   GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up SUB-BG-FONT\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1982,9 +1873,6 @@ static void SetupMainBG_WINDOW( RRT_WORK* work )
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( handle );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup MAIN-BG-WINDOW\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -1996,8 +1884,6 @@ static void SetupMainBG_WINDOW( RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static void CleanUpMainBG_WINDOW( RRT_WORK* work )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up MAIN-BG-WINDOW\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2014,9 +1900,6 @@ static void SetupMainBG_FONT( RRT_WORK* work )
 
   // クリア
   GFL_BG_ClearScreen( MAIN_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup MAIN-BG-FONT\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2030,9 +1913,6 @@ static void CleanUpMainBG_FONT( RRT_WORK* work )
 { 
   // NULLキャラ解放
   GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up MAIN-BG-FONT\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2094,9 +1974,6 @@ static void CreateBGFonts( RRT_WORK* work )
     // 文字列を設定
     BG_FONT_SetMessage( work->BGFont[i], strID );
   } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create BGFonts\n" ); 
 }
 
 //------------------------------------------------------------------------------------
@@ -2117,9 +1994,6 @@ static void DeleteBGFonts( RRT_WORK* work )
     BG_FONT_Delete( work->BGFont[i] );
     work->BGFont[i] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete BGFonts\n" ); 
 }
 
 //------------------------------------------------------------------------------------
@@ -2137,9 +2011,6 @@ static void InitOBJResources( RRT_WORK* work )
   {
     work->objResRegisterIdx[i] = 0;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init OBJ resources\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2177,9 +2048,6 @@ static void RegisterSubOBJResources( RRT_WORK* work )
   work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] = cellAnime;
 
   GFL_ARC_CloseDataHandle( arcHandle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: register SUB-OBJ resources\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2194,9 +2062,6 @@ static void ReleaseSubOBJResources( RRT_WORK* work )
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ] );
   GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: release SUB-OBJ resources\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2236,9 +2101,6 @@ static void RegisterMainOBJResources( RRT_WORK* work )
   work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] = cellAnime;
 
   GFL_ARC_CloseDataHandle( arcHandle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: register MAIN-OBJ resources\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2253,9 +2115,6 @@ static void ReleaseMainOBJResources( RRT_WORK* work )
   GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
   GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: release MAIN-OBJ resources\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2273,9 +2132,6 @@ static void InitClactUnits( RRT_WORK* work )
   {
     work->clactUnit[ unitIdx ] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init clact units\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2299,9 +2155,6 @@ static void CreateClactUnits( RRT_WORK* work )
     priority = ClactUnitPriority[ unitIdx ];
     work->clactUnit[ unitIdx ] = GFL_CLACT_UNIT_Create( workNum, priority, work->heapID );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create clact units\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2320,9 +2173,6 @@ static void DeleteClactUnits( RRT_WORK* work )
     GF_ASSERT( work->clactUnit[ unitIdx ] );
     GFL_CLACT_UNIT_Delete( work->clactUnit[ unitIdx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete clact units\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2341,9 +2191,6 @@ static void InitClactWorks( RRT_WORK* work )
   {
     work->clactWork[ wkIdx ] = NULL;
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init clact works\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2386,9 +2233,6 @@ static void CreateClactWorks( RRT_WORK* work )
     // 非表示に設定
     GFL_CLACT_WK_SetDrawEnable( work->clactWork[ wkIdx ], FALSE );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create clact works\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2410,9 +2254,6 @@ static void DeleteClactWorks( RRT_WORK* work )
     // 破棄
     GFL_CLACT_WK_Remove( work->clactWork[ wkIdx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete clact works\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2430,9 +2271,6 @@ static void InitPaletteAnime( RRT_WORK* work )
   {
     work->paletteAnime[i] = NULL;
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2452,9 +2290,6 @@ static void CreatePaletteAnime( RRT_WORK* work )
 
     work->paletteAnime[i] = PALETTE_ANIME_Create( work->heapID );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: create palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2474,9 +2309,6 @@ static void DeletePaletteAnime( RRT_WORK* work )
 
     PALETTE_ANIME_Delete( work->paletteAnime[i] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: delete palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2499,9 +2331,6 @@ static void SetupPaletteAnime( RRT_WORK* work )
                          PaletteAnimeData[i].srcAdrs,
                          PaletteAnimeData[i].colorNum);
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: setup palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2522,9 +2351,6 @@ static void CleanUpPaletteAnime( RRT_WORK* work )
     // 操作していたパレットを元に戻す
     PALETTE_ANIME_Reset( work->paletteAnime[i] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: clean up palette anime\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2537,9 +2363,6 @@ static void CleanUpPaletteAnime( RRT_WORK* work )
 static void SetVBlankFunc( RRT_WORK* work )
 {
   GFUser_SetVIntrFunc( GFL_CLACT_SYS_VBlankFunc );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: SetVBlankFunc\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -2552,9 +2375,6 @@ static void SetVBlankFunc( RRT_WORK* work )
 static void ResetVBlankFunc( RRT_WORK* work )
 {
   GFUser_ResetVIntrFunc();
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: ResetVBlankFunc\n" );
 }
 
 
@@ -2571,43 +2391,3 @@ static void SetupWirelessIcon( const RRT_WORK* work )
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
   GFL_NET_ReloadIcon();
 }
-
-//====================================================================================
-// ◆LAYER 0 デバッグ
-//====================================================================================
-
-//------------------------------------------------------------------------------------
-/**
- * @brief 状態キューの中身を表示する
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void DebugPrint_stateQueue( const RRT_WORK* work )
-{
-  int i;
-  int dataNum;
-  int value;
-
-  // キュー内のデータの個数を取得
-  dataNum = QUEUE_GetDataNum( work->stateQueue );
-
-  // 全てのデータを出力
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: seq queue = " );
-  for( i=0; i < dataNum; i++ )
-  { 
-    value = QUEUE_PeekData( work->stateQueue, i );
-    
-    switch( value ) {
-    case RRT_STATE_SETUP:    OS_TFPrintf( PRINT_TARGET, "SETUP " );      break;
-    case RRT_STATE_STANDBY:  OS_TFPrintf( PRINT_TARGET, "STANDBY " );    break;
-    case RRT_STATE_KEYWAIT:  OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " );   break;
-    case RRT_STATE_WAIT:     OS_TFPrintf( PRINT_TARGET, "FRAME-WAIT " ); break;
-    case RRT_STATE_FADEOUT:  OS_TFPrintf( PRINT_TARGET, "FADEOUT " );    break;
-    case RRT_STATE_CLEANUP:  OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " );   break;
-    case RRT_STATE_FINISH:   OS_TFPrintf( PRINT_TARGET, "FINISH " );     break;
-    default: GF_ASSERT(0);
-    }
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
-} 
