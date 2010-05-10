@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-03-03T18:18:37"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-10T20:26:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,9 +342,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+	<dialog left="1029" top="377" right="1734" bottom="1005" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -383,7 +383,7 @@
 それでも　セーブデータエリアを
 しょうきょ　しますか？</language>
 		<language name="JPN_KANJI" width="256">消去した　データは
-元に　戻せません▼
+元に　もどせません▼
 それでも　セーブデータエリアを
 消去しますか？</language>
 	</row>
