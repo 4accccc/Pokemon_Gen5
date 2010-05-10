@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-10T16:50:09"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T17:05:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -890,11 +890,11 @@
 		<attribute name="キャラ指定">C02ジムリーダー
 アロエ</attribute>
 		<language name="JPN" width="256">アロエ『[1:00:トレーナー名:0]！▼
-あんたの　もっている　それが
+アンタの　もっている　それが
 ひっしになって　とりかえしてくれた▽
 ドラゴンのホネ　なんだね▼</language>
 		<language name="JPN_KANJI" width="256">アロエ『[1:00:トレーナー名:0]！▼
-あんたの　持っている　それが
+アンタの　持っている　それが
 必死になって　取り返してくれた▽
 ドラゴンのホネ　なんだね▼</language>
 	</row>
@@ -919,7 +919,7 @@
 アロエ</attribute>
 		<language name="JPN" width="256">アロエ『[1:00:トレーナー名:0]
 ほんとうに　ありがとうよ▼
-あんたのように
+アンタのように
 やさしい　トレーナーなら▼
 いっしょにいる　ポケモンも
 しあわせ　だよ▼
@@ -927,7 +927,7 @@
 たいせつに　つかっておくれ！▼</language>
 		<language name="JPN_KANJI" width="256">アロエ『[1:00:トレーナー名:0]
 本当に　ありがとうよ▼
-あんたのように
+アンタのように
 優しい　トレーナーなら▼
 一緒にいる　ポケモンも
 しあわせ　だよ▼
