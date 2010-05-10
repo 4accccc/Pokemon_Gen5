@@ -9,24 +9,24 @@
 #pragma once
 
 
-// 処理シーケンス
+// 状態
 typedef enum {
-  RESEARCH_SELECT_SEQ_SETUP,             // 準備
-  RESEARCH_SELECT_SEQ_STANDBY,           // 最初のキー入力待ち
-  RESEARCH_SELECT_SEQ_KEY_WAIT,          // キー入力待ち
-  RESEARCH_SELECT_SEQ_SCROLL_WAIT,       // スクロール完了待ち
-  RESEARCH_SELECT_SEQ_SCROLL_CONTROL,    // スクロール操作
-  RESEARCH_SELECT_SEQ_CONFIRM_STANDBY,   // 調査項目確定の確認 ( スタンバイ )
-  RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT,  // 調査項目確定の確認 ( キー入力待ち )
-  RESEARCH_SELECT_SEQ_DETERMINE,         // 調査項目確定
-  RESEARCH_SELECT_SEQ_FADE_IN,           // フェードイン
-  RESEARCH_SELECT_SEQ_FADE_OUT,          // フェードアウト
-  RESEARCH_SELECT_SEQ_FRAME_WAIT,        // フレーム経過待ち
-  RESEARCH_SELECT_SEQ_SCROLL_RESET,      // スクロールの復帰
-  RESEARCH_SELECT_SEQ_PALETTE_RESET,     // パレットの復帰
-  RESEARCH_SELECT_SEQ_CLEAN_UP,          // 後片付け
-  RESEARCH_SELECT_SEQ_FINISH,            // 終了
-} RESEARCH_SELECT_SEQ;
+  RRL_STATE_SETUP,             // 準備
+  RRL_STATE_STANDBY,           // 最初のキー入力待ち
+  RRL_STATE_KEY_WAIT,          // キー入力待ち
+  RRL_STATE_SCROLL_WAIT,       // スクロール完了待ち
+  RRL_STATE_SCROLL_CONTROL,    // スクロール操作
+  RRL_STATE_CONFIRM_STANDBY,   // 調査項目確定の確認 ( スタンバイ )
+  RRL_STATE_CONFIRM_KEY_WAIT,  // 調査項目確定の確認 ( キー入力待ち )
+  RRL_STATE_DETERMINE,         // 調査項目確定
+  RRL_STATE_FADE_IN,           // フェードイン
+  RRL_STATE_FADE_OUT,          // フェードアウト
+  RRL_STATE_FRAME_WAIT,        // フレーム経過待ち
+  RRL_STATE_SCROLL_RESET,      // スクロールの復帰
+  RRL_STATE_PALETTE_RESET,     // パレットの復帰
+  RRL_STATE_CLEAN_UP,          // 後片付け
+  RRL_STATE_FINISH,            // 終了
+} RRL_STATE;
 
 // 選択項目
 typedef enum {

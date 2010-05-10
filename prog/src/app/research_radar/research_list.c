@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @brief  ’²¸ƒŒ[ƒ_[ ’²¸“à—e•ÏX‰æ–Ê
+ * @brief  ’²¸ƒŒ[ƒ_[ ƒŠƒXƒg‰æ–Ê
  * @file   research_list.c
  * @author obata
  * @date   2010.02.03
@@ -49,23 +49,21 @@
 
 
 //=========================================================================================
-// ¡’²¸“à—e•ÏX‰æ–Êƒ[ƒN
+// ¡ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN
 //=========================================================================================
 struct _RESEARCH_RADAR_LIST_WORK
 { 
-  RESEARCH_COMMON_WORK* commonWork; // ‘S‰æ–Ê‹¤’Êƒ[ƒN
-  HEAPID                heapID;
-  GAMESYS_WORK*         gameSystem;
-  GAMEDATA*             gameData;
+  // ‘S‰æ–Ê‹¤’Êƒ[ƒN
+  RESEARCH_COMMON_WORK* commonWork; 
 
+  HEAPID       heapID; 
   GFL_FONT*    font;
   GFL_MSGDATA* message[ MESSAGE_NUM ];
 
-  QUEUE*                 seqQueue;      // ƒV[ƒPƒ“ƒXƒLƒ…[
-  RESEARCH_SELECT_SEQ    seq;           // Œ»İ‚ÌƒV[ƒPƒ“ƒX
-  u32                    seqCount;      // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^
-  BOOL                   seqFinishFlag; // Œ»İ‚ÌƒV[ƒPƒ“ƒX‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
-  u32                    waitFrame;     // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŠÔ
+  QUEUE*    stateQueue; // ó‘ÔƒLƒ…[
+  RRL_STATE state;      // Œ»İ‚Ìó‘Ô
+  u32       stateCount; // ó‘ÔƒJƒEƒ“ƒ^
+  u32       waitFrame;  // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ
 
   // ƒƒjƒ…[€–Ú
   MENU_ITEM menuCursorPos; // ƒJ[ƒ\ƒ‹ˆÊ’u
@@ -83,21 +81,20 @@ struct _RESEARCH_RADAR_LIST_WORK
   int scrollFrames;     // ƒXƒNƒ[ƒ‹ƒtƒŒ[ƒ€”
   int scrollFrameCount; // ƒXƒNƒ[ƒ‹ƒtƒŒ[ƒ€”ƒJƒEƒ“ƒ^
 
-  // VBlank
-  GFL_TCBSYS* VBlankTCBSystem; // VBlankŠúŠÔ’†‚Ìƒ^ƒXƒNŠÇ—ƒVƒXƒeƒ€
-  GFL_TCB*    VBlankTask;      // VBlankƒ^ƒCƒ~ƒ“ƒO’†‚És‚¤ƒ^ƒXƒN
-
   // ƒ^ƒbƒ`—Ìˆæ
   GFL_UI_TP_HITTBL menuTouchHitTable[ MENU_TOUCH_AREA_NUM ];
   GFL_UI_TP_HITTBL topicTouchHitTable[ TOPIC_TOUCH_AREA_NUM ];
   GFL_UI_TP_HITTBL scrollTouchHitTable[ SCROLL_TOUCH_AREA_NUM ];
 
+  // ƒpƒŒƒbƒgƒtƒF[ƒhˆ—ƒVƒXƒeƒ€
+  PALETTE_FADE_PTR paletteFadeSystem; 
+
   // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
   PALETTE_ANIME* paletteAnime[ PALETTE_ANIME_NUM ];
 
   // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg
-  BG_FONT* BGFont[ BG_FONT_NUM ];
-  BG_FONT* TopicsBGFont[ TOPIC_ID_NUM ]; // ’²¸€–Ú
+  BG_FONT* BGFont_topic[ TOPIC_ID_NUM ]; // ’²¸€–Ú
+  BG_FONT* BGFont_string[ BG_FONT_NUM ]; // •¶š—ñ
 
   // OBJ
   u32         objResRegisterIdx[ OBJ_RESOURCE_NUM ]; // ƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX
@@ -109,12 +106,15 @@ struct _RESEARCH_RADAR_LIST_WORK
   BMPOAM_ACT_PTR BmpOamActor[ BMPOAM_ACTOR_NUM ]; // BMP-OAMƒAƒNƒ^[
   GFL_BMP_DATA*  BmpData[ BMPOAM_ACTOR_NUM ];     // ŠeƒAƒNƒ^[‚É‘Î‰‚·‚éƒrƒbƒgƒ}ƒbƒvƒf[ƒ^
 
-  // ƒJƒ‰[ƒpƒŒƒbƒg
-  PALETTE_FADE_PTR paletteFadeSystem; // ƒpƒŒƒbƒgƒtƒF[ƒhˆ—ƒVƒXƒeƒ€
-  BOOL             palFadeOutFlag;    // ƒtƒF[ƒhƒAƒEƒg’†‚©‚Ç‚¤‚©
+  // VBlank
+  GFL_TCBSYS* VBlankTCBSystem; // VBlankŠúŠÔ’†‚Ìƒ^ƒXƒNŠÇ—ƒVƒXƒeƒ€
+  GFL_TCB*    VBlankTask;      // VBlankƒ^ƒCƒ~ƒ“ƒO’†‚És‚¤ƒ^ƒXƒN
 
-  BOOL finishFlag;
-  RRL_RESULT finishResult;
+  // ƒtƒ‰ƒO
+  BOOL stateEndFlag;   // Œ»İ‚Ìó‘Ô‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+  BOOL palFadeOutFlag; // ƒtƒF[ƒhƒAƒEƒg’†‚©‚Ç‚¤‚©
+  BOOL finishFlag;     // ƒŠƒXƒg‰æ–Ê‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+  RRL_RESULT finishResult; // ƒŠƒXƒg‰æ–Ê‚ÌI—¹Œ‹‰Ê
 };
 
 
@@ -124,67 +124,64 @@ struct _RESEARCH_RADAR_LIST_WORK
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
-// ŸLAYER 3 ƒV[ƒPƒ“ƒX
+// ŸLAYER 3 ó‘Ô
 //-----------------------------------------------------------------------------------------
-// ƒV[ƒPƒ“ƒX‰Šú‰»ˆ—
-static void InitSeq_SETUP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void InitSeq_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void InitSeq_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void InitSeq_SCROLL_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void InitSeq_SCROLL_CONTROL( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void InitSeq_CONFIRM_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
-static void InitSeq_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
-static void InitSeq_DETERMINE( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void InitSeq_FADE_IN( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void InitSeq_FADE_OUT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void InitSeq_FRAME_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
-static void InitSeq_SCROLL_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
-static void InitSeq_PALETTE_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void InitSeq_CLEAN_UP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
-// ƒV[ƒPƒ“ƒXˆ—
-static void MainSeq_SETUP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void MainSeq_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void MainSeq_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void MainSeq_SCROLL_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void MainSeq_SCROLL_CONTROL( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
-static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
-static void MainSeq_DETERMINE( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void MainSeq_FADE_IN( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void MainSeq_FADE_OUT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void MainSeq_FRAME_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
-static void MainSeq_SCROLL_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
-static void MainSeq_PALETTE_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void MainSeq_CLEAN_UP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
-// ƒV[ƒPƒ“ƒXI—¹ˆ—
-static void FinishSeq_SETUP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SETUP
-static void FinishSeq_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_STANDBY
-static void FinishSeq_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_KEY_WAIT
-static void FinishSeq_SCROLL_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_WAIT
-static void FinishSeq_SCROLL_CONTROL( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_CONTROL
-static void FinishSeq_CONFIRM_STANDBY( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_STANDBY
-static void FinishSeq_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT
-static void FinishSeq_DETERMINE( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
-static void FinishSeq_FADE_IN( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
-static void FinishSeq_FADE_OUT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
-static void FinishSeq_FRAME_WAIT( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
-static void FinishSeq_SCROLL_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
-static void FinishSeq_PALETTE_RESET( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
-static void FinishSeq_CLEAN_UP( RRL_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
-// ƒV[ƒPƒ“ƒX§Œä
-static void CountUpSeqCount( RRL_WORK* work ); // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^‚ğXV‚·‚é
-static void SetNextSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // Ÿ‚ÌƒV[ƒPƒ“ƒX‚ğƒLƒ…[‚É“o˜^‚·‚é
-static void FinishCurrentSeq( RRL_WORK* work ); // Œ»İ‚ÌƒV[ƒPƒ“ƒX‚ğI—¹‚·‚é
-static void SwitchSeq( RRL_WORK* work ); // ˆ—ƒV[ƒPƒ“ƒX‚ğ•ÏX‚·‚é
-static void SetSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // ˆ—ƒV[ƒPƒ“ƒX‚ğİ’è‚·‚é
-static void SetResult( RRL_WORK* work, RRL_RESULT result ); // ‰æ–ÊI—¹Œ‹‰Ê‚ğİ’è‚·‚é
-static void SetWaitFrame( RRL_WORK* work, u32 frame ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŠÔ‚ğİ’è‚·‚é
-static u32 GetWaitFrame( const RRL_WORK* work ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŠÔ‚ğæ“¾‚·‚é
-static void SetFirstSeq( RRL_WORK* work ); // Å‰‚ÌƒV[ƒPƒ“ƒX‚ğƒZƒbƒg‚·‚é
-// VBlankƒ^ƒXƒN
-static void RegisterVBlankTask( RRL_WORK* work ); // VBlankƒ^ƒXƒN‚ğ“o˜^‚·‚é
-static void ReleaseVBlankTask ( RRL_WORK* work ); // VBlankƒ^ƒXƒN‚Ì“o˜^‚ğ‰ğœ‚·‚é
-static void VBlankFunc( GFL_TCB* tcb, void* wk ); // VBlank’†‚Ìˆ—
+// ó‘Ô‚Ì‰Šú‰»ˆ—
+static void InitState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
+static void InitState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
+static void InitState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
+static void InitState_SCROLL_WAIT( RRL_WORK* work ); // RRL_STATE_SCROLL_WAIT
+static void InitState_SCROLL_CONTROL( RRL_WORK* work ); // RRL_STATE_SCROLL_CONTROL
+static void InitState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
+static void InitState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
+static void InitState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
+static void InitState_FADE_IN( RRL_WORK* work ); // RRL_STATE_FADE_IN 
+static void InitState_FADE_OUT( RRL_WORK* work ); // RRL_STATE_FADE_OUT
+static void InitState_FRAME_WAIT( RRL_WORK* work ); // RRL_STATE_FRAME_WAIT
+static void InitState_SCROLL_RESET( RRL_WORK* work ); // RRL_STATE_SCROLL_RESET
+static void InitState_PALETTE_RESET( RRL_WORK* work ); // RRL_STATE_PALETTE_RESET
+static void InitState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP 
+// ó‘Ô‚²‚Æ‚Ìˆ—
+static void MainState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
+static void MainState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
+static void MainState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
+static void MainState_SCROLL_WAIT( RRL_WORK* work ); // RRL_STATE_SCROLL_WAIT
+static void MainState_SCROLL_CONTROL( RRL_WORK* work ); // RRL_STATE_SCROLL_CONTROL
+static void MainState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
+static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
+static void MainState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
+static void MainState_FADE_IN( RRL_WORK* work ); // RRL_STATE_FADE_IN 
+static void MainState_FADE_OUT( RRL_WORK* work ); // RRL_STATE_FADE_OUT
+static void MainState_FRAME_WAIT( RRL_WORK* work ); // RRL_STATE_FRAME_WAIT
+static void MainState_SCROLL_RESET( RRL_WORK* work ); // RRL_STATE_SCROLL_RESET
+static void MainState_PALETTE_RESET( RRL_WORK* work ); // RRL_STATE_PALETTE_RESET
+static void MainState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP 
+// ó‘Ô‚ÌI—¹ˆ—
+static void FinishState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
+static void FinishState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
+static void FinishState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
+static void FinishState_SCROLL_WAIT( RRL_WORK* work ); // RRL_STATE_SCROLL_WAIT
+static void FinishState_SCROLL_CONTROL( RRL_WORK* work ); // RRL_STATE_SCROLL_CONTROL
+static void FinishState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
+static void FinishState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
+static void FinishState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
+static void FinishState_FADE_IN( RRL_WORK* work ); // RRL_STATE_FADE_IN 
+static void FinishState_FADE_OUT( RRL_WORK* work ); // RRL_STATE_FADE_OUT
+static void FinishState_FRAME_WAIT( RRL_WORK* work ); // RRL_STATE_FRAME_WAIT
+static void FinishState_SCROLL_RESET( RRL_WORK* work ); // RRL_STATE_SCROLL_RESET
+static void FinishState_PALETTE_RESET( RRL_WORK* work ); // RRL_STATE_PALETTE_RESET
+static void FinishState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP 
+// ó‘Ô§Œä
+static void CountUpStateCount( RRL_WORK* work ); // ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
+static void RegisterNextState( RRL_WORK* work, RRL_STATE nextSeq ); // Ÿ‚Ìó‘Ô‚ğƒLƒ…[‚É“o˜^‚·‚é
+static void FinishCurrentState( RRL_WORK* work ); // Œ»İ‚Ìó‘Ô‚ğI—¹‚·‚é
+static void SwitchState( RRL_WORK* work ); // ˆ—ó‘Ô‚ğ•ÏX‚·‚é
+static RRL_STATE GetState( const RRL_WORK* work ); // ó‘Ô‚ğæ“¾‚·‚é
+static void SetState( RRL_WORK* work, RRL_STATE nextSeq ); // ˆ—ó‘Ô‚ğİ’è‚·‚é
+static void SetFinishResult( RRL_WORK* work, RRL_RESULT result ); // ‰æ–ÊI—¹Œ‹‰Ê‚ğİ’è‚·‚é
+static void SetWaitFrame( RRL_WORK* work, u32 frame ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğİ’è‚·‚é
+static u32 GetWaitFrame( const RRL_WORK* work ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğæ“¾‚·‚é
+static void RegisterFirstStateFlow( RRL_WORK* work ); // Å‰‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg‚·‚é
 //-----------------------------------------------------------------------------------------
 // ŸLAYER 2 ‹@”\
 //-----------------------------------------------------------------------------------------
@@ -202,28 +199,14 @@ static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID ); // ’¼ÚˆÚ“®‚·‚é
 // ƒZ[ƒuƒf[ƒ^
 static u8 GetInvestigatingTopicID( const RRL_WORK* work ); // Œ»İ’²¸’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
 static void UpdateInvestigatingTopicID( const RRL_WORK* work ); // ’²¸‚·‚é€–Ú‚ğXV‚·‚é
-// ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹
+// ƒƒjƒ…[€–Ú
 static void ShiftMenuCursorPos( RRL_WORK* work, int stride ); // ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é ( ƒIƒtƒZƒbƒgw’è )
 static void SetMenuCursorPos( RRL_WORK* work, MENU_ITEM menuItem ); // ƒƒjƒ…[€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚ğ•ÏX‚·‚é ( ’¼’lw’è ) 
-// ’²¸€–ÚƒJ[ƒ\ƒ‹
-static void SetTopicCursorPosDirect( RRL_WORK* work, int topciID ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é ( ƒ_ƒCƒŒƒNƒgˆÚ“® ) 
-static void SetTopicCursorNextPos( RRL_WORK* work, int stride ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é ( ƒIƒtƒZƒbƒgˆÚ“® )
-// ƒ^ƒbƒ`”ÍˆÍ
-static void UpdateTopicTouchArea( RRL_WORK* work ); // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
-// ’²¸€–Ú
-static int GetNextTopicID( const RRL_WORK* work, int topicID ); // Ÿ‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
-static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // ‘O‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
-static void SetupSelectableTopicNum( RRL_WORK* work ); // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static u8 GetSelectableTopicNum( const RRL_WORK* work ); // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğæ“¾‚·‚é
-static u8 GetSelectedTopicID( const RRL_WORK* work ); // ‘I‘ğ’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
-static void SetSelectedTopicID( RRL_WORK* work, u8 topicID ); // ’²¸€–ÚID‚ğ‘I‘ğ‚·‚é
-static void ResetSelectedTopicID( RRL_WORK* work ); // ’²¸€–ÚID‚Ì‘I‘ğ‚ğ‰ğœ‚·‚é
-static BOOL IsTopicIDSelected( const RRL_WORK* work ); // ‘I‘ğÏ‚İ‚©‚ğ”»’è‚·‚é
-static BOOL CheckTopicCanSelect( const RRL_WORK* work, u8 topicID ); // ’²¸€–Ú‚ğ‘I‘ğ‰Â”\‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
-// ƒƒjƒ…[€–Ú‚Ì•\¦
 static void SetMenuItemCursorOn( RRL_WORK* work, MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetMenuItemCursorOff( RRL_WORK* work, MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-// ’²¸€–Ú‚Ì•\¦
+// ’²¸€–Ú
+static void SetTopicCursorPosDirect( RRL_WORK* work, int topciID ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é ( ’¼’lw’è ) 
+static void SetTopicCursorNextPos( RRL_WORK* work, int stride ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é ( ƒIƒtƒZƒbƒgw’è )
 static void SetTopicButtonCursorOn( const RRL_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetTopicButtonCursorOff( const RRL_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 static void SetTopicButtonInvestigating( const RRL_WORK* work, u8 topicID ); // ’²¸’†‚Ìó‘Ô‚É‚·‚é
@@ -234,6 +217,7 @@ static int CalcDisplayLeftOfTopicButton( const RRL_WORK* work, u8 topicID ); // 
 static int CalcDisplayTopOfTopicButton ( const RRL_WORK* work, u8 topicID ); // ’²¸€–Úƒ{ƒ^ƒ“‚Ì¶ãyÀ•W‚ğZo‚·‚é ( ƒfƒBƒXƒvƒŒƒCÀ•WŒnEƒhƒbƒg’PˆÊ ) 
 static int CalcDisplayBottomOfTopicButton ( const RRL_WORK* work, u8 topicID ); // ’²¸€–Úƒ{ƒ^ƒ“‚Ì‰E‰ºyÀ•W‚ğZo‚·‚é ( ƒfƒBƒXƒvƒŒƒCÀ•WŒnEƒhƒbƒg’PˆÊ ) 
 static void UpdateTopicButtonMask( const RRL_WORK* work ); // ’²¸€–Úƒ{ƒ^ƒ“‚ÌƒXƒNƒ[ƒ‹‰ñ‚è‚İ‚ğ‰B‚·‚½‚ß‚ÌƒEƒBƒ“ƒhƒE‚ğXV‚·‚é
+static void UpdateInvestigatingIcon( const RRL_WORK* work ); // ’²¸’†ƒAƒCƒRƒ“‚Ì•\¦ó‘Ô‚ğXV‚·‚é
 // ã‰æ–Ê‚Ì•\¦
 static void UpdateSubDisplayStrings( RRL_WORK* work ); // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ•\¦‚ğXV‚·‚é
 static void TopicDetailStringHide( RRL_WORK* work ); // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚Ì•\¦‚ğ‰B‚·
@@ -262,158 +246,138 @@ static int CalcScrollCursorPosOfTopicButtonBottom( int topicID ); // w’è‚µ‚½’²
 static int GetMaxScrollValue( const RRL_WORK* work ); // Å‘åƒXƒNƒ[ƒ‹’l‚ğæ“¾‚·‚é
 static int GetMaxScrollCursorPos( const RRL_WORK* work ); // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹‚ÌÅ‘å’l‚ğæ“¾‚·‚é
 static BOOL CheckScrollControlCan( const RRL_WORK* work ); // ƒXƒNƒ[ƒ‹‘€ì‚ª‰Â”\‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
-// ’²¸’†ƒAƒCƒRƒ“
-static void UpdateTopicSelectIcon( const RRL_WORK* work ); // ’²¸’†ƒAƒCƒRƒ“‚Ì•\¦ó‘Ô‚ğXV‚·‚é
-// ƒV[ƒPƒ“ƒXƒLƒ…[
-static void InitSeqQueue( RRL_WORK* work ); // ƒV[ƒPƒ“ƒXƒLƒ…[‚ğ‰Šú‰»‚·‚é
-static void CreateSeqQueue( RRL_WORK* work ); // ƒV[ƒPƒ“ƒXƒLƒ…[‚ğ¶¬‚·‚é
-static void DeleteSeqQueue( RRL_WORK* work ); // ƒV[ƒPƒ“ƒXƒLƒ…[‚ğ”jŠü‚·‚é
-// ƒ^ƒbƒ`—Ìˆæ
-static void SetupTouchArea( RRL_WORK* work ); // ƒ^ƒbƒ`—Ìˆæ‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-// ƒtƒHƒ“ƒgƒf[ƒ^
-static void InitFont( RRL_WORK* work ); // ƒtƒHƒ“ƒgƒf[ƒ^‚ğ‰Šú‰»‚·‚é
-static void CreateFont( RRL_WORK* work ); // ƒtƒHƒ“ƒgƒf[ƒ^‚ğ¶¬‚·‚é
-static void DeleteFont( RRL_WORK* work ); // ƒtƒHƒ“ƒgƒf[ƒ^‚ğ”jŠü‚·‚é
-// ƒƒbƒZ[ƒWƒf[ƒ^
-static void InitMessages( RRL_WORK* work ); // ƒƒbƒZ[ƒWƒf[ƒ^‚ğ‰Šú‰»‚·‚é
-static void CreateMessages( RRL_WORK* work ); // ƒƒbƒZ[ƒWƒf[ƒ^‚ğ¶¬‚·‚é
-static void DeleteMessages( RRL_WORK* work ); // ƒƒbƒZ[ƒWƒf[ƒ^‚ğ”jŠü‚·‚é
-// BG
-static void SetupBG( RRL_WORK* work ); // BG‘S”Ê‚ÌƒZƒbƒgƒAƒbƒv‚ğs‚¤
-static void SetupSubBG_WINDOW( RRL_WORK* work ); // SUB-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void SetupSubBG_FONT( RRL_WORK* work ); // SUB-BG ( ƒtƒHƒ“ƒg–Ê ) ‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void SetupMainBG_BAR( RRL_WORK* work ); // MAIN-BG ( ƒo[–Ê ) ‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void SetupMainBG_WINDOW( RRL_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void SetupMainBG_FONT( RRL_WORK* work ); // MAIN-BG ( ƒtƒHƒ“ƒg–Ê ) ‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void CleanUpBG( RRL_WORK* work ); // BG‘S”Ê‚ÌƒNƒŠ[ƒ“ƒAƒbƒv‚ğs‚¤
-static void CleanUpSubBG_WINDOW( RRL_WORK* work ); // SUB-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
-static void CleanUpSubBG_FONT( RRL_WORK* work ); // SUB-BG ( ƒtƒHƒ“ƒg–Ê ) ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
-static void CleanUpMainBG_BAR( RRL_WORK* work ); // MAIN-BG ( ƒo[–Ê ) ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
-static void CleanUpMainBG_WINDOW( RRL_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
-static void CleanUpMainBG_FONT( RRL_WORK* work ); // MAIN-BG ( ƒtƒHƒ“ƒg–Ê ) ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
-// •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg
-static void InitBGFonts( RRL_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ‰Šú‰»‚·‚é
-static void CreateBGFonts( RRL_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
-static void DeleteBGFonts( RRL_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
-// OBJ
-static void CreateClactSystem( RRL_WORK* work ); // OBJ ƒVƒXƒeƒ€‚ğ¶¬‚·‚é
-static void DeleteClactSystem( RRL_WORK* work ); // OBJ ƒVƒXƒeƒ€‚ğ”jŠü‚·‚é
-static void InitOBJResources( RRL_WORK* work ); // OBJ ƒŠƒ\[ƒX‚ğ‰Šú‰»‚·‚é
-static void RegisterSubObjResources( RRL_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX‚ğ“o˜^‚·‚é
-static void ReleaseSubObjResources( RRL_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
-static void RegisterMainObjResources( RRL_WORK* work ); // MAIN-OBJ ƒŠƒ\[ƒX‚ğ“o˜^‚·‚é
-static void ReleaseMainObjResources( RRL_WORK* work ); // MAIN-OBJ ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
-static void InitClactUnits( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ‰Šú‰»‚·‚é
-static void CreateClactUnits( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ¶¬‚·‚é
-static void DeleteClactUnits( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ”jŠü‚·‚é
-static void InitClactWorks( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ‰Šú‰»‚·‚é
-static void CreateClactWorks( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ¶¬‚·‚é
-static void DeleteClactWorks( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ”jŠü‚·‚é
-static u32 GetObjResourceRegisterIndex( const RRL_WORK* work, OBJ_RESOURCE_ID resID ); // OBJƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
-static GFL_CLUNIT* GetClactUnit( const RRL_WORK* work, CLUNIT_INDEX unitIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğæ“¾‚·‚é
-static GFL_CLWK* GetClactWork( const RRL_WORK* work, CLWK_INDEX wkIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğæ“¾‚·‚é
-// BMP-OAM
-static void InitBitmapDatas( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ‰Šú‰»‚·‚é
-static void CreateBitmapDatas( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğì¬‚·‚é
-static void SetupBitmapData_forDefault( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğƒZƒbƒgƒAƒbƒv‚·‚é ( ƒfƒtƒHƒ‹ƒg )
-static void SetupBitmapData_forOK( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğƒZƒbƒgƒAƒbƒv‚·‚é (u‚¯‚Á‚Ä‚¢v)
-static void SetupBitmapData_forCANCEL( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğƒZƒbƒgƒAƒbƒv‚·‚é (u‚â‚ß‚év)
-static void DeleteBitmapDatas( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ”jŠü‚·‚é
-static void SetupBmpOamSystem( RRL_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void CleanUpBmpOamSystem( RRL_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
-static void CreateBmpOamActors( RRL_WORK* work ); // BMP-OAM ƒAƒNƒ^[‚ğì¬‚·‚é
-static void DeleteBmpOamActors( RRL_WORK* work ); // BMP-OAM ƒAƒNƒ^[‚ğ”jŠü‚·‚é
-static void BmpOamSetDrawEnable( RRL_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable ); // •\¦‚·‚é‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
-static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM menuItem ); // ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAMƒAƒNƒ^[‚ğæ“¾‚·‚é
+// ƒ^ƒbƒ`”ÍˆÍ
+static void UpdateTopicTouchArea( RRL_WORK* work ); // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
 // ƒpƒŒƒbƒgƒtƒF[ƒh
-static void InitPaletteFadeSystem( RRL_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
-static void SetupPaletteFadeSystem( RRL_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void CleanUpPaletteFadeSystem( RRL_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
 static void StartPaletteFadeOut( RRL_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
 static void StartPaletteFadeIn ( RRL_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
 static BOOL IsPaletteFadeEnd( RRL_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
-static void InitPaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ‰Šú‰»‚·‚é
-static void CreatePaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ¶¬‚·‚é
-static void DeletePaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ”jŠü‚·‚é
-static void SetupPaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒZƒbƒgƒAƒbƒv‚·‚é
-static void CleanUpPaletteAnime( RRL_WORK* work );  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
 static void StartPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
 static void StopPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
 static void UpdatePaletteAnime( RRL_WORK* work );  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
-// ’ÊMƒAƒCƒRƒ“
-static void SetupWirelessIcon( const RRL_WORK* work ); // ’ÊMƒAƒCƒRƒ“‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+static void UpdateCommonPaletteAnime( const RRL_WORK* work ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
+// VBlank
+static void VBlankFunc( GFL_TCB* tcb, void* wk ); // VBlank ’†‚Ìˆ—
 //-----------------------------------------------------------------------------------------
-// ŸLAYER 0 ƒfƒoƒbƒO
+// ŸLAYER 2 æ“¾Eİ’èE”»’è
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_seqQueue( const RRL_WORK* work ); // ƒV[ƒPƒ“ƒXƒLƒ…[‚Ì’†g‚ğ•\¦‚·‚é
+// ƒVƒXƒeƒ€
+static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work );
+static GAMEDATA* GetGameData( const RRL_WORK* work );
+static void SetHeapID( RRL_WORK* work, HEAPID heapID );
+static void SetCommonWork( RRL_WORK* work, RESEARCH_COMMON_WORK* commonWork );
+// ’²¸€–Ú
+static int GetNextTopicID( const RRL_WORK* work, int topicID ); // Ÿ‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // ‘O‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+static u8 GetSelectableTopicNum( const RRL_WORK* work ); // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğæ“¾‚·‚é
+static u8 GetSelectedTopicID( const RRL_WORK* work ); // ‘I‘ğ’†‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
+static void SetSelectedTopicID( RRL_WORK* work, u8 topicID ); // ’²¸€–ÚID‚ğ‘I‘ğ‚·‚é
+static void ResetSelectedTopicID( RRL_WORK* work ); // ’²¸€–ÚID‚Ì‘I‘ğ‚ğ‰ğœ‚·‚é
+static BOOL IsTopicIDSelected( const RRL_WORK* work ); // ‘I‘ğÏ‚İ‚©‚ğ”»’è‚·‚é
+static BOOL CheckTopicCanSelect( const RRL_WORK* work, u8 topicID ); // ’²¸€–Ú‚ğ‘I‘ğ‰Â”\‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
+// OBJ
+static u32 GetObjResourceRegisterIndex( const RRL_WORK* work, OBJ_RESOURCE_ID resID ); // OBJƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
+static GFL_CLUNIT* GetClactUnit( const RRL_WORK* work, CLUNIT_INDEX unitIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğæ“¾‚·‚é
+static GFL_CLWK* GetClactWork( const RRL_WORK* work, CLWK_INDEX wkIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğæ“¾‚·‚é
+// BMP-OAM
+static void BmpOamSetDrawEnable( RRL_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable ); // •\¦‚·‚é‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM menuItem ); // ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAMƒAƒNƒ^[‚ğæ“¾‚·‚é
+//-----------------------------------------------------------------------------------------
+// ŸLAYER 1 ¶¬E‰Šú‰»E€”õEŒã•Ğ•t‚¯E”jŠü
+//-----------------------------------------------------------------------------------------
+static RRL_WORK* CreateListWork( HEAPID heapID ); // ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN ¶¬
+static void InitListWork( RRL_WORK* work ); // ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN ‰Šú‰»
+static void DeleteListWork( RRL_WORK* work ); // ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN ”jŠü
+static void SetupSelectableTopicNum( RRL_WORK* work ); // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì” €”õ
+static void CreateFont( RRL_WORK* work ); // ƒtƒHƒ“ƒgƒf[ƒ^ ¶¬
+static void InitFont( RRL_WORK* work ); // ƒtƒHƒ“ƒgƒf[ƒ^ ‰Šú‰»
+static void DeleteFont( RRL_WORK* work ); // ƒtƒHƒ“ƒgƒf[ƒ^ ”jŠü
+static void CreateMessages( RRL_WORK* work ); // ƒƒbƒZ[ƒWƒf[ƒ^ ¶¬
+static void InitMessages( RRL_WORK* work ); // ƒƒbƒZ[ƒWƒf[ƒ^ ‰Šú‰»
+static void DeleteMessages( RRL_WORK* work ); // ƒƒbƒZ[ƒWƒf[ƒ^ ”jŠü
+static void CreateStateQueue( RRL_WORK* work ); // ó‘ÔƒLƒ…[ ¶¬
+static void InitStateQueue( RRL_WORK* work ); // ó‘ÔƒLƒ…[ ‰Šú‰»
+static void DeleteStateQueue( RRL_WORK* work ); // ó‘ÔƒLƒ…[ ”jŠü
+static void SetupTouchArea( RRL_WORK* work ); // ƒ^ƒbƒ`—Ìˆæ €”õ
+static void SetupBG( RRL_WORK* work ); // BG ‘S”Ê €”õ
+static void SetupSubBG_WINDOW( RRL_WORK* work ); // SUB-BG ( ƒEƒBƒ“ƒhƒE–Ê )  €”õ
+static void SetupSubBG_FONT( RRL_WORK* work ); // SUB-BG ( ƒtƒHƒ“ƒg–Ê )  €”õ
+static void SetupMainBG_BAR( RRL_WORK* work ); // MAIN-BG ( ƒo[–Ê )  €”õ
+static void SetupMainBG_WINDOW( RRL_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê )  €”õ
+static void SetupMainBG_FONT( RRL_WORK* work ); // MAIN-BG ( ƒtƒHƒ“ƒg–Ê )  €”õ
+static void CleanUpBG( RRL_WORK* work ); // BG ‘S”Ê Œã•Ğ•t‚¯
+static void CleanUpSubBG_WINDOW( RRL_WORK* work ); // SUB-BG ( ƒEƒBƒ“ƒhƒE–Ê )  Œã•Ğ•t‚¯
+static void CleanUpSubBG_FONT( RRL_WORK* work ); // SUB-BG ( ƒtƒHƒ“ƒg–Ê )  Œã•Ğ•t‚¯
+static void CleanUpMainBG_BAR( RRL_WORK* work ); // MAIN-BG ( ƒo[–Ê )  Œã•Ğ•t‚¯
+static void CleanUpMainBG_WINDOW( RRL_WORK* work ); // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê )  Œã•Ğ•t‚¯
+static void CleanUpMainBG_FONT( RRL_WORK* work ); // MAIN-BG ( ƒtƒHƒ“ƒg–Ê )  Œã•Ğ•t‚¯
+static void CreateBGFonts( RRL_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ¶¬
+static void InitBGFonts( RRL_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ‰Šú‰»
+static void DeleteBGFonts( RRL_WORK* work ); // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg ”jŠü
+static void InitOBJResources( RRL_WORK* work ); // OBJ ƒŠƒ\[ƒX ‰Šú‰»
+static void RegisterSubObjResources( RRL_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX “o˜^
+static void ReleaseSubObjResources( RRL_WORK* work ); // SUB-OBJ ƒŠƒ\[ƒX ‰ğ•ú
+static void RegisterMainObjResources( RRL_WORK* work ); // MAIN-OBJ ƒŠƒ\[ƒX “o˜^
+static void ReleaseMainObjResources( RRL_WORK* work ); // MAIN-OBJ ƒŠƒ\[ƒX ‰ğ•ú
+static void InitClactUnits( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg ‰Šú‰»
+static void CreateClactUnits( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg ¶¬
+static void DeleteClactUnits( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg ”jŠü
+static void InitClactWorks( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN ‰Šú‰»
+static void CreateClactWorks( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN ¶¬
+static void DeleteClactWorks( RRL_WORK* work ); // ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN ”jŠü
+static void InitBitmapDatas( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ ‰Šú‰»
+static void CreateBitmapDatas( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ ì¬
+static void SetupBitmapData_forDefault( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ €”õ ( ƒfƒtƒHƒ‹ƒg )
+static void SetupBitmapData_forOK( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ €”õ (u‚¯‚Á‚Ä‚¢v)
+static void SetupBitmapData_forCANCEL( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ €”õ (u‚â‚ß‚év)
+static void DeleteBitmapDatas( RRL_WORK* work ); // ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^ ”jŠü
+static void SetupBmpOamSystem( RRL_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€ €”õ
+static void CleanUpBmpOamSystem( RRL_WORK* work ); // BMP-OAM ƒVƒXƒeƒ€ Œã•Ğ•t‚¯
+static void CreateBmpOamActors( RRL_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ì¬
+static void DeleteBmpOamActors( RRL_WORK* work ); // BMP-OAM ƒAƒNƒ^[ ”jŠü
+static void InitPaletteFadeSystem( RRL_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ ‰Šú‰»
+static void SetupPaletteFadeSystem( RRL_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ €”õ
+static void CleanUpPaletteFadeSystem( RRL_WORK* work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€ Œã•Ğ•t‚¯
+static void CreatePaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ¶¬
+static void InitPaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ‰Šú‰»
+static void DeletePaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ”jŠü
+static void SetupPaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN €”õ
+static void CleanUpPaletteAnime( RRL_WORK* work );  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN Œã•Ğ•t‚¯
+static void SetupWirelessIcon( const RRL_WORK* work ); // ’ÊMƒAƒCƒRƒ“ €”õ
+static void RegisterVBlankTask( RRL_WORK* work ); // VBlank ƒ^ƒXƒN “o˜^
+static void ReleaseVBlankTask ( RRL_WORK* work ); // VBlank ƒ^ƒXƒN ‰ğœ
 
 
 
 
 //=========================================================================================
-//  ’²¸‰Šú‰æ–Ê §ŒäŠÖ”
+// ¡public functions
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ’²¸‰Šú‰æ–Êƒ[ƒN‚Ì¶¬
+ * @brief ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN‚ğ¶¬‚·‚é
  *
  * @param commonWork ‘S‰æ–Ê‹¤’Êƒ[ƒN
  *
- * @return ’²¸“à—e•ÏX‰æ–Êƒ[ƒN
+ * @return ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN
  */
 //-----------------------------------------------------------------------------------------
 RRL_WORK* RRL_CreateWork( RESEARCH_COMMON_WORK* commonWork )
 {
-  int i;
   RRL_WORK* work;
   HEAPID heapID;
 
   heapID = RESEARCH_COMMON_GetHeapID( commonWork );
 
-  // ¶¬
-  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRL_WORK) );
+  // ƒ[ƒN‚ğ¶¬
+  work = CreateListWork( heapID );
 
-  // ‰Šú‰»
-  work->commonWork            = commonWork;
-  work->heapID                = heapID;
-  work->gameSystem            = RESEARCH_COMMON_GetGameSystem( commonWork );
-  work->gameData              = RESEARCH_COMMON_GetGameData( commonWork );
-  work->seq                   = RESEARCH_SELECT_SEQ_SETUP;
-  work->seqCount              = 0;
-  work->seqFinishFlag         = FALSE;
-  work->waitFrame             = WAIT_FRAME_BUTTON;
-  work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
-  work->topicCursorPos        = 0;
-  work->topicCursorNextPos    = 0;
-  work->selectableTopicNum    = 0;
-  work->selectedTopicID       = TOPIC_ID_DUMMY;
-  work->VBlankTCBSystem       = GFUser_VIntr_GetTCBSYS();
-  work->scrollCursorPos       = MIN_SCROLL_CURSOR_POS;
-  work->scrollStartPos        = 0;
-  work->scrollEndPos          = 0;
-  work->scrollFrames          = 0;
-  work->scrollFrameCount      = 0;
-  work->palFadeOutFlag        = FALSE;
-  work->finishResult          = RRL_RESULT_TO_TOP;
-  work->finishFlag            = FALSE;
-
-  InitSeqQueue( work );
-  InitMessages( work );
-  InitFont( work );
-  InitBGFonts( work );
-  InitClactUnits( work );
-  InitClactWorks( work );
-  InitOBJResources( work );
-  InitPaletteFadeSystem( work );
-  InitBitmapDatas( work );
-  InitPaletteAnime( work );
-
-  CreateSeqQueue( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create work\n" );
+  // ƒ[ƒN‚ğ‰Šú‰»
+  InitListWork( work );
+  SetHeapID( work, heapID );
+  SetCommonWork( work, commonWork );
 
   return work;
 }
@@ -427,16 +391,8 @@ RRL_WORK* RRL_CreateWork( RESEARCH_COMMON_WORK* commonWork )
 //-----------------------------------------------------------------------------------------
 void RRL_DeleteWork( RRL_WORK* work )
 {
-  if( work == NULL )
-  {
-    GF_ASSERT(0);
-    return;
-  }
-  DeleteSeqQueue( work ); // ƒV[ƒPƒ“ƒXƒLƒ…[
-  GFL_HEAP_FreeMemory( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete work\n" );
+  DeleteStateQueue( work );
+  DeleteListWork( work );
 } 
 
 //-----------------------------------------------------------------------------------------
@@ -448,41 +404,56 @@ void RRL_DeleteWork( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 void RRL_Main( RRL_WORK* work )
 {
-  // ƒV[ƒPƒ“ƒX‚²‚Æ‚Ìˆ—
-  switch( work->seq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:             MainSeq_SETUP( work );             break;
-  case RESEARCH_SELECT_SEQ_STANDBY:           MainSeq_STANDBY( work );           break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:          MainSeq_KEY_WAIT( work );          break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:       MainSeq_SCROLL_WAIT( work );       break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:    MainSeq_SCROLL_CONTROL( work );    break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:   MainSeq_CONFIRM_STANDBY( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT:  MainSeq_CONFIRM_KEY_WAIT( work );  break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:         MainSeq_DETERMINE( work );         break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:           MainSeq_FADE_IN( work );           break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:          MainSeq_FADE_OUT( work );          break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:        MainSeq_FRAME_WAIT( work );        break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:      MainSeq_SCROLL_RESET( work );      break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:     MainSeq_PALETTE_RESET( work );     break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:          MainSeq_CLEAN_UP( work );          break;
-  case RESEARCH_SELECT_SEQ_FINISH:            break;
+  switch( GetState(work) ) {
+  case RRL_STATE_SETUP:             MainState_SETUP( work );             break;
+  case RRL_STATE_STANDBY:           MainState_STANDBY( work );           break;
+  case RRL_STATE_KEY_WAIT:          MainState_KEY_WAIT( work );          break;
+  case RRL_STATE_SCROLL_WAIT:       MainState_SCROLL_WAIT( work );       break;
+  case RRL_STATE_SCROLL_CONTROL:    MainState_SCROLL_CONTROL( work );    break;
+  case RRL_STATE_CONFIRM_STANDBY:   MainState_CONFIRM_STANDBY( work );   break;
+  case RRL_STATE_CONFIRM_KEY_WAIT:  MainState_CONFIRM_KEY_WAIT( work );  break;
+  case RRL_STATE_DETERMINE:         MainState_DETERMINE( work );         break;
+  case RRL_STATE_FADE_IN:           MainState_FADE_IN( work );           break;
+  case RRL_STATE_FADE_OUT:          MainState_FADE_OUT( work );          break;
+  case RRL_STATE_FRAME_WAIT:        MainState_FRAME_WAIT( work );        break;
+  case RRL_STATE_SCROLL_RESET:      MainState_SCROLL_RESET( work );      break;
+  case RRL_STATE_PALETTE_RESET:     MainState_PALETTE_RESET( work );     break;
+  case RRL_STATE_CLEAN_UP:          MainState_CLEAN_UP( work );          break;
+  case RRL_STATE_FINISH:            break;
   default:  GF_ASSERT(0);
   }
 
-  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
+  UpdateCommonPaletteAnime( work ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
   UpdatePaletteAnime( work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
   GFL_CLACT_SYS_Main(); // ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€ ƒƒCƒ“ˆ—
-
-  CountUpSeqCount( work ); // ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^XV
-  SwitchSeq( work );  // ƒV[ƒPƒ“ƒXXV
+  CountUpStateCount( work ); // ó‘ÔƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+  SwitchState( work );  // ó‘Ô‚ğXV
 }
 
 
-// I—¹”»’è
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–Ê‚ÌI—¹‚ğƒ`ƒFƒbƒN‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒŠƒXƒg‰æ–Ê‚ªI—¹‚µ‚Ä‚¢‚éê‡ TRUE
+ */
+//-----------------------------------------------------------------------------------------
 RRL_IsFinished( const RRL_WORK* work )
 {
   return work->finishFlag;
 }
-// I—¹Œ‹‰Ê‚Ìæ“¾
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–Ê‚ÌI—¹Œ‹‰Ê‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ƒŠƒXƒg‰æ–Ê‚ÌI—¹Œ‹‰Ê
+ */
+//-----------------------------------------------------------------------------------------
 RRL_RESULT RRL_GetResult( const RRL_WORK* work )
 {
   return work->finishResult;
@@ -491,18 +462,19 @@ RRL_RESULT RRL_GetResult( const RRL_WORK* work )
 
 
 //=========================================================================================
-// ¡LAYER 4 ƒV[ƒPƒ“ƒX“®ì
+// ¡LAYER 4 ó‘Ô“®ì
 //=========================================================================================
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief €”õƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_SETUP ) ‚Ìˆ—
+ * @brief €”õó‘Ô ( RRL_STATE_SETUP ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SETUP( RRL_WORK* work )
+static void MainState_SETUP( RRL_WORK* work )
 {
+  CreateStateQueue( work );
   CreateFont( work );
   CreateMessages( work );
   SetupTouchArea( work );
@@ -523,7 +495,6 @@ static void MainSeq_SETUP( RRL_WORK* work )
   TopicDetailStringHide( work );
 
   // OBJ €”õ
-  CreateClactSystem( work );
   RegisterSubObjResources( work );
   RegisterMainObjResources( work );
   CreateClactUnits( work );
@@ -550,18 +521,18 @@ static void MainSeq_SETUP( RRL_WORK* work )
   // ’ÊMƒAƒCƒRƒ“
   SetupWirelessIcon( work );
 
-  SetFirstSeq( work ); // Ÿ‚ÌƒV[ƒPƒ“ƒX‚ğƒZƒbƒg
-  FinishCurrentSeq( work ); // ƒV[ƒPƒ“ƒXI—¹
+  RegisterFirstStateFlow( work ); // Ÿ‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg
+  FinishCurrentState( work ); // ó‘ÔI—¹
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Å‰‚ÌƒL[“ü—Í‘Ò‚¿ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_STANDBY ) ‚Ìˆ—
+ * @brief Å‰‚ÌƒL[“ü—Í‘Ò‚¿ó‘Ô ( RRL_STATE_STANDBY ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_STANDBY( RRL_WORK* work )
+static void MainState_STANDBY( RRL_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -577,11 +548,11 @@ static void MainSeq_STANDBY( RRL_WORK* work )
         work->commonWork, SEQ_CHANGE_BY_TOUCH ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
     RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_FRAME_WAIT );
+    RegisterNextState( work, RRL_STATE_FADE_OUT );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_CLEAN_UP );
+    FinishCurrentState( work );
     return;
   }
 
@@ -591,11 +562,11 @@ static void MainSeq_STANDBY( RRL_WORK* work )
         work->commonWork, SEQ_CHANGE_BY_BUTTON ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
     RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_FRAME_WAIT );
+    RegisterNextState( work, RRL_STATE_FADE_OUT );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_CLEAN_UP );
+    FinishCurrentState( work );
     return;
   }
 
@@ -605,8 +576,8 @@ static void MainSeq_STANDBY( RRL_WORK* work )
       (trg & PAD_KEY_LEFT) ||
       (trg & PAD_KEY_RIGHT) ||
       (trg & PAD_BUTTON_A) ) {
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );
+    FinishCurrentState( work );
     return;
   }
 
@@ -620,8 +591,8 @@ static void MainSeq_STANDBY( RRL_WORK* work )
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // Œˆ’è‰¹
       UpdateSubDisplayStrings( work );                    // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ‚ğXV
       TopicDetailStringDispStart( work );                 // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_STANDBY );
-      FinishCurrentSeq( work );
+      RegisterNextState( work, RRL_STATE_CONFIRM_STANDBY );
+      FinishCurrentState( work );
     }
     return;
   } 
@@ -629,12 +600,12 @@ static void MainSeq_STANDBY( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒL[“ü—Í‘Ò‚¿ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_KEY_WAIT ) ‚Ìˆ—
+ * @brief ƒL[“ü—Í‘Ò‚¿ó‘Ô ( RRL_STATE_KEY_WAIT ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_KEY_WAIT( RRL_WORK* work )
+static void MainState_KEY_WAIT( RRL_WORK* work )
 { 
   int trg;
   int touchTrg;
@@ -652,29 +623,29 @@ static void MainSeq_KEY_WAIT( RRL_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ƒLƒƒƒ“ƒZƒ‹‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_FRAME_WAIT );
+    RegisterNextState( work, RRL_STATE_FADE_OUT );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_CLEAN_UP );
+    FinishCurrentState( work );
     return;
   }
 
   // ªƒL[
   if( trg & PAD_KEY_UP ) {
     MoveTopicCursorUp( work );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_SCROLL_WAIT );
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );
+    FinishCurrentState( work );
     return;
   }
 
   // «ƒL[
   if( trg & PAD_KEY_DOWN ) {
     MoveTopicCursorDown( work );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_SCROLL_WAIT );
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );
+    FinishCurrentState( work );
     return;
   } 
 
@@ -683,8 +654,8 @@ static void MainSeq_KEY_WAIT( RRL_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );
     SetSelectedTopicID( work, work->topicCursorPos ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // Œˆ’è‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_CONFIRM_KEY_WAIT );
+    FinishCurrentState( work );
     return;
   } 
 
@@ -696,8 +667,8 @@ static void MainSeq_KEY_WAIT( RRL_WORK* work )
       MoveTopicCursorDirect( work, touchTrg );          // ƒJ[ƒ\ƒ‹ˆÚ“®
       SetSelectedTopicID( work, work->topicCursorPos ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                   // Œˆ’è‰¹
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_STANDBY );
-      FinishCurrentSeq( work );
+      RegisterNextState( work, RRL_STATE_CONFIRM_STANDBY );
+      FinishCurrentState( work );
     }
     return;
   }
@@ -709,11 +680,11 @@ static void MainSeq_KEY_WAIT( RRL_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ‘I‘ğƒpƒŒƒbƒgƒAƒjƒŠJn
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_FRAME_WAIT );
+    RegisterNextState( work, RRL_STATE_FADE_OUT );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_CLEAN_UP );
+    FinishCurrentState( work );
     return;
   } 
 
@@ -721,9 +692,9 @@ static void MainSeq_KEY_WAIT( RRL_WORK* work )
   if( GFL_UI_TP_HitCont( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) {
     // ƒXƒNƒ[ƒ‹‘€ì‰Â”\
     if( CheckScrollControlCan( work ) == TRUE ) {
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_CONTROL );
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-      FinishCurrentSeq( work );
+      RegisterNextState( work, RRL_STATE_SCROLL_CONTROL );
+      RegisterNextState( work, RRL_STATE_KEY_WAIT );
+      FinishCurrentState( work );
     }
     return;
   }
@@ -731,35 +702,35 @@ static void MainSeq_KEY_WAIT( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒXƒNƒ[ƒ‹Š®—¹‘Ò‚¿ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_SCROLL_WAIT ) ‚Ìˆ—
+ * @brief ƒXƒNƒ[ƒ‹Š®—¹‘Ò‚¿ó‘Ô ( RRL_STATE_SCROLL_WAIT ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SCROLL_WAIT( RRL_WORK* work )
+static void MainState_SCROLL_WAIT( RRL_WORK* work )
 {
   // ƒXƒNƒ[ƒ‹ˆ—
   UpdateScroll( work );           // ƒXƒNƒ[ƒ‹‚ğXV
   UpdateScrollValue( work );      // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
   UpdateTopicTouchArea( work );   // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
   UpdateScrollControlPos( work ); // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª
-  UpdateTopicSelectIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
+  UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
   UpdateTopicButtonMask( work );  // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV‚·‚é
 
   // ƒXƒNƒ[ƒ‹I—¹
   if( CheckScrollEnd(work) ) {
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒXƒNƒ[ƒ‹‘€ìƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_SCROLL_CONTROL ) ‚Ìˆ—
+ * @brief ƒXƒNƒ[ƒ‹‘€ìó‘Ô ( RRL_STATE_SCROLL_CONTROL ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SCROLL_CONTROL( RRL_WORK* work )
+static void MainState_SCROLL_CONTROL( RRL_WORK* work )
 {
   u32 x, y;
   BOOL touch;
@@ -768,7 +739,7 @@ static void MainSeq_SCROLL_CONTROL( RRL_WORK* work )
 
   // ƒ^ƒbƒ`‚ª—£‚³‚ê‚½
   if( touch == FALSE ) {
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
     return;
   }
 
@@ -780,7 +751,7 @@ static void MainSeq_SCROLL_CONTROL( RRL_WORK* work )
     AdjustScrollValue( work );                  // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
     UpdateTopicTouchArea( work );               // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
     UpdateScrollControlPos( work );             // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª‚ğXV
-    UpdateTopicSelectIcon( work );              // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+    UpdateInvestigatingIcon( work );              // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
   }
 
   // ƒJ[ƒ\ƒ‹ˆÊ’uXVˆ—
@@ -800,12 +771,12 @@ static void MainSeq_SCROLL_CONTROL( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ’²¸€–ÚŠm’è‚ÌŠm”FƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_CONFIRM_STANDBY ) ‚Ìˆ—
+ * @brief ’²¸€–ÚŠm’è‚ÌŠm”Fó‘Ô ( RRL_STATE_CONFIRM_STANDBY ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work )
+static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -819,7 +790,7 @@ static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work )
     UpdateScrollValue( work );      // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
     UpdateTopicTouchArea( work );   // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
     UpdateScrollControlPos( work ); // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª
-    UpdateTopicSelectIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
+    UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
     UpdateTopicButtonMask( work );  // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV‚·‚é
   }
 
@@ -830,8 +801,8 @@ static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work )
       (trg & PAD_KEY_LEFT) ||
       (trg & PAD_KEY_RIGHT) ||
       (trg & PAD_BUTTON_A) ) {
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_CONFIRM_KEY_WAIT );
+    FinishCurrentState( work );
     return;
   }
 
@@ -842,8 +813,8 @@ static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work )
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK );
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_DETERMINE );
+    FinishCurrentState( work );
     return;
   } 
 
@@ -854,21 +825,21 @@ static void MainSeq_CONFIRM_STANDBY( RRL_WORK* work )
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_SCROLL_RESET );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );
+    FinishCurrentState( work );
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ’²¸€–ÚŠm’è‚ÌŠm”FƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT ) ‚Ìˆ—
+ * @brief ’²¸€–ÚŠm’è‚ÌŠm”Fó‘Ô ( RRL_STATE_CONFIRM_KEY_WAIT ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
+static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
 {
   int trg;
   int touchTrg;
@@ -882,7 +853,7 @@ static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
     UpdateScrollValue( work );      // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
     UpdateTopicTouchArea( work );   // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
     UpdateScrollControlPos( work ); // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª
-    UpdateTopicSelectIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
+    UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
     UpdateTopicButtonMask( work );  // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV‚·‚é
   }
 
@@ -900,20 +871,20 @@ static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
     case MENU_ITEM_DETERMINATION_OK:
       RESEARCH_COMMON_SetSeqChangeTrig( 
           work->commonWork, SEQ_CHANGE_BY_BUTTON ); // ‰æ–Ê‘JˆÚ‚ÌƒgƒŠƒK‚ğ“o˜^
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
+      RegisterNextState( work, RRL_STATE_DETERMINE );
       break;
     case MENU_ITEM_DETERMINATION_CANCEL:
       PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_RESET );
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-      SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
+      RegisterNextState( work, RRL_STATE_SCROLL_RESET );
+      RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+      RegisterNextState( work, RRL_STATE_KEY_WAIT );
       break;
     default:
       GF_ASSERT(0);
     }
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
     return;
   } 
 
@@ -924,8 +895,8 @@ static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_OK );
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_DETERMINE );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_DETERMINE );
+    FinishCurrentState( work );
     return;
   } 
 
@@ -936,122 +907,122 @@ static void MainSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ƒLƒƒƒ“ƒZƒ‹‰¹
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT );
-    FinishCurrentSeq( work );
+    RegisterNextState( work, RRL_STATE_SCROLL_RESET );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );
+    FinishCurrentState( work );
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ’²¸€–ÚŠm’èƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_DETERMINE ) ‚Ìˆ—
+ * @brief ’²¸€–ÚŠm’èó‘Ô ( RRL_STATE_DETERMINE ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_DETERMINE( RRL_WORK* work )
+static void MainState_DETERMINE( RRL_WORK* work )
 {
   // ˆê’èŠÔ‚ªŒo‰ß
-  if( SEQ_DETERMINE_WAIT_FRAMES <= work->seqCount ) {
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
-    FinishCurrentSeq( work );
+  if( SEQ_DETERMINE_WAIT_FRAMES <= work->stateCount ) {
+    RegisterNextState( work, RRL_STATE_FADE_OUT );
+    RegisterNextState( work, RRL_STATE_PALETTE_RESET );
+    RegisterNextState( work, RRL_STATE_CLEAN_UP );
+    FinishCurrentState( work );
   } 
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒtƒF[ƒhƒCƒ“ ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_FADE_IN ) ‚Ìˆ—
+ * @brief ƒtƒF[ƒhƒCƒ“ ó‘Ô ( RRL_STATE_FADE_IN ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FADE_IN( RRL_WORK* work )
+static void MainState_FADE_IN( RRL_WORK* work )
 {
   // ƒtƒF[ƒh‚ªI—¹
   if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
   } 
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒtƒF[ƒhƒAƒEƒg ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_FADE_OUT ) ‚Ìˆ—
+ * @brief ƒtƒF[ƒhƒAƒEƒg ó‘Ô ( RRL_STATE_FADE_OUT ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FADE_OUT( RRL_WORK* work )
+static void MainState_FADE_OUT( RRL_WORK* work )
 {
   // ƒtƒF[ƒh‚ªI—¹
   if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
   } 
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_FRAME_WAIT ) ‚Ìˆ—
+ * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ ó‘Ô ( RRL_STATE_FRAME_WAIT ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_FRAME_WAIT( RRL_WORK* work )
+static void MainState_FRAME_WAIT( RRL_WORK* work )
 {
   // ‘Ò‚¿ŠÔ‚ªŒo‰ß
-  if( GetWaitFrame(work) < work->seqCount ) {
-    FinishCurrentSeq( work ); 
+  if( GetWaitFrame(work) < work->stateCount ) {
+    FinishCurrentState( work ); 
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒpƒŒƒbƒg•œ‹AƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_PALETTE_RESET ) ‚Ìˆ—
+ * @brief ƒpƒŒƒbƒg•œ‹Aó‘Ô ( RRL_STATE_PALETTE_RESET ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_PALETTE_RESET( RRL_WORK* work )
+static void MainState_PALETTE_RESET( RRL_WORK* work )
 {
   // ƒpƒŒƒbƒgƒtƒF[ƒhŠ®—¹
   if( IsPaletteFadeEnd( work ) ) {
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒpƒŒƒbƒg•œ‹AƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_SCROLL_RESET ) ‚Ìˆ—
+ * @brief ƒpƒŒƒbƒg•œ‹Aó‘Ô ( RRL_STATE_SCROLL_RESET ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_SCROLL_RESET( RRL_WORK* work )
+static void MainState_SCROLL_RESET( RRL_WORK* work )
 {
   // ƒXƒNƒ[ƒ‹ˆ—
   UpdateScroll( work );           // ƒXƒNƒ[ƒ‹‚ğXV
   UpdateScrollValue( work );      // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
   UpdateTopicTouchArea( work );   // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
   UpdateScrollControlPos( work ); // ƒXƒNƒ[ƒ‹ƒo[‚Ì‚Â‚Ü‚İ•”•ª
-  UpdateTopicSelectIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
+  UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
   UpdateTopicButtonMask( work );  // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV‚·‚é
 
   // ƒXƒNƒ[ƒ‹I—¹
   if( CheckScrollEnd(work) ) {
-    FinishCurrentSeq( work );
+    FinishCurrentState( work );
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Œã•Ğ•t‚¯ƒV[ƒPƒ“ƒX ( RESEARCH_SELECT_SEQ_CLEAN_UP ) ‚Ìˆ—
+ * @brief Œã•Ğ•t‚¯ó‘Ô ( RRL_STATE_CLEAN_UP ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_CLEAN_UP( RRL_WORK* work )
+static void MainState_CLEAN_UP( RRL_WORK* work )
 { 
   // VBlankƒ^ƒXƒN‚ğ‰ğœ
   ReleaseVBlankTask( work );
@@ -1077,7 +1048,6 @@ static void MainSeq_CLEAN_UP( RRL_WORK* work )
   DeleteClactUnits( work );
   ReleaseSubObjResources ( work );
   ReleaseMainObjResources( work );
-  DeleteClactSystem ( work );
 
   // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg Œã•Ğ•t‚¯
   DeleteBGFonts( work );
@@ -1094,81 +1064,80 @@ static void MainSeq_CLEAN_UP( RRL_WORK* work )
   DeleteFont( work );
 
   // ‰æ–ÊI—¹Œ‹‰Ê‚ğŒˆ’è
-  SetResult( work, RRL_RESULT_TO_TOP );  
-  SetNextSeq( work, RESEARCH_SELECT_SEQ_FINISH );
-  FinishCurrentSeq( work );
+  SetFinishResult( work, RRL_RESULT_TO_TOP );  
+  RegisterNextState( work, RRL_STATE_FINISH );
+  FinishCurrentState( work );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXƒJƒEƒ“ƒ^‚ğXV‚·‚é
+ * @brief ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
  * 
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CountUpSeqCount( RRL_WORK* work )
+static void CountUpStateCount( RRL_WORK* work )
 {
   u32 maxCount;
 
   // ƒCƒ“ƒNƒŠƒƒ“ƒg
-  work->seqCount++;
+  work->stateCount++;
 
   // Å‘å’l‚ğŒˆ’è
-  switch( work->seq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:             maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_STANDBY:           maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:          maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:       maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:    maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:   maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT:  maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:         maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:           maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:          maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:        maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:      maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:     maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:          maxCount = 0xffffffff;                break;
-  case RESEARCH_SELECT_SEQ_FINISH:            maxCount = 0xffffffff;                break;
+  switch( work->state ) {
+  case RRL_STATE_SETUP:             maxCount = 0xffffffff;                break;
+  case RRL_STATE_STANDBY:           maxCount = 0xffffffff;                break;
+  case RRL_STATE_KEY_WAIT:          maxCount = 0xffffffff;                break;
+  case RRL_STATE_SCROLL_WAIT:       maxCount = 0xffffffff;                break;
+  case RRL_STATE_SCROLL_CONTROL:    maxCount = 0xffffffff;                break;
+  case RRL_STATE_CONFIRM_STANDBY:   maxCount = 0xffffffff;                break;
+  case RRL_STATE_CONFIRM_KEY_WAIT:  maxCount = 0xffffffff;                break;
+  case RRL_STATE_DETERMINE:         maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
+  case RRL_STATE_FADE_IN:           maxCount = 0xffffffff;                break;
+  case RRL_STATE_FADE_OUT:          maxCount = 0xffffffff;                break;
+  case RRL_STATE_FRAME_WAIT:        maxCount = 0xffffffff;                break;
+  case RRL_STATE_SCROLL_RESET:      maxCount = 0xffffffff;                break;
+  case RRL_STATE_PALETTE_RESET:     maxCount = 0xffffffff;                break;
+  case RRL_STATE_CLEAN_UP:          maxCount = 0xffffffff;                break;
+  case RRL_STATE_FINISH:            maxCount = 0xffffffff;                break;
   default: GF_ASSERT(0);
   }
 
   // Å‘å’l•â³
-  if( maxCount < work->seqCount ) { work->seqCount = maxCount; }
+  if( maxCount < work->stateCount ) { work->stateCount = maxCount; }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Ÿ‚ÌƒV[ƒPƒ“ƒX‚ğƒLƒ…[‚É“o˜^‚·‚é
+ * @brief Ÿ‚Ìó‘Ô‚ğƒLƒ…[‚É“o˜^‚·‚é
  *
  * @param work
- * @param nextSeq “o˜^‚·‚éƒV[ƒPƒ“ƒX
+ * @param nextSeq “o˜^‚·‚éó‘Ô
  */
 //-----------------------------------------------------------------------------------------
-static void SetNextSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static void RegisterNextState( RRL_WORK* work, RRL_STATE nextSeq )
 {
-  // ƒV[ƒPƒ“ƒXƒLƒ…[‚É’Ç‰Á‚·‚é
-  QUEUE_EnQueue( work->seqQueue, nextSeq );
+  // ó‘ÔƒLƒ…[‚É’Ç‰Á‚·‚é
+  QUEUE_EnQueue( work->stateQueue, nextSeq );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set next seq\n" );
-  DebugPrint_seqQueue( work );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set next state\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Œ»İ‚ÌƒV[ƒPƒ“ƒX‚ğI—¹‚·‚é
+ * @brief Œ»İ‚Ìó‘Ô‚ğI—¹‚·‚é
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishCurrentSeq( RRL_WORK* work )
+static void FinishCurrentState( RRL_WORK* work )
 {
   // ‚·‚Å‚ÉI—¹Ï‚İ
-  GF_ASSERT( work->seqFinishFlag == FALSE );
+  GF_ASSERT( work->stateEndFlag == FALSE );
 
   // I—¹ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-  work->seqFinishFlag = TRUE;
+  work->stateEndFlag = TRUE;
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish current sequence\n" );
@@ -1182,7 +1151,7 @@ static void FinishCurrentSeq( RRL_WORK* work )
  * @param result Œ‹‰Ê
  */
 //-----------------------------------------------------------------------------------------
-static void SetResult( RRL_WORK* work, RRL_RESULT result )
+static void SetFinishResult( RRL_WORK* work, RRL_RESULT result )
 {
   // İ’è
   work->finishResult = result;
@@ -1193,7 +1162,7 @@ static void SetResult( RRL_WORK* work, RRL_RESULT result )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŠÔ‚ğİ’è‚·‚é
+ * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğİ’è‚·‚é
  *
  * @param work
  * @param frame İ’è‚·‚é‘Ò‚¿ƒtƒŒ[ƒ€”
@@ -1206,7 +1175,7 @@ static void SetWaitFrame( RRL_WORK* work, u32 frame )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ƒV[ƒPƒ“ƒX‚Ì‘Ò‚¿ŠÔ‚ğæ“¾‚·‚é
+ * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğæ“¾‚·‚é
  *
  * @param work
  *
@@ -1220,12 +1189,12 @@ static u32 GetWaitFrame( const RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Å‰‚ÌƒV[ƒPƒ“ƒX‚ğƒZƒbƒg‚·‚é
+ * @brief Å‰‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg‚·‚é
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetFirstSeq( RRL_WORK* work )
+static void RegisterFirstStateFlow( RRL_WORK* work )
 {
   RESEARCH_COMMON_WORK* commonWork;
   RADAR_SEQ prev_seq;
@@ -1237,152 +1206,163 @@ static void SetFirstSeq( RRL_WORK* work )
 
   // ‘O‚Ì‰æ–Ê‚ğƒ{ƒ^ƒ“‚ÅI—¹
   if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_KEY_WAIT ); 
+    RegisterNextState( work, RRL_STATE_SCROLL_WAIT ); 
+    RegisterNextState( work, RRL_STATE_FADE_IN ); 
+    RegisterNextState( work, RRL_STATE_KEY_WAIT ); 
   }
   else {
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_IN ); 
-    SetNextSeq( work, RESEARCH_SELECT_SEQ_STANDBY ); 
+    RegisterNextState( work, RRL_STATE_SCROLL_WAIT ); 
+    RegisterNextState( work, RRL_STATE_FADE_IN ); 
+    RegisterNextState( work, RRL_STATE_STANDBY ); 
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ•ÏX‚·‚é
+ * @brief ó‘Ô‚ğ•ÏX‚·‚é
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SwitchSeq( RRL_WORK* work )
+static void SwitchState( RRL_WORK* work )
 {
-  RESEARCH_SELECT_SEQ nextSeq;
+  RRL_STATE nextSeq;
 
-  if( work->seqFinishFlag == FALSE ){ return; }  // Œ»İ‚ÌƒV[ƒPƒ“ƒX‚ªI—¹‚µ‚Ä‚¢‚È‚¢
-  if( QUEUE_IsEmpty( work->seqQueue ) ){ return; } // ƒV[ƒPƒ“ƒXƒLƒ…[‚É“o˜^‚³‚ê‚Ä‚¢‚È‚¢
+  if( work->stateEndFlag == FALSE ){ return; }  // Œ»İ‚Ìó‘Ô‚ªI—¹‚µ‚Ä‚¢‚È‚¢
+  if( QUEUE_IsEmpty( work->stateQueue ) ){ return; } // ó‘ÔƒLƒ…[‚É“o˜^‚³‚ê‚Ä‚¢‚È‚¢
 
   // •ÏX
-  nextSeq = QUEUE_DeQueue( work->seqQueue );
-  SetSeq( work, nextSeq ); 
-
-  // DEBUG: ƒV[ƒPƒ“ƒXƒLƒ…[‚ğ•\¦
-  DebugPrint_seqQueue( work );
+  nextSeq = QUEUE_DeQueue( work->stateQueue );
+  SetState( work, nextSeq ); 
 } 
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğİ’è‚·‚é
+ * @brief ó‘Ô‚ğæ“¾‚·‚é
  *
  * @param work
- * @parma nextSeq İ’è‚·‚éƒV[ƒPƒ“ƒX
+ *
+ * @return Œ»İ‚Ìó‘Ô
  */
 //-----------------------------------------------------------------------------------------
-static void SetSeq( RRL_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
+static RRL_STATE GetState( const RRL_WORK* work )
+{
+  return work->state;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ó‘Ô‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @parma nextSeq İ’è‚·‚éó‘Ô
+ */
+//-----------------------------------------------------------------------------------------
+static void SetState( RRL_WORK* work, RRL_STATE nextSeq )
 { 
-  // ƒV[ƒPƒ“ƒX‚ÌI—¹ˆ—
-  switch( work->seq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:            FinishSeq_SETUP( work );            break;
-  case RESEARCH_SELECT_SEQ_STANDBY:          FinishSeq_STANDBY( work );          break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:         FinishSeq_KEY_WAIT( work );         break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      FinishSeq_SCROLL_WAIT( work );      break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   FinishSeq_SCROLL_CONTROL( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  FinishSeq_CONFIRM_STANDBY( work );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: FinishSeq_CONFIRM_KEY_WAIT( work ); break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:        FinishSeq_DETERMINE( work );        break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:          FinishSeq_FADE_IN( work );          break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:         FinishSeq_FADE_OUT( work );         break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:       FinishSeq_FRAME_WAIT( work );       break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:     FinishSeq_SCROLL_RESET( work );     break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    FinishSeq_PALETTE_RESET( work );    break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:         FinishSeq_CLEAN_UP( work );         break;
-  case RESEARCH_SELECT_SEQ_FINISH:           break;
+  // ó‘Ô‚ÌI—¹ˆ—
+  switch( work->state ) {
+  case RRL_STATE_SETUP:            FinishState_SETUP( work );            break;
+  case RRL_STATE_STANDBY:          FinishState_STANDBY( work );          break;
+  case RRL_STATE_KEY_WAIT:         FinishState_KEY_WAIT( work );         break;
+  case RRL_STATE_SCROLL_WAIT:      FinishState_SCROLL_WAIT( work );      break;
+  case RRL_STATE_SCROLL_CONTROL:   FinishState_SCROLL_CONTROL( work );   break;
+  case RRL_STATE_CONFIRM_STANDBY:  FinishState_CONFIRM_STANDBY( work );  break;
+  case RRL_STATE_CONFIRM_KEY_WAIT: FinishState_CONFIRM_KEY_WAIT( work ); break;
+  case RRL_STATE_DETERMINE:        FinishState_DETERMINE( work );        break;
+  case RRL_STATE_FADE_IN:          FinishState_FADE_IN( work );          break;
+  case RRL_STATE_FADE_OUT:         FinishState_FADE_OUT( work );         break;
+  case RRL_STATE_FRAME_WAIT:       FinishState_FRAME_WAIT( work );       break;
+  case RRL_STATE_SCROLL_RESET:     FinishState_SCROLL_RESET( work );     break;
+  case RRL_STATE_PALETTE_RESET:    FinishState_PALETTE_RESET( work );    break;
+  case RRL_STATE_CLEAN_UP:         FinishState_CLEAN_UP( work );         break;
+  case RRL_STATE_FINISH:           break;
   default:  GF_ASSERT(0);
   }
 
   // XV
-  work->seq = nextSeq;
-  work->seqCount = 0;
-  work->seqFinishFlag = FALSE;
+  work->state = nextSeq;
+  work->stateCount = 0;
+  work->stateEndFlag = FALSE;
 
-  // ƒV[ƒPƒ“ƒX‚Ì‰Šú‰»ˆ—
+  // ó‘Ô‚Ì‰Šú‰»ˆ—
   switch( nextSeq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:            InitSeq_SETUP( work );            break;
-  case RESEARCH_SELECT_SEQ_STANDBY:          InitSeq_STANDBY( work );          break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:         InitSeq_KEY_WAIT( work );         break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      InitSeq_SCROLL_WAIT( work );      break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   InitSeq_SCROLL_CONTROL( work );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  InitSeq_CONFIRM_STANDBY( work );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: InitSeq_CONFIRM_KEY_WAIT( work ); break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:        InitSeq_DETERMINE( work );        break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:          InitSeq_FADE_IN( work );          break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:         InitSeq_FADE_OUT( work );         break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:       InitSeq_FRAME_WAIT( work );       break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:     InitSeq_SCROLL_RESET( work );     break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    InitSeq_PALETTE_RESET( work );    break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:         InitSeq_CLEAN_UP( work );         break;
-  case RESEARCH_SELECT_SEQ_FINISH:           break;
+  case RRL_STATE_SETUP:            InitState_SETUP( work );            break;
+  case RRL_STATE_STANDBY:          InitState_STANDBY( work );          break;
+  case RRL_STATE_KEY_WAIT:         InitState_KEY_WAIT( work );         break;
+  case RRL_STATE_SCROLL_WAIT:      InitState_SCROLL_WAIT( work );      break;
+  case RRL_STATE_SCROLL_CONTROL:   InitState_SCROLL_CONTROL( work );   break;
+  case RRL_STATE_CONFIRM_STANDBY:  InitState_CONFIRM_STANDBY( work );  break;
+  case RRL_STATE_CONFIRM_KEY_WAIT: InitState_CONFIRM_KEY_WAIT( work ); break;
+  case RRL_STATE_DETERMINE:        InitState_DETERMINE( work );        break;
+  case RRL_STATE_FADE_IN:          InitState_FADE_IN( work );          break;
+  case RRL_STATE_FADE_OUT:         InitState_FADE_OUT( work );         break;
+  case RRL_STATE_FRAME_WAIT:       InitState_FRAME_WAIT( work );       break;
+  case RRL_STATE_SCROLL_RESET:     InitState_SCROLL_RESET( work );     break;
+  case RRL_STATE_PALETTE_RESET:    InitState_PALETTE_RESET( work );    break;
+  case RRL_STATE_CLEAN_UP:         InitState_CLEAN_UP( work );         break;
+  case RRL_STATE_FINISH:           break;
   default:  GF_ASSERT(0);
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set seq ==> " );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: set state ==> " );
   switch( nextSeq ) {
-  case RESEARCH_SELECT_SEQ_SETUP:            OS_TFPrintf( PRINT_TARGET, "SETUP\n" );            break;
-  case RESEARCH_SELECT_SEQ_STANDBY:          OS_TFPrintf( PRINT_TARGET, "STANDBY\n" );          break;
-  case RESEARCH_SELECT_SEQ_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );         break;
-  case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n"    );   break;
-  case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL\n" );   break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  OS_TFPrintf( PRINT_TARGET, "CONFIRM_STANDBY\n" );  break;
-  case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "CONFIRM_KEY_WAIT\n" ); break;
-  case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );        break;
-  case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );          break;
-  case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );         break;
-  case RESEARCH_SELECT_SEQ_FRAME_WAIT:       OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT\n" );       break;
-  case RESEARCH_SELECT_SEQ_SCROLL_RESET:     OS_TFPrintf( PRINT_TARGET, "SCROLL_RESET\n" );     break;
-  case RESEARCH_SELECT_SEQ_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET\n" );    break;
-  case RESEARCH_SELECT_SEQ_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );         break;
-  case RESEARCH_SELECT_SEQ_FINISH:           OS_TFPrintf( PRINT_TARGET, "FINISH\n" );           break;
+  case RRL_STATE_SETUP:            OS_TFPrintf( PRINT_TARGET, "SETUP\n" );            break;
+  case RRL_STATE_STANDBY:          OS_TFPrintf( PRINT_TARGET, "STANDBY\n" );          break;
+  case RRL_STATE_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT\n" );         break;
+  case RRL_STATE_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT\n"    );   break;
+  case RRL_STATE_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL\n" );   break;
+  case RRL_STATE_CONFIRM_STANDBY:  OS_TFPrintf( PRINT_TARGET, "CONFIRM_STANDBY\n" );  break;
+  case RRL_STATE_CONFIRM_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "CONFIRM_KEY_WAIT\n" ); break;
+  case RRL_STATE_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );        break;
+  case RRL_STATE_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );          break;
+  case RRL_STATE_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );         break;
+  case RRL_STATE_FRAME_WAIT:       OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT\n" );       break;
+  case RRL_STATE_SCROLL_RESET:     OS_TFPrintf( PRINT_TARGET, "SCROLL_RESET\n" );     break;
+  case RRL_STATE_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET\n" );    break;
+  case RRL_STATE_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );         break;
+  case RRL_STATE_FINISH:           OS_TFPrintf( PRINT_TARGET, "FINISH\n" );           break;
   default:  GF_ASSERT(0);
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_SETUP )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SETUP )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SETUP( RRL_WORK* work )
+static void InitState_SETUP( RRL_WORK* work )
 { 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SETUP\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state SETUP\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_STANDBY )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_STANDBY )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_STANDBY( RRL_WORK* work )
+static void InitState_STANDBY( RRL_WORK* work )
 {
   SetTopicButtonCursorOff( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq STANDBY\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state STANDBY\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_KEY_WAIT )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_KEY_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_KEY_WAIT( RRL_WORK* work )
+static void InitState_KEY_WAIT( RRL_WORK* work )
 {
   SetTopicButtonCursorOn( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 
@@ -1395,17 +1375,17 @@ static void InitSeq_KEY_WAIT( RRL_WORK* work )
   TopicDetailStringDispStart( work );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq KEY_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state KEY_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_SCROLL_WAIT )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SCROLL_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SCROLL_WAIT( RRL_WORK* work )
+static void InitState_SCROLL_WAIT( RRL_WORK* work )
 {
   // ƒXƒNƒ[ƒ‹ŠJn
   {
@@ -1451,30 +1431,30 @@ static void InitSeq_SCROLL_WAIT( RRL_WORK* work )
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state SCROLL_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_SCROLL_CONTROL )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SCROLL_CONTROL )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SCROLL_CONTROL( RRL_WORK* work )
+static void InitState_SCROLL_CONTROL( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_CONTROL\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state SCROLL_CONTROL\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_CONFIRM_STANDBY )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_CONFIRM_STANDBY )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CONFIRM_STANDBY( RRL_WORK* work )
+static void InitState_CONFIRM_STANDBY( RRL_WORK* work )
 {
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_OK );     // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
@@ -1485,7 +1465,7 @@ static void InitSeq_CONFIRM_STANDBY( RRL_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
 
   if( work->palFadeOutFlag == FALSE ) {
-    BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
+    BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
     StartPaletteFadeOut( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
   }
 
@@ -1510,17 +1490,17 @@ static void InitSeq_CONFIRM_STANDBY( RRL_WORK* work )
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM_STANDBY\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state CONFIRM_STANDBY\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_CONFIRM_KEY_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
+static void InitState_CONFIRM_KEY_WAIT( RRL_WORK* work )
 {
   SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );         // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ‰Šú‰»
   SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
@@ -1533,7 +1513,7 @@ static void InitSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
 
   if( work->palFadeOutFlag == FALSE ) {
-    BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
+    BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
     StartPaletteFadeOut( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
   }
 
@@ -1558,17 +1538,17 @@ static void InitSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CONFIRM_KEY_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state CONFIRM_KEY_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_DETERMINE )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_DETERMINE )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_DETERMINE( RRL_WORK* work )
+static void InitState_DETERMINE( RRL_WORK* work )
 {
   // ’²¸’†‚¾‚Á‚½€–Ú‚Ìƒ{ƒ^ƒ“‚ğ, ’²¸‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
   SetTopicButtonNotInvestigating( work, GetInvestigatingTopicID(work) );
@@ -1578,7 +1558,7 @@ static void InitSeq_DETERMINE( RRL_WORK* work )
 
   // V‚½‚É’²¸‚·‚é€–Ú‚Ìƒ{ƒ^ƒ“‚ğ, ’²¸’†‚Ìó‘Ô‚É‚·‚é
   SetTopicButtonInvestigating( work, GetSelectedTopicID(work) );
-  UpdateTopicSelectIcon( work );
+  UpdateInvestigatingIcon( work );
 
   //u‚¿‚å‚¤‚³‚ğ@‚©‚¢‚µ‚µ‚Ü‚·Iv‚ğ•\¦
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_DETERMINE, TRUE ); 
@@ -1587,80 +1567,80 @@ static void InitSeq_DETERMINE( RRL_WORK* work )
   PMSND_PlaySE( SEQ_SE_SYS_80 );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq DETERMINE\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state DETERMINE\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_FADE_IN )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_FADE_IN )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FADE_IN( RRL_WORK* work )
+static void InitState_FADE_IN( RRL_WORK* work )
 {
   // ƒtƒF[ƒhƒCƒ“ŠJn
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FADE IN\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state FADE IN\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_FADE_OUT )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_FADE_OUT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FADE_OUT( RRL_WORK* work )
+static void InitState_FADE_OUT( RRL_WORK* work )
 {
   // ƒtƒF[ƒhƒAƒEƒgŠJn
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0);
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FADE OUT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state FADE OUT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_FRAME_WAIT )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_FRAME_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_FRAME_WAIT( RRL_WORK* work )
+static void InitState_FRAME_WAIT( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FRAME WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state FRAME WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_PALETTE_RESET )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_PALETTE_RESET )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_PALETTE_RESET( RRL_WORK* work )
+static void InitState_PALETTE_RESET( RRL_WORK* work )
 {
   // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
   StartPaletteFadeIn( work );
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq PALETTE_RESET\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state PALETTE_RESET\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_SCROLL_RESET )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SCROLL_RESET )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_SCROLL_RESET( RRL_WORK* work )
+static void InitState_SCROLL_RESET( RRL_WORK* work )
 {
   // ƒXƒNƒ[ƒ‹ŠJn
   {
@@ -1704,30 +1684,30 @@ static void InitSeq_SCROLL_RESET( RRL_WORK* work )
     StartScroll( work, startPos, endPos, frames  );  
   }
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq SCROLL_RESET\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state SCROLL_RESET\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒX‚ğ‰Šú‰»‚·‚é ( ==> RESEARCH_SELECT_SEQ_CLEAN_UP )
+ * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_CLEAN_UP )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitSeq_CLEAN_UP( RRL_WORK* work )
+static void InitState_CLEAN_UP( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq CLEAN_UP\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init state CLEAN_UP\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_SETUP )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SETUP )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SETUP( RRL_WORK* work )
+static void FinishState_SETUP( RRL_WORK* work )
 {
   u8 nowTopicID;
 
@@ -1739,7 +1719,7 @@ static void FinishSeq_SETUP( RRL_WORK* work )
     // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
     SetTopicButtonInvestigating( work, nowTopicID ); // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
     SetSelectedTopicID( work, nowTopicID );     // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğ
-    UpdateTopicSelectIcon( work );              // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+    UpdateInvestigatingIcon( work );              // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
   }
 
   // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
@@ -1761,190 +1741,190 @@ static void FinishSeq_SETUP( RRL_WORK* work )
   }
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SETUP\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state SETUP\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_STANDBY )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_STANDBY )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_STANDBY( RRL_WORK* work )
+static void FinishState_STANDBY( RRL_WORK* work )
 {
 // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq STANDBY\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state STANDBY\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_KEY_WAIT )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_KEY_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_KEY_WAIT( RRL_WORK* work )
+static void FinishState_KEY_WAIT( RRL_WORK* work )
 {
   UpdateSubDisplayStrings( work ); // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ‚ğXV
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq KEY_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state KEY_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_SCROLL_WAIT )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SCROLL_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SCROLL_WAIT( RRL_WORK* work )
+static void FinishState_SCROLL_WAIT( RRL_WORK* work )
 {
   SetTopicCursorPosDirect( work, work->topicCursorNextPos ); // ’²¸€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
   UpdateSubDisplayStrings( work ); // ã‰æ–Ê‚ÌƒJ[ƒ\ƒ‹ˆË‘¶•¶š—ñ‚ğXV
   UpdateTopicButtonMask( work ); // ƒEƒBƒ“ƒhƒE‚ğØ‚é
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SCROLL_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state SCROLL_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_SCROLL_CONTROL )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SCROLL_CONTROL )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SCROLL_CONTROL( RRL_WORK* work )
+static void FinishState_SCROLL_CONTROL( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SCROLL_CONTROL\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state SCROLL_CONTROL\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_CONFIRM_STANDBY )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_CONFIRM_STANDBY )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CONFIRM_STANDBY( RRL_WORK* work )
+static void FinishState_CONFIRM_STANDBY( RRL_WORK* work )
 { 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM_STANDBY\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state CONFIRM_STANDBY\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_CONFIRM_KEY_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CONFIRM_KEY_WAIT( RRL_WORK* work )
+static void FinishState_CONFIRM_KEY_WAIT( RRL_WORK* work )
 { 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CONFIRM_KEY_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state CONFIRM_KEY_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_DETERMINE )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_DETERMINE )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_DETERMINE( RRL_WORK* work )
+static void FinishState_DETERMINE( RRL_WORK* work )
 { 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq DETERMINE\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state DETERMINE\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_FADE_IN )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_FADE_IN )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FADE_IN( RRL_WORK* work )
+static void FinishState_FADE_IN( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_IN\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state FADE_IN\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_FADE_OUT )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_FADE_OUT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FADE_OUT( RRL_WORK* work )
+static void FinishState_FADE_OUT( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_OUT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state FADE_OUT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_FRAME_WAIT )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_FRAME_WAIT )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_FRAME_WAIT( RRL_WORK* work )
+static void FinishState_FRAME_WAIT( RRL_WORK* work )
 {
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FRAME_WAIT\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state FRAME_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_PALETTE_RESET )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_PALETTE_RESET )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_PALETTE_RESET( RRL_WORK* work )
+static void FinishState_PALETTE_RESET( RRL_WORK* work )
 {
   // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
-  BG_FONT_SetPalette( work->TopicsBGFont[ work->topicCursorPos ], 0xf); 
+  BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xf); 
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq PALETTE_RESET\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state PALETTE_RESET\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_SCROLL_RESET )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SCROLL_RESET )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_SCROLL_RESET( RRL_WORK* work )
+static void FinishState_SCROLL_RESET( RRL_WORK* work )
 {
   UpdateTopicButtonMask( work ); // ƒEƒBƒ“ƒhƒE‚ğØ‚é
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SCROLL_RESET\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state SCROLL_RESET\n" );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXI—¹ˆ— ( ==> RESEARCH_SELECT_SEQ_CLEAN_UP )
+ * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_CLEAN_UP )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishSeq_CLEAN_UP( RRL_WORK* work )
+static void FinishState_CLEAN_UP( RRL_WORK* work )
 {
   work->finishFlag = TRUE;
   GX_SetVisibleWnd( GX_WNDMASK_NONE ); //ƒEƒBƒ“ƒhƒE‚ğ–³Œø‚É
 
   // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq CLEAN_UP\n" );
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish state CLEAN_UP\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2178,39 +2158,6 @@ static void UpdateTopicTouchArea( RRL_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update touch area\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğƒZƒbƒgƒAƒbƒv‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupSelectableTopicNum( RRL_WORK* work )
-{
-  EVENTWORK* evwork;
-  int num;
-
-  evwork = GAMEDATA_GetEventWork( work->gameData );
-
-  // ƒAƒ“ƒP[ƒg‚É“š‚¦‚½”‚ğƒJƒEƒ“ƒg
-  num = 1; // æ“ª€–Ú‚ÍÅ‰‚©‚ç‘I‚×‚é
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_YOU      ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_FAVARITE ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_WISH     ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_PARTNER  ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_TASTE    ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_HOBBY    ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_SCHOOL   ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_PLAY     ) == TRUE ) { num++; }
-  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_POKEMON  ) == TRUE ) { num++; }
-
-  // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğ‹L‰¯
-  work->selectableTopicNum = num;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup selectable topic num ==> %d\n", num );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2557,13 +2504,13 @@ static void UpdateSubDisplayStrings( RRL_WORK* work )
   nowPos = work->topicCursorPos;
 
   // ’²¸€–Ú ‘è–¼/•â‘«
-  BG_FONT_SetMessage( work->BGFont[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
-  BG_FONT_SetMessage( work->BGFont[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
 
   // ¿–â
-  BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
-  BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
-  BG_FONT_SetMessage( work->BGFont[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: update sub display strings\n" );
@@ -2578,11 +2525,11 @@ static void UpdateSubDisplayStrings( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void TopicDetailStringHide( RRL_WORK* work )
 {
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_TITLE ], FALSE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_CAPTION ], FALSE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_1 ], FALSE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_2 ], FALSE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_3 ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_TITLE ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_QUESTION_1 ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_QUESTION_2 ], FALSE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_QUESTION_3 ], FALSE );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic detail string hide\n" );
@@ -2597,11 +2544,11 @@ static void TopicDetailStringHide( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void TopicDetailStringDispStart( RRL_WORK* work )
 {
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_TITLE ], TRUE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_TOPIC_CAPTION ], TRUE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_1 ], TRUE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_2 ], TRUE );
-  BG_FONT_SetDrawEnable( work->BGFont[ BG_FONT_QUESTION_3 ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_TITLE ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_QUESTION_1 ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_QUESTION_2 ], TRUE );
+  BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_QUESTION_3 ], TRUE );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: topic detail string disp start\n" );
@@ -2774,1471 +2721,13 @@ static void UpdateTopicButtonMask( const RRL_WORK* work )
 
 
 
-//-----------------------------------------------------------------------------------------
-/**
- * @breif ƒ^ƒbƒ`—Ìˆæ‚Ì€”õ‚ğs‚¤
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupTouchArea( RRL_WORK* work )
-{
-  int idx;
 
-  for( idx=0; idx < MENU_TOUCH_AREA_NUM; idx++ )
-  {
-    work->menuTouchHitTable[ idx ].rect.left   = MenuTouchAreaInitData[ idx ].left;
-    work->menuTouchHitTable[ idx ].rect.right  = MenuTouchAreaInitData[ idx ].right;
-    work->menuTouchHitTable[ idx ].rect.top    = MenuTouchAreaInitData[ idx ].top;
-    work->menuTouchHitTable[ idx ].rect.bottom = MenuTouchAreaInitData[ idx ].bottom;
-  }
-  for( idx=0; idx < TOPIC_TOUCH_AREA_NUM; idx++ )
-  {
-    work->topicTouchHitTable[ idx ].rect.left   = TopicTouchAreaInitData[ idx ].left;
-    work->topicTouchHitTable[ idx ].rect.right  = TopicTouchAreaInitData[ idx ].right;
-    work->topicTouchHitTable[ idx ].rect.top    = TopicTouchAreaInitData[ idx ].top;
-    work->topicTouchHitTable[ idx ].rect.bottom = TopicTouchAreaInitData[ idx ].bottom;
-  }
-  for( idx=0; idx < SCROLL_TOUCH_AREA_NUM; idx++ )
-  {
-    work->scrollTouchHitTable[ idx ].rect.left   = ScrollTouchAreaInitData[ idx ].left;
-    work->scrollTouchHitTable[ idx ].rect.right  = ScrollTouchAreaInitData[ idx ].right;
-    work->scrollTouchHitTable[ idx ].rect.top    = ScrollTouchAreaInitData[ idx ].top;
-    work->scrollTouchHitTable[ idx ].rect.bottom = ScrollTouchAreaInitData[ idx ].bottom;
-  }
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create touch hit table\n" );
-}
 
 
 
 
-//=========================================================================================
-// ¡‰æ–ÊI—¹Œ‹‰Ê
-//=========================================================================================
 
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒV[ƒPƒ“ƒXƒLƒ…[‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitSeqQueue( RRL_WORK* work )
-{
-  // ‰Šú‰»
-  work->seqQueue = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq queue\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒV[ƒPƒ“ƒXƒLƒ…[‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateSeqQueue( RRL_WORK* work )
-{
-  GF_ASSERT( work->seqQueue == NULL );
-
-  // ì¬
-  work->seqQueue = QUEUE_Create( SEQ_QUEUE_SIZE, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create seq queue\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒV[ƒPƒ“ƒXƒLƒ…[‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteSeqQueue( RRL_WORK* work )
-{
-  GF_ASSERT( work->seqQueue );
-
-  // íœ
-  QUEUE_Delete( work->seqQueue );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete seq queue\n" );
-}
-
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‰‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitFont( RRL_WORK* work )
-{
-  // ‰Šú‰»
-  work->font = NULL;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init font\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‰‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateFont( RRL_WORK* work )
-{
-  GF_ASSERT( work->font == NULL );
-
-  // ¶¬
-  work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
-                                GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create font\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‰‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteFont( RRL_WORK* work )
-{
-  GF_ASSERT( work->font );
-
-  // íœ
-  GFL_FONT_Delete( work->font );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete font\n" );
-}
-
-
-//=========================================================================================
-// ¡ƒƒbƒZ[ƒW
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒƒbƒZ[ƒWƒf[ƒ^‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitMessages( RRL_WORK* work )
-{
-  int msgIdx;
-
-  // ‰Šú‰»
-  for( msgIdx=0; msgIdx < MESSAGE_NUM; msgIdx++ )
-  {
-    work->message[ msgIdx ] = NULL;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init messages\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒƒbƒZ[ƒWƒf[ƒ^‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateMessages( RRL_WORK* work )
-{
-  int msgIdx;
-
-  for( msgIdx=0; msgIdx < MESSAGE_NUM; msgIdx++ )
-  {
-    // ‘½d¶¬
-    GF_ASSERT( work->message[ msgIdx ] == NULL );
-
-    // ì¬
-    work->message[ msgIdx ] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-                                              ARCID_MESSAGE, 
-                                              MessageDataID[ msgIdx ],
-                                              work->heapID ); 
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create messages\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒƒbƒZ[ƒWƒf[ƒ^‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteMessages( RRL_WORK* work )
-{
-  int msgIdx;
-
-  for( msgIdx=0; msgIdx < MESSAGE_NUM; msgIdx++ )
-  {
-    GF_ASSERT( work->message[ msgIdx ] );
-
-    // íœ
-    GFL_MSG_Delete( work->message[ msgIdx ] );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete messages\n" );
-}
-
-
-//=========================================================================================
-// ¡BG
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BG ‚Ì€”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupBG( RRL_WORK* work )
-{ 
-  // BG ƒ‚[ƒh
-  GFL_BG_SetBGMode( &BGSysHeader2D );
-
-  // BG ƒRƒ“ƒgƒ[ƒ‹
-  GFL_BG_SetBGControl( SUB_BG_WINDOW,  &SubBGControl_WINDOW,  GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( SUB_BG_FONT,    &SubBGControl_FONT,    GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( MAIN_BG_BAR,    &MainBGControl_BAR,    GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( MAIN_BG_WINDOW, &MainBGControl_WINDOW, GFL_BG_MODE_TEXT );
-  GFL_BG_SetBGControl( MAIN_BG_FONT,   &MainBGControl_FONT,   GFL_BG_MODE_TEXT );
-
-  // ‰Â‹İ’è
-  GFL_BG_SetVisible( SUB_BG_BACK,    VISIBLE_ON );
-  GFL_BG_SetVisible( SUB_BG_RADAR,   VISIBLE_ON );
-  GFL_BG_SetVisible( SUB_BG_WINDOW,  VISIBLE_ON );
-  GFL_BG_SetVisible( SUB_BG_FONT,    VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_BACK,   VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_BAR,    VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_WINDOW, VISIBLE_ON );
-  GFL_BG_SetVisible( MAIN_BG_FONT,   VISIBLE_ON );
-
-  // ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒO
-  G2S_SetBlendAlpha( SUB_BG_BLEND_TARGET_1, SUB_BG_BLEND_TARGET_2, 
-                     SUB_BG_BLEND_WEIGHT_1, SUB_BG_BLEND_WEIGHT_2 );
-  G2_SetBlendAlpha( MAIN_BG_BLEND_TARGET_1, MAIN_BG_BLEND_TARGET_2, 
-                    MAIN_BG_BLEND_WEIGHT_1, MAIN_BG_BLEND_WEIGHT_2 );
-
-  // ƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE ƒVƒXƒeƒ€‰Šú‰»
-  GFL_BMPWIN_Init( work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup BG\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BG ‚ÌŒã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpBG( RRL_WORK* work )
-{
-  GFL_BMPWIN_Exit();
-
-  GFL_BG_FreeBGControl( MAIN_BG_FONT );
-  GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
-  GFL_BG_FreeBGControl( MAIN_BG_BAR );
-  GFL_BG_FreeBGControl( SUB_BG_FONT );
-  GFL_BG_FreeBGControl( SUB_BG_WINDOW );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up BG\n" );
-}
-
-
-//=========================================================================================
-// ¡ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupSubBG_WINDOW( RRL_WORK* work )
-{
-  ARCHANDLE* handle;
-
-  // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
-  handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
-
-  // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
-  {
-    void* src;
-    ARCDATID datID;
-    NNSG2dScreenData* data;
-    datID = NARC_research_radar_graphic_bgu_win1_NSCR;
-    src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
-    NNS_G2dGetUnpackedScreenData( src, &data );
-    GFL_BG_WriteScreen( SUB_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
-    GFL_BG_LoadScreenReq( SUB_BG_WINDOW );
-    GFL_HEAP_FreeMemory( src );
-  }
-
-  // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
-  GFL_ARC_CloseDataHandle( handle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup SUB-BG-WINDOW\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_WINDOW( RRL_WORK* work )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up SUB-BG-WINDOW\n" );
-}
-
-
-//=========================================================================================
-// ¡ã‰æ–Ê ƒtƒHƒ“ƒgBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚Ì€”õ
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupSubBG_FONT( RRL_WORK* work )
-{
-  // NULLƒLƒƒƒ‰Šm•Û
-  GFL_BG_FillCharacter( SUB_BG_FONT, 0, 1, 0 );
-
-  // ƒNƒŠƒA
-  GFL_BG_ClearScreen( SUB_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup SUB-BG-FONT\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚ÌŒã•Ğ•t‚¯
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpSubBG_FONT( RRL_WORK* work )
-{ 
-  // NULLƒLƒƒƒ‰‰ğ•ú
-  GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up SUB-BG-FONT\n" );
-}
-
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒo[BG–Ê €”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupMainBG_BAR( RRL_WORK* work )
-{
-  // ƒf[ƒ^“Ç‚İ‚İ
-  {
-    ARCHANDLE* handle;
-
-    // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
-    handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
-
-    // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
-    {
-      void* src;
-      ARCDATID datID;
-      NNSG2dScreenData* data;
-      datID = NARC_research_radar_graphic_bgd_title_NSCR;
-      src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
-      NNS_G2dGetUnpackedScreenData( src, &data );
-      GFL_BG_WriteScreen( MAIN_BG_BAR, data->rawData, 0, 0, 32, 24 );
-      GFL_BG_LoadScreenReq( MAIN_BG_BAR );
-      GFL_HEAP_FreeMemory( src );
-    }
-
-    // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
-    GFL_ARC_CloseDataHandle( handle );
-  } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup MAIN-BG-BAR\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒo[BG–Ê Œã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_BAR( RRL_WORK* work )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up MAIN-BG-BAR\n" );
-}
-
-//=========================================================================================
-// ¡‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupMainBG_WINDOW( RRL_WORK* work )
-{
-  ARCHANDLE* handle;
-
-  // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
-  handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, work->heapID ); 
-
-  // ƒXƒNƒŠ[ƒ“ƒf[ƒ^‚ğ“Ç‚İ‚Ş
-  {
-    void* src;
-    ARCDATID datID; 
-    NNSG2dScreenData* data;
-    int sx, sy;
-
-    sx    = 32;
-    sy    = GetSelectableTopicNum( work ) * TOPIC_BUTTON_HEIGHT;
-    datID = NARC_research_radar_graphic_bgd_searchbtn_NSCR;
-    src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID ); 
-
-    NNS_G2dGetUnpackedScreenData( src, &data );
-    GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, sx, sy );
-    GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
-    GFL_HEAP_FreeMemory( src );
-  }
-
-  // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
-  GFL_ARC_CloseDataHandle( handle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup MAIN-BG-WINDOW\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_WINDOW( RRL_WORK* work )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up MAIN-BG-WINDOW\n" );
-}
-
-
-//=========================================================================================
-// ¡‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê €”õ
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupMainBG_FONT( RRL_WORK* work )
-{ 
-  // NULLƒLƒƒƒ‰Šm•Û
-  GFL_BG_FillCharacter( MAIN_BG_FONT, 0, 1, 0 );
-
-  // ƒNƒŠƒA
-  GFL_BG_ClearScreen( MAIN_BG_FONT );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup MAIN-BG-FONT\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê Œã•Ğ•t‚¯
- * 
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpMainBG_FONT( RRL_WORK* work )
-{ 
-  // NULLƒLƒƒƒ‰‰ğ•ú
-  GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up MAIN-BG-FONT\n" );
-}
-
-
-//=========================================================================================
-// ¡•¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitBGFonts( RRL_WORK* work )
-{
-  int idx;
-
-  // ’Êí‚ÌBGFont
-  for( idx=0; idx < BG_FONT_NUM; idx++ )
-  {
-    work->BGFont[ idx ] = NULL; 
-  }
-  // ’²¸€–ÚBGFont
-  for( idx=0; idx < TOPIC_ID_NUM; idx++ )
-  {
-    work->TopicsBGFont[ idx ] = NULL; 
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateBGFonts( RRL_WORK* work )
-{
-  int i;
-
-  // ’Êí‚ÌBGFont
-  for( i=0; i<BG_FONT_NUM; i++ )
-  {
-    BG_FONT_PARAM param;
-    GFL_MSGDATA* msgData;
-    u32 strID;
-
-    GF_ASSERT( work->BGFont[i] == NULL ); 
-
-    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
-    param.BGFrame       = BGFontInitData[i].BGFrame;
-    param.posX          = BGFontInitData[i].posX;
-    param.posY          = BGFontInitData[i].posY;
-    param.sizeX         = BGFontInitData[i].sizeX;
-    param.sizeY         = BGFontInitData[i].sizeY;
-    param.offsetX       = BGFontInitData[i].offsetX;
-    param.offsetY       = BGFontInitData[i].offsetY;
-    param.paletteNo     = BGFontInitData[i].paletteNo;
-    param.colorNo_L     = BGFontInitData[i].colorNo_L;
-    param.colorNo_S     = BGFontInitData[i].colorNo_S;
-    param.colorNo_B     = BGFontInitData[i].colorNo_B;
-    param.centeringFlag = BGFontInitData[i].softCentering; 
-    msgData             = work->message[ BGFontInitData[i].messageIdx ];
-    strID               = BGFontInitData[i].stringIdx;
-
-    // ¶¬
-    work->BGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
-
-    // •¶š—ñ‚ğİ’è
-    BG_FONT_SetMessage( work->BGFont[i], strID );
-  } 
-
-  // ’²¸€–ÚBGFont
-   for( i=0; i < GetSelectableTopicNum(work); i++ )
-  {
-    BG_FONT_PARAM param;
-    GFL_MSGDATA* msgData;
-    u32 strID;
-
-    GF_ASSERT( work->TopicsBGFont[i] == NULL ); 
-
-    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
-    param.BGFrame       = TopicsBGFontInitData[i].BGFrame;
-    param.posX          = TopicsBGFontInitData[i].posX;
-    param.posY          = TopicsBGFontInitData[i].posY;
-    param.sizeX         = TopicsBGFontInitData[i].sizeX;
-    param.sizeY         = TopicsBGFontInitData[i].sizeY;
-    param.offsetX       = TopicsBGFontInitData[i].offsetX;
-    param.offsetY       = TopicsBGFontInitData[i].offsetY;
-    param.paletteNo     = TopicsBGFontInitData[i].paletteNo;
-    param.colorNo_L     = TopicsBGFontInitData[i].colorNo_L;
-    param.colorNo_S     = TopicsBGFontInitData[i].colorNo_S;
-    param.colorNo_B     = TopicsBGFontInitData[i].colorNo_B;
-    param.centeringFlag = TopicsBGFontInitData[i].softCentering; 
-    msgData             = work->message[ TopicsBGFontInitData[i].messageIdx ];
-    strID               = TopicsBGFontInitData[i].stringIdx;
-
-    // ¶¬
-    work->TopicsBGFont[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
-
-    // •¶š—ñ‚ğİ’è
-    BG_FONT_SetMessage( work->TopicsBGFont[i], strID );
-  } 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create BGFonts\n" ); 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteBGFonts( RRL_WORK* work )
-{
-  int i;
-  
-  // ’Êí‚ÌBGFont
-  for( i=0; i < BG_FONT_NUM; i++ )
-  {
-    GF_ASSERT( work->BGFont[i] );
-    BG_FONT_Delete( work->BGFont[i] );
-    work->BGFont[i] = NULL;
-  }
-  // ’²¸€–ÚBGFont
-  for( i=0; i < GetSelectableTopicNum(work); i++ )
-  {
-    GF_ASSERT( work->TopicsBGFont[i] );
-    BG_FONT_Delete( work->TopicsBGFont[i] );
-    work->TopicsBGFont[i] = NULL;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete BGFonts\n" ); 
-} 
-
-
-//=========================================================================================
-// ¡OBJ
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateClactSystem( RRL_WORK* work )
-{
-  // ƒVƒXƒeƒ€ì¬
-  //GFL_CLACT_SYS_Create( &ClactSystemInitData, &VRAMBankSettings, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create clact system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteClactSystem( RRL_WORK* work )
-{ 
-  // ƒVƒXƒeƒ€”jŠü
-  //GFL_CLACT_SYS_Delete();
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete clact system\n" );
-}
-
-
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief OBJ ƒŠƒ\[ƒX‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitOBJResources( RRL_WORK* work )
-{
-  int i;
-
-  for( i=0; i<OBJ_RESOURCE_NUM; i++ )
-  {
-    work->objResRegisterIdx[i] = 0; 
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init OBJ resources\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief SUB-OBJ ƒŠƒ\[ƒX‚ğ“o˜^‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void RegisterSubObjResources( RRL_WORK* work )
-{
-  HEAPID heapID;
-  ARCHANDLE* arcHandle;
-  u32 character, palette, cellAnime;
-
-  heapID    = work->heapID;
-  arcHandle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID );
-
-  // ƒŠƒ\[ƒX‚ğ“o˜^
-  character = GFL_CLGRP_CGR_Register( arcHandle, 
-                                      NARC_research_radar_graphic_obj_NCGR, 
-                                      FALSE, CLSYS_DRAW_SUB, heapID ); 
-
-  palette = GFL_CLGRP_PLTT_Register( arcHandle, 
-                                     NARC_research_radar_graphic_obj_NCLR,
-                                     CLSYS_DRAW_SUB, 0, heapID );
-
-  cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,
-                                           NARC_research_radar_graphic_obj_NCER,
-                                           NARC_research_radar_graphic_obj_NANR,
-                                           heapID ); 
-  // “o˜^ƒCƒ“ƒfƒbƒNƒX‚ğ‹L‰¯
-  work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ]  = character;
-  work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ]    = palette;
-  work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] = cellAnime;
-
-  GFL_ARC_CloseDataHandle( arcHandle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: register SUB-OBJ resources\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief SUB-OBJ ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void ReleaseSubObjResources( RRL_WORK* work )
-{
-  GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
-  GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ] );
-  GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: release SUB-OBJ resources\n" );
-}
-
-
-//=========================================================================================
-// ¡MAIN-OBJ ƒŠƒ\[ƒX
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief MAIN-OBJ ƒŠƒ\[ƒX‚ğ“o˜^‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void RegisterMainObjResources( RRL_WORK* work )
-{
-  HEAPID heapID;
-  ARCHANDLE* arcHandle;
-  u32 character, palette, palette3, cellAnime;
-
-  heapID    = work->heapID;
-  arcHandle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, heapID );
-
-  character = GFL_CLGRP_CGR_Register( arcHandle, 
-                                      NARC_research_radar_graphic_obj_NCGR, 
-                                      FALSE, CLSYS_DRAW_MAIN, heapID ); 
-  palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
-                                       NARC_research_radar_graphic_obj_NCLR,
-                                       CLSYS_DRAW_MAIN, 
-                                       ONE_PALETTE_SIZE*6, 0, 4, 
-                                       heapID ); 
-  cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,
-                                           NARC_research_radar_graphic_obj_NCER,
-                                           NARC_research_radar_graphic_obj_NANR,
-                                           heapID ); 
-  GFL_ARC_CloseDataHandle( arcHandle );
-
-  arcHandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, heapID ); 
-  palette3 = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
-                                       NARC_app_menu_common_task_menu_NCLR,
-                                       CLSYS_DRAW_MAIN,
-                                       ONE_PALETTE_SIZE*4, 0, 2, 
-                                       heapID );
-  GFL_ARC_CloseDataHandle( arcHandle );
-
-  // “o˜^ƒCƒ“ƒfƒbƒNƒX‚ğ‹L‰¯
-  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ]  = character;
-  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ]    = palette;
-  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] = cellAnime;
-  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE_COMMON_BUTTON ] = palette3;
-
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: register MAIN-OBJ resources\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief MAIN-OBJ ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void ReleaseMainObjResources( RRL_WORK* work )
-{
-  GFL_CLGRP_CGR_Release     ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
-  GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
-  GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] );
-  GFL_CLGRP_PLTT_Release    ( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE_COMMON_BUTTON ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: release MAIN-OBJ resources\n" );
-}
-
-
-//=========================================================================================
-// ¡ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitClactUnits( RRL_WORK* work )
-{
-  int unitIdx;
-
-  for( unitIdx=0; unitIdx < CLUNIT_NUM; unitIdx++ )
-  {
-    work->clactUnit[ unitIdx ] = NULL;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init clact units\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğì¬‚·‚é
- *
- * @param
- */
-//-----------------------------------------------------------------------------------------
-static void CreateClactUnits( RRL_WORK* work )
-{
-  int unitIdx;
-  u16 workNum;
-  u8 priority;
-
-  for( unitIdx=0; unitIdx < CLUNIT_NUM; unitIdx++ )
-  {
-    GF_ASSERT( work->clactUnit[ unitIdx ] == NULL );
-
-    workNum  = ClactUnitWorkSize[ unitIdx ];
-    priority = ClactUnitPriority[ unitIdx ];
-    work->clactUnit[ unitIdx ] = GFL_CLACT_UNIT_Create( workNum, priority, work->heapID );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create clact units\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ”jŠü‚·‚é
- *
- * @param
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteClactUnits( RRL_WORK* work )
-{
-  int unitIdx;
-
-  for( unitIdx=0; unitIdx < CLUNIT_NUM; unitIdx++ )
-  {
-    GF_ASSERT( work->clactUnit[ unitIdx ] );
-    GFL_CLACT_UNIT_Delete( work->clactUnit[ unitIdx ] );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete clact units\n" );
-}
-
-
-//=========================================================================================
-//  ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN
-//=========================================================================================
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitClactWorks( RRL_WORK* work )
-{
-  int wkIdx;
-
-  // ‰Šú‰»
-  for( wkIdx=0; wkIdx < CLWK_NUM; wkIdx++ )
-  {
-    work->clactWork[ wkIdx ] = NULL;
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init clact works\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğì¬‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateClactWorks( RRL_WORK* work )
-{
-  int wkIdx;
-
-  for( wkIdx=0; wkIdx < CLWK_NUM; wkIdx++ )
-  {
-    GFL_CLUNIT* unit;
-    GFL_CLWK_DATA wkData;
-    u32 charaIdx, paletteIdx, cellAnimeIdx;
-    u16 surface;
-
-    // ‘½d¶¬
-    GF_ASSERT( work->clactWork[ wkIdx ] == NULL );
-
-    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
-    wkData.pos_x   = ClactWorkInitData[ wkIdx ].posX;
-    wkData.pos_y   = ClactWorkInitData[ wkIdx ].posY;
-    wkData.anmseq  = ClactWorkInitData[ wkIdx ].animeSeq;
-    wkData.softpri = ClactWorkInitData[ wkIdx ].softPriority; 
-    wkData.bgpri   = ClactWorkInitData[ wkIdx ].BGPriority; 
-    unit           = GetClactUnit( work, ClactWorkInitData[ wkIdx ].unitIdx );
-    charaIdx       = GetObjResourceRegisterIndex( work, ClactWorkInitData[ wkIdx ].characterResID );
-    paletteIdx     = GetObjResourceRegisterIndex( work, ClactWorkInitData[ wkIdx ].paletteResID );
-    cellAnimeIdx   = GetObjResourceRegisterIndex( work, ClactWorkInitData[ wkIdx ].cellAnimeResID );
-    surface        = ClactWorkInitData[ wkIdx ].setSurface;
-
-    // ¶¬
-    work->clactWork[ wkIdx ] = GFL_CLACT_WK_Create( 
-        unit, charaIdx, paletteIdx, cellAnimeIdx, &wkData, surface, work->heapID );
-
-    // ”ñ•\¦‚Éİ’è
-    GFL_CLACT_WK_SetDrawEnable( work->clactWork[ wkIdx ], FALSE );
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create clact works\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteClactWorks( RRL_WORK* work )
-{
-  int wkIdx;
-
-  for( wkIdx=0; wkIdx < CLWK_NUM; wkIdx++ )
-  {
-    // ¶¬‚³‚ê‚Ä‚¢‚È‚¢
-    GF_ASSERT( work->clactWork[ wkIdx ] );
-
-    // ”jŠü
-    GFL_CLACT_WK_Remove( work->clactWork[ wkIdx ] );
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete clact works\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitBitmapDatas( RRL_WORK* work )
-{
-  int idx;
-
-  // ‰Šú‰»
-  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
-  {
-    work->BmpData[ idx ] = NULL;
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init bitmap datas\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğì¬‚·‚é
- *
- * @parma work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateBitmapDatas( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
-  {
-    const BITMAP_INIT_DATA* data;
-
-    // ‰Šú‰»ƒf[ƒ^‚ğæ“¾
-    data = &BitmapInitData[ idx ]; 
-
-    // ì¬
-    work->BmpData[ idx ] = GFL_BMP_Create( data->width, data->height, data->colorMode, work->heapID );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create bitmap datas\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒfƒtƒHƒ‹ƒg‰Šú‰»ˆ—‚É‚æ‚è, ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚Ì€”õ‚ğs‚¤
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forDefault( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
-  {
-    GFL_BMP_DATA* bmp;
-    const BITMAP_INIT_DATA* data;
-    GFL_MSGDATA* msgData;
-    STRBUF* strbuf;
-    PRINTSYS_LSB color;
-
-    // ‰Šú‰»ƒf[ƒ^æ“¾
-    data = &BitmapInitData[ idx ]; 
-
-    // ƒfƒtƒHƒ‹ƒgƒZƒbƒgƒAƒbƒv‘ÎÛ‚Å‚È‚¢
-    if( data->defaultSetupFlag == FALSE ) { continue; }
-
-    // ”wŒi‚ÌƒLƒƒƒ‰ƒNƒ^‚ğƒRƒs[‚·‚é
-    bmp = GFL_BMP_LoadCharacter( data->charaDataArcID, data->charaDataArcDatID, FALSE, work->heapID );
-    GFL_BMP_Print( bmp, work->BmpData[ idx ], 0, 0, 0, 0, 
-                   data->width * DOT_PER_CHARA, data->height * DOT_PER_CHARA, data->colorNo_B );
-
-    // •¶š—ñ‚ğ‘‚«‚Ş
-    msgData = work->message[ data->messageIdx ];
-    color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
-    strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
-
-    PRINTSYS_PrintColor( work->BmpData[ idx ],
-                         data->stringDrawPosX, data->stringDrawPosY,
-                         strbuf, work->font, color ); 
-
-    GFL_HEAP_FreeMemory( strbuf );
-    GFL_BMP_Delete( bmp );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup bitmap data for Default\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @briefu‚¯‚Á‚Ä‚¢vƒ{ƒ^ƒ“—p‚Ìƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ€”õ‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forOK( RRL_WORK* work )
-{
-  int x, y;
-  GFL_BMP_DATA* srcBMP; 
-  GFL_MSGDATA* msgData;
-  STRBUF* strbuf;
-  PRINTSYS_LSB color;
-  const BITMAP_INIT_DATA* data;
-
-  // ƒRƒs[‚·‚éƒLƒƒƒ‰ƒNƒ^”Ô†
-  int charaNo[ BMPOAM_ACTOR_OK_CHARA_SIZE_Y ][ BMPOAM_ACTOR_OK_CHARA_SIZE_X ] = 
-  {
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2},
-    {3, 4, 4, 4, 4, 4, 4, 4, 4, 5},
-    {6, 7, 7, 7, 7, 7, 7, 7, 7, 8},
-  };
-
-  // ‰Šú‰»ƒf[ƒ^æ“¾
-  data = &BitmapInitData[ BMPOAM_ACTOR_OK ]; 
-
-  // ƒLƒƒƒ‰ƒNƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
-  srcBMP = GFL_BMP_LoadCharacter( data->charaDataArcID, 
-                                  data->charaDataArcDatID,
-                                  FALSE, 
-                                  work->heapID ); 
-  // ƒLƒƒƒ‰ƒf[ƒ^‚ğƒRƒs[‚·‚é
-  for( y=0; y < BMPOAM_ACTOR_OK_CHARA_SIZE_Y; y++)
-  {
-    for(x=0; x < BMPOAM_ACTOR_OK_CHARA_SIZE_X; x++)
-    {
-      GFL_BMP_Print( srcBMP, work->BmpData[ BMPOAM_ACTOR_OK ], 
-                     (charaNo[y][x] % 3) * DOT_PER_CHARA, 
-                     (charaNo[y][x] / 3) * DOT_PER_CHARA, 
-                     x * DOT_PER_CHARA, y * DOT_PER_CHARA, 
-                     DOT_PER_CHARA, DOT_PER_CHARA, 0 );
-    }
-  }
-  GFL_BMP_Delete( srcBMP );
-
-  // •¶š—ñ‚ğ‘‚«‚Ş
-  msgData = work->message[ data->messageIdx ];
-  color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
-  strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
-
-  PRINTSYS_PrintColor( work->BmpData[ BMPOAM_ACTOR_OK ],
-                       data->stringDrawPosX, data->stringDrawPosY,
-                       strbuf, work->font, color ); 
-
-  GFL_HEAP_FreeMemory( strbuf );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup bitmap data for OK\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @briefu‚â‚ß‚évƒ{ƒ^ƒ“—p‚Ìƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ€”õ‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupBitmapData_forCANCEL( RRL_WORK* work )
-{
-  int x, y;
-  GFL_BMP_DATA* srcBMP; 
-  GFL_MSGDATA* msgData;
-  STRBUF* strbuf;
-  PRINTSYS_LSB color;
-  const BITMAP_INIT_DATA* data;
-
-  // ƒRƒs[‚·‚éƒLƒƒƒ‰ƒNƒ^”Ô†
-  int charaNo[ BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y ][ BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X ] = 
-  {
-    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2},
-    {3, 4, 4, 4, 4, 4, 4, 4, 4, 5},
-    {6, 7, 7, 7, 7, 7, 7, 7, 7, 8},
-  };
-
-  // ‰Šú‰»ƒf[ƒ^æ“¾
-  data = &BitmapInitData[ BMPOAM_ACTOR_CANCEL ]; 
-
-  // ƒLƒƒƒ‰ƒNƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
-  srcBMP = GFL_BMP_LoadCharacter( data->charaDataArcID, 
-                                  data->charaDataArcDatID,
-                                  FALSE, 
-                                  work->heapID ); 
-  // ƒLƒƒƒ‰ƒf[ƒ^‚ğƒRƒs[‚·‚é
-  for( y=0; y < BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y; y++)
-  {
-    for(x=0; x < BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X; x++)
-    {
-      GFL_BMP_Print( srcBMP, work->BmpData[ BMPOAM_ACTOR_CANCEL ], 
-                     (charaNo[y][x] % 3) * DOT_PER_CHARA, 
-                     (charaNo[y][x] / 3) * DOT_PER_CHARA, 
-                     x * DOT_PER_CHARA, y * DOT_PER_CHARA, 
-                     DOT_PER_CHARA, DOT_PER_CHARA, 0 );
-    }
-  }
-  GFL_BMP_Delete( srcBMP );
-
-  // •¶š—ñ‚ğ‘‚«‚Ş
-  msgData = work->message[ data->messageIdx ];
-  color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
-  strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
-
-  PRINTSYS_PrintColor( work->BmpData[ BMPOAM_ACTOR_CANCEL ],
-                       data->stringDrawPosX, data->stringDrawPosY,
-                       strbuf, work->font, color ); 
-
-  GFL_HEAP_FreeMemory( strbuf );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup bitmap data for CANCEL\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ”jŠü‚·‚é
- *
- * @parma work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteBitmapDatas( RRL_WORK* work )
-{
-  int idx;
-
-  // ”jŠü
-  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
-  {
-    GFL_BMP_Delete( work->BmpData[ idx ] );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete bitmap datas\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BMP-OAM ƒVƒXƒeƒ€‚Ì€”õ‚ğs‚¤
- *
- * @parma work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupBmpOamSystem( RRL_WORK* work )
-{
-  // BMP-OAM ƒVƒXƒeƒ€‚ğì¬
-  work->BmpOamSystem = BmpOam_Init( work->heapID, work->clactUnit[ CLUNIT_BMPOAM ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup BMP-OAM system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BMP-OAM ƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
- *
- * @parma work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpBmpOamSystem( RRL_WORK* work )
-{
-  // BMP-OAM ƒVƒXƒeƒ€‚ğ”jŠü
-  BmpOam_Exit( work->BmpOamSystem );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up BMP-OAM system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BMP-OAM ƒAƒNƒ^[‚ğì¬‚·‚é
- *
- * @parma work
- */
-//-----------------------------------------------------------------------------------------
-static void CreateBmpOamActors( RRL_WORK* work )
-{
-  int idx;
-  BMPOAM_ACT_DATA head;
-
-  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
-  {
-    // ‰Šúƒpƒ‰ƒ[ƒ^‚ğì¬
-    head.bmp        = work->BmpData[ idx ];
-    head.x          = BmpOamActorInitData[ idx ].x;
-    head.y          = BmpOamActorInitData[ idx ].y;
-    head.pltt_index = GetObjResourceRegisterIndex( work, BmpOamActorInitData[ idx ].paletteResID );
-    head.pal_offset = BmpOamActorInitData[ idx ].paletteOffset;
-    head.soft_pri   = BmpOamActorInitData[ idx ].softPriority;
-    head.bg_pri     = BmpOamActorInitData[ idx ].BGPriority;
-    head.setSerface = BmpOamActorInitData[ idx ].setSurface;
-    head.draw_type  = BmpOamActorInitData[ idx ].drawType;
-
-    // BMP-OAM ƒAƒNƒ^[‚ğ’Ç‰Á
-    work->BmpOamActor[ idx ] = BmpOam_ActorAdd( work->BmpOamSystem, &head );
-
-    // ”ñ•\¦‚Éİ’è
-    BmpOam_ActorSetDrawEnable( work->BmpOamActor[ idx ], FALSE );
-
-    BmpOam_ActorBmpTrans( work->BmpOamActor[ idx ] );
-
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create BMP-OAM actors\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief BMP-OAM ƒAƒNƒ^[‚ğ”jŠü‚·‚é
- *
- * @parma work
- */
-//-----------------------------------------------------------------------------------------
-static void DeleteBmpOamActors( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
-  {
-    BmpOam_ActorDel( work->BmpOamActor[ idx ] );
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete BMP-OAM actors\n" );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void InitPaletteAnime( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
-  {
-    work->paletteAnime[ idx ] = NULL;
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init palette anime\n" );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ¶¬‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void CreatePaletteAnime( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
-  {
-    GF_ASSERT( work->paletteAnime[ idx ] == NULL ); // ‘½d¶¬
-
-    work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: create palette anime\n" );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ”jŠü‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void DeletePaletteAnime( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
-  {
-    GF_ASSERT( work->paletteAnime[ idx ] );
-
-    PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: delete palette anime\n" );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒZƒbƒgƒAƒbƒv‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void SetupPaletteAnime( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
-  {
-    GF_ASSERT( work->paletteAnime[ idx ] );
-
-    PALETTE_ANIME_Setup( work->paletteAnime[ idx ],
-                         PaletteAnimeData[ idx ].destAdrs,
-                         PaletteAnimeData[ idx ].srcAdrs,
-                         PaletteAnimeData[ idx ].colorNum);
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup palette anime\n" );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
- *
- * @param work
- */
-//------------------------------------------------------------------------------------
-static void CleanUpPaletteAnime( RRL_WORK* work )
-{
-  int idx;
-
-  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
-  {
-    GF_ASSERT( work->paletteAnime[ idx ] );
-
-    // ‘€ì‚µ‚Ä‚¢‚½ƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
-    PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
-  }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up palette anime\n" );
-}
 
 //------------------------------------------------------------------------------------
 /**
@@ -4290,99 +2779,16 @@ static void UpdatePaletteAnime( RRL_WORK* work )
   }
 }
 
-//-----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 /**
- * @brief VBlankŠúŠÔ’†‚Ìƒ^ƒXƒN‚ğ“o˜^‚·‚é
+ * @brief ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
  *
  * @param work
  */
-//-----------------------------------------------------------------------------------------
-static void RegisterVBlankTask( RRL_WORK* work )
+//------------------------------------------------------------------------------------
+static void UpdateCommonPaletteAnime( const RRL_WORK* work )
 {
-  work->VBlankTask = GFUser_VIntr_CreateTCB( VBlankFunc, work, 0 );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: register VBlank task\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief VBlankŠúŠÔ’†‚Ìƒ^ƒXƒN‚ğ‰ğœ‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void ReleaseVBlankTask( RRL_WORK* work )
-{ 
-  GFL_TCB_DeleteTask( work->VBlankTask );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: release VBlank task\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitPaletteFadeSystem( RRL_WORK* work )
-{ 
-  // ‰Šú‰»
-  work->paletteFadeSystem = NULL;
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init palette fade system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ€”õ‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void SetupPaletteFadeSystem( RRL_WORK* work )
-{
-  u32 tcbWorkSize;
-
-  // ‘½d¶¬
-  GF_ASSERT( work->paletteFadeSystem == NULL );
-
-  // ƒtƒF[ƒhˆ—ƒVƒXƒeƒ€ì¬
-  work->paletteFadeSystem = PaletteFadeInit( work->heapID ); 
-
-  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ¶¬
-  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_BG,  FULL_PALETTE_SIZE, work->heapID );
-  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_OBJ, FULL_PALETTE_SIZE, work->heapID );
-
-  // ƒŠƒNƒGƒXƒgƒ[ƒN‰Šú‰»
-  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_BG,  0, FULL_PALETTE_SIZE );
-  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: setup palette fade system\n" );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void CleanUpPaletteFadeSystem( RRL_WORK* work )
-{ 
-  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ”jŠü
-  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
-  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_OBJ );
-
-  // ƒtƒF[ƒhŠÇ—ƒVƒXƒeƒ€‚ğ”jŠü
-  PaletteFadeFree( work->paletteFadeSystem );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: clean up palette fade system\n" );
+  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork );
 }
 
 
@@ -4437,23 +2843,56 @@ static GFL_CLWK* GetClactWork( const RRL_WORK* work, CLWK_INDEX wkIdx )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAMƒAƒNƒ^[
- * 
- * @param work
- * @param menuItem ƒƒjƒ…[€–Ú‚ÌƒCƒ“ƒfƒbƒNƒX
+ * @brief ƒQ[ƒ€ƒVƒXƒeƒ€‚ğæ“¾‚·‚é
  *
- * @return w’è‚µ‚½ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAM ƒAƒNƒ^[
+ * @param work
+ * 
+ * @return ƒQ[ƒ€ƒVƒXƒeƒ€
  */
 //-----------------------------------------------------------------------------------------
-static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM menuItem )
+static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work )
 {
-  BMPOAM_ACTOR_INDEX BmpOamActorIdx;
+  return RESEARCH_COMMON_GetGameSystem( work->commonWork );
+}
 
-  // BMP-OAM ƒAƒNƒ^[‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
-  BmpOamActorIdx = BmpOamIndexOfMenu[ menuItem ];
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒQ[ƒ€ƒf[ƒ^‚ğæ“¾‚·‚é
+ *
+ * @param work
+ * 
+ * @return ƒQ[ƒ€ƒf[ƒ^
+ */
+//-----------------------------------------------------------------------------------------
+static GAMEDATA* GetGameData( const RRL_WORK* work )
+{
+  return RESEARCH_COMMON_GetGameData( work->commonWork );
+}
 
-  // BMP-OAM ƒAƒNƒ^[‚ğ•Ô‚·
-  return work->BmpOamActor[ BmpOamActorIdx ];
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒq[ƒvID‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param heapID
+ */
+//-----------------------------------------------------------------------------------------
+static void SetHeapID( RRL_WORK* work, HEAPID heapID )
+{
+  work->heapID = heapID;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param commonWork
+ */
+//-----------------------------------------------------------------------------------------
+static void SetCommonWork( RRL_WORK* work, RESEARCH_COMMON_WORK* commonWork )
+{
+  work->commonWork = commonWork;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4468,13 +2907,15 @@ static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM 
 static u8 GetInvestigatingTopicID( const RRL_WORK* work )
 {
   int qIdx;
+  GAMEDATA* gameData;
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
   u8 questionID[ QUESTION_NUM_PER_TOPIC ];
   u8 topicID;
 
-  save  = GAMEDATA_GetSaveControlWork( work->gameData );
-  QSave = SaveData_GetQuestionnaire( save );
+  gameData = GetGameData( work );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save );
 
   // ’²¸’†‚Ì¿–âID‚ğæ“¾
   for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
@@ -4504,6 +2945,7 @@ static u8 GetInvestigatingTopicID( const RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void UpdateInvestigatingTopicID( const RRL_WORK* work )
 {
+  GAMEDATA* gameData;
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
   u8 topicID;
@@ -4511,9 +2953,10 @@ static void UpdateInvestigatingTopicID( const RRL_WORK* work )
   // €–Ú‚ğ‘I‘ğ‚µ‚Ä‚¢‚È‚¢
   GF_ASSERT( IsTopicIDSelected(work) );
 
-  topicID = GetSelectedTopicID( work ); // ‘I‘ğ‚µ‚½’²¸€–ÚID
-  save    = GAMEDATA_GetSaveControlWork( work->gameData );
-  QSave   = SaveData_GetQuestionnaire( save );
+  topicID  = GetSelectedTopicID( work ); // ‘I‘ğ‚µ‚½’²¸€–ÚID
+  gameData = GetGameData( work );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save );
   
   // ƒZ[ƒuƒf[ƒ^‚ğXV
   QuestionnaireWork_SetInvestigatingQuestion( QSave, Question1_topic[ topicID ], 0 );
@@ -5045,7 +3488,7 @@ static int GetPrevTopicID( const RRL_WORK* work, int topicID )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateTopicSelectIcon( const RRL_WORK* work )
+static void UpdateInvestigatingIcon( const RRL_WORK* work )
 {
   int topicID;
   GFL_CLWK* clactWork;
@@ -5161,6 +3604,11 @@ static BOOL IsPaletteFadeEnd( RRL_WORK* work )
   return (PaletteFadeCheck( work->paletteFadeSystem ) == 0);
 }
 
+
+//=========================================================================================
+// ŸLAYER 2 æ“¾Eİ’èE”»’è
+//=========================================================================================
+
 //-----------------------------------------------------------------------------------------
 /**
  * @brief BMP-OAM ‚Ì•\¦ó‘Ô‚ğİ’è‚·‚é
@@ -5172,25 +3620,1390 @@ static BOOL IsPaletteFadeEnd( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void BmpOamSetDrawEnable( RRL_WORK* work, BMPOAM_ACTOR_INDEX actorIdx, BOOL enable )
 {
-  // ƒCƒ“ƒfƒbƒNƒXƒGƒ‰[
   GF_ASSERT( actorIdx < BMPOAM_ACTOR_NUM );
 
   // •\¦ó‘Ô‚ğ•ÏX
   BmpOam_ActorSetDrawEnable( work->BmpOamActor[ actorIdx ], enable );
+}
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, 
-              "RESEARCH-SELECT: set draw enable BMP-OAM [%d] ==> %d\n", actorIdx, enable );
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAMƒAƒNƒ^[‚ğæ“¾‚·‚é
+ * 
+ * @param work
+ * @param menuItem ƒƒjƒ…[€–Ú‚ÌƒCƒ“ƒfƒbƒNƒX
+ *
+ * @return w’è‚µ‚½ƒƒjƒ…[€–Ú‚É‘Î‰‚·‚éBMP-OAM ƒAƒNƒ^[
+ */
+//-----------------------------------------------------------------------------------------
+static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RRL_WORK* work, MENU_ITEM menuItem )
+{
+  BMPOAM_ACTOR_INDEX BmpOamActorIdx;
+
+  BmpOamActorIdx = BmpOamIndexOfMenu[ menuItem ];
+  return work->BmpOamActor[ BmpOamActorIdx ];
 }
 
 
+//=========================================================================================
+// ŸLAYER 1 ¶¬E‰Šú‰»E€”õEŒã•Ğ•t‚¯E”jŠü
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN‚ğ¶¬‚·‚é
+ *
+ * @param heapID
+ *
+ * @return ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------------------
+static RRL_WORK* CreateListWork( HEAPID heapID )
+{
+  RRL_WORK* work;
+
+  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRL_WORK) );
+
+  return work;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitListWork( RRL_WORK* work )
+{
+  work->state              = RRL_STATE_SETUP;
+  work->stateCount         = 0;
+  work->stateEndFlag       = FALSE;
+  work->waitFrame          = WAIT_FRAME_BUTTON;
+  work->menuCursorPos      = MENU_ITEM_DETERMINATION_OK;
+  work->topicCursorPos     = 0;
+  work->topicCursorNextPos = 0;
+  work->selectableTopicNum = 0;
+  work->selectedTopicID    = TOPIC_ID_DUMMY;
+  work->VBlankTCBSystem    = GFUser_VIntr_GetTCBSYS();
+  work->scrollCursorPos    = MIN_SCROLL_CURSOR_POS;
+  work->scrollStartPos     = 0;
+  work->scrollEndPos       = 0;
+  work->scrollFrames       = 0;
+  work->scrollFrameCount   = 0;
+  work->palFadeOutFlag     = FALSE;
+  work->finishResult       = RRL_RESULT_TO_TOP;
+  work->finishFlag         = FALSE;
+  work->VBlankTask         = NULL;
+
+  InitStateQueue( work );
+  InitMessages( work );
+  InitFont( work );
+  InitBGFonts( work );
+  InitClactUnits( work );
+  InitClactWorks( work );
+  InitOBJResources( work );
+  InitPaletteFadeSystem( work );
+  InitBitmapDatas( work );
+  InitPaletteAnime( work );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteListWork( RRL_WORK* work )
+{
+  GFL_HEAP_FreeMemory( work );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupSelectableTopicNum( RRL_WORK* work )
+{
+  GAMEDATA* gameData;
+  EVENTWORK* evwork;
+  int num;
+
+  gameData = GetGameData( work );
+  evwork   = GAMEDATA_GetEventWork( gameData );
+
+  // ƒAƒ“ƒP[ƒg‚É“š‚¦‚½”‚ğƒJƒEƒ“ƒg
+  num = 1; // æ“ª€–Ú‚ÍÅ‰‚©‚ç‘I‚×‚é
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_YOU      ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_FAVARITE ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_WISH     ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_PARTNER  ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_TASTE    ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_HOBBY    ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_SCHOOL   ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_PLAY     ) == TRUE ) { num++; }
+  if( EVENTWORK_CheckEventFlag( evwork, FE_RES_QUESTION_POKEMON  ) == TRUE ) { num++; }
+
+  // ‘I‘ğ‰Â”\‚È’²¸€–Ú‚Ì”‚ğ‹L‰¯
+  work->selectableTopicNum = num;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‰‚ğì¬‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateFont( RRL_WORK* work )
+{
+  GF_ASSERT( work->font == NULL );
+
+  // ¶¬
+  work->font = GFL_FONT_Create( 
+      ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‰‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitFont( RRL_WORK* work )
+{
+  work->font = NULL;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‰‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteFont( RRL_WORK* work )
+{
+  GF_ASSERT( work->font );
+
+  GFL_FONT_Delete( work->font );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒbƒZ[ƒWƒf[ƒ^‚ğì¬‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateMessages( RRL_WORK* work )
+{
+  int msgIdx;
+
+  for( msgIdx=0; msgIdx < MESSAGE_NUM; msgIdx++ )
+  {
+    GF_ASSERT( work->message[ msgIdx ] == NULL );
+
+    work->message[ msgIdx ] = GFL_MSG_Create( 
+        GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, MessageDataID[ msgIdx ], work->heapID ); 
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒbƒZ[ƒWƒf[ƒ^‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitMessages( RRL_WORK* work )
+{
+  int msgIdx;
+
+  for( msgIdx=0; msgIdx < MESSAGE_NUM; msgIdx++ )
+  {
+    work->message[ msgIdx ] = NULL;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒƒbƒZ[ƒWƒf[ƒ^‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteMessages( RRL_WORK* work )
+{
+  int msgIdx;
+
+  for( msgIdx=0; msgIdx < MESSAGE_NUM; msgIdx++ )
+  {
+    GF_ASSERT( work->message[ msgIdx ] );
+
+    GFL_MSG_Delete( work->message[ msgIdx ] );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ó‘ÔƒLƒ…[‚ğì¬‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateStateQueue( RRL_WORK* work )
+{
+  GF_ASSERT( work->stateQueue == NULL );
+
+  work->stateQueue = QUEUE_Create( SEQ_QUEUE_SIZE, work->heapID );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ó‘ÔƒLƒ…[‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitStateQueue( RRL_WORK* work )
+{
+  work->stateQueue = NULL;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ó‘ÔƒLƒ…[‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteStateQueue( RRL_WORK* work )
+{
+  GF_ASSERT( work->stateQueue );
+
+  QUEUE_Delete( work->stateQueue );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @breif ƒ^ƒbƒ`—Ìˆæ‚Ì€”õ‚ğs‚¤
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupTouchArea( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < MENU_TOUCH_AREA_NUM; idx++ )
+  {
+    work->menuTouchHitTable[ idx ].rect.left   = MenuTouchAreaInitData[ idx ].left;
+    work->menuTouchHitTable[ idx ].rect.right  = MenuTouchAreaInitData[ idx ].right;
+    work->menuTouchHitTable[ idx ].rect.top    = MenuTouchAreaInitData[ idx ].top;
+    work->menuTouchHitTable[ idx ].rect.bottom = MenuTouchAreaInitData[ idx ].bottom;
+  }
+  for( idx=0; idx < TOPIC_TOUCH_AREA_NUM; idx++ )
+  {
+    work->topicTouchHitTable[ idx ].rect.left   = TopicTouchAreaInitData[ idx ].left;
+    work->topicTouchHitTable[ idx ].rect.right  = TopicTouchAreaInitData[ idx ].right;
+    work->topicTouchHitTable[ idx ].rect.top    = TopicTouchAreaInitData[ idx ].top;
+    work->topicTouchHitTable[ idx ].rect.bottom = TopicTouchAreaInitData[ idx ].bottom;
+  }
+  for( idx=0; idx < SCROLL_TOUCH_AREA_NUM; idx++ )
+  {
+    work->scrollTouchHitTable[ idx ].rect.left   = ScrollTouchAreaInitData[ idx ].left;
+    work->scrollTouchHitTable[ idx ].rect.right  = ScrollTouchAreaInitData[ idx ].right;
+    work->scrollTouchHitTable[ idx ].rect.top    = ScrollTouchAreaInitData[ idx ].top;
+    work->scrollTouchHitTable[ idx ].rect.bottom = ScrollTouchAreaInitData[ idx ].bottom;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BG ‚Ì€”õ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupBG( RRL_WORK* work )
+{ 
+  // BG ƒ‚[ƒh
+  GFL_BG_SetBGMode( &BGSysHeader2D );
+
+  // BG ƒRƒ“ƒgƒ[ƒ‹
+  GFL_BG_SetBGControl( SUB_BG_WINDOW,  &SubBGControl_WINDOW,  GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( SUB_BG_FONT,    &SubBGControl_FONT,    GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( MAIN_BG_BAR,    &MainBGControl_BAR,    GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( MAIN_BG_WINDOW, &MainBGControl_WINDOW, GFL_BG_MODE_TEXT );
+  GFL_BG_SetBGControl( MAIN_BG_FONT,   &MainBGControl_FONT,   GFL_BG_MODE_TEXT );
+
+  // ‰Â‹İ’è
+  GFL_BG_SetVisible( SUB_BG_BACK,    VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_RADAR,   VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_WINDOW,  VISIBLE_ON );
+  GFL_BG_SetVisible( SUB_BG_FONT,    VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_BACK,   VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_BAR,    VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_WINDOW, VISIBLE_ON );
+  GFL_BG_SetVisible( MAIN_BG_FONT,   VISIBLE_ON );
+
+  // ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒO
+  G2S_SetBlendAlpha( SUB_BG_BLEND_TARGET_1, SUB_BG_BLEND_TARGET_2, 
+                     SUB_BG_BLEND_WEIGHT_1, SUB_BG_BLEND_WEIGHT_2 );
+  G2_SetBlendAlpha( MAIN_BG_BLEND_TARGET_1, MAIN_BG_BLEND_TARGET_2, 
+                    MAIN_BG_BLEND_WEIGHT_1, MAIN_BG_BLEND_WEIGHT_2 );
+
+  // ƒrƒbƒgƒ}ƒbƒvƒEƒBƒ“ƒhƒE ƒVƒXƒeƒ€‰Šú‰»
+  GFL_BMPWIN_Init( work->heapID );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BG ‚ÌŒã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpBG( RRL_WORK* work )
+{
+  GFL_BMPWIN_Exit();
+
+  GFL_BG_FreeBGControl( MAIN_BG_FONT );
+  GFL_BG_FreeBGControl( MAIN_BG_WINDOW );
+  GFL_BG_FreeBGControl( MAIN_BG_BAR );
+  GFL_BG_FreeBGControl( SUB_BG_FONT );
+  GFL_BG_FreeBGControl( SUB_BG_WINDOW );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupSubBG_WINDOW( RRL_WORK* work )
+{
+  ARCHANDLE* handle;
+
+  // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
+  handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, GetHeapLowID(work->heapID) ); 
+
+  // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
+  {
+    void* src;
+    ARCDATID datID;
+    NNSG2dScreenData* data;
+    datID = NARC_research_radar_graphic_bgu_win1_NSCR;
+    src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
+    NNS_G2dGetUnpackedScreenData( src, &data );
+    GFL_BG_WriteScreen( SUB_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
+    GFL_BG_LoadScreenReq( SUB_BG_WINDOW );
+    GFL_HEAP_FreeMemory( src );
+  }
+
+  // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
+  GFL_ARC_CloseDataHandle( handle );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ã‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpSubBG_WINDOW( RRL_WORK* work )
+{
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚Ì€”õ
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupSubBG_FONT( RRL_WORK* work )
+{
+  // NULLƒLƒƒƒ‰Šm•Û
+  GFL_BG_FillCharacter( SUB_BG_FONT, 0, 1, 0 );
+
+  // ƒNƒŠƒA
+  GFL_BG_ClearScreen( SUB_BG_FONT );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief SUB-BG ƒtƒHƒ“ƒg–Ê‚ÌŒã•Ğ•t‚¯
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpSubBG_FONT( RRL_WORK* work )
+{ 
+  // NULLƒLƒƒƒ‰‰ğ•ú
+  GFL_BG_FillCharacterRelease( SUB_BG_FONT, 1, 0 );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒo[BG–Ê €”õ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupMainBG_BAR( RRL_WORK* work )
+{
+  ARCHANDLE* handle;
+
+  // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
+  handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, GetHeapLowID(work->heapID) ); 
+
+  // ƒXƒNƒŠ[ƒ“ƒf[ƒ^
+  {
+    void* src;
+    ARCDATID datID;
+    NNSG2dScreenData* data;
+    datID = NARC_research_radar_graphic_bgd_title_NSCR;
+    src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
+    NNS_G2dGetUnpackedScreenData( src, &data );
+    GFL_BG_WriteScreen( MAIN_BG_BAR, data->rawData, 0, 0, 32, 24 );
+    GFL_BG_LoadScreenReq( MAIN_BG_BAR );
+    GFL_HEAP_FreeMemory( src );
+  }
+
+  // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
+  GFL_ARC_CloseDataHandle( handle );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒo[BG–Ê Œã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpMainBG_BAR( RRL_WORK* work )
+{
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê €”õ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupMainBG_WINDOW( RRL_WORK* work )
+{
+  ARCHANDLE* handle;
+
+  // ƒnƒ“ƒhƒ‹ƒI[ƒvƒ“
+  handle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, GetHeapLowID(work->heapID) ); 
+
+  // ƒXƒNƒŠ[ƒ“ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+  {
+    void* src;
+    ARCDATID datID; 
+    NNSG2dScreenData* data;
+    int sx, sy;
+
+    sx    = 32;
+    sy    = GetSelectableTopicNum( work ) * TOPIC_BUTTON_HEIGHT;
+    datID = NARC_research_radar_graphic_bgd_searchbtn_NSCR;
+    src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID ); 
+
+    NNS_G2dGetUnpackedScreenData( src, &data );
+    GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, sx, sy );
+    GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
+    GFL_HEAP_FreeMemory( src );
+  }
+
+  // ƒnƒ“ƒhƒ‹ƒNƒ[ƒY
+  GFL_ARC_CloseDataHandle( handle );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒEƒBƒ“ƒhƒEBG–Ê Œã•Ğ•t‚¯
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpMainBG_WINDOW( RRL_WORK* work )
+{
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê €”õ
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupMainBG_FONT( RRL_WORK* work )
+{ 
+  // NULLƒLƒƒƒ‰Šm•Û
+  GFL_BG_FillCharacter( MAIN_BG_FONT, 0, 1, 0 );
+
+  // ƒNƒŠƒA
+  GFL_BG_ClearScreen( MAIN_BG_FONT );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰º‰æ–Ê ƒtƒHƒ“ƒgBG–Ê Œã•Ğ•t‚¯
+ * 
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpMainBG_FONT( RRL_WORK* work )
+{ 
+  // NULLƒLƒƒƒ‰‰ğ•ú
+  GFL_BG_FillCharacterRelease( MAIN_BG_FONT, 1, 0 );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğì¬‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateBGFonts( RRL_WORK* work )
+{
+  int i;
+
+  // ’Êí‚ÌBGFont
+  for( i=0; i<BG_FONT_NUM; i++ )
+  {
+    BG_FONT_PARAM param;
+    GFL_MSGDATA* msgData;
+    u32 strID;
+
+    GF_ASSERT( work->BGFont_string[i] == NULL ); 
+
+    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
+    param.BGFrame       = BGFontInitData[i].BGFrame;
+    param.posX          = BGFontInitData[i].posX;
+    param.posY          = BGFontInitData[i].posY;
+    param.sizeX         = BGFontInitData[i].sizeX;
+    param.sizeY         = BGFontInitData[i].sizeY;
+    param.offsetX       = BGFontInitData[i].offsetX;
+    param.offsetY       = BGFontInitData[i].offsetY;
+    param.paletteNo     = BGFontInitData[i].paletteNo;
+    param.colorNo_L     = BGFontInitData[i].colorNo_L;
+    param.colorNo_S     = BGFontInitData[i].colorNo_S;
+    param.colorNo_B     = BGFontInitData[i].colorNo_B;
+    param.centeringFlag = BGFontInitData[i].softCentering; 
+    msgData             = work->message[ BGFontInitData[i].messageIdx ];
+    strID               = BGFontInitData[i].stringIdx;
+
+    // ¶¬
+    work->BGFont_string[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
+
+    // •¶š—ñ‚ğİ’è
+    BG_FONT_SetMessage( work->BGFont_string[i], strID );
+  } 
+
+  // ’²¸€–ÚBGFont
+   for( i=0; i < GetSelectableTopicNum(work); i++ )
+  {
+    BG_FONT_PARAM param;
+    GFL_MSGDATA* msgData;
+    u32 strID;
+
+    GF_ASSERT( work->BGFont_topic[i] == NULL ); 
+
+    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
+    param.BGFrame       = TopicsBGFontInitData[i].BGFrame;
+    param.posX          = TopicsBGFontInitData[i].posX;
+    param.posY          = TopicsBGFontInitData[i].posY;
+    param.sizeX         = TopicsBGFontInitData[i].sizeX;
+    param.sizeY         = TopicsBGFontInitData[i].sizeY;
+    param.offsetX       = TopicsBGFontInitData[i].offsetX;
+    param.offsetY       = TopicsBGFontInitData[i].offsetY;
+    param.paletteNo     = TopicsBGFontInitData[i].paletteNo;
+    param.colorNo_L     = TopicsBGFontInitData[i].colorNo_L;
+    param.colorNo_S     = TopicsBGFontInitData[i].colorNo_S;
+    param.colorNo_B     = TopicsBGFontInitData[i].colorNo_B;
+    param.centeringFlag = TopicsBGFontInitData[i].softCentering; 
+    msgData             = work->message[ TopicsBGFontInitData[i].messageIdx ];
+    strID               = TopicsBGFontInitData[i].stringIdx;
+
+    // ¶¬
+    work->BGFont_topic[i] = BG_FONT_Create( &param, work->font, msgData, work->heapID );
+
+    // •¶š—ñ‚ğİ’è
+    BG_FONT_SetMessage( work->BGFont_topic[i], strID );
+  } 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitBGFonts( RRL_WORK* work )
+{
+  int idx;
+
+  // ’Êí‚ÌBGFont
+  for( idx=0; idx < BG_FONT_NUM; idx++ )
+  {
+    work->BGFont_string[ idx ] = NULL; 
+  }
+  // ’²¸€–ÚBGFont
+  for( idx=0; idx < TOPIC_ID_NUM; idx++ )
+  {
+    work->BGFont_topic[ idx ] = NULL; 
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteBGFonts( RRL_WORK* work )
+{
+  int i;
+  
+  // ’Êí‚ÌBGFont
+  for( i=0; i < BG_FONT_NUM; i++ )
+  {
+    GF_ASSERT( work->BGFont_string[i] );
+    BG_FONT_Delete( work->BGFont_string[i] );
+    work->BGFont_string[i] = NULL;
+  }
+  // ’²¸€–ÚBGFont
+  for( i=0; i < GetSelectableTopicNum(work); i++ )
+  {
+    GF_ASSERT( work->BGFont_topic[i] );
+    BG_FONT_Delete( work->BGFont_topic[i] );
+    work->BGFont_topic[i] = NULL;
+  }
+} 
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief OBJ ƒŠƒ\[ƒX‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitOBJResources( RRL_WORK* work )
+{
+  int i;
+
+  for( i=0; i<OBJ_RESOURCE_NUM; i++ )
+  {
+    work->objResRegisterIdx[i] = 0; 
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief SUB-OBJ ƒŠƒ\[ƒX‚ğ“o˜^‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void RegisterSubObjResources( RRL_WORK* work )
+{
+  HEAPID heapID;
+  ARCHANDLE* arcHandle;
+  u32 character, palette, cellAnime;
+
+  heapID    = work->heapID;
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, GetHeapLowID(heapID) );
+
+  // ƒŠƒ\[ƒX‚ğ“o˜^
+  character = GFL_CLGRP_CGR_Register( 
+      arcHandle, NARC_research_radar_graphic_obj_NCGR, FALSE, CLSYS_DRAW_SUB, heapID ); 
+
+  palette = GFL_CLGRP_PLTT_Register( 
+      arcHandle, NARC_research_radar_graphic_obj_NCLR, CLSYS_DRAW_SUB, 0, heapID );
+
+  cellAnime = GFL_CLGRP_CELLANIM_Register( 
+      arcHandle, NARC_research_radar_graphic_obj_NCER, NARC_research_radar_graphic_obj_NANR, heapID ); 
+
+  // “o˜^ƒCƒ“ƒfƒbƒNƒX‚ğ‹L‰¯
+  work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ]  = character;
+  work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ]    = palette;
+  work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] = cellAnime;
+
+  GFL_ARC_CloseDataHandle( arcHandle );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief SUB-OBJ ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ReleaseSubObjResources( RRL_WORK* work )
+{
+  GFL_CLGRP_CGR_Release( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CHARACTER ] );
+  GFL_CLGRP_PLTT_Release( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_PALETTE ] );
+  GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_SUB_CELL_ANIME ] );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief MAIN-OBJ ƒŠƒ\[ƒX‚ğ“o˜^‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void RegisterMainObjResources( RRL_WORK* work )
+{
+  HEAPID heapID;
+  ARCHANDLE* arcHandle;
+  u32 character, palette, palette3, cellAnime;
+
+  heapID    = work->heapID;
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_RESEARCH_RADAR_GRAPHIC, GetHeapLowID(heapID) );
+
+  character = GFL_CLGRP_CGR_Register( 
+      arcHandle, NARC_research_radar_graphic_obj_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID ); 
+
+  palette = GFL_CLGRP_PLTT_RegisterEx( 
+      arcHandle, NARC_research_radar_graphic_obj_NCLR, CLSYS_DRAW_MAIN, ONE_PALETTE_SIZE*6, 0, 4, heapID ); 
+
+  cellAnime = GFL_CLGRP_CELLANIM_Register( 
+      arcHandle, NARC_research_radar_graphic_obj_NCER, NARC_research_radar_graphic_obj_NANR, heapID ); 
+
+  GFL_ARC_CloseDataHandle( arcHandle );
+
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, heapID ); 
+
+  palette3 = GFL_CLGRP_PLTT_RegisterEx( 
+      arcHandle, NARC_app_menu_common_task_menu_NCLR, CLSYS_DRAW_MAIN, ONE_PALETTE_SIZE*4, 0, 2, heapID );
+
+  GFL_ARC_CloseDataHandle( arcHandle );
+
+  // “o˜^ƒCƒ“ƒfƒbƒNƒX‚ğ‹L‰¯
+  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ]  = character;
+  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ]    = palette;
+  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] = cellAnime;
+  work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE_COMMON_BUTTON ] = palette3;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief MAIN-OBJ ƒŠƒ\[ƒX‚ğ‰ğ•ú‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ReleaseMainObjResources( RRL_WORK* work )
+{
+  GFL_CLGRP_CGR_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CHARACTER ] );
+  GFL_CLGRP_PLTT_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE ] );
+  GFL_CLGRP_CELLANIM_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_CELL_ANIME ] );
+  GFL_CLGRP_PLTT_Release( work->objResRegisterIdx[ OBJ_RESOURCE_MAIN_PALETTE_COMMON_BUTTON ] );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitClactUnits( RRL_WORK* work )
+{
+  int unitIdx;
+
+  for( unitIdx=0; unitIdx < CLUNIT_NUM; unitIdx++ )
+  {
+    work->clactUnit[ unitIdx ] = NULL;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğì¬‚·‚é
+ *
+ * @param
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateClactUnits( RRL_WORK* work )
+{
+  int unitIdx;
+  u16 workNum;
+  u8 priority;
+
+  for( unitIdx=0; unitIdx < CLUNIT_NUM; unitIdx++ )
+  {
+    GF_ASSERT( work->clactUnit[ unitIdx ] == NULL );
+
+    workNum  = ClactUnitWorkSize[ unitIdx ];
+    priority = ClactUnitPriority[ unitIdx ];
+    work->clactUnit[ unitIdx ] = GFL_CLACT_UNIT_Create( workNum, priority, work->heapID );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ğ”jŠü‚·‚é
+ *
+ * @param
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteClactUnits( RRL_WORK* work )
+{
+  int unitIdx;
+
+  for( unitIdx=0; unitIdx < CLUNIT_NUM; unitIdx++ )
+  {
+    GF_ASSERT( work->clactUnit[ unitIdx ] );
+    GFL_CLACT_UNIT_Delete( work->clactUnit[ unitIdx ] );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitClactWorks( RRL_WORK* work )
+{
+  int wkIdx;
+
+  for( wkIdx=0; wkIdx < CLWK_NUM; wkIdx++ )
+  {
+    work->clactWork[ wkIdx ] = NULL;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğì¬‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateClactWorks( RRL_WORK* work )
+{
+  int wkIdx;
+
+  for( wkIdx=0; wkIdx < CLWK_NUM; wkIdx++ )
+  {
+    GFL_CLUNIT* unit;
+    GFL_CLWK_DATA wkData;
+    u32 charaIdx, paletteIdx, cellAnimeIdx;
+    u16 surface;
+
+    GF_ASSERT( work->clactWork[ wkIdx ] == NULL );
+
+    // ¶¬ƒpƒ‰ƒ[ƒ^‘I‘ğ
+    wkData.pos_x   = ClactWorkInitData[ wkIdx ].posX;
+    wkData.pos_y   = ClactWorkInitData[ wkIdx ].posY;
+    wkData.anmseq  = ClactWorkInitData[ wkIdx ].animeSeq;
+    wkData.softpri = ClactWorkInitData[ wkIdx ].softPriority; 
+    wkData.bgpri   = ClactWorkInitData[ wkIdx ].BGPriority; 
+    unit           = GetClactUnit( work, ClactWorkInitData[ wkIdx ].unitIdx );
+    charaIdx       = GetObjResourceRegisterIndex( work, ClactWorkInitData[ wkIdx ].characterResID );
+    paletteIdx     = GetObjResourceRegisterIndex( work, ClactWorkInitData[ wkIdx ].paletteResID );
+    cellAnimeIdx   = GetObjResourceRegisterIndex( work, ClactWorkInitData[ wkIdx ].cellAnimeResID );
+    surface        = ClactWorkInitData[ wkIdx ].setSurface;
+
+    // ¶¬
+    work->clactWork[ wkIdx ] = GFL_CLACT_WK_Create( 
+        unit, charaIdx, paletteIdx, cellAnimeIdx, &wkData, surface, work->heapID );
+
+    // ”ñ•\¦‚Éİ’è
+    GFL_CLACT_WK_SetDrawEnable( work->clactWork[ wkIdx ], FALSE );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZƒ‹ƒAƒNƒ^[ƒ[ƒN‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteClactWorks( RRL_WORK* work )
+{
+  int wkIdx;
+
+  for( wkIdx=0; wkIdx < CLWK_NUM; wkIdx++ )
+  {
+    GF_ASSERT( work->clactWork[ wkIdx ] );
+
+    GFL_CLACT_WK_Remove( work->clactWork[ wkIdx ] );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitBitmapDatas( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    work->BmpData[ idx ] = NULL;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğì¬‚·‚é
+ *
+ * @parma work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateBitmapDatas( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    const BITMAP_INIT_DATA* data;
+
+    // ‰Šú‰»ƒf[ƒ^‚ğæ“¾
+    data = &BitmapInitData[ idx ]; 
+
+    // ì¬
+    work->BmpData[ idx ] = GFL_BMP_Create( data->width, data->height, data->colorMode, work->heapID );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒfƒtƒHƒ‹ƒg‰Šú‰»ˆ—‚É‚æ‚è, ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚Ì€”õ‚ğs‚¤
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupBitmapData_forDefault( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    GFL_BMP_DATA* bmp;
+    const BITMAP_INIT_DATA* data;
+    GFL_MSGDATA* msgData;
+    STRBUF* strbuf;
+    PRINTSYS_LSB color;
+
+    // ‰Šú‰»ƒf[ƒ^æ“¾
+    data = &BitmapInitData[ idx ]; 
+
+    // ƒfƒtƒHƒ‹ƒgƒZƒbƒgƒAƒbƒv‘ÎÛ‚Å‚È‚¢
+    if( data->defaultSetupFlag == FALSE ) { continue; }
+
+    // ”wŒi‚ÌƒLƒƒƒ‰ƒNƒ^‚ğƒRƒs[‚·‚é
+    bmp = GFL_BMP_LoadCharacter( data->charaDataArcID, data->charaDataArcDatID, FALSE, work->heapID );
+    GFL_BMP_Print( bmp, work->BmpData[ idx ], 0, 0, 0, 0, 
+                   data->width * DOT_PER_CHARA, data->height * DOT_PER_CHARA, data->colorNo_B );
+
+    // •¶š—ñ‚ğ‘‚«‚Ş
+    msgData = work->message[ data->messageIdx ];
+    color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
+    strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
+
+    PRINTSYS_PrintColor( work->BmpData[ idx ],
+                         data->stringDrawPosX, data->stringDrawPosY,
+                         strbuf, work->font, color ); 
+
+    GFL_HEAP_FreeMemory( strbuf );
+    GFL_BMP_Delete( bmp );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu‚¯‚Á‚Ä‚¢vƒ{ƒ^ƒ“—p‚Ìƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ€”õ‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupBitmapData_forOK( RRL_WORK* work )
+{
+  int x, y;
+  GFL_BMP_DATA* srcBMP; 
+  GFL_MSGDATA* msgData;
+  STRBUF* strbuf;
+  PRINTSYS_LSB color;
+  const BITMAP_INIT_DATA* data;
+
+  // ƒRƒs[‚·‚éƒLƒƒƒ‰ƒNƒ^”Ô†
+  int charaNo[ BMPOAM_ACTOR_OK_CHARA_SIZE_Y ][ BMPOAM_ACTOR_OK_CHARA_SIZE_X ] = 
+  {
+    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2},
+    {3, 4, 4, 4, 4, 4, 4, 4, 4, 5},
+    {6, 7, 7, 7, 7, 7, 7, 7, 7, 8},
+  };
+
+  // ‰Šú‰»ƒf[ƒ^æ“¾
+  data = &BitmapInitData[ BMPOAM_ACTOR_OK ]; 
+
+  // ƒLƒƒƒ‰ƒNƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+  srcBMP = GFL_BMP_LoadCharacter( data->charaDataArcID, 
+                                  data->charaDataArcDatID,
+                                  FALSE, 
+                                  work->heapID ); 
+  // ƒLƒƒƒ‰ƒf[ƒ^‚ğƒRƒs[‚·‚é
+  for( y=0; y < BMPOAM_ACTOR_OK_CHARA_SIZE_Y; y++)
+  {
+    for(x=0; x < BMPOAM_ACTOR_OK_CHARA_SIZE_X; x++)
+    {
+      GFL_BMP_Print( srcBMP, work->BmpData[ BMPOAM_ACTOR_OK ], 
+                     (charaNo[y][x] % 3) * DOT_PER_CHARA, 
+                     (charaNo[y][x] / 3) * DOT_PER_CHARA, 
+                     x * DOT_PER_CHARA, y * DOT_PER_CHARA, 
+                     DOT_PER_CHARA, DOT_PER_CHARA, 0 );
+    }
+  }
+  GFL_BMP_Delete( srcBMP );
+
+  // •¶š—ñ‚ğ‘‚«‚Ş
+  msgData = work->message[ data->messageIdx ];
+  color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
+  strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
+
+  PRINTSYS_PrintColor( work->BmpData[ BMPOAM_ACTOR_OK ],
+                       data->stringDrawPosX, data->stringDrawPosY,
+                       strbuf, work->font, color ); 
+
+  GFL_HEAP_FreeMemory( strbuf );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefu‚â‚ß‚évƒ{ƒ^ƒ“—p‚Ìƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ€”õ‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupBitmapData_forCANCEL( RRL_WORK* work )
+{
+  int x, y;
+  GFL_BMP_DATA* srcBMP; 
+  GFL_MSGDATA* msgData;
+  STRBUF* strbuf;
+  PRINTSYS_LSB color;
+  const BITMAP_INIT_DATA* data;
+
+  // ƒRƒs[‚·‚éƒLƒƒƒ‰ƒNƒ^”Ô†
+  int charaNo[ BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y ][ BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X ] = 
+  {
+    {0, 1, 1, 1, 1, 1, 1, 1, 1, 2},
+    {3, 4, 4, 4, 4, 4, 4, 4, 4, 5},
+    {6, 7, 7, 7, 7, 7, 7, 7, 7, 8},
+  };
+
+  // ‰Šú‰»ƒf[ƒ^æ“¾
+  data = &BitmapInitData[ BMPOAM_ACTOR_CANCEL ]; 
+
+  // ƒLƒƒƒ‰ƒNƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+  srcBMP = GFL_BMP_LoadCharacter( data->charaDataArcID, 
+                                  data->charaDataArcDatID,
+                                  FALSE, 
+                                  work->heapID ); 
+  // ƒLƒƒƒ‰ƒf[ƒ^‚ğƒRƒs[‚·‚é
+  for( y=0; y < BMPOAM_ACTOR_CANCEL_CHARA_SIZE_Y; y++)
+  {
+    for(x=0; x < BMPOAM_ACTOR_CANCEL_CHARA_SIZE_X; x++)
+    {
+      GFL_BMP_Print( srcBMP, work->BmpData[ BMPOAM_ACTOR_CANCEL ], 
+                     (charaNo[y][x] % 3) * DOT_PER_CHARA, 
+                     (charaNo[y][x] / 3) * DOT_PER_CHARA, 
+                     x * DOT_PER_CHARA, y * DOT_PER_CHARA, 
+                     DOT_PER_CHARA, DOT_PER_CHARA, 0 );
+    }
+  }
+  GFL_BMP_Delete( srcBMP );
+
+  // •¶š—ñ‚ğ‘‚«‚Ş
+  msgData = work->message[ data->messageIdx ];
+  color   = PRINTSYS_LSB_Make( data->colorNo_L, data->colorNo_S, data->colorNo_B );
+  strbuf  = GFL_MSG_CreateString( msgData, data->stringID );
+
+  PRINTSYS_PrintColor( work->BmpData[ BMPOAM_ACTOR_CANCEL ],
+                       data->stringDrawPosX, data->stringDrawPosY,
+                       strbuf, work->font, color ); 
+
+  GFL_HEAP_FreeMemory( strbuf );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒrƒbƒgƒ}ƒbƒvƒf[ƒ^‚ğ”jŠü‚·‚é
+ *
+ * @parma work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteBitmapDatas( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    GFL_BMP_Delete( work->BmpData[ idx ] );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒVƒXƒeƒ€‚Ì€”õ‚ğs‚¤
+ *
+ * @parma work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupBmpOamSystem( RRL_WORK* work )
+{
+  work->BmpOamSystem = BmpOam_Init( work->heapID, work->clactUnit[ CLUNIT_BMPOAM ] );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
+ *
+ * @parma work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpBmpOamSystem( RRL_WORK* work )
+{
+  BmpOam_Exit( work->BmpOamSystem );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒAƒNƒ^[‚ğì¬‚·‚é
+ *
+ * @parma work
+ */
+//-----------------------------------------------------------------------------------------
+static void CreateBmpOamActors( RRL_WORK* work )
+{
+  int idx;
+  BMPOAM_ACT_DATA head;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    // ‰Šúƒpƒ‰ƒ[ƒ^‚ğì¬
+    head.bmp        = work->BmpData[ idx ];
+    head.x          = BmpOamActorInitData[ idx ].x;
+    head.y          = BmpOamActorInitData[ idx ].y;
+    head.pltt_index = GetObjResourceRegisterIndex( work, BmpOamActorInitData[ idx ].paletteResID );
+    head.pal_offset = BmpOamActorInitData[ idx ].paletteOffset;
+    head.soft_pri   = BmpOamActorInitData[ idx ].softPriority;
+    head.bg_pri     = BmpOamActorInitData[ idx ].BGPriority;
+    head.setSerface = BmpOamActorInitData[ idx ].setSurface;
+    head.draw_type  = BmpOamActorInitData[ idx ].drawType;
+
+    // BMP-OAM ƒAƒNƒ^[‚ğ’Ç‰Á
+    work->BmpOamActor[ idx ] = BmpOam_ActorAdd( work->BmpOamSystem, &head );
+
+    // ”ñ•\¦‚Éİ’è
+    BmpOam_ActorSetDrawEnable( work->BmpOamActor[ idx ], FALSE );
+
+    BmpOam_ActorBmpTrans( work->BmpOamActor[ idx ] );
+
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief BMP-OAM ƒAƒNƒ^[‚ğ”jŠü‚·‚é
+ *
+ * @parma work
+ */
+//-----------------------------------------------------------------------------------------
+static void DeleteBmpOamActors( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < BMPOAM_ACTOR_NUM; idx++ )
+  {
+    BmpOam_ActorDel( work->BmpOamActor[ idx ] );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitPaletteFadeSystem( RRL_WORK* work )
+{ 
+  work->paletteFadeSystem = NULL;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ğ€”õ‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupPaletteFadeSystem( RRL_WORK* work )
+{
+  u32 tcbWorkSize;
+
+  GF_ASSERT( work->paletteFadeSystem == NULL );
+
+  // ƒtƒF[ƒhˆ—ƒVƒXƒeƒ€ì¬
+  work->paletteFadeSystem = PaletteFadeInit( work->heapID ); 
+
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ¶¬
+  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_BG,  FULL_PALETTE_SIZE, work->heapID );
+  PaletteFadeWorkAllocSet( work->paletteFadeSystem, FADE_MAIN_OBJ, FULL_PALETTE_SIZE, work->heapID );
+
+  // ƒŠƒNƒGƒXƒgƒ[ƒN‰Šú‰»
+  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_BG,  0, FULL_PALETTE_SIZE );
+  PaletteWorkSet_VramCopy( work->paletteFadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒtƒF[ƒhƒVƒXƒeƒ€‚ÌŒã•Ğ•t‚¯‚ğs‚¤
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void CleanUpPaletteFadeSystem( RRL_WORK* work )
+{ 
+  // ƒpƒŒƒbƒgƒtƒF[ƒh‚ÌƒŠƒNƒGƒXƒgƒ[ƒN‚ğ”jŠü
+  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_BG );
+  PaletteFadeWorkAllocFree( work->paletteFadeSystem, FADE_MAIN_OBJ );
+
+  // ƒtƒF[ƒhŠÇ—ƒVƒXƒeƒ€‚ğ”jŠü
+  PaletteFadeFree( work->paletteFadeSystem );
+}
+
 //------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ¶¬‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void CreatePaletteAnime( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] == NULL );
+
+    work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
+  }
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ‰Šú‰»‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void InitPaletteAnime( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    work->paletteAnime[ idx ] = NULL;
+  }
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğ”jŠü‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void DeletePaletteAnime( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
+  }
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupPaletteAnime( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    PALETTE_ANIME_Setup( work->paletteAnime[ idx ],
+                         PaletteAnimeData[ idx ].destAdrs,
+                         PaletteAnimeData[ idx ].srcAdrs,
+                         PaletteAnimeData[ idx ].colorNum);
+  }
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void CleanUpPaletteAnime( RRL_WORK* work )
+{
+  int idx;
+
+  for( idx=0; idx < PALETTE_ANIME_NUM; idx++ )
+  {
+    GF_ASSERT( work->paletteAnime[ idx ] );
+
+    // ‘€ì‚µ‚Ä‚¢‚½ƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+    PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
 /**
  * @brief ’ÊMƒAƒCƒRƒ“‚ğƒZƒbƒgƒAƒbƒv‚·‚é
  * 
  * @param work
  */
-//------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 static void SetupWirelessIcon( const RRL_WORK* work )
 {
   GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
@@ -5198,51 +5011,35 @@ static void SetupWirelessIcon( const RRL_WORK* work )
   GFL_NET_ReloadIcon();
 }
 
-//=========================================================================================
-// ¡DEBUG:
-//=========================================================================================
-
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒV[ƒPƒ“ƒXƒLƒ…[‚Ì’†g‚ğ•\¦‚·‚é
+ * @brief VBlankŠúŠÔ’†‚Ìƒ^ƒXƒN‚ğ“o˜^‚·‚é
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void DebugPrint_seqQueue( const RRL_WORK* work )
+static void RegisterVBlankTask( RRL_WORK* work )
 {
-  int i;
-  int dataNum;
-  int value;
+  GF_ASSERT( work->VBlankTask == NULL );
 
-  // ƒLƒ…[“à‚Ìƒf[ƒ^‚ÌŒÂ”‚ğæ“¾
-  dataNum = QUEUE_GetDataNum( work->seqQueue );
+  work->VBlankTask = GFUser_VIntr_CreateTCB( VBlankFunc, work, 0 );
+}
 
-  // ‘S‚Ä‚Ìƒf[ƒ^‚ğo—Í
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: seq queue = " );
-  for( i=0; i < dataNum; i++ )
-  { 
-    value = QUEUE_PeekData( work->seqQueue, i );
-    
-    switch( value )
-    {
-    case RESEARCH_SELECT_SEQ_SETUP:            OS_TFPrintf( PRINT_TARGET, "SETUP " );            break;
-    case RESEARCH_SELECT_SEQ_STANDBY:          OS_TFPrintf( PRINT_TARGET, "STANDBY " );          break;
-    case RESEARCH_SELECT_SEQ_KEY_WAIT:         OS_TFPrintf( PRINT_TARGET, "KEY_WAIT " );         break;
-    case RESEARCH_SELECT_SEQ_SCROLL_WAIT:      OS_TFPrintf( PRINT_TARGET, "SCROLL_WAIT " );      break;
-    case RESEARCH_SELECT_SEQ_SCROLL_CONTROL:   OS_TFPrintf( PRINT_TARGET, "SCROLL_CONTROL " );   break;
-    case RESEARCH_SELECT_SEQ_CONFIRM_STANDBY:  OS_TFPrintf( PRINT_TARGET, "CONFIRM_STANDBY " );  break;
-    case RESEARCH_SELECT_SEQ_CONFIRM_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "CONFIRM_KEY_WAIT " ); break;
-    case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE " );        break;
-    case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN " );          break;
-    case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );         break;
-    case RESEARCH_SELECT_SEQ_FRAME_WAIT:       OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT " );       break;
-    case RESEARCH_SELECT_SEQ_SCROLL_RESET:     OS_TFPrintf( PRINT_TARGET, "SCROLL_RESET " );     break;
-    case RESEARCH_SELECT_SEQ_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET " );    break;
-    case RESEARCH_SELECT_SEQ_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP " );         break;
-    case RESEARCH_SELECT_SEQ_FINISH:           OS_TFPrintf( PRINT_TARGET, "FINISH " );           break;
-    default: GF_ASSERT(0);
-    }
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
-} 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief VBlankŠúŠÔ’†‚Ìƒ^ƒXƒN‚ğ‰ğœ‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ReleaseVBlankTask( RRL_WORK* work )
+{ 
+  GF_ASSERT( work->VBlankTask );
+
+  GFL_TCB_DeleteTask( work->VBlankTask );
+  work->VBlankTask = NULL;
+}
+
+
+
+
