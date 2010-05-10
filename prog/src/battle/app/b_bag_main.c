@@ -153,6 +153,8 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page );
 
 static BOOL CheckTimeOut( BBAG_WORK * wk );
 
+static void PlaySE( BBAG_WORK * wk, int no );
+
 //static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap );
 
 
@@ -503,7 +505,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
     case BBAG_UI_P1_STATUS_POCKET:    // 状態回復ポケット
     case BBAG_UI_P1_BALL_POCKET:      // ボールポケット
     case BBAG_UI_P1_BATTLE_POCKET:    // 戦闘用ポケット
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->poke_id = (u8)ret;
       wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_POCKET01+ret-BBAG_POKE_HPRCV );
@@ -511,7 +513,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 
     case BBAG_UI_P1_LAST_ITEM:    // 最後に使用した道具
       if( wk->used_item != ITEM_DUMMY_DATA ){
-        PMSND_PlaySE( SEQ_SE_DECIDE2 );
+        PlaySE( wk, SEQ_SE_DECIDE2 );
         wk->poke_id = wk->used_poke;
         wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
         BattleBag_CorsorReset( wk );
@@ -523,26 +525,26 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
     case BBAG_UI_P1_RETURN:   // 戻る
 /*
 			if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-				PMSND_PlaySE( SEQ_SE_CANCEL2 );
+				PlaySE( wk, SEQ_SE_CANCEL2 );
 			}else{
-				PMSND_PlaySE( SEQ_SE_DECIDE2 );
+				PlaySE( wk, SEQ_SE_DECIDE2 );
 			}
 */
-			PMSND_PlaySE( SEQ_SE_CANCEL2 );
+			PlaySE( wk, SEQ_SE_CANCEL2 );
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
       return SEQ_BBAG_ENDSET;
 
     case CURSORMOVE_CANCEL:   // キャンセル
-			PMSND_PlaySE( SEQ_SE_CANCEL2 );
+			PlaySE( wk, SEQ_SE_CANCEL2 );
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
       return SEQ_BBAG_ENDSET;
 
     case CURSORMOVE_CURSOR_MOVE:    // 移動
-      PMSND_PlaySE( SEQ_SE_SELECT1 );
+      PlaySE( wk, SEQ_SE_SELECT1 );
       break;
 
     case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
@@ -585,7 +587,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
   case BBAG_UI_P2_ITEM5:    // アイテム５
   case BBAG_UI_P2_ITEM6:    // アイテム６
     if( BattleBag_PosItemCheck( wk, ret ) != 0 ){
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->dat->item_pos[wk->poke_id] = (u8)ret;
       wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_ITEM01+ret );
@@ -596,12 +598,12 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
   case BBAG_UI_P2_RETURN:   // 戻る
 /*
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-			PMSND_PlaySE( SEQ_SE_CANCEL2 );
+			PlaySE( wk, SEQ_SE_CANCEL2 );
 		}else{
-			PMSND_PlaySE( SEQ_SE_DECIDE2 );
+			PlaySE( wk, SEQ_SE_DECIDE2 );
 		}
 */
-		PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PlaySE( wk, SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
@@ -614,7 +616,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
     break;
 
   case CURSORMOVE_CANCEL:   // キャンセル
-		PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PlaySE( wk, SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
       wk->dat->ret_item = ITEM_DUMMY_DATA;
@@ -628,7 +630,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 
   case BBAG_UI_P2_LEFT:     // 前へ
     if( wk->scr_max[wk->poke_id] != 0 ){
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->dat->item_pos[wk->poke_id] = 0;
       wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
       wk->page_mv = -1;
@@ -639,7 +641,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 
   case BBAG_UI_P2_RIGHT:    // 次へ
     if( wk->scr_max[wk->poke_id] != 0 ){
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->dat->item_pos[wk->poke_id] = 0;
       wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
       wk->page_mv = 1;
@@ -649,7 +651,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
     break;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
-    PMSND_PlaySE( SEQ_SE_SELECT1 );
+    PlaySE( wk, SEQ_SE_SELECT1 );
     break;
 
   case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
@@ -663,7 +665,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
       u8  pos = CURSORMOVE_PosGet( wk->cmwk );
       if( pos == BBAG_UI_P2_ITEM1 || pos == BBAG_UI_P2_ITEM3 || BBAG_UI_P2_ITEM5 ){
         if( wk->scr_max[wk->poke_id] != 0 ){
-        PMSND_PlaySE( SEQ_SE_DECIDE2 );
+        PlaySE( wk, SEQ_SE_DECIDE2 );
           wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
           wk->page_mv = -1;
           BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
@@ -678,7 +680,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
       u8  pos = CURSORMOVE_PosGet( wk->cmwk );
       if( pos == BBAG_UI_P2_ITEM2 || pos == BBAG_UI_P2_ITEM4 || BBAG_UI_P2_ITEM6 ){
         if( wk->scr_max[wk->poke_id] != 0 ){
-        PMSND_PlaySE( SEQ_SE_DECIDE2 );
+        PlaySE( wk, SEQ_SE_DECIDE2 );
           wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
           wk->page_mv = 1;
           BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
@@ -757,7 +759,7 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 
   switch( ret ){
   case BBAG_UI_P3_USE:    // 使う
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+    PlaySE( wk, SEQ_SE_DECIDE2 );
     wk->dat->ret_item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
     wk->dat->ret_page = wk->poke_id;
     if( wk->dat->mode == BBAG_MODE_SHOOTER ){
@@ -771,24 +773,24 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
   case BBAG_UI_P3_RETURN:   // 戻る
 /*
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-			PMSND_PlaySE( SEQ_SE_CANCEL2 );
+			PlaySE( wk, SEQ_SE_CANCEL2 );
 		}else{
-			PMSND_PlaySE( SEQ_SE_DECIDE2 );
+			PlaySE( wk, SEQ_SE_DECIDE2 );
 		}
 */
-		PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PlaySE( wk, SEQ_SE_CANCEL2 );
     wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     return SEQ_BBAG_BUTTON_WAIT;
 
   case CURSORMOVE_CANCEL:   // キャンセル
-		PMSND_PlaySE( SEQ_SE_CANCEL2 );
+		PlaySE( wk, SEQ_SE_CANCEL2 );
     wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     return SEQ_BBAG_BUTTON_WAIT;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
-    PMSND_PlaySE( SEQ_SE_SELECT1 );
+    PlaySE( wk, SEQ_SE_SELECT1 );
     break;
 
   case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
@@ -1210,7 +1212,7 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
   switch( wk->get_seq ){
 	case 0:
 		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->poke_id = BBAG_POKE_BALL;
       wk->ret_seq = SEQ_BBAG_GETDEMO;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_POCKET03 );
@@ -1230,7 +1232,7 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 
 	case 2:
 		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->dat->item_pos[wk->poke_id] = 0;
       wk->ret_seq = SEQ_BBAG_GETDEMO;
       BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_ITEM01 );
@@ -1250,7 +1252,7 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 
 	case 4:
 		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
+      PlaySE( wk, SEQ_SE_DECIDE2 );
       wk->dat->ret_item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
       wk->dat->ret_page = wk->poke_id;
       wk->dat->ret_cost = 0;
@@ -1668,3 +1670,9 @@ static BOOL CheckTimeOut( BBAG_WORK * wk )
 	return FALSE;
 }
 
+static void PlaySE( BBAG_WORK * wk, int no )
+{
+	if( wk->dat->commFlag == FALSE ){
+		PMSND_PlaySE( no );
+	}
+}
