@@ -183,6 +183,8 @@ static void _modeFadeStart(PDWACC_WORK* pWork)
 {
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_WHITE , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  PMSND_FadeOutBGM(PMSND_FADE_FAST);
+
   _CHANGE_STATE(_modeFadeout);        // èIÇÌÇË
 }
 
