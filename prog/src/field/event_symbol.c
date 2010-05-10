@@ -16,7 +16,6 @@
 #include "event_fieldtalk.h"
 
 #include "print/wordset.h"
-#include "event_comm_talk.h"
 #include "field/event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "event_symbol.h"
 

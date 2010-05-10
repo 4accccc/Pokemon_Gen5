@@ -16,7 +16,6 @@
 #include "event_fieldtalk.h"
 
 #include "print/wordset.h"
-#include "event_comm_talk.h"
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_comm_command.h"
 #include "field/field_comm/bingo_system.h"
