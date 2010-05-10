@@ -27,6 +27,7 @@
 #define R09R0201_FIX_SHOP_03              14
 #define R09R0201_FIX_SHOP_04              15
 #define R09R0201_FIX_SHOP_05              16
+#define R09R0201_TRAINERM_01              17
 
 #endif //ZONE_R09R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
