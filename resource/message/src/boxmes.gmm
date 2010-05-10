@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-04-27T15:33:11"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T15:55:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1389" top="379" right="2094" bottom="1007" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -398,7 +398,7 @@
 	<row id="msg_boxmes_01_11" back-color="#00ffff,,,#00ffff,,#00ffff,,#ff0000,,,#ff0000,#00ffff,,,,,,">
 		<comment>かべがみを選択しているときのメッセージ</comment>
 		<language name="JPN" width="216">どの　かべがみに　しますか？</language>
-		<language name="JPN_KANJI" width="216">どの　かべがみに　しますか？</language>
+		<language name="JPN_KANJI" width="216">どの　壁紙に　しますか？</language>
 	</row>
 
 	<row id="msg_boxmes_01_12" back-color="#ff0000,,,#ff0000,,#ff0000,,#ff0000,,,#ff0000,,,,,,,">

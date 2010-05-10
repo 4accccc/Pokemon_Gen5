@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T14:58:20"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T16:10:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -431,13 +431,13 @@
 	<row id="mes_config_sm03_00" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「試合のルール」-&gt;いれかえ</comment>
 		<language name="JPN" width="216" line="2">いれかえ</language>
-		<language name="JPN_KANJI" width="216" line="2">入れ替え</language>
+		<language name="JPN_KANJI" width="216" line="2">いれかえ</language>
 	</row>
 
 	<row id="mes_config_sm03_01" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「試合のルール」-&gt;かちぬき</comment>
 		<language name="JPN" width="216" line="2">かちぬき</language>
-		<language name="JPN_KANJI" width="216" line="2">勝ち抜き</language>
+		<language name="JPN_KANJI" width="216" line="2">かちぬき</language>
 	</row>
 
 	<row id="mes_config_sm04_00" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">

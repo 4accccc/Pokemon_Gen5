@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-19T21:25:06"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T16:08:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -363,7 +363,7 @@
 	<row id="mes_status_01_05">
 		<comment>項目名：もちもの</comment>
 		<language name="JPN" font=" 1:small" width="48">もちもの</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">持ち物</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">もちもの</language>
 	</row>
 
 	<row id="mes_status_01_06">
@@ -382,7 +382,7 @@
 	<row id="mes_status_02_01">
 		<comment>ポケモン情報ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="108">じょうほう</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">じょうほう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">情報</language>
 	</row>
 
 	<row id="mes_status_02_02">
@@ -1718,19 +1718,19 @@
 	<row id="mes_status_06_20">
 		<comment>戦う技ページの技入れ替え処理の項目名</comment>
 		<language name="JPN" font=" 1:small" width="48">いりょく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">威力</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">いりょく</language>
 	</row>
 
 	<row id="mes_status_06_21">
 		<comment>戦う技ページの技入れ替え処理の項目名</comment>
 		<language name="JPN" font=" 1:small" width="48">めいちゅう</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">命中</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">めいちゅう</language>
 	</row>
 
 	<row id="mes_status_06_22">
 		<comment>戦う技ページの技入れ替え処理の項目名</comment>
 		<language name="JPN" font=" 1:small" width="48">ぶんるい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">分類</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">ぶんるい</language>
 	</row>
 
 	<row id="mes_status_06_23">
