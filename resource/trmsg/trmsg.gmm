@@ -1412,10 +1412,10 @@
 	</row>
 
 	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まいったぜ……！
-も　　え　　つ　　き　　た</language>
-		<language name="JPN_KANJI" width="216">まいったぜ……！
-燃　　え　　つ　　き　　た</language>
+		<language name="JPN" width="216">まいったぜ……
+も　　　え　　　つ　　　き　　　た！</language>
+		<language name="JPN_KANJI" width="216">まいったぜ……
+燃　　　え　　　つ　　　き　　　た！</language>
 	</row>
 
 	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -1883,17 +1883,17 @@
 
 	<row id="TRID_TANPAN_02_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">がんばったよな
-オレの　ポケモン！</language>
+オレの　ポケモンたち！</language>
 		<language name="JPN_KANJI" width="216">がんばったよな
-オレの　ポケモン！</language>
+オレの　ポケモンたち！</language>
 	</row>
 
 	<row id="TRID_TANPAN_02_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">オレには　もくひょうが　ある！
-ポケモンが　いてくれる！▽
+ポケモンたちが　いてくれる！▽
 だから　どこまでも　がんばれる！</language>
 		<language name="JPN_KANJI" width="216">オレには　目標が　ある！
-ポケモンが　いてくれる！▽
+ポケモンたちが　いてくれる！▽
 だから　どこまでも　がんばれる！</language>
 	</row>
 
