@@ -1057,6 +1057,7 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->pfd = BTLV_EFFECT_GetPfd();
   plist->gamedata = BTL_MAIN_GetGameData( wk->mainModule );
   plist->time_out_flg = FALSE;
+  plist->commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
   plist->end_flg = FALSE;
 }
 //=============================================================================================
