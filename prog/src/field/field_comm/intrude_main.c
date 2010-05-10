@@ -1006,7 +1006,7 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
 
 #if 0
   if(sta->disguise_no == 0 || sta->disguise_no >= NELEMS(DisguiseObjCodeTbl)){
-#else //※check　OBJCODE最大数チェックを入れる
+#else
   if(sta->disguise_no == DISGUISE_NO_NULL){
 #endif
     obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
@@ -1016,6 +1016,12 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
   }
   else{
     obj_code = sta->disguise_no;
+  }
+  
+  if((obj_code >= OBJCODEEND_BBD && obj_code < OBJCODESTART_TPOKE) 
+      || obj_code >= OBJCODEEND_TPOKE){
+    obj_code = BOY1;
+    GF_ASSERT(0);
   }
   
   return obj_code;
