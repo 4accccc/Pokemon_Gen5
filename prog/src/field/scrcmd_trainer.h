@@ -30,9 +30,6 @@ extern VMCMD_RESULT EvCmdTrainerSpecialTypeGet( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerItemGet( VMHANDLE *core, void *wk );
 
 
-extern VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk );
-
 extern VMCMD_RESULT EvCmdGetTradeAfterTrainerBattleSet( VMHANDLE *core, void *wk ); // 交換後トレーナーとの対戦
 
 

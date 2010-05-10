@@ -405,53 +405,6 @@ VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 観覧車トレーナーのOBJIDを返す
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-	u16  id	= SCRCMD_GetVMWorkValue( core, work );
-	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
- 
-  static const u16 obj_tbl[] = {
-    GIRL2, DANCER,
-    MOUNTMAN, TRAINERM,
-    OL, WAITRESS,
-    BABYGIRL2, BOY4,
-  };
-	*ret_wk = obj_tbl[id];
-	return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 観覧車トレーナーのトレーナーIDを返す
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-	u16  id	= SCRCMD_GetVMWorkValue( core, work );
-	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
-  
-  static const u16 trid_tbl[] = {
-    TRID_MINI_06, TRID_DANCER_03,
-    TRID_MOUNT_13, TRID_ELITEM_14,
-    TRID_OL_04, TRID_WAITRESS_04,
-    TRID_KINDERGARTENW_05,TRID_PRINCE_05,
-  };
-
-	*ret_wk = trid_tbl[id];
-	return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief スクリプトコマンド：トレーナー：特殊タイプ取得
  */
 //--------------------------------------------------------------
