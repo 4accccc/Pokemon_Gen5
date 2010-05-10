@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T19:56:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T16:59:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,9 +357,13 @@
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえは　ダメダメ！！
-いま　じっけんちゅう　なんだって！</language>
+いま　じっけんちゅう　なんだって！▼
+マコモねえちゃん
+すっげー　かおして　いってたもん！</language>
 		<language name="JPN_KANJI" width="256">上は　ダメダメ！！
-今　実験中　なんだって！</language>
+今　実験中　なんだって！▼
+マコモねえちゃん
+すっげー　顔して　いってたもん！</language>
 	</row>
 
 	<row id="msg_c01r0101_boy3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -367,9 +371,9 @@
 ・c01ジムバッジ取得後、座標移動</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
-		<language name="JPN" width="256">うえに　すんでる　ねえちゃん
+		<language name="JPN" width="256">うえの　マコモねえちゃん
 ああみえて　すごい　けんきゅうか！</language>
-		<language name="JPN_KANJI" width="256">２階の　姉ちゃん
+		<language name="JPN_KANJI" width="256">２階の　マコモねえちゃん
 ああ見えて　すごい　研究家だって</language>
 	</row>
 
