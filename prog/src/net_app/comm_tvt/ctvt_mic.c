@@ -421,7 +421,8 @@ static void CTVT_MIC_PlayWaveMain( CTVT_MIC_WORK *micWork )
 //--------------------------------------------------------------
 const BOOL CTVT_MIC_PlayWave( CTVT_MIC_WORK *micWork , void *buffer , u32 size , u8 volume , int speed )
 {
-  if( size > 0 )
+  //余りにも小さいサイズは再生しない
+  if( size > 32 )
   {
     const BOOL ret = NNS_SndWaveOutStart(
                       micWork->waveHandle ,

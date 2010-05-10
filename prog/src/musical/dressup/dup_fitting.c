@@ -2297,6 +2297,7 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
   dispPos.y = work->tpy;
   pos.x = FX32_CONST(work->tpx);
   pos.y = FX32_CONST(work->tpy);
+  OS_TPrintf("[%3d][%3d]\n",work->tpx,work->tpy);
 
   item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys , itemState , &pos );
   DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField,item );
@@ -2307,6 +2308,7 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
   itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
   MUS_ITEM_DRAW_GetSize( work->itemDrawSys , holdDrawWork ,&scaleX,&scaleY );
   MUS_ITEM_DRAW_SetSize( work->itemDrawSys , itemDrawWork ,scaleX,scaleY );
+  MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , itemDrawWork , FALSE );
 
   //À•W‹L‰¯
   befPos = DUP_FIT_ITEM_GetPosition( work->holdItem );
