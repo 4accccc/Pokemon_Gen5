@@ -6999,12 +6999,15 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
 //---------------------------------------------------------------------------------------------
 static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 wazaDamage )
 {
-  u32 damage = scEvent_CalcKickBack( wk, attacker, waza, wazaDamage );
-  if( damage )
+  if( !BPP_IsDead(attacker) )
   {
-    HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
-    HANDEX_STR_AddArg( &wk->strParam, BPP_GetID(attacker) );
-    scproc_SimpleDamage( wk, attacker, damage, &wk->strParam );
+    u32 damage = scEvent_CalcKickBack( wk, attacker, waza, wazaDamage );
+    if( damage )
+    {
+      HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
+      HANDEX_STR_AddArg( &wk->strParam, BPP_GetID(attacker) );
+      scproc_SimpleDamage( wk, attacker, damage, &wk->strParam );
+    }
   }
 }
 //---------------------------------------------------------------------------------------------
