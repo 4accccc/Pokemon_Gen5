@@ -384,13 +384,6 @@ EVENT_START    ev_pos_h03_sage_01
 		_OBJ_ANIME( H03_NINJA_03,anm_ninja_03_idou_01_24)
 	ENDIF
 	_OBJ_ANIME_WAIT()
-
-/*
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
-	_OBJ_ANIME_WAIT()
-*/	
 	
 	_BALLOONWIN_OBJMSG_POS( msg_h03_ninja_02, H03_NINJA_02, POS_UP )
 	_MSGWIN_CLOSE()
@@ -524,6 +517,7 @@ _ANIME_LABEL	anm_sage1_move_05
 //ダークトリニティ:出現する             
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_add
+	_ANIME_DATA	AC_VANISH_OFF,1
 	_ANIME_DATA AC_NINJA_ACT0,1
 	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -533,6 +527,7 @@ _ANIME_LABEL	anm_ninja_add
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_del
 	_ANIME_DATA AC_NINJA_ACT1,1
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

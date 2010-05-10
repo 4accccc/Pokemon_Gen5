@@ -251,6 +251,7 @@ _ANIME_LABEL	anm_ninja_add
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ninja_del
 	_ANIME_DATA AC_NINJA_ACT1,1
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -352,7 +353,7 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	//ホワイトがやってくる
 	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_01)
 	//主人公の動きとサポートの動きを合わせる為のウェイト
-	_TIME_WAIT(96)
+	_TIME_WAIT(80)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_turn_s1)
 	_OBJ_ANIME_WAIT()
 	
@@ -506,7 +507,6 @@ _ANIME_LABEL	anm_heroine_kuru_01
 	_ANIME_DATA AC_WALK_U_8F,3
 	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA AC_WAIT_4F,5
-	_ANIME_DATA AC_WAIT_16F,1
 	_ANIME_DATA AC_WALK_U_8F,2
 	_ANIME_DATA AC_WAIT_16F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
