@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T19:00:05"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T16:14:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -416,7 +416,7 @@
 ポケモンは　じどうてきに▽
 パソコンに　おくられるのよ！▼
 すばらしいでしょ！　びっくりでしょ！▼
-あと　アララギのパソコンを　えらべば
+あと　はかせのパソコンを　えらべば
 わたしが　ずかんひょうか　しまーす！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『これは　パソコン！
 トレーナーなら　だれでも　使えるの▼
@@ -428,7 +428,7 @@
 新しく　捕まえた　ポケモンは
 自動的に　パソコンに　転送されるの！▼
 すばらしいでしょ！　びっくりでしょ！▼
-あと　アララギのパソコンを　選べば
+あと　博士のパソコンを　選べば
 わたしが　図鑑評価　しまーす！▼</language>
 	</row>
 
