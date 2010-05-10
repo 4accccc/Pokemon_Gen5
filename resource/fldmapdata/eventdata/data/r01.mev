@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 22:20:28
+#save date:2010/05/10 16:25:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
@@ -404,25 +404,8 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+1
 #event number: 0
-#Pos Event Label
-POSID_R01_POKE_GETDEMO_01
-#Pos Script Name
-SCRID_R01_POKE_GETDEMO_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_R01
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-552 0 -664
-#size
-6 1
-#event number: 1
 #Pos Event Label
 POSID_R01_POKECOUNT_01
 #Pos Script Name
