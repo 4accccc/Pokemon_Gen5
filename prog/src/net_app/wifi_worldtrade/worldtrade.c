@@ -54,7 +54,7 @@
 
 FS_EXTERN_OVERLAY( dpw_common );
 FS_EXTERN_OVERLAY( ui_common );
-FS_EXTERN_OVERLAY( app_mail );
+//FS_EXTERN_OVERLAY( app_mail );
 
 //============================================================================================
 //  íËêîíËã`
@@ -136,7 +136,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dpw_common ) );
   //à»â∫ÉfÉÇÇ≈égÇ§ÇÃÇ≈åƒÇ‘
   GFL_OVERLAY_Load( FS_OVERLAY_ID( ui_common ));
-  GFL_OVERLAY_Load( FS_OVERLAY_ID( app_mail ));
+//  GFL_OVERLAY_Load( FS_OVERLAY_ID( app_mail ));
 #if PM_DEBUG
   GFL_NET_DebugPrintOn();
 #endif
@@ -324,7 +324,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 
   GFL_HEAP_DeleteHeap( HEAPID_WORLDTRADE );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID( app_mail ) );
+//  GFL_OVERLAY_Unload( FS_OVERLAY_ID( app_mail ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
 

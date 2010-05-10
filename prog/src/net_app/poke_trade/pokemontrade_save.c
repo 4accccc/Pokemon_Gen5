@@ -596,7 +596,28 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     int item = PP_Get( pp , ID_PARA_item ,NULL);
     if(ITEM_CheckMail(item)){
       MAIL_BLOCK* pMailBlock = GAMEDATA_GetMailBlock(pWork->pGameData);
-      MailSys_MoveMailPoke2Paso(pMailBlock, pp, pWork->heapID);
+
+      {
+        int id;
+        int itemno = ITEM_DUMMY_DATA;
+        MAIL_DATA* src = NULL;
+        //空き領域検索
+        id = MAIL_SearchNullID(pMailBlock,MAILBLOCK_PASOCOM);
+        if(id != MAILDATA_NULLID){
+          //ワーク作成
+          src = MailData_CreateWork(pWork->heapID);
+          //ポケモンからメールを取得
+          PP_Get(pp,ID_PARA_mail_data,src);
+          //パソコン領域にデータコピー
+          MAIL_AddMailFormWork(pMailBlock,MAILBLOCK_PASOCOM,id,src);
+          //ポケモンからメールを外す
+          MailData_Clear(src);
+          PP_Put(pp,ID_PARA_mail_data,(u32)src);
+          PP_Put(pp,ID_PARA_item,itemno);
+          //領域解放
+          GFL_HEAP_FreeMemory(src);
+        }
+      }
     }
   }
 
@@ -822,11 +843,6 @@ void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork)
   GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
   GFL_NET_ReloadIcon();
 
-  {
-//    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
-//    GF_ASSERT(MAILDATA_NULLID != MailSys_MoveMailPoke2Paso(pWork->pMailBlock, pp, pWork->heapID));
-  }
-  
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   _CHANGE_STATE(pWork,_changeTimingSaveStart);

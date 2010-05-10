@@ -9,6 +9,8 @@
 
 
 #include <gflib.h>
+
+#include "system/main.h"
 #include "arc_def.h"
 #include "poke_tool/monsno_def.h"
 
@@ -618,9 +620,11 @@ void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
   pWork->modelno = -1;
 
   // 初期化処理
-  _demoInit( GetHeapLowID(pWork->heapID) );
+//  _demoInit( GetHeapLowID(pWork->heapID) );
+  _demoInit( HEAPID_POKEMONTRADE_STATIC );
   // 3D管理ユーティリティーのセットアップ
-  pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, GetHeapLowID(pWork->heapID) );
+//  pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, GetHeapLowID(pWork->heapID) );
+  pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, HEAPID_POKEMONTRADE_STATIC );
 
   // カメラ作成
   if(pWork->camera==NULL)

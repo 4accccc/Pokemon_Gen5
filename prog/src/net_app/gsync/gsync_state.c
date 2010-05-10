@@ -421,11 +421,6 @@ static void _wakeupActio9(G_SYNC_WORK* pWork)
   }
   
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-
-    PMSND_PopBGM();
-    PMSND_PauseBGM(FALSE);
-    PMSND_FadeInBGM(PMSND_FADE_FAST);
-
     _CHANGE_STATE(_wakeupActio92);
   }
 }

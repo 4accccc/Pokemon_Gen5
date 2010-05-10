@@ -180,6 +180,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_POP_BGM:
     if(dbw->push){
       PMSND_PopBGM();
+      PMSND_PauseBGM( FALSE ); // BGM‚ð‰ðœ
       PMSND_FadeInBGM( PMSND_FADE_NORMAL );
       dbw->push=FALSE;
     } 
@@ -198,6 +199,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         (*seq) = _GAMESYNC_MAINPROC;  //BOX‚©‚ç•\Ž¦‚ð‚µ‚ÄI—¹‚·‚é‚½‚ß‚É
       }
       else{
+        PMSND_PauseBGM( TRUE ); // BGM‚ðˆêŽž’âŽ~        
         PMSND_PushBGM();
         dbw->push=TRUE;
         dbw->aLoginWork.pSvl = &dbw->aSVL;
@@ -239,6 +241,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         (*seq)=_CALL_GAMESYNC_MENU;
         if(dbw->push){
           PMSND_PopBGM();
+          PMSND_PauseBGM( FALSE ); // BGM‚ð‰ðœ
           PMSND_FadeInBGM( PMSND_FADE_NORMAL );
           dbw->push=FALSE;
         }
