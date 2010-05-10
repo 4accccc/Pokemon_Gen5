@@ -72,7 +72,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 
 
-//#define DEBUG_FLAG_GPF_PASS_ON    //GPFをスルーするフラグの使用
+#define DEBUG_FLAG_GPF_PASS_ON    //GPFをスルーするフラグの使用
 
 #endif //PM_DEBUG
 
@@ -416,8 +416,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
   DEBUGWIN_WIFISCORE_Exit();
   DEBUGWIN_ExitProc();
 #endif
-
-  PMSND_PopBGM();
 
 	//モジュールの破棄
   WBM_WAITICON_Exit( p_wk->p_wait );
