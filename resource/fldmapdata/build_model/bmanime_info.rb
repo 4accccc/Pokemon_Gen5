@@ -10,6 +10,8 @@ INPUT_FILE = ARGV[0]
 OUTPUT_FILE = ARGV[1]
 OUTPUT_HEADER = OUTPUT_FILE.sub(/\.bin/,"\.h")
 
+ANMDATA_OUTPUT_DIR = ARGV[2]
+
 lib_path_naixread = ENV["PROJECT_ROOT"] + "tools/naixread"
 require lib_path_naixread
 
@@ -138,6 +140,7 @@ begin
 
   #バイナリファイル生成：出力データ作成
   str = ""
+  count = 0;
   bmarray.each{|anm|
     #アニメタイプ、動作指定、アニメカウント、セットカウント
     arr = [anm.anm_type, anm.prog_type, anm.anmset_num, anm.pattern_count]
@@ -154,7 +157,11 @@ begin
     (BmAnime.MAX_FILE - anm.files.length).times do |i|
       arr << 0xffff
     end
-  
+
+    #1アニメデータをanmdatに出力
+    File.open( "#{ANMDATA_OUTPUT_DIR}/anmdat_#{count}.dat", "wb" ){|file| file.write(arr.pack("C C C C S4"))}
+    
+    count += 1
     str += arr.pack("C C C C S4")
   }
   #バイナリファイル生成：出力

@@ -1,0 +1,59 @@
+#------------------------------------------------------------------------------
+#
+#	配置モデルデータコンバート用Makefile
+#       nsbmdfiles bminfo パッケージ
+#
+# output に buildmodel_indoor.narc buildmodel_outdoor.narcまで生成
+#------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
+
+#dependファイル
+DEPEND_FILE_OUTDOOR = outdoor_pack_depend
+DEPEND_FILE_INDOOR = indoor_pack_depend
+ARCLIST_OUTDOOR = outdoor.list
+ARCLIST_INDOOR = indoor.list
+DEPEND_OBJ_OUTDOOR = outdoor_pack_depend_obj
+DEPEND_OBJ_INDOOR = indoor_pack_depend_obj
+
+
+OUTPUT_DIR = output
+
+TARGET_INDOOR = buildmodel_indoor_area
+TARGET_OUTDOOR = buildmodel_outdoor_area
+
+
+
+
+
+do-build: $(TARGETDIR)/$(TARGET_INDOOR).narc $(TARGETDIR)/$(TARGET_OUTDOOR).narc
+
+-include $(DEPEND_FILE_OUTDOOR)
+-include $(DEPEND_FILE_INDOOR)
+-include $(DEPEND_OBJ_OUTDOOR)
+-include $(DEPEND_OBJ_INDOOR)
+
+
+$(TARGETDIR)/$(TARGET_OUTDOOR).narc:	$(OUTPUT_DIR)/$(TARGET_OUTDOOR).narc
+	@$(COPY)	$(OUTPUT_DIR)/$(TARGET_OUTDOOR).narc $(TARGETDIR)
+	@$(COPY) $(OUTPUT_DIR)/$(TARGET_OUTDOOR).naix $(TARGETDIR)
+
+$(TARGETDIR)/$(TARGET_INDOOR).narc:	$(OUTPUT_DIR)/$(TARGET_INDOOR).narc
+	@$(COPY)	$(OUTPUT_DIR)/$(TARGET_INDOOR).narc $(TARGETDIR)
+	@$(COPY) $(OUTPUT_DIR)/$(TARGET_INDOOR).naix $(TARGETDIR)
+
+
+#アーカイブ処理
+$(OUTPUT_DIR)/$(TARGET_INDOOR).narc:$(indoor_OBJ)
+	nnsarc -c -l -n -i $(OUTPUT_DIR)/$(TARGET_INDOOR).narc -S $(ARCLIST_INDOOR)
+
+$(OUTPUT_DIR)/$(TARGET_OUTDOOR).narc:$(outdoor_OBJ)
+	nnsarc -c -l -n -i $(OUTPUT_DIR)/$(TARGET_OUTDOOR).narc -S $(ARCLIST_OUTDOOR)
+

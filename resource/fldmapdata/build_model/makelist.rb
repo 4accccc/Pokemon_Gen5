@@ -34,11 +34,30 @@ COL_SUBMODEL_X = 11
 COL_SUBMODEL_Y = 12
 COL_SUBMODEL_Z = 13
 
+
+#入力ファイル（Excelファイルをタブ区切りテキストに変換したもの）
+INPUT_FILE	=	ARGV[0]
+#依存ファイルを定義するMakefile変数のシンボル名
+DEP_SYMBOL	= ARGV[1]
+#依存ファイル定義を記述するファイルの名前
+DEP_FILE	=	ARGV[2]
+#アーカイブ対象ファイルを記述するファイルの名前
+ARC_FILE	=	ARGV[3]
+
+BIN_FILE  = ARGV[4]
+#アニメダットの取得ディレクトリ
+INPUT_ANMDAT_DIR = ARGV[5]
+#BMINFOの格納先ディレクトリ
+OUTPUT_BMINFO_DIR = ARGV[6]
+
+
+
+
 #------------------------------------------------------------------------------
 # 配置モデルデータを保持するクラス
 #------------------------------------------------------------------------------
 class BMData
-  attr_reader :sym, :anime_id, :prog, :submodel_id, :submodel_pos
+  attr_reader :sym, :bm_id, :anime_id, :prog, :submodel_id, :submodel_pos
 
   #------------------------------------------------------------------------------
   # アニメIDの辞書生成
@@ -79,6 +98,7 @@ class BMData
       raise TooMuchSymbolError, "配置モデルの種類が制限値（#{BUILDMODEL_ID_MAX})を超えています！！"
     end
     @sym = sym
+    @bm_id = @@syms.index(sym)
     @anime_id = getAnimeID( anime_id )
     @prog = getProgID( prog )
     @submodel = submodel
@@ -91,8 +111,17 @@ class BMData
   def dump()
     #p self
     output = ""
-    output += [ @anime_id, @prog, @submodel_id ].pack("SSS")
+    output += [ @bm_id, @prog, @submodel_id ].pack("SSS")
     output += [ @smx, @smy, @smz ].pack("sss")
+    output += [ @anime_id, 0 ].pack("SS")
+
+    #アニメデータを読み込み、追加
+    #FIELD_BMANIME_DATA
+    if @anime_id != 0xffff then
+      File.open( "#{INPUT_ANMDAT_DIR}/anmdat_#{@anime_id}.dat", "rb" ){|file| output += file.read() }
+    else
+      output += [ 0,0,0,0, 0xffff,0xffff,0xffff,0xffff ].pack( "CCCCSSSS" )
+    end
   end
   
   #------------------------------------------------------------------------------
@@ -143,16 +172,6 @@ end
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-#入力ファイル（Excelファイルをタブ区切りテキストに変換したもの）
-INPUT_FILE	=	ARGV[0]
-#依存ファイルを定義するMakefile変数のシンボル名
-DEP_SYMBOL	= ARGV[1]
-#依存ファイル定義を記述するファイルの名前
-DEP_FILE	=	ARGV[2]
-#アーカイブ対象ファイルを記述するファイルの名前
-ARC_FILE	=	ARGV[3]
-
-BIN_FILE  = ARGV[4]
 
 
 
@@ -176,6 +195,9 @@ File.open(INPUT_FILE, "r"){|input_file|
 output = ""
 bmdata.each{|bm|
   bm.createSubModelID()
+
+  File.open("#{OUTPUT_BMINFO_DIR}/bminfo_#{bm.bm_id}.dat", "wb"){|file| file.write( bm.dump ) }
+  
   output += bm.dump
 }
 bin_file = File.open(BIN_FILE, "wb")
