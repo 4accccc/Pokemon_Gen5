@@ -66,24 +66,11 @@ enum {
 #include "../camera_scroll/camera_scroll.naix"//カメラエリアデータ
 #include "../../../prog/src/field/map_change_type.h" //マップ切り替えタイプ定義ファイル
 #include "../mm_list/mmlist_def.h" //動作モデル登録定義ファイル
+#include "../../../prog/include/field/weather_no.h" // 天気
 
 enum {
 	enc_dummy = 0xffff,
 
 	camera_area_dummy = 0xffff,
 };
-
-//pokemon_wb/prog/include/field/weather_no.hから暫定こぴー。
-//実際にはちゃんと参照できるようにすること！！
-#define		WEATHER_NO_SUNNY			(0)				// 晴れ
-#define		WEATHER_NO_SNOW				(1)				// 雪		
-#define		WEATHER_NO_RAIN				(2)				// 雨		
-#define		WEATHER_NO_STORM			(3)				// 砂嵐		
-#define		WEATHER_NO_SPARK			(4)				// 雷雨
-#define		WEATHER_NO_SNOWSTORM		(5)				// 吹雪
-#define		WEATHER_NO_ARARE			(6)				// 吹雪
-#define		WEATHER_NO_RAIKAMI			(7)				// ライカミ
-#define		WEATHER_NO_KAZAKAMI			(8)				// カザカミ
-
-#define		WEATHER_NO_MIRAGE			(9)				// 蜃気楼
 

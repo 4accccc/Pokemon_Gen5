@@ -53,6 +53,7 @@ DEPFILES	= ../area_data/area_id.h \
 						../script/script_seq.naix \
 						../../message/script_message.naix \
 						../../encount/encount_data_w.naix \
+						../../../prog/include/field/weather_no.h \
 						tmp/map_matrix.h
 
 MATRIXDATA = ../map_matrix/map_matrix.xls
