@@ -33,7 +33,7 @@
 	<tex_image index="0" name="t4x4x22.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.1.tga"
 	>
@@ -75,7 +75,7 @@
 	<tex_image index="1" name="t4x4x22.10"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.10.tga"
 	>
@@ -117,7 +117,7 @@
 	<tex_image index="2" name="t4x4x22.11"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.11.tga"
 	>
@@ -159,7 +159,7 @@
 	<tex_image index="3" name="t4x4x22.12"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.12.tga"
 	>
@@ -201,7 +201,7 @@
 	<tex_image index="4" name="t4x4x22.13"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.13.tga"
 	>
@@ -243,7 +243,7 @@
 	<tex_image index="5" name="t4x4x22.14"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.14.tga"
 	>
@@ -285,7 +285,7 @@
 	<tex_image index="6" name="t4x4x22.15"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.15.tga"
 	>
@@ -327,7 +327,7 @@
 	<tex_image index="7" name="t4x4x22.16"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.16.tga"
 	>
@@ -369,7 +369,7 @@
 	<tex_image index="8" name="t4x4x22.17"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.17.tga"
 	>
@@ -411,7 +411,7 @@
 	<tex_image index="9" name="t4x4x22.18"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.18.tga"
 	>
@@ -453,7 +453,7 @@
 	<tex_image index="10" name="t4x4x22.19"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.19.tga"
 	>
@@ -495,7 +495,7 @@
 	<tex_image index="11" name="t4x4x22.2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.2.tga"
 	>
@@ -537,7 +537,7 @@
 	<tex_image index="12" name="t4x4x22.20"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.20.tga"
 	>
@@ -579,7 +579,7 @@
 	<tex_image index="13" name="t4x4x22.21"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.21.tga"
 	>
@@ -621,7 +621,7 @@
 	<tex_image index="14" name="t4x4x22.22"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.22.tga"
 	>
@@ -663,7 +663,7 @@
 	<tex_image index="15" name="t4x4x22.3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.3.tga"
 	>
@@ -705,7 +705,7 @@
 	<tex_image index="16" name="t4x4x22.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.4.tga"
 	>
@@ -747,7 +747,7 @@
 	<tex_image index="17" name="t4x4x22.5"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.5.tga"
 	>
@@ -789,7 +789,7 @@
 	<tex_image index="18" name="t4x4x22.6"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.6.tga"
 	>
@@ -831,7 +831,7 @@
 	<tex_image index="19" name="t4x4x22.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.7.tga"
 	>
@@ -873,7 +873,7 @@
 	<tex_image index="20" name="t4x4x22.8"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.8.tga"
 	>
@@ -915,7 +915,7 @@
 	<tex_image index="21" name="t4x4x22.9"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="t4x4x22"
 		path="C:/home/wb_data3d/field/fldobj/t4x4x22.9.tga"
 	>
