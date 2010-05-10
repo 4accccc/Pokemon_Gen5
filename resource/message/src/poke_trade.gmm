@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-07T20:52:22"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-10T20:54:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="333" top="131" right="1033" bottom="753" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="763" top="311" right="1236" bottom="710" visible="no"/>
-		<band id="0" index="0" style="0000" width="525"/>
+	<dialog left="1273" top="363" right="1964" bottom="985" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="311" right="1024" bottom="710" visible="no"/>
+		<band id="0" index="0" style="0000" width="516"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="692"/>
-		<band id="3" index="3" style="0000" width="692"/>
+		<band id="2" index="2" style="0000" width="683"/>
+		<band id="3" index="3" style="0000" width="683"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -457,7 +457,7 @@
 		<language name="JPN" width="256">あそぶないようが　ちがったので
 さいしょに　もどります</language>
 		<language name="JPN_KANJI" width="256">遊ぶ内容が　違ったので
-最初に　戻ります</language>
+最初に　もどります</language>
 	</row>
 
 	<row id="POKETRADE_STR_26">
