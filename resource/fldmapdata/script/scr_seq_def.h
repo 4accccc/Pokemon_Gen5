@@ -3186,6 +3186,41 @@
   .short  \frame
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  @def _BGM_VOLUME_DOWN 
+ *  @brief BGM の音量を下げる
+ *  @param volume 音量 ( MIN 0～127 MAX )
+ *  @param frame  フェードアウトフレーム数
+ *
+ *  ※ボリュームを下げたら, 
+ *    必ず _BGM_VOLUME_RECOVER() で元に戻してください。
+ */
+//--------------------------------------------------------------
+#define _BGM_VOLUME_DOWN( volume, frame ) \
+		_ASM_BGM_VOLUME_DOWN volume, frame
+
+  .macro  _ASM_BGM_VOLUME_DOWN volume, frame
+  .short  EV_SEQ_BGM_VOLUME_DOWN
+  .short  \volume
+  .short  \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _BGM_VOLUME_RECOVER 
+ *  @brief BGM の音量を下げる
+ *  @param frame フェードインフレーム数
+ */
+//--------------------------------------------------------------
+#define _BGM_VOLUME_RECOVER( frame ) \
+		_ASM_BGM_VOLUME_RECOVER frame
+
+  .macro  _ASM_BGM_VOLUME_RECOVER frame
+  .short  EV_SEQ_BGM_VOLUME_RECOVER
+  .short  \frame
+  .endm
+
 
 //======================================================================
 //  サウンド ISS

@@ -882,6 +882,10 @@
 
   //地名表示リクエスト発行
   DEF_CMD( EvCmdPlaceNameDisplay, EV_SEQ_PLACE_NAME_DISPLAY )
+
+  //BGM のボリュームコントロール
+  DEF_CMD( EvCmdBgmVolumeDown, EV_SEQ_BGM_VOLUME_DOWN )
+  DEF_CMD( EvCmdBgmVolumeRecover, EV_SEQ_BGM_VOLUME_RECOVER )
   
   END_CMD
   //スクリプトコマンドテーブル終了

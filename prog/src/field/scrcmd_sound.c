@@ -165,6 +165,7 @@ static BOOL EvWaitBgm( VMHANDLE *core, void *wk )
   }
   return FALSE;
 }
+
 //--------------------------------------------------------------
 /**
  * BGM終了待ち
@@ -175,8 +176,83 @@ static BOOL EvWaitBgm( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBgmWait( VMHANDLE *core, void *wk )
 {
   VMCMD_SetWait( core, EvWaitBgm );
-  return VMCMD_RESULT_SUSPEND;
+  return VMCMD_RESULT_SUSPEND; 
+}
 
+//--------------------------------------------------------------
+/**
+ * BGM のボリュームを下げる
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmVolumeDown( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work = wk;
+  GAMESYS_WORK*  gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( gameData );
+  u16 volume, frame;
+
+  volume = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: ボリューム
+  frame  = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: フレーム数
+
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, volume, frame );  
+  SCREND_CHK_SetBitOn( SCREND_CHK_BGM_VOLUME_DOWN );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGM のボリュームを復帰させる
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmVolumeRecover( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work = wk;
+  GAMESYS_WORK*  gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( gameData );
+  u16 frame;
+
+  frame  = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: フレーム数
+
+  FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, frame );  
+  SCREND_CHK_SetBitOff( SCREND_CHK_BGM_VOLUME_DOWN );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGM ボリューム操作処理の対チェック
+ *
+ *	@param	end_check   ワーク
+ *	@param	seq         シーケンス
+ *
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL SCREND_CheckEndBGMVolumeDown( SCREND_CHECK *end_check, int *seq )
+{
+  GAMEDATA*    gameData   = GAMESYSTEM_GetGameData( end_check->gsys );
+  FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
+
+  switch( *seq ){
+  case 0:
+    FIELD_SOUND_ChangePlayerVolume( fieldSound, 127, 0 );  
+    (*seq) ++;
+    break;
+  case 1:
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

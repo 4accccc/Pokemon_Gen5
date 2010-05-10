@@ -16,20 +16,18 @@
 //BGM
 extern VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk );
-//extern VMCMD_RESULT EvCmdBgmStop( VMHANDLE *core, void *wk );
-//extern VMCMD_RESULT EvCmdBgmPlayerPause( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk );
-//extern VMCMD_RESULT EvCmdBgmFadeOut( VMHANDLE *core, void *wk );
-//extern VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmFadeWait( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPush( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPop( VMHANDLE *core, void *wk );
-extern BOOL SCREND_CheckEndBGMPushPop( SCREND_CHECK *end_check, int *seq );
-
+extern BOOL SCREND_CheckEndBGMPushPop( SCREND_CHECK *end_check, int *seq ); 
 extern VMCMD_RESULT EvCmdBgmWait( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBgmVolumeDown( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBgmVolumeRecover( VMHANDLE *core, void *wk );
+extern BOOL SCREND_CheckEndBGMVolumeDown( SCREND_CHECK *end_check, int *seq ); 
 
 //SE
 extern VMCMD_RESULT EvCmdSePlay( VMHANDLE *core, void *wk );

@@ -1173,34 +1173,6 @@ void FSND_ReleaseBGMVolume_fromApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
   FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, APP_FADE_FRAME );
 }
 
-#if 0
-//---------------------------------------------------------------------------------
-/**
- * @brief アプリ内における BGMボリューム操作 ( 下げる場合 )
- *
- * @param fieldSound
- */
-//---------------------------------------------------------------------------------
-void FSND_HoldBGMVolume_inApp( FIELD_SOUND* fieldSound )
-{
-  // プレイヤーボリュームを即時設定
-  FIELD_SOUND_ChangePlayerVolume( fieldSound, APP_HOLD_VOLUME, 0 );  
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief アプリ内における BGMボリューム操作 ( 上げる場合 )
- *
- * @param fieldSound
- */
-//---------------------------------------------------------------------------------
-void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
-{
-  // プレイヤーボリュームを即時設定
-  FIELD_SOUND_ChangePlayerVolume( fieldSound, MAX_VOLUME, 0 );  
-}
-#endif
-
 
 //=================================================================================
 // ■BGM No.取得
