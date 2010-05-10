@@ -342,6 +342,8 @@ static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL msgPokanCallback( u32 arg );
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
@@ -4902,6 +4904,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_EFFECT_BYVECTOR,   scProc_ACT_EffectByVector },
     { SC_ACT_CHANGE_FORM,       scProc_ACT_ChangeForm     },
     { SC_ACT_RESET_MOVE,        scProc_ACT_ResetMove      },
+    { SC_ACT_MIGAWARI_CREATE,   scProc_ACT_MigawariCreate },
+    { SC_ACT_MIGAWARI_DELETE,   scProc_ACT_MigawariDelete },
   };
 
 restart:
@@ -5950,6 +5954,54 @@ static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args )
       return TRUE;
     }
     break;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  ‚Ý‚ª‚í‚èì¬
+ *  args .. [0]:pos
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      BTLV_EFFECT_CreateMigawari( vpos );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  ‚Ý‚ª‚í‚èíœ
+ *  args .. [0]:pos
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      BTLV_EFFECT_DeleteMigawari( vpos );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      return TRUE;
+    }
   }
   return FALSE;
 }

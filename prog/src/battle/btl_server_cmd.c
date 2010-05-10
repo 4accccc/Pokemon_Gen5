@@ -163,6 +163,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_112byte,          // SC_ACT_EFFECT_BYVECTOR
   SC_ARGFMT_11byte,           // SC_ACT_CHANGE_FORM
   SC_ARGFMT_5353bit,          // SC_ACT_RESET_MOVE
+  SC_ARGFMT_1byte,            // SC_ACT_MIGAWARI_CREATE
+  SC_ARGFMT_1byte,            // SC_ACT_MIGAWARI_DELETE
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
   SC_ARGFMT_12byte, // SC_MSG_WAZA

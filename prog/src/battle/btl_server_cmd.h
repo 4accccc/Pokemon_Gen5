@@ -101,6 +101,8 @@ typedef enum {
   SC_ACT_EFFECT_BYVECTOR,   ///< 指定発動位置＆終点位置でエフェクト発動
   SC_ACT_CHANGE_FORM,       ///< フォルムナンバーチェンジ
   SC_ACT_RESET_MOVE,        ///< リセットムーブカットイン
+  SC_ACT_MIGAWARI_CREATE,   ///< みがわり作成
+  SC_ACT_MIGAWARI_DELETE,   ///< みがわり消去
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -515,6 +517,14 @@ static inline void SCQUE_PUT_ACT_ChangeForm( BTL_SERVER_CMD_QUE* que, u8 pokeID,
 static inline void SCQUE_PUT_ACT_TripleResetMove( BTL_SERVER_CMD_QUE* que, u8 clientID_1, u8 posIdx1, u8 clientID_2, u8 posIdx2 )
 {
   SCQUE_PUT_Common( que, SC_ACT_RESET_MOVE, clientID_1, posIdx1, clientID_2, posIdx2 );
+}
+static inline void SCQUE_PUT_ACT_MigawariCreate( BTL_SERVER_CMD_QUE* que, BtlPokePos pos )
+{
+  SCQUE_PUT_Common( que, SC_ACT_MIGAWARI_CREATE, pos );
+}
+static inline void SCQUE_PUT_ACT_MigawariDelete( BTL_SERVER_CMD_QUE* que, BtlPokePos pos )
+{
+  SCQUE_PUT_Common( que, SC_ACT_MIGAWARI_DELETE, pos );
 }
 
 

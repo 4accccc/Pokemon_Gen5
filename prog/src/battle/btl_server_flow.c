@@ -8585,20 +8585,25 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 //----------------------------------------------------------------------------------
 static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-  if( !BPP_MIGAWARI_IsExist(bpp) ){
+  if( !BPP_MIGAWARI_IsExist(bpp) )
+  {
     int migawariHP = BTL_CALC_QuotMaxHP( bpp, 4 );
     if( BPP_GetValue(bpp, BPP_HP) > migawariHP )
     {
-      scPut_SimpleHp( wk, bpp, -migawariHP, TRUE );
-      scproc_CheckItemReaction( wk, bpp );
+      BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp) );
+      if( pos != BTL_POS_NULL )
+      {
+        scPut_SimpleHp( wk, bpp, -migawariHP, TRUE );
+        scproc_CheckItemReaction( wk, bpp );
 
-      BPP_MIGAWARI_Create( bpp, migawariHP );
-      SCQUE_PUT_OP_MigawariCreate( wk->que, BPP_GetID(bpp), migawariHP );
-      // @todo ここでたぶん身代わり作成エフェクトコマンド
+        BPP_MIGAWARI_Create( bpp, migawariHP );
+        SCQUE_PUT_OP_MigawariCreate( wk->que, BPP_GetID(bpp), migawariHP );
+        SCQUE_PUT_ACT_MigawariCreate( wk->que, pos );
+        return;
+      }
     }
-    else{
-      scPut_Message_StdEx( wk, BTL_STRID_STD_MigawariFail, 0, NULL );
-    }
+    // 失敗メッセージ
+    scPut_Message_StdEx( wk, BTL_STRID_STD_MigawariFail, 0, NULL );
   }
   else{
     // すでに出ていたメッセージ
@@ -8620,10 +8625,13 @@ static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16
   scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDamage );
   if( BPP_MIGAWARI_AddDamage(bpp, damage) )
   {
-     SCQUE_PUT_OP_MigawariDelete( wk->que, BPP_GetID(bpp) );
-     // @@@ ここでたぶん身代わり削除エフェクトコマンド
-     scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDestract );
-     return TRUE;
+    u8 pokeID = BPP_GetID( bpp );
+    BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
+
+    scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDestract );
+    SCQUE_PUT_OP_MigawariDelete( wk->que, pokeID );
+    SCQUE_PUT_ACT_MigawariDelete( wk->que, pos );
+    return TRUE;
   }
   return FALSE;
 }
@@ -8649,7 +8657,6 @@ static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* 
     &&  (BPP_MIGAWARI_IsExist(bpp))
     ){
       BTL_POKESET_Remove( rec, bpp );
-      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
     }
   }
 }
