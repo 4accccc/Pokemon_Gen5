@@ -3,9 +3,9 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-10T22:45:09" source="c09gate_01.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-08T20:17:25" source="c09gate_main.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
@@ -15,32 +15,10 @@
 	tool_start_frame="0"
 	tool_end_frame="12"
 	interpolation="frame"
-	compress_material="on" material_size="1 1"
+	compress_material="on" material_size="2 2"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
-
-<mat_color_data size="3">
-	25 31 0
-</mat_color_data>
-
-<mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="lambert2">
-		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
-		<ambient_r frame_step="1" data_size="1" data_head="1"/>
-		<ambient_g frame_step="1" data_size="1" data_head="1"/>
-		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="2"/>
-		<specular_g frame_step="1" data_size="1" data_head="2"/>
-		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="1"/>
-	</mat_color_anm>
-</mat_color_anm_array>
 
 </body>
 
