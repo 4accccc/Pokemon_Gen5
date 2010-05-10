@@ -8571,6 +8571,9 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       Hem_PopState( &wk->HEManager, hem_state );
     }
   }
+  else{
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+  }
 }
 //----------------------------------------------------------------------------------
 /**

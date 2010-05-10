@@ -1638,8 +1638,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems )
     { BTL_EVENT_MEMBER_IN,            handler_FlowerGift_MemberIn }, // ポケ入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_FlowerGift_MemberIn }, // とくせい書き換えハンドラ
     { BTL_EVENT_WEATHER_CHANGE_AFTER, handler_FlowerGift_Weather  }, // 天候変化後ハンドラ
-//    { BTL_EVENT_IEKI_FIXED,           handler_FlowerGift_TokOff   }, // いえき確定ハンドラ
-    { BTL_EVENT_ACTPROC_END,          handler_FlowerGift_Weather },
+    { BTL_EVENT_IEKI_FIXED,           handler_FlowerGift_TokOff   }, // いえき確定ハンドラ
+    { BTL_EVENT_ACTPROC_END,          handler_FlowerGift_Weather  },
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,handler_FlowerGift_TokOff   }, // とくせい書き換え直前ハンドラ
     { BTL_EVENT_ATTACKER_POWER,       handler_FlowerGift_Power    }, // 攻撃力決定のハンドラ
     { BTL_EVENT_DEFENDER_GUARD,       handler_FlowerGift_Guard    }, // 防御力決定のハンドラ
