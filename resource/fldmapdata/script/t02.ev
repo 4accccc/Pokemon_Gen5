@@ -425,21 +425,31 @@ _ANIME_LABEL	anm_player_left
 /************************************************************/
 EVENT_START   ev_pos_t02_rival_speech1
 
-	//ライバル：自機に気付く
-	_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
-	_OBJ_ANIME_WAIT()
-
-	//おい　こっち！
-	_PLAYER_NAME(0)
-	_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-	_BALLOONWIN_CLOSE()
-
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_SPEECH_X
 	DEFINE_LOCAL	LWK_SPEECH_Z
 
 	//主人公位置取得
 	_PLAYER_POS_GET( LWK_SPEECH_X,LWK_SPEECH_Z )
+
+	IF $LWK_SPEECH_X == 792 THEN
+	
+		//ライバル：自機に気付く
+		_OBJ_ANIME( T02_RIVAL_02, anm_rival_792_1 )
+		_OBJ_ANIME_WAIT()
+	
+	ELSE
+	
+		//ライバル：自機に気付く
+		_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
+
+	//おい　こっち！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
 	
 	//X軸が787なら
 	IF $LWK_SPEECH_X == 787 THEN
@@ -480,6 +490,7 @@ EVENT_START   ev_pos_t02_rival_speech1
 	ELSE
 
 		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( T02_RIVAL_02, anm_rival_792_2 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_792go )
 		_OBJ_ANIME_WAIT()
 	
@@ -489,6 +500,120 @@ EVENT_START   ev_pos_t02_rival_speech1
 
 EVENT_END
 
+
+
+/**************************************************************/
+/*  			T02 看板：街								  */
+/**************************************************************/
+EVENT_START   ev_bg_t02_sign1_01
+	_EASY_BGWIN_MSG( msg_t02_sign1_01,TYPE_TOWN )
+EVENT_END
+
+/**************************************************************/
+/*  			T02 看板：ポケセン							  */
+/**************************************************************/
+EVENT_START   ev_bg_t02_sign2_01
+	_EASY_BGWIN_MSG( msg_t02_sign2_01,TYPE_POST )
+EVENT_END
+
+
+/************************************************************/
+/*	七賢者ゲーチス　演説									*/
+/************************************************************/
+EVENT_START   ev_pos_t02_rival_speech2
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_SPEECH_X1
+	DEFINE_LOCAL	LWK_SPEECH_Z1
+
+	//主人公位置取得
+	_PLAYER_POS_GET( LWK_SPEECH_X1,LWK_SPEECH_Z1 )
+
+	//ライバル：自機に気付く
+	IF $LWK_SPEECH_Z1 == 658 THEN
+		_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
+	ELSE
+		_OBJ_ANIME( T02_RIVAL_02, anm_stay_d )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+
+	//おい　こっち！
+	_PLAYER_NAME(0)
+	IF $LWK_SPEECH_Z1 == 661 THEN
+		_PLAINWIN_MSG_UP( msg_t02_black_02 )
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
+	ENDIF
+	_MSGWIN_CLOSE()
+
+	//Z軸が658なら
+	IF $LWK_SPEECH_Z1 == 658 THEN
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_658go )
+		_OBJ_ANIME_WAIT()
+
+	//Z軸が659なら
+	ELSIF $LWK_SPEECH_Z1 == 659 THEN
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_659go )
+		_OBJ_ANIME_WAIT()
+
+	//Z軸が660なら
+	ELSIF $LWK_SPEECH_Z1 == 660 THEN
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_660go )
+		_OBJ_ANIME_WAIT()
+
+	//Z軸が661なら
+	ELSE
+
+		//自機：！マークを出し、ライバルの所へ
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_661go )
+		_OBJ_ANIME_WAIT()
+	
+	ENDIF
+
+	_CALL t02_speech
+
+EVENT_END
+	
+//--------------------------------------------------------------
+//	自機：ライバルの後ろへ行く
+//--------------------------------------------------------------
+_ANIME_LABEL anm_player_658go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_659go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_660go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_661go
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_WALK_U_8F,3
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		ACMD_END,0
+	
+/**************************************************************/
+/*		T02 GIRL1											  */
+/**************************************************************/
+EVENT_START		ev_t02_girl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		共通処理：演説イベント								  */
+/**************************************************************/
 t02_speech:
 
 	//ライバル、広場の方へ向く
@@ -915,7 +1040,19 @@ t02_speech:
 
 	//============================================//
 _RET
-	
+
+//--------------------------------------------------------------------
+//	ライバル：端から入った場合
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_792_1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_rival_792_2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
 //--------------------------------------------------------------
 //	自機：ライバルの後ろへ行く
 //--------------------------------------------------------------
@@ -1273,113 +1410,3 @@ _ANIME_LABEL anm_n_leave
 _ANIME_LABEL anm_rival_leave
 	_ANIME_DATA		AC_WALK_U_8F,10
 	_ANIME_DATA		ACMD_END,0
-
-/**************************************************************/
-/*  			T02 看板：街								  */
-/**************************************************************/
-EVENT_START   ev_bg_t02_sign1_01
-	_EASY_BGWIN_MSG( msg_t02_sign1_01,TYPE_TOWN )
-EVENT_END
-
-/**************************************************************/
-/*  			T02 看板：ポケセン							  */
-/**************************************************************/
-EVENT_START   ev_bg_t02_sign2_01
-	_EASY_BGWIN_MSG( msg_t02_sign2_01,TYPE_POST )
-EVENT_END
-
-
-/************************************************************/
-/*	七賢者ゲーチス　演説									*/
-/************************************************************/
-EVENT_START   ev_pos_t02_rival_speech2
-	//ローカル変数を定義
-	DEFINE_LOCAL	LWK_SPEECH_X1
-	DEFINE_LOCAL	LWK_SPEECH_Z1
-
-	//主人公位置取得
-	_PLAYER_POS_GET( LWK_SPEECH_X1,LWK_SPEECH_Z1 )
-
-	//ライバル：自機に気付く
-	IF $LWK_SPEECH_Z1 == 658 THEN
-		_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
-	ELSE
-		_OBJ_ANIME( T02_RIVAL_02, anm_stay_d )
-	ENDIF
-	_OBJ_ANIME_WAIT()
-
-	//おい　こっち！
-	_PLAYER_NAME(0)
-	IF $LWK_SPEECH_Z1 == 661 THEN
-		_PLAINWIN_MSG_UP( msg_t02_black_02 )
-	ELSE
-		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-	ENDIF
-	_MSGWIN_CLOSE()
-
-	//Z軸が658なら
-	IF $LWK_SPEECH_Z1 == 658 THEN
-
-		//自機：！マークを出し、ライバルの所へ
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_658go )
-		_OBJ_ANIME_WAIT()
-
-	//Z軸が659なら
-	ELSIF $LWK_SPEECH_Z1 == 659 THEN
-
-		//自機：！マークを出し、ライバルの所へ
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_659go )
-		_OBJ_ANIME_WAIT()
-
-	//Z軸が660なら
-	ELSIF $LWK_SPEECH_Z1 == 660 THEN
-
-		//自機：！マークを出し、ライバルの所へ
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_660go )
-		_OBJ_ANIME_WAIT()
-
-	//Z軸が661なら
-	ELSE
-
-		//自機：！マークを出し、ライバルの所へ
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_661go )
-		_OBJ_ANIME_WAIT()
-	
-	ENDIF
-
-	_CALL t02_speech
-
-EVENT_END
-	
-//--------------------------------------------------------------
-//	自機：ライバルの後ろへ行く
-//--------------------------------------------------------------
-_ANIME_LABEL anm_player_658go
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_player_659go
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_player_660go
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_player_661go
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_WALK_U_8F,3
-	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		ACMD_END,0
-	
-/**************************************************************/
-/*		T02 GIRL1											  */
-/**************************************************************/
-EVENT_START		ev_t02_girl1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_girl1_01 )
-EVENT_END
-
