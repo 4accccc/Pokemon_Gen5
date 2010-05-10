@@ -55,51 +55,6 @@ class MAPEDITOR_BINFILE_LOADER
         printf("finded 0x%x\n",low)
         result_file.printf("X=%d Z=%d finded 0x%x\n",idx % @header[0] , idx / @header[0], low)
       end
-      #水チェック
-      if IsWater( idx ) == true then
-        u = idx - @header[0]
-        l = idx - 1
-        r = idx + 1
-        d = idx + @header[0]
-
-        pass = 0;
-      
-        if u >= 0 then
-          if IsWater( u ) == true && IsHit(u)==1 then
-            pass+=1
-          end
-        else
-          pass+=1
-        end
-
-        if (l>=0) && ( (l/@header[1]) == (idx/@header[1]) ) then
-          if IsWater( l ) == true && IsHit(l)==1 then
-            pass+=1
-          end
-        else
-          pass+=1
-        end
-
-        if d < @header[0]*@header[1] then
-          if IsWater( d ) == true && IsHit(d)==1 then
-            pass+=1
-          end
-        else
-          pass+=1
-        end
-
-        if (r < @header[0]*@header[1]) && ( (r/@header[1]) == (idx/@header[1]) ) then
-          if IsWater( r ) == true && IsHit(r)==1 then
-            pass+=1
-          end
-        else
-          pass+=1
-        end
-
-        if pass != 4 then
-          result_file.printf("X=%d Z=%d WaterError\n",idx % @header[0] , idx / @header[0])
-        end
-      end
     }
   end
 
@@ -115,7 +70,7 @@ class MAPEDITOR_BINFILE_LOADER
         pass = 0;
       
         if u >= 0 then
-          if IsWater( u ) == true && IsHit(u)==1 then
+          if IsWater( u ) == true || IsHit(u)==1 then
             pass+=1
           end
         else
@@ -123,7 +78,7 @@ class MAPEDITOR_BINFILE_LOADER
         end
 
         if (l>=0) && ( (l/@header[1]) == (idx/@header[1]) ) then
-          if IsWater( l ) == true && IsHit(l)==1 then
+          if IsWater( l ) == true || IsHit(l)==1 then
             pass+=1
           end
         else
@@ -131,7 +86,7 @@ class MAPEDITOR_BINFILE_LOADER
         end
 
         if d < @header[0]*@header[1] then
-          if IsWater( d ) == true && IsHit(d)==1 then
+          if IsWater( d ) == true || IsHit(d)==1 then
             pass+=1
           end
         else
@@ -139,7 +94,7 @@ class MAPEDITOR_BINFILE_LOADER
         end
 
         if (r < @header[0]*@header[1]) && ( (r/@header[1]) == (idx/@header[1]) ) then
-          if IsWater( r ) == true && IsHit(r)==1 then
+          if IsWater( r ) == true || IsHit(r)==1 then
             pass+=1
           end
         else
@@ -155,7 +110,8 @@ class MAPEDITOR_BINFILE_LOADER
 
   def IsWater( idx )
     atr = @attr_tbl[idx]
-    rc = @WaterTbl.include?(atr)
+    low = atr & 0xFFFF
+    rc = @WaterTbl.include?(low)
     return rc 
   end
 
