@@ -82,6 +82,7 @@ EVENT_START ev_vending_machine01
       _ADD_ITEM_CHK( item, 1, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE  THEN //バッグはいらない
         //「バッグがいっぱい」
+        $SCWK_TEMP0 = $item
         _CHG_COMMON_SCR SCRID_ITEM_EVENT_FAIL_NOWAIT
         $bag_full = TRUE
         $loop = FALSE
