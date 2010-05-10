@@ -36,7 +36,6 @@
 #include "message.naix"// GMM
 #include "msg/msg_mictest.h"//  GMM
 
-// ===== @TODO ñ¢é¿ëïèàóùÇÃâºíËã` =====
 
 // BGMä÷òA
 static void Snd_BgmFadeOut( int a, int b ){}
@@ -233,9 +232,9 @@ typedef u8 MIC_BUF_SIZE;
 #define BMPWIN_TITLE_CHR_OFS  (1)
 #define BMPWIN_INFO_FRAME   (GFL_BG_FRAME0_S)
 #define BMPWIN_INFO_X     (5)
-#define BMPWIN_INFO_Y     (8)
+#define BMPWIN_INFO_Y     (6)
 #define BMPWIN_INFO_W     (22)
-#define BMPWIN_INFO_H     (5)
+#define BMPWIN_INFO_H     (8)
 #define BMPWIN_INFO_PLT     (13)
 #define BMPWIN_INFO_CHR_OFS   (1)
 #define BMPWIN_RETBTN_FRAME   (GFL_BG_FRAME0_S)
