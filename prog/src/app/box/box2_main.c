@@ -6542,6 +6542,34 @@ int BOX2MAIN_VFuncItemGetMenuClose( BOX2_SYS_WORK * syswk )
   return 1;
 }
 
+// 「持ち物整理」バッグで持たせた場合のアイテムアイコン非表示処理
+int BOX2MAIN_VFuncItemArrangeIconClose( BOX2_SYS_WORK * syswk )
+{
+  BOX2_IRQWK * vf;
+
+  vf = &syswk->app->vfunk;
+
+  switch( vf->seq ){
+  case 0:
+    if( BOX2OBJ_VanishCheck( syswk->app, BOX2OBJ_ID_ITEMICON ) == TRUE ){
+      BOX2OBJ_ItemIconAffineSet( syswk->app, TRUE );
+      BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_ITEMICON, 2 );
+    }
+    vf->seq++;
+		break;
+
+  case 1:
+		if( BOX2OBJ_AnmCheck( syswk->app, BOX2OBJ_ID_ITEMICON ) == FALSE ){
+      BOX2OBJ_ItemIconAffineSet( syswk->app, FALSE );
+      BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
+    }
+    vf->seq = 0;
+    return 0;
+  }
+
+  return 1;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * VBLANK FUNC : アイテムアイコン入れ替え動作
