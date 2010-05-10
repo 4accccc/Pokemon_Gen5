@@ -446,7 +446,7 @@ static BOOL _initNet(DELIVERY_IRC_WORK* pWork)
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    HEAPID_IRC,   //※check　赤外線通信用にcreateされるHEAPID
+    HEAPID_IRC,   //赤外線通信用にcreateされるHEAPID
     GFL_WICON_POSX, GFL_WICON_POSY,        // 通信アイコンXY位置
     2,     // 最大接続人数
     64,  //最大送信バイト数

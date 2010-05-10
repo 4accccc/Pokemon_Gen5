@@ -209,7 +209,7 @@ static const GFLNetInitializeStruct sc_net_init =
     GFL_HEAPID_APP,  //元になるheapID
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    HEAPID_IRC,   //※check　赤外線通信用にcreateされるHEAPID
+    HEAPID_IRC,   //赤外線通信用にcreateされるHEAPID
     GFL_WICON_POSX, GFL_WICON_POSY,        // 通信アイコンXY位置
     COMPATIBLE_IRC_CONNEXT_NUM,     // 最大接続人数
     COMPATIBLE_IRC_SENDDATA_BYTE,  //最大送信バイト数

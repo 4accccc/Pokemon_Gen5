@@ -887,7 +887,7 @@ static void IRC_BATTLE_InitNet( IRC_BATTLE_WORK *work )
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    HEAPID_IRC,   //※check　赤外線通信用にcreateされるHEAPID
+    HEAPID_IRC,   //赤外線通信用にcreateされるHEAPID
     GFL_WICON_POSX, GFL_WICON_POSY,        // 通信アイコンXY位置
     IRC_BATTLE_MEMBER_NUM,     // 最大接続人数
     100,  //最大送信バイト数
