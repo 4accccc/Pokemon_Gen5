@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/13 21:01:02
+#save date:2010/05/10 16:48:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r1202.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R1202_BADGE_01
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 88
+-152 0 88
 #event number: 1
 #type
 1

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1202.h"
-  //.include  "c03r1202.h"
+  .include  "c03r1202.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -42,7 +42,7 @@ _TALK_OBJ_START()
 	$LWK_REPEAT = 0
 	
 	//イッシュちほうで～～～　せつめいをききたいかい？
-	_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_01 ,C03R1202_BADGE_01 , POS_DL )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_MSGWIN_CLOSE()
 	//はい選択時
@@ -50,7 +50,7 @@ _TALK_OBJ_START()
 	
 		WHILE $LWK_REPEAT != 1
 			
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_11 )
+			_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_11 ,C03R1202_BADGE_01 , POS_DL )
 			
 			//分岐・トライ・ベーシック……　やめる
 			_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_BADGE_SELECT )
@@ -72,39 +72,39 @@ _TALK_OBJ_START()
 			SWITCH $LWK_BADGE_SELECT
 			CASE 0 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_03 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_03 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 1 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_04 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_04 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 2 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_05 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_05 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 3 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_06 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_06 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 4 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_07 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_07 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 5 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_08 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_08 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 6 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_09 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_09 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 7 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_10 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_10 ,C03R1202_BADGE_01 , POS_DL )
 				_MSGWIN_CLOSE()
 			CASE 8 THEN
 				_MSGWIN_CLOSE()
-				_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_02 )
+				_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_02 ,C03R1202_BADGE_01 , POS_DL )
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 				//========================================/
@@ -123,7 +123,7 @@ _TALK_OBJ_START()
 	
 	//いいえ選択時
 	ELSE
-	_BALLOONWIN_TALKOBJ_MSG( msg_c03r1202_badge_02 )
+	_BALLOONWIN_OBJMSG_POS( msg_c03r1202_badge_02 ,C03R1202_BADGE_01 , POS_DL )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
