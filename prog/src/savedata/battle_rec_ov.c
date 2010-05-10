@@ -203,11 +203,6 @@ SAVE_RESULT BattleRec_SecureSetSave(GAMEDATA *gamedata, int num, u16 *work0, u16
  * @param   num
  * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
  * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
- *
- *
- * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
- *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
- *            ->分割セーブにしましたnagihashi100331
  */
 //--------------------------------------------------------------
 void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num)
@@ -236,10 +231,6 @@ void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num)
  * @retval  SAVE_RESULT_LAST    セーブ処理継続中、最後の一つ前
  * @retval  SAVE_RESULT_OK      セーブ正常終了
  * @retval  SAVE_RESULT_NG      セーブ失敗終了
- *
- * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
- *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
- *            ->分割セーブにしましたnagihashi100331
  */
 //--------------------------------------------------------------
 SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num)
