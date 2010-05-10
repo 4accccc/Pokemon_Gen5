@@ -30,7 +30,6 @@
 #include "savedata/randommap_save.h"  //テストでランダムマップの都市の種類を取得
 
 #include "arc/fieldmap/area_id.h"
-#include "arc/fieldmap/buildmodel_info.naix"
 #include "arc/fieldmap/buildmodel_outdoor.naix"
 #include "arc/fieldmap/buildmodel_indoor.naix"
 
@@ -108,14 +107,6 @@ enum {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-enum{ 
-  FILEID_BMODEL_ANIMEDATA = NARC_buildmodel_info_buildmodel_anime_bin,
-  FILEID_BMINFO_OUTDOOR = NARC_buildmodel_info_buildmodel_outdoor_bin,
-  FILEID_BMINFO_INDOOR = NARC_buildmodel_info_buildmodel_indoor_bin,
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 enum {
   BMODEL_ID_MAX = 400,      ///<配置モデルの種類上限
   BMODEL_ENTRY_MAX = 128,   ///<配置モデルの登録上限（メモリの方が先に制約条件となるはず）
@@ -140,6 +131,24 @@ typedef enum {
   BM_ANMMODE_TIMEZONE,    ///<アニメ状態：時間帯で制御
 }BM_ANMMODE;
 
+
+//------------------------------------------------------------------
+/// 配置モデル　エリア情報パッケージヘッダ
+//  
+//  header の下に、datanum+1 分のオフセット値 （u32）
+//
+//  datanum / 2 がファイル総数  
+//  前半  BMINFO
+//  交換　NSBMD
+//------------------------------------------------------------------
+#define BM_AREA_HEADER_DATAID 'BA'  //"AB"の逆 
+typedef struct {
+    u16 DataID;         ////< DP3PACK_HEADER
+    u8  datanum;
+    u8  dummy1;
+    u32 ofs[]; ///<datanum + 1分
+} BM_AREA_HEADER;
+
 //------------------------------------------------------------------
 /// 配置モデルアニメ情報
 //------------------------------------------------------------------
@@ -156,11 +165,12 @@ typedef struct _FIELD_BMANIME_DATA
 /// 配置モデル情報
 //------------------------------------------------------------------
 typedef struct {
-  BMODEL_ID bm_id;              ///<配置モデルID
+  u16 bm_id;              ///<配置モデルID  (BMODEL_ID)
   u16 prog_id;                  ///<BM_PROG_ID プログラム指定ID
-  BMODEL_ID sub_bm_id;          ///<従属モデル指定ID
+  u16 sub_bm_id;          ///<従属モデル指定ID (BMODEL_ID)
   s16 sx, sy, sz;               ///<従属モデルの相対位置
   u16 anm_id;                   ///<アニメ指定ID
+  u16 pad;                ///<padding
   FIELD_BMANIME_DATA animeData; ///<アニメ指定データ
 }BMINFO;
 
@@ -233,19 +243,17 @@ struct _FIELD_BMODEL_MAN
   FLDMAPPER * fldmapper;  //描画オフセット取得に必要。できたら不要にしたい
   TIMEANIME_CTRL tmanm_ctrl;  ///<時間帯アニメ制御ワーク
 
+  ///エリア配置モデル情報
+  BM_AREA_HEADER* bm_areadata;
+
   ///配置モデルID→登録IDの変換テーブル
 	u8 BMIDToEntryTable[BMODEL_ID_MAX];
 
   ///配置モデル登録数
 	u16 entryCount;
   ///配置モデル情報
-  BMINFO bmInfo[BMODEL_ENTRY_MAX];
-  ///登録ID→配置モデルIDの変換テーブル
-	BMODEL_ID entryToBMIDTable[BMODEL_ENTRY_MAX];
+  const BMINFO* bmInfo;
 
-  ///適用する配置モデルアーカイブ指定
-	ARCID mdl_arc_id;
-  
 	FLD_G3D_MAP_GLOBALOBJ	g3dMapObj;						///<共通オブジェクト
 
 	u32	objRes_Count;		  		///<共通オブジェクトリソース数
@@ -319,8 +327,12 @@ static inline u8 AnimeNoAssert(u8 anmNo)
 static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man);
 static u16 calcArcIndex(u16 area_id);
 
-static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id);
+static void loadAreaBMData( FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id );
+static void releaseAreaBMData( FIELD_BMODEL_MAN * man );
 static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
+
+static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header );
+static const void* BM_AREA_HEADER_getNSBMDData( const BM_AREA_HEADER* header, u32 count );
 
 #ifdef BMODEL_TEXSET
 static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, u8* gray_scale);
@@ -331,7 +343,7 @@ static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 static const BMINFO * BMODELMAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id);
 
-static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id);
+static void BMINFO_Load(FIELD_BMODEL_MAN * man);
 static void BMINFO_init(BMINFO * bmInfo);
 //アニメデータの取得処理
 static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo);
@@ -349,7 +361,7 @@ static void deleteAllResource(FIELD_BMODEL_MAN * man);
 static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 
-static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id, u8 *gray_scale);
+static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, u8 *gray_scale);
 static void OBJRES_finalize( OBJ_RES * objRes );
 #ifndef BMODEL_TEXSET
 static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * resTex);
@@ -447,6 +459,9 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
   deleteFullTimeObjHandle( man, &man->g3dMapObj );
   deleteAllResource( man );
 
+  // BMAreaデータ破棄
+  releaseAreaBMData( man );
+
 #ifdef BMODEL_TEXSET
   freeBMTextureSet( man );
 #endif
@@ -508,49 +523,40 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 {	
 	u16 area_id = ZONEDATA_GetAreaID(zoneid);
 	u16 bmlist_index = calcArcIndex(area_id);
-  ARCID bmlist_arc_id,bmtex_arc_id;
-  u16 model_info_dataid;
+  ARCID bmtex_arc_id;
+  ARCID mdl_arc_id;
   int i;
 
 	GFL_STD_MemClear(man->BMIDToEntryTable, sizeof(man->BMIDToEntryTable));
-	GFL_STD_MemFill16(man->entryToBMIDTable, BMODEL_ENTRY_NG, sizeof(man->entryToBMIDTable));
-  for (i = 0; i < BMODEL_ENTRY_MAX; i++)
-  { 
-    BMINFO_init( &man->bmInfo[i] );
-  }
 
   if (AREADATA_GetInnerOuterSwitch(areadata) != 0) 
   {	
-    man->mdl_arc_id = ARCID_BMODEL_OUTDOOR;
-    model_info_dataid = FILEID_BMINFO_OUTDOOR;
-    bmlist_arc_id = ARCID_BMODEL_IDX_OUTDOOR;
+    mdl_arc_id = ARCID_BMODEL_OUTDOOR_AREA;
 #ifdef BMODEL_TEXSET
     bmtex_arc_id = ARCID_BMODEL_TEXSET_OUTDOOR;
 #endif
   }
   else
   {	
-    man->mdl_arc_id = ARCID_BMODEL_INDOOR;
-    model_info_dataid = FILEID_BMINFO_INDOOR;
-    bmlist_arc_id = ARCID_BMODEL_IDX_INDOOR;
+    mdl_arc_id = ARCID_BMODEL_INDOOR_AREA;
 #ifdef BMODEL_TEXSET
     bmtex_arc_id = ARCID_BMODEL_TEXSET_INDOOR;
 #endif
   }
 
-  //エリア別配置モデルIDリストの読み込み
-  loadEntryToBMIDTable(man, bmlist_arc_id, bmlist_index);
+  // エリア別配置モデルデータの読み込み
+  loadAreaBMData( man, mdl_arc_id, bmlist_index );
 
 #ifdef BMODEL_TEXSET
   //エリア別配置モデルテクスチャセットの読み込み
   loadBMTextureSet(man, bmtex_arc_id, bmlist_index, gray_scale );
 #endif
 
+  //必要な配置モデルデータの読み込み
+  BMINFO_Load(man);
+
 	//ID→登録順序の変換データテーブル生成
 	makeBMIDToEntryTable(man);
-
-  //必要な配置モデルデータの読み込み
-  BMINFO_Load(man, model_info_dataid);
 
   createAllResource( man, gray_scale );
   createFullTimeObjHandle( man, &man->g3dMapObj );
@@ -754,18 +760,17 @@ FLD_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief エリア別配置モデルIDリストの読み込み
+ *	@brief  エリア別配置モデルデータの読み込み
+ *
  * @param man
  * @param arc_id  エリア別配置モデルリストのアーカイブ指定ID（屋内or屋外）
  * @param file_id  エリアIDから変換したファイル指定ID
- *
- * entryCount/entryToBMIDTableを書き換える
  */
-//------------------------------------------------------------------
-static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id)
-{ 
+//-----------------------------------------------------------------------------
+static void loadAreaBMData( FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id )
+{
   ARCHANDLE * handle = GFL_ARC_OpenDataHandle(arc_id, man->heapID);
 
   {
@@ -777,20 +782,38 @@ static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id
     }
   }
 
+  // 読み込み
 	{	
-		u16 size = GFL_ARC_GetDataSizeByHandle(handle, file_id);
-		man->entryCount = size / sizeof(BMODEL_ID);
-		if(size > sizeof(man->entryToBMIDTable))
+    man->bm_areadata = GFL_ARC_LoadDataAllocByHandle( handle, file_id, man->heapID );
+    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->bm_areadata );
+
+    GF_ASSERT( man->bm_areadata->DataID == BM_AREA_HEADER_DATAID );
+
+    man->entryCount = man->bm_areadata->datanum / 2;
+    
+		if(man->entryCount > BMODEL_ID_MAX)
 		{	
-			GF_ASSERT_MSG(0, "配置モデルリストデータがオーバー（size=%d ARCINDEX=%d)\n", size, file_id);
+			GF_ASSERT_MSG(0, "配置モデルリストデータがオーバー（size=%d ARCINDEX=%d)\n", man->entryCount, file_id);
 			man->entryCount = BMODEL_ENTRY_MAX;	//ハングアップ回避
-			size = sizeof(man->entryToBMIDTable);
 		}
-		//TAMADA_Printf("entryCount=%d\n", man->entryCount);
-		GFL_ARC_LoadDataOfsByHandle(handle, file_id, 0, size, man->entryToBMIDTable);
 	}
 	
 	GFL_ARC_CloseDataHandle(handle);
+
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリア配置モデル情報release
+ */
+//-----------------------------------------------------------------------------
+static void releaseAreaBMData( FIELD_BMODEL_MAN * man )
+{
+  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( man->bm_areadata );
+  GFL_HEAP_FreeMemory( man->bm_areadata );
+  man->bmInfo = NULL;
+  man->entryCount = 0;
 }
 
 //------------------------------------------------------------------
@@ -801,7 +824,7 @@ static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man)
 	u8 entryNo;
 	for (entryNo = 0; entryNo < man->entryCount; entryNo++)
 	{	
-		BMODEL_ID bm_id = man->entryToBMIDTable[entryNo];
+		BMODEL_ID bm_id = man->bmInfo[entryNo].bm_id;
 		man->BMIDToEntryTable[bm_id] = entryNo;
 	}
 }
@@ -819,6 +842,40 @@ static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
   ENTRYNO_ASSERT( man, entryNo );
 	return entryNo;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置モデルエリアデータからBMINFOを取得
+ *
+ *	@param	header  ヘッダー
+ *  
+ *	@return BMINFO
+ */
+//-----------------------------------------------------------------------------
+static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header )
+{
+  return (const BMINFO*)( (u32)(header) + header->ofs[0] );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置モデルエリアデータからNSBMDデータを取得
+ *
+ *	@param	header  ヘッダー
+ *	@param	count   カウント
+ *
+ *	@return NSBMDデータ
+ */
+//-----------------------------------------------------------------------------
+static const void* BM_AREA_HEADER_getNSBMDData( const BM_AREA_HEADER* header, u32 count )
+{
+  return (const void*)( (u32)(header) + header->ofs[(header->datanum/2) + count] );
+}
+
+
+
+
 
 //------------------------------------------------------------------
 /**
@@ -959,46 +1016,9 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
+static void BMINFO_Load(FIELD_BMODEL_MAN * man)
 {
-  typedef struct {
-    u16 anime_id;     ///<アニメ指定
-    u16 prog_id;      ///<プログラム指定
-    u16 submodel_id;  ///<サブモデル指定
-    s16 submodel_x;
-    s16 submodel_y;
-    s16 submodel_z;
-  }BM_INFO_BIN;
-
-  enum {
-    BM_INFO_SIZE = sizeof(BM_INFO_BIN),
-    BM_ANMDATA_SIZE = sizeof(FIELD_BMANIME_DATA),
-  };
-
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(ARCID_BMODEL_INFO, man->heapID);
-  BM_INFO_BIN * infobin = GFL_HEAP_AllocMemory(man->heapID, BM_INFO_SIZE);
-  u8 entryNo;
-
-  for (entryNo = 0; entryNo < man->entryCount; entryNo++)
-  { 
-    BMINFO * bmInfo = &man->bmInfo[entryNo];
-    u16 anm_id;
-    bmInfo->bm_id = man->entryToBMIDTable[entryNo];
-    GFL_ARC_LoadDataOfsByHandle(handle, file_id, bmInfo->bm_id * BM_INFO_SIZE, BM_INFO_SIZE, infobin);
-    bmInfo->prog_id = infobin->prog_id;
-    bmInfo->sub_bm_id = infobin->submodel_id;
-    bmInfo->sx = infobin->submodel_x;
-    bmInfo->sy = infobin->submodel_y;
-    bmInfo->sz = infobin->submodel_z;
-    bmInfo->anm_id = infobin->anime_id;
-    if (bmInfo->anm_id == 0xffff) continue;
-    GFL_ARC_LoadDataOfsByHandle(handle, FILEID_BMODEL_ANIMEDATA,
-        bmInfo->anm_id * BM_ANMDATA_SIZE, BM_ANMDATA_SIZE,
-        &bmInfo->animeData);
-    //DEBUG_BMANIME_dump(&man->animeData[entryNo]);
-  }
-  GFL_HEAP_FreeMemory(infobin);
-  GFL_ARC_CloseDataHandle(handle);
+  man->bmInfo = BM_AREA_HEADER_getBMINFOBuff(man->bm_areadata);
 }
 
 //------------------------------------------------------------------
@@ -1121,9 +1141,8 @@ static void createAllResource(FIELD_BMODEL_MAN * man, u8 *gray_scale)
     for ( entryNo = 0; entryNo < man->objRes_Count; entryNo++ )
     {
       OBJ_RES * objRes = &man->objRes[entryNo];
-      BMODEL_ID bm_id = man->entryToBMIDTable[entryNo];
       //TAMADA_Printf("BM:Create Rsc %d (%d)\n", entryNo, bm_id);
-      OBJRES_initialize( man, objRes, bm_id, gray_scale );
+      OBJRES_initialize( man, objRes, entryNo, gray_scale );
     }
   }
 }
@@ -1227,17 +1246,17 @@ static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * objRes)
 //------------------------------------------------------------------
 // オブジェクトリソースを作成
 //------------------------------------------------------------------
-static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id, u8 *gray_scale)
+static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, u8 *gray_scale)
 {
 	GFL_G3D_RES* resTex;
 
   //配置モデルに対応した情報へのポインタをセット
-  objRes->bmInfo = BMODELMAN_GetBMInfo(man, bm_id);
+  objRes->bmInfo = &man->bmInfo[entryNo];
 
   //モデルデータ生成
-	objRes->g3DresMdl = GFL_G3D_CreateResourceArc( man->mdl_arc_id, bm_id );
+  objRes->g3DresMdl = GFL_HEAP_AllocClearMemory( man->heapID, GFL_G3D_GetResourceHeaderSize() );
+	GFL_G3D_CreateResourceAuto( objRes->g3DresMdl, (void*)BM_AREA_HEADER_getNSBMDData( man->bm_areadata, entryNo ) ); //配置モデル内で、リソースデータを書き換えることはない。
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( objRes->g3DresMdl );
-  BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( GFL_G3D_GetResourceFileHeader( objRes->g3DresMdl ) );
 
 #ifndef BMODEL_TEXSET
   //テクスチャ登録
@@ -1302,9 +1321,8 @@ static void OBJRES_finalize( OBJ_RES * objRes )
 #endif
 
   if( objRes->g3DresMdl != NULL ){
-    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( objRes->g3DresMdl ) );
     BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( objRes->g3DresMdl );
-    GFL_G3D_DeleteResource( objRes->g3DresMdl );
+    GFL_HEAP_FreeMemory( objRes->g3DresMdl );
     objRes->g3DresMdl = NULL;
   }
 }

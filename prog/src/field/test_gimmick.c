@@ -6,7 +6,8 @@
 //ì«Ç›çûÇﬁ3DÉäÉ\Å[ÉX
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	//1P
-	{ ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_trailer_01_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ 0, 0, 0 },
+//	{ ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_trailer_01_nsbmd, GFL_G3D_UTIL_RESARC },
 ///	{ ARCID_BMODEL_OUTDOOR, NARC_output_buildmodel_outdoor_h01_ship_nsbmd, GFL_G3D_UTIL_RESARC },
 };
 
