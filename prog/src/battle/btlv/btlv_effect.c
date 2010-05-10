@@ -607,6 +607,30 @@ void  BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos )
   BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_VANISH_OFF );
 }
 
+//=============================================================================================
+/**
+ * @brief 身代わりを出す
+ *
+ * @param[in] vpos  対象ポケモンの描画位置
+ */
+//=============================================================================================
+void  BTLV_EFFECT_CreateMigawari( BtlvMcssPos vpos )
+{ 
+  BTLV_EFFECT_AddByPos( vpos, BTLEFF_MIGAWARI_FALL );
+}
+
+//=============================================================================================
+/**
+ * @brief 身代わりを消す
+ *
+ * @param[in] vpos  対象ポケモンの描画位置
+ */
+//=============================================================================================
+void  BTLV_EFFECT_DeleteMigawari( BtlvMcssPos vpos )
+{ 
+  BTLV_EFFECT_AddByPos( vpos, BTLEFF_MIGAWARI_DEAD );
+}
+
 //============================================================================================
 /**
  * @brief  エフェクト起動中かチェック

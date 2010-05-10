@@ -232,6 +232,8 @@ extern  void              BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no );
 extern  void              BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_PokemonVanishOn( BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos );
+extern  void              BTLV_EFFECT_CreateMigawari( BtlvMcssPos vpos );
+extern  void              BTLV_EFFECT_DeleteMigawari( BtlvMcssPos vpos );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
 extern  void              BTLV_EFFECT_SetGaugeStatus( PokeSick sick,  BtlvMcssPos pos );
