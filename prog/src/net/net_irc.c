@@ -210,9 +210,6 @@ void GFL_NET_IRC_Exit(void)
   if(NetIrcSys.initialize == TRUE){
     IRC_Shutdown();
   }
-#if 0	//Å¶check
-  GF_ASSERT(NetIrcSys.initialize == TRUE);
-#endif
   NetIrcSys.initialize = FALSE;
 }
 
