@@ -48,6 +48,7 @@ enum{
 //=====================================
 typedef struct 
 {
+  int soundNo;
   GAMESYS_WORK      * gsys;
   FIELDMAP_WORK     * fieldmap;
   GDSPROC_PARAM     param;
@@ -81,6 +82,8 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_COMM:
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
     {
+      dbw->soundNo = PMSND_GetBGMsoundNo();
+      PMSND_FadeOutBGM(PMSND_FADE_FAST);
       (*seq)++;
     }
     break;
@@ -105,6 +108,8 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
       (*seq) ++;
     break;
   case _FIELD_OPEN:
+    PMSND_PlayBGM(dbw->soundNo);
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;

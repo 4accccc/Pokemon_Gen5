@@ -286,8 +286,8 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 
   GF_ASSERT_MSG( COMPATIBLE_MYSTATUS_SIZE == MyStatus_GetWorkSize(), "number %d != mystatus %d!!\n", COMPATIBLE_MYSTATUS_SIZE, MyStatus_GetWorkSize() );
 
+  PMSND_PauseBGM( TRUE );
   PMSND_PushBGM( );
-  PMSND_FadeOutBGM( PMSND_FADE_FAST );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -309,6 +309,10 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
 	p_wk	= p_work;
 
+
+  PMSND_PopBGM( );
+  PMSND_PauseBGM( FALSE );
+
 	//ÉÇÉWÉÖÅ[Éãîjä¸
 	COMPATIBLE_IRC_DeleteSystem( p_wk->p_irc );
 	SUBPROC_Exit( &p_wk->subproc );
@@ -321,7 +325,6 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	//ÉqÅ[Évîjä¸
 	GFL_HEAP_DeleteHeap( HEAPID_IRCCOMPATIBLE_SYSTEM );
 	
-  PMSND_PopBGM( );
 
 	return GFL_PROC_RES_FINISH;
 }

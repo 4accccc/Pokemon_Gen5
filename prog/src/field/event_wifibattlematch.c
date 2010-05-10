@@ -35,6 +35,7 @@
 //=====================================
 typedef struct 
 {
+  int soundNo;
   GAMESYS_WORK      * gsys;
   FIELDMAP_WORK     * fieldmap;
   void              * p_sub_wk;
@@ -85,6 +86,8 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
   case _FIELD_COMM:
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
     {
+      dbw->soundNo = PMSND_GetBGMsoundNo();
+      PMSND_FadeOutBGM(PMSND_FADE_FAST);
       (*seq)++;
     }
     break;
@@ -149,6 +152,8 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     break;
   case _FIELD_OPEN:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    PMSND_PlayBGM(dbw->soundNo);
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     (*seq) ++;
     break;
   case _FIELD_FADEOUT:

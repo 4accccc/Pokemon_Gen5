@@ -45,6 +45,7 @@ FS_EXTERN_OVERLAY(worldtrade);
 //=====================================
 typedef struct
 {
+  int soundNo;
   GAMESYS_WORK        *p_gamesys;
   FIELDMAP_WORK       *p_field;
   WORLDTRADE_PARAM    param;
@@ -176,6 +177,8 @@ static GMEVENT_RESULT Event_CallGtsMain( GMEVENT *p_event, int *p_seq, void *p_w
       GMEVENT_CallEvent( p_event,
         EVENT_FieldFadeOut_Black(p_wk->p_gamesys,p_wk->p_field,FIELD_FADE_WAIT) );
     }
+    p_wk->soundNo = PMSND_GetBGMsoundNo();
+    PMSND_FadeOutBGM(PMSND_FADE_FAST);
     *p_seq  = SEQ_FLDCLOSE;
     break;
   case SEQ_FLDCLOSE:
@@ -191,6 +194,8 @@ static GMEVENT_RESULT Event_CallGtsMain( GMEVENT *p_event, int *p_seq, void *p_w
   case SEQ_FLDCOPEN:
     if (GAMESYSTEM_IsProcExists(p_wk->p_gamesys) == GFL_PROC_MAIN_NULL)
     {
+      PMSND_PlayBGM(p_wk->soundNo);
+      PMSND_FadeInBGM(PMSND_FADE_NORMAL);
       GMEVENT_CallEvent(p_event, EVENT_FieldOpen(p_wk->p_gamesys));
       *p_seq  = SEQ_FADEOUT;
     }

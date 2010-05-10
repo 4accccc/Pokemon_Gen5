@@ -1298,6 +1298,7 @@ static void SEQFUNC_FadeOut( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 	{	
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
+    PMSND_FadeOutBGM( 8 );
 		*p_seq	= SEQ_FADEIN_WAIT;
 		break;
 
