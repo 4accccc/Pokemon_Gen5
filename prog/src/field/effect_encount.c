@@ -83,7 +83,7 @@ static void effenc_WalkCtClear( ENCOUNT_WORK* ewk );
 
 static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
-static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z );
+static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z, BOOL player_egnore_f );
 static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc );
 static void effect_EffectDelete( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 
@@ -621,7 +621,7 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
   attr->gy = SIZE_GRID_FX32( attr->height );
 
   //フィールドモデルの位置をチェック
-  if( effect_CheckMMdlHit( enc, attr->gx, attr->gy, attr->gz )){
+  if( effect_CheckMMdlHit( enc, attr->gx, attr->gy, attr->gz, FALSE )){
     IWASAWA_Printf("HitCancel FieldModelHit\n");
     return;
   }
@@ -644,27 +644,39 @@ static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 /*
  *  @brief  エフェクト座標チェック
  */
-static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z )
+static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z, BOOL player_egnore_f )
 {
   const MMDLSYS* fos;
-  MMDL* fplayer = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( enc->fwork ) );
+  const OBJCODE_PARAM* obj_prm;
+
   MMDL_GRIDPOS pos;
   MMDL* mmdl;
   u32 i = 0;
+  MMDL* fplayer = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( enc->fwork ) );
 
   fos = FIELDMAP_GetMMdlSys( enc->fwork );
  
+//  IWASAWA_Printf(" req ( %d, %d, %d ) player_egnore %d\n", x, y, z, player_egnore_f);
   while(TRUE){
     if(!MMDLSYS_SearchUseMMdl( fos, &mmdl, &i)){
       break;
     }
-    if( (mmdl == fplayer) || (MMDL_CheckEndAcmd(mmdl) == FALSE) ){
+    if( MMDL_CheckEndAcmd(mmdl) == FALSE ){
       continue;
     }
+    if( (mmdl == fplayer) && player_egnore_f ){
+//      IWASAWA_Printf("player_egnore\n");
+      continue;
+    }
+    obj_prm = MMDLSYS_GetOBJCodeParam( fos, MMDL_GetOBJCode( mmdl ) );
+
     MMDL_GetGridPos(mmdl,&pos);
-    if( pos.gx != x ||
-        pos.gy != y ||
-        pos.gz != z){
+    if( y != pos.gy ||
+        x < pos.gx || 
+        x >= (pos.gx+obj_prm->size_width) ||
+        z > pos.gz ||
+        z <= (pos.gz-obj_prm->size_depth) ){
+//      IWASAWA_Printf("pos( %d, %d, %d ) size( %d, %d)\n",pos.gx,pos.gy,pos.gz,obj_prm->size_width, obj_prm->size_depth);
       continue;
     }
     return TRUE;
@@ -683,7 +695,7 @@ static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc )
   if( !ep->valid_f ){
     return FALSE;
   }
-  if( effect_CheckMMdlHit( enc, ep->gx, ep->gy, ep->gz )){
+  if( effect_CheckMMdlHit( enc, ep->gx, ep->gy, ep->gz, TRUE )){
     effect_EffectDelete( enc, enc->eff_enc );
     return TRUE;
   }
