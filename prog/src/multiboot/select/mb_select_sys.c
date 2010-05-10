@@ -53,6 +53,7 @@
 #define MB_SELECT_FRAME_BAR (GFL_BG_FRAME1_M)
 #define MB_SELECT_FRAME_BG  (GFL_BG_FRAME3_M)
 
+#define MB_SELECT_FRAME_SUB_MSG  (GFL_BG_FRAME2_S)
 #define MB_SELECT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
 
 #define MB_SEL_TRAY_X (216)
@@ -144,6 +145,7 @@ struct _MB_SELECT_WORK
   
   //メッセージ用
   MB_MSG_WORK *msgWork;
+  MB_MSG_WORK *msgWorkUp;
   BOOL isUpdateBoxName;
   BOOL isUpdatePokeInfo;
   GFL_BMPWIN  *msgBoxName;
@@ -232,9 +234,11 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   MB_SELECT_InitCell( work );
   
 #ifndef MULTI_BOOT_MAKE
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE , FALSE );
+  work->msgWork   = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG     , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE , FALSE );
+  work->msgWorkUp = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_SUB_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE , FALSE );
 #else
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat , TRUE , FALSE );
+  work->msgWork   = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG     , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat , TRUE , FALSE );
+  work->msgWorkUp = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_SUB_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat , TRUE , FALSE );
 #endif
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_SELECT_VBlankFunc , work , 8 );
 
@@ -313,6 +317,12 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
 
+
+  //説明文表示
+  {
+    MB_MSG_MessageCreateWindow( work->msgWorkUp , MMWT_3LINE );
+    MB_MSG_MessageDispNoWait( work->msgWorkUp , MSG_MB_CHILD_SEL_10 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -337,6 +347,7 @@ static void MB_SELECT_Term( MB_SELECT_WORK *work )
 
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
+  MB_MSG_MessageTerm( work->msgWorkUp );
   MB_MSG_MessageTerm( work->msgWork );
   MB_SELECT_TermCell( work );
   MB_SELECT_ReleaseResource( work );
@@ -539,6 +550,7 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
   GFL_CLACT_SYS_Main();
 
   MB_MSG_MessageMain( work->msgWork );
+  MB_MSG_MessageMain( work->msgWorkUp );
   if( work->isUpdateBoxName == TRUE )
   {
     if( MB_MSG_CheckPrintQueIsFinish( work->msgWork ) == TRUE )
@@ -624,11 +636,18 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG2 SUB (Msg
+    static const GFL_BG_BGCNT_HEADER header_sub2 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x18000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     GFL_BG_SetBGMode( &sys_data );
@@ -636,7 +655,8 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
     MB_SELECT_SetupBgFunc( &header_main0 , MB_SELECT_FRAME_MSG , GFL_BG_MODE_TEXT );
     MB_SELECT_SetupBgFunc( &header_main1 , MB_SELECT_FRAME_BAR , GFL_BG_MODE_TEXT );
     MB_SELECT_SetupBgFunc( &header_main3 , MB_SELECT_FRAME_BG , GFL_BG_MODE_TEXT );
-    MB_SELECT_SetupBgFunc( &header_sub3  , MB_SELECT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
+    MB_SELECT_SetupBgFunc( &header_sub2  , MB_SELECT_FRAME_SUB_MSG , GFL_BG_MODE_TEXT );
+    MB_SELECT_SetupBgFunc( &header_sub3  , MB_SELECT_FRAME_SUB_BG  , GFL_BG_MODE_TEXT );
    
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_BG3 , 8 , 8 );
   }
@@ -665,7 +685,9 @@ static void MB_SELECT_TermGraphic( MB_SELECT_WORK *work )
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_MSG );
+  GFL_BG_FreeBGControl( MB_SELECT_FRAME_BAR );
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_BG );
+  GFL_BG_FreeBGControl( MB_SELECT_FRAME_SUB_MSG );
   GFL_BG_FreeBGControl( MB_SELECT_FRAME_SUB_BG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();

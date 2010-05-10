@@ -101,7 +101,11 @@ void MachineSystem_Init(void)
 #endif
 
 #if (defined(SDK_TWL))
+#ifndef MULTI_BOOT_MAKE
   if(DS_SYSTEM_IsRunOnTwl()){
+#else
+  if(OS_IsRunOnTwl()){
+#endif
     //ARM9優先の場合に必要なハードリセットの為の処理
     PM_SetExitCallbackInfo( &myInfo, myExitCallback, (void*)0 );
     PM_AppendPostExitCallback( &myInfo );

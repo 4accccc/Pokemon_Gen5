@@ -392,6 +392,7 @@ static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value)
   {
   case 2:  // "テテテテン"Lvアップ・技を覚えた
     {
+      PMSND_PauseBGM( TRUE );
       PMSND_PushBGM();
       PMSND_PlayBGM(PLIST_SND_WAZA_LEARN_ME);
       //PMSND_PlaySystemSE( PLIST_SND_WAZA_LEARN );
@@ -407,6 +408,7 @@ static BOOL PLSIT_MSG_PrintStreamCallBack(u32 value)
       if( PMSND_CheckPlayBGM() == FALSE )
       {
         PMSND_PopBGM();
+        PMSND_PauseBGM( FALSE );
         return FALSE;
       }
       else

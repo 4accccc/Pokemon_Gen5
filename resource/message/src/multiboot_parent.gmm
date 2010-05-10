@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T21:31:40"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-10T12:55:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1390" top="192" right="2095" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -570,7 +570,7 @@ DSシステムフォントなので
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
 えらんでください
-　　　　　　　　　　　　　　　　Ｂ…キャンセル</language>
+Ｂボタン：キャンセル</language>
 		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
@@ -579,7 +579,7 @@ DSシステムフォントなので
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
 選んでください
-　　　　　　　　　　　　　　　　Ｂ…キャンセル</language>
+Ｂボタン：キャンセル</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_02">

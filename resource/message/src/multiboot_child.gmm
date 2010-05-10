@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T12:09:48"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-10T12:57:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1321" top="10" right="2026" bottom="638" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -562,6 +562,18 @@
 終了確認</comment>
 		<language name="JPN" width="240">ポケシフターを　しゅうりょうしますか？</language>
 		<language name="JPN_KANJI" width="240">ポケシフターを　終了しますか？</language>
+	</row>
+
+	<row id="MSG_MB_CHILD_SEL_10" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi追加0510
+
+説明文</comment>
+		<language name="JPN" width="240">ポケモンを　６ひき　えらんで
+タッチペンをつかって　みぎのわくに
+スライドさせて　ください</language>
+		<language name="JPN_KANJI" width="240">ポケモンを　６匹　選んで
+タッチペンを使って　右の枠に
+スライドさせて　ください</language>
 	</row>
 
 	<row id="MSG_MB_CHILD_CAP_01">

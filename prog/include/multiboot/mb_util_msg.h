@@ -63,6 +63,7 @@ typedef enum
   MMWT_LARGE,   //画面中央(大)
   MMWT_1LINE,   //画面下１行
   MMWT_2LINE,   //画面下２行
+  MMWT_3LINE,   //画面下２行
 
   MMWT_2LINE_UP,   //画面上２行
 

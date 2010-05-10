@@ -55,6 +55,10 @@
 
 #define MB_PARENT_PLT_SUB_BG  (0)
 #define MB_PARENT_PLT_SUB_BAR (8)
+#define MB_PARENT_PLT_SUB_SS  (9)
+
+#define MB_PARENT_PLT_MAIN_BG  (0)
+#define MB_PARENT_PLT_MAIN_SS  (8)
 
 #define MB_PARENT_FIRST_TIMEOUT (60*15) //’Êí5•bˆÈ“à‚ÅÚ‘±‚·‚é‚Ì‚ª‚Å‚«‚È‚©‚Á‚½B
 
@@ -456,6 +460,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_WHITE , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+      PMSND_FadeOutBGM(PMSND_FADE_FAST);
     }
 
     work->state = MPS_WAIT_FADEOUT;
@@ -1018,6 +1023,15 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
                       MB_PARENT_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_main_NSCR , 
                       MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
+
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_ss_NCLR , 
+                      PALTYPE_MAIN_BG , MB_PARENT_PLT_MAIN_SS*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_ss_NCGR ,
+                      MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_ss_NSCR , 
+                      MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( MB_PARENT_FRAME_BG , 0 , 0 , 32 , 24 , MB_PARENT_PLT_MAIN_SS );
+    GFL_BG_LoadScreenReq( MB_PARENT_FRAME_BG );
     
     GFL_ARC_CloseDataHandle( arcHandle );
   }
@@ -1033,15 +1047,27 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
                       MB_PARENT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
                       MB_PARENT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
-    
     //ã‰æ–Ê
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
                       PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
-                      MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
+                      MB_PARENT_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
-                      MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+                      MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
     
+    GFL_ARC_CloseDataHandle( arcHandle );
+
+
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_PARENT , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_ss_NCLR , 
+                      PALTYPE_SUB_BG , MB_PARENT_PLT_SUB_SS*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_ss_NCGR ,
+                      MB_PARENT_FRAME_SUB_MSG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_ss_NSCR , 
+                      MB_PARENT_FRAME_SUB_MSG ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( MB_PARENT_FRAME_SUB_MSG , 0 , 0 , 32 , 24 , MB_PARENT_PLT_SUB_SS );
+    GFL_BG_LoadScreenReq( MB_PARENT_FRAME_SUB_MSG );
+
     GFL_ARC_CloseDataHandle( arcHandle );
   }
 

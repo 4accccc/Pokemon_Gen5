@@ -338,6 +338,15 @@ void MB_MSG_MessageCreateWindow( MB_MSG_WORK *msgWork , MB_MSG_WIN_TYPE type )
                                         MB_MSG_PLT_MAIN_FONT ,
                                         GFL_BMP_CHRAREA_GET_B );
       break;
+    case MMWT_3LINE:   //‰æ–Ê‰º‚Rs
+      msgWork->msgWin = GFL_BMPWIN_Create( msgWork->frame , 
+                                        MB_MSG_MSGWIN_SEL_L_LEFT , 
+                                        MB_MSG_MSGWIN_SEL_L_TOP-2 ,
+                                        MB_MSG_MSGWIN_SEL_L_WIDTH , 
+                                        MB_MSG_MSGWIN_SEL_L_HEIGHT+2 , 
+                                        MB_MSG_PLT_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+      break;
 
     case MMWT_2LINE_UP:   //‰æ–Êã‚Qs
       msgWork->msgWin = GFL_BMPWIN_Create( msgWork->frame , 

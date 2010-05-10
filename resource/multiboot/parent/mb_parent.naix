@@ -13,10 +13,13 @@
 enum {
 	NARC_mb_parent_bg_main_NCLR = 0,
 	NARC_mb_parent_bg_sub_NCLR = 1,
-	NARC_mb_parent_bg_main_NCGR = 2,
-	NARC_mb_parent_bg_sub_NCGR = 3,
-	NARC_mb_parent_bg_main_NSCR = 4,
-	NARC_mb_parent_bg_sub_NSCR = 5
+	NARC_mb_parent_ss_NCLR = 2,
+	NARC_mb_parent_bg_main_NCGR = 3,
+	NARC_mb_parent_bg_sub_NCGR = 4,
+	NARC_mb_parent_ss_NCGR = 5,
+	NARC_mb_parent_bg_main_NSCR = 6,
+	NARC_mb_parent_bg_sub_NSCR = 7,
+	NARC_mb_parent_ss_NSCR = 8
 };
 
 /* NARC_MB_PARENT_NAIX_ */
