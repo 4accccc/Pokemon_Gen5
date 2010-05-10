@@ -90,7 +90,6 @@ static void ResetPalette( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX
 static void UpdatePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションを更新する
 // タッチ範囲
 static void SetupTouchArea( RESEARCH_COMMON_WORK* work ); // タッチ範囲をセットアップする
-
 //-------------------------------------------------------------------------------
 // ■取得
 //-------------------------------------------------------------------------------
