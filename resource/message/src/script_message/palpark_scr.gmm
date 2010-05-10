@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T19:12:18"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-10T16:56:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1391" top="163" right="2096" bottom="791" maximized="no" rayout="Vertical2">
+	<dialog left="380" top="110" right="1085" bottom="738" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="682" top="69" right="1155" bottom="467" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -429,7 +429,7 @@ BOXに6匹以上の空きがある</comment>
 
 	<row id="msg_palpark_score_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイスコアメッセージ1</comment>
-		<language name="JPN" width="256">さすが　でんどういりの　トレーナーだ！
+		<language name="JPN" width="256">きたいどおりの　うでまえだ！
 ポケシフターが　うごいている！▼
 ……だが　[1:00:トレーナー名:0]くん！▼
 わたしのめは　ごまかせんよ！
@@ -439,7 +439,7 @@ BOXに6匹以上の空きがある</comment>
 きみほどの　トレーナーなら
 もっともっと　ポケシフターを▽
 つかいこなせる　はずだ！▼</language>
-		<language name="JPN_KANJI" width="256">さすが　殿堂入りの　トレーナーだ！
+		<language name="JPN_KANJI" width="256">期待通りの　腕前だ！
 ポケシフターが　動いている！▼
 ……だが　[1:00:トレーナー名:0]くん！▼
 わたしの目は　ごまかせんよ！
