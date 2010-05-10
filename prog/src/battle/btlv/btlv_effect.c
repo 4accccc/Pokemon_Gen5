@@ -538,6 +538,7 @@ void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success, 
   effvm_param.item_no       = item_no;
 
   BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_AA, vpos, BTLEFF_BALL_THROW, &effvm_param );
+  bew->execute_flag = TRUE;
 }
 
 //=============================================================================================
@@ -557,6 +558,7 @@ void BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no )
   effvm_param.item_no = item_no;
 
   BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_AA, vpos, BTLEFF_BALL_THROW_TRAINER, &effvm_param );
+  bew->execute_flag = TRUE;
 }
 
 //=============================================================================================
@@ -579,6 +581,30 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
   bew->tcb_execute_flag = 1;
 
   GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Henge, beht, 0 );
+}
+
+//=============================================================================================
+/**
+ * @brief ポケモンバニッシュフラグON
+ *
+ * @param[in] vpos  対象ポケモンの描画位置
+ */
+//=============================================================================================
+void  BTLV_EFFECT_PokemonVanishOn( BtlvMcssPos vpos )
+{ 
+  BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_VANISH_ON );
+}
+
+//=============================================================================================
+/**
+ * @brief ポケモンバニッシュフラグOFF
+ *
+ * @param[in] vpos  対象ポケモンの描画位置
+ */
+//=============================================================================================
+void  BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos )
+{ 
+  BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_VANISH_OFF );
 }
 
 //============================================================================================

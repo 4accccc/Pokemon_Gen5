@@ -107,6 +107,8 @@ enum{
   BTLEFF_SHOOTER_EFFECT,                      //シューターエフェクト
   BTLEFF_TONBOGAERI_RETURN,                   //とんぼがえり戻りエフェクト
   BTLEFF_VOLTCHANGE_RETURN,                   //ボルトチェンジ戻りエフェクト
+  BTLEFF_POKEMON_VANISH_ON,                   //ポケモンバニッシュON
+  BTLEFF_POKEMON_VANISH_OFF,                   //ポケモンバニッシュOFF
 
   BTLEFF_STATUS_EFFECT_END,
 };
@@ -228,6 +230,8 @@ extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const B
 extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical );
 extern  void              BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no );
 extern  void              BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos );
+extern  void              BTLV_EFFECT_PokemonVanishOn( BtlvMcssPos vpos );
+extern  void              BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
 extern  void              BTLV_EFFECT_SetGaugeStatus( PokeSick sick,  BtlvMcssPos pos );
