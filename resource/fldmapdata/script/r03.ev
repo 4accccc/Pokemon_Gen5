@@ -595,6 +595,9 @@ EVENT_START   ev_pos_r03_support_01
 	_OBJ_ANIME_WAIT()
 	
 	ENDSWITCH
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_support_stop_lookup )
+	_OBJ_ANIME_WAIT()
 
 	_BALLOONWIN_OBJMSG( msg_r03_white_06 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
@@ -626,6 +629,84 @@ EVENT_START   ev_pos_r03_support_01
 	}
 EVENT_END
 
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公振り向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_lookup
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：主人公ストッパーで戻される
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_player_stop_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポート主人公を引き止めるx715
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_x715
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポート主人公を引き止めるx716
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_x716
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポート主人公を引き止めるx717
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_x717
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポート主人公を引き止めるx715_retrun
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_x715_ret
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_STAY_WALK_D_4F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポート主人公を引き止めるx716_retrun
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_x716_ret
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_4F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ポケモン誘拐イベント：サポート主人公を引き止めるx717_retrun
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_support_stop_x717_ret
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_4F,0
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*  R03 support01に直接話しかけ*/
 /**************************************************************/
@@ -647,30 +728,8 @@ EVENT_END
 /*  R03 RIVAL03（ストッパー）に直接話しかけ*/
 /**************************************************************/
 EVENT_START   ev_r03_rival_03
-
+{
 	_TALK_OBJ_START()
-	_CALL ev_r03_rival_stoper
-	
-EVENT_END
-
-/**************************************************************/
-/*  R03 RIVAL03（ストッパー）POS*/
-/**************************************************************/
-EVENT_START   ev_pos_r03_rival_03
-
-	_OBJ_ANIME( R03_RIVAL_03 , anm_rival_01_06_down )
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_up )
-	_OBJ_ANIME_WAIT()
-	_CALL ev_r03_rival_stoper
-	
-EVENT_END
-
-
-/**************************************************************/
-/*CALL：ライバルストッパー                               */
-/**************************************************************/
-ev_r03_rival_stoper:
-
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
@@ -681,7 +740,6 @@ ev_r03_rival_stoper:
 		//先に行くか質問
 		DEFINE_LOCAL SCWK_ANSWER01
 		_YES_NO_WIN( SCWK_ANSWER01 )
-		_BALLOONWIN_CLOSE()
 		
 		//はい
 		IF $SCWK_ANSWER01 == 0 THEN
@@ -711,9 +769,8 @@ ev_r03_rival_stoper:
 			
 			//準備してこいよ
 			_BALLOONWIN_OBJMSG( msg_r03_black_08c , R03_RIVAL_03 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
-			_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_return02 )
-			_OBJ_ANIME_WAIT()
 			
 			//======================================//
 			
@@ -732,7 +789,6 @@ ev_r03_rival_stoper:
 		//先に行くか質問
 		DEFINE_LOCAL SCWK_ANSWER02
 		_YES_NO_WIN( SCWK_ANSWER02 )
-		_BALLOONWIN_CLOSE()
 		
 		//はい
 		IF $SCWK_ANSWER02 == 0 THEN
@@ -761,6 +817,111 @@ ev_r03_rival_stoper:
 
 			//準備してこいよ
 			_BALLOONWIN_OBJMSG( msg_r03_black_08c , R03_RIVAL_03 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+		ENDIF
+	
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*  R03 RIVAL03（ストッパー）POS*/
+/**************************************************************/
+EVENT_START   ev_pos_r03_rival_03
+{
+	_OBJ_ANIME( R03_RIVAL_03 , anm_rival_01_06_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_up )
+	_OBJ_ANIME_WAIT()
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//初回話しかけ
+	IF $WK_SCENE_R03_PLASMA == 1 THEN
+		_BALLOONWIN_OBJMSG( msg_r03_black_08a , R03_RIVAL_03 )
+		
+		//先に行くか質問
+		DEFINE_LOCAL SCWK_ANSWER01
+		_YES_NO_WIN( SCWK_ANSWER01 )
+		
+		//はい
+		IF $SCWK_ANSWER01 == 0 THEN
+		
+				_BALLOONWIN_OBJMSG( msg_r03_black_08b , R03_RIVAL_03 )
+				_BALLOONWIN_CLOSE()
+			
+				_OBJ_ANIME( R03_RIVAL_03 , anm_stoper_rival_go )
+				_OBJ_ANIME_WAIT()
+
+			
+			//======================================//
+			
+			//OBJ非表示
+			_OBJ_DEL(R03_RIVAL_03)
+			_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+			_SE_WAIT()
+			//洞窟前のRIVALを非表示
+			_FLAG_SET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：R03R0301のPOS起動***
+			$WK_SCENE_R03_PLASMA = 3
+			
+			//======================================//
+		
+		ELSE
+			
+			//準備してこいよ
+			_BALLOONWIN_OBJMSG( msg_r03_black_08d , R03_RIVAL_03 )
+			_BALLOONWIN_CLOSE()
+			_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_return02 )
+			_OBJ_ANIME_WAIT()
+			
+			//======================================//
+			
+			//***フラグ操作：ストッパーの会話を２回目に***
+			$WK_SCENE_R03_PLASMA = 2
+			
+			//======================================//
+			
+		ENDIF
+	
+	//２回目以降の話しかけ
+	ELSE
+
+		_BALLOONWIN_OBJMSG( msg_r03_black_08e , R03_RIVAL_03 )
+		
+		//先に行くか質問
+		DEFINE_LOCAL SCWK_ANSWER02
+		_YES_NO_WIN( SCWK_ANSWER02 )
+		
+		//はい
+		IF $SCWK_ANSWER02 == 0 THEN
+			
+			_BALLOONWIN_OBJMSG( msg_r03_black_08b , R03_RIVAL_03 )
+			_BALLOONWIN_CLOSE()
+			
+			_OBJ_ANIME( R03_RIVAL_03 , anm_stoper_rival_go )
+			_OBJ_ANIME_WAIT()
+			
+			//======================================//
+			
+			//OBJ非表示
+			_OBJ_DEL(R03_RIVAL_03)
+			_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+			_SE_WAIT()
+			//洞窟前のRIVALを非表示
+			_FLAG_SET(FV_R03_RIVAL_03)
+			
+			//***フラグ操作：R03R0301のPOS起動***
+			$WK_SCENE_R03_PLASMA = 3
+			
+			//======================================//
+			
+		ELSE
+
+			//準備してこいよ
+			_BALLOONWIN_OBJMSG( msg_r03_black_08d , R03_RIVAL_03 )
 			_BALLOONWIN_CLOSE()
 			_OBJ_ANIME( MMDL_ID_PLAYER , anm_stoper_player_return02 )
 			_OBJ_ANIME_WAIT()
@@ -775,7 +936,8 @@ ev_r03_rival_stoper:
 		ENDIF
 	
 	ENDIF
-_RET
+}
+EVENT_END
 
 /**************************************************************/
 /*  R03 R03R0301イベント終了後POSでお礼イベント（目の前時）*/
@@ -805,16 +967,12 @@ EVENT_START   ev_pos_r03_support_03
 	_OBJ_ANIME_WAIT()
 	
 	CASE 716 THEN //デフォルト処理
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_02 )
-	_OBJ_ANIME_WAIT()
 	
 	CASE 717 THEN
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_goodbye_x717 )
 	_OBJ_ANIME_WAIT()
 	
     DEFAULT
-    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_02 )
-	_OBJ_ANIME_WAIT()
 	
     ENDSWITCH
     
@@ -972,17 +1130,13 @@ ev_r03_babygirl_thanks:
 	//アイテム入手
 	_ITEM_EVENT_KEYWAIT(ITEM_HIIRUBOORU, 3)
 	
-	//バイバーイ。サポートとBABYRIRL退場
+	//ベル：あっ！ヒールボール
 	_BALLOONWIN_OBJMSG( msg_r03_white_08 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
+	
+	//バイバーイ。サポートとBABYRIRL退場
 	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye01 )
 	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_goodbye01 )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye02 )
-	_OBJ_ANIME( R03_BABYGIRL_02 , anm_babygirl_goodbye02 )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( R03_BABYGIRL_02 ,  anm_support_goodbye03 )
-	_OBJ_ANIME( R03_SUPPORT_01 , anm_support_goodbye03 )
 	_OBJ_ANIME_WAIT()
 
 	//======================================//
@@ -1017,6 +1171,10 @@ _ANIME_LABEL	 anm_support_goodbye01
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1024,34 +1182,11 @@ _ANIME_LABEL	 anm_support_goodbye01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_babygirl_goodbye01
+	_ANIME_DATA	AC_WAIT_8F,4
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（サポート先導）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_goodbye02
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（BABYGIRL後ろにつく）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_babygirl_goodbye02
 	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：BABYGIRLとサポート退場（二人とも歩いていく）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_goodbye03
-	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -1357,73 +1492,6 @@ _ANIME_LABEL	 anm_rival_go01
 	_ANIME_DATA	AC_WALK_L_8F,10
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：主人公ストッパーで戻される
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_player_stop_01
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公を引き止めるx715
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_stop_x715
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,5
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公を引き止めるx716
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_stop_x716
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公を引き止めるx717
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_stop_x717
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公を引き止めるx715_retrun
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_stop_x715_ret
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_STAY_WALK_D_4F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公を引き止めるx716_retrun
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_stop_x716_ret
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_STAY_WALK_D_4F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ポケモン誘拐イベント：サポート主人公を引き止めるx717_retrun
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_support_stop_x717_ret
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_STAY_WALK_D_4F,0
-	_ANIME_DATA	ACMD_END,0
 //--------------------------------------------------------------
 //	ポケモン誘拐イベント：ライバル洞窟の中へ
 //--------------------------------------------------------------
