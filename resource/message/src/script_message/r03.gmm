@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-10T15:02:35"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T18:52:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="111" right="1989" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -555,9 +555,11 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『おねがい……　[1:00:トレーナー名:0]
-ポケモン　とりかえしてあげて！</language>
+プラズマだんに　うばわれた▽
+ポケモンを　とりかえしてあげて！</language>
 		<language name="JPN_KANJI" width="256">ベル『お願い……　[1:00:トレーナー名:0]
-ポケモン　取り返してあげて！</language>
+プラズマ団に　奪われた▽
+ポケモンを　取り返してあげて！</language>
 	</row>
 
 	<row id="msg_r03_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -568,9 +570,11 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『おねがい……　[1:00:トレーナー名:0]
-ポケモン　とりかえしてあげて！▼</language>
+プラズマだんに　うばわれた▽
+ポケモンを　とりかえしてあげて！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『お願い……　[1:00:トレーナー名:0]
-ポケモン　取り返してあげて！▼</language>
+プラズマ団に　奪われた▽
+ポケモンを　取り返してあげて！▼</language>
 	</row>
 
 	<row id="msg_r03_babygirl1_02">
@@ -580,9 +584,9 @@
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">おんなのこ『……どうして
-ポケモン　とっちゃうの……？</language>
+ひとの　ポケモン　とるの……？</language>
 		<language name="JPN_KANJI" width="256">おんなのこ『……どうして
-ポケモン　とっちゃうの……？</language>
+ひとの　ポケモン　とるの……？</language>
 	</row>
 
 	<row id="msg_r03_black_08a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
