@@ -83,6 +83,7 @@ struct _BTL_PARTY {
 struct _BTL_POKE_CONTAINER {
   BTL_MAIN_MODULE*  mainModule;
   BTL_PARTY         party[ BTL_CLIENT_MAX ];
+  POKEPARTY*        srcParty[ BTL_CLIENT_MAX ];
   BTL_POKEPARAM*    pokeParam[ BTL_COMMITMENT_POKE_MAX ];
   u32               fForServer;
 };
@@ -118,6 +119,7 @@ struct _BTL_MAIN_MODULE {
   BTL_POKE_CONTAINER    pokeconForClient;
   BTL_POKE_CONTAINER    pokeconForServer;
   POKEPARTY*            srcParty[ BTL_CLIENT_MAX ];
+  POKEPARTY*            srcPartyForServer[ BTL_CLIENT_MAX ];
   POKEPARTY*            tmpParty;
   POKEMON_PARAM*        ppIllusionZoroArc;
   BTLNET_AIDATA_CONTAINER*  AIDataContainer;
@@ -171,6 +173,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
+static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID );
 static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
@@ -184,8 +187,8 @@ static BOOL setup_comm_rotation( int* seq, void* work );
 static BOOL setup_comm_triple( int* seq, void* work );
 static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq );
-static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int* seq );
@@ -206,11 +209,13 @@ static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, Btl
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static u8 PokeID_to_ClientID( u8 pokeID );
 static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon );
-static BOOL PokeCon_CheckForServer( const BTL_POKE_CONTAINER* pokeCon );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer );
 static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
+static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
+static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
+static POKEPARTY* PokeCon_GetSrcParty( BTL_POKE_CONTAINER* pokecon, u8 clientID );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
@@ -222,9 +227,7 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
 static void srcParty_Init( BTL_MAIN_MODULE* wk );
 static void srcParty_Quit( BTL_MAIN_MODULE* wk );
 static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
-static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID );
-static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID );
-static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID );
+static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID, BOOL fForServer );
 static void reflectPartyData( BTL_MAIN_MODULE* wk );
 static BtlResult checkWinner( BTL_MAIN_MODULE* wk );
 static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
@@ -3342,8 +3345,8 @@ BOOL BTL_MAIN_IsPokeListMultiMode( BTL_MAIN_MODULE* wk )
  */
 POKEPARTY* BTL_MAIN_GetClientSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  srcParty_RefrectBtlParty( wk, clientID );
-  return srcParty_Get( wk, clientID );
+  PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID );
+  return PokeCon_GetSrcParty( &wk->pokeconForClient, clientID );
 }
 /**
  *  マルチバトル時、クライアントの仲間パーティ（いなければNULL）を取得
@@ -3353,9 +3356,10 @@ POKEPARTY* BTL_MAIN_GetClientMultiSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
   if( BTL_MAIN_IsMultiMode(wk) )
   {
     u8 friendClientID = GetFriendCrientID( clientID );
-    if( BTL_MAIN_IsExistClient(wk, friendClientID) ){
-      srcParty_RefrectBtlParty( wk, friendClientID );
-      return srcParty_Get( wk, friendClientID );
+    if( BTL_MAIN_IsExistClient(wk, friendClientID) )
+    {
+      PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID );
+      return PokeCon_GetSrcParty( &wk->pokeconForClient, friendClientID );
     }
   }
   return NULL;
@@ -3711,10 +3715,6 @@ static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon )
   return (pokeCon->mainModule != NULL);
 }
 
-static BOOL PokeCon_CheckForServer( const BTL_POKE_CONTAINER* pokeCon )
-{
-  return pokeCon->fForServer;
-}
 
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer )
 {
@@ -3728,6 +3728,9 @@ static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModu
   }
   for(i=0; i<NELEMS(pokecon->pokeParam); ++i){
     pokecon->pokeParam[i] = NULL;
+  }
+  for(i=0; i<NELEMS(pokecon->srcParty); ++i){
+    pokecon->srcParty[i] = NULL;
   }
 }
 static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon )
@@ -3750,7 +3753,7 @@ static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon )
 
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  const POKEPARTY* party_src = srcParty_Get( wk, clientID );
+  POKEPARTY* party_src = srcParty_Get( wk, clientID, pokecon->fForServer );
   BTL_PARTY* party = &pokecon->party[ clientID ];
   u32 poke_count = PokeParty_GetPokeCount( party_src );
   u8 pokeID_Start = ClientBasePokeID[ clientID ];
@@ -3758,6 +3761,8 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
 
   POKEMON_PARAM* pp;
   u8 i;
+
+  pokecon->srcParty[ clientID ] = party_src;
 
   pokeID = pokeID_Start;
   for(i=0; i<poke_count; ++i, ++pokeID)
@@ -3798,7 +3803,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
          * 同じく手持ちに エンテイ がいれば スイクン に、
          *                スイクン がいれば ライコウ にそれぞれ化ける
          */
-        const POKEPARTY* party_player = srcParty_Get( wk, 0 );
+        POKEPARTY* party_player = srcParty_Get( wk, 0, pokecon->fForServer );
         u8 player_poke_cnt = PokeParty_GetPokeCount( party_player );
         u8 p;
         u16 monsno, monsno_illusion = MONSNO_NULL;
@@ -3840,6 +3845,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
 
   BTL_PARTY_MoveAlivePokeToFirst( party );
 }
+
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
 {
   u32 i;
@@ -3852,6 +3858,73 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
       pokecon->pokeParam[i] = NULL;
     }
   }
+}
+// バトルパーティの内容をオリジナルパーティデータに反映させる
+static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  POKEPARTY* srcParty = PokeCon_GetSrcParty( pokecon, clientID );
+  BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( pokecon, clientID );
+  u32 memberCount = PokeParty_GetPokeCount( srcParty );
+  POKEMON_PARAM* pp;
+  BTL_POKEPARAM* bpp;
+  u32 i;
+
+  PokeParty_InitWork( wk->tmpParty );
+
+  for(i=0; i<memberCount; ++i)
+  {
+    bpp = BTL_PARTY_GetMemberData( btlParty, i );
+    BPP_ReflectToPP( bpp );
+    pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
+    PokeParty_Add( wk->tmpParty, pp );
+  }
+
+  PokeParty_Copy( wk->tmpParty, srcParty );
+
+  // SrcPP ポインタを再設定
+  for(i=0; i<memberCount; ++i)
+  {
+    pp = PokeParty_GetMemberPointer( srcParty, i );
+    bpp = BTL_PARTY_GetMemberData( btlParty, i );
+    BPP_SetSrcPP( bpp,  pp );
+  }
+}
+static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  POKEPARTY* srcParty = PokeCon_GetSrcParty( pokecon, clientID );
+  BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( pokecon, clientID );
+  u32 memberCount = PokeParty_GetPokeCount( srcParty );
+  const POKEMON_PARAM* pp;
+  BTL_POKEPARAM* bpp;
+  u32 orgPokeID, i, j;
+
+  PokeParty_InitWork( wk->tmpParty );
+  orgPokeID = ClientBasePokeID[ clientID ];
+
+  for(i=0; i<memberCount; ++i)
+  {
+    for(j=0; j<memberCount; ++j){
+      bpp = BTL_PARTY_GetMemberData( btlParty, j );
+      if( BPP_GetID(bpp) == (orgPokeID+i) )
+      {
+        BPP_ReflectToPP( bpp );
+        pp = BPP_GetSrcData( bpp );
+        PokeParty_Add( wk->tmpParty, pp );
+
+        if( BPP_GetBtlInFlag(bpp) )
+        {
+          wk->setupParam->fightPokeIndex[ i ] = TRUE;
+        }
+        break;
+      }
+    }
+  }
+
+  PokeParty_Copy( wk->tmpParty, srcParty );
+}
+static POKEPARTY* PokeCon_GetSrcParty( BTL_POKE_CONTAINER* pokecon, u8 clientID )
+{
+  return pokecon->srcParty[ clientID ];
 }
 
 //----------------------------------------------------------------------------------
@@ -4632,6 +4705,7 @@ static void srcParty_Init( BTL_MAIN_MODULE* wk )
   u32 i;
   for(i=0; i<NELEMS(wk->srcParty); ++i){
     wk->srcParty[i] = NULL;
+    wk->srcPartyForServer[i] = NULL;
   }
   wk->tmpParty = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
 }
@@ -4645,6 +4719,10 @@ static void srcParty_Quit( BTL_MAIN_MODULE* wk )
       GFL_HEAP_FreeMemory( wk->srcParty[i] );
       wk->srcParty[i] = NULL;
     }
+    if( wk->srcPartyForServer[i] ){
+      GFL_HEAP_FreeMemory( wk->srcPartyForServer[i] );
+      wk->srcPartyForServer[i] = NULL;
+    }
   }
   if( wk->tmpParty ){
     GFL_HEAP_FreeMemory( wk->tmpParty );
@@ -4657,89 +4735,21 @@ static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* par
   if( wk->srcParty[clientID] == NULL )
   {
     wk->srcParty[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
+    wk->srcPartyForServer[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
     PokeParty_Copy( party, wk->srcParty[clientID] );
+    PokeParty_Copy( party, wk->srcPartyForServer[clientID] );
   }
 }
 // パーティデータ取得
-static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID )
+static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID, BOOL fForServer )
 {
   GF_ASSERT( wk->srcParty[clientID] );
-  return wk->srcParty[ clientID ];
-}
-// バトルパーティの内容をオリジナルパーティデータに反映させる
-static void srcParty_RefrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
-{
-  POKEPARTY* srcParty = srcParty_Get( wk, clientID );
-  BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
-  u32 memberCount = PokeParty_GetPokeCount( srcParty );
-  POKEMON_PARAM* pp;
-  BTL_POKEPARAM* bpp;
-  u32 i;
 
-  PokeParty_InitWork( wk->tmpParty );
-
-  for(i=0; i<memberCount; ++i)
-  {
-    bpp = BTL_PARTY_GetMemberData( btlParty, i );
-    BPP_ReflectToPP( bpp );
-    pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
-    PokeParty_Add( wk->tmpParty, pp );
+  if( fForServer ){
+    return wk->srcPartyForServer[ clientID ];
+  }else{
+    return wk->srcParty[ clientID ];
   }
-
-  PokeParty_Copy( wk->tmpParty, srcParty );
-
-  // SrcPP ポインタをサーバ用、クライアント用パーティデータに再設定
-  {
-    BTL_PARTY* btlParty_sv = NULL;
-    if( PokeCon_IsInitialized(&wk->pokeconForServer) ){
-      btlParty_sv = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
-    }
-    for(i=0; i<memberCount; ++i)
-    {
-      pp = PokeParty_GetMemberPointer( srcParty, i );
-
-      bpp = BTL_PARTY_GetMemberData( btlParty, i );
-      BPP_SetSrcPP( bpp,  pp );
-      if( btlParty_sv ){
-        bpp = BTL_PARTY_GetMemberData( btlParty_sv, i );
-        BPP_SetSrcPP( bpp,  pp );
-      }
-    }
-  }
-}
-// バトルパーティの内容を、バトル開始時の順に並べ直した上でオリジナルパーティデータに反映させる
-static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID )
-{
-  POKEPARTY* srcParty = srcParty_Get( wk, clientID );
-  BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
-  u32 memberCount = PokeParty_GetPokeCount( srcParty );
-  const POKEMON_PARAM* pp;
-  BTL_POKEPARAM* bpp;
-  u32 orgPokeID, i, j;
-
-  PokeParty_InitWork( wk->tmpParty );
-  orgPokeID = ClientBasePokeID[ clientID ];
-
-  for(i=0; i<memberCount; ++i)
-  {
-    for(j=0; j<memberCount; ++j){
-      bpp = BTL_PARTY_GetMemberData( btlParty, j );
-      if( BPP_GetID(bpp) == (orgPokeID+i) )
-      {
-        BPP_ReflectToPP( bpp );
-        pp = BPP_GetSrcData( bpp );
-        PokeParty_Add( wk->tmpParty, pp );
-
-        if( BPP_GetBtlInFlag(bpp) )
-        {
-          wk->setupParam->fightPokeIndex[ i ] = TRUE;
-        }
-        break;
-      }
-    }
-  }
-
-  PokeParty_Copy( wk->tmpParty, srcParty );
 }
 
 
@@ -4868,6 +4878,7 @@ void BTL_MAIN_NotifyPokemonGetToGameSystem( BTL_MAIN_MODULE* wk, const BTL_POKEP
 //----------------------------------------------------------------------------------
 /**
  * バトル内パーティデータを、結果としてセットアップパラメータに書き戻す
+ * ※バトル終了時
  *
  * @param   wk
  */
@@ -4885,8 +4896,8 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
   ){
     POKEPARTY* srcParty;
 
-    srcParty_RefrectBtlPartyStartOrder( wk, wk->myClientID );
-    srcParty = srcParty_Get( wk, wk->myClientID );
+    PokeCon_RefrectBtlPartyStartOrder( &wk->pokeconForServer, wk, wk->myClientID );
+    srcParty = PokeCon_GetSrcParty( &wk->pokeconForServer, wk->myClientID );
 
     // ジムリーダー、四天王、チャンピオンならなつき度アップ
     if( wk->setupParam->competitor == BTL_COMPETITOR_TRAINER )
@@ -4917,8 +4928,8 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     u8 clientID = BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, 0 );
     POKEPARTY* srcParty;
 
-    srcParty_RefrectBtlParty( wk, clientID );
-    srcParty = srcParty_Get( wk, clientID );
+    PokeCon_RefrectBtlParty( &wk->pokeconForServer, wk, clientID );
+    srcParty = PokeCon_GetSrcParty( &wk->pokeconForServer, clientID );
     PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_ENEMY1 ] );
   }
 }

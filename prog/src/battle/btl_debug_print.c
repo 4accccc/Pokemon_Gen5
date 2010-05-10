@@ -148,7 +148,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_AI_PutPokeStart:      return "myID=%d 戦闘ポケが死んで %d体選択\n";
   case DBGSTR_CLIENT_AI_PutPokeDecide:     return "  -> %d番目を新たに出す\n";
   case DBGSTR_CLIENT_CoverRotateDecide:    return "空きを埋めるローテーション確定 ClientID=%d, dir=%d\n";
-  case DBGSTR_CLIENT_HPCheckByLvup:        return "PPLVUP Client line:%d, HP=%d\n";
+  case DBGSTR_CLIENT_HPCheckByLvup:        return "PPLVUP Client line:%d, pokeID=%d, HP=%d\n";
   case DBGSTR_CLIENT_OP_HPPlus:            return "ポケモンHP回復 : bpp=%p, pokeID=%d, AddHP=%d, ResultHP=%d\n";
   case DBGSTR_CLIENT_OP_MemberIn:          return "メンバー入場 : pos %d<->%d  inPokeID=%d, inPokeHP=%d\n";
 
