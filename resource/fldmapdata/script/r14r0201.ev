@@ -506,7 +506,7 @@ ev_r14r0201_tuchi_come:
 	
 	//ふるびた ちいさな ほこらがある…
 	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
+	_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_02)
 	_PLAINWIN_CLOSE()
 	
 	//主人公「！」
@@ -537,6 +537,7 @@ ev_r14r0201_tuchi_come:
 	//どぅるるるる！
 	_VOICE_PLAY( MONSNO_652, 0 )
 	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, POS_UP )
+	_AB_KEYWAIT_MARK()
 	_GIZAWIN_CLOSE ( )
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r14r0210_player_back_01 )
@@ -589,6 +590,7 @@ EVENT_START   ev_r14r0201_poke9_01
 {
 	_VOICE_PLAY( MONSNO_652, 0 )
 	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
 	_GIZAWIN_CLOSE ( )
 
 	_WILD_BTL_SET_LEGEND( MONSNO_652, 60 )
