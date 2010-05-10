@@ -1257,10 +1257,18 @@ GFL_PROC_DATA COMM_TVT_ProcData =
 static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   COMM_TVT_WORK *work;
+  COMM_TVT_INIT_WORK *initWork = pwk;
   
   CTVT_TPrintf("Least heap[%x]\n",GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
 //  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x100000 );
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+  if( initWork->mode == CTM_WIFI )
+  {
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000-0x18000 );
+  }
+  else
+  {
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000 );
+  }
   
   work = GFL_PROC_AllocWork( proc, sizeof(COMM_TVT_WORK), HEAPID_COMM_TVT );
   work->heapId = HEAPID_COMM_TVT;

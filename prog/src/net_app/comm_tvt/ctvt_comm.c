@@ -252,7 +252,11 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   }
   for( i=0;i<CTVT_MEMBER_NUM-1;i++ )
   {
-    commWork->postPhotoBuf[i] = GFL_NET_Align32Alloc( heapId , CTVT_BUFFER_SCR_SIZE/2 );
+    //Wifiは1人分しか確保しない
+    if( COMM_TVT_IsWifi(work) == FALSE || i == 0 )
+    {
+      commWork->postPhotoBuf[i] = GFL_NET_Align32Alloc( heapId , CTVT_BUFFER_SCR_SIZE/2 );
+    }
   }
   {
     const u32 encWorkSize = SSP_GetJpegEncoderBufferSize( 128,192,CTVT_COMM_JPG_OUT_TYPE,CTVT_COMM_JPG_OUT_OPT );
@@ -345,7 +349,11 @@ void CTVT_COMM_TermSystem( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   GFL_NET_Align32Free( commWork->encWorkBuf );
   for( i=0;i<CTVT_MEMBER_NUM-1;i++ )
   {
-    GFL_NET_Align32Free( commWork->postPhotoBuf[i] );
+    //Wifiは1人分しか確保しない
+    if( COMM_TVT_IsWifi(work) == FALSE || i == 0 )
+    {
+      GFL_NET_Align32Free( commWork->postPhotoBuf[i] );
+    }
   }
   GFL_HEAP_FreeMemory( commWork );
   
