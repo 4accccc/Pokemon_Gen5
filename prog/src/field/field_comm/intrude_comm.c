@@ -270,9 +270,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
       }
     }
     else if(intcomm->comm_status == INTRUDE_COMM_STATUS_BOOT_CHILD){
-      //※check　ここに子の場合、一定時間経過しても親との接続が確立できなかったら
-      //         通信をあきらめる処理を入れたので要確認。確認が出来たらこのコメントを削除
-      //          2010.05.04(火)
+      //子の場合、一定時間経過しても親との接続が確立できなかったら通信をあきらめる
       intcomm->exit_wait++;
       if(intcomm->exit_wait > PARENT_SEARCH_TIMEOUT){
         intcomm->exit_wait = 0;
