@@ -274,7 +274,6 @@ STRBUF * GDS_Profile_GetSelfIntroduction(const GDS_PROFILE_PTR gpp, PMS_DATA *pm
 		return NULL;
 	}
 	else{
-		//※check 最大チェック入れる
 		STRBUF * tmpBuf = GFL_STR_CreateBuffer(EVENT_SELF_INTRO, heap_id);
 		GFL_STR_SetStringCodeOrderLength(tmpBuf, gpp->event_self_introduction, EVENT_SELF_INTRO);
 		return tmpBuf;
