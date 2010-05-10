@@ -375,7 +375,8 @@ static void SEQFUNC_FadeOut( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 	{	
 	case SEQ_FADEIN_START:
     if( p_wk->p_param->ret == BATTLE_CHAMPIONSHIP_CORE_RET_TITLE )
-    { 
+    {
+      PMSND_FadeOutBGM( PMSND_FADE_FAST );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
     }
     else

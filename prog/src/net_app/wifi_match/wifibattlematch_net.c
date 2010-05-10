@@ -4093,6 +4093,7 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     SEQ_CANCEL,
     SEQ_DOWNLOAD_COMPLETE,
     SEQ_END,
+    SEQ_EMPTY_END,
 
     SEQ_WAIT_CALLBACK         = 100,
   };
@@ -4149,7 +4150,11 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     { 
       DEBUG_NET_Printf( "サーバーにレギュレーションがあった数 %d\n", p_wk->server_filenum );
 
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
+      // ファイル読み込み終了
+      if( !DWC_NdCleanupAsync() ){  //FALSEの場合コールバックが呼ばれない
+        return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
+      }
+      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_EMPTY_END );
     }
     break;
 
@@ -4233,6 +4238,10 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     { 
       return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
     }
+
+
+  case SEQ_EMPTY_END:
+    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
 
 //-------------------------------------
 ///	コールバック待ち処理  

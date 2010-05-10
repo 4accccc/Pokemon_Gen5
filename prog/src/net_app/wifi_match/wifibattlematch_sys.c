@@ -56,7 +56,18 @@
 ///	DEBUG
 //=====================================
 #ifdef PM_DEBUG
+
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(DEBUG_ONLY_FOR_shimoyamada)
+#define WBM_SYS_PRINT_ON
+#endif
+
 #endif //PM_DEBUG
+
+#ifdef WBM_SYS_PRINT_ON
+#define WBM_SYS_Printf(...)  OS_TFPrintf( 3, __VA_ARGS__ )
+#else
+#define WBM_SYS_Printf(...) /*  */
+#endif
 
 //-------------------------------------
 ///	PROCエクスターン
@@ -381,7 +392,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   p_wk->p_player_modify_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
   p_wk->p_enemy_modify_party = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_SYS );
 
-  OS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->param.poke, p_wk->param.btl_rule );
+  WBM_SYS_Printf( "ランダムマッチ引数 使用ポケ%d ルール%d\n", p_wk->param.poke, p_wk->param.btl_rule );
 
   //データバッファ作成
   BattleRec_Init( HEAPID_WIFIBATTLEMATCH_SYS );
@@ -1184,8 +1195,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //レギュレーションの内容を適用
   BATTLE_PARAM_SetRegulation( p_param->p_btl_setup_param, p_reg, GFL_HEAP_LOWID( heapID ) );
 
-  OS_TFPrintf( 3, "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
-  OS_TFPrintf( 3, "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
+  WBM_SYS_Printf( "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
+  WBM_SYS_Printf( "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
 
   //録画準備
   BTL_SETUP_AllocRecBuffer( p_param->p_btl_setup_param, heapID );
@@ -1245,7 +1256,7 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     p_wk->btl_score.enemy_rest_hp   = 100 * now_hp_all / max_hp_all;
   }
 
-  OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_score.result);
+  WBM_SYS_Printf( "バトル結果 %d \n", p_wk->btl_score.result);
 
   //録画情報にバトル情報を設定
   BattleRec_LoadToolModule();

@@ -25,6 +25,22 @@
 //外部公開
 #include "wifibattlematch_battle.h"
 
+//-------------------------------------
+///	DEBUG
+//=====================================
+#ifdef PM_DEBUG
+
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(DEBUG_ONLY_FOR_shimoyamada)
+#define WBM_SYS_PRINT_ON
+#endif
+
+#endif //PM_DEBUG
+
+#ifdef WBM_SYS_PRINT_ON
+#define WBM_BTL_Printf(...)  OS_TFPrintf( 3, __VA_ARGS__ )
+#else
+#define WBM_BTL_Printf(...) /*  */
+#endif
 
 //=============================================================================
 /**
@@ -193,13 +209,13 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 200, WB_NET_WIFIMATCH );
-      OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
+      WBM_BTL_Printf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*p_seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 200, WB_NET_WIFIMATCH ) ){
-      OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
+      WBM_BTL_Printf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*p_seq) = SEQ_BATTLE_INIT;
     }
     break;
@@ -213,7 +229,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     break;
   case SEQ_BATTLE_END:
-    OS_TPrintf("バトル完了\n");
+    WBM_BTL_Printf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
     (*p_seq) = SEQ_CALL_END_DEMO;
@@ -230,7 +246,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       {
         p_param->p_demo_param->type = COMM_BTL_DEMO_TYPE_MULTI_END;
       }
-      HOSAKA_Printf("comm battle demo type=%d\n",p_param->p_demo_param->type);
 
       // 勝敗設定
       switch( p_param->p_btl_setup_param->result )

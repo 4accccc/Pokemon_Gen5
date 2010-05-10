@@ -512,6 +512,12 @@ static void SEQFUNCTION_StartFadeOut( WIFILOGOUT_WORK *p_wk )
     fade  = WIPE_FADE_BLACK;
   }
 
+
+  if( p_wk->p_param->bgm == WIFILOGIN_BGM_NORMAL )
+  { 
+    PMSND_FadeOutBGM( PMSND_FADE_FAST );
+  }
+
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
       fade, WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
   SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitFadeOut );
