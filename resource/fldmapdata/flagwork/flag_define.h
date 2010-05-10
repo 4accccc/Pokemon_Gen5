@@ -2401,7 +2401,7 @@
 #define SYS_FLAG_PALACE_DPOWER            2433 /* 0x0981 ハイリンク：デルパワーを初めて登録したフラグ */
 #define SYS_FLAG_BGM_T01R0102             2434 /* 0x0982 自宅２F：３匹選択のBGM変更フラグ */
 #define SYS_FLAG_BGM_C03R0402             2435 /* 0x0983 ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
-		/* not used  2436(0x0984) */
+#define SYS_FLAG_BGM_R03R0301PLASMA       2436 /* 0x0984 BGM変更フラグ：地下水脈プラズマ団イベント時にBGMを変更する */
 		/* not used  2437(0x0985) */
 		/* not used  2438(0x0986) */
 		/* not used  2439(0x0987) */
