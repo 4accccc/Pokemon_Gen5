@@ -1192,8 +1192,10 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ぷっ　ぷらずま……！</language>
-		<language name="JPN_KANJI" width="216">ぷっ　ぷらずま……！</language>
+		<language name="JPN" width="216">プラーズマー！
+まけちまった！？</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+負けちまった！？</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_02_TRMSG_FIGHT_LOSE">
@@ -14455,10 +14457,10 @@
 	</row>
 
 	<row id="TRID_RIVAL_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ジムバッジの　かずは
-おなじ　１コ　なのに……</language>
-		<language name="JPN_KANJI" width="216">ジムバッジの　数は
-同じ　１コ　なのに……</language>
+		<language name="JPN" width="216">なぜ……？　ジムバッジの
+かずは　おなじ　なのに……</language>
+		<language name="JPN_KANJI" width="216">なぜ……？　ジムバッジの
+数は　同じ　なのに……</language>
 	</row>
 
 	<row id="TRID_RIVAL_05_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -14476,10 +14478,10 @@
 	</row>
 
 	<row id="TRID_RIVAL_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ジムバッジの　かずは
-おなじ　１コ　なのに……</language>
-		<language name="JPN_KANJI" width="216">ジムバッジの　数は
-同じ　１コ　なのに……</language>
+		<language name="JPN" width="216">なぜ……？　ジムバッジの
+かずは　おなじ　なのに……</language>
+		<language name="JPN_KANJI" width="216">なぜ……？　ジムバッジの
+数は　同じ　なのに……</language>
 	</row>
 
 	<row id="TRID_RIVAL_06_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -14497,10 +14499,10 @@
 	</row>
 
 	<row id="TRID_RIVAL_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ジムバッジの　かずは
-おなじ　１コ　なのに……</language>
-		<language name="JPN_KANJI" width="216">ジムバッジの　数は
-同じ　１コ　なのに……</language>
+		<language name="JPN" width="216">なぜ……？　ジムバッジの
+かずは　おなじ　なのに……</language>
+		<language name="JPN_KANJI" width="216">なぜ……？　ジムバッジの
+数は　同じ　なのに……</language>
 	</row>
 
 	<row id="TRID_SUPPORT_13_TRMSG_FIGHT_FIRST_DAMAGE">
