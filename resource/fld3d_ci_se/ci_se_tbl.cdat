@@ -150,6 +150,7 @@ const CI_SE_TBL Tbl18[] = {
 };
 
 const CI_SE_TBL Tbl19[] = {
+	{ SEQ_SE_FLD_172, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
