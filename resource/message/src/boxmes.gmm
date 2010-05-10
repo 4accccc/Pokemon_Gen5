@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T15:55:42"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T16:22:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -630,7 +630,7 @@
 	<row id="msg_boxmes_03_02" back-color="#ff0000,,,#ff0000,,#ff0000,,#ff0000,,,#ff0000,,,,,,,">
 		<comment>上画面タイトル</comment>
 		<language name="JPN" font=" 1:small" width="48">ポケモンを　つれていく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">ポケモンを　つれていく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">ポケモンを　連れていく</language>
 	</row>
 
 	<row id="msg_boxmes_03_03" back-color="#ff0000,,,#ff0000,,#ff0000,,#ff0000,,,#ff0000,,,,,,,">
