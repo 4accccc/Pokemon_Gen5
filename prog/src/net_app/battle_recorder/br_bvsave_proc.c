@@ -388,7 +388,37 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
           //受信したので、battle_recを設定
           BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
               &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
-          *p_seq  = SEQ_FADEOUT_START;
+
+          { 
+            BOOL is_have  = FALSE;
+            int i;
+            u64 now_number  = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_DATA_NUMBER, 0 );
+            //すでに受信しているものかチェック
+            for( i = BR_SAVEDATA_OTHER_00; i <= BR_SAVEDATA_OTHER_02; i++ )
+            { 
+              OS_TPrintf("比較 save[%d]%d%d download%d%d\n", i,
+                  (p_wk->p_param->cp_rec_saveinfo->video_number[i] >> 16) & 0xFFFFFFFF, 
+                  (p_wk->p_param->cp_rec_saveinfo->video_number[i]) & 0xFFFFFFFF, 
+                  (now_number >> 16) & 0xFFFFFFFF, now_number & 0xFFFFFFFF );
+              if( p_wk->p_param->cp_rec_saveinfo->video_number[i] == now_number )
+              { 
+                is_have = TRUE;
+                break;
+              }
+            }
+
+            if( is_have == TRUE )
+            { 
+              //すでに受信していたのでメッセージをだして、戻る
+              BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_008 );
+              *p_seq  = SEQ_MSG_WAIT;
+            }
+            else
+            { 
+              //次へ
+              *p_seq  = SEQ_FADEOUT_START;
+            }
+          }
         }
         else
         { 
@@ -399,6 +429,7 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
       }
       else
       { 
+        //エラー
         BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
         *p_seq  = SEQ_MSG_WAIT;
       }

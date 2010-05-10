@@ -83,6 +83,7 @@ typedef struct
   BOOL    is_valid[BR_SAVEDATA_NUM]; //セーブデータが存在するか
   STRBUF  *p_name[BR_SAVEDATA_NUM];  //名前
   u32     sex[BR_SAVEDATA_NUM];      //性別
+  u64     video_number[BR_SAVEDATA_NUM]; //ビデオナンバー
   BOOL    is_musical_valid;             //ミュージカルは存在するか
   BOOL    is_check;                     //１度チェックしたか
 } BR_SAVE_INFO;

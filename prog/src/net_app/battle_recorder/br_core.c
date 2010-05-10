@@ -1398,7 +1398,11 @@ static void Br_Core_CheckSaveData( BR_SAVE_INFO *p_saveinfo, BOOL is_onece, GAME
         p_saveinfo->p_name[i]   = GDS_Profile_CreateNameString( p_profile, HEAPID_BATTLE_RECORDER_SYS );
         DEBUG_STRBUF_Print( p_saveinfo->p_name[i] );
 
+        //«•ÊŽæ“¾
 	      p_saveinfo->sex[i]      = GDS_Profile_GetSex( p_profile );
+
+        //ƒrƒfƒI”Ô†Žæ“¾
+        p_saveinfo->video_number[i]  = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_DATA_NUMBER, 0 );
 	    }
 	  }
 	
