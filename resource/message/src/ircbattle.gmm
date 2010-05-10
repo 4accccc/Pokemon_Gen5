@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T17:53:18"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-10T20:46:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,13 +342,13 @@
 		</language>
 	</columns>
 
-	<dialog left="357" top="148" right="1062" bottom="776" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+	<dialog left="1285" top="360" right="1952" bottom="988" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="58" top="61" right="531" bottom="459" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="659"/>
+		<band id="3" index="3" style="0000" width="659"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -472,7 +472,7 @@
 
 	<row id="IRCBTL_STR_19">
 		<language name="JPN" width="256">てもち</language>
-		<language name="JPN_KANJI" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">手持ち</language>
 	</row>
 
 	<row id="IRCBTL_STR_20">
