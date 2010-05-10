@@ -8525,9 +8525,9 @@
 		<language name="JPN" width="256">END-02</language>
 		<language name="JPN_KANJI" width="256">END-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_362">
-		<language name="JPN" width="256">DMY-362</language>
-		<language name="JPN_KANJI" width="256">DMY-362</language>
+	<row id="msg_seq_se_w156_babble2">
+		<language name="JPN" width="256">W156-BABBLE2</language>
+		<language name="JPN_KANJI" width="256">W156-BABBLE2</language>
 	</row>
 	<row id="msg_seq_se_dmy_363">
 		<language name="JPN" width="256">DMY-363</language>
