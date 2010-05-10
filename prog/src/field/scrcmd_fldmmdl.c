@@ -954,7 +954,7 @@ VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * é©ã@MMDLéÊìæÅ@âº
+ * é©ã@MMDLéÊìæ
  * @param work SCRCMD_WORK
  * @retval
  */
@@ -962,7 +962,7 @@ VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
 static MMDL * scmd_GetMMdlPlayer( SCRCMD_WORK *work )
 {
   MMDLSYS *fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
-  MMDL *fmmdl = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
+  MMDL *fmmdl = MMDLSYS_SearchMMdlPlayer( fmmdlsys );
   return( fmmdl );
 }
 

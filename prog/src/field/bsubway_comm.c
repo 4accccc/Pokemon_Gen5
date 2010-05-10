@@ -533,65 +533,6 @@ BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
   return( FALSE );
 }
 
-
-#if 0
-BOOL BSUBWAY_SCRWORK_CommSendData(
-    BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param, u16 *ret_wk )
-{
-  int command,size;
-  const MYSTATUS* my;
-  u16 mode  = VMGetWorkValue(core);
-  u16 param  = VMGetWorkValue(core);
-  u16* ret_wk = VMGetWork(core);
-   
-  KAGAYA_Printf( "通信マルチデータ送信\n" );
-
-  *ret_wk = 0;
-  
-  switch( mode ){
-  case BSWAY_COMM_PLAYER_DATA:  //ポケモン選択
-    command = FC_TOWER_PLAYER_DATA;
-    BTowerComm_SendPlayerData(core->fsys->btower_wk,core->fsys->savedata);
-    break;
-  case TOWER_COMM_TR_DATA:    //抽選トレーナー
-    command = FC_TOWER_TR_DATA;
-    BTowerComm_SendTrainerData(core->fsys->btower_wk);
-    break;
-  case TOWER_COMM_RETIRE_SELECT:  //リタイアを選ぶか？
-    command = FC_TOWER_RETIRE_SELECT;
-    BTowerComm_SendRetireSelect(core->fsys->btower_wk,param);
-    break;
-  }
-  OS_Printf(">>btwr send = %d,%d,%d\n",wk->send_buf[0],wk->send_buf[1],wk->send_buf[2]);
-
-  //自分、相手のどちらかがDPの時は、DPの通信処理
-  if( Frontier_CheckDPRomCode(core->fsys->savedata) == 1 ){
-
-    OS_Printf( "DPの形式の通信処理\n" );
-    //CommToolSetTempData(CommGetCurrentID(),wk->send_buf);
-    //*ret_wk = 1;    //成功
-#if 1
-    //同期待ち、受信人数待ちがないので、再送信してもずれそうだが一応。
-    if( CommToolSetTempData(CommGetCurrentID(),wk->send_buf) == TRUE ){
-      *ret_wk = 1;    //成功
-    }else{
-      return 1;      //注意！
-    }
-#endif
-  }else{
-    OS_Printf( "PLの形式の通信処理\n" );
-    CommCommandFrontierInitialize( wk );
-    //size = 35;          //定義がない？ぽいので、とりあえず直値
-    size = BTWR_SIO_BUF_LEN;    //bufは[35]で、2byteなので、size=70
-    if( CommSendData(command,wk->send_buf,size) == TRUE ){
-      *ret_wk = 1;  //成功
-    }
-  }
-
-  return 0;
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * @brief 通信マルチデータ受信

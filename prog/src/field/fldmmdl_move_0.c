@@ -157,7 +157,7 @@ enum
 //--------------------------------------------------------------
 //  debug
 //--------------------------------------------------------------
-#ifdef PM_DEBUG
+#ifdef DEBUG_MMDL
 //#define DEBUG_SEARCH  //有効で方向切り替え型動作全て自機サーチ
 #endif
 
@@ -2107,8 +2107,8 @@ static int MvRt4Move_JikiCheck( MMDL * mmdl, MV_RT4_WORK *work )
       }
 
       if( sx <= 1 ){
-        KAGAYA_Printf( "MMDL TRAINER ESCAPE ID=%d, DIR=%d, GX=%d,GZ=%d (jiki GX=%d,GZ=%d)\n", id, dir, gx, gz, jx, jz );
-        KAGAYA_Printf( "MMDL TRAINER ESCAPE HIT\n" );
+        D_MMDL_DPrintf( "MMDL TRAINER ESCAPE ID=%d, DIR=%d, GX=%d,GZ=%d (jiki GX=%d,GZ=%d)\n", id, dir, gx, gz, jx, jz );
+        D_MMDL_DPrintf( "MMDL TRAINER ESCAPE HIT\n" );
       }
     }
 #endif
@@ -2716,10 +2716,10 @@ static void MoveSub_KuruKuruSet( MMDL * mmdl, RT_KURUKURU_WORK *work )
 #if 0  
   {
     switch( dir ){
-    case DIR_UP: KAGAYA_Printf( "くるくる移動 0 方向は上　" ); break;
-    case DIR_DOWN: KAGAYA_Printf( "くるくる移動 0 方向は下　" ); break;
-    case DIR_LEFT: KAGAYA_Printf( "くるくる移動 0 方向は左　" ); break;
-    case DIR_RIGHT: KAGAYA_Printf( "くるくる移動 0 方向は右　" ); break;
+    case DIR_UP: D_MMDL_DPrintf( "くるくる移動 0 方向は上　" ); break;
+    case DIR_DOWN: D_MMDL_DPrintf( "くるくる移動 0 方向は下　" ); break;
+    case DIR_LEFT: D_MMDL_DPrintf( "くるくる移動 0 方向は左　" ); break;
+    case DIR_RIGHT: D_MMDL_DPrintf( "くるくる移動 0 方向は右　" ); break;
     }
   }
 #endif
@@ -2743,10 +2743,10 @@ static void MoveSub_KuruKuruSet( MMDL * mmdl, RT_KURUKURU_WORK *work )
 #if 0
   {
     switch( dir ){
-    case DIR_UP: KAGAYA_Printf( "1方向は上\n" ); break;
-    case DIR_DOWN: KAGAYA_Printf( "1方向は下\n" ); break;
-    case DIR_LEFT: KAGAYA_Printf( "1方向は左\n" ); break;
-    case DIR_RIGHT: KAGAYA_Printf(  " 1方向は右\n" ); break;
+    case DIR_UP: D_MMDL_DPrintf( "1方向は上\n" ); break;
+    case DIR_DOWN: D_MMDL_DPrintf( "1方向は下\n" ); break;
+    case DIR_LEFT: D_MMDL_DPrintf( "1方向は左\n" ); break;
+    case DIR_RIGHT: D_MMDL_DPrintf(  " 1方向は右\n" ); break;
     }
   }
 #endif

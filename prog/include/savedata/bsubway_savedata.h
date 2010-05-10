@@ -33,8 +33,10 @@
 ///WiFi 手持ちポケモン数
 #define BSUBWAY_STOCK_WIFI_MEMBER_MAX (3)
 
-//kari pt_save.h
+#if 0
+//pt_save.h
 #define WAZA_TEMOTI_MAX (4) ///<1体のポケモンがもてる技の最大値
+#endif
 
 //--------------------------------------------------------------
 /// プレイデータ取得ID

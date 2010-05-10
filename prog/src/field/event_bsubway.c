@@ -447,8 +447,6 @@ static GMEVENT_RESULT ev_CallLeaderBoard(
 
       work->param.gamedata = GAMESYSTEM_GetGameData( work->gsys );
 
-      
-
 #if 0
       bsw_wifi = GAMEDATA_GetBSubwayWifiData( work->param.gamedata );
       work->param.rank_no   = BSUBWAY_WIFIDATA_GetLeaderRank();

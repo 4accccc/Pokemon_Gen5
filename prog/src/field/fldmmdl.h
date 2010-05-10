@@ -44,17 +44,31 @@
 //----
 #define DEBUG_MMDL_PRINT //定義でデバッグ出力有効
 #define DEBUG_MMDL_RESOURCE_MEMORY_SIZE // ONでメモリサイズを計算
+#define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
 
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_MMDL_DEVELOP ///<作業者のみ有効なデバッグ処理
+#define DEBUG_MMDL_DEVELOP
+#define DEBUG_MMDL_DEVELOP_PRINT
 #endif
-
-#define DEBUG_OBJCODE_STR_LENGTH (16) //動作モデルOBJコード文字列長さ
 
 //#define MMDL_BBD_DRAW_OFFS_Z_USE //有効でビルボード表示位置Z補正有り
 //----
 #endif //DEBUG
 //----
+
+//デバッグ用出力
+#ifdef DEBUG_MMDL_PRINT
+#define D_MMDL_Printf( ... ) OS_TPrintf( __VA_ARGS__ )
+#else
+#define D_MMDL_Printf( ... ) ((void)0)
+#endif
+
+//デバッグ用出力　開発用
+#ifdef DEBUG_MMDL_DEVELOP_PRINT
+#define D_MMDL_DPrintf( ... ) OS_TPrintf( __VA_ARGS__ )
+#else
+#define D_MMDL_DPrintf( ... ) ((void)0)
+#endif
 
 //--------------------------------------------------------------
 //	fx
@@ -603,7 +617,7 @@ typedef struct
 #endif
 
 //--------------------------------------------------------------
-///	OBJCODE_PARAM構造体　外部データと一致 24byte
+///	OBJCODE_PARAM構造体　外部データと一致 28byte
 //	0-1 OBJコード
 //	2-3 リソースアーカイブインデックス 
 //	4	表示タイプ

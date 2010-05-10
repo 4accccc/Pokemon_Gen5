@@ -536,12 +536,6 @@ static void DrawBlAct_Draw( MMDL *mmdl )
     return;
   }
   
-#if 0
-  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
-    KAGAYA_Printf( "‚«‚Ü‚µ‚½\n" );
-  }
-#endif
-  
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
   
@@ -647,7 +641,7 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
-        KAGAYA_Printf( "MMDL ‰‰‹ZƒAƒjƒ‚»‚Ì0 IDX = %d\n", anm_idx );
+        D_MMDL_DPrintf( "MMDL ‰‰‹ZƒAƒjƒ‚»‚Ì0 IDX = %d\n", anm_idx );
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
@@ -699,7 +693,7 @@ static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
-        KAGAYA_Printf( "MMDL ‰‰‹ZƒAƒjƒ‚»‚Ì‚P IDX = %d\n", anm_idx );
+        D_MMDL_DPrintf( "MMDL ‰‰‹ZƒAƒjƒ‚»‚Ì‚P IDX = %d\n", anm_idx );
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
@@ -1910,15 +1904,14 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
         u8 tbl[4] = {0,2,2,0}; //ŽŸ‰ñˆÚ“®ŒnƒZƒbƒgŽž‚ÌƒAƒjƒIndex
         
         work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
-        
-//        #ifdef DEBUG_ONLY_FOR_kagaya
-        #if 0
+/*        
+        #ifdef DEBUG_ONLY_FOR_kagaya
         if( MMDL_GetOBJID(mmdl) == MMDL_ID_PLAYER ){
           OS_Printf( "Ž©‹@ƒAƒjƒØ‚è‘Ö‚¦@ˆÚ“®Œn->’âŽ~ ‚»‚ê‚Ü‚Å‚ÌIDX=%d\n",
               work->next_walk_frmidx ); 
         }       
         #endif
-        
+*/        
         if( work->next_walk_frmidx >= 4 ) //index over
         {
           work->next_walk_frmidx = 0;

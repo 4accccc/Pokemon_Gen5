@@ -1707,9 +1707,9 @@ static int AC_Jump_1( MMDL * mmdl )
 			VecFx32 vec;
 			u16 frame = UX16_NUM( work->h_frame );
 			const fx32 *tbl = DATA_AcJumpOffsetTbl[work->h_type];
-//			OS_Printf( " JUMP=%x ", work->h_frame );
-//			OS_Printf( " SPEED=%x ", work->h_speed );
-//			OS_Printf( " FRAME=%x \n", frame );
+//			D_MMDL_Printf( " JUMP=%x ", work->h_frame );
+//			D_MMDL_Printf( " SPEED=%x ", work->h_speed );
+//			D_MMDL_Printf( " FRAME=%x \n", frame );
 			vec.x = 0;
 			vec.y = tbl[frame];
 			vec.z = 0;

@@ -2090,7 +2090,7 @@ VMCMD_RESULT EvCmdBGWinMsg( VMHANDLE *core, void *wk )
   u16 msg_id = VMGetU16( core );
   u16 type = VMGetU16( core );
   
-  { //‰¼
+  {
     SCRIPT_FLDPARAM *fparam;
     GFL_MSGDATA *msgData;
     FLDBGWIN *bgWin;

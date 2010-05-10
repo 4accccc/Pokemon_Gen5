@@ -244,10 +244,10 @@ void * MMDL_DrawArcDataAlloc( const MMDLSYS *fos, u32 datID, int fb )
 		buf = GFL_HEAP_AllocClearMemoryLo( HEAPID_FIELD, size );
 	}
 	
-	#ifdef DEBUG_ONLY_FOR_kagaya
+	#ifdef DEBUG_MMDL_DEVELOP
 	{
 	 u32 free = sys_GetHeapFreeSize( HEAPID_FIELD );
-	 OS_Printf( "fmmdl DrawArcData datID(%d) FIELD HEAP FreeSize %xH\n",
+	 D_MMDL_DPrintf( "fmmdl DrawArcData datID(%d) FIELD HEAP FreeSize %xH\n",
 			 datID, free );
 	}
 	#endif

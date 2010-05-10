@@ -192,22 +192,6 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     }
   }
   
-#if 0 //wb null
-  //WIFI(32人データがあるので、周回数ワークが足りないため、
-  //連勝数から周回数を算出してセット
-  if(wk->play_mode == BSWAY_MODE_WIFI_MULTI){
-    wk->stage = TowerScoreData_SetStageValue(
-        wk->scoreSave, BSWAY_MODE_WIFI_MULTI, 
-        (wk->renshou / 7) );
-    OS_Printf( "** wk->renshou = %d\n", wk->renshou );
-    OS_Printf( "** stage = %d\n", TowerScoreData_SetStage(wk->scoreSave,
-                              BSWAY_MODE_WIFI_MULTI,BSWAY_DATA_get) );
-  }
-  
-  OS_Printf( "stage = %d\n", wk->stage );
-  return wk;
-#endif
-  
   return( bsw_scr );
 }
 
@@ -936,17 +920,9 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
   
   switch( bsw_scr->play_mode ){
   case BSWAY_MODE_WIFI:
-#if 1
     BSUBWAY_WIFIDATA_GetBtlPlayerData( bsw_scr->wifiData,
         &bsw_scr->tr_data[0], round );
     break;
-#else //WB 仮 サーバーデータが古いため
-    BSUBWAY_SCRWORK_MakeRomTrainerData(
-      bsw_scr, &(bsw_scr->tr_data[0]),
-      bsw_scr->trainer[round],
-      bsw_scr->member_num, NULL, NULL, NULL, bsw_scr->heapID );
-    break;
-#endif
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_S_MULTI:
   case BSWAY_MODE_COMM_MULTI:
@@ -1874,51 +1850,6 @@ u16 BSUBWAY_SCRWORK_LeaderRibbonSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
     return bswayscr_PokeRibbonSet( sv,ID_PARA_sinou_battle_tower_ttwin_second,wk );
   }
   return 0;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- *  @brief  フラグが立っていたら連勝のご褒美リボンをあげる  
- */
-//--------------------------------------------------------------
-#if 0 //wb
-u16 BSUBWAY_SCRWORK_RenshouRibbonSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
-{
-  u8  id,fid;
-  u16  record,goods,ret;
-  UNDERGROUNDDATA *gSave;
-
-  if( wk->play_mode == BSWAY_MODE_RETRY ){
-    return 0;
-  }
-
-  /////////////////////////////////////////
-  //とりあえず仕様が決まっていないので保留
-  /////////////////////////////////////////
-  if( wk->play_mode == BSWAY_MODE_WIFI_MULTI ){
-    return 0;
-  }
-
-  if(!wk->prize_f ){
-    return 0;
-  }
-  switch( wk->play_mode ){
-  case BSWAY_MODE_DOUBLE:
-    id = ID_PARA_sinou_battle_tower_2vs2_win50;
-    break;
-  case BSWAY_MODE_MULTI:
-    id = ID_PARA_sinou_battle_tower_aimulti_win50;
-    break;
-  case BSWAY_MODE_COMM_MULTI:
-    id = ID_PARA_sinou_battle_tower_siomulti_win50;
-    break;
-  case BSWAY_MODE_WIFI:
-    id = ID_PARA_sinou_battle_tower_wifi_rank5;
-    break;
-  }
-  //メンバーにリボンセット
-  return bswayscr_PokeRibbonSet( sv,id,wk );
 }
 #endif
 

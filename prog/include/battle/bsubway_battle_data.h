@@ -15,10 +15,9 @@
 //======================================================================
 //  define
 //======================================================================
-//kari #include "../../../multiboot/src/dl_child/pt_save.h"
-#define MONS_NAME_SIZE		10	// ポケモン名の長さ(バッファサイズ EOM_含まず)
-#define	EOM_SIZE			1	// 終了コードの長さ
-#define PERSON_NAME_SIZE	7	// 人物の名前の長さ（自分も含む）
+#include "buflen.h" //MONS_NAME_SIZE,EOM_SIZE,PERSON_NAME_SIZE
+
+#define WAZA_TEMOTI_MAX (4) ///<1体のポケモンがもてる技の最大値
 
 //======================================================================
 //  struct

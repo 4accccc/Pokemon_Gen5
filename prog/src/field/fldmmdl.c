@@ -431,19 +431,17 @@ void MMDLSYS_SetMMdl( MMDLSYS *fos,
   GF_ASSERT( count > 0 );
   GF_ASSERT( header != NULL );
   
-  KAGAYA_Printf( "MMDLSYS_SetMMdl Count %d\n", count );
+  D_MMDL_DPrintf( "MMDLSYS_SetMMdl Count %d\n", count );
   
   do{
     if( MMdlHeader_CheckAlies(header) == TRUE ||
         mmdlsys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
       mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
-    }
-#ifdef PM_DEBUG
-    else{
-      OS_Printf( "ADD STOP MMDL OBJID=%d,EVENT FLAG=%xH\n",
+    }else{
+      D_MMDL_Printf( "ADD STOP MMDL OBJID=%d,EVENT FLAG=%xH\n",
           header->id, header->event_flag );
     }
-#endif
+    
     header++;
     count--;
   }while( count );
@@ -470,7 +468,7 @@ MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
   GF_ASSERT( count > 0 );
   GF_ASSERT( header != NULL );
   
-  KAGAYA_Printf( "MMDLSYS_SetMMdlHeaderID Count %d\n", count );
+  D_MMDL_DPrintf( "MMDLSYS_SetMMdlHeaderID Count %d\n", count );
   
   do{
     if( MMdlHeader_CheckAlies(header) == FALSE )
@@ -863,11 +861,11 @@ void MMDLSYS_Push( MMDLSYS *mmdlsys )
   u32 no = 0;
   MMDL *mmdl;
   
-  #ifdef DEBUG_MMDL_PRINT
   if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == FALSE ){
-    GF_ASSERT( 0 && "WARNING!! 動作モデル 描画未初期化\n" );
+    D_MMDL_DPrintf( "WARNING!! 動作モデル 描画未初期化\n" );
+    GF_ASSERT( 0 );
+    return;
   }
-  #endif
   
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
     {
@@ -4689,14 +4687,6 @@ void MMDL_MoveInitProcDummy( MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_MoveProcDummy( MMDL * mmdl )
 {
-#if 0
-  if( MMDL_GetOBJID(mmdl) != MMDL_ID_PLAYER ){
-    if( MMDL_GetDirDisp(mmdl) != DIR_UP ){
-      OS_Printf( "動作モデル ID %d DIR %d\n",
-          MMDL_GetOBJID(mmdl), MMDL_GetDirDisp(mmdl) );
-    }
-  }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -4847,7 +4837,7 @@ static int rockpos_GetPosNumber( const u16 zone_id, const u16 obj_id )
     z = DATA_MMDL_PushRockPosNum[i][0];
     o = DATA_MMDL_PushRockPosNum[i][1];
     
-    KAGAYA_Printf( "怪力岩 座標ワーク検索 zone_id = %xH, obj_id = %xH,  data zone_id = %xH, data obj_id = %xH\n", zone_id, obj_id, z, o );
+    D_MMDL_DPrintf( "怪力岩 座標ワーク検索 zone_id = %xH, obj_id = %xH,  data zone_id = %xH, data obj_id = %xH\n", zone_id, obj_id, z, o );
 
     if( z == zone_id && o == obj_id ){
       return( DATA_MMDL_PushRockPosNum[i][2] );
@@ -5086,10 +5076,10 @@ void DEBUG_MMDL_PrintState(
     const MMDL *mmdl, const char *f_str, const char *e_str )
 {
   if( f_str != NULL ){
-    OS_Printf( "%s\n", f_str );
+    OS_TPrintf( "%s\n", f_str );
   }
   
-  OS_Printf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d : EV TYPE %d EV FLAG %d : PARAM 0(%d) 1(%d) 2(%d)\n",
+  OS_TPrintf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d : EV TYPE %d EV FLAG %d : PARAM 0(%d) 1(%d) 2(%d)\n",
       MMDL_GetOBJID(mmdl),
       MMDL_GetOBJCode(mmdl),
       MMDL_GetMoveCode(mmdl),
@@ -5105,7 +5095,7 @@ void DEBUG_MMDL_PrintState(
       );
       
   if( e_str != NULL ){
-    OS_Printf( "%s\n", e_str );
+    OS_TPrintf( "%s\n", e_str );
   }
 }
 

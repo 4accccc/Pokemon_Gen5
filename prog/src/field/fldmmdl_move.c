@@ -31,7 +31,7 @@
 //--------------------------------------------------------------
 //  debug
 //--------------------------------------------------------------
-#ifdef DEBUG_ONLY_FOR_kagaya
+#ifdef DEBUGDEBUG_ONLY_FOR_kagaya
 //#define DEBUG_REFLECT_CHECK //定義で映り込みチェック
 #endif
 
@@ -187,13 +187,11 @@ void MMDL_UpdateMove( MMDL * mmdl )
         MMDL_CallMoveProc( mmdl );
       }
     }
-    #ifdef DEBUG_ONLY_FOR_KAGAYA
     else
     {
-      KAGAYA_Printf("ERROR MMDL Move Start ID=%xH GX=%xH,GZ=%xH\n",
+      D_MMDL_DPrintf("ERROR MMDL Move Start ID=%xH GX=%xH,GZ=%xH\n",
         MMDL_GetOBJID(mmdl),MMDL_GetGridPosX(mmdl),MMDL_GetGridPosZ(mmdl));
     }
-    #endif
   }
   
   MMdl_ProcMoveStartSecond( mmdl );

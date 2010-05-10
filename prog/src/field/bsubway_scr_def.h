@@ -397,17 +397,6 @@
 #define BSWAY_COMM_RETIRE_SELECT  (2)
 #define BSWAY_COMM_MYSTATUS_DATA (3)
 
-//D31R0205_HERO kari
-#define HERO_OBJ (0)
-
-//--------------------------------------------------
-//D31R0205_PCWOMAN2
-#define PCWOMAN_OBJ (1)
-//kari
-#define TRAINER_OBJ (2)
-//kari
-#define OBJCODE_TRAINBOSS (TBOSS)
-
 //--------------------------------------------------------------
 //  —ñŽÔŽí—Þ FLDEFF_BTRAIN_TYPE‚Æ“¯ˆê‚Å‚ ‚éŽ–
 //--------------------------------------------------------------

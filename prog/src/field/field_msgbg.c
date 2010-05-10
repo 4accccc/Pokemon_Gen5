@@ -5558,7 +5558,7 @@ static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo =
 };
 
 //--------------------------------------------------------------
-/// 送りカーソルデータ 仮　PLから持ってきた
+/// 送りカーソルデータ PLから持ってきた
 //--------------------------------------------------------------
 #if 0
 static const u8 ALIGN4 skip_cursor_Character[128] = {

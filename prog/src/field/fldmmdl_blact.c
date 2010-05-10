@@ -645,7 +645,7 @@ static GFL_BBDACT_ACTUNIT_ID blact_SetActor( MMDL *mmdl, u16 code )
     GF_ASSERT( resID != REGIDCODE_MAX );
     
     #ifdef DEBUG_MMDL
-    KAGAYA_Printf( "MMDL ADD GUEST RESOURCE %xH\n", code );
+    D_MMDL_DPrintf( "MMDL ADD GUEST RESOURCE %xH\n", code );
     #endif
   }
   
@@ -713,7 +713,7 @@ GFL_BBDACT_ACTUNIT_ID MMDL_BLACTCONT_AddActor( MMDL *mmdl, u32 code )
     GF_ASSERT( actData.resID != REGIDCODE_MAX );
     
     #ifdef DEBUG_MMDL
-    KAGAYA_Printf( "MMDL ADD GUEST RESOURCE %xH\n", code );
+    D_MMDL_DPrintf( "MMDL ADD GUEST RESOURCE %xH\n", code );
     #endif
   }
   
@@ -806,7 +806,7 @@ static void blact_DeleteResource(
         #else //リソース削除を予約する
         BBDResUnitIndex_RegistRemoveResUnit( pBlActCont, actID, code );
         #endif
-        KAGAYA_Printf(
+        D_MMDL_DPrintf(
           "MMDL DEL GUEST RESOURCE CODE=%d, RESID=%d\n", code, id );
         return;
       }
@@ -869,7 +869,7 @@ void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID )
       {
         BBDResUnitIndex_RemoveResUnit( pBlActCont, code );
         
-        KAGAYA_Printf(
+        D_MMDL_DPrintf(
           "MMDL DEL GUEST RESOURCE CODE=%d, RESID=%d\n", code, id );
       }
     }
@@ -1515,7 +1515,7 @@ static void BlActAddReserve_RegistResourceParam(
     if( pResParam->code == REGIDCODE_MAX ){
       pResParam->code = code;
       pResParam->flag = flag;
-      KAGAYA_Printf( "MMDL BLACT RESERVE REG RESPRM CODE=%d\n", code );
+      D_MMDL_DPrintf( "MMDL BLACT RESERVE REG RESPRM CODE=%d\n", code );
       return;
     }
   }
@@ -1541,7 +1541,7 @@ static void BlActAddReserve_DigestResourceParam(
     if( pResParam->code != REGIDCODE_MAX ){
       if( BlActAddReserve_RegistResource(
           pBlActCont,pResParam->code,pResParam->flag) == FALSE ){
-        KAGAYA_Printf( "MMDL DIG RESPRM RESERVE OVER\n" );
+        D_MMDL_DPrintf( "MMDL DIG RESPRM RESERVE OVER\n" );
         break; //予約一杯
       }
       
@@ -1549,7 +1549,7 @@ static void BlActAddReserve_DigestResourceParam(
 
       j++;
       if( j >= pReserve->resDigestFrameMax ){
-        KAGAYA_Printf( "MMDL DIG RESPRM FRAME OVER\n" );
+        D_MMDL_DPrintf( "MMDL DIG RESPRM FRAME OVER\n" );
         break;
       }
     }
@@ -1605,7 +1605,7 @@ static BOOL BlActAddReserve_RegistResource(
       DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( GFL_G3D_GetResourceFileHeader( pRes->pG3dRes ) );
       DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Plus( pRes->pG3dRes );
       
-      KAGAYA_Printf(
+      D_MMDL_DPrintf(
         "MMDL BLACT RESERVE ADD RESOURCE CODE=%d,ARCIDX=%d\n",
         pRes->code, prm_bbd->res_idx );
       return( TRUE );
@@ -1642,12 +1642,12 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
               pBlActCont, pRes->pG3dRes, pRes->code, pRes->flag );
           pRes->pG3dRes = NULL;
         
-          #ifdef DEBUG_ONLY_FOR_kagaya
+          #ifdef DEBUG_MMDL_DEVELOP
           {
             u16 id,flag;
             BBDResUnitIndex_SearchResID(
                 pBlActCont, pRes->code, &id, &flag );
-            KAGAYA_Printf(
+            D_MMDL_DPrintf(
                 "MMDL BLACT RESERVE DIG RESOURCE CODE=%d, RESID=%d\n",
                 pRes->code, id );
           }
@@ -1695,7 +1695,7 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
       {
         u16 id,flag;
         BBDResUnitIndex_SearchResID( pBlActCont, pRes->code, &id, &flag );
-        KAGAYA_Printf(
+        D_MMDL_DPrintf(
             "MMDL BLACT RESERVE DIG RESOURCE CODE=%d, RESID=%d\n",
             pRes->code, id );
       }
@@ -1765,7 +1765,7 @@ static BOOL BlActAddReserve_CancelResource(
     for( ; i < pReserve->resMax; i++, pResParam++ ){
       if( pResParam->code == code ){
         pResParam->code = REGIDCODE_MAX;
-        KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", code );
+        D_MMDL_DPrintf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", code );
         return( TRUE );
       }
     }
@@ -1783,7 +1783,7 @@ static BOOL BlActAddReserve_CancelResource(
         DEBUG_MMDL_RESOURCE_MEMORY_SIZE_Minus( pRes->pG3dRes );
         GFL_G3D_DeleteResource( pRes->pG3dRes );
         pRes->pG3dRes = NULL;
-        KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", code );
+        D_MMDL_DPrintf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", code );
         return( TRUE );
       }
     }
@@ -1854,12 +1854,12 @@ static void BlActAddReserve_RegistActor(
 
       pRes->compFlag = TRUE;
       
-#ifdef DEBUG_ONLY_FOR_kagaya
+#ifdef DEBUG_MMDL_DEVELOP
       if( mmdl != NULL ){
-        KAGAYA_Printf( "MMDL BLACT RESERVE ADD ACTOR OBJID=%d, CODE=%d\n", 
+        D_MMDL_DPrintf( "MMDL BLACT RESERVE ADD ACTOR OBJID=%d, CODE=%d\n", 
           MMDL_GetOBJID(mmdl), pRes->code );
       }else{
-        KAGAYA_Printf( "MMDL BLACT RESERVE ADD ACTOR OBJID=NON, CODE=%d\n", 
+        D_MMDL_DPrintf( "MMDL BLACT RESERVE ADD ACTOR OBJID=NON, CODE=%d\n", 
           pRes->code );
       }
 #endif
@@ -1907,7 +1907,7 @@ static void BlActAddReserve_DigestActorCore(
           pBlActCont, pRes->code, &resID, &flag );
         
     if( ret != TRUE ){
-      OS_Printf( "BLACT ADD RESOURCE ERROR CODE=%xH\n", pRes->code );
+      D_MMDL_Printf( "BLACT ADD RESOURCE ERROR CODE=%xH\n", pRes->code );
     }
         
     //リソース無し
@@ -1930,13 +1930,13 @@ static void BlActAddReserve_DigestActorCore(
     MMDL_CallDrawProc( pRes->mmdl ); //描画処理呼び出し
   }
       
-  #ifdef DEBUG_ONLY_FOR_kagaya
-  KAGAYA_Printf( "MMDL BLACT RESERVE DIG ACTOR " );
+  #ifdef DEBUG_MMDL_DEVELOP
+  D_MMDL_DPrintf( "MMDL BLACT RESERVE DIG ACTOR " );
   if( pRes->mmdl != NULL ){
-    KAGAYA_Printf( "OBJID=%d, CODE=%d, RESID=%d,TRANSID=%d\n",
+    D_MMDL_DPrintf( "OBJID=%d, CODE=%d, RESID=%d,TRANSID=%d\n",
       MMDL_GetOBJID(pRes->mmdl), pRes->code, resID, transID );
   }else{
-    KAGAYA_Printf( "OBJID=NONE, CODE=%d, RESID=%d,TRANSID=%d\n",
+    D_MMDL_DPrintf( "OBJID=NONE, CODE=%d, RESID=%d,TRANSID=%d\n",
       MMDL_GetOBJID(pRes->mmdl), pRes->code, resID, transID );
   }
   #endif
@@ -2056,7 +2056,7 @@ static void BlActAddReserve_CancelActorOutID(
         pRes->pTransActRes = NULL;
       }
       
-      KAGAYA_Printf(
+      D_MMDL_DPrintf(
           "MMDL BLACT RESERVE CANCEL OBJID=NON, CODE=%d\n",  pRes->code );
       
       BlActAddReserve_ClearWork( pRes );
@@ -2108,7 +2108,7 @@ static void BlActAddReserve_CancelActor(
         pRes->pTransActRes = NULL;
       }
       
-      KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL OBJID=%d, CODE=%d\n", 
+      D_MMDL_DPrintf( "MMDL BLACT RESERVE CANCEL OBJID=%d, CODE=%d\n", 
           MMDL_GetOBJID(mmdl), pRes->code );
       
       BlActAddReserve_ClearWork( pRes );
@@ -2452,7 +2452,7 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
     data.celSizX = size[0];
     data.celSizY = size[1];
 #if 0   
-    KAGAYA_Printf( "テクスチャリソース追加 セルサイズ X=%d,Y=%d\n",
+    D_MMDL_DPrintf( "テクスチャリソース追加 セルサイズ X=%d,Y=%d\n",
         data.celSizX, data.celSizY );
 #endif
   }
@@ -2461,7 +2461,7 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
   
   id = GFL_BBDACT_AddResourceG3DResUnit( pBlActCont->pBbdActSys, &data, 1 );
   
-  KAGAYA_Printf( "MMDL ADD RESOURCE CODE=%d,RESID=%d\n", code, id );
+  D_MMDL_DPrintf( "MMDL ADD RESOURCE CODE=%d,RESID=%d\n", code, id );
   return( id );
 }
 
