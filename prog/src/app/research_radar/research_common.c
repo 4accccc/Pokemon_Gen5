@@ -22,8 +22,8 @@
 //===============================================================================
 // ■調査レーダー 全画面共通ワーク
 //===============================================================================
-struct _RESEARCH_COMMON_WORK
-{
+struct _RESEARCH_RADAR_COMMON_WORK {
+
   HEAPID        heapID;
   GAMESYS_WORK* gameSystem;
   GAMEDATA*     gameData;
@@ -31,9 +31,6 @@ struct _RESEARCH_COMMON_WORK
   // タッチ範囲
   GFL_UI_TP_HITTBL touchHitTable[ COMMON_TOUCH_AREA_NUM ]; 
   
-  // パレットアニメーション
-  PALETTE_ANIME* paletteAnime[ COMMON_PALETTE_ANIME_NUM ];
-
   // OBJ
   u32         OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_NUM ]; // 共通リソースの登録インデックス
   GFL_CLUNIT* clactUnit[ COMMON_CLUNIT_NUM ];               // セルアクターユニット
@@ -41,6 +38,9 @@ struct _RESEARCH_COMMON_WORK
 
   // カラーパレット
   PALETTE_FADE_PTR paletteFadeSystem; // カラーパレット フェードシステム
+
+  // パレットアニメーション
+  PALETTE_ANIME* paletteAnime[ COMMON_PALETTE_ANIME_NUM ];
 
   // 画面遷移
   RADAR_SEQ prevSeq; // 直前の画面
@@ -52,52 +52,50 @@ struct _RESEARCH_COMMON_WORK
 // ■初期化・生成・破棄
 //-------------------------------------------------------------------------------
 // 全画面共通ワーク
-static void InitCommonWork( RESEARCH_COMMON_WORK* work ); // 全画面共通ワークを初期化する
-static RESEARCH_COMMON_WORK* CreateCommonWork( HEAPID heapID ); // 全画面共通ワークを生成する
-static void DeleteCommonWork( RESEARCH_COMMON_WORK* work ); // 全画面共通ワークを破棄する
-static void SetupCommonWork( RESEARCH_COMMON_WORK* work, GAMESYS_WORK* gameSystem, HEAPID heapID ); // 全画面共通ワークをセットアップする
-static void CleanUpCommonWork( RESEARCH_COMMON_WORK* work ); // 全画面共通ワークをクリーンアップする
+static void InitCommonWork( RRC_WORK* work ); // 全画面共通ワークを初期化する
+static RRC_WORK* CreateCommonWork( HEAPID heapID ); // 全画面共通ワークを生成する
+static void DeleteCommonWork( RRC_WORK* work ); // 全画面共通ワークを破棄する
+static void SetupCommonWork( RRC_WORK* work, GAMESYS_WORK* gameSystem, HEAPID heapID ); // 全画面共通ワークをセットアップする
+static void CleanUpCommonWork( RRC_WORK* work ); // 全画面共通ワークをクリーンアップする
 // セルアクターシステム
-static void CreateClactSystem( RESEARCH_COMMON_WORK* work ); // アクターシステムを初期化する
-static void DeleteClactSystem( RESEARCH_COMMON_WORK* work ); // アクターシステムを破棄する
+static void CreateClactSystem( RRC_WORK* work ); // アクターシステムを初期化する
+static void DeleteClactSystem( RRC_WORK* work ); // アクターシステムを破棄する
 // OBJ リソース
-static void InitOBJResources( RESEARCH_COMMON_WORK* work ); // 共通OBJのリソースを初期化する
-static void RegisterOBJResources( RESEARCH_COMMON_WORK* work ); // 共通OBJのリソースを登録する
-static void ReleaseOBJResources( RESEARCH_COMMON_WORK* work ); // 共通OBJのリソースを解放する
+static void InitOBJResources( RRC_WORK* work ); // 共通OBJのリソースを初期化する
+static void RegisterOBJResources( RRC_WORK* work ); // 共通OBJのリソースを登録する
+static void ReleaseOBJResources( RRC_WORK* work ); // 共通OBJのリソースを解放する
 // セルアクターユニット
-static void InitClactUnits( RESEARCH_COMMON_WORK* work ); // 共通OBJのセルアクターユニットを初期化する
-static void CreateClactUnits( RESEARCH_COMMON_WORK* work ); // 共通OBJのセルアクターユニットを生成する
-static void DeleteClactUnits( RESEARCH_COMMON_WORK* work ); // 共通OBJのセルアクターユニットを破棄する
+static void InitClactUnits( RRC_WORK* work ); // 共通OBJのセルアクターユニットを初期化する
+static void CreateClactUnits( RRC_WORK* work ); // 共通OBJのセルアクターユニットを生成する
+static void DeleteClactUnits( RRC_WORK* work ); // 共通OBJのセルアクターユニットを破棄する
 // セルアクターワーク
-static void InitClactWorks( RESEARCH_COMMON_WORK* work ); // 共通OBJのセルアクターワークを初期化する
-static void CreateClactWorks( RESEARCH_COMMON_WORK* work ); // 共通OBJのセルアクターワークを生成する
-static void DeleteClactWorks( RESEARCH_COMMON_WORK* work ); // 共通OBJのセルアクターワークを破棄する
+static void InitClactWorks( RRC_WORK* work ); // 共通OBJのセルアクターワークを初期化する
+static void CreateClactWorks( RRC_WORK* work ); // 共通OBJのセルアクターワークを生成する
+static void DeleteClactWorks( RRC_WORK* work ); // 共通OBJのセルアクターワークを破棄する
 // パレットフェードシステム
-static void InitPaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムを初期化する
-static void CreatePaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムを生成する
-static void DeletePaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムを破棄する
-static void SetupPaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムをセットアップする
-static void CleanUpPaletteFadeSystem( RESEARCH_COMMON_WORK* work ); // パレットフェードシステムをクリーンアップする
+static void InitPaletteFadeSystem( RRC_WORK* work ); // パレットフェードシステムを初期化する
+static void CreatePaletteFadeSystem( RRC_WORK* work ); // パレットフェードシステムを生成する
+static void DeletePaletteFadeSystem( RRC_WORK* work ); // パレットフェードシステムを破棄する
+static void SetupPaletteFadeSystem( RRC_WORK* work ); // パレットフェードシステムをセットアップする
+static void CleanUpPaletteFadeSystem( RRC_WORK* work ); // パレットフェードシステムをクリーンアップする
 // パレットアニメーション
-static void InitPaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークを初期化する
-static void CreatePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークを生成する
-static void DeletePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークを破棄する
-static void SetupPaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークをセットアップする
-static void CleanUpPaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションワークをクリーンアップする
-static void StartPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
-static void StopPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
-static void ResetPalette( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index  ); // パレットをアニメ開始時の状態にリセットする
-static void UpdatePaletteAnime( RESEARCH_COMMON_WORK* work ); // パレットアニメーションを更新する
+static void InitPaletteAnime( RRC_WORK* work ); // パレットアニメーションワークを初期化する
+static void CreatePaletteAnime( RRC_WORK* work ); // パレットアニメーションワークを生成する
+static void DeletePaletteAnime( RRC_WORK* work ); // パレットアニメーションワークを破棄する
+static void SetupPaletteAnime( RRC_WORK* work ); // パレットアニメーションワークをセットアップする
+static void CleanUpPaletteAnime( RRC_WORK* work ); // パレットアニメーションワークをクリーンアップする
+static void StartPaletteAnime( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
+static void StopPaletteAnime( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
+static void ResetPalette( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index  ); // パレットをアニメ開始時の状態にリセットする
+static void UpdatePaletteAnime( RRC_WORK* work ); // パレットアニメーションを更新する
 // タッチ範囲
-static void SetupTouchArea( RESEARCH_COMMON_WORK* work ); // タッチ範囲をセットアップする
+static void SetupTouchArea( RRC_WORK* work ); // タッチ範囲をセットアップする
 //-------------------------------------------------------------------------------
 // ■取得
 //-------------------------------------------------------------------------------
-static u32 GetOBJResRegisterIndex( const RESEARCH_COMMON_WORK* work, COMMON_OBJ_RESOURCE_ID resID ); // 共通OBJリソースの登録インデックス
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_COMMON_WORK* work, COMMON_CLUNIT_INDEX unitIdx ); // 共通OBJのセルアクターユニットを取得する
-static GFL_CLWK* GetClactWork( const RESEARCH_COMMON_WORK* work, COMMON_CLWK_INDEX workIdx ); // 共通OBJのセルアクターワークを取得する
-
-
+static u32 GetOBJResRegisterIndex( const RRC_WORK* work, COMMON_OBJ_RESOURCE_ID resID ); // 共通OBJリソースの登録インデックス
+static GFL_CLUNIT* GetClactUnit( const RRC_WORK* work, COMMON_CLUNIT_INDEX unitIdx ); // 共通OBJのセルアクターユニットを取得する
+static GFL_CLWK* GetClactWork( const RRC_WORK* work, COMMON_CLWK_INDEX workIdx ); // 共通OBJのセルアクターワークを取得する
 
 
 
@@ -113,16 +111,13 @@ static GFL_CLWK* GetClactWork( const RESEARCH_COMMON_WORK* work, COMMON_CLWK_IND
  * @param gameSystem
  */
 //-------------------------------------------------------------------------------
-RESEARCH_COMMON_WORK* RESEARCH_COMMON_CreateWork( HEAPID heapID, GAMESYS_WORK* gameSystem )
+RRC_WORK* RRC_CreateWork( HEAPID heapID, GAMESYS_WORK* gameSystem )
 {
-  RESEARCH_COMMON_WORK* work;
+  RRC_WORK* work;
 
   work = CreateCommonWork( heapID );           // 生成
   InitCommonWork( work );                      // 初期化
   SetupCommonWork( work, gameSystem, heapID ); // セットアップ
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create work\n" );
 
   return work;
 }
@@ -134,13 +129,10 @@ RESEARCH_COMMON_WORK* RESEARCH_COMMON_CreateWork( HEAPID heapID, GAMESYS_WORK* g
  * @param work
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_DeleteWork( RESEARCH_COMMON_WORK* work )
+void RRC_DeleteWork( RRC_WORK* work )
 {
   CleanUpCommonWork( work ); // クリーンアップ
   DeleteCommonWork( work );  // 破棄
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete work\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -150,10 +142,8 @@ void RESEARCH_COMMON_DeleteWork( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_StartPaletteFadeBlackOut( RESEARCH_COMMON_WORK* work )
+void RRC_StartPaletteFadeBlackOut( RRC_WORK* work )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: start palette fade black out\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -163,10 +153,8 @@ void RESEARCH_COMMON_StartPaletteFadeBlackOut( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_StartPaletteFadeBlackIn( RESEARCH_COMMON_WORK* work )
+void RRC_StartPaletteFadeBlackIn( RRC_WORK* work )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: start palette fade black in\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -178,7 +166,7 @@ void RESEARCH_COMMON_StartPaletteFadeBlackIn( RESEARCH_COMMON_WORK* work )
  * @return ヒープID
  */
 //-------------------------------------------------------------------------------
-HEAPID RESEARCH_COMMON_GetHeapID( const RESEARCH_COMMON_WORK* work )
+HEAPID RRC_GetHeapID( const RRC_WORK* work )
 {
   return work->heapID;
 }
@@ -192,7 +180,7 @@ HEAPID RESEARCH_COMMON_GetHeapID( const RESEARCH_COMMON_WORK* work )
  * @return ゲームシステム
  */
 //-------------------------------------------------------------------------------
-GAMESYS_WORK* RESEARCH_COMMON_GetGameSystem( const RESEARCH_COMMON_WORK* work )
+GAMESYS_WORK* RRC_GetGameSystem( const RRC_WORK* work )
 {
   return work->gameSystem;
 }
@@ -206,7 +194,7 @@ GAMESYS_WORK* RESEARCH_COMMON_GetGameSystem( const RESEARCH_COMMON_WORK* work )
  * @return ゲームデータ
  */
 //-------------------------------------------------------------------------------
-GAMEDATA* RESEARCH_COMMON_GetGameData( const RESEARCH_COMMON_WORK* work )
+GAMEDATA* RRC_GetGameData( const RRC_WORK* work )
 {
   return work->gameData;
 }
@@ -221,8 +209,7 @@ GAMEDATA* RESEARCH_COMMON_GetGameData( const RESEARCH_COMMON_WORK* work )
  * @return 指定したインデックスのセルアクターユニット
  */
 //-------------------------------------------------------------------------------
-GFL_CLUNIT* RESEARCH_COMMON_GetClactUnit( 
-    const RESEARCH_COMMON_WORK* work, COMMON_CLUNIT_INDEX unitIdx )
+GFL_CLUNIT* RRC_GetClactUnit( const RRC_WORK* work, COMMON_CLUNIT_INDEX unitIdx )
 {
   return GetClactUnit( work, unitIdx );
 }
@@ -237,22 +224,20 @@ GFL_CLUNIT* RESEARCH_COMMON_GetClactUnit(
  * @return 指定したインデックスのセルアクターワーク
  */
 //-------------------------------------------------------------------------------
-GFL_CLWK* RESEARCH_COMMON_GetClactWork( 
-    const RESEARCH_COMMON_WORK* work, COMMON_CLWK_INDEX workIdx )
+GFL_CLWK* RRC_GetClactWork( const RRC_WORK* work, COMMON_CLWK_INDEX workIdx )
 {
   return GetClactWork( work, workIdx );
 }
 
 //-------------------------------------------------------------------------------
-/**
- * @brief 共通パレットフェードシステムを取得する
+/** * @brief 共通パレットフェードシステムを取得する
  *
  * @param work
  *
  * @return 共通パレットフェードシステム
  */
 //-------------------------------------------------------------------------------
-PALETTE_FADE_PTR RESEARCH_COMMON_GetPaletteFadeSystem( const RESEARCH_COMMON_WORK* work )
+PALETTE_FADE_PTR RRC_GetPaletteFadeSystem( const RRC_WORK* work )
 {
   return work->paletteFadeSystem;
 } 
@@ -266,7 +251,7 @@ PALETTE_FADE_PTR RESEARCH_COMMON_GetPaletteFadeSystem( const RESEARCH_COMMON_WOR
  * @return 共通タッチ範囲のヒットテーブル
  */
 //-------------------------------------------------------------------------------
-const GFL_UI_TP_HITTBL* RESEARCH_COMMON_GetHitTable( const RESEARCH_COMMON_WORK* work )
+const GFL_UI_TP_HITTBL* RRC_GetHitTable( const RRC_WORK* work )
 {
   return work->touchHitTable;
 }
@@ -279,7 +264,7 @@ const GFL_UI_TP_HITTBL* RESEARCH_COMMON_GetHitTable( const RESEARCH_COMMON_WORK*
  * @param seq  登録する画面の識別子
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_SetNowSeq( RESEARCH_COMMON_WORK* work, RADAR_SEQ seq )
+void RRC_SetNowSeq( RRC_WORK* work, RADAR_SEQ seq )
 {
   // 直前の画面を更新
   work->prevSeq = work->nowSeq;
@@ -296,7 +281,7 @@ void RESEARCH_COMMON_SetNowSeq( RESEARCH_COMMON_WORK* work, RADAR_SEQ seq )
  * @param trig
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_SetSeqChangeTrig( RESEARCH_COMMON_WORK* work, SEQ_CHANGE_TRIG trig )
+void RRC_SetSeqChangeTrig( RRC_WORK* work, SEQ_CHANGE_TRIG trig )
 {
   work->seqTrig = trig;
 }
@@ -310,7 +295,7 @@ void RESEARCH_COMMON_SetSeqChangeTrig( RESEARCH_COMMON_WORK* work, SEQ_CHANGE_TR
  * @return 現在の画面を表す識別子
  */
 //-------------------------------------------------------------------------------
-RADAR_SEQ RESEARCH_COMMON_GetNowSeq( const RESEARCH_COMMON_WORK* work )
+RADAR_SEQ RRC_GetNowSeq( const RRC_WORK* work )
 {
   return work->nowSeq;
 }
@@ -324,7 +309,7 @@ RADAR_SEQ RESEARCH_COMMON_GetNowSeq( const RESEARCH_COMMON_WORK* work )
  * @return 直前の画面を表す識別子
  */
 //-------------------------------------------------------------------------------
-RADAR_SEQ RESEARCH_COMMON_GetPrevSeq( const RESEARCH_COMMON_WORK* work )
+RADAR_SEQ RRC_GetPrevSeq( const RRC_WORK* work )
 {
   return work->prevSeq;
 }
@@ -338,7 +323,7 @@ RADAR_SEQ RESEARCH_COMMON_GetPrevSeq( const RESEARCH_COMMON_WORK* work )
  * @return 画面遷移の引き金となったトリガ
  */
 //-------------------------------------------------------------------------------
-SEQ_CHANGE_TRIG RESEARCH_COMMON_GetSeqChangeTrig( const RESEARCH_COMMON_WORK* work )
+SEQ_CHANGE_TRIG RRC_GetSeqChangeTrig( const RRC_WORK* work )
 {
   return work->seqTrig;
 }
@@ -350,7 +335,7 @@ SEQ_CHANGE_TRIG RESEARCH_COMMON_GetSeqChangeTrig( const RESEARCH_COMMON_WORK* wo
  * @param work
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_UpdatePaletteAnime( RESEARCH_COMMON_WORK* work )
+void RRC_UpdatePaletteAnime( RRC_WORK* work )
 {
   UpdatePaletteAnime( work );
 }
@@ -363,8 +348,7 @@ void RESEARCH_COMMON_UpdatePaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param index 開始するアニメーション
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_StartPaletteAnime( 
-    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+void RRC_StartPaletteAnime( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 {
   StartPaletteAnime( work, index );
 }
@@ -377,8 +361,7 @@ void RESEARCH_COMMON_StartPaletteAnime(
  * @param index 停止するアニメーション
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_StopPaletteAnime( 
-    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+void RRC_StopPaletteAnime( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 { 
   StopPaletteAnime( work, index );
 }
@@ -390,7 +373,7 @@ void RESEARCH_COMMON_StopPaletteAnime(
  * @param work
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_StopAllPaletteAnime( RESEARCH_COMMON_WORK* work )
+void RRC_StopAllPaletteAnime( RRC_WORK* work )
 { 
   int idx;
 
@@ -408,8 +391,8 @@ void RESEARCH_COMMON_StopAllPaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param index リセット対象のアニメーション
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_ResetPalette(
-    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+void RRC_ResetPalette(
+    RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 {
   ResetPalette( work, index );
 }
@@ -421,7 +404,7 @@ void RESEARCH_COMMON_ResetPalette(
  * @param work
  */
 //-------------------------------------------------------------------------------
-void RESEARCH_COMMON_ResetAllPalette( RESEARCH_COMMON_WORK* work )
+void RRC_ResetAllPalette( RRC_WORK* work )
 {
   int idx;
 
@@ -445,10 +428,10 @@ void RESEARCH_COMMON_ResetAllPalette( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void InitCommonWork( RESEARCH_COMMON_WORK* work )
+static void InitCommonWork( RRC_WORK* work )
 {
   // 初期化
-  GFL_STD_MemClear( work, sizeof(RESEARCH_COMMON_WORK) );
+  GFL_STD_MemClear( work, sizeof(RRC_WORK) );
 
   work->prevSeq = RADAR_SEQ_NULL;
   work->nowSeq = RADAR_SEQ_NULL;
@@ -458,9 +441,6 @@ static void InitCommonWork( RESEARCH_COMMON_WORK* work )
   InitClactWorks( work );
   InitPaletteFadeSystem( work );
   InitPaletteAnime( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init common work\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -472,14 +452,11 @@ static void InitCommonWork( RESEARCH_COMMON_WORK* work )
  * @return 生成した全画面共通ワーク
  */
 //-------------------------------------------------------------------------------
-static RESEARCH_COMMON_WORK* CreateCommonWork( HEAPID heapID )
+static RRC_WORK* CreateCommonWork( HEAPID heapID )
 {
-  RESEARCH_COMMON_WORK* work;
+  RRC_WORK* work;
 
-  work = GFL_HEAP_AllocMemory( heapID, sizeof(RESEARCH_COMMON_WORK) );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create common work\n" );
+  work = GFL_HEAP_AllocMemory( heapID, sizeof(RRC_WORK) );
 
   return work;
 }
@@ -491,12 +468,9 @@ static RESEARCH_COMMON_WORK* CreateCommonWork( HEAPID heapID )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void DeleteCommonWork( RESEARCH_COMMON_WORK* work )
+static void DeleteCommonWork( RRC_WORK* work )
 {
   GFL_HEAP_FreeMemory( work );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete common work\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -508,7 +482,7 @@ static void DeleteCommonWork( RESEARCH_COMMON_WORK* work )
  * @param heapID
  */
 //-------------------------------------------------------------------------------
-static void SetupCommonWork( RESEARCH_COMMON_WORK* work, GAMESYS_WORK* gameSystem, HEAPID heapID )
+static void SetupCommonWork( RRC_WORK* work, GAMESYS_WORK* gameSystem, HEAPID heapID )
 {
   work->heapID     = heapID;
   work->gameSystem = gameSystem;
@@ -523,9 +497,6 @@ static void SetupCommonWork( RESEARCH_COMMON_WORK* work, GAMESYS_WORK* gameSyste
   SetupTouchArea( work );          // タッチ範囲をセットアップ
   CreatePaletteAnime( work );      // パレットアニメーションワークを生成
   SetupPaletteAnime( work );       // パレットアニメーションワークをセットアップ
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: setup common work\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -535,7 +506,7 @@ static void SetupCommonWork( RESEARCH_COMMON_WORK* work, GAMESYS_WORK* gameSyste
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void CleanUpCommonWork( RESEARCH_COMMON_WORK* work )
+static void CleanUpCommonWork( RRC_WORK* work )
 {
   CleanUpPaletteAnime( work );      // パレットアニメーションワークをクリーンアップ
   DeletePaletteAnime( work );       // パレットアニメーションワークを破棄
@@ -545,9 +516,6 @@ static void CleanUpCommonWork( RESEARCH_COMMON_WORK* work )
   DeleteClactUnits( work );         // セルアクターユニットを破棄
   ReleaseOBJResources( work );      // OBJリソースを解放
   DeleteClactSystem( work );        // アクターシステムを破棄
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: clean up common work\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -557,13 +525,10 @@ static void CleanUpCommonWork( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void CreateClactSystem( RESEARCH_COMMON_WORK* work )
+static void CreateClactSystem( RRC_WORK* work )
 {
   // システム作成
   GFL_CLACT_SYS_Create( &CommonClactSystemInitData, &VRAMBankSettings, work->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create clact system\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -573,13 +538,10 @@ static void CreateClactSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void DeleteClactSystem( RESEARCH_COMMON_WORK* work )
+static void DeleteClactSystem( RRC_WORK* work )
 { 
   // システム破棄
   GFL_CLACT_SYS_Delete();
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete clact system\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -589,7 +551,7 @@ static void DeleteClactSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void InitOBJResources( RESEARCH_COMMON_WORK* work )
+static void InitOBJResources( RRC_WORK* work )
 {
   int i;
 
@@ -597,9 +559,6 @@ static void InitOBJResources( RESEARCH_COMMON_WORK* work )
   {
     work->OBJResRegisterIdx[i] = 0; 
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init OBJ resources\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -609,14 +568,14 @@ static void InitOBJResources( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
+static void RegisterOBJResources( RRC_WORK* work )
 {
   HEAPID heapID;
   ARCHANDLE* arcHandle;
   u32 character, iconPalette, cellAnime;
 
   heapID    = work->heapID;
-  arcHandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, heapID );
+  arcHandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GetHeapLowID(heapID) );
 
   // リソースを登録
   character = GFL_CLGRP_CGR_Register( arcHandle, 
@@ -640,9 +599,6 @@ static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
   work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME ]     = cellAnime;
 
   GFL_ARC_CloseDataHandle( arcHandle );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: register OBJ resources\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -652,14 +608,11 @@ static void RegisterOBJResources( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void ReleaseOBJResources( RESEARCH_COMMON_WORK* work )
+static void ReleaseOBJResources( RRC_WORK* work )
 {
   GFL_CLGRP_CGR_Release     ( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CHARACTER ] );
   GFL_CLGRP_PLTT_Release    ( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_PALETTE_ICON ] );
   GFL_CLGRP_CELLANIM_Release( work->OBJResRegisterIdx[ COMMON_OBJ_RESOURCE_MAIN_CELL_ANIME ] );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: release OBJ resources\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -669,7 +622,7 @@ static void ReleaseOBJResources( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void InitClactUnits( RESEARCH_COMMON_WORK* work )
+static void InitClactUnits( RRC_WORK* work )
 {
   int unitIdx;
 
@@ -677,9 +630,6 @@ static void InitClactUnits( RESEARCH_COMMON_WORK* work )
   {
     work->clactUnit[ unitIdx ] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init clact units\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -689,7 +639,7 @@ static void InitClactUnits( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void CreateClactUnits( RESEARCH_COMMON_WORK* work )
+static void CreateClactUnits( RRC_WORK* work )
 {
   int unitIdx;
 
@@ -705,9 +655,6 @@ static void CreateClactUnits( RESEARCH_COMMON_WORK* work )
     priority = CommonClactUnitPriority[ unitIdx ];
     work->clactUnit[ unitIdx ] = GFL_CLACT_UNIT_Create( workNum, priority, work->heapID );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMON: create clact units\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -717,7 +664,7 @@ static void CreateClactUnits( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void DeleteClactUnits( RESEARCH_COMMON_WORK* work )
+static void DeleteClactUnits( RRC_WORK* work )
 {
   int unitIdx;
 
@@ -726,9 +673,6 @@ static void DeleteClactUnits( RESEARCH_COMMON_WORK* work )
     GF_ASSERT( work->clactUnit[ unitIdx ] );
     GFL_CLACT_UNIT_Delete( work->clactUnit[ unitIdx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete clact units\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -738,7 +682,7 @@ static void DeleteClactUnits( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void InitClactWorks( RESEARCH_COMMON_WORK* work )
+static void InitClactWorks( RRC_WORK* work )
 {
   int workIdx;
 
@@ -747,9 +691,6 @@ static void InitClactWorks( RESEARCH_COMMON_WORK* work )
   {
     work->clactWork[ workIdx ] = NULL;
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init clact works\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -759,7 +700,7 @@ static void InitClactWorks( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void CreateClactWorks( RESEARCH_COMMON_WORK* work )
+static void CreateClactWorks( RRC_WORK* work )
 {
   int wkIdx;
 
@@ -789,13 +730,8 @@ static void CreateClactWorks( RESEARCH_COMMON_WORK* work )
     work->clactWork[ wkIdx ] = GFL_CLACT_WK_Create( 
         unit, charaIdx, paletteIdx, cellAnimeIdx, &wkData, surface, work->heapID );
 
-    // 非表示に設定
-    //GFL_CLACT_WK_SetDrawEnable( work->clactWork[ wkIdx ], FALSE );
     GFL_CLACT_WK_SetDrawEnable( work->clactWork[ wkIdx ], TRUE );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create clact works\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -805,7 +741,7 @@ static void CreateClactWorks( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void DeleteClactWorks( RESEARCH_COMMON_WORK* work )
+static void DeleteClactWorks( RRC_WORK* work )
 {
   int wkIdx;
 
@@ -817,9 +753,6 @@ static void DeleteClactWorks( RESEARCH_COMMON_WORK* work )
     // 破棄
     GFL_CLACT_WK_Remove( work->clactWork[ wkIdx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete clact works\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -829,12 +762,9 @@ static void DeleteClactWorks( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void InitPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
+static void InitPaletteFadeSystem( RRC_WORK* work )
 {
   work->paletteFadeSystem = NULL;
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init palette fade system\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -844,14 +774,11 @@ static void InitPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void CreatePaletteFadeSystem( RESEARCH_COMMON_WORK* work )
+static void CreatePaletteFadeSystem( RRC_WORK* work )
 {
   GF_ASSERT( work->paletteFadeSystem == NULL );
 
   work->paletteFadeSystem = PaletteFadeInit( work->heapID );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create palette fade system\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -861,14 +788,11 @@ static void CreatePaletteFadeSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void DeletePaletteFadeSystem( RESEARCH_COMMON_WORK* work )
+static void DeletePaletteFadeSystem( RRC_WORK* work )
 {
   GF_ASSERT( work->paletteFadeSystem );
 
   PaletteFadeFree( work->paletteFadeSystem );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete palette fade system\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -878,7 +802,7 @@ static void DeletePaletteFadeSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void SetupPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
+static void SetupPaletteFadeSystem( RRC_WORK* work )
 {
   PALETTE_FADE_PTR fadeSystem;
   
@@ -895,9 +819,6 @@ static void SetupPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
   PaletteWorkSet_VramCopy( fadeSystem, FADE_MAIN_OBJ, 0, FULL_PALETTE_SIZE );
   PaletteWorkSet_VramCopy( fadeSystem, FADE_SUB_BG,   0, FULL_PALETTE_SIZE );
   PaletteWorkSet_VramCopy( fadeSystem, FADE_SUB_OBJ,  0, FULL_PALETTE_SIZE );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: setup palette fade system\n" );
 }
 
 //-------------------------------------------------------------------------------
@@ -907,7 +828,7 @@ static void SetupPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void CleanUpPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
+static void CleanUpPaletteFadeSystem( RRC_WORK* work )
 {
   PALETTE_FADE_PTR fadeSystem;
   
@@ -918,9 +839,6 @@ static void CleanUpPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
   PaletteFadeWorkAllocFree( fadeSystem, FADE_MAIN_OBJ );
   PaletteFadeWorkAllocFree( fadeSystem, FADE_SUB_BG );
   PaletteFadeWorkAllocFree( fadeSystem, FADE_SUB_OBJ );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: clean up palette fade system\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -930,7 +848,7 @@ static void CleanUpPaletteFadeSystem( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void InitPaletteAnime( RESEARCH_COMMON_WORK* work )
+static void InitPaletteAnime( RRC_WORK* work )
 {
   int idx;
 
@@ -938,9 +856,6 @@ static void InitPaletteAnime( RESEARCH_COMMON_WORK* work )
   {
     work->paletteAnime[ idx ] = NULL;
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: init palette anime\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -950,7 +865,7 @@ static void InitPaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void CreatePaletteAnime( RESEARCH_COMMON_WORK* work )
+static void CreatePaletteAnime( RRC_WORK* work )
 {
   int idx;
 
@@ -960,9 +875,6 @@ static void CreatePaletteAnime( RESEARCH_COMMON_WORK* work )
 
     work->paletteAnime[ idx ] = PALETTE_ANIME_Create( work->heapID );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: create palette anime\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -972,7 +884,7 @@ static void CreatePaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void DeletePaletteAnime( RESEARCH_COMMON_WORK* work )
+static void DeletePaletteAnime( RRC_WORK* work )
 {
   int idx;
 
@@ -982,9 +894,6 @@ static void DeletePaletteAnime( RESEARCH_COMMON_WORK* work )
 
     PALETTE_ANIME_Delete( work->paletteAnime[ idx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: delete palette anime\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -994,7 +903,7 @@ static void DeletePaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void SetupPaletteAnime( RESEARCH_COMMON_WORK* work )
+static void SetupPaletteAnime( RRC_WORK* work )
 {
   int idx;
 
@@ -1007,9 +916,6 @@ static void SetupPaletteAnime( RESEARCH_COMMON_WORK* work )
                          CommonPaletteAnimeData[ idx ].srcAdrs,
                          CommonPaletteAnimeData[ idx ].colorNum);
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: setup palette anime\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1019,7 +925,7 @@ static void SetupPaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void CleanUpPaletteAnime( RESEARCH_COMMON_WORK* work )
+static void CleanUpPaletteAnime( RRC_WORK* work )
 {
   int idx;
 
@@ -1030,9 +936,6 @@ static void CleanUpPaletteAnime( RESEARCH_COMMON_WORK* work )
     // 操作していたパレットを元に戻す
     PALETTE_ANIME_Reset( work->paletteAnime[ idx ] );
   }
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: clean up palette anime\n" );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1043,13 +946,11 @@ static void CleanUpPaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param index 開始するアニメーション
  */
 //----------------------------------------------------------------------------------------------
-static void StartPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+static void StartPaletteAnime( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Start( work->paletteAnime[ index ], 
                        CommonPaletteAnimeData[ index ].animeType,
                        CommonPaletteAnimeData[ index ].fadeColor );
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: start palette anime [%d]\n", index );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1060,12 +961,9 @@ static void StartPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_
  * @param index 停止するアニメーション
  */
 //----------------------------------------------------------------------------------------------
-static void StopPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+static void StopPaletteAnime( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: stop palette anime [%d]\n", index );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1076,12 +974,9 @@ static void StopPaletteAnime( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_I
  * @param index リセット対象のアニメーション
  */
 //----------------------------------------------------------------------------------------------
-static void ResetPalette( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
+static void ResetPalette( RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 { 
   PALETTE_ANIME_Reset( work->paletteAnime[ index ] );
-
-  // DEBUG;
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: reset palette [%d]\n", index );
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1091,7 +986,7 @@ static void ResetPalette( RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX
  * @param work
  */
 //----------------------------------------------------------------------------------------------
-static void UpdatePaletteAnime( RESEARCH_COMMON_WORK* work )
+static void UpdatePaletteAnime( RRC_WORK* work )
 {
   int idx;
 
@@ -1110,7 +1005,7 @@ static void UpdatePaletteAnime( RESEARCH_COMMON_WORK* work )
  * @param work
  */
 //-------------------------------------------------------------------------------
-static void SetupTouchArea( RESEARCH_COMMON_WORK* work )
+static void SetupTouchArea( RRC_WORK* work )
 {
   int idx;
 
@@ -1121,9 +1016,6 @@ static void SetupTouchArea( RESEARCH_COMMON_WORK* work )
     work->touchHitTable[ idx ].rect.top    = CommonTouchAreaInitData[ idx ].top;
     work->touchHitTable[ idx ].rect.bottom = CommonTouchAreaInitData[ idx ].bottom;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "RESEARCH-COMMON: setup touch area\n" );
 }
 
 
@@ -1143,7 +1035,7 @@ static void SetupTouchArea( RESEARCH_COMMON_WORK* work )
  * @return 指定したリソースの登録インデックス
  */
 //-------------------------------------------------------------------------------
-static u32 GetOBJResRegisterIndex( const RESEARCH_COMMON_WORK* work, COMMON_OBJ_RESOURCE_ID resID )
+static u32 GetOBJResRegisterIndex( const RRC_WORK* work, COMMON_OBJ_RESOURCE_ID resID )
 {
   return work->OBJResRegisterIdx[ resID ];
 }
@@ -1158,7 +1050,7 @@ static u32 GetOBJResRegisterIndex( const RESEARCH_COMMON_WORK* work, COMMON_OBJ_
  * @return 指定したセルアクターユニット
  */
 //-------------------------------------------------------------------------------
-static GFL_CLUNIT* GetClactUnit( const RESEARCH_COMMON_WORK* work, COMMON_CLUNIT_INDEX unitIdx )
+static GFL_CLUNIT* GetClactUnit( const RRC_WORK* work, COMMON_CLUNIT_INDEX unitIdx )
 {
   return work->clactUnit[ unitIdx ];
 }
@@ -1173,7 +1065,7 @@ static GFL_CLUNIT* GetClactUnit( const RESEARCH_COMMON_WORK* work, COMMON_CLUNIT
  * @return 指定したセルアクターワーク
  */
 //-------------------------------------------------------------------------------
-static GFL_CLWK* GetClactWork( const RESEARCH_COMMON_WORK* work, COMMON_CLWK_INDEX workIdx )
+static GFL_CLWK* GetClactWork( const RRC_WORK* work, COMMON_CLWK_INDEX workIdx )
 {
   return work->clactWork[ workIdx ];
 }

@@ -9,7 +9,7 @@
 #pragma once
 #include <gflib.h>
 #include "gamesystem/gamesystem.h" // for GAMESYS_WORK
-#include "research_common.h"       // for RESEARCH_COMMON_WORK
+#include "research_common.h"       // for RRC_WORK
 
 
 //===============================================================================
@@ -31,7 +31,7 @@ typedef struct _RESEARCH_RADAR_LIST_WORK RRL_WORK;
 // ■
 //=============================================================================== 
 // ワークを生成する
-extern RRL_WORK* RRL_CreateWork( RESEARCH_COMMON_WORK* commonWork );
+extern RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork );
 // ワークを破棄する
 extern void RRL_DeleteWork( RRL_WORK* work ); 
 // メイン動作

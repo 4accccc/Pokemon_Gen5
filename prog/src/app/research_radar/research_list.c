@@ -54,7 +54,7 @@
 struct _RESEARCH_RADAR_LIST_WORK
 { 
   // 全画面共通ワーク
-  RESEARCH_COMMON_WORK* commonWork; 
+  RRC_WORK* commonWork; 
 
   HEAPID       heapID; 
   GFL_FONT*    font;
@@ -270,7 +270,7 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk ); // VBlank 中の処理
 static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work );
 static GAMEDATA* GetGameData( const RRL_WORK* work );
 static void SetHeapID( RRL_WORK* work, HEAPID heapID );
-static void SetCommonWork( RRL_WORK* work, RESEARCH_COMMON_WORK* commonWork );
+static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork );
 // 調査項目
 static int GetNextTopicID( const RRL_WORK* work, int topicID ); // 次の調査項目IDを取得する
 static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // 前の調査項目IDを取得する
@@ -368,12 +368,12 @@ static void ReleaseVBlankTask ( RRL_WORK* work ); // VBlank タスク 解除
  * @return リスト画面管理ワーク
  */
 //-----------------------------------------------------------------------------------------
-RRL_WORK* RRL_CreateWork( RESEARCH_COMMON_WORK* commonWork )
+RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork )
 {
   RRL_WORK* work;
   HEAPID heapID;
 
-  heapID = RESEARCH_COMMON_GetHeapID( commonWork );
+  heapID = RRC_GetHeapID( commonWork );
 
   // ワークを生成
   work = CreateListWork( heapID );
@@ -544,7 +544,7 @@ static void MainState_STANDBY( RRL_WORK* work )
 
   trg   = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
   //-------------------------
   //「もどる」ボタンをタッチ
@@ -617,7 +617,7 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
 
   trg   = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
   //-------------------------
   //「もどる」ボタンをタッチ
@@ -1041,8 +1041,8 @@ static void MainState_CLEAN_UP( RRL_WORK* work )
   DeletePaletteAnime( work );
 
   // 共通パレットアニメーション
-  RESEARCH_COMMON_StopAllPaletteAnime( work->commonWork ); // 停止して, 
-  RESEARCH_COMMON_ResetAllPalette( work->commonWork );     // パレットを元に戻す
+  RRC_StopAllPaletteAnime( work->commonWork ); // 停止して, 
+  RRC_ResetAllPalette( work->commonWork );     // パレットを元に戻す
 
   // パレットフェードシステム 後片付け
   CleanUpPaletteFadeSystem( work );
@@ -1684,7 +1684,7 @@ static void FinishCurrentState( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void SetFinishReason( RRL_WORK* work, SEQ_CHANGE_TRIG reason )
 {
-  RESEARCH_COMMON_SetSeqChangeTrig( work->commonWork, reason );
+  RRC_SetSeqChangeTrig( work->commonWork, reason );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1736,13 +1736,13 @@ static u32 GetWaitFrame( const RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void RegisterFirstStateFlow( RRL_WORK* work )
 {
-  RESEARCH_COMMON_WORK* commonWork;
+  RRC_WORK* commonWork;
   RADAR_SEQ prev_seq;
   SEQ_CHANGE_TRIG trig;
 
   commonWork = work->commonWork;
-  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
-  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+  prev_seq   = RRC_GetPrevSeq( commonWork );
+  trig       = RRC_GetSeqChangeTrig( commonWork );
 
   // 前の画面をボタンで終了
   if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
@@ -3168,7 +3168,7 @@ static BOOL IsPaletteFadeEnd( RRL_WORK* work )
 //------------------------------------------------------------------------------------
 static void StartCommonPaletteAnime( RRL_WORK* work, COMMON_PALETTE_ANIME_INDEX index )
 {
-  RESEARCH_COMMON_StartPaletteAnime( work->commonWork, index );
+  RRC_StartPaletteAnime( work->commonWork, index );
 }
 
 //------------------------------------------------------------------------------------
@@ -3227,7 +3227,7 @@ static void UpdatePaletteAnime( RRL_WORK* work )
 //------------------------------------------------------------------------------------
 static void UpdateCommonPaletteAnime( const RRL_WORK* work )
 {
-  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork );
+  RRC_UpdatePaletteAnime( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3263,7 +3263,7 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 //-----------------------------------------------------------------------------------------
 static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work )
 {
-  return RESEARCH_COMMON_GetGameSystem( work->commonWork );
+  return RRC_GetGameSystem( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3277,7 +3277,7 @@ static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static GAMEDATA* GetGameData( const RRL_WORK* work )
 {
-  return RESEARCH_COMMON_GetGameData( work->commonWork );
+  return RRC_GetGameData( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3301,7 +3301,7 @@ static void SetHeapID( RRL_WORK* work, HEAPID heapID )
  * @param commonWork
  */
 //-----------------------------------------------------------------------------------------
-static void SetCommonWork( RRL_WORK* work, RESEARCH_COMMON_WORK* commonWork )
+static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork )
 {
   work->commonWork = commonWork;
 }

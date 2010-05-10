@@ -63,7 +63,7 @@
 //=========================================================================================
 struct _RESEARCH_RADAR_GRAPH_WORK
 { 
-  RESEARCH_COMMON_WORK* commonWork; // ‘S‰æ–Ê‹¤’Êƒ[ƒN
+  RRC_WORK* commonWork; // ‘S‰æ–Ê‹¤’Êƒ[ƒN
   HEAPID heapID;
 
   GFL_FONT*    font;                   // ƒtƒHƒ“ƒg
@@ -268,8 +268,8 @@ static GAMESYS_WORK* GetGameSystem( const RRG_WORK* work ); // ƒQ[ƒ€ƒVƒXƒeƒ€‚ðŽ
 static GAMEDATA* GetGameData( const RRG_WORK* work ); // ƒQ[ƒ€ƒf[ƒ^‚ðŽæ“¾‚·‚é
 static HEAPID GetHeapID( const RRG_WORK* work ); // ƒq[ƒvID‚ðŽæ“¾‚·‚é
 static void SetHeapID( RRG_WORK* work, HEAPID heapID );// ƒq[ƒvID‚ðÝ’è‚·‚é
-static RESEARCH_COMMON_WORK* GetCommonWork( const RRG_WORK* work ); // ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ðŽæ“¾‚·‚é
-static void SetCommonWork( RRG_WORK* work, RESEARCH_COMMON_WORK* commonWork ); // ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ðÝ’è‚·‚é
+static RRC_WORK* GetCommonWork( const RRG_WORK* work ); // ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ðŽæ“¾‚·‚é
+static void SetCommonWork( RRG_WORK* work, RRC_WORK* commonWork ); // ‘S‰æ–Ê‹¤’Êƒ[ƒN‚ðÝ’è‚·‚é
 // ’²¸ƒf[ƒ^•\Ž¦ƒ^ƒCƒv
 static void SetDataDisplayType( RRG_WORK* work, GRAPH_DISP_MODE graphMode ); // ’²¸ƒf[ƒ^‚Ì•\Ž¦ƒ^ƒCƒv‚ðÝ’è‚·‚é
 // ‰~ƒOƒ‰ƒt
@@ -395,12 +395,12 @@ static void Debug_SetupResearchData( RRG_WORK* work ); // ƒfƒoƒbƒO—p’²¸ƒf[ƒ^‚ð
  * @return ’²¸•ñŠm”F‰æ–Êƒ[ƒN
  */
 //-----------------------------------------------------------------------------------------
-RRG_WORK* RRG_CreateWork( RESEARCH_COMMON_WORK* commonWork )
+RRG_WORK* RRG_CreateWork( RRC_WORK* commonWork )
 {
   RRG_WORK* work;
   HEAPID heapID;
 
-  heapID = RESEARCH_COMMON_GetHeapID( commonWork );
+  heapID = RRC_GetHeapID( commonWork );
 
   // ƒ[ƒN‚ð¶¬
   work = CreateGraphWork( heapID );
@@ -620,7 +620,7 @@ static void MainSeq_STANDBY( RRG_WORK* work )
   key = GFL_UI_KEY_GetCont();
   trg = GFL_UI_KEY_GetTrg(); 
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
   //-----------------------
   //w–ß‚éxƒ{ƒ^ƒ“‚ðƒ^ƒbƒ`
@@ -802,7 +802,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   key = GFL_UI_KEY_GetCont();
   trg = GFL_UI_KEY_GetTrg(); 
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
   //------------------------
   // ’²¸ƒf[ƒ^‚ÌXV‚ðŒŸo
@@ -1248,8 +1248,8 @@ static void MainSeq_CLEANUP( RRG_WORK* work )
   DeletePaletteAnime( work );
 
   // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“
-  RESEARCH_COMMON_StopAllPaletteAnime( work->commonWork ); // ’âŽ~‚µ‚Ä, 
-  RESEARCH_COMMON_ResetAllPalette( work->commonWork );     // ƒpƒŒƒbƒg‚ðŒ³‚É–ß‚·
+  RRC_StopAllPaletteAnime( work->commonWork ); // ’âŽ~‚µ‚Ä, 
+  RRC_ResetAllPalette( work->commonWork );     // ƒpƒŒƒbƒg‚ðŒ³‚É–ß‚·
 
   ReleaseVBlankTask( work );        // VBlankƒ^ƒXƒN‚ð‰ðœ
   DeletePercentage( work );         // % •\Ž¦ƒIƒuƒWƒFƒNƒg”jŠü
@@ -1322,7 +1322,7 @@ static void FinishCurrentState( RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void SetFinishReason( RRG_WORK* work, SEQ_CHANGE_TRIG reason )
 {
-  RESEARCH_COMMON_SetSeqChangeTrig( work->commonWork, reason );
+  RRC_SetSeqChangeTrig( work->commonWork, reason );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1379,13 +1379,13 @@ static u32 GetWaitFrame( const RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 RRG_STATE GetFirstState( const RRG_WORK* work )
 {
-  RESEARCH_COMMON_WORK* commonWork;
+  RRC_WORK* commonWork;
   RADAR_SEQ prev_seq;
   SEQ_CHANGE_TRIG trig;
 
   commonWork = work->commonWork;
-  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
-  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+  prev_seq   = RRC_GetPrevSeq( commonWork );
+  trig       = RRC_GetSeqChangeTrig( commonWork );
 
   // ‘O‚Ì‰æ–Ê‚ðƒ{ƒ^ƒ“‚ÅI—¹
   if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
@@ -2269,7 +2269,7 @@ static void SetAnalyzeButtonNotActive( RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void BlinkReturnButton( RRG_WORK* work )
 {
-  RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN );
+  RRC_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3248,7 +3248,7 @@ static void UpdatePaletteAnime( RRG_WORK* work )
 //------------------------------------------------------------------------------------
 static void UpdateCommonPaletteAnime( RRG_WORK* work )
 {
-  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork );
+  RRC_UpdatePaletteAnime( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3364,7 +3364,7 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 //-----------------------------------------------------------------------------------------
 static GAMESYS_WORK* GetGameSystem( const RRG_WORK* work )
 {
-  return RESEARCH_COMMON_GetGameSystem( work->commonWork );
+  return RRC_GetGameSystem( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3378,7 +3378,7 @@ static GAMESYS_WORK* GetGameSystem( const RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static GAMEDATA* GetGameData( const RRG_WORK* work )
 {
-  return RESEARCH_COMMON_GetGameData( work->commonWork );
+  return RRC_GetGameData( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3417,7 +3417,7 @@ static void SetHeapID( RRG_WORK* work, HEAPID heapID )
  * @return ‘S‰æ–Ê‹¤’Êƒ[ƒN
  */
 //-----------------------------------------------------------------------------------------
-static RESEARCH_COMMON_WORK* GetCommonWork( const RRG_WORK* work )
+static RRC_WORK* GetCommonWork( const RRG_WORK* work )
 {
   return work->commonWork;
 }
@@ -3430,7 +3430,7 @@ static RESEARCH_COMMON_WORK* GetCommonWork( const RRG_WORK* work )
  * @param commonWork
  */
 //-----------------------------------------------------------------------------------------
-static void SetCommonWork( RRG_WORK* work, RESEARCH_COMMON_WORK* commonWork )
+static void SetCommonWork( RRG_WORK* work, RRC_WORK* commonWork )
 {
   work->commonWork = commonWork;
 }

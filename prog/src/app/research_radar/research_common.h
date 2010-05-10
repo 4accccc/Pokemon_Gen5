@@ -17,74 +17,73 @@
 //===============================================================================
 // ■共通ワークの不完全型
 //===============================================================================
-typedef struct _RESEARCH_COMMON_WORK RESEARCH_COMMON_WORK;
+typedef struct _RESEARCH_RADAR_COMMON_WORK RRC_WORK;
 
 
 //===============================================================================
 // ■生成・破棄
 //===============================================================================
 // 生成
-extern RESEARCH_COMMON_WORK* RESEARCH_COMMON_CreateWork( 
-    HEAPID heapID, GAMESYS_WORK* gameSystem );
+extern RRC_WORK* RRC_CreateWork( HEAPID heapID, GAMESYS_WORK* gameSystem );
 // 破棄
-extern void RESEARCH_COMMON_DeleteWork( RESEARCH_COMMON_WORK* work );
+extern void RRC_DeleteWork( RRC_WORK* work );
 
 
 //===============================================================================
 // ■制御
 //===============================================================================
 // パレットフェード ( ブラック・アウト ) を開始する
-extern void RESEARCH_COMMON_StartPaletteFadeBlackOut( RESEARCH_COMMON_WORK* work );
+extern void RRC_StartPaletteFadeBlackOut( RRC_WORK* work );
 // パレットフェード ( ブラック・イン ) を開始する
-extern void RESEARCH_COMMON_StartPaletteFadeBlackIn( RESEARCH_COMMON_WORK* work );
+extern void RRC_StartPaletteFadeBlackIn( RRC_WORK* work );
 
 // パレットアニメーションを更新する
-extern void RESEARCH_COMMON_UpdatePaletteAnime( RESEARCH_COMMON_WORK* work );
+extern void RRC_UpdatePaletteAnime( RRC_WORK* work );
 // パレットアニメーションを開始する
-extern void RESEARCH_COMMON_StartPaletteAnime( 
-    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index );
+extern void RRC_StartPaletteAnime( 
+    RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index );
 // パレットアニメーションを停止する ( 個別指定 )
-extern void RESEARCH_COMMON_StopPaletteAnime( 
-    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index );
+extern void RRC_StopPaletteAnime( 
+    RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index );
 // パレットアニメーションを停止する ( 全指定 )
-extern void RESEARCH_COMMON_StopAllPaletteAnime( RESEARCH_COMMON_WORK* work );
+extern void RRC_StopAllPaletteAnime( RRC_WORK* work );
 // パレットアニメで操作したパレットをリセットする ( 個別指定 )
-extern void RESEARCH_COMMON_ResetPalette(
-    RESEARCH_COMMON_WORK* work, COMMON_PALETTE_ANIME_INDEX index );
+extern void RRC_ResetPalette(
+    RRC_WORK* work, COMMON_PALETTE_ANIME_INDEX index );
 // パレットアニメで操作したパレットをリセットする ( 全指定 )
-extern void RESEARCH_COMMON_ResetAllPalette( RESEARCH_COMMON_WORK* work );
+extern void RRC_ResetAllPalette( RRC_WORK* work );
 
 
 //===============================================================================
 // ■取得
 //===============================================================================
 // ヒープIDを取得する
-extern HEAPID RESEARCH_COMMON_GetHeapID( const RESEARCH_COMMON_WORK* work );
+extern HEAPID RRC_GetHeapID( const RRC_WORK* work );
 // ゲームシステムを取得する
-extern GAMESYS_WORK* RESEARCH_COMMON_GetGameSystem( const RESEARCH_COMMON_WORK* work );
+extern GAMESYS_WORK* RRC_GetGameSystem( const RRC_WORK* work );
 // ゲームデータを取得する
-extern GAMEDATA* RESEARCH_COMMON_GetGameData( const RESEARCH_COMMON_WORK* work );
+extern GAMEDATA* RRC_GetGameData( const RRC_WORK* work );
 // セルアクターユニットを取得する
-extern GFL_CLUNIT* RESEARCH_COMMON_GetClactUnit( 
-    const RESEARCH_COMMON_WORK* work, COMMON_CLUNIT_INDEX unitIdx );
+extern GFL_CLUNIT* RRC_GetClactUnit( 
+    const RRC_WORK* work, COMMON_CLUNIT_INDEX unitIdx );
 // セルアクターワークを取得する
-extern GFL_CLWK* RESEARCH_COMMON_GetClactWork( 
-    const RESEARCH_COMMON_WORK* work, COMMON_CLWK_INDEX workIdx );
+extern GFL_CLWK* RRC_GetClactWork( 
+    const RRC_WORK* work, COMMON_CLWK_INDEX workIdx );
 // パレットフェードシステムを取得する
-extern PALETTE_FADE_PTR RESEARCH_COMMON_GetPaletteFadeSystem( const RESEARCH_COMMON_WORK* work );
+extern PALETTE_FADE_PTR RRC_GetPaletteFadeSystem( const RRC_WORK* work );
 // ヒットテーブルを取得する
-extern const GFL_UI_TP_HITTBL* RESEARCH_COMMON_GetHitTable( const RESEARCH_COMMON_WORK* work );
+extern const GFL_UI_TP_HITTBL* RRC_GetHitTable( const RRC_WORK* work );
 // 現在の画面を取得する
-extern RADAR_SEQ RESEARCH_COMMON_GetNowSeq( const RESEARCH_COMMON_WORK* work );
+extern RADAR_SEQ RRC_GetNowSeq( const RRC_WORK* work );
 // 直前の画面を取得する
-extern RADAR_SEQ RESEARCH_COMMON_GetPrevSeq( const RESEARCH_COMMON_WORK* work );
+extern RADAR_SEQ RRC_GetPrevSeq( const RRC_WORK* work );
 // 画面遷移のトリガを取得する
-extern SEQ_CHANGE_TRIG RESEARCH_COMMON_GetSeqChangeTrig( const RESEARCH_COMMON_WORK* work );
+extern SEQ_CHANGE_TRIG RRC_GetSeqChangeTrig( const RRC_WORK* work );
 
 //===============================================================================
 // ■設定
 //===============================================================================
 // 現在の画面を登録する
-extern void RESEARCH_COMMON_SetNowSeq( RESEARCH_COMMON_WORK* work, RADAR_SEQ seq );
+extern void RRC_SetNowSeq( RRC_WORK* work, RADAR_SEQ seq );
 // 画面遷移のトリガを登録する
-extern void RESEARCH_COMMON_SetSeqChangeTrig( RESEARCH_COMMON_WORK* work, SEQ_CHANGE_TRIG trig );
+extern void RRC_SetSeqChangeTrig( RRC_WORK* work, SEQ_CHANGE_TRIG trig );

@@ -104,7 +104,7 @@ typedef struct {
   u32 frameCount;
 
   // 全画面共通ワーク
-  RESEARCH_COMMON_WORK* commonWork;
+  RRC_WORK* commonWork;
 
   // 各画面専用ワーク
   RRT_WORK*   topWork;   // トップ画面
@@ -286,9 +286,9 @@ static void ChangeMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ next
 
   // 画面の遷移を登録する
   switch( *seq ) {
-  case PROC_MAIN_SEQ_MENU:    RESEARCH_COMMON_SetNowSeq( work->commonWork, RADAR_SEQ_MENU ); break;
-  case PROC_MAIN_SEQ_SELECT:  RESEARCH_COMMON_SetNowSeq( work->commonWork, RADAR_SEQ_SELECT ); break;
-  case PROC_MAIN_SEQ_CHECK:   RESEARCH_COMMON_SetNowSeq( work->commonWork, RADAR_SEQ_CHECK ); break;
+  case PROC_MAIN_SEQ_MENU:    RRC_SetNowSeq( work->commonWork, RADAR_SEQ_MENU ); break;
+  case PROC_MAIN_SEQ_SELECT:  RRC_SetNowSeq( work->commonWork, RADAR_SEQ_SELECT ); break;
+  case PROC_MAIN_SEQ_CHECK:   RRC_SetNowSeq( work->commonWork, RADAR_SEQ_CHECK ); break;
   }
 
   // DEBUG:
@@ -548,7 +548,7 @@ static void CreateCommonWork( RESEARCH_WORK* work )
 {
   GF_ASSERT( work->commonWork == NULL );
 
-  work->commonWork = RESEARCH_COMMON_CreateWork( work->heapID, work->gameSystem );
+  work->commonWork = RRC_CreateWork( work->heapID, work->gameSystem );
 }
 
 //-------------------------------------------------------------------------------
@@ -562,7 +562,7 @@ static void DeleteCommonWork( RESEARCH_WORK* work )
 {
   GF_ASSERT( work->commonWork );
 
-  RESEARCH_COMMON_DeleteWork( work->commonWork );
+  RRC_DeleteWork( work->commonWork );
   work->commonWork = NULL;
 }
 

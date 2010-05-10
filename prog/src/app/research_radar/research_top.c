@@ -40,7 +40,7 @@
 //====================================================================================
 struct _RESEARCH_RADAR_TOP_WORK { 
 
-  RESEARCH_COMMON_WORK* commonWork; // ëSâÊñ ã§í ÉèÅ[ÉN
+  RRC_WORK* commonWork; // ëSâÊñ ã§í ÉèÅ[ÉN
   HEAPID heapID;
 
   GFL_FONT*    font;
@@ -139,8 +139,8 @@ static void UpdatePaletteAnime( RRT_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçXê
 // í≤ç∏çÄñ⁄
 static u8 GetSelectableTopicNum( const RRT_WORK* work ); // ëIëâ¬î\Ç»í≤ç∏çÄñ⁄ÇÃêîÇéÊìæÇ∑ÇÈ
 // ëSâÊñ ã§í ÉèÅ[ÉN
-static RESEARCH_COMMON_WORK* GetCommonWork( const RRT_WORK* work ); // ëSâÊñ ã§í ÉèÅ[ÉNÇéÊìæÇ∑ÇÈ
-static void SetCommonWork( RRT_WORK* work, RESEARCH_COMMON_WORK* commonWork ); // ëSâÊñ ã§í ÉèÅ[ÉNÇê›íËÇ∑ÇÈ
+static RRC_WORK* GetCommonWork( const RRT_WORK* work ); // ëSâÊñ ã§í ÉèÅ[ÉNÇéÊìæÇ∑ÇÈ
+static void SetCommonWork( RRT_WORK* work, RRC_WORK* commonWork ); // ëSâÊñ ã§í ÉèÅ[ÉNÇê›íËÇ∑ÇÈ
 // ÉqÅ[ÉvID
 static HEAPID GetHeapID( const RRT_WORK* work ); // ÉqÅ[ÉvIDÇéÊìæÇ∑ÇÈ
 static void SetHeapID( RRT_WORK* work, HEAPID heapID ); // ÉqÅ[ÉvIDÇê›íËÇ∑ÇÈ
@@ -227,12 +227,12 @@ static void DebugPrint_stateQueue( const RRT_WORK* work ); // èÛë‘ÉLÉÖÅ[ÇèoóÕÇ∑
  * @return ê∂ê¨ÇµÇΩÉgÉbÉvâÊñ ÉèÅ[ÉN
  */
 //------------------------------------------------------------------------------------
-RRT_WORK* RRT_CreateWork( RESEARCH_COMMON_WORK* commonWork )
+RRT_WORK* RRT_CreateWork( RRC_WORK* commonWork )
 {
   RRT_WORK* work;
   HEAPID heapID;
 
-  heapID = RESEARCH_COMMON_GetHeapID( commonWork );
+  heapID = RRC_GetHeapID( commonWork );
 
   // ÉèÅ[ÉNÇê∂ê¨
   work = CreateTopWork( heapID );
@@ -287,7 +287,7 @@ void RRT_Main( RRT_WORK* work )
 
   CheckNewEntry( work );
   UpdatePaletteAnime( work );
-  RESEARCH_COMMON_UpdatePaletteAnime( work->commonWork );
+  RRC_UpdatePaletteAnime( work->commonWork );
   GFL_CLACT_SYS_Main();
 
   // èÛë‘ÇÃçXêV
@@ -421,7 +421,7 @@ static void Main_STANDBY( RRT_WORK* work )
 
   trg = GFL_UI_KEY_GetTrg();
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
   //-----------------
   //ÅuÇ‡Ç«ÇÈÅvÉ{É^Éì 
@@ -531,7 +531,7 @@ static void Main_KEYWAIT( RRT_WORK* work )
 
   trg = GFL_UI_KEY_GetTrg();
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RESEARCH_COMMON_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
   //-----------------
   //ÅuÇ‡Ç«ÇÈÅvÉ{É^Éì
@@ -695,8 +695,8 @@ static void Main_CLEANUP( RRT_WORK* work )
   ResetVBlankFunc ( work );
 
   // ã§í ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉì
-  RESEARCH_COMMON_StopAllPaletteAnime( work->commonWork ); // í‚é~ÇµÇƒ, 
-  RESEARCH_COMMON_ResetAllPalette( work->commonWork );     // ÉpÉåÉbÉgÇå≥Ç…ñﬂÇ∑
+  RRC_StopAllPaletteAnime( work->commonWork ); // í‚é~ÇµÇƒ, 
+  RRC_ResetAllPalette( work->commonWork );     // ÉpÉåÉbÉgÇå≥Ç…ñﬂÇ∑
 
   // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉì
   CleanUpPaletteAnime( work );
@@ -853,14 +853,14 @@ static void IncStateSeq( RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static RRT_STATE GetFirstState( const RRT_WORK* work )
 {
-  RESEARCH_COMMON_WORK* commonWork;
+  RRC_WORK* commonWork;
   RADAR_SEQ prev_seq;
   SEQ_CHANGE_TRIG trig;
   MENU_ITEM cursor_pos;
 
   commonWork = work->commonWork;
-  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
-  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+  prev_seq   = RRC_GetPrevSeq( commonWork );
+  trig       = RRC_GetSeqChangeTrig( commonWork );
 
   // ëOÇÃâÊñ ÇÉ{É^ÉìÇ≈èIóπ
   if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
@@ -880,7 +880,7 @@ static RRT_STATE GetFirstState( const RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static void SetFinishReason( const RRT_WORK* work, SEQ_CHANGE_TRIG reason )
 {
-  RESEARCH_COMMON_SetSeqChangeTrig( work->commonWork, reason );
+  RRC_SetSeqChangeTrig( work->commonWork, reason );
 }
 
 //------------------------------------------------------------------------------------
@@ -1123,7 +1123,7 @@ static void SetChangeButtonNotActive( RRT_WORK* work )
 static void BlinkReturnButton( RRT_WORK* work )
 {
   // ÉpÉåÉbÉgÉAÉjÉÅäJén
-  RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN );
+  RRC_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN );
 }
 
 //------------------------------------------------------------------------------------
@@ -1441,7 +1441,7 @@ static u8 GetSelectableTopicNum( const RRT_WORK* work )
   EVENTWORK* evwork;
   int num;
 
-  gameData = RESEARCH_COMMON_GetGameData( work->commonWork );
+  gameData = RRC_GetGameData( work->commonWork );
   evwork   = GAMEDATA_GetEventWork( gameData );
 
   // ÉAÉìÉPÅ[ÉgÇ…ìöÇ¶ÇΩêîÇÉJÉEÉìÉg
@@ -1468,7 +1468,7 @@ static u8 GetSelectableTopicNum( const RRT_WORK* work )
  * @return ëSâÊñ ã§í ÉèÅ[ÉN
  */
 //------------------------------------------------------------------------------------
-static RESEARCH_COMMON_WORK* GetCommonWork( const RRT_WORK* work )
+static RRC_WORK* GetCommonWork( const RRT_WORK* work )
 {
   return work->commonWork;
 }
@@ -1481,7 +1481,7 @@ static RESEARCH_COMMON_WORK* GetCommonWork( const RRT_WORK* work )
  * @param commonWork
  */
 //------------------------------------------------------------------------------------
-static void SetCommonWork( RRT_WORK* work, RESEARCH_COMMON_WORK* commonWork )
+static void SetCommonWork( RRT_WORK* work, RRC_WORK* commonWork )
 {
   work->commonWork = commonWork;
 }
@@ -1586,14 +1586,14 @@ static void InitTopWork( RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static void SetupCursorPos( RRT_WORK* work )
 {
-  RESEARCH_COMMON_WORK* commonWork;
+  RRC_WORK* commonWork;
   RADAR_SEQ prev_seq;
   SEQ_CHANGE_TRIG trig;
   MENU_ITEM cursor_pos;
 
   commonWork = work->commonWork;
-  prev_seq   = RESEARCH_COMMON_GetPrevSeq( commonWork );
-  trig       = RESEARCH_COMMON_GetSeqChangeTrig( commonWork );
+  prev_seq   = RRC_GetPrevSeq( commonWork );
+  trig       = RRC_GetSeqChangeTrig( commonWork );
 
   // ëOÇÃâÊñ ÇÉ{É^ÉìÇ≈èIóπ
   if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {

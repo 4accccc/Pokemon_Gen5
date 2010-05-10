@@ -9,7 +9,7 @@
 #pragma once
 #include <gflib.h>
 #include "gamesystem/gamesystem.h" // for GAMESYS_WORK
-#include "research_common.h"       // for RESEARCH_COMMON_WORK
+#include "research_common.h"       // for RRC_WORK
 
 
 //===============================================================================
@@ -31,7 +31,7 @@ typedef struct _RESEARCH_RADAR_GRAPH_WORK RRG_WORK;
 // ■調査報告確認画面 制御関数
 //=============================================================================== 
 // ワークを生成する
-extern RRG_WORK* RRG_CreateWork( RESEARCH_COMMON_WORK* commonWork );
+extern RRG_WORK* RRG_CreateWork( RRC_WORK* commonWork );
 // ワークを破棄する
 extern void RRG_DeleteWork( RRG_WORK* work ); 
 // メイン関数
