@@ -60,7 +60,7 @@ def convGraFileFunc( mainFolder , subFolder )
     when fileType == '.ncl'
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NCLR'
       if( CompFileDate( fileName , convFile ) == 1 )
-        system( "perl " + PERL_TOOL_DIR + "ncl.pl " + fileName + " " + TEMP_DIR )
+        system( "perl " + PERL_TOOL_DIR + "ncl.pl " + fileName + " " + OUTPUT_DIR )
         system( "cp " + TEMP_DIR + "*.NCLR" + " " + OUTPUT_DIR )
         system( "rm " + TEMP_DIR + "*.*" )
         $isRefresh = TRUE
