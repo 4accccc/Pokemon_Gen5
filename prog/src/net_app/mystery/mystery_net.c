@@ -669,6 +669,8 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   { 
   case SEQ_INIT:
 		GFL_NET_Init( &sc_net_init, NULL, p_wk );
+    
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 
     *p_seq = SEQ_INIT_WAIT;
     break;
@@ -678,7 +680,6 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 		{
       GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
       GFL_NET_ReloadIcon();
-
       p_wk->p_wih = WIH_DWC_AllBeaconStart(sc_net_init.maxBeaconNum, p_wk->heapID );
       GFL_NET_Changeover(NULL);
       *p_seq = SEQ_END;
@@ -686,6 +687,7 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     break;
 
   case SEQ_END:
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
     OS_TFPrintf( 3, "ビーコン初期化\n" );
     SEQ_SetNext( p_seqwk, SEQFUNC_MainBeaconScan );
     break;
@@ -814,7 +816,6 @@ static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       //通信アイコン
       GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
       GFL_NET_ReloadIcon();
-
       *p_seq = SEQ_END;
     }
     break;
@@ -930,6 +931,8 @@ static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
     p_wk->recv_status = MYSTERY_NET_RECV_STATUS_NONE;
     *p_seq = SEQ_INIT_WAIT;
+
+
     break;
 
   case SEQ_INIT_WAIT:
@@ -938,7 +941,6 @@ static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       //通信アイコン
       GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
       GFL_NET_ReloadIcon();
-
       *p_seq = SEQ_END;
     }
     break;
