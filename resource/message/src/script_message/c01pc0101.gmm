@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T12:34:43"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T17:20:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,19 +296,18 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年お洒落</attribute>
-		<language name="JPN" width="257">もっている　ジムバッジの
-かずが　おおいほど[BE:01:ページ切り替え（クリア）]
-ショップで　かえる
-しょうひんも　ふえるって　しってた？</language>
-		<language name="JPN_KANJI" width="256">持っている　ジムバッジの
-数が　多いほど[BE:01:ページ切り替え（クリア）]
-ショップで　買える
-商品も　増えるって　知ってた？</language>
+		<language name="JPN" width="257">ボク　はじめて　しったけど▼
+ジムバッジを　たくさん　もってるほど
+ショップで　かえる▽
+どうぐの　しゅるいも　ふえるんだって！</language>
+		<language name="JPN_KANJI" width="256">ボク　はじめて　知ったけど▼
+ジムバッジを　たくさん　持ってるほど
+ショップで　買える▽
+道具の　種類も　増えるんだって！</language>
 	</row>
 
-	<row id="msg_c01pc0101_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c01pc0101_middleman2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
 		<language name="JPN" width="256">ポケモンを　つかまえているかい？[BE:01:ページ切り替え（クリア）]
