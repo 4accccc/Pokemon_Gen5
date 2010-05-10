@@ -4,6 +4,11 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_552.spa
 #001
 %00
+制御モード変更	継続
+SE再生	SEQ_SE_W245_BUCKL	SYSTEM	防御側	0:-1000:127	0:0:0
+SE動的変化	SYSTEM	追従	ピッチ	-1000	1000	0	50:0:0
+SE再生	SEQ_SE_DUMMY5	SYSTEM	防御側	50:0:0	0:0:0
+制御モード変更	逐次
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
 BGのパレットフェード	お盆＋フィールド	0	8	2	31:0:0
@@ -15,8 +20,8 @@ BGのパレットフェード	お盆＋フィールド	0	8	2	31:0:0
 タイマーによるウエイト	10
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_016	SE1	防御側	0:0:127	0:0:0
-SE再生	SEQ_SE_FLD_131	SE2	防御側	0:0:127	0:0:0
-SE再生	SEQ_SE_FLD_131	SE1	防御側	80:0:127	0:0:0
+SE再生	SEQ_SE_FLD_131	SE2	防御側	0:-500:127	0:0:0
+SE再生	SEQ_SE_FLD_131	SE1	防御側	80:-500:127	0:0:0
 制御モード変更	逐次
 パーティクル再生	w_552	W_552_552_BALL_SPIN_S	防御側	方向無し	0:0:0	1:1:1	1
 タイマーによるウエイト	60

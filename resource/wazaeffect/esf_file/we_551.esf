@@ -7,6 +7,9 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_038_bashishi.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_264_supernova2.NSCR
 #001
 %00
+制御モード変更	継続
+SE再生	SEQ_SE_SDEMO_03	SE1	防御側	30:0:127	0:0:0
+制御モード変更	逐次
 BGのロード	bg_264_supernova2
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
