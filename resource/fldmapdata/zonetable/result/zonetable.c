@@ -11797,7 +11797,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_R09,
 		MAPNAME_R9,
 		1,
-		WEATHER_NO_SPARK,
+		WEATHER_NO_SUNNY,
 		0,
 		MC_TYPE_FIELD,
 		0,
