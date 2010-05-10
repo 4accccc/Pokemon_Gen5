@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:15:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T16:50:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -560,7 +560,7 @@
 キミと　トモダチに　なる！▼</language>
 	</row>
 
-	<row id="msg_c02_leader3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_leader3_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 　ジム（＝博物館）の外に出ると
@@ -570,9 +570,9 @@
 ・続けてmsg_c02_leader2_01</comment>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
-		<language name="JPN" width="256">？？？『やあ　アロエさん
+		<language name="JPN" width="256">？？？『やあ　アロエねえさん
 なにか　いいカセキは　みつかったかい？▼</language>
-		<language name="JPN_KANJI" width="256">？？？『やあ　アロエさん
+		<language name="JPN_KANJI" width="256">？？？『やあ　アロエねえさん
 なにか　いいカセキは　みつかったかい？▼</language>
 	</row>
 

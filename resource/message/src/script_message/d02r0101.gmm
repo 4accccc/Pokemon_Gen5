@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:24:44"/>
+	<create user="matsumiya" host="W00224" date="2010-05-10T16:50:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -479,7 +479,7 @@
 		<language name="JPN" width="256">それじゃあ
 アロエねえさんの　ため　やりますか！▼</language>
 		<language name="JPN_KANJI" width="256">それじゃあ
-アロエ姉さんの　ため　やりますか！▼</language>
+アロエねえさんの　ため　やりますか！▼</language>
 	</row>
 
 	<row id="msg_d02r0101_leader3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -871,14 +871,14 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">C03ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">んじゃ　[1:00:トレーナー名:0]▼
-ヒウンシティの　ポケモンジムで
-キミの　ちょうせんを　まってるよ▼
+		<language name="JPN" width="256">それじゃあさ
+ヒウンシティの　ポケモンジムで▽
+きみの　ちょうせんを　まってるよ▼
 うん
 たのしみ　たのしみ▼</language>
-		<language name="JPN_KANJI" width="256">んじゃ　[1:00:トレーナー名:0]▼
-ヒウンシティの　ポケモンジムで
-キミの　挑戦を　待ってるよ▼
+		<language name="JPN_KANJI" width="256">それじゃあさ
+ヒウンシティの　ポケモンジムで▽
+きみの　挑戦を　待ってるよ▼
 うん
 たのしみ　たのしみ▼</language>
 	</row>
