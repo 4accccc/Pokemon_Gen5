@@ -96,7 +96,6 @@ typedef struct{
 ///ゲーム通信管理ワーク構造体
 typedef struct _GAME_COMM_SYS{
   GAMEDATA *gamedata;                 ///<ゲームデータへのポインタ
-  GAME_COMM_STATUS comm_status;         ///<通信ステータス
   u8 exit_reserve;                      ///<終了予約
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
@@ -288,8 +287,6 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     break;
   case GCSSEQ_INIT_WAIT:
     if(func_tbl->init_wait_func == NULL || func_tbl->init_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
-      //※check　現状ワイヤレスしかないので、とりあえずここでWIRELESSを代入
-      gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
       GameCommSub_SeqSet(sub_work, GCSSEQ_UPDATE);
     }
     break;
@@ -317,7 +314,6 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
   case GCSSEQ_FINISH:
     gcsp->app_work = NULL;
     gcsp->game_comm_no = GAME_COMM_NO_NULL;
-    gcsp->comm_status = GAME_COMM_STATUS_NULL;
     {//終了コールバック
       GAMECOMM_EXITCALLBACK_FUNC exit_callback = gcsp->exitcallback_func;
       void *exit_parentwork = gcsp->exitcallback_parentwork;
@@ -440,49 +436,6 @@ void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_F
       gcsp->exitcallback_parentwork = parent_work;
     }
   }
-}
-
-//==================================================================
-/**
- * 通信ステータスを取得
- *
- * @param   gcsp		
- *
- * @retval  GAME_COMM_STATUS	通信ステータス
- */
-//==================================================================
-GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp)
-{
-  const GFLNetInitializeStruct *aNetStruct;
-  
-  if(GFL_NET_IsInit() == FALSE){
-    return GAME_COMM_STATUS_NULL;
-  }
-  
-  aNetStruct = GFL_NET_GetNETInitStruct();
-	switch(aNetStruct->bNetType){
-  case GFL_NET_TYPE_WIRELESS:		///<ワイヤレス通信
-  case GFL_NET_TYPE_IRC_WIRELESS:	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
-    gcsp->comm_status = GAME_COMM_STATUS_WIRELESS;
-    break;
-
-  case GFL_NET_TYPE_WIRELESS_SCANONLY:	///<ワイヤレス通信(スキャン専用・電源ランプ非点滅)
-    {
-      gcsp->comm_status = WIH_DWC_GetAllBeaconType(NULL);  //@todo
-    }
-    break;
-  case GFL_NET_TYPE_WIFI:			///<WIFI通信
-  case GFL_NET_TYPE_WIFI_LOBBY:	///<WIFI広場通信
-    gcsp->comm_status = GAME_COMM_STATUS_WIFI;
-    break;
-  case GFL_NET_TYPE_IRC:			///<赤外線通信
-    gcsp->comm_status = GAME_COMM_STATUS_IRC;
-    break;
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-  return gcsp->comm_status;
 }
 
 //==================================================================

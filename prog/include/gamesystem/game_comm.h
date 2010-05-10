@@ -126,7 +126,6 @@ extern void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, 
 extern void GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_FUNC callback_func, void *parent_work);
 extern void GameCommSys_ChangeReq(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work);
-extern GAME_COMM_STATUS GameCommSys_GetCommStatus(GAME_COMM_SYS_PTR gcsp);
 extern GAME_COMM_NO GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp);
 extern GAME_COMM_NO GameCommSys_GetCommGameNo(GAME_COMM_SYS_PTR gcsp);
 extern BOOL GameCommSys_CheckSystemWaiting(GAME_COMM_SYS_PTR gcsp);
