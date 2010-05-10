@@ -1,0 +1,1 @@
+ruby attr_check.rb
