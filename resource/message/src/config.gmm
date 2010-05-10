@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-08T21:04:44"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T14:58:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -419,13 +419,13 @@
 	<row id="mes_config_sm02_00" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「戦闘アニメ」-&gt;みる</comment>
 		<language name="JPN" width="216" line="2">みる</language>
-		<language name="JPN_KANJI" width="216" line="2">見る</language>
+		<language name="JPN_KANJI" width="216" line="2">みる</language>
 	</row>
 
 	<row id="mes_config_sm02_01" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「戦闘アニメ」-&gt;みない</comment>
 		<language name="JPN" width="216" line="2">みない</language>
-		<language name="JPN_KANJI" width="216" line="2">見ない</language>
+		<language name="JPN_KANJI" width="216" line="2">みない</language>
 	</row>
 
 	<row id="mes_config_sm03_00" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -507,7 +507,7 @@
 		<language name="JPN" width="216" line="2">せんとうのとき　ポケモンの　わざの
 アニメを　みるかどうか　えらべます</language>
 		<language name="JPN_KANJI" width="216" line="2">戦闘のとき　ポケモンの　技の
-アニメを　見るかどうか　選べます</language>
+アニメを　みるかどうか　選べます</language>
 	</row>
 
 	<row id="mes_config_comment03" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
