@@ -124,6 +124,7 @@ typedef struct GYM_ELEC_TMP_tag
 {
   GFL_TCB * CapStopTcbPtr;   //カプセル停止制御ＴＣＢ
   u8 RadeRaleIdx;          //自機が走行しているレールインデックス
+  //↑トレーナーバトルイベント中のレール特定にも使用。間借してるだけなのでスクリプトチェンジの際に、値をリセットする
   s8 LeverIdx;              //操作しようとしているレバーインデックス(イベント中以外は-1)
   u8 ChgingSw;            //イベント中のみ使用
   s8 RideEvt;            //乗降イベント中カプセル番号
@@ -821,6 +822,22 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         ChgRaleAnm(obj_cnt_ptr, old_sw, i);
         //走行レール保存
         tmp->NowRaleIdx[i] = (i*2)+gmk_sv_work->LeverSw[i];
+        //自分が乗っている場合、走行レールを変更
+        if ((tmp->RadeRaleIdx != RIDE_NONE)&&(tmp->RadeRaleIdx/2 == i))
+        {
+          if ( tmp->RadeRaleIdx != tmp->NowRaleIdx[i] )
+          {
+            u16 arc_idx;
+            tmp->RadeRaleIdx = tmp->NowRaleIdx[i];
+            ICA_ANIME_Delete( tmp->IcaAnmPtr );
+            OS_Printf("リロードレール%d\n",tmp->RadeRaleIdx);
+            arc_idx = RaleAnm[tmp->RadeRaleIdx];
+            tmp->IcaAnmPtr = ICA_ANIME_Create( 
+            GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_ELEC, arc_idx, tmp->FramePosDat, FRAME_POS_SIZE*2
+            );
+            GF_ASSERT(tmp->IcaAnmPtr != NULL);
+          }
+        }
         //リクエストフラグを落とす
         tmp->RaleChgReq[i] = 0;
       }
@@ -963,6 +980,8 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
+
+#if 0  
 #ifdef PM_DEBUG
   //テスト
   {
@@ -987,7 +1006,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
     }
   }
 #endif  //PM_DEBUG
-
+#endif  
 
 #if 1
 #ifdef PM_DEBUG
@@ -1866,6 +1885,9 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       //タイマークリア
       tmp->TaskWk[cap_idx].Timer = 0;
       tmp->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
+
+      //レールチェンジリクエスト時にＩＣＡアニメデータにアクセスしないように値をリセット
+      tmp->RadeRaleIdx = RIDE_NONE; //間借していたのだから、使用後はリセットする
 
       //スクリプトチェンジ
       SCRIPT_ChangeScript( event, SCRID_PRG_C04GYM0101_SCR02,
