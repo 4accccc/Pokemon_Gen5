@@ -133,6 +133,7 @@ static void ripple_InitResource( FLDEFF_RIPPLE *ripple )
   
   data.g3dres = GFL_G3D_CreateResourceHandle(
       handle, NARC_fldeff_ripple_nsbtx );
+  FLDEFF_CTRL_SetGrayScaleG3DResource( ripple->fectrl, data.g3dres );
   ripple->res_idx_ripple = 
       GFL_BBDACT_AddResourceG3DResUnit( ripple->bbdact_sys, &data, 1 );
 }

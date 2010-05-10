@@ -201,6 +201,7 @@ static void fmark_InitResource( FLDEFF_FOOTMARK *fmark )
   for( i = 0; i < FOOTMARK_ALL_MAX; i++, idx++ )
   {
     data.g3dres = GFL_G3D_CreateResourceHandle( handle, *idx );
+    FLDEFF_CTRL_SetGrayScaleG3DResource( fmark->fectrl, data.g3dres );
     fmark->res_idx_tbl[i] =
       GFL_BBDACT_AddResourceG3DResUnit( fmark->bbdact_sys, &data, 1 );
   }

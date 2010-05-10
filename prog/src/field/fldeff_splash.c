@@ -167,6 +167,7 @@ static void splash_InitResource( FLDEFF_SPLASH *splash )
   
   data.g3dres = GFL_G3D_CreateResourceHandle(
       handle, NARC_fldeff_shibuki02_nsbtx );
+  FLDEFF_CTRL_SetGrayScaleG3DResource( splash->fectrl, data.g3dres );
   splash->res_idx_splash = 
       GFL_BBDACT_AddResourceG3DResUnit( splash->bbdact_sys, &data, 1 );
 } 

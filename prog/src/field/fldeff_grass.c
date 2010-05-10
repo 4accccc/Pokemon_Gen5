@@ -160,6 +160,7 @@ static void grass_InitResource( FLDEFF_GRASS *grass )
   for( i = 0; i < FLDEFF_GRASS_MAX; i++ ){
     data.g3dres = GFL_G3D_CreateResourceHandle(
           handle, data_ArcIdxTbl[i][season].idx_mdl );
+    FLDEFF_CTRL_SetGrayScaleG3DResource( grass->fectrl, data.g3dres );
     grass->res_idx_tbl[i] =
       GFL_BBDACT_AddResourceG3DResUnit( grass->bbdact_sys, &data, 1 );
   }
