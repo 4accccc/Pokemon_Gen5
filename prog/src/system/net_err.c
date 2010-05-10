@@ -618,7 +618,7 @@ static void Local_ErrDispInit(BOOL fatal_error)
 	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
 	GFL_FONTSYS_SetColor(4, 0xb, 7);
 	
-	//※check　退避できないもの
+	//退避できないもの
 	G2_BlendNone(); //WriteOnlyの為、レジスタ退避が出来ていない
 	
 	//エラー画面描画
