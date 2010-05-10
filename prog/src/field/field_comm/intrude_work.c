@@ -307,22 +307,6 @@ BOOL Intrude_GetRecvWfbc(INTRUDE_COMM_SYS_PTR intcomm)
 
 //==================================================================
 /**
- * 新規ミッション受信フラグを取得   ※check 現状使用していないので削除候補 2010.02.02(火) 毎フレーム監視している使い方でないと機能しないので再度使う場合は注意
- *
- * @param   intcomm		
- *
- * @retval  BOOL		TRUE:受信した　FALSE:受信していない
- */
-//==================================================================
-BOOL Intrude_GetNewMissionRecvFlag(INTRUDE_COMM_SYS_PTR intcomm)
-{
-  BOOL new_mission = intcomm->new_mission_recv;
-  intcomm->new_mission_recv = FALSE;
-  return new_mission;
-}
-
-//==================================================================
-/**
  * WFBC通信ワークを取得
  *
  * @param   intcomm		
