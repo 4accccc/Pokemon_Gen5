@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_pos_d07r0401_rival_01
 _EVENT_DATA    ev_d07r0401_rival_02
 _EVENT_DATA    ev_d07r0401_workman_01
+_EVENT_DATA    ev_zone_d07r0401
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -31,6 +32,25 @@ _EVENT_DATA_END
 //																	//
 //------------------------------------------------------------------//
 
+/************************************************************/
+/*				ZONE_CHANGE_LABEL				*/
+/************************************************************/
+INIT_EVENT_START ev_zone_d07r0401
+{
+	
+	//冬以外の季節でストッパー石を非表示
+	_FLAG_SET( FV_D07_STONE_01 )
+	
+	//季節チェック
+	DEFINE_LOCAL SCWK_SEASON
+	_GET_SEASON_ID( SCWK_SEASON )
+	
+	//冬だったら岩を表示
+	IF $SCWK_SEASON == PMSEASON_WINTER THEN
+		_FLAG_RESET( FV_D07_STONE_01 )
+	ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*POSイベント：ライバルとプラズマ団                            */

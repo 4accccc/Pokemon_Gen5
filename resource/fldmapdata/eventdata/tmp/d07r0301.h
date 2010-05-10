@@ -33,6 +33,7 @@
 #define D07R0301_FLD_ITEM_02              12
 #define D07R0301_FLD_ITEM_03              13
 #define D06R0301_FLD_ITEM_04              14
+#define D07R0301_ROCK_01                  15
 
 #endif //ZONE_D07R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
