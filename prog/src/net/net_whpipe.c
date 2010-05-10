@@ -250,7 +250,9 @@ static void _changeState(GFL_NETWL* pState,PTRStateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(GFL_NETWL* pState,PTRStateFunc state, int line)
 {
-	NET_PRINT("pipe: %d\n",line);
+#if DEBUG_ONLY_FOR_ohno
+  NET_PRINT("pipe: %d\n",line);
+#endif
 	_changeState(pState, state);
 }
 #endif
