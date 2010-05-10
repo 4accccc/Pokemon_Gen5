@@ -652,7 +652,7 @@ static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work )
 
   save   = GAMEDATA_GetSaveControlWork( work->gamedata );
   record = GAMEDATA_GetRecordPtr( work->gamedata );
-  ptime  = SaveData_GetPlayTime( save );
+  ptime  = GAMEDATA_GetPlayTimeWork( save );
 
   // ƒvƒŒƒCŠÔ‚ğæ“¾
   hour   = PLAYTIME_GetHour( ptime );
