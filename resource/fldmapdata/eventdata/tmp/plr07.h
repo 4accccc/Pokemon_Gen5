@@ -8,6 +8,15 @@
 #ifndef ZONE_PLR07_EVC_H
 #define ZONE_PLR07_EVC_H
 
+#define PLR07_STOPPER_01                   0
+#define PLR07_STOPPER_02                   1
+#define PLR07_STOPPER_03                   2
+#define PLR07_STOPPER_04                   3
+#define PLR07_STOPPER_05                   4
+#define PLR07_STOPPER_06                   5
+#define PLR07_STOPPER_07                   6
+#define PLR07_STOPPER_08                   7
+#define PLR07_STOPPER_09                   8
 
 #endif //ZONE_PLR07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/plr07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
