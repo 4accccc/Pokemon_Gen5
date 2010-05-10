@@ -62,7 +62,11 @@ extern FLD_G3DOBJ_CTRL * FLD_G3DOBJ_CTRL_Create(
 extern void FLD_G3DOBJ_CTRL_Delete( FLD_G3DOBJ_CTRL *ctrl );
 extern void FLD_G3DOBJ_CTRL_Trans( FLD_G3DOBJ_CTRL *ctrl );
 extern void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl );
+extern void FLD_G3DOBJ_CTRL_SetGrayScale( FLD_G3DOBJ_CTRL *ctrl, u8 *gray_scale );
 extern FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResource(
+    FLD_G3DOBJ_CTRL *ctrl,
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag );
+extern FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResourceNonGrayScale(
     FLD_G3DOBJ_CTRL *ctrl,
     const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag );
 extern void FLD_G3DOBJ_CTRL_DeleteResource(

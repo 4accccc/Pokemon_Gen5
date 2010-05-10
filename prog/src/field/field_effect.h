@@ -163,6 +163,12 @@ extern void FLDEFF_TASK_SetPos( FLDEFF_TASK *task, const VecFx32 *pos );
 extern void * FLDEFF_TASK_GetWork( FLDEFF_TASK *task );
 extern HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task );
 
+//グレースケール
+extern void FLDEFF_CTRL_SetGrayScaleParam( FLDEFF_CTRL *fectrl, u8 *scale );
+extern u8 * FLDEFF_CTRL_GetGrayScaleParam( FLDEFF_CTRL *fectrl );
+extern void FLDEFF_CTRL_SetGrayScaleG3DResource(
+    FLDEFF_CTRL *fectrl, GFL_G3D_RES *g3dRes );
+
 //kari
 extern FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1];
 

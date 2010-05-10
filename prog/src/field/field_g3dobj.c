@@ -11,6 +11,8 @@
 
 #include "field_g3dobj.h"
 
+#include "system/palanm.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -74,6 +76,7 @@ struct _TAG_FLD_G3DOBJ_CTRL
   u16 obj_max;
   FLD_G3DOBJ_RES *pResTbl;
   FLD_G3DOBJ *pObjTbl;
+  u8 *gray_scale;
 };
 
 //======================================================================
@@ -82,7 +85,7 @@ struct _TAG_FLD_G3DOBJ_CTRL
 static void transTexture( FLD_G3DOBJ_RES *res );
 static void setResource(
     FLD_G3DOBJ_RES *res, HEAPID heapID,
-    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag );
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, u8 *gray_scale );
 static void delResource( FLD_G3DOBJ_RES *res );
 static void setObject( FLD_G3DOBJ *obj,
     FLD_G3DOBJ_RES *res, u32 resIdx, u32 mdlIdx, HEAPID heapID,
@@ -228,6 +231,47 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
 
 //--------------------------------------------------------------
 /**
+ * FLD_G3DOBJ_CTRL グレースケール設定
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @param gray_scale グレースケール
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_CTRL_SetGrayScale( FLD_G3DOBJ_CTRL *ctrl, u8 *gray_scale )
+{
+  ctrl->gray_scale = gray_scale;
+}
+
+//--------------------------------------------------------------
+/**
+ * リソース作成
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @retval mdl 追加するFLD_G3DMDL_ARCIDX
+ * @retval tex 追加するFLD_G3DTEX_ARCIDX NULL=mdl内のテクスチャを参照
+ * @retval anm 追加するFLD_G3DANM_ARCIDX NULL=無し
+ * @param transFlag TRUE=テクスチャ即転送 FALSE=FLD_G3DOBJ_CTRL_Trans()で転送
+ * @retval u16 登録されたリソースインデックス
+ */
+//--------------------------------------------------------------
+static FLD_G3DOBJ_RESIDX createResource( FLD_G3DOBJ_CTRL *ctrl,
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, u8 *gray_scale )
+{
+  u16 i;
+  FLD_G3DOBJ_RES *res = ctrl->pResTbl;
+  
+  for( i = 0; i < ctrl->res_max; i++, res++ ){
+    if( res->pResMdl == NULL ){
+      setResource( res, ctrl->heapID, head, transFlag, gray_scale );
+      return( i );
+    }
+  }
+  
+  GF_ASSERT( i );
+  return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
  * リソース作成
  * @param ctrl FLD_G3DOBJ_CTRL
  * @retval mdl 追加するFLD_G3DMDL_ARCIDX
@@ -240,18 +284,25 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
 FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResource( FLD_G3DOBJ_CTRL *ctrl,
     const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
 {
-  u16 i;
-  FLD_G3DOBJ_RES *res = ctrl->pResTbl;
-  
-  for( i = 0; i < ctrl->res_max; i++, res++ ){
-    if( res->pResMdl == NULL ){
-      setResource( res, ctrl->heapID, head, transFlag );
-      return( i );
-    }
-  }
-  
-  GF_ASSERT( i );
-  return( 0 );
+  return( createResource(ctrl,head,transFlag,ctrl->gray_scale) );
+}
+
+//--------------------------------------------------------------
+/**
+ * リソース作成　グレースケールを適用しない
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @retval mdl 追加するFLD_G3DMDL_ARCIDX
+ * @retval tex 追加するFLD_G3DTEX_ARCIDX NULL=mdl内のテクスチャを参照
+ * @retval anm 追加するFLD_G3DANM_ARCIDX NULL=無し
+ * @param transFlag TRUE=テクスチャ即転送 FALSE=FLD_G3DOBJ_CTRL_Trans()で転送
+ * @retval u16 登録されたリソースインデックス
+ */
+//--------------------------------------------------------------
+FLD_G3DOBJ_RESIDX FLD_G3DOBJ_CTRL_CreateResourceNonGrayScale(
+    FLD_G3DOBJ_CTRL *ctrl,
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
+{
+  return( createResource(ctrl,head,transFlag,NULL) );
 }
 
 //--------------------------------------------------------------
@@ -538,7 +589,7 @@ static void transTexture( FLD_G3DOBJ_RES *res )
 //--------------------------------------------------------------
 static void setResource(
     FLD_G3DOBJ_RES *res, HEAPID heapID,
-    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag )
+    const FLD_G3DOBJ_RES_HEADER *head, BOOL transFlag, u8 *gray_scale )
 {
   if( head->arcHandleMdl != NULL ){
     res->pResMdl = GFL_G3D_CreateResourceHandle(
@@ -548,6 +599,26 @@ static void setResource(
   if( head->arcHandleTex != NULL ){
     res->pResTex = GFL_G3D_CreateResourceHandle(
         head->arcHandleTex, head->arcIdxTex );
+  }
+  
+  if( gray_scale != NULL ){ //グレースケールの適用
+    GFL_G3D_RES *pTex = NULL;
+    
+    if( res->pResMdl != NULL ){
+      pTex = res->pResMdl;
+    }
+     
+    if( res->pResTex != NULL ){
+      pTex = res->pResTex;
+    }
+    
+    if( GFL_G3D_CheckResourceType(pTex,GFL_G3D_RES_CHKTYPE_TEX) ){
+      NNSG3dResFileHeader *head = GFL_G3D_GetResourceFileHeader( pTex );
+      NNSG3dResTex *tex = NNS_G3dGetTex( head ); 
+      void *pData = (u8*)tex + tex->plttInfo.ofsPlttData;
+      u32 size = (u32)tex->plttInfo.sizePltt << 3;
+      PaletteGrayScaleShadeTable( pData, size / sizeof(u16), gray_scale );
+    }
   }
   
   if( res->pResMdl != NULL || res->pResTex != NULL ){

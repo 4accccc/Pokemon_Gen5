@@ -712,7 +712,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     
     //進入用グレースケール管理作成
     fieldWork->palace_sys = FIELD_PALACE_Create( fieldWork->heapID, gsys , fieldWork , fieldWork->map_id );
-
+    
     SET_CHECK("setup: fldmapper");  //デバッグ：処理負荷計測
     {
       FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fieldWork->g3Dmapper );
@@ -730,6 +730,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
         gray_scale  = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
         FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata, gray_scale);
+
+        //G3DOBJにグレースケール適用
+        FLD_G3DOBJ_CTRL_SetGrayScale( fieldWork->fieldG3dObjCtrl, gray_scale );
       }
     }
 
@@ -775,8 +778,14 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
         fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
     
-    //フィールドエフェクト　パラメタ初期化
+    //フィールドエフェクト　パラメタ設定　タスク
     FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
+    
+    //フィールドエフェクト　パラメタ設定 グレースケール
+    {
+      u8 *gray_scale = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
+      FLDEFF_CTRL_SetGrayScaleParam( fieldWork->fldeff_ctrl, gray_scale );
+    }
     
     //フィールドエフェクト　登録
     FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl,

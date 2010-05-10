@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	field_effect.c
- * @brief	フィールドエフェクト
- * @authaor	kagaya
- * @date	2008.12.11
+ * @file  field_effect.c
+ * @brief  フィールドエフェクト
+ * @authaor  kagaya
+ * @date  2008.12.11
  */
 //======================================================================
 #include <gflib.h>
@@ -16,6 +16,8 @@
 
 #include "fieldmap.h"
 #include "field_effect.h"
+
+#include "system/palanm.h"
 
 //======================================================================
 //  define
@@ -46,6 +48,8 @@ struct _TAG_FLDEFF_CTRL
   void *tcbsys_work;
   GFL_TCBSYS *tcbsys;
   FLDEFF_TASKSYS *tasksys;
+  
+  u8 *gray_scale;
 };
 
 //--------------------------------------------------------------
@@ -854,6 +858,55 @@ HEAPID FLDEFF_TASK_GetHeapID( const FLDEFF_TASK *task )
   
   GF_ASSERT( 0 );
   return( 0 );
+}
+
+//======================================================================
+//  フィールドエフェクト　コントロール　グレースケール
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト　コントロール　グレースケール設定
+ * @param fectrl FLDEFF_CTRL
+ * @param scale グレースケール
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDEFF_CTRL_SetGrayScaleParam( FLDEFF_CTRL *fectrl, u8 *scale )
+{
+  fectrl->gray_scale = scale;
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト　コントロール　グレースケール設定　取得
+ * @param fectrl FLDEFF_CTRL
+ * @retval u8* NULL=無し
+ */
+//--------------------------------------------------------------
+u8 * FLDEFF_CTRL_GetGrayScaleParam( FLDEFF_CTRL *fectrl )
+{
+  return( fectrl->gray_scale );
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドエフェクト　コントロール　G3Dリソースにグレースケールを適用
+ * @param fectrl FLDEFF_CTRL
+ * @retval nothing
+ * @note グレースケールが設定されていない場合は何もせず。
+ */
+//--------------------------------------------------------------
+void FLDEFF_CTRL_SetGrayScaleG3DResource(
+    FLDEFF_CTRL *fectrl, GFL_G3D_RES *g3dRes )
+{
+  if( fectrl->gray_scale != NULL ){
+    NNSG3dResFileHeader *head = GFL_G3D_GetResourceFileHeader( g3dRes );
+    NNSG3dResTex *tex = NNS_G3dGetTex( head ); 
+    void *pData = (u8*)tex + tex->plttInfo.ofsPlttData;
+    u32 size = (u32)tex->plttInfo.sizePltt << 3;
+    PaletteGrayScaleShadeTable(
+        pData, size / sizeof(u16), fectrl->gray_scale );
+  }
 }
 
 //======================================================================
