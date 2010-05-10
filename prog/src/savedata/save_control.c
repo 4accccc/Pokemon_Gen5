@@ -175,25 +175,6 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 		break;
 	}
 
-#if 0	//Å¶check
-#ifdef	PM_DEBUG
-	{
-		int i, rest;
-		for (i = 0; i < SVBLK_ID_MAX; i++) {
-			OS_TPrintf("[%d] ",i);
-			OS_TPrintf("(%04x x %02d) - %05x = %05x\n",
-					SEC_DATA_SIZE,sv->blkinfo[i].use_sec,
-					sv->blkinfo[i].size,
-					SEC_DATA_SIZE * sv->blkinfo[i].use_sec - sv->blkinfo[i].size);
-		}
-		rest = SECTOR_MAX - GetTotalSector(sv);
-		if (rest > 0) {
-			OS_TPrintf("%2d sector(0x%05x) left.\n", rest, 0x1000 * rest);
-		}
-	}
-#endif
-#endif
-
 	return ctrl;
 }
 
