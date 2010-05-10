@@ -56,7 +56,7 @@ typedef struct {
   RAIL_LOCATION railposition;
 
   u16 direction;        ///<回転角度のRadian値　（0～0xffff）
-  u8 palace_area;       ///<※check　パレステストの為、一時的にここに配置
+  u8 padding2;       //
   u8 pos_type;       ///<LOCATION_POS_TYPE
 
   u16 objcode_fix; ///<OBJコード変更不可 OBJCODEMAX なし
@@ -211,28 +211,6 @@ extern void PLAYERWORK_setDirection_Type(PLAYER_WORK * player, u16 dir_type);
  */
 //--------------------------------------------------------------
 extern u16 PLAYERWORK_getDirection_Type(const PLAYER_WORK * player);
-
-//--------------------------------------------------------------
-/**
- * @brief パレスエリア番号を設定する
- * @param player        PLAYER_WORKへのポインタ
- * @param palace_area   パレス番号
- *
- * ※check　パレステストの為の暫定関数
- */
-//--------------------------------------------------------------
-extern void PLAYERWORK_setPalaceArea(PLAYER_WORK * player, u8 palace_area);
-
-//--------------------------------------------------------------
-/**
- * @brief パレスエリア番号を取得する
- * @param player  PLAYER_WORKへのポインタ
- * @return  パレスエリア番号
- *
- * ※check　パレステストの為の暫定関数
- */
-//--------------------------------------------------------------
-extern u8 PLAYERWORK_getPalaceArea(const PLAYER_WORK * player);
 
 //--------------------------------------------------------------
 /**

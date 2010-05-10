@@ -1075,22 +1075,6 @@ u16 PLAYERWORK_getDirection_Type(const PLAYER_WORK * player)
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-//※check　パレステストの為の暫定関数
-void PLAYERWORK_setPalaceArea(PLAYER_WORK * player, u8 palace_area)
-{
-  player->palace_area = palace_area;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-//※check　パレステストの為の暫定関数
-u8 PLAYERWORK_getPalaceArea(const PLAYER_WORK * player)
-{
-  return player->palace_area;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 PLAYER_MOVE_FORM PLAYERWORK_GetMoveForm( const PLAYER_WORK *player )
 {
   return player->move_form;
