@@ -779,6 +779,9 @@ extern  PokeType  POKETOOL_GetPokeTypeFromItem( u16 item );
 //アイテムナンバーからフォルム取得(インセクタ用
 extern  const u32 POKETOOL_GetPokeInsekutaFromItem( const u16 item );
 
+//指定されたポケモンナンバーから不正なフォルムナンバーかどうかチェックする
+extern  u8	POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no );
+
 //性格によるパラメータ変化値を取得
 extern  PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond );
 
