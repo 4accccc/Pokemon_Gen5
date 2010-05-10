@@ -18,6 +18,7 @@
 #include "net/nhttp_rap.h"
 #include "net/dwc_error.h"
 
+#include "system/net_err.h"
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/ds_system.h"
@@ -188,6 +189,8 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork);
 static void _modeSvlGetStart(WIFILOGIN_WORK* pWork);
 static void _modeSvlGetMain(WIFILOGIN_WORK* pWork);
 static void _modeErrorRetry(WIFILOGIN_WORK* pWork);
+
+static void _checkError( WIFILOGIN_WORK* pWork ); //シーケンス内で使用して下さい
 
 
 #if PM_DEBUG
@@ -433,95 +436,6 @@ static void _CheckAndEnd( WIFILOGIN_WORK *pWork )
   }
 }
 
-//------------------------------------------------------------------
-/**
- * $brief   エラー表示
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static void _retryInit(WIFILOGIN_WORK* pWork)
-{
-  if(pWork->timer > 0){
-    pWork->timer--;
-    return;
-  }
-  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
-    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
-    _CHANGE_STATE(pWork,_modeErrorRetry);
-  }
-}
-
-
-//------------------------------------------------------------------
-/**
- * $brief   エラー表示
- * @param   wk
- * @param   seq
- * @retval  int
- */
-//------------------------------------------------------------------
-
-static void _errorDisp(WIFILOGIN_WORK* pWork)
-{
-  GFL_NETSTATE_DWCERROR* pErr = GFL_NET_StateGetWifiError();
-  int msgno,no = pErr->errorCode;
-  int type =  GFL_NET_DWC_ErrorType(pErr->errorCode, pErr->errorType);
-
-  if(type == 11){
-    msgno = dwc_error_0015;
-    type = 11;
-  }
-  else if(no == ERRORCODE_HEAP){
-    msgno = dwc_error_0014;
-    type = 12;
-  }
-  else{
-    if( type >= 0 ){
-      msgno = dwc_error_0001 + type;
-    }else{
-      msgno = dwc_error_0012;
-    }
-  }
-  NET_PRINT("エラーメッセージ %d \n",msgno);
-  //EndMessageWindowOff(pWork);
-
-  // エラーメッセージを表示しておくシンク数
-  pWork->timer = STOP_TIME_;
-
-  WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-  WIFILOGIN_MESSAGE_ErrorMessageDisp(pWork->pMessageWork, msgno, no);
-//  WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, msgno);
-  
-  switch(type){
-  case 1:
-  case 4:
-  case 5:
-  case 11:
-    _CHANGE_STATE(pWork,_retryInit);
-    break;
-  case 6:
-  case 7:
-  case 8:
-  case 9:
-    _CHANGE_STATE(pWork,_retryInit);
-    break;
-  case 10:
-    _CHANGE_STATE(pWork,_retryInit);
-    break;
-  case 0:
-  case 2:
-  case 3:
-  default:
-    _CHANGE_STATE(pWork, _CheckAndEnd);
-    break;
-  }
-}
-
-
 //------------------------------------------------------------------------------
 /**
  * @brief   キー押したら終了
@@ -573,8 +487,8 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
       }
     }
   }
-  else if(GFL_NET_StateIsWifiError() || (GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT)){
-    _errorDisp(pWork);
+  else{
+    _checkError(pWork);
   }
 }
 
@@ -771,6 +685,53 @@ static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
     _CHANGE_STATE(pWork,_modeLoginWait2);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   エラーをチェックし、検出したならばメッセージ表示後、リトライへ行く処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _checkError( WIFILOGIN_WORK* pWork )
+{
+  if( NetErr_App_CheckError() ){
+    const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+
+    switch( cp_error->errorType )
+    { 
+    case DWC_ETYPE_LIGHT:
+    case DWC_ETYPE_SHOW_ERROR:
+    case DWC_ETYPE_DISCONNECT:
+    case DWC_ETYPE_SHUTDOWN_FM:
+    case DWC_ETYPE_SHUTDOWN_GHTTP:
+    case DWC_ETYPE_SHUTDOWN_ND:
+      //エラー画面
+      WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+      WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+      NetErr_DispCallPushPop();
+
+      //エラークリア
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
+
+      //強制切断
+      if( GFL_NET_IsInit() )
+      {
+        NetErr_ExitNetSystem();
+      }
+
+      //再接続へ
+      WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
+      _CHANGE_STATE(pWork,_modeErrorRetry);
+      break;
+
+    case DWC_ETYPE_FATAL:
+      //Fatal
+      NetErr_DispCallFatal();
+      break;
+    }
+  }
+}
 
 static void _modeLoginWait(WIFILOGIN_WORK* pWork)
 {
@@ -1016,6 +977,8 @@ static void _callbackFunciton(WIFILOGIN_WORK* pWork)
         break;
       }
     }
+
+    _checkError(pWork);
   }
   else
   { 
@@ -1237,17 +1200,6 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
   WIFILOGIN_WORK* pWork = mywk;
   WIFILOGIN_PARAM* pEv=pwk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
-
-  //エラーチェック
-  //（GAMESYSTEMかこの下位のPROCでNetErr_DispCall(FALSE);が呼ばれているのが前提です）
-  if( GFL_NET_IsInit() )
-  { 
-    if( GFL_NET_DWC_ERROR_RESULT_NONE != GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE ) )
-    {
-      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      return retCode;
-    }
-  }
 
   //メインプロセスの下にあるど同じフレームないでTRG検知してしまうので、
   //メインプロセスの上にあげました

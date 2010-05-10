@@ -144,6 +144,7 @@ WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_dat, pWork->heapID );
+  pWork->pWordSet = WORDSET_Create( pWork->heapID );
 
   //‰º‰æ–Ê‚Å‚µ‚©APP_TASK‚ÍŽg‚í‚È‚¢
   pWork->yesno_wk.pAppTaskRes =
@@ -196,6 +197,7 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
 
 
   GFL_FONTSYS_SetDefaultColor();
+  WORDSET_Delete( pWork->pWordSet );
   GFL_MSG_Delete( pWork->pMsgData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
@@ -570,9 +572,13 @@ u8 WIFILOGIN_MESSAGE_YesNoGetCursorPos( const WIFILOGIN_YESNO_WORK* pWork )
 void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
 {
   GFL_BMPWIN* pwin;
+  STRBUF  *pTemp;
 
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  
+  pTemp = GFL_STR_CreateCopyBuffer( pWork->pStrBuf, pWork->heapID );
+
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pTemp );
+
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
       WifiLogin_Message_GetSysFrame( pWork->display )
@@ -589,6 +595,8 @@ void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetSysFrame( pWork->display ));
+
+  GFL_STR_DeleteBuffer( pTemp );
 }
 
 
