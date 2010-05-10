@@ -472,27 +472,6 @@ BOOL MISSION_GetMissionComplete(const MISSION_SYSTEM *mission)
 
 //==================================================================
 /**
- * ミッションデータから対応したミッションメッセージIDを取得する ※check　削除候補
- *
- * @param   mission		
- *
- * @retval  u16		メッセージID
- */
-//==================================================================
-u16 MISSION_GetMissionMsgID(const MISSION_SYSTEM *mission)
-{
-  const MISSION_DATA *mdata = &mission->data;
-  u16 msg_id;
-  
-  if(mdata->accept_netid == INTRUDE_NETID_NULL){
-    return msg_invasion_mission000;
-  }
-  msg_id = mdata->cdata.mission_no * 2 + mdata->monolith_type;
-  return msg_invasion_mission001 + msg_id;
-}
-
-//==================================================================
-/**
  * ミッション結果から対応した結果メッセージIDを取得する
  *
  * @param   mission		
@@ -611,7 +590,7 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
   result->achieve_netid[ranking] = achieve_netid;
   
   mission->result_mission_achieve[achieve_netid] = MISSION_ACHIEVE_OK;
-  mission->result_send_req = TRUE;  //※check メインで 達成者の席が全て埋まる or 制限時間で送信するようにする
+  mission->result_send_req = TRUE;
   
   return TRUE;
 }
