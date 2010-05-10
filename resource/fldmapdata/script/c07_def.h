@@ -19,6 +19,6 @@
 #define SCRID_C07_BOY1_01 (12)
 #define SCRID_BG_C07_BOARD_02 (13)
 #define SCRID_BG_C07_BOARD_03 (14)
-#define SCRID_INIT_C07 (15)
+#define SCRID_C07_AMBRELLA_02 (15)
 
 #endif //_C07_DEF_H_

@@ -33,6 +33,8 @@
 #define C07_FLD_ITEM_01                   15
 #define C07_DUMMY_03                      16
 #define C07_DUMMY_04                      17
+#define C07_AMBRELLA_02                   18
+#define C07_AMBRELLA_01                   19
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
