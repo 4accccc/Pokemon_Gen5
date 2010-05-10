@@ -38,7 +38,7 @@ static const MMDL_HEADER data_MMdlHeader =
 	MOVE_LIMIT_NOT,	///<X方向移動制限
 	MOVE_LIMIT_NOT,	///<Z方向移動制限
   MMDL_HEADER_POSTYPE_GRID,
-  {0},            ///<ポジションバッファ ※check　グリッドマップの場合はここはMMDL_HEADER_GRIDPOS
+  {0},            ///<ポジションバッファ (グリッドマップの場合はここはMMDL_HEADER_GRIDPOS)
 };
 
 
