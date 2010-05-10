@@ -171,7 +171,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   BOOL update_ret;
 
 #if 0
-  //※check　デバッグ
+  //デバッグ
   if(ZONEDATA_IsBingo(FIELDMAP_GetZoneID(fieldWork)) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT)){
     DEBUG_INTRUDE_Pokemon_Add(fieldWork);
   }
@@ -1618,7 +1618,7 @@ static const MMDL_HEADER data_MMdlHeader =
 	MOVE_LIMIT_NOT,	///<X方向移動制限
 	MOVE_LIMIT_NOT,	///<Z方向移動制限
   MMDL_HEADER_POSTYPE_GRID,
-  {0},            ///<ポジションバッファ ※check　グリッドマップの場合はここはMMDL_HEADER_GRIDPOS
+  {0},            ///<ポジションバッファ (グリッドマップの場合はここはMMDL_HEADER_GRIDPOS)
 };
 
 
