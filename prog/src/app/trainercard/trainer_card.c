@@ -41,10 +41,6 @@
 #include "test/ariizumi/ari_debug.h"
 
 
-// キーでカードがめくれないようにする
-#define KEY_LR_OK
-
-
 #define MIN_SCRUCH  (3)
 #define MAX_SCRUCH  (40)
 #define REV_SPEED (FX32_SHIFT - wk->RevSpeed)
@@ -311,6 +307,9 @@ static int DrawPoint_to_Line(  GFL_BMPWIN *win,
   int count, int flag );
 static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock );
 static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode );
+static void SetBookMark( TR_CARD_WORK *wk);
+
+
 //============================================================================================
 //  グローバル変数
 //============================================================================================
@@ -588,7 +587,7 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       JumpInputResult(wk, req, seq);  // 入力で分岐
       
       UpdateSignAnime(wk);
-      UpdateTextBlink(wk);
+//      UpdateTextBlink(wk);
 
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
         int line = DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
@@ -837,32 +836,27 @@ static int card_palette_table[][2]={
  *
  * @param   wk    
  * @param   inCardRank    
- * @param   inPokeBookHold    
+ * @param   inVersion
  */
 //----------------------------------------------------------------------------------
 static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold)
 {
   u32 palette_index;
-  if (inPokeBookHold){
-      int Version = 1;
+  int Version = 1;
 
-      // ＷＢのバージョンにあわせてバレット切り替え（WB以外は全て青）
-      if(wk->TrCardData->Version==VERSION_WHITE){
-        Version = 0;
-      }else if(wk->TrCardData->Version==VERSION_BLACK){
-        Version = 1;
-      }else{
-        inCardRank = 6;
-      }
-      
-      OS_Printf("rank=%d, version=%d", inCardRank, Version);
-
-      // ＷＢにあわせてパレット読み込み
-      palette_index = card_palette_table[inCardRank][Version];
-  } else{
-      palette_index = NARC_trainer_case_card_6_NCLR;
-   
+  // ＷＢのバージョンにあわせてバレット切り替え（WB以外は全て青）
+  if(wk->TrCardData->Version==VERSION_WHITE){
+    Version = 0;
+  }else if(wk->TrCardData->Version==VERSION_BLACK){
+    Version = 1;
+  }else{
+    inCardRank = 6;
   }
+  
+  OS_Printf("rank=%d, version=%d", inCardRank, Version);
+
+  // ＷＢにあわせてパレット読み込み
+  palette_index = card_palette_table[inCardRank][Version];
 
   // パレット転送
   GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, palette_index,
@@ -1743,16 +1737,19 @@ static int CheckKey(TR_CARD_WORK* wk)
     return TRC_KEY_REQ_END_BUTTON;
     
   }
-
-#ifdef KEY_LR_OK
-  if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT))
+  else if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_BUTTON_A))
   {
     // 拡大していない
     if(wk->ScaleMode==0){
       return TRC_KEY_REQ_REV_BUTTON;
     }
   }
-#endif
+  else if(keyTrg & PAD_BUTTON_Y)
+  {
+    // ブックマーク（Yボタンメニュー）登録
+    SetBookMark( wk );
+  }
+
   return TRC_KEY_REQ_NONE;
 }
 
@@ -1765,6 +1762,8 @@ static int CheckKey(TR_CARD_WORK* wk)
 //----------------------------------------------------------------------------------
 static void SetBookMark( TR_CARD_WORK *wk)
 {
+  PMSND_PlaySE( SND_TRCARD_BOOKMARK );
+
   if(wk->is_back==0){   // 表
     BOOL flag = GAMEDATA_GetShortCut( wk->tcp->gameData, SHORTCUT_ID_TRCARD_FRONT );
     flag ^=1;
@@ -1944,7 +1943,6 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     }
     break;
   case 6:     // ブックマークボタン
-    PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     SetBookMark( wk );
     break;
   case 7:     // トレーナータイプ
@@ -2003,7 +2001,6 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
     }
     break;
   case 6:     // ブックマークボタン
-    PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     SetBookMark( wk );
     break;
   case 10:     // 右へ移動
@@ -2261,6 +2258,10 @@ static void VBlankFunc( GFL_TCB *tcb, void *work )
 {
   TR_CARD_WORK* wk = (TR_CARD_WORK*)work;
   int scr;
+
+  // スクロールテキスト点滅
+  UpdateTextBlink( wk );
+
 
   //背景スクロール
   scr = -(wk->scrl_ct/2);

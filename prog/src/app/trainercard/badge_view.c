@@ -235,7 +235,6 @@ static void _page_max_init( BADGEVIEW_WORK *wk );
 static void _page_clact_set( BADGEVIEW_WORK *wk, int page, int max );
 static  int _page_move_check( BADGEVIEW_WORK *wk, int touch );
 static void SetupPage( BADGEVIEW_WORK *wk, int page );
-static void NamePlatePrint_1Page( BADGEVIEW_WORK *wk );
 static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y );
 static void Draw3D( BADGEVIEW_WORK* wk );
 static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x );
@@ -243,6 +242,7 @@ static void SetRtcData( BADGEVIEW_WORK *wk );
 static void RefreshPolishData( BADGEVIEW_WORK *wk );
 static void Trans_BadgePalette( BADGEVIEW_WORK *wk );
 static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch );
+static void CheckBookmark( BADGEVIEW_WORK *wk );
 
 
 #ifdef PM_DEBUG
@@ -1554,6 +1554,23 @@ static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief ジムリーダー情報を描画する
+ *
+ * @param   wk    BAGDEVIEW_WORK
+ * @param   line  行指定（0 or 1 or 2)
+ * @param   no    ジムインデックス（0-7)
+ * @param   strbuf  文字列展開のためのバッファ
+ */
+//----------------------------------------------------------------------------------
+static void _print_gym_leader_info( BADGEVIEW_WORK *wk, int line, int no, STRBUF *strbuf )
+{
+  GFL_MSG_GetString( wk->mman, MSG_BADGE_LEADER1_01+no*3+line, strbuf );
+  PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
+                         0, 32*line, strbuf, wk->font, BV_COL_BLACK );
+
+}
+//----------------------------------------------------------------------------------
+/**
  * @brief 情報ウインドウにテキスト書き込み
  *
  * @param   wk    
@@ -1598,11 +1615,14 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no )
 
   // ジムリーダー情報
   case INFO_TYPE_GYMLEADER:  
-    for(i=0;i<3;i++){
-      GFL_MSG_GetString( wk->mman, MSG_BADGE_LEADER1_01+no*3+i, strbuf );
-      PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
-                             0, 32*i, strbuf, wk->font, BV_COL_BLACK );
+    for(i=0;i<2;i++){
+      _print_gym_leader_info( wk, i, no, strbuf );
     }
+    // 3行目以降はバッジ取得後に表示される
+    if(wk->badgeflag[no]){
+      _print_gym_leader_info( wk, 2, no, strbuf );
+    }
+
     break;
   }
   GFL_STR_DeleteBuffer( strbuf );
@@ -1823,6 +1843,8 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
     PMSND_PlaySE( SEQ_SE_CANCEL1 );
     trg = TOUCH_END;
+  }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+    trg = TOUCH_BOOKMARK;
   }
   // 左ページ・右ページ・戻る機能の呼び出し
   ExecFunc(wk, trg);
@@ -1918,13 +1940,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_CARD], 12 );
     break;
   case TOUCH_BOOKMARK:
-    {
-      int flag = GAMEDATA_GetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE );
-      flag ^= 1;
-      GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_BOOKMARK], 6+flag );
-      GAMEDATA_SetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE, flag );
-      PMSND_PlaySE( SND_TRCARD_BOOKMARK );
-    }
+    CheckBookmark(wk);
     break;
   case TOUCH_END:           // トレーナーカード終了→直接フィールドへ
     PMSND_PlaySE( SND_TRCARD_END );
@@ -1941,6 +1957,24 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
   }
 
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief Yボタンメニュー登録・解除
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void CheckBookmark( BADGEVIEW_WORK *wk )
+{
+  int flag = GAMEDATA_GetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE );
+  flag ^= 1;
+  GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_BOOKMARK], 6+flag );
+  GAMEDATA_SetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE, flag );
+  PMSND_PlaySE( SND_TRCARD_BOOKMARK );
+}
+
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -2104,9 +2138,6 @@ static void SetupPage( BADGEVIEW_WORK *wk, int page )
   // タッチバー表示設定
   _page_clact_set( wk, page, wk->page_max );
 
-  // プレート状態変更
-  NamePlatePrint_1Page( wk );
-
   // バッジ＆ジムリーダーパレット転送
   Trans_BadgePalette( wk );
 }
@@ -2135,47 +2166,6 @@ static int _get_print_num( int page, int max, int trainer_num )
   return num;
 }
 
-
-//----------------------------------------------------------------------------------
-/**
- * @brief 1ページ分の名前プレートを描画する
- *
- * @param   wk    
- */
-//----------------------------------------------------------------------------------
-static void NamePlatePrint_1Page( BADGEVIEW_WORK *wk )
-{
-  int num;
-  STRBUF *strbuf = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, HEAPID_TR_CARD );
-
-  // 表示する総数取得
-  num = _get_print_num( wk->page, wk->page_max, wk->trainer_num );
-
-  // プレート描画
-  //BgFramePrint( wk, i, strbuf, strbuf, strbuf );
-
-  GFL_STR_DeleteBuffer( strbuf );
-}
-
-//----------------------------------------------------------------------------------
-/**
- * @brief BGFRAMEに文字列を描画し、画面に反映
- *
- * @param   wk      
- * @param   id      指定プレート
- * @param   str     名前
- * @param   gender  性別
- */
-//----------------------------------------------------------------------------------
-static void BgFramePrint( BADGEVIEW_WORK *wk, int id, STRBUF *str, STRBUF *str2, STRBUF *str3 )
-{
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
-  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->InfoWin), 0,  0, str, wk->font, BV_COL_BLACK );
-  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->InfoWin), 0, 32, str2, wk->font, BV_COL_BLACK );
-  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->InfoWin), 0, 64, str3, wk->font, BV_COL_BLACK );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->InfoWin );
-  
-}
 
 
 

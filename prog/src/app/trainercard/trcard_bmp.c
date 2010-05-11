@@ -164,7 +164,7 @@ enum{
 #define SEC_DISP_OFS  (2) //適当。いい感じに見える値で。
 #define NAME_OFS    (8*1) // 名前表示右スペース
 #define YEN_OFS     (8*1) //「円」表示分右スペース
-#define HIKI_OFS    (8*2) //「ひき」表示分右スペース
+#define HIKI_OFS    (8*1) //「ひき」表示分右スペース
 
 #define SEC_DISP_POS_X  (8*24)
 #define MINITE_DISP_POS_X (8*26)
@@ -278,6 +278,16 @@ static void WriteStrData( TR_CARD_WORK* wk,
               const u32 inRightSpace,
               const u32 inStartY,
               const STRBUF *buff);
+static void WriteNumDataHiki( TR_CARD_WORK* wk,
+              GFL_BMPWIN *inWin,
+              const u32 inBmpWidth,
+              const u32 inRightSpace,
+              const u32 inStartY,
+              STRBUF *buff,
+              int   num,
+              const StrNumberDispType inDisptype,
+              int col);
+
 //--------------------------------------------------------------------------------------------
 /**
  * BMPウィンドウ追加
@@ -377,12 +387,11 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
 
     //ずかん
     if (inTrCardData->PokeBookFlg){ //表示フラグがたっているときのみ表示  
-      WriteNumData( wk, win[TRC_BMPWIN_BOOK],
-              BMP_WIDTH_TYPE2, HIKI_OFS, 0, str, inTrCardData->PokeBook, MONS_NUM_DIGIT,
+      WriteNumDataHiki( wk, win[TRC_BMPWIN_BOOK],
+              BMP_WIDTH_TYPE2, HIKI_OFS, 0, str, inTrCardData->PokeBook,
               STR_NUM_DISP_SPACE,0);
     }
-    
-    
+
     // トレーナータイプ(ユニオン見た目の取得・反映)
     TRCBmp_PrintTrainerType( wk, inTrCardData->UnionTrNo, 0 );
     
@@ -969,6 +978,45 @@ static void WriteNumDateYYMMDDHHMM( TR_CARD_WORK* wk,
         , inBmpWidth-(len+inRightSpace), inStartY
         , buff, wk->fontHandle, col_tbl[col] );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 数字表示(ゲームクリア年月日時分表示用）
+ *
+ * @param win       BmpWin
+ * @param inBmpWidth    幅
+ * @param inRightSpace  右空白
+ * @param inStartY    表示開始Y位置
+ * @param buff      バッファ
+ * @param inNum     数字
+ * @param inDigit     桁数
+ * @param inDispType    表示タイプ
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void WriteNumDataHiki( TR_CARD_WORK* wk,
+              GFL_BMPWIN *inWin,
+              const u32 inBmpWidth,
+              const u32 inRightSpace,
+              const u32 inStartY,
+              STRBUF *buff,
+              int   num,
+              const StrNumberDispType inDisptype,
+              int col)
+{
+  u32 len;
+
+  WORDSET_RegisterNumber( wk->wordset, 0, num, 3, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_HIKI] );
+  len = PRINTSYS_GetStrWidth(buff,wk->fontHandle,0);
+
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin) 
+        , inBmpWidth-(len+inRightSpace), inStartY
+        , buff, wk->fontHandle, col_tbl[col] );
+}
+
+
 
 //--------------------------------------------------------------------------------------------
 /**
