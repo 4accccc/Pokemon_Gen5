@@ -79,7 +79,7 @@ static const EARTH_AREATABLE NationFlag_to_AreaID[] = {
     country043,
     NARC_wifi_earth_place_place_pos_CHN_dat,
     NARC_message_wifi_place_msg_CHN_dat,
-    CHN31
+    CHN33
   },
   { // ƒhƒCƒc
     country079,
