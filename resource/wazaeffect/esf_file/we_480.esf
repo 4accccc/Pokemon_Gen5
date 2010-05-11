@@ -10,8 +10,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_480.spa
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_031	SE1	防御側	10:200:127	0:0:0
 SE再生	SEQ_SE_BE_SE_031	SE1	防御側	30:200:127	0:0:0
-SE再生	SEQ_SE_W001_01	SE2	攻撃側	73:0:127	0:0:0
-SE再生	SEQ_SE_W001_01	SE2	攻撃側	77:0:127	0:0:0
+SE再生	SEQ_SE_W001_01	SE2	防御側	73:0:127	0:0:0
+SE再生	SEQ_SE_W001_01	SE2	防御側	77:0:127	0:0:0
 制御モード変更	逐次
 ポケモン拡縮	攻撃側	往復	0.3	-0.3	4	1	3
 パーティクルデータロード	w_480
