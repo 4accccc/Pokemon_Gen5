@@ -346,7 +346,7 @@ struct _IRC_BATTLE_MATCH {
   GFL_BUTTON_MAN* pButton;
   TouchFunc* touch;
   int timer;
-
+  int messageBackup;
   void* pVramBG;
   PRINT_QUE*            SysMsgQue;
   APP_TASKMENU_WORK* pAppTask;
@@ -1328,7 +1328,7 @@ static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   受け取った数のウインドウを等間隔に作る 幅は3char
+ * @brief   受け取った数のウインドウを等間隔に作る 幅は3char IRCBTL_STR_16
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -1353,6 +1353,8 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
 //  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
+  pWork->messageBackup = pMsgBuff[i];
+  
   GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
   //    GFL_FONTSYS_SetColor( 1, 1, 1 );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
@@ -1820,8 +1822,13 @@ static void _ircExitWaitNO(IRC_BATTLE_MATCH* pWork)
 {
   _buttonWindowDelete(pWork);
 
-  _firstConnectMessage(pWork);
-
+//  _firstConnectMessage(pWork);
+  {
+    int aMsgBuff[1];
+    aMsgBuff[0] = pWork->messageBackup;
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
+  
   _ReturnButtonStart(pWork);
   pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
   pWork->touch = &_cancelButtonCallback;
@@ -1981,11 +1988,14 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 static void ircExitStart(IRC_BATTLE_MATCH* pWork)
 {
-    int aMsgBuff[]={IRCBTL_STR_16};
+  int aMsgBuff[]={IRCBTL_STR_16};
+  int backup = pWork->messageBackup;
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                   0x20*12, 0x20, pWork->heapID);
-    _msgWindowCreate(aMsgBuff, pWork);
-
+  
+  _msgWindowCreate(aMsgBuff, pWork);
+  pWork->messageBackup = backup;
+  
     _YesNoStart(pWork);
 
     GFL_FONTSYS_SetDefaultColor();

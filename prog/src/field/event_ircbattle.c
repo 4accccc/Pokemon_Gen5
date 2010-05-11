@@ -241,6 +241,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         *seq = _WAIT_NET_END;
         break;
       case EVENTIRCBTL_ENTRYMODE_EXIT:
+        NetErr_DEBUG_ErrorSet();
         *seq = _WAIT_NET_END;
         break;
       case EVENTIRCBTL_ENTRYMODE_RETRY:
@@ -469,8 +470,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _WAIT_NET_END:
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      NetErr_ErrWorkInit();
+    }
     if(GFL_NET_IsExit()){
-//      _battleParaFree(dbw);
       (*seq) ++;
     }
     break;
