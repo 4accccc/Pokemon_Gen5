@@ -109,11 +109,6 @@ static void DeleteClactUnit( ARROW* arrow ); // セルアクターユニット 破棄
 static void CreateClactWorks( ARROW* arrow ); // セルアクターワーク 生成
 static void DeleteClactWorks( ARROW* arrow ); // セルアクターワーク 破棄
 
-//-------------------------------------------------------------------------------------
-// デバッグ
-//-------------------------------------------------------------------------------------
-static void DebugPrint_cell( const ARROW* arrow ); // セルを出力する
-
 
 
 
@@ -170,7 +165,6 @@ void ARROW_Delete( ARROW* arrow )
 void ARROW_Setup( ARROW* arrow, int startX, int startY, int endX, int endY ) 
 {
   SetupCellAct( arrow, startX, startY, endX, endY );
-  DebugPrint_cell( arrow );
 }
 
 //-------------------------------------------------------------------------------------
@@ -298,16 +292,6 @@ static void ChangeState( ARROW* arrow, ARROW_STATE nextState )
   // 状態を更新
   arrow->state = nextState;
   arrow->stateCount = 0;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: change state ==> " );
-  switch( nextState ) {
-  case ARROW_STATE_WAIT:    OS_TFPrintf( PRINT_TARGET, "WAIT");     break;
-  case ARROW_STATE_STRETCH: OS_TFPrintf( PRINT_TARGET, "STRETCH");  break;
-  case ARROW_STATE_STAY:    OS_TFPrintf( PRINT_TARGET, "STAY");     break;
-  default:                  OS_TFPrintf( PRINT_TARGET, "UNKNOWN "); break;
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -380,9 +364,6 @@ static void BootCell( ARROW* arrow, u8 cellIdx )
   GFL_CLACT_WK_SetAutoAnmSpeed( clwk, FX32_CONST(ANIME_SPEED) );
   GFL_CLACT_WK_StartAnm( clwk );
   GFL_CLACT_WK_SetDrawEnable( clwk, TRUE );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: boot cell[%d]\n", cellIdx );
 }
 
 //-------------------------------------------------------------------------------------
@@ -404,9 +385,6 @@ static void Vanish( ARROW* arrow )
   {
     GFL_CLACT_WK_SetDrawEnable( arrow->cell[ idx ].clactWork, FALSE );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: vanish\n" );
 }
 
 
@@ -503,9 +481,6 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
 
   // セル数
   arrow->cellNum = cellIdx;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: setup cells\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -548,9 +523,6 @@ static ARROW* CreateArrow( HEAPID heapID )
 
   // 矢印を生成
   arrow = GFL_HEAP_AllocMemory( heapID, sizeof(ARROW) ); 
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: create arrow\n" );
   return arrow;
 }
 
@@ -581,9 +553,6 @@ static void InitArrow( ARROW* arrow, HEAPID heapID )
     arrow->cell[i].top       = 0;
     arrow->cell[i].clactWork = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: init arrow\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -599,9 +568,6 @@ static void DeleteArrow( ARROW* arrow )
 
   // 矢印を破棄
   GFL_HEAP_FreeMemory( arrow );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: delete arrow\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -616,9 +582,6 @@ static void CreateClactUnit( ARROW* arrow )
   GF_ASSERT( arrow->clactUnit == NULL ); // 多重生成
 
   arrow->clactUnit = GFL_CLACT_UNIT_Create( MAX_CELL_NUM, 0, arrow->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: create clact unit\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -633,9 +596,6 @@ static void DeleteClactUnit( ARROW* arrow )
   GF_ASSERT( arrow->clactUnit );
 
   GFL_CLACT_UNIT_Delete( arrow->clactUnit );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: delete clact unit\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -670,9 +630,6 @@ static void CreateClactWorks( ARROW* arrow )
                            dispParam->cellAnimIndex, &data, 
                            dispParam->setSerface, arrow->heapID ); 
   }
-  
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: create clact works\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -691,9 +648,6 @@ static void DeleteClactWorks( ARROW* arrow )
   {
     GFL_CLACT_WK_Remove( arrow->cell[ idx ].clactWork );
   }
-  
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: delete clact works\n" );
 }
 
 //-------------------------------------------------------------------------------------
@@ -707,25 +661,4 @@ static void DeleteClactWorks( ARROW* arrow )
 static void SetDispParams( ARROW* arrow, const ARROW_DISP_PARAM* param )
 { 
   arrow->dispParam = *param;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "ARROW: set disp params\n" );
-}
-
-//-------------------------------------------------------------------------------------
-/**
- * @brief セルを出力する
- *
- * @param arrow
- */
-//-------------------------------------------------------------------------------------
-static void DebugPrint_cell( const ARROW* arrow )
-{
-  int i;
-
-  for( i=0; i<arrow->cellNum; i++ )
-  {
-    OS_TFPrintf( PRINT_TARGET, "ARROW: cell[%d]: x=%3d, y=%3d, f=%3d\n", 
-        i, arrow->cell[i].left, arrow->cell[i].top, arrow->cell[i].bootFrame );
-  }
 }

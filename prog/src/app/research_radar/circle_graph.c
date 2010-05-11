@@ -54,9 +54,11 @@ typedef enum {
 // ■描画用頂点データ
 //==============================================================================
 typedef struct {
+
   VecFx16 pos;       // 座標
   GXRgb   color;     // 頂点カラー
   u8      polygonID; // ポリゴンID 
+
 } VERTEX;
 
 
@@ -64,6 +66,7 @@ typedef struct {
 // ■グラフの構成要素単位のデータ
 //==============================================================================
 typedef struct {
+
   u8  ID;              // 構成要素ID
   u32 value;           // 値
   u8  percentage;      // 全構成要素中の割合[%]
@@ -75,14 +78,15 @@ typedef struct {
   u8  centerColorR;    // 中心点の色(R) [0, 31]
   u8  centerColorG;    // 中心点の色(G) [0, 31]
   u8  centerColorB;    // 中心点の色(B) [0, 31] 
+
 } GRAPH_COMPONENT;
 
 
 //==============================================================================
 // ■円グラフ
 //==============================================================================
-struct _CIRCLE_GRAPH
-{
+struct _CIRCLE_GRAPH {
+
   HEAPID heapID;
 
   BOOL        drawFlag;   // 描画許可フラグ
@@ -117,13 +121,6 @@ static void SetMatrix( const CIRCLE_GRAPH* graph ); // 行列を設定する
 // ◇動作
 //------------------------------------------------------------------------------
 static void GraphMain( CIRCLE_GRAPH* graph ); // メイン関数
-// 状態開始処理
-static void GraphStart_HIDE     ( CIRCLE_GRAPH* graph ); // 状態開始処理 ( GRAPH_STATE_HIDE )
-static void GraphStart_ANALYZE  ( CIRCLE_GRAPH* graph ); // 状態開始処理 ( GRAPH_STATE_ANALYZE )
-static void GraphStart_APPEAR   ( CIRCLE_GRAPH* graph ); // 状態開始処理 ( GRAPH_STATE_APPEAR )
-static void GraphStart_DISAPPEAR( CIRCLE_GRAPH* graph ); // 状態開始処理 ( GRAPH_STATE_DISAPPEAR )
-static void GraphStart_STAY     ( CIRCLE_GRAPH* graph ); // 状態開始処理 ( GRAPH_STATE_STAY )
-static void GraphStart_UPDATE   ( CIRCLE_GRAPH* graph ); // 状態開始処理 ( GRAPH_STATE_UPDATE )
 // 状態ごとの処理
 static void GraphAct_HIDE     ( CIRCLE_GRAPH* graph ); // 状態メイン動作 ( GRAPH_STATE_HIDE )
 static void GraphAct_ANALYZE  ( CIRCLE_GRAPH* graph ); // 状態メイン動作 ( GRAPH_STATE_ANALYZE )
@@ -131,13 +128,6 @@ static void GraphAct_APPEAR   ( CIRCLE_GRAPH* graph ); // 状態メイン動作 ( GRAPH
 static void GraphAct_DISAPPEAR( CIRCLE_GRAPH* graph ); // 状態メイン動作 ( GRAPH_STATE_DISAPPEAR )
 static void GraphAct_STAY     ( CIRCLE_GRAPH* graph ); // 状態メイン動作 ( GRAPH_STATE_STAY )
 static void GraphAct_UPDATE   ( CIRCLE_GRAPH* graph ); // 状態メイン動作 ( GRAPH_STATE_UPDATE )
-// 状終了処理
-static void GraphFinish_HIDE     ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_HIDE )
-static void GraphFinish_ANALYZE  ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_ANALYZE )
-static void GraphFinish_APPEAR   ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_APPEAR )
-static void GraphFinish_DISAPPEAR( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_DISAPPEAR )
-static void GraphFinish_STAY     ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_STAY )
-static void GraphFinish_UPDATE   ( CIRCLE_GRAPH* graph ); // 状態終了処理 ( GRAPH_STATE_UPDATE )
 // 状態
 static void SetNextState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState ); // 次の状態をキューに登録する
 static void SwitchState( CIRCLE_GRAPH* graph ); // 状態を切り替える
@@ -195,12 +185,6 @@ static void SetupCirclePoints( CIRCLE_GRAPH* graph ); // 外周頂点の座標 準備
 // 計算
 //------------------------------------------------------------------------------
 static void CalcScreenPos( const VecFx16* pos, int* destX, int* destY ); // スクリーン座標を計算する
-
-//------------------------------------------------------------------------------
-// デバッグ
-//------------------------------------------------------------------------------
-static void DebugPrint_stateQueue( const CIRCLE_GRAPH* graph ); // 状態キュー
-static void DebugPrint_components( const CIRCLE_GRAPH* graph ); // 構成要素
 
 
 
@@ -270,9 +254,6 @@ void CIRCLE_GRAPH_SetupComponents(
   UpdateComponentsPercentage( graph ); // 割合を更新
   UpdateComponentsScope( graph );      // 割合の範囲を更新
   UpdateDrawVertices( graph );         // 描画に使用する頂点
-
-  // DEBUG:
-  DebugPrint_components( graph );
 }
 
 //------------------------------------------------------------------------------
@@ -290,9 +271,6 @@ void CIRCLE_GRAPH_AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_D
   UpdateComponentsPercentage( graph ); // 割合を更新
   UpdateComponentsScope( graph );      // 割合の範囲を更新
   UpdateDrawVertices( graph );         // 描画に使用する頂点
-
-  // DEBUG:
-  DebugPrint_components( graph );
 }
 
 //------------------------------------------------------------------------------
@@ -632,8 +610,7 @@ static void DrawGraph( const CIRCLE_GRAPH* graph )
   int polygonID;
 
   // 描画ポリゴン範囲を決定
-  switch( graph->state )
-  {
+  switch( graph->state ) {
   case GRAPH_STATE_HIDE:
     drawPolygonNum = 0;  // 描画しない
     break;
@@ -1001,10 +978,6 @@ static void SetNextState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
 {
   // エンキュー
   QUEUE_EnQueue( graph->stateQueue, nextState );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: set next state\n" );
-  DebugPrint_stateQueue( graph );  // キューの状態を出力
 }
 
 //------------------------------------------------------------------------------
@@ -1021,9 +994,6 @@ static void SwitchState( CIRCLE_GRAPH* graph )
   // 状態を更新
   nextState = QUEUE_DeQueue( graph->stateQueue );
   ChangeState( graph, nextState );
-
-  // DEBUG:
-  DebugPrint_stateQueue( graph );  // キューの状態を出力
 }
 
 //------------------------------------------------------------------------------
@@ -1036,203 +1006,10 @@ static void SwitchState( CIRCLE_GRAPH* graph )
 //------------------------------------------------------------------------------
 static void ChangeState( CIRCLE_GRAPH* graph, GRAPH_STATE nextState )
 {
-  // 現在の状態の終了処理
-  switch( graph->state ) {
-  case GRAPH_STATE_HIDE:      GraphFinish_HIDE( graph );      break;
-  case GRAPH_STATE_ANALYZE:   GraphFinish_ANALYZE( graph );   break;
-  case GRAPH_STATE_APPEAR:    GraphFinish_APPEAR( graph );    break;
-  case GRAPH_STATE_DISAPPEAR: GraphFinish_DISAPPEAR( graph ); break;
-  case GRAPH_STATE_STAY:      GraphFinish_STAY( graph );      break;
-  case GRAPH_STATE_UPDATE:    GraphFinish_UPDATE( graph );    break;
-  default: GF_ASSERT(0);
-  }
-
   // 状態を更新
-  graph->state = nextState;
+  graph->state      = nextState;
   graph->stateCount = 0;
-
-  // 次の状態の状態の開始処理
-  switch( nextState ) {
-  case GRAPH_STATE_HIDE:      GraphStart_HIDE( graph );      break;
-  case GRAPH_STATE_ANALYZE:   GraphStart_ANALYZE( graph );   break;
-  case GRAPH_STATE_APPEAR:    GraphStart_APPEAR( graph );    break;
-  case GRAPH_STATE_DISAPPEAR: GraphStart_DISAPPEAR( graph ); break;
-  case GRAPH_STATE_STAY:      GraphStart_STAY( graph );      break;
-  case GRAPH_STATE_UPDATE:    GraphStart_UPDATE( graph );    break;
-  default: GF_ASSERT(0);
-  }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: change state ==> " );
-  switch( nextState ) {
-  case GRAPH_STATE_HIDE:      OS_TFPrintf( PRINT_TARGET, "HIDE" );      break;
-  case GRAPH_STATE_ANALYZE:   OS_TFPrintf( PRINT_TARGET, "ANALYZE" );   break;
-  case GRAPH_STATE_APPEAR:    OS_TFPrintf( PRINT_TARGET, "APPEAR" );    break;
-  case GRAPH_STATE_DISAPPEAR: OS_TFPrintf( PRINT_TARGET, "DISAPPEAR" ); break;
-  case GRAPH_STATE_STAY:      OS_TFPrintf( PRINT_TARGET, "STAY" );      break;
-  case GRAPH_STATE_UPDATE:    OS_TFPrintf( PRINT_TARGET, "UPDATE" );    break;
-  default: GF_ASSERT(0);
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態開始処理 ( GRAPH_STATE_HIDE )
- *
- * @param graph
- */
-//-------------------------------------------------------------------------------
-static void GraphStart_HIDE( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state HIDE\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態開始処理 ( GRAPH_STATE_ANALYZE )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphStart_ANALYZE( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state ANALYZE\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態開始処理 ( GRAPH_STATE_APPEAR )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphStart_APPEAR( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state APPEAR\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態開始処理 ( GRAPH_STATE_DISAPPEAR )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphStart_DISAPPEAR( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state DISAPPEAR\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態開始処理 ( GRAPH_STATE_STAY )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphStart_STAY( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state STAY\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態開始処理 ( GRAPH_STATE_UPDATE )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphStart_UPDATE( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start state UPDATE\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態終了処理 ( GRAPH_STATE_HIDE )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-
-static void GraphFinish_HIDE( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state HIDE\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態終了処理 ( GRAPH_STATE_ANALYZE )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphFinish_ANALYZE( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state ANALYZE\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態終了処理 ( GRAPH_STATE_APPEAR )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphFinish_APPEAR( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state APPEAR\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態終了処理 ( GRAPH_STATE_DISAPPEAR )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphFinish_DISAPPEAR( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state DISAPPEAR\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態終了処理 ( GRAPH_STATE_STAY )
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphFinish_STAY( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state STAY\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態終了処理 ( GRAPH_STATE_UPDATE ) 
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void GraphFinish_UPDATE( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: finish state UPDATE\n" );
 } 
-
 
 
 
@@ -1280,9 +1057,6 @@ static void AddComponent( CIRCLE_GRAPH* graph, const GRAPH_COMPONENT_ADD_DATA* n
   graph->components[ graph->componentNum ].centerColorG    = newComponent->centerColorG;
   graph->components[ graph->componentNum ].centerColorB    = newComponent->centerColorB;
   graph->componentNum++;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: add new component(%d)\n", graph->componentNum );
 }
 
 //------------------------------------------------------------------------------
@@ -1309,8 +1083,7 @@ static void LowerSortComponents( CIRCLE_GRAPH* graph )
 
     for( idx=0; idx < unSortedTailPos; idx++ )
     {
-      if( graph->components[ idx ].value < graph->components[ idx + 1 ].value )
-      {
+      if( graph->components[ idx ].value < graph->components[ idx + 1 ].value ) {
         // 入れ替える
         GRAPH_COMPONENT temp         = graph->components[ idx ];
         graph->components[ idx ]     = graph->components[ idx + 1 ];
@@ -1318,9 +1091,6 @@ static void LowerSortComponents( CIRCLE_GRAPH* graph )
       }
     }
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: lower sort components\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1362,9 +1132,6 @@ static void UpdateComponentsPercentage( CIRCLE_GRAPH* graph )
     loss--;
     idx = ( idx + 1 ) % componentNum;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: update components percentage\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1397,9 +1164,6 @@ static void UpdateComponentsScope( CIRCLE_GRAPH* graph )
     // オフセット加算
     percentageOffset += component->percentage;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: update components scope\n" );
 } 
 
 //------------------------------------------------------------------------------
@@ -1466,9 +1230,6 @@ static void UpdateDrawVertices( CIRCLE_GRAPH* graph )
       vertexIdx++;
     }
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: update draw vertices\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1773,16 +1534,10 @@ static BOOL CheckAnime( const CIRCLE_GRAPH* graph )
  */
 //------------------------------------------------------------------------------
 static void SetupGraph( CIRCLE_GRAPH* graph )
-{
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start setup graph\n" );
-
+{ 
   // セットアップ処理
   CreateStateQueue( graph );  // 状態キューを作成
   SetupCirclePoints( graph ); // 外周オフセット座標を算出
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: end setup graph\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1794,14 +1549,8 @@ static void SetupGraph( CIRCLE_GRAPH* graph )
 //------------------------------------------------------------------------------
 static void CleanUpGraph( CIRCLE_GRAPH* graph )
 {
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: start clean up graph\n" );
-
   // クリーンアップ処理
   DeleteStateQueue( graph ); // 状態キューを破棄
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: end clean up graph\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1824,9 +1573,6 @@ static void InitGraph( CIRCLE_GRAPH* graph, HEAPID heapID )
   graph->componentNum = 0;
 
   VEC_Fx16Set( &(graph->centerPos), CIRCLE_CENTER_X, CIRCLE_CENTER_Y, 0 );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: init graph\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1847,9 +1593,6 @@ static CIRCLE_GRAPH* CreateGraph( HEAPID heapID )
   // 初期化
   InitGraph( graph, heapID );
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: create graph\n" );
-
   return graph;
 }
 
@@ -1863,9 +1606,6 @@ static CIRCLE_GRAPH* CreateGraph( HEAPID heapID )
 static void DeleteGraph( CIRCLE_GRAPH* graph )
 {
   GFL_HEAP_FreeMemory( graph );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: delete graph\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1881,9 +1621,6 @@ static void CreateStateQueue( CIRCLE_GRAPH* graph )
   GF_ASSERT( graph->stateQueue == NULL );
 
   graph->stateQueue = QUEUE_Create( STATE_QUEUE_SIZE, graph->heapID );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: create state queueh\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1899,9 +1636,6 @@ static void DeleteStateQueue( CIRCLE_GRAPH* graph )
   GF_ASSERT( graph->stateQueue );
 
   QUEUE_Delete( graph->stateQueue );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: delete state queue\n" );
 }
 
 //------------------------------------------------------------------------------
@@ -1932,9 +1666,6 @@ static void SetupCirclePoints( CIRCLE_GRAPH* graph )
     VEC_Fx16Set( &(graph->circlePoints[ pointIdx ]), 
                  FX_F32_TO_FX16(x), FX_F32_TO_FX16(y), FX_F32_TO_FX16(z)  );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: setup circle points\n" );
 }
 
 
@@ -1962,93 +1693,4 @@ static void CalcScreenPos( const VecFx16* worldPos, int* destX, int* destY )
   posFx32.z = FX32_CONST( FX_FX16_TO_F32(worldPos->z) );
 
   ret = NNS_G3dWorldPosToScrPos( &posFx32, destX, destY );
-}
-
-
-//==============================================================================
-// ■デバッグ
-//===============================================================================
-
-//------------------------------------------------------------------------------
-/**
- * @brief 状態キューの内容を出力する
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void DebugPrint_stateQueue( const CIRCLE_GRAPH* graph )
-{
-  int i;
-  int data;
-  int dataNum;
-  const QUEUE* queue;
-
-  queue   = graph->stateQueue;
-  dataNum = QUEUE_GetDataNum( queue );
-
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: state queue = " );
-  for( i=0; i < dataNum; i++ )
-  {
-    data = QUEUE_PeekData( graph->stateQueue, i );
-
-    switch( data ) {
-    case GRAPH_STATE_HIDE:      OS_TFPrintf( PRINT_TARGET, "HIDE ");      break;
-    case GRAPH_STATE_ANALYZE:   OS_TFPrintf( PRINT_TARGET, "ANALYZE ");   break;
-    case GRAPH_STATE_APPEAR:    OS_TFPrintf( PRINT_TARGET, "APPEAR ");    break;
-    case GRAPH_STATE_DISAPPEAR: OS_TFPrintf( PRINT_TARGET, "DISAPPEAR "); break;
-    case GRAPH_STATE_STAY:      OS_TFPrintf( PRINT_TARGET, "STAY ");      break;
-    case GRAPH_STATE_UPDATE:    OS_TFPrintf( PRINT_TARGET, "UPDATE ");    break;
-    default:                    OS_TFPrintf( PRINT_TARGET, "UNKNOWN ");   break;
-    }
-  }
-  OS_TFPrintf( PRINT_TARGET, "\n" );
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief すべての構成要素を出力する
- *
- * @param graph
- */
-//------------------------------------------------------------------------------
-static void DebugPrint_components( const CIRCLE_GRAPH* graph )
-{
-  int idx;
-  int componentNum;
-  int totalValue;
-  int totalPercentage;
-
-  totalValue      = 0;
-  totalPercentage = 0;
-  componentNum    = graph->componentNum;
-
-  // 個別データ出力
-  for( idx=0; idx < componentNum; idx++ )
-  {
-    const GRAPH_COMPONENT* component;
-
-    component = GetComponentByRank( graph, idx );
-
-    // データ出力
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].ID              = %d\n", idx, component->ID );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].value           = %d\n", idx, component->value );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].percentage      = %d\n", idx, component->percentage );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].startPercentage = %d\n", idx, component->startPercentage );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].endPercentage   = %d\n", idx, component->endPercentage );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].outerColorR     = %d\n", idx, component->outerColorR );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].outerColorG     = %d\n", idx, component->outerColorG );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].outerColorB     = %d\n", idx, component->outerColorB );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].centerColorR    = %d\n", idx, component->centerColorR );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].centerColorG    = %d\n", idx, component->centerColorG );
-    OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: component[%d].centerColorB    = %d\n", idx, component->centerColorB );
-
-    // 総合データ集計
-    totalValue      += component->value;
-    totalPercentage += component->percentage;
-  }
-
-  // 総合データ出力
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: components num   = %d\n", componentNum );
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: total value      = %d\n", totalValue );
-  OS_TFPrintf( PRINT_TARGET, "CIRCLE-GRAPH: total percentage = %d\n", totalPercentage );
 } 
