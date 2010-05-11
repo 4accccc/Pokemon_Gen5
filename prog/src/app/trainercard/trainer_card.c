@@ -1737,10 +1737,11 @@ static int CheckKey(TR_CARD_WORK* wk)
     return TRC_KEY_REQ_END_BUTTON;
     
   }
-  else if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_BUTTON_A))
+  else if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT))
   {
     // 拡大していない
     if(wk->ScaleMode==0){
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN, ANMS_TURN_G ,TRUE);
       return TRC_KEY_REQ_REV_BUTTON;
     }
   }
@@ -1748,6 +1749,13 @@ static int CheckKey(TR_CARD_WORK* wk)
   {
     // ブックマーク（Yボタンメニュー）登録
     SetBookMark( wk );
+  }
+  else if(keyTrg & PAD_BUTTON_DECIDE)
+  {
+    // バッジ画面へ
+    PMSND_PlaySE( SND_TRCARD_DECIDE );
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
+    return TRC_KEY_REQ_BADGE_CALL;
   }
 
   return TRC_KEY_REQ_NONE;

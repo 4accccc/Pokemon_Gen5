@@ -1845,6 +1845,8 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
     trg = TOUCH_END;
   }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
     trg = TOUCH_BOOKMARK;
+  }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+    trg = TOUCH_CHANGE_CARD;
   }
   // 左ページ・右ページ・戻る機能の呼び出し
   ExecFunc(wk, trg);
