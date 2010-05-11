@@ -33,8 +33,12 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START ev_init_t01r0101
 
-	//クリア後ハンサムイベント有効ならママの初期位置を変更
-	IF $WK_SCENE_T01R0101 == 2 THEN
+	//イベント進行で分岐
+	IF $WK_SCENE_T01R0101 == 0 THEN
+	//ゲーム開始直後ならママの初期位置（向きのみ）を変更
+		_OBJ_POS_CHANGE( T01R0101_MAMA_01, 6, 0, 5, DIR_LEFT )
+	ELSIF $WK_SCENE_T01R0101 == 2 THEN
+	//クリア後ハンサムイベント有効ならママの初期位置（向きのみ）を変更
 		_OBJ_POS_CHANGE( T01R0101_MAMA_01, 6, 0, 5, DIR_DOWN )
 	ENDIF
 
@@ -50,7 +54,7 @@ EVENT_START ev_scene_t01r0101_first_01
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラパージ
 	
-	_CAMERA_MOVE(9688,0,970752,360448,0,360448, 30)		//カメラ移動開始
+	_CAMERA_MOVE(9688,0,970752,229376,0,294912, 30)		//カメラ移動開始
 	
 	//主人公：下を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
@@ -58,11 +62,6 @@ EVENT_START ev_scene_t01r0101_first_01
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	
-	//ライバル：その場歩き
-//	_OBJ_ANIME( T01R0101_RIVAL_01, anm_stay_walk_r )
-//	_OBJ_ANIME_WAIT()
-
 	//ライバルＭＳＧ：騒がしくしてすみませんでした
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_black_01, T01R0101_RIVAL_01, POS_DL )
 	_MSGWIN_CLOSE()
@@ -144,15 +143,21 @@ EVENT_START ev_scene_t01r0101_first_01
 	//ママ：何があったの？
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_01, T01R0101_MAMA_01, POS_DR )
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 
-	//ちょっとウェイト
-	_TIME_WAIT( 15 )
+	//ママ：下を向いて
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
 
-	//ママ：ポケモンをもらって勝負してたのね
+	//ママ：思い出しちゃうなー初めてのポケモン勝負
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_02, T01R0101_MAMA_01, POS_DR )
+	_MSGWIN_CLOSE()
 
-	//ママ：ポケモンを休ませないと
+	//ママ：主人公を見て
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+
+	//ママ：そうだ ポケモンを休ませないと
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_03, T01R0101_MAMA_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 
