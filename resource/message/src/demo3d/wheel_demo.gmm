@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-08T15:47:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-11T17:37:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,7 +351,7 @@
 		</language>
 	</columns>
 
-	<dialog left="244" top="370" right="744" bottom="998" maximized="no" rayout="Vertical2">
+	<dialog left="1513" top="212" right="2013" bottom="840" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -384,9 +384,9 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]……さいしょに　いっておくよ
-ボクが　プラズマだんの　おうさま　だ[BE:09:速度コントロール:0]</language>
+ボクが　プラズマだんの　おうさま[BE:09:速度コントロール:0]</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……最初に　いっておくよ
-ボクが　プラズマ団の　王様だ[BE:09:速度コントロール:0]</language>
+ボクが　プラズマ団の　王様[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_wheel_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -612,8 +612,8 @@
 		<attribute name="キャラ指定">BABYGIRL2</attribute>
 		<language name="JPN" width="256">わーいわーい！　くるくる　まわるー！
 わーいわーい！　どんどん　あがるー！</language>
-		<language name="JPN_KANJI" width="256">わーいわーい！　くるくる　回るー！
-わーいわーい！　どんどん　上がるー！</language>
+		<language name="JPN_KANJI" width="256">わーいわーい！　くるくる　まわるー！
+わーいわーい！　どんどん　あがるー！</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -623,8 +623,8 @@
 		<attribute name="キャラ指定">BABYGIRL2</attribute>
 		<language name="JPN" width="256">わーい！　たかーい！　たかいぞー！！
 えへへ　おにーちゃん！　たのしーね！</language>
-		<language name="JPN_KANJI" width="256">わーい！　高ーい！　高いぞー！！
-えへへ　おにーちゃん！　楽しーね！</language>
+		<language name="JPN_KANJI" width="256">わーい！　たかーい！　たかいぞー！！
+えへへ　おにーちゃん！　たのしーね！</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -635,7 +635,7 @@
 		<language name="JPN" width="256">ねー　おにーちゃん！　おひざの
 うえに　のっかっても　いーい？</language>
 		<language name="JPN_KANJI" width="256">ねー　おにーちゃん！　おひざの
-上に　乗っても　いーい？</language>
+うえに　のっかっても　いーい？</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
