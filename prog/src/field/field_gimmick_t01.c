@@ -147,8 +147,6 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     status->trans = pos;
     //カリングする
     FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, 0, TRUE);
-    //アニメ再生
-    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, 0, 0, TRUE);
     {
       BOOL vanish;
       if ( gmk_sv_work->Disp ) vanish = FALSE;   //表示
@@ -160,14 +158,23 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   //アニメの状態を初期化
   for (i=0;i<BIRD_ANM_NUM;i++)
   {
+    BOOL valid;
     EXP_OBJ_ANM_CNT_PTR anm;
     anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i);
     //1回再生
     FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
     //アニメ停止
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
-    //無効化
-    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, FALSE);
+    if ( gmk_sv_work->Disp )
+    {
+      //有効
+      valid = TRUE;
+    }
+    else
+    {
+      valid = FALSE;
+    }
+    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, valid);
   }
 }
 
@@ -248,8 +255,6 @@ void T01_GIMMICK_Start( FIELDMAP_WORK* fieldmap )
     anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i);
     //アニメ再生
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-    //有効
-    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, i, TRUE);
   }
 }
 
