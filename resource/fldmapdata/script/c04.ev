@@ -117,6 +117,12 @@ EVENT_START	ev_pos_c04_hakai_01
 	DEFINE_LOCAL	LWK_POSX
 	DEFINE_LOCAL	LWK_POSZ
 	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,28213248,65551,30564352,45 )	//一番最後の引数は移動にかかるフレーム数
+	
 	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
 	//主人公：前へ
 	IF $LWK_POSX == 427 THEN
@@ -138,11 +144,6 @@ EVENT_START	ev_pos_c04_hakai_01
 	
 	}
 	
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	
-	//カメラ操作
-	_CAMERA_MOVE( 9688,0,970752,28213248,65551,30564352,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//プラズマ団曲を再生
@@ -315,6 +316,9 @@ EVENT_START	ev_pos_c04_hakai_01
 	
 	//育て屋に２匹預けられるようにする
 	_FLAG_SET( FE_SODATEYAOLDMAN_OPEN )
+	
+	//ヤグルマの森にいるストッパーを非表示
+	_FLAG_SET( FV_D02R0101_STOP_01 )
 	
 	//========================================//
 	
