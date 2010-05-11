@@ -537,7 +537,7 @@ BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata)
   static const u16 check_flag_array[] = {
     SYS_FLAG_PALACE_MISSION_START,
     SYS_FLAG_PALACE_MISSION_CLEAR,
-    SYS_FLAG_PALACE_DPOWER,
+    //SYS_FLAG_PALACE_DPOWER,
   };
   int i;
   
