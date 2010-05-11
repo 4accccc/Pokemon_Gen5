@@ -299,7 +299,7 @@ ev_oldman1_guide:
 		//リスト追加
 		_BMPMENU_MAKE_LIST( plc_oldman1_01_07, 0 )	//ハイリンクとは
 		IF FLAG_ON( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
-			//デルパワー入手したことがあるならリスト追加
+			//ミッションをクリアしたことがあるならリスト追加
 			_BMPMENU_MAKE_LIST( plc_oldman1_01_08, 1 )	//デルパワーとは
 		ENDIF
 		_BMPMENU_MAKE_LIST( plc_oldman1_01_09, 10 )	//やめる
