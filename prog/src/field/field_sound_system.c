@@ -2497,11 +2497,11 @@ static void PauseBeaconScan( void )
 {
 #ifdef PM_DEBUG
   DEBUG_PerformanceStressON( FALSE, STRESS_ID_SND );
-#else
+#endif
+
 	if( GFL_NET_IsInit() ) {
 		GFL_NET_WL_PauseScan( TRUE );
 	}
-#endif
 }
 
 //---------------------------------------------------------------------------------
@@ -2513,11 +2513,11 @@ static void StartBeaconScan( void )
 {
 #ifdef PM_DEBUG
   DEBUG_PerformanceStressON( TRUE, STRESS_ID_SND );
-#else
+#endif
+
 	if( GFL_NET_IsInit() ) {
 		GFL_NET_WL_PauseScan( FALSE );
 	}
-#endif
 }
 
 //---------------------------------------------------------------------------------
