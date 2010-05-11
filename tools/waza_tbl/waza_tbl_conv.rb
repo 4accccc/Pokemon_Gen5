@@ -64,6 +64,14 @@ end
     "！"=>"！",
   }
 
+  atkmsg_table_k = {
+    "をつかった！"=>"を　つかった！",
+    "した！"=>"した！",
+    "をした！"=>"を　した！",
+    "こうげき！"=>"　攻撃！",
+    "！"=>"！",
+  }
+
   minemsg_table = {
     "をつかった！"  =>"[1:01:ニックネーム:0]は\r\n",
     "した！"        =>"[1:01:ニックネーム:0]は\r\n",
@@ -170,11 +178,14 @@ end
       p split_data[ PARA::ATKMSG ]
     end
     atkmsg = minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
-    atkmsg_gmm.make_row_index_kanji( "ATKMSG_M_", cnt, atkmsg, atkmsg )
+    atkmsg_k = minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table_k[ split_data[ PARA::ATKMSG ] ]
+    atkmsg_gmm.make_row_index_kanji( "ATKMSG_M_", cnt, atkmsg, atkmsg_k )
     atkmsg = "やせいの　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
-    atkmsg_gmm.make_row_index_kanji( "ATKMSG_Y_", cnt, atkmsg, atkmsg )
+    atkmsg_k = "野生の　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table_k[ split_data[ PARA::ATKMSG ] ]
+    atkmsg_gmm.make_row_index_kanji( "ATKMSG_Y_", cnt, atkmsg, atkmsg_k )
     atkmsg = "あいての　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table[ split_data[ PARA::ATKMSG ] ]
-    atkmsg_gmm.make_row_index_kanji( "ATKMSG_E_", cnt, atkmsg, atkmsg )
+    atkmsg_k = "相手の　" + minemsg_table[ split_data[ PARA::ATKMSG ] ] + split_data[ PARA::WAZANAME ] + atkmsg_table_k[ split_data[ PARA::ATKMSG ] ]
+    atkmsg_gmm.make_row_index_kanji( "ATKMSG_E_", cnt, atkmsg, atkmsg_k )
     cnt += 1
   }
 
@@ -189,6 +200,12 @@ end
     if tame_waza[ cnt ] == "1"
       fp_hash.printf("\t\t%d,\n", cnt + 1 )
     end
+  }
+  fp_hash.printf("\t]\n\n" )
+
+  fp_hash.printf("\t$waza_name = [\n")
+  wazaname.size.times {|i|
+    fp_hash.printf("\t\"%s\",\n",wazaname[ i ].sub(/\n/,""))
   }
   fp_hash.printf("\t]\n" )
 
