@@ -1,8 +1,14 @@
 EFFSEQ
+$0005
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_open1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_fix.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_close.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_capture_01.spa
 #001
 %00
 制御モード変更	継続
-カメラ移動（座標指定）	追従	3.699951:6.699951:18.5	-3:2.600098:1.199951	20	0	18
+カメラ移動（座標指定）	追従	6.699951:6.699951:17.30005	0:2.600098:0	20	0	18
 射影モード	正射影
 エフェクト終了待ち	すべて
 サブルーチンリターン
