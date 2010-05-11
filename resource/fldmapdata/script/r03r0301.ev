@@ -28,9 +28,6 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_pos_r03r0301_rival_01
 
-	//プラズマ団曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
-
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
@@ -40,8 +37,24 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_PLAYER_POS_GET( POSX,POSZ )
 	
 	//ライバル振り向く
-	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_plasma_staystep )
+	SWITCH $POSZ
+	CASE 4 THEN
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_plasma_staystep )
+		_OBJ_ANIME_WAIT()
+	CASE 5 THEN  //目の前に立った時
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_plasma_staystep )
+		_OBJ_ANIME_WAIT()
 	_OBJ_ANIME_WAIT()
+	CASE 6 THEN
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_down )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //一番上と同じ処理
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_plasma_staystep )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	
+	
 	
 	//チェレン：きをつけて！
 	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_black_01 , R03R0301_RIVAL_01 , POS_UR )
@@ -225,27 +238,31 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_black_06 , R03R0301_RIVAL_01 , POS_UR)
 	_BALLOONWIN_CLOSE()
 	
-	
-	//プラズマ団：ポケモンはかえす
-	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_03 , R03R0301_HAKAIM_01 , POS_DR  )
-	_BALLOONWIN_CLOSE()
-	
 	//ライバルに隣接
 	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_retpoke )
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_to_plasma )
 	_OBJ_ANIME_WAIT()
 	
+	//プラズマ団：ポケモンはかえす
+	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_03 , R03R0301_HAKAIM_01 , POS_UP  )
 	//プラズマ団：いつかじぶんたちのおろかさにきづけ
-	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_04 , R03R0301_HAKAIM_01 ,POS_DR  )
+	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_hakaim1_04 , R03R0301_HAKAIM_01 ,POS_UP  )
 	_BALLOONWIN_CLOSE()
 	
 	//暗転プラズマ団OBJ削除
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 	
-	//プラズマ団曲停止
-	_END_EVENT_BGM()
+	//==================================//
+	
+	//ゾーンBGM変更フラグをリセット
+	_FLAG_RESET( SYS_FLAG_BGM_R03R0301PLASMA )
+
+	//==================================//
+	
+	//フィールド通常曲に戻す
+	_BGM_NOW_MAP_RECOVER()
 	
 	_OBJ_DEL( R03R0301_HAKAIM_01 )
 	_OBJ_DEL( R03R0301_HAKAIM_02 )
