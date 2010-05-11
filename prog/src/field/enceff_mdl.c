@@ -17,6 +17,8 @@
 
 #define FADE_MARGINE  (20*FX32_ONE)
 
+#define ENC_SE_NONE (0xffffffff)
+
 //--------------------------------------------------------------
 /// ENCEFF_MDL_WORK
 //--------------------------------------------------------------
@@ -39,6 +41,7 @@ typedef struct
   int Fade;
   BOOL FadeStart;
   fx32 FadeStartFrm;
+  u32 SE;
 }ENCEFF_MDL_WORK;
 
 //======================================================================
@@ -155,6 +158,14 @@ GMEVENT *ENCEFF_MDL_Create6(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
                            NARC_enceff_mdl_ee_zoroark_nsbmd,
                            NARC_enceff_mdl_ee_zoroark_nsbca,
                            inIsFadeWhite );
+  //SEƒZƒbƒg
+  {
+    ENCEFF_MDL_WORK *work;
+    ENCEFF_CNT_PTR cnt_ptr;
+    cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldWork);
+    work = ENCEFF_GetUserWorkPtr(cnt_ptr);
+    work->SE = SEQ_SE_ZORO_01;
+  }
   return( event );
 }
 
@@ -191,6 +202,7 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   work->fieldWork = fieldWork;
   work->MdlArcIdx = inMdl;
   work->AnmArcIdx = inAnm;
+  work->Se = ENC_SE_NONE;
   if (inIsFadeWhite) work->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT;
   else work->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
 
@@ -299,6 +311,12 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
       GFL_G3D_OBJECT_GetAnimeFrameMax( work->g3DobjEff, 0, (int*)&maxfrm );
       work->FadeStartFrm = maxfrm - FADE_MARGINE;
       NOZOMU_Printf("mdl enceff maxfrm = %x %d\n",maxfrm, maxfrm/FX32_ONE);
+    }
+
+    //SEÄ¶
+    if (work->SE != ENC_SE_NONE)
+    {
+      PMSND_PlaySE(work->SE);
     }
     (*seq)++;
     break;
