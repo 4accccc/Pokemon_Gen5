@@ -492,6 +492,15 @@ extern void GFL_NET_Changeover(NetStepEndCallback callback);
  */
 //==================================================================
 extern void GFL_NET_ChangeoverModeSet(int mode, BOOL bAuto, const u8 *macAddress);
+//==============================================================================
+/**
+ * @brief   WIFIランダムマッチを開始する
+ * @param   pNetHandle   GFL_NETHANDLE
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+extern int GFL_NET_StateStartWifiRandomMatch_Filter(void );
 
 //==============================================================================
 /**
@@ -925,6 +934,7 @@ extern BOOL GFL_NET_WIFI_IsNewPlayer(void);
  */
 //==============================================================================
 extern BOOL GFL_NET_StartRandomMatch(void);
+
 //==============================================================================
 /**
  * @brief   物理的なWIFIコネクション番号を得る
