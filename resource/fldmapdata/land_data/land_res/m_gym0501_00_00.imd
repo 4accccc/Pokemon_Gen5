@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-12-18T17:17:36" source="m_gym0501_00_00c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-05-11T21:24:29" source="m_gym0501_00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-12-18T17:17:36" source="m_gym0501_00_00c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-05-11T21:24:29" source="m_gym0501_00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,13 +21,13 @@
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="26 25"
+	compress_material="on" material_size="25 25"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="8" xyz="-1.031250 -3.968994 -2.125000" whd="2.000000 7.933594 3.203125"/>
+<box_test pos_scale="8" xyz="-1.031250 -3.968750 -2.125000" whd="2.000000 7.933594 3.203125"/>
 
 <tex_image_array size="24">
 	<tex_image index="0" name="in27_ashiba01"
@@ -1753,7 +1753,7 @@
 </tex_palette_array>
 
 <material_array size="25">
-	<material index="0" name="in27_ashiba01_1"
+	<material index="0" name="in27_ashiba01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1777,7 +1777,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="in27_ashiba02_1"
+	<material index="1" name="in27_ashiba02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1801,7 +1801,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="in27_cone01_1"
+	<material index="2" name="in27_cone01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1825,7 +1825,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="in27_dan01_1"
+	<material index="3" name="in27_cone02"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="10"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="3" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="in27_dan01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1849,7 +1873,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in27_dono01_1"
+	<material index="5" name="in27_dono01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1873,7 +1897,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="in27_eme01_1"
+	<material index="6" name="in27_eme01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1897,7 +1921,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="in27_eme01_2"
+	<material index="7" name="in27_eme01_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1921,7 +1945,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="in27_kage01_1"
+	<material index="8" name="in27_kage01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1945,7 +1969,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in27_kaseki01_1"
+	<material index="9" name="in27_kaseki01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1969,7 +1993,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in27_kaseki02_1"
+	<material index="10" name="in27_kaseki02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1993,7 +2017,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in27_kaseki03_1"
+	<material index="11" name="in27_kaseki03"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2017,7 +2041,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in27_kaseki04_1"
+	<material index="12" name="in27_kaseki04"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2041,7 +2065,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="in27_saku01_1"
+	<material index="13" name="in27_saku01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2065,7 +2089,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="in27_sou01_1"
+	<material index="14" name="in27_sou01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2089,7 +2113,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="in27_sou02_1"
+	<material index="15" name="in27_sou02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2113,7 +2137,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="15" name="in27_sou03_1"
+	<material index="16" name="in27_sou03"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2137,7 +2161,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="in27_sou04_1"
+	<material index="17" name="in27_sou04"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2161,7 +2185,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="in27_sou05_1"
+	<material index="18" name="in27_sou05"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2185,7 +2209,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="18" name="in27_sou06_1"
+	<material index="19" name="in27_sou06"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2209,7 +2233,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="19" name="in27_sou07_1"
+	<material index="20" name="in27_sou07"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2233,7 +2257,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="20" name="in27_sou08_1"
+	<material index="21" name="in27_sou08"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2257,7 +2281,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="in27_sou09_1"
+	<material index="22" name="in27_sou09"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2281,7 +2305,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="22" name="in27_yuka01_1"
+	<material index="23" name="in27_yuka01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2305,7 +2329,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="23" name="in27_yuka02_1"
+	<material index="24" name="in27_yuka02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2323,30 +2347,6 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="23" tex_palette_idx="23"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="24" name="lambert26"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="10"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -9799,8 +9799,8 @@
 		vertex_size="36" polygon_size="15"
 		triangle_size="12" quad_size="3"
 		volume_min="-0.410156 5.023438 0.394531"
-		volume_max="0.378906 6.398438 0.996094"
-		volume_r="6.422363"
+		volume_max="0.503906 6.398438 0.996094"
+		volume_r="6.429932"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -9853,25 +9853,25 @@
 					<pos_xz xz="0.058594 0.911377"/>
 				</primitive>
 				<primitive index="4" type="triangle_strip" vertex_size="4">
-					<pos_xyz xyz="0.367188 6.273438 0.445313"/>
+					<pos_xyz xyz="0.492188 6.273438 0.445313"/>
 					<tex st="2.750000 0.187500"/>
 					<clr rgb="25 25 25"/>
-					<pos_xy xy="0.328125 6.398438"/>
+					<pos_xy xy="0.453125 6.398438"/>
 					<tex st="2.750000 7.937500"/>
 					<clr rgb="7 13 13"/>
 					<pos_diff xyz="0.019531 -0.125000 0.033936"/>
-					<pos_xy xy="0.308594 6.273438"/>
+					<pos_xy xy="0.433594 6.273438"/>
 				</primitive>
 				<primitive index="5" type="triangle_strip" vertex_size="4">
-					<pos_xy xy="0.308594 6.273438"/>
+					<pos_xy xy="0.433594 6.273438"/>
 					<tex st="2.750000 0.187500"/>
 					<clr rgb="25 25 25"/>
-					<pos_xyz xyz="0.328125 6.398438 0.445313"/>
+					<pos_xyz xyz="0.453125 6.398438 0.445313"/>
 					<tex st="2.750000 7.937500"/>
 					<clr rgb="7 13 13"/>
-					<pos_xy xy="0.289063 6.273438"/>
+					<pos_xy xy="0.414063 6.273438"/>
 					<clr rgb="10 17 17"/>
-					<pos_xz xz="0.308594 0.411377"/>
+					<pos_xz xz="0.433594 0.411377"/>
 				</primitive>
 				<primitive index="6" type="quads" vertex_size="12">
 					<tex st="4.812500 7.687500"/>
@@ -9891,13 +9891,13 @@
 					<tex st="4.812500 0.312500"/>
 					<pos_xy xy="0.027344 5.023438"/>
 					<tex st="4.812500 7.687500"/>
-					<pos_xyz xyz="0.277344 6.273438 0.496094"/>
+					<pos_xyz xyz="0.402344 6.273438 0.496094"/>
 					<tex st="7.187500 7.687500"/>
-					<pos_xy xy="0.378906 6.273438"/>
+					<pos_xy xy="0.503906 6.273438"/>
 					<tex st="7.187500 0.312500"/>
-					<pos_xz xz="0.378906 0.394531"/>
+					<pos_xz xz="0.503906 0.394531"/>
 					<tex st="4.812500 0.312500"/>
-					<pos_xy xy="0.277344 6.273438"/>
+					<pos_xy xy="0.402344 6.273438"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -9905,7 +9905,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface11" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -9926,28 +9926,28 @@
 		<display index="0" material="0" polygon="5" priority="0"/>
 		<display index="1" material="1" polygon="15" priority="0"/>
 		<display index="2" material="2" polygon="16" priority="0"/>
-		<display index="3" material="3" polygon="10" priority="0"/>
-		<display index="4" material="4" polygon="17" priority="0"/>
-		<display index="5" material="5" polygon="13" priority="0"/>
-		<display index="6" material="6" polygon="14" priority="0"/>
-		<display index="7" material="7" polygon="23" priority="0"/>
-		<display index="8" material="8" polygon="18" priority="0"/>
-		<display index="9" material="9" polygon="19" priority="0"/>
-		<display index="10" material="10" polygon="20" priority="0"/>
-		<display index="11" material="11" polygon="21" priority="0"/>
-		<display index="12" material="12" polygon="22" priority="0"/>
-		<display index="13" material="13" polygon="0" priority="0"/>
-		<display index="14" material="14" polygon="1" priority="0"/>
-		<display index="15" material="15" polygon="2" priority="0"/>
-		<display index="16" material="16" polygon="3" priority="0"/>
-		<display index="17" material="17" polygon="4" priority="0"/>
-		<display index="18" material="18" polygon="7" priority="0"/>
-		<display index="19" material="19" polygon="6" priority="0"/>
-		<display index="20" material="20" polygon="12" priority="0"/>
-		<display index="21" material="21" polygon="9" priority="0"/>
-		<display index="22" material="22" polygon="11" priority="0"/>
-		<display index="23" material="23" polygon="8" priority="0"/>
-		<display index="24" material="24" polygon="24" priority="0"/>
+		<display index="3" material="3" polygon="24" priority="0"/>
+		<display index="4" material="4" polygon="10" priority="0"/>
+		<display index="5" material="5" polygon="17" priority="0"/>
+		<display index="6" material="6" polygon="13" priority="0"/>
+		<display index="7" material="7" polygon="14" priority="0"/>
+		<display index="8" material="8" polygon="23" priority="0"/>
+		<display index="9" material="9" polygon="18" priority="0"/>
+		<display index="10" material="10" polygon="19" priority="0"/>
+		<display index="11" material="11" polygon="20" priority="0"/>
+		<display index="12" material="12" polygon="21" priority="0"/>
+		<display index="13" material="13" polygon="22" priority="0"/>
+		<display index="14" material="14" polygon="0" priority="0"/>
+		<display index="15" material="15" polygon="1" priority="0"/>
+		<display index="16" material="16" polygon="2" priority="0"/>
+		<display index="17" material="17" polygon="3" priority="0"/>
+		<display index="18" material="18" polygon="4" priority="0"/>
+		<display index="19" material="19" polygon="7" priority="0"/>
+		<display index="20" material="20" polygon="6" priority="0"/>
+		<display index="21" material="21" polygon="12" priority="0"/>
+		<display index="22" material="22" polygon="9" priority="0"/>
+		<display index="23" material="23" polygon="11" priority="0"/>
+		<display index="24" material="24" polygon="8" priority="0"/>
 	</node>
 </node_array>
 
