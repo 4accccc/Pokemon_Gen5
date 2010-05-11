@@ -40,13 +40,6 @@ enum{
   HEAPID_CHILD_MAX, //終端
 };
 
-//------------------------------------------------------------------
-//  ヒープサイズ定義
-//------------------------------------------------------------------
-#define HEAPSIZE_SYSTEM (0x008000)
-#define HEAPSIZE_APP    (0x186000)   // PL,GSでは約0x13A000
-#define HEAPSIZE_DSI    (0x486000)   // DSIは16M
-
 //将来的にTWLで増えたメモリは別HEAPIDから撮るための定義
 #define GFL_HEAPID_TWL (GFL_HEAPID_APP)
 
