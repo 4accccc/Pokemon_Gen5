@@ -1686,6 +1686,26 @@ extern void GFL_CLACT_WK_StartAnmCallBack( GFL_CLWK* p_wk, const GFL_CLWK_ANM_CA
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_WK_StopAnmCallBack( GFL_CLWK* p_wk );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションSRTアニメーション反映のONOFF
+ *
+ *	@param	p_wk         ワーク
+ *	@param  flag         フラグ TRUE：反映する　FALSE：反映しない
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_WK_SetSRTAnimeFlag( GFL_CLWK* p_wk, BOOL flag );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションSRTアニメーション反映フラグの取得
+ *
+ *	@param	p_wk         ワーク
+ *	@retval  TRUE：反映する　FALSE：反映しない
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GFL_CLACT_WK_GetSRTAnimeFlag( const GFL_CLWK* cp_wk );
+
 
 
 

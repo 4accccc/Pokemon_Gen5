@@ -194,6 +194,9 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
 				bact->cgr_id[x + y*num_x], head->pltt_index, bsp->cell_id[data_index], &clwkdata, 
 				head->setSerface, bsp->heap_id);
 			GFL_CLACT_WK_SetPlttOffs(bact->cap[x + y*num_x], head->pal_offset, CLWK_PLTTOFFS_MODE_OAM_COLOR);
+
+      // SRTƒAƒjƒOFF
+      GFL_CLACT_WK_SetSRTAnimeFlag( bact->cap[x + y*num_x], FALSE );
 		}
 	}
 	GFL_ARC_CloseDataHandle(hdl);

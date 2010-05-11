@@ -2608,6 +2608,9 @@ static void WEATHER_OBJ_WK_Init( WEATHER_OBJ_WORK* p_wk, WEATHER_TASK* p_parent,
 	// •`‰æOFF
 	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 
+  // SRTƒAƒjƒOFF
+  GFL_CLACT_WK_SetSRTAnimeFlag( p_wk->p_clwk, FALSE );
+
 }
 
 //----------------------------------------------------------------------------
