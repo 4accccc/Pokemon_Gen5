@@ -369,8 +369,13 @@
 #define BTLEFF_USE_BALL             ( 8 )
 #define BTLEFF_CAPTURE_BALL_ATTACK  ( 9 )
 
-#define BTLEFF_DRAW_OFF ( 0 )
-#define BTLEFF_DRAW_ON  ( 1 )
+//ゲージ表示／非表示
+#define BTLEFF_GAUGE_DRAW_OFF ( 0 )
+#define BTLEFF_GAUGE_DRAW_ON  ( 1 )
+
+#define BTLEFF_GAUGE_MINE   ( 0 )
+#define BTLEFF_GAUGE_ENEMY  ( 1 )
+#define BTLEFF_GAUGE_ALL    ( 2 )
 
 #endif //__BTLV_EFFVM_DEF_H_
 
@@ -1868,16 +1873,20 @@ ex)
 /**
  * @brief	HPゲージ表示／非表示
  *
- * #param_num	1
+ * #param_num	2
  * @param	flag		表示／非表示フラグ
+ * @param	side		操作する側
  *
  * #param	COMBOBOX_TEXT 非表示  表示
- * #param	COMBOBOX_VALUE  BTLEFF_DRAW_OFF BTLEFF_DRAW_ON
+ * #param	COMBOBOX_VALUE  BTLEFF_GAUGE_DRAW_OFF BTLEFF_GAUGE_DRAW_ON
+ * #param	COMBOBOX_TEXT すべて  自分側  相手側
+ * #param	COMBOBOX_VALUE  BTLEFF_GAUGE_ALL  BTLEFF_GAUGE_MINE BTLEFF_GAUGE_ENEMY
  */
 //======================================================================
-	.macro  GAUGE_VANISH flag
+	.macro  GAUGE_VANISH flag, side
 	.short	EC_GAUGE_VANISH
 	.long		\flag
+	.long		\side
 	.endm
 
 //======================================================================

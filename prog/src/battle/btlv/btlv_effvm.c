@@ -418,21 +418,22 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
  *  データテーブル
  */
 //============================================================================================
-#define TBL_AA2BB ( 4 * 0 )
-#define TBL_BB2AA ( 4 * 1 )
-#define TBL_A2B   ( 4 * 2 )
-#define TBL_A2C   ( 4 * 3 )
-#define TBL_A2D   ( 4 * 4 )
-#define TBL_B2A   ( 4 * 5 )
-#define TBL_B2C   ( 4 * 6 )
-#define TBL_B2D   ( 4 * 7 )
-#define TBL_C2A   ( 4 * 8 )
-#define TBL_C2B   ( 4 * 9 )
-#define TBL_C2D   ( 4 * 10 )
-#define TBL_D2A   ( 4 * 11 )
-#define TBL_D2B   ( 4 * 12 )
-#define TBL_D2C   ( 4 * 13 )
-#define TBL_MAX   ( 4 * 14 )
+#define TBL_CNT   ( 4 * 0 )
+#define TBL_AA2BB ( 4 * 1 )
+#define TBL_BB2AA ( 4 * 2 )
+#define TBL_A2B   ( 4 * 3 )
+#define TBL_A2C   ( 4 * 4 )
+#define TBL_A2D   ( 4 * 5 )
+#define TBL_B2A   ( 4 * 6 )
+#define TBL_B2C   ( 4 * 7 )
+#define TBL_B2D   ( 4 * 8 )
+#define TBL_C2A   ( 4 * 9 )
+#define TBL_C2B   ( 4 * 10 )
+#define TBL_C2D   ( 4 * 11 )
+#define TBL_D2A   ( 4 * 12 )
+#define TBL_D2B   ( 4 * 13 )
+#define TBL_D2C   ( 4 * 14 )
+#define TBL_MAX   ( 4 * 15 )
 #define TBL_ERROR ( 0xffffffff )
 
 static const int  script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
@@ -600,7 +601,7 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
     //HPゲージ表示
-    BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
+    BTLV_EFFECT_SetGaugeDrawEnable( TRUE, BTLEFF_GAUGE_ALL );
 
     if( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA )
     {
@@ -677,7 +678,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   {
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, GFL_HEAP_LOWID( bevw->heapID ) );
     //HPゲージ非表示
-    BTLV_EFFECT_SetGaugeDrawEnable( FALSE );
+    BTLV_EFFECT_SetGaugeDrawEnable( FALSE, BTLEFF_GAUGE_ALL );
 
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
     //BGMのマスターボリュームを下げる
@@ -1114,8 +1115,8 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       u32   ofs;
       u32*  ofs_p;
 
-      heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
-      bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
+      heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
+      bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, GFL_HEAP_LOWID( bevw->heapID ) );
       ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
       ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
       resource = (void *)&bevw->dpd->adrs[ ofs ];
@@ -1124,9 +1125,9 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       return bevw->control_mode;
     }
 #endif
-    heap = GFL_HEAP_AllocMemory( bevw->heapID, PARTICLE_LIB_HEAP_SIZE );
-    bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, bevw->heapID );
-    resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, bevw->heapID );
+    heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
+    bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, GFL_HEAP_LOWID( bevw->heapID ) );
+    resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, GFL_HEAP_LOWID( bevw->heapID ) );
     GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
     EFFVM_RegistSprMax( bevw, ptc_no, resource );
   }
@@ -1277,7 +1278,8 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_ORTHO( VMHANDLE *vmh, void *context_work 
 
     if( GFL_PTC_GetCameraPtr( bevw->ptc[ ptc_no ] ) == NULL )
     {
-      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
+      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,
+                                    GFL_HEAP_LOWID( bevw->heapID ) );
     }
 
     beeiw_src->vmh      = vmh;
@@ -2291,9 +2293,9 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
   GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
-  GFL_ARC_UTIL_TransVramScreen( ARCID_WAZAEFF_GRA, datID, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
-  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
+  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, GFL_HEAP_LOWID( bevw->heapID ) );
+  GFL_ARC_UTIL_TransVramScreen( ARCID_WAZAEFF_GRA, datID, GFL_BG_FRAME3_M, 0, 0, 0, GFL_HEAP_LOWID( bevw->heapID ) );
+  PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, GFL_HEAP_LOWID( bevw->heapID ), FADE_MAIN_BG, 0,
                         BTLV_EFFVM_BG_PAL * 16, 0 );
 
   bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
@@ -2737,12 +2739,13 @@ static VMCMD_RESULT VMEC_GAUGE_VANISH( VMHANDLE *vmh, void *context_work )
 { 
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BOOL flag = ( BOOL )VMGetU32( vmh );
+  BOOL side = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_GAUGE_VANISH\n");
 #endif DEBUG_OS_PRINT
 
-  BTLV_EFFECT_SetGaugeDrawEnable( flag );
+  BTLV_EFFECT_SetGaugeDrawEnable( flag, side );
 
   return bevw->control_mode;
 }
@@ -2854,7 +2857,7 @@ static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEEFFECT ) );
+  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_SEEFFECT ) );
   int start, end;
 
 #ifdef DEBUG_OS_PRINT
@@ -2905,7 +2908,7 @@ static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_SE_EFFECT( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
-  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_SEEFFECT ) );
+  BTLV_EFFVM_SEEFFECT*  bes = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_SEEFFECT ) );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_SE_EFFECT\n");
@@ -5297,7 +5300,8 @@ static VMCMD_RESULT EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context
       proj.far    = FX32_ONE * 1024;
       proj.scaleW = FX32_ONE;
 
-      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at, bevw->heapID );
+      GFL_PTC_PersonalCameraCreate( bevw->ptc[ ptc_no ], &proj, DEFAULT_PERSP_WAY, &Eye, &vUp, &at,
+                                    GFL_HEAP_LOWID( bevw->heapID ) );
     }
 
     bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ),
