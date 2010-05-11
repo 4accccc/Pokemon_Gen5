@@ -127,20 +127,20 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//30  戦闘から逃げ出した(GAMEBEACON_ACTION_ESCAPE)
-		2,		//priority
+		4,		//priority
 		10 * 60,		//life
 	},
 	{	//31  HPが残り少ない(GAMEBEACON_ACTION_HP_LITTLE)
-		3,		//priority
-		15 * 60,		//life
-	},
-	{	//32  PPが残り少ない(GAMEBEACON_ACTION_PP_LITTLE)
 		2,		//priority
 		10 * 60,		//life
 	},
+	{	//32  PPが残り少ない(GAMEBEACON_ACTION_PP_LITTLE)
+		1,		//priority
+		10 * 60,		//life
+	},
 	{	//33  先頭のポケモンが瀕死(GAMEBEACON_ACTION_DYING)
-		4,		//priority
-		20 * 60,		//life
+		3,		//priority
+		10 * 60,		//life
 	},
 	{	//34  先頭のポケモンが状態異常(GAMEBEACON_ACTION_STATE_IS_ABNORMAL)
 		1,		//priority
