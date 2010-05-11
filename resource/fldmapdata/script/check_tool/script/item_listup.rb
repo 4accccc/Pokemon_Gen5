@@ -5,13 +5,13 @@
 # @date   2010.05.10
 ###################################################################################
 require "item_info.rb"
-require "place_name_hash"
+require "place_name_hash.rb"
 
 # チェック対象のファイル名
 CHECK_TARGET_FILE_NAME = "*.ev"
 
 # チェック対象のディレクトリ
-PATH_TO_CHECK_DIR = "../"
+PATH_TO_CHECK_DIR = "../../"
 
 # チェック対象ファイルへのパス
 PATH_TO_CHECK_TARGET_FILE = PATH_TO_CHECK_DIR + CHECK_TARGET_FILE_NAME
@@ -101,7 +101,7 @@ end
 
 
 # 解析結果を出力
-file = File::open( "result.txt", "w" )
+file = File::open( "../result/result.txt", "w" )
 item_info.each do |info|
   data = info.zone_id + "\t" + info.zone_name + "\t" + info.item_name
   file.puts( data )
@@ -109,7 +109,7 @@ end
 file.close
 
 # 解析失敗リストを出力
-file = File::open( "failed.txt", "w" )
+file = File::open( "../result/failed.txt", "w" )
 file.puts( item_get_skip_file_list )
 file.puts( item_get_failed_file_list )
 file.close

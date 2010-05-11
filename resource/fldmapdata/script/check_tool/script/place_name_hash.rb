@@ -5,7 +5,7 @@ require 'kconv'  # for String.toutf8
 
 
 def get_zone_name( place_name_id ) 
-  file = File::open( "place_name.gmm", "r" )
+  file = File::open( "../copy/place_name.gmm", "r" )
   file_lines = file.readlines
   file.close
 
@@ -28,7 +28,7 @@ end
 
 def create_place_name_hash
 
-  file = File::open( "zonetable.txt", "r" )
+  file = File::open( "../copy/zonetable.txt", "r" )
   zone_table = file.readlines
   file.close
 

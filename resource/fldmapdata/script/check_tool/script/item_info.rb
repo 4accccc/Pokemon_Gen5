@@ -6,7 +6,7 @@
 #----------------------------------------------------------------------------------
 def GetItemName( label )
 
-	file = File::open("itemsym.h", "r");
+	file = File::open("../copy/itemsym.h", "r");
 	file_line = file.readlines
 	file.close
 
