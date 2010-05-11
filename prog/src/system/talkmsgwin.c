@@ -213,9 +213,6 @@ static void clearBmpWindow( TALKMSGWIN_SYS* tmsgwinSys, GFL_BMPWIN *bmpwin );
 static void writeWindowSelect( TALKMSGWIN_SYS* tmsgwinSys,
     GFL_BMPWIN *bmpwin, u8 winType, TAIL_SETPAT tailPat );
 
-  //動作確認用暫定
-static BOOL  debugOn;
-
 #define TALKMSGWIN_OPENWAIT  (8)
 //============================================================================================
 /**
@@ -253,8 +250,6 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
     u32 siz = setupWindowBG(tmsgwinSys, &tmsgwinSys->setup);
     tmsgwinSys->chrNum = siz/0x20;
   }
-
-  debugOn = FALSE;
 
   return tmsgwinSys;
 }
@@ -321,12 +316,6 @@ void TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys )
 u32 TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys )
 {
   return tmsgwinSys->chrNum;
-}
-
-//------------------------------------------------------------------
-void TALKMSGWIN_SystemDebugOn( TALKMSGWIN_SYS* tmsgwinSys )
-{
-  debugOn = TRUE;
 }
 
 //============================================================================================
@@ -741,33 +730,7 @@ static void setupWindow(  TALKMSGWIN_SYS*    tmsgwinSys,
   tmsgwin->tailData.tailPat = setup->tailPat;
 #endif
   
-#if 0
-  //描画位置算出（センタリング）
-  {
-    u32 width = PRINTSYS_GetStrWidth(msg, tmsgwinSys->setup.fontHandle, 0);
-    u32 height = PRINTSYS_GetStrHeight(msg, tmsgwinSys->setup.fontHandle);
 
-    //heightが正しくないのでとりあえず
-    height = setup->winsy*8;
-
-    if(width > (setup->winsx * 8)){
-      tmsgwin->writex = 0;
-      OS_Printf("文字幅オーバー！！！\n");
-    } else {
-      tmsgwin->writex = (setup->winsx*8 - width)/2;
-    }
-    if(height > (setup->winsy * 8)){
-      tmsgwin->writey = 0;
-      OS_Printf("文字列オーバー！！！\n");
-    } else {
-#ifndef MSGPOS_090730ROM
-      tmsgwin->writey = (setup->winsy*8 - height)/2;
-#else
-      tmsgwin->writey = 2;
-#endif
-    }
-  }
-#else
 #ifdef TALKMSGWIN_POS_100506
   tmsgwin->writex = 8;
 #else //old 100506
@@ -775,7 +738,6 @@ static void setupWindow(  TALKMSGWIN_SYS*    tmsgwinSys,
 #endif
 //tmsgwin->writey = 2; //縦サイズ32dot、１文字縦サイズ16で被ってしまう。
   tmsgwin->writey = 0;
-#endif
   
   tmsgwin->seq = WINSEQ_IDLING;
 }
@@ -814,7 +776,6 @@ static void closeWindow( TMSGWIN* tmsgwin )
 static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 {
   u16 timerWait = TALKMSGWIN_OPENWAIT;
-  if(debugOn == TRUE){ timerWait *= 2; }
 
   switch(tmsgwin->seq){
   case WINSEQ_EMPTY:
@@ -832,12 +793,7 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
       tmsgwin->timer++;
     }else{
       int wait;
-      
-      if(debugOn == TRUE){
-        wait = 2;
-      } else {
-        wait = tmsgwin->msgwait;
-      }
+      wait = tmsgwin->msgwait;
 
       tmsgwin->seq = WINSEQ_HOLD;
       writeWindow(tmsgwinSys, tmsgwin);
@@ -886,12 +842,7 @@ static void mainfuncWindowAlone(
   case WINSEQ_OPEN:
     {
       int wait;
-      
-      if(debugOn == TRUE){
-        wait = 2;
-      } else {
-        wait = tmsgwin->msgwait;
-      }
+      wait = tmsgwin->msgwait;
       
       tmsgwin->seq = WINSEQ_HOLD;
       writeWindowAlone(tmsgwinSys, tmsgwin);
@@ -959,8 +910,6 @@ static void  drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOn
   fx32 scale;
   TAIL_DATA* tailData = &tmsgwin->tailData;
   u16 timerWait = TALKMSGWIN_OPENWAIT;
-
-  if(debugOn == TRUE){ timerWait *= 2; }
 
   G3_PushMtx();
   //平行移動パラメータ設定
