@@ -656,7 +656,7 @@
   //顔アップ
   DEF_CMD( EvCmdFaceup_Start, EV_SEQ_FACEUP_SATRT )
   DEF_CMD( EvCmdFaceup_End, EV_SEQ_FACEUP_END )
-  NO_CMD()  //DEF_CMD( EvCmdFaceup_Change, EV_SEQ_FACEUP_CHG )  未使用になったので削除
+  DEF_CMD( EvCmdFaceup_StartAnm, EV_SEQ_FACEUP_START_ANM )
 
   //相性チェック
   DEF_CMD( EvCmdGetFeelingCheckCount, EV_SEQ_GET_FEELING_COUNT )
@@ -892,8 +892,6 @@
   DEF_CMD( EvCmdLegStartBallAnm, EV_SEQ_LEG_START_BALL_ANM )
   DEF_CMD( EvCmdLegWaitBallAnm, EV_SEQ_LEG_WAIT_BALL_ANM )
   DEF_CMD( EvCmdLegWaitBallPokeApp, EV_SEQ_LEG_WAIT_BALL_POKE_APP )
-
-  //顔アップ表示じのアニメ開始リクエスト
 
   END_CMD
   //スクリプトコマンドテーブル終了
