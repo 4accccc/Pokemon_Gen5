@@ -878,11 +878,14 @@ BOOL  BTLV_EFFECT_CheckExecuteGauge( void )
 //============================================================================================
 /**
  * @brief  ゲージ表示/非表示
+ *
+ * @param[in] on_off  表示／非表示フラグ
+ * @param[in] side    操作する側
  */
 //============================================================================================
-void  BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off )
+void  BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off, int side )
 {
-  BTLV_GAUGE_SetDrawEnable( bew->bgw, on_off );
+  BTLV_GAUGE_SetDrawEnable( bew->bgw, on_off, side );
 }
 
 //============================================================================================

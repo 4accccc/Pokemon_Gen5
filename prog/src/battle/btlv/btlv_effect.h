@@ -235,7 +235,7 @@ extern  void              BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_CreateMigawari( BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_DeleteMigawari( BtlvMcssPos vpos );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
-extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
+extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off, int side );
 extern  void              BTLV_EFFECT_SetGaugeStatus( PokeSick sick,  BtlvMcssPos pos );
 extern  void              BTLV_EFFECT_SetGaugeYure( BtlvMcssPos pos );
 extern  BOOL              BTLV_EFFECT_CheckExistGauge( BtlvMcssPos pos );
