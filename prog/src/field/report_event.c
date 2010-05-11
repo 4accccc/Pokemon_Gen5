@@ -237,7 +237,6 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 */
 
   case REPORT_SEQ_SAVE_SIZE_CHECK:        // セーブサイズ取得
-    GAMEDATA_PlayTimeSetSaveTime( GAMESYSTEM_GetGameData(wk->gsys) );
 		{	// レコードデータ＋
 			RECORD * rec = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(wk->gsys) );
 			RECORD_Inc( rec, RECID_REPORT_COUNT );

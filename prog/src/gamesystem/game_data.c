@@ -1929,18 +1929,6 @@ void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value)
 
 //==================================================================
 /**
- * PLAYTIME ƒZ[ƒuŽžŠÔ‚ÌÝ’è
- *
- * @param   gamedata    
- */
-//==================================================================
-void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata)
-{
-  PLAYTIME_SetSaveTime( gamedata->playtime );
-}
-
-//==================================================================
-/**
  * PLAYTIME Žæ“¾ 
  *
  * @param   gamedata    

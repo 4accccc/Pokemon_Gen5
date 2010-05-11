@@ -776,16 +776,6 @@ extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
 
 //==================================================================
 /**
- * PLAYTIME ÉZÅ[Éuéûä‘ÇÃê›íË
- *
- * @param   gamedata    
- */
-//==================================================================
-extern void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata);
-
-
-//==================================================================
-/**
  * PLAYTIME éÊìæ 
  *
  * @param   gamedata    
