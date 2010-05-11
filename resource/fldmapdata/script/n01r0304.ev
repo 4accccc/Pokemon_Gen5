@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_n01r0304.h"
-  //.include  "n01r0304.h"
+  .include  "n01r0304.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_n01r0304_poke_01
 _EVENT_DATA    ev_n01r0304_hakaiw_01
 _EVENT_DATA    ev_n01r0304_warpman_01
+_EVENT_DATA		ev_n01r0304_ball_01
 _EVENT_DATA_END
 
 
@@ -82,4 +83,98 @@ EVENT_START	ev_n01r0304_warpman_01
 
 EVENT_END
 
+/**************************************************************/
+/*			ボールをくれるプラズマ団員						  */
+/**************************************************************/
+EVENT_START		ev_n01r0304_ball_01
+_TALK_OBJ_START()
+	//初回話しかけの場合　【仮】フラグ
+	IF FLAG_OFF ( FE_N01R0304_TALK ) THEN
+		
+		//ポケモンを　つかまえる　どうぐは　もういらないのよ
+		_BALLOONWIN_OBJMSG_POS( msg_n01r0304_ball_01 , N01R0304_HAKAIW_02, POS_DEFAULT )
+		_MSGWIN_CLOSE()
+		
+		_ITEM_EVENT_KEYWAIT( ITEM_HAIPAABOORU, 1 )
+	
+		//========================================/
+		
+		_FLAG_SET( FE_N01R0304_TALK )
+		
+		//========================================/
+	
+	//２回目以降の話しかけの場合
+	ELSE
+		
+		DEFINE_LOCAL	LWK_BALL_NUM
+		DEFINE_LOCAL	LWK_BALL_CHK
+		DEFINE_LOCAL	LWK_ZERO
+		
+		$LWK_BALL_NUM = 1
+		$LWK_ZERO = 0
+		
+		//マスターボール～プレシャスボールまで繰り返し
+		WHILE $LWK_BALL_NUM != 17
 
+			//アイテムをチェックする
+			_ITEM_CHK( LWK_BALL_NUM, 1, LWK_BALL_CHK )
+
+			//ボールを１個以上所持していた場合
+			IF $LWK_BALL_CHK == TRUE THEN
+			
+				
+				//========================================/
+				
+				$LWK_BALL_NUM = 17
+				
+				//========================================/
+				
+			
+			//ボールが０個の場合
+			ELSE
+			
+				//========================================/
+				
+				$LWK_BALL_NUM += 1
+				$LWK_ZERO += 1
+				
+				//========================================/
+			
+			ENDIF
+	
+		ENDWHILE
+
+		//アイテムをチェックする
+		_ITEM_CHK( ITEM_DORIIMUBOORU, 1, LWK_BALL_CHK )
+		
+		//ドリームボール未所持の場合
+		IF $LWK_BALL_CHK == FALSE THEN
+		
+			//========================================/
+			$LWK_ZERO += 1
+			//========================================/
+		
+		ENDIF
+
+		//ボールが完全に未所持の場合
+		IF $LWK_ZERO == 17 THEN
+		
+			//……ボールが　ほしいのね　いいわよ　もっていきなさいな
+			_BALLOONWIN_OBJMSG_POS( msg_n01r0304_ball_03 , N01R0304_HAKAIW_02, POS_DEFAULT )
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_HAIPAABOORU, 1 )
+		
+		//ボールを所持している場合
+		ELSE
+			
+			//モンスターボール……　あたしから　すれば
+			_BALLOONWIN_OBJMSG_POS( msg_n01r0304_ball_02 , N01R0304_HAKAIW_02, POS_DEFAULT )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	ENDIF
+
+EVENT_END

@@ -12,6 +12,7 @@
 #define N01R0304_HAKAIW_01                 0
 #define N01R0304_POKE_01                   1
 #define N01R0304_WARPMAN_01                2
+#define N01R0304_HAKAIW_02                 3
 
 #endif //ZONE_N01R0304_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0304.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
