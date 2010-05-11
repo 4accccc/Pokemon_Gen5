@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T15:21:06"/>
+	<create user="matsumiya" host="W00224" date="2010-05-11T16:58:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,18 +306,23 @@
 	</row>
 
 	<row id="msg_c03r1302_man3_01">
-		<comment>♂</comment>
+		<comment>♂：ドイツ語
+・このまえ　くるまを　かったんだよ！▼
+　これで　ジムバッジが　なくても
+　つぎの　まちまで　ひとっとび！▼
+　……まぁ　めんきょが
+　とれたらの　はなしだけど</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
-		<language name="JPN" width="256">このまえ　くるまを　かったんだよ！▼
-これで　ジムバッジが　なくても
-つぎの　まちまで　ひとっとび！▼
-……まぁ　めんきょが
-とれたらの　はなしだけど</language>
-		<language name="JPN_KANJI" width="256">このまえ　車を　買ったんだよ！▼
-これで　ジムバッジが　なくても
-次の　街まで　ひとっとび！▼
-……まぁ　免許が
-とれたらの　話だけど</language>
+		<language name="JPN" width="256">Ich habe mir nun ein Auto zugelegt!▼
+Damit ist die nächste Stadt auch
+ganz ohne Orden zum Greifen nah!▼
+Es sei denn, ich rassele durch
+meine Führerscheinprüfung...</language>
+		<language name="JPN_KANJI" width="256">Ich habe mir nun ein Auto zugelegt!▼
+Damit ist die nächste Stadt auch
+ganz ohne Orden zum Greifen nah!▼
+Es sei denn, ich rassele durch
+meine Führerscheinprüfung...</language>
 	</row>
 
 	<row id="msg_c03r1302_middleman2_01">
@@ -447,17 +452,20 @@ having a good time?</language>
 	</row>
 
 	<row id="msg_c03r1302_fighterw_01">
+		<comment>♀：スペイン語
+・はじめて　ここに　きてみたけど▼
+　ステキな　けしきに
+　アットホームな　くうき！▼
+　こんど　ともだちも　つれてきちゃおーっと！</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
-		<language name="JPN" width="256">はじめて　ここに　きてみたけど▼
-ステキな　けしきに
-アットホームな　くうき！▼
-こんど　ともだちも
-つれてきちゃおーっと！</language>
-		<language name="JPN_KANJI" width="256">初めて　ここに　きてみたけど▼
-ステキな　景色に
-アットホームな　空気！▼
-今度　友達も
-連れてきちゃおーっと！</language>
+		<language name="JPN" width="256">¡Es la primera vez que vengo aquí!▼
+¡Pero este precioso paisaje hace
+que me sienta como en casa!▼
+¡La próxima vez traeré a mis amigos!</language>
+		<language name="JPN_KANJI" width="256">¡Es la primera vez que vengo aquí!▼
+¡Pero este precioso paisaje hace
+que me sienta como en casa!▼
+¡La próxima vez traeré a mis amigos!</language>
 	</row>
 
 	<flowchart-group-list>
