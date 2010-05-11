@@ -259,6 +259,8 @@ enum {
 //--------------------------------------------------------------
 #define FIELD_PROG_AREA_HEAP_SIZE  (0xf800)
 static u8 FIELD_PROG_AREA_HEAP_BUF[ FIELD_PROG_AREA_HEAP_SIZE ] ATTRIBUTE_ALIGN(4);  //<-4byteアライメント
+#define FIELD_PROG_AREA_WEATHER_HEAP_SIZE (0x6800)  // 天気に割り当てるメモリサイズ
+#define FIELD_PROG_AREA_PLACENAME_HEAP_SIZE (0x7000)  // 地名表示に割り当てるメモリサイズ
 
 
 //--------------------------------------------------------------
@@ -536,6 +538,10 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
   // このメモリを使用して、
   // 天気などを動かす。
   GFL_HEAP_CreateHeapInBuffer( FIELD_PROG_AREA_HEAP_BUF, FIELD_PROG_AREA_HEAP_SIZE, HEAPID_FIELD_PRBUF );
+  // 天気、地名表示は、ZONE切り替え時に分割読み込みを行うため
+  // 断片化しやすい。先にメモリを確保し、断片化を回避する。
+  GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_WEATHER, FIELD_PROG_AREA_WEATHER_HEAP_SIZE );
+  GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_PLACE_NAME, FIELD_PROG_AREA_PLACENAME_HEAP_SIZE );
 
 	return fieldWork;
 }
@@ -550,6 +556,11 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
   GAMESYS_WORK *gsys = fieldWork->gsys;
+
+  // 天気、地名表示は、ZONE切り替え時に分割読み込みを行うため
+  // 断片化しやすい。先にメモリを確保し、断片化を回避する。
+  GFL_HEAP_DeleteHeap( HEAPID_WEATHER );
+  GFL_HEAP_DeleteHeap( HEAPID_PLACE_NAME );
 
   // プログラムエリアを使用したヒープを破棄
   GFL_HEAP_DeleteHeap( HEAPID_FIELD_PRBUF );
@@ -668,7 +679,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->goldMsgWin = NULL;
 
     // 地名表示システム作成
-    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( gsys, HEAPID_FIELD_PRBUF, fieldWork->fldMsgBG );
+    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( gsys, HEAPID_PLACE_NAME, fieldWork->fldMsgBG );
 
     SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
     // フラッシュチェック
@@ -871,12 +882,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
           fieldWork->zonefog, 
           fsnd,
           PMSEASON_GetConsiderCommSeason(gsys),
-          HEAPID_FIELD_PRBUF ); // プログラムヒープを使用する。
+          HEAPID_WEATHER ); // プログラムヒープを使用する。
     }
     
     // 天気晴れ
     FIELD_WEATHER_Set(
-        fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_FIELD_PRBUF );
+        fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_WEATHER );
 
     //フィールドギミックセットアップ
     FLDGMK_SetUpFieldGimmick(fieldWork);
@@ -986,7 +997,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
   // 天気待ち
   while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys)  ){
-	  FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
+	  FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
   }
   
   { //フィールド初期化スクリプトの呼び出し
@@ -1042,6 +1053,15 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
 #ifdef PM_DEBUG
   DEBUG_MAIN_UPDATE_TYPE = 0;
+
+#endif
+
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    TOMOYA_Printf( "prog nokori 0x%x\n", GFL_HEAP_GetHeapFreeSize( HEAPID_FIELD_PRBUF ) );
+    TOMOYA_Printf( "placename nokori 0x%x\n", GFL_HEAP_GetHeapFreeSize( HEAPID_PLACE_NAME ) );
+    TOMOYA_Printf( "weather nokori 0x%x\n", GFL_HEAP_GetHeapFreeSize( HEAPID_WEATHER ) );
+  }
 #endif
 
   if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
@@ -2407,7 +2427,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 /*#ifdef PM_DEBUG
   INIT_CHECK();   //デバッグ：処理負荷計測用
 #endif*/
-	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
+	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
 /*#ifdef PM_DEBUG
   {
     OSTick debug_fieldmap_end_tick;
@@ -3014,7 +3034,7 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	FIELD_WEATHER *we = FIELDMAP_GetFieldWeather( fieldWork );
 
   PM_WEATHER_UpdateZoneChangeWeatherNo( fieldWork->gsys, zone_id );
-
+  
   w_no = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
 
 	if( w_no != WEATHER_NO_NUM ){

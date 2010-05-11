@@ -2158,6 +2158,9 @@ static void WEATHER_TASK_WK_InitOther( WEATHER_TASK* p_wk, HEAPID heapID )
 	int i;
 	
 	GF_ASSERT( !p_wk->p_user_work );
+
+  //TOMOYA_Printf( "weather_user_work size 0x%x\n", p_wk->cp_data->work_byte );
+  
 	p_wk->p_user_work = GFL_HEAP_AllocClearMemory( heapID, p_wk->cp_data->work_byte );
 
 	// オブジェワークのアクターをクリエイト
