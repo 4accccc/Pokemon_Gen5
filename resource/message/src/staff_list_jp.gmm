@@ -1779,18 +1779,23 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_277">
-		<language name="JPN" width="256">ポケットモンスターブラック</language>
-		<language name="JPN_KANJI" width="256">ポケットモンスターブラック</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_278">
 		<language name="JPN" width="256">かいはつ</language>
 		<language name="JPN_KANJI" width="256">かいはつ</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_279">
+	<row id="STAFF_ROLL_STR_278">
 		<language name="JPN" width="256">ゲームフリーク</language>
 		<language name="JPN_KANJI" width="256">ゲームフリーク</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_279">
+		<language name="JPN" width="256">ポケットモンスターブラック</language>
+		<language name="JPN_KANJI" width="256">ポケットモンスターブラック</language>
+	</row>
+
+	<row id="STAFF_ROLL_STR_280">
+		<language name="JPN" width="256">ポケットモンスターホワイト</language>
+		<language name="JPN_KANJI" width="256">ポケットモンスターホワイト</language>
 	</row>
 
 	<flowchart-group-list>

@@ -100,6 +100,7 @@ enum {
 	ITEMLIST_LABEL_LOGO_PUT,
 	ITEMLIST_LABEL_3D_PUT,
 	ITEMLIST_LABEL_3D_CLEAR,
+	ITEMLIST_LABEL_VERSION,
 
 	ITEMLIST_LABEL_MAX,
 };
@@ -111,9 +112,10 @@ enum {
 	STR_PUT_MODE_CENTER,			// 中央
 };
 
-#define SKIP_SPEED				( 4 )
-#define	STR_FADE_SPEED		( 4 )
-#define	LOGO_FADE_SPEED		( 1 )
+#define SKIP_SPEED					( 4 )
+#define	STR_FADE_SPEED			( 4 )
+#define	LOGO_FADEIN_SPEED		( 16 )
+#define	LOGO_FADEOUT_SPEED	( 1 )
 
 typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 
@@ -168,9 +170,11 @@ static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
 static void DebugGridSet(void);
+//static void DebugCameraPrint( SRMAIN_WORK * wk );
 #endif	// PM_DEBUG
 
 
@@ -232,6 +236,7 @@ static const pCOMM_FUNC CommFunc[] = {
 	Comm_LabelLogoPut,			// ラベル：ロゴ表示
 	Comm_Label3DPut,				// ラベル：３Ｄ表示
 	Comm_Label3DClear,			// ラベル：３Ｄクリア
+	Comm_LabelVersion,			// ラベル：バージョン別処理
 };
 
 
@@ -339,20 +344,20 @@ static int MainSeq_StartSePlay( SRMAIN_WORK * wk )
 static int MainSeq_Main( SRMAIN_WORK * wk )
 {
 #ifdef	PM_DEBUG
-	// 終了
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
-	}
 	// グリッド表示
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		DebugGridSet();
 	}
 	// 一時停止
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
 		wk->debugStopFlg ^= 1;
 	}
 	if( wk->debugStopFlg == TRUE ){
 		return MAINSEQ_MAIN;
+	}
+	// 終了
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 #endif
 
@@ -742,6 +747,7 @@ static const GFL_G3D_UTIL_SETUP G3DUtilSetup = {
 	G3DUtilObjTbl, NELEMS(G3DUtilObjTbl),
 };
 
+/*	常駐が大きくなるので使えない...
 // 3D OBJデータ
 static const GFL_G3D_SCENEOBJ_DATA	ObjData[] =
 {
@@ -760,6 +766,7 @@ static const GFL_G3D_SCENEOBJ_DATA	ObjData[] =
 		Poke3DMove,	// 動作関数
 	},
 };
+*/
 
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light_data[] = {
@@ -778,12 +785,24 @@ static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_d
 #define cameraFar       ( 1024 << FX32_SHIFT )
 
 // ３Ｄカメラ設定
+/*
 #define	CAMERA_POS_X			( 43354 )
 #define	CAMERA_POS_Y			( 30266 )
 #define	CAMERA_POS_Z			( 7671 )
 #define	CAMERA_TARGET_X		( 43354 )
 #define	CAMERA_TARGET_Y		( 31902 )
 #define	CAMERA_TARGET_Z		( 0 )
+*/
+#define	CAMERA_POS_X			( 69939 )
+#define	CAMERA_POS_Y			( 179142 )
+#define	CAMERA_POS_Z			( -266359 )
+#define	CAMERA_TARGET_X		( -2833552 )
+#define	CAMERA_TARGET_Y		( 1208595 )
+#define	CAMERA_TARGET_Z		( -7952187 )
+/*
+POS : x = 69939, y = 179142, z = -266359
+TARGET : x = -2833552, y = 1208595, z = -7952187
+*/
 
 #ifdef PM_DEBUG
 //static VecFx32 test_pos    = { 0, BADGE3D_CAMERA_POS_Y, BADGE3D_CAMERA_POS_Z };
@@ -809,9 +828,10 @@ static void Init3D( SRMAIN_WORK * wk )
 		NULL );							// セットアップ関数(NULLの時はDefaultSetUp)
 
 	// ハンドル作成
-	wk->g3d_util = GFL_G3D_UTIL_Create ( 2, 1, HEAPID_STAFF_ROLL );
+	wk->g3d_util = GFL_G3D_UTIL_Create( 2, 1, HEAPID_STAFF_ROLL );
 	wk->g3d_unit = GFL_G3D_UTIL_AddUnit( wk->g3d_util, &G3DUtilSetup );
 
+/*	常駐が大きくなるので使えない...
 	// 管理システム作成
 	wk->g3d_scene = GFL_G3D_SCENE_Create(
 										wk->g3d_util,					// 依存するg3Dutil
@@ -820,6 +840,7 @@ static void Init3D( SRMAIN_WORK * wk )
 										32,										// アクセサリ数
 										FALSE,								// パーティクルシステムの起動フラグ
 										HEAPID_STAFF_ROLL );	// ヒープID
+
 	// OBJ追加
 	wk->g3d_obj_id = GFL_G3D_SCENEOBJ_Add( wk->g3d_scene, ObjData, NELEMS(ObjData), 0 );
 
@@ -828,6 +849,20 @@ static void Init3D( SRMAIN_WORK * wk )
 		GFL_G3D_SCENEOBJ_DisableAnime( obj, 0 );
 		GFL_G3D_SCENEOBJ_ResetAnimeFrame( obj, 0 );
 		GFL_G3D_SCENEOBJ_EnableAnime( obj, 0 );
+	}
+*/
+	{
+		GFL_G3D_OBJ * obj;
+		int	anm;
+		u32	i;
+
+		obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		anm = GFL_G3D_OBJECT_GetAnimeCount( obj );
+
+		for( i=0; i<anm; i++ ){
+			GFL_G3D_OBJECT_EnableAnime( obj, i );
+//			GFL_G3D_OBJECT_SetAnimeFrame( obj, i, 0 );
+		}
 	}
 
   // ライト作成
@@ -859,9 +894,10 @@ static void Exit3D( SRMAIN_WORK * wk )
 	GFL_G3D_CAMERA_Delete( wk->g3d_camera );
 	GFL_G3D_LIGHT_Delete( wk->g3d_light );
 
+/*	常駐が大きくなるので使えない...
 	GFL_G3D_SCENEOBJ_Remove( wk->g3d_scene, wk->g3d_obj_id, NELEMS(ObjData) );
-
 	GFL_G3D_SCENE_Delete( wk->g3d_scene );
+*/
 	GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->g3d_unit );
 	GFL_G3D_UTIL_Delete( wk->g3d_util );
 
@@ -871,69 +907,123 @@ static void Exit3D( SRMAIN_WORK * wk )
 
 static void Main3D( SRMAIN_WORK * wk )
 {
-/*
 #ifdef PM_DEBUG
-  // TEMP: カメラ設定
-	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
-			test_pos.z -= FX32_ONE/10;
+	if( wk->debugStopFlg == TRUE ){
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
+				test_pos.z -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+				test_pos.z += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
+				test_pos.y -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+				test_pos.y += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+				test_pos.x -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+				test_pos.x += FX32_ONE/10;
+			}
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
+			OS_Printf( "POS : x = %d, y = %d, z = %d\n", test_pos.x, test_pos.y, test_pos.z );
 		}
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-			test_pos.z += FX32_ONE/10;
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
+				test_target.z -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+				test_target.z += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
+				test_target.y -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+				test_target.y += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+				test_target.x -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+				test_target.x += FX32_ONE/10;
+			}
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+			OS_Printf( "TARGET : x = %d, y = %d, z = %d\n", test_target.x, test_target.y, test_target.z );
 		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-			test_pos.y -= FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-			test_pos.y += FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-			test_pos.x -= FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-			test_pos.x += FX32_ONE/10;
-		}
-		GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
-		OS_Printf( "POS : x = %d, y = %d, z = %d\n", test_pos.x, test_pos.y, test_pos.z );
-	}
-	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
-			test_target.z -= FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-			test_target.z += FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-			test_target.y -= FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-			test_target.y += FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-			test_target.x -= FX32_ONE/10;
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-			test_target.x += FX32_ONE/10;
-		}
-		GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
-		OS_Printf( "TARGET : x = %d, y = %d, z = %d\n", test_target.x, test_target.y, test_target.z );
-	}
-  GFL_G3D_CAMERA_Switching( wk->g3d_camera );
-//  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
-//    anime_speed = FX32_ONE;
-//  }else{
-//    anime_speed = 0;
-//  }
-#endif
-*/
 
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			test_pos.x = CAMERA_POS_X;
+			test_pos.y = CAMERA_POS_Y;
+			test_pos.z = CAMERA_POS_Z;
+			test_target.x = CAMERA_TARGET_X;
+			test_target.y = CAMERA_TARGET_Y;
+			test_target.z = CAMERA_TARGET_Z;
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			test_pos.x = 0;
+			test_pos.y = 0;
+			test_pos.z = 0;
+			test_target.x = 0;
+			test_target.y = 0;
+			test_target.z = 0;
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+		}
+
+	  GFL_G3D_CAMERA_Switching( wk->g3d_camera );
+//	  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+//	    anime_speed = FX32_ONE;
+//	  }else{
+//			anime_speed = 0;
+//	  }
+	}
+#endif
+
+/*	常駐が大きくなるので使えない...
 	{
 		GFL_G3D_SCENEOBJ * obj = GFL_G3D_SCENEOBJ_Get( wk->g3d_scene, wk->g3d_obj_id );
 		GFL_G3D_SCENEOBJ_LoopAnimeFrame( obj, 0, FX32_ONE );
 	}
 
 	GFL_G3D_SCENE_Main( wk->g3d_scene );
-	GFL_G3D_SCENE_Draw( wk->g3d_scene );  
+	GFL_G3D_SCENE_Draw( wk->g3d_scene );
+*/
+
+	{
+    GFL_G3D_OBJ * obj;
+		int	anm;
+		u32	i;
+
+		obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		anm = GFL_G3D_OBJECT_GetAnimeCount( obj );
+
+		for( i=0; i<anm; i++ ){
+			GFL_G3D_OBJECT_LoopAnimeFrame( obj, i, FX32_ONE );
+		}
+	}
+
+	GFL_G3D_DRAW_Start();
+	GFL_G3D_DRAW_SetLookAt();
+
+	{
+		GFL_G3D_OBJSTATUS	st =
+		{
+			{ 0, 0, 0 },																				// trans
+			{ FX32_ONE, FX32_ONE, FX32_ONE },										// scale
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	// rotate
+		};
+		GFL_G3D_OBJ * obj;
+
+		obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		GFL_G3D_DRAW_DrawObject( obj, &st );
+	}
+
+	GFL_G3D_DRAW_End();
 }
 
 
@@ -1238,9 +1328,9 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 
 	case 1:
 		if( wk->skipFlag == 1 ){
-			wk->britness += ( LOGO_FADE_SPEED * SKIP_SPEED );
+			wk->britness += ( LOGO_FADEIN_SPEED * SKIP_SPEED );
 		}else{
-			wk->britness += LOGO_FADE_SPEED;
+			wk->britness += LOGO_FADEIN_SPEED;
 		}
 		if( wk->britness >= 16 ){
 			G2_ChangeBlendAlpha( 16, 0 );
@@ -1265,9 +1355,9 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 
 	case 3:
 		if( wk->skipFlag == 1 ){
-			wk->britness += ( LOGO_FADE_SPEED * SKIP_SPEED );
+			wk->britness += ( LOGO_FADEOUT_SPEED * SKIP_SPEED );
 		}else{
-			wk->britness += LOGO_FADE_SPEED;
+			wk->britness += LOGO_FADEOUT_SPEED;
 		}
 		if( wk->britness >= 16 ){
 			G2_BlendNone();
@@ -1386,6 +1476,23 @@ static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 	return TRUE;
 }
 
+// バージョン別処理
+static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+#if	PM_VERSION == LOCAL_VERSION
+	item = &item[item->labelType];
+#else
+	item = &item[item->labelType+1];
+#endif
+
+	MakeScrollStr( wk, item );
+
+	wk->listWait = item->wait;
+	wk->subSeq = SUBSEQ_WAIT;
+
+	return TRUE;
+}
+
 
 //============================================================================================
 //	デバッグ
@@ -1439,6 +1546,12 @@ static void DebugGridSet(void)
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 }
+
+/*
+static void DebugCameraPrint( SRMAIN_WORK * wk )
+{
+}
+*/
 
 #endif // PM_DEBUG
 

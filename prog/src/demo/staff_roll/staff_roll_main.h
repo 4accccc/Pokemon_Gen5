@@ -17,7 +17,7 @@
 
 //============================================================================================
 //============================================================================================
-//#define	SRMAIN_DRAW_3D		// 定義を有効にすると３Ｄが有効になります
+#define	SRMAIN_DRAW_3D		// 定義を有効にすると３Ｄが有効になります
 
 // フォントタイプ
 enum {
@@ -58,7 +58,7 @@ typedef struct {
 
 #ifdef	SRMAIN_DRAW_3D
 	GFL_G3D_UTIL * g3d_util;
-	GFL_G3D_SCENE * g3d_scene;
+//	GFL_G3D_SCENE * g3d_scene;
 	GFL_G3D_CAMERA * g3d_camera;
 	GFL_G3D_LIGHTSET * g3d_light;
 	u32	g3d_obj_id;

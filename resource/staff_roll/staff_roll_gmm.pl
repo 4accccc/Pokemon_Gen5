@@ -101,7 +101,7 @@ sub SUB_DataConv {
 		$line[0] =~ s/&/&amp;/g;		# "&"を"&amp;"に置き換え
 		$line[0] =~ s/、/,/g;			# "、"を","に置き換え
 
-		print( $line[0] . "\t" );
+#		print( $line[0] . "\t" );
 
 		if( $line[0] ne "" ){
 #			$text = encode( "utf8", decode( "shiftjis", $line[0] ) );	# Shift-Jis > UTF8
