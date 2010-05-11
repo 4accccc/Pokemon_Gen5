@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T15:41:01"/>
+	<create user="ohmori" host="W00223" date="2010-05-11T17:40:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1412" top="250" right="2042" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="1926" top="97" right="2631" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="455"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="468"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="622"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="548"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -372,10 +372,9 @@
 	<row id="plc_oldman1_01_06" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>ハイリンクの老人：デルパワーとは？</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">このきが　もっている
-だれかを　たすける　パワーを▽
-デルパワーとよんでいる▼
-もし　このきから　デルパワーを
+		<language name="JPN" width="256">このきが　もっている　パワーを
+デルパワーと　よんでいる▼
+このきから　デルパワーを
 うけとることが　できれば▼
 Ｃギアの
 「すれちがいログ」から▽
@@ -386,10 +385,9 @@
 デルダマが　ひつようだ▼
 だれかのせかいで　ミッションを
 おこない　デルダマを　あつめるのだ▼</language>
-		<language name="JPN_KANJI" width="256">この木が　もっている
-だれかを助ける　パワーを▽
-デルパワーとよんでいる▼
-もし　この木から　デルパワーを
+		<language name="JPN_KANJI" width="256">この木が　もっている　パワーを
+デルパワーと　よんでいる▼
+この木から　デルパワーを
 うけとることが　できれば▼
 Ｃ－ＧＥＡＲの
 「すれちがいログ」から▽
@@ -953,38 +951,40 @@ plc_girl4_03_06,7,8</comment>
 	<row id="plc_help_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">チュートリアル
 メッセージ３</attribute>
-		<language name="JPN" width="256">……おお！
-すばらしい！！▽
+		<language name="JPN" width="256">……おお
+すばらしい！▽
 ミッションを　たっせいしたな！▽
 ここまで　やるとはな……▼
 ……これで
 ハイリンクに　しあわせが　あつまり▽
-きがすこし　せいちょうしたようだ▼
+きがすこし　せいちょうした▼
 このきは　おおきく
 せいちょう　することで▽
-さまざまな　きせきをおこす　パワー▽
-「デルパワー」を　あたえてくれる▼
+ふしぎな　パワーが▽
+あつまって　くるのだ▼
 ……うむ
 もしかしたら　おぬしは▽
-デルパワーを　あつかえるかもしれない▼
+そのパワーを　うけとれるかもしれない▼
 このきを　しらべて
+その　ふしぎな　パワー▽
 デルパワーを　うけとって　みなさい</language>
-		<language name="JPN_KANJI" width="256">……おお！
-すばらしい！！▽
+		<language name="JPN_KANJI" width="256">……おお
+すばらしい！▽
 ミッションを　達成したな！▽
 ここまで　やるとはな……▼
 ……これで
 ハイリンクに　幸せが　集まり▽
-木が　少し生長したようだ▼
+木が　少し生長した▼
 この木は　大きく
 生長することで▽
-様々な　奇跡を起こす　パワー▽
-「デルパワー」を　与えてくれる▼
+不思議な　パワーが▽
+あつまって　くるのだ▼
 ……うむ
 もしかしたら　おぬしは▽
-デルパワーを　扱えるかもしれない▼
+そのパワーを　受け取れるかもしれない▼
 この木を　調べて
-デルパワーを　受け取ってみなさい</language>
+その　不思議な　パワー▽
+デルパワーを　受け取って　みなさい</language>
 	</row>
 
 	<row id="plc_help_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1013,7 +1013,7 @@ plc_girl4_03_06,7,8</comment>
 メッセージ５</attribute>
 		<language name="JPN" width="256">おおぉ！
 デルパワーを　うけとったか！▽
-その　パワーを　あつかえるとは……▽
+その　パワーを　もらえるとは……▽
 ……すばらしい▽
 じつに　すばらしい！▼
 その　デルパワーは
@@ -1030,13 +1030,13 @@ plc_girl4_03_06,7,8</comment>
 たくさんの　しあわせを　あつめるのだ▼
 ……　……　……
 ……　……　……▼
-ハイリンクの　パワーは
+この　ハイリンクの　パワーは
 すべて　おぬしの　ものだ▼
-この　イッシュの　しあわせを
-おぬしに　たくしたぞ！</language>
+たくさんの　しあわせを　あつめ
+すべての　パワーを　てにいれるのだ！</language>
 		<language name="JPN_KANJI" width="256">おおぉ！
 デルパワーを　受け取ったか！▽
-その　パワーを　扱えるとは……▽
+その　パワーを　もらえるとは……▽
 ……すばらしい▽
 実に　すばらしい！▼
 その　デルパワーは
@@ -1053,10 +1053,10 @@ plc_girl4_03_06,7,8</comment>
 たくさんの　幸せを　集めるのだ▼
 ……　……　……
 ……　……　……▼
-ハイリンクの　パワーは
+この　ハイリンクの　パワーは
 全て　おぬしの　ものだ▼
-この　イッシュの　幸せを
-おぬしに　託したぞ！</language>
+たくさんの　幸せを　集め
+全ての　パワーを　手に入れるのだ！</language>
 	</row>
 
 	<flowchart-group-list>
