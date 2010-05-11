@@ -140,8 +140,10 @@ EVENT_START   ev_bg_r07r0105_bell
 	
 	IF $SCWK_ANSWER01 == 0 THEN
 		
-		//【仮】BGMを押さえる
-		//_BGM_FADEOUT( 60 , 12 )
+		//BGMを押さえる
+		_BGM_VOLUME_DOWN( 64 , BGM_FADE_SHORT )
+		
+		//_TIME_WAIT( 24 )
 		
 		//鐘SE再生
 		_SE_PLAY( SEQ_SE_FLD_151 )
@@ -162,8 +164,8 @@ EVENT_START   ev_bg_r07r0105_bell
 		_SE_WAIT()
 		_PLAINWIN_CLOSE()
 		
-		//【仮】BGMを戻す
-		//_BGM_FADEIN( 12 )
+		//BGMを戻す
+		_BGM_VOLUME_RECOVER( BGM_FADE_MIDDLE )
 		
 		//フウロイベント中はイベントを起動
 		IF $WK_SCENE_C07R0105 == 1 THEN
@@ -320,6 +322,9 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
+	//BGMを押さえる
+	_BGM_VOLUME_DOWN( 64 , BGM_FADE_SHORT )
+	
 	//鐘SE再生
 	_SE_PLAY( SEQ_SE_FLD_151 )
 		
@@ -331,6 +336,9 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	
 	//鐘SE待ち
 	_SE_WAIT()
+	
+	//BGMを戻す
+	_BGM_VOLUME_RECOVER( BGM_FADE_MIDDLE )
 	
 	//鐘アニメ破棄
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
