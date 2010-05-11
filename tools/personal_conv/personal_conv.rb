@@ -1317,6 +1317,11 @@ end
     end
   }
 
+  fp_monsno.printf( "//タマゴ\n" )
+  fp_monsno.printf( "#define\t\tFORMNO_TAMAGO_NORMAL\t\t\t\t( 0 )\n" )
+  fp_monsno.printf( "#define\t\tFORMNO_TAMAGO_MANAFI\t\t\t\t( 1 )\n" )
+  fp_monsno.printf( "#define\t\tFORMNO_TAMAGO_MAX\t\t\t\t( 2 )\n\n" )
+
   fp_monsno.printf( "//フォルム違いトータル\n" )
   fp_monsno.printf( "#define OTHER_FORM_MAX  ( %d )\n\n",form_gra_index )
   fp_monsno.printf( "//イッシュ図鑑トータル\n" )
