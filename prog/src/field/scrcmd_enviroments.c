@@ -528,12 +528,12 @@ VMCMD_RESULT EvCmdGetMapReplaceFlag( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @brief 
+ * @brief ずかんフラグのセット 
  * @param  core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo
+ * @note
  * ずかんフラグを正確にセットするためにはPOKEMON_PARAMが必要だが、
  * 存在しないのでコマンド内部で生成している。
  * POKEMON_PARAM依存のものをスクリプトが指定しないような仕組みが必要。
@@ -549,7 +549,7 @@ VMCMD_RESULT EvCmdSetZukanFlag( VMHANDLE * core, void *wk )
   u16 set_mode = SCRCMD_GetVMWorkValue( core, work ); // 引数1
   u16 monsno = SCRCMD_GetVMWorkValue( core, work ); // 引数2
 
-  POKEMON_PARAM * pp = PP_Create( monsno, 1, PTL_SETUP_ID_AUTO, heap_id );
+  POKEMON_PARAM * pp = PP_Create( monsno, 1, PTL_SETUP_ID_NOT_RARE, heap_id );
   switch( set_mode )
   {
   case ZUKANCTRL_MODE_SEE:  // 見た

@@ -237,8 +237,9 @@ BOOL ARRIVEDATA_GetArriveFlag(GAMEDATA * gamedata, int warp_id)
  * @param gx        出現するX位置（グリッド単位）
  * @param gz        出現するZ位置（グリッド単位）
  *
- * @todo  dirの値の定義に取り決めがない
- * @todo  Y方向データも設定するべきかどうか？
+ * @note
+ * Yの値が０でも現状の仕組みでは高さ補正が入る。
+ * 立体交差の箇所には上手く出現出来ないので注意
  */
 //------------------------------------------------------------------
 static void set_location(LOCATION * loc, u16 zone_id, u16 dir, u16 gx, u16 gz)
