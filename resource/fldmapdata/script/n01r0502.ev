@@ -1430,10 +1430,9 @@ ev_last:
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_16 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	//================望さんへ========================/
-	
-	//X.16 Y.3 Z.7にモンスターボールを投げる演出
-	
+  //========================================/
+  //X.16 Y.3 Z.7にモンスターボールを投げる演出
+  _CALL ball_out	
 	//========================================/
 
 	//Ｎ：自機を見る
@@ -1463,13 +1462,13 @@ ev_last:
 			
 			//電気石の洞穴ではいを選択した場合
 			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
-			
+
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
 				_PLAINWIN_CLOSE()
 			
 			//いいえを選択した場合
 			ELSE
-			
+
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
 				_PLAINWIN_CLOSE()
 			
@@ -1479,13 +1478,13 @@ ev_last:
 		
 			//電気石の洞穴ではいを選択した場合
 			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
-			
+
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
 				_PLAINWIN_CLOSE()
 			
 			//いいえを選択した場合
 			ELSE
-			
+
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
 				_PLAINWIN_CLOSE()
 			
@@ -1501,7 +1500,7 @@ ev_last:
 	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 15 )
 
 	_TIME_WAIT( 30 )
-	
+
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
 	_PLAINWIN_CLOSE()
 	
@@ -1851,6 +1850,24 @@ sub_legend_add_loop:
 
   _RET
 }
+
+/**************************************************************/
+/*		ボール投げる演出			  */
+/**************************************************************/
+ball_out:
+  _LEG_MOVE_BALL( N01R0502_BOSS_01, 16, 3, 7, 3, 8 )
+  _LEG_START_BALL_ANM( 16, 3, 7  )
+  //ボール出現フレーム待ち
+  _LEG_WAIT_BALL_POKE_APP()
+  _WHITE_OUT()
+  _DISP_FADE_END_CHECK()
+  //ポケを表示
+  
+  _WHITE_IN()
+  _DISP_FADE_END_CHECK()
+  _LEG_WAIT_BALL_ANM()
+  
+_RET
 
 /**************************************************************/
 /*		ゲーチス	話しかけ（負けた場合のもの）			  */
