@@ -63,6 +63,7 @@ typedef struct
   PDC_SETUP_PARAM*    psp;
   BTL_FIELD_SITUATION bfs;
   GAMEDATA*   game_data;
+  ZUKAN_SAVEDATA*   zs;
 }SOGA_WORK;
 
 static  void  TextPrint( SOGA_WORK *wk );
@@ -215,6 +216,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
   wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
   wk->game_data = pwk;
+  wk->zs        = GAMEDATA_GetZukanSave( wk->game_data );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -312,7 +314,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
   }
 
   if( wk->seq_no ){
-    GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(sogabe_debug), spt[ wk->pos ].gpd, NULL );
+    GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(sogabe_debug), spt[ wk->pos ].gpd, wk->zs );
   }
 
   GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed, wk->key_repeat_wait );
