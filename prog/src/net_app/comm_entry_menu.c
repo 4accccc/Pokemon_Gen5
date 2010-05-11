@@ -496,6 +496,8 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     _SEQ_SEND_GAMECANCEL,
     _SEQ_CANCEL_MSG,
     _SEQ_CANCEL_MSG_WAIT,
+    _SEQ_COLOSSEUM_PARENT_ONLY,
+    _SEQ_COLOSSEUM_PARENT_ONLY_MSG_WAIT,
     _SEQ_FINISH,
   };
 
@@ -559,6 +561,9 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       }
       else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
         em->seq = _SEQ_BREAKUP_CHECK;
+      }
+      else if(em->game_type == COMM_ENTRY_GAMETYPE_COLOSSEUM && GFL_NET_GetConnectNum() <= 1){
+        em->seq = _SEQ_COLOSSEUM_PARENT_ONLY;
       }
     }
     break;
@@ -639,6 +644,18 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     }
     break;
   
+  case _SEQ_COLOSSEUM_PARENT_ONLY:  //コロシアムで親が一人になった
+    _StreamMsgSet(em, msg_connect_07_01);
+    em->seq = _SEQ_COLOSSEUM_PARENT_ONLY_MSG_WAIT;
+    break;
+  case _SEQ_COLOSSEUM_PARENT_ONLY_MSG_WAIT:
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      em->entry_result = COMM_ENTRY_RESULT_CANCEL;
+      em->seq = _SEQ_FINISH;
+    }
+    break;
+
   case _SEQ_FINISH:   //終了処理
     _MemberInfo_Exit(em);
     return TRUE;
