@@ -2,6 +2,10 @@
 /**
  * @file  legend_gmk.h
  * @brief  伝説ポケモンギミック
+ *
+ * @note    配布系で使用しているモンスターボールアニメーションをここではリソースのみ共有してプログラムを作成しています
+ * @note    本当は統合した方がいいのですが、こちらは開発終盤まで調整が入る可能性があるため、ＦＩＸしている配布系ボールアニメーションと切り離します
+ * @note    結果、同じ動きをするコードが生まれる可能性がありますが、切り離すことで、配布系ボールアニメーションの動作を保証することを優先します
  * @author  Saito
  */
 //======================================================================
@@ -15,9 +19,10 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/fieldmap/legend_gmk.naix"
-
+#include "arc/fieldmap/sppoke.naix"
 #include "sound/pm_sndsys.h"
 #include "legend_gmk_se_def.h"
+#include "sp_poke_gimmick_se_def.h"
 
 #include "../../../resource/fldmapdata/gimmick/legend/leg_gmk_timing_def.h"
 
@@ -26,13 +31,11 @@
 #define STONE_ANM_NUM  (4)
 
 #define FLASH_FRAME_FX32  ( FLASH_FRAME*FX32_ONE )
-//#define LOOP_START_FRAME_FX32 ( LOOP_START_FRAME*FX32_ONE )
 
 #define FADE_SPEED    (0)
 
 typedef struct LEG_GMK_WK_tag
 {
-//  BOOL OneLoop;   //アニメが１順したか
   u32 Fade;
   int Count;
   BOOL Se0;
@@ -50,16 +53,22 @@ enum {
   RES_ID_STONE_ANM2,
   RES_ID_STONE_ANM3,
   RES_ID_STONE_ANM4,
+
+  RES_ID_BALL_OUT_MDL,
+  RES_ID_BALL_OUT_ANM1,
+  RES_ID_BALL_OUT_ANM2,
+  RES_ID_BALL_OUT_ANM3,
 };
 
 //ＯＢＪインデックス
 enum {
   OBJ_STONE = 0,
+  OBJ_BALL_OUT,
 };
 
 //==========================================================================
 /**
- リソース共通部分
+ リソース部分
 */
 //==========================================================================
 
@@ -70,6 +79,14 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl[] = {
   { RES_ID_STONE_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_STONE_ANM4,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
+
+//3Dアニメ　ボールアウト
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ball_out[] = {
+  { RES_ID_BALL_OUT_ANM1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_BALL_OUT_ANM2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_BALL_OUT_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
 
 //==========================================================================
 /**
@@ -84,6 +101,11 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_black[] = {
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_p_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
@@ -93,16 +115,31 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_LEGEND_GMK, NARC_legend_gmk_mu_p_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+
 };
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+  //石
   {
 		RES_ID_STONE_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
 		RES_ID_STONE_MDL, 	//テクスチャリソースID
 		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
+	},
+  //出現モンスターボール
+  {
+		RES_ID_BALL_OUT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_OUT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_out,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_out),	//アニメリソース数
 	},
 };
 
@@ -136,7 +173,6 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   //汎用ワーク確保
   gmk_wk = GMK_TMP_WK_AllocWork
       (fieldWork, LEGEND_GMK_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(LEG_GMK_WK));
-//  gmk_wk->OneLoop = FALSE;
   gmk_wk->Count = 0;
   
   //必要なリソースの用意(バージョン分岐)
@@ -176,9 +212,6 @@ void LEGEND_GMK_End(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
-  //SE停止
-  PMSND_StopSE();
-
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
 
@@ -198,29 +231,6 @@ void LEGEND_GMK_Move(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
-#if 0
-  //ループ制御
-  {
-    LEG_GMK_WK *gmk_wk;
-    gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
-    if (gmk_wk->OneLoop)
-    {
-      fx32 frm;
-      FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-      int obj = OBJ_STONE;
-      //現在フレームを取得
-      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, 0 );
-      if ( frm == 0 )
-      {
-        int i;
-        for (i=0;i<STONE_ANM_NUM;i++)
-        {
-          FLD_EXP_OBJ_SetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, i, LOOP_START_FRAME_FX32 );
-        }
-      }
-    }
-  }
-#endif  
 }
 
 //--------------------------------------------------------------
@@ -361,10 +371,7 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   //終了していいフレームか？
   if (frm >= last_frm)
   {
-//    LEG_GMK_WK *gmk_wk;
     NOZOMU_Printf("アニメ終了\n");
-//    gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
-//    gmk_wk->OneLoop = TRUE;
     //イベント終了
     return GMEVENT_RES_FINISH;
   }
