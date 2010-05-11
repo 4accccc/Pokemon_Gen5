@@ -38,9 +38,11 @@ EVENT_START		ev_c03p14_recept_01
 	DEFINE_LOCAL	lwk_select
 
 	//交換した国数をチェック（自分以外の国と交換したことがあるか）
-	_UN_GET_COUNTRY_NUM( TRUE, SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-		//海外の人と交換したことがない
+	_UN_GET_COUNTRY_NUM( TRUE, SCWK_TEMP0 )
+	//ジオネットに自分の国コードを登録しているかチェック
+	_UN_IS_SETTING_MYCOUNTRY( SCWK_TEMP1 )
+	IF $SCWK_TEMP0 == 0 || $SCWK_TEMP1 == FALSE THEN
+		//海外の人と交換したことがない or 自分の国を登録していない
 		
 		//国境って何のために……
 		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DEFAULT )
@@ -99,6 +101,12 @@ ev_select_yes:
 	_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
 	_MSGWIN_CLOSE()
 	
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+	
 	//主人公：船へ
 	_PLAYER_DIR_GET( SCWK_ANSWER )
 	IF $SCWK_ANSWER == DIR_UP THEN
@@ -155,6 +163,8 @@ EVENT_START	ev_reserve_c03p14_recept_end
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	_PLACE_NAME_DISPLAY()	//地名表示演出
 	
 	//主人公：船から降りる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_end_ply_move_01 )

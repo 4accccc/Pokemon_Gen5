@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c11.h"
-  //.include  "c11.h"
+  .include  "c11.h"
   .include  "c03p14_def.h"
 
 //--------------------------------------------------------------
@@ -32,6 +32,8 @@ EVENT_START	ev_reserve_c11_recept_end
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	_PLACE_NAME_DISPLAY()	//地名表示演出
 	
 	//主人公：船から降りる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_end_ply_move_01 )
@@ -58,17 +60,28 @@ EVENT_START	ev_c11_recept_01
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 		//はい
+		
+		//どうぞ ご乗船ください
 		_BALLOONWIN_TALKOBJ_MSG( msg_c11_infomationm_02 )
 		_MSGWIN_CLOSE()
+		
+		//自転車に乗ってるなら歩行状態へ
+		_PLAYER_FORM_GET( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+			_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+		ENDIF
 		
 		_PLAYER_DIR_GET( SCWK_TEMP0 )
 		SWITCH $SCWK_TEMP0
 		CASE DIR_UP THEN
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
+			_OBJ_ANIME( C11_RECEPT_01, anm_staywalk_r )
 		CASE DIR_LEFT THEN
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
 		DEFAULT
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
+			_TIME_WAIT( 16 )
+			_OBJ_ANIME( C11_RECEPT_01, anm_staywalk_r )
 		ENDSWITCH
 		_OBJ_ANIME_WAIT()
 		
@@ -109,6 +122,13 @@ _ANIME_LABEL	anm_recept_ply_move_01l
 _ANIME_LABEL	anm_recept_ply_move_01r
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staywalk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
