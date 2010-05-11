@@ -4121,10 +4121,9 @@ const u32 POKETOOL_GetPokeInsekutaFromItem( const u16 item )
 //============================================================================================
 u8  POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
 {
-  int form_max = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_form_max );
-
   if( mons_no != MONSNO_TAMAGO )
   {
+    int form_max = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_form_max );
     if( form_no < form_max )
     { 
       return form_no;
