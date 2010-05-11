@@ -34,6 +34,9 @@
 
 #define FADE_SPEED    (0)
 
+#define BALL_ANM_NUM  (3)
+#define BALL_OUT_TIMMING  (5)
+
 typedef struct LEG_GMK_WK_tag
 {
   u32 Fade;
@@ -41,9 +44,24 @@ typedef struct LEG_GMK_WK_tag
   BOOL Se0;
   BOOL Se1;
   BOOL Se2;
+  VecFx32 BallStart;
+  VecFx32 BallEnd;
+  fx32 Height;
+  u16 Sync;
+  u16 NowSync;
+
 }LEG_GMK_WK;
 
+
+//==========================================================================
+/**
+ *  関数前方宣言
+*/
+//==========================================================================
 static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
 
 //リソースの並び順番
 enum {
@@ -198,6 +216,19 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     //無効化
     FLD_EXP_OBJ_ValidCntAnm(ptr, LEGEND_UNIT_IDX, OBJ_STONE, i, FALSE);
+  }
+
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, OBJ_BALL_OUT, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, LEGEND_UNIT_IDX, OBJ_BALL_OUT, i, FALSE);
   }
 }
 
@@ -379,4 +410,256 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
+//============================================================================================================
+//ボール関連
+//============================================================================================================
 
+//--------------------------------------------------------------
+/**
+ * ボールアニメイベント作成
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+GMEVENT *LEGEND_GMK_MoveBall( GAMESYS_WORK *gsys, const VecFx32 *inStart, const VecFx32 *inEnd,
+                              const fx32 inHeight, const u32 inSync)
+{
+  int i;
+  int obj;
+  GMEVENT *event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  LEG_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  obj = OBJ_BALL_OUT;
+  //投げるSE再生
+  PMSND_PlaySE(SPPOKE_GMK_BALL_THROW);
+
+  //スタート座標に表示状態でボール配置
+  {
+     GFL_G3D_OBJSTATUS *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, LEGEND_UNIT_IDX, obj);
+     status->trans = *inStart;
+  }
+
+  //ボールを表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, LEGEND_UNIT_IDX, obj, FALSE);
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, obj, i);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, LEGEND_UNIT_IDX, obj, i, FALSE);
+    //頭だし
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, i, 0 );
+  }
+
+  //移動に必要なパラメータのセット
+  {
+    gmk_wk->BallStart = *inStart;
+    gmk_wk->BallEnd = *inEnd;
+    gmk_wk->Sync = inSync;
+    gmk_wk->NowSync = 0;
+    gmk_wk->Height = inHeight;
+  }
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, BallMoveEvt, 0 );
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ボールアニメイベント作成
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+void LEGEND_GMK_StartBallAnm( GAMESYS_WORK *gsys, const VecFx32 *inPos )
+{
+  int i;
+  int obj;
+  int se;
+  GMEVENT *event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  obj = OBJ_BALL_OUT;
+  se = SPPOKE_GMK_BALL_OUT;
+  //SE再生
+  PMSND_PlaySE(se);
+
+  //ボール座標時セット
+  {
+     GFL_G3D_OBJSTATUS   *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, LEGEND_UNIT_IDX, obj);
+     status->trans = *inPos;
+  }
+
+  //ボールを表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, LEGEND_UNIT_IDX, obj, FALSE);
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, obj, i);
+    //アニメ停止解除
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, LEGEND_UNIT_IDX, obj, i, TRUE);
+    //頭だし
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, i, 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * ポケモンを表示・非表示していいタイミングでTRUEを返すイベント
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+GMEVENT *LEGEND_GMK_WaitPokeAppear( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  //イベント作成
+  GMEVENT * event = GMEVENT_Create( gsys, NULL, WaitPokeAppFrmEvt, 0 );
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ボールアニメ終了まで待つイベント作成
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+GMEVENT *LEGEND_GMK_WaitBallAnmEnd( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  //イベント作成
+  GMEVENT * event = GMEVENT_Create( gsys, NULL, WaitBallAnmEvt, 0 );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * ボールの投げ、戻りによる移動イベント
+ * @param       event             イベントポインタ
+ * @param       seq               シーケンサ
+ * @param       work              ワークポインタ
+ * @return      GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  LEG_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
+  int obj;
+  obj = OBJ_BALL_OUT;
+
+  //目的地に向かって飛ぶ
+  {
+    VecFx32 vec;
+    fx32 diff;
+    gmk_wk->NowSync++;
+    diff = gmk_wk->BallEnd.x - gmk_wk->BallStart.x;
+    vec.x = gmk_wk->BallStart.x + ( (diff*gmk_wk->NowSync) / gmk_wk->Sync );
+    diff = gmk_wk->BallEnd.y - gmk_wk->BallStart.y;
+    vec.y = gmk_wk->BallStart.y + ( (diff*gmk_wk->NowSync) / gmk_wk->Sync );
+    diff = gmk_wk->BallEnd.z - gmk_wk->BallStart.z;
+    vec.z = gmk_wk->BallStart.z + ( (diff*gmk_wk->NowSync) / gmk_wk->Sync );
+
+    {
+      int h_sync = (gmk_wk->Sync+1)/2;
+      int now_h_sync;
+      fx32 h;
+      if ( gmk_wk->NowSync < h_sync ){
+        now_h_sync = gmk_wk->NowSync;
+      }else{
+        now_h_sync = (gmk_wk->Sync-gmk_wk->NowSync);
+      }
+      h = (gmk_wk->Height * now_h_sync) / gmk_wk->Sync;
+      vec.y += h;
+    }
+
+    {
+     GFL_G3D_OBJSTATUS *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, LEGEND_UNIT_IDX, obj);
+     status->trans = vec;
+    }
+  }
+  //到着したか？
+  if (gmk_wk->NowSync >= gmk_wk->Sync)
+  {
+    //イベント終了
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ポケモンを表示していいタイミングでT終了するイベント
+ * @param       event             イベントポインタ
+ * @param       seq               シーケンサ
+ * @param       work              ワークポインタ
+ * @return      GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  fx32 frm, dst_frm;
+  int obj;
+  {
+    dst_frm = BALL_OUT_TIMMING * FX32_ONE;
+    obj = OBJ_BALL_OUT;
+  }
+  //ボールアニメの現在フレームを取得
+  frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, 0 );
+  //ポケモン出していいフレームか？
+  if (frm >= dst_frm)
+  {
+    //イベント終了
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ボールアニメ終了で終了するイベント
+ * @param       event             イベントポインタ
+ * @param       seq               シーケンサ
+ * @param       work              ワークポインタ
+ * @return      GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int obj;
+
+  obj = OBJ_BALL_OUT;
+
+  //０番目にアニメで終了判定する
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, obj, 0);
+  if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+  {
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}

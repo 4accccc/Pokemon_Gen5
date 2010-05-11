@@ -71,6 +71,28 @@ VMCMD_RESULT EvCmdFaceup_Start( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * 顔アップ開始
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFaceup_StartAnm( VMHANDLE *core, void *wk )
+{
+  u8 back_idx;
+  u8 char_idx;
+  u16 last;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_FACEUP_AnmStart( fieldmap );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * 顔アップ終了
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
