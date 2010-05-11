@@ -668,7 +668,7 @@ static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z, BOOL pl
 //      IWASAWA_Printf("player_egnore\n");
       continue;
     }
-    obj_prm = MMDLSYS_GetOBJCodeParam( fos, MMDL_GetOBJCode( mmdl ) );
+    obj_prm = MMDL_GetOBJCodeParam( mmdl );
 
     MMDL_GetGridPos(mmdl,&pos);
     if( y != pos.gy ||
