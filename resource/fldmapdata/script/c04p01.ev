@@ -164,6 +164,9 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
 	_OBJ_ANIME_WAIT()
 	
+	//ＢＧＭ音量を下げる
+	_BGM_VOLUME_DOWN( 64, BGM_FADE_SHORT )
+	
 	//-------------観覧車未実装------------------------
 	
 	//画面暗転
@@ -184,7 +187,9 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ADD( C04P01_HAKAIM_01 )
 	_OBJ_ADD( C04P01_HAKAIM_02 )
 	
+	//ＢＧＭ音量を元に戻す
 	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )			//イベント曲再生（プラズマ団）
+	_BGM_VOLUME_RECOVER( 1 )
 	
 	//したっぱズ：登場
 	_OBJ_ANIME( C04P01_HAKAIM_01, anm_hakai_come_01a )
@@ -403,7 +408,7 @@ _ANIME_LABEL	anm_player_move_01e
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_02
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
