@@ -241,7 +241,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         *seq = _WAIT_NET_END;
         break;
       case EVENTIRCBTL_ENTRYMODE_EXIT:
-        NetErr_DEBUG_ErrorSet();
         *seq = _WAIT_NET_END;
         break;
       case EVENTIRCBTL_ENTRYMODE_RETRY:
