@@ -138,12 +138,12 @@
 #include "field_camera_debug.h"
 #include "test/performance.h"
 
-#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
+//#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 //#define DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK  //update_topでの処理負荷を見る
 //#define DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK  //update_tailでの処理負荷を見る
-#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
+//#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
 
 // フィールドマップ描画にかかる処理時間を求める
@@ -253,14 +253,6 @@ enum {
   MMDL_BBD_OFFS_Y_VALUE = FX32_CONST(4),
   MMDL_BBD_OFFS_POS_Y   = FX32_CONST(-4),
 };
-
-//--------------------------------------------------------------
-///	ヒープ用プログラム領域
-//--------------------------------------------------------------
-#define FIELD_PROG_AREA_HEAP_SIZE  (0xf800)
-static u8 FIELD_PROG_AREA_HEAP_BUF[ FIELD_PROG_AREA_HEAP_SIZE ] ATTRIBUTE_ALIGN(4);  //<-4byteアライメント
-#define FIELD_PROG_AREA_WEATHER_HEAP_SIZE (0x6400)  // 天気に割り当てるメモリサイズ
-#define FIELD_PROG_AREA_PLACENAME_HEAP_SIZE (0x7400)  // 地名表示に割り当てるメモリサイズ
 
 
 //--------------------------------------------------------------
@@ -534,15 +526,6 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	fieldWork->func_tbl = FIELDDATA_GetFieldFunctions( fieldWork->map_id );
 
 
-  // プログラムエリアを使用したヒープ作成
-  // このメモリを使用して、
-  // 天気などを動かす。
-  GFL_HEAP_CreateHeapInBuffer( FIELD_PROG_AREA_HEAP_BUF, FIELD_PROG_AREA_HEAP_SIZE, HEAPID_FIELD_PRBUF );
-  // 天気、地名表示は、ZONE切り替え時に分割読み込みを行うため
-  // 断片化しやすい。先にメモリを確保し、断片化を回避する。
-  GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_WEATHER, FIELD_PROG_AREA_WEATHER_HEAP_SIZE );
-  GFL_HEAP_CreateHeap( HEAPID_FIELD_PRBUF, HEAPID_PLACE_NAME, FIELD_PROG_AREA_PLACENAME_HEAP_SIZE );
-
 	return fieldWork;
 }
 
@@ -556,14 +539,6 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
   GAMESYS_WORK *gsys = fieldWork->gsys;
-
-  // 天気、地名表示は、ZONE切り替え時に分割読み込みを行うため
-  // 断片化しやすい。先にメモリを確保し、断片化を回避する。
-  GFL_HEAP_DeleteHeap( HEAPID_WEATHER );
-  GFL_HEAP_DeleteHeap( HEAPID_PLACE_NAME );
-
-  // プログラムエリアを使用したヒープを破棄
-  GFL_HEAP_DeleteHeap( HEAPID_FIELD_PRBUF );
 
   //エリアデータ
   AREADATA_Delete( fieldWork->areadata );
@@ -678,6 +653,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
     fieldWork->goldMsgWin = NULL;
 
+    SET_CHECK("setup: place name");  //デバッグ：処理負荷計測
     // 地名表示システム作成
     fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( gsys, HEAPID_PLACE_NAME, fieldWork->fldMsgBG );
 
@@ -3036,6 +3012,20 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
   PM_WEATHER_UpdateZoneChangeWeatherNo( fieldWork->gsys, zone_id );
   
   w_no = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
+
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
+  {
+    static int weather_no = 0;
+    if( weather_no == 0 ){
+      weather_no = 1;
+      w_no = WEATHER_NO_KAZAKAMI;
+    }else{
+      weather_no = 0;
+      w_no = WEATHER_NO_RAIKAMI;
+    }
+    
+  }
+#endif
 
 	if( w_no != WEATHER_NO_NUM ){
 		FIELD_WEATHER_Change( we, w_no );
