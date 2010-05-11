@@ -384,7 +384,9 @@ _ANIME_LABEL	anm_player_last18
 sub_legend_born:
 
 	_TIME_WAIT( 15 )
-	
+
+//--------------------------------------------------------------------
+
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
@@ -395,6 +397,62 @@ sub_legend_born:
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_SE_WAIT()
 	
+	_AB_KEYWAIT()
+
+//--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+	
+	_SE_PLAY(SEQ_SE_END_02)
+	_CAMERA_MOVE( 9688,0,2019328,1081344,0,2588672,3 )
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_RECV_MOVE(15)	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_SE_WAIT()
+	
+	_AB_KEYWAIT()
+
+//--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+
+	_SE_PLAY(SEQ_SE_END_02)
+	_CAMERA_MOVE( 9688,0,2019328,1081344,0,2588672,3 )
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_RECV_MOVE(30)	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_SE_WAIT()
+	
+	_AB_KEYWAIT()
+
+//--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+	
+	_SE_PLAY(SEQ_SE_END_02)
+	_CAMERA_MOVE( 9688,0,2019328,1081344,0,2588672,10 )
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_RECV_MOVE(5)	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_SE_WAIT()
+	
+	_AB_KEYWAIT()
+
+//--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+	
+	_SE_PLAY(SEQ_SE_END_02)
+	_CAMERA_MOVE( 9688,0,2019328,1081344,0,2588672,20 )
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_RECV_MOVE(3)	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_SE_WAIT()
+	
+	_AB_KEYWAIT()
+
+//--------------------------------------------------------------------
+
 	_TIME_WAIT( 30 )
 
     //バッグの　なか……
@@ -428,6 +486,9 @@ sub_legend_born:
 
 	//ダーク（ライト）ストーンの演出
 	_START_LEG_GMK()
+	//無音にする
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 10 )
+
 	//～～～ストーンが　はげしく　かがやきだす……！
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
@@ -437,6 +498,7 @@ sub_legend_born:
 			_SYSWIN_MSG( msg_n01r0502_stone_03b , POS_DOWN )
 			_SUB_ITEM( ITEM_RAITOSUTOON,1,SCWK_ANSWER )
 		ENDIF
+	_TIME_WAIT( 40 )
     _SYSWIN_CLOSE()
 
 	//デモ再生：ム（シン）石から復活デモ
@@ -1111,7 +1173,7 @@ sub_sage_appear:
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_come5 )
 	_OBJ_ANIME_WAIT()
 
-	//ゲーチス：両手アニメ
+	//ゲーチス：片手アニメ
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_hand )
 	_OBJ_ANIME_WAIT()
 
@@ -1272,6 +1334,8 @@ ev_last:
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_20 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
+	_TIME_WAIT(30)
+
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi0 )
 	_OBJ_ANIME_WAIT()
 	
@@ -1366,6 +1430,12 @@ ev_last:
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_16 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
+	//================望さんへ========================/
+	
+	//X.16 Y.3 Z.7にモンスターボールを投げる演出
+	
+	//========================================/
+
 	//Ｎ：自機を見る
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_d )
 	_OBJ_ANIME_WAIT()
@@ -1424,15 +1494,17 @@ ev_last:
 		ENDIF
 }
 
-	//無音にする
-	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 15 )
-	
-	_TIME_WAIT( 45 )
-
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
-	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
 
+	//無音にする
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 15 )
+
+	_TIME_WAIT( 30 )
+	
+	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
+	_PLAINWIN_CLOSE()
+	
 	//Ｎのアップ絵終了
 	_CAMERA_END()
 	_END_FACEUP()
