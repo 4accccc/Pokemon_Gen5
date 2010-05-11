@@ -90,6 +90,7 @@
 #include "./c_gear/event_cgearget.h"
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_picture.h"
+#include "savedata/wifihistory.h"
 
 #include "event_debug_local.h"
 
@@ -282,6 +283,8 @@ static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * w
 static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
+
 
 //======================================================================
 //  デバッグメニューリスト
@@ -360,6 +363,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
   { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
   { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
+  { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
 
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
@@ -3179,6 +3183,27 @@ static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk )
   MUSICAL_DEBUG_CreateDummyData( MUSICAL_SAVE_GetMusicalShotData( musSave ), MONSNO_PIKATYUU , HEAPID_PROC );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー ジオネット情報削除（データズレ対策）
+ * @param wk  DEBUG_MENU_EVENT_WORK*  ワーク
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys      = wk->gmSys;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(wk->gdata);
+  WIFI_HISTORY *wifiHistory = SaveData_GetWifiHistory(p_sv);
+  MYSTATUS *mystatus        = GAMEDATA_GetMyStatus( wk->gdata );
+
+  WIFIHISTORY_Init( wifiHistory );
+  MyStatus_SetMyNationArea( mystatus, 0, 0 );
+  OS_Printf("mystatus adr=%08x\n", (u32)mystatus);
 
   return FALSE;
 }
