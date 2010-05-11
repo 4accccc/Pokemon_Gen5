@@ -369,6 +369,14 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
   POKEMON_PERSONAL_DATA ppd;
   u32 data_ofs;
 
+  //タマゴにはパーソナルがないので、0のダミーデータを読み込ませるようにする
+  GF_ASSERT( ( mons_no != MONSNO_TAMAGO ) && ( mons_no != MONSNO_DAMETAMAGO ) );
+  if( ( mons_no == MONSNO_TAMAGO ) ||
+      ( mons_no == MONSNO_DAMETAMAGO ) )
+  { 
+    return 0;
+  }
+
   data_ofs = GFL_ARC_GetDataOfsByHandle( ArcHandle, mons_no );
   GFL_ARC_SeekDataByHandle( ArcHandle, data_ofs );
   GFL_ARC_LoadDataByHandleContinue( ArcHandle, sizeof(POKEMON_PERSONAL_DATA), &ppd );
