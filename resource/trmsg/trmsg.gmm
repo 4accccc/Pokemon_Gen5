@@ -2759,8 +2759,10 @@
 
 	<row id="TRID_BUSINESS1_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">いやいや　おつよい　ですねえ！
+あこがれちゃいますよ▽
 わたくし　みならいたいです！</language>
 		<language name="JPN_KANJI" width="216">いやいや　お強い　ですねえ！
+あこがれちゃいますよ▽
 わたくし　見習いたいです！</language>
 	</row>
 
@@ -12855,18 +12857,18 @@ puo accadere ancora di tutto!</language>
 
 	<row id="TRID_CYCLINGW_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">チャリンチャリン♪▼
-じてんしゃに　のりながら
+この　スピードを　いかして
 ポケモンしょうぶ　しちゃうね！▼</language>
 		<language name="JPN_KANJI" width="216">チャリンチャリン♪▼
-じてんしゃに　乗りながら
+この　スピードを　活かして
 ポケモン勝負　しちゃうね！▼</language>
 	</row>
 
 	<row id="TRID_CYCLINGW_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけちゃって　くやしいから
-むだに　じてんしゃを　こぐわ！</language>
+チャリンチャリン♪　ならしちゃう！</language>
 		<language name="JPN_KANJI" width="216">負けちゃって　悔しいから
-むだに　じてんしゃを　こぐわ！</language>
+チャリンチャリン♪　鳴らしちゃう！</language>
 	</row>
 
 	<row id="TRID_CYCLINGW_01_TRMSG_FIGHT_AFTER">
