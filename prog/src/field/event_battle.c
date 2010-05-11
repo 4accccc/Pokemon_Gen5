@@ -802,38 +802,41 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
   
   POKEPARTY * party = GAMEDATA_GetMyPokemon( bew->gamedata );
   POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, PokeParty_GetMemberTopIdxNotEgg( party ));
-  STRBUF* nickname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID( HEAPID_PROC ) );
 
-  PP_Get( pp, ID_PARA_nickname, nickname );
-
-  //先頭ポケモンの残HPチェック
+  if( (bp->result != BTL_RESULT_LOSE) && (bp->result != BTL_RESULT_DRAW))
   {
-    u16 hp = PP_Get(pp,ID_PARA_hp,NULL);
-    u16 hp_max = PP_Get(pp,ID_PARA_hpmax,NULL);
+    STRBUF* nickname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID( HEAPID_PROC ) );
+    PP_Get( pp, ID_PARA_nickname, nickname );
 
-    if( hp == 0 ){
-      GAMEBEACON_Set_Dying(nickname);
-    }else if( (hp*2) <= hp_max ){
-      GAMEBEACON_Set_HPLittle(nickname);
-    }
-  }
-  { //残PPチェック
-    int i;
+    //先頭ポケモンの残HPチェック
+    {
+      u16 hp = PP_Get(pp,ID_PARA_hp,NULL);
+      u16 hp_max = PP_Get(pp,ID_PARA_hpmax,NULL);
 
-    for(i = 0;i < 4;i++){
-      if( ( PP_Get( pp, ID_PARA_waza1+i, NULL) != WAZANO_NULL ) &&
-          ( PP_Get( pp, ID_PARA_pp1+i,NULL) == 0) ){
-        GAMEBEACON_Set_PPLittle(nickname);
-        break;
+      if( hp == 0 ){
+        GAMEBEACON_Set_Dying(nickname);
+      }else if( (hp*2) <= hp_max ){
+        GAMEBEACON_Set_HPLittle(nickname);
       }
     }
-  }
-  { //状態異常チェック
-    if( PP_Get( pp, ID_PARA_condition, NULL) != 0 ) {
-      GAMEBEACON_Set_StateIsAbnormal(nickname);
+    { //残PPチェック
+      int i;
+
+      for(i = 0;i < 4;i++){
+        if( ( PP_Get( pp, ID_PARA_waza1+i, NULL) != WAZANO_NULL ) &&
+            ( PP_Get( pp, ID_PARA_pp1+i,NULL) == 0) ){
+          GAMEBEACON_Set_PPLittle(nickname);
+          break;
+        }
+      }
     }
+    { //状態異常チェック
+      if( PP_Get( pp, ID_PARA_condition, NULL) != 0 ) {
+        GAMEBEACON_Set_StateIsAbnormal(nickname);
+      }
+    }
+    GFL_STR_DeleteBuffer( nickname );
   }
-  GFL_STR_DeleteBuffer( nickname );
 
   switch( bp->competitor ){
   case BTL_COMPETITOR_WILD:
