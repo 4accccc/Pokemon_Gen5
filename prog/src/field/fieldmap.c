@@ -138,12 +138,12 @@
 #include "field_camera_debug.h"
 #include "test/performance.h"
 
-//#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
+#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 //#define DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK  //update_topでの処理負荷を見る
 //#define DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK  //update_tailでの処理負荷を見る
-//#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
+#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
 
 // フィールドマップ描画にかかる処理時間を求める
@@ -259,8 +259,8 @@ enum {
 //--------------------------------------------------------------
 #define FIELD_PROG_AREA_HEAP_SIZE  (0xf800)
 static u8 FIELD_PROG_AREA_HEAP_BUF[ FIELD_PROG_AREA_HEAP_SIZE ] ATTRIBUTE_ALIGN(4);  //<-4byteアライメント
-#define FIELD_PROG_AREA_WEATHER_HEAP_SIZE (0x6800)  // 天気に割り当てるメモリサイズ
-#define FIELD_PROG_AREA_PLACENAME_HEAP_SIZE (0x7000)  // 地名表示に割り当てるメモリサイズ
+#define FIELD_PROG_AREA_WEATHER_HEAP_SIZE (0x6400)  // 天気に割り当てるメモリサイズ
+#define FIELD_PROG_AREA_PLACENAME_HEAP_SIZE (0x7400)  // 地名表示に割り当てるメモリサイズ
 
 
 //--------------------------------------------------------------
