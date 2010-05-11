@@ -20,3 +20,5 @@ extern GMEVENT *FLD_FACEUP_Start( const int inBackNo, const int inCharNo, const 
                                   GAMESYS_WORK *gsys, SCRCMD_WORK * scrCmdWork );
 extern GMEVENT *FLD_FACEUP_End(GAMESYS_WORK *gsys);
 extern void FLD_FACEUP_Release( FIELDMAP_WORK *fieldmap );
+
+extern void FLD_FACEUP_AnmStart( FIELDMAP_WORK *fieldmap );

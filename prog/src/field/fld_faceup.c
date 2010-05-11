@@ -446,6 +446,20 @@ void FLD_FACEUP_Release( FIELDMAP_WORK *fieldmap )
 
 //--------------------------------------------------------------
 /**
+ * アニメ開始
+ * @param     fieldmap    フィールドマップポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+void FLD_FACEUP_AnmStart( FIELDMAP_WORK *fieldmap )
+{
+  FACEUP_WK_PTR ptr;
+  ptr = *FIELDMAP_GetFaceupWkPtrAdr(fieldmap);
+  ptr->MsgEnd = FALSE;
+}
+
+//--------------------------------------------------------------
+/**
  * リリースイベント
  * @param     event	            イベントポインタ
  * @param     seq               シーケンサ
@@ -693,26 +707,27 @@ static void MainTcbFunc( GFL_TCB* tcb, void* work )
       NOZOMU_Printf("NOTHING WIN\n");
     }
     
+    //口パク
     MoveAnm(  MouthAnmPat, MOUTH_ANM_MAX,
               MOUTH_SRC_TRNAS_CHR_NO,
               MOUTH_TRNAS_WIDTH*TRANS_HEIGHT,
               MOUTH_TRNAS_WIDTH,
               &ptr->MouthAnm );
-  }
 
-  //目パチ
-  {
-    if (ptr->EyeAnmWaitCount<=0){
-      ptr->EyeAnm.Stop = FALSE;
-      ptr->EyeAnmWaitCount = EYE_DEF_COUNT + GFUser_GetPublicRand( EYE_RND_COUNT );
+    //目パチ
+    {
+      if (ptr->EyeAnmWaitCount<=0){
+        ptr->EyeAnm.Stop = FALSE;
+        ptr->EyeAnmWaitCount = EYE_DEF_COUNT + GFUser_GetPublicRand( EYE_RND_COUNT );
+      }
+      else ptr->EyeAnmWaitCount--;
+      //アニメ
+      MoveAnm(  EyeAnmPat, EYE_ANM_MAX,
+                EYE_SRC_TRNAS_CHR_NO,
+                EYE_TRNAS_WIDTH*TRANS_HEIGHT,
+                EYE_TRNAS_WIDTH,
+                &ptr->EyeAnm );
     }
-    else ptr->EyeAnmWaitCount--;
-    //アニメ
-    MoveAnm(  EyeAnmPat, EYE_ANM_MAX,
-              EYE_SRC_TRNAS_CHR_NO,
-              EYE_TRNAS_WIDTH*TRANS_HEIGHT,
-              EYE_TRNAS_WIDTH,
-              &ptr->EyeAnm );
   }
 }
 
