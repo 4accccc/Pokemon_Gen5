@@ -1638,6 +1638,9 @@ static void WH_StateOutStartScan(void *arg)
 	BOOL found;
 	int state = cb->state;
 
+	WH_TRACE_STATE;
+  WH_TRACE("WH_StateOutStartScan %d\n",_pWmInfo->sSysState);
+
   _pWmInfo->beaconScanNum++;  //‰ñ”‚ğ”‚¦‚é
   _pWmInfo->startScan=0;
 
@@ -3659,17 +3662,16 @@ void WH_Finalize(void)
 	}
 	WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
 
-  if (_pWmInfo->sWH_EndScan){  //EndScan‚ğŒÄ‚ñ‚¾Œã‚·‚®‚ÉWH_Finalize‚ğŒÄ‚Î‚ê‚½ê‡‚Ì‘Îˆ‚Ìˆ×
-    WH_TRACE("sWH_EndScan\n");
-    return;
-  }
-
   if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
 		if (!WH_EndScan()){
 			WH_Reset();
 		}
 		return;
 	}
+  if (_pWmInfo->sWH_EndScan){  //EndScan‚ğŒÄ‚ñ‚¾Œã‚·‚®‚ÉWH_Finalize‚ğŒÄ‚Î‚ê‚½ê‡‚Ì‘Îˆ‚Ìˆ×
+    WH_TRACE("sWH_EndScan\n");
+    return;
+  }
 
 
 	if (
