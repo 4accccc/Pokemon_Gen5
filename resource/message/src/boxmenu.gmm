@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T15:50:47"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-11T18:31:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -528,13 +528,13 @@
 	<row id="mes_boxmenu_03_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>選択項目：ボックスの壁紙変更</comment>
 		<language name="JPN" font=" 1:small" width="60">かべがみ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">壁紙</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">かべがみ</language>
 	</row>
 
 	<row id="mes_boxmenu_03_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>選択項目：ボックスの名前変更</comment>
 		<language name="JPN" font=" 1:small" width="60">なまえ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">名前</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">なまえ</language>
 	</row>
 
 	<row id="mes_boxmenu_03_04" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
@@ -702,7 +702,7 @@
 	<row id="mes_boxmenu_04_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：追加壁紙の名前</comment>
 		<language name="JPN" font=" 1:small" width="60">プラズマだん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">プラズマ団</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">プラズマだん</language>
 	</row>
 
 	<row id="mes_boxmenu_04_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
@@ -738,19 +738,19 @@
 	<row id="mes_boxmenu_04_33" back-color="#00ffff,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
 		<comment>壁紙メニュー</comment>
 		<language name="JPN" font=" 1:small" width="60">まえへ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">前へ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">まえへ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_34" back-color="#00ffff,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
 		<comment>壁紙メニュー</comment>
 		<language name="JPN" font=" 1:small" width="60">つぎへ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="60">次へ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">つぎへ</language>
 	</row>
 
 	<row id="mes_boxbutton_01_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>手持ちポケモン表示ボタン</comment>
 		<language name="JPN" font=" 1:small" width="72">てもちポケモン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">手持ちポケモン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">てもちポケモン</language>
 	</row>
 
 	<row id="mes_boxbutton_01_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
@@ -796,7 +796,7 @@
 	<row id="mes_boxbutton_02_04" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">にがす</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">逃がす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">にがす</language>
 	</row>
 
 	<row id="mes_boxbutton_02_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
@@ -820,25 +820,25 @@
 	<row id="mes_boxbutton_02_08" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">いどうする</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">移動する</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いどうする</language>
 	</row>
 
 	<row id="mes_boxbutton_02_09" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>メニュー（バトルボックス）</comment>
 		<language name="JPN" font=" 1:small" width="72">いどうする</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">移動する</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いどうする</language>
 	</row>
 
 	<row id="mes_boxbutton_02_10" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">ねかせる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">寝かせる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ねかせる</language>
 	</row>
 
 	<row id="mes_boxbutton_03_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>マーキングメニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">けってい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">決定</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">けってい</language>
 	</row>
 
 	<row id="mes_boxbutton_03_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
@@ -850,7 +850,7 @@
 	<row id="mes_boxbutton_04_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>手持ちポケモンボタン１</comment>
 		<language name="JPN" font=" 1:small" width="72">いれかえ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">入れ替え</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いれかえ</language>
 	</row>
 
 	<row id="mes_boxbutton_04_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
@@ -898,13 +898,13 @@
 	<row id="mes_boxbutton_08_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>道具整理メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">もたせる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">持たせる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もたせる</language>
 	</row>
 
 	<row id="mes_boxbutton_08_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#ff8080,,#00ffff,#ff8080,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>道具整理メニュー</comment>
 		<language name="JPN" font=" 1:small" width="72">いどうする</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">移動する</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いどうする</language>
 	</row>
 
 	<row id="mes_box_subst_01_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
@@ -994,7 +994,7 @@
 	<row id="mes_box_subst_01_15" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
 		<comment>上画面</comment>
 		<language name="JPN" font=" 1:small" width="72">もっているわざ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">持っているわざ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もっているわざ</language>
 	</row>
 
 	<row id="mes_box_yes" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
