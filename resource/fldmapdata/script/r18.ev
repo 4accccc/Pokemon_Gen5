@@ -35,9 +35,12 @@ EVENT_START	ev_r18_sage6_01
 	
 	//ここは潮のにおいがする…
 	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01, R18_SAGE6_01 )
-	_MSGWIN_CLOSE()
 	
-	_TURN_HERO_SITE()
+	//七賢人：主人公を見て（すでに向きあっている場合は何もしない）
+	IF $lwk_ply_dir != DIR_UP THEN
+		_MSGWIN_CLOSE()
+		_TURN_HERO_SITE()
+	ENDIF
 	
 	//…ゲーチスさまは
 	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01a, R18_SAGE6_01 )
@@ -86,9 +89,16 @@ EVENT_START	ev_r18_sage6_01
 	ELSE
 		_OBJ_ANIME( R18_SAGE6_01, anm_stay_walk_u )
 	ENDIF
+	_OBJ_ANIME_WAIT()
 	
-	//かまわんよ
-	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_03, R18_SAGE6_01 )
+	//かまわんよ（吹き出しの位置を分岐）
+	IF $lwk_ply_dir == DIR_UP THEN
+		_BALLOONWIN_OBJMSG_POS( msg_r18_sage6_end_03, R18_SAGE6_01, POS_UL )
+	ELSIF $lwk_ply_dir == DIR_DOWN THEN
+		_BALLOONWIN_OBJMSG_POS( msg_r18_sage6_end_03, R18_SAGE6_01, POS_DL )
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_r18_sage6_end_03, R18_SAGE6_01, POS_DEFAULT )
+	ENDIF
 	_MSGWIN_CLOSE()
 	
 	//ハンサム：主人公の横へ
