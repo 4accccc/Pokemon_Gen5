@@ -562,7 +562,8 @@ typedef struct{
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
   u16 scanFixNo;
-  u16 pauseScan;
+  u8 pauseScan;
+  u8 sWH_EndScan;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
 } _WM_INFO_STRUCT;
 
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
@@ -1770,6 +1771,7 @@ BOOL WH_EndScan(void)
   }
   _pWmInfo->startScan = -1;
 	_pWmInfo->sAutoConnectFlag = FALSE;
+  _pWmInfo->sWH_EndScan = TRUE;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);
 	return TRUE;
 }
@@ -1796,6 +1798,8 @@ static void WH_StateOutEndScan(void *arg)
 	WMCallback *cb = (WMCallback *)arg;
 	WH_TRACE_STATE;
 
+  _pWmInfo->sWH_EndScan = FALSE;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
+  
 	if (cb->errcode != WM_ERRCODE_SUCCESS)
 	{
 		WH_REPORT_FAILURE(cb->errcode);
@@ -3654,7 +3658,13 @@ void WH_Finalize(void)
 		return;
 	}
 	WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
-	if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
+
+  if (_pWmInfo->sWH_EndScan){  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
+    WH_TRACE("sWH_EndScan\n");
+    return;
+  }
+
+  if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
 		if (!WH_EndScan()){
 			WH_Reset();
 		}
