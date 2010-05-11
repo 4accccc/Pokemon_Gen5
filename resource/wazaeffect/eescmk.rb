@@ -369,7 +369,7 @@ end
 				sequence = Array.new
 				inc_header = Array.new
 				dir_table.size.times { |dir|
-					seq_table << "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_00 - WE_" + num_str + 0.to_s(10) +"\t//" + dir_table[ dir ] + "\n"
+					seq_table << "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_00 - WE_" + num_str + 0.to_s(10) +" + 4\t//" + dir_table[ dir ] + "\n"
 				}
 				seq_no = SEQ_MAKE_DATA
 			end
@@ -398,7 +398,7 @@ end
           }
         end
 =end
-				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + " - WE_" + num_str + 0.to_s(10) + "\t//" + dir_table[ dir_str.to_i ] + "\n"
+				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + " - WE_" + num_str + 0.to_s(10) + " + 4\t//" + dir_table[ dir_str.to_i ] + "\n"
 			else
 #技エフェクトコンバート用処理ここから
 				if split_data[ ESF_COM_STR_POS ] == "ポケモン鳴き声"
@@ -564,6 +564,8 @@ end
 		}
   }
 	fp_w.print("\n")
+
+	fp_w.print("\t.long\t" + seq_cnt.to_s(10) + "\n\n")
 
   seq_cnt.times{ |cnt|
 	  fp_w.print( "WE_" + num_str + cnt.to_s(10) + ":\n" )
