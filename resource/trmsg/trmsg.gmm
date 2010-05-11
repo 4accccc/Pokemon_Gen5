@@ -1348,11 +1348,11 @@
 	<row id="TRID_ESPM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">わたしの　エスパーポケモンが
 なぜか　さわぎだした……▼
-いせきが　ちかいからか
+いせきの　なか　だからか
 それとも　きみの　せいなのか？▼</language>
 		<language name="JPN_KANJI" width="216">わたしの　エスパーポケモンが
 なぜか　騒ぎだした……▼
-遺跡が　近いからか
+遺跡の　中だからか
 それとも　君の　せいなのか？▼</language>
 	</row>
 
@@ -1367,11 +1367,11 @@
 		<language name="JPN" width="216">この　いせきを　ちゅうしんに
 ながい　ねんげつを　かけて▼
 イッシュちほうに
-ひとや　ポケモンが　ふえたって</language>
+ひとや　ポケモンが　ふえたってさ</language>
 		<language name="JPN_KANJI" width="216">この遺跡を　中心に
 長い　年月を　かけて▼
 イッシュ地方に
-人や　ポケモンが　増えたって</language>
+人や　ポケモンが　増えたってさ</language>
 	</row>
 
 	<row id="TRID_ESPW_01_TRMSG_FIGHT_START">
