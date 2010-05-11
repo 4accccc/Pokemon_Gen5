@@ -1,6 +1,6 @@
 //============================================================================
 /**
- *  @file   manual.c
+ *  @file   manual_common.c
  *  @brief  ゲーム内マニュアル
  *  @author Koji Kawada
  *  @data   2010.04.26
@@ -20,6 +20,7 @@
 
 #include "manual_graphic.h"
 #include "manual_def.h"
+#include "manual_touchbar.h"
 #include "manual_common.h"
 
 // アーカイブ
@@ -114,6 +115,26 @@ MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
     work->handle_explain = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, work->heap_id );
   }
 
+  // パレット
+  {
+    // サブBGパレット
+    // テキスト
+    GFL_ARC_UTIL_TransVramPaletteEx(
+        ARCID_FONT,
+        NARC_font_default_nclr,
+        PALTYPE_SUB_BG,
+        0,
+        BG_PAL_POS_S_TEXT * 0x20,
+        BG_PAL_NUM_S_TEXT * 0x20,
+        work->heap_id );
+  }
+
+  // 呼び出した関数の中でMANUAL_COMMON_WORKを使用するものは、MANUAL_COMMON_Initの1番最後に呼び出すこと。
+  // マニュアルタッチバー
+  {
+    work->mtb_wk = MANUAL_TOUCHBAR_Init( work );
+  }
+
   return  work;
 }
 
@@ -122,6 +143,11 @@ void  MANUAL_COMMON_Exit(
     MANUAL_COMMON_WORK*  work
 )
 {
+  // マニュアルタッチバー
+  {
+    MANUAL_TOUCHBAR_Exit( work->mtb_wk );
+  }
+
   // ファイルハンドル
   {
     GFL_ARC_CloseDataHandle( work->handle_system );

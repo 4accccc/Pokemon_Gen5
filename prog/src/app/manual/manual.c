@@ -21,8 +21,10 @@
 #include "manual_graphic.h"
 #include "manual_def.h"
 #include "manual_common.h"
-#include "manual_touchbar.h"
 #include "manual_top.h"
+#include "manual_category.h"
+#include "manual_title.h"
+#include "manual_explain.h"
 #include "app/manual.h"
 
 // アーカイブ
@@ -59,28 +61,19 @@ enum
   SEQ_END,
 };
 
-// テキスト
-enum
-{
-  TEXT_DUMMY,
-  TEXT_MAX,
-};
-
-// BG_PAL_POS_M_TEXTの割り当て
-#define TEXT_PAL_POS      (BG_PAL_POS_S_TEXT)
-#define TEXT_COLOR_L      (1)  // 文字主色
-#define TEXT_COLOR_S      (2)  // 文字影色
-#define TEXT_COLOR_B      (0)  // 文字背景色(透明)
-
-static const u8 bmpwin_setup[TEXT_MAX][9] =
-{
-  // frmnum              posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
-  {  BG_FRAME_S_TB_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-};
-
 // フェード
 #define FADE_IN_WAIT  (0)
 #define FADE_OUT_WAIT (0)
+
+// 表示画面
+typedef enum
+{
+  DISP_TYPE_TOP,
+  DISP_TYPE_CATEGORY,
+  DISP_TYPE_TITLE,
+  DISP_TYPE_EXPLAIN,
+}
+DISP_TYPE;
 
 
 //=============================================================================
@@ -103,10 +96,21 @@ typedef struct
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
 
-  // タッチバー
-  MANUAL_TOUCHBAR_WORK*       mtb_wk;
+  // 表示画面
+  DISP_TYPE                   disp_type;
+
   // トップ画面
+  MANUAL_TOP_PARAM            top_param;
   MANUAL_TOP_WORK*            top_wk;
+  // カテゴリ選択画面
+  MANUAL_CATEGORY_PARAM       category_param;
+  MANUAL_CATEGORY_WORK*       category_wk;
+  // タイトル選択画面
+  MANUAL_TITLE_PARAM          title_param;
+  MANUAL_TITLE_WORK*          title_wk;
+  // 説明画面
+  MANUAL_EXPLAIN_PARAM        explain_param;
+  MANUAL_EXPLAIN_WORK*        explain_wk;
 }
 MANUAL_WORK;
 
@@ -199,10 +203,37 @@ static GFL_PROC_RESULT Manual_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
   GFL_NET_ReloadIcon();
 
-  // マニュアルタッチバー
-  work->mtb_wk = MANUAL_TOUCHBAR_Init( work->cmn_wk );
+  // 各画面のパラメータ初期化
+  {
+    // トップ画面
+    // in
+    work->top_param.cursor_pos = 0;
+
+    // カテゴリ選択画面
+    // in
+    work->category_param.head_pos   = 0;
+    work->category_param.cursor_pos = 0;
+
+    // タイトル選択画面
+    // in
+    work->title_param.type        = MANUAL_TITLE_TYPE_CATEGORY;
+    work->title_param.cate_no     = 0;
+    work->title_param.head_pos    = 0;
+    work->title_param.cursor_pos  = 0;
+
+    // 説明画面
+    // in
+    work->explain_param.page_num       = 1;
+    work->explain_param.title_str_id   = 0;
+    work->explain_param.page[0].image  = MANUAL_EXPLAIN_NO_IMAGE;
+    work->explain_param.page[0].str_id = 0;
+  }
+  
+  // 表示画面
+  work->disp_type = DISP_TYPE_TOP;
+  
   // トップ画面
-  work->top_wk = MANUAL_TOP_Init( work->cmn_wk );
+  work->top_wk = MANUAL_TOP_Init( &work->top_param, work->cmn_wk );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -214,10 +245,33 @@ static GFL_PROC_RESULT Manual_ProcExit( GFL_PROC* proc, int* seq, void* pwk, voi
 {
   MANUAL_WORK* work = (MANUAL_WORK*)mywk;
 
-  // トップ画面
-  MANUAL_TOP_Exit( work->top_wk );
-  // マニュアルタッチバー
-  MANUAL_TOUCHBAR_Exit( work->mtb_wk );
+  switch( work->disp_type )
+  {
+  case DISP_TYPE_TOP:
+    {
+      // トップ画面
+      MANUAL_TOP_Exit( work->top_wk );
+    }
+    break;
+  case DISP_TYPE_CATEGORY:
+    {
+      // カテゴリ選択画面
+      MANUAL_CATEGORY_Exit( work->category_wk );
+    }
+    break;
+  case DISP_TYPE_TITLE:
+    {
+      // タイトル選択画面
+      MANUAL_TITLE_Exit( work->title_wk );
+    }
+    break;
+  case DISP_TYPE_EXPLAIN:
+    {
+      // 説明画面
+      MANUAL_EXPLAIN_Exit( work->explain_wk );
+    }
+    break;
+  }
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_DefaultLCD();
@@ -262,26 +316,143 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
   case SEQ_MAIN:
     {
       BOOL b_end = FALSE;
-      u32 x, y;
-      if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
-      {
-        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        b_end = TRUE;
-        work->param->result = MANUAL_RESULT_RETURN;
-      }
-      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-      {
-        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        b_end = TRUE;
-        work->param->result = MANUAL_RESULT_CLOSE;
-      }
-      else if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-      {
-        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-        b_end = TRUE;
-        work->param->result = MANUAL_RESULT_RETURN;
-      }
+      BOOL b_ret = FALSE;
 
+      switch( work->disp_type )
+      {
+      case DISP_TYPE_TOP:
+        {
+          // トップ画面
+          b_ret = MANUAL_TOP_Main( work->top_wk );
+          if( b_ret )
+          {
+            if(    work->top_param.result == MANUAL_TOP_RESULT_CLOSE
+                || work->top_param.result == MANUAL_TOP_RESULT_RETURN )
+            {
+              if( work->top_param.result == MANUAL_TOP_RESULT_CLOSE )        work->param->result = MANUAL_RESULT_CLOSE;
+              else if( work->top_param.result == MANUAL_TOP_RESULT_RETURN )  work->param->result = MANUAL_RESULT_RETURN;
+              b_end = TRUE;
+            }
+            else
+            {
+              // トップ画面
+              MANUAL_TOP_Exit( work->top_wk );
+
+              if( work->top_param.result == MANUAL_TOP_RESULT_CATEGORY )
+              {
+                // カテゴリ選択画面
+                work->disp_type = DISP_TYPE_CATEGORY;
+                work->category_param.head_pos   = 0;
+                work->category_param.cursor_pos = 0;
+                work->category_wk = MANUAL_CATEGORY_Init( &work->category_param, work->cmn_wk );
+              }
+              else if( work->top_param.result == MANUAL_TOP_RESULT_ALL )
+              {
+                // タイトル選択画面
+                work->disp_type = DISP_TYPE_TITLE;
+                work->title_param.type        = MANUAL_TITLE_TYPE_ALL;
+                work->title_param.cate_no     = 0;
+                work->title_param.head_pos    = 0;
+                work->title_param.cursor_pos  = 0;
+                work->title_wk = MANUAL_TITLE_Init( &work->title_param, work->cmn_wk );
+              }
+            }
+          }
+        }
+        break;
+      case DISP_TYPE_CATEGORY:
+        {
+          // タイトル選択画面
+          b_ret = MANUAL_CATEGORY_Main( work->category_wk );
+          if( b_ret )
+          {
+            // タイトル選択画面
+            MANUAL_CATEGORY_Exit( work->category_wk );
+
+            if( work->category_param.result == MANUAL_CATEGORY_RESULT_RETURN )
+            {
+              // トップ画面
+              work->disp_type = DISP_TYPE_TOP;
+              // カーソル位置はそのままで
+              work->top_wk = MANUAL_TOP_Init( &work->top_param, work->cmn_wk );
+            }
+            else
+            {
+              // タイトル選択画面
+              work->disp_type = DISP_TYPE_TITLE;
+              work->title_param.type        = MANUAL_TITLE_TYPE_CATEGORY;
+              work->title_param.cate_no     = work->category_param.cate_no;
+              work->title_param.head_pos    = 0;
+              work->title_param.cursor_pos  = 0;
+              work->title_wk = MANUAL_TITLE_Init( &work->title_param, work->cmn_wk );
+            }
+          }
+        }
+        break;
+      case DISP_TYPE_TITLE:
+        {
+          // タイトル選択画面
+          b_ret = MANUAL_TITLE_Main( work->title_wk );
+          if( b_ret )
+          {
+            // タイトル選択画面
+            MANUAL_TITLE_Exit( work->title_wk );
+
+            if( work->title_param.result == MANUAL_TITLE_RESULT_RETURN )
+            {
+              if( work->title_param.type == MANUAL_TITLE_TYPE_CATEGORY )
+              {
+                // カテゴリ選択画面
+                work->disp_type = DISP_TYPE_CATEGORY;
+                // カーソル位置はそのままで
+                work->category_wk = MANUAL_CATEGORY_Init( &work->category_param, work->cmn_wk );
+              }
+              else if( work->title_param.type == MANUAL_TITLE_TYPE_ALL )
+              {
+                // トップ画面
+                work->disp_type = DISP_TYPE_TOP;
+                // カーソル位置はそのままで
+                work->top_wk = MANUAL_TOP_Init( &work->top_param, work->cmn_wk );
+              }
+            }
+            else
+            {
+              // 説明画面
+              work->disp_type = DISP_TYPE_EXPLAIN;
+              {
+                work->explain_param.page_num       = 7;
+                work->explain_param.title_str_id   = 0;
+                work->explain_param.page[0].image  = MANUAL_EXPLAIN_NO_IMAGE;
+                work->explain_param.page[0].str_id = 0;
+              }
+              work->explain_wk = MANUAL_EXPLAIN_Init( &work->explain_param, work->cmn_wk );
+            }
+          }
+        }
+        break;
+      case DISP_TYPE_EXPLAIN:
+        {
+          // 説明画面
+          b_ret = MANUAL_EXPLAIN_Main( work->explain_wk );
+          if( b_ret )
+          {
+            // 説明画面
+            MANUAL_EXPLAIN_Exit( work->explain_wk );
+
+            if( work->explain_param.result == MANUAL_EXPLAIN_RESULT_RETURN )
+            {
+              // タイトル選択画面
+              work->disp_type = DISP_TYPE_TITLE;
+              // カテゴリか全表示かはそのままで
+              // カーソル位置はそのままで
+              work->title_wk = MANUAL_TITLE_Init( &work->title_param, work->cmn_wk );
+            }
+          }
+        }
+        break;
+      }
+     
+      // 終了
       if( b_end )
       {
         *seq = SEQ_FADE_OUT;
@@ -308,13 +479,9 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
   // 共通
   MANUAL_COMMON_Main( work->cmn_wk );
 
-  // マニュアルタッチバー
-  MANUAL_TOUCHBAR_Main( work->mtb_wk );
-  // トップ画面
-  MANUAL_TOP_Main( work->top_wk );
-
   return GFL_PROC_RES_CONTINUE;
 }
+
 
 //=============================================================================
 /**

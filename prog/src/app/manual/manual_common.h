@@ -1,6 +1,6 @@
 //============================================================================
 /**
- *  @file   manual.h
+ *  @file   manual_common.h
  *  @brief  ゲーム内マニュアル
  *  @author Koji Kawada
  *  @data   2010.04.26
@@ -16,6 +16,8 @@
 #include <gflib.h>
 
 #include "gamesystem/gamedata_def.h"
+
+#include "manual_touchbar.h"
 
 
 //=============================================================================
@@ -55,6 +57,9 @@ typedef struct
   // ファイルハンドル
   ARCHANDLE*                  handle_system;   // システムのファイルハンドル
   ARCHANDLE*                  handle_explain;  // 説明画面のファイルハンドル
+
+  // マニュアルタッチバー
+  MANUAL_TOUCHBAR_WORK*       mtb_wk;  // MANUAL_TOUCHBAR_Mainは各画面で呼んで下さい
 }
 MANUAL_COMMON_WORK;
 

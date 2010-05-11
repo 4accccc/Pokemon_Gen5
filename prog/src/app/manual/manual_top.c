@@ -1,6 +1,6 @@
 //============================================================================
 /**
- *  @file   manual.c
+ *  @file   manual_top.c
  *  @brief  ゲーム内マニュアル
  *  @author Koji Kawada
  *  @data   2010.04.26
@@ -22,6 +22,7 @@
 #include "manual_graphic.h"
 #include "manual_def.h"
 #include "manual_common.h"
+#include "manual_touchbar.h"
 #include "manual_top.h"
 
 // アーカイブ
@@ -50,10 +51,42 @@
 typedef enum
 {
   ATM_WIN_ITEM_CATEGORY,
-  ATM_WIN_ITEM_INITIAL,
+  ATM_WIN_ITEM_ALL,
   ATM_WIN_ITEM_MAX,
 }
 ATM_WIN_ITEM;
+
+#define ATM_PLATE_WIDTH (30)  // キャラ
+#define ATM_PLATE_X     (1)   // キャラ
+#define ATM_PLATE_Y     (3)   // キャラ
+
+// タッチの当たり判定
+static const GFL_UI_TP_HITTBL atm_tp_hittbl[ATM_WIN_ITEM_MAX +1] =
+{
+  {
+    ( ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*(ATM_WIN_ITEM_CATEGORY+0) ) *8  ,
+    ( ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*(ATM_WIN_ITEM_CATEGORY+1) ) *8 -1,
+    ( ATM_PLATE_X ) *8,
+    ( ATM_PLATE_X + ATM_PLATE_WIDTH ) *8 -1
+  },  // rect
+  {
+    ( ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*(ATM_WIN_ITEM_ALL+0) ) *8  ,
+    ( ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*(ATM_WIN_ITEM_ALL+1) ) *8 -1,
+    ( ATM_PLATE_X ) *8,
+    ( ATM_PLATE_X + ATM_PLATE_WIDTH ) *8 -1
+  },  // rect
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },  // テーブル終了
+};
+
+// 入力状態
+typedef enum
+{
+  INPUT_STATE_NONE,  // 何の入力アニメーションも行っていないので、入力可能。
+  INPUT_STATE_END,   // もう何の入力も受け付けない。
+  INPUT_STATE_TB,    // タッチバーの入力アニメーションを行っている最中なので、入力不可能。
+  INPUT_STATE_ATM,   // APP_TASKMENU_WINの入力アニメーションを行っている最中なので、入力不可能。
+}
+INPUT_STATE;
 
 
 //=============================================================================
@@ -66,6 +99,8 @@ ATM_WIN_ITEM;
 //=====================================
 struct _MANUAL_TOP_WORK
 {
+  // パラメータ
+  MANUAL_TOP_PARAM*           param;
   // 共通
   MANUAL_COMMON_WORK*         cmn_wk;
 
@@ -76,6 +111,9 @@ struct _MANUAL_TOP_WORK
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
+
+  // 入力状態
+  INPUT_STATE                 input_state;
 };
 
 
@@ -92,6 +130,8 @@ static void Manual_Top_Prepare( MANUAL_TOP_WORK* work );
 static void Manual_Top_PrepareAppTaskmenuWin( MANUAL_TOP_WORK* work );
 // 転送(VBlank転送ではない)
 static void Manual_Top_Trans( MANUAL_TOP_WORK* work );
+// 入力
+static BOOL Manual_Top_InputAppTaskmenuWin( MANUAL_TOP_WORK* work );
 
 
 //=============================================================================
@@ -101,12 +141,19 @@ static void Manual_Top_Trans( MANUAL_TOP_WORK* work );
 //=============================================================================
 // 初期化処理
 MANUAL_TOP_WORK*  MANUAL_TOP_Init(
+    MANUAL_TOP_PARAM*    param,
     MANUAL_COMMON_WORK*  cmn_wk
 )
 {
   // ワーク
   MANUAL_TOP_WORK*  work  = GFL_HEAP_AllocClearMemory( cmn_wk->heap_id, sizeof(MANUAL_TOP_WORK) );
 
+  // パラメータ
+  work->param  = param;
+  {
+    // out
+    work->param->result = MANUAL_TOP_RESULT_RETURN;
+  }
   // 共通
   work->cmn_wk = cmn_wk;
 
@@ -116,6 +163,12 @@ MANUAL_TOP_WORK*  MANUAL_TOP_Init(
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Manual_Top_VBlankFunc, work, 1 );
+
+  // 入力状態
+  work->input_state = INPUT_STATE_NONE;
+
+  // マニュアルタッチバー
+  MANUAL_TOUCHBAR_SetType( work->cmn_wk->mtb_wk, MANUAL_TOUCHBAR_TYPE_TOP );
 
   return work;
 }
@@ -146,10 +199,87 @@ void  MANUAL_TOP_Exit(
 }
 
 // 主処理
-void  MANUAL_TOP_Main(
+BOOL  MANUAL_TOP_Main(
     MANUAL_TOP_WORK*     work
 )
 {
+  BOOL b_end = FALSE;
+
+  // マニュアルタッチバーの入力を調べる
+  if(    work->input_state == INPUT_STATE_NONE
+      || work->input_state == INPUT_STATE_TB )
+  {
+    // マニュアルタッチバー
+    MANUAL_TOUCHBAR_Main( work->cmn_wk->mtb_wk );
+
+    if( work->input_state == INPUT_STATE_NONE )
+    {
+      TOUCHBAR_ICON icon = MANUAL_TOUCHBAR_GetTouch( work->cmn_wk->mtb_wk );
+      if( icon != TOUCHBAR_SELECT_NONE )
+      {
+        work->input_state = INPUT_STATE_TB;
+      }
+    }
+    else
+    {
+      TOUCHBAR_ICON icon = MANUAL_TOUCHBAR_GetTrg( work->cmn_wk->mtb_wk );
+      if( icon != TOUCHBAR_SELECT_NONE )
+      {
+        switch( icon )
+        {
+        case TOUCHBAR_ICON_RETURN:
+          {
+            work->param->result = MANUAL_TOP_RESULT_RETURN;
+          }
+          break;
+        case TOUCHBAR_ICON_CLOSE:
+          {
+            work->param->result = MANUAL_TOP_RESULT_CLOSE;
+          }
+          break;
+        }
+        work->input_state = INPUT_STATE_END;
+        b_end = TRUE;
+      }
+    }
+  }
+
+  // APP_TASKMENU_WINの入力を調べる
+  if(    work->input_state == INPUT_STATE_NONE
+      || work->input_state == INPUT_STATE_ATM )
+  {
+    // APP_TASKMENU_WIN
+    u8 i;
+    for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
+    {
+      APP_TASKMENU_WIN_Update( work->atm_win_wk[i] );
+    }
+      
+    if( work->input_state == INPUT_STATE_NONE )
+    {
+      BOOL b_decide = Manual_Top_InputAppTaskmenuWin( work );
+      if( b_decide ) work->input_state = INPUT_STATE_ATM;
+    }
+    else
+    {
+      BOOL b_finish = APP_TASKMENU_WIN_IsFinish( work->atm_win_wk[work->param->cursor_pos] );
+      if( b_finish )
+      {
+        if( work->param->cursor_pos == ATM_WIN_ITEM_CATEGORY )
+        {
+          work->param->result = MANUAL_TOP_RESULT_CATEGORY;
+        }
+        else if( work->param->cursor_pos == ATM_WIN_ITEM_ALL )
+        {
+          work->param->result = MANUAL_TOP_RESULT_ALL;
+        }
+        work->input_state = INPUT_STATE_END;
+        b_end = TRUE;
+      }
+    }
+  }
+
+  return b_end;
 }
 
 
@@ -244,22 +374,28 @@ static void Manual_Top_PrepareAppTaskmenuWin( MANUAL_TOP_WORK* work )
     item[ATM_WIN_ITEM_CATEGORY].msgColor  = APP_TASKMENU_ITEM_MSGCOLOR;
     item[ATM_WIN_ITEM_CATEGORY].type      = APP_TASKMENU_WIN_TYPE_NORMAL;
 
-    item[ATM_WIN_ITEM_INITIAL].str        = GFL_MSG_CreateString( work->cmn_wk->msgdata_system, manual_01_02 );
-    item[ATM_WIN_ITEM_INITIAL].msgColor   = APP_TASKMENU_ITEM_MSGCOLOR;
-    item[ATM_WIN_ITEM_INITIAL].type       = APP_TASKMENU_WIN_TYPE_NORMAL;
+    item[ATM_WIN_ITEM_ALL].str            = GFL_MSG_CreateString( work->cmn_wk->msgdata_system, manual_01_02 );
+    item[ATM_WIN_ITEM_ALL].msgColor       = APP_TASKMENU_ITEM_MSGCOLOR;
+    item[ATM_WIN_ITEM_ALL].type           = APP_TASKMENU_WIN_TYPE_NORMAL;
 
     for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
     {
       work->atm_win_wk[i] = APP_TASKMENU_WIN_Create(
           work->atm_res,
           &item[i],
-          1, 1 + 3*i,
-          30,
+          ATM_PLATE_X, ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*i,
+          ATM_PLATE_WIDTH,
           work->cmn_wk->heap_id );
 
       // 文字列解放
       GFL_STR_DeleteBuffer( item[i].str );
     }
+  }
+
+  // カーソルの表示
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  {
+    APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
   }
 }
 
@@ -267,5 +403,91 @@ static void Manual_Top_PrepareAppTaskmenuWin( MANUAL_TOP_WORK* work )
 static void Manual_Top_Trans( MANUAL_TOP_WORK* work )
 {
   GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
+}
+
+// 入力
+static BOOL Manual_Top_InputAppTaskmenuWin( MANUAL_TOP_WORK* work )
+{
+  // 決定したときTRUEを返す
+  
+  int tp_hit = GFL_UI_TP_HitTrg(atm_tp_hittbl);
+
+  // タッチorキーの切り替えチェック
+  // キー入力のとき
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  {
+    if( ATM_WIN_ITEM_CATEGORY<=tp_hit && tp_hit<=ATM_WIN_ITEM_ALL )
+    {
+      // タッチに変更
+      GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+      // タッチに変更した場合は、このまま処理を続ける
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
+    }
+  }
+  // タッチ入力のとき
+  else
+  {
+    if( GFL_UI_KEY_GetTrg() )
+    {
+      if( !( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_B | PAD_BUTTON_X ) ) )  // タッチバーへの入力以外なら
+      {
+        // キーに変更
+        GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+        // キーに変更した場合は、カーソルを表示して、処理を終える
+        APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
+        PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+        return FALSE;
+      }
+    }
+  }
+
+  // キー入力受け付け
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  {
+    // キーのまま変更なしなので、GFL_UI_SetTouchOrKeyは不要。
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      // 決定
+      APP_TASKMENU_WIN_SetDecide( work->atm_win_wk[work->param->cursor_pos], TRUE );
+      PMSND_PlaySE(MANUAL_SND_ATM_DECIDE);
+      return TRUE;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )  // 選択項目は2個しかないのでTrgでいい
+    {
+      if( work->param->cursor_pos != ATM_WIN_ITEM_CATEGORY )
+      {
+        APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
+        work->param->cursor_pos = ATM_WIN_ITEM_CATEGORY;
+        APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
+        PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+      }
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )  // 選択項目は2個しかないのでTrgでいい
+    {
+      if( work->param->cursor_pos != ATM_WIN_ITEM_ALL )
+      {
+        APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
+        work->param->cursor_pos = ATM_WIN_ITEM_ALL;
+        APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
+        PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+      }
+    }
+  }
+  // タッチ入力受け付け
+  else
+  {
+    // タッチのまま変更なしなので、GFL_UI_SetTouchOrKeyは不要。
+    if( ATM_WIN_ITEM_CATEGORY<=tp_hit && tp_hit<=ATM_WIN_ITEM_ALL )
+    {
+      // 決定
+      work->param->cursor_pos = tp_hit;
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
+      APP_TASKMENU_WIN_SetDecide( work->atm_win_wk[work->param->cursor_pos], TRUE );
+      PMSND_PlaySE(MANUAL_SND_ATM_DECIDE);
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 

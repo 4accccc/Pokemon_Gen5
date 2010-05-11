@@ -2224,7 +2224,11 @@ SRCS_OVERLAY_MANUAL = app/manual/manual.c \
                       app/manual/manual_graphic.c \
                       app/manual/manual_common.c \
                       app/manual/manual_touchbar.c \
-                      app/manual/manual_top.c
+                      app/manual/manual_list.c \
+                      app/manual/manual_top.c \
+                      app/manual/manual_category.c \
+                      app/manual/manual_title.c \
+                      app/manual/manual_explain.c
 
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON

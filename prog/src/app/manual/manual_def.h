@@ -16,6 +16,7 @@
 #include <gflib.h>
 
 #include "ui/touchbar.h"
+#include "sound/pm_sndsys.h"
 
 
 // オーバーレイ
@@ -85,13 +86,21 @@ enum
 // 本数
 enum
 {
-  OBJ_PAL_NUM_S_CELL      =  1,
+  OBJ_PAL_NUM_S_LIST      =  1,
   OBJ_PAL_NUM_S_TB_ICON   =  3,  // TOUCHBAR_OBJ_PLT_NUM
+  OBJ_PAL_NUM_S_BTN       =  3,  // TOUCHBAR_OBJ_PLT_NUM  // タッチバーのアイコンと同じパレット(同じのを読み込むのはイヤだが仕方がない)
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_S_CELL      = 0,
+  OBJ_PAL_POS_S_LIST      = 0,
   OBJ_PAL_POS_S_TB_ICON   = 1,
+  OBJ_PAL_POS_S_BTN       = 4,
 };
+
+// サウンド
+#define MANUAL_SND_ATM_MOVE    (SEQ_SE_SELECT1)
+#define MANUAL_SND_ATM_DECIDE  (SEQ_SE_DECIDE1)
+#define MANUAL_SND_BTN_PUSH    (SEQ_SE_SELECT1)
+
 
