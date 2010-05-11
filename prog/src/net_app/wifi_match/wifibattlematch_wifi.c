@@ -824,19 +824,25 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_WAIT_SAKE:
-    if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net ) )
-    { 
-      *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
-      *p_seq  = SEQ_END;
-    }
-    //エラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
-    { 
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+    {
+      WIFIBATTLEMATCH_GDB_RESULT  res = WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
+      { 
+        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+        *p_seq  = SEQ_END;
+      }
+      else if(  res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
 
-      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-      break;
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          break;
+        }
+      }
     }
     break;
 
@@ -1091,7 +1097,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_WAIT_WRITE_SAKE_DELETE_POKE:
     {
-      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
+      WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_START_GIVEUP_MSG;
@@ -1382,7 +1389,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     
   case SEQ_WAIT_GPF_POKEMON:
     {
-      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
+      WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_SEND_GPF_CUPSTATUS;
@@ -1480,10 +1488,13 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
  
   case SEQ_WAIT_SAKE_DATA:
-    if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
-    { 
-      *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
-      *p_seq  = SEQ_CHECK_RATING;
+    {
+      WIFIBATTLEMATCH_GDB_RESULT  res = WIFIBATTLEMATCH_GDB_Process( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
+      { 
+        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+        *p_seq  = SEQ_CHECK_RATING;
+      }
     }
     break;
 
@@ -1870,22 +1881,25 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     
   case SEQ_WAIT_SEND_SAKE_POKE:
     {
-      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
+      WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_LOCK_POKE;
       }
+      else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          *p_seq  = SEQ_START_DRAW_PLAYERINFO;
+          break;
 
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        *p_seq  = SEQ_START_DRAW_PLAYERINFO;
-        break;
-
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-        break;
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;
@@ -2325,7 +2339,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     
   case SEQ_WAIT_SAKE_DATA:
     { 
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
+      WIFIBATTLEMATCH_GDB_RESULT  res = WIFIBATTLEMATCH_GDB_Process( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       { 
         WIFIBATTLEMATCH_ENEMYDATA *p_my_data = p_param->p_player_data;
 
@@ -2381,17 +2396,19 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           *p_seq  = SEQ_START_MATCH_MSG;
         }
       }
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
+          break;
 
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
-        break;
-
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-        break;
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;
@@ -2526,22 +2543,26 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
   case SEQ_WAIT_DOWNLOAD_OTHER_SAKE_POKE:
     { 
-      if( WIFIBATTLEMATCH_GDB_Process( p_wk->p_net ) )
+      WIFIBATTLEMATCH_GDB_RESULT  res = WIFIBATTLEMATCH_GDB_Process( p_wk->p_net );
+
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC2;
         *p_seq  = SEQ_CHECK_DIRTY_POKE;
       }
+      else if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+          break;
 
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
-        break;
-
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-        break;
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;
@@ -2987,12 +3008,13 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   case SEQ_WAIT_SAKE_RECORD:
     {
-      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
+      WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
+      if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq = SEQ_START_RESULT_MSG;
       }
-      else
+      else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
       { 
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
@@ -3352,22 +3374,15 @@ static void WbmWifiSeq_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq, vo
     break;
 
   case SEQ_WAIT_SAKE_LOGINTIME:
-    if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
-    { 
-      *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
-      *p_seq  = SEQ_END;
-    }
-
+    {
+      WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
     //エラーがあろうとなかろうと終了へいく
-#if 0
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
-    { 
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-      *p_seq  = SEQ_END;
-      break;
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
+      { 
+        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+        *p_seq  = SEQ_END;
+      }
     }
-#endif
     break;
 
   case SEQ_END:

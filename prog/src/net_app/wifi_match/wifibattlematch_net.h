@@ -250,12 +250,6 @@ extern BOOL WIFIBATTLEMATCH_NET_WaitTiming( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_heavy );
 
 //-------------------------------------
-///	初回処理(必要のない場合は内部で自動的にきる)
-//=====================================
-extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
-
-//-------------------------------------
 ///	マッチング
 //=====================================
 typedef struct 
@@ -345,11 +339,19 @@ typedef enum
   WIFIBATTLEMATCH_GDB_GET_DEBUGALL  = WIFIBATTLEMATCH_GDB_GET_RND_SCORE,
 }WIFIBATTLEMATCH_GDB_GETTYPE;
 
+//終了コード
+typedef enum
+{
+  WIFIBATTLEMATCH_GDB_RESULT_UPDATE,
+  WIFIBATTLEMATCH_GDB_RESULT_SUCCESS,
+  WIFIBATTLEMATCH_GDB_RESULT_ERROR,
+}WIFIBATTLEMATCH_GDB_RESULT;
+
 //自分のデータから取得する場合
 #define WIFIBATTLEMATCH_GDB_MYRECORD  (-1)
 
 extern void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, int recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs );
-extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 #define WIFIBATTLEMATCH_GDB_DEFAULT_RATEING (1500)
 
@@ -366,14 +368,20 @@ typedef enum
   WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL,
 }WIFIBATTLEMATCH_GDB_WRITETYPE;
 extern void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_GDB_WRITETYPE type, const void *cp_wk_adrs );
-extern BOOL WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_GDB_ProcessWrite( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //作成
 extern void WIFIBATTLEMATCH_GDB_StartCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_GDB_ProcessCreateRecord( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //レコードID取得
 extern u32 WIFIBATTLEMATCH_GDB_GetRecordID( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
+
+//-------------------------------------
+///	初回処理(必要のない場合は内部で自動的にきる)
+//=====================================
+extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //-------------------------------------
 ///	相手のデータ受信  お互いのデータを送る  SENDDATA系
