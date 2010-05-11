@@ -128,22 +128,23 @@ VMCMD_RESULT EvCmdPDW_FurnitureTools( VMHANDLE *core, void *wk )
   case PDW_FURNITURE_TOOLS_CHECK_LIST:
     //家具リストがあるか？
     {
-      DREAM_WORLD_FURNITUREDATA *furData = DREAMWORLD_SV_GetFurnitureData( pdwSave , 0 );
-      if( furData == NULL )
+      u8 i;
+      *ret_wk = TRUE;
+      for( i=0;i<DREAM_WORLD_DATA_MAX_FURNITURE;i++ )
       {
-        //データがおかしい？
-        *ret_wk = FALSE;
-      }
-      else
-      {
-        if( furData->id == 0 )
+        DREAM_WORLD_FURNITUREDATA *furData = DREAMWORLD_SV_GetFurnitureData( pdwSave , i );
+        if( furData == NULL )
         {
-          //データが無い
+          //データがおかしい？
           *ret_wk = FALSE;
         }
         else
         {
-          *ret_wk = TRUE;
+          if( furData->id == 0 )
+          {
+            //データが無い
+            *ret_wk = FALSE;
+          }
         }
       }
     }
