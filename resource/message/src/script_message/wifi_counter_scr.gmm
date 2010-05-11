@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-11T15:47:57"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-11T23:16:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1044" top="414" right="1749" bottom="1042" maximized="no" rayout="Vertical2">
+	<dialog left="170" top="266" right="875" bottom="1012" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="475" top="626" right="994" bottom="1024" visible="yes"/>
+		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="453"/>
 		<band id="1" index="2" style="0000" width="242"/>
 		<band id="2" index="3" style="0000" width="242"/>
@@ -922,22 +922,22 @@ C-Gear入手前</comment>
 	<row id="msg_rndmatch_02_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">ランダムマッチ　について</language>
-		<language name="JPN_KANJI" width="256">ランダムマッチ　について</language>
+		<language name="JPN" width="256">フリーモード　について</language>
+		<language name="JPN_KANJI" width="256">フリーモード　について</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">フリーモード　について</language>
-		<language name="JPN_KANJI" width="256">フリーモード　について</language>
+		<language name="JPN" width="256">レーティングモード　について</language>
+		<language name="JPN_KANJI" width="256">レーティングモード　について</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">レーティングモード　について</language>
-		<language name="JPN_KANJI" width="256">レーティングモード　について</language>
+		<language name="JPN" width="256">とくべつな　ルール　について</language>
+		<language name="JPN_KANJI" width="256">特別なルール　について</language>
 	</row>
 
 	<row id="msg_rndmatch_02_win04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -948,55 +948,6 @@ C-Gear入手前</comment>
 	</row>
 
 	<row id="msg_rndmatch_02_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>ランダムマッチ</comment>
-		<attribute name="キャラ指定">ランダムマッチ</attribute>
-		<language name="JPN" width="256">ランダムマッチでは　いくつかの
-とくべつな　ルールが　あります[BE:01:ページ切り替え（クリア）]
-ポケモンの　レベルが　５１いじょうの
-ばあいは　すべて　５０に　なります[BE:01:ページ切り替え（クリア）]
-ポケモンの　なまえは
-ニックネームで　よびません[BE:01:ページ切り替え（クリア）]
-また　たいせんに　さんかさせる
-ポケモンを　えらぶとき[BE:01:ページ切り替え（クリア）]
-たいせんちゅう　ポケモンに
-めいれいを　するとき[BE:01:ページ切り替え（クリア）]
-それぞれに
-せいげん　じかんが　あります[BE:01:ページ切り替え（クリア）]
-せいげん　じかんを　こえると
-ポケモンの　わざは[BE:00:ページ切り替え（行送り）]
-じどうで　えらばれることに　なるので[BE:00:ページ切り替え（行送り）]
-ごちゅうい　ください[BE:01:ページ切り替え（クリア）]
-なお　たいせんにも
-せいげん　じかんが　あります[BE:01:ページ切り替え（クリア）]
-せいげん　じかんを　こえても
-しょうぶが　つかない　ときは[BE:01:ページ切り替え（クリア）]
-はんていにより　かちまけを
-けってい　します[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ランダムマッチでは　いくつかの
-特別な　ルールが　あります[BE:01:ページ切り替え（クリア）]
-ポケモンの　レベルが　５１以上の
-場合は　すべて　５０に　なります[BE:01:ページ切り替え（クリア）]
-ポケモンの　名前は
-ニックネームで　呼びません[BE:01:ページ切り替え（クリア）]
-また　対戦に　参加させる
-ポケモンを　選ぶとき[BE:01:ページ切り替え（クリア）]
-対戦中　ポケモンに
-命令を　するとき[BE:01:ページ切り替え（クリア）]
-それぞれに
-制限時間が　あります[BE:01:ページ切り替え（クリア）]
-制限時間を　こえると
-ポケモンの　技は[BE:00:ページ切り替え（行送り）]
-自動で　選ばれることに　なるので[BE:00:ページ切り替え（行送り）]
-ご注意ください[BE:01:ページ切り替え（クリア）]
-なお　対戦にも
-制限時間が　あります[BE:01:ページ切り替え（クリア）]
-制限時間を　こえても
-勝負が　つかない　ときは[BE:00:ページ切り替え（行送り）]
-判定により　勝ち負けを　決定します[BE:01:ページ切り替え（クリア）]
-</language>
-	</row>
-
-	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">フリーモードは
@@ -1011,7 +962,7 @@ C-Gear入手前</comment>
 気軽に　挑戦してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_02_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードは
@@ -1064,6 +1015,55 @@ C-Gear入手前</comment>
 すべて　消えてしまいます[BE:01:ページ切り替え（クリア）]
 参加中　ＤＳ本体を
 替えるときは　ご注意ください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_rndmatch_02_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
+		<comment>ランダムマッチ</comment>
+		<attribute name="キャラ指定">ランダムマッチ</attribute>
+		<language name="JPN" width="256">ランダムマッチでは　いくつかの
+とくべつな　ルールが　あります[BE:01:ページ切り替え（クリア）]
+ポケモンの　レベルが　５１いじょうの
+ばあいは　すべて　５０に　なります[BE:01:ページ切り替え（クリア）]
+ポケモンの　なまえは
+ニックネームで　よびません[BE:01:ページ切り替え（クリア）]
+また　たいせんに　さんかさせる
+ポケモンを　えらぶとき[BE:01:ページ切り替え（クリア）]
+たいせんちゅう　ポケモンに
+めいれいを　するとき[BE:01:ページ切り替え（クリア）]
+それぞれに
+せいげん　じかんが　あります[BE:01:ページ切り替え（クリア）]
+せいげん　じかんを　こえると
+ポケモンの　わざは[BE:00:ページ切り替え（行送り）]
+じどうで　えらばれることに　なるので[BE:00:ページ切り替え（行送り）]
+ごちゅうい　ください[BE:01:ページ切り替え（クリア）]
+なお　たいせんにも
+せいげん　じかんが　あります[BE:01:ページ切り替え（クリア）]
+せいげん　じかんを　こえても
+しょうぶが　つかない　ときは[BE:01:ページ切り替え（クリア）]
+はんていにより　かちまけを
+けってい　します[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチでは　いくつかの
+特別な　ルールが　あります[BE:01:ページ切り替え（クリア）]
+ポケモンの　レベルが　５１以上の
+場合は　すべて　５０に　なります[BE:01:ページ切り替え（クリア）]
+ポケモンの　名前は
+ニックネームで　呼びません[BE:01:ページ切り替え（クリア）]
+また　対戦に　参加させる
+ポケモンを　選ぶとき[BE:01:ページ切り替え（クリア）]
+対戦中　ポケモンに
+命令を　するとき[BE:01:ページ切り替え（クリア）]
+それぞれに
+制限時間が　あります[BE:01:ページ切り替え（クリア）]
+制限時間を　こえると
+ポケモンの　技は[BE:00:ページ切り替え（行送り）]
+自動で　選ばれることに　なるので[BE:00:ページ切り替え（行送り）]
+ご注意ください[BE:01:ページ切り替え（クリア）]
+なお　対戦にも
+制限時間が　あります[BE:01:ページ切り替え（クリア）]
+制限時間を　こえても
+勝負が　つかない　ときは[BE:00:ページ切り替え（行送り）]
+判定により　勝ち負けを　決定します[BE:01:ページ切り替え（クリア）]
+</language>
 	</row>
 
 	<row id="msg_rndmatch_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
