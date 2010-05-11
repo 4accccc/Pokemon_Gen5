@@ -451,11 +451,11 @@ static void PokeGra_GetFileOffset( ARCID arc_id , int mons_no, int form_no, int 
   { 
     if( mons_no == MONSNO_MANAFI )
     { 
-      form_no = 1;
+      form_no = FORMNO_TAMAGO_MANAFI;
     }
     else
     { 
-      form_no = 0;
+      form_no = FORMNO_TAMAGO_NORMAL;
     }
     file_start = POKEGRA_FILE_MAX * ( MONSNO_TAMAGO + form_no );
   }
