@@ -1760,22 +1760,24 @@ BOOL WH_EndScan(void)
 	}
   if(_pWmInfo->startScan!=0){
     //ビーコンスキャン強制終了
-    
     if (!WH_StateInStartScan()) {
       WH_ChangeSysState(WH_SYSSTATE_ERROR);
     }
-
-
-    //WM_EndScan(WH_StateOutEndScan);
-//    NET_PRINT("----%d ForceStop\n",_pWmInfo->startScan);
-    
-//    _pWmInfo->startScan = -1;
-//    return FALSE;
+    _pWmInfo->startScan = -1;
+    _pWmInfo->sAutoConnectFlag = FALSE;
+    WH_ChangeSysState(WH_SYSSTATE_BUSY);
   }
-  _pWmInfo->startScan = -1;
-	_pWmInfo->sAutoConnectFlag = FALSE;
-  _pWmInfo->sWH_EndScan = TRUE;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
-	WH_ChangeSysState(WH_SYSSTATE_BUSY);
+  else{
+    OSIntrMode  enable = OS_DisableInterrupts();
+    if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING)
+    {
+      _pWmInfo->startScan = -1;
+      _pWmInfo->sAutoConnectFlag = FALSE;
+      _pWmInfo->sWH_EndScan = TRUE;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
+      WH_ChangeSysState(WH_SYSSTATE_BUSY);
+    }
+    (void)OS_RestoreInterrupts(enable);
+  }
 	return TRUE;
 }
 
