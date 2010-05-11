@@ -127,7 +127,7 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 
   { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_541 }, // ポケモン出現演出
 
-  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
+//  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
 
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_03, 0, 1 } }, // そう！　この　せかいには
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_04, 0, 1 } }, // ふしぎな　ちからを　ひめている
