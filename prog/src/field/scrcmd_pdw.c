@@ -140,7 +140,8 @@ VMCMD_RESULT EvCmdPDW_FurnitureTools( VMHANDLE *core, void *wk )
         }
         else
         {
-          if( furData->id == 0 )
+          if( furData->id == DREAM_WORLD_INVALID_FURNITURE ||
+              furData->id == 0 )
           {
             //データが無い
             *ret_wk = FALSE;
@@ -228,7 +229,8 @@ VMCMD_RESULT EvCmdPDW_SetFurnitureWord( VMHANDLE *core, void *wk )
     }
     else
     {
-      if( furData->id == 0 )
+      if( furData->id == DREAM_WORLD_INVALID_FURNITURE ||
+          furData->id == 0 )
       {
         //データが無い
         GF_ASSERT_MSG( 0 , "Script _PDW_SET_FURNITURE_WORD data is nothing!!\n" );
