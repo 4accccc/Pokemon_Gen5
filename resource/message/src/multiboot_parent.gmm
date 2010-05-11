@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-10T12:55:18"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-11T18:53:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -766,6 +766,15 @@ multiboot_childと一緒</comment>
 キャンセル確認</comment>
 		<language name="JPN" width="208">てんそうマシンを　ちゅうししますか？</language>
 		<language name="JPN_KANJI" width="208">転送マシンを　中止しますか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_23" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>100511Ariizumi　追加
+開始確認</comment>
+		<language name="JPN" width="208">ＤＳワイヤレスつうしんを
+かいし　します</language>
+		<language name="JPN_KANJI" width="208">ＤＳワイヤレス通信を
+開始します</language>
 	</row>
 
 	<flowchart-group-list>

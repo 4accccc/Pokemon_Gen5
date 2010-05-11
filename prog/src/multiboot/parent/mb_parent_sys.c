@@ -72,6 +72,10 @@ typedef enum
   MPS_WAIT_FADEIN,
   MPS_FADEOUT,
   MPS_WAIT_FADEOUT,
+
+  MPS_START_COMM_INIT_MSG,
+  MPS_START_COMM_INIT_YESNO,
+  MPS_START_COMM_MAIN,
   
   MPS_SEND_IMAGE_INIT,
   MPS_SEND_IMAGE_MAIN,
@@ -335,7 +339,6 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   {
     work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_MSG , FILE_MSGID_MB , FALSE , TRUE );
   }
-  MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   work->isSendGameData = FALSE;
@@ -436,7 +439,15 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     {
       if( DS_SYSTEM_IsAvailableWireless() == TRUE )
       {
-        work->state = MPS_SEND_IMAGE_INIT;
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          work->state = MPS_SEND_IMAGE_INIT;
+        }
+        else
+        {
+          //転送マシンは通信開始を聞く
+          work->state = MPS_START_COMM_INIT_MSG;
+        }
       }
       else
       {
@@ -472,6 +483,40 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     }
     break;
     
+  //-----------------------------------------------
+  //通信開始確認
+  case MPS_START_COMM_INIT_MSG:
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_23 , MSGSPEED_GetWait() );
+    work->state = MPS_START_COMM_INIT_YESNO;
+    break;
+  case MPS_START_COMM_INIT_YESNO:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_UP );
+      work->state = MPS_START_COMM_MAIN;
+    }
+    break;
+  case MPS_START_COMM_MAIN:
+    {
+      MB_MSG_YESNO_RET ret;
+      ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+
+      if( ret == MMYR_RET1 )
+      {
+        work->state = MPS_SEND_IMAGE_INIT;
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_ClearYesNoUpper( work->msgWork );
+      }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        work->state = MPS_FADEOUT;
+      }
+    }
+    
+    break;
+
   //-----------------------------------------------
   //ROMの送信部分
   case MPS_SEND_IMAGE_INIT:
@@ -1149,6 +1194,7 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   work->romInfoStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_INTRO_LENGTH*2 );
 
   //タイトル
+  MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   MB_MSG_MessageCreateWordset( work->msgWork );
   MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
   {
