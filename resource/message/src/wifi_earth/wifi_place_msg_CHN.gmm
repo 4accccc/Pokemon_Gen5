@@ -553,6 +553,16 @@
 		<language name="JPN_KANJI" width="216">せっこう</language>
 	</row>
 
+	<row id="CHN32">
+		<language name="JPN" width="216">ホンコン</language>
+		<language name="JPN_KANJI" width="216">ホンコン</language>
+	</row>
+
+	<row id="CHN33">
+		<language name="JPN" width="216">マカオ</language>
+		<language name="JPN_KANJI" width="216">マカオ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
