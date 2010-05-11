@@ -331,6 +331,9 @@ init_flags:
 	//電気石の洞穴のプラズマ団を非表示
 	_FLAG_SET(FV_D06R0301_HAKAI_01)
 
+	//トライアルハウスの謎の女性を非表示
+	_FLAG_SET( FV_C04R0901_TRAINERW_01 )
+
 }
 _RET
 
@@ -480,8 +483,8 @@ ev_first_gameclear:
   //ボックス壁紙追加
   _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
   
-	//５番道路のライバル
-	_FLAG_RESET( FV_R05_RIVAL_AFTER )
+  //５番道路のライバル
+  _FLAG_RESET( FV_R05_RIVAL_AFTER )
 
   //R07R0105タワーオブヘブン5F：クリア後チャンピオン
   _FLAG_RESET( FV_R07R0105_CHAMPION_01 )

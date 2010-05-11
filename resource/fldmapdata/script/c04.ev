@@ -1201,8 +1201,6 @@ EVENT_START	ev_pos_c04_btlrec_get
 	
 	//謎の女性：去る
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_btlrec_trainerw_goaway_01 )
-	_TIME_WAIT( 16 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//謎の女性削除
@@ -1212,6 +1210,8 @@ EVENT_START	ev_pos_c04_btlrec_get
 	//POS無効
 	$WK_SCENE_C04_BTLREC = 1
 	
+	//トライアルハウスに謎の女性を表示
+	_FLAG_RESET( FV_C04R0901_TRAINERW_01 )
 	//========================================//
 	
 	}
