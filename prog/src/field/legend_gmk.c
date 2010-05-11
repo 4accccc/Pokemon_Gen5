@@ -44,6 +44,7 @@ typedef struct LEG_GMK_WK_tag
   BOOL Se0;
   BOOL Se1;
   BOOL Se2;
+  BOOL Se3;
   VecFx32 BallStart;
   VecFx32 BallEnd;
   fx32 Height;
@@ -364,6 +365,15 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
     PMSND_PlaySE( LEG_GMK_BALL );
     gmk_wk->Se2 = TRUE;
   }
+  else if ( (frm >= LEG_SE3_FRM*FX32_ONE)&&(!gmk_wk->Se3) )
+  {
+    //‰¹’âŽ~
+    PMSND_StopSE();
+    //‚r‚dÄ¶
+    PMSND_PlaySE( LEG_GMK_FINISH );
+    gmk_wk->Se3 = TRUE;
+  }
+
 
   switch(*seq){
   case 0:
