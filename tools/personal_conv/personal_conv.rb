@@ -1036,6 +1036,7 @@ end
   form_gra_index = 0
   form_pal_index = 0
   seed = []
+  index_mons_no = 0
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
     if split_data[ PARA::POKENAME ] == ""
@@ -1124,7 +1125,7 @@ end
       end
 
       escape  = split_data[ PARA::ESCAPE ].to_i
-      
+
       form_per_start  = form[ cnt ].get_form_index
 
       if form[ cnt ].get_form_max == 0
@@ -1139,7 +1140,8 @@ end
         end
       end
 
-      form_max  = form[ cnt ].get_form_max
+      num = monsno[ split_data[ PARA::POKENAME ] ]
+      form_max  = form[ num ].get_form_max
       if form_max == 0
         form_max = 1
       end
