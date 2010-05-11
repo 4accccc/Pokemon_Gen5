@@ -7704,7 +7704,7 @@ static void handler_ShadowDive_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   {
     BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
     param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
+    param->flag = BPP_CONTFLG_SHADOWDIVE;
     {
       BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_ShadowDive );
@@ -7718,7 +7718,7 @@ static void handler_ShadowDive_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   {
     BTL_HANDEX_PARAM_SET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
     param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
+    param->flag = BPP_CONTFLG_SHADOWDIVE;
   }
 }
 static void handler_ShadowDive_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

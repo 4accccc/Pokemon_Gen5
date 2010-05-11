@@ -9699,11 +9699,15 @@ static BOOL scproc_TameHideCancel( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppC
 {
   if( BPP_CONTFLAG_Get(bpp, hideContFlag) )
   {
+    u8 pokeID = BPP_GetID( bpp );
+
     scPut_ResetContFlag( wk, bpp, hideContFlag );
     if( BPP_CheckSick(bpp, WAZASICK_TAMELOCK) ) {
       scPut_CureSick( wk, bpp, WAZASICK_TAMELOCK, NULL );
     }
-    SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(bpp), FALSE );
+    SCQUE_PUT_ACT_TameWazaHide( wk->que, pokeID, FALSE );
+
+    ActOrder_ForceDone( wk, pokeID );
     return TRUE;
   }
   return FALSE;
@@ -11111,7 +11115,7 @@ static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
   static const BppContFlag  hideState[] = {
-    BPP_CONTFLG_SORAWOTOBU, BPP_CONTFLG_ANAWOHORU, BPP_CONTFLG_DIVING,
+    BPP_CONTFLG_SORAWOTOBU, BPP_CONTFLG_ANAWOHORU, BPP_CONTFLG_DIVING, BPP_CONTFLG_SHADOWDIVE,
   };
 
   BOOL avoidFlag = FALSE;
