@@ -148,7 +148,6 @@ extern  fx32	          MCSS_GetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys );
 extern  void	          MCSS_SetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys, const fx32 rate );
 extern  void	          MCSS_SetAnimeFrame( MCSS_WORK *mcss, const fx32 frame );
 extern  u16             MCSS_GetAnimeNum( MCSS_WORK* mcss );
-extern  void	          MCSS_SetScaleOffset( MCSS_SYS_WORK* mcss_sys, const fx32 scale );
 
 #ifdef PM_DEBUG
 extern	MCSS_WORK*			MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
