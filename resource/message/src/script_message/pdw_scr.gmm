@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T22:20:02"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-05-11T19:25:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="1018" maximized="no" rayout="Vertical2">
+	<dialog left="258" top="244" right="963" bottom="872" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -379,23 +379,25 @@
 
 
 	<row id="pdw_furniture_menu_01">
-		<language name="JPN">アタシ　かぐの　コレクター！▼
-でも　かんきょうが　ととのってなくて
-かぐカタログが　とどかないのよね▼
-カタログを　ながめる　じかんが
-アタシの　いきがい　なのに……</language>
-		<language name="JPN_KANJI">アタシ　家具の　コレクター！▼
-でも　環境が　整ってなくて
-家具カタログが　届かないのよね▼
-カタログを　ながめる　時間が
-アタシの　生きがい　なのに……</language>
+		<language name="JPN">ワタシ　かぐのデザイナーよ▼
+でも　いまは　ダメなの……
+いいデザインが　おもいつかなくて……▼
+ゆめに　みるくらいの　ステキな
+かぐ　を　かんがえてるんだけど……</language>
+		<language name="JPN_KANJI">ワタシ　家具のデザイナーよ▼
+でも　今は　ダメなの……
+いいデザインが　思いつかなくて……▼
+夢に　見るくらいの　ステキな
+家具　を　考えてるんだけど……</language>
 	</row>
 
 	<row id="pdw_furniture_menu_02">
-		<language name="JPN" width="401">かぐカタログが
-まだ　とどかないのよね</language>
-		<language name="JPN_KANJI">家具カタログが
-まだ　届かないのよね</language>
+		<language name="JPN" width="401">んん……　まだ　あたらしいデザインの
+デザインを　おもいつかないの▼
+また　きてくれない？</language>
+		<language name="JPN_KANJI">んん……　まだ　新しいデザインの
+デザインを　思いつかないの▼
+また　来てくれない？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_03">
@@ -403,10 +405,10 @@
 ・新規のカタログがないとき
 　＝家具選択後も</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">あたらしい　カタログが　とどいたら
-また　えらんでくださいね！！</language>
-		<language name="JPN_KANJI">新しい　カタログが　届いたら
-また　選んでくださいね！！</language>
+		<language name="JPN">また　つぎの　デザインが
+ひらめいたとき　つきあってね！</language>
+		<language name="JPN_KANJI">また　次の　デザインが
+ひらめいたとき　つきあってね！</language>
 	</row>
 
 	<row id="pdw_furniture_menu_04">
@@ -416,14 +418,14 @@
 ・メッセージ表示後
 　カタログメニューが開く</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">アナタの　ステキセンスを　みこんで
-またまた　おねがいしたいのです！▼
-この　カタログから　さいこうの
-かぐを　１つ　えらんでほしいの！</language>
-		<language name="JPN_KANJI">アナタの　ステキセンスを　見込んで
-またまた　お願いしたいのです！▼
-この　カタログから
-最高の家具を　１つ　選んでほしいの！</language>
+		<language name="JPN">あたらしい　かぐデザイン　を
+かんがえたの　じしんさくよ！▼
+この　なかでどれが　いちばん　ゆめに
+でてくるくらい　ステキだと　おもう？</language>
+		<language name="JPN_KANJI">新しい　家具デザイン　を
+考えたの　自信作よ！▼
+この　中でどれが　いちばん　夢に
+出てくるくらい　ステキだと　思う？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_05">
@@ -432,10 +434,14 @@
 ・メッセージ表示後
 　カタログメニューが開く</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">この　カタログから　さいこうの
-かぐを　１つ　えらんでほしいの！</language>
-		<language name="JPN_KANJI">この　カタログから
-最高の家具を　１つ　選んでほしいの！</language>
+		<language name="JPN">それで　ゆめにみるような
+かぐデザイン　を　かんがえたの▼
+この　なかでどれが　いちばん　ゆめに
+でてくるくらい　ステキだと　おもう？</language>
+		<language name="JPN_KANJI">それで　夢に見るような
+家具デザイン　を　考えたの▼
+この　中でどれが　いちばん　夢に
+出てくるくらい　ステキだと　思う？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_06">
@@ -443,10 +449,12 @@
 ・いいえ選択時
 ・カタログでやめる選択時も同様</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">そそそそんなあああッ……！
-アタシを　みすてないで　くださああい</language>
-		<language name="JPN_KANJI">そそそそんなあああッ……！
-アタシを　見捨てないで　くださああい</language>
+		<language name="JPN">そう……　また　きがむいたら▼
+ワタシの　ゆめの　かぐデザインに
+つきあってね</language>
+		<language name="JPN_KANJI">そう……　また　気が向いたら▼
+ワタシの　夢の　家具デザインに
+つきあってね</language>
 	</row>
 
 	<row id="pdw_furniture_menu_07">
@@ -455,48 +463,54 @@
 ・PDWに行くと、選んだ家具が
 　追加されている（予定）</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">なるほど！　こんなに　ステキなら
-ゆめにも　でてきそうですよね！</language>
-		<language name="JPN_KANJI">なるほど！　こんなに　ステキなら
-夢にも　でてきそうですよね！</language>
+		<language name="JPN">なるほど……　いいセンス　ね
+アドバイス　ありがとう！▼
+きっとこのデザインなら　ゆめに
+でるくらい　ステキなかぐに　なるわ▼
+また　つぎの　デザインが
+ひらめいたとき　つきあってね！</language>
+		<language name="JPN_KANJI">なるほど……　いいセンス　ね
+アドバイス　ありがとう！▼
+きっとこのデザインなら　夢に
+出るくらい　ステキな家具に　なるわ▼
+また　次の　デザインが
+ひらめいたとき　つきあってね！</language>
+	</row>
+
+	<row id="pdw_furniture_menu_08_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀：PDW用の家具入手
+・はい/いいえ
+・はい→furniture_menu_08
+　いいえ→furniture_menu_08</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN">アナタ……　いまウワサの
+ゆめにみる　かぐって　しってる？▼</language>
+		<language name="JPN_KANJI">アナタ……　今ウワサの
+夢に見る　家具って　知ってる？▼</language>
 	</row>
 
 	<row id="pdw_furniture_menu_08">
 		<comment>♀：PDW用の家具入手
 ・はい/いいえ
-・はい→furniture_store_03
-　いいえ→urniture_store_04</comment>
+・はい→furniture_menu_03
+　いいえ→furniture_menu_04</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">その　ポケモン……▼
-なかなかの　センスの　もちぬし▼
-ツウごのみの　ステキな　かんじ！！▼
-その　ステキセンスを　みこんで
-おねがいが　あるの！！　きいてね！▼
-アタシ　かぐのコレクターなの▼
-それで　つぎに　どんな　かぐを
-あつめようかな　って▼
-カタログを　ながめてるんだけど
-なかなか　きめられなくって……▼
-そこで！　この　かぐカタログから
-これがすき！　っていう▽
-かぐを　１つ　えらんでほしいんだ▼
-アナタの　センスを　しんじるので
-アドバイスを　おねがいします！</language>
-		<language name="JPN_KANJI">その　ポケモン……▼
-なかなかの　センスの　持ち主▼
-通好みの　ステキな　感じ！！▼
-その　ステキセンスを　見込んで
-お願いが　あるの！！　聞いてね！▼
-アタシ　家具の　コレクターなの▼
-それで　次に　どんな家具を
-集めようかな　って▼
-カタログを　ながめてるんだけど
-なかなか　決められなくって……▼
-そこで！　この　家具カタログから
-これが好き！　っていう▽
-家具を　１つ　選んでほしいんだ▼
-アナタの　センスを　信じるので
-アドバイスを　お願いします！</language>
+		<language name="JPN">あっ　とつぜんゴメンね
+ワタシ　かぐのデザイナーをしているの▼
+かぐデザイナー　の　だれもが　めざす
+ゆめに　みるような　かぐを▽
+つくることを　めざしているわ▼
+そのかぐを　しった　そのよる
+ゆめにみずには　いられない……！▽
+そんなかぐ　よ▼</language>
+		<language name="JPN_KANJI">あっ　突然ゴメンね
+ワタシ　家具のデザイナーをしているの▼
+家具デザイナー　の　だれもが　目指す
+夢に　見るような　家具を▽
+作ることを　目指しているわ▼
+その家具を　知った　その夜
+夢に見ずには　いられない……！▽
+そんな家具　よ▼</language>
 	</row>
 
 	<row id="pdw_furniture_menu_sys_01">
