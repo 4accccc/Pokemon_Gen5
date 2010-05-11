@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-30T12:21:48"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-11T19:23:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1535" top="314" right="2240" bottom="942" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="148" right="1280" bottom="547" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1303,21 +1303,21 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>サブメニュー項目
 メールをよむ</comment>
 		<language name="JPN" font=" 1:small" width="84">メールを　よむ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">メールを読む</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">メールを　よむ</language>
 	</row>
 
 	<row id="mes_pokelist_05_06">
 		<comment>サブメニュー項目
 メールをとる</comment>
 		<language name="JPN" font=" 1:small" width="84">メールを　とる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">メールを取る</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">メールを　とる</language>
 	</row>
 
 	<row id="mes_pokelist_05_07">
 		<comment>サブメニュー項目
 育て屋にポケモンを預ける</comment>
 		<language name="JPN" font=" 1:small" width="84">あずける</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">預ける</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">あずける</language>
 	</row>
 
 	<row id="mes_pokelist_05_08">
@@ -1384,14 +1384,14 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>サブメニュー項目
 道具を持たせる</comment>
 		<language name="JPN" font=" 1:small" width="84">もたせる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">持たせる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">もたせる</language>
 	</row>
 
 	<row id="mes_pokelist_05_17">
 		<comment>サブメニュー項目
 道具を預かる</comment>
 		<language name="JPN" font=" 1:small" width="84">あずかる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">預かる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">あずかる</language>
 	</row>
 
 	<row id="mes_pokelist_05_18">
