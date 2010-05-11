@@ -29,10 +29,11 @@
 #include "message.naix"
 #include "msg/msg_manual.h"
 #include "manual.naix"
+#include "manual_image.naix"
+
 
 // ダミー
 #include "msg/msg_zkn.h"
-#include "zukan_gra.naix"
 
 
 // サウンド
@@ -181,7 +182,6 @@ struct _MANUAL_TOUCHBAR_WORK
   GFL_CLWK*                   obj_clwk[OBJ_CELL_MAX];
   u8                          btn_push;  // OBJ_BTN_L_CELL, OBJ_BTN_R_CELL, BTN_PUSH_NONE のどれか
   BTN_STATE                   btn_state;
-
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
 };
@@ -705,12 +705,10 @@ static void Manual_Touchbar_TextPrintCategory( MANUAL_TOUCHBAR_WORK* work )
         work->cmn_wk->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
     GFL_STR_DeleteBuffer( strbuf );
-
+    work->text_trans[TEXT_TB] = TRUE;
     // 既に済んでいるかもしれないので、Mainを1度呼んでおく
     Manual_Touchbar_TextMain( work );
   }
-  
-  work->text_trans[TEXT_TB] = TRUE;
 }
 static void Manual_Touchbar_TextPrintTitle( MANUAL_TOUCHBAR_WORK* work )
 {
@@ -727,12 +725,10 @@ static void Manual_Touchbar_TextPrintTitle( MANUAL_TOUCHBAR_WORK* work )
         work->cmn_wk->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
     GFL_STR_DeleteBuffer( strbuf );
-
+    work->text_trans[TEXT_TB] = TRUE;
     // 既に済んでいるかもしれないので、Mainを1度呼んでおく
     Manual_Touchbar_TextMain( work );
   }
-  
-  work->text_trans[TEXT_TB] = TRUE;
 }
 static void Manual_Touchbar_TextPrintExplain( MANUAL_TOUCHBAR_WORK* work )
 {
@@ -757,12 +753,10 @@ static void Manual_Touchbar_TextPrintExplain( MANUAL_TOUCHBAR_WORK* work )
     GFL_STR_DeleteBuffer( strbuf );
     GFL_STR_DeleteBuffer( src_strbuf );
     WORDSET_Delete( wordset ); 
-
+    work->text_trans[TEXT_TB] = TRUE;
     // 既に済んでいるかもしれないので、Mainを1度呼んでおく
     Manual_Touchbar_TextMain( work );
   }
-  
-  work->text_trans[TEXT_TB] = TRUE;
 }
 
 // OBJ
@@ -905,11 +899,11 @@ static void Manual_Touchbar_BtnMain( MANUAL_TOUCHBAR_WORK* work )
 // 状態の初期化
 static void Manual_Touchbar_StateInit( MANUAL_TOUCHBAR_WORK* work )
 {
-  work->input_state = INPUT_STATE_NONE;
-  work->touch_icon  = TOUCHBAR_SELECT_NONE;            
-  work->trg_icon    = TOUCHBAR_SELECT_NONE;            
+  work->input_state             = INPUT_STATE_NONE;
+  work->touch_icon              = TOUCHBAR_SELECT_NONE;            
+  work->trg_icon                = TOUCHBAR_SELECT_NONE;            
 
-  work->btn_push    = BTN_PUSH_NONE;
-  work->btn_state   = BTN_STATE_MAIN;
+  work->btn_push                = BTN_PUSH_NONE;
+  work->btn_state               = BTN_STATE_MAIN;
 }
 

@@ -30,10 +30,11 @@
 #include "message.naix"
 #include "msg/msg_manual.h"
 #include "manual.naix"
+#include "manual_image.naix"
+
 
 // ダミー
 #include "msg/msg_zkn.h"
-#include "zukan_gra.naix"
 
 
 // サウンド

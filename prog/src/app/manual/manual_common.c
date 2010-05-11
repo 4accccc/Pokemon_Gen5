@@ -29,10 +29,11 @@
 #include "message.naix"
 #include "msg/msg_manual.h"
 #include "manual.naix"
+#include "manual_image.naix"
+
 
 // ダミー
 #include "msg/msg_zkn.h"
-#include "zukan_gra.naix"
 
 
 // サウンド
@@ -112,7 +113,7 @@ MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
   // ファイルハンドル
   {
     work->handle_system  = GFL_ARC_OpenDataHandle( ARCID_MANUAL, work->heap_id );
-    work->handle_explain = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, work->heap_id );
+    work->handle_explain = GFL_ARC_OpenDataHandle( ARCID_MANUAL_IMAGE, work->heap_id );
   }
 
   // パレット

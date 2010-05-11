@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: manual_image.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MANUAL_IMAGE_NAIX_
+#define NARC_MANUAL_IMAGE_NAIX_
+
+enum {
+	NARC_manual_image_image100428_1228_000_lz77_nbfs = 0,
+	NARC_manual_image_image100428_1229_000_lz77_nbfs = 1,
+	NARC_manual_image_image100428_1229_001_lz77_nbfs = 2
+};
+
+/* NARC_MANUAL_IMAGE_NAIX_ */
+#endif

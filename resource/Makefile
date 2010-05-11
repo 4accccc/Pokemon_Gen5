@@ -172,7 +172,8 @@ SUBDIRS	=	wmi \
 			fld3d_ci_se \
 			profanity_word \
 			manual \
-			symbol
+			symbol \
+			manual_image
 
 
 include $(RESOURCE_MACRO)

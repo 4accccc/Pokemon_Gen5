@@ -33,10 +33,11 @@
 #include "message.naix"
 #include "msg/msg_manual.h"
 #include "manual.naix"
+#include "manual_image.naix"
+
 
 // ダミー
 #include "msg/msg_zkn.h"
-#include "zukan_gra.naix"
 
 
 // サウンド
@@ -49,7 +50,7 @@
 *  定数定義
 */
 //=============================================================================
-#define HEAP_SIZE              (0x30000)               ///< ヒープサイズ
+#define HEAP_SIZE              (0x50000)               ///< ヒープサイズ
 
 // ProcMainのシーケンス
 enum
@@ -123,6 +124,10 @@ MANUAL_WORK;
 // VBlank関数
 static void Manual_VBlankFunc( GFL_TCB* tcb, void* wk );
 
+// メインBGの設定
+static void Manual_MainBgInit( MANUAL_WORK* work );
+static void Manual_MainBgExit( MANUAL_WORK* work );
+
 
 //=============================================================================
 /**
@@ -186,7 +191,8 @@ static GFL_PROC_RESULT Manual_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
   work->cmn_wk = MANUAL_COMMON_Init( work->param->gamedata, work->heap_id );
 
   // メインBG
-  GFL_BG_SetPriority( BG_FRAME_M_PIC,     BG_FRAME_PRI_M_PIC );
+  //GFL_BG_SetPriority( BG_FRAME_M_PIC,     BG_FRAME_PRI_M_PIC );
+  Manual_MainBgInit( work );
   // サブBG
   GFL_BG_SetPriority( BG_FRAME_S_REAR,    BG_FRAME_PRI_S_REAR );
   GFL_BG_SetPriority( BG_FRAME_S_MAIN,    BG_FRAME_PRI_S_MAIN );
@@ -278,6 +284,9 @@ static GFL_PROC_RESULT Manual_ProcExit( GFL_PROC* proc, int* seq, void* pwk, voi
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
+
+  // メインBG
+  Manual_MainBgExit( work );
 
   // 共通
   MANUAL_COMMON_Exit( work->cmn_wk );
@@ -422,8 +431,21 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
               {
                 work->explain_param.page_num       = 7;
                 work->explain_param.title_str_id   = 0;
-                work->explain_param.page[0].image  = MANUAL_EXPLAIN_NO_IMAGE;
-                work->explain_param.page[0].str_id = 0;
+                {
+                  u8 i;
+                  for( i=0; i<work->explain_param.page_num; i++ )
+                  {
+                    work->explain_param.page[i].image  = MANUAL_EXPLAIN_NO_IMAGE;
+                    work->explain_param.page[i].str_id = i;
+                  }
+                  work->explain_param.page[0].image  = 0;
+                  work->explain_param.page[1].image  = 1;
+                  work->explain_param.page[2].image  = 2;
+                  work->explain_param.page[3].image  = MANUAL_EXPLAIN_NO_IMAGE;
+                  work->explain_param.page[4].image  = 0;
+                  work->explain_param.page[5].image  = 1;
+                  work->explain_param.page[6].image  = 2;
+                }
               }
               work->explain_wk = MANUAL_EXPLAIN_Init( &work->explain_param, work->cmn_wk );
             }
@@ -494,5 +516,23 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
 static void Manual_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   MANUAL_WORK* work = (MANUAL_WORK*)wk;
+}
+
+//-------------------------------------
+/// メインBGの設定
+//=====================================
+static void Manual_MainBgInit( MANUAL_WORK* work )
+{
+  {
+    G2_SetBG2ControlDCBmp( GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000 );
+    G2_SetBG2Priority( BG_FRAME_PRI_M_PIC );
+    G2_BG0Mosaic( FALSE );
+  }
+
+  GFL_BG_SetVisible( BG_FRAME_M_PIC, VISIBLE_ON );
+}
+static void Manual_MainBgExit( MANUAL_WORK* work )
+{
+  // 何もしない
 }
 

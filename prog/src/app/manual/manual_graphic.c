@@ -97,7 +97,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 //=====================================
 static const GFL_BG_SYS_HEADER sc_bgsys_header	=
 {	
-	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D/*GX_BG0_AS_3D*/	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_5,GX_BGMODE_0,GX_BG0_AS_2D/*GX_BG0_AS_3D*/	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
 };
 //-------------------------------------
 ///	BG面設定
@@ -109,7 +109,9 @@ static const struct
 	u32									mode;
 	BOOL								is_visible;
 }	sc_bgsetup[]	=
-{	
+{
+
+#if 0
 	//MAIN------------------------
 //#if 0	//3D設定のためいらない
 	{	
@@ -157,6 +159,7 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
+#endif
 
 	//SUB---------------------------
 	{	

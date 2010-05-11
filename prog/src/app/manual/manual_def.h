@@ -29,14 +29,14 @@ FS_EXTERN_OVERLAY(manual);
 */
 //=============================================================================
 // メインBGフレーム
-#define BG_FRAME_M_PIC       (GFL_BG_FRAME0_M)
+#define BG_FRAME_M_PIC       (GFL_BG_FRAME2_M)
 // メインBGフレームのプライオリティ
 #define BG_FRAME_PRI_M_PIC   (0)
 // メインBGパレット
 // 本数
 enum
 {
-  BG_PAL_NUM_M_PIC       = 16,
+  BG_PAL_NUM_M_PIC       = 0,
 };
 // 位置
 enum
