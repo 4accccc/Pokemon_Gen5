@@ -202,7 +202,7 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   work->fieldWork = fieldWork;
   work->MdlArcIdx = inMdl;
   work->AnmArcIdx = inAnm;
-  work->Se = ENC_SE_NONE;
+  work->SE = ENC_SE_NONE;
   if (inIsFadeWhite) work->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT;
   else work->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
 
