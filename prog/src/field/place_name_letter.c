@@ -84,7 +84,7 @@ static void DeleteLetter( PN_LETTER* letter ); // 文字オブジェクトを破棄する
 static void InitLetter( PN_LETTER* letter ); // 文字オブジェクトを初期化する
 static void CreateBitmap( PN_LETTER* letter ); // ビットマップを生成する
 static void DeleteBitmap( PN_LETTER* letter ); // ビットマップを破棄する
-static void CreateBmpOamActor( PN_LETTER* letter, BMPOAM_SYS_PTR bmpOamSys, u32 plttRegIdx ); // BMPOAMアクターを生成する
+static void CreateBmpOamActor( PN_LETTER* letter, BMPOAM_SYS_PTR bmpOamSys, u16 surface, u32 plttRegIdx ); // BMPOAMアクターを生成する
 static void DeleteBmpOamActor( PN_LETTER* letter ); // BMPOAMアクターを破棄する
 // アクセッサ
 static HEAPID GetHeapID( const PN_LETTER* letter ); // ヒープIDを取得する
@@ -145,7 +145,7 @@ static void GetPrintSize( GFL_FONT* font, STRCODE code, HEAPID heapID, u8* destX
  */
 //---------------------------------------------------------------------------
 PN_LETTER* PN_LETTER_Create( 
-    HEAPID heapID, BMPOAM_SYS_PTR bmpOamSys, u32 plttRegIdx )
+    HEAPID heapID, BMPOAM_SYS_PTR bmpOamSys, u16 surface, u32 plttRegIdx )
 {
   PN_LETTER* letter;
 
@@ -157,7 +157,7 @@ PN_LETTER* PN_LETTER_Create(
   InitLetter( letter ); // 初期化
   SetHeapID( letter, heapID ); // ヒープIDをセット
   CreateBitmap( letter ); // ビットマップを生成
-  CreateBmpOamActor( letter, bmpOamSys, plttRegIdx ); // BMPOAMアクターを生成
+  CreateBmpOamActor( letter, bmpOamSys, surface, plttRegIdx ); // BMPOAMアクターを生成
   SetDrawEnable( letter, FALSE ); // 非表示にする
 
 #ifdef DEBUG_MODE
@@ -460,7 +460,7 @@ static void DeleteBitmap( PN_LETTER* letter )
  */
 //---------------------------------------------------------------------------
 static void CreateBmpOamActor( 
-    PN_LETTER* letter, BMPOAM_SYS_PTR bmpOamSys, u32 plttRegIdx )
+    PN_LETTER* letter, BMPOAM_SYS_PTR bmpOamSys, u16 surface, u32 plttRegIdx )
 {
 	BMPOAM_ACT_DATA actorData;
 
@@ -474,7 +474,7 @@ static void CreateBmpOamActor(
 	actorData.pal_offset = 0;
 	actorData.soft_pri   = 0;
 	actorData.bg_pri     = 0;
-	actorData.setSerface = CLSYS_DEFREND_MAIN;
+	actorData.setSerface = surface;
 	actorData.draw_type  = CLSYS_DRAW_MAIN; 
 
   // アクターを追加

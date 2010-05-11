@@ -46,8 +46,8 @@ BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
 // ■ 定数・マクロ
 //=================================================================================== 
 #define MAX_STATE_COUNT (0xffff) // 状態カウンタ最大値
-//#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // 最大文字数
-#define MAX_NAME_LENGTH (28)
+#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // 最大文字数
+//#define MAX_NAME_LENGTH (28)
 // ↑パレス侵入中は侵入相手の名前を表示するため, 大きめに設定する.2010.05.11
 // 現時点の最大長「ホワイトフォレスト」+ 名前5文字 = 14文字 
 // ==> ローカライズ考慮で 28文字
@@ -150,6 +150,25 @@ GFL_BG_BGCNT_HEADER BGCntHeader =
   FALSE,						      // モザイク設定
 }; 
 
+// レンダラーのインデックス
+typedef enum {
+  RENDERER_LETTER, // 文字オブジェクト用
+  RENDERER_NUM
+} RENDERER_INDEX;
+
+// セルアクターのレンダラー
+static const GFL_REND_SURFACE_INIT RendererSurface[ RENDERER_NUM ] = 
+{
+  {
+    0,                                  // サーフェース左上ｘ座標
+    0,                                  // サーフェース左上ｙ座標
+    256,                                // サーフェース幅
+    192,                                // サーフェース高さ
+    CLSYS_DRAW_MAIN,                    // サーフェースタイプ(CLSYS_DRAW_TYPE)
+    CLSYS_REND_CULLING_TYPE_NOT_AFFINE, // カリングタイプ
+  },
+};
+
 
 
 //===================================================================================
@@ -175,9 +194,10 @@ struct _FIELD_PLACE_NAME {
   u32           nullCharPos; // NULLキャラクタのキャラNo.
 
 	// OBJ
-	u32            resPltt[ PLTT_RES_NUM ]; // パレットリソース
-	BMPOAM_SYS_PTR bmpOamSys;               // BMPOAMシステム
-	GFL_CLUNIT*    clunit[ CLUNIT_NUM ];    // セルアクターユニット
+	u32             resPltt[ PLTT_RES_NUM ]; // パレットリソース
+	BMPOAM_SYS_PTR  bmpOamSys;               // BMPOAMシステム
+	GFL_CLUNIT*     clunit[ CLUNIT_NUM ];    // セルアクターユニット
+  GFL_CLSYS_REND* renderer;                // レンダラーシステム
 
   // システム状態
 	SYSTEM_STATE state;	
@@ -216,12 +236,15 @@ static void AllocBGNullCharArea( FIELD_PLACE_NAME* system ); // 空白キャラエリア
 static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system ); // 空白キャラエリアを解放する
 static void RecoverBlankBand( FIELD_PLACE_NAME* system ); // 帯を文字が書き込まれていない状態に復帰する
 // OBJ
+static void CreateClactRenderer( FIELD_PLACE_NAME* system ); // セルアクターのレンダラーを作成する
+static void DeleteClactRenderer( FIELD_PLACE_NAME* system ); // セルアクターのレンダラーを破棄する
 static void LoadOBJResource( FIELD_PLACE_NAME* system ); // OBJ リソースを読み込む
 static void UnloadOBJResource( FIELD_PLACE_NAME* system ); // OBJ リソースを解放する
 static void CreateBmpOamSystem( FIELD_PLACE_NAME* system ); // BMPOAM システムを生成する
 static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system ); // BMPOAM システムを破棄する
 static void CreateClactUnit( FIELD_PLACE_NAME* system ); // セルアクターユニットを生成する
 static void DeleteClactUnit( FIELD_PLACE_NAME* system ); // セルアクターユニットを破棄する
+static void SetUserRenderer( FIELD_PLACE_NAME* system, CLUNIT_INDEX unitIdx ); // セルアクターユニットにレンダラーを設定する
 // 文字オブジェクト
 static void SetupLetter_init( FIELD_PLACE_NAME* system ); // 文字オブジェクトのセットアップを開始する
 static void SetupLetter_main( FIELD_PLACE_NAME* system ); // 文字オブジェクトを１文字ずつセットアップする
@@ -345,8 +368,10 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
   SetHeapID( system, heapID );
   SetFont( system, FLDMSGBG_GetFontHandle( msgbg ) );
 
+  CreateClactRenderer( system );
 	LoadOBJResource( system );
 	CreateClactUnit( system );
+  SetUserRenderer( system, CLUNIT_LETTER );
   CreateBmpOamSystem( system );
 
 	CreateLetters( system ); // 文字オブジェクトを生成
@@ -377,6 +402,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
   DeleteBmpOamSystem( system ); 
   DeleteClactUnit( system );
   UnloadOBJResource( system ); 
+  DeleteClactRenderer( system );
   DeleteWordset( system );
   DeleteMessageData( system ); 
   DeleteBandBitmapWindow( system );
@@ -394,7 +420,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 // ■動作
 //====================================================================================
 
-//#define TEST
+//#define TICK_TEST
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示システムの動作処理
@@ -403,18 +429,18 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
  */
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
-{
+{ 
+#ifdef TICK_TEST
+  OSTick start, end;
+#endif
+
 #ifdef PM_DEBUG
   if( PlaceNameEnable == FALSE ) { return; }
 #endif
 
-#ifdef TEST
-  OSTick start, end;
-#endif
-
   IncStateCount( system ); // 状態カウンタを更新
 
-#ifdef TEST
+#ifdef TICK_TEST
   DEBUG_PrintSystemState( system );
   OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
   start = OS_GetTick();
@@ -434,7 +460,7 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 	// 文字オブジェクトを動かす
   MoveLetters( system );
 
-#ifdef TEST
+#ifdef TICK_TEST
   end = OS_GetTick();
   OS_TFPrintf( 3, "tick = %d, micro sec = %d\n", 
       (u32)(end - start),
@@ -704,6 +730,38 @@ static void RecoverBlankBand( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
+ * @brief セルアクターのレンダラーを作成する
+ *
+ * @param system 
+ */
+//-----------------------------------------------------------------------------------
+static void CreateClactRenderer( FIELD_PLACE_NAME* system )
+{
+  GF_ASSERT( system->renderer == NULL );
+
+  system->renderer = GFL_CLACT_USERREND_Create( 
+      RendererSurface, NELEMS(RendererSurface), system->heapID );
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief セルアクターのレンダラーを破棄する
+ *
+ * @param system 
+ */
+//-----------------------------------------------------------------------------------
+static void DeleteClactRenderer( FIELD_PLACE_NAME* system )
+{
+  GF_ASSERT( system->renderer );
+
+  if( system->renderer ) {
+    GFL_CLACT_USERREND_Delete( system->renderer );
+    system->renderer = NULL;
+  }
+}
+
+//-----------------------------------------------------------------------------------
+/**
  * @brief OBJ リソースを読み込む
  *
  * @param system 
@@ -794,6 +852,25 @@ static void DeleteClactUnit( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
+ * @brief セルアクターユニットにレンダラーを設定する
+ *
+ * @param system
+ * @param unitIdx   ユニット
+ */
+//-----------------------------------------------------------------------------------
+static void SetUserRenderer( FIELD_PLACE_NAME* system, CLUNIT_INDEX unitIdx )
+{
+  if( system->renderer ) {
+    GFL_CLACT_UNIT_SetUserRend( system->clunit[ unitIdx ], system->renderer );
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetUserRenderer\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
  * @brief 文字オブジェクトを生成する
  *
  * @param system 
@@ -806,7 +883,8 @@ static void CreateLetters( FIELD_PLACE_NAME* system )
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
     system->letters[i] = PN_LETTER_Create( 
-        system->heapID, system->bmpOamSys, system->resPltt[ PLTT_RES_LETTER ] );
+        system->heapID, system->bmpOamSys, RENDERER_LETTER, 
+        system->resPltt[ PLTT_RES_LETTER ] );
 	} 
 
 #ifdef DEBUG_PRINT_ON
