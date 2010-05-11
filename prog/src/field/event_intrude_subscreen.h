@@ -17,5 +17,4 @@ extern GMEVENT * EVENT_ChangeIntrudeSubScreen(
 extern GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 zone_id);
 extern GMEVENT * EVENT_IntrudePlayerWarp(
   GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, int player_netid);
-extern GMEVENT * EVENT_IntrudeMissionPut(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heap_id);
 

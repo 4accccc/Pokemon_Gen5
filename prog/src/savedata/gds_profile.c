@@ -169,11 +169,7 @@ int GDS_Profile_GetFormNo(const GDS_PROFILE_PTR gpp)
 	if(gpp->monsno >= MONSNO_MAX){
 		return 0;
 	}
-#if 0 //※check　ここら辺はサーバーの不正チェックでやっているのでいらないかも。保留 2009.11.09(月)
-	return PokeFuseiFormNoCheck(gpp->monsno, gpp->form_no);
-#else
-  return gpp->form_no;
-#endif
+	return POKETOOL_CheckPokeFormNo(gpp->monsno, gpp->form_no);
 }
 
 int GDS_Profile_GetPokeSex(const GDS_PROFILE_PTR gpp)

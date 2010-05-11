@@ -55,13 +55,3 @@ extern const u16 IntrudeSecretItemReverseZoneTbl[];
 //==================================================================
 extern int ISC_TblSearch(u16 zone_id, u16 grid_x, u16 grid_y, u16 grid_z);
 
-//==================================================================
-/**
- * 隠すアイテムを送信スタックへ載せる
- *
- * @param   gsys		ゲームシステムワークへのポインタ
- * @param   tblno		配置テーブル番号(ISC_TblSearchで取得した値)
- * @param   item		隠すアイテムの番号
- */
-//==================================================================
-extern void ISC_ItemSendStack(GAMESYS_WORK *gsys, int tblno, u16 item);

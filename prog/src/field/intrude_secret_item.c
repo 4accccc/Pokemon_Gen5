@@ -54,26 +54,3 @@ int ISC_TblSearch(u16 zone_id, u16 grid_x, u16 grid_y, u16 grid_z)
   return ISC_SEARCH_NONE;
 }
 
-//==================================================================
-/**
- * 隠すアイテムを送信スタックへ載せる
- *
- * @param   gsys		ゲームシステムワークへのポインタ
- * @param   tblno		配置テーブル番号(ISC_TblSearchで取得した値)
- * @param   item		隠すアイテムの番号
- */
-//==================================================================
-void ISC_ItemSendStack(GAMESYS_WORK *gsys, int tblno, u16 item)
-{
-  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
-  
-  if(intcomm == NULL){
-    return; //侵入中ではないため、無視
-  }
-  
-#if 0 //※check　ここで送信スタックへセット
-  名前などはGAMEDATAから取得
-#endif
-}
-

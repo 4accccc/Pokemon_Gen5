@@ -40,7 +40,7 @@
 #include "event_fldmmdl_control.h"
 #include "event_fieldmap_control_local.h" // event_mapchange“àŒÀ’è‚ÌFieldOpen Close
 #include "field_place_name.h"   // FIELD_PLACE_NAME_DisplayForce 
-#include "fieldmap/zone_id.h"   //¦check@ƒ†ƒjƒIƒ“‚ÌSubScreenİ’èb’è‘Îˆ‚Ìˆ×
+#include "fieldmap/zone_id.h"
 #include "script.h"
 #include "warpdata.h"
 #include "move_pokemon.h"
