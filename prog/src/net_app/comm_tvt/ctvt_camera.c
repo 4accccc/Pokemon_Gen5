@@ -267,7 +267,7 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       {
         u8 i;
         //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
-        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
+        //GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         camWork->isWaitAllRefresh = FALSE;
         if( camWork->isDispDouble != COMM_TVT_IsDoubleMode(work) )
         {
