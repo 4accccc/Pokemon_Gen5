@@ -751,8 +751,8 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     {
       VecFx32 pos, tar;
       BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &tar );
-      OS_TPrintf("cam_pos_x:0x%08x cam_pos_y:0x%08x cam_pos_z:0x%08x\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
-      OS_TPrintf("cam_tar_x:0x%08x cam_tar_y:0x%08x cam_tar_z:0x%08x\n",FX_FX32_TO_F32(tar.x),FX_FX32_TO_F32(tar.y),FX_FX32_TO_F32(tar.z));
+      OS_Printf("cam_pos_x:%f cam_pos_y:%f cam_pos_z:%f\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
+      OS_Printf("cam_tar_x:%f cam_tar_y:%f cam_tar_z:%f\n",FX_FX32_TO_F32(tar.x),FX_FX32_TO_F32(tar.y),FX_FX32_TO_F32(tar.z));
       evw->seq_no = evw->ret_seq_no;
     }
     break;
@@ -958,10 +958,10 @@ static  BOOL  EffectViewerRecieveAction( EFFECT_VIEWER_WORK *evw )
   switch( evw->sub_seq_no ){
   case SUB_SEQ_INIT:
     {
-      int *start_ofs = (int *)evw->sequence_data ;
+      int *start_ofs = (int *)evw->sequence_data;
       u8 *start = (u8 *)evw->sequence_data;
-      u16 *com_start = (u16 *)&start[ start_ofs[ 0 ] ];
-      evw->param_start = (u8 *)&start[ start_ofs[ 0 ] + 2 ];
+      u16 *com_start = (u16 *)&start[ start_ofs[ 1 ] ];
+      evw->param_start = (u8 *)&start[ start_ofs[ 1 ] + 2 ];
 
       switch( com_start[ 0 ] ){
       case EC_PARTICLE_PLAY:
