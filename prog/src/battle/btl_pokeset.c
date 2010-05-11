@@ -12,6 +12,142 @@
 #include "btl_calc.h"
 
 /**
+ *  初期化
+ */
+void BTL_POKESET_Clear( BTL_POKESET* set )
+{
+  GFL_STD_MemClear( set, sizeof(BTL_POKESET) );
+}
+
+/**
+ *  コピー
+ */
+void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
+{
+  GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
+}
+
+/**
+ *  ポケモン１体登録（ダメージ記録）
+ */
+void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage )
+{
+  if( rec->count < NELEMS(rec->bpp) )
+  {
+    rec->bpp[ rec->count ] = bpp;
+    rec->damage[ rec->count ] = damage;
+    rec->count++;
+    if( rec->count > rec->countMax ){
+      rec->countMax = rec->count;
+    }
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+}
+/**
+ *  ポケモン１体登録
+ */
+void BTL_POKESET_Add( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
+{
+  BTL_POKESET_AddWithDamage( rec, bpp, 0 );
+}
+/**
+ *  ポケモン１体除外
+ */
+void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
+{
+  u32 i;
+  for(i=0; i<rec->count; ++i)
+  {
+    if( rec->bpp[i] == bpp )
+    {
+      u32 j;
+      for(j=i+1; j<rec->count; ++j)
+      {
+        rec->bpp[j-1] = rec->bpp[j];
+      }
+      rec->count--;
+      rec->getIdx--;
+      break;
+    }
+  }
+}
+/**
+ *  ポケモンデータ取得
+ */
+BTL_POKEPARAM* BTL_POKESET_Get( const BTL_POKESET* rec, u32 idx )
+{
+  if( idx < rec->count )
+  {
+    return (BTL_POKEPARAM*)(rec->bpp[ idx ]);
+  }
+  return NULL;
+}
+/**
+ *  順番アクセス開始
+ */
+void BTL_POKESET_SeekStart( BTL_POKESET* rec )
+{
+  rec->getIdx = 0;
+}
+/**
+ *  順番アクセス（NULLが返ったら修了）
+ */
+BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec )
+{
+  if( rec->getIdx < rec->count )
+  {
+    return rec->bpp[ rec->getIdx++ ];
+  }
+  else
+  {
+    return NULL;
+  }
+}
+/**
+ *  ダメージ記録取得
+ */
+u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
+{
+  u32 i;
+  for(i=0; i<rec->count; ++i)
+  {
+    if( rec->bpp[i] == bpp )
+    {
+      return rec->damage[i];
+    }
+  }
+  GF_ASSERT(0); // ポケモン見つからない
+  return 0;
+}
+/**
+ *  現在登録されているポケモン総数を取得
+ */
+u32 BTL_POKESET_GetCount( const BTL_POKESET* rec )
+{
+  return rec->count;
+}
+/**
+ *  初期化後、記録されたポケモン総数を取得
+ */
+u32 BTL_POKESET_GetCountMax( const BTL_POKESET* rec )
+{
+  return rec->countMax;
+}
+
+/**
+ *  本来は１体以上いたハズのターゲットが現在は0になってしまったケースをチェック
+ */
+BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec )
+{
+  return (rec->countMax > 0) && (rec->count == 0);
+}
+
+
+
+/**
  *  指定ポケモンと同陣営のデータのみをコピー
  *
  *  @return u32 コピーしたポケモン数

@@ -2710,6 +2710,31 @@ static void PlaySELocal( BTLV_CORE* wk, u32 SENo )
 }
 
 /*--------------------------------------------------------------------------------------------------*/
+/* 文字列パラメータ設定                                                                             */
+/*--------------------------------------------------------------------------------------------------*/
+void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u16 strID )
+{
+  int i;
+  for(i=0; i<NELEMS(sp->args); ++i){
+    sp->args[i] = 0;
+  }
+  sp->argCnt = 0;
+  sp->strID = strID;
+  sp->strType = strType;
+  sp->wait = BTLV_MSGWAIT_STD;
+}
+void BTLV_STRPARAM_AddArg( BTLV_STRPARAM* sp, int arg )
+{
+  if( sp->argCnt < NELEMS(sp->args) ){
+    sp->args[ sp->argCnt++ ] = arg;
+  }
+}
+void BTLV_STRPARAM_SetWait( BTLV_STRPARAM* sp, u8 wait )
+{
+  sp->wait = wait;
+}
+
+/*--------------------------------------------------------------------------------------------------*/
 /* 下請けから呼び出される関数群                                                                     */
 /*--------------------------------------------------------------------------------------------------*/
 

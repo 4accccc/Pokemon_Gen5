@@ -355,6 +355,139 @@ u8 BTL_CALC_GetResistTypes( PokeType type, PokeType* dst )
 
   return cnt;
 }
+//=============================================================================================
+/**
+ * タイプ相性（厳密）->タイプ相性（おおまか）に変更
+ *
+ * @param   aff
+ *
+ * @retval  BtlTypeAffAbout
+ */
+//=============================================================================================
+BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff )
+{
+  if( aff > BTL_TYPEAFF_100 )
+  {
+    return BTL_TYPEAFF_ABOUT_ADVANTAGE;
+  }
+  if( aff == BTL_TYPEAFF_100 )
+  {
+    return BTL_TYPEAFF_ABOUT_NORMAL;
+  }
+  if( aff != BTL_TYPEAFF_0 )
+  {
+    return BTL_TYPEAFF_ABOUT_DISADVANTAGE;
+  }
+  return BTL_TYPEAFF_ABOUT_NONE;
+}
+//=============================================================================================
+/**
+ * 確率事象チェック
+ *
+ * @param   per
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_IsOccurPer( u32 per )
+{
+  return (BTL_CALC_GetRand(100) < per);
+}
+//=============================================================================================
+/**
+ * 数値切り上げ
+ *
+ * @param   value
+ * @param   min
+ *
+ * @retval  int
+ */
+//=============================================================================================
+int BTL_CALC_Roundup( int value, int min )
+{
+  if( value < min ){ value = min; }
+  return value;
+}
+//=============================================================================================
+/**
+ *
+ *
+ * @param   value
+ * @param   ratio   倍率（％）
+ *
+ * @retval  extern u32
+ */
+//=============================================================================================
+u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
+{
+  u32 decimal;
+
+  value *= ratio;
+  decimal = value & ( (1 << FX32_SHIFT) -1 );
+  value >>= FX32_SHIFT;
+  if( decimal > (1 << (FX32_SHIFT-1)) ){
+    ++value;
+  }
+
+  return value;
+}
+//=============================================================================================
+/**
+ *
+ *
+ * @param   value
+ * @param   ratio   倍率（％）
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
+{
+  value = BTL_CALC_MulRatio( value, ratio );
+  if( value == 0 ){
+    value = 1;
+  }
+  return value;
+}
+//=============================================================================================
+/**
+ * ポケモンの最大HP * 1/n を計算（最低１になるように補正）
+ *
+ * @param   bpp
+ * @param   denom
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
+{
+  u32 ret = BPP_GetValue( bpp, BPP_MAX_HP ) / denom;
+  if( ret == 0 ){ ret = 1; }
+  return ret;
+}
+//=============================================================================================
+/**
+ *  min以上 ～ max以下の範囲内で乱数取得
+ *
+ * @param   min
+ * @param   max
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_RandRange( u32 min, u32 max )
+{
+  if( min > max ){
+    u32 tmp = min;
+    min = max;
+    max = tmp;
+  }
+  {
+    u32 range = 1 + (max-min);
+    return min + BTL_CALC_GetRand( range );
+  }
+}
+
 
 
 

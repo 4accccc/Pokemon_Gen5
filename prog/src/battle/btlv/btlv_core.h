@@ -85,27 +85,9 @@ typedef struct {
   int   args[BTL_STR_ARG_MAX];  ///< ˆø”
 }BTLV_STRPARAM;
 
-static inline void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u16 strID )
-{
-  int i;
-  for(i=0; i<NELEMS(sp->args); ++i){
-    sp->args[i] = 0;
-  }
-  sp->argCnt = 0;
-  sp->strID = strID;
-  sp->strType = strType;
-  sp->wait = BTLV_MSGWAIT_STD;
-}
-static inline void BTLV_STRPARAM_AddArg( BTLV_STRPARAM* sp, int arg )
-{
-  if( sp->argCnt < NELEMS(sp->args) ){
-    sp->args[ sp->argCnt++ ] = arg;
-  }
-}
-static inline void BTLV_STRPARAM_SetWait( BTLV_STRPARAM* sp, u8 wait )
-{
-  sp->wait = wait;
-}
+extern void BTLV_STRPARAM_Setup( BTLV_STRPARAM* sp, BtlStrType strType, u16 strID );
+extern void BTLV_STRPARAM_AddArg( BTLV_STRPARAM* sp, int arg );
+extern void BTLV_STRPARAM_SetWait( BTLV_STRPARAM* sp, u8 wait );
 
 
 //----------------------------------------------------------------------

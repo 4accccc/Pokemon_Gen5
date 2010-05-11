@@ -86,31 +86,15 @@ extern BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV
 //-------------------------------------------------------------------------------
 extern BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 );
 extern BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID );
+extern BtlSide BTL_MAINUTIL_PokeIDtoOpponentSide( u8 pokeID );
 extern BtlPokePos BTL_MAINUTIL_GetFriendPokePos( BtlPokePos basePos, u8 idx );
 extern BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8 idx );
 extern BOOL BTL_MAIN_IsPlayerSide( const BTL_MAIN_MODULE* wk, BtlSide side );
+extern BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side );
+extern BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx );
+extern BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx );
+extern BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos );
 
-static inline BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
-{
-  GF_ASSERT(side < BTL_SIDE_MAX);
-  return !side;
-}
-static inline BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
-{
-  GF_ASSERT(side < BTL_SIDE_MAX);
-  GF_ASSERT(idx < BTL_POSIDX_MAX);
-
-  return (side&1) + idx*2;
-}
-static inline BtlSide BTL_MAINUTIL_PokeIDtoOpponentSide( u8 pokeID )
-{
-  BtlSide  side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
-  return BTL_MAINUTIL_GetOpponentSide( side );
-}
-static inline BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
-{
-  return pos & 1;
-}
 
 
 /*------------------------------------------------------------------------------*/

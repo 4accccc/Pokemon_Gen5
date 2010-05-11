@@ -43,132 +43,61 @@ extern void BTL_POKESET_SortByAgility( BTL_POKESET* rec, BTL_SVFLOW_WORK* flowWk
 /**
  *  初期化
  */
-static inline void BTL_POKESET_Clear( BTL_POKESET* set )
-{
-  GFL_STD_MemClear( set, sizeof(BTL_POKESET) );
-}
+extern void BTL_POKESET_Clear( BTL_POKESET* set );
+
+
 /**
  *  コピー
  */
-static inline void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
-{
-  GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
-}
+extern void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst );
+
 /**
  *  ポケモン１体登録（ダメージ記録）
  */
-static inline void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage )
-{
-  if( rec->count < NELEMS(rec->bpp) )
-  {
-    rec->bpp[ rec->count ] = bpp;
-    rec->damage[ rec->count ] = damage;
-    rec->count++;
-    if( rec->count > rec->countMax ){
-      rec->countMax = rec->count;
-    }
-  }
-  else
-  {
-    GF_ASSERT(0);
-  }
-}
+extern void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage );
+
 /**
  *  ポケモン１体登録
  */
-static inline void BTL_POKESET_Add( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
-{
-  BTL_POKESET_AddWithDamage( rec, bpp, 0 );
-}
+extern void BTL_POKESET_Add( BTL_POKESET* rec, BTL_POKEPARAM* bpp );
+
 /**
  *  ポケモン１体除外
  */
-static inline void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
-{
-  u32 i;
-  for(i=0; i<rec->count; ++i)
-  {
-    if( rec->bpp[i] == bpp )
-    {
-      u32 j;
-      for(j=i+1; j<rec->count; ++j)
-      {
-        rec->bpp[j-1] = rec->bpp[j];
-      }
-      rec->count--;
-      rec->getIdx--;
-      break;
-    }
-  }
-}
+extern void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp );
+
 /**
  *  ポケモンデータ取得
  */
-static inline BTL_POKEPARAM* BTL_POKESET_Get( const BTL_POKESET* rec, u32 idx )
-{
-  if( idx < rec->count )
-  {
-    return (BTL_POKEPARAM*)(rec->bpp[ idx ]);
-  }
-  return NULL;
-}
+extern BTL_POKEPARAM* BTL_POKESET_Get( const BTL_POKESET* rec, u32 idx );
+
 /**
  *  順番アクセス開始
  */
-static inline void BTL_POKESET_SeekStart( BTL_POKESET* rec )
-{
-  rec->getIdx = 0;
-}
+extern void BTL_POKESET_SeekStart( BTL_POKESET* rec );
+
 /**
  *  順番アクセス（NULLが返ったら修了）
  */
-static inline BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec )
-{
-  if( rec->getIdx < rec->count )
-  {
-    return rec->bpp[ rec->getIdx++ ];
-  }
-  else
-  {
-    return NULL;
-  }
-}
+extern BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec );
+
 /**
  *  ダメージ記録取得
  */
-static inline u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
-{
-  u32 i;
-  for(i=0; i<rec->count; ++i)
-  {
-    if( rec->bpp[i] == bpp )
-    {
-      return rec->damage[i];
-    }
-  }
-  GF_ASSERT(0); // ポケモン見つからない
-  return 0;
-}
+extern u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp );
+
 /**
  *  現在登録されているポケモン総数を取得
  */
-static inline u32 BTL_POKESET_GetCount( const BTL_POKESET* rec )
-{
-  return rec->count;
-}
+extern u32 BTL_POKESET_GetCount( const BTL_POKESET* rec );
+
 /**
  *  初期化後、記録されたポケモン総数を取得
  */
-static inline u32 BTL_POKESET_GetCountMax( const BTL_POKESET* rec )
-{
-  return rec->countMax;
-}
-
+extern u32 BTL_POKESET_GetCountMax( const BTL_POKESET* rec );
 
 /**
  *  本来は１体以上いたハズのターゲットが現在は0になってしまったケースをチェック
  */
-static inline BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec )
-{
-  return (rec->countMax > 0) && (rec->count == 0);
-}
+extern BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec );
+

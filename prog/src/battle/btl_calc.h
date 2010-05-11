@@ -55,22 +55,7 @@ typedef enum {
  *  タイプ相性 -> 簡易タイプ相性変換
  */
 //--------------------------------------------------------------------
-static inline BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff )
-{
-  if( aff > BTL_TYPEAFF_100 )
-  {
-    return BTL_TYPEAFF_ABOUT_ADVANTAGE;
-  }
-  if( aff == BTL_TYPEAFF_100 )
-  {
-    return BTL_TYPEAFF_ABOUT_NORMAL;
-  }
-  if( aff != BTL_TYPEAFF_0 )
-  {
-    return BTL_TYPEAFF_ABOUT_DISADVANTAGE;
-  }
-  return BTL_TYPEAFF_ABOUT_NONE;
-}
+extern BtlTypeAffAbout BTL_CALC_TypeAffAbout( BtlTypeAff aff );
 
 
 /*--------------------------------------------------------------------------*/
@@ -180,63 +165,29 @@ extern BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myCl
 //=============================================================================================
 extern BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* bpp, WazaID waza );
 
+extern u32 BTL_CALC_MulRatio( u32 value, fx32 ratio );
+extern u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio );
 
-static inline u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
-{
-  u32 decimal;
+/**
+ *  確率事象のチェック
+ */
+extern u32 BTL_CALC_IsOccurPer( u32 per );
 
-  value *= ratio;
-  decimal = value & ( (1 << FX32_SHIFT) -1 );
-  value >>= FX32_SHIFT;
-  if( decimal > (1 << (FX32_SHIFT-1)) ){
-    ++value;
-  }
-
-  return value;
-}
-
-static inline u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
-{
-  value = BTL_CALC_MulRatio( value, ratio );
-  if( value == 0 ){
-    value = 1;
-  }
-  return value;
-}
-
-static inline u32 BTL_CALC_IsOccurPer( u32 per )
-{
-  return (BTL_CALC_GetRand(100) < per);
-}
-
-static inline int BTL_CALC_Roundup( int value, int min )
-{
-  if( value < min ){ value = min; }
-  return value;
-}
+/**
+ *  数値切り上げ
+ */
+extern int BTL_CALC_Roundup( int value, int min );
 
 /**
  *  ポケモンの最大HP * 1/N を計算（最低１になるように補正）
  */
-static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
-{
-  u32 ret = BPP_GetValue( bpp, BPP_MAX_HP ) / denom;
-  if( ret == 0 ){ ret = 1; }
-  return ret;
-}
+extern u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom );
 
-static inline u32 BTL_CALC_RandRange( u32 min, u32 max )
-{
-  if( min > max ){
-    u32 tmp = min;
-    min = max;
-    max = tmp;
-  }
-  {
-    u32 range = 1 + (max-min);
-    return min + BTL_CALC_GetRand( range );
-  }
-}
+/**
+ *  min以上 ～ max以下の範囲内で乱数取得
+ */
+extern  u32 BTL_CALC_RandRange( u32 min, u32 max );
+
 static inline void BTL_CALC_BITFLG_Construction( u8* flags, u8 bufsize )
 {
   u32 i;

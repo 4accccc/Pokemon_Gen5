@@ -10,7 +10,10 @@
 #ifndef __BTL_ACTION_H__
 #define __BTL_ACTION_H__
 
+#include "waza_tool\wazadata.h"
 #include "waza_tool\wazano_def.h"
+
+#include "btl_common.h"
 
 //--------------------------------------------------------------
 /**
@@ -85,99 +88,45 @@ typedef union {
 }BTL_ACTION_PARAM;
 
 // たたかうアクション
-static inline void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos )
-{
-  p->raw = 0;
-  p->fight.cmd = BTL_ACTION_FIGHT;
-  p->fight.targetPos = targetPos;
-  p->fight.waza = waza;
-}
+extern void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos );
+
 // アイテムつかうアクション
-static inline void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx, u8 wazaIdx )
-{
-  p->raw = 0;
-  p->item.cmd = BTL_ACTION_ITEM;
-  p->item.number = itemNumber;
-  p->item.targetIdx = targetIdx;
-  p->item.param = wazaIdx;
-}
+extern void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx, u8 wazaIdx );
+
 // 入れ替えポケモン選択アクション（選択対象は未定）
-static inline void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p )
-{
-  p->raw = 0;
-  p->change.cmd = BTL_ACTION_CHANGE;
-  p->change.posIdx = 0;
-  p->change.memberIdx = 0;
-  p->change.depleteFlag = 0;
-}
+extern void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p );
 
 // 入れ替えポケモン選択アクション（通常）
-static inline void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 posIdx, u8 memberIdx )
-{
-  p->raw = 0;
-  p->change.cmd = BTL_ACTION_CHANGE;
-  p->change.posIdx = posIdx;
-  p->change.memberIdx = memberIdx;
-  p->change.depleteFlag = 0;
-}
+extern void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 posIdx, u8 memberIdx );
+
 // 入れ替えポケモン選択アクション（もう戦えるポケモンがいない）
-static inline void BTL_ACTION_SetChangeDepleteParam( BTL_ACTION_PARAM* p )
-{
-  p->raw = 0;
-  p->change.cmd = BTL_ACTION_CHANGE;
-  p->change.memberIdx = 0;
-  p->change.depleteFlag = 1;
-}
+extern void BTL_ACTION_SetChangeDepleteParam( BTL_ACTION_PARAM* p );
+
 // ローテーション
-static inline void BTL_ACTION_SetRotation( BTL_ACTION_PARAM* p, BtlRotateDir dir )
-{
-  p->raw = 0;
-  p->rotation.cmd = BTL_ACTION_ROTATION;
-  p->rotation.dir = dir;
-}
-static inline BOOL BTL_ACTION_IsDeplete( const BTL_ACTION_PARAM* p )
-{
-  return ((p->change.cmd == BTL_ACTION_CHANGE) && (p->change.depleteFlag == 1));
-}
+extern void BTL_ACTION_SetRotation( BTL_ACTION_PARAM* p, BtlRotateDir dir );
 
-static inline void BTL_ACTION_SetEscapeParam( BTL_ACTION_PARAM* p )
-{
-  p->gen.cmd = BTL_ACTION_ESCAPE;
-}
+extern BOOL BTL_ACTION_IsDeplete( const BTL_ACTION_PARAM* p );
 
-static inline void BTL_ACTION_SetMoveParam( BTL_ACTION_PARAM* p )
-{
-  p->gen.cmd = BTL_ACTION_MOVE;
-}
-static inline void BTL_ACTION_SetNULL( BTL_ACTION_PARAM* p )
-{
-  p->gen.cmd = BTL_ACTION_NULL;
-  p->gen.param = 0;
-}
+// 逃げるパラメータ設定
+extern void BTL_ACTION_SetEscapeParam( BTL_ACTION_PARAM* p );
 
-static inline void BTL_ACTION_SetSkip( BTL_ACTION_PARAM* p )
-{
-  p->gen.cmd = BTL_ACTION_SKIP;
-}
+// ムーブパラメータ設定
+extern void BTL_ACTION_SetMoveParam( BTL_ACTION_PARAM* p );
 
-static inline BtlAction BTL_ACTION_GetAction( const BTL_ACTION_PARAM* p )
-{
-  return p->gen.cmd;
-}
+// NULL（死んでいるので飛ばす）パラメータ設定
+extern void BTL_ACTION_SetNULL( BTL_ACTION_PARAM* p );
 
-static inline WazaID BTL_ACTION_GetWazaID( const BTL_ACTION_PARAM* act )
-{
-  if( act->gen.cmd == BTL_ACTION_FIGHT ){
-    return act->fight.waza;
-  }
-  return WAZANO_NULL;
-}
+extern void BTL_ACTION_SetSkip( BTL_ACTION_PARAM* p );
 
-static inline void BTL_ACTION_SetRecPlayOver( BTL_ACTION_PARAM* act )
-{
-  act->gen.cmd = BTL_ACTION_RECPLAY_TIMEOVER;
-  act->gen.param = 0;
-}
+// コマンド取得
+extern BtlAction BTL_ACTION_GetAction( const BTL_ACTION_PARAM* p );
+
+// ワザID取得（たたかうアクション設定時のみ）
+extern WazaID BTL_ACTION_GetWazaID( const BTL_ACTION_PARAM* act );
+
+// 録画バッファあふれ通知コマンド通知
+extern void BTL_ACTION_SetRecPlayOver( BTL_ACTION_PARAM* act );
+
 
 #endif
 

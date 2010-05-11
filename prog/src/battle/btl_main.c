@@ -3261,67 +3261,6 @@ BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
     return result;
   }
 }
-//-------------------------------------------------------------------
-/**
- *  トリプルバトル時にセンター位置かどうかを判定
- */
-//-------------------------------------------------------------------
-BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
-{
-  return (pos == BTL_POS_1ST_1) || (pos == BTL_POS_2ND_1);
-}
-//-------------------------------------------------------------------
-/**
- *  トリプルバトル時に相手の反対端にあたる位置を取得
- *
- * @param   myPos   自分位置
- * @param   farPos  [out] 相手の反対端にあたる位置を格納する変数ポインタ
- *
- * @retval  BOOL    取得できたらTRUE／取得できない（自分位置がCenterの）場合 FALSE
- */
-//-------------------------------------------------------------------
-BOOL BTL_MAINUTIL_GetTripleFarPos( BtlPokePos myPos, BtlPokePos* farPos )
-{
-  if( !BTL_MAINUTIL_IsTripleCenterPos(myPos) )
-  {
-    u8 myPosIdx = btlPos_to_sidePosIdx( myPos );
-    *farPos = BTL_MAINUTIL_GetOpponentPokePos( BTL_RULE_TRIPLE, myPos, myPosIdx );
-    return TRUE;
-  }
-  return FALSE;
-}
-
-
-//=============================================================================================
-/**
- *
- *
- * @param   pokeID
- *
- * @retval  BtlSide
- */
-//=============================================================================================
-BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID )
-{
-  return (pokeID < TEMOTI_POKEMAX*2)? BTL_SIDE_1ST : BTL_SIDE_2ND;
-}
-//=============================================================================================
-/**
- * 味方同士のポケモンIDかどうかを判定する
- *
- * @param   pokeID1
- * @param   pokeID2
- *
- * @retval  BOOL    味方同士ならTRUE
- */
-//=============================================================================================
-BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
-{
-  BtlSide side1 = BTL_MAINUTIL_PokeIDtoSide( pokeID1 );
-  BtlSide side2 = BTL_MAINUTIL_PokeIDtoSide( pokeID2 );
-  return side1 == side2;
-}
-
 /**
  *  ポケモンリスト画面をマルチモードで開くかどうか判定
  */
@@ -4131,8 +4070,89 @@ const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos )
 
   return &tbl[pos];
 }
-
-//=============================================================================================
+//-------------------------------------------------------------------
+/**
+ *  トリプルバトル時にセンター位置かどうかを判定
+ */
+//-------------------------------------------------------------------
+BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
+{
+  return (pos == BTL_POS_1ST_1) || (pos == BTL_POS_2ND_1);
+}
+//-------------------------------------------------------------------
+/**
+ *  トリプルバトル時に相手の反対端にあたる位置を取得
+ *
+ * @param   myPos   自分位置
+ * @param   farPos  [out] 相手の反対端にあたる位置を格納する変数ポインタ
+ *
+ * @retval  BOOL    取得できたらTRUE／取得できない（自分位置がCenterの）場合 FALSE
+ */
+//-------------------------------------------------------------------
+BOOL BTL_MAINUTIL_GetTripleFarPos( BtlPokePos myPos, BtlPokePos* farPos )
+{
+  if( !BTL_MAINUTIL_IsTripleCenterPos(myPos) )
+  {
+    u8 myPosIdx = btlPos_to_sidePosIdx( myPos );
+    *farPos = BTL_MAINUTIL_GetOpponentPokePos( BTL_RULE_TRIPLE, myPos, myPosIdx );
+    return TRUE;
+  }
+  return FALSE;
+}
+//-------------------------------------------------------------------
+/**
+ * 味方同士のポケモンIDかどうかを判定する
+ *
+ * @param   pokeID1
+ * @param   pokeID2
+ *
+ * @retval  BOOL    味方同士ならTRUE
+ */
+//-------------------------------------------------------------------
+BOOL BTL_MAINUTIL_IsFriendPokeID( u8 pokeID1, u8 pokeID2 )
+{
+  BtlSide side1 = BTL_MAINUTIL_PokeIDtoSide( pokeID1 );
+  BtlSide side2 = BTL_MAINUTIL_PokeIDtoSide( pokeID2 );
+  return side1 == side2;
+}
+//-------------------------------------------------------------------
+/**
+ *ポケモンID -> サイドID変換
+ *
+ * @param   pokeID
+ *
+ * @retval  BtlSide
+ */
+//-------------------------------------------------------------------
+BtlSide BTL_MAINUTIL_PokeIDtoSide( u8 pokeID )
+{
+  return (pokeID < TEMOTI_POKEMAX*2)? BTL_SIDE_1ST : BTL_SIDE_2ND;
+}
+//-------------------------------------------------------------------
+/**
+ * ポケモンID -> 敵方サイドID変換
+ *
+ * @param   pokeID
+ *
+ * @retval  BtlSide
+ */
+//-------------------------------------------------------------------
+BtlSide BTL_MAINUTIL_PokeIDtoOpponentSide( u8 pokeID )
+{
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+  return BTL_MAINUTIL_GetOpponentSide( side );
+}
+//-------------------------------------------------------------------
+/**
+ *  敵型サイドID変換
+ */
+//-------------------------------------------------------------------
+BtlSide BTL_MAINUTIL_GetOpponentSide( BtlSide side )
+{
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  return !side;
+}
+//-------------------------------------------------------------------
 /**
  * トリプルバトル時の攻撃可能エリア判定
  *
@@ -4141,7 +4161,7 @@ const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos )
  *
  * @retval  BOOL
  */
-//=============================================================================================
+//-------------------------------------------------------------------
 BOOL BTL_MAINUTIL_CheckTripleHitArea( BtlPokePos attackerPos, BtlPokePos targetPos )
 {
   const BTL_TRIPLE_ATTACK_AREA* area = BTL_MAINUTIL_GetTripleAttackArea( attackerPos );
@@ -4158,9 +4178,11 @@ BOOL BTL_MAINUTIL_CheckTripleHitArea( BtlPokePos attackerPos, BtlPokePos targetP
 
   return FALSE;
 }
+//-------------------------------------------------------------------
 /**
  *  ローテーション回転方向 -> 新しく入ってくるポケモンの元位置Index取得
  */
+//-------------------------------------------------------------------
 u8 BTL_MAINUTIL_GetRotateInPosIdx( BtlRotateDir dir )
 {
   switch( dir ){
@@ -4170,9 +4192,11 @@ u8 BTL_MAINUTIL_GetRotateInPosIdx( BtlRotateDir dir )
     return 0;
   }
 }
+//-------------------------------------------------------------------
 /**
  *  ローテーション回転方向 -> 出て行く先のポケモンの位置Index取得
  */
+//-------------------------------------------------------------------
 u8 BTL_MAINUTIL_GetRotateOutPosIdx( BtlRotateDir dir )
 {
   switch( dir ){
@@ -4182,6 +4206,31 @@ u8 BTL_MAINUTIL_GetRotateOutPosIdx( BtlRotateDir dir )
     return 0;
   }
 }
+//-------------------------------------------------------------------
+/**
+ * 指定サイドの位置ID取得
+ */
+//-------------------------------------------------------------------
+BtlPokePos BTL_MAINUTIL_GetSidePos( BtlSide side, u8 idx )
+{
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  GF_ASSERT(idx < BTL_POSIDX_MAX);
+
+  return (side&1) + idx*2;
+}
+//-------------------------------------------------------------------
+/**
+ *  位置ID->サイドID
+ */
+//-------------------------------------------------------------------
+BtlSide BTL_MAINUTIL_PosToSide( BtlPokePos pos )
+{
+  return pos & 1;
+}
+
+
+
+
 
 
 //------------------------------------------------------------------------------

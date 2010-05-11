@@ -1179,6 +1179,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_pokeparam.c \
 			battle/btl_event.c \
 			battle/btl_calc.c \
+			battle/btl_action.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \
