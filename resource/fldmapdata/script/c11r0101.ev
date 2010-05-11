@@ -192,7 +192,7 @@ EVENT_START ev_c11r0101_policeman01
     $gardman_talk_msg = msg_policeman_02_02
   CASE 2 THEN     //3ヶ国突破
     $gardman_talk_msg = msg_policeman_02_03
-  CASE 3 THEN     //6ヶ国突破
+  CASE 3 THEN     //5ヶ国突破
     $gardman_talk_msg = msg_policeman_02_04
   CASE 4 THEN     //10ヶ国突破
     $gardman_talk_msg = msg_policeman_02_05
@@ -200,25 +200,25 @@ EVENT_START ev_c11r0101_policeman01
     $gardman_talk_msg = msg_policeman_02_06
   CASE 6 THEN     //20ヶ国突破
     $gardman_talk_msg = msg_policeman_02_07
-  CASE 7 THEN     //30ヶ国突破
+  CASE 7 THEN     //25ヶ国突破
     $gardman_talk_msg = msg_policeman_02_08
-  CASE 8 THEN     //40ヶ国突破
+  CASE 8 THEN     //30ヶ国突破
     $gardman_talk_msg = msg_policeman_02_09
-  CASE 9 THEN     //50ヶ国突破
+  CASE 9 THEN     //35ヶ国突破
     $gardman_talk_msg = msg_policeman_02_10
-  CASE 10 THEN    //75ヶ国突破
+  CASE 10 THEN    //40ヶ国突破
     $gardman_talk_msg = msg_policeman_02_11
-  CASE 11 THEN    //100ヶ国突破
+  CASE 11 THEN    //50ヶ国突破
     $gardman_talk_msg = msg_policeman_02_12
-  CASE 12 THEN    //125ヶ国突破
+  CASE 12 THEN    //60ヶ国突破
     $gardman_talk_msg = msg_policeman_02_13
-  CASE 13 THEN    //150ヶ国突破
+  CASE 13 THEN    //70ヶ国突破
     $gardman_talk_msg = msg_policeman_02_14
-  CASE 14 THEN    //175ヶ国突破
+  CASE 14 THEN    //85ヶ国突破
     $gardman_talk_msg = msg_policeman_02_15
-  CASE 15 THEN    //200ヶ国突破
+  CASE 15 THEN    //100ヶ国突破
     $gardman_talk_msg = msg_policeman_02_16
-  CASE 16 THEN    //233ヶ国突破
+  CASE 16 THEN    //132ヶ国突破
     $gardman_talk_msg = msg_policeman_02_17
   DEFAULT  
     //ここにはこないけど
@@ -267,7 +267,7 @@ EVENT_START ev_c11r0101_pos01
     SWITCH $LOCALWORK2
     CASE 2 THEN     //3ヶ国突破
       $gardman_msg = msg_policeman_01_03
-    CASE 3 THEN     //6ヶ国突破
+    CASE 3 THEN     //5ヶ国突破
       $gardman_msg = msg_policeman_01_04
     CASE 4 THEN     //10ヶ国突破
       $gardman_msg = msg_policeman_01_05
@@ -275,25 +275,25 @@ EVENT_START ev_c11r0101_pos01
       $gardman_msg = msg_policeman_01_06
     CASE 6 THEN     //20ヶ国突破
       $gardman_msg = msg_policeman_01_07
-    CASE 7 THEN     //30ヶ国突破
+    CASE 7 THEN     //25ヶ国突破
       $gardman_msg = msg_policeman_01_08
-    CASE 8 THEN     //40ヶ国突破
+    CASE 8 THEN     //30ヶ国突破
       $gardman_msg = msg_policeman_01_09
-    CASE 9 THEN     //50ヶ国突破
+    CASE 9 THEN     //35ヶ国突破
       $gardman_msg = msg_policeman_01_10
-    CASE 10 THEN    //75ヶ国突破
+    CASE 10 THEN    //40ヶ国突破
       $gardman_msg = msg_policeman_01_11
-    CASE 11 THEN    //100ヶ国突破
+    CASE 11 THEN    //50ヶ国突破
       $gardman_msg = msg_policeman_01_12
-    CASE 12 THEN    //125ヶ国突破
+    CASE 12 THEN    //60ヶ国突破
       $gardman_msg = msg_policeman_01_13
-    CASE 13 THEN    //150ヶ国突破
+    CASE 13 THEN    //70ヶ国突破
       $gardman_msg = msg_policeman_01_14
-    CASE 14 THEN    //175ヶ国突破
+    CASE 14 THEN    //85ヶ国突破
       $gardman_msg = msg_policeman_01_15
-    CASE 15 THEN    //200ヶ国突破
+    CASE 15 THEN    //100ヶ国突破
       $gardman_msg = msg_policeman_01_16
-    CASE 16 THEN    //233ヶ国突破
+    CASE 16 THEN    //132ヶ国突破
       $gardman_msg = msg_policeman_01_17
     DEFAULT
       $talk = FALSE
@@ -434,34 +434,34 @@ check_posevt_start:
     CASE 1 THEN     //初回イベント済
       $chk_val = 3
     CASE 2 THEN     //3ヶ国チェック済
-      $chk_val = 6
-    CASE 3 THEN     //6ヶ国チェック済
+      $chk_val = 5
+    CASE 3 THEN     //5ヶ国チェック済
       $chk_val = 10
     CASE 4 THEN     //10ヶ国チェック済
       $chk_val = 15
     CASE 5 THEN     //15ヶ国チェック済
       $chk_val = 20
     CASE 6 THEN     //20ヶ国チェック済
+      $chk_val = 25
+    CASE 7 THEN     //25ヶ国チェック済
       $chk_val = 30
-    CASE 7 THEN     //30ヶ国チェック済
+    CASE 8 THEN     //30ヶ国チェック済
+      $chk_val = 35
+    CASE 9 THEN     //35ヶ国チェック済
       $chk_val = 40
-    CASE 8 THEN     //40ヶ国チェック済
+    CASE 10 THEN    //40ヶ国チェック済
       $chk_val = 50
-    CASE 9 THEN     //50ヶ国チェック済
-      $chk_val = 75
-    CASE 10 THEN    //75ヶ国チェック済
+    CASE 11 THEN    //50ヶ国チェック済
+      $chk_val = 60
+    CASE 12 THEN    //60ヶ国チェック済
+      $chk_val = 70
+    CASE 13 THEN    //70ヶ国チェック済
+      $chk_val = 85
+    CASE 14 THEN    //85ヶ国チェック済
       $chk_val = 100
-    CASE 11 THEN    //100ヶ国チェック済
-      $chk_val = 125
-    CASE 12 THEN    //125ヶ国チェック済
-      $chk_val = 150
-    CASE 13 THEN    //150ヶ国チェック済
-      $chk_val = 175
-    CASE 14 THEN    //175ヶ国チェック済
-      $chk_val = 200
-    CASE 15 THEN    //200ヶ国チェック済
-      $chk_val = 233
-    CASE 16 THEN    //233ヶ国チェック済
+    CASE 15 THEN    //100ヶ国チェック済
+      $chk_val = 132
+    CASE 16 THEN    //132ヶ国チェック済
       $chk_val = 300      //チェックの必要ないので、国数以上の値をセットしておく
     DEFAULT
       //何もしないでリターン
@@ -471,25 +471,25 @@ check_posevt_start:
     //ヶ国数取得
     _UN_GET_COUNTRY_NUM( TRUE, chk_total )
 
-    IF $chk_total >= 233 THEN
+    IF $chk_total >= 132 THEN
       $next_scene = 16
-    ELSIF $chk_total >= 200 THEN
-      $next_scene = 15
-    ELSIF $chk_total >= 175 THEN
-      $next_scene = 14
-    ELSIF $chk_total >= 150 THEN
-      $next_scene = 13
-    ELSIF $chk_total >= 125 THEN
-      $next_scene = 12
     ELSIF $chk_total >= 100 THEN
-      $next_scene = 11
-    ELSIF $chk_total >= 75 THEN
-      $next_scene = 10
+      $next_scene = 15
+    ELSIF $chk_total >= 85 THEN
+      $next_scene = 14
+    ELSIF $chk_total >= 70 THEN
+      $next_scene = 13
+    ELSIF $chk_total >= 60 THEN
+      $next_scene = 12
     ELSIF $chk_total >= 50 THEN
-      $next_scene = 9
+      $next_scene = 11
     ELSIF $chk_total >= 40 THEN
-      $next_scene = 8
+      $next_scene = 10
+    ELSIF $chk_total >= 35 THEN
+      $next_scene = 9
     ELSIF $chk_total >= 30 THEN
+      $next_scene = 8
+    ELSIF $chk_total >= 25 THEN
       $next_scene = 7
     ELSIF $chk_total >= 20 THEN
       $next_scene = 6
@@ -497,7 +497,7 @@ check_posevt_start:
       $next_scene = 5
     ELSIF $chk_total >= 10 THEN
       $next_scene = 4
-    ELSIF $chk_total >= 6 THEN
+    ELSIF $chk_total >= 5 THEN
       $next_scene = 3
     ELSIF $chk_total >= 3 THEN
       $next_scene = 2
