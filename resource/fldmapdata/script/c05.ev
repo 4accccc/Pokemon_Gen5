@@ -290,11 +290,13 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_BALLOONWIN_CLOSE()
 	
 	//画面暗転・プラズマ団OB削除
-	_BLACK_OUT()
+	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 	
 	//イベント曲停止
 	_END_EVENT_BGM()
+	
+	_TIME_WAIT( 16 )
 	
 	_OBJ_DEL(C05_HAKAI_01)
 	_OBJ_DEL(C05_HAKAI_02)
@@ -312,7 +314,7 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_OBJ_POS_CHANGE(C05_RIVAL_02,211,0,404,DIR_UP)
 	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,212,0,404,DIR_UP)
 
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
 	
 	//ジムリーダー一言残してジムの前へ
@@ -451,6 +453,12 @@ _ANIME_LABEL	anm_c05_rival_02
 /*POSイベント：サポート登場                            */
 /**************************************************************/
 EVENT_START   ev_pos_c05_support_01
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	
 	//ハイリンク通信ブロック処理
 	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
@@ -466,8 +474,21 @@ EVENT_START   ev_pos_c05_support_01
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_gyoe )
 	_OBJ_ANIME_WAIT()
 	
-	//サポート表示
-	_OBJ_ADD_EX( 172, 405, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	//主人公座標に応じてサポートの表示位置を変更
+	SWITCH $POSZ
+	CASE 403 THEN
+		_OBJ_ADD_EX( 172, 403, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	CASE 404 THEN
+		_OBJ_ADD_EX( 172, 404, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	CASE 405 THEN //目の前に立った時
+		_OBJ_ADD_EX( 172, 405, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	CASE 406 THEN
+		_OBJ_ADD_EX( 172, 406, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	CASE 407 THEN
+		_OBJ_ADD_EX( 172, 406, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ADD_EX( 172, 405, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+	ENDSWITCH
 	
 	//サポート曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
@@ -475,35 +496,17 @@ EVENT_START   ev_pos_c05_support_01
 	//サポート主人公に隣接
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_hello )
 	_OBJ_ANIME_WAIT()
-	{
-	//自機座標取得変数定義
-	DEFINE_LOCAL  POSX
-	DEFINE_LOCAL  POSZ
 	
-	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	
 	//主人公座標に応じてサポートに隣接
 	SWITCH $POSZ
-	CASE 403 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz403 )
-		_OBJ_ANIME_WAIT()
-	CASE 404 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz404 )
-		_OBJ_ANIME_WAIT()
-	CASE 405 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz405 )
-	_OBJ_ANIME_WAIT()
-	CASE 406 THEN  //目の前に立った時
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz406 )
-		 _OBJ_ANIME_WAIT()
 	CASE 407 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz407 )
 		_OBJ_ANIME_WAIT()
 	DEFAULT  //目の前に立ったケースと同じ処理を行う
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_to_supportz405 )
-		_OBJ_ANIME_WAIT()
+	
 	ENDSWITCH
-	}
+	
 	//サポート：ねえねえ！ひょっとして
 	_BALLOONWIN_OBJMSG(msg_c05_white_02,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
@@ -564,7 +567,7 @@ EVENT_START   ev_pos_c05_support_01
 	_BALLOONWIN_OBJMSG(msg_c05_white_05,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
-	//退場アニメ（１）
+	//退場アニメ
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c05_support_goodbye01 )
 	_OBJ_ANIME_WAIT()
 	
@@ -582,7 +585,7 @@ EVENT_START   ev_pos_c05_support_01
 	
 	//ハイリンク通信ブロック処理終了
 	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
-
+	}
 EVENT_END
 
 //--------------------------------------------------------------
@@ -601,41 +604,10 @@ _ANIME_LABEL	anm_c05_support_hello
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	サポート登場：主人公、z座標に応じてサポートに隣接z403
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_player_to_supportz403
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	サポート登場：主人公、z座標に応じてサポートに隣接z404
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_player_to_supportz404
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	サポート登場：主人公、z座標に応じてサポートに隣接z405
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_player_to_supportz405
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	サポート登場：主人公、z座標に応じてサポートに隣接z406
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c05_player_to_supportz406
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
 //	サポート登場：主人公、z座標に応じてサポートに隣接z407
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_player_to_supportz407
-	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
