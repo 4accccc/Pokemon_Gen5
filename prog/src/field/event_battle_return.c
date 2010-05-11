@@ -214,7 +214,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         if( param->btlResult->getMoney > 0 ){
           MISC_AddGold( GAMEDATA_GetMiscWork(param->gameData), param->btlResult->getMoney);
         }else if( param->btlResult->getMoney < 0 ){
-          MISC_SubGold( GAMEDATA_GetMiscWork(param->gameData), param->btlResult->getMoney);
+          //MISC_??Gold‚Íunsigned‚Ì’l‚µ‚©Žó‚¯Žæ‚ç‚È‚¢
+          MISC_SubGold( GAMEDATA_GetMiscWork(param->gameData), -(param->btlResult->getMoney) );
         }
       }
 
