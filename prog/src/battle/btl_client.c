@@ -1748,7 +1748,7 @@ static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID )
       // 場に出ているポケで生きているヤツを探しておく
       if( BPP_IsDead(bpp) )
       {
-        u32 numCoverPos = BTL_MAIN_GetClientCoverPosCount( wk->mainModule, clientID );
+        u32 numCoverPos = BTL_MAIN_GetClientFrontPosCount( wk->mainModule, clientID );
         for(i=1; i<numCoverPos; ++i){
           bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, i );
           if( !BPP_IsDead(bpp) ){

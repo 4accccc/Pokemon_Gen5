@@ -174,7 +174,7 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
 static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID );
-static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID );
+static u8 CheckNumFrontPos( const BTL_MAIN_MODULE* wk, u8 clientID );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
@@ -604,7 +604,7 @@ static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID )
 /**
  *  クライアントが管理する位置数を取得
  */
-static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID )
+static u8 CheckNumFrontPos( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   switch( wk->setupParam->rule ){
   case BTL_RULE_SINGLE:
@@ -1776,7 +1776,7 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( BTL_MAIN_IsExistClient(wk, i) ){
-        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumCoverPos(wk, i) );
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumFrontPos(wk, i) );
       }
     }
 
@@ -1828,7 +1828,7 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( BTL_MAIN_IsExistClient(wk, i) ){
-        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumCoverPos(wk, i) );
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumFrontPos(wk, i) );
       }
     }
 
@@ -1881,7 +1881,7 @@ static BOOL setupseq_comm_create_server_client_rotation( BTL_MAIN_MODULE* wk, in
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( BTL_MAIN_IsExistClient(wk, i) ){
-        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumCoverPos(wk, i) );
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumFrontPos(wk, i) );
       }
     }
 
@@ -4042,9 +4042,9 @@ BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* p
  * @retval  u8
  */
 //=============================================================================================
-u8 BTL_MAIN_GetClientCoverPosCount( const BTL_MAIN_MODULE* wk, u8 clientID )
+u8 BTL_MAIN_GetClientFrontPosCount( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  return CheckNumCoverPos( wk, clientID );
+  return CheckNumFrontPos( wk, clientID );
 }
 
 

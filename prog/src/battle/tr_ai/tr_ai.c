@@ -263,9 +263,9 @@ static  VMCMD_RESULT  AI_IF_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work );
-static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_UNDER( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_UNDER( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_OVER( VMHANDLE* vmh, void* context_work );
-static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_EQUAL( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_EQUAL( VMHANDLE* vmh, void* context_work );
 
 static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
@@ -423,9 +423,9 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_IFN_COMMONRND_EQUAL,
   AI_TABLE_JUMP,
   AI_IF_MIRAIYOCHI,
-	AI_IF_DMG_PHYSIC_UNDER,
-	AI_IF_DMG_PHYSIC_OVER,
-	AI_IF_DMG_PHYSIC_EQUAL,
+  AI_IF_DMG_PHYSIC_UNDER,
+  AI_IF_DMG_PHYSIC_OVER,
+  AI_IF_DMG_PHYSIC_EQUAL,
 };
 
 enum{
@@ -498,7 +498,7 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
 
   //‹Zƒf[ƒ^‚ÌƒLƒƒƒbƒVƒ…‚ð¶¬
   if( WAZADATA_CheckCache() == FALSE )
-  { 
+  {
     WAZADATA_CreateCache( TR_AI_WAZATBL_MAX, heapID );
   }
 
@@ -528,14 +528,14 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   {
     ret = waza_ai_plural( vmh, taw );
   }
-  else 
-  { 
+  else
+  {
     int def[ 3 ];
     int def_cnt = 0;
     const BTL_POKEPARAM* bpp;
-    
+
     for( taw->def_btl_poke_pos = 0 ; taw->def_btl_poke_pos < 6 ; taw->def_btl_poke_pos++ )
-    { 
+    {
       if( taw->def_btl_poke_pos == taw->atk_btl_poke_pos ) { continue; }
       if( ( taw->def_btl_poke_pos & 1 ) == ( taw->atk_btl_poke_pos & 1 ) ) { continue; }
       bpp = get_bpp( taw, taw->def_btl_poke_pos );
@@ -575,7 +575,7 @@ void  TR_AI_Exit( VMHANDLE* vmh )
 
   //‹Zƒf[ƒ^ƒLƒƒƒbƒVƒ…”jŠü
   if( WAZADATA_CheckCache() == TRUE )
-  { 
+  {
     WAZADATA_DeleteCache();
   }
 }
@@ -878,7 +878,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
 #endif
   }
 
-  { 
+  {
     BtlPokePos  btl_pos;
     u8  btl_pos_wk[BTL_POS_MAX];
     s16 point_max = taw->max_point[ 0 ];
@@ -1794,7 +1794,7 @@ static  VMCMD_RESULT  AI_IF_FIRST( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_IF_FIRST\n");
 #endif
 
-  switch( cond ){ 
+  switch( cond ){
   case IF_FIRST_ATTACK:
     cond = COND_OVER;
     break;
@@ -1826,7 +1826,7 @@ static  VMCMD_RESULT  AI_CHECK_BENCH_COUNT( VMHANDLE* vmh, void* context_work )
   u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, pos );
   const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
   //‘O‰q‚Ì”
-  u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+  u8  front_count = BTL_MAIN_GetClientFrontPosCount( taw->wk, clientID );
   int i;
 
 #ifdef AI_SEQ_PRINT
@@ -1972,7 +1972,7 @@ static  void  ai_if_bench_cond( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond 
   u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, pos );
   const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
   //‘O‰q‚Ì”
-  u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+  u8  front_count = BTL_MAIN_GetClientFrontPosCount( taw->wk, clientID );
   int i;
 
   for( i = front_count ; i < BTL_PARTY_GetMemberCount( pty ) ; i++ )
@@ -2296,7 +2296,7 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond 
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
       if( taw->use_waza[ pos ][ i ] != WAZANO_NULL )
-      { 
+      {
         int have_seqno = get_waza_param( taw, taw->use_waza[ pos ][ i ], WAZAPARAM_AI_SEQNO );
         if( have_seqno == seqno )
         {
@@ -2552,11 +2552,11 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_POW( VMHANDLE* vmh, void* context_work )
 #endif
 
   if( taw->calc_work != WAZANO_NULL )
-  { 
+  {
     taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_POWER );
   }
   else
-  { 
+  {
     taw->calc_work = 0;
   }
 
@@ -2575,11 +2575,11 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work
 #endif
 
   if( taw->calc_work != WAZANO_NULL )
-  { 
+  {
     taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_AI_SEQNO );
   }
   else
-  { 
+  {
     taw->calc_work = -1;
   }
 
@@ -2886,7 +2886,7 @@ static  VMCMD_RESULT  AI_IF_BENCH_HPDEC( VMHANDLE* vmh, void* context_work )
   u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, pos );
   const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
   //‘O‰q‚Ì”
-  u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+  u8  front_count = BTL_MAIN_GetClientFrontPosCount( taw->wk, clientID );
   int i;
 
 #ifdef AI_SEQ_PRINT
@@ -2922,7 +2922,7 @@ static  VMCMD_RESULT  AI_IF_BENCH_PPDEC( VMHANDLE* vmh, void* context_work )
   u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, pos );
   const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
   //‘O‰q‚Ì”
-  u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+  u8  front_count = BTL_MAIN_GetClientFrontPosCount( taw->wk, clientID );
   int i, j;
 
 #ifdef AI_SEQ_PRINT
@@ -3047,11 +3047,11 @@ static  VMCMD_RESULT  AI_CHECK_LAST_WAZA_KIND( VMHANDLE* vmh, void* context_work
 #endif
 
   if( waza != WAZANO_NULL )
-  { 
+  {
     taw->calc_work = get_waza_param( taw, waza, WAZAPARAM_DAMAGE_TYPE );
   }
   else
-  { 
+  {
     taw->calc_work = WAZADATA_DMG_NONE;
   }
 
@@ -3114,7 +3114,7 @@ static  VMCMD_RESULT  AI_IF_BENCH_DAMAGE_MAX( VMHANDLE* vmh, void* context_work 
     u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos );
     const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
     //‘O‰q‚Ì”
-    u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+    u8  front_count = BTL_MAIN_GetClientFrontPosCount( taw->wk, clientID );
 
     max_dmg = get_max_damage( taw, taw->atk_bpp, taw->def_bpp, loss_flag );
 
@@ -3302,7 +3302,7 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
   u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos );
   const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
   //‘O‰q‚Ì”
-  u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+  u8  front_count = BTL_MAIN_GetClientFrontPosCount( taw->wk, clientID );
   int cnt;
   int idx = BTL_PARTY_FindMember( pty, taw->atk_bpp );
   u8  atkPokeID = BPP_GetID( taw->atk_bpp );
@@ -3585,7 +3585,7 @@ static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
 //------------------------------------------------------------
 //  UŒ‚‚Æ“ÁU‚ð”ä‚×‚Ä•ªŠò
 //------------------------------------------------------------
-static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_UNDER( VMHANDLE* vmh, void* context_work )
+static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_UNDER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
@@ -3611,7 +3611,7 @@ static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_OVER( VMHANDLE* vmh, void* context_work )
   return taw->vmcmd_result;
 }
 
-static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_EQUAL( VMHANDLE* vmh, void* context_work )
+static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
@@ -3735,7 +3735,7 @@ static  BtlPokePos  get_poke_pos( TR_AI_WORK* taw, int side )
     btl_poke_pos = taw->def_btl_poke_pos;
     break;
   case CHECK_ATTACK_FRIEND:
-    switch( taw->rule ){ 
+    switch( taw->rule ){
     case BTL_RULE_SINGLE:
     case BTL_RULE_ROTATION:
       btl_poke_pos = taw->atk_btl_poke_pos;
@@ -3750,7 +3750,7 @@ static  BtlPokePos  get_poke_pos( TR_AI_WORK* taw, int side )
     }
     break;
   case CHECK_DEFENCE_FRIEND:
-    switch( taw->rule ){ 
+    switch( taw->rule ){
     case BTL_RULE_SINGLE:
     case BTL_RULE_ROTATION:
       btl_poke_pos = taw->def_btl_poke_pos;
