@@ -1407,6 +1407,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
   }
   { //PlayTime
     PLAYTIME* sv = SaveData_GetPlayTime( gamedata->sv_control_ptr );
+    PLAYTIME_SetSaveTime( gamedata->playtime );
     PLAYTIME_SetAllData( sv, gamedata->playtime );
   }
 }

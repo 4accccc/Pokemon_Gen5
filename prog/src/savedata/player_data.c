@@ -11,6 +11,7 @@
 #include "savedata/playerdata_local.h"
 #include "savedata/mystatus.h"
 #include "mystatus_local.h"
+#include "savedata/playtime.h"
 #include "playtime_local.h"
 #include "savedata/playtime.h"
 #include "savedata/save_tbl.h"

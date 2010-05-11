@@ -21,6 +21,16 @@
 //---------------------------------------------------------------------------
 typedef struct PLAYTIME PLAYTIME;
 
+///セーブした日時
+typedef struct{
+	u32	save_year:7;			// セーブ時の日付（年）
+	u32	save_month:4;			// セーブ時の日付（月）
+	u32	save_day:5;				// セーブ時の日付（日）
+	u32	save_hour:5;			// セーブ時の時間（時）
+	u32	save_minute:6;		// セーブ時の時間（分）
+	u32	dmy:5;						// あまり
+}PLAYTIME_SAVE_DATE;
+
 //---------------------------------------------------------------------------
 //		プレイ時間の最大値の定義
 //---------------------------------------------------------------------------
@@ -49,5 +59,7 @@ extern u32 PLAYTIME_GetSaveMonth( const PLAYTIME * ptime );
 extern u32 PLAYTIME_GetSaveDay( const PLAYTIME * ptime );
 extern u32 PLAYTIME_GetSaveHour( const PLAYTIME * ptime );
 extern u32 PLAYTIME_GetSaveMinute( const PLAYTIME * ptime );
+extern void PLAYTIME_GetSaveDate( const PLAYTIME * ptime, PLAYTIME_SAVE_DATE *dest );
+extern void PLAYTIME_SetSaveDate( PLAYTIME * ptime, const PLAYTIME_SAVE_DATE *src );
 
 #endif	//__PLAYTIME_H__

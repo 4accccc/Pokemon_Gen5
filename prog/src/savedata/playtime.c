@@ -46,11 +46,11 @@ void PLAYTIME_Init(PLAYTIME * ptime)
 	ptime->minute = 0;
 	ptime->second = 0;
 
-	ptime->save_year = 0;
-	ptime->save_month = 0;
-	ptime->save_day = 0;
-	ptime->save_hour = 0;
-	ptime->save_minute = 0;
+	ptime->save_date.save_year = 0;
+	ptime->save_date.save_month = 0;
+	ptime->save_date.save_day = 0;
+	ptime->save_date.save_hour = 0;
+	ptime->save_date.save_minute = 0;
 }
 
 //---------------------------------------------------------------------------
@@ -183,11 +183,11 @@ void PLAYTIME_SetSaveTime( PLAYTIME * ptime )
 	RTC_GetDate( &date );
 	RTC_GetTime( &time );
 
-	ptime->save_year = date.year;
-	ptime->save_month = date.month;
-	ptime->save_day = date.day;
-	ptime->save_hour = time.hour;
-	ptime->save_minute = time.minute;
+	ptime->save_date.save_year = date.year;
+	ptime->save_date.save_month = date.month;
+	ptime->save_date.save_day = date.day;
+	ptime->save_date.save_hour = time.hour;
+	ptime->save_date.save_minute = time.minute;
 }
 
 //---------------------------------------------------------------------------
@@ -199,7 +199,7 @@ void PLAYTIME_SetSaveTime( PLAYTIME * ptime )
 //---------------------------------------------------------------------------
 u32 PLAYTIME_GetSaveYear( const PLAYTIME * ptime )
 {
-	return ptime->save_year;
+	return ptime->save_date.save_year;
 }
 
 //---------------------------------------------------------------------------
@@ -211,7 +211,7 @@ u32 PLAYTIME_GetSaveYear( const PLAYTIME * ptime )
 //---------------------------------------------------------------------------
 u32 PLAYTIME_GetSaveMonth( const PLAYTIME * ptime )
 {
-	return ptime->save_month;
+	return ptime->save_date.save_month;
 }
 
 //---------------------------------------------------------------------------
@@ -223,7 +223,7 @@ u32 PLAYTIME_GetSaveMonth( const PLAYTIME * ptime )
 //---------------------------------------------------------------------------
 u32 PLAYTIME_GetSaveDay( const PLAYTIME * ptime )
 {
-	return ptime->save_day;
+	return ptime->save_date.save_day;
 }
 
 //---------------------------------------------------------------------------
@@ -235,7 +235,7 @@ u32 PLAYTIME_GetSaveDay( const PLAYTIME * ptime )
 //---------------------------------------------------------------------------
 u32 PLAYTIME_GetSaveHour( const PLAYTIME * ptime )
 {
-	return ptime->save_hour;
+	return ptime->save_date.save_hour;
 }
 
 //---------------------------------------------------------------------------
@@ -247,5 +247,31 @@ u32 PLAYTIME_GetSaveHour( const PLAYTIME * ptime )
 //---------------------------------------------------------------------------
 u32 PLAYTIME_GetSaveMinute( const PLAYTIME * ptime )
 {
-	return ptime->save_minute;
+	return ptime->save_date.save_minute;
+}
+
+//==================================================================
+/**
+ * セーブした日付を取得
+ *
+ * @param   ptime		
+ * @param   dest		代入先
+ */
+//==================================================================
+void PLAYTIME_GetSaveDate( const PLAYTIME * ptime, PLAYTIME_SAVE_DATE *dest )
+{
+  *dest = ptime->save_date;
+}
+
+//==================================================================
+/**
+ * セーブした日付をセット
+ *
+ * @param   ptime		
+ * @param   src		  
+ */
+//==================================================================
+void PLAYTIME_SetSaveDate( PLAYTIME * ptime, const PLAYTIME_SAVE_DATE *src )
+{
+  ptime->save_date = *src;
 }
