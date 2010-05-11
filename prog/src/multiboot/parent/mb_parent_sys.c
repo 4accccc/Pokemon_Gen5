@@ -1448,7 +1448,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
           work->confirmState = MPCS_INIT;
           GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
           GFL_CLACT_WK_SetAutoAnmFlag( work->clwkReturn , TRUE );
-
+          PMSND_PlaySE( SEQ_SE_CANCEL1 );
           break;
         }
         //子機がくれば自動でDLが始まる。キャンセル時ステート移行で再接続が
