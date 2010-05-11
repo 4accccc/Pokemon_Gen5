@@ -524,6 +524,12 @@ ev_first_gameclear:
   //ゲーム内交換の対戦トレーナーとバトル可能にする
   _FLAG_SET(FE_C02R0301_BTL_01)
   
+  //デザートリゾートに博士出現
+  IF $WK_SCENE_D03R0101_AFTER != 2 THEN
+	$WK_SCENE_D03R0101_AFTER = 1
+  ENDIF
+  
+  
 _RET
 
 

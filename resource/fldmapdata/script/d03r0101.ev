@@ -30,6 +30,7 @@ _EVENT_DATA		ev_d03r0101_daruma_04
 _EVENT_DATA		ev_d03r0101_daruma_05
 _EVENT_DATA		ev_d03r0101_backpackerm_01
 _EVENT_DATA		ev_d03r0101_rival_01
+_EVENT_DATA		ev_pos_d03r0101_hakase2_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -315,6 +316,7 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
+					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -364,6 +366,7 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE2 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
+					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -413,6 +416,7 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE3 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
+					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -462,6 +466,7 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE4 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
+					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -511,6 +516,7 @@ _TALK_START_TURN_NOT()
 
 				IF $LWK_LOSE5 == SCR_BATTLE_RESULT_WIN THEN
 					_OBJ_DEL( SCWK_TARGET_OBJID )
+					_CALL ev_daruma_wk
 					_WILD_WIN()
 				ELSE
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
@@ -529,9 +535,162 @@ _TALK_START_TURN_NOT()
 
 EVENT_END
 
+ev_daruma_wk:
+
+	IF FLAG_ON( FV_D03R0101_DARUMA_01 ) && FLAG_ON( FV_D03R0101_DARUMA_02 ) && FLAG_ON( FV_D03R0101_DARUMA_03 ) && FLAG_ON( FV_D03R0101_DARUMA_04 ) && FLAG_ON( FV_D03R0101_DARUMA_05 ) THEN
+		$WK_SCENE_D03R0101_AFTER = 2
+	ENDIF
+
+_RET
+
 /**************************************************************/
 /*			バックパッカー♂	D03R0101イベントスクリプト	  */
 /**************************************************************/
 EVENT_START		ev_d03r0101_backpackerm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_backpackerm_01 )
 EVENT_END
+
+/**************************************************************/
+/*		HAKASE2		D03R0101POSイベント						  */
+/**************************************************************/
+EVENT_START		ev_pos_d03r0101_hakase2_01
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+
+	//博士（娘）遺跡から出てくる
+	_OBJ_ADD_EX( 61,29,DIR_DOWN,MMDL_ID_EVENTOBJ_00,HAKASE2,MV_DMY )
+	_SE_WAIT()
+
+	//博士：ギョエる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	//博士：一歩前へ
+	//自機：一歩下がる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_come )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+	_OBJ_ANIME_WAIT()
+
+	//ハーイ！
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//いせきの　いりぐち
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_02 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：自機の真横に移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_move )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//ちなみに
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_03 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：自機の方を向いて
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//いつから　そんざいしていたのか
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_04 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：ゴリダルマの前に移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_move1 )
+	_OBJ_ANIME_WAIT()
+
+	//この　ポケモンたち……
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_05 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：自機に渡す
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_come1 )
+	_OBJ_ANIME_WAIT()
+	
+	//いかりまんじゅう入手
+	_ITEM_EVENT_KEYWAIT( ITEM_IKARIMANZYUU, 1 )
+
+	//じゃあ　アタシは
+	_BALLOONWIN_OBJMSG( msg_d03r0101_hakase2_06 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//博士：画面下に移動する
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_leave )
+	_OBJ_ANIME_WAIT()
+
+	//博士OBJDEL
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================/
+	//ワーク操作
+	$WK_SCENE_D03R0101_AFTER = 2
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	博士２：登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_come
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_come1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_hakase2_leave
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_move
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase2_move1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機：ゆっくり下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_look
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_back2
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
