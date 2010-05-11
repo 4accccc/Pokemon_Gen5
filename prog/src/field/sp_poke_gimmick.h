@@ -25,7 +25,6 @@ extern void SPPOKE_GMK_SetupZoroa(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_EndZoroa(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_MoveZoroa(FIELDMAP_WORK *fieldWork);
 
-
 extern GMEVENT *SPPOKE_GMK_MoveBall(
     GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType,
     const VecFx32 *inStart, const VecFx32 *inEnd ,

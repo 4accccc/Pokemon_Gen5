@@ -27,7 +27,8 @@
 #define SPPOKE_UNIT_IDX    (0)                      //特殊ポケイベントユニットインデックス
 #define SPPOKE_TRIO_UNIT_IDX    (SPPOKE_UNIT_IDX)   //三銃士イベントユニットインデックス
 #define SPPOKE_MERO_UNIT_IDX    (SPPOKE_UNIT_IDX)   //メロディアイベントユニットインデックス
-#define ZOROA_UNIT_IDX    (SPPOKE_UNIT_IDX)   //ゾロアイベントユニットインデックス
+#define ZOROA_UNIT_IDX    (SPPOKE_UNIT_IDX)         //ゾロアイベントユニットインデックス
+
 #define BALL_ANM_NUM  (3)
 #define SMOKE_ANM_NUM  (3)
 
@@ -72,18 +73,17 @@ enum {
   RES_ID_BALL_IN_ANM2,
   RES_ID_BALL_IN_ANM3,
 
-  RES_ID_SMOKE_MDL,
+  RES_ID_SMOKE_MDL = 8,
   RES_ID_SMOKE_ANM1,
   RES_ID_SMOKE_ANM2,
   RES_ID_SMOKE_ANM3,
 };
 
-
 //ＯＢＪインデックス
 enum {
   OBJ_BALL_OUT = 0,
   OBJ_BALL_IN,
-  OBJ_SMOKE,
+  OBJ_SMOKE = 2,
 };
 
 //==========================================================================
@@ -106,17 +106,16 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ball_in[] = {
   { RES_ID_BALL_IN_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
-//3Dアニメ　煙
+//3Dアニメ　ゾロア　煙
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_smoke[] = {
   { RES_ID_SMOKE_ANM1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_SMOKE_ANM2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_SMOKE_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
-
 //==========================================================================
 /**
- リソース
+ 三銃士リソース
 */
 //==========================================================================
 
@@ -262,12 +261,14 @@ static const GFL_G3D_UTIL_SETUP SetupZoroa = {
 	NELEMS(g3Dutil_objTbl_zoroa),		//オブジェクト数
 };
 
+//============================================================================================================
+//関数前方宣言
+//============================================================================================================
 static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
 
 static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
-
 
 //============================================================================================================
 //三銃士関連
@@ -428,6 +429,10 @@ void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }
+
+//============================================================================================================
+//ゾロア関連
+//============================================================================================================
 
 //--------------------------------------------------------------
 /**
