@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-03-27T12:20:31"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-11T21:19:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="yes"/>
-		<tag-palette left="797" top="73" right="1270" bottom="471" visible="yes"/>
+	<dialog left="1318" top="573" right="2023" bottom="1193" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="yes"/>
+		<tag-palette left="551" top="73" right="1024" bottom="471" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -384,18 +384,18 @@
 	<row id="mes_b_plist_01_600">
 		<comment>会話ウインドウ：基本ポケモン選択メッセージ</comment>
 		<language name="JPN" width="176">ポケモンを　えらんでください</language>
-		<language name="JPN_KANJI" width="176">ポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="176">ポケモンを　選んでください</language>
 	</row>
 
 	<row id="mes_b_plist_01_601">
 		<comment>会話ウインドウ：道具を使うポケモン選択メッセージ</comment>
 		<language name="JPN" width="176">どの　ポケモンに　つかう？</language>
-		<language name="JPN_KANJI" width="176">どの　ポケモンに　つかう？</language>
+		<language name="JPN_KANJI" width="176">どの　ポケモンに　使う？</language>
 	</row>
 
 	<row id="mes_b_plist_01_602">
 		<language name="JPN" width="176">どれと　いれかえる？</language>
-		<language name="JPN_KANJI" width="176">どれと　いれかえる？</language>
+		<language name="JPN_KANJI" width="176">どれと　入れ替える？</language>
 	</row>
 
 	<row id="mes_b_plist_01_701" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
@@ -550,7 +550,7 @@ HP表示</comment>
 		<comment>強さを見る画面
 「つぎのポケモンのレベルまで」</comment>
 		<language name="JPN" font=" 1:small" width="96">つぎのレベルまで</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">つぎのレベルまで</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">次のレベルまで</language>
 	</row>
 
 	<row id="mes_b_plist_03_101">
@@ -776,7 +776,7 @@ HP表示</comment>
 		<language name="JPN_KANJI" font=" 1:small" width="64">とくしゅ</language>
 	</row>
 
-	<row id="mes_b_plist_04_400">
+	<row id="mes_b_plist_04_400" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>技詳細画面
 技忘れ時のコンテスト技用項目</comment>
 		<language name="JPN" font=" 1:small" width="96">アピールポイント</language>
@@ -941,7 +941,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
 すでに　せんとうに　でています</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-すでに　せんとうに　でています</language>
+すでに　戦闘に　でています</language>
 	</row>
 
 	<row id="mes_b_plist_m02">
@@ -949,8 +949,8 @@ HP表示</comment>
 0：選択したポケモンにニックネーム</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　たたかうための
 げんきが　のこっていません！</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　たたかうための
-げんきが　のこっていません！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　戦うための
+元気が　残っていません！</language>
 	</row>
 
 	<row id="mes_b_plist_m03">
@@ -968,7 +968,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">タマゴを
 せんとうに　だすことは　できません</language>
 		<language name="JPN_KANJI" width="216" line="2">タマゴを
-せんとうに　だすことは　できません</language>
+戦闘に　だすことは　できません</language>
 	</row>
 
 	<row id="mes_b_plist_m05">
@@ -977,13 +977,13 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">パートナーの　ポケモンと　
 いれかえることは　できません！</language>
 		<language name="JPN_KANJI" width="216" line="2">パートナーの　ポケモンと　
-いれかえることは　できません！</language>
+入れ替えることは　できません！</language>
 	</row>
 
 	<row id="mes_b_plist_m06">
 		<comment>道具使用で使用不可メッセージ</comment>
 		<language name="JPN" width="216" line="2">つかっても　こうかが　ないよ</language>
-		<language name="JPN_KANJI" width="216" line="2">つかっても　こうかが　ないよ</language>
+		<language name="JPN_KANJI" width="216" line="2">使っても　効果が　ないよ</language>
 	</row>
 
 	<row id="mes_b_plist_m07">
@@ -992,8 +992,8 @@ HP表示</comment>
 1：回復したＨＰ</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の　たいりょくが
 [2:02:３桁:1]　かいふくした！</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　たいりょくが
-[2:02:３桁:1]　かいふくした！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　体力が
+[2:02:３桁:1]　回復した！</language>
 	</row>
 
 	<row id="mes_b_plist_m08">
@@ -1002,7 +1002,7 @@ HP表示</comment>
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の　どくは
 きれい　さっぱり　なくなった！</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　どくは
+		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の　毒は
 きれい　さっぱり　なくなった！</language>
 	</row>
 
@@ -1013,7 +1013,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
 からだの　しびれが　とれた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-からだの　しびれが　とれた！</language>
+体の　しびれが　とれた！</language>
 	</row>
 
 	<row id="mes_b_plist_m10">
@@ -1033,7 +1033,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
 からだの　こおりが　とけた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-からだの　こおりが　とけた！</language>
+体の　こおりが　溶けた！</language>
 	</row>
 
 	<row id="mes_b_plist_m12">
@@ -1051,17 +1051,17 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
 げんきを　とりもどした！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-げんきを　とりもどした！</language>
+元気を　とりもどした！</language>
 	</row>
 
-	<row id="mes_b_plist_m14">
+	<row id="mes_b_plist_m14" back-color=",,,,,,,,,,,#ffff00,,,,,,">
 		<comment>
 0：選択したポケモンニックネーム
 </comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
 けんこうに　なった！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-けんこうに　なった！</language>
+健康に　なった！</language>
 	</row>
 
 	<row id="mes_b_plist_m15">
@@ -1071,7 +1071,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
 こんらんが　とけた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-こんらんが　とけた！</language>
+混乱が　解けた！</language>
 	</row>
 
 	<row id="mes_b_plist_m16">
@@ -1081,7 +1081,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]の
 メロメロが　とけた！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]の
-メロメロが　とけた！</language>
+メロメロが　解けた！</language>
 	</row>
 
 	<row id="mes_b_plist_m17">
@@ -1091,7 +1091,7 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は
 めを　さました！</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は
-めを　さました！</language>
+目を　覚ました！</language>
 	</row>
 
 	<row id="mes_b_plist_m18">
@@ -1101,14 +1101,14 @@ HP表示</comment>
 		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]は　すでに
 せんたく　されています</language>
 		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]は　すでに
-せんたく　されています</language>
+選択　されています</language>
 	</row>
 
 	<row id="mes_b_plist_m19">
 		<comment>ＰＰを回復するときのアナウンスメッセージ
 </comment>
 		<language name="JPN" width="216" line="2">どの　わざを　かいふくする？</language>
-		<language name="JPN_KANJI" width="216" line="2">どの　わざを　かいふくする？</language>
+		<language name="JPN_KANJI" width="216" line="2">どの　わざを　回復する？</language>
 	</row>
 
 	<row id="mes_b_plist_m20">
@@ -1118,8 +1118,8 @@ HP表示</comment>
 </comment>
 		<language name="JPN" font=" 1:small" width="216" line="2">[1:07:わざ名:1]の　こうかで
 [1:02:ポケモンニックネーム:0]には　つかえません！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:07:わざ名:1]の　こうかで
-[1:02:ポケモンニックネーム:0]には　つかえません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:07:わざ名:1]の　効果で
+[1:02:ポケモンニックネーム:0]には　使えません！</language>
 	</row>
 
 	<row id="mes_b_plist_m21">
@@ -1129,7 +1129,7 @@ HP表示</comment>
 		<language name="JPN" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]と
 いれかえることは　できません！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]と
-いれかえることは　できません！</language>
+入れ替えることは　できません！</language>
 	</row>
 
 	<flowchart-group-list>

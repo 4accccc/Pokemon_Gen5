@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-09-14T17:12:03"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-11T21:28:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="167"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -306,13 +306,13 @@
 	</columns>
 
 	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -344,21 +344,21 @@
 		<comment>カテゴリー選択画面
 カテゴリー項目１ー２行目</comment>
 		<language name="JPN" width="84">かいふく</language>
-		<language name="JPN_KANJI" width="84">かいふく</language>
+		<language name="JPN_KANJI" width="84">回復</language>
 	</row>
 
 	<row id="mes_b_bag_01_100" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<comment>カテゴリー選択画面
 カテゴリー項目２ー１行目</comment>
 		<language name="JPN" width="84">じょうたい</language>
-		<language name="JPN_KANJI" width="84">じょうたい</language>
+		<language name="JPN_KANJI" width="84">状態</language>
 	</row>
 
 	<row id="mes_b_bag_01_101" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<comment>カテゴリー選択画面
 カテゴリー項目２ー２行目</comment>
 		<language name="JPN" width="84">かいふく</language>
-		<language name="JPN_KANJI" width="84">かいふく</language>
+		<language name="JPN_KANJI" width="84">回復</language>
 	</row>
 
 	<row id="mes_b_bag_01_200" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,,,,,,,">
@@ -379,7 +379,7 @@
 		<comment>カテゴリー選択画面
 カテゴリー項目４</comment>
 		<language name="JPN" width="84">せんとうよう</language>
-		<language name="JPN_KANJI" width="84">せんとうよう</language>
+		<language name="JPN_KANJI" width="84">戦闘用</language>
 	</row>
 
 	<row id="mes_b_bag_01_500" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
@@ -394,7 +394,7 @@
 画面下にあるボタンの名称
 </comment>
 		<language name="JPN" width="154">さいごにつかったどうぐ</language>
-		<language name="JPN_KANJI" width="154">さいごにつかったどうぐ</language>
+		<language name="JPN_KANJI" width="154">最後に使った道具</language>
 	</row>
 
 	<row id="mes_b_bag_02_000">
@@ -505,21 +505,21 @@
 		<comment>道具選択画面
 カテゴリー名称</comment>
 		<language name="JPN" font=" 1:small" width="108">かいふく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">かいふく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">回復</language>
 	</row>
 
 	<row id="mes_b_bag_02_702" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<comment>道具選択画面
 カテゴリー名称</comment>
 		<language name="JPN" font=" 1:small" width="108">じょうたい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">じょうたい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">状態</language>
 	</row>
 
 	<row id="mes_b_bag_02_703" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<comment>道具選択画面
 カテゴリー名称</comment>
 		<language name="JPN" font=" 1:small" width="108">かいふく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">かいふく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">回復</language>
 	</row>
 
 	<row id="mes_b_bag_02_704" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
@@ -533,7 +533,7 @@
 		<comment>道具選択画面
 カテゴリー名称</comment>
 		<language name="JPN" font=" 1:small" width="108">せんとうよう</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">せんとうよう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">戦闘用</language>
 	</row>
 
 	<row id="mes_b_bag_02_800">
@@ -564,7 +564,7 @@
 ページ番号
 0：現在のページ数</comment>
 		<language name="JPN" width="42">つかう</language>
-		<language name="JPN_KANJI" width="42">つかう</language>
+		<language name="JPN_KANJI" width="42">使う</language>
 	</row>
 
 	<row id="mes_b_bag_03_100">
@@ -585,7 +585,7 @@
 		<comment>道具使用メッセージ
 使用できない</comment>
 		<language name="JPN" font=" 1:small" width="216">つかっても　こうかが　ないよ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">つかっても　こうかが　ないよ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">使っても　効果が　ないよ</language>
 	</row>
 
 	<row id="mes_b_bag_m02">
@@ -593,7 +593,7 @@
 使用できない</comment>
 		<language name="JPN" font=" 1:small" width="216">しろいきりに　つつまれた！
 </language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">しろいきりに　つつまれた！
+		<language name="JPN_KANJI" font=" 1:small" width="216">白い霧に　包まれた！
 </language>
 	</row>
 
@@ -614,7 +614,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
 こうげきが　あがった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
-こうげきが　あがった！</language>
+攻撃が　上がった！</language>
 	</row>
 
 	<row id="mes_b_bag_m05">
@@ -624,7 +624,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
-とくこうが　あがった！</language>
+特攻が　上がった！</language>
 	</row>
 
 	<row id="mes_b_bag_m06">
@@ -634,7 +634,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
 すばやさが　あがった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
-すばやさが　あがった！</language>
+素早さが　上がった！</language>
 	</row>
 
 	<row id="mes_b_bag_m07">
@@ -644,7 +644,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
 とくぼうが　あがった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
-とくぼうが　あがった！</language>
+特防が　上がった！</language>
 	</row>
 
 	<row id="mes_b_bag_m08">
@@ -654,7 +654,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
 ぼうぎょが　あがった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
-ぼうぎょが　あがった！</language>
+防御が　上がった！</language>
 	</row>
 
 	<row id="mes_b_bag_m09">
@@ -664,7 +664,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
 めいちゅうりつが　あがった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:02:ポケモンニックネーム:0]の
-めいちゅうりつが　あがった！</language>
+命中率が　上がった！</language>
 	</row>
 
 	<row id="mes_b_bag_m10">
@@ -674,7 +674,7 @@
 		<language name="JPN" font=" 1:small" width="216">[1:09:どうぐ名:0]を
 つかった！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:09:どうぐ名:0]を
-つかった！</language>
+使った！</language>
 	</row>
 
 	<row id="mes_b_bag_m11">
@@ -682,15 +682,15 @@
 野生２ＶＳ２：ボールが投げられない警告メッセージ</comment>
 		<language name="JPN" font=" 1:small" width="216">だめだ！　２ひきいて
 ねらいが　さだまらない……！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">だめだ！　２ひきいて
-ねらいが　さだまらない……！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">だめだ！　２匹いて
+ねらいが　定まらない……！</language>
 	</row>
 
 	<row id="mes_b_bag_m12">
 		<comment>道具使用メッセージ
 ボックスの中身がいっぱいで投げられない警告メッセージ</comment>
 		<language name="JPN" font=" 1:small" width="216">ボックスが　いっぱいです！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスが　いっぱいです！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスが　一杯です！</language>
 	</row>
 
 	<row id="mes_b_bag_m13">
@@ -700,8 +700,8 @@
 </comment>
 		<language name="JPN" font=" 1:small" width="216">[1:07:わざ名:1]の　こうかで
 [1:02:ポケモンニックネーム:0]には　つかえません！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:07:わざ名:1]の　こうかで
-[1:02:ポケモンニックネーム:0]には　つかえません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:07:わざ名:1]の　効果で
+[1:02:ポケモンニックネーム:0]には　使えません！</language>
 	</row>
 
 	<row id="mes_b_bag_m14">
@@ -709,7 +709,7 @@
 		<language name="JPN" font=" 1:small" width="216">だめだ！　ポケモンが　みえなくて
 ねらいが　さだまらない……！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">だめだ！　ポケモンが　みえなくて
-ねらいが　さだまらない……！</language>
+ねらいが　定まらない……！</language>
 	</row>
 
 	<row id="mes_b_bag_m15">
@@ -717,13 +717,13 @@
 		<language name="JPN" font=" 1:small" width="216">だめだ！　ポケモンが　みえなくて
 ねらいが　さだまらない……！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">だめだ！　ポケモンが　みえなくて
-ねらいが　さだまらない……！</language>
+ねらいが　定まらない……！</language>
 	</row>
 
 	<row id="mes_b_bag_m16">
 		<comment>シューター時にエネルギーが足りないとき</comment>
 		<language name="JPN" font=" 1:small" width="216">エネルギーが　たりません</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">エネルギーが　たりません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エネルギーが　足りません</language>
 	</row>
 
 	<flowchart-group-list>

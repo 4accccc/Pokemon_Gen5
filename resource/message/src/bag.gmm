@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-10T20:10:43"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-11T21:29:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1029" top="377" right="1734" bottom="1005" maximized="no" rayout="Vertical2">
+	<dialog left="1044" top="414" right="1749" bottom="1042" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="230" right="1024" bottom="628" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -885,7 +885,7 @@ const u8 msg_b_vidro[]
 		<comment>バッグ / アイテム関連
 const u8 msg_pc_mons_box_max[] </comment>
 		<language name="JPN" font=" 1:small">ボックスが　いっぱい　です！</language>
-		<language name="JPN_KANJI" font=" 1:small">ボックスが　いっぱい　です！</language>
+		<language name="JPN_KANJI" font=" 1:small">ボックスが　一杯　です！</language>
 	</row>
 
 	<row id="msg_bag_071" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
