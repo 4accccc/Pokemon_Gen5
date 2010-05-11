@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T19:43:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-11T15:21:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,11 +297,11 @@
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">ようこそ！
 わたくしの　パーティに！！▼
-どうぞ　ごじゆうに　うごきまわって
+みなさんとの　かいわを
 たのしんでいって　くださいな！</language>
 		<language name="JPN_KANJI" width="256">ようこそ！
 わたくしの　パーティに！！▼
-どうぞ　ご自由に　動きまわって
+みなさんとの　会話を
 楽しんでいって　くださいな！</language>
 	</row>
 
@@ -451,11 +451,13 @@ having a good time?</language>
 		<language name="JPN" width="256">はじめて　ここに　きてみたけど▼
 ステキな　けしきに
 アットホームな　くうき！▼
-こんど　ともだちも　つれてきちゃおーっと！</language>
+こんど　ともだちも
+つれてきちゃおーっと！</language>
 		<language name="JPN_KANJI" width="256">初めて　ここに　きてみたけど▼
 ステキな　景色に
 アットホームな　空気！▼
-今度　友達も　連れてきちゃおーっと！</language>
+今度　友達も
+連れてきちゃおーっと！</language>
 	</row>
 
 	<flowchart-group-list>
