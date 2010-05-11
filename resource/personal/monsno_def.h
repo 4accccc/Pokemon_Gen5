@@ -824,7 +824,6 @@
 //タマゴ
 #define		FORMNO_TAMAGO_NORMAL				( 0 )
 #define		FORMNO_TAMAGO_MANAFI				( 1 )
-
 #define		FORMNO_TAMAGO_MAX				( 2 )
 
 //フォルム違いトータル
