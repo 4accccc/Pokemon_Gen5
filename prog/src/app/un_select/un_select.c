@@ -114,7 +114,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //ＢＧ書き換え用
 #define BASE_OFS  (1*32)    //ＢＧ先頭アドレス１キャラ先から開始
 #define MAIN_DISP_COUNTRY_MAX (80)   //メイン画面には80カ国表示
-#define SUB_DISP_COUNTRY_MAX (52)   //サブ画面には52カ国表示
+#define SUB_DISP_COUNTRY_MAX (50)   //サブ画面には50カ国表示
 //ＯＢＪ
 #define UN_OBJ_CHRRES_MAX (1)
 #define UN_OBJ_PALRES_MAX (1)
@@ -135,9 +135,9 @@ FS_EXTERN_OVERLAY(ui_common);
 #define LIST_MARLER_OFS (5*8)     //リスト項目は５キャラ間隔
 #define BASE_FLOOR_IDX (3)       //計算基底フロアインデックス
 
-//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0(1カ国目133階)に相当
-#define BUIL_FLOOR_YDOT_TOP    (88)
-//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス131（132カ国目2階）に相当
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス0(1カ国目131階)に相当
+#define BUIL_FLOOR_YDOT_TOP    (92)
+//ビルフロア塗りつぶし開始Ｙドット位置（絶対座標）ここの位置がフロアインデックス129（130カ国目2階）に相当
 #define BUIL_FLOOR_YDOT_BOTTOM    (351)
 
 #define SCROLL_BAR_UY (8)
@@ -284,7 +284,7 @@ typedef struct
 
   int ListSelPos;   //リストで選んだ位置 0～UN_LIST_MAX-1
 
-  BOOL Valid[UN_LIST_MAX]; //0=最上階　131=2Ｆ
+  BOOL Valid[UN_LIST_MAX]; //0=最上階　129=2Ｆ
 
   GFL_TCB * htask;		// TCB ( HBLANK )
 

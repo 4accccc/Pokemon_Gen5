@@ -1,137 +1,135 @@
 //--------------------------------------------------------------
 /// フロアテーブル  コンバーターで出すファイルではありません。
 //==============================================================
-static const int g_FloorTable[132]={
-	country095,  //	アイスランド
-	country100,  //	アイルランド
-	country001,  //	アフガニスタン
-	country222,  //	アメリカ
-	country223,  //	アメリカりょうバージンしょとう
-	country219,  //	アラブしゅちょうこく
-	country003,  //	アルジェリア
-	country009,  //	アルゼンチン
-	country002,  //	アルバニア
-	country006,  //	アンゴラ
-	country008,  //	アンティグア・バーブーダ
-	country220,  //	イギリス
-	country029,  //	イギリスりょうバージンしょとう
-	country102,  //	イスラエル
-	country103,  //	イタリア
-	country099,  //	イラク
-	country096,  //	インド
-	country097,  //	インドネシア
-	country217,  //	ウガンダ
-	country224,  //	ウルグアイ
-	country062,  //	エクアドル
-	country063,  //	エジプト
-	country064,  //	エルサルバドル
-	country012,  //	オーストラリア
-	country013,  //	オーストリア
-	country158,  //	オマーン
-	country147,  //	オランダ
-	country080,  //	ガーナ
-	country090,  //	ガイアナ
-	country036,  //	カナダ
-	country076,  //	ガボン
-	country035,  //	カメルーン
-	country172,  //	かんこく
-	country034,  //	カンボジア
-	country088,  //	ギニア
-	country053,  //	キプロス
-	country082,  //	ギリシャ
-	country087,  //	グアテマラ
-	country085,  //	グアドループとう
-	country112,  //	クウェート
-	country048,  //	クックしょとう
-	country083,  //	グリーンランド
-	country084,  //	グレナダ
-	country051,  //	クロアチア
-	country110,  //	ケニア
-	country049,  //	コスタリカ
-	country045,  //	コロンビア
-	country047,  //	コンゴきょうわこく
-	country183,  //	サモア
-	country190,  //	シエラレオネ
-	country081,  //	ジブラルタル
-	country104,  //	ジャマイカ
-	country191,  //	シンガポール
-	country203,  //	スイス
-	country202,  //	スウェーデン
-	country197,  //	スペイン
-	country200,  //	スリナム
-	country198,  //	スリランカ
-	country192,  //	スロバキア
-	country193,  //	スロベニア
-	country201,  //	スワジランド
-	country187,  //	セネガル
-	country188,  //	セルビア
-	country207,  //	タイ
-	country205,  //	たいわん
-	country221,  //	タンザニア
-	country054,  //	チェコ
-	country040,  //	チャド
-	country043,  //	ちゅうごく
-	country212,  //	チュニジア
-	country042,  //	チリ
-	country058,  //	デンマーク
-	country079,  //	ドイツ
-	country208,  //	トーゴ
-	country060,  //	ドミニカ
-	country061,  //	ドミニカきょうわこく
-	country213,  //	トルコ
-	country153,  //	ナイジェリア
-	country151,  //	ニカラグア
-	country152,  //	ニジェール
-	country106,  //	にほん
-	country149,  //	ニューカレドニア
-	country150,  //	ニュージーランド
-	country157,  //	ノルウェー
-	country016,  //	バーレーン
-	country091,  //	ハイチ
-	country159,  //	パキスタン
-	country162,  //	パナマ
-	country226,  //	バヌアツ
-	country015,  //	バハマ
-	country163,  //	パプアニューギニア
-	country023,  //	バミューダ
-	country018,  //	バルバドス
-	country094,  //	ハンガリー
-	country017,  //	バングラデシュ
-	country071,  //	フィジーしょとう
-	country166,  //	フィリピン
-	country072,  //	フィンランド
-	country028,  //	ブラジル
-	country073,  //	フランス
-	country074,  //	フランスりょうギアナ
-	country031,  //	ブルガリア
-	country033,  //	ブルンジ
-	country229,  //	ベトナム
-	country022,  //	ベナン
-	country228,  //	ベネズエラ
-	country021,  //	ベリーズ
-	country165,  //	ペルー
-	country020,  //	ベルギー
-	country168,  //	ポーランド
-	country027,  //	ボツワナ
-	country025,  //	ボリビア
-	country169,  //	ポルトガル
-	country093,  //	ホンコン
-	country092,  //	ホンジュラス
-	country123,  //	マカオ
-	country130,  //	マルタ
-	country132,  //	マルチニーク
-	country127,  //	マレーシア
-	country196,  //	みなみアフリカ
-	country143,  //	ミャンマー
-	country136,  //	メキシコ
-	country134,  //	モーリシャス
-	country141,  //	モロッコ
-	country140,  //	モンテネグロ
-	country107,  //	ヨルダン
-	country119,  //	リビア
-	country118,  //	リベリア
-	country175,  //	ルーマニア
-	country122,  //	ルクセンブルク
-	country116,  //	レバノン
-	country176,  //	ロシア
+static const int g_FloorTable[130]={
+	country094	,  //	アイスランド
+	country099	,  //	アイルランド
+	country001	,  //	アフガニスタン
+	country220	,  //	アメリカ
+	country221	,  //	アメリカりょうバージンしょとう
+	country217	,  //	アラブしゅちょうこく
+	country003	,  //	アルジェリア
+	country009	,  //	アルゼンチン
+	country002	,  //	アルバニア
+	country006	,  //	アンゴラ
+	country008	,  //	アンティグア・バーブーダ
+	country218	,  //	イギリス
+	country029	,  //	イギリスりょうバージンしょとう
+	country101	,  //	イスラエル
+	country102	,  //	イタリア
+	country098	,  //	イラク
+	country095	,  //	インド
+	country096	,  //	インドネシア
+	country215	,  //	ウガンダ
+	country222	,  //	ウルグアイ
+	country062	,  //	エクアドル
+	country063	,  //	エジプト
+	country064	,  //	エルサルバドル
+	country012	,  //	オーストラリア
+	country013	,  //	オーストリア
+	country156	,  //	オマーン
+	country145	,  //	オランダ
+	country080	,  //	ガーナ
+	country090	,  //	ガイアナ
+	country036	,  //	カナダ
+	country076	,  //	ガボン
+	country035	,  //	カメルーン
+	country170	,  //	かんこく
+	country034	,  //	カンボジア
+	country088	,  //	ギニア
+	country053	,  //	キプロス
+	country082	,  //	ギリシャ
+	country087	,  //	グアテマラ
+	country085	,  //	グアドループとう
+	country111	,  //	クウェート
+	country048	,  //	クックしょとう
+	country083	,  //	グリーンランド
+	country084	,  //	グレナダ
+	country051	,  //	クロアチア
+	country109	,  //	ケニア
+	country049	,  //	コスタリカ
+	country045	,  //	コロンビア
+	country047	,  //	コンゴきょうわこく
+	country181	,  //	サモア
+	country188	,  //	シエラレオネ
+	country081	,  //	ジブラルタル
+	country103	,  //	ジャマイカ
+	country189	,  //	シンガポール
+	country201	,  //	スイス
+	country200	,  //	スウェーデン
+	country195	,  //	スペイン
+	country198	,  //	スリナム
+	country196	,  //	スリランカ
+	country190	,  //	スロバキア
+	country191	,  //	スロベニア
+	country199	,  //	スワジランド
+	country185	,  //	セネガル
+	country186	,  //	セルビア
+	country205	,  //	タイ
+	country203	,  //	たいわん
+	country219	,  //	タンザニア
+	country054	,  //	チェコ
+	country040	,  //	チャド
+	country043	,  //	ちゅうごく
+	country210	,  //	チュニジア
+	country042	,  //	チリ
+	country058	,  //	デンマーク
+	country079	,  //	ドイツ
+	country206	,  //	トーゴ
+	country060	,  //	ドミニカ
+	country061	,  //	ドミニカきょうわこく
+	country211	,  //	トルコ
+	country151	,  //	ナイジェリア
+	country149	,  //	ニカラグア
+	country150	,  //	ニジェール
+	country105	,  //	にほん
+	country147	,  //	ニューカレドニア
+	country148	,  //	ニュージーランド
+	country155	,  //	ノルウェー
+	country016	,  //	バーレーン
+	country091	,  //	ハイチ
+	country157	,  //	パキスタン
+	country160	,  //	パナマ
+	country224	,  //	バヌアツ
+	country015	,  //	バハマ
+	country161	,  //	パプアニューギニア
+	country023	,  //	バミューダ
+	country018	,  //	バルバドス
+	country093	,  //	ハンガリー
+	country017	,  //	バングラデシュ
+	country071	,  //	フィジーしょとう
+	country164	,  //	フィリピン
+	country072	,  //	フィンランド
+	country028	,  //	ブラジル
+	country073	,  //	フランス
+	country074	,  //	フランスりょうギアナ
+	country031	,  //	ブルガリア
+	country033	,  //	ブルンジ
+	country227	,  //	ベトナム
+	country022	,  //	ベナン
+	country226	,  //	ベネズエラ
+	country021	,  //	ベリーズ
+	country163	,  //	ペルー
+	country020	,  //	ベルギー
+	country166	,  //	ポーランド
+	country027	,  //	ボツワナ
+	country025	,  //	ボリビア
+	country167	,  //	ポルトガル
+	country092	,  //	ホンジュラス
+	country128	,  //	マルタ
+	country130	,  //	マルチニーク
+	country125	,  //	マレーシア
+	country194	,  //	みなみアフリカ
+	country141	,  //	ミャンマー
+	country134	,  //	メキシコ
+	country132	,  //	モーリシャス
+	country139	,  //	モロッコ
+	country138	,  //	モンテネグロ
+	country106	,  //	ヨルダン
+	country118	,  //	リビア
+	country117	,  //	リベリア
+	country173	,  //	ルーマニア
+	country121	,  //	ルクセンブルク
+	country115	,  //	レバノン
+	country174	,  //	ロシア
 };

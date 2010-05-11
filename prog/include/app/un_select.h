@@ -17,7 +17,7 @@
 
 #include "savedata/wifihistory.h" // for WIFI_COUNTRY_MAX
 
-#define UN_LIST_MAX  (/*WIFI_COUNTRY_MAX-1*/132) ///< €–Ú” 132ƒ–‘  @note 233ƒ–‘‚©‚ç132ƒ–‘‚É•ÏX
+#define UN_LIST_MAX  (/*WIFI_COUNTRY_MAX-1*/130) ///< €–Ú” 130ƒ–‘  @note 233ƒ–‘‚©‚ç130ƒ–‘‚É•ÏX
 #define FLOOR_MARKING_MAX (20)
 
 //=============================================================================
