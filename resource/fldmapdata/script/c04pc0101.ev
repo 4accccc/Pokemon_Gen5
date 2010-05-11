@@ -41,7 +41,7 @@ EVENT_END
 //=============================================================
 EVENT_START ev_c04pc0101_fix_shop
   _TALK_OBJ_START()
-  _FIX_SHOP_CALL( C04_FS )
+  _FIX_SHOP_CALL_GREETING_WAZA( C04_FS )
 EVENT_END
 
 
