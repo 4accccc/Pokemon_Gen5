@@ -1327,7 +1327,7 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
   if ( IsStopCapsuleToPlatForm(tmp_work, platform_idx) ){ //停止している
     u8 cap_idx = GetCapIdxByPlatformIdx(platform_idx);
     {
-      //自機が走行するレールインデックスを保存
+      //自機が走行するレールインデックスを保存(コースタートレーナーバトルの場合はこの変数を間借りする)
       tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(tmp_work, platform_idx);
       OS_Printf("RideRaleIdx %d\n",tmp_work->RadeRaleIdx);
       //カプセル移動アニメを停止
