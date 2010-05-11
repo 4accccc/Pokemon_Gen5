@@ -684,7 +684,7 @@ BOOL PP_ChangeRotomFormNo(POKEMON_PARAM *pp, int new_form_no, int del_waza_pos)
  */
 //--------------------------------------------------------------
 void  PP_Birth( POKEMON_PARAM *pp, const MYSTATUS* status, const u32 placeID, const HEAPID heapID )
-{ 
+{
   u8 fast_flag = PP_FastModeOn( pp );
   PPP_Birth( &pp->ppp, status, placeID, heapID );
   PP_FastModeOff( pp, fast_flag );
@@ -702,7 +702,7 @@ void  PP_Birth( POKEMON_PARAM *pp, const MYSTATUS* status, const u32 placeID, co
  */
 //--------------------------------------------------------------
 void  PPP_Birth( POKEMON_PASO_PARAM *ppp, const MYSTATUS* status, const u32 placeID, const HEAPID heapID )
-{ 
+{
   u8 fast_flag = PPP_FastModeOn( ppp );
   u16 mons_no = PPP_Get( ppp, ID_PARA_monsno, 0 );
   u16 form_no = PPP_Get( ppp, ID_PARA_form_no, 0 );
@@ -714,7 +714,7 @@ void  PPP_Birth( POKEMON_PASO_PARAM *ppp, const MYSTATUS* status, const u32 plac
   PPP_Put( ppp, ID_PARA_tamago_flag, 0 );
 
   //なつき度を初期値にする
-  { 
+  {
     u32 friend = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_friend );
     PPP_Put( ppp, ID_PARA_friend, friend );
   }
@@ -778,10 +778,10 @@ static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 next_monsno,
   u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
   u16 param = POKEPER_ID_speabi1;
   u32 mask = PRAND_TOKUSEI_MASK;
-  
+
   //シャチで特性を判断するビット位置が変更になったのでカセットバージョンを見て変更する
   if( PPP_Get( ppp, ID_PARA_get_cassette, 0 ) < VERSION_WHITE )
-  { 
+  {
     mask = PRAND_TOKUSEI_MASK_OLD;
   }
 
@@ -1942,7 +1942,7 @@ u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 
     rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
     rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
     if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
-    { 
+    {
       rnd ^= PRAND_TOKUSEI_MASK;
     }
   }
@@ -2011,7 +2011,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
       rnd &= 0x000000ff;
       rnd |= ( rare_mask ^ ( rnd & 0x0000ffff ) ) << 16;
       if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
-      { 
+      {
         rnd ^= PRAND_TOKUSEI_MASK;
       }
     }
@@ -2026,7 +2026,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
     /* fallthru */
   case PTL_RARE_SPEC_BOTH:
     if( ( rnd & PRAND_TOKUSEI_MASK ) != ( tokusei << PRAND_TOKUSEI_SHIFT ) )
-    { 
+    {
       rnd ^= PRAND_TOKUSEI_MASK;
     }
     break;
@@ -3054,8 +3054,7 @@ static  void  pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
 //----------------------------------------------------------------------------------
 static inline u32 adjustExp( POKEMON_PASO_PARAM1* ppp1, u32 currentExp, u32 nextExp )
 {
-  u32 sum, margin;
-  int gain;
+  int sum, margin, gain;
 
   sum = ppp1->hp_exp
       + ppp1->pow_exp
@@ -3065,7 +3064,8 @@ static inline u32 adjustExp( POKEMON_PASO_PARAM1* ppp1, u32 currentExp, u32 next
       + ppp1->spedef_exp;
 
   margin = PARA_EXP_TOTAL_MAX - sum;
-  gain = (int)nextExp - (int)currentExp;
+  gain = (int)((int)nextExp - (int)currentExp);
+
   if( gain > margin ){
     gain = margin;
     nextExp = currentExp + gain;
@@ -4093,16 +4093,16 @@ const u32 POKETOOL_GetPokeInsekutaFromItem( const u16 item )
 {
   switch( item )
   {
-  case ITEM_AKUAKASETTO:    //( 116 )		// アクアカセット
+  case ITEM_AKUAKASETTO:    //( 116 )   // アクアカセット
     return FORMNO_656_AQUA;
     break;
-  case ITEM_INAZUMAKASETTO: //( 117 )		// イナズマカセット
+  case ITEM_INAZUMAKASETTO: //( 117 )   // イナズマカセット
     return FORMNO_656_INAZUMA;
     break;
-  case ITEM_BUREIZUKASETTO: //( 118 )		// ブレイズカセット
+  case ITEM_BUREIZUKASETTO: //( 118 )   // ブレイズカセット
     return FORMNO_656_BLAZE;
     break;
-  case ITEM_HURIIZUKASETTO: //( 119 )		// フリーズカセット
+  case ITEM_HURIIZUKASETTO: //( 119 )   // フリーズカセット
     return FORMNO_656_FREEZE;
     break;
   }
@@ -4111,20 +4111,20 @@ const u32 POKETOOL_GetPokeInsekutaFromItem( const u16 item )
 
 //============================================================================================
 /**
- *	指定されたポケモンナンバーから不正なフォルムナンバーかどうかチェックする
+ *  指定されたポケモンナンバーから不正なフォルムナンバーかどうかチェックする
  *
- * @param[in]	mons_no	チェックするポケモンナンバー
- * @param[in]	form_no	チェックするためのフォルムナンバー
+ * @param[in] mons_no チェックするポケモンナンバー
+ * @param[in] form_no チェックするためのフォルムナンバー
  *
  * @retval 正しい：そのままform_noを返す　不正：０を返す
  */
 //============================================================================================
-u8	POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
-{ 
+u8  POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
+{
   int form_max = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_form_max );
 
   if( mons_no != MONSNO_TAMAGO )
-  { 
+  {
     if( form_no < form_max )
     { 
       return form_no;
@@ -4135,7 +4135,7 @@ u8	POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
     }
   }
   else
-  { 
+  {
     if( form_no < FORMNO_TAMAGO_MAX )
     { 
       return form_no;
