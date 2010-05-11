@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-05-04T02:30:41"/>
+	<create user="mori" host="W00155" date="2010-05-11T11:37:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1646" top="224" right="2330" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="84" top="138" right="789" bottom="758" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="80" right="1280" bottom="478" visible="yes"/>
-		<band id="0" index="0" style="0000" width="503"/>
+		<band id="0" index="0" style="0000" width="524"/>
 		<band id="1" index="1" style="0000" width="171"/>
-		<band id="2" index="2" style="0000" width="676"/>
-		<band id="3" index="3" style="0000" width="676"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -651,6 +651,11 @@
 	<row id="MSG_TCARD_NUM_YYMMDDHHMM">
 		<language name="JPN" width="256">[2:03:４桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日 [2:01:２桁:3]時 [2:01:２桁:4]分</language>
 		<language name="JPN_KANJI" width="256">[2:03:４桁:0]年 [2:01:２桁:1]月 [2:01:２桁:2]日 [2:01:２桁:3]時 [2:01:２桁:4]分</language>
+	</row>
+
+	<row id="MSG_TCARD_NUM_HIKI">
+		<language name="JPN" width="256">[2:02:３桁:0]ひき</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]匹</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
