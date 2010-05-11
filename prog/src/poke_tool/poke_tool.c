@@ -4123,13 +4123,27 @@ u8	POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
 { 
   int form_max = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_form_max );
 
-  if( form_no < form_max )
+  if( mons_no != MONSNO_TAMAGO )
   { 
-    return form_no;
+    if( form_no < form_max )
+    { 
+      return form_no;
+    }
+    else
+    { 
+      return 0;
+    }
   }
   else
   { 
-    return 0;
+    if( form_no < FORMNO_TAMAGO_MAX )
+    { 
+      return form_no;
+    }
+    else
+    { 
+      return 0;
+    }
   }
 }
 
