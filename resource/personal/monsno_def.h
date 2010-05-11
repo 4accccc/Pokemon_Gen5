@@ -821,6 +821,12 @@
 #define		FORMNO_INSEKUTA_FREEZE				( 4 )
 #define		FORMNO_INSEKUTA_MAX				( 5 )
 
+//タマゴ
+#define		FORMNO_TAMAGO_NORMAL				( 0 )
+#define		FORMNO_TAMAGO_MANAFI				( 1 )
+
+#define		FORMNO_TAMAGO_MAX				( 2 )
+
 //フォルム違いトータル
 #define OTHER_FORM_MAX  ( 62 )
 
