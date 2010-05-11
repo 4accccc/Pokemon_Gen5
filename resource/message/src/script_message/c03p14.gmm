@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:24:25"/>
+	<create user="matsumiya" host="W00224" date="2010-05-11T15:12:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -459,12 +459,12 @@
 　自動で表示
 ・会話後・中央広場の方へ消える</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">なんか　よう？▼
-おー！　ダンスチーム！！
-オレに　しょうかい　してよ！▼</language>
-		<language name="JPN_KANJI" width="256">なんか　よう？▼
-おー！　ダンスチーム！！
-オレに　紹介してよ！▼</language>
+		<language name="JPN" width="256">なんだったっけ？▼
+そうだ！　ダンスチーム！！
+レッツ　ごうりゅう　しまーす！▼</language>
+		<language name="JPN_KANJI" width="256">なんだったっけ？▼
+そうだ！　ダンスチーム！！
+レッツ　合流しまーす！▼</language>
 	</row>
 
 	<flowchart-group-list>
