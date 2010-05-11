@@ -79,10 +79,15 @@ VMCMD_RESULT EvCmdLegMoveBall( VMHANDLE *core, void *wk )
 
   //開始地点算出
   {
-    FIELD_PLAYER *fld_player;
-    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-    FIELD_PLAYER_GetPos( fld_player, &start );
+    MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+    MMDL *target = MMDLSYS_SearchOBJID( fmmdlsys, target_obj );
+    GF_ASSERT( target != NULL );
+    if (target != NULL)
+    {
+      MMDL_GetVectorPos( target, &start );
+    }
   }
+
   //目的座標セット
   end.x = x * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE;
   end.y = y * GRID_HALF_SIZE;
