@@ -854,6 +854,14 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     if( ret == 0 ||
         GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
+      if( ret == 0 )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+      }
+      else
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
+      }
       talkWork->state = CTS_END_CONFIRM_INIT;
       PMSND_PlaySystemSE( CTVT_SND_CANCEL );
     }
