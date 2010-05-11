@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-11T11:54:24"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-11T12:02:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -832,7 +832,7 @@ POS</comment>
 	</row>
 
 	<row id="msg_policeman_02_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>2カ国以上と交換後
+		<comment>3カ国以上と交換後
 能動的に話しかけた時</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">はしゃぎすぎて　ころんだり
