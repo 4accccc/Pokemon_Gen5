@@ -49,12 +49,14 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
     if ( tbl[i].pos_type == MMDL_HEADER_POSTYPE_GRID )
     {
       s16 x,y,z;
+      OBJCODE_PARAM param;
       MMDL_HEADER_GRIDPOS * pos = (MMDL_HEADER_GRIDPOS *)(tbl[i].pos_buf);
-      const OBJCODE_PARAM *param = MMDLSYS_GetOBJCodeParam( fos, tbl[i].obj_code );
+      MMDLSYS_LoadOBJCodeParam( fos, tbl[i].obj_code, &param );
+      
       FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
       //¦Šî“_‚Í¶‰º
-      if ( (pos->gx<=x) && (x<pos->gx+param->size_width) &&
-           (pos->gz-param->size_depth<z) && (z<=pos->gz) )
+      if ( (pos->gx<=x) && (x<pos->gx+param.size_width) &&
+           (pos->gz-param.size_depth<z) && (z<=pos->gz) )
       {
         NOZOMU_Printf( "Dont warp\n");
         return FALSE;

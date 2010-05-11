@@ -40,13 +40,10 @@ typedef struct
 //--------------------------------------------------------------
 static void MMdl_DrawModel_Init( MMDL * mmdl )
 {
-  u16 code;
   DRAW_MODEL_WORK *work;
-
-  work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_MODEL_WORK) );
   
-  code = MMDL_GetOBJCode( mmdl );
-  work->obj_idx = MMDL_G3DOBJCONT_AddObject( mmdl, code );
+  work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_MODEL_WORK) );
+  work->obj_idx = MMDL_G3DOBJCONT_AddObject( mmdl );
 }
 
 //--------------------------------------------------------------

@@ -439,8 +439,7 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
     if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
       MATR now = MMDL_GetMapAttr( mmdl );
       MATR old = MMDL_GetMapAttrOld( mmdl );
-      const OBJCODE_PARAM *prm =
-        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
       
       MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
       MMdl_MapAttrGrassProc_0( mmdl, now, old, prm );
@@ -469,8 +468,7 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
     if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
       MATR now = MMDL_GetMapAttr( mmdl );
       MATR old = MMDL_GetMapAttrOld( mmdl );
-      const OBJCODE_PARAM *prm =
-        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
 
       MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
       MMdl_MapAttrGrassProc_12( mmdl, now, old, prm );
@@ -503,8 +501,7 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
     if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
       MATR now = MMDL_GetMapAttr( mmdl );
       MATR old = MMDL_GetMapAttrOld( mmdl );
-      const OBJCODE_PARAM *prm =
-        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
 
       MMdl_MapAttrBridgeProc_01( mmdl, now, old, prm );
       MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
@@ -530,8 +527,7 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
     if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
       MATR now = MMDL_GetMapAttr( mmdl );
       MATR old = MMDL_GetMapAttrOld( mmdl );
-      const OBJCODE_PARAM *prm =
-        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
       
       //終了　アトリビュート処理
       MMdl_MapAttrHeight_02( mmdl, now, old, prm );
@@ -559,8 +555,7 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * mmdl )
     if( MMDL_CheckCompletedDrawInit(mmdl) == TRUE ){
       MATR now = MMDL_GetMapAttr( mmdl );
       MATR old = MMDL_GetMapAttrOld( mmdl );
-      const OBJCODE_PARAM *prm =
-        MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+      const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
       
       //終了　アトリビュート処理
       MMdl_MapAttrHeight_02( mmdl, now, old, prm );

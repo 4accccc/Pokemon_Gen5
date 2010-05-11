@@ -10,6 +10,8 @@
 #include "fldmmdl.h"
 #include "fldmmdl_work.h"
 
+#include "arc/fieldmap/fldmmdl_mdlparam.naix"
+
 //======================================================================
 //  define
 //======================================================================
@@ -86,8 +88,10 @@ static BOOL mmdlsys_SearchUseMMdl(
   const MMDLSYS *fos, MMDL **mmdl, u32 *no );
 static MMDL * mmdlsys_SearchSpaceMMdl( const MMDLSYS *sys );
 
-static const OBJCODE_PARAM * mmdlsys_GetOBJCodeParam(
-    const MMDLSYS *mmdlsys, u16 code );
+#if 0
+static void mmdlsys_GetOBJCodeParam(
+    const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *param );
+#endif
 
 //======================================================================
 //  MMDL_SAVEDATA
@@ -280,7 +284,8 @@ static void mmdl_SaveData_LoadMMdl(
     
     { //管理表指定オフセット座標設定
       const OBJCODE_PARAM *param;
-      param = mmdlsys_GetOBJCodeParam( fos, mmdl->obj_code );
+      MMDLSYS_LoadOBJCodeParam( fos, mmdl->obj_code, &mmdl->objcode_param );
+      param = &mmdl->objcode_param;
       mmdl->offset_x = param->offs_x; //オフセット
       mmdl->offset_y = param->offs_y;
       mmdl->offset_z = param->offs_z;
@@ -394,10 +399,14 @@ u16 MMDL_TOOL_OBJCodeToDataNumber( u16 code )
  * @retval  OBJCODE_PARAM*
  */
 //--------------------------------------------------------------
-static const OBJCODE_PARAM * mmdlsys_GetOBJCodeParam(
-    const MMDLSYS *mmdlsys, u16 code )
+static void mmdlsys_GetOBJCodeParam(
+    const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *param )
 {
-  GF_ASSERT( mmdlsys->pOBJCodeParamTbl != NULL );
-  code = MMDL_TOOL_OBJCodeToDataNumber( code );
-  return( &(mmdlsys->pOBJCodeParamTbl[code]) );
+  u16 size = sizeof( OBJCODE_PARAM );
+  u16 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE +
+    (size * MMDL_TOOL_OBJCodeToDataNumber(code));
+  
+  GFL_ARC_LoadDataOfsByHandle( mmdlsys->arcH_param, 
+      NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+      offs, size, &param );
 }

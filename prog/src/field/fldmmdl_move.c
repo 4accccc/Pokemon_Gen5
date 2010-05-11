@@ -349,9 +349,8 @@ static void mmdl_InitAttrData( const MMDL *mmdl, ATTRDATA *data )
     data->attr_flag_old = MAPATTR_GetAttrFlag( data->attr_old );
   }
   
-  data->objcode_prm =
-      MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
-   
+  data->objcode_prm = MMDL_GetOBJCodeParam( mmdl );
+  
   {
     MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
     FIELDMAP_WORK *fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );

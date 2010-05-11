@@ -533,7 +533,7 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk )
 static void debug_FldmmdlAnmCodeCheck( const GAMESYS_WORK* gsys )
 {
   int i;
-  const OBJCODE_PARAM* obj_prm;
+  OBJCODE_PARAM obj_prm;
   const MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( GAMESYSTEM_GetGameData( (GAMESYS_WORK*)gsys ));
 
   static const u16 checkTbl[][2] = {
@@ -551,8 +551,8 @@ static void debug_FldmmdlAnmCodeCheck( const GAMESYS_WORK* gsys )
   };
 
   for(i = 0;i < NELEMS(checkTbl);i++){
-    obj_prm = MMDLSYS_GetOBJCodeParam( mmdlsys, checkTbl[i][0] );
-    if( obj_prm->anm_id != checkTbl[i][1]){
+    MMDLSYS_LoadOBJCodeParam( mmdlsys, checkTbl[i][0], &obj_prm );
+    if( obj_prm.anm_id != checkTbl[i][1]){
       GF_ASSERT_MSG(0,"Demo3D Fldmmdl anmType err idx=%d -> %d \n",i, checkTbl[i][0]);
     }
   }

@@ -248,9 +248,8 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
             u16 ac_act_d = ACMD_NOT;
             u16 ac_act_l = ACMD_NOT;
             u16 ac_act_r = ACMD_NOT;
-
-            const OBJCODE_PARAM *param =
-                MMDL_GetOBJCodeParam( mmdl, code );
+            
+            const OBJCODE_PARAM *param = MMDL_GetOBJCodeParam( mmdl );
 
             if( key_cont & PAD_BUTTON_A ){
               switch( param->anm_id ){

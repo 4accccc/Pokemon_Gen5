@@ -1020,10 +1020,9 @@ extern BOOL MMDL_CheckSameDataIDOnly(
     const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );
 extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 
-extern const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
-		const MMDLSYS *mmdlsys, u16 code );
-extern const OBJCODE_PARAM * MMDL_GetOBJCodeParam(
-		const MMDL *mmdl, u16 code );
+extern void MMDLSYS_LoadOBJCodeParam(
+    const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *param );
+extern const OBJCODE_PARAM * MMDL_GetOBJCodeParam( const MMDL *mmdl );
 extern const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
     const OBJCODE_PARAM *param );
 extern const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
@@ -1229,12 +1228,14 @@ extern void MMDL_BLACTCONT_AddResourceTex(
 	MMDLSYS *mmdlsys, const u16 *code, int max );
 
 extern BOOL MMDL_BLACTCONT_AddActor(
-    MMDL *mmdl, u16 code, GFL_BBDACT_ACTUNIT_ID *outID );
+    MMDL *mmdl, GFL_BBDACT_ACTUNIT_ID *outID );
 extern void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID );
 
 extern BOOL MMDL_BLACTCONT_USER_AddActor( MMDLSYS *mmdlsys,
-    u16 code, MMDL_BLACTWORK_USER *userAct, const VecFx32 *pos,
+    const OBJCODE_PARAM *pParam,
+    MMDL_BLACTWORK_USER *userAct, const VecFx32 *pos,
     MMDL_BLACTCONT_ADDACT_USERPROC init_proc, void *init_work );
+
 extern void MMDL_BLACTCONT_USER_DeleteActor(
     MMDLSYS *mmdlsys, MMDL_BLACTWORK_USER *userAct );
 
@@ -1251,8 +1252,8 @@ extern BOOL MMDL_BLACTCONT_AddOBJCodeRes(
     MMDLSYS *mmdlsys, u16 code, BOOL trans, BOOL guest );
 extern void MMDL_BLACTCONT_DeleteOBJCodeRes( MMDLSYS *mmdlsys, u16 code );
 
-extern const MMDL_BBDACT_ANMTBL * MMDL_BLACTCONT_GetObjAnimeTable(
-  const MMDLSYS *mmdlsys, u16 code );
+//extern const MMDL_BBDACT_ANMTBL * MMDL_BLACTCONT_GetObjAnimeTable(
+//  const MMDLSYS *mmdlsys, u16 code );
 
 extern void MMDL_BLACTCONT_ChangeOBJCodeWithDummy(
     MMDL *mmdl, u16 next_code );
@@ -1320,7 +1321,7 @@ extern void MMDL_G3DOBJCONT_Setup(
     MMDLSYS *mmdlsys, FLD_G3DOBJ_CTRL *g3dobj_ctrl );
 extern void MMDL_G3DOBJCONT_Delete( MMDLSYS *mmdlsys );
 extern FLD_G3DOBJ_CTRL * MMDL_G3DOBJCONT_GetFldG3dObjCtrl( MMDL *mmdl );
-extern FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl, u16 code );
+extern FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl );
 extern void MMDL_G3DOBJCONT_DeleteObject(
     MMDL *mmdl, FLD_G3DOBJ_OBJIDX idx );
 

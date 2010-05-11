@@ -181,6 +181,9 @@ static void gyoe_DeleteResource( FLDEFF_GYOE *gyoe )
 }
 
 #ifdef  PM_DEBUG
+u32 DEBUG_GetGyoeZoffs( FLDEFF_CTRL *fectrl );
+void DEBUG_SetGyoeZoffs( FLDEFF_CTRL *fectrl, u32 value );
+
 u32 DEBUG_GetGyoeZoffs( FLDEFF_CTRL *fectrl )
 {
   FLDEFF_GYOE * eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
@@ -192,6 +195,7 @@ void DEBUG_SetGyoeZoffs( FLDEFF_CTRL *fectrl, u32 value )
   eff_gyoe->gyoe_z_offs = value;
 }
 #endif
+
 //======================================================================
 //	びっくりマークエフェクト　タスク
 //======================================================================

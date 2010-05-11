@@ -46,7 +46,8 @@ static u16 rescode_RegCodeIdx( MMDL_G3DOBJCONT *objcont, u16 code, u16 idx );
 static u16 rescode_GetResIdx( MMDL_G3DOBJCONT *objcont, u16 code );
 static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 idx );
 static u16 rescode_AddResource(
-    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, const u16 code );
+    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont,
+    const u16 code, const OBJCODE_PARAM_BUF_MDL *prm_mdl );
 static void rescode_DeleteResource( MMDL_G3DOBJCONT *objcont, u16 code );
 
 //======================================================================
@@ -228,17 +229,13 @@ static u16 rescode_GetOBJCode( MMDL_G3DOBJCONT *objcont, u16 r_idx )
  */
 //--------------------------------------------------------------
 static u16 rescode_AddResource(
-    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont, const u16 code )
+    MMDLSYS *mmdlsys, MMDL_G3DOBJCONT *objcont,
+    const u16 code, const OBJCODE_PARAM_BUF_MDL *prm_mdl )
 {
   int i;
   u16 res_idx;
-  const OBJCODE_PARAM *prm;
-  const OBJCODE_PARAM_BUF_MDL *prm_mdl;
   FLD_G3DOBJ_RES_HEADER head;
   ARCHANDLE *handle = MMDLSYS_GetResArcHandle( mmdlsys );
-  
-  prm = MMDLSYS_GetOBJCodeParam( objcont->mmdlsys, code );
-  prm_mdl = MMDL_GetOBJCodeParamBufMDL( prm );
   
   FLD_G3DOBJ_RES_HEADER_Init( &head );
   
@@ -261,7 +258,7 @@ static u16 rescode_AddResource(
   KAGAYA_Printf(
       "動作モデル G3D OBJRES追加 code=%dH, mdl idx = %d, anm count =%xH\n",
       code, head.arcIdxMdl, head.anmCount );
-
+  
   res_idx = FLD_G3DOBJ_CTRL_CreateResource(
       objcont->g3dobj_ctrl, &head, FALSE );
   rescode_RegCodeIdx( objcont, code, res_idx );
@@ -303,19 +300,23 @@ static void rescode_DeleteResource( MMDL_G3DOBJCONT *objcont, u16 code )
  * @retval u16 追加されたオブジェインデックス
  */
 //--------------------------------------------------------------
-FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl, u16 code )
+FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl )
 {
   MMDLSYS *mmdlsys;
   MMDL_G3DOBJCONT *objcont;
   FLD_G3DOBJ_RESIDX residx;
   FLD_G3DOBJ_OBJIDX objidx;
+  const OBJCODE_PARAM *prm;
   
+  prm = MMDL_GetOBJCodeParam( mmdl );
   mmdlsys = MMDL_GetMMdlSys( mmdl );
   objcont = MMDLSYS_GetG3dObjCont( mmdlsys );
-  residx = rescode_GetResIdx( objcont, code );
+  residx = rescode_GetResIdx( objcont, prm->code );
   
   if( residx == FLD_G3DOBJ_IDX_ERROR ){
-    residx = rescode_AddResource( mmdlsys, objcont, code );
+    const OBJCODE_PARAM_BUF_MDL *prm_mdl;
+    prm_mdl = MMDL_GetOBJCodeParamBufMDL( prm );
+    residx = rescode_AddResource( mmdlsys, objcont, prm->code, prm_mdl );
   }
   
   objidx = FLD_G3DOBJ_CTRL_AddObject(

@@ -141,10 +141,8 @@ static void mmdlsys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
 
 //parts
 static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code );
-static u16 OBJCode_GetDataNumber( u16 code );
 static const MMDL_MOVE_PROC_LIST * MoveProcList_GetList( u16 code );
-static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList(
-    MMDL_DRAWPROCNO no );
+static const MMDL_DRAW_PROC_LIST * DrawProcList_GetList( MMDL_DRAWPROCNO no );
 static BOOL MMdlHeader_CheckAlies( const MMDL_HEADER *head );
 static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head );
 static BOOL mmdlsys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
@@ -590,7 +588,8 @@ static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
   MMDL_SetMoveLimitX( mmdl, head->move_limit_x );
   MMDL_SetMoveLimitZ( mmdl, head->move_limit_z );
   
-  param = MMDLSYS_GetOBJCodeParam( mmdlsys, obj_code );
+  MMDLSYS_LoadOBJCodeParam( mmdlsys, obj_code, &mmdl->objcode_param );
+  param = &mmdl->objcode_param;
   
   if( obj_code == STOPPER ){ //サイズ設定。STOPPERはサイズ指定アリ
     mmdl->gx_size = head->param0;
@@ -4107,8 +4106,7 @@ static void mmdl_InitDrawWork( MMDL *mmdl )
 static void mmdl_InitCallDrawProcWork( MMDL * mmdl )
 {
   const MMDL_DRAW_PROC_LIST *list;
-  u16 code = MMDL_GetOBJCode( mmdl );
-  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl, code );
+  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
   list = DrawProcList_GetList( prm->draw_proc_no );
   mmdl->draw_proc_list = list;
 }
@@ -4374,9 +4372,10 @@ void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
   
   MMDL_SetOBJCode( mmdl, code );
   
-  {
+  { //新規OBJCODE_PARAM
     const OBJCODE_PARAM *param;
-    param = MMDLSYS_GetOBJCodeParam( fos, code );
+    MMDLSYS_LoadOBJCodeParam( fos, code, &mmdl->objcode_param );
+    param = &mmdl->objcode_param;
     mmdl->gx_size = param->size_width;
     mmdl->gz_size = param->size_depth;
     mmdl->offset_x = param->offs_x; //オフセット
@@ -4401,10 +4400,14 @@ void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
 //--------------------------------------------------------------
 static void mmdlsys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID )
 {
+#if 0
   u8 *p = GFL_ARC_LoadDataAlloc( ARCID_MMDL_PARAM, 
       NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin, heapID );
   mmdlsys->pOBJCodeParamBuf = p;
   mmdlsys->pOBJCodeParamTbl = (const OBJCODE_PARAM*)(&p[OBJCODE_PARAM_TOTAL_NUMBER_SIZE]);
+#endif
+  
+  mmdlsys->arcH_param = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
 }
 
 //--------------------------------------------------------------
@@ -4416,10 +4419,15 @@ static void mmdlsys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID )
 //--------------------------------------------------------------
 static void mmdlsys_DeleteOBJCodeParam( MMDLSYS *mmdlsys )
 {
+#if 0
   GFL_HEAP_FreeMemory( mmdlsys->pOBJCodeParamBuf );
   mmdlsys->pOBJCodeParamBuf = NULL;
+#endif
+  
+  GFL_ARC_CloseDataHandle( mmdlsys->arcH_param );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * MMDLSYS OBJCODE_PARAM 取得
@@ -4432,23 +4440,51 @@ const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code )
 {
   GF_ASSERT( mmdlsys->pOBJCodeParamTbl != NULL );
-  code = OBJCode_GetDataNumber( code );
+  code = MMDL_TOOL_OBJCodeToDataNumber( code );
   return( &(mmdlsys->pOBJCodeParamTbl[code]) );
+}
+#endif
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS OBJCODE_PARAM ロード
+ * @param  mmdlsys  MMDLSYS *
+ * @param  code  取得するOBJコード
+ * @param  outParam 格納先
+ * @retval nothing
+ * @attention アーカイブデータからロードを行いoutParamに格納します。
+ * 処理が重い為、連続呼びは控えて下さい。
+ * 可能であればMMDL_GetOBJCodeParam()を使用してください。
+ * @note 呼び出し速度 約270ms～300ms
+ */
+//--------------------------------------------------------------
+void MMDLSYS_LoadOBJCodeParam(
+    const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *outParam )
+{
+  u16 size = sizeof( OBJCODE_PARAM );
+  u16 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE +
+    (size * MMDL_TOOL_OBJCodeToDataNumber(code));
+  
+  GFL_ARC_LoadDataOfsByHandle( mmdlsys->arcH_param, 
+      NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+      offs, size, outParam );
 }
 
 //--------------------------------------------------------------
 /**
- * MMDL OBJCODE_PARAM 取得
+ * MMDL MMDLに設定されているOBJCODE_PARAM取得
  * @param  mmdl  MMDL*
- * @param  code  取得するOBJコード
- * @retval  OBJCODE_PARAM*
+ * @param OBJCODE_PARAM*
  */
 //--------------------------------------------------------------
-const OBJCODE_PARAM * MMDL_GetOBJCodeParam(
-    const MMDL *mmdl, u16 code )
+const OBJCODE_PARAM * MMDL_GetOBJCodeParam( const MMDL *mmdl )
 {
+#if 0
   const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
   return( MMDLSYS_GetOBJCodeParam(mmdlsys,code) );
+#else  
+  return( &(mmdl->objcode_param) );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -4523,33 +4559,6 @@ static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code )
   }
   
   return( code );
-}
-
-//--------------------------------------------------------------
-/**
- * 指定されたOBJコードをデータ配列要素数に変換
- * @param code OBJ CODE
- * @retval u16 codeをデータの並びにあわせた数値
- */
-//--------------------------------------------------------------
-static u16 OBJCode_GetDataNumber( u16 code )
-{
-  if( code < OBJCODEEND_BBD ){
-    return( code );
-  }
-  
-  if( code >= OBJCODESTART_TPOKE && code < OBJCODEEND_TPOKE ){
-    code = (code - OBJCODESTART_TPOKE) + OBJCODECOUNT_BBD;
-    return( code );
-  }
-  
-  if( code >= OBJCODESTART_MDL && code < OBJCODEEND_MDL ){
-    code = (code - OBJCODESTART_MDL) + OBJCODECOUNT_BBD + OBJCODECOUNT_TPOKE;
-    return( code );
-  }
-  
-  GF_ASSERT( 0 );
-  return( BOY1 ); //エラー回避用として無難なコードを返す
 }
 
 //--------------------------------------------------------------
@@ -5051,7 +5060,7 @@ u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID )
 {
   u8 *buf;
   
-  code = OBJCode_GetDataNumber( code );
+  code = MMDL_TOOL_OBJCodeToDataNumber( code );
   
   buf = GFL_HEAP_AllocClearMemoryLo(
       heapID, DEBUG_OBJCODE_STR_LENGTH );

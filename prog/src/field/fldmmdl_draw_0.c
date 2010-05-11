@@ -169,16 +169,16 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_Non =
  *
  */
 //-----------------------------------------------------------------------------
-void MMDL_DrawBlactWork_GetAnimeFrame( MMDL *mmdl, u16* outIdx, u16* outFrmIdx )
+void MMDL_DrawBlactWork_GetAnimeFrame(
+    MMDL *mmdl, u16* outIdx, u16* outFrmIdx )
 {
   DRAW_BLACT_WORK *work;
-  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
-      MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
   GFL_BBDACT_SYS *actSys;
+  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
   
-
-  if(prm->draw_type == MMDL_DRAWTYPE_BLACT){
+  if( prm->draw_type == MMDL_DRAWTYPE_BLACT ){
     work = MMDL_GetDrawProcWork( mmdl );
+    
     if( work->actID != MMDL_BLACTID_NULL ){
       actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
       *outIdx     = GFL_BBDACT_GetAnimeIdx( actSys,work->actID );
@@ -206,8 +206,7 @@ void MMDL_DrawBlactWork_GetAnimeFrame( MMDL *mmdl, u16* outIdx, u16* outFrmIdx )
 extern void MMDL_DrawBlactWork_SetAnimeFrame( MMDL *mmdl, u16 Idx, u16 FrmIdx )
 {
   DRAW_BLACT_WORK *work;
-  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
-      MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
+  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
   GFL_BBDACT_SYS *actSys;
 
   if(prm->draw_type == MMDL_DRAWTYPE_BLACT){
@@ -234,14 +233,11 @@ extern void MMDL_DrawBlactWork_SetAnimeFrame( MMDL *mmdl, u16 Idx, u16 FrmIdx )
 //--------------------------------------------------------------
 static void DrawHero_Init( MMDL *mmdl )
 {
-  u16 code;
   DRAW_BLACT_WORK *work;
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
-  
-  code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt );
-  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
+  MMDL_BLACTCONT_AddActor( mmdl, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -493,14 +489,12 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_SwimHero =
 //--------------------------------------------------------------
 static void DrawBlAct_Init( MMDL *mmdl )
 {
-  u16 code;
   DRAW_BLACT_WORK *work;
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
   
-  code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt );
-  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
+  MMDL_BLACTCONT_AddActor( mmdl, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -576,8 +570,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   }
   
   {
-    const OBJCODE_PARAM *prm =
-      MMDLSYS_GetOBJCodeParam( MMDL_GetMMdlSys(mmdl), code );
+    const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
     
     if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLACTALWAYSANIME_32 ){
       anm_id = DRAW_STA_WALK_32F * DIR_MAX4;
@@ -1264,14 +1257,11 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActOnePattern =
 //--------------------------------------------------------------
 static void DrawTsurePoke_Init( MMDL *mmdl )
 {
-  u16 code;
   DRAW_BLACT_POKE_WORK *work;
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
   work->set_anm_dir = DIR_NOT;
-
-  code = MMDL_GetOBJCode( mmdl );
-  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
+  MMDL_BLACTCONT_AddActor( mmdl, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -1341,9 +1331,9 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   VecFx32 vec;
   BOOL pause_f, anmcmd_f;
   const OBJCODE_PARAM* obj_prm;
-  u16 obj_code = MMDL_GetOBJCode( mmdl );
-  obj_prm = MMDLSYS_GetOBJCodeParam( MMDL_GetMMdlSys(mmdl), obj_code );
-
+  
+  obj_prm = MMDL_GetOBJCodeParam( mmdl );
+  
   VEC_Set(&vec,0,0,0);
 
   pause_f = MMDL_CheckDrawPause( mmdl );
@@ -1480,14 +1470,11 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_TsurePoke =
 //--------------------------------------------------------------
 static void DrawBlActShinMu_Init( MMDL *mmdl )
 {
-  u16 code;
   DRAW_BLACT_WORK *work;
   
   work = MMDL_InitDrawProcWork( mmdl, sizeof(DRAW_BLACT_WORK) );
-  
-  code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt );
-  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
+  MMDL_BLACTCONT_AddActor( mmdl, &work->actID );
 }
 
 //--------------------------------------------------------------

@@ -264,15 +264,16 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
 #endif
 
   actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
-
+  
   if( work->flag_initact == FALSE ){
     if( actID == MMDL_BLACTID_NULL ){ //動作モデルビルボード追加まだ
       return;
     }else{
       VecFx32 pos = {0,0,0};
-      u16 code = MMDL_GetOBJCode( work->head.mmdl );
+      const OBJCODE_PARAM *param = MMDL_GetOBJCodeParam( work->head.mmdl );
+      
       MMDL_BLACTCONT_USER_AddActor( work->head.mmdlsys,
-          code, &work->actWork, &pos,
+          param, &work->actWork, &pos,
           reflectTask_UpdateBlAct, work );
       work->flag_initact = TRUE;
     }
@@ -368,7 +369,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     const OBJCODE_PARAM *param;
     
     mmdl = work->head.mmdl;
-    param = MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+    param = MMDL_GetOBJCodeParam( mmdl );
     
     MMDL_GetVectorDrawOffsetPos( mmdl, &pos );
     x = pos.x;
@@ -477,8 +478,7 @@ static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
 //--------------------------------------------------------------
 static BOOL debug_CheckMMdl( const MMDL *mmdl )
 {
-  u16 code = MMDL_GetOBJCode( mmdl );
-  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl, code );
+  const OBJCODE_PARAM *prm = MMDL_GetOBJCodeParam( mmdl );
     
   if( prm->draw_type != MMDL_DRAWTYPE_BLACT ){
     GF_ASSERT( 0 && "FLDEFF REFLECT NOT REFLECT OBJ" );

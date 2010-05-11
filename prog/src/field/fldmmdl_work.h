@@ -42,7 +42,8 @@ struct _TAG_MMDLSYS
   u8 padding1;
   
   ARCHANDLE *arcH_res; ///<動作モデルリソースアーカイブハンドル
-
+  ARCHANDLE *arcH_param; ///<動作モデルパラメタアーカイブハンドル
+  
   MMDL *pMMdlBuf;      ///<MMDLワーク *
   void *pTCBSysWork;        ///<TCBワーク
   GFL_TCBSYS *pTCBSys;      ///<TCBSYS*
@@ -51,10 +52,12 @@ struct _TAG_MMDLSYS
   MMDL_G3DOBJCONT *pObjCont; ///<MMDL_G3DOBJCONT
   
   MMDL_ROCKPOS *rockpos; ///<かいりき岩座標 セーブデータポインタ
-  
+
+#if 0  
   u8 *pOBJCodeParamBuf;      ///<OBJCODE_PARAMバッファ
   const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
-  
+#endif
+
   GAMEDATA *gdata; ///<GAMEDATA
   const FLDMAPPER *pG3DMapper;  ///<FLDMAPPER
   FLDNOGRID_MAPPER *pNOGRIDMapper;  ///<FLDNOGRID_MAPPER
@@ -128,6 +131,9 @@ struct _TAG_MMDL
   u8 move_sub_proc_work[MMDL_MOVE_SUB_WORK_SIZE];///動作サブ関数用ワーク
   u8 move_cmd_proc_work[MMDL_MOVE_CMD_WORK_SIZE];///動作コマンド用ワーク
   u8 draw_proc_work[MMDL_DRAW_WORK_SIZE];///描画関数用ワーク
+  
+  ///obj_codeに設定されているOBJCODE_PARAM 基本は閲覧のみで操作禁止
+  OBJCODE_PARAM objcode_param;
 };
 
 #define MMDL_SIZE (sizeof(MMDL)) ///<MMDLサイズ 224
