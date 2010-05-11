@@ -2138,10 +2138,14 @@
 	<row id="TRID_RANGERW_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">さあ！　いっしょに
 しんこきゅう　しましょ！▼
+スー　ハー
+ヒー　フー▼
 はい！　つぎは
 ポケモンを　たたかわせましょ！▼</language>
 		<language name="JPN_KANJI" width="216">さあ！　一緒に
 深呼吸　しましょ！▼
+スー　ハー
+ヒー　フー▼
 はい！　次は
 ポケモンを　戦わせましょ！▼</language>
 	</row>
@@ -11821,57 +11825,57 @@
 	</row>
 
 	<row id="TRID_BACKPACKERM_09_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">……きみとの　であいを
-こころに　やきつけるため▽
-しょうぶを　させてください▼</language>
-		<language name="JPN_KANJI" width="216">……きみとの　出会いを
-心に　焼き付けるため▽
-勝負を　させてください▼</language>
+		<language name="JPN" width="216">Please let me battle you
+so I can etch our▽
+meeting into my memory.▼</language>
+		<language name="JPN_KANJI" width="216">Please let me battle you
+so I can etch our▽
+meeting into my memory.▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_09_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">きみたちの　インパクト……
-けっして　わすれないよ！</language>
-		<language name="JPN_KANJI" width="216">きみたちの　インパクト……
-決して　忘れないよ！</language>
+		<language name="JPN" width="216">Your impact...
+I will never forget it!</language>
+		<language name="JPN_KANJI" width="216">Your impact...
+I will never forget it!</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">みた　けしき……
-であった　ひと……▽
-わざを　まじえた　ポケモン……▼
-すべて　こころに　やきつけるよ</language>
-		<language name="JPN_KANJI" width="216">みた　景色……
-出会った　人……▽
-技を交えた　ポケモン……▼
-すべて　心に　焼き付けるよ</language>
+		<language name="JPN" width="216">The scenery I've seen...
+People I've met...▽
+Pokemon we've traded moves with...▼
+I etch them into my memory.</language>
+		<language name="JPN_KANJI" width="216">The scenery I've seen...
+People I've met...▽
+Pokemon we've traded moves with...▼
+I etch them into my memory.</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_08_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">たびをした　くにの　かず
-あいてした　トレーナーの　かずは▽
-いがいと　おおい　わたしです！▼</language>
-		<language name="JPN_KANJI" width="216">旅をした　国の　数
-相手した　トレーナーの　数は▽
-意外と　多い　わたしです！▼</language>
+		<language name="JPN" width="216">Tu n'imagineras jamais le nombre de
+pays que j'ai visites, et le nombre▽
+de Dresseurs que j'ai combattus!▼</language>
+		<language name="JPN_KANJI" width="216">Tu n'imagineras jamais le nombre de
+pays que j'ai visites, et le nombre▽
+de Dresseurs que j'ai combattus!▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">わー！　ステキな
-たびの　おもいで　ふえちゃった！</language>
-		<language name="JPN_KANJI" width="216">わー！　ステキな
-旅の思い出　増えちゃった！</language>
+		<language name="JPN" width="216">Wah! Encore un formidable
+souvenir de voyage!</language>
+		<language name="JPN_KANJI" width="216">Wah! Encore un formidable
+souvenir de voyage!</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">いっぱい　いっぱい
-たびを　したら　いえに　かえるの▼
-そして　いろんな　ことを
-かぞくに　おはなし　するの！</language>
-		<language name="JPN_KANJI" width="216">いっぱい　いっぱい
-旅をしたら　家に　帰るの▼
-そして　いろんな　ことを
-家族に　お話しするの！</language>
+		<language name="JPN" width="216">Quand j'aurai beaucoup, beaucoup
+voyage, je rentrerai a la maison,▼
+et je pourrai raconter tout
+plein de choses a ma famille!</language>
+		<language name="JPN_KANJI" width="216">Quand j'aurai beaucoup, beaucoup
+voyage, je rentrerai a la maison,▼
+et je pourrai raconter tout
+plein de choses a ma famille!</language>
 	</row>
 
 	<row id="TRID_RANGERM_07_TRMSG_FIGHT_START">
@@ -12657,28 +12661,28 @@
 	</row>
 
 	<row id="TRID_MOUNT_10_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">いままで　あるいてきた　みち……
-のぼってきた　やまを　ふりかえると▽
-なぜだか　しょうぶ　したくなるんだな▼</language>
-		<language name="JPN_KANJI" width="216">今まで　歩いてきた　道……
-登ってきた　山を　振りかえると▽
-なぜだか　勝負したくなるんだな▼</language>
+		<language name="JPN" width="216">Se ripenso a quante montagne
+ho attraversato in lungo e in largo,▽
+mi viene tanta voglia di una lotta.▼</language>
+		<language name="JPN_KANJI" width="216">Se ripenso a quante montagne
+ho attraversato in lungo e in largo,▽
+mi viene tanta voglia di una lotta.▼</language>
 	</row>
 
 	<row id="TRID_MOUNT_10_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まえにも　こんなふうに
-まけた　おもいでが　よみがえる！</language>
-		<language name="JPN_KANJI" width="216">前にも　こんな風に
-負けた　思い出が　よみがえる！</language>
+		<language name="JPN" width="216">vengono in mente altre lotte in
+cui ho perso proprio come adesso!</language>
+		<language name="JPN_KANJI" width="216">vengono in mente altre lotte in
+cui ho perso proprio come adesso!</language>
 	</row>
 
 	<row id="TRID_MOUNT_10_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">のぼってきた　みちは　かえられん！▼
-だが　これから　のぼる　やまみちは
-かえられる！　かえていいのだ！</language>
-		<language name="JPN_KANJI" width="216">登ってきた　道は　変えられん！▼
-だが　これから　登る　山道は
-変えられる！　変えていいのだ！</language>
+		<language name="JPN" width="216">La strada percorsa non si cambia!▼
+Ma su quella da percorrere
+puo accadere ancora di tutto!</language>
+		<language name="JPN_KANJI" width="216">La strada percorsa non si cambia!▼
+Ma su quella da percorrere
+puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_RANGERM_08_TRMSG_FIGHT_START">
