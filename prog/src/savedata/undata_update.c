@@ -25,10 +25,10 @@ static void  AddDataCore(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_da
  * @param	  wh        wifi履歴データポインタ
  * @param   add_data  追加するデータ
  *
- * @return	none
+ * @return	DAT_ADD_ST      追加結果
  */
 //----------------------------------------------------------
-void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
+DAT_ADD_ST UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
 {
   UNITEDNATIONS_SAVE *un_data;
   u32 same_idx;
@@ -40,7 +40,7 @@ void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
     {
       //登録指定無い場合は処理を行わない
       OS_Printf("自分の国コードが設定されていないので、処理しない\n");
-      return;
+      return DAT_ADD_ST_FAIL;
     }
   }
 
@@ -58,6 +58,7 @@ void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
     DelData(un_data, same_idx);
     //リストの最後尾へ追加  自分の持っていたデータに存在していたので会話状態は引き継ぐ
     AddData(wh, add_data, talk);
+    return DAT_ADD_ST_CHG;
   }
   else
   {       //見つからなかった
@@ -90,6 +91,7 @@ void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
       //リストの最後尾へ追加  自分の持っていたデータには存在していなかったので会話フラグはFALSE確定
       AddData(wh, add_data, FALSE);
     }
+    return DAT_ADD_ST_ADD;
   }
 }
 

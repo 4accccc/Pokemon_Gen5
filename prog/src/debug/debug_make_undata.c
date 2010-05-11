@@ -1240,9 +1240,11 @@ static void MakeData(MAKE_WORK *wk)
   wk->UNData.nature = wk->BoxValue[EDITBOX_ID_NATURE];   //«Ši
 
   //’Ç‰Á
-  UNDATAUP_Update(wk->wh, &wk->UNData);
-
-  OS_Printf("UN DATA ADD\n");
+  {
+    DAT_ADD_ST st = UNDATAUP_Update(wk->wh, &wk->UNData);
+    if (st == DAT_ADD_ST_ADD) OS_Printf("UN DATA ADD\n");
+    else if( st == DAT_ADD_ST_CHG ) OS_Printf("UN DATA CHG\n");
+  }
 }
 
 static void DumpUNData(MAKE_WORK *wk)

@@ -12,7 +12,14 @@
 #include "wifihistory.h"
 #include "src/savedata/wifihistory_local.h"
 
-extern void UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
+typedef enum
+{
+  DAT_ADD_ST_FAIL = 0,
+  DAT_ADD_ST_CHG,
+  DAT_ADD_ST_ADD,
+}DAT_ADD_ST;
+
+extern DAT_ADD_ST UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
 extern u32 UNDATAUP_GetDataNum(const UNITEDNATIONS_SAVE *un_data);
 
 
