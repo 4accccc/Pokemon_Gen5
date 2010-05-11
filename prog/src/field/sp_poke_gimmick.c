@@ -825,7 +825,7 @@ static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work )
 
 //--------------------------------------------------------------
 /**
- * 煙りアニメイベント作成
+ * 煙アニメイベント作成
  * @param	      fieldWork   フィールドワークポインタ
  * @return      none
  */
