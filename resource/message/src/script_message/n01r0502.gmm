@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-10T20:29:55"/>
+	<create user="matsumiya" host="W00224" date="2010-05-11T18:44:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -664,9 +664,9 @@
 ・メッセージ表示後、ム復活デモへ</comment>
 		<attribute name="キャラ指定">ダークストーン</attribute>
 		<language name="JPN" width="256">ダークストーンが
-はげしく　ふるえだす……！▼</language>
+はげしく　ふるえだす……！</language>
 		<language name="JPN_KANJI" width="256">ダークストーンが
-激しく　震えだす！▼</language>
+激しく　震えだす！</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -675,9 +675,9 @@
 ・メッセージ表示後、シン復活デモへ</comment>
 		<attribute name="キャラ指定">ライトストーン</attribute>
 		<language name="JPN" width="256">ライトストーンが
-はげしく　ふるえだす……！▼</language>
+はげしく　ふるえだす……！</language>
 		<language name="JPN_KANJI" width="256">ライトストーンが
-激しく　震えだす！▼</language>
+激しく　震えだす！</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_08w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
