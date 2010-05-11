@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-03-09T17:30:11" source="short_down.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-05-11T17:30:57" source="short_down.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -146,21 +146,21 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="3">
-	<tex_srt_anm index="0" material_name="demo_02_lm1">
+	<tex_srt_anm index="0" material_name="demo_02_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="555" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="demo_03_lm1">
+	<tex_srt_anm index="1" material_name="demo_03_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="1"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="demo3_01_lm1">
+	<tex_srt_anm index="2" material_name="demo3_01_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="555" data_head="2"/>

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-03-09T17:30:11" source="short_down.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-05-11T17:30:56" source="short_down.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-03-09T17:30:11" source="short_down.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-05-11T17:30:56" source="short_down.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -625,7 +625,7 @@
 </tex_palette_array>
 
 <material_array size="11">
-	<material index="0" name="demo3_01_lm1"
+	<material index="0" name="demo3_01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="23"
@@ -649,7 +649,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="demo_01_1_lm1"
+	<material index="1" name="demo_01_1_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -673,7 +673,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="demo_01_2_lm1"
+	<material index="2" name="demo_01_2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -697,7 +697,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="demo_01_lm1"
+	<material index="3" name="demo_01_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -721,7 +721,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="demo_01_lm3"
+	<material index="4" name="demo_01_5"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -745,7 +745,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="demo_02_lm1"
+	<material index="5" name="demo_02_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -769,7 +769,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="demo_03_lm1"
+	<material index="6" name="demo_03_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -793,79 +793,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="tex"
 	/>
-	<material index="7" name="op_mb_a_lm1"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="25 25 25"
-		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="7"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="8" name="op_mb_lm1"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="8"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="25 25 25"
-		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="8"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="9" name="op_mb_lm4"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="8"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="25 25 25"
-		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="8"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="10" name="osara_demo_sara_lm1"
+	<material index="7" name="demo_sara_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -883,6 +811,78 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="6" tex_palette_idx="6"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="8" name="op_mb_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="25 25 25"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="8"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="9" name="op_mb_4"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="25 25 25"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="8"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="10" name="op_mb_a_1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="25 25 25"
+		shininess_table_flag="off"
+		tex_image_idx="8" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -7200,7 +7200,7 @@
 		volume_max="0.028320 0.028076 -0.009766"
 		volume_r="0.029785"
 	>
-		<display index="0" material="10" polygon="16" priority="0"/>
+		<display index="0" material="7" polygon="16" priority="0"/>
 	</node>
 	<node index="3" name="trade1" kind="mesh"
 		parent="0"
@@ -7220,8 +7220,8 @@
 		volume_max="0.001709 0.001953 0.001953"
 		volume_r="0.002441"
 	>
-		<display index="0" material="7" polygon="0" priority="0"/>
-		<display index="1" material="8" polygon="1" priority="0"/>
+		<display index="0" material="8" polygon="1" priority="0"/>
+		<display index="1" material="10" polygon="0" priority="0"/>
 	</node>
 	<node index="4" name="trade1_1" kind="mesh"
 		parent="0"
@@ -7241,8 +7241,8 @@
 		volume_max="0.001709 0.001953 0.002197"
 		volume_r="0.002441"
 	>
-		<display index="0" material="7" polygon="8" priority="0"/>
-		<display index="1" material="8" polygon="9" priority="0"/>
+		<display index="0" material="8" polygon="9" priority="0"/>
+		<display index="1" material="10" polygon="8" priority="0"/>
 	</node>
 	<node index="5" name="trade1_2" kind="mesh"
 		parent="0"
@@ -7262,8 +7262,8 @@
 		volume_max="0.001709 0.001953 0.002197"
 		volume_r="0.002441"
 	>
-		<display index="0" material="7" polygon="11" priority="0"/>
-		<display index="1" material="9" polygon="12" priority="0"/>
+		<display index="0" material="9" polygon="12" priority="0"/>
+		<display index="1" material="10" polygon="11" priority="0"/>
 	</node>
 	<node index="6" name="trade2" kind="mesh"
 		parent="0"
