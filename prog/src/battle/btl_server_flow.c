@@ -783,7 +783,7 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
 static BOOL scEvent_CheckItemSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scEvent_ItemSetDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 nextItemID );
 static void scEvent_ItemSetFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 tokuseiID );
+static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 prev_tokuseiID, u16 next_tokuseiID );
 static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, u8 userPokeID, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont );
 static void AffCounter_Clear( WAZA_AFF_COUNTER* cnt );
@@ -8553,8 +8553,8 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_ChangeTokuseiBefore( wk, atkPokeID, tgt_tok );
-      scEvent_ChangeTokuseiBefore( wk, tgtPokeID, atk_tok );
+      scEvent_ChangeTokuseiBefore( wk, atkPokeID, atk_tok, tgt_tok );
+      scEvent_ChangeTokuseiBefore( wk, tgtPokeID, tgt_tok, atk_tok );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }
@@ -12337,11 +12337,12 @@ static void scEvent_ItemSetFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
  * @param   tokuseiID
  */
 //----------------------------------------------------------------------------------
-static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 tokuseiID )
+static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 prev_tokuseiID, u16 next_tokuseiID )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, pokeID );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TOKUSEI, tokuseiID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TOKUSEI_PREV, prev_tokuseiID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TOKUSEI_NEXT, next_tokuseiID );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHANGE_TOKUSEI_BEFORE );
   BTL_EVENTVAR_Pop();
 }
@@ -14358,7 +14359,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     // とくせい書き換え直前イベント
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
-      scEvent_ChangeTokuseiBefore( wk, param->pokeID, param->tokuseiID );
+      scEvent_ChangeTokuseiBefore( wk, param->pokeID, prevTokusei, param->tokuseiID );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }
@@ -15023,6 +15024,8 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
       if( param_header->tokwin_flag ){
         scPut_TokWin_In( wk, bpp );
       }
+
+      TAYA_Printf("今のフォルム=%d, 変更後のフォルム=%d\n", currentForm, param->formNo);
       BPP_ChangeFormPutSrcData( bpp, param->formNo );
       SCQUE_PUT_ACT_ChangeForm( wk->que, param->pokeID, param->formNo );
       handexSub_putString( wk, &param->exStr );

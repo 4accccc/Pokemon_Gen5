@@ -2135,6 +2135,7 @@ void BPP_ChangeFormPutSrcData( BTL_POKEPARAM* bpp, u8 formNo )
 {
   bpp->formNo = formNo;
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
+  PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
   setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
 }
 
