@@ -226,10 +226,10 @@ static void UpdateSubDisplayStrings( RRL_WORK* work ); // 上画面のカーソル依存文
 static void TopicDetailStringHide( RRL_WORK* work ); // 上画面の調査項目説明文の表示を隠す
 static void TopicDetailStringDispStart( RRL_WORK* work ); // 上画面の調査項目説明文の表示を開始する
 // スクロールバー
-static void UpdateScrollControlPos( const RRL_WORK* work ); // 現在のスクロール実効値に合わせて, スクロールバーのつまみ部分の位置を更新する
-static int CalcScrollControlPos_byScrollValue( const RRL_WORK* work ); // スクロール実効値から, スクロールバーのつまみ部分の位置を計算する
-static int CalcScrollCursorPos_byScrollControlPos( const RRL_WORK* work, int controlPos ); // スクロールバーのつまみ部分の表示位置から, スクロールカーソル位置を算出する
-static int GetScrollControlPos( const RRL_WORK* work ); // スクロールバーのつまみ部分の表示位置を取得する
+static void UpdateScrollHandleDisp( const RRL_WORK* work ); // 現在のスクロール実効値に合わせて, スクロールバーのつまみ部分の表示位置を更新する
+static int CalcScrollHandlePos_byScrollValue( const RRL_WORK* work ); // スクロール実効値から, スクロールバーのつまみ部分の表示位置を計算する
+static int CalcScrollCursorPos_byScrollHandlePos( const RRL_WORK* work, int controlPos ); // スクロールバーのつまみ部分の表示位置から, スクロールカーソル位置を算出する
+static int GetScrollHandlePos( const RRL_WORK* work ); // スクロールバーのつまみ部分の表示位置を取得する
 // スクロール
 static void StartScroll( RRL_WORK* work, int startPos, int endPos, int frames ); // スクロールを開始する
 static void UpdateScroll( RRL_WORK* work ); // スクロールを更新する
@@ -717,7 +717,7 @@ static void MainState_SCROLL_WAIT( RRL_WORK* work )
   UpdateScroll( work );            // スクロールを更新
   UpdateScrollValue( work );       // スクロール実効値を更新
   UpdateTopicTouchArea( work );    // タッチ範囲を更新
-  UpdateScrollControlPos( work );  // スクロールバーのつまみ部分
+  UpdateScrollHandleDisp( work );  // スクロールバーのつまみ部分
   UpdateInvestigatingIcon( work ); // 調査項目選択アイコンを更新
   UpdateTopicButtonMask( work );   // 調査項目のマスクウィンドを更新
 
@@ -750,12 +750,12 @@ static void MainState_SCROLL_CONTROL( RRL_WORK* work )
   // スクロール処理
   {
     int scrollCursorPos;
-    scrollCursorPos = CalcScrollCursorPos_byScrollControlPos( work, y ); // タッチ場所から, スクロールカーソル位置を算出
+    scrollCursorPos = CalcScrollCursorPos_byScrollHandlePos( work, y ); // タッチ場所から, スクロールカーソル位置を算出
     SetScrollCursorPos( work, scrollCursorPos );// スクロールカーソル位置を更新
     AdjustScrollValue( work );                  // スクロール実効値を更新
     UpdateTopicTouchArea( work );               // タッチ範囲を更新する
-    UpdateScrollControlPos( work );             // スクロールバーのつまみ部分を更新
-    UpdateInvestigatingIcon( work );              // 調査項目選択アイコンを更新
+    UpdateScrollHandleDisp( work );             // スクロールバーのつまみ部分を更新
+    UpdateInvestigatingIcon( work );            // 調査項目選択アイコンを更新
   }
 
   // カーソル位置更新処理
@@ -793,7 +793,7 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
     UpdateScroll( work );             // スクロールを更新
     UpdateScrollValue( work );        // スクロール実効値を更新
     UpdateTopicTouchArea( work );     // タッチ範囲を更新
-    UpdateScrollControlPos( work );   // スクロールバーのつまみ部分を更新
+    UpdateScrollHandleDisp( work );   // スクロールバーのつまみ部分を更新
     UpdateInvestigatingIcon( work );  // 調査項目選択アイコンを更新
     UpdateTopicButtonMask( work );    // 調査項目のマスクウィンドを更新
   }
@@ -855,7 +855,7 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
     UpdateScroll( work );             // スクロールを更新
     UpdateScrollValue( work );        // スクロール実効値を更新
     UpdateTopicTouchArea( work );     // タッチ範囲を更新
-    UpdateScrollControlPos( work );   // スクロールバーのつまみ部分を更新
+    UpdateScrollHandleDisp( work );   // スクロールバーのつまみ部分を更新
     UpdateInvestigatingIcon( work );  // 調査項目選択アイコンを更新
     UpdateTopicButtonMask( work );    // 調査項目のマスクウィンドを更新
   }
@@ -1014,7 +1014,7 @@ static void MainState_SCROLL_RESET( RRL_WORK* work )
   UpdateScroll( work );           // スクロールを更新
   UpdateScrollValue( work );      // スクロール実効値を更新
   UpdateTopicTouchArea( work );   // タッチ範囲を更新する
-  UpdateScrollControlPos( work ); // スクロールバーのつまみ部分
+  UpdateScrollHandleDisp( work ); // スクロールバーのつまみ部分
   UpdateInvestigatingIcon( work );  // 調査項目選択アイコン
   UpdateTopicButtonMask( work );  // 調査項目のマスクウィンドを更新する
 
@@ -2592,12 +2592,12 @@ static void TopicDetailStringDispStart( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロールバーのつまみ部分の位置を更新する
+ * @brief スクロールバーのつまみ部分の表示位置を更新する
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateScrollControlPos( const RRL_WORK* work )
+static void UpdateScrollHandleDisp( const RRL_WORK* work )
 {
   GFL_CLWK* clactWork;
 
@@ -2616,7 +2616,7 @@ static void UpdateScrollControlPos( const RRL_WORK* work )
 
     // 表示位置を算出
     pos.x = SCROLL_CONTROL_LEFT;
-    pos.y = CalcScrollControlPos_byScrollValue( work );
+    pos.y = CalcScrollHandlePos_byScrollValue( work );
     setSurface = ClactWorkInitData[ CLWK_SCROLL_CONTROL ].setSurface;
 
     // 表示位置を変更
@@ -2627,14 +2627,14 @@ static void UpdateScrollControlPos( const RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロールバーのつまみ部分の位置を計算する
+ * @brief スクロールバーのつまみ部分の表示位置を計算する
  *
  * @param work
  *
  * @return 指定したスクロール実効値から求めた, スクロールバーつまみ部分のy座標
  */
 //-----------------------------------------------------------------------------------------
-static int CalcScrollControlPos_byScrollValue( const RRL_WORK* work )
+static int CalcScrollHandlePos_byScrollValue( const RRL_WORK* work )
 {
   int controlRange;
   int valueRange;
@@ -2661,8 +2661,7 @@ static int CalcScrollControlPos_byScrollValue( const RRL_WORK* work )
  * @return スクロールカーソルの位置
  */
 //-----------------------------------------------------------------------------------------
-static int CalcScrollCursorPos_byScrollControlPos( const RRL_WORK* work, 
-                                                   int controlPos )
+static int CalcScrollCursorPos_byScrollHandlePos( const RRL_WORK* work, int controlPos )
 {
   float rate;
   int min, max;
@@ -2688,7 +2687,7 @@ static int CalcScrollCursorPos_byScrollControlPos( const RRL_WORK* work,
  * @return スクロールバーのつまみ部分の表示位置
  */
 //-----------------------------------------------------------------------------------------
-static int GetScrollControlPos( const RRL_WORK* work )
+static int GetScrollHandlePos( const RRL_WORK* work )
 {
   int controlPos;
   GFL_CLWK* clwk;
