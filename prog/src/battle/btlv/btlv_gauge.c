@@ -230,6 +230,8 @@ struct _BTLV_GAUGE_CLWK
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
+
+  GFL_TCB*      tcb;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -749,7 +751,7 @@ static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvM
 
   bgw->bgcl[ pos ].move_cnt = MOVE_COUNT;
 
-  GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_Move, &bgw->bgcl[ pos ], 0 );
+  bgw->bgcl[ pos ].tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_Move, &bgw->bgcl[ pos ], 0 );
 }
 
 //============================================================================================
@@ -784,8 +786,10 @@ static  void  init_damage_dot( BTLV_GAUGE_CLWK* bgcl )
 //============================================================================================
 void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
 {
-  if( bgw->bgcl[ pos ].base_clwk )
+  if( bgw->bgcl[ pos ].gauge_enable )
   {
+    bgw->bgcl[ pos ].gauge_enable = 0;
+
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].base_charID );
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hpnum_charID );
     GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].hp_charID );
@@ -818,6 +822,11 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
       GFL_CLACT_WK_Remove( bgw->bgcl[ pos ].exp_clwk );
       bgw->bgcl[ pos ].exp_clwk = NULL;
     }
+  }
+  if( bgw->bgcl[ pos ].tcb )
+  { 
+    GFL_TCB_DeleteTask( bgw->bgcl[ pos ].tcb );
+    bgw->bgcl[ pos ].tcb = NULL;
   }
 }
 
@@ -1028,11 +1037,38 @@ BOOL  BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw )
  *
  *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
  *  @param[in] on_off TRUE:表示 FALSE:非表示
+ *  @param[in] side   操作する側
  */
 //============================================================================================
-void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off )
+void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off, int side )
 {
-  GFL_CLACT_UNIT_SetDrawEnable( bgw->clunit, on_off );
+  BtlvMcssPos pos;
+
+  if( side == BTLEFF_GAUGE_ALL )
+  { 
+    GFL_CLACT_UNIT_SetDrawEnable( bgw->clunit, on_off );
+  }
+  else
+  { 
+    for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
+    { 
+      if( ( bgw->bgcl[ pos ].gauge_dir == side ) &&
+          ( bgw->bgcl[ pos ].gauge_enable ) )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].base_clwk, on_off );
+        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hpnum_clwk, on_off );
+        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hp_clwk, on_off );
+        if( bgw->bgcl[ pos ].exp_clwk )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].exp_clwk, on_off );
+        }
+        if( bgw->bgcl[ pos ].status_clwk )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, on_off );
+        }
+      }
+    }
+  }
 }
 
 //============================================================================================
@@ -2172,6 +2208,7 @@ static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work )
   if( --bgcl->move_cnt == 0 )
   { 
     GFL_TCB_DeleteTask( tcb );
+    bgcl->tcb = NULL;
   }
 }
 
