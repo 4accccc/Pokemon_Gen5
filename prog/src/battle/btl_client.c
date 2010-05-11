@@ -1766,7 +1766,7 @@ static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID )
           {
             switch( TRMsgTbl[i] ){
             case TRMSG_FIGHT_POKE_HP_HALF:
-              if( BPP_GetValue(bpp,BPP_HP) <= BTL_CALC_QuotMaxHP(bpp,2) ){
+              if( BPP_GetValue(bpp,BPP_HP) <= BTL_CALC_QuotMaxHP_Zero(bpp,2) ){
                 enableIndex = i;
                 wk->AITrainerMsgCheckedFlag[ i ] = TRUE;
               }
@@ -1791,7 +1791,7 @@ static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID )
             case TRMSG_FIGHT_POKE_LAST_HP_HALF:  ///< ÅŒã‚Ì‚P‘Ì‚ªHP”¼•ªˆÈ‰º
               if( (BTL_PARTY_GetMemberCount(party) > 1)
               &&  (BTL_PARTY_GetAliveMemberCount(party) == 1)
-              &&  (BPP_GetValue(bpp,BPP_HP) <= BTL_CALC_QuotMaxHP(bpp,2) )
+              &&  (BPP_GetValue(bpp,BPP_HP) <= BTL_CALC_QuotMaxHP_Zero(bpp,2) )
               ){
                 enableIndex = i;
                 wk->AITrainerMsgCheckedFlag[ i ] = TRUE;
@@ -7297,7 +7297,7 @@ static u16 AIItem_CheckUse( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, const BTL_
       if( BTL_CALC_ITEM_GetParam(wk->AIItem[i], ITEM_PRM_HP_RCV) )
       {
         u32 hp = BPP_GetValue( bpp, BPP_HP );
-        if( hp <= BTL_CALC_QuotMaxHP(bpp, 4) ){
+        if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, 4) ){
           fUse = TRUE;
         }
         else{

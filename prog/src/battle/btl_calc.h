@@ -179,9 +179,16 @@ extern u32 BTL_CALC_IsOccurPer( u32 per );
 extern int BTL_CALC_Roundup( int value, int min );
 
 /**
+ *  ポケモンの最大HP * 1/N を計算
+ */
+extern u32 BTL_CALC_QuotMaxHP_Zero( const BTL_POKEPARAM* bpp, u32 denom );
+
+/**
  *  ポケモンの最大HP * 1/N を計算（最低１になるように補正）
  */
 extern u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom );
+
+
 
 /**
  *  min以上 ～ max以下の範囲内で乱数取得

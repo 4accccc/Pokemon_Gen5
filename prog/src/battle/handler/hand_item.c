@@ -1995,7 +1995,7 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 
     BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, maxHP, hp, n);
 
-    if( hp <= BTL_CALC_QuotMaxHP(bpp, n) ){
+    if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) ){
       BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
@@ -2027,7 +2027,7 @@ static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SV
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     u16 hp = BPP_GetValue( bpp, BPP_HP );
-    u16 hp_border = BTL_CALC_QuotMaxHP( bpp, quot );
+    u16 hp_border = BTL_CALC_QuotMaxHP_Zero( bpp, quot );
     if( hp < hp_border )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH );
@@ -2089,7 +2089,7 @@ static void handler_MikuruNomi_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     u16 hp = BPP_GetValue( bpp, BPP_HP );
-    u16 hp_border = BTL_CALC_QuotMaxHP( bpp, quot );
+    u16 hp_border = BTL_CALC_QuotMaxHP_Zero( bpp, quot );
     if( hp <= hp_border )
     {
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );

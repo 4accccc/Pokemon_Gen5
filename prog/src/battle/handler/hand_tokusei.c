@@ -1420,9 +1420,9 @@ static void common_hpborder_powerup( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeTyp
   {
     // HP 1/3 以下で
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32  borderHP = BTL_CALC_QuotMaxHP( bpp, 3 );
+    u32  borderHP = BTL_CALC_QuotMaxHP_Zero( bpp, 3 );
     u32  hp = BPP_GetValue( bpp, BPP_HP );
-    BTL_Printf("hp=%d, borderHP=%d\n", hp, borderHP);
+
     if( hp <= borderHP )
     {
       // 使うのが指定タイプワザなら
@@ -5486,7 +5486,7 @@ static void handler_Yowaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 hp = BPP_GetValue( bpp, BPP_HP );
-    u32 hp_half = BTL_CALC_QuotMaxHP( bpp, 2 );
+    u32 hp_half = BTL_CALC_QuotMaxHP_Zero( bpp, 2 );
     if( hp <= hp_half )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
@@ -6088,7 +6088,7 @@ static void handler_DarumaMode( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     u8  form_next;
 
     hp = BPP_GetValue( bpp, BPP_HP );
-    hp_border = BTL_CALC_QuotMaxHP( bpp, 2 );
+    hp_border = BTL_CALC_QuotMaxHP_Zero( bpp, 2 );
 
     form_next = (hp <= hp_border)? FORMNO_HIHIDARUMA_MEDITATION : FORMNO_HIHIDARUMA_ACTION;
     if( BPP_GetValue(bpp, BPP_FORM) != form_next )

@@ -6970,6 +6970,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     &&  (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_KONJOU)
     ){
       fxDamage = (fxDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
+      TAYA_Printf("  ‚â‚¯‚Ç•â³ -> %d\n", fxDamage );
     }
     rawDamage = fxDamage;
     if( rawDamage == 0 ){ rawDamage = 1; }

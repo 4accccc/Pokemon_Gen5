@@ -167,7 +167,7 @@ static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
   {
     /*
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+    param->recoverHP = BTL_CALC_QuotMaxHP_Zero( bpp, 16 );
     param->pokeID = pokeID;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
@@ -177,7 +177,7 @@ static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     drain_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
     drain_param->recoverPokeID = pokeID;
     drain_param->damagedPokeID = BTL_POKEID_NULL;
-    drain_param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );;
+    drain_param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
     HANDEX_STR_Setup( &drain_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
     HANDEX_STR_AddArg( &drain_param->exStr, pokeID );
   }
