@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-15T10:06:21" source="c09_back_v00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-11T16:41:38" source="c09_back_v00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-04-15T10:06:21" source="c09_back_v00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-11T16:41:38" source="c09_back_v00.mb"/>
 <original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="9" xyz="-2.040527 -0.007813 -1.710938" whd="4.335449 2.438477 1.710693"/>
+<box_test pos_scale="9" xyz="-2.441406 -0.007813 -1.710938" whd="4.736328 2.675293 0.870361"/>
 
 <tex_image_array size="6">
 	<tex_image index="0" name="alpha"
@@ -6125,7 +6125,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
@@ -6139,14 +6139,14 @@
 		<display index="0" material="0" polygon="2" priority="0"/>
 		<display index="1" material="3" polygon="3" priority="0"/>
 	</node>
-	<node index="2" name="polySurface2775" kind="mesh"
+	<node index="2" name="poly" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="3"
 		brother_prev="1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
@@ -6159,16 +6159,16 @@
 	>
 		<display index="0" material="4" polygon="6" priority="0"/>
 	</node>
-	<node index="3" name="polySurface2776_DUP" kind="mesh"
+	<node index="3" name="polySurf" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="4"
 		brother_prev="2"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="-180.053223 629.619141 -817.537598"
 		visibility="on"
 		display_size="1"
 		vertex_size="8" polygon_size="2"
