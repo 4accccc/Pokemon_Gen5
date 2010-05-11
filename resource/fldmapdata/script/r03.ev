@@ -1200,11 +1200,7 @@ EVENT_START   ev_pos_r03_rival_02
 	//ライバル専用曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
 
-	//草むらからライバル登場
-	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_01 )
-	_OBJ_ANIME_WAIT()
-	
-		//自機座標取得
+	//自機座標取得
 	DEFINE_LOCAL  LCW_POSX03
     DEFINE_LOCAL  LCW_POSZ03
     _PLAYER_POS_GET( LCW_POSX03,LCW_POSZ03 ) 
@@ -1216,13 +1212,16 @@ EVENT_START   ev_pos_r03_rival_02
 	_OBJ_ANIME_WAIT()
 	
 	CASE 582 THEN //デフォルト処理
+	_OBJ_ANIME( R03_RIVAL_02, anm_kusa_rival_02_01z582 )
+	_OBJ_ANIME_WAIT()
 	
 	CASE 583 THEN
 	_OBJ_ANIME( R03_RIVAL_02, anm_kusa_rival_02_01z583 )
 	_OBJ_ANIME_WAIT()
 	
     DEFAULT
-
+	_OBJ_ANIME( R03_RIVAL_02, anm_kusa_rival_02_01z582 )
+	_OBJ_ANIME_WAIT()
 	
     ENDSWITCH
 	
@@ -1241,6 +1240,7 @@ EVENT_START   ev_pos_r03_rival_02
 	
 	//退場
 	_OBJ_ANIME( R03_RIVAL_02 ,  anm_kusa_rival_02_04 )
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_player_02 )
 	
 	//ライバル専用曲停止
 	_END_EVENT_BGM()
@@ -1489,7 +1489,7 @@ _ANIME_LABEL	anm_rival_01_06_down
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_rival_go01
-	_ANIME_DATA	AC_WALK_L_8F,10
+	_ANIME_DATA	AC_WALK_L_4F,10
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1536,25 +1536,24 @@ _ANIME_LABEL	anm_player_02
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
-
-
-//--------------------------------------------------------------
-//	長い草イベント：ライバル登場
-//--------------------------------------------------------------
-
-_ANIME_LABEL	 anm_kusa_rival_02_01
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,5
-	_ANIME_DATA	ACMD_END,0
-
 //--------------------------------------------------------------
 //	長い草イベント：ライバル登場z581
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_01z581
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	長い草イベント：ライバル登場z582
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_kusa_rival_02_01z582
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1562,8 +1561,10 @@ _ANIME_LABEL	 anm_kusa_rival_02_01z581
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_01z583
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
