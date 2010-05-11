@@ -251,12 +251,12 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     break;
   }
 #ifdef PM_DEBUG
+#if 0
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
     OSTick tick = OS_GetTick()-s_tick;
     IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
   }
 #endif
-#ifdef PM_DEBUG
   if(!wk->deb_stack_check_throw ){
     GAMEBEACON_Stack_Update( wk->infoStack );
   }
@@ -279,16 +279,20 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
   OSTick s_tick,e_tick,t_tick;  // = OS_GetTick();
   s_tick = OS_GetTick();
 #endif
-
   PRINTSYS_QUE_Main( wk->printQue );
 
 #ifdef PM_DEBUG
+  if( !wk->active ){
+    return;
+  }
+#if 0
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
     e_tick = OS_GetTick();
     t_tick = e_tick-s_tick;
     IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
   debug_InputCheck( wk );
+#endif
 #endif
 }
 
@@ -572,12 +576,6 @@ static void debug_InputCheck(BEACON_VIEW_PTR wk)
   if( wk->event_id != EV_NONE ){
     return;
   }
-#ifdef PM_DEBUG
-  if( trg & PAD_BUTTON_START ){
-    event_Request( wk, EV_DEBUG_MENU_CALL);
-    return;
-  }
-#endif
 
 #ifdef DEBUG_ONLY_FOR_iwasawa
   switch(tp_ret){
@@ -623,7 +621,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   wk->ctrl.max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
   wk->ctrl.view_top = BEACON_STATUS_GetViewTopOffset( wk->b_status );
 
-  IWASAWA_Printf("BeaconViewSetup log_num = %d\n", wk->ctrl.max );
+//  IWASAWA_Printf("BeaconViewSetup log_num = %d\n", wk->ctrl.max );
   if( wk->ctrl.max < PANEL_VIEW_MAX ){
     wk->ctrl.view_max = wk->ctrl.max;
   }else{
@@ -739,9 +737,10 @@ static void _sub_SystemExit(BEACON_VIEW_PTR wk)
   GFL_MSG_Delete(wk->mm_status);
 	WORDSET_Delete(wk->wordset);
   
-  GFL_FONTSYS_SetDefaultColor();
   PRINTSYS_QUE_Clear( wk->printQue );
   PRINTSYS_QUE_Delete( wk->printQue );
+  
+  GFL_FONTSYS_SetDefaultColor();
  
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_BG );
@@ -1256,6 +1255,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
   pp->id = idx;
   pp->data_idx = PANEL_DATA_BLANK;
   pp->n_line = 0;
+  pp->que = wk->printQue;
 
   pp->px = ACT_PANEL_OX*idx;
   pp->py = ACT_PANEL_OY*idx;

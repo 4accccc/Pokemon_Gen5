@@ -100,7 +100,9 @@ typedef struct _PANEL_WORK{
 	STRBUF* str;
 	STRBUF* name;
 
-  GFL_TCBL* tcb;
+  const PRINT_QUE* que;
+  GFL_TCBL* tcb_print;
+  GFL_TCBL* tcb_icon;
 }PANEL_WORK;
 
 /*
@@ -149,9 +151,11 @@ typedef struct _BEACON_VIEW{
   u16                   tmpTime;
   u16                   newLogTime;
   GAMEBEACON_INFO*      newLogInfo;
-  
+  PANEL_WORK*           newLogPanel;
+
   u8                    newLogOfs;
   u8                    newLogIdx;
+  u8                    newLogWait;
   u8                    old_list_max;
   BOOL                  first_entry_f;
 

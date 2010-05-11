@@ -105,7 +105,7 @@ static void effReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpowe
 static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs );
 
 static void printReq_BmpwinPrint( BEACON_VIEW_PTR wk, BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct );
-static void printReq_FOamPrint( BEACON_VIEW_PTR wk, FONT_OAM* foam, STRBUF* str, PRINTSYS_LSB color, int* task_ct );
+static void printReq_FOamPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, PRINTSYS_LSB color, int* task_ct );
 
 //////////////////////////////////////////////////////////////////
 
@@ -156,6 +156,13 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   int ret;
   POINT tp;
   BOOL my_power;
+
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    wk->event_id = EV_DEBUG_MENU_CALL;
+    return SEQ_MAIN;
+  }
+#endif
 
   if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
     return SEQ_MAIN;
@@ -270,6 +277,21 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
                     wk->newLogInfo, wk->newLogTime, &wk->first_entry_f );
   wk->newLogIdx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->newLogOfs );
 
+  if( !wk->first_entry_f ){
+    //ビーコンのトレーナーパネルが表示中かチェック
+    wk->newLogPanel = panel_GetPanelFromDataIndex( wk, wk->newLogIdx );
+  }else{
+    wk->newLogPanel = NULL;
+  }
+
+  //パネルが非表示か、Bitmapの書き込み中でなければsub_seqを進めておく
+  if( wk->newLogPanel != NULL &&
+      wk->newLogPanel->tcb_print != NULL ){
+    wk->sub_seq = 0;
+  }else{
+    wk->sub_seq = 1;
+  }
+
   //登録数更新
   wk->old_list_max = wk->ctrl.max;
   if( wk->ctrl.max < BS_LOG_MAX ){
@@ -279,61 +301,6 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
       wk->ctrl.view_max = wk->ctrl.max;
     }
   }
-
-#if 0
-  ofs = GAMEBEACON_InfoTblRing_SetBeacon( wk->infoLog,
-          wk->newLogInfo, wk->newLogTime, &new_f );
-  idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
-
-  //登録数更新
-  old_max = wk->ctrl.max;
-  if( wk->ctrl.max < BS_LOG_MAX ){
-    wk->ctrl.max += new_f;
-  
-    if( wk->ctrl.max <= PANEL_VIEW_MAX){
-      wk->ctrl.view_max = wk->ctrl.max;
-    }
-  }
-  //ポップアップリクエスト
-  popup_f = effReq_PopupMsg( wk, wk->newLogInfo, new_f );
-
-  //新規でない時はスクロール無し
-  if( !new_f ){
-    //ビーコンのトレーナーパネルが表示中かチェック
-    pp = panel_GetPanelFromDataIndex( wk, idx );
-    if(pp == NULL){
-      return TRUE;  //パネルが見えていない時はポップアップのみ
-    }
-    //ターゲットパネル書換え
-    panel_Draw( wk, pp, wk->newLogInfo, PANEL_DRAW_UPDATE, NULL );
-    panel_VisibleSet( pp, TRUE );
-    if(popup_f){
-      sub_PlaySE( BVIEW_SE_ICON );
-    }
-    return TRUE;
-  }
-  //新規
-  wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
-
-  draw_LogNumWindow( wk );
-  draw_MenuWindow( wk, msg_sys_now_record );
-  obj_ThanksViewSet( wk );
-  
-  //特殊Gパワーチェック
-  sp_gpower_ConditionCheck( wk, wk->newLogInfo, old_max );
-
-  if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
-    ofs = wk->ctrl.view_top;
-    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->newLogInfo, &wk->newLogTime, ofs );
-    idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
-  }
-  //スクロールリクエスト
-  list_ScrollReq( wk, wk->newLogInfo, idx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
-  wk->ctrl.view_top = ofs;
-  
-  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
-  sub_PlaySE( BVIEW_SE_NEW_PLAYER );
-#endif
   return TRUE;
 }
 
@@ -350,7 +317,7 @@ void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
     SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 6, 0x0000);
     G2S_SetBlendAlpha( ALPHA_1ST_PASSIVE, ALPHA_2ND, ALPHA_EV1_PASSIVE, ALPHA_EV2_PASSIVE);
 
-    GFL_FONTSYS_SetDefaultColor();
+//    GFL_FONTSYS_SetDefaultColor();
   }else{
     SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 0, 0x0000);
     SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 0, 0x0000);
@@ -404,44 +371,49 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
 {
   switch( wk->sub_seq ){
   case 0:
+    //なにかプリント中なら待つ
+    if( wk->newLogPanel->tcb_print != NULL ){
+      break;
+    }
+    wk->sub_seq++;
+    break;
+  case 1:
     {
       BOOL popup_f;
-      PANEL_WORK* pp;
 
       //ポップアップリクエスト
       popup_f = effReq_PopupMsg( wk, wk->newLogInfo, wk->first_entry_f );
 
       //新規でない時はスクロール無し
       if( !wk->first_entry_f ){
-        //ビーコンのトレーナーパネルが表示中かチェック
-        pp = panel_GetPanelFromDataIndex( wk, wk->newLogIdx );
-        if(pp == NULL){
-          return TRUE;  //パネルが見えていない時はポップアップのみ
-        }
-        //ターゲットパネル書換え
-        panel_Draw( wk, pp, wk->newLogInfo, PANEL_DRAW_UPDATE, !popup_f, NULL );
-        panel_VisibleSet( pp, TRUE );
         if(popup_f){
+          BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
           sub_PlaySE( BVIEW_SE_ICON );
+        }
+        if(wk->newLogPanel != NULL){
+          //パネルが見えている時のみターゲットパネル書換え
+          panel_Draw( wk, wk->newLogPanel, wk->newLogInfo, PANEL_DRAW_UPDATE, !popup_f, NULL );
+          panel_VisibleSet( wk->newLogPanel, TRUE );
         }
         return TRUE;
       }
     }
+    BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
     wk->sub_seq++;
     break;
-  case 1:
+  case 2:
     //新規
     wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
 
     draw_LogNumWindow( wk );
     draw_MenuWindow( wk, msg_sys_now_record );
-    obj_ThanksViewSet( wk );
+//    obj_ThanksViewSet( wk );
   
     //特殊Gパワーチェック
     sp_gpower_ConditionCheck( wk, wk->newLogInfo, wk->old_list_max );
     wk->sub_seq++;
     break;
-  case 2:
+  case 3:
     if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
       wk->newLogOfs = wk->ctrl.view_top;
       GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->newLogInfo, &wk->newLogTime, wk->newLogOfs );
@@ -451,9 +423,8 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
     list_ScrollReq( wk, wk->newLogInfo, wk->newLogIdx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
     wk->ctrl.view_top = wk->newLogOfs;
   
-    BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
+//    BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
     sub_PlaySE( BVIEW_SE_NEW_PLAYER );
-    wk->sub_seq = 0;
     return TRUE;
   }
   return FALSE;
@@ -997,16 +968,11 @@ static BOOL print_PopupWindowTimeWaitCheck( u8* p_wait )
   }
  
   //タッチチェック
-#if 0
-  if( GFL_UI_TP_GetPointTrg( &x, &y ) &&
-      GFL_BG_CheckDot( FRM_POPUP, x, y, &pat )){
-#else
   if( GFL_UI_TP_GetPointTrg( &x, &y )){
     //スクロールのため、スクリーンが実座標+64dotの位置にあるので、ちょっと位置補正してチェック
     if( GFL_BG_CheckDot( FRM_POPUP, x, y+64, &pat )){
-#endif
-    *p_wait = 0;
-    return TRUE; 
+      *p_wait = 0;
+      return TRUE; 
     }
   }
   return FALSE;
@@ -1235,10 +1201,19 @@ static void panel_Clear( PANEL_WORK* pp )
   pp->data_idx = PANEL_DATA_BLANK;
   pp->n_line = 0;
   pp->rank = 0;
-
-  if( pp->tcb != NULL ){
-    GFL_TCBL_Delete( pp->tcb );
-    pp->tcb = NULL;
+  
+  if( pp->tcb_print != NULL ){
+#ifdef PM_DEBUG
+    if( PRINTSYS_QUE_IsExistTarget( pp->que, pp->msgOam.bmp ) ){
+      GF_ASSERT(0);
+    }
+#endif
+    GFL_TCBL_Delete( pp->tcb_print );
+    pp->tcb_print = NULL;
+  }
+  if( pp->tcb_icon != NULL ){
+    GFL_TCBL_Delete( pp->tcb_icon );
+    pp->tcb_icon = NULL;
   }
 }
 
@@ -1340,7 +1315,7 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
  */
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, int* task_ct )
 {
-  printReq_FOamPrint( wk, &pp->msgOam, str, FCOL_FNTOAM_W, task_ct );
+  printReq_FOamPrint( wk, pp, str, FCOL_FNTOAM_W, task_ct );
 }
 
 /*
@@ -1360,9 +1335,9 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, i
 
   //再描画
   if( flag ){
-    printReq_FOamPrint( wk, &pp->msgOam, pp->name, FCOL_FNTOAM_G, task_ct );
+    printReq_FOamPrint( wk, pp, pp->name, FCOL_FNTOAM_G, task_ct );
   }else{
-    printReq_FOamPrint( wk, &pp->msgOam, pp->name, FCOL_FNTOAM_W, task_ct );
+    printReq_FOamPrint( wk, pp, pp->name, FCOL_FNTOAM_W, task_ct );
   }
 }
 
@@ -1468,7 +1443,7 @@ static void list_TimeOutCheck( BEACON_VIEW_PTR wk )
 
     idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->ctrl.view_top+i );
     pp = panel_GetPanelFromDataIndex( wk, idx );
-    if( pp->tcb == NULL ){  //メッセージ描画中はスキップ
+    if( pp->tcb_icon == NULL || pp->tcb_print ){  //メッセージ描画中はスキップ
       panel_NamePrint( wk, pp, FALSE, NULL );
     }
   }
@@ -1585,9 +1560,6 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
   TASKWK_LIST_SCROLL* twk = (TASKWK_LIST_SCROLL*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
   
-  if( !bvp->active || (bvp->event_id != EV_NONE)){
-    return;
-  }
   if( twk->child_task > 0 ){
     return;
   }
@@ -1725,25 +1697,33 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_PANEL_SCROLL* twk = (TASKWK_PANEL_SCROLL*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
+ 
+  switch( twk->seq ){
+  case 0:
+    if( twk->deray > 0 ){
+      twk->deray--;
+      return;
+    }
+    if( ++twk->ct < twk->frame){
+      twk->x += twk->ax;
+      twk->y += twk->ay;
+      panel_SetPos( twk->pp, FX_Whole(twk->x), FX_Whole(twk->y));
+      return;
+    }
+    panel_SetPos( twk->pp, twk->epx, twk->epy);
   
-  if( !bvp->active || (bvp->event_id != EV_NONE)){
-    return;
-  }
-
-  if( twk->deray > 0 ){
-    twk->deray--;
-    return;
-  }
-  if( ++twk->ct < twk->frame){
-    twk->x += twk->ax;
-    twk->y += twk->ay;
-    panel_SetPos( twk->pp, FX_Whole(twk->x), FX_Whole(twk->y));
-    return;
-  }
-  panel_SetPos( twk->pp, twk->epx, twk->epy);
-
-  if( twk->pp->n_line == 0 || twk->pp->n_line == PANEL_LINE_END){
+    if( twk->pp->n_line == 0 || twk->pp->n_line == PANEL_LINE_END){
+      twk->seq++;
+      return;
+    }
+    break; 
+  case 1:
+  default:
+    if( twk->pp->tcb_print != NULL ){
+      return;
+    }
     panel_Clear( twk->pp );  //パネル破棄
+    break;
   }
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
@@ -1894,9 +1874,6 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
   TASKWK_WIN_POPUP* twk = (TASKWK_WIN_POPUP*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
   
-  if( !bvp->active || (bvp->event_id != EV_NONE)){
-    return;
-  }
   if( twk->child_task ){
     return;
   }
@@ -2044,9 +2021,6 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
   TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
 
-  if( !bvp->active || (bvp->event_id != EV_NONE)){
-    return;
-  }
   if( twk->child_task > 0 ){
     return;
   }
@@ -2127,9 +2101,6 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
   TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
 
-  if( !bvp->active || (bvp->event_id != EV_NONE)){
-    return;
-  }
   if( twk->child_task > 0 ){
     return;
   }
@@ -2221,7 +2192,7 @@ static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
   twk->bvp = wk;
   twk->pp = pp;
   twk->wait = ICON_POP_TIME;
-  twk->pp->tcb = tcb;
+  twk->pp->tcb_icon = tcb;
 
   if( new_f ){
     twk->action = GAMEBEACON_ACTION_SEARCH;
@@ -2236,17 +2207,28 @@ static void tcb_IconEffect( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_ICON_EFF* twk = (TASKWK_ICON_EFF*)tcb_wk;
 
-  if( twk->wait-- > 0 ){
-    return;
-  }
-  switch( twk->action ){
-  case GAMEBEACON_ACTION_SEARCH:
-  case GAMEBEACON_ACTION_THANKYOU:
-  case GAMEBEACON_ACTION_FREEWORD:
-    panel_NamePrint( twk->bvp, twk->pp, TRUE, NULL ); 
+  switch( twk->seq ){
+  case 0:
+    if( twk->wait-- > 0 ){
+      return;
+    }
+    switch( twk->action ){
+    case GAMEBEACON_ACTION_SEARCH:
+    case GAMEBEACON_ACTION_THANKYOU:
+    case GAMEBEACON_ACTION_FREEWORD:
+      panel_NamePrint( twk->bvp, twk->pp, TRUE, NULL );
+      twk->seq++;
+      return;
+    }
+    break;
+  default:
+    //プリント待ち
+    if( twk->pp->tcb_print != NULL ){
+      return;
+    }
     break;
   }
-  twk->pp->tcb = NULL;
+  twk->pp->tcb_icon = NULL;
   panel_IconVisibleSet( twk->pp, FALSE );
   GFL_TCBL_Delete(tcb);
 }
@@ -2401,34 +2383,41 @@ static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* tcb_wk)
  */
 /////////////////////////////////////////////////////////////////////
 typedef struct _TASKWK_FOAM_PRINT{
+  PANEL_WORK* pp;
   FONT_OAM* foam;
-  
+   
   BEACON_VIEW_PTR bvp;
   int* task_ct;
 }TASKWK_FOAM_PRINT;
 
-static void taskAdd_FOamPrint( BEACON_VIEW_PTR wk, FONT_OAM* foam, int* task_ct );
+static void taskAdd_FOamPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_ct );
 static void tcb_FOamPrint( GFL_TCBL *tcb , void* work);
 
-static void printReq_FOamPrint( BEACON_VIEW_PTR wk, FONT_OAM* foam, STRBUF* str, PRINTSYS_LSB color,int* task_ct )
+static void printReq_FOamPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, PRINTSYS_LSB color,int* task_ct )
 {
+  FONT_OAM* foam = &pp->msgOam;
+
   GFL_BMP_Clear( foam->bmp, 0 );
   if( wk->init_f ){ //初期化時はダイレクトプリント
 	  PRINTSYS_PrintColor( foam->bmp, 0, 0, str, wk->fontHandle, color );
 	  BmpOam_ActorBmpTrans( foam->oam );
   }else{
     PRINTSYS_PrintQueColor( wk->printQue, foam->bmp, 0, 0, str, wk->fontHandle, color );
-    taskAdd_FOamPrint( wk, foam, task_ct );
+    taskAdd_FOamPrint( wk, pp, task_ct );
   }
 }
 
 /*
- *  @brief  メッセージウィンドウ パネルフラッシュタスク登録
+ *  @brief  パネルメッセージ描画タスク登録
  */
-static void taskAdd_FOamPrint( BEACON_VIEW_PTR wk, FONT_OAM* foam, int* task_ct )
+static void taskAdd_FOamPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_ct )
 {
   GFL_TCBL* tcb;
   TASKWK_FOAM_PRINT* twk;
+
+#ifdef PM_DEBUG
+  GF_ASSERT( pp->tcb_print == NULL );
+#endif
 
   tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_FOamPrint, sizeof(TASKWK_FOAM_PRINT), 0 );
 
@@ -2436,7 +2425,9 @@ static void taskAdd_FOamPrint( BEACON_VIEW_PTR wk, FONT_OAM* foam, int* task_ct 
   MI_CpuClear8( twk, sizeof( TASKWK_FOAM_PRINT ));
 
   twk->bvp = wk;
-  twk->foam = foam;
+  twk->pp = pp;
+  twk->foam = &pp->msgOam;
+  twk->pp->tcb_print = tcb;
 
   if( task_ct != NULL ){
     twk->task_ct = task_ct;
@@ -2458,6 +2449,7 @@ static void tcb_FOamPrint( GFL_TCBL *tcb , void* tcb_wk)
     (*twk->task_ct)--;
   }
 
+  twk->pp->tcb_print = NULL;
   GFL_TCBL_Delete(tcb);
 }
 
@@ -2484,6 +2476,7 @@ void DEBUG_BEACON_VIEW_MemberListClear( BEACON_VIEW_PTR wk )
   wk->init_f = TRUE;  //文字列即時反映のため
 
   GAMEBEACON_InfoTbl_Clear( wk->infoLog );
+  PRINTSYS_QUE_Clear( wk->printQue );
 
   for(i = 0;i < PANEL_MAX;i++){
     panel_Clear( &wk->panel[i] );
