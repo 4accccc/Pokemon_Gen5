@@ -157,7 +157,6 @@ extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態
 
 #endif  //PM_DEBUG
 
-#define FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
 
 #define MMLID_MAX  (MMLID_NOENTRY)
 
@@ -646,9 +645,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   case 0:
     //フラグ操作：フィールドマップ生成タイミング
     FIELD_FLAGCONT_INIT_FieldIn( gdata, fieldWork->map_id );
-
-    //フィールド3Ｄカットインヒープ確保
-    GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
 
     fieldWork->fldMsgBG = FLDMSGBG_Create( fieldWork->heapID, fieldWork->g3Dcamera );
     fieldWork->goldMsgWin = NULL;
@@ -1400,8 +1396,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
 
-  //フィールド3Ｄカットインヒープ解放
-  GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN );
 
 #ifdef PM_DEBUG
   //3Ｄ描画コールバックリセット

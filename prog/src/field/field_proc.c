@@ -22,6 +22,7 @@
 ///HEAPID_FIELD_SUBSCREENのサイズ
 #define HEAP_FIELD_SUBSCREEN_SIZE   (0xd000)
 
+#define HEAP_FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
 
 
 //--------------------------------------------------------------
@@ -83,6 +84,9 @@ static GFL_PROC_RESULT FieldMapProcInit
     heap_size -= HEAP_FIELD_SUBSCREEN_SIZE;
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELD_SUBSCREEN, HEAP_FIELD_SUBSCREEN_SIZE );
+    //フィールド3Ｄカットインヒープ確保
+    GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, HEAP_FLD3DCUTIN_SIZE );
+
 
     // プログラムエリアを使用したヒープ作成
     // このメモリを使用して、
@@ -161,6 +165,7 @@ static GFL_PROC_RESULT FieldMapProcEnd
   GFL_HEAP_DeleteHeap( HEAPID_WEATHER );
   GFL_HEAP_DeleteHeap( HEAPID_PLACE_NAME );
   GFL_HEAP_DeleteHeap( HEAPID_FIELD_PRBUF );
+  GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN ); //フィールド3Ｄカットインヒープ解放
 	GFL_HEAP_DeleteHeap( HEAPID_FIELD_SUBSCREEN );
 	GFL_HEAP_DeleteHeap( HEAPID_FIELDMAP );
 
