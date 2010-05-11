@@ -344,7 +344,7 @@ static void DEBWIN_U_PDW_SetFurniture( void* userWork , DEBUGWIN_ITEM* item )
   DREAMWORLD_SAVEDATA *pdwSave = DREAMWORLD_SV_GetDreamWorldSaveData(SaveControl_GetPointer());
   DREAM_WORLD_FURNITUREDATA *topFurData = DREAMWORLD_SV_GetFurnitureData( pdwSave , 0 );
   BOOL setEnable = FALSE;
-  if( topFurData->id == DREAM_WORLD_INVALID_FURNITURE )
+  if( topFurData->id == 0 )
   {
     setEnable = TRUE;
   }
@@ -379,7 +379,7 @@ static void DEBWIN_D_PDW_SetFurniture( void* userWork , DEBUGWIN_ITEM* item )
 {
   DREAMWORLD_SAVEDATA *pdwSave = DREAMWORLD_SV_GetDreamWorldSaveData(SaveControl_GetPointer());
   DREAM_WORLD_FURNITUREDATA *topFurData = DREAMWORLD_SV_GetFurnitureData( pdwSave , 0 );
-  if( topFurData->id == DREAM_WORLD_INVALID_FURNITURE )
+  if( topFurData->id == 0 )
   {
     DEBUGWIN_ITEM_SetNameV( item , "Ç©ÇÆÉJÉ^ÉçÉOX");
   }

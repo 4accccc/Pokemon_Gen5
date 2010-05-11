@@ -59,7 +59,7 @@ void DREAMWORLD_SV_Init(DREAMWORLD_SAVEDATA* pSV)
   
   for( i=0;i<DREAM_WORLD_DATA_MAX_FURNITURE;i++ )
   {
-    pSV->furnitureID[i].id = DREAM_WORLD_INVALID_FURNITURE;
+    pSV->furnitureID[i].id = 0;
   }
 }
 

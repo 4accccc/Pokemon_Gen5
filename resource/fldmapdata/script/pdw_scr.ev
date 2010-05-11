@@ -36,22 +36,23 @@ EVENT_START ev_pdw_furniture_menu
   IF $SCWK_ANSWER == FALSE THEN //PDWアカウントが無い！
     //"かぐカタログが　かんきょうが　ととのってなくて　とどかないのよね"
     _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_01, SCWK_TARGET_OBJID, POS_DOWN )
-    _AB_KEYWAIT ()
+    _LAST_KEYWAIT ()
     _BALLOONWIN_CLOSE()
   ELSE
     _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_CHECK_LIST , 0 , 0 , SCWK_ANSWER )
     IF $SCWK_ANSWER == FALSE THEN //家具リストが無い！
       //"家具のカタログがまだ届かないのよね"
       _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_02, SCWK_TARGET_OBJID, POS_DOWN )
-      _AB_KEYWAIT ()
+      _LAST_KEYWAIT ()
       _BALLOONWIN_CLOSE()
     ELSE
       IF $WK_SCENE_C02R0101 == FALSE THEN
         //初回イベント
-        //"その　ポケモン……▼なかなかの　センスの　持ち主▼・・・"
+        //"アナタ……　いまウワサのゆめにみる　かぐって　しってる？▼"
+        _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_08_01, SCWK_TARGET_OBJID, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+        //"あっ　とつぜんゴメンねワタシ　かぐのデザイナーをしているの▼(略)
         _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_08, SCWK_TARGET_OBJID, POS_DOWN )
-        _AB_KEYWAIT ()
-        _BALLOONWIN_CLOSE()
         
         $WK_SCENE_C02R0101 = TRUE
         
@@ -61,7 +62,7 @@ EVENT_START ev_pdw_furniture_menu
         IF $SCWK_ANSWER == TRUE THEN //もうリストを選んでる
           //"あたらしい　カタログが　とどいたらまた　えらんでくださいね！！"
           _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_03, SCWK_TARGET_OBJID, POS_DOWN )
-          _AB_KEYWAIT ()
+          _LAST_KEYWAIT ()
           _BALLOONWIN_CLOSE()
         ELSE
           _CHG_COMMON_SCR SCRID_PDW_FURNITURE_SELECT_ROUTINE
@@ -108,19 +109,18 @@ ev_pdw_furniture_select_routine:
   _BMPMENU_MAKE_LIST( pdw_furniture_menu_sys_06, 5 ) //やめる
   //メニュー表示
   _BMPMENU_START()
-  _BALLOONWIN_CLOSE()
   
   IF $selectNo == 5 || $selectNo == EV_WIN_B_CANCEL THEN //やめる
     //"そそそそんなあああッ……！アタシを　見捨てないで　くださああい"
     _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_06, SCWK_TARGET_OBJID, POS_DOWN )
-    _AB_KEYWAIT ()
+    _LAST_KEYWAIT ()
     _BALLOONWIN_CLOSE()
   ELSE
     //家具番号の設定
     _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , SCWK_ANSWER , 0 , 0)
     //"なるほど！　こんなに　ステキなら夢にも　でてきそうですよね！"
     _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_07, SCWK_TARGET_OBJID, POS_DOWN )
-    _AB_KEYWAIT ()
+    _LAST_KEYWAIT ()
     _BALLOONWIN_CLOSE()
   ENDIF
 
