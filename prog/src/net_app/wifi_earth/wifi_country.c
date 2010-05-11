@@ -88,7 +88,7 @@ static const EARTH_AREATABLE NationFlag_to_AreaID[] = {
     DEU16
   },
   { // スペイン
-    country197,
+    country195,
     NARC_wifi_earth_place_place_pos_ESP_dat,
     NARC_message_wifi_place_msg_ESP_dat,
     ESP17
@@ -106,55 +106,55 @@ static const EARTH_AREATABLE NationFlag_to_AreaID[] = {
     FRA22
   },
   { // イギリス
-    country220,
+    country218,
     NARC_wifi_earth_place_place_pos_GBR_dat,
     NARC_message_wifi_place_msg_GBR_dat,
     GBR12
   },
   { // インド
-    country096,
+    country095,
     NARC_wifi_earth_place_place_pos_IND_dat,
     NARC_message_wifi_place_msg_IND_dat,
     IND35
   },
   { // イタリア
-    country103,
+    country102,
     NARC_wifi_earth_place_place_pos_ITA_dat,
     NARC_message_wifi_place_msg_ITA_dat,
     ITA20
   },
   { // 日本
-    country106,
+    country105,
     NARC_wifi_earth_place_place_pos_JPN_dat,
     NARC_message_wifi_place_msg_JPN_dat,
     JPN50
   },
   { // ノルウェー
-    country157,
+    country155,
     NARC_wifi_earth_place_place_pos_NOR_dat,
     NARC_message_wifi_place_msg_NOR_dat,
     NOR20
   },
   { // ポーランド
-    country168,
+    country166,
     NARC_wifi_earth_place_place_pos_POL_dat,
     NARC_message_wifi_place_msg_POL_dat,
     POL16
   },
   { // ロシア
-    country176,
+    country174,
     NARC_wifi_earth_place_place_pos_RUS_dat,
     NARC_message_wifi_place_msg_RUS_dat,
     RUS07
   },
   { // スウェーデン
-    country202,
+    country200,
     NARC_wifi_earth_place_place_pos_SWE_dat,
     NARC_message_wifi_place_msg_SWE_dat,
     SWE22
   },
   { // アメリカ
-    country222,
+    country220,
     NARC_wifi_earth_place_place_pos_USA_dat,
     NARC_message_wifi_place_msg_USA_dat,
     USA51
