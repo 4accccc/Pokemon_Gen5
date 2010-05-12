@@ -735,7 +735,7 @@ static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p
   // l•¨‚Ìî•ñ‚ð‘å‚«‚­•ÏX
   {
     MMDL_HEADER header = s_MMDL_HEADER;
-    header.obj_code = 10;
+    header.obj_code = MMDL_GetOBJCode( p_wk->p_mmdl );
     header.dir      = move_dir;
     header.id       = p_wk->id;
     MMDLHEADER_SetGridPos( &header, gx, gz, 0 );

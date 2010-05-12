@@ -232,7 +232,7 @@ static void mmdl_SaveData_LoadMMdl(
   MI_CpuClear8( mmdl, MMDL_SIZE );
 
   mmdl->status_bit = save->status_bit;
-//  mmdl->move_bit = save->move_bit;
+//mmdl->move_bit = save->move_bit;
   mmdl->gx_size = save->gx_size;
   mmdl->gz_size = save->gz_size;
   mmdl->obj_id = save->obj_id;
@@ -282,10 +282,14 @@ static void mmdl_SaveData_LoadMMdl(
     
     mmdl->vec_pos_now = pos;
     
+    //ステータスビットを一時的に降ろし
+    //MMDLSYS_LoadOBJCodeParam()既出検索の対象から外す
+    mmdl->status_bit &= ~MMDL_STABIT_USE;
+    MMDLSYS_LoadOBJCodeParam( fos, mmdl->obj_code, &mmdl->objcode_param );
+    mmdl->status_bit |= MMDL_STABIT_USE;
+    
     { //管理表指定オフセット座標設定
-      const OBJCODE_PARAM *param;
-      MMDLSYS_LoadOBJCodeParam( fos, mmdl->obj_code, &mmdl->objcode_param );
-      param = &mmdl->objcode_param;
+      const OBJCODE_PARAM *param = &mmdl->objcode_param;
       mmdl->offset_x = param->offs_x; //オフセット
       mmdl->offset_y = param->offs_y;
       mmdl->offset_z = param->offs_z;
@@ -390,7 +394,6 @@ u16 MMDL_TOOL_OBJCodeToDataNumber( u16 code )
   return( BOY1 ); //エラー回避用として無難なコードを返す
 }
 
-
 //--------------------------------------------------------------
 /**
  * MMDLSYS OBJCODE_PARAM 取得
@@ -399,6 +402,7 @@ u16 MMDL_TOOL_OBJCodeToDataNumber( u16 code )
  * @retval  OBJCODE_PARAM*
  */
 //--------------------------------------------------------------
+#if 0
 static void mmdlsys_GetOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *param )
 {
@@ -410,3 +414,4 @@ static void mmdlsys_GetOBJCodeParam(
       NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
       offs, size, &param );
 }
+#endif

@@ -315,7 +315,7 @@ FLD_G3DOBJ_OBJIDX MMDL_G3DOBJCONT_AddObject( MMDL *mmdl )
   
   if( residx == FLD_G3DOBJ_IDX_ERROR ){
     const OBJCODE_PARAM_BUF_MDL *prm_mdl;
-    prm_mdl = MMDL_GetOBJCodeParamBufMDL( prm );
+    prm_mdl = MMDL_TOOL_GetOBJCodeParamBufMDL( prm );
     residx = rescode_AddResource( mmdlsys, objcont, prm->code, prm_mdl );
   }
   

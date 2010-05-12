@@ -114,13 +114,14 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  BOOL compFlag; //データの設定が完了したフラグ
+  u8 compFlag; //データの設定が完了したフラグ
+  BBDRESBIT flag; //登録用フラグ
   
   u16 code; //登録用コード
   u8 mdl_size; //モデルサイズ
   u8 tex_size; //テクスチャサイズ
+  
   MMDL *mmdl; //関連の動作モデル 無い場合はNULL
-  BBDRESBIT flag; //登録用フラグ
   GFL_G3D_RES *pG3dRes; //登録リソース
 }ADDRES_RESERVE;
 
@@ -1256,7 +1257,7 @@ static void BBDResUnitIndex_AddResUnit(
   GFL_G3D_RES *g3dres;
   const OBJCODE_PARAM_BUF_BBD *prm_bbd;
   
-  prm_bbd = MMDL_GetOBJCodeParamBufBBD( pParam );
+  prm_bbd = MMDL_TOOL_GetOBJCodeParamBufBBD( pParam );
   
   g3dres = GFL_G3D_CreateResourceHandle(
       MMDLSYS_GetResArcHandle(pBlActCont->mmdlsys), prm_bbd->res_idx );
@@ -1888,7 +1889,7 @@ static void BlActAddReserve_RegistActor(
               pBlActCont,pRes->code,&flag) == FALSE )
         {
           const OBJCODE_PARAM_BUF_BBD *prm_bbd;
-          prm_bbd = MMDL_GetOBJCodeParamBufBBD( pParam );
+          prm_bbd = MMDL_TOOL_GetOBJCodeParamBufBBD( pParam );
           
           flag = BBDRES_VRAM_GUEST; //基本VRAM常駐ゲスト型で登録
           BlActAddReserve_RegistResourceParam( pBlActCont,

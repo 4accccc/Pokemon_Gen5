@@ -63,7 +63,7 @@
 #define D_MMDL_Printf( ... ) ((void)0)
 #endif
 
-//デバッグ用出力　開発用
+//デバッグ用出力　開発者用
 #ifdef DEBUG_MMDL_DEVELOP_PRINT
 #define D_MMDL_DPrintf( ... ) OS_TPrintf( __VA_ARGS__ )
 #else
@@ -1023,9 +1023,9 @@ extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 extern void MMDLSYS_LoadOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *param );
 extern const OBJCODE_PARAM * MMDL_GetOBJCodeParam( const MMDL *mmdl );
-extern const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
+extern const OBJCODE_PARAM_BUF_BBD * MMDL_TOOL_GetOBJCodeParamBufBBD(
     const OBJCODE_PARAM *param );
-extern const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
+extern const OBJCODE_PARAM_BUF_MDL * MMDL_TOOL_GetOBJCodeParamBufMDL(
     const OBJCODE_PARAM *param );
 
 extern u16 MMDL_TOOL_GetWorkOBJCode( const EVENTWORK *ev, u16 code );

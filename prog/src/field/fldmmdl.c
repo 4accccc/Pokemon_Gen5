@@ -78,11 +78,15 @@ struct _TAG_MMDL_ROCKPOS
 //  proto
 //======================================================================
 //MMDLSYS プロセス
-static void mmdlsys_DeleteProc( MMDLSYS *fos );
+static void mmdlsys_DeleteProc( MMDLSYS *mmdlsys );
 
 //MMDL 追加、削除
-static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
+static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *mmdlsys,
     const MMDL_HEADER *header, int zone_id, const EVENTWORK *ev );
+static void mmdl_SetHeaderMoveParam(
+    MMDL * mmdl, const MMDL_HEADER *head );
+static void mmdl_CallSetHeaderPos(
+    MMDL * mmdl, const MMDL_HEADER *head );
 static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
     const EVENTWORK *ev, const MMDLSYS *mmdlsys );
 static void mmdl_SetHeaderAfter(
@@ -91,12 +95,12 @@ static void mmdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
 static void mmdl_InitWork( MMDL * mmdl, MMDLSYS *sys, int zone_id );
 static void mmdl_InitDir( MMDL *mmdl );
 static void mmdl_InitCallMoveProcWork( MMDL * mmdl );
-static void mmdl_InitMoveWork( const MMDLSYS *fos, MMDL * mmdl );
-static void mmdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl );
+static void mmdl_InitMoveWork( const MMDLSYS *mmdlsys, MMDL * mmdl );
+static void mmdl_InitMoveProc( const MMDLSYS *mmdlsys, MMDL * mmdl );
 static void mmdl_UpdateMove( MMDL * mmdl );
 #if 0
-static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *fos );
-static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *fos );
+static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *mmdlsys );
+static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *mmdlsys );
 #endif
 
 //MMDL 動作関数
@@ -114,7 +118,7 @@ static void mmdlsys_DecrementOBJCount( MMDLSYS *mmdlsys );
 //MMDLSYS ツール
 static MMDL * mmdlsys_SearchSpaceMMdl( const MMDLSYS *sys );
 static MMDL * mmdlsys_SearchAlies(
-  const MMDLSYS *fos, int obj_id, int zone_id );
+  const MMDLSYS *mmdlsys, int obj_id, int zone_id );
 
 //MMDL ツール
 static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys );
@@ -127,7 +131,7 @@ static int mmdl_CheckHeaderAlies(
     const MMDL *mmdl, int h_zone_id, int max,
     const MMDL_HEADER *head );
 static MMDL * mmdl_SearchOBJIDZoneID(
-    const MMDLSYS *fos, int obj_id, int zone_id );
+    const MMDLSYS *mmdlsys, int obj_id, int zone_id );
 static void mmdl_InitDrawStatus( MMDL * mmdl );
 static void mmdl_SetDrawDeleteStatus( MMDL * mmdl );
 static void mmdl_ChangeAliesOBJ(
@@ -169,29 +173,29 @@ static BOOL mmdl_rockpos_GetPos( const MMDL *mmdl, VecFx32 *pos );
 MMDLSYS * MMDLSYS_CreateSystem(
     HEAPID heapID, u32 max, MMDL_ROCKPOS *rockpos )
 {
-  MMDLSYS *fos;
-  fos = GFL_HEAP_AllocClearMemory( heapID, MMDLSYS_SIZE );
-  fos->pMMdlBuf = GFL_HEAP_AllocClearMemory( heapID, max*MMDL_SIZE );
-  fos->mmdl_max = max;
-  fos->sysHeapID = heapID;
-  fos->rockpos = rockpos;
-  fos->tcb_pri = MMDL_TCBPRI_STANDARD;
-  mmdlsys_InitOBJCodeParam( fos, heapID );
-  return( fos );
+  MMDLSYS *mmdlsys;
+  mmdlsys = GFL_HEAP_AllocClearMemory( heapID, MMDLSYS_SIZE );
+  mmdlsys->pMMdlBuf = GFL_HEAP_AllocClearMemory( heapID, max*MMDL_SIZE );
+  mmdlsys->mmdl_max = max;
+  mmdlsys->sysHeapID = heapID;
+  mmdlsys->rockpos = rockpos;
+  mmdlsys->tcb_pri = MMDL_TCBPRI_STANDARD;
+  mmdlsys_InitOBJCodeParam( mmdlsys, heapID );
+  return( mmdlsys );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS システム開放
- * @param  fos  MMDLSYS*
+ * @param  mmdlsys  MMDLSYS*
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_FreeSystem( MMDLSYS *fos )
+void MMDLSYS_FreeSystem( MMDLSYS *mmdlsys )
 {
-  mmdlsys_DeleteOBJCodeParam( fos );
-  GFL_HEAP_FreeMemory( fos->pMMdlBuf );
-  GFL_HEAP_FreeMemory( fos );
+  mmdlsys_DeleteOBJCodeParam( mmdlsys );
+  GFL_HEAP_FreeMemory( mmdlsys->pMMdlBuf );
+  GFL_HEAP_FreeMemory( mmdlsys );
 }
 
 //======================================================================
@@ -200,93 +204,93 @@ void MMDLSYS_FreeSystem( MMDLSYS *fos )
 //--------------------------------------------------------------
 /**
  * MMDLSYS システム 動作プロセスセットアップ
- * @param  fos  MMDLSYS*
+ * @param  mmdlsys  MMDLSYS*
  * @param  heapID  プロセス用HEAPID
  * @param  pG3DMapper FLDMAPPER
  * @param  pNOGRIDMapper FLDNOGRID_MAPPER
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetupProc( MMDLSYS *fos, HEAPID heapID,
+void MMDLSYS_SetupProc( MMDLSYS *mmdlsys, HEAPID heapID,
     GAMEDATA *gdata, FIELDMAP_WORK *fieldmap,
     const FLDMAPPER *pG3DMapper, FLDNOGRID_MAPPER* pNOGRIDMapper )
 {
-  fos->heapID = heapID;
-  fos->pG3DMapper = pG3DMapper;
-  fos->gdata = gdata;
-  fos->fieldMapWork = fieldmap;
+  mmdlsys->heapID = heapID;
+  mmdlsys->pG3DMapper = pG3DMapper;
+  mmdlsys->gdata = gdata;
+  mmdlsys->fieldMapWork = fieldmap;
   
-  fos->pTCBSysWork = GFL_HEAP_AllocMemory(
-    heapID, GFL_TCB_CalcSystemWorkSize(fos->mmdl_max) );
-  fos->pTCBSys = GFL_TCB_Init( fos->mmdl_max, fos->pTCBSysWork );
+  mmdlsys->pTCBSysWork = GFL_HEAP_AllocMemory(
+    heapID, GFL_TCB_CalcSystemWorkSize(mmdlsys->mmdl_max) );
+  mmdlsys->pTCBSys = GFL_TCB_Init( mmdlsys->mmdl_max, mmdlsys->pTCBSysWork );
   
-  fos->arcH_res = GFL_ARC_OpenDataHandle( ARCID_MMDL_RES, heapID );
+  mmdlsys->arcH_res = GFL_ARC_OpenDataHandle( ARCID_MMDL_RES, heapID );
   
   // ノーグリッド移動設定
-  fos->pNOGRIDMapper = pNOGRIDMapper;
-  mmdlsys_OnStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
+  mmdlsys->pNOGRIDMapper = pNOGRIDMapper;
+  mmdlsys_OnStatusBit( mmdlsys, MMDLSYS_STABIT_MOVE_INIT_COMP );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS システム　動作プロセス削除
- * @param  fos    MMDLSYS *
+ * @param  mmdlsys    MMDLSYS *
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void mmdlsys_DeleteProc( MMDLSYS *fos )
+static void mmdlsys_DeleteProc( MMDLSYS *mmdlsys )
 {
-  GFL_TCB_Exit( fos->pTCBSys );
-  GFL_HEAP_FreeMemory( fos->pTCBSysWork );
-  GFL_ARC_CloseDataHandle( fos->arcH_res );
-  mmdlsys_OffStatusBit( fos, MMDLSYS_STABIT_MOVE_INIT_COMP );
+  GFL_TCB_Exit( mmdlsys->pTCBSys );
+  GFL_HEAP_FreeMemory( mmdlsys->pTCBSysWork );
+  GFL_ARC_CloseDataHandle( mmdlsys->arcH_res );
+  mmdlsys_OffStatusBit( mmdlsys, MMDLSYS_STABIT_MOVE_INIT_COMP );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS 全てのプロセス削除
- * @param  fos    MMDLSYS *
+ * @param  mmdlsys    MMDLSYS *
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_DeleteProc( MMDLSYS *fos )
+void MMDLSYS_DeleteProc( MMDLSYS *mmdlsys )
 {
-//  MMDLSYS_DeleteMMdl( fos );
+//  MMDLSYS_DeleteMMdl( mmdlsys );
   
   { //いずれfldmmdl.c内で処理する。
-    MMDLSYS_DeleteDraw( fos );
-    fos->targetCameraAngleYaw = NULL;
+    MMDLSYS_DeleteDraw( mmdlsys );
+    mmdlsys->targetCameraAngleYaw = NULL;
   }
   
-  mmdlsys_DeleteProc( fos );
+  mmdlsys_DeleteProc( mmdlsys );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS 動作モデル更新
- * @param  fos  MMDLSYS
+ * @param  mmdlsys  MMDLSYS
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_UpdateProc( MMDLSYS *fos )
+void MMDLSYS_UpdateProc( MMDLSYS *mmdlsys )
 {
-  GFL_TCBSYS *tcbsys = fos->pTCBSys;
+  GFL_TCBSYS *tcbsys = mmdlsys->pTCBSys;
   GF_ASSERT( tcbsys != NULL );
   GFL_TCB_Main( tcbsys );
-  MMDL_BLACTCONT_Update( fos );
+  MMDL_BLACTCONT_Update( mmdlsys );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS Vブランク処理
- * @param  fos  MMDLSYS
+ * @param  mmdlsys  MMDLSYS
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_VBlankProc( MMDLSYS *fos )
+void MMDLSYS_VBlankProc( MMDLSYS *mmdlsys )
 {
-  if( fos->pBlActCont != NULL ){
-    MMDL_BLACTCONT_ProcVBlank( fos );
+  if( mmdlsys->pBlActCont != NULL ){
+    MMDL_BLACTCONT_ProcVBlank( mmdlsys );
   }
 }
 
@@ -296,16 +300,16 @@ void MMDLSYS_VBlankProc( MMDLSYS *fos )
 //--------------------------------------------------------------
 /**
  * MMDLSYS システム　描画プロセスセットアップ
- * @param  fos  MMDLSYS*
+ * @param  mmdlsys  MMDLSYS*
  * @param  heapID  プロセス用HEAPID
  * @param  pG3DMapper FLDMAPPER
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw )
+void MMDLSYS_SetupDrawProc( MMDLSYS *mmdlsys, const u16 *angleYaw )
 {
-  fos->targetCameraAngleYaw = angleYaw;
-  MMDLSYS_SetCompleteDrawInit( fos, TRUE );
+  mmdlsys->targetCameraAngleYaw = angleYaw;
+  MMDLSYS_SetCompleteDrawInit( mmdlsys, TRUE );
 }
 
 //======================================================================
@@ -314,7 +318,7 @@ void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw )
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデルを追加　コア部分
- * @param  fos      MMDLSYS *
+ * @param  mmdlsys      MMDLSYS *
  * @param  header    追加する情報を纏めたMMDL_HEADER *
  * @param  zone_id    ゾーンID
  * @param ev EVENTWORK*
@@ -323,18 +327,18 @@ void MMDLSYS_SetupDrawProc( MMDLSYS *fos, const u16 *angleYaw )
  * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
  */
 //--------------------------------------------------------------
-static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
+static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *mmdlsys,
     const MMDL_HEADER *header, int zone_id, const EVENTWORK *ev )
 {
   MMDL *mmdl;
   MMDL_HEADER header_data = *header;
   const MMDL_HEADER *head = &header_data;
   
-  mmdl = mmdlsys_SearchSpaceMMdl( fos );
+  mmdl = mmdlsys_SearchSpaceMMdl( mmdlsys );
   GF_ASSERT( mmdl != NULL );
   
-  mmdl_InitWork( mmdl, fos, zone_id );
-  mmdl_SetHeaderBefore( mmdl, head, ev, fos );
+  mmdl_InitWork( mmdl, mmdlsys, zone_id );
+  mmdl_SetHeaderBefore( mmdl, head, ev, mmdlsys );
   mmdl_InitDir( mmdl );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
@@ -343,12 +347,12 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
         MMDL_STABIT_HEIGHT_GET_OFF );
   }
   
-  if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_MOVE_INIT_COMP) ){
-    mmdl_InitMoveWork( fos, mmdl );
-    mmdl_InitMoveProc( fos, mmdl );
+  if( MMDLSYS_CheckStatusBit(mmdlsys,MMDLSYS_STABIT_MOVE_INIT_COMP) ){
+    mmdl_InitMoveWork( mmdlsys, mmdl );
+    mmdl_InitMoveProc( mmdlsys, mmdl );
   }
   
-  if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_DRAW_INIT_COMP) ){
+  if( MMDLSYS_CheckStatusBit(mmdlsys,MMDLSYS_STABIT_DRAW_INIT_COMP) ){
     mmdl_InitDrawWork( mmdl );
   }
   
@@ -361,17 +365,17 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *fos,
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデルを追加
- * @param  fos      MMDLSYS *
+ * @param  mmdlsys      MMDLSYS *
  * @param  header    追加する情報を纏めたMMDL_HEADER *
  * @param  zone_id    ゾーンID
  * @retval  MMDL  追加されたMMDL *
  */
 //--------------------------------------------------------------
 MMDL * MMDLSYS_AddMMdl(
-  MMDLSYS *fos, const MMDL_HEADER *header, int zone_id )
+  MMDLSYS *mmdlsys, const MMDL_HEADER *header, int zone_id )
 {
   MMDL *mmdl;
-  mmdl = mmdlsys_AddMMdlCore( fos, header, zone_id, NULL );
+  mmdl = mmdlsys_AddMMdlCore( mmdlsys, header, zone_id, NULL );
   return( mmdl );
 }
 
@@ -379,7 +383,7 @@ MMDL * MMDLSYS_AddMMdl(
 /**
  * MMDLSYS 動作モデルを追加。必要最低限な情報からヘッダーを作成して追加。
  * 足りない情報は0でクリアされている。必要あれば追加後に各自で設定する。
- * @param fos MMDLSYS
+ * @param mmdlsys MMDLSYS
  * @param x 初期X座標 グリッド単位
  * @param z 初期Z座標 グリッド単位
  * @param dir 初期方向。DIR_UP等
@@ -390,7 +394,7 @@ MMDL * MMDLSYS_AddMMdl(
  * @retval MMDL 追加されたMMDL*
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_AddMMdlParam( MMDLSYS *fos,
+MMDL * MMDLSYS_AddMMdlParam( MMDLSYS *mmdlsys,
     s16 gx, s16 gz, u16 dir,
     u16 id, u16 code, u16 move, int zone_id )
 {
@@ -408,14 +412,14 @@ MMDL * MMDLSYS_AddMMdlParam( MMDLSYS *fos,
   gridpos->gx = gx;
   gridpos->gz = gz;
   
-  mmdl = MMDLSYS_AddMMdl( fos, &head, zone_id );
+  mmdl = MMDLSYS_AddMMdl( mmdlsys, &head, zone_id );
   return( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデルを追加　複数
- * @param  fos      MMDLSYS *
+ * @param  mmdlsys      MMDLSYS *
  * @param  header    追加する情報を纏めたMMDL_HEADER *
  * @param  zone_id    ゾーンID
  * @param  count    header要素数
@@ -423,7 +427,7 @@ MMDL * MMDLSYS_AddMMdlParam( MMDLSYS *fos,
  * @note イベントフラグが立っているヘッダーは追加しない。
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetMMdl( MMDLSYS *fos,
+void MMDLSYS_SetMMdl( MMDLSYS *mmdlsys,
   const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork )
 {
   GF_ASSERT( count > 0 );
@@ -434,7 +438,7 @@ void MMDLSYS_SetMMdl( MMDLSYS *fos,
   do{
     if( MMdlHeader_CheckAlies(header) == TRUE ||
         mmdlsys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
-      mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
+      mmdlsys_AddMMdlCore( mmdlsys, header, zone_id, eventWork );
     }else{
       D_MMDL_Printf( "ADD STOP MMDL OBJID=%d,EVENT FLAG=%xH\n",
           header->id, header->event_flag );
@@ -448,7 +452,7 @@ void MMDLSYS_SetMMdl( MMDLSYS *fos,
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデルを追加　ヘッダー内の指定OBJID
- * @param  fos      MMDLSYS *
+ * @param  mmdlsys      MMDLSYS *
  * @param  header    追加する情報を纏めたMMDL_HEADER *
  * @param  zone_id    ゾーンID
  * @param  count    header要素数
@@ -457,7 +461,7 @@ void MMDLSYS_SetMMdl( MMDLSYS *fos,
  * @note イベントフラグが立っているヘッダーは追加しない。
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
+MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *mmdlsys,
   const MMDL_HEADER *header, int zone_id, int count, EVENTWORK *eventWork,
   u16 objID )
 {
@@ -476,7 +480,7 @@ MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
         if( mmdlsys_CheckEventFlag(
               eventWork,header->event_flag) == FALSE )
         {
-          mmdl = mmdlsys_AddMMdlCore( fos, header, zone_id, eventWork );
+          mmdl = mmdlsys_AddMMdlCore( mmdlsys, header, zone_id, eventWork );
           break;
         }
       }
@@ -498,11 +502,11 @@ MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *fos,
 //--------------------------------------------------------------
 void MMDL_Delete( MMDL * mmdl )
 {
-  const MMDLSYS *fos;
+  const MMDLSYS *mmdlsys;
   
-  fos = MMDL_GetMMdlSys( mmdl );
+  mmdlsys = MMDL_GetMMdlSys( mmdl );
   
-  if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+  if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == TRUE ){
     MMDL_CallDrawDeleteProc( mmdl );
   }
   
@@ -531,17 +535,17 @@ void MMDL_DeleteEvent( MMDL * mmdl, EVENTWORK *evwork )
 //--------------------------------------------------------------
 /**
  * MMDLSYS 現在発生しているフィールド動作モデルを全て削除
- * @param  fos  MMDLSYS
+ * @param  mmdlsys  MMDLSYS
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
+void MMDLSYS_DeleteMMdl( const MMDLSYS *mmdlsys )
 {
   u32 no = 0;
   MMDL *mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) ){
-    if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
+    if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == TRUE ){
       MMDL_CallDrawDeleteProc( mmdl );
     }
     
@@ -557,25 +561,16 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
 
 //--------------------------------------------------------------
 /**
- * MMDL フィールド動作モデル　ヘッダー情報反映
+ * MMDL フィールド動作モデル　ヘッダー情報反映　動作関連
  * @param  mmdl    設定するMMDL * 
  * @param  head    反映する情報を纏めたMMDL_HEADER *
- * @param  ev      EVENTWORK*
  * @retval  nothing
- * @attention ev==NULL状態の際に
- * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
  */
 //--------------------------------------------------------------
-static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
-    const EVENTWORK *ev, const MMDLSYS *mmdlsys )
+static void mmdl_SetHeaderMoveParam(
+    MMDL * mmdl, const MMDL_HEADER *head )
 {
-  u16 obj_code;
-  const OBJCODE_PARAM *param;
-
-  obj_code = WorkOBJCode_GetOBJCode( ev, head->obj_code );
-  
   MMDL_SetOBJID( mmdl, head->id );
-  MMDL_SetOBJCode( mmdl, obj_code );
   MMDL_SetMoveCode( mmdl, head->move_code );
   MMDL_SetEventType( mmdl, head->event_type );
   MMDL_SetEventFlag( mmdl, head->event_flag );
@@ -587,8 +582,59 @@ static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
   MMDL_SetParam( mmdl, head->param2, MMDL_PARAM_2 );
   MMDL_SetMoveLimitX( mmdl, head->move_limit_x );
   MMDL_SetMoveLimitZ( mmdl, head->move_limit_z );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL フィールド動作モデル　ヘッダーから
+ * @param  mmdl    設定するMMDL * 
+ * @param  head    反映する情報を纏めたMMDL_HEADER *
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void mmdl_CallSetHeaderPos(
+    MMDL * mmdl, const MMDL_HEADER *head )
+{
+  // 座標タイプにより、位置の初期化方法を変更
+  if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
+  {
+    mmdl_SetHeaderPos( mmdl, head );
+  }
+  else
+  {
+    MMDL_SetRailHeaderBefore( mmdl, head );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL フィールド動作モデル　ヘッダー情報反映
+ * @param  mmdl    設定するMMDL * 
+ * @param  head    反映する情報を纏めたMMDL_HEADER *
+ * @param  ev      EVENTWORK*
+ * @retval  nothing
+ * @attention ev==NULL状態の際に
+ * WKOBJCODE00等のワーク参照型OBJコードが来るとエラーとなる。
+ */
+//--------------------------------------------------------------
+static void mmdl_SetHeaderBefore(
+    MMDL * mmdl, const MMDL_HEADER *head,
+    const EVENTWORK *ev, const MMDLSYS *mmdlsys )
+{
+  u16 obj_code;
+  const OBJCODE_PARAM *param;
   
+  mmdl_SetHeaderMoveParam( mmdl, head );
+  
+  obj_code = WorkOBJCode_GetOBJCode( ev, head->obj_code );
+  MMDL_SetOBJCode( mmdl, obj_code );
+  
+  //ステータスビットを一時的に降ろし
+  //MMDLSYS_LoadOBJCodeParam()既出検索の対象から外す
+  MMDL_OffStatusBit( mmdl, MMDL_STABIT_USE );
   MMDLSYS_LoadOBJCodeParam( mmdlsys, obj_code, &mmdl->objcode_param );
+  MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
+  
   param = &mmdl->objcode_param;
   
   if( obj_code == STOPPER ){ //サイズ設定。STOPPERはサイズ指定アリ
@@ -611,15 +657,7 @@ static void mmdl_SetHeaderBefore( MMDL * mmdl, const MMDL_HEADER *head,
   mmdl->offset_y = param->offs_y;
   mmdl->offset_z = param->offs_z;
   
-  // 座標タイプにより、位置の初期化方法を変更
-  if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
-  {
-    mmdl_SetHeaderPos( mmdl, head );
-  }
-  else
-  {
-    MMDL_SetRailHeaderBefore( mmdl, head );
-  }
+  mmdl_CallSetHeaderPos( mmdl, head );
 }
 
 //--------------------------------------------------------------
@@ -655,7 +693,7 @@ static void mmdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
   VecFx32 vec;
   int pos,set_gx,set_gz;
   const MMDL_HEADER_GRIDPOS *gridpos;
-
+  
   GF_ASSERT( head->pos_type == MMDL_HEADER_POSTYPE_GRID );
   
   gridpos = (const MMDL_HEADER_GRIDPOS*)head->pos_buf;
@@ -753,10 +791,10 @@ static void mmdl_InitCallMoveProcWork( MMDL * mmdl )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void mmdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
+static void mmdl_InitMoveWork( const MMDLSYS *mmdlsys, MMDL *mmdl )
 {
   mmdl_InitCallMoveProcWork( mmdl );
-  mmdl_AddTCB( mmdl, fos );
+  mmdl_AddTCB( mmdl, mmdlsys );
   MMDL_OnMoveBit( mmdl,
       MMDL_MOVEBIT_MOVE_START |
       MMDL_MOVEBIT_ATTR_GET_ERROR |
@@ -766,11 +804,11 @@ static void mmdl_InitMoveWork( const MMDLSYS *fos, MMDL *mmdl )
 //--------------------------------------------------------------
 /**
  * フィールド動作モデル 動作初期化
- *  @param  fos
+ *  @param  mmdlsys
  *  @param  mmdl 
  */
 //--------------------------------------------------------------
-static void mmdl_InitMoveProc( const MMDLSYS *fos, MMDL * mmdl )
+static void mmdl_InitMoveProc( const MMDLSYS *mmdlsys, MMDL * mmdl )
 {
   if( !MMDL_CheckStatusBit(mmdl,MMDL_STABIT_RAIL_MOVE) )
   {
@@ -805,17 +843,17 @@ static void mmdl_UpdateMove( MMDL * mmdl )
 //--------------------------------------------------------------
 /**
  * MMDLSYS 動作初期化を行っていない動作モデルに対して初期化処理をセット
- * @param  fos  MMDLSYS*
+ * @param  mmdlsys  MMDLSYS*
  * @retval  nothing
  */
 //--------------------------------------------------------------
 #if 0
-static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *fos )
+static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *mmdlsys )
 {
   u32 i = 0;
   MMDL *mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&i) == TRUE ){
     if( MMDL_CheckStatusBit(mmdl,  //初期化関数呼び出しまだ
       MMDL_STABIT_MOVEPROC_INIT) == 0 ){
       mmdl_InitMoveProc( mmdl );
@@ -827,17 +865,17 @@ static void mmdlsys_CheckSetInitMoveWork( MMDLSYS *fos )
 //--------------------------------------------------------------
 /**
  * MMDLSYS 描画初期化を行っていない動作モデルに対して初期化処理をセット
- * @param  fos  MMDLSYS*
+ * @param  mmdlsys  MMDLSYS*
  * @retval  nothing
  */
 //--------------------------------------------------------------
 #if 0
-static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *fos )
+static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *mmdlsys )
 {
   u32 i = 0;
   MMDL *mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&i) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&i) == TRUE ){
     if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
       mmdl_InitDrawWork( mmdl );
     }
@@ -965,9 +1003,9 @@ static void mmdl_TCB_MoveProc( GFL_TCB * tcb, void *work )
 //--------------------------------------------------------------
 static void mmdl_TCB_DrawProc( MMDL * mmdl )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys(mmdl);
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys(mmdl);
   
-  if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+  if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == TRUE ){
     MMDL_UpdateDraw( mmdl );
   }
 }
@@ -1212,25 +1250,25 @@ static void mmdlsys_DecrementOBJCount( MMDLSYS *mmdlsys )
 //--------------------------------------------------------------
 /**
  * MMDLSYS GFL_TCBSYS*取得
- * @param  fos  MMDLSYS*
+ * @param  mmdlsys  MMDLSYS*
  * @retval  GFL_TCBSYS*
  */
 //--------------------------------------------------------------
-GFL_TCBSYS * MMDLSYS_GetTCBSYS( MMDLSYS *fos )
+GFL_TCBSYS * MMDLSYS_GetTCBSYS( MMDLSYS *mmdlsys )
 {
-  return( fos->pTCBSys );
+  return( mmdlsys->pTCBSys );
 }
 
 //--------------------------------------------------------------
 /**
  * MMDLSYS リソースアーカイブハンドル取得
- * @param fos MMDLSYS*
+ * @param mmdlsys MMDLSYS*
  * @retval ARCHANDLE*
  */
 //--------------------------------------------------------------
-ARCHANDLE * MMDLSYS_GetResArcHandle( MMDLSYS *fos )
+ARCHANDLE * MMDLSYS_GetResArcHandle( MMDLSYS *mmdlsys )
 {
-  return( fos->arcH_res );
+  return( mmdlsys->arcH_res );
 }
 
 //--------------------------------------------------------------
@@ -1294,23 +1332,23 @@ MMDL_G3DOBJCONT * MMDLSYS_GetG3dObjCont( MMDLSYS *mmdlsys )
  * @retval  FLDMAPPER* FLDMAPPER*
  */
 //--------------------------------------------------------------
-const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *fos )
+const FLDMAPPER * MMDLSYS_GetG3DMapper( const MMDLSYS *mmdlsys )
 {
-  GF_ASSERT( fos->pG3DMapper != NULL);
-  return( fos->pG3DMapper );
+  GF_ASSERT( mmdlsys->pG3DMapper != NULL);
+  return( mmdlsys->pG3DMapper );
 }
 
 //--------------------------------------------------------------
 /**
  *  @brief  ノーグリッド動作マッパーの取得
- *  @param  fos   動作モデルシステム
+ *  @param  mmdlsys   動作モデルシステム
  *  @return　マッパー
  */
 //--------------------------------------------------------------
-FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos )
+FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *mmdlsys )
 {
-  GF_ASSERT( fos );
-  return fos->pNOGRIDMapper;
+  GF_ASSERT( mmdlsys );
+  return mmdlsys->pNOGRIDMapper;
 }
 
 //--------------------------------------------------------------
@@ -1320,10 +1358,10 @@ FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos )
  * @retval fieldMapWork FIELDMAP_WORK
  */
 //--------------------------------------------------------------
-void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos )
+void * MMDLSYS_GetFieldMapWork( MMDLSYS *mmdlsys )
 {
-  GF_ASSERT( fos->fieldMapWork != NULL );
-  return( fos->fieldMapWork );
+  GF_ASSERT( mmdlsys->fieldMapWork != NULL );
+  return( mmdlsys->fieldMapWork );
 }
 
 //--------------------------------------------------------------
@@ -1333,10 +1371,10 @@ void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos )
  * @retval GAMEDATA*
  */
 //--------------------------------------------------------------
-GAMEDATA * MMDLSYS_GetGameData( MMDLSYS *fos )
+GAMEDATA * MMDLSYS_GetGameData( MMDLSYS *mmdlsys )
 {
-  GF_ASSERT( fos->gdata != NULL );
-  return( fos->gdata );
+  GF_ASSERT( mmdlsys->gdata != NULL );
+  return( mmdlsys->gdata );
 }
 
 //--------------------------------------------------------------
@@ -2830,12 +2868,12 @@ void MMDLSYS_SetCompleteDrawInit( MMDLSYS *mmdlsys, BOOL flag )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_SetJoinShadow( MMDLSYS *fos, BOOL flag )
+void MMDLSYS_SetJoinShadow( MMDLSYS *mmdlsys, BOOL flag )
 {
   if( flag == FALSE ){
-    mmdlsys_OnStatusBit( fos, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
+    mmdlsys_OnStatusBit( mmdlsys, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
   }else{
-    mmdlsys_OffStatusBit( fos, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
+    mmdlsys_OffStatusBit( mmdlsys, MMDLSYS_STABIT_SHADOW_JOIN_NOT );
   }
 }
 
@@ -2846,9 +2884,9 @@ void MMDLSYS_SetJoinShadow( MMDLSYS *fos, BOOL flag )
  * @retval  BOOL TRUE=付ける
  */
 //--------------------------------------------------------------
-BOOL MMDLSYS_CheckJoinShadow( const MMDLSYS *fos )
+BOOL MMDLSYS_CheckJoinShadow( const MMDLSYS *mmdlsys )
 {
-  if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_SHADOW_JOIN_NOT) ){
+  if( MMDLSYS_CheckStatusBit(mmdlsys,MMDLSYS_STABIT_SHADOW_JOIN_NOT) ){
     return( FALSE );
   }
   return( TRUE );
@@ -2941,8 +2979,8 @@ void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys )
 u32 MMDL_CheckMMdlSysStatusBit(
   const MMDL *mmdl, MMDLSYS_STABIT bit )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
-  return( MMDLSYS_CheckStatusBit(fos,bit) );
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  return( MMDLSYS_CheckStatusBit(mmdlsys,bit) );
 }
 
 //--------------------------------------------------------------
@@ -3261,11 +3299,11 @@ BOOL MMDL_CheckMoveBitMoveProcPause( const MMDL * mmdl )
 //--------------------------------------------------------------
 BOOL MMDL_CheckCompletedDrawInit( const MMDL * mmdl )
 {
-  const MMDLSYS *fos;
+  const MMDLSYS *mmdlsys;
   
-  fos = MMDL_GetMMdlSys( mmdl );
+  mmdlsys = MMDL_GetMMdlSys( mmdl );
   
-  if( MMDLSYS_CheckCompleteDrawInit(fos) == FALSE ){
+  if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == FALSE ){
     return( FALSE );
   }
   
@@ -3623,7 +3661,7 @@ void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag )
 //--------------------------------------------------------------
 /**
  * MMDLSYS 使用しているフィールド動作モデルを探す。
- * @param  fos  MMDLSYS *
+ * @param  mmdlsys  MMDLSYS *
  * @param  mmdl  MMDL*格納先
  * @param  no  検索開始ワークno。先頭から検索する際は初期値0を指定。
  * @retval BOOL TRUE=動作モデル取得した FALSE=noから終端まで検索し取得無し
@@ -3631,7 +3669,7 @@ void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag )
  * @note ※例：OBJ ID 1番の動作モデルを探す。
  * u32 no=0;
  * MMDL *mmdl;
- * while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) == TRUE ){
+ * while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
  *     if( MMDL_GetOBJID(mmdl) == 1 ){
  *       break;
  *     }
@@ -3639,12 +3677,12 @@ void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag )
  */
 //--------------------------------------------------------------
 BOOL MMDLSYS_SearchUseMMdl(
-  const MMDLSYS *fos, MMDL **mmdl, u32 *no )
+  const MMDLSYS *mmdlsys, MMDL **mmdl, u32 *no )
 {
-  u32 max = MMDLSYS_GetMMdlMax( fos );
+  u32 max = MMDLSYS_GetMMdlMax( mmdlsys );
   
   if( (*no) < max ){
-    MMDL *check_obj = &(((MMDLSYS*)fos)->pMMdlBuf[*no]);
+    MMDL *check_obj = &(((MMDLSYS*)mmdlsys)->pMMdlBuf[*no]);
     
     do{
       (*no)++;
@@ -3759,17 +3797,17 @@ MMDL * MMDLSYS_SearchGridPosEx(
 //--------------------------------------------------------------
 /**
  * MMDLSYS 動作コードに一致するMMDL *を検索
- * @param  fos    MMDLSYS *
+ * @param  mmdlsys    MMDLSYS *
  * @param  mv_code    検索する動作コード
  * @retval  MMDL *  NULL=存在しない
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_SearchMoveCode( const MMDLSYS *fos, u16 mv_code )
+MMDL * MMDLSYS_SearchMoveCode( const MMDLSYS *mmdlsys, u16 mv_code )
 {
   u32 no = 0;
   MMDL *mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
     if( MMDL_GetMoveCode(mmdl) == mv_code ){
       return( mmdl );
     }
@@ -3781,17 +3819,17 @@ MMDL * MMDLSYS_SearchMoveCode( const MMDLSYS *fos, u16 mv_code )
 //--------------------------------------------------------------
 /**
  * MMDLSYS OBJ IDに一致するMMDL *を検索
- * @param  fos    MMDLSYS *
+ * @param  mmdlsys    MMDLSYS *
  * @param  id    検索するOBJ ID
  * @retval  MMDL *  NULL=存在しない
  */
 //--------------------------------------------------------------
-MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id )
+MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *mmdlsys, u16 id )
 {
   u32 no = 0;
   MMDL *mmdl;
 
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
     if( MMDL_CheckStatusBitAlies(mmdl) == FALSE ){
       if( MMDL_GetOBJID(mmdl) == id ){
         return( mmdl );
@@ -3805,7 +3843,7 @@ MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id )
 //--------------------------------------------------------------
 /**
  * MMDLSYS 自機OBJを探す
- * @param fos MMDLSYS*
+ * @param mmdlsys MMDLSYS*
  * @retval MMDL* NULL=存在しない
  */
 //--------------------------------------------------------------
@@ -3847,19 +3885,19 @@ static MMDL * mmdlsys_SearchSpaceMMdl( const MMDLSYS *sys )
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデル　エイリアスを探す
- * @param  fos      MMDLSYS *
+ * @param  mmdlsys      MMDLSYS *
  * @param  obj_id    一致するOBJ ID
  * @param  zone_id    一致するZONE ID
  * @retval  MMDL  一致するMMDL*　一致無し=NULL
  */
 //--------------------------------------------------------------
 static MMDL * mmdlsys_SearchAlies(
-  const MMDLSYS *fos, int obj_id, int zone_id )
+  const MMDLSYS *mmdlsys, int obj_id, int zone_id )
 {
   u32 no = 0;
   MMDL * mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
     if( MMDL_CheckStatusBitAlies(mmdl) == TRUE ){
       if( MMDL_GetOBJID(mmdl) == obj_id ){
         if( MMDL_GetZoneIDAlies(mmdl) == zone_id ){
@@ -3875,16 +3913,16 @@ static MMDL * mmdlsys_SearchAlies(
 //--------------------------------------------------------------
 /**
  * MMDLSYS フィールド動作モデル ゾーン更新時の動作モデル削除
- * @param  fos  MMDLSYS
+ * @param  mmdlsys  MMDLSYS
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *fos )
+void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *mmdlsys )
 {
   u32 no = 0;
   MMDL *mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
     //本来であれば更にエイリアスチェックが入る
     if( MMDL_CheckStatusBit(
         mmdl,MMDL_STABIT_ZONE_DEL_NOT) == 0 ){
@@ -3966,9 +4004,9 @@ BOOL MMDL_SearchUseOBJCode( const MMDL *mmdl, u16 code )
   u32 no = 0;
   u16 check_code;
   MMDL *cmmdl;
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
   
-  while( MMDLSYS_SearchUseMMdl(fos,&cmmdl,&no) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&cmmdl,&no) == TRUE ){
     if( cmmdl != mmdl ){
       check_code = MMDL_GetOBJCode( cmmdl );
       if( check_code != OBJCODEMAX && check_code == code ){
@@ -4030,7 +4068,7 @@ void MMDL_InitGridPosition( MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir )
 
 //--------------------------------------------------------------
 /**
- * MMDL ヘッダーから座標タイプ、座標、コードを変更
+ * MMDL ヘッダーから座標タイプ、座標、動作コードを変更
  * @param  mmdl  MMDL *
  * @param  head MMDL_HEADAER
  * @retval  nothing
@@ -4038,12 +4076,13 @@ void MMDL_InitGridPosition( MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir )
 //--------------------------------------------------------------
 void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
   
   MMDL_CallMoveDeleteProc( mmdl );
-  mmdl_SetHeaderBefore( mmdl, head, NULL, fos );
+  mmdl_SetHeaderMoveParam( mmdl, head );
+  mmdl_CallSetHeaderPos( mmdl, head );
   mmdl_InitCallMoveProcWork( mmdl );
-  mmdl_InitMoveProc( fos, mmdl );
+  mmdl_InitMoveProc( mmdlsys, mmdl );
   mmdl_SetHeaderAfter( mmdl, head, NULL );
 }
 
@@ -4057,12 +4096,12 @@ void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head )
 //--------------------------------------------------------------
 void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
   
   MMDL_CallMoveDeleteProc( mmdl );
   MMDL_SetMoveCode( mmdl, code );
   mmdl_InitCallMoveProcWork( mmdl );
-  mmdl_InitMoveProc( fos, mmdl );
+  mmdl_InitMoveProc( mmdlsys, mmdl );
 }
 
 //--------------------------------------------------------------
@@ -4074,9 +4113,9 @@ void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code )
 //--------------------------------------------------------------
 static void mmdl_InitDrawWork( MMDL *mmdl )
 {
-  const MMDLSYS *fos = MMDL_GetMMdlSys( mmdl );
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
   
-  if( MMDLSYS_CheckCompleteDrawInit(fos) == FALSE ){
+  if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == FALSE ){
     return; //描画システム初期化完了していない
   }
   
@@ -4208,19 +4247,19 @@ static int mmdl_CheckHeaderAlies(
 //--------------------------------------------------------------
 /**
  * MMDL 指定されたゾーンIDとOBJ IDを持つMMDL *を取得。
- * @param  fos    MMDLSYS *
+ * @param  mmdlsys    MMDLSYS *
  * @param  obj_id  OBJ ID
  * @param  zone_id  ゾーンID
  * @retval  MMDL * MMDL *
  */
 //--------------------------------------------------------------
 static MMDL * mmdl_SearchOBJIDZoneID(
-    const MMDLSYS *fos, int obj_id, int zone_id )
+    const MMDLSYS *mmdlsys, int obj_id, int zone_id )
 {
   u32 no = 0;
   MMDL *mmdl;
   
-  while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) == TRUE ){
+  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
     if( MMDL_GetOBJID(mmdl) == obj_id &&
       MMDL_GetZoneID(mmdl) == zone_id ){
       return( mmdl );
@@ -4361,28 +4400,32 @@ BOOL MMDL_CheckSameDataIDOnly(
 //--------------------------------------------------------------
 void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
 {
-  const MMDLSYS *fos;
-  fos = MMDL_GetMMdlSys( mmdl );
+  const MMDLSYS *mmdlsys;
+  mmdlsys = MMDL_GetMMdlSys( mmdl );
   
-  if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+  if( MMDLSYS_CheckCompleteDrawInit(mmdlsys) == TRUE ){
     if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == TRUE ){
       MMDL_CallDrawDeleteProc( mmdl );
     }
   }
   
   MMDL_SetOBJCode( mmdl, code );
+
+  //ステータスビットを一時的に降ろし
+  //MMDLSYS_LoadOBJCodeParam()既出検索の対象から外す
+  MMDL_OffStatusBit( mmdl, MMDL_STABIT_USE );
+  MMDLSYS_LoadOBJCodeParam( mmdlsys, code, &mmdl->objcode_param );
+  MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
   
   { //新規OBJCODE_PARAM
-    const OBJCODE_PARAM *param;
-    MMDLSYS_LoadOBJCodeParam( fos, code, &mmdl->objcode_param );
-    param = &mmdl->objcode_param;
+    const OBJCODE_PARAM *param = &mmdl->objcode_param;
     mmdl->gx_size = param->size_width;
     mmdl->gz_size = param->size_depth;
     mmdl->offset_x = param->offs_x; //オフセット
     mmdl->offset_y = param->offs_y;
     mmdl->offset_z = param->offs_z;
   }
-
+  
   MMDL_OffMoveBitCompletedDrawInit( mmdl );
   mmdl_InitDrawStatus( mmdl );
   mmdl_InitDrawWork( mmdl );
@@ -4461,13 +4504,29 @@ const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 void MMDLSYS_LoadOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *outParam )
 {
-  u16 size = sizeof( OBJCODE_PARAM );
-  u16 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE +
-    (size * MMDL_TOOL_OBJCodeToDataNumber(code));
+#if 0
+  { //既にロード済みの同一コードを持つ動作モデルを探す
+    u32 no = 0;
+    MMDL *mmdl;
+    
+    while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
+      if( MMDL_GetOBJCode(mmdl) == code ){
+        *outParam = mmdl->objcode_param;
+        return;
+      }
+    }
+  }
+#endif
   
-  GFL_ARC_LoadDataOfsByHandle( mmdlsys->arcH_param, 
-      NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
-      offs, size, outParam );
+  {
+    u16 size = sizeof( OBJCODE_PARAM );
+    u16 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE +
+      (size * MMDL_TOOL_OBJCodeToDataNumber(code));
+  
+    GFL_ARC_LoadDataOfsByHandle( mmdlsys->arcH_param, 
+        NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+        offs, size, outParam );
+  }
 }
 
 //--------------------------------------------------------------
@@ -4494,7 +4553,7 @@ const OBJCODE_PARAM * MMDL_GetOBJCodeParam( const MMDL *mmdl )
  * @retval
  */
 //--------------------------------------------------------------
-const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
+const OBJCODE_PARAM_BUF_BBD * MMDL_TOOL_GetOBJCodeParamBufBBD(
     const OBJCODE_PARAM *param )
 {
   return (const OBJCODE_PARAM_BUF_BBD*)param->buf;
@@ -4507,7 +4566,7 @@ const OBJCODE_PARAM_BUF_BBD * MMDL_GetOBJCodeParamBufBBD(
  * @retval
  */
 //--------------------------------------------------------------
-const OBJCODE_PARAM_BUF_MDL * MMDL_GetOBJCodeParamBufMDL(
+const OBJCODE_PARAM_BUF_MDL * MMDL_TOOL_GetOBJCodeParamBufMDL(
     const OBJCODE_PARAM *param )
 {
   return (const OBJCODE_PARAM_BUF_MDL*)param->buf;
@@ -5108,19 +5167,28 @@ void DEBUG_MMDL_PrintState(
   }
 }
 
-/*
 #ifdef DEBUG_ONLY_FOR_kagaya
 #define DEBUG_SPEED_CHECK_ENABLE  //デバッグ速度計測を有効にする
 #include "debug_speed_check.h"
-void DEBUG_MMDLSYS_CheckSpeed( HEAPID heapID )
+
+#if 0
+void DEBUG_MMDLSYS_CheckSpeed( MMDLSYS *mmdlsys )
 {
   OBJCODE_PARAM param;
-  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
+  MMDL *mmdl = MMDLSYS_SearchMMdlPlayer( mmdlsys );
+  u16 code = MMDL_GetOBJCode( mmdl );
   
+  if( code == HERO ){
+    code = HEROINE;
+  }else{
+    code = HERO;
+  }
+
   INIT_CHECK();
   SET_CHECK( "MMDL CHECK PARAM_START" );
   SET_CHECK( "MMDL CHECK PARAM0" );
   
+#if 0  
   //ハンドル使用で約270ms
   GFL_ARC_LoadDataOfsByHandle(
       handle,
@@ -5128,6 +5196,9 @@ void DEBUG_MMDLSYS_CheckSpeed( HEAPID heapID )
       OBJCODE_PARAM_TOTAL_NUMBER_SIZE,
       sizeof(OBJCODE_PARAM),
       &param );
+#else
+  MMDLSYS_LoadOBJCodeParam( mmdlsys, code, &param );
+#endif
   
   SET_CHECK( "MMDL CHECK PARAM1" );
   SET_CHECK( "MMDL CHECK PARAM_END" );
@@ -5140,11 +5211,10 @@ void DEBUG_MMDLSYS_CheckSpeed( HEAPID heapID )
     OS_TPrintf(" MMDL micro sec:%ld\n", OS_TicksToMicroSeconds( end_tick ) );
   }
 
-  GFL_ARC_CloseDataHandle( handle );
   GF_ASSERT( 0 && "MMDL CHECK END" );
 }
 #endif
-*/
+#endif
 
 //----
 #endif //DEBUG_MMDL
