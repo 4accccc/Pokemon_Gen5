@@ -2534,7 +2534,7 @@
 #define TMFLG_T04R0401_TALKSET            2760 /* 0x0ac8 サザナミタウン：春と夏にT04R0101に登場する人々の 日替わりのメッセージを設定するフラグ */
 #define TMFLG_H05_MINEZUMI                2761 /* 0x0ac9 ワンダーブリッジ：ミネズミ当てゲーム */
 #define TMFLG_D07R0401_FOSSIL             2762 /* 0x0aca ネジ山：クリア後１日１回カセキ入手イベント */
-		/* not used  2763(0x0acb) */
+#define TMFLG_T04R0401_SHIRONA_TALK       2763 /* 0x0acb サザナミタウン：シロナの春の１日の初回会話フラグ */
 		/* not used  2764(0x0acc) */
 		/* not used  2765(0x0acd) */
 		/* not used  2766(0x0ace) */
