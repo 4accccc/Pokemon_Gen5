@@ -3561,10 +3561,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
+    pWork->ret_item = ITEM_DUMMY_DATA;
     SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
   // 戻るボタン
   }else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
+    pWork->ret_item = ITEM_DUMMY_DATA;
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, NULL );
   // リスト
   }else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
