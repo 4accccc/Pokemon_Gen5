@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:54:17"/>
+	<create user="matsumiya" host="W00224" date="2010-05-12T15:55:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -852,18 +852,19 @@
 うぬぼれると　すぐ　ダメになるもんな</language>
 	</row>
 
-	<row id="msg_c05_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c05_badman_01">
+		<comment>♂</comment>
 		<attribute name="キャラクター">BADMAN</attribute>
-		<language name="JPN" width="256">ここだけの　はなし……[BE:01:ページ切り替え（クリア）]
-ジムリーダーの　ヤーコンさんは
-マジで　ヤバイ！[BE:01:ページ切り替え（クリア）]
-なにが　ヤバイかは　いえないけどさ</language>
-		<language name="JPN_KANJI" width="256">ここだけの　話……[BE:01:ページ切り替え（クリア）]
-ジムリーダーの　ヤーコンさんは
-マジで　ヤバイ！[BE:01:ページ切り替え（クリア）]
-なにが　ヤバイかは　いえないけどさ</language>
+		<language name="JPN" width="256">オレが　ウロウロしている　りゆう▼
+それは　ウロウロしたいからだ！▼
+あーあ！　ポケモンが
+なみのりの　わざを　つかえりゃ▽
+みずのうえを　すすめるのによ！</language>
+		<language name="JPN_KANJI" width="256">オレが　ウロウロしている　理由▼
+それは　ウロウロしたいからだ！▼
+あーあ！　ポケモンが
+なみのりの　技を　使えりゃ▽
+水上を　気持ちよく　進めるのによ！</language>
 	</row>
 
 	<row id="msg_c05_workman_01">
@@ -906,29 +907,31 @@
 いろんな　ポケモンが　いるのよね</language>
 	</row>
 
-	<row id="msg_c05_mountain_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c05_mountain_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,,">
 		<comment>♂
-・GRIDX=198、GRIDZ=399辺り
-・仮メッセージ</comment>
+・GRIDX=198、GRIDZ=399辺り</comment>
 		<attribute name="キャラクター">MOUNTAIN</attribute>
 		<language name="JPN" width="256">６ばんどうろに　いる　ジイさんが
 でんせつの　ポケモンを　さがしている▼
-きになるなら　あいにいきな</language>
+きになるなら　あうと　いい</language>
 		<language name="JPN_KANJI" width="256">６番道路に　いる　ジイさんが
 伝説の　ポケモンを　探している▼
-興味があるなら　会いにいきな</language>
+興味があるなら　会うと　いい</language>
 	</row>
 
-	<row id="msg_c05_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・現状、r05のman2と同じメッセージ</comment>
+	<row id="msg_c05_man2_01">
+		<comment>♂</comment>
 		<attribute name="キャラクター">MAN2</attribute>
 		<language name="JPN" width="256">はしって　すごいよな！[BE:01:ページ切り替え（クリア）]
 だって　はしは　せかいを
-つなぐ　シンボル　なんだから！</language>
+つなぐ　シンボル　なんだから！▼
+って　５ばんどうろの
+ヤツも　おなじこと　いってただろ！？</language>
 		<language name="JPN_KANJI" width="256">橋って　すごいよな！[BE:01:ページ切り替え（クリア）]
 だって　橋は　世界を
-つなぐ　シンボル　なんだから！</language>
+つなぐ　シンボル　なんだから！▼
+って　５番道路の
+ヤツも　同じこと　いってただろ！？</language>
 	</row>
 
 	<row id="msg_c05_badrider_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
