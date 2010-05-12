@@ -15,7 +15,8 @@ typedef struct{
   GAMESYS_WORK *gsys;
   u8 target_netid;
   u8 flat_level;        ///<フラットレベル(0の場合はフリー)
-  u8 padding[2];
+  u8 max_poke_num;      ///<手持ちポケモン最大数(先頭からこの数分までしか出場させない)
+  u8 padding;
 }INTRUDE_BATTLE_PARENT;
 
 

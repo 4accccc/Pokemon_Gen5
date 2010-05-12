@@ -88,6 +88,8 @@ typedef struct
   FLDMSGWIN_STREAM *msgStream;
   
   INTRUDE_EVENT_DISGUISE_WORK iedw;
+  
+  MISSION_FORCEWARP_MSGID warp_talk;   ///<強制ワープ後に表示する会話タイプ
 }EVENT_FORCEWARP;
 
 
@@ -665,7 +667,10 @@ GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id)
 /**
  * 自分のパレスへワープし、「不思議な力で戻された」を表示
  *
- * @param   gsys		
+ * @param   gsys		    
+ * @param   warp_talk		強制ワープ後に特別なメッセージを表示したい場合に指定
+ *                      MISSION_FORCEWARP_MSGID_NULLを指定するとGameCommSys_GetLastStatusで
+ *                      表示されるメッセージが決定
  *
  * @retval  GMEVENT *		
  *
@@ -673,11 +678,14 @@ GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id)
  * エラー時は自分のパレスへワープする
  */
 //==================================================================
-GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys)
+GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys, MISSION_FORCEWARP_MSGID warp_talk)
 {
   GMEVENT * event;
+  EVENT_FORCEWARP *evf;
   
   event = GMEVENT_Create( gsys, NULL, EventForceWarpMyPalace, sizeof(EVENT_FORCEWARP) );
+  evf = GMEVENT_GetEventWork(event);
+  evf->warp_talk = warp_talk;
   return event;
 }
 
@@ -749,35 +757,52 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
         
         {
           u32 msg_id;
-          GAME_COMM_LAST_STATUS last_status = GameCommSys_GetLastStatus(game_comm);
-          switch(last_status){
-          case GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT:           //誰かの退出による終了
-            msg_id = plc_connect_13;
-            break;
-          case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS:  //ミッション成功で終了
-            msg_id = plc_connect_09;
-            break;
-          case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL: //ミッション失敗で終了(相手に先を越された)
-            msg_id = plc_connect_10;
-            mission_fail = TRUE;
-            break;
-          case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT:  //ミッション失敗で終了(タイムアウト)
-            msg_id = plc_connect_11;
-            mission_fail = TRUE;
-            break;
-          case GAME_COMM_LAST_STATUS_INTRUDE_ERROR:            //通信エラー
-          default:
-            msg_id = plc_connect_12;
-            break;
+
+          if(evf->warp_talk != MISSION_FORCEWARP_MSGID_NULL){
+            switch(evf->warp_talk){
+            case MISSION_FORCEWARP_MSGID_BATTLE_NG:
+            case MISSION_FORCEWARP_MSGID_SHOP_NG:
+              msg_id = plc_connect_15;
+              break;
+            default:
+              GF_ASSERT(0);
+              msg_id = plc_connect_12;
+              break;
+            }
+            mission_fail = TRUE;  //今の所、失敗でしかこちらにこないのでここでセット
+          }
+          else{
+            GAME_COMM_LAST_STATUS last_status = GameCommSys_GetLastStatus(game_comm);
+            switch(last_status){
+            case GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT:           //誰かの退出による終了
+              msg_id = plc_connect_13;
+              break;
+            case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS:  //ミッション成功で終了
+              msg_id = plc_connect_09;
+              break;
+            case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL: //ミッション失敗で終了(相手に先を越された)
+              msg_id = plc_connect_10;
+              mission_fail = TRUE;
+              break;
+            case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT://ミッション失敗で終了(タイムアウト)
+              msg_id = plc_connect_11;
+              mission_fail = TRUE;
+              break;
+            case GAME_COMM_LAST_STATUS_INTRUDE_ERROR:            //通信エラー
+            default:
+              msg_id = plc_connect_12;
+              break;
+            }
           }
           FLDMSGWIN_STREAM_PrintStart(evf->msgStream, 0, 0, msg_id);
-        }
-        if(mission_fail == TRUE){
-          GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
-          *seq = SEQ_ME_WAIT;
-        }
-        else{
-          *seq = SEQ_MSG_SET;
+          
+          if(mission_fail == TRUE){
+            GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
+            *seq = SEQ_ME_WAIT;
+          }
+          else{
+            *seq = SEQ_MSG_SET;
+          }
         }
       }
     }

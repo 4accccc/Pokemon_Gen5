@@ -40,6 +40,13 @@
 
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+///バトルミッションで繰り出せる手持ちポケモン最大数
+#define BATTLE_MISSION_POKE_MAX   (2)
+
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -186,6 +193,7 @@ void EVENTCHANGE_CommMissionBattle_MtoT_Talk(GMEVENT *event, const COMMTALK_COMM
   talk->ibp.gsys = gsys;
   talk->ibp.target_netid = ccew->talk_netid;
   talk->ibp.flat_level = d_vic->battle_level;
+  talk->ibp.max_poke_num = BATTLE_MISSION_POKE_MAX;
 }
 
 //--------------------------------------------------------------
@@ -236,6 +244,8 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterNumber( talk->ccew.iem.wordset, 1, 
+      talk->ibp.flat_level, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     {
       int msg_id;
       if(talk->first_talked == FALSE){
@@ -341,6 +351,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     if(talk->success == TRUE){
       GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
     }
+    else{
+      GMEVENT_ChangeEvent(
+        event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_BATTLE_NG));
+    }
     return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
   }
 	return GMEVENT_RES_CONTINUE;
@@ -372,6 +386,7 @@ void EVENTCHANGE_CommMissionBattle_TtoM_Talk(GMEVENT *event, const COMMTALK_COMM
   talk->ibp.gsys = gsys;
   talk->ibp.target_netid = talk->ccew.talk_netid;
   talk->ibp.flat_level = d_vic->battle_level;
+  talk->ibp.max_poke_num = BATTLE_MISSION_POKE_MAX;
 }
 
 //--------------------------------------------------------------
@@ -423,6 +438,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterNumber( talk->ccew.iem.wordset, 1, 
+      talk->ibp.flat_level, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     {
       int msg_id;
       if(talk->first_talked == FALSE){
@@ -556,6 +573,7 @@ void EVENTCHANGE_CommMissionBattle_MtoT_Talked(GMEVENT *event, const COMMTALK_CO
   talk->ibp.gsys = gsys;
   talk->ibp.target_netid = talk->ccew.talk_netid;
   talk->ibp.flat_level = d_vic->battle_level;
+  talk->ibp.max_poke_num = BATTLE_MISSION_POKE_MAX;
 }
 
 
@@ -585,5 +603,6 @@ void EVENTCHANGE_CommMissionBattle_TtoM_Talked(GMEVENT *event, const COMMTALK_CO
   talk->ibp.gsys = gsys;
   talk->ibp.target_netid = talk->ccew.talk_netid;
   talk->ibp.flat_level = d_vic->battle_level;
+  talk->ibp.max_poke_num = BATTLE_MISSION_POKE_MAX;
 }
 

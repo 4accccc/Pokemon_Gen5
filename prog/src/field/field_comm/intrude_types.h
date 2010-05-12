@@ -120,6 +120,13 @@ typedef enum{
   INTRUDE_TALK_STATUS_SHOP_ITEM_FULL,          ///<アイテムがいっぱい
 }INTRUDE_TALK_STATUS;
 
+///強制切断後のメッセージID
+typedef enum{
+  MISSION_FORCEWARP_MSGID_NULL,       ///<指定なし
+  MISSION_FORCEWARP_MSGID_BATTLE_NG,  ///<対戦を断られた
+  MISSION_FORCEWARP_MSGID_SHOP_NG,    ///<買い物を断られた
+}MISSION_FORCEWARP_MSGID;
+
 ///同期取り番号
 enum{
     INTRUDE_TIMING_EXIT = 20,

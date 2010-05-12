@@ -320,6 +320,22 @@ POKEMON_PARAM * PokeParty_GetMemberPointer( const POKEPARTY * party, int pos )
 	return (POKEMON_PARAM*)&party->member[pos];
 }
 
+//--------------------------------------------------------------
+/*
+ * @brief 指定Indexのポケモンが戦える(タマゴと瀕死を除いた)ポケモンかを調べる
+ * @param	party	POKEPARTY構造体へのポインタ
+ * @retval	TRUE:戦える　FALSE:戦えない
+ */
+//--------------------------------------------------------------
+BOOL PokeParty_CheckPokeIdxBattleEnable( const POKEPARTY* party, int pos )
+{
+  POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party, pos );
+  if(pp != NULL){
+    return poke_CheckBattleEnable( pp );
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------
 /**
  * @brief	POKEPARTYへポケモンデータを強制セット

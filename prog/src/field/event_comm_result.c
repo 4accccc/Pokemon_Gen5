@@ -269,7 +269,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   #endif
     
     IntrudeEventPrint_ExitFieldMsg(&talk->iem);
-    GMEVENT_ChangeEvent(event, EVENT_IntrudeForceWarpMyPalace(gsys));
+    GMEVENT_ChangeEvent(event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_NULL));
   
     return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
   }

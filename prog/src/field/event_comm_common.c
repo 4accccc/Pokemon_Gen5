@@ -555,7 +555,8 @@ static INTRUDE_TALK_TYPE _IntrudeTalkTypeJudge(EVENT_COMM_COMMON *talk, INTRUDE_
   INTRUDE_TALK_TYPE intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;
   
   //ミッション実施中である
-  if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
+  if(MISSION_GetResultData(&intcomm->mission) == NULL 
+      && MISSION_RecvCheck(&intcomm->mission) == TRUE){
     //ミッション実施者である
     if(MISSION_GetMissionEntry(&intcomm->mission) == TRUE){
     	//話しかけた相手がミッションターゲットの相手である

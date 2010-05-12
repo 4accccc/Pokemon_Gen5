@@ -465,7 +465,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     
     //侵入先のROM相手が切断されていれば自分のパレスへワープ
     if(IntrudeField_CheckIntrudeShutdown(gsys, req.map_id) == TRUE){
-      return EVENT_IntrudeForceWarpMyPalace(gsys);
+      return EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_NULL);
     }
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
       //裏フィールドにいて自分がミッションターゲットにされているなら表へ戻す
@@ -491,7 +491,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     #else
       //ミッションタイムアウトで失敗
       if(MISSION_CheckResultTimeout(&intcomm->mission) == TRUE){
-        return EVENT_IntrudeForceWarpMyPalace(gsys);
+        return EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_NULL);
       }
     #endif
       //隠しアイテムの目的地到達チェック

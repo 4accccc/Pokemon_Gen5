@@ -59,6 +59,7 @@ extern int PokeParty_GetMemberTopIdxBattleEnable( const POKEPARTY * party );
 extern int PokeParty_GetMemberTopIdxNotEgg( const POKEPARTY * party );
 extern void PokeParty_SetMemberData( POKEPARTY* party, int pos, POKEMON_PARAM* pp );
 extern int PokeParty_GetBattlePokeNum(const POKEPARTY * ppt);
+extern BOOL PokeParty_CheckPokeIdxBattleEnable( const POKEPARTY* party, int pos );
 
 //ステータス画面でのポケモンの向き
 extern BOOL PokeParty_GetStatusViewIsFront( POKEPARTY* party, int pos );
