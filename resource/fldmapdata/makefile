@@ -57,3 +57,7 @@ do-build:
 
 clean:
 	@$(MAKE_SUBDIR)
+
+imd_check:
+	ruby ../../tools/nix_check/map_nix_check.rb > result.txt
+
