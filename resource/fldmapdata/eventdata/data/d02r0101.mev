@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/12 17:57:59
+#save date:2010/05/12 19:04:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -36,11 +36,11 @@ DIR_DOWN
 #Move Limit X Number
 0
 #Move Limit Z Number
-16
+10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-904 0 -280
+968 0 -472
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-888 0 -712
+952 0 -280
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ D02R0101_ASSISTANTW_01
 #OBJ CODE Number
 ASSISTANTW
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_D02R0101_ASSISTANTW_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+0
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-952 0 -488
+888 0 -536
 #event number: 3
 #type
 1

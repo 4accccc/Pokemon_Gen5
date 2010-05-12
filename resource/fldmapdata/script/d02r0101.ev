@@ -199,7 +199,7 @@ EVENT_START		ev_pos_d02r0101_event_01
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_01a , D02R0101_LEADER3_01 )
 	
 	//アーティ：自機を見る
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_down_staywalk1 )
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_d_dir )
 	_OBJ_ANIME_WAIT()
 	
 	//いなかったとしても　にげられないように
@@ -214,7 +214,7 @@ EVENT_START		ev_pos_d02r0101_event_01
 	_BALLOONWIN_OBJMSG( msg_d02r0101_leader3_02 , D02R0101_LEADER3_01 )
 	
 	//アーティ：自機を見る
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_down_staywalk )
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_d_dir )
 	_OBJ_ANIME_WAIT()
 	
 	//じゃあ　アロエねえさんの　ため　やりますか！
@@ -261,27 +261,27 @@ _ANIME_LABEL anm_leader_saru
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_leader_pos1
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_pos2
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_pos3
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_pos4
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader_pos5
 	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -330,7 +330,6 @@ EVENT_START		ev_pos_d02r0101_stop
 	_MSGWIN_CLOSE()
 
 	//自機：押し戻される
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_stay_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 	_OBJ_ANIME_WAIT()
 
@@ -472,7 +471,7 @@ EVENT_START		ev_pos_d02r0101_event_02
     }
     
     //プラズマ団員：その場歩き
-    _OBJ_ANIME( D02R0101_HAKAIM1_01, anm_up_staywalk )
+    _OBJ_ANIME( D02R0101_HAKAIM1_01, anm_u_dir )
     _OBJ_ANIME_WAIT()
     
     //しつこい　こどもめ！
@@ -573,7 +572,7 @@ EVENT_START		ev_pos_d02r0101_event_03
     }
     
     //プラズマ団員：その場歩き
-    _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_right_staywalk )
+    _OBJ_ANIME( D02R0101_HAKAIW1_01, anm_r_dir )
     _OBJ_ANIME_WAIT()
     
     //あら　なにか　おさがし　かしら？
@@ -643,6 +642,22 @@ _ANIME_LABEL	anm_hakai2_pos10
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_r_dir
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_u_dir
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_l_dir
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d_dir
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*  D02R0101	プラズマ団員２	盗難イベント会話スクリプト	  */
 /**************************************************************/
@@ -662,10 +677,6 @@ EVENT_START		ev_pos_d02r0101_event_04
     
     //プラズマ団のBGM再生
 	_START_TEMP_EVENT_BGM( SEQ_BGM_EYE_PLASMA )
-	
-    //プラズマ団員：その場歩き
-    _OBJ_ANIME( D02R0101_HAKAIM2_01, anm_left_staywalk )
-    _OBJ_ANIME_WAIT()
 
     //ここまで　きたか
     _BALLOONWIN_OBJMSG_POS( msg_d02r0101_hakaim2_01 , D02R0101_HAKAIM2_01,POS_UR )
@@ -724,10 +735,6 @@ EVENT_START		ev_pos_d02r0101_event_05
    
 	//プラズマ団のBGM再生
 	_START_TEMP_EVENT_BGM( SEQ_BGM_EYE_PLASMA )
-
-    //プラズマ団員：その場歩き
-    _OBJ_ANIME( D02R0101_HAKAIM3_01, anm_down_staywalk )
-    _OBJ_ANIME_WAIT()
 
     //おって　だと？
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_01 , D02R0101_HAKAIM3_01 )
@@ -794,7 +801,7 @@ EVENT_START		ev_pos_d02r0101_event_05
     _MSGWIN_CLOSE()
    
 	//団員：賢者の方を向いてその場歩き
-	_OBJ_ANIME( D02R0101_HAKAIM3_01, anm_left_staywalk )
+	_OBJ_ANIME( D02R0101_HAKAIM3_01, anm_l_dir )
 	_OBJ_ANIME_WAIT()
 
 	//これで　われらの……
@@ -802,7 +809,7 @@ EVENT_START		ev_pos_d02r0101_event_05
     _MSGWIN_CLOSE()
 
 	//賢者５：団員へその場歩き
-	_OBJ_ANIME( D02R0101_SAGE5_01, anm_right_staywalk )
+	_OBJ_ANIME( D02R0101_SAGE5_01, anm_r_dir)
 	_OBJ_ANIME_WAIT()
 
 	//いいのです　こっかくひょうほん
@@ -837,10 +844,6 @@ EVENT_START		ev_pos_d02r0101_event_05
 	_PLAYER_NAME( 0 )
     _BALLOONWIN_OBJMSG( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
     _MSGWIN_CLOSE()
-    
-   	//賢者５：その場歩き
-	_OBJ_ANIME( D02R0101_SAGE5_01, anm_down_staywalk )
-	_OBJ_ANIME_WAIT()
 	
 	//わたしは　プラズマだんの　おうの　もとに
 	_BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_04 , D02R0101_SAGE5_01,POS_UL )
@@ -940,6 +943,7 @@ EVENT_START		ev_pos_d02r0101_event_05
 	_MSGWIN_CLOSE()
 
 	//アロエ・画面外へ去る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miokuru )
 	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader3_leave2 )
 	_OBJ_ANIME_WAIT()
 
@@ -988,6 +992,11 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_go
 	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_miokuru
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
