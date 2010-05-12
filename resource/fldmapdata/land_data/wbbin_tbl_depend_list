@@ -2550,17 +2550,9 @@ $(DIR_WBTMP)/m_ncastle06_00_00.tbl: $(DIR_RES)/m_ncastle06_00_00.bin
 	@echo create_bintbl m_ncastle06_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle06_00_00.bin
 
-$(DIR_WBTMP)/m_ncastle06_01_00.tbl: $(DIR_RES)/m_ncastle06_01_00.bin
-	@echo create_bintbl m_ncastle06_01_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle06_01_00.bin
-
 $(DIR_WBTMP)/m_ncastle06_00_01.tbl: $(DIR_RES)/m_ncastle06_00_01.bin
 	@echo create_bintbl m_ncastle06_00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle06_00_01.bin
-
-$(DIR_WBTMP)/m_ncastle06_01_01.tbl: $(DIR_RES)/m_ncastle06_01_01.bin
-	@echo create_bintbl m_ncastle06_01_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle06_01_01.bin
 
 $(DIR_WBTMP)/m_ncastle07_00_00.tbl: $(DIR_RES)/m_ncastle07_00_00.bin
 	@echo create_bintbl m_ncastle07_00_00
@@ -2662,17 +2654,9 @@ $(DIR_WBTMP)/m_ncastle09_00_00.tbl: $(DIR_RES)/m_ncastle09_00_00.bin
 	@echo create_bintbl m_ncastle09_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle09_00_00.bin
 
-$(DIR_WBTMP)/m_ncastle09_01_00.tbl: $(DIR_RES)/m_ncastle09_01_00.bin
-	@echo create_bintbl m_ncastle09_01_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle09_01_00.bin
-
 $(DIR_WBTMP)/m_ncastle09_00_01.tbl: $(DIR_RES)/m_ncastle09_00_01.bin
 	@echo create_bintbl m_ncastle09_00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle09_00_01.bin
-
-$(DIR_WBTMP)/m_ncastle09_01_01.tbl: $(DIR_RES)/m_ncastle09_01_01.bin
-	@echo create_bintbl m_ncastle09_01_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ncastle09_01_01.bin
 
 $(DIR_WBTMP)/m_cabin01_02_00.tbl: $(DIR_RES)/m_cabin01_02_00.bin
 	@echo create_bintbl m_cabin01_02_00

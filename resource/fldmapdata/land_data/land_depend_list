@@ -606,9 +606,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_ncastle05_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle01_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle06_00_00.3dppack \
-	$(DIR_OUTPUT)/m_ncastle06_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle06_00_01.3dppack \
-	$(DIR_OUTPUT)/m_ncastle06_01_01.3dppack \
 	$(DIR_OUTPUT)/m_ncastle07_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle07_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle08_00_00.3dppack \
@@ -634,9 +632,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0701_01_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0701_02_01.3dppack \
 	$(DIR_OUTPUT)/m_ncastle09_00_00.3dppack \
-	$(DIR_OUTPUT)/m_ncastle09_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle09_00_01.3dppack \
-	$(DIR_OUTPUT)/m_ncastle09_01_01.3dppack \
 	$(DIR_OUTPUT)/m_cabin01_02_00.3dppack \
 	$(DIR_OUTPUT)/m_cabin01_03_00.3dppack \
 	$(DIR_OUTPUT)/m_cabin01_04_00.3dppack \
