@@ -28,15 +28,37 @@ _EVENT_DATA		ev_init_c03pc0101
 
 _EVENT_DATA_END
 
+/************************	  注意	  *************************/
+/*															  */
+/*	同マップで												  */
+/*	LOCALWORK1	…	ジオネットを誘導するイベントで			  */
+/*					主人公が入り口から入ってきたかを判別する  */
+/*															  */
+/*	を使用しました。同マップでの使用を禁止します。			  */
+/*															  */
+/**************************************************************/
+
 /**************************************************************/
 /*            ZONE_INIT_LABEL                              　 */
 /**************************************************************/
 INIT_EVENT_START	ev_init_c03pc0101
-
-	IF FLAG_ON(FE_C03PC0101_GEONET) THEN
-		_OBJ_POS_CHANGE( C03PC0101_TENNISW_01, 8, 0, 12, DIR_UP)
+{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	
+	//主人公の座標取得
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+	
+	//ジオネットのお姉さんと話しかけていなくて、入り口から入ったとき
+	IF FLAG_OFF(FE_C03PC0101_GEONET) && $LWK_POSZ == 19  THEN
+	
+		//お姉さんの位置を、カウンターの正面に移動する
+		_OBJ_POS_CHANGE( C03PC0101_TENNISW_01, 7, 0, 12, DIR_UP)
+		$LOCALWORK1 = 1
 	ENDIF
 	
+	//【仮】ここにグローバルコールで配達員の処理を入れる
+}
 INIT_EVENT_END
 
 //=============================================================
@@ -70,7 +92,7 @@ EVENT_START		ev_c03pc0101_tennisw_01
 	
 	_TALK_OBJ_START()
 	//初回話しかけ時のみ受付の前にいて移動
-	IF FLAG_OFF(FE_C03PC0101_GEONET) THEN
+	IF FLAG_OFF(FE_C03PC0101_GEONET) && $LOCALWORK1 == 1 THEN
 	
 		//ポケモンの回復？
 		_BALLOONWIN_TALKOBJ_MSG(msg_geonet_01)
@@ -85,8 +107,6 @@ EVENT_START		ev_c03pc0101_tennisw_01
 		ENDSWITCH
 		_TIME_WAIT(8)
 		_OBJ_ANIME_WAIT()
-		
-		_FLAG_SET(FE_C03PC0101_GEONET)
 			
 	ENDIF
 
@@ -113,6 +133,11 @@ EVENT_START		ev_c03pc0101_tennisw_01
 		_MSGWIN_CLOSE()
 		
 	ENDIF
+	
+	//===========フラグワーク操作============//
+	//ジオネットのお姉さんと話した
+	_FLAG_SET(FE_C03PC0101_GEONET)
+	//===========フラグワーク操作============//
 
 EVENT_END
 
@@ -121,14 +146,14 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_geonet_avoid_right
 
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_geonet_avoid_left
 
-	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_L_8F,2
 	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
