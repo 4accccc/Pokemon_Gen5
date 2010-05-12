@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/04 10:13:57
+#save date:2010/05/12 13:07:27
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -107,133 +107,9 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_HAKAIW1_08
-#OBJ CODE Number
-HAKAIW
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-FV_D06R0201_PLASMA
-#Event Script Name
-SCRID_TRID_HAKAIW1_08
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-2
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-616 16 56
-#event number: 4
-#type
-1
-#ID name
 TR_HAKAIW1_07
 #OBJ CODE Number
 HAKAIW
-#MOVE CODE Number
-MV_DIR_RND
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-FV_D06R0201_PLASMA
-#Event Script Name
-SCRID_TRID_HAKAIW1_07
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-2
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-568 16 -280
-#event number: 5
-#type
-1
-#ID name
-TR_HAKAIM1_17
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DIR_RND
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-FV_D06R0201_PLASMA
-#Event Script Name
-SCRID_TRID_HAKAIM1_17
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-3
-#Parameter 1 Number
-1
-#Parameter 2 Number
-0
-#Move Limit X Number
-1
-#Move Limit Z Number
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-584 16 -488
-#event number: 6
-#type
-1
-#ID name
-TR_HAKAIM1_18
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-FV_D06R0201_PLASMA
-#Event Script Name
-SCRID_TRID_HAKAIM1_18
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-3
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-712 16 -296
-#event number: 7
-#type
-1
-#ID name
-TR_HAKAIM1_19
-#OBJ CODE Number
-HAKAIM
 #MOVE CODE Number
 MV_LEFT
 #EVENT TYPE Number
@@ -241,7 +117,7 @@ EV_TYPE_TRAINER
 #Flag Name
 FV_D06R0201_PLASMA
 #Event Script Name
-SCRID_TRID_HAKAIM1_19
+SCRID_TRID_HAKAIW1_07
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -257,8 +133,101 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-648 16 -88
-#event number: 8
+600 16 -88
+#event number: 4
+#type
+1
+#ID name
+TR_HAKAIM1_17
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_D06R0201_PLASMA
+#Event Script Name
+SCRID_TRID_HAKAIM1_17
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+584 16 -280
+#event number: 5
+#type
+1
+#ID name
+TR_HAKAIM1_18
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_D06R0201_PLASMA
+#Event Script Name
+SCRID_TRID_HAKAIM1_18
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+520 16 -216
+#event number: 6
+#type
+1
+#ID name
+TR_HAKAIM1_19
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_D06R0201_PLASMA
+#Event Script Name
+SCRID_TRID_HAKAIM1_19
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 16 8
+#event number: 7
 #type
 1
 #ID name
@@ -276,7 +245,7 @@ SCRID_TRID_HAKAIM1_20
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-2
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -288,8 +257,8 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 184
-#event number: 9
+520 0 184
+#event number: 8
 #type
 1
 #ID name
@@ -297,7 +266,7 @@ TR_DOCTOR_01
 #OBJ CODE Number
 DOCTOR
 #MOVE CODE Number
-MV_LEFT
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -305,7 +274,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_DOCTOR_01
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -319,8 +288,8 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 16 -536
-#event number: 10
+712 16 -424
+#event number: 9
 #type
 1
 #ID name
@@ -351,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 424 16 -312
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -359,7 +328,7 @@ TR_HAKAIW1_13
 #OBJ CODE Number
 HAKAIW
 #MOVE CODE Number
-MV_RIGHT
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -367,7 +336,38 @@ FV_D06R0201_PLASMA
 #Event Script Name
 SCRID_TRID_HAKAIW1_13
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 16 56
+#event number: 11
+#type
+1
+#ID name
+TR_HAKAIW1_08
+#OBJ CODE Number
+HAKAIW
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+FV_D06R0201_PLASMA
+#Event Script Name
+SCRID_TRID_HAKAIW1_08
+#Direction Type Number
+DIR_LEFT
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -381,7 +381,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 16 -216
+472 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
