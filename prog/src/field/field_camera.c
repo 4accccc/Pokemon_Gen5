@@ -2614,10 +2614,13 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
     return;
   }
 
+  data = &camera->MoveData;
+  //移動リクエスト中ならばアサート
+  GF_ASSERT_MSG( data->Valid == FALSE, "ERROR:already move" );
+
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
-  data = &camera->MoveData;
   SetNowCameraParam(camera, &data->SrcParam);
   data->DstParam = param->Core;
   data->NowFrm = 0;
@@ -2656,10 +2659,13 @@ void FIELD_CAMERA_SetLinerParamDirect(
     return;
   }
 
+  data = &camera->MoveData;
+  //移動リクエスト中ならばアサート
+  GF_ASSERT_MSG( data->Valid == FALSE, "ERROR:already move" );
+
   //補間移動はダイレクト型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
 
-  data = &camera->MoveData;
   SetNowCameraParam(camera, &data->SrcParam);
   data->DstParam.CamPos = *inCamPos;
   data->DstParam.TrgtPos = *inTrgtPos;
