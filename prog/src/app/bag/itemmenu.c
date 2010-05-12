@@ -277,7 +277,7 @@ static BMPMENULIST_HEADER _itemMenuListHeader = {
 //-----------------------------------------------------------------------------
 static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 {
-	pWork->oamlistpos_old = 0xffff;
+  pWork->oamlistpos_old = 0xffff;
   _windowRewrite(pWork);
 }
 
@@ -305,8 +305,8 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
   ITEMDISP_CellMessagePrint(pWork);
   BTN_DrawCheckBox( pWork );
 //  pWork->bChange = TRUE;
-	pWork->bCursorChange = 1;
-//	pWork->bCellChange = 1;
+  pWork->bCursorChange = 1;
+//  pWork->bCellChange = 1;
 }
 
 //------------------------------------------------------------------------------
@@ -403,7 +403,7 @@ void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID
 {
 //    GFL_MSG_GetString( pWork->MsgManagerItemName, itemID, pWork->pItemNameBuf );
 //    WORDSET_RegisterWord( pWork->WordSet, bufID, pWork->pItemNameBuf, 0, TRUE, PM_LANG );
-	WORDSET_RegisterItemName( pWork->WordSet, bufID, itemID );
+  WORDSET_RegisterItemName( pWork->WordSet, bufID, itemID );
 }
 
 
@@ -858,9 +858,9 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 //  GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
-	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+  if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
     return;
-	}
+  }
 
   // スクロール中フラグクリア
   if( GFL_UI_TP_GetCont() == FALSE ){
@@ -898,7 +898,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     pWork->moveMode = FALSE;
     KTST_SetDraw( pWork, TRUE );
 //    _CHANGE_STATE( pWork, _itemMoveCancel );
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite( pWork );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemMoveCancel );
     return;
@@ -919,20 +919,20 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   if( _itemScrollCheck(pWork) ){
     new_pos = ITEMMENU_GetItemIndex( pWork );
     _ItemChange( pWork, now_pos, new_pos );
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite( pWork );
   // リストタッチ操作
   }else if( _itemMovePositionTouchItem(pWork) ){
     pWork->moveDrag = TRUE;
     ITEMDISP_ScrollCursorChangePos( pWork );
     PMSND_PlaySE( SE_BAG_SLIDE );
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   // キー操作
   }else if( _keyChangeItemCheck(pWork) ){ 
     ITEMDISP_ScrollCursorChangePos( pWork );
     PMSND_PlaySE( SE_BAG_SLIDE );
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
 }
@@ -1311,6 +1311,7 @@ static int _check_AmaiMitu( FIELD_ITEMMENU_WORK *pWork )
   if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_AMAIMITU)){
       pWork->ret_code = BAG_NEXTPROC_AMAIMITU;  //あまいミツ
     _CHANGE_STATE(pWork,NULL);
+    ITEM_Sub( pWork, 1 );   // アイテムを減らす
     return TRUE;
   }else{
     // 使えない
@@ -1420,8 +1421,9 @@ static int _check_AnanukenoHimo( FIELD_ITEMMENU_WORK *pWork )
   if(BAG_MENU_TSUKAU == pWork->ret_code2){
     if( ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_ANANUKENOHIMO ) )
     {
-      pWork->ret_code = BAG_NEXTPROC_ANANUKENOHIMO;  // バッグもメニューも閉じて、ダウジングマシンを使う
+      pWork->ret_code = BAG_NEXTPROC_ANANUKENOHIMO;  // バッグもメニューも閉じて、あなぬけのヒモを使う
       _CHANGE_STATE( pWork, NULL );
+      ITEM_Sub( pWork, 1 );   // アイテムを減らす
       return TRUE;
     }
     else
@@ -1531,13 +1533,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     case BAG_MENU_TSUKAU:  
       ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンをパッシブへ
 
-      if( pWork->pocketno != BAG_POKE_EVENT){ //大切なもの以外はビーコンを飛ばす
+      if( pWork->pocketno != BAG_POKE_EVENT){     //大切なもの以外はビーコンを飛ばす
         GAMEBEACON_Set_UseItem( pWork->ret_item );
       }
-      if((pWork->pocketno==BAG_POKE_WAZA)){         //技マシン
+      if((pWork->pocketno==BAG_POKE_WAZA)){       //技マシン
         _CHANGE_STATE(pWork,_itemTecniqueUseInit);
       }else if(1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )){
-        pWork->ret_code = BAG_NEXTPROC_EVOLUTION;   //進化アイテム
+        pWork->ret_code = BAG_NEXTPROC_EVOLUTION; //進化アイテム
         _CHANGE_STATE(pWork,NULL);
       }else if(_hit_item(pWork->ret_item)>=0){    // どうぐ使用チェックを増やせる構造
         ItemUseFuncTable[_hit_item(pWork->ret_item)].check( pWork );
@@ -1584,13 +1586,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     // ----------かいじょ------------
     case BAG_MENU_TOUROKU:  
     case BAG_MENU_KAIZYO:   
-			if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
-	      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-	      ITEMDISP_ChangeActive( pWork, TRUE );
-	      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
-//	      _CHANGE_STATE(pWork, _itemKindSelectMenu);
-	      ChangeStateItemKindSelectItemMenu( pWork );
-			}
+      if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+        SHORTCUT_SetEventItem( pWork, pWork->curpos );
+        ITEMDISP_ChangeActive( pWork, TRUE );
+        GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+//        _CHANGE_STATE(pWork, _itemKindSelectMenu);
+        ChangeStateItemKindSelectItemMenu( pWork );
+      }
       break;
     // ----------みる------------
     case BAG_MENU_MIRU:
@@ -1719,9 +1721,9 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   u32 ret=0;
 //  BOOL bChange=FALSE;
 
-	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+  if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
     return;
-	}
+  }
 
   // スクロール中フラグクリア
   if( GFL_UI_TP_GetCont() == FALSE ){
@@ -1757,24 +1759,24 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
-	    if( pWork->pocketno == BAG_POKE_EVENT ){
-	      SHORTCUT_SetEventItem( pWork, pWork->curpos );
-	    }else{
-	      SHORTCUT_SetPocket( pWork );
-	    }
-	    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-	      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
-	      KTST_SetDraw( pWork, TRUE );
-	    }
-		}
+    if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+      if( pWork->pocketno == BAG_POKE_EVENT ){
+        SHORTCUT_SetEventItem( pWork, pWork->curpos );
+      }else{
+        SHORTCUT_SetPocket( pWork );
+      }
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+        ITEMDISP_upMessageRewrite(pWork); // 上画面表示
+        KTST_SetDraw( pWork, TRUE );
+      }
+    }
     return;
   // ソート
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
     if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, TRUE );
-			pWork->oamlistpos_old = 0xffff;
+      pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
       _CHANGE_STATE( pWork, _sortMessageSet );
       return;
@@ -1809,23 +1811,23 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
-	    GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
-	    MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
-	    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
-	    ITEMDISP_ChangeMoveModeButton( pWork, FALSE );
-	    pWork->moveMode = TRUE;
-//	    _CHANGE_STATE(pWork,_itemMovePosition);
-	    ChangeStateItemMovePosition( pWork );
-		}
+      GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
+      MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
+      GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
+      ITEMDISP_ChangeMoveModeButton( pWork, FALSE );
+      pWork->moveMode = TRUE;
+//      _CHANGE_STATE(pWork,_itemMovePosition);
+      ChangeStateItemMovePosition( pWork );
+    }
     return;
   }
   // タッチスクロール
   else if( _itemScrollCheck(pWork) )
   {
 //    bChange = TRUE;
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
-		return;
+    return;
   }
   // キー操作
   else if( _keyMoveCheck(pWork) )
@@ -1834,12 +1836,12 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     PMSND_PlaySE( SE_BAG_SLIDE );
 //    bChange = TRUE;
     _windowRewrite(pWork);
-		return;
+    return;
   }
 
   {
     if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-			u32	oldpocket = pWork->pocketno;
+      u32 oldpocket = pWork->pocketno;
       pWork->pocketno++;
       if( pWork->pocketno >= BAG_POKE_MAX ){
         pWork->pocketno = 0;
@@ -1848,7 +1850,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
       return;
     }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-			u32	oldpocket = pWork->pocketno;
+      u32 oldpocket = pWork->pocketno;
       pWork->pocketno--;
       if( pWork->pocketno < 0 ){
         pWork->pocketno = BAG_POKE_MAX-1;
@@ -1944,17 +1946,17 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTecniqueUseWaitSE(FIELD_ITEMMENU_WORK* pWork)
 {
-	if( PMSND_CheckPlaySE() == TRUE ){
-		return;
-	}
+  if( PMSND_CheckPlaySE() == TRUE ){
+    return;
+  }
 
-	if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() ){
-		GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
-		WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
-		WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-		ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
-		_CHANGE_STATE(pWork,_itemTecniqueUseWait);
-	}
+  if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() ){
+    GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
+    WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+    _CHANGE_STATE(pWork,_itemTecniqueUseWait);
+  }
 }
 
 static void _itemTecniqueUseStartSE(FIELD_ITEMMENU_WORK* pWork)
@@ -1963,7 +1965,7 @@ static void _itemTecniqueUseStartSE(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
-	// 起動後のＳＥ
+  // 起動後のＳＥ
   PMSND_PlaySE( SE_BAG_WAZA );
   _CHANGE_STATE( pWork, _itemTecniqueUseWaitSE );
 }
@@ -1984,14 +1986,14 @@ static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
   ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
   _CHANGE_STATE(pWork,_itemTecniqueUseWait);
 */
-	// 起動した
-	if( ITEM_GetHidenMashineNo( pWork->ret_item ) == 0xff ){
-		GFL_MSG_GetString( pWork->MsgManager, msg_bag_063, pWork->pExpStrBuf );
-	}else{
-		GFL_MSG_GetString( pWork->MsgManager, msg_bag_064, pWork->pExpStrBuf );
-	}
-	ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
-	_CHANGE_STATE( pWork, _itemTecniqueUseStartSE );
+  // 起動した
+  if( ITEM_GetHidenMashineNo( pWork->ret_item ) == 0xff ){
+    GFL_MSG_GetString( pWork->MsgManager, msg_bag_063, pWork->pExpStrBuf );
+  }else{
+    GFL_MSG_GetString( pWork->MsgManager, msg_bag_064, pWork->pExpStrBuf );
+  }
+  ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+  _CHANGE_STATE( pWork, _itemTecniqueUseStartSE );
 }
 
 //=============================================================================
@@ -2015,7 +2017,7 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
   {
     // 再描画
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
 
 //    InputNum_ButtonState( pWork, TRUE );
@@ -2383,7 +2385,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           ITEMDISP_GoldDispWrite( pWork );
 
           // 再描画
-					pWork->oamlistpos_old = 0xffff;
+          pWork->oamlistpos_old = 0xffff;
           _windowRewrite(pWork);
 
           // 「○○○を　わたして XXXXXX円 うけとった」
@@ -2491,8 +2493,8 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
       // リストを下げる
       pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
 //      pWork->bChange = TRUE;
-			pWork->bCursorChange = 1;
-//			pWork->bCellChange = 1;
+      pWork->bCursorChange = 1;
+//      pWork->bCellChange = 1;
       
       HOSAKA_Printf("oamlistpos=%d\n", pWork->oamlistpos);
     }
@@ -2945,7 +2947,7 @@ static void SORT_Main( FIELD_ITEMMENU_WORK* pWork )
 {
   SORT_Type( pWork );
   // 再描画
-	pWork->oamlistpos_old = 0xffff;
+  pWork->oamlistpos_old = 0xffff;
   _windowRewrite( pWork );
 }
 
@@ -3040,12 +3042,12 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //-----------------------------------------------------------------------------
 BOOL ITEMMENU_CheckShortCutSetMode( FIELD_ITEMMENU_WORK* pWork )
 {
-	if( pWork->mode == BAG_MODE_FIELD ||
-			pWork->mode == BAG_MODE_UNION ||
-			pWork->mode == BAG_MODE_COLOSSEUM ){
-		return TRUE;
-	}
-	return FALSE;
+  if( pWork->mode == BAG_MODE_FIELD ||
+      pWork->mode == BAG_MODE_UNION ||
+      pWork->mode == BAG_MODE_COLOSSEUM ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
@@ -3057,23 +3059,23 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
     if( ITEMMENU_GetItemPocketNumber(pWork) <= pos ){
       return;
     }else{
-	    ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
-			SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
-			// 登録可能かチェック
-			if( shortcut_id == SHORTCUT_ID_NULL ){
-				return;
-			}
+      ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
+      SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
+      // 登録可能かチェック
+      if( shortcut_id == SHORTCUT_ID_NULL ){
+        return;
+      }
 
-			if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == TRUE ){
-	      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
-	    }else{
-	      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
-			}
+      if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == TRUE ){
+        GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
+      }else{
+        GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
+      }
     }
 
     PMSND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
 
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
 }
@@ -3130,10 +3132,10 @@ static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork )
   SHORTCUT_ID id;
   BOOL is_active;
 
-	// 入れ替え時は処理しない
-	if( pWork->moveMode == TRUE ){
-		return;
-	}
+  // 入れ替え時は処理しない
+  if( pWork->moveMode == TRUE ){
+    return;
+  }
 
   id = SHORTCUT_GetPocket( pWork->pocketno );
   is_active = GAMEDATA_GetShortCut( pWork->gamedata, id );
@@ -3454,7 +3456,7 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 BOOL ITEMMENU_CheckCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no)
 {
-	return GAMEDATA_GetShortCut( pWork->gamedata, SHORTCUT_DATA_GetItemToShortcutID(no) );
+  return GAMEDATA_GetShortCut( pWork->gamedata, SHORTCUT_DATA_GetItemToShortcutID(no) );
 }
 
 //----------------------------------------------------------------------------
@@ -3522,7 +3524,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   // ポケット切り替え左ボタン
   }else if(BUTTONID_LEFT == bttnid){
-		u32	oldpocket = pWork->pocketno;
+    u32 oldpocket = pWork->pocketno;
     pWork->pocketno--;
     if(pWork->pocketno < 0){
       pWork->pocketno = BAG_POKE_MAX-1;
@@ -3532,7 +3534,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   // ポケット切り替え右ボタン
   }else if(BUTTONID_RIGHT == bttnid){
-		u32	oldpocket = pWork->pocketno;
+    u32 oldpocket = pWork->pocketno;
     pWork->pocketno++;
     if(pWork->pocketno >= BAG_POKE_MAX){
       pWork->pocketno = 0;
@@ -3546,18 +3548,18 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, FALSE );
-			pWork->oamlistpos_old = 0xffff;
+      pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
       _CHANGE_STATE( pWork, _sortMessageSet );
     }
   // Ｙ登録ボタン
   }else if(BUTTONID_CHECKBOX == bttnid){
-		if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
-	    SHORTCUT_SetPocket( pWork );
-	    KTST_SetDraw( pWork, FALSE );
-			pWork->oamlistpos_old = 0xffff;
-	    _windowRewrite(pWork);
-		}
+    if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+      SHORTCUT_SetPocket( pWork );
+      KTST_SetDraw( pWork, FALSE );
+      pWork->oamlistpos_old = 0xffff;
+      _windowRewrite(pWork);
+    }
   // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
@@ -3597,7 +3599,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
       // タッチ通知
       KTST_SetDraw( pWork, FALSE ); 
-			pWork->oamlistpos_old = 0xffff;
+      pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
 
       // 上画面表示
@@ -3609,10 +3611,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   // チェックボックス
   }else if(bttnid >= BUTTONID_CHECK_AREA){
-		if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
-	    int no = bttnid - BUTTONID_CHECK_AREA;
-	    SHORTCUT_SetEventItem( pWork, no );
-		}
+    if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
+      int no = bttnid - BUTTONID_CHECK_AREA;
+      SHORTCUT_SetEventItem( pWork, no );
+    }
   }
 
   if(pocketno != -1){
@@ -3624,7 +3626,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     SORT_ModeReset( pWork );
 
     KTST_SetDraw( pWork, FALSE );
-		pWork->oamlistpos_old = 0xffff;
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
 }
@@ -3751,23 +3753,23 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
     MYITEM_FieldBagCursorGet(pWork->pBagCursor, pWork->pocketno, &cur, &scr );
     pWork->curpos = cur;
     pWork->oamlistpos = scr - 1;
-		// カーソル位置補正
-		while( 1 ){
-			if( pWork->curpos == 0 && pWork->oamlistpos == -1 ){
-				break;
-			}
-			{
-				ITEM_ST * item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
-				if( item->id != 0 && item->no != 0 ){
-					break;
-				}
-			}
-			if( pWork->oamlistpos != -1 ){
-				pWork->oamlistpos--;
-			}else if( pWork->curpos != 0 ){
-				pWork->curpos--;
-			}
-		}
+    // カーソル位置補正
+    while( 1 ){
+      if( pWork->curpos == 0 && pWork->oamlistpos == -1 ){
+        break;
+      }
+      {
+        ITEM_ST * item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
+        if( item->id != 0 && item->no != 0 ){
+          break;
+        }
+      }
+      if( pWork->oamlistpos != -1 ){
+        pWork->oamlistpos--;
+      }else if( pWork->curpos != 0 ){
+        pWork->curpos--;
+      }
+    }
   }
 
   // 文字列初期化
@@ -3793,7 +3795,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pItemNameBuf = GFL_STR_CreateBuffer(64,pWork->heapID);
   pWork->WordSet    = WORDSET_Create( pWork->heapID );
 //  pWork->SysMsgQue  = PRINTSYS_QUE_Create( pWork->heapID );
-	pWork->SysMsgQue  = PRINTSYS_QUE_CreateEx( 1024*4, pWork->heapID );		// デフォルトの４倍
+  pWork->SysMsgQue  = PRINTSYS_QUE_CreateEx( 1024*4, pWork->heapID );   // デフォルトの４倍
   pWork->MsgCursorWork =  APP_KEYCURSOR_Create( 15, TRUE, TRUE, pWork->heapID );
   pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                        GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
@@ -3871,7 +3873,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   }
 */
 
-	pWork->oamlistpos_old = pWork->oamlistpos;
+  pWork->oamlistpos_old = pWork->oamlistpos;
 
   state(pWork);
   _dispMain(pWork);
@@ -3885,19 +3887,19 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
     pWork->bChange = FALSE;
   }
 */
-	// カーソル位置変更
-	if( pWork->bCursorChange ){
-		ITEMDISP_CangeCursorPos( pWork );
-		pWork->bCursorChange = 0;
-	}
-	// リスト転送
-	if( pWork->bCellChange ){
-		ITEMDISP_CellVramTrans( pWork );
-		pWork->bCellChange = 0;
-	}
+  // カーソル位置変更
+  if( pWork->bCursorChange ){
+    ITEMDISP_CangeCursorPos( pWork );
+    pWork->bCursorChange = 0;
+  }
+  // リスト転送
+  if( pWork->bCellChange ){
+    ITEMDISP_CellVramTrans( pWork );
+    pWork->bCellChange = 0;
+  }
 
 //  PRINTSYS_QUE_Main(pWork->SysMsgQue);
-	ITEMDISP_PrintUtilTrans( pWork );
+  ITEMDISP_PrintUtilTrans( pWork );
 
   GFL_TCBL_Main( pWork->pMsgTcblSys );
 
@@ -3920,9 +3922,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
     return GFL_PROC_RES_CONTINUE;
   }
 
-	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+  if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
     return GFL_PROC_RES_CONTINUE;
-	}
+  }
 
   // GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
   GFL_TCB_DeleteTask( pWork->g3dVintr );
@@ -4114,7 +4116,7 @@ static void SetEndButtonAnime( FIELD_ITEMMENU_WORK * wk, u16 type, StateFunc * n
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[wk->tmpSeq], TRUE );
   wk->chgState = next;
 
-	_CHANGE_STATE( wk, _endButtonAnime );
+  _CHANGE_STATE( wk, _endButtonAnime );
 }
 
 static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk )
@@ -4134,7 +4136,7 @@ static void SetPageButtonAnime( FIELD_ITEMMENU_WORK * wk, u32 old, u16 type, Sta
   // ソートボタン表示切替
   SORT_ModeReset( wk );
   BTN_DrawCheckBox( wk );
-	wk->oamlistpos_old = 0xffff;
+  wk->oamlistpos_old = 0xffff;
   _windowRewrite( wk );
 
   if( type == BAR_ICON_RIGHT ){
@@ -4145,24 +4147,24 @@ static void SetPageButtonAnime( FIELD_ITEMMENU_WORK * wk, u32 old, u16 type, Sta
     anm = APP_COMMON_BARICON_CURSOR_LEFT_ON;
   }
   wk->tmpSeq = type;
-	wk->tmpCnt = 6;
+  wk->tmpCnt = 6;
 
   GFL_CLACT_WK_SetAnmFrame( wk->clwkBarIcon[wk->tmpSeq], 0 );
   GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[wk->tmpSeq], anm );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[wk->tmpSeq], TRUE );
   wk->chgState = next;
 
-	_CHANGE_STATE( wk, _waitCount );
+  _CHANGE_STATE( wk, _waitCount );
 }
 
 static void _waitCount( FIELD_ITEMMENU_WORK * wk )
 {
-	if( wk->tmpCnt == 0 ){
+  if( wk->tmpCnt == 0 ){
     wk->tmpSeq = 0;
     _CHANGE_STATE( wk, wk->chgState );
-	}else{
-		wk->tmpCnt--;
-	}
+  }else{
+    wk->tmpCnt--;
+  }
 }
 
 
@@ -4281,7 +4283,7 @@ static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk )
     return;
   }
 
-	wk->oamlistpos_old = 0xffff;
+  wk->oamlistpos_old = 0xffff;
   _windowRewrite( wk );
   ITEMDISP_ListPlateClear( wk );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
@@ -4316,7 +4318,7 @@ static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk )
   // ソートボタン表示切替
   SORT_ModeReset( wk );
   BTN_DrawCheckBox( wk );
-	wk->oamlistpos_old = 0xffff;
+  wk->oamlistpos_old = 0xffff;
   _windowRewrite( wk );
 
   wk->tmpCnt = 0;
