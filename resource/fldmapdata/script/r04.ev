@@ -29,6 +29,8 @@ _EVENT_DATA		ev_bg_r04_sign3_01
 _EVENT_DATA		ev_bg_r04_sign4_01
 _EVENT_DATA		ev_bg_r04_sign1_01
 _EVENT_DATA		ev_r04_mountain_01
+_EVENT_DATA		ev_init_r04
+_EVENT_DATA		ev_recover_r04
 _EVENT_DATA_END
 
 
@@ -37,6 +39,33 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_r04_flag_change:
 //  _END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r04
+	_CALL ev_stopper
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_r04
+	_CALL ev_stopper
+INIT_EVENT_END
+
+ev_stopper:
+	
+//分岐：ジムバッジを取得しているか？
+_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
+//ジムバッジを取得していない場合
+IF $SCWK_TEMP0 == 0 THEN
+//取得している場合
+ELSE
+	_OBJ_POS_CHANGE( R04_STOP_01, 429, 0, 565, DIR_DOWN )
+ENDIF
+	
+_RET
 
 /**************************************************************/
 /*			R04 ストッパー	会話用イベントスクリプト		  */
@@ -129,7 +158,6 @@ IF $SCWK_TEMP0 == 0 THEN
 	
 	//なんだ？　ヒウンジムの　ジムバッジも　もってない　やつに
 	_BALLOONWIN_OBJMSG( msg_r04_stop_02 , R04_STOP_01 )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 		
 //ジムバッジを取得している場合

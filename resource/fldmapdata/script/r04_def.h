@@ -15,5 +15,7 @@
 #define SCRID_BG_R04_SIGN4_01 (8)
 #define SCRID_BG_R04_SIGN1_01 (9)
 #define SCRID_R04_MOUNTAIN_01 (10)
+#define SCRID_INIT_R04 (11)
+#define SCRID_RECOVER_R04 (12)
 
 #endif //_R04_DEF_H_
