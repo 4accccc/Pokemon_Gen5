@@ -242,7 +242,11 @@ struct _CGEAR_POWER_ONOFF {
   u16 type;
   u16 seq;
 
-  BOOL off;
+  u16 off;
+  u16 main_end;
+
+
+  
 
 };
 
@@ -362,10 +366,12 @@ void CGEAR_POWER_ONOFF_Main( CGEAR_POWER_ONOFF* p_sys, BOOL active )
 
   // 上画面はアクティブでないじょうたいである必要がある。
   
-
-  if( pFunc[ p_sys->type ]( p_sys ) )
-  {
-    FIELD_SUBSCREEN_SetAction( p_sys->p_subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_POWER_EXIT );
+  if( p_sys->main_end == FALSE ){
+    if( pFunc[ p_sys->type ]( p_sys ) )
+    {
+      FIELD_SUBSCREEN_SetAction( p_sys->p_subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_POWER_EXIT );
+      p_sys->main_end = TRUE;
+    }
   }
 
   // キューメイン

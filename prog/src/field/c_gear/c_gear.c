@@ -3083,6 +3083,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                                 CGEAR_REND_SUB,
                                                 pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], FALSE );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[i], FALSE ); //SRTアニメ反映OFF
   }
   _editMarkONOFF(pWork,FALSE);
 
@@ -3111,6 +3112,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                               CGEAR_REND_SUB,
                                               pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], FALSE );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellType[i], FALSE );  // SRTアニメOFF
   }
   _timeAnimation(pWork);
   _typeAnimation(pWork);
@@ -3319,6 +3321,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                CGEAR_REND_SUB,
                                                pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCross, FALSE );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCross, FALSE );
   }
   {
     cellInitData.pos_x = POS_CROSS_X_CENTER;
@@ -3334,6 +3337,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                CGEAR_REND_SUB,
                                                pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCrossBase, FALSE );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCrossBase, FALSE );
     
   }
 
@@ -3353,6 +3357,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                             CGEAR_REND_SUB,
                                             pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, FALSE );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellRadar, FALSE );
   }
 }
 
