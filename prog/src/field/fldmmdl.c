@@ -142,6 +142,8 @@ static void mmdl_ChangeOBJAlies(
 //OBJCODE_PARAM
 static void mmdlsys_InitOBJCodeParam( MMDLSYS *mmdlsys, HEAPID heapID );
 static void mmdlsys_DeleteOBJCodeParam( MMDLSYS *mmdlsys );
+static void mmdlsys_LoadSetMMdlOBJCodeParam(
+    const MMDLSYS *mmdlsys, u16 code, MMDL *mmdl );
 
 //parts
 static u16 WorkOBJCode_GetOBJCode( const EVENTWORK *ev, u16 code );
@@ -628,12 +630,7 @@ static void mmdl_SetHeaderBefore(
   
   obj_code = WorkOBJCode_GetOBJCode( ev, head->obj_code );
   MMDL_SetOBJCode( mmdl, obj_code );
-  
-  //ステータスビットを一時的に降ろし
-  //MMDLSYS_LoadOBJCodeParam()既出検索の対象から外す
-  MMDL_OffStatusBit( mmdl, MMDL_STABIT_USE );
-  MMDLSYS_LoadOBJCodeParam( mmdlsys, obj_code, &mmdl->objcode_param );
-  MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
+  mmdlsys_LoadSetMMdlOBJCodeParam( mmdlsys, obj_code, mmdl );
   
   param = &mmdl->objcode_param;
   
@@ -4410,12 +4407,7 @@ void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code )
   }
   
   MMDL_SetOBJCode( mmdl, code );
-
-  //ステータスビットを一時的に降ろし
-  //MMDLSYS_LoadOBJCodeParam()既出検索の対象から外す
-  MMDL_OffStatusBit( mmdl, MMDL_STABIT_USE );
-  MMDLSYS_LoadOBJCodeParam( mmdlsys, code, &mmdl->objcode_param );
-  MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
+  mmdlsys_LoadSetMMdlOBJCodeParam( mmdlsys, code, mmdl );
   
   { //新規OBJCODE_PARAM
     const OBJCODE_PARAM *param = &mmdl->objcode_param;
@@ -4504,7 +4496,6 @@ const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 void MMDLSYS_LoadOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *outParam )
 {
-#if 0
   { //既にロード済みの同一コードを持つ動作モデルを探す
     u32 no = 0;
     MMDL *mmdl;
@@ -4512,11 +4503,12 @@ void MMDLSYS_LoadOBJCodeParam(
     while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
       if( MMDL_GetOBJCode(mmdl) == code ){
         *outParam = mmdl->objcode_param;
+        D_MMDL_DPrintf(
+            "MMDLSYS_LoadOBJCodeParam() 既存データアリ ロードせず\n" );
         return;
       }
     }
   }
-#endif
   
   {
     u16 size = sizeof( OBJCODE_PARAM );
@@ -4528,6 +4520,29 @@ void MMDLSYS_LoadOBJCodeParam(
         offs, size, outParam );
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS OBJCODE_PARAMを動作モデルにセット
+ * @param  mmdlsys  MMDLSYS *
+ * @param  code  取得するOBJコード
+ * @param  mmdl ロード先MMDL
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void mmdlsys_LoadSetMMdlOBJCodeParam(
+    const MMDLSYS *mmdlsys, u16 code, MMDL *mmdl )
+{
+  //ステータスビットを一時的に降ろし
+  //MMDLSYS_LoadOBJCodeParam()既出検索の対象から外す
+  MMDL_OffStatusBit( mmdl, MMDL_STABIT_USE );
+  
+  //ロード
+  MMDLSYS_LoadOBJCodeParam( mmdlsys, code, &mmdl->objcode_param );
+  
+  //元に戻す
+  MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
+} 
 
 //--------------------------------------------------------------
 /**
@@ -5176,29 +5191,21 @@ void DEBUG_MMDLSYS_CheckSpeed( MMDLSYS *mmdlsys )
 {
   OBJCODE_PARAM param;
   MMDL *mmdl = MMDLSYS_SearchMMdlPlayer( mmdlsys );
-  u16 code = MMDL_GetOBJCode( mmdl );
-  
+  u16 code;
+
+  code = MMDL_GetOBJCode( mmdl );
+#if 0  
   if( code == HERO ){
     code = HEROINE;
   }else{
     code = HERO;
   }
-
+#endif  
   INIT_CHECK();
   SET_CHECK( "MMDL CHECK PARAM_START" );
   SET_CHECK( "MMDL CHECK PARAM0" );
   
-#if 0  
-  //ハンドル使用で約270ms
-  GFL_ARC_LoadDataOfsByHandle(
-      handle,
-      NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
-      OBJCODE_PARAM_TOTAL_NUMBER_SIZE,
-      sizeof(OBJCODE_PARAM),
-      &param );
-#else
   MMDLSYS_LoadOBJCodeParam( mmdlsys, code, &param );
-#endif
   
   SET_CHECK( "MMDL CHECK PARAM1" );
   SET_CHECK( "MMDL CHECK PARAM_END" );
