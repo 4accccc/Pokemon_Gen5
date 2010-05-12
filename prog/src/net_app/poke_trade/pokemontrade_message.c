@@ -58,7 +58,7 @@
 
 static void _select6keywait(POKEMON_TRADE_WORK* pWork);
 static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
-static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork,BOOL bGTSNEGO);
+static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork,BOOL bGTSNEGO, BOOL bShu);
 
 
 
@@ -607,19 +607,23 @@ static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKE
  */
 //------------------------------------------------------------------------------
 
-static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork,BOOL bGTSNEGO)
+static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork,BOOL bGTSNEGO, BOOL bShu)
 {
-  int sex,flg;
+  int sex,flg,no;
   PRINTSYS_LSB fontCol;
 
   sex =	PP_Get(pp, ID_PARA_sex, NULL);
   flg =	PP_Get(pp, ID_PARA_nidoran_nickname, NULL);
+  no = PP_Get(pp, ID_PARA_monsno, NULL);
 
   if(sex > PM_FEMALE){
     return;  //•\Ž¦‚µ‚È‚¢
   }
   if(!flg){
     return;  //•\Ž¦‚µ‚È‚¢
+  }
+  if(bShu && (no == MONSNO_NIDORAN_F)){  //‹­§Ží‘°–¼•\Ž¦
+    return;
   }
   
   if(bGTSNEGO){
@@ -773,7 +777,7 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
   _pokeNickNameMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin[side]), 2*8, 0,
                        bEgg, POKEMONTRADEPROC_IsTimeWaitSelect(pWork), pWork);
   if(!bEgg){
-    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin[side]), 10*8, 0, pWork, FALSE);
+    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin[side]), 10*8, 0, pWork, FALSE,POKEMONTRADEPROC_IsTimeWaitSelect(pWork));
     GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
     _pokeLvMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin[side]), 16, 19, pWork);
     _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
@@ -915,7 +919,7 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
       _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 3*8 ,16*8,pWork);
       _pokeHpHpmaxMsgDisp(pp, pWork->MyInfoWin, 8*8,4*8, pWork);
       _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 10*8,6*8, pWork);
-      _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 12*8, 0, pWork, FALSE);
+      _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 12*8, 0, pWork, FALSE,FALSE);
 
       IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
       IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
@@ -1009,7 +1013,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
     _pokeZukanNoMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0, 8*2,bEgg,pWork);
     _pokeKindNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 7*8, 8*2,bEgg,pWork);
     _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 0,pWork);
-    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE);
+    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE,POKEMONTRADEPROC_IsTimeWaitSelect(pWork));
 
     _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 0 ,4*8,pWork);
 
@@ -1137,7 +1141,7 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame)
         
         _pokeNickNameMsgDisp(pp, pWork->listBmp[side*4+poke+1], 0,  0 , bEgg,FALSE, pWork);
         if(!bEgg){
-          _pokeSexMsgDisp(pp, pWork->listBmp[side*4+poke+1], 7*8, 2*8, pWork, FALSE);
+          _pokeSexMsgDisp(pp, pWork->listBmp[side*4+poke+1], 7*8, 2*8, pWork, FALSE, FALSE);
           _pokeLvMsgDisp(pp, pWork->listBmp[side*4+poke+1], 0,  2*8, pWork);
         }
       }
@@ -1225,9 +1229,9 @@ void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMO
 
   GFL_FONTSYS_SetColor( 1, 2, palette[side*2] );
 
-  _pokeNickNameMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 2*8, 4, bEgg,FALSE, pWork);
+  _pokeNickNameMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 2*8, 4, bEgg, POKEMONTRADEPROC_IsTimeWaitSelect(pWork)  , pWork);
   if(!bEgg){
-    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 10*8, 4, pWork, TRUE);
+    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 10*8, 4, pWork, TRUE, POKEMONTRADEPROC_IsTimeWaitSelect(pWork));
     _pokeLvMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 16, 19, pWork);
     GFL_FONTSYS_SetColor( 1, 2, palette[side*2+1] );
     _pokePocketItemMsgDisp(pp, pWork->StatusWin2[side], 16, 16*8, pWork);
