@@ -204,7 +204,11 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
     FLD_EXP_OBJ_AddUnit(ptr, &SetupBlack, LEGEND_UNIT_IDX );
   }
   gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN;
-  
+
+  //OBJ‚ð”ñ•\Ž¦ó‘Ô‚É‚·‚é
+  FLD_EXP_OBJ_SetVanish(ptr, LEGEND_UNIT_IDX, OBJ_STONE, TRUE);
+  FLD_EXP_OBJ_SetVanish(ptr, LEGEND_UNIT_IDX, OBJ_BALL_OUT, TRUE);
+
   //3‚c‚n‚a‚i‰Šú‰»
   //ƒAƒjƒ‚Ìó‘Ô‚ð‰Šú‰»
   for (i=0;i<STONE_ANM_NUM;i++)

@@ -293,8 +293,12 @@ void SPPOKE_GMK_SetupTrio(FIELDMAP_WORK *fieldWork)
   ;
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnit(ptr, &SetupTrio, SPPOKE_TRIO_UNIT_IDX );
-  
+
   //ボール初期化
+  //OBJを非表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, OBJ_BALL_IN, TRUE);
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_TRIO_UNIT_IDX, OBJ_BALL_OUT, TRUE);
+  
   //アニメの状態を初期化
   for (i=0;i<BALL_ANM_NUM;i++)
   {
@@ -375,6 +379,9 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_AddUnit(ptr, &SetupMero, SPPOKE_MERO_UNIT_IDX );
   
   //ボール初期化
+  //OBJを非表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_IN, TRUE);
+  FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_OUT, TRUE);
   //アニメの状態を初期化
   for (i=0;i<BALL_ANM_NUM;i++)
   {
@@ -462,6 +469,9 @@ void SPPOKE_GMK_SetupZoroa(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_AddUnit(ptr, &SetupZoroa, ZOROA_UNIT_IDX );
   
   //ボール初期化
+  //OBJを非表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, ZOROA_UNIT_IDX, OBJ_BALL_IN, TRUE);
+  FLD_EXP_OBJ_SetVanish(ptr, ZOROA_UNIT_IDX, OBJ_BALL_OUT, TRUE);
   //アニメの状態を初期化
   for (i=0;i<BALL_ANM_NUM;i++)
   {
