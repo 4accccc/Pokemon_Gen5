@@ -463,7 +463,17 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     (*seq) ++;
     break;
   case P2P_BATTLE_END:
-
+    GF_ASSERT((pClub->pMatchParam->friendNo-1) >= 0);
+    
+    if(ep2p->demo_prm.result == COMM_BTL_DEMO_RESULT_WIN){
+      // ƒoƒgƒ‹‚Ì‹L˜^
+      WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pClub->gsys)),
+                         pClub->pMatchParam->friendNo-1,1,0,0);
+    }
+    else if(ep2p->demo_prm.result == COMM_BTL_DEMO_RESULT_LOSE){
+      WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pClub->gsys)),
+                         pClub->pMatchParam->friendNo-1,0,1,0);
+    }
     _pokmeonListWorkFree(ep2p);      // 
     BATTLE_PARAM_Delete(ep2p->para);
 
@@ -473,6 +483,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     break;
   case P2P_TRADE:
     ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_START;
+    ep2p->aPokeTr.friendNo = pClub->pMatchParam->friendNo;
     (*seq) ++;
     break;
   case P2P_TRADE_MAIN:

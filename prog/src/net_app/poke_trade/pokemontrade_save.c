@@ -674,6 +674,15 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
                            (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
     }
   }
+
+  switch(pWork->type){
+  case POKEMONTRADE_TYPE_WIFICLUB:
+    // ŒðŠ·‚Ì‹L˜^
+    GF_ASSERT((pWork->pParentWork->friendNo-1) >= 0);
+    WifiList_SetResult(GAMEDATA_GetWiFiList(pWork->pGameData), pWork->pParentWork->friendNo-1,0,0,1);
+    break;
+  }
+
 }
 
 

@@ -56,11 +56,12 @@ typedef struct{
   GAMEDATA* gamedata;
   EVENT_GTSNEGO_WORK* pNego;
   POKEPARTY* pParty;
-  u16 selectBoxno;
-  u16 selectIndex;
-  BOOL bDebug;
   SHINKA_DEMO_PARAM* shinka_param;
   DWCSvlResult* pSvl;         //[in ]任天堂SVL認証構造体 DWCSvlResultは自前で確保してください
+  u16 selectBoxno;
+  u16 selectIndex;
+  u16 friendNo;     //wifiクラブ交換時の相手のフレンドインデックス
+  u16 bDebug;
 } POKEMONTRADE_PARAM;
 
 

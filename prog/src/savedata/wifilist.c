@@ -433,7 +433,7 @@ void WifiList_FormUpData( WIFI_LIST *list)
     if(WifiList_IsFriendData(list, i)){
       if(blank != -1){
         WifiList_MoveData(list, blank, i);  // ‹ó‚«‚ÉˆÚ“®
-        OS_TPrintf("friend move %d < %d\n",blank,i);
+   //     OS_TPrintf("friend move %d < %d\n",blank,i);
         i = -1;  // ‚à‚¤ˆê‰ñŒŸ¸
         blank = -1;
       }
@@ -476,6 +476,9 @@ void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
 //-----------------------------------------------------------------
 void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int trade)
 {
+	if((no < 0) || (no >= WIFILIST_FRIEND_MAX)){
+		return;
+	}
   list->friendData[no].battle_win += winNum;
   if(list->friendData[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
     list->friendData[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
@@ -488,7 +491,6 @@ void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int tr
   if(list->friendData[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
     list->friendData[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
   }
-  OS_TPrintf("list->friendData[  %d ].trade_num  %d\n",no,list->friendData[no].trade_num);
   WifiList_SetLastPlayDate(list, no);
 }
 
@@ -505,6 +507,12 @@ void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int tr
 //-----------------------------------------------------------------
 void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 {
+	if((no < 0) || (no >= WIFILIST_FRIEND_MAX)){
+		return;
+	}
+	if((delNo < 0) || (delNo >= WIFILIST_FRIEND_MAX)){
+		return;
+	}
   list->friendData[no].battle_win += list->friendData[delNo].battle_win;
   if(list->friendData[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
     list->friendData[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
@@ -605,13 +613,13 @@ WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv)
   pData = SaveControl_DataPtrGet(sv, GMDATA_ID_WIFILIST);
 
   pCode = WifiList_GetFriendNamePtr(pData,0);
-
+/*
   OS_TPrintf("id = %x / %d %d %d\n",WifiList_GetFriendInfo(pData,0,WIFILIST_FRIEND_ID),
              pCode[0],
              pCode[1],
              pCode[2]
              );
-
+*/
   return pData;
 }
 
