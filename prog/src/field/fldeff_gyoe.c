@@ -412,8 +412,12 @@ static void gyoe_PlaySE( FLDEFF_GYOETYPE type )
     idx = SEQ_SE_SYS_63;
     break;
   case FLDEFF_GYOETYPE_TEN:
+#if 0 //点々はSEを鳴らさない様に変更 100512
     idx = SEQ_SE_SYS_64;
     break;
+#else
+    return;
+#endif
   }
 
   PMSND_PlaySE( idx );
