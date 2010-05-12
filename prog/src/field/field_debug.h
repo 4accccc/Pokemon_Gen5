@@ -34,8 +34,10 @@ extern FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
 	FIELDMAP_WORK *pFieldMainWork, u8 bg_frame, HEAPID heapID );
 extern void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work );
+extern void FIELD_DEBUG_Draw( FIELD_DEBUG_WORK *work );
 
 extern void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work );
+extern void FIELD_DEBUG_SetHitchCheckPrint( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_SetPosUpdateFlag( FIELD_DEBUG_WORK *work, BOOL flag );
 extern void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work );
 

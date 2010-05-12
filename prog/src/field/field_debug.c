@@ -16,11 +16,21 @@
 #include "field/map_matrix.h"
 #include "field/zonedata.h"
 #include "arc/others.naix"
+#include "arc/debug/hitch_check.naix"
 
 //======================================================================
 //	define
 //======================================================================
 #define DEBUG_PANO_FONT (15) //フォントで使用するパレットNo
+
+enum
+{ 
+  UNIT_MAX = 5*5,   ///< ユニット最大数
+};
+
+#define	UNIT_NONE		( 0xffff )	///< ユニットなし
+#define MAP_UNIT_W  (FX32_CONST(16))
+#define MAP_UNIT_WH  (FX32_CONST(8))
 
 //======================================================================
 //	typedef struct
@@ -36,26 +46,74 @@ typedef struct RENDER_INFO_tag
   u16 DrawLandNum;
 }RENDER_INFO;
 
+typedef struct _TAG_HITCH_UNIT
+{
+  u16 idx;
+  u8  draw_f:1;
+  fx32  y;
+}HITCH_UNIT;
+
 //--------------------------------------------------------------
 ///	FIELD_DEBUG_WORK 
 //--------------------------------------------------------------
 struct _TAG_FIELD_DEBUG_WORK
 {
 	HEAPID heapID;	//デバッグで使用するHEAPID
-	u32 bgFrame;	//デバッグで使用するBG FRAME
 	FIELDMAP_WORK *pFieldMainWork; //FIELDMAP_WORK*
+	GAMESYS_WORK *gsys;
+	PLAYER_WORK *player;
+  FLDMAPPER * g3dMapper;
 	
-	BOOL flag_bgscr_load;	//デバッグBG面のスクリーンロード
-	u16 flag_pos_print;	//座標表示切り替え
-	u16 flag_pos_update;	//座標表示更新可能フラグ
+	u8 bgFrame;	//デバッグで使用するBG FRAME
+	u8 flag_bgscr_load:1;	//デバッグBG面のスクリーンロード
+	u8 flag_pos_print:1;	//座標表示切り替え
+	u8 flag_pos_update:1;	//座標表示更新可能フラグ
+	u8 flag_hitch_check:1;	//HitchチェックOn/Offフラグ
+	u8 flag_hitch_y_org:1;	//Hitchポリゴンの高さをプレイヤーの高さにあわせる
+
+  GFL_G3D_UTIL*     g3d_util;
+  GFL_G3D_OBJSTATUS obj_status;
+  u16               unit_idx;
+  HITCH_UNIT        unit[UNIT_MAX];
+  fx32              unit_ox;
+  fx32              unit_oz;
+  fx32              unit_oy;
 };
 
 RENDER_INFO DbgRenderInfo = {0,0,0,0};
 
 
+//RES
+static const GFL_G3D_UTIL_RES res_unit_hitch_check[] = {
+  { ARCID_DEBUG_HITCH_CHECK, NARC_hitch_check_hitch_chk_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEBUG_HITCH_CHECK, NARC_hitch_check_hitch_chk_nsbtp, GFL_G3D_UTIL_RESARC },
+};
+//ANM
+static const GFL_G3D_UTIL_ANM anm_unit_hitch_check[] = {
+  { 1, 0 },
+};
+//OBJ
+static const GFL_G3D_UTIL_OBJ obj_unit_hitch_check[] = {
+  0, 0, 0, anm_unit_hitch_check, 1,
+};
+
+#define UNIT_RES_MAX  (NELEMS(res_unit_hitch_check))
+// セットアップ
+static const GFL_G3D_UTIL_SETUP sc_g3d_setup = 
+{ 
+  res_unit_hitch_check, UNIT_RES_MAX, obj_unit_hitch_check, NELEMS(obj_unit_hitch_check)
+};
+
+
 //======================================================================
 //	proto
 //======================================================================
+static void g3d_unit_Init( FIELD_DEBUG_WORK *work );
+static void g3d_unit_Release( FIELD_DEBUG_WORK *work );
+static void g3d_unit_Main( FIELD_DEBUG_WORK *work );
+static void g3d_unit_Draw( FIELD_DEBUG_WORK *work );
+
+
 static void DebugFont_Init( FIELD_DEBUG_WORK *work );
 static void DebugFont_Put( u16 *screen, char c, u16 x, u16 y );
 static void DebugFont_Print(
@@ -85,12 +143,16 @@ FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
 	work->heapID = heapID;
 	work->bgFrame = bg_frame;
 	work->pFieldMainWork = pFieldMainWork;
+	work->gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
+	work->player = GAMESYSTEM_GetMyPlayerWork( work->gsys );
+  work->g3dMapper = FIELDMAP_GetFieldG3Dmapper( work->pFieldMainWork );
 	
 	{	//デバッグ用フォント初期化
 		DebugFont_Init( work );
 	}
 	
 	{	//各デバッグ機能初期化
+    g3d_unit_Init( work );
 	}
 	
 	return( work );
@@ -105,6 +167,8 @@ FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
 //--------------------------------------------------------------
 void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work )
 {
+  g3d_unit_Release( work );
+
 	GFL_HEAP_FreeMemory( work );
 }
 
@@ -120,10 +184,27 @@ void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 	if( (work->flag_pos_print == TRUE) && (work->flag_pos_update == TRUE) ){ //座標表示
     DebugFieldPosPrint_Proc( work );
 	}
+  if( work->flag_hitch_check ){
+    g3d_unit_Main( work );
+  }
 	
 	if( work->flag_bgscr_load == TRUE ){ //デバッグ用BGスクリーン反映
     GFL_BG_LoadScreenReq( work->bgFrame );
     work->flag_bgscr_load = FALSE;
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドデバッグシステム 3D描画常駐処理
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_Draw( FIELD_DEBUG_WORK *work )
+{
+	if( work->flag_hitch_check && work->flag_pos_update ){ //当たり判定表示
+    g3d_unit_Draw( work );
 	}
 }
 
@@ -176,146 +257,169 @@ static void resetBgCont( FIELD_DEBUG_WORK *work )
   }
 }
 
-
-#if 0
-//------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
- * @brief	指定ファイルの読み込み
- * @param	path	ファイルへのパス
- * @param	buf	読み出したデータを格納するポインタ
- * @return	int	読み込んだファイルサイズ
+ * g3dリソース　初期化
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
  */
-//------------------------------------------------------------------
-static void * ReadFile( const char *path, HEAPID heapID )
+//--------------------------------------------------------------
+static void g3d_unit_Init( FIELD_DEBUG_WORK *work )
 {
-	FSFile file;
-	void*  memory;
+  int i;
+  GFL_G3D_OBJ* obj;
 
-	FS_InitFile(&file);
-	if (FS_OpenFile(&file, path)){
+  // 3D管理ユーティリティーの生成
+  work->g3d_util = GFL_G3D_UTIL_Create( UNIT_RES_MAX, UNIT_MAX, work->heapID );
+  VEC_Set( &work->obj_status.trans, 0, 0, 0 );
+  VEC_Set( &work->obj_status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  MTX_Identity33( &work->obj_status.rotate );
+  work->unit_oy = FX32_CONST(0);
 
-		u32	fileSize = FS_GetLength(&file);		
-		memory = GFL_HEAP_AllocMemory( heapID, fileSize );
+  work->unit_idx = GFL_G3D_UTIL_AddUnit( work->g3d_util, &sc_g3d_setup );
+  obj = GFL_G3D_UTIL_GetObjHandle( work->g3d_util, work->unit_idx );
+  GFL_G3D_OBJECT_EnableAnime( obj, 0 );
 
-		if (memory == NULL){
-			OS_Printf("no enough memory.\n");
-		}else{
-			if(FS_ReadFile(&file, memory, fileSize) != fileSize){
-				// ファイルサイズ分読み込めていない場合
-				GFL_HEAP_FreeMemory( memory );
-				memory = NULL;
-				OS_Printf("file reading failed.\n");
-				GF_ASSERT( 0 );
-			}
-		}
-		(void)FS_CloseFile(&file);
-	}else{
-		OS_Printf("FS_OpenFile(\"%s\") ... ERROR!\n",path);
-		GF_ASSERT( 0 );
-		memory = NULL;
-	}
-	return memory;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	指定ファイルのサイズを返す
- * @param	path	ファイルへのパス
- * @return	int	ファイルサイズ(bytes)
- */
-//------------------------------------------------------------------
-static int GetFileSize(char *path)
-{
-  FSFile *fp;
-  u32 size = 0;
-  fp = OS_AllocFromMainArenaLo(sizeof(FSFile), 4);
-  if(FS_OpenFile(fp, path) == TRUE){
-    size = FS_GetLength(fp);
-    (void)FS_CloseFile(fp);
-  } else {
-    SDK_ASSERT(FALSE);
+  for(i = 0;i < UNIT_MAX;i++){
+    work->unit[i].draw_f = TRUE;
   }
-  return (int)size;
 }
 
 //--------------------------------------------------------------
 /**
- * ファイルパスを指定してデータの読み込み
- *
- * @param	heapID	メモリ確保をするヒープID
- * @param	path	ファイルパス
- *
- * @retval	データを読み込んだアドレス
+ * g3dリソース  解放　
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
  */
 //--------------------------------------------------------------
-static void * LoadFile( HEAPID heapID, const char *path )
+static void g3d_unit_Release( FIELD_DEBUG_WORK *work )
 {
-	void	*buf;
-	buf = ReadFile(path,heapID);
-	return buf;
+  int i;
+
+  GFL_G3D_UTIL_DelUnit( work->g3d_util, work->unit_idx );
+  // 3D管理ユーティリティーの破棄
+  GFL_G3D_UTIL_Delete( work->g3d_util );
 }
 
 //--------------------------------------------------------------
 /**
- * NITRO-CHARACTERのパレットデータを展開
- * @param	mem		展開場所
- * @param	heapID	指定ヒープ領域定義
- * @param	path	ファイルパス
- * @return	パレットデータ
- * @li		pal->pRawData = パレットデータ
- * @li		pal->szByte   = サイズ
-*/
-//--------------------------------------------------------------
-static NNSG2dPaletteData * DebugFont_OpenPalette(
-		void **mem, HEAPID heapID, u32 arc_id, u32 arc_idxconst char * path )
-{
-	NNSG2dPaletteData * pal;
-	
-	*mem = GFL_ARC_LoadDataAlloc(
-		ARCID_OTHERS, NARC_others_nfont_NCLR, HEAPID );
-	
-	if( mem == NULL ){
-		GF_ASSERT( 0 );
-	}
-	
-	if( NNS_G2dGetUnpackedPaletteData(*mem,&pal) == FALSE ){
-		GF_ASSERT( 0 );
-	}
-	
-	return pal;
-}
-
-//--------------------------------------------------------------
-/**
- * NITRO-CHARACTERのキャラデータを読み込む
- *
- * @param	frmnum	BGフレーム番号
- * @param	path	ファイルパス
- * @param	offs	オフセット（キャラ単位
- *
- * @return	none
+ * g3dリソース  メイン　
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
  */
 //--------------------------------------------------------------
-static void NTRCHR_BGCharLoad(
-	u8 frmnum, const char * path, u32 offs, HEAPID heapID )
+static void g3d_unit_Main( FIELD_DEBUG_WORK *work )
 {
-	void * buf;
-	NNSG2dCharacterData * dat;
-	
-	buf = LoadFile( heapID, path );
-	
-	if( buf == NULL ){
-		GF_ASSERT( 0 );
+  int i,j;
+  VecFx32 vec;
+  fx32  sx,sz; 
+  HITCH_UNIT* ph;
+  FLDMAPPER_GRIDINFODATA gridData;
+  int trg = GFL_UI_KEY_GetTrg();
+	const VecFx32 *pos = PLAYERWORK_getPosition( work->player );
+
+  if( trg & PAD_BUTTON_START ){
+    resetBgCont( work );
+  }
+  if( work->g3dMapper == NULL ){
+		return;
 	}
 
-	if( NNS_G2dGetUnpackedBGCharacterData(buf,&dat) == FALSE ){
-		GF_ASSERT( 0 );
-	}
-	
-	GFL_BG_LoadCharacter( frmnum, dat->pRawData, dat->szByte, offs );
-	GFL_HEAP_FreeMemory( buf );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    if( trg & PAD_KEY_UP ){
+      work->unit_oy += FX32_CONST(8);
+		  work->flag_pos_update = TRUE;
+    }else if( trg & PAD_KEY_DOWN ){
+      work->unit_oy -= FX32_CONST(8);
+		  work->flag_pos_update = TRUE;
+    }else if( trg & PAD_KEY_LEFT ){
+      work->unit_oy -= (FX32_CONST(1));
+		  work->flag_pos_update = TRUE;
+    }else if( trg & PAD_KEY_RIGHT ){
+      work->unit_oy += (FX32_CONST(1));
+		  work->flag_pos_update = TRUE;
+    }else if( trg & PAD_BUTTON_B ){
+      work->unit_oy = 0;
+		  work->flag_pos_update = TRUE;
+    }else if( trg & PAD_BUTTON_START ){
+      work->flag_hitch_y_org ^= 1;
+		  work->flag_pos_update = TRUE;
+    }
+  }
+  sx = (pos->x-FX_Mod( pos->x, MAP_UNIT_W))+FX32_CONST(-32+8);
+  sz = (pos->z-FX_Mod( pos->z, MAP_UNIT_W))+FX32_CONST(-32+8);
+  work->unit_ox = sx;
+  work->unit_oz = sz;
+
+  vec.y = pos->y;
+
+  for(i = 0;i < UNIT_MAX;i++){
+    work->unit[i].draw_f = TRUE;
+  }
+  for( i = 0; i < 5; i++ )
+  {
+    vec.z = sz+FX32_CONST(16*i);
+    if( vec.z < 0 || vec.z >= FX32_CONST(512)){
+      continue;
+    }
+
+    for(j = 0; j < 5; j++ ){
+      vec.x = sx+FX32_CONST(16*j);
+      if( vec.x < 0 || vec.x >= FX32_CONST(512)){
+        continue;
+      }
+      ph = &work->unit[i*5+j];
+
+      if( FLDMAPPER_GetGridData( work->g3dMapper,&vec,&gridData) == FALSE){
+        continue;
+      }
+      if( MAPATTR_GetHitchFlag( gridData.attr )){
+        continue;
+      }
+      ph->draw_f = FALSE; 
+      ph->y = gridData.height;
+    }
+  }
 }
-#endif
+
+//--------------------------------------------------------------
+/**
+ * g3dリソース  描画
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void g3d_unit_Draw( FIELD_DEBUG_WORK *work )
+{
+  int i,j,frame;
+  GFL_G3D_OBJ* obj;
+  HITCH_UNIT* ph;
+
+  for( i = 0; i < 5; i++ )
+  {
+    work->obj_status.trans.z = work->unit_oz+FX32_CONST(16*i);
+
+    for(j = 0; j < 5; j++ ){
+      ph = &work->unit[i*5+j];
+      work->obj_status.trans.x = work->unit_ox+FX32_CONST(16*j);
+      
+      if( work->flag_hitch_y_org ){
+        work->obj_status.trans.y = work->unit_oy+ph->y;
+      }else{
+        work->obj_status.trans.y = work->unit_oy+work->unit[2*5+2].y;
+      }
+
+      obj = GFL_G3D_UTIL_GetObjHandle( work->g3d_util, work->unit_idx );
+      if( i == 2 && j == 2){
+        frame = FX32_CONST(2+ph->draw_f);
+      }else{
+        frame = FX32_CONST(ph->draw_f);
+      }
+      GFL_G3D_OBJECT_SetAnimeFrame( obj, 0, &frame );
+      GFL_G3D_DRAW_DrawObject( obj, &work->obj_status );
+    }
+  }
+}
 
 //--------------------------------------------------------------
 /**
@@ -457,29 +561,35 @@ static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
 //--------------------------------------------------------------
 void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
 {
-#if 0
-	if( work->flag_pos_print == FALSE ){
-		work->flag_pos_print = TRUE;
-    
-		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
-	}else{
-		work->flag_pos_print = FALSE;
-		GFL_BG_SetVisible( work->bgFrame, VISIBLE_OFF );
-	}
-#else
 	if( work->flag_pos_print == FALSE ){
 		work->flag_pos_print = TRUE;
 		work->flag_pos_update = TRUE;
     resetBgCont( work );
+		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
 	}else{
 		work->flag_pos_print = FALSE;
+
     // スクリーンのクリア
     GFL_BG_ClearScreen( work->bgFrame );
 		GFL_BG_LoadScreenReq( work->bgFrame );
 	}
-#endif
+  //描画コールバックのセット
+  FIELD_DEBUG_SetDrawCallBackFunc(work->flag_pos_print);
 }
 
+//--------------------------------------------------------------
+/**
+ * フィールド当たり判定表示
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_SetHitchCheckPrint( FIELD_DEBUG_WORK *work )
+{
+  work->flag_pos_update = TRUE; //初回描画リクエスト
+	work->flag_hitch_check ^= 1;
+  work->unit_oy = FX32_CONST(0);
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -508,6 +618,10 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
   FLDMAPPER * g3Dmapper = FIELDMAP_GetFieldG3Dmapper( work->pFieldMainWork );
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    resetBgCont( work );
+  }
 	
 	{	//座標表示
     u32 gx, gz;
@@ -644,7 +758,6 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
     sprintf( str, "LAND:%d",DbgRenderInfo.DrawLandNum);
 		DebugFont_Print( work, 0, 12, str );
   }
-
 }
 
 //--------------------------------------------------------------

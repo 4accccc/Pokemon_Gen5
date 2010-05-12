@@ -202,6 +202,7 @@ static BOOL debugMenuCallProc_FieldAveStress( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_FieldAveStressPalace( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_FieldHitchCheckData( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -307,7 +308,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
   { DEBUG_FIELD_STRESS_N, debugMenuCallProc_FieldAveStress },    //平均負荷
   { DEBUG_FIELD_STRESS_P, debugMenuCallProc_FieldAveStressPalace },    //パレス平均負荷
-  { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
+  { DEBUG_FIELD_STR17_01, debugMenuCallProc_FieldPosData },    //座標をみる
+  { DEBUG_FIELD_STR17_02, debugMenuCallProc_FieldHitchCheckData },    //当たり判定をみる
   { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },  //カメラ簡単操作
   { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera }, //カメラ全部操作
   { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript }, //イベント操作
@@ -1925,8 +1927,19 @@ static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
   FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
   FIELD_DEBUG_SetPosPrint( debug );
 
-  //描画コールバックのセット
-  FIELD_DEBUG_SetDrawCallBackFunc(TRUE);
+  return( FALSE );
+}
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　フィールド当たり判定情報
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_FieldHitchCheckData( DEBUG_MENU_EVENT_WORK *wk )
+{
+  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
+  FIELD_DEBUG_SetHitchCheckPrint( debug );
 
   return( FALSE );
 }

@@ -3544,6 +3544,10 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     
     SET_CHECK("update_tail:fldeff draw");
     FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+
+#ifdef  PM_DEBUG
+  if(fieldWork->debugWork){ FIELD_DEBUG_Draw( fieldWork->debugWork ); }
+#endif
     
     if(fieldWork->union_eff != NULL){
       UNION_EFF_SystemDraw( fieldWork->union_eff);
