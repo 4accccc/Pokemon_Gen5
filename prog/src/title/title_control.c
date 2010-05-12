@@ -61,6 +61,7 @@ static GFL_PROC_RESULT TitleControlProcInit( GFL_PROC * proc, int * seq, void * 
 	return GFL_PROC_RES_FINISH;
 }
 
+#include "debug/debug_hudson.h"
 //--------------------------------------------------------------------------
 /**
  * PROC Main
@@ -72,13 +73,18 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 	switch( *seq  ){
 	case 0:		// 社名表示
 #ifdef DEBUG_ONLY_FOR_hudson
-    // HUDSONで実行した場合は直でフィールドへ
-    CorpRet = CORPORATE_RET_DEBUG;
-    *seq = 4;
-#else
-		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpRet );
-		*seq = 1;
+    if( HUDSON_IsSkipTitle() )
+    {
+      // HUDSONで実行した場合は直でフィールドへ
+      CorpRet = CORPORATE_RET_DEBUG;
+      *seq = 4;
+    }
+    else
 #endif
+    {
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpRet );
+      *seq = 1;
+    }
 		break;
 
 	case 1:		// 社名デモ

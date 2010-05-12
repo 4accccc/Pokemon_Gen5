@@ -32,6 +32,8 @@
 
 #define HUDSON_TESTCODE_MAP_JUMP ("1")
 
+extern BOOL HUDSON_IsSkipTitle( void );
+
 //---------------------------------
 // HUDSON‚Ì‚ÝŽÀ‘Ì‚ð’è‹`
 //---------------------------------

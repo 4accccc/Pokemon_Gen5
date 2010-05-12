@@ -355,11 +355,16 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 #ifdef PM_DEBUG // デバッグ用スキップ処理
   }else if( mode == END_DEBUG_CALL ){
 #ifdef DEBUG_ONLY_FOR_hudson
-    // HUDSONで実行した場合は直でフィールドへ
-    HudsonInit();
-#else
-    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
+    if( HUDSON_IsSkipTitle() )
+    {
+      // HUDSONで実行した場合は直でフィールドへ
+      HudsonInit();
+    }
+    else
 #endif 
+    {
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
+    }
 
 #endif  // PM_DEBUG
   }
