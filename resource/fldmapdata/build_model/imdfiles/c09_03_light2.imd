@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-02-02T22:42:13" source="light2.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-12T12:01:00" source="light2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-02-02T22:42:13" source="light2.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-12T12:01:00" source="light2.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="0"
+	tool_start_frame="20"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="4 4"
 	compress_material="on" material_size="2 2"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-1.465332 3.569824 -5.919189" whd="3.338623 3.320068 6.587891"/>
+<box_test pos_scale="6" xyz="-3.465332 3.569824 -7.919189" whd="3.338623 3.320068 6.587891"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="c09_03_light"
@@ -390,7 +390,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="128.000000 0.000000 128.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="0"
 	>
@@ -404,7 +404,7 @@
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 -110.000000 0.000000"
-		translate="-8.088867 351.793213 -85.194580"
+		translate="-8.088867 293.124756 -85.194580"
 		visibility="on"
 		display_size="1"
 		vertex_size="50" polygon_size="24"
@@ -435,7 +435,7 @@
 	>
 		<display index="0" material="0" polygon="1" priority="0"/>
 	</node>
-	<node index="3" name="polySurface438_DUP" kind="mesh"
+	<node index="3" name="poly" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
