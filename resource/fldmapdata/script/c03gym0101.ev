@@ -561,6 +561,10 @@ EVENT_START	ev_prg_c03gym0101_tr1_btl
 	IF FLAG_OFF( FE_C03GYM_TRBTL1 ) THEN
 		//対戦前の処理
 		_SE_WAIT()
+		
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+		_OBJ_ANIME_WAIT()
+		
 		//戦闘前メッセージ
 		_BALLOONWIN_OBJMSG( msg_c03gym0101_jugglimg_05_01 , C03GYM0101_TRAINER_01 )
 		_BALLOONWIN_CLOSE()
@@ -643,6 +647,10 @@ EVENT_START	ev_prg_c03gym0101_tr2_btl
 	IF FLAG_OFF( FE_C03GYM_TRBTL2 ) THEN
 		//対戦前の処理
 		_SE_WAIT()
+		
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+		_OBJ_ANIME_WAIT()
+		
 		//戦闘前メッセージ
 		_BALLOONWIN_OBJMSG( msg_c03gym0101_jugglimg_06_01 , C03GYM0101_TRAINER_02 )
 		_BALLOONWIN_CLOSE()
@@ -877,4 +885,8 @@ _ANIME_LABEL	anm_player_back
 
 _ANIME_LABEL	anm_player_look
 	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA		AC_DIR_U,1
 	_ANIME_DATA		ACMD_END,0
