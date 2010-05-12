@@ -1532,12 +1532,12 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
         anm_idx = DRAW_STA_SHINMU_A_ANMNO_FLY;
         break;
       }
-
+      
       work->anmcnt.set_anm_status = status;
       GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       init_flag = TRUE;
     }
-  }else{ //B
+  }else if( code == SHIN_B || code == MU_B ){ //B
     u16 dir = blact_GetDrawDir( mmdl );
     u16 anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_U;
     
@@ -1565,11 +1565,19 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
           anm_idx = DRAW_STA_SHINMU_B_ANMNO_TURN;
           break;
         }
-
+        
         work->anmcnt.set_anm_status = status;
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
         init_flag = TRUE;
       }
+    }
+  }else{ //C
+    if( status != work->anmcnt.set_anm_status ){
+      u16 anm_idx = DRAW_STA_SHINMU_C_ANMNO_FLY;
+      
+      work->anmcnt.set_anm_status = status;
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+      init_flag = TRUE;
     }
   }
   

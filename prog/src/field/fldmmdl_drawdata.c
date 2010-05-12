@@ -2662,6 +2662,13 @@ static const GFL_BBDACT_ANM DATA_BlActShinMuA_Fly[] = {
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 
+static const GFL_BBDACT_ANM * DATA_BlActShinMuATbl[DRAW_STA_SHINMU_A_ANMNO_MAX] = {
+  DATA_BlActShinMuA_StopU,
+  DATA_BlActShinMuA_Gutari,
+  DATA_BlActShinMuA_FlyUp,
+  DATA_BlActShinMuA_Fly,
+};
+
 //シンムB
 static const GFL_BBDACT_ANM DATA_BlActShinMuB_StopU[] = {
   {TEXIDX_SHIN_MU_4,ANMFLIP_OFF,ANMFLIP_OFF,7},
@@ -2704,18 +2711,25 @@ static const GFL_BBDACT_ANM DATA_BlActShinMuB_Turn[] = {
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 
-static const GFL_BBDACT_ANM * DATA_BlActShinMuATbl[DRAW_STA_SHINMU_A_ANMNO_MAX] = {
-  DATA_BlActShinMuA_StopU,
-  DATA_BlActShinMuA_Gutari,
-  DATA_BlActShinMuA_FlyUp,
-  DATA_BlActShinMuA_Fly,
-};
-
 static const GFL_BBDACT_ANM * DATA_BlActShinMuBTbl[DRAW_STA_SHINMU_B_ANMNO_MAX] = {
   DATA_BlActShinMuB_StopU,
   DATA_BlActShinMuB_StopD,
   DATA_BlActShinMuB_Hoeru,
   DATA_BlActShinMuB_Turn,
+};
+
+//シンムC
+static const GFL_BBDACT_ANM DATA_BlActShinMuC_FlyUp[] = {
+  {TEXIDX_SHIN_MU_8,ANMFLIP_OFF,ANMFLIP_OFF,5},   //上昇開始
+  {TEXIDX_SHIN_MU_9,ANMFLIP_OFF,ANMFLIP_OFF,5},
+  {TEXIDX_SHIN_MU_10,ANMFLIP_OFF,ANMFLIP_OFF,5},
+  {TEXIDX_SHIN_MU_11,ANMFLIP_OFF,ANMFLIP_OFF,5},
+  {TEXIDX_SHIN_MU_7,ANMFLIP_OFF,ANMFLIP_OFF,5},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * DATA_BlActShinMuCTbl[DRAW_STA_SHINMU_C_ANMNO_MAX] = {
+  DATA_BlActShinMuC_FlyUp,
 };
 
 //======================================================================
@@ -2882,6 +2896,8 @@ const MMDL_BBDACT_ANMTBL
   {DATA_BlActAnmNonFlipNinja,DRAW_STA_ACT1_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_CHAMPION
   {DATA_BlActAnmNonFlipChampion,DRAW_STA_ACT0_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_SHIN_MU_C
+  {DATA_BlActShinMuCTbl,DRAW_STA_SHINMU_C_ANMNO_MAX},
 };
 
 //======================================================================

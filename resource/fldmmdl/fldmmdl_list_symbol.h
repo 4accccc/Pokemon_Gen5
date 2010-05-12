@@ -137,6 +137,7 @@
 #define ANMID_SAGE1 26 //SAGE1
 #define ANMID_NINJA 27 //NINJA
 #define ANMID_CHAMPION 28 //CHAMPION
+#define ANMID_SHIN_MU_C 29
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

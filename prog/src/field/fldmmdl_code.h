@@ -426,6 +426,12 @@
 #define DRAW_STA_SHINMU_B_ANMNO_TURN     0x03
 #define DRAW_STA_SHINMU_B_ANMNO_MAX      0x04
 
+#define DRAW_STA_SHINMU_C_STOP 0x00
+#define DRAW_STA_SHINMU_C_FLY  (DRAW_STA_MAX)
+
+#define DRAW_STA_SHINMU_C_ANMNO_FLY    0x00
+#define DRAW_STA_SHINMU_C_ANMNO_MAX    0x01
+
 //--------------------------------------------------------------
 ///  フィールド動作モデル くもの巣専用描画ステータス
 //--------------------------------------------------------------
@@ -642,7 +648,8 @@
 #define AC_NINJA_ACT1 0xb9 ///<演技(NINJA専用 消去アニメ
 #define AC_ACT2_STOP 0xba ///<演技(特定OBJ専用
 #define AC_ACT2_LOOP 0xbb ///<演技(特定OBJ専用
-#define ACMD_MAX 0xbc ///<アニメーションコマンド最大数
+#define AC_SHIN_MU_C_FLY 0xbc ///<シンムC 滞空アニメ
+#define ACMD_MAX 0xbd ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド

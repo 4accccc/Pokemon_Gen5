@@ -4488,8 +4488,8 @@ const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
  * @param  outParam 格納先
  * @retval nothing
  * @attention アーカイブデータからロードを行いoutParamに格納します。
- * 処理が重い為、連続呼びは控えて下さい。
- * 可能であればMMDL_GetOBJCodeParam()を使用してください。
+ * ・処理が重い為、連続呼びは控えて下さい。
+ * ・可能であればMMDL_GetOBJCodeParam()を使用してください。
  * @note 呼び出し速度 約270ms～300ms
  */
 //--------------------------------------------------------------
@@ -4504,7 +4504,7 @@ void MMDLSYS_LoadOBJCodeParam(
       if( MMDL_GetOBJCode(mmdl) == code ){
         *outParam = mmdl->objcode_param;
         D_MMDL_DPrintf(
-            "MMDLSYS_LoadOBJCodeParam() 既存データアリ ロードせず\n" );
+            "MMDLSYS_LoadOBJCodeParam() CODE %xH 既存データアリ\n", code );
         return;
       }
     }
