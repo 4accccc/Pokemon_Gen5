@@ -1662,6 +1662,11 @@ static void print_iteminfo( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
 }
 
+// 支払う際の単位を切り替えるためのテーブル（円・BP）
+static const payment_strtbl[]={
+  mes_shop_07_02,
+  mes_shop_07_03,
+};
 
 //----------------------------------------------------------------------------------
 /**
@@ -1676,7 +1681,7 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
 {
 
   STRBUF *kake_str = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_07_01 );
-  STRBUF *yen_str   = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_07_02 );
+  STRBUF *yen_str   = GFL_MSG_CreateString( wk->shopMsgData, payment_strtbl[wk->payment]);
   STRBUF *expand = GFL_STR_CreateBuffer( SHOP_ITEMNUM_STR_MAX, wk->heapId );
 
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( wk->win[SHOP_BUY_BMPWIN_PRICE]);
@@ -1698,8 +1703,11 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
                           6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, yen_str );
 
-  PRINTSYS_PrintColor( bmp,  13*3+2, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
-  
+  if(wk->payment==SHOP_PAYMENT_MONEY){
+    PRINTSYS_PrintColor( bmp,  13*3+2, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+  }else{
+    PRINTSYS_PrintColor( bmp,  11*3+2, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+  }
 
   GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_PRICE] );
 
