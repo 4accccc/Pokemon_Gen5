@@ -162,6 +162,8 @@ typedef enum {
   BTL_STATUS_FLAG_WILD_TALK = 0x0080,   ///<話しかけでの野生戦の時にTRUE(Btlエンカウントメッセージ変化)
   BTL_STATUS_FLAG_NO_LOSE = 0x0100,     ///<ゲームオーバーにならないバトルならTRUE
   BTL_STATUS_FLAG_LEGEND_EX = 0x0200,   ///<シナリオラストのシン・ム戦専用（経験値なし・倒したメッセージ表示なし）
+  BTL_STATUS_FLAG_CAMERA_WCS = 0x0400,  ///< WCS用カメラモード
+  BTL_STATUS_FLAG_CAMERA_OFF = 0x0800,  ///< カメラ動作オフ
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
