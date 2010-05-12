@@ -226,7 +226,8 @@ struct _BTLV_GAUGE_CLWK
   u32           yure_req          :1;
   u32           damage_wait       :5;
   u32           damage_wait_flag  :1;
-  u32                             :5;
+  u32           appear_flag       :1;     //GAUGE_Addされたかどうかフラグ（下画面のボタン記憶クリアに使用）
+  u32                             :4;
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
@@ -729,6 +730,7 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
     }
     BTLV_GAUGE_SetPos( bgw, pos, NULL );
   }
+  bgw->bgcl[ pos ].appear_flag = 1;
 }
 
 static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp )
@@ -1084,6 +1086,29 @@ void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off, int side )
 BOOL  BTLV_GAUGE_CheckExist( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
 {
   return ( bgw->bgcl[ pos ].base_clwk != NULL );
+}
+
+//============================================================================================
+/**
+ *  @brief  appear_flagをチェック
+ *
+ *  @param[in] bgw  BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] pos  チェックするポジション
+ *
+ *  @retval TRUE:存在する FALSE:存在しない
+ */
+//============================================================================================
+BOOL  BTLV_GAUGE_CheckAppearFlag( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+{
+  BOOL  ret = FALSE;
+
+  if( bgw->bgcl[ pos ].base_clwk != NULL )
+  { 
+    ret = bgw->bgcl[ pos ].appear_flag;
+    bgw->bgcl[ pos ].appear_flag = 0;
+  }
+
+  return ret;
 }
 
 //--------------------------------------------------------------

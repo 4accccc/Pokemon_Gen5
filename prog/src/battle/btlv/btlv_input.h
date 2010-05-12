@@ -15,6 +15,7 @@
 #include "system/palanm.h"
 #include "gamesystem/game_data.h"
 
+#define BTLV_INPUT_POKEMON_MAX ( 3 )            //入力するポケモンMAX
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
 #define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
 

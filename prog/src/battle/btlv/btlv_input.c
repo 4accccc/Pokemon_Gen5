@@ -574,13 +574,14 @@ struct _BTLV_INPUT_WORK
 
   HEAPID                heapID;
 
-  u8                    decide_pos[ BTLV_INPUT_SCRTYPE_MAX ];   //Aボタンで決定したボタン位置を記憶
+  u8                    decide_pos[ BTLV_INPUT_POKEMON_MAX ][ BTLV_INPUT_SCRTYPE_MAX ];   //Aボタンで決定したボタン位置を記憶
   u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
 
   u8                    *cursor_mode;
 
   int                   camera_work_wait;   //カメラワークウェイト
   BtlvMcssPos           focus_pos;          //フォーカスをあわせるポケモンの位置
+  int                   active_index;       //コマンド選択しているポケモンのインデックス
 
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
@@ -741,6 +742,7 @@ static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int p
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work );
 static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw );
+static  void  check_init_decide_pos( BTLV_INPUT_WORK* biw );
 
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw );
@@ -1254,6 +1256,13 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->center_button_type = bicp->center_button_type;
       ttw->biw = biw;
       ttw->pos = bicp->pos;
+      biw->active_index = bicp->pos;
+
+      if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
+      { 
+        check_init_decide_pos( biw );
+      }
+
       for( i = 0 ; i < BTLV_INPUT_DIR_MAX ; i++ )
       { 
         biw->bidp[ 0 ][ i ] = bicp->bidp[ 0 ][ i ];
@@ -1646,6 +1655,15 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
         if( tp_tbl->cancel_flag[ hit ] == FALSE )
         {
           SePlayDecide( biw );
+          switch( biw->scr_type ){
+          case BTLV_INPUT_SCRTYPE_COMMAND:
+          case BTLV_INPUT_SCRTYPE_WAZA:
+          case BTLV_INPUT_SCRTYPE_DIR:
+          case BTLV_INPUT_SCRTYPE_ROTATE:
+            biw->decide_pos[ biw->active_index ][ biw->scr_type ] = hit;
+          default:
+            break;
+          }
         }
         else
         {
@@ -4381,9 +4399,10 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_DIR:
-      if( biw->button_exist[ biw->decide_pos[ biw->scr_type ] ] == TRUE )
+    case BTLV_INPUT_SCRTYPE_ROTATE:
+      if( biw->button_exist[ biw->decide_pos[ biw->active_index ][ biw->scr_type ] ] == TRUE )
       {
-        biw->cursor_pos = biw->decide_pos[ biw->scr_type ];
+        biw->cursor_pos = biw->decide_pos[ biw->active_index ][ biw->scr_type ];
       }
       else
       {
@@ -4512,9 +4531,10 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_DIR:
+    case BTLV_INPUT_SCRTYPE_ROTATE:
       if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
       {
-        biw->decide_pos[ biw->scr_type ] = biw->cursor_pos;
+        biw->decide_pos[ biw->active_index ][ biw->scr_type ] = biw->cursor_pos;
       }
     default:
       break;
@@ -4731,6 +4751,22 @@ static  void  TCB_SetFocus( GFL_TCB* tcb, void* work )
   { 
     BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
     GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//=============================================================================================
+//  ボタン決定位置記憶初期化チェック
+//=============================================================================================
+static  void  check_init_decide_pos( BTLV_INPUT_WORK* biw )
+{ 
+  if( BTLV_GAUGE_CheckAppearFlag( BTLV_EFFECT_GetGaugeWork(), biw->focus_pos ) )
+  { 
+    int i;
+
+    for( i = 0 ; i < BTLV_INPUT_SCRTYPE_MAX ; i++ )
+    { 
+      biw->decide_pos[ biw->active_index ][ i ] = 0;
+    }
   }
 }
 
