@@ -17,13 +17,14 @@
 // ■定数
 //==============================================================================
 #define WEATHER_DATA_NONE (0xffff)  // データが登録されていない
+#define INDEX_TABLE_SIZE (69) // インデックスデータの数 ( 登録されているゾーンの数 )
 
 
 //==============================================================================
 // ■インデックス データ フォーマット
 //==============================================================================
-typedef struct
-{
+typedef struct {
+
   u16 zoneID;     // ゾーンID
   u16 dataIndex;  // 先頭データのインデックス
 
@@ -33,31 +34,37 @@ typedef struct
 //==============================================================================
 // ■カレンダーワーク
 //==============================================================================
-struct _CALENDER
-{
+struct _CALENDER {
+
   HEAPID     heapID;
   GAMEDATA*  gameData;
   ARCHANDLE* arcHandle;  // アーカイブハンドル
+  INDEX_DATA indexTable[ INDEX_TABLE_SIZE ];
 };
 
 
 //==============================================================================
-// ■非公開関数
+// ■prototype
 //============================================================================== 
 // カレンダーワーク
 void InitCalenderWork( CALENDER* calender );
-void OpenArcHandle   ( CALENDER* calender );
-void CloseArcHandle  ( CALENDER* calender ); 
+void OpenArcHandle( CALENDER* calender );
+void CloseArcHandle( CALENDER* calender ); 
 // 天気データ
 WEATHER_NO GetWeatherNo_today( const CALENDER* calender, u16 zoneID );
-WEATHER_NO GetWeatherNo      ( const CALENDER* calender, u16 zoneID, u8 month, u8 day ); 
+WEATHER_NO GetWeatherNo( const CALENDER* calender, u16 zoneID, u8 month, u8 day ); 
 // 辞書データ
-u16 GetAnnualWeatherDataIndex ( const CALENDER* calender, u16 zoneID );
-u16 GetDateIndex              ( u8 month, u8 day );
+void LoadIndexTable( CALENDER* calender );
+u16 GetAnnualWeatherDataIndex( const CALENDER* calender, u16 zoneID );
+u16 GetDateIndex( u8 month, u8 day );
+// デバッグ
+#ifdef PM_DEBUG
+void DEBUG_CheckTableSize( const CALENDER* calender );
+#endif
 
 
 //==============================================================================
-// ■公開関数
+// ■public functions
 //============================================================================== 
 
 //------------------------------------------------------------------------------
@@ -80,6 +87,7 @@ CALENDER* CALENDER_Create( GAMEDATA* gameData, HEAPID heapID )
   calender->heapID   = heapID;
   calender->gameData = gameData;
   OpenArcHandle( calender );
+  LoadIndexTable( calender );
 
   return calender;
 }
@@ -249,6 +257,26 @@ WEATHER_NO GetWeatherNo( const CALENDER* calender, u16 zoneID, u8 month, u8 day 
 
 //------------------------------------------------------------------------------
 /**
+ * @brief インデックステーブルを読み込む
+ *
+ * @param calender
+ */
+//------------------------------------------------------------------------------
+void LoadIndexTable( CALENDER* calender )
+{
+#ifdef PM_DEBUG
+  DEBUG_CheckTableSize( calender );
+#endif
+
+  GFL_ARC_LoadDataOfsByHandle( 
+      calender->arcHandle, NARC_calender_weather_index_bin,
+      sizeof(u16), // テーブル登録数をスキップ
+      sizeof(INDEX_DATA) * INDEX_TABLE_SIZE, 
+      calender->indexTable );
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief 年間データのインデックスを取得する
  *
  * @param calender
@@ -264,32 +292,17 @@ u16 GetAnnualWeatherDataIndex( const CALENDER* calender, u16 zoneID )
 {
   int i;
   u16 index;
-  u16 tableSize;
-  INDEX_DATA* table;
-
-  // テーブルサイズ取得
-  GFL_ARC_LoadDataOfsByHandle( calender->arcHandle, NARC_calender_weather_index_bin, 
-                               0, sizeof(tableSize), &tableSize );
-  
-  // テーブル作成
-  table = GFL_HEAP_AllocMemory( calender->heapID, sizeof(INDEX_DATA) * tableSize );
-  GFL_ARC_LoadDataOfsByHandle( calender->arcHandle, NARC_calender_weather_index_bin,
-                               sizeof(tableSize), sizeof(INDEX_DATA) * tableSize, table );
 
   // 検索
   index = WEATHER_DATA_NONE;
-  for( i=0; i < tableSize; i++ )
+  for( i=0; i < INDEX_TABLE_SIZE; i++ )
   {
     // 発見
-    if( table[i].zoneID == zoneID )
-    {
-      index = table[i].dataIndex; 
+    if( calender->indexTable[i].zoneID == zoneID ) {
+      index = calender->indexTable[i].dataIndex; 
       break;
     }
   }
-
-  // テーブル破棄
-  GFL_HEAP_FreeMemory( table );
 
   return index;
 }
@@ -323,3 +336,26 @@ u16 GetDateIndex( u8 month, u8 day )
 
   return index;
 }
+
+#ifdef PM_DEBUG
+//------------------------------------------------------------------------------
+/**
+ * @brief アーカイブに問う労苦されているテーブルのサイズをチェックする
+ *
+ * @param calender
+ */
+//------------------------------------------------------------------------------
+void DEBUG_CheckTableSize( const CALENDER* calender )
+{
+  u16 table_size;
+
+  // テーブルサイズを取得
+  GFL_ARC_LoadDataOfsByHandle( 
+      calender->arcHandle, NARC_calender_weather_index_bin, 
+      0, sizeof(u16), &table_size );
+
+  // テーブルサイズが変化したら止める
+  // ※使用するヒープのサイズを決定するために, テーブルサイズを固定長にする. 2010.05.12
+  GF_ASSERT( table_size == INDEX_TABLE_SIZE );
+}
+#endif
