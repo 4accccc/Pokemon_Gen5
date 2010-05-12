@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-29T17:43:28" source="zoroa_kemu_v02.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-12T14:11:12" source="zoroa_kemu_v2009.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-04-29T17:43:28" source="zoroa_kemu_v02.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-12T14:11:12" source="zoroa_kemu_v2009.mb"/>
 <original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="e_kaori1.1_pl"
-		path="C:/home/wb_data3d/demo/effect/tex/e_kaori1.1.tga"
+		path="C:/home/wb_data3d/gimmick/zoroa/tex/e_kaori1.1.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -107,7 +107,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="e_kaori1.3_pl"
-		path="C:/home/wb_data3d/demo/effect/tex/e_kaori1.3.tga"
+		path="C:/home/wb_data3d/gimmick/zoroa/tex/e_kaori1.3.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -180,10 +180,10 @@
 
 <tex_palette_array size="2">
 	<tex_palette index="0" name="e_kaori1.1_pl" color_size="8">
-		5294 5ef7 6b5a 7fff 7fff 7fff 7fff 7fff
+		7d5f 7dff 7e9f 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="e_kaori1.3_pl" color_size="8">
-		5294 5ef7 6318 6b5a 7fff 7fff 7fff 7fff
+		7d5f 7dff 7e1f 7e9f 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
