@@ -1293,7 +1293,6 @@ static const fx32 sc_GHOST_SPARK_SOUND_TIMING[] = {
 
 // サウンドID
 #define GHOST_SND_SE_SPARK      ( SEQ_SE_FLD_33 )
-#define GHOST_SND_SE_SPARK_SML  ( SEQ_SE_FLD_34 )
 
 //-----------------------------------------------------------------------------
 /**
@@ -1414,10 +1413,14 @@ static void GHOST_SPARK_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p
   // 決まったフレームで、音を鳴らす。
   if( p_wk->next_frame == now_frame )
   {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    FIELD_SOUND* p_fieldsound = GAMEDATA_GetFieldSound( p_gdata );
+
     p_wk->tbl_index = (p_wk->tbl_index + 1) % GHOST_SPARK_SOUND_TIMING_TBL_MAX;
 
     p_wk->next_frame = sc_GHOST_SPARK_SOUND_TIMING[ p_wk->tbl_index ];
-    PMSND_PlaySE( GHOST_SND_SE_SPARK );
+    FSND_PlayEnvSE( p_fieldsound, GHOST_SND_SE_SPARK );
   }
 
   /*
