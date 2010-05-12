@@ -223,7 +223,7 @@ struct _FIELD_PLACE_NAME {
 
 
 //===================================================================================
-// ■システムに関する関数
+// ■prototype
 //===================================================================================
 // BG
 static void SetupBG( FIELD_PLACE_NAME* system );
@@ -498,7 +498,7 @@ void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system )
  * @brief ゾーンの切り替えを通知し, 新しい地名を表示する
  *
  * @param system
- * @param zoneID ゾーンID
+ * @param zoneID 地名を表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
@@ -521,7 +521,7 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
  * @brief 地名ウィンドウを強制的に表示する
  *
  * @param system
- * @param zoneID 表示する場所のゾーンID
+ * @param zoneID 地名を表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
 extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
@@ -548,6 +548,19 @@ void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system )
   // 全ての表示リクエストを無効化
   ResetDispFlag( system );
   ResetForceDispFlag( system );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 過去の表示記録をクリアする
+ *      ( 最後に表示した場所と同じなら表示しない, というルールに穴を開けるための制御 )
+ *
+ * @param system
+ */
+//------------------------------------------------------------------------------------
+void FIELD_PLACE_NAME_ClearLog( FIELD_PLACE_NAME* system )
+{
+  SetLastZoneID( system, ZONE_ID_MAX );
 }
 
 //------------------------------------------------------------------------------------
@@ -1394,13 +1407,6 @@ static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state )
 		case SYSTEM_STATE_HIDE:	
 			GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BGを非表示
 			HideLetters( system ); // 文字オブジェクトを非表示にする
-			break;
-		case SYSTEM_STATE_FADEIN:
-      //GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
-      //Draw_FADEIN( system );
-			break;
-		case SYSTEM_STATE_LAUNCH:
-			//system->launchLetterNum = 0;	// 発射文字数をリセット
 			break;
 	}
 }
