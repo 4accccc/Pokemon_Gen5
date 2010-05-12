@@ -621,8 +621,8 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 
 	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
-
+	_START_EVENT_BGM_EX( SEQ_BGM_E_SAGE, BGM_FADE_MIDDLE )
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
@@ -804,13 +804,11 @@ t02_speech:
 	_TIME_WAIT( 16 )
 
 	//ゲーチス・団員：ゲートへ移動
-//	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_02, anm_hakaim2_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_03, anm_hakaim3_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim4_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_05, anm_hakaim5_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_06, anm_hakaim6_leave1 )
-//	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_leave1 )
 	_OBJ_ANIME_WAIT()
 
 	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave1 )
@@ -925,6 +923,8 @@ t02_speech:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
 	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 30 )
 
 	//画面暗転解除
 	_BLACK_IN()
@@ -989,9 +989,6 @@ t02_speech:
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
-
-//	_OBJ_ANIME( T02_N_01, anm_n_afterb )
-//	_OBJ_ANIME_WAIT()
 
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG( msg_t02_boss_04 , T02_N_01 )
