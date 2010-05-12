@@ -284,7 +284,7 @@ typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
 typedef BOOL (*WHSendCallbackFunc) (BOOL result);
 
 // 接続許可判定関数型 (for multiboot model)
-typedef BOOL (*WHJudgeAcceptFunc) (WMStartParentCallback *);
+typedef BOOL (*WHJudgeAcceptFunc) (WMStartParentCallback *, void* pWork);
 
 // 受信コールバック型
 typedef void (*WHReceiverFunc) (u16 aid, u16 *data, u16 size);

@@ -674,6 +674,11 @@ static void _MainLoopScanBeaconData(void);
 //#define WMHIGH_DEBUG
 
 
+#if DEBUG_ONLY_FOR_ohno
+#define WMHIGH_DEBUG
+#endif
+
+
 #if defined(WMHIGH_DEBUG)
 
 #define WH_TRACE    NET_PRINT
@@ -1089,7 +1094,7 @@ static void WH_StateOutStartParent(void *arg)
 			WH_TRACE("StartParent - new child (aid 0x%x) connected\n", cb->aid);
 			// 接続してきた子機が接続許可条件を満たしているかどうかをチェック
 			if (_pWmInfo->sJudgeAcceptFunc != NULL){
-				bConnect = _pWmInfo->sJudgeAcceptFunc(cb);
+				bConnect = _pWmInfo->sJudgeAcceptFunc(cb,GFL_NET_GetWork());
 			}
 			if (!bConnect){
 				WMErrCode result;

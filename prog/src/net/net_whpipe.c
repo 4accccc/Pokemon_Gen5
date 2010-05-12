@@ -22,7 +22,9 @@
 
 //#define DEBUG_WH_BEACON_PRINT_ON  // beacon切り替えタイミングを表示
 
-
+#if DEBUG_ONLY_FOR_ohno
+#define DEBUG_WH_BEACON_PRINT_ON  // beacon切り替えタイミングを表示
+#endif
 #endif
 
 
@@ -1981,13 +1983,13 @@ BOOL GFI_NET_WHPipeEnd(NetDevEndCallback callback)
 
 
 // 接続許可判定関数型
-static BOOL _connectEnable(WMStartParentCallback* pCallback)
+static BOOL _connectEnable(WMStartParentCallback* pCallback, void* pWork)
 {
 	return TRUE;
 }
 
 // 接続許可判定関数型
-static BOOL _connectDisable(WMStartParentCallback* pCallback)
+static BOOL _connectDisable(WMStartParentCallback* pCallback, void* pWork)
 {
 	return FALSE;
 }
