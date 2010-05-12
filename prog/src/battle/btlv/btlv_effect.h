@@ -108,7 +108,11 @@ enum{
   BTLEFF_TONBOGAERI_RETURN,                   //とんぼがえり戻りエフェクト
   BTLEFF_VOLTCHANGE_RETURN,                   //ボルトチェンジ戻りエフェクト
   BTLEFF_POKEMON_VANISH_ON,                   //ポケモンバニッシュON
-  BTLEFF_POKEMON_VANISH_OFF,                   //ポケモンバニッシュOFF
+  BTLEFF_POKEMON_VANISH_OFF,                  //ポケモンバニッシュOFF
+  BTLEFF_RESHUFFLE_FOCUS_DEFAULT,            //入れ替えカメラフォーカスデフォルト 50
+  BTLEFF_RESHUFFLE_FOCUS_2vs2_POS_A,         //入れ替えカメラフォーカス2vs2POS_A
+  BTLEFF_RESHUFFLE_FOCUS_3vs3_POS_A,         //入れ替えカメラフォーカス3vs3POS_A
+  BTLEFF_RESHUFFLE_FOCUS_3vs3_POS_E,         //入れ替えカメラフォーカス3vs3POS_E
 
   BTLEFF_STATUS_EFFECT_END,
 };

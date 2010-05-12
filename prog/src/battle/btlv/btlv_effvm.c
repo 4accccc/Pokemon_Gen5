@@ -5139,6 +5139,9 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
   case BTLEFF_WORK_SEQUENCE_WORK:   ///<”Ä—pƒ[ƒN
     ret = bevw->sequence_work;
     break;
+  case BTLEFF_WORK_ATTACK_POKEMON:
+    ret = bevw->attack_pos;
+    break;
   case BTLEFF_WORK_ATTACK_POKEMON_VANISH:
     ret = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
     break;
@@ -5173,6 +5176,9 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_MULTI:
     ret = BTLV_EFFECT_GetMulti();
+    break;
+  case BTLEFF_WORK_RULE:
+    ret = BTLV_EFFECT_GetBtlRule();
     break;
   case BTLEFF_WORK_TRTYPE_A:
   case BTLEFF_WORK_TRTYPE_B:
