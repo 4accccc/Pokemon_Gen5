@@ -326,28 +326,24 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//自機の位置取得
 	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
 
-	IF $LWK_HERO_X == 11 THEN
-	//X軸が11グリッドの場合
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
-		_OBJ_ANIME_WAIT()
-		
-	ELSIF $LWK_HERO_X == 12 THEN
-	//X軸が12グリッドの場合
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_12 )
-		_OBJ_ANIME_WAIT()
-		
-	ELSE
-	//X軸が13グリッドの場合
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_13 )
-		_OBJ_ANIME_WAIT()
-		
-	ENDIF
-
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 				
-	//カメラ操作　サポートの位置にカメラを合わせる
+	//カメラ操作　自機の位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,819200,65551,221184,30 )	//一番最後の引数は移動にかかるフレーム数
+
+	IF $LWK_HERO_X == 11 THEN
+	//X軸が11グリッドの場合
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
+	ELSIF $LWK_HERO_X == 12 THEN
+	//X軸が12グリッドの場合
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_12 )
+	ELSE
+	//X軸が13グリッドの場合
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_13 )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//ようこそ　こちら　サンヨウシティ　ポケモンジムです
@@ -472,7 +468,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	ENDIF
 	
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_DEF_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
@@ -575,15 +571,17 @@ _ANIME_LABEL	anm_leader_turndento2
 //	自機　近づく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_tikaduku_11
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_player_tikaduku_12
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_tikaduku_13
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
@@ -655,14 +653,12 @@ _ANIME_LABEL	anm_stay_d
 /*         ジムリーダーコーン（画面右）  戦闘前             */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_leader1b_01
-	_TALK_OBJ_START()
-	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 	
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
-			
+		_TALK_START_TURN_NOT()
 		//分岐：炎タイプを選択しているか、いないか
 
 		//炎タイプを選択している場合
@@ -773,6 +769,7 @@ EVENT_START		ev_c01gym0101_leader1b_01
 
 		//炎タイプ選択じゃない場合
 		ELSE
+			_TALK_OBJ_START()
 			//よかったね　キミ
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_21b , C01GYM0101_LEADER1B_01 )
 			_LAST_KEYWAIT()
@@ -781,7 +778,7 @@ EVENT_START		ev_c01gym0101_leader1b_01
 		ENDIF
 	//ジムバッジ入手後の場合
 	ELSE
-	
+	_TALK_OBJ_START()
 		//ゲームクリア前なら
 		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 		
@@ -826,17 +823,15 @@ _ANIME_LABEL	anm_dento_comeback
 /*         ジムリーダーポッド（画面左）  戦闘前	              */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_leader1a_01
-	_TALK_OBJ_START()
-	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		//分岐：草タイプを選択しているか、いないか
-
+		
 			//草タイプを選択している場合
 		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
-
+			_TALK_START_TURN_NOT()
 			_CALL ev_move
 			
 			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_stay_d )
@@ -942,7 +937,7 @@ EVENT_START		ev_c01gym0101_leader1a_01
 
 		//草タイプ選択じゃない場合
 		ELSE
-			
+			_TALK_OBJ_START()
 			//なんだよーッ！　オレ　あばれたかったのになー！！
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_21a , C01GYM0101_LEADER1A_01 )
 			_LAST_KEYWAIT()
@@ -952,7 +947,7 @@ EVENT_START		ev_c01gym0101_leader1a_01
 
 	//ジムバッジ入手後の場合
 	ELSE
-
+	_TALK_OBJ_START()
 		//ゲームクリア前なら
 		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 		
@@ -997,7 +992,6 @@ _ANIME_LABEL	anm_dento_podback
 /*         ジムリーダーデント（画面左）  戦闘前	              */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_leader1c_01
-_TALK_OBJ_START()
 
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
@@ -1009,7 +1003,7 @@ _TALK_OBJ_START()
 
 		//水タイプを選択している場合
 		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
-			
+			_TALK_START_TURN_NOT()
 			_CALL ev_move
 			
 			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_stay_d )
@@ -1038,8 +1032,8 @@ _TALK_OBJ_START()
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1C_01 )
 			_BALLOONWIN_CLOSE()
 				
-      //リーダー戦勝利時の情報登録
-      _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+			//リーダー戦勝利時の情報登録
+			_SET_GYM_VICTORY_INFO( BADGE_ID_01 )
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
@@ -1106,6 +1100,7 @@ _TALK_OBJ_START()
 
 		//水タイプ選択じゃない場合
 		ELSE
+			_TALK_OBJ_START()
 			//うーん　どうしても
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_21c , C01GYM0101_LEADER1C_01 )
 			_LAST_KEYWAIT()
@@ -1115,6 +1110,7 @@ _TALK_OBJ_START()
 
 	//ジムバッジ入手後の場合
 	ELSE
+	_TALK_OBJ_START()
 		//ゲームクリア前なら
 		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 		
