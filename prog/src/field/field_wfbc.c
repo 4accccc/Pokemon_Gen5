@@ -1550,6 +1550,13 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
 #include "msg/msg_place_name.h"  // for MAPNAME_xxxx
 #include "system/main.h"  // 
 
+
+// 人物書き換えようパラメータ
+static u8 DEBUG_WFBCPeople_mode = 0;
+static s8 DEBUG_WFBCPeople_index = 0;
+static s8 DEBUG_WFBCPeople_npc_id = 0;
+
+
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_CityType( void* userWork , DEBUGWIN_ITEM* item );
@@ -1560,6 +1567,8 @@ static void DEBWIN_Update_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item );
 
 
 void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
@@ -1577,6 +1586,9 @@ void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
                              p_gdata , 10 , heapId );
 
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFBCBlockCheck,DEBWIN_Draw_WFBCBlockCheck, 
+                             p_gdata , 10 , heapId );
+
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFBCPeopleCheck,DEBWIN_Draw_WFBCPeopleCheck, 
                              p_gdata , 10 , heapId );
 }
 
@@ -1865,7 +1877,92 @@ static void DEBWIN_Draw_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item )
   }
 }
 
+static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+    // 設定
+    FIELD_WFBC_CORE_PEOPLE* p_array;
+    
+    if( DEBUG_WFBCPeople_mode == 0 ){
+      // 表
+      p_array = p_wk->people;
+    }else{
+      // 裏
+      p_array = p_wk->back_people;
+    }
 
-#endif
+    // もしなかったら位置から生成
+    if( p_array[ DEBUG_WFBCPeople_index ].data_in == FALSE ){
+
+      p_array[ DEBUG_WFBCPeople_index ].npc_id  = DEBUG_WFBCPeople_npc_id;
+      p_array[ DEBUG_WFBCPeople_index ].mood  = 50;
+      p_array[ DEBUG_WFBCPeople_index ].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
+      p_array[ DEBUG_WFBCPeople_index ].data_in = TRUE;
+
+      if( p_wk->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+      {
+        FIELD_WFBC_CORE_PEOPLE_SetParentData( &p_array[ DEBUG_WFBCPeople_index ], GAMEDATA_GetMyStatus(p_gdata) );
+      }
+      
+    }else{
+
+      p_array[ DEBUG_WFBCPeople_index ].npc_id = DEBUG_WFBCPeople_npc_id;
+
+    }
+
+    DEBUGWIN_RefreshScreen();
+    
+  }else{
+
+    // 表裏設定
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+      DEBUG_WFBCPeople_mode ^= 1;
+      DEBUGWIN_RefreshScreen();
+    }
+
+    // インデックス設定
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+        DEBUG_WFBCPeople_index = (DEBUG_WFBCPeople_index + 1) % FIELD_WFBC_PEOPLE_MAX;
+        DEBUGWIN_RefreshScreen();
+      }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+        DEBUG_WFBCPeople_index --;
+        if( DEBUG_WFBCPeople_index < 0 ){
+          DEBUG_WFBCPeople_index += FIELD_WFBC_PEOPLE_MAX;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+    }
+    // NPC_ID
+    else{
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+        DEBUG_WFBCPeople_npc_id = (DEBUG_WFBCPeople_npc_id + 1) % FIELD_WFBC_NPCID_MAX;
+        DEBUGWIN_RefreshScreen();
+      }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+        DEBUG_WFBCPeople_npc_id --;
+        if( DEBUG_WFBCPeople_npc_id < 0 ){
+          DEBUG_WFBCPeople_npc_id += FIELD_WFBC_NPCID_MAX;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+    }
+  }
+}
+
+static void DEBWIN_Draw_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item )
+{
+  if( DEBUG_WFBCPeople_mode == 0 ){
+    DEBUGWIN_ITEM_SetNameV( item , "N idx %d npc %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id );
+  }else{
+    DEBUGWIN_ITEM_SetNameV( item , "B idx %d npc %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id );
+  }
+}
+  
+
+
+#endif //PM_DEBUG
 
 
