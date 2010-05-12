@@ -16,8 +16,8 @@
 //===============================================================================
 // ■BG_FONT
 //===============================================================================
-struct _BG_FONT
-{
+struct _BG_FONT {
+
   BG_FONT_PARAM param;    // 基本パラメータ
   GFL_FONT*     font;     // 使用するフォント
   GFL_MSGDATA*  message;  // 参照するメッセージデータ
@@ -143,7 +143,7 @@ void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
 
   if( BGFont->draw_enable_flag ) {
     // VRAMへ転送
-    GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
+    GFL_BMPWIN_MakeTransWindow_VBlank( BGFont->bmpWin );
   }
 }
 
@@ -156,17 +156,19 @@ void BG_FONT_SetString( BG_FONT* BGFont, const STRBUF* strbuf )
  */
 //-------------------------------------------------------------------------------
 void BG_FONT_SetDrawEnable( BG_FONT* BGFont, BOOL enable )
-{
-  BGFont->draw_enable_flag = enable;
+{ 
+  BOOL now = BGFont->draw_enable_flag;
 
-  if( enable ) {
+  if( !now && enable ) {
     // スクリーンを作成
-    GFL_BMPWIN_MakeTransWindow( BGFont->bmpWin );
+    GFL_BMPWIN_MakeTransWindow_VBlank( BGFont->bmpWin );
   }
-  else {
+  else if( now && !enable ) {
     // スクリーンをクリア
-    GFL_BMPWIN_ClearTransWindow( BGFont->bmpWin );
+    GFL_BMPWIN_ClearTransWindow_VBlank( BGFont->bmpWin );
   }
+
+  BGFont->draw_enable_flag = enable;
 }
 
 //-------------------------------------------------------------------------------
@@ -192,7 +194,7 @@ extern void BG_FONT_SetPalette( BG_FONT* BGFont, u8 palnum )
       palnum ); // 該当スクリーンのパレットを変更
 
   if( BGFont->draw_enable_flag ) {
-    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) ); // VRAMへ転送
+    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) ); // VRAMへ転送
   }
 }
 
@@ -216,7 +218,7 @@ static int CalcXOffsetForCentering( const BG_FONT* BGFont, const STRBUF* str )
   targetWidth = GFL_BMPWIN_GetSizeX( BGFont->bmpWin ) * DOT_PER_CHARA;
   strWidth    = PRINTSYS_GetStrWidth( str, BGFont->font, 0 );
 
-  //GF_ASSERT( strWidth <= targetWidth ) // 書き込み先よりも文字列の幅が大きい
+  // 書き込み先よりも文字列の幅が大きい
   if( targetWidth < strWidth ) {
     OS_Printf( "---------------------------------------------------\n" );
     OS_Printf( "RESEARCH-RADAR: bitmap width (%d) < string width (%d)\n", targetWidth, strWidth );

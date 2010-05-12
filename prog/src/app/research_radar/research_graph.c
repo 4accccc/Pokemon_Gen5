@@ -1009,6 +1009,7 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
     UpdateBGFont_Answer( work );        // 回答を更新する
     UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
+    UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
     UpdateBGFont_Count( work );         // 回答人数を更新する
     UpdateArrow( work );                // 矢印を更新する
     UpdateMyAnswerIconOnButton( work ); // 自分の回答アイコン ( ボタン上 ) を更新する
@@ -1817,12 +1818,13 @@ static void SwitchDataDisplayType( RRG_WORK* work )
   SetDataDisplayType( work, nextType );
 
   // 表示を更新
-  UpdateMainBG_WINDOW( work ); // MAIN-BG ( ウィンドウ面 ) を更新
-  SetMenuCursorOn( work );     // カーソルが乗っている状態にする
-  UpdateBGFont_Answer( work ); // 回答を更新する
-  UpdateBGFont_Count( work );  // 回答人数を更新する
-  UpdateBGFont_NoData( work ); //「ただいま ちょうさちゅう」の表示を更新する
-  UpdateArrow( work );         // 矢印を更新する
+  UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新
+  SetMenuCursorOn( work );            // カーソルが乗っている状態にする
+  UpdateBGFont_Answer( work );        // 回答を更新する
+  UpdateBGFont_Count( work );         // 回答人数を更新する
+  UpdateBGFont_NoData( work );        //「ただいま ちょうさちゅう」の表示を更新する
+  UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+  UpdateArrow( work );                // 矢印を更新する
 
   // 解析済みの場合のみの更新
   if( work->analyzeFlag ) {
@@ -2731,12 +2733,14 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
   // 解析前 or 更新中なら表示しない
   if( (work->analyzeFlag == FALSE) || (work->updateFlag == TRUE) ) {
     BG_FONT_SetDrawEnable( BGFont, FALSE );
+    OBATA_Printf( "answer FALSE\n" );
     return;
   }
 
   //「ただいま ちょうさちゅう」なら, 表示しない
   if( GetCountOfQuestion(work) == 0 ) {
     BG_FONT_SetDrawEnable( BGFont, FALSE );
+    OBATA_Printf( "answer FALSE\n" );
     return;
   }
 
@@ -2761,6 +2765,7 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
   // BG ( フォント面 ) に対し, 文字列を書き込む
   BG_FONT_SetString( BGFont, strbuf_expand );
   BG_FONT_SetDrawEnable( BGFont, TRUE );
+  OBATA_Printf( "answer TRUE\n" );
 
   GFL_STR_DeleteBuffer( strbuf_plain );
   GFL_STR_DeleteBuffer( strbuf_expand );
@@ -2885,10 +2890,12 @@ static void UpdateBGFont_NoData( RRG_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void UpdateBGFont_DataReceiving( RRG_WORK* work )
 {
-  if( work->state == RRG_STATE_UPDATE ) {
+  if( work->updateFlag ) {
+    OBATA_Printf( "receiving TRUE\n" );
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_DATA_RECEIVING ], TRUE ); // 表示  
   }
   else {
+    OBATA_Printf( "receiving FALSE\n" );
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_DATA_RECEIVING ], FALSE ); // クリア
   }
 }

@@ -14,8 +14,8 @@ typedef enum {
   RRL_STATE_SETUP,             // 準備
   RRL_STATE_STANDBY,           // 最初のキー入力待ち
   RRL_STATE_KEY_WAIT,          // キー入力待ち
-  RRL_STATE_SCROLL_WAIT,       // スクロール完了待ち
-  RRL_STATE_SCROLL_CONTROL,    // スクロール操作
+  RRL_STATE_AUTO_SCROLL,       // 自動スクロール
+  RRL_STATE_SLIDE_CONTROL,     // スクロール操作
   RRL_STATE_CONFIRM_STANDBY,   // 調査項目確定の確認 ( スタンバイ )
   RRL_STATE_CONFIRM_KEY_WAIT,  // 調査項目確定の確認 ( キー入力待ち )
   RRL_STATE_DETERMINE,         // 調査項目確定

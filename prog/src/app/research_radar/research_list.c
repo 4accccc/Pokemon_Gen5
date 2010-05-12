@@ -62,6 +62,7 @@ struct _RESEARCH_RADAR_LIST_WORK
 
   QUEUE*    stateQueue; // 状態キュー
   RRL_STATE state;      // 現在の状態
+  u32       stateSeq;   // 状態内シーケンス番号
   u32       stateCount; // 状態カウンタ
   u32       waitFrame;  // フレーム経過待ち状態の待ち時間
 
@@ -75,11 +76,14 @@ struct _RESEARCH_RADAR_LIST_WORK
   u8 topicCursorNextPos; // 移動後のカーソル位置 
 
   // スクロール
-  int scrollCursorPos;  // スクロールカーソル位置
-  int scrollStartPos;   // スクロール開始時のカーソル位置
-  int scrollEndPos;     // スクロール終了時のカーソル位置
-  int scrollFrames;     // スクロールフレーム数
-  int scrollFrameCount; // スクロールフレーム数カウンタ
+  int scrollCursorPos;      // スクロールカーソル位置
+  int scrollCursorPos_prev; // 前回のスクロールカーソル位置
+  int scrollStartPos;       // スクロール開始時のカーソル位置
+  int scrollEndPos;         // スクロール終了時のカーソル位置
+  int scrollFrames;         // スクロールフレーム数
+  int scrollFrameCount;     // スクロールフレーム数カウンタ
+  int sliderSpeed;          // スライダーの速度
+  int sliderAccel;          // スライダーの加速度
 
   // タッチ領域
   GFL_UI_TP_HITTBL menuTouchHitTable[ MENU_TOUCH_AREA_NUM ];
@@ -130,8 +134,8 @@ struct _RESEARCH_RADAR_LIST_WORK
 static void InitState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
 static void InitState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
 static void InitState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
-static void InitState_SCROLL_WAIT( RRL_WORK* work ); // RRL_STATE_SCROLL_WAIT
-static void InitState_SCROLL_CONTROL( RRL_WORK* work ); // RRL_STATE_SCROLL_CONTROL
+static void InitState_AUTO_SCROLL( RRL_WORK* work ); // RRL_STATE_AUTO_SCROLL
+static void InitState_SLIDE_CONTROL( RRL_WORK* work ); // RRL_STATE_SLIDE_CONTROL
 static void InitState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
 static void InitState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
 static void InitState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
@@ -145,8 +149,8 @@ static void InitState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP
 static void MainState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
 static void MainState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
 static void MainState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
-static void MainState_SCROLL_WAIT( RRL_WORK* work ); // RRL_STATE_SCROLL_WAIT
-static void MainState_SCROLL_CONTROL( RRL_WORK* work ); // RRL_STATE_SCROLL_CONTROL
+static void MainState_AUTO_SCROLL( RRL_WORK* work ); // RRL_STATE_AUTO_SCROLL
+static void MainState_SLIDE_CONTROL( RRL_WORK* work ); // RRL_STATE_SLIDE_CONTROL
 static void MainState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
 static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
 static void MainState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
@@ -160,8 +164,8 @@ static void MainState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP
 static void FinishState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
 static void FinishState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
 static void FinishState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
-static void FinishState_SCROLL_WAIT( RRL_WORK* work ); // RRL_STATE_SCROLL_WAIT
-static void FinishState_SCROLL_CONTROL( RRL_WORK* work ); // RRL_STATE_SCROLL_CONTROL
+static void FinishState_AUTO_SCROLL( RRL_WORK* work ); // RRL_STATE_AUTO_SCROLL
+static void FinishState_SLIDE_CONTROL( RRL_WORK* work ); // RRL_STATE_SLIDE_CONTROL
 static void FinishState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
 static void FinishState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
 static void FinishState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
@@ -178,6 +182,9 @@ static void FinishCurrentState( RRL_WORK* work ); // 現在の状態を終了する
 static void SwitchState( RRL_WORK* work ); // 処理状態を変更する
 static RRL_STATE GetState( const RRL_WORK* work ); // 状態を取得する
 static void SetState( RRL_WORK* work, RRL_STATE nextSeq ); // 処理状態を設定する
+static u32 GetStateSeq( const RRL_WORK* work ); // 状態内シーケンス番号を取得する
+static void IncStateSeq( RRL_WORK* work ); // 状態内シーケンス番号をインクリメントする
+static void ResetStateSeq( RRL_WORK* work ); // 状態内シーケンス番号をリセットする
 static void SetFinishReason( RRL_WORK* work, SEQ_CHANGE_TRIG reason ); // リスト画面終了の方法を登録する
 static void SetFinishResult( RRL_WORK* work, RRL_RESULT result ); // 画面終了結果を設定する
 static void SetWaitFrame( RRL_WORK* work, u32 frame ); // フレーム経過待ち状態の待ち時間を設定する
@@ -191,6 +198,7 @@ static void MoveMenuCursorUp( RRL_WORK* work ); // 上へ移動する
 static void MoveMenuCursorDown( RRL_WORK* work ); // 下へ移動する
 static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem ); // 直接移動する
 // 調査項目カーソル
+static void AdjustTopicCursor( RRL_WORK* work ); // カーソルが画面内に存在するように調整する
 static void MoveTopicCursorUp( RRL_WORK* work ); // 上へ移動する
 static void MoveTopicCursorDown( RRL_WORK* work ); // 下へ移動する
 static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID ); // 直接移動する
@@ -222,14 +230,21 @@ static int CalcDisplayBottomOfTopicButton ( const RRL_WORK* work, u8 topicID ); 
 static void UpdateTopicButtonMask( const RRL_WORK* work ); // 調査項目ボタンのスクロール回り込みを隠すためのウィンドウを更新する
 static void UpdateInvestigatingIcon( const RRL_WORK* work ); // 調査中アイコンの表示状態を更新する
 // 上画面の表示
-static void UpdateSubDisplayStrings( RRL_WORK* work ); // 上画面のカーソル依存文字列表示を更新する
-static void TopicDetailStringHide( RRL_WORK* work ); // 上画面の調査項目説明文の表示を隠す
-static void TopicDetailStringDispStart( RRL_WORK* work ); // 上画面の調査項目説明文の表示を開始する
-// スクロールバー
-static void UpdateScrollHandleDisp( const RRL_WORK* work ); // 現在のスクロール実効値に合わせて, スクロールバーのつまみ部分の表示位置を更新する
-static int CalcScrollHandlePos_byScrollValue( const RRL_WORK* work ); // スクロール実効値から, スクロールバーのつまみ部分の表示位置を計算する
-static int CalcScrollCursorPos_byScrollHandlePos( const RRL_WORK* work, int controlPos ); // スクロールバーのつまみ部分の表示位置から, スクロールカーソル位置を算出する
-static int GetScrollHandlePos( const RRL_WORK* work ); // スクロールバーのつまみ部分の表示位置を取得する
+static void UpdateTopicDetailStrings_at_Now( RRL_WORK* work ); // 上画面の調査項目説明文を更新する ( 現在のカーソル位置に合わせる )
+static void UpdateTopicDetailStrings_at_Next( RRL_WORK* work ); // 上画面の調査項目説明文を更新する ( 次のカーソル位置に合わせる )
+static void UpdateTopicDetailStrings_at( RRL_WORK* work, u8 topicID ); // 上画面の調査項目説明文を更新する ( 指定カーソル位置に合わせる )
+static void HideTopicDetailStrints( RRL_WORK* work ); // 上画面の調査項目説明文の表示を隠す
+static void ShowTopicDetailStrings( RRL_WORK* work ); // 上画面の調査項目説明文の表示を開始する
+// スライダー
+static void UpdateSliderDisp( const RRL_WORK* work ); // 現在のスクロール実効値に合わせて, スライダーの表示位置を更新する
+static int CalcSliderPos_byScrollValue( const RRL_WORK* work ); // スクロール実効値から, スライダーの表示位置を計算する
+static int CalcScrollCursorPos_bySliderPos( const RRL_WORK* work, int controlPos ); // スライダーの表示位置から, スクロールカーソル位置を算出する
+static int GetSliderPos( const RRL_WORK* work ); // スライダーの表示位置を取得する
+static void AccelerateSliderSpeed( RRL_WORK* work ); // スライダーの移動速度を更新する
+static BOOL IsSliderMoving( const RRL_WORK* work ); // スライダーが動いているかどうかをチェックする
+static void ObserveSliderSpeed( RRL_WORK* work ); // スライダーの移動速度を観測する
+static void AdjustSliderSpeed_forFreeMove( RRL_WORK* work ); // スライダーの移動速度を調整する ( 自然移動用 )
+static void AdjustSliderAccel_forFreeMove( RRL_WORK* work ); // スライダーの加速度を調整する ( 自然移動用 )
 // スクロール
 static void StartScroll( RRL_WORK* work, int startPos, int endPos, int frames ); // スクロールを開始する
 static void UpdateScroll( RRL_WORK* work ); // スクロールを更新する
@@ -271,6 +286,7 @@ static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work );
 static GAMEDATA* GetGameData( const RRL_WORK* work );
 static void SetHeapID( RRL_WORK* work, HEAPID heapID );
 static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork );
+// スライダー
 // 調査項目
 static int GetNextTopicID( const RRL_WORK* work, int topicID ); // 次の調査項目IDを取得する
 static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // 前の調査項目IDを取得する
@@ -412,8 +428,8 @@ void RRL_Main( RRL_WORK* work )
   case RRL_STATE_SETUP:             MainState_SETUP( work );             break;
   case RRL_STATE_STANDBY:           MainState_STANDBY( work );           break;
   case RRL_STATE_KEY_WAIT:          MainState_KEY_WAIT( work );          break;
-  case RRL_STATE_SCROLL_WAIT:       MainState_SCROLL_WAIT( work );       break;
-  case RRL_STATE_SCROLL_CONTROL:    MainState_SCROLL_CONTROL( work );    break;
+  case RRL_STATE_AUTO_SCROLL:       MainState_AUTO_SCROLL( work );       break;
+  case RRL_STATE_SLIDE_CONTROL:     MainState_SLIDE_CONTROL( work );     break;
   case RRL_STATE_CONFIRM_STANDBY:   MainState_CONFIRM_STANDBY( work );   break;
   case RRL_STATE_CONFIRM_KEY_WAIT:  MainState_CONFIRM_KEY_WAIT( work );  break;
   case RRL_STATE_DETERMINE:         MainState_DETERMINE( work );         break;
@@ -495,8 +511,8 @@ static void MainState_SETUP( RRL_WORK* work )
 
   // 文字列描画オブジェクト 準備
   CreateBGFonts( work );
-  UpdateSubDisplayStrings( work );
-  TopicDetailStringHide( work );
+  UpdateTopicDetailStrings_at_Now( work );
+  HideTopicDetailStrints( work );
 
   // OBJ 準備
   RegisterSubObjResources( work );
@@ -592,13 +608,26 @@ static void MainState_STANDBY( RRL_WORK* work )
       SetSelectedTopicID( work, work->topicCursorPos );     // カーソル位置の調査項目を選択
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                       // 決定音
       StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );// 項目選択時のパレットアニメ開始
-      UpdateSubDisplayStrings( work );                      // 上画面のカーソル依存文字列を更新
-      TopicDetailStringDispStart( work );                   // 上画面の詳細表示開始
+      UpdateTopicDetailStrings_at_Now( work );              // 上画面の調査項目説明文を更新
+      ShowTopicDetailStrings( work );                       // 上画面の詳細表示開始
       FinishCurrentState( work );                           // RRL_STATE_STANDBY 状態終了
       RegisterNextState( work, RRL_STATE_CONFIRM_STANDBY ); // => RRL_STATE_CONFIRM_STANDBY 
     }
     return;
   } 
+
+  //----------------
+  // スクロールバー
+  if( ( GFL_UI_TP_HitCont( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ||
+      ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
+    // スクロール操作可能
+    if( CheckScrollControlCan( work ) == TRUE ) {
+      FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT 状態終了
+      RegisterNextState( work, RRL_STATE_SLIDE_CONTROL );  // => RRL_STATE_SLIDE_CONTROL 
+      RegisterNextState( work, RRL_STATE_KEY_WAIT );       // ==> RRL_STATE_KEY_WAIT 
+    }
+    return;
+  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -638,7 +667,7 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   if( trg & PAD_KEY_UP ) {
     MoveTopicCursorUp( work );                         // カーソル移動
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT 状態終了
-    RegisterNextState( work, RRL_STATE_SCROLL_WAIT );  // => RRL_STATE_SCROLL_WAIT 
+    RegisterNextState( work, RRL_STATE_AUTO_SCROLL );  // => RRL_STATE_AUTO_SCROLL 
     RegisterNextState( work, RRL_STATE_KEY_WAIT );     // ==> RRL_STATE_KEY_WAIT 
     return;
   } 
@@ -647,7 +676,7 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   if( trg & PAD_KEY_DOWN ) {
     MoveTopicCursorDown( work );                       // カーソル移動
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT 状態終了
-    RegisterNextState( work, RRL_STATE_SCROLL_WAIT );  // => RRL_STATE_SCROLL_WAIT 
+    RegisterNextState( work, RRL_STATE_AUTO_SCROLL );  // => RRL_STATE_AUTO_SCROLL 
     RegisterNextState( work, RRL_STATE_KEY_WAIT );     // ==> RRL_STATE_KEY_WAIT 
     return;
   } 
@@ -692,12 +721,14 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
     return;
   } 
 
+  //----------------
   // スクロールバー
-  if( GFL_UI_TP_HitCont( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) {
+  if( ( GFL_UI_TP_HitCont( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ||
+      ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
     // スクロール操作可能
     if( CheckScrollControlCan( work ) == TRUE ) {
       FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT 状態終了
-      RegisterNextState( work, RRL_STATE_SCROLL_CONTROL ); // => RRL_STATE_SCROLL_CONTROL 
+      RegisterNextState( work, RRL_STATE_SLIDE_CONTROL );  // => RRL_STATE_SLIDE_CONTROL 
       RegisterNextState( work, RRL_STATE_KEY_WAIT );       // ==> RRL_STATE_KEY_WAIT 
     }
     return;
@@ -706,18 +737,18 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロール完了待ち状態 ( RRL_STATE_SCROLL_WAIT ) の処理
+ * @brief スクロール完了待ち状態 ( RRL_STATE_AUTO_SCROLL ) の処理
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainState_SCROLL_WAIT( RRL_WORK* work )
+static void MainState_AUTO_SCROLL( RRL_WORK* work )
 {
   // スクロール処理
   UpdateScroll( work );            // スクロールを更新
   UpdateScrollValue( work );       // スクロール実効値を更新
   UpdateTopicTouchArea( work );    // タッチ範囲を更新
-  UpdateScrollHandleDisp( work );  // スクロールバーのつまみ部分
+  UpdateSliderDisp( work );        // スライダー
   UpdateInvestigatingIcon( work ); // 調査項目選択アイコンを更新
   UpdateTopicButtonMask( work );   // 調査項目のマスクウィンドを更新
 
@@ -729,48 +760,66 @@ static void MainState_SCROLL_WAIT( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロール操作状態 ( RRL_STATE_SCROLL_CONTROL ) の処理
+ * @brief スクロール操作状態 ( RRL_STATE_SLIDE_CONTROL ) の処理
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainState_SCROLL_CONTROL( RRL_WORK* work )
+static void MainState_SLIDE_CONTROL( RRL_WORK* work )
 {
   u32 x, y;
   BOOL touch;
 
   touch = GFL_UI_TP_GetPointCont( &x, &y );
 
-  // タッチが離された
-  if( touch == FALSE ) {
-    FinishCurrentState( work );
-    return;
+  switch( GetStateSeq(work) ) {
+  case 0: 
+    // タッチが離された
+    if( touch == FALSE ) {
+      AdjustSliderSpeed_forFreeMove( work ); // スライダーの速度を調整
+      AdjustSliderAccel_forFreeMove( work ); // スライダーの加速度を調整
+      IncStateSeq( work ); 
+      break;
+    }
+
+    // スクロール処理
+    {
+      int scrollCursorPos;
+      scrollCursorPos = CalcScrollCursorPos_bySliderPos( work, y ); // タッチ場所から, スクロールカーソル位置を算出
+      SetScrollCursorPos( work, scrollCursorPos );// スクロールカーソル位置を更新
+      AdjustScrollValue( work );                  // スクロール実効値を更新
+      UpdateTopicTouchArea( work );               // タッチ範囲を更新する
+      UpdateSliderDisp( work );                   // スライダーを更新
+      UpdateInvestigatingIcon( work );            // 調査項目選択アイコンを更新
+      ObserveSliderSpeed( work );                 // スライダーの移動速度を観測
+    }
+
+    break;
+
+  case 1:
+    // スクロール処理
+    {
+      int scrollCursorPos;
+      scrollCursorPos = work->scrollCursorPos + work->sliderSpeed;
+      SetScrollCursorPos( work, scrollCursorPos );// スクロールカーソル位置を更新
+      AdjustScrollValue( work );                  // スクロール実効値を更新
+      UpdateTopicTouchArea( work );               // タッチ範囲を更新する
+      UpdateSliderDisp( work );                   // スライダーを更新
+      UpdateInvestigatingIcon( work );            // 調査項目選択アイコンを更新
+    } 
+
+    // スライダーの速度を更新
+    AccelerateSliderSpeed( work );
+
+    // スライダーが停止
+    if( IsSliderMoving( work ) == FALSE ) {
+      FinishCurrentState( work );
+    }
+    break;
   }
 
-  // スクロール処理
-  {
-    int scrollCursorPos;
-    scrollCursorPos = CalcScrollCursorPos_byScrollHandlePos( work, y ); // タッチ場所から, スクロールカーソル位置を算出
-    SetScrollCursorPos( work, scrollCursorPos );// スクロールカーソル位置を更新
-    AdjustScrollValue( work );                  // スクロール実効値を更新
-    UpdateTopicTouchArea( work );               // タッチ範囲を更新する
-    UpdateScrollHandleDisp( work );             // スクロールバーのつまみ部分を更新
-    UpdateInvestigatingIcon( work );            // 調査項目選択アイコンを更新
-  }
-
-  // カーソル位置更新処理
-  {
-    int min = GetMinScrollCursorMarginPos();
-    int max = GetMaxScrollCursorMarginPos();
-    int curTop = CalcScrollCursorPosOfTopicButtonTop( work->topicCursorPos );
-    int curBottom = CalcScrollCursorPosOfTopicButtonBottom( work->topicCursorPos );
-    if( curBottom <= min ) {
-      MoveTopicCursorDirect( work, CalcTopicID_byScrollCursorPos(curBottom + TOPIC_BUTTON_HEIGHT/2) );
-    }
-    if( max <= curTop ) {
-      MoveTopicCursorDirect( work, CalcTopicID_byScrollCursorPos(curTop - TOPIC_BUTTON_HEIGHT/2) );
-    }
-  }
+  // カーソル位置調整
+  AdjustTopicCursor( work );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -793,7 +842,7 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
     UpdateScroll( work );             // スクロールを更新
     UpdateScrollValue( work );        // スクロール実効値を更新
     UpdateTopicTouchArea( work );     // タッチ範囲を更新
-    UpdateScrollHandleDisp( work );   // スクロールバーのつまみ部分を更新
+    UpdateSliderDisp( work );         // スライダーを更新
     UpdateInvestigatingIcon( work );  // 調査項目選択アイコンを更新
     UpdateTopicButtonMask( work );    // 調査項目のマスクウィンドを更新
   }
@@ -855,7 +904,7 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
     UpdateScroll( work );             // スクロールを更新
     UpdateScrollValue( work );        // スクロール実効値を更新
     UpdateTopicTouchArea( work );     // タッチ範囲を更新
-    UpdateScrollHandleDisp( work );   // スクロールバーのつまみ部分を更新
+    UpdateSliderDisp( work );         // スライダーを更新
     UpdateInvestigatingIcon( work );  // 調査項目選択アイコンを更新
     UpdateTopicButtonMask( work );    // 調査項目のマスクウィンドを更新
   }
@@ -1014,7 +1063,7 @@ static void MainState_SCROLL_RESET( RRL_WORK* work )
   UpdateScroll( work );           // スクロールを更新
   UpdateScrollValue( work );      // スクロール実効値を更新
   UpdateTopicTouchArea( work );   // タッチ範囲を更新する
-  UpdateScrollHandleDisp( work ); // スクロールバーのつまみ部分
+  UpdateSliderDisp( work );       // スライダー
   UpdateInvestigatingIcon( work );  // 調査項目選択アイコン
   UpdateTopicButtonMask( work );  // 調査項目のマスクウィンドを更新する
 
@@ -1118,17 +1167,17 @@ static void InitState_KEY_WAIT( RRL_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
 
   // 上画面の詳細表示開始
-  TopicDetailStringDispStart( work );
+  ShowTopicDetailStrings( work );
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 状態を初期化する ( ==> RRL_STATE_SCROLL_WAIT )
+ * @brief 状態を初期化する ( ==> RRL_STATE_AUTO_SCROLL )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitState_SCROLL_WAIT( RRL_WORK* work )
+static void InitState_AUTO_SCROLL( RRL_WORK* work )
 {
   // スクロール開始
   {
@@ -1148,8 +1197,7 @@ static void InitState_SCROLL_WAIT( RRL_WORK* work )
     {
       int min = GetMinScrollCursorMarginPos();
       int max = GetMaxScrollCursorMarginPos();
-      if( (endPos < min) || (max < endPos) )
-      {
+      if( (endPos < min) || (max < endPos) ) {
         if( startPos < endPos ) {
           startPos = max;
         }
@@ -1158,30 +1206,30 @@ static void InitState_SCROLL_WAIT( RRL_WORK* work )
         }
       }
     }
-    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 3;
-    // スクロール実効値に変更がないスクロールの場合,
-    // 1フレームで処理する
+    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 4;
+
+    // スクロール実効値に変化があるかどうか
     {
       int min = GetMinScrollCursorMarginPos();
       int max = GetMaxScrollCursorMarginPos();
+      // スクロール実効値に変更がない
       if( ( min <= startPos) && (startPos <= max) && 
-          ( min <= endPos) && (endPos <= max)  ) 
-      {
-        frames = 1;
+          ( min <= endPos) && (endPos <= max)  ) {
+        frames = 0;
       }
     } 
-    StartScroll( work, startPos, endPos, frames  );  
+    StartScroll( work, startPos, endPos, frames );  
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 状態を初期化する ( ==> RRL_STATE_SCROLL_CONTROL )
+ * @brief 状態を初期化する ( ==> RRL_STATE_SLIDE_CONTROL )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void InitState_SCROLL_CONTROL( RRL_WORK* work )
+static void InitState_SLIDE_CONTROL( RRL_WORK* work )
 {
 }
 
@@ -1475,31 +1523,31 @@ static void FinishState_STANDBY( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void FinishState_KEY_WAIT( RRL_WORK* work )
 {
-  UpdateSubDisplayStrings( work ); // 上画面のカーソル依存文字列を更新
+  UpdateTopicDetailStrings_at_Now( work ); // 上画面の調査項目説明文を更新
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 状態終了処理 ( ==> RRL_STATE_SCROLL_WAIT )
+ * @brief 状態終了処理 ( ==> RRL_STATE_AUTO_SCROLL )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishState_SCROLL_WAIT( RRL_WORK* work )
+static void FinishState_AUTO_SCROLL( RRL_WORK* work )
 {
   SetTopicCursorPosDirect( work, work->topicCursorNextPos ); // 調査項目カーソル位置を更新
-  UpdateSubDisplayStrings( work ); // 上画面のカーソル依存文字列を更新
+  //UpdateTopicDetailStrings_at_Now( work ); // 上画面の調査項目説明文を更新
   UpdateTopicButtonMask( work ); // ウィンドウを切る
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 状態終了処理 ( ==> RRL_STATE_SCROLL_CONTROL )
+ * @brief 状態終了処理 ( ==> RRL_STATE_SLIDE_CONTROL )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void FinishState_SCROLL_CONTROL( RRL_WORK* work )
+static void FinishState_SLIDE_CONTROL( RRL_WORK* work )
 {
 }
 
@@ -1626,8 +1674,8 @@ static void CountUpStateCount( RRL_WORK* work )
   case RRL_STATE_SETUP:             maxCount = 0xffffffff;                break;
   case RRL_STATE_STANDBY:           maxCount = 0xffffffff;                break;
   case RRL_STATE_KEY_WAIT:          maxCount = 0xffffffff;                break;
-  case RRL_STATE_SCROLL_WAIT:       maxCount = 0xffffffff;                break;
-  case RRL_STATE_SCROLL_CONTROL:    maxCount = 0xffffffff;                break;
+  case RRL_STATE_AUTO_SCROLL:       maxCount = 0xffffffff;                break;
+  case RRL_STATE_SLIDE_CONTROL:     maxCount = 0xffffffff;                break;
   case RRL_STATE_CONFIRM_STANDBY:   maxCount = 0xffffffff;                break;
   case RRL_STATE_CONFIRM_KEY_WAIT:  maxCount = 0xffffffff;                break;
   case RRL_STATE_DETERMINE:         maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
@@ -1653,7 +1701,7 @@ static void CountUpStateCount( RRL_WORK* work )
  * @param nextSeq 登録する状態
  */
 //-----------------------------------------------------------------------------------------
-static void RegisterNextState( RRL_WORK* work, RRL_STATE nextSeq )     // => work
+static void RegisterNextState( RRL_WORK* work, RRL_STATE nextSeq )
 {
   QUEUE_EnQueue( work->stateQueue, nextSeq );
 }
@@ -1746,14 +1794,14 @@ static void RegisterFirstStateFlow( RRL_WORK* work )
 
   // 前の画面をボタンで終了
   if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
-    RegisterNextState( work, RRL_STATE_SCROLL_WAIT );      // => RRL_STATE_SCROLL_WAIT 
-    RegisterNextState( work, RRL_STATE_FADE_IN );      // => RRL_STATE_FADE_IN 
-    RegisterNextState( work, RRL_STATE_KEY_WAIT );      // => RRL_STATE_KEY_WAIT 
+    RegisterNextState( work, RRL_STATE_AUTO_SCROLL ); // => RRL_STATE_AUTO_SCROLL 
+    RegisterNextState( work, RRL_STATE_FADE_IN );     // ==> RRL_STATE_FADE_IN 
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );    // ===> RRL_STATE_KEY_WAIT 
   }
   else {
-    RegisterNextState( work, RRL_STATE_SCROLL_WAIT );      // => RRL_STATE_SCROLL_WAIT 
-    RegisterNextState( work, RRL_STATE_FADE_IN );      // => RRL_STATE_FADE_IN 
-    RegisterNextState( work, RRL_STATE_STANDBY );      // => RRL_STATE_STANDBY 
+    RegisterNextState( work, RRL_STATE_AUTO_SCROLL ); // => RRL_STATE_AUTO_SCROLL 
+    RegisterNextState( work, RRL_STATE_FADE_IN );     // ==> RRL_STATE_FADE_IN 
+    RegisterNextState( work, RRL_STATE_STANDBY );     // ===> RRL_STATE_STANDBY 
   }
 }
 
@@ -1805,8 +1853,8 @@ static void SetState( RRL_WORK* work, RRL_STATE nextSeq )
   case RRL_STATE_SETUP:            FinishState_SETUP( work );            break;
   case RRL_STATE_STANDBY:          FinishState_STANDBY( work );          break;
   case RRL_STATE_KEY_WAIT:         FinishState_KEY_WAIT( work );         break;
-  case RRL_STATE_SCROLL_WAIT:      FinishState_SCROLL_WAIT( work );      break;
-  case RRL_STATE_SCROLL_CONTROL:   FinishState_SCROLL_CONTROL( work );   break;
+  case RRL_STATE_AUTO_SCROLL:      FinishState_AUTO_SCROLL( work );      break;
+  case RRL_STATE_SLIDE_CONTROL:    FinishState_SLIDE_CONTROL( work );    break;
   case RRL_STATE_CONFIRM_STANDBY:  FinishState_CONFIRM_STANDBY( work );  break;
   case RRL_STATE_CONFIRM_KEY_WAIT: FinishState_CONFIRM_KEY_WAIT( work ); break;
   case RRL_STATE_DETERMINE:        FinishState_DETERMINE( work );        break;
@@ -1824,14 +1872,15 @@ static void SetState( RRL_WORK* work, RRL_STATE nextSeq )
   work->state        = nextSeq;
   work->stateCount   = 0;
   work->stateEndFlag = FALSE;
+  ResetStateSeq( work );
 
   // 状態の初期化処理
   switch( nextSeq ) {
   case RRL_STATE_SETUP:            InitState_SETUP( work );            break;
   case RRL_STATE_STANDBY:          InitState_STANDBY( work );          break;
   case RRL_STATE_KEY_WAIT:         InitState_KEY_WAIT( work );         break;
-  case RRL_STATE_SCROLL_WAIT:      InitState_SCROLL_WAIT( work );      break;
-  case RRL_STATE_SCROLL_CONTROL:   InitState_SCROLL_CONTROL( work );   break;
+  case RRL_STATE_AUTO_SCROLL:      InitState_AUTO_SCROLL( work );      break;
+  case RRL_STATE_SLIDE_CONTROL:    InitState_SLIDE_CONTROL( work );    break;
   case RRL_STATE_CONFIRM_STANDBY:  InitState_CONFIRM_STANDBY( work );  break;
   case RRL_STATE_CONFIRM_KEY_WAIT: InitState_CONFIRM_KEY_WAIT( work ); break;
   case RRL_STATE_DETERMINE:        InitState_DETERMINE( work );        break;
@@ -1844,6 +1893,44 @@ static void SetState( RRL_WORK* work, RRL_STATE nextSeq )
   case RRL_STATE_FINISH:           break;
   default:  GF_ASSERT(0);
   }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 状態内シーケンス番号を取得する
+ *
+ * @param work
+ *
+ * @return 状態内シーケンス番号
+ */
+//-----------------------------------------------------------------------------------------
+static u32 GetStateSeq( const RRL_WORK* work )
+{
+  return work->stateSeq;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 状態内シーケンス番号をインクリメントする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void IncStateSeq( RRL_WORK* work )
+{
+  (work->stateSeq)++;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 状態内シーケンス番号をリセットする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ResetStateSeq( RRL_WORK* work )
+{
+  work->stateSeq = 0;
 }
 
 
@@ -1899,6 +1986,27 @@ static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem )
   SetMenuItemCursorOn( work, work->menuCursorPos ); // カーソルが乗っている状態にする
   PMSND_PlaySE( SEQ_SE_SELECT1 );                   // カーソル移動音
   StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // パレットアニメ開始
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief カーソルが画面内に存在するように調整する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void AdjustTopicCursor( RRL_WORK* work )
+{
+  int min = GetMinScrollCursorMarginPos();
+  int max = GetMaxScrollCursorMarginPos();
+  int curTop = CalcScrollCursorPosOfTopicButtonTop( work->topicCursorPos );
+  int curBottom = CalcScrollCursorPosOfTopicButtonBottom( work->topicCursorPos );
+  if( curBottom <= min ) {
+    MoveTopicCursorDirect( work, CalcTopicID_byScrollCursorPos(curBottom + TOPIC_BUTTON_HEIGHT/2) );
+  }
+  if( max <= curTop ) {
+    MoveTopicCursorDirect( work, CalcTopicID_byScrollCursorPos(curTop - TOPIC_BUTTON_HEIGHT/2) );
+  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2165,7 +2273,7 @@ static void SetTopicButtonCursorOn( const RRL_WORK* work )
 
   // スクリーン更新
   GFL_BG_ChangeScreenPalette( BGFrame, left, top, width, height, paletteNo );
-  GFL_BG_LoadScreenReq( BGFrame );
+  GFL_BG_LoadScreenV_Req( BGFrame );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2193,7 +2301,7 @@ static void SetTopicButtonCursorOff( const RRL_WORK* work )
 
   // スクリーン更新
   GFL_BG_ChangeScreenPalette( BGFrame, left, top, width, height, paletteNo );
-  GFL_BG_LoadScreenReq( BGFrame );
+  GFL_BG_LoadScreenV_Req( BGFrame );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2263,8 +2371,8 @@ static void SetTopicButtonInvestigating( const RRL_WORK* work, u8 topicID )
     screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
     screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
   }
-  GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
-  GFL_BG_LoadScreenReq( MAIN_BG_FONT );
+  GFL_BG_LoadScreenV_Req( MAIN_BG_WINDOW );
+  GFL_BG_LoadScreenV_Req( MAIN_BG_FONT );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2334,8 +2442,8 @@ static void SetTopicButtonNotInvestigating( const RRL_WORK* work, u8 topicID )
     screenBuffer1[ destPos ] = screenBuffer1[ srcPos ];
     screenBuffer2[ destPos ] = screenBuffer2[ srcPos ];
   }
-  GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
-  GFL_BG_LoadScreenReq( MAIN_BG_FONT );
+  GFL_BG_LoadScreenV_Req( MAIN_BG_WINDOW );
+  GFL_BG_LoadScreenV_Req( MAIN_BG_FONT );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2537,25 +2645,46 @@ static void UpdateInvestigatingIcon( const RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 上画面のカーソル依存文字列表示を更新する
+ * @brief 上画面の調査項目説明文を更新する ( 現在のカーソル位置に合わせる )
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateSubDisplayStrings( RRL_WORK* work )
+static void UpdateTopicDetailStrings_at_Now( RRL_WORK* work )
 {
-  int nowPos;
+  UpdateTopicDetailStrings_at( work, work->topicCursorPos );
+}
 
-  nowPos = work->topicCursorPos;
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 上画面の調査項目説明文を更新する ( 次のカーソル位置に合わせる )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void UpdateTopicDetailStrings_at_Next( RRL_WORK* work )
+{
+  UpdateTopicDetailStrings_at( work, work->topicCursorNextPos );
+}
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 上画面の調査項目説明文を更新する ( 指定カーソル位置に合わせる )
+ *
+ * @param work
+ * @param topicID カーソル位置 ( 調査項目ID )
+ */
+//-----------------------------------------------------------------------------------------
+static void UpdateTopicDetailStrings_at( RRL_WORK* work, u8 topicID )
+{
   // 調査項目 題名/補足
-  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ nowPos ] );
-  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ nowPos ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_TOPIC_TITLE ],   StringID_topicTitle[ topicID ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], StringID_topicCaption[ topicID ] );
 
   // 質問
-  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ nowPos ] ] );
-  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ nowPos ] ] );
-  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ nowPos ] ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_1 ], StringID_question[ Question1_topic[ topicID ] ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_2 ], StringID_question[ Question2_topic[ topicID ] ] );
+  BG_FONT_SetMessage( work->BGFont_string[ BG_FONT_QUESTION_3 ], StringID_question[ Question3_topic[ topicID ] ] );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2565,7 +2694,7 @@ static void UpdateSubDisplayStrings( RRL_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void TopicDetailStringHide( RRL_WORK* work )
+static void HideTopicDetailStrints( RRL_WORK* work )
 {
   BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_TITLE ], FALSE );
   BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], FALSE );
@@ -2581,7 +2710,7 @@ static void TopicDetailStringHide( RRL_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void TopicDetailStringDispStart( RRL_WORK* work )
+static void ShowTopicDetailStrings( RRL_WORK* work )
 {
   BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_TITLE ], TRUE );
   BG_FONT_SetDrawEnable( work->BGFont_string[ BG_FONT_TOPIC_CAPTION ], TRUE );
@@ -2592,12 +2721,12 @@ static void TopicDetailStringDispStart( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロールバーのつまみ部分の表示位置を更新する
+ * @brief スライダーの表示位置を更新する
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void UpdateScrollHandleDisp( const RRL_WORK* work )
+static void UpdateSliderDisp( const RRL_WORK* work )
 {
   GFL_CLWK* clactWork;
 
@@ -2605,8 +2734,7 @@ static void UpdateScrollHandleDisp( const RRL_WORK* work )
   clactWork  = GetClactWork( work, CLWK_SCROLL_CONTROL ); 
 
   // 表示しない
-  if( CheckScrollControlCan( work ) == FALSE ) 
-  {
+  if( CheckScrollControlCan( work ) == FALSE ) {
     GFL_CLACT_WK_SetDrawEnable( clactWork, FALSE );
   }
   // 表示する
@@ -2616,7 +2744,7 @@ static void UpdateScrollHandleDisp( const RRL_WORK* work )
 
     // 表示位置を算出
     pos.x = SCROLL_CONTROL_LEFT;
-    pos.y = CalcScrollHandlePos_byScrollValue( work );
+    pos.y = CalcSliderPos_byScrollValue( work );
     setSurface = ClactWorkInitData[ CLWK_SCROLL_CONTROL ].setSurface;
 
     // 表示位置を変更
@@ -2627,14 +2755,14 @@ static void UpdateScrollHandleDisp( const RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロールバーのつまみ部分の表示位置を計算する
+ * @brief スライダーの表示位置を計算する
  *
  * @param work
  *
  * @return 指定したスクロール実効値から求めた, スクロールバーつまみ部分のy座標
  */
 //-----------------------------------------------------------------------------------------
-static int CalcScrollHandlePos_byScrollValue( const RRL_WORK* work )
+static int CalcSliderPos_byScrollValue( const RRL_WORK* work )
 {
   int controlRange;
   int valueRange;
@@ -2653,7 +2781,7 @@ static int CalcScrollHandlePos_byScrollValue( const RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロールバーのつまみ部分の表示位置から, スクロールカーソル位置を算出する
+ * @brief スライダーの表示位置から, スクロールカーソル位置を算出する
  *
  * @param work
  * @param controlPos つまみ部分の表示位置
@@ -2661,7 +2789,7 @@ static int CalcScrollHandlePos_byScrollValue( const RRL_WORK* work )
  * @return スクロールカーソルの位置
  */
 //-----------------------------------------------------------------------------------------
-static int CalcScrollCursorPos_byScrollHandlePos( const RRL_WORK* work, int controlPos )
+static int CalcScrollCursorPos_bySliderPos( const RRL_WORK* work, int controlPos )
 {
   float rate;
   int min, max;
@@ -2680,14 +2808,14 @@ static int CalcScrollCursorPos_byScrollHandlePos( const RRL_WORK* work, int cont
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief スクロールバーのつまみ部分の表示位置を取得する
+ * @brief スライダーの表示位置を取得する
  *
  * @param work
  *
- * @return スクロールバーのつまみ部分の表示位置
+ * @return スライダーの表示位置
  */
 //-----------------------------------------------------------------------------------------
-static int GetScrollHandlePos( const RRL_WORK* work )
+static int GetSliderPos( const RRL_WORK* work )
 {
   int controlPos;
   GFL_CLWK* clwk;
@@ -2700,6 +2828,100 @@ static int GetScrollHandlePos( const RRL_WORK* work )
   controlPos = pos.y;
 
   return controlPos;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief スライダーの移動速度を更新する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void AccelerateSliderSpeed( RRL_WORK* work )
+{
+  int prev_speed;
+  int accl_speed;
+
+  // 加速度を適用
+  prev_speed = work->sliderSpeed;
+  accl_speed = work->sliderSpeed + work->sliderAccel;
+
+  // 符号が変化
+  if( prev_speed * accl_speed <= 0 ) { accl_speed = 0; }
+
+  // 速度を更新
+  work->sliderSpeed = accl_speed;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief スライダーが動いているかどうかをチェックする
+ *
+ * @param work
+ *
+ * @return スライダーが動いている場合 TRUE
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL IsSliderMoving( const RRL_WORK* work )
+{
+  if( work->sliderSpeed == 0 ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief スライダーの移動速度を観測する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ObserveSliderSpeed( RRL_WORK* work )
+{
+  // スクロールカーソルの変化量で速度を決定
+  work->sliderSpeed = work->scrollCursorPos - work->scrollCursorPos_prev;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief スライダーの移動速度を調整する ( 自然移動用 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void AdjustSliderSpeed_forFreeMove( RRL_WORK* work )
+{
+  // 滑りやすいように調整
+  work->sliderSpeed *= 1.5;
+
+  // 最大値補正
+  if( SLIDER_MAX_SPEED_AT_FREE_MOVE < work->sliderSpeed ) {
+    work->sliderSpeed = SLIDER_MAX_SPEED_AT_FREE_MOVE;
+  }
+  // 最小値補正
+  else if( work->sliderSpeed < SLIDER_MIN_SPEED_AT_FREE_MOVE ) {
+    work->sliderSpeed = SLIDER_MIN_SPEED_AT_FREE_MOVE;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief スライダーの加速度を調整する ( 自然移動用 )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void AdjustSliderAccel_forFreeMove( RRL_WORK* work )
+{
+  if( work->sliderSpeed < 0 ) {
+    work->sliderAccel = SLIDER_ACCEL_AT_FREE_MOVE;
+  }
+  else {
+    work->sliderAccel = -SLIDER_ACCEL_AT_FREE_MOVE;
+  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2796,7 +3018,8 @@ static void ShiftScrollCursorPos( RRL_WORK* work, int offset )
   if( GetMaxScrollCursorPos(work) < next ) { next = GetMaxScrollCursorPos(work); } // 最大値補正
 
   // カーソル位置を更新
-  work->scrollCursorPos = next;
+  work->scrollCursorPos_prev = now;
+  work->scrollCursorPos      = next;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2814,7 +3037,8 @@ static void SetScrollCursorPos( RRL_WORK* work, int pos )
   if( GetMaxScrollCursorPos(work) < pos ) { pos = GetMaxScrollCursorPos(work); } // 最大値補正
 
   // カーソル位置を更新
-  work->scrollCursorPos = pos;
+  work->scrollCursorPos_prev = work->scrollCursorPos;
+  work->scrollCursorPos      = pos;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2828,7 +3052,8 @@ static void SetScrollCursorPos( RRL_WORK* work, int pos )
 static void SetScrollCursorPosForce( RRL_WORK* work, int pos )
 {
   // カーソル位置を更新
-  work->scrollCursorPos = pos;
+  work->scrollCursorPos_prev = pos;
+  work->scrollCursorPos      = pos;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3535,25 +3760,26 @@ static RRL_WORK* CreateListWork( HEAPID heapID )
 //-----------------------------------------------------------------------------------------
 static void InitListWork( RRL_WORK* work )
 {
-  work->state              = RRL_STATE_SETUP;
-  work->stateCount         = 0;
-  work->stateEndFlag       = FALSE;
-  work->waitFrame          = WAIT_FRAME_BUTTON;
-  work->menuCursorPos      = MENU_ITEM_DETERMINATION_OK;
-  work->topicCursorPos     = 0;
-  work->topicCursorNextPos = 0;
-  work->selectableTopicNum = 0;
-  work->selectedTopicID    = TOPIC_ID_DUMMY;
-  work->VBlankTCBSystem    = GFUser_VIntr_GetTCBSYS();
-  work->scrollCursorPos    = MIN_SCROLL_CURSOR_POS;
-  work->scrollStartPos     = 0;
-  work->scrollEndPos       = 0;
-  work->scrollFrames       = 0;
-  work->scrollFrameCount   = 0;
-  work->palFadeOutFlag     = FALSE;
-  work->finishResult       = RRL_RESULT_TO_TOP;
-  work->finishFlag         = FALSE;
-  work->VBlankTask         = NULL;
+  work->state                = RRL_STATE_SETUP;
+  work->stateCount           = 0;
+  work->stateEndFlag         = FALSE;
+  work->waitFrame            = WAIT_FRAME_BUTTON;
+  work->menuCursorPos        = MENU_ITEM_DETERMINATION_OK;
+  work->topicCursorPos       = 0;
+  work->topicCursorNextPos   = 0;
+  work->selectableTopicNum   = 0;
+  work->selectedTopicID      = TOPIC_ID_DUMMY;
+  work->VBlankTCBSystem      = GFUser_VIntr_GetTCBSYS();
+  work->scrollCursorPos      = MIN_SCROLL_CURSOR_POS;
+  work->scrollCursorPos_prev = MIN_SCROLL_CURSOR_POS;
+  work->scrollStartPos       = 0;
+  work->scrollEndPos         = 0;
+  work->scrollFrames         = 0;
+  work->scrollFrameCount     = 0;
+  work->palFadeOutFlag       = FALSE;
+  work->finishResult         = RRL_RESULT_TO_TOP;
+  work->finishFlag           = FALSE;
+  work->VBlankTask           = NULL;
 
   InitStateQueue( work );
   InitMessages( work );
@@ -3863,7 +4089,7 @@ static void SetupSubBG_WINDOW( RRL_WORK* work )
     src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
     NNS_G2dGetUnpackedScreenData( src, &data );
     GFL_BG_WriteScreen( SUB_BG_WINDOW, data->rawData, 0, 0, 32, 24 );
-    GFL_BG_LoadScreenReq( SUB_BG_WINDOW );
+    GFL_BG_LoadScreenV_Req( SUB_BG_WINDOW );
     GFL_HEAP_FreeMemory( src );
   }
 
@@ -3934,7 +4160,7 @@ static void SetupMainBG_BAR( RRL_WORK* work )
     src   = GFL_ARC_LoadDataAllocByHandle( handle, datID, work->heapID );
     NNS_G2dGetUnpackedScreenData( src, &data );
     GFL_BG_WriteScreen( MAIN_BG_BAR, data->rawData, 0, 0, 32, 24 );
-    GFL_BG_LoadScreenReq( MAIN_BG_BAR );
+    GFL_BG_LoadScreenV_Req( MAIN_BG_BAR );
     GFL_HEAP_FreeMemory( src );
   }
 
@@ -3981,7 +4207,7 @@ static void SetupMainBG_WINDOW( RRL_WORK* work )
 
     NNS_G2dGetUnpackedScreenData( src, &data );
     GFL_BG_WriteScreen( MAIN_BG_WINDOW, data->rawData, 0, 0, sx, sy );
-    GFL_BG_LoadScreenReq( MAIN_BG_WINDOW );
+    GFL_BG_LoadScreenV_Req( MAIN_BG_WINDOW );
     GFL_HEAP_FreeMemory( src );
   }
 

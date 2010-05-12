@@ -293,6 +293,9 @@
 #define SELECT_TOPIC_MAX_NUM      (1)  // 選択する調査項目の数
 #define SEQ_DETERMINE_WAIT_FRAMES (60) // 調査項目確定シーケンスの待ち時間
 #define WAIT_FRAME_BUTTON         (15) // ボタンを押した時の待ち時間
+#define SLIDER_MAX_SPEED_AT_FREE_MOVE  (9) // スライダーの自由移動時の最大速度 ( 下方向 )
+#define SLIDER_MIN_SPEED_AT_FREE_MOVE (-9) // スライダーの自由移動時の最大速度 ( 上方向 )
+#define SLIDER_ACCEL_AT_FREE_MOVE (1) // スライダーの自由移動時の加速度
 
 // スクロールバーつまみ部分
 #define SCROLL_CONTROL_LEFT     (248)  // x 座標
