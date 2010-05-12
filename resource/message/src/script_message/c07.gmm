@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:05:22"/>
+	<create user="matsumiya" host="W00224" date="2010-05-12T22:22:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -793,12 +793,16 @@
 たすけ　くにを　つくる……▼
 そして　にくたいが　ほろぶと
 ライトストーンと　なり　あらたな▽
-えいゆうの　たんじょうを　まつ……</language>
+えいゆうの　たんじょうを　まつ……▼
+そんな　はなしを
+ちいさいときに　きいたことが　あるよ</language>
 		<language name="JPN_KANJI" width="256">伝説の　ポケモンは
 真実を　求める　英雄を助ける▼
 そして　肉体が　滅ぶと
 ライトストーンと　なり　新たな▽
-英雄の　誕生を　待つという……</language>
+英雄の　誕生を　待つという……▼
+そんな　話を
+小さいときに　きいたことが　あるよ</language>
 	</row>
 
 	<row id="msg_c07_man3_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -810,12 +814,16 @@
 たすけ　くにを　つくる……▼
 そして　にくたいが　ほろぶと
 ダークストーンと　なり　あらたな▽
-えいゆうの　たんじょうを　まつ……</language>
+えいゆうの　たんじょうを　まつ……▼
+そんな　はなしを
+ちいさいときに　きいたことが　あるよ</language>
 		<language name="JPN_KANJI" width="256">伝説の　ポケモンは
 理想を　求める　英雄を助ける▼
 そして　肉体が　滅ぶと
 ダークストーンと　なり　新たな▽
-英雄の　誕生を　待つという……</language>
+英雄の　誕生を　待つという……▼
+そんな　話を
+小さいときに　きいたことが　あるよ</language>
 	</row>
 
 	<row id="msg_c07_fighterm_01">
