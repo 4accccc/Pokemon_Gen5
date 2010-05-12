@@ -82,6 +82,7 @@ EVENT_START ev_pc
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START_BREAKABLE()
     _SYSWIN_CLOSE()
+    _TIME_WAIT(3) // メニュー決定音SEとアクセスSEが重ならないように待つ
     // 選択に応じた処理
     SWITCH $select_pos
     CASE msg_pc_window_01 THEN _CALL( pc_box )
