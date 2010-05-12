@@ -325,6 +325,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 #ifdef DEBUG_ONLY_FOR_hudson
 #include "title/game_start.h"
+#include "debug/debug_hudson.h"
 static void HudsonInit( void )
 { 
   GameStart_DebugNet();
