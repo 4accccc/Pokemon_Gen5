@@ -68,12 +68,13 @@
 #define BGID_D02R0101_STONE_01            0
 #define BGID_D02R0101_SIGN1_01            1
 #define D02R0101_HIDE_ITEM_01             2
-#define D02R0101_HIDE_ITEM_02             3
-#define BGID_D02R0101_STONE_02            4
-#define BGID_D02R0101_STONE_03            5
-#define BGID_D02R0101_STONE_04            6
-#define BGID_D02R0101_STONE_05            7
-#define BGID_D02R0101_STONE_06            8
-#define BGID_D02R0101_STONE_07            9
+#define BGID_D02R0101_STONE_02            3
+#define BGID_D02R0101_STONE_03            4
+#define BGID_D02R0101_STONE_04            5
+#define BGID_D02R0101_STONE_05            6
+#define BGID_D02R0101_STONE_06            7
+#define BGID_D02R0101_STONE_07            8
+#define D02R0101_HIDE_ITEM_02             9
+#define D02R0101_HIDE_ITEM_03            10
 
 #endif //ZONE_D02R0101_EVB_H
