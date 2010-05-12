@@ -1043,8 +1043,8 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
   case 3:
@@ -1081,8 +1081,8 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade( GMEVENT* event, int* seq, void* wk 
     break;
   case 1:
     // BGM更新リクエスト
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
   case 2:
@@ -1205,8 +1205,8 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
     break;
   case _SEQ_BGM_CHANGE:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
   case _SEQ_MAPCHG_CORE:
@@ -1257,8 +1257,8 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, voi
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
   case 3: 
@@ -1310,8 +1310,8 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
 
@@ -1368,8 +1368,8 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
 
@@ -1424,8 +1424,8 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
       PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
     }
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
   case 3: 

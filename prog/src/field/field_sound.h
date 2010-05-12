@@ -39,14 +39,11 @@ extern GMEVENT* EVENT_FSND_ForcePlayBGM( GAMESYS_WORK* gameSystem, u16 soundIdx 
 extern GMEVENT* EVENT_FSND_FadeInBGM( GAMESYS_WORK* gameSystem, u16 fadeInFrame );
 extern GMEVENT* EVENT_FSND_FadeOutBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame );
 extern GMEVENT* EVENT_FSND_PushBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame );
-extern GMEVENT* EVENT_FSND_PopBGM( GAMESYS_WORK* gameSystem, 
-                                   u16 fadeOutFrame, u16 fadeInFrame );
+extern GMEVENT* EVENT_FSND_PopBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame, u16 fadeInFrame );
 extern GMEVENT* EVENT_FSND_AllPopBGM( GAMESYS_WORK* gameSystem, u16 fadeInFrame );
-extern GMEVENT* EVENT_FSND_PushPlayNextBGM( GAMESYS_WORK* gameSystem, u32 soundIdx, 
-                                            u16 fadeOutFrame, u16 fadeInFrame );
+extern GMEVENT* EVENT_FSND_PushPlayNextBGM( GAMESYS_WORK* gameSystem, u32 soundIdx, u16 fadeOutFrame, u16 fadeInFrame );
 extern GMEVENT* EVENT_FSND_PushPlayJingleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
-extern GMEVENT* EVENT_FSND_ChangeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx, 
-                                      u16 fadeOutFrame, u16 fadeInFrame );
+extern GMEVENT* EVENT_FSND_ChangeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx, u16 fadeOutFrame, u16 fadeInFrame );
 extern GMEVENT* EVENT_FSND_ResetBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame );
 
 // ベースBGMを退避し, 戦闘曲を再生する
@@ -73,12 +70,11 @@ extern GMEVENT* EVENT_FSND_PlayTrainerEyeBGM( GAMESYS_WORK* gameSystem, u32 soun
 extern void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID ); 
 
 // マップ チェンジ
-extern void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID ); 
-extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound );
+extern void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 prevZoneID, u16 nextZoneID );
+extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID );
 
 // 自機移動フォーム変更
-extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, 
-                                               GAMEDATA* gameData, u16 zoneID ); 
+extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID ); 
 
 
 //=================================================================================

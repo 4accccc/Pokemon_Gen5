@@ -49,7 +49,6 @@ enum {
   SEQ_DOOROUT_END,
   // 以下, 実行時の判定で遷移するシーケンス
   SEQ_DOOROUT_CAMERA_TRACE_WAIT,
-  SEQ_DOOROUT_SOUND_LOAD_WAIT,
   SEQ_DOOROUT_WAIT_FOR_CAMERA_ACT_START,
 };
 
@@ -79,7 +78,8 @@ typedef struct {
   GAMEDATA *      gameData;        //<<<ゲームデータへのポインタ
   FIELDMAP_WORK * fieldmap;        //<<<フィールドマップへのポインタ
   FIELD_SOUND *   fieldSound;      //<<<フィールドサウンドへのポインタ
-  LOCATION        loc_req;         //<<<次のマップを指すロケーション指定 ( BGMフェード処理の係数 )
+  u16             prevZoneID;      //<<<ドアに入る時のゾーンID
+  u16             nextZoneID;      //<<<ドアから出た先のゾーンID
   BOOL            cameraAnimeFlag; //<<<カメラアニメーションの有無
   BOOL            seasonDispFlag;  //<<<四季表示を行うかどうか
   u8              startSeason;     //<<<最初に表示する季節 ( 四季表示を行う場合のみ有効 )
@@ -291,7 +291,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   FIELDMAP_WORK *         fieldmap   = work->fieldmap;
   FIELD_SOUND *           fieldSound = work->fieldSound;
   FIELD_CAMERA *          camera     = FIELDMAP_GetFieldCamera( fieldmap ); 
-  FIELD_TASK_MAN *   task_man   = FIELDMAP_GetTaskManager( fieldmap );
+  FIELD_TASK_MAN *        task_man   = FIELDMAP_GetTaskManager( fieldmap );
+  u16                     zone_id    = FIELDMAP_GetZoneID( fieldmap );
 
   switch( *seq ) {
   // イベント初期設定
@@ -323,20 +324,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   // 演出開始
   case SEQ_DOOROUT_EFFECT_START:
     ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam ); // カメラ演出をセットアップ
-    FSND_PlayStartBGM( fieldSound ); // BGM 再生開始
+    FSND_PlayStartBGM( fieldSound, gameData, zone_id ); // BGM 再生開始
     StartFadeInEvent( event, work ); // 画面フェードイン開始
-    *seq = SEQ_DOOROUT_SOUND_LOAD_WAIT;
-    break;
-
-  // サウンドの読み込み待ち
-  case SEQ_DOOROUT_SOUND_LOAD_WAIT:
-    if( PMSND_IsLoading() ) {
-      OS_Printf( "WARNING!!: BGMの読み込みが間に合っていません!\n" ); // 警告!!
-    }
-    else {
-      *seq = GetNextSeq( work );
-      FinishCurrentSeq( work );
-    }
+    *seq = GetNextSeq( work );
+    FinishCurrentSeq( work );
     break;
 
   // ドアオープン開始
@@ -420,7 +411,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
  *
  * @param gameSystem
  * @param fieldmap
- * @param loc             次のマップを指定
  * @param cameraAnimeFlag カメラアニメーションの有無
  * @param seasonDispFlag  四季表示を行うかどうか
  * @param fadeType        四季表示を行わない場合のフェードタイプ
@@ -429,7 +419,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
  */
 //--------------------------------------------------------------------------------------------
 GMEVENT* EVENT_FieldDoorInAnime ( 
-    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, const LOCATION* loc, 
+    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+    u16 prevZoneID, u16 nextZoneID,
     BOOL cameraAnimeFlag, BOOL seasonDispFlag, FIELD_FADE_TYPE fadeType,
     EXIT_TYPE exitType )
 {
@@ -446,7 +437,8 @@ GMEVENT* EVENT_FieldDoorInAnime (
   work->gameData        = GAMESYSTEM_GetGameData( gameSystem );
   work->fieldmap        = GAMESYSTEM_GetFieldMapWork( gameSystem );
   work->fieldSound      = GAMEDATA_GetFieldSound( work->gameData );
-  work->loc_req         = *loc;
+  work->prevZoneID      = prevZoneID;
+  work->nextZoneID      = nextZoneID;
   work->cameraAnimeFlag = cameraAnimeFlag;
   work->seasonDispFlag  = seasonDispFlag;
   work->fadeType        = fadeType;
@@ -582,7 +574,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
 
     // BGM再生準備
   case SEQ_DOORIN_BGM_STAND_BY:
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->prevZoneID, work->nextZoneID );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
     break;

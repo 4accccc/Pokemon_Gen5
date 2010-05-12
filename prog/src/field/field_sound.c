@@ -1075,22 +1075,26 @@ void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData,
  *
  * @param fieldSound
  * @param gameData
- * @param prevZoneID チェンジ前のゾーンID
- * @param nextZoneID チェンジ後のゾーンID
+ * @param prevZoneID 遷移前のゾーンID
+ * @param nextZoneID 遷移後のゾーンID
  */
 //---------------------------------------------------------------------------------
-void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID )
-{
-  u32 soundIdx;
+void FSND_StandByNextMapBGM( 
+    FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 prevZoneID, u16 nextZoneID )
+{ 
+  u32 prevBGM, nextBGM;
 
   // 前後のゾーンのBGMを取得
-  soundIdx = GetSpecialBGM( gameData, nextZoneID );
-  if( soundIdx == SPECIAL_BGM_NONE ) {
-    soundIdx = GetZoneBGM( gameData, nextZoneID ); 
-  }
+  prevBGM = GetSpecialBGM( gameData, prevZoneID );
+  nextBGM = GetSpecialBGM( gameData, nextZoneID );
+  if( prevBGM == SPECIAL_BGM_NONE ) { prevBGM = GetZoneBGM( gameData, prevZoneID ); }
+  if( nextBGM == SPECIAL_BGM_NONE ) { nextBGM = GetZoneBGM( gameData, nextZoneID ); }
+
+  // 前後のBGMが同じなら何もしない
+  if( prevBGM == nextBGM ) { return; }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, soundIdx, FSND_FADE_NORMAL );
+  FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_NORMAL );
 }
 
 //---------------------------------------------------------------------------------
@@ -1098,12 +1102,22 @@ void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 ne
  * @brief マップ チェンジ時のBGM再生開始
  *
  * @param fieldSound
+ * @param gameData
+ * @param zoneID チェンジ後のゾーンID
  */
 //---------------------------------------------------------------------------------
-void FSND_PlayStartBGM( FIELD_SOUND* fieldSound )
+void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID )
 {
+  u32 soundIdx;
+
+  // チェンジ後のゾーンのBGMを取得
+  soundIdx = GetSpecialBGM( gameData, zoneID );
+  if( soundIdx == SPECIAL_BGM_NONE ) {
+    soundIdx = GetZoneBGM( gameData, zoneID ); 
+  }
+
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_FADE_IN( fieldSound, FSND_FADE_NONE );
+  FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, soundIdx );
 }
 
 //---------------------------------------------------------------------------------
@@ -1115,8 +1129,7 @@ void FSND_PlayStartBGM( FIELD_SOUND* fieldSound )
  * @param zoneID      現在のゾーンID
  */
 //---------------------------------------------------------------------------------
-void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, 
-                                        GAMEDATA* gameData, u16 zoneID )
+void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID )
 {
   u32 soundIdx;
 

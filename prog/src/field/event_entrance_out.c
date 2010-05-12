@@ -195,7 +195,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 
   // BGM再生開始
   case 1:
-    FSND_PlayStartBGM( fieldSound );
+    FSND_PlayStartBGM( fieldSound, gameData, work->location.zone_id );
     (*seq)++;
     break;
 
@@ -294,7 +294,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
         GMEVENT_CallEvent( event, EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST ) );
       }
       else {
-        FSND_PlayStartBGM( fieldSound );
+        FSND_PlayStartBGM( fieldSound, gameData, work->location.zone_id );
       }
     }
     (*seq)++;
@@ -343,109 +343,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
   return GMEVENT_RES_CONTINUE;
 }
 
-#if 0
-//---------------------------------------------------------------------------------------
-/**
- * @breif 退出イベント( SPx )
- */
-//---------------------------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *seq, void * wk )
-{
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-  FIELD_CAMERA*  camera     = FIELDMAP_GetFieldCamera( work->fieldmap );
-
-  // 処理シーケンス
-  enum {
-    SEQ_SETUP_CAMERA,                   // カメラのセットアップ
-    SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS,  // カメラ演出データ取得
-    SEQ_DOOR_OUT_ANIME,                 // ドア退出イベント
-    SEQ_INIT_CAMERA_SETTINGS,           // カメラの初期状態を設定する
-    SEQ_CREATE_CAMERA_EFFECT_TASK,      // カメラ演出タスクの作成
-    SEQ_WAIT_CAMERA_EFFECT_TASK,        // カメラ演出タスク終了待ち
-    SEQ_DISPLAY_PLACE_NAME,             // 地名表示更新リクエスト発行
-    SEQ_RECOVER_CAMERA,                 // カメラの復帰
-    SEQ_EXIT,                           // イベント終了
-  };
-
-  switch( *seq ) {
-  // カメラのセットアップ
-  case SEQ_SETUP_CAMERA:
-    SetupCamera( work );
-    *seq = SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS;
-    break;
-
-  // カメラ演出データ取得
-  case SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS:
-    // データ取得
-    ENTRANCE_CAMERA_LoadData( &work->cameraSettings, work->exitType );
-
-    // データが有効かどうか
-    if( work->cameraSettings.validFlag_OUT ) {
-      *seq = SEQ_INIT_CAMERA_SETTINGS;
-    }
-    else {
-      *seq = SEQ_DOOR_OUT_ANIME;
-    } 
-    break;
-
-  // カメラの初期状態を設定する
-  case SEQ_INIT_CAMERA_SETTINGS:
-    ENTRANCE_CAMERA_PrepareForDoorOut( fieldmap, &(work->cameraSettings) );
-    *seq = SEQ_DOOR_OUT_ANIME;
-    break;
-
-  // ドア退出イベント
-  case SEQ_DOOR_OUT_ANIME:
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldDoorOutAnime( gameSystem, fieldmap, FALSE, 
-                                 work->seasonDisplayFlag, work->startSeason, work->endSeason, work->fadeInType ) );
-
-    if( work->cameraSettings.validFlag_OUT ) {
-      *seq = SEQ_CREATE_CAMERA_EFFECT_TASK;
-    }
-    else {
-      *seq = SEQ_DISPLAY_PLACE_NAME;
-    } 
-    break;
-
-  // カメラ演出タスクの作成
-  case SEQ_CREATE_CAMERA_EFFECT_TASK:
-    ENTRANCE_CAMERA_AddDoorOutTask( fieldmap, &(work->cameraSettings) );
-    *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
-    break;
-
-  // タスク終了待ち
-  case SEQ_WAIT_CAMERA_EFFECT_TASK:
-    {
-      FIELD_TASK_MAN* taskMan;
-      taskMan = FIELDMAP_GetTaskManager( fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) { 
-        *seq = SEQ_DISPLAY_PLACE_NAME;
-      }
-    }
-    break;
-
-  // 地名表示更新リクエスト発行
-  case SEQ_DISPLAY_PLACE_NAME:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id );
-    *seq = SEQ_RECOVER_CAMERA;
-    break;
-
-  // カメラの復帰
-  case SEQ_RECOVER_CAMERA:
-    RecoverCamera( work );
-    *seq = SEQ_EXIT;
-    break;
-
-  // イベント終了
-  case SEQ_EXIT:
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-} 
-#endif
 //---------------------------------------------------------------------------------------
 /**
  * @breif 退出イベント( SPx )
@@ -501,7 +398,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, in
 
   // BGM再生開始
   case 1:
-    FSND_PlayStartBGM( fieldSound );
+    FSND_PlayStartBGM( fieldSound, gameData, work->location.zone_id );
     (*seq)++;
     break;
 

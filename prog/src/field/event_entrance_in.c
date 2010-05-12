@@ -56,7 +56,6 @@ typedef struct {
   EXIT_TYPE         exitType;          // 出入り口タイプ
   BOOL              seasonDisplayFlag; // 季節表示を行うかどうか
   FIELD_FADE_TYPE   fadeOutType;       // 季節表示がない場合のF/Oタイプ
-  BOOL              BGMFadeWaitFlag;   // BGM のフェード完了を待つかどうか
   FIELD_CAMERA_MODE initCameraMode;    // イベント開始時のカメラモード
   u16               zoneID;            // 遷移前のゾーンID
   u16               nextZoneID;        // 遷移後のゾーンID
@@ -178,12 +177,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
   switch ( *seq ) {
   // BGM再生準備
   case 0:
-    { 
-      u16 nowZoneID;
-
-      nowZoneID = FIELDMAP_GetZoneID( fieldmap );
-      FSND_StandByNextMapBGM( fieldSound, gameData, work->nextLocation.zone_id );
-    }
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->zoneID, work->nextZoneID );
     (*seq)++;
     break;
 
@@ -230,8 +224,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
   // ドア進入イベント
   case 0:
     GMEVENT_CallEvent( event, 
-        EVENT_FieldDoorInAnime( 
-          gameSystem, fieldmap, &(work->nextLocation), TRUE, work->seasonDisplayFlag, work->fadeOutType, work->exitType ) );
+        EVENT_FieldDoorInAnime( gameSystem, fieldmap, work->zoneID, work->nextZoneID, 
+          TRUE, work->seasonDisplayFlag, work->fadeOutType, work->exitType ) );
     (*seq)++;
     break;
 
@@ -269,14 +263,10 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
         // BGM フェードアウト
         GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_SHORT );
         GMEVENT_CallEvent( event, fadeOutEvent );
-        work->BGMFadeWaitFlag = TRUE; // BGMフェードを待つ
       }
       else { 
         // BGM 再生準備
-        FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
-        u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
-        FSND_StandByNextMapBGM( fieldSound, gameData, work->nextLocation.zone_id );
-        work->BGMFadeWaitFlag = FALSE; // BGMフェードは待たない
+        FSND_StandByNextMapBGM( fieldSound, gameData, work->zoneID, work->nextZoneID );
       }
     }
     (*seq)++;
@@ -386,9 +376,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   // ドア進入アニメ
   case SEQ_DOOR_IN_ANIME:
     GMEVENT_CallEvent( event, 
-        EVENT_FieldDoorInAnime( gameSystem, fieldmap, &work->nextLocation, 
-                                FALSE, work->seasonDisplayFlag, work->fadeOutType,
-                                work->exitType ) );
+        EVENT_FieldDoorInAnime( gameSystem, fieldmap, work->zoneID, work->nextZoneID,
+          FALSE, work->seasonDisplayFlag, work->fadeOutType, work->exitType ) );
     *seq = SEQ_EXIT;
     break;
 
@@ -415,12 +404,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, in
   switch ( *seq ) {
   // BGM再生準備
   case 0:
-    { 
-      u16 nowZoneID;
-
-      nowZoneID = FIELDMAP_GetZoneID( fieldmap );
-      FSND_StandByNextMapBGM( fieldSound, gameData, work->nextLocation.zone_id );
-    }
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->zoneID, work->nextZoneID );
     (*seq)++;
     break;
 

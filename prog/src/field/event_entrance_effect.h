@@ -12,7 +12,7 @@
 
 extern GMEVENT * EVENT_FieldDoorInAnime ( GAMESYS_WORK * gsys, 
                                           FIELDMAP_WORK * fieldmap, 
-                                          const LOCATION * loc, 
+                                          u16 prevZoneID, u16 nextZoneID,
                                           BOOL cam_anm_flag, 
                                           BOOL season_disp_flag,
                                           FIELD_FADE_TYPE fadeType,
