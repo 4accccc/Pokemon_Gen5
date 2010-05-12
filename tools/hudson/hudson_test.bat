@@ -16,13 +16,17 @@ REM ##################################################
 PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
 
 REM main.srl
-SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS/Release/main.srl
+SET PATH_MAIN_TLF=%PROJECT_PROGDIR%bin/ARM9-TS.HYB/Release/main.tlf
+SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS.HYB/Release/main.srl
 
 REM 最後のPrintfからのタイムアウト(秒) >> hudsonで指定
 SET TIMEOUT_DISP=%1 
 
 REM 対象DSのシリアルナンバー >> hudsonで指定
 SET SERIAL_NO=%2
+
+REM テストナンバー >> hudsonで指定
+SET TEST_NO=%3
 
 REM wbrom:05093474
 REM hosaka:05113644
@@ -44,8 +48,11 @@ REM ================================
 REM ブート
 REM ================================
 
-REM buryarg %PATH_MAIN_SRL% 1
-
+REM まずTLFに書きこんでからSRLを再生成
+buryarg.TWL %PATH_MAIN_TLF% %TEST_NO%
+touch %PATH_MAIN_SRL%
+make
+REM 実行開始
 loadrun -t %TIMEOUT_DISP% -s %SERIAL_NO% -a %ABORT_STRING% %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
 
