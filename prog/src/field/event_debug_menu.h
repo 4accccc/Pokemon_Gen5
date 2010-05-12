@@ -26,3 +26,4 @@
 extern GMEVENT * DEBUG_EVENT_DebugMenu( GAMESYS_WORK * gsys,
 		FIELDMAP_WORK * fieldWork, HEAPID heapID, u16 page_id );
 
+extern GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag );

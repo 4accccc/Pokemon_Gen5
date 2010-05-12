@@ -71,8 +71,14 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 #ifdef PM_DEBUG
 	switch( *seq  ){
 	case 0:		// 社名表示
+#ifdef DEBUG_ONLY_FOR_hudson
+    // HUDSONで実行した場合は直でフィールドへ
+    CorpRet = CORPORATE_RET_DEBUG;
+    *seq = 4;
+#else
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpRet );
 		*seq = 1;
+#endif
 		break;
 
 	case 1:		// 社名デモ

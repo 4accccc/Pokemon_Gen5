@@ -5562,7 +5562,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *wk )
 //
 //======================================================================
 
-static GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag );
+//static GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag );
 //--------------------------------------------------------------
 /// デバッグメニュー：全マップチェック
 //--------------------------------------------------------------
@@ -5685,6 +5685,7 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
       ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
       OS_TPrintf( "\t[[ALL MAP CHECKING... :%s]]!!\n", buf );
     }
+    OS_Printf( "ALL MAP CHECK: zone_id = %d\n", zone_id );
     fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
     GMEVENT_CallEvent( event,
         DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
@@ -5714,7 +5715,7 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag )
+GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag )
 {
   GMEVENT * new_event;
   ALL_MAP_CHECK_WORK * amcw;

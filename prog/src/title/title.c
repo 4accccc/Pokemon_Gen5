@@ -323,6 +323,14 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
   return GFL_PROC_RES_CONTINUE;
 }
 
+#ifdef DEBUG_ONLY_FOR_hudson
+#include "title/game_start.h"
+static void HudsonInit( void )
+{ 
+  GameStart_DebugNet();
+}
+#endif // DEBUG_ONLY_FOR_hudson
+
 //--------------------------------------------------------------------------
 /**
  * PROC Quit
@@ -346,7 +354,13 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL);
 #ifdef PM_DEBUG // デバッグ用スキップ処理
   }else if( mode == END_DEBUG_CALL ){
+#ifdef DEBUG_ONLY_FOR_hudson
+    // HUDSONで実行した場合は直でフィールドへ
+    HudsonInit();
+#else
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
+#endif 
+
 #endif  // PM_DEBUG
   }
 
