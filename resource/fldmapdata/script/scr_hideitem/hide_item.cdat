@@ -1,4 +1,4 @@
-static const HIDE_ITEM_DATA hide_item_data[175] = {
+static const HIDE_ITEM_DATA hide_item_data[176] = {
 
 	{ // かおるキノコ
 		  0, 
@@ -240,7 +240,7 @@ static const HIDE_ITEM_DATA hide_item_data[175] = {
 		323, // PLR16 侵入先１６番道路
 		458,436, // x, y
 	},
-	{ // スーパーボール
+	{ // ハイパーボール
 		 40, 
 		1,0, // flags
 		 18, // C02 シッポウシティ
@@ -270,11 +270,11 @@ static const HIDE_ITEM_DATA hide_item_data[175] = {
 		160, // D02R0101 ヤグルマの森
 		 88, 55, // x, y
 	},
-	{ // まんたんのくすり
+	{ // ちいさなキノコ
 		 45, 
 		0,0, // flags
 		160, // D02R0101 ヤグルマの森
-		 58, 52, // x, y
+		 14, 56, // x, y
 	},
 	{ // ふしぎなアメ
 		 46, 
@@ -1049,5 +1049,11 @@ static const HIDE_ITEM_DATA hide_item_data[175] = {
 		0,0, // flags
 		263, // h04 ビレッジブリッジ
 		 85,  8, // x, y
+	},
+	{ // ちいさなキノコ
+		175, 
+		0,0, // flags
+		160, // D02R0101 ヤグルマの森
+		 35, 80, // x, y
 	},
 }; // end of hide_item_data
