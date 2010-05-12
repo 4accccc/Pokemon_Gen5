@@ -45,13 +45,24 @@ SET USERNAME=hudson
 @echo serial_no = %SERIAL_NO%
 
 REM ================================
-REM ブート
+REM makeする
 REM ================================
+make
+if %ERRORLEVEL% == 0 goto _MAKE_SUCCESS:
+@echo make error.
+exit 0
+:_MAKE_SUCCESS
 
+REM ================================
 REM まずTLFに書きこんでからSRLを再生成
+REM ================================
 buryarg.TWL %PATH_MAIN_TLF% %TEST_NO%
 touch %PATH_MAIN_SRL%
 make
+
+REM ================================
+REM ブート
+REM ================================
 REM 実行開始
 loadrun -t %TIMEOUT_DISP% -s %SERIAL_NO% -a %ABORT_STRING% %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
