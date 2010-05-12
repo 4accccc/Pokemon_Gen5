@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T18:06:40"/>
+	<create user="matsumiya" host="W00224" date="2010-05-12T12:41:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -391,23 +391,23 @@
 		<attribute name="キャラ指定">TENNISW</attribute>
 		<language name="JPN" width="256">いちりゅうの　テニスプレイヤーが
 ポケモンと　いっしょに▽
-きょうぎじょうで　まってるわよ！</language>
+コートで　まってるわよ！</language>
 		<language name="JPN_KANJI" width="256">一流の　テニスプレイヤーが
 ポケモンと　一緒に▽
 コートの　上で　待ってるわよ！</language>
 	</row>
 
 	<row id="msg_c04r0401_basketm_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀
+		<comment>♂
 ・バスケのとき
 ・試合中は非表示</comment>
 		<attribute name="キャラ指定">BASKETM</attribute>
 		<language name="JPN" width="256">いちりゅうの　バスケせんしゅが
 ポケモンと　いっしょに▽
-きょうぎじょうで　まってるわよ！</language>
+コートで　キミを　まってる！</language>
 		<language name="JPN_KANJI" width="256">一流の　バスケ選手が
 ポケモンと　一緒に▽
-コートの　上で　待ってるわよ！</language>
+コート上で　キミを　待ってる！</language>
 	</row>
 
 	<row id="msg_c04r0301_policeman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
