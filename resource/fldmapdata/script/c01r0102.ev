@@ -484,8 +484,6 @@ EVENT_START   ev_c01r0102_girl3_01
 		
 		ENDIF
 		
-		//ぜひぜひ　バトルボックスを
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_04 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
@@ -527,8 +525,6 @@ EVENT_START   ev_c01r0102_girl3_01
 		
 				ENDIF
 		
-				//ぜひぜひ　バトルボックスを
-				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_04 )
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 
