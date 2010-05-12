@@ -94,7 +94,7 @@
 #define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
 #define UI_TEMPLATE_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
 #define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
-#define UI_TEMPLATE_POKE2D				// ポケモンBG,OBJ読みこみ
+//#define UI_TEMPLATE_POKE2D				// ポケモンBG,OBJ読みこみ
 #define UI_TEMPLATE_BALL					// ボールアイコン読みこみ
 //#define UI_TEMPLATE_PMSDRAW       // 簡易会話表示
 
