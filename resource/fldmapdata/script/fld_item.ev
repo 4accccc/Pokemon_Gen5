@@ -2341,10 +2341,10 @@ EVENT_START ev_fld_item_290
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r16r0201 X=12 Y=41 ITEM=ピーピーエイダー FLAG=285
+// MAP=r16r0201 X=12 Y=41 ITEM=おおきなキノコ FLAG=285
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_285
-  _FLD_ITEM_EVENT ITEM_PIIPIIEIDAA,1
+  _FLD_ITEM_EVENT ITEM_OOKINAKINOKO,1
 EVENT_END
 
 //--------------------------------------------------------------
