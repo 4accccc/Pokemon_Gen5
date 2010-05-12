@@ -136,7 +136,9 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	return GFL_PROC_RES_FINISH;
 }
 
+//#if 1
 #ifdef DEBUG_ONLY_FOR_hudson
+
 #include "debug/debug_hudson.h"
 #include "field/event_debug_menu.h"
 static void HudsonMain( GAMESYS_WORK* gsys )
@@ -153,19 +155,14 @@ static void HudsonMain( GAMESYS_WORK* gsys )
 
     //>>引数からテストモード切り替え
 
-    switch ( OS_GetArgv(1) )
+    // 全マップチェック
+//    if ( OS_GetArgv(1) == '1' )
     {
-    case HUDSON_TESTMODE_MAP_JUMP:
-      // 全マップチェック
-      {
-        GMEVENT * new_event;
+      GMEVENT * new_event;
 
-        new_event = EVENT_DEBUG_AllMapCheck( gsys, FALSE );
-        GAMESYSTEM_SetEvent( gsys, new_event );
-      }
-      break;
-    default : 
-    };
+      new_event = EVENT_DEBUG_AllMapCheck( gsys, FALSE );
+      GAMESYSTEM_SetEvent( gsys, new_event );
+    }
    
   }
 }
