@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-10T18:18:46"/>
+	<create user="matsumiya" host="W00224" date="2010-05-12T17:28:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1484" top="321" right="2189" bottom="949" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -369,7 +369,8 @@
 その　ひでんマシンで　いあいぎりという
 ほそいきを　きることが　できる▽
 わざを　おぼえさせることが　できるわ▼
-しかも　ひでんマシンは　なんどでも
+しかも　ひでんマシンも　
+わざマシンと　おなじで　なんどでも▽
 つかえるのよ！　すごいでしょ！▼
 ……ただ　ひでんは　おぼえさせると
 わすれるのが　たいへん　だけどね▼</language>
@@ -379,7 +380,8 @@
 その　ひでんマシンで　いあいぎりという
 細い木を　切ることが　できる▽
 技を　覚えさせることが　できるわ▼
-しかも　ひでんマシンは　何度でも
+しかも　ひでんマシンも　
+わざマシンと　おなじで　何度でも▽
 使えるのよ！　すごいでしょ！▼
 ……ただ　ひでんは　覚えさせると
 忘れるのが　大変だけどね▼</language>
@@ -426,20 +428,16 @@
 ……ていきてきに　ずかんを
 こうしん　するのも　たいへんね▼
 でね　わたしの　おねがいは
-いろんな　ポケモンに　であう▽
-きっかけ　にもなると　おもって▼
-ゆめのあとち　にいる　ムンナの　だす
-「ゆめのけむり」を　とってきてほしいな</language>
+ゆめのあとち　にいる　ムンナが　だす▽
+「ゆめのけむり」が　ほしいの！</language>
 		<language name="JPN_KANJI" width="256">マコモ『あなた　アララギから
 ポケモン図鑑の　完成を▽
 頼まれて　いるんでしょ？▼
 ……定期的に　図鑑を
 更新するのも　たいへんね▼
 でね　わたしの　お願いは
-いろんな　ポケモンに　出会う▽
-きっかけ　にもなると　思って▼
-夢の跡地にいる　ムンナの　だす
-「ゆめのけむり」を　とってきてほしいな</language>
+夢の跡地にいる　ムンナが　だす▽
+「ゆめのけむり」が　ほしいの！</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_07">
@@ -625,8 +623,7 @@
 	<row id="msg_c01r0102_inventor_12" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
-・メッセージ前にその場で2度ジャンプ
-・続けてinventor_13</comment>
+・メッセージ前にその場で2度ジャンプ</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
 		<language name="JPN" width="256">さらに　すごいことが　わかって▼
 [FF:00:色:2]ゲームシンク[FF:00:色:0]で
@@ -644,7 +641,7 @@
 あなたも　レポートを　おくってみてね▼
 くわしいことは　おくの
 パソコンに　まとめているから▽
-よければ　チェックしてね！</language>
+よければ　チェックしてね！▼</language>
 		<language name="JPN_KANJI" width="256">さらに　すごいことが　わかって▼
 [FF:00:色:2]ゲームシンク[FF:00:色:0]で
 眠らせた　ポケモンは▽
@@ -661,7 +658,7 @@
 あなたも　レポートを　送信してみてね▼
 詳しいことは　この部屋の　奥にある
 パソコンに　まとめているから▽
-よければ　チェックしてね！</language>
+よければ　チェックしてね！▼</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_13" text-color=",,,#000000,,,,,,,,,,,,,,,">
@@ -779,8 +776,7 @@
 
 	<row id="msg_c01r0102_girl3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・はい選択時
-・仮メッセージ</comment>
+・はい選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
 		<language name="JPN" width="256">ショウロ『さすが！▼
@@ -795,8 +791,7 @@
 
 	<row id="msg_c01r0102_girl3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・いいえ選択時
-・仮メッセージ</comment>
+・いいえ選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
 		<language name="JPN" width="256">ショウロ『では　かんたんに！▼
@@ -812,7 +807,7 @@
 	<row id="msg_c01r0102_girl3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・girl3_01表示後から
-　inventor_15表示まで繰り返し</comment>
+　inventor_06表示まで繰り返し</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
 パソコン管理者</attribute>
 		<language name="JPN" width="256">ショウロ『ぜひぜひ
@@ -827,7 +822,7 @@
 
 	<row id="msg_c01r0102_girl3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・inventor_15表示後
+・Cギア入手後
 　！マーク表示後、主人公に隣接
 ・アイテム入手処理
 　No437「ともだちてちょう」</comment>
@@ -972,7 +967,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_girl3_11" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
