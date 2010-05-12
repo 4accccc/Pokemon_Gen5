@@ -3957,10 +3957,12 @@
 	</row>
 
 	<row id="TRID_MOUNT_02_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">じんせい　やまあり　たにあり
-ポケモン　かったり　まけたり　だ</language>
-		<language name="JPN_KANJI" width="216">人生　山あり　谷あり
-ポケモン　勝ったり　負けたり　だ</language>
+		<language name="JPN" width="216">ほらあなの　なか……
+じめんが　もりあがった　ところには▽
+ポケモンが　いるんだよ！</language>
+		<language name="JPN_KANJI" width="216">洞穴の　中……
+地面が　盛りあがった　ところには▽
+ポケモンが　いるんだよ！</language>
 	</row>
 
 	<row id="TRID_MOUNT_03_TRMSG_FIGHT_START">
