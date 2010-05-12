@@ -130,3 +130,5 @@ extern void CTVT_COMM_ResetBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *com
 extern const BOOL CTVT_COMM_IsEndBeaconTime( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const BOOL CTVT_COMM_CanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern void CTVT_COMM_SetCanSendWaveBuf( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const BOOL flg );
+
+extern const BOOL CTVT_COMM_CheckCallingAddress( CTVT_COMM_BEACON *beacon , u8 *address );

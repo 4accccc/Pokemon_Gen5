@@ -574,6 +574,7 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
                 }
               }
             }
+            beacon->isCalling = 1;
             CTVT_COMM_ResetBeaconTime( work , commWork );
           }
         }
@@ -1078,15 +1079,22 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
           }
         }
         {
-          BOOL isFriend;
+          BOOL isFriend = FALSE;
           //友達かチェック
           if( serviceType == WB_NET_COMM_TVT )
           {
+            u8 macAddress[6];
             CTVT_COMM_BEACON *becData = beaconData;
             const STRCODE *name = MyStatus_GetMyName( &becData->myStatus );
             const u32 sex = MyStatus_GetMySex( &becData->myStatus );
             const u32 id  = MyStatus_GetID( &becData->myStatus );
-            isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+            OS_GetMacAddress( macAddress );
+
+            if( becData->isCalling == 0 ||
+                CTVT_COMM_CheckCallingAddress( becData , macAddress ) == TRUE )
+            {
+              isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
+            }
           }
           else
           {

@@ -1261,7 +1261,8 @@ static GFL_PROC_RESULT COMM_TVT_Proc_Init( GFL_PROC * proc, int * seq , void *pw
   
   CTVT_TPrintf("Least heap[%x]\n",GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
 //  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0x100000 );
-  if( initWork->mode == CTM_WIFI )
+  if( pwk != NULL && 
+      initWork->mode == CTM_WIFI )
   {
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMM_TVT, 0xe8000-0x18000 );
   }

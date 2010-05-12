@@ -35,7 +35,8 @@ struct _CTVT_COMM_BEACON
   
   u8      connectNum;
   u8      canUseCamera:1;
-  u8      pad:7;
+  u8      isCalling:1;   //呼び出し中か？
+  u8      pad:6;
   //呼び出しターゲット
   u8      callTarget[3][6];
 };

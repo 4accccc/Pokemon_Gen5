@@ -65,6 +65,7 @@ struct _CTVT_CAMERA_WORK
   
   u8   isUpdateBit;
   BOOL isWaitAllRefresh;
+  BOOL isRefreshClear;
   BOOL isDispDouble;
   u8   waitAllConut;  //2‰ñ‘Ò‚½‚È‚¢‚Æ‚¢‚¯‚È‚¢
   
@@ -124,6 +125,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   camWork->isUpdateBit = 0;
   camWork->waitAllConut = 0;
   camWork->isWaitAllRefresh = FALSE;
+  camWork->isRefreshClear = FALSE;
   camWork->isDispDouble = FALSE;
   camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
   
@@ -267,7 +269,10 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       {
         u8 i;
         //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
-        //GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
+        if( camWork->isRefreshClear == TRUE )
+        {
+          GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
+        }
         camWork->isWaitAllRefresh = FALSE;
         if( camWork->isDispDouble != COMM_TVT_IsDoubleMode(work) )
         {
@@ -526,11 +531,12 @@ void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork 
 //--------------------------------------------------------------
 //	‘SˆõXV‘Ò‚¿ƒtƒ‰ƒO‚ð—§‚Ä‚é
 //--------------------------------------------------------------
-void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork  , const BOOL isClear )
 {
   u8 i;
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   camWork->isWaitAllRefresh = TRUE;
+  camWork->isRefreshClear = isClear;
 
   camWork->isUpdateBit = 0;
   camWork->waitAllConut = 0;

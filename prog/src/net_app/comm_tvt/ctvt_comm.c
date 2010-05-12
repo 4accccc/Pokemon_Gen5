@@ -27,6 +27,8 @@
 #include "ctvt_mic.h"
 #include "enc_adpcm.h"
 
+#include "test/ariizumi/ari_debug.h"
+
 //1にすると、送信完了を相手からフラグでもらう
 #define USE_COMM_SEND_CHECK (0)
 
@@ -197,6 +199,7 @@ static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 static void*  CTVT_COMM_GetBeaconData(void* pWork);
 static int CTVT_COMM_GetBeaconSize(void *pWork);
 static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
+static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork);
 
 static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
@@ -311,6 +314,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     }
     
     commWork->beacon.canUseCamera = COMM_TVT_CanUseCamera();
+    commWork->beacon.isCalling = 0;
   }
   
   //自身のデータセット
@@ -407,6 +411,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
         break;
       case CCIM_PARENT:
         GFL_NET_InitServer();
+        WH_SetJudgeAcceptFunc( CTVT_COMM_ConnectCheckCallBack );
         commWork->state = CCS_REQ_NEGOTIATION;
         break;
       case CCIM_CHILD:
@@ -535,7 +540,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   {
     commWork->beaconDataTime--;
     //ビーコンリセット
-#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+#if PM_DEBUG
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
     {
       commWork->beaconDataTime = 0;
@@ -551,6 +556,7 @@ void CTVT_COMM_Main( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
           commWork->beacon.callTarget[i][j] = 0xFF;
         }
       }
+      commWork->beacon.isCalling = 0;
     }
   }
 }
@@ -719,6 +725,23 @@ static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID 
 }
 
 //--------------------------------------------------------------
+// 接続時チェックコールバック
+//--------------------------------------------------------------
+static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork)
+{
+  CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  ARI_TPrintf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
+                        ,cbWork->macAddress[0],cbWork->macAddress[1]
+                        ,cbWork->macAddress[2],cbWork->macAddress[3]
+                        ,cbWork->macAddress[4],cbWork->macAddress[5]); 
+  if( commWork->beacon.isCalling == 0 )
+  {
+    return TRUE;
+  }
+  return CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
+}
+
+//--------------------------------------------------------------
 // 通信中更新メイン
 //--------------------------------------------------------------
 static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
@@ -743,7 +766,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       commWork->connectNum = 1;
       commWork->beacon.connectNum = 1;
       
-      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork );
+      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork , TRUE );
     }
   }
   else
@@ -781,7 +804,6 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     {
       CTVT_COMM_UpdateMemberState( work , commWork , &commWork->member[i] , i );
     }
-    
   }
 
   //自身の更新
@@ -1049,8 +1071,33 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
   }
   {
     CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
-    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork );
+    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork  , TRUE );
   }
+}
+
+//--------------------------------------------------------------
+// 今呼び出し中のMacAddressか？
+//--------------------------------------------------------------
+const BOOL CTVT_COMM_CheckCallingAddress( CTVT_COMM_BEACON *beacon , u8 *address )
+{
+  u8 i,j;
+  for( i=0;i<3;i++ )
+  {
+    BOOL isSame = TRUE;
+    for( j=0;j<6;j++ )
+    {
+      if( beacon->callTarget[i][j] != address[j] )
+      {
+        isSame = FALSE;
+        break;
+      }
+    }
+    if( isSame == TRUE )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 #pragma mark [>member
@@ -1221,7 +1268,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   case CCFT_CHANGE_DOUBLE:
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(commWork->parentWork);
-      CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork );
+      CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , FALSE );
       COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
     }
     break;
