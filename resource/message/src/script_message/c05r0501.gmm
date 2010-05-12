@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T15:46:32"/>
+	<create user="matsumiya" host="W00224" date="2010-05-12T12:54:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -464,25 +464,24 @@
 		<comment>♀
 ・ハイリンクの情報</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">ハイリンク……▼
-つぎに　いくときは
-わたしが　てを　さしのべたいな</language>
-		<language name="JPN_KANJI" width="256">ハイリンク……▼
-次に　行くときは
-わたしが　手を　差し伸べたいな</language>
+		<language name="JPN" width="256">つぎに　ハイリンクに　いくときは
+デルパワーを　とうろく　しちゃって▽
+みんなを　えがおに　したいな！</language>
+		<language name="JPN_KANJI" width="256">次に　ハイリンクに　行くときは
+デルパワーを　登録しちゃって▽
+みんなを　笑顔に　したいなあ！</language>
 	</row>
 
 	<row id="msg_c05r0501_oldwoman_01">
-		<comment>♀</comment>
+		<comment>♀
+・ハイリンクの情報</comment>
 		<attribute name="キャラ指定">OLDWOMAN</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:2]いきること……
-しぬこと……▽
-だれも　えらべないから▽
-せいいっぱい　いきないとね[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:2]生きること……
-死ぬこと……▽
-だれも　選べないから▽
-精一杯　生きないとね[BE:09:速度コントロール:0]</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:2]この　せかいに　あそびにきた　ひとが
+どうぐを　かくしていく……▽
+ハイリンクとは　ユニークだねえ[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:2]この世界に　訪れた　人が
+道具を　隠していく……▽
+ハイリンクとは　ユニークだねえ[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_c05r0501_mountain_01">
