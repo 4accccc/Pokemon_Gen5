@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T17:26:22"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-05-12T18:55:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1315" top="105" right="2020" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="83" top="122" right="788" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -958,6 +958,73 @@
 		<comment>パレス用(仮)</comment>
 		<language name="JPN" width="256">サザナミタウン</language>
 		<language name="JPN_KANJI" width="256">サザナミタウン</language>
+	</row>
+
+	<row id="MAPNAME_GATE_T02" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・R02R0101</comment>
+		<language name="JPN" width="256">カラクサゲート</language>
+		<language name="JPN_KANJI" width="256">カラクサゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_T04" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・R13R0201</comment>
+		<language name="JPN" width="256">サザナミゲート</language>
+		<language name="JPN_KANJI" width="256">サザナミゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_C02" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・C02R0701</comment>
+		<language name="JPN" width="256">シッポウゲート</language>
+		<language name="JPN_KANJI" width="256">シッポウゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_C03" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・C03R0601</comment>
+		<language name="JPN" width="256">ヒウンゲート</language>
+		<language name="JPN_KANJI" width="256">ヒウンゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_C04" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・C04R0601/C04R0701
+/C04R0801</comment>
+		<language name="JPN" width="256">ライモンゲート</language>
+		<language name="JPN_KANJI" width="256">ライモンゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_C08" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・C08R0501/C08R0601
+/C08R0701</comment>
+		<language name="JPN" width="256">ソウリュウゲート</language>
+		<language name="JPN_KANJI" width="256">ソウリュウゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_BC10" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>※ブラック限定
+R14R0101/R15R0101</comment>
+		<language name="JPN" width="256">ブラックゲート</language>
+		<language name="JPN_KANJI" width="256">ブラックゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_WF10" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>※ホワイト限定
+R14R0101/R15R0101</comment>
+		<language name="JPN" width="256">ホワイトゲート</language>
+		<language name="JPN_KANJI" width="256">ホワイトゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_BRIDGE" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・H01R0101/H01R0201
+・R08R0201/R09R0101
+・R11R0101/R12R0101
+・R15R0201/R16R0101</comment>
+		<language name="JPN" width="256">ブリッジゲート</language>
+		<language name="JPN_KANJI" width="256">ブリッジゲート</language>
+	</row>
+
+	<row id="MAPNAME_GATE_ROAD" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>・D03R0201/R01R0101</comment>
+		<language name="JPN" width="256">ロードゲート</language>
+		<language name="JPN_KANJI" width="256">ロードゲート</language>
 	</row>
 
 	<flowchart-group-list>
