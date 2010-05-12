@@ -1369,7 +1369,7 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_Act2Stop_Tbl,  //AC_ACT2_STOP
   DATA_AC_Act2Loop_Tbl,  //AC_ACT2_LOOP
   
-  NULL, //AC_SHIN_MU_C_FLY
+  DATA_AC_ShinMuC_Fly_Tbl, //AC_SHIN_MU_C_FLY
 };
 
 //--------------------------------------------------------------

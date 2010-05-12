@@ -243,6 +243,10 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
             }else if( key_cont & PAD_KEY_RIGHT ){
               ac = AC_SHIN_MU_TURN;
             }
+          }else if( code == SHIN_C || code == MU_C ){
+            if( key_cont & PAD_KEY_UP ){
+              ac = AC_SHIN_MU_C_FLY;
+            }
           }else{
             u16 ac_act_u = ACMD_NOT;
             u16 ac_act_d = ACMD_NOT;

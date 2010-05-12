@@ -4620,6 +4620,91 @@ static int AC_ShinMuOffsetClear( MMDL * mmdl )
 	return( TRUE );
 }
 
+//--------------------------------------------------------------
+///	AC_SHIN_MU_C_FLY_WORK 構造体　シンムC上昇で使用する
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 wait;
+  u8 setAnmFrmIdx;
+  u8 padding0;
+  u8 padding1;
+}AC_SHIN_MU_C_FLY_WORK;
+
+#define AC_SHIN_MU_C_FLY_WORK_SIZE (sizeof(AC_SHIN_MU_C_FLY_WORK))
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_C_FLY 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuC_Fly0( MMDL * mmdl )
+{
+  VecFx32 offs = {0,FX32_ONE*24,0};
+  AC_SHIN_MU_C_FLY_WORK *work;
+	
+  work = MMDL_InitMoveCmdWork( mmdl, AC_SHIN_MU_C_FLY_WORK_SIZE );
+	work->wait = 0;
+  work->setAnmFrmIdx = 0;
+  
+  MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
+  
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_C_FLY );
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_C_FLY 1
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuC_Fly1( MMDL * mmdl )
+{
+	int grid;
+  u16 anmIdx,anmFrmIdx;
+  AC_SHIN_MU_C_FLY_WORK *work;
+	
+  work = MMDL_GetMoveCmdWork( mmdl );
+  MMDL_ShinMuC_GetAnimeFrame( mmdl, &anmIdx, &anmFrmIdx );
+  
+  work->wait++;
+   
+  if( MMDL_GetOBJCode(mmdl) == SHIN_C ){
+    if( anmIdx == DRAW_STA_SHINMU_C_ANMNO_FLY ){ //shin 羽ばたき音
+      if( work->setAnmFrmIdx != anmFrmIdx ){
+        work->setAnmFrmIdx = anmFrmIdx;
+        
+        switch( anmFrmIdx ){
+        case 0:
+          PMSND_PlaySE( SEQ_SE_FLD_167 );
+          break;
+        case 3:
+          PMSND_PlaySE( SEQ_SE_FLD_168 );
+          break;
+        }
+      }
+    }
+  }
+#if 0
+  //MUは今の所未定
+  else if( work->wait == ((5*7)+(12*5)) ){ //mu 上昇音
+    PMSND_PlaySE( SEQ_SE_FLD_169 );
+  }
+#endif
+  
+  if( work->wait < ((5*7) + (12*5)) ){
+    return( FALSE );
+  }
+  
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
 //======================================================================
 //	AC_MELODYER系
 //======================================================================
@@ -6541,6 +6626,16 @@ int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * ) =
 int (* const DATA_AC_ShinMuOffsetClear_Tbl[])( MMDL * ) =
 {
   AC_ShinMuOffsetClear,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SHIN_MU_C_FLY
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuC_Fly_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuC_Fly0,
+  AC_ShinMuC_Fly1,
 	AC_End,
 };
 

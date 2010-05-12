@@ -355,6 +355,7 @@ extern int (* const DATA_AC_ShinMuFlyUpper_Tbl[])( MMDL * );
 extern int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * );
 extern int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * );
 extern int (* const DATA_AC_ShinMuOffsetClear_Tbl[])( MMDL * );
+extern int (* const DATA_AC_ShinMuC_Fly_Tbl[])( MMDL * );
 
 //--------------------------------------------------------------
 //  AC_MELODYERŠÖ˜A
