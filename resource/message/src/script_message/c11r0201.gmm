@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-11T21:31:12"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-12T11:41:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1253,7 +1253,7 @@
 [1:25:地域名:1]に
 きたことって　ある？▼
 すごく　いいとこだから
-いちど　きてみてよねー！　へへ</language>
+いちど　きてみてよねー！</language>
 		<language name="JPN_KANJI" width="256">へへっ　わたし　[2:02:３桁:8]カ国の
 人と　交換したよ！▼
 ねぇねぇ　[1:00:トレーナー名:3]の
@@ -1265,7 +1265,7 @@
 [1:25:地域名:1]に
 来たことって　ある？▼
 すごく　いいとこ　だから
-一度　来てみてよねー！　へへ</language>
+一度　来てみてよねー！</language>
 	</row>
 
 	<row id="msg_un_wierd_woman_03">
@@ -3163,7 +3163,7 @@
 [1:24:国名:0]に
 きたことって　ある？▼
 すごく　いいとこだから
-いちど　きてみてよねー！　へへ</language>
+いちど　きてみてよねー！</language>
 		<language name="JPN_KANJI" width="256">へへっ　わたし　[2:02:３桁:8]カ国の
 人と　交換したよ！▼
 ねぇねぇ　[1:00:トレーナー名:3]の
@@ -3175,7 +3175,7 @@
 [1:24:国名:0]に
 来たことって　ある？▼
 すごく　いいとこ　だから
-一度　来てみてよねー！　へへ</language>
+一度　来てみてよねー！</language>
 	</row>
 
 	<row id="msg_un_wierd_woman_09">
