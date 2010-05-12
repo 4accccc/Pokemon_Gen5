@@ -267,6 +267,11 @@ enum{
 ///通信相手が不明ゾーンにいる場合の表示座標間隔Y
 #define NOTHING_ZONE_SUB_POS_Y_SPACE      (24)
 
+///通信相手のアイコンアニメ速度：通常
+#define CURSOR_S_ANM_SPEED_NORMAL         (FX32_ONE)
+///通信相手のアイコンアニメ速度：戦闘中
+#define CURSOR_S_ANM_SPEED_BATTLE         (FX32_ONE*2)
+
 //--------------------------------------------------------------
 //  イベントNo
 //--------------------------------------------------------------
@@ -1588,6 +1593,14 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
       continue;
     }
     
+    //戦闘中はアニメ速度アップ
+    if(ist->action_status == INTRUDE_ACTION_BATTLE){
+      GFL_CLACT_WK_SetAutoAnmSpeed(act, CURSOR_S_ANM_SPEED_BATTLE);
+    }
+    else{
+      GFL_CLACT_WK_SetAutoAnmSpeed(act, CURSOR_S_ANM_SPEED_NORMAL);
+    }
+    
     if(ist->palace_area == my_area){  //このプレイヤーがいる街を指す
       if(ZONEDATA_IsPalace(ist->zone_id) == TRUE){
         pos.x = PALACE_CURSOR_POS_X + WearOffset[net_id][0];
@@ -1952,8 +1965,11 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     	}
       GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
       WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
-      msg_on = TRUE;
     }
+    else{
+      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_022, intsub->strbuf_info );
+    }
+    msg_on = TRUE;
   }
 
   //表の世界にいて近くに誰かが来ている
@@ -1990,8 +2006,14 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   if(msg_on == FALSE && intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
       && Intrude_GetMyStatus(intcomm, intsub->print_touch_player) != NULL){
     MYSTATUS *myst = Intrude_GetMyStatus(intcomm, intsub->print_touch_player);
-    
-    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_011, intsub->strbuf_temp );
+    u32 msg_id;
+    if(intcomm->intrude_status[intsub->print_touch_player].action_status == INTRUDE_ACTION_BATTLE){
+      msg_id = msg_invasion_info_025;
+    }
+    else{
+      msg_id = msg_invasion_info_011;
+    }
+    GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
     WORDSET_RegisterPlayerName( intsub->wordset, 0, myst );
     WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
     intsub->print_touch_player = INTRUDE_NETID_NULL;
@@ -2340,9 +2362,14 @@ static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub)
       scrn_load++;
     }
   }
-
-  if(scrn_load && _TimeNum_CheckEnable(intsub) == TRUE){
-    _TimeScrn_Recover(intsub);
+  
+  if(scrn_load){
+    GFL_BMPWIN_MakeScreen(intsub->printutil_title.win);
+    GFL_BMPWIN_MakeScreen(intsub->printutil_info.win);
+    GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
+    if(_TimeNum_CheckEnable(intsub) == TRUE){
+      _TimeScrn_Recover(intsub);
+    }
   }
 }
 

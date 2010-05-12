@@ -19,6 +19,7 @@
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
 #include "monolith_snd_def.h"
+#include "intrude_work.h"
 
 
 //==============================================================================
@@ -212,6 +213,24 @@ enum{
   TOUCH_CANCEL,
 };
 
+///カーソル移動テーブル
+static const struct{
+  u8 key_u;   //上を押された場合の移動後カーソル位置
+  u8 key_d;   //下を押された場合の移動後カーソル位置
+  u8 key_l;   //左を押された場合の移動後カーソル位置
+  u8 key_r;   //右を押された場合の移動後カーソル位置
+}CursorMoveTbl[] = {
+  {0xff, 4, 2, 1},
+  {0xff, 5, 0, 3},
+  
+  {0, 4, 0xff, 0xff},
+  {1, 5, 0xff, 0xff},
+  
+  {0, 0xff, 2, 5},
+  {1, 0xff, 4, 3},
+};
+SDK_COMPILER_ASSERT(NELEMS(CursorMoveTbl) == NELEMS(TownCursor_MoveTbl));
+
 
 //==============================================================================
 //
@@ -286,6 +305,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     SEQ_ORDER_WAIT,
     SEQ_ORDER_OK_STREAM_WAIT,
     SEQ_ORDER_NG_STREAM_WAIT,
+    SEQ_NOT_TUTORIAL_MISSION,
+    SEQ_NOT_TUTORIAL_MISSION_MSG_WAIT,
     SEQ_FINISH,
   };
   
@@ -307,7 +328,12 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     break;
   case SEQ_FIRST_STREAM:
     if(PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == TRUE){  //※check　Queのパレットカラーが被るので暫定対処　フォントのカラー指定が個別に出来るようになれば取っ払う
-      _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_004);
+      if(Intrude_CheckTutorialComplete( GAMESYSTEM_GetGameData(appwk->parent->gsys) ) == FALSE){
+        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_008);
+      }
+      else{
+        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_004);
+      }
       (*seq)++;
     }
     break;
@@ -357,25 +383,31 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         break;
       }
       else if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT | PAD_KEY_DOWN | PAD_KEY_LEFT)){
-        int now_pos;
+        int now_pos, move_code = 0xff;
         for(now_pos = 0; now_pos < NELEMS(TownCursor_MoveTbl); now_pos++){
           if(TownCursor_MoveTbl[now_pos] == appwk->common->mission_select_no){
             break;
           }
         }
-        if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT)){
-          now_pos++;
-          if(now_pos >= NELEMS(TownCursor_MoveTbl)){
-            now_pos = 0;
-          }
+        
+        now_pos = appwk->common->mission_select_no;
+        if(trg & PAD_KEY_UP){
+          move_code = CursorMoveTbl[now_pos].key_u;
         }
-        else if(trg & (PAD_KEY_DOWN | PAD_KEY_LEFT)){
-          now_pos--;
-          if(now_pos < 0){
-            now_pos = NELEMS(TownCursor_MoveTbl) - 1;
-          }
+        else if(trg & PAD_KEY_DOWN){
+          move_code = CursorMoveTbl[now_pos].key_d;
         }
-        appwk->common->mission_select_no = TownCursor_MoveTbl[now_pos];
+        else if(trg & PAD_KEY_LEFT){
+          move_code = CursorMoveTbl[now_pos].key_l;
+        }
+        else if(trg & PAD_KEY_RIGHT){
+          move_code = CursorMoveTbl[now_pos].key_r;
+        }
+        
+        if(move_code != 0xff){
+          now_pos = move_code;
+        }
+        appwk->common->mission_select_no = now_pos;
         PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       
@@ -388,15 +420,25 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       }
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("「受ける」選択\n");
-        MonolithTool_PanelOBJ_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
-        PMSND_PlaySE( MONOLITH_SE_DECIDE_MISSION );
+
         if(tp_ret == TOUCH_RECEIVE){
           GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
         }
         else{
           GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         }
-        *seq = SEQ_ORDER;
+        
+        if(Intrude_CheckTutorialComplete( GAMESYSTEM_GetGameData(appwk->parent->gsys) ) == FALSE
+            && TownNo_to_Type[appwk->common->mission_select_no] != MISSION_TYPE_BASIC
+            && TownNo_to_Type[appwk->common->mission_select_no] != MISSION_TYPE_SKILL){
+          //チュートリアルで受けられるミッションを選択していない場合
+          *seq = SEQ_NOT_TUTORIAL_MISSION;
+        }
+        else{
+          MonolithTool_PanelOBJ_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+          PMSND_PlaySE( MONOLITH_SE_DECIDE_MISSION );
+          *seq = SEQ_ORDER;
+        }
       }
       else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
@@ -479,6 +521,19 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         else{
           *seq = SEQ_FINISH;
         }
+      }
+    }
+    break;
+
+  case SEQ_NOT_TUTORIAL_MISSION:  //チュートリアルで受けられないミッションを選んだ
+    _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_009);
+    (*seq)++;
+    break;
+  case SEQ_NOT_TUTORIAL_MISSION_MSG_WAIT:
+    if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){
+      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+        _Clear_MsgStream(mmw);
+        (*seq) = SEQ_TOP;
       }
     }
     break;
