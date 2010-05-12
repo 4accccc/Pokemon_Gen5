@@ -376,7 +376,7 @@
 #define FE_R15R0401_TRADE_01               360 /* 0x0168 15番道路：ポケモン入手イベント */
 #define FE_C03PC0101_GEONET                361 /* 0x0169 ヒウンポケセン：ジオネット誘導イベントの初回会話フラグ */
 #define FE_N01R0304_TALK                   362 /* 0x016a Nの城：ボールをくれるプラズマ団員・初回会話フラグ */
-		/* not used   363(0x016b) */
+#define FE_T05_RAILWAY_TALK                363 /* 0x016b カナワタウン：鉄道トークを聞いたことがある */
 		/* not used   364(0x016c) */
 		/* not used   365(0x016d) */
 		/* not used   366(0x016e) */
