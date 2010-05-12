@@ -220,14 +220,14 @@ static const struct{
   u8 key_l;   //左を押された場合の移動後カーソル位置
   u8 key_r;   //右を押された場合の移動後カーソル位置
 }CursorMoveTbl[] = {
-  {0xff, 4, 2, 1},
-  {0xff, 5, 0, 3},
+  {0xff, 2, 2, 1},
+  {0xff, 3, 0, 3},
   
-  {0, 4, 0xff, 0xff},
-  {1, 5, 0xff, 0xff},
+  {0, 4, 0xff, 3},
+  {1, 5, 2, 0xff},
   
-  {0, 0xff, 2, 5},
-  {1, 0xff, 4, 3},
+  {2, 0xff, 2, 5},
+  {3, 0xff, 4, 3},
 };
 SDK_COMPILER_ASSERT(NELEMS(CursorMoveTbl) == NELEMS(TownCursor_MoveTbl));
 
