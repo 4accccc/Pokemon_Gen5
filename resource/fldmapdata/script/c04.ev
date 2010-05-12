@@ -875,6 +875,12 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
+	_TIME_WAIT( 8 )
+	
+	//パパ：沈黙
+	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_mark_tenten )
+	_OBJ_ANIME_WAIT()
+	
 	//……むむっ
 	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_05, C04_SUPPORTPAPA_01, POS_UL )
 	_MSGWIN_CLOSE()
@@ -1025,6 +1031,13 @@ EVENT_START	ev_scene_c04_support_01
 	//重要イベントでの通信切断から復帰
 	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
+
+//--------------------------------------------------------------------
+//[…]マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //主人公：サポートの近くへ
