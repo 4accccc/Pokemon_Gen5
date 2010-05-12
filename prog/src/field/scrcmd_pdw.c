@@ -82,7 +82,8 @@ VMCMD_RESULT EvCmdPDW_CommonTools( VMHANDLE *core, void *wk )
   switch( type )
   {
   case PDW_TOOLS_CHECK_ACCOUNT:
-    if( DREAMWORLD_SV_GetAccount( pdwSave ) == TRUE )
+    if( DREAMWORLD_SV_GetAccount( pdwSave ) == TRUE &&
+        DREAMWORLD_SV_GetSignin( pdwSave ) == TRUE )
     {
       *ret_wk = TRUE;
     }
