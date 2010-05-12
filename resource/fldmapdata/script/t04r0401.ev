@@ -243,6 +243,13 @@ EVENT_START   ev_t04r0401_shirona_02
 			//シロナ：あら きてくれたのね！
 			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_01, T04R0401_SHIRONA_01, POS_DEFAULT )
 			
+			//======================================//
+				
+			//今日の初回会話終了フラグセット
+			_FLAG_SET ( TMFLG_T04R0401_SHIRONA_TALK )
+			
+			//======================================//
+			
 		//パターン1で本日2回目以降の会話
 		ELSIF $WK_OTHER_T04R0401_SHIRONA == 0 && FLAG_ON(TMFLG_T04R0401_SHIRONA_TALK) THEN
 			//シロナ：あたしの ポケモンたちが
@@ -252,7 +259,14 @@ EVENT_START   ev_t04r0401_shirona_02
 		ELSIF $WK_OTHER_T04R0401_SHIRONA == 1 && FLAG_OFF(TMFLG_T04R0401_SHIRONA_TALK) THEN
 			//シロナ：……ポケモンも ひとも
 			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_01, T04R0401_SHIRONA_01, POS_DEFAULT )
-		
+			
+			//======================================//
+				
+			//今日の初回会話終了フラグセット
+			_FLAG_SET ( TMFLG_T04R0401_SHIRONA_TALK )
+			
+			//======================================//
+			
 		//パターン2で本日2回目以降の会話
 		ELSE
 			//シロナ：どうかしら？
@@ -313,13 +327,6 @@ EVENT_START   ev_t04r0401_shirona_02
 			ENDIF
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
-			
-			//======================================//
-				
-			//今日の初回会話終了フラグセット
-			_FLAG_SET ( TMFLG_T04R0401_SHIRONA_TALK )
-			
-			//======================================//
 			
 		ENDIF
 
