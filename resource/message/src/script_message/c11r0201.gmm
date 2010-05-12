@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-06T20:15:52"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-11T21:31:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -329,7 +329,7 @@
 きみが　くれた　[1:02:ポケモンニックネーム:5]は▽
 とっても　げんきだよ▼
 よかったら　また
-ポケモン　こうかん　しようよ！▼</language>
+ポケモン　こうかん　しようよ！</language>
 		<language name="JPN_KANJI" width="256">やあ　[1:00:トレーナー名:3]！
 僕のこと　覚えてる？▼
 [1:24:国名:0] の
@@ -339,7 +339,7 @@
 君が　くれた　[1:02:ポケモンニックネーム:5]は▽
 とっても　元気だよ▼
 良かったら　また　
-ポケモン　交換　しようよ！▼</language>
+ポケモン　交換　しようよ！</language>
 	</row>
 
 	<row id="msg_un_default_man_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,,,#8080ff,,,,,,">
