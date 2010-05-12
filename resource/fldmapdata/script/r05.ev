@@ -1129,7 +1129,7 @@ EVENT_START	ev_r05_rival_02
 	_OBJ_ANIME_WAIT()
 	
 	//イベント曲停止
-	_END_EVENT_BGM_EX( 120 )
+	_END_EVENT_BGM_EX( BGM_FADE_VLONG )
 	
 	//ライバルを消す
 	_OBJ_DEL( R05_RIVAL_02 )

@@ -134,7 +134,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	
 	//画面暗転、BGMフェード
 	_DEMO_FADEOUT_BLACK_CALL()
-	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 6 )
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
 	
 	//Ｎ城出現デモ=============================
 	

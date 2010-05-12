@@ -133,7 +133,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_TIME_WAIT( 15 )
 	
 	//BGMñ≥âπÇ÷
-	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 6 )
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
 	
 	//???ÇæÇ¢Ç∂ÇÂÇ§Ç‘ÇæÇÎÇ§ÇÊ
 	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
@@ -258,7 +258,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_CAMERA_END()		//ÉJÉÅÉâëÄçÏèIóπ
 
 	//BGMñﬂÇ∑
-	_END_EVENT_BGM_EX( 120 )
+	_END_EVENT_BGM_EX( BGM_FADE_VLONG )
 
 	//========================================//
 	
