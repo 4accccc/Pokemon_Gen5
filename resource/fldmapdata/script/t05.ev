@@ -116,25 +116,65 @@ EVENT_START	ev_t05_railfan_01
 	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 15)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01 )
-	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
-	IF $SCWK_ANSWER == SCR_YES THEN
-		//はい
-		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_02 )
-		_MSGWIN_CLOSE()
-		
-		//車両解説へ
-		_CALL	ev_rail_talk
-		
+	IF $WK_OTHER_T05_TRAIN == T05_TRAIN_NONE && FLAG_OFF( FE_T05_RAILWAY_TALK ) THEN
+	//車両なし＆解説を聞いたことがなければ一言メッセージで終了
 
-	ELSE
-		//いいえ
-		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03 )
+		//残念だけど今日は電車がきてないんだ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01_01 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
+	ELSE
+	//上記以外
+	
+		//車両の有無で分岐
+		IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+		//車両あり
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01 )			//車両解説きいてく？
+		ELSE
+		//車両なしだけど解説を聞いたことがあるので、妄想トークへ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01_02 )		//あの電車が見えるかい！？
+		ENDIF
+		_YES_NO_WIN( SCWK_ANSWER )
+
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//はい
+			
+			IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+			//車両あり
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_02 )
+			ELSE
+			//車両なし
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_02_01 )
+			ENDIF
+			_MSGWIN_CLOSE()
+			
+			//車両解説へ
+			_CALL	ev_rail_talk
+			
+			//========================================//
+			//解説聞いたフラグをセット
+			IF FLAG_OFF( FE_T05_RAILWAY_TALK ) THEN
+				_FLAG_SET( FE_T05_RAILWAY_TALK )
+			ENDIF
+			//========================================//
+			
+		ELSE
+			//いいえ
+			
+			IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+			//車両あり
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03 )
+			ELSE
+			//車両なし
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03_01 )
+			ENDIF
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	
 	ENDIF
 	
 	_CAMERA_DEF_MOVE(15)		//カメラ主人公位置に復帰
@@ -165,14 +205,19 @@ DEFINE_LOCAL	lwk_msg_num
 	$lwk_msg_num += $WK_OTHER_T05_TRAIN
 	
 	_PLAINWIN_MSG_UP( lwk_msg_num )
-	_TIME_WAIT( 16 )
+	SWITCH $WK_OTHER_T05_TRAIN
+	CASE T05_TRAIN_NONE THEN
+		_TIME_WAIT( 30 )
+	DEFAULT
+		_TIME_WAIT( 15 )
+	ENDSWITCH
 	
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 	_MSGWIN_CLOSE()
 	
 	//カメラ切り替え２
-//	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_MOVE( 7000,9600,970752,1785856,293663,1943200, 1)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_MOVE( 7000,9600,970752,1785856,293663,1220608, 180)
@@ -190,7 +235,7 @@ DEFINE_LOCAL	lwk_msg_num
 	_MSGWIN_CLOSE()
 	
 	//カメラ切り替え３（戻す）
-//	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 1)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_BLACK_IN_SLOW()
@@ -493,7 +538,10 @@ EVENT_END
 /*					ISS：フルート吹き						*/
 /************************************************************/
 EVENT_START	ev_t05_pipe_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_iss_01 )
+	_TALK_OBJ_START()
+	_PLAINWIN_MSG_DOWN( msg_t05_iss_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
