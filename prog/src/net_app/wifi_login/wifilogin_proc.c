@@ -380,6 +380,9 @@ static void _exitEnd( WIFILOGIN_WORK* pWork)
 
 static void _exitEnd2( WIFILOGIN_WORK* pWork)
 {
+	if(!WIPE_SYS_EndCheck()){
+    return;
+  }
   if( !WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
     return;
   }
@@ -671,6 +674,9 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeProfileWait(WIFILOGIN_WORK* pWork)
 {
+	if(!WIPE_SYS_EndCheck()){
+    return;
+  }
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
@@ -680,6 +686,9 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
 
 static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
 {
+	if(!WIPE_SYS_EndCheck()){
+    return;
+  }
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
     _CHANGE_STATE(pWork,_modeLoginWait2);
@@ -735,6 +744,9 @@ static void _checkError( WIFILOGIN_WORK* pWork )
 
 static void _modeLoginWait(WIFILOGIN_WORK* pWork)
 {
+	if(!WIPE_SYS_EndCheck()){
+    return;
+  }
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
@@ -873,6 +885,9 @@ static void _modeDifferDSWait2(WIFILOGIN_WORK* pWork)
 
 static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 {
+	if(!WIPE_SYS_EndCheck()){
+    return;
+  }
   if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
