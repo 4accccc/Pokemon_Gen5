@@ -8529,13 +8529,13 @@
 		<language name="JPN" width="256">W156-BABBLE2</language>
 		<language name="JPN_KANJI" width="256">W156-BABBLE2</language>
 	</row>
-	<row id="msg_seq_se_dmy_363">
-		<language name="JPN" width="256">DMY-363</language>
-		<language name="JPN_KANJI" width="256">DMY-363</language>
+	<row id="msg_seq_se_fld_175">
+		<language name="JPN" width="256">FLD-175</language>
+		<language name="JPN_KANJI" width="256">FLD-175</language>
 	</row>
-	<row id="msg_seq_se_dmy_364">
-		<language name="JPN" width="256">DMY-364</language>
-		<language name="JPN_KANJI" width="256">DMY-364</language>
+	<row id="msg_seq_se_zoro_01">
+		<language name="JPN" width="256">ZORO-01</language>
+		<language name="JPN_KANJI" width="256">ZORO-01</language>
 	</row>
 	<row id="msg_seq_se_dmy_365">
 		<language name="JPN" width="256">DMY-365</language>
