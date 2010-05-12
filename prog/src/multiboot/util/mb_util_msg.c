@@ -592,8 +592,12 @@ void MB_MSG_DispYesNo( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type )
   }
   initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
   initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
-
+  
   msgWork->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, msgWork->takmenures );
+//マルチブート用きり分け
+#ifdef MULTI_BOOT_MAKE  //DL子機時処理
+  APP_TASKMENU_SetDisableKey( msgWork->yesNoWork , TRUE );
+#endif //MULTI_BOOT_MAKE
   
   GFL_STR_DeleteBuffer( itemWork[0].str );
   GFL_STR_DeleteBuffer( itemWork[1].str );
