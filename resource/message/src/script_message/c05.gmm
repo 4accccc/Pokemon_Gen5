@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-12T15:55:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-12T18:26:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -456,14 +456,14 @@
 はじめまして[BE:01:ページ切り替え（クリア）]
 ワタクシ　プラズマだんの
 ゲーチスと　もうします[BE:01:ページ切り替え（クリア）]
-めんどうを　みていただいていた
-はいかを　ひきとりに　きました[BE:01:ページ切り替え（クリア）]</language>
+おせわに　なった
+どうしを　ひきとりに　きました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『ヤーコンさん
 はじめまして[BE:01:ページ切り替え（クリア）]
 ワタクシ　プラズマ団の
 ゲーチスと　申します[BE:01:ページ切り替え（クリア）]
-面倒を　みていただいていた
-配下を　引き取りに　来ました[BE:01:ページ切り替え（クリア）]</language>
+お世話に　なった
+同志を　引き取りに　来ました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c05_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
