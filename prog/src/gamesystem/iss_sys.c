@@ -230,18 +230,7 @@ void ISS_SYS_Update( ISS_SYS* system )
 void ISS_SYS_ZoneChange( ISS_SYS* system, u16 nextZoneID )
 {
 #ifdef ISS_ENABLE
-	PLAYER_MOVE_FORM form;
-
   GF_ASSERT( system );
-
-  // 自機のフォームを取得
-	form = PLAYERWORK_GetMoveForm( GetPlayerWork(system) ); 
-
-	// 自転車に乗っている ==> ISS変更無し
-	if( form == PLAYER_MOVE_FORM_CYCLE ) { return; }
-
-  // なみのり中 ==> ISS変更無し
-	if( form == PLAYER_MOVE_FORM_SWIM ) { return; }
 
   // 各ISSシステムにゾーンの変更を通知
   ZoneChangeISS_R( system, nextZoneID ); // 道ISS
