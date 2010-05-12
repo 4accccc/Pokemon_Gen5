@@ -2733,14 +2733,12 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
   // 解析前 or 更新中なら表示しない
   if( (work->analyzeFlag == FALSE) || (work->updateFlag == TRUE) ) {
     BG_FONT_SetDrawEnable( BGFont, FALSE );
-    OBATA_Printf( "answer FALSE\n" );
     return;
   }
 
   //「ただいま ちょうさちゅう」なら, 表示しない
   if( GetCountOfQuestion(work) == 0 ) {
     BG_FONT_SetDrawEnable( BGFont, FALSE );
-    OBATA_Printf( "answer FALSE\n" );
     return;
   }
 
@@ -2765,7 +2763,6 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
   // BG ( フォント面 ) に対し, 文字列を書き込む
   BG_FONT_SetString( BGFont, strbuf_expand );
   BG_FONT_SetDrawEnable( BGFont, TRUE );
-  OBATA_Printf( "answer TRUE\n" );
 
   GFL_STR_DeleteBuffer( strbuf_plain );
   GFL_STR_DeleteBuffer( strbuf_expand );
@@ -2891,11 +2888,9 @@ static void UpdateBGFont_NoData( RRG_WORK* work )
 static void UpdateBGFont_DataReceiving( RRG_WORK* work )
 {
   if( work->updateFlag ) {
-    OBATA_Printf( "receiving TRUE\n" );
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_DATA_RECEIVING ], TRUE ); // 表示  
   }
   else {
-    OBATA_Printf( "receiving FALSE\n" );
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_DATA_RECEIVING ], FALSE ); // クリア
   }
 }
