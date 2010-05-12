@@ -5,7 +5,6 @@
  * @date  2008.11.04
  * @author  tamada GAME FREAK inc.
  *
- * @todo  FIELD_STATUS_SetFieldInitFlagをどこかに機能としてまとめるべきか検討
  */
 //============================================================================================
 #include <gflib.h>
@@ -93,7 +92,7 @@ FS_EXTERN_OVERLAY(debug_data);
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req );
+static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id );
 static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys );
 
 static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req );
@@ -105,7 +104,7 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc );
 
 
-static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req );
+static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id );
 
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
@@ -318,8 +317,7 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
 #else
     SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
 #endif
-    FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-    MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
+    MAPCHG_setupMapTools( gsys, fmw->loc_req.zone_id ); //新しいマップモードなど機能指定を行う
     MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
 
     (*seq)++;
@@ -433,7 +431,8 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
 typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gamedata;
-  LOCATION loc_req;
+  //LOCATION loc_req;
+  u16 continue_zone_id;
   BOOL sp_exit_flag;    ///<特殊接続で開始するかどうかの判定フラグ
 }CONTINUE_MAPIN_WORK;
 
@@ -475,21 +474,20 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
     if ( cmw->sp_exit_flag )
     { //特殊接続リクエスト：いきなり別マップに遷移する
       const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
-      cmw->loc_req = *spLoc;
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+      cmw->continue_zone_id = spLoc->zone_id;
       MAPCHG_releaseMapTools( gsys ); //動作モデルの開放など
-      MAPCHG_setupMapTools( gsys, &cmw->loc_req ); //新しいマップモードなど機能指定を行う
-      MAPCHG_updateGameData( gsys, &cmw->loc_req ); //新しいマップID、初期位置をセット
+      MAPCHG_setupMapTools( gsys, cmw->continue_zone_id ); //新しいマップモードなど機能指定を行う
+      MAPCHG_updateGameData( gsys, spLoc ); //新しいマップID、初期位置をセット
     }
     else
     {
-      MAPCHG_setupMapTools( gsys, &cmw->loc_req ); //新しいマップモードなど機能指定を行う
+      MAPCHG_setupMapTools( gsys, cmw->continue_zone_id ); //新しいマップモードなど機能指定を行う
       EVTIME_Update( gamedata ); //イベント時間更新
-      FIELD_FLAGCONT_INIT_Continue( gamedata, cmw->loc_req.zone_id ); //コンティニューによるフラグ落とし処理
+      FIELD_FLAGCONT_INIT_Continue( gamedata, cmw->continue_zone_id ); //コンティニューによるフラグ落とし処理
       //天気ロード決定
       //**上のFIELD_FLAGCONT_INIT_Continueで移動ポケモンの天気が抽選されるので、
       //必ず、その下で行う。**
-      PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, cmw->loc_req.zone_id );
+      PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, cmw->continue_zone_id );
     }
     (*seq)++;
     break;
@@ -497,7 +495,7 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
   case 1:
     // BGM フェードイン
     {
-      u32 soundIdx = FSND_GetFieldBGM( gamedata, cmw->loc_req.zone_id );
+      u32 soundIdx = FSND_GetFieldBGM( gamedata, cmw->continue_zone_id );
       GMEVENT_CallEvent( event, EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
     }
     (*seq)++;
@@ -531,7 +529,7 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     if( FIELDMAP_GetPlaceNameSys(fieldmap) )
     {
-      FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->loc_req.zone_id );
+      FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->continue_zone_id );
     }
     return GMEVENT_RES_FINISH;
   }
@@ -541,8 +539,6 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
 //------------------------------------------------------------------
 /**
  * @brief ゲームコンティニューイベント生成
- *
- * @todo  LOCATION_SetDirectを使用していて問題ないか調査する
  */
 //------------------------------------------------------------------
 static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
@@ -558,8 +554,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
   // イベントワークを初期化
   cmw->gsys = gameSystem;
   cmw->gamedata   = GAMESYSTEM_GetGameData(gameSystem);
-  LOCATION_SetDirect(&cmw->loc_req, gameInitWork->mapid, gameInitWork->dir, 
-    gameInitWork->pos.x, gameInitWork->pos.y, gameInitWork->pos.z);
+  cmw->continue_zone_id = gameInitWork->mapid;
   ev = GAMEDATA_GetEventWork( cmw->gamedata );
   cmw->sp_exit_flag = EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
   EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
@@ -810,10 +805,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gameSystem );
 
-    { 
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gameData), TRUE );
-    }
-
     // 季節の更新
     if( (work->seasonUpdateEnable) && (work->seasonUpdateOccur) )
     {
@@ -830,7 +821,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     }
 
     //新しいマップモードなど機能指定を行う
-    MAPCHG_setupMapTools( gameSystem, &work->loc_req );
+    MAPCHG_setupMapTools( gameSystem, work->loc_req.zone_id );
     
     //新しいマップID、初期位置をセット
     MAPCHG_updateGameData( gameSystem, &work->loc_req );
@@ -2451,11 +2442,8 @@ static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   //マップモードなど機能指定を解除する
   MAPCHG_releaseMapTools( gsys );
 
-  { 
-    FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-  }
   //新しいマップモードなど機能指定を行う
-  MAPCHG_setupMapTools( gsys, &loc_req );
+  MAPCHG_setupMapTools( gsys, loc_req.zone_id );
   
   //新しいマップID、初期位置をセット
   MAPCHG_updateGameData( gsys, &loc_req );
@@ -2584,7 +2572,8 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 /**
  * @brief Map切り替え時のデータ更新処理
  *
- * @todo  歩いてマップをまたいだときの処理との共通部分をきちんと処理すること
+ * @note  コンティニュー時にも呼ばれる処理はMAPCHG_setupMapToolsに集積すること
+ *
  */
 //------------------------------------------------------------------
 static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req )
@@ -2603,6 +2592,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   }
 #endif  //PM_DEBUG
   
+  //MAPCHG_updateGameDataを呼ぶ == マップ初期化タイミング
+  FIELD_STATUS_SetFieldInitFlag( fldstatus, TRUE );
+
   //開始位置セット
   MakeNewLocation(evdata, loc_req, &loc);
 
@@ -2648,9 +2640,6 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   //ギミックアサイン
   AssignGimmickID(gamedata, loc.zone_id);
 
-  //特殊スクリプト呼び出し：ゾーン切り替え
-  SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
-
   //イベント時間更新
   EVTIME_Update( gamedata );
 
@@ -2660,11 +2649,14 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   //マップ到着フラグセット
   ARRIVEDATA_SetArriveFlag( gamedata, loc.zone_id );
 
+  //特殊スクリプト呼び出し：ゾーン切り替え
+  SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
+
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
 
   //フィールド技　マップ効果
-  MAPCHG_setupFieldSkillMapEff( gamedata, &loc );
+  MAPCHG_setupFieldSkillMapEff( gamedata, loc.zone_id );
 
   // WFBCの設定
   MAPCHG_SetUpWfbc( gamedata, &loc );
@@ -2805,10 +2797,10 @@ static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
  *  @brief  フィールド技　画面効果マスクの設定
  */
 //-----------------------------------------------------------------------------
-static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *loc_req )
+static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id )
 {
   FIELD_STATUS * fldstatus =  GAMEDATA_GetFieldStatus( gamedata ); 
-  u32 fs_effmsk = ZONEDATA_GetFieldSkillMapEffMsk( loc_req->zone_id );
+  u32 fs_effmsk = ZONEDATA_GetFieldSkillMapEffMsk( zone_id );
 
   //フラッシュ　システムフラグを見て、マスクを書き換える
   if( FIELDSKILL_MAPEFF_MSK_IS_ON(fs_effmsk, FIELDSKILL_MAPEFF_MSK_FLASH_NEAR) )
@@ -2826,14 +2818,19 @@ static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, const LOCATION *l
 
 //--------------------------------------------------------------
 /**
- * @brief
- * @param gamedata
+ * @brief   マップデータ初期化処理
+ * @param   gsys
+ * @param[in] zone_id
  *
- * @todo  マップをまたいでor画面暗転中もずっと維持されるメモリ状態などはここで設定
+ * @note 
+ * マップをまたいでor画面暗転中もずっと維持されるメモリ状態などはここで設定する。
+ * マップ初期化時だけでなく、コンティニュー時、全滅時などにも呼ばれる。
+ * （逆に、初期化時のみの処理はMAPCHG_updateGameDataに集積すること）
+ *
  * @todo  下記の※checkの対処を行う
  */
 //--------------------------------------------------------------
-static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req )
+static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
   EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
@@ -2842,11 +2839,9 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   GF_ASSERT( fieldmap == NULL );
 
   //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこで行うようにしたい
-//  if(ZONEDATA_IsPalaceField(loc_req->zone_id) || ZONEDATA_IsBingo(loc_req->zone_id)){
   if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
-      && ZONEDATA_IsPalace(loc_req->zone_id) == FALSE){ //パレス島では白黒にしない
+      && ZONEDATA_IsPalace(zone_id) == FALSE){ //パレス島では白黒にしない
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
-    //GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
   }
   else{
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_NORMAL );
@@ -2854,12 +2849,12 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
   //         変更もそのスクリプト内で行うようにする
   //         ミュージカル控え室も同じように処理するAri100329
-  if ( ZONEDATA_IsUnionRoom( loc_req->zone_id ) )
+  if ( ZONEDATA_IsUnionRoom( zone_id ) )
   {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
   }
-  else if ( ZONEDATA_IsColosseum( loc_req->zone_id )
-      || ZONEDATA_IsMusicalWaitingRoom( loc_req->zone_id ) )
+  else if ( ZONEDATA_IsColosseum( zone_id )
+      || ZONEDATA_IsMusicalWaitingRoom( zone_id ) )
   {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
   }
@@ -2886,20 +2881,20 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   }
 
   //イベント起動データの読み込み
-  EVENTDATA_SYS_Load(evdata, loc_req->zone_id, GAMEDATA_GetSeasonID(gamedata) );
+  EVENTDATA_SYS_Load(evdata, zone_id, GAMEDATA_GetSeasonID(gamedata) );
 
   // イベント追加登録
 
   //マトリックスデータの更新
   {
     MAP_MATRIX * matrix = GAMEDATA_GetMapMatrix( gamedata );
-    u16 matID = ZONEDATA_GetMatrixID( loc_req->zone_id );
-    MAP_MATRIX_Init( matrix, matID, loc_req->zone_id, GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+    u16 matID = ZONEDATA_GetMatrixID( zone_id );
+    MAP_MATRIX_Init( matrix, matID, zone_id, GFL_HEAP_LOWID(GFL_HEAPID_APP) );
     MAP_MATRIX_CheckReplace( matrix, gsys, GFL_HEAP_LOWID(GFL_HEAPID_APP) );
   }
 
   //フィールド技 マップ効果
-  MAPCHG_setupFieldSkillMapEff( gamedata, loc_req );
+  MAPCHG_setupFieldSkillMapEff( gamedata, zone_id );
 }
 
 //--------------------------------------------------------------
