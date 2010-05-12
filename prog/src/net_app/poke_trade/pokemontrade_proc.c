@@ -158,6 +158,13 @@ static BOOL _IsMailBoxFull(POKEMON_TRADE_WORK* pWork)
 }
 
 
+void POKEMONTRADE_CancelCall(void)
+{
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
+  GFL_NET_StateWifiMatchEnd(FALSE);
+}
+
 BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp)
 {
   u8* data = (u8*)pp;
@@ -1429,7 +1436,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
       return;
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      GFL_NET_StateWifiMatchEnd(TRUE);
+      POKEMONTRADE_CancelCall();
       _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
       return;
     }
@@ -1570,15 +1577,15 @@ static void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int in
 }
 
 //タッチした場所にいるかどうか
-static BOOL _SerchTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, int* boxno,int* boxindex)
+static BOOL _SerchTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, int* boxno,int* boxindex,int* line,int* index)
 {
   BOOL bChange=FALSE;
   {
     u32 x,y;
-    int line,index,RingLine;
+    int RingLine;
 
     if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-      GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, boxno, boxindex, &line, &index, &RingLine);
+      GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, boxno, boxindex, line, index, &RingLine);
       if(pCL){
         POKEMON_PASO_PARAM* ppp =
           IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, *boxno, *boxindex, pWork);
@@ -1687,6 +1694,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   int selectno=-1;
   u32 x,y;
   int boxindex,boxno;
+  int line,index;
 
   if(GFL_UI_TP_GetTrg()){
     _CatchPokemonPositionRewind(pWork);
@@ -1721,7 +1729,9 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     APP_TASKMENU_SetActive(pWork->pAppTask,FALSE);
 
 
-    if(_SerchTouchCLACTPosition(pWork,&pWork->underSelectBoxno,&pWork->underSelectIndex)){
+    if(_SerchTouchCLACTPosition(pWork,&pWork->underSelectBoxno,&pWork->underSelectIndex,&line,&index)){
+      pWork->MainObjCursorIndex = index;
+      pWork->MainObjCursorLine = line;
       pWork->x = x;
       pWork->y = y;
       PMSND_PlaySystemSE(POKETRADESE_CUR);
@@ -1772,6 +1782,12 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
         POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
+        _CHANGE_STATE(pWork, _changeMenuOpen);
+      }
+      else if( (POKE_GTS_IsFullMode(pWork) &&  (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) )){
+        pWork->selectIndex = pWork->underSelectIndex;
+        pWork->selectBoxno = pWork->underSelectBoxno;
+        POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
         _CHANGE_STATE(pWork, _changeMenuOpen);
       }
       else{
@@ -1900,7 +1916,7 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      GFL_NET_StateWifiMatchEnd(TRUE);
+      POKEMONTRADE_CancelCall();
       _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
       return;
     }
@@ -2929,7 +2945,6 @@ static void _POKE_SetAndSendData2(POKEMON_TRADE_WORK* pWork)
     if(POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno)){  //記録
       pWork->workPokeIndex = -1;
       pWork->workBoxno = -1;
-    //  _scrollResetAndIconReset(pWork);
       _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
     }
   }
@@ -3501,7 +3516,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 
 // ヒープ量削減の為staticで確保
-#define _PROG_AREA_HEAP_SIZE (0x10000)
+#define _PROG_AREA_HEAP_SIZE (0xc000)
 static u8 _PROG_AREA_HEAP_BUF[_PROG_AREA_HEAP_SIZE];
 
 #define HEAPSIZE_POKETRADE (0xd2000-_PROG_AREA_HEAP_SIZE)   //  全共通 WiFiだとほぼマックス
@@ -3887,6 +3902,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   GFL_G3D_DRAW_End();
 
+  
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){

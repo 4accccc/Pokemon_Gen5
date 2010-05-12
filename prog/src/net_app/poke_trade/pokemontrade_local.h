@@ -156,6 +156,7 @@ typedef enum
 #define PLTID_OBJ_POKERUS_M (15) //
 #define PLTID_OBJ_DEMO_M (7)
 #define PLTID_OBJ_POKEITEM_M (6)
+#define PLTID_OBJ_BALLICON_M_L (5)  // 1–{Žg—p
 #define _OBJPLT_GTS_POKEICON_OFFSET_M (0)
 
 
@@ -945,6 +946,7 @@ extern void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_Select6MessageInit(POKEMON_TRADE_WORK* pWork);
 extern int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index);
+extern BOOL POKE_GTS_IsFullMode(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADEPROC_IsTimeWaitSelect(POKEMON_TRADE_WORK* pWork);
 
 
@@ -1041,6 +1043,7 @@ extern void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray);
 extern void POKEMONTRADE_McssAnmStop( u32 data, fx32 currentFrame );
+extern void POKEMONTRADE_CancelCall(void);
 
 
 

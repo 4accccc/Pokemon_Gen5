@@ -96,7 +96,7 @@ void POKETRADE_TOUCHBAR_Init(POKEMON_TRADE_WORK* pWork)
   touchbar_icon_tbl[2].active_anmseq  = 9;            //アクティブのときのアニメ
   touchbar_icon_tbl[2].noactive_anmseq  =   8;            //ノンアクティブのときのアニメ
   touchbar_icon_tbl[2].push_anmseq  =   7;            //押したときのアニメ（STOPになっていること）
-  touchbar_icon_tbl[2].key  =   0;    //キーで押したときに動作させたいならば、ボタン番号
+  touchbar_icon_tbl[2].key  =   PAD_BUTTON_START;    //キーで押したときに動作させたいならば、ボタン番号
   touchbar_icon_tbl[2].se =   POKETRADESE_DECIDE;                 //押したときにSEならしたいならば、SEの番号
 
   touchbar_icon_tbl[3].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];

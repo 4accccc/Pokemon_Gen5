@@ -878,12 +878,15 @@ static int _evalcallback(int index, void* param)
       if(pWork->friendChageType==targetmy){
         value+=10;
       }
+#if DEBUG_ONLY_FOR_ohno
+#else
       for(i=0;i<EVENT_GTSNEGO_RECONNECT_NUM;i++){
         if(profile == pEv->profileID[i]){
           value = 0;
           break;
         }
       }
+#endif
     }
   }
   OHNO_Printf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
@@ -942,7 +945,7 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   STD_TSPrintf( pWork->filter, "ty=%d And db=%d", pWork->changeMode,MATCHINGKEY);
 
   if( GFL_NET_DWC_StartMatchFilter( pWork->filter, 2 ,&_evalcallback, pWork) != 0){
-
+    GFL_NET_StateStartWifiRandomMatch_Filter();
     GFL_NET_DWC_SetVChat(FALSE);
 
     GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );

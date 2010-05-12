@@ -297,11 +297,6 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 
   switch (*seq) {
   case _FIELD_FADE_START:
-    {
- //     GMEVENT* fade_event;
- //     fade_event = EVENT_FieldFadeOut_Black(gsys, pClub->fieldmap, FIELD_FADE_WAIT);
-  //    GMEVENT_CallEvent(event, fade_event);
-    }
     
     pClub->soundNo = PMSND_GetBGMsoundNo();
     PMSND_FadeOutBGM(6);

@@ -2196,7 +2196,7 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
     prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
-    prm.pltt_line = PLTID_OBJ_POKEITEM_S;
+   // prm.pltt_line = PLTID_OBJ_POKEITEM_S;
     prm.pltt_src_ofs = 0;
     prm.pltt_src_num = 1;
     

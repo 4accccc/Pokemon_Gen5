@@ -152,6 +152,38 @@ void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork)
 
 }
 
+static _pokeGTSSelectNum(POKEMON_TRADE_WORK* pWork)
+{
+  int i,pokenum=0;
+  
+  for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
+    if((pWork->GTSSelectIndex[0][i] != -1) && ( pWork->GTSSelectBoxno[0][i] != -1)){
+      pokenum++;
+    }
+  }
+  return pokenum;
+}
+
+
+//登録前に呼ばれる関数の為一個少ない
+BOOL POKE_GTS_IsFullMode(POKEMON_TRADE_WORK* pWork)
+{
+  BOX_MANAGER * pManager = GAMEDATA_GetBoxManager(pWork->pGameData);
+  int selectnum,pokenum;
+
+  selectnum = _pokeGTSSelectNum(pWork);
+  pokenum = PokeParty_GetPokeCount(GAMEDATA_GetMyPokemon(pWork->pGameData));
+  pokenum += BOXDAT_GetPokeExistCountTotal(pManager);
+  
+  if((pokenum==2) && (selectnum==1)){
+    return TRUE;
+  }
+  else if((pokenum>2) && (selectnum==2)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //自分のPOKEがいるかどうか確認する
 BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork)
 {
@@ -191,8 +223,6 @@ int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index)
 //ダイレクトにポケモン追加 相手用 
 void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const POKEMON_PARAM* pp)
 {
-  
-
   pWork->GTSSelectIndex[1][index] = index;
   pWork->GTSSelectBoxno[1][index] = index;
   if(pWork->GTSSelectPP[1][index]==NULL){
@@ -606,7 +636,7 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      GFL_NET_StateWifiMatchEnd(TRUE);
+      POKEMONTRADE_CancelCall();
       _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
       return;
     }
@@ -771,7 +801,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      GFL_NET_StateWifiMatchEnd(TRUE);
+      POKEMONTRADE_CancelCall();
       _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
       return;
     }
@@ -1613,7 +1643,7 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
     }
     if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      GFL_NET_StateWifiMatchEnd(TRUE);
+      POKEMONTRADE_CancelCall();
       _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
       return;
     }
