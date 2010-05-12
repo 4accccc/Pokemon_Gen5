@@ -56,7 +56,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -437,13 +437,15 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
 #define TBL_ERROR ( 0xffffffff )
 
 static const int  script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
-  //  AA          BB          A           B           C           D
-  { TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB },  //AA
-  { TBL_BB2AA,  TBL_BB2AA,  TBL_ERROR,  TBL_ERROR,  TBL_ERROR,  TBL_ERROR },  //BB
-  { TBL_ERROR,  TBL_ERROR,  TBL_AA2BB,  TBL_A2B,    TBL_A2C,    TBL_A2D   },  //A
-  { TBL_ERROR,  TBL_ERROR,  TBL_B2A,    TBL_AA2BB,  TBL_B2C,    TBL_B2D   },  //B
-  { TBL_ERROR,  TBL_ERROR,  TBL_C2A,    TBL_C2B,    TBL_AA2BB,  TBL_C2D   },  //C
-  { TBL_ERROR,  TBL_ERROR,  TBL_D2A,    TBL_D2B,    TBL_D2C,    TBL_AA2BB },  //D
+  //  AA          BB          A           B           C           D           E           F
+  { TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  },  //AA
+  { TBL_BB2AA,  TBL_BB2AA,  TBL_ERROR,  TBL_ERROR,  TBL_ERROR,  TBL_ERROR,  TBL_ERROR,  TBL_ERROR,  },  //BB
+  { TBL_ERROR,  TBL_ERROR,  TBL_AA2BB,  TBL_A2B,    TBL_A2C,    TBL_A2D,    TBL_AA2BB,  TBL_AA2BB,  },  //A
+  { TBL_ERROR,  TBL_ERROR,  TBL_B2A,    TBL_AA2BB,  TBL_B2C,    TBL_B2D,    TBL_AA2BB,  TBL_AA2BB,  },  //B
+  { TBL_ERROR,  TBL_ERROR,  TBL_C2A,    TBL_C2B,    TBL_AA2BB,  TBL_C2D,    TBL_AA2BB,  TBL_AA2BB,  },  //C
+  { TBL_ERROR,  TBL_ERROR,  TBL_D2A,    TBL_D2B,    TBL_D2C,    TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  },  //D
+  { TBL_ERROR,  TBL_ERROR,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  },  //E
+  { TBL_ERROR,  TBL_ERROR,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  TBL_AA2BB,  },  //F
 };
 
 //============================================================================================
