@@ -93,8 +93,18 @@ struct _FRAMELIST_WORK {
 	u8	railTop;										// レール最上部のＹ座標
 	u8	railBottom;									// レール最下部のＹ座標
 
+	u8	slideSeq;
+	s8	slideVec;
+	u8	slideReqCount:5;
+	u8	slideTouchFlag:1;
+	u8	slideAutoStop:1;
+	u8	slideAutoRepeat:1;
 	u8	slidePos;						// スライド基準項目位置
+	u8	slidePosTmp;				// スライド基準項目位置
 	u8	slideCnt;						// スライド処理テーブル位置
+
+	u32	slideStartTpy;			// 現在のタッチＹ座標
+	u32	slideOldTpy;				// 前回のタッチＹ座標
 
 	u8	keyRepeat;					// キーリピートカウンタ
 	u8	keyRepPos;					// キーリピート処理テーブル位置
@@ -173,6 +183,10 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk );
 
 static void InitSlideMove( FRAMELIST_WORK * wk, int pos );
 static BOOL MainSlideMove( FRAMELIST_WORK * wk );
+static BOOL SetSlideScroll( FRAMELIST_WORK * wk, int pos );
+static void InitSledeAutoScroll( FRAMELIST_WORK * wk );
+static BOOL InitSledeAutoScroll2( FRAMELIST_WORK * wk );
+static BOOL CheckSledeAutoScrollRepeat( FRAMELIST_WORK * wk );
 
 static void WriteItemFrame( FRAMELIST_WORK * wk, u32 itemNum, u32 frmNum );
 static void PutItemFrame( FRAMELIST_WORK * wk, u32 idx, s8 py );
@@ -190,7 +204,8 @@ static void PrintTransMain( FRAMELIST_WORK * wk );
 
 // オートスクロールカウンタ
 static const u8 AutoScrollCount[] = {
-	128, 64, 32, 16, 8, 4
+//	128, 64, 32, 16, 8, 4
+	32, 24, 16, 10, 6, 4
 };
 
 
@@ -469,6 +484,7 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 
 	if( GFL_UI_TP_GetPointCont( &x, &wk->nowTpy ) == FALSE ){
 		wk->nowTpy = 0xffffffff;
+		wk->slideTouchFlag = 0;
 	}
 
 	switch( wk->mainSeq ){
@@ -1087,52 +1103,160 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 		return TRUE;
 	}
 
+	if( wk->nextSeq == MAINSEQ_SLIDE ){
+		// オートスクロール中
+		if( wk->autoScroll == TRUE ){
+			int	ret = GFL_UI_TP_HitCont( wk->touch );
+			// タッチ停止処理
+			if( wk->slideAutoStop == 1 ){
+				if( wk->slideAutoRepeat == 0 ){
+					if( ret == GFL_UI_TP_HIT_NONE ){
+						wk->slideVec = wk->slideOldTpy - wk->slideStartTpy;
+						if( GFL_STD_Abs(wk->slideVec) >= 16 ){
+							wk->slideReqCount = 0;
+							wk->slideAutoStop = 0;
+							wk->slideAutoRepeat = 1;
+						}
+					}else{
+						if( wk->slideReqCount != 3 ){
+							wk->slideStartTpy = wk->nowTpy;
+							wk->slideReqCount++;
+						}
+					}
+				}
+			}else{
+				if( ret != GFL_UI_TP_HIT_NONE ){
+					if( wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE ){
+						wk->listPos = ret;
+						wk->slideAutoStop = 1;
+						wk->slideReqCount = 0;
+						wk->slideStartTpy = wk->nowTpy;
+						wk->slideOldTpy   = wk->nowTpy;
+					}
+				}
+			}
+		}
+	}
+
+
 	if( wk->listBgScrollCount == 0 ){
 		// 指定回数スクロール終了
 		if( wk->listBgScrollMax == 0 ){
-			ChangeCursorPosPalette( wk, wk->listPos, PALCHG_NONE );
-			wk->mainSeq = wk->nextSeq;
-			return FALSE;
+			int	ret = GFL_UI_TP_HitCont( wk->touch );
+			if( wk->slideTouchFlag == 1 &&
+					wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE &&
+					( ( wk->slideVec < 0 && wk->slidePos < ret ) || ( wk->slideVec > 0 && wk->slidePos > ret ) ) ){
+				wk->slideTouchFlag = 0;
+				{
+					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
+					if( max != 0 ){
+						wk->listBgScrollMax = GFL_STD_Abs( wk->slidePos - ret );
+						if( wk->listBgScrollMax > max ){
+							wk->listBgScrollMax = max;
+						}
+						wk->slidePos = ret;
+					}else{
+						wk->slideStartTpy = wk->nowTpy;
+						wk->slideOldTpy   = wk->nowTpy;
+						wk->slideAutoStop = 0;
+						ChangeCursorPosPalette( wk, wk->listPos, PALCHG_NONE );
+						wk->mainSeq = wk->nextSeq;
+						return FALSE;
+					}
+				}
+			}else{
+				wk->slideStartTpy = wk->nowTpy;
+				wk->slideOldTpy   = wk->nowTpy;
+				wk->slideTouchFlag = 0;
+				wk->slideAutoStop = 0;
+				ChangeCursorPosPalette( wk, wk->listPos, PALCHG_NONE );
+				wk->mainSeq = wk->nextSeq;
+				return FALSE;
+			}
 		}
 
 		ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listPos );
 
+/*
+		// スライドからの処理
 		if( wk->nextSeq == MAINSEQ_SLIDE ){
+			// オートスクロール以外
 			if( wk->autoScroll == FALSE ){
-				if( GFL_UI_TP_GetCont() == FALSE ){
-					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
-					u32	abs = GFL_STD_Abs( wk->listBgScrollSpeed );
-					wk->autoScroll = TRUE;
-					for( wk->slideCnt=0; wk->slideCnt<FRAMELIST_SPEED_MAX; wk->slideCnt++ ){
-						if( abs == wk->hed.scrollSpeed[wk->slideCnt] ){
-							wk->listBgScrollMax = AutoScrollCount[wk->slideCnt];
-							break;
-						}
-					}
-					if( wk->listBgScrollMax > max ){
-						wk->listBgScrollMax = max;
-					}
+				if( wk->listBgScrollSpeed < 0 ){
+					wk->listPos++;
 				}else{
-					if( wk->listBgScrollSpeed < 0 ){
-						wk->listPos++;
-					}else{
-						wk->listPos--;
-					}
+					wk->listPos--;
 				}
+			// オートスクロール中
 			}else{
-//				if( GFL_UI_TP_GetCont() == TRUE ){
 				int	ret = GFL_UI_TP_HitCont( wk->touch );
+				// タッチ停止処理
 				if( ret != GFL_UI_TP_HIT_NONE ){
 					if( wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE ){
 						wk->listPos = ret;
+						wk->slideStartTpy = wk->nowTpy;
+						wk->slideOldTpy   = wk->nowTpy;
 						wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
 						wk->mainSeq = wk->nextSeq;
 						return FALSE;
 					}
 				}
+				// 減速処理
 				if( wk->listBgScrollMax == 1 ){
 					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
-					u32	abs = GFL_STD_Abs( wk->listBgScrollSpeed );
+					wk->slideCnt++;
+					if( wk->slideCnt != FRAMELIST_SPEED_MAX ){
+						if( wk->listBgScrollSpeed < 0 ){
+							wk->listBgScrollSpeed = -wk->hed.scrollSpeed[wk->slideCnt];
+						}else{
+							wk->listBgScrollSpeed = wk->hed.scrollSpeed[wk->slideCnt];
+						}
+						wk->listBgScrollMax = AutoScrollCount[wk->slideCnt];
+					}
+					if( wk->listBgScrollMax > max ){
+						wk->listBgScrollMax = max;
+					}
+				}
+			}
+		}
+*/
+		if( wk->nextSeq == MAINSEQ_SLIDE ){
+			// オートスクロール以外
+			if( wk->autoScroll == FALSE ){
+				if( wk->listBgScrollSpeed < 0 ){
+					wk->listPos++;
+				}else{
+					wk->listPos--;
+				}
+			}else{
+				// リピート
+				if( wk->slideAutoRepeat == 1 ){
+					if( InitSledeAutoScroll2( wk ) == TRUE ){
+						wk->slideReqCount = 0;
+					}
+					wk->slideAutoRepeat = 0;
+				}
+				// タッチ停止
+				if( wk->slideAutoStop == 1 && wk->slideReqCount == 3 ){
+					int	ret = GFL_UI_TP_HitCont( wk->touch );
+					if( ret != GFL_UI_TP_HIT_NONE ){
+						if( wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE ){
+							wk->listPos = ret;
+//							wk->slideStartTpy = wk->nowTpy;
+//							wk->slideOldTpy   = wk->nowTpy;
+						}
+					}
+					wk->slideAutoStop = 0;
+					wk->slideReqCount = 0;
+					wk->slideStartTpy = wk->nowTpy;
+					wk->slideOldTpy   = wk->nowTpy;
+					wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
+					wk->mainSeq = wk->nextSeq;
+					return FALSE;
+				}
+				// 減速処理
+				if( wk->listBgScrollMax == 1 ){
+					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
 					wk->slideCnt++;
 					if( wk->slideCnt != FRAMELIST_SPEED_MAX ){
 						if( wk->listBgScrollSpeed < 0 ){
@@ -1341,7 +1465,12 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void InitSlideMove( FRAMELIST_WORK * wk, int pos )
 {
-	wk->slidePos = pos;
+	wk->slideSeq      = 0;
+	wk->slidePos      = pos;
+	wk->slideReqCount = 0;
+	wk->slideStartTpy = wk->nowTpy;
+	wk->slideOldTpy   = wk->nowTpy;
+
 	wk->mainSeq  = MAINSEQ_SLIDE;
 }
 
@@ -1357,6 +1486,172 @@ static void InitSlideMove( FRAMELIST_WORK * wk, int pos )
 //--------------------------------------------------------------------------------------------
 static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 {
+	int	ret;
+	u32	x, y;
+
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return TRUE;
+	}
+
+	ret = GFL_UI_TP_HitCont( wk->touch );
+
+	switch( wk->slideSeq ){
+	case 0:
+		// タッチされていない
+		if( ret == GFL_UI_TP_HIT_NONE ){
+			if( wk->slideStartTpy != 0xffffffff && wk->slideOldTpy != 0xffffffff ){
+				wk->slideVec = wk->slideOldTpy - wk->slideStartTpy;
+				wk->slideReqCount = 0;
+				if( InitSledeAutoScroll2( wk ) == TRUE ){
+					break;
+				}
+			}
+			wk->autoScroll = FALSE;
+			wk->mainSeq = MAINSEQ_MAIN;
+			return FALSE;
+		}
+		// スライドエリア範囲外
+		if( wk->hed.touch[ret].prm != FRAMELIST_TOUCH_PARAM_SLIDE ){
+			if( wk->slideStartTpy != 0xffffffff && wk->slideOldTpy != 0xffffffff ){
+				wk->slideVec = wk->slideOldTpy - wk->slideStartTpy;
+				wk->slideReqCount = 0;
+				if( InitSledeAutoScroll2( wk ) == TRUE ){
+					break;
+				}
+			}
+			wk->autoScroll = FALSE;
+			wk->mainSeq = MAINSEQ_MAIN;
+			return FALSE;
+		}
+		// オートスクロール中なら
+		if( wk->autoScroll == TRUE ){
+			wk->autoScroll = FALSE;
+			wk->slidePos = ret;
+		}
+		if( wk->slidePos != ret ){
+			wk->slidePosTmp   = ret;
+			wk->slideVec      = wk->slidePos - ret;
+			wk->slideReqCount = 0;
+//			wk->slideStartTpy = wk->nowTpy;
+//			wk->slideOldTpy   = wk->nowTpy;
+			wk->slideSeq      = 1;
+		}
+		wk->slideOldTpy   = wk->slideStartTpy;
+		wk->slideStartTpy = wk->nowTpy;
+		break;
+
+	case 1:
+		// タッチされていない
+		if( ret == GFL_UI_TP_HIT_NONE ){
+			wk->slideSeq = 0;
+/*
+			if( SetSlideScroll( wk, wk->slidePosTmp ) == TRUE ){
+				InitSledeAutoScroll( wk );
+				return TRUE;
+			}
+*/
+//			wk->slideReqCount = 0;
+			return InitSledeAutoScroll2( wk );
+		}
+		// スライドエリア範囲外
+		if( wk->hed.touch[ret].prm != FRAMELIST_TOUCH_PARAM_SLIDE ){
+			wk->slideSeq = 0;
+/*
+			if( SetSlideScroll( wk, wk->slidePosTmp ) == TRUE ){
+				InitSledeAutoScroll( wk );
+				return TRUE;
+			}
+*/
+//			wk->slideReqCount = 0;
+			return InitSledeAutoScroll2( wk );
+		}
+		// タイムオーバー
+		if( wk->slideReqCount == 5 ){
+			wk->slideReqCount = 0;
+			wk->slideSeq = 0;
+			if( SetSlideScroll( wk, ret ) == TRUE ){
+				wk->slideTouchFlag = 1;
+			}
+		}else{
+			wk->slidePosTmp   = ret;
+//			wk->slideOldTpy   = wk->nowTpy;
+			wk->slideStartTpy = wk->nowTpy;
+			wk->slideReqCount++;
+		}
+		break;
+	}
+
+/*
+	if( wk->nowTpy != 0xffffffff && wk->oldTpy != 0xffffffff ){
+		u32	y;
+		u32	cnt, cntMax;
+		s8	speed;
+
+		y = GFL_STD_Abs(  wk->nowTpy -  wk->oldTpy );
+
+		if( wk->listPos == 0 && wk->nowTpy < wk->oldTpy ){
+			speed = 0;
+		}else if( wk->listPos == (wk->listPosMax-1) && wk->nowTpy > wk->oldTpy ){
+			speed = 0;
+		}else if( y >= 12 ){
+			speed = wk->hed.scrollSpeed[0];
+		}else if( y >= 8 ){
+			speed = wk->hed.scrollSpeed[1];
+		}else if( y >= 4 ){
+			speed = wk->hed.scrollSpeed[2];
+		}else{
+			speed = 0;
+		}
+
+		if( wk->nowTpy > wk->oldTpy ){
+			speed *= -1;
+		}
+
+		cntMax = GetListScrollCount( wk, speed );
+		if( cntMax != 0 ){
+			cnt = y / wk->hed.itemSizY;
+			if( cnt == 0 ){
+				cnt = 1;
+			}else if( cntMax < cnt ){
+				cnt = cntMax;
+			}
+
+			if( speed != 0 ){
+				InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
+				wk->slidePos = ret;
+				return TRUE;
+			}
+		}
+	}
+
+	if( wk->slidePos != ret ){
+		u32	cnt;
+		u32	cntMax;
+		s8	speed;
+		if( ret > wk->slidePos ){
+			speed = -wk->hed.scrollSpeed[3];
+			cnt = ret - wk->slidePos;
+		}else if( ret < wk->slidePos ){
+			speed = wk->hed.scrollSpeed[3];
+			cnt = wk->slidePos - ret;
+		}
+		cntMax = GetListScrollCount( wk, speed );
+		if( cntMax != 0 ){
+			if( cntMax < cnt ){
+				cnt = cntMax;
+			}
+			InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
+			wk->slidePos = ret;
+			return TRUE;
+		}
+	}
+*/
+
+	return TRUE;
+
+
+
+/*
 	int	ret;
 	u32	x, y;
 
@@ -1447,6 +1742,185 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 	}
 
 	return TRUE;
+*/
+}
+
+// 
+static BOOL SetSlideScroll( FRAMELIST_WORK * wk, int pos )
+{
+	u32	cntMax;
+	s32	abs;
+	s8	speed;
+
+	abs = wk->slidePos - pos;
+	// 向きが違う
+	if( ( abs < 0 && wk->slideVec > 0 ) || ( abs > 0 && wk->slideVec < 0 ) ){
+		return FALSE;
+	}
+
+	// スクロール不可
+	if( ( wk->slideVec < 0 && wk->listScroll == 0 ) ||
+			( wk->slideVec > 0 && wk->listScroll == wk->listScrollMax ) ){
+		return FALSE;
+	}
+
+	abs = GFL_STD_Abs( abs );
+
+	if( abs == 0 ){
+		return FALSE;
+	}else if( abs == 1 ){
+		speed = wk->hed.scrollSpeed[3];
+	}else if( abs == 2 ){
+		speed = wk->hed.scrollSpeed[2];
+	}else if( abs == 3 ){
+		speed = wk->hed.scrollSpeed[1];
+	}else{
+		speed = wk->hed.scrollSpeed[0];
+	}
+
+	if( pos > wk->slidePos ){
+		speed *= -1;
+	}
+
+	cntMax = GetListScrollCount( wk, speed );
+	if( cntMax != 0 ){
+		if( cntMax < abs ){
+			abs = cntMax;
+		}
+		InitListScroll( wk, speed, abs, MAINSEQ_SLIDE, TRUE );
+		wk->slidePos = pos;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static void InitSledeAutoScroll( FRAMELIST_WORK * wk )
+{
+	u32	max;
+	u32	abs;
+
+	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
+	abs = GFL_STD_Abs( wk->listBgScrollSpeed );
+
+	wk->autoScroll = TRUE;
+
+	for( wk->slideCnt=0; wk->slideCnt<FRAMELIST_SPEED_MAX; wk->slideCnt++ ){
+		if( abs == wk->hed.scrollSpeed[wk->slideCnt] ){
+			wk->listBgScrollMax = AutoScrollCount[wk->slideCnt];
+			break;
+		}
+	}
+	if( wk->listBgScrollMax > max ){
+		wk->listBgScrollMax = max;
+	}
+}
+
+static const u8 AutoScrollSpeed[6][6] =
+{
+/*
+	{ 16,  8,  6,  4,  4, 4 },		// 0frm
+	{ 16,  8,  6,  4,  2, 1 },		// 1frm
+	{ 40, 32, 16,  8,  4, 1 },		// 2frm
+	{ 64, 40, 32, 16,  8, 1 },		// 3frm
+	{ 80, 64, 40, 32, 16, 1 },		// 4frm
+	{ 96, 80, 64, 40, 32, 1 },		// 5frm
+*/
+	{  16,   8,  6,  4,  4, 4 },		// 0frm
+	{  32,  16,  8,  6,  4, 1 },		// 1frm
+	{  64,  40, 32, 16,  8, 1 },		// 2frm
+	{  96,  80, 64, 48, 32, 1 },		// 3frm
+	{ 112,  96, 80, 64, 48, 1 },		// 4frm
+	{ 128, 112, 96, 80, 64, 1 },		// 5frm
+};
+
+static BOOL InitSledeAutoScroll2( FRAMELIST_WORK * wk )
+{
+	u32	max;
+	u32	abs;
+	s8	speed;
+
+	if( ( wk->slideVec < 0 && wk->slideOldTpy > wk->slideStartTpy ) || 
+			( wk->slideVec > 0 && wk->slideOldTpy < wk->slideStartTpy ) ){
+		return FALSE;
+	}
+
+	abs = GFL_STD_Abs( wk->slideOldTpy - wk->slideStartTpy );
+
+	if( abs == 0 ){
+		return FALSE;
+	}
+
+	for( wk->slideCnt=0; wk->slideCnt<FRAMELIST_SPEED_MAX; wk->slideCnt++ ){
+		if( abs >= AutoScrollSpeed[wk->slideReqCount][wk->slideCnt] ){
+			speed = wk->hed.scrollSpeed[wk->slideCnt];
+			abs   = AutoScrollCount[wk->slideCnt];
+			break;
+		}
+	}
+	if( wk->slideCnt == FRAMELIST_SPEED_MAX ){
+		return FALSE;
+	}
+	if( wk->slideStartTpy > wk->slideOldTpy ){
+		speed *= -1;
+	}
+
+	max = GetListScrollCount( wk, speed );
+	if( max != 0 ){
+		if( max < abs ){
+			abs = max;
+		}
+		InitListScroll( wk, speed, abs, MAINSEQ_SLIDE, TRUE );
+//		OS_Printf( "speed = %d, max = %d\n", speed, abs );
+		wk->autoScroll = TRUE;
+//		wk->slidePos = pos;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static BOOL CheckSledeAutoScrollRepeat( FRAMELIST_WORK * wk )
+{
+	u32	max;
+	u32	abs;
+	u32	i;
+	s8	speed;
+
+	if( ( wk->slideVec < 0 && wk->slideOldTpy > wk->slideStartTpy ) || 
+			( wk->slideVec > 0 && wk->slideOldTpy < wk->slideStartTpy ) ){
+		return FALSE;
+	}
+
+	abs = GFL_STD_Abs( wk->slideOldTpy - wk->slideStartTpy );
+
+	if( abs == 0 ){
+		return FALSE;
+	}
+
+	for( i=0; i<FRAMELIST_SPEED_MAX; i++ ){
+		if( abs >= AutoScrollSpeed[wk->slideReqCount][i] ){
+			speed = wk->hed.scrollSpeed[i];
+			abs   = AutoScrollCount[i];
+			break;
+		}
+	}
+	if( i == FRAMELIST_SPEED_MAX ){
+		return FALSE;
+	}
+	if( wk->slideStartTpy > wk->slideOldTpy ){
+		speed *= -1;
+	}
+
+	max = GetListScrollCount( wk, speed );
+	if( max != 0 ){
+		if( max < abs ){
+			abs = max;
+		}
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 
