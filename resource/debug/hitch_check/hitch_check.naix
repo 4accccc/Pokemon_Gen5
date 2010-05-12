@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: hitch_check.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_HITCH_CHECK_NAIX_
+#define NARC_HITCH_CHECK_NAIX_
+
+enum {
+	NARC_hitch_check_hitch_chk_nsbmd = 0,
+	NARC_hitch_check_hitch_chk_nsbtp = 1
+};
+
+/* NARC_HITCH_CHECK_NAIX_ */
+#endif
