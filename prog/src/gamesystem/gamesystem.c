@@ -136,7 +136,6 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	return GFL_PROC_RES_FINISH;
 }
 
-//#if 1
 #ifdef DEBUG_ONLY_FOR_hudson
 
 #include "debug/debug_hudson.h"
@@ -156,7 +155,7 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     //>>引数からテストモード切り替え
 
     // 全マップチェック
-//    if ( OS_GetArgv(1) == '1' )
+    if ( OS_GetArgv(1) == HUDSON_TESTCODE_MAP_JUMP )
     {
       GMEVENT * new_event;
 

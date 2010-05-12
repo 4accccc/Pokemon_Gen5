@@ -30,6 +30,8 @@
 
 #ifdef DEBUG_ONLY_FOR_hudson
 
+#define HUDSON_TESTCODE_MAP_JUMP ("1")
+
 //---------------------------------
 // HUDSON‚Ì‚ÝŽÀ‘Ì‚ð’è‹`
 //---------------------------------
