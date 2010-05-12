@@ -12,8 +12,8 @@
 #define LOOP_START_FRAME ( 450 )      //ループ先頭フレーム
 #define FADE_WAIT    (15)              //輝度ウェイト
 
-#define LEG_SE0_FRM  (0)              //ＳＥ1つ目
-#define LEG_SE1_FRM  (131)            //ＳＥ2つ目
-#define LEG_SE2_FRM  (108)            //ＳＥ3つ目
-#define LEG_SE3_FRM  (120)            //ＳＥ4つ目
+#define LEG_SE0_FRM  (0)              //ＳＥ1つ目上がる音（じょわ）
+#define LEG_SE1_FRM  (131)            //ＳＥ2つ目光る音（ぴかあああ)
+#define LEG_SE2_FRM  (108)            //ＳＥ3つ目エネルギーループ音
+#define LEG_SE3_FRM  (305)            //ＳＥ4つ目エネルギー収縮音
   
