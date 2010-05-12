@@ -636,10 +636,10 @@ EVENT_START   ev_h04_girl2_01
 				
 				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
 				_YES_NO_WIN(SCWK_ANSWER)
-				_MSGWIN_CLOSE()
-				
+
 				IF $SCWK_ANSWER == SCR_YES THEN
-					
+				_MSGWIN_CLOSE()		
+							
 					IF $LOCALWORK9 == 1 THEN
 						$LWK_GIRL_TAKE = $LOCALWORK5
 					ELSIF $LOCALWORK9 == 2 THEN
@@ -799,10 +799,10 @@ EVENT_START   ev_h04_man1_01
 				
 				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
 				_YES_NO_WIN(SCWK_ANSWER)
-				_MSGWIN_CLOSE()
 				
 				IF $SCWK_ANSWER == SCR_YES THEN
-					
+				_MSGWIN_CLOSE()
+									
 					IF $LOCALWORK9 == 1 THEN
 						$LWK_MAN1_TAKE = $LOCALWORK5
 					ELSIF $LOCALWORK9 == 2 THEN
@@ -957,10 +957,10 @@ EVENT_START   ev_h04_man3_01
 				
 				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
 				_YES_NO_WIN(SCWK_ANSWER)
-				_MSGWIN_CLOSE()
-				
+
 				IF $SCWK_ANSWER == SCR_YES THEN
-					
+				_MSGWIN_CLOSE()
+									
 					IF $LOCALWORK9 == 1 THEN
 						$LWK_MAN3_TAKE = $LOCALWORK5
 					ELSIF $LOCALWORK9 == 2 THEN
@@ -1118,10 +1118,9 @@ EVENT_START   ev_h04_woman1_01
 				
 				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
 				_YES_NO_WIN(SCWK_ANSWER)
-				_MSGWIN_CLOSE()
-				
+
 				IF $SCWK_ANSWER == SCR_YES THEN
-					
+				_MSGWIN_CLOSE()
 					IF $LOCALWORK9 == 1 THEN
 						$LWK_WOMAN_TAKE = $LOCALWORK5
 					ELSIF $LOCALWORK9 == 2 THEN
