@@ -2615,8 +2615,6 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
   }
 
   data = &camera->MoveData;
-  //移動リクエスト中ならばアサート
-  GF_ASSERT_MSG( data->Valid == FALSE, "ERROR:already move" );
 
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -2629,6 +2627,7 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
 
   //コールバックをセット
   camera->CallBack = LinerMoveFunc;
+  data->CallBackWorkPtr = NULL;
   //線形補間移動を開始
   data->Valid = TRUE;
 
@@ -2660,8 +2659,6 @@ void FIELD_CAMERA_SetLinerParamDirect(
   }
 
   data = &camera->MoveData;
-  //移動リクエスト中ならばアサート
-  GF_ASSERT_MSG( data->Valid == FALSE, "ERROR:already move" );
 
   //補間移動はダイレクト型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
@@ -2686,6 +2683,7 @@ void FIELD_CAMERA_SetLinerParamDirect(
 
   //コールバックをセット
   camera->CallBack = DirectLinerMoveFunc;
+  data->CallBackWorkPtr = NULL;
   //線形補間移動を開始
   data->Valid = TRUE;
 
@@ -2736,6 +2734,7 @@ void FIELD_CAMERA_RecvLinerParam(
 
   //コールバックをセット
   camera->CallBack = LinerMoveFunc;
+  data->CallBackWorkPtr = NULL;
   //線形補間移動を開始
   data->Valid = TRUE;
 }
@@ -2837,6 +2836,7 @@ void FIELD_CAMERA_RecvLinerParamDefault(
 
   //コールバックをセット
   camera->CallBack = LinerMoveFunc;
+  data->CallBackWorkPtr = NULL;
   //線形補間移動を開始
   data->Valid = TRUE;
 }
