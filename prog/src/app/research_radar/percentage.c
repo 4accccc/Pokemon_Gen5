@@ -13,7 +13,6 @@
 //============================================================================
 // ■定数
 //============================================================================ 
-#define PRINT_TARGET (2)  // デバッグ情報の出力先
 #define OFFSET_X_100 (10)  // ベースからのx座標オフセット ( 100の位 )
 #define OFFSET_Y_100 (-8) // ベースからのy座標オフセット ( 100の位 )
 #define OFFSET_X_10  (15) // ベースからのx座標オフセット ( 10の位 )
@@ -211,9 +210,6 @@ void SetDrawEnable( PERCENTAGE* percentage, BOOL enable )
 
   // 1の位
   GFL_CLACT_WK_SetDrawEnable( percentage->clactWork[ CLWK_VALUE_1 ], enable );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: set draw enable ==> %d\n", enable );
 }
 
 
@@ -274,9 +270,6 @@ void SetupClactWorks( PERCENTAGE* percentage )
   GFL_CLACT_WK_SetAnmFrame( clwk, GetValue_1(percentage) << FX32_SHIFT );
   GFL_CLACT_WK_StopAnm( clwk );
   GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: setup clact works\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -290,9 +283,6 @@ void SetupClactWorks( PERCENTAGE* percentage )
 void SetValue( PERCENTAGE* percentage, u8 value )
 {
   percentage->value = value;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: set value ==> %d\n", value );
 }
 
 //----------------------------------------------------------------------------
@@ -308,9 +298,6 @@ void SetPos( PERCENTAGE* percentage, int x, int y )
 {
   percentage->x = x;
   percentage->y = y;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: set pos (%d, %d)\n", x, y );
 }
 
 
@@ -432,9 +419,6 @@ PERCENTAGE* CreatePercentage( HEAPID heapID )
   PERCENTAGE* percentage;
   percentage = GFL_HEAP_AllocMemory( heapID, sizeof(PERCENTAGE) );
 
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: create percentage\n" );
-
   return percentage;
 }
 
@@ -448,9 +432,6 @@ PERCENTAGE* CreatePercentage( HEAPID heapID )
 void DeletePercentage( PERCENTAGE* percentage )
 {
   GFL_HEAP_FreeMemory( percentage );
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: delete percentage\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -472,9 +453,6 @@ void InitPercentage( PERCENTAGE* percentage, HEAPID heapID )
   {
     percentage->clactWork[i] = NULL;
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: init percentage\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -492,9 +470,6 @@ void SetupPercentage(
   SetClactUnit( percentage, clactUnit );  // セルアクターユニットをセット
   SetDispParams( percentage, dispParam ); // 表示パラメータをセット
   CreateClactWorks( percentage );         // セルアクターワークを生成
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: setup percentage\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -507,9 +482,6 @@ void SetupPercentage(
 void CleanUpPercentage( PERCENTAGE* percentage )
 {
   DeleteClactWorks( percentage ); // セルアクターワークを破棄
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: clean up percentage\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -525,9 +497,6 @@ void SetClactUnit( PERCENTAGE* percentage, GFL_CLUNIT* clactUnit )
   GF_ASSERT( percentage->clactUnit == NULL );
 
   percentage->clactUnit = clactUnit;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: set clact unit\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -563,9 +532,6 @@ void CreateClactWorks( PERCENTAGE* percentage )
                            dispParam->setSerface, 
                            percentage->heapID );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: create clact works\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -585,9 +551,6 @@ void DeleteClactWorks( PERCENTAGE* percentage )
 
     GFL_CLACT_WK_Remove( percentage->clactWork[ idx ] );
   }
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: delete clact works\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -600,7 +563,4 @@ void DeleteClactWorks( PERCENTAGE* percentage )
 void SetDispParams( PERCENTAGE* percentage, const PERCENTAGE_DISP_PARAM* dispParam )
 {
   percentage->dispParam = *dispParam;
-
-  // DEBUG:
-  OS_TFPrintf( PRINT_TARGET, "PERCENTAGE: set disp params\n" );
 } 
