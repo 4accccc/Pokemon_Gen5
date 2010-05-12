@@ -363,7 +363,6 @@ static void draw_UnionObjUpdate( BEACON_DETAIL_WORK* wk, u8 char_no )
                           wk->resCharUnion[ char_no ].p_char );
   //パレット転送
   p_ofs = 16*sc_wifi_unionobj_plt[char_no];
-//  PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
   sub_PlttVramTrans( &wk->resPlttUnion.dat[p_ofs], FADE_MAIN_OBJ, PLTID_OBJ_UNION_M*16, 16 );
 }
 
@@ -385,13 +384,8 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
   
       GFL_BMP_Clear( bp->prof[i].bmp, FCOL_BEACON_BASE(i%2) );
 
-#if 0
-      PRINT_UTIL_PrintColor( &bp->prof[i].putil, wk->print_que,
-          0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(i%2) );
-#else
       printReq_BmpwinPrint( wk, &bp->prof[i],
           0, 0, wk->str_tmp, FCOL_BEACON_COL(i%2) );
-#endif
       GFL_BMPWIN_MakeTransWindow( bp->prof[i].win );
     }
   }
@@ -402,13 +396,8 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
 
     GFL_BMP_Clear( bp->home[0].bmp, FCOL_BEACON_BASE(0) );
 
-#if 0
-    PRINT_UTIL_PrintColor( &bp->home[0].putil, wk->print_que,
-          0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(0) );
-#else
     printReq_BmpwinPrint( wk, &bp->home[0],
           0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
-#endif
     GFL_BMPWIN_MakeTransWindow( bp->home[0].win );
   }
 
@@ -419,13 +408,8 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
     bp = &wk->beacon_win[i];
     
     GFL_BMP_Clear( bp->record.bmp, FCOL_BEACON_BASE(0) );
-#if 0
-    PRINT_UTIL_PrintColor( &bp->record.putil, wk->print_que,
-          0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(0) );
-#else
     printReq_BmpwinPrint( wk, &bp->record,
           0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
-#endif
     GFL_BMPWIN_MakeTransWindow( bp->record.win );
   }
 }
@@ -436,12 +420,7 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
 static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy, u8 col_idx)
 {
   GFL_BMP_Fill( win->bmp, px*8, 0, sx*8, sy*8, FCOL_BEACON_BASE(col_idx) );
-#if 0
-  PRINT_UTIL_PrintColor( &win->putil, wk->print_que,
-      fx, 0, str, wk->font, FCOL_BEACON_COL(col_idx) );
-#else
   printReq_BmpwinPrint( wk, win, fx, 0, str, FCOL_BEACON_COL(col_idx) );
-#endif
   GFL_BMPWIN_MakeTransWindow( win->win );
 }
 
@@ -563,10 +542,6 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
       PMS_DRAW_Clear( wk->pms_draw, idx, TRUE );
     }
     GAMEBEACON_Get_IntroductionPms( info, &pms );
-#if 0
-    PMSDAT_SetDebugRandom( &pms );
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO + idx );
-#endif
     PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , idx );
   }
   //ユニオンキャラクタナンバーを取得
@@ -884,11 +859,6 @@ static void tcb_BWinScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_BWIN_SCROLL* twk = (TASKWK_BWIN_SCROLL*)tcb_wk;
 
-#if 0
-  if( !PRINTSYS_QUE_IsFinished( twk->bdw->print_que ) ){	
-    return;
-  }
-#endif
   if( twk->wait-- > 0 ){
     twk->py += twk->dy;
     draw_BeaconWindowScroll( twk->bp, twk->py );
@@ -981,6 +951,8 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   case 1:
     taskAdd_BWinScroll( twk->bdw, twk->bdw->flip_sw, SCROLL_POS_DEF, twk->dir, &twk->child_task );
     taskAdd_BWinScroll( twk->bdw, twk->bdw->flip_sw^1, pos_tbl[twk->dir], twk->dir, &twk->child_task );
+    GFL_CLACT_WK_SetDrawEnable( twk->bdw->pAct[ACT_ICON_TR], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( twk->bdw->pAct[ACT_ICON_EV], FALSE );
     twk->seq++;
     return;
   case 2:
