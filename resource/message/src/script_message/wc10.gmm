@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T17:13:17"/>
+	<create user="ohmori" host="W00223" date="2010-05-12T15:23:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -264,16 +264,16 @@
 		</language>
 	</columns>
 
-	<dialog left="1500" top="130" right="2205" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="1241" top="228" right="1741" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="619" top="121" right="1092" bottom="519" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="15" top="568" right="488" bottom="966" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -296,8 +296,8 @@
 	<row id="msg_wc10_npc00" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ダミーメッセージ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ホワイトフォレスト よいところ!</language>
-		<language name="JPN_KANJI" width="256">ホワイトフォレスト よいところ!</language>
+		<language name="JPN" width="256">ホワイトフォレスト　よいところ!</language>
+		<language name="JPN_KANJI" width="256">ホワイトフォレスト　よいところ!</language>
 	</row>
 
 	<row id="msg_wc10_girl1_01">
@@ -380,7 +380,7 @@
 力を　持っているんです</language>
 	</row>
 
-	<row id="wc10_01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_01_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 シュウサク</attribute>
 		<language name="JPN" width="256">シュウサク『あっ　こんにちは！
@@ -393,45 +393,49 @@
 やってきた　シュウサクです　よろしく！▼</language>
 	</row>
 
-	<row id="wc10_01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_01_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 シュウサク</attribute>
 		<language name="JPN" width="256">シュウサク『あっ　どうも　こんにちは！▼
 はっぱと　はっぱが　すれあう　おとで
-きょうは　めざめたよ▼
+きょうは　めざめたよ▽
 ほんとうに　きもちいいね　ここは！▼</language>
 		<language name="JPN_KANJI" width="256">シュウサク『あっ　どうも　こんにちは！▼
 はっぱと　はっぱが　すれあう　音で
-今日は　目覚めたよ▼
+今日は　目覚めたよ▽
 本当に　気持ちいいね　ここは！▼</language>
 	</row>
 
-	<row id="wc10_01_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_01_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 シュウサク</attribute>
-		<language name="JPN" width="256">さいきん　むねが　ざわつくんだよね
+		<language name="JPN" width="256">でも　さいきん
+むねが　ざわつくんだよね▽
 とかいの　かぜを　かんじたいのかも</language>
-		<language name="JPN_KANJI" width="256">最近　胸が　ざわつくんだよね
+		<language name="JPN_KANJI" width="256">でも　最近
+胸が　ざわつくんだよね▽
 都会の風を　感じたいのかも</language>
 	</row>
 
-	<row id="wc10_01_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_01_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 シュウサク</attribute>
-		<language name="JPN" width="256">シュウサク『あっ！　きいて　きいて▼
+		<language name="JPN" width="256">あっ！　そうそう
+きいて　きいて▼
 そこの　そうげんで
 ポッポが　ごはん　たべてたよ！</language>
-		<language name="JPN_KANJI" width="256">シュウサク『あっ！　きいて　きいて▼
+		<language name="JPN_KANJI" width="256">あっ！　そうそう
+きいて　きいて▼
 そこの　草原で
 ポッポが　ごはん　食べてたよ！</language>
 	</row>
 
-	<row id="wc10_02_01">
+	<row id="wc10_02_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL3
 ヒロコ</attribute>
 		<language name="JPN" width="256">ヒロコ『あら　こんにちは！▼
 おいしい　くうきに　のどかな　じかん
-ここの　まちは　すごく　ステキですね▼
+ここのまちは　すごく　ステキですね▼
 [1:00:トレーナー名:0]さんが　いた
 ブラックシティから　きた　ヒロコです▽
 どうも　よろしくね▼</language>
@@ -443,7 +447,7 @@
 どうも　よろしくね▼</language>
 	</row>
 
-	<row id="wc10_02_02">
+	<row id="wc10_02_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL3
 ヒロコ</attribute>
 		<language name="JPN" width="256">ヒロコ『もし　メガネを　はずしていても
@@ -456,31 +460,33 @@
 すごく　ステキですね！▼</language>
 	</row>
 
-	<row id="wc10_02_03">
+	<row id="wc10_02_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL3
 ヒロコ</attribute>
-		<language name="JPN" width="256">ここで　すごす　じかんは
-すごく　だいすきで　たいせつ　だけど▼
-なにかが　たりない……
+		<language name="JPN" width="256">でも　ここで　すごす　じかんは
+すごく　だいすき　なんだけど▽
+なにかが　たりない……▽
 そんな　きがするの</language>
-		<language name="JPN_KANJI" width="256">ここで　すごす　時間は
-すごく　大好きで　大切だけど▼
-なにかが　足りない……
+		<language name="JPN_KANJI" width="256">でも　ここで　すごす　時間は
+すごく　大好き　なんだけど▽
+なにかが　足りない……▽
 そんな　気がするの</language>
 	</row>
 
-	<row id="wc10_02_04">
+	<row id="wc10_02_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL3
 ヒロコ</attribute>
 		<language name="JPN" width="256">このまえ　そこで
-ケムッソちゃんと　であったの！▽
-ほんとうに　のどかで　ステキね　ここ</language>
+ケムッソちゃんと　であったの！▼
+ほんとうに　のどかで
+ステキね　ここ</language>
 		<language name="JPN_KANJI" width="256">このまえ　そこで
-ケムッソちゃんと　出会ったの！▽
-本当に　のどかで　ステキね　ここ</language>
+ケムッソちゃんと　出会ったの！▼
+本当に　のどかで
+ステキね　ここ</language>
 	</row>
 
-	<row id="wc10_03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_03_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BADMAN
 タクロウ</attribute>
 		<language name="JPN" width="256">タクロウ『ウッス　[1:00:トレーナー名:0]とは
@@ -497,40 +503,46 @@
 大きな　器を　感じるぜ▼</language>
 	</row>
 
-	<row id="wc10_03_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_03_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BADMAN
 タクロウ</attribute>
-		<language name="JPN" width="256">タクロウ『ウッス　きょうも　キマってるぜ▼
+		<language name="JPN" width="256">タクロウ『ウッス
+きょうも　キマってるぜ▼
 だいしぜんの　すげー　ところ
 ビシビシ　つたわってくるぜ▼</language>
-		<language name="JPN_KANJI" width="256">タクロウ『ウッス　きょうも　キマってるぜ▼
+		<language name="JPN_KANJI" width="256">タクロウ『ウッス
+きょうも　キマってるぜ▼
 大自然の　すげー　ところ
 ビシビシ　伝わってくるぜ▼</language>
 	</row>
 
-	<row id="wc10_03_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_03_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BADMAN
 タクロウ</attribute>
-		<language name="JPN" width="256">なんつーか　ヒマすぎるぜ▼
+		<language name="JPN" width="256">しっかし
+なんつーか　ヒマすぎるぜ▼
 オレは　ここで　おさまってる
-うつわじゃ　ねーのかもな　</language>
-		<language name="JPN_KANJI" width="256">なんつーか　ヒマすぎるぜ▼
+うつわじゃ　ねーのかもな</language>
+		<language name="JPN_KANJI" width="256">しっかし
+なんつーか　ヒマすぎるぜ▼
 オレは　ここで　おさまってる
-器じゃ　ねーのかもな　</language>
+器じゃ　ねーのかもな</language>
 	</row>
 
-	<row id="wc10_03_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_03_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BADMAN
 タクロウ</attribute>
-		<language name="JPN" width="256">ゴースか！？▼
+		<language name="JPN" width="256">……ん！？
+そこにいるのは　ゴースか！？▼
 ……なんだ　おまえか
 さっきよ　ゴースを　みかけたぜ</language>
-		<language name="JPN_KANJI" width="256">ゴースか！？▼
+		<language name="JPN_KANJI" width="256">……ん！？
+そこにいるのは　ゴースか！？▼
 ……なんだ　おまえか
 さっきよ　ゴースを　みかけたぜ</language>
 	</row>
 
-	<row id="wc10_04_01">
+	<row id="wc10_04_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁です</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
@@ -544,7 +556,7 @@
 ちょっこし　大胆だったのです▼</language>
 	</row>
 
-	<row id="wc10_04_02">
+	<row id="wc10_04_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁です</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
@@ -560,17 +572,17 @@
 いいとこ　ですねー▼</language>
 	</row>
 
-	<row id="wc10_04_03">
+	<row id="wc10_04_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁です</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
-		<language name="JPN" width="256">あせくらしい　せいかつも
+		<language name="JPN" width="256">でも　あせくらしい　せいかつも
 たまには　いいかなと　おもってます</language>
-		<language name="JPN_KANJI" width="256">あせくらしい　生活も
+		<language name="JPN_KANJI" width="256">でも　あせくらしい　生活も
 たまには　いいかなと　思ってます</language>
 	</row>
 
-	<row id="wc10_04_04">
+	<row id="wc10_04_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
 		<language name="JPN" width="256">あれ？　ハネッコを　さがしてます？
@@ -579,7 +591,7 @@
 ハネッコなら　そこで　みましたよ</language>
 	</row>
 
-	<row id="wc10_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_05_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY2
 マサオ</attribute>
 		<language name="JPN" width="256">マサオ『[1:00:トレーナー名:0]が　いた
@@ -594,7 +606,7 @@
 すげー　森だらけ！　びっくりだよ▼</language>
 	</row>
 
-	<row id="wc10_05_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_05_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY2
 マサオ</attribute>
 		<language name="JPN" width="256">マサオ『ビルが　だいすきで
@@ -607,16 +619,16 @@
 けっこう　あり　だよねー！▼</language>
 	</row>
 
-	<row id="wc10_05_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_05_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY2
 マサオ</attribute>
-		<language name="JPN" width="256">あー！　ヒマ！　ヒマすぎる！
+		<language name="JPN" width="256">しかし　あー！　ヒマ！　ヒマすぎる！
 ブラックシティに　もどりたいよー！</language>
-		<language name="JPN_KANJI" width="256">あー！　ヒマ！　ヒマすぎる！
+		<language name="JPN_KANJI" width="256">しかし　あー！　ヒマ！　ヒマすぎる！
 ブラックシティに　もどりたいよー！</language>
 	</row>
 
-	<row id="wc10_05_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_05_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY2
 マサオ</attribute>
 		<language name="JPN" width="256">あ！　あのさー！
@@ -629,7 +641,7 @@
 おいかけちゃおうかなー</language>
 	</row>
 
-	<row id="wc10_06_01">
+	<row id="wc10_06_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
 		<language name="JPN" width="256">ミキ『こんにちわぁー　アタシ
@@ -644,7 +656,7 @@
 すごく　強くなったの！▼</language>
 	</row>
 
-	<row id="wc10_06_02">
+	<row id="wc10_06_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
 		<language name="JPN" width="256">ミキ『うぅーん　ここは　おちつくね
@@ -659,29 +671,29 @@
 ここにも　そんな　効果が　あるかも▼</language>
 	</row>
 
-	<row id="wc10_06_03">
+	<row id="wc10_06_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
-		<language name="JPN" width="256">おちつきすぎて　たいくつかもぉ？▼
+		<language name="JPN" width="256">うーん　でも
+おちつきすぎて　たいくつかもぉ？▼
 そんな　じかんも
 たいせつだって　おもうのだけどねー</language>
-		<language name="JPN_KANJI" width="256">落ち着きすぎて　退屈かもぉ？▼
+		<language name="JPN_KANJI" width="256">うーん　でも
+落ち着きすぎて　退屈かもぉ？▼
 そんな　時間も
 大切だって　思うのだけどねー</language>
 	</row>
 
-	<row id="wc10_06_04">
+	<row id="wc10_06_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
-		<language name="JPN" width="256">こんにちはぁー▼
-あれれ？　いま　アナタの　うしろを
+		<language name="JPN" width="256">あれれ？　いま　アナタの　うしろを
 トゲピーが　かけていったわよ</language>
-		<language name="JPN_KANJI" width="256">こんにちはぁー▼
-あれれ？　いま　アナタの　後ろを
+		<language name="JPN_KANJI" width="256">あれれ？　いま　アナタの　後ろを
 トゲピーが　かけていったわよ</language>
 	</row>
 
-	<row id="wc10_07_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_07_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">FIGHTERM
 タクマ</attribute>
 		<language name="JPN" width="256">タクマ『やあ！　こんにちは
@@ -694,7 +706,7 @@
 やってきた　タクマだよ　よろしく！▼</language>
 	</row>
 
-	<row id="wc10_07_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_07_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">FIGHTERM
 タクマ</attribute>
 		<language name="JPN" width="256">タクマ『セイ！　セイ！　セイ！！
@@ -709,33 +721,35 @@
 ちょっと　こまりもの　だけどね！▼</language>
 	</row>
 
-	<row id="wc10_07_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_07_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">FIGHTERM
 タクマ</attribute>
-		<language name="JPN" width="256">セイ？　セイ？　セイ？？
-あれれ　きあいが　はいらないな……▼
+		<language name="JPN" width="256">セイ？　セイ？　セイ？？▼
+しかし　さいきん　うまく
+きあいが　はいらないな……▼
 やっぱり　おれには
 ブラックシティが　あうのかな？</language>
-		<language name="JPN_KANJI" width="256">セイ？　セイ？　セイ？？
-あれれ　気合が　はいらないな……▼
+		<language name="JPN_KANJI" width="256">セイ？　セイ？　セイ？？▼
+しかし　最近　うまく
+気合いが　入らないな……▼
 やっぱり　おれには
 ブラックシティが　あうのかな？</language>
 	</row>
 
-	<row id="wc10_07_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_07_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">FIGHTERM
 タクマ</attribute>
-		<language name="JPN" width="256">やあ！　おれの　ポケモンと
+		<language name="JPN" width="256">おれの　ポケモンと
 せいけんづき　してたら▼
 ワンリキーが　うらやましそうに
 みてたからさ　さがしてみたら？</language>
-		<language name="JPN_KANJI" width="256">やあ！　おれの　ポケモンと
+		<language name="JPN_KANJI" width="256">おれの　ポケモンと
 せいけんづき　してたら▼
 ワンリキーが　うらやましそうに
 みてたからさ　探してみたら？</language>
 	</row>
 
-	<row id="wc10_08_01">
+	<row id="wc10_08_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
 		<language name="JPN" width="256">カレン『ブラックシティから
@@ -750,7 +764,7 @@
 わたしも　まだまだって　思ったわ！▼</language>
 	</row>
 
-	<row id="wc10_08_02">
+	<row id="wc10_08_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
 		<language name="JPN" width="256">カレン『ファイト！　オー！▼
@@ -761,7 +775,7 @@
 走りこんでるの！▼</language>
 	</row>
 
-	<row id="wc10_08_03">
+	<row id="wc10_08_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
 		<language name="JPN" width="256">ふー……　そろそろ
@@ -774,7 +788,7 @@
 ブラックシティに　行きたいわ</language>
 	</row>
 
-	<row id="wc10_08_04">
+	<row id="wc10_08_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
 		<language name="JPN" width="256">あら？　
@@ -787,22 +801,22 @@
 走ってたら　会えるかも？</language>
 	</row>
 
-	<row id="wc10_09_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_09_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
-		<language name="JPN" width="256">トモタカ『どうも　どうも！　トモタカです▼
-ブラックシティから　まいりました
+		<language name="JPN" width="256">トモタカ『どうも　どうも！　トモタカです
+ブラックシティから　まいりました▽
 [1:00:トレーナー名:0]さんの　しりあい　です▼
 あのかたは　じつに　じょうねつてきな
 ポケモンしょうぶを　されますね！▼</language>
-		<language name="JPN_KANJI" width="256">トモタカ『どうも　どうも！　トモタカです▼
-ブラックシティから　まいりました
+		<language name="JPN_KANJI" width="256">トモタカ『どうも　どうも！　トモタカです
+ブラックシティから　まいりました▽
 [1:00:トレーナー名:0]さんの　知り合いです▼
 あのかたは　じつに　情熱的な
 ポケモン勝負を　されますね！▼</language>
 	</row>
 
-	<row id="wc10_09_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_09_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
 		<language name="JPN" width="256">トモタカ『しぜんに　かこまれて
@@ -813,16 +827,18 @@
 けっこう　はかどる　ものですね▼</language>
 	</row>
 
-	<row id="wc10_09_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_09_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
-		<language name="JPN" width="256">しぜんが　あっても　モノが　なければ
+		<language name="JPN" width="256">しかし　ですね
+しぜんが　あっても　モノが　なければ▽
 しごとは　すすまない　ですね……</language>
-		<language name="JPN_KANJI" width="256">自然があっても　モノがなければ
+		<language name="JPN_KANJI" width="256">しかし　ですね
+自然があっても　モノがなければ▽
 仕事は　進まない　ですね……</language>
 	</row>
 
-	<row id="wc10_09_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_09_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
 		<language name="JPN" width="256">どうも　おせわに　なってます！▼
@@ -837,22 +853,22 @@
 気分は　リフレッシュ！　ですよ</language>
 	</row>
 
-	<row id="wc10_10_01">
+	<row id="wc10_10_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERM
 ジュンイチ</attribute>
 		<language name="JPN" width="256">ジュンイチ『やあ　ごきげんよう▼
 ブラックシティでは　[1:00:トレーナー名:0]の
 れんしゅう　あいてを　してあげたけど▼
 まあまあ　つよかったかな
-ぼくほどでは　ないけどね▼</language>
+ぼく　ほどでは　ないけどね▼</language>
 		<language name="JPN_KANJI" width="256">ジュンイチ『やあ　ごきげんよう▼
 ブラックシティでは　[1:00:トレーナー名:0]の
 練習相手を　してあげたけど▼
 まあまあ　強かったかな
-ぼくほどでは　ないけどね▼</language>
+ぼく　ほどでは　ないけどね▼</language>
 	</row>
 
-	<row id="wc10_10_02">
+	<row id="wc10_10_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERM
 ジュンイチ</attribute>
 		<language name="JPN" width="256">ジュンイチ『しぜんの　そうだいさは
@@ -863,16 +879,18 @@
 うん　気にいったよ　ここ▼</language>
 	</row>
 
-	<row id="wc10_10_03">
+	<row id="wc10_10_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERM
 ジュンイチ</attribute>
-		<language name="JPN" width="256">シティうまれ　シティそだち　だからさ
+		<language name="JPN" width="256">しかしさ　ぼくは
+シティうまれ　シティそだち　だからさ▽
 そろそろ　かえりたいんだよね？</language>
-		<language name="JPN_KANJI" width="256">シティ生まれ　シティ育ち　だからさ
+		<language name="JPN_KANJI" width="256">しかしさ　ぼくは
+シティ生まれ　シティ育ち　だからさ▽
 そろそろ　帰りたいんだよね？</language>
 	</row>
 
-	<row id="wc10_10_04">
+	<row id="wc10_10_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERM
 ジュンイチ</attribute>
 		<language name="JPN" width="256">さっき　そこで　ブビィが
@@ -885,31 +903,31 @@
 ずいぶん　てれや　なんだね</language>
 	</row>
 
-	<row id="wc10_11_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_11_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTW
 カズホ</attribute>
-		<language name="JPN" width="256">カズホ『さんそが　こい！
+		<language name="JPN" width="256">カズホ『さんそが　こいわ！
 [1:00:トレーナー名:0]に　きいた　とおりね！▼
 ここなら　
 いい　ろんぶんが　かけちゃうわ！▼</language>
-		<language name="JPN_KANJI" width="256">カズホ『酸素が　濃い！
+		<language name="JPN_KANJI" width="256">カズホ『酸素が　濃いわ！
 [1:00:トレーナー名:0]に　きいた　とおりね！▼
 ここなら　
 いい　論文が　書けちゃうわ！▼</language>
 	</row>
 
-	<row id="wc10_11_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_11_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTW
 カズホ</attribute>
-		<language name="JPN" width="256">カズホ『いい　さんそに
+		<language name="JPN" width="256">カズホ『いい　さんそ　に
 いい　ろんぶん……　これが　かけたら▽
 ブラックシティで　はっぴょうね！▼</language>
-		<language name="JPN_KANJI" width="256">カズホ『いい酸素に
+		<language name="JPN_KANJI" width="256">カズホ『いい酸素　に
 いい論文……　これが　書けたら▽
 ブラックシティで　発表ね！▼</language>
 	</row>
 
-	<row id="wc10_11_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_11_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTW
 カズホ</attribute>
 		<language name="JPN" width="256">じゅうぶんに　リフレッシュ　したし
@@ -918,7 +936,7 @@
 ブラックシティに　もどりたいわ</language>
 	</row>
 
-	<row id="wc10_11_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_11_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTW
 カズホ</attribute>
 		<language name="JPN" width="256">さっき　しんこきゅう　してたら
@@ -929,7 +947,7 @@
 なんか　おかしくて　笑っちゃった</language>
 	</row>
 
-	<row id="wc10_12_01">
+	<row id="wc10_12_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERW
 レナ</attribute>
 		<language name="JPN" width="256">レナ『[1:00:トレーナー名:0]……？
@@ -942,7 +960,7 @@
 ポケモン勝負を　したの……▼</language>
 	</row>
 
-	<row id="wc10_12_02">
+	<row id="wc10_12_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERW
 レナ</attribute>
 		<language name="JPN" width="256">レナ『だいちの　めぐみが
@@ -953,18 +971,18 @@
 感謝して　歩きたい……▼</language>
 	</row>
 
-	<row id="wc10_12_03">
+	<row id="wc10_12_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERW
 レナ</attribute>
-		<language name="JPN" width="256">ひとは　ひとが　つくった　ものに
-ひかれて　しまうものね▼
+		<language name="JPN" width="256">でも　ひとは　ひとが　つくった
+ものに　ひかれて　しまうものね▽
 ブラックシティが　なつかしい……</language>
-		<language name="JPN_KANJI" width="256">人は　人が　つくった　ものに
-ひかれて　しまうものね▼
+		<language name="JPN_KANJI" width="256">でも　人は　人が　つくった
+ものに　ひかれて　しまうものね▽
 ブラックシティが　懐かしい……</language>
 	</row>
 
-	<row id="wc10_12_04">
+	<row id="wc10_12_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERW
 レナ</attribute>
 		<language name="JPN" width="256">くさポケモンの　こきゅうや
@@ -977,7 +995,7 @@
 後ろを　走っていった……</language>
 	</row>
 
-	<row id="wc10_13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_13_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 カルロス</attribute>
 		<language name="JPN" width="256">カルロス『おー！　こんにちは
@@ -992,7 +1010,7 @@
 すごく　強くて　おもしろかったけど▼</language>
 	</row>
 
-	<row id="wc10_13_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_13_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 カルロス</attribute>
 		<language name="JPN" width="256">カルロス『おー！　こんにちは
@@ -1005,16 +1023,16 @@
 すごく　珍しいと　思うよ！▼</language>
 	</row>
 
-	<row id="wc10_13_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_13_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 カルロス</attribute>
-		<language name="JPN" width="256">うーん　そろそろ　
+		<language name="JPN" width="256">……しかし　うーん　そろそろ　
 ほかのばしょも　みてみたいな　</language>
-		<language name="JPN_KANJI" width="256">うーん　そろそろ　
+		<language name="JPN_KANJI" width="256">……しかし　うーん　そろそろ　
 他の場所も　みてみたいな　</language>
 	</row>
 
-	<row id="wc10_13_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_13_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 カルロス</attribute>
 		<language name="JPN" width="256">ムックル！　ムックルが
@@ -1025,7 +1043,7 @@
 探してみたら　どうかな？</language>
 	</row>
 
-	<row id="wc10_14_01">
+	<row id="wc10_14_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 ヒロミ</attribute>
 		<language name="JPN" width="256">ヒロミ『ここが　ホワイトフォレストかぁ
@@ -1038,7 +1056,7 @@
 知ってる？　すごく　強いのよ！▼</language>
 	</row>
 
-	<row id="wc10_14_02">
+	<row id="wc10_14_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 ヒロミ</attribute>
 		<language name="JPN" width="256">ヒロミ『たびを　して　いろいろな
@@ -1051,44 +1069,46 @@
 みたのは　はじめてよ▼</language>
 	</row>
 
-	<row id="wc10_14_03">
+	<row id="wc10_14_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 ヒロミ</attribute>
-		<language name="JPN" width="256">きれいな　ところ　だけど
+		<language name="JPN" width="256">でも　きれいな　ところ　だけど
 ちょっと　たいくつ　かな</language>
-		<language name="JPN_KANJI" width="256">きれいな　ところ　だけど
+		<language name="JPN_KANJI" width="256">でも　きれいな　ところ　だけど
 ちょっと　退屈かな</language>
 	</row>
 
-	<row id="wc10_14_04">
+	<row id="wc10_14_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 ヒロミ</attribute>
-		<language name="JPN" width="256">ルリリが　げんきよく
+		<language name="JPN" width="256">そうそう！　ルリリが　げんきよく
 そうげんの　ほうへ　はしっていったよ▼
 わたしも　ポケモンと　いっしょに
 そうげんを　はしろうかしら</language>
-		<language name="JPN_KANJI" width="256">ルリリが　元気よく
+		<language name="JPN_KANJI" width="256">そうそう！　ルリリが　元気よく
 草原の　ほうへ　走っていったよ▼
 わたしも　ポケモンと　一緒に
 草原を　走ろうかしら</language>
 	</row>
 
-	<row id="wc10_15_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_15_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
-		<language name="JPN" width="256">ツネカズ『[1:00:トレーナー名:0]！？
-ちがうかね▼
+		<language name="JPN" width="256">ツネカズ『[1:00:トレーナー名:0]！？▼
+……おっと
+べつの　ひとかね▼
 ポケモンしょうぶで　まけたのが
 くやしくてね　こんど　みかけたら▽
 もういちど　しょうぶ　したいのだよ▼</language>
-		<language name="JPN_KANJI" width="256">ツネカズ『[1:00:トレーナー名:0]！？
-違うかね▼
+		<language name="JPN_KANJI" width="256">ツネカズ『[1:00:トレーナー名:0]！？▼
+……おっと
+別の　人かね▼
 ポケモン勝負で　負けたのが
 くやしくてね　今度　みかけたら▽
 もう一度　勝負したいのだよ▼</language>
 	</row>
 
-	<row id="wc10_15_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_15_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
 		<language name="JPN" width="256">ツネカズ『おお……　みなさい！▼
@@ -1103,16 +1123,18 @@
 わたしとは　正反対だな▼</language>
 	</row>
 
-	<row id="wc10_15_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_15_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
-		<language name="JPN" width="256">ポケモンは　よろこんでいるが
-わたしは　しげきに　うえている</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　喜んでいるが
-わたしは　刺激に　飢えている</language>
+		<language name="JPN" width="256">……しかし
+ポケモンは　よろこんでいるが▽
+わたしは　しげきに　うえているよ</language>
+		<language name="JPN_KANJI" width="256">……しかし
+ポケモンは　喜んでいるが▽
+わたしは　刺激に　飢えているよ</language>
 	</row>
 
-	<row id="wc10_15_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_15_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
 		<language name="JPN" width="256">さきほどな　わたしの　ポケモンが
@@ -1125,7 +1147,7 @@
 じつに　楽しそうだったよ</language>
 	</row>
 
-	<row id="wc10_16_01">
+	<row id="wc10_16_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL4
 シオリ</attribute>
 		<language name="JPN" width="256">シオリ『ごきげんよう
@@ -1138,7 +1160,7 @@
 ステキだったわよ▼</language>
 	</row>
 
-	<row id="wc10_16_02">
+	<row id="wc10_16_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL4
 シオリ</attribute>
 		<language name="JPN" width="256">シオリ『こんな　しぜんに　かこまれた
@@ -1149,20 +1171,20 @@
 いいわね！　いやされちゃうわ▼</language>
 	</row>
 
-	<row id="wc10_16_03">
+	<row id="wc10_16_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL4
 シオリ</attribute>
-		<language name="JPN" width="256">……ちょっと
+		<language name="JPN" width="256">……でも　ちょっと
 イナカには　あきちゃったわ▼
 もっと　いろいろな　モノがある
 とかいで　すごしたいわ</language>
-		<language name="JPN_KANJI" width="256">……ちょっと
+		<language name="JPN_KANJI" width="256">……でも　ちょっと
 イナカには　飽きちゃったわ▼
 もっと　いろいろな　モノがある
 都会で　すごしたいわ</language>
 	</row>
 
-	<row id="wc10_16_04">
+	<row id="wc10_16_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL4
 シオリ</attribute>
 		<language name="JPN" width="256">きょうは　ナゾノクサを　みかけたわ！▼
@@ -1173,22 +1195,22 @@
 なんだか　感動しちゃった！</language>
 	</row>
 
-	<row id="wc10_17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_17_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY4
 ヒトシ</attribute>
-		<language name="JPN" width="256">ヒトシ『まえは
-ブラックシティに　いたんだよ▼
-[1:00:トレーナー名:0]と　たたかったりもしたけど▼
+		<language name="JPN" width="256">ヒトシ『このまえ　まで
+ブラックシティに　いたんだよ▽
+[1:00:トレーナー名:0]と　たたかったりも　してさ▼
 [1:00:トレーナー名:0]も　ホワイトフォレスト
-いがいと　きにいるんじゃないかな▼</language>
-		<language name="JPN_KANJI" width="256">ヒトシ『まえは
-ブラックシティに　いたんだよ▼
-[1:00:トレーナー名:0]と　戦ったりもしたけど▼
+いがいと　きにいるんじゃ　ないかな▼</language>
+		<language name="JPN_KANJI" width="256">ヒトシ『このまえ　まで
+ブラックシティに　いたんだよ▽
+[1:00:トレーナー名:0]と　戦ったりも　してさ▼
 [1:00:トレーナー名:0]も　ホワイトフォレスト
-以外と　気にいるんじゃないかな▼</language>
+以外と　気にいるんじゃ　ないかな▼</language>
 	</row>
 
-	<row id="wc10_17_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_17_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY4
 ヒトシ</attribute>
 		<language name="JPN" width="256">ヒトシ『しぜんのなかで
@@ -1203,7 +1225,7 @@
 悪くないと　思うんだ▼</language>
 	</row>
 
-	<row id="wc10_17_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_17_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY4
 ヒトシ</attribute>
 		<language name="JPN" width="256">うーん……▼
@@ -1214,7 +1236,7 @@
 ちょっと　飽きてきちゃったかもな……</language>
 	</row>
 
-	<row id="wc10_17_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_17_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY4
 ヒトシ</attribute>
 		<language name="JPN" width="256">きょうは
@@ -1227,7 +1249,7 @@
 出会い　だよね！</language>
 	</row>
 
-	<row id="wc10_18_01">
+	<row id="wc10_18_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">MOUNTMAN
 ガクト</attribute>
 		<language name="JPN" width="256">ガクト『しぜんは　いいなぁ！▼
@@ -1242,7 +1264,7 @@
 わしの　貴重な　思い出だ！▼</language>
 	</row>
 
-	<row id="wc10_18_02">
+	<row id="wc10_18_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">MOUNTMAN
 ガクト</attribute>
 		<language name="JPN" width="256">ガクト『わしの　しゅみは！▼
@@ -1253,7 +1275,7 @@
 ポケモンと　出会うことだ！▼</language>
 	</row>
 
-	<row id="wc10_18_03">
+	<row id="wc10_18_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">MOUNTMAN
 ガクト</attribute>
 		<language name="JPN" width="256">でも　さいきんは
@@ -1264,7 +1286,7 @@
 力試しを　したいと　思う</language>
 	</row>
 
-	<row id="wc10_18_04">
+	<row id="wc10_18_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">MOUNTMAN
 ガクト</attribute>
 		<language name="JPN" width="256">きょうは　ココドラと
@@ -1277,22 +1299,24 @@
 わしの　肌に　あうなぁ</language>
 	</row>
 
-	<row id="wc10_19_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_19_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">OL
 ユミコ</attribute>
-		<language name="JPN" width="256">ユミコ『ここはみどりが　ここちいいわね▼
+		<language name="JPN" width="256">ユミコ『ここは　みどりが
+ここち　いいわね▼
 さいきんまで
 ブラックシティに　いたのだけれど▼
-[1:00:トレーナー名:0]の　こうりつの　いい
-トレーナーぶりは　なかなかだったわ▼</language>
-		<language name="JPN_KANJI" width="256">ユミコ『ここは緑が　心地いいわね▼
+[1:00:トレーナー名:0]の　こうりつてき　な
+たたかいかたは　なかなか　だったわ▼</language>
+		<language name="JPN_KANJI" width="256">ユミコ『ここは　緑が
+心地　いいわね▼
 最近まで
 ブラックシティに　いたのだけれど▼
-[1:00:トレーナー名:0]の　効率の　いい
-トレーナーぶりは　なかなかだったわ▼</language>
+[1:00:トレーナー名:0]の　効率的な
+たたかいかたは　なかなか　だったわ▼</language>
 	</row>
 
-	<row id="wc10_19_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_19_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">OL
 ユミコ</attribute>
 		<language name="JPN" width="256">ユミコ『ポケモンたちと　すごす
@@ -1303,7 +1327,7 @@
 こういうのって　大事よね▼</language>
 	</row>
 
-	<row id="wc10_19_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_19_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">OL
 ユミコ</attribute>
 		<language name="JPN" width="256">でもなんだか　さいきん
@@ -1314,7 +1338,7 @@
 ちょっと　あせりを　感じてるの</language>
 	</row>
 
-	<row id="wc10_19_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_19_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">OL
 ユミコ</attribute>
 		<language name="JPN" width="256">きょうは　マダツボミと
@@ -1325,7 +1349,7 @@
 貴重な　体験だった！</language>
 	</row>
 
-	<row id="wc10_20_01">
+	<row id="wc10_20_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">WOMAN3
 ミホ</attribute>
 		<language name="JPN" width="256">ミホ『ホワイトフォレストの
@@ -1338,57 +1362,59 @@
 [1:00:トレーナー名:0]も　かわいかったなー▼</language>
 	</row>
 
-	<row id="wc10_20_02">
+	<row id="wc10_20_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">WOMAN3
 ミホ</attribute>
-		<language name="JPN" width="256">ミホ『ポケモンたちと　しぜん▼
+		<language name="JPN" width="256">ミホ『ポケモンたちと
+この　だいしぜん！▼
 みんな　ありのままの　すがたで
 とっても　ステキだと　おもう▼</language>
-		<language name="JPN_KANJI" width="256">ミホ『ポケモンたちと　自然▼
+		<language name="JPN_KANJI" width="256">ミホ『ポケモンたちと
+この　大自然！▼
 みんな　ありのままの　姿で
 とっても　ステキだと　思う▼</language>
 	</row>
 
-	<row id="wc10_20_03">
+	<row id="wc10_20_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">WOMAN3
 ミホ</attribute>
-		<language name="JPN" width="256">でも　ワタシは　しぜんたいじゃ
-かわいくないかも……▽
-そんなふうに　ふあんになるの</language>
-		<language name="JPN_KANJI" width="256">でも　ワタシは　自然体じゃ
-かわいくないかも……▽
-そんなふうに　不安になるの</language>
+		<language name="JPN" width="256">でも　ワタシは　しぜんな　だけじゃ
+だめなのかも……▽
+もっと　やりたいこと　みつけないと</language>
+		<language name="JPN_KANJI" width="256">でも　ワタシは　自然な　だけじゃ
+だめなのかも……▽
+もっと　やりたいこと　みつけないと</language>
 	</row>
 
-	<row id="wc10_20_04">
+	<row id="wc10_20_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">WOMAN3
 ミホ</attribute>
-		<language name="JPN" width="256">しぜんたいで　タネボーとも
+		<language name="JPN" width="256">しぜんの　なかで　タネボーとも
 ひととも　なかよくできる……▽
 それって　ステキな　ことよね！</language>
-		<language name="JPN_KANJI" width="256">自然体で　タネボーとも
+		<language name="JPN_KANJI" width="256">自然の　中で　タネボーとも
 人とも　仲良くできる……▽
 それって　ステキな　ことよね！</language>
 	</row>
 
-	<row id="wc10_21_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_21_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 トシノブ</attribute>
 		<language name="JPN" width="256">トシノブ『ホワイトフォレストは
-みんな じぶんに　すなお　だよね▼
-まえに ブラックシティで　あった
+みんな　じぶんに　すなお　だよね▼
+まえに　ブラックシティで　あった
 [1:00:トレーナー名:0]も　あんがい▽
-ホワイトフォレストのこと▽
+ホワイトフォレストの　こと▽
 きにいるんじゃ　ないかな？▼</language>
 		<language name="JPN_KANJI" width="256">トシノブ『ホワイトフォレストは
 みんな　自分に　素直だよね▼
 前に　ブラックシティで　会った
 [1:00:トレーナー名:0]も　案外▽
-ホワイトフォレストのこと▽
+ホワイトフォレストの　こと▽
 気にいるんじゃ　ないかな？▼</language>
 	</row>
 
-	<row id="wc10_21_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_21_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 トシノブ</attribute>
 		<language name="JPN" width="256">トシノブ『ここでは　ポケモンも　ひとも
@@ -1397,79 +1423,83 @@
 みんな　自分に　素直でいられる▼</language>
 	</row>
 
-	<row id="wc10_21_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_21_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 トシノブ</attribute>
 		<language name="JPN" width="256">でも　そんな　すなおなじぶんを
 どうみられてるか　ふあん　なんだ</language>
-		<language name="JPN_KANJI" width="256">でも　そんな　素直な　自分を
+		<language name="JPN_KANJI" width="256">でも　そんな　素直な自分を
 どうみられてるか　不安なんだ</language>
 	</row>
 
-	<row id="wc10_21_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_21_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 トシノブ</attribute>
-		<language name="JPN" width="256">サイホーンを　みかけたけど
+		<language name="JPN" width="256">さっき　そこで
+サイホーンを　みかけたけど▽
 しぜんたいで　いいよね　アイツは</language>
-		<language name="JPN_KANJI" width="256">サイホーンを　みかけたけど
+		<language name="JPN_KANJI" width="256">さっき　そこで
+サイホーンを　みかけたけど▽
 自然体で　いいよね　アイツは</language>
 	</row>
 
-	<row id="wc10_22_01">
+	<row id="wc10_22_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">RANGERM
 ソウスケ</attribute>
-		<language name="JPN" width="256">ソウスケ『ホワイトフォレストでは
-ひととも　ポケモンとも すなおに▽
-むきあえる　かんじが　たのしいな▼
-でも　まえにブラックシティで
-[1:00:トレーナー名:0]と　ポケモンしょうぶして▽
+		<language name="JPN" width="256">ソウスケ『ホワイトフォレスト　では
+ひとも　ポケモンも　すなおに▽
+むきあえるから　たのしいな▼
+まえに　ブラックシティで
+[1:00:トレーナー名:0]と　たたかって▽
 きもちを　ぶつけあったことが　ある！▽
 あのときも　たのしかったな▼</language>
 		<language name="JPN_KANJI" width="256">ソウスケ『ホワイトフォレストでは
-ひととも　ポケモンとも　素直に▽
-むきあえる　感じが　楽しいな▼
-でも　前に　ブラックシティで
-[1:00:トレーナー名:0]と　ポケモン勝負して▽
+人も　ポケモンも　素直に▽
+向き合えるから　楽しいな▼
+前に　ブラックシティで
+[1:00:トレーナー名:0]と　戦って▽
 気持ちを　ぶつけあったことが　ある！▽
 あのときも　楽しかったな▼</language>
 	</row>
 
-	<row id="wc10_22_02">
+	<row id="wc10_22_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">RANGERM
 ソウスケ</attribute>
 		<language name="JPN" width="256">ソウスケ『ポケモンとも　ひととも
-きちんと　おたがい　むきあって▼
-わかりあえる　かんけいに
+きちんと　おたがい　むきあって▽
+わかりあえる　かんけいに▽
 なりたいと　おもってるんだ▼</language>
 		<language name="JPN_KANJI" width="256">ソウスケ『ポケモンとも　人とも
-きちんと　お互い　向き合って▼
-わかりあえる　関係に
+きちんと　お互い　向き合って▽
+分かりあえる　関係に▽
 なりたいと　思ってるんだ▼</language>
 	</row>
 
-	<row id="wc10_22_03">
+	<row id="wc10_22_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">RANGERM
 ソウスケ</attribute>
-		<language name="JPN" width="256">でも　もっと　てっとりばやく
+		<language name="JPN" width="256">……でも　もっと　てっとりばやく
 じぶんの　きもちを　ぶつけたい！▽
-そう　おもうときも　さいきんあるよ</language>
-		<language name="JPN_KANJI" width="256">でも　もっと　てっとりばやく
+そう　おもうときも　あるよ</language>
+		<language name="JPN_KANJI" width="256">……でも　もっと　てっとりばやく
 自分の　気持ちを　ぶつけたい！▽
-そう思うときも　最近あるよ</language>
+そう思うときも　あるよ</language>
 	</row>
 
-	<row id="wc10_22_04">
+	<row id="wc10_22_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">RANGERM
 ソウスケ</attribute>
-		<language name="JPN" width="256">きょうは　ハスボーと　あったよ▼
+		<language name="JPN" width="256">きょうは　そこで
+ハスボーに　あったよ▼
 なんだか　きもちが　つうじあえた……
 そんな　おもいで　いっぱいだよ</language>
-		<language name="JPN_KANJI" width="256">きょうは　ハスボーと　会ったよ▼
+		<language name="JPN_KANJI" width="256">きょうは　そこで
+ハスボーに　会ったよ▼
 なんだか　気持ちが　通じあえた……
 そんな　思いで　いっぱいだよ</language>
 	</row>
 
-	<row id="wc10_23_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_23_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 エリザ</attribute>
 		<language name="JPN" width="256">エリザ『しぜんと　ふれあう
@@ -1486,7 +1516,7 @@
 なんだか　満たされたな▼</language>
 	</row>
 
-	<row id="wc10_23_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_23_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 エリザ</attribute>
 		<language name="JPN" width="256">エリザ『しぜんと　ふれあっていると
@@ -1495,20 +1525,22 @@
 それだけで　心が　豊かになるね▼</language>
 	</row>
 
-	<row id="wc10_23_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_23_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 エリザ</attribute>
 		<language name="JPN" width="256">だけど……
-しぜんを　みてるだけじゃ▼
-こころが　みたされない
-そんなときも　さいきん　あるの</language>
+しぜんを　みてるだけじゃ▽
+こころが　みたされない▼
+そんなことを
+さいきん　おもうの</language>
 		<language name="JPN_KANJI" width="256">だけど……
-自然を　みてるだけじゃ▼
-心が　満たされない
-そんなときも　最近あるの</language>
+自然を　みてるだけじゃ▽
+心が　満たされない▼
+そんなことを
+最近　思うの</language>
 	</row>
 
-	<row id="wc10_23_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_23_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 エリザ</attribute>
 		<language name="JPN" width="256">ナックラーを　みたんだけど
@@ -1517,24 +1549,24 @@
 なんだか　心が　満たされた！</language>
 	</row>
 
-	<row id="wc10_24_01">
+	<row id="wc10_24_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">ヒロノリ『いやぁー
 のんびりした　くらし　いいよね▼
 じつは　まえに
 ブラックシティに　いたんだけど▼
-[1:00:トレーナー名:0]と　せかせか　しょうぶした
-そんな　いちめんも　あるんだよ▼</language>
+そこで　あった　[1:00:トレーナー名:0]は
+せかせか　していたなぁ▼</language>
 		<language name="JPN_KANJI" width="256">ヒロノリ『いやぁー
 のんびりした　暮らし　いいよね▼
 じつは　前に
 ブラックシティに　いたんだけど▼
-[1:00:トレーナー名:0]と　せかせか　勝負した
-そんな　一面も　あるんだよ▼</language>
+そこで　あった　[1:00:トレーナー名:0]は
+せかせか　していたなぁ▼</language>
 	</row>
 
-	<row id="wc10_24_02">
+	<row id="wc10_24_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">ヒロノリ『いやぁー　のんびりと
@@ -1543,7 +1575,7 @@
 自然を　楽しむのって　いいよねぇ▼</language>
 	</row>
 
-	<row id="wc10_24_03">
+	<row id="wc10_24_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">でも　こうして
@@ -1554,39 +1586,37 @@
 考えるときも　あるんだよねぇ</language>
 	</row>
 
-	<row id="wc10_24_04">
+	<row id="wc10_24_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">もりで　のんびりしてたら
-ケーシィと　あったよー！▼
+ケーシィと　あったよー！▽
 すばらしい　じかんだったなぁ</language>
 		<language name="JPN_KANJI" width="256">森で　のんびりしてたら
-ケーシィと　あったよー！▼
+ケーシィと　あったよー！▽
 すばらしい　時間だったなぁ</language>
 	</row>
 
-	<row id="wc10_25_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_25_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANM
 ケン</attribute>
 		<language name="JPN" width="256">ケン『ここでは　ひろい　かんがえで
 ポケモンを　みつめることが　できる▼
 トレーナーとして
 せいちょうを　かんじるよ▼
-だが　まえに　ブラックシティで
-[1:00:トレーナー名:0]と　しょうぶした……▼
-あのときも　トレーナーとして
-じぶんの　せいちょうを　かんじたな▼</language>
-		<language name="JPN_KANJI" width="256">ケン『ここでは　広い　視野で
+まえに　ブラックシティで　あった
+[1:00:トレーナー名:0]は▽
+いまごろ　どうしてるかな▼　</language>
+		<language name="JPN_KANJI" width="256">ケン『ここでは　広い　考えで
 ポケモンを　みつめることが　できる▼
 トレーナーとして
 成長を　感じるよ▼
-だが　前に　ブラックシティで
-[1:00:トレーナー名:0]と　勝負した……▼
-あのときも　トレーナーとして
-自分の　成長を　感じたな▼</language>
+前に　ブラックシティで　会った
+[1:00:トレーナー名:0]は▽
+今ごろ　どうしてるかな▼</language>
 	</row>
 
-	<row id="wc10_25_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_25_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANM
 ケン</attribute>
 		<language name="JPN" width="256">ケン『いろんな　ポケモンを
@@ -1596,109 +1626,115 @@
 		<language name="JPN_KANJI" width="256">ケン『いろんな　ポケモンを
 研究して▽
 広い　知識を　得ると▽
-視野も　広がるよ▼</language>
+世界も　広がるよ▼</language>
 	</row>
 
-	<row id="wc10_25_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_25_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANM
 ケン</attribute>
-		<language name="JPN" width="256">だけど　もっとひとつの　ことだけを
+		<language name="JPN" width="256">……だけど　もっとひとつの　ことだけを
 ふかく　みたいとも　おもうね</language>
-		<language name="JPN_KANJI" width="256">だけど　もっとひとつの　ことだけを
+		<language name="JPN_KANJI" width="256">……だけど　もっと一つの　ことだけを
 深く　みたいとも　思うね</language>
 	</row>
 
-	<row id="wc10_25_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_25_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANM
 ケン</attribute>
-		<language name="JPN" width="256">ひろい　しやを　もつことで
+		<language name="JPN" width="256">ひろい　考えを　もつことで
 しぜんと　じぶん▽
-じぶんと　ニドラン♂▽
-いろんなことに　きづかされるよ</language>
-		<language name="JPN_KANJI" width="256">広い　視野を　もつことで
+じぶんと　ポケモン▽
+いろんなことに　きづかされるよ▼
+さっき　そこで　ニドラン♂を
+みたとき　そう思ったんだ</language>
+		<language name="JPN_KANJI" width="256">広い　考えを　持つことで
 自然と　自分▽
-じぶんと　ニドラン♂▽
-いろんなことに　きづかされるよ</language>
+自分と　ポケモン▽
+色んなことに　気付かされるよ▼
+さっき　そこで　ニドラン♂を
+見たとき　そう思ったんだ</language>
 	</row>
 
-	<row id="wc10_26_01">
+	<row id="wc10_26_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTM
 サトル</attribute>
-		<language name="JPN" width="256">サトル『せかいの　たような
+		<language name="JPN" width="256">サトル『せかいの　さまざまな
 ポケモンを　みていると▼
-たような　こたえの
-そんざいを　かんじる▼
+いろいろな　こたえの
+そんざいを　かんじる……▼
 まえに　ブラックシティで
 であった　[1:00:トレーナー名:0]▼
-かれの　トレーナーとしての
-しせいにも　また　ひとつの▽
+かれの　かんがえにも　また　ひとつの
 こたえを　かんじた▼</language>
-		<language name="JPN_KANJI" width="256">サトル『世界の　多様な
+		<language name="JPN_KANJI" width="256">サトル『世界の　様々な
 ポケモンを　みていると▼
-多様な　解答の
+様々な　答えの
 存在を　感じる……▼
 以前　ブラックシティで
 出会った　[1:00:トレーナー名:0]▼
-彼の　トレーナーとしての
-姿勢にも　また　ひとつの▽
-解答を　感じた▼</language>
+彼の　考えにも　また　一つの
+答えを　感じた▼</language>
 	</row>
 
-	<row id="wc10_26_02">
+	<row id="wc10_26_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTM
 サトル</attribute>
-		<language name="JPN" width="256">サトル『ものごとには　いくつも
-こたえの　あるものが　そんざいする▼
+		<language name="JPN" width="256">サトル『ものごと　には　いくつも
+こたえが　そんざいする▼
 いろんな　ポケモンたちを　みていると
 そういうふうに　かんじるんだ▼</language>
 		<language name="JPN_KANJI" width="256">サトル『物事には　いくつも
-解答の　あるものが　存在する▼
-いろんな　ポケモンたちを　みていると
+答えが　存在する▼
+色んな　ポケモンたちを　みていると
 そういうふうに　感じるんだ▼</language>
 	</row>
 
-	<row id="wc10_26_03">
+	<row id="wc10_26_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTM
 サトル</attribute>
 		<language name="JPN" width="256">でも　もっと　めいかくに
 ハッキリとした　こたえのでる▽
 けんきゅうが　したい……</language>
 		<language name="JPN_KANJI" width="256">でも　もっと　明確に
-ハッキリとした　解答のでる▽
+ハッキリとした　答えのでる▽
 研究が　したい……</language>
 	</row>
 
-	<row id="wc10_26_04">
+	<row id="wc10_26_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">ASSISTANTM
 サトル</attribute>
-		<language name="JPN" width="256">たような　ニドラン♀
-たような　こたえ▽
-その　いずれも　ただしいんだよ</language>
-		<language name="JPN_KANJI" width="256">多様な　ニドラン♀
-多様な　解答▽
-その　いずれも　正しいんだよ</language>
+		<language name="JPN" width="256">さまざまな　ポケモン
+さまざまな　こたえ▽
+その　いずれも　ただしいんだよ▼
+さっき　そこで　ニドラン♀を
+みたとき　そうおもったね</language>
+		<language name="JPN_KANJI" width="256">様々な　ポケモン
+様々な　こたえ▽
+その　いずれも　ただしいんだよ▼
+さっき　そこで　ニドラン♀を
+見たとき　そう思ったね</language>
 	</row>
 
-	<row id="wc10_27_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_27_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
-		<language name="JPN" width="256">ローザ『いちにち　いちにちを
-いきることでの せいちょうを▽
-ホワイトフォレストでは かんじるけど▼
-まえに ブラックシティで　であった
-[1:00:トレーナー名:0]を　みたときも▽
-いきるって　こういうことかな　と▽
-わたし　かんじたわ▼</language>
-		<language name="JPN_KANJI" width="256">ローザ『一日　一日を
-生きることでの　成長を▽
-ホワイトフォレストでは　感じるけど▼
-前に ブラックシティで　出会った
-[1:00:トレーナー名:0]を　みたときも▽
-生きるって　こういうことかな　と▽
-わたし　感じたわ▼</language>
+		<language name="JPN" width="256">ローザ『ここでは
+いちにち　いちにちを　いきることで▽
+せいちょうを　かんじるわ▼
+まえに　ブラックシティで
+[1:00:トレーナー名:0]と　たたかったとき▼
+わたし　せいちょう　してないって
+おもったの</language>
+		<language name="JPN_KANJI" width="256">ローザ『ここでは
+一日　一日を　生きることで▽
+成長を　感じるわ▼
+前に　ブラックシティで
+[1:00:トレーナー名:0]と　たたかったとき▼
+私　成長　してないって
+思ったの</language>
 	</row>
 
-	<row id="wc10_27_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_27_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
 		<language name="JPN" width="256">ローザ『こうして
@@ -1711,50 +1747,50 @@
 成長が　あるのを　感じるわ▼</language>
 	</row>
 
-	<row id="wc10_27_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_27_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
-		<language name="JPN" width="256">でも　ただいきてる　だけって
+		<language name="JPN" width="256">でも　それだけだと
 しょうじき　ヒマなのよね▽
 たいくつ　しちゃう……</language>
-		<language name="JPN_KANJI" width="256">でも　ただ生きてるだけって
+		<language name="JPN_KANJI" width="256">でも　それだけだと
 正直　ヒマなのよね▽
 退屈しちゃう……</language>
 	</row>
 
-	<row id="wc10_27_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_27_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANW
 ローザ</attribute>
-		<language name="JPN" width="256">まいにちを　いきていくことって
-すこしずつ　へんかがあって▽
+		<language name="JPN" width="256">まいにちを　いきていく　ことって
+すこしずつ　へんかが　あって▽
 いみの　あることなのね▼
-ゴニョニョを　みていると
-そう　おもうわ</language>
-		<language name="JPN_KANJI" width="256">毎日を　生きていくことって
-少しずつ　変化があって▽
+さっき　ゴニョニョを
+みたとき　そう　おもったわ</language>
+		<language name="JPN_KANJI" width="256">毎日を　生きていく　ことって
+少しずつ　変化が　あって▽
 意味の　あることなのね▼
-ゴニョニョを　みていると
-そう　思うわ</language>
+さっき　ゴニョニョを
+見たとき　そう　思った</language>
 	</row>
 
-	<row id="wc10_28_01">
+	<row id="wc10_28_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 ヒロアキ</attribute>
 		<language name="JPN" width="256">ヒロアキ『いまは　ここで
-おちついてる オレだけど▼
+おちついてる　オレだけど▼
 いぜんは　ブラックシティに
 いったことも　あるんだ▼
 [1:00:トレーナー名:0]との
 ポケモンしょうぶは　たのしかったな！▼</language>
 		<language name="JPN_KANJI" width="256">ヒロアキ『いまは　ここで
-落ち着いている オレだけど▼
+落ち着いている　オレだけど▼
 以前は　ブラックシティに
 行ったことも　あるんだ▼
 [1:00:トレーナー名:0]との
 ポケモン勝負は　楽しかったな！▼</language>
 	</row>
 
-	<row id="wc10_28_02">
+	<row id="wc10_28_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 ヒロアキ</attribute>
 		<language name="JPN" width="256">ヒロアキ『しぜんに　かこまれて
@@ -1763,32 +1799,38 @@
 暮らしていると　ほっとするよ▼</language>
 	</row>
 
-	<row id="wc10_28_03">
+	<row id="wc10_28_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 ヒロアキ</attribute>
 		<language name="JPN" width="256">でも　ひとつの　ところに
-いつづけるのって▽
+ずっと　いるのって▽
 オレの　しょうには　あわないんだよね</language>
 		<language name="JPN_KANJI" width="256">でも　ひとつの　ところに
-いつづけるのって▽
+ずっと　いるのって▽
 オレの　性には　合わないんだよね</language>
 	</row>
 
-	<row id="wc10_28_04">
+	<row id="wc10_28_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 ヒロアキ</attribute>
-		<language name="JPN" width="256">ポリゴンと　であえる
-このもりを　きにいってるんだ▼
-ここで　ゆっくり　くらしたい</language>
-		<language name="JPN_KANJI" width="256">ポリゴンと　出会える
-この森を　気にいってるんだ▼
-ここで　ゆっくり　暮らしたい</language>
+		<language name="JPN" width="256">そうそう　さっき
+ポリゴンを　みかけたんだ▼
+ふしぎだな……　このもりを
+きにいって　いるんだろうな▼
+オレも　ここで
+ゆっくり　くらしたいよ</language>
+		<language name="JPN_KANJI" width="256">そうそう　さっき
+ポリゴンを　みかけたんだ▼
+不思議だな……　この森を
+気に入って　いるんだろうな▼
+オレも　ここで
+ゆっくり　くらしたいよ</language>
 	</row>
 
-	<row id="wc10_29_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_29_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 エミ</attribute>
-		<language name="JPN" width="256">エミ『いまはゆったり
+		<language name="JPN" width="256">エミ『いまは　ゆったり
 たびをしてる　わたしだけど▼
 いぜんは　ブラックシティで
 [1:00:トレーナー名:0]に　かつことを▽
@@ -1802,7 +1844,7 @@
 そんなときも　あったの▼</language>
 	</row>
 
-	<row id="wc10_29_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_29_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 エミ</attribute>
 		<language name="JPN" width="256">エミ『もくてきを　きめずに
@@ -1813,7 +1855,7 @@
 楽しいものね▼</language>
 	</row>
 
-	<row id="wc10_29_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_29_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 エミ</attribute>
 		<language name="JPN" width="256">でも　すこしくらいは
@@ -1824,33 +1866,35 @@
 旅を　したほうが　楽しいかも？</language>
 	</row>
 
-	<row id="wc10_29_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="wc10_29_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 エミ</attribute>
-		<language name="JPN" width="256">なにもきめずに あるいていたら
+		<language name="JPN" width="256">さっき　フラッと
+あるいて　いたら▽
 ピンプクに　あえたの！▽
 うれしかった！</language>
-		<language name="JPN_KANJI" width="256">なにも決めずに　歩いていたら
+		<language name="JPN_KANJI" width="256">さっき　フラッと
+歩いて　いたら▽
 ピンプクに　会えたの！▽
 うれしかった！</language>
 	</row>
 
-	<row id="wc10_30_01">
+	<row id="wc10_30_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">LADY
 グレース</attribute>
 		<language name="JPN" width="256">グレース『いぜん　ブラックシティで
 であった　[1:00:トレーナー名:0]との▽
-ポケモンしょうぶも▼
+ポケモンしょうぶ　も▼
 しぜんに　おとらぬ
 うつくしさが　あったわ！▼</language>
 		<language name="JPN_KANJI" width="256">グレース『以前　ブラックシティで
 出会った　[1:00:トレーナー名:0]との▽
-ポケモン勝負も▼
+ポケモン勝負　も▼
 自然に　劣らぬ
 美しさが　あったわ！▼</language>
 	</row>
 
-	<row id="wc10_30_02">
+	<row id="wc10_30_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">LADY
 グレース</attribute>
 		<language name="JPN" width="256">グレース『だいしぜんが
@@ -1863,22 +1907,26 @@
 人の　想像を　超えているわ▼</language>
 	</row>
 
-	<row id="wc10_30_03">
+	<row id="wc10_30_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">LADY
 グレース</attribute>
-		<language name="JPN" width="256">ひとの　てによる　げいじゅつも
-さいきんは　みたくなってきたわ</language>
-		<language name="JPN_KANJI" width="256">人の手による　芸術も
-最近は　みたくなってきたわ</language>
+		<language name="JPN" width="256">……でも　さいきんは
+ひとの　てによる　げいじゅつも▽
+みたくなって　きたわ</language>
+		<language name="JPN_KANJI" width="256">……でも　最近は
+人の手による　芸術も▽
+最近は　見たくなってきたわ</language>
 	</row>
 
-	<row id="wc10_30_04">
+	<row id="wc10_30_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">LADY
 グレース</attribute>
-		<language name="JPN" width="256">タツベイの　うつくしさも
-また　しぜんなのが　いいのよね……</language>
-		<language name="JPN_KANJI" width="256">タツベイの　美しさも
-また　自然なのが　いいのよね……</language>
+		<language name="JPN" width="256">さっき　そこで　みかけた
+タツベイの　うつくしさも▽
+しぜんなのが　いいのよね……</language>
+		<language name="JPN_KANJI" width="256">さっき　そこで　見かけた
+タツベイの　美しさも▽
+自然なのが　いいのよね……</language>
 	</row>
 
 	<row id="wc10_sign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
