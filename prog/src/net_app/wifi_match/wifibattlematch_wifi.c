@@ -598,8 +598,11 @@ static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_RecvDigCard );
     break;
 
-  case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR:
+    WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    /* fallthrough */
+
+  case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
     Util_PlayerInfo_CreateStay( p_wk );
     WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_EndBattle );
     break;
@@ -915,12 +918,13 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_WAIT_MOVEOUT_CARD,
 
     SEQ_START_UPDATE_MSG,
-    SEQ_START_SAVE_UPDATE,
-    SEQ_WAIT_SAVE_UPDATE,
     SEQ_SEND_GPF_POKEMON,
     SEQ_WAIT_GPF_POKEMON,
     SEQ_SEND_GPF_CUPSTATUS,
     SEQ_WAIT_GPF_CUPSTATUS,
+    SEQ_START_SAVE_MSG,
+    SEQ_START_SAVE_UPDATE,
+    SEQ_WAIT_SAVE_UPDATE,
     SEQ_START_SAVE_NG_MSG,
 
     //‘å‰ï–¢”­Œ©
@@ -1211,6 +1215,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     
   case SEQ_START_MOVEIN_CARD:
     Util_PlayerInfo_Create( p_wk );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     *p_seq  = SEQ_WAIT_MOVEIN_CARD;
     break;
 
@@ -1372,7 +1377,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   //XVˆ—
   case SEQ_START_UPDATE_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_13, WBM_TEXT_TYPE_WAIT );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_18, WBM_TEXT_TYPE_WAIT );
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SEND_GPF_POKEMON );
     *p_seq  = SEQ_WAIT_MSG;
     break;
@@ -1418,9 +1423,15 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
-        *p_seq  = SEQ_START_SAVE_UPDATE;
+        *p_seq  = SEQ_START_SAVE_MSG;
       }
     }
+    break;
+
+  case SEQ_START_SAVE_MSG:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_08, WBM_TEXT_TYPE_WAIT );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE_UPDATE );
+    *p_seq  = SEQ_WAIT_MSG;
     break;
 
   case SEQ_START_SAVE_UPDATE:

@@ -581,8 +581,11 @@ static void WbmRndSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
     break;
 
-  case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
   case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR:
+    WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    /* fallthrough */
+
+  case WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE:
     if( p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_RATE )
     { 
       WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndBattle );
@@ -924,7 +927,6 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
   { 
     SEQ_START_RECVRATE_MSG,
     SEQ_START_RECVRATE_SAKE,
-    SEQ_WAIT_SERVER,
     SEQ_WAIT_RECVRATE_SAKE,
 
     SEQ_START_CREATE_SAKE,
@@ -953,18 +955,14 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
     break;
 
   case SEQ_START_RECVRATE_SAKE:
-    WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, p_wk->p_param->p_rnd_sake_data );
-    *p_seq       = SEQ_WAIT_SERVER;
-    break;
-    
-  case SEQ_WAIT_SERVER:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
-      OS_TPrintf( "サーバー待ち%d\n",  *p_wk->p_param->p_server_time );
-      *p_seq  = SEQ_WAIT_RECVRATE_SAKE;
+      WIFIBATTLEMATCH_GDB_Start( p_wk->p_net, WIFIBATTLEMATCH_GDB_MYRECORD, WIFIBATTLEMATCH_GDB_GET_RND_SCORE, p_wk->p_param->p_rnd_sake_data );
+      *p_seq       = SEQ_WAIT_RECVRATE_SAKE;
     }
+    OS_TPrintf( "サーバー待ち%d\n",  *p_wk->p_param->p_server_time );
     break;
-
+    
   case SEQ_WAIT_RECVRATE_SAKE:
     { 
       WIFIBATTLEMATCH_GDB_RESULT  res = WIFIBATTLEMATCH_GDB_Process( p_wk->p_net );
@@ -983,7 +981,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
 
         *p_seq       = SEQ_START_CREATE_SAKE;
       }
-      else if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
+      else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
       { 
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )

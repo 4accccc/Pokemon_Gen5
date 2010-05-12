@@ -193,15 +193,16 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
       GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
       switch( result )
       { 
-#if 0
-      case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
       case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
-        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI;
-        procWork->plData.isNetErr = TRUE;
-        procWork->psData.isExitRequest = TRUE;
-        OS_TPrintf( "相手が切断\n" );
+        if(  procWork->plData.isNetErr == FALSE )
+        {
+          p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI;
+          procWork->plData.isNetErr = TRUE;
+          procWork->psData.isExitRequest = TRUE;
+          OS_TPrintf( "相手が切断\n" );
+        }
         break;
-#endif
+
       case GFL_NET_DWC_ERROR_RESULT_NONE:
         /*  エラーが発生していない  */
         break;

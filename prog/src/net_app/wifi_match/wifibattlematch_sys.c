@@ -909,9 +909,8 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   WIFIBATTLEMATCH_SUBPROC_PARAM   *p_param  = p_param_adrs;
 
-  if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
-
     if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
     { 
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
