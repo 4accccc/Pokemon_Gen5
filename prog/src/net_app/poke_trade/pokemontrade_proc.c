@@ -1691,6 +1691,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bExit=FALSE;
   BOOL bChange=FALSE;
+  BOOL bIconReset=TRUE;
   int selectno=-1;
   u32 x,y;
   int boxindex,boxno;
@@ -1788,7 +1789,10 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
         POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //‹L˜^
-        _CHANGE_STATE(pWork, _changeMenuOpen);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+        bIconReset=FALSE;
+        _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
       }
       else{
         pWork->selectIndex = pWork->underSelectIndex;
@@ -1805,7 +1809,9 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     }
     pWork->underSelectBoxno = -1;
     pWork->underSelectIndex = -1;
-    _scrollResetAndIconReset(pWork);
+    if(bIconReset){
+      _scrollResetAndIconReset(pWork);
+    }
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork,TRUE);

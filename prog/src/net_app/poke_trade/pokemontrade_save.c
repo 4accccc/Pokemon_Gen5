@@ -502,6 +502,8 @@ static void _removeCallback(void* pW)
   }
   if(pWork->aBackup.pPokeParty){
     PokeParty_Copy(pWork->aBackup.pPokeParty, pWork->pMyParty );
+    //プレイタイムも間借り
+    PLAYTIME_SetSaveDate( GAMEDATA_GetPlayTimeWork(pWork->pGameData), &pWork->aBackup.date );
   }
   if(pWork->aBackup.pBoxTray){
     GFL_STD_MemCopy(pWork->aBackup.pBoxTray,
@@ -569,7 +571,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     pWork->aBackup.pWifiHis = WIFIHISTORY_BackupBlock(pWork->pGameData, pWork->heapID);
     pWork->aBackup.pZukan = ZUKAN_SAVEDATA_BackupBlock(pWork->pGameData, pWork->heapID);
     pWork->aBackup.pNego = WIFI_NEGOTIATION_SV_BackupBlock(pWork->pGameData, pWork->heapID);
-
+    PLAYTIME_GetSaveDate( GAMEDATA_GetPlayTimeWork(pWork->pGameData), &pWork->aBackup.date );
     if(pWork->pParentWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
       pWork->aBackup.pPokeParty = PokeParty_AllocPartyWork( pWork->heapID );
       PokeParty_Copy(pWork->pMyParty, pWork->aBackup.pPokeParty);

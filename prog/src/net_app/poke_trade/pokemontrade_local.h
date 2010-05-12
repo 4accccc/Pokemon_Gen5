@@ -490,6 +490,7 @@ typedef struct
   WIFI_NEGOTIATION_SAVEDATA* pNego;
   POKEPARTY* pPokeParty;
   BOX_TRAY_DATA* pBoxTray;
+  PLAYTIME_SAVE_DATE date;
   BOOL bVoice;
 } SAVEREV_BACKUP;
 

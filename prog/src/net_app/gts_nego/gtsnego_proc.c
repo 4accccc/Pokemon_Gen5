@@ -112,19 +112,20 @@ enum _CHANGEMODE_IMAGE {
 
 
 enum _GTSNEGO_MATCHKEY {
-  _MATCHKEY_PROFILE,   //Profile
+  _MATCHKEY_PROFILE,   //自分のProfile
   _MATCHKEY_TYPE,     //交換タイプ 知り合いかどうか
   _MATCHKEY_LEVEL,    //交換LV
   _MATCHKEY_IMAGE_MY,  //自分の希望
   _MATCHKEY_IMAGE_FRIEND,  //相手に対しての希望
   _MATCHKEY_ROMCODE,    //ROMバージョン
   _MATCHKEY_DEBUG,    //デバッグか製品か
+  _MATCHKEY_SEARCHPROFILE,   //探しているProfile
   _MATCHKEY_MAX,
 };
 
 
 
-static char matchkeystr[_MATCHKEY_MAX][2]={"p1","ty","lv","my","fr","rm","db"};
+static char matchkeystr[_MATCHKEY_MAX][2]={"p1","ty","lv","my","fr","rm","db","p2"};
 
 
 typedef void (StateFunc)(GTSNEGO_WORK* pState);
@@ -857,17 +858,20 @@ static int _evalcallback(int index, void* param)
   GTSNEGO_WORK *pWork=param;
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
   int value = -1;
-  int targetlv,targetfriend,targetmy,profile;
+  int targetlv,targetfriend,targetmy,profile,friendprofile;
   int i;
 
   targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
   targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
   targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
   profile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_PROFILE].keyStr,-1);
+  friendprofile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_SEARCHPROFILE].keyStr,0);
   
   if(pWork->changeMode==_CHANGEMODE_SELECT_FRIEND){//ともだち
     if( WIFI_NEGOTIATION_SV_IsCheckFriend( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave) ,profile )){
-      value=100;
+      if(friendprofile == MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pEv->gamedata) )){
+        value=100;
+      }
     }
   }
   else{
@@ -920,7 +924,18 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   
   GFL_NET_DWC_GetMySendedFriendCode(pWork->pList, (DWCFriendData*)&buff[0]);
 
+  OHNO_Printf("選んだ番号 %d\n", pWork->selectFriendIndex);
+
   buff[0] = pWork->profileID;
+  if(pWork->changeMode == _CHANGEMODE_SELECT_FRIEND){
+    {
+      MYSTATUS* pFriend = WIFI_NEGOTIATION_SV_GetMyStatus( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave),pWork->selectFriendIndex);
+      buff[_MATCHKEY_SEARCHPROFILE] = MyStatus_GetProfileID(pFriend);
+    }
+  }
+  else{
+    buff[_MATCHKEY_SEARCHPROFILE] = 0;
+  }
   buff[1] = pWork->changeMode;
   buff[2] = pWork->chageLevel;
   buff[3] = pWork->myChageType;
