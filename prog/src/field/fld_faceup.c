@@ -92,6 +92,7 @@ typedef struct FACEUP_WORK_tag
   ANM_CNT MouthAnm;
 
   BOOL Last;
+  BOOL AnmReq;
 }FACEUP_WORK;
 
 
@@ -194,6 +195,7 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, const BOOL inL
     ptr->TransTcb = GFUser_VIntr_CreateTCB(TransTcbFunc, ptr, 1 );
 
     ptr->MsgEnd = FALSE;
+    ptr->AnmReq = TRUE;
   }
   return event;
 }
@@ -456,6 +458,7 @@ void FLD_FACEUP_AnmStart( FIELDMAP_WORK *fieldmap )
   FACEUP_WK_PTR ptr;
   ptr = *FIELDMAP_GetFaceupWkPtrAdr(fieldmap);
   ptr->MsgEnd = FALSE;
+  ptr->AnmReq = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -691,6 +694,7 @@ static void MainTcbFunc( GFL_TCB* tcb, void* work )
       {
         NOZOMU_Printf("口パクしてＯＫ\n");
         ptr->MouthAnm.Stop = FALSE;
+        ptr->AnmReq = FALSE;    //リクエスト消化
       }
       else
       {
@@ -698,8 +702,11 @@ static void MainTcbFunc( GFL_TCB* tcb, void* work )
         NOZOMU_Printf("口閉じる\n");
         if ( state == PRINTSTREAM_STATE_DONE )
         {
-          NOZOMU_Printf("メッセージ終了\n");
-          ptr->MsgEnd = TRUE;
+          if ( ptr->AnmReq == FALSE )   //リクエスト消化済みならメッセージを終了させる
+          {
+            NOZOMU_Printf("メッセージ終了\n");
+            ptr->MsgEnd = TRUE;
+          }
         }
       }
     }
