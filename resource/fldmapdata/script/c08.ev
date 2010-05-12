@@ -107,13 +107,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME( C08_CHAMPION_01, anm_c08_champion_come_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//自転車チェック
-	_PLAYER_FORM_GET( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
-		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
-	ENDIF
-	
-		//自機座標取得変数定義
+	//自機座標取得変数定義
 	DEFINE_LOCAL  POSX
 	DEFINE_LOCAL  POSZ
 
@@ -141,6 +135,11 @@ EVENT_START   ev_pos_c08_champions_01
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
+	//自転車チェック
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
 	
 	//チャンピオン：おお（主人公）か、こちらだ
 	_BALLOONWIN_OBJMSG( msg_c08_champion_01 , C08_CHAMPION_01 )
@@ -175,8 +174,6 @@ EVENT_START   ev_pos_c08_champions_01
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
-	
-	
 	//上を向いてゲーヂスにコメント
 	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
@@ -190,7 +187,7 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//イベント曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
-	
+
 	//ゲーヂスの演説　
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
 	
@@ -265,7 +262,6 @@ EVENT_START   ev_pos_c08_champions_01
 	_SUBWIN_MSG( msg_c08_crowd1_02 , 3 , 8 , 4 )
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_c08_crowd3_02 , 17 , 15 , 5 )
-	
 	
 	//キー送りでウィンドウを消す
 	_AB_KEYWAIT_MARK()
