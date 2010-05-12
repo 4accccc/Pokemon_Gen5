@@ -64,6 +64,7 @@ static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId
 static void PLIST_ITEM_UTIL_ItemUseMessageLvUp( PLIST_WORK *work );
 static void PLIST_MSGCB_LvUp( PLIST_WORK *work );
 
+static const u16 paraArr[6] = {ID_PARA_hpmax,ID_PARA_pow,ID_PARA_def,ID_PARA_spepow,ID_PARA_spedef,ID_PARA_agi};
 //--------------------------------------------------------------------------------------------
 /**
  * 回復タイプチェック
@@ -457,7 +458,7 @@ const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
       //表示用にレベルアップ前ののパラメータを保存
       for( i=0;i<6;i++ )
       {
-        work->befParam[i] = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
+        work->befParam[i] = PP_Get( work->selectPokePara , paraArr[i] , NULL );
       }
       
     }
@@ -678,7 +679,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
       GFL_BMPWIN_MakeTransWindow_VBlank( work->paramWin );
       for( i=0;i<6;i++ )
       {
-        const u32 param = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
+        const u32 param = PP_Get( work->selectPokePara , paraArr[i] , NULL );
         const u32 sub = param - work->befParam[i];
         if( sub >= 10 )
         {
@@ -750,7 +751,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
                     4*8 , PLIST_ITEM_PARAMWIN_HEIGHT*8 , 0xf );
       for( i=0;i<6;i++ )
       {
-        const u32 param = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
+        const u32 param = PP_Get( work->selectPokePara , paraArr[i] , NULL );
         //数値書く
         STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_08_08 ); 
         STRBUF *workStr = GFL_STR_CreateBuffer( 32 , work->heapId );
