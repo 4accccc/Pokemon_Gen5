@@ -234,16 +234,43 @@ EVENT_START   ev_t04r0401_shirona_02
 	
 	//春である・戦闘していない
 	ELSIF $SCWK_SEASON == PMSEASON_SPRING && FLAG_OFF( TMFLG_T04R0401_SHIRONA_BTL ) THEN
+	
+	//1/2の確率でパターン１かパターン２のセリフに分岐
+	//パターンの決定はサザナミタウンへのゾーンチェンジに行っています。
 		
-		//シロナ：あら きてくれたのね！
-		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_01, T04R0401_SHIRONA_01, POS_DEFAULT )
+		//パターン1で本日の初回会話
+		IF $WK_OTHER_T04R0401_SHIRONA == 0 && FLAG_OFF(TMFLG_T04R0401_SHIRONA_TALK) THEN
+			//シロナ：あら きてくれたのね！
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_01, T04R0401_SHIRONA_01, POS_DEFAULT )
+			
+		//パターン1で本日2回目以降の会話
+		ELSIF $WK_OTHER_T04R0401_SHIRONA == 0 && FLAG_ON(TMFLG_T04R0401_SHIRONA_TALK) THEN
+			//シロナ：あたしの ポケモンたちが
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_04, T04R0401_SHIRONA_01, POS_DEFAULT )
+		
+		//パターン2で本日の初回会話
+		ELSIF $WK_OTHER_T04R0401_SHIRONA == 1 && FLAG_OFF(TMFLG_T04R0401_SHIRONA_TALK) THEN
+			//シロナ：……ポケモンも ひとも
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_01, T04R0401_SHIRONA_01, POS_DEFAULT )
+		
+		//パターン2で本日2回目以降の会話
+		ELSE
+			//シロナ：どうかしら？
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_04, T04R0401_SHIRONA_01, POS_DEFAULT )
+		ENDIF
+		
 		_YES_NO_WIN( SCWK_ANSWER )
 		
 		//はい
 		IF $SCWK_ANSWER == 0 THEN
 			
-			//シロナ：ありがとう！
-			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_02, T04R0401_SHIRONA_01, POS_DEFAULT )
+			IF $WK_OTHER_T04R0401_SHIRONA == 0 THEN
+				//シロナ：ありがとう！
+				_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_02, T04R0401_SHIRONA_01, POS_DEFAULT )
+			ELSE
+				//シロナ：おたがいの いとおしい
+				_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_02, T04R0401_SHIRONA_01, POS_DEFAULT )
+			ENDIF
 			_MSGWIN_CLOSE()
 			
 			//戦闘処理
@@ -264,24 +291,48 @@ EVENT_START   ev_t04r0401_shirona_02
 				
 			ENDIF
 			
-			//シロナ：なんだか おもいだしちゃった
-			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+			IF $WK_OTHER_T04R0401_SHIRONA == 0 THEN
+				//シロナ：なんだか おもいだしちゃった
+				_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+			ELSE
+				//シロナ：あいてが トレーナーなら
+				_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+			ENDIF
+			
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
 		//いいえ
 		ELSE
-			//シロナ：うふふ
-			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_03, T04R0401_SHIRONA_01, POS_DEFAULT )
+			IF $WK_OTHER_T04R0401_SHIRONA == 0 THEN
+				//シロナ：あら ざんねんね
+				_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_03, T04R0401_SHIRONA_01, POS_DEFAULT )
+			ELSE
+				//シロナ：……ちょっと がっかり
+				_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_03, T04R0401_SHIRONA_01, POS_DEFAULT )
+			ENDIF
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
+			
+			//======================================//
+				
+			//今日の初回会話終了フラグセット
+			_FLAG_SET ( TMFLG_T04R0401_SHIRONA_TALK )
+			
+			//======================================//
 			
 		ENDIF
 
 	//春である・戦闘した
 	ELSIF $SCWK_SEASON == PMSEASON_SPRING && FLAG_ON( TMFLG_T04R0401_SHIRONA_BTL ) THEN
-		//シロナ：なんだか おもいだしちゃった
-		_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+	
+		IF $WK_OTHER_T04R0401_SHIRONA == 0 THEN
+			//シロナ：なんだか おもいだしちゃった
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_01_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+		ELSE
+			//シロナ：……ちょっと がっかり
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0401_shirona_spring_02_05, T04R0401_SHIRONA_01, POS_DEFAULT )
+		ENDIF
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -291,16 +342,16 @@ EVENT_START   ev_t04r0401_shirona_02
 		//1/5の確率でランダムにその日固定のメッセージを表示
 		//セリフの決定はサザナミタウンへのゾーンチェンジに行っています。
 		
-		IF $WK_OTHER_T04R0401_BIGFOUR4 == 0 THEN
+		IF $WK_OTHER_T04R0401_SHIRONA == 0 THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_01 )
 			
-		ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 1 THEN
+		ELSIF $WK_OTHER_T04R0401_SHIRONA == 1 THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_02 )
 		
-		ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 2 THEN
+		ELSIF $WK_OTHER_T04R0401_SHIRONA == 2 THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_03 )
 		
-		ELSIF $WK_OTHER_T04R0401_BIGFOUR4 == 3 THEN
+		ELSIF $WK_OTHER_T04R0401_SHIRONA == 3 THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0401_shirona_summer_04 )
 		
 		ELSE

@@ -85,6 +85,9 @@ INIT_EVENT_START	ev_zone_t04
 			
 			//***シロナを表示
 			_FLAG_RESET( FV_T04R0401_SHIRONA_01 )
+			//***シロナの本日のセリフを設定
+			_GET_RND( LWK_RANDWORD,2 )
+			$WK_OTHER_T04R0401_SHIRONA = $LWK_RANDWORD
 			
 			//***カトレアを75%の確率で表示する
 			_GET_RND( LWK_RANDNUM,4 )

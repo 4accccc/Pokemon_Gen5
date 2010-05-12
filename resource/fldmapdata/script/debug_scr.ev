@@ -358,7 +358,7 @@ EVENT_START   ev_debug_mizuguchi
 			//_FLAG_RESET(FV_D07R0201_GYMLEADER05_01)
 		
 			//***フラグ操作：D07R0201の全てのイベントを無効に***
-			$WK_SCENE_D07R0201 = 0
+			//$WK_SCENE_D07R0201 = 0
 			
 			//夢ポケモン受け取ってません
 			//$WK_SCENE_D01R0101 = 0
@@ -378,23 +378,44 @@ EVENT_START   ev_debug_mizuguchi
 
 			//R03のお礼イベントを起動
 			//$WK_SCENE_R03_PLASMA = 0
-			//$WK_SCENE_R03 = 0
+			//$WK_SCENE_R03 = 1
+			//RIVAL02のフラグをSETして以降非表示に
 			//_FLAG_RESET(FV_R03_RIVAL_02)
-			
+			//_FLAG_RESET(FV_R03_RIVAL_02)
+			/*
+			$WK_SCENE_R03_PLASMA = 1
+			_FLAG_RESET(FV_R03_SUPPORT_01)
+			_FLAG_RESET(FV_R03_RIVAL_03)
+			_FLAG_RESET( FV_R03R0301_RIVAL_01 )
+			_FLAG_SET( SYS_FLAG_BGM_R03R0301PLASMA )
+			*/
 			//_TRAINER_FLAG_RESET( TRID_VETERANM_04 )
 			
 			//D01R0101夢イベント
 			/*
-			_FLAG_RESET(FV_D01R0101_SUPPORT_01)
+			_FLAG_SET(FV_D01R0101_SUPPORT_01)
 			_FLAG_SET( FV_D01R0101_POKE_01 )
-			$WK_SCENE_D01R0101_POKE = 4
+			$WK_SCENE_D01R0101_POKE = 1
 			*/
 			
 			//_FLAG_SET( FE_H05_LOOK_WANDERGIRL )
 			
 			//_FLAG_RESET ( FE_C05R0201_POKETRADE_01 )
 			
-			$WK_SCENE_R07 = 0
+			//$WK_SCENE_R07 = 0
+			
+			/*
+			//***ワーク操作：C05のPOSを起動***
+			$WK_SCENE_C05 = 2
+			//***C05のジム前イベントのキャラを表示する***
+			_FLAG_RESET(FV_C05_SAGE_01)
+			_FLAG_RESET(FV_C05_GYMLEADER_02)
+			//ジム前ストッパー削除
+			_FLAG_SET(FV_C05_BUSINESSMAN_01)
+			*/
+			
+			//C05ベル起動
+			//$WK_SCENE_C05 = 4
 			
 			//R05のライバルを表示に
 			//_FLAG_RESET( FV_R05_RIVAL_AFTER )
@@ -416,6 +437,9 @@ EVENT_START   ev_debug_mizuguchi
 			//$WK_SCENE_C08_GYMCLEAR = 1
 			//_FLAG_SET( FV_C08_SUNGLASSES_01 )
 			
+			//r10イベント起動
+			//$WK_SCENE_C08_GYMCLEAR = 3
+			
 			//R10イベント起動
 			//$WK_SCENE_C08_GYMCLEAR = 3
 			
@@ -433,6 +457,10 @@ EVENT_START   ev_debug_mizuguchi
 			
 			$WK_SCENE_AFTER_SAGE = 1
 			*/
+			
+			//C08演説
+			_FLAG_RESET( FV_C08_SAGE1_01 )
+			$WK_SCENE_C08 = 0
 			
 			//$WK_SCENE_D07_RIVAL_01 = 1
 	
@@ -453,10 +481,12 @@ EVENT_START   ev_debug_mizuguchi
 			//_FLAG_RESET( FV_C08_SAGE1_01 )
 			//C08演説イベントPOSを無効に／誘導イベント（２）へ
 			//$WK_SCENE_C08 = 0
+			
+			//_FLAG_RESET ( TMFLG_WC10R0101_OLDMAN )
 		
 			//C07ハチク非表示
 			//_FLAG_RESET( FV_C07_RIVAL_01 )
-			//$WK_SCENE_C07 = 2
+			//$WK_SCENE_C07 = 3
 			
 			//C07到着イベントPOSを無効に
 			//$WK_SCENE_C07 = 0
