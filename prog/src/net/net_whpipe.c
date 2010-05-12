@@ -124,7 +124,6 @@ typedef enum{    // 切断状態
 	_DISCONNECT_NONE,
 	_DISCONNECT_END,
 	_DISCONNECT_SECRET,
-	_DISCONNECT_STEALTH,
 } _DisconnectState_e;
 
 
@@ -655,9 +654,6 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 	}
 
 	_commInit(pNetWL);
-	if( pNetWL->disconnectType == _DISCONNECT_STEALTH){
-		return TRUE;
-	}
 
 	if(bBconInit){
 #ifdef DEBUG_WH_BEACON_PRINT_ON
@@ -697,15 +693,11 @@ BOOL GFL_NET_WLSwitchParentChild(void)
 		NET_PRINT("pNetWLNONE\n");
 		return TRUE;
 	}
-	if(pNetWL->disconnectType == _DISCONNECT_STEALTH){
-		NET_PRINT("_DISCONNECT_STEALTH\n");
-		return TRUE;
-	}
 	NET_PRINT("scan %d\n",pNetWL->bEndScan);
 	switch(pNetWL->bEndScan){
 	case 0:
 		if(WH_SYSSTATE_SCANNING == WH_GetSystemState()){
-			NET_PRINT("スキャンを消す------1\n");
+			NET_PRINT("スキャンを消す------WH_EndScan\n");
 			WH_EndScan();
 			pNetWL->bEndScan = 1;
 			break;
@@ -967,55 +959,6 @@ static BOOL _parentFindCallback(WMBssDesc* pBeacon)
 	return TRUE;
 }
 
-//-------------------------------------------------------------
-/**
- * @brief   子機　MP状態で接続
- * @param   index   親のリストのindex
- * @retval  子機接続を親機に送ったらTRUE
- */
-//-------------------------------------------------------------
-/*
-BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
-{
-    GFL_NETWL* pNetWL = _pNetWL;
-    int serviceNo;
-
-    if (WH_GetSystemState() == WH_SYSSTATE_SCANNING) {
-        (void)WH_EndScan();
-        return FALSE;
-    }
-    if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
-        GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
-        u16 mode;
-        NET_PRINT("子機 接続開始 WH_ChildConnect\n");
-        serviceNo = pNetWL->serviceNo;
-        pNetWL->channel = pNetWL->sBssDesc[index].channel;
-        pNetWL->bEndScan = 0;
-        pNetWL->pNetHandle = pNetHandle;
-        pNetWL->pCallback = pCallback;
-        if(pInit->bMPMode){
-            mode = WH_CONNECTMODE_MP_PARENT;
-        }
-        else{
-            mode = WH_CONNECTMODE_DS_PARENT;
-        }
-        WH_ChildConnectAuto(mode, pNetWL->sBssDesc[index].bssid, 0);
-        WH_SetScanCallback(_parentFindCallback);
-        return TRUE;
-    }
-    return FALSE;
-}
- */
-
-/*
-void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback)
-{
-    GFL_NETWL* pNetWL = _pNetWL;
-    pNetWL->bEndScan = 0;
-    pNetWL->pCallback = pCallback;
-    WH_SetScanCallback(_parentFindCallback);
-}
- */
 
 //-------------------------------------------------------------
 /**
@@ -1179,11 +1122,6 @@ static void _stateProcess(u16 bitmap)
       _commEnd();  // ワークから何から全て開放
 			return;
 		}
-		if(pNetWL->disconnectType == _DISCONNECT_SECRET){
-			NET_PRINT("WHEnd を呼んで死んだふり開始\n");
-			pNetWL->disconnectType = _DISCONNECT_STEALTH;
-			return;
-		}
 		break;
 	case WH_SYSSTATE_IDLE:
 		if(pNetWL->disconnectType == _DISCONNECT_END){
@@ -1326,26 +1264,6 @@ static int _connectNum(void)
 		}
 	}
 	return num;
-}
-
-//-------------------------------------------------------------
-/**
- * @brief  通信切断モードにはいったかどうか
- * @param   none
- * @retval  接続人数
- */
-//-------------------------------------------------------------
-
-BOOL GFL_NET_WLIsConnectStalth(void)
-{
-	GFL_NETWL* pNetWL = _pNetWL;
-
-  GF_ASSERT(0);
-
-  if(pNetWL && (pNetWL->disconnectType == _DISCONNECT_STEALTH)){
-		return TRUE;
-	}
-	return FALSE;
 }
 
 //-------------------------------------------------------------
@@ -2015,6 +1933,7 @@ BOOL GFL_NET_WLChildMacAddressConnect(BOOL bBconInit,u8* macAddress, int macInde
 	}
 	if (WH_GetSystemState() == WH_SYSSTATE_SCANNING) {
 		_pNetWL->bEndScan = 0;
+			NET_PRINT("GFL_NET_WLChildMacAddressConnect WH_EndScan\n");
 		WH_EndScan();
 	}
 	_CHANGE_STATE(_connectAutoFunc);
@@ -2138,6 +2057,7 @@ static void _crossScanShootWait(GFL_NETWL* pNetWL)
   pNetWL->CrossRand--;
   
   if( pNetWL->CrossRand == 0){
+			NET_PRINT("_crossScanShootWait WH_EndScan\n");
     WH_EndScan(); //スキャン終了
     _CHANGE_STATE(_crossScanShootEndWait);  // スキャン終了待ち
 #ifdef DEBUG_WH_BEACON_PRINT_ON

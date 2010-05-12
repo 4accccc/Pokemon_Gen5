@@ -1753,32 +1753,27 @@ static void WH_StateOutStartScan(void *arg)
  *---------------------------------------------------------------------------*/
 BOOL WH_EndScan(void)
 {
-	WH_TRACE_STATE;
-	if (_pWmInfo->sSysState != WH_SYSSTATE_SCANNING)
+  OSIntrMode  enable;
+  BOOL bRet = FALSE;
+
+  WH_TRACE_STATE;
+  enable = OS_DisableInterrupts();
+	if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING)
 	{
-		return FALSE;
-	}
-  if(_pWmInfo->startScan!=0){
-    //ビーコンスキャン強制終了
-    if (!WH_StateInStartScan()) {
-      WH_ChangeSysState(WH_SYSSTATE_ERROR);
+    if(_pWmInfo->startScan!=0){
+      //ビーコンスキャン強制終了
+      if (!WH_StateInStartScan()) {
+        WH_ChangeSysState(WH_SYSSTATE_ERROR);
+      }
     }
     _pWmInfo->startScan = -1;
     _pWmInfo->sAutoConnectFlag = FALSE;
+    _pWmInfo->sWH_EndScan = TRUE;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
     WH_ChangeSysState(WH_SYSSTATE_BUSY);
+    bRet = TRUE;
   }
-  else{
-    OSIntrMode  enable = OS_DisableInterrupts();
-    if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING)
-    {
-      _pWmInfo->startScan = -1;
-      _pWmInfo->sAutoConnectFlag = FALSE;
-      _pWmInfo->sWH_EndScan = TRUE;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
-      WH_ChangeSysState(WH_SYSSTATE_BUSY);
-    }
-    (void)OS_RestoreInterrupts(enable);
-  }
-	return TRUE;
+  (void)OS_RestoreInterrupts(enable);
+  return bRet;
 }
 
 
@@ -3665,6 +3660,7 @@ void WH_Finalize(void)
 	WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
 
   if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
+    WH_TRACE("WH_FinalizeWH_EndScan\n");
 		if (!WH_EndScan()){
 			WH_Reset();
 		}

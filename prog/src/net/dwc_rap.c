@@ -20,7 +20,7 @@
 
 // デバッグ出力を大量に吐き出す場合定義
 #if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#define DEBUGPRINT_ON (0)
+#define DEBUGPRINT_ON (1)
 #else
 #define DEBUGPRINT_ON (0)
 #endif
@@ -756,7 +756,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
 {
   _sendAckMain();
 
-  
+
   switch ( _dWork->state ){
   case MDSTATE_INIT:
   case MDSTATE_CONNECTING:
@@ -907,7 +907,7 @@ int GFL_NET_DWC_sendToServer(void *data, int size)
   if(!_dWork->sendFinish){
     return 0;
   }
-  
+
   MYDWC_DEBUGPRINT("mydwc_sendToServer(data=%d)\n", *((u32*)data));
 
   if( DWC_GetMyAID() == 0 )
@@ -1028,7 +1028,7 @@ int GFL_NET_DWC_sendToClient(void *data, int size)
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-static int _SendToBase(void *data, int size, int header)  
+static int _SendToBase(void *data, int size, int header)
 {
   u16 bitmap;
 
@@ -1037,7 +1037,7 @@ static int _SendToBase(void *data, int size, int header)
   }
   {
     // 相手に対してデータ送信。
- //   if( _dWork->sendbufflag || !_isSendableReliable() ) // 送信バッファをチェック。
+    //   if( _dWork->sendbufflag || !_isSendableReliable() ) // 送信バッファをチェック。
     if( _dWork->sendbufflag ) // 送信フラグをチェック。
     {
       return 0;
@@ -1056,7 +1056,7 @@ static int _SendToBase(void *data, int size, int header)
       _dWork->sendbufflag = 0;
       return 0;
     }
-    
+
   }
   return 1;
 }
@@ -1090,13 +1090,13 @@ static int _SendToAck(void *data, int size)
 int GFL_NET_DWC_SendToOther(void *data, int size)
 {
   if(!_dWork->sendFinish){
-    OS_TPrintf("sendFinish NONE\n");
+    //OS_TPrintf("sendFinish NONE\n");
     return 0;
   }
   if(0==_SendToBase(data, size, MYDWC_GAME_PACKET)){
     return 0;
   }
-  OS_TPrintf("++send data\n");
+  //OS_TPrintf("++send data\n");
   _dWork->sendFinish=FALSE;
   // 自分自身の受信コールバックを呼び出す。
   if( _dWork->clientCallback != NULL ){
@@ -1109,14 +1109,14 @@ int GFL_NET_DWC_SendToOther(void *data, int size)
 
 
 /*---------------------------------------------------------------------------*
-  
+
  *---------------------------------------------------------------------------*/
 static void _sendAckMain(void)
 {
   if(_dWork->sendAck){
     int data=0;
     if( _SendToAck(&data, 4)){
-      OS_TPrintf("++sendAck \n");
+      //OS_TPrintf("++sendAck \n");
       _dWork->sendAck = FALSE;
     }
   }
@@ -1284,7 +1284,7 @@ static void setTimerAndFlg(int index)
 {
   int i,j;
 
-  OS_TPrintf("接続しました%s%d\n",__FILE__,__LINE__);
+ // OS_TPrintf("接続しました%s%d\n",__FILE__,__LINE__);
   //  _dWork->state = MDSTATE_MATCHED;
   _CHANGE_STATE(MDSTATE_MATCHED);
 
@@ -1394,18 +1394,18 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
     _setOpVchat( topcode );
     _dWork->opseqno = buffer[MYDWC_PACKET_SEQNO_POS];
     _dWork->sendAck = TRUE;
-    OS_TPrintf("++recv command\n");
+   // OS_TPrintf("++recv command\n");
 
   }
   else if( (topcode & MYDWC_PACKETYPE_MASK) == MYDWC_CHECK_PACKET ){  //arc returnコマンド
-    OS_TPrintf("++recv ack\n");
+   // OS_TPrintf("++recv ack\n");
     _dWork->sendFinish = TRUE;
     return;
   }
   else {
     if( myvct_checkData( aid, buffer,size ) ) return;
     // 無意味な情報（コネクションを保持するためのものと思われる）
-//    _setOpVchat( topcode );
+    //    _setOpVchat( topcode );
     return;
   }
   //	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
@@ -1882,15 +1882,13 @@ static void _DWC_StartVChat(int heapID)
 {
   int late;
   int num = 1;
-  //    BOOL bFourGame = CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo());
 
-  OS_TPrintf("VCTON\n");
+  // OS_TPrintf("VCTON\n");
   // デバックプリントOFF
 #ifndef DEBUGPRINT_ON
-  VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );
+  //VCT_SetReportLevel( VCT_REPORTLEVEL_NONE );
 #else
-  VCT_SetReportLevel( VCT_REPORTLEVEL_ALL );
-
+  //VCT_SetReportLevel( VCT_REPORTLEVEL_ALL );
 #endif
 #if 0
   if(bFourGame){
@@ -2108,7 +2106,7 @@ int GFL_NET_DWC_disconnect( int sync )
   if( ret != 0 ){
     DWC_ClearError();
   }
-  
+
   if( sync == 0 ){
     MYDWC_DEBUGPRINT(" mydwc_disconnect state %d \n",_dWork->state);
     switch( _dWork->state )	{
@@ -2403,7 +2401,7 @@ static void SetupGameServerCallback(DWCError error,
 
       if(_dWork->connectModeCheck){
         if(FALSE == _dWork->connectModeCheck(index,GFL_NET_GetWork())){
-          OS_TPrintf("切断WIFIP2PModeCheck \n");
+          //OS_TPrintf("切断WIFIP2PModeCheck \n");
           bFriendOnly = TRUE;
         }
       }
@@ -2911,6 +2909,23 @@ BOOL GFL_NET_DWC_IsLogin(void)
 {
   if(_dWork){
     return ( _dWork->state == MDSTATE_LOGIN );
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	マッチング状態かどうか
+ *	@param	TRUE マッチング状態である
+ */
+//-----------------------------------------------------------------------------
+BOOL GFL_NET_DWC_IsMatched(void)
+{
+  if(_dWork){
+    if((_dWork->state == MDSTATE_MATCHED)  ||  (_dWork->state == MDSTATE_PLAYING)){
+      return TRUE;
+    }
   }
   return FALSE;
 }

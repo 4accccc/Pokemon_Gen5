@@ -45,6 +45,8 @@ static BOOL _DevIsConnectable(int index);
 static BOOL _DevIsVChat(void);
 static BOOL _DevIsNewPlayer(void);
 static void _DevSetClinetConnect(BOOL bEnable);
+static BOOL _DevIsConnectSystemFunc(void);
+
 static BOOL _DevLobbyLogin(const void* cp_loginprofile);
 static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season );
 static BOOL _DevLobbyUpdateErrorCheck(void);
@@ -106,9 +108,9 @@ static GFLNetDevTable netDevTbl={
   _DevIsNewPlayer,
   NULL, //_DevIrcMoveFunc
 
-  NULL,	//DevIsConnectSystemFunc
-  NULL,	//DevGetSendLockFlagFunc
-  NULL,	//DevConnectWorkInitFunc
+	NULL, //DevIsSendDataFunc DevIsSendData; ///< データを送ってよいかどうか
+	NULL, //DevGetSendTurnFunc DevGetSendTurn; ///< 送信可能ターンフラグを取得
+  _DevIsConnectSystemFunc, 
   NULL,	//DevGetSendLockFlagFunc
   NULL,	//DevConnectWorkInitFunc
 	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
@@ -500,6 +502,19 @@ static void _DevSetClinetConnect(BOOL bEnable)
 {
 	GFL_NET_DWC_SetClinetConnect(bEnable);
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	マッチング状態かどうか
+ *	@param	TRUE マッチング状態である
+ */
+//-----------------------------------------------------------------------------
+static BOOL _DevIsConnectSystemFunc(void)
+{
+	return GFL_NET_DWC_IsMatched();
+
+}
+
 
 //--------------------------------------------------------------
 /**
