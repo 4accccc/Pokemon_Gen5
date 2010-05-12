@@ -225,6 +225,8 @@ struct _FIELD_PLACE_NAME {
 //===================================================================================
 // ■prototype
 //===================================================================================
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
 // BG
 static void SetupBG( FIELD_PLACE_NAME* system );
 static void CleanBG( FIELD_PLACE_NAME* system );
@@ -275,8 +277,8 @@ static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* system );
 static void Draw_LAUNCH( const FIELD_PLACE_NAME* system );
 static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* system );
 static void Draw_FADEOUT( const FIELD_PLACE_NAME* system );
-
-
+//-----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- 
 // システム
 static FIELD_PLACE_NAME* CreatePNSystem( HEAPID heapID ); // 地名表示システムを生成する
 static void InitPNSystem( FIELD_PLACE_NAME* system, GAMESYS_WORK* gameSystem ); // 地名表示システムを初期化する
@@ -372,15 +374,13 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 	LoadOBJResource( system );
 	CreateClactUnit( system );
   SetUserRenderer( system, CLUNIT_LETTER );
-  CreateBmpOamSystem( system );
-
-	CreateLetters( system ); // 文字オブジェクトを生成
+  CreateBmpOamSystem( system ); 
+	CreateLetters( system );
 
   GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
   LoadBGPaletteData( system );
 
-	ChangeState( system, SYSTEM_STATE_HIDE );
-
+	ChangeState( system, SYSTEM_STATE_HIDE ); 
 
 	return system;
 }
@@ -410,7 +410,6 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
   CloseDataHandle( system );
 
 	GFL_BG_FreeBGControl( BG_FRAME ); 
-
 
   DeletePNSystem( system );
 } 
@@ -1399,8 +1398,8 @@ static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID )
 static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state )
 {
   SetState( system, next_state ); // 状態を設定
-  ResetStateCount( system ); // 状態カウンタをリセット
-  ResetStateSeq( system ); // 状態内シーケンスをリセット
+  ResetStateCount( system );      // 状態カウンタをリセット
+  ResetStateSeq( system );        // 状態内シーケンスをリセット
 
 	// 遷移先の状態に応じた初期化
 	switch( next_state ) {
@@ -1807,13 +1806,13 @@ static void InitPNSystem( FIELD_PLACE_NAME* system, GAMESYS_WORK* gameSystem )
   GFL_STD_MemClear( system, sizeof(FIELD_PLACE_NAME) );
 
   // 初期化
-  system->gameSystem = gameSystem;
-  system->gameData = GAMESYSTEM_GetGameData( gameSystem );
-  system->nullCharPos = AREAMAN_POS_NOTFOUND;
+  system->gameSystem    = gameSystem;
+  system->gameData      = GAMESYSTEM_GetGameData( gameSystem );
+  system->nullCharPos   = AREAMAN_POS_NOTFOUND;
   system->forceDispFlag = FALSE;
-  system->dispFlag = FALSE;
-  system->lastZoneID = ZONE_ID_MAX;
-  system->dispZoneID = ZONE_ID_MAX;
+  system->dispFlag      = FALSE;
+  system->lastZoneID    = ZONE_ID_MAX;
+  system->dispZoneID    = ZONE_ID_MAX;
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: InitPNSystem\n" );
