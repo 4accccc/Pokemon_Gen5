@@ -118,7 +118,7 @@ MANUAL_TITLE_WORK*  MANUAL_TITLE_Init(
       {
         work->list_param.item[i].no     = i;
         work->list_param.item[i].str_id = i;
-        work->list_param.item[i].icon   = MANUAL_LIST_ICON_NEW;
+        work->list_param.item[i].icon   = (i%3==0)?(MANUAL_LIST_ICON_NEW):(MANUAL_LIST_ICON_NONE);
       }
       work->list_param.head_pos    = work->param->head_pos;
       work->list_param.cursor_pos  = work->param->cursor_pos;
@@ -133,7 +133,7 @@ MANUAL_TITLE_WORK*  MANUAL_TITLE_Init(
       {
         work->list_param.item[i].no     = i;
         work->list_param.item[i].str_id = i;
-        work->list_param.item[i].icon   = MANUAL_LIST_ICON_NEW;
+        work->list_param.item[i].icon   = (i%3==0)?(MANUAL_LIST_ICON_NONE):(MANUAL_LIST_ICON_NEW);
       }
       work->list_param.head_pos    = work->param->head_pos;
       work->list_param.cursor_pos  = work->param->cursor_pos;

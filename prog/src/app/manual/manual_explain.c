@@ -193,6 +193,20 @@ void  MANUAL_EXPLAIN_Exit(
     MANUAL_EXPLAIN_WORK*     work
 )
 {
+  // ‰æ‘œ‚ðÁ‹Ž
+  {
+    u32  image_size = 256*192*2;
+    u32  size;
+    u16* buf;
+
+    buf = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, image_size );
+    size = image_size;
+
+    DC_FlushRange( buf, size );
+    GX_LoadBG2Bmp( buf, 0, image_size );
+    GFL_HEAP_FreeMemory( buf );
+  }
+
   // VBlank’†TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 

@@ -101,6 +101,7 @@ enum
 #define SB_CURSOR_X          (240)
 #define SB_CURSOR_Y_MIN      ( 17)  // MIN<= <=MAX
 #define SB_CURSOR_Y_MAX      (135)
+#define SB_CURSOR_Y_OFFSET   (  8)  // カーソルの左上が(0,0)となっているので、カーソルの中心にするにはこれだけずらす必要がある。
 
 // NEWアイコン
 #define NEW_ICON_X       (0)
@@ -127,7 +128,9 @@ struct _MANUAL_LIST_WORK
   // APP_TASKMENU_WIN
   APP_TASKMENU_RES*           atm_res;
   APP_TASKMENU_WIN_WORK*      atm_win_wk[ATM_WIN_ITEM_MAX];  // NULLのときなし
-
+  BOOL                        atm_win_is_show[ATM_WIN_ITEM_MAX];  // TRUEのとき表示している、FALSEのとき表示していない
+                                                                  // atm_win_wk[i]がNULLでないときだけ有効な値が入っている
+  
   // OBJ
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   sb_cursor_clwk;
@@ -139,6 +142,7 @@ struct _MANUAL_LIST_WORK
   // 入力状態
   INPUT_STATE                 input_state;
   BOOL                        b_sb_touch;  // TRUEのときスクロールバーをタッチしている
+  BOOL                        b_sb_cursor_pos_change;  // TRUEのときスクロールバーをタッチしたためにparam->cursor_posの位置が変わった。
 };
 
 
@@ -175,6 +179,11 @@ static u16 Manual_List_GetHeadPosMax( MANUAL_LIST_WORK* work );
 // リストが動いたのでつくり直す
 static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work );
 
+// タッチしているy座標からhead_posを求める
+static u16 Manual_List_GetHeadPosFromY( MANUAL_LIST_WORK* work, u16 num_for_head_pos, u16 y );
+// head_posからスクロールバーのカーソルを置くy座標を求める(SB_CURSOR_Y_OFFSETも考慮してあるので、戻り値のyをそのままclwkに使ってやればよい)
+static u16 Manual_List_GetSbCursorYFromHeadPos( MANUAL_LIST_WORK* work, u16 num_for_head_pos, u16 head_pos );
+
 
 //=============================================================================
 /**
@@ -205,6 +214,7 @@ MANUAL_LIST_WORK*  MANUAL_LIST_Init(
     for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
     {
       work->atm_win_wk[i] = NULL;
+      work->atm_win_is_show[i] = FALSE;
     }
   }
 
@@ -215,13 +225,28 @@ MANUAL_LIST_WORK*  MANUAL_LIST_Init(
   // スクロール
   GFL_BG_SetScrollReq( BG_FRAME_S_MAIN, GFL_BG_SCROLL_Y_SET, SCROLL_Y );
 
+  // スクロールバーのカーソルを表示するか、非表示にするか
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->sb_cursor_clwk, ( work->param->num > ATM_WIN_ITEM_ENABLE_NUM ) );
+  }
+
+  // スクロールバーのカーソルの位置
+  {
+    GFL_CLACTPOS pos;
+    u16 y = Manual_List_GetSbCursorYFromHeadPos( work, Manual_List_GetHeadPosMax(work)+1, work->param->head_pos );
+    pos.x = SB_CURSOR_X;
+    pos.y = y; 
+    GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+  }
+
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Manual_List_VBlankFunc, work, 1 );
 
   // 入力状態
   work->input_state = INPUT_STATE_NONE;
   work->b_sb_touch = FALSE;
-
+  work->b_sb_cursor_pos_change = FALSE;
+  
   // マニュアルタッチバー
   {
     MANUAL_TOUCHBAR_TYPE t = MANUAL_TOUCHBAR_TYPE_TITLE;
@@ -289,6 +314,15 @@ BOOL  MANUAL_LIST_Main(
 {
   BOOL b_end = FALSE;
 
+  {
+    // APP_TASKMENU_WIN
+    u8 i;
+    for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
+    {
+      if( work->atm_win_wk[i] && work->atm_win_is_show[i] ) APP_TASKMENU_WIN_Update( work->atm_win_wk[i] );
+    }
+  }
+
   // スクロールバーの入力を調べる
   if(    work->input_state == INPUT_STATE_NONE
       || work->input_state == INPUT_STATE_SB )
@@ -337,13 +371,16 @@ BOOL  MANUAL_LIST_Main(
   if(    work->input_state == INPUT_STATE_NONE
       || work->input_state == INPUT_STATE_ATM )
   {
+/*
+描画を更新するだけなので、毎フレームAPP_TASKMENU_WIN_Updateを呼び出しても大丈夫なはずだから、外に出した。
     // APP_TASKMENU_WIN
     u8 i;
     for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
     {
-      if( work->atm_win_wk[i] ) APP_TASKMENU_WIN_Update( work->atm_win_wk[i] );
+      if( work->atm_win_wk[i] && work->atm_win_is_show[i] ) APP_TASKMENU_WIN_Update( work->atm_win_wk[i] );
     }
-      
+ */
+
     if( work->input_state == INPUT_STATE_NONE )
     {
       BOOL b_decide = Manual_List_InputAppTaskmenuWin( work );
@@ -523,6 +560,7 @@ static void Manual_List_PrepareAppTaskmenuWin( MANUAL_LIST_WORK* work )
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
   {
     APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+    work->b_sb_cursor_pos_change = FALSE;
   }
 }
 
@@ -572,6 +610,7 @@ static BOOL Manual_List_InputAppTaskmenuWin( MANUAL_LIST_WORK* work )
         GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
         // キーに変更した場合は、カーソルを表示して、処理を終える
         APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+        work->b_sb_cursor_pos_change = FALSE;
         PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
         return FALSE;
       }
@@ -618,10 +657,20 @@ static BOOL Manual_List_InputAppTaskmenuWin( MANUAL_LIST_WORK* work )
               work->param->cursor_pos = work->param->num -1;
             }
             Manual_List_UpdateAppTaskmenuWin(work);
+
+            // スクロールバーのカーソルの位置
+            {
+              GFL_CLACTPOS pos;
+              u16 y = Manual_List_GetSbCursorYFromHeadPos( work, Manual_List_GetHeadPosMax(work)+1, work->param->head_pos );
+              pos.x = SB_CURSOR_X;
+              pos.y = y; 
+              GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+            }
           }
         }
 
         APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+        work->b_sb_cursor_pos_change = FALSE;
         PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
       }
       else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
@@ -651,10 +700,20 @@ static BOOL Manual_List_InputAppTaskmenuWin( MANUAL_LIST_WORK* work )
               work->param->cursor_pos = 0;
             }
             Manual_List_UpdateAppTaskmenuWin(work);
+
+            // スクロールバーのカーソルの位置
+            {
+              GFL_CLACTPOS pos;
+              u16 y = Manual_List_GetSbCursorYFromHeadPos( work, Manual_List_GetHeadPosMax(work)+1, work->param->head_pos );
+              pos.x = SB_CURSOR_X;
+              pos.y = y; 
+              GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+            }
           }
         }
 
         APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+        work->b_sb_cursor_pos_change = FALSE;
         PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
       }
       else if( GFL_UI_KEY_GetRepeat() & ( PAD_KEY_LEFT | PAD_BUTTON_L ) )
@@ -676,6 +735,7 @@ static BOOL Manual_List_InputAppTaskmenuWin( MANUAL_LIST_WORK* work )
       // 決定
       work->param->cursor_pos = work->param->head_pos + tp_hit;
       APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+      work->b_sb_cursor_pos_change = FALSE;
       APP_TASKMENU_WIN_SetDecide( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
       PMSND_PlaySE(MANUAL_SND_ATM_DECIDE);
       return TRUE;
@@ -692,17 +752,102 @@ static BOOL Manual_List_InputSb( MANUAL_LIST_WORK* work )
   // タッチ中→タッチしていないとき              TRUE
   // タッチしていないとき→タッチ中              TRUE
   // タッチしていないとき→タッチしていないとき  FALSE
-  
+  // スクロールバーのカーソルが非表示のとき      FALSE
+
+
+  // スクロールバーのカーソルが非表示のとき
+  if( !GFL_CLACT_WK_GetDrawEnable( work->sb_cursor_clwk ) )
+  {
+    return FALSE;
+  }
+
   if( work->b_sb_touch )
   {
     // タッチ中
+    u32 x, y;  
+    if( GFL_UI_TP_GetPointCont( &x, &y ) )
+    {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], FALSE );
+      
+      // スクロールバーのカーソルの位置
+      {
+        GFL_CLACTPOS pos;
+        pos.x = SB_CURSOR_X;
+        pos.y = (y >= SB_CURSOR_Y_OFFSET)?(y - SB_CURSOR_Y_OFFSET):(0);
+        if( pos.y < SB_CURSOR_Y_MIN )      pos.y = SB_CURSOR_Y_MIN;
+        else if( pos.y > SB_CURSOR_Y_MAX ) pos.y = SB_CURSOR_Y_MAX;
+        GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+      }
+
+      {
+        u16 head_pos_new = Manual_List_GetHeadPosFromY( work, Manual_List_GetHeadPosMax(work)+1, (u16)y );
+        if( head_pos_new != work->param->head_pos )  // リストを動かす必要があるとき
+        {
+          u16 tail_pos;
+          work->param->head_pos = head_pos_new;
+          tail_pos = Manual_List_GetTailPos( work );
+          if( work->b_sb_cursor_pos_change || work->param->cursor_pos<work->param->head_pos || tail_pos<work->param->cursor_pos )
+          {  // スクロールバーをタッチしてparam->cursor_posを変更しているなら、継続して変更させて先頭を選ばせるようにする。
+            work->param->cursor_pos = work->param->head_pos;
+            work->b_sb_cursor_pos_change = TRUE;
+          }
+
+          Manual_List_UpdateAppTaskmenuWin(work);
+
+          PMSND_PlaySE( MANUAL_SND_SB_MOVE );
+        }
+      }
+    }
+    else
+    {
+      work->b_sb_touch = FALSE;
+    }
 
     return TRUE; 
   }
   else
   {
     // タッチしていないとき
+    u32 x, y;  
+    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+    {
+      if(    SB_LINE_TOUCH_X_MIN<=x && x<=SB_LINE_TOUCH_X_MAX
+          && SB_LINE_TOUCH_Y_MIN<=y && y<=SB_LINE_TOUCH_Y_MAX )
+      {
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], FALSE );
+        
+        PMSND_PlaySE( MANUAL_SND_SB_MOVE );
+        work->b_sb_touch = TRUE;
 
+        // スクロールバーのカーソルの位置
+        {
+          GFL_CLACTPOS pos;
+          pos.x = SB_CURSOR_X;
+          pos.y = (y >= SB_CURSOR_Y_OFFSET)?(y - SB_CURSOR_Y_OFFSET):(0);
+          if( pos.y < SB_CURSOR_Y_MIN )      pos.y = SB_CURSOR_Y_MIN;
+          else if( pos.y > SB_CURSOR_Y_MAX ) pos.y = SB_CURSOR_Y_MAX;
+          GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+        }
+
+        {
+          u16 head_pos_new = Manual_List_GetHeadPosFromY( work, Manual_List_GetHeadPosMax(work)+1, (u16)y );
+          if( head_pos_new != work->param->head_pos )  // リストを動かす必要があるとき
+          {
+            u16 tail_pos;
+            work->param->head_pos = head_pos_new;
+            tail_pos = Manual_List_GetTailPos( work );
+            if( work->b_sb_cursor_pos_change || work->param->cursor_pos<work->param->head_pos || tail_pos<work->param->cursor_pos )
+            {  // スクロールバーをタッチしてparam->cursor_posを変更しているなら、継続して変更させて先頭を選ばせるようにする。
+              work->param->cursor_pos = work->param->head_pos;
+              work->b_sb_cursor_pos_change = TRUE;
+            }
+            Manual_List_UpdateAppTaskmenuWin(work);
+          }
+        }
+      }
+    }
     if( work->b_sb_touch ) return TRUE;
     else                   return FALSE;
   }
@@ -773,9 +918,13 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
     {
       // UP_HALFを非表示にする
       APP_TASKMENU_WIN_Hide(work->atm_win_wk[ATM_WIN_ITEM_UP_HALF]);
+      work->atm_win_is_show[ATM_WIN_ITEM_UP_HALF] = FALSE;
     }
     atm_win_start_idx = ATM_WIN_ITEM_ENABLE_START;
     item_start_idx    = work->param->head_pos;
+      
+    // NEWアイコン
+    GFL_CLACT_WK_SetDrawEnable( work->new_icon_clwk[ATM_WIN_ITEM_UP_HALF], FALSE );
   }
 
   // 最後尾の調整
@@ -793,7 +942,11 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
       {
         // 最後尾のデータより後ろは非表示にする
         APP_TASKMENU_WIN_Hide(work->atm_win_wk[i]);
+        work->atm_win_is_show[i] = FALSE;
       }
+
+      // NEWアイコン
+      GFL_CLACT_WK_SetDrawEnable( work->new_icon_clwk[i], FALSE );
     }
   }
 
@@ -819,12 +972,126 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
           ATM_PLATE_X, ATM_PLATE_Y + APP_TASKMENU_PLATE_HEIGHT*i,
           ATM_PLATE_WIDTH,
           work->cmn_wk->heap_id );
+      APP_TASKMENU_WIN_Update( work->atm_win_wk[i] );  // print_que描画をするためにAPP_TASKMENU_WIN_Create直後に1回APP_TASKMENU_WIN_Updateを呼んでおく
+      work->atm_win_is_show[i] = TRUE;
 
       // 文字列解放
       GFL_STR_DeleteBuffer( atm_item_wk.str );
 
+      // NEWアイコン
+      {
+        if( work->param->item[item_idx].icon == MANUAL_LIST_ICON_NONE )
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->new_icon_clwk[i], FALSE );
+        }
+        else if( work->param->item[item_idx].icon == MANUAL_LIST_ICON_NEW )
+        {
+          //GFL_CLACT_WK_SetAnmSeq( work->new_icon_clwk[i], NEW_ICON_ANMSEQ );  // 0フレーム目から再生されるように、アニメを設定し直す。
+                                                                                // スクロールするだけなので、続きのフレームからでよいからコメントアウト。
+          GFL_CLACT_WK_SetDrawEnable( work->new_icon_clwk[i], TRUE );
+        }
+      }
+
       item_idx++; 
     } 
   }
+}
+
+// タッチしているy座標からhead_posを求める
+static u16 Manual_List_GetHeadPosFromY( MANUAL_LIST_WORK* work, u16 num_for_head_pos, u16 y )
+{
+  // 画面の1番上(UP_HALFは除く)にある項目の番号head_posを返す。
+  // num_for_head_posは、画面の1番上(UP_HALFは除く)に来ることができる項目の個数。
+  // yはタッチしている座標。
+
+  u16 head_pos;
+
+  if( num_for_head_pos <= 1 )
+  {
+    head_pos = 0;
+  }
+  else
+  {
+    u16 range_min;  // range_min<= <range_max
+    u16 range_max;
+    u16 one_range;  // 1つのパネル分に相当する区画の幅
+
+    range_min = SB_CURSOR_Y_MIN + SB_CURSOR_Y_OFFSET;
+    range_max = SB_CURSOR_Y_MAX + SB_CURSOR_Y_OFFSET +1;
+
+    one_range = ( range_max - range_min ) / num_for_head_pos;
+
+    // yが範囲外にあるとき
+    if( y<range_min )
+    {
+      head_pos = 0;
+    }
+    else if( range_max<=y )
+    {
+      head_pos = num_for_head_pos -1;
+    }
+    // yが範囲内にあるとき
+    else
+    {
+      // yは何番目の区画に入っているか
+      for( head_pos=0; head_pos<num_for_head_pos; head_pos++ )
+      {
+        //u16 curr_min = range_min + one_range * (head_pos +0);  // curr_min<= <curr_max 
+        //u16 curr_max = range_min + one_range * (head_pos +1);
+        u16 curr_min = range_min + ( range_max - range_min ) * (head_pos +0) / num_for_head_pos;  // 計算の順番を入れ替えただけなので、
+        u16 curr_max = range_min + ( range_max - range_min ) * (head_pos +1) / num_for_head_pos;  // 上のコメントアウトと同じ意味です。
+      
+        if( curr_min<=y && y<curr_max )
+        {
+          break;
+        }
+      }
+    }
+  }
+
+  if( head_pos >= num_for_head_pos ) head_pos = 0;
+  return head_pos;
+}
+
+// head_posからスクロールバーのカーソルを置くy座標を求める(SB_CURSOR_Y_OFFSETも考慮してあるので、戻り値のyをそのままclwkに使ってやればよい)
+static u16 Manual_List_GetSbCursorYFromHeadPos( MANUAL_LIST_WORK* work, u16 num_for_head_pos, u16 head_pos )
+{
+  u16 y;
+
+  {
+    u16 range_min;  // range_min<= <range_max
+    u16 range_max;
+    u16 one_range;  // 1つのパネル分に相当する区画の幅
+
+    range_min = SB_CURSOR_Y_MIN + SB_CURSOR_Y_OFFSET;
+    range_max = SB_CURSOR_Y_MAX + SB_CURSOR_Y_OFFSET +1;
+
+    one_range = ( range_max - range_min ) / num_for_head_pos;
+
+    // 端にあるとき
+    if( head_pos == 0 )
+    {
+      y = range_min - SB_CURSOR_Y_OFFSET;  // 端に置く
+    }
+    else if( head_pos == num_for_head_pos -1 )
+    {
+      y = range_max - SB_CURSOR_Y_OFFSET -1;  // 端に置く
+    }
+    // 内側にあるとき
+    else
+    {
+      //u16 curr_min = range_min + one_range * (head_pos +0);  // curr_min<= <curr_max 
+      //u16 curr_max = range_min + one_range * (head_pos +1);
+      u16 curr_min = range_min + ( range_max - range_min ) * (head_pos +0) / num_for_head_pos;  // 計算の順番を入れ替えただけなので、
+      u16 curr_max = range_min + ( range_max - range_min ) * (head_pos +1) / num_for_head_pos;  // 上のコメントアウトと同じ意味です。
+
+      u16 curr_center = (curr_min + curr_max) /2;
+      y = curr_center - SB_CURSOR_Y_OFFSET;  // 中央に置く
+    }
+  }
+
+  if( y<SB_CURSOR_Y_MIN )      y = SB_CURSOR_Y_MIN;
+  else if( y>SB_CURSOR_Y_MAX ) y = SB_CURSOR_Y_MAX;
+  return y;
 }
 
