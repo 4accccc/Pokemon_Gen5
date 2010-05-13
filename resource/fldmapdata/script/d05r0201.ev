@@ -511,6 +511,9 @@ EVENT_END
 /**************************************************************/
 ev_d05r0201_vs_plasma_win:
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
 	//復帰、workmanとヤーコン配置
 	_FLAG_RESET(FV_D05R0201_WORKMAN_01)
 	_OBJ_ADD(D05R0201_WORKMAN_01)
