@@ -664,7 +664,7 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
  * @li  ビーコンサーチを禁止しているマップでない
  * @li  通信エラーが発生していない
  * @li  常時通信フラグ（CギアのONやコンフィグの通信と連動しているフラグ）が立っている
- * @li  Cギア入手フラグが立っている
+ * @li  Cギア入手フラグが立っている(入手前なら常時通信フラグが常にOFFのはずだが念のためこちらも)
  */
 //==================================================================
 BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)

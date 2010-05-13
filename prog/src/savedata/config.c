@@ -103,7 +103,7 @@ void CONFIG_Init(CONFIG * cfg)
 #endif
   cfg->moji_mode = MOJIMODE_HIRAGANA;
   cfg->wirelesssave_mode = WIRELESSSAVE_ON;
-  cfg->network_search = NETWORK_SEARCH_ON;
+  cfg->network_search = NETWORK_SEARCH_OFF;
 }
 
 //============================================================================================
