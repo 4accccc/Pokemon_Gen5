@@ -10344,6 +10344,7 @@ static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       if( BTL_WAZAREC_GetPrevEffectiveWaza(rec, thisTurn) == combiWazaID )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+        BTL_SVFRET_SetWazaEffectIndex( flowWk, BTLV_WAZAEFF_LINKWAZA_LINK );
       }
     }
   }
