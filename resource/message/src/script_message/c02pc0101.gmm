@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T12:49:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T12:57:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,7 +302,7 @@
 ジムリーダーさん　だーいすき！</language>
 	</row>
 
-	<row id="msg_c02pc0101_backpackerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c02pc0101_backpackerm_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BACKPACKERM
 バックパッカー♂</attribute>
@@ -314,6 +314,17 @@
 ネジ山で　みつかったそうだね▼
 で　ヤーコンという　人物が
 博物館に　寄贈したらしい</language>
+	</row>
+
+	<row id="msg_c02pc0101_boy1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">ポケモンセンターの　パソコンで
+「ヘルプをみる」を　えらぶと▽
+いろいろ　わかって　いー　かんじ！</language>
+		<language name="JPN_KANJI" width="256">ポケモンセンターの　パソコンで
+「ヘルプをみる」を　選択すると▽
+いろいろ　わかって　いー　感じ！</language>
 	</row>
 
 	<flowchart-group-list>
