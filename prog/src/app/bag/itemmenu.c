@@ -44,7 +44,7 @@
 #include "system/scroll_bar.h"
 
 #include "field/eventwork.h"  // GAMEDATA_GetEventWork
-#include "../../../resource/fldmapdata/flagwork/work_define.h"  // WK_SYS_N01R0502_ITEMUSE
+//#include "../../../resource/fldmapdata/flagwork/work_define.h"  // WK_SYS_N01R0502_ITEMUSE
 
 //============================================================================================
 //============================================================================================
