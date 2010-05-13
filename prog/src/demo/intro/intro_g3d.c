@@ -90,8 +90,8 @@ static const VecFx32 sc_camera_target = { 0, 0, 0 };
                                        FX32_CONST(-1.0f)};
     static const VecFx32 cam_up = {0,FX32_ONE,0};
 */
-#define	ORTHO_HEIGHT	( 3 )
-#define	ORTHO_WIDTH		( 4 )
+#define	ORTHO_HEIGHT	( 6 )
+#define	ORTHO_WIDTH		( 8 )
 
 
 //=============================================================================
@@ -166,7 +166,6 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID sc
 									FX32_CONST(1024),
 									FX32_ONE,
 									&pos, &up, &target, heap_id );
-
 	}
   
 	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO ){
