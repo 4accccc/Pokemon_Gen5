@@ -444,11 +444,10 @@ EVENT_START   ev_pos_r02_mama_01
 
 	//ママがランニングシューズの説明
 	_BALLOONWIN_OBJMSG( msg_r02_mama_04, MMDL_ID_EVENTOBJ_00)
-	_BALLOONWIN_CLOSE()
-	
+/*
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_mama_back)
 	_OBJ_ANIME_WAIT()
-	
+*/	
 	//ママ「あなたは　ひとりじゃ～」
 	_BALLOONWIN_OBJMSG( msg_r02_mama_05, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
@@ -523,7 +522,7 @@ _ANIME_LABEL	anm_mama_back
 //ママ:2番道路から去るA                        
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_mama_saru_a
-	_ANIME_DATA AC_WALK_R_8F,6
+	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -531,7 +530,7 @@ _ANIME_LABEL	anm_mama_saru_a
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_mama_saru_b
 	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA AC_WALK_R_8F,6
+	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

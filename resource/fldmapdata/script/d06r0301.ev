@@ -42,15 +42,40 @@ EVENT_START   ev_d06r0301_sage3_01
 	//ヒウンで見たときは　気にも止めなかった
 	_BALLOONWIN_OBJMSG_POS(msg_d06r0301_sage3_end_01, D06R0301_SAGE3_01, POS_DOWN )
 	_MSGWIN_CLOSE()
-	
+/*
+	//プラズマ団のしたっぱをイベント地に移動
+	IF $LWK_POSX == 15 THEN
+		_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,38,DIR_DOWN)
+		_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,39,DIR_DOWN)
+		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+		_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1_a)
+		_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1_a)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	ELSIF $LWK_POSX == 16 THEN
+		_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,39,DIR_DOWN)
+		_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,38,DIR_DOWN)
+		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+		_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1_b)
+		_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1_b)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	ELSIF $LWK_POSX == 17 THEN
+		_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,39,DIR_DOWN)
+		_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,38,DIR_DOWN)
+		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+		_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1_c)
+		_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1_c)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	ENDIF
+	_OBJ_ANIME_WAIT()
+*/	
 	//プラズマ団のしたっぱをイベント地に移動
 	_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,39,DIR_DOWN)
 	_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,38,DIR_DOWN)
 	
 	//プラズマ団のしたっぱがやってくる
-	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1)
-	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1)
-
+	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1_b)
+	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1_b)
+	
 	IF $LWK_POSX == 15 THEN
 		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
 		_TIME_WAIT(8)
@@ -70,7 +95,7 @@ EVENT_START   ev_d06r0301_sage3_01
 
 	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_2)
 	_OBJ_ANIME_WAIT()
-	
+
 	//戦闘処理
 	_CALL  ev_hakaim_btl
 
@@ -267,13 +292,27 @@ _ANIME_LABEL	anm_icpo_come_02
 //--------------------------------------------------------------------
 // プラズマ団オトコ：主人公にちかづく                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_d06r0301_hakaim_move_1
+_ANIME_LABEL	anm_d06r0301_hakaim_move_1_a
+
+	_ANIME_DATA AC_WALK_D_8F,8
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d06r0301_hakaim_move_1_b
 
 	_ANIME_DATA AC_WALK_D_8F,7
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_d06r0301_hakaim_move_1_c
+
+	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA AC_WALK_R_8F,5
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 //戦闘前、一歩近づく
 _ANIME_LABEL	anm_d06r0301_hakaim_move_2
 
@@ -302,10 +341,24 @@ _ANIME_LABEL	anm_d06r0301_hakaim_move_4
 //--------------------------------------------------------------------
 // プラズマ団オンナ：主人公にちかづく                   
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_d06r0301_hakaiw_move_1
+_ANIME_LABEL	anm_d06r0301_hakaiw_move_1_a
+
+	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d06r0301_hakaiw_move_1_b
 
 	_ANIME_DATA AC_WALK_D_8F,8
 	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d06r0301_hakaiw_move_1_c
+
+	_ANIME_DATA AC_WALK_D_8F,8
+	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 

@@ -513,6 +513,7 @@ _ANIME_LABEL anm_support_info7
 //	サポート　ヒウンシティのほうを見る
 //--------------------------------------------------------------------
 _ANIME_LABEL anm_support_look
+	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		AC_STAY_WALK_D_16F,1
 	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		ACMD_END,0

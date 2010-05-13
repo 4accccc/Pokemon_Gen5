@@ -179,19 +179,14 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 	    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 		_CAMERA_MOVE(9688,0,970752,819200,0,1409024,32)
 	    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	    _TIME_WAIT(32)
     
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_01, C02GYM0101_AD_01,POS_DEFAULT )
 		_MSGWIN_CLOSE()
-
-		//副館長：主人公を向く
-		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
 		
-		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
-		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_02, C02GYM0101_AD_01,POS_DEFAULT )
-		_MSGWIN_CLOSE()
+		//副館長：主人公を向く
+		_OBJ_ANIME( C02GYM0101_AD_01, anm_ad_turn_gyoe )
+		_OBJ_ANIME_WAIT()
 		
 		//副館長：主人公の前まで来る
 		//POSの3グリッド分を用意する
@@ -210,6 +205,10 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 
 		DEFAULT
 		ENDSWITCH
+		
+		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
+		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_02, C02GYM0101_AD_01,POS_DEFAULT )
+		_MSGWIN_CLOSE()
 		
 		//副館長：展示物の方を向く
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_u)
@@ -249,13 +248,11 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_03, C02GYM0101_AD_01,POS_DL )
 		_BALLOONWIN_CLOSE()
 	
-		_TIME_WAIT(8)
 		_CAMERA_DEF_MOVE(1)//引数は移動にかかるフレーム数
 		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 		_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 		_CAMERA_END()		//カメラ操作終了
 
-		_TIME_WAIT(8)
 		//副館長：展示物（隕石）まで移動
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_inseki)	
 		_TIME_WAIT(2)
@@ -287,13 +284,11 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_jimu)
 		_OBJ_ANIME_WAIT()		
 
-		_TIME_WAIT(8)
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラのバインドを解く
 		_CAMERA_MOVE( 9694,0,970795,819200,196655,163840,32 )	//一番最後の引数は移動にかかるフレーム数
 		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 		
-		_TIME_WAIT(16)
 		//副館長：ジムの説明
 		//あの扉の　先が　ポケモンジムと　なっております
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_06, C02GYM0101_AD_01,POS_UR )
@@ -325,6 +320,14 @@ EVENT_END
 _ANIME_LABEL	anm_ad_bikkuri_mark
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_ad_turn_gyoe
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 //副館長:下を向く                              
 //--------------------------------------------------------------------
@@ -589,7 +592,7 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 
     //[100224斉藤マ修正 けむり演出を組み込みました]
     //ホワイトアウト中にＯＢＪを消す---------------------
-	_WHITE_OUT()
+	_WHITE_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 
 	_FLAG_SET( FV_C02GYM0101_HAKAI )  //プラズマ団を非表示にする
@@ -609,13 +612,15 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 14, 15 )
 	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
 	
-	_WHITE_IN()
-	_DISP_FADE_END_CHECK()
-	//ホワイトアウト終了---------------------------------
+	//ホネが消える瞬間を見えないようにするためのウェイト
+	_WHITE_IN_SLOW()
 
 	//煙のSEを鳴らす
 	_SE_PLAY( SEQ_SE_FLD_143 )
+
+	_DISP_FADE_END_CHECK()
 	_SE_WAIT()
+	//ホワイトアウト終了---------------------------------
 	
 	//けむりが晴れるの待ち
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
@@ -641,8 +646,8 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 
 	//アロエが退場
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_b )
-	_OBJ_ANIME_WAIT()
 	
+	_TIME_WAIT(40)
 	//副館長があたふた見渡す
 	_OBJ_ANIME(C02GYM0101_AD_01, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
@@ -718,8 +723,8 @@ _ANIME_LABEL	anm_leader_idou_tounan_a
 //アロエ:博物館の外に退場                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_idou_tounan_b
-	_ANIME_DATA	AC_WALK_L_2F,5,1
-	_ANIME_DATA	AC_WALK_D_2F,10,1
+	_ANIME_DATA	AC_WALK_L_4F,5,1
+	_ANIME_DATA	AC_WALK_D_4F,10,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
