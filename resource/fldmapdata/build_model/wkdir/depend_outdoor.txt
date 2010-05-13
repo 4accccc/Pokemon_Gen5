@@ -302,4 +302,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/r01_b_autumn.nsbmd \
 	$(RESDIR)/r01_a_winter.nsbmd \
 	$(RESDIR)/r01_b_winter.nsbmd \
+	$(RESDIR)/h04_ligth2.nsbmd \
 

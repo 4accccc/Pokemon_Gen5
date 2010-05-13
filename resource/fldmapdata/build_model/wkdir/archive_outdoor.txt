@@ -301,3 +301,4 @@
 "nsbmdfiles/r01_b_autumn.nsbmd"
 "nsbmdfiles/r01_a_winter.nsbmd"
 "nsbmdfiles/r01_b_winter.nsbmd"
+"nsbmdfiles/h04_ligth2.nsbmd"
