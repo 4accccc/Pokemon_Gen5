@@ -122,6 +122,15 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage7_01, N01R0101_SAGE2_07, POS_UP )
 	_MSGWIN_CLOSE()
 	
+	//七賢人３・４・５が前に出て、主人公下がる
+	_OBJ_ANIME( N01R0101_SAGE2_03, anm_walk_d )
+	_OBJ_ANIME( N01R0101_SAGE2_04, anm_walk_d )
+	_OBJ_ANIME( N01R0101_SAGE2_05, anm_walk_d )
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_sage6_move_02 )
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_sage7_move_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_hirumu )
+	_OBJ_ANIME_WAIT()
+	
 	//７人衆２：前へ
 	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
 	_OBJ_ANIME_WAIT()
@@ -130,7 +139,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_sage2_02, N01R0101_SAGE2_02, POS_UP )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT( 15 )
+	_TIME_WAIT( 30 )
 	
 	//BGM無音へ
 	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
@@ -138,6 +147,10 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//???だいじょうぶだろうよ
 	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
 	_MSGWIN_CLOSE()
+	
+	//七賢人？マーク
+	_OBJ_ANIME( N01R0101_SAGE2_02, anm_hatena )
+	_OBJ_ANIME_WAIT()
 	
 	//イベント曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_GL_UNION )
@@ -156,6 +169,15 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_MSGWIN_CLOSE()
 	
 	_OBJ_ANIME( N01R0101_SAGE2_02, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_slowback_u )
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_slowback_u )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( N01R0101_SAGE2_03, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_04, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_05, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_06, anm_back_u )
+	_OBJ_ANIME( N01R0101_SAGE2_07, anm_back_u )
 	_OBJ_ANIME_WAIT()
 	
 	//きさまホドモエの！？
@@ -168,7 +190,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//フン！俺さまだけじゃない
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0101_leader5_03, N01R0101_LEADER5_01, POS_DOWN )
 	_MSGWIN_CLOSE()
-	
+
 	//ジムリーダー７人が一斉に登場
 	_FLAG_RESET( FV_N01R0101_LEADERS_01 )
 	_OBJ_ADD( N01R0101_LEADER2_01 )
@@ -252,7 +274,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_MSGWIN_CLOSE()
 
 	//カメラ戻す
-	_CAMERA_RECV_MOVE( 30 )	//カメラ復帰移動
+	_CAMERA_DEF_MOVE( 30 )	//カメラ復帰移動
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
@@ -277,7 +299,13 @@ EVENT_END
 //主人公：上へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_01
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_hirumu
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -305,6 +333,20 @@ _ANIME_LABEL	anm_sage6_move_01
 
 _ANIME_LABEL	anm_sage7_move_01
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage6_move_02
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage7_move_02
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -385,6 +427,22 @@ _ANIME_LABEL	anm_stay_l
 _ANIME_LABEL	anm_back_u
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_slowback_u
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_slowback_u2
+	_ANIME_DATA	AC_WAIT_16F,2
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
