@@ -20,8 +20,6 @@
 //======================================================================
 //	proto
 //======================================================================
-static void MMdlSys_ArcHandleOpen( MMDLSYS *fos );
-static void MMdlSys_ArcHandleClose( MMDLSYS *fos );
 
 //======================================================================
 //	フィールド動作モデル　描画システム
@@ -39,23 +37,7 @@ static void MMdlSys_ArcHandleClose( MMDLSYS *fos );
 //--------------------------------------------------------------
 void MMDLSYS_InitDraw( MMDLSYS *fos )
 {
-	#ifndef MMDL_PL_NULL
-	int max,pri;
-	MMDL_BLACT_CONT *cont;
-	
-	GF_ASSERT( MMDLSYS_CheckCompleteDrawInit(fos) == FALSE );
-	MMdlSys_ArcHandleOpen( fos );
-	
-	max = MMDLSYS_GetMMdlMax( fos );
-	pri = MMDLSYS_GetTCBPriority( fos ) - 1; //追加処理は標準より上
-	cont = MMDLSYS_BlActContGet( fos );
-	
-	MMDL_BlActCont_Init(
-		cont, fos, max, pri, tex_max, reg_tex_max, tex_tbl, frm_trans_max );
-	MMDLSYS_StatusBit_ON( fos, MMDLSYS_STABIT_DRAW_INIT_COMP );
-	#else
 	MMDLSYS_SetCompleteDrawInit( fos, TRUE );
-	#endif
 }
 
 //--------------------------------------------------------------
@@ -67,14 +49,6 @@ void MMDLSYS_InitDraw( MMDLSYS *fos )
 //--------------------------------------------------------------
 void MMDLSYS_DeleteDraw( MMDLSYS *fos )
 {
-	#ifndef MMDL_PL_NULL
-	GF_ASSERT( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE );
-	
-	MMDL_BlActCont_Delete( MMDLSYS_BlActContGet(fos) );
-	
-	MMDLSYS_StatusBit_OFF( fos, MMDLSYS_STABIT_DRAW_INIT_COMP );
-	MMdlSys_ArcHandleClose( fos );
-	#else
   if( MMDLSYS_GetBlActCont(fos) != NULL ){
 		MMDL_BLACTCONT_Release( fos );
 	}
@@ -84,40 +58,6 @@ void MMDLSYS_DeleteDraw( MMDLSYS *fos )
   }
   
 	MMDLSYS_SetCompleteDrawInit( fos, FALSE );
-	#endif
-}
-
-//======================================================================
-//	アーカイブ
-//======================================================================
-//--------------------------------------------------------------
-/**
- * アーカイブハンドルセット
- * @param	fos		MMDLSYS *
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void MMdlSys_ArcHandleOpen( MMDLSYS *fos )
-{
-#ifndef MMDL_PL_NULL
-	ARCHANDLE *handle = ArchiveDataHandleOpen( ARC_MMODEL, HEAPID_FIELD );
-	MMDLSYS_SetArcHandle( fos, handle );
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * アーカイブハンドルクローズ
- * @param	fos		MMDLSYS *
- * @retval	nothing
- */
-//--------------------------------------------------------------
-static void MMdlSys_ArcHandleClose( MMDLSYS *fos )
-{
-#ifndef MMDL_PL_NULL
-	ARCHANDLE *handle = MMDLSYS_GetArcHandle( fos );
-	ArchiveDataHandleClose( handle );
-#endif
 }
 
 //======================================================================
@@ -159,45 +99,6 @@ void MMDL_UpdateDraw( MMDL * fmmdl )
 }
 
 //======================================================================
-//	フィールド動作モデル 描画ステータス
-//======================================================================
-#ifndef MMDL_PL_NULL
-//--------------------------------------------------------------
-/**
- * OBJコードから描画ステータス取得
- * @param	code	表示コード HERO等
- * @retval	OBJCODE_STATE*
- */
-//--------------------------------------------------------------
-const OBJCODE_STATE * MMDL_TOOL_GetOBJCodeState( u16 code )
-{
-	const OBJCODE_STATE *state = DATA_FieldOBJCodeDrawStateTbl;
-	
-	do{
-		if( state->code == code ){
-			return( state );
-		}
-		state++;
-	}while( state->code != OBJCODEMAX );
-	
-	GF_ASSERT( 0 );
-	return( NULL );
-}
-
-//--------------------------------------------------------------
-/**
- * 動作モデルOBJコードから描画ステータス取得
- * @param	code	表示コード HERO等
- * @retval	OBJCODE_STATE*
- */
-//--------------------------------------------------------------
-const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *fmmdl )
-{
-	return( MMDL_TOOL_GetOBJCodeState(MMDL_GetOBJCode(fmmdl)) );
-}
-#endif
-
-//======================================================================
 //	parts
 //======================================================================
 //--------------------------------------------------------------
@@ -220,43 +121,6 @@ BOOL MMDL_CheckDrawPause( const MMDL * fmmdl )
 	}
 
 	return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * アーカイブデータロード
- * @param	fos		MMDLSYS *
- * @param	datID	アーカイブデータID
- * @param	fb TRUE=GFL_HEAP_AllocClearMemory() FALSE=GFL_HEAP_AllocClearMemoryLo()
- * @retval	void*	取得したデータ
- */
-//--------------------------------------------------------------
-void * MMDL_DrawArcDataAlloc( const MMDLSYS *fos, u32 datID, int fb )
-{
-#ifndef MMDL_PL_NULL
-	void *buf;
-	ARCHANDLE *handle = MMDLSYS_GetArcHandle( fos );
-	u32 size = ArchiveDataSizeGetByHandle( handle, datID );
-	
-	if( fb == TRUE ){
-		buf = GFL_HEAP_AllocClearMemory( HEAPID_FIELD, size );
-	}else{
-		buf = GFL_HEAP_AllocClearMemoryLo( HEAPID_FIELD, size );
-	}
-	
-	#ifdef DEBUG_MMDL_DEVELOP
-	{
-	 u32 free = sys_GetHeapFreeSize( HEAPID_FIELD );
-	 D_MMDL_DPrintf( "fmmdl DrawArcData datID(%d) FIELD HEAP FreeSize %xH\n",
-			 datID, free );
-	}
-	#endif
-	
-	ArchiveDataLoadByHandle( handle, datID, buf );
-	return( buf );
-#else
-	return( NULL );
-#endif
 }
 
 //--------------------------------------------------------------

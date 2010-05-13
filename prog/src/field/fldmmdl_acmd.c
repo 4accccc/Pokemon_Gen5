@@ -238,13 +238,9 @@ static void AcStayWalkWorkInit(
 	MMDL * mmdl, int dir, s16 wait, u16 draw );
 static int AC_StayWalk_1( MMDL * mmdl );
 
-#ifndef MMDL_PL_NULL
-static void AcMarkWorkInit(
-	MMDL * mmdl, GYOE_TYPE type, int trans );
-#else
 static void AcMarkWorkInit(
 	MMDL * mmdl, int type, int trans );
-#endif
+
 static int AC_Mark_1( MMDL * mmdl );
 
 const fx32 * DATA_AcJumpOffsetTbl[];
@@ -4642,7 +4638,7 @@ typedef struct
 //--------------------------------------------------------------
 static int AC_ShinMuC_Fly0( MMDL * mmdl )
 {
-  VecFx32 offs = {0,FX32_ONE*24,0};
+  VecFx32 offs = {0,FX32_ONE*8,0};
   AC_SHIN_MU_C_FLY_WORK *work;
 	
   work = MMDL_InitMoveCmdWork( mmdl, AC_SHIN_MU_C_FLY_WORK_SIZE );

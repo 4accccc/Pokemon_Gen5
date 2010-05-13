@@ -3456,6 +3456,7 @@ BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * mmdl )
   return( FALSE );
 }
 
+#if 0 //old pl
 //--------------------------------------------------------------
 /**
  * MMDL 橋移動フラグセット
@@ -3464,7 +3465,6 @@ BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * mmdl )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
 void MMDL_SetStatusBitBridge( MMDL * mmdl, BOOL flag )
 {
   if( flag == TRUE ){
@@ -4121,9 +4121,6 @@ static void mmdl_InitDrawWork( MMDL *mmdl )
   }
   
   MMDL_SetDrawStatus( mmdl, 0 );
-  #ifndef MMDL_PL_NULL
-  MMDL_BlActAddPracFlagSet( mmdl, FALSE );
-  #endif
   
   if( MMDL_CheckMoveBitCompletedDrawInit(mmdl) == FALSE ){
     mmdl_InitCallDrawProcWork( mmdl );

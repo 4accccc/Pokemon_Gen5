@@ -111,22 +111,20 @@ static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrGroundSmokeProc_2( MMDL *mmdl, ATTRDATA *data );
 
-static void MMdl_MapAttrLGrassProc_0( MMDL *mmdl, ATTRDATA *data );
-static void MMdl_MapAttrLGrassProc_1( MMDL *mmdl, ATTRDATA *data );
+//static void MMdl_MapAttrLGrassProc_0( MMDL *mmdl, ATTRDATA *data );
+//static void MMdl_MapAttrLGrassProc_1( MMDL *mmdl, ATTRDATA *data );
 
-static void MMdl_MapAttrNGrassProc_0( MMDL *mmdl, ATTRDATA *data );
-static void MMdl_MapAttrNGrassProc_1( MMDL *mmdl, ATTRDATA *data );
+//static void MMdl_MapAttrNGrassProc_0( MMDL *mmdl, ATTRDATA *data );
+//static void MMdl_MapAttrNGrassProc_1( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrPoolProc_1( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrPoolProc_2( MMDL *mmdl, ATTRDATA *data );
 
-static void MMdl_MapAttrSwampProc_1( MMDL *mmdl, ATTRDATA *data );
-static void MMdl_MapAttrSwampProc_2( MMDL *mmdl, ATTRDATA *data );
+//static void MMdl_MapAttrSwampProc_1( MMDL *mmdl, ATTRDATA *data );
+//static void MMdl_MapAttrSwampProc_2( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrReflect_2( MMDL *mmdl, ATTRDATA *data );
-
-static void MMdl_MapAttrBridgeProc_01( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrBiriBiri_2( MMDL *mmdl, ATTRDATA *data );
 
@@ -374,13 +372,10 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
     ATTRDATA data;
     mmdl_InitAttrData( mmdl, &data );
     
-    MMdl_MapAttrBridgeProc_01( mmdl, &data );
     MMdl_MapAttrGrassProc_0( mmdl, &data );
     MMdl_MapAttrSplashProc_0( mmdl, &data );
     MMdl_MapAttrShadowProc_01( mmdl, &data );
     MMdl_MapAttrHeight_02( mmdl, &data );
-    MMdl_MapAttrLGrassProc_0( mmdl, &data );
-    MMdl_MapAttrNGrassProc_0( mmdl, &data );
     MMdl_MapAttrReflect_01( mmdl, &data );
   }
 }
@@ -400,15 +395,11 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
     ATTRDATA data;
     mmdl_InitAttrData( mmdl, &data );
     
-    MMdl_MapAttrBridgeProc_01( mmdl, &data );
     MMdl_MapAttrGrassProc_12( mmdl, &data );
     MMdl_MapAttrFootMarkProc_1( mmdl, &data );
     MMdl_MapAttrSplashProc_12( mmdl, &data );
     MMdl_MapAttrShadowProc_01( mmdl, &data );
-    MMdl_MapAttrLGrassProc_1( mmdl, &data );
-    MMdl_MapAttrNGrassProc_1( mmdl, &data );
     MMdl_MapAttrPoolProc_1( mmdl, &data );
-    MMdl_MapAttrSwampProc_1( mmdl, &data );
     MMdl_MapAttrReflect_01( mmdl, &data );
     
     MMdl_MapAttrSEProc_1( mmdl, &data ); //描画関係ない?
@@ -430,7 +421,6 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl )
     ATTRDATA data;
     mmdl_InitAttrData( mmdl, &data );
     
-    MMdl_MapAttrBridgeProc_01( mmdl, &data );
     MMdl_MapAttrShadowProc_01( mmdl, &data );
     MMdl_MapAttrReflect_01( mmdl, &data );
     MMdl_MapAttrSplashProc_Jump1( mmdl, &data );
@@ -457,7 +447,6 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * mmdl )
     //終了　アトリビュート処理
     MMdl_MapAttrHeight_02( mmdl, &data );
     MMdl_MapAttrPoolProc_2( mmdl, &data );
-    MMdl_MapAttrSwampProc_2( mmdl, &data );
     MMdl_MapAttrSplashProc_12( mmdl, &data );
     MMdl_MapAttrReflect_2( mmdl, &data );
     MMdl_MapAttrShadowProc_2( mmdl, &data );
@@ -483,7 +472,6 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * mmdl )
     //終了　アトリビュート処理
     MMdl_MapAttrHeight_02( mmdl, &data );
     MMdl_MapAttrPoolProc_2( mmdl, &data );
-    MMdl_MapAttrSwampProc_2( mmdl, &data );
     MMdl_MapAttrSplashProc_12( mmdl, &data );
     MMdl_MapAttrReflect_2( mmdl, &data );
     MMdl_MapAttrShadowProc_2( mmdl, &data );
@@ -522,7 +510,7 @@ static void MMdl_MapAttrHeight_02( MMDL *mmdl, ATTRDATA *data )
   }
 }
 
-#ifndef MMDL_PL_NULL
+#if 0 //old
 static void MMdl_MapAttrHeight_02(
     MMDL * mmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
@@ -862,6 +850,7 @@ static void MMdl_MapAttrGroundSmokeProc_2( MMDL *mmdl, ATTRDATA *data )
 //======================================================================
 //  アトリビュート　長い草
 //======================================================================
+#if 0 //old
 //--------------------------------------------------------------
 /**
  * 長い草　動作開始 0
@@ -874,11 +863,9 @@ static void MMdl_MapAttrGroundSmokeProc_2( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrLGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
   if( MAPATTR_IsLongGrass(now) == TRUE ){
     FE_mmdlLGrass_Add( mmdl, FALSE );
   }
-  #endif
 }
 
 //--------------------------------------------------------------
@@ -893,16 +880,16 @@ static void MMdl_MapAttrLGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrLGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
   if( MAPATTR_IsLongGrass(now) == TRUE ){
     FE_mmdlLGrass_Add( mmdl, TRUE );
   }
-  #endif
 }
+#endif
 
 //======================================================================
 //  アトリビュート　沼草
 //======================================================================
+#if 0 //old
 //--------------------------------------------------------------
 /**
  * 沼草　動作開始 0
@@ -915,11 +902,9 @@ static void MMdl_MapAttrLGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrNGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
   if( MAPATTR_IsSwampGrass(now) == TRUE ){
     FE_mmdlNGrass_Add( mmdl, FALSE );
   }
-  #endif
 }
 
 //--------------------------------------------------------------
@@ -934,12 +919,11 @@ static void MMdl_MapAttrNGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrNGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
   if( MAPATTR_IsSwampGrass(now) == TRUE ){
     FE_mmdlNGrass_Add( mmdl, TRUE );
   }
-  #endif
 }
+#endif
 
 //======================================================================
 //  アトリビュート　水たまり
@@ -987,6 +971,7 @@ static void MMdl_MapAttrPoolProc_2( MMDL *mmdl, ATTRDATA *data )
 //======================================================================
 //  アトリビュート　沼
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * 沼　動作開始 1
@@ -999,14 +984,12 @@ static void MMdl_MapAttrPoolProc_2( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrSwampProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
   if( MAPATTR_IsSwamp(old) == TRUE ){
     FE_mmdlNRippleSet( mmdl,
       MMDL_GetOldGridPosX(mmdl),
       MMDL_GetOldGridPosY(mmdl), 
       MMDL_GetOldGridPosZ(mmdl) );
   }
-  #endif
 }
 
 //--------------------------------------------------------------
@@ -1021,15 +1004,14 @@ static void MMdl_MapAttrSwampProc_1( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrSwampProc_2( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
   if( MAPATTR_IsSwamp(now) == TRUE ){
     FE_mmdlNRippleSet( mmdl,
       MMDL_GetGridPosX(mmdl),
       MMDL_GetGridPosY(mmdl), 
       MMDL_GetGridPosZ(mmdl) );
   }
-  #endif
 }
+#endif
 
 //======================================================================
 //  アトリビュート　映りこみ
@@ -1132,32 +1114,6 @@ static void MMdl_MapAttrReflect_2( MMDL *mmdl, ATTRDATA *data )
 }
 
 //======================================================================
-//  アトリビュート　橋
-//======================================================================
-//--------------------------------------------------------------
-/**
- * 橋　動作開始 0
- * @param  mmdl    MMDL *
- * @param  now      現在のアトリビュート
- * @param  old      過去のアトリビュート
- * @param  prm    OBJCODE_PARAM
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void MMdl_MapAttrBridgeProc_01( MMDL *mmdl, ATTRDATA *data )
-{
-  #ifndef MMDL_PL_NULL
-  if( MAPATTR_IsBridgeFlag(now) == TRUE ){
-    MMDL_SetStatusBitBridge( mmdl, TRUE );
-  }else if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
-    if( MAPATTR_IsBridge(now) == FALSE ){
-      MMDL_SetStatusBitBridge( mmdl, FALSE );
-    }
-  }
-  #endif
-}
-
-//======================================================================
 //  アトリビュート　ビリビリ床
 //======================================================================
 //--------------------------------------------------------------
@@ -1192,11 +1148,6 @@ static void MMdl_MapAttrBiriBiri_2( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrSEProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-  #ifndef MMDL_PL_NULL
-  if( MAPATTR_IsSnow(now) ){
-    Snd_SePlay( SEQ_SE_DP_YUKIASHI );
-  }
-  #endif
 }
 
 //======================================================================
@@ -1211,7 +1162,7 @@ static void MMdl_MapAttrSEProc_1( MMDL *mmdl, ATTRDATA *data )
  * @retval  u32    ヒットビット。MMDL_MOVEHITBIT_LIM等
  */
 //--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
+#if 0
 u32 MMDL_PosHitCheck( const MMDLSYS *fos, int x, int z )
 {
   u32 ret;
@@ -1762,164 +1713,6 @@ static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR_VALUE val ) =
   MAPATTR_VALUE_CheckNotMoveRight,
   MAPATTR_VALUE_CheckNotMoveLeft,
 };
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した水アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  BOOL  TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-static BOOL MMdl_CheckMapAttrKind_Water( MMDL * mmdl, u32 attr )
-{
-  #ifndef MMDL_PL_NULL
-  if( MAPATTR_IsBridgeWater(attr) ){
-    if( MMDL_CheckStatusBitBridge(mmdl) == FALSE ){
-      return( TRUE );
-    }
-  }else if( MAPATTR_IsWater(attr) ){
-    return( TRUE );
-  }
-  #endif
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した砂アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  int    TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-static BOOL MMdl_CheckMapAttrKind_Sand( MMDL * mmdl, u32 attr )
-{
-  #ifndef MMDL_PL_NULL
-  if( MAPATTR_IsBridgeSand(attr) ){
-    if( MMDL_CheckStatusBitBridge(mmdl) == FALSE ){
-      return( TRUE );
-    }
-  }else if( MAPATTR_IsSand(attr) ){
-    return( TRUE );
-  }
-  #endif
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した雪アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  int    TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-static BOOL MMdl_CheckMapAttrKind_Snow( MMDL * mmdl, u32 attr )
-{
-  #ifndef MMDL_PL_NULL
-  if( MAPATTR_IsBridgeSnowShallow(attr) ){
-    if( MMDL_CheckStatusBitBridge(mmdl) == FALSE ){
-      return( TRUE );
-    }
-  }else if( MAPATTR_IsSnow(attr) ){
-    return( TRUE );
-  }
-  #endif
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した浅い雪アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  int    TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-static BOOL MMdl_CheckMapAttrKind_MostShallowSnow(
-    MMDL * mmdl, u32 attr )
-{
-  #ifndef MMDL_PL_NULL
-  if( MAPATTR_IsBridgeSnowShallow(attr) ){
-    if( MMDL_CheckStatusBitBridge(mmdl) == FALSE ){
-      return( TRUE );
-    }
-  }else if( MAPATTR_IsMostShallowSnow(attr) ){
-    return( TRUE );
-  }
-  #endif  
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した橋アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  int    TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-#if 0 //wb null
-static BOOL MMdl_CheckMapAttrKind_Bridge( MMDL * mmdl, u32 attr )
-{
-  if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
-    #ifndef MMDL_PL_NULL
-    if( MAPATTR_IsBridge(attr) == TRUE ){
-      return( TRUE );
-    }
-    #endif
-  }
-  
-  return( FALSE );
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した一本橋縦アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  int    TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-#if 0 //wb null
-static BOOL MMdl_CheckMapAttrKind_BridgeV( MMDL * mmdl, u32 attr )
-{
-  if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
-  #ifndef MMDL_PL_NULL
-    if( MAPATTR_IsBridgeV(attr) == TRUE ){
-      return( TRUE );
-    }
-  #endif
-  }
-  
-  return( FALSE );
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * 橋を考慮した一本橋横アトリビュートチェック
- * @param  mmdl  MMDL *
- * @param  attr  アトリビュート
- * @retval  int    TRUE=水アトリビュート
- */
-//--------------------------------------------------------------
-#if 0 //wb null
-static BOOL MMdl_CheckMapAttrKind_BridgeH( MMDL * mmdl, u32 attr )
-{
-  if( MMDL_CheckStatusBitBridge(mmdl) == TRUE ){
-  #ifndef MMDL_PL_NULL
-    if( MAPATTR_IsBridgeH(attr) == TRUE ){
-      return( TRUE );
-    }
-  #endif
-  }
-  
-  return( FALSE );
-}
-#endif
 
 //--------------------------------------------------------------
 /**

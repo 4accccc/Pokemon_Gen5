@@ -603,21 +603,6 @@ typedef struct
 #define MMDL_ACMD_LIST_SIZE (sizeof(MMDL_ACMD_LIST))
 
 //--------------------------------------------------------------
-///	OBJCODE_STATE構造体
-//--------------------------------------------------------------
-#ifndef MMDL_PL_NULL
-typedef struct
-{
-	int code;				///<OBJコード
-	u32 type_draw:4;		///<MMDL_DRAWTYPE
-	u32 type_shadow:2;		///<MMDL_SHADOWTYPE
-	u32 type_footmark:4;	///<MMDL_FOOTMARKTYPE
-	u32 type_reflect:2;		///<MMDL_REFLECTTYPE
-	u32 dmy:20;				///<bit余り
-}OBJCODE_STATE;
-#endif
-
-//--------------------------------------------------------------
 ///	OBJCODE_PARAM構造体　外部データと一致 28byte
 //	0-1 OBJコード
 //	2-3 リソースアーカイブインデックス 
@@ -975,10 +960,6 @@ extern void MMDL_SetMoveBitShoalEffect( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckMoveBitShoalEffect( const MMDL * mmdl );
 extern void MMDL_SetStatusBitAttrOffsetOFF( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitAttrOffsetOFF( const MMDL * mmdl );
-#ifndef MMDL_PL_NULL
-extern void MMDL_SetStatusBitBridge( MMDL * mmdl, BOOL flag );
-extern BOOL MMDL_CheckStatusBitBridge( const MMDL * mmdl );
-#endif
 extern void MMDL_SetMoveBitReflect( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckMoveBitReflect( const MMDL * mmdl );
 extern BOOL MMDL_CheckMoveBitAcmd( const MMDL * mmdl );
@@ -1083,25 +1064,6 @@ extern const MMDL_BBDACT_ANMTBL
 extern const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2];
 extern const u16 DATA_MMDL_BLACT_MdlSizeDrawSize[MMDL_BLACT_MDLSIZE_MAX][2];
 
-#ifndef MMDL_PL_NULL
-extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
-#endif
-
-#ifndef MMDL_PL_NULL
-extern const MMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Non;
-
-extern const MMDL_RESMNARC DATA_MMDL_ResmNArcTbl_RenderOBJ[];
-extern const int DATA_FIELDOBJ_RenderOBJMax;
-
-extern const MMDL_RESMNARC DATA_MMDL_ResmNArcTbl_Tex[];
-extern const MMDL_RESMNARC DATA_MMDL_ResmNArcTbl_Mdl[];
-extern const MMDL_RESMNARC DATA_MMDL_ResmNArcTbl_Anm[];
-extern const int DATA_MMDL_Regular_Tex[];
-extern const int DATA_MMDL_Regular_Mdl[];
-extern const int DATA_MMDL_Regular_Anm[];
-extern const int DATA_MMDL_BlActFogEnableOFFTbl[];
-#endif
-
 //--------------------------------------------------------------
 //	fldmmdl_move.c
 //--------------------------------------------------------------
@@ -1177,15 +1139,7 @@ extern void MMDLSYS_DeleteDraw( MMDLSYS *fos );
 
 extern void MMDL_UpdateDraw( MMDL * mmdl );
 
-
-#ifndef MMDL_PL_NULL
-extern const OBJCODE_STATE * MMDL_TOOL_GetOBJCodeState( u16 code );
-extern const OBJCODE_STATE * MMDL_GetOBJCodeState( const MMDL *mmdl );
-#endif
-
 extern BOOL MMDL_CheckDrawPause( const MMDL * mmdl );
-extern void * MMDL_DrawArcDataAlloc(
-		const MMDLSYS *fos, u32 datID, int fb );
 extern void MMDL_GetDrawVectorPos(
 		const MMDL * mmdl, VecFx32 *vec );
 

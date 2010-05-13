@@ -1245,7 +1245,7 @@ static int CopyMove_CmdSet( MMDL * mmdl, MV_COPY_WORK *work )
   int ret;
   MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
   u16 dir = MMDL_GetDirMove( jiki );
-#ifndef MMDL_PL_NULL //wb 自機側の対応が必要
+#if 0 //wb 自機側の対応が必要
   u32 type = Player_AcmdTypeGet( fsys->player );
   
   switch( type ){
@@ -1274,7 +1274,7 @@ static int CopyMove_CmdSet( MMDL * mmdl, MV_COPY_WORK *work )
   ret = MMDL_ChangeDirAcmdCode( dir, AC_DIR_U );
   MMDL_SetLocalAcmd( mmdl, ret );
 #endif
-
+  
   work->seq_no = SEQNO_COPYMOVE_CMD_WAIT;
   return( TRUE );
 }
