@@ -11189,9 +11189,9 @@
 
 	<row id="TRID_RIVAL_19_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">きみの　つよさ……
-そして　ぼくの　つよさ……</language>
+そして　ぼくの　つよさ……　ね</language>
 		<language name="JPN_KANJI" width="216">きみの　強さ……
-そして　ぼくの　強さ……</language>
+そして　ぼくの　強さ……　ね</language>
 	</row>
 
 	<row id="TRID_RIVAL_19_TRMSG_FIGHT_POKE_LAST">
@@ -11203,16 +11203,16 @@
 
 	<row id="TRID_RIVAL_19_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……ポケモンしょうぶは　たのしい
-だけど　つよいって　なんだ！？</language>
+だけど　つよいって　なんだよ！？</language>
 		<language name="JPN_KANJI" width="216">……ポケモン勝負は　楽しい
-だけど　強いって　なんだ！？</language>
+だけど　強いって　なんだよ！？</language>
 	</row>
 
 	<row id="TRID_RIVAL_20_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">きみの　つよさ……
-そして　ぼくの　つよさ……</language>
+そして　ぼくの　つよさ……　ね</language>
 		<language name="JPN_KANJI" width="216">きみの　強さ……
-そして　ぼくの　強さ……</language>
+そして　ぼくの　強さ……　ね</language>
 	</row>
 
 	<row id="TRID_RIVAL_20_TRMSG_FIGHT_POKE_LAST">
@@ -11224,16 +11224,16 @@
 
 	<row id="TRID_RIVAL_20_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……ポケモンしょうぶは　たのしい
-だけど　つよいって　なんだ！？</language>
+だけど　つよいって　なんだよ！？</language>
 		<language name="JPN_KANJI" width="216">……ポケモン勝負は　楽しい
-だけど　強いって　なんだ！？</language>
+だけど　強いって　なんだよ！？</language>
 	</row>
 
 	<row id="TRID_RIVAL_21_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">きみの　つよさ……
-そして　ぼくの　つよさ……</language>
+そして　ぼくの　つよさ……　ね</language>
 		<language name="JPN_KANJI" width="216">きみの　強さ……
-そして　ぼくの　強さ……</language>
+そして　ぼくの　強さ……　ね</language>
 	</row>
 
 	<row id="TRID_RIVAL_21_TRMSG_FIGHT_POKE_LAST">
@@ -11245,9 +11245,9 @@
 
 	<row id="TRID_RIVAL_21_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……ポケモンしょうぶは　たのしい
-だけど　つよいって　なんだ！？</language>
+だけど　つよいって　なんだよ！？</language>
 		<language name="JPN_KANJI" width="216">……ポケモン勝負は　楽しい
-だけど　強いって　なんだ！？</language>
+だけど　強いって　なんだよ！？</language>
 	</row>
 
 	<row id="TRID_ELITEW_18_TRMSG_POKE_UNDER_TWO">
@@ -13553,10 +13553,10 @@ puo accadere ancora di tutto!</language>
 
 	<row id="TRID_TANPAN_17_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ここは　オレたちの　あそびば！▼
-ツチノカミさまが
+ランドロスさまが
 みまもって　くれるんだもん！▼</language>
 		<language name="JPN_KANJI" width="216">ここは　オレたちの　遊び場！▼
-ツチノカミさまが
+ランドロスさまが
 見守って　くれるんだもん！▼</language>
 	</row>
 
@@ -13568,9 +13568,9 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_TANPAN_17_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ツチノカミさま　かあ……
+		<language name="JPN" width="216">ランドロスさま　かあ……
 やさしくて　つよい　ポケモンかな？</language>
-		<language name="JPN_KANJI" width="216">ツチノカミさま　かあ……
+		<language name="JPN_KANJI" width="216">ランドロスさま　かあ……
 優しくて　強い　ポケモンかな？</language>
 	</row>
 
