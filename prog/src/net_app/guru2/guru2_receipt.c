@@ -398,7 +398,7 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
     
     if(wk->g2c->record_execute == FALSE){ //レコード混ぜ中の時は更新しない
       NameCheckPrint(
-        wk->TrainerNameWin, 0, PRINTSYS_LSB_Make(1, 3, 0), wk );
+        wk->TrainerNameWin, 0, PRINTSYS_LSB_Make(1, 4, 0), wk );
     }
     
     TrainerObjFunc(wk);
@@ -1091,7 +1091,7 @@ static void BmpWinInit(GURU2RC_WORK *wk )
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TrainerNameWin), 0 );
 
     //最初に見えている面なので文字パネル描画と転送も行う
-    NameCheckPrint( wk->TrainerNameWin, 0, PRINTSYS_LSB_Make(1, 3, 0), wk );
+    NameCheckPrint( wk->TrainerNameWin, 0, PRINTSYS_LSB_Make(1, 4, 0), wk );
 
 
   }
@@ -2490,7 +2490,7 @@ static BOOL NameCheckPrint( GFL_BMPWIN *win, int frame, PRINTSYS_LSB color, GURU
   int i,id = GFL_NET_SystemGetCurrentID();
   STRBUF *id_str  = NULL;
   STRBUF *tmp_str = NULL;
-
+  PRINTSYS_LSB tmpcol = color;
 
   // 名前取得の状況に変化が無い場合は書き換えない
   if(!MyStatusCheck(wk)){
@@ -2500,6 +2500,7 @@ static BOOL NameCheckPrint( GFL_BMPWIN *win, int frame, PRINTSYS_LSB color, GURU
 
   // それぞれの文字パネルの背景色でクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win),0x0000);
+  OS_Printf("NamePrint-------------------------------------------------\n");
 
   // 描画
   for(i=0;i<RECORD_CORNER_MEMBER_MAX;i++){
@@ -2518,13 +2519,16 @@ static BOOL NameCheckPrint( GFL_BMPWIN *win, int frame, PRINTSYS_LSB color, GURU
       
       if(id==i){  // 自分の名前の時は描画色を赤色に
         color = PRINTSYS_LSB_Make(2,3,0);
+      }else{
+        color = tmpcol;
       }
+      OS_Printf("id=%d, i=%d\n", id, i);
       // 名前とID描画
       PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win), 5, 1+i*NAME_PRINT_HABA, wk->TrainerName[i], 
-                           wk->font, PRINTSYS_LSB_Make(2,3,0) );
+                           wk->font, color );
 
       PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win), 5+13*5, 1+i*NAME_PRINT_HABA, id_str, 
-                            wk->font, PRINTSYS_LSB_Make(2,3,0) );
+                            wk->font, color );
       // ID文字列を解放
       GFL_STR_DeleteBuffer( id_str );
       GFL_STR_DeleteBuffer( tmp_str );
