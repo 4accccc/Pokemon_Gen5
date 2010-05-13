@@ -687,6 +687,7 @@ static const BtlEventHandlerTable*  ADD_SideChange( u32* numElems );
 static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Telekinesis( u32* numElems );
 static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Telekinesis_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems );
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -7598,17 +7599,17 @@ static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     const BTL_POKEPARAM* bpp;
     u32 cnt_max, cnt, i;
 
-    cnt_max = cnt = BTL_PARTY_GetMemberCount( party );
+    cnt_max = BTL_PARTY_GetMemberCount( party );
+    cnt = 0;
     for(i=0; i<cnt_max; ++i)
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
-      if( BPP_IsDead(bpp)
-      ||  (BPP_GetPokeSick(bpp) != POKESICK_NULL)
+      if( BPP_IsFightEnable(bpp)
+      &&  (BPP_GetPokeSick(bpp) == POKESICK_NULL)
       ){
-        --cnt;
+        ++cnt;
       }
     }
-    BTL_Printf("生きてて状態異常じゃない仲間の数=%d\n", cnt);
     if( cnt ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, cnt );
     }
@@ -9953,11 +9954,29 @@ static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_Telekinesis( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASICK_SPECIAL,  handler_Telekinesis   },  // 特殊状態異常
+    { BTL_EVENT_NOEFFECT_CHECK_L3, handler_Telekinesis_NoEffCheck },  // 無効チェック
+    { BTL_EVENT_WAZASICK_SPECIAL,  handler_Telekinesis            },  // 特殊状態異常
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 無効チェック
+static void handler_Telekinesis_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    const BTL_POKEPARAM* bppDef = BTL_SVFTOOL_GetPokeParam( flowWk, defPokeID );
+    u16 defMonsNo = BPP_GetMonsNo( bppDef );
+
+    if( (defMonsNo == MONSNO_DHIGUDA)
+    ||  (defMonsNo == MONSNO_DAGUTORIO)
+    ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+    }
+  }
+}
+// 特殊状態異常
 static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
