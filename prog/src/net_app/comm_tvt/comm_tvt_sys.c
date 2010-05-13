@@ -857,20 +857,20 @@ static void COMM_TVT_UpdateUpperNameFunc( COMM_TVT_WORK *work , MYSTATUS *myStat
 
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
                           ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2+1 , 1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
                           ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2-1 , 1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
                           ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1+1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
                           ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1-1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
 
   PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) ,
                           ((COMM_TVT_NAME_WIDTH*8) - nameLen)/2 , 1 , str ,
-                          work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                          work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
 
 
   //    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,

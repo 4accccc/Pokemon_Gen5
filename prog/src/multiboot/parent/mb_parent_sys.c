@@ -43,10 +43,12 @@
 //  define
 //======================================================================
 #pragma mark [> define
+#define MB_PARENT_FRAME_SSMSG (GFL_BG_FRAME0_M)
 #define MB_PARENT_FRAME_MSG (GFL_BG_FRAME1_M)
 #define MB_PARENT_FRAME_BG  (GFL_BG_FRAME2_M)
 #define MB_PARENT_FRAME_BG2  (GFL_BG_FRAME3_M)
 
+#define MB_PARENT_FRAME_SUB_SSMSG  (GFL_BG_FRAME0_S)
 #define MB_PARENT_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_PARENT_FRAME_SUB_BAR  (GFL_BG_FRAME2_S)
 #define MB_PARENT_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
@@ -56,9 +58,9 @@
 #define MB_PARENT_PLT_SUB_BG  (0)
 #define MB_PARENT_PLT_SUB_BAR (8)
 #define MB_PARENT_PLT_SUB_SS  (9)
+#define MB_PARENT_PLT_SUB_SS_MSG  (0x0d)
 
 #define MB_PARENT_PLT_MAIN_BG  (0)
-#define MB_PARENT_PLT_MAIN_SS  (8)
 
 #define MB_PARENT_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
 
@@ -908,7 +910,7 @@ static void MB_PARENT_VSyncMovie( void )
   if( MB_PARENT_bgScrollCnt >= 5 )
   {
     MB_PARENT_bgScrollCnt = 0;
-    GFL_BG_SetScroll( MB_PARENT_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_BG2 , GFL_BG_SCROLL_Y_DEC , 1 );
     GFL_BG_SetScroll( MB_PARENT_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
   }
 }
@@ -939,11 +941,18 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     static const GFL_BG_SYS_HEADER sys_data = {
         GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
     };
+    // BG0 MAIN (SSメッセージ
+    static const GFL_BG_BGCNT_HEADER header_main0 = {
+      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x00000,0x5800,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG1 MAIN (メッセージ
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000,0x8000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (背景
@@ -961,11 +970,18 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG0 SUB (""メッセージ
+    static const GFL_BG_BGCNT_HEADER header_sub0 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG1 SUB (メッセージ
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x06000,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x08000,
       GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 SUB (バー
@@ -973,7 +989,7 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
-      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
@@ -984,9 +1000,11 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     };
     GFL_BG_SetBGMode( &sys_data );
 
+    MB_PARENT_SetupBgFunc( &header_main0 , MB_PARENT_FRAME_SSMSG , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_main1 , MB_PARENT_FRAME_MSG , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_main2 , MB_PARENT_FRAME_BG , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_main3 , MB_PARENT_FRAME_BG2 , GFL_BG_MODE_TEXT );
+    MB_PARENT_SetupBgFunc( &header_sub0  , MB_PARENT_FRAME_SUB_SSMSG, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub1  , MB_PARENT_FRAME_SUB_MSG, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub2  , MB_PARENT_FRAME_SUB_BAR, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub3  , MB_PARENT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
@@ -1021,12 +1039,14 @@ static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work )
   GFL_CLACT_WK_Remove( work->clwkReturn );
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
+  GFL_BG_FreeBGControl( MB_PARENT_FRAME_SSMSG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_BG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_BG2 );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BAR );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_MSG );
+  GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_SSMSG );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 }
@@ -1070,13 +1090,20 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_main_NSCR , 
                       MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_ss_NCLR , 
-                      PALTYPE_MAIN_BG , MB_PARENT_PLT_MAIN_SS*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_mb_parent_ss_NCLR , 
+                      PALTYPE_MAIN_BG , MB_PARENT_PLT_SUB_SS*32 , 
+                      MB_PARENT_PLT_SUB_SS*32 , 32*4 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_ss_NCGR ,
                       MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_ss_NSCR , 
                       MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
-    GFL_BG_ChangeScreenPalette( MB_PARENT_FRAME_BG , 0 , 0 , 32 , 24 , MB_PARENT_PLT_MAIN_SS );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_mb_parent_ss_msg_NCLR , 
+                      PALTYPE_MAIN_BG , MB_PARENT_PLT_SUB_SS_MSG*32 , 
+                      MB_PARENT_PLT_SUB_SS_MSG*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_ss_msg_NCGR ,
+                      MB_PARENT_FRAME_SSMSG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_ss_msg_NSCR , 
+                      MB_PARENT_FRAME_SSMSG ,  0 , 0, FALSE , work->heapId );
     GFL_BG_LoadScreenReq( MB_PARENT_FRAME_BG );
     
     GFL_ARC_CloseDataHandle( arcHandle );
@@ -1105,14 +1132,23 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
 
 
     arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_PARENT , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_ss_NCLR , 
-                      PALTYPE_SUB_BG , MB_PARENT_PLT_SUB_SS*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_mb_parent_ss_NCLR , 
+                      PALTYPE_SUB_BG , MB_PARENT_PLT_SUB_SS*32 , 
+                      MB_PARENT_PLT_SUB_SS*32 , 32*4 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_ss_NCGR ,
                       MB_PARENT_FRAME_SUB_MSG , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_ss_NSCR , 
                       MB_PARENT_FRAME_SUB_MSG ,  0 , 0, FALSE , work->heapId );
-    GFL_BG_ChangeScreenPalette( MB_PARENT_FRAME_SUB_MSG , 0 , 0 , 32 , 24 , MB_PARENT_PLT_SUB_SS );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_mb_parent_ss_msg_NCLR , 
+                      PALTYPE_SUB_BG , MB_PARENT_PLT_SUB_SS_MSG*32 , 
+                      MB_PARENT_PLT_SUB_SS_MSG*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_ss_msg_NCGR ,
+                      MB_PARENT_FRAME_SUB_SSMSG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_ss_msg_NSCR , 
+                      MB_PARENT_FRAME_SUB_SSMSG ,  0 , 0, FALSE , work->heapId );
     GFL_BG_LoadScreenReq( MB_PARENT_FRAME_SUB_MSG );
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_MSG , FALSE );
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_SSMSG , FALSE );
 
     GFL_ARC_CloseDataHandle( arcHandle );
   }
@@ -1282,6 +1318,17 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   
   work->isSendRom = FALSE;
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dev_wireless));
+
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    GFL_BG_SetVisible( MB_PARENT_FRAME_BG , TRUE );
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SSMSG , TRUE );
+  }
+  else
+  {
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_MSG , TRUE );
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_SSMSG , TRUE );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1293,6 +1340,16 @@ static void MP_PARENT_SendImage_Term( MB_PARENT_WORK *work )
 
   GFL_HEAP_FreeMemory( work->romTitleStr );
   GFL_HEAP_FreeMemory( work->romInfoStr );
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    GFL_BG_SetVisible( MB_PARENT_FRAME_BG , FALSE );
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SSMSG , FALSE );
+  }
+  else
+  {
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_MSG , FALSE );
+    GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_SSMSG , FALSE );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1337,7 +1394,14 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
       MP_PARENT_SendImage_MBPInit( work );
 
       MB_MSG_MessageHide( work->msgWork );
-      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+      if( work->mode == MPM_POKE_SHIFTER )
+      {
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+      }
+      else
+      {
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE2 );
+      }
 
       MB_MSG_MessageCreateWordset( work->msgWork );
       MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
@@ -1667,7 +1731,14 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
         }
         MB_MSG_MessageHide( work->msgWork );
         
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+        }
+        else
+        {
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE2 );
+        }
         MB_MSG_MessageCreateWordset( work->msgWork );
         MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
         GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN );

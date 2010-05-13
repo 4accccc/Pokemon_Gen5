@@ -14,12 +14,15 @@ enum {
 	NARC_mb_parent_bg_main_NCLR = 0,
 	NARC_mb_parent_bg_sub_NCLR = 1,
 	NARC_mb_parent_ss_NCLR = 2,
-	NARC_mb_parent_bg_main_NCGR = 3,
-	NARC_mb_parent_bg_sub_NCGR = 4,
-	NARC_mb_parent_ss_NCGR = 5,
-	NARC_mb_parent_bg_main_NSCR = 6,
-	NARC_mb_parent_bg_sub_NSCR = 7,
-	NARC_mb_parent_ss_NSCR = 8
+	NARC_mb_parent_ss_msg_NCLR = 3,
+	NARC_mb_parent_bg_main_NCGR = 4,
+	NARC_mb_parent_bg_sub_NCGR = 5,
+	NARC_mb_parent_ss_NCGR = 6,
+	NARC_mb_parent_ss_msg_NCGR = 7,
+	NARC_mb_parent_bg_main_NSCR = 8,
+	NARC_mb_parent_bg_sub_NSCR = 9,
+	NARC_mb_parent_ss_NSCR = 10,
+	NARC_mb_parent_ss_msg_NSCR = 11
 };
 
 /* NARC_MB_PARENT_NAIX_ */

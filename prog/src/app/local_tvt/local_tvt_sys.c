@@ -877,6 +877,7 @@ static const BOOL LTVT_SCRIPT_DispMessageMain( LOCAL_TVT_WORK *work )
   {
     LOCAL_TVT_HideRecIcon( work );
     LOCAL_TVT_MSG_CloseWindow( work );
+    LOCAL_TVT_CHARA_LipSyncForceStop( work->charaWork[work->talkCharaNo] );
     return TRUE;
   }
   return FALSE;

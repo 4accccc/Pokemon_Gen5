@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-13T15:47:58"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-13T20:08:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="241" top="149" right="946" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -564,7 +564,8 @@ DSシステムフォントなので
 
 	<row id="MSG_MB_PAERNT_MOVIE_01">
 		<comment>以下映画転送用</comment>
-		<language name="JPN" width="208">もうひとつの　ＤＳに
+		<language name="JPN" width="208">したがめんを　さんこうに
+もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
@@ -573,7 +574,8 @@ DSシステムフォントなので
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
 えらんでください
 Ｂボタン：キャンセル</language>
-		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
+		<language name="JPN_KANJI" width="208">下画面を　参考に
+もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー

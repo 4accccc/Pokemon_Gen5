@@ -30,6 +30,7 @@
 #define LTVT_CHARA_NAME_HEIGHT (2)
 
 #define LTVT_CHARA_EYE_BLINK_CNT (150)
+#define LTVT_CHARA_LIP_DELAY_CNT (60*2)
 #define LTVT_CHARA_OFFSET (7)
 #define LTVT_CHARA_OFFSET_SIZE (LTVT_CHARA_OFFSET*16*0x40)
 //======================================================================
@@ -77,6 +78,7 @@ struct _LOCAL_TVT_CHARA
   
   u16 eyeBlinkCnt;
   BOOL isLipSync;
+  u16  lipDelayCnt;
 };
 
 static const u8 charaResList[LTCT_MAX][3] = {
@@ -148,7 +150,7 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
     charaWork->resData = NULL;
     
     charaWork->anmCnt = GFUser_GetPublicRand0(LTVT_CHARA_UPDATE_CNT);
-    
+    charaWork->lipDelayCnt = 0;
     
     return charaWork;
   }
@@ -257,7 +259,8 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     }
   }
   //ŒûƒpƒN
-  if( charaWork->isLipSync == TRUE )
+  if( charaWork->isLipSync == TRUE ||
+      charaWork->lipDelayCnt > 0 )
   {
     if( GFL_CLACT_WK_CheckAnmActive( charaWork->clwkMouth ) == FALSE )
     {
@@ -271,6 +274,11 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
     {
       GFL_CLACT_WK_StopAnm( charaWork->clwkMouth );
     }
+  }
+  
+  if( charaWork->lipDelayCnt > 0 )
+  {
+    charaWork->lipDelayCnt--;
   }
 }
 
@@ -484,20 +492,20 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *ch
 
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2+1 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2-1 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1+1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1-1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
 
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
                             ((LTVT_CHARA_NAME_WIDTH*8) - charaWork->nameLen)/2 , 1 , str ,
-                            work->fontHandle , PRINTSYS_LSB_Make( 0xf,0,0 ) );
+                            work->fontHandle , PRINTSYS_LSB_Make( 1,0,0 ) );
 
 
 //    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,
@@ -523,5 +531,16 @@ const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork )
 
 void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg )
 {
+  if( charaWork->isLipSync == TRUE &&
+      flg == FALSE )
+  {
+    charaWork->lipDelayCnt = LTVT_CHARA_LIP_DELAY_CNT;
+  }
   charaWork->isLipSync = flg;
+}
+
+void LOCAL_TVT_CHARA_LipSyncForceStop( LOCAL_TVT_CHARA *charaWork )
+{
+  charaWork->lipDelayCnt = 0;
+  charaWork->isLipSync = FALSE;
 }

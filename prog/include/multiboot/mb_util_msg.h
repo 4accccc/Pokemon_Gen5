@@ -61,6 +61,7 @@ typedef enum
   MMWT_NONE ,
   MMWT_NORMAL,  //画面中央
   MMWT_LARGE,   //画面中央(大)
+  MMWT_LARGE2,  //画面中央(大映画用)
   MMWT_1LINE,   //画面下１行
   MMWT_2LINE,   //画面下２行
   MMWT_3LINE,   //画面下２行
