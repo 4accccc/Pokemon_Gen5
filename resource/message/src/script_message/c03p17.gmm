@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T16:50:03"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T19:17:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1332" top="165" right="2037" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -421,11 +421,11 @@
 		<language name="JPN" width="256">じゃあ　きみなら
 ヤナップ　バオップ　ヒヤップ　の▽
 どの　ポケモンを▽
-しんか　させてみたい？▼</language>
+しんか　させてみたい？</language>
 		<language name="JPN_KANJI" width="256">じゃあ　きみなら
 ヤナップ　バオップ　ヒヤップ　の▽
 どの　ポケモンを▽
-進化させて　みたい？▼</language>
+進化させて　みたい？</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

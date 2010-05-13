@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T16:48:48"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T19:16:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1332" top="165" right="2037" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,6 +315,44 @@
 	<row id="msg_c02gym0101_glasses_02" back-color="#ffff00,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
+・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">この　ジムはですね
+ノーマルタイプの　ポケモンを▽
+つかう　トレーナー　ばかりです▼
+ここだけの　はなし……
+ノーマルタイプって▽
+かくとうタイプが　にがて　なんすよ▼
+では　ジムそのものに　ついて
+せつめい　するっすよ！▼
+この　ポケモンジムは
+ほんに　かくされた　もんだいを▽
+といていくと　さきに　すすめます▼
+ちなみに　さいしょの　ほんは
+「はじめまして　ポケモンちゃん」です▼
+ほんの　ばしょが　わからないときは
+みんなに　きくと　いいっすよ！▼</language>
+		<language name="JPN_KANJI" width="256">この　ジムはですね
+ノーマルタイプの　ポケモンを▽
+使う　トレーナー　ばかりです▼
+ここだけの　話……
+ノーマルタイプって▽
+かくとうタイプが　苦手なんすよ▼
+では　ジムそのものに　ついて
+説明するっすよ！▼
+この　ポケモンジムは
+本に隠された　問題を▽
+解いていくと　先に　進めます▼
+ちなみに　最初の　本は
+「はじめまして　ポケモンちゃん」です▼
+本の　場所が　わからないときは
+みんなに　聞くと　いいっすよ！▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_glasses_02a" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・アニメ後、元の位置に戻ってから
 ・ジムバッジ取得まで繰り返し</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
@@ -768,8 +806,22 @@
 ・戦闘後</comment>
 		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
-ここが　さいごの　ほんなの▽
-さあ！　さいごの　ほんを　よんでみて！</language>
+ここが　さいごの　ほんなの▼
+さあ！
+さいごの　ほんを　よんでみて！▼</language>
+		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ
+ここが　最後の　本なの▽
+さあ！　最後の　本を　読んでみて！▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_06a" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>♀：トレーナー
+・戦闘後</comment>
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
+		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
+ここが　さいごの　ほんなの▼
+さあ！
+さいごの　ほんを　よんでみて！</language>
 		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ
 ここが　最後の　本なの▽
 さあ！　最後の　本を　読んでみて！</language>
@@ -798,13 +850,13 @@
 おっと！　いま　よんでいるのは
 「きかんしゃの　こうぞう」よ▼
 このほんを　よみたくなったら
-わたしに　いってね</language>
+わたしに　いってね▼</language>
 		<language name="JPN_KANJI" width="256">……ふむふむ
 なるほど▼
 おっと！　今　読んでいるのは
 「機関車の　構造」よ▼
 この本を　読みたくなったら
-私に　いってね</language>
+私に　いってね▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff00,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -892,6 +944,16 @@
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_03" back-color="#ffff00,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：トレーナー
+・戦闘後</comment>
+		<attribute name="キャラ指定">本棚ストッパー２</attribute>
+		<language name="JPN" width="256">よんだ　ほんは　ほんだなにもどす……
+ほんを　よむときの　ルールよね▼</language>
+		<language name="JPN_KANJI" width="256">読んだ本は　本棚に戻す……
+本を　読むときの　ルールよね▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantw_03a" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
 		<attribute name="キャラ指定">本棚ストッパー２</attribute>
