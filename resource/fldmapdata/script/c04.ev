@@ -91,6 +91,9 @@ INIT_EVENT_END
 /*	予約スクリプト：ギアステーションから出てくるアニメ		*/
 /************************************************************/
 EVENT_START	ev_reserve_c04_exit
+
+	_PLACE_NAME_DISPLAY()	//地名表示演出
+
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_exit_player_walk_out )
 	_OBJ_ANIME_WAIT()
 	
@@ -766,13 +769,14 @@ EVENT_START	ev_scene_c04_support_01
 	_CAMERA_PURGE()		//カメラパージ
 	_CAMERA_MOVE( 9840,0,970752,28409856,65551,28672000, 30 )
 	
+	//BGM変更
+	_START_EVENT_BGM_EX( SEQ_BGM_E_EMOTION, BGM_FADE_LONG )
+	
 	//主人公：サポートの近くへ
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_papa_player_move_01 )
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	
-	_START_EVENT_BGM_EX( SEQ_BGM_E_EMOTION, BGM_FADE_LONG )
 	
 	//パパ！？どうしてここに
 	_BALLOONWIN_OBJMSG_POS( msg_c04_white_08, C04_SUPPORT_01, POS_UR )
@@ -871,15 +875,11 @@ EVENT_START	ev_scene_c04_support_01
 	_BALLOONWIN_OBJMSG_POS( msg_c04_white_11, C04_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
-	//パパ：下を向いて
-	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_stay_walk_d )
-	_OBJ_ANIME_WAIT()
-	
-	_TIME_WAIT( 8 )
-	
-	//パパ：沈黙
+	//パパ：下を向いて沈黙
 	_OBJ_ANIME( C04_SUPPORTPAPA_01, anm_mark_tenten )
 	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 15 )
 	
 	//……むむっ
 	_BALLOONWIN_OBJMSG_POS( msg_c04_middleman1_05, C04_SUPPORTPAPA_01, POS_UL )
@@ -1036,6 +1036,7 @@ EVENT_END
 //[…]マーク
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_mark_tenten
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_MARK_TENTEN,1
 	_ANIME_DATA	ACMD_END,0
 

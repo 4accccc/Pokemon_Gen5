@@ -721,9 +721,6 @@ ev_pole_unlock:
 	//カメラ操作（ポール前へ） [091121追加]
 	_CALL	ev_camera_move_pole
 
-	//カメラ移動終了後、少し間を持たせる？【保留】
-//	_TIME_WAIT( 10 )
-
 	//ＳＥ再生
 	_SE_PLAY( SEQ_SE_FLD_56 )
 	//ポール解除処理
