@@ -130,6 +130,8 @@ static void TheEnd_BgInit( THE_END_WORK* work );
 static void TheEnd_BgExit( THE_END_WORK* work );
 static void TheEnd_LogoInit( THE_END_WORK* work );
 
+static void StartBrightnessFade( int start, int end, int fadetype );
+
 
 //=============================================================================
 /**
@@ -166,6 +168,7 @@ const GFL_PROC_DATA    THE_END_ProcData =
 static GFL_PROC_RESULT TheEnd_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   THE_END_WORK*  work;
+  const u16 pal_white[]={0xffff};    //下画面0番パレット潰す用データ
 
   // ヒープ、パラメータなど
   {
@@ -192,12 +195,16 @@ static GFL_PROC_RESULT TheEnd_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
   work->vblank_tcb = GFUser_VIntr_CreateTCB( TheEnd_VBlankFunc, work, 1 );
 
   // 生成
-//  TheEnd_BgInit( work );
-  TheEnd_LogoInit(work);
+  TheEnd_BgInit( work );
+//  TheEnd_LogoInit(work);
 
+  // ホワイトバージョンでは下画面を白くする
+  if(GetVersion()==VERSION_WHITE){
+    GXS_LoadBGPltt( pal_white, 0, 2);
+  }
 
-  // フェードイン(黒→見える)
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+  // フェードイン(黒か白→見える)
+  StartBrightnessFade( 16, 0, FADE_IN_WAIT );
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
@@ -253,7 +260,7 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
   {
   case SEQ_START:
     {
-      *seq = SEQ_FADE_IN;
+      *seq = SEQ_FADE_IN2;
     }
     break;
   case SEQ_FADE_IN:
@@ -288,7 +295,8 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
       {
         *seq = SEQ_FADE_OUT;
         // フェードアウト(見える→黒)
-        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
+        StartBrightnessFade( 0, 16, FADE_OUT_WAIT );
+
       }
     }
     break;
@@ -298,7 +306,7 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
       {
         TheEnd_BgInit(work);
         // フェードイン(黒→見える)
-        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+        StartBrightnessFade( 16, 0, FADE_IN_WAIT );
         *seq = SEQ_FADE_IN2;
       }
     }
@@ -314,7 +322,7 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
     if(++work->wait>THE_END_APPEAR_WAIT){
       *seq = SEQ_FADE_OUT2;
       // フェードアウト(見える→黒)
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
+        StartBrightnessFade( 0, 16, FADE_OUT_WAIT );
     }
     break;
   case SEQ_FADE_OUT2:
@@ -480,4 +488,23 @@ static void TheEnd_LogoInit( THE_END_WORK* work )
   GFL_BG_SetVisible( BG_FRAME_M_LOGO, VISIBLE_ON );
   GFL_BG_SetVisible( BG_FRAME_M_REAR, VISIBLE_OFF );
 
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief カセットバージョンでブラックアウトとホワイトアウトを切り替える
+ *
+ * @param   start     フェードスタート値
+ * @param   end       フェード終了値
+ * @param   fadetype  フェードタイプ
+ */
+//----------------------------------------------------------------------------------
+static void StartBrightnessFade( int start, int end, int fadetype )
+{
+  if(GetVersion()==VERSION_BLACK){
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, start, end, fadetype );
+  }else{
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, start, end, fadetype );
+  }
 }
