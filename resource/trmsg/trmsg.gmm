@@ -3001,10 +3001,10 @@
 	<row id="TRID_ELITEM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">パートナーである　ポケモンと
 かずかずの　げきせんを　かちぬいた！▼
-その　オレが　まけるとは　おもえん！</language>
+その　オレが　まけるとは　おもえん！▼</language>
 		<language name="JPN_KANJI" width="216">パートナーである　ポケモンと
 幾多の　激戦を　勝ち抜いた！▼
-その　オレが　負けるとは　思えん！</language>
+その　オレが　負けるとは　思えん！▼</language>
 	</row>
 
 	<row id="TRID_ELITEM_01_TRMSG_FIGHT_LOSE">
@@ -6447,12 +6447,12 @@
 	<row id="TRID_ELITEM_12_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">トレーナーである　じぶんが
 つよくある　ひつようは　ない▼
-ポケモンの　つよさを　ひきだせれば
-それで　いいんだ</language>
+ポケモンが　つよく　たたかえるよう
+サポートできれば　いいんだ</language>
 		<language name="JPN_KANJI" width="216">トレーナーである　自分が
 強くある　必要は　ない▼
-ポケモンの　強さを　引き出せれば
-それで　いいんだ</language>
+ポケモンが　強く　戦えるよう
+サポートできれば　いいんだ</language>
 	</row>
 
 	<row id="TRID_ELITEM_13_TRMSG_FIGHT_START">
