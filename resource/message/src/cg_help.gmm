@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-12T17:30:27"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-13T16:16:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,13 +349,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1741" top="210" right="1992" bottom="838" maximized="no" rayout="Vertical2">
+	<dialog left="16" top="159" right="721" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="445"/>
+		<band id="0" index="0" style="0000" width="452"/>
 		<band id="1" index="1" style="0000" width="243"/>
-		<band id="2" index="2" style="0000" width="243"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -484,15 +484,11 @@
 		<language name="JPN" width="224">Ｗｉ－Ｆｉの　でんぱを　キャッチしても
 ほんたいせっていが　できて　いないか
 ＷＥＰキーが　みとうろく　だと
-Ｗｉ－Ｆｉに　せつぞく　できません。
-そのばあい　ボタンの　いろは
-あかいろで　てんめつ　します。</language>
+Ｗｉ－Ｆｉに　せつぞく　できません。</language>
 		<language name="JPN_KANJI" width="224">Ｗｉ－Ｆｉの　電波を　キャッチしても
 本体設定が　できて　いないか
 ＷＥＰキーが　未登録だと
-Ｗｉ－Ｆｉに　接続　できません。
-その場合　ボタンの　色は
-赤色で　点滅　します。</language>
+Ｗｉ－Ｆｉに　接続　できません。</language>
 	</row>
 
 	<row id="CG_HELP_MSG_04">
