@@ -2773,7 +2773,12 @@ void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 		PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
 		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, _PAL_FADE_OBJ_BIT, 0, 8, 8, 0, GFUser_VIntr_GetTCBSYS() );
 		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_BG, 0x0001, 0, 8, 8, 0, GFUser_VIntr_GetTCBSYS() );
-	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, -8 );
+		//「売る」モードでページ切り替え矢印が表示されていない時
+		if( wk->mode == BAG_MODE_SELL && GFL_CLACT_WK_GetDrawEnable( wk->clwkBarIcon[BAR_ICON_LEFT] ) == FALSE ){
+			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1, -8 );
+		}else{
+			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, -8 );
+		}
 
     // ソートボタン
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );

@@ -2205,7 +2205,6 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 //  InputNum_ButtonState( pWork, FALSE );
 
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, FALSE );
-  ITEMDISP_ChangeActive( pWork, FALSE );
 
   // 買えないもの判定
   {
@@ -2218,6 +2217,7 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
     // 売値が0、もじくは重要フラグがONの時は売れない
     if( val == 0 || event )
     {
+		  ITEMDISP_ChangeActive( pWork, FALSE );
       // 「○○○を　かいとることは　できません」
       GFL_MSG_GetString( pWork->MsgManager, mes_shop_093, pWork->pStrBuf );
       ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
@@ -2235,6 +2235,7 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 
   // おこづかい表示開始
   ITEMDISP_GoldDispIn( pWork );
+  ITEMDISP_ChangeActive( pWork, FALSE );
 
   // アイテムがひとつしかない場合、入力をスキップ
   {
