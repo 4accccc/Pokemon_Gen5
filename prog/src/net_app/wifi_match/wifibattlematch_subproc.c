@@ -190,7 +190,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     }
     else
     { 
-      GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+      GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE,TRUE );
       switch( result )
       { 
       case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:

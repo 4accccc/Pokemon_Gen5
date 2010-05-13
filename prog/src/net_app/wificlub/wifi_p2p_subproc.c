@@ -362,7 +362,7 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
   //エラー処理ここで起きたら復帰が難しいので切断
   if( GFL_NET_IsInit() )
   { 
-    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
+    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
     { 
       p_param->result = WIFICLUB_BATTLE_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
       return GFL_PROC_RES_FINISH;

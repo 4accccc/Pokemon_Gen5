@@ -270,7 +270,7 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   //ÉGÉâÅ[
   if( GFL_NET_IsInit() )
   { 
-    GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+    GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE,TRUE );
     switch( result )
     { 
     case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:

@@ -249,7 +249,7 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Main
   //ÅiGAMESYSTEMÇ©Ç±ÇÃâ∫à ÇÃPROCÇ≈NetErr_DispCall(FALSE);Ç™åƒÇŒÇÍÇƒÇ¢ÇÈÇÃÇ™ëOíÒÇ≈Ç∑Åj
   if( GFL_NET_IsInit() )
   { 
-    if( GFL_NET_DWC_ERROR_RESULT_NONE != GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE ) )
+    if( GFL_NET_DWC_ERROR_RESULT_NONE != GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE,FALSE ) )
     {
       return GFL_PROC_RES_FINISH;
     }

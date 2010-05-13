@@ -43,12 +43,13 @@
  *	        重いエラーならば、プロセス移動時に表示
  *	        Fatalならば、その場で表示し無限ループになる
  *
- *	@param	TRUEならば軽度判別する　FALSEならば軽度も重度として返す
+ *	@param	is_heavy  TRUEならば軽度判別する　FALSEならば軽度も重度として返す
+ *	@param  is_timeout  タイムアウトを検知するか
  *
  *	@return TRUEエラー発生し表示  FALSEならばエラーではない
  */
 //-----------------------------------------------------------------------------
-GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
+GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_timeout )
 { 
   if( GFL_NET_IsInit() )
   { 
@@ -90,7 +91,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
     }
-    if( cp_error->errorUser == ERRORCODE_TIMEOUT )
+    if( cp_error->errorUser == ERRORCODE_TIMEOUT && is_timeout )
     { 
       NetErr_DispCallPushPop();       //エラーメッセージ表示
       GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
@@ -99,8 +100,6 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
 
       GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
                                         //解消する
-      GFL_NET_DWC_returnLobby();
-
       return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
   }

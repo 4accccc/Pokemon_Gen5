@@ -776,7 +776,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_ERROR )
       { 
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -837,7 +837,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       else if(  res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
       {
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -951,7 +951,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   //-------------------------------------
   ///	選手証チェックでエラーが起こったら必ずログインからやりなおし
   //=====================================
-  switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
+  switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
   { 
   case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
   case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -1862,7 +1862,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         *p_seq  = SEQ_START_DRAW_PLAYERINFO;
@@ -1901,7 +1901,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
       {
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           *p_seq  = SEQ_START_DRAW_PLAYERINFO;
@@ -1982,7 +1982,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         *p_seq  = SEQ_START_DRAW_PLAYERINFO;
@@ -2137,7 +2137,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2181,7 +2181,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2323,7 +2323,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2410,7 +2410,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
       {
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2465,7 +2465,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
 
     //エラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
     { 
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2564,7 +2564,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       else if( res == WIFIBATTLEMATCH_GDB_RESULT_SUCCESS )
       {
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2648,7 +2648,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       else
       { 
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -2856,7 +2856,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Start );
@@ -2950,7 +2950,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -3028,7 +3028,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
       { 
         //エラー
-        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -3146,7 +3146,7 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
@@ -3254,7 +3254,7 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
         *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
@@ -3449,7 +3449,7 @@ static void WbmWifiSeq_DisConnextCheckDate( WBM_SEQ_WORK *p_seqwk, int *p_seq, v
       }
 
       //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE ) )
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE ) )
       { 
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
       case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し

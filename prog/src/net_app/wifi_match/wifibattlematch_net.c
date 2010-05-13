@@ -643,7 +643,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitTiming( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@return 修復タイプを取得
  */
 //-----------------------------------------------------------------------------
-WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_heavy )
+WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_heavy, BOOL is_timeout )
 { 
   WIFIBATTLEMATCH_NETERR_WORK           *p_error  = &p_wk->error;
   WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;
@@ -652,7 +652,7 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
   if( GFL_NET_IsInit() )
   { 
     //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
-    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(is_heavy) )
+    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(is_heavy, is_timeout) )
     { 
     case GFL_NET_DWC_ERROR_RESULT_NONE:
       repair  = WIFIBATTLEMATCH_NET_ERROR_NONE;
@@ -975,8 +975,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
         {
           p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD;
         }
-
-        if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
+        else if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
         { 
           DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
           p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
@@ -993,6 +992,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
 
   case WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD:
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT, WB_NET_WIFIMATCH);
+    p_wk->cancel_select_timeout = 0;
     p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_TIMING_END;
     break;
 
@@ -1002,8 +1002,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
       DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
-
-    if( GFL_NET_HANDLE_GetNumNegotiation() != 0 )
+    else if( GFL_NET_HANDLE_GetNumNegotiation() != 0 )
     {
       if( GFL_NET_HANDLE_RequestNegotiation() )
       {
@@ -1020,8 +1019,7 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
       DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
-
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT,WB_NET_WIFIMATCH))
+    else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT,WB_NET_WIFIMATCH))
     {
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_END;
     }
@@ -1065,7 +1063,6 @@ BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_
 {
   //GFL_NET_DWC_SetNoChildErrorCheck( FALSE );
   GFL_NET_StateWifiMatchEnd(!is_force);
-  GFL_NET_DWC_returnLobby();
   return TRUE;
 }
 //----------------------------------------------------------------------------

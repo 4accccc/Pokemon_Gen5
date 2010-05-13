@@ -546,7 +546,7 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
   if( NetErr_App_CheckError() )
   { 
     GFL_NET_DWC_ERROR_RESULT  result;
-    result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+    result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE, FALSE );
 
     switch( result )
     { 

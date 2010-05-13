@@ -7300,7 +7300,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   _funcBGMVol(wk);
 
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-    if(GFL_NET_DWC_ERROR_RESULT_RETURN_PROC==GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE)){
+    if(GFL_NET_DWC_ERROR_RESULT_RETURN_PROC==GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE)){
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
       wk->endSeq = WIFI_GAME_ERROR;

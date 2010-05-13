@@ -2085,7 +2085,7 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
 
       GFL_NET_DWC_ERROR_RESULT  result;
-      result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+      result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE, TRUE );
       switch( result ){
       case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
         _checkReturnState(pWork);
