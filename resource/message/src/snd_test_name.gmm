@@ -8537,9 +8537,9 @@
 		<language name="JPN" width="256">ZORO-01</language>
 		<language name="JPN_KANJI" width="256">ZORO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_365">
-		<language name="JPN" width="256">DMY-365</language>
-		<language name="JPN_KANJI" width="256">DMY-365</language>
+	<row id="msg_seq_se_be_se_04r">
+		<language name="JPN" width="256">BE-SE-04R</language>
+		<language name="JPN_KANJI" width="256">BE-SE-04R</language>
 	</row>
 	<row id="msg_seq_se_dmy_366">
 		<language name="JPN" width="256">DMY-366</language>
