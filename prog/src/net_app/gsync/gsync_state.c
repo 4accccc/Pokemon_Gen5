@@ -2306,7 +2306,7 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
-      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
+      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
       ret = GFL_PROC_RES_FINISH;
     }
   }
