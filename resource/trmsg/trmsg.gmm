@@ -3661,17 +3661,17 @@
 	<row id="TRID_FISHING_03_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ほんものの　つりびとは
 きが　みじかい！▽
-だから　すぐに　しょうぶする！！▼</language>
+だから　すぐに　しょうぶ！！▼</language>
 		<language name="JPN_KANJI" width="216">本物の　つりびとは
 気が　短い！▽
-だから　すぐに　勝負する！！▼</language>
+だから　すぐに　勝負！！▼</language>
 	</row>
 
 	<row id="TRID_FISHING_03_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけた！
-さっさと　おわろう！！</language>
+おわり！！</language>
 		<language name="JPN_KANJI" width="216">負けた！
-さっさと　終わろう！！</language>
+終わり！！</language>
 	</row>
 
 	<row id="TRID_FISHING_03_TRMSG_FIGHT_AFTER">
@@ -4413,12 +4413,14 @@
 	</row>
 
 	<row id="TRID_RANGERW_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
-		<language name="JPN" width="216">ポケモンに　にあうのは
-しぜんなのか　とかいなのか……▽
-あたし　いっつも　かんがえるんだよね</language>
-		<language name="JPN_KANJI" width="216">ポケモンに　似合うのは
-自然なのか　都会なのか……▽
-あたし　いっつも　考えるんだよね</language>
+		<language name="JPN" width="216">しぜんもあるし　とかいもある
+あれこれ　あるって　すてきよね▼
+ポケモンも　ひとも　すきな　ばしょを
+えらべるって　ことだもの！</language>
+		<language name="JPN_KANJI" width="216">自然もあるし　都会もある
+あれこれ　あるって　すてきよね▼
+ポケモンも　人も　好きな　場所を
+選べるって　ことだもの！</language>
 	</row>
 
 	<row id="TRID_SCIENTISTM_01_TRMSG_FIGHT_START">
