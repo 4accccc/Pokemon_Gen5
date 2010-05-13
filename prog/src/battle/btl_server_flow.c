@@ -11913,8 +11913,9 @@ static BOOL scEvent_HitCheckParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_HIT_COUNT );
 
       // ã≠êßìIÇ…ç≈ëÂâÒêîÇ‹Ç≈ÉqÉbÉg
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
-      {
+      if( ( max <= 5)
+      &&  ( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) )
+      ){
         param->countMax = max;
         param->fCheckEveryTime = FALSE;
       }

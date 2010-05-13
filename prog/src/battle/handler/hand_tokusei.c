@@ -301,6 +301,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems );
 static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tenkiya_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void common_Tenkiya_Off( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID );
 static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems );
@@ -4627,13 +4629,22 @@ static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 // とくせい書き換え直前ハンドラ
 static void handler_Tenkiya_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // 「てんきや」以外のとくせいに書き換わる時、フォルムをノーマルに戻す
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI_NEXT) != BTL_EVENT_FACTOR_GetSubID(myHandle) )
+  {
+    common_Tenkiya_Off( myHandle, flowWk, pokeID );
+  }
+}
+// いえき確定
+static void handler_Tenkiya_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_Tenkiya_Off( myHandle, flowWk, pokeID );
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetMonsNo(bpp) == MONSNO_POWARUN )
     {
-      // 「てんきや」以外のとくせいに書き換わる時、フォルムをノーマルに戻す
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI_NEXT) != BTL_EVENT_FACTOR_GetSubID(myHandle) )
+      common_Tenkiya_Off( myHandle, flowWk, pokeID );
       {
         BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
         param->header.tokwin_flag = TRUE;
@@ -4642,6 +4653,22 @@ static void handler_Tenkiya_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
       }
+    }
+  }
+}
+static void common_Tenkiya_Off( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetMonsNo(bpp) == MONSNO_POWARUN )
+    {
+      BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+      param->header.tokwin_flag = TRUE;
+      param->pokeID = pokeID;
+      param->formNo = FORMNO_POWARUN_NORMAL;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
     }
   }
 }
@@ -4681,7 +4708,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
     { BTL_EVENT_MEMBER_IN,             handler_Tenkiya_MemberIn  },  // ポケ入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER,  handler_Tenkiya_MemberIn  },  // とくせい書き換え直後ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Tenkiya_ChangeTok },  // とくせい書き換え直前ハンドラ
-    { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_ChangeTok },  // いえき確定ハンドラ
+    { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff    },  // いえき確定ハンドラ
     { BTL_EVENT_ACTPROC_END,           handler_Tenkiya_Weather   },
     { BTL_EVENT_WEATHER_CHANGE_AFTER,  handler_Tenkiya_Weather   },  // 天候変化後ハンドラ
   };
