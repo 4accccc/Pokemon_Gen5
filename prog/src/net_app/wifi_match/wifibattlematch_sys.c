@@ -911,32 +911,41 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
 
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
-    if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
-    { 
+    switch( p_param->result )
+    {
+    case WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS:
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
-    }
-    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE )
-    { 
+      break;
+
+    case WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_RETURN_LIVE:
       p_wk->btl_score.is_error  = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+      break;
+
+    default:
+      GF_ASSERT_MSG( 0, "IRC %d\n", p_param->result );
     }
   }
   else
   { 
-    if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS )
-    { 
+    switch( p_param->result)
+    {
+    case WIFIBATTLEMATCH_SUBPROC_RESULT_SUCCESS:
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LISTAFTER );
-    }
-    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
-    { 
+      break;
+
+    case WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN:
       p_wk->is_err_return_login = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
-    }
-    else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI )
-    { 
+      break;
+    case WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI:
       //切断された
       p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+      break;
+
+    default:
+      GF_ASSERT_MSG( 0, "WIFI %d\n", p_param->result );
     }
   }
 
@@ -1295,10 +1304,12 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
       //ライブマッチはメインメニューからくるのでライブまっちへ戻る
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
       break;
-    default:
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_LIVE:
       p_wk->btl_score.is_error  = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
       break;
+    default:
+      GF_ASSERT_MSG( 0, "IRC %d\n", result );
     }
   }
   else
@@ -1311,16 +1322,17 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
       break;
 
-    case WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT:
-      //切断された
-      p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
-      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_RETURN_LOGIN_WIFI:
+      p_wk->is_err_return_login = TRUE;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
       break;
 
-    case WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL:
+    case WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_DISCONNECT_WIFI:
       p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
       break;
+    default:
+      GF_ASSERT_MSG( 0, "WIFI %d\n", result );
     }
   }
 
@@ -1396,6 +1408,8 @@ static BOOL LOGIN_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs,
       WBM_SYS_SUBPROC_End( p_subproc );
     }
     break;
+  default:
+    GF_ASSERT_MSG( 0, "IRC %d\n", result );
   }
 
   return TRUE;
@@ -1450,7 +1464,7 @@ static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_par
 
   GFL_HEAP_FreeMemory( p_param );
 
-  if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
     switch( result )
     { 
@@ -1461,6 +1475,8 @@ static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_par
       p_wk->btl_score.is_error  = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
       break;
+    default:
+      GF_ASSERT_MSG( 0, "IRC %d\n", result );
     }
   }
   else
@@ -1475,6 +1491,13 @@ static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_par
       p_wk->is_err_return_login = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
       break;
+
+    case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_DISCONNECT_WIFI:
+      p_wk->core_mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_CORE );
+      break;
+    default:
+      GF_ASSERT_MSG( 0, "WIFI %d\n", result );
     }
   }
 
@@ -1538,6 +1561,7 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
 
       battle_mode = BATTLE_MODE_COMPETITION_SINGLE + battle_type * 2 + is_shooter;
 
+      OS_TPrintf( "mode%d type%d sho%d\n", battle_mode, battle_type, is_shooter );
     }
   }
 
@@ -1547,6 +1571,7 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
   p_param->battle_mode  = battle_mode;;
   p_param->fight_count  = 0;
 
+  //相手と自分のサーバーが違かったら録画できない
   if( p_wk->p_enemy_data->btl_server_version != p_wk->p_player_data->btl_server_version )
   { 
     p_param->b_rec      = FALSE;

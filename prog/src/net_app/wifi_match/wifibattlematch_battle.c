@@ -16,8 +16,11 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/btl_setup.h"
 #include "poke_tool/pokeparty.h"
-#include "net/dwc_error.h"
 #include "sound/pm_sndsys.h"
+
+//ネット
+#include "net/dwc_rap.h"
+#include "net/dwc_error.h"
 
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_net.h"
@@ -44,6 +47,13 @@
 
 //=============================================================================
 /**
+ *					定数宣言
+*/
+//=============================================================================
+#define WBM_BTL_ERROR_TIMEOUT (60*30)
+
+//=============================================================================
+/**
  *					構造体宣言
 */
 //=============================================================================
@@ -53,6 +63,7 @@
 typedef struct 
 {
   GFL_PROCSYS *p_procsys;
+  u32         cnt;
 } WIFIBATTLEMATCH_BATTLELINK_WORK;
 
 //=============================================================================
@@ -108,7 +119,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Init( GFL_PROC *p_proc, i
   WIFIBATTLEMATCH_BATTLELINK_PARAM *p_param  = p_param_adrs;
 
   //ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SUB, 0x100 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SUB, 0x150 );
 
   //プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFIBATTLEMATCH_BATTLELINK_WORK), HEAPID_WIFIBATTLEMATCH_SUB );
@@ -177,8 +188,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     SEQ_CALL_END_DEMO,        ///< バトル後デモ呼び出し
     SEQ_WAIT_END_DEMO,
     SEQ_CALL_BTL_REC_SEL,     ///< 通信対戦後の録画選択画面
-    SEQ_BGM_POP,
-    SEQ_END
+    SEQ_END,
+
+    SEQ_ERROR_WAIT,
   };
 
   WIFIBATTLEMATCH_BATTLELINK_WORK  *p_wk     = p_wk_adrs;
@@ -199,7 +211,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     break;
   
   case SEQ_WAIT_START_DEMO:
-    if ( status != GFL_PROC_MAIN_VALID ){
+    if ( status != GFL_PROC_MAIN_VALID )
+    {
       (*p_seq) = SEQ_BATTLE_TIMING_INIT;
     }
     break;
@@ -214,17 +227,28 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 200, WB_NET_WIFIMATCH ) ){
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 200, WB_NET_WIFIMATCH ) )
+    {
       WBM_BTL_Printf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*p_seq) = SEQ_BATTLE_INIT;
     }
     break;
   case SEQ_BATTLE_INIT:
     GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, NO_OVERLAY_ID, &BtlProcData, p_param->p_btl_setup_param);
+
+    if( GFL_NET_GetNETInitStruct()->bNetType != GFL_NET_TYPE_IRC )
+    {
+      GFL_NET_DWC_SetNoChildErrorCheck( TRUE );
+    }
     (*p_seq) = SEQ_BATTLE_WAIT;
     break;
   case SEQ_BATTLE_WAIT:
-    if ( status != GFL_PROC_MAIN_VALID ){
+    if ( status != GFL_PROC_MAIN_VALID )
+    {
+      if( GFL_NET_GetNETInitStruct()->bNetType != GFL_NET_TYPE_IRC )
+      {
+        GFL_NET_DWC_SetNoChildErrorCheck( FALSE );
+      }
       (*p_seq) = SEQ_BATTLE_END;
     }
     break;
@@ -237,6 +261,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   case SEQ_CALL_END_DEMO:
     // 通信バトル後デモ呼び出し
     {
+      BOOL is_next = TRUE;
+
       // マルチバトル判定
       if( p_param->p_btl_setup_param->multiMode == 0 )
       {
@@ -261,56 +287,87 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       case BTL_RESULT_DRAW :
         p_param->p_demo_param->result = COMM_BTL_DEMO_RESULT_DRAW;
         break;
+
+      case BTL_RESULT_COMM_ERROR:
+
+        //ここに来たら下記エラーチェックに引っかかる
+        OS_TPrintf( "バトルエラー終了！" );
+        is_next = FALSE;
+        p_wk->cnt = 0;
+        (*p_seq)  = SEQ_ERROR_WAIT;
+        break;
+
       default : 
         p_param->p_demo_param->result = COMM_BTL_DEMO_RESULT_DRAW;
       }
 
-      GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, p_param->p_demo_param);
-      (*p_seq) = SEQ_WAIT_END_DEMO;
+      if( is_next )
+      {
+        GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, p_param->p_demo_param);
+        (*p_seq) = SEQ_WAIT_END_DEMO;
+      }
     }
     break;
   case SEQ_WAIT_END_DEMO:
-    if ( status != GFL_PROC_MAIN_VALID ){
+    if ( status != GFL_PROC_MAIN_VALID )
+    {
       (*p_seq) = SEQ_END;
     }
     break;
 
   case SEQ_END:
-    PMSND_StopBGM();
     return GFL_PROC_RES_FINISH;
+
+  case SEQ_ERROR_WAIT:
+    //下のエラーにひっかからないときの対処
+    if( p_wk->cnt++ > WBM_BTL_ERROR_TIMEOUT )
+    {
+      NetErr_App_ReqErrorDisp();
+      p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_RETURN_LOGIN_WIFI;
+      return GFL_PROC_RES_FINISH;
+    }
+    OS_TPrintf( "エラー対処待ち\n" );
+    break;
 
   default:
     GF_ASSERT(0);
     break;
   }
 
-  //エラー処理ここで起きたらCOREに戻る
-  if( GFL_NET_IsInit() )
+  //エラー処理
+  //バトル中はバトル内部のエラーチェックに任せる
+  if( GFL_NET_IsInit() && (status == GFL_PROC_MAIN_NULL ) )
   {
     if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
     { 
       if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
       { 
         NetErr_App_ReqErrorDisp();
-        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT;
-        return TRUE;
+        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_LIVE;
+        return GFL_PROC_RES_FINISH;
       }
     }
     else 
     { 
-      if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
+      GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+      switch( result )
       { 
-        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_DISCONNECT;
+      case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
+        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_DISCONNECT_WIFI;
+        OS_TPrintf( "相手が切断\n" );
+        return GFL_PROC_RES_FINISH;
+
+      case GFL_NET_DWC_ERROR_RESULT_NONE:
+        /*  エラーが発生していない  */
+        break;
+
+      case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
+      case GFL_NET_DWC_ERROR_RESULT_FATAL:
+      default:
+        OS_TPrintf( "ネット切断\n" );
+        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_RETURN_LOGIN_WIFI;
         return GFL_PROC_RES_FINISH;
       }
-    }
-  }
-
-  { 
-    //不正チェック
-    if( 0 )
-    { 
-      return WIFIBATTLEMATCH_BATTLELINK_RESULT_EVIL;
     }
   }
 

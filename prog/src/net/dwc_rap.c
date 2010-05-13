@@ -19,8 +19,10 @@
 #if GFL_NET_WIFI
 
 // デバッグ出力を大量に吐き出す場合定義
-#if defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_ONLY_FOR_ohno)
 #define DEBUGPRINT_ON (1)
+#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#define DEBUGPRINT_ON (0)
 #else
 #define DEBUGPRINT_ON (0)
 #endif
@@ -605,7 +607,10 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
    *     GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
    *   }
    */
-  GF_ASSERT(DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr)!=0);
+  {
+    BOOL ret = DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr);
+    GF_ASSERT_MSG(ret!=0, "DWC_AddMatchKeyString\n");
+  }
   {
     MI_CpuClear8(_dWork->randommatch_query,_MATCHSTRINGNUM);
     sprintf((char*)_dWork->randommatch_query,randommatch_query,PPW_LOBBY_MATCHMAKING_KEY,keyStr);
@@ -1247,6 +1252,7 @@ static void clearTimeoutBuff(void)
 static void setTimeoutTime(void)
 {
   int i;
+  BOOL ret;
 
   for(i = 0 ;i < _WIFI_NUM_MAX; i++){
     DWC_SetRecvTimeoutTime( i, 0 );
@@ -1257,14 +1263,16 @@ static void setTimeoutTime(void)
     for(i = 0 ;i < _dWork->maxConnectNum; i++){
       if(DWC_GetMyAID() != i){
         if(DWC_GetAIDBitmap() & (0x01<<i) ){
-          GF_ASSERT(DWC_SetRecvTimeoutTime( i, MYDWC_TIMEOUTSEC * 1000 ));
+          ret = DWC_SetRecvTimeoutTime( i, MYDWC_TIMEOUTSEC * 1000 );
+          GF_ASSERT_MSG(ret,"DWC_SetRecvTimeoutTime\n");
           MYDWC_DEBUGPRINT("setTimeOut %d\n",i);
         }
       }
     }
   }
   else{
-    GF_ASSERT(DWC_SetRecvTimeoutTime( _WIFI_PARENT_AID, MYDWC_TIMEOUTSEC * 1000 ));
+    ret = DWC_SetRecvTimeoutTime( _WIFI_PARENT_AID, MYDWC_TIMEOUTSEC * 1000 );
+    GF_ASSERT_MSG(ret,"DWC_SetRecvTimeoutTime\n");
     MYDWC_DEBUGPRINT("setTimeOut 0\n");
   }
 
@@ -1496,7 +1504,7 @@ static void ConnectionClosedCallback(DWCError error,
       else {
         if(_dWork->bAutoDisconnect){
           GFL_NET_StateSetError(0);
-          GFL_NET_StateSetWifiError( 0, 0, 0, STEPMATCH_DISCONNECT );
+          GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_TIMEOUT );
         }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");

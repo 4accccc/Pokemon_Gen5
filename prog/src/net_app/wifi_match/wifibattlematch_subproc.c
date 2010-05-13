@@ -194,13 +194,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
       switch( result )
       { 
       case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
-        if(  procWork->plData.isNetErr == FALSE )
-        {
-          p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI;
-          procWork->plData.isNetErr = TRUE;
-          procWork->psData.isExitRequest = TRUE;
-          OS_TPrintf( "‘ŠŽè‚ªØ’f\n" );
-        }
+        p_param->result = WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_DISCONNECT_WIFI;
+        procWork->plData.isNetErr = TRUE;
+        procWork->psData.isExitRequest = TRUE;
+        OS_TPrintf( "‘ŠŽè‚ªØ’f\n" );
         break;
 
       case GFL_NET_DWC_ERROR_RESULT_NONE:
@@ -218,9 +215,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
       }
     }
   }
-
-  PLIST_COMM_UpdateComm( &procWork->plData );
-
   
   switch( procWork->state )
   {
@@ -285,6 +279,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     break;
   }
 
+  if( procWork->plData.isNetErr == FALSE )
+  {
+    PLIST_COMM_UpdateComm( &procWork->plData );
+  }
 
   return GFL_PROC_RES_CONTINUE;
 }

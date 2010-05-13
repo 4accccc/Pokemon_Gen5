@@ -54,7 +54,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
   { 
     const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
 
-    if( NetErr_App_CheckError() )
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
     { 
       switch( cp_error->errorType )
       { 
@@ -90,13 +90,17 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
     }
-
-    if( cp_error->errorUser == STEPMATCH_DISCONNECT )
+    if( cp_error->errorUser == ERRORCODE_TIMEOUT )
     { 
       NetErr_DispCallPushPop();       //エラーメッセージ表示
       GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
       NetErr_ErrWorkInit();           //エラーシステム情報クリア
       GFL_NET_StateResetError();      //NET内エラー情報クリア
+
+      GFL_NET_StateWifiMatchEnd(TRUE);  //エラーをクリアしてもずっとタイムアウト中になってしまうので
+                                        //解消する
+      GFL_NET_DWC_returnLobby();
+
       return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
   }

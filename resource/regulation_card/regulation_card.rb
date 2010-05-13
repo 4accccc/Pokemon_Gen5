@@ -33,8 +33,8 @@ COL_VETO_SHOOTER_ITEM = 16 #シューター禁止道具
 COL_TIME_VS = 17    #対戦時間
 COL_TIME_COMMAND = 18    #入力時間
 COL_NICKNAME = 19    #ニックネーム表示
-COL_AGE_LO = 20    #年齢制限以上
-COL_AGE_HI = 21    #年齢制限以下
+COL_CAMERA = 20    #カメラモード
+COL_DUMMY = 21        #未使用ですが、セーブデータが変わるため消さずにこのままにしておきます
 COL_SHOW_POKE = 22    #ポケモン見せ合い
 COL_TIME_SHOW_POKE = 23 #ポケモン見せ合い時間
 COL_BTL_TYPE = 24 #バトルタイプ
@@ -77,6 +77,7 @@ class RegulationBin
       "GREEN"=>0x20, "GOLD"=>0x80, "SILVER"=>0x100,"DIAMOND"=>0x800, "PEARL"=>0x1000, "PLATINUM"=>0x2000,
       "COLOSSEUM"=>0x10000, "WHITE"=>0x100000, "BLACK"=>0x200000}
     @HashBGM = { "TRAINER"=>0,"WCS"=>1 }
+    @HashCAMERA = { "NORMAL"=>0, "MOVE"=>1, "STOP"=>2 }
     @TempNum = "0"
     @HashPokeGmm = Hash.new
     @HashItemGmm = Hash.new
@@ -217,10 +218,10 @@ class RegulationBin
     when COL_NICKNAME    #ニックネーム表示
       num = @HashONOFF[value]
       outFH.write([num].pack("c"))
-    when COL_AGE_LO    #年齢制限以上
-      num = value.to_i
+    when COL_CAMERA    #カメラモード
+      num = @HashCAMERA[value]
       outFH.write([num].pack("c"))
-    when COL_AGE_HI    #年齢制限以下
+    when COL_DUMMY    #未使用ですが、セーブデータが変わるため消さずにこのままにしておきます
       num = value.to_i
       outFH.write([num].pack("c"))
     when COL_SHOW_POKE    #ポケモン見せ合い

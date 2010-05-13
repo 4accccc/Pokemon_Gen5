@@ -1041,7 +1041,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     {
       DEBUG_NET_Printf( "ÅIéqã@ " );
     }
-    GFL_NET_DWC_SetNoChildErrorCheck( TRUE );
+    //GFL_NET_DWC_SetNoChildErrorCheck( TRUE );
     return TRUE;
   }
 
@@ -1073,9 +1073,10 @@ WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMAT
  */
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force )
-{ 
-  GFL_NET_DWC_SetNoChildErrorCheck( FALSE );
+{
+  //GFL_NET_DWC_SetNoChildErrorCheck( FALSE );
   GFL_NET_StateWifiMatchEnd(!is_force);
+  GFL_NET_DWC_returnLobby();
   return TRUE;
 }
 

@@ -267,6 +267,31 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
     SEQ_END,
   };
 
+  //エラー
+  if( GFL_NET_IsInit() )
+  { 
+    GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+    switch( result )
+    { 
+    case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
+      OS_TPrintf( "相手が切断\n" );
+      p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_DISCONNECT_WIFI;
+      return TRUE;
+
+    case GFL_NET_DWC_ERROR_RESULT_NONE:
+      /*  エラーが発生していない  */
+      break;
+
+    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
+    case GFL_NET_DWC_ERROR_RESULT_FATAL:
+    default:
+      OS_TPrintf( "ネット切断\n" );
+      p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN;
+      return TRUE;
+    }
+  }
+
+  //シーケンス
   switch( *p_seq )
   { 
   case SEQ_INIT:
@@ -314,17 +339,6 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   case SEQ_END:
     return TRUE;
   }
-
-   //エラー処理ここで起きたら復帰が難しいので切断
-  if( GFL_NET_IsInit() )
-  { 
-    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
-    { 
-      p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN;
-      return TRUE;
-    }
-  } 
-
 
   return FALSE;
 }
@@ -389,6 +403,15 @@ static BOOL UTIL_IRC_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATCH
     SEQ_END,
   };
 
+  //エラー処理
+  if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
+  { 
+    NetErr_App_ReqErrorDisp();
+    p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_RETURN_LIVE;
+    return TRUE;
+  }
+
+  //シーケンス
   switch( *p_seq )
   { 
   case SEQ_INIT:
@@ -426,13 +449,6 @@ static BOOL UTIL_IRC_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATCH
   }
 
   LIVEBATTLEMATCH_IRC_Main( p_wk->p_irc );
-
-  if( NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
-  { 
-    NetErr_App_ReqErrorDisp();
-    p_param->result = WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_RETURN_LIVE;
-    return TRUE;
-  } 
 
   return FALSE;
 }

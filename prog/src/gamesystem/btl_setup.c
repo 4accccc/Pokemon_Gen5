@@ -149,6 +149,7 @@ BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG st
  *    ・シューター設定
  *    ・ニックネーム設定
  *    ・レベル補正設定
+ *    ・カメラモード設定
  */
 void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, HEAPID heapID )
 {
@@ -161,6 +162,22 @@ void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, 
 
   //シューターを設定
   Regulation_GetShooterItem( reg, &bp->shooterBitWork );
+
+  //カメラモード設定
+  {
+
+    REGULATION_CAMERA_TYPE  type = Regulation_GetParam( reg, REGULATION_CAMERA );
+    switch( type )
+    {
+    case REGULATION_CAMERA_MOVE:
+      bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_WCS;
+      break;
+
+    case REGULATION_CAMERA_STOP:
+      bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_OFF;
+      break;
+    }
+  }
 
   //ポケパーティへの設定
   for( i = 0; i < BTL_CLIENT_NUM; i++ )

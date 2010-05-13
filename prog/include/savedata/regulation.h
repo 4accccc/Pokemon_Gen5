@@ -35,7 +35,6 @@ typedef enum {
   REGULATION_COMMAND_TIME = 99,   ///< コマンド入力時間 99秒
   REGULATION_SHOW_POKE_TIME_MAX = 99,   ///< 見せ合い時間 99秒
   REGULATION_SHOW_POKE_TIME_NONE = 0,   ///< 見せ合い無制限
-  REGULATION_AGE_NONE = 0,   ///< 年齢無制限
 
 } REGULATION_ETC_PARAM_TYPE;
 
@@ -58,8 +57,7 @@ typedef enum  {
   REGULATION_TIME_VS,     ///<    #対戦時間 分単位バトルに渡すときには秒に変換してください
   REGULATION_TIME_COMMAND, ///<    #入力時間  分単位バトルに渡すときには秒に変換してください
   REGULATION_NICKNAME, ///<    #ニックネーム表示
-  REGULATION_AGE_LO,  ///<    #年齢制限以上
-  REGULATION_AGE_HI,  ///<    #年齢制限以下
+  REGULATION_CAMERA,  ///<    #先頭のカメラーモード
   REGULATION_SHOW_POKE,  ///<    #ポケモン見せ合いONOFF
   REGULATION_SHOW_POKE_TIME,  ///<    #ポケモン見せ合い制限時間 0は無制限
   REGULATION_BATTLETYPE,  ///<  バトルタイプ
@@ -82,6 +80,7 @@ typedef enum  {
   REGULATION_BATTLE_TRIPLE,   ///<トリプル
   REGULATION_BATTLE_ROTATION,   ///<ローテーション
   REGULATION_BATTLE_MULTI,   ///<マルチ
+  REGULATION_BATTLE_SHOOTER,   ///<シューター
   REGULATION_BATTLE_MAX   //
 } REGULATION_BATTLE_TYPE;
 
@@ -91,6 +90,12 @@ typedef enum {
   REGULATION_SHOOTER_MANUAL,    ///<マニュアル
 }REGULATION_SHOOTER_TYPE;
 
+typedef enum
+{
+  REGULATION_CAMERA_NORMAL,
+  REGULATION_CAMERA_MOVE,    //待機中もカメラ動作
+  REGULATION_CAMERA_STOP,   //カメラ操作を行わない
+} REGULATION_CAMERA_TYPE;
 
 
 typedef enum  {
@@ -130,7 +135,6 @@ typedef enum {
   REGULATION_CARD_TYPE_MAX,    //.cで使用
 } REGULATION_CARD_TYPE;
 
-
 //----------------------------------------------------------
 /**
  * @brief	バトルレギュレーションデータ型定義  fushigi_data.h参照の為外部公開に
@@ -160,8 +164,8 @@ typedef struct{
   u8 TIME_VS;     ///<    #対戦時間 分単位バトルに渡すときには秒に変換してください
   u8 TIME_COMMAND; ///<    #入力時間  分単位バトルに渡すときは秒に変換してください
   u8 NICKNAME; ///<    #ニックネーム表示
-  u8 AGE_LO;  ///<    #年齢制限以上
-  u8 AGE_HI;  ///<    #年齢制限以下
+  u8 CAMERA;  ///<    #カメラ動作モード REGULATION_CAMERA_TYPEの値
+  u8 DUMMY;  ///<    #未使用
   u8 SHOW_POKE;  ///<    #ポケモン見せ合い
   u8 SHOW_POKE_TIME;  ///<ポケモン見せ合い時間
   u8 BATTLE_TYPE;    ///< バトルタイプ

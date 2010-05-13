@@ -337,11 +337,8 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
   case REGULATION_NICKNAME: //    #ニックネーム表示
     ret = pReg->NICKNAME;
     break;
-  case REGULATION_AGE_LO:  //    #年齢制限以上
-    ret = pReg->AGE_LO;
-    break;
-  case REGULATION_AGE_HI:  //    #年齢制限以下
-    ret = pReg->AGE_HI;
+  case REGULATION_CAMERA:  //    #カメラモード
+    ret = pReg->CAMERA;
     break;
   case REGULATION_SHOW_POKE:  //    #ポケモン見せ合い
     ret = pReg->SHOW_POKE;
@@ -475,11 +472,8 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     }
     pReg->NICKNAME = param;
     break;
-  case REGULATION_AGE_LO:  //    #年齢制限以上
-    pReg->AGE_LO = param;
-    break;
-  case REGULATION_AGE_HI:  //    #年齢制限以下
-    pReg->AGE_HI = param;
+  case REGULATION_CAMERA:  //    #カメラモード
+    pReg->CAMERA  = param;
     break;
   case REGULATION_SHOW_POKE:  //    #ポケモン見せ合い
     if(param >= 2){
@@ -933,8 +927,6 @@ void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
     p_data->TIME_VS     = 99;
     p_data->TIME_COMMAND= 99;
     p_data->NICKNAME    = 1;
-    p_data->AGE_LO      = 0;
-    p_data->AGE_HI      = 0;
     p_data->SHOW_POKE   = 0;
     p_data->SHOW_POKE_TIME  = 99;
     p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
@@ -995,8 +987,7 @@ void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg )
   OS_TPrintf( "time_vs  =%d\n", cp_data->TIME_VS);     ///<    #対戦時間
   OS_TPrintf( "time_cmd =%d\n", cp_data->TIME_COMMAND); ///<    #入力時間
   OS_TPrintf( "nick_view=%d\n", cp_data->NICKNAME); ///<    #ニックネーム表示
-  OS_TPrintf( "age_lo   =%d\n", cp_data->AGE_LO);  ///<    #年齢制限以上
-  OS_TPrintf( "age_hi   =%d\n", cp_data->AGE_HI);  ///<    #年齢制限以下
+  OS_TPrintf( "camera   =%d\n", cp_data->CAMERA);  ///<     #カメラモード
   OS_TPrintf( "show_poke=%d\n", cp_data->SHOW_POKE);  ///<    #ポケモン見せ合い
   OS_TPrintf( "show_time=%d\n", cp_data->SHOW_POKE_TIME);  ///<ポケモン見せ合い時間
   OS_TPrintf( "btl_type =%d\n", cp_data->BATTLE_TYPE);    ///< バトルタイプ  230
