@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-13T20:37:05" source="intro_town_13.mb"/>
+	<create user="unno" host="W00199" date="2010-05-13T21:21:44" source="intro_town_18.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-04-13T20:37:05" source="intro_town_13.mb"/>
+<original_create user="unno" host="W00199" date="2010-05-13T21:21:44" source="intro_town_18.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-1.604980 0.026611 -3.591797" whd="3.594971 1.830078 6.526123"/>
+<box_test pos_scale="4" xyz="-1.604980 0.026611 -3.591797" whd="3.594971 1.830078 6.864502"/>
 
 <tex_image_array size="18">
 	<tex_image index="0" name="cloud01"
@@ -1461,7 +1461,7 @@
 		vertex_size="20" polygon_size="5"
 		triangle_size="0" quad_size="5"
 		volume_min="-1.604980 2.460205 -3.591797"
-		volume_max="1.990234 2.460205 2.934570"
+		volume_max="1.990234 2.460205 3.272949"
 		volume_r="4.380371"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
@@ -1481,13 +1481,13 @@
 					<tex st="0.000000 -64.000000"/>
 					<pos_xz xz="-1.228027 -2.175049"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="0.892822 2.934570"/>
+					<pos_xz xz="0.892822 3.272949"/>
 					<tex st="64.000000 0.000000"/>
-					<pos_xz xz="1.636719 1.517822"/>
+					<pos_xz xz="1.636719 1.856445"/>
 					<tex st="64.000000 -64.000000"/>
-					<pos_xz xz="0.219971 0.774170"/>
+					<pos_xz xz="0.219971 1.112549"/>
 					<tex st="0.000000 -64.000000"/>
-					<pos_xz xz="-0.523682 2.190674"/>
+					<pos_xz xz="-0.523682 2.529297"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="0.390137 0.964355"/>
 					<tex st="64.000000 0.000000"/>
@@ -7269,7 +7269,7 @@
 		vertex_size="20" polygon_size="5"
 		triangle_size="0" quad_size="5"
 		volume_min="-1.604980 2.460205 -3.591797"
-		volume_max="1.990234 2.460205 2.934570"
+		volume_max="1.990234 2.460205 3.272949"
 		volume_r="4.380371"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
