@@ -72,8 +72,8 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
   //エフェクトエンカウントチェック
   if ( inEncType == ENC_TYPE_EFFECT )
   {
-    *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
-    *outEffNo = ENCEFFID_WILD_HEIGH;
+    *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    *outEffNo = ENCEFFID_EFF_POKE;
     return;
   }
   //釣りチェック
