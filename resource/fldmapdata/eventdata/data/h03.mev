@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/04 11:51:00
+#save date:2010/05/13 17:34:46
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -377,7 +377,7 @@ POS_H03_BADRIDER_02
 #Pos Script Name
 SCRID_POS_H03_BADRIDER_01
 #Pos Check Type
-POS_CHECK_TYPE_UP
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_H03_BADRIDER
 #Event Trigger Work Value
@@ -394,7 +394,7 @@ POS_H03_BADRIDER_02
 #Pos Script Name
 SCRID_POS_H03_BADRIDER_01
 #Pos Check Type
-POS_CHECK_TYPE_DOWN
+POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_H03_BADRIDER
 #Event Trigger Work Value
