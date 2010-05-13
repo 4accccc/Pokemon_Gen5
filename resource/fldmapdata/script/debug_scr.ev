@@ -549,6 +549,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 4 )	//ゲーチス戦前
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//D02プラズマ団
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 7 )	//ゲーチス戦イベント		
 		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -674,6 +675,23 @@ EVENT_START   ev_debug_suginaka
 
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_C03P07, 9, 33, DIR_LEFT )
+		
+		ELSIF $SCWK_ANSWER == 7 THEN
+		
+			//ゲーチス戦・ラストイベント
+			$WK_SCENE_N01R0502 = 5
+			$WK_SCENE_C09R0501 = 2
+			_FLAG_SET( FV_C09R0501_RIVAL_01 )
+			_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+			_FLAG_SET( FV_N01R0501_SAGE1 )
+			_FLAG_RESET( FV_N01R0502_EVENT_01 )
+			
+			//謁見の間、水が干上がった状態のマップに変更
+			_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+		
+			$SCWK_TEMP0 = 428
+		
+			_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
 
 		ELSE
 
@@ -1408,6 +1426,10 @@ ev_event_jump:
 	_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 50 )	//ツチノカミ（カザカミ・ライカミ追加）
 //	_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 60 )	//カザカミ・ライカミ手持ちに追加
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_16, 70 )	//ライ遭遇イベント
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 90 )		//ラストイベント２・伝説捕獲前
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 100 )	//ラストイベント３・Ｎ戦前
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 110 )	//ラストイベント４・ゲーチス戦前
 	_BMPMENU_MAKE_LIST( msg_debug_00, 0 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
@@ -1495,6 +1517,66 @@ ev_event_jump:
 		//ライ遭遇イベント
 		$WK_SCENE_D10_LEG = 0
 		_MAP_CHANGE( ZONE_ID_D10R0201, 50, 50, DIR_DOWN )
+
+	ELSIF $LWK_EVTJUMP == 80 THEN
+		//ラストシーン・はじめから
+		//OBJ調整
+		_FLAG_SET( FV_N01R0502_LEGEND_01 )
+		_FLAG_SET( FV_N01R0502_LEGEND_02 )
+		_FLAG_SET( FV_N01R0502_EVENT_01 )
+
+		//ワークを０に
+		$WK_SCENE_N01R0502 = 0
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 58, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 90 THEN
+		//ラストシーン・伝説捕獲前
+		//OBJ調整
+		_FLAG_RESET( FV_N01R0502_LEGEND_01 )
+		_FLAG_RESET( FV_N01R0502_LEGEND_02 )
+		_FLAG_SET( FV_N01R0502_EVENT_01 )
+
+		//謁見の間、水が干上がった状態のマップに変更
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+		//ワークを２に
+		$WK_SCENE_N01R0502 = 2
+		
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 100 THEN
+		//ラストシーン・Ｎ戦前
+		//OBJ調整
+		_FLAG_RESET( FV_N01R0502_LEGEND_01 )	//Nの伝説
+		_FLAG_SET( FV_N01R0502_LEGEND_02 )	//自機の伝説
+		_FLAG_SET( FV_N01R0502_EVENT_01 )
+
+		//謁見の間、水が干上がった状態のマップに変更
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+		//ワークを３に
+		$WK_SCENE_N01R0502 = 3
+		
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 110 THEN
+		//ラストシーン・ゲーチス戦前
+		//OBJセット
+		_FLAG_SET( FV_C09R0501_RIVAL_01 )
+		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		_FLAG_SET( FV_N01R0501_SAGE1 )
+		_FLAG_RESET( FV_N01R0502_EVENT_01 )
+
+		//謁見の間、水が干上がった状態のマップに変更
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+		//ワーク
+		$WK_SCENE_N01R0502 = 5
+		$WK_SCENE_C09R0501 = 2	
+			
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
 		
 	ENDIF
 	}
