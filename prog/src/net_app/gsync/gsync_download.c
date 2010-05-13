@@ -121,10 +121,11 @@ GSYNC_DOWNLOAD_WORK* GSYNC_DOWNLOAD_Create(HEAPID id,int dlsize)
 
 void GSYNC_DOWNLOAD_Exit(GSYNC_DOWNLOAD_WORK* pWork)
 {
-  GF_ASSERT(_pDLWork);
-  GFL_HEAP_FreeMemory(pWork->pbuffer);
-  GFL_HEAP_FreeMemory(pWork);
-  _pDLWork = NULL;
+  if(_pDLWork){
+    GFL_HEAP_FreeMemory(pWork->pbuffer);
+    GFL_HEAP_FreeMemory(pWork);
+    _pDLWork = NULL;
+  }
 }
 
 void* GSYNC_DOWNLOAD_GetData(GSYNC_DOWNLOAD_WORK* pWork)
@@ -133,6 +134,10 @@ void* GSYNC_DOWNLOAD_GetData(GSYNC_DOWNLOAD_WORK* pWork)
 }
 
 
+int GSYNC_DOWNLOAD_GetNum(GSYNC_DOWNLOAD_WORK* pWork)
+{
+  return pWork->server_filenum;
+}
 
 BOOL GSYNC_DOWNLOAD_InitAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {

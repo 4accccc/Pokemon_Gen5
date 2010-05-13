@@ -48,6 +48,8 @@
 #include "savedata/c_gear_picture.h"
 #include "field/tpoke_data.h"
 
+#include "net/dwc_error.h"
+
 /*
 ¡BGM¡
 
@@ -782,6 +784,24 @@ static void _downloadcgearend(G_SYNC_WORK* pWork)
   _CHANGE_STATE(_downloadcheck);
 }
 
+
+static void _downloadcgear7(G_SYNC_WORK* pWork)
+{
+  switch(pWork->downloadType){
+  case _DOWNLOAD_CGEAR:
+    _CHANGE_STATE(_cgearsave);
+    break;
+  case _DOWNLOAD_MUSICAL:
+    _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload)-2);
+    break;
+  case _DOWNLOAD_ZUKAN:
+    _CHANGE_STATE(_zukansave);
+    break;
+  }
+}
+
+
+
 static void _downloadcgear6(G_SYNC_WORK* pWork)
 {
   if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
@@ -791,19 +811,7 @@ static void _downloadcgear6(G_SYNC_WORK* pWork)
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
   }
-  else{
-    switch(pWork->downloadType){
-    case _DOWNLOAD_CGEAR:
-      _CHANGE_STATE(_cgearsave);
-      break;
-    case _DOWNLOAD_MUSICAL:
-      _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload)-2);
-      break;
-    case _DOWNLOAD_ZUKAN:
-      _CHANGE_STATE(_zukansave);
-      break;
-    }
-  }
+  _CHANGE_STATE(_downloadcgear7);
 }
 
 
@@ -835,8 +843,14 @@ static void _downloadcgear4(G_SYNC_WORK* pWork)
   if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
+    return;
   }
-  else if(GSYNC_DOWNLOAD_FileListAsync(pWork->pDownload)){
+  //if(GSYNC_DOWNLOAD_GetNum(pWork->pDownload) != 1){
+  //  pWork->ErrorNo = _DOWNLOAD_ERROR;
+    //_CHANGE_STATE(_ErrorDisp);
+//    return;
+  //}
+  if(GSYNC_DOWNLOAD_FileListAsync(pWork->pDownload)){
     _CHANGE_STATE(_downloadcgear5);
   }
   else{
@@ -2289,7 +2303,9 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 
   if(GFL_NET_IsInit()){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-      NetErr_App_ReqErrorDisp();
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
       ret = GFL_PROC_RES_FINISH;
     }
   }
@@ -2300,11 +2316,17 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 {
   G_SYNC_WORK* pWork = mywk;
 
+
+  if(!WIPE_SYS_EndCheck()){
+    return GFL_PROC_RES_CONTINUE;
+  }
+  
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
   }
   GSYNC_MESSAGE_End(pWork->pMessageWork);
   GSYNC_DISP_End(pWork->pDispWork);
+  GSYNC_DOWNLOAD_Exit(pWork->pDownload);
 
   if(pWork->pMusical){
     GFL_HEAP_FreeMemory(pWork->pMusical);
