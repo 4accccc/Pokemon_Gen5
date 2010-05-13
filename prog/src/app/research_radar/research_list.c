@@ -517,11 +517,15 @@ static void MainState_SETUP( RRL_WORK* work )
   SetupScrollBar( work );     // スクロールバー
 
   // 調査中の項目がある場合
-  if( GetInvestigatingTopicID( work ) != INVESTIGATING_QUESTION_NULL ) {
-    // 調査中の項目を選択状態にする
-    SetTopicButtonInvestigating( work, nowTopicID ); // 選択している状態にする
-    SetSelectedTopicID( work, nowTopicID );          // 調査中の項目を選択
-    UpdateInvestigatingIcon( work );                 // 調査項目選択アイコンを更新
+  {
+    u8 topic_id = GetInvestigatingTopicID( work );
+    
+    if( topic_id != INVESTIGATING_QUESTION_NULL ) {
+      // 調査中の項目を選択状態にする
+      SetTopicButtonInvestigating( work, topic_id ); // 選択している状態にする
+      SetSelectedTopicID( work, topic_id );          // 調査中の項目を選択
+      UpdateInvestigatingIcon( work );               // 調査項目選択アイコンを更新
+    }
   }
 
   // パレットアニメーション開始
@@ -684,6 +688,7 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //---------
   // ↓キー
   if( trg & PAD_KEY_DOWN ) {
+  //if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ) {
     SetTopicButtonCursorOff( work );                   // 移動前の項目を元に戻す
     SetTopicCursorNextPos( work, 1 );                  // 移動先を設定
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT 状態終了
@@ -710,7 +715,7 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
     if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
       MoveTopicCursorDirect( work, touchTrg );                 // カーソル移動
       SetSelectedTopicID( work, work->topicCursorPos );        // カーソル位置の調査項目を選択
-      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // 項目選択時のパレットアニメ開始;
+      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // 項目選択時のパレットアニメ開始
       PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // 決定音
       UpdateTopicDetailStrings_at_Now( work );                 // 上画面の調査項目説明文を更新
       FinishCurrentState( work );                              // RRL_STATE_KEY_WAIT 状態終了
