@@ -1972,8 +1972,9 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     msg_on = TRUE;
   }
   
-  if(msg_on == FALSE && intcomm != NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE
-      && GFL_NET_GetConnectNum() > 1 && Intrude_CheckStartTimeoutMsgON(intcomm)){
+  //‘ŠŽè‚Ì¢ŠE‚ªÁ‚¦‚©‚©‚Á‚Ä‚¢‚Ü‚·
+  if(msg_on == FALSE && intcomm != NULL && GFL_NET_GetConnectNum() > 1 
+      && Intrude_CheckStartTimeoutMsgON(intcomm)){
     GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_024, intsub->strbuf_info );
     msg_on = TRUE;
   }
