@@ -46,6 +46,7 @@ SUBDIRS	=	wmi \
 			research_radar \
 			fld_trade \
             staff_roll \
+			manual \
 			message\
 			fldmmdl \
 			encount \
@@ -171,7 +172,6 @@ SUBDIRS	=	wmi \
 			dendou_demo \
 			fld3d_ci_se \
 			profanity_word \
-			manual \
 			symbol \
 			manual_image
 
