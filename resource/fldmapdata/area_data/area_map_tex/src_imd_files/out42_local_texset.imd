@@ -29,7 +29,7 @@
 
 <box_test pos_scale="7" xyz="-2.062500 -0.187500 -3.565430" whd="4.000000 1.372803 5.440430"/>
 
-<tex_image_array size="32">
+<tex_image_array size="30">
 	<tex_image index="0" name="bg_mk04"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
@@ -372,91 +372,7 @@
 			0000 0000 0000 1113 1142 0033 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="denki.3"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="denki.3_pl"
-		path="C:/home/wb_data3d/field/out42/map/tex/denki.3.tga"
-	>
-		<bitmap size="256">
-			0000 0000 3300 1111 3111 0013 0000 0000
-			0000 0000 1330 2221 3311 0001 0000 0000
-			0000 0000 1130 1242 0311 3001 0003 0000
-			0000 0000 2130 1124 0013 3001 0031 0000
-			3000 0030 4113 3112 1010 3003 3311 0000
-			3000 3030 4211 0311 3101 0000 3143 0000
-			1000 1304 2421 1331 3311 0000 3113 0000
-			3000 1311 1244 1131 3003 0003 0313 0000
-			0000 1133 1241 3331 0000 3313 0031 0000
-			0000 3130 2421 3131 0000 3133 0031 0000
-			0000 1300 4211 3111 0000 3000 0311 0000
-			0000 3000 2111 3312 0000 3000 0314 0000
-			0000 0000 1133 3124 0003 0000 0031 0000
-			0000 0000 1330 1241 0033 1300 0003 0000
-			0000 0000 3303 2421 0331 3130 0000 0000
-			0000 1300 3003 4211 3312 0313 0000 0000
-			0000 1300 3004 2113 3124 0311 0000 0000
-			0000 1300 1031 1133 1242 0311 0000 0000
-			0000 3000 1311 1330 2421 0331 0000 0000
-			0000 0000 3130 3100 4211 3312 0000 0000
-			0000 0000 1300 3003 2113 1124 0033 0030
-			0000 0000 0000 1411 1133 1144 0133 0010
-			0000 0000 0000 0113 1133 1124 1103 0013
-			0000 0000 0000 3130 2113 1114 1303 0033
-			0000 0000 0000 3300 4211 3112 3130 0003
-			0000 0000 0000 1330 2421 0311 0310 0000
-			0000 0000 0000 1133 1242 0031 0313 0000
-			0000 0000 3000 2113 1124 0003 0313 0000
-			0000 0000 3000 4211 3112 3003 0311 0000
-			0000 0000 3300 2421 3311 1001 0031 0000
-			0000 0000 1300 2221 0331 1131 0003 0000
-			0000 0000 1300 1111 3311 3111 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="8" name="denki.4"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="denki.4_pl"
-		path="C:/home/wb_data3d/field/out42/map/tex/denki.4.tga"
-	>
-		<bitmap size="256">
-			0000 0000 1133 1111 0033 0000 0000 0000
-			0000 0000 2113 3122 0033 0000 0000 0000
-			0000 0010 4213 3124 0033 0000 0000 0000
-			0000 0310 4213 3124 0003 0000 0000 0000
-			0000 0310 4213 3124 0003 0000 0000 0000
-			0000 0310 4213 3124 0003 0000 0000 0000
-			0000 3130 4213 3124 0003 0000 0000 0000
-			0000 1100 4213 3124 0003 0000 0000 0000
-			0000 1000 4211 3124 0003 0000 0000 0000
-			0000 0000 4111 3124 0003 0000 0000 0000
-			0000 0000 2113 3124 0003 0000 0000 0000
-			0000 0000 1133 3124 0033 0000 0000 0000
-			0000 0000 1130 1124 0033 0000 0000 0000
-			0000 0000 1330 1144 0033 0030 0000 0000
-			0000 0000 1330 1142 0033 0031 0000 0000
-			0000 0000 1330 1241 0033 0031 0000 0000
-			0000 0000 1330 1441 0031 0031 0000 0000
-			0000 0000 1300 2421 0331 0031 0000 0000
-			0000 0000 3300 4411 3331 0031 0000 0000
-			0000 0000 3300 4211 1311 0001 0000 0000
-			0000 0000 3300 4111 1312 0003 0000 0000
-			0000 0000 3000 4113 3114 0000 0000 0000
-			0000 0000 3000 2113 3114 0000 0000 0000
-			0000 0000 3000 2113 3114 0003 0000 0000
-			0000 0000 0000 2113 3124 0003 0000 0000
-			0000 0000 0000 2133 1144 0003 0000 0000
-			0000 0000 0000 2113 1244 0003 0000 0000
-			0000 0000 0000 2111 1244 0003 0000 0000
-			0000 0000 3000 2131 1244 0003 0000 0000
-			0000 0000 1000 2131 1244 0003 0000 0000
-			0000 0000 1300 2133 1222 0003 0000 0000
-			0000 0000 1130 1133 1111 0003 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="9" name="h_kage"
+	<tex_image index="7" name="h_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
@@ -469,7 +385,7 @@
 			4040 4040 4040 4040 4040 4040 4040 4040
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="out38_t03"
+	<tex_image index="8" name="out38_t03"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -607,7 +523,7 @@
 			0000 0000 0001 0110 0000 0000 0001 0110
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="out38_t04"
+	<tex_image index="9" name="out38_t04"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -745,7 +661,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="out38_t05"
+	<tex_image index="10" name="out38_t05"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette4"
 		color0_mode="color"
@@ -819,7 +735,7 @@
 			5550 5555 0000 1401 0000 1401 0000 eb81
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="out38_t06"
+	<tex_image index="11" name="out38_t06"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -957,7 +873,7 @@
 			3333 3333 3335 3553 3333 3333 3335 3553
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="out38_t07"
+	<tex_image index="12" name="out38_t07"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -1095,7 +1011,7 @@
 			0000 1000 1113 1331 1111 1111 1113 1331
 		</bitmap>
 	</tex_image>
-	<tex_image index="15" name="out38_t08"
+	<tex_image index="13" name="out38_t08"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="transparency"
@@ -1233,7 +1149,7 @@
 			0000 0000 0000 0000 0000 0000 0662 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="16" name="out38_t09"
+	<tex_image index="14" name="out38_t09"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1307,7 +1223,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="17" name="out40_chis02"
+	<tex_image index="15" name="out40_chis02"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1349,7 +1265,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="18" name="out40_chis05"
+	<tex_image index="16" name="out40_chis05"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1391,7 +1307,7 @@
 			0001 0000 0000 0000 0000 0000 0000 1000
 		</bitmap>
 	</tex_image>
-	<tex_image index="19" name="out42_armi01"
+	<tex_image index="17" name="out42_armi01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1433,7 +1349,7 @@
 			9999 9999 9999 9999 9999 9999 9999 9999
 		</bitmap>
 	</tex_image>
-	<tex_image index="20" name="out42_cup01"
+	<tex_image index="18" name="out42_cup01"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -1459,7 +1375,7 @@
 			5555 a555 aaaa aaaa aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="21" name="out42_glass01"
+	<tex_image index="19" name="out42_glass01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -1477,7 +1393,7 @@
 			5566 6566 2234 6543 4455 5455 0012 5421
 		</bitmap>
 	</tex_image>
-	<tex_image index="22" name="out42_glass02"
+	<tex_image index="20" name="out42_glass02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="transparency"
@@ -1491,7 +1407,7 @@
 			8000 0003 8000 0003 8000 0003 8000 0003
 		</bitmap>
 	</tex_image>
-	<tex_image index="23" name="out42_glass03"
+	<tex_image index="21" name="out42_glass03"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
 		palette_name="out42_glass03_pl"
@@ -1504,7 +1420,7 @@
 			4969 3929 2969 1119 4969 3929 2969 1119
 		</bitmap>
 	</tex_image>
-	<tex_image index="24" name="out42_kabe01"
+	<tex_image index="22" name="out42_kabe01"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -1642,7 +1558,7 @@
 			6660 1111 1111 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="25" name="out42_lig01"
+	<tex_image index="23" name="out42_lig01"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -1653,7 +1569,7 @@
 			0000 0000 5554 aaa4 aaa4 5554 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="26" name="out42_lig04"
+	<tex_image index="24" name="out42_lig04"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
 		palette_name="out42_lig04_pl"
@@ -1666,7 +1582,7 @@
 			6161 4151 1929 0911 6179 4151 1929 0911
 		</bitmap>
 	</tex_image>
-	<tex_image index="27" name="out42_line01"
+	<tex_image index="25" name="out42_line01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -1680,7 +1596,7 @@
 			9001 aaaa 5400 5555 0000 0000 ffff ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="28" name="out42_step01"
+	<tex_image index="26" name="out42_step01"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette4"
 		color0_mode="color"
@@ -1698,7 +1614,7 @@
 			5550 5555 5555 5555 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="29" name="out42_tes01"
+	<tex_image index="27" name="out42_tes01"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="transparency"
@@ -1710,7 +1626,7 @@
 			0002 3000 4442 3444 2222 2222 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="30" name="out43_chis03"
+	<tex_image index="28" name="out43_chis03"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1752,7 +1668,7 @@
 			3333 1113 0001 1100 0000 1310 0000 1311
 		</bitmap>
 	</tex_image>
-	<tex_image index="31" name="out43_em01"
+	<tex_image index="29" name="out43_em01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -1772,7 +1688,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="32">
+<tex_palette_array size="30">
 	<tex_palette index="0" name="bg_mk04_pl" color_size="16">
 		14e8 190a 192b 1d4d 216f 25b0 29d2 2e14
 		3236 3277 42da 4afb 533d 7fff 7fff 7fff
@@ -1798,86 +1714,80 @@
 	<tex_palette index="6" name="denki.2_pl" color_size="8">
 		7fff 7fe0 7ff3 77b2 7ffa 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="denki.3_pl" color_size="8">
-		7fff 7fe0 7ff3 77b2 7ffa 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="8" name="denki.4_pl" color_size="8">
-		7fff 7fe0 7ff3 77b2 7ffa 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="9" name="h_kage_pl" color_size="8">
+	<tex_palette index="7" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="out38_t03_pl" color_size="8">
+	<tex_palette index="8" name="out38_t03_pl" color_size="8">
 		3278 3699 36ba 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="out38_t04_pl" color_size="16">
+	<tex_palette index="9" name="out38_t04_pl" color_size="16">
 		2d91 2db3 2dd4 31f5 3217 3638 3679 3a9a
 		429a 42db 46db 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="12" name="out38_t05_pl" color_size="4">
+	<tex_palette index="10" name="out38_t05_pl" color_size="4">
 		3a78 3e99 42ba 46db
 	</tex_palette>
-	<tex_palette index="13" name="out38_t06_pl" color_size="8">
+	<tex_palette index="11" name="out38_t06_pl" color_size="8">
 		3278 3699 36ba 3aba 3adb 3edb 3efc 7fff
 	</tex_palette>
-	<tex_palette index="14" name="out38_t07_pl" color_size="8">
+	<tex_palette index="12" name="out38_t07_pl" color_size="8">
 		3257 3278 3678 3699 36ba 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="15" name="out38_t08_pl" color_size="8">
+	<tex_palette index="13" name="out38_t08_pl" color_size="8">
 		7fff 32b9 3256 471d 2e36 3257 2e14 7fff
 	</tex_palette>
-	<tex_palette index="16" name="out38_t09_pl" color_size="16">
+	<tex_palette index="14" name="out38_t09_pl" color_size="16">
 		7fff 36cf 3f11 2e6d 42db 3679 3a9a 3638
 		31f5 29b4 7fff 0000 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="17" name="out40_chis02_pl" color_size="16">
+	<tex_palette index="15" name="out40_chis02_pl" color_size="16">
 		256d 258e 29af 2dd0 2dd3 2df4 2e15 2e16
 		31d0 31f1 3214 3258 3613 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="18" name="out40_chis05_pl" color_size="16">
+	<tex_palette index="16" name="out40_chis05_pl" color_size="16">
 		1d2b 1d4c 216d 258e 2591 25b2 25d3 25d4
 		298e 29af 29d2 2a16 2dd1 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="19" name="out42_armi01_pl" color_size="16">
+	<tex_palette index="17" name="out42_armi01_pl" color_size="16">
 		1dd7 1e19 26bb 3b1a 468b 4acb 4ecd 4f0c
 		5712 572e 5b4f 5ef7 5f71 6739 7fff 7fff
 	</tex_palette>
-	<tex_palette index="20" name="out42_cup01_pl" color_size="16">
+	<tex_palette index="18" name="out42_cup01_pl" color_size="16">
 		5292 5ef5 6317 6737 6b58 6b5a 6f79 739c
 		77bb 77bd 7bdc 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="21" name="out42_glass01_pl" color_size="8">
+	<tex_palette index="19" name="out42_glass01_pl" color_size="8">
 		5ef7 6318 6739 6f7b 739c 7bde 7fff 7fff
 	</tex_palette>
-	<tex_palette index="22" name="out42_glass02_pl" color_size="4">
+	<tex_palette index="20" name="out42_glass02_pl" color_size="4">
 		0000 35ad 39ce 3def
 	</tex_palette>
-	<tex_palette index="23" name="out42_glass03_pl" color_size="8">
+	<tex_palette index="21" name="out42_glass03_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="24" name="out42_kabe01_pl" color_size="16">
+	<tex_palette index="22" name="out42_kabe01_pl" color_size="16">
 		38c6 3d08 4108 4129 412a 4529 454a 496b
 		498c 4d8d 518c 51ad 55ce 55ef 5a10 5e73
 	</tex_palette>
-	<tex_palette index="25" name="out42_lig01_pl" color_size="4">
+	<tex_palette index="23" name="out42_lig01_pl" color_size="4">
 		7fe0 7ff3 7fff 7fff
 	</tex_palette>
-	<tex_palette index="26" name="out42_lig04_pl" color_size="8">
+	<tex_palette index="24" name="out42_lig04_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="27" name="out42_line01_pl" color_size="4">
+	<tex_palette index="25" name="out42_line01_pl" color_size="4">
 		1a7c 25f9 2d76 3637
 	</tex_palette>
-	<tex_palette index="28" name="out42_step01_pl" color_size="4">
+	<tex_palette index="26" name="out42_step01_pl" color_size="4">
 		3def 4a52 5294 5ad6
 	</tex_palette>
-	<tex_palette index="29" name="out42_tes01_pl" color_size="8">
+	<tex_palette index="27" name="out42_tes01_pl" color_size="8">
 		7fff 18da 1cfe 2d7e 3dff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="30" name="out43_chis03_pl" color_size="8">
+	<tex_palette index="28" name="out43_chis03_pl" color_size="8">
 		3258 3679 369a 3a9a 3abb 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="31" name="out43_em01_pl" color_size="8">
+	<tex_palette index="29" name="out43_em01_pl" color_size="8">
 		7fff 674b 56e3 46a3 3224 6777 2e0a 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -2116,7 +2026,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="9"
+		tex_image_idx="7" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2140,7 +2050,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="10"
+		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2164,7 +2074,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="9" tex_palette_idx="9"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2188,7 +2098,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="12" tex_palette_idx="12"
+		tex_image_idx="10" tex_palette_idx="10"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2212,7 +2122,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="13" tex_palette_idx="13"
+		tex_image_idx="11" tex_palette_idx="11"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2236,7 +2146,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="14" tex_palette_idx="14"
+		tex_image_idx="12" tex_palette_idx="12"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2260,7 +2170,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="15" tex_palette_idx="15"
+		tex_image_idx="13" tex_palette_idx="13"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2284,7 +2194,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="16" tex_palette_idx="16"
+		tex_image_idx="14" tex_palette_idx="14"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2308,7 +2218,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="17" tex_palette_idx="17"
+		tex_image_idx="15" tex_palette_idx="15"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2332,7 +2242,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="18" tex_palette_idx="18"
+		tex_image_idx="16" tex_palette_idx="16"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2356,7 +2266,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="19" tex_palette_idx="19"
+		tex_image_idx="17" tex_palette_idx="17"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2380,7 +2290,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="20" tex_palette_idx="20"
+		tex_image_idx="18" tex_palette_idx="18"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2404,7 +2314,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="20" tex_palette_idx="20"
+		tex_image_idx="18" tex_palette_idx="18"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2428,7 +2338,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="21" tex_palette_idx="21"
+		tex_image_idx="19" tex_palette_idx="19"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2452,7 +2362,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="22" tex_palette_idx="22"
+		tex_image_idx="20" tex_palette_idx="20"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2476,7 +2386,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="23" tex_palette_idx="23"
+		tex_image_idx="21" tex_palette_idx="21"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2500,7 +2410,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="24" tex_palette_idx="24"
+		tex_image_idx="22" tex_palette_idx="22"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2524,7 +2434,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="25" tex_palette_idx="25"
+		tex_image_idx="23" tex_palette_idx="23"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2548,7 +2458,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="26" tex_palette_idx="26"
+		tex_image_idx="24" tex_palette_idx="24"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2572,7 +2482,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="27" tex_palette_idx="27"
+		tex_image_idx="25" tex_palette_idx="25"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2596,7 +2506,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="28" tex_palette_idx="28"
+		tex_image_idx="26" tex_palette_idx="26"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2620,7 +2530,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="29" tex_palette_idx="29"
+		tex_image_idx="27" tex_palette_idx="27"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2644,7 +2554,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="30" tex_palette_idx="30"
+		tex_image_idx="28" tex_palette_idx="28"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2668,7 +2578,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="31" tex_palette_idx="31"
+		tex_image_idx="29" tex_palette_idx="29"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"

@@ -8,6 +8,11 @@ C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd isi.2
 C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd isi.3
 C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd water.2
 C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd water.3
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd fire.2
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd fire.3
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd fire.4
+C:\cygwin\bin\perl tex_del.pl out42_local_texset.imd denki.3
+C:\cygwin\bin\perl tex_del.pl out42_local_texset.imd denki.4
 
 
 pause
