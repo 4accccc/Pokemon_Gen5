@@ -3459,8 +3459,8 @@
 	</row>
 
 	<row id="doctor_05">
-		<language name="JPN" width="216">ケンイチ</language>
-		<language name="JPN_KANJI" width="216">ケンイチ</language>
+		<language name="JPN" width="216">タツロウ</language>
+		<language name="JPN_KANJI" width="216">タツロウ</language>
 	</row>
 
 	<flowchart-group-list>
