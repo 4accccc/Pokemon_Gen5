@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-05-08T19:17:40" source="r01_b_autumn.mb"/>
+	<create user="fuchino" host="W00152" date="2010-05-13T12:00:58" source="r01_b_autumn.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-05-08T19:17:40" source="r01_b_autumn.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-05-13T12:00:58" source="r01_b_autumn.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1260,8 +1260,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="2" name="polygon2"
-		vertex_size="36" polygon_size="9"
-		triangle_size="0" quad_size="9"
+		vertex_size="32" polygon_size="8"
+		triangle_size="0" quad_size="8"
 		volume_min="0.000000 0.031250 -2.125000"
 		volume_max="3.000000 0.031250 2.875000"
 		volume_r="3.281250"
@@ -1271,7 +1271,7 @@
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="36">
+				<primitive index="0" type="quads" vertex_size="32">
 					<mtx idx="0"/>
 					<tex st="0.000000 0.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
@@ -1282,14 +1282,6 @@
 					<pos_xy xy="2.500000 0.031250"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="2.500000 -2.125000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="0.625000 -0.125000"/>
-					<tex st="0.000000 16.000000"/>
-					<pos_xz xz="0.625000 0.125000"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="0.875000 0.031250"/>
-					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="0.875000 -0.125000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="0.000000 0.125000"/>
 					<tex st="0.000000 16.000000"/>
@@ -1592,8 +1584,8 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="5"
-		vertex_size="320" polygon_size="87"
-		triangle_size="0" quad_size="87"
+		vertex_size="316" polygon_size="86"
+		triangle_size="0" quad_size="86"
 		volume_min="-2.500000 0.031250 -4.914307"
 		volume_max="6.704346 1.375000 4.607910"
 		volume_r="8.160889"
@@ -1606,8 +1598,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="320" polygon_size="87"
-	triangle_size="0" quad_size="87"/>
+<output_info vertex_size="316" polygon_size="86"
+	triangle_size="0" quad_size="86"/>
 
 </body>
 
