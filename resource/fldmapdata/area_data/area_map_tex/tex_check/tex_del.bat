@@ -4,10 +4,10 @@
 @echo      imd名				テクスチャ名
 @echo perl tex_del.pl out39_local_texset.imd fire.2
 
-perl tex_del.pl out39_local_texset.imd isi.2
-perl tex_del.pl out39_local_texset.imd isi.3
-perl tex_del.pl out39_local_texset.imd water.2
-perl tex_del.pl out39_local_texset.imd water.3
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd isi.2
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd isi.3
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd water.2
+C:\cygwin\bin\perl tex_del.pl out39_local_texset.imd water.3
 
 
 pause

@@ -1,1 +1,1 @@
-perl conv.pl > texset_check_result.txt
+C:\cygwin\bin\perl conv.pl > texset_check_result.txt
