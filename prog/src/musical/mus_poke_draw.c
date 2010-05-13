@@ -234,12 +234,14 @@ BOOL MUS_POKE_DRAW_GetShowFlg( MUS_POKE_DRAW_WORK *drawWork )
 
 void MUS_POKE_DRAW_StartAnime( MUS_POKE_DRAW_WORK *drawWork )
 {
-	MUS_MCSS_ResetAnmStopFlag( drawWork->mcss );
+	MUS_MCSS_ResetAnmStopFlag( drawWork->mcssFront );
+	MUS_MCSS_ResetAnmStopFlag( drawWork->mcssBack );
 }
 
 void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork )
 {
-	MUS_MCSS_SetAnmStopFlag( drawWork->mcss );
+	MUS_MCSS_SetAnmStopFlag( drawWork->mcssFront );
+	MUS_MCSS_SetAnmStopFlag( drawWork->mcssBack );
 }
 
 void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx )
@@ -409,3 +411,11 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 	maw->rand = musPoke->mcssParam.perRand;
 
 }
+
+
+#if PM_DEBUG
+void  MUS_POKE_StepAnime( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWork , fx32 frame )
+{
+  MUS_MCSS_StepAnime( work->mcssSys , drawWork->mcss , frame );
+}
+#endif	

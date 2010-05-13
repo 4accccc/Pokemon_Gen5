@@ -202,7 +202,6 @@ void  MUS_MCSS_Main( MUS_MCSS_SYS_WORK *mcss_sys )
   }
   mcss_sys->befVCount = nowVCount;
 }
-
 //“ÆŽ©•`‰æ
 //--------------------------------------------------------------------------
 /**
@@ -1295,5 +1294,11 @@ static  void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 
 void MUS_MCSS_SetDebugLoadFlg(  MUS_MCSS_SYS_WORK *mcss_sys , const BOOL flg )
 {
   mcss_sys->debugLoad = flg;
+}
+
+
+void  MUS_MCSS_StepAnime( MUS_MCSS_SYS_WORK *mcss_sys , MUS_MCSS_WORK *mcss , fx32 frame )
+{
+  NNS_G2dTickMCAnimation( &mcss->mcss_mcanim, frame );
 }
 #endif

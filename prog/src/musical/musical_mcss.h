@@ -98,6 +98,7 @@ extern	void			MUS_MCSS_CopyState( MUS_MCSS_WORK *srcMcss , MUS_MCSS_WORK *dstMcs
 
 #if PM_DEBUG
 extern void MUS_MCSS_SetDebugLoadFlg(  MUS_MCSS_SYS_WORK *mcss_sys , const BOOL flg );
+extern void  MUS_MCSS_StepAnime( MUS_MCSS_SYS_WORK *mcss_sys , MUS_MCSS_WORK *mcss , fx32 frame );
 #endif
 
 #endif	//MUSICAL_MCSS_H_

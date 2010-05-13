@@ -102,6 +102,7 @@ typedef struct
   u16 rare;
   
   u8 bgColIdx;
+  BOOL  isAnime;
 
   MUSICAL_POKE_PARAM *musPoke;
   
@@ -314,8 +315,16 @@ static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
   }
 
 
-  MUS_POKE_DRAW_StartAnime( work->pokeWork );
-  MUS_POKE_DRAW_StartAnime( work->pokeWorkBack );
+  if( work->isAnime == TRUE )
+  {
+    MUS_POKE_DRAW_StartAnime( work->pokeWork );
+    MUS_POKE_DRAW_StartAnime( work->pokeWorkBack );
+  }
+  else
+  {
+    MUS_POKE_DRAW_StopAnime( work->pokeWork );
+    MUS_POKE_DRAW_StopAnime( work->pokeWorkBack );
+  }
   
 }
 
@@ -409,6 +418,8 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
       //“ÁŽêƒ{ƒ^ƒ“(’Ç‰Á•ª
       { 72 , 88 , 104 , 120 },
       { 72 , 88 , 128 , 144 },
+      { 72 , 88 , 152 , 168 },
+      { 72 , 88 , 176 , 192 },
 
       { GFL_UI_TP_HIT_END ,0,0,0},
     };
@@ -513,6 +524,29 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
         
       }
       
+      break;
+
+    case 19:
+      {
+        if( work->isAnime == FALSE )
+        {
+          work->isAnime = TRUE;
+          MUS_POKE_DRAW_StartAnime( work->pokeWork );
+          MUS_POKE_DRAW_StartAnime( work->pokeWorkBack );
+        }
+        else
+        {
+          work->isAnime = FALSE;
+          MUS_POKE_DRAW_StopAnime( work->pokeWork );
+          MUS_POKE_DRAW_StopAnime( work->pokeWorkBack );
+        }
+      }
+      break;
+    case 20:
+      {
+        MUS_POKE_StepAnime( work->pokeSys , work->pokeWork , FX32_ONE );
+        MUS_POKE_StepAnime( work->pokeSys , work->pokeWorkBack , FX32_ONE );
+      }
       break;
     }
   }
@@ -1042,6 +1076,7 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   work->rare = 0;
   work->isDispBit = 0;
   work->bgColIdx = 0;
+  work->isAnime = TRUE;
   
   work->musPoke = MUSICAL_SYSTEM_InitMusPokeParam( work->monsno , work->sex , work->form , work->rare , 0 , work->heapId );
   work->pokeWork = NULL;

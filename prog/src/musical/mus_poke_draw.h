@@ -85,4 +85,8 @@ VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork );
 BOOL* MUS_POKE_DRAW_GetEnableRotateOfs( MUS_POKE_DRAW_WORK *drawWork );
 BOOL* MUS_POKE_DRAW_GetEnableShadowOfs( MUS_POKE_DRAW_WORK *drawWork );
 
+#if PM_DEBUG
+extern void  MUS_POKE_StepAnime( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWork , fx32 frame );
+#endif //PM_DEBUG
+
 #endif MUS_POKE_DRAW_H__
