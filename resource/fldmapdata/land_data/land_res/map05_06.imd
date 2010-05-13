@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-26T11:55:58" source="map05_06.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-13T17:28:13" source="map05_06.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-26T11:55:58" source="map05_06.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-05-13T17:28:13" source="map05_06.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1245,22 +1245,22 @@
 		path="C:/home/wb_data3d/field/out11/chip/tex_spring/sp_o11m2.tga"
 	>
 		<bitmap size="128">
-			e4e4 e5e4 e4e5 e6e5 e4e9 e4e4 e8e8 e8e8
-			e4e4 e5e5 e7e4 e8e6 e4e4 e6e6 e7e6 e7e5
-			e4e4 e5e5 e6e7 e5e8 e8e5 e3e5 e5e5 e0e3
-			e9e5 e6e4 e7e6 e5e9 e5e5 e3e5 e5e5 e1e3
-			e5e7 e6e6 e8e7 e5ea e5e8 e0e5 e8e5 e1e0
-			e5e5 e8e6 e9e9 e8ea e8e5 e1e0 e5e0 ebe1
-			e6e4 eae8 eae9 e5e8 e5e5 ebe0 eb62 6262
-			e8e7 eae9 e8e8 e5e5 e0e5 82eb 8282 8c82
-			eae5 e5e5 e8e5 e3e5 e0e3 8262 8c8c 8c8c
-			e5e4 e7e8 e5e5 e3e5 ebe0 8c82 8c8c 8c8c
-			e5e9 e5e6 e5e5 e0e0 82eb 8c82 8d8c 8f8c
-			e6e9 e5e5 e0e5 62eb 8282 8c8c 8d8d 8f8f
-			e7e6 e3e5 e0e3 82eb 8c8c 8d8c 8f8f 8f8f
-			e8e7 e8e5 e5e8 82eb 8d8c 8f8d 8f8f 8e8d
-			e9e8 e5e5 ebe5 8262 8f8c 8f8f 8d8d 8f8e
-			e5e9 e5e5 ebe1 8c82 8f8c 8d8f 8e8d 8e8e
+			e4e4 e5e4 e4e5 e5e5 e4e8 e4e4 e7e7 e7e7
+			e4e4 e5e5 e6e4 e7e5 e4e4 e5e5 e6e5 e6e5
+			e4e4 e5e5 e5e6 e5e7 e7e5 e3e5 e5e5 e0e3
+			e8e5 e5e4 e6e5 e5e8 e5e5 e3e5 e5e5 e1e3
+			e5e6 e5e5 e7e6 e5e9 e5e7 e0e5 e7e5 e1e0
+			e5e5 e7e5 e8e8 e7e9 e7e5 e1e0 e5e0 eae1
+			e5e4 e9e7 e9e8 e5e7 e5e5 eae0 ea62 6262
+			e7e6 e9e8 e7e7 e5e5 e0e5 82ea 8282 8b82
+			e9e5 e5e5 e7e5 e3e5 e0e3 8262 8b8b 8b8b
+			e5e4 e6e7 e5e5 e3e5 eae0 8b82 8b8b 8b8b
+			e5e8 e5e5 e5e5 e0e0 82ea 8b82 8c8b 8e8b
+			e5e8 e5e5 e0e5 62ea 8282 8b8b 8c8c 8e8e
+			e6e5 e3e5 e0e3 82ea 8b8b 8c8b 8e8e 8e8e
+			e7e6 e7e5 e5e7 82ea 8c8b 8e8c 8e8e 8d8c
+			e8e7 e5e5 eae5 8262 8e8b 8e8e 8c8c 8e8d
+			e5e8 e5e5 eae1 8b82 8e8b 8c8e 8d8c 8d8d
 		</bitmap>
 	</tex_image>
 	<tex_image index="24" name="ue_grass00"
@@ -1403,8 +1403,8 @@
 		5aa5 5664 5ea5 5684 5aa5 5ac5 56a5 5ac5
 	</tex_palette>
 	<tex_palette index="22" name="sp_o11m2_pl" color_size="16">
-		370d 3aaa 3dc2 4370 4770 4792 4793 47b3
-		47b4 4bb5 4bd6 4e44 5664 5684 5a85 5aa5
+		370d 3aaa 3dc2 4370 4371 4792 4793 47b4
+		4bb5 4bd6 4e44 5664 5684 5a85 5aa5 7fff
 	</tex_palette>
 	<tex_palette index="23" name="sp_o11m_pl" color_size="16">
 		370d 3aaa 3dc2 4370 47b3 4e44 5264 5684

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-27T20:05:42" source="map06_06.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-13T17:27:34" source="map06_06.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-27T20:05:42" source="map06_06.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-05-13T17:27:34" source="map06_06.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-3.000000 -0.875000 -2.500000" whd="5.499756 1.687500 4.500000"/>
+<box_test pos_scale="7" xyz="-3.000000 -1.125000 -2.500000" whd="5.499756 1.937500 4.500000"/>
 
 <tex_image_array size="27">
 	<tex_image index="0" name="dansa01a"
@@ -4063,9 +4063,9 @@
 	<polygon index="13" name="polygon13"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-6.000000 -1.750000 -5.000000"
-		volume_max="5.000000 -1.750000 4.000000"
-		volume_r="8.003906"
+		volume_min="-6.000000 -2.250000 -5.000000"
+		volume_max="5.000000 -2.250000 4.000000"
+		volume_r="8.127930"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -4076,13 +4076,13 @@
 					<mtx idx="0"/>
 					<tex st="-192.000000 192.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-6.000000 -1.750000 4.000000"/>
+					<pos_s xyz="-6.000000 -2.250000 4.000000"/>
 					<tex st="160.000000 192.000000"/>
-					<pos_xy xy="5.000000 -1.750000"/>
+					<pos_xy xy="5.000000 -2.250000"/>
 					<tex st="160.000000 -96.000000"/>
 					<pos_xz xz="5.000000 -5.000000"/>
 					<tex st="-192.000000 -96.000000"/>
-					<pos_xy xy="-6.000000 -1.750000"/>
+					<pos_xy xy="-6.000000 -2.250000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -7067,9 +7067,9 @@
 		display_size="27"
 		vertex_size="1761" polygon_size="525"
 		triangle_size="185" quad_size="340"
-		volume_min="-6.000000 -1.750000 -5.000000"
+		volume_min="-6.000000 -2.250000 -5.000000"
 		volume_max="5.000000 1.625000 4.000000"
-		volume_r="8.003906"
+		volume_r="8.127930"
 	>
 		<display index="0" material="0" polygon="3" priority="0"/>
 		<display index="1" material="1" polygon="15" priority="0"/>
