@@ -107,6 +107,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 
       battlecall_param.btl_setup_prm = &cbw->para;
       battlecall_param.demo_prm = cbw->demo_prm;
+      battlecall_param.error_auto_disp = FALSE; //エラー画面の表示はユニオンで制御
 
       next_event = GMEVENT_CreateOverlayEventCall( gsys, 
                     FS_OVERLAY_ID(event_battlecall), 

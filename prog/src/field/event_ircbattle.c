@@ -365,6 +365,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
       battlecall_param.btl_setup_prm = dbw->para;
       battlecall_param.demo_prm = &dbw->demo_prm;
+      battlecall_param.error_auto_disp = TRUE;
 
       next_event = GMEVENT_CreateOverlayEventCall( gsys, 
                     FS_OVERLAY_ID(event_battlecall), 

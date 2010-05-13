@@ -53,21 +53,11 @@ typedef struct {
   COMM_BTL_DEMO_PARAM *demo_prm;
   int battle_mode;      ///<BATTLE_MODE_xxx
   int fight_count;      ///<連勝数
+  BOOL error_auto_disp;         ///<TRUE:エラーが発生した場合、画面を抜ける時にエラー画面を表示
+                                ///<FALSE:エラーが発生しても画面を抜けるだけ
   // [PRIVATE]
   BTL_REC_SEL_PARAM  btl_rec_sel_param;
 } COMM_BATTLE_CALL_PROC_PARAM;
-
-//==============================================================================
-//  通信バトル呼び出しイベント用ワーク
-//==============================================================================
-typedef struct{
-  // [IN]
-  GAMESYS_WORK * gsys;  
-  BATTLE_SETUP_PARAM  *btl_setup_prm;
-  COMM_BTL_DEMO_PARAM *demo_prm;
-  // [PRIVATE]
-  COMM_BATTLE_CALL_PROC_PARAM cbc;
-}EVENT_BATTLE_CALL_WORK;
 
 
 //-------------------------------------
@@ -76,6 +66,8 @@ typedef struct{
 typedef struct {
   BATTLE_SETUP_PARAM *btl_setup_prm;
   COMM_BTL_DEMO_PARAM *demo_prm;
+  BOOL error_auto_disp;         ///<TRUE:エラーが発生した場合、画面を抜ける時にエラー画面を表示
+                                ///<FALSE:エラーが発生しても画面を抜けるだけ
 } EV_BATTLE_CALL_PARAM;
 
 
@@ -98,5 +90,5 @@ typedef struct {
  * @param   work
  */
 //==================================================================
-extern GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void* work );
+extern GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void *work );
 

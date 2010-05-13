@@ -453,6 +453,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
         ep2p->prm.gdata = GAMESYSTEM_GetGameData(pClub->gsys);
         ep2p->prm.btl_setup_prm = ep2p->para;
         ep2p->prm.demo_prm = &ep2p->demo_prm;
+        ep2p->prm.error_auto_disp = TRUE;
         
         GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
         GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(event_battlecall), &CommBattleCommProcData, &ep2p->prm);

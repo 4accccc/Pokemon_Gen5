@@ -107,7 +107,12 @@ static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void*
 static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
 {
   COMM_BTL_DEMO_PROC_WORK*   work = mywk;
+  COMM_BATTLE_CALL_PROC_PARAM * bcw = pwk;
 
+  if(bcw->error_auto_disp == TRUE && NetErr_App_CheckError()){
+    NetErr_App_ReqErrorDisp();
+  }
+  
   GFL_PROC_LOCAL_Exit( work->procsys_up );
   
   GFL_PROC_FreeWork( proc );
@@ -335,7 +340,7 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 FS_EXTERN_OVERLAY(battle);
 
 
-static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm);
+static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm, BOOL error_auto_disp);
 static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work);
 
 
@@ -345,11 +350,10 @@ static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * w
 ///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
  */
 //-----------------------------------------------------------------------------
-GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void* work )
+GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void *work )
 {
   EV_BATTLE_CALL_PARAM* param = work;
-
-  return EVENT_CommBattle( gsys, param->btl_setup_prm, param->demo_prm );
+  return EVENT_CommBattle( gsys, param->btl_setup_prm, param->demo_prm, param->error_auto_disp );
 }
 
 
@@ -358,6 +362,20 @@ GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void* work )
 //    サブイベント
 //
 //============================================================================================
+//--------------------------------------------------------------
+//  通信バトル呼び出しイベント用ワーク
+//--------------------------------------------------------------
+typedef struct{
+  // [IN]
+  GAMESYS_WORK * gsys;  
+  BATTLE_SETUP_PARAM  *btl_setup_prm;
+  COMM_BTL_DEMO_PARAM *demo_prm;
+  BOOL error_auto_disp;         ///<TRUE:エラーが発生した場合、画面を抜ける時にエラー画面を表示
+                                ///<FALSE:エラーが発生しても画面を抜けるだけ
+  // [PRIVATE]
+  COMM_BATTLE_CALL_PROC_PARAM cbc;
+}EVENT_BATTLE_CALL_WORK;
+
 //==================================================================
 /**
  * イベント作成：通信バトル呼び出し
@@ -369,7 +387,7 @@ GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void* work )
  * @retval  GMEVENT *		
  */
 //==================================================================
-static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm)
+static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm, BOOL error_auto_disp)
 {
   EVENT_BATTLE_CALL_WORK *bcw;
   GMEVENT * event;
@@ -379,6 +397,7 @@ static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_s
   bcw->gsys = gsys;
   bcw->btl_setup_prm = btl_setup_prm;
   bcw->demo_prm = demo_prm;
+  bcw->error_auto_disp = error_auto_disp;
   return event;
 }
 
@@ -409,6 +428,7 @@ static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * w
       prm->demo_prm = bcw->demo_prm;
       prm->battle_mode = bcw->demo_prm->battle_mode;
       prm->fight_count = bcw->demo_prm->fight_count;
+      prm->error_auto_disp = bcw->error_auto_disp;
       GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &CommBattleCommProcData, prm);
     }
     (*seq)++;
