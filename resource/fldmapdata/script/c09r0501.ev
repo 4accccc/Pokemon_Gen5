@@ -218,11 +218,8 @@ EVENT_START	ev_pos_c09r0501_n_01
 	
 	//チャンピオン：……まけたわ　とほうもない
 	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_champion_04, C09R0501_CHAMPION_01, POS_UL )
+	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-
-	//ライバル：チャンピオンの方を見る
-	_OBJ_ANIME( C09R0501_RIVAL_01, anm_nevent_rival_move_03 )
-	_OBJ_ANIME_WAIT()
 
 	//カメラ戻す
 	_CAMERA_DEF_MOVE( 30 )//カメラ復帰移動
