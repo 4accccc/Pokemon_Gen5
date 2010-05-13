@@ -6,8 +6,7 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2010/05/12
 REM =================================================================
 
-REM main.srl
-SET PATH_MAIN_SRL=%PROJECT_PROGDIR%bin/ARM9-TS.HYB/Release/main.srl
+SET PATH_MAIN_TEF=%PROJECT_PROGDIR%bin/ARM9-TS.HYB/Release/main.tef
 SET PATH_MAIN_TLF=%PROJECT_PROGDIR%bin/ARM9-TS.HYB/Release/main.tlf
 
 REM テストナンバー >> hudsonで指定
@@ -27,6 +26,6 @@ REM ================================
 REM TLFに書きこんでからSRLを再生成
 REM ================================
 buryarg.TWL %PATH_MAIN_TLF% %TEST_NO%
-touch %PATH_MAIN_SRL%
+touch %PATH_MAIN_TEF%
 make
 

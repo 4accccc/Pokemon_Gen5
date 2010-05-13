@@ -6,8 +6,6 @@ REM 制作者  : hosaka_genya
 REM 日付    : 2009/11/24
 REM =================================================================
 
-SET PATH_TOOLS=%PROJECT_ROOT%\tools\hudson
-
 REM デバイスのON/OFF は問題なく動作する。
 REM devcon enable *HID*
 
