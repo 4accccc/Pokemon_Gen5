@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-27T16:36:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T20:04:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1332" top="165" right="2037" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,7 @@
 
 	<row id="msg_n01r0101_sage2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・七人衆６人（ゲーチス以外）、横並びで配置
+・七賢人６人（ゲーチス以外）、横並びで配置
 ・配置順は
 　６・４・２・１・３・５
 ・続けてsage3_01</comment>
@@ -345,7 +345,7 @@
 
 	<row id="msg_n01r0101_sage7_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・メッセージ表示後、七人衆全員
+・メッセージ表示後、七賢人全員
 　主人公を囲む位置に移動しsage2_02に</comment>
 		<attribute name="キャラ指定">七賢人７</attribute>
 		<language name="JPN" width="256">てんに　ふつか　なく
@@ -353,7 +353,7 @@
 		<language name="JPN_KANJI" width="256">天に二日なく　民に二王なし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_n01r0101_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0101_sage2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader5_01</comment>
 		<attribute name="キャラ指定">七賢人２</attribute>
@@ -376,7 +376,7 @@
 	<row id="msg_n01r0101_leader5_01">
 		<comment>♂
 ・メッセージのみ表示
-・表示後、七人衆全員に？マーク表示
+・表示後、七賢人に？マーク表示
 ・続けてleader5_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ヤーコン</attribute>
@@ -485,7 +485,7 @@
 	<row id="msg_n01r0101_leader8b_01">
 		<comment>♀
 ・できればleader6_01と同時に表示したい（こちらが下）
-・メッセージ後、七人衆とジムリーダーが対峙するよういっせいに移動
+・メッセージ後、七賢人とジムリーダーが対峙するよういっせいに移動
 ・それが終わるとleader8a_01表示</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
