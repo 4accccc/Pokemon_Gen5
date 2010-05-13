@@ -6188,6 +6188,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     break;
 
   case SEQ_END:
+    BTL_MAIN_ReflectPokeWazaOboe( wk->mainModule, pokeID );
     return TRUE;
 
   }
@@ -6402,7 +6403,6 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
   case SEQ_AKIRAME_YESNO_WAIT:
     {
       BtlYesNo result;
-
       if( BTLV_YESNO_Wait( wk->viewCore, &result ) )
       {
         // ‚ ‚«‚ç‚ß‚é

@@ -47,6 +47,10 @@ extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 extern BOOL BTL_SERVER_Main( BTL_SERVER* server );
 extern void BTL_SERVER_GetEscapeInfo( const BTL_SERVER* sv, BTL_ESCAPEINFO* dst );
 
+extern void BTL_SERVER_IntrLevelup_Start( BTL_SERVER* server );
+extern BOOL BTL_SERVER_IntrLevelup_Main( BTL_SERVER* server );
+
+
 extern BTL_SVFLOW_WORK* BTL_SERVER_GetFlowWork( BTL_SERVER* server );
 
 //-------------------------------------

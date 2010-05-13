@@ -110,6 +110,7 @@ extern u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk );
 extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
+extern void BTL_MAIN_ReflectPokeWazaOboe( BTL_MAIN_MODULE* wk, u8 pokeID );
 extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID );
 extern void BTL_MAIN_RECORDDATA_Add( const BTL_MAIN_MODULE* wk, int recID, u32 value );
@@ -125,10 +126,10 @@ extern int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk );
 //-------------------------
 
 
-
 //=========================================================
 // for server only
 //=========================================================
+extern void BTL_MAIN_IntrLevelupProc( const BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_BtlPosToClientID_and_PosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos, u8* clientID, u8* posIdx );
 extern u8   BTL_MAIN_BtlPosToPosIdx( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk );

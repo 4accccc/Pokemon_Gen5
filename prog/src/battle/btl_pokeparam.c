@@ -508,6 +508,14 @@ BOOL BPP_WAZA_CheckUsedInAlive( const BTL_POKEPARAM* bpp, u8 idx )
   GF_ASSERT(idx < bpp->wazaCnt);
   return bpp->waza[idx].usedFlag;
 }
+void BPP_WAZA_Copy( const BTL_POKEPARAM* bppSrc, BTL_POKEPARAM* bppDst )
+{
+  u32 i;
+  for(i=0; i<NELEMS(bppDst->waza); ++i){
+    bppDst->waza[i] = bppSrc->waza[i];
+  }
+}
+
 //=============================================================================================
 /**
  * [ワザパラメータ] ID, 現PP, 最大PPを一度に取得

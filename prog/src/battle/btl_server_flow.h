@@ -34,6 +34,7 @@ typedef enum {
   SVFLOW_RESULT_DEFAULT = 0,  ///< そのまま続行
   SVFLOW_RESULT_POKE_CHANGE,  ///< ターン途中のポケモン入れ替えリクエスト
   SVFLOW_RESULT_POKE_COVER,   ///< 空き位置にポケモンを投入するリクエスト
+  SVFLOW_RESULT_LEVELUP,      ///< レベルアップ処理
   SVFLOW_RESULT_BTL_SHOWDOWN, ///< バトル終了（決着）
   SVFLOW_RESULT_BTL_QUIT,     ///< バトル終了（逃げ）
   SVFLOW_RESULT_POKE_GET,     ///< バトル終了（ポケモン捕獲）
@@ -86,14 +87,22 @@ extern BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 extern void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
-extern BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
 extern SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk );
+
+extern void BTL_SVFLOW_StartTurn_Boot( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
+
+extern void BTL_SVFLOW_ContinueAfterPokeChange_Boot( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
+
+extern void BTL_SVFLOW_StartAfterPokeIn_Boot( BTL_SVFLOW_WORK* wk );
 extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
 
-extern SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
-extern void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir );
-extern BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk );
+
+
+extern BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk );
+extern void BTL_SVFLOW_MakeRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir );
+extern BOOL BTL_SVFLOW_MakePlayerEscapeCommand( BTL_SVFLOW_WORK* wk );
 
 //------------------------------------------------
 // サーバ本体との連絡関数

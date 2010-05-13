@@ -241,6 +241,7 @@ extern u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetUsableCount( const BTL_POKEPARAM* bpp );
 extern WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* pp, u8 idx );
 extern BOOL BPP_WAZA_CheckUsedInAlive( const BTL_POKEPARAM* bpp, u8 idx );
+extern void BPP_WAZA_Copy( const BTL_POKEPARAM* bppSrc, BTL_POKEPARAM* bppDst );
 extern WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
 extern u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza );
 extern u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );

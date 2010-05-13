@@ -151,13 +151,13 @@ static void handler_fld_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* ADD_Fld_Juryoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_HIT_RATIO,  handler_fld_Jyuryoku_AdjustDmg   },  // ダメージ補正ハンドラ
+    { BTL_EVENT_WAZA_HIT_RATIO,  handler_fld_Jyuryoku_AdjustDmg   },  // 命中率補正ハンドラ
     { BTL_EVENT_CHECK_AFFINITY,  handler_fld_Jyuryoku_CheckAff    },  // 相性チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-// ダメージ補正ハンドラ
+// 命中率補正ハンドラ
 static void handler_fld_Jyuryoku_AdjustDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 subParam, int* work )
 {
   BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.67) );

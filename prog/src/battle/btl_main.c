@@ -7,7 +7,9 @@
  * @date  2008.09.06  作成
  */
 //=============================================================================================
+#include <setjmp.h>
 #include <gflib.h>
+
 
 #include "system/main.h"
 #include "sound/pm_sndsys.h"
@@ -137,7 +139,7 @@ struct _BTL_MAIN_MODULE {
   u16       LimitTimeCommand;
 
   BTL_ESCAPEINFO  escapeInfo;
-
+  jmp_buf         setjmpBuf;
 
   BTL_PROC    subProc;
   int         subSeq;
@@ -159,6 +161,7 @@ struct _BTL_MAIN_MODULE {
   u8        fBonusMoneyFixed     : 1;
   u8        fLoseMoneyFixed      : 1;
   u8        fBGMFadeOutDisable   : 1;
+  u8        fLevelupIntr         : 1;
 
 
 };
@@ -280,6 +283,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fLoseMoneyFixed = FALSE;
       wk->fCommError = FALSE;
       wk->fBGMFadeOutDisable = FALSE;
+      wk->fLevelupIntr = FALSE;
       wk->MultiAIClientNum = 0;
 
       TAYA_Printf("musicDef=%d, musicWin=%d\n", setup_param->musicDefault, setup_param->musicWin );
@@ -1932,28 +1936,53 @@ static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq )
 //======================================================================================================
 //======================================================================================================
 
+void BTL_MAIN_IntrLevelupProc( const BTL_MAIN_MODULE* wk )
+{
+  BTL_MAIN_MODULE* pwk = (BTL_MAIN_MODULE*)wk;
+  longjmp( pwk->setjmpBuf, 1 );
+}
 
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 {
   BOOL quitFlag = FALSE;
   int i;
 
-  BTL_SERVER_Main( wk->server );
+  if( setjmp(wk->setjmpBuf) == 1 ){
+    wk->fLevelupIntr = TRUE;
+    BTL_SERVER_IntrLevelup_Start( wk->server );
+    OS_TPrintf("JumpReturned\n");
+  }
 
-  for(i=0; i<BTL_CLIENT_MAX; i++)
+  if( wk->fLevelupIntr )
   {
-    if( wk->client[i] != NULL )
+    BOOL fEndIntr = BTL_SERVER_IntrLevelup_Main( wk->server );
+    for(i=0; i<BTL_CLIENT_MAX; i++){
+      if( wk->client[i] != NULL ){
+        BTL_CLIENT_Main (wk->client[i] );
+      }
+    }
+    if( fEndIntr ){
+      wk->fLevelupIntr = FALSE;
+    }
+  }
+  else
+  {
+    BTL_SERVER_Main( wk->server );
+
+    for(i=0; i<BTL_CLIENT_MAX; i++)
     {
-      if( BTL_CLIENT_Main(wk->client[i]) )
+      if( wk->client[i] != NULL )
       {
-        BTL_CLIENT_GetEscapeInfo( wk->client[i], &wk->escapeInfo );
-        quitFlag = TRUE;
+        if( BTL_CLIENT_Main(wk->client[i]) )
+        {
+          BTL_CLIENT_GetEscapeInfo( wk->client[i], &wk->escapeInfo );
+          quitFlag = TRUE;
+        }
       }
     }
   }
 
   BTLV_CORE_Main( wk->viewCore );
-
   return quitFlag;
 }
 
@@ -3371,30 +3400,6 @@ u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx
 
 //=============================================================================================
 /**
- * クライアント計算結果完了後のデータを、サーバ計算用データに上書きする
- *
- * @param   wk
- *
- */
-//=============================================================================================
-void BTL_MAIN_SyncServerCalcData( BTL_MAIN_MODULE* wk )
-{
-  #if 0
-  u32 i;
-  for(i=0; i<NELEMS(wk->pokeconForServer.pokeParam); ++i)
-  {
-    if( wk->pokeconForServer.pokeParam[i] != NULL )
-    {
-      BTL_POKEPARAM_Copy(
-        wk->pokeconForServer.pokeParam[i],
-        wk->pokeconForClient.pokeParam[i] );
-    }
-  }
-  #endif
-}
-
-//=============================================================================================
-/**
  * プレイヤー使用アイテムをバッグから減らす
  *
  * @param   wk
@@ -3644,6 +3649,26 @@ BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk )
 {
   return checkWinner( wk );
 }
+
+
+//=============================================================================================
+/**
+ * クライアント側で処理したレベルアップ・ワザおぼえの結果をサーバ用パラメータに反映
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_MAIN_ReflectPokeWazaOboe( BTL_MAIN_MODULE* wk, u8 pokeID )
+{
+  BTL_POKEPARAM  *bppSv, *bppCl;
+
+  bppSv = BTL_POKECON_GetPokeParam( &wk->pokeconForServer, pokeID );
+  bppCl = BTL_POKECON_GetPokeParam( &wk->pokeconForClient, pokeID );
+
+  BPP_WAZA_Copy( bppCl, bppSv );
+}
+
 
 //=======================================================================================================
 // BTL_POKE_CONTAINER
