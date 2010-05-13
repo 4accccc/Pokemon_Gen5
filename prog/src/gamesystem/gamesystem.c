@@ -153,9 +153,14 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     debugcnt++;
 
     //>>引数からテストモード切り替え
+  
+    if( OS_GetArgc() < 2 )
+    {
+      return;
+    }
 
     // 全マップチェック
-    if ( OS_GetArgv(1) == HUDSON_TESTCODE_MAP_JUMP )
+    if ( STD_StrCmp( OS_GetArgv(1), HUDSON_TESTCODE_MAP_JUMP ) == 0 )
     {
       GMEVENT * new_event;
 

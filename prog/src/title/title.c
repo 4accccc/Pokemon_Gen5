@@ -362,7 +362,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
       HudsonInit();
     }
     else
-#endif 
+#endif // DEBUG_ONLY_FOR_hudson
     {
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
     }

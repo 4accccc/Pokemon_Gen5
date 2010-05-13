@@ -28,8 +28,8 @@ BOOL HUDSON_IsSkipTitle( void )
   {
     return FALSE;
   }
-
-  if ( STD_CompareString( OS_GetArgv(1), HUDSON_TESTCODE_MAP_JUMP ) )
+  
+  if ( STD_StrCmp( OS_GetArgv(1), HUDSON_TESTCODE_MAP_JUMP ) == 0 )
   {
     return TRUE;
   }
