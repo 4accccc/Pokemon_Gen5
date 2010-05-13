@@ -25,6 +25,8 @@
  *	@data   2010.2.5    OAMAttr単位のカリング作成　GFL_CLACT_USERREND_SetOAMAttrCulling　
  *	@data   2010.4.2    アフィンを考慮しないカリングを作成　ユーザーレンダラーの初期化時に指定できるように。
  *	@data   2010.4.12    カリングなし　設定を作成
+ *	@data   2010.5.10    アニメーションSRTアニメーション反映のONOFF作成
+ *	@data   2010.5.13    ダミーのキャラクタデータ登録関数追加
  *	                      
  *
  */
@@ -428,6 +430,7 @@ extern void GFL_CLACT_SYS_ClearAllOamBuffer( void );
  *		GFL_CLGRP_CGR_Register					VRAM常駐型データ用
  *		GFL_CLGRP_CGR_Register_VramTransfer		VRAM転送型データ用
  *		GFL_CLGRP_CGR_CreateAlies_VramTransfer	登録済みVRAM転送型データのエイリアスを生成
+ *		GFL_CLGRP_CGR_RegisterDummy			VRAM常駐型ダミーデータ用
  *
  *	・解放
  *		GFL_CLGRP_CGR_Release
@@ -499,6 +502,22 @@ extern u32 GFL_CLGRP_CGR_Register_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDat
  */
 //==============================================================================================
 extern u32 GFL_CLGRP_CGR_CreateAliesVramTransfer( u32 srcCgrIdx, u32 cellAnimIdx, CLSYS_DRAW_TYPE targetVram );
+
+//==============================================================================================
+/**
+ * 仮CGRデータの登録（VRAM常駐型OBJ用）
+ *
+ * ダミーデータのVRAM転送を行い、プロキシを作成して保持する。
+ *
+ * @param   size        [in] ダミーキャラクタサイズ
+ * @param   targetVram		[in] 転送先VRAM指定
+ * @param   heapID			[in] データロード用ヒープ（テンポラリ）
+ *
+ * @retval  u32		登録インデックス（登録失敗の場合, GFL_CLGRP_REGISTER_FAILED）
+ */
+//==============================================================================================
+extern u32 GFL_CLGRP_CGR_RegisterDummy( u32 size, CLSYS_DRAW_TYPE targetVram, HEAPID heapID );
+
 
 //==============================================================================================
 /**
