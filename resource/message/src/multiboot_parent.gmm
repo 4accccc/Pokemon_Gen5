@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-11T18:53:55"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-13T15:47:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1390" top="192" right="2095" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -391,7 +391,8 @@
 
 
 	<row id="MSG_MB_PAERNT_01">
-		<language name="JPN" width="208">もう１つの　ＤＳに
+		<language name="JPN" width="208">うえがめんを　さんこうに
+もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
@@ -399,7 +400,8 @@
 『ＤＳダウンロードプレイ』から
 『ポケシフター　ＩＤ：[2:04:５桁:0]』を
 えらんでください</language>
-		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
+		<language name="JPN_KANJI" width="208">上画面を　参考に
+もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
