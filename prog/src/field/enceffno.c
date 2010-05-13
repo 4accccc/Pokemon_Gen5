@@ -44,10 +44,11 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     *outBgmNo = SEQ_BGM_VS_MU;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
-  case MONSNO_644:  //ライ MONSNO_RAI
+  case MONSNO_653:  //ライ MONSNO_RAI
     *outBgmNo = SEQ_BGM_VS_RAI;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
+  case MONSNO_644:  //ドラー MONSNO_DORAA
   case MONSNO_657:  //ビクティ MONSNO_BIKUTHI
     *outBgmNo = SEQ_BGM_VS_NORAPOKE;
     *outEffNo = ENCEFFID_EFF_POKE;
