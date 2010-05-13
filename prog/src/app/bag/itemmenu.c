@@ -120,7 +120,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork );
 static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemInnerUseError( FIELD_ITEMMENU_WORK* pWork );
 static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork );
-static void _itemInnerUseRightStoneWait( FIELD_ITEMMENU_WORK* pWork );
+//static void _itemInnerUseRightStoneWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
@@ -1054,9 +1054,9 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
   // 入力待ち
   if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
   {
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-
     // 再描画
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+    pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
@@ -1067,11 +1067,12 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
 }
 
 
+/*
 // Nの前で「ほらライトストーンを使ってみせてよ」
 #define N01R0502_START     ( 1 )
 // ライトストーンを使った
 #define N01R0502_CHANGE    ( 2 )
-
+*/
 //-----------------------------------------------------------------------------
 /**
  *  @brief  バッグ内で使うアイテム処理
@@ -1083,9 +1084,9 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
 {
-  // スプレー
   if( pWork->ret_item ==ITEM_DAAKUSUTOON || pWork->ret_item==ITEM_RAITOSUTOON )
   {
+/*	シナリオで自動発動するので、確実に使えなくてよい。 2010/05/13 by nakahiro
     SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( pWork->gamedata );
     ENC_SV_PTR encsv = EncDataSave_GetSaveDataPtr( save );
     EVENTWORK *evwork = GAMEDATA_GetEventWork(pWork->gamedata);
@@ -1108,14 +1109,14 @@ static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
     }
     else
     {
+*/
       // つかえなかったので「アララギの　ことば…　つかいどきがある」
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_057, pWork->pStrBuf );
       WORDSET_RegisterPlayerName(pWork->WordSet, 0,  pWork->mystatus );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
       _CHANGE_STATE(pWork,_itemInnerUseWait);
-    }
-
+//    }
   }
   else
   {
@@ -1132,6 +1133,7 @@ static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+/*
 static void _itemInnerUseRightStoneWait( FIELD_ITEMMENU_WORK* pWork )
 {
   EVENTWORK *evwork = GAMEDATA_GetEventWork(pWork->gamedata);
@@ -1155,7 +1157,7 @@ static void _itemInnerUseRightStoneWait( FIELD_ITEMMENU_WORK* pWork )
     
   }
 }
-
+*/
 
 
 //----------------------------------------------------------------------------------
