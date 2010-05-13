@@ -307,6 +307,28 @@ void	FLDMAPPER_AllSetUp( FLDMAPPER* g3Dmapper )
 	if( g3Dmapper->blocks == NULL ){
 		return;
 	}
+
+	for( i=0; i<g3Dmapper->blockNum; i++ ){
+    BLOCKINFO_init(&g3Dmapper->blockNew[i].newBlockInfo);
+	}
+
+	switch( g3Dmapper->mode ){
+	case FLDMAPPER_MODE_SCROLL_NONE: 
+		GetMapperBlockIdxAll( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
+		break;
+	default:
+	case FLDMAPPER_MODE_SCROLL_XZ: 
+		GetMapperBlockIdxXZ( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
+		break;
+	case FLDMAPPER_MODE_SCROLL_XZ_LOOP: 
+		GetMapperBlockIdxXZ_Loop( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
+		break;
+	case FLDMAPPER_MODE_SCROLL_Y: 
+		GetMapperBlockIdxY( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
+		break;
+	}
+	ReloadMapperBlock( g3Dmapper, g3Dmapper->blockNew );
+
 #ifdef DEBUG_PRINT_LOADING_TICK
   {
     OSTick DEBUG_starttick = OS_GetTick();
@@ -324,6 +346,15 @@ void	FLDMAPPER_AllSetUp( FLDMAPPER* g3Dmapper )
     OS_TPrintf( " %ld\n", OS_GetTick() - DEBUG_starttick );
   }
 #endif
+
+
+	//Œ»ÝƒuƒƒbƒN‚ÌindexŽæ“¾
+	{
+		u32 blockx = FX_Whole( FX_Div( g3Dmapper->posCont.x, g3Dmapper->blockWidth ) );
+		u32 blockz = FX_Whole( FX_Div( g3Dmapper->posCont.z, g3Dmapper->blockWidth ) );
+
+		g3Dmapper->nowBlockIdx = blockz * g3Dmapper->sizex + blockx;
+	}
 }
 
 
