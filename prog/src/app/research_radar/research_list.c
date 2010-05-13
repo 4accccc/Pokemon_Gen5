@@ -85,6 +85,9 @@ struct _RESEARCH_RADAR_LIST_WORK
   int sliderSpeed;          // スライダーの速度
   int sliderAccel;          // スライダーの加速度
 
+  // キー入力
+  u32 keyContCount; // 上下キー押しっぱなしカウンタ
+
   // タッチ領域
   GFL_UI_TP_HITTBL menuTouchHitTable[ MENU_TOUCH_AREA_NUM ];
   GFL_UI_TP_HITTBL topicTouchHitTable[ TOPIC_TOUCH_AREA_NUM ];
@@ -253,6 +256,10 @@ static void StopPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // パ
 static BOOL CheckPaletteAnimeEnd( const RRL_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションの終了をチェックする
 static void UpdatePaletteAnime( RRL_WORK* work );  // パレットアニメーションを更新する
 static void UpdateCommonPaletteAnime( const RRL_WORK* work ); // 共通パレットアニメーションを更新する
+// キー入力
+static u32 GetKeyContCount( const RRL_WORK* work ); // キー押しっぱなしカウンタを取得する
+static void IncKeyContCount( RRL_WORK* work ); // キー押しっぱなしカウンタをインクリメントする
+static void ResetKeyContCount( RRL_WORK* work ); // キー押しっぱなしカウンタをリセットする
 // VBlank
 static void VBlankFunc( GFL_TCB* tcb, void* wk ); // VBlank 中の処理
 //-----------------------------------------------------------------------------------------
@@ -655,14 +662,23 @@ static void MainState_STANDBY( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MainState_KEY_WAIT( RRL_WORK* work )
 { 
-  int trg;
+  int key, trg;
   int touchTrg;
   int commonTouch;
   BOOL select = FALSE;
 
+  key   = GFL_UI_KEY_GetCont();
   trg   = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
+
+  // 押しっぱなしチェック
+  if( key & (PAD_KEY_UP + PAD_KEY_DOWN) ) {
+    IncKeyContCount( work );
+  }
+  else {
+    ResetKeyContCount( work );
+  }
 
   //-------------------------
   //「もどる」ボタンをタッチ
@@ -675,9 +691,10 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
     return;
   }
 
-  //---------
-  // ↑キー
-  if( trg & PAD_KEY_UP ) {
+  //--------
+  // ↑キー 
+  if( ( trg & PAD_KEY_UP ) ||
+      ( (key & PAD_KEY_UP) && (0 < work->topicCursorPos) && (10 < GetKeyContCount(work)) ) ) {
     SetTopicButtonCursorOff( work );                   // 移動前の項目を元に戻す
     SetTopicCursorNextPos( work, -1 );                 // 移動先を設定
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT 状態終了
@@ -685,10 +702,10 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
     RegisterNextState( work, RRL_STATE_KEY_WAIT );     // ==> RRL_STATE_KEY_WAIT 
     return;
   } 
-  //---------
+  //--------
   // ↓キー
-  if( trg & PAD_KEY_DOWN ) {
-  //if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ) {
+  if( ( trg & PAD_KEY_DOWN ) ||
+      ( (key & PAD_KEY_DOWN) && (work->topicCursorPos < TOPIC_ID_MAX) && (10 < GetKeyContCount(work)) ) ) {
     SetTopicButtonCursorOff( work );                   // 移動前の項目を元に戻す
     SetTopicCursorNextPos( work, 1 );                  // 移動先を設定
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT 状態終了
@@ -3183,6 +3200,44 @@ static void UpdatePaletteAnime( RRL_WORK* work )
 static void UpdateCommonPaletteAnime( const RRL_WORK* work )
 {
   RRC_UpdatePaletteAnime( work->commonWork );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief キー押しっぱなしカウンタを取得する
+ *
+ * @param work
+ *
+ * @return キー押しっぱなしカウンタの値
+ */
+//------------------------------------------------------------------------------------
+static u32 GetKeyContCount( const RRL_WORK* work )
+{
+  return work->keyContCount;
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief キー押しっぱなしカウンタをインクリメントする
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void IncKeyContCount( RRL_WORK* work )
+{
+  (work->keyContCount)++;
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief キー押しっぱなしカウンタをリセットする
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void ResetKeyContCount( RRL_WORK* work )
+{
+  work->keyContCount = 0;
 }
 
 //-----------------------------------------------------------------------------------------
