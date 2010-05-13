@@ -68,16 +68,30 @@ static const VecFx32 sc_camera_target = { 0x0, FX32_CONST(5.1), FX32_CONST(0.5) 
 #endif
 
 // カメラ設定
-#define CAMERA_POS_Z	( FX32_CONST(32.728027f) )
 /*
-#define CAMERA_POS_Z ( 0x21ccf) // 目的地トして使う
-static const VecFx32 sc_camera_pos = { 0x0, 0x70c2, 0x21ccf }; 
-static const VecFx32 sc_camera_up =  { 0x0, 0x4272, 0x9f0 }; 
-static const VecFx32 sc_camera_target = { 0x0, 0x519a, 0x800 }; 
-*/
+#define CAMERA_POS_Z	( FX32_CONST(32.728027f) )
 static const VecFx32 sc_camera_pos = { 0x0, FX32_CONST(7.996582f), CAMERA_POS_Z }; 
 static const VecFx32 sc_camera_up =  { 0x0, FX32_CONST(1), 0x0 }; 
 static const VecFx32 sc_camera_target = { 0x0, FX32_CONST(4.541260f), FX32_CONST(-0.790039f) }; 
+*/
+#define CAMERA_POS_Z	( 0 )
+/*
+static const VecFx32 sc_camera_pos = { 0, 0, FX32_CONST(300) }; 
+static const VecFx32 sc_camera_up =  { 0, FX32_ONE, 0 }; 
+static const VecFx32 sc_camera_target = { 0, 0, 0 }; 
+*/
+/*
+	{
+    static const VecFx32 cam_pos = {FX32_CONST(-41.0f),
+                                    FX32_CONST(  0.0f),
+                                    FX32_CONST(101.0f)};
+    static const VecFx32 cam_target = {FX32_CONST(0.0f),
+                                       FX32_CONST(0.0f),
+                                       FX32_CONST(-1.0f)};
+    static const VecFx32 cam_up = {0,FX32_ONE,0};
+*/
+#define	ORTHO_HEIGHT	( 3 )
+#define	ORTHO_WIDTH		( 4 )
 
 
 //=============================================================================
@@ -137,13 +151,23 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID sc
   wk->g3d_util = GFL_G3D_UTIL_Create( 10, 16, heap_id );
 
   // 専用カメラを用意
-  wk->camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS,//GFL_G3D_PRJORTH, 
-									FX_SinIdx( 30/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( 30/2 *PERSPWAY_COEFFICIENT ),
-//									defaultCameraAspect, 0,
-									FX32_CONST(1.333333f), 0,
-									defaultCameraNear, defaultCameraFar, 0,
-									&sc_camera_pos, &sc_camera_up, &sc_camera_target, heap_id );
+	{
+		VecFx32 pos			= { 0, 0, FX32_ONE };
+		VecFx32 up			= { 0, FX32_ONE, 0 };
+		VecFx32 target	= { 0, 0, -FX32_ONE };
+
+	  wk->camera = GFL_G3D_CAMERA_Create(
+									GFL_G3D_PRJORTH,
+									FX32_CONST(ORTHO_HEIGHT),
+									-FX32_CONST(ORTHO_HEIGHT),
+									-FX32_CONST(ORTHO_WIDTH),
+									FX32_CONST(ORTHO_WIDTH),
+									FX32_ONE,
+									FX32_CONST(1024),
+									FX32_ONE,
+									&pos, &up, &target, heap_id );
+
+	}
   
 	if( scene != INTRO_SCENE_ID_05_RETAKE_YESNO ){
     int i;
@@ -284,15 +308,19 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
 		// デフォルト位置のフレーム
 		INTRO_G3D_SelectSet( wk, INTRO_3D_SEL_SEX_DEF_FRAME );
     // カメラを離す
+/*
     GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
-    pos.z = 0x200000;
+    pos.z = FX32_ONE;
     GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
+*/
     // ブレンドモード、対象面指定
     G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
 		PMSND_PlaySE( SEQ_SE_OPEN2 );
     wk->start_seq++;
     break;
+
   case 1:
+/*
     // 拡大
     GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
 
@@ -313,6 +341,9 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
       
     GFL_G3D_CAMERA_SetPos( wk->camera, &pos );
     break;
+*/
+		return TRUE;
+
   default : GF_ASSERT(0);
   }
 
