@@ -175,10 +175,10 @@ BOOL POKE_GTS_IsFullMode(POKEMON_TRADE_WORK* pWork)
   pokenum = PokeParty_GetPokeCount(GAMEDATA_GetMyPokemon(pWork->pGameData));
   pokenum += BOXDAT_GetPokeExistCountTotal(pManager);
   
-  if((pokenum==2) && (selectnum==1)){
+  if((pokenum==2) && (selectnum>=1)){
     return TRUE;
   }
-  else if((pokenum>2) && (selectnum==2)){
+  else if((pokenum>2) && (selectnum>=2)){
     return TRUE;
   }
   return FALSE;
