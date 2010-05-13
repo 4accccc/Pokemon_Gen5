@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-13T16:16:55"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-13T22:56:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,7 +356,7 @@
 		<band id="1" index="1" style="0000" width="243"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -482,12 +482,14 @@
 		<comment>説明文
 「Ｗｉ－Ｆｉ」について</comment>
 		<language name="JPN" width="224">Ｗｉ－Ｆｉの　でんぱを　キャッチしても
-ほんたいせっていが　できて　いないか
-ＷＥＰキーが　みとうろく　だと
+ほんたいせっていが　できて　いないと
+Ｗｉ－Ｆｉに　せつぞく　できません。
+また　ＷＥＰキーが　みとうろく　でも
 Ｗｉ－Ｆｉに　せつぞく　できません。</language>
 		<language name="JPN_KANJI" width="224">Ｗｉ－Ｆｉの　電波を　キャッチしても
-本体設定が　できて　いないか
-ＷＥＰキーが　未登録だと
+本体設定が　できて　いないと
+Ｗｉ－Ｆｉに　接続　できません。
+また　ＷＥＰキーが　未登録でも
 Ｗｉ－Ｆｉに　接続　できません。</language>
 	</row>
 
