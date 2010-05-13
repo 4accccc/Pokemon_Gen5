@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T21:29:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T22:28:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -590,7 +590,7 @@
 新しい　世界を　見守るか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_05w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_n01r0502_boss_05w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・WHITEver
 ・メッセージ表示前に、芝居（片手上げ）
@@ -600,7 +600,7 @@
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　シン！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_05b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_05b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・メッセージ表示前に、芝居（片手上げ）
@@ -796,7 +796,7 @@
 キミの　仲間に　するんだ！！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_pokemon_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_pokemon_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポケモン
 ・WHITEver
 ・話しかけるとメッセージ表示とともに鳴き声再生
@@ -813,7 +813,7 @@
 		<language name="JPN_KANJI" width="256">ババリバリダー！！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_pokemon_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_pokemon_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポケモン
 ・BLACKver
 ・話しかけるとメッセージ表示とともに鳴き声再生
@@ -830,7 +830,7 @@
 		<language name="JPN_KANJI" width="256">ンバーニンガッ！！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_pokemon_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_pokemon_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポケモン
 ・戦闘で勝利するとフィールドに復帰して
 　このメッセージを自動で表示
@@ -843,7 +843,7 @@
 [1:00:トレーナー名:0]を　みつめている……</language>
 	</row>
 
-	<row id="msg_n01r0502_pokemon_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_pokemon_02b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポケモン
 ・戦闘で勝利するとフィールドに復帰して
 　このメッセージを自動で表示
@@ -856,7 +856,7 @@
 [1:00:トレーナー名:0]を　みつめている……</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_11w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_n01r0502_boss_11w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・WHITEver
 ・ムを手持ちに加えたとき
@@ -874,7 +874,7 @@
 ともに　歩むことを　決めたか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_11b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_11b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・シンを手持ちに加えたとき
@@ -892,7 +892,7 @@
 ともに　歩むことを　決めたか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_battle_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_battle_01">
 		<comment>♂
 ・ム/シンを手持ちに加えなかったとき
 ・メッセージ後、主人公に隣接してboss_heal_01</comment>
@@ -905,7 +905,7 @@
 そんな相手に　勝っても　無意味だ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_heal_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_heal_01">
 		<comment>♂
 ・システムウインドウ
 ・回復処理
@@ -917,7 +917,7 @@
 回復させた！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_battle_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_battle_02">
 		<comment>♂
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">N</attribute>
@@ -1730,8 +1730,8 @@
 	</row>
 
 	<row id="msg_n01r0502_boss_last_06" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]バイバイ！[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]グッドラック！[BE:09:速度コントロール:0]</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]バイバイ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]グッドラック！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
