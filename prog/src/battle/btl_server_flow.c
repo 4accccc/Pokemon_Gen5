@@ -995,6 +995,9 @@ void BTL_SVFLOW_StartTurn_Boot( BTL_SVFLOW_WORK* wk )
 //=============================================================================================
 SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction )
 {
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+  SCQUE_Init( wk->que );
+
   if( wk->cmdBuildStep == 0 )
   {
     relivePokeRec_Init( wk );
@@ -1011,8 +1014,6 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* c
     wk->cmdBuildStep = 1;
   }
 
-  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
-  SCQUE_Init( wk->que );
   wk->numEndActOrder = ActOrderProc_Main( wk, wk->numEndActOrder );
 
   BTL_N_Printf( DBGSTR_SVFL_TurnStart_Result, wk->numEndActOrder, wk->numActOrder );
@@ -1053,23 +1054,23 @@ void BTL_SVFLOW_ContinueAfterPokeChange_Boot( BTL_SVFLOW_WORK* wk )
 //=============================================================================================
 SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction )
 {
+  wk->flowResult = SVFLOW_RESULT_DEFAULT;
+  SCQUE_Init( wk->que );
+
   if( wk->cmdBuildStep == 0 )
   {
     BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeChange );
 
     BTL_SERVER_InitChangePokemonReq( wk->server );
     BTL_EVENTVAR_CheckStackCleared();
-    SCQUE_Init( wk->que );
-    wk->actOrderStep = 0;
 
-    wk->flowResult = SVFLOW_RESULT_DEFAULT;
+    wk->actOrderStep = 0;
     wk->cmdBuildStep = 1;
 
     if( ActOrderProc_OnlyPokeIn(wk, clientAction) ){
       wk->flowResult = SVFLOW_RESULT_LEVELUP;
       return wk->flowResult;
     }
-
   }
 
   wk->numEndActOrder = ActOrderProc_Main( wk, wk->numEndActOrder );
@@ -1095,16 +1096,17 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
   u32 i;
   u8 numDeadPoke;
 
+  wk->flowResult =  SVFLOW_RESULT_DEFAULT;
+  SCQUE_Init( wk->que );
+
   if( wk->cmdBuildStep == 0 )
   {
     BTL_SERVER_InitChangePokemonReq( wk->server );
     BTL_EVENTVAR_CheckStackCleared();
-    SCQUE_Init( wk->que );
 
     BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeIn );
 
     numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
     wk->numActOrder = sortClientAction( wk, clientAction, wk->actOrder, NELEMS(wk->actOrder) );
     wk->numEndActOrder = 0;
@@ -8807,28 +8809,33 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 
   switch( wk->turnCheckStep ){
   case 1:
+    wk->turnCheckStep++;
     if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_BEGIN) ){
       fLevelUp = TRUE;
       break;
     }
     /* fallthru */
   case 2:
+    wk->turnCheckStep++;
     if( scproc_turncheck_weather(wk, pokeSet) ){
       fLevelUp = TRUE;
       break;
     }
     /* fallthru */
   case 3:
+    wk->turnCheckStep++;
     if( scproc_turncheck_sick(wk, pokeSet) ){
       fLevelUp = TRUE;
       break;
     }
     /* fallthru */
   case 4:
+    wk->turnCheckStep++;
     scproc_turncheck_side( wk );
     scproc_turncheck_field( wk );
     /* fallthru */
   case 5:
+    wk->turnCheckStep++;
     if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_END) ){
       fLevelUp = TRUE;
       break;
@@ -8836,6 +8843,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     /* fallthru */
   case 6:
     // 全ポケモンのターンフラグをクリア
+    wk->turnCheckStep++;
     {
       BTL_POKEPARAM* bpp;
       BTL_POKESET_SeekStart( pokeSet );
@@ -8859,9 +8867,8 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
       wk->turnCount++;
     }
     wk->turnCheckStep = 0;
-    break;
+    return FALSE;
   }
-  wk->turnCheckStep++;
 
   return fLevelUp;
 }
@@ -9780,7 +9787,7 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
 
 //        BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
         SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
-/*
+
         {
           u32 restExp = exp;
           while(1){
@@ -9790,8 +9797,7 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
           }
         }
         SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
-        */
-        SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
+
         BTL_MAIN_RECORDDATA_Add( wk->mainModule, RECID_DAYCNT_EXP, exp );
 
         result = TRUE;
@@ -13828,6 +13834,7 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+    TAYA_Printf( " HandEx damage pokeID=%d\n", param->pokeID );
     if( !BPP_IsDead(pp_target) )
     {
       if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr) ){

@@ -616,6 +616,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
+      TAYA_Printf("Reset Adapter %d\n", __LINE__ );
 
       // 試合制限時間切れのチェック
       if( BTL_MAIN_CheckGameLimitTimeOver(server->mainModule) )
@@ -625,41 +626,46 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       }
 
       storeClientAction( server );
-      BTL_SVFLOW_StartTurn_Boot( server->flowWork );
-      (*seq)++;
+      if( SendActionRecord(server, BTL_RECTIMING_StartTurn, check_action_chapter(server)) ){
+        (*seq)++;
+      }else{
+        TAYA_Printf("録画データ生成失敗！！！\n");
+        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
+      }
     }
     break;
+
   case 4:
-    server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
-    BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
-
-    if( SendActionRecord(server, BTL_RECTIMING_StartTurn, check_action_chapter(server)) ){
-      (*seq)++;
-    }else{
-      (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
-    }
-    break;
-
-  case 5:
     if( WaitAllAdapterReply(server) )
     {
       BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
+      TAYA_Printf("Reset Adapter %d\n", __LINE__ );
       (*seq)++;
     }
     break;
 
+  case 5:
+    BTL_SVFLOW_StartTurn_Boot( server->flowWork );
+    ResetAdapterCmd( server );
+    (*seq)++;
+
+    /* fallthru */
+
   case 6:
-      BTL_N_Printf( DBGSTR_SVFL_SendServerCmd, server->flowResult);
+    server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
+    BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
-      if( BTL_MAIN_GetCommMode(server->mainModule) != BTL_COMM_NONE ){
-        print_client_action( &server->clientAction );
-        print_que_info( server->que, "Server Send ... ");
-      }
+    if( BTL_MAIN_GetCommMode(server->mainModule) != BTL_COMM_NONE ){
+      print_client_action( &server->clientAction );
+      print_que_info( server->que, "Server Send ... ");
+    }
 
+    if( server->que->writePtr ){
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-      (*seq)++;
-      break;
+    }
+    (*seq)++;
+    break;
 
   case 7:
     if( WaitAllAdapterReply(server) )
@@ -672,7 +678,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         setMainProc_Root( server );
         break;
       case SVFLOW_RESULT_LEVELUP:
-        (*seq) = 4;
+        (*seq) = 6;
         break;
       case SVFLOW_RESULT_POKE_COVER:
         BTL_N_Printf( DBGSTR_SV_PokeInReqForEmptyPos );
@@ -824,34 +830,36 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      SCQUE_Init( server->que );
-
       storeClientAction( server );
-      BTL_SVFLOW_StartAfterPokeIn_Boot( server->flowWork );
-      (*seq)++;
+      if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
+        (*seq)++;
+      }else{
+        BTL_N_Printf( DBGSTR_SV_SendActRecordFailed );
+        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
+      }
     }
     break;
 
   case 3:
-    server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
-    BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-    if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
-      (*seq)++;
-    }else{
-      BTL_N_Printf( DBGSTR_SV_SendActRecordFailed );
-      (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
-    }
-    break;
-
-  case 4:
     if( WaitAllAdapterReply(server) ){
+      TAYA_Printf("Reset Adapter %d\n", __LINE__ );
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
+  case 4:
+    ResetAdapterCmd( server );
+    BTL_SVFLOW_StartAfterPokeIn_Boot( server->flowWork );
+    (*seq)++;
+    /* fallthru */
   case 5:
-    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    SCQUE_Init( server->que );
+    server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
+    BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
+    if( server->que->writePtr ){
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    }
     (*seq)++;
     break;
 
@@ -865,7 +873,7 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
         (*seq) = 0;
         break;
       case SVFLOW_RESULT_LEVELUP:
-        (*seq) = 3;
+        (*seq) = 5;
         break;
       case SVFLOW_RESULT_BTL_SHOWDOWN:
         setMainProc( server, ServerMain_ExitBattle );
@@ -949,31 +957,35 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      SCQUE_Init( server->que );
 
       storeClientAction( server );
-      BTL_SVFLOW_ContinueAfterPokeChange_Boot( server->flowWork );
-      (*seq)++;
+      if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){
+        (*seq)++;
+      }else{
+        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
+      }
     }
     break;
+
   case 2:
-    server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork, &server->clientAction );
-    BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-    if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){
-      (*seq)++;
-    }else{
-      (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
-    }
-    break;
-  case 3:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
 
+  case 3:
+    ResetAdapterCmd( server );
+    BTL_SVFLOW_ContinueAfterPokeChange_Boot( server->flowWork );
+    (*seq)++;
+    /* fallthru */
   case 4:
-    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    SCQUE_Init( server->que );
+    server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork, &server->clientAction );
+    BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
+    if( server->que->writePtr ){
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    }
     (*seq)++;
     break;
 
@@ -987,7 +999,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
         (*seq) = 0;
         break;
       case SVFLOW_RESULT_LEVELUP:
-        (*seq) = 2;
+        (*seq) = 4;
         break;
       case SVFLOW_RESULT_POKE_COVER:
         setMainProc( server, ServerMain_SelectPokemonCover );

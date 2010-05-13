@@ -2440,7 +2440,6 @@ void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
   GFL_BMPWIN_TransVramCharacter( wk->win );
 #endif
 
-
   wk->printSeq = 0;
   wk->printWait = 0;
   wk->printWaitOrg = 0;

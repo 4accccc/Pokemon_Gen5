@@ -5784,6 +5784,7 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      TAYA_Printf("PokeID=%d, Pos=%d\n", args[0], pos);
       BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
       (*seq)++;
     }

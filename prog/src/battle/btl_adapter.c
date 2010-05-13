@@ -209,7 +209,7 @@ void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendDat
   wk->returnDataSize = 0;
   wk->returnDataPreparedFlag = FALSE;
 
-  BTL_N_PrintfEx(PRINT_FLG, DBGSTR_ADAPTER_SEND_START, wk->myID, wk->processingCmd );
+  BTL_N_Printf( PRINT_FLG, DBGSTR_ADAPTER_SEND_START, wk->myID, wk->processingCmd );
 }
 
 
