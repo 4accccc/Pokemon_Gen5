@@ -11,9 +11,11 @@
 #define NARC_WMI_NAIX_
 
 enum {
-	NARC_wmi_wm_NCLR = 0,
-	NARC_wmi_wifi_NCGR = 1,
-	NARC_wmi_wm_NCGR = 2
+	NARC_wmi_wiwi_NCLR = 0,
+	NARC_wmi_wm_NCLR = 1,
+	NARC_wmi_wifi_NCGR = 2,
+	NARC_wmi_wiwi_NCGR = 3,
+	NARC_wmi_wm_NCGR = 4
 };
 
 /* NARC_WMI_NAIX_ */
