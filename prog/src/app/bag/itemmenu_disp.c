@@ -1835,10 +1835,11 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_LEFT], TRUE );
 		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_RIGHT], TRUE );
 
-    // うる画面のときはチェックボックスを非表示
-    if( pWork->mode == BAG_MODE_SELL )
+    //「売る」「持たせる」画面のときはチェックボックスを非表示
+    if( pWork->mode == BAG_MODE_SELL || pWork->mode == BAG_MODE_POKELIST )
     {
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_CHECK_BOX] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_EXIT] , FALSE );
     }
   }
 

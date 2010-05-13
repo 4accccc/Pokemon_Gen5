@@ -1753,11 +1753,13 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // 強制終了
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-    pWork->ret_code = BAG_NEXTPROC_EXIT;
-    pWork->ret_item = ITEM_DUMMY_DATA;
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-//    _CHANGE_STATE(pWork,NULL);
-    SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+		if( pWork->mode != BAG_MODE_POKELIST ){
+	    pWork->ret_code = BAG_NEXTPROC_EXIT;
+	    pWork->ret_item = ITEM_DUMMY_DATA;
+	    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+//	    _CHANGE_STATE(pWork,NULL);
+	    SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+		}
     return;
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
@@ -3565,9 +3567,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
-    pWork->ret_code = BAG_NEXTPROC_EXIT;
-    pWork->ret_item = ITEM_DUMMY_DATA;
-    SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+		if( pWork->mode != BAG_MODE_POKELIST ){
+	    pWork->ret_code = BAG_NEXTPROC_EXIT;
+	    pWork->ret_item = ITEM_DUMMY_DATA;
+	    SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+		}
   // 戻るボタン
   }else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
