@@ -600,7 +600,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_080
 //８番道路 ( 203, 183 )
-	_ITEM_EVENT_HIDEITEM( 51, 1, FLAG_HIDEITEM_080 )// ポイントアップ
+	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_080 )// ピーピーマックス
 EVENT_END
 
 EVENT_START ev_hide_item_081
@@ -1030,7 +1030,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_166
 //フキヨセのほらあな２Ｆ ( 5, 9 )
-	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_166 )// ピーピーマックス
+	_ITEM_EVENT_HIDEITEM( 51, 1, FLAG_HIDEITEM_166 )// ポイントアップ
 EVENT_END
 
 EVENT_START ev_hide_item_167
@@ -1039,8 +1039,8 @@ EVENT_START ev_hide_item_167
 EVENT_END
 
 EVENT_START ev_hide_item_168
-//れいとうコンテナ ( 192, 460 )
-	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_168 )// ピーピーマックス
+//れいとうコンテナ ( 176, 463 )
+	_ITEM_EVENT_HIDEITEM( 51, 1, FLAG_HIDEITEM_168 )// ポイントアップ
 EVENT_END
 
 EVENT_START ev_hide_item_169
