@@ -60,6 +60,14 @@
 //	カナワタウン：転車台に配置される車両の定義名
 //======================================================================
 #define	T05_TRAIN_NONE			( 0 )	//車両なし
+#define	T05_TRAIN_SINGLE		( 1 )	//シングル
+#define	T05_TRAIN_S_SINGLE		( 2 )	//スーパーシングル
+#define	T05_TRAIN_DOUBLE		( 3 )	//ダブル
+#define	T05_TRAIN_S_DOUBLE		( 4 )	//スーパーダブル
+#define	T05_TRAIN_MULTI			( 5 )	//マルチ
+#define	T05_TRAIN_S_MULTI		( 6 )	//スーパーマルチ
+#define	T05_TRAIN_WIFI			( 7 )	//Ｗｉ－Ｆｉ
+#define	T05_TRAIN_LOCAL			( 8 )	//カナワ行き
 #define	T05_TRAIN_OLD			( 9 )	//レトロトレイン
 #define	T05_TRAIN_NEW			( 10 )	//ニュートレイン
 
