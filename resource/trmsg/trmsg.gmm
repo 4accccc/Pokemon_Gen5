@@ -1414,9 +1414,9 @@
 	</row>
 
 	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まいったぜ……
+		<language name="JPN" width="216">まいったぜ……▼
 も　　　え　　　つ　　　き　　　た！</language>
-		<language name="JPN_KANJI" width="216">まいったぜ……
+		<language name="JPN_KANJI" width="216">まいったぜ……▼
 燃　　　え　　　つ　　　き　　　た！</language>
 	</row>
 
@@ -2730,15 +2730,11 @@
 		<language name="JPN" width="216">ポケモンと　いっしょに
 ためしのいわに　こぶしを　つきだす！▼
 あなたも　かくとうタイプの　ポケモンと
-ためしのいわを　しらべたら？▼
-あたしの　ともだちから　いわくだきの
-わざマシン　もらったでしょ！？</language>
+ためしのいわを　しらべたら？</language>
 		<language name="JPN_KANJI" width="216">ポケモンと　一緒に
 試しの岩に　こぶしを　つきだす！▼
 あなたも　かくとうタイプの　ポケモンと
-試しの岩を　調べたら？▼
-あたしの　友達から　いわくだきの
-わざマシン　もらったでしょ！？</language>
+試しの岩を　調べたら？</language>
 	</row>
 
 	<row id="TRID_BUSINESS1_01_TRMSG_FIGHT_START">
@@ -4014,18 +4010,14 @@
 	</row>
 
 	<row id="TRID_NURSE_01_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
-		<language name="JPN" width="216">みんな　できることは　ちがいます▼
-で　あたしに　できるのは
-ポケモンを　げんきに　してあげること▼
-いろんな　ひとや　ポケモンが
-いろんなこと　できるってのが▽
-ステキだと　おもうんですよね</language>
-		<language name="JPN_KANJI" width="216">みんな　できることは　違います▼
-で　あたしに　できるのは
-ポケモンを　元気に　してあげること▼
-いろんな　人や　ポケモンが
-いろんなこと　できるってのが▽
-ステキだと　思うんですよね</language>
+		<language name="JPN" width="216">いろんな　ひとや　ポケモンが
+いろんなこと　できるって　ステキ！▼
+で　あたしに　できるのは　ポケモンを
+げんきに　してあげることでーす！</language>
+		<language name="JPN_KANJI" width="216">いろんな　ひとや　ポケモンが
+いろんなこと　できるって　ステキ！▼
+で　あたしに　できるのは　ポケモンを
+元気にして　あげること　でーす！</language>
 	</row>
 
 	<row id="TRID_OL_01_TRMSG_FIGHT_START">
@@ -5162,9 +5154,9 @@
 
 	<row id="TRID_WORKER2_12_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">これは　ひょっとして
-おっさん　まけたのか！？</language>
+おっちゃん　まけたのか！？</language>
 		<language name="JPN_KANJI" width="216">これは　ひょっとして
-おっさん　負けたのか！？</language>
+おっちゃん　負けたのか！？</language>
 	</row>
 
 	<row id="TRID_WORKER2_12_TRMSG_FIGHT_AFTER">
@@ -10449,9 +10441,9 @@
 
 	<row id="TRID_HAKAIM1_26_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけても　いうわよ
-プラ〜ズマ〜</language>
+プラーズマー</language>
 		<language name="JPN_KANJI" width="216">負けても　いうわよ
-プラ〜ズマ〜</language>
+プラーズマー</language>
 	</row>
 
 	<row id="TRID_HAKAIW1_10_TRMSG_FIGHT_LOSE">
