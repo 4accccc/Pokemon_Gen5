@@ -848,10 +848,14 @@ u16 ZONEDATA_GetGroupID( u16 zone_id)
 //------------------------------------------------------------------
 u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 {
-  ZONEDATA* zoneData;
+  ZONEDATA* zoneData; 
+
+  zoneData = loadZoneData( zone_id );
 
   // ホワイトゲート・ブラックゲートは同じゾーンIDなので個別処理
-  if( (zone_id == ZONE_ID_R14R0101) || (zone_id == ZONE_ID_R15R0101) ) {
+  if( (zoneData->placename_id == MAPNAME_GATE_WF10) || 
+      (zoneData->placename_id == MAPNAME_GATE_BC10) )
+  {
     if( GET_VERSION() == VERSION_WHITE ) {
       return MAPNAME_GATE_WF10;
     }
@@ -860,7 +864,6 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
     }
   }
 
-  zoneData = loadZoneData( zone_id );
   return zoneData->placename_id;
 }
 
