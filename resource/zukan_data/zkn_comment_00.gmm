@@ -4819,12 +4819,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_497_000">
-		<language name="JPN">あたまを　たかく　もちあげて
-あいてを　いあつする。きょうてきと
-たたかう　ときだけ　ほんきを　だす。</language>
-		<language name="JPN_KANJI">頭を　高く　持ち上げて　相手を
-威圧する。いつもは　余裕たっぷりだが
-強敵を　相手にすると　本気になる。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_498_000">
@@ -4864,21 +4860,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_502_000">
-		<language name="JPN">みにつけた　ホタチさばきの　わざは
-ミズッコ●に　よって　ちがう。
-ホタチの　ていれは　かかさない。</language>
-		<language name="JPN_KANJI">身につけた　ホタチさばきの　技は
-ミズッコ●に　よって　ちがう。
-ホタチの　手入れは　欠かさない。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_503_000">
-		<language name="JPN">まえあしの　よろいの　いちぶが
-おおきな　つるぎに　なっている。
-なきごえだけで　てきを　いあつする。</language>
-		<language name="JPN_KANJI">前脚の　鎧の　一部が　アシガタナと
-呼ばれる　大剣に　なっている。
-鋭い　咆哮で　相手を　威圧する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_504_000">
@@ -4900,30 +4888,18 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_506_000">
-		<language name="JPN">かおを　おおう　ながい　けは
-すぐれた　レーダー。しゅういの
-ようすを　びんかんに　さっちする。</language>
-		<language name="JPN_KANJI">顔を　覆う　長い毛は　レーダーの
-ような　機能を　持つ。空気の　動きで
-周囲の　様子を　敏感に　察知する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_507_000">
-		<language name="JPN">トレーナーの　しじに　ちゅうじつ。
-おおむかしから　ポケモンを　そだてる
-トレーナーの　てつだいを　してきた。</language>
-		<language name="JPN_KANJI">トレーナーの　指示を　忠実に　守る。
-大昔から　ポケモンを　育成する
-トレーナーの　手伝いを　してきた。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_508_000">
-		<language name="JPN">ゆきやまや　さばくなど　かこくな
-とちで　ひとの　しごとを　てつだう。
-とても　かしこい　ポケモン。</language>
-		<language name="JPN_KANJI">古くから　雪山や　砂漠など　過酷な
-土地で　人の　仕事を　手伝ってきた。
-とてもに　賢い　ポケモン。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_509_000">
@@ -5719,21 +5695,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_629_000">
-		<language name="JPN">てごろな　ガイコツを　みつけて
-おしりを　ぼうぎょする　しゅうせい。
-よわい　ポケモンを　おいかけまわす。</language>
-		<language name="JPN_KANJI">手ごろな　ガイコツを　見つけて
-おしりを　防御する　習性。
-弱い　ポケモンを　追いかけ回す。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_630_000">
-		<language name="JPN">そらから　ちじょうを　かんさつして
-よわった　えものに　おそいかかる。
-ほねで　きかざる　しゅうせい。</language>
-		<language name="JPN_KANJI">空から　地上の　観察して
-弱った　獲物に　襲いかかる。
-元気な　相手は　狙わない。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_631_000">

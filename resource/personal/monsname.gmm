@@ -2879,8 +2879,8 @@
 	</row>
 
 	<row id="MONSNAME_497">
-		<language name="JPN" width="216">プランブラ</language>
-		<language name="JPN_KANJI" width="216">プランブラ</language>
+		<language name="JPN" width="216">ジャローダ</language>
+		<language name="JPN_KANJI" width="216">ジャローダ</language>
 	</row>
 
 	<row id="MONSNAME_498">
@@ -2904,13 +2904,13 @@
 	</row>
 
 	<row id="MONSNAME_502">
-		<language name="JPN" width="216">ミズッコ</language>
-		<language name="JPN_KANJI" width="216">ミズッコ</language>
+		<language name="JPN" width="216">フタチマル</language>
+		<language name="JPN_KANJI" width="216">フタチマル</language>
 	</row>
 
 	<row id="MONSNAME_503">
-		<language name="JPN" width="216">ラッコール</language>
-		<language name="JPN_KANJI" width="216">ラッコール</language>
+		<language name="JPN" width="216">ダイケンキ</language>
+		<language name="JPN_KANJI" width="216">ダイケンキ</language>
 	</row>
 
 	<row id="MONSNAME_504">
@@ -2924,18 +2924,18 @@
 	</row>
 
 	<row id="MONSNAME_506">
-		<language name="JPN" width="216">パピー</language>
-		<language name="JPN_KANJI" width="216">パピー</language>
+		<language name="JPN" width="216">ヨーテリー</language>
+		<language name="JPN_KANJI" width="216">ヨーテリー</language>
 	</row>
 
 	<row id="MONSNAME_507">
-		<language name="JPN" width="216">パブロー</language>
-		<language name="JPN_KANJI" width="216">パブロー</language>
+		<language name="JPN" width="216">ハーデリア</language>
+		<language name="JPN_KANJI" width="216">ハーデリア</language>
 	</row>
 
 	<row id="MONSNAME_508">
-		<language name="JPN" width="216">パブドッグ</language>
-		<language name="JPN_KANJI" width="216">パブドッグ</language>
+		<language name="JPN" width="216">ムーランド</language>
+		<language name="JPN_KANJI" width="216">ムーランド</language>
 	</row>
 
 	<row id="MONSNAME_509">
@@ -3539,13 +3539,13 @@
 	</row>
 
 	<row id="MONSNAME_629">
-		<language name="JPN" width="216">アウトン</language>
-		<language name="JPN_KANJI" width="216">アウトン</language>
+		<language name="JPN" width="216">バルチャイ</language>
+		<language name="JPN_KANJI" width="216">バルチャイ</language>
 	</row>
 
 	<row id="MONSNAME_630">
-		<language name="JPN" width="216">アウトロン</language>
-		<language name="JPN_KANJI" width="216">アウトロン</language>
+		<language name="JPN" width="216">バルジーナ</language>
+		<language name="JPN_KANJI" width="216">バルジーナ</language>
 	</row>
 
 	<row id="MONSNAME_631">
@@ -3599,13 +3599,13 @@
 	</row>
 
 	<row id="MONSNAME_641">
-		<language name="JPN" width="216">カザカミ</language>
-		<language name="JPN_KANJI" width="216">カザカミ</language>
+		<language name="JPN" width="216">トルネロス</language>
+		<language name="JPN_KANJI" width="216">トルネロス</language>
 	</row>
 
 	<row id="MONSNAME_642">
-		<language name="JPN" width="216">ライカミ</language>
-		<language name="JPN_KANJI" width="216">ライカミ</language>
+		<language name="JPN" width="216">ボルトロス</language>
+		<language name="JPN_KANJI" width="216">ボルトロス</language>
 	</row>
 
 	<row id="MONSNAME_643">
@@ -3619,8 +3619,8 @@
 	</row>
 
 	<row id="MONSNAME_645">
-		<language name="JPN" width="216">ツチノカミ</language>
-		<language name="JPN_KANJI" width="216">ツチノカミ</language>
+		<language name="JPN" width="216">ランドロス</language>
+		<language name="JPN_KANJI" width="216">ランドロス</language>
 	</row>
 
 	<row id="MONSNAME_646">

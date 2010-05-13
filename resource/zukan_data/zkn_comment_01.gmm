@@ -4819,12 +4819,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_497_000">
-		<language name="JPN">プライドの　たかい　ポケモン。
-たいようの　ひかりを　たいないで
-ぞうふくさせて　くちから　うちだす。</language>
-		<language name="JPN_KANJI">プライドが　とても　高い　ポケモン。
-全身で　浴びた　太陽の　光を
-体内で　増幅させ　口から　撃ち出す。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_498_000">
@@ -4864,21 +4860,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_502_000">
-		<language name="JPN">ながれるような　たちさばきで
-２まいの　ホタチを　あつかう　わざは
-きびしい　しゅぎょうで　みにつける。</language>
-		<language name="JPN_KANJI">流れるような　太刀さばきで
-２枚の　ホタチを　あつかう　技は
-厳しい　修業によって　身につける。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_503_000">
-		<language name="JPN">アシガタナと　よばれる　つるぎの
-ひとふりで　あいてを　たおす。
-なかまには　とても　やさしい。</language>
-		<language name="JPN_KANJI">アシガタナと　呼ばれる　大剣の
-一振りで　相手を　倒す。
-仲間には　とても　優しい。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_504_000">
@@ -4900,30 +4888,18 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_506_000">
-		<language name="JPN">つよい　あいてにも　ゆうかんに
-たちむかうが　ふりな　たたかいを
-さける　ちのうの　たかい　ポケモン。</language>
-		<language name="JPN_KANJI">強い　相手にも　勇敢に　立ち向かうが
-状況を　判断して　不利な　戦いを
-避ける　知能の　高い　ポケモン。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_507_000">
-		<language name="JPN">マントの　ように　からだを　おおう
-くろい　たいもうは　とても　かたい。
-うけた　ダメージを　へらしてくれる。</language>
-		<language name="JPN_KANJI">マントの　ように　体を　覆う　黒い
-体毛は　非常に　硬い。相手の　攻撃の
-ダメージを　減らしてくれる。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_508_000">
-		<language name="JPN">こころやさしい　せいかく。よわい
-ポケモンや　トレーナーが　ピンチに
-なると　ぜんりょくで　たすける。</language>
-		<language name="JPN_KANJI">心優しい　性格。弱い　ポケモンや
-トレーナーが　ピンチに　陥ると
-身を挺して　全力で　助ける。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_509_000">
@@ -5719,21 +5695,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_629_000">
-		<language name="JPN">つばさが　ちいさいため　とべない。
-しんかの　ときが　ちかづくと
-じぶんから　ガイコツを　ぬぎすてる。</language>
-		<language name="JPN_KANJI">翼が　未発達のため　飛べない。
-進化の　ときが　近づくと
-自分から　ガイコツを　脱ぎ捨てる。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_630_000">
-		<language name="JPN">ほねを　ひろい　あつめて　すづくり。
-よわった　えものを　あしで　つかみ
-ほねの　すまで　かるがると　はこぶ。</language>
-		<language name="JPN_KANJI">骨を　拾い　集めて　巣作り。
-弱った　獲物を　脚で　つかみ
-骨の　巣まで　軽々と　運ぶ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_631_000">
