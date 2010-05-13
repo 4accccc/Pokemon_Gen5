@@ -239,6 +239,9 @@ EVENT_START		ev_pos_c03r0601_stop_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_look )
 	_OBJ_ANIME_WAIT()
 	
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_senyou)
+	_OBJ_ANIME_WAIT()
+	
 	//あたしは　チェレンのように
 	_BALLOONWIN_OBJMSG( msg_c03r0601_white_04 , MMDL_ID_EVENTOBJ_00 )
 	_MSGWIN_CLOSE()
@@ -293,6 +296,14 @@ EVENT_START		ev_pos_c03r0601_stop_01
 
 EVENT_END
 
+//--------------------------------------------------------------------
+// サポート：専用アニメ                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_senyou
+
+	_ANIME_DATA AC_SUPPORT_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 //	受付嬢　ベルから戦闘したいとの話を聞く
 //--------------------------------------------------------------------
@@ -502,7 +513,6 @@ _ANIME_LABEL anm_support_info7
 //	サポート　ヒウンシティのほうを見る
 //--------------------------------------------------------------------
 _ANIME_LABEL anm_support_look
-	_ANIME_DATA		AC_WAIT_16F,1
 	_ANIME_DATA		AC_STAY_WALK_D_16F,1
 	_ANIME_DATA		AC_WAIT_8F,1
 	_ANIME_DATA		ACMD_END,0
