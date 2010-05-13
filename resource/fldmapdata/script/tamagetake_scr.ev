@@ -33,7 +33,6 @@ EVENT_START	ev_tamagetake_enc
 
 	_TALK_OBJ_START()
 	
-	_TIME_WAIT( 16 )
 	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv ) 
 	//parameter0‚ÉŠÔˆá‚Á‚Ä 0 ‚ª“ü—Í‚³‚ê‚Ä‚¢‚éê‡ 5 ‚ÉC³
 	IF $lwk_poke_lv == 0 THEN
