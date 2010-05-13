@@ -235,13 +235,19 @@ BOOL MUS_POKE_DRAW_GetShowFlg( MUS_POKE_DRAW_WORK *drawWork )
 void MUS_POKE_DRAW_StartAnime( MUS_POKE_DRAW_WORK *drawWork )
 {
 	MUS_MCSS_ResetAnmStopFlag( drawWork->mcssFront );
-	MUS_MCSS_ResetAnmStopFlag( drawWork->mcssBack );
+	if( drawWork->mcssBack != NULL )
+	{
+  	MUS_MCSS_ResetAnmStopFlag( drawWork->mcssBack );
+  }
 }
 
 void MUS_POKE_DRAW_StopAnime( MUS_POKE_DRAW_WORK *drawWork )
 {
 	MUS_MCSS_SetAnmStopFlag( drawWork->mcssFront );
-	MUS_MCSS_SetAnmStopFlag( drawWork->mcssBack );
+	if( drawWork->mcssBack != NULL )
+	{
+  	MUS_MCSS_SetAnmStopFlag( drawWork->mcssBack );
+  }
 }
 
 void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx )
