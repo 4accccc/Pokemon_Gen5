@@ -1226,7 +1226,7 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
     WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_ThankyouCount(info), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     break;
   case BEACON_WSET_HAIHU_MONS:
-    WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_DistributionMonsno(info));
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1, GAMEBEACON_Get_Action_DistributionMonsno(info));
     break;
   case BEACON_WSET_HAIHU_ITEM:
     WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_DistributionItemNo(info));
