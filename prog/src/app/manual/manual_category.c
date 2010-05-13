@@ -20,6 +20,7 @@
 
 #include "manual_graphic.h"
 #include "manual_def.h"
+#include "manual_data.h"
 #include "manual_common.h"
 #include "manual_list.h"
 #include "manual_category.h"
@@ -29,12 +30,9 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_manual.h"
+#include "msg/msg_manual_text.h"
 #include "manual.naix"
 #include "manual_image.naix"
-
-
-// ダミー
-#include "msg/msg_zkn.h"
 
 
 // サウンド
@@ -108,16 +106,39 @@ MANUAL_CATEGORY_WORK*  MANUAL_CATEGORY_Init(
 
   // ここで作成
   {
-    u16 i;
     work->list_param.type = MANUAL_LIST_TYPE_CATEGORY;
-    work->list_param.num  = 4;
-    work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*work->list_param.num );
-    for( i=0; i<work->list_param.num; i++ )
+
     {
-      work->list_param.item[i].no     = i;
-      work->list_param.item[i].str_id = i;
-      work->list_param.item[i].icon   = MANUAL_LIST_ICON_NONE;
+      u16 cate_idx;
+      u16 cate_num = MANUAL_DATA_CateRefGetTotalCateNum( work->cmn_wk->data_wk );
+      
+      work->list_param.num  = 0;
+      work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*cate_num );  // 最大も使わないことが多いだろうが、最大で確保しておく
+      
+      for( cate_idx=0; cate_idx<cate_num; cate_idx++ )
+      {
+        u16 open_title_num = 0;
+        u16 title_num = MANUAL_DATA_CateGetTitleNum( work->cmn_wk->data_wk, cate_idx );
+        u16 title_order; 
+        for( title_order=0; title_order<title_num; title_order++ )
+        {
+          u16 title_idx = MANUAL_DATA_CateGetTitleIdx( work->cmn_wk->data_wk, cate_idx, title_order );
+          u16 open_flag = MANUAL_DATA_TitleGetOpenFlag( work->cmn_wk->data_wk, title_idx );
+          if( MANUAL_DATA_OpenFlagIsOpen( work->cmn_wk->data_wk, open_flag, work->cmn_wk->gamedata ) )
+          {
+            open_title_num++;
+          }
+        }
+        if( open_title_num > 0 )
+        {
+          work->list_param.item[work->list_param.num].no     = cate_idx;
+          work->list_param.item[work->list_param.num].str_id = MANUAL_DATA_CateGetCateGmmId( work->cmn_wk->data_wk, cate_idx );
+          work->list_param.item[work->list_param.num].icon   = MANUAL_LIST_ICON_NONE;
+          work->list_param.num++;
+        }
+      }
     }
+
     work->list_param.head_pos    = work->param->head_pos;
     work->list_param.cursor_pos  = work->param->cursor_pos;
 

@@ -2222,6 +2222,7 @@ SRCS_OVERLAY_SUBWAY_MAP = app/subway_map/subway_map.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_MANUAL = app/manual/manual.c \
                       app/manual/manual_graphic.c \
+                      app/manual/manual_data.c \
                       app/manual/manual_common.c \
                       app/manual/manual_touchbar.c \
                       app/manual/manual_list.c \

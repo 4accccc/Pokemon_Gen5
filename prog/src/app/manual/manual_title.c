@@ -29,12 +29,9 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_manual.h"
+#include "msg/msg_manual_text.h"
 #include "manual.naix"
 #include "manual_image.naix"
-
-
-// ダミー
-#include "msg/msg_zkn.h"
 
 
 // サウンド
@@ -110,31 +107,65 @@ MANUAL_TITLE_WORK*  MANUAL_TITLE_Init(
   {
     if( work->param->type == MANUAL_TITLE_TYPE_CATEGORY )
     {
-      u16 i;
       work->list_param.type = MANUAL_LIST_TYPE_TITLE;
-      work->list_param.num  = 7 + work->param->cate_no;
-      work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*work->list_param.num );
-      for( i=0; i<work->list_param.num; i++ )
+
       {
-        work->list_param.item[i].no     = i;
-        work->list_param.item[i].str_id = i;
-        work->list_param.item[i].icon   = (i%3==0)?(MANUAL_LIST_ICON_NEW):(MANUAL_LIST_ICON_NONE);
+        u16 title_order;
+        u16 cate_idx  = work->param->cate_no;
+        u16 title_num = MANUAL_DATA_CateGetTitleNum( work->cmn_wk->data_wk, cate_idx );
+        
+        work->list_param.num  = 0;
+        work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*title_num );  // 最大も使わないことが多いだろうが、最大で確保しておく
+        
+        for( title_order=0; title_order<title_num; title_order++ )
+        {
+          u16 title_idx = MANUAL_DATA_CateGetTitleIdx( work->cmn_wk->data_wk, cate_idx, title_order );
+          u16 open_flag = MANUAL_DATA_TitleGetOpenFlag( work->cmn_wk->data_wk, title_idx );
+          if( MANUAL_DATA_OpenFlagIsOpen( work->cmn_wk->data_wk, open_flag, work->cmn_wk->gamedata ) )
+          {
+            u16 read_flag = MANUAL_DATA_TitleGetReadFlag( work->cmn_wk->data_wk, title_idx );
+            BOOL is_read  = MANUAL_DATA_ReadFlagIsRead( work->cmn_wk->data_wk, read_flag, work->cmn_wk->gamedata );
+            
+            work->list_param.item[work->list_param.num].no     = title_idx;
+            work->list_param.item[work->list_param.num].str_id = MANUAL_DATA_TitleGetTitleGmmId( work->cmn_wk->data_wk, title_idx );
+            work->list_param.item[work->list_param.num].icon   = (is_read)?(MANUAL_LIST_ICON_NONE):(MANUAL_LIST_ICON_NEW);
+
+            work->list_param.num++;
+          }
+        }
       }
+
       work->list_param.head_pos    = work->param->head_pos;
       work->list_param.cursor_pos  = work->param->cursor_pos;
     }
     else  // if( work->param->type == MANUAL_TITLE_TYPE_ALL )
     {
-      u16 i;
       work->list_param.type = MANUAL_LIST_TYPE_TITLE;
-      work->list_param.num  = 16;
-      work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*work->list_param.num );
-      for( i=0; i<work->list_param.num; i++ )
+
       {
-        work->list_param.item[i].no     = i;
-        work->list_param.item[i].str_id = i;
-        work->list_param.item[i].icon   = (i%3==0)?(MANUAL_LIST_ICON_NONE):(MANUAL_LIST_ICON_NEW);
+        u16 title_idx;
+        u16 title_num = MANUAL_DATA_TitleRefGetTotalTitleNum( work->cmn_wk->data_wk );
+
+        work->list_param.num  = 0;
+        work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*title_num );  // 最大も使わないことが多いだろうが、最大で確保しておく
+
+        for( title_idx=0; title_idx<title_num; title_idx++ )
+        {
+          u16 open_flag = MANUAL_DATA_TitleGetOpenFlag( work->cmn_wk->data_wk, title_idx );
+          if( MANUAL_DATA_OpenFlagIsOpen( work->cmn_wk->data_wk, open_flag, work->cmn_wk->gamedata ) )
+          {
+            u16 read_flag = MANUAL_DATA_TitleGetReadFlag( work->cmn_wk->data_wk, title_idx );
+            BOOL is_read  = MANUAL_DATA_ReadFlagIsRead( work->cmn_wk->data_wk, read_flag, work->cmn_wk->gamedata );
+            
+            work->list_param.item[work->list_param.num].no     = title_idx;
+            work->list_param.item[work->list_param.num].str_id = MANUAL_DATA_TitleGetTitleGmmId( work->cmn_wk->data_wk, title_idx );
+            work->list_param.item[work->list_param.num].icon   = (is_read)?(MANUAL_LIST_ICON_NONE):(MANUAL_LIST_ICON_NEW);
+
+            work->list_param.num++;
+          }
+        }
       }
+
       work->list_param.head_pos    = work->param->head_pos;
       work->list_param.cursor_pos  = work->param->cursor_pos;
     }

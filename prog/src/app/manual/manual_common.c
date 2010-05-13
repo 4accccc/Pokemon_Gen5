@@ -20,6 +20,7 @@
 
 #include "manual_graphic.h"
 #include "manual_def.h"
+#include "manual_data.h"
 #include "manual_touchbar.h"
 #include "manual_common.h"
 
@@ -28,12 +29,9 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_manual.h"
+#include "msg/msg_manual_text.h"
 #include "manual.naix"
 #include "manual_image.naix"
-
-
-// ダミー
-#include "msg/msg_zkn.h"
 
 
 // サウンド
@@ -106,7 +104,7 @@ MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
     work->msgdata_main   = GFL_MSG_Create(
                                GFL_MSG_LOAD_NORMAL,
                                ARCID_MESSAGE,
-                               NARC_message_zkn_dat,
+                               NARC_message_manual_text_dat,
                                work->heap_id );
   }
 
@@ -130,6 +128,11 @@ MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
         work->heap_id );
   }
 
+  // マニュアルデータ
+  {
+    work->data_wk = MANUAL_DATA_Load( work->handle_system, work->heap_id ); 
+  }
+
   // 呼び出した関数の中でMANUAL_COMMON_WORKを使用するものは、MANUAL_COMMON_Initの1番最後に呼び出すこと。
   // マニュアルタッチバー
   {
@@ -147,6 +150,11 @@ void  MANUAL_COMMON_Exit(
   // マニュアルタッチバー
   {
     MANUAL_TOUCHBAR_Exit( work->mtb_wk );
+  }
+
+  // マニュアルデータ
+  {
+    MANUAL_DATA_Unload( work->data_wk ); 
   }
 
   // ファイルハンドル

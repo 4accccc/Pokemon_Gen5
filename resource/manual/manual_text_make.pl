@@ -103,6 +103,7 @@ $debug_out = 1;  # これが0のときデバッグ出力なし。これが1の�
 ↓はカテゴリ番号順に並んでいる
 {
   カテゴリ番号(u16)
+  カテゴリのgmmのID(u16)
   タイトル数(u16)
   タイトルのインデックス(u16)←タイトル開始場所ファイルから参照すれば、タイトルへ到達できるように
   タイトルのインデックス(u16)←タイトル数分だけしか用意しないようにするので、
@@ -264,8 +265,9 @@ $manual_cate_col_cate_no              = 0;
 $manual_cate_col_cate_name_hira       = 1;
 $manual_cate_col_cate_name_kanji      = 2;
 $manual_cate_col_cate_name_gmm_row_id = 3;
-$manual_cate_col_first                = 4;  # 初登場なら1、2回目以降なら0
-$manual_cate_col_max                  = 5;
+$manual_cate_col_title_num            = 4;  # このカテゴリに属するタイトルの個数
+$manual_cate_col_first                = 5;  # 初登場なら1、2回目以降なら0
+$manual_cate_col_max                  = 6;
 #%manual_cate_tbl_idx_hash_from_cate_name_hira = ();
 %manual_cate_tbl_idx_hash_from_cate_no        = ();
 
@@ -1423,6 +1425,39 @@ sub WriteDataCateFile
         printf D_FH_MAIN "%d,", $manual_cate_tbl[$i][$manual_cate_col_cate_no];
       }
 
+      $buf = pack "v", $manual_cate_tbl[$i][$manual_cate_col_cate_name_gmm_row_id];  # 符号なし16ビット整数。リトルエンディアン。
+      print FH_MAIN "$buf";
+      $cate_byte += 2;
+
+      if( $debug_out == 1 )
+      {
+        printf D_FH_MAIN "%d,", $manual_cate_tbl[$i][$manual_cate_col_cate_name_gmm_row_id];
+      }
+
+      # このカテゴリに属するタイトルの個数をまず数える
+      my $title_num = 0;
+      for( my $j=0; $j<$manual_title_num; $j++ )
+      {
+        if( $manual_title_tbl[$j][$manual_title_col_first] == 1 )
+        {
+          if( $manual_title_tbl[$j][$manual_title_col_cate_no] == $manual_cate_tbl[$i][$manual_cate_col_cate_no] )
+          {
+            $title_num++;
+          }
+        }
+      }
+      $manual_cate_tbl[$i][$manual_cate_col_title_num] = $title_num;
+
+      $buf = pack "v", $manual_cate_tbl[$i][$manual_cate_col_title_num];  # 符号なし16ビット整数。リトルエンディアン。
+      print FH_MAIN "$buf";
+      $cate_byte += 2;
+
+      if( $debug_out == 1 )
+      {
+        printf D_FH_MAIN "%d,", $manual_cate_tbl[$i][$manual_cate_col_title_num];
+      }
+     
+      # このカテゴリに属するタイトルのインデックスを出力する
       for( my $j=0; $j<$manual_title_num; $j++ )
       {
         if( $manual_title_tbl[$j][$manual_title_col_first] == 1 )

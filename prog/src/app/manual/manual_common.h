@@ -17,6 +17,7 @@
 
 #include "gamesystem/gamedata_def.h"
 
+#include "manual_data.h"
 #include "manual_touchbar.h"
 
 
@@ -57,6 +58,9 @@ typedef struct
   // ファイルハンドル
   ARCHANDLE*                  handle_system;   // システムのファイルハンドル
   ARCHANDLE*                  handle_explain;  // 説明画面のファイルハンドル
+
+  // マニュアルのデータ
+  MANUAL_DATA_WORK*           data_wk;
 
   // マニュアルタッチバー
   MANUAL_TOUCHBAR_WORK*       mtb_wk;  // MANUAL_TOUCHBAR_Mainは各画面で呼んで下さい
