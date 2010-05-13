@@ -398,19 +398,19 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   #define QuickJumpStart   DEBUG_FIELD_STR48
 #elif defined DEBUG_ONLY_FOR_matsumiya
   #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17
+  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_masafumi_saitou
   #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17
+  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_suginaka_katsunori
   #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17
+  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_mizuguchi_mai || defined DEBUG_ONLY_FOR_mai_ando
   #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17
+  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_murakami_naoto
   #define QuickJumpStart   DEBUG_FIELD_STR03
-  #define QuickJumpSelect  DEBUG_FIELD_STR17
+  #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_ohno
   #define QuickJumpStart   DEBUG_FIELD_STR19
 //#elif defined DEBUG_ONLY_FOR_
