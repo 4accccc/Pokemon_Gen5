@@ -40,10 +40,10 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_SE_PLAY(SEQ_SE_FLD_17)
 	_OBJ_FALL_IN( D04R0601_RIVAL_01,14,24,DIR_UP )
 	_SE_WAIT()
-	
+
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_down )
 	_OBJ_ANIME_WAIT()
-		
+
 	//やっと　おいついた
 	_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
 	_BALLOONWIN_CLOSE()		
@@ -161,7 +161,7 @@ EVENT_START		ev_reserve_d04r0601_event_01
 
 	//画面暗転処理
 	_MAP_FADE_BLACK_OUT_SLOW()
-		
+	
 	//========================================/
 	
 	//D04遺跡イベント終了
@@ -179,6 +179,10 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	//========================================/
 
 	_MAP_FADE_END_CHECK()
+	
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
 	
 	_CAMERA_END()		//カメラ操作終了
 
