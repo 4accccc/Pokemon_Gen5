@@ -210,6 +210,7 @@ static const BtlEventHandlerTable*  ADD_Osyaberi( u32* numElems );
 static void handler_Osyaberi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Makituku( u32* numElems );
 static void handler_Makituku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Makituku_Str( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Uzusio( u32* numElems );
 static void handler_Uzusio_CheckHide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Uzusio_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2241,7 +2242,8 @@ static void handler_Osyaberi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Makituku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK, handler_Makituku },    // 追加効果による状態異常チェックハンドラ
+    { BTL_EVENT_ADD_SICK,     handler_Makituku },     // 追加効果による状態異常チェックハンドラ
+    { BTL_EVENT_WAZASICK_STR, handler_Makituku_Str }, // 状態異常追加時の文字列セットハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2255,8 +2257,35 @@ static void handler_Makituku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
     cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
     BPP_SICKCONT_AddParam( &cont, waza );
-    BTL_Printf("  巻き付く系 : poketurn, pokeID=%d, turn=%d\n", cont.poketurn.pokeID, cont.poketurn.count);
+
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
+  }
+}
+// 状態異常追加時の文字列セットハンドラ
+static void handler_Makituku_Str( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) == WAZASICK_BIND)
+  ){
+    BTL_HANDEX_STR_PARAMS* str = (BTL_HANDEX_STR_PARAMS*)BTL_EVENTVAR_GetValue( BTL_EVAR_WORK_ADRS );
+    u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    u16 strID;
+
+    switch( BTL_EVENT_FACTOR_GetSubID(myHandle) ){
+    case WAZANO_MAKITUKU:       strID = BTL_STRID_SET_Makituku_Start; break;
+    case WAZANO_SIMETUKERU:     strID = BTL_STRID_SET_Simetukeru_Start; break;
+    case WAZANO_HONOONOUZU:     strID = BTL_STRID_SET_HonoNoUzu_Start; break;
+    case WAZANO_KARADEHASAMU:   strID = BTL_STRID_SET_KaradeHasamu_Start; break;
+    case WAZANO_SUNAZIGOKU:     strID = BTL_STRID_SET_Sunajigoku_Start; break;
+    case WAZANO_MAGUMASUTOOMU:  strID = BTL_STRID_SET_MagmaStorm_Start; break;
+    case WAZANO_UZUSIO:         strID = BTL_STRID_SET_Uzusio_Start; break;
+    default:
+      return;
+    }
+
+    HANDEX_STR_Setup( str, BTL_STRTYPE_SET, strID );
+    HANDEX_STR_AddArg( str, defPokeID );
+    HANDEX_STR_AddArg( str, pokeID );
   }
 }
 //----------------------------------------------------------------------------------
@@ -2268,6 +2297,7 @@ static const BtlEventHandlerTable*  ADD_Uzusio( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_ADD_SICK,        handler_Makituku           }, // 追加効果による状態異常チェックハンドラ = まきつくと一緒
+    { BTL_EVENT_WAZASICK_STR,    handler_Makituku_Str       }, // 状態異常追加時の文字列セットハンドラ
     { BTL_EVENT_CHECK_POKE_HIDE, handler_Uzusio_CheckHide   }, // 消えポケヒットチェック
     { BTL_EVENT_WAZA_DMG_PROC2,  handler_Uzusio_Dmg         }, // ダメージ計算ハンドラ
   };

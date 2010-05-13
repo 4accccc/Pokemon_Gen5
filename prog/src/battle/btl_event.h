@@ -113,6 +113,7 @@ typedef enum {
   BTL_EVENT_WAZA_RANKEFF_FIXED,     ///< ワザによるランク増減効果成功
   BTL_EVENT_WAZASICK_TURN_COUNT,    ///< 特殊処理の状態異常ターン数
   BTL_EVENT_WAZASICK_SPECIAL,       ///< 特殊処理の状態異常ID決定
+  BTL_EVENT_WAZASICK_STR,           ///< ワザによる通常の状態異常決定時テキスト
   BTL_EVENT_WAZASICK_PARAM,         ///< ワザによる状態異常のパラメータチェック
   BTL_EVENT_ADD_SICK_TYPE,          ///< ワザの追加効果による状態異常のタイプ調整
   BTL_EVENT_ADD_SICK,               ///< ワザの追加効果による状態異常の発生チェック

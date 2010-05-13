@@ -578,6 +578,8 @@ static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
   WazaID waza, WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost );
 static WazaSick scEvent_DecideSpecialWazaSick( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* str );
+static void scEvent_GetWazaSickAddStr( BTL_SVFLOW_WORK* wk, WazaSick sick,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* str );
 static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target,
   WazaSick sick, BPP_SICK_CONT* sickCont );
 static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
@@ -7256,13 +7258,12 @@ static WazaSick scEvent_CheckWazaAddSick( BTL_SVFLOW_WORK* wk, WazaID waza,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
-//    BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK_TYPE );
 
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
-
-    BTL_EVENTVAR_SetValue( BTL_EVAR_SICK_CONT, sickCont.raw );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_SICK_CONT, sickCont.raw );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADD_SICK );
+
     sick = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
     fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
@@ -7341,13 +7342,15 @@ static BOOL scproc_Fight_WazaSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
       return FALSE;
     }
   }
+  else{
+    scEvent_GetWazaSickAddStr( wk, sick, attacker, target, &wk->strParam );
+  }
   scEvent_WazaSickCont( wk, attacker, target, sick, &sickCont );
 
   {
     // 特殊メッセージが何も用意されていなければ、scproc_AddSick 内で、
     // できるだけ標準メッセージを出すようにしている。
     BOOL fDefaultMsg = (HANDEX_STR_IsEnable(&wk->strParam) == FALSE );
-
     if( scproc_AddSickRoot(wk, target, attacker, sick, sickCont, fAlmost, fDefaultMsg) )
     {
       if( !fDefaultMsg ){
@@ -7384,6 +7387,27 @@ static WazaSick scEvent_DecideSpecialWazaSick( BTL_SVFLOW_WORK* wk,
     sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
   BTL_EVENTVAR_Pop();
   return sickID;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザによる通常の状態異常に対する成功時メッセージを決定する
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   str
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_GetWazaSickAddStr( BTL_SVFLOW_WORK* wk, WazaSick sick,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* str )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WORK_ADRS, (int)(str) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASICK_STR );
+  BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
 /**
