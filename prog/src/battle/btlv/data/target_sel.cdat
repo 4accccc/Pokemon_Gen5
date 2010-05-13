@@ -241,7 +241,7 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Mine[] = {
   { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
 };
 
-static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ WAZA_TARGET_MAX + 1 ] = {
+const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ WAZA_TARGET_MAX + 1 ] = {
   { 
     PokeSeleMenuKey4Normal_L,  ///< 自分以外１体（選択）
     PokeSeleMenuKey4MineSel,   ///< 自分を含む味方１体（選択）
@@ -275,6 +275,43 @@ static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ WAZA_TARGET_MAX + 1 
     PokeSeleMenuKey4Mine,      ///< 自分側陣営
     PokeSeleMenuKey4Mine_R,    ///< ゆびをふるなど特殊型
     PokeSeleMenuKey4Normal_R,  ///< 自分以外１体（遠距離）
+  },
+};
+
+const u8 PokeSeleMenuKey4DataCount[ 2 ][ WAZA_TARGET_MAX + 1 ] = {
+  { 
+    NELEMS(PokeSeleMenuKey4Normal_L),  ///< 自分以外１体（選択）
+    NELEMS(PokeSeleMenuKey4MineSel),   ///< 自分を含む味方１体（選択）
+    NELEMS(PokeSeleMenuKey4Mine_R),    ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey4EnemySel),  ///< 相手側１体（選択）
+    NELEMS(PokeSeleMenuKey4NoMine_L),  ///< 自分以外全て
+    NELEMS(PokeSeleMenuKey4Enemy),     ///< 相手側全て
+    NELEMS(PokeSeleMenuKey4Mine),      ///< 味方側全ポケ
+    NELEMS(PokeSeleMenuKey4Mine_L),    ///< 自分のみ
+    NELEMS(PokeSeleMenuKey4All),       ///< 場に出ているポケモン全て
+    NELEMS(PokeSeleMenuKey4Mine_L),    ///< 相手側１体ランダム
+    NELEMS(PokeSeleMenuKey4All),       ///< 場全体（天候など）
+    NELEMS(PokeSeleMenuKey4Enemy),     ///< 敵側陣営
+    NELEMS(PokeSeleMenuKey4Mine),      ///< 自分側陣営
+    NELEMS(PokeSeleMenuKey4Mine_L),    ///< ゆびをふるなど特殊型
+    NELEMS(PokeSeleMenuKey4Normal_L),  ///< 自分以外１体（遠距離）
+  },
+  { 
+    NELEMS(PokeSeleMenuKey4Normal_R),  ///< 自分以外１体（選択）
+    NELEMS(PokeSeleMenuKey4MineSel),   ///< 自分を含む味方１体（選択）
+    NELEMS(PokeSeleMenuKey4Mine_L),    ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey4EnemySel),  ///< 相手側１体（選択）
+    NELEMS(PokeSeleMenuKey4NoMine_R),  ///< 自分以外全て
+    NELEMS(PokeSeleMenuKey4Enemy),     ///< 相手側全て
+    NELEMS(PokeSeleMenuKey4Mine),      ///< 味方側全ポケ
+    NELEMS(PokeSeleMenuKey4Mine_R),    ///< 自分のみ
+    NELEMS(PokeSeleMenuKey4All),       ///< 場に出ているポケモン全て
+    NELEMS(PokeSeleMenuKey4Mine_R),    ///< 相手側１体ランダム
+    NELEMS(PokeSeleMenuKey4All),       ///< 場全体（天候など）
+    NELEMS(PokeSeleMenuKey4Enemy),     ///< 敵側陣営
+    NELEMS(PokeSeleMenuKey4Mine),      ///< 自分側陣営
+    NELEMS(PokeSeleMenuKey4Mine_R),    ///< ゆびをふるなど特殊型
+    NELEMS(PokeSeleMenuKey4Normal_R),  ///< 自分以外１体（遠距離）
   },
 };
 
@@ -707,7 +744,7 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Long_R[] = {
   { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //5
 };
 
-static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 ] = { 
+const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 ] = { 
   { 
     PokeSeleMenuKey6Normal_L,   ///< 自分以外１体（選択）
     PokeSeleMenuKey6MineSel,    ///< 自分を含む味方１体（選択）
@@ -758,6 +795,60 @@ static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 
     PokeSeleMenuKey6Mine,       ///< 自分側陣営
     PokeSeleMenuKey6Mine_R,     ///< ゆびをふるなど特殊型
     PokeSeleMenuKey6Long_R,     ///< 自分以外１体（遠距離）
+  },
+};
+
+const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ] = { 
+  { 
+    NELEMS(PokeSeleMenuKey6Normal_L),   ///< 自分以外１体（選択）
+    NELEMS(PokeSeleMenuKey6MineSel),    ///< 自分を含む味方１体（選択）
+    NELEMS(PokeSeleMenuKey6Pair_L),     ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey6EnemySel_L), ///< 相手側１体（選択）
+    NELEMS(PokeSeleMenuKey6NoMine_L),   ///< 自分以外全て
+    NELEMS(PokeSeleMenuKey6Enemy_L),    ///< 相手側全て
+    NELEMS(PokeSeleMenuKey6Mine),       ///< 味方側全ポケ
+    NELEMS(PokeSeleMenuKey6Mine_L),     ///< 自分のみ
+    NELEMS(PokeSeleMenuKey6All),        ///< 場に出ているポケモン全て
+    NELEMS(PokeSeleMenuKey6Mine_L),     ///< 相手側１体ランダム
+    NELEMS(PokeSeleMenuKey6All),        ///< 場全体（天候など）
+    NELEMS(PokeSeleMenuKey6Enemy_C),    ///< 敵側陣営
+    NELEMS(PokeSeleMenuKey6Mine),       ///< 自分側陣営
+    NELEMS(PokeSeleMenuKey6Mine_L),     ///< ゆびをふるなど特殊型
+    NELEMS(PokeSeleMenuKey6Long_L),     ///< 自分以外１体（遠距離）
+  },
+  { 
+    NELEMS(PokeSeleMenuKey6Normal_C),   ///< 自分以外１体（選択）
+    NELEMS(PokeSeleMenuKey6MineSel),    ///< 自分を含む味方１体（選択）
+    NELEMS(PokeSeleMenuKey6Pair_C),     ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey6EnemySel_C), ///< 相手側１体（選択）
+    NELEMS(PokeSeleMenuKey6NoMine_C),   ///< 自分以外全て
+    NELEMS(PokeSeleMenuKey6Enemy_C),    ///< 相手側全て
+    NELEMS(PokeSeleMenuKey6Mine),       ///< 味方側全ポケ
+    NELEMS(PokeSeleMenuKey6Mine_C),     ///< 自分のみ
+    NELEMS(PokeSeleMenuKey6All),        ///< 場に出ているポケモン全て
+    NELEMS(PokeSeleMenuKey6Mine_C),     ///< 相手側１体ランダム
+    NELEMS(PokeSeleMenuKey6All),        ///< 場全体（天候など）
+    NELEMS(PokeSeleMenuKey6Enemy_C),    ///< 敵側陣営
+    NELEMS(PokeSeleMenuKey6Mine),       ///< 自分側陣営
+    NELEMS(PokeSeleMenuKey6Mine_C),     ///< ゆびをふるなど特殊型
+    NELEMS(PokeSeleMenuKey6Normal_C),   ///< 自分以外１体（遠距離）
+  },
+  { 
+    NELEMS(PokeSeleMenuKey6Normal_R),   ///< 自分以外１体（選択）
+    NELEMS(PokeSeleMenuKey6MineSel),    ///< 自分を含む味方１体（選択）
+    NELEMS(PokeSeleMenuKey6Pair_R),     ///< 自分以外の味方１体（選択）
+    NELEMS(PokeSeleMenuKey6EnemySel_R), ///< 相手側１体（選択）
+    NELEMS(PokeSeleMenuKey6NoMine_R),   ///< 自分以外全て
+    NELEMS(PokeSeleMenuKey6Enemy_R),    ///< 相手側全て
+    NELEMS(PokeSeleMenuKey6Mine),       ///< 味方側全ポケ
+    NELEMS(PokeSeleMenuKey6Mine_R),     ///< 自分のみ
+    NELEMS(PokeSeleMenuKey6All),        ///< 場に出ているポケモン全て
+    NELEMS(PokeSeleMenuKey6Mine_R),     ///< 相手側１体ランダム
+    NELEMS(PokeSeleMenuKey6All),        ///< 場全体（天候など）
+    NELEMS(PokeSeleMenuKey6Enemy_C),    ///< 敵側陣営
+    NELEMS(PokeSeleMenuKey6Mine),       ///< 自分側陣営
+    NELEMS(PokeSeleMenuKey6Mine_R),     ///< ゆびをふるなど特殊型
+    NELEMS(PokeSeleMenuKey6Long_R),     ///< 自分以外１体（遠距離）
   },
 };
 

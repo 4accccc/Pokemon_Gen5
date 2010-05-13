@@ -37,6 +37,11 @@
 
 #include "data/rotate_sel.cdat"
 
+extern  const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ WAZA_TARGET_MAX + 1 ];
+extern  const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 ];
+extern  const u8 PokeSeleMenuKey4DataCount[ 2 ][ WAZA_TARGET_MAX + 1 ];
+extern  const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ];
+
 //============================================================================================
 /**
  *  定数宣言
@@ -512,7 +517,11 @@ struct _BTLV_INPUT_WORK
   u32                   demo_cursor_pos     :4;
   u32                   button_reaction     :1;
 
-  BOOL                  b_button_flag;
+  u32                   b_button_flag       :1;
+  u32                   decide_pos_flag     :1;     //決定ボタン位置記憶フラグ
+  u32                   waza_target         :8;     ///<対象選択タイプ
+  u32                   waza_cursor_pos     :8;     ///<技選択位置記憶ワーク
+  u32                                       :14;
 
   int                   hit;
 
@@ -1652,15 +1661,39 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     {
       if( hit_tp != GFL_UI_TP_HIT_NONE )
       {
-        if( tp_tbl->cancel_flag[ hit ] == FALSE )
+        if( ( tp_tbl->cancel_flag[ hit ] == FALSE ) && ( biw->decide_pos_flag == 0 ) )
         {
           SePlayDecide( biw );
           switch( biw->scr_type ){
           case BTLV_INPUT_SCRTYPE_COMMAND:
-          case BTLV_INPUT_SCRTYPE_WAZA:
-          case BTLV_INPUT_SCRTYPE_DIR:
           case BTLV_INPUT_SCRTYPE_ROTATE:
+          case BTLV_INPUT_SCRTYPE_WAZA:
             biw->decide_pos[ biw->active_index ][ biw->scr_type ] = hit;
+            break;
+          case BTLV_INPUT_SCRTYPE_DIR:
+            { 
+              int i;
+              int pos = 0;
+              int pos_max = ( biw->type != BTLV_INPUT_TYPE_TRIPLE ) ?
+                            PokeSeleMenuKey4DataCount[ biw->active_index ][ biw->waza_target ] :
+                            PokeSeleMenuKey6DataCount[ biw->active_index ][ biw->waza_target ];
+              const BTLV_INPUT_KEYTBL*  key_tbl = ( biw->type != BTLV_INPUT_TYPE_TRIPLE ) ?
+                                                  PokeSeleMenuKey4Data[ biw->active_index ][ biw->waza_target ] : 
+                                                  PokeSeleMenuKey6Data[ biw->active_index ][ biw->waza_target ]; 
+
+              for( i = 0 ; i < pos_max ; i++ )
+              { 
+                if( key_tbl[ i ].a_button == hit )
+                { 
+                  pos = i;
+                  break;
+                }
+              }
+              biw->decide_pos[ biw->active_index ][ biw->scr_type ] = pos |
+                                                                      ( biw->decide_pos[ biw->active_index ] 
+                                                                                       [ BTLV_INPUT_SCRTYPE_WAZA ] << 4 );
+            }
+            break;
           default:
             break;
           }
@@ -1669,6 +1702,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
         {
           SePlayCancel( biw );
         }
+        biw->decide_pos_flag = 0;
       }
     }
   }
@@ -3547,6 +3581,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
         },
       },
     };
+    biw->waza_target = bisp->waza_target;
     ttw->datID = datID[ type ][ pos ][ bisp->waza_target ];
   }
   //パレット転送
@@ -4398,15 +4433,21 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     switch( biw->scr_type ){
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
-    case BTLV_INPUT_SCRTYPE_DIR:
     case BTLV_INPUT_SCRTYPE_ROTATE:
-      if( biw->button_exist[ biw->decide_pos[ biw->active_index ][ biw->scr_type ] ] == TRUE )
-      {
-        biw->cursor_pos = biw->decide_pos[ biw->active_index ][ biw->scr_type ];
-      }
-      else
-      {
-        biw->cursor_pos = 0;
+      biw->cursor_pos = biw->decide_pos[ biw->active_index ][ biw->scr_type ];
+      break;
+    case BTLV_INPUT_SCRTYPE_DIR:
+      { 
+        int waza_pos = ( biw->decide_pos[ biw->active_index ][ biw->scr_type ] & 0xf0 ) >> 4;
+
+        if( biw->decide_pos[ biw->active_index ][ BTLV_INPUT_SCRTYPE_WAZA ] == waza_pos )
+        { 
+          biw->cursor_pos = biw->decide_pos[ biw->active_index ][ biw->scr_type ] & 0x0f;
+        }
+        else
+        { 
+          biw->cursor_pos = 0;
+        }
       }
       break;
     default:
@@ -4530,12 +4571,22 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     switch( biw->scr_type ){
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
-    case BTLV_INPUT_SCRTYPE_DIR:
     case BTLV_INPUT_SCRTYPE_ROTATE:
       if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
       {
         biw->decide_pos[ biw->active_index ][ biw->scr_type ] = biw->cursor_pos;
       }
+      biw->decide_pos_flag = 1;
+      break;
+    case BTLV_INPUT_SCRTYPE_DIR:
+      if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
+      {
+        biw->decide_pos[ biw->active_index ][ biw->scr_type ] = biw->cursor_pos |
+                                                                ( biw->decide_pos[ biw->active_index ]
+                                                                                 [ BTLV_INPUT_SCRTYPE_WAZA ] << 4 );
+      }
+      biw->decide_pos_flag = 1;
+      break;
     default:
       break;
     }
@@ -4786,12 +4837,9 @@ static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 {
-  if( biw->comp != BTL_COMPETITOR_COMM )
-  {
-    OS_TPrintf("SEQ_SE_DECIDE2\n");
-    PMSND_StopSE();
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
-  }
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  PMSND_PlaySE( SEQ_SE_DECIDE2 );
 }
 
 //=============================================================================================
@@ -4799,10 +4847,9 @@ static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 {
-  if( biw->comp != BTL_COMPETITOR_COMM )
-  {
-    PMSND_PlaySE( SEQ_SE_CANCEL2 );
-  }
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  PMSND_PlaySE( SEQ_SE_CANCEL2 );
 }
 
 //=============================================================================================
@@ -4810,10 +4857,9 @@ static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 {
-  if( biw->comp != BTL_COMPETITOR_COMM )
-  {
-    PMSND_PlaySE( SEQ_SE_ROTATION_S );
-  }
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  PMSND_PlaySE( SEQ_SE_ROTATION_S );
 }
 
 //=============================================================================================
@@ -4821,10 +4867,9 @@ static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 {
-  if( biw->comp != BTL_COMPETITOR_COMM )
-  {
-    PMSND_PlaySE( SEQ_SE_DECIDE2 );
-  }
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  PMSND_PlaySE( SEQ_SE_DECIDE2 );
 }
 
 //=============================================================================================
@@ -4832,9 +4877,8 @@ static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 {
-  if( biw->comp != BTL_COMPETITOR_COMM )
-  {
-    PMSND_PlaySE( SEQ_SE_ROTATION_B );
-  }
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+
+  PMSND_PlaySE( SEQ_SE_ROTATION_B );
 }
 
