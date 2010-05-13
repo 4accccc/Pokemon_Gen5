@@ -196,7 +196,7 @@ ExpertAISeq:
 	ADRS  ExpertAI_157	// たまごうみ		2006.6.14
 	ADRS  ExpertAI_158	// ねこだまし		2006.6.14
 	ADRS  ExpertAI_Dummy		// ダミー	
-	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_160		// たくわえる	
 
 	ADRS  ExpertAI_161	// はきだす			2006.6.14
 	ADRS  ExpertAI_162	// のみこむ			2006.6.14
@@ -2399,6 +2399,30 @@ ExpertAI_158:	// ねこだましok
 	INCDEC		2
 ExpertAI_158_end:
 	AIEND
+//---------------------------------------------------------------------------
+ExpertAI_160:		// たくわえる	2010/5/11
+
+	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_160_2_2
+
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_160_2		// バトンタッチ系
+
+	IF_RND_UNDER	128,ExpertAI_160_2_2
+ExpertAI_160_2:
+	INCDEC		2
+ExpertAI_160_2_2:
+	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_160_3
+
+	IF_RND_UNDER	200,ExpertAI_160_end
+
+ExpertAI_160_3:
+	IF_HP_UNDER	CHECK_ATTACK,40,ExpertAI_160_5
+
+	IF_RND_UNDER	60,ExpertAI_160_end
+ExpertAI_160_5:
+	INCDEC		-2
+ExpertAI_160_end:
+	AIEND
+
 //---------------------------------------------------------------------------
 ExpertAI_161:	// はきだす
 	CHECK_TAKUWAERU		CHECK_ATTACK
