@@ -1173,6 +1173,8 @@ EVENT_START ev_debug_obata
 	_BMPMENU_MAKE_LIST( msg_debug_obata_8,   8 ) // 無音曲再生
 	_BMPMENU_MAKE_LIST( msg_debug_obata_9,   9 ) // 調査項目全オープン
 	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 10 ) // テスト
+	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 11 ) // テスト
+	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 12 ) // テスト
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1208,7 +1210,15 @@ EVENT_START ev_debug_obata
     _FLAG_SET( FE_RES_QUESTION_PLAY )
     _FLAG_SET( FE_RES_QUESTION_POKEMON )
   CASE 10 THEN
-    _PLACE_NAME_DISPLAY()
+    _BGM_VOLUME_DOWN( 30, 100 )
+  CASE 11 THEN
+    _BGM_VOLUME_RECOVER( 30 )
+  CASE 12 THEN
+    _BGM_VOLUME_DOWN( 30, 60 )
+    _TIME_WAIT( 60 )
+    _START_EVENT_BGM( SEQ_BGM_C_01 )
+    _TIME_WAIT( 60 )
+    _BGM_VOLUME_RECOVER( 30 )
   ENDSWITCH
 
 EVENT_END
