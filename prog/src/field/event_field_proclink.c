@@ -80,9 +80,9 @@ typedef enum
 
 typedef enum
 {
-  PROCLINK_MODE_LIST_TO_MAIL_CREATE,  //手紙を持たせる→作成画面
+  PROCLINK_MODE_LIST_TO_MAIL_CREATE,  //バッグ→リスト→手紙を持たせる→作成画面
   PROCLINK_MODE_LIST_TO_MAIL_VIEW,    //手紙を見る→View画面
-  PROCLINK_MODE_BAG_TO_MAIL_CREATE,   //手紙を持たせる→作成画面
+  PROCLINK_MODE_BAG_TO_MAIL_CREATE,   //リスト→バッグ→手紙を持たせる→作成画面
   PROCLINK_MODE_EVOLUTION_ITEM,       //アイテム進化(○○の石
   PROCLINK_MODE_EVOLUTION_LEVEL,      //レベルアップ進化(ふしぎなアメ
   PROCLINK_MODE_WAZAWASURE_MACHINE,   //リスト→技忘れ(技マシン
@@ -803,7 +803,8 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     plistData->item = pBag->ret_item;     //アイテムID
     if( pBag->next_proc != BAG_NEXTPROC_ITEMEQUIP &&
         pBag->next_proc != BAG_NEXTPROC_ITEMHAVE_RET &&
-        pBag->next_proc != BAG_NEXTPROC_RETURN )
+        pBag->next_proc != BAG_NEXTPROC_RETURN &&
+        pBag->next_proc != BAG_NEXTPROC_MAILSET )
     {
       //リストからバッグへ行って戻る時以外リセット
       plistData->ret_sel  = 0;
@@ -829,6 +830,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
       break;
 
     case BAG_NEXTPROC_ITEMEQUIP:  //ポケモンリストのアイテム装備に戻る
+    case BAG_NEXTPROC_MAILSET:    //メールを渡すが、すでに道具を持っている
       plistData->mode     = PL_MODE_ITEMSET_RET;
       break;
 
@@ -1471,10 +1473,33 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
     wk->next_type = EVENT_PROCLINK_CALL_MAIL;
     return RETURNFUNC_RESULT_NEXT;
   case BAG_NEXTPROC_MAILSET:
-    wk->next_type = EVENT_PROCLINK_CALL_MAIL;
+    //もしポケモンがすでにアイテムを持っていたらリストではずす確認
+    {
+      const GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
+      const POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );
+      const POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party,wk->param->select_poke);
+      if( PP_Get( pp ,ID_PARA_item , NULL ) != 0 )
+      {
+        wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+      }
+      else
+      {
+        wk->next_type = EVENT_PROCLINK_CALL_MAIL;
+      }
+      wk->mode = PROCLINK_MODE_BAG_TO_MAIL_CREATE;
+    }
     return RETURNFUNC_RESULT_NEXT;
   case BAG_NEXTPROC_DOWSINGMACHINE:
     return RETURNFUNC_RESULT_DOWSINGMACHINE;
+  
+  case BAG_NEXTPROC_HAVE:
+    if( ITEM_CheckMail( pBag->ret_item ) == TRUE )
+    {
+      wk->mode = PROCLINK_MODE_LIST_TO_MAIL_CREATE;
+    }
+    wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+    return RETURNFUNC_RESULT_NEXT;
+    break;
     
   default:
     wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
@@ -1847,7 +1872,8 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
     wk->item_no = plistData->item;
     if( plistData->ret_mode == PL_RET_MAILSET )
     {
-      wk->mode = PROCLINK_MODE_LIST_TO_MAIL_CREATE;
+      //Bag開放時移動
+      //wk->mode = PROCLINK_MODE_LIST_TO_MAIL_CREATE;
       mailParam = MAILSYS_GetWorkCreate( gmData, 
                                          MAILBLOCK_TEMOTI, 
                                          plistData->ret_sel,
@@ -1865,7 +1891,8 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
     MORI_Printf("proclink mail design no =%d\ item = %dn",ITEM_GetMailDesign( pBag->ret_item ), pBag->ret_item);
     
     if( pBag->mode == BAG_MODE_POKELIST ){
-      wk->mode = PROCLINK_MODE_BAG_TO_MAIL_CREATE;
+      //Bag開放時移動
+      //wk->mode = PROCLINK_MODE_BAG_TO_MAIL_CREATE;
       OS_TPrintf("メール作成\n");
       mailParam = MAILSYS_GetWorkCreate( gmData, 
                                          MAILBLOCK_TEMOTI, 
@@ -1904,7 +1931,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
 
   if( wk->pre_type == EVENT_PROCLINK_CALL_POKELIST )
   { 
-    if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
+    if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE ||
+        wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE )
     {
       const BOOL isCreate = MailSys_IsDataCreate( mailParam );
       if( isCreate == TRUE )
@@ -1915,7 +1943,14 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
       }
       else
       {
-        wk->next_type = EVENT_PROCLINK_CALL_BAG;
+        if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
+        {
+          wk->next_type = EVENT_PROCLINK_CALL_BAG;
+        }
+        else
+        {
+          wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+        }
       }
     }
     else

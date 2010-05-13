@@ -1467,28 +1467,63 @@ static void PLIST_InitMode( PLIST_WORK *work )
   //メール画面からの戻り
   case PL_MODE_MAILSET:
   case PL_MODE_MAILSET_BAG:
+    work->pokeCursor = work->plData->ret_sel;
+    work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
     {
-      work->pokeCursor = work->plData->ret_sel;
-      work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
+      u32 haveItemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
       PLIST_MSG_CreateWordSet( work , work->msgWork );
       PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
       PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 2 , haveItemNo );
+
+      //フォルムチェンジ前にReDrawParamが必要
+      PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
+      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+
+      PLIST_ITEM_CangeAruseusuForm( work , work->selectPokePara , work->plData->item );
+      PLIST_ITEM_CangeInsekutaForm( work , work->selectPokePara , work->plData->item );
+      if( PLIST_DEMO_CheckGirathnaToAnother( work , work->selectPokePara ) == TRUE )
+      {
+        //ギラティナ・フォルムチェンジ
+        PLIST_DEMO_ChangeGirathinaToAnother( work , work->selectPokePara);
+        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_FormChange );
+        work->demoType = PDT_GIRATHINA_TO_ANOTHER;
+      }
+      else
+      if( work->plData->mode == PL_MODE_MAILSET )
+      {
+        if( haveItemNo != 0 )
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ExitCommon );
+        }
+        else
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
+        }
+      }
+      else
+      {
+        if( haveItemNo != 0 )
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        }
+        else
+        {
+          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+        }
+      }
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
       if( work->plData->mode == PL_MODE_MAILSET )
       {
         //バッグからリストを呼んだのでバッグに戻る
         work->plData->ret_mode = PL_RET_BAG;
-        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
       }
       else
       {
         //リストからバッグを呼んでいったので、選択に戻る
         work->plData->mode = PL_MODE_FIELD;
-        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
       }
-      PLIST_MSG_DeleteWordSet( work , work->msgWork );
-
-      PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
-      PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
     }
     work->nextMainSeq = PSMS_MSG_WAIT;
     work->mainSeq = PSMS_FADEIN;

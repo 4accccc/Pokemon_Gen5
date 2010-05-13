@@ -192,8 +192,11 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
   {
     (void)MI_FreeWram_B(MI_WRAM_ARM9);
     (void)MI_CancelWram_B(MI_WRAM_ARM9);
+    (void)MI_CancelWram_B(MI_WRAM_ARM7);
     (void)MI_FreeWram_C(MI_WRAM_ARM9);
     (void)MI_CancelWram_C(MI_WRAM_ARM9);
+    (void)MI_CancelWram_C(MI_WRAM_ARM7);
+    //MI_DumpWramListAll();
     {
       FSFile  file[1];
       DSP_OpenStaticComponentG711(file);
