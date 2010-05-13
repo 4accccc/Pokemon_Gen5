@@ -1470,11 +1470,22 @@ static void PLIST_InitMode( PLIST_WORK *work )
     work->pokeCursor = work->plData->ret_sel;
     work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, work->plData->ret_sel );
     {
-      u32 haveItemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      const u32 haveItemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+      u16 msgId;
       PLIST_MSG_CreateWordSet( work , work->msgWork );
-      PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
-      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
-      PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 2 , haveItemNo );
+      if( haveItemNo == 0 )
+      {
+        msgId = mes_pokelist_04_59;
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , work->plData->item );
+      }
+      else
+      {
+        msgId = mes_pokelist_04_32;
+        PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 1 , haveItemNo );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 2 , work->plData->item );
+      }
 
       //フォルムチェンジ前にReDrawParamが必要
       PLIST_SetPokeItem( work , work->selectPokePara , work->plData->item );
@@ -1486,31 +1497,17 @@ static void PLIST_InitMode( PLIST_WORK *work )
       {
         //ギラティナ・フォルムチェンジ
         PLIST_DEMO_ChangeGirathinaToAnother( work , work->selectPokePara);
-        PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_FormChange );
+        PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_FormChange );
         work->demoType = PDT_GIRATHINA_TO_ANOTHER;
       }
       else
       if( work->plData->mode == PL_MODE_MAILSET )
       {
-        if( haveItemNo != 0 )
-        {
-          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ExitCommon );
-        }
-        else
-        {
-          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ExitCommon );
-        }
+        PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_ExitCommon );
       }
       else
       {
-        if( haveItemNo != 0 )
-        {
-          PLIST_MessageWaitInit( work , mes_pokelist_04_32 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
-        }
-        else
-        {
-          PLIST_MessageWaitInit( work , mes_pokelist_04_59 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
-        }
+        PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_ReturnSelectCommon );
       }
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
 
