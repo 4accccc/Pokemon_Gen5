@@ -741,8 +741,8 @@
 	</row>
 
 	<row id="ITEMNAME_122">
-		<language name="JPN" width="256">クリティカッター</language>
-		<language name="JPN_KANJI" width="256">クリティカッター</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_123">
@@ -3258,86 +3258,6 @@
 	<row id="ITEMNAME_625">
 		<language name="JPN" width="256">はいたつぶつ３</language>
 		<language name="JPN_KANJI" width="256">はいたつぶつ３</language>
-	</row>
-
-	<row id="ITEMNAME_626">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_627">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_628">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_629">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_630">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_631">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_632">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_633">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_634">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_635">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_636">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_637">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_638">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_639">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_640">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_641">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 
