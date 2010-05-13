@@ -46,8 +46,8 @@ BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
 // ■ 定数・マクロ
 //=================================================================================== 
 #define MAX_STATE_COUNT (0xffff) // 状態カウンタ最大値
-#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // 最大文字数
-//#define MAX_NAME_LENGTH (28)
+//#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // 最大文字数
+#define MAX_NAME_LENGTH (28)
 // ↑パレス侵入中は侵入相手の名前を表示するため, 大きめに設定する.2010.05.11
 // 現時点の最大長「ホワイトフォレスト」+ 名前5文字 = 14文字 
 // ==> ローカライズ考慮で 28文字
@@ -55,14 +55,15 @@ BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
 //-----------
 // 表示設定
 //-----------
+// BG
 #define BG_PALETTE_NO          (0) // BGパレット番号
 #define BG_FRAME (GFL_BG_FRAME3_M) // 使用するBGフレーム
 #define BG_FRAME_PRIORITY      (1) // BGフレームのプライオリティ
-
+// フォント
 #define	COLOR_NO_LETTER     (1) // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW     (2) // 影部分のカラー番号
 #define	COLOR_NO_BACKGROUND (0) // 背景部のカラー番号
-
+// αブレンド
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3) // αブレンドの第1対象面
 #define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0) // αブレンドの第2対象面
 #define ALPHA_VALUE_1                     (16) // 第1対象面のαブレンディング係数
@@ -93,6 +94,9 @@ BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
 #define PROCESS_TIME_WAIT_FADEOUT   (30)
 #define PROCESS_TIME_FADEOUT (20)
 
+//--------------
+// インデックス
+//--------------
 // パレットリソース
 typedef enum {
 	PLTT_RES_LETTER,	// 文字オブジェクトで使用するパレット
