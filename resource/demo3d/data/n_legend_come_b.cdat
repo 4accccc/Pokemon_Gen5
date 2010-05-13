@@ -82,11 +82,12 @@ static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_b_end_data[] = {
 static const u16 res_n_legend_come_b_file_n_legend_come_b_01[] = {
  NARC_data_demo3d_n_legend_come_b_01_nsbmd,
  NARC_data_demo3d_n_legend_come_b_01_nsbtp,
+ NARC_data_demo3d_n_legend_come_b_01_nsbta,
  NARC_data_demo3d_n_legend_come_b_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_n_legend_come_b_file_unit_n_legend_come_b_01[] = {
- { res_n_legend_come_b_file_n_legend_come_b_01, 3 },
+ { res_n_legend_come_b_file_n_legend_come_b_01, 4 },
 };
 
 ///==================================
