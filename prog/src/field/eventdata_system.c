@@ -1835,32 +1835,43 @@ static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 exit_dir, u16 exit_way, u
     {
       ret_ofs = enter_ofs;
     }
-    // 奇数
+    // 変化値が奇数だと、偶数ー＞奇数　or 奇数ー＞偶数
     else if( (size_diff % 2) )
     {
-      // 飛び元オフセットを中心からの距離にして、飛び先の中心を足してあげる。　飛び先では、インデックスの小さいほうを選択
-      if( enter_ofs <= enter_size_half )
+      // 偶数ー＞奇数
+      if( (size % 2) )
       {
-        ret_ofs = enter_ofs - enter_size_half + (size_half-1);
+        // 中心の2つを飛び先の中心に合わせる
+        if( enter_ofs < enter_size_half )
+        {
+          ret_ofs = enter_ofs - (enter_size_half-1) + (size_half);
+        }
+        else
+        {
+          ret_ofs = enter_ofs - enter_size_half + (size_half);
+        }
       }
+      // 奇数ー＞偶数
       else
       {
-        // はんぶんから大きい場合は、インデックスの大きいほうを選択
-        ret_ofs = enter_ofs - enter_size_half + (size_half);
+        // 飛び元オフセットを中心からの距離にして、飛び先の中心を足してあげる。　飛び先では、インデックスの小さいほうを選択
+        if( enter_ofs <= enter_size_half )
+        {
+          ret_ofs = enter_ofs - enter_size_half + (size_half-1);
+        }
+        else
+        {
+          // はんぶんから大きい場合は、インデックスの大きいほうを選択
+          ret_ofs = enter_ofs - enter_size_half + (size_half);
+        }
       }
     }
-    // 偶数
+    // 変化値が偶数だと、中心からの位置ですべてをあわせることが出来る。
     else
     {
-      // 中心の2つを飛び先の中心に合わせる
-      if( enter_ofs < enter_size_half )
-      {
-        ret_ofs = enter_ofs - (enter_size_half-1) + (size_half);
-      }
-      else
-      {
-        ret_ofs = enter_ofs - enter_size_half + (size_half);
-      }
+      // はんぶんから大きい場合は、インデックスの大きいほうを選択
+      ret_ofs = enter_ofs - enter_size_half + (size_half);
+      
     }
 
     // 範囲オーバーチェック
