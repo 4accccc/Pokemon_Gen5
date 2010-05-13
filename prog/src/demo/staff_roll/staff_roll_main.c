@@ -148,6 +148,11 @@ static void TransBmpWinChar( SRMAIN_WORK * wk );
 static void Init3D( SRMAIN_WORK * wk );
 static void Exit3D( SRMAIN_WORK * wk );
 static void Main3D( SRMAIN_WORK * wk );
+static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk );
+static VecFx32 CameraMoveValMake( const VecFx32 * now, const VecFx32 * mvp, u32 cnt );
+static void CameraMoveMain( SRMAIN_WORK * wk );
+static void CameraMoveFlagSet( SR3DCAMERA_MOVE * mvwk, BOOL flg );
+
 
 static int SetFadeIn( SRMAIN_WORK * wk, int next );
 static int SetFadeOut( SRMAIN_WORK * wk, int next );
@@ -715,7 +720,7 @@ static void TransBmpWinChar( SRMAIN_WORK * wk )
 //============================================================================================
 #ifdef	SRMAIN_DRAW_3D
 
-static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work );
+//static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work );
 
 // リソーステーブル
 static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
@@ -887,6 +892,9 @@ static void Init3D( SRMAIN_WORK * wk )
 
 	GFL_BG_SetBGControl3D( 2 );				// BG面設定（引数は優先度）
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+
+	CameraMoveInit( &wk->cameraMove );
+	CameraMoveFlagSet( &wk->cameraMove, TRUE );
 }
 
 static void Exit3D( SRMAIN_WORK * wk )
@@ -994,6 +1002,8 @@ static void Main3D( SRMAIN_WORK * wk )
 	GFL_G3D_SCENE_Draw( wk->g3d_scene );
 */
 
+	CameraMoveMain( wk );
+
 	{
     GFL_G3D_OBJ * obj;
 		int	anm;
@@ -1026,10 +1036,123 @@ static void Main3D( SRMAIN_WORK * wk )
 	GFL_G3D_DRAW_End();
 }
 
-
+/*
 static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work )
 {
 }
+*/
+
+static const SR3DCAMERA_PARAM CameraMoveTable[] =
+{
+	{ { 69939, 179142, -266359 }, { -2833552, 1208595, -7952187 } },
+	{ { 69939, 110839, -283946 }, { -2833552, 1208595, -7952187 } },
+	{ { 15951, 127608, -283946 }, { -2833552, 1208595, -7952187 } },
+	{ { 111248, 17178, -283946 }, { -2833552, 1208595, -7952187 } },
+	{ { 154193, 66258, -61859 }, { -2833552, 1208595, -7952187 } },
+};
+
+static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk )
+{
+	mvwk->tbl    = CameraMoveTable;
+	mvwk->tblMax = NELEMS(CameraMoveTable);
+	mvwk->cnt    = 0;
+//	mvwk->cntMax = 0;
+	mvwk->pos    = 0;
+	mvwk->flg = FALSE;
+}
+
+static VecFx32 CameraMoveValMake( const VecFx32 * now, const VecFx32 * mvp, u32 cnt )
+{
+	VecFx32	vec;
+
+	vec.x = ( GFL_STD_Abs(now->x-mvp->x) << 8 ) / cnt;
+	if( now->x > mvp->x ){
+		vec.x *= -1;
+	}
+	vec.y = ( GFL_STD_Abs(now->y-mvp->y) << 8 ) / cnt;
+	if( now->y > mvp->y ){
+		vec.y *= -1;
+	}
+	vec.z = ( GFL_STD_Abs(now->z-mvp->z) << 8 ) / cnt;
+	if( now->z > mvp->z ){
+		vec.z *= -1;
+	}
+	return vec;
+}
+
+static VecFx32 CameraMoveCore( const VecFx32 * p, const VecFx32 * mv, u32 cnt )
+{
+	VecFx32	vec;
+	fx32	val;
+
+	vec = *p;
+
+	val = ( GFL_STD_Abs(mv->x) * cnt ) >> 8;
+	if( mv->x > 0 ){
+		vec.x += val;
+	}else{
+		vec.x -= val;
+	}
+	val = ( GFL_STD_Abs(mv->y) * cnt ) >> 8;
+	if( mv->y > 0 ){
+		vec.y += val;
+	}else{
+		vec.y -= val;
+	}
+	val = ( GFL_STD_Abs(mv->z) * cnt ) >> 8;
+	if( mv->z > 0 ){
+		vec.z += val;
+	}else{
+		vec.z -= val;
+	}
+	return vec;
+}
+
+static void CameraMoveMain( SRMAIN_WORK * wk )
+{
+	SR3DCAMERA_MOVE * mvwk = &wk->cameraMove;
+
+	if( mvwk->flg == FALSE ){
+		return;
+	}
+
+	if( mvwk->cnt == 0 ){
+		mvwk->cntMax = 256;
+		{
+			u32	next = mvwk->pos + 1;
+			if( next >= mvwk->tblMax ){
+				next = 0;
+			}
+			mvwk->val.pos = CameraMoveValMake( &mvwk->tbl[mvwk->pos].pos, &mvwk->tbl[next].pos, mvwk->cntMax );
+			mvwk->val.target = CameraMoveValMake( &mvwk->tbl[mvwk->pos].target, &mvwk->tbl[next].target, mvwk->cntMax );
+		}
+	}
+
+	if( mvwk->cnt >= mvwk->cntMax ){
+		mvwk->cnt = 0;
+		mvwk->pos++;
+		if( mvwk->pos >= mvwk->tblMax ){
+			mvwk->pos = 0;
+		}
+		mvwk->param.pos    = mvwk->tbl[mvwk->pos].pos;
+		mvwk->param.target = mvwk->tbl[mvwk->pos].target;
+	}else{
+		mvwk->param.pos    = CameraMoveCore( &mvwk->tbl[mvwk->pos].pos, &mvwk->val.pos, mvwk->cnt );
+		mvwk->param.target = CameraMoveCore( &mvwk->tbl[mvwk->pos].target, &mvwk->val.target, mvwk->cnt );
+		mvwk->cnt++;
+	}
+
+	GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &mvwk->param.pos );
+	GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &mvwk->param.target );
+
+	GFL_G3D_CAMERA_Switching( wk->g3d_camera );
+}
+
+static void CameraMoveFlagSet( SR3DCAMERA_MOVE * mvwk, BOOL flg )
+{
+	mvwk->flg = flg;
+}
+
 
 #endif	// SRMAIN_DRAW_3D
 

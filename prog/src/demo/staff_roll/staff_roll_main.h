@@ -42,6 +42,26 @@ typedef struct {
 	s16	offs_x;
 }ITEMLIST_DATA;
 
+// カメラ動作データ
+typedef struct {
+	VecFx32	pos;
+	VecFx32	target;
+}SR3DCAMERA_PARAM;
+
+typedef struct {
+	const SR3DCAMERA_PARAM * tbl;
+	SR3DCAMERA_PARAM	param;
+	SR3DCAMERA_PARAM	val;
+
+	u16	tblMax;
+	u16	pos;
+
+	u16	cnt;
+	u16	cntMax;
+
+	BOOL	flg;
+}SR3DCAMERA_MOVE;
+
 typedef struct {
 	STAFFROLL_DATA * dat;			// 外部設定データ
 
@@ -63,6 +83,8 @@ typedef struct {
 	GFL_G3D_LIGHTSET * g3d_light;
 	u32	g3d_obj_id;
 	u16	g3d_unit;
+
+	SR3DCAMERA_MOVE	cameraMove;
 #endif	// SRMAIN_DRAW_3D
 
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント

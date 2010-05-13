@@ -56,7 +56,8 @@ static GFL_PROC_RESULT StaffRollProc_Init( GFL_PROC * proc, int * seq, void * pw
 
 //	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP) );
 	// OS_PrintfÇÃåãâ ÅA0x1307d4 ãÛÇ¢ÇƒÇÈ ( 2010/05/10 13:00 )
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_STAFF_ROLL, 0x130000 );
+	// GFL_HEAPID_APPÇ™5000hå∏Ç¡ÇΩÇÃÇ≈ÅA-5000h ( 2010/05/12 15:30 )
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_STAFF_ROLL, 0x125000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(SRMAIN_WORK), HEAPID_STAFF_ROLL );
 	GFL_STD_MemClear( wk, sizeof(SRMAIN_WORK) );
