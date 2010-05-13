@@ -318,12 +318,12 @@ static void g3d_unit_Main( FIELD_DEBUG_WORK *work )
   int trg = GFL_UI_KEY_GetTrg();
 	const VecFx32 *pos = PLAYERWORK_getPosition( work->player );
 
-  if( trg & PAD_BUTTON_START ){
-    resetBgCont( work );
-  }
   if( work->g3dMapper == NULL ){
 		return;
 	}
+  if( trg & PAD_BUTTON_START ){
+    resetBgCont( work );
+  }
 
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
     if( trg & PAD_KEY_UP ){
@@ -355,17 +355,18 @@ static void g3d_unit_Main( FIELD_DEBUG_WORK *work )
 
   for(i = 0;i < UNIT_MAX;i++){
     work->unit[i].draw_f = TRUE;
+    work->unit[i].y = 0;
   }
   for( i = 0; i < 5; i++ )
   {
     vec.z = sz+FX32_CONST(16*i);
-    if( vec.z < 0 || vec.z >= FX32_CONST(512)){
+    if( vec.z < 0 ){// || vec.z >= FX32_CONST(512)){
       continue;
     }
 
     for(j = 0; j < 5; j++ ){
       vec.x = sx+FX32_CONST(16*j);
-      if( vec.x < 0 || vec.x >= FX32_CONST(512)){
+      if( vec.x < 0 ){// || vec.x >= FX32_CONST(512)){
         continue;
       }
       ph = &work->unit[i*5+j];
@@ -373,11 +374,11 @@ static void g3d_unit_Main( FIELD_DEBUG_WORK *work )
       if( FLDMAPPER_GetGridData( work->g3dMapper,&vec,&gridData) == FALSE){
         continue;
       }
+      ph->y = gridData.height;
       if( MAPATTR_GetHitchFlag( gridData.attr )){
         continue;
       }
       ph->draw_f = FALSE; 
-      ph->y = gridData.height;
     }
   }
 }
@@ -617,7 +618,6 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
 	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
-  FLDMAPPER * g3Dmapper = FIELDMAP_GetFieldG3Dmapper( work->pFieldMainWork );
   
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
     resetBgCont( work );
@@ -642,7 +642,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		DebugFont_Print( work, 0, 2, str );
 
 		DebugFont_ClearLine( work, 3 );
-    FLDMAPPER_GetBlockXZPos( g3Dmapper, &gx, &gz );
+    FLDMAPPER_GetBlockXZPos( work->g3dMapper, &gx, &gz );
     sprintf( str, "BLOCK (%d,%d) LOCAL (%d,%d)", gx, gz, SIZE_GRID_FX32(pos->x)%32, SIZE_GRID_FX32(pos->z)%32 );
     DebugFont_Print( work, 0, 3, str );
 	}
