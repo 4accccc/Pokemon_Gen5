@@ -128,6 +128,8 @@ EVENT_END
 //C03P15が1の時に起動
 EVENT_START		ev_scene_c03p15_plazmaevent_01
 
+	_START_EVENT_BGM(SEQ_BGM_E_PLASMA)
+	
 	//アーティが自機に気付く
 	_OBJ_ANIME( C03P15_LEADER3_01, anm_leader3_kiduku )
 	_OBJ_ANIME_WAIT()
@@ -285,6 +287,8 @@ EVENT_START		ev_scene_c03p15_plazmaevent_01
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
 
+	_END_EVENT_BGM()
+	
 	//========================================/
 	
 	//イベント終了

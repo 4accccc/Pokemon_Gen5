@@ -182,7 +182,12 @@ EVENT_START		ev_pos_c03_leader3_01
 	DEFINE_LOCAL	LWK_INDEX
 	DEFINE_LOCAL	LWK_FRONT
 	DEFINE_LOCAL	LWK_SIDE
-
+/*
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 3576,44186,3247531,3145728,-455884,3522560,24 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+*/	
 	//アーティ・キョロキョロ
 	_OBJ_ANIME( C03_LEADER3_01, anm_leader3_kyoro )
 	_OBJ_ANIME_WAIT()
@@ -198,7 +203,12 @@ EVENT_START		ev_pos_c03_leader3_01
 
 	//アーティOBJ削除
 	_OBJ_DEL( C03_LEADER3_01 )
-	
+/*
+	_CAMERA_DEF_MOVE(24)//引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+*/	
 	//========================================/
 	
 	//イベント終了
