@@ -209,7 +209,7 @@ void BTL_FIELD_SITUATION_Init( BTL_FIELD_SITUATION* sit )
 
 static void setup_common_situation( BTL_FIELD_SITUATION* sit )
 {
-  // @todo 現在は仮作成
+  // デフォルト設定
   sit->bgType = BATTLE_BG_TYPE_GRASS;
   sit->bgAttr = BATTLE_BG_ATTR_LAWN;
   sit->season = PMSEASON_SPRING;
@@ -290,7 +290,7 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BT
       case TRTYPE_GRP_PLASMA_BOSS:      // プラズマ団のＮ
         dst->musicWin = SEQ_BGM_WIN6;
         break;
-      
+
       default:
         dst->musicWin = SEQ_BGM_WIN2;
         break;
