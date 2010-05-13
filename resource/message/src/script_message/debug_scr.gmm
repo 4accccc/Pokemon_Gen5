@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-05-07T20:26:39"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-05-13T11:12:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="492" top="78" right="1197" bottom="698" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -453,13 +453,13 @@
 	</row>
 
 	<row id="msg_debug_suginaka_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｎ０１Ｒ０５０２Ｎ戦・前</language>
-		<language name="JPN_KANJI" width="256">Ｎ０１Ｒ０５０２Ｎ戦・前</language>
+		<language name="JPN" width="256">N01R0502ラスト1・デモ前</language>
+		<language name="JPN_KANJI" width="256">N01R0502ラスト1・デモ前</language>
 	</row>
 
 	<row id="msg_debug_suginaka_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｎ０１Ｒ０５０２ライトストーン</language>
-		<language name="JPN_KANJI" width="256">Ｎ０１Ｒ０５０２ライトストーン</language>
+		<language name="JPN" width="256">N01R0502ラスト2・伝説戦前</language>
+		<language name="JPN_KANJI" width="256">N01R0502ラスト2・伝説戦前</language>
 	</row>
 
 	<row id="msg_debug_murakami_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -608,8 +608,8 @@
 	</row>
 
 	<row id="msg_debug_suginaka_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｎ０１Ｒ０５０２ゲーチス戦前</language>
-		<language name="JPN_KANJI" width="256">Ｎ０１Ｒ０５０２ゲーチス戦前</language>
+		<language name="JPN" width="256">N01R0502ラスト3・N戦前</language>
+		<language name="JPN_KANJI" width="256">N01R0502ラスト3・N戦前</language>
 	</row>
 
 	<row id="msg_debug_suginaka_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -624,8 +624,8 @@
 
 	<row id="msg_debug_suginaka_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>確保</comment>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">N01R0502ラスト4・ゲーチス戦前</language>
+		<language name="JPN_KANJI" width="256">N01R0502ラスト4・ゲーチス戦前</language>
 	</row>
 
 	<row id="msg_debug_mizu_01" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
