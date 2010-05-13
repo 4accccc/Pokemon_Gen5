@@ -13,7 +13,6 @@
 //=====================================================================================
 // ■定数
 //=====================================================================================
-#define PRINT_TARGET   (2)  // デバッグ情報の出力先
 #define MAX_CELL_NUM   (26) // 最大セル数
 #define ANIME_SPEED    (18.0f) // アニメーション再生速度
 #define ANIME_FRAMES   (36) // アニメーションフレーム数
@@ -53,8 +52,8 @@ typedef struct {
 //=====================================================================================
 // ■矢印
 //=====================================================================================
-struct _ARROW
-{
+struct _ARROW {
+
   HEAPID           heapID;
   GFL_CLUNIT*      clactUnit; // セルアクターユニット
   ARROW_DISP_PARAM dispParam; // 表示パラメータ
@@ -78,9 +77,9 @@ struct _ARROW
 //-------------------------------------------------------------------------------------
 static void ArrowMain( ARROW* arrow ); // メイン動作
 
-static void ArrowAct_WAIT   ( ARROW* arrow ); // 状態メイン動作 ( ARROW_STATE_WAIT )
+static void ArrowAct_WAIT( ARROW* arrow ); // 状態メイン動作 ( ARROW_STATE_WAIT )
 static void ArrowAct_STRETCH( ARROW* arrow ); // 状態メイン動作 ( ARROW_STATE_STRETCH )
-static void ArrowAct_STAY   ( ARROW* arrow ); // 状態メイン動作 ( ARROW_STATE_STAY )
+static void ArrowAct_STAY( ARROW* arrow ); // 状態メイン動作 ( ARROW_STATE_STAY )
 
 static void ChangeState( ARROW* arrow, ARROW_STATE nextState ); // 状態を変更する
 
@@ -415,7 +414,7 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
 
   // 横に伸びるセル
   length   = startX - endX;
-  length  -= CELL_WIDTH/2;
+  length  -= CELL_WIDTH/2; // 角の分を引く
   hCellNum = length / CELL_WIDTH;
   left     = startX - CELL_WIDTH;
   top      = startY - CELL_HEIGHT/2;
@@ -428,8 +427,15 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
   } 
 
   // 横に伸びるセル ( 調整 )
-  if( (length % CELL_WIDTH) != 0 )
-  {
+  if( hCellNum == 0 ) {
+    if( 0 < length ) {
+      SetCellParams( &( arrow->cell[ cellIdx ] ), endX, top, frame, ARROW_CELL_H );
+      left  -= length;
+      frame += (STRETCH_FRAMES * length / CELL_WIDTH) - 1;
+      cellIdx++;
+    }
+  }
+  else if( (length % CELL_WIDTH) != 0 ) {
     int diff;
     left   = endX + CELL_WIDTH/2;
     diff   = length - (hCellNum * CELL_WIDTH);
