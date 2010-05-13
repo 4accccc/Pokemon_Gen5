@@ -28,36 +28,13 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
-ssources:=$(wildcard *.nsc)
-esources:=$(wildcard *.nce)
+bmp_sources:=$(wildcard *.bmp)
 
-# リソースが吐き出すファイルを自動でつくる
-lobjects = $(subst .ncl,.NCLR,$(lsources))
-gobjects = $(subst .ncg,.NCGR,$(gsources))
-sobjects = $(subst .nsc,.NSCR,$(ssources))
-eobjects = $(subst .nce,.NCER,$(esources))
-aobjects = $(subst .nce,.NANR,$(esources))
+# 入力ファイル、バッチファイル
+manual_image_list     = manual_image.lst
+manual_image_conv_bat = manual_image_conv.bat
+manual_image_comp_bat = manual_image_comp.bat
 
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
-
-.ncl.NCLR:
-	g2dcvtr $<
-
-.ncg.NCGR:
-	g2dcvtr $< -bg
-
-.nsc.NSCR:
-	g2dcvtr $<
-
-.nce.NCER:
-	g2dcvtr $<
-
-endif
 
 .PHONY:	do-build clean subdir
 
@@ -76,20 +53,14 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
-	nnsarc -r -l -n -i $(targetname) $^
-	$(NAIXCUT) $(targetname).naix
-endif
 
-$(targetname).narc: image100428_1228_000.bmp image100428_1229_000.bmp image100428_1229_001.bmp
-	ntexconv image100428_1228_000.bmp -no -bg -bgb -bgf direct
-	ntexconv image100428_1229_000.bmp -no -bg -bgb -bgf direct
-	ntexconv image100428_1229_001.bmp -no -bg -bgb -bgf direct
-	ntrcomp -l -o image100428_1228_000_lz77.nbfs image100428_1228_000.nbfs
-	ntrcomp -l -o image100428_1229_000_lz77.nbfs image100428_1229_000.nbfs
-	ntrcomp -l -o image100428_1229_001_lz77.nbfs image100428_1229_001.nbfs
-	nnsarc -r -l -n -i $(targetname) image100428_1228_000_lz77.nbfs image100428_1229_000_lz77.nbfs image100428_1229_001_lz77.nbfs
+$(targetname).narc: $(bmp_sources) $(manual_image_list) $(manual_image_conv_bat) $(manual_image_comp_bat)
+	$(manual_image_conv_bat)
+	$(manual_image_comp_bat)
+	nnsarc -r -l -n -i $(targetname) -S $(manual_image_list)
 	$(NAIXCUT) $(targetname).naix
+
+endif
 
 
 #------------------------------------------------------------------------------
@@ -108,8 +79,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.naix
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f *_lz77.nbfs
+	rm -f *.nbfs
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
-
 

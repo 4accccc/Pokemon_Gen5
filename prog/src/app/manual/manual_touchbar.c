@@ -739,7 +739,7 @@ static void Manual_Touchbar_TextPrintExplain( MANUAL_TOUCHBAR_WORK* work )
     WORDSET* wordset       = WORDSET_Create( work->cmn_wk->heap_id );
     STRBUF*  src_strbuf    = GFL_MSG_CreateString( work->cmn_wk->msgdata_system, manual_02_03 );
     STRBUF*  strbuf        = GFL_STR_CreateBuffer( TEXT_PAGE_LEN_MAX, work->cmn_wk->heap_id );
-    WORDSET_RegisterNumber( wordset, 0, work->page_no, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordset, 0, work->page_no +1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );  // 1Žn‚Ü‚è‚É‚µ‚Ä‚¨‚­
     WORDSET_RegisterNumber( wordset, 1, work->page_num, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
 
