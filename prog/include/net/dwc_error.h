@@ -40,9 +40,10 @@ typedef enum
  *	        重いエラーならば、プロセス移動時に表示
  *	        Fatalならば、その場で表示し無限ループになる
  *
- *	@param	強制的に  軽度エラーも重度扱い（PROC後切断しメッセージ表示）にするか？
+ *	@param	is_heavy  TRUEならば軽度判別する　FALSEならば軽度も重度として返す
+ *	@param  is_timeout  タイムアウトを検知するか
  *
  *	@return GFL_NET_DWC_ERROR_RESULT
  */
 //-----------------------------------------------------------------------------
-extern GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy );
+extern GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_timeout );
