@@ -505,7 +505,10 @@ void DREAMWORLD_SV_SetZukanNo(DREAMWORLD_SAVEDATA* pSV,int no)
 //--------------------------------------------------------------------------------------------
 int DREAMWORLD_SV_GetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV)
 {
-  return pSV->furnitureNo;
+  if(pSV->furnitureNo < DREAM_WORLD_DATA_MAX_FURNITURE || (pSV->furnitureNo == DREAM_WORLD_NOFURNITURE)){
+    return pSV->furnitureNo;
+  }
+  return DREAM_WORLD_NOFURNITURE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -517,10 +520,9 @@ int DREAMWORLD_SV_GetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV)
 //--------------------------------------------------------------------------------------------
 void DREAMWORLD_SV_SetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV,int no)
 {
-  if(no >= DREAM_WORLD_DATA_MAX_FURNITURE){
-    return;
+  if(no < DREAM_WORLD_DATA_MAX_FURNITURE || (no == DREAM_WORLD_NOFURNITURE)){
+    pSV->furnitureNo = no;
   }
-  pSV->furnitureNo = no;
 }
 
 //--------------------------------------------------------------------------------------------
