@@ -122,8 +122,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/pl_00_00.3dppack \
 	$(DIR_OUTPUT)/c04_a00_00.3dppack \
 	$(DIR_OUTPUT)/c04_a01_00.3dppack \
-	$(DIR_OUTPUT)/c04_a00_01.3dppack \
-	$(DIR_OUTPUT)/c04_a01_01.3dppack \
 	$(DIR_OUTPUT)/h02_a00_00.3dppack \
 	$(DIR_OUTPUT)/h02_a01_00.3dppack \
 	$(DIR_OUTPUT)/h02_a02_00.3dppack \

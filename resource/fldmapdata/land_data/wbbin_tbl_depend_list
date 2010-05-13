@@ -554,14 +554,6 @@ $(DIR_WBTMP)/c04_a01_00.tbl: $(DIR_RES)/c04_a01_00.bin
 	@echo create_bintbl c04_a01_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c04_a01_00.bin
 
-$(DIR_WBTMP)/c04_a00_01.tbl: $(DIR_RES)/c04_a00_01.bin
-	@echo create_bintbl c04_a00_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c04_a00_01.bin
-
-$(DIR_WBTMP)/c04_a01_01.tbl: $(DIR_RES)/c04_a01_01.bin
-	@echo create_bintbl c04_a01_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c04_a01_01.bin
-
 $(DIR_WBTMP)/h02_a00_00.tbl: $(DIR_RES)/h02_a00_00.bin
 	@echo create_bintbl h02_a00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h02_a00_00.bin
