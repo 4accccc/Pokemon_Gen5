@@ -512,8 +512,9 @@ _ANIME_LABEL	anm_c07_support_to_player
 /* サポート                                             */
 /**************************************************************/
 EVENT_START   ev_c07_support_01
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07_white_03 )
-	_MOVE_CODE_CHANGE( C07_SUPPORT_01,MV_DMY )
 EVENT_END
 
 /**************************************************************/
