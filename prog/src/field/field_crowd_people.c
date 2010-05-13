@@ -341,6 +341,7 @@ static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
 static void FIELD_CROWD_PEOPLE_WK_Exit( FIELD_CROWD_PEOPLE_WK* p_wk );
 static void FIELD_CROWD_PEOPLE_WK_Main( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player );
 static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_fos, const FIELD_PLAYER* cp_player, u16 type, u16 gx, u16 gz, u16 move_dir, u16 move_grid, const FIELD_CROWD_PEOPLE_BOOT_POINT* cp_point );
+static void FIELD_CROWD_PEOPLE_WK_ChangeNormalMove( FIELD_CROWD_PEOPLE_WK* p_wk );
 static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk );
 
 
@@ -474,6 +475,14 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   // 起動チェック
   FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( &p_wk->boot_control, p_wk, timezone ); 
 
+
+  // イベント中は、全ワークの動作方法をNORMALに変更
+  if( FIELDMAP_CheckDoEvent( p_fieldmap ) ){
+    for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
+    {
+      FIELD_CROWD_PEOPLE_WK_ChangeNormalMove( &p_wk->people_wk[i] );
+    }
+  }
   
   // 管理システムワーク更新
   for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
@@ -757,6 +766,25 @@ static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p
 
   // 内部ワーク情報の設定
   cpFunc[ type ]( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Normal動作に変更する。
+ *
+ *	@param	p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_WK_ChangeNormalMove( FIELD_CROWD_PEOPLE_WK* p_wk )
+{
+  if( p_wk->flag == TRUE ){
+    if( p_wk->type == FIELD_CROWD_PEOPLE_TYPE_NASTY ){
+      if( MMDL_GetEventID( p_wk->p_mmdl ) == SCRID_DUMMY ){ // 目の前に主人公がいる場合は変えない。　前に歩けているときのみ。　そうしないと話しかけた人がうごきだしてしまう。
+        p_wk->type = FIELD_CROWD_PEOPLE_TYPE_NORMAL;
+        FIELD_CROWD_PEOPLE_WK_SetUpNormal( p_wk );
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1205,7 +1233,6 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
       // ぶつかるときにしか話しかけられない。
       // イベント起動あり。
       MMDL_SetEventID( p_wk->p_mmdl, p_wk->event_id );
-
       break;
     }
     else
