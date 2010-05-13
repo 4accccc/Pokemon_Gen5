@@ -356,6 +356,7 @@ typedef enum {
 }InputBoxType;
 
 typedef enum {
+
   INPUTBOX_ID_POKETYPE=0,
   INPUTBOX_ID_LEVEL,
   INPUTBOX_ID_EXP,
@@ -363,66 +364,52 @@ typedef enum {
   INPUTBOX_ID_SEIKAKU,
   INPUTBOX_ID_TOKUSEI,
   INPUTBOX_ID_ITEM,
-
   INPUTBOX_ID_WAZA1,
   INPUTBOX_ID_WAZA2,
   INPUTBOX_ID_WAZA3,
   INPUTBOX_ID_WAZA4,
-
   INPUTBOX_ID_PPCNT1,
   INPUTBOX_ID_PPCNT2,
   INPUTBOX_ID_PPCNT3,
   INPUTBOX_ID_PPCNT4,
-
   INPUTBOX_ID_PPMAX1,
   INPUTBOX_ID_PPMAX2,
   INPUTBOX_ID_PPMAX3,
   INPUTBOX_ID_PPMAX4,
-
   INPUTBOX_ID_PPEDIT1,
   INPUTBOX_ID_PPEDIT2,
   INPUTBOX_ID_PPEDIT3,
   INPUTBOX_ID_PPEDIT4,
-
   INPUTBOX_ID_HPRND,
   INPUTBOX_ID_HPEXP,
   INPUTBOX_ID_HPVAL,
   INPUTBOX_ID_HPEDIT,
-
   INPUTBOX_ID_POWRND,
   INPUTBOX_ID_POWEXP,
   INPUTBOX_ID_POWVAL,
-
   INPUTBOX_ID_DEFRND,
   INPUTBOX_ID_DEFEXP,
   INPUTBOX_ID_DEFVAL,
-
   INPUTBOX_ID_AGIRND,
   INPUTBOX_ID_AGIEXP,
   INPUTBOX_ID_AGIVAL,
-
   INPUTBOX_ID_SPWRND,
   INPUTBOX_ID_SPWEXP,
   INPUTBOX_ID_SPWVAL,
-
   INPUTBOX_ID_SDFRND,
   INPUTBOX_ID_SDFEXP,
   INPUTBOX_ID_SDFVAL,
-
   INPUTBOX_ID_TYPE1,
   INPUTBOX_ID_TYPE2,
   INPUTBOX_ID_DEF_BUTTON,
   INPUTBOX_ID_HATAKU_BUTTON,
   INPUTBOX_ID_HANERU_BUTTON,
-
   INPUTBOX_ID_SICK,
   INPUTBOX_ID_NATSUKI,
   INPUTBOX_ID_FORM,
   INPUTBOX_ID_TAMAGO,
   INPUTBOX_ID_RARE,
-
   INPUTBOX_ID_MAX,
-
 
 }InputBoxID;
 
@@ -837,8 +824,15 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
         STRTOOL_Copy( dmyName, wk->oyaName, NELEMS(wk->oyaName) );
       }
 
-      if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 ){
-        PP_Setup( wk->dst, MONSNO_HIHIDARUMA, 5, wk->oyaID  );
+      if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 )
+      {
+        u32 defaultMonsNo = proc_param->defaultMonsNo;
+        if( (defaultMonsNo == 0)
+        ||  (defaultMonsNo > MONSNO_END)
+        ){
+          defaultMonsNo = MONSNO_MIZYUMARU;
+        }
+        PP_Setup( wk->dst, defaultMonsNo, 5, wk->oyaID  );
       }
 
       UpdatePokeExpMinMax( wk, wk->dst );
@@ -1101,11 +1095,14 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
               PP_SetWazaDefault( wk->dst );
               break;
             }
+            PP_RecoverWazaPPAll( wk->dst );
 
             // わざパラメータを反映
             for(i=0; i<PTL_WAZA_MAX; ++i){
-              box_setup( wk, INPUTBOX_ID_WAZA1+i, wk->dst );
-              box_setup( wk, INPUTBOX_ID_PPMAX1+i, wk->dst );
+              box_setup( wk, INPUTBOX_ID_WAZA1+i,   wk->dst );
+              box_setup( wk, INPUTBOX_ID_PPMAX1+i,  wk->dst );
+              box_setup( wk, INPUTBOX_ID_PPCNT1+i,  wk->dst );
+              box_setup( wk, INPUTBOX_ID_PPEDIT1+i, wk->dst );
             }
           }
           break;
@@ -1582,7 +1579,6 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       const INPUT_BOX_PARAM* p = &InputBoxParams[ updateBoxID ];
       u32 value = box_getvalue( wk, updateBoxID );
-      TAYA_Printf("せいかく書き換える ID=%d, value=%d\n", p->paraID, value );
       PP_Put( wk->dst, p->paraID, value );
 
       PP_Renew( wk->dst );
@@ -1759,7 +1755,6 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
         }
         // 桁あふれしたら最大値に
         if( k == (wk->keta) ){
-          TAYA_Printf("↑　ケタあふれ\n");
           numinput_sub_setary( wk, wk->numMax );
         }
         break;
@@ -1776,7 +1771,6 @@ static BOOL NumInput_Main( NUMINPUT_WORK* wk )
         }
         // 桁あふれしたら最小値に
         if( k == (wk->keta) ){
-          TAYA_Printf("↓　ケタあふれ\n");
           numinput_sub_setary( wk, wk->numMin );
         }
         break;

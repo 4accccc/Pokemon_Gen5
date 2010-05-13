@@ -1109,6 +1109,21 @@ static void setupBagItem( GAMEDATA* gameData, HEAPID heapID )
 
 }
 
+static u16 PosToDeafultMonsNo( u16 pos )
+{
+  if( pos <= POKEIDX_SELF_6 ){
+    return MONSNO_POKABU;
+  }
+  if( pos <= POKEIDX_ENEMY1_6 ){
+    return MONSNO_MIZYUMARU;
+  }
+  if( pos <= POKEIDX_FRIEND_6 ){
+    return MONSNO_TUTAAZYA;
+  }
+
+  return MONSNO_SIMAMA;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * セーブデータ初期化
@@ -1146,23 +1161,23 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->fld_minute = 0;
 
 
-
   for(i=0; i<POKEPARA_MAX; ++i){
     pp = savework_GetPokeParaArea( saveData, i );
     PP_Clear( pp );
   }
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_SELF_1 );
-  PP_Setup( pp, MONSNO_HIHIDARUMA, 5, 0 );
+  PP_Setup( pp, PosToDeafultMonsNo(POKEIDX_SELF_1), 5, 0 );
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY1_1 );
-  PP_Setup( pp, MONSNO_HIHIDARUMA, 5, 0 );
+  PP_Setup( pp, PosToDeafultMonsNo(POKEIDX_ENEMY1_1), 5, 0 );
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_FRIEND_1 );
-  PP_Setup( pp, MONSNO_MAMANBOU, 5, 0 );
+  PP_Setup( pp, PosToDeafultMonsNo(POKEIDX_FRIEND_1), 5, 0 );
 
   pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY2_1 );
-  PP_Setup( pp, MONSNO_MAMANBOU, 5, 0 );
+  PP_Setup( pp, PosToDeafultMonsNo(POKEIDX_ENEMY2_1), 5, 0 );
+
 }
 
 static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx )
@@ -1985,12 +2000,16 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     (*seq)++;
     break;
   case 1:
-    wk->makePokeParam.dst = savework_GetPokeParaArea( &wk->saveData, wk->selectItem-SELITEM_POKE_SELF_1 );
-//  wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
-    wk->makePokeParam.oyaStatus = NULL;
+    {
+      u16 pos = wk->selectItem - SELITEM_POKE_SELF_1;
+      wk->makePokeParam.dst = savework_GetPokeParaArea( &wk->saveData, pos );
+  //  wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
+      wk->makePokeParam.oyaStatus = NULL;
+      wk->makePokeParam.defaultMonsNo = PosToDeafultMonsNo( pos );
 
-    GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
-    (*seq)++;
+      GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
+      (*seq)++;
+    }
     break;
   case 2:
     if( GFL_PROC_LOCAL_Main(wk->subProc) != GFL_PROC_MAIN_VALID ){

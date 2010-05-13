@@ -21,6 +21,7 @@ typedef struct {
 
   POKEMON_PARAM*    dst;
   const MYSTATUS*   oyaStatus;
+  u32               defaultMonsNo;
 
 }PROCPARAM_DEBUG_MAKEPOKE;
 
