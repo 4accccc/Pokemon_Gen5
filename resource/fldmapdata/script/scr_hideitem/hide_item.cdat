@@ -1,4 +1,4 @@
-static const HIDE_ITEM_DATA hide_item_data[176] = {
+static const HIDE_ITEM_DATA hide_item_data[177] = {
 
 	{ // かおるキノコ
 		  0, 
@@ -258,7 +258,7 @@ static const HIDE_ITEM_DATA hide_item_data[176] = {
 		159, // D02 ヤグルマの森外
 		597,635, // x, y
 	},
-	{ // ピーピーエイド
+	{ // ちいさなキノコ
 		 43, 
 		1,0, // flags
 		159, // D02 ヤグルマの森外
@@ -952,7 +952,7 @@ static const HIDE_ITEM_DATA hide_item_data[176] = {
 		158, 
 		1,0, // flags
 		335, // R04 ４番道路
-		420,573, // x, y
+		398,552, // x, y
 	},
 	{ // しんじゅ
 		159, 
@@ -1055,5 +1055,11 @@ static const HIDE_ITEM_DATA hide_item_data[176] = {
 		0,0, // flags
 		160, // D02R0101 ヤグルマの森
 		 35, 80, // x, y
+	},
+	{ // ピーピーエイド
+		176, 
+		1,0, // flags
+		335, // R04 ４番道路
+		406,544, // x, y
 	},
 }; // end of hide_item_data

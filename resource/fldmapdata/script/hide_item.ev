@@ -194,6 +194,7 @@ _EVENT_DATA  ev_hide_item_172
 _EVENT_DATA  ev_hide_item_173
 _EVENT_DATA  ev_hide_item_174
 _EVENT_DATA  ev_hide_item_175
+_EVENT_DATA  ev_hide_item_176
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -414,7 +415,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_043
 //ヤグルマの森外 ( 590, 619 )
-	_ITEM_EVENT_HIDEITEM( 38, 1, FLAG_HIDEITEM_043 )// ピーピーエイド
+	_ITEM_EVENT_HIDEITEM( 86, 1, FLAG_HIDEITEM_043 )// ちいさなキノコ
 EVENT_END
 
 EVENT_START ev_hide_item_044
@@ -988,7 +989,7 @@ EVENT_START ev_hide_item_157
 EVENT_END
 
 EVENT_START ev_hide_item_158
-//４番道路 ( 420, 573 )
+//４番道路 ( 398, 552 )
 	_ITEM_EVENT_HIDEITEM( 19, 1, FLAG_HIDEITEM_158 )// やけどなおし
 EVENT_END
 
@@ -1075,6 +1076,11 @@ EVENT_END
 EVENT_START ev_hide_item_175
 //ヤグルマの森 ( 35, 80 )
 	_ITEM_EVENT_HIDEITEM( 86, 1, FLAG_HIDEITEM_175 )// ちいさなキノコ
+EVENT_END
+
+EVENT_START ev_hide_item_176
+//４番道路 ( 406, 544 )
+	_ITEM_EVENT_HIDEITEM( 38, 1, FLAG_HIDEITEM_176 )// ピーピーエイド
 EVENT_END
 
 //--------------------------------------------------------------
