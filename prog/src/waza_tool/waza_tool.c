@@ -61,7 +61,7 @@ struct _WAZA_DATA {
 };
 
 typedef struct
-{ 
+{
   WAZA_DATA** wd;
   WazaID*     wazaID;
   int         cache_size;
@@ -86,24 +86,24 @@ static WAZA_DATA  gWazaData = {0};
 static WAZA_DATA_CACHE* wd_cache = NULL;
 
 static inline WAZA_DATA* getCacheData( WazaID id )
-{ 
+{
   int i;
 
   for( i = 0 ; i < wd_cache->cache_size ; i++ )
-  { 
+  {
     if( wd_cache->wazaID[ i ] == WAZANO_NULL )
-    { 
+    {
       wd_cache->wazaID[ i ] = id;
       GFL_ARC_LoadData( wd_cache->wd[ i ], ARCID_WAZA_TBL, id );
       break;
     }
     if( wd_cache->wazaID[ i ] == id )
-    { 
+    {
       break;
     }
   }
   if( i == wd_cache->cache_size )
-  { 
+  {
     i--;
     wd_cache->wazaID[ i ] = id;
     GFL_ARC_LoadData( wd_cache->wd[ i ], ARCID_WAZA_TBL, id );
@@ -113,24 +113,24 @@ static inline WAZA_DATA* getCacheData( WazaID id )
 }
 
 static inline WAZA_DATA* getCacheDataByHandle( ARCHANDLE* handle, WazaID id )
-{ 
+{
   int i;
 
   for( i = 0 ; i < wd_cache->cache_size ; i++ )
-  { 
+  {
     if( wd_cache->wazaID[ i ] == WAZANO_NULL )
-    { 
+    {
       wd_cache->wazaID[ i ] = id;
       GFL_ARC_LoadDataByHandle( handle, id, wd_cache->wd[ i ] );
       break;
     }
     if( wd_cache->wazaID[ i ] == id )
-    { 
+    {
       break;
     }
   }
   if( i == wd_cache->cache_size )
-  { 
+  {
     i--;
     wd_cache->wazaID[ i ] = id;
     GFL_ARC_LoadDataByHandle( handle, id, wd_cache->wd[ i ] );
@@ -142,7 +142,7 @@ static inline WAZA_DATA* getCacheDataByHandle( ARCHANDLE* handle, WazaID id )
 static inline WAZA_DATA* loadWazaDataTmp( WazaID id )
 {
   if( wd_cache )
-  { 
+  {
     return getCacheData( id );
   }
   GFL_ARC_LoadData( &gWazaData, ARCID_WAZA_TBL, id );
@@ -152,7 +152,7 @@ static inline WAZA_DATA* loadWazaDataTmp( WazaID id )
 static inline WAZA_DATA* loadWazaDataTmpHandle( ARCHANDLE* handle, WazaID id )
 {
   if( wd_cache )
-  { 
+  {
     return getCacheDataByHandle( handle, id );
   }
   GFL_ARC_LoadDataByHandle( handle, id, &gWazaData );
@@ -165,7 +165,7 @@ static inline WAZA_DATA* loadWazaDataTmpHandle( ARCHANDLE* handle, WazaID id )
  */
 //=============================================================================================
 u32 WAZADATA_GetWorkSize( void )
-{ 
+{
   return sizeof( WAZA_DATA );
 }
 
@@ -180,7 +180,7 @@ u32 WAZADATA_GetWorkSize( void )
  */
 //=============================================================================================
 ARCHANDLE*  WAZADATA_OpenDataHandle( HEAPID heapID )
-{ 
+{
   return  GFL_ARC_OpenDataHandle( ARCID_WAZA_TBL, heapID );
 }
 
@@ -369,7 +369,7 @@ BOOL WAZADATA_GetFlag( WazaID wazaID, WazaFlag flag )
 BOOL WAZADATA_PTR_GetFlag( const WAZA_DATA* wazaData, WazaFlag flag )
 {
   GF_ASSERT(flag<WAZAFLAG_MAX);
-  TAYA_Printf("FlagID=%d, bits=%08x\n", flag, wazaData->flags);
+
   return (wazaData->flags & (1<<flag)) != 0;
 }
 
@@ -564,13 +564,13 @@ BOOL WAZADATA_IsDamage( WazaID id )
  */
 //=============================================================================================
 void  WAZADATA_CreateCache( int size, HEAPID heapID )
-{ 
+{
   int i;
 
   //すでにキャッシュが生成されていたらアサート
   GF_ASSERT( wd_cache == NULL );
   if( wd_cache )
-  { 
+  {
     return;
   }
 
@@ -580,7 +580,7 @@ void  WAZADATA_CreateCache( int size, HEAPID heapID )
   wd_cache->cache_size  = size;
 
   for( i = 0 ; i < size ; i++ )
-  { 
+  {
     wd_cache->wd[ i ] = GFL_HEAP_AllocMemory( heapID, sizeof( WAZA_DATA ) );
     wd_cache->wazaID[ i ] = WAZANO_NULL;
   }
@@ -592,18 +592,18 @@ void  WAZADATA_CreateCache( int size, HEAPID heapID )
  */
 //=============================================================================================
 void  WAZADATA_DeleteCache( void )
-{ 
+{
   int i;
 
   //すでにキャッシュが破棄されていたらアサート
   GF_ASSERT( wd_cache != NULL );
   if( wd_cache == NULL )
-  { 
+  {
     return;
   }
 
   for( i = 0 ; i < wd_cache->cache_size ; i++ )
-  { 
+  {
     GFL_HEAP_FreeMemory( wd_cache->wd[ i ] );
   }
   GFL_HEAP_FreeMemory( wd_cache->wazaID );
@@ -620,7 +620,7 @@ void  WAZADATA_DeleteCache( void )
  */
 //=============================================================================================
 BOOL  WAZADATA_CheckCache( void )
-{ 
+{
   return ( wd_cache != NULL );
 }
 
