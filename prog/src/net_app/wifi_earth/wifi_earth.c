@@ -744,6 +744,9 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
   wk->TaskMenuWork[0]   = NULL;
   wk->TaskMenuWork[1]   = NULL;
 
+//  OS_Printf("mystatus=%08x\n", (u32)wk->mystatus);
+//  OS_Printf("my_nation=%d, my_area=%d\n", wk->my_nation, wk->my_area);
+
   //ＶＲＡＭ設定
   Earth_VramBankSet();
   //ＢＧライブラリ設定
@@ -1437,7 +1440,7 @@ static void EarthListLoad( EARTH_DEMO_WORK * wk )
     listp++;  //1originのため読み飛ばし
     for(i=1;i<listcount;i++){
       if(listp->flag != 2){ //2の場合は地域リストが存在する
-        OS_Printf("pre y=%d,", listp->y);
+//        OS_Printf("pre y=%d,", listp->y);
         EarthListSet(wk,wk->placelist.listcount,listp->x,listp->y,i,0);
         wk->placelist.listcount++;
       }
@@ -1483,7 +1486,7 @@ static void EarthListSet( EARTH_DEMO_WORK * wk,u32 index,s16 x,s16 y,u16 nationI
 {
   MtxFx33 rotMtx = {FX32_ONE,0,0,0,FX32_ONE,0,0,0,FX32_ONE};
   VecFx32 rotVec;
-  OS_Printf(" func in y=%d\n", y);
+//  OS_Printf(" func in y=%d\n", y);
 
   wk->placelist.place[index].x = x; //Ｘ回転オフセット取得
   wk->placelist.place[index].y = y; //Ｙ回転オフセット取得
