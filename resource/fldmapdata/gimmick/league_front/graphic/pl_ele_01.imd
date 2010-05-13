@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-14T23:39:13" source="pl_ele_01_v01.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-14T08:48:25"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="7 6"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -297,224 +297,128 @@
 	</tex_image>
 	<tex_image index="1" name="pl_colum_b"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="pl_colum_b_pl"
 		path="C:/home/wb_data3d/gimmick/league_front/tex/pl_colum_b.tga"
 	>
-		<bitmap size="512">
-			1724 0614 0606 1709 1616 1617 0608 0806
-			1716 1616 1716 0614 1716 1617 0609 0606
-			0a23 1826 1818 1625 0602 0607 0102 0201
-			0606 0606 0706 0002 0202 0606 0101 1300
-			2623 3c3c 3c3b 0d3c 0c02 0d0d 0c0f 040c
-			0404 0d04 0d0d 0a0d 0202 0403 0203 1302
-			2637 453d 4442 2844 1a1a 4444 4244 1a42
-			0b0a 281a 2828 2728 1a1a 0a1a 040d 0601
-			2531 493c 4545 2a2a 451b 4545 4545 1b45
-			0d0d 3333 3333 2a33 1b33 1a1b 040d 0601
-			1806 493c 3349 3434 4949 4949 4949 1d49
-			0d0d 3333 3333 3433 3333 1d1d 071e 0601
-			2516 1d3c 4028 4045 4e4f 5451 4e4f 5451
-			1228 3e12 3e3e 453e 123e 2b12 0b2c 3000
-			0a17 0d0d 2b2a 4545 533e 5555 5154 4f51
-			3e2a 1c2a 3e3e 4545 1b1c 2b2b 0b35 2f00
-			0216 1d04 5128 3e51 543e 5455 5354 4b4b
-			3e2a 2a4b 4b1b 124b 2a12 282a 0a2a 2f01
-			0216 1d0d 5151 5451 4645 4f4f 4f4f 4f4f
-			452b 4b4f 1e2b 1212 2a2a 2828 0a2b 3001
-			0216 490d 5351 5554 4655 4f46 4f4f 4f4f
-			4646 4b4f 2b4f 2a28 2a2a 2b2b 0a2b 3000
-			0216 490d 5451 5455 4654 4646 4f4f 4f4f
-			4646 4d4f 452c 2a28 2b28 2c35 0a2b 3001
-			0a16 490d 5451 5555 5555 4635 4f46 4f4f
-			4f46 464f 4046 2a28 2b28 2a2b 272b 3917
-			0a17 490d 5351 5454 5454 2b2b 4543 4f4f
-			4f46 4545 3e45 2a3e 2b2b 3e3f 3c45 3716
-			0a16 490d 5151 5151 5151 2828 4528 4f46
-			3546 3e45 3e3e 2a3e 4546 4b4b 3c4f 3015
-			0908 490d 5151 5151 5151 2a28 2d2b 4646
-			452d 3e3e 453e 4646 4f52 4b4b 3c4f 3817
-			0906 490d 5151 3e51 2b45 2b2b 2b2b 4645
-			3e2b 3e3e 3f3e 4f45 4f4f 4c4b 3c4f 3716
-			0906 490d 5151 3f3e 3546 2c35 282a 4f45
-			2a4c 3e3e 3e3e 4b4b 4b4b 4c4b 4254 3014
-			0906 490d 3e51 463f 2c46 2c2c 452b 4f46
-			4b4c 3e2a 4f45 4b4f 4b4b 4b4b 3c4f 3015
-			0906 490d 3e51 4640 2c46 351e 4646 4f4f
-			4b4c 2a4b 504f 4f4f 4d4f 4b4b 3c4f 3015
-			0906 490d 3e3e 4640 1e46 281e 4f4f 4b4f
-			4b4b 2a4b 4f2b 4f4f 4f52 4b4b 3c4f 3015
-			0906 490d 3e3e 4640 1f1e 4c28 4f4c 3e4f
-			4b4b 3e4b 352b 4f4f 4f52 4b4b 3c4f 3014
-			0106 490d 3e3e 1f40 2b1e 4b4f 4f4f 3e4f
-			4b3e 454f 2b21 4f2b 4f4f 4b4b 3c4f 3014
-			0106 3404 3e1e 1f1e 4f29 4b4f 4f4f 284f
-			4b3e 454f 2820 2828 4b4b 4b4b 3c4f 3015
-			0106 1d04 1212 2b1e 4f4f 4b4f 4d4c 2a4c
-			4b3e 2a3e 2a12 2a2a 4b2a 4b4b 192b 3001
-			0106 1d04 211e 5028 504f 4f4f 4b4c 2a3e
-			4b3e 2b3f 121b 2a2a 2b2a 2a4f 0a2b 3001
-			0106 1d04 4528 4f46 4f4f 4f4f 4b4b 123e
-			3e3e 2b45 121b 2812 2b28 2a2b 0a2a 3001
-			0106 0d04 2a2a 4b28 4b4b 4b4b 4b4a 1028
-			3e3e 2828 1212 1012 2828 2828 040e 3001
-			0106 0d04 2812 2727 4949 4549 3545 1020
-			2727 1d27 1010 1010 1e0d 1020 040d 3602
-			0106 0d04 1010 1e1e 1e1e 1e1e 1e1e 1010
-			1010 1010 1010 1010 0e0d 1011 040d 3705
-			2230 3932 3a3a 3a3a 3a3a 3a3a 3a3a 3a3a
-			3a3a 3a3a 3a3a 3a3a 3a3a 3a3a 3239 302e
-			3730 4741 4848 4848 4848 4848 4848 4848
-			4848 4848 4848 4848 4848 4848 4147 3037
+		<bitmap size="256">
+			3414 1333 4114 3333 1414 3414 4114 3333
+			1243 1611 0300 0000 0330 0033 0000 3000
+			9923 1998 1110 3441 1333 4411 3300 3000
+			a924 7aaa aa66 6aaa 7644 7775 4666 3034
+			b964 77ab aaa2 2aab 7714 7777 6227 0031
+			b963 888b bbbb 2bbb 8811 8888 2288 3032
+			2964 aba7 eddd eddd 9267 aa9a 826a 3049
+			1444 ab87 eeea ddde 28a8 aaaa 8822 3049
+			2301 add7 eeea ddee 7da7 2dd2 7772 3038
+			2104 eddd edba dddd ddb8 2228 7777 3048
+			b101 eeed dbbe eddd ddbb 778d 8887 3048
+			b101 eeed bbbe dddd ddbb 87a9 9987 3038
+			b444 eeed b9ee dddb bddb 77ab 8987 1158
+			b131 eeed 88ee ddba aadb 8aaa aa88 449a
+			b444 dddd 77dd dba7 aa9b 7aaa ddab 349d
+			b133 dddd 87dd bb98 aaa9 bbaa ddde 119d
+			b133 addd 888a ba88 aaa8 daa9 dddd 449d
+			b133 aadd 999b da78 aa7d ddaa dddd 34ad
+			b133 baad 898b dbb8 a7dd ddda dddd 349d
+			b133 baad 958b ddbb 8ddd dddd dddd 349d
+			b133 baaa 755b bddd 8ddd dde8 ddde 349d
+			b133 baaa d755 addd addd dd98 dddd 349d
+			b103 5aaa dd82 addd adda d887 dddd 339d
+			8300 52a2 ddd8 7ddd bdda 7775 dddd 349d
+			2003 7222 dddd 7ddd 7ada 7872 ddd7 3068
+			2303 e755 dddd 7add 8ada 8722 7d88 3048
+			2303 dbb7 dddd 2add 8aaa 7222 8887 3038
+			1300 b777 dddd 65bb 7799 6662 7555 3031
+			1003 5552 bbbb 659b 2555 6666 6551 4031
+			1303 5566 5555 6655 6666 6616 6611 4031
+			6433 6666 6666 6666 6666 6666 6666 3346
+			c643 cccc cccc cccc cccc cccc cccc 346c
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="pl_ele_1"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="pl_ele_1_pl"
 		path="C:/home/wb_data3d/gimmick/league_front/tex/pl_ele_1.tga"
 	>
-		<bitmap size="512">
-			0300 0303 0303 0303 0603 0306 0306 0603
-			0606 0303 0306 0306 0303 0303 0303 0003
-			0c03 0c0c 0c0c 0c10 0c0c 0c0c 100c 0c0c
-			1010 100c 0c0c 0c0c 0c0c 0c0c 0c0c 030c
-			0c03 0c0c 130c 1113 1113 1111 1313 1311
-			1111 1311 1111 1111 1313 0c11 0c0c 030c
-			120a 1212 1812 1c1c 1c1c 1c1c 1c1c 1c1c
-			1c1c 1c1c 1c1c 1c1c 1c1c 1218 1212 0a12
-			0301 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0103
-			0301 0303 0503 0607 0706 0707 0706 0606
-			0606 0607 0606 0707 0707 0303 0303 0103
-			0301 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0103
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0601 0606 0606 0202 0603 0606 0306 0303
-			0606 0606 0306 0606 0202 0303 0303 0103
-			0201 0b02 080b 0202 1010 100f 1010 100f
-			1010 1010 0f10 0f0f 0202 0b07 020b 0102
-			0a01 120a 080d 0202 1613 1616 1616 1616
-			1616 1616 1616 1316 0202 0b07 0a12 010a
-			0a01 120a 070b 0202 1614 1616 1616 1616
-			1616 1616 1616 1416 0202 0b07 0a12 010a
-			0a01 150a 070d 0202 1b19 1a1a 1a1b 1b1a
-			1a1a 1a1a 1b1a 171a 0202 0b07 0a12 010a
-			0a01 0e0a 0202 0202 0902 0309 0909 0909
-			0909 0909 0909 0409 0202 0202 0a0a 010a
-			0a01 0a0a 0202 0202 0904 0909 0309 0903
-			0909 0909 0903 0409 0202 0202 0a0a 010a
-			0a01 120a 030b 0202 0c0b 100c 1010 1010
-			1010 1010 0c0c 0b0c 0202 0b03 0a12 010a
-			0a01 120a 070b 0202 130f 1311 1313 1313
-			1313 1313 1311 1011 0202 0b07 0a12 010a
-			0a01 150a 070d 0202 1613 1616 1616 1616
-			1616 1616 1616 1316 0202 0b07 0a12 010a
-			0a01 120a 070b 0202 1614 1616 1616 1616
-			1616 1616 1616 1416 0202 0b07 0a12 010a
-			0a01 120a 070b 0202 1a17 1b1b 1a1b 1a1a
-			1a1a 1a1a 1a1a 171a 0202 0b07 0a12 010a
-			0a01 0e0e 0202 0202 0904 0303 0909 0909
-			0909 0909 0909 0409 0202 0202 0a0a 010a
-			0a01 0a0a 0202 0202 0904 0909 0903 0909
-			0909 0903 0309 0409 0202 0202 0a0a 010a
-			0a01 0a0a 0202 0202 0904 0909 0909 0909
-			0909 0909 0903 0409 0202 0202 0a0e 010a
-			0a01 0a0a 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0a0a 010a
-			1203 1512 070b 0202 0707 0707 0807 0808
-			0808 0808 0808 0708 0202 0b07 1212 0312
-			1203 1212 070b 0202 0707 0707 0607 0606
-			0706 0607 0606 0706 0202 0b07 1212 0312
-			1203 1212 070b 0202 0606 0606 0506 0506
-			0606 0606 0506 0505 0202 0b07 1212 0312
-			1203 1512 070b 0202 0303 0303 0303 0303
-			0303 0303 0303 0303 0202 0d07 1212 0312
-			0c03 0c0c 070b 0202 0303 0303 0303 0303
-			0303 0303 0303 0303 0202 0b07 0c0c 030c
-			0c03 0c0c 070b 0202 0303 0303 0303 0303
-			0303 0303 0303 0303 0202 0b07 0c0c 030c
-			0303 0303 0706 0202 0303 0303 0303 0303
-			0303 0303 0303 0303 0202 0307 0303 0303
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
+		<bitmap size="256">
+			8887 8888 8aa8 a88a 88aa 8a8a 8888 7888
+			2228 2222 2222 2222 2222 2222 2222 8222
+			2228 2122 2222 2212 1222 2222 2222 8222
+			222a 1112 1111 1111 1111 1111 2111 a222
+			8887 8888 8888 8888 8888 8888 8888 7888
+			8887 aaa8 aaaa aaaa aaaa aaaa 88aa 7888
+			8887 8888 8888 8888 8888 8888 8888 7888
+			7777 7777 7777 7777 7777 7777 7777 7777
+			dddf 99dd dddc cccd dddd ddcd cc99 fccc
+			b99f 99bb 6666 6666 6666 6666 be99 f99b
+			033f 99b5 7774 7777 7777 4777 be99 f330
+			033f 99eb 7774 7777 7777 4777 be99 f330
+			433f 99e5 8888 8888 8888 7888 be99 f330
+			533f 9999 c3e9 3333 3333 d333 9999 f333
+			333f 9999 e33c ecc3 e3e3 ce3c 9999 f333
+			033f 99cb 655b 6666 6666 b555 bc99 f330
+			033f 99eb 4646 4444 4444 6646 be99 f330
+			433f 99e5 7774 7777 7777 4777 be99 f330
+			033f 99eb 7774 7777 7777 4777 be99 f330
+			033f 99eb 8887 8888 8888 7888 be99 f330
+			b53f 9999 dd33 3333 3333 d333 9999 f333
+			333f 9999 333c e3ec 3ce3 c3ce 9999 f333
+			333f 9999 3e3c 3e33 3e33 d33c 9999 f335
+			333f 9999 9999 9999 9999 9999 9999 f333
+			400c 99e3 eeee bbbe bbbb ebbb be99 9000
+			000c 99eb ebeb edee deee eede be99 c000
+			000c 99eb dddd dddd dddd dddd be99 c000
+			400c 99eb cccc cccc cccc cccc 5e99 c000
+			555c 99eb cccc cccc cccc cccc be99 c555
+			555c 99eb cccc cccc cccc cccc be99 c555
+			cccc 99ed cccc cccc cccc cccc ce99 cccc
+			9999 9999 9999 9999 9999 9999 9999 9999
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="pl_ele_3"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="pl_ele_3_pl"
 		path="C:/home/wb_data3d/gimmick/league_front/tex/pl_ele_3.tga"
 	>
-		<bitmap size="512">
-			0000 0400 0404 0404 0404 0404 0a0a 0507
-			0705 0505 0505 0505 0505 0505 0005 0000
-			0000 0400 0404 0407 0404 0404 0e0a 0507
-			0707 0705 0505 0505 0505 0505 0005 0000
-			0000 0400 0a04 070a 070a 0707 1517 0d10
-			0a0a 0d0a 0a0a 0a0a 0d0d 050a 0005 0000
-			0000 0400 0704 1010 1010 1010 1e20 141a
-			1414 1414 1414 1414 1414 050a 0005 0000
-			0000 0500 0a05 1515 1515 1015 1e21 151a
-			1515 1515 1515 1515 1515 050a 0005 0000
-			0101 0701 1207 251a 2522 1b21 2a25 1b22
-			1b1b 1b21 1b1b 2121 2121 050a 0005 0000
-			0202 0a02 150a 2a1e 252a 181b 2222 1b22
-			1b1b 1b1b 1b1b 1b1b 1b1b 050a 0005 0000
-			0303 0a03 170a 2c21 252a 181b 0e0e 0e0e
-			0e0e 040e 0a07 0a0a 070a 0404 0404 0404
-			0505 0f05 1d16 2c27 252a 181b 2323 2523
-			1b23 0711 0704 0a0a 0407 0707 0407 0404
-			0505 0f05 1d0f 2d29 252a 181b 2323 2325
-			1b1b 111b 040a 0707 0a04 070a 0a0a 0404
-			0505 0f05 1d16 2d29 252a 181b 2325 1c1b
-			1f21 1821 1616 1616 1616 1010 0710 0404
-			0505 0f05 1d0f 2d2a 252b 181b 1a25 1b1b
-			1f1f 1b1b 1719 1817 1717 1115 0a11 0405
-			0505 1605 1d16 2d2a 252b 181b 1b1b 1e1e
-			171f 1818 1818 1717 1517 1114 0d0f 0707
-			0505 1605 1d16 2d2a 252b 181b 1b15 1c1c
-			1615 1616 1616 1616 1616 1014 0a0d 0707
-			0505 1605 1d16 2d2a 252b 181b 1b16 1313
-			0f0e 0f0f 0f0f 0f0f 0f0f 0f0f 0a0e 0707
-			0505 0f05 0f16 2d29 252b 181b 0d0a 0c0d
-			0d0d 1010 1010 1010 1110 0d11 070d 0506
-			0505 0f05 180f 2d27 252a 181b 0a0a 0b07
-			0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0907
-			0505 1605 1816 2d24 252a 181b 0a0e 0b07
-			0b0b 0b0b 0b0b 0b0b 0b0b 0b0b 0d0b 0a0a
-			0505 0f05 180f 2d26 252a 181b 0707 0707
-			0b0a 0b0b 0b0b 0b0b 0b0b 0b0b 070b 0606
-			0505 0f05 180f 2d2d 2225 1b21 0606 0708
-			0a07 0a0a 0a0a 0a0a 0a0a 070a 0507 0504
-			0303 0a03 120a 2d28 2225 181b 0505 0705
-			0a07 0a0a 0a0a 0a0a 0a0a 070a 0606 0505
-			0202 0a02 100a 2525 2225 181b 0404 0705
-			0707 0707 0707 0707 0707 0707 0507 0404
-			0101 0701 1007 2222 2222 181b 0405 0505
-			0505 0505 0505 0505 0505 0405 0404 0404
-			0000 0500 0a05 1b1b 1b1b 181b 0404 0404
-			0404 0404 0404 0404 0404 0404 0404 0404
-			0404 0704 0704 1818 1818 1818 0404 0404
-			0404 0404 0404 0404 0404 0404 0404 0404
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
-			2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e 2e2e
+		<bitmap size="256">
+			0000 0000 0000 0123 0010 0000 0000 0000
+			0000 0100 0000 0143 2012 0000 0000 0000
+			0000 1320 1113 4588 4322 2332 0244 0000
+			0000 6510 5665 79ab 7777 7777 0377 0000
+			0000 7720 6777 7aab 7777 7777 0277 0000
+			1000 ca61 abcb abdc abaa bbaa 02bb 0000
+			1000 da72 9acd abbb aaaa aaaa 02aa 0000
+			3000 eb83 9acd 4544 0444 2230 0003 0000
+			4000 eca8 9acd ccbc 169c 3310 0101 0001
+			4000 eda4 9acd bccb 6aaa 0103 1330 0023
+			5000 eda8 9acd a9cc 9bab 8888 5688 0016
+			4000 eda4 9acd aa9c a9bb 998a 6799 0026
+			8000 eda8 9acd aa9a 998b 9898 6778 1045
+			8000 eda8 9acd aaa7 8877 8888 5788 1033
+			8000 eda8 9acd 77a8 5554 5555 5555 0134
+			4000 ed48 9acd 3442 6644 6666 4666 0114
+			4000 ec94 9acd 3132 4444 4444 4444 2134
+			8000 ec98 9acd 3124 3333 3333 3333 2243
+			4000 ec94 9acd 2111 3333 3333 3333 0113
+			5000 ee94 abbc 1200 2211 1221 1122 0001
+			3000 ed73 9abc 1100 2221 2222 1222 0010
+			2000 cc52 9abc 1000 1110 1111 1111 0001
+			1000 bb51 9abb 0000 0001 0000 0000 0000
+			0000 aa30 9aaa 0000 0000 0000 0000 0000
+			0000 9910 9999 0000 0000 0000 0000 0000
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="pl_ele_dai"
@@ -525,22 +429,22 @@
 		path="C:/home/wb_data3d/gimmick/league_front/tex/pl_ele_dai.tga"
 	>
 		<bitmap size="128">
-			0202 0202 0202 0202 0404 0404 0404 0404
-			0808 0808 0808 0808 0f0f 0f0f 0f0f 0f0f
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0202 0202 0202 0202 0505 0505 0505 0505
-			0909 0909 0909 0909 0909 0909 0909 0909
-			0d0d 0d0d 0d0d 0d0d 0909 0909 0909 0909
-			0a0a 0a0a 0a0a 0a0a 0b0b 0c0c 0c0c 0c0c
-			0909 0909 0909 0909 0a0a 0a0a 0a0a 0a0a
-			0909 0909 0909 0909 0d0d 0d0d 0d0d 0d0d
+			0101 0101 0101 0101 0202 0202 0202 0202
+			0303 0303 0303 0303 0404 0404 0404 0404
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0505 0505 0505 0505 0909 0909 0909 0909
+			0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
+			0f0f 0f0f 0f0f 0f0f 0c0c 0c0c 0c0c 0c0c
+			0d0d 0d0d 0d0d 0d0d 0e0e 0e0e 0e0e 0e0e
+			0c0c 0c0c 0c0c 0c0c 0d0d 0d0d 0d0d 0d0d
+			0c0c 0c0c 0c0c 0c0c 0f0f 0f0f 0f0f 0f0f
+			0a0a 0a0a 0a0a 0a0a 0909 0909 0909 0909
+			0a0a 0a0a 0a0a 0a0a 0909 0909 0909 0909
+			0b0b 0b0b 0b0b 0b0b 0c0c 0c0c 0c0c 0c0c
+			0c0c 0c0c 0c0c 0c0c 1010 1010 1010 1010
+			0808 0808 0808 0808 0707 0707 0707 0707
 			0707 0707 0707 0707 0606 0606 0606 0606
-			0707 0707 0707 0707 0505 0505 0505 0505
-			0808 0808 0808 0808 0909 0909 0909 0909
-			0909 0909 0909 0909 0e0e 0e0e 0e0e 0e0e
-			0303 0303 0303 0303 0101 0101 0101 0101
-			0101 0101 0101 0101 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="pl_ele_ple"
@@ -562,36 +466,22 @@
 		6f40 6f41 7342 7343 7365 7367 778b 778e
 		7bb1 7bd5 7fd9 7ffb 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="pl_colum_b_pl" color_size="88">
-		050a 052a 052b 054b 054c 092b 094b 094c
-		096b 096c 096d 096e 098d 098e 098f 09ae
-		09af 09b0 09d0 0d4b 0d6c 0d6d 0d8d 0d8e
-		0dae 0daf 0dcf 0dd0 0dd1 0df0 0df1 0df2
-		0e11 0e12 114b 116c 118d 11cf 11f0 1211
-		1212 1213 1232 1233 1253 1254 154b 156b
-		156c 158c 158d 1632 1633 1654 198c 198d
-		19ad 19ae 19cf 1a32 1a53 1a54 1a74 1a75
-		1a95 1dcf 1e74 1e75 1e94 1e95 1e96 21f0
-		2211 2295 2296 22b6 26b6 26b7 26d6 26d7
-		26d8 2ad7 2ad8 2af7 2af8 2ef8 7fff 7fff
+	<tex_palette index="1" name="pl_colum_b_pl" color_size="16">
+		32f8 3b5b 3f9d 431a 435b 439e 477c 47be
+		47df 4fdf 53ff 57ff 5bbe 5fff 63ff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="pl_ele_1_pl" color_size="32">
-		0086 00a7 04e8 04e9 0509 050a 050b 052c
-		054c 092b 094a 094c 098d 098e 0d6c 0daf
-		0dd0 0df1 11ce 1212 1232 1611 1654 1675
-		1a32 1a96 1eb7 1ed8 22b5 7fff 7fff 7fff
+	<tex_palette index="2" name="pl_ele_1_pl" color_size="16">
+		11ce 53ff 3f5c 092a 1212 098d 0dd0 1654
+		1eb7 04e8 26f9 054c 04e9 050b 052c 00a7
 	</tex_palette>
-	<tex_palette index="3" name="pl_ele_3_pl" color_size="48">
-		0021 0042 0043 0443 0463 0464 0484 0485
-		0486 04a5 04a6 08a6 08c6 08c7 08c8 08e8
-		08e9 0909 090a 0d09 0d0a 0d2a 0d2b 0d4b
-		0d4c 0d6c 0d6d 116d 116e 118d 118e 118f
-		11ae 11af 11d0 15d1 15f1 15f2 1611 1612
-		1a13 1a32 1a33 1a34 1a54 1e75 351a 7fff
+	<tex_palette index="3" name="pl_ele_3_pl" color_size="16">
+		1df0 2a32 2e53 3274 3695 36b7 3ab7 3ad8
+		3ef9 431a 433b 477c 4b9e 53df 57ff 6ebf
 	</tex_palette>
-	<tex_palette index="4" name="pl_ele_dai_pl" color_size="16">
-		04e8 04e9 050b 092b 098d 0dd0 11d0 11f1
-		1212 1654 1a75 1a95 1a96 1eb7 1ed8 22b5
+	<tex_palette index="4" name="pl_ele_dai_pl" color_size="24">
+		04e9 050b 098d 1212 22b5 6f6b 7368 7369
+		736b 7390 7391 73b2 73b4 73b5 73b6 73d7
+		73d8 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="5" name="pl_ele_ple_pl" color_size="16">
 		2dee 42d5 46d5 4717 5bbc 5f9c 5fbc 639c
@@ -717,8 +607,8 @@
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
+		tex_translate="0.250000 0.000000"
+		tex_gen_mode="tex"
 	/>
 	<material index="5" name="pl_ele_ple_1"
 		light0="off" light1="off" light2="off" light3="off"
@@ -2047,6 +1937,46 @@
 
 <output_info vertex_size="494" polygon_size="190"
 	triangle_size="94" quad_size="96"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="defo" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="6">
+		<ex_tex_image index="0" disp_pos="-360.000000 300.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="360.000000 300.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="6">
+		<ex_tex_palette index="0" disp_pos="-360.000000 360.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="360.000000 360.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="6">
+		<ex_material index="0" disp_pos="-360.000000 240.000000"/>
+		<ex_material index="1" disp_pos="-240.000000 240.000000"/>
+		<ex_material index="2" disp_pos="-120.000000 240.000000"/>
+		<ex_material index="3" disp_pos="0.000000 240.000000"/>
+		<ex_material index="4" disp_pos="240.000000 240.000000"/>
+		<ex_material index="5" disp_pos="360.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="7">
+		<ex_polygon index="0" disp_pos="-360.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="0.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="360.000000 180.000000"/>
+		<ex_polygon index="3" disp_pos="-120.000000 180.000000"/>
+		<ex_polygon index="4" disp_pos="-240.000000 180.000000"/>
+		<ex_polygon index="5" disp_pos="120.000000 180.000000"/>
+		<ex_polygon index="6" disp_pos="240.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
