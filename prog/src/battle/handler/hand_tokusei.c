@@ -4645,14 +4645,6 @@ static void handler_Tenkiya_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     if( BPP_GetMonsNo(bpp) == MONSNO_POWARUN )
     {
       common_Tenkiya_Off( myHandle, flowWk, pokeID );
-      {
-        BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
-        param->header.tokwin_flag = TRUE;
-        param->pokeID = pokeID;
-        param->formNo = FORMNO_POWARUN_NORMAL;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-      }
     }
   }
 }
@@ -4664,7 +4656,6 @@ static void common_Tenkiya_Off( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     if( BPP_GetMonsNo(bpp) == MONSNO_POWARUN )
     {
       BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
-      param->header.tokwin_flag = TRUE;
       param->pokeID = pokeID;
       param->formNo = FORMNO_POWARUN_NORMAL;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
