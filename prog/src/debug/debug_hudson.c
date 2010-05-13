@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 BOOL HUDSON_IsSkipTitle( void )
 {
-  if ( OS_GetArgv(1) == HUDSON_TESTCODE_MAP_JUMP )
+  if ( STD_CompareString( OS_GetArgv(1), HUDSON_TESTCODE_MAP_JUMP ) )
   {
     return TRUE;
   }
