@@ -175,13 +175,18 @@ EVENT_START   ev_c05r0601_waitress_01
 
 			ENDIF
 			
+			//ÉåÉWâπçƒê∂
+			_SE_PLAY( SEQ_SE_SYS_22 )		
 			_SUBTRACT_GOLD( LWK_MILK_GOLD )
 			_GOLD_WIN_UPDATE()
-			_TIME_WAIT( 30 )
-			_GOLD_WIN_CLOSE()
-						
-			_SE_PLAY( SEQ_SE_SYS_22 )
+			
 			_SE_WAIT()
+			
+			//GOLDWINÇ™ë¶ç¿Ç…è¡Ç¶Ç»Ç¢ÇΩÇﬂÇÃä‘
+			_TIME_WAIT(30)
+			
+			_GOLD_WIN_CLOSE()
+			
 			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, LWK_MILK_NUM )
 
 		ENDIF
