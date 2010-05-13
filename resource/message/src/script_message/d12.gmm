@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:46:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T23:11:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1454" top="226" right="2159" bottom="854" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -588,38 +588,86 @@
 		<language name="JPN_KANJI" width="256">さっさと　歩け！</language>
 	</row>
 
-	<row id="msg_d12_hakase2_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_d12_hakase2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>●アララギ（娘）が遠くから話しかける。
 
 ●この後、主人公が２グリッド前進する。</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　おかげで
+		<language name="JPN" width="256">アララギ『[1:00:トレーナー名:0]の　おかげで
 あくじを　はたらいた　れんちゅうは[BE:00:ページ切り替え（行送り）]
-ごっそり　つかまえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　おかげで
+ごそっと　とらえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『[1:00:トレーナー名:0]の　おかげで
 悪事を　働いた　連中は[BE:00:ページ切り替え（行送り）]
-ごっそり　捕まえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
+ごそっと　　捕らえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
-		<comment>※仮メッセージ</comment>
+	<row id="msg_d12_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">ビクティが　このしまに　いた　わけは…
-[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ビクティが　この島に　いた　理由は…
-[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ビクティは
+その　からだから　あふれる▽
+エネルギーを　はっさんさせる　という▽
+まぼろしの　ポケモン……▼
+その　エネルギーに　ふれた
+ポケモンや　ひとは▼
+ぜんしんに　パワーが　あふれ
+いつもより　ちからを　はっきできたの▼
+そう……！　ビクティは
+エネルギーや　パワーを　わけあたえ▽
+しょうりを　もたらす　ポケモンとして▽
+みんなに　あいされていたの▼
+だけど　ときの　けんりょくしゃが
+その　パワーを　ひとりじめ　しようと▼
+ビクティを　とらえてから
+どうなっていたのか▽
+まったく　わからなくて……▼
+この　リバティガーデンとう　で
+しずかに　くらしていたのね……▼</language>
+		<language name="JPN_KANJI" width="256">ビクティは
+その小さな　体から　あふれる▽
+エネルギーを　発散させる　という▽
+まぼろしの　ポケモン……▼
+その　エネルギーに　触れた
+ポケモンや　人は▼
+全身に　パワーが　みなぎり
+いつもより　力を　発揮できたの▼
+そう……！　ビクティは
+エネルギーや　パワーを　わけあたえ▽
+勝利を　もたらす　ポケモンとして▽
+みんなに　愛されていたのね▼
+だけど　時の　権力者が
+その　パワーを　独占しようと▼
+ビクティを　捕まえてから
+どうなっていたのか▽
+まったく　わからなくて……▼
+この　リバティガーデン島　で
+静かに　暮らしていたのね……▼</language>
 	</row>
 
-	<row id="msg_d12_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
-		<comment>※仮メッセージ</comment>
+	<row id="msg_d12_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">ビクティの　イッシュずかんナンバーが
-０の　りゆうは…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ビクティの　イッシュ図鑑ナンバーが
-０の　理由は…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">でね……▼
+ビクティの　ずかんばんごうが
+「０」なのは▼
+この　ポケモンずかんを　もって
+たびを　する　ポケモントレーナーに▼
+ビクティの　しょうりを　もたらす
+パワーが　わけあたえられるように……▼
+そんな　ねがいが　こめられていると
+わたしは　きいたことが　あるわ▼</language>
+		<language name="JPN_KANJI" width="256">でね……▼
+ビクティの　図鑑番号が
+「０」なのは▼
+この　ポケモン図鑑を　所持して
+旅をする　ポケモントレーナーに▼
+ビクティの　勝利を　もたらす
+パワーが　わけあたえられるように……▼
+そんな　願いが　こめられていると
+わたしは　きいたことが　あるわ▼</language>
 	</row>
 
 	<row id="msg_d12_police03_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -638,18 +686,18 @@
 博士も　ご乗船ください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_hakase2_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_d12_hakase2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>●警官３を向いて、セリフ。
 ●再び主人公を向く。</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">ありがとう
+		<language name="JPN" width="256">アララギ『ありがとう
 すぐに　いきまーす！▼</language>
-		<language name="JPN_KANJI" width="256">ありがとう
+		<language name="JPN_KANJI" width="256">アララギ『ありがとう
 すぐに　いきまーす！▼</language>
 	</row>
 
-	<row id="msg_d12_hakase2_05" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_d12_hakase2_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>●最後のセリフ。
 
 ●セリフ後に、警官隊たちと立ち去る。</comment>
@@ -660,13 +708,13 @@
 あくよう　しようと　するだなんて……▼
 ただしい　こころで　むきあってこそ
 わたしたち　ポケモンと　ひとの▽
-みらいは　あかるくなるのに……▼</language>
+みらいは　あかるく　なるのにね！▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　能力▼
 その　すごさに　心　惑わされ
 悪用しようと　するだなんて……▼
 正しい　心で　向き合ってこそ
 わたしたち　ポケモンと　人の▽
-未来は　明るくなるのに……▼</language>
+未来は　明るく　なるのにね！▼</language>
 	</row>
 
 	<flowchart-group-list>
