@@ -3232,10 +3232,10 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     if(GFL_NET_DWC_IsNewPlayer() == -1){
       if(PAD_BUTTON_X & GFL_UI_KEY_GetTrg()){
         if(_myVChatStatusToggleOrg(wk)){
-          WifiP2PMatchMessagePrint(wk, msg_wifilobby_054, FALSE);
+          WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_054, FALSE);
         }
         else{
-          WifiP2PMatchMessagePrint(wk, msg_wifilobby_055, FALSE);
+          WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_055, FALSE);
         }
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _userDataInfoDisp(wk);

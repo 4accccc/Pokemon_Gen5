@@ -236,7 +236,7 @@ static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 //------------------------------------------------------------------
 
 
-static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem )
+static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem, BOOL bStream )
 {
   // 文字列取得
   u8 speed = MSGSPEED_GetWait();
@@ -273,11 +273,13 @@ static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bS
 
   BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
 
-
-
-  wk->pStream = PRINTSYS_PrintStream(wk->MsgWin ,0,0, wk->TalkString, wk->fontHandle,
-                                     MSGSPEED_GetWait(), wk->pMsgTcblSys, 2,HEAPID_WIFIP2PMATCH, 15);
-
+  if(!bStream){
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->MsgWin), 0, 0, wk->TalkString, wk->fontHandle);
+  }
+  else{
+    wk->pStream = PRINTSYS_PrintStream(wk->MsgWin ,0,0, wk->TalkString, wk->fontHandle,
+                                       MSGSPEED_GetWait(), wk->pMsgTcblSys, 2,HEAPID_WIFIP2PMATCH, 15);
+  }
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
 }
@@ -298,8 +300,27 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
 {
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
 
-  WifiP2PMatchMessagePrintS(wk,msgno, bSystem);
+  WifiP2PMatchMessagePrintS(wk,msgno, bSystem, TRUE);
 }
+
+//------------------------------------------------------------------
+/**
+ * $brief   会話ウインドウ表示
+ *
+ * @param   wk
+ *
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+
+static void WifiP2PMatchMessagePrintDirect( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem )
+{
+  wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
+
+  WifiP2PMatchMessagePrintS(wk,msgno, bSystem, FALSE);
+}
+
 
 //==============================================================================
 /**

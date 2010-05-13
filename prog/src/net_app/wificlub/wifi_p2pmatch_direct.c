@@ -1076,7 +1076,7 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
     _friendNameExpand(wk,  wk->friendNo - 1);
 //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);
 
-    WifiP2PMatchMessagePrintS(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
+    WifiP2PMatchMessagePrintS(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE, TRUE);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_12);
   }
