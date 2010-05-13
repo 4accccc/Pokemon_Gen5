@@ -1,0 +1,1 @@
+perl conv.pl > texset_check_result.txt
