@@ -1012,13 +1012,14 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
   if((monsno!=0) && (monsno <= MONSNO_ARUSEUSU)){  // データ読み込み・破棄
     TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
     int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
+    u8 form_no =  POKETOOL_CheckPokeFormNo(  monsno,  form );
 
     if(sex > 1){
       sex = GFUser_GetPublicRand( 2 );
     }
 #if 1
     OS_TPrintf("モンスター番号%d %d\n",monsno,sex);
-    if(TPOKE_DATA_IsSizeBig(pWork->pGameData, pTP, monsno, sex, form )){
+    if(TPOKE_DATA_IsSizeBig(pWork->pGameData, pTP, monsno, sex, form_no )){
       size = SYMBOL_ZONE_TYPE_FREE_LARGE;
     }
 #endif
@@ -1027,7 +1028,7 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
       move_type = 0;
     }
     SymbolSave_SetFreeZone(
-      SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form, move_type, size);
+      SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form_no, move_type, size);
     TPOKE_DATA_Delete( pTP );
   }
 }

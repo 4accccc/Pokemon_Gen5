@@ -915,10 +915,9 @@ static void GSYNC_DISP_FriendPokeIconCreate(GSYNC_DISP_WORK* pWork, u32 mons_no,
   {
     GFL_CLWK_DATA cellInitData;
     ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
-
-
-    u8 pal = POKEICON_GetPalNum( mons_no,form_no,sex, FALSE );
-    u16 charno = POKEICON_GetCgxArcIndexByMonsNumber(mons_no,form_no,sex, FALSE);
+    u8 form =  POKETOOL_CheckPokeFormNo(  mons_no,  form_no );
+    u8 pal = POKEICON_GetPalNum( mons_no,form,sex, FALSE );
+    u16 charno = POKEICON_GetCgxArcIndexByMonsNumber(mons_no,form,sex, FALSE);
 
     pWork->cellRes[CHAR_SELECT_POKE] =
       GFL_CLGRP_CGR_Register( arcHandlePoke ,
