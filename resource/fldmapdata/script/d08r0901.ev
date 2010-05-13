@@ -164,43 +164,65 @@ _ANIME_LABEL	anm_legend_hoeru
 /* パッケージポケモンの復活POSイベント                                                          
 /**************************************************************/
 EVENT_START    ev_pos_d08R0901_boss_01	
-	
-	//プレイヤーの名前を格納
-	_PLAYER_NAME(0)
 
-	//主人公がびっくりする
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
-	_OBJ_ANIME_WAIT()
-	
 	//バージョンによって、復活するポケモンを変更する
 	DEFINE_LOCAL	LCWK_VERSION
 	_GET_ROM_VERSION(LCWK_VERSION)
 	
-	//デモを呼ぶ
-	_DEMO_FADEOUT_BLACK_CALL()
-
 	//ROMによって、復活するポケモンを変更する
 	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_W )
 		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00,SHIN_A, MV_DMY )
 	ELSE
-		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_B )
 		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00,MU_A, MV_DMY )
 	ENDIF
-	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_turn_d)
-	_OBJ_ANIME_WAIT()
-
-	_DEMO_FADEIN_BLACK_CALL()
+	
+	//プレイヤーの名前を格納
+	_PLAYER_NAME(0)
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	//カメラ操作
+	_CAMERA_MOVE(9694,0,970795,1081344,0,1212416,60 )
+	_TIME_WAIT(32)
 	
 	//主人公がNに近寄る
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01)
+	_TIME_WAIT(24)
+	
+	//デモを呼ぶ
+	_DEMO_FADEOUT_BLACK_CALL()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	_OBJ_ANIME_WAIT()
-
+	
+	//ROMによって、復活するポケモンを変更する
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_W )
+	ELSE
+		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_B )
+	ENDIF
+	
+	//プレイヤーの位置を動かしておく
+	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,16,0,16,DIR_UP)
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
-	//カメラ操作　チャンピオンの位置にカメラを合わせる
-	_CAMERA_MOVE(9685,0,970639,1081344,0,770048,24 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE(9694,0,970795,1081344,0,1081344,1 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//フェードインでフィールドに戻る
+	_DEMO_FADEIN_BLACK_CALL()
+
+	//カメラ操作　
+	_CAMERA_MOVE(9694,0,970681,1081344,0,773664,56 )//一番最後の引数は移動にかかるフレーム数
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_down)
+	_OBJ_ANIME_WAIT()
 	
 	//Nが喋る
 	//どう　せかいを　みちびく
@@ -274,8 +296,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME_WAIT()
 
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	
+	_CAMERA_DEF_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+
 	//============フラグワーク操作=============//
 	
 	//ハチクとライバルを表示
@@ -285,9 +307,14 @@ EVENT_START    ev_pos_d08R0901_boss_01
 		
 	//========================================//
 	
+	//少し呆然とする
+	_TIME_WAIT(8)
+	
 	//ハチクとライバルがやってくる		
 	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
+	_TIME_WAIT(24)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -299,29 +326,35 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_MSGWIN_CLOSE()
 
 	//ハチクが喋る
-	//
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_leader7_01, D08R0901_LEADER7_01,POS_DR)
 	_MSGWIN_CLOSE()
 	
-	//ライバルの振り向きを作るためのウェイト
-	_OBJ_ANIME(D08R0901_RIVEL_01,anm_turn_s2)
-	_TIME_WAIT(24)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
+	_OBJ_ANIME(D08R0901_RIVEL_01,anm_common_turn_up)
+	_OBJ_ANIME_WAIT()
+	
 	//ライバルが喋る
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_black_02, D08R0901_RIVEL_01,POS_DL)
 	_MSGWIN_CLOSE()
-	_OBJ_ANIME_WAIT()
 
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_leader7_02, D08R0901_LEADER7_01,POS_DR)
 	_MSGWIN_CLOSE()
-	_OBJ_ANIME(D08R0901_LEADER7_01,anm_common_turn_up)
-	_OBJ_ANIME_WAIT()
 
 	//画面暗転処理
-	_TIME_WAIT(24)
-	_MAP_FADE_BLACK_OUT()
-	_MAP_FADE_END_CHECK()
+	_TIME_WAIT(4)
+	_MAP_FADE_BLACK_OUT_SLOW()
+	_OBJ_ANIME(D08R0901_LEADER7_01,anm_leader7_idou_02)
+	_TIME_WAIT(8)
+	_OBJ_ANIME(D08R0901_RIVEL_01,anm_raival_idou_02)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_02)
 
+	_MAP_FADE_END_CHECK()
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(16)
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+	_TIME_WAIT(16)
+		
 	//============フラグワーク操作=============//
 	
 	//シンとムの復活のPOSイベントを無効
@@ -340,6 +373,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//========================================//
 	
+
 	//画面遷移後、イベントが自動で始まるようにセット
 	_RESERVE_SCRIPT( SCRID_RESERVE_D08_HAKASE1_01 )
 	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)
@@ -359,7 +393,12 @@ _ANIME_LABEL	anm_boss_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_01
 	
-	_ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA AC_WALK_U_16F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_idou_02
+	
+	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -371,6 +410,11 @@ _ANIME_LABEL	anm_raival_idou_01
 	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_raival_idou_02
+
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //   ハチク： リュウラセンの塔、最上階に現れる                 
 //--------------------------------------------------------------------
@@ -378,6 +422,11 @@ _ANIME_LABEL	anm_leader7_idou_01
 
 	_ANIME_DATA AC_WALK_U_8F,9
 	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader7_idou_02
+
+	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -422,7 +471,7 @@ _ANIME_LABEL	anm_turn_d
 //共通スクリプト：下を向く                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_down
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
