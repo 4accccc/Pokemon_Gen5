@@ -335,6 +335,10 @@ void REPORT_Draw( REPORT_WORK * wk )
 			GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
 			GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
 			GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+			for( i=0; i<BMPWIN_MAX; i++ ){
+				GFL_BMPWIN_MakeScreen( wk->win[i].win );
+			}
+			GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
 			{
 				POKEPARTY * party;
 				party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(wk->gameSys) );
@@ -707,11 +711,6 @@ static void InitBmp( REPORT_WORK * wk )
 	GFL_STR_DeleteBuffer( exp );
 	WORDSET_Delete( wset );
 	GFL_MSG_Delete( mman );
-
-	for( i=0; i<BMPWIN_MAX; i++ ){
-		GFL_BMPWIN_MakeScreen( wk->win[i].win );
-	}
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
 }
 
 //--------------------------------------------------------------------------------------------
