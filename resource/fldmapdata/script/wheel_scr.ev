@@ -34,7 +34,7 @@ DEFINE_LOCAL  lwk_2nd_f
 //==============================================================
 /// 
 ///
-///       ポケモンセンター　WI-FIクラブ受付                   
+///       観覧車トレーナー対戦イベント               
 ///
 ///
 //==============================================================
@@ -63,13 +63,13 @@ EVENT_START   ev_wheel_ride
 EVENT_END
 
 //==============================================================
-//サブルーチン：受付メイン
+//サブルーチン：対戦イベントメイン
 //==============================================================
 sub_wheel_ride_main:
 {
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_scene_id
-  
+
   _DEBUG_PRINT_WK( lwk_entry_id )
   _DEBUG_PRINT_WK( lwk_1st_f )
   _DEBUG_PRINT_WK( lwk_2nd_f )
@@ -114,17 +114,24 @@ sub_wheel_ride_main:
   //負けたから一緒に乗ってあげる
   _WHEEL_TRAINER_MSG( msg_wheel_spring_f_04, lwk_entry_id, lwk_1st_f )  
   _BALLOONWIN_CLOSE()
+ 
+  //入り口まで移動
+  _START_EVENT_BGM( SEQ_BGM_E_KANRANSYA )			//イベント曲再生	
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_move_to_entrance )
+  _OBJ_ANIME_WAIT()
 
   //デモ再生
   $i_scene_id = $lwk_entry_id
   $i_scene_id += 1
 	
-  _START_EVENT_BGM( SEQ_BGM_E_KANRANSYA )			//イベント曲再生	
-	
   _DEMO_FADEOUT_BLACK_CALL()
   _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
+
+	//暗転中にトレーナーの位置を変更
+	_OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 54, 1, 15, DIR_DOWN )
+  _TURN_HERO_SITE()
+
   _DEMO_FADEIN_BLACK_CALL()
-	
 	_END_EVENT_BGM()  //BGM戻す
 
   //また一緒に乗ろうね
@@ -149,6 +156,13 @@ sub_wheel_ride_main:
   ENDIF
 }
 _RET
+
+//--------------------------------------------------------------------
+//観覧車入り口へ移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_to_entrance
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
 
 } //WHEEL_RIDE_END
 
