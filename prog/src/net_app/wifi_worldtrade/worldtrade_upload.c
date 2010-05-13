@@ -1529,7 +1529,7 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
       wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
 		}
 
-    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,FALSE) )
     {
     case GFL_NET_DWC_ERROR_RESULT_NONE:        //エラーはおきていない
       /* なにもしない */
@@ -1680,7 +1680,7 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
       wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
 		}
 
-    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,FALSE) )
     {
     case GFL_NET_DWC_ERROR_RESULT_NONE:        //エラーはおきていない
       /* なにもしない */
