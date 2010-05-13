@@ -389,7 +389,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
   //POSイベント：方向指定ありチェックその２
-  //if ( req->player_state != PLAYER_MOVE_STATE_END && req->player_value == PLAYER_MOVE_VALUE_TURN )
   {
     event = checkPosEvent_prefetchDirection( &req );
     if (event)
@@ -407,31 +406,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   }
 
 
-  //看板イベントチェック
-  /*
-  if( req.stepRequest ){
-    u16 id;
-    VecFx32 pos;
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-    u16 dir = MMDL_GetDirDisp( fmmdl );
-  
-    FIELD_PLAYER_GetPos( req.field_player, &pos );
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-  
-    {
-      //OBJ看板チェック
-    }
-    
-    id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
-    
-    if( id != EVENTDATA_ID_NONE ){
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-      return event;
-    }
-  }
-  */
-  
   SET_CHECK("ev_check:player event");
 //☆☆☆自機状態イベントチェック
 #ifdef  PM_DEBUG
@@ -1068,30 +1042,6 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   }
 
   
-#if 0 //WBで要らなくなった
-  //看板イベントチェック
-  if( req.stepRequest ){
-    //*
-    u16 id;
-    RAIL_LOCATION pos;
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    u16 dir = MMDL_GetDirDisp( player_fmmdl );
-  
-    // 1歩前のレールロケーション取得
-    pos = front_location;
-    {
-      //OBJ看板チェック
-    }
-    
-    id = EVENTDATA_CheckTalkBoardEventRailLocation( req.evdata, evwork, &pos, dir );
-    
-    if( id != EVENTDATA_ID_NONE ){
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-    }
-    //*/
-  }
-#endif
-
 //☆☆☆自機状態イベントチェックがここから
     /* 今はない */
 
@@ -1510,7 +1460,7 @@ static GMEVENT * checkPosEvent_OnlyDirection( EV_REQUEST * req )
   }
 
   next_dir = FIELD_PLAYER_GetKeyDir( req->field_player, req->key_cont );
-  if ( next_dir == req->player_dir )
+  if ( next_dir == DIR_NOT || next_dir == req->player_dir )
   {
     return NULL;
   }
@@ -1549,18 +1499,6 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
     key_dir = DIR_RIGHT;
   }
 
-#if 0
-  switch ( val )
-  {
-  case PLAYER_MOVE_VALUE_STOP:
-    GF_ASSERT( st == PLAYER_MOVE_STATE_OFF );
-    break;
-  case PLAYER_MOVE_VALUE_WALK:
-  case PLAYER_MOVE_VALUE_TURN:
-    GF_ASSERT( st != PLAYER_MOVE_STATE_OFF );
-    break;
-  }
-#endif
   if ( key_dir == req->player_dir ) return NULL;
   if ( key_dir == DIR_NOT ) return NULL;
 
@@ -1573,28 +1511,7 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
   //case PLAYER_MOVE_STATE_END:
   }
 
-#if 0
-  if ( FIELD_PLAYER_GRID_GetMoveValue( fpg, key_dir ) == PLAYER_MOVE_VALUE_STOP )
-  {
-    return NULL;
-  }
-  switch ( val )
-  {
-  case PLAYER_MOVE_VALUE_STOP:
-    if
-  case PLAYER_MOVE_VALUE_WALK:
-  case PLAYER_MOVE_VALUE_TURN:
-  }
-#endif
   event = checkPosEvent_core( req, key_dir );
-#if 0
-  if ( event )
-  {
-    OS_Printf( " prefetch dir pos event!!\n" );
-  } else if ( req->key_cont & PAD_BUTTON_L ) {
-    OS_Printf( " prefetch dir pos not!!\n" );
-  }
-#endif
 
   return event;
 }
