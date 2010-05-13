@@ -11,21 +11,21 @@
 
 // 状態
 typedef enum {
-  RRL_STATE_SETUP,             // 準備
-  RRL_STATE_STANDBY,           // 最初のキー入力待ち
-  RRL_STATE_KEY_WAIT,          // キー入力待ち
-  RRL_STATE_AUTO_SCROLL,       // 自動スクロール
-  RRL_STATE_SLIDE_CONTROL,     // スクロール操作
-  RRL_STATE_CONFIRM_STANDBY,   // 調査項目確定の確認 ( スタンバイ )
-  RRL_STATE_CONFIRM_KEY_WAIT,  // 調査項目確定の確認 ( キー入力待ち )
-  RRL_STATE_DETERMINE,         // 調査項目確定
-  RRL_STATE_FADE_IN,           // フェードイン
-  RRL_STATE_FADE_OUT,          // フェードアウト
-  RRL_STATE_FRAME_WAIT,        // フレーム経過待ち
-  RRL_STATE_SCROLL_RESET,      // スクロールの復帰
-  RRL_STATE_PALETTE_RESET,     // パレットの復帰
-  RRL_STATE_CLEAN_UP,          // 後片付け
-  RRL_STATE_FINISH,            // 終了
+  RRL_STATE_SETUP,               // 準備
+  RRL_STATE_STANDBY,             // 最初のキー入力待ち
+  RRL_STATE_KEY_WAIT,            // キー入力待ち
+  RRL_STATE_AUTO_SCROLL,         // 自動スクロール
+  RRL_STATE_SLIDE_CONTROL,       // スクロール操作
+  RRL_STATE_RETURN_FROM_STANDBY, // 戻る ( From キー最初のキー入力待ち )
+  RRL_STATE_RETURN_FROM_KEYWAIT, // 戻る ( From キー入力待ち )
+  RRL_STATE_TO_CONFIRM_STANDBY,  // 調査項目確定の確認 ( スタンバイ ) へ
+  RRL_STATE_CONFIRM_STANDBY,     // 調査項目確定の確認 ( スタンバイ )
+  RRL_STATE_TO_CONFIRM_KEY_WAIT, // 調査項目確定の確認 ( キー入力待ち ) へ
+  RRL_STATE_CONFIRM_KEY_WAIT,    // 調査項目確定の確認 ( キー入力待ち )
+  RRL_STATE_CONFIRM_CANCEL,      // 調査項目確定の確認をキャンセル
+  RRL_STATE_CONFIRM_DETERMINE,   // 調査項目確定
+  RRL_STATE_CLEAN_UP,            // 後片付け
+  RRL_STATE_FINISH,              // 終了
 } RRL_STATE;
 
 // 選択項目

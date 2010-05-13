@@ -130,53 +130,23 @@ struct _RESEARCH_RADAR_LIST_WORK
 //-----------------------------------------------------------------------------------------
 // ŸLAYER 5 ó‘Ô
 //-----------------------------------------------------------------------------------------
-// ó‘Ô‚Ì‰Šú‰»ˆ—
-static void InitState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
-static void InitState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
-static void InitState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
-static void InitState_AUTO_SCROLL( RRL_WORK* work ); // RRL_STATE_AUTO_SCROLL
-static void InitState_SLIDE_CONTROL( RRL_WORK* work ); // RRL_STATE_SLIDE_CONTROL
-static void InitState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
-static void InitState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
-static void InitState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
-static void InitState_FADE_IN( RRL_WORK* work ); // RRL_STATE_FADE_IN 
-static void InitState_FADE_OUT( RRL_WORK* work ); // RRL_STATE_FADE_OUT
-static void InitState_FRAME_WAIT( RRL_WORK* work ); // RRL_STATE_FRAME_WAIT
-static void InitState_SCROLL_RESET( RRL_WORK* work ); // RRL_STATE_SCROLL_RESET
-static void InitState_PALETTE_RESET( RRL_WORK* work ); // RRL_STATE_PALETTE_RESET
-static void InitState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP 
 // ó‘Ô‚²‚Æ‚Ìˆ—
 static void MainState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
 static void MainState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
 static void MainState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
 static void MainState_AUTO_SCROLL( RRL_WORK* work ); // RRL_STATE_AUTO_SCROLL
 static void MainState_SLIDE_CONTROL( RRL_WORK* work ); // RRL_STATE_SLIDE_CONTROL
+static void MainState_RETURN_FROM_KEYWAIT( RRL_WORK* work ); // RRL_STATE_RETURN_FROM_KEYWAIT
+static void MainState_RETURN_FROM_STANDBY( RRL_WORK* work ); // RRL_STATE_RETURN_FROM_STANDBY
+static void MainState_TO_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_TO_CONFIRM_STANDBY
 static void MainState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
+static void MainState_TO_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_TO_CONFIRM_KEY_WAIT
 static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
-static void MainState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
-static void MainState_FADE_IN( RRL_WORK* work ); // RRL_STATE_FADE_IN 
-static void MainState_FADE_OUT( RRL_WORK* work ); // RRL_STATE_FADE_OUT
-static void MainState_FRAME_WAIT( RRL_WORK* work ); // RRL_STATE_FRAME_WAIT
-static void MainState_SCROLL_RESET( RRL_WORK* work ); // RRL_STATE_SCROLL_RESET
-static void MainState_PALETTE_RESET( RRL_WORK* work ); // RRL_STATE_PALETTE_RESET
+static void MainState_CONFIRM_CANCEL( RRL_WORK* work ); // RRL_STATE_CONFIRM_CANCEL
+static void MainState_CONFIRM_DETERMINE( RRL_WORK* work ); // RRL_STATE_CONFIRM_DETERMINE
 static void MainState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP 
-// ó‘Ô‚ÌI—¹ˆ—
-static void FinishState_SETUP( RRL_WORK* work ); // RRL_STATE_SETUP
-static void FinishState_STANDBY( RRL_WORK* work ); // RRL_STATE_STANDBY
-static void FinishState_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_KEY_WAIT
-static void FinishState_AUTO_SCROLL( RRL_WORK* work ); // RRL_STATE_AUTO_SCROLL
-static void FinishState_SLIDE_CONTROL( RRL_WORK* work ); // RRL_STATE_SLIDE_CONTROL
-static void FinishState_CONFIRM_STANDBY( RRL_WORK* work ); // RRL_STATE_CONFIRM_STANDBY
-static void FinishState_CONFIRM_KEY_WAIT( RRL_WORK* work ); // RRL_STATE_CONFIRM_KEY_WAIT
-static void FinishState_DETERMINE( RRL_WORK* work ); // RRL_STATE_DETERMINE
-static void FinishState_FADE_IN( RRL_WORK* work ); // RRL_STATE_FADE_IN 
-static void FinishState_FADE_OUT( RRL_WORK* work ); // RRL_STATE_FADE_OUT
-static void FinishState_FRAME_WAIT( RRL_WORK* work ); // RRL_STATE_FRAME_WAIT
-static void FinishState_SCROLL_RESET( RRL_WORK* work ); // RRL_STATE_SCROLL_RESET
-static void FinishState_PALETTE_RESET( RRL_WORK* work ); // RRL_STATE_PALETTE_RESET
-static void FinishState_CLEAN_UP( RRL_WORK* work ); // RRL_STATE_CLEAN_UP 
 // ó‘Ô§Œä
-static void CountUpStateCount( RRL_WORK* work ); // ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
+static void IncStateCount( RRL_WORK* work ); // ó‘ÔƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
 static void RegisterNextState( RRL_WORK* work, RRL_STATE nextSeq ); // Ÿ‚Ìó‘Ô‚ğƒLƒ…[‚É“o˜^‚·‚é
 static void FinishCurrentState( RRL_WORK* work ); // Œ»İ‚Ìó‘Ô‚ğI—¹‚·‚é
 static void SwitchState( RRL_WORK* work ); // ˆ—ó‘Ô‚ğ•ÏX‚·‚é
@@ -185,11 +155,11 @@ static void SetState( RRL_WORK* work, RRL_STATE nextSeq ); // ˆ—ó‘Ô‚ğİ’è‚·‚é
 static u32 GetStateSeq( const RRL_WORK* work ); // ó‘Ô“àƒV[ƒPƒ“ƒX”Ô†‚ğæ“¾‚·‚é
 static void IncStateSeq( RRL_WORK* work ); // ó‘Ô“àƒV[ƒPƒ“ƒX”Ô†‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
 static void ResetStateSeq( RRL_WORK* work ); // ó‘Ô“àƒV[ƒPƒ“ƒX”Ô†‚ğƒŠƒZƒbƒg‚·‚é
+static SEQ_CHANGE_TRIG GetFinishReason( RRL_WORK* work ); // ‰æ–Ê‘JˆÚ‚Ì•û–@‚ğæ“¾‚·‚é
 static void SetFinishReason( RRL_WORK* work, SEQ_CHANGE_TRIG reason ); // ƒŠƒXƒg‰æ–ÊI—¹‚Ì•û–@‚ğ“o˜^‚·‚é
 static void SetFinishResult( RRL_WORK* work, RRL_RESULT result ); // ‰æ–ÊI—¹Œ‹‰Ê‚ğİ’è‚·‚é
 static void SetWaitFrame( RRL_WORK* work, u32 frame ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğİ’è‚·‚é
 static u32 GetWaitFrame( const RRL_WORK* work ); // ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ó‘Ô‚Ì‘Ò‚¿ŠÔ‚ğæ“¾‚·‚é
-static void RegisterFirstStateFlow( RRL_WORK* work ); // Å‰‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg‚·‚é
 //-----------------------------------------------------------------------------------------
 // ŸLAYER 4 ‹@”\
 //-----------------------------------------------------------------------------------------
@@ -199,11 +169,13 @@ static void MoveMenuCursorDown( RRL_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem ); // ’¼ÚˆÚ“®‚·‚é
 // ’²¸€–ÚƒJ[ƒ\ƒ‹
 static void AdjustTopicCursor( RRL_WORK* work ); // ƒJ[ƒ\ƒ‹‚ª‰æ–Ê“à‚É‘¶İ‚·‚é‚æ‚¤‚É’²®‚·‚é
-static void MoveTopicCursorUp( RRL_WORK* work ); // ã‚ÖˆÚ“®‚·‚é
-static void MoveTopicCursorDown( RRL_WORK* work ); // ‰º‚ÖˆÚ“®‚·‚é
 static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID ); // ’¼ÚˆÚ“®‚·‚é
 //w–ß‚éxƒ{ƒ^ƒ“
 static void BlinkReturnButton( RRL_WORK* work ); //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
+// ƒI[ƒgƒXƒNƒ[ƒ‹
+static void StartAutoScroll_to_Topic( RRL_WORK* work ); // ƒI[ƒgƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é ( ’²¸€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚Ö )
+static void StartAutoScroll_for_Reset( RRL_WORK* work ); // ƒI[ƒgƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é ( ”ÍˆÍŠOƒXƒNƒ[ƒ‹‚ğƒŠƒZƒbƒg )
+static void StartAutoScroll_to_Confirm( RRL_WORK* work ); // ƒI[ƒgƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é ( ’²¸€–ÚŠm’è‚ÌŠm”F‚Ö )
 //-----------------------------------------------------------------------------------------
 // ŸLAYER 3 ŒÂ•Ê‘€ì
 //-----------------------------------------------------------------------------------------
@@ -216,7 +188,7 @@ static void SetMenuCursorPos( RRL_WORK* work, MENU_ITEM menuItem ); // ƒƒjƒ…[
 static void SetMenuItemCursorOn( RRL_WORK* work, MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetMenuItemCursorOff( RRL_WORK* work, MENU_ITEM menuItem ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 // ’²¸€–Ú
-static void SetTopicCursorPosDirect( RRL_WORK* work, int topciID ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é ( ’¼’lw’è ) 
+static void SetTopicCursorPosDirect( RRL_WORK* work, int topciID ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÊ’u‚ğİ’è‚·‚é ( ’¼’lw’è ) 
 static void SetTopicCursorNextPos( RRL_WORK* work, int stride ); // ’²¸€–ÚƒJ[ƒ\ƒ‹‚ÌˆÚ“®æ‚ğİ’è‚·‚é ( ƒIƒtƒZƒbƒgw’è )
 static void SetTopicButtonCursorOn( const RRL_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
 static void SetTopicButtonCursorOff( const RRL_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
@@ -266,6 +238,10 @@ static int GetMaxScrollCursorPos( const RRL_WORK* work ); // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹‚
 static BOOL CheckScrollControlCan( const RRL_WORK* work ); // ƒXƒNƒ[ƒ‹‘€ì‚ª‰Â”\‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 // ƒ^ƒbƒ`”ÍˆÍ
 static void UpdateTopicTouchArea( RRL_WORK* work ); // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
+// ‰æ–Ê‚ÌƒtƒF[ƒhƒAƒEƒgEƒtƒF[ƒhƒCƒ“
+static void StartFadeIn( void ); // ƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+static void StartFadeOut( void ); // ƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
+static BOOL CheckFadeEnd( void ); // ƒtƒF[ƒh‚ÌI—¹‚ğƒ`ƒFƒbƒN‚·‚é
 // ƒpƒŒƒbƒgƒtƒF[ƒh
 static void StartPaletteFadeOut( RRL_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
 static void StartPaletteFadeIn ( RRL_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
@@ -274,6 +250,7 @@ static BOOL IsPaletteFadeEnd( RRL_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚
 static void StartCommonPaletteAnime( RRL_WORK* work, COMMON_PALETTE_ANIME_INDEX index ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
 static void StartPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
 static void StopPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
+static BOOL CheckPaletteAnimeEnd( const RRL_WORK* work, PALETTE_ANIME_INDEX index ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ÌI—¹‚ğƒ`ƒFƒbƒN‚·‚é
 static void UpdatePaletteAnime( RRL_WORK* work );  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
 static void UpdateCommonPaletteAnime( const RRL_WORK* work ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é
 // VBlank
@@ -286,7 +263,6 @@ static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work );
 static GAMEDATA* GetGameData( const RRL_WORK* work );
 static void SetHeapID( RRL_WORK* work, HEAPID heapID );
 static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork );
-// ƒXƒ‰ƒCƒ_[
 // ’²¸€–Ú
 static int GetNextTopicID( const RRL_WORK* work, int topicID ); // Ÿ‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
 static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // ‘O‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
@@ -364,6 +340,7 @@ static void InitPaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN 
 static void DeletePaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN ”jŠü
 static void SetupPaletteAnime( RRL_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN €”õ
 static void CleanUpPaletteAnime( RRL_WORK* work );  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ƒ[ƒN Œã•Ğ•t‚¯
+static void SetupScrollBar( RRL_WORK* work ); // ƒXƒNƒ[ƒ‹ƒo[ €”õ
 static void SetupWirelessIcon( const RRL_WORK* work ); // ’ÊMƒAƒCƒRƒ“ €”õ
 static void RegisterVBlankTask( RRL_WORK* work ); // VBlank ƒ^ƒXƒN “o˜^
 static void ReleaseVBlankTask ( RRL_WORK* work ); // VBlank ƒ^ƒXƒN ‰ğœ
@@ -425,29 +402,29 @@ void RRL_DeleteWork( RRL_WORK* work )
 void RRL_Main( RRL_WORK* work )
 {
   switch( GetState(work) ) {
-  case RRL_STATE_SETUP:             MainState_SETUP( work );             break;
-  case RRL_STATE_STANDBY:           MainState_STANDBY( work );           break;
-  case RRL_STATE_KEY_WAIT:          MainState_KEY_WAIT( work );          break;
-  case RRL_STATE_AUTO_SCROLL:       MainState_AUTO_SCROLL( work );       break;
-  case RRL_STATE_SLIDE_CONTROL:     MainState_SLIDE_CONTROL( work );     break;
-  case RRL_STATE_CONFIRM_STANDBY:   MainState_CONFIRM_STANDBY( work );   break;
-  case RRL_STATE_CONFIRM_KEY_WAIT:  MainState_CONFIRM_KEY_WAIT( work );  break;
-  case RRL_STATE_DETERMINE:         MainState_DETERMINE( work );         break;
-  case RRL_STATE_FADE_IN:           MainState_FADE_IN( work );           break;
-  case RRL_STATE_FADE_OUT:          MainState_FADE_OUT( work );          break;
-  case RRL_STATE_FRAME_WAIT:        MainState_FRAME_WAIT( work );        break;
-  case RRL_STATE_SCROLL_RESET:      MainState_SCROLL_RESET( work );      break;
-  case RRL_STATE_PALETTE_RESET:     MainState_PALETTE_RESET( work );     break;
-  case RRL_STATE_CLEAN_UP:          MainState_CLEAN_UP( work );          break;
-  case RRL_STATE_FINISH:            break;
+  case RRL_STATE_SETUP:               MainState_SETUP( work );               break;
+  case RRL_STATE_STANDBY:             MainState_STANDBY( work );             break;
+  case RRL_STATE_KEY_WAIT:            MainState_KEY_WAIT( work );            break;
+  case RRL_STATE_AUTO_SCROLL:         MainState_AUTO_SCROLL( work );         break;
+  case RRL_STATE_SLIDE_CONTROL:       MainState_SLIDE_CONTROL( work );       break;
+  case RRL_STATE_RETURN_FROM_KEYWAIT: MainState_RETURN_FROM_KEYWAIT( work ); break;
+  case RRL_STATE_RETURN_FROM_STANDBY: MainState_RETURN_FROM_STANDBY( work ); break;
+  case RRL_STATE_TO_CONFIRM_STANDBY:  MainState_TO_CONFIRM_STANDBY( work );  break;
+  case RRL_STATE_CONFIRM_STANDBY:     MainState_CONFIRM_STANDBY( work );     break;
+  case RRL_STATE_TO_CONFIRM_KEY_WAIT: MainState_TO_CONFIRM_KEY_WAIT( work ); break;
+  case RRL_STATE_CONFIRM_KEY_WAIT:    MainState_CONFIRM_KEY_WAIT( work );    break;
+  case RRL_STATE_CONFIRM_CANCEL:      MainState_CONFIRM_CANCEL( work );      break;
+  case RRL_STATE_CONFIRM_DETERMINE:   MainState_CONFIRM_DETERMINE( work );   break;
+  case RRL_STATE_CLEAN_UP:            MainState_CLEAN_UP( work );            break;
+  case RRL_STATE_FINISH:              break;
   default:  GF_ASSERT(0);
   }
 
   UpdateCommonPaletteAnime( work ); // ‹¤’ÊƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
-  UpdatePaletteAnime( work ); // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
-  GFL_CLACT_SYS_Main(); // ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€ ƒƒCƒ“ˆ—
-  CountUpStateCount( work ); // ó‘ÔƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
-  SwitchState( work );  // ó‘Ô‚ğXV
+  UpdatePaletteAnime( work );       // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV
+  GFL_CLACT_SYS_Main();             // ƒZƒ‹ƒAƒNƒ^[ƒVƒXƒeƒ€ ƒƒCƒ“ˆ—
+  IncStateCount( work );            // ó‘ÔƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+  SwitchState( work );              // ó‘Ô‚ğXV
 }
 
 
@@ -502,12 +479,12 @@ static void MainState_SETUP( RRL_WORK* work )
   SetupSelectableTopicNum( work );
 
   // BG €”õ
-  SetupBG           ( work );
-  SetupSubBG_WINDOW ( work );
-  SetupSubBG_FONT   ( work );
-  SetupMainBG_BAR   ( work );
+  SetupBG( work );
+  SetupSubBG_WINDOW( work );
+  SetupSubBG_FONT( work );
+  SetupMainBG_BAR( work );
   SetupMainBG_WINDOW( work );
-  SetupMainBG_FONT  ( work );
+  SetupMainBG_FONT( work );
 
   // •¶š—ñ•`‰æƒIƒuƒWƒFƒNƒg €”õ
   CreateBGFonts( work );
@@ -535,14 +512,53 @@ static void MainState_SETUP( RRL_WORK* work )
   CreatePaletteAnime( work );
   SetupPaletteAnime( work );
 
-  // VBkankƒ^ƒXƒN“o˜^
-  RegisterVBlankTask( work );
+  RegisterVBlankTask( work ); // VBkankƒ^ƒXƒN“o˜^
+  SetupWirelessIcon( work );  // ’ÊMƒAƒCƒRƒ“
+  SetupScrollBar( work );     // ƒXƒNƒ[ƒ‹ƒo[
 
-  // ’ÊMƒAƒCƒRƒ“
-  SetupWirelessIcon( work );
+  // ’²¸’†‚Ì€–Ú‚ª‚ ‚éê‡
+  if( GetInvestigatingTopicID( work ) != INVESTIGATING_QUESTION_NULL ) {
+    // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
+    SetTopicButtonInvestigating( work, nowTopicID ); // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
+    SetSelectedTopicID( work, nowTopicID );          // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğ
+    UpdateInvestigatingIcon( work );                 // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+  }
 
-  RegisterFirstStateFlow( work ); // Ÿ‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg
-  FinishCurrentState( work ); // ó‘ÔI—¹
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON ); 
+
+  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
+
+  // ƒI[ƒgƒXƒNƒ[ƒ‹ŠJn
+  StartAutoScroll_to_Topic( work ); 
+  while( CheckScrollEnd(work) == FALSE ) {
+    UpdateScroll( work ); // ƒXƒNƒ[ƒ‹‚ğXV
+  }
+  // ƒXƒNƒ[ƒ‹I—¹
+  UpdateScrollValue( work );       // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
+  UpdateTopicTouchArea( work );    // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
+  UpdateSliderDisp( work );        // ƒXƒ‰ƒCƒ_[
+  UpdateInvestigatingIcon( work ); // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+  UpdateTopicButtonMask( work );   // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
+
+  // ƒtƒF[ƒhƒCƒ“ŠJn
+  StartFadeIn(); 
+
+  // Ÿ‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg
+  if( GetFinishReason( work ) == SEQ_CHANGE_BY_BUTTON ) {
+    SetTopicButtonCursorOn( work );                // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+    ShowTopicDetailStrings( work );                // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
+    FinishCurrentState( work );                    // RRL_STATE_SETUP ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_KEY_WAIT ); // => RRL_STATE_KEY_WAIT 
+  }
+  else {
+    SetTopicButtonCursorOff( work );               // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+    FinishCurrentState( work );                    // RRL_STATE_SETUP ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_STANDBY );  // => RRL_STATE_STANDBY 
+  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -565,28 +581,22 @@ static void MainState_STANDBY( RRL_WORK* work )
   //-------------------------
   //u‚à‚Ç‚évƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                     // ƒLƒƒƒ“ƒZƒ‹‰¹
-    BlinkReturnButton( work );                          //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
-    SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );       // ƒ^ƒbƒ`‚ÅI—¹
-    FinishCurrentState( work );                         // RRL_STATE_STANDBY ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_FRAME_WAIT );    // => RRL_STATE_FRAME_WAIT 
-    RegisterNextState( work, RRL_STATE_FADE_OUT );      // ==> RRL_STATE_FADE_OUT 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET ); // ===> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_CLEAN_UP );      // ====> RRL_STATE_CLEAN_UP 
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                           // ƒLƒƒƒ“ƒZƒ‹‰¹
+    BlinkReturnButton( work );                                //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
+    SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );             // ƒ^ƒbƒ`‚ÅI—¹
+    FinishCurrentState( work );                               // RRL_STATE_STANDBY ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_RETURN_FROM_STANDBY ); // => RRL_STATE_RETURN_FROM_STANDBY 
     return;
   }
 
   //-----------
   // B ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_B ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                     // ƒLƒƒƒ“ƒZƒ‹‰¹
-    BlinkReturnButton( work );                          //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
-    SetFinishReason( work, SEQ_CHANGE_BY_BUTTON );      // ƒ{ƒ^ƒ“‚ÅI—¹
-    FinishCurrentState( work );                         // RRL_STATE_STANDBY ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_FRAME_WAIT );    // => RRL_STATE_FRAME_WAIT 
-    RegisterNextState( work, RRL_STATE_FADE_OUT );      // ==> RRL_STATE_FADE_OUT 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET ); // ===> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_CLEAN_UP );      // ====> RRL_STATE_CLEAN_UP 
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                           // ƒLƒƒƒ“ƒZƒ‹‰¹
+    BlinkReturnButton( work );                                //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
+    SetFinishReason( work, SEQ_CHANGE_BY_BUTTON );            // ƒ{ƒ^ƒ“‚ÅI—¹
+    FinishCurrentState( work );                               // RRL_STATE_STANDBY ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_RETURN_FROM_STANDBY ); // => RRL_STATE_RETURN_FROM_STANDBY 
     return;
   }
 
@@ -594,6 +604,8 @@ static void MainState_STANDBY( RRL_WORK* work )
   // \šƒL[ or A ƒ{ƒ^ƒ“
   if( (trg & PAD_KEY_UP) || (trg & PAD_KEY_DOWN) ||
       (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) || (trg & PAD_BUTTON_A) ) {
+    SetTopicButtonCursorOn( work );                 // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+    ShowTopicDetailStrings( work );                 // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
     FinishCurrentState( work );                     // RRL_STATE_STANDBY ó‘ÔI—¹
     RegisterNextState( work, RRL_STATE_KEY_WAIT );  // => RRL_STATE_KEY_WAIT 
     return;
@@ -604,14 +616,14 @@ static void MainState_STANDBY( RRL_WORK* work )
   if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchTrg) && (touchTrg <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
     // ‘I‘ğ‰Â”\
     if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
-      MoveTopicCursorDirect( work, touchTrg );              // ƒJ[ƒ\ƒ‹ˆÚ“®
-      SetSelectedTopicID( work, work->topicCursorPos );     // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );                       // Œˆ’è‰¹
-      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );// €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒŠJn
-      UpdateTopicDetailStrings_at_Now( work );              // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
-      ShowTopicDetailStrings( work );                       // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
-      FinishCurrentState( work );                           // RRL_STATE_STANDBY ó‘ÔI—¹
-      RegisterNextState( work, RRL_STATE_CONFIRM_STANDBY ); // => RRL_STATE_CONFIRM_STANDBY 
+      MoveTopicCursorDirect( work, touchTrg );                 // ƒJ[ƒ\ƒ‹ˆÚ“®
+      SetSelectedTopicID( work, work->topicCursorPos );        // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // Œˆ’è‰¹
+      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒŠJn
+      UpdateTopicDetailStrings_at_Now( work );                 // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
+      ShowTopicDetailStrings( work );                          // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
+      FinishCurrentState( work );                              // RRL_STATE_STANDBY ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_TO_CONFIRM_STANDBY ); // => RRL_STATE_TO_CONFIRM_STANDBY 
     }
     return;
   } 
@@ -651,21 +663,19 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //-------------------------
   //u‚à‚Ç‚évƒ{ƒ^ƒ“‚ğƒ^ƒbƒ`
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ƒLƒƒƒ“ƒZƒ‹‰¹
-    BlinkReturnButton( work );                           //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
-    SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );        // ƒ^ƒbƒ`‚ÅI—¹
-    FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_FRAME_WAIT );     // => RRL_STATE_FRAME_WAIT 
-    RegisterNextState( work, RRL_STATE_FADE_OUT );       // ==> RRL_STATE_FADE_OUT 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET );  // ===> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_CLEAN_UP );       // ====> RRL_STATE_CLEAN_UP 
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                           // ƒLƒƒƒ“ƒZƒ‹‰¹
+    BlinkReturnButton( work );                                //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
+    SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );             // ƒ^ƒbƒ`‚ÅI—¹
+    FinishCurrentState( work );                               // RRL_STATE_KEY_WAIT ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_RETURN_FROM_KEYWAIT ); // => RRL_STATE_RETURN_FROM_KEYWAIT 
     return;
   }
 
   //---------
   // ªƒL[
   if( trg & PAD_KEY_UP ) {
-    MoveTopicCursorUp( work );                         // ƒJ[ƒ\ƒ‹ˆÚ“®
+    SetTopicButtonCursorOff( work );                   // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+    SetTopicCursorNextPos( work, -1 );                 // ˆÚ“®æ‚ğİ’è
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT ó‘ÔI—¹
     RegisterNextState( work, RRL_STATE_AUTO_SCROLL );  // => RRL_STATE_AUTO_SCROLL 
     RegisterNextState( work, RRL_STATE_KEY_WAIT );     // ==> RRL_STATE_KEY_WAIT 
@@ -674,7 +684,8 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //---------
   // «ƒL[
   if( trg & PAD_KEY_DOWN ) {
-    MoveTopicCursorDown( work );                       // ƒJ[ƒ\ƒ‹ˆÚ“®
+    SetTopicButtonCursorOff( work );                   // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+    SetTopicCursorNextPos( work, 1 );                  // ˆÚ“®æ‚ğİ’è
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT ó‘ÔI—¹
     RegisterNextState( work, RRL_STATE_AUTO_SCROLL );  // => RRL_STATE_AUTO_SCROLL 
     RegisterNextState( work, RRL_STATE_KEY_WAIT );     // ==> RRL_STATE_KEY_WAIT 
@@ -684,11 +695,11 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //----------
   // A ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_A ) {
-    StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );  // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒŠJn
-    SetSelectedTopicID( work, work->topicCursorPos );       // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );                         // Œˆ’è‰¹
-    RegisterNextState( work, RRL_STATE_CONFIRM_KEY_WAIT );  // => RRL_STATE_CONFIRM_KEY_WAIT 
-    FinishCurrentState( work );                             // RRL_STATE_KEY_WAIT ó‘ÔI—¹
+    StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );    // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒŠJn
+    SetSelectedTopicID( work, work->topicCursorPos );         // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );                           // Œˆ’è‰¹
+    RegisterNextState( work, RRL_STATE_TO_CONFIRM_KEY_WAIT ); // => RRL_STATE_TO_CONFIRM_KEY_WAIT 
+    FinishCurrentState( work );                               // RRL_STATE_KEY_WAIT ó‘ÔI—¹
     return;
   } 
 
@@ -697,12 +708,13 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchTrg) && (touchTrg <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
     // ‘I‘ğ‰Â”\
     if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
-      MoveTopicCursorDirect( work, touchTrg );               // ƒJ[ƒ\ƒ‹ˆÚ“®
-      SetSelectedTopicID( work, work->topicCursorPos );      // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
-      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT ); // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒŠJn;
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );                        // Œˆ’è‰¹
-      FinishCurrentState( work );                            // RRL_STATE_KEY_WAIT ó‘ÔI—¹
-      RegisterNextState( work, RRL_STATE_CONFIRM_STANDBY );  // => RRL_STATE_CONFIRM_STANDBY 
+      MoveTopicCursorDirect( work, touchTrg );                 // ƒJ[ƒ\ƒ‹ˆÚ“®
+      SetSelectedTopicID( work, work->topicCursorPos );        // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ğ‘I‘ğ
+      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒŠJn;
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // Œˆ’è‰¹
+      UpdateTopicDetailStrings_at_Now( work );                 // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
+      FinishCurrentState( work );                              // RRL_STATE_KEY_WAIT ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_TO_CONFIRM_STANDBY ); // => RRL_STATE_TO_CONFIRM_STANDBY 
     }
     return;
   }
@@ -710,14 +722,11 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //----------
   // B ƒ{ƒ^ƒ“
   if( trg & PAD_BUTTON_B ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                     // ƒLƒƒƒ“ƒZƒ‹‰¹
-    BlinkReturnButton( work );                          //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
-    SetFinishReason( work, SEQ_CHANGE_BY_BUTTON );      // ƒ{ƒ^ƒ“‚ÅI—¹
-    FinishCurrentState( work );                         // RRL_STATE_KEY_WAIT ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_FRAME_WAIT );    // => RRL_STATE_FRAME_WAIT 
-    RegisterNextState( work, RRL_STATE_FADE_OUT );      // ==> RRL_STATE_FADE_OUT 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET ); // ===> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_CLEAN_UP );      // ====> RRL_STATE_CLEAN_UP 
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                           // ƒLƒƒƒ“ƒZƒ‹‰¹
+    BlinkReturnButton( work );                                //w–ß‚éxƒ{ƒ^ƒ“‚ğ–¾–Å‚³‚¹‚é
+    SetFinishReason( work, SEQ_CHANGE_BY_BUTTON );            // ƒ{ƒ^ƒ“‚ÅI—¹
+    FinishCurrentState( work );                               // RRL_STATE_KEY_WAIT ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_RETURN_FROM_KEYWAIT ); // => RRL_STATE_RETURN_FROM_KEYWAIT 
     return;
   } 
 
@@ -727,9 +736,9 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
       ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
     // ƒXƒNƒ[ƒ‹‘€ì‰Â”\
     if( CheckScrollControlCan( work ) == TRUE ) {
-      FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT ó‘ÔI—¹
-      RegisterNextState( work, RRL_STATE_SLIDE_CONTROL );  // => RRL_STATE_SLIDE_CONTROL 
-      RegisterNextState( work, RRL_STATE_KEY_WAIT );       // ==> RRL_STATE_KEY_WAIT 
+      FinishCurrentState( work );                         // RRL_STATE_KEY_WAIT ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_SLIDE_CONTROL ); // => RRL_STATE_SLIDE_CONTROL 
+      RegisterNextState( work, RRL_STATE_KEY_WAIT );      // ==> RRL_STATE_KEY_WAIT 
     }
     return;
   }
@@ -744,17 +753,29 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MainState_AUTO_SCROLL( RRL_WORK* work )
 {
-  // ƒXƒNƒ[ƒ‹ˆ—
-  UpdateScroll( work );            // ƒXƒNƒ[ƒ‹‚ğXV
-  UpdateScrollValue( work );       // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
-  UpdateTopicTouchArea( work );    // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
-  UpdateSliderDisp( work );        // ƒXƒ‰ƒCƒ_[
-  UpdateInvestigatingIcon( work ); // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
-  UpdateTopicButtonMask( work );   // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    StartAutoScroll_to_Topic( work );                         // ƒI[ƒgƒXƒNƒ[ƒ‹ŠJn
+    MoveTopicCursorDirect( work, work->topicCursorNextPos );  // ƒJ[ƒ\ƒ‹‚ğˆÚ“®
+    UpdateTopicDetailStrings_at_Now( work );                  // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
+    IncStateSeq( work );
+    break;
 
-  // ƒXƒNƒ[ƒ‹I—¹
-  if( CheckScrollEnd(work) ) {
-    FinishCurrentState( work );
+  case 1:
+    // ƒXƒNƒ[ƒ‹ˆ—
+    UpdateScroll( work );            // ƒXƒNƒ[ƒ‹‚ğXV
+    UpdateScrollValue( work );       // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
+    UpdateTopicTouchArea( work );    // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
+    UpdateSliderDisp( work );        // ƒXƒ‰ƒCƒ_[
+    UpdateInvestigatingIcon( work ); // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+    UpdateTopicButtonMask( work );   // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
+
+    // ƒXƒNƒ[ƒ‹I—¹
+    if( CheckScrollEnd(work) ) {
+      UpdateTopicButtonMask( work ); // ƒEƒBƒ“ƒhƒE‚ğØ‚é
+      FinishCurrentState( work );    // RRL_STATE_AUTO_SCROLL ó‘ÔI—¹
+    }
+    break;
   }
 }
 
@@ -813,6 +834,8 @@ static void MainState_SLIDE_CONTROL( RRL_WORK* work )
 
     // ƒXƒ‰ƒCƒ_[‚ª’â~
     if( IsSliderMoving( work ) == FALSE ) {
+      UpdateTopicDetailStrings_at_Now( work ); // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
+      ShowTopicDetailStrings( work );          // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
       FinishCurrentState( work );
     }
     break;
@@ -837,23 +860,12 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
   trg = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
 
-  // ƒXƒNƒ[ƒ‹ˆ—
-  if( CheckScrollEnd(work) == FALSE ) {
-    UpdateScroll( work );             // ƒXƒNƒ[ƒ‹‚ğXV
-    UpdateScrollValue( work );        // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
-    UpdateTopicTouchArea( work );     // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
-    UpdateSliderDisp( work );         // ƒXƒ‰ƒCƒ_[‚ğXV
-    UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
-    UpdateTopicButtonMask( work );    // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
-  }
-
-
   //----------------------
   // \šƒL[ or A ƒ{ƒ^ƒ“
   if( (trg & PAD_KEY_UP) || (trg & PAD_KEY_DOWN) ||
       (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) || (trg & PAD_BUTTON_A) ) {
-    FinishCurrentState( work );                             // RRL_STATE_CONFIRM_STANDBY ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_CONFIRM_KEY_WAIT );  // => RRL_STATE_CONFIRM_KEY_WAIT 
+    FinishCurrentState( work );                               // RRL_STATE_CONFIRM_STANDBY ó‘ÔI—¹
+    RegisterNextState( work, RRL_STATE_TO_CONFIRM_KEY_WAIT ); // => RRL_STATE_TO_CONFIRM_KEY_WAIT 
     return;
   }
 
@@ -865,7 +877,7 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );     // ‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ğŠJn
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );             // ƒ^ƒbƒ`‚ÅI—¹
     FinishCurrentState( work );                               // RRL_STATE_CONFIRM_STANDBY ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_DETERMINE );           // => RRL_STATE_DETERMINE 
+    RegisterNextState( work, RRL_STATE_CONFIRM_DETERMINE );   // => RRL_STATE_CONFIRM_DETERMINE 
     return;
   } 
 
@@ -877,9 +889,8 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );         // ‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ğŠJn
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                               // ƒLƒƒƒ“ƒZƒ‹‰¹
     FinishCurrentState( work );                                   // RRL_STATE_CONFIRM_STANDBY ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_SCROLL_RESET );            // => RRL_STATE_SCROLL_RESET 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET );           // ==> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_KEY_WAIT );                // ===> RRL_STATE_KEY_WAIT 
+    RegisterNextState( work, RRL_STATE_CONFIRM_CANCEL );          // => RRL_STATE_CONFIRM_CANCEL 
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );                // ==> RRL_STATE_KEY_WAIT 
     return;
   }
 }
@@ -898,17 +909,6 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
 
   trg = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->menuTouchHitTable );
-
-  // ƒXƒNƒ[ƒ‹ˆ—
-  if( CheckScrollEnd(work) == FALSE ) {
-    UpdateScroll( work );             // ƒXƒNƒ[ƒ‹‚ğXV
-    UpdateScrollValue( work );        // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
-    UpdateTopicTouchArea( work );     // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
-    UpdateSliderDisp( work );         // ƒXƒ‰ƒCƒ_[‚ğXV
-    UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
-    UpdateTopicButtonMask( work );    // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
-  }
-
 
   //--------
   // ªƒL[
@@ -929,16 +929,15 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
     // ƒJ[ƒ\ƒ‹ˆÊ’u‚É‰‚¶‚½ˆ—
     switch( work->menuCursorPos ) {
     case MENU_ITEM_DETERMINATION_OK:
-      SetFinishReason( work, SEQ_CHANGE_BY_BUTTON );        // ƒ{ƒ^ƒ“‚ÅI—¹
-      FinishCurrentState( work );                           // RRL_STATE_CONFIRM_KEY_WAIT ó‘ÔI—¹
-      RegisterNextState( work, RRL_STATE_DETERMINE );       // => RRL_STATE_DETERMINE 
+      SetFinishReason( work, SEQ_CHANGE_BY_BUTTON );          // ƒ{ƒ^ƒ“‚ÅI—¹
+      FinishCurrentState( work );                             // RRL_STATE_CONFIRM_KEY_WAIT ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_CONFIRM_DETERMINE ); // => RRL_STATE_CONFIRM_DETERMINE 
       break;
     case MENU_ITEM_DETERMINATION_CANCEL:
       PMSND_PlaySE( SEQ_SE_CANCEL1 );                       // ƒLƒƒƒ“ƒZƒ‹‰¹
       FinishCurrentState( work );                           // RRL_STATE_CONFIRM_KEY_WAIT ó‘ÔI—¹
-      RegisterNextState( work, RRL_STATE_SCROLL_RESET );    // => RRL_STATE_SCROLL_RESET 
-      RegisterNextState( work, RRL_STATE_PALETTE_RESET );   // ==> RRL_STATE_PALETTE_RESET 
-      RegisterNextState( work, RRL_STATE_KEY_WAIT );        // ===> RRL_STATE_KEY_WAIT 
+      RegisterNextState( work, RRL_STATE_CONFIRM_CANCEL );  // => RRL_STATE_CONFIRM_CANCEL 
+      RegisterNextState( work, RRL_STATE_KEY_WAIT );        // ==> RRL_STATE_KEY_WAIT 
       break;
     default:
       GF_ASSERT(0);
@@ -954,7 +953,7 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );     // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ğŠJn
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );             // ƒ^ƒbƒ`‚ÅI—¹
     FinishCurrentState( work );                               // RRL_STATE_CONFIRM_KEY_WAIT ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_DETERMINE );           // => RRL_STATE_DETERMINE 
+    RegisterNextState( work, RRL_STATE_CONFIRM_DETERMINE );   // => RRL_STATE_CONFIRM_DETERMINE 
     return;
   } 
 
@@ -966,110 +965,279 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );         // €–Ú‘I‘ğ‚ÌƒpƒŒƒbƒgƒAƒjƒ‚ğŠJn
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                               // ƒLƒƒƒ“ƒZƒ‹‰¹
     FinishCurrentState( work );                                   // RRL_STATE_CONFIRM_KEY_WAIT ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_SCROLL_RESET );            // => RRL_STATE_SCROLL_RESET 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET );           // ==> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_KEY_WAIT );                // ===> RRL_STATE_KEY_WAIT 
+    RegisterNextState( work, RRL_STATE_CONFIRM_CANCEL );          // => RRL_STATE_CONFIRM_CANCEL 
+    RegisterNextState( work, RRL_STATE_KEY_WAIT );                // ==> RRL_STATE_KEY_WAIT 
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ’²¸€–ÚŠm’èó‘Ô ( RRL_STATE_DETERMINE ) ‚Ìˆ—
+ * @brief ’²¸€–ÚŠm’è‚ÌŠm”Fó‘Ô ( RRL_STATE_TO_CONFIRM_STANDBY ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainState_DETERMINE( RRL_WORK* work )
+static void MainState_TO_CONFIRM_STANDBY( RRL_WORK* work )
 {
-  // ˆê’èŠÔ‚ªŒo‰ß
-  if( SEQ_DETERMINE_WAIT_FRAMES <= work->stateCount ) {
-    FinishCurrentState( work );                         // RRL_STATE_DETERMINE ó‘ÔI—¹
-    RegisterNextState( work, RRL_STATE_FADE_OUT );      // => RRL_STATE_FADE_OUT 
-    RegisterNextState( work, RRL_STATE_PALETTE_RESET ); // ==> RRL_STATE_PALETTE_RESET 
-    RegisterNextState( work, RRL_STATE_CLEAN_UP );      // ===> RRL_STATE_CLEAN_UP 
-  } 
-}
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+    SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_OK );     // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒtƒF[ƒhƒCƒ“ ó‘Ô ( RRL_STATE_FADE_IN ) ‚Ìˆ—
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void MainState_FADE_IN( RRL_WORK* work )
-{
-  // ƒtƒF[ƒh‚ªI—¹
-  if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentState( work ); // Ÿ‚Ìó‘Ô‚Ö
-  } 
-}
+    // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğ•\¦
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
 
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒtƒF[ƒhƒAƒEƒg ó‘Ô ( RRL_STATE_FADE_OUT ) ‚Ìˆ—
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void MainState_FADE_OUT( RRL_WORK* work )
-{
-  // ƒtƒF[ƒh‚ªI—¹
-  if( GFL_FADE_CheckFade() == FALSE ) {
-    FinishCurrentState( work ); // Ÿ‚Ìó‘Ô‚Ö
-  } 
-}
+    if( work->palFadeOutFlag == FALSE ) {
+      BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
+      StartPaletteFadeOut( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
+    }
 
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ ó‘Ô ( RRL_STATE_FRAME_WAIT ) ‚Ìˆ—
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void MainState_FRAME_WAIT( RRL_WORK* work )
-{
-  // ‘Ò‚¿ŠÔ‚ªŒo‰ß
-  if( GetWaitFrame(work) < work->stateCount ) {
-    FinishCurrentState( work );  // Ÿ‚Ìó‘Ô‚Ö
+    // ƒXƒNƒ[ƒ‹ŠJn
+    StartAutoScroll_to_Confirm( work );
+
+    IncStateSeq( work );
+    break;
+
+  case 1:
+    // ƒXƒNƒ[ƒ‹ˆ—
+    UpdateScroll( work );             // ƒXƒNƒ[ƒ‹‚ğXV
+    UpdateScrollValue( work );        // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
+    UpdateTopicTouchArea( work );     // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
+    UpdateSliderDisp( work );         // ƒXƒ‰ƒCƒ_[‚ğXV
+    UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+    UpdateTopicButtonMask( work );    // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
+
+    // ƒXƒNƒ[ƒ‹I—¹
+    if( CheckScrollEnd( work ) ) {
+      FinishCurrentState( work );                           // RRL_STATE_TO_CONFIRM_STANDBY ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_CONFIRM_STANDBY ); // => RRL_STATE_CONFIRM_STANDBY
+    }
+    break;
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒpƒŒƒbƒg•œ‹Aó‘Ô ( RRL_STATE_PALETTE_RESET ) ‚Ìˆ—
+ * @brief ’²¸€–ÚŠm’è‚ÌŠm”Fó‘Ô ( RRL_STATE_TO_CONFIRM_KEY_WAIT ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainState_PALETTE_RESET( RRL_WORK* work )
+static void MainState_TO_CONFIRM_KEY_WAIT( RRL_WORK* work )
 {
-  // ƒpƒŒƒbƒgƒtƒF[ƒhŠ®—¹
-  if( IsPaletteFadeEnd( work ) ) {
-    FinishCurrentState( work ); // Ÿ‚Ìó‘Ô‚Ö
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );         // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ‰Šú‰»
+    SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+    SetMenuItemCursorOn( work, MENU_ITEM_DETERMINATION_OK );      // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+    StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );      // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+
+    // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğ•\¦
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
+
+    if( work->palFadeOutFlag == FALSE ) {
+      BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
+      StartPaletteFadeOut( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
+    }
+
+    // ƒXƒNƒ[ƒ‹ŠJn
+    StartAutoScroll_to_Confirm( work );
+
+    IncStateSeq( work );
+    break;
+
+  case 1:
+    // ƒXƒNƒ[ƒ‹ˆ—
+    UpdateScroll( work );             // ƒXƒNƒ[ƒ‹‚ğXV
+    UpdateScrollValue( work );        // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
+    UpdateTopicTouchArea( work );     // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
+    UpdateSliderDisp( work );         // ƒXƒ‰ƒCƒ_[‚ğXV
+    UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
+    UpdateTopicButtonMask( work );    // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV
+
+    // ƒXƒNƒ[ƒ‹I—¹
+    if( CheckScrollEnd( work ) ) {
+      FinishCurrentState( work );                            // RRL_STATE_TO_CONFIRM_KEY_WAIT ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_CONFIRM_KEY_WAIT ); // => RRL_STATE_CONFIRM_KEY_WAIT
+    }
+    break;
   }
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ƒpƒŒƒbƒg•œ‹Aó‘Ô ( RRL_STATE_SCROLL_RESET ) ‚Ìˆ—
+ * @brief ’²¸€–ÚŠm’èó‘Ô ( RRL_STATE_CONFIRM_DETERMINE ) ‚Ìˆ—
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainState_SCROLL_RESET( RRL_WORK* work )
+static void MainState_CONFIRM_DETERMINE( RRL_WORK* work )
 {
-  // ƒXƒNƒ[ƒ‹ˆ—
-  UpdateScroll( work );           // ƒXƒNƒ[ƒ‹‚ğXV
-  UpdateScrollValue( work );      // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
-  UpdateTopicTouchArea( work );   // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
-  UpdateSliderDisp( work );       // ƒXƒ‰ƒCƒ_[
-  UpdateInvestigatingIcon( work );  // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
-  UpdateTopicButtonMask( work );  // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV‚·‚é
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    SetTopicButtonNotInvestigating( work, GetInvestigatingTopicID(work) ); // ’²¸’†‚¾‚Á‚½€–Ú‚Ìƒ{ƒ^ƒ“‚ğ, ’²¸‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
+    UpdateInvestigatingTopicID( work );                                    // ’²¸‚·‚é€–Ú‚ğXV
+    SetTopicButtonInvestigating( work, GetSelectedTopicID(work) );         // V‚½‚É’²¸‚·‚é€–Ú‚Ìƒ{ƒ^ƒ“‚ğ, ’²¸’†‚Ìó‘Ô‚É‚·‚é
+    UpdateInvestigatingIcon( work );                                       // ’²¸’†ƒAƒCƒRƒ“‚ğXV
+    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_DETERMINE, TRUE );             //u‚¿‚å‚¤‚³‚ğ@‚©‚¢‚µ‚µ‚Ü‚·Iv‚ğ•\¦
+    PMSND_PlaySE( SEQ_SE_SYS_80 );                                         // ’²¸ŠJn SE 
+    IncStateSeq( work );
+    break;
 
-  // ƒXƒNƒ[ƒ‹I—¹
-  if( CheckScrollEnd(work) ) {
-    FinishCurrentState( work ); // Ÿ‚Ìó‘Ô‚Ö
+  case 1:
+    // ˆê’èŠÔ‚ªŒo‰ß
+    if( SEQ_DETERMINE_WAIT_FRAMES <= work->stateCount ) {
+      StartFadeOut(); // ƒtƒF[ƒhƒAƒEƒgŠJn
+      IncStateSeq( work );
+    }
+    break;
+
+  case 2:
+    // ƒtƒF[ƒh‚ªI—¹
+    if( CheckFadeEnd() ) {
+      StartPaletteFadeIn( work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+      IncStateSeq( work );
+    } 
+    break;
+
+  case 3:
+    // ƒpƒŒƒbƒgƒtƒF[ƒhŠ®—¹
+    if( IsPaletteFadeEnd( work ) ) {
+      FinishCurrentState( work );                    // RRL_STATE_CONFIRM_DETERMINE ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_CLEAN_UP ); // ===> RRL_STATE_CLEAN_UP 
+    }
+    break;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒF[ƒhƒAƒEƒg ó‘Ô ( RRL_STATE_RETURN_FROM_KEYWAIT ) ‚Ìˆ—
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainState_RETURN_FROM_KEYWAIT( RRL_WORK* work )
+{
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    // ‘Ò‚¿ŠÔ‚ªŒo‰ß
+    if( GetWaitFrame(work) < work->stateCount ) {
+      StartFadeOut(); // ƒtƒF[ƒhƒAƒEƒgŠJn
+      IncStateSeq( work );
+    }
+    break;
+
+  case 1:
+    // ƒtƒF[ƒh‚ªI—¹
+    if( CheckFadeEnd() ) {
+      StartPaletteFadeIn( work );    // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+      IncStateSeq( work );
+    } 
+    break;
+
+  case 2:
+    // ƒpƒŒƒbƒgƒtƒF[ƒhŠ®—¹
+    if( IsPaletteFadeEnd( work ) ) {
+      BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xf); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+      FinishCurrentState( work );                                           // RRL_STATE_RETURN_FROM_KEYWAIT ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_CLEAN_UP );                        // => RRL_STATE_CLEAN_UP 
+    }
+    break;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒŒ[ƒ€Œo‰ß‘Ò‚¿ ó‘Ô ( RRL_STATE_RETURN_FROM_STANDBY ) ‚Ìˆ—
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainState_RETURN_FROM_STANDBY( RRL_WORK* work )
+{
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    // ‘Ò‚¿ŠÔ‚ªŒo‰ß
+    if( GetWaitFrame(work) < work->stateCount ) {
+      StartFadeOut(); // ƒtƒF[ƒhƒAƒEƒgŠJn
+      IncStateSeq( work );
+    }
+    break;
+
+  case 1:
+    // ƒtƒF[ƒh‚ªI—¹
+    if( CheckFadeEnd() ) {
+      StartPaletteFadeIn( work );    // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+      IncStateSeq( work );
+    } 
+    break;
+
+  case 2:
+    // ƒpƒŒƒbƒgƒtƒF[ƒhŠ®—¹
+    if( IsPaletteFadeEnd( work ) ) {
+      BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xf); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+      FinishCurrentState( work );                                           // RRL_STATE_RETURN_FROM_KEYWAIT ó‘ÔI—¹
+      RegisterNextState( work, RRL_STATE_CLEAN_UP );                        // => RRL_STATE_CLEAN_UP 
+    }
+    break;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒg•œ‹Aó‘Ô ( RRL_STATE_CONFIRM_CANCEL ) ‚Ìˆ—
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainState_CONFIRM_CANCEL( RRL_WORK* work )
+{
+  switch( GetStateSeq( work ) ) {
+  case 0:
+    StartAutoScroll_for_Reset( work ); // ƒXƒNƒ[ƒ‹ŠJn
+    IncStateSeq( work );
+    break;
+
+  case 1:
+    // ƒXƒNƒ[ƒ‹ˆ—
+    UpdateScroll( work );            // ƒXƒNƒ[ƒ‹‚ğXV
+    UpdateScrollValue( work );       // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
+    UpdateTopicTouchArea( work );    // ƒ^ƒbƒ`”ÍˆÍ‚ğXV‚·‚é
+    UpdateSliderDisp( work );        // ƒXƒ‰ƒCƒ_[
+    UpdateInvestigatingIcon( work ); // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“
+    UpdateTopicButtonMask( work );   // ’²¸€–Ú‚Ìƒ}ƒXƒNƒEƒBƒ“ƒh‚ğXV‚·‚é
+
+    // ƒXƒNƒ[ƒ‹‚ªI—¹
+    if( CheckScrollEnd(work) ) {
+      IncStateSeq( work );
+    }
+    break;
+
+  case 2:
+    // ƒpƒŒƒbƒgƒAƒjƒ‚ªI—¹
+    if( CheckPaletteAnimeEnd(work, PALETTE_ANIME_MENU_SELECT ) ) {
+      // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
+      BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
+      BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
+      BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
+      UpdateTopicButtonMask( work ); // ƒEƒBƒ“ƒhƒE‚ğØ‚é
+      StartPaletteFadeIn( work );    // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+      IncStateSeq( work );
+    }
+    break;
+
+  case 3:
+    // ƒpƒŒƒbƒgƒtƒF[ƒhŠ®—¹
+    if( IsPaletteFadeEnd( work ) ) {
+      BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xf); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
+      FinishCurrentState( work ); // Ÿ‚Ìó‘Ô‚Ö
+    }
+    break;
   }
 }
 
@@ -1125,572 +1293,20 @@ static void MainState_CLEAN_UP( RRL_WORK* work )
   SetFinishResult( work, RRL_RESULT_TO_TOP );   // ƒŠƒXƒg‰æ–Ê‚ÌI—¹Œ‹‰Ê‚ğİ’è
   FinishCurrentState( work );                   // RRL_STATE_CLEAN_UP ó‘ÔI—¹
   RegisterNextState( work, RRL_STATE_FINISH );  // => RRL_STATE_FINISH 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SETUP )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_SETUP( RRL_WORK* work )
-{ 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_STANDBY )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_STANDBY( RRL_WORK* work )
-{
-  SetTopicButtonCursorOff( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_KEY_WAIT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_KEY_WAIT( RRL_WORK* work )
-{
-  SetTopicButtonCursorOn( work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
-
-  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
-
-  // ã‰æ–Ê‚ÌÚ×•\¦ŠJn
-  ShowTopicDetailStrings( work );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_AUTO_SCROLL )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_AUTO_SCROLL( RRL_WORK* work )
-{
-  // ƒXƒNƒ[ƒ‹ŠJn
-  {
-    int startPos = work->scrollCursorPos;
-    int endPos;
-    int frames;
-    if( work->topicCursorPos < work->topicCursorNextPos ) {
-      // ‰º‚Öi‚Şê‡‚Í, ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹‚ÌI“_‚Íƒ{ƒ^ƒ“‚Ì’ê•ÓˆÊ’u + 1
-      endPos = CalcScrollCursorPosOfTopicButtonBottom( work->topicCursorNextPos ) + 1;
-    }
-    else {
-      // ã‚Öi‚Şê‡‚Í, ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹‚ÌI“_‚Íƒ{ƒ^ƒ“‚Ìã•ÓˆÊ’u
-      endPos = CalcScrollCursorPosOfTopicButtonTop( work->topicCursorNextPos );
-    }
-    // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚ ‚éƒXƒNƒ[ƒ‹‚Ìê‡,
-    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹n“_À•W‚ğ’[‚ÉƒZƒbƒg‚·‚é
-    {
-      int min = GetMinScrollCursorMarginPos();
-      int max = GetMaxScrollCursorMarginPos();
-      if( (endPos < min) || (max < endPos) ) {
-        if( startPos < endPos ) {
-          startPos = max;
-        }
-        else {
-          startPos = min;
-        }
-      }
-    }
-    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 4;
-
-    // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•Ï‰»‚ª‚ ‚é‚©‚Ç‚¤‚©
-    {
-      int min = GetMinScrollCursorMarginPos();
-      int max = GetMaxScrollCursorMarginPos();
-      // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚È‚¢
-      if( ( min <= startPos) && (startPos <= max) && 
-          ( min <= endPos) && (endPos <= max)  ) {
-        frames = 0;
-      }
-    } 
-    StartScroll( work, startPos, endPos, frames );  
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SLIDE_CONTROL )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_SLIDE_CONTROL( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_CONFIRM_STANDBY )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_CONFIRM_STANDBY( RRL_WORK* work )
-{
-  SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-  SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_OK );     // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-
-  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğ•\¦
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
-
-  if( work->palFadeOutFlag == FALSE ) {
-    BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
-    StartPaletteFadeOut( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
-  }
-
-  // ƒXƒNƒ[ƒ‹ŠJn
-  {
-    int centerPos = ( GetMinScrollCursorMarginPos() + GetMaxScrollCursorMarginPos() ) / 2;
-    int startPos  = work->scrollCursorPos;
-    int endPos    = CalcScreenTopOfTopicButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
-    int frames;
-    // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ª‰æ–Ê‚Ì”CˆÓ‚ÌˆÊ’u‚Ü‚Å—ˆ‚é‚æ‚¤‚ÉƒXƒNƒ[ƒ‹‚³‚¹‚é
-    if( centerPos < endPos ) { 
-      // i‚Ş•ûŒü‚ÅƒJ[ƒ\ƒ‹ˆÊ’u‚Ìn“_EI“_‚ğ•Ï‚¦‚é
-      startPos = GetMaxScrollCursorMarginPos();
-      endPos   = GetMaxScrollCursorMarginPos() + (endPos - centerPos);
-    }
-    else {
-      startPos = GetMinScrollCursorMarginPos();
-      endPos   = GetMinScrollCursorMarginPos() - (centerPos - endPos);
-    }
-    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 2;
-    StartScroll( work, startPos, endPos, frames  );  
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_CONFIRM_KEY_WAIT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_CONFIRM_KEY_WAIT( RRL_WORK* work )
-{
-  SetMenuCursorPos( work, MENU_ITEM_DETERMINATION_OK );         // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğ‰Šú‰»
-  SetMenuItemCursorOff( work, MENU_ITEM_DETERMINATION_CANCEL ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-  SetMenuItemCursorOn( work, MENU_ITEM_DETERMINATION_OK );      // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
-  StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );      // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
-
-  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğ•\¦
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, TRUE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, TRUE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, TRUE );
-
-  if( work->palFadeOutFlag == FALSE ) {
-    BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xe ); // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğ•ÏX ( ƒpƒŒƒbƒgƒtƒF[ƒh‚ª–³Œø‚É‚È‚é‚æ‚¤‚É )
-    StartPaletteFadeOut( work ); // ƒpƒŒƒbƒgƒtƒF[ƒhƒAƒEƒgŠJn
-  }
-
-  // ƒXƒNƒ[ƒ‹ŠJn
-  {
-    int centerPos = ( GetMinScrollCursorMarginPos() + GetMaxScrollCursorMarginPos() ) / 2;
-    int startPos  = work->scrollCursorPos;
-    int endPos    = CalcScreenTopOfTopicButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
-    int frames;
-    // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ª‰æ–Ê‚Ì”CˆÓ‚ÌˆÊ’u‚Ü‚Å—ˆ‚é‚æ‚¤‚ÉƒXƒNƒ[ƒ‹‚³‚¹‚é
-    if( centerPos < endPos ) { 
-      // i‚Ş•ûŒü‚ÅƒJ[ƒ\ƒ‹ˆÊ’u‚Ìn“_EI“_‚ğ•Ï‚¦‚é
-      startPos = GetMaxScrollCursorMarginPos();
-      endPos   = GetMaxScrollCursorMarginPos() + (endPos - centerPos);
-    }
-    else {
-      startPos = GetMinScrollCursorMarginPos();
-      endPos   = GetMinScrollCursorMarginPos() - (centerPos - endPos);
-    }
-    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 2;
-    StartScroll( work, startPos, endPos, frames  );  
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_DETERMINE )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_DETERMINE( RRL_WORK* work )
-{
-  // ’²¸’†‚¾‚Á‚½€–Ú‚Ìƒ{ƒ^ƒ“‚ğ, ’²¸‚µ‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
-  SetTopicButtonNotInvestigating( work, GetInvestigatingTopicID(work) );
-
-  // ’²¸‚·‚é€–Ú‚ğXV
-  UpdateInvestigatingTopicID( work ); 
-
-  // V‚½‚É’²¸‚·‚é€–Ú‚Ìƒ{ƒ^ƒ“‚ğ, ’²¸’†‚Ìó‘Ô‚É‚·‚é
-  SetTopicButtonInvestigating( work, GetSelectedTopicID(work) );
-  UpdateInvestigatingIcon( work );
-
-  //u‚¿‚å‚¤‚³‚ğ@‚©‚¢‚µ‚µ‚Ü‚·Iv‚ğ•\¦
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_DETERMINE, TRUE ); 
-
-  // ’²¸ŠJnSE
-  PMSND_PlaySE( SEQ_SE_SYS_80 );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_FADE_IN )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_FADE_IN( RRL_WORK* work )
-{
-  // ƒtƒF[ƒhƒCƒ“ŠJn
-  GFL_FADE_SetMasterBrightReq(
-      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_FADE_OUT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_FADE_OUT( RRL_WORK* work )
-{
-  // ƒtƒF[ƒhƒAƒEƒgŠJn
-  GFL_FADE_SetMasterBrightReq(
-      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0);
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_FRAME_WAIT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_FRAME_WAIT( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_PALETTE_RESET )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_PALETTE_RESET( RRL_WORK* work )
-{
-  // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
-  StartPaletteFadeIn( work );
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_SCROLL_RESET )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_SCROLL_RESET( RRL_WORK* work )
-{
-  // ƒXƒNƒ[ƒ‹ŠJn
-  {
-    int startPos = work->scrollCursorPos;
-    int endPos = startPos;
-    int frames;
-    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹I“_ˆÊ’u‚ğŒˆ’è
-    if( GetMaxScrollCursorPos(work) < startPos ) {
-      endPos = GetMaxScrollValue(work) + SCROLL_CURSOR_TOP_MARGIN;
-    }
-    else if( startPos < MIN_SCROLL_CURSOR_POS ) {
-      endPos = MIN_SCROLL_VALUE + DISP_DOT_HEIGHT - SCROLL_CURSOR_BOTTOM_MARGIN;
-    }
-    // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚ ‚éƒXƒNƒ[ƒ‹‚Ìê‡,
-    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹n“_À•W‚ğ’[‚ÉƒZƒbƒg‚·‚é
-    {
-      int min = GetMinScrollCursorMarginPos();
-      int max = GetMaxScrollCursorMarginPos();
-      if( (endPos < min) || (max < endPos) )
-      {
-        if( startPos < endPos ) {
-          startPos = max;
-        }
-        else {
-          startPos = min;
-        }
-      }
-    }
-    frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 3;
-    // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚È‚¢ƒXƒNƒ[ƒ‹‚Ìê‡,
-    // 1ƒtƒŒ[ƒ€‚Åˆ—‚·‚é
-    {
-      int min = GetMinScrollCursorMarginPos();
-      int max = GetMaxScrollCursorMarginPos();
-      if( ( min <= startPos) && (startPos <= max) && 
-          ( min <= endPos) && (endPos <= max)  ) 
-      {
-        frames = 1;
-      }
-    } 
-    StartScroll( work, startPos, endPos, frames  );  
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘Ô‚ğ‰Šú‰»‚·‚é ( ==> RRL_STATE_CLEAN_UP )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void InitState_CLEAN_UP( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SETUP )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_SETUP( RRL_WORK* work )
-{
-  u8 nowTopicID;
-
-  // ’²¸’†‚Ì€–ÚID‚ğæ“¾
-  nowTopicID = GetInvestigatingTopicID( work );
-
-  // ’²¸’†‚Ì€–Ú‚ª‚ ‚éê‡
-  if( nowTopicID != INVESTIGATING_QUESTION_NULL ) {
-    // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
-    SetTopicButtonInvestigating( work, nowTopicID ); // ‘I‘ğ‚µ‚Ä‚¢‚éó‘Ô‚É‚·‚é
-    SetSelectedTopicID( work, nowTopicID );     // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğ
-    UpdateInvestigatingIcon( work );              // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
-  }
-
-  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
-  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON );
-
-  // ƒXƒNƒ[ƒ‹ƒo[‚ÌOBJ‚ğ•\¦
-  {
-    GFL_CLWK* scrollbar;
-    GFL_CLACTPOS pos;
-    u16 setSurface;
-
-    scrollbar = GetClactWork( work, CLWK_SCROLL_BAR );
-    pos.x = 128;
-    pos.y = 96;
-    setSurface = ClactWorkInitData[ CLWK_SCROLL_BAR ].setSurface; 
-
-    GFL_CLACT_WK_SetPos( scrollbar, &pos, setSurface );
-    GFL_CLACT_WK_SetDrawEnable( scrollbar, TRUE );
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_STANDBY )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_STANDBY( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_KEY_WAIT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_KEY_WAIT( RRL_WORK* work )
-{
-  UpdateTopicDetailStrings_at_Now( work ); // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_AUTO_SCROLL )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_AUTO_SCROLL( RRL_WORK* work )
-{
-  SetTopicCursorPosDirect( work, work->topicCursorNextPos ); // ’²¸€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-  //UpdateTopicDetailStrings_at_Now( work ); // ã‰æ–Ê‚Ì’²¸€–Úà–¾•¶‚ğXV
-  UpdateTopicButtonMask( work ); // ƒEƒBƒ“ƒhƒE‚ğØ‚é
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SLIDE_CONTROL )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_SLIDE_CONTROL( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_CONFIRM_STANDBY )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_CONFIRM_STANDBY( RRL_WORK* work )
-{ 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_CONFIRM_KEY_WAIT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_CONFIRM_KEY_WAIT( RRL_WORK* work )
-{ 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_DETERMINE )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_DETERMINE( RRL_WORK* work )
-{ 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_FADE_IN )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_FADE_IN( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_FADE_OUT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_FADE_OUT( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_FRAME_WAIT )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_FRAME_WAIT( RRL_WORK* work )
-{
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_PALETTE_RESET )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_PALETTE_RESET( RRL_WORK* work )
-{
-  // ƒtƒHƒ“ƒg‚ÌƒpƒŒƒbƒg‚ğŒ³‚É–ß‚·
-  BG_FONT_SetPalette( work->BGFont_topic[ work->topicCursorPos ], 0xf); 
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_SCROLL_RESET )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_SCROLL_RESET( RRL_WORK* work )
-{
-  UpdateTopicButtonMask( work ); // ƒEƒBƒ“ƒhƒE‚ğØ‚é
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ó‘ÔI—¹ˆ— ( ==> RRL_STATE_CLEAN_UP )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void FinishState_CLEAN_UP( RRL_WORK* work )
-{
   work->finishFlag = TRUE;
   GX_SetVisibleWnd( GX_WNDMASK_NONE ); //ƒEƒBƒ“ƒhƒE‚ğ–³Œø‚É
 }
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ó‘ÔƒJƒEƒ“ƒ^‚ğXV‚·‚é
+ * @brief ó‘ÔƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
  * 
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void CountUpStateCount( RRL_WORK* work )
+static void IncStateCount( RRL_WORK* work )
 {
-  u32 maxCount;
-
-  // ƒCƒ“ƒNƒŠƒƒ“ƒg
   work->stateCount++;
-
-  // Å‘å’l‚ğŒˆ’è
-  switch( work->state ) {
-  case RRL_STATE_SETUP:             maxCount = 0xffffffff;                break;
-  case RRL_STATE_STANDBY:           maxCount = 0xffffffff;                break;
-  case RRL_STATE_KEY_WAIT:          maxCount = 0xffffffff;                break;
-  case RRL_STATE_AUTO_SCROLL:       maxCount = 0xffffffff;                break;
-  case RRL_STATE_SLIDE_CONTROL:     maxCount = 0xffffffff;                break;
-  case RRL_STATE_CONFIRM_STANDBY:   maxCount = 0xffffffff;                break;
-  case RRL_STATE_CONFIRM_KEY_WAIT:  maxCount = 0xffffffff;                break;
-  case RRL_STATE_DETERMINE:         maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
-  case RRL_STATE_FADE_IN:           maxCount = 0xffffffff;                break;
-  case RRL_STATE_FADE_OUT:          maxCount = 0xffffffff;                break;
-  case RRL_STATE_FRAME_WAIT:        maxCount = 0xffffffff;                break;
-  case RRL_STATE_SCROLL_RESET:      maxCount = 0xffffffff;                break;
-  case RRL_STATE_PALETTE_RESET:     maxCount = 0xffffffff;                break;
-  case RRL_STATE_CLEAN_UP:          maxCount = 0xffffffff;                break;
-  case RRL_STATE_FINISH:            maxCount = 0xffffffff;                break;
-  default: GF_ASSERT(0);
-  }
-
-  // Å‘å’l•â³
-  if( maxCount < work->stateCount ) { work->stateCount = maxCount; }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1720,6 +1336,20 @@ static void FinishCurrentState( RRL_WORK* work )
 
   // I—¹ƒtƒ‰ƒO‚ğ—§‚Ä‚é
   work->stateEndFlag = TRUE;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‰æ–Ê‘JˆÚ‚Ì•û–@‚ğæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return ‰æ–Ê‘JˆÚ‚Ì•û–@
+ */
+//-----------------------------------------------------------------------------------------
+static SEQ_CHANGE_TRIG GetFinishReason( RRL_WORK* work )
+{
+  return RRC_GetSeqChangeTrig( work->commonWork );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1777,36 +1407,6 @@ static u32 GetWaitFrame( const RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief Å‰‚Ìó‘Ô‘JˆÚ‚ğƒZƒbƒg‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void RegisterFirstStateFlow( RRL_WORK* work )
-{
-  RRC_WORK* commonWork;
-  RADAR_SEQ prev_seq;
-  SEQ_CHANGE_TRIG trig;
-
-  commonWork = work->commonWork;
-  prev_seq   = RRC_GetPrevSeq( commonWork );
-  trig       = RRC_GetSeqChangeTrig( commonWork );
-
-  // ‘O‚Ì‰æ–Ê‚ğƒ{ƒ^ƒ“‚ÅI—¹
-  if( (prev_seq != RADAR_SEQ_NULL) && (trig == SEQ_CHANGE_BY_BUTTON) ) {
-    RegisterNextState( work, RRL_STATE_AUTO_SCROLL ); // => RRL_STATE_AUTO_SCROLL 
-    RegisterNextState( work, RRL_STATE_FADE_IN );     // ==> RRL_STATE_FADE_IN 
-    RegisterNextState( work, RRL_STATE_KEY_WAIT );    // ===> RRL_STATE_KEY_WAIT 
-  }
-  else {
-    RegisterNextState( work, RRL_STATE_AUTO_SCROLL ); // => RRL_STATE_AUTO_SCROLL 
-    RegisterNextState( work, RRL_STATE_FADE_IN );     // ==> RRL_STATE_FADE_IN 
-    RegisterNextState( work, RRL_STATE_STANDBY );     // ===> RRL_STATE_STANDBY 
-  }
-}
-
-//-----------------------------------------------------------------------------------------
-/**
  * @brief ó‘Ô‚ğ•ÏX‚·‚é
  *
  * @param work
@@ -1848,51 +1448,11 @@ static RRL_STATE GetState( const RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void SetState( RRL_WORK* work, RRL_STATE nextSeq )
 { 
-  // ó‘Ô‚ÌI—¹ˆ—
-  switch( work->state ) {
-  case RRL_STATE_SETUP:            FinishState_SETUP( work );            break;
-  case RRL_STATE_STANDBY:          FinishState_STANDBY( work );          break;
-  case RRL_STATE_KEY_WAIT:         FinishState_KEY_WAIT( work );         break;
-  case RRL_STATE_AUTO_SCROLL:      FinishState_AUTO_SCROLL( work );      break;
-  case RRL_STATE_SLIDE_CONTROL:    FinishState_SLIDE_CONTROL( work );    break;
-  case RRL_STATE_CONFIRM_STANDBY:  FinishState_CONFIRM_STANDBY( work );  break;
-  case RRL_STATE_CONFIRM_KEY_WAIT: FinishState_CONFIRM_KEY_WAIT( work ); break;
-  case RRL_STATE_DETERMINE:        FinishState_DETERMINE( work );        break;
-  case RRL_STATE_FADE_IN:          FinishState_FADE_IN( work );          break;
-  case RRL_STATE_FADE_OUT:         FinishState_FADE_OUT( work );         break;
-  case RRL_STATE_FRAME_WAIT:       FinishState_FRAME_WAIT( work );       break;
-  case RRL_STATE_SCROLL_RESET:     FinishState_SCROLL_RESET( work );     break;
-  case RRL_STATE_PALETTE_RESET:    FinishState_PALETTE_RESET( work );    break;
-  case RRL_STATE_CLEAN_UP:         FinishState_CLEAN_UP( work );         break;
-  case RRL_STATE_FINISH:           break;
-  default:  GF_ASSERT(0);
-  }
-
   // XV
   work->state        = nextSeq;
   work->stateCount   = 0;
   work->stateEndFlag = FALSE;
   ResetStateSeq( work );
-
-  // ó‘Ô‚Ì‰Šú‰»ˆ—
-  switch( nextSeq ) {
-  case RRL_STATE_SETUP:            InitState_SETUP( work );            break;
-  case RRL_STATE_STANDBY:          InitState_STANDBY( work );          break;
-  case RRL_STATE_KEY_WAIT:         InitState_KEY_WAIT( work );         break;
-  case RRL_STATE_AUTO_SCROLL:      InitState_AUTO_SCROLL( work );      break;
-  case RRL_STATE_SLIDE_CONTROL:    InitState_SLIDE_CONTROL( work );    break;
-  case RRL_STATE_CONFIRM_STANDBY:  InitState_CONFIRM_STANDBY( work );  break;
-  case RRL_STATE_CONFIRM_KEY_WAIT: InitState_CONFIRM_KEY_WAIT( work ); break;
-  case RRL_STATE_DETERMINE:        InitState_DETERMINE( work );        break;
-  case RRL_STATE_FADE_IN:          InitState_FADE_IN( work );          break;
-  case RRL_STATE_FADE_OUT:         InitState_FADE_OUT( work );         break;
-  case RRL_STATE_FRAME_WAIT:       InitState_FRAME_WAIT( work );       break;
-  case RRL_STATE_SCROLL_RESET:     InitState_SCROLL_RESET( work );     break;
-  case RRL_STATE_PALETTE_RESET:    InitState_PALETTE_RESET( work );    break;
-  case RRL_STATE_CLEAN_UP:         InitState_CLEAN_UP( work );         break;
-  case RRL_STATE_FINISH:           break;
-  default:  GF_ASSERT(0);
-  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1948,10 +1508,10 @@ static void ResetStateSeq( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MoveMenuCursorUp( RRL_WORK* work )
 { 
-  SetMenuItemCursorOff( work, work->menuCursorPos );// ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-  ShiftMenuCursorPos( work, -1 );                   // ƒJ[ƒ\ƒ‹ˆÚ“®
-  SetMenuItemCursorOn( work, work->menuCursorPos ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
-  PMSND_PlaySE( SEQ_SE_SELECT1 );                   // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
+  SetMenuItemCursorOff( work, work->menuCursorPos );        // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+  ShiftMenuCursorPos( work, -1 );                           // ƒJ[ƒ\ƒ‹ˆÚ“®
+  SetMenuItemCursorOn( work, work->menuCursorPos );         // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                           // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
   StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // ƒpƒŒƒbƒgƒAƒjƒŠJn
 }
 
@@ -1964,10 +1524,10 @@ static void MoveMenuCursorUp( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MoveMenuCursorDown( RRL_WORK* work )
 {
-  SetMenuItemCursorOff( work, work->menuCursorPos );// ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-  ShiftMenuCursorPos( work, 1 );                    // ƒJ[ƒ\ƒ‹ˆÚ“®
-  SetMenuItemCursorOn( work, work->menuCursorPos ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
-  PMSND_PlaySE( SEQ_SE_SELECT1 );                   // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
+  SetMenuItemCursorOff( work, work->menuCursorPos );        // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+  ShiftMenuCursorPos( work, 1 );                            // ƒJ[ƒ\ƒ‹ˆÚ“®
+  SetMenuItemCursorOn( work, work->menuCursorPos );         // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                           // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
   StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // ƒpƒŒƒbƒgƒAƒjƒŠJn
 }
 
@@ -1981,10 +1541,10 @@ static void MoveMenuCursorDown( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem )
 {
-  SetMenuItemCursorOff( work, work->menuCursorPos );// ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
-  SetMenuCursorPos( work, menuItem );               // ƒJ[ƒ\ƒ‹ˆÚ“®
-  SetMenuItemCursorOn( work, work->menuCursorPos ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
-  PMSND_PlaySE( SEQ_SE_SELECT1 );                   // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
+  SetMenuItemCursorOff( work, work->menuCursorPos );        // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+  SetMenuCursorPos( work, menuItem );                       // ƒJ[ƒ\ƒ‹ˆÚ“®
+  SetMenuItemCursorOn( work, work->menuCursorPos );         // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                           // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
   StartPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_SET ); // ƒpƒŒƒbƒgƒAƒjƒŠJn
 }
 
@@ -2011,36 +1571,6 @@ static void AdjustTopicCursor( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğã‚ÉˆÚ“®‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void MoveTopicCursorUp( RRL_WORK* work )
-{
-  SetTopicButtonCursorOff( work );   // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
-  SetTopicCursorNextPos( work, -1 ); // ˆÚ“®æ‚ğİ’è
-  PMSND_PlaySE( SEQ_SE_SELECT1 );    // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
-  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_SET ); // ƒpƒŒƒbƒgƒAƒjƒŠJn
-}
-
-//-----------------------------------------------------------------------------------------
-/**
- * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğ‰º‚ÉˆÚ“®‚·‚é
- *
- * @param work
- */
-//-----------------------------------------------------------------------------------------
-static void MoveTopicCursorDown( RRL_WORK* work )
-{
-  SetTopicButtonCursorOff( work );   // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
-  SetTopicCursorNextPos( work, 1 );  // ˆÚ“®æ‚ğİ’è
-  PMSND_PlaySE( SEQ_SE_SELECT1 );    // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
-  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_SET ); // ƒpƒŒƒbƒgƒAƒjƒŠJn
-}
-
-//-----------------------------------------------------------------------------------------
-/**
  * @brief ’²¸€–ÚƒJ[ƒ\ƒ‹‚ğ’¼ÚˆÚ“®‚·‚é
  *
  * @param work
@@ -2049,10 +1579,10 @@ static void MoveTopicCursorDown( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID )
 {
-  SetTopicButtonCursorOff( work );          // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
-  SetTopicCursorPosDirect( work, topicID ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
-  SetTopicButtonCursorOn( work );           // ˆÚ“®Œã‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
-  PMSND_PlaySE( SEQ_SE_SELECT1 );           // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
+  SetTopicButtonCursorOff( work );                           // ˆÚ“®‘O‚Ì€–Ú‚ğŒ³‚É–ß‚·
+  SetTopicCursorPosDirect( work, topicID );                  // ƒJ[ƒ\ƒ‹ˆÊ’u‚ğXV
+  SetTopicButtonCursorOn( work );                            // ˆÚ“®Œã‚Ì€–Ú‚ğ‘I‘ğó‘Ô‚É‚·‚é
+  PMSND_PlaySE( SEQ_SE_SELECT1 );                            // ƒJ[ƒ\ƒ‹ˆÚ“®‰¹
   StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_SET ); // ƒpƒŒƒbƒgƒAƒjƒŠJn
 }
 
@@ -2068,6 +1598,136 @@ static void BlinkReturnButton( RRL_WORK* work )
   StartCommonPaletteAnime( work, COMMON_PALETTE_ANIME_RETURN );
 }
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒI[ƒgƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é ( ’²¸€–ÚƒJ[ƒ\ƒ‹ˆÊ’u‚Ö )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartAutoScroll_to_Topic( RRL_WORK* work )
+{
+  int startPos = work->scrollCursorPos;
+  int endPos;
+  int frames;
+
+  // ‰º‚Öi‚Şê‡
+  if( work->topicCursorPos < work->topicCursorNextPos ) {
+    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹‚ÌI“_‚Íƒ{ƒ^ƒ“‚Ì’ê•ÓˆÊ’u + 1
+    endPos = CalcScrollCursorPosOfTopicButtonBottom( work->topicCursorNextPos ) + 1;
+  }
+  // ã‚Öi‚Şê‡
+  else {
+    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹‚ÌI“_‚Íƒ{ƒ^ƒ“‚Ìã•ÓˆÊ’u
+    endPos = CalcScrollCursorPosOfTopicButtonTop( work->topicCursorNextPos );
+  }
+
+  // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚ ‚éƒXƒNƒ[ƒ‹‚Ìê‡,
+  // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹n“_À•W‚ğ’[‚ÉƒZƒbƒg‚·‚é
+  {
+    int min = GetMinScrollCursorMarginPos();
+    int max = GetMaxScrollCursorMarginPos();
+    if( (endPos < min) || (max < endPos) ) {
+      if( startPos < endPos ) {
+        startPos = max;
+      }
+      else {
+        startPos = min;
+      }
+    }
+  }
+
+  frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 4;
+
+  // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•Ï‰»‚ª‚ ‚é‚©‚Ç‚¤‚©
+  {
+    int min = GetMinScrollCursorMarginPos();
+    int max = GetMaxScrollCursorMarginPos();
+    // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚È‚¢
+    if( ( min <= startPos) && (startPos <= max) && 
+        ( min <= endPos) && (endPos <= max)  ) {
+      frames = 0;
+    }
+  } 
+  StartScroll( work, startPos, endPos, frames );  
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒI[ƒgƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é ( ”ÍˆÍŠOƒXƒNƒ[ƒ‹‚ğƒŠƒZƒbƒg )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartAutoScroll_for_Reset( RRL_WORK* work )
+{
+  int startPos = work->scrollCursorPos;
+  int endPos = startPos;
+  int frames;
+
+  // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹I“_ˆÊ’u‚ğŒˆ’è
+  if( GetMaxScrollCursorPos(work) < startPos ) {
+    endPos = GetMaxScrollValue(work) + SCROLL_CURSOR_TOP_MARGIN;
+  }
+  else if( startPos < MIN_SCROLL_CURSOR_POS ) {
+    endPos = MIN_SCROLL_VALUE + DISP_DOT_HEIGHT - SCROLL_CURSOR_BOTTOM_MARGIN;
+  }
+  // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚ ‚éƒXƒNƒ[ƒ‹‚Ìê‡,
+  // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹n“_À•W‚ğ’[‚ÉƒZƒbƒg‚·‚é
+  {
+    int min = GetMinScrollCursorMarginPos();
+    int max = GetMaxScrollCursorMarginPos();
+    if( (endPos < min) || (max < endPos) )
+    {
+      if( startPos < endPos ) {
+        startPos = max;
+      }
+      else {
+        startPos = min;
+      }
+    }
+  }
+  frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 3;
+  // ƒXƒNƒ[ƒ‹ÀŒø’l‚É•ÏX‚ª‚È‚¢ƒXƒNƒ[ƒ‹‚Ìê‡,
+  // 1ƒtƒŒ[ƒ€‚Åˆ—‚·‚é
+  {
+    int min = GetMinScrollCursorMarginPos();
+    int max = GetMaxScrollCursorMarginPos();
+    if( ( min <= startPos) && (startPos <= max) && 
+        ( min <= endPos) && (endPos <= max)  ) 
+    {
+      frames = 1;
+    }
+  } 
+  StartScroll( work, startPos, endPos, frames  );  
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒI[ƒgƒXƒNƒ[ƒ‹‚ğŠJn‚·‚é ( ’²¸€–ÚŠm’è‚ÌŠm”F‚Ö )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartAutoScroll_to_Confirm( RRL_WORK* work )
+{
+  int centerPos = ( GetMinScrollCursorMarginPos() + GetMaxScrollCursorMarginPos() ) / 2;
+  int startPos  = work->scrollCursorPos;
+  int endPos    = CalcScreenTopOfTopicButton( work, work->topicCursorPos ) * DOT_PER_CHARA;
+  int frames;
+  // ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’²¸€–Ú‚ª‰æ–Ê‚Ì”CˆÓ‚ÌˆÊ’u‚Ü‚Å—ˆ‚é‚æ‚¤‚ÉƒXƒNƒ[ƒ‹‚³‚¹‚é
+  if( centerPos < endPos ) { 
+    // i‚Ş•ûŒü‚ÅƒJ[ƒ\ƒ‹ˆÊ’u‚Ìn“_EI“_‚ğ•Ï‚¦‚é
+    startPos = GetMaxScrollCursorMarginPos();
+    endPos   = GetMaxScrollCursorMarginPos() + (endPos - centerPos);
+  }
+  else {
+    startPos = GetMinScrollCursorMarginPos();
+    endPos   = GetMinScrollCursorMarginPos() - (centerPos - endPos);
+  }
+  frames = ( MATH_MAX(startPos, endPos) - MATH_MIN(startPos, endPos) ) / 3;
+  StartScroll( work, startPos, endPos, frames  );  
+}
 
 
 //=========================================================================================
@@ -3303,6 +2963,52 @@ static void UpdateTopicTouchArea( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartFadeIn( void )
+{
+  GFL_FADE_SetMasterBrightReq(
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+      16, 0, 0);
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void StartFadeOut( void )
+{
+  GFL_FADE_SetMasterBrightReq(
+      GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
+      0, 16, 0);
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒtƒF[ƒh‚ÌI—¹‚ğƒ`ƒFƒbƒN‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL CheckFadeEnd( void )
+{
+  // ƒtƒF[ƒhI—¹
+  if( GFL_FADE_CheckFade() == FALSE ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+} 
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ƒpƒŒƒbƒg‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é
  *
  * @param work
@@ -3421,6 +3127,26 @@ static void StartPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index )
 static void StopPaletteAnime( RRL_WORK* work, PALETTE_ANIME_INDEX index )
 {
   PALETTE_ANIME_Stop( work->paletteAnime[ index ] );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ÌI—¹‚ğƒ`ƒFƒbƒN‚·‚é
+ *
+ * @param work
+ * @param index ’â~‚·‚éƒpƒŒƒbƒgƒAƒjƒ‚ÌƒCƒ“ƒfƒbƒNƒX
+ *
+ * @return ƒpƒŒƒbƒgƒAƒjƒ‚ªI—¹‚µ‚Ä‚¢‚éê‡ TRUE
+ */
+//------------------------------------------------------------------------------------
+static BOOL CheckPaletteAnimeEnd( const RRL_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  if( PALETTE_ANIME_CheckAnime( work->paletteAnime[ index ] ) ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
 //------------------------------------------------------------------------------------
@@ -5084,6 +4810,28 @@ static void CleanUpPaletteAnime( RRL_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ƒXƒNƒ[ƒ‹ƒo[‚ğƒZƒbƒgƒAƒbƒv‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetupScrollBar( RRL_WORK* work )
+{
+  GFL_CLWK* scrollbar;
+  GFL_CLACTPOS pos;
+  u16 setSurface;
+
+  scrollbar = GetClactWork( work, CLWK_SCROLL_BAR );
+  pos.x = 128;
+  pos.y = 96;
+  setSurface = ClactWorkInitData[ CLWK_SCROLL_BAR ].setSurface; 
+
+  GFL_CLACT_WK_SetPos( scrollbar, &pos, setSurface );
+  GFL_CLACT_WK_SetDrawEnable( scrollbar, TRUE );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ’ÊMƒAƒCƒRƒ“‚ğƒZƒbƒgƒAƒbƒv‚·‚é
  * 
  * @param work
@@ -5123,8 +4871,4 @@ static void ReleaseVBlankTask( RRL_WORK* work )
 
   GFL_TCB_DeleteTask( work->VBlankTask );
   work->VBlankTask = NULL;
-}
-
-
-
-
+} 
