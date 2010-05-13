@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 
 _EVENT_DATA    ev_c02pc0101_girl2_01
+_EVENT_DATA    ev_c02pc0101_boy1_01
 _EVENT_DATA    ev_c02pc0101_backpackerm_01
 _EVENT_DATA    ev_c02pc0101_shop
 _EVENT_DATA    ev_c02pc0101_fix_shop
@@ -47,6 +48,15 @@ EVENT_END
 EVENT_START ev_c02pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C02_FS )
+EVENT_END
+
+/**************************************************************/
+/*  C02PC0101 BOY1の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START    ev_c02pc0101_boy1_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  (msg_c02pc0101_boy1_01)  
+
 EVENT_END
 
 /**************************************************************/

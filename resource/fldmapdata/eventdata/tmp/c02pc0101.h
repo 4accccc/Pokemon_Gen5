@@ -18,6 +18,7 @@
 #define C02PC0101_CONNECT_02               6
 #define C02PC0101_SHOPM1_02                7
 #define C02PC0101_DELIVERY                 8
+#define C02PC0101_BOY1_01                  9
 
 #endif //ZONE_C02PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
