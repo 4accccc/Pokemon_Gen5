@@ -219,6 +219,8 @@ static void _trans_touchbar_screen( HEAPID heapId, int bgfrm );
 static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel );
 static void _set_cursor_pos( FIELD_MENU_WORK *work );
 
+static void ScrollObj( FIELD_MENU_WORK* work );
+
 
 
 static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
@@ -455,6 +457,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     else
     {
       work->scrollOffset -= FIELD_MENU_SCROLL_SPD;
+			ScrollObj( work );
     }
     work->isUpdateScroll = TRUE;
     break;
@@ -540,11 +543,55 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     else
     {
       work->scrollOffset += FIELD_MENU_SCROLL_SPD;
-    }
+			ScrollObj( work );
+		}
     work->isUpdateScroll = TRUE;
   }
   PRINTSYS_QUE_Main( work->printQue );
 }
+
+// OBJスクロール
+static void ScrollObj( FIELD_MENU_WORK* work )
+{
+	u8 i;
+	GFL_CLACTPOS sufacePos;
+
+	sufacePos.x = 0;
+	sufacePos.y = -work->scrollOffset;
+	GFL_CLACT_USERREND_SetSurfacePos( work->cellRender , FIELD_MENU_RENDER_SURFACE , &sufacePos );
+	//アイコンの処理
+	for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
+	{
+		if( work->icon[i].cellIcon != NULL && work->icon[i].type!=FMIT_NONE)
+    {
+			GFL_CLACTPOS cellPos;
+	    GFL_CLACT_WK_GetPos( work->icon[i].cellIcon , &cellPos , FIELD_MENU_RENDER_SURFACE );
+      if( cellPos.y < 192 + FIELD_MENU_ICON_SIZE_Y/2 )
+      {
+				GFL_CLACT_WK_SetDrawEnable( work->icon[i].cellIcon, TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->icon[i].cellIcon, FALSE );
+      }
+    }
+	}
+	//カーソルの処理
+	{
+		GFL_CLACTPOS cellPos;
+		GFL_CLACT_WK_GetPos( work->cellCursor , &cellPos , FIELD_MENU_RENDER_SURFACE );
+		if( work->isDispCursor &&
+				cellPos.y < 192 + FIELD_MENU_CURSOR_SIZE_Y/2 )
+		{
+			GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+		}
+		else
+		{
+			GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
+		}
+	}
+}
+
 
 //--------------------------------------------------------------
 //  更新
@@ -553,47 +600,10 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
 {
   if( work->isUpdateScroll == TRUE )
   {
-    u8 i;
-    GFL_CLACTPOS sufacePos;
-
+		// BGスクロール
+		// OBJはupdateで。
     GFL_BG_SetScrollReq( FIELD_MENU_BG_BUTTON , GFL_BG_SCROLL_Y_SET , -work->scrollOffset );
     GFL_BG_SetScrollReq( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -work->scrollOffset -4 );
-    
-    sufacePos.x = 0;
-    sufacePos.y = -work->scrollOffset;
-    GFL_CLACT_USERREND_SetSurfacePos( work->cellRender , FIELD_MENU_RENDER_SURFACE , &sufacePos );
-    //アイコンの処理
-    for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
-    {
-      if( work->icon[i].cellIcon != NULL && work->icon[i].type!=FMIT_NONE)
-      {
-        GFL_CLACTPOS cellPos;
-        GFL_CLACT_WK_GetPos( work->icon[i].cellIcon , &cellPos , FIELD_MENU_RENDER_SURFACE );
-        if( cellPos.y < 192 + FIELD_MENU_ICON_SIZE_Y/2 )
-        {
-          GFL_CLACT_WK_SetDrawEnable( work->icon[i].cellIcon, TRUE );
-        }
-        else
-        {
-          GFL_CLACT_WK_SetDrawEnable( work->icon[i].cellIcon, FALSE );
-        }
-      }
-    }
-    //カーソルの処理
-    {
-      GFL_CLACTPOS cellPos;
-      GFL_CLACT_WK_GetPos( work->cellCursor , &cellPos , FIELD_MENU_RENDER_SURFACE );
-      if( work->isDispCursor &&
-          cellPos.y < 192 + FIELD_MENU_CURSOR_SIZE_Y/2 )
-      {
-        GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
-      }
-      else
-      {
-        GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
-      }
-    }
-    
     work->isUpdateScroll = FALSE;
   }
 }
