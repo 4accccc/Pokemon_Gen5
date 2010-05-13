@@ -41,7 +41,7 @@ typedef enum{
   MISSION_ENTRY_RESULT_OK,      ///<受注OK
   MISSION_ENTRY_RESULT_NG,      ///<受注NG
   MISSION_ENTRY_RESULT_NG_TARGET_REVERSE,  ///<ターゲットが裏フィールドへ来ている
-  MISSION_ENTRY_RESULT_NG_BATTLE, ///<二人専用ミッションの条件を満たしていない
+  MISSION_ENTRY_RESULT_NG_TWIN, ///<二人専用ミッションの条件を満たしていない
 }MISSION_ENTRY_RESULT;
 
 ///ミッション達成宣言の返事

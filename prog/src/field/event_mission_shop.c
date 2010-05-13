@@ -324,6 +324,11 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
       GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
       return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
     }
+    else{
+      GMEVENT_ChangeEvent(
+        event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_SHOP_NG));
+      return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
+    }
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;

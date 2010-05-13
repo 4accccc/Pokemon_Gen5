@@ -501,7 +501,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_007);
         *seq = SEQ_ORDER_NG_STREAM_WAIT;
       }
-      else if(result == MISSION_ENTRY_RESULT_NG_BATTLE){
+      else if(result == MISSION_ENTRY_RESULT_NG_TWIN){
         _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_006);
         *seq = SEQ_ORDER_NG_STREAM_WAIT;
       }
