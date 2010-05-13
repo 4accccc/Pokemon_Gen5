@@ -48,7 +48,12 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     *outBgmNo = SEQ_BGM_VS_RAI;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
+  case MONSNO_657:  //ビクティ MONSNO_BIKUTHI
+    *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    *outEffNo = ENCEFFID_EFF_POKE;
+    return;
   //三銃士  
+  case MONSNO_645:  //アトス MONSNO_ATOSU
   case MONSNO_646:  //ポルトス MONSNO_PORUTOSU
   case MONSNO_647:  //アラミス MONSNO_ARAMISU
   case MONSNO_654:  //ダルタニス MONSNO_DARUTANISU
