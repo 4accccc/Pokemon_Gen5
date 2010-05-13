@@ -1,55 +1,55 @@
 //=============================================================================
 /**
- * @file	myitem_savedata.h
- * @brief	手持ちアイテム操作用ヘッダ
- * @author	tamada
- * @author	hiroyuki nakamura
- * @date	2005.10.13
+ * @file  myitem_savedata.h
+ * @brief 手持ちアイテム操作用ヘッダ
+ * @author  tamada
+ * @author  hiroyuki nakamura
+ * @date  2005.10.13
  */
 //=============================================================================
-#ifndef	__MYITEM_SAVEDATA_H__
-#define	__MYITEM_SAVEDATA_H__
+#ifndef __MYITEM_SAVEDATA_H__
+#define __MYITEM_SAVEDATA_H__
 
 #include "myitem_savedata_def.h"
 //============================================================================================
 //============================================================================================
 // バッグのカーソル位置
-typedef struct _BAG_CURSOR	BAG_CURSOR;
+typedef struct _BAG_CURSOR  BAG_CURSOR;
 
 //------------------------------------------------------------------------
-//	アイテムデータ
+//  アイテムデータ
 //------------------------------------------------------------------------
-typedef	struct {
-	u16	id;		// アイテム番号
-	u16	no;		// 個数
+typedef struct {
+  u16 id;   // アイテム番号
+  u16 no;   // 個数
 }ITEM_ST;
-#define	ITEM_MAX_NORMAL			( 999 )		// 通常のアイテム所持数最大
-#define	ITEM_MAX_WAZAMACHINE	( 99 )		// 技マシンの所持数最大
+#define ITEM_MAX_NORMAL     ( 999 )   // 通常のアイテム所持数最大
+#define ITEM_MAX_WAZAMACHINE  ( 1 )   // 技マシンの所持数最大
 
-#define	BAG_EVENT_ITEM_MAX		( 83 )		// 大切な物ポケット最大数
-#define	BAG_WAZA_ITEM_MAX			( 109 )		// 技マシンポケット最大数
-#define	BAG_DRUG_ITEM_MAX			( 48 )		// 薬ポケット最大数
-#define	BAG_NUTS_ITEM_MAX			( 64 )		// 木の実ポケット最大数
-#define	BAG_NORMAL_ITEM_MAX		( 310 )		// 道具ポケット最大数
+#define BAG_EVENT_ITEM_MAX    ( 83 )    // 大切な物ポケット最大数
+#define BAG_WAZA_ITEM_MAX     ( 109 )   // 技マシンポケット最大数
+#define BAG_DRUG_ITEM_MAX     ( 48 )    // 薬ポケット最大数
+#define BAG_NUTS_ITEM_MAX     ( 64 )    // 木の実ポケット最大数
+#define BAG_NORMAL_ITEM_MAX   ( 310 )   // 道具ポケット最大数
 /*
-	※ BAG_NORMAL_ITEM_MAXは
-			ボール		26
-			メール		12
-			装備			149
-			戦闘用		38
-			ノーマル	85
-		の合計
+  ※ BAG_NORMAL_ITEM_MAXは
+      ボール    26
+      メール    12
+      装備      149
+      戦闘用    38
+      ノーマル  85
+    の合計
 */
 
-#define	BAG_MYITEM_MAX (BAG_NORMAL_ITEM_MAX) //一番要素が大きい物
+#define BAG_MYITEM_MAX (BAG_NORMAL_ITEM_MAX) //一番要素が大きい物
 
 //
 #define BAG_TOTAL_NUM (BAG_EVENT_ITEM_MAX+BAG_WAZA_ITEM_MAX+BAG_DRUG_ITEM_MAX+BAG_NUTS_ITEM_MAX+BAG_NORMAL_ITEM_MAX)
 
-#define MYITEM_SHORTCUT_MAX (10)	 // 便利ボタンの最大数 ※使用禁止
+#define MYITEM_SHORTCUT_MAX (10)   // 便利ボタンの最大数 ※使用禁止
 
 //==============================================================================
-//	型定義
+//  型定義
 //==============================================================================
 ///手持ちアイテムの不定形アクセス型
 typedef struct _MYITEM MYITEM;
@@ -60,7 +60,7 @@ typedef struct _MYITEM * MYITEM_PTR;
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
-//	セーブデータシステムが依存する関数
+//  セーブデータシステムが依存する関数
 //----------------------------------------------------------
 extern int MYITEM_GetWorkSize(void);
 extern MYITEM_PTR MYITEM_AllocWork(HEAPID heapID);
@@ -68,7 +68,7 @@ extern void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to);
 extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet);
 
 //----------------------------------------------------------
-//	MYITEM操作のための関数
+//  MYITEM操作のための関数
 //----------------------------------------------------------
 extern void MYITEM_Init(MYITEM_PTR item);
 extern BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
@@ -90,13 +90,13 @@ extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], HE
 //extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index, u32 item );
 
 //----------------------------------------------------------
-//	ITEMLIST操作のための関数
+//  ITEMLIST操作のための関数
 //----------------------------------------------------------
 extern u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max );
 
 
 //----------------------------------------------------------
-//	バッグ作成関数
+//  バッグ作成関数
 //----------------------------------------------------------
 #if 0
 extern void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, HEAPID heap );
@@ -107,7 +107,7 @@ extern void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, HEAPID hea
 extern u32 MYITEM_GetItemMax( u16 item );
 
 //------------------------------------------------------------------
-//	バッグのカーソル位置データ
+//  バッグのカーソル位置データ
 //------------------------------------------------------------------
 extern BAG_CURSOR * MYITEM_BagCursorAlloc( HEAPID heapID );
 
@@ -129,4 +129,4 @@ extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
 #ifdef CREATE_INDEX
 extern void *Index_Get_Myitem_Offset(MYITEM_PTRitem, int type);
 #endif
-#endif	/* __MYITEM_SAVEDATA_H__ */
+#endif  /* __MYITEM_SAVEDATA_H__ */
