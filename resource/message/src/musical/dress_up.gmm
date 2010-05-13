@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-29T16:31:55"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-05-14T01:35:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -415,9 +415,9 @@ DUP_MSG_01を表示
 
 0:グッズ名</comment>
 		<language name="JPN" width="256">[1:0A:グッズ名:0]
-[1:31:ミュージカルグッズ部位:1]　ににあう　グッズです</language>
+[1:31:ミュージカルグッズ部位:1]に　にあう　グッズです</language>
 		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
-[1:31:ミュージカルグッズ部位:1]　に似合う　グッズです</language>
+[1:31:ミュージカルグッズ部位:1]に　似合う　グッズです</language>
 	</row>
 
 	<row id="DUP_MSG_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -426,9 +426,9 @@ DUP_MSG_01を表示
 際に表示
 
 0:パーツのタグ（現状なし）</comment>
-		<language name="JPN" width="256">[1:31:ミュージカルグッズ部位:0]　ににあう　グッズを
+		<language name="JPN" width="256">[1:31:ミュージカルグッズ部位:0]に　にあう　グッズを
 せんとうに　ならびかえました</language>
-		<language name="JPN_KANJI" width="256">[1:31:ミュージカルグッズ部位:0]　に似合う　グッズを
+		<language name="JPN_KANJI" width="256">[1:31:ミュージカルグッズ部位:0]に　似合う　グッズを
 先頭に　ならびかえました</language>
 	</row>
 
