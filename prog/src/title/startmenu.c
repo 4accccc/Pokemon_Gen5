@@ -363,6 +363,7 @@ static const u8 BmpWinData[][6] =
 // OBJ
 static const GFL_CLWK_DATA PlayerObjData = { PLAYER_OBJ_PX, PLAYER_OBJ_PY, 1, 0, 1 };
 static const GFL_CLWK_DATA NewObjData = { NEW_OBJ_PX, 0, 0, 0, 1 };
+static const GFL_CLWK_DATA WiconObjData = { WICON_OBJ_PX, 0, 1, 0, 1 };
 
 // セーブデータ破損メッセージ表示テーブル
 static const u32 SaveBreakMessage[][2] =
@@ -1771,6 +1772,17 @@ static void InitObj( START_MENU_WORK * wk )
 																NARC_startmenu_obj_u_NCER,
 																NARC_startmenu_obj_u_NANR,
 																HEAPID_STARTMENU );
+		wk->chrRes[CHRRES_WICON] = GFL_CLGRP_CGR_Register(
+																ah, NARC_startmenu_wicon_lz_NCGR,
+																TRUE, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
+	  wk->palRes[PALRES_WICON] = GFL_CLGRP_PLTT_Register(
+																ah, NARC_startmenu_wicon_NCLR,
+																CLSYS_DRAW_MAIN, PALNUM_WICON*0x20, HEAPID_STARTMENU );
+    wk->celRes[CELRES_WICON] = GFL_CLGRP_CELLANIM_Register(
+																ah,
+																NARC_startmenu_wicon_NCER,
+																NARC_startmenu_wicon_NANR,
+																HEAPID_STARTMENU );
 		GFL_ARC_CloseDataHandle( ah );
 	}
 
@@ -1797,6 +1809,13 @@ static void InitObj( START_MENU_WORK * wk )
 			GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[i], TRUE );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
 		}
+
+		wk->clwk[OBJ_ID_WICON] = GFL_CLACT_WK_Create(
+															wk->clunit,
+															wk->chrRes[CHRRES_WICON],
+															wk->palRes[PALRES_WICON],
+															wk->celRes[CELRES_WICON],
+															&WiconObjData, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
 	}
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// MAIN DISP OBJ ON
@@ -2069,6 +2088,9 @@ static void InitListPut( START_MENU_WORK * wk )
 				GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_HUSHIGI], TRUE );
 			}
 */
+		}else if( wk->list[i] == LIST_ITEM_WIFI_SET ){
+			PutListObj( wk, OBJ_ID_WICON, py*8+ListItemData[wk->list[i]].sy*8/2 );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_WICON], TRUE );
 		}else if( wk->list[i] == LIST_ITEM_BATTLE ){
 			if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_BATTLE) == MISC_STARTMENU_FLAG_OPEN ){
 				PutListObj( wk, OBJ_ID_NEW_BATTLE, py*8+ListItemData[wk->list[i]].sy*8/2 );
@@ -2342,7 +2364,7 @@ static void VanishListObj( START_MENU_WORK * wk, BOOL flg )
 
 	// 非表示
 	if( flg == FALSE ){
-		for( i=OBJ_ID_PLAYER; i<=OBJ_ID_NEW_MACHINE; i++ ){
+		for( i=OBJ_ID_PLAYER; i<=OBJ_ID_WICON; i++ ){
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], flg );
 		}
 	// 表示
@@ -2372,6 +2394,8 @@ static void VanishListObj( START_MENU_WORK * wk, BOOL flg )
 				if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_MACHINE) == MISC_STARTMENU_FLAG_OPEN ){
 					GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_MACHINE], TRUE );
 				}
+			}else if( wk->list[i] == LIST_ITEM_WIFI_SET ){
+				GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_WICON], TRUE );
 			}
 		}
 	}

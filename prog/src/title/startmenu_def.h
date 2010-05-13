@@ -219,6 +219,7 @@ enum {
 	OBJ_ID_NEW_BATTLE,
 	OBJ_ID_NEW_GAMESYNC,
 	OBJ_ID_NEW_MACHINE,
+	OBJ_ID_WICON,
 	OBJ_ID_MAX
 };
 
@@ -227,16 +228,19 @@ enum {
 	// キャラ
 	CHRRES_PLAYER = 0,
 	CHRRES_OBJ_U,
+	CHRRES_WICON,
 	CHRRES_MAX,
 
 	// パレット
 	PALRES_PLAYER = 0,
 	PALRES_OBJ_U,
+	PALRES_WICON,
 	PALRES_MAX,
 
 	// セル
 	CELRES_PLAYER = 0,
 	CELRES_OBJ_U,
+	CELRES_WICON,
 	CELRES_MAX,
 };
 
@@ -245,8 +249,11 @@ enum {
 #define	PALSIZ_PLAYER		( 1 )
 #define	PALNUM_OBJ_U		( PALNUM_PLAYER+PALSIZ_PLAYER )
 #define	PALSIZ_OBJ_U		( 1 )
+#define	PALNUM_WICON		( PALNUM_OBJ_U+PALSIZ_OBJ_U )
+#define	PALSIZ_WICON		( 1 )
 
 // 座標
 #define	PLAYER_OBJ_PX		( 48 )
 #define	PLAYER_OBJ_PY		( 64 )
 #define	NEW_OBJ_PX			( 208 )
+#define	WICON_OBJ_PX		( 208 )
