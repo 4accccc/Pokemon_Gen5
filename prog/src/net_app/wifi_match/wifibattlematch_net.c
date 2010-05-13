@@ -176,7 +176,7 @@ typedef enum
 #define TIMEOUT_MS            100       // HTTP通信のタイムアウト時間
 #define PLAYER_NUM            2          // プレイヤー数
 #define TEAM_NUM              0          // チーム数
-#define CANCELSELECT_TIMEOUT (20*60)     //キャンセルセレクトタイムアウト
+#define CANCELSELECT_TIMEOUT (60*60)     //キャンセルセレクトタイムアウト
 #define ASYNC_TIMEOUT (120*60)     //非同期用タイムアウト
 
 #define RECV_BUFFER_SIZE  (0x1000)
@@ -325,7 +325,6 @@ struct _WIFIBATTLEMATCH_NET_WORK
   u32   magic_num;
   u32 async_timeout;
   u32 cancel_select_timeout;   //CANCELSELECT_TIMEOUT
-  BOOL is_stop_connect;
   BOOL is_auth;
   WIFIBATTLEMATCH_SC_REPORT_TYPE report_type;
   int get_recordID;
@@ -824,7 +823,6 @@ WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_N
   return WIFIBATTLEMATCH_GDB_RESULT_UPDATE;
 }
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  マッチメイク開始
@@ -849,8 +847,11 @@ void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBAT
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_BTLCNT, cp_data->btlcnt );
   STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", btl_mode, btl_rule, MATCHINGKEY );
   OS_TFPrintf( 3, "%s\n", p_wk->filter );
-  p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
+  p_wk->seq_matchmake = 0;
   p_wk->async_timeout = 0;
+  p_wk->cancel_select_timeout = 0;
+
+  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST] = FALSE;
 
   //接続評価コールバック指定
   switch( mode )
@@ -888,7 +889,7 @@ void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk )
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_DISCONNECT, 0 );
   MATCHMAKE_KEY_Set( p_wk, MATCHMAKE_KEY_CUPNO, 0 );
   STD_TSPrintf( p_wk->filter, "mod=%d And rul=%d And deb=%d", 0, 0, MATCHINGKEY );
-  p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
+  p_wk->seq_matchmake = 0;
 
   p_wk->matchmake_eval_callback = WIFIBATTLEMATCH_RND_FREE_Eval_Callback;
 }
@@ -898,17 +899,30 @@ void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@brief  マッチメイク処理
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ *  @ret  終了コード
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
+WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
+  enum
+  {
+    WIFIBATTLEMATCH_NET_SEQ_MATCH_START,
+    WIFIBATTLEMATCH_NET_SEQ_MATCH_START2,
+    WIFIBATTLEMATCH_NET_SEQ_MATCH_WAIT,
+
+    WIFIBATTLEMATCH_NET_SEQ_CONNECT_START,
+    WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD,
+    WIFIBATTLEMATCH_NET_SEQ_CONNECT_PARENT,
+    WIFIBATTLEMATCH_NET_SEQ_TIMING_END,
+
+    WIFIBATTLEMATCH_NET_SEQ_CANCEL,
+
+    WIFIBATTLEMATCH_NET_SEQ_MATCH_END,
+  };
+
  // DEBUG_NET_Printf( "WiFiState %d \n", GFL_NET_StateGetWifiStatus() );
   switch( p_wk->seq_matchmake )
   { 
-  case WIFIBATTLEMATCH_NET_SEQ_MATCH_IDLE:
-    /* 何もしない  */
-    break;
-
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START:
     if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2, p_wk->matchmake_eval_callback, p_wk ) != 0 )
     {
@@ -931,6 +945,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
       ret = GFL_NET_DWC_GetStepMatchResult();
       switch(ret)
       {
+      case STEPMATCH_CONNECT:
       case STEPMATCH_CONTINUE:
         /* 接続中 */
         break;
@@ -941,15 +956,8 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
         break;
 
       case STEPMATCH_CANCEL:
-        GF_ASSERT( 0 );
-        break;
-
       case STEPMATCH_FAIL:
-        GF_ASSERT( 0 );
-        break;
-
-      case STEPMATCH_CONNECT:
-        break;
+        return WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_FAILED;
 
       default:
         GF_ASSERT_MSG(0,"StepMatchResult=[%d]\n",ret);
@@ -961,29 +969,27 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
     {
       u16 netID;
       netID = GFL_NET_SystemGetCurrentID();
-      if( !GFL_NET_IsParentMachine() ){  // 子機として接続が完了した
+      if( !GFL_NET_IsParentMachine() )
+      {  // 子機として接続が完了した
         if( GFL_NET_HANDLE_RequestNegotiation() )
         {
           p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD;
         }
+
+        if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
+        { 
+          DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
+          p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
+        }
       }
       else
       {
+        p_wk->cancel_select_timeout = 0;
         p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CONNECT_PARENT;
       }
-      DEBUG_NET_Printf( "接続処理 %d^\n",netID );
-
-      //相手が「やめますかはいorいいえ」中に放置することを考えて、
-      //タイムアウトしたら、切断して、マッチメイクしなおす
-      if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
-      { 
-        p_wk->cancel_select_timeout = 0;
-        DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウト\n" );
-        p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
-      }
+      DEBUG_NET_Printf( "接続処理 %d\n",netID );
     }
     break;
-
 
   case WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD:
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT, WB_NET_WIFIMATCH);
@@ -993,8 +999,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
   case WIFIBATTLEMATCH_NET_SEQ_CONNECT_PARENT:
     if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
     { 
-      p_wk->cancel_select_timeout = 0;
-      DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウト\n" );
+      DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
 
@@ -1003,18 +1008,16 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
       if( GFL_NET_HANDLE_RequestNegotiation() )
       {
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT, WB_NET_WIFIMATCH);
+        p_wk->cancel_select_timeout = 0;
         p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_TIMING_END;
       }
     }
     break;
 
   case WIFIBATTLEMATCH_NET_SEQ_TIMING_END:
-    //相手が「やめますかはいorいいえ」中に放置することを考えて、
-    //タイムアウトしたら、切断して、マッチメイクしなおす
     if( p_wk->cancel_select_timeout++ > CANCELSELECT_TIMEOUT )
     { 
-      p_wk->cancel_select_timeout = 0;
-      DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウト\n" );
+      DEBUG_NET_Printf( "マッチングネゴシエーションタイムアウトline %d\n", __LINE__ );
       p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_CANCEL;
     }
 
@@ -1026,8 +1029,8 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
   case WIFIBATTLEMATCH_NET_SEQ_CANCEL:
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk, TRUE ) )
-    { 
-      p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START;
+    {
+      return WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_FAILED;
     }
     break;
 
@@ -1042,24 +1045,10 @@ BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk )
       DEBUG_NET_Printf( "！子機 " );
     }
     //GFL_NET_DWC_SetNoChildErrorCheck( TRUE );
-    return TRUE;
+    return WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_SUCCESS;
   }
 
-  return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  マッチメイクのシーケンスを取得
- *
- *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk ワーク
- *
- *	@return シーケンス
- */
-//-----------------------------------------------------------------------------
-WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
-{ 
-  return cp_wk->seq_matchmake;
+  return WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_UPDATE;
 }
 
 //----------------------------------------------------------------------------
@@ -1079,18 +1068,41 @@ BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_
   GFL_NET_DWC_returnLobby();
   return TRUE;
 }
-
 //----------------------------------------------------------------------------
 /**
- *	@brief  接続を一時停止にする
+ *	@brief  自分がキャンセルしたことを相手へ通知する
  *
- *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param	is_stop                         TRUEで一時停止  FALSEで解除
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ *
+ *	@return TRUEで送信完了  FALSEで送信継続
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_stop )
-{ 
-  p_wk->is_stop_connect = is_stop;
+BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{
+  static const int sc_temp  = 0;
+
+  if( GFL_NET_DWC_IsMatched() )
+  {
+    return GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), 
+        WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH, sizeof(int), &sc_temp );
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  相手がキャンセルしたかチェック
+ *
+ *	@param	const WIFIBATTLEMATCH_NET_WORK *cp_wk ワーク
+ *
+ *	@return TRUEで相手がキャンセルした  FALSEでしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( const WIFIBATTLEMATCH_NET_WORK *cp_wk )
+{
+  return cp_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST];
 }
 
 //----------------------------------------------------------------------------

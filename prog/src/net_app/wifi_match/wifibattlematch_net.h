@@ -37,26 +37,6 @@
 */
 //=============================================================================
 //-------------------------------------
-///	マッチシーケンス
-//=====================================
-typedef enum
-{
-  WIFIBATTLEMATCH_NET_SEQ_MATCH_IDLE,
-  WIFIBATTLEMATCH_NET_SEQ_MATCH_START,
-  WIFIBATTLEMATCH_NET_SEQ_MATCH_START2,
-  WIFIBATTLEMATCH_NET_SEQ_MATCH_WAIT,
-
-  WIFIBATTLEMATCH_NET_SEQ_CONNECT_START,
-  WIFIBATTLEMATCH_NET_SEQ_CONNECT_CHILD,
-  WIFIBATTLEMATCH_NET_SEQ_CONNECT_PARENT,
-  WIFIBATTLEMATCH_NET_SEQ_TIMING_END,
-
-  WIFIBATTLEMATCH_NET_SEQ_CANCEL,
-
-  WIFIBATTLEMATCH_NET_SEQ_MATCH_END,
-} WIFIBATTLEMATCH_NET_SEQ;
-
-//-------------------------------------
 ///	エラーの種類
 //=====================================
 typedef enum
@@ -89,6 +69,16 @@ typedef enum
   WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL,       //電源切断
   WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT,     //タイムアウト
 } WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE;
+
+
+//-------------------------------------
+///	タイミングシンク
+//=====================================
+enum
+{
+  WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_CANCEL = 20,
+  WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK,
+} ;
 
 
 //サケサーバーのアクセス時間
@@ -260,16 +250,23 @@ typedef struct
   u32 btlcnt;
 } WIFIBATTLEMATCH_MATCH_KEY_DATA;
 extern void WIFIBATTLEMATCH_NET_StartMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, BOOL is_rnd_rate, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_MATCH_KEY_DATA *cp_data );
-extern BOOL WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern WIFIBATTLEMATCH_NET_SEQ WIFIBATTLEMATCH_NET_GetSeqMatchMake( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
+
+typedef enum
+{
+  WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_UPDATE,   //処理中
+  WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_SUCCESS,  //接続成功
+  WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_FAILED,  //接続失敗（タイムアウト等）
+} WIFIBATTLEMATCH_NET_MATCHMAKE_STATE;
+extern WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 extern void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //切断
 extern BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force );
 
-//キャンセル
-extern void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_stop );
+//自分がキャンセル状態なことを相手へ通知
+extern BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
 
 //-------------------------------------
 ///	ATLAS統計・競争関係（SC）

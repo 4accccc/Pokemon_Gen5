@@ -2450,7 +2450,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
   case SEQ_WAIT_MATCHING:
     //マッチングキャンセル
-    if( WIFIBATTLEMATCH_NET_GetSeqMatchMake( p_wk->p_net ) < WIFIBATTLEMATCH_NET_SEQ_CONNECT_START )
+    if( 0 )
     { 
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
       { 
