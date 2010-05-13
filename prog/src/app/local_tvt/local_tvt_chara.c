@@ -30,7 +30,7 @@
 #define LTVT_CHARA_NAME_HEIGHT (2)
 
 #define LTVT_CHARA_EYE_BLINK_CNT (150)
-#define LTVT_CHARA_LIP_DELAY_CNT (60*2)
+#define LTVT_CHARA_LIP_DELAY_CNT (70)
 #define LTVT_CHARA_OFFSET (7)
 #define LTVT_CHARA_OFFSET_SIZE (LTVT_CHARA_OFFSET*16*0x40)
 //======================================================================
