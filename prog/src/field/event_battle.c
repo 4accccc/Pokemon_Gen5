@@ -747,7 +747,8 @@ static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
   u8 grp = TT_TrainerTypeGrpGet(TT_TrainerDataParaGet( tr_id, ID_TD_tr_type ) );
 
-  if( grp == TRTYPE_GRP_NONE ){
+  if( grp == TRTYPE_GRP_NONE ||
+      grp == TRTYPE_GRP_PLASMA ){
     return TR_BEACON_NORMAL;
   }
   if( grp == TRTYPE_GRP_LEADER ){
