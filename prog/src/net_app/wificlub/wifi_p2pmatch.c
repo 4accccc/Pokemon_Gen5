@@ -366,9 +366,9 @@ enum{
 #define COMM_SYS_WIN_CGX    ( MENU_WIN_CGX_NUM - ( COMM_SYS_WIN_SX * COMM_SYS_WIN_SY ) )  // 通信システムウィンドウ転送先
 
 
-#define REGWINDOW_WIN_PX   ( 3 )
+#define REGWINDOW_WIN_PX   ( 2 )
 #define REGWINDOW_WIN_PY   ( 5 )
-#define REGWINDOW_WIN_SX   ( 25 )
+#define REGWINDOW_WIN_SX   ( 26 )
 #define REGWINDOW_WIN_SY   ( 16 )
 
 

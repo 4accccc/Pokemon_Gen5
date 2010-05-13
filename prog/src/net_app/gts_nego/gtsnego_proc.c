@@ -563,7 +563,7 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
   else{
     pMy = pEv->pStatus[1];
     num = pWork->MatchData.num;
-    pEv->profileID[pEv->count] = MyStatus_GetProfileID( pMy );
+    pEv->profileID[pEv->count] = MyStatus_GetID( pMy );
     pEv->count++;
     if(pEv->count >= EVENT_GTSNEGO_RECONNECT_NUM){
       pEv->count = 0;
@@ -869,7 +869,7 @@ static int _evalcallback(int index, void* param)
   
   if(pWork->changeMode==_CHANGEMODE_SELECT_FRIEND){//‚Æ‚à‚¾‚¿
     if( WIFI_NEGOTIATION_SV_IsCheckFriend( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave) ,profile )){
-      if(friendprofile == MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pEv->gamedata) )){
+      if(friendprofile == MyStatus_GetID( GAMEDATA_GetMyStatus(pEv->gamedata) )){
         value=100;
       }
     }
@@ -930,7 +930,7 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   if(pWork->changeMode == _CHANGEMODE_SELECT_FRIEND){
     {
       MYSTATUS* pFriend = WIFI_NEGOTIATION_SV_GetMyStatus( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave),pWork->selectFriendIndex);
-      buff[_MATCHKEY_SEARCHPROFILE] = MyStatus_GetProfileID(pFriend);
+      buff[_MATCHKEY_SEARCHPROFILE] = MyStatus_GetID(pFriend);
     }
   }
   else{
@@ -2038,7 +2038,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->key2=_CROSSCUR_TYPE_ANY1;
   pWork->key3=_CROSSCUR_TYPE_FRIEND1;
 
-  pWork->profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pEv->gamedata) );
+  pWork->profileID = MyStatus_GetID( GAMEDATA_GetMyStatus(pEv->gamedata) );
   
   if(GFL_NET_IsInit()){
     GFL_NET_AddCommandTable(GFL_NET_CMD_GTSNEGO,_PacketTbl,NELEMS(_PacketTbl), pWork);
