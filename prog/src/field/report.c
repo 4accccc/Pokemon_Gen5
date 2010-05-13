@@ -817,6 +817,8 @@ static void InitObj( REPORT_WORK * wk )
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
 		dat.pos_x += TIMEMARK_SX;
 	}
+
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
 }
 
 //--------------------------------------------------------------------------------------------
@@ -850,6 +852,8 @@ static void ExitObj( REPORT_WORK * wk )
 	GFL_CLGRP_CELLANIM_Release( wk->celRes[CELRES_TIME] );
 
 	GFL_CLACT_UNIT_Delete( wk->clunit );
+
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );		// SUB DISP OBJ ON
 }
 
 
