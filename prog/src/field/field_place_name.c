@@ -532,7 +532,6 @@ extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID 
 
   // ã≠êßìIÇ…ï\é¶
   SetForceDispFlag( system ); 
-  SetDispFlag( system );
   SetNowZoneID( system, zoneID );
 }
 
