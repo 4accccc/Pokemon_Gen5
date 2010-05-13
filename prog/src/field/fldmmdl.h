@@ -1149,8 +1149,8 @@ extern void MMDL_GetDrawVectorPos(
 extern BOOL MMDL_DrawYureHero_SetAnimeFrame( MMDL *mmdl, u32 frame );
 extern BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl );
 extern void MMDL_SetDrawMelodyerStartAnimeFrame( MMDL *mmdl );
-extern void MMDL_ShinMuA_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx );
-extern void MMDL_ShinMuC_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx );
+extern BOOL MMDL_ShinMuA_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx );
+extern BOOL MMDL_ShinMuC_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx );
 extern void MMDL_DrawBlactWork_GetAnimeFrame( MMDL *mmdl, u16* outIdx, u16* outFrmIdx );  // DRAW_BLACT_WORKêÍóp
 extern void MMDL_DrawBlactWork_SetAnimeFrame( MMDL *mmdl, u16 Idx, u16 FrmIdx );  // DRAW_BLACT_WORKêÍóp
 

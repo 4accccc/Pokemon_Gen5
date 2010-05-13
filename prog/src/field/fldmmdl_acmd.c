@@ -4496,7 +4496,10 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
   AC_SHIN_MU_FLY_UPPPER_WORK *work;
 	
   work = MMDL_GetMoveCmdWork( mmdl );
-  MMDL_ShinMuA_GetAnimeFrame( mmdl, &anmIdx, &anmFrmIdx );
+  
+  if( MMDL_ShinMuA_GetAnimeFrame(mmdl,&anmIdx,&anmFrmIdx) != TRUE ){
+    return( FALSE );
+  }
   
   work->wait++;
    
@@ -4666,7 +4669,10 @@ static int AC_ShinMuC_Fly1( MMDL * mmdl )
   AC_SHIN_MU_C_FLY_WORK *work;
 	
   work = MMDL_GetMoveCmdWork( mmdl );
-  MMDL_ShinMuC_GetAnimeFrame( mmdl, &anmIdx, &anmFrmIdx );
+
+  if( MMDL_ShinMuC_GetAnimeFrame(mmdl,&anmIdx,&anmFrmIdx) != TRUE ){
+    return( FALSE );
+  }
   
   work->wait++;
    

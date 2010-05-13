@@ -1613,22 +1613,27 @@ static u32 DrawBlActShinMu_GetBlActID( MMDL *mmdl, u32 state )
  * @retval
  */
 //--------------------------------------------------------------
-void MMDL_ShinMuA_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx )
+BOOL MMDL_ShinMuA_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx )
 {
   u16 code = MMDL_GetOBJCode( mmdl );
   
   if( code == SHIN_A || code == MU_A ){
-    GFL_BBDACT_SYS *actSys =
-      MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
     DRAW_BLACT_WORK *work = MMDL_GetDrawProcWork( mmdl );
     
-    *outIdx = GFL_BBDACT_GetAnimeIdx( actSys, work->actID );
-    *outFrmIdx = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
-  }else{
-    GF_ASSERT( 0 );
-    *outIdx = 0;
-    *outFrmIdx = 0;
+    if( work->actID != MMDL_BLACTID_NULL ){
+      GFL_BBDACT_SYS *actSys =
+        MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+      *outIdx = GFL_BBDACT_GetAnimeIdx( actSys, work->actID );
+      *outFrmIdx = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
+      return( TRUE );
+    }
+    return( FALSE );
   }
+  
+  GF_ASSERT( 0 );
+  *outIdx = 0;
+  *outFrmIdx = 0;
+  return( TRUE );
 }
 
 //--------------------------------------------------------------
@@ -1638,22 +1643,29 @@ void MMDL_ShinMuA_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx )
  * @retval
  */
 //--------------------------------------------------------------
-void MMDL_ShinMuC_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx )
+BOOL MMDL_ShinMuC_GetAnimeFrame( MMDL *mmdl, u16 *outIdx, u16 *outFrmIdx )
 {
   u16 code = MMDL_GetOBJCode( mmdl );
   
   if( code == SHIN_C || code == MU_C ){
-    GFL_BBDACT_SYS *actSys =
-      MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
     DRAW_BLACT_WORK *work = MMDL_GetDrawProcWork( mmdl );
     
-    *outIdx = GFL_BBDACT_GetAnimeIdx( actSys, work->actID );
-    *outFrmIdx = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
-  }else{
-    GF_ASSERT( 0 );
-    *outIdx = 0;
-    *outFrmIdx = 0;
+    if( work->actID != MMDL_BLACTID_NULL ){
+      GFL_BBDACT_SYS *actSys =
+        MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+      
+      *outIdx = GFL_BBDACT_GetAnimeIdx( actSys, work->actID );
+      *outFrmIdx = GFL_BBDACT_GetAnimeFrmIdx( actSys, work->actID );
+      return( TRUE );
+    }
+    
+    return( FALSE );
   }
+
+  GF_ASSERT( 0 );
+  *outIdx = 0;
+  *outFrmIdx = 0;
+  return( TRUE );
 }
 
 //--------------------------------------------------------------
