@@ -64,6 +64,7 @@ _EVENT_DATA		ev_n01r0502_champion_01
 _EVENT_DATA		ev_n01r0502_rival_01
 _EVENT_DATA   ev_reserve_n01r0502_n_battle
 _EVENT_DATA   ev_reserve_n01r0502_sage_appear
+_EVENT_DATA		ev_pos_n01r0502_lastbtl_04	//全滅後・ゲーチス戦用ＰＯＳ
 _EVENT_DATA_END
 
 
@@ -526,7 +527,7 @@ _ANIME_LABEL  anm_bikkuri
   _ANIME_DATA ACMD_END,0
 
 /************************************************************/
-/*	最終イベント３	*/
+/*	最終イベント３	Ｎ戦で全滅した用	*/
 /************************************************************/
 EVENT_START	ev_pos_n01r0502_lastbtl_03
 {
@@ -558,7 +559,8 @@ EVENT_START	ev_pos_n01r0502_lastbtl_03
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,20 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,30 )
+	_CAMERA_WAIT_MOVE()
 
 	_CALL sub_n_battle
 
@@ -1050,13 +1052,15 @@ EVENT_START ev_reserve_n01r0502_sage_appear
 EVENT_END
 
 sub_sage_appear:
+
+	_TIME_WAIT(30)
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,30 )
-
-	_TIME_WAIT(30)
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,15 )
+	_CAMERA_WAIT_MOVE()
 
 	//「上回ったか…
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w, msg_n01r0502_boss_06b, N01R0502_BOSS_01, POS_DEFAULT )
@@ -1189,6 +1193,79 @@ sub_sage_appear:
 	_OBJ_ANIME_WAIT()
 
   _RET
+
+/************************************************************/
+/*	最終イベント４	ゲーチス戦で全滅した用	*/
+/************************************************************/
+EVENT_START	ev_pos_n01r0502_lastbtl_04
+{
+	DEFINE_LOCAL LWK_POSX1
+	DEFINE_LOCAL LWK_POSZ1
+	
+	_PLAYER_POS_GET( LWK_POSX1,LWK_POSZ1 )
+
+	//X軸が14の場合
+	IF $LWK_POSX1 == 14 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl4_last14 )
+	//X軸が15の場合	
+	ELSIF $LWK_POSX1 == 15 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl4_last15 )
+	//X軸が16の場合	
+	ELSIF $LWK_POSX1== 16 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl4_last16 )
+	//X軸が17の場合	
+	ELSIF $LWK_POSX1 == 17 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl4_last17 )
+	//X軸が18の場合
+	ELSE
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl4_last18 )
+	ENDIF
+	
+	_OBJ_ANIME_WAIT()
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	//ゲーチス：片手アニメ
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_hand )
+	_OBJ_ANIME_WAIT()
+
+	_CALL ev_last
+
+}
+EVENT_END
+
+_ANIME_LABEL	anm_btl4_last14
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_btl4_last15
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_btl4_last16
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_btl4_last17
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_btl4_last18
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*	ラストシーン											*/
@@ -1333,6 +1410,9 @@ ev_last:
 
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_nayamu )
 	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_kubi )
+	_OBJ_ANIME_WAIT()
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2654208,30 )
@@ -1354,7 +1434,7 @@ ev_last:
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_20 , N01R0502_BOSS_01,POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	_TIME_WAIT(30)
+	_TIME_WAIT(20)
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi0 )
 	_OBJ_ANIME_WAIT()
@@ -1396,6 +1476,12 @@ ev_last:
 	//Ｎ：もうちょい歩く・自機の方を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi1 )
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_ayumi1 )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 30 )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_stay_l )
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_WAIT_MOVE()
@@ -1516,7 +1602,6 @@ ev_last:
 }
 
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
-	_PLAINWIN_CLOSE()
 
 	//無音にする
 	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
@@ -1524,7 +1609,6 @@ ev_last:
 	_TIME_WAIT( 60 )
 
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
-	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
 	
 	//Ｎのアップ絵終了
@@ -1608,7 +1692,6 @@ _ANIME_LABEL	anm_gcis_come5
 _ANIME_LABEL	anm_rival_come
 	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_WALK_U_16F,5
-	_ANIME_DATA	AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -1671,7 +1754,7 @@ _ANIME_LABEL	anm_champion_ayumi
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_ayumi0
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_ayumi
@@ -1688,12 +1771,10 @@ _ANIME_LABEL	anm_n_ayumi
 _ANIME_LABEL	anm_player_ayumi1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_WALK_U_16F,8
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_ayumi1
 	_ANIME_DATA	AC_WALK_U_16F,8
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_last
@@ -1749,8 +1830,8 @@ _ANIME_LABEL	anm_gcis_last1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_nayamu
-	_ANIME_DATA	AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	AC_WAIT_16F,2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_n_nayamu1
@@ -1889,12 +1970,11 @@ ball_out:
   _OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 3, 7, DIR_DOWN )
 	
   _OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_last )
-  _OBJ_ANIME_WAIT()
 
   _WHITE_IN()
   _DISP_FADE_END_CHECK()
   _LEG_WAIT_BALL_ANM()
-  
+  _OBJ_ANIME_WAIT()
 _RET
 
 /**************************************************************/
