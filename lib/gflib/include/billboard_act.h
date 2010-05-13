@@ -130,6 +130,7 @@ typedef const GFL_BBDACT_ACTDATA*	GFL_BBDACT_ACT_SETTBL;
 //=====================================
 typedef u16		GFL_BBDACT_ACTUNIT_ID;
 
+#define GFL_BBDACT_ACTUNIT_ID_INVALID (0xffff)
 
 //=============================================================================
 /**
