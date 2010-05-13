@@ -849,6 +849,17 @@ u16 ZONEDATA_GetGroupID( u16 zone_id)
 u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
 {
   ZONEDATA* zoneData;
+
+  // ホワイトゲート・ブラックゲートは同じゾーンIDなので個別処理
+  if( (zone_id == ZONE_ID_R14R0101) || (zone_id == ZONE_ID_R15R0101) ) {
+    if( GET_VERSION() == VERSION_WHITE ) {
+      return MAPNAME_GATE_WF10;
+    }
+    else {
+      return MAPNAME_GATE_BC10;
+    }
+  }
+
   zoneData = loadZoneData( zone_id );
   return zoneData->placename_id;
 }
@@ -1184,7 +1195,7 @@ BOOL ZONEDATA_IsC04RebattleZone( u16 zone_id )
 const BOOL ZONEDATA_CheckPlaceNameID_IsPalace(const u16 planeNameId)
 {
   if( planeNameId >= MAPNAME_P_C4RAIMON &&
-      planeNameId < msg_place_name_max )
+      planeNameId <= MAPNAME_P_T04 )
   {
     return TRUE;
   }
