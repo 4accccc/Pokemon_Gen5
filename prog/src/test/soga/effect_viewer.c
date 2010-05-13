@@ -1086,9 +1086,9 @@ static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw )
   if( trg == PAD_KEY_UP )
   {
     evw->waza_no += ev_pow( 10, evw->cursor_keta );
-    if( evw->waza_no > WAZANO_MAX )
+    if( evw->waza_no >= WAZANO_MAX )
     {
-      evw->waza_no = WAZANO_MAX;
+      evw->waza_no = WAZANO_MAX - 1;
     }
     evw->draw_req = DRAW_REQ_WAZA_NO;
   }
