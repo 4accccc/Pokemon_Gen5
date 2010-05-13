@@ -83,7 +83,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       plData->pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
       plData->ret_sel = PL_SEL_POS_POKE1;
       PokeParty_Init( plData->pp , 6 );
-      for( i=0;i<5;i++ )
+      for( i=0;i<4;i++ )
       {
         //*
         static const u8 no[5] = {487,135,32,2,3};
@@ -146,9 +146,9 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         {
           plData->in_num[i] = 0;
         }
-        plData->mode = PL_MODE_BATTLE;
+        //plData->mode = PL_MODE_BATTLE;
         //plData->mode = PL_MODE_BATTLE_WIFI;
-        //plData->mode = PL_MODE_BATTLE_SUBWAY;
+        plData->mode = PL_MODE_BATTLE_SUBWAY;
         for( p=0;p<3;p++ )
         {
           plData->comm_battle[p].pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);

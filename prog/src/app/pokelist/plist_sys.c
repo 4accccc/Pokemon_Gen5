@@ -2522,47 +2522,93 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       {
         maxValue = PL_SEL_POS_POKE6;
       }
-
-      //プレートがある位置までループ
-      while( isFinish == FALSE )
+      if( (work->pokeCursor == PL_SEL_POS_EXIT || 
+          work->pokeCursor == PL_SEL_POS_ENTER ) && 
+          (repeat & (PAD_KEY_UP|PAD_KEY_DOWN)) )
       {
-        if( work->pokeCursor + moveVal > maxValue )
+        //決定・戻るにある時の上下移動は例外処理
+        const u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
+        if( repeat & PAD_KEY_UP )
         {
-          //EXITが無い時動きが変になるので調整
-          if( maxValue == PL_SEL_POS_ENTER &&
-              moveVal > 1 &&
-              befPos != PL_SEL_POS_ENTER )
+          if( work->pokeCursor == PL_SEL_POS_EXIT ||
+              PLIST_UTIL_IsBattleMenu_CanReturn( work ) == FALSE )
           {
-            work->pokeCursor = maxValue;
+            //右列
+            static const u8 arr[6] = {0,1,1,3,3,5};
+            work->pokeCursor = arr[partyMax-1];
           }
           else
           {
-            work->pokeCursor = work->pokeCursor+moveVal-(maxValue+1);
-          }
-        }
-        else
-        if( work->pokeCursor + moveVal < PL_SEL_POS_POKE1 )
-        {
-          //EXITが無い時動きが変になるので調整
-          if( maxValue == PL_SEL_POS_ENTER &&
-              moveVal < 1 )
-          {
-            work->pokeCursor = maxValue;
-          }
-          else
-          {
-            work->pokeCursor = work->pokeCursor+(maxValue+1)+moveVal;
+            //左列
+            static const u8 arr[6] = {0,0,2,2,4,4};
+            work->pokeCursor = arr[partyMax-1];
           }
         }
         else
         {
-          work->pokeCursor += moveVal;
+          if( work->pokeCursor == PL_SEL_POS_EXIT ||
+              PLIST_UTIL_IsBattleMenu_CanReturn( work ) == FALSE )
+          {
+            //右列
+            if( partyMax > 1 )
+            {
+              work->pokeCursor = 1;
+            }
+            else
+            {
+              work->pokeCursor = 0;
+            }
+          }
+          else
+          {
+            //左列
+            work->pokeCursor = 0;
+          }
         }
+      }
+      else
+      {
+        //プレートがある位置までループ
+        while( isFinish == FALSE )
+        {
+          if( work->pokeCursor + moveVal > maxValue )
+          {
+            //EXITが無い時動きが変になるので調整
+            if( maxValue == PL_SEL_POS_ENTER &&
+                moveVal > 1 &&
+                befPos != PL_SEL_POS_ENTER )
+            {
+              work->pokeCursor = maxValue;
+            }
+            else
+            {
+              work->pokeCursor = work->pokeCursor+moveVal-(maxValue+1);
+            }
+          }
+          else
+          if( work->pokeCursor + moveVal < PL_SEL_POS_POKE1 )
+          {
+            //EXITが無い時動きが変になるので調整
+            if( maxValue == PL_SEL_POS_ENTER &&
+                moveVal < 1 )
+            {
+              work->pokeCursor = maxValue;
+            }
+            else
+            {
+              work->pokeCursor = work->pokeCursor+(maxValue+1)+moveVal;
+            }
+          }
+          else
+          {
+            work->pokeCursor += moveVal;
+          }
 
-        if( work->pokeCursor > PL_SEL_POS_POKE6 ||
-            PLIST_PLATE_CanSelect( work , work->plateWork[work->pokeCursor] ) == TRUE )
-        {
-          isFinish = TRUE;
+          if( work->pokeCursor > PL_SEL_POS_POKE6 ||
+              PLIST_PLATE_CanSelect( work , work->plateWork[work->pokeCursor] ) == TRUE )
+          {
+            isFinish = TRUE;
+          }
         }
       }
       //表示周り更新

@@ -976,9 +976,11 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
       }
     }
   }
+  //キャンセル不可はショートカットも消す
   if( PSTATUS_UTIL_CanUseExitButton(work) == FALSE )
   {
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_EXIT] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CHECK] , FALSE );
   }
   
   PSTATUS_SUB_InitCell( work , work->subWork );
@@ -1171,22 +1173,25 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   else
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
   {
-    if( work->page < PPT_SKILL_ADD )
+    if(  PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
     {
-      if( work->shortCutCheck[work->page] == TRUE )
+      if( work->page < PPT_SKILL_ADD )
       {
-        work->shortCutCheck[work->page] = FALSE;
-        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF );
+        if( work->shortCutCheck[work->page] == TRUE )
+        {
+          work->shortCutCheck[work->page] = FALSE;
+          GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF );
+        }
+        else
+        {
+          work->shortCutCheck[work->page] = TRUE;
+          GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
+        }
+        PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
+        work->ktst = GFL_APP_END_KEY;
       }
-      else
-      {
-        work->shortCutCheck[work->page] = TRUE;
-        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
-      }
-      PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
-      work->ktst = GFL_APP_END_KEY;
+      return TRUE;
     }
-    return TRUE;
   }
   return FALSE;
 }
@@ -1268,7 +1273,8 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     }
     break;
   case SBT_CHECK:
-    if( work->page < PPT_SKILL_ADD )
+    if( work->page < PPT_SKILL_ADD && 
+        PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
     {
       if( work->shortCutCheck[work->page] == TRUE )
       {
@@ -1539,11 +1545,11 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     {
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , TRUE );
     }
-    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CHECK] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CURSOR_UP] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CURSOR_DOWN] , TRUE );
     if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
     {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CHECK] , TRUE );
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_EXIT] , TRUE );
     }
   }
@@ -1866,7 +1872,8 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       }
     }
     
-    if( work->page < PPT_SKILL_ADD )
+    if( work->page < PPT_SKILL_ADD &&
+        PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
     {
       if( work->shortCutCheck[work->page] == TRUE )
       {
