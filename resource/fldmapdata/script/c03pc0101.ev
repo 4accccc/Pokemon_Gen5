@@ -50,12 +50,19 @@ INIT_EVENT_START	ev_init_c03pc0101
 	//主人公の座標取得
 	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
 	
-	//ジオネットのお姉さんと話しかけていなくて、入り口から入ったとき
-	IF FLAG_OFF(FE_C03PC0101_GEONET) && $LWK_POSZ == 19  THEN
+	//ジオネットのお姉さんと話しかけていない
+	IF FLAG_OFF( FE_C03PC0101_GEONET ) THEN
+		//イベント前なら女性をカウンター前に移動するかのチェック処理へ
+		
+		//自機の位置によって分岐
+		IF $LWK_POSX == 7 && $LWK_POSZ == 12 THEN
+			//全滅処理の復帰位置なら女性を動かさない
+		ELSE
+			//それ以外の位置から入ったなら、お姉さんの位置をカウンターの正面に移動する
+			_OBJ_POS_CHANGE( C03PC0101_TENNISW_01, 7, 0, 12, DIR_UP)
+			$LOCALWORK1 = 1
+		ENDIF
 	
-		//お姉さんの位置を、カウンターの正面に移動する
-		_OBJ_POS_CHANGE( C03PC0101_TENNISW_01, 7, 0, 12, DIR_UP)
-		$LOCALWORK1 = 1
 	ENDIF
 	
 	//通常のポケセンではFIELD_INIT_LABEL/FIELD_RECOVER_LABELで
