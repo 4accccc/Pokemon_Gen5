@@ -88,6 +88,8 @@ struct _CAMERA_SYSTEM_WORK
 //======================================================================
 #pragma mark [> proto
 
+static void CAMERA_SYS_SoftResetCallBack( void *work ); ///<ソフトリセットコールバック関数
+
 static void CAMERA_SYS_LoadSutterSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart );
 static void CAMERA_SYS_ReleaseSutterSnd( CAMERA_SYSTEM_WORK *work );
 
@@ -188,25 +190,38 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
   // シャッター音のためにDSPコンポーネントをロード。
   // (どのコンポーネントでもよいのでここではG.711を使用)
   {
-      (void)MI_FreeWram_B(MI_WRAM_ARM9);
-      (void)MI_CancelWram_B(MI_WRAM_ARM9);
-      (void)MI_FreeWram_C(MI_WRAM_ARM9);
-      (void)MI_CancelWram_C(MI_WRAM_ARM9);
+    (void)MI_FreeWram_B(MI_WRAM_ARM9);
+    (void)MI_CancelWram_B(MI_WRAM_ARM9);
+    (void)MI_FreeWram_C(MI_WRAM_ARM9);
+    (void)MI_CancelWram_C(MI_WRAM_ARM9);
+    {
+      FSFile  file[1];
+      DSP_OpenStaticComponentG711(file);
+      if (!DSP_LoadG711(file, 0xFF, 0xFF))
       {
-        FSFile  file[1];
-        DSP_OpenStaticComponentG711(file);
-        if (!DSP_LoadG711(file, 0xFF, 0xFF))
-        {
-            OS_TPanic("can't allocate WRAM Slot");
-        }
+        OS_TPanic("can't allocate WRAM Slot");
       }
+    }
+    GFL_UI_SoftResetSetFunc( CAMERA_SYS_SoftResetCallBack , work );
   }
   return work;
+}
+
+///<ソフトリセットコールバック関数
+static void CAMERA_SYS_SoftResetCallBack( void *pWork )
+{
+  CAMERA_SYSTEM_WORK *work = pWork;
+  DSP_UnloadG711();
+  CAMERA_SYS_StopCapture( work );
+  CAMERA_Stop();
+  MI_StopNDma(NDMA_NO);
+  CAMERA_End();
 }
 
 void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work )
 {
   // シャッター音のためにDSPコンポーネントをアンロード。
+  GFL_UI_SoftResetSetFunc( NULL , NULL );
   DSP_UnloadG711();
   CAMERA_SYS_StopCapture( work );
   CAMERA_Stop();
