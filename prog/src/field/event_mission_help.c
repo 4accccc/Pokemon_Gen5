@@ -370,7 +370,10 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-    return GMEVENT_RES_FINISH;
+
+  	//ミッション失敗：パレスへ戻される
+    GMEVENT_ChangeEvent(event, EVENT_IntrudeWarpPalace(gsys));
+    return GMEVENT_RES_CONTINUE;  //ChangeEventで終了する為Finishしない
   }
 	return GMEVENT_RES_CONTINUE;
 }
