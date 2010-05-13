@@ -62,117 +62,45 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_C07, 
     ZONE_ID_PLC07, 
     9*8, 7*8,
-    {
-      2792/16, 3112/16, 32,
-      2792/16, 2888/16, 32,
-      2984/16, 3208/16, 0, 
-      3336/16, 3192/16, 32,
-    },
   },
   {
     ZONE_ID_C08, 
     ZONE_ID_PLC08, 
     0x10*8, 7*8,
-    {
-      6632/16, 2856/16, 33,
-      6952/16, 2792/16, 33,
-      6824/16, 2472/16, 33,
-      6472/16, 2472/16, 33,
-    },
   },
   {
     ZONE_ID_T03, 
     ZONE_ID_PLT03, 
     0x17*8, 7*8,
-    {
-      1656/16,4888/16, 0, 
-      1688/16,4760/16, 0, 
-      1224/16,4824/16, 0, 
-      1304/16,4984/16, 0, 
-    },
   },
   {
     ZONE_ID_C06, 
     ZONE_ID_PLC06, 
     5*8, 0xb*8+4,
-    {
-      10552/16, 2824/16, 80,
-      10488/16,3000/16, 0, 
-      10712/16,2728/16, 0, 
-      10584/16,2696/16, 0, 
-    },
   },
   {
     ZONE_ID_T04, 
     ZONE_ID_PLT04, 
     0x1b*8, 0xb*8+4,
-    {
-      11640/16, 4824/16, 16,
-      11816/16,4888/16, 0, 
-      12040/16,4840/16, 0, 
-      11688/16,4936/16, 0, 
-    },
   },
   {
     ZONE_ID_C05, 
     ZONE_ID_PLC05, 
     9*8, 0x10*8,
-    {
-      3752/16,6952/16, 0, 
-      3320/16,6920/16, 0, 
-      2904/16,6920/16, 0, 
-      2952/16,6632/16, 0, 
-    },
   },
   {
     ZONE_ID_C04, 
     ZONE_ID_PLC04, 
     0x10*8, 0x10*8,
-    {
-      6936/16, 7448/16, 16,
-      6856/16, 7000/16, 16,
-      6520/16, 6984/16, 16,
-      6488/16, 7368/16, 16,
-    },
   },
   {
     ZONE_ID_BC10,
     ZONE_ID_PLC10, 
     0x17*8, 0x10*8,
-    {
-      5,4, 0, 
-      5,4, 0, 
-      29,28, 0, 
-      29,28, 0, 
-    },
   },
 };
 SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
-
-//--------------------------------------------------------------
-//  
-//--------------------------------------------------------------
-///変装用OBJCODEインデックス
-static const u16 DisguiseObjCodeTbl[] = {
-  HERO,   //変装無し
-  BABYBOY1,
-  BABYGIRL1,
-  BOY1,
-  BOY2,
-  BOY3,
-  BOY4,
-  GIRL1,
-  GIRL2,
-  GIRL3,
-  GIRL4,
-  POKE2,
-  POKE3,
-  POKE4,
-  POKE5,
-  POKE6,
-};
-u32 DisguiseObjCodeTblMax = NELEMS(DisguiseObjCodeTbl);
 
 //==============================================================================
 //
@@ -1001,11 +929,7 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
   u16 obj_code;
   u8 disguise_type, disguise_sex;
 
-#if 0
-  if(sta->disguise_no == 0 || sta->disguise_no >= NELEMS(DisguiseObjCodeTbl)){
-#else
   if(sta->disguise_no == DISGUISE_NO_NULL){
-#endif
     obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
   }
   else if(sta->disguise_no == DISGUISE_NO_NORMAL){

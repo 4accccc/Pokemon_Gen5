@@ -49,4 +49,5 @@ extern GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAM
 extern BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm);
 extern BOOL Intrude_CheckZonePalaceConnect(u16 zone_id);
 extern BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata);
+extern BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm);
 

@@ -20,6 +20,7 @@
 #include "intrude_comm_command.h"
 #include "intrude_main.h"
 #include "intrude_work.h"
+#include "intrude_mission.h"
 #include "field/field_status.h"
 #include "field/field_status_local.h"
 #include "fieldmap/zone_id.h"
@@ -547,4 +548,22 @@ BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata)
     }
   }
   return TRUE;
+}
+
+//==================================================================
+/**
+ * 誰かと接続してからミッションを始めるまでの間のタイムアウトメッセージの確認
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		TRUE:タイムアウト目前の為、警告メッセージを表示する必要がある
+ * @retval  BOOL		FALSE:表示する必要は無い
+ */
+//==================================================================
+BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  if(intcomm->mission_start_timeout_warning && MISSION_RecvCheck(&intcomm->mission) == FALSE){
+    return TRUE;
+  }
+  return FALSE;
 }

@@ -56,12 +56,6 @@ typedef struct{
   u16 reverse_zone_id;      ///<裏フィールドのゾーンID
   u8 subscreen_x;           ///<サブスクリーンの街の位置X
   u8 subscreen_y;           ///<サブスクリーンの街の位置Y
-//  u8 padding[2];
-  struct{
-    u16 gx;
-    u16 gz;
-    u16 y;
-  }warp_pos[PALACE_WARP_POS_PATERN];
 }PALACE_TOWN_DATA;
 
 ///パレスの街データ、検索結果

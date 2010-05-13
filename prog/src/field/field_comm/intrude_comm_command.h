@@ -28,6 +28,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_PROFILE,                        ///<プロフィールデータ
   INTRUDE_CMD_DELETE_PROFILE,                 ///<離脱者のプロフィール削除
   INTRUDE_CMD_PLAYER_STATUS,                  ///<侵入ステータス(現在情報)
+  INTRUDE_CMD_TIMEOUT_WARNING,                ///<「ミッションを開始しないからタイムアウトしそう」
   INTRUDE_CMD_TALK,                           ///<話しかける
   INTRUDE_CMD_TALK_ANSWER,                    ///<話しかけられたので自分の状況を返す
   INTRUDE_CMD_TALK_CANCEL,                    ///<話しかけをキャンセル
@@ -79,6 +80,7 @@ extern BOOL IntrudeSend_ProfileReq(void);
 extern BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_DeleteProfile(INTRUDE_COMM_SYS_PTR intcomm, int leave_netid);
 extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);
+extern BOOL IntrudeSend_TimeoutWarning(void);
 extern BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, const MISSION_DATA *mdata, INTRUDE_TALK_TYPE intrude_talk_type);
 extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer);
 extern BOOL IntrudeSend_TalkCancel(int send_net_id);

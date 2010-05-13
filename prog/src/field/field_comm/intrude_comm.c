@@ -33,6 +33,11 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
+///ミッション開始前までのタイムアウト時間
+#define MISSION_START_TIMEOUT    (60 * 180)
+///ミッション開始前までのタイムアウト時間で警告メッセージを表示しだす時間
+#define MISSION_START_TIMEOUT_MSG_ON    (MISSION_START_TIMEOUT - 60*10)
+
 ///自分一人になった場合、通信終了へ遷移するまでのタイムアウト
 #define OTHER_PLAYER_TIMEOUT    (60 * 3)
 
@@ -306,11 +311,28 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE){
       OS_TPrintf("季節が変わったため切断します\n");
       GameCommSys_ExitReq(intcomm->game_comm);
-      *seq = 200; //一応何も動作しないシーケンス番号にしておく
       break;
     }
 
     Intrude_Main(intcomm);
+    
+    if(GFL_NET_IsParentMachine() == TRUE && MISSION_RecvCheck(&intcomm->mission) == FALSE){
+      intcomm->mission_start_timeout++;
+      if(intcomm->mission_start_timeout > MISSION_START_TIMEOUT){
+        OS_TPrintf("ミッション開始前のタイムアウトによる切断\n");
+        GameCommSys_ExitReq(intcomm->game_comm);
+        break;
+      }
+      else if(intcomm->mission_start_timeout > MISSION_START_TIMEOUT_MSG_ON
+          && intcomm->mission_start_timeout_warning == 0){
+        if(IntrudeSend_TimeoutWarning() == TRUE){
+          intcomm->mission_start_timeout_warning = TRUE;
+        }
+      }
+    }
+    else{
+      intcomm->mission_start_timeout_warning = FALSE;
+    }
     
     //自分一人になった場合、通信終了へ遷移するまでのタイムアウト
     if(Intrude_OtherPlayerExistence() == FALSE){
@@ -325,26 +347,6 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
       intcomm->other_player_timeout = 0;
     }
     
-    break;
-  
-  case 100: //一度通信を終了し再度通信を起動  (子機に離脱されて親が一人残った場合のみここに来る)
-    OS_TPrintf("通信再起動：システム終了\n");
-    GFL_NET_Exit( NULL );
-    (*seq)++;
-    break;
-  case 101:
-    if(GFL_NET_IsExit() == TRUE){
-      GFL_NET_Init( &aGFLNetInit, NULL, intcomm );
-      (*seq)++;
-    }
-    break;
-  case 102:
-    if(GFL_NET_IsInit() == TRUE){
-      OS_TPrintf("通信再起動：親として起動\n");
-      GFL_NET_ChangeoverConnect(NULL);
-      intcomm->comm_status = INTRUDE_COMM_STATUS_BOOT_PARENT;
-      *seq = 0;
-    }
     break;
   }
 }
