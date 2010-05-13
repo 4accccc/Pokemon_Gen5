@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-08T22:08:27"/>
+	<create user="ohmori" host="W00223" date="2010-05-13T23:33:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -318,71 +318,65 @@
 
 	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>話しかけメニュー</comment>
-		<language name="JPN" width="256">フラット５０たいせん</language>
-		<language name="JPN_KANJI" width="256">フラット５０対戦</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_menu_002" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>話しかけメニュー</comment>
-		<language name="JPN" width="256">アイテムを　わたす</language>
-		<language name="JPN_KANJI" width="256">アイテムを　渡す</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_menu_003" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>話しかけメニュー</comment>
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_battle_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">フラット５０　で　たいせん　しよう！</language>
-		<language name="JPN_KANJI" width="256">フラット５０　で　対戦　しよう！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_battle_002" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">あいての　へんじを　まっています</language>
-		<language name="JPN_KANJI" width="256">相手の　返事を　待っています</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_battle_003" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">ことわられました</language>
-		<language name="JPN_KANJI" width="256">断られました</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]から
-[1:09:どうぐ名:1]を　もらった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から
-[1:09:どうぐ名:1]を　もらった！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_002" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に
-[1:09:どうぐ名:1]を　わたした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に
-[1:09:どうぐ名:1]を　渡した！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_cancel" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">なんでもない！　バイバイ！</language>
-		<language name="JPN_KANJI" width="256">なんでもない！　バイバイ！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_intrude_bingo000" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">ビンゴバトルに　らんにゅうを
-しんせい　しています</language>
-		<language name="JPN_KANJI" width="256">ビンゴバトルに　乱入を
-申請しています</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_intrude_bingo001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">らんにゅう　OK!</language>
-		<language name="JPN_KANJI" width="256">乱入OK!</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_intrude_bingo002" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">らんにゅう　できません</language>
-		<language name="JPN_KANJI" width="256">乱入できません</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_intrude_normal_talk_m" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -402,8 +396,8 @@
 	</row>
 
 	<row id="msg_invasion_mission_sys000" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">ミッションの　じゅしんが　できませんでした</language>
-		<language name="JPN_KANJI" width="256">ミッションの　受信が　出来ませんでした</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_invasion_mission_sys001" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
@@ -443,49 +437,43 @@
 		<comment>ミッション4成立時：助けてもらった側にフィールドで表示
 
 このあと、げんきのかけらを入手</comment>
-		<language name="JPN" width="256">どうやら　[1:00:トレーナー名:0]が
+		<language name="JPN" width="256">どうやら　ハイリンクから
+[1:00:トレーナー名:0]が▽
 たすけに　きてくれたようだ▼
 ……おや？▼
 たすけにきた　[1:00:トレーナー名:0]が
-どうぐを　おいていったようだ▼</language>
-		<language name="JPN_KANJI" width="256">どうやら　[1:00:トレーナー名:0]が
+どうぐを　おいていった▼</language>
+		<language name="JPN_KANJI" width="256">どうやら　ハイリンクから
+[1:00:トレーナー名:0]が▽
 助けに　来てくれたようだ▼
 ……おや？▼
 助けに来た　[1:00:トレーナー名:0]が
-道具を　置いていったようだ▼</language>
+道具を　置いていった▼</language>
 	</row>
 
 	<row id="msg_invasion_mission000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
-		<language name="JPN" width="256">げんざい　ミッションは　ありません</language>
-		<language name="JPN_KANJI" width="256">現在　ミッションは　ありません</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_invasion_mission001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
-		<language name="JPN" width="256">WHITEミッション：
-６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
-		<language name="JPN_KANJI" width="256">WHITEミッション：
-６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_invasion_mission001_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
-		<language name="JPN" width="256">BLACKミッション：
-６０びょうで　[1:00:トレーナー名:0]　と　であい　たすけよ</language>
-		<language name="JPN_KANJI" width="256">BLACKミッション：
-６０秒で　[1:00:トレーナー名:0]　と　出会い　助けよ</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_invasion_mission001_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
-		<language name="JPN" width="256">ミッションたっせい！
-[1:00:トレーナー名:0]を　かいふくさせた！</language>
-		<language name="JPN_KANJI" width="256">ミッション達成！
-[1:00:トレーナー名:0]を　回復させた！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_invasion_mission001_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]は　[1:00:トレーナー名:0]を
-かいふくさせた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　[1:00:トレーナー名:0]を
-回復させた！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_m_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
@@ -493,119 +481,48 @@
 
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『おや！？
-こんなところに　ポケモンが▽
-めずらしいなぁ▼
-[1:00:トレーナー名:1]は　ハイルツリーから
-もらった　[1:1C:簡易会話単語:2]を▽
-[1:00:トレーナー名:0]に　つかった！▼
-
-[1:09:どうぐ名:0]を　くれるの？▼
-ありがとう
-たいせつに　つかうよ！▼
-もっていた　[1:09:どうぐ名:0]を
-あいてに　わたした！</language>
-		<language name="JPN_KANJI" width="256">おや！？
-こんなところに　ポケモンが▽
-珍しいなぁ▼
-……え！
-[1:09:どうぐ名:0]を　くれるの？▼
-ありがとう
-大切に　つかうよ！▼
-持っていた　[1:09:どうぐ名:0]を
-相手に　わたした！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_m_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">キューン　キューン！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:0]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:0]を　くれた！▼
-キュイーン！</language>
-		<language name="JPN_KANJI" width="256">キューン　キューン！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:0]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:0]を　くれた！▼
-キュイーン！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_w_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">おや！？
-こんなところに　ポケモンが▽
-かわいいー！▼
-……え！
-[1:09:どうぐ名:0]を　くれるの？▼
-ありがとう
-たいせつに　つかうよ！▼
-もっていた　[1:09:どうぐ名:0]を
-あいてに　わたした！</language>
-		<language name="JPN_KANJI" width="256">おや！？
-こんなところに　ポケモンが▽
-かわいいー！▼
-……え！
-[1:09:どうぐ名:0]を　くれるの？▼
-ありがとう
-大切に　つかうよ！▼
-持っていた　[1:09:どうぐ名:0]を
-相手に　わたした！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_w_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">キューン　キューン！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:0]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:0]を　くれた！▼
-キュイーン！</language>
-		<language name="JPN_KANJI" width="256">キューン　キューン！▼
-……　おや？
-やってきた　ポケモンが▽
-[1:09:どうぐ名:0]を　もっている▼
-なんと　ポケモンが
-[1:09:どうぐ名:0]を　くれた！▼
-キュイーン！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_pika_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">ピカチュウ！
-え！[1:09:どうぐ名:0]を　くれるピカ？▽
-ありがとう！たいせつにつかうピカ！</language>
-		<language name="JPN_KANJI" width="256">ピカチュウ！
-え！[1:09:どうぐ名:0]を　くれるピカ？▽
-ありがとう！大切につかうピカ！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_item_pika_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>アイテム渡し：話しかけられた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">こんにちは！
-[1:09:どうぐ名:0]を　あげるピカ！▼
-[1:00:トレーナー名:1]から
-[1:09:どうぐ名:0]を　もらった！▽
-たいせつに　つかってピカ！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！
-[1:09:どうぐ名:0]を　あげるピカ！▼
-[1:00:トレーナー名:1]から
-[1:09:どうぐ名:0]を　もらった！▽
-大切に　つかってピカ！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_life_m_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
@@ -613,54 +530,24 @@
 
 主人公男
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　『いけ！
-そこだ！　がんばれ！！▼
-たたかっている　　[1:00:トレーナー名:0]の
-ポケモンを　かいふくさせた！▼
-[1:00:トレーナー名:0]　『おお！
-たすかったよ！　ありがとう！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　『いけ！
-そこだ！　がんばれ！！▼
-戦っている　　[1:00:トレーナー名:0]の
-ポケモンを　かいふくさせた！▼
-[1:00:トレーナー名:0]　『おお！
-助かったよ！　ありがとう！！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_life_w_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 主人公女
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　『いけ！
-そこだ！　がんばれ！！▼
-たたかっている　　[1:00:トレーナー名:0]の
-ポケモンを　かいふくさせた！▼
-[1:00:トレーナー名:0]　『おお！
-たすかったよ！　ありがとう！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　『いけ！
-そこだ！　がんばれ！！▼
-戦っている　　[1:00:トレーナー名:0]の
-ポケモンを　かいふくさせた！▼
-[1:00:トレーナー名:0]　『おお！
-助かったよ！　ありがとう！！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_talk_life_pika_000" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,#c0c0c0,,,,,,">
 		<comment>戦闘回復：話しかけた側
 ピカチュウ
 ※タグの数値はmission.gmmに合わせること</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]　『いけ！
-そこだ！　がんばれ！！▼
-たたかっている　　[1:00:トレーナー名:0]の
-ポケモンを　かいふくさせた！▼
-[1:00:トレーナー名:0]　『おお！
-たすかったよ！　ありがとう！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　『いけ！
-そこだ！　がんばれ！！▼
-戦っている　　[1:00:トレーナー名:0]の
-ポケモンを　かいふくさせた！▼
-[1:00:トレーナー名:0]　『おお！
-助かったよ！　ありがとう！！</language>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<row id="msg_invasion_mission_01" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
@@ -1545,21 +1432,25 @@ w=トレーナー女子（相手が）
 [1:00:トレーナー名:0]＝相手の名前
 [1:00:トレーナー名:1]＝自分の名前
 [1:1C:簡易会話単語:2]＝デルパワー名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
-がんばってるかい！？▼
-すこしでも　ぼうけんのやくに
-たてばと　おもって▽
-これを　もってきたんだ▼
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+ぼうけんの　たすけに
+なればと　おもって▼
+ハイリンク　から
+これを　もって　きたんだ▽
 うけとってよ！▼
-[1:00:トレーナー名:0]が
+……[1:00:トレーナー名:0]が
 とつぜん　ひかりだした！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
-がんばってるかい！？▼
-少しでも　冒険のやくに
-たてばと　思って▽
-これを　持ってきたんだ▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ！▼
+冒険の　助けに
+なればと　思って▼
+ハイリンク　から　
+これを　持って来たんだ▽
 受け取ってよ！▼
-[1:00:トレーナー名:0]が
+……[1:00:トレーナー名:0]が
 突然　光りだした！▼</language>
 	</row>
 
@@ -1573,20 +1464,24 @@ w=トレーナー女子（相手が）
 [1:00:トレーナー名:1]＝自分の名前
 [1:1C:簡易会話単語:2]＝デルパワー名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-ぼうけん　がんばってる？▼
-すこしでも　ぼうけんのやくに
-たてばと　おもって▽
-これを　もってきたよ▼
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼　
+ぼうけんの　たすけに
+なればと　おもって▼
+ハイリンク　から
+これを　もって　きたよ▽
 うけとって！▼
-[1:00:トレーナー名:0]が
+……[1:00:トレーナー名:0]が
 とつぜん　ひかりだした！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-冒険　がんばってる？▼
-少しでも　冒険のやくに
-たてばと　思って▽
-これを　持ってきたよ▼
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼　
+冒険の　助けに
+なればと　思って▼
+ハイリンク　から
+これを　持って来たよ▽
 受け取って！▼
-[1:00:トレーナー名:0]が
+……[1:00:トレーナー名:0]が
 突然　光りだした！▼</language>
 	</row>
 
@@ -1739,15 +1634,15 @@ w=トレーナー女子（相手が）
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『わあ！
 び　びっくりした！▽
 ……あっ▼
-もらった　パワーを
-なくしちゃった……▼
+あ　あれ？
+わすれもの　しちゃった……▼
 アッ　アハハ……
 またあおうね</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『わあ！
 び　びっくりした！▽
 ……あっ▼
-もらった　パワーを
-なくしちゃった……▼
+あ　あれ？
+わすれもの　しちゃった……▼
 アッ　アハハ……
 また会おうね</language>
 	</row>
@@ -1760,15 +1655,15 @@ w=トレーナー女子（相手が）
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『わー！
 び　びっくりした！▽
 ……あっ▼
-もらった　パワーを
-なくしちゃったよ……▼
+あ　あれ？
+わすれもの　しちゃった　みたい……▼
 エッ　エヘヘ……
 またあおうね</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『わー！
 び　びっくりした！▽
 ……あっ▼
-もらった　パワーを
-なくしちゃったよ……▼
+あ　あれ？
+忘れもの　しちゃった　みたい……▼
 エッ　エヘヘ……
 また会おうね</language>
 	</row>
@@ -1873,9 +1768,11 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
 ４＝トレーナー男子（自分が）
 mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『このパワーが　すこしでも
-たびのやくにたてば　うれしいよ！</language>
+たびのやくにたてば　うれしいよ！▽
+じゃあ　また！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『このパワーが　少しでも
-旅のやくにたてば　うれしいよ！</language>
+旅のやくにたてば　うれしいよ！▽
+じゃあ　また！</language>
 	</row>
 
 	<row id="mis_m02_03_t5" back-color="#00ff00,,,#ffff80,,#ffffff,#ff0000,,,,,#ffffff,,,,,,">
@@ -1883,9 +1780,11 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
 5＝トレーナー女子（自分が）
 mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『このパワーが　すこしでも
-たびのやくにたてば　うれしいな！</language>
+たびのやくにたてば　うれしいな！▽
+じゃあ　また！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『このパワーが　少しでも
-旅のやくにたてば　うれしいな！</language>
+旅のやくにたてば　うれしいな！▽
+じゃあ　また！</language>
 	</row>
 
 	<row id="mis_m02_03_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
@@ -2095,20 +1994,22 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 話しかたとき、相手側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『なあ！
-いきなりだけど　たいせんしないか？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+……いきなり　だけど
+たいせん　しないか？▼
 たいりょくも　かいふくさせて
-レベルフラットで　せいせいどうどう▽
-きみと　たたかいたいぜ！▼
-どうだ！？
-たいせん　しようぜ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『なあ！
-いきなりだけど　対戦しないか？▼
+レベル　[2:02:３桁:1]フラット▽
+てもち　２ひきで　たたかおうぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+……いきなり　だけど
+対戦　しないか？▼
 体力も　回復させて
-レベルフラットで　正々堂々▽
-君と　戦いたいぜ！▼
-どうだ！？
-対戦　しようぜ！</language>
+レベル　[2:02:３桁:1]フラット▽
+手持ち　２匹で　戦おうぜ！</language>
 	</row>
 
 	<row id="mis_m03_01_t5" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -2118,20 +2019,22 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『ねえ！
-いきなりだけど　たいせんしない？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+……いきなり　だけど
+たいせん　しない？▼
 たいりょくも　かいふくさせて
-レベルフラットで　せいせいどうどう▽
-きみと　たたかいたいわ！▼
-どう！？
-たいせん　しましょう！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ねえ！
-いきなりだけど　対戦しない？▼
+レベル　[2:02:３桁:1]フラット▽
+てもち　２ひきで　たたかいましょう！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+……いきなり　だけど
+対戦しない？▼
 体力も　回復させて
-レベルフラットで　正々堂々▽
-君と　戦いたいわ！▼
-どう！？
-対戦　しましょう！</language>
+レベル　[2:02:３桁:1]フラット▽
+手持ち　２匹で　戦いましょう！</language>
 	</row>
 
 	<row id="mis_m03_01_m1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
@@ -2170,8 +2073,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん？
+レベル[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまってて！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん？
+レベル[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待ってて！</language>
 	</row>
 
@@ -2183,8 +2088,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『え？
+レベル[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまっててね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『え？
+レベル[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待っててね！</language>
 	</row>
 
@@ -2221,20 +2128,22 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 話しかけられた時、相手側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『なあ！
-いきなりだけど　たいせんしないか？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+……いきなり　だけど
+たいせん　しないか？▼
 たいりょくも　かいふくさせて
-レベル[2:02:３桁:1]フラットで　せいせいどうどう▽
-きみと　たたかいたいぜ！▼
-どうだ！？
-たいせん　しようぜ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『なあ！
-いきなりだけど　対戦しないか？▼
+レベル　[2:02:３桁:1]フラット▽
+てもち　２ひきで　たたかおうぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+……いきなり　だけど
+対戦　しないか？▼
 体力も　回復させて
-レベル[2:02:３桁:1]フラットで　正々堂々▽
-君と　戦いたいぜ！▼
-どうだ！？
-対戦　しようぜ！</language>
+レベル　[2:02:３桁:1]フラット▽
+手持ち　２匹で　戦おうぜ！</language>
 	</row>
 
 	<row id="mis_m03_02_t5" back-color="#80ff80,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -2244,20 +2153,22 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『ねえ！
-いきなりだけど　たいせんしない？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+……いきなり　だけど
+たいせん　しない？▼
 たいりょくも　かいふくさせて
-レベル[2:02:３桁:1]フラットで　せいせいどうどう▽
-きみと　たたかいたいわ！▼
-どう！？
-たいせん　しましょう！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ねえ！
-いきなりだけど　対戦しない？▼
+レベル　[2:02:３桁:1]フラット▽
+てもち　２ひきで　たたかいましょう！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+……いきなり　だけど
+対戦しない？▼
 体力も　回復させて
-レベル[2:02:３桁:1]フラットで　正々堂々▽
-君と　戦いたいわ！▼
-どう！？
-対戦　しましょう！</language>
+レベル　[2:02:３桁:1]フラット▽
+手持ち　２匹で　戦いましょう！</language>
 	</row>
 
 	<row id="mis_m03_02_m1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
@@ -2994,15 +2905,17 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　たたかってたら
-すぐに　たすけにいきます！▼
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+もし　あぶなくなったら
+すぐ　たすけにいきます！▼
 ……おっと！
 わたしを　よぶこえが　きこえる▽
 それじゃあ　また！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　戦ってたら
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+もし　危なくなったら
 すぐに　助けにいきます！▼
 ……おっと！
 私を　呼ぶ声が　聞こえる▽
@@ -3016,15 +2929,17 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　たたかってたら
+とつぜｍｍで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+もし　あぶなくなったら
 すぐに　たすけにいきますね！▼
 ……やや！
 わたしを　よぶこえが　きこえます▽
 それじゃあ　また！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　戦ってたら
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+もし　危なくなったら
 すぐに　助けにいきますね！▼
 ……やや！
 私を　呼ぶ声が　聞こえます▽
@@ -3140,14 +3055,16 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　たたかってたら
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+もし　あぶなくなったら
 すぐに　たすけにいきます！▼
 ぜひ　あんしんして　ポケモンと
 たたかって　ください！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　戦ってたら
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+もし　危なくなったら
 すぐに　助けにいきます！▼
 ぜひ　安心して　ポケモンと
 戦って　ください！</language>
@@ -3160,14 +3077,16 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　たたかってたら
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+もし　あぶなくなったら
 すぐに　たすけにいきますね！▼
 ぜひ　あんしんして　ポケモンと
 たたかって　くださいませ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-がんばってますか？▼
-もし　ポケモンと　戦ってたら
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+もし　危なくなったら
 すぐに　助けにいきますね！▼
 ぜひ　安心して　ポケモンと
 戦って　くださいませ！</language>
@@ -3816,14 +3735,20 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:09:どうぐ名:1]＝売る道具
 [2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+さて！　とつぜんですが
 たびのとちゅうの　ブレイクタイム！▼
-ただいま　ですね
+……ただいま　ですね
 フレンドリィショップ　キャンペーンで▽
 [1:09:どうぐ名:1]を！▽
 なんと！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+さて！　突然ですが
 旅の途中の　ブレイクタイム！▼
-ただいま　ですね
+……ただいま　ですね
 フレンドリィショップ　キャンペーンで▽
 [1:09:どうぐ名:1]を！▽
 なんと！▼</language>
@@ -3839,13 +3764,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝売る道具
 [2:04:５桁:2]＝売る値段</comment>
-		<language name="JPN" width="256">げきやす　[2:04:５桁:2]円で！
+		<language name="JPN" width="256">とくべつかかく　[2:04:５桁:2]円で！
 はんばい　しております！▼
 こんな　チャンス
 めったに　ありません！▼
 [1:09:どうぐ名:1]を
 [2:04:５桁:2]円で　いかがでしょうか？</language>
-		<language name="JPN_KANJI" width="256">げきやす　[2:04:５桁:2]円で！
+		<language name="JPN_KANJI" width="256">特別価格　[2:04:５桁:2]円で！
 販売　しております！▼
 こんな　チャンス
 めったに　ありません！▼
@@ -3864,15 +3789,21 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:09:どうぐ名:1]＝売る道具
 [2:04:５桁:2]＝売る値段</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+とつぜんで　びっくりした？▽
+ハイリンクから　あいにきたよ▼
+さて！　とつぜんですが
 たびのとちゅうの　ブレイクタイム！▼
-いま　フレンドリィショップ　キャンペーンを
-やってて　ですね▽
+いま　フレンドリィショップ
+キャンペーンを　やってて　ですね▽
 [1:09:どうぐ名:1]を！▽
 なんとー！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+突然で　びっくりした？▽
+ハイリンクから　会いに来たよ▼
+さて！　突然ですが
 旅の途中の　ブレイクタイム！▼
-いま　フレンドリィショップ　キャンペーンを
-やってて　ですね▽
+いま　フレンドリィショップ
+キャンペーンを　やってて　ですね▽
 [1:09:どうぐ名:1]を！▽
 なんとー！▼</language>
 	</row>
@@ -3887,13 +3818,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 [1:00:トレーナー名:0]＝相手の名前
 [1:09:どうぐ名:1]＝売る道具
 [2:04:５桁:2]＝売る値段</comment>
-		<language name="JPN" width="256">げきやす　[2:04:５桁:2]円で！
+		<language name="JPN" width="256">とくべつかかく　[2:04:５桁:2]円で！
 はんばい　しております！▼
 こんな　チャンス
 めったに　ありませんよ！▼
 [1:09:どうぐ名:1]を
 [2:04:５桁:2]円で　いかがでしょうか？</language>
-		<language name="JPN_KANJI" width="256">げきやす　[2:04:５桁:2]円で！
+		<language name="JPN_KANJI" width="256">特別価格　[2:04:５桁:2]円で！
 販売　しております！▼
 こんな　チャンス
 めったに　ありませんよ！▼

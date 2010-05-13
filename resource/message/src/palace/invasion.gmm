@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-11T17:53:56"/>
+	<create user="ohmori" host="W00223" date="2010-05-13T22:25:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -635,18 +635,18 @@
 		<comment>状況メッセージ
 タグ0,1：近くに居るプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と
-せつぞく　しています……</language>
+せつぞくちゅう　です……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と
-接続　しています……</language>
+接続中　です……</language>
 	</row>
 
 	<row id="msg_invasion_info_013" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：近くに居るプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]のせかい　と
-せつぞく　しています……</language>
+せつぞくちゅう　です……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]の世界　と
-接続　しています……</language>
+接続中　です……</language>
 	</row>
 
 	<row id="msg_invasion_info_014" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -725,10 +725,10 @@
 		<comment>状況メッセージ
 タグ0,1：橋の上で近くにだれかがいるとき、
 チュートリアル専用のメッセージ</comment>
-		<language name="JPN" width="256">つうしんちゅう……　このちずの　まち
-どうろに　いるひとを　さがしています</language>
-		<language name="JPN_KANJI" width="256">通信中……　この地図の　街
-道路に　いる人を　探しています</language>
+		<language name="JPN" width="256">つうしんちゅう……　ハイリンクの
+まわりにいる　ひとを　さがしています</language>
+		<language name="JPN_KANJI" width="256">通信中……　ハイリンクの
+周りにいる　人を　探しています</language>
 	</row>
 
 	<row id="msg_invasion_info_023" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
