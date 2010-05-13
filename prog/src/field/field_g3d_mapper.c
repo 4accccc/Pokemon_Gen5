@@ -297,6 +297,38 @@ void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
 
 //------------------------------------------------------------------
 /**
+ * @brief	３Ｄマップコントロール 一括セットアップ
+ */
+//------------------------------------------------------------------
+void	FLDMAPPER_AllSetUp( FLDMAPPER* g3Dmapper )
+{
+	int i;
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->blocks == NULL ){
+		return;
+	}
+#ifdef DEBUG_PRINT_LOADING_TICK
+  {
+    OSTick DEBUG_starttick = OS_GetTick();
+    
+    OS_TPrintf( "tl.. " );
+    
+#endif
+  
+	//ブロック制御メイン
+	for( i=0; i<g3Dmapper->blockNum; i++ ){
+		FLD_G3D_MAP_AllSetUp( g3Dmapper->blockWk[i].g3Dmap );
+	}
+
+#ifdef DEBUG_PRINT_LOADING_TICK
+    OS_TPrintf( " %ld\n", OS_GetTick() - DEBUG_starttick );
+  }
+#endif
+}
+
+
+//------------------------------------------------------------------
+/**
  * @brief	３Ｄマップコントロールシステムメイン
  */
 //------------------------------------------------------------------

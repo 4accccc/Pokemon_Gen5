@@ -40,7 +40,8 @@
 //------------------------------------------------------------------
 struct _FLD_G3D_MAP 
 {
-	BOOL							drawSw;
+	u16							drawSw;
+  u16             allSetUp; // 一括セットアップモード　（TRUE：ON　FALSE：OFF）
 	VecFx32							trans;
 	ARCHANDLE*						arc;
 	u32								datID;
@@ -96,6 +97,8 @@ static s32		testBoundingBox( const GXBoxTestParam* boundingBox );
 //static BOOL		checkCullingBoxTest( NNSG3dRenderObj* rnd );
 static BOOL checkCullingBoxTest( NNSG3dResMdl * mdl );
 static GFL_G3D_RES*	getResourceTex( const FLD_G3D_MAP* g3Dmap );
+
+static void allLoad( FLD_G3D_MAP* g3Dmap, u32 datID ); // 一括読み込み処理
 
 //------------------------------------------------------------------
 /**
@@ -230,6 +233,30 @@ void	FLD_G3D_MAP_Main( FLD_G3D_MAP* g3Dmap )
     OS_TPrintf( "loading.. tick %ld\n", OS_GetTick() - DEBUG_starttick );
 #endif
 	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップ一括読み込み
+ *				※データ読み込み
+ */
+//------------------------------------------------------------------
+void	FLD_G3D_MAP_AllSetUp( FLD_G3D_MAP* g3Dmap )
+{
+  // 一括読み込みモードON
+  g3Dmap->allSetUp = TRUE;
+
+
+  {
+    FLD_G3D_MAP_LOAD_STATUS* ldst;
+    do{
+      FLD_G3D_MAP_Main( g3Dmap );
+      FLD_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
+    }while( ldst->seq != FLD_G3D_MAP_LOAD_IDLING );
+  }
+
+  // 一括読み込みモードOFF
+  g3Dmap->allSetUp = FALSE;
 }
 
 //------------------------------------------------------------------
@@ -746,18 +773,29 @@ void FLD_G3D_MAP_ResetLoadStatus( FLD_G3D_MAP* g3Dmap )
 //------------------------------------------------------------------
 void FLD_G3D_MAP_StartFileLoad( FLD_G3D_MAP* g3Dmap, u32 datID )
 {
-	void* dst = (void*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
+  // 一括Load
+  if( g3Dmap->allSetUp )
+  {
+    allLoad( g3Dmap, datID );
+  }
+  else
+  {
+    // 分割Load
+    void* dst = (void*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
 
-	GF_ASSERT( (g3Dmap->ldst.mOffs + g3Dmap->mapLoadSize) <= g3Dmap->mapDataHeapSize );
+    GF_ASSERT( (g3Dmap->ldst.mOffs + g3Dmap->mapLoadSize) <= g3Dmap->mapDataHeapSize );
 
-	//ロード開始
-	g3Dmap->ldst.fSize = GFL_ARC_GetDataSizeByHandle( g3Dmap->arc, datID );
-	g3Dmap->ldst.fOffs = 0;
+    
+    // 分割Lord
+    //ロード開始
+    g3Dmap->ldst.fSize = GFL_ARC_GetDataSizeByHandle( g3Dmap->arc, datID );
+    g3Dmap->ldst.fOffs = 0;
 
-	GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, datID, 0, g3Dmap->mapLoadSize, dst ); 
+    GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, datID, 0, g3Dmap->mapLoadSize, dst ); 
 
-	g3Dmap->ldst.mOffs += g3Dmap->mapLoadSize;
-	g3Dmap->ldst.fOffs += g3Dmap->mapLoadSize;
+    g3Dmap->ldst.mOffs += g3Dmap->mapLoadSize;
+    g3Dmap->ldst.fOffs += g3Dmap->mapLoadSize;
+  }
 }
 
 BOOL FLD_G3D_MAP_ContinueFileLoad( FLD_G3D_MAP* g3Dmap )
@@ -765,7 +803,7 @@ BOOL FLD_G3D_MAP_ContinueFileLoad( FLD_G3D_MAP* g3Dmap )
 	void*	dst = (void*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
 	u32		rest;
 
-	if( g3Dmap->ldst.fSize < g3Dmap->ldst.fOffs){
+	if( g3Dmap->ldst.fSize <= g3Dmap->ldst.fOffs){
 		return FALSE;
 	}
 	rest = g3Dmap->ldst.fSize - g3Dmap->ldst.fOffs;
@@ -1329,3 +1367,31 @@ static GFL_G3D_RES*	getResourceTex( const FLD_G3D_MAP* g3Dmap )
 	}
 	return g3Dmap->groundResTex;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brie 一括読み込み　処理
+ *
+ *	@param  g3Dmap  ワーク
+ *	@param  datID   データID
+ */
+//-----------------------------------------------------------------------------
+static void allLoad( FLD_G3D_MAP* g3Dmap, u32 datID )
+{
+	void* dst = (void*)((u32)g3Dmap->mapData);
+  u32 fsize = GFL_ARC_GetDataSizeByHandle( g3Dmap->arc, datID );
+  GF_ASSERT( fsize <= g3Dmap->mapDataHeapSize );
+
+  // 一括
+  GFL_ARC_LoadDataByHandle( g3Dmap->arc, datID, dst );
+
+  // 読み込み完了にする。
+	g3Dmap->ldst.fSize = fsize;
+  g3Dmap->ldst.mOffs = fsize;
+	g3Dmap->ldst.fOffs = fsize;
+}
+
+
+
