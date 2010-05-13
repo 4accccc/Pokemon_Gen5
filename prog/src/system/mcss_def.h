@@ -80,7 +80,8 @@ struct _MCSS_WORK
 	void*													mcss_mcanim_buf;			//マルチセルアニメーションの実体の内部で使用するワーク領域
 	NNSG2dImageProxy							mcss_image_proxy;			//テクスチャプロキシ
 	NNSG2dImagePaletteProxy				mcss_palette_proxy;		//パレットプロキシ
-	u16														*pltt_data;						//パレットデータ（パレットフェード用）
+	u16														*base_pltt_data;			//パレットデータ（パレットフェードのベースカラー）
+	u16														*fade_pltt_data;			//パレットデータ（別のパレットフェードを適応してベースカラーにする）
 	int														pltt_data_size;				//パレットデータサイズ
 	VecFx32												pos;									//マルチセルのポジション
 	VecFx32												scale;								//マルチセルのスケール
@@ -103,7 +104,7 @@ struct _MCSS_WORK
   u32                           shadow_alpha      :9; //影アルファ(32で通常の半分を
 	u32														shadow_vanish_flag:1;    
 	u32														mosaic				    :8; //モザイク    
-	u32																					    :1;    
+	u32														fade_pltt_data_flag:1;    
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
   MCSS_ADD_WORK                 maw;
@@ -116,6 +117,7 @@ struct _MCSS_WORK
 
 struct _MCSS_SYS_WORK
 {
+  GFL_TCB*                tcb_load_shadow;      //影リソース読み込みtcb
 	int											mcss_max;							//登録数MAX
 	MCSS_WORK**							mcss;									//登録マルチセル構造体
 #ifdef USE_RENDER

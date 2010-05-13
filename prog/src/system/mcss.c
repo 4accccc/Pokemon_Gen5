@@ -146,7 +146,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
                                               GFL_HEAP_LOWID( heapID ) );
 		GF_ASSERT( tlw->pBufPltt != NULL);
 
-		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    mcss_sys->tcb_load_shadow = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
 	}
 	
 	return mcss_sys;
@@ -162,6 +162,16 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys )
 {
 	int	i;
+
+  if( mcss_sys->tcb_load_shadow )
+  { 
+	  TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)GFL_TCB_GetWork( mcss_sys->tcb_load_shadow );
+	  GFL_HEAP_FreeMemory( tlw->pPlttData->pRawData );
+	  GFL_HEAP_FreeMemory( tlw->pPlttData );
+    GFL_HEAP_FreeMemory( tlw );
+    GFL_TCB_DeleteTask( mcss_sys->tcb_load_shadow );
+    mcss_sys->tcb_load_shadow = NULL;
+  }
 
 	for( i = 0 ; i < mcss_sys->mcss_max ; i++ ){
 		if( mcss_sys->mcss[i] != NULL ){
@@ -746,7 +756,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 
 	for( count = 0 ; count < mcss_sys->mcss_max ; count++ ){
 		if( mcss_sys->mcss[ count ] == NULL ){
-			mcss_sys->mcss[ count ] = GFL_HEAP_AllocClearMemory( mcss_sys->heapID, sizeof(MCSS_WORK) );
+			mcss_sys->mcss[ count ] = GFL_HEAP_AllocClearMemory( mcss_sys->heapID, sizeof( MCSS_WORK ) );
 			mcss_sys->mcss[ count ]->index = count;
 			mcss_sys->mcss[ count ]->heapID = mcss_sys->heapID;
 			mcss_sys->mcss[ count ]->pos.x = pos_x;
@@ -806,6 +816,7 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
     }
     GFL_HEAP_FreeMemory( tlw );
     GFL_TCB_DeleteTask( mcss->tcb_load_resource );
+    mcss->tcb_load_resource = NULL;
   }
 
   if( mcss->tcb_load_palette )
@@ -815,6 +826,7 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
 	  GFL_HEAP_FreeMemory( tlw->pPlttData );
     GFL_HEAP_FreeMemory( tlw );
     GFL_TCB_DeleteTask( mcss->tcb_load_palette );
+    mcss->tcb_load_palette = NULL;
   }
 
 	mcss_sys->mcss[ mcss->index ] = NULL;
@@ -1542,6 +1554,72 @@ u16 MCSS_GetAnimeNum( MCSS_WORK* mcss )
 }
 
 //--------------------------------------------------------------------------
+/**
+ * @brief パレットフェード用ベースカラー変更
+ * パレットフェードに使用するベースカラーをカラー加減算を適応したパレットに変更
+ *
+ * @param[in] mcss      MCSSワーク構造体のポインタ
+ * @param[in]	evy	      セットするパラメータ（フェードさせる色に対する開始割合16段階）
+ * @param[in]	rgb				セットするパラメータ（フェードさせる色）
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK* mcss, u8 evy, u32 rgb )
+{ 
+	TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
+
+  tlw->mcss = mcss;
+	tlw->palette_p = &mcss->mcss_palette_proxy;
+	tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * mcss->index;
+
+	tlw->pPlttData = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( NNSG2dPaletteData ) );
+
+	tlw->pPlttData->fmt = mcss->mcss_palette_proxy.fmt;
+	tlw->pPlttData->bExtendedPlt = FALSE;
+	tlw->pPlttData->szByte = mcss->pltt_data_size;
+	tlw->pPlttData->pRawData = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( mcss->heapID ), mcss->pltt_data_size );
+
+  SoftFade( (void *)mcss->base_pltt_data, (void *)tlw->pPlttData->pRawData, mcss->pltt_data_size / 2, evy, rgb );
+	MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->fade_pltt_data, mcss->pltt_data_size );
+
+  if( mcss->pal_fade_flag == 0 )
+  { 
+	  mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+  }
+  else
+  { 
+    GFL_HEAP_FreeMemory( tlw->pPlttData->pRawData );
+    GFL_HEAP_FreeMemory( tlw->pPlttData );
+    GFL_HEAP_FreeMemory( tlw );
+  }
+
+  mcss->fade_pltt_data_flag = 1;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief パレットフェード用ベースカラー変更解除
+ *
+ * @param[in] mcss      MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetPaletteFadeBaseColor( MCSS_WORK *mcss )
+{ 
+  mcss->fade_pltt_data_flag = 0;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief パレットフェード用ベースカラー変更フラグ取得
+ *
+ * @param[in] mcss      MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+int   MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss )
+{ 
+  return mcss->fade_pltt_data_flag;
+}
+
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1596,7 +1674,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	// VRAM 関連の初期化
 	//
 	{
-		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
 		tlw->image_p = &mcss->mcss_image_proxy;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
@@ -1618,9 +1696,10 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 		{
 			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, GFL_HEAP_LOWID( mcss->heapID ) );
 			GF_ASSERT( tlw->pBufPltt != NULL);
-			mcss->pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->base_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
-			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->pltt_data, tlw->pPlttData->szByte );
+			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->base_pltt_data, tlw->pPlttData->szByte );
 		}
 
     if( mcss_sys->load_resource_callback )
@@ -1797,24 +1876,35 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 {	
 	if( mcss->pal_fade_wait == 0 )
 	{	
-		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
 
     tlw->mcss = mcss;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * mcss->index;
 
-		tlw->pPlttData = GFL_HEAP_AllocMemory( mcss->heapID, sizeof( NNSG2dPaletteData ) );
+		tlw->pPlttData = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( NNSG2dPaletteData ) );
 
 		tlw->pPlttData->fmt = mcss->mcss_palette_proxy.fmt;
 		tlw->pPlttData->bExtendedPlt = FALSE;
 		tlw->pPlttData->szByte = mcss->pltt_data_size;
-		tlw->pPlttData->pRawData = GFL_HEAP_AllocMemory( mcss->heapID, mcss->pltt_data_size );
+		tlw->pPlttData->pRawData = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( mcss->heapID ), mcss->pltt_data_size );
 
-		SoftFade( (void *)mcss->pltt_data,
-							(void *)tlw->pPlttData->pRawData,
-							mcss->pltt_data_size / 2, 
-							mcss->pal_fade_start_evy,
-							mcss->pal_fade_rgb );
+    if( mcss->fade_pltt_data_flag )
+    { 
+		  SoftFade( (void *)mcss->fade_pltt_data,
+							  (void *)tlw->pPlttData->pRawData,
+							  mcss->pltt_data_size / 2, 
+							  mcss->pal_fade_start_evy,
+							  mcss->pal_fade_rgb );
+    }
+    else
+    { 
+		  SoftFade( (void *)mcss->base_pltt_data,
+							  (void *)tlw->pPlttData->pRawData,
+							  mcss->pltt_data_size / 2, 
+							  mcss->pal_fade_start_evy,
+							  mcss->pal_fade_rgb );
+    }
 
 		mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
 
@@ -1854,7 +1944,8 @@ static  void  MCSS_FreeResource( MCSS_WORK* mcss )
 	GF_ASSERT( mcss->mcss_nmar_buf   != NULL );
 	GF_ASSERT( mcss->mcss_mcanim_buf != NULL );
 	GF_ASSERT( mcss->mcss_ncec       != NULL );
-	GF_ASSERT( mcss->pltt_data       != NULL );
+	GF_ASSERT( mcss->base_pltt_data  != NULL );
+	GF_ASSERT( mcss->fade_pltt_data  != NULL );
 
 	GFL_HEAP_FreeMemory( mcss->mcss_ncer_buf );
 	GFL_HEAP_FreeMemory( mcss->mcss_nanr_buf );
@@ -1862,7 +1953,8 @@ static  void  MCSS_FreeResource( MCSS_WORK* mcss )
 	GFL_HEAP_FreeMemory( mcss->mcss_nmar_buf );
 	GFL_HEAP_FreeMemory( mcss->mcss_mcanim_buf );
 	GFL_HEAP_FreeMemory( mcss->mcss_ncec );
-	GFL_HEAP_FreeMemory( mcss->pltt_data );
+	GFL_HEAP_FreeMemory( mcss->base_pltt_data );
+	GFL_HEAP_FreeMemory( mcss->fade_pltt_data );
 
 	mcss->mcss_ncer_buf   = NULL;
 	mcss->mcss_nanr_buf   = NULL;
@@ -1870,7 +1962,8 @@ static  void  MCSS_FreeResource( MCSS_WORK* mcss )
 	mcss->mcss_nmar_buf   = NULL;
 	mcss->mcss_mcanim_buf = NULL;
 	mcss->mcss_ncec       = NULL;
-	mcss->pltt_data       = NULL;
+	mcss->base_pltt_data  = NULL;
+	mcss->fade_pltt_data  = NULL;
 }
 
 //--------------------------------------------------------------------------
@@ -2241,9 +2334,10 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 			NNS_G2dGetUnpackedPaletteData( madw->nclr, &tlw->pPlttData );
 			tlw->pBufPltt = madw->nclr;
 			GF_ASSERT( tlw->pBufPltt != NULL);
-			mcss->pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->base_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
-			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->pltt_data, tlw->pPlttData->szByte );
+			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->base_pltt_data, tlw->pPlttData->szByte );
     }
 
     mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
