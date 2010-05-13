@@ -655,4 +655,8 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/h01a_00_02.nsbmd \
 	$(DIR_TEMP)/h01a_01_00.nsbmd \
 	$(DIR_TEMP)/h01a_01_01.nsbmd \
-	$(DIR_TEMP)/h01a_01_02.nsbmd
+	$(DIR_TEMP)/h01a_01_02.nsbmd \
+	$(DIR_TEMP)/champion_00_00.nsbmd \
+	$(DIR_TEMP)/champion_00_01.nsbmd \
+	$(DIR_TEMP)/champion_01_00.nsbmd \
+	$(DIR_TEMP)/champion_01_01.nsbmd

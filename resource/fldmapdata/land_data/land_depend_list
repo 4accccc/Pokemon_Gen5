@@ -655,4 +655,8 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/h01a_00_02.ngpack \
 	$(DIR_OUTPUT)/h01a_01_00.ngpack \
 	$(DIR_OUTPUT)/h01a_01_01.ngpack \
-	$(DIR_OUTPUT)/h01a_01_02.ngpack
+	$(DIR_OUTPUT)/h01a_01_02.ngpack \
+	$(DIR_OUTPUT)/champion_00_00.ngpack \
+	$(DIR_OUTPUT)/champion_00_01.ngpack \
+	$(DIR_OUTPUT)/champion_01_00.ngpack \
+	$(DIR_OUTPUT)/champion_01_01.ngpack
