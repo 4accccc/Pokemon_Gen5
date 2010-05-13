@@ -120,6 +120,8 @@ enum{
 typedef struct _BTLV_EFFECT_SETUP_PARAM BTLV_EFFECT_SETUP_PARAM;
 typedef struct _BTLV_EFFECT_WORK        BTLV_EFFECT_WORK;
 
+typedef void  (BTLV_EFFECT_TCB_CALLBACK_FUNC)( GFL_TCB* tcb );
+
 //OBJパレット使用内訳
 enum{
   BTLV_OBJ_PLTT_HP_GAUGE    = 0x20 * 0,   //0-5:HPゲージ（6本分）
@@ -128,6 +130,14 @@ enum{
   BTLV_OBJ_PLTT_STATUS_ICON = 0x20 * 8,   //8:状態異常アイコン
   BTLV_OBJ_PLTT_CLACT       = 0x20 * 9,   //9:BTLV_CLACTで使用するセルアクター（7個分）
 };
+
+//BTLV_EFFECT_SetTCBで使用するグループ指定
+typedef enum{ 
+  GROUP_DEFAULT = 0,
+  GROUP_EFFVM,
+  GROUP_MCSS,
+  GROUP_CLACT,
+}BTLV_EFFECT_TCB_GROUP;
 
 //--------------------------------------------
 /**
@@ -281,6 +291,11 @@ extern  const BTLV_SCU*   BTLV_EFFECT_GetScu( void );
 extern  int               BTLV_EFFECT_GetPinchBGMFlag( void );
 extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no );
 extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
+extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func,
+                                              BTLV_EFFECT_TCB_GROUP group );
+extern  int               BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb );
+extern  void              BTLV_EFFECT_FreeTCB( GFL_TCB* tcb );
+extern  void              BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

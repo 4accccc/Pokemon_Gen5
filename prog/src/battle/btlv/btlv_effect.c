@@ -86,6 +86,9 @@ struct _BTLV_EFFECT_WORK
   //最終的にはエフェクトで使用するTCBをBTLV_MCSS、BTLV_CAMERA、BTLV_EFFECTでシェアする形にする
   GFL_TCBSYS*             tcb_sys;
   void*                   tcb_work;
+  GFL_TCB*                tcb[ BTLV_EFFECT_TCB_MAX ];
+  BTLV_EFFECT_TCB_CALLBACK_FUNC*  tcb_callback[ BTLV_EFFECT_TCB_MAX ];
+  int                     tcb_group[ BTLV_EFFECT_TCB_MAX ];
   VMHANDLE*               vm_core;
   PALETTE_FADE_PTR        pfd;
   BTLV_MCSS_WORK*         bmw;
@@ -100,7 +103,10 @@ struct _BTLV_EFFECT_WORK
   GFL_TCB*                v_tcb;
   BTLV_EFFECT_SETUP_PARAM besp;
   int                     execute_flag;
-  int                     tcb_execute_flag;
+  u32                     tcb_damage_flag :BTLV_MCSS_POS_MAX;
+  u32                     tcb_henge_flag  :BTLV_MCSS_POS_MAX;
+  u32                     tcb_rotate_flag :2;
+  u32                                     :15;
   HEAPID                  heapID;
 
   BOOL                    trainer_bgm_change_flag;
@@ -140,9 +146,14 @@ static  BTLV_EFFECT_WORK  *bew = NULL;
 //============================================================================================
 
 static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work );
-static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work );
-static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_EFFECT_Damage_CB( GFL_TCB *tcb );
+static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_EFFECT_Henge_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb );
+static  int   BTLV_EFFECT_GetTCBIndex( void );
+static  void  BTLV_EFFECT_FreeTCBAll( void );
 
 #ifdef PM_DEBUG
 void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
@@ -316,6 +327,7 @@ void  BTLV_EFFECT_Exit( void )
   GF_ASSERT( bew != NULL );
 
   PMVOICE_PlayerHeapRelease();
+  BTLV_EFFECT_FreeTCBAll();
 
   PaletteFadeWorkAllocFree( bew->pfd, FADE_MAIN_BG );
   PaletteFadeWorkAllocFree( bew->pfd, FADE_SUB_BG );
@@ -488,8 +500,6 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
   bedt->work = BTLV_EFFECT_BLINK_TIME;
   bedt->wait = 0;
 
-  bew->tcb_execute_flag = 1;
-
   if( WAZADATA_GetDamageType( waza ) == WAZADATA_DMG_PHYSIC )
   {
     //物理ダメージ
@@ -501,7 +511,10 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
     bedt->color = BTLV_EFFECT_BLINK_SPECIAL;
   }
 
-  GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bedt, 0 );
+  bew->tcb_damage_flag |= BTLV_EFFTOOL_Pos2Bit( target );
+
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Damage, bedt, 0 ),
+                                       TCB_BTLV_EFFECT_Damage_CB, GROUP_DEFAULT );
 }
 //=============================================================================================
 /**
@@ -578,9 +591,10 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
 
   BTLV_MCSS_MakeMAW( pp, &beht->maw, vpos );
 
-  bew->tcb_execute_flag = 1;
+  bew->tcb_henge_flag |= BTLV_EFFTOOL_Pos2Bit( vpos );
 
-  GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Henge, beht, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Henge, beht, 0 ),
+                      TCB_BTLV_EFFECT_Henge_CB, GROUP_DEFAULT );
 }
 
 //=============================================================================================
@@ -640,7 +654,7 @@ void  BTLV_EFFECT_DeleteMigawari( BtlvMcssPos vpos )
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckExecute( void )
 {
-  return ( ( bew->execute_flag | bew->tcb_execute_flag ) != 0 );
+  return ( ( bew->execute_flag | bew->tcb_damage_flag | bew->tcb_henge_flag | bew->tcb_rotate_flag ) != 0 );
 }
 
 //============================================================================================
@@ -1086,11 +1100,14 @@ void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
   {
     return;
   }
-  bew->tcb_execute_flag = 1;
   tr->seq_no = 0;
   tr->dir = ( dir == BTL_ROTATEDIR_L ) ? 0 : 1;
   tr->side = side;
-  GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Rotation, tr, 0 );
+
+  bew->tcb_rotate_flag |= BTLV_EFFTOOL_Pos2Bit( side );
+
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Rotation, tr, 0 ),
+                      TCB_BTLV_EFFECT_Rotation_CB, GROUP_DEFAULT );
 }
 
 //============================================================================================
@@ -1493,6 +1510,145 @@ BOOL  BTLV_EFFECT_GetTrainerBGMChangeFlag( void )
   return bew->trainer_bgm_change_flag;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  空いているTCBIndexを取得してGFL_TCBをセット
+ *
+ *  @param[in]  tcb       セットするGFL_TCB
+ *  @param[in]  callback  解放されるときに呼び出されるコールバック関数
+ *  @param[in]  group     グループ指定
+ */
+//-----------------------------------------------------------------------------
+void   BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func, BTLV_EFFECT_TCB_GROUP group )
+{ 
+  int index = BTLV_EFFECT_GetTCBIndex();
+
+  bew->tcb[ index ] = tcb;
+  bew->tcb_callback[ index ] = callback_func;
+  bew->tcb_group[ index ] = group;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  指定されたGFL_TCBのTCBIndexを取得
+ *
+ *  @param[in]  tcb 取得するGFL_TCB
+ */
+//-----------------------------------------------------------------------------
+int   BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb )
+{
+  int i;
+
+  for( i = 0 ; i < BTLV_EFFECT_TCB_MAX ; i++ )
+  {
+    if( bew->tcb[ i ] == tcb )
+    {
+      break;
+    }
+  }
+
+  GF_ASSERT( i != BTLV_EFFECT_TCB_MAX );
+
+  return i;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  解放されていないTCBを解放
+ *
+ *  @param[in]  tcb 解放するTCB
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_FreeTCB( GFL_TCB* tcb )
+{
+  int index = BTLV_EFFECT_SearchTCBIndex( tcb );
+  if( tcb )
+  {
+    void* work = GFL_TCB_GetWork( tcb );
+    if( bew->tcb_callback[ index ] )
+    { 
+      bew->tcb_callback[ index ]( tcb );
+    }
+    if( work )
+    { 
+      GFL_HEAP_FreeMemory( work );
+    }
+    GFL_TCB_DeleteTask( tcb );
+    bew->tcb[ index ] = NULL;
+    bew->tcb_callback[ index ] = NULL;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  グループを指定してTCBを解放
+ *
+ *  @param[in]  group 解放するTCBグループ
+ *
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTLV_EFFECT_TCB_MAX ; i++ )
+  {
+    if( ( bew->tcb[ i ] ) && ( bew->tcb_group[ i ] == group ) )
+    {
+      BTLV_EFFECT_FreeTCB( bew->tcb[ i ] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  空いているTCBIndexを取得
+ *
+ *  @param[in]  bevw システム管理構造体
+ */
+//-----------------------------------------------------------------------------
+static  int   BTLV_EFFECT_GetTCBIndex( void )
+{
+  int i;
+
+  for( i = 0 ; i < BTLV_EFFECT_TCB_MAX ; i++ )
+  {
+    if( bew->tcb[ i ] == NULL )
+    {
+      break;
+    }
+  }
+
+  GF_ASSERT( i != BTLV_EFFECT_TCB_MAX );
+  if( i == BTLV_EFFECT_TCB_MAX )
+  { 
+    BTLV_EFFECT_FreeTCB( bew->tcb[ 0 ] );
+    i = 0;
+  }
+
+  return i;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  解放されていないすべてのTCBを解放
+ *
+ *  @param[in]  bevw システム管理構造体
+ */
+//-----------------------------------------------------------------------------
+static  void  BTLV_EFFECT_FreeTCBAll( void )
+{
+  int i;
+
+  for( i = 0 ; i < BTLV_EFFECT_TCB_MAX ; i++ )
+  {
+    if( bew->tcb[ i ] )
+    {
+      BTLV_EFFECT_FreeTCB( bew->tcb[ i ] );
+    }
+  }
+}
+
 //============================================================================================
 /**
  *  @brief  VBlank関数
@@ -1509,7 +1665,7 @@ static  void  BTLV_EFFECT_VBlank( GFL_TCB *tcb, void *work )
  *  @brief  ダメージエフェクトシーケンス（多重起動があるのでTCBで作成）
  */
 //============================================================================================
-static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
+static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work )
 {
   BTLV_EFFECT_DAMAGE_TCB *bedt = (BTLV_EFFECT_DAMAGE_TCB*)work;
 
@@ -1534,20 +1690,25 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
     BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 0, 0, 0, 0x7fff );
     bedt->wait = BTLV_EFFECT_BLINK_WAIT;
     if( --bedt->work == 0 ){
-      bew->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( bedt );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
 }
 
+static  void  TCB_BTLV_EFFECT_Damage_CB( GFL_TCB *tcb )
+{ 
+  BTLV_EFFECT_DAMAGE_TCB *bedt = (BTLV_EFFECT_DAMAGE_TCB*)GFL_TCB_GetWork( tcb );
+
+  bew->tcb_damage_flag &= ( BTLV_EFFTOOL_Pos2Bit( bedt->target ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+}
+
 //============================================================================================
 /**
- *  @brief  ダメージエフェクトシーケンス（多重起動があるのでTCBで作成）
+ *  @brief  変化エフェクトシーケンス（多重起動があるのでTCBで作成）
  */
 //============================================================================================
-static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work )
+static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
 {
   BTLV_EFFECT_HENGE_TCB *beht = (BTLV_EFFECT_HENGE_TCB*)work;
 
@@ -1572,12 +1733,17 @@ static  void  BTLV_EFFECT_TCB_Henge( GFL_TCB *tcb, void *work )
     if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
     {
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 31, 0, 0, 0 );
-      bew->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( beht );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
+}
+
+static  void  TCB_BTLV_EFFECT_Henge_CB( GFL_TCB *tcb )
+{ 
+  BTLV_EFFECT_HENGE_TCB *beht = (BTLV_EFFECT_HENGE_TCB*)GFL_TCB_GetWork( tcb );
+
+  bew->tcb_henge_flag &= ( BTLV_EFFTOOL_Pos2Bit( beht->vpos ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
 }
 
 //============================================================================================
@@ -1598,13 +1764,19 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
     if( ( BTLV_STAGE_CheckExecuteAnmReq( bew->bsw ) == FALSE ) &&
         ( BTLV_MCSS_CheckTCBExecuteAllPos( bew->bmw ) == FALSE ) )
     {
-      bew->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( tr );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
 }
+
+static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb )
+{ 
+  TCB_ROTATION *tr = ( TCB_ROTATION* )GFL_TCB_GetWork( tcb );
+
+  bew->tcb_rotate_flag &= ( BTLV_EFFTOOL_Pos2Bit( tr->side ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+}
+
 #ifdef PM_DEBUG
 //============================================================================================
 /**

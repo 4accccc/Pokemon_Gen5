@@ -48,6 +48,7 @@ typedef struct
 //============================================================================================
 static  void  BTLV_BG_TCBInitialize( BTLV_BG_WORK *bbw, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func );
 static  void  TCB_BTLV_BG_Move( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_BG_CallbackFunc( GFL_TCB* tcb );
 
 //============================================================================================
 /**
@@ -189,7 +190,7 @@ static  void  BTLV_BG_TCBInitialize( BTLV_BG_WORK *bbw, int type, VecFx32 *start
     bbtw->emw.vector.z = FX_Div( end->z, FX32_CONST( frame ) );
     break;
   }
-  GFL_TCB_AddTask( bbw->tcb_sys, func, bbtw, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bbw->tcb_sys, func, bbtw, 0 ), TCB_BTLV_BG_CallbackFunc, GROUP_DEFAULT );
 }
 
 //============================================================================================
@@ -228,9 +229,14 @@ static  void  TCB_BTLV_BG_Move( GFL_TCB *tcb, void *work )
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, scr_y );
   if( ret == TRUE )
   {
-    bbw->bg_tcb_move_execute = 0;
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_BTLV_BG_CallbackFunc( GFL_TCB* tcb )
+{ 
+  BTLV_BG_TCB_WORK *bbtw = ( BTLV_BG_TCB_WORK * )GFL_TCB_GetWork( tcb );
+
+  bbtw->bbw->bg_tcb_move_execute = 0;
 }
 

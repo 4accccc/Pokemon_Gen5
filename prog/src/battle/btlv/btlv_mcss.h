@@ -54,7 +54,7 @@ typedef enum{
   BTLV_MCSS_POS_TOTAL,    //ポケモンとトレーナーをあわせたMAX値
 
   BTLV_MCSS_POS_PAIR_BIT = 0x02,
-  BTLV_MCSS_POS_ERROR = 0xff
+  BTLV_MCSS_POS_ERROR = 0xff,
 }BtlvMcssPos;
 
 typedef enum{
@@ -165,6 +165,8 @@ extern  BOOL            BTLV_MCSS_CheckTCBExecuteAllPos( BTLV_MCSS_WORK *bmw );
 extern  BOOL            BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
                                                   u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
+extern  void            BTLV_MCSS_SetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position, u8 evy, u32 rgb );
+extern  void            BTLV_MCSS_ResetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position );
 extern  int             BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position );
 extern  int             BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );

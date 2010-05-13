@@ -677,6 +677,11 @@ typedef struct
 }TCB_BUTTON_REACTION;
 
 typedef struct
+{ 
+  BtlvMcssPos pos;
+}TCB_SET_FOCUS;
+
+typedef struct
 {
   const GFL_CLACTPOS  pos[ BUTTON_ANIME_MAX ];          //座標
   int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
@@ -706,20 +711,28 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work );
+static  void  TCB_Transform_CB( GFL_TCB* tcb );
 static  void  TCB_SetFocus( GFL_TCB* tcb, void* work );
 
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y );
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work );
+static  void  TCB_ScaleChange_CB( GFL_TCB* tcb );
 static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, int scroll_speed, int scroll_count );
 static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work );
+static  void  TCB_ScrollUp_CB( GFL_TCB* tcb );
 static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DIR dir );
 static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work );
+static  void  TCB_ScreenAnime_CB( GFL_TCB* tcb );
 static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_ANIME_TYPE anm_type );
 static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
+static  void  TCB_ButtonAnime_CB( GFL_TCB* tcb );
 static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir );
 static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work );
+static  void  TCB_BallGaugeMove_CB( GFL_TCB* tcb );
 static  void  TCB_Fade( GFL_TCB* tcb, void* work );
+static  void  TCB_Fade_CB( GFL_TCB* tcb );
 static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work );
+static  void  TCB_WeatherIconMove_CB( GFL_TCB* tcb );
 static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir );
 static  void  TCB_RotateAction( GFL_TCB* tcb, void* work );
 
@@ -749,6 +762,7 @@ static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work );
+static  void  TCB_ButtonReaction_CB( GFL_TCB* tcb );
 static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw );
 static  void  check_init_decide_pos( BTLV_INPUT_WORK* biw );
@@ -1150,7 +1164,8 @@ void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
   biw->fade_flag = BTLV_INPUT_FADE_OUT;
 
   tfa->biw           = biw;
-  GFL_TCB_AddTask( biw->tcbsys, TCB_Fade, tfa, 0 );
+
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_Fade, tfa, 0 ), TCB_Fade_CB, GROUP_DEFAULT );
 }
 
 //============================================================================================
@@ -1173,7 +1188,8 @@ void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
   biw->fade_flag = BTLV_INPUT_FADE_IN;
 
   tfa->biw           = biw;
-  GFL_TCB_AddTask( biw->tcbsys, TCB_Fade, tfa, 0 );
+
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_Fade, tfa, 0 ), TCB_Fade_CB, GROUP_DEFAULT );
 }
 
 //============================================================================================
@@ -1237,11 +1253,13 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       else
       {
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
@@ -1331,7 +1349,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
 #endif
       {
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       else
       {
@@ -1342,15 +1361,18 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         }
         biw->trainer_flag = bicp->trainer_flag;
 #ifdef ROTATION_NEW_SYSTEM
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
 #else
         if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
         {
-          GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 );
+          BTVL_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 ),
+                              TCB_Transform_CB, GROUP_DEFAULT );
         }
         else
         {
-          GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
+          BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 ),
+                              TCB_Transform_CB, GROUP_DEFAULT );
         }
 #endif
       }
@@ -1374,7 +1396,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )
       {
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformDir2Waza, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformDir2Waza, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       else if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
       { 
@@ -1383,12 +1406,14 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         {
           BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_ENEMY );
         }
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Waza, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Waza, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       else
       {
         BTLV_INPUT_DeletePokeIcon( biw );
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
     }
     break;
@@ -1401,7 +1426,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
       ttw->pos = bisp->pos;
-      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Dir, ttw, 1 );
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Dir, ttw, 1 ),
+                          TCB_Transform_CB, GROUP_DEFAULT );
     }
     break;
   case BTLV_INPUT_SCRTYPE_YES_NO:
@@ -1413,7 +1439,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
       biw->b_button_flag = biyp->b_cancel_flag;
-      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2YesNo, ttw, 1 );
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2YesNo, ttw, 1 ),
+                          TCB_Transform_CB, GROUP_DEFAULT );
     }
     break;
   case BTLV_INPUT_SCRTYPE_ROTATE:
@@ -1449,11 +1476,13 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         {
           BTLV_INPUT_CreateBallGauge( biw, BALL_GAUGE_TYPE_ENEMY );
         }
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       else
       { 
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Rotate, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Rotate, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
     }
 #else
@@ -1476,7 +1505,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreateRotatePokeIcon( biw );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
-      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 );
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 ),
+                          TCB_Transform_CB, GROUP_DEFAULT );
     }
 #endif
     break;
@@ -1507,7 +1537,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
           ttw->scr_x = TTS2BR_FRAME0_SCROLL_X;
           ttw->scr_y = 0;
         }
-        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 ),
+                            TCB_Transform_CB, GROUP_DEFAULT );
       }
       else
       {
@@ -1522,7 +1553,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
-      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2PDC, ttw, 1 );
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2PDC, ttw, 1 ),
+                          TCB_Transform_CB, GROUP_DEFAULT );
       biw->button_exist[ 0 ] = TRUE;  //押せるボタンかどうかチェック
       biw->button_exist[ 1 ] = TRUE;  //押せるボタンかどうかチェック
     }
@@ -1963,9 +1995,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2031,9 +2061,7 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2079,9 +2107,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2117,9 +2143,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     if( ttw->biw->tcb_execute_count == 0 )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2155,9 +2179,7 @@ static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
     if( ttw->biw->tcb_execute_count == 0 )
     {
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2173,29 +2195,6 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
 {
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  //現状、どんな演出になるか決まっていないので、表示だけしてタスク終了
-  /*
-  switch( ttw->seq_no ){
-  case 0:
-    SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
-    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-    ttw->seq_no++;
-    break;
-  case 1:
-  default:
-    if( ttw->biw->tcb_execute_count == 0 )
-    {
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
-    }
-    break;
-  }
-  */
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
                                    GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID,
@@ -2213,9 +2212,7 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   }
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
-  ttw->biw->tcb_execute_flag = 0;
-  GFL_HEAP_FreeMemory( ttw );
-  GFL_TCB_DeleteTask( tcb );
+  BTLV_EFFECT_FreeTCB( tcb );
 }
 
 //============================================================================================
@@ -2227,29 +2224,6 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
 {
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  //現状、どんな演出になるか決まっていないので、表示だけしてタスク終了
-  /*
-  switch( ttw->seq_no ){
-  case 0:
-    SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
-    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-    ttw->seq_no++;
-    break;
-  case 1:
-  default:
-    if( ttw->biw->tcb_execute_count == 0 )
-    {
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
-    }
-    break;
-  }
-  */
   if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
   {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
@@ -2266,9 +2240,7 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
   GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
-  ttw->biw->tcb_execute_flag = 0;
-  GFL_HEAP_FreeMemory( ttw );
-  GFL_TCB_DeleteTask( tcb );
+  BTLV_EFFECT_FreeTCB( tcb );
 }
 
 //============================================================================================
@@ -2292,9 +2264,7 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2332,9 +2302,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2379,9 +2347,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2441,9 +2407,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2492,9 +2456,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2539,9 +2501,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2580,9 +2540,7 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2621,9 +2579,7 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
@@ -2657,12 +2613,17 @@ static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
       GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
       GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
-      ttw->biw->tcb_execute_flag = 0;
-      GFL_HEAP_FreeMemory( ttw );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
+}
+
+static  void  TCB_Transform_CB( GFL_TCB* tcb )
+{ 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)GFL_TCB_GetWork( tcb );
+
+  ttw->biw->tcb_execute_flag = 0;
 }
 
 //============================================================================================
@@ -2686,7 +2647,7 @@ static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end
   tsu->scale_speed  = scale_speed;
   tsu->pos_y        = pos_y;
 
-  GFL_TCB_AddTask( biw->tcbsys, TCB_ScaleChange, tsu, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_ScaleChange, tsu, 0 ), TCB_ScaleChange_CB, GROUP_DEFAULT );
 
   biw->tcb_execute_count++;
 }
@@ -2716,10 +2677,15 @@ static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work )
   GFL_BG_SetAffineScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, tsu->pos_y, &mtx, 256, 256 );
   if( tsu->start_scale == tsu->end_scale )
   {
-    tsu->biw->tcb_execute_count--;
-    GFL_HEAP_FreeMemory( tsu );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_ScaleChange_CB( GFL_TCB* tcb )
+{ 
+  TCB_SCALE_UP* tsu = ( TCB_SCALE_UP * )GFL_TCB_GetWork( tcb );
+
+  tsu->biw->tcb_execute_count--;
 }
 
 //============================================================================================
@@ -2745,7 +2711,7 @@ static  void  SetupScrollUp( BTLV_INPUT_WORK* biw, int scroll_x, int scroll_y, i
   tsu->scroll_speed = scroll_speed;
   tsu->scroll_count = scroll_count;
 
-  GFL_TCB_AddTask( biw->tcbsys, TCB_ScrollUp, tsu, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_ScrollUp, tsu, 0 ), TCB_ScrollUp_CB, GROUP_DEFAULT );
 
   biw->tcb_execute_count++;
 }
@@ -2765,10 +2731,15 @@ static  void  TCB_ScrollUp( GFL_TCB* tcb, void* work )
 
   if( --tsu->scroll_count == 0 )
   {
-    tsu->biw->tcb_execute_count--;
-    GFL_HEAP_FreeMemory( tsu );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_ScrollUp_CB( GFL_TCB* tcb )
+{ 
+  TCB_SCROLL_UP* tsu = ( TCB_SCROLL_UP * )GFL_TCB_GetWork( tcb );
+
+  tsu->biw->tcb_execute_count--;
 }
 
 //============================================================================================
@@ -2791,7 +2762,7 @@ static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DI
 
   //indexから表示するスクリーンを読み替える予定
 
-  GFL_TCB_AddTask( biw->tcbsys, TCB_ScreenAnime, tsa, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_ScreenAnime, tsa, 0 ), TCB_ScreenAnime_CB, GROUP_DEFAULT );
 
   biw->tcb_execute_count++;
 }
@@ -2827,10 +2798,15 @@ static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work )
 
   if( tsa->count >= 2 )
   {
-    tsa->biw->tcb_execute_count--;
-    GFL_HEAP_FreeMemory( tsa );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_ScreenAnime_CB( GFL_TCB* tcb )
+{ 
+  TCB_SCREEN_ANIME* tsa = ( TCB_SCREEN_ANIME * )GFL_TCB_GetWork( tcb );
+
+  tsa->biw->tcb_execute_count--;
 }
 
 //============================================================================================
@@ -2907,7 +2883,7 @@ static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_A
     GFL_CLACT_WK_SetAnmSeq( tba->clwk[ i ], bap[ type ].anm_no[ anm_type ] );
   }
 
-  GFL_TCB_AddTask( biw->tcbsys, TCB_ButtonAnime, tba, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_ButtonAnime, tba, 0 ), TCB_ButtonAnime_CB, GROUP_DEFAULT );
 
   biw->tcb_execute_count++;
 }
@@ -2932,7 +2908,15 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
       }
     }
   }
-  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+  BTLV_EFFECT_FreeTCB( tcb );
+}
+
+static  void  TCB_ButtonAnime_CB( GFL_TCB* tcb )
+{ 
+  TCB_BUTTON_ANIME* tba = ( TCB_BUTTON_ANIME * )GFL_TCB_GetWork( tcb );
+  int i;
+
+  for( i = 0 ; i < BUTTON_ANIME_MAX ; i++ )
   {
     if( tba->clwk[ i ] )
     {
@@ -2940,9 +2924,8 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
     }
   }
   GFL_CLACT_UNIT_Delete( tba->clunit );
+
   tba->biw->tcb_execute_count--;
-  GFL_HEAP_FreeMemory( tba );
-  GFL_TCB_DeleteTask( tcb );
 }
 
 //============================================================================================
@@ -2960,7 +2943,7 @@ static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir 
   tbgm->biw           = biw;
   tbgm->move_dir      = dir;
 
-  GFL_TCB_AddTask( biw->tcbsys, TCB_BallGaugeMove, tbgm, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_BallGaugeMove, tbgm, 0 ), TCB_BallGaugeMove_CB, GROUP_DEFAULT );
 
   biw->tcb_execute_count++;
 }
@@ -3020,10 +3003,15 @@ static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
   }
   if( flag == FALSE )
   {
-    tbgm->biw->tcb_execute_count--;
-    GFL_HEAP_FreeMemory( tbgm );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_BallGaugeMove_CB( GFL_TCB* tcb )
+{ 
+  TCB_BALL_GAUGE_MOVE*  tbgm = ( TCB_BALL_GAUGE_MOVE * )GFL_TCB_GetWork( tcb );
+
+  tbgm->biw->tcb_execute_count--;
 }
 
 //============================================================================================
@@ -3041,10 +3029,15 @@ static  void  TCB_Fade( GFL_TCB* tcb, void* work )
     {
       BTLV_INPUT_ExitBG( tfa->biw );
     }
-    tfa->biw->fade_flag = 0;
-    GFL_HEAP_FreeMemory( tfa );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_Fade_CB( GFL_TCB* tcb )
+{ 
+  TCB_FADE_ACT* tfa = ( TCB_FADE_ACT* )GFL_TCB_GetWork( tcb );
+
+  tfa->biw->fade_flag = 0;
 }
 
 //============================================================================================
@@ -3066,10 +3059,15 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
 
   if( pos.x == BTLV_INPUT_WEATHER_X2 )
   {
-    twim->biw->tcb_execute_count--;
-    GFL_HEAP_FreeMemory( twim );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_WeatherIconMove_CB( GFL_TCB* tcb )
+{ 
+  TCB_WEATHER_ICON_MOVE*  twim = ( TCB_WEATHER_ICON_MOVE* )GFL_TCB_GetWork( tcb );
+
+  twim->biw->tcb_execute_count--;
 }
 
 //============================================================================================
@@ -3094,7 +3092,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 
   biw->tcb_execute_flag = 1;
   ttw->biw = biw;
-  GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Rotate, ttw, 1 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Rotate, ttw, 1 ), TCB_Transform_CB, GROUP_DEFAULT );
 
   BTLV_EFFECT_Stop();
   biw->camera_work_wait = 0;
@@ -4134,7 +4132,7 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
     TCB_WEATHER_ICON_MOVE*  twim = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_WEATHER_ICON_MOVE ) );
     twim->biw = biw;
 
-    GFL_TCB_AddTask( biw->tcbsys, TCB_WeatherIconMove, twim, 0 );
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_WeatherIconMove, twim, 0 ), TCB_WeatherIconMove_CB, GROUP_DEFAULT );
 
     biw->tcb_execute_count++;
   }
@@ -4709,7 +4707,7 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
     tbr->seq_no = 0;
     tbr->pltt   = pltt & 0xffff;
 
-    GFL_TCB_AddTask( biw->tcbsys, TCB_ButtonReaction, tbr, 0 );
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_ButtonReaction, tbr, 0 ), TCB_ButtonReaction_CB, GROUP_DEFAULT );
   }
   return GFL_UI_TP_HIT_NONE;
 }
@@ -4738,12 +4736,17 @@ static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
   case 2:
     if( !PaletteFadeCheck( tbr->biw->pfd ) )
     {
-      tbr->biw->button_reaction = 0;
-      GFL_HEAP_FreeMemory( work );
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
+}
+
+static  void  TCB_ButtonReaction_CB( GFL_TCB* tcb )
+{ 
+  TCB_BUTTON_REACTION*  tbr = ( TCB_BUTTON_REACTION* )GFL_TCB_GetWork( tcb );
+
+  tbr->biw->button_reaction = 0;
 }
 
 //--------------------------------------------------------------
@@ -4791,7 +4794,9 @@ static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMM
 //=============================================================================================
 static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
 { 
-  GFL_TCB_AddTask( biw->tcbsys, TCB_SetFocus, biw, 0 );
+  TCB_SET_FOCUS* tsf = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_SET_FOCUS ) );
+  tsf->pos = biw->focus_pos;
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( biw->tcbsys, TCB_SetFocus, tsf, 0 ), NULL, GROUP_DEFAULT );
 }
 
 static  void  TCB_SetFocus( GFL_TCB* tcb, void* work )
@@ -4801,7 +4806,7 @@ static  void  TCB_SetFocus( GFL_TCB* tcb, void* work )
   if( !BTLV_EFFECT_CheckExecute() )
   { 
     BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
 }
 

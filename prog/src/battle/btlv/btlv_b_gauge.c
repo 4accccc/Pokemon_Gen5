@@ -95,12 +95,18 @@ struct _BTLV_BALL_GAUGE_WORK
   HEAPID                heapID;
 };
 
+typedef struct
+{ 
+  BTLV_BALL_GAUGE_WORK* bbgw;
+}TCB_BALL_GAUGE_ANIME;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
  */
 //============================================================================================
 static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work );
+static  void  TCB_BTLV_BALL_GAUGE_Anime_CB( GFL_TCB* tcb );
 
 //============================================================================================
 /**
@@ -226,7 +232,12 @@ BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp,
                                  BTLV_BALL_GAUGE_ARROW_MOVE_SPEED;
   }
 
-  GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_BALL_GAUGE_Anime, bbgw, 0 );
+  { 
+    TCB_BALL_GAUGE_ANIME* tbga = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ), sizeof( TCB_BALL_GAUGE_ANIME ) );
+    tbga->bbgw = bbgw;
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_BALL_GAUGE_Anime, tbga, 0 ),
+                                         TCB_BTLV_BALL_GAUGE_Anime_CB, GROUP_DEFAULT );
+  }
   bbgw->tcb_execute = 1;
 
   GFL_ARC_CloseDataHandle( handle );
@@ -284,46 +295,46 @@ BOOL  BTLV_BALL_GAUGE_CheckExecute( BTLV_BALL_GAUGE_WORK* bbgw )
 //============================================================================================
 static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work )
 { 
-  BTLV_BALL_GAUGE_WORK* bbgw = ( BTLV_BALL_GAUGE_WORK* )work;
+  TCB_BALL_GAUGE_ANIME* tbga = ( TCB_BALL_GAUGE_ANIME* )work;
   BOOL flag = FALSE;
   int i;
 
-  switch( bbgw->seq_no ){ 
+  switch( tbga->bbgw->seq_no ){ 
   case 0:
     for( i = 0 ; i < BTLV_BALL_GAUGE_CLWK_MAX ; i++ )
     { 
-      if( bbgw->bbgcl[ i ].wait )
+      if( tbga->bbgw->bbgcl[ i ].wait )
       { 
         flag = TRUE;
-        bbgw->bbgcl[ i ].wait--;
+        tbga->bbgw->bbgcl[ i ].wait--;
         continue;
       }
-      if( bbgw->bbgcl[ i ].speed )
+      if( tbga->bbgw->bbgcl[ i ].speed )
       { 
         flag = TRUE;
-        bbgw->bbgcl[ i ].now_pos.x += bbgw->bbgcl[ i ].speed;
-        if( bbgw->bbgcl[ i ].speed > 0 )
+        tbga->bbgw->bbgcl[ i ].now_pos.x += tbga->bbgw->bbgcl[ i ].speed;
+        if( tbga->bbgw->bbgcl[ i ].speed > 0 )
         { 
-          if( bbgw->bbgcl[ i ].now_pos.x >= bbgw->bbgcl[ i ].move_pos )
+          if( tbga->bbgw->bbgcl[ i ].now_pos.x >= tbga->bbgw->bbgcl[ i ].move_pos )
           { 
-            bbgw->bbgcl[ i ].now_pos.x = bbgw->bbgcl[ i ].move_pos;
-            bbgw->bbgcl[ i ].speed = 0;
+            tbga->bbgw->bbgcl[ i ].now_pos.x = tbga->bbgw->bbgcl[ i ].move_pos;
+            tbga->bbgw->bbgcl[ i ].speed = 0;
           }
         }
         else
         { 
-          if( bbgw->bbgcl[ i ].now_pos.x <= bbgw->bbgcl[ i ].move_pos )
+          if( tbga->bbgw->bbgcl[ i ].now_pos.x <= tbga->bbgw->bbgcl[ i ].move_pos )
           { 
-            bbgw->bbgcl[ i ].now_pos.x = bbgw->bbgcl[ i ].move_pos;
-            bbgw->bbgcl[ i ].speed = 0;
+            tbga->bbgw->bbgcl[ i ].now_pos.x = tbga->bbgw->bbgcl[ i ].move_pos;
+            tbga->bbgw->bbgcl[ i ].speed = 0;
           }
         }
-        GFL_CLACT_WK_SetPos( bbgw->bbgcl[ i ].clwk, &bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
-        if( bbgw->bbgcl[ i ].speed == 0 )
+        GFL_CLACT_WK_SetPos( tbga->bbgw->bbgcl[ i ].clwk, &tbga->bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
+        if( tbga->bbgw->bbgcl[ i ].speed == 0 )
         { 
           int se_no;
-          GFL_CLACT_WK_SetAnmSeq( bbgw->bbgcl[ i ].clwk, bbgw->bbgcl[ i ].stop_anm_no );
-          switch( bbgw->bbgcl[ i ].stop_anm_no ){ 
+          GFL_CLACT_WK_SetAnmSeq( tbga->bbgw->bbgcl[ i ].clwk, tbga->bbgw->bbgcl[ i ].stop_anm_no );
+          switch( tbga->bbgw->bbgcl[ i ].stop_anm_no ){ 
           case BTLV_BALL_GAUGE_ANM_NONE:
             se_no = SEQ_SE_TB_KARA;
             break;
@@ -337,46 +348,52 @@ static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work )
           }
           if( se_no )
           { 
-            PMSND_PlaySE_byPlayerID( se_no, bbgw->player_no );
-            bbgw->player_no ^= 1;
+            PMSND_PlaySE_byPlayerID( se_no, tbga->bbgw->player_no );
+            tbga->bbgw->player_no ^= 1;
           }
         }
       }
     }
     if( flag == FALSE )
     { 
-      bbgw->seq_no++;
+      tbga->bbgw->seq_no++;
     }
     break;
   case 1:
     for( i = 0 ; i < BTLV_BALL_GAUGE_CLWK_MAX ; i++ )
     { 
-      if( bbgw->bbgcl[ i ].now_pos.x < bbgw->bbgcl[ i ].stop_pos )
+      if( tbga->bbgw->bbgcl[ i ].now_pos.x < tbga->bbgw->bbgcl[ i ].stop_pos )
       { 
-        bbgw->bbgcl[ i ].now_pos.x += 2;
-        if( bbgw->bbgcl[ i ].now_pos.x >= bbgw->bbgcl[ i ].stop_pos )
+        tbga->bbgw->bbgcl[ i ].now_pos.x += 2;
+        if( tbga->bbgw->bbgcl[ i ].now_pos.x >= tbga->bbgw->bbgcl[ i ].stop_pos )
         { 
-          bbgw->bbgcl[ i ].now_pos.x = bbgw->bbgcl[ i ].stop_pos;
+          tbga->bbgw->bbgcl[ i ].now_pos.x = tbga->bbgw->bbgcl[ i ].stop_pos;
         }
         flag = TRUE;
       }
-      else if( bbgw->bbgcl[ i ].now_pos.x > bbgw->bbgcl[ i ].stop_pos )
+      else if( tbga->bbgw->bbgcl[ i ].now_pos.x > tbga->bbgw->bbgcl[ i ].stop_pos )
       { 
-        bbgw->bbgcl[ i ].now_pos.x -= 2;
-        if( bbgw->bbgcl[ i ].now_pos.x <= bbgw->bbgcl[ i ].stop_pos )
+        tbga->bbgw->bbgcl[ i ].now_pos.x -= 2;
+        if( tbga->bbgw->bbgcl[ i ].now_pos.x <= tbga->bbgw->bbgcl[ i ].stop_pos )
         { 
-          bbgw->bbgcl[ i ].now_pos.x = bbgw->bbgcl[ i ].stop_pos;
+          tbga->bbgw->bbgcl[ i ].now_pos.x = tbga->bbgw->bbgcl[ i ].stop_pos;
         }
         flag = TRUE;
       }
-      GFL_CLACT_WK_SetPos( bbgw->bbgcl[ i ].clwk, &bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
+      GFL_CLACT_WK_SetPos( tbga->bbgw->bbgcl[ i ].clwk, &tbga->bbgw->bbgcl[ i ].now_pos, CLSYS_DEFREND_MAIN );
     }
     if( flag == FALSE )
     { 
-      bbgw->tcb_execute = 0;
-      GFL_TCB_DeleteTask( tcb );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
     break;
   }
+}
+
+static  void  TCB_BTLV_BALL_GAUGE_Anime_CB( GFL_TCB* tcb )
+{ 
+  TCB_BALL_GAUGE_ANIME* tbga = ( TCB_BALL_GAUGE_ANIME* )GFL_TCB_GetWork( tcb );
+
+  tbga->bbgw->tcb_execute = 0;
 }
 

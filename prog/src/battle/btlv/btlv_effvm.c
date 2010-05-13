@@ -42,8 +42,6 @@ enum{
   ORTHO_WIDTH = 4,
   ORTHO_HEIGHT = 3,
 
-  BTLV_EFFVM_TCB_MAX = 20,      //EFFVMで登録できるタスクのMAX
-
   EFFVM_CHANGE_VOLUME = ( 127 * EFFVM_VOLUME_DOWN_RATIO / 100 ) << FX32_SHIFT,
   EFFVM_CHANGE_VOLUME_DOWN_FRAME = EFFVM_VOLUME_DOWN_FRAME,
   EFFVM_CHANGE_VOLUME_UP_FRAME = EFFVM_VOLUME_UP_FRAME,
@@ -56,7 +54,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -105,7 +103,6 @@ typedef struct{
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
-  GFL_TCB*          tcb[ BTLV_EFFVM_TCB_MAX ];
   GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
   int               ptc_no[ PARTICLE_GLOBAL_MAX ];
   int               spr_max[ PARTICLE_GLOBAL_MAX ];
@@ -206,7 +203,6 @@ typedef struct
   int               vol;
   int               mod_depth;
   int               mod_speed;
-  int               tcb_index;
 }BTLV_EFFVM_SEPLAY;
 
 //SEエフェクト用パラメータ構造体
@@ -226,7 +222,6 @@ typedef struct
   int               wait;
   int               wait_tmp;
   int               count;
-  int               tcb_index;
 }BTLV_EFFVM_SEEFFECT;
 
 //ボリューム変化
@@ -236,7 +231,6 @@ typedef struct
   fx32              start_vol;
   fx32              end_vol;
   fx32              vec_vol;
-  int               tcb_index;
 }BTLV_EFFVM_CHANGE_VOLUME;
 
 //鳴き声再生
@@ -250,7 +244,6 @@ typedef struct
   int               chorus_speed;
   BOOL              play_dir;
   int               wait;
-  int               tcb_index;
 }BTLV_EFFVM_NAKIGOE;
 
 //SPAデータ（SPAに含まれるsprの数を取りたい）
@@ -275,6 +268,11 @@ typedef struct
 	int               wait_tmp;
   BOOL              flag;
 }BTLV_EFFVM_WINDOW_MOVE;
+
+typedef struct
+{ 
+  BTLV_EFFVM_WORK*  bevw;
+}TCB_NONE_WORK;
 
 //============================================================================================
 /**
@@ -388,18 +386,20 @@ static  void          EFFVM_INIT_EMITTER_POS( BTLV_EFFVM_WORK* bevw, BTLV_EFFVM_
 static  VMCMD_RESULT  EFFVM_INIT_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work, BOOL ortho_mode );
 static  void          EFFVM_CalcPosOrtho( VecFx32 *pos, VecFx32 *ofs );
 static  void          MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
-static  int           EFFVM_GetTcbIndex( BTLV_EFFVM_WORK* bevw );
-static  void          EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw );
 static  ARCDATID      EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID );
 static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame );
 static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_SEPLAY_CB( GFL_TCB* tcb );
 static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_SEEFFECT_CB( GFL_TCB* tcb );
 static  void  TCB_EFFVM_NAKIGOE( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_NAKIGOE_CB( GFL_TCB* tcb );
 static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work );
 static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work );
+static  void  TCB_EFFVM_WINDOW_MOVE_CB( GFL_TCB* tcb );
 static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work );
 
 #ifdef PM_DEBUG
@@ -636,7 +636,6 @@ void  BTLV_EFFVM_Exit( VMHANDLE *vmh )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
-  EFFVM_FreeTcb( bevw );
   GFL_HEAP_FreeMemory ( bevw );
   VM_Delete( vmh );
 }
@@ -661,7 +660,7 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 #endif
 
   bevw->sequence = NULL;
-  EFFVM_FreeTcb( bevw );
+  BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
 
   if( param != NULL )
   {
@@ -2529,7 +2528,7 @@ static VMCMD_RESULT VMEC_WINDOW_MOVE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_WINDOW_MOVE\n");
 #endif DEBUG_OS_PRINT
 
-  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_WINDOW_MOVE, bevwm, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_WINDOW_MOVE, bevwm, 0 ), TCB_EFFVM_WINDOW_MOVE_CB, GROUP_EFFVM );
   bevw->window_move_flag = 1;
 
   return bevw->control_mode;
@@ -2811,9 +2810,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
 
     bevw->se_play_wait_flag = 1;
 
-    bes->tcb_index = EFFVM_GetTcbIndex( bevw );
-
-    bevw->tcb[ bes->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEPLAY, bes, 0 );
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEPLAY, bes, 0 ), TCB_EFFVM_SEPLAY_CB, GROUP_EFFVM );
   }
 
   return bevw->control_mode;
@@ -2890,9 +2887,7 @@ static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work )
   bes->value = FX32_CONST( bes->start );
   bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
 
-  bes->tcb_index = EFFVM_GetTcbIndex( bevw );
-
-  bevw->tcb[ bes->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 ), TCB_EFFVM_SEEFFECT_CB, GROUP_EFFVM );
 
   bevw->se_effect_enable_flag = 1;
 
@@ -2938,9 +2933,7 @@ static VMCMD_RESULT VMEC_SE_EFFECT( VMHANDLE *vmh, void *context_work )
   bes->value = FX32_CONST( bes->start );
   bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
 
-  bes->tcb_index = EFFVM_GetTcbIndex( bevw );
-
-  bevw->tcb[ bes->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 ), TCB_EFFVM_SEEFFECT_CB, GROUP_EFFVM );
 
   bevw->se_effect_enable_flag = 1;
 
@@ -3312,7 +3305,9 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
       }
       if( bevw->volume_already_down == 0 )
       { 
-        GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, bevw, 0 );
+        TCB_NONE_WORK*  tnw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_NONE_WORK ) );
+        tnw->bevw = bevw;
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, tnw, 0 ), NULL, GROUP_EFFVM );
       }
     }
     else
@@ -3333,12 +3328,8 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
 
         bevw->nakigoe_wait_flag = 1;
 
-        ben->tcb_index = EFFVM_GetTcbIndex( bevw );
-
-        bevw->tcb[ ben->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NAKIGOE, ben, 0 );
-
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NAKIGOE, ben, 0 ), TCB_EFFVM_NAKIGOE_CB, GROUP_EFFVM );
       }
-
     }
   }
 
@@ -3632,7 +3623,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   }
   bevw->temp_work_count = 0;
 
-  EFFVM_FreeTcb( bevw );
+  BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
 
   //仮想マシン停止
   VM_End( vmh );
@@ -5444,53 +5435,6 @@ static  void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  TCBIndexを取得
- *
- *  @param[in]  bevw システム管理構造体
- */
-//-----------------------------------------------------------------------------
-static  int EFFVM_GetTcbIndex( BTLV_EFFVM_WORK* bevw )
-{
-  int i;
-
-  for( i = 0 ; i < BTLV_EFFVM_TCB_MAX ; i++ )
-  {
-    if( bevw->tcb[ i ] == NULL )
-    {
-      break;
-    }
-  }
-
-  GF_ASSERT( i != BTLV_EFFVM_TCB_MAX );
-
-  return i;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  解放されていないTCBを解放
- *
- *  @param[in]  bevw システム管理構造体
- */
-//-----------------------------------------------------------------------------
-static  void  EFFVM_FreeTcb( BTLV_EFFVM_WORK* bevw )
-{
-  int i;
-
-  for( i = 0 ; i < BTLV_EFFVM_TCB_MAX ; i++ )
-  {
-    if( bevw->tcb[ i ] )
-    {
-      void* work = GFL_TCB_GetWork( bevw->tcb[ i ] );
-      GFL_HEAP_FreeMemory( work );
-      GFL_TCB_DeleteTask( bevw->tcb[ i ] );
-      bevw->tcb[ i ] = NULL;
-    }
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
  *  @brief  ボールのリソースを参照しているなら、ball_modeによりオフセット計算する
  *
  *  @param[in]  bevw  システム管理構造体
@@ -5582,12 +5526,11 @@ static  void  EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 en
 
   becv = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
 
-  becv->tcb_index = EFFVM_GetTcbIndex( bevw );
   becv->start_vol = start_vol;
   becv->end_vol = end_vol;
   becv->bevw = bevw;
   BTLV_EFFTOOL_CalcMove( becv->start_vol, becv->end_vol, &becv->vec_vol, FX32_CONST( frame ) );
-  bevw->tcb[ becv->tcb_index ] = GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_ChangeVolume, becv, 0 ), NULL, GROUP_EFFVM );
 }
 
 //----------------------------------------------------------------------------
@@ -5633,12 +5576,15 @@ static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work )
 
   if( --bes->wait == 0 )
   {
-    bes->bevw->se_play_wait_flag = 0;
-    bes->bevw->tcb[ bes->tcb_index ] = NULL;
     EFFVM_SePlay( bes->se_no, bes->player, bes->pan, bes->pitch, bes->vol, bes->mod_depth, bes->mod_speed );
-    GFL_HEAP_FreeMemory( bes );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_EFFVM_SEPLAY_CB( GFL_TCB* tcb )
+{ 
+  BTLV_EFFVM_SEPLAY*  bes = ( BTLV_EFFVM_SEPLAY* )GFL_TCB_GetWork( tcb );
+  bes->bevw->se_play_wait_flag = 0;
 }
 
 //============================================================================================
@@ -5744,11 +5690,14 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
 
   if( flag == TRUE )
   {
-    bes->bevw->se_effect_enable_flag = 0;
-    bes->bevw->tcb[ bes->tcb_index ] = NULL;
-    GFL_HEAP_FreeMemory( bes );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_EFFVM_SEEFFECT_CB( GFL_TCB* tcb )
+{ 
+  BTLV_EFFVM_SEEFFECT*  bes = ( BTLV_EFFVM_SEEFFECT* )GFL_TCB_GetWork( tcb );
+  bes->bevw->se_effect_enable_flag = 0;
 }
 
 //============================================================================================
@@ -5763,8 +5712,6 @@ static  void  TCB_EFFVM_NAKIGOE( GFL_TCB* tcb, void* work )
   if( --ben->wait == 0 )
   {
     int index = EFFVM_GetVoicePlayerIndex( ben->bevw );
-    ben->bevw->nakigoe_wait_flag = 0;
-    ben->bevw->tcb[ ben->tcb_index ] = NULL;
     ben->bevw->voiceplayerIndex[ index ] = BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), ben->pos, ben->pitch, ben->volume,
                                                                 ben->chorus_vol, ben->chorus_speed, ben->play_dir );
     //BGMのマスターボリュームを下げる
@@ -5781,11 +5728,18 @@ static  void  TCB_EFFVM_NAKIGOE( GFL_TCB* tcb, void* work )
     }
     if( ben->bevw->volume_already_down == 0 )
     { 
-      GFL_TCB_AddTask( ben->bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, ben->bevw, 0 );
+      TCB_NONE_WORK*  tnw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( ben->bevw->heapID ), sizeof( TCB_NONE_WORK ) );
+      tnw->bevw = ben->bevw;
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( ben->bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, tnw, 0 ), NULL, GROUP_EFFVM );
     }
-    GFL_HEAP_FreeMemory( ben );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_EFFVM_NAKIGOE_CB( GFL_TCB* tcb )
+{ 
+  BTLV_EFFVM_NAKIGOE* ben = ( BTLV_EFFVM_NAKIGOE* )GFL_TCB_GetWork( tcb );
+  ben->bevw->nakigoe_wait_flag = 0;
 }
 
 //============================================================================================
@@ -5804,9 +5758,7 @@ static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work )
 
   if( ret )
   {
-    becv->bevw->tcb[ becv->tcb_index ] = NULL;
-    GFL_HEAP_FreeMemory( becv );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
 }
 
@@ -5868,13 +5820,7 @@ static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work )
       }
       if( --bevwm->frame == 0 )
       {
-        if( bevwm->flag == FALSE )
-        {  
-          GX_SetVisibleWnd( GX_WNDMASK_NONE );
-        }
-        bevwm->bevw->window_move_flag = 0;
-        GFL_HEAP_FreeMemory( bevwm );
-        GFL_TCB_DeleteTask( tcb );
+        BTLV_EFFECT_FreeTCB( tcb );
       }
     }
     else
@@ -5885,6 +5831,16 @@ static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work )
   }
 }
 
+static  void  TCB_EFFVM_WINDOW_MOVE_CB( GFL_TCB* tcb )
+{ 
+  BTLV_EFFVM_WINDOW_MOVE* bevwm = ( BTLV_EFFVM_WINDOW_MOVE* )GFL_TCB_GetWork( tcb );
+  if( bevwm->flag == FALSE )
+  {  
+    GX_SetVisibleWnd( GX_WNDMASK_NONE );
+  }
+  bevwm->bevw->window_move_flag = 0;
+}
+
 //============================================================================================
 /**
  * @brief 鳴き声終了チェック
@@ -5892,19 +5848,19 @@ static  void  TCB_EFFVM_WINDOW_MOVE( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work )
 { 
-  BTLV_EFFVM_WORK*  bevw = ( BTLV_EFFVM_WORK* )work;
+  TCB_NONE_WORK*  tnw = ( TCB_NONE_WORK* )work;
   int i;
   for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
   {
-    if( bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
+    if( tnw->bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
     { 
-      if( PMVOICE_CheckPlay( bevw->voiceplayerIndex[ i ] ) )
+      if( PMVOICE_CheckPlay( tnw->bevw->voiceplayerIndex[ i ] ) )
       { 
         return;
       }
       else
       { 
-        bevw->voiceplayerIndex[ i ] = EFFVM_VOICEPLAYER_INDEX_NONE;
+        tnw->bevw->voiceplayerIndex[ i ] = EFFVM_VOICEPLAYER_INDEX_NONE;
       }
     }
   }
@@ -5917,10 +5873,10 @@ static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work )
     int   frame = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #endif
     fx32  end_vol = 127 << FX32_SHIFT;
-    EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
+    EFFVM_ChangeVolume( tnw->bevw, start_vol, end_vol, frame );
   }
-  bevw->volume_already_down = 0;
-  GFL_TCB_DeleteTask( tcb );
+  tnw->bevw->volume_already_down = 0;
+  BTLV_EFFECT_FreeTCB( tcb );
 }
 
 #ifdef PM_DEBUG
@@ -5939,7 +5895,7 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
   int *start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
   int i;
 
-  EFFVM_FreeTcb( bevw );
+  BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
 
   if( bevw->pause_flag )
   {
@@ -6079,7 +6035,7 @@ void  BTLV_EFFVM_DebugSeEffect( VMHANDLE *vmh, int player, int type, int param, 
   bes->value = FX32_CONST( bes->start );
   bes->vec_value = FX_Div( FX32_CONST( bes->end - bes->start ) , FX32_CONST( bes->frame ) );
 
-  GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_SEEFFECT, bes, 0 ), TCB_EFFVM_SEEFFECT_CB, GROUP_EFFVM );
 }
 
 //============================================================================================

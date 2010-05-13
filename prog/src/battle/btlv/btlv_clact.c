@@ -58,9 +58,11 @@ typedef struct
  *  プロトタイプ宣言
  */
 //============================================================================================
-static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func );
+static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func, BTLV_EFFECT_TCB_CALLBACK_FUNC* cb_func );
 static  void  TCB_BTLV_CLACT_Move( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_CLACT_Move_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_CLACT_Scale( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_CLACT_Scale_CB( GFL_TCB *tcb );
 
 //============================================================================================
 /**
@@ -307,7 +309,8 @@ void  BTLV_CLACT_MovePosition( BTLV_CLACT_WORK *bclw, int index, int type, GFL_C
     pos_fx32.z += start_fx32.z;
   }
 
-  BTLV_CLACT_TCBInitialize( bclw, index, type, &start_fx32, &pos_fx32, frame, wait, count, TCB_BTLV_CLACT_Move );
+  BTLV_CLACT_TCBInitialize( bclw, index, type, &start_fx32, &pos_fx32, frame, wait, count,
+                            TCB_BTLV_CLACT_Move, TCB_BTLV_CLACT_Move_CB );
   bclw->clact_tcb_move_execute |= BTLV_EFFTOOL_No2Bit( index );
 }
 
@@ -334,7 +337,8 @@ void  BTLV_CLACT_MoveScale( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 
   start.y = FX32_ONE;
   start.z = FX32_ONE;
 
-  BTLV_CLACT_TCBInitialize( bclw, index, type, &start, scale, frame, wait, count, TCB_BTLV_CLACT_Scale );
+  BTLV_CLACT_TCBInitialize( bclw, index, type, &start, scale, frame, wait, count,
+                            TCB_BTLV_CLACT_Scale, TCB_BTLV_CLACT_Scale_CB );
   bclw->clact_tcb_scale_execute |= BTLV_EFFTOOL_No2Bit( index );
 }
 
@@ -398,7 +402,7 @@ BOOL  BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index )
  *  CLWK操作系タスク初期化処理
  */
 //============================================================================================
-static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func )
+static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func, BTLV_EFFECT_TCB_CALLBACK_FUNC* cb_func )
 {
   BTLV_CLACT_TCB_WORK *bctw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bclw->heapID ), sizeof( BTLV_CLACT_TCB_WORK ) );
 
@@ -459,10 +463,15 @@ static  void  TCB_BTLV_CLACT_Move( GFL_TCB *tcb, void *work )
   GFL_CLACT_WK_SetPos( bclw->bccl[ bctw->index ].clwk, &now_pos, CLSYS_DEFREND_MAIN );
   if( ret == TRUE )
   {
-    bclw->clact_tcb_move_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_BTLV_CLACT_Move_CB( GFL_TCB *tcb )
+{ 
+  BTLV_CLACT_TCB_WORK *bctw = ( BTLV_CLACT_TCB_WORK * )GFL_TCB_GetWork( tcb );
+
+  bctw->bclw->clact_tcb_move_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
 }
 
 //============================================================================================
@@ -482,10 +491,16 @@ static  void  TCB_BTLV_CLACT_Scale( GFL_TCB *tcb, void *work )
   now_scale.y = bctw->now_value.y;
   GFL_CLACT_WK_SetAffineParam( bclw->bccl[ bctw->index ].clwk, CLSYS_AFFINETYPE_NORMAL );
   GFL_CLACT_WK_SetScale( bclw->bccl[ bctw->index ].clwk, &now_scale );
-  if( ret == TRUE ){
-    bclw->clact_tcb_scale_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
+  if( ret == TRUE )
+  {
+    BTLV_EFFECT_FreeTCB( tcb );
   }
+}
+
+static  void  TCB_BTLV_CLACT_Scale_CB( GFL_TCB *tcb )
+{ 
+  BTLV_CLACT_TCB_WORK *bctw = ( BTLV_CLACT_TCB_WORK * )GFL_TCB_GetWork( tcb );
+
+  bctw->bclw->clact_tcb_scale_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
 }
 
