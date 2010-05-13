@@ -295,7 +295,7 @@ static BOOL check_LocalCompMonsno( u16 monsno )
 {
   int i;
   static const u16 cut_check_monsno[] = {
-		MONSNO_TUTINOKAMI,	// ツチノカミ
+		MONSNO_652,	// ツチノカミ
 		MONSNO_RAI,					// ライ
 		MONSNO_DARUTANISU,	// ダルタニス
 		MONSNO_MERODHIA,		// メロディア
