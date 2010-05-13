@@ -2714,7 +2714,6 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     // 逃げ禁止チェック
     if( !BPP_IsDead(bpp) )
     {
-
       if( !scEvent_SkipNigeruForbid(wk, bpp) )
       {
         u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -8195,9 +8194,11 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
-    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, NULL) ){
+    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, NULL) )
+    {
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-    }else if( fFailMsgDisped == FALSE ){
+    }
+    else if( fFailMsgDisped == FALSE ){
       scPut_WazaFail( wk, attacker, waza );
     }
   }
@@ -8297,6 +8298,9 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
       // バトル離脱効果
       else
       {
+        u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(attacker) );
+        BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
+
         scproc_MemberOutCore( wk, target );
         wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
       }
@@ -14896,7 +14900,8 @@ static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
 
   BOOL fFailMsgDisped;
 
-  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped, &param->exStr) ){
+  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped, &param->exStr) )
+  {
     return 1;
   }
   return 0;

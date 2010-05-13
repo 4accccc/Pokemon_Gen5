@@ -365,7 +365,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
       break;
     case BTL_RESULT_LOSE:
       wk->setupParam->getMoney = (int)(wk->loseMoney) * -1;
-      TAYA_Printf("•‰‚¯ƒyƒi‹àŠz=%d\n", wk->loseMoney );
+      TAYA_Printf("•‰‚¯ƒyƒi‹àŠz=%d\n", wk->setupParam->getMoney );
       break;
     }
     return GFL_PROC_RES_FINISH;
