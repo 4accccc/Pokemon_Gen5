@@ -74,7 +74,7 @@ class C_NIX_CHECK
       tex_idx = attrs["tex_image_idx"].to_i
       pltt_idx = attrs["tex_palette_idx"].to_i
 
-      if mat_name != @tex_list[tex_idx].name then
+      if tex_idx >= 0 && mat_name != @tex_list[tex_idx].name then
         @err_msg << (" + #{elem_name}-> \"#{mat_name}\" != \"#{@tex_list[tex_idx].name}\"")
       end
     end
@@ -88,6 +88,7 @@ class C_NIX_CHECK
 
 	def NixCheckWarning( inFileName )
     @err_msg.clear
+    @tex_list.clear
     @user = "unknown" 
     @date = "unknown" 
     @source = "unknown" 
