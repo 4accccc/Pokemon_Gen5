@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03pc0101.h"
   .include  "c03pc0101.h"
+  .include  "postman_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -57,7 +58,10 @@ INIT_EVENT_START	ev_init_c03pc0101
 		$LOCALWORK1 = 1
 	ENDIF
 	
-	//【仮】ここにグローバルコールで配達員の処理を入れる
+	//通常のポケセンではFIELD_INIT_LABEL/FIELD_RECOVER_LABELで
+	//直接指定するが、ここでは処理がかぶるため
+	//グローバルコールで配達員の出現・消去処理を呼び出し
+	_GLOBAL_CALL  SCRID_INIT_POSTMAN
 }
 INIT_EVENT_END
 
