@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-06T18:06:41"/>
+	<create user="taya" host="W00146" date="2010-05-14T00:10:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2407,6 +2407,71 @@
 ファストガードで　まもられた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 ファストガードで　守られた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Simetukeru_Start">
+		<comment>しめつける</comment>
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]に▼
+しめつけられた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]に▼
+締めつけられた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Makituku_Start">
+		<comment>まきつく</comment>
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]に▼
+まきつかれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]に▼
+巻きつかれた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KaradeHasamu_Start">
+		<comment>からではさむ</comment>
+		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　からに▼
+はさまれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:02:ポケモンニックネーム:1]の　からに▼
+挟まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Uzusio_Start">
+		<comment>うずしお</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+うずの　なかに　とじこめられた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+渦の中に　閉じ込められた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_HonoNoUzu_Start">
+		<comment>ほのおのうず</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+ほのおの　うずに　とじこめられた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+炎の渦に　閉じ込められた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_MagmaStorm_Start">
+		<comment>マグマストーム</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+マグマの　うずに　とじこめられた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+マグマの渦に　閉じ込められた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Sunajigoku_Start">
+		<comment>すなじごく</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+すなじごくに　とらわれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+砂じごくに　捕らわれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_WaruagakiExe">
