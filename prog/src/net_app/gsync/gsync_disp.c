@@ -1126,10 +1126,14 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
       pWork->aIconParam[rand].startx= 64 + GFUser_GetPublicRand(128);
       pWork->aIconParam[rand].starty=0;
       if(rand == DREAM_WORLD_DATA_MAX_ITEMBOX){
+        int sex = pWork->aIconParam[rand].sex;
+        if(pWork->aIconParam[rand].sex>2){
+          sex = 0;
+        }
         GSYNC_DISP_FriendPokeIconCreate(pWork,
                                         pWork->aIconParam[rand].no,
                                         pWork->aIconParam[rand].form,
-                                        pWork->aIconParam[rand].sex);
+                                        sex);
       }
       else{
         GSYNC_DISP_ItemiconCreate(pWork,pWork->aIconParam[rand].no,rand);
