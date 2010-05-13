@@ -1,5 +1,5 @@
 EFFSEQ
-$0008
+$0009
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_488.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_488.spa
@@ -8,6 +8,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_172.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_067.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_023.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_067.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_492.spa
 #001
 %00
 制御モード変更	継続
@@ -16,8 +17,10 @@ SE再生	SEQ_SE_W001_01	SE2	防御側	27:0:127	0:0:0
 制御モード変更	逐次
 ポケモン円移動	攻撃側	Ｙ軸左	シフトＨ－	0	3	12:0:1	0
 タイマーによるウエイト	10
-パーティクルデータロード	w_067
-パーティクル再生（正射影）	w_067	W_067_067_HIT_MARK	防御側	方向無し	0:2:0	0.5:1:0.5	1
+パーティクルデータロード	w_492
+パーティクル再生（正射影）	w_492	W_492_492_HIT_MARK	防御側	方向無し	0:2:0	0.5:1:0.5	1
+パーティクル再生（正射影）	w_492	W_492_492_BIG_BURN	防御側	方向無し	0:2:0	0.5:1:0.5	1
+パーティクル再生（正射影）	w_492	W_492_492_BALL_BURN	防御側	方向無し	0:2:0	0.5:1:0.5	1
 ポケモンアニメ	防御側	アニメストップ
 ポケモン拡縮	防御側	往復	-0.3	0.3	6	0	1
 エフェクト終了待ち	すべて
