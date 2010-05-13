@@ -416,7 +416,7 @@ static void handler_Kinchoukan_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static void common_KinchoukanOff( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kinchoukan( u32* numElems );
 static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hensin( u32* numElems );
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kawarimono( u32* numElems );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Illusion( u32* numElems );
 static void handler_Illusion_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Illusion_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -581,9 +581,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_HATOMUNE,         HAND_TOK_ADD_Hatomune      }, // はとむね
     { POKETOKUSEI_SUNAKAKI,         HAND_TOK_ADD_Sunakaki      }, // すなかき
     { POKETOKUSEI_MIRAKURUSUKIN,    HAND_TOK_ADD_MilacreSkin   }, // ミラクルスキン
-    { POKETOKUSEI_ANARAIZU,         HAND_TOK_ADD_Analyze        }, // アナライズ
+    { POKETOKUSEI_ANARAIZU,         HAND_TOK_ADD_Analyze       }, // アナライズ
     { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Illusion      }, // イリュージョン
-    { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Hensin        }, // へんしん
+    { POKETOKUSEI_KAWARIMONO,       HAND_TOK_ADD_Kawarimono    }, // かわりもの
     { POKETOKUSEI_SURINUKE,         HAND_TOK_ADD_Surinuke      }, // すりぬけ
     { POKETOKUSEI_MIIRA,            HAND_TOK_ADD_Miira         }, // ミイラ
     { POKETOKUSEI_JISINKAJOU,       HAND_TOK_ADD_JisinKajou    }, // じしんかじょう
@@ -3217,13 +3217,16 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     u8  pokeCnt, targetCnt, i;
     PokeTokusei  tok;
 
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
+    BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+
+    pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, allPokeID );
     targetCnt = 0;
-    pokeCnt = BTL_SVFTOOL_GetAllOpponentFrontPokeID( flowWk, pokeID, allPokeID );
     for(i=0; i<pokeCnt; ++i)
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, allPokeID[i] );
       tok = BPP_GetValue( bpp, BPP_TOKUSEI );
-      if( tok != POKETOKUSEI_TOREESU )
+      if( !BTL_CALC_IsCantRecvTokusei(tok) )
       {
         targetPokeID[ targetCnt++ ] = allPokeID[i];
       }
@@ -6664,7 +6667,7 @@ static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     }
   }
 }
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hensin( u32* numElems )
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kawarimono( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,              handler_Hensin }, // 入場ハンドラ

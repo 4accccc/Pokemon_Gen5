@@ -433,7 +433,7 @@ u32 BTL_CALC_MulRatio( u32 value, fx32 ratio )
 }
 //=============================================================================================
 /**
- *
+ * 倍率計算（整数x固定小数）※ゼロになった場合、最低１に切り上げ
  *
  * @param   value
  * @param   ratio   倍率（％）
@@ -446,6 +446,28 @@ u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio )
   value = BTL_CALC_MulRatio( value, ratio );
   if( value == 0 ){
     value = 1;
+  }
+  return value;
+}
+//=============================================================================================
+/**
+ * 倍率計算（整数x整数）
+ *
+ * @param   value
+ * @param   ratio   倍率（％）
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_MulRatioInt( u32 value, u32 ratio )
+{
+  u32  rem;
+
+  value *= ratio;
+  rem = value % 100;
+  value /= 100;
+  if( rem >= 50 ){
+    ++value;
   }
   return value;
 }
@@ -788,6 +810,32 @@ BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok )
   {
     if( prohibits[i] == tok )
     {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
+ * 「トレース」「なりきり」などを使って自分のとくせいを変更してはいけない対象のとくせいチェック
+ *
+ * @param   tok
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_CALC_IsCantRecvTokusei( PokeTokusei tok )
+{
+  static const u16 list[] = {
+    POKETOKUSEI_TOREESU,       POKETOKUSEI_TENKIYA,     POKETOKUSEI_MARUTITAIPU,
+    POKETOKUSEI_FURAWAAGIFUTO, POKETOKUSEI_DARUMAMOODO, POKETOKUSEI_IRYUUJON,
+    POKETOKUSEI_KAWARIMONO,
+  };
+  u16 i;
+
+  for(i=0; i<NELEMS(list); ++i)
+  {
+    if( list[i] == tok ){
       return TRUE;
     }
   }

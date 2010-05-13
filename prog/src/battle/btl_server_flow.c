@@ -11585,10 +11585,11 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
   {
     if( reactionType == SV_REACTION_HP )
     {
-      damage = roundMin( (BPP_GetValue(attacker,BPP_MAX_HP)*ratio)/100, 1 );
+      u32 maxHP = BPP_GetValue( attacker, BPP_MAX_HP );
+      damage = roundMin( BTL_CALC_MulRatioInt(maxHP, ratio), 1 );
     }
     else{
-      damage = roundMin( (damage*ratio)/100, 1 );
+      damage = roundMin( BTL_CALC_MulRatioInt(damage, ratio), 1 );
     }
     TAYA_Printf("反動発生, ratio=%d, damage=%d\n", ratio, damage);
     return damage;
@@ -15171,7 +15172,7 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
       }
 
       TAYA_Printf("今のフォルム=%d, 変更後のフォルム=%d\n", currentForm, param->formNo);
-      BPP_ChangeFormPutSrcData( bpp, param->formNo );
+      BPP_ChangeForm( bpp, param->formNo );
       SCQUE_PUT_ACT_ChangeForm( wk->que, param->pokeID, param->formNo );
       handexSub_putString( wk, &param->exStr );
 

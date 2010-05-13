@@ -2131,25 +2131,10 @@ void BPP_ChangeTokusei( BTL_POKEPARAM* bpp, PokeTokusei tok )
 {
   bpp->tokusei = tok;
 }
-//=============================================================================================
-/**
- * フォルム変更（サーバ処理用：ソースデータ書き換え・パラメータ変更対応）
- *
- * @param   pp
- * @param   formNo
- */
-//=============================================================================================
-void BPP_ChangeFormPutSrcData( BTL_POKEPARAM* bpp, u8 formNo )
-{
-  bpp->formNo = formNo;
-  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
-  PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
-  setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
-}
 
 //=============================================================================================
 /**
- * フォルム変更（クライアント処理用：ソースデータは書き換えない）
+ * フォルム変更
  *
  * @param   bpp
  * @param   formNo
@@ -2158,6 +2143,9 @@ void BPP_ChangeFormPutSrcData( BTL_POKEPARAM* bpp, u8 formNo )
 void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 {
   bpp->formNo = formNo;
+  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
+  PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+  setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
 }
 
 
