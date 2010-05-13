@@ -114,12 +114,38 @@ def MakeAryFromReplace( csv, hash, master_ary )
   }
 end
 
+def MakeFieldMapBlock(csv_fld, w, ary)
+  file = open( csv_fld, "r" );
+  z = 0
+  #2行飛ばし
+  line = file.gets
+  line = file.gets
+  while line = file.gets
+    #END検出
+    if line =~/^#END/ then
+		  break
+	  end
+
+    column = line.split ","
+
+    for x in (0...w) do
+      str = column[1+x].chomp("\n").chomp("\r")
+      if str == "1" then
+        map_str = "map" + sprintf("%02d_%02d",x,z)
+        ary << map_str
+      end
+    end
+    z += 1
+  end
+end
+
 csv01 = ARGV[0]
 csv02 = ARGV[1]
 csv03 = ARGV[2]
 csv04 = ARGV[3]
 csv_rep = ARGV[4]
 csv_matrix =  ARGV[5]
+csv_fld_matrix =  ARGV[6]
 
 result_file = open( "result.txt", "w" )
 
@@ -152,17 +178,24 @@ dmd_ary.each{|i|
 
 all_ary = bin_ary | imd_ary | dmd_ary
 
-ary = Array.new
+maplist_ary = Array.new
 
-MakeAry( csv01, ary )
-MakeAry( csv02, ary )
-MakeAry( csv03, ary )
-MakeAry( csv04, ary )
+MakeAry( csv01, maplist_ary )
+MakeAry( csv02, maplist_ary )
+MakeAry( csv03, maplist_ary )
+MakeAry( csv04, maplist_ary )
+#深いコピー
+ary2 = Marshal.load(Marshal.dump(maplist_ary))
 
 #置き換えマップを配列に格納
-MakeAryFromReplace( csv_rep, mat_hash, ary )
+rep_ary = Array.new
+MakeAryFromReplace( csv_rep, mat_hash, rep_ary )
+maplist_ary = maplist_ary | rep_ary
 #重複を削除
-ary.uniq!
+maplist_ary.uniq!
+
+#深いコピー
+ary = Marshal.load(Marshal.dump(maplist_ary))
 
 printf("ary_size = %d\n", ary.length)
 printf("all_size = %d\n", all_ary.length)
@@ -201,4 +234,75 @@ ary.each{|i|
   p i
 }
 
+
+
+
+#-----------------------------------------------------------------------------------------
+#マップリストにはあるが、マップマトリックス、リプレイスから生成していないブロックを調べる
+#-----------------------------------------------------------------------------------------
+
+check_ary = Array.new
+fld_ary = Array.new
+
+#後ろに「_ex」がつく項目を探して、「_ex」をけす
+ary2.each{|i|
+  i.sub!(/_ex/,"")
+  check_ary << i
+}
+
+#重複削除
+check_ary.uniq!
+
+w = mat_hash["WB"].x
+MakeFieldMapBlock(csv_fld_matrix, w, fld_ary)
+
+fld_ary.each{|i|
+  rc = check_ary.include?(i)
+  if rc == true then
+    check_ary.delete(i)
+  end
+}
+
+
+matrix_ary = Array.new
+mat_hash.each{|key,val|
+  if val.Prefix != "map" then
+    MakeBlock(matrix_ary, val)
+  end
+}
+
+use_ary.clear
+matrix_ary.each{|i|
+  rc = check_ary.include?(i)
+  if rc == true then
+    check_ary.delete(i)
+    use_ary << i
+  end
+}
+
+rep_ary.each{|i|
+  rc = check_ary.include?(i)
+  if rc == true then
+    check_ary.delete(i)
+  end
+}
+
+printf("rest_maplistdump\n")
+check_ary.each{|i|
+  p i
+}
+printf("rest_maplistdump_end\n")
+
+use_ary.each{|i|
+  rc = use_ary.include?(i)
+  if rc == true then
+    matrix_ary.delete(i)
+  end
+}
+
+printf("rest_matrixdump\n")
+matrix_ary.each{|i|
+  p i
+}
+printf("rest_matrixdump_end\n")
 

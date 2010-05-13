@@ -44,7 +44,8 @@ check:
 	ruby $(XLS_CNV) -c -n 3 $(MAP_LIST_XLS) > 04.csv
 	ruby $(XLS_CNV) -c -n 0 $(MAP_REPLACE_XLS) > rep.csv
 	ruby $(XLS_CNV) -c -n 0 $(MAP_MATRIX_XLS) > mat.csv
-	ruby chk_list.rb 01.csv 02.csv 03.csv 04.csv rep.csv mat.csv
+	ruby $(XLS_CNV) -c -n 2 $(MAP_MATRIX_XLS) > fld_mat.csv
+	ruby chk_list.rb 01.csv 02.csv 03.csv 04.csv rep.csv mat.csv fld_mat.csv
 
 delete:
 	ruby file_del.rb result.txt ../../land_res/
