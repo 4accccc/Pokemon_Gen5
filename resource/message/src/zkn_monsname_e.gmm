@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-10T17:52:31"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-13T21:11:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,7 +334,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -529,10 +529,10 @@
 		<language name="JPN_KANJI">SANDSLASH</language>
 	</row>
 
-	<row id="ZKN_MONSNAME_E_029">
+	<row id="ZKN_MONSNAME_E_029" back-color="#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,">
 		<comment>ニドラン♀</comment>
-		<language name="JPN" width="216">NIDORAN\[32:0E:female\]</language>
-		<language name="JPN_KANJI">NIDORAN\[32:0E:female\]</language>
+		<language name="JPN" width="216">NIDORAN⑮</language>
+		<language name="JPN_KANJI">NIDORAN⑮</language>
 	</row>
 
 	<row id="ZKN_MONSNAME_E_030">
@@ -547,10 +547,10 @@
 		<language name="JPN_KANJI">NIDOQUEEN</language>
 	</row>
 
-	<row id="ZKN_MONSNAME_E_032">
+	<row id="ZKN_MONSNAME_E_032" back-color="#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,">
 		<comment>ニドラン♂</comment>
-		<language name="JPN" width="216">NIDORAN\[32:0D:male\]</language>
-		<language name="JPN_KANJI">NIDORAN\[32:0D:male\]</language>
+		<language name="JPN" width="216">NIDORAN⑭</language>
+		<language name="JPN_KANJI">NIDORAN⑭</language>
 	</row>
 
 	<row id="ZKN_MONSNAME_E_033">

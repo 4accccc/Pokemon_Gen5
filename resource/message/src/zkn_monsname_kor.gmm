@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-10T17:55:18"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-13T22:45:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -529,10 +529,10 @@
 		<language name="JPN_KANJI">고지</language>
 	</row>
 
-	<row id="ZKN_MONSNAME_KOR_029">
+	<row id="ZKN_MONSNAME_KOR_029" back-color="#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,">
 		<comment>ニドラン♀</comment>
-		<language name="JPN" width="216">니드런\[32:0E:female\]</language>
-		<language name="JPN_KANJI">니드런\[32:0E:female\]</language>
+		<language name="JPN" width="216">니드런♀</language>
+		<language name="JPN_KANJI">니드런♀</language>
 	</row>
 
 	<row id="ZKN_MONSNAME_KOR_030">
@@ -547,10 +547,10 @@
 		<language name="JPN_KANJI">니드퀸</language>
 	</row>
 
-	<row id="ZKN_MONSNAME_KOR_032">
+	<row id="ZKN_MONSNAME_KOR_032" back-color="#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,,,#00ff00,,">
 		<comment>ニドラン♂</comment>
-		<language name="JPN" width="216">니드런\[32:0D:male\]</language>
-		<language name="JPN_KANJI">니드런\[32:0D:male\]</language>
+		<language name="JPN" width="216">니드런♂</language>
+		<language name="JPN_KANJI">니드런♂</language>
 	</row>
 
 	<row id="ZKN_MONSNAME_KOR_033">

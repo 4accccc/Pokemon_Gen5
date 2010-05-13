@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-09T18:40:15"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-14T01:00:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,7 +301,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="114"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -355,12 +355,14 @@
 	</lock>
 
 
-	<row id="ZKN_COMMENT_E_00_000">
-		<language name="JPN">\[4:09:null\]</language>
-		<language name="JPN_KANJI">\[4:09:null\]</language>
+	<row id="ZKN_COMMENT_E_00_000" back-color=",,,,,#ffff00,,,,,,#ffff00,,,,,,">
+		<comment> </comment>
+		<language name="JPN"> </language>
+		<language name="JPN_KANJI"> </language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_001">
+		<comment>フシギダネ</comment>
 		<language name="JPN">For some time after its birth, it
 grows by gaining nourishment from
 the seed on its back.</language>
@@ -370,6 +372,7 @@ the seed on its back.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_002">
+		<comment>フシギソウ</comment>
 		<language name="JPN">When the bud on its back starts
 swelling, a sweet aroma wafts to
 indicate the flower&apos;s coming bloom.</language>
@@ -379,6 +382,7 @@ indicate the flower&apos;s coming bloom.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_003">
+		<comment>フシギバナ</comment>
 		<language name="JPN">After a rainy day, the flower on
 its back smells stronger. The
 scent attracts other Pokémon.</language>
@@ -388,6 +392,7 @@ scent attracts other Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_004">
+		<comment>ヒトカゲ</comment>
 		<language name="JPN">The fire on the tip of its tail is a
 measure of its life. If healthy,
 its tail burns intensely.</language>
@@ -397,6 +402,7 @@ its tail burns intensely.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_005">
+		<comment>リザード</comment>
 		<language name="JPN">In the rocky mountains where
 CHARMELEON live, their fiery
 tails shine at night like stars.</language>
@@ -406,6 +412,7 @@ tails shine at night like stars.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_006">
+		<comment>リザードン</comment>
 		<language name="JPN">It is said that CHARIZARD&apos;s fire
 burns hotter if it has
 experienced harsh battles.</language>
@@ -415,6 +422,7 @@ experienced harsh battles.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_007">
+		<comment>ゼニガメ</comment>
 		<language name="JPN">It shelters itself in its shell,
 then strikes back with spouts of
 water at every opportunity.</language>
@@ -424,6 +432,7 @@ water at every opportunity.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_008">
+		<comment>カメール</comment>
 		<language name="JPN">It is said to live 10,000 years.
 Its furry tail is popular as a
 symbol of longevity.</language>
@@ -433,6 +442,7 @@ symbol of longevity.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_009">
+		<comment>カメックス</comment>
 		<language name="JPN">The jets of water it spouts from
 the rocket cannons on its shell
 can punch through thick steel.</language>
@@ -442,6 +452,7 @@ can punch through thick steel.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_010">
+		<comment>キャタピー</comment>
 		<language name="JPN">It releases a stench from its red
 antenna to repel enemies. It
 grows by molting repeatedly.</language>
@@ -451,6 +462,7 @@ grows by molting repeatedly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_011">
+		<comment>トランセル</comment>
 		<language name="JPN">A steel-hard shell protects its
 tender body. It quietly endures
 hardships while awaiting evolution.</language>
@@ -460,6 +472,7 @@ hardships while awaiting evolution.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_012">
+		<comment>バタフリー</comment>
 		<language name="JPN">It loves the honey of flowers and
 can locate flower patches that
 have even tiny amounts of pollen.</language>
@@ -469,6 +482,7 @@ have even tiny amounts of pollen.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_013">
+		<comment>ビードル</comment>
 		<language name="JPN">It eats its weight in leaves every
 day. It fends off attackers with
 the needle on its head.</language>
@@ -478,6 +492,7 @@ the needle on its head.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_014">
+		<comment>コクーン</comment>
 		<language name="JPN">While awaiting evolution, it
 hides from predators under
 leaves and in nooks of branches.</language>
@@ -487,6 +502,7 @@ leaves and in nooks of branches.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_015">
+		<comment>スピアー</comment>
 		<language name="JPN">Its best attack involves flying
 around at high speed, striking with
 poison needles, then flying off.</language>
@@ -496,6 +512,7 @@ poison needles, then flying off.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_016">
+		<comment>ポッポ</comment>
 		<language name="JPN">It is docile and prefers to avoid
 conflict. If disturbed, however,
 it can ferociously strike back.</language>
@@ -505,6 +522,7 @@ it can ferociously strike back.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_017">
+		<comment>ピジョン</comment>
 		<language name="JPN">It flies over its wide territory in
 search of prey, downing it
 with its highly developed claws.</language>
@@ -514,6 +532,7 @@ with its highly developed claws.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_018">
+		<comment>ピジョット</comment>
 		<language name="JPN">By flapping its wings with all its
 might, PIDGEOT can make a gust of
 wind capable of bending tall trees.</language>
@@ -523,6 +542,7 @@ wind capable of bending tall trees.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_019">
+		<comment>コラッタ</comment>
 		<language name="JPN">Cautious in the extreme, its
 hardy vitality lets it live in
 any kind of environment.</language>
@@ -532,6 +552,7 @@ any kind of environment.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_020">
+		<comment>ラッタ</comment>
 		<language name="JPN">It whittles its constantly growing
 fangs by gnawing on hard things.
 It can chew apart cinder walls.</language>
@@ -541,6 +562,7 @@ It can chew apart cinder walls.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_021">
+		<comment>オニスズメ</comment>
 		<language name="JPN">It flaps its small wings busily to
 fly. Using its beak, it searches
 in grass for prey.</language>
@@ -550,6 +572,7 @@ in grass for prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_022">
+		<comment>オニドリル</comment>
 		<language name="JPN">It has the stamina to fly all
 day on its broad wings. It
 fights by using its sharp beak.</language>
@@ -559,6 +582,7 @@ fights by using its sharp beak.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_023">
+		<comment>アーボ</comment>
 		<language name="JPN">It sneaks through grass without
 making a sound and strikes
 unsuspecting prey from behind.</language>
@@ -568,6 +592,7 @@ unsuspecting prey from behind.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_024">
+		<comment>アーボック</comment>
 		<language name="JPN">The pattern on its belly is for
 intimidation. It constricts foes
 while they are frozen in fear.</language>
@@ -577,6 +602,8 @@ while they are frozen in fear.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_025">
+		<comment>ピカチュウ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It occasionally uses an electric
 shock to recharge a fellow PIKACHU
 that is in a weakened state.</language>
@@ -586,6 +613,8 @@ that is in a weakened state.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_026">
+		<comment>ライチュウ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its tail discharges electricity into
 the ground, protecting it from
 getting shocked.</language>
@@ -595,6 +624,7 @@ getting shocked.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_027">
+		<comment>サンド</comment>
 		<language name="JPN">To protect itself from attackers,
 it curls up into a ball. It lives in
 arid regions with minimal rainfall.</language>
@@ -604,6 +634,7 @@ arid regions with minimal rainfall.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_028">
+		<comment>サンドパン</comment>
 		<language name="JPN">It curls up, then rolls into foes
 with its back. Its sharp spines
 inflict severe damage.</language>
@@ -613,6 +644,7 @@ inflict severe damage.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_029">
+		<comment>ニドラン♀</comment>
 		<language name="JPN">While it does not prefer to fight,
 even one drop of the poison it
 secretes from barbs can be fatal.</language>
@@ -622,6 +654,7 @@ secretes from barbs can be fatal.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_030">
+		<comment>ニドリーナ</comment>
 		<language name="JPN">When it senses danger, it raises
 all the barbs on its body. These
 barbs grow slower than NIDORINO&apos;s.</language>
@@ -631,6 +664,7 @@ barbs grow slower than NIDORINO&apos;s.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_031">
+		<comment>ニドクイン</comment>
 		<language name="JPN">Its entire body is armored with
 hard scales. It will protect the
 young in its burrow with its life.</language>
@@ -640,6 +674,7 @@ young in its burrow with its life.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_032">
+		<comment>ニドラン♂</comment>
 		<language name="JPN">It scans its surroundings by
 raising its ears out of the grass.
 Its toxic horn is for protection.</language>
@@ -649,6 +684,7 @@ Its toxic horn is for protection.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_033">
+		<comment>ニドリーノ</comment>
 		<language name="JPN">It has a violent disposition and
 stabs foes with its horn, which
 oozes poison upon impact.</language>
@@ -658,6 +694,7 @@ oozes poison upon impact.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_034">
+		<comment>ニドキング</comment>
 		<language name="JPN">One swing of its mighty tail can
 snap a telephone pole as if it were
 a matchstick.</language>
@@ -667,6 +704,8 @@ a matchstick.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_035">
+		<comment>ピッピ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is said that happiness will come
 to those who see a gathering of
 CLEFAIRY dancing under a full moon.</language>
@@ -676,6 +715,8 @@ CLEFAIRY dancing under a full moon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_036">
+		<comment>ピクシー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is very wary and rarely shows
 itself to people. Its ears can hear
 a pin drop over half a mile away.</language>
@@ -685,6 +726,7 @@ a pin drop over half a mile away.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_037">
+		<comment>ロコン</comment>
 		<language name="JPN">It controls balls of fire. As it
 grows, its six tails split from
 their tips to make more tails.</language>
@@ -694,6 +736,7 @@ their tips to make more tails.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_038">
+		<comment>キュウコン</comment>
 		<language name="JPN">Its nine tails are said to be
 imbued with a mystic power.
 It can live for a thousand years.</language>
@@ -703,6 +746,7 @@ It can live for a thousand years.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_039">
+		<comment>プリン</comment>
 		<language name="JPN">When it wavers its big, round
 eyes, it begins singing a lullaby
 that makes everyone drowsy.</language>
@@ -712,6 +756,7 @@ that makes everyone drowsy.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_040">
+		<comment>プクリン</comment>
 		<language name="JPN">Its fine fur feels sublime to the
 touch. It can expand its body by
 inhaling air.</language>
@@ -721,6 +766,8 @@ inhaling air.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_041">
+		<comment>ズバット
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It checks its surroundings and
 location using reflections of the
 ultrasonic waves from its mouth.</language>
@@ -730,6 +777,8 @@ ultrasonic waves from its mouth.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_042">
+		<comment>ゴルバット
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its sharp fangs puncture the
 toughest of hides and have small
 holes for greedily sucking blood.</language>
@@ -739,6 +788,7 @@ holes for greedily sucking blood.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_043">
+		<comment>ナゾノクサ</comment>
 		<language name="JPN">It often plants its root feet in the
 ground during the day and sows
 seeds as it walks about at night.</language>
@@ -748,6 +798,7 @@ seeds as it walks about at night.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_044">
+		<comment>クサイハナ</comment>
 		<language name="JPN">The honey it drools from its mouth
 smells so atrocious, it can curl
 noses more than a mile away.</language>
@@ -757,6 +808,7 @@ noses more than a mile away.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_045">
+		<comment>ラフレシア</comment>
 		<language name="JPN">Its petals are the largest in the
 world. As it walks, it scatters
 extremely allergenic pollen.</language>
@@ -766,6 +818,7 @@ extremely allergenic pollen.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_046">
+		<comment>パラス</comment>
 		<language name="JPN">Mushrooms named tochukaso grow
 on its back. They grow along
 with the host PARAS.</language>
@@ -775,6 +828,7 @@ with the host PARAS.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_047">
+		<comment>パラセクト</comment>
 		<language name="JPN">A mushroom grown larger than the
 host&apos;s body controls PARASECT.
 It scatters poisonous spores.</language>
@@ -784,6 +838,7 @@ It scatters poisonous spores.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_048">
+		<comment>コンパン</comment>
 		<language name="JPN">Its big eyes are actually clusters
 of tiny eyes. At night, its kind is
 drawn by light.</language>
@@ -793,6 +848,7 @@ drawn by light.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_049">
+		<comment>モルフォン</comment>
 		<language name="JPN">It flutters its wings to scatter
 dustlike scales. The scales leach
 toxins if they contact skin.</language>
@@ -802,6 +858,7 @@ toxins if they contact skin.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_050">
+		<comment>ディグダ</comment>
 		<language name="JPN">A Pokémon that lives underground.
 Because of its dark habitat, it is
 repelled by bright sunlight.</language>
@@ -811,6 +868,7 @@ repelled by bright sunlight.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_051">
+		<comment>ダグトリオ</comment>
 		<language name="JPN">Its three heads move alternately,
 driving it through tough soil to
 depths of over 60 miles.</language>
@@ -820,6 +878,7 @@ depths of over 60 miles.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_052">
+		<comment>ニャース</comment>
 		<language name="JPN">It is nocturnal in nature. If it
 spots something shiny, its eyes
 glitter brightly.</language>
@@ -829,6 +888,7 @@ glitter brightly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_053">
+		<comment>ペルシアン</comment>
 		<language name="JPN">A very haughty Pokémon. Among
 fans, the size of the jewel in its
 forehead is a topic of much talk.</language>
@@ -838,6 +898,8 @@ forehead is a topic of much talk.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_054">
+		<comment>コダック
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Overwhelmed by enigmatic abilities,
 it suffers a constant headache. It
 sometimes uses mysterious powers.</language>
@@ -847,6 +909,8 @@ sometimes uses mysterious powers.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_055">
+		<comment>ゴルダック
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is seen swimming dynamically and
 elegantly using its well-developed
 limbs and flippers.</language>
@@ -856,6 +920,7 @@ limbs and flippers.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_056">
+		<comment>マンキー</comment>
 		<language name="JPN">It lives in treetop colonies.
 If one becomes enraged, the whole
 colony rampages for no reason.</language>
@@ -865,6 +930,7 @@ colony rampages for no reason.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_057">
+		<comment>オコリザル</comment>
 		<language name="JPN">It grows angry if you see its eyes
 and gets angrier if you run. If you
 beat it, it gets even madder.</language>
@@ -874,6 +940,7 @@ beat it, it gets even madder.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_058">
+		<comment>ガーディ</comment>
 		<language name="JPN">A Pokémon with a loyal nature.
 It will remain motionless until it is
 given an order by its Trainer.</language>
@@ -883,6 +950,7 @@ given an order by its Trainer.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_059">
+		<comment>ウインディ</comment>
 		<language name="JPN">Its proud and regal appearance
 has captured the hearts of
 people since long ago.</language>
@@ -892,6 +960,7 @@ people since long ago.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_060">
+		<comment>ニョロモ</comment>
 		<language name="JPN">Its skin is so thin, its internal
 organs are visible. It has trouble
 walking on its newly grown feet.</language>
@@ -901,6 +970,7 @@ walking on its newly grown feet.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_061">
+		<comment>ニョロゾ</comment>
 		<language name="JPN">The spiral pattern on its belly
 subtly undulates. Staring at it
 gradually causes drowsiness.</language>
@@ -910,6 +980,7 @@ gradually causes drowsiness.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_062">
+		<comment>ニョロボン</comment>
 		<language name="JPN">With its extremely tough muscles,
 it can keep swimming in the Pacific
 Ocean without resting.</language>
@@ -919,6 +990,8 @@ Ocean without resting.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_063">
+		<comment>ケーシィ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Using its psychic power is such a
 strain on its brain that it needs
 to sleep for 18 hours a day.</language>
@@ -928,6 +1001,8 @@ to sleep for 18 hours a day.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_064">
+		<comment>ユンゲラー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It stares at its silver spoon to
 focus its mind. It emits more alpha
 waves while doing so.</language>
@@ -937,6 +1012,8 @@ waves while doing so.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_065">
+		<comment>フーディン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The spoons clutched in its hands
 are said to have been created by
 its psychic powers.</language>
@@ -946,6 +1023,8 @@ its psychic powers.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_066">
+		<comment>ワンリキー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Though small in stature, it is
 powerful enough to easily heft and
 throw a number of GEODUDE at once.</language>
@@ -955,6 +1034,8 @@ throw a number of GEODUDE at once.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_067">
+		<comment>ゴーリキー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It happily carries heavy cargo to
 toughen up. It willingly does hard
 work for people.</language>
@@ -964,6 +1045,8 @@ work for people.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_068">
+		<comment>カイリキー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its four muscled arms slam foes
 with powerful punches and chops
 at blinding speed.</language>
@@ -973,6 +1056,7 @@ at blinding speed.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_069">
+		<comment>マダツボミ</comment>
 		<language name="JPN">It prefers hot and humid
 environments. It is quick at
 capturing prey with its vines.</language>
@@ -982,6 +1066,7 @@ capturing prey with its vines.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_070">
+		<comment>ウツドン</comment>
 		<language name="JPN">A Pokémon that appears to be a
 plant. It captures unwary prey by
 dousing them with a toxic powder.</language>
@@ -991,6 +1076,7 @@ dousing them with a toxic powder.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_071">
+		<comment>ウツボット</comment>
 		<language name="JPN">It pools in its mouth a fluid with
 a honeylike scent, which is really
 an acid that dissolves anything.</language>
@@ -1000,6 +1086,8 @@ an acid that dissolves anything.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_072">
+		<comment>メノクラゲ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Because its body is almost entirely
 composed of water, it shrivels up if
 it is washed ashore.</language>
@@ -1009,6 +1097,8 @@ it is washed ashore.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_073">
+		<comment>ドククラゲ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It extends its 80 tentacles to
 form an encircling poisonous net
 that is difficult to escape.</language>
@@ -1018,6 +1108,8 @@ that is difficult to escape.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_074">
+		<comment>イシツブテ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">At rest, it looks just like a rock.
 Carelessly stepping on it will make
 it swing its fists angrily.</language>
@@ -1027,6 +1119,8 @@ it swing its fists angrily.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_075">
+		<comment>ゴローン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It rolls on mountain paths to move.
 Once it builds momentum, no Pokémon
 can stop it without difficulty.</language>
@@ -1036,6 +1130,8 @@ can stop it without difficulty.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_076">
+		<comment>ゴローニャ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Even dynamite can&apos;t harm its hard,
 boulderlike body. It sheds its hide
 just once a year.</language>
@@ -1045,6 +1141,8 @@ just once a year.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_077">
+		<comment>ポニータ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">As a newborn, it can barely stand.
 However, through galloping, its
 legs are made tougher and faster.</language>
@@ -1054,6 +1152,8 @@ legs are made tougher and faster.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_078">
+		<comment>ギャロップ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When at an all-out gallop, its
 blazing mane sparkles, enhancing
 its beautiful appearance.</language>
@@ -1063,6 +1163,7 @@ its beautiful appearance.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_079">
+		<comment>ヤドン</comment>
 		<language name="JPN">Although slow, it is skilled at
 fishing with its tail. It does not
 feel pain if its tail is bitten.</language>
@@ -1072,6 +1173,7 @@ feel pain if its tail is bitten.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_080">
+		<comment>ヤドラン</comment>
 		<language name="JPN">Though usually dim witted, it
 seems to become inspired if the
 SHELLDER on its tail bites down.</language>
@@ -1081,6 +1183,8 @@ SHELLDER on its tail bites down.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_081">
+		<comment>コイル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The faster the units at its sides
 rotate, the greater the magnetic
 force they generate.</language>
@@ -1090,6 +1194,8 @@ force they generate.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_082">
+		<comment>レアコイル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Many mysteriously appear when more
 sunspots dot the sun. They stop
 TV sets from displaying properly.</language>
@@ -1099,6 +1205,7 @@ TV sets from displaying properly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_083">
+		<comment>カモネギ</comment>
 		<language name="JPN">It can&apos;t live without the stalk it
 holds. That&apos;s why it defends the
 stalk from attackers with its life.</language>
@@ -1108,6 +1215,7 @@ stalk from attackers with its life.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_084">
+		<comment>ドードー</comment>
 		<language name="JPN">The brains in its two heads appear
 to communicate emotions to each
 other with a telepathic power.</language>
@@ -1117,6 +1225,7 @@ other with a telepathic power.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_085">
+		<comment>ドードリオ</comment>
 		<language name="JPN">When DODUO evolves into this odd
 breed, one of its heads splits into
 two. It runs at nearly 40 mph.</language>
@@ -1126,6 +1235,7 @@ two. It runs at nearly 40 mph.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_086">
+		<comment>パウワウ</comment>
 		<language name="JPN">A Pokémon that lives on icebergs.
 It swims in the sea using the point
 on its head to break up ice.</language>
@@ -1135,6 +1245,7 @@ on its head to break up ice.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_087">
+		<comment>ジュゴン</comment>
 		<language name="JPN">In snow, the pure white coat
 covering its body obscures it from
 predators.</language>
@@ -1144,6 +1255,7 @@ predators.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_088">
+		<comment>ベトベター</comment>
 		<language name="JPN">It was born when sludge in a dirty
 stream was exposed to the moon&apos;s
 X-rays. It appears among filth.</language>
@@ -1153,6 +1265,7 @@ X-rays. It appears among filth.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_089">
+		<comment>ベトベトン</comment>
 		<language name="JPN">A toxic fluid seeps from its body.
 The fluid instantly kills plants and
 trees on contact.</language>
@@ -1162,6 +1275,7 @@ trees on contact.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_090">
+		<comment>シェルダー</comment>
 		<language name="JPN">It swims backward by opening and
 closing its two shells. Its large
 tongue is always kept hanging out.</language>
@@ -1171,6 +1285,7 @@ tongue is always kept hanging out.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_091">
+		<comment>パルシェン</comment>
 		<language name="JPN">It fights by keeping its shell
 tightly shut for protection and
 by shooting spikes to repel foes.</language>
@@ -1180,6 +1295,8 @@ by shooting spikes to repel foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_092">
+		<comment>ゴース
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Born from gases, anyone would
 faint if engulfed by its gaseous
 body, which contains poison.</language>
@@ -1189,6 +1306,9 @@ body, which contains poison.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_093">
+		<comment>ゴースト
+・シンオウ図鑑プラチナ版
+・シオンの町の人の話っぽく</comment>
 		<language name="JPN">It likes to lurk in the dark and tap
 shoulders with a gaseous hand. Its
 touch causes endless shuddering.</language>
@@ -1198,6 +1318,8 @@ touch causes endless shuddering.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_094">
+		<comment>ゲンガー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The leer that floats in darkness
 belongs to a GENGAR delighting in
 casting curses on people.</language>
@@ -1207,6 +1329,8 @@ casting curses on people.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_095">
+		<comment>イワーク
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It burrows through the ground
 at a speed of 50 mph while
 feeding on large boulders.
@@ -1218,6 +1342,7 @@ feeding on large boulders.
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_096">
+		<comment>スリープ</comment>
 		<language name="JPN">It can tell what people are
 dreaming by sniffing with its big
 nose. It loves fun dreams.</language>
@@ -1227,6 +1352,7 @@ nose. It loves fun dreams.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_097">
+		<comment>スリーパー</comment>
 		<language name="JPN">Seeing its swinging pendulum can
 induce sleep in three seconds,
 even in someone who just woke up.</language>
@@ -1236,6 +1362,7 @@ even in someone who just woke up.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_098">
+		<comment>クラブ</comment>
 		<language name="JPN">It lives in burrows dug on sandy
 beaches. Its pincers fully grow
 back if they are broken in battle.</language>
@@ -1245,6 +1372,7 @@ back if they are broken in battle.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_099">
+		<comment>キングラー</comment>
 		<language name="JPN">The larger pincer has 10,000-
 horsepower strength. However, it
 is so heavy, it is difficult to aim.</language>
@@ -1254,6 +1382,7 @@ is so heavy, it is difficult to aim.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_100">
+		<comment>ビリリダマ</comment>
 		<language name="JPN">It looks just like a Poké Ball.
 It is dangerous because it may
 electrocute or explode on touch.</language>
@@ -1263,6 +1392,7 @@ electrocute or explode on touch.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_101">
+		<comment>マルマイン</comment>
 		<language name="JPN">It is known to drift on winds if it
 is bloated to bursting with stored
 electricity.</language>
@@ -1272,6 +1402,7 @@ electricity.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_102">
+		<comment>タマタマ</comment>
 		<language name="JPN">Its six eggs converse using
 telepathy. They can quickly gather
 if they become separated.</language>
@@ -1280,16 +1411,18 @@ telepathy. They can quickly gather
 if they become separated.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_103">
-		<language name="JPN">It is called \[4:07:L_DoubleQuot.\]The Walking Jungle.&quot;
+	<row id="ZKN_COMMENT_E_00_103" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>ナッシー</comment>
+		<language name="JPN">It is called “The Walking Jungle.”
 If a head grows too big, it falls
 off and becomes an EXEGGCUTE.</language>
-		<language name="JPN_KANJI">It is called \[4:07:L_DoubleQuot.\]The Walking Jungle.&quot;
+		<language name="JPN_KANJI">It is called “The Walking Jungle.”
 If a head grows too big, it falls
 off and becomes an EXEGGCUTE.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_104">
+		<comment>カラカラ</comment>
 		<language name="JPN">When it thinks of its dead mother,
 it cries. Its crying makes the
 skull it wears rattle hollowly.</language>
@@ -1299,6 +1432,7 @@ skull it wears rattle hollowly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_105">
+		<comment>ガラガラ</comment>
 		<language name="JPN">From its birth, this savage Pokémon
 constantly holds bones. It is
 skilled in using them as weapons.</language>
@@ -1308,6 +1442,7 @@ skilled in using them as weapons.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_106">
+		<comment>サワムラー</comment>
 		<language name="JPN">Its legs can stretch double.
 First-time foes are startled by
 its extensible reach.</language>
@@ -1317,6 +1452,7 @@ its extensible reach.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_107">
+		<comment>エビワラー</comment>
 		<language name="JPN">The arm-twisting punches it throws
 pulverize even concrete. It rests
 after three minutes of fighting.</language>
@@ -1326,6 +1462,8 @@ after three minutes of fighting.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_108">
+		<comment>ベロリンガ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When it extends its over-six-foot-
 long tongue, its tail quivers. There
 is a possibility they are connected.</language>
@@ -1335,6 +1473,7 @@ is a possibility they are connected.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_109">
+		<comment>ドガース</comment>
 		<language name="JPN">Lighter-than-air gases in its body
 keep it aloft. The gases not only
 smell, they are also explosive.</language>
@@ -1344,6 +1483,7 @@ smell, they are also explosive.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_110">
+		<comment>マタドガス</comment>
 		<language name="JPN">It grows by feeding on gases
 released by garbage. Though very
 rare, triplets have been found.</language>
@@ -1353,6 +1493,8 @@ rare, triplets have been found.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_111">
+		<comment>サイホーン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its powerful tackles can destroy
 anything. However, it is too
 slow witted to help people work.</language>
@@ -1362,6 +1504,8 @@ slow witted to help people work.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_112">
+		<comment>サイドン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Standing on its hind legs freed its
 forelegs and made it smarter. It is
 very forgetful, however.</language>
@@ -1371,6 +1515,8 @@ very forgetful, however.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_113">
+		<comment>ラッキー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A kindly Pokémon that lays highly
 nutritious eggs and shares them
 with injured Pokémon or people.</language>
@@ -1380,6 +1526,8 @@ with injured Pokémon or people.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_114">
+		<comment>モンジャラ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The blue vines shrouding its body
 are covered in a growth of fine
 hair. It is known to be ticklish.</language>
@@ -1389,6 +1537,7 @@ hair. It is known to be ticklish.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_115">
+		<comment>ガルーラ</comment>
 		<language name="JPN">It raises its offspring in its belly
 pouch. It lets the baby out to
 play only when it feels safe.</language>
@@ -1398,6 +1547,7 @@ play only when it feels safe.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_116">
+		<comment>タッツー</comment>
 		<language name="JPN">It makes its nest in the shade of
 corals. If it senses danger, it
 spits murky ink and flees.</language>
@@ -1407,6 +1557,7 @@ spits murky ink and flees.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_117">
+		<comment>シードラ</comment>
 		<language name="JPN">Its spines provide protection.
 Its fins and bones are prized as
 traditional medicine ingredients.</language>
@@ -1416,6 +1567,8 @@ traditional medicine ingredients.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_118">
+		<comment>トサキント
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Though it appears very elegant
 when swimming with fins unfurled, it
 can jab powerfully with its horn.</language>
@@ -1425,6 +1578,8 @@ can jab powerfully with its horn.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_119">
+		<comment>アズマオウ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">In autumn, its body becomes more
 fatty in preparing to propose to a
 mate. It takes on beautiful colors.</language>
@@ -1434,6 +1589,7 @@ mate. It takes on beautiful colors.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_120">
+		<comment>ヒトデマン</comment>
 		<language name="JPN">If its body is torn, it can grow
 back if the red core remains.
 The core flashes at midnight.</language>
@@ -1443,6 +1599,7 @@ The core flashes at midnight.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_121">
+		<comment>スターミー</comment>
 		<language name="JPN">At the center of its body is a red
 core, which sends mysterious
 radio signals into the night sky.</language>
@@ -1452,6 +1609,8 @@ radio signals into the night sky.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_122">
+		<comment>バリヤード
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It shapes an invisible wall in midair
 by minutely vibrating its fingertips
 to stop molecules in the air.</language>
@@ -1461,6 +1620,8 @@ to stop molecules in the air.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_123">
+		<comment>ストライク
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The sharp scythes on its forearms
 become increasingly sharp by
 cutting through hard objects.</language>
@@ -1470,6 +1631,7 @@ cutting through hard objects.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_124">
+		<comment>ルージュラ</comment>
 		<language name="JPN">Its cries sound like human speech.
 However, it is impossible to tell
 what it is trying to say.</language>
@@ -1479,6 +1641,8 @@ what it is trying to say.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_125">
+		<comment>エレブー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It windmills its arms to slightly
 boost its punches. Foes have been
 known to escape in the meantime.</language>
@@ -1488,6 +1652,8 @@ known to escape in the meantime.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_126">
+		<comment>ブーバー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When it breathes deeply, heat
 waves form around its body, making
 it hard to see clearly.</language>
@@ -1497,6 +1663,7 @@ it hard to see clearly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_127">
+		<comment>カイロス</comment>
 		<language name="JPN">It grips prey with its pincers
 until the prey is torn in half.
 What it can&apos;t tear, it tosses far.</language>
@@ -1506,6 +1673,7 @@ What it can&apos;t tear, it tosses far.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_128">
+		<comment>ケンタロス</comment>
 		<language name="JPN">Once it takes aim at its foe, it
 makes a headlong charge. It is
 famous for its violent nature.</language>
@@ -1515,6 +1683,8 @@ famous for its violent nature.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_129">
+		<comment>コイキング
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A MAGIKARP living for many years
 can leap a mountain using Splash.
 The move remains useless, though.</language>
@@ -1524,6 +1694,8 @@ The move remains useless, though.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_130">
+		<comment>ギャラドス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Once it begins to rampage, a
 GYARADOS will burn everything
 down, even in a harsh storm.</language>
@@ -1533,6 +1705,7 @@ down, even in a harsh storm.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_131">
+		<comment>ラプラス</comment>
 		<language name="JPN">It loves crossing the sea with
 people and Pokémon on its back.
 It understands human speech.</language>
@@ -1542,6 +1715,7 @@ It understands human speech.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_132">
+		<comment>メタモン</comment>
 		<language name="JPN">It has the ability to reconstitute
 its entire cellular structure to
 transform into whatever it sees.</language>
@@ -1551,6 +1725,8 @@ transform into whatever it sees.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_133">
+		<comment>イーブイ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Because its genetic makeup is
 irregular, it quickly changes its
 form due to a variety of causes.</language>
@@ -1560,6 +1736,8 @@ form due to a variety of causes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_134">
+		<comment>シャワーズ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its cell composition is similar
 to water molecules. As a result,
 it can melt away into water.</language>
@@ -1569,6 +1747,8 @@ it can melt away into water.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_135">
+		<comment>サンダース
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If agitated, it uses electricity to
 straighten out its fur and launch
 it in small bunches.</language>
@@ -1578,6 +1758,8 @@ it in small bunches.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_136">
+		<comment>ブースター
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Inhaled air is heated in the flame
 sac in its body to an intense fire
 over 3,000 degrees Fahrenheit.</language>
@@ -1587,6 +1769,8 @@ over 3,000 degrees Fahrenheit.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_137">
+		<comment>ポリゴン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A man-made Pokémon created using
 advanced scientific means. It can
 move freely in cyberspace.</language>
@@ -1596,6 +1780,7 @@ move freely in cyberspace.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_138">
+		<comment>オムナイト</comment>
 		<language name="JPN">A Pokémon that was resurrected
 from a fossil using modern science.
 It swam in ancient seas.</language>
@@ -1605,6 +1790,7 @@ It swam in ancient seas.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_139">
+		<comment>オムスター</comment>
 		<language name="JPN">It is thought that this Pokémon
 became extinct because its spiral
 shell grew too large.</language>
@@ -1614,6 +1800,7 @@ shell grew too large.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_140">
+		<comment>カブト</comment>
 		<language name="JPN">It is thought to have inhabited
 beaches 300 million years ago.
 It is protected by a stiff shell.</language>
@@ -1623,6 +1810,7 @@ It is protected by a stiff shell.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_141">
+		<comment>カブトプス</comment>
 		<language name="JPN">It is thought that this Pokémon
 came onto land because its
 prey adapted to life on land.</language>
@@ -1632,6 +1820,7 @@ prey adapted to life on land.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_142">
+		<comment>プテラ</comment>
 		<language name="JPN">A Pokémon that roamed the skies
 in the dinosaur era. Its teeth are
 like saw blades.</language>
@@ -1641,6 +1830,8 @@ like saw blades.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_143">
+		<comment>カビゴン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When its belly is full, it becomes
 too lethargic to even lift a finger,
 so it is safe to bounce on its belly.</language>
@@ -1650,6 +1841,7 @@ so it is safe to bounce on its belly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_144">
+		<comment>フリーザー</comment>
 		<language name="JPN">A legendary bird Pokémon.
 It can create blizzards by
 freezing moisture in the air.</language>
@@ -1659,6 +1851,7 @@ freezing moisture in the air.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_145">
+		<comment>サンダー</comment>
 		<language name="JPN">A legendary Pokémon that is said
 to live in thunderclouds. It freely
 controls lightning bolts.</language>
@@ -1668,6 +1861,7 @@ controls lightning bolts.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_146">
+		<comment>ファイヤー</comment>
 		<language name="JPN">One of the legendary bird Pokémon.
 It is said that its appearance
 indicates the coming of spring.</language>
@@ -1676,16 +1870,18 @@ It is said that its appearance
 indicates the coming of spring.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_147">
-		<language name="JPN">It is called the \[4:07:L_DoubleQuot.\]Mirage Pokémon&quot;
+	<row id="ZKN_COMMENT_E_00_147" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>ミニリュウ</comment>
+		<language name="JPN">It is called the “Mirage Pokémon”
 because so few have seen it.
 Its shed skin has been found.</language>
-		<language name="JPN_KANJI">It is called the \[4:07:L_DoubleQuot.\]Mirage Pokémon&quot;
+		<language name="JPN_KANJI">It is called the “Mirage Pokémon”
 because so few have seen it.
 Its shed skin has been found.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_148">
+		<comment>ハクリュー</comment>
 		<language name="JPN">If its body takes on an aura, the
 weather changes instantly. It is
 said to live in seas and lakes.</language>
@@ -1695,6 +1891,7 @@ said to live in seas and lakes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_149">
+		<comment>カイリュー</comment>
 		<language name="JPN">It is said to make its home
 somewhere in the sea. It guides
 crews of shipwrecks to shore.</language>
@@ -1704,6 +1901,7 @@ crews of shipwrecks to shore.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_150">
+		<comment>ミュウツー</comment>
 		<language name="JPN">A Pokémon created by recombining
 MEW&apos;s genes. It&apos;s said to have the
 most savage heart among Pokémon.</language>
@@ -1713,6 +1911,7 @@ most savage heart among Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_151">
+		<comment>ミュウ</comment>
 		<language name="JPN">Because it can use all kinds of
 moves, many scientists believe MEW
 to be the ancestor of Pokémon.</language>
@@ -1722,6 +1921,7 @@ to be the ancestor of Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_152">
+		<comment>チコリータ</comment>
 		<language name="JPN">It uses the leaf on its head to
 determine the temperature and
 humidity. It loves to sunbathe.</language>
@@ -1731,6 +1931,7 @@ humidity. It loves to sunbathe.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_153">
+		<comment>ベイリーフ</comment>
 		<language name="JPN">The buds that ring its neck give
 off a spicy aroma that perks
 people up.</language>
@@ -1740,6 +1941,7 @@ people up.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_154">
+		<comment>メガニウム</comment>
 		<language name="JPN">Its breath has the fantastic
 ability to revive dead plants and
 flowers.</language>
@@ -1749,6 +1951,7 @@ flowers.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_155">
+		<comment>ヒノアラシ</comment>
 		<language name="JPN">It has a timid nature. If it is
 startled, the flames on its back
 burn more vigorously.</language>
@@ -1758,6 +1961,7 @@ burn more vigorously.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_156">
+		<comment>マグマラシ</comment>
 		<language name="JPN">It intimidates foes with the heat
 of its flames. The fire burns more
 strongly when it readies to fight.</language>
@@ -1767,6 +1971,7 @@ strongly when it readies to fight.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_157">
+		<comment>バクフーン</comment>
 		<language name="JPN">It attacks using blasts of fire.
 It creates heat shimmers with
 intense fire to hide itself.</language>
@@ -1776,6 +1981,7 @@ intense fire to hide itself.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_158">
+		<comment>ワニノコ</comment>
 		<language name="JPN">It has the habit of biting anything
 with its developed jaws. Even its
 Trainer needs to be careful.</language>
@@ -1785,6 +1991,7 @@ Trainer needs to be careful.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_159">
+		<comment>アリゲイツ</comment>
 		<language name="JPN">Once it bites down, it won&apos;t let go
 until it loses its fangs. New fangs
 quickly grow into place.</language>
@@ -1794,6 +2001,7 @@ quickly grow into place.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_160">
+		<comment>オーダイル</comment>
 		<language name="JPN">It usually moves slowly, but it
 goes at blinding speed when it
 attacks and bites prey.</language>
@@ -1803,6 +2011,7 @@ attacks and bites prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_161">
+		<comment>オタチ</comment>
 		<language name="JPN">It has a very nervous nature.
 It stands up high on its tail so it
 can scan wide areas.</language>
@@ -1812,6 +2021,7 @@ can scan wide areas.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_162">
+		<comment>オオタチ</comment>
 		<language name="JPN">The mother puts its offspring to
 sleep by curling up around them.
 It corners foes with speed.</language>
@@ -1821,6 +2031,8 @@ It corners foes with speed.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_163">
+		<comment>ホーホー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It marks time precisely. Some
 countries consider it to be a wise
 friend, versed in the world&apos;s ways.</language>
@@ -1830,6 +2042,8 @@ friend, versed in the world&apos;s ways.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_164">
+		<comment>ヨルノズク
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its eyes are specially developed
 to enable it to see clearly even in
 murky darkness and minimal light.</language>
@@ -1839,6 +2053,7 @@ murky darkness and minimal light.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_165">
+		<comment>レディバ</comment>
 		<language name="JPN">It is so timid, it can&apos;t move if it
 isn&apos;t with a swarm of others. It
 conveys its feelings with scent.</language>
@@ -1848,6 +2063,7 @@ conveys its feelings with scent.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_166">
+		<comment>レディアン</comment>
 		<language name="JPN">It uses starlight as energy. When
 more stars appear at night, the
 patterns on its back grow larger.</language>
@@ -1857,6 +2073,7 @@ patterns on its back grow larger.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_167">
+		<comment>イトマル</comment>
 		<language name="JPN">It sets a trap by spinning a web
 with thin but strong silk. It waits
 motionlessly for prey to arrive.</language>
@@ -1866,6 +2083,7 @@ motionlessly for prey to arrive.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_168">
+		<comment>アリアドス</comment>
 		<language name="JPN">It attaches silk to its prey and
 sets it free. Later, it tracks the
 silk to the prey and its friends.</language>
@@ -1875,6 +2093,8 @@ silk to the prey and its friends.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_169">
+		<comment>クロバット
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The transformation of its legs into
 wings made it better at flying, but
 more clumsy at walking.</language>
@@ -1884,6 +2104,7 @@ more clumsy at walking.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_170">
+		<comment>チョンチー</comment>
 		<language name="JPN">It discharges positive and
 negative electricity from its
 antenna tips to shock its foes.</language>
@@ -1892,16 +2113,19 @@ negative electricity from its
 antenna tips to shock its foes.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_171">
+	<row id="ZKN_COMMENT_E_00_171" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>ランターン</comment>
 		<language name="JPN">LANTURN&apos;s light can shine up from
 great depths. It is nicknamed
-\[4:07:L_DoubleQuot.\]The Deep-Sea Star.&quot;</language>
+“The Deep-Sea Star.”</language>
 		<language name="JPN_KANJI">LANTURN&apos;s light can shine up from
 great depths. It is nicknamed
-\[4:07:L_DoubleQuot.\]The Deep-Sea Star.&quot;</language>
+“The Deep-Sea Star.”</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_172">
+		<comment>ピチュー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The electric sacs in its cheeks are
 small. If even a little electricity
 leaks, it becomes shocked.</language>
@@ -1911,6 +2135,8 @@ leaks, it becomes shocked.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_173">
+		<comment>ピィ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is often seen when shooting
 stars fill the night skies. It&apos;s said
 to arrive riding on a shooting star.</language>
@@ -1920,6 +2146,7 @@ to arrive riding on a shooting star.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_174">
+		<comment>ププリン</comment>
 		<language name="JPN">It has a soft and bouncy body.
 Once it starts bouncing, it
 becomes impossible to stop.</language>
@@ -1929,6 +2156,8 @@ becomes impossible to stop.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_175">
+		<comment>トゲピー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It transforms the kindness and joy
 of others into happiness, which it
 stores in its shell.</language>
@@ -1938,6 +2167,8 @@ stores in its shell.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_176">
+		<comment>トゲチック
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">To share its happiness, it flies
 around the world seeking kind-
 hearted people.</language>
@@ -1947,6 +2178,7 @@ hearted people.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_177">
+		<comment>ネイティ</comment>
 		<language name="JPN">It picks food from cactus plants,
 deftly avoiding buds and spines.
 It seems to skip about to move.</language>
@@ -1956,6 +2188,7 @@ It seems to skip about to move.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_178">
+		<comment>ネイティオ</comment>
 		<language name="JPN">This odd Pokémon can see both
 the past and the future. It eyes
 the sun&apos;s movement all day.</language>
@@ -1965,6 +2198,7 @@ the sun&apos;s movement all day.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_179">
+		<comment>メリープ</comment>
 		<language name="JPN">Its fluffy coat swells to double
 when static electricity builds up.
 Touching it can be shocking.</language>
@@ -1974,6 +2208,7 @@ Touching it can be shocking.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_180">
+		<comment>モココ</comment>
 		<language name="JPN">If its coat becomes fully charged
 with electricity, its tail lights up.
 It fires hair that zaps on impact.</language>
@@ -1983,6 +2218,7 @@ It fires hair that zaps on impact.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_181">
+		<comment>デンリュウ</comment>
 		<language name="JPN">The tip of its tail shines brightly.
 In the olden days, people sent
 signals using the tail&apos;s light.</language>
@@ -1992,6 +2228,7 @@ signals using the tail&apos;s light.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_182">
+		<comment>キレイハナ</comment>
 		<language name="JPN">When the heavy rainfall season
 ends, it is drawn out by warm
 sunlight to dance in the open.</language>
@@ -2001,6 +2238,8 @@ sunlight to dance in the open.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_183">
+		<comment>マリル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The oil-filled end of its tail floats
 on water. It keeps MARILL from
 drowning even in a strong current.</language>
@@ -2010,6 +2249,8 @@ drowning even in a strong current.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_184">
+		<comment>マリルリ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It can spend all day in water,
 since it can inhale and store
 a large volume of air.</language>
@@ -2019,6 +2260,8 @@ a large volume of air.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_185">
+		<comment>ウソッキー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">To avoid being attacked, it does
 nothing but mimic a tree. It hates
 water and flees from rain.</language>
@@ -2028,6 +2271,7 @@ water and flees from rain.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_186">
+		<comment>ニョロトノ</comment>
 		<language name="JPN">It gathers groups of others as
 their leader. Its cries make
 POLIWAG obey.</language>
@@ -2037,6 +2281,7 @@ POLIWAG obey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_187">
+		<comment>ハネッコ</comment>
 		<language name="JPN">It drifts on winds. It is said that
 when HOPPIP gather in fields and
 mountains, spring is on the way.</language>
@@ -2046,6 +2291,7 @@ mountains, spring is on the way.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_188">
+		<comment>ポポッコ</comment>
 		<language name="JPN">It blooms when the weather warms.
 It floats in the sky to soak up as
 much sunlight as possible.</language>
@@ -2055,6 +2301,7 @@ much sunlight as possible.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_189">
+		<comment>ワタッコ</comment>
 		<language name="JPN">Blown by seasonal winds, it
 circles the globe, scattering
 cotton spores as it goes.</language>
@@ -2064,6 +2311,8 @@ cotton spores as it goes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_190">
+		<comment>エイパム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It lives high among the treetops.
 It can use its tail as freely and
 cleverly as its hands.</language>
@@ -2073,6 +2322,7 @@ cleverly as its hands.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_191">
+		<comment>ヒマナッツ</comment>
 		<language name="JPN">It suddenly falls out of the sky in
 the morning. A year after a cold
 summer, their population explodes.</language>
@@ -2082,6 +2332,7 @@ summer, their population explodes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_192">
+		<comment>キマワリ</comment>
 		<language name="JPN">It gets energy from warm sunlight
 and is known for its habit of
 moving in pursuit of it.</language>
@@ -2091,6 +2342,8 @@ moving in pursuit of it.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_193">
+		<comment>ヤンヤンマ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It can hover in one spot by
 flapping its wings at high speed. It
 flits about to guard its territory.</language>
@@ -2100,6 +2353,8 @@ flits about to guard its territory.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_194">
+		<comment>ウパー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When walking on land, it covers its
 body with a poisonous film that
 keeps its skin from dehydrating.</language>
@@ -2109,6 +2364,8 @@ keeps its skin from dehydrating.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_195">
+		<comment>ヌオー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It has an easygoing nature. It
 doesn&apos;t care if it bumps its head on
 boats and boulders while swimming.</language>
@@ -2118,6 +2375,8 @@ boats and boulders while swimming.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_196">
+		<comment>エーフィ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its fur is so sensitive, it can
 sense minute shifts in the air
 and predict the weather.</language>
@@ -2127,6 +2386,8 @@ and predict the weather.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_197">
+		<comment>ブラッキー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When exposed to the moon&apos;s aura,
 the rings on its body glow faintly
 and it gains a mysterious power.</language>
@@ -2136,6 +2397,8 @@ and it gains a mysterious power.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_198">
+		<comment>ヤミカラス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If spotted, it will lure an unwary
 person into chasing it, then lose
 the pursuer on mountain trails.</language>
@@ -2145,6 +2408,7 @@ the pursuer on mountain trails.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_199">
+		<comment>ヤドキング</comment>
 		<language name="JPN">Being bitten by SHELLDER gave it
 intelligence comparable to that of
 award-winning scientists.</language>
@@ -2154,6 +2418,8 @@ award-winning scientists.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_200">
+		<comment>ムウマ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A Pokémon that startles people in
 the middle of the night. It gathers
 fear as its energy.</language>
@@ -2163,6 +2429,8 @@ fear as its energy.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_201">
+		<comment>アンノーン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When alone, nothing happens.
 However, if there are two or more,
 an odd power is said to emerge.</language>
@@ -2172,6 +2440,7 @@ an odd power is said to emerge.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_202">
+		<comment>ソーナンス</comment>
 		<language name="JPN">It desperately tries to keep its
 black tail hidden. It is said to be
 proof the tail hides a secret.</language>
@@ -2181,6 +2450,8 @@ proof the tail hides a secret.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_203">
+		<comment>キリンリキ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The head on its tail contains a
 small brain. It can instinctively
 fight even while facing backward.</language>
@@ -2190,6 +2461,7 @@ fight even while facing backward.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_204">
+		<comment>クヌギダマ</comment>
 		<language name="JPN">It looks just like a pinecone.
 Its shell protects it from bird
 Pokémon that peck it by mistake.</language>
@@ -2199,6 +2471,7 @@ Pokémon that peck it by mistake.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_205">
+		<comment>フォレトス</comment>
 		<language name="JPN">It is encased in a steel shell. Its
 peering eyes are all that can be
 seen of its mysterious innards.</language>
@@ -2208,6 +2481,7 @@ seen of its mysterious innards.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_206">
+		<comment>ノコッチ</comment>
 		<language name="JPN">It digs into the ground with its
 tail and makes a mazelike nest.
 It can fly just a little.</language>
@@ -2217,6 +2491,8 @@ It can fly just a little.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_207">
+		<comment>グライガー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It glides as if sliding. It startles
 foes by clamping on to their faces,
 then jabs with its poison stinger.</language>
@@ -2226,6 +2502,8 @@ then jabs with its poison stinger.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_208">
+		<comment>ハガネール
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is thought its body transformed
 as a result of iron accumulating
 internally from swallowing soil.</language>
@@ -2235,6 +2513,7 @@ internally from swallowing soil.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_209">
+		<comment>ブルー</comment>
 		<language name="JPN">Small Pokémon flee from its scary
 face. It is, however, considered
 by women to be cute.</language>
@@ -2244,6 +2523,7 @@ by women to be cute.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_210">
+		<comment>グランブル</comment>
 		<language name="JPN">It is timid in spite of its looks.
 If it becomes enraged, however,
 it will strike with its huge fangs.</language>
@@ -2253,6 +2533,7 @@ it will strike with its huge fangs.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_211">
+		<comment>ハリーセン</comment>
 		<language name="JPN">It shoots the poison spines on its
 body in all directions. Its round
 form makes it a poor swimmer.</language>
@@ -2262,6 +2543,8 @@ form makes it a poor swimmer.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_212">
+		<comment>ハッサム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It raises its pincers with eyelike
 markings for intimidation. It also
 swings them down dangerously.</language>
@@ -2271,6 +2554,7 @@ swings them down dangerously.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_213">
+		<comment>ツボツボ</comment>
 		<language name="JPN">It stores berries in its shell.
 The berries eventually ferment to
 become delicious juices.</language>
@@ -2280,6 +2564,8 @@ become delicious juices.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_214">
+		<comment>ヘラクロス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It loves sweet honey. To keep all
 the honey to itself, it hurls rivals
 away with its prized horn.</language>
@@ -2289,6 +2575,8 @@ away with its prized horn.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_215">
+		<comment>ニューラ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A smart and sneaky Pokémon. A pair
 may work together to steal eggs by
 having one lure the parents away.</language>
@@ -2298,6 +2586,7 @@ having one lure the parents away.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_216">
+		<comment>ヒメグマ</comment>
 		<language name="JPN">It lets honey soak into its paws
 so it can lick them all the time.
 Every set of paws tastes unique.</language>
@@ -2307,6 +2596,7 @@ Every set of paws tastes unique.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_217">
+		<comment>リングマ</comment>
 		<language name="JPN">In its territory, it leaves
 scratches on trees that bear
 delicious berries or fruits.</language>
@@ -2316,6 +2606,7 @@ delicious berries or fruits.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_218">
+		<comment>マグマッグ</comment>
 		<language name="JPN">Its body is made of magma.
 If it doesn&apos;t keep moving, its
 body will cool and harden.</language>
@@ -2325,6 +2616,7 @@ body will cool and harden.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_219">
+		<comment>マグカルゴ</comment>
 		<language name="JPN">Its body temperature is roughly
 18,000 degrees F. Flames spout
 from gaps in its hardened shell.</language>
@@ -2334,6 +2626,8 @@ from gaps in its hardened shell.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_220">
+		<comment>ウリムー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It has a very sensitive nose. It
 can locate mushrooms, berries, and
 even hot springs buried under ice.</language>
@@ -2343,6 +2637,8 @@ even hot springs buried under ice.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_221">
+		<comment>イノムー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Covered by a shaggy coat, it is
 strong against the cold. Its tusks
 of ice thicken when it snows.</language>
@@ -2352,6 +2648,7 @@ of ice thicken when it snows.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_222">
+		<comment>サニーゴ</comment>
 		<language name="JPN">Many live in the clean seas of the
 south. They apparently can&apos;t live
 in polluted waters.</language>
@@ -2361,6 +2658,8 @@ in polluted waters.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_223">
+		<comment>テッポウオ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It forcefully squirts water. The
 water jet never misses prey even
 if the REMORAID is deep in the sea.</language>
@@ -2370,6 +2669,8 @@ if the REMORAID is deep in the sea.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_224">
+		<comment>オクタン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It loves to lurk inside holes in
 rocks. It sometimes sprays ink on
 prey by sticking out only its mouth.</language>
@@ -2379,6 +2680,7 @@ prey by sticking out only its mouth.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_225">
+		<comment>デリバード</comment>
 		<language name="JPN">It carries food rolled up in its
 tail. It has the habit of sharing
 food with people lost in mountains.</language>
@@ -2388,6 +2690,8 @@ food with people lost in mountains.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_226">
+		<comment>マンタイン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">While elegantly swimming in the sea,
 it ignores REMORAID that cling to
 its fins seeking food scraps.</language>
@@ -2397,6 +2701,7 @@ its fins seeking food scraps.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_227">
+		<comment>エアームド</comment>
 		<language name="JPN">Despite being clad entirely in
 iron-hard armor, it flies at
 speeds over 180 mph.</language>
@@ -2406,6 +2711,8 @@ speeds over 180 mph.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_228">
+		<comment>デルビル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is smart enough to hunt in
 packs. It uses a variety of cries
 for communicating with others.</language>
@@ -2415,6 +2722,8 @@ for communicating with others.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_229">
+		<comment>ヘルガー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The flames it breathes when angry
 contain toxins. If they cause a
 burn, it will hurt forever.</language>
@@ -2424,6 +2733,7 @@ burn, it will hurt forever.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_230">
+		<comment>キングドラ</comment>
 		<language name="JPN">It lives in caves on the seafloor
 and creates giant whirlpools
 every time it moves.</language>
@@ -2433,6 +2743,7 @@ every time it moves.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_231">
+		<comment>ゴマゾウ</comment>
 		<language name="JPN">It is strong despite its compact
 size. It can easily pick up and
 carry an adult human on its back.</language>
@@ -2442,6 +2753,7 @@ carry an adult human on its back.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_232">
+		<comment>ドンファン</comment>
 		<language name="JPN">It attacks by curling up, then
 rolling into its foe. It can blow
 apart a house in one hit.</language>
@@ -2451,6 +2763,8 @@ apart a house in one hit.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_233">
+		<comment>ポリゴン２
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It was upgraded to enable the
 exploration of other planets.
 However, it failed to measure up.</language>
@@ -2460,6 +2774,7 @@ However, it failed to measure up.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_234">
+		<comment>オドシシ</comment>
 		<language name="JPN">Staring at its antlers creates
 an odd sensation as if one were
 being drawn into their centers.</language>
@@ -2469,6 +2784,7 @@ being drawn into their centers.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_235">
+		<comment>ドーブル</comment>
 		<language name="JPN">It marks its territory by using its
 tail like a paintbrush. There are
 more than 5,000 different marks.</language>
@@ -2478,6 +2794,7 @@ more than 5,000 different marks.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_236">
+		<comment>バルキー</comment>
 		<language name="JPN">It is famous for its eagerness to
 fight and always nurses injuries
 from challenging larger foes.</language>
@@ -2487,6 +2804,7 @@ from challenging larger foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_237">
+		<comment>カポエラー</comment>
 		<language name="JPN">It fights while spinning like a top.
 The centrifugal force boosts its
 destructive power by ten.</language>
@@ -2496,6 +2814,7 @@ destructive power by ten.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_238">
+		<comment>ムチュール</comment>
 		<language name="JPN">It tests everything by touching
 with its lips, which remember
 what it likes and dislikes.</language>
@@ -2505,6 +2824,8 @@ what it likes and dislikes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_239">
+		<comment>エレキッド
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A weak electric current flows
 between its horns. Sticking a hand
 there shocks the unwary.</language>
@@ -2514,6 +2835,8 @@ there shocks the unwary.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_240">
+		<comment>ブビィ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its magma-like blood circulates
 throughout its body. Its body&apos;s
 heat can top 1,100 degrees F.</language>
@@ -2523,6 +2846,7 @@ heat can top 1,100 degrees F.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_241">
+		<comment>ミルタンク</comment>
 		<language name="JPN">It is said that kids who drink
 MILTANK&apos;s milk grow up to become
 hearty, healthy adults.</language>
@@ -2532,6 +2856,8 @@ hearty, healthy adults.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_242">
+		<comment>ハピナス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The eggs it lays are filled with
 happiness. Eating even one bite
 will bring a smile to anyone.</language>
@@ -2541,6 +2867,7 @@ will bring a smile to anyone.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_243">
+		<comment>ライコウ</comment>
 		<language name="JPN">It is said to have fallen with
 lightning. It can fire thunderbolts
 from the rain clouds on its back.</language>
@@ -2550,6 +2877,7 @@ from the rain clouds on its back.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_244">
+		<comment>エンテイ</comment>
 		<language name="JPN">It is said that when it roars, a
 volcano erupts somewhere around
 the globe.</language>
@@ -2559,6 +2887,7 @@ the globe.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_245">
+		<comment>スイクン</comment>
 		<language name="JPN">It races around the world to
 purify fouled water. It dashes
 away with the north wind.</language>
@@ -2568,6 +2897,7 @@ away with the north wind.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_246">
+		<comment>ヨーギラス</comment>
 		<language name="JPN">A Pokémon that eats soil. Once it
 has eaten a large mountain, it
 goes to sleep so it can grow.</language>
@@ -2577,6 +2907,7 @@ goes to sleep so it can grow.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_247">
+		<comment>サナギラス</comment>
 		<language name="JPN">Its body is as hard as bedrock.
 By venting pressurized gas, it can
 launch itself like a rocket.</language>
@@ -2586,6 +2917,7 @@ launch itself like a rocket.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_248">
+		<comment>バンギラス</comment>
 		<language name="JPN">If it rampages, it knocks down
 mountains and buries rivers. Maps
 must be redrawn afterward.</language>
@@ -2595,6 +2927,7 @@ must be redrawn afterward.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_249">
+		<comment>ルギア</comment>
 		<language name="JPN">It sleeps in a deep-sea trench.
 If it flaps its wings, it is said to
 cause a 40-day storm.</language>
@@ -2604,6 +2937,7 @@ cause a 40-day storm.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_250">
+		<comment>ホウオウ</comment>
 		<language name="JPN">Its feathers are in seven colors.
 It is said that anyone seeing it is
 promised eternal happiness.</language>
@@ -2613,6 +2947,7 @@ promised eternal happiness.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_251">
+		<comment>セレビィ</comment>
 		<language name="JPN">It has the power to travel across
 time, but it is said to appear only
 in peaceful times.</language>
@@ -2622,6 +2957,7 @@ in peaceful times.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_252">
+		<comment>キモリ</comment>
 		<language name="JPN">The soles of its feet are covered
 by countless tiny spikes, enabling
 it to walk on walls and ceilings.</language>
@@ -2631,6 +2967,7 @@ it to walk on walls and ceilings.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_253">
+		<comment>ジュプトル</comment>
 		<language name="JPN">It lives in dense jungles. While 
 closing in on its prey, it leaps
 from branch to branch.</language>
@@ -2640,6 +2977,7 @@ from branch to branch.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_254">
+		<comment>ジュカイン</comment>
 		<language name="JPN">The leaves that grow on its arms
 can slice down thick trees. It is
 without peer in jungle combat.</language>
@@ -2649,6 +2987,7 @@ without peer in jungle combat.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_255">
+		<comment>アチャモ</comment>
 		<language name="JPN">A fire burns inside, so it feels
 very warm to hug. It launches
 fireballs of 1,800 degrees F.</language>
@@ -2658,6 +2997,7 @@ fireballs of 1,800 degrees F.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_256">
+		<comment>ワカシャモ</comment>
 		<language name="JPN">Its kicking mastery lets it loose
 10 kicks per second. It emits
 sharp cries to intimidate foes.</language>
@@ -2667,6 +3007,7 @@ sharp cries to intimidate foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_257">
+		<comment>バシャーモ</comment>
 		<language name="JPN">Flames spout from its wrists,
 enveloping its knuckles. Its
 punches scorch its foes.</language>
@@ -2676,6 +3017,7 @@ punches scorch its foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_258">
+		<comment>ミズゴロウ</comment>
 		<language name="JPN">To alert it, the fin on its head
 senses the flow of water. It has
 the strength to heft boulders.</language>
@@ -2685,6 +3027,7 @@ the strength to heft boulders.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_259">
+		<comment>ヌマクロー</comment>
 		<language name="JPN">Its sturdy legs give it sure
 footing, even in mud. It
 burrows into dirt to sleep.</language>
@@ -2694,6 +3037,7 @@ burrows into dirt to sleep.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_260">
+		<comment>ラグラージ</comment>
 		<language name="JPN">It can swim while towing a large
 ship. It bashes down foes with a
 swing of its thick arms.</language>
@@ -2703,6 +3047,7 @@ swing of its thick arms.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_261">
+		<comment>ポチエナ</comment>
 		<language name="JPN">A Pokémon with a persistent
 nature, it chases its chosen prey
 until the prey becomes exhausted.</language>
@@ -2712,6 +3057,7 @@ until the prey becomes exhausted.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_262">
+		<comment>グラエナ</comment>
 		<language name="JPN">It chases down prey in a pack.
 It will never disobey the commands
 of a skilled Trainer.</language>
@@ -2721,6 +3067,7 @@ of a skilled Trainer.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_263">
+		<comment>ジグザグマ</comment>
 		<language name="JPN">It walks in zigzag fashion. It is
 good at finding items in the
 grass and even in the ground.</language>
@@ -2730,6 +3077,7 @@ grass and even in the ground.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_264">
+		<comment>マッスグマ</comment>
 		<language name="JPN">It charges prey at speeds over
 60 mph. However, because it can
 only run straight, it often fails.</language>
@@ -2739,6 +3087,8 @@ only run straight, it often fails.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_265">
+		<comment>ケムッソ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Often targeted by bird Pokémon,
 it desperately resists by releasing
 poison from its tail spikes.</language>
@@ -2748,6 +3098,8 @@ poison from its tail spikes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_266">
+		<comment>カラサリス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It wraps silk around the branches
 of a tree. It drinks rainwater on
 its silk while awaiting evolution.</language>
@@ -2757,6 +3109,8 @@ its silk while awaiting evolution.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_267">
+		<comment>アゲハント
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Despite its looks, it is aggressive.
 It jabs with its long, thin mouth if
 disturbed while collecting pollen.</language>
@@ -2766,6 +3120,8 @@ disturbed while collecting pollen.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_268">
+		<comment>マユルド
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It never forgets any attack it
 endured while in the cocoon.
 After evolution, it seeks payback.</language>
@@ -2775,6 +3131,8 @@ After evolution, it seeks payback.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_269">
+		<comment>ドクケイル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Toxic powder is scattered with each
 flap. At night, it is known to strip
 leaves off trees lining boulevards.</language>
@@ -2784,6 +3142,7 @@ leaves off trees lining boulevards.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_270">
+		<comment>ハスボー</comment>
 		<language name="JPN">It looks like an aquatic plant and
 serves as a ferry to Pokémon
 that can&apos;t swim.</language>
@@ -2793,6 +3152,7 @@ that can&apos;t swim.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_271">
+		<comment>ハスブレロ</comment>
 		<language name="JPN">It has a mischievous spirit. If it
 spots an angler, it will tug on the
 fishing line to interfere.</language>
@@ -2802,6 +3162,7 @@ fishing line to interfere.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_272">
+		<comment>ルンパッパ</comment>
 		<language name="JPN">If it hears festive music, all its
 muscles fill with energy. It can&apos;t
 help breaking out into a dance.</language>
@@ -2811,6 +3172,7 @@ help breaking out into a dance.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_273">
+		<comment>タネボー</comment>
 		<language name="JPN">When it dangles from a tree
 branch, it looks just like an acorn.
 It enjoys scaring other Pokémon.</language>
@@ -2820,6 +3182,7 @@ It enjoys scaring other Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_274">
+		<comment>コノハナ</comment>
 		<language name="JPN">The sound of its grass flute makes
 its listeners uneasy. It lives deep
 in forests.</language>
@@ -2829,6 +3192,7 @@ in forests.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_275">
+		<comment>ダーテング</comment>
 		<language name="JPN">By flapping its leafy fan, it can
 whip up gusts of 100 ft/second
 that can level houses.</language>
@@ -2838,6 +3202,7 @@ that can level houses.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_276">
+		<comment>スバメ</comment>
 		<language name="JPN">It has a gutsy spirit that makes
 it bravely take on tough foes. It
 flies in search of warm climates.</language>
@@ -2847,6 +3212,7 @@ flies in search of warm climates.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_277">
+		<comment>オオスバメ</comment>
 		<language name="JPN">It circles the sky in search of
 prey. When it spots one, it dives
 steeply to catch the prey.</language>
@@ -2856,6 +3222,8 @@ steeply to catch the prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_278">
+		<comment>キャモメ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It soars high in the sky, riding on
 updrafts like a glider. It carries
 food tucked in its bill.</language>
@@ -2865,6 +3233,8 @@ food tucked in its bill.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_279">
+		<comment>ペリッパー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is a messenger of the skies,
 carrying small Pokémon and
 eggs to safety in its bill.</language>
@@ -2874,6 +3244,8 @@ eggs to safety in its bill.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_280">
+		<comment>ラルトス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If its horns capture the warm
 feelings of people or Pokémon,
 its body warms up slightly.</language>
@@ -2883,6 +3255,8 @@ its body warms up slightly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_281">
+		<comment>キルリア
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If its Trainer becomes happy, it
 overflows with energy, dancing
 joyously while spinning about.</language>
@@ -2892,6 +3266,8 @@ joyously while spinning about.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_282">
+		<comment>サーナイト
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">To protect its Trainer, it will
 expend all its psychic power
 to create a small black hole.</language>
@@ -2901,6 +3277,7 @@ to create a small black hole.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_283">
+		<comment>アメタマ</comment>
 		<language name="JPN">It appears as if it is skating on
 water. It draws prey with a sweet
 scent from the tip of its head.</language>
@@ -2910,6 +3287,7 @@ scent from the tip of its head.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_284">
+		<comment>アメモース</comment>
 		<language name="JPN">Its antennae have eye patterns
 on them. Its four wings enable it
 to hover and fly in any direction.</language>
@@ -2919,6 +3297,7 @@ to hover and fly in any direction.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_285">
+		<comment>キノココ</comment>
 		<language name="JPN">It spouts poison spores from the
 top of its head. These spores
 cause pain all over if inhaled.</language>
@@ -2928,6 +3307,7 @@ cause pain all over if inhaled.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_286">
+		<comment>キノガッサ</comment>
 		<language name="JPN">Its short arms stretch when it
 throws punches. Its technique is
 equal to that of pro boxers.</language>
@@ -2937,6 +3317,7 @@ equal to that of pro boxers.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_287">
+		<comment>ナマケロ</comment>
 		<language name="JPN">It spends nearly all its time in a
 day sprawled out. Just seeing it
 makes one drowsy.</language>
@@ -2946,6 +3327,7 @@ makes one drowsy.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_288">
+		<comment>ヤルキモノ</comment>
 		<language name="JPN">Its heart beats at a tenfold
 tempo, so it cannot sit still for
 even a moment.</language>
@@ -2955,6 +3337,7 @@ even a moment.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_289">
+		<comment>ケッキング</comment>
 		<language name="JPN">The world&apos;s laziest Pokémon. When
 it is lounging, it is actually saving
 energy for striking back.</language>
@@ -2964,6 +3347,7 @@ energy for striking back.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_290">
+		<comment>ツチニン</comment>
 		<language name="JPN">It grows underground, sensing
 its surroundings using antennae
 instead of its virtually blind eyes.</language>
@@ -2973,6 +3357,7 @@ instead of its virtually blind eyes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_291">
+		<comment>テッカニン</comment>
 		<language name="JPN">Because it moves so quickly, it
 sometimes becomes unseeable. It
 congregates around tree sap.</language>
@@ -2982,6 +3367,7 @@ congregates around tree sap.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_292">
+		<comment>ヌケニン</comment>
 		<language name="JPN">A discarded bug shell that came to
 life. Peering into the crack on its
 back is said to steal one&apos;s spirit.</language>
@@ -2991,6 +3377,7 @@ back is said to steal one&apos;s spirit.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_293">
+		<comment>ゴニョニョ</comment>
 		<language name="JPN">Usually, its cries are like quiet
 murmurs. If frightened, it shrieks
 at the same volume as a jet plane.</language>
@@ -3000,6 +3387,7 @@ at the same volume as a jet plane.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_294">
+		<comment>ドゴーム</comment>
 		<language name="JPN">The shock waves from its cries can
 tip over trucks. It stamps its
 feet to power up.</language>
@@ -3009,6 +3397,7 @@ feet to power up.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_295">
+		<comment>バクオング</comment>
 		<language name="JPN">Its howls can be heard over six
 miles away. It emits all sorts of
 noises from the ports on its body.</language>
@@ -3018,6 +3407,7 @@ noises from the ports on its body.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_296">
+		<comment>マクノシタ</comment>
 		<language name="JPN">It toughens its body by slamming
 into thick trees. Many snapped
 trees can be found near its nest.</language>
@@ -3027,6 +3417,7 @@ trees can be found near its nest.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_297">
+		<comment>ハリテヤマ</comment>
 		<language name="JPN">It loves to match power with
 big-bodied Pokémon. It can knock a
 truck flying with its arm thrusts.</language>
@@ -3036,6 +3427,8 @@ truck flying with its arm thrusts.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_298">
+		<comment>ルリリ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its tail bounces like a rubber ball.
 It flings that tail around to fight
 opponents bigger than itself.</language>
@@ -3045,6 +3438,8 @@ opponents bigger than itself.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_299">
+		<comment>ノズパス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When endangered, it may protect
 itself by raising its magnetism and
 drawing iron objects to its body.</language>
@@ -3054,6 +3449,7 @@ drawing iron objects to its body.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_300">
+		<comment>エネコ</comment>
 		<language name="JPN">It can&apos;t stop itself from chasing
 moving things, and it runs in a
 circle, chasing its own tail.</language>
@@ -3063,6 +3459,7 @@ circle, chasing its own tail.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_301">
+		<comment>エネコロロ</comment>
 		<language name="JPN">It is highly popular among female
 Trainers for its sublime fur.
 It does not keep a nest.</language>
@@ -3072,6 +3469,7 @@ It does not keep a nest.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_302">
+		<comment>ヤミラミ</comment>
 		<language name="JPN">It hides in the darkness of caves.
 Its diet of gems has transformed
 its eyes into gemstones.</language>
@@ -3081,6 +3479,7 @@ its eyes into gemstones.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_303">
+		<comment>クチート</comment>
 		<language name="JPN">Attached to its head is a huge
 set of jaws formed by horns.
 It can chew through iron beams.</language>
@@ -3090,6 +3489,7 @@ It can chew through iron beams.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_304">
+		<comment>ココドラ</comment>
 		<language name="JPN">It usually lives deep in mountains.
 However, hunger may drive it to
 eat railroad tracks and cars.</language>
@@ -3099,6 +3499,7 @@ eat railroad tracks and cars.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_305">
+		<comment>コドラ</comment>
 		<language name="JPN">For food, it digs up iron ore. It
 smashes its steely body against
 others to fight over territory.</language>
@@ -3108,6 +3509,7 @@ others to fight over territory.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_306">
+		<comment>ボスゴドラ</comment>
 		<language name="JPN">While seeking iron for food, it
 digs tunnels by breaking through
 bedrock with its steel horns.</language>
@@ -3117,6 +3519,8 @@ bedrock with its steel horns.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_307">
+		<comment>アサナン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It always trains deep in mountains.
 It levitates when it heightens its
 spiritual power through meditation.</language>
@@ -3126,6 +3530,8 @@ spiritual power through meditation.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_308">
+		<comment>チャーレム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It gains the ability to see the aura
 of its opponents by honing its mind
 through starvation.</language>
@@ -3135,6 +3541,7 @@ through starvation.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_309">
+		<comment>ラクライ</comment>
 		<language name="JPN">Using electricity stored in its fur,
 it stimulates its muscles to
 heighten its reaction speed.</language>
@@ -3144,6 +3551,7 @@ heighten its reaction speed.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_310">
+		<comment>ライボルト</comment>
 		<language name="JPN">It discharges electricity from its
 mane. It creates a thundercloud
 overhead to drop lightning bolts.</language>
@@ -3153,6 +3561,7 @@ overhead to drop lightning bolts.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_311">
+		<comment>プラスル</comment>
 		<language name="JPN">It cheers on friends with pom-poms
 made of sparks. It drains power
 from telephone poles.</language>
@@ -3162,6 +3571,7 @@ from telephone poles.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_312">
+		<comment>マイナン</comment>
 		<language name="JPN">It cheers on friends. If its
 friends are losing, its body lets
 off more and more sparks.</language>
@@ -3171,6 +3581,7 @@ off more and more sparks.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_313">
+		<comment>バルビート</comment>
 		<language name="JPN">It communicates with others by
 lighting up its rear at night. It
 loves ILLUMISE&apos;s sweet aroma.</language>
@@ -3180,6 +3591,7 @@ loves ILLUMISE&apos;s sweet aroma.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_314">
+		<comment>イルミーゼ</comment>
 		<language name="JPN">With its sweet aroma, it guides
 VOLBEAT to draw signs with light in
 the night sky.</language>
@@ -3189,6 +3601,8 @@ the night sky.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_315">
+		<comment>ロゼリア
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The more healthy the ROSELIA, the
 more pleasant its flowers&apos; aroma.
 Its scent deeply relaxes people.</language>
@@ -3198,6 +3612,7 @@ Its scent deeply relaxes people.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_316">
+		<comment>ゴクリン</comment>
 		<language name="JPN">Almost all its body is its stomach.
 Its harsh digestive juices quickly
 dissolve anything it swallows.</language>
@@ -3207,6 +3622,7 @@ dissolve anything it swallows.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_317">
+		<comment>マルノーム</comment>
 		<language name="JPN">It swallows anything whole.
 It sweats toxic fluids from its
 follicles to douse foes.</language>
@@ -3216,6 +3632,7 @@ follicles to douse foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_318">
+		<comment>キバニア</comment>
 		<language name="JPN">They swarm any foe that invades
 their territory. Their sharp fangs
 can tear out boat hulls.</language>
@@ -3224,16 +3641,18 @@ their territory. Their sharp fangs
 can tear out boat hulls.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_319">
+	<row id="ZKN_COMMENT_E_00_319" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>サメハダー</comment>
 		<language name="JPN">Its fangs rip through sheet iron.
 It swims at 75 mph and is known as
-\[4:07:L_DoubleQuot.\]The Bully of the Sea.&quot;</language>
+“The Bully of the Sea.”</language>
 		<language name="JPN_KANJI">Its fangs rip through sheet iron.
 It swims at 75 mph and is known as
-\[4:07:L_DoubleQuot.\]The Bully of the Sea.&quot;</language>
+“The Bully of the Sea.”</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_320">
+		<comment>ホエルコ</comment>
 		<language name="JPN">On sunny days, it lands on beaches
 to bounce like a ball and play.
 It spouts water from its nose.</language>
@@ -3243,6 +3662,7 @@ It spouts water from its nose.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_321">
+		<comment>ホエルオー</comment>
 		<language name="JPN">The biggest of all Pokémon.
 It can dive to a depth of almost
 10,000 feet on only one breath.</language>
@@ -3252,6 +3672,7 @@ It can dive to a depth of almost
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_322">
+		<comment>ドンメル</comment>
 		<language name="JPN">Its humped back stores intensely
 hot magma. In rain, the magma
 cools, slowing its movement.</language>
@@ -3261,6 +3682,7 @@ cools, slowing its movement.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_323">
+		<comment>バクーダ</comment>
 		<language name="JPN">It has volcanoes on its back. If
 magma builds up in its body, it
 shudders, then erupts violently.</language>
@@ -3270,6 +3692,7 @@ shudders, then erupts violently.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_324">
+		<comment>コータス</comment>
 		<language name="JPN">It burns coal inside its shell for
 energy. It blows out black soot if
 it is endangered.</language>
@@ -3279,6 +3702,7 @@ it is endangered.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_325">
+		<comment>バネブー</comment>
 		<language name="JPN">It bounces constantly, using its
 tail like a spring. The shock of
 bouncing keeps its heart beating.</language>
@@ -3288,6 +3712,7 @@ bouncing keeps its heart beating.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_326">
+		<comment>ブーピッグ</comment>
 		<language name="JPN">It uses black pearls to amplify its
 psycho-power. It does an odd
 dance to gain control over foes.</language>
@@ -3297,6 +3722,7 @@ dance to gain control over foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_327">
+		<comment>パッチール</comment>
 		<language name="JPN">No two SPINDA have the same
 pattern of spots. Its tottering
 step fouls the aim of foes.</language>
@@ -3306,6 +3732,7 @@ step fouls the aim of foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_328">
+		<comment>ナックラー</comment>
 		<language name="JPN">It makes a conical pit in desert
 sand and lies in wait at the bottom
 for prey to come tumbling down.</language>
@@ -3315,6 +3742,7 @@ for prey to come tumbling down.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_329">
+		<comment>ビブラーバ</comment>
 		<language name="JPN">It violently shudders its wings,
 generating ultrasonic waves to
 induce headaches in people.</language>
@@ -3323,16 +3751,18 @@ generating ultrasonic waves to
 induce headaches in people.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_330">
+	<row id="ZKN_COMMENT_E_00_330" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>フライゴン</comment>
 		<language name="JPN">It whips up sandstorms with
 powerful flaps of its wings. It is
-known as \[4:07:L_DoubleQuot.\]The Desert Spirit.&quot;</language>
+known as “The Desert Spirit.”</language>
 		<language name="JPN_KANJI">It whips up sandstorms with
 powerful flaps of its wings. It is
-known as \[4:07:L_DoubleQuot.\]The Desert Spirit.&quot;</language>
+known as “The Desert Spirit.”</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_331">
+		<comment>サボネア</comment>
 		<language name="JPN">By storing water in its body, this
 desert dweller can survive for 30
 days without water.</language>
@@ -3342,6 +3772,7 @@ days without water.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_332">
+		<comment>ノクタス</comment>
 		<language name="JPN">It becomes active at night,
 seeking prey that is exhausted
 from the day&apos;s desert heat.</language>
@@ -3351,6 +3782,8 @@ from the day&apos;s desert heat.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_333">
+		<comment>チルット
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It can&apos;t relax if it or its
 surroundings are not clean.
 It wipes off dirt with its wings.</language>
@@ -3360,6 +3793,8 @@ It wipes off dirt with its wings.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_334">
+		<comment>チルタリス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If it bonds with a person, it will
 gently envelop the friend with its
 soft wings, then hum.</language>
@@ -3369,6 +3804,7 @@ soft wings, then hum.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_335">
+		<comment>ザングース</comment>
 		<language name="JPN">It has feuded with SEVIPER for
 many generations. Its sharp claws
 are its biggest weapons.</language>
@@ -3378,6 +3814,7 @@ are its biggest weapons.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_336">
+		<comment>ハブネーク</comment>
 		<language name="JPN">For many generations, it has
 feuded with ZANGOOSE. It whets its
 bladed tail on rocks for battle.</language>
@@ -3387,6 +3824,7 @@ bladed tail on rocks for battle.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_337">
+		<comment>ルナトーン</comment>
 		<language name="JPN">Because it turns active on nights
 of the full moon, it is said to have
 some link to the lunar phases.</language>
@@ -3396,6 +3834,7 @@ some link to the lunar phases.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_338">
+		<comment>ソルロック</comment>
 		<language name="JPN">A new Pokémon species, rumored
 to be from the sun. It gives off
 light while spinning.</language>
@@ -3405,6 +3844,8 @@ light while spinning.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_339">
+		<comment>ドジョッチ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its slimy body is hard to grasp. In
 one region, it is said to have been
 born from hardened mud.</language>
@@ -3414,6 +3855,8 @@ born from hardened mud.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_340">
+		<comment>ナマズン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is extremely protective of its
 territory. If any foe approaches,
 it attacks using vicious tremors.</language>
@@ -3423,6 +3866,7 @@ it attacks using vicious tremors.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_341">
+		<comment>ヘイガニ</comment>
 		<language name="JPN">Its hardy vitality enables it to
 adapt to any environment. Its
 pincers will never release prey.</language>
@@ -3432,6 +3876,7 @@ pincers will never release prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_342">
+		<comment>シザリガー</comment>
 		<language name="JPN">It is a ruffian that uses its
 pincers to pick up and toss out
 other Pokémon from its pond.</language>
@@ -3441,6 +3886,7 @@ other Pokémon from its pond.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_343">
+		<comment>ヤジロン</comment>
 		<language name="JPN">It moves by spinning on its foot.
 It is a rare Pokémon that was
 discovered in ancient ruins.</language>
@@ -3450,6 +3896,7 @@ discovered in ancient ruins.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_344">
+		<comment>ネンドール</comment>
 		<language name="JPN">An ancient clay figurine that came
 to life as a Pokémon from exposure
 to a mysterious ray of light.</language>
@@ -3459,6 +3906,7 @@ to a mysterious ray of light.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_345">
+		<comment>リリーラ</comment>
 		<language name="JPN">It lived on the seafloor 100
 million years ago and was
 reanimated scientifically.</language>
@@ -3468,6 +3916,7 @@ reanimated scientifically.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_346">
+		<comment>ユレイドル</comment>
 		<language name="JPN">It lives in the shallows of warm
 seas. When the tide goes out, it
 digs up prey from beaches.</language>
@@ -3477,6 +3926,7 @@ digs up prey from beaches.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_347">
+		<comment>アノプス</comment>
 		<language name="JPN">A Pokémon ancestor that was
 reanimated from a fossil. It lived
 in the sea and hunted with claws.</language>
@@ -3486,6 +3936,7 @@ in the sea and hunted with claws.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_348">
+		<comment>アーマルド</comment>
 		<language name="JPN">It went ashore after evolving.
 Its entire body is clad in a sturdy
 armor.</language>
@@ -3495,6 +3946,8 @@ armor.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_349">
+		<comment>ヒンバス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is a shabby and ugly Pokémon.
 However, it is very hardy and
 can survive on little water.</language>
@@ -3504,6 +3957,8 @@ can survive on little water.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_350">
+		<comment>ミロカロス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its lovely scales are described as
 rainbow colored. They change color
 depending on the viewing angle.</language>
@@ -3513,6 +3968,7 @@ depending on the viewing angle.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_351">
+		<comment>ポワルン</comment>
 		<language name="JPN">Its appearance changes with the
 weather. Recently, its molecules
 were found to be just like water.</language>
@@ -3522,6 +3978,7 @@ were found to be just like water.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_352">
+		<comment>カクレオン</comment>
 		<language name="JPN">It can freely change its body&apos;s
 color. The zigzag pattern on its
 belly doesn&apos;t change, however.</language>
@@ -3531,6 +3988,7 @@ belly doesn&apos;t change, however.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_353">
+		<comment>カゲボウズ</comment>
 		<language name="JPN">It loves vengeful emotions and
 hangs in rows under the eaves of
 houses where vengeful people live.</language>
@@ -3540,6 +3998,7 @@ houses where vengeful people live.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_354">
+		<comment>ジュペッタ</comment>
 		<language name="JPN">A doll that became a Pokémon over
 its grudge from being junked. It
 seeks the child that disowned it.</language>
@@ -3549,6 +4008,8 @@ seeks the child that disowned it.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_355">
+		<comment>ヨマワル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It loves the crying of children. It
 startles bad kids by passing
 through walls and making them cry.</language>
@@ -3558,6 +4019,8 @@ through walls and making them cry.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_356">
+		<comment>サマヨール
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It seeks drifting will-o&apos;-the-wisps
 and sucks them into its empty body.
 What happens inside is a mystery.</language>
@@ -3567,6 +4030,8 @@ What happens inside is a mystery.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_357">
+		<comment>トロピウス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Delicious fruits grew out from
 around its neck because it always
 ate the same kind of fruit.</language>
@@ -3576,6 +4041,10 @@ ate the same kind of fruit.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_358">
+		<comment>チリーン
+・シンオウ図鑑プラチナ版
+・宗教的な意味合いで
+　鈴の音で魔物を追いはらうのではない</comment>
 		<language name="JPN">Its cries echo inside its hollow
 body to emerge as beautiful notes
 for startling and repelling foes.</language>
@@ -3585,6 +4054,9 @@ for startling and repelling foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_359">
+		<comment>アブソル
+・シンオウ図鑑プラチナ版
+・角の形＝勾玉</comment>
 		<language name="JPN">Rumored to sense disasters with its
 horn, it became a target. It fled
 deep into the mountains.</language>
@@ -3594,6 +4066,7 @@ deep into the mountains.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_360">
+		<comment>ソーナノ</comment>
 		<language name="JPN">It grows strong by pushing up
 against others en masse.
 It loves eating sweet fruit.</language>
@@ -3603,6 +4076,8 @@ It loves eating sweet fruit.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_361">
+		<comment>ユキワラシ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is said that several SNORUNT
 gather under giant leaves and
 live together in harmony.</language>
@@ -3612,6 +4087,8 @@ live together in harmony.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_362">
+		<comment>オニゴーリ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It prevents prey from escaping by
 instantaneously freezing moisture
 in the air.</language>
@@ -3621,6 +4098,7 @@ in the air.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_363">
+		<comment>タマザラシ</comment>
 		<language name="JPN">It rolls across ice floes to reach
 shore because its body is poorly
 shaped for swimming.</language>
@@ -3630,6 +4108,7 @@ shaped for swimming.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_364">
+		<comment>トドグラー</comment>
 		<language name="JPN">It habitually spins things on its
 nose. By doing so, it learns
 textures and odors.</language>
@@ -3639,6 +4118,7 @@ textures and odors.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_365">
+		<comment>トドゼルガ</comment>
 		<language name="JPN">It shatters ice with its big tusks.
 Its thick blubber repels not only
 the cold, but also enemy attacks.</language>
@@ -3648,6 +4128,7 @@ the cold, but also enemy attacks.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_366">
+		<comment>パールル</comment>
 		<language name="JPN">It makes a single pearl during
 its lifetime. The pearl is said
 to amplify psychic power.</language>
@@ -3657,6 +4138,7 @@ to amplify psychic power.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_367">
+		<comment>ハンテール</comment>
 		<language name="JPN">It lives deep in the sea. With a
 tail shaped like a small fish, it
 attracts unsuspecting prey.</language>
@@ -3666,6 +4148,7 @@ attracts unsuspecting prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_368">
+		<comment>サクラビス</comment>
 		<language name="JPN">It lives at the bottom of the sea.
 In the springtime, its pink body
 turns more vivid for some reason.</language>
@@ -3675,6 +4158,7 @@ turns more vivid for some reason.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_369">
+		<comment>ジーランス</comment>
 		<language name="JPN">A rare Pokémon discovered during
 a deep-sea exploration. It has not
 changed in over 100 million years.</language>
@@ -3684,6 +4168,7 @@ changed in over 100 million years.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_370">
+		<comment>ラブカス</comment>
 		<language name="JPN">It lives in warm seas. It is said
 that a couple finding this Pokémon
 will be blessed with eternal love.</language>
@@ -3693,6 +4178,7 @@ will be blessed with eternal love.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_371">
+		<comment>タツベイ</comment>
 		<language name="JPN">Dreaming of one day flying, it
 practices by leaping off cliffs
 every day.</language>
@@ -3702,6 +4188,7 @@ every day.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_372">
+		<comment>コモルー</comment>
 		<language name="JPN">Within its rugged shell, its cells
 have begun changing. The shell
 peels off the instant it evolves.</language>
@@ -3711,6 +4198,7 @@ peels off the instant it evolves.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_373">
+		<comment>ボーマンダ</comment>
 		<language name="JPN">As a result of its long-held dream
 of flying, its cellular structure
 changed, and wings grew out.</language>
@@ -3720,6 +4208,7 @@ changed, and wings grew out.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_374">
+		<comment>ダンバル</comment>
 		<language name="JPN">It converses with others by using
 magnetic pulses. In a swarm, they
 move in perfect unison.</language>
@@ -3729,6 +4218,7 @@ move in perfect unison.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_375">
+		<comment>メタング</comment>
 		<language name="JPN">It is formed by two BELDUM joining
 together. Its steel body won&apos;t be
 scratched if it collides with a jet.</language>
@@ -3738,6 +4228,7 @@ scratched if it collides with a jet.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_376">
+		<comment>メタグロス</comment>
 		<language name="JPN">METANG combined to form it.
 With four brains, it has the
 intelligence of a supercomputer.</language>
@@ -3747,6 +4238,7 @@ intelligence of a supercomputer.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_377">
+		<comment>レジロック</comment>
 		<language name="JPN">Its entire body is made of rock.
 If any part chips off in battle, it
 attaches rocks to repair itself.</language>
@@ -3756,6 +4248,7 @@ attaches rocks to repair itself.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_378">
+		<comment>レジアイス</comment>
 		<language name="JPN">Its body is made of ice from the
 ice age. It controls frigid air of
 -328 degrees Fahrenheit.</language>
@@ -3765,6 +4258,7 @@ ice age. It controls frigid air of
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_379">
+		<comment>レジスチル</comment>
 		<language name="JPN">Tempered by pressure underground
 over tens of thousands of years,
 its body cannot be scratched.</language>
@@ -3774,6 +4268,7 @@ its body cannot be scratched.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_380">
+		<comment>ラティアス</comment>
 		<language name="JPN">Its body is covered with a down
 that can refract light in such a
 way that it becomes invisible.</language>
@@ -3783,6 +4278,7 @@ way that it becomes invisible.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_381">
+		<comment>ラティオス</comment>
 		<language name="JPN">A highly intelligent Pokémon.
 By folding back its wings in flight,
 it can overtake jet planes.</language>
@@ -3792,6 +4288,7 @@ it can overtake jet planes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_382">
+		<comment>カイオーガ</comment>
 		<language name="JPN">It is said to have widened the
 seas by causing downpours. It had
 been asleep in a marine trench.</language>
@@ -3801,6 +4298,7 @@ been asleep in a marine trench.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_383">
+		<comment>グラードン</comment>
 		<language name="JPN">It had been asleep in underground
 magma ever since it fiercely
 fought KYOGRE long ago.</language>
@@ -3810,6 +4308,7 @@ fought KYOGRE long ago.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_384">
+		<comment>レックウザ</comment>
 		<language name="JPN">It lives in the ozone layer far
 above the clouds and cannot be
 seen from the ground.</language>
@@ -3819,6 +4318,7 @@ seen from the ground.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_385">
+		<comment>ジラーチ</comment>
 		<language name="JPN">It is said to have the ability to
 grant any wish for just one week
 every thousand years.</language>
@@ -3828,6 +4328,7 @@ every thousand years.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_386">
+		<comment>デオキシス</comment>
 		<language name="JPN">An alien virus that fell to earth
 on a meteor underwent a DNA
 mutation to become this Pokémon.</language>
@@ -3837,6 +4338,8 @@ mutation to become this Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_387">
+		<comment>ナエトル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The shell on its back is made of
 soil. On a very healthy TURTWIG,
 the shell should feel moist.</language>
@@ -3846,6 +4349,8 @@ the shell should feel moist.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_388">
+		<comment>ハヤシガメ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It knows where pure water wells
 up. It carries fellow Pokémon there
 on its back.</language>
@@ -3855,6 +4360,9 @@ on its back.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_389">
+		<comment>ドダイトス
+・シンオウ図鑑プラチナ版
+・ビオトープの要素</comment>
 		<language name="JPN">Some Pokémon are born on a
 TORTERRA&apos;s back and spend their
 entire life there.</language>
@@ -3864,6 +4372,8 @@ entire life there.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_390">
+		<comment>ヒコザル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is very agile. Before going to
 sleep, it extinguishes the flame
 on its tail to prevent fires.</language>
@@ -3873,6 +4383,8 @@ on its tail to prevent fires.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_391">
+		<comment>モウカザル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It skillfully controls the intensity
 of the fire on its tail to keep its
 foes at an ideal distance.</language>
@@ -3882,6 +4394,8 @@ foes at an ideal distance.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_392">
+		<comment>ゴウカザル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It uses unique fighting moves with
 fire on its hands and feet. It will
 take on any opponent.</language>
@@ -3891,6 +4405,8 @@ take on any opponent.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_393">
+		<comment>ポッチャマ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A poor walker, it often falls down.
 However, its strong pride makes it
 puff up its chest without a care.</language>
@@ -3900,6 +4416,8 @@ puff up its chest without a care.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_394">
+		<comment>ポッタイシ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Because every PRINPLUP considers
 itself to be the most important,
 they can never form a group.</language>
@@ -3909,6 +4427,8 @@ they can never form a group.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_395">
+		<comment>エンペルト
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If anyone were to hurt its pride,
 it would slash them with wings that
 can cleave through an ice floe.</language>
@@ -3918,6 +4438,8 @@ can cleave through an ice floe.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_396">
+		<comment>ムックル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Because they are weak individually,
 they form groups. However, they
 bicker if the group grows too big.</language>
@@ -3927,6 +4449,8 @@ bicker if the group grows too big.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_397">
+		<comment>ムクバード
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Recognizing their own weakness,
 they always live in a group. When
 alone, a STARAVIA cries noisily.</language>
@@ -3936,6 +4460,8 @@ alone, a STARAVIA cries noisily.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_398">
+		<comment>ムクホーク
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It never stops attacking even
 if it is injured. It fusses over the
 shape of its comb.</language>
@@ -3945,6 +4471,8 @@ shape of its comb.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_399">
+		<comment>ビッパ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A comparison revealed that
 BIDOOF&apos;s front teeth grow at
 the same rate as RATTATA&apos;s.</language>
@@ -3954,6 +4482,8 @@ the same rate as RATTATA&apos;s.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_400">
+		<comment>ビーダル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A river dammed by BIBAREL will
 never overflow its banks, which
 is appreciated by people nearby.</language>
@@ -3963,6 +4493,8 @@ is appreciated by people nearby.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_401">
+		<comment>コロボーシ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its legs are short. Whenever it
 stumbles, its stiff antennae clack
 with a xylophone-like sound.</language>
@@ -3972,6 +4504,8 @@ with a xylophone-like sound.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_402">
+		<comment>コロトック
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">There is a village that hosts a
 contest based on the amazingly
 variable cries of this Pokémon.</language>
@@ -3981,6 +4515,8 @@ variable cries of this Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_403">
+		<comment>コリンク
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The extension and contraction of
 its muscles generates electricity.
 It glows when in trouble.</language>
@@ -3990,6 +4526,8 @@ It glows when in trouble.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_404">
+		<comment>ルクシオ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Strong electricity courses through
 the tips of its sharp claws. A light
 scratch causes fainting in foes.</language>
@@ -3999,6 +4537,8 @@ scratch causes fainting in foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_405">
+		<comment>レントラー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It can see clearly through walls
 to track down its prey and seek
 its lost young.</language>
@@ -4008,6 +4548,8 @@ its lost young.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_406">
+		<comment>スボミー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Sensitive to changing temperature,
 the bud is said to bloom when it
 feels the sun&apos;s warm touch.</language>
@@ -4017,6 +4559,8 @@ feels the sun&apos;s warm touch.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_407">
+		<comment>ロズレイド
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Each of its hands contains
 different toxins, but both hands
 can jab with near-fatal power.</language>
@@ -4026,6 +4570,8 @@ can jab with near-fatal power.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_408">
+		<comment>ズガイドス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A lifelong jungle dweller from 100
 million years ago, it would snap
 obstructing trees with head butts.</language>
@@ -4035,6 +4581,8 @@ obstructing trees with head butts.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_409">
+		<comment>ラムパルド
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If two were to smash their heads
 together, their foot-thick skulls
 would keep them from fainting.</language>
@@ -4044,6 +4592,8 @@ would keep them from fainting.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_410">
+		<comment>タテトプス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is outstandingly armored. As a
 result, it can eat grass and
 berries without having to fight.</language>
@@ -4053,6 +4603,8 @@ berries without having to fight.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_411">
+		<comment>トリデプス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When they lined up side by side, no
 foe could break through. They
 shielded their young in that way.</language>
@@ -4062,6 +4614,8 @@ shielded their young in that way.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_412">
+		<comment>ミノムッチ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Even if it is born where there are
 no cocooning materials, it somehow
 always ends up with a cloak.</language>
@@ -4071,6 +4625,8 @@ always ends up with a cloak.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_413">
+		<comment>ミノマダム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When evolving, its body takes in
 surrounding materials. As a result,
 there are many body variations.</language>
@@ -4080,6 +4636,8 @@ there are many body variations.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_414">
+		<comment>ガーメイル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">While it loves floral honey, it won&apos;t
 gather any itself. Instead, it
 plots to steal some from COMBEE.</language>
@@ -4089,6 +4647,8 @@ plots to steal some from COMBEE.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_415">
+		<comment>ミツハニー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The trio is together from birth.
 It constantly gathers honey from
 flowers to please VESPIQUEN.</language>
@@ -4098,6 +4658,8 @@ flowers to please VESPIQUEN.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_416">
+		<comment>ビークイン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It releases various pheromones
 to make the grubs in its body do
 its bidding while fighting foes.</language>
@@ -4107,6 +4669,8 @@ its bidding while fighting foes.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_417">
+		<comment>パチリス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A pair may be seen rubbing their
 cheek pouches together in an
 effort to share stored electricity.</language>
@@ -4116,6 +4680,8 @@ effort to share stored electricity.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_418">
+		<comment>ブイゼル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It spins its two tails like a screw
 to propel itself through water. The
 tails also slice clinging seaweed.</language>
@@ -4125,6 +4691,8 @@ tails also slice clinging seaweed.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_419">
+		<comment>フローゼル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is a common sight around
 fishing ports. It is known to
 rescue people and carry off prey.</language>
@@ -4134,6 +4702,8 @@ rescue people and carry off prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_420">
+		<comment>チェリンボ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The small ball is not only filled with
 nutrients, it is also tasty. STARLY
 try to peck it off.</language>
@@ -4143,6 +4713,8 @@ try to peck it off.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_421">
+		<comment>チェリム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If it senses strong sunlight, it
 opens its folded petals to absorb
 the sun&apos;s rays with its whole body.</language>
@@ -4152,6 +4724,8 @@ the sun&apos;s rays with its whole body.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_422">
+		<comment>カラナクシ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Beware of pushing strongly on
 its squishy body, as it makes a
 mysterious purple fluid ooze out.</language>
@@ -4161,6 +4735,8 @@ mysterious purple fluid ooze out.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_423">
+		<comment>トリトドン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Long ago, its entire back was
 shielded with a sturdy shell. There
 are traces of it left in its cells.</language>
@@ -4170,6 +4746,8 @@ are traces of it left in its cells.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_424">
+		<comment>エテボース
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Split into two, the tails are so
 adept at handling and doing things,
 AMBIPOM rarely uses its hands.</language>
@@ -4178,16 +4756,20 @@ adept at handling and doing things,
 AMBIPOM rarely uses its hands.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_425">
+	<row id="ZKN_COMMENT_E_00_425" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>フワンテ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Because of the way it floats
 aimlessly, an old folktale calls it a
-\[4:07:L_DoubleQuot.\]Signpost for Wandering Spirits.&quot;</language>
+“Signpost for Wandering Spirits.”</language>
 		<language name="JPN_KANJI">Because of the way it floats
 aimlessly, an old folktale calls it a
-\[4:07:L_DoubleQuot.\]Signpost for Wandering Spirits.&quot;</language>
+“Signpost for Wandering Spirits.”</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_426">
+		<comment>フワライド
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">At dusk, swarms of them are
 carried aloft on winds. When
 noticed, they suddenly vanish.</language>
@@ -4197,6 +4779,8 @@ noticed, they suddenly vanish.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_427">
+		<comment>ミミロル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its ears are always rolled up. They
 can be forcefully extended to
 shatter even a large boulder.</language>
@@ -4206,6 +4790,9 @@ shatter even a large boulder.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_428">
+		<comment>ミミロップ
+・シンオウ図鑑プラチナ版
+・進化前と進化後で矛盾させた</comment>
 		<language name="JPN">The ears appear to be delicate. If
 they are touched roughly, it kicks
 with its graceful legs.</language>
@@ -4215,6 +4802,8 @@ with its graceful legs.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_429">
+		<comment>ムウマージ
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">Its cry sounds like an incantation.
 It is said the cry may rarely be
 imbued with happiness-giving power.</language>
@@ -4223,16 +4812,20 @@ It is said the cry may rarely be
 imbued with happiness-giving power.</language>
 	</row>
 
-	<row id="ZKN_COMMENT_E_00_430">
+	<row id="ZKN_COMMENT_E_00_430" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>ドンカラス
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">If one utters a deep cry, many
 MURKROW gather quickly. For this,
-it is called \[4:07:L_DoubleQuot.\]Summoner of Night.&quot;</language>
+it is called “Summoner of Night.”</language>
 		<language name="JPN_KANJI">If one utters a deep cry, many
 MURKROW gather quickly. For this,
-it is called \[4:07:L_DoubleQuot.\]Summoner of Night.&quot;</language>
+it is called “Summoner of Night.”</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_431">
+		<comment>ニャルマー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It hides its spiteful tendency of
 hooking its claws into the nose of
 its Trainer if it isn&apos;t fed.</language>
@@ -4242,6 +4835,8 @@ its Trainer if it isn&apos;t fed.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_432">
+		<comment>ブニャット
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It binds its body with its tails to
 make itself look bigger. If it locks
 eyes, it will glare ceaselessly.</language>
@@ -4251,6 +4846,8 @@ eyes, it will glare ceaselessly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_433">
+		<comment>リーシャン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">There is an orb inside its mouth.
 When it hops, the orb bounces all
 over and makes a ringing sound.</language>
@@ -4260,6 +4857,9 @@ over and makes a ringing sound.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_434">
+		<comment>スカンプー
+・DPポケモンだがプラチナのROM内で入手不可
+・あえて「汁」</comment>
 		<language name="JPN">It sprays a foul fluid from its
 rear. Its stench spreads over a
 mile radius, driving Pokémon away.</language>
@@ -4269,6 +4869,8 @@ mile radius, driving Pokémon away.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_435">
+		<comment>スカタンク
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">It attacks by spraying a horribly
 smelly fluid from the tip of its tail.
 Attacks from above confound it.</language>
@@ -4278,6 +4880,8 @@ Attacks from above confound it.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_436">
+		<comment>ドーミラー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">There are researchers who believe
 this Pokémon reflected like a mirror
 in the distant past.</language>
@@ -4287,6 +4891,8 @@ in the distant past.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_437">
+		<comment>ドータクン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It brought rains by opening portals
 to another world. It was revered
 as a bringer of plentiful harvests.</language>
@@ -4296,6 +4902,8 @@ as a bringer of plentiful harvests.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_438">
+		<comment>ウソハチ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It prefers an arid atmosphere. It
 leaks water that looks like tears
 when adjusting its moisture level.</language>
@@ -4305,6 +4913,8 @@ when adjusting its moisture level.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_439">
+		<comment>マネネ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It mimics the expressions and
 motions of those it sees to
 understand the feelings of others.</language>
@@ -4314,6 +4924,8 @@ understand the feelings of others.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_440">
+		<comment>ピンプク
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It likes to carry around a small
 rock. It may wander around others&apos;
 feet and cause them to stumble.</language>
@@ -4323,6 +4935,8 @@ feet and cause them to stumble.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_441">
+		<comment>ペラップ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its tongue is just like a human&apos;s.
 As a result, it can cleverly mimic
 human speech.</language>
@@ -4332,6 +4946,8 @@ human speech.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_442">
+		<comment>ミカルゲ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its constant mischief and misdeeds
 resulted in it being bound to an Odd
 Keystone by a mysterious spell.</language>
@@ -4341,6 +4957,8 @@ Keystone by a mysterious spell.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_443">
+		<comment>フカマル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It attacks using its huge mouth.
 While its attacks are powerful, it
 hurts itself out of clumsiness, too.</language>
@@ -4350,6 +4968,8 @@ hurts itself out of clumsiness, too.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_444">
+		<comment>ガバイト
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It loves sparkly things. It seeks
 treasures in caves and hoards the
 loot in its nest.</language>
@@ -4359,6 +4979,8 @@ loot in its nest.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_445">
+		<comment>ガブリアス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is said that when one runs at
 high speed, its wings create blades
 of wind that can fell nearby trees.</language>
@@ -4368,6 +4990,8 @@ of wind that can fell nearby trees.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_446">
+		<comment>ゴンベ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">In its desperation to gulp down
 food, it forgets about the food it
 has hidden under its fur.</language>
@@ -4377,6 +5001,8 @@ has hidden under its fur.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_447">
+		<comment>リオル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It has the peculiar power of being
 able to see emotions such as joy
 and rage in the form of waves.</language>
@@ -4386,6 +5012,8 @@ and rage in the form of waves.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_448">
+		<comment>ルカリオ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A well-trained one can sense auras
 to identify and take in the feelings
 of creatures over half a mile away.</language>
@@ -4395,6 +5023,8 @@ of creatures over half a mile away.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_449">
+		<comment>ヒポポタス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It shuts its nostrils tight then
 travels through sand as if walking.
 They form colonies of around ten.</language>
@@ -4404,6 +5034,8 @@ They form colonies of around ten.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_450">
+		<comment>カバルドン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is surprisingly quick to anger.
 It holds its mouth agape as a
 display of its strength.</language>
@@ -4413,6 +5045,8 @@ display of its strength.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_451">
+		<comment>スコルピ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">As soon as the tail claws close,
 its needle tips secrete poison.
 It can survive a year without food.</language>
@@ -4422,6 +5056,8 @@ It can survive a year without food.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_452">
+		<comment>ドラピオン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Possessing a sturdy build, it takes
 pride in its strength, taking down
 foes without using toxins.</language>
@@ -4431,6 +5067,8 @@ foes without using toxins.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_453">
+		<comment>グレッグル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It rarely fights fairly, but that is
 strictly to ensure survival. It is
 popular as a mascot.</language>
@@ -4440,6 +5078,8 @@ popular as a mascot.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_454">
+		<comment>ドクロッグ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It has a poison sac at its throat.
 When it croaks, the stored poison
 is churned for greater potency.</language>
@@ -4449,6 +5089,8 @@ is churned for greater potency.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_455">
+		<comment>マスキッパ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It binds itself to trees in marshes.
 It attracts prey with its sweet-
 smelling drool and gulps them down.</language>
@@ -4458,6 +5100,8 @@ smelling drool and gulps them down.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_456">
+		<comment>ケイコウオ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The line running down its side can
 store sunlight. It shines vividly at
 night.</language>
@@ -4467,6 +5111,8 @@ night.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_457">
+		<comment>ネオラント
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It crawls along the seafloor using
 its long front fins like legs. It
 competes for food with LANTURN.</language>
@@ -4476,6 +5122,8 @@ competes for food with LANTURN.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_458">
+		<comment>タマンタ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">People organize tours to see this
 Pokémon frolic and skim the tops
 of waves with REMORAID.</language>
@@ -4485,6 +5133,8 @@ of waves with REMORAID.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_459">
+		<comment>ユキカブリ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Seemingly curious about people,
 they gather around footsteps they
 find on snowy mountains.</language>
@@ -4494,6 +5144,8 @@ find on snowy mountains.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_460">
+		<comment>ユキノオー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">They appear when the snow flowers
 bloom. When the petals fall, they
 retreat to places unknown again.</language>
@@ -4503,6 +5155,8 @@ retreat to places unknown again.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_461">
+		<comment>マニューラ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Evolution made it even more
 devious. It communicates by clawing
 signs in boulders.</language>
@@ -4512,6 +5166,8 @@ signs in boulders.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_462">
+		<comment>ジバコイル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A group tried to use scientific
 means to make MAGNEZONE evolve,
 but their efforts ended in failure.</language>
@@ -4521,6 +5177,8 @@ but their efforts ended in failure.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_463">
+		<comment>ベロベルト
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">The long tongue is always soggy
 with slobber. The saliva contains
 a solvent that causes numbness.</language>
@@ -4530,6 +5188,8 @@ a solvent that causes numbness.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_464">
+		<comment>ドサイドン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It can launch a rock held in its
 hand like a missile by tightening
 then expanding muscles instantly.</language>
@@ -4539,6 +5199,8 @@ then expanding muscles instantly.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_465">
+		<comment>モジャンボ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its arms are made of plants that
 bind themselves to things. They
 grow back right away if cut.</language>
@@ -4548,6 +5210,8 @@ grow back right away if cut.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_466">
+		<comment>エレキブル
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Heedless of enemy attacks, it
 closes in, shoves its tails onto the
 foe, then looses high voltage.</language>
@@ -4557,6 +5221,8 @@ foe, then looses high voltage.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_467">
+		<comment>ブーバーン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When launching 3,600 degrees F
 fireballs, its body takes on a
 whitish hue from the intense heat.</language>
@@ -4566,6 +5232,8 @@ whitish hue from the intense heat.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_468">
+		<comment>トゲキッス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It shares many blessings with
 people who respect one another&apos;s
 rights and avoid needless strife.</language>
@@ -4575,6 +5243,8 @@ rights and avoid needless strife.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_469">
+		<comment>メガヤンマ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its jaw power is incredible. It is
 adept at biting apart foes while
 flying by at high speed.</language>
@@ -4584,6 +5254,8 @@ flying by at high speed.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_470">
+		<comment>リーフィア
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It basically does not fight. With
 cells similar to those of plants, it
 can perform photosynthesis.</language>
@@ -4593,6 +5265,9 @@ can perform photosynthesis.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_471">
+		<comment>グレイシア
+・シンオウ図鑑プラチナ版
+・オニゴーリと酷似</comment>
 		<language name="JPN">By controlling its body heat, it can
 freeze the atmosphere around it
 to make a diamond-dust flurry.</language>
@@ -4602,6 +5277,8 @@ to make a diamond-dust flurry.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_472">
+		<comment>グライオン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">If it succeeds in catching even a
 faint breeze properly, it can circle
 the globe without flapping once.</language>
@@ -4611,6 +5288,8 @@ the globe without flapping once.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_473">
+		<comment>マンムー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A frozen one was dug up from
 soil dating back 10,000 years. It
 woke up to much amazement.</language>
@@ -4620,6 +5299,8 @@ woke up to much amazement.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_474">
+		<comment>ポリゴンＺ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its programming was modified to
 enable work in alien dimensions.
 It did not work as planned.</language>
@@ -4629,6 +5310,8 @@ It did not work as planned.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_475">
+		<comment>エルレイド
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When trying to protect someone,
 it extends its elbows as if they
 were swords and fights savagely.</language>
@@ -4638,6 +5321,8 @@ were swords and fights savagely.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_476">
+		<comment>ダイノーズ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It freely controls three small
 units called Mini-Noses using
 magnetic force.</language>
@@ -4647,6 +5332,8 @@ magnetic force.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_477">
+		<comment>ヨノワール
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is said to take lost spirits
 into its pliant body and guide
 them home.</language>
@@ -4656,6 +5343,8 @@ them home.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_478">
+		<comment>ユキメノコ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It freezes prey by blowing its -58
 degrees F breath. It is said to
 then secretly display its prey.</language>
@@ -4665,6 +5354,8 @@ then secretly display its prey.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_479">
+		<comment>ロトム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its electric-like body can enter
 some kinds of machines and take
 control in order to make mischief.</language>
@@ -4674,6 +5365,8 @@ control in order to make mischief.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_480">
+		<comment>ユクシー
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When UXIE flew, people gained the
 ability to solve problems.
 It was the birth of knowledge.</language>
@@ -4683,6 +5376,8 @@ It was the birth of knowledge.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_481">
+		<comment>エムリット
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When MESPRIT flew, people learned
 the joy and sadness of living.
 It was the birth of emotions.</language>
@@ -4692,6 +5387,8 @@ It was the birth of emotions.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_482">
+		<comment>アグノム
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">When AZELF flew, people gained the
 determination to do things.
 It was the birth of willpower.</language>
@@ -4701,6 +5398,8 @@ It was the birth of willpower.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_483">
+		<comment>ディアルガ
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A legendary Pokémon of Sinnoh.
 It is said that time flows when
 DIALGA&apos;s heart beats.</language>
@@ -4710,6 +5409,8 @@ DIALGA&apos;s heart beats.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_484">
+		<comment>パルキア
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">A legendary Pokémon of Sinnoh.
 It is said that space becomes more
 stable with PALKIA&apos;s every breath.</language>
@@ -4719,6 +5420,8 @@ stable with PALKIA&apos;s every breath.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_485">
+		<comment>ヒードラン
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Its body is made of rugged steel.
 However, it is partially melted in
 spots because of its own heat.</language>
@@ -4728,6 +5431,8 @@ spots because of its own heat.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_486">
+		<comment>レジギガス
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">It is said to have made Pokémon
 that look like itself from a special
 ice mountain, rocks, and magma.</language>
@@ -4748,6 +5453,8 @@ world from the Distortion World.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_488">
+		<comment>クレセリア
+・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">On nights around the quarter moon,
 the aurora from its tail extends
 and undulates beautifully.</language>
@@ -4757,6 +5464,8 @@ and undulates beautifully.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_489">
+		<comment>フィオネ
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">It drifts in warm seas. It always
 returns to where it was born, no
 matter how far it may have drifted.</language>
@@ -4766,6 +5475,8 @@ matter how far it may have drifted.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_490">
+		<comment>マナフィ
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">It is born with a wondrous power
 that lets it bond with any kind of
 Pokémon.</language>
@@ -4775,6 +5486,8 @@ Pokémon.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_491">
+		<comment>ダークライ
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">To protect itself, it afflicts those
 around it with nightmares. However,
 it means no harm.</language>
@@ -4784,6 +5497,8 @@ it means no harm.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_492">
+		<comment>シェイミ
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">The flowers all over its body burst
 into bloom if it is lovingly hugged
 and senses gratitude.</language>
@@ -4793,6 +5508,8 @@ and senses gratitude.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_493">
+		<comment>アルセウス
+・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">It is said to have emerged from an
 egg in a place where there was
 nothing, then shaped the world.</language>
