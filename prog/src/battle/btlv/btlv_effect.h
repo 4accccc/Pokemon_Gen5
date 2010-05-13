@@ -175,6 +175,10 @@ typedef enum {
   BTLV_WAZAEFF_TECKNOBASTER_HONOO,      ///< 炎
   BTLV_WAZAEFF_TECKNOBASTER_KOORI,      ///< こおり
 
+  // フレイムソウル・サンダーソウル
+  BTLV_WAZAEFF_LINKWAZA_NORMAL = 0,     ///< 通常
+  BTLV_WAZAEFF_LINKWAZA_LINK,           ///< リンクした（続けて出した）
+
 }BtlvWazaEffect_TurnType;
 
 
