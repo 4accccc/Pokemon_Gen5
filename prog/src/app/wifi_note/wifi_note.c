@@ -1668,10 +1668,9 @@ static BOOL MainListPageButtonDecedeAnime( WFNOTE_FRIENDLIST * p_wk );
 
 static void SetCancelButtonAnime( WFNOTE_DRAW * p_draw );
 static void SetExitButtonAnime( WFNOTE_DRAW * p_draw );
-static void SetDispActive( WFNOTE_DRAW * p_draw, BOOL flg );
+static void SetDispActive( BOOL flg );
 static void ChangeListPageNumAnime( WFNOTE_FRIENDLIST * p_wk, u32 page );
 static void PutListTitle( WFNOTE_DRAW * p_draw );
-static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, BOOL flg );
 
 static void InitPrintUtil( WFNOTE_DRAW * p_draw );
 static void SetPrintUtil( WFNOTE_DRAW * p_draw, PRINT_UTIL * util );
@@ -4139,7 +4138,7 @@ static void ModeSelect_TalkMsgPrint( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_dra
   GFL_STR_DeleteBuffer( p_tmp );
 
   // 画面をパッシブへ
-  SetDispActive( p_draw, TRUE );
+  SetDispActive( FALSE );
 }
 
 //----------------------------------------------------------------------------
@@ -4171,7 +4170,7 @@ static BOOL ModeSelect_TalkMsgEndCheck( const WFNOTE_MODESELECT* cp_wk, WFNOTE_D
 //-----------------------------------------------------------------------------
 static void ModeSelect_TalkMsgOff( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_draw )
 {
-  SetDispActive( p_draw, FALSE );
+  SetDispActive( TRUE );
   BmpWinFrame_Clear( p_wk->talk.win, WINDOW_TRANS_ON );
   GFL_BMPWIN_ClearTransWindow_VBlank( p_wk->talk.win );
 //  GF_BGL_BmpWinOffVReq(&p_wk->talk);
@@ -5662,7 +5661,7 @@ static void FList_TalkMsgWrite( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u3
 
   GFL_STR_DeleteBuffer( p_tmp );
 
-  SetListDispActive( p_wk, p_draw, TRUE );
+  SetDispActive( FALSE );
 }
 
 //----------------------------------------------------------------------------
@@ -5703,7 +5702,7 @@ static void FList_TalkMsgOff( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW * p_draw )
   PutListTitle( p_draw );
   ResetListPageButton( p_wk );
 
-  SetListDispActive( p_wk, p_draw, FALSE );
+  SetDispActive( TRUE );
 
   // 戻るの文字が消えるので表示
 //  GFL_BMPWIN_MakeScreen( p_wk->backmsg );
@@ -9370,25 +9369,18 @@ static void SetExitButtonAnime( WFNOTE_DRAW * p_draw )
 
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
-#define DISP_PASSIVE_BLEND_EV1  ( 10 )
-#define DISP_PASSIVE_BLEND_EV2  ( 6 )
+#define DISP_ACTIVE_BRIGHTNESS		( 0 )
+#define DISP_PASSIVE_BRIGHTNESS		( -8 )
 
 
-static void SetDispActive( WFNOTE_DRAW * p_draw, BOOL flg )
+static void SetDispActive( BOOL flg )
 {
   if( flg == TRUE ){
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_XLU );
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_XLU );
-    G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG2,
-      GX_BLEND_PLANEMASK_BG0 |
-      GX_BLEND_PLANEMASK_BG2,
-      DISP_PASSIVE_BLEND_EV1,
-      DISP_PASSIVE_BLEND_EV2 );
+		G2_SetBlendBrightness(
+			GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ, DISP_ACTIVE_BRIGHTNESS );
   }else{
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_NORMAL );
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_NORMAL );
-    G2_BlendNone();
+		G2_SetBlendBrightness(
+			GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ, DISP_PASSIVE_BRIGHTNESS );
   }
 }
 
@@ -9407,44 +9399,6 @@ static void PutListTitle( WFNOTE_DRAW * p_draw )
   GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_draw->title.win) );
 }
 
-static void SetListDispActive( WFNOTE_FRIENDLIST * p_wk, WFNOTE_DRAW * p_draw, BOOL flg )
-{
-  WFNOTE_FLIST_DRAWAREA * da;
-  u32 i;
-
-  da = &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN];
-
-  if( flg == TRUE ){
-    GFL_CLACT_WK_SetObjMode( p_wk->p_pageact, GX_OAM_MODE_XLU );
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_XLU );
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_XLU );
-    for( i=0; i<FLIST_PAGE_FRIEND_NUM; i++ ){
-      if( da->p_hate[i] == NULL ){
-        GFL_CLACT_WK_SetObjMode( WF_2DC_WkClWkGet(da->p_clwk[i]), GX_OAM_MODE_XLU );
-      }else{
-        GFL_CLACT_WK_SetObjMode( da->p_hate[i], GX_OAM_MODE_XLU );
-      }
-    }
-    G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG2,
-      GX_BLEND_PLANEMASK_BG0 |
-      GX_BLEND_PLANEMASK_BG2,
-      DISP_PASSIVE_BLEND_EV1,
-      DISP_PASSIVE_BLEND_EV2 );
-  }else{
-    GFL_CLACT_WK_SetObjMode( p_wk->p_pageact, GX_OAM_MODE_NORMAL );
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tb, GX_OAM_MODE_NORMAL );
-    GFL_CLACT_WK_SetObjMode( p_draw->p_tbx, GX_OAM_MODE_NORMAL );
-    for( i=0; i<FLIST_PAGE_FRIEND_NUM; i++ ){
-      if( da->p_hate[i] == NULL ){
-        GFL_CLACT_WK_SetObjMode( WF_2DC_WkClWkGet(da->p_clwk[i]), GX_OAM_MODE_NORMAL );
-      }else{
-        GFL_CLACT_WK_SetObjMode( da->p_hate[i], GX_OAM_MODE_NORMAL );
-      }
-    }
-    G2_BlendNone();
-  }
-}
 
 // 登録初期化
 static void InitPrintUtil( WFNOTE_DRAW * p_draw )
