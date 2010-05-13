@@ -6372,7 +6372,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN10,
-		MATRIX_ID_DUN0419,
+		MATRIX_ID_DUN0418,
 		NARC_script_seq_d04r3001_bin,
 		NARC_script_seq_sp_d04r3001_bin,	//NARC_script_seq_sp_d04r3001_bin,
 		NARC_script_message_d04r3001_dat,
@@ -6395,7 +6395,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN0419, // camera_area
+		MATRIX_ID_DUN0418, // camera_area
 		0, // padding
 		5,
 		0,
@@ -8913,7 +8913,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN01,
-		MATRIX_ID_H01,
+		MATRIX_ID_THOUSE01,
 		NARC_script_seq_h04r0701_bin,
 		NARC_script_seq_sp_h04r0701_bin,	//NARC_script_seq_sp_h04r0701_bin,
 		NARC_script_message_h04r0701_dat,
@@ -8936,7 +8936,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_H01, // camera_area
+		MATRIX_ID_THOUSE01, // camera_area
 		0, // padding
 		5,
 		0,

@@ -1406,10 +1406,6 @@ $(DIR_WBTMP)/m_dun0418_00_00.tbl: $(DIR_RES)/m_dun0418_00_00.bin
 	@echo create_bintbl m_dun0418_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0418_00_00.bin
 
-$(DIR_WBTMP)/m_dun0419_00_00.tbl: $(DIR_RES)/m_dun0419_00_00.bin
-	@echo create_bintbl m_dun0419_00_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0419_00_00.bin
-
 $(DIR_WBTMP)/m_dun0420_00_00.tbl: $(DIR_RES)/m_dun0420_00_00.bin
 	@echo create_bintbl m_dun0420_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0420_00_00.bin
