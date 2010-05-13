@@ -157,8 +157,9 @@ struct _FIELD_CAMERA {
 
   // ƒJƒƒ‰‰Â“®”ÍˆÍ
   FIELD_CAMERA_AREA camera_area[FIELD_CAMERA_AREA_DATA_MAX];  
-  u16               camera_area_num;
-  u16               camera_area_active;
+  u8                camera_area_num;
+  u8                camera_area_active;
+  u16               camera_area_id;
 
 
   CAMERA_TRACE * Trace;

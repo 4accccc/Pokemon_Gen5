@@ -157,6 +157,8 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
   {
     camera->init_param_handle   = GFL_ARC_OpenDataHandle(ARCID_FIELD_CAMERA, camera->heapID);
     camera->camera_area_handle  = GFL_ARC_OpenDataHandle(ARCID_FLD_CAMSCRLL, camera->heapID);
+
+    camera->camera_area_id = 0xffff;
   }
 
 
@@ -2053,6 +2055,10 @@ void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID hea
   FIELD_CAMERA_AREA_SET* p_rect;
   GF_ASSERT( camera );
 
+  if( camera->camera_area_id == area_id ){
+    return ;
+  }
+
   p_rect = GFL_ARCHDL_UTIL_Load( camera->camera_area_handle, 
       area_id, 
       FALSE, GFL_HEAP_LOWID(heapID) );
@@ -2063,6 +2069,8 @@ void FIELD_CAMERA_LoadCameraArea( FIELD_CAMERA * camera, u32 area_id, HEAPID hea
   
   FIELD_CAMERA_SetCameraArea( camera, p_rect );
   GFL_HEAP_FreeMemory( p_rect );
+
+  camera->camera_area_id = area_id;
 }
 
 //----------------------------------------------------------------------------

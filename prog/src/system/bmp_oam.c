@@ -54,6 +54,7 @@ typedef struct _BMPOAM_ACT{
 typedef struct _BMPOAM_SYS{
 	GFL_CLUNIT *clunit;
 	HEAPID heap_id;
+  ARCHANDLE* hdl;
 	u32 cell_id[DATAID_MAX];			///<共通セルの登録index
 }BMPOAM_SYS;
 
@@ -70,22 +71,22 @@ static void _FOLocal_CommonResourceFree(BMPOAM_SYS_PTR bsp);
 //==============================================================================
 ///リソースデータのテーブル　　※DATAID_???と並びを同じにしておくこと！
 static const struct{
-	u32 ncgr;
+	u32 ncgr_size;  // バイトサイズ
 	u32 ncer;
 	u32 nanr;
 }OamResourceTbl[] = {
 	{
-		NARC_bmpoam_bmpoam_dummy32x16_NCGR,
+		304,
 		NARC_bmpoam_bmpoam_dummy32x16_NCER,
 		NARC_bmpoam_bmpoam_dummy32x16_NANR,
 	},
 	{
-		NARC_bmpoam_bmpoam_dummy32x16_64k_NCGR,
+		304,
 		NARC_bmpoam_bmpoam_dummy32x16_64k_NCER,
 		NARC_bmpoam_bmpoam_dummy32x16_64k_NANR,
 	},
 	{
-		NARC_bmpoam_bmpoam_dummy32x16_32k_NCGR,
+		304,
 		NARC_bmpoam_bmpoam_dummy32x16_32k_NCER,
 		NARC_bmpoam_bmpoam_dummy32x16_32k_NANR,
 	},
@@ -117,6 +118,8 @@ BMPOAM_SYS_PTR BmpOam_Init(HEAPID heap_id, GFL_CLUNIT* p_unit)
 	for(i = 0; i < DATAID_MAX; i++){
 		bsp->cell_id[i] = DATAID_NULL;
 	}
+
+  bsp->hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, GetHeapLowID(heap_id));
 	
 	return bsp;
 }
@@ -130,6 +133,7 @@ BMPOAM_SYS_PTR BmpOam_Init(HEAPID heap_id, GFL_CLUNIT* p_unit)
 //--------------------------------------------------------------
 void BmpOam_Exit(BMPOAM_SYS_PTR bsp)
 {
+	GFL_ARC_CloseDataHandle(bsp->hdl);
 	_FOLocal_CommonResourceFree(bsp);
 	GFL_HEAP_FreeMemory(bsp);
 }
@@ -177,14 +181,14 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
 	bact->draw_type = head->draw_type;
 	
 	//キャラ登録
-	hdl = GFL_ARC_OpenDataHandle(ARCID_BMPOAM, GetHeapLowID(bsp->heap_id));
+	hdl = bsp->hdl;
 	for(y = 0; y < num_y; y++){
 		for(x = 0; x < num_x; x++){
 			//共通セルリソース登録
 			data_index = _FOLocal_CellResourceSet(bsp, head->draw_type, hdl);
 			//キャラ登録(領域確保)
-			bact->cgr_id[x + y*num_x] = GFL_CLGRP_CGR_Register(hdl, 
-				OamResourceTbl[data_index].ncgr, FALSE, head->draw_type, bsp->heap_id);
+			bact->cgr_id[x + y*num_x] = GFL_CLGRP_CGR_RegisterDummy( 
+				OamResourceTbl[data_index].ncgr_size, head->draw_type, bsp->heap_id);
 			//アクター生成
 			clwkdata.pos_x = head->x + x * DUMMY_CELL_SIZE_X;
 			clwkdata.pos_y = head->y + y * DUMMY_CELL_SIZE_Y;
@@ -199,7 +203,6 @@ BMPOAM_ACT_PTR BmpOam_ActorAdd(BMPOAM_SYS_PTR bsp, const BMPOAM_ACT_DATA *head)
       GFL_CLACT_WK_SetSRTAnimeFlag( bact->cap[x + y*num_x], FALSE );
 		}
 	}
-	GFL_ARC_CloseDataHandle(hdl);
 	
 	return bact;
 }
