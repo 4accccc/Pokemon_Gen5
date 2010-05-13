@@ -572,13 +572,18 @@ ev_r03_ice_shop_buy:
 			_MSGWIN_CLOSE()	
 			
 			_SUBTRACT_GOLD( LWK_ICE_GOLD )
-      _GOLD_WIN_UPDATE()
-			_TIME_WAIT( 30 )
-			_GOLD_WIN_CLOSE()
-						
-			//コマンドが変更になる予定
-			_SE_PLAY( SEQ_SE_SYS_22 )
+			
+			//レジ音再生
+			_SE_PLAY( SEQ_SE_SYS_22 )		
+			_SUBTRACT_GOLD( LWK_ICE_GOLD )
+			_GOLD_WIN_UPDATE()
+			
 			_SE_WAIT()
+			
+			//GOLDWINが即座に消えないための間
+			_TIME_WAIT(30)
+			_GOLD_WIN_CLOSE()
+			
 			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_HIUNAISU, 1 )
 			
 		ENDIF
