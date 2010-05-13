@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T19:37:02"/>
+	<create user="matsumiya" host="W00224" date="2010-05-13T11:21:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,10 +296,10 @@
 		<comment>・弟を追いかけて、
 主人公の前に立ってからのセリフ。</comment>
 		<attribute name="キャラ指定">兄</attribute>
-		<language name="JPN" width="256">ツチノカミさまの　ほこらに
+		<language name="JPN" width="256">ランドロスさまの　ほこらに
 イタズラ　すると[BE:00:ページ切り替え（行送り）]
 おおあらしに　なるんだぞー！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ツチノカミさまの　ほこらに
+		<language name="JPN_KANJI" width="256">ランドロスさまの　ほこらに
 イタズラ　すると[BE:00:ページ切り替え（行送り）]
 おおあらしに　なるんだぞー！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -348,13 +348,13 @@
 逃げた弟に向かって叫ぶ。</comment>
 		<attribute name="キャラ指定">兄</attribute>
 		<language name="JPN" width="256">わるさした　ポケモンを　こらしめた
-ツチノカミさまの　ほこら　なんだぞ！[BE:01:ページ切り替え（クリア）]
+ランドロスさまの　ほこら　なんだぞ！[BE:01:ページ切り替え（クリア）]
 ほこらに　イタズラを　すると
 あらしを　おこす　ポケモンが[BE:00:ページ切り替え（行送り）]
 また　でてきても[BE:00:ページ切り替え（行送り）]
 こらしめて　くれなくなるんだよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">悪さした　ポケモンを　こらしめた
-ツチノカミさまの　ほこら　なんだぞ！[BE:01:ページ切り替え（クリア）]
+ランドロスさまの　ほこら　なんだぞ！[BE:01:ページ切り替え（クリア）]
 ほこらに　イタズラを　すると
 あらしを　おこす　ポケモンが[BE:00:ページ切り替え（行送り）]
 また　でてきても[BE:00:ページ切り替え（行送り）]
@@ -365,12 +365,12 @@
 		<comment>・叫んで、退場。</comment>
 		<attribute name="キャラ指定">弟</attribute>
 		<language name="JPN" width="256">わるさする　ポケモンが　いたら
-ツチノカミさまが　でてきて[BE:00:ページ切り替え（行送り）]
+ランドロスさまが　でてきて[BE:00:ページ切り替え（行送り）]
 やっつけて　くれるもーん！[BE:01:ページ切り替え（クリア）]
 にいちゃんの　ほうが
 ばかだもーんっ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">悪さする　ポケモンが　いたら
-ツチノカミさまが　でてきて[BE:00:ページ切り替え（行送り）]
+ランドロスさまが　でてきて[BE:00:ページ切り替え（行送り）]
 やっつけて　くれるもーん！[BE:01:ページ切り替え（クリア）]
 にいちゃんの　ほうが
 ばかだもーんっ！[BE:01:ページ切り替え（クリア）]</language>
@@ -386,19 +386,19 @@
 	<row id="msg_r14r0201_girl1_01">
 		<comment>・主人公の前まで来てから、セリフ。</comment>
 		<attribute name="キャラ指定">姉</attribute>
-		<language name="JPN" width="256">ほこらは　ツチノカミって　なまえの
+		<language name="JPN" width="256">ほこらは　ランドロスって　なまえの
 ポケモンを　おまつりしてるの[BE:01:ページ切り替え（クリア）]
-カザカミと　ライカミが
+トルネロスと　ボルトロスが
 イッシュちほうの　いえや　はたけを[BE:00:ページ切り替え（行送り）]
 あらしまわった　ときに[BE:00:ページ切り替え（行送り）]
-ツチノカミって　ポケモンが[BE:00:ページ切り替え（行送り）]
+ランドロスって　ポケモンが[BE:00:ページ切り替え（行送り）]
 やっつけて　くれたんだって[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ほこらは　ツチノカミって　名前の
+		<language name="JPN_KANJI" width="256">ほこらは　ランドロスって　名前の
 ポケモンを　おまつりしてるの[BE:01:ページ切り替え（クリア）]
-カザカミと　ライカミが
+トルネロスと　ボルトロスが
 イッシュ地方の　家や　畑を[BE:00:ページ切り替え（行送り）]
 荒らしまわった　ときに[BE:00:ページ切り替え（行送り）]
-ツチノカミって　ポケモンが[BE:00:ページ切り替え（行送り）]
+ランドロスって　ポケモンが[BE:00:ページ切り替え（行送り）]
 やっつけて　くれたんだって[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -414,12 +414,12 @@
 	<row id="msg_r14r0201_girl1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>・段差を降りる途中で振り向いて。</comment>
 		<attribute name="キャラ指定">姉</attribute>
-		<language name="JPN" width="256">カザカミと　ライカミが
+		<language name="JPN" width="256">トルネロスと　ボルトロスが
 また　ここに　きたら[BE:00:ページ切り替え（行送り）]
-ツチノカミさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">カザカミと　ライカミが
+ランドロスさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">トルネロスと　ボルトロスが
 また　ここに　来たら[BE:00:ページ切り替え（行送り）]
-ツチノカミさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
+ランドロスさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r14r0201_girl1_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -430,7 +430,7 @@
 	</row>
 
 	<row id="msg_r14r0201_narration_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>●カザカミ、ライカミの両方が
+		<comment>●トルネロス、ボルトロスの両方が
 手持ちに無いときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
 		<language name="JPN" width="256">ふるびた　ちいさな　ほこらが　ある…</language>
@@ -438,7 +438,7 @@
 	</row>
 
 	<row id="msg_r14r0201_narration_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>●カザカミ、ライカミの両方が
+		<comment>●トルネロス、ボルトロスの両方が
 手持ちにいるときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
 		<language name="JPN" width="256">ふるびた　ちいさな　ほこらが　ある…[BE:01:ページ切り替え（クリア）]</language>
@@ -447,13 +447,13 @@
 
 	<row id="msg_r14r0201_narration_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・「！」表示後のメッセージ。
-・このあとツチノカミが登場。</comment>
+・このあとランドロスが登場。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
 		<language name="JPN" width="256">モンスターボールに　はいっている
-カザカミと　ライカミが[BE:00:ページ切り替え（行送り）]
+トルネロスと　ボルトロスが[BE:00:ページ切り替え（行送り）]
 はげしく　はんのうしている！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">モンスターボールに　入っている
-カザカミと　ライカミが[BE:00:ページ切り替え（行送り）]
+トルネロスと　ボルトロスが[BE:00:ページ切り替え（行送り）]
 はげしく　反応している！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -462,18 +462,18 @@
 
 ・話しかけて戦闘に入るときも、
 このメッセージを使います。</comment>
-		<attribute name="キャラ指定">ツチノカミ</attribute>
+		<attribute name="キャラ指定">ランドロス</attribute>
 		<language name="JPN" width="256">どろるるるるっ！！</language>
 		<language name="JPN_KANJI" width="256">どろるるるるっ！！</language>
 	</row>
 
 	<row id="msg_r14r0201_narration_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>●ツチノカミを倒したとき、主人公が
+		<comment>●ランドロスを倒したとき、主人公が
 逃げたときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
-		<language name="JPN" width="256">ツチノカミは　そらの　かなたへ
+		<language name="JPN" width="256">ランドロスは　そらの　かなたへ
 とびさってしまった…</language>
-		<language name="JPN_KANJI" width="256">ツチノカミは　空の　彼方へ
+		<language name="JPN_KANJI" width="256">ランドロスは　空の　彼方へ
 飛び去ってしまった…</language>
 	</row>
 
