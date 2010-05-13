@@ -49,5 +49,6 @@
 #define R04_HIDE_ITEM_02                  4
 #define R04_HIDE_ITEM_03                  5
 #define R04_HIDE_ITEM_04                  6
+#define R04_HIDE_ITEM_05                  7
 
 #endif //ZONE_R04_EVB_H
