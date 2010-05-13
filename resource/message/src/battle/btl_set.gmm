@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-14T00:10:05"/>
+	<create user="taya" host="W00146" date="2010-05-14T02:12:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -643,19 +643,19 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-特攻が上がった！</language>
+特攻が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_Rankup_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
-特攻が上がった！</language>
+特攻が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_Rankup_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
-特攻が上がった！</language>
+特攻が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF">
