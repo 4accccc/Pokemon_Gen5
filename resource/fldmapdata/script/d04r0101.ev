@@ -72,7 +72,8 @@ _TALK_OBJ_START()
 
 		//シッポウシティの　はくぶつかん
 		_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_backpackerw_06 )
-		_BALLOONWIN_CLOSE()
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 	
 	//カセキ入手前の場合
 	ELSE
@@ -92,7 +93,6 @@ _TALK_OBJ_START()
 		
 			//メニュー表示
 			_BMPMENU_START()
-			_BALLOONWIN_CLOSE()
 
 			//カセキその１の場合
 			IF $LWK_KASEKI == 0 THEN
@@ -162,7 +162,6 @@ _TALK_OBJ_START()
 		
 			//メニュー表示
 			_BMPMENU_START()
-			_BALLOONWIN_CLOSE()
 
 			//カセキその１の場合
 			IF $LWK_KASEKI == 0 THEN
