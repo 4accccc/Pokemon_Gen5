@@ -588,6 +588,7 @@ static void LOCAL_TVT_DispRecIcon( LOCAL_TVT_WORK *work , const u8 idx )
   pos.y = LOCAL_TVT_CHARA_BASE_POS[idx][1]*8 + 16;
   GFL_CLACT_WK_SetPos( work->clwkRecIcon , &pos , CLSYS_DRAW_MAIN );
   GFL_CLACT_WK_SetDrawEnable( work->clwkRecIcon , TRUE );
+  GFL_CLACT_WK_ResetAnm( work->clwkRecIcon );
 }
 static void LOCAL_TVT_HideRecIcon( LOCAL_TVT_WORK *work )
 {

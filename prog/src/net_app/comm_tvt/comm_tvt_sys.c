@@ -647,6 +647,7 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
               &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( work->clwkRec , FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkRec , TRUE );
   }
 
   //パレットアニメデータの取得
@@ -1201,6 +1202,7 @@ void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
       
       GFL_CLACT_WK_SetPos( work->clwkRec , &cellPos , CLSYS_DRAW_MAIN );
       GFL_CLACT_WK_SetDrawEnable( work->clwkRec , TRUE );
+      GFL_CLACT_WK_ResetAnm( work->clwkRec );
     }
   }
 }
