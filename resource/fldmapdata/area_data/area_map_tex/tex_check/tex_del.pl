@@ -34,6 +34,9 @@ foreach $filename ( @all_tex_file ){
 
     $tex_del_after = 0;
     $plt_del_after = 0;
+    
+    $tex_del_idx = 0;
+    $plt_del_idx = 0;
 
     $output_cut = 0;
     
@@ -70,6 +73,13 @@ foreach $filename ( @all_tex_file ){
           $setnum  = $datanum - 1;
 
           $line =~ s/$datanum/$setnum/; #数値の置換
+        }elsif( $line =~ /tex_image_idx="([0-9]*)"/ ){
+          $datanum = $1;
+          if( $tex_del_idx <= $datanum ){
+            $setnum  = $datanum - 1;
+
+            $line =~ s/$datanum/$setnum/; #数値の置換
+          }
         }
 
       }else{
@@ -83,7 +93,8 @@ foreach $filename ( @all_tex_file ){
         }else{
 
           #削除開始
-          if( $line =~ /tex_image index="[0-9]*" name="$tex_name"/ ){
+          if( $line =~ /tex_image index="([0-9]*)" name="$tex_name"/ ){
+            $tex_del_idx = $1;
             $output_cut = 1;
           }
         }
@@ -99,7 +110,16 @@ foreach $filename ( @all_tex_file ){
           $setnum  = $datanum - 1;
 
           $line =~ s/$datanum/$setnum/; #数値の置換
+        }elsif( $line =~ /tex_palette_idx="([0-9]*)"/ ){
+          $datanum = $1;
+          if( $plt_del_idx <= $datanum ){
+            $setnum  = $datanum - 1;
+
+            $line =~ s/$datanum/$setnum/; #数値の置換
+          }
         }
+
+        
       }else{
 
         if( $output_cut ){
@@ -113,6 +133,9 @@ foreach $filename ( @all_tex_file ){
           #削除開始
           $check = 'tex_palette index="[0-9]*" name="'.$tex_name.'_pl"';
           if( $line =~ /$check/ ){
+            if( $line =~ /tex_palette index="([0-9]*)"/ ){
+              $plt_del_idx = $1;
+            }
             $output_cut = 1;
           }
         }
