@@ -23,6 +23,10 @@ _EVENT_DATA    ev_c02r0601_woman3_01
 _EVENT_DATA    ev_c02r0601_middleman2_01
 _EVENT_DATA    ev_c02r0601_bigman_01
 _EVENT_DATA		ev_c02r0601_man2_01
+
+_EVENT_DATA		ev_c02r0601_trainerm_01
+_EVENT_DATA		ev_c02r0601_trainerw_01
+
 _EVENT_DATA_END
 
 
@@ -74,6 +78,24 @@ EVENT_START   ev_c02r0601_waitress_01
 	
 	ENDIF
  
+EVENT_END
+
+/**************************************************************/
+/*  C02R0601 WOMAN3の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c02r0601_trainerm_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0601_trainaerm_01)
+  
+EVENT_END
+
+/**************************************************************/
+/*  C02R0601 WOMAN3の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c02r0601_trainerw_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0601_trainaerw_01)
+  
 EVENT_END
 
 /**************************************************************/
