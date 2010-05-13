@@ -1816,6 +1816,7 @@ static void bsway_GetHomeNPCItemData(
 //--------------------------------------------------------------
 static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
 {
+  SAVE_RESULT res;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
@@ -1823,8 +1824,23 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
   int renshou = BSUBWAY_SCOREDATA_GetRenshou(
       bsw_scr->scoreData, bsw_scr->play_mode );
-  SAVE_RESULT res = BattleRec_Save(
-      gdata, HEAPID_PROC, BATTLE_MODE_SUBWAY_SINGLE, renshou, LOADDATA_MYREC,
+  BATTLE_MODE mode = BATTLE_MODE_SUBWAY_SINGLE;
+  
+  switch( bsw_scr->play_mode ){
+  case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_S_DOUBLE:
+    mode = BATTLE_MODE_SUBWAY_DOUBLE;
+    break;
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
+    mode = BATTLE_MODE_SUBWAY_MULTI;
+    break;
+  }
+  
+  res = BattleRec_Save(
+      gdata, HEAPID_PROC, mode, renshou, LOADDATA_MYREC,
       &bsw_scr->btlrec_save_work[0], &bsw_scr->btlrec_save_work[1] );
   
   if( res == SAVE_RESULT_OK || res == SAVE_RESULT_NG ){
