@@ -31,34 +31,34 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
 {
   //特定のモンスターかを調べる
   switch (inMonsNo){
-  case MONSNO_ZOROAAKU:
+  case MONSNO_530: //ゾロアーク MONSNO_ZOROAAKU
     *outEffNo = ENCEFFID_ZOROARK;
     *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
     return;
   //パッケージ
-  case MONSNO_SIN:
+  case MONSNO_650:  //シン MONSNO_SIN
     *outBgmNo = SEQ_BGM_VS_SHIN;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
-  case MONSNO_MU:
+  case MONSNO_651: //ム MONSNO_MU
     *outBgmNo = SEQ_BGM_VS_MU;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
-  case MONSNO_RAI:
+  case MONSNO_644:  //ライ MONSNO_RAI
     *outBgmNo = SEQ_BGM_VS_RAI;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
   //三銃士  
-  case MONSNO_PORUTOSU:
-  case MONSNO_ARAMISU:
-  case MONSNO_DARUTANISU:
+  case MONSNO_646:  //ポルトス MONSNO_PORUTOSU
+  case MONSNO_647:  //アラミス MONSNO_ARAMISU
+  case MONSNO_654:  //ダルタニス MONSNO_DARUTANISU
     *outBgmNo = SEQ_BGM_VS_SETPOKE;
     *outEffNo = ENCEFFID_THREE_POKE;
     return;
   //移動ポケとか
-  case MONSNO_KAZAKAMI:
-  case MONSNO_RAIKAMI:
-  case MONSNO_TUTINOKAMI:
+  case MONSNO_648:  //カザカミ MONSNO_KAZAKAMI:
+  case MONSNO_649:  //ライカミ MONSNO_RAIKAMI:
+  case MONSNO_652:  //ツチノカミ MONSNO_TUTINOKAMI:
     *outBgmNo = SEQ_BGM_VS_MOVEPOKE;
     *outEffNo = ENCEFFID_MOVE_POKE;
     return;

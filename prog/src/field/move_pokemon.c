@@ -279,12 +279,12 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 	
 	switch(inTargetPoke){
 	case MOVE_POKE_RAIKAMI:
-		monsno = MONSNO_RAIKAMI;
+		monsno = MONSNO_649;  //ライカミ MONSNO_RAIKAMI;
 		lv = MOVE_POKE_RAIKAMI_LV;
     move_type = MVPOKE_TYPE_TIME;
 		break;
 	case MOVE_POKE_KAZAKAMI:
-		monsno = MONSNO_KAZAKAMI;
+		monsno = MONSNO_648;  //カザカミ MONSNO_KAZAKAMI;
 		lv = MOVE_POKE_KAZAKAMI_LV;
     move_type = MVPOKE_TYPE_TIME;
 		break;
@@ -490,9 +490,9 @@ static inline u16 GetZoneID( u8 zone_idx )
 static u8 MonsNoToMovePokeID(u16 monsno)
 {
 	switch (monsno) {
-	case MONSNO_RAIKAMI:
+  case MONSNO_649:  //ライカミ MONSNO_RAIKAMI:
 		return MOVE_POKE_RAIKAMI;
-	case MONSNO_KAZAKAMI:
+  case MONSNO_648:  //カザカミ MONSNO_KAZAKAMI:
 		return MOVE_POKE_KAZAKAMI;
 	}
 	GF_ASSERT(0);

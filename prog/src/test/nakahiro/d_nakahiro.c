@@ -210,7 +210,7 @@ static const u16 DDemoMonsList[][7] =
 	{
 		MONSNO_KORATTA,			// ノーマル
 		MONSNO_KAIRIKII,		// かくとう
-		MONSNO_KAZAKAMI,		// ひこう
+		MONSNO_648,         // ひこう カザカミ MONSNO_KAZAKAMI
 		MONSNO_DOGAASU,			// どく
 		MONSNO_GURAADON,		// じめん
 		MONSNO_IWAAKU,			// いわ

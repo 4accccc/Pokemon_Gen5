@@ -109,7 +109,8 @@ typedef struct _EVENT_DEB_MVPOKE{
 
 
 static const u16 DATA_DebugMvPokeNo[] = {
- MONSNO_RAIKAMI,MONSNO_KAZAKAMI,
+ //ライカミMONSNO_RAIKAMI,カザカミMONSNO_KAZAKAMI,
+ MONSNO_649,MONSNO_648,
 };
 
 static GMEVENT_RESULT EVENT_DebugMovePokemon(GMEVENT * event, int *  seq, void * work);
