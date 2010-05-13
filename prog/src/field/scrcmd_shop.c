@@ -507,9 +507,9 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
     wk->payment = SHOP_PAYMENT_BP;
     break;
   case SCR_SHOPID_BP_WAZA:
-    bp_item_set( wk, SHOP_TYPE_WAZA  );
     wk->payment = SHOP_PAYMENT_BP;
     wk->type = SHOP_TYPE_WAZA;
+    bp_item_set( wk, SHOP_TYPE_WAZA  );
     break;
   case SCR_SHOPID_BLACK_CITY0:  case SCR_SHOPID_BLACK_CITY1:  case SCR_SHOPID_BLACK_CITY2:
   case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:
@@ -787,6 +787,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_ITEMINFO] );
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
+    BmpMenuList_Rewrite( wk->menuList );
     wk->seq = SHOPBUY_SEQ_MAIN;
     break;
   case SHOPBUY_SEQ_YESNO:
@@ -801,6 +802,9 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     if(ret!=BMPMENU_NULL){
       if(ret==0){
         wk->seq = SHOPBUY_SEQ_BUY;
+        BmpMenuList_Rewrite( wk->menuList );
+        GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
+        GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
       }else if(ret==BMPMENU_CANCEL){
         wk->seq = SHOPBUY_SEQ_BACK;
       }
