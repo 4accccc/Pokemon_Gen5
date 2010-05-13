@@ -664,6 +664,7 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
  * @li  ビーコンサーチを禁止しているマップでない
  * @li  通信エラーが発生していない
  * @li  常時通信フラグ（CギアのONやコンフィグの通信と連動しているフラグ）が立っている
+ * @li  Cギア入手フラグが立っている
  */
 //==================================================================
 BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
@@ -675,7 +676,8 @@ BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
       && ZONEDATA_IsFieldBeaconNG(zone_id) == FALSE
       && NetErr_App_CheckError() == NET_ERR_CHECK_NONE
       && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE
-      && Intrude_Check_AlwaysBoot( gsys ) == TRUE )
+      && Intrude_Check_AlwaysBoot( gsys ) == TRUE
+      && CGEAR_SV_GetCGearONOFF(GAMEDATA_GetCGearSaveData(gsys->gamedata)) )
   {
     return TRUE;
   }
@@ -694,9 +696,9 @@ BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
 {
   GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
-  if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE){
-    //多重起動防止
-    if(GFL_NET_IsInit() == FALSE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+  //多重起動防止
+  if(GFL_NET_IsInit() == FALSE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
+    if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE){
       GameCommSys_Boot( gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys );
       return TRUE;
     }
