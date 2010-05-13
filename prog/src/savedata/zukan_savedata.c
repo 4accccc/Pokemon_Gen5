@@ -269,7 +269,7 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
     MONSNO_DAAKURAI,		// ダークライ
     MONSNO_SHEIMI,			// シェイミ
     MONSNO_ARUSEUSU,		// アルセウス
-		MONSNO_TUTINOKAMI,	// ツチノカミ
+		MONSNO_652,	// ツチノカミ
 		MONSNO_RAI,					// ライ
 		MONSNO_DARUTANISU,	// ダルタニス
 		MONSNO_MERODHIA,		// メロディア
