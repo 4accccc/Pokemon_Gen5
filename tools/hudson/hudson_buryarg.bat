@@ -20,6 +20,9 @@ REM ================================
 SET USERNAME=hudson
 @echo USERNAME = %USERNAME%
 
+REM prog‚ÉˆÚ“®
+cd prog
+
 REM ================================
 REM TLF‚É‘‚«‚±‚ñ‚Å‚©‚çSRL‚ðÄ¶¬
 REM ================================
