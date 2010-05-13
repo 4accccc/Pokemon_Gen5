@@ -124,42 +124,22 @@ void POKMEONTRADE_DEMO_GTSMID_ChangeDemo(POKEMON_TRADE_WORK* pWork)
 
   _demoBGMChangeStart(pWork);
   
-#if 0
-  //強制停止
-  pWork->mcssStop[0] = TRUE;
-  MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
-
-  if(pWork->type==POKEMONTRADE_TYPE_GTSUP){  //デモのときは真ん中から
-    VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
-    MCSS_SetPosition( pWork->pokeMcss[0] ,&pos );
-  }
-
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
-  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-#endif
-
 
   //強制停止
-
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
   pWork->mcssStop[1] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[1], 0);
 
-#if 1
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     MCSS_WORK* pMCSS0 = pWork->pokeMcss[0];
     MCSS_WORK* pMCSS1 = pWork->pokeMcss[1];
     pWork->pokeMcss[0]=pMCSS1;
     pWork->pokeMcss[1]=pMCSS0;
   }
-#endif
 
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
-//  _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
-
-
 }
 
 //3dスタート
@@ -181,19 +161,9 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2_BlendNone();
 
 
- // IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ミドル用モデル
- // IRC_POKETRADEDEMO_RemoveModel( pWork);
-
-  
- //IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ダウン用モデル
-  
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手裏
   IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );  //みかた裏
   IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手表
-//  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手裏
-//  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //みかた裏
-//  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手表
-//  MCSS_SetVanishFlag( pWork->pokeMcss[0] );
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
@@ -470,9 +440,9 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 #if 1
   {
     int num = 3;
-   // if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-//      num=0;
-    //}
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      num=0;
+    }
     if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
       VecFx32 apos;
       MCSS_ResetVanishFlag(pWork->pokeMcss[num]);
