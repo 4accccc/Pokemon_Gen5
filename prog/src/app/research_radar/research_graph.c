@@ -247,6 +247,9 @@ static void UpdateControlCursor( RRG_WORK* work ); // 操作カーソルの表示を更新す
 static void UpdateMyAnswerIconOnButton( RRG_WORK* work ); // 自分の回答アイコン ( ボタン上 ) を更新する
 static void UpdateMyAnswerIconOnGraph( RRG_WORK* work ); // 自分の回答アイコン ( グラフ上 ) を更新する
 // BMP-OAM
+static void ShowAnalyzeButton( RRG_WORK* work ); //『報告を見る』ボタンを表示する
+static void ShowAnalyzeMessage( RRG_WORK* work ); //「…かいせきちゅう…」を表示する
+static void HideAnalyzeMessage( RRG_WORK* work ); //「…かいせきちゅう…」を非表示にする
 static void BmpOamSetDrawEnable( RRG_WORK* work, BMPOAM_ACTOR_INDEX BmpOamActorIdx, BOOL enable );  // 表示するかどうかを設定する
 // パレットアニメーション
 static void StartPaletteAnime( RRG_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
@@ -567,7 +570,7 @@ static void MainSeq_SETUP( RRG_WORK* work )
   UpdateControlCursor( work );          // 左右カーソルを更新
   UpdateMainBG_WINDOW( work );          // MAIN-BG ( ウィンドウ面 ) を更新する
   UpdateMyAnswerIconOnButton( work );   // 自分の回答アイコン ( ボタン上 ) を更新する
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZE_BUTTON, TRUE ); //『報告を見る』ボタンを表示
+  ShowAnalyzeButton( work );            //『報告を見る』ボタンを表示
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // カーソルONパレットアニメを開始
   StartPaletteAnime( work, PALETTE_ANIME_RECEIVE_BUTTON ); //「データ受信中」ボタンのパレットアニメを開始
   UpdateAnalyzeButton( work ); //『報告を見る』ボタンを更新する
@@ -821,6 +824,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   //『戻る』ボタンをタッチ
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );  // 画面遷移のトリガを登録
+    BlinkReturnButton( work );                     //『戻る』ボタンを明滅させる
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                // キャンセル音
     FinishCurrentState( work );                    // RRG_STATE_KEYWAIT 状態を終了
     RegisterNextState( work, RRG_STATE_WAIT );     // => RRG_STATE_WAIT 
@@ -966,7 +970,7 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
   switch( GetStateSeq(work) ) {
   case 0:
     SetupResearchData( work );                                 // 調査データを再セットアップ
-    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, TRUE ); //「…かいせきちゅう…」を表示
+    ShowAnalyzeMessage( work ); //「…かいせきちゅう…」を表示
     SetupMainCircleGraph( work, GRAPH_DISP_MODE_TODAY );       // 円グラフ作成
     SetupMainCircleGraph( work, GRAPH_DISP_MODE_TOTAL );       // 円グラフ作成
     CIRCLE_GRAPH_SetDrawEnable( GetMainGraph(work), TRUE );    // 円グラフ表示開始
@@ -1005,7 +1009,7 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
 
     // 表示を更新
     ChangeAnswerToTop( work ); // 先頭の回答を表示
-    BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, FALSE ); //「…かいせきちゅう…」を消す
+    HideAnalyzeMessage( work ); //「…かいせきちゅう…」を消す
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
     UpdateBGFont_Answer( work );        // 回答を更新する
     UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
@@ -3018,6 +3022,42 @@ void UpdateMyAnswerIconOnGraph( RRG_WORK* work )
   // アニメーション開始
   GFL_CLACT_WK_SetAutoAnmFlag( clwk, TRUE );
   GFL_CLACT_WK_SetAnmMode( clwk, CLSYS_ANMPM_FORWARD_L );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief『報告を見る』ボタンを表示する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ShowAnalyzeButton( RRG_WORK* work )
+{
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZE_BUTTON, TRUE );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief「…かいせきちゅう…」を表示する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ShowAnalyzeMessage( RRG_WORK* work )
+{
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, TRUE );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief「…かいせきちゅう…」を非表示にする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void HideAnalyzeMessage( RRG_WORK* work )
+{
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, FALSE );
 }
 
 //-----------------------------------------------------------------------------------------

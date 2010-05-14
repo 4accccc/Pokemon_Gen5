@@ -584,10 +584,12 @@ static void MainState_STANDBY( RRL_WORK* work )
   int trg;
   int touchTrg;
   int commonTouch;
+  u32 touch_x, touch_y;
 
   trg   = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
-  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
+  commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) ); 
+  GFL_UI_TP_GetPointCont( &touch_x, &touch_y );
 
   //-------------------------
   //「もどる」ボタンをタッチ
@@ -625,16 +627,19 @@ static void MainState_STANDBY( RRL_WORK* work )
   //----------------------------
   //「調査項目」ボタンをタッチ
   if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchTrg) && (touchTrg <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
-    // 選択可能
-    if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
-      MoveTopicCursorDirect( work, touchTrg );                 // カーソル移動
-      SetSelectedTopicID( work, work->topicCursorPos );        // カーソル位置の調査項目を選択
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // 決定音
-      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // 項目選択時のパレットアニメ開始
-      UpdateTopicDetailStrings_at_Now( work );                 // 上画面の調査項目説明文を更新
-      ShowTopicDetailStrings( work );                          // 上画面の詳細表示開始
-      FinishCurrentState( work );                              // RRL_STATE_STANDBY 状態終了
-      RegisterNextState( work, RRL_STATE_TO_CONFIRM_STANDBY ); // => RRL_STATE_TO_CONFIRM_STANDBY 
+    // 範囲内をタッチ
+    if( (TOPIC_BUTTON_TOUCH_AREA_TOP <= touch_y) && (touch_y <= TOPIC_BUTTON_TOUCH_AREA_BOTTOM) ) {
+      // 選択可能
+      if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
+        MoveTopicCursorDirect( work, touchTrg );                 // カーソル移動
+        SetSelectedTopicID( work, work->topicCursorPos );        // カーソル位置の調査項目を選択
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // 決定音
+        StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // 項目選択時のパレットアニメ開始
+        UpdateTopicDetailStrings_at_Now( work );                 // 上画面の調査項目説明文を更新
+        ShowTopicDetailStrings( work );                          // 上画面の詳細表示開始
+        FinishCurrentState( work );                              // RRL_STATE_STANDBY 状態終了
+        RegisterNextState( work, RRL_STATE_TO_CONFIRM_STANDBY ); // => RRL_STATE_TO_CONFIRM_STANDBY 
+      }
     }
     return;
   } 
@@ -665,12 +670,13 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   int key, trg;
   int touchTrg;
   int commonTouch;
-  BOOL select = FALSE;
+  u32 touch_x, touch_y;
 
-  key   = GFL_UI_KEY_GetCont();
-  trg   = GFL_UI_KEY_GetTrg();
+  key = GFL_UI_KEY_GetCont();
+  trg = GFL_UI_KEY_GetTrg();
   touchTrg = GFL_UI_TP_HitTrg( work->topicTouchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
+  GFL_UI_TP_GetPointCont( &touch_x, &touch_y );
 
   // 押しっぱなしチェック
   if( key & (PAD_KEY_UP + PAD_KEY_DOWN) ) {
@@ -728,15 +734,18 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //----------------------------
   //「調査項目」ボタン をタッチ
   if( (TOPIC_TOUCH_AREA_TOPIC_0 <= touchTrg) && (touchTrg <= TOPIC_TOUCH_AREA_TOPIC_9) ) {
-    // 選択可能
-    if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
-      MoveTopicCursorDirect( work, touchTrg );                 // カーソル移動
-      SetSelectedTopicID( work, work->topicCursorPos );        // カーソル位置の調査項目を選択
-      StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // 項目選択時のパレットアニメ開始
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // 決定音
-      UpdateTopicDetailStrings_at_Now( work );                 // 上画面の調査項目説明文を更新
-      FinishCurrentState( work );                              // RRL_STATE_KEY_WAIT 状態終了
-      RegisterNextState( work, RRL_STATE_TO_CONFIRM_STANDBY ); // => RRL_STATE_TO_CONFIRM_STANDBY 
+    // 範囲内をタッチ
+    if( (TOPIC_BUTTON_TOUCH_AREA_TOP <= touch_y) && (touch_y <= TOPIC_BUTTON_TOUCH_AREA_BOTTOM) ) {
+      // 選択可能
+      if( CheckTopicCanSelect( work, touchTrg ) == TRUE ) {
+        MoveTopicCursorDirect( work, touchTrg );                 // カーソル移動
+        SetSelectedTopicID( work, work->topicCursorPos );        // カーソル位置の調査項目を選択
+        StartPaletteAnime( work, PALETTE_ANIME_TOPIC_SELECT );   // 項目選択時のパレットアニメ開始
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );                          // 決定音
+        UpdateTopicDetailStrings_at_Now( work );                 // 上画面の調査項目説明文を更新
+        FinishCurrentState( work );                              // RRL_STATE_KEY_WAIT 状態終了
+        RegisterNextState( work, RRL_STATE_TO_CONFIRM_STANDBY ); // => RRL_STATE_TO_CONFIRM_STANDBY 
+      }
     }
     return;
   }
