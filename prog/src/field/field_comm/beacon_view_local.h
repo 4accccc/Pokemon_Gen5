@@ -163,7 +163,8 @@ typedef struct _BEACON_VIEW{
   BOOL      my_power_f;
   int       seq;
   int       sub_seq;
-  int       event_id;
+  u16       event_id;
+  u16       event_reserve_f;
 
   int       io_interval;      ///<スタックチェックインターバルカウンタ
   u8        msg_spd;            ///<メッセージスピード
@@ -233,4 +234,18 @@ typedef struct _BEACON_VIEW{
 #endif
 }BEACON_VIEW;
 
+/*
+ *  @brief  イベントリクエスト
+ */
+extern void BEACON_VIEW_SUB_EventReserve( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
+
+/*
+ *  @brief  イベントリクエスト
+ */
+extern void BEACON_VIEW_SUB_EventRequest( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
+
+/*
+ *  @brief  イベントリクエストリセット
+ */
+extern void BEACON_VIEW_SUB_EventReserveReset( BEACON_VIEW_PTR wk );
 

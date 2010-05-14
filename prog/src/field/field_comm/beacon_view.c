@@ -39,13 +39,27 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
+typedef enum{
+  EVWAIT_MENU_ANM,
+  EVWAIT_TCB_ANM,
+}EVWAIT_TYPE;
+
+typedef struct _EVWK_EVENT_START{
+  int   sub_seq;
+  GAMESYS_WORK* gsys;
+  FIELDMAP_WORK* fieldmap;
+  BEACON_VIEW_PTR bvp;
+  GMEVENT*  call_event;
+
+  EVWAIT_TYPE type;
+  int param;
+}EVWK_EVENT_START;
 
 
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static void event_Request( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
-static void event_RequestReset( BEACON_VIEW_PTR wk );
+static GMEVENT* event_EventStart( BEACON_VIEW_PTR wk, GMEVENT* call_event, EVWAIT_TYPE type, int param );
 
 static int seq_Main( BEACON_VIEW_PTR wk );
 static int seq_LogEntry( BEACON_VIEW_PTR wk );
@@ -201,13 +215,18 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   OSTick s_tick = OS_GetTick();
 #endif
   if( wk->active != bActive ){
-    wk->active = bActive;
-    BeaconView_SetViewPassive( wk, !bActive );
+    if( (wk->event_reserve_f && !bActive) == FALSE ){ //イベント移行アニメ待ち中はパッシブにしない
+      wk->active = bActive;
+      BeaconView_SetViewPassive( wk, !bActive );
+    }
   }
   if( wk->event_id != EV_NONE ){
     if(!bActive){
       //リクエストを強制破棄
-      event_RequestReset( wk );
+      if( wk->event_id == EV_GPOWER_USE ){
+        wk->ctrl.g_power = GPOWER_ID_NULL;
+      }
+      BEACON_VIEW_SUB_EventReserveReset( wk );
     }
     return; //イベントリクエスト中はメイン処理をスキップ
   }
@@ -306,6 +325,7 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 {
   GMEVENT* event = NULL;
+  GMEVENT* call_event = NULL;
 
   if( !bEvReqOK ){  //イベント起動していいタイミングを待つ
     return NULL;
@@ -314,10 +334,12 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   switch( wk->event_id ){
   case EV_RETURN_CGEAR:
     BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
-    event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
+    call_event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
+    event = event_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETURN );
     break;
   case EV_CALL_DETAIL_VIEW:
-    event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
+    call_event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
+    event = event_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
     break;
   case EV_GPOWER_USE:
     event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
@@ -327,8 +349,9 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
     break;
   case EV_CALL_TALKMSG_INPUT:
-    event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
+    call_event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
               NAMEIN_FREE_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
+    event = event_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_HELLO );
     break;
 
 #ifdef PM_DEBUG
@@ -342,10 +365,107 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   default:
     return NULL;
   }
-  event_RequestReset( wk );
+  BEACON_VIEW_SUB_EventReserveReset( wk );
   return event; 
 }
 
+/*
+ *  @brief  イベントリクエスト
+ */
+void BEACON_VIEW_SUB_EventReserve( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id)
+{
+  wk->event_id = ev_id;
+}
+
+/*
+ *  @brief  イベントリクエスト
+ */
+void BEACON_VIEW_SUB_EventRequest( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id)
+{
+  wk->event_id = ev_id;
+}
+
+/*
+ *  @brief  イベントリクエストリセット
+ */
+void BEACON_VIEW_SUB_EventReserveReset( BEACON_VIEW_PTR wk )
+{
+  wk->event_id = EV_NONE;
+}
+
+////////////////////////////////////////////////////////////////////////////
+//アニメウェイトイベント
+////////////////////////////////////////////////////////////////////////////
+static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * work);
+static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
+static BOOL evsub_WaitTypeTcb( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
+
+/*
+ *  @brief  各種イベント起動前に、アニメなどの待ちをするためのイベント
+ */
+GMEVENT* event_EventStart( BEACON_VIEW_PTR wk, GMEVENT* call_event, EVWAIT_TYPE type, int param )
+{
+  GMEVENT* event;
+  EVWK_EVENT_START* ev_wk;
+
+  event = GMEVENT_Create(wk->gsys, NULL, event_EventStartMain, sizeof(EVWK_EVENT_START));
+  ev_wk = GMEVENT_GetEventWork(event);
+
+  ev_wk->bvp = wk;
+  ev_wk->gsys = wk->gsys;
+  ev_wk->fieldmap = wk->fieldWork;
+  ev_wk->call_event = call_event;
+
+  ev_wk->type  = type;
+  ev_wk->param = param;
+
+  wk->event_reserve_f = TRUE;
+
+  return event;
+}
+
+static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * work)
+{
+  EVWK_EVENT_START* ev_wk = work;
+  BEACON_VIEW_PTR wk = ev_wk->bvp;
+  int ret = FALSE;
+
+  switch( ev_wk->type ){
+  case EVWAIT_MENU_ANM:
+    ret = evsub_WaitTypeMenuAnime( wk, ev_wk );
+    break;
+  case EVWAIT_TCB_ANM:
+    ret = evsub_WaitTypeTcb( wk, ev_wk );
+    break;
+  }
+  if( ret ){
+    wk->event_reserve_f = FALSE;
+    GMEVENT_ChangeEvent( event, ev_wk->call_event );
+  }
+  return GMEVENT_RES_CONTINUE;
+//  return GMEVENT_RES_FINISH;
+}
+
+static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
+{
+  switch( ev_wk->sub_seq ){
+  case 0:
+    BeaconView_MenuBarViewSet( wk, ev_wk->param, MENU_ST_ANM );
+    ev_wk->sub_seq++;
+    return FALSE;
+  case 1:
+    if( BeaconView_MenuBarCheckAnm( wk, ev_wk->param )){
+      return FALSE;
+    }
+    break;
+  }
+  return TRUE;
+}
+
+static BOOL evsub_WaitTypeTcb( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
+{
+  return (wk->eff_task_ct == 0 );
+}
 
 /////////////////////////////////////////////////////////////////
 //
@@ -359,21 +479,6 @@ static void tcb_VInter( GFL_TCB* tcb, void * work)
   }
 }
 
-/*
- *  @brief  イベントリクエスト
- */
-static void event_Request( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id)
-{
-  wk->event_id = ev_id;
-}
-
-/*
- *  @brief  イベントリクエストリセット
- */
-static void event_RequestReset( BEACON_VIEW_PTR wk )
-{
-  wk->event_id = EV_NONE;
-}
 
 /*
  *  @brief  メイン　待機
@@ -433,7 +538,7 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
     return SEQ_VIEW_UPDATE;
   }
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
-    event_Request( wk, EV_GPOWER_USE );
+    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_USE );
   }
   BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
   BeaconView_UpDownViewSet( wk );
@@ -488,9 +593,9 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
   }
   wk->sub_seq = 0;
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
-    event_Request( wk, EV_GPOWER_USE );
+    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_USE );
   }else if( wk->gpower_check_req ){
-    event_Request( wk, EV_GPOWER_CHECK );
+    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_CHECK );
     wk->gpower_check_req = FALSE;
   }
   return SEQ_MAIN;
@@ -511,7 +616,7 @@ static int seq_TalkMsgInput( BEACON_VIEW_PTR wk )
       break;
     }
     wk->sub_seq = 0;
-    event_Request( wk, EV_CALL_TALKMSG_INPUT );
+    BEACON_VIEW_SUB_EventReserve( wk, EV_CALL_TALKMSG_INPUT );
     return SEQ_END;
   }
   return SEQ_TALKMSG_INPUT;
@@ -539,7 +644,7 @@ static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
     if( BeaconView_MenuBarCheckAnm( wk, MENU_RETURN )){
       break;
     }
-    event_Request( wk , EV_RETURN_CGEAR );
+    BEACON_VIEW_SUB_EventReserve( wk , EV_RETURN_CGEAR );
     wk->sub_seq = 0;
     return SEQ_END;
   }
@@ -554,7 +659,7 @@ static int seq_CallDetailView( BEACON_VIEW_PTR wk )
   if( wk->eff_task_ct ){
     return SEQ_CALL_DETAIL_VIEW;
   }
-  event_Request( wk , EV_CALL_DETAIL_VIEW );
+  BEACON_VIEW_SUB_EventReserve( wk , EV_CALL_DETAIL_VIEW );
   return SEQ_END;
 }
 

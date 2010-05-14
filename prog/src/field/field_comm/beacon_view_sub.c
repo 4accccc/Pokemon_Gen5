@@ -159,7 +159,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
 
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-    wk->event_id = EV_DEBUG_MENU_CALL;
+    BEACON_VIEW_SUB_EventReserve( wk, EV_DEBUG_MENU_CALL );
     return SEQ_MAIN;
   }
 #endif
@@ -171,7 +171,20 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   //メニューあたり判定
   ret = touchin_CheckMenu( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
-    return SEQ_GPOWER_USE+ret;
+    switch( ret ){
+    case MENU_POWER:
+      return SEQ_GPOWER_USE;
+    case MENU_HELLO:
+      BEACON_VIEW_SUB_EventReserve( wk, EV_CALL_TALKMSG_INPUT );
+      break;
+    case MENU_THANKS:
+      return SEQ_THANK_YOU;
+    case MENU_RETURN:
+      BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR );
+      break;
+    }
+    return SEQ_MAIN;
+//    return SEQ_GPOWER_USE+ret;
   }
 
   //パネルあたり判定
@@ -179,8 +192,9 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     wk->ctrl.target = ret;
     effReq_SetPanelFlash( wk, ret );
-//    IWASAWA_Printf("PanelTarget = %d\n",ret);
-    return SEQ_CALL_DETAIL_VIEW;
+    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_CHECK );
+    return SEQ_MAIN;
+//    return SEQ_CALL_DETAIL_VIEW;
   }
 
   //上下矢印あたり判定
@@ -482,6 +496,7 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
       break;
     }
     BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
+    BeaconView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_OFF );
     BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
     wk->sub_seq++;
     break;
@@ -1864,6 +1879,7 @@ static void taskAdd_WinPopup( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct )
   twk->wait = POPUP_WAIT;
   
 //  IWASAWA_Printf("WinPopup Req\n");
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
 
   twk->task_ct = task_ct;
   (*task_ct)++;
@@ -2059,7 +2075,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
 
     switch( twk->ret ){
     case TMENU_YN_CHECK:
-      bvp->event_id = EV_GPOWER_CHECK;
+      BEACON_VIEW_SUB_EventReserve( bvp, EV_GPOWER_CHECK );
       twk->seq = 3;
       return;
     case TMENU_YN_NO:
