@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タイトルをスキップするか判定
+ *	@brief  タイトルをスキップするか判定。引数が指定されていた場合、スキップ。
  *
  *	@param	void 
  *
@@ -28,13 +28,8 @@ BOOL HUDSON_IsSkipTitle( void )
   {
     return FALSE;
   }
-  
-  if ( STD_StrCmp( OS_GetArgv(1), HUDSON_TESTCODE_MAP_JUMP ) == 0 )
-  {
-    return TRUE;
-  }
 
-  return FALSE;
+  return TRUE;
 }
 
 
