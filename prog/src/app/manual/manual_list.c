@@ -715,11 +715,88 @@ static BOOL Manual_List_InputAppTaskmenuWin( MANUAL_LIST_WORK* work )
       }
       else if( GFL_UI_KEY_GetRepeat() & ( PAD_KEY_LEFT | PAD_BUTTON_L ) )
       {
+        if( work->param->cursor_pos > 0 )
+        {
+          APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], FALSE );
+        
+          if( work->param->num <= ATM_WIN_ITEM_ENABLE_NUM )  // Activeの移動だけで済む場合  // 先頭へ
+          {
+            work->param->cursor_pos = 0;
+          }
+          else  // リストを動かす必要があるとき
+          {
+            if( work->param->head_pos >= ATM_WIN_ITEM_ENABLE_NUM )
+            {
+              work->param->head_pos -= ATM_WIN_ITEM_ENABLE_NUM;
+              work->param->cursor_pos -= ATM_WIN_ITEM_ENABLE_NUM;
+            }
+            else
+            {
+              work->param->head_pos = 0;
+              if( work->param->cursor_pos >= ATM_WIN_ITEM_ENABLE_NUM )
+              {
+                work->param->cursor_pos -= ATM_WIN_ITEM_ENABLE_NUM;
+              }
+              else
+              {
+                work->param->cursor_pos = 0;
+              }
+            }
+            Manual_List_UpdateAppTaskmenuWin(work);
 
+            // スクロールバーのカーソルの位置
+            {
+              GFL_CLACTPOS pos;
+              u16 y = Manual_List_GetSbCursorYFromHeadPos( work, Manual_List_GetHeadPosMax(work)+1, work->param->head_pos );
+              pos.x = SB_CURSOR_X;
+              pos.y = y; 
+              GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+            }
+          }
+
+          APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+          work->b_sb_cursor_pos_change = FALSE;
+          PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+        }
       }
       else if( GFL_UI_KEY_GetRepeat() & ( PAD_KEY_RIGHT | PAD_BUTTON_R ) )
       {
+        if( work->param->cursor_pos < work->param->num -1 )
+        {
+          APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], FALSE );
+        
+          if( work->param->num <= ATM_WIN_ITEM_ENABLE_NUM )  // Activeの移動だけで済む場合  // 最後尾へ
+          {
+            work->param->cursor_pos = work->param->num -1;
+          }
+          else  // リストを動かす必要があるとき
+          {
+            work->param->head_pos += ATM_WIN_ITEM_ENABLE_NUM;
+            if( work->param->head_pos > Manual_List_GetHeadPosMax(work) )
+            {
+              work->param->head_pos = Manual_List_GetHeadPosMax(work);
+            }
+            work->param->cursor_pos += ATM_WIN_ITEM_ENABLE_NUM;
+            if( work->param->cursor_pos >= work->param->num )
+            {
+              work->param->cursor_pos = work->param->num -1;
+            }
+            Manual_List_UpdateAppTaskmenuWin(work);
 
+            // スクロールバーのカーソルの位置
+            {
+              GFL_CLACTPOS pos;
+              u16 y = Manual_List_GetSbCursorYFromHeadPos( work, Manual_List_GetHeadPosMax(work)+1, work->param->head_pos );
+              pos.x = SB_CURSOR_X;
+              pos.y = y; 
+              GFL_CLACT_WK_SetPos( work->sb_cursor_clwk, &pos, CLSYS_DEFREND_SUB );
+            }
+          }
+
+          APP_TASKMENU_WIN_SetActive( work->atm_win_wk[Manual_List_ConvertCursorPosToAtmWinItem(work)], TRUE );
+          work->b_sb_cursor_pos_change = FALSE;
+          PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+        }
       }
     }
   }

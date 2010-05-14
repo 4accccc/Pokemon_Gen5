@@ -8,6 +8,12 @@
  *  モジュール名：MANUAL_TITLE
  */
 //============================================================================
+
+
+// デバッグ機能
+//#define DEBUG_LONG_LIST  // これが定義されているとき、長いリストを作成する(リストのテスト用なので選ぶと止まるかも)
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -140,6 +146,31 @@ MANUAL_TITLE_WORK*  MANUAL_TITLE_Init(
     }
     else  // if( work->param->type == MANUAL_TITLE_TYPE_ALL )
     {
+
+#ifdef DEBUG_LONG_LIST
+
+      work->list_param.type = MANUAL_LIST_TYPE_TITLE;
+
+      work->list_param.num  = 15;
+      work->list_param.item = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, sizeof(MANUAL_LIST_ITEM)*work->list_param.num );
+
+      {
+        u16 i;
+        for( i=0; i<work->list_param.num; i++ )
+        {
+          {
+            work->list_param.item[i].no     = i;
+            work->list_param.item[i].str_id = i;
+            work->list_param.item[i].icon   = (i%3)?(MANUAL_LIST_ICON_NONE):(MANUAL_LIST_ICON_NEW);
+          }
+        }
+      }
+
+      work->list_param.head_pos    = work->param->head_pos;
+      work->list_param.cursor_pos  = work->param->cursor_pos;
+
+#else
+
       work->list_param.type = MANUAL_LIST_TYPE_TITLE;
 
       {
@@ -168,6 +199,9 @@ MANUAL_TITLE_WORK*  MANUAL_TITLE_Init(
 
       work->list_param.head_pos    = work->param->head_pos;
       work->list_param.cursor_pos  = work->param->cursor_pos;
+
+#endif
+
     }
 
     work->list_wk = MANUAL_LIST_Init( &work->list_param, cmn_wk );

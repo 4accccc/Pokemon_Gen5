@@ -450,9 +450,37 @@ static BOOL Manual_Top_InputAppTaskmenuWin( MANUAL_TOP_WORK* work )
       PMSND_PlaySE(MANUAL_SND_ATM_DECIDE);
       return TRUE;
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )  // 選択項目は2個しかないのでTrgでいい
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )  // 選択項目の多い画面と操作を合わせておきたいのでRepeatにした
     {
-      if( work->param->cursor_pos != ATM_WIN_ITEM_CATEGORY )
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
+      if( work->param->cursor_pos == ATM_WIN_ITEM_CATEGORY )
+      {
+        work->param->cursor_pos = ATM_WIN_ITEM_ALL;
+      }
+      else
+      {
+        work->param->cursor_pos = ATM_WIN_ITEM_CATEGORY;
+      }
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
+      PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+    }
+    else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )  // 選択項目の多い画面と操作を合わせておきたいのでRepeatにした
+    {
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
+      if( work->param->cursor_pos == ATM_WIN_ITEM_ALL )
+      {
+        work->param->cursor_pos = ATM_WIN_ITEM_CATEGORY;
+      }
+      else
+      {
+        work->param->cursor_pos = ATM_WIN_ITEM_ALL;
+      }
+      APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], TRUE );
+      PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
+    }
+    else if( GFL_UI_KEY_GetRepeat() & ( PAD_KEY_LEFT | PAD_BUTTON_L ) )
+    {
+      if( work->param->cursor_pos == ATM_WIN_ITEM_ALL )
       {
         APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
         work->param->cursor_pos = ATM_WIN_ITEM_CATEGORY;
@@ -460,9 +488,9 @@ static BOOL Manual_Top_InputAppTaskmenuWin( MANUAL_TOP_WORK* work )
         PMSND_PlaySE(MANUAL_SND_ATM_MOVE);
       }
     }
-    else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )  // 選択項目は2個しかないのでTrgでいい
+    else if( GFL_UI_KEY_GetRepeat() & ( PAD_KEY_RIGHT | PAD_BUTTON_R ) )
     {
-      if( work->param->cursor_pos != ATM_WIN_ITEM_ALL )
+      if( work->param->cursor_pos == ATM_WIN_ITEM_CATEGORY )
       {
         APP_TASKMENU_WIN_SetActive( work->atm_win_wk[work->param->cursor_pos], FALSE );
         work->param->cursor_pos = ATM_WIN_ITEM_ALL;
