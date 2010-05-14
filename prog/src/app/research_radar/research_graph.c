@@ -969,12 +969,12 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
 { 
   switch( GetStateSeq(work) ) {
   case 0:
-    SetupResearchData( work );                                 // 調査データを再セットアップ
-    ShowAnalyzeMessage( work ); //「…かいせきちゅう…」を表示
-    SetupMainCircleGraph( work, GRAPH_DISP_MODE_TODAY );       // 円グラフ作成
-    SetupMainCircleGraph( work, GRAPH_DISP_MODE_TOTAL );       // 円グラフ作成
-    CIRCLE_GRAPH_SetDrawEnable( GetMainGraph(work), TRUE );    // 円グラフ表示開始
-    CIRCLE_GRAPH_AnalyzeReq( GetMainGraph(work) );             // 円グラフ表示開始
+    SetupResearchData( work );                              // 調査データを再セットアップ
+    ShowAnalyzeMessage( work );                             //「…かいせきちゅう…」を表示
+    SetupMainCircleGraph( work, GRAPH_DISP_MODE_TODAY );    // 円グラフ作成
+    SetupMainCircleGraph( work, GRAPH_DISP_MODE_TOTAL );    // 円グラフ作成
+    CIRCLE_GRAPH_SetDrawEnable( GetMainGraph(work), TRUE ); // 円グラフ表示開始
+    CIRCLE_GRAPH_AnalyzeReq( GetMainGraph(work) );          // 円グラフ表示開始
 
     IncStateSeq( work );
     break;
@@ -1003,13 +1003,13 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
     // ボタンで解析
     else {
       SetMenuCursorPos( work, MENU_ITEM_ANSWER ); // カーソル位置を『回答』に合わせる
-      UpdateControlCursor( work ); // 左右カーソルを更新
-      UpdateTouchArea( work ); // タッチ範囲を更新
+      UpdateControlCursor( work );                // 左右カーソルを更新
+      UpdateTouchArea( work );                    // タッチ範囲を更新
     }
 
     // 表示を更新
-    ChangeAnswerToTop( work ); // 先頭の回答を表示
-    HideAnalyzeMessage( work ); //「…かいせきちゅう…」を消す
+    ChangeAnswerToTop( work );          // 先頭の回答を表示
+    HideAnalyzeMessage( work );         //「…かいせきちゅう…」を消す
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
     UpdateBGFont_Answer( work );        // 回答を更新する
     UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
