@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-05-13T20:31:28"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-05-14T13:03:16"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-05-12T18:20:22" source="out47_local_tex_sp.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-05-14T12:52:33" source="out47_local_tex_sp.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="109 109"
+	compress_material="on" material_size="110 110"
 	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 7.000000"/>
 
-<tex_image_array size="109">
+<tex_image_array size="110">
 	<tex_image index="0" name="art01a"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
@@ -4635,7 +4635,25 @@
 			1111 1201 1111 1111 1111 1201 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="93" name="pc_kabe01"
+	<tex_image index="93" name="out_dust01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="out_dust01_pl"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/out_dust01.tga"
+	>
+		<bitmap size="64">
+			1234 0000 0000 4321 2343 0001 1000 3432
+			3432 0012 2100 2343 4321 0123 3210 1234
+			3210 1234 4321 0123 2100 2343 3432 0012
+			1000 3432 2343 0001 0000 4321 1234 0000
+			0000 4321 1234 0000 1000 3432 2343 0001
+			2100 2343 3432 0012 3210 1234 4321 0123
+			4321 0123 3210 1234 3432 0012 2100 2343
+			2343 0001 1000 3432 1234 0000 0000 4321
+		</bitmap>
+	</tex_image>
+	<tex_image index="94" name="pc_kabe01"
 		width="8" height="32" original_width="8" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -4653,7 +4671,7 @@
 			6555 aa66 6666 aa66 0000 aa00 0000 aa00
 		</bitmap>
 	</tex_image>
-	<tex_image index="94" name="pc_kabe02"
+	<tex_image index="95" name="pc_kabe02"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -4695,7 +4713,7 @@
 			9a99 99dd 9999 9999 9999 9999 dd99 99a9
 		</bitmap>
 	</tex_image>
-	<tex_image index="95" name="pc_kabe1"
+	<tex_image index="96" name="pc_kabe1"
 		width="8" height="16" original_width="8" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -4709,7 +4727,7 @@
 			bdb6 33db 8dbe 33d8 ddb7 33dd ddb3 33dd
 		</bitmap>
 	</tex_image>
-	<tex_image index="96" name="pc_logo"
+	<tex_image index="97" name="pc_logo"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -4727,7 +4745,7 @@
 			0000 4300 0034 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="97" name="pc_win1"
+	<tex_image index="98" name="pc_win1"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a3i5"
 		palette_name="pcwin"
@@ -4800,7 +4818,7 @@
 			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="98" name="sea_gake02"
+	<tex_image index="99" name="sea_gake02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -4818,7 +4836,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="99" name="sea_mizu1"
+	<tex_image index="100" name="sea_mizu1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -4844,7 +4862,7 @@
 			9698 a554 9698 a554 2600 9955 2600 9955
 		</bitmap>
 	</tex_image>
-	<tex_image index="100" name="siba01"
+	<tex_image index="101" name="siba01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -4870,7 +4888,7 @@
 			bdff fffa feea ffff fffc bebb bfaa febb
 		</bitmap>
 	</tex_image>
-	<tex_image index="101" name="sign02a"
+	<tex_image index="102" name="sign02a"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -4912,7 +4930,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="102" name="sign03a"
+	<tex_image index="103" name="sign03a"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -4954,7 +4972,7 @@
 			2222 2222 2222 2222 0111 1001 0111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="103" name="tex001"
+	<tex_image index="104" name="tex001"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -4996,7 +5014,7 @@
 			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="104" name="tex002"
+	<tex_image index="105" name="tex002"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -5022,7 +5040,7 @@
 			7777 7777 7777 7777 0000 0000 1000 2211
 		</bitmap>
 	</tex_image>
-	<tex_image index="105" name="tg01c"
+	<tex_image index="106" name="tg01c"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -5040,7 +5058,7 @@
 			8888 7888 7787 6988 8868 7888 8887 4588
 		</bitmap>
 	</tex_image>
-	<tex_image index="106" name="tree_kage"
+	<tex_image index="107" name="tree_kage"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="tree_kage_pl"
@@ -5113,7 +5131,7 @@
 			0101 2121 0101 0101 0101 0101 0101 0101
 		</bitmap>
 	</tex_image>
-	<tex_image index="107" name="white"
+	<tex_image index="108" name="white"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -5124,7 +5142,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="108" name="white_gra"
+	<tex_image index="109" name="white_gra"
 		width="8" height="16" original_width="8" original_height="16"
 		format="a5i3"
 		palette_name="white_gra"
@@ -5143,7 +5161,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="109">
+<tex_palette_array size="110">
 	<tex_palette index="0" name="art01a_pl" color_size="16">
 		19b3 2a36 530f 1d8f 6ee4 5f0b 5774 4f32
 		4312 4b99 36f5 3b38 2ef7 22da 0e9d 2a37
@@ -5470,68 +5488,71 @@
 	<tex_palette index="91" name="m_whouse01_10_pl" color_size="8">
 		254a 2d8c 35ce 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="92" name="pc_kabe01_pl" color_size="16">
+	<tex_palette index="92" name="out_dust01_pl" color_size="8">
+		2108 2529 35ad 3def 4e73 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="93" name="pc_kabe01_pl" color_size="16">
 		20e7 65a9 7a4a 6f59 7b10 2fbf 22ba 0d3d
 		115e 157f 00b8 08fb 0d1c 0056 1d1b 7fff
 	</tex_palette>
-	<tex_palette index="93" name="pc_kabe02_pl" color_size="16">
+	<tex_palette index="94" name="pc_kabe02_pl" color_size="16">
 		20e7 66d6 735a 3dce 7bbd 28a0 3d23 19ff
 		157f 00b8 08fb 113d 155e 0056 7fff 1084
 	</tex_palette>
-	<tex_palette index="94" name="pckabe1" color_size="16">
+	<tex_palette index="95" name="pckabe1" color_size="16">
 		14b3 62b5 3dce 18a5 3927 55ec 7a4a 2fbf
 		1d1a 213c 255e 297f 39ff 14d7 7fff 7fff
 	</tex_palette>
-	<tex_palette index="95" name="pclogo" color_size="16">
+	<tex_palette index="96" name="pclogo" color_size="16">
 		0000 55c4 6689 6eef 7332 7b55 7fb9 7fdd
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="96" name="pcwin" color_size="16">
+	<tex_palette index="97" name="pcwin" color_size="16">
 		4148 1c83 28c4 55a3 6e8a 5e05 72cc 7312
 		6668 7777 7bbb 6f34 66cd 4e73 3def 7fff
 	</tex_palette>
-	<tex_palette index="97" name="sea_gake02_pl" color_size="16">
+	<tex_palette index="98" name="sea_gake02_pl" color_size="16">
 		7c1f 6f36 7bdd 6af4 6ad2 628e 779a 6739
 		4a95 4e95 5f19 6b5b 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="98" name="sea_mizu1_pl" color_size="4">
+	<tex_palette index="99" name="sea_mizu1_pl" color_size="4">
 		69c3 5d82 61a3 7fff
 	</tex_palette>
-	<tex_palette index="99" name="siba01_pl" color_size="4">
+	<tex_palette index="100" name="siba01_pl" color_size="4">
 		12ad 0e6c 0e2b 126d
 	</tex_palette>
-	<tex_palette index="100" name="sign02a_pl" color_size="16">
+	<tex_palette index="101" name="sign02a_pl" color_size="16">
 		4500 4a52 4d82 5d60 5ef7 6624 79c0 7e46
 		7ec8 7f31 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="101" name="sign03a_pl" color_size="8">
+	<tex_palette index="102" name="sign03a_pl" color_size="8">
 		3def 4210 4e73 5ef7 6b5a 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="102" name="t2_buil2_b" color_size="8">
+	<tex_palette index="103" name="t2_buil2_b" color_size="8">
 		3da8 316d 20c8 2509 41f0 2509 10a6 7fff
 	</tex_palette>
-	<tex_palette index="103" name="tex001_pl" color_size="8">
+	<tex_palette index="104" name="tex001_pl" color_size="8">
 		7c1f 4631 56b5 6b5a 4e73 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="104" name="tex002_pl" color_size="8">
+	<tex_palette index="105" name="tex002_pl" color_size="8">
 		0000 18c6 294a 35ad 4631 4e73 56b5 6b5a
 	</tex_palette>
-	<tex_palette index="105" name="tg01c_pl" color_size="16">
+	<tex_palette index="106" name="tg01c_pl" color_size="16">
 		012e 0972 0dd5 1639 4e71 6316 6b57 6f77
 		77ba 7bfe 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="106" name="tree_kage_pl" color_size="8">
+	<tex_palette index="107" name="tree_kage_pl" color_size="8">
 		1001 1461 1c29 244c 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="107" name="white_gra" color_size="8">
+	<tex_palette index="108" name="white_gra" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="108" name="white_pl" color_size="4">
+	<tex_palette index="109" name="white_pl" color_size="4">
 		7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="109">
+<material_array size="110">
 	<material index="0" name="art01a"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -7325,7 +7346,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="74" tex_palette_idx="102"
+		tex_image_idx="74" tex_palette_idx="103"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -7764,7 +7785,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="93" name="pc_kabe01"
+	<material index="93" name="out_dust01"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7788,7 +7809,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="94" name="pc_kabe03"
+	<material index="94" name="pc_kabe01"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7812,7 +7833,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="95" name="pc_kabe1"
+	<material index="95" name="pc_kabe03"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7836,7 +7857,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="96" name="pc_logo"
+	<material index="96" name="pc_kabe1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7860,7 +7881,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="97" name="pc_win1"
+	<material index="97" name="pc_logo"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7884,7 +7905,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="98" name="sea_gake02"
+	<material index="98" name="pc_win1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7908,7 +7929,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="99" name="sea_mizu1"
+	<material index="99" name="sea_gake02"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7932,7 +7953,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="100" name="siba01"
+	<material index="100" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7956,7 +7977,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="101" name="sign02a"
+	<material index="101" name="siba01"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7980,7 +8001,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="102" name="sign03a"
+	<material index="102" name="sign02a"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8004,7 +8025,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="103" name="tex001"
+	<material index="103" name="sign03a"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8021,14 +8042,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="103" tex_palette_idx="103"
+		tex_image_idx="103" tex_palette_idx="102"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="104" name="tex003"
+	<material index="104" name="tex001"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8052,7 +8073,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="105" name="tg01c"
+	<material index="105" name="tex003"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8076,7 +8097,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="106" name="tree_kage"
+	<material index="106" name="tg01c"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8100,7 +8121,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="107" name="white"
+	<material index="107" name="tree_kage"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8117,14 +8138,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="107" tex_palette_idx="108"
+		tex_image_idx="107" tex_palette_idx="107"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="108" name="white_gra"
+	<material index="108" name="white"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -8141,7 +8162,31 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="108" tex_palette_idx="107"
+		tex_image_idx="108" tex_palette_idx="109"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="109" name="white_gra"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="109" tex_palette_idx="108"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -8154,7 +8199,7 @@
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="109">
+<polygon_array size="110">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -10680,12 +10725,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.250000 0.000000 5.750000"/>
-					<tex st="8.000000 32.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="2.750000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="2.750000 5.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.250000 0.000000"/>
@@ -10710,9 +10755,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.750000 0.000000 5.750000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="8.000000 32.000000"/>
 					<pos_xy xy="3.250000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
 					<pos_xz xz="3.250000 5.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.750000 0.000000"/>
@@ -10734,12 +10779,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.250000 0.000000 5.750000"/>
-					<tex st="8.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="3.750000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="3.750000 5.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="3.250000 0.000000"/>
@@ -10764,9 +10809,9 @@
 					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-0.250000 0.000000 6.250000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="8.000000 16.000000"/>
 					<pos_xy xy="0.250000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
 					<pos_xz xz="0.250000 5.750000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-0.250000 0.000000"/>
@@ -10788,10 +10833,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.250000 0.000000 6.250000"/>
-					<tex st="16.000000 64.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="0.750000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="0.750000 5.750000"/>
@@ -10815,10 +10860,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 64.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.750000 0.000000 6.250000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="16.000000 64.000000"/>
 					<pos_xy xy="1.250000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="1.250000 5.750000"/>
@@ -10842,12 +10887,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.250000 0.000000 6.250000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="1.750000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="1.750000 5.750000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.250000 0.000000"/>
@@ -10980,9 +11025,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-0.250000 0.000000 6.750000"/>
-					<tex st="16.000000 32.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="0.250000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="0.250000 6.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-0.250000 0.000000"/>
@@ -11004,10 +11049,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.250000 0.000000 6.750000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="16.000000 32.000000"/>
 					<pos_xy xy="0.750000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="0.750000 6.250000"/>
@@ -11031,12 +11076,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.750000 0.000000 6.750000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="1.250000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="1.250000 6.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="0.750000 0.000000"/>
@@ -11058,12 +11103,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.250000 0.000000 6.750000"/>
-					<tex st="8.000000 8.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="1.750000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="1.750000 6.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.250000 0.000000"/>
@@ -11085,15 +11130,42 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 8.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.750000 0.000000 6.750000"/>
-					<tex st="8.000000 16.000000"/>
+					<tex st="8.000000 8.000000"/>
 					<pos_xy xy="2.250000 0.000000"/>
 					<tex st="8.000000 0.000000"/>
 					<pos_xz xz="2.250000 6.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.750000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="109" name="polygon109"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="2.250000 0.000000 6.250000"
+		volume_max="2.750000 0.000000 6.750000"
+		volume_r="7.288574"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="2.250000 0.000000 6.750000"/>
+					<tex st="8.000000 16.000000"/>
+					<pos_xy xy="2.750000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="2.750000 6.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="2.250000 0.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -11112,9 +11184,9 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="109"
-		vertex_size="436" polygon_size="109"
-		triangle_size="0" quad_size="109"
+		display_size="110"
+		vertex_size="440" polygon_size="110"
+		triangle_size="0" quad_size="110"
 		volume_min="-0.250000 0.000000 -0.250000"
 		volume_max="3.750000 0.000000 6.750000"
 		volume_r="7.288574"
@@ -11228,457 +11300,462 @@
 		<display index="106" material="106" polygon="106" priority="0"/>
 		<display index="107" material="107" polygon="107" priority="0"/>
 		<display index="108" material="108" polygon="108" priority="0"/>
+		<display index="109" material="109" polygon="109" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="436" polygon_size="109"
-	triangle_size="0" quad_size="109"/>
+<output_info vertex_size="440" polygon_size="110"
+	triangle_size="0" quad_size="110"/>
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="109">
-		<ex_tex_image index="0" disp_pos="-6480.000000 300.000000"/>
-		<ex_tex_image index="1" disp_pos="-6360.000000 300.000000"/>
-		<ex_tex_image index="2" disp_pos="-6240.000000 300.000000"/>
-		<ex_tex_image index="3" disp_pos="-6120.000000 300.000000"/>
-		<ex_tex_image index="4" disp_pos="-6000.000000 300.000000"/>
-		<ex_tex_image index="5" disp_pos="-5880.000000 300.000000"/>
-		<ex_tex_image index="6" disp_pos="-5760.000000 300.000000"/>
-		<ex_tex_image index="7" disp_pos="-5640.000000 300.000000"/>
-		<ex_tex_image index="8" disp_pos="-5520.000000 300.000000"/>
-		<ex_tex_image index="9" disp_pos="-5400.000000 300.000000"/>
-		<ex_tex_image index="10" disp_pos="-5280.000000 300.000000"/>
-		<ex_tex_image index="11" disp_pos="-5160.000000 300.000000"/>
-		<ex_tex_image index="12" disp_pos="-5040.000000 300.000000"/>
-		<ex_tex_image index="13" disp_pos="-4920.000000 300.000000"/>
-		<ex_tex_image index="14" disp_pos="-4800.000000 300.000000"/>
-		<ex_tex_image index="15" disp_pos="-4680.000000 300.000000"/>
-		<ex_tex_image index="16" disp_pos="-4560.000000 300.000000"/>
-		<ex_tex_image index="17" disp_pos="-4440.000000 300.000000"/>
-		<ex_tex_image index="18" disp_pos="-4320.000000 300.000000"/>
-		<ex_tex_image index="19" disp_pos="-4200.000000 300.000000"/>
-		<ex_tex_image index="20" disp_pos="-4080.000000 300.000000"/>
-		<ex_tex_image index="21" disp_pos="-3960.000000 300.000000"/>
-		<ex_tex_image index="22" disp_pos="-3840.000000 300.000000"/>
-		<ex_tex_image index="23" disp_pos="-3720.000000 300.000000"/>
-		<ex_tex_image index="24" disp_pos="-3600.000000 300.000000"/>
-		<ex_tex_image index="25" disp_pos="-3480.000000 300.000000"/>
-		<ex_tex_image index="26" disp_pos="-3360.000000 300.000000"/>
-		<ex_tex_image index="27" disp_pos="-3240.000000 300.000000"/>
-		<ex_tex_image index="28" disp_pos="-3120.000000 300.000000"/>
-		<ex_tex_image index="29" disp_pos="-3000.000000 300.000000"/>
-		<ex_tex_image index="30" disp_pos="-2880.000000 300.000000"/>
-		<ex_tex_image index="31" disp_pos="-2640.000000 300.000000"/>
-		<ex_tex_image index="32" disp_pos="-2520.000000 300.000000"/>
-		<ex_tex_image index="33" disp_pos="-2400.000000 300.000000"/>
-		<ex_tex_image index="34" disp_pos="-2280.000000 300.000000"/>
-		<ex_tex_image index="35" disp_pos="-2760.000000 300.000000"/>
-		<ex_tex_image index="36" disp_pos="-2160.000000 300.000000"/>
-		<ex_tex_image index="37" disp_pos="-2040.000000 300.000000"/>
-		<ex_tex_image index="38" disp_pos="-1920.000000 300.000000"/>
-		<ex_tex_image index="39" disp_pos="-1800.000000 300.000000"/>
-		<ex_tex_image index="40" disp_pos="-1680.000000 300.000000"/>
-		<ex_tex_image index="41" disp_pos="-1560.000000 300.000000"/>
-		<ex_tex_image index="42" disp_pos="-1440.000000 300.000000"/>
-		<ex_tex_image index="43" disp_pos="-1320.000000 300.000000"/>
-		<ex_tex_image index="44" disp_pos="-1200.000000 300.000000"/>
-		<ex_tex_image index="45" disp_pos="-1080.000000 300.000000"/>
-		<ex_tex_image index="46" disp_pos="-960.000000 300.000000"/>
-		<ex_tex_image index="47" disp_pos="-840.000000 300.000000"/>
-		<ex_tex_image index="48" disp_pos="-720.000000 300.000000"/>
-		<ex_tex_image index="49" disp_pos="-600.000000 300.000000"/>
-		<ex_tex_image index="50" disp_pos="-480.000000 300.000000"/>
-		<ex_tex_image index="51" disp_pos="-360.000000 300.000000"/>
-		<ex_tex_image index="52" disp_pos="-240.000000 300.000000"/>
-		<ex_tex_image index="53" disp_pos="-120.000000 300.000000"/>
-		<ex_tex_image index="54" disp_pos="0.000000 300.000000"/>
-		<ex_tex_image index="55" disp_pos="120.000000 300.000000"/>
-		<ex_tex_image index="56" disp_pos="240.000000 300.000000"/>
-		<ex_tex_image index="57" disp_pos="360.000000 300.000000"/>
-		<ex_tex_image index="58" disp_pos="480.000000 300.000000"/>
-		<ex_tex_image index="59" disp_pos="600.000000 300.000000"/>
-		<ex_tex_image index="60" disp_pos="720.000000 300.000000"/>
-		<ex_tex_image index="61" disp_pos="840.000000 300.000000"/>
-		<ex_tex_image index="62" disp_pos="960.000000 300.000000"/>
+	<ex_tex_image_array size="110">
+		<ex_tex_image index="0" disp_pos="-6540.000000 300.000000"/>
+		<ex_tex_image index="1" disp_pos="-6420.000000 300.000000"/>
+		<ex_tex_image index="2" disp_pos="-6300.000000 300.000000"/>
+		<ex_tex_image index="3" disp_pos="-6180.000000 300.000000"/>
+		<ex_tex_image index="4" disp_pos="-6060.000000 300.000000"/>
+		<ex_tex_image index="5" disp_pos="-5940.000000 300.000000"/>
+		<ex_tex_image index="6" disp_pos="-5820.000000 300.000000"/>
+		<ex_tex_image index="7" disp_pos="-5700.000000 300.000000"/>
+		<ex_tex_image index="8" disp_pos="-5580.000000 300.000000"/>
+		<ex_tex_image index="9" disp_pos="-5460.000000 300.000000"/>
+		<ex_tex_image index="10" disp_pos="-5340.000000 300.000000"/>
+		<ex_tex_image index="11" disp_pos="-5220.000000 300.000000"/>
+		<ex_tex_image index="12" disp_pos="-5100.000000 300.000000"/>
+		<ex_tex_image index="13" disp_pos="-4980.000000 300.000000"/>
+		<ex_tex_image index="14" disp_pos="-4860.000000 300.000000"/>
+		<ex_tex_image index="15" disp_pos="-4740.000000 300.000000"/>
+		<ex_tex_image index="16" disp_pos="-4620.000000 300.000000"/>
+		<ex_tex_image index="17" disp_pos="-4500.000000 300.000000"/>
+		<ex_tex_image index="18" disp_pos="-4380.000000 300.000000"/>
+		<ex_tex_image index="19" disp_pos="-4260.000000 300.000000"/>
+		<ex_tex_image index="20" disp_pos="-4140.000000 300.000000"/>
+		<ex_tex_image index="21" disp_pos="-4020.000000 300.000000"/>
+		<ex_tex_image index="22" disp_pos="-3900.000000 300.000000"/>
+		<ex_tex_image index="23" disp_pos="-3780.000000 300.000000"/>
+		<ex_tex_image index="24" disp_pos="-3660.000000 300.000000"/>
+		<ex_tex_image index="25" disp_pos="-3540.000000 300.000000"/>
+		<ex_tex_image index="26" disp_pos="-3420.000000 300.000000"/>
+		<ex_tex_image index="27" disp_pos="-3300.000000 300.000000"/>
+		<ex_tex_image index="28" disp_pos="-3180.000000 300.000000"/>
+		<ex_tex_image index="29" disp_pos="-3060.000000 300.000000"/>
+		<ex_tex_image index="30" disp_pos="-2940.000000 300.000000"/>
+		<ex_tex_image index="31" disp_pos="-2700.000000 300.000000"/>
+		<ex_tex_image index="32" disp_pos="-2580.000000 300.000000"/>
+		<ex_tex_image index="33" disp_pos="-2460.000000 300.000000"/>
+		<ex_tex_image index="34" disp_pos="-2340.000000 300.000000"/>
+		<ex_tex_image index="35" disp_pos="-2820.000000 300.000000"/>
+		<ex_tex_image index="36" disp_pos="-2220.000000 300.000000"/>
+		<ex_tex_image index="37" disp_pos="-2100.000000 300.000000"/>
+		<ex_tex_image index="38" disp_pos="-1980.000000 300.000000"/>
+		<ex_tex_image index="39" disp_pos="-1860.000000 300.000000"/>
+		<ex_tex_image index="40" disp_pos="-1740.000000 300.000000"/>
+		<ex_tex_image index="41" disp_pos="-1620.000000 300.000000"/>
+		<ex_tex_image index="42" disp_pos="-1500.000000 300.000000"/>
+		<ex_tex_image index="43" disp_pos="-1380.000000 300.000000"/>
+		<ex_tex_image index="44" disp_pos="-1260.000000 300.000000"/>
+		<ex_tex_image index="45" disp_pos="-1140.000000 300.000000"/>
+		<ex_tex_image index="46" disp_pos="-1020.000000 300.000000"/>
+		<ex_tex_image index="47" disp_pos="-900.000000 300.000000"/>
+		<ex_tex_image index="48" disp_pos="-780.000000 300.000000"/>
+		<ex_tex_image index="49" disp_pos="-660.000000 300.000000"/>
+		<ex_tex_image index="50" disp_pos="-540.000000 300.000000"/>
+		<ex_tex_image index="51" disp_pos="-420.000000 300.000000"/>
+		<ex_tex_image index="52" disp_pos="-300.000000 300.000000"/>
+		<ex_tex_image index="53" disp_pos="-180.000000 300.000000"/>
+		<ex_tex_image index="54" disp_pos="-60.000000 300.000000"/>
+		<ex_tex_image index="55" disp_pos="60.000000 300.000000"/>
+		<ex_tex_image index="56" disp_pos="180.000000 300.000000"/>
+		<ex_tex_image index="57" disp_pos="300.000000 300.000000"/>
+		<ex_tex_image index="58" disp_pos="420.000000 300.000000"/>
+		<ex_tex_image index="59" disp_pos="540.000000 300.000000"/>
+		<ex_tex_image index="60" disp_pos="660.000000 300.000000"/>
+		<ex_tex_image index="61" disp_pos="780.000000 300.000000"/>
+		<ex_tex_image index="62" disp_pos="900.000000 300.000000"/>
 		<ex_tex_image index="63" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="64" disp_pos="1200.000000 300.000000"/>
-		<ex_tex_image index="65" disp_pos="1320.000000 300.000000"/>
-		<ex_tex_image index="66" disp_pos="1440.000000 300.000000"/>
-		<ex_tex_image index="67" disp_pos="1560.000000 300.000000"/>
-		<ex_tex_image index="68" disp_pos="1680.000000 300.000000"/>
-		<ex_tex_image index="69" disp_pos="1800.000000 300.000000"/>
-		<ex_tex_image index="70" disp_pos="1920.000000 300.000000"/>
-		<ex_tex_image index="71" disp_pos="2040.000000 300.000000"/>
-		<ex_tex_image index="72" disp_pos="2160.000000 300.000000"/>
-		<ex_tex_image index="73" disp_pos="2280.000000 300.000000"/>
-		<ex_tex_image index="74" disp_pos="2400.000000 300.000000"/>
-		<ex_tex_image index="75" disp_pos="2520.000000 300.000000"/>
-		<ex_tex_image index="76" disp_pos="2640.000000 300.000000"/>
-		<ex_tex_image index="77" disp_pos="2760.000000 300.000000"/>
-		<ex_tex_image index="78" disp_pos="2880.000000 300.000000"/>
-		<ex_tex_image index="79" disp_pos="3000.000000 300.000000"/>
-		<ex_tex_image index="80" disp_pos="3120.000000 300.000000"/>
-		<ex_tex_image index="81" disp_pos="3240.000000 300.000000"/>
-		<ex_tex_image index="82" disp_pos="3360.000000 300.000000"/>
-		<ex_tex_image index="83" disp_pos="3480.000000 300.000000"/>
-		<ex_tex_image index="84" disp_pos="3600.000000 300.000000"/>
-		<ex_tex_image index="85" disp_pos="3720.000000 300.000000"/>
-		<ex_tex_image index="86" disp_pos="3840.000000 300.000000"/>
-		<ex_tex_image index="87" disp_pos="3960.000000 300.000000"/>
-		<ex_tex_image index="88" disp_pos="4080.000000 300.000000"/>
-		<ex_tex_image index="89" disp_pos="4200.000000 300.000000"/>
-		<ex_tex_image index="90" disp_pos="4320.000000 300.000000"/>
-		<ex_tex_image index="91" disp_pos="4440.000000 300.000000"/>
-		<ex_tex_image index="92" disp_pos="4560.000000 300.000000"/>
-		<ex_tex_image index="93" disp_pos="4680.000000 300.000000"/>
-		<ex_tex_image index="94" disp_pos="4800.000000 300.000000"/>
-		<ex_tex_image index="95" disp_pos="4920.000000 300.000000"/>
-		<ex_tex_image index="96" disp_pos="5040.000000 300.000000"/>
-		<ex_tex_image index="97" disp_pos="5160.000000 300.000000"/>
-		<ex_tex_image index="98" disp_pos="5280.000000 300.000000"/>
-		<ex_tex_image index="99" disp_pos="5400.000000 300.000000"/>
-		<ex_tex_image index="100" disp_pos="5520.000000 300.000000"/>
-		<ex_tex_image index="101" disp_pos="5640.000000 300.000000"/>
-		<ex_tex_image index="102" disp_pos="5760.000000 300.000000"/>
-		<ex_tex_image index="103" disp_pos="5880.000000 300.000000"/>
-		<ex_tex_image index="104" disp_pos="6000.000000 300.000000"/>
-		<ex_tex_image index="105" disp_pos="6120.000000 300.000000"/>
-		<ex_tex_image index="106" disp_pos="6240.000000 300.000000"/>
-		<ex_tex_image index="107" disp_pos="6360.000000 300.000000"/>
-		<ex_tex_image index="108" disp_pos="6480.000000 300.000000"/>
+		<ex_tex_image index="64" disp_pos="1140.000000 300.000000"/>
+		<ex_tex_image index="65" disp_pos="1260.000000 300.000000"/>
+		<ex_tex_image index="66" disp_pos="1380.000000 300.000000"/>
+		<ex_tex_image index="67" disp_pos="1500.000000 300.000000"/>
+		<ex_tex_image index="68" disp_pos="1620.000000 300.000000"/>
+		<ex_tex_image index="69" disp_pos="1740.000000 300.000000"/>
+		<ex_tex_image index="70" disp_pos="1860.000000 300.000000"/>
+		<ex_tex_image index="71" disp_pos="1980.000000 300.000000"/>
+		<ex_tex_image index="72" disp_pos="2100.000000 300.000000"/>
+		<ex_tex_image index="73" disp_pos="2220.000000 300.000000"/>
+		<ex_tex_image index="74" disp_pos="2340.000000 300.000000"/>
+		<ex_tex_image index="75" disp_pos="2460.000000 300.000000"/>
+		<ex_tex_image index="76" disp_pos="2580.000000 300.000000"/>
+		<ex_tex_image index="77" disp_pos="2700.000000 300.000000"/>
+		<ex_tex_image index="78" disp_pos="2820.000000 300.000000"/>
+		<ex_tex_image index="79" disp_pos="2940.000000 300.000000"/>
+		<ex_tex_image index="80" disp_pos="3060.000000 300.000000"/>
+		<ex_tex_image index="81" disp_pos="3180.000000 300.000000"/>
+		<ex_tex_image index="82" disp_pos="3300.000000 300.000000"/>
+		<ex_tex_image index="83" disp_pos="3420.000000 300.000000"/>
+		<ex_tex_image index="84" disp_pos="3540.000000 300.000000"/>
+		<ex_tex_image index="85" disp_pos="3660.000000 300.000000"/>
+		<ex_tex_image index="86" disp_pos="3780.000000 300.000000"/>
+		<ex_tex_image index="87" disp_pos="3900.000000 300.000000"/>
+		<ex_tex_image index="88" disp_pos="4020.000000 300.000000"/>
+		<ex_tex_image index="89" disp_pos="4140.000000 300.000000"/>
+		<ex_tex_image index="90" disp_pos="4260.000000 300.000000"/>
+		<ex_tex_image index="91" disp_pos="4380.000000 300.000000"/>
+		<ex_tex_image index="92" disp_pos="4500.000000 300.000000"/>
+		<ex_tex_image index="93" disp_pos="4620.000000 300.000000"/>
+		<ex_tex_image index="94" disp_pos="4740.000000 300.000000"/>
+		<ex_tex_image index="95" disp_pos="4860.000000 300.000000"/>
+		<ex_tex_image index="96" disp_pos="4980.000000 300.000000"/>
+		<ex_tex_image index="97" disp_pos="5100.000000 300.000000"/>
+		<ex_tex_image index="98" disp_pos="5220.000000 300.000000"/>
+		<ex_tex_image index="99" disp_pos="5340.000000 300.000000"/>
+		<ex_tex_image index="100" disp_pos="5460.000000 300.000000"/>
+		<ex_tex_image index="101" disp_pos="5580.000000 300.000000"/>
+		<ex_tex_image index="102" disp_pos="5700.000000 300.000000"/>
+		<ex_tex_image index="103" disp_pos="5820.000000 300.000000"/>
+		<ex_tex_image index="104" disp_pos="5940.000000 300.000000"/>
+		<ex_tex_image index="105" disp_pos="6060.000000 300.000000"/>
+		<ex_tex_image index="106" disp_pos="6180.000000 300.000000"/>
+		<ex_tex_image index="107" disp_pos="6300.000000 300.000000"/>
+		<ex_tex_image index="108" disp_pos="6420.000000 300.000000"/>
+		<ex_tex_image index="109" disp_pos="6540.000000 300.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="109">
-		<ex_tex_palette index="0" disp_pos="-6480.000000 360.000000"/>
-		<ex_tex_palette index="1" disp_pos="-6360.000000 360.000000"/>
-		<ex_tex_palette index="2" disp_pos="-4800.000000 360.000000"/>
-		<ex_tex_palette index="3" disp_pos="-6240.000000 360.000000"/>
-		<ex_tex_palette index="4" disp_pos="-6120.000000 360.000000"/>
-		<ex_tex_palette index="5" disp_pos="2040.000000 360.000000"/>
-		<ex_tex_palette index="6" disp_pos="-6000.000000 360.000000"/>
-		<ex_tex_palette index="7" disp_pos="-5880.000000 360.000000"/>
-		<ex_tex_palette index="8" disp_pos="-5760.000000 360.000000"/>
-		<ex_tex_palette index="9" disp_pos="-5640.000000 360.000000"/>
-		<ex_tex_palette index="10" disp_pos="-5520.000000 360.000000"/>
-		<ex_tex_palette index="11" disp_pos="-5400.000000 360.000000"/>
-		<ex_tex_palette index="12" disp_pos="1920.000000 360.000000"/>
-		<ex_tex_palette index="13" disp_pos="-5160.000000 360.000000"/>
-		<ex_tex_palette index="14" disp_pos="-5280.000000 360.000000"/>
-		<ex_tex_palette index="15" disp_pos="-5040.000000 360.000000"/>
-		<ex_tex_palette index="16" disp_pos="-4920.000000 360.000000"/>
-		<ex_tex_palette index="17" disp_pos="-4680.000000 360.000000"/>
-		<ex_tex_palette index="18" disp_pos="-4560.000000 360.000000"/>
-		<ex_tex_palette index="19" disp_pos="-4440.000000 360.000000"/>
-		<ex_tex_palette index="20" disp_pos="-4320.000000 360.000000"/>
-		<ex_tex_palette index="21" disp_pos="-4200.000000 360.000000"/>
-		<ex_tex_palette index="22" disp_pos="-4080.000000 360.000000"/>
-		<ex_tex_palette index="23" disp_pos="2280.000000 360.000000"/>
-		<ex_tex_palette index="24" disp_pos="-3840.000000 360.000000"/>
-		<ex_tex_palette index="25" disp_pos="-3720.000000 360.000000"/>
-		<ex_tex_palette index="26" disp_pos="-3600.000000 360.000000"/>
-		<ex_tex_palette index="27" disp_pos="-3480.000000 360.000000"/>
-		<ex_tex_palette index="28" disp_pos="-3360.000000 360.000000"/>
-		<ex_tex_palette index="29" disp_pos="-3240.000000 360.000000"/>
-		<ex_tex_palette index="30" disp_pos="-3120.000000 360.000000"/>
-		<ex_tex_palette index="31" disp_pos="-3000.000000 360.000000"/>
-		<ex_tex_palette index="32" disp_pos="-2880.000000 360.000000"/>
-		<ex_tex_palette index="33" disp_pos="-3960.000000 360.000000"/>
-		<ex_tex_palette index="34" disp_pos="-2640.000000 360.000000"/>
-		<ex_tex_palette index="35" disp_pos="-2520.000000 360.000000"/>
-		<ex_tex_palette index="36" disp_pos="-2400.000000 360.000000"/>
-		<ex_tex_palette index="37" disp_pos="-2280.000000 360.000000"/>
-		<ex_tex_palette index="38" disp_pos="-2760.000000 360.000000"/>
-		<ex_tex_palette index="39" disp_pos="-2160.000000 360.000000"/>
-		<ex_tex_palette index="40" disp_pos="-2040.000000 360.000000"/>
-		<ex_tex_palette index="41" disp_pos="-1920.000000 360.000000"/>
-		<ex_tex_palette index="42" disp_pos="-1680.000000 360.000000"/>
-		<ex_tex_palette index="43" disp_pos="-1800.000000 360.000000"/>
-		<ex_tex_palette index="44" disp_pos="-1560.000000 360.000000"/>
-		<ex_tex_palette index="45" disp_pos="-1440.000000 360.000000"/>
-		<ex_tex_palette index="46" disp_pos="-1320.000000 360.000000"/>
-		<ex_tex_palette index="47" disp_pos="-1080.000000 360.000000"/>
-		<ex_tex_palette index="48" disp_pos="-1200.000000 360.000000"/>
-		<ex_tex_palette index="49" disp_pos="-840.000000 360.000000"/>
-		<ex_tex_palette index="50" disp_pos="-960.000000 360.000000"/>
-		<ex_tex_palette index="51" disp_pos="-720.000000 360.000000"/>
-		<ex_tex_palette index="52" disp_pos="-600.000000 360.000000"/>
-		<ex_tex_palette index="53" disp_pos="-480.000000 360.000000"/>
-		<ex_tex_palette index="54" disp_pos="-360.000000 360.000000"/>
-		<ex_tex_palette index="55" disp_pos="-240.000000 360.000000"/>
-		<ex_tex_palette index="56" disp_pos="-120.000000 360.000000"/>
-		<ex_tex_palette index="57" disp_pos="0.000000 360.000000"/>
-		<ex_tex_palette index="58" disp_pos="240.000000 360.000000"/>
-		<ex_tex_palette index="59" disp_pos="360.000000 360.000000"/>
-		<ex_tex_palette index="60" disp_pos="120.000000 360.000000"/>
-		<ex_tex_palette index="61" disp_pos="480.000000 360.000000"/>
-		<ex_tex_palette index="62" disp_pos="720.000000 360.000000"/>
-		<ex_tex_palette index="63" disp_pos="600.000000 360.000000"/>
-		<ex_tex_palette index="64" disp_pos="840.000000 360.000000"/>
-		<ex_tex_palette index="65" disp_pos="960.000000 360.000000"/>
+	<ex_tex_palette_array size="110">
+		<ex_tex_palette index="0" disp_pos="-6540.000000 360.000000"/>
+		<ex_tex_palette index="1" disp_pos="-6420.000000 360.000000"/>
+		<ex_tex_palette index="2" disp_pos="-4860.000000 360.000000"/>
+		<ex_tex_palette index="3" disp_pos="-6300.000000 360.000000"/>
+		<ex_tex_palette index="4" disp_pos="-6180.000000 360.000000"/>
+		<ex_tex_palette index="5" disp_pos="1980.000000 360.000000"/>
+		<ex_tex_palette index="6" disp_pos="-6060.000000 360.000000"/>
+		<ex_tex_palette index="7" disp_pos="-5940.000000 360.000000"/>
+		<ex_tex_palette index="8" disp_pos="-5820.000000 360.000000"/>
+		<ex_tex_palette index="9" disp_pos="-5700.000000 360.000000"/>
+		<ex_tex_palette index="10" disp_pos="-5580.000000 360.000000"/>
+		<ex_tex_palette index="11" disp_pos="-5460.000000 360.000000"/>
+		<ex_tex_palette index="12" disp_pos="1860.000000 360.000000"/>
+		<ex_tex_palette index="13" disp_pos="-5220.000000 360.000000"/>
+		<ex_tex_palette index="14" disp_pos="-5340.000000 360.000000"/>
+		<ex_tex_palette index="15" disp_pos="-5100.000000 360.000000"/>
+		<ex_tex_palette index="16" disp_pos="-4980.000000 360.000000"/>
+		<ex_tex_palette index="17" disp_pos="-4740.000000 360.000000"/>
+		<ex_tex_palette index="18" disp_pos="-4620.000000 360.000000"/>
+		<ex_tex_palette index="19" disp_pos="-4500.000000 360.000000"/>
+		<ex_tex_palette index="20" disp_pos="-4380.000000 360.000000"/>
+		<ex_tex_palette index="21" disp_pos="-4260.000000 360.000000"/>
+		<ex_tex_palette index="22" disp_pos="-4140.000000 360.000000"/>
+		<ex_tex_palette index="23" disp_pos="2220.000000 360.000000"/>
+		<ex_tex_palette index="24" disp_pos="-3900.000000 360.000000"/>
+		<ex_tex_palette index="25" disp_pos="-3780.000000 360.000000"/>
+		<ex_tex_palette index="26" disp_pos="-3660.000000 360.000000"/>
+		<ex_tex_palette index="27" disp_pos="-3540.000000 360.000000"/>
+		<ex_tex_palette index="28" disp_pos="-3420.000000 360.000000"/>
+		<ex_tex_palette index="29" disp_pos="-3300.000000 360.000000"/>
+		<ex_tex_palette index="30" disp_pos="-3180.000000 360.000000"/>
+		<ex_tex_palette index="31" disp_pos="-3060.000000 360.000000"/>
+		<ex_tex_palette index="32" disp_pos="-2940.000000 360.000000"/>
+		<ex_tex_palette index="33" disp_pos="-4020.000000 360.000000"/>
+		<ex_tex_palette index="34" disp_pos="-2700.000000 360.000000"/>
+		<ex_tex_palette index="35" disp_pos="-2580.000000 360.000000"/>
+		<ex_tex_palette index="36" disp_pos="-2460.000000 360.000000"/>
+		<ex_tex_palette index="37" disp_pos="-2340.000000 360.000000"/>
+		<ex_tex_palette index="38" disp_pos="-2820.000000 360.000000"/>
+		<ex_tex_palette index="39" disp_pos="-2220.000000 360.000000"/>
+		<ex_tex_palette index="40" disp_pos="-2100.000000 360.000000"/>
+		<ex_tex_palette index="41" disp_pos="-1980.000000 360.000000"/>
+		<ex_tex_palette index="42" disp_pos="-1740.000000 360.000000"/>
+		<ex_tex_palette index="43" disp_pos="-1860.000000 360.000000"/>
+		<ex_tex_palette index="44" disp_pos="-1620.000000 360.000000"/>
+		<ex_tex_palette index="45" disp_pos="-1500.000000 360.000000"/>
+		<ex_tex_palette index="46" disp_pos="-1380.000000 360.000000"/>
+		<ex_tex_palette index="47" disp_pos="-1140.000000 360.000000"/>
+		<ex_tex_palette index="48" disp_pos="-1260.000000 360.000000"/>
+		<ex_tex_palette index="49" disp_pos="-900.000000 360.000000"/>
+		<ex_tex_palette index="50" disp_pos="-1020.000000 360.000000"/>
+		<ex_tex_palette index="51" disp_pos="-780.000000 360.000000"/>
+		<ex_tex_palette index="52" disp_pos="-660.000000 360.000000"/>
+		<ex_tex_palette index="53" disp_pos="-540.000000 360.000000"/>
+		<ex_tex_palette index="54" disp_pos="-420.000000 360.000000"/>
+		<ex_tex_palette index="55" disp_pos="-300.000000 360.000000"/>
+		<ex_tex_palette index="56" disp_pos="-180.000000 360.000000"/>
+		<ex_tex_palette index="57" disp_pos="-60.000000 360.000000"/>
+		<ex_tex_palette index="58" disp_pos="180.000000 360.000000"/>
+		<ex_tex_palette index="59" disp_pos="300.000000 360.000000"/>
+		<ex_tex_palette index="60" disp_pos="60.000000 360.000000"/>
+		<ex_tex_palette index="61" disp_pos="420.000000 360.000000"/>
+		<ex_tex_palette index="62" disp_pos="660.000000 360.000000"/>
+		<ex_tex_palette index="63" disp_pos="540.000000 360.000000"/>
+		<ex_tex_palette index="64" disp_pos="780.000000 360.000000"/>
+		<ex_tex_palette index="65" disp_pos="900.000000 360.000000"/>
 		<ex_tex_palette index="66" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="67" disp_pos="1320.000000 360.000000"/>
-		<ex_tex_palette index="68" disp_pos="1200.000000 360.000000"/>
-		<ex_tex_palette index="69" disp_pos="1560.000000 360.000000"/>
-		<ex_tex_palette index="70" disp_pos="1440.000000 360.000000"/>
-		<ex_tex_palette index="71" disp_pos="1680.000000 360.000000"/>
-		<ex_tex_palette index="72" disp_pos="2160.000000 360.000000"/>
-		<ex_tex_palette index="73" disp_pos="1800.000000 360.000000"/>
-		<ex_tex_palette index="74" disp_pos="2520.000000 360.000000"/>
-		<ex_tex_palette index="75" disp_pos="2640.000000 360.000000"/>
-		<ex_tex_palette index="76" disp_pos="2760.000000 360.000000"/>
-		<ex_tex_palette index="77" disp_pos="2880.000000 360.000000"/>
-		<ex_tex_palette index="78" disp_pos="3000.000000 360.000000"/>
-		<ex_tex_palette index="79" disp_pos="3120.000000 360.000000"/>
-		<ex_tex_palette index="80" disp_pos="3240.000000 360.000000"/>
-		<ex_tex_palette index="81" disp_pos="3360.000000 360.000000"/>
-		<ex_tex_palette index="82" disp_pos="3480.000000 360.000000"/>
-		<ex_tex_palette index="83" disp_pos="3600.000000 360.000000"/>
-		<ex_tex_palette index="84" disp_pos="3720.000000 360.000000"/>
-		<ex_tex_palette index="85" disp_pos="3840.000000 360.000000"/>
-		<ex_tex_palette index="86" disp_pos="3960.000000 360.000000"/>
-		<ex_tex_palette index="87" disp_pos="4080.000000 360.000000"/>
-		<ex_tex_palette index="88" disp_pos="4200.000000 360.000000"/>
-		<ex_tex_palette index="89" disp_pos="4320.000000 360.000000"/>
-		<ex_tex_palette index="90" disp_pos="4440.000000 360.000000"/>
-		<ex_tex_palette index="91" disp_pos="4560.000000 360.000000"/>
-		<ex_tex_palette index="92" disp_pos="4680.000000 360.000000"/>
-		<ex_tex_palette index="93" disp_pos="4800.000000 360.000000"/>
-		<ex_tex_palette index="94" disp_pos="4920.000000 360.000000"/>
-		<ex_tex_palette index="95" disp_pos="5040.000000 360.000000"/>
-		<ex_tex_palette index="96" disp_pos="5160.000000 360.000000"/>
-		<ex_tex_palette index="97" disp_pos="5280.000000 360.000000"/>
-		<ex_tex_palette index="98" disp_pos="5400.000000 360.000000"/>
-		<ex_tex_palette index="99" disp_pos="5520.000000 360.000000"/>
-		<ex_tex_palette index="100" disp_pos="5640.000000 360.000000"/>
-		<ex_tex_palette index="101" disp_pos="5760.000000 360.000000"/>
-		<ex_tex_palette index="102" disp_pos="2400.000000 360.000000"/>
-		<ex_tex_palette index="103" disp_pos="5880.000000 360.000000"/>
-		<ex_tex_palette index="104" disp_pos="6000.000000 360.000000"/>
-		<ex_tex_palette index="105" disp_pos="6120.000000 360.000000"/>
-		<ex_tex_palette index="106" disp_pos="6240.000000 360.000000"/>
-		<ex_tex_palette index="107" disp_pos="6480.000000 360.000000"/>
-		<ex_tex_palette index="108" disp_pos="6360.000000 360.000000"/>
+		<ex_tex_palette index="67" disp_pos="1260.000000 360.000000"/>
+		<ex_tex_palette index="68" disp_pos="1140.000000 360.000000"/>
+		<ex_tex_palette index="69" disp_pos="1500.000000 360.000000"/>
+		<ex_tex_palette index="70" disp_pos="1380.000000 360.000000"/>
+		<ex_tex_palette index="71" disp_pos="1620.000000 360.000000"/>
+		<ex_tex_palette index="72" disp_pos="2100.000000 360.000000"/>
+		<ex_tex_palette index="73" disp_pos="1740.000000 360.000000"/>
+		<ex_tex_palette index="74" disp_pos="2460.000000 360.000000"/>
+		<ex_tex_palette index="75" disp_pos="2580.000000 360.000000"/>
+		<ex_tex_palette index="76" disp_pos="2700.000000 360.000000"/>
+		<ex_tex_palette index="77" disp_pos="2820.000000 360.000000"/>
+		<ex_tex_palette index="78" disp_pos="2940.000000 360.000000"/>
+		<ex_tex_palette index="79" disp_pos="3060.000000 360.000000"/>
+		<ex_tex_palette index="80" disp_pos="3180.000000 360.000000"/>
+		<ex_tex_palette index="81" disp_pos="3300.000000 360.000000"/>
+		<ex_tex_palette index="82" disp_pos="3420.000000 360.000000"/>
+		<ex_tex_palette index="83" disp_pos="3540.000000 360.000000"/>
+		<ex_tex_palette index="84" disp_pos="3660.000000 360.000000"/>
+		<ex_tex_palette index="85" disp_pos="3780.000000 360.000000"/>
+		<ex_tex_palette index="86" disp_pos="3900.000000 360.000000"/>
+		<ex_tex_palette index="87" disp_pos="4020.000000 360.000000"/>
+		<ex_tex_palette index="88" disp_pos="4140.000000 360.000000"/>
+		<ex_tex_palette index="89" disp_pos="4260.000000 360.000000"/>
+		<ex_tex_palette index="90" disp_pos="4380.000000 360.000000"/>
+		<ex_tex_palette index="91" disp_pos="4500.000000 360.000000"/>
+		<ex_tex_palette index="92" disp_pos="4620.000000 360.000000"/>
+		<ex_tex_palette index="93" disp_pos="4740.000000 360.000000"/>
+		<ex_tex_palette index="94" disp_pos="4860.000000 360.000000"/>
+		<ex_tex_palette index="95" disp_pos="4980.000000 360.000000"/>
+		<ex_tex_palette index="96" disp_pos="5100.000000 360.000000"/>
+		<ex_tex_palette index="97" disp_pos="5220.000000 360.000000"/>
+		<ex_tex_palette index="98" disp_pos="5340.000000 360.000000"/>
+		<ex_tex_palette index="99" disp_pos="5460.000000 360.000000"/>
+		<ex_tex_palette index="100" disp_pos="5580.000000 360.000000"/>
+		<ex_tex_palette index="101" disp_pos="5700.000000 360.000000"/>
+		<ex_tex_palette index="102" disp_pos="5820.000000 360.000000"/>
+		<ex_tex_palette index="103" disp_pos="2340.000000 360.000000"/>
+		<ex_tex_palette index="104" disp_pos="5940.000000 360.000000"/>
+		<ex_tex_palette index="105" disp_pos="6060.000000 360.000000"/>
+		<ex_tex_palette index="106" disp_pos="6180.000000 360.000000"/>
+		<ex_tex_palette index="107" disp_pos="6300.000000 360.000000"/>
+		<ex_tex_palette index="108" disp_pos="6540.000000 360.000000"/>
+		<ex_tex_palette index="109" disp_pos="6420.000000 360.000000"/>
 	</ex_tex_palette_array>
-	<ex_material_array size="109">
-		<ex_material index="0" disp_pos="-6480.000000 240.000000"/>
-		<ex_material index="1" disp_pos="-6360.000000 240.000000"/>
-		<ex_material index="2" disp_pos="-6240.000000 240.000000"/>
-		<ex_material index="3" disp_pos="-6120.000000 240.000000"/>
-		<ex_material index="4" disp_pos="-6000.000000 240.000000"/>
-		<ex_material index="5" disp_pos="-5880.000000 240.000000"/>
-		<ex_material index="6" disp_pos="-5760.000000 240.000000"/>
-		<ex_material index="7" disp_pos="-5640.000000 240.000000"/>
-		<ex_material index="8" disp_pos="-5520.000000 240.000000"/>
-		<ex_material index="9" disp_pos="-5400.000000 240.000000"/>
-		<ex_material index="10" disp_pos="-5280.000000 240.000000"/>
-		<ex_material index="11" disp_pos="-5160.000000 240.000000"/>
-		<ex_material index="12" disp_pos="-5040.000000 240.000000"/>
-		<ex_material index="13" disp_pos="-4920.000000 240.000000"/>
-		<ex_material index="14" disp_pos="-4800.000000 240.000000"/>
-		<ex_material index="15" disp_pos="-4680.000000 240.000000"/>
-		<ex_material index="16" disp_pos="-4560.000000 240.000000"/>
-		<ex_material index="17" disp_pos="-4440.000000 240.000000"/>
-		<ex_material index="18" disp_pos="-4320.000000 240.000000"/>
-		<ex_material index="19" disp_pos="-4200.000000 240.000000"/>
-		<ex_material index="20" disp_pos="-4080.000000 240.000000"/>
-		<ex_material index="21" disp_pos="-3960.000000 240.000000"/>
-		<ex_material index="22" disp_pos="-3840.000000 240.000000"/>
-		<ex_material index="23" disp_pos="-3720.000000 240.000000"/>
-		<ex_material index="24" disp_pos="-3600.000000 240.000000"/>
-		<ex_material index="25" disp_pos="-3480.000000 240.000000"/>
-		<ex_material index="26" disp_pos="-3360.000000 240.000000"/>
-		<ex_material index="27" disp_pos="-3240.000000 240.000000"/>
-		<ex_material index="28" disp_pos="-3120.000000 240.000000"/>
-		<ex_material index="29" disp_pos="-3000.000000 240.000000"/>
-		<ex_material index="30" disp_pos="-2880.000000 240.000000"/>
-		<ex_material index="31" disp_pos="-2760.000000 240.000000"/>
-		<ex_material index="32" disp_pos="-2640.000000 240.000000"/>
-		<ex_material index="33" disp_pos="-2520.000000 240.000000"/>
-		<ex_material index="34" disp_pos="-2400.000000 240.000000"/>
-		<ex_material index="35" disp_pos="-2280.000000 240.000000"/>
-		<ex_material index="36" disp_pos="-2160.000000 240.000000"/>
-		<ex_material index="37" disp_pos="-2040.000000 240.000000"/>
-		<ex_material index="38" disp_pos="-1920.000000 240.000000"/>
-		<ex_material index="39" disp_pos="-1800.000000 240.000000"/>
-		<ex_material index="40" disp_pos="-1680.000000 240.000000"/>
-		<ex_material index="41" disp_pos="-1560.000000 240.000000"/>
-		<ex_material index="42" disp_pos="-1440.000000 240.000000"/>
-		<ex_material index="43" disp_pos="-1320.000000 240.000000"/>
-		<ex_material index="44" disp_pos="-1200.000000 240.000000"/>
-		<ex_material index="45" disp_pos="-1080.000000 240.000000"/>
-		<ex_material index="46" disp_pos="-960.000000 240.000000"/>
-		<ex_material index="47" disp_pos="-840.000000 240.000000"/>
-		<ex_material index="48" disp_pos="-720.000000 240.000000"/>
-		<ex_material index="49" disp_pos="-600.000000 240.000000"/>
-		<ex_material index="50" disp_pos="-480.000000 240.000000"/>
-		<ex_material index="51" disp_pos="-360.000000 240.000000"/>
-		<ex_material index="52" disp_pos="-240.000000 240.000000"/>
-		<ex_material index="53" disp_pos="-120.000000 240.000000"/>
-		<ex_material index="54" disp_pos="0.000000 240.000000"/>
-		<ex_material index="55" disp_pos="120.000000 240.000000"/>
-		<ex_material index="56" disp_pos="240.000000 240.000000"/>
-		<ex_material index="57" disp_pos="360.000000 240.000000"/>
-		<ex_material index="58" disp_pos="480.000000 240.000000"/>
-		<ex_material index="59" disp_pos="600.000000 240.000000"/>
-		<ex_material index="60" disp_pos="720.000000 240.000000"/>
-		<ex_material index="61" disp_pos="840.000000 240.000000"/>
-		<ex_material index="62" disp_pos="960.000000 240.000000"/>
-		<ex_material index="63" disp_pos="1080.000000 240.000000"/>
-		<ex_material index="64" disp_pos="1200.000000 240.000000"/>
-		<ex_material index="65" disp_pos="1320.000000 240.000000"/>
-		<ex_material index="66" disp_pos="1440.000000 240.000000"/>
-		<ex_material index="67" disp_pos="1560.000000 240.000000"/>
-		<ex_material index="68" disp_pos="1680.000000 240.000000"/>
-		<ex_material index="69" disp_pos="1800.000000 240.000000"/>
-		<ex_material index="70" disp_pos="1920.000000 240.000000"/>
-		<ex_material index="71" disp_pos="2040.000000 240.000000"/>
-		<ex_material index="72" disp_pos="2160.000000 240.000000"/>
-		<ex_material index="73" disp_pos="2280.000000 240.000000"/>
-		<ex_material index="74" disp_pos="2400.000000 240.000000"/>
-		<ex_material index="75" disp_pos="2520.000000 240.000000"/>
-		<ex_material index="76" disp_pos="2640.000000 240.000000"/>
-		<ex_material index="77" disp_pos="2760.000000 240.000000"/>
-		<ex_material index="78" disp_pos="2880.000000 240.000000"/>
-		<ex_material index="79" disp_pos="3000.000000 240.000000"/>
-		<ex_material index="80" disp_pos="3120.000000 240.000000"/>
-		<ex_material index="81" disp_pos="3240.000000 240.000000"/>
-		<ex_material index="82" disp_pos="3360.000000 240.000000"/>
-		<ex_material index="83" disp_pos="3480.000000 240.000000"/>
-		<ex_material index="84" disp_pos="3600.000000 240.000000"/>
-		<ex_material index="85" disp_pos="3720.000000 240.000000"/>
-		<ex_material index="86" disp_pos="3840.000000 240.000000"/>
-		<ex_material index="87" disp_pos="3960.000000 240.000000"/>
-		<ex_material index="88" disp_pos="4080.000000 240.000000"/>
-		<ex_material index="89" disp_pos="4200.000000 240.000000"/>
-		<ex_material index="90" disp_pos="4320.000000 240.000000"/>
-		<ex_material index="91" disp_pos="4440.000000 240.000000"/>
-		<ex_material index="92" disp_pos="4560.000000 240.000000"/>
-		<ex_material index="93" disp_pos="4680.000000 240.000000"/>
-		<ex_material index="94" disp_pos="4800.000000 240.000000"/>
-		<ex_material index="95" disp_pos="4920.000000 240.000000"/>
-		<ex_material index="96" disp_pos="5040.000000 240.000000"/>
-		<ex_material index="97" disp_pos="5160.000000 240.000000"/>
-		<ex_material index="98" disp_pos="5280.000000 240.000000"/>
-		<ex_material index="99" disp_pos="5400.000000 240.000000"/>
-		<ex_material index="100" disp_pos="5520.000000 240.000000"/>
-		<ex_material index="101" disp_pos="5640.000000 240.000000"/>
-		<ex_material index="102" disp_pos="5760.000000 240.000000"/>
-		<ex_material index="103" disp_pos="5880.000000 240.000000"/>
-		<ex_material index="104" disp_pos="6000.000000 240.000000"/>
-		<ex_material index="105" disp_pos="6120.000000 240.000000"/>
-		<ex_material index="106" disp_pos="6240.000000 240.000000"/>
-		<ex_material index="107" disp_pos="6360.000000 240.000000"/>
-		<ex_material index="108" disp_pos="6480.000000 240.000000"/>
+	<ex_material_array size="110">
+		<ex_material index="0" disp_pos="-6540.000000 240.000000"/>
+		<ex_material index="1" disp_pos="-6420.000000 240.000000"/>
+		<ex_material index="2" disp_pos="-6300.000000 240.000000"/>
+		<ex_material index="3" disp_pos="-6180.000000 240.000000"/>
+		<ex_material index="4" disp_pos="-6060.000000 240.000000"/>
+		<ex_material index="5" disp_pos="-5940.000000 240.000000"/>
+		<ex_material index="6" disp_pos="-5820.000000 240.000000"/>
+		<ex_material index="7" disp_pos="-5700.000000 240.000000"/>
+		<ex_material index="8" disp_pos="-5580.000000 240.000000"/>
+		<ex_material index="9" disp_pos="-5460.000000 240.000000"/>
+		<ex_material index="10" disp_pos="-5340.000000 240.000000"/>
+		<ex_material index="11" disp_pos="-5220.000000 240.000000"/>
+		<ex_material index="12" disp_pos="-5100.000000 240.000000"/>
+		<ex_material index="13" disp_pos="-4980.000000 240.000000"/>
+		<ex_material index="14" disp_pos="-4860.000000 240.000000"/>
+		<ex_material index="15" disp_pos="-4740.000000 240.000000"/>
+		<ex_material index="16" disp_pos="-4620.000000 240.000000"/>
+		<ex_material index="17" disp_pos="-4500.000000 240.000000"/>
+		<ex_material index="18" disp_pos="-4380.000000 240.000000"/>
+		<ex_material index="19" disp_pos="-4260.000000 240.000000"/>
+		<ex_material index="20" disp_pos="-4140.000000 240.000000"/>
+		<ex_material index="21" disp_pos="-4020.000000 240.000000"/>
+		<ex_material index="22" disp_pos="-3900.000000 240.000000"/>
+		<ex_material index="23" disp_pos="-3780.000000 240.000000"/>
+		<ex_material index="24" disp_pos="-3660.000000 240.000000"/>
+		<ex_material index="25" disp_pos="-3540.000000 240.000000"/>
+		<ex_material index="26" disp_pos="-3420.000000 240.000000"/>
+		<ex_material index="27" disp_pos="-3300.000000 240.000000"/>
+		<ex_material index="28" disp_pos="-3180.000000 240.000000"/>
+		<ex_material index="29" disp_pos="-3060.000000 240.000000"/>
+		<ex_material index="30" disp_pos="-2940.000000 240.000000"/>
+		<ex_material index="31" disp_pos="-2820.000000 240.000000"/>
+		<ex_material index="32" disp_pos="-2700.000000 240.000000"/>
+		<ex_material index="33" disp_pos="-2580.000000 240.000000"/>
+		<ex_material index="34" disp_pos="-2460.000000 240.000000"/>
+		<ex_material index="35" disp_pos="-2340.000000 240.000000"/>
+		<ex_material index="36" disp_pos="-2220.000000 240.000000"/>
+		<ex_material index="37" disp_pos="-2100.000000 240.000000"/>
+		<ex_material index="38" disp_pos="-1980.000000 240.000000"/>
+		<ex_material index="39" disp_pos="-1860.000000 240.000000"/>
+		<ex_material index="40" disp_pos="-1740.000000 240.000000"/>
+		<ex_material index="41" disp_pos="-1620.000000 240.000000"/>
+		<ex_material index="42" disp_pos="-1500.000000 240.000000"/>
+		<ex_material index="43" disp_pos="-1380.000000 240.000000"/>
+		<ex_material index="44" disp_pos="-1260.000000 240.000000"/>
+		<ex_material index="45" disp_pos="-1140.000000 240.000000"/>
+		<ex_material index="46" disp_pos="-1020.000000 240.000000"/>
+		<ex_material index="47" disp_pos="-900.000000 240.000000"/>
+		<ex_material index="48" disp_pos="-780.000000 240.000000"/>
+		<ex_material index="49" disp_pos="-660.000000 240.000000"/>
+		<ex_material index="50" disp_pos="-540.000000 240.000000"/>
+		<ex_material index="51" disp_pos="-420.000000 240.000000"/>
+		<ex_material index="52" disp_pos="-300.000000 240.000000"/>
+		<ex_material index="53" disp_pos="-180.000000 240.000000"/>
+		<ex_material index="54" disp_pos="-60.000000 240.000000"/>
+		<ex_material index="55" disp_pos="60.000000 240.000000"/>
+		<ex_material index="56" disp_pos="180.000000 240.000000"/>
+		<ex_material index="57" disp_pos="300.000000 240.000000"/>
+		<ex_material index="58" disp_pos="420.000000 240.000000"/>
+		<ex_material index="59" disp_pos="540.000000 240.000000"/>
+		<ex_material index="60" disp_pos="660.000000 240.000000"/>
+		<ex_material index="61" disp_pos="780.000000 240.000000"/>
+		<ex_material index="62" disp_pos="900.000000 240.000000"/>
+		<ex_material index="63" disp_pos="1020.000000 240.000000"/>
+		<ex_material index="64" disp_pos="1140.000000 240.000000"/>
+		<ex_material index="65" disp_pos="1260.000000 240.000000"/>
+		<ex_material index="66" disp_pos="1380.000000 240.000000"/>
+		<ex_material index="67" disp_pos="1500.000000 240.000000"/>
+		<ex_material index="68" disp_pos="1620.000000 240.000000"/>
+		<ex_material index="69" disp_pos="1740.000000 240.000000"/>
+		<ex_material index="70" disp_pos="1860.000000 240.000000"/>
+		<ex_material index="71" disp_pos="1980.000000 240.000000"/>
+		<ex_material index="72" disp_pos="2100.000000 240.000000"/>
+		<ex_material index="73" disp_pos="2220.000000 240.000000"/>
+		<ex_material index="74" disp_pos="2340.000000 240.000000"/>
+		<ex_material index="75" disp_pos="2460.000000 240.000000"/>
+		<ex_material index="76" disp_pos="2580.000000 240.000000"/>
+		<ex_material index="77" disp_pos="2700.000000 240.000000"/>
+		<ex_material index="78" disp_pos="2820.000000 240.000000"/>
+		<ex_material index="79" disp_pos="2940.000000 240.000000"/>
+		<ex_material index="80" disp_pos="3060.000000 240.000000"/>
+		<ex_material index="81" disp_pos="3180.000000 240.000000"/>
+		<ex_material index="82" disp_pos="3300.000000 240.000000"/>
+		<ex_material index="83" disp_pos="3420.000000 240.000000"/>
+		<ex_material index="84" disp_pos="3540.000000 240.000000"/>
+		<ex_material index="85" disp_pos="3660.000000 240.000000"/>
+		<ex_material index="86" disp_pos="3780.000000 240.000000"/>
+		<ex_material index="87" disp_pos="3900.000000 240.000000"/>
+		<ex_material index="88" disp_pos="4020.000000 240.000000"/>
+		<ex_material index="89" disp_pos="4140.000000 240.000000"/>
+		<ex_material index="90" disp_pos="4260.000000 240.000000"/>
+		<ex_material index="91" disp_pos="4380.000000 240.000000"/>
+		<ex_material index="92" disp_pos="4500.000000 240.000000"/>
+		<ex_material index="93" disp_pos="4620.000000 240.000000"/>
+		<ex_material index="94" disp_pos="4740.000000 240.000000"/>
+		<ex_material index="95" disp_pos="4860.000000 240.000000"/>
+		<ex_material index="96" disp_pos="4980.000000 240.000000"/>
+		<ex_material index="97" disp_pos="5100.000000 240.000000"/>
+		<ex_material index="98" disp_pos="5220.000000 240.000000"/>
+		<ex_material index="99" disp_pos="5340.000000 240.000000"/>
+		<ex_material index="100" disp_pos="5460.000000 240.000000"/>
+		<ex_material index="101" disp_pos="5580.000000 240.000000"/>
+		<ex_material index="102" disp_pos="5700.000000 240.000000"/>
+		<ex_material index="103" disp_pos="5820.000000 240.000000"/>
+		<ex_material index="104" disp_pos="5940.000000 240.000000"/>
+		<ex_material index="105" disp_pos="6060.000000 240.000000"/>
+		<ex_material index="106" disp_pos="6180.000000 240.000000"/>
+		<ex_material index="107" disp_pos="6300.000000 240.000000"/>
+		<ex_material index="108" disp_pos="6420.000000 240.000000"/>
+		<ex_material index="109" disp_pos="6540.000000 240.000000"/>
 	</ex_material_array>
-	<ex_polygon_array size="109">
-		<ex_polygon index="0" disp_pos="-6480.000000 180.000000"/>
-		<ex_polygon index="1" disp_pos="-6360.000000 180.000000"/>
-		<ex_polygon index="2" disp_pos="-6240.000000 180.000000"/>
-		<ex_polygon index="3" disp_pos="-6120.000000 180.000000"/>
-		<ex_polygon index="4" disp_pos="-6000.000000 180.000000"/>
-		<ex_polygon index="5" disp_pos="-5880.000000 180.000000"/>
-		<ex_polygon index="6" disp_pos="-5760.000000 180.000000"/>
-		<ex_polygon index="7" disp_pos="-5640.000000 180.000000"/>
-		<ex_polygon index="8" disp_pos="-5520.000000 180.000000"/>
-		<ex_polygon index="9" disp_pos="-5400.000000 180.000000"/>
-		<ex_polygon index="10" disp_pos="1440.000000 180.000000"/>
-		<ex_polygon index="11" disp_pos="1560.000000 180.000000"/>
-		<ex_polygon index="12" disp_pos="1680.000000 180.000000"/>
-		<ex_polygon index="13" disp_pos="1800.000000 180.000000"/>
-		<ex_polygon index="14" disp_pos="1920.000000 180.000000"/>
-		<ex_polygon index="15" disp_pos="2040.000000 180.000000"/>
-		<ex_polygon index="16" disp_pos="2160.000000 180.000000"/>
-		<ex_polygon index="17" disp_pos="2280.000000 180.000000"/>
-		<ex_polygon index="18" disp_pos="2400.000000 180.000000"/>
-		<ex_polygon index="19" disp_pos="2520.000000 180.000000"/>
-		<ex_polygon index="20" disp_pos="2640.000000 180.000000"/>
-		<ex_polygon index="21" disp_pos="2760.000000 180.000000"/>
-		<ex_polygon index="22" disp_pos="2880.000000 180.000000"/>
-		<ex_polygon index="23" disp_pos="-5280.000000 180.000000"/>
-		<ex_polygon index="24" disp_pos="-5160.000000 180.000000"/>
-		<ex_polygon index="25" disp_pos="-5040.000000 180.000000"/>
-		<ex_polygon index="26" disp_pos="-4920.000000 180.000000"/>
-		<ex_polygon index="27" disp_pos="-4800.000000 180.000000"/>
-		<ex_polygon index="28" disp_pos="-4680.000000 180.000000"/>
-		<ex_polygon index="29" disp_pos="-4560.000000 180.000000"/>
-		<ex_polygon index="30" disp_pos="-4440.000000 180.000000"/>
-		<ex_polygon index="31" disp_pos="-4320.000000 180.000000"/>
-		<ex_polygon index="32" disp_pos="-4200.000000 180.000000"/>
-		<ex_polygon index="33" disp_pos="-4080.000000 180.000000"/>
-		<ex_polygon index="34" disp_pos="-3960.000000 180.000000"/>
-		<ex_polygon index="35" disp_pos="-3840.000000 180.000000"/>
-		<ex_polygon index="36" disp_pos="-3720.000000 180.000000"/>
-		<ex_polygon index="37" disp_pos="-3600.000000 180.000000"/>
-		<ex_polygon index="38" disp_pos="-3480.000000 180.000000"/>
-		<ex_polygon index="39" disp_pos="-3360.000000 180.000000"/>
-		<ex_polygon index="40" disp_pos="-3240.000000 180.000000"/>
-		<ex_polygon index="41" disp_pos="-3120.000000 180.000000"/>
-		<ex_polygon index="42" disp_pos="-3000.000000 180.000000"/>
-		<ex_polygon index="43" disp_pos="-2880.000000 180.000000"/>
-		<ex_polygon index="44" disp_pos="-2640.000000 180.000000"/>
-		<ex_polygon index="45" disp_pos="-2520.000000 180.000000"/>
-		<ex_polygon index="46" disp_pos="-2400.000000 180.000000"/>
-		<ex_polygon index="47" disp_pos="-2280.000000 180.000000"/>
-		<ex_polygon index="48" disp_pos="-2760.000000 180.000000"/>
-		<ex_polygon index="49" disp_pos="-2160.000000 180.000000"/>
-		<ex_polygon index="50" disp_pos="-2040.000000 180.000000"/>
-		<ex_polygon index="51" disp_pos="-1920.000000 180.000000"/>
-		<ex_polygon index="52" disp_pos="-1560.000000 180.000000"/>
-		<ex_polygon index="53" disp_pos="-1440.000000 180.000000"/>
-		<ex_polygon index="54" disp_pos="-1320.000000 180.000000"/>
-		<ex_polygon index="55" disp_pos="-1200.000000 180.000000"/>
-		<ex_polygon index="56" disp_pos="-1080.000000 180.000000"/>
-		<ex_polygon index="57" disp_pos="-1800.000000 180.000000"/>
-		<ex_polygon index="58" disp_pos="-1680.000000 180.000000"/>
-		<ex_polygon index="59" disp_pos="-960.000000 180.000000"/>
-		<ex_polygon index="60" disp_pos="-840.000000 180.000000"/>
-		<ex_polygon index="61" disp_pos="-720.000000 180.000000"/>
-		<ex_polygon index="62" disp_pos="-600.000000 180.000000"/>
-		<ex_polygon index="63" disp_pos="-480.000000 180.000000"/>
-		<ex_polygon index="64" disp_pos="-360.000000 180.000000"/>
-		<ex_polygon index="65" disp_pos="-240.000000 180.000000"/>
-		<ex_polygon index="66" disp_pos="-120.000000 180.000000"/>
-		<ex_polygon index="67" disp_pos="0.000000 180.000000"/>
-		<ex_polygon index="68" disp_pos="120.000000 180.000000"/>
-		<ex_polygon index="69" disp_pos="240.000000 180.000000"/>
-		<ex_polygon index="70" disp_pos="360.000000 180.000000"/>
-		<ex_polygon index="71" disp_pos="480.000000 180.000000"/>
-		<ex_polygon index="72" disp_pos="600.000000 180.000000"/>
-		<ex_polygon index="73" disp_pos="720.000000 180.000000"/>
-		<ex_polygon index="74" disp_pos="840.000000 180.000000"/>
-		<ex_polygon index="75" disp_pos="960.000000 180.000000"/>
-		<ex_polygon index="76" disp_pos="1080.000000 180.000000"/>
-		<ex_polygon index="77" disp_pos="1200.000000 180.000000"/>
-		<ex_polygon index="78" disp_pos="1320.000000 180.000000"/>
-		<ex_polygon index="79" disp_pos="3120.000000 180.000000"/>
-		<ex_polygon index="80" disp_pos="3000.000000 180.000000"/>
-		<ex_polygon index="81" disp_pos="3360.000000 180.000000"/>
-		<ex_polygon index="82" disp_pos="3480.000000 180.000000"/>
-		<ex_polygon index="83" disp_pos="3240.000000 180.000000"/>
-		<ex_polygon index="84" disp_pos="3600.000000 180.000000"/>
-		<ex_polygon index="85" disp_pos="3720.000000 180.000000"/>
-		<ex_polygon index="86" disp_pos="3840.000000 180.000000"/>
-		<ex_polygon index="87" disp_pos="3960.000000 180.000000"/>
-		<ex_polygon index="88" disp_pos="4080.000000 180.000000"/>
-		<ex_polygon index="89" disp_pos="4200.000000 180.000000"/>
-		<ex_polygon index="90" disp_pos="4320.000000 180.000000"/>
-		<ex_polygon index="91" disp_pos="4440.000000 180.000000"/>
-		<ex_polygon index="92" disp_pos="4560.000000 180.000000"/>
-		<ex_polygon index="93" disp_pos="4680.000000 180.000000"/>
-		<ex_polygon index="94" disp_pos="4800.000000 180.000000"/>
-		<ex_polygon index="95" disp_pos="4920.000000 180.000000"/>
-		<ex_polygon index="96" disp_pos="5040.000000 180.000000"/>
-		<ex_polygon index="97" disp_pos="5160.000000 180.000000"/>
-		<ex_polygon index="98" disp_pos="5280.000000 180.000000"/>
-		<ex_polygon index="99" disp_pos="5400.000000 180.000000"/>
-		<ex_polygon index="100" disp_pos="5520.000000 180.000000"/>
-		<ex_polygon index="101" disp_pos="5640.000000 180.000000"/>
-		<ex_polygon index="102" disp_pos="5760.000000 180.000000"/>
-		<ex_polygon index="103" disp_pos="5880.000000 180.000000"/>
-		<ex_polygon index="104" disp_pos="6000.000000 180.000000"/>
-		<ex_polygon index="105" disp_pos="6120.000000 180.000000"/>
-		<ex_polygon index="106" disp_pos="6240.000000 180.000000"/>
-		<ex_polygon index="107" disp_pos="6360.000000 180.000000"/>
-		<ex_polygon index="108" disp_pos="6480.000000 180.000000"/>
+	<ex_polygon_array size="110">
+		<ex_polygon index="0" disp_pos="-6540.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="-6420.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="-6300.000000 180.000000"/>
+		<ex_polygon index="3" disp_pos="-6180.000000 180.000000"/>
+		<ex_polygon index="4" disp_pos="-6060.000000 180.000000"/>
+		<ex_polygon index="5" disp_pos="-5940.000000 180.000000"/>
+		<ex_polygon index="6" disp_pos="-5820.000000 180.000000"/>
+		<ex_polygon index="7" disp_pos="-5700.000000 180.000000"/>
+		<ex_polygon index="8" disp_pos="-5580.000000 180.000000"/>
+		<ex_polygon index="9" disp_pos="-5460.000000 180.000000"/>
+		<ex_polygon index="10" disp_pos="1380.000000 180.000000"/>
+		<ex_polygon index="11" disp_pos="1500.000000 180.000000"/>
+		<ex_polygon index="12" disp_pos="1620.000000 180.000000"/>
+		<ex_polygon index="13" disp_pos="1740.000000 180.000000"/>
+		<ex_polygon index="14" disp_pos="1860.000000 180.000000"/>
+		<ex_polygon index="15" disp_pos="1980.000000 180.000000"/>
+		<ex_polygon index="16" disp_pos="2100.000000 180.000000"/>
+		<ex_polygon index="17" disp_pos="2220.000000 180.000000"/>
+		<ex_polygon index="18" disp_pos="2340.000000 180.000000"/>
+		<ex_polygon index="19" disp_pos="2460.000000 180.000000"/>
+		<ex_polygon index="20" disp_pos="2580.000000 180.000000"/>
+		<ex_polygon index="21" disp_pos="2700.000000 180.000000"/>
+		<ex_polygon index="22" disp_pos="2820.000000 180.000000"/>
+		<ex_polygon index="23" disp_pos="-5340.000000 180.000000"/>
+		<ex_polygon index="24" disp_pos="-5220.000000 180.000000"/>
+		<ex_polygon index="25" disp_pos="-5100.000000 180.000000"/>
+		<ex_polygon index="26" disp_pos="-4980.000000 180.000000"/>
+		<ex_polygon index="27" disp_pos="-4860.000000 180.000000"/>
+		<ex_polygon index="28" disp_pos="-4740.000000 180.000000"/>
+		<ex_polygon index="29" disp_pos="-4620.000000 180.000000"/>
+		<ex_polygon index="30" disp_pos="-4500.000000 180.000000"/>
+		<ex_polygon index="31" disp_pos="-4380.000000 180.000000"/>
+		<ex_polygon index="32" disp_pos="-4260.000000 180.000000"/>
+		<ex_polygon index="33" disp_pos="-4140.000000 180.000000"/>
+		<ex_polygon index="34" disp_pos="-4020.000000 180.000000"/>
+		<ex_polygon index="35" disp_pos="-3900.000000 180.000000"/>
+		<ex_polygon index="36" disp_pos="-3780.000000 180.000000"/>
+		<ex_polygon index="37" disp_pos="-3660.000000 180.000000"/>
+		<ex_polygon index="38" disp_pos="-3540.000000 180.000000"/>
+		<ex_polygon index="39" disp_pos="-3420.000000 180.000000"/>
+		<ex_polygon index="40" disp_pos="-3300.000000 180.000000"/>
+		<ex_polygon index="41" disp_pos="-3180.000000 180.000000"/>
+		<ex_polygon index="42" disp_pos="-3060.000000 180.000000"/>
+		<ex_polygon index="43" disp_pos="-2940.000000 180.000000"/>
+		<ex_polygon index="44" disp_pos="-2700.000000 180.000000"/>
+		<ex_polygon index="45" disp_pos="-2580.000000 180.000000"/>
+		<ex_polygon index="46" disp_pos="-2460.000000 180.000000"/>
+		<ex_polygon index="47" disp_pos="-2340.000000 180.000000"/>
+		<ex_polygon index="48" disp_pos="-2820.000000 180.000000"/>
+		<ex_polygon index="49" disp_pos="-2220.000000 180.000000"/>
+		<ex_polygon index="50" disp_pos="-2100.000000 180.000000"/>
+		<ex_polygon index="51" disp_pos="-1980.000000 180.000000"/>
+		<ex_polygon index="52" disp_pos="-1620.000000 180.000000"/>
+		<ex_polygon index="53" disp_pos="-1500.000000 180.000000"/>
+		<ex_polygon index="54" disp_pos="-1380.000000 180.000000"/>
+		<ex_polygon index="55" disp_pos="-1260.000000 180.000000"/>
+		<ex_polygon index="56" disp_pos="-1140.000000 180.000000"/>
+		<ex_polygon index="57" disp_pos="-1860.000000 180.000000"/>
+		<ex_polygon index="58" disp_pos="-1740.000000 180.000000"/>
+		<ex_polygon index="59" disp_pos="-1020.000000 180.000000"/>
+		<ex_polygon index="60" disp_pos="-900.000000 180.000000"/>
+		<ex_polygon index="61" disp_pos="-780.000000 180.000000"/>
+		<ex_polygon index="62" disp_pos="-660.000000 180.000000"/>
+		<ex_polygon index="63" disp_pos="-540.000000 180.000000"/>
+		<ex_polygon index="64" disp_pos="-420.000000 180.000000"/>
+		<ex_polygon index="65" disp_pos="-300.000000 180.000000"/>
+		<ex_polygon index="66" disp_pos="-180.000000 180.000000"/>
+		<ex_polygon index="67" disp_pos="-60.000000 180.000000"/>
+		<ex_polygon index="68" disp_pos="60.000000 180.000000"/>
+		<ex_polygon index="69" disp_pos="180.000000 180.000000"/>
+		<ex_polygon index="70" disp_pos="300.000000 180.000000"/>
+		<ex_polygon index="71" disp_pos="420.000000 180.000000"/>
+		<ex_polygon index="72" disp_pos="540.000000 180.000000"/>
+		<ex_polygon index="73" disp_pos="660.000000 180.000000"/>
+		<ex_polygon index="74" disp_pos="780.000000 180.000000"/>
+		<ex_polygon index="75" disp_pos="900.000000 180.000000"/>
+		<ex_polygon index="76" disp_pos="1020.000000 180.000000"/>
+		<ex_polygon index="77" disp_pos="1140.000000 180.000000"/>
+		<ex_polygon index="78" disp_pos="1260.000000 180.000000"/>
+		<ex_polygon index="79" disp_pos="3060.000000 180.000000"/>
+		<ex_polygon index="80" disp_pos="2940.000000 180.000000"/>
+		<ex_polygon index="81" disp_pos="3300.000000 180.000000"/>
+		<ex_polygon index="82" disp_pos="3420.000000 180.000000"/>
+		<ex_polygon index="83" disp_pos="3180.000000 180.000000"/>
+		<ex_polygon index="84" disp_pos="3540.000000 180.000000"/>
+		<ex_polygon index="85" disp_pos="3660.000000 180.000000"/>
+		<ex_polygon index="86" disp_pos="3780.000000 180.000000"/>
+		<ex_polygon index="87" disp_pos="3900.000000 180.000000"/>
+		<ex_polygon index="88" disp_pos="4020.000000 180.000000"/>
+		<ex_polygon index="89" disp_pos="4140.000000 180.000000"/>
+		<ex_polygon index="90" disp_pos="4260.000000 180.000000"/>
+		<ex_polygon index="91" disp_pos="4380.000000 180.000000"/>
+		<ex_polygon index="92" disp_pos="4500.000000 180.000000"/>
+		<ex_polygon index="93" disp_pos="4620.000000 180.000000"/>
+		<ex_polygon index="94" disp_pos="4740.000000 180.000000"/>
+		<ex_polygon index="95" disp_pos="4860.000000 180.000000"/>
+		<ex_polygon index="96" disp_pos="4980.000000 180.000000"/>
+		<ex_polygon index="97" disp_pos="5100.000000 180.000000"/>
+		<ex_polygon index="98" disp_pos="5220.000000 180.000000"/>
+		<ex_polygon index="99" disp_pos="5340.000000 180.000000"/>
+		<ex_polygon index="100" disp_pos="5460.000000 180.000000"/>
+		<ex_polygon index="101" disp_pos="5580.000000 180.000000"/>
+		<ex_polygon index="102" disp_pos="5700.000000 180.000000"/>
+		<ex_polygon index="103" disp_pos="5820.000000 180.000000"/>
+		<ex_polygon index="104" disp_pos="5940.000000 180.000000"/>
+		<ex_polygon index="105" disp_pos="6060.000000 180.000000"/>
+		<ex_polygon index="106" disp_pos="6180.000000 180.000000"/>
+		<ex_polygon index="107" disp_pos="6300.000000 180.000000"/>
+		<ex_polygon index="108" disp_pos="6420.000000 180.000000"/>
+		<ex_polygon index="109" disp_pos="6540.000000 180.000000"/>
 	</ex_polygon_array>
 	<ex_node_array size="1">
 		<ex_node index="0" disp_pos="0.000000 120.000000"/>
