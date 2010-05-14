@@ -1067,6 +1067,10 @@ static void _modeCheckStart(IRC_BATTLE_MATCH* pWork)
 {
   GFL_NET_AddCommandTable(GFL_NET_CMD_IRCBATTLE, _PacketTbl, NELEMS(_PacketTbl), pWork);
   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS, WB_NET_IRCBATTLE);
+
+  GFL_NET_SetAutoErrorCheck(TRUE);
+  GFL_NET_SetNoChildErrorCheck(TRUE);
+
   _CHANGE_STATE(pWork,_modeCheckStart2);
 }
 
@@ -2293,6 +2297,10 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
     int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
     if(num1==WIFILIST_FRIEND_MAX){
       pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+
+      GFL_NET_SetAutoErrorCheck(FALSE);
+      GFL_NET_SetNoChildErrorCheck(FALSE);
+
       _CHANGE_STATE(pWork,_waitFinish);        // I‚í‚è()
       pWork->timer = _FULL_TIMER;
       return;

@@ -362,6 +362,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
     return;
   }
   POKETRADE_MESSAGE_WindowClose(pWork);
+  POKETRADE_MESSAGE_AppMenuClose(pWork);
   if(pWork->pStream){
     PRINTSYS_PrintStreamDelete( pWork->pStream );
     pWork->pStream = NULL;
