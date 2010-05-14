@@ -306,7 +306,6 @@ void MISSION_RecvMissionStart(MISSION_SYSTEM *mission)
   MISSION_DATA *md = MISSION_GetRecvData(mission);
   if(md != NULL){
     md->ready_timer = 0;
-    mission->start_timer = GFL_RTC_GetTimeBySecond();
   }
 }
 
@@ -320,6 +319,9 @@ void MISSION_RecvMissionStart(MISSION_SYSTEM *mission)
 //==================================================================
 void MISSION_RecvMissionStartClient(MISSION_SYSTEM *mission, NetID net_id)
 {
+  if(mission->start_client_bit == 0){ //誰かがミッションを開始したら親が持つ全体タイマーをセット
+    mission->start_timer = GFL_RTC_GetTimeBySecond();
+  }
   mission->start_client_bit |= 1 << net_id;
   mission->send_start_client_bit |= 1 << net_id;
 }
@@ -337,6 +339,9 @@ void MISSION_RecvMissionStartClientAnswer(MISSION_SYSTEM *mission, s32 now_timer
 {
   mission->mission_start_ok = TRUE;
   mission->data.exe_timer = now_timer;
+  if(GFL_NET_IsParentMachine() == FALSE){ //親はMISSION_RecvMissionStartClientでセットされる
+    mission->start_timer = GFL_RTC_GetTimeBySecond();
+  }
 }
 
 //==================================================================
