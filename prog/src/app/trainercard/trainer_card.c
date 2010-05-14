@@ -1728,6 +1728,7 @@ static int CheckKey(TR_CARD_WORK* wk)
   {
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
     PMSND_PlaySE( SND_TRCARD_CANCEL );   //èIóπâπ
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     return TRC_KEY_REQ_RETURN_BUTTON;
   }
   else if(keyTrg & PAD_BUTTON_X )
@@ -1894,6 +1895,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
   case 0:     // ñﬂÇÈ
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
     PMSND_PlaySE( SND_TRCARD_CANCEL );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
     return TRC_KEY_REQ_RETURN_BUTTON;
     break;
   case 1:     // èIóπ

@@ -229,8 +229,7 @@ static BOOL SEQ_Main( BADGEVIEW_WORK *wk );
 static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no );
 static void InfoWinPut( BADGEVIEW_WORK *wk );
 static  int TouchBar_KeyControl( BADGEVIEW_WORK *wk );
-static void ExecFunc( BADGEVIEW_WORK *wk, int trg );
-static void ContFunc( BADGEVIEW_WORK *wk, int cont );
+static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag );
 static void _page_max_init( BADGEVIEW_WORK *wk );
 static void _page_clact_set( BADGEVIEW_WORK *wk, int page, int max );
 static  int _page_move_check( BADGEVIEW_WORK *wk, int touch );
@@ -1830,6 +1829,7 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
 {
   int  trg, trg2, cont,cont2;
   u32  tp_x=0, tp_y=0;
+  BOOL keyflag=FALSE;
   trg    = GFL_UI_TP_HitTrg( TouchButtonHitTbl );   // タッチトリガー情報
   cont2  = GFL_UI_TP_HitCont( TouchButtonHitTbl ); // タッチトリガー情報
   trg2   = GFL_UI_TP_HitTrg( SlideTbl );          // タッチ情報
@@ -1839,6 +1839,7 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
   // キーでキャンセル
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
     PMSND_PlaySE( SEQ_SE_CANCEL1 );
+    keyflag = TRUE;
     trg = TOUCH_RETURN;
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
     PMSND_PlaySE( SEQ_SE_CANCEL1 );
@@ -1849,8 +1850,7 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
     trg = TOUCH_CHANGE_CARD;
   }
   // 左ページ・右ページ・戻る機能の呼び出し
-  ExecFunc(wk, trg);
-//  ContFunc(wk, cont2);
+  ExecFunc(wk, trg, keyflag);
 
   // ジムリーダーをスライドさせる処理
   SlideFunc( wk, trg2, cont+1, tp_x );
@@ -1894,7 +1894,7 @@ static int _get_front_gymreader( int frame )
  * @param   trg 
  */
 //----------------------------------------------------------------------------------
-static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
+static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
 {
   if(trg==GFL_UI_TP_HIT_NONE){
     return;
@@ -1949,6 +1949,11 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_END], 8 );
+    if(keyflag){
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    }else{
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    }
     break;
   case TOUCH_RETURN:        // トレーナーカード終了→メニューへ
     PMSND_PlaySE( SND_TRCARD_CANCEL );
@@ -1974,33 +1979,6 @@ static void CheckBookmark( BADGEVIEW_WORK *wk )
   GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_BOOKMARK], 6+flag );
   GAMEDATA_SetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE, flag );
   PMSND_PlaySE( SND_TRCARD_BOOKMARK );
-}
-
-
-
-//----------------------------------------------------------------------------------
-/**
- * @brief タッチし続けてるときの処理
- *
- * @param   wk    
- * @param   cont    
- */
-//----------------------------------------------------------------------------------
-static void ContFunc( BADGEVIEW_WORK *wk, int cont )
-{
-  switch(cont){
-  case TOUCH_BADGE_0:
-  case TOUCH_BADGE_1:
-  case TOUCH_BADGE_2:
-  case TOUCH_BADGE_3:
-  case TOUCH_BADGE_4:
-  case TOUCH_BADGE_5:
-  case TOUCH_BADGE_6:
-  case TOUCH_BADGE_7:
-    if(wk->badge.polish[cont-TOUCH_BADGE_0]!=255){
-      wk->badge.polish[cont-TOUCH_BADGE_0]++;
-    }
-  }
 }
 
 
