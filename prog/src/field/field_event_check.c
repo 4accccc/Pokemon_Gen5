@@ -2834,7 +2834,8 @@ static GMEVENT_RESULT event_NaminoriEnd(
   
   switch( *seq )
   {
-  case 0: //入力された方向に向く
+  case 0: //動作モデルポーズ＆入力された方向に向く
+    MMDLSYS_PauseMoveProc( MMDL_GetMMdlSys(mmdl) );
     MMDL_SetDirDisp( mmdl, work->dir );
     (*seq)++;
     break;
@@ -2860,6 +2861,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
     }
     break;
   case 3:
+    MMDLSYS_ClearPauseMoveProc( MMDL_GetMMdlSys(mmdl) );
     return GMEVENT_RES_FINISH;
   }
   
@@ -2913,7 +2915,7 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
       attr_value = MAPATTR_GetAttrValue( attr );
       
       kishi = FALSE;
-
+      
       if( MAPATTR_VALUE_CheckShore(attr_value) == TRUE ){ //岸
         MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 ); //もう一歩先
         attr = MAPATTR_GetAttribute( mapper, &pos );
@@ -3189,7 +3191,8 @@ static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWo
     gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
 
     // 動作モデルを検索
-    mmdl = MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
+    mmdl = MMDLSYS_SearchGridPos(
+        FIELDMAP_GetMMdlSys(fieldWork), gx, gz, TRUE );
 
     // 動作モデルを発見
     if( mmdl ) { return FALSE; }

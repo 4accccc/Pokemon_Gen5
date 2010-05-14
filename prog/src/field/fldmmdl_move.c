@@ -1537,8 +1537,8 @@ BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x0, s16 z0, BOOL old_hit )
   }
   
   if( old_hit == TRUE ){
-    x1 = MMDL_GetGridPosX( mmdl );
-    z1 = MMDL_GetGridPosZ( mmdl );
+    x1 = MMDL_GetOldGridPosX( mmdl );
+    z1 = MMDL_GetOldGridPosZ( mmdl );
     MMDL_CreateHitCheckRect( mmdl, x1, z1, &rect );
     
     if( rect.left <= x0 && rect.right >= x0 ){
