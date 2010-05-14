@@ -3165,6 +3165,10 @@ GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm)
   GAME_COMM_NO comm_no = GameCommSys_BootCheck(game_comm);
   switch(comm_no){
   case GAME_COMM_NO_NULL:                  //何も起動していない状態
+    if(NetErr_App_CheckError()){  //エラーが発生している場合は最後に起動していた通信番号を返す
+      return GameCommSys_GetLastCommNo(game_comm);
+    }
+    return comm_no;
   case GAME_COMM_NO_FIELD_BEACON_SEARCH:   //フィールド上でビーコンサーチ
   case GAME_COMM_NO_INVASION:              //侵入
   case GAME_COMM_NO_DEBUG_SCANONLY:        //デバッグ用スキャンのみ
