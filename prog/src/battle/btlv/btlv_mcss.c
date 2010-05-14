@@ -43,6 +43,9 @@
 
 #define BTLV_MCSS_PINCH_PITCH ( -2560 )
 
+#define BTLV_MCSS_EVY_WAIT ( 24 )
+#define BTLV_MCSS_EVY_MAX  ( 12 )
+
 enum{
   REVERSE_FLAG_OFF = 0,
   REVERSE_FLAG_ON,
@@ -105,6 +108,9 @@ struct _BTLV_MCSS_WORK
   u32             mcss_tcb_blink_execute;
   u32             mcss_tcb_alpha_execute;
   u32             mcss_tcb_mosaic_execute;
+  int             evy;
+  int             evy_dir;
+  int             evy_wait;
 
   HEAPID          heapID;
 };
@@ -397,6 +403,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
             BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
           }
         }
+        if( BTLV_EFFECT_CheckExecute() ) continue;
         //目を瞑る＆アニメーション速度制御
         if( BTLV_MCSS_CheckExist( bmw, pos ) )
         { 
@@ -404,55 +411,74 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
           int sick_anm;
           int index = BTLV_MCSS_GetIndex( bmw, pos );
 
+          if( bmw->btlv_mcss[ index ].sick_set_flag == 1 )
+          { 
+            if( bmw->evy_dir == 0 )
+            { 
+              bmw->evy_dir = 1;
+            }
+            if( bmw->evy_wait++ > BTLV_MCSS_EVY_WAIT )
+            { 
+              bmw->evy_wait = 0;
+              bmw->evy += bmw->evy_dir;
+              if( ( bmw->evy == 0 ) || ( bmw->evy == BTLV_MCSS_EVY_MAX ) )
+              { 
+                bmw->evy_dir *= -1;
+              }
+            }
+          }
+
           if( BTLV_EFFECT_GetGaugeStatus( pos, &color, &sick_anm ) )
           { 
-            if( ( ( bmw->btlv_mcss[ index ].sick_set_flag ) && ( sick_anm == APP_COMMON_ST_ICON_NONE ) ) ||
-                ( ( !bmw->btlv_mcss[ index ].sick_set_flag ) && ( sick_anm != APP_COMMON_ST_ICON_NONE ) ) )
-            { 
-              switch( sick_anm ){ 
-              case APP_COMMON_ST_ICON_NEMURI:      // 眠り
-                BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_ON );
-                BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE / 3 );
-                bmw->btlv_mcss[ index ].sick_set_flag = 1;
-                break;
-              case APP_COMMON_ST_ICON_MAHI:        // 麻痺
-                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 0 ) );
-                bmw->btlv_mcss[ index ].sick_set_flag = 1;
-                break;
-              case APP_COMMON_ST_ICON_KOORI:       // 氷
-                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 31 ) );
-                BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ON );
-                bmw->btlv_mcss[ index ].sick_set_flag = 1;
-                break;
-              case APP_COMMON_ST_ICON_YAKEDO:      // 火傷
-                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 0, 0 ) );
-                bmw->btlv_mcss[ index ].sick_set_flag = 1;
-                break;
-              case APP_COMMON_ST_ICON_DOKU:        // 毒
-              case APP_COMMON_ST_ICON_DOKUDOKU:    // どくどく
-                BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 0, 15 ) );
-                bmw->btlv_mcss[ index ].sick_set_flag = 1;
-                break;
-              case APP_COMMON_ST_ICON_NONE:        // なし（アニメ番号的にもなし）
-              default:
+            switch( sick_anm ){ 
+            case APP_COMMON_ST_ICON_NEMURI:      // 眠り
+              BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_ON );
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE / 3 );
+              bmw->btlv_mcss[ index ].sick_set_flag = 1;
+              break;
+            case APP_COMMON_ST_ICON_MAHI:        // 麻痺
+              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 15, 0 ) );
+              bmw->btlv_mcss[ index ].sick_set_flag = 1;
+              break;
+            case APP_COMMON_ST_ICON_KOORI:       // 氷
+              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 31 ) );
+              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ON );
+              bmw->btlv_mcss[ index ].sick_set_flag = 1;
+              break;
+            case APP_COMMON_ST_ICON_YAKEDO:      // 火傷
+              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 0, 0 ) );
+              bmw->btlv_mcss[ index ].sick_set_flag = 1;
+              break;
+            case APP_COMMON_ST_ICON_DOKU:        // 毒
+            case APP_COMMON_ST_ICON_DOKUDOKU:    // どくどく
+              BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, bmw->evy, GX_RGB( 15, 0, 15 ) );
+              bmw->btlv_mcss[ index ].sick_set_flag = 1;
+              break;
+            case APP_COMMON_ST_ICON_NONE:        // なし（アニメ番号的にもなし）
+            default:
+              if( bmw->btlv_mcss[ index ].sick_set_flag == 1 )
+              { 
                 BTLV_MCSS_ResetPaletteFadeBaseColor( bmw, pos );
                 BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
                 BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_OFF );
                 BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
                 bmw->btlv_mcss[ index ].sick_set_flag = 0;
-                break;
+                bmw->evy_dir = 0;
+                bmw->evy = 0;
+                bmw->evy_wait = 0;
               }
+              break;
             }
-            if( sick_anm == APP_COMMON_ST_ICON_NONE )
+          }
+          if( sick_anm == APP_COMMON_ST_ICON_NONE )
+          { 
+            if( ( color == GAUGETOOL_HP_DOTTO_RED ) || ( color == GAUGETOOL_HP_DOTTO_NULL ) )
             { 
-              if( ( color == GAUGETOOL_HP_DOTTO_RED ) || ( color == GAUGETOOL_HP_DOTTO_NULL ) )
-              { 
-                BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE / 3 );
-              }
-              else
-              { 
-                BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
-              }
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE / 3 );
+            }
+            else
+            { 
+              BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
             }
           }
         }
