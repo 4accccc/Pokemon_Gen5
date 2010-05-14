@@ -184,8 +184,6 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame, u32 delayCount )
       data++;
       wk->is_cmd_end = ( data->type == DEMO3D_CMD_TYPE_END );
 
-      //@TODO TCBが残っていたらアサート
-     
       wk->cmd_idx++;
 
       // 終了判定 ENDフラグが立っているか、現在のフレームで実行するコマンドが無くなっていたら処理を抜ける
