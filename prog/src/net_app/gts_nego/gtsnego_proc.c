@@ -858,13 +858,14 @@ static int _evalcallback(int index, void* param)
   GTSNEGO_WORK *pWork=param;
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
   int value = -1;
-  int targetlv,targetfriend,targetmy,profile,friendprofile;
+  int targetlv,targetfriend,targetmy;
+  u32 profile,friendprofile;
   int i;
 
   targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
   targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
   targetmy = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_MY].keyStr,-1);
-  profile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_PROFILE].keyStr,-1);
+  profile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_PROFILE].keyStr,0);
   friendprofile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_SEARCHPROFILE].keyStr,0);
   
   if(pWork->changeMode==_CHANGEMODE_SELECT_FRIEND){//‚Æ‚à‚¾‚¿

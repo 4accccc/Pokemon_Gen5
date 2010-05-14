@@ -1009,12 +1009,12 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
     GFL_BMPWIN_Create(GFL_BG_FRAME3_M,
                       1, 0, 31 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
-  _pokeNickNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 0,bEgg, POKEMONTRADEPROC_IsTimeWaitSelect(pWork),pWork);
+  _pokeNickNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 0,bEgg, FALSE,pWork);
   if(!bEgg){
     _pokeZukanNoMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0, 8*2,bEgg,pWork);
     _pokeKindNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 7*8, 8*2,bEgg,pWork);
     _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 0,pWork);
-    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE,POKEMONTRADEPROC_IsTimeWaitSelect(pWork));
+    _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE,FALSE);
 
     _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 0 ,4*8,pWork);
 
@@ -1140,9 +1140,9 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame)
 
         POKETRADE_2D_GTSPokemonIconSet(pWork, side, poke, pp,FALSE);
         
-        _pokeNickNameMsgDisp(pp, pWork->listBmp[side*4+poke+1], 0,  0 , bEgg,FALSE, pWork);
+        _pokeNickNameMsgDisp(pp, pWork->listBmp[side*4+poke+1], 0,  0 , bEgg,POKEMONTRADEPROC_IsTimeWaitSelect(pWork), pWork);
         if(!bEgg){
-          _pokeSexMsgDisp(pp, pWork->listBmp[side*4+poke+1], 7*8, 2*8, pWork, FALSE, FALSE);
+          _pokeSexMsgDisp(pp, pWork->listBmp[side*4+poke+1], 7*8, 2*8, pWork, FALSE, POKEMONTRADEPROC_IsTimeWaitSelect(pWork));
           _pokeLvMsgDisp(pp, pWork->listBmp[side*4+poke+1], 0,  2*8, pWork);
         }
       }

@@ -135,18 +135,18 @@ MYSTATUS* WIFI_NEGOTIATION_SV_GetMyStatus(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 ind
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   渡したプロファイルIDに一致する物があるかどうかさがす
+ * @brief   渡したPlayerIDに一致する物があるかどうかさがす
  * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
- * @param   profile 検査profileID
+ * @param   playerID
  * @return	一致したらTRUE
  */
 //--------------------------------------------------------------------------------------------
-BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,s32 profile)
+BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 playerID)
 {
   int i;
 
   for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
-    if(MyStatus_GetProfileID(&pSV->aMyStatus[ i ]) == profile){
+    if(MyStatus_GetID(&pSV->aMyStatus[ i ]) == playerID){
       return TRUE;
     }
   }
