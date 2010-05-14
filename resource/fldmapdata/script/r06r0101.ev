@@ -39,8 +39,15 @@ _EVENT_DATA_END
 //シキジカ															//
 //	LOCALWORK0～2	まで使用しました。同マップ内の使用を禁止します。//
 //																	//
+//	LOCALWORK0	マップに入ってからの初回会話かどうか判定			//
+//	LOCALWORK1	シキジカを研究員に見せた状態を保存してメッセージ分岐//
+//	LOCALWORK2	見せたシキジカの季節を保存して会話を分岐			//
+//																	//
 //温度計															//
 //	LOCALWORK3	まで使用しました。同マップ内の使用を禁止します。	//
+//																	//
+//	LOCALWORK3	温度計の気温を保存して、同マップ内で使用する		//
+//																	//
 //------------------------------------------------------------------//
 
 /************************************************************/
@@ -50,7 +57,8 @@ INIT_EVENT_START	ev_init_r06r0101
 {
 	DEFINE_LOCAL LWK_KISETU
 	_GET_SEASON_ID( LWK_KISETU )
-
+	
+	//温度計の温度をランダムで決定して保存
 	IF $LWK_KISETU == 0 THEN
 		_GET_RND(LOCALWORK3,9)
 		$LOCALWORK3 += 11
@@ -132,7 +140,6 @@ EVENT_START  ev_r06r0101_assistantm_03
 			_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_09)
 			_MSGWIN_CLOSE()
 			
-			
 			//アイテム入手【仮】アイテム内容
 			_ITEM_EVENT_KEYWAIT(ITEM_RIIHUNOISI,1)
 			//アイテム入手フラグをON
@@ -147,19 +154,18 @@ EVENT_START  ev_r06r0101_assistantm_03
 						
 						//われわれは　きせつによる　しぜんの　さまざまな
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_01)
-						_MSGWIN_CLOSE()
 								
 						//…と　ここまでは　よいのですけれども
-						_TIME_WAIT(16)
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_01a)
-						_MSGWIN_CLOSE()
 						
 					ENDIF
 					
-					_TIME_WAIT(16)
 					//シキジカを選択したかの判定へ
 					_CALL ev_shikijika_event
-						
+
+					//イベントスタートフラグON
+					_FLAG_SET(FE_R06R0101_EVENT_ON)
+			
 					//一度話しかけたことを保存
 					$LOCALWORK0 = 1
 					
@@ -210,9 +216,7 @@ ev_shikijika_event:
 	_YES_NO_WIN(SCWK_ANSWER)
 		
 	IF $SCWK_ANSWER == SCR_YES THEN
-		_MSGWIN_CLOSE()
-		//イベントスタートフラグON
-		_FLAG_SET(FE_R06R0101_EVENT_ON)
+	_MSGWIN_CLOSE()
 
 		//手持ちポケモンを選択する
 		_SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK , LWK_POKE_SELECT , 0 )

@@ -240,6 +240,7 @@ EVENT_START   ev_pos_c03r1301_sunglasses_02
 			_CALL ev_c03r1301_lookdown
 					
 			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_05 , C03R1301_SUNGLASSES_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 		ENDIF

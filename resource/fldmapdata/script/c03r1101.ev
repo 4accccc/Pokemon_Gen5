@@ -284,8 +284,6 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	_MSGWIN_CLOSE()
 	
 	//で　みんなは　どうするのさ？
-	_OBJ_ANIME( C03R1101_LEADER3_01, anm_stay_r )
-	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_06 , C03R1101_LEADER3_01 )
 	_MSGWIN_CLOSE()
 	
@@ -309,8 +307,6 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	_MSGWIN_CLOSE()
 	
 	//んー　いいねえ
-	_OBJ_ANIME( C03R1101_LEADER3_01, anm_stay_r )
-	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_07 , C03R1101_LEADER3_01 )
 	_MSGWIN_CLOSE()
 	
@@ -357,6 +353,8 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	
 	//アーティ・出る
 	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_leave1 )
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_stay_d)
 	_OBJ_ANIME_WAIT()
 
 	_OBJ_DEL( C03R1101_LEADER3_01 )
