@@ -738,6 +738,7 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
   evWork->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_PROC_WRAPPER , sizeof( MUS_SHOT_INIT_WORK ));
   evWork->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , sizeof( MUSICAL_SHOT_DATA ));
   evWork->shotInitWork->isLoadOverlay = FALSE;
+  evWork->shotInitWork->commWork = evWork->commWork;
   {
     u8 i;
     RTCDate date;

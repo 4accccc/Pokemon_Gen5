@@ -239,8 +239,6 @@ ev_musical_recept_comm_core:
     _RET
   ENDIF
 
-  //TODO ペアコンチェック！！
-
   //ポケモン選択
   _CALL ev_musical_select_poke
   IF $SCWK_ANSWER == FALSE THEN //接続失敗
@@ -771,7 +769,6 @@ fan_main_routine:
 
   _TALK_OBJ_START()
   
-  //本来見た目の処理はココでやるべきではないと思うが、仮処理
   _GET_MUSICAL_FAN_VALUE_TYPE( fan_number , fan_type )
   IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
     _BALLOONWIN_TALKOBJ_MSG( msg_musical_fan_none )

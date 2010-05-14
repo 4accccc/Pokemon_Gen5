@@ -25,6 +25,7 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "system/bmp_winframe.h"
+#include "system/time_icon.h"
 #include "system/wipe.h"
 #include "test/ariizumi/ari_debug.h"
 #include "mus_shot_info.h"
@@ -65,6 +66,7 @@ typedef enum
   //保存確認モード
   MSIS_MSG_WAIT,
   MSIS_YESNO_WAIT,
+  MSIS_COMM_WAIT,
   //見るだけモード
   MSIS_KEY_WAIT,
   MSIS_WAIT_ANIME,
@@ -103,12 +105,15 @@ struct _MUS_SHOT_INFO_WORK
   PRINT_STREAM    *printHandle;
   GFL_MSGDATA     *msgHandle;
   STRBUF          *msgStr;
+  BOOL            isUpdateQue;
+  TIMEICON_WORK *timeIcon;
   
   PRINT_QUE *printQue;
   APP_TASKMENU_WORK *yesNoWork;
 	APP_TASKMENU_RES	*takmenures;
 
-
+  MUS_COMM_WORK *commWork;
+  
   GFL_CLUNIT  *cellUnit;
   u32         cellResIdx[SICR_MAX];
   GFL_CLWK    *clwkReturn;
@@ -123,13 +128,14 @@ static void MUS_SHOT_INFO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bg
 static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *infoWork );
 static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *infoWork );
 static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *infoWork , const u16 msgId );
+static void MUS_SHOT_INFO_DispMessageTimer( MUS_SHOT_INFO_WORK *infoWork , const u16 msgId );
 static void MUS_SHOT_INFO_HideMessage( MUS_SHOT_INFO_WORK *infoWork );
 static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *infoWork );
 
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
-MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSICAL_SAVE *musicalSave , const BOOL isChackMode , HEAPID heapId )
+MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSICAL_SAVE *musicalSave , const BOOL isChackMode , MUS_COMM_WORK *commWork , HEAPID heapId )
 {
   MUS_SHOT_INFO_WORK* infoWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MUS_SHOT_INFO_WORK ));
   
@@ -137,6 +143,7 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
   infoWork->isChackMode = isChackMode;
   infoWork->shotData = shotData;
   infoWork->musicalSave = musicalSave;
+  infoWork->commWork = commWork;
   infoWork->msgStr = NULL;
   infoWork->bgScrollCnt = 0;
 
@@ -234,10 +241,26 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
         GFL_STD_MemCopy( infoWork->shotData , shotData , sizeof(MUSICAL_SHOT_DATA) );
       }
       
-      infoWork->state = MSIS_FINISH;
+      if( infoWork->commWork != NULL )
+      {
+        infoWork->state = MSIS_COMM_WAIT;
+        MUS_COMM_SendTimingCommand( infoWork->commWork , MUS_COMM_TIMMING_SHOT_CONFIRM );
+        MUS_SHOT_INFO_DispMessageTimer( infoWork , MUSICAL_SHOT_INFO_04 );
+      }
+      else
+      {
+        infoWork->state = MSIS_FINISH;
+      }
     }
     break;
   
+  case MSIS_COMM_WAIT:
+    if( MUS_COMM_CheckTimingCommand( infoWork->commWork , MUS_COMM_TIMMING_SHOT_CONFIRM ) == TRUE )
+    {
+      infoWork->state = MSIS_FINISH;
+    }
+    break;
+  //見るだけモード
   case MSIS_KEY_WAIT:
     {
       static const GFL_UI_TP_HITTBL hitTbl[2] = 
@@ -276,6 +299,16 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
     }
   }
   PRINTSYS_QUE_Main( infoWork->printQue );
+
+  if( infoWork->isUpdateQue == TRUE )
+  {
+    if( PRINTSYS_QUE_IsFinished( infoWork->printQue ) == TRUE )
+    {
+      infoWork->isUpdateQue = FALSE;
+      GFL_BMPWIN_TransVramCharacter( infoWork->msgWin );
+      infoWork->timeIcon = TIMEICON_CreateTcbl( infoWork->tcblSys , infoWork->msgWin , 0x0F , TIMEICON_DEFAULT_WAIT , infoWork->heapId );
+    }
+  }
 
   //スクロール系
   infoWork->bgScrollCnt++;
@@ -463,7 +496,9 @@ static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *infoWork )
   infoWork->tcblSys = GFL_TCBL_Init( infoWork->heapId , infoWork->heapId , 3 , 0x100 );
   infoWork->printHandle = NULL;
   infoWork->msgStr = NULL;
-  
+  infoWork->isUpdateQue = FALSE;
+  infoWork->timeIcon = NULL;
+
   //YesNo用
   infoWork->printQue = PRINTSYS_QUE_Create( infoWork->heapId );
 }
@@ -474,6 +509,11 @@ static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *infoWork )
 static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *infoWork )
 {
   PRINTSYS_QUE_Delete( infoWork->printQue );
+  if( infoWork->timeIcon != NULL )
+  {
+    TIMEICON_Exit( infoWork->timeIcon );
+    infoWork->timeIcon = NULL;
+  }
   if( infoWork->printHandle != NULL )
   {
     PRINTSYS_PrintStreamDelete( infoWork->printHandle );
@@ -515,6 +555,24 @@ static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *infoWork , const u16 
   BmpWinFrame_Write( infoWork->msgWin , WINDOW_TRANS_ON_V , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN );
 }
 
+static void MUS_SHOT_INFO_DispMessageTimer( MUS_SHOT_INFO_WORK *infoWork , const u16 msgId )
+{
+  {
+    if( infoWork->msgStr != NULL )
+    {
+      GFL_STR_DeleteBuffer( infoWork->msgStr );
+      infoWork->msgStr = NULL;
+    }
+    
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( infoWork->msgWin ) , 0xf );
+    infoWork->msgStr = GFL_MSG_CreateString( infoWork->msgHandle , msgId );
+    PRINTSYS_PrintQue( infoWork->printQue , GFL_BMPWIN_GetBmp( infoWork->msgWin ) , 
+            0 , 0 , infoWork->msgStr , infoWork->fontHandle );
+    infoWork->isUpdateQue = TRUE;
+  }
+  BmpWinFrame_Write( infoWork->msgWin , WINDOW_TRANS_ON_V , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN );
+}
+
 //--------------------------------------------------------------------------
 //  メッセージ表示
 //--------------------------------------------------------------------------
@@ -522,6 +580,11 @@ static void MUS_SHOT_INFO_HideMessage( MUS_SHOT_INFO_WORK *infoWork )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( infoWork->msgWin ) , 0 );
   BmpWinFrame_Clear( infoWork->msgWin , WINDOW_TRANS_ON_V );
+  if( infoWork->timeIcon != NULL )
+  {
+    TIMEICON_Exit( infoWork->timeIcon );
+    infoWork->timeIcon = NULL;
+  }
 }
 
 //--------------------------------------------------------------------------

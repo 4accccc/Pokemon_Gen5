@@ -40,6 +40,7 @@ DEFINE_LOCAL condition  // コンディション
 DEFINE_LOCAL ownerPos   //オーナーの位置
 DEFINE_LOCAL ownerBefPos  //オーナーの前回位置
 DEFINE_LOCAL checkRank    //今向かう順位(0～3で1～4位
+DEFINE_LOCAL msgSyncNo    //メッセージ同期用番号
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -155,6 +156,8 @@ _RET
 //======================================================================
 grade_one_msg_routine:
 {
+  $msgSyncNo += 1
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC,msgSyncNo , 0, 0 )
   _CALL owner_move_routine
   
   _MUSICAL_WORD( MUSICAL_WORD_NPC_NAME , 0 , ownerPos )
@@ -168,6 +171,8 @@ grade_one_msg_routine:
 
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POINT,ownerPos,point)
   
+  $msgSyncNo += 1
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, msgSyncNo, 0, 0 )
   IF $point >= 100 THEN
     _BALLOONWIN_OBJMSG( msg_mus_03_003_01 , C04R0202_WOMAN1_01 )
   ELSIF $point >= 70 THEN
@@ -254,22 +259,27 @@ EVENT_START ev_c04r0202_mus_1st
     _MUSICAL_WORD( MUSICAL_WORD_AUDI_TYPE   , 1 , condition )
     _BALLOONWIN_OBJMSG( msg_mus_01_001 , C04R0202_WOMAN1_01 )
 
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_MSG11, 0, 0 )
     _MUSICAL_WORD( MUSICAL_WORD_POKE_NAME , 2 , 0 )
     _MUSICAL_WORD( MUSICAL_WORD_NPC_NAME  , 3 , 0 )
     _BALLOONWIN_OBJMSG( msg_mus_01_002 , C04R0202_WOMAN1_01 )
 
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_MSG12, 0, 0 )
     _MUSICAL_WORD( MUSICAL_WORD_POKE_NAME , 2 , 1 )
     _MUSICAL_WORD( MUSICAL_WORD_NPC_NAME  , 3 , 1 )
     _BALLOONWIN_OBJMSG( msg_mus_01_002 , C04R0202_WOMAN1_01 )
 
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_MSG13, 0, 0 )
     _MUSICAL_WORD( MUSICAL_WORD_POKE_NAME , 2 , 2 )
     _MUSICAL_WORD( MUSICAL_WORD_NPC_NAME  , 3 , 2 )
     _BALLOONWIN_OBJMSG( msg_mus_01_002 , C04R0202_WOMAN1_01 )
 
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_MSG14, 0, 0 )
     _MUSICAL_WORD( MUSICAL_WORD_POKE_NAME , 2 , 3 )
     _MUSICAL_WORD( MUSICAL_WORD_NPC_NAME  , 3 , 3 )
     _BALLOONWIN_OBJMSG( msg_mus_01_002 , C04R0202_WOMAN1_01 )
 
+    _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_MSG15, 0, 0 )
     _BALLOONWIN_OBJMSG( msg_mus_01_003 , msg_mus_01_003 )
     _BALLOONWIN_CLOSE()
 
@@ -345,6 +355,7 @@ EVENT_START ev_c04r0202_mus_3rd
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_GRADE_START, 0, 0 )
 
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
+  $msgSyncNo = MUSICAL_COMM_SYNC_MSG_OWNER1
 
   //全体評価
   _CALL grade_all_msg_routine
@@ -366,6 +377,7 @@ EVENT_START ev_c04r0202_mus_3rd
     ENDIF
   ENDWHILE
   
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_MSG21, 0, 0 )
   $ownerPos = 5
   _CALL owner_move_routine
   

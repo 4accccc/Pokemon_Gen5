@@ -9,6 +9,7 @@
 #pragma once
 
 #include "musical/musical_define.h"
+#include "musical/comm/mus_comm_func.h"
 #include "savedata/musical_save.h"
 
 //======================================================================
@@ -31,6 +32,7 @@ typedef struct
   
   MUSICAL_SHOT_DATA *musShotData;
   MUSICAL_SAVE* musicalSave;  //isCheckMode = TRUE ‚ÌŽž‚¾‚¯•K—v
+  MUS_COMM_WORK *commWork;
   
 }MUS_SHOT_INIT_WORK;
 

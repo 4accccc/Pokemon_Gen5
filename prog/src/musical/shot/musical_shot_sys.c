@@ -206,6 +206,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
   work->infoWork = MUS_SHOT_INFO_InitSystem( work->shotInitWork->musShotData , 
                                              work->shotInitWork->musicalSave , 
                                              work->shotInitWork->isCheckMode ,
+                                             work->shotInitWork->commWork ,
                                              work->heapId );
   
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
