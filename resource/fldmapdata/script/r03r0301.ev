@@ -164,6 +164,14 @@ EVENT_START   ev_pos_r03r0301_rival_01
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			
+			//100514斉藤マ：BTS1569の対処
+			//全滅状態になり、ライバル一人で勝利した場合、プレイヤーの手持ちを回復させる
+			_GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+			IF $SCWK_TEMP0 == 0 THEN
+				_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+			ENDIF
+			
 			_TRAINER_WIN()
 		ELSE
 			//======================================//

@@ -328,6 +328,12 @@ EVENT_START	ev_pos_r05_rival_01
 		_CAMERA_MOVE(9688,0,970752,23494656,0,28540928, 1)
 		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 		
+		//全滅状態になり、ライバル一人で勝利した場合、プレイヤーの手持ちを回復させる
+		_GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+		IF $SCWK_TEMP0 == 0 THEN
+			_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		ENDIF
+		
 		_TRAINER_WIN()
 	ELSE
 		//負けの場合ライバルとカミツレの非表示フラグをセット
@@ -1076,15 +1082,7 @@ EVENT_START	ev_r05_rival_02
 	
 	//ライバル主人公と向き合う
 	_TURN_HERO_SITE()
-/*	IF $LWK_DIR == DIR_DOWN THEN
-		_OBJ_ANIME( R05_RIVAL_02, anm_obj_dir_u )
-	ELSIF $LWK_DIR == DIR_RIGHT THEN
-		_OBJ_ANIME( R05_RIVAL_02, anm_obj_dir_l )
-	ELSE
-		_OBJ_ANIME( R05_RIVAL_02, anm_obj_dir_r )
-	ENDIF
-	_OBJ_ANIME_WAIT()
-*/	
+
 	//ライバル：…ポケモン勝負に
 	_BALLOONWIN_OBJMSG_POS( msg_r05_black_end_02, R05_RIVAL_02, POS_DEFAULT )
 	_MSGWIN_CLOSE()
