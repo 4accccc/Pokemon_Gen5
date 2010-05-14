@@ -279,6 +279,14 @@ void WIFILOGIN_MESSAGE_InfoMessageDispEx(WIFILOGIN_MESSAGE_WORK* pWork, GFL_MSGD
     }
     APP_PRINTSYS_COMMON_PrintStreamInit( &pWork->print_wk, type );
   }
+
+  //EndCheckで解放を行っているが、
+  //通信エラーなどでEndCheckを通らずここへきた場合のためNULLではなかったら解放処理を行なう
+  if( pWork->pStream )
+  { 
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+  }
+
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
