@@ -229,8 +229,14 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   case WIFI_GAME_TVT:
-    wk->command=WIFIP2PMATCH_PLAYERDIRECT_TVT;
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+    if(wk->pParentWork->VCTOn[1]==FALSE ){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1033 , FALSE);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_RETURN);
+    }
+    else{
+      wk->command=WIFIP2PMATCH_PLAYERDIRECT_TVT;
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+    }
     break;
   case WIFI_GAME_TRADE:
     {
