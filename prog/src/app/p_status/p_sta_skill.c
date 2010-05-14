@@ -1032,24 +1032,40 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_POW] , mes_status_06_20 ,
                             PSTATUS_SKILL_STR_WAZA_POWER_X , PSTATUS_SKILL_STR_WAZA_POWER_Y , PSTATUS_STR_COL_TITLE );
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 no = WAZADATA_GetPower( wazaNo );
-    WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-    PSTATUS_UTIL_DrawValueStrFunc( work , skillWork->upBmpWin[PSBT_POW] , wordSet , mes_status_06_23 ,
-                                   PSTATUS_SKILL_STR_WAZA_POWER_NUM_X , PSTATUS_SKILL_STR_WAZA_POWER_NUM_Y , PSTATUS_STR_COL_VALUE );
-    WORDSET_Delete( wordSet );
+    u32 pow = WAZADATA_GetPower( wazaNo );
+    if( pow == 0 )
+    {
+      PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_POW] , mes_status_06_28 ,
+                                     PSTATUS_SKILL_STR_WAZA_POWER_NUM_X , PSTATUS_SKILL_STR_WAZA_POWER_NUM_Y , PSTATUS_STR_COL_VALUE );
+    }
+    else
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      WORDSET_RegisterNumber( wordSet , 0 , pow , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+      PSTATUS_UTIL_DrawValueStrFunc( work , skillWork->upBmpWin[PSBT_POW] , wordSet , mes_status_06_23 ,
+                                     PSTATUS_SKILL_STR_WAZA_POWER_NUM_X , PSTATUS_SKILL_STR_WAZA_POWER_NUM_Y , PSTATUS_STR_COL_VALUE );
+      WORDSET_Delete( wordSet );
+    }
   }
 
   //ãZñΩíÜ
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_HIT] , mes_status_06_21 ,
                             PSTATUS_SKILL_STR_WAZA_HIT_X , PSTATUS_SKILL_STR_WAZA_HIT_Y , PSTATUS_STR_COL_TITLE );
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 no = WAZADATA_GetParam( wazaNo, WAZAPARAM_HITPER );
-    WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-    PSTATUS_UTIL_DrawValueStrFunc( work , skillWork->upBmpWin[PSBT_HIT] , wordSet , mes_status_06_24 ,
-                                   PSTATUS_SKILL_STR_WAZA_HIT_NUM_X , PSTATUS_SKILL_STR_WAZA_HIT_NUM_Y , PSTATUS_STR_COL_VALUE );
-    WORDSET_Delete( wordSet );
+    u32 hit = WAZADATA_GetParam( wazaNo, WAZAPARAM_HITPER );
+    if( hit == 0 )
+    {
+      PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_HIT] , mes_status_06_28 ,
+                                     PSTATUS_SKILL_STR_WAZA_HIT_NUM_X , PSTATUS_SKILL_STR_WAZA_HIT_NUM_Y , PSTATUS_STR_COL_VALUE );
+    }
+    else
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      WORDSET_RegisterNumber( wordSet , 0 , hit , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+      PSTATUS_UTIL_DrawValueStrFunc( work , skillWork->upBmpWin[PSBT_HIT] , wordSet , mes_status_06_24 ,
+                                     PSTATUS_SKILL_STR_WAZA_HIT_NUM_X , PSTATUS_SKILL_STR_WAZA_HIT_NUM_Y , PSTATUS_STR_COL_VALUE );
+      WORDSET_Delete( wordSet );
+    }
   }
   //ãZê‡ñæ
   {
