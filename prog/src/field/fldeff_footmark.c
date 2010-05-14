@@ -68,7 +68,7 @@ enum
 #define FOOTMARK_DEEPSNOW_START (FOOTMARK_DEEPSNOW_UD)
 
 //#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-8))
-#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-1))
+//#define FOOTMARK_OFFSPOS_Y (NUM_FX32(-1))
 #define FOOTMARK_OFFSPOS_Z_WALK_LR (NUM_FX32(-2))
 
 #define FOOTMARK_VANISH_START_FRAME (16)			///<点滅開始フレーム(赤緑40)
@@ -78,8 +78,10 @@ enum
 #define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*1+0x200)
 #define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*1+0x200)
 #else
-#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*1+0x300)
-#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*1+0x300)
+//#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*1+0x300)
+//#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*1+0x300)
+#define FOOTMARK_BBDACT_SIZE_X (FX16_ONE*1)
+#define FOOTMARK_BBDACT_SIZE_Y (FX16_ONE*1)
 #endif
 
 //======================================================================
@@ -154,7 +156,7 @@ void * FLDEFF_FOOTMARK_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
   fmark->fectrl = fectrl;
   
   fieldmap = FLDEFF_CTRL_GetFieldMapWork( fmark->fectrl );
-  fmark->bbdact_sys = FIELDMAP_GetEffBbdActSys( fieldmap );
+  fmark->bbdact_sys = FIELDMAP_GetSubBbdActSys( fieldmap );
   
   fmark_InitResource( fmark );
   return( fmark );
@@ -293,11 +295,14 @@ void FLDEFF_FOOTMARK_SetMMdl(
       MMDL_GetDirDisp(mmdl), MMDL_GetDirDispOld(mmdl) );
 
   MMDL_GetVectorPos( mmdl, &pos ); //y
+  
   MMDL_TOOL_GetCenterGridPos(
       MMDL_GetOldGridPosX(mmdl), MMDL_GetOldGridPosZ(mmdl), &pos );
-  
+
+#ifdef FOOTMARK_OFFSPOS_Y
   pos.y += FOOTMARK_OFFSPOS_Y;
-  
+#endif
+
   if( type == FOOTMARK_TYPE_HUMAN &&
       (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
     pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
@@ -344,8 +349,13 @@ static void fmarkTask_Init( FLDEFF_TASK *task, void *wk )
   FLDEFF_TASK_GetPos( task, &actData.trans );
   
   bbdact_sys = work->head.eff_fmark->bbdact_sys;
+  
   work->act_id = GFL_BBDACT_AddActEx(
       bbdact_sys, 0, &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
+  
+  if( work->act_id == GFL_BBDACT_ACTUNIT_ID_INVALID ){
+    FLDEFF_TASK_CallDelete( task );
+  }
 }
 
 //--------------------------------------------------------------
@@ -360,7 +370,10 @@ static void fmarkTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_FOOTMARK *work = wk;
   GFL_BBDACT_SYS *bbdact_sys = work->head.eff_fmark->bbdact_sys;
-  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
+  
+  if( work->act_id != GFL_BBDACT_ACTUNIT_ID_INVALID ){
+    GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
+  }
 }
 
 //--------------------------------------------------------------

@@ -216,6 +216,11 @@ static void rippleTask_Init( FLDEFF_TASK *task, void *wk )
     work->act_id = GFL_BBDACT_AddActEx(
         bbdact_sys, 0, &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
     
+    if( work->act_id == GFL_BBDACT_ACTUNIT_ID_INVALID ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
+    
     tbl = (GFL_BBDACT_ANMTBL)data_BlActAnm_RippleTbl;
     GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  tbl, 1 );
     GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
@@ -234,7 +239,10 @@ static void rippleTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_RIPPLE *work = wk;
   GFL_BBDACT_SYS *bbdact_sys = work->eff_ripple->bbdact_sys;
-  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
+  
+  if( work->act_id != GFL_BBDACT_ACTUNIT_ID_INVALID ){
+    GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
+  }
 }
 
 //--------------------------------------------------------------

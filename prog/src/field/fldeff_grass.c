@@ -284,6 +284,12 @@ static void grassTask_Init( FLDEFF_TASK *task, void *wk )
   bbdact_sys = work->head.eff_grass->bbdact_sys;
   
   work->act_id = GFL_BBDACT_AddAct( bbdact_sys, 0, &actData, 1 );
+  
+  if( work->act_id == GFL_BBDACT_ACTUNIT_ID_INVALID ){
+    FLDEFF_TASK_CallDelete( task );
+    return;
+  }
+  
   GFL_BBDACT_SetAnimeTable( bbdact_sys, work->act_id,  
       (GFL_BBDACT_ANMTBL)data_BlActAnm_GrassTbl[type], 1 );
   GFL_BBDACT_SetAnimeIdxOn( bbdact_sys, work->act_id, 0 );
@@ -307,7 +313,9 @@ static void grassTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_GRASS *work = wk;
   GFL_BBDACT_SYS *bbdact_sys = work->head.eff_grass->bbdact_sys;
-  GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
+  if( work->act_id != GFL_BBDACT_ACTUNIT_ID_INVALID ){
+    GFL_BBDACT_RemoveAct( bbdact_sys, work->act_id, 1 );
+  }
 }
 
 //--------------------------------------------------------------

@@ -146,7 +146,7 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
     }
     
     { //Poligon ID
-      u8 id = 2;
+      u8 id = 0;
       GFL_BBD_SetPolID( bbdsys, &id );
     }
 

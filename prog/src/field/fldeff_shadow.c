@@ -236,7 +236,13 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
     work->bbdUnitIdx = GFL_BBDACT_AddActEx(
         work->eff_shadow->bbdactsys, work->eff_shadow->resIdx,
         &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
+    
+    if( work->bbdUnitIdx == GFL_BBDACT_ACTUNIT_ID_INVALID ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
   }
+  
   FLDEFF_TASK_CallUpdate( task ); //‘¦AÀ•W‚ð”½‰f‚·‚é
 }
 
@@ -251,7 +257,11 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
 static void shadowTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SHADOW *work = wk;
-  GFL_BBDACT_RemoveAct( work->eff_shadow->bbdactsys, work->bbdUnitIdx, 1 );
+  
+  if( work->bbdUnitIdx != GFL_BBDACT_ACTUNIT_ID_INVALID ){
+    GFL_BBDACT_RemoveAct(
+        work->eff_shadow->bbdactsys, work->bbdUnitIdx, 1 );
+  }
 }
 
 //--------------------------------------------------------------

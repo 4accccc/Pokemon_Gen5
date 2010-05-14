@@ -203,17 +203,17 @@ enum {
 
   ///DTCMエリアのサイズ
   FIELD_3D_DTCM_SIZE    =   0x1000, 
-
+  
   ///billboardActで使用するリソースの最大設定可能数
   FIELD_G3D_BBDACT_RESMAX	    =   64,
   ///billboardActで使用するオブジェクトの最大設定可能数
   FIELD_G3D_BBDACT_ACTMAX	    =   128,
+
+  FIELD_G3D_SUBBBDACT_RESMAX  =   58,
+  FIELD_G3D_SUBBBDACT_ACTMAX  =   80,
   
-  FIELD_G3D_SUBBBDACT_RESMAX  =   32,
-  FIELD_G3D_SUBBBDACT_ACTMAX  =   64,
-  
-  FIELD_G3D_EFFBBDACT_RESMAX  =   56,
-  FIELD_G3D_EFFBBDACT_ACTMAX  =   56,
+  FIELD_G3D_EFFBBDACT_RESMAX  =   30,
+  FIELD_G3D_EFFBBDACT_ACTMAX  =   40,
   
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
@@ -2621,8 +2621,8 @@ static void fieldmap_G3D_BBDSetColorParam( FIELDMAP_WORK * fieldWork )
   // ビルボードカラーの設定
   p_color = FLD_BBD_COLOR_Create( heapID );
   FLD_BBD_COLOR_Load( p_color, bbd_color_idx );
-  FLD_BBD_COLOR_SetData( p_color, GFL_BBDACT_GetBBDSystem(fieldWork->mainBbdActSys) );
-  FLD_BBD_COLOR_SetData( p_color, GFL_BBDACT_GetBBDSystem( fieldWork->subBbdActSys ) );
+  FLD_BBD_COLOR_SetData(
+      p_color, GFL_BBDACT_GetBBDSystem(fieldWork->mainBbdActSys) );
   FLD_BBD_COLOR_Delete( p_color );
 }
 
@@ -2653,7 +2653,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	{ //ビルボードリソース登録
 	  MMDL_LIST mlist;
 	  int list_area_id = ZONEDATA_GetMvMdlID(fieldWork->location.zone_id);
-    NOZOMU_Printf("アリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",fieldWork->location.zone_id, list_area_id);
+    NOZOMU_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",fieldWork->location.zone_id, list_area_id);
     if ( list_area_id < MMLID_MAX )
     {
       fldmap_MMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
@@ -2667,50 +2667,15 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 
 	//動作モデル描画　セットアップ
   {
-    const u16 *pAngleYaw = FIELD_CAMERA_GetAngleYawAddress( fieldWork->camera_control );
+    const u16 *pAngleYaw =
+      FIELD_CAMERA_GetAngleYawAddress( fieldWork->camera_control );
 	  MMDLSYS_SetupDrawProc( fieldWork->fldMMdlSys, pAngleYaw );
 	}
 
 	//動作モデル　復帰
 	MMDLSYS_Pop( fieldWork->fldMMdlSys );
-
-/*
-  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID ){
-    MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
-  }else{
-    MMDLSYS_SetJoinShadow( fmmdlsys, FALSE );
-  }
-//*/
+  
   MMDLSYS_SetJoinShadow( fmmdlsys, TRUE );
-  
-#ifdef DEBUG_ONLY_FOR_kagaya
-  /*
-  #define OBJID_TEST_TRAINER (128)
-  #include "../../../resource/fldmapdata/script/trainer_def.h"
-  
-  if( fieldWork->location.zone_id == ZONE_ID_T01 )
-  {
-    MMDLSYS *mmdlsys = fieldWork->fldMMdlSys;
-    
-    if( MMDLSYS_SearchOBJID(mmdlsys,OBJID_TEST_TRAINER) == NULL )
-    {
-      MMDL_HEADER head =
-      {
-        OBJID_TEST_TRAINER,
-        BOY1,
-        MV_DOWN,
-        EV_TYPE_TRAINER, 0, SCRID_R01_TRAINER_02,
-        DIR_DOWN,
-        4, 0, 0,
-        0, 0,
-        785,748,0,
-      };
-      
-      MMDLSYS_AddMMdl( mmdlsys, &head, ZONE_ID_T01 );
-    }
-  }
-  */
-#endif
 }
 
 //--------------------------------------------------------------
