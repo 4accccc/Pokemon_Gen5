@@ -30,6 +30,18 @@
 
 //======================================================================
 //======================================================================
+static BOOL isSpecialDay( int month, int day );
+
+/**
+ * @def SP_DAY_VALUE
+ * @brief 日付をu16に変換
+ * @param m 月
+ * @param d 日
+ */
+#define SP_DAY_VALUE(m,d) (m << 8 | d )
+
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * @brief トレインタウンの電車用モデルIDを取得
@@ -63,6 +75,28 @@ VMCMD_RESULT EvCmdGetTrainModelID( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 特別な日か？のチェック
+ */
+//--------------------------------------------------------------
+static BOOL isSpecialDay( int month, int day )
+{
+  static const u16 spDaysTable[] = {
+    SP_DAY_VALUE(10, 1),  //新幹線の創設
+    SP_DAY_VALUE(10,14),  //鉄道の日
+    SP_DAY_VALUE(12,30),  //地下鉄開業
+    SP_DAY_VALUE( 2, 1),  //電気鉄道開業
+    SP_DAY_VALUE( 6,12),  //日本初の鉄道仮開業日
+  };
+  int i;
+  u16 today = SP_DAY_VALUE( month, day );
+  for (i = 0; i < NELEMS(spDaysTable); i++ )
+  {
+    if ( spDaysTable[i] == today ) return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
  * @brief トレインタウン：電車の種類抽選コマンド
  *
  * @li  01	シングルトレイン	日付の下一桁が1
@@ -85,7 +119,7 @@ VMCMD_RESULT EvCmdGetTrainTownCondition( VMHANDLE * core, void *wk )
   int month = EVTIME_GetMonth( gamedata );
   int   day = EVTIME_GetDay( gamedata );
 
-  if ( (month == 10 && day == 1) || (month == 10 && day == 14) )
+  if ( isSpecialDay( month, day ) == TRUE )
   {
     *ret_wk = 10;   //特別な日＝最新型レアトレイン
   }
