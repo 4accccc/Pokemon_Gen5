@@ -804,7 +804,7 @@ static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-#if 0
+#if 1
 static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
@@ -967,7 +967,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      BTL_MAIN_SyncServerCalcData( server->mainModule );
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_POKE_COVER:
