@@ -205,8 +205,8 @@ struct _FIELD_PLACE_NAME {
 
   // システム状態
 	SYSTEM_STATE state;	
-  u8  stateSeq;   // 状態内シーケンス
-	u16	stateCount;	// 状態カウンタ
+  u8           stateSeq;   // 状態内シーケンス番号
+	u16	         stateCount; // 状態カウンタ
 
   // 表示するゾーン
   u16  prevZoneID;    // 前回のゾーンID
