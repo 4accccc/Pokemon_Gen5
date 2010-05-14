@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T22:43:55"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T11:57:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -318,7 +318,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="275"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -663,10 +663,16 @@
 ・WHITEver
 ・メッセージ表示後、ム復活デモへ</comment>
 		<attribute name="キャラ指定">ダークストーン</attribute>
-		<language name="JPN" width="256">ダークストーンが
-はげしく　ふるえだす……！</language>
-		<language name="JPN_KANJI" width="256">ダークストーンが
-激しく　震えだす！</language>
+		<language name="JPN" width="256">まわりの　オーラを　とりこんだ
+ダークストーンが▽
+それを　きょうれつな　パワーとし▼
+いま……▼
+ときはなつ……！！</language>
+		<language name="JPN_KANJI" width="256">周囲の　オーラを　取りこんだ
+ダークストーンが▽
+それを　強烈な　パワーに　変換し▼
+いま……▼
+解き放つ……！！</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -674,10 +680,16 @@
 ・BLACKver
 ・メッセージ表示後、シン復活デモへ</comment>
 		<attribute name="キャラ指定">ライトストーン</attribute>
-		<language name="JPN" width="256">ライトストーンが
-はげしく　ふるえだす……！</language>
-		<language name="JPN_KANJI" width="256">ライトストーンが
-激しく　震えだす！</language>
+		<language name="JPN" width="256">まわりの　オーラを　とりこんだ
+ライトストーンが▽
+それを　きょうれつな　パワーとし▼
+いま……▼
+ときはなつ……！！</language>
+		<language name="JPN_KANJI" width="256">周囲の　オーラを　取りこんだ
+ライトストーンが▽
+それを　強烈な　パワーに　変換し▼
+いま……▼
+解き放つ……！！</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_08w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -689,8 +701,8 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
-せいはんたいの　そんざい　にして
-まったく　おなじもの▼
+せいはんたい　にして
+まったく　おなじ　そんざい▼
 シンも　ムも　えいゆうと
 みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
@@ -699,8 +711,8 @@
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
-正反対の　存在にして
-まったく　同じもの▼
+正反対にして
+まったく　同じ　存在▼
 シンも　ムも　英雄と
 認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
@@ -717,8 +729,8 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
-せいはんたいの　そんざい　にして
-まったく　おなじもの▼
+せいはんたい　にして
+まったく　おなじ　そんざい▼
 ムも　シンも　えいゆうと
 みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
@@ -727,8 +739,8 @@
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
-正反対の　存在にして
-まったく　同じもの▼
+正反対にして
+まったく　同じ　存在▼
 ムも　シンも　英雄と
 認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
