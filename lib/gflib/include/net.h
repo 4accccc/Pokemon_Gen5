@@ -553,6 +553,13 @@ extern void GFL_NET_IRCWIRELESS_GetMacAddress(u8 *mac_address, int no);
  */
 //==============================================================================
 extern void GFL_NET_IRCWIRELESS_SetGSIDCallback(IrcGSIDCallback* callback);
+//==============================================================================
+/**
+ * @brief   エラーの時にIRCWIRLESSをリセットする関数
+ * @param   void
+ */
+//==============================================================================
+extern void GFL_NET_IRCWIRELESS_ResetSystemError(void);
 
 //==============================================================================
 /**
