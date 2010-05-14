@@ -227,7 +227,8 @@ struct _BTLV_GAUGE_CLWK
   u32           damage_wait       :5;
   u32           damage_wait_flag  :1;
   u32           appear_flag       :1;     //GAUGE_Addされたかどうかフラグ（下画面のボタン記憶クリアに使用）
-  u32                             :4;
+  u32           se_wait_flag      :1;
+  u32                             :3;
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
@@ -451,6 +452,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     {
       PMSND_StopSE();
       bgw->bgcl[ i ].se_wait++;
+      bgw->bgcl[ i ].se_wait_flag = 0;
     }
     if( bgw->bgcl[ i ].level_up_req )
     {
@@ -973,6 +975,7 @@ void  BTLV_GAUGE_CalcHPAtOnce( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value 
 void  BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 {
   bgw->bgcl[ pos ].se_wait = 0;
+  bgw->bgcl[ pos ].se_wait_flag = 1;
   Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
 }
 
@@ -1006,6 +1009,7 @@ void  BTLV_GAUGE_CalcEXPLevelUp( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp,
   bgw->bgcl[ pos ].seq_no = 0;
   bgw->bgcl[ pos ].level_up_req = 1;
   bgw->bgcl[ pos ].se_wait = 0;
+  bgw->bgcl[ pos ].se_wait_flag = 1;
 
   Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
 }
@@ -1025,7 +1029,10 @@ BOOL  BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw )
 
   for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
   {
-    if( ( bgw->bgcl[ i ].hp_calc_req ) || ( bgw->bgcl[ i ].exp_calc_req ) || ( bgw->bgcl[ i ].level_up_req ) )
+    if( ( bgw->bgcl[ i ].hp_calc_req ) ||
+        ( bgw->bgcl[ i ].exp_calc_req ) ||
+        ( bgw->bgcl[ i ].level_up_req ) ||
+        ( bgw->bgcl[ i ].se_wait_flag ) )
     {
       return TRUE;
     }
