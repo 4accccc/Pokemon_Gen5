@@ -63,6 +63,7 @@ static void SCENEAREA_UpdateGridAngleOffsChange( const FLD_SCENEAREA* cp_sys, co
 static void SCENEAREA_UpdateGridAngleOffsChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void SCENEAREA_UpdateGridAngleOffsChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void SCENEAREA_UpdateGridAngleOffsChange_SetOffs( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleOffsChange_SetFovy( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 
 
 static FLD_SCENEAREA_CHECK_AREA_FUNC* sp_FLD_SCENEAREA_CHECK_AREA_FUNC[FLD_SCENEAREA_AREACHECK_MAX] = 
@@ -625,6 +626,9 @@ static void SCENEAREA_UpdateGridAngleOffsChange( const FLD_SCENEAREA* cp_sys, co
 
   // ターゲットオフセット設定
   SCENEAREA_UpdateGridAngleOffsChange_SetOffs( cp_sys, cp_data, cp_pos );
+
+  // FOVY設定
+  SCENEAREA_UpdateGridAngleOffsChange_SetFovy( cp_sys, cp_data, cp_pos );
 }
 
 //----------------------------------------------------------------------------
@@ -638,6 +642,9 @@ static void SCENEAREA_UpdateGridAngleOffsChange_IN( const FLD_SCENEAREA* cp_sys,
   
   // ターゲットオフセット設定
   SCENEAREA_UpdateGridAngleOffsChange_SetOffs( cp_sys, cp_data, cp_pos );
+
+  // FOVY設定
+  SCENEAREA_UpdateGridAngleOffsChange_SetFovy( cp_sys, cp_data, cp_pos );
 }
 
 //----------------------------------------------------------------------------
@@ -652,6 +659,9 @@ static void SCENEAREA_UpdateGridAngleOffsChange_OUT( const FLD_SCENEAREA* cp_sys
 
   // ターゲットオフセット設定
   SCENEAREA_UpdateGridAngleOffsChange_SetOffs( cp_sys, cp_data, cp_pos );
+
+  // FOVY設定
+  SCENEAREA_UpdateGridAngleOffsChange_SetFovy( cp_sys, cp_data, cp_pos );
 }
 
 
@@ -674,6 +684,7 @@ static void SCENEAREA_UpdateGridAngleOffsChange_SetOffs( const FLD_SCENEAREA* cp
   // 計算用のパラメータを求める
   SCENEAREA_GridAngleGetOfsAndMax( (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_param, cp_pos, &dist, &sub_num );
 
+
   // 移動値を求める
   dis_x = cp_param->end_offs_x - cp_param->start_offs_x;
   dis_y = cp_param->end_offs_y - cp_param->start_offs_y;
@@ -684,6 +695,36 @@ static void SCENEAREA_UpdateGridAngleOffsChange_SetOffs( const FLD_SCENEAREA* cp
   target_offs.z = cp_param->start_offs_z + FX_Div( FX_Mul( dis_z, sub_num ), dist );
 
   FIELD_CAMERA_SetTargetOffset( p_camera, &target_offs );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Fovy設定
+ *
+ *	@param	cp_sys
+ *	@param	cp_data
+ *	@param	cp_pos 
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleOffsChange_SetFovy( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const FLD_SCENEAREA_GRIDCHANGEANGLEOFFS_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLEOFFS_PARAM*)cp_data->area;
+  FIELD_CAMERA* p_camera;
+  s32 fovy_dif;
+  u16 set_fovy;
+  fx32 dist, sub_num;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+  // 計算用のパラメータを求める
+  SCENEAREA_GridAngleGetOfsAndMax( (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_param, cp_pos, &dist, &sub_num );
+
+  sub_num = FX_Div( sub_num, dist );
+
+  // fovy
+  fovy_dif = cp_param->end_fovy - cp_param->start_fovy;
+  set_fovy = cp_param->start_fovy + ((fovy_dif * sub_num) / FX32_ONE);
+  FIELD_CAMERA_SetFovy( p_camera, set_fovy );
 }
 
 

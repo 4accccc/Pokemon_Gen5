@@ -178,6 +178,10 @@ typedef struct {
   fx32 end_offs_y;// 終了オフセットｙ
   fx32 end_offs_z;// 終了オフセットｚ
 
+  // fovy
+  u16 start_fovy; // 開始 fovy
+  u16 end_fovy;   // 終了 fovy
+
 } FLD_SCENEAREA_GRIDCHANGEANGLEOFFS_PARAM;
 
 
