@@ -2011,6 +2011,20 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_CANCEL_GIFT_INIT );
         *p_seq  = SEQ_MSG_WAIT;
       }
+
+
+      //エラーチェック
+      switch( MYSTERY_NET_GetErrorRepairType( p_wk->p_net ) )
+      { 
+      case MYSTERY_NET_ERROR_REPAIR_RETURN:      //１つ前の選択肢まで戻る
+      case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
+        UTIL_DeleteMenu( p_wk );
+        MYSTERY_NET_ClearError( p_wk->p_net );
+
+        MYSTERY_Printf( "取得できなかった\n" );
+        MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+        break;
+      }
     }
     break;
 

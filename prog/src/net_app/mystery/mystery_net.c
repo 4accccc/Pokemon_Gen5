@@ -566,6 +566,7 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wifi_GetErrorRepairType( const 
       DWC_ClearError();
       NetErr_ExitNetSystem();
       NetErr_DispCallPushPop();
+      NetErr_ErrWorkInit();
       repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
       break;
 
@@ -597,6 +598,7 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wireless_GetErrorRepairType( co
   { 
     NetErr_ExitNetSystem();
     NetErr_DispCallPushPop();
+    NetErr_ErrWorkInit();
 
     repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
   }
@@ -620,6 +622,7 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Irc_GetErrorRepairType( const M
   { 
     NetErr_ExitNetSystem();
     NetErr_DispCallPushPop();
+    NetErr_ErrWorkInit();
 
     repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
   }
@@ -1091,6 +1094,8 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
     {
       OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
+      *p_seq  = SEQ_END;
     }
     else
     { 
@@ -1127,7 +1132,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( DWC_NdGetFileListNumAsync( &p_nd_data->server_filenum ) == FALSE )
     {
       OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-      //エラーが起こったら内部で取得するためループ
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END ); 
     }
     else
     { 
@@ -1141,7 +1146,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       //ファイルがなかった場合
       if( p_nd_data->server_filenum == 0 )
       { 
-        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE );
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
         break;
       }
       else
@@ -1151,6 +1156,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
         {
           OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+          WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
         }
         else
         { 
@@ -1259,6 +1265,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     OS_TPrintf( "取得するもの target%d max%d ser%d\n", p_nd_data->target, p_nd_data->recv_filenum, p_nd_data->server_filenum );
     if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->p_buffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END ); 
     }
     else
     { 
@@ -1295,7 +1302,8 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else if( s_callback_result != DWC_ND_ERROR_NONE)
     {
-
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END ); 
     }
     else
     { //callback1_result
@@ -1356,7 +1364,9 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       s_callback_flag = FALSE;
       if( s_callback_result != DWC_ND_ERROR_NONE)
       {
-
+        //エラーが起こったので終了
+        p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_END, SEQ_END );  
       }
       else
       { 
@@ -1704,7 +1714,6 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
     if( reason == DWC_ND_CBREASON_GETFILELISTNUM )
       {
           OS_Printf( "It is not possible to connect download server.\n." );
-          ///	OS_Terminate();
       }
     break;
   case DWC_ND_ERROR_BUFFULL:
