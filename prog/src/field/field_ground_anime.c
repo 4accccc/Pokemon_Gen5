@@ -123,6 +123,11 @@ typedef struct
 typedef struct
 {
   FIELD_GRANM_ITP wk[ FIELD_GRANM_ITP_NUM ];
+
+  // ARCHANDLE
+  ARCHANDLE* p_arc_tex;
+  ARCHANDLE* p_arc_anm;
+
 }FIELD_GRANM_ITP_SYS;
 
 //-------------------------------------
@@ -174,7 +179,7 @@ static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 
 static void FIELD_GRANM_ItpSys_Exit( FIELD_GRANM_ITP_SYS* p_sys );
 static void FIELD_GRANM_ItpSys_Main( FIELD_GRANM_ITP_SYS* p_sys, fx32 speed );
 
-static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, HEAPID heapID );
+static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, ARCHANDLE* p_itp_arc, ARCHANDLE* p_tex_arc, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, HEAPID heapID );
 static void FIELD_GRANM_Itp_Exit( FIELD_GRANM_ITP* p_wk );
 static void FIELD_GRANM_Itp_Main( FIELD_GRANM_ITP* p_wk, fx32 speed );
 static BOOL FIELD_GRANM_Itp_IsMove( const FIELD_GRANM_ITP* cp_wk );
@@ -625,10 +630,14 @@ static void FIELD_GRANM_ItpSys_Init( FIELD_GRANM_ITP_SYS* p_sys, u32 arcID, u32 
 
   p_tbl = GFL_ARC_UTIL_Load( arcID, tblID, FALSE, heapID );
 
+  p_sys->p_arc_tex = GFL_ARC_OpenDataHandle( texarcID, heapID );
+  p_sys->p_arc_anm = GFL_ARC_OpenDataHandle( itparcID, heapID );
+
   for( i=0; i<FIELD_GRANM_ITP_NUM; i++ ){
     // ITPアニメーションの初期化
     if( p_tbl->itp[i] != FIELD_GRANM_ITP_TBL_NONE ){
-      FIELD_GRANM_Itp_Init( &p_sys->wk[i], itparcID, texarcID, p_tbl->itp[i], p_tbl->tex[i], cp_tex, heapID );
+      FIELD_GRANM_Itp_Init( &p_sys->wk[i], 
+          p_sys->p_arc_anm, p_sys->p_arc_tex, p_tbl->itp[i], p_tbl->tex[i], cp_tex, heapID );
     }
   }
   
@@ -650,6 +659,13 @@ static void FIELD_GRANM_ItpSys_Exit( FIELD_GRANM_ITP_SYS* p_sys )
     if( FIELD_GRANM_Itp_IsMove( &p_sys->wk[i] ) ){
       FIELD_GRANM_Itp_Exit( &p_sys->wk[i] );
     }
+  }
+
+  if( p_sys->p_arc_tex ){
+    GFL_ARC_CloseDataHandle( p_sys->p_arc_tex );
+    GFL_ARC_CloseDataHandle( p_sys->p_arc_anm );
+    p_sys->p_arc_tex = NULL;
+    p_sys->p_arc_anm = NULL;
   }
 }
 
@@ -686,17 +702,17 @@ static void FIELD_GRANM_ItpSys_Main( FIELD_GRANM_ITP_SYS* p_sys, fx32 speed )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcID, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, HEAPID heapID )
+static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, ARCHANDLE* p_itp_arc, ARCHANDLE* p_tex_arc, u32 anmID, u32 texID, const GFL_G3D_RES* cp_tex, HEAPID heapID )
 {
 	// 地面テクスチャ保存
 	p_wk->cp_ground_tex = cp_tex;
 	
 	// アニメーション情報読み込み
-	p_wk->p_anmfile = GFL_ARC_UTIL_Load( arcID, anmID, FALSE, heapID );
+	p_wk->p_anmfile = GFL_ARC_LoadDataAllocByHandle( p_itp_arc, anmID, heapID );
 	TEXANM_UnPackLoadFile( p_wk->p_anmfile, &p_wk->anmtbl );
 
 	// アニメーションテクスチャ読み込み
-	p_wk->p_tex = GFL_G3D_CreateResourceArc( tex_arcID, texID );
+	p_wk->p_tex = GFL_G3D_CreateResourceHandle( p_tex_arc, texID );
 
 	// アニメーション数分の情報作成
 	{
@@ -736,8 +752,8 @@ static void FIELD_GRANM_Itp_Init( FIELD_GRANM_ITP* p_wk, u32 arcID, u32 tex_arcI
   {
     u32 size;
 
-    size = GFL_ARC_GetDataSize( arcID, anmID );
-    size += GFL_ARC_GetDataSize( tex_arcID, texID );
+    size = GFL_ARC_GetDataSizeByHandle( p_itp_arc, anmID );
+    size += GFL_ARC_GetDataSizeByHandle( p_tex_arc, texID );
     size += sizeof(TEXANM_DATA) * p_wk->anime_num;
     size += sizeof(u32) * p_wk->anime_num;
     size += sizeof(u32) * p_wk->anime_num;
