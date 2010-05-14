@@ -38,7 +38,7 @@ extern void WIFILOGIN_MESSAGE_TitleEnd(WIFILOGIN_MESSAGE_WORK* pWork);
 
 
 //ÇÕÇ¢ÅAÇ¢Ç¢Ç¶ëIë
-extern WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type,int brightness);
+extern WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type,int brightness, int pos );
 extern void WIFILOGIN_MESSAGE_YesNoEnd( WIFILOGIN_YESNO_WORK* pWork );
 extern void WIFILOGIN_MESSAGE_YesNoUpdate( WIFILOGIN_YESNO_WORK* pWork );
 extern BOOL WIFILOGIN_MESSAGE_YesNoIsFinish( const WIFILOGIN_YESNO_WORK* pWork );

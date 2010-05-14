@@ -128,7 +128,7 @@ struct _WIFILOGIN_MESSAGE_WORK {
 //------------------------------------------------------------------
 static u8 WifiLogin_Message_GetTextFrame( WIFILOGIN_DISPLAY display );
 static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display );
-static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork, int type );
+static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork, int type, int pos );
 
 
 WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_DISPLAY display)
@@ -433,10 +433,7 @@ void WIFILOGIN_MESSAGE_TitleEnd(WIFILOGIN_MESSAGE_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-
-
-WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type,int brightness)
+WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type,int brightness, int pos )
 {
   WIFILOGIN_YESNO_WORK* yesno_wk  = &pWork->yesno_wk;
   yesno_wk->display = pWork->display;
@@ -480,11 +477,12 @@ WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork
       if(brightness){
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
       }
+      APP_TASKMENU_SetCursorPos( yesno_wk->pAppTask, pos );
     }
     break;
 
   case WIFILOGIN_DISPLAY_UP:
-    yesno_wk->pYesNoWork  = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork, type);
+    yesno_wk->pYesNoWork  = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork, type, pos);
     yesno_wk->yesno_ret   = BMPMENU_NULL;
     break;
   }
@@ -706,7 +704,7 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
   _BUTTON_MSG_PAL, 0
 };
 
-static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork, int type )
+static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork, int type, int pos )
 {
   BMPWIN_YESNO_DAT  dat = _yesNoBmpDat;
   dat.chrnum  = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar);
@@ -723,5 +721,5 @@ static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* p
   }
 
   return BmpMenu_YesNoSelectInit( &dat, dat.chrnum,
-                             _BUTTON_WIN_PAL, 0, pWork->heapID );
+                             _BUTTON_WIN_PAL, pos, pWork->heapID );
 }

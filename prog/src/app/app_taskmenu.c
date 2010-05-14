@@ -475,6 +475,28 @@ void APP_TASKMENU_SetDisableKey( APP_TASKMENU_WORK *work , const BOOL flg )
   }
 }
 
+void APP_TASKMENU_SetCursorPos( APP_TASKMENU_WORK *work, int pos )
+{
+  work->cursorPos = pos;
+
+  //キーモード
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+  {
+    int i;
+    for( i = 0; i < work->initWork.itemNum; i++ )
+    {
+      if( i == pos )
+      {
+        APP_TASKMENU_SetActiveItem( work->menuWin[i], work->res, TRUE );
+      }
+      else
+      {
+        APP_TASKMENU_SetActiveItem( work->menuWin[i], work->res, FALSE );
+      }
+    }
+  }
+}
+
 #pragma mark [>main func
 //--------------------------------------------------------------
 //	キー操作更新
