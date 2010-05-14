@@ -33,10 +33,10 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-///ミッション開始前までのタイムアウト時間
-#define MISSION_START_TIMEOUT    (60 * 180)
-///ミッション開始前までのタイムアウト時間で警告メッセージを表示しだす時間
-#define MISSION_START_TIMEOUT_MSG_ON    (MISSION_START_TIMEOUT - 60*10)
+///ミッション開始前までのタイムアウト時間(秒)
+#define MISSION_START_TIMEOUT_SEC    (60 * 3)
+///ミッション開始前までのタイムアウト時間で警告メッセージを表示しだす時間(秒)
+#define MISSION_START_TIMEOUT_MSG_ON_SEC    (MISSION_START_TIMEOUT_SEC - 10)
 
 ///自分一人になった場合、通信終了へ遷移するまでのタイムアウト
 #define OTHER_PLAYER_TIMEOUT    (60 * 3)
@@ -306,6 +306,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   case 3:
     if(IntrudeSend_Profile(intcomm) == TRUE){
       intcomm->comm_status = INTRUDE_COMM_STATUS_UPDATE;
+      intcomm->mission_start_timeout = GFL_RTC_GetTimeBySecond();
       (*seq)++;
     }
     break;
@@ -323,13 +324,17 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     Intrude_Main(intcomm);
     
     if(GFL_NET_IsParentMachine() == TRUE && MISSION_RecvCheck(&intcomm->mission) == FALSE){
-      intcomm->mission_start_timeout++;
-      if(intcomm->mission_start_timeout > MISSION_START_TIMEOUT){
+      s32 start_time = intcomm->mission_start_timeout;
+      s32 now_time = GFL_RTC_GetTimeBySecond();
+      if(now_time < start_time){  //回り込みが発生
+        now_time += GFL_RTC_TIME_SECOND_MAX;
+      }
+      if(now_time - start_time >= MISSION_START_TIMEOUT_SEC){
         OS_TPrintf("ミッション開始前のタイムアウトによる切断\n");
         GameCommSys_ExitReq(intcomm->game_comm);
         break;
       }
-      else if(intcomm->mission_start_timeout > MISSION_START_TIMEOUT_MSG_ON
+      else if(now_time - start_time > MISSION_START_TIMEOUT_MSG_ON_SEC
           && intcomm->mission_start_timeout_warning == 0){
         if(IntrudeSend_TimeoutWarning() == TRUE){
           intcomm->mission_start_timeout_warning = TRUE;
