@@ -4477,7 +4477,8 @@ int BOX2MAIN_VFuncGetPokeMoveParty( BOX2_SYS_WORK * syswk )
       if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
         BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
         put_pos = BoxMovePutAreaCheck( syswk, syswk->app->tpx, syswk->app->tpy );
-        if( put_pos == BOX2MAIN_GETPOS_NONE ){
+        if( put_pos == BOX2MAIN_GETPOS_NONE ||
+						PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos ) == FALSE ){
           BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           vf->seq = SEIRI_SEQ_CANCEL_TRAYFRM_OUT;
