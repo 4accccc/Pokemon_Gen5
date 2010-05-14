@@ -5691,7 +5691,7 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
     zone_id = getNextZoneID( amcw );
     if ( zone_id >= ZONE_ID_MAX || zone_id < 0 )
     { 
-      OS_Printf( "HUDSON: ALL MAP CHECK SCCESS!!\n" ); // hudson 検出用
+      OS_Printf( "HUDSON: ALL MAP CHECK SUCCESS!!\n" ); // hudson 検出用
       return GMEVENT_RES_FINISH;
     }
     {
