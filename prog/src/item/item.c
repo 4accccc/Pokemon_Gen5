@@ -216,6 +216,39 @@ u16 ITEM_GetIconCellAnm(void)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * アーカイブハンドルオープン
+ *
+ * @param		heapID		ヒープID
+ *
+ * @return  アークハンドル
+ */
+//--------------------------------------------------------------------------------------------
+ARCHANDLE * ITEM_OpenItemDataArcHandle( HEAPID heapID )
+{
+	return GFL_ARC_OpenDataHandle( ARCID_ITEMDATA, heapID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムデータ取得（アークハンドル版）
+ *
+ * @param		ah				アークハンドル
+ * @param		item			アイテム番号
+ * @param		heapID		ヒープID
+ *
+ * @return  アイテムデータ
+ */
+//--------------------------------------------------------------------------------------------
+void * ITEM_GetItemDataArcHandle( ARCHANDLE * ah, u16 item, HEAPID heapID )
+{
+  if( item > ITEM_DATA_MAX ){
+		return NULL;
+	}
+	return GFL_ARC_LoadDataAllocByHandle( ah, item, heapID );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * アーカイブデータロード
  *
  * @param item    アイテム番号

@@ -33,7 +33,7 @@ typedef struct {
 
 // ポケットIDテーブル
 static const u8 PocketNum[] = {
-  2, 3, 0, 1, 0
+  2, 3, 0, 1
 };
 
 
@@ -164,21 +164,33 @@ void BattleBag_CorsorReset( BBAG_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+static const u8 SearchPocket[] = {
+	BAG_POKE_NORMAL, BAG_POKE_DRUG, BAG_POKE_NUTS,
+};
+
 void BattleBag_PocketInit( BBAG_WORK * wk )
 {
   ITEM_ST * item;
+	ARCHANDLE * ah;
+	void * buf;
   u32 i, j, k;
   s32 prm;
 
-  for( i=0; i<BAG_POKE_MAX; i++ ){
+	ah = ITEM_OpenItemDataArcHandle( wk->dat->heap );
+
+//  for( i=0; i<BAG_POKE_MAX; i++ ){
+	for( i=0; i<3; i++ ){
     j = 0;
     while(1){
-//      item = MyItem_PosItemGet( wk->dat->myitem, i, j );
-      item = MYITEM_PosItemGet( wk->dat->myitem, i, j );
+//      item = MYITEM_PosItemGet( wk->dat->myitem, i, j );
+      item = MYITEM_PosItemGet( wk->dat->myitem, SearchPocket[i], j );
       if( item == NULL ){ break; }
       if( !( item->id == 0 || item->no == 0 ) ){
-        prm = ITEM_GetParam( item->id, ITEM_PRM_BTL_POCKET, wk->dat->heap );
-        for( k=0; k<5; k++ ){
+//        prm = ITEM_GetParam( item->id, ITEM_PRM_BTL_POCKET, wk->dat->heap );
+				buf = ITEM_GetItemDataArcHandle( ah, item->id, wk->dat->heap );
+				prm = ITEM_GetBufParam( buf, ITEM_PRM_BTL_POCKET );
+				GFL_HEAP_FreeMemory( buf );
+        for( k=0; k<4; k++ ){
           if( ( prm & (1<<k) ) == 0 ){ continue; }
           wk->pocket[ PocketNum[k] ][wk->item_max[ PocketNum[k] ]] = *item;
           wk->item_max[ PocketNum[k] ]++;
@@ -187,6 +199,9 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
       j++;
     }
   }
+
+	GFL_ARC_CloseDataHandle( ah );
+
 
   for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
     if( wk->item_max[i] == 0 ){
