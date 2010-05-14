@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T16:28:05"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T15:12:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -400,28 +400,28 @@
 
 	<row id="msg_c02r0601_trainaerm_01">
 		<comment>♂
-・サポートシューター説明</comment>
+・ミラクルシューター説明</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ともだちと　つうしん　しながら
 ポケモンしょうぶを　するときはさ▼
-サポートシューターで
+ミラクルシューターで
 どうぐが　つかえるように　なるよね！</language>
 		<language name="JPN_KANJI" width="256">ともだちと　通信で
 ポケモン勝負を　するときはさ▼
-サポートシューターで
+ミラクルシューターで
 道具が　使えるように　なるよね！</language>
 	</row>
 
 	<row id="msg_c02r0601_trainaerw_01">
 		<comment>♀
-・サポートシューター説明</comment>
+・ミラクルシューター説明</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">そうそう　しってる！▼
-サポートシューターが　あると
+ミラクルシューターが　あると
 エネルギーが　チャージされていって▽
 いろんな　どうぐが　つかえるんだよね</language>
 		<language name="JPN_KANJI" width="256">そうそう　知ってる！▼
-サポートシューターが　あると
+ミラクルシューターが　あると
 エネルギーが　チャージされていって▽
 いろんな　道具が　使えるんだよね</language>
 	</row>
