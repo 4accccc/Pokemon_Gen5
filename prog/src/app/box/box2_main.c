@@ -2497,7 +2497,7 @@ static void PokeIconChgDataMeke( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
+static BOOL PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
 {
   BOX2MAIN_POKEMOVE_WORK * work;
   BOX2MAIN_POKEMOVE_DATA * dat;
@@ -2536,7 +2536,7 @@ static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
       dat[1].flg    = 1;
     }
     PokeIconMoveParamMake( syswk, &dat[0] );
-    return;
+    return FALSE;
   }
 
   // 同じ位置 or 手持ち１の時のボックスへの移動
@@ -2555,7 +2555,7 @@ static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
     dat[1].gt_pos = get_pos;
     dat[1].flg    = 1;
     PokeIconMoveParamMake( syswk, &dat[0] );
-    return;
+    return FALSE;
   }
 
   work->get_pos = get_pos;
@@ -2625,7 +2625,7 @@ static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
 //      PokeIconMoveParamMake( syswk, &dat[ppcnt] );
       PokeIconMoveOutRangeParamMake( syswk, &dat[ppcnt] );
     }
-    return;
+    return TRUE;
   }
 
   // トレイがスクロールされているとき
@@ -2647,7 +2647,7 @@ static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
     dat[1].flg    = 2;
     PokeIconMoveParamMake( syswk, &dat[0] );
     PokeIconMoveParamMake( syswk, &dat[1] );
-    return;
+    return TRUE;
   }
 
   if( get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
@@ -2714,6 +2714,8 @@ static void PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
       }
     }
   }
+
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -4829,7 +4831,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
       syswk->app->mode_chg_flg = 0;
 
       put_pos = BOX2MAIN_GETPOS_NONE;
-      // トレイアイコン
+      // トレイアイコンのフレームが表示中
       if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
         put_pos = BoxMovePutAreaCheck( syswk, syswk->app->tpx, syswk->app->tpy );
 				// 手持ちキャンセルのとき
@@ -4840,8 +4842,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
           break;
 				}
       }
-
-      // 手持ちポケモン
+      // 手持ちポケモンのフレームが表示中
       if( BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == TRUE ){
         put_pos = PartyPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy, PartyPokeAreaRight );
       }
@@ -4849,12 +4850,10 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
       if( put_pos == BOX2MAIN_GETPOS_NONE ){
         put_pos = TrayPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy );
       }
-/*
-      if( put_pos == BOX2MAIN_GETPOS_NONE ){
-        put_pos = PartyPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy, PartyPokeAreaRight );
-      }
-*/
-      PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos );
+
+      if( PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos ) == FALSE ){
+				put_pos = BOX2MAIN_GETPOS_NONE;
+			}
       if( BOX2BGWFRM_PokeMenuOpenPutCheck( syswk->app->wfrm ) == FALSE ){
         BOX2OBJ_PokeCursorVanish( syswk, FALSE );
       }
