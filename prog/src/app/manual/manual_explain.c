@@ -78,6 +78,10 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 #define TEXT_EXPLAIN_COLOR_S  ( 2)  // 文字影色
 #define TEXT_EXPLAIN_COLOR_B  ( 0)  // 文字背景色(透明)
 
+// 終了リクエスト
+#define END_REQ_COUNT_START_VAL (1)   // カウントダウン開始値
+#define END_REQ_COUNT_NO        (-1)  // カウントダウンしない値
+
 
 //=============================================================================
 /**
@@ -108,6 +112,9 @@ struct _MANUAL_EXPLAIN_WORK
 
   // 入力の状態
   INPUT_STATE                 input_state;
+
+  // 終了リクエスト
+  s8                          end_req_count;  // 負のときカウントダウンしない。正のときカウントダウンする。0になったら終了。
 };
 
 
@@ -123,6 +130,10 @@ static void Manual_Explain_VBlankFunc( GFL_TCB* tcb, void* wk );
 static void Manual_Explain_Prepare( MANUAL_EXPLAIN_WORK* work );
 // 転送(VBlank転送ではない)
 static void Manual_Explain_Trans( MANUAL_EXPLAIN_WORK* work );
+// 転送(VBlank転送)
+static void Manual_Explain_TransVBlank( MANUAL_EXPLAIN_WORK* work );
+// 後片付け
+static void Manual_Explain_Finish( MANUAL_EXPLAIN_WORK* work );
 
 // テキスト
 static void Manual_Explain_TextInit( MANUAL_EXPLAIN_WORK* work );
@@ -163,7 +174,8 @@ MANUAL_EXPLAIN_WORK*  MANUAL_EXPLAIN_Init(
   }
 
   Manual_Explain_Prepare( work );
-  Manual_Explain_Trans( work );
+  //Manual_Explain_Trans( work );
+  Manual_Explain_TransVBlank( work );
 
   Manual_Explain_TextInit( work );
 
@@ -172,6 +184,9 @@ MANUAL_EXPLAIN_WORK*  MANUAL_EXPLAIN_Init(
 
   // 入力状態
   work->input_state = INPUT_STATE_NONE;
+
+  // 終了リクエスト
+  work->end_req_count = END_REQ_COUNT_NO;
 
   // マニュアルタッチバー
   MANUAL_TOUCHBAR_SetType( work->cmn_wk->mtb_wk, MANUAL_TOUCHBAR_TYPE_EXPLAIN );
@@ -197,7 +212,7 @@ void  MANUAL_EXPLAIN_Exit(
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
   // ここで作成
-  Manual_Explain_TextExit( work );
+  //Manual_Explain_TextExit( work );
 
   // ワーク
   GFL_HEAP_FreeMemory( work );
@@ -210,8 +225,25 @@ BOOL  MANUAL_EXPLAIN_Main(
 {
   BOOL b_end = FALSE;
 
+  if( work->end_req_count == 0 )
+  {
+    b_end = TRUE;
+  }
+  else if( work->end_req_count > 0 )
+  {
+    if( work->end_req_count == END_REQ_COUNT_START_VAL )
+    {
+      Manual_Explain_TextExit( work );
+      Manual_Explain_Finish( work );
+    }
+    work->end_req_count--;
+  }
+
   // テキスト
-  Manual_Explain_TextMain( work );
+  if( work->input_state != INPUT_STATE_END )
+  {
+    Manual_Explain_TextMain( work );
+  }
 
   // マニュアルタッチバーの入力を調べる
   if(    work->input_state == INPUT_STATE_NONE
@@ -257,7 +289,8 @@ BOOL  MANUAL_EXPLAIN_Main(
           {
             work->param->result = MANUAL_EXPLAIN_RESULT_RETURN;
             work->input_state = INPUT_STATE_END;
-            b_end = TRUE;
+            //b_end = TRUE;
+            work->end_req_count = END_REQ_COUNT_START_VAL;
           }
           break;
         case TOUCHBAR_ICON_CUR_L:
@@ -344,6 +377,16 @@ static void Manual_Explain_Trans( MANUAL_EXPLAIN_WORK* work )
 {
   GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
 }
+// 転送(VBlank転送)
+static void Manual_Explain_TransVBlank( MANUAL_EXPLAIN_WORK* work )
+{
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_REAR );
+}
+// 後片付け
+static void Manual_Explain_Finish( MANUAL_EXPLAIN_WORK* work )
+{
+  // 何もしない
+}
 
 // テキスト
 static void Manual_Explain_TextInit( MANUAL_EXPLAIN_WORK* work )
@@ -393,6 +436,8 @@ static void Manual_Explain_TextExit( MANUAL_EXPLAIN_WORK* work )
                                                      // ゴミを残さないようにしておく。APP_TASKMENU_WIN_Deleteを参考にした。
     GFL_BMPWIN_Delete( work->text_bmpwin[i] );
   }
+
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_MAIN );
 }
 static void Manual_Explain_TextMain( MANUAL_EXPLAIN_WORK* work )
 {

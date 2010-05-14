@@ -116,6 +116,10 @@ enum
 #define NEW_ICON_Y       (-SCROLL_Y+4)
 #define NEW_ICON_ANMSEQ  (1)
 
+// 終了リクエスト
+#define END_REQ_COUNT_START_VAL (1)  // カウントダウン開始値
+#define END_REQ_COUNT_NO        (-1)  // カウントダウンしない値
+
 
 //=============================================================================
 /**
@@ -153,6 +157,9 @@ struct _MANUAL_LIST_WORK
   INPUT_STATE                 input_state;
   BOOL                        b_sb_touch;  // TRUEのときスクロールバーをタッチしている
   BOOL                        b_sb_cursor_pos_change;  // TRUEのときスクロールバーをタッチしたためにparam->cursor_posの位置が変わった。
+
+  // 終了リクエスト
+  s8                          end_req_count;  // 負のときカウントダウンしない。正のときカウントダウンする。0になったら終了。
 };
 
 
@@ -169,6 +176,12 @@ static void Manual_List_Prepare( MANUAL_LIST_WORK* work );
 static void Manual_List_PrepareAppTaskmenuWin( MANUAL_LIST_WORK* work );
 // 転送(VBlank転送ではない)
 static void Manual_List_Trans( MANUAL_LIST_WORK* work );
+// 転送(VBlank転送)
+static void Manual_List_TransVBlank( MANUAL_LIST_WORK* work );
+// 後片付け
+static void Manual_List_Finish( MANUAL_LIST_WORK* work );
+static void Manual_List_FinishAppTaskmenuWin( MANUAL_LIST_WORK* work );
+
 // 入力
 static BOOL Manual_List_InputAppTaskmenuWin( MANUAL_LIST_WORK* work );
 static BOOL Manual_List_InputSb( MANUAL_LIST_WORK* work );
@@ -230,7 +243,8 @@ MANUAL_LIST_WORK*  MANUAL_LIST_Init(
 
   // ここで作成
   Manual_List_Prepare( work );
-  Manual_List_Trans( work );
+  //Manual_List_Trans( work );
+  Manual_List_TransVBlank( work );
 
   // スクロール
   GFL_BG_SetScrollReq( BG_FRAME_S_MAIN, GFL_BG_SCROLL_Y_SET, SCROLL_Y );
@@ -256,7 +270,10 @@ MANUAL_LIST_WORK*  MANUAL_LIST_Init(
   work->input_state = INPUT_STATE_NONE;
   work->b_sb_touch = FALSE;
   work->b_sb_cursor_pos_change = FALSE;
-  
+ 
+  // 終了リクエスト
+  work->end_req_count = END_REQ_COUNT_NO;
+
   // マニュアルタッチバー
   {
     MANUAL_TOUCHBAR_TYPE t = MANUAL_TOUCHBAR_TYPE_TITLE;
@@ -280,38 +297,7 @@ void  MANUAL_LIST_Exit(
   GFL_BG_SetScrollReq( BG_FRAME_S_MAIN, GFL_BG_SCROLL_Y_SET, 0 );
 
   // ここで作成
-  // APP_TASKMENU_WIN
-  {
-    u8 i;
-    // ワーク
-    for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
-    {
-      if( work->atm_win_wk[i] ) APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
-    }
-    // リソース
-    APP_TASKMENU_RES_Delete( work->atm_res );
-  }
-
-  // OBJ
-  {
-    // clwk
-    // new_icon_clwk
-    {
-      u8 i;
-      for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
-      {
-        GFL_CLACT_WK_Remove( work->new_icon_clwk[i] );
-      }
-    }
-    // sb_cursor_clwk
-    {
-      GFL_CLACT_WK_Remove( work->sb_cursor_clwk );
-    }
-    // リソース
-    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_LIST_RES_NCE] );
-    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_LIST_RES_NCG] );
-    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_LIST_RES_NCL] );
-  }
+  //Manual_List_Finish( work );
 
   // ワーク
   GFL_HEAP_FreeMemory( work );
@@ -324,6 +310,20 @@ BOOL  MANUAL_LIST_Main(
 {
   BOOL b_end = FALSE;
 
+  if( work->end_req_count == 0 )
+  {
+    b_end = TRUE;
+  }
+  else if( work->end_req_count > 0 )
+  {
+    if( work->end_req_count == END_REQ_COUNT_START_VAL )
+    {
+      Manual_List_Finish( work );
+    }
+    work->end_req_count--;
+  }
+
+  if( work->input_state != INPUT_STATE_END )
   {
     // APP_TASKMENU_WIN
     u8 i;
@@ -372,7 +372,8 @@ BOOL  MANUAL_LIST_Main(
           break;
         }
         work->input_state = INPUT_STATE_END;
-        b_end = TRUE;
+        //b_end = TRUE;
+        work->end_req_count = END_REQ_COUNT_START_VAL;
       }
     }
   }
@@ -403,7 +404,8 @@ BOOL  MANUAL_LIST_Main(
       {
         work->param->result = MANUAL_LIST_RESULT_ITEM;
         work->input_state = INPUT_STATE_END;
-        b_end = TRUE;
+        //b_end = TRUE;
+        work->end_req_count = END_REQ_COUNT_START_VAL;
       }
     }
   }
@@ -593,6 +595,56 @@ static void Manual_List_PrepareAppTaskmenuWin( MANUAL_LIST_WORK* work )
 static void Manual_List_Trans( MANUAL_LIST_WORK* work )
 {
   GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
+}
+
+// 転送(VBlank転送)
+static void Manual_List_TransVBlank( MANUAL_LIST_WORK* work )
+{
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_REAR );
+}
+
+// 後片付け
+static void Manual_List_Finish( MANUAL_LIST_WORK* work )
+{
+  // APP_TASKMENU_WIN
+  Manual_List_FinishAppTaskmenuWin( work );
+
+  // OBJ
+  {
+    // clwk
+    // new_icon_clwk
+    {
+      u8 i;
+      for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
+      {
+        GFL_CLACT_WK_Remove( work->new_icon_clwk[i] );
+      }
+    }
+    // sb_cursor_clwk
+    {
+      GFL_CLACT_WK_Remove( work->sb_cursor_clwk );
+    }
+    // リソース
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_LIST_RES_NCE] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_LIST_RES_NCG] );
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_LIST_RES_NCL] );
+  }
+}
+static void Manual_List_FinishAppTaskmenuWin( MANUAL_LIST_WORK* work )
+{
+  // APP_TASKMENU_WIN
+  {
+    u8 i;
+    // ワーク
+    for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
+    {
+      if( work->atm_win_wk[i] ) APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+    }
+    // リソース
+    APP_TASKMENU_RES_Delete( work->atm_res );
+  }
+
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_MAIN );
 }
 
 // 入力

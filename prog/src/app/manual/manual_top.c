@@ -86,6 +86,10 @@ typedef enum
 }
 INPUT_STATE;
 
+// 終了リクエスト
+#define END_REQ_COUNT_START_VAL (1)   // カウントダウン開始値
+#define END_REQ_COUNT_NO        (-1)  // カウントダウンしない値
+
 
 //=============================================================================
 /**
@@ -112,6 +116,9 @@ struct _MANUAL_TOP_WORK
 
   // 入力状態
   INPUT_STATE                 input_state;
+
+  // 終了リクエスト
+  s8                          end_req_count;  // 負のときカウントダウンしない。正のときカウントダウンする。0になったら終了。
 };
 
 
@@ -128,6 +135,12 @@ static void Manual_Top_Prepare( MANUAL_TOP_WORK* work );
 static void Manual_Top_PrepareAppTaskmenuWin( MANUAL_TOP_WORK* work );
 // 転送(VBlank転送ではない)
 static void Manual_Top_Trans( MANUAL_TOP_WORK* work );
+// 転送(VBlank転送)
+static void Manual_Top_TransVBlank( MANUAL_TOP_WORK* work );
+// 後片付け
+static void Manual_Top_Finish( MANUAL_TOP_WORK* work );
+static void Manual_Top_FinishAppTaskmenuWin( MANUAL_TOP_WORK* work );
+
 // 入力
 static BOOL Manual_Top_InputAppTaskmenuWin( MANUAL_TOP_WORK* work );
 
@@ -157,7 +170,8 @@ MANUAL_TOP_WORK*  MANUAL_TOP_Init(
 
   // ここで作成
   Manual_Top_Prepare( work );
-  Manual_Top_Trans( work );
+  //Manual_Top_Trans( work );
+  Manual_Top_TransVBlank( work );
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Manual_Top_VBlankFunc, work, 1 );
@@ -165,6 +179,9 @@ MANUAL_TOP_WORK*  MANUAL_TOP_Init(
   // 入力状態
   work->input_state = INPUT_STATE_NONE;
 
+  // 終了リクエスト
+  work->end_req_count = END_REQ_COUNT_NO;
+  
   // マニュアルタッチバー
   MANUAL_TOUCHBAR_SetType( work->cmn_wk->mtb_wk, MANUAL_TOUCHBAR_TYPE_TOP );
 
@@ -180,17 +197,7 @@ void  MANUAL_TOP_Exit(
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
   // ここで作成
-  // APP_TASKMENU_WIN
-  {
-    u8 i;
-    // ワーク
-    for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
-    {
-      APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
-    }
-    // リソース
-    APP_TASKMENU_RES_Delete( work->atm_res );
-  }
+  //Manual_Top_Finish( work );
 
   // ワーク
   GFL_HEAP_FreeMemory( work );
@@ -202,6 +209,19 @@ BOOL  MANUAL_TOP_Main(
 )
 {
   BOOL b_end = FALSE;
+
+  if( work->end_req_count == 0 )
+  {
+    b_end = TRUE;
+  }
+  else if( work->end_req_count > 0 )
+  {
+    if( work->end_req_count == END_REQ_COUNT_START_VAL )
+    {
+      Manual_Top_Finish( work );
+    }
+    work->end_req_count--;
+  }
 
   // マニュアルタッチバーの入力を調べる
   if(    work->input_state == INPUT_STATE_NONE
@@ -237,7 +257,8 @@ BOOL  MANUAL_TOP_Main(
           break;
         }
         work->input_state = INPUT_STATE_END;
-        b_end = TRUE;
+        //b_end = TRUE;
+        work->end_req_count = END_REQ_COUNT_START_VAL;
       }
     }
   }
@@ -272,7 +293,8 @@ BOOL  MANUAL_TOP_Main(
           work->param->result = MANUAL_TOP_RESULT_ALL;
         }
         work->input_state = INPUT_STATE_END;
-        b_end = TRUE;
+        //b_end = TRUE;
+        work->end_req_count = END_REQ_COUNT_START_VAL;
       }
     }
   }
@@ -401,6 +423,35 @@ static void Manual_Top_PrepareAppTaskmenuWin( MANUAL_TOP_WORK* work )
 static void Manual_Top_Trans( MANUAL_TOP_WORK* work )
 {
   GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
+}
+
+// 転送(VBlank転送)
+static void Manual_Top_TransVBlank( MANUAL_TOP_WORK* work )
+{
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_REAR );
+}
+
+// 後片付け
+static void Manual_Top_Finish( MANUAL_TOP_WORK* work )
+{
+  Manual_Top_FinishAppTaskmenuWin( work );
+}
+
+static void Manual_Top_FinishAppTaskmenuWin( MANUAL_TOP_WORK* work )
+{
+  // APP_TASKMENU_WIN
+  {
+    u8 i;
+    // ワーク
+    for( i=0; i<ATM_WIN_ITEM_MAX; i++ )
+    {
+      APP_TASKMENU_WIN_Delete( work->atm_win_wk[i] );
+    }
+    // リソース
+    APP_TASKMENU_RES_Delete( work->atm_res );
+  }
+
+  GFL_BG_LoadScreenV_Req( BG_FRAME_S_MAIN );
 }
 
 // 入力
