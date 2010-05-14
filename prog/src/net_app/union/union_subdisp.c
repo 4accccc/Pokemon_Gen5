@@ -216,7 +216,7 @@ static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index);
 static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 write_pos);
 static void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
-static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos, UNION_CHAT_LOG *log);
+static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos, UNION_CHAT_LOG *log, s32 chat_view_no);
 static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log, s32 offset);
 static BOOL _UniSub_ScrollBar_TouchCheck(UNION_SUBDISP_PTR unisub);
 static void _UniSub_ScrollBar_Update(UNION_SYSTEM_PTR unisys, UNION_SUBDISP_PTR unisub);
@@ -1029,7 +1029,7 @@ void _UniSub_Chat_DispAllWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log)
  * @param   dest_pos		コピー先描画位置
  */
 //--------------------------------------------------------------
-static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos, UNION_CHAT_LOG *log)
+static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos, UNION_CHAT_LOG *log, s32 chat_view_no)
 {
   u16 *src_plate_screen, *dest_plate_screen;
 
@@ -1054,7 +1054,7 @@ static void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_
   }
   else{
     UNION_CHAT_DATA *chat;
-    chat = UnionChat_GetReadBuffer(log, log->chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + src_pos);
+    chat = UnionChat_GetReadBuffer(log, chat_view_no - (UNION_CHAT_VIEW_LOG_NUM-1) + src_pos);
     _UniSub_Chat_DispWrite(unisub, chat, dest_pos);
   }
 }
@@ -1080,7 +1080,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     dest_pos = 0;
     src_pos = dest_pos + offset;
     while(src_pos < UNION_CHAT_VIEW_LOG_NUM){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no-1);
       dest_pos++;
       src_pos++;
     }
@@ -1096,7 +1096,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     dest_pos = UNION_CHAT_VIEW_LOG_NUM - 1;
     src_pos = dest_pos + offset;
     while(src_pos > -1){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no+1);
       dest_pos--;
       src_pos--;
     }
