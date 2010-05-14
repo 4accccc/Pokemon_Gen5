@@ -66,7 +66,7 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME( D04R0601_CHAMPION_01, anm_stay_right )
 	_OBJ_ANIME_WAIT()
 
-	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+	_START_EVENT_BGM_EX( SEQ_BGM_E_SAGE, BGM_FADE_MIDDLE )
 
 	//カメラ操作　ゲーチスの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1015808,98327,1212416,15 )	//一番最後の引数は移動にかかるフレーム数
