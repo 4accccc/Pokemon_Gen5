@@ -109,8 +109,9 @@ typedef struct {
   u16  recoverNumber;     ///< バトル中にワザが書き換わった時に、巻き戻し用に前のワザを保存
   u8   pp;                ///< PP値
   u8   ppMax;             ///< PP最大値
-  u8   usedFlag;          ///< 使用したフラグ（死亡・入れ替えなどでクリア）
-  u8   usedFlagFix;       ///< 使用したフラグ（死亡・入れ替えなどでも保持）
+  u8   ppCnt;             ///< PP増加数
+  u8   usedFlag : 4;      ///< 使用したフラグ（死亡・入れ替えなどでクリア）
+  u8   usedFlagFix : 4;   ///< 使用したフラグ（死亡・入れ替えなどでも保持）
 }BPP_WAZA;
 
 
@@ -287,12 +288,14 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
     {
       bpp->waza[i].pp = PP_Get( srcPP, ID_PARA_pp1+i, 0 );
       bpp->waza[i].ppMax = PP_Get( srcPP, ID_PARA_pp_max1+i, 0 );
+      bpp->waza[i].ppCnt = PP_Get( srcPP, ID_PARA_pp_count1+i, 0 );
       bpp->wazaCnt++;
     }
     else
     {
       bpp->waza[i].pp = 0;
       bpp->waza[i].ppMax = 0;
+      bpp->waza[i].ppCnt = 0;
     }
     bpp->waza[i].usedFlag = FALSE;
     bpp->waza[i].usedFlagFix = FALSE;
@@ -2656,6 +2659,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
   {
     PP_SetWazaPos( pp, bpp->waza[i].number, i );
     PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].pp );
+    PP_Put( pp, ID_PARA_pp_count1+i, bpp->waza[i].ppCnt );
   }
 
   PP_Put( pp, ID_PARA_item, bpp->coreParam.item );

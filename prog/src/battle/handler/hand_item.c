@@ -2027,7 +2027,7 @@ static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SV
     u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     u16 hp = BPP_GetValue( bpp, BPP_HP );
     u16 hp_border = BTL_CALC_QuotMaxHP_Zero( bpp, quot );
-    if( hp < hp_border )
+    if( hp <= hp_border )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH );
     }
