@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-14T16:17:46"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T17:06:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -764,10 +764,10 @@ SUNGLASSES</attribute>
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">どうだい？
 いかしたブツが　あるなら▽
-みせて　くれないかな？</language>
+みせて　くれないかな？▼</language>
 		<language name="JPN_KANJI" width="256">どうだい？
 いかしたブツが　あるなら▽
-見せて　くれないかな？</language>
+みせて　くれないかな？▼</language>
 	</row>
 
 	<row id="msg_appraisal_m2_03" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -839,7 +839,7 @@ SUNGLASSES</attribute>
 どこよりも　だれよりも　たかーく
 かいとって　あげるからさ……▼</language>
 		<language name="JPN_KANJI" width="256">いかしたブツを　みつけたら
-わたしの　ところへ　おいで！▼
+私の　ところへ　おいで！▼
 どこよりも　だれよりも　高ーく
 買い取って　あげるからさ……▼</language>
 	</row>
@@ -851,12 +851,12 @@ SUNGLASSES</attribute>
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">どうだい？
 いかしたブツが　あるなら……▼
-って　バッグのなか　ないようだね
+って　バッグのなかに　ないようだね
 しょうがない！▽
 また　こんど　もってきてよ！</language>
 		<language name="JPN_KANJI" width="256">どうだい？
 いかしたブツが　あるなら……▼
-って　バッグの中　ないようだね
+って　バッグの中に　ないようだね
 しょうがない！▽
 また　今度　持ってきてよ！</language>
 	</row>
