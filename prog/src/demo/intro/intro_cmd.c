@@ -1279,7 +1279,7 @@ static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 
 	case 1:
 		if( INTRO_MCSS_PokeFall( wk->mcss, FX32_CONST(1.0), -FX32_CONST(11.5) ) == TRUE ){
-			PMSND_PlaySE( SEQ_SE_TOUJOU_SMALL );
+			PMSND_PlaySE( SEQ_SE_TOUJOU_INTRO );
 			sdat->seq++;
 		}
 		break;
@@ -1287,22 +1287,13 @@ static BOOL CMD_POKEMON_APPER( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
 	case 2:
 		if( PMSND_CheckPlaySE() == FALSE ){
 			INTRO_MCSS_SetAnimeIndex( wk->mcss, 1, 0 );
+		  // ロードしておいた鳴き声を再生
+		  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
 			sdat->seq++;
 		}
 		break;
 
 	case 3:
-		if( sdat->cnt == 30 ){
-		  // ロードしておいた鳴き声を再生
-		  PMVOICE_PlayOnly( wk->init_param->voice_load_id );
-			sdat->cnt = 0;
-			sdat->seq++;
-		}else{
-			sdat->cnt++;
-		}
-		break;
-
-	case 4:
 		if( PMVOICE_CheckPlay( wk->init_param->voice_load_id ) == FALSE ){
 			sdat->seq = 0;
 			return TRUE;

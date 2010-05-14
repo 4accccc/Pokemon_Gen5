@@ -192,7 +192,7 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
 {
   MCSS_ADD_WORK   add;
   POKEMON_PARAM*  pp;
-  VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
+  VecFx32 scale = {-FX32_ONE*16,FX32_ONE*16,FX32_ONE};
   
   GF_ASSERT( wk );
   GF_ASSERT( wk->mcss );

@@ -31,15 +31,19 @@ static const INTRO_CMD_DATA c_intro_scene_init[] =
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 {
-//  { INTRO_CMD_TYPE_LOAD_BG, { 0 }, CMD_READ_NEXT }, // BGをロード
-
-  // 初期化
-//  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },
+	// 画面フェードイン
   { INTRO_CMD_TYPE_BRIGHTNESS_SET, { -16, }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 } },
 
-  { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01, 0 } }, // ゲームで　つかう もじは
-  
+  // BGMフェードイン
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },  // BGM切り替え  
+  { INTRO_CMD_TYPE_BGM_FADEIN, { 90 }, CMD_READ_NEXT },         // BGMフェードイン
+  { INTRO_CMD_TYPE_WAIT, { 90 }, },                             // ウェイト
+
+	// システムメッセージ表示
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01, 0 } },					// ゲームで　つかう もじは
+
+  // 文字モード選択
   { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, FALSE }, },
     { INTRO_CMD_TYPE_SELECT_MOJI, 0 }, // かな
     { INTRO_CMD_TYPE_SELECT_MOJI, 1 }, // 漢字
@@ -55,6 +59,28 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
+	// データ読み込み
+  { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_533, -FX32_CONST(6), -FX32_CONST(0.5) }, CMD_READ_NEXT },    // ポケモンロード
+  { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 1, FALSE }, },		// ポケモン非表示
+
+  // ↑ROMアクセスはここまで↑
+#ifdef CMD_SAVE_ON
+  { INTRO_CMD_TYPE_SAVE_INIT }, // セーブ開始
+#endif
+
+  { INTRO_CMD_TYPE_CLEAR_WINDOW, },			// メッセージウィンドウクリア
+
+  { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, },						// ブラックからフェードイン
+  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT }, // BGM切替
+  { INTRO_CMD_TYPE_BGM_CHANGE_WAIT,  },                         // BGM切替待ち
+
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_01, 0, 1 }, },    // ハーイ！
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_02, 0, 1 }, },		// わたし　アララギと　いいます
+
+  { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 },		// シーン02へ
+
+/*
   { INTRO_CMD_TYPE_CLEAR_WINDOW, },      // メッセージウィンドウクリア
 
 //  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00, 1 } }, // ……ごめんなさい ちょっと待ってね！
@@ -94,6 +120,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_02, 0, 1 }, }, // わたし　アララギと　いいます
 
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 }, // シーン02へ
+*/
 };
 
 //---------------------------------------------------------------------------

@@ -34,16 +34,30 @@ enum
 
 #define	UNIT_NONE		( 0xffff )	///< ユニットなし
 
+enum {
+	UNIT_ANM_SELECT_CA = 0,
+	UNIT_ANM_SELECT_MA,
+	UNIT_ANM_START_CA,
+	UNIT_ANM_START_MA,
+};
+
 //RES
 static const GFL_G3D_UTIL_RES res_unit_select[] = {
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbma, GFL_G3D_UTIL_RESARC },
+
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg_b_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg_b_nsbma, GFL_G3D_UTIL_RESARC },
 };
 //ANM
 static const GFL_G3D_UTIL_ANM anm_unit_select[] = {
+	// 男女選択
   { 1, 0 },
   { 2, 0 },
+	// 男女選択開始演出
+  { 3, 0 },
+  { 4, 0 },
 };
 //OBJ
 static const GFL_G3D_UTIL_OBJ obj_unit_select[] = {
@@ -182,6 +196,7 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID sc
     }
   
 	  // アニメーション有効化
+/*
     for( i=0; i<UNIT_MAX; i++ )
     {
       int j;
@@ -199,6 +214,14 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic, INTRO_SCENE_ID sc
         GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
       }
     }
+*/
+		{
+      GFL_G3D_OBJ * obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[0] );
+			GFL_G3D_OBJECT_EnableAnime( obj, UNIT_ANM_START_CA );
+			GFL_G3D_OBJECT_EnableAnime( obj, UNIT_ANM_START_MA );
+			GFL_G3D_OBJECT_DisableAnime( obj, UNIT_ANM_SELECT_CA );
+			GFL_G3D_OBJECT_DisableAnime( obj, UNIT_ANM_SELECT_MA );
+		}
   }else{
     int i;
     for( i=0; i<UNIT_MAX; i++ ){
@@ -301,6 +324,37 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
   fx32 val;
   VecFx32 pos;
 
+	switch( wk->start_seq ){
+	case 0:
+    // ブレンドモード、対象面指定
+    G2_SetBlendAlpha( GX_PLANEMASK_BG0, GX_PLANEMASK_BG3|GX_PLANEMASK_BG0, 0, 0 );
+		PMSND_PlaySE( SEQ_SE_OPEN2 );
+    wk->start_seq++;
+
+	case 1:
+		{
+			GFL_G3D_OBJ * obj;
+			BOOL	caFlag, maFlag;
+			obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[0] );
+			caFlag = GFL_G3D_OBJECT_IncAnimeFrame( obj, UNIT_ANM_START_CA, FX32_ONE );
+			maFlag = GFL_G3D_OBJECT_IncAnimeFrame( obj, UNIT_ANM_START_MA, FX32_ONE );
+			if( caFlag == FALSE && maFlag == FALSE ){
+				GFL_G3D_OBJECT_DisableAnime( obj, UNIT_ANM_START_CA );
+				GFL_G3D_OBJECT_DisableAnime( obj, UNIT_ANM_START_MA );
+				GFL_G3D_OBJECT_EnableAnime( obj, UNIT_ANM_SELECT_CA );
+				GFL_G3D_OBJECT_EnableAnime( obj, UNIT_ANM_SELECT_MA );
+				// デフォルト位置のフレーム
+				INTRO_G3D_SelectSet( wk, INTRO_3D_SEL_SEX_DEF_FRAME );
+		    wk->start_seq++;
+			}
+		}
+		break;
+
+	case 2:
+		return TRUE;
+	}
+
+#if 0
   switch( wk->start_seq )
   {
   case 0:
@@ -345,6 +399,7 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
 
   default : GF_ASSERT(0);
   }
+#endif
 
   return FALSE;
 }
@@ -478,7 +533,9 @@ BOOL INTRO_G3D_SelectDecideReturn( INTRO_G3D_WORK* wk )
     INTRO_G3D_SelectSet( wk, wk->cnt );
   }
 
-  if( wk->cnt == INTRO_3D_SEL_SEX_DEF_FRAME ){ return TRUE; }
+  if( wk->cnt == INTRO_3D_SEL_SEX_DEF_FRAME ){
+		return TRUE;
+	}
 
   return FALSE;
 
@@ -495,6 +552,7 @@ BOOL INTRO_G3D_SelectDecideReturn( INTRO_G3D_WORK* wk )
 //-----------------------------------------------------------------------------
 void INTRO_G3D_SelectSet( INTRO_G3D_WORK* wk, u32 in_frame )
 {
+/*
   int i;
 
   // アニメフレーム指定
@@ -514,6 +572,14 @@ void INTRO_G3D_SelectSet( INTRO_G3D_WORK* wk, u32 in_frame )
       GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &frame );
     }
   }
+*/
+	GFL_G3D_OBJ * obj;
+	int frm;
+
+	obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->unit_idx[0] );
+	frm = FX32_CONST(in_frame);
+	GFL_G3D_OBJECT_SetAnimeFrame( obj, UNIT_ANM_SELECT_CA, &frm );
+	GFL_G3D_OBJECT_SetAnimeFrame( obj, UNIT_ANM_SELECT_MA, &frm );
 }
 
 
