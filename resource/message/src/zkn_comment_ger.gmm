@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-13T22:09:51"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-14T13:14:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1410,10 +1410,10 @@ finden sie sich schnell wieder.</language>
 	<row id="ZKN_COMMENT_GER_00_103" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>ナッシー</comment>
 		<language name="JPN">Man nennt es den “Laufenden
-Dschungel”. Wird ein Kopf zu groß,
+Dschungel&quot;. Wird ein Kopf zu groß,
 fällt er ab und wird zu einem OWEI.</language>
 		<language name="JPN_KANJI">Man nennt es den “Laufenden
-Dschungel”. Wird ein Kopf zu groß,
+Dschungel&quot;. Wird ein Kopf zu groß,
 fällt er ab und wird zu einem OWEI.</language>
 	</row>
 
@@ -1868,10 +1868,10 @@ Frühlings angesehen.</language>
 
 	<row id="ZKN_COMMENT_GER_00_147" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>ミニリュウ</comment>
-		<language name="JPN">Man nennt es “Illusion-Pokémon”,
+		<language name="JPN">Man nennt es “Illusion-Pokémon&quot;,
 denn nur wenige haben es gesehen.
 Nur seine Haut wurde oft gefunden.</language>
-		<language name="JPN_KANJI">Man nennt es “Illusion-Pokémon”,
+		<language name="JPN_KANJI">Man nennt es “Illusion-Pokémon&quot;,
 denn nur wenige haben es gesehen.
 Nur seine Haut wurde oft gefunden.</language>
 	</row>
@@ -2113,10 +2113,10 @@ Gegnern einen Schlag versetzt.</language>
 		<comment>ランターン</comment>
 		<language name="JPN">LANTURNs Licht kann aus großen
 Tiefen heraufscheinen. Man nennt
-es auch “Tiefseestern”.</language>
+es auch “Tiefseestern&quot;.</language>
 		<language name="JPN_KANJI">LANTURNs Licht kann aus großen
 Tiefen heraufscheinen. Man nennt
-es auch “Tiefseestern”.</language>
+es auch “Tiefseestern&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_172">
@@ -3639,10 +3639,10 @@ Ihre Zähne durchdringen alles.</language>
 		<comment>サメハダー</comment>
 		<language name="JPN">Seine Zähne durchdringen sogar
 Eisen. Es schwimmt mit 120 km/h und
-wird “Tyrann des Meeres” genannt.</language>
+wird “Tyrann des Meeres&quot; genannt.</language>
 		<language name="JPN_KANJI">Seine Zähne durchdringen sogar
 Eisen. Es schwimmt mit 120 km/h und
-wird “Tyrann des Meeres” genannt.</language>
+wird “Tyrann des Meeres&quot; genannt.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_320">
@@ -3749,10 +3749,10 @@ die Kopfschmerzen verursachen.</language>
 		<comment>フライゴン</comment>
 		<language name="JPN">Mit mächtigem Flügelschlag verur-
 sacht es einen Sandsturm. Es wird
-“Geist der Wüste” genannt.</language>
+“Geist der Wüste&quot; genannt.</language>
 		<language name="JPN_KANJI">Mit mächtigem Flügelschlag verur-
 sacht es einen Sandsturm. Es wird
-“Geist der Wüste” genannt.</language>
+“Geist der Wüste&quot; genannt.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_331">
@@ -4755,10 +4755,10 @@ nur noch selten gebraucht.</language>
 ・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Laut einer alten Volkssage nennt
 man es den “Wegweiser für
-umherstreifende Geister”.</language>
+umherstreifende Geister&quot;.</language>
 		<language name="JPN_KANJI">Laut einer alten Volkssage nennt
 man es den “Wegweiser für
-umherstreifende Geister”.</language>
+umherstreifende Geister&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_426">
@@ -4811,10 +4811,10 @@ Kraft verfüge, glücklich zu machen.</language>
 ・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">Sein tiefer Ruf lockt andere
 KRAMURX herbei. Man nennt es daher
-“Beschwörer der Nacht”.</language>
+“Beschwörer der Nacht&quot;.</language>
 		<language name="JPN_KANJI">Sein tiefer Ruf lockt andere
 KRAMURX herbei. Man nennt es daher
-“Beschwörer der Nacht”.</language>
+“Beschwörer der Nacht&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_GER_00_431">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-14T01:00:06"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-14T13:12:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1413,10 +1413,10 @@ if they become separated.</language>
 
 	<row id="ZKN_COMMENT_E_00_103" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>ナッシー</comment>
-		<language name="JPN">It is called “The Walking Jungle.”
+		<language name="JPN">It is called “The Walking Jungle.&quot;
 If a head grows too big, it falls
 off and becomes an EXEGGCUTE.</language>
-		<language name="JPN_KANJI">It is called “The Walking Jungle.”
+		<language name="JPN_KANJI">It is called “The Walking Jungle.&quot;
 If a head grows too big, it falls
 off and becomes an EXEGGCUTE.</language>
 	</row>
@@ -1872,10 +1872,10 @@ indicates the coming of spring.</language>
 
 	<row id="ZKN_COMMENT_E_00_147" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>ミニリュウ</comment>
-		<language name="JPN">It is called the “Mirage Pokémon”
+		<language name="JPN">It is called the “Mirage Pokémon&quot;
 because so few have seen it.
 Its shed skin has been found.</language>
-		<language name="JPN_KANJI">It is called the “Mirage Pokémon”
+		<language name="JPN_KANJI">It is called the “Mirage Pokémon&quot;
 because so few have seen it.
 Its shed skin has been found.</language>
 	</row>
@@ -2117,10 +2117,10 @@ antenna tips to shock its foes.</language>
 		<comment>ランターン</comment>
 		<language name="JPN">LANTURN&apos;s light can shine up from
 great depths. It is nicknamed
-“The Deep-Sea Star.”</language>
+“The Deep-Sea Star.&quot;</language>
 		<language name="JPN_KANJI">LANTURN&apos;s light can shine up from
 great depths. It is nicknamed
-“The Deep-Sea Star.”</language>
+“The Deep-Sea Star.&quot;</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_172">
@@ -3645,10 +3645,10 @@ can tear out boat hulls.</language>
 		<comment>サメハダー</comment>
 		<language name="JPN">Its fangs rip through sheet iron.
 It swims at 75 mph and is known as
-“The Bully of the Sea.”</language>
+“The Bully of the Sea.&quot;</language>
 		<language name="JPN_KANJI">Its fangs rip through sheet iron.
 It swims at 75 mph and is known as
-“The Bully of the Sea.”</language>
+“The Bully of the Sea.&quot;</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_320">
@@ -3755,10 +3755,10 @@ induce headaches in people.</language>
 		<comment>フライゴン</comment>
 		<language name="JPN">It whips up sandstorms with
 powerful flaps of its wings. It is
-known as “The Desert Spirit.”</language>
+known as “The Desert Spirit.&quot;</language>
 		<language name="JPN_KANJI">It whips up sandstorms with
 powerful flaps of its wings. It is
-known as “The Desert Spirit.”</language>
+known as “The Desert Spirit.&quot;</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_331">
@@ -4761,10 +4761,10 @@ AMBIPOM rarely uses its hands.</language>
 ・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Because of the way it floats
 aimlessly, an old folktale calls it a
-“Signpost for Wandering Spirits.”</language>
+“Signpost for Wandering Spirits.&quot;</language>
 		<language name="JPN_KANJI">Because of the way it floats
 aimlessly, an old folktale calls it a
-“Signpost for Wandering Spirits.”</language>
+“Signpost for Wandering Spirits.&quot;</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_426">
@@ -4817,10 +4817,10 @@ imbued with happiness-giving power.</language>
 ・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">If one utters a deep cry, many
 MURKROW gather quickly. For this,
-it is called “Summoner of Night.”</language>
+it is called “Summoner of Night.&quot;</language>
 		<language name="JPN_KANJI">If one utters a deep cry, many
 MURKROW gather quickly. For this,
-it is called “Summoner of Night.”</language>
+it is called “Summoner of Night.&quot;</language>
 	</row>
 
 	<row id="ZKN_COMMENT_E_00_431">

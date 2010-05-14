@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-13T22:06:11"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-14T13:14:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -818,10 +818,10 @@ un pollen extrêmement allergène.</language>
 	<row id="ZKN_COMMENT_FRA_00_046" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>パラス</comment>
 		<language name="JPN">Des champignons appelés
-“tochukaso” poussent sur son dos.
+“tochukaso&quot; poussent sur son dos.
 Ils évoluent avec le PARAS hôte.</language>
 		<language name="JPN_KANJI">Des champignons appelés
-“tochukaso” poussent sur son dos.
+“tochukaso&quot; poussent sur son dos.
 Ils évoluent avec le PARAS hôte.</language>
 	</row>
 
@@ -1409,10 +1409,10 @@ rapidement si on les sépare.</language>
 
 	<row id="ZKN_COMMENT_FRA_00_103" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>ナッシー</comment>
-		<language name="JPN">On l&apos;appelle “jungle sur pattes”.
+		<language name="JPN">On l&apos;appelle “jungle sur pattes&quot;.
 Si une tête devient trop grosse,
 elle tombe et produit un NOEUNOEUF.</language>
-		<language name="JPN_KANJI">On l&apos;appelle “jungle sur pattes”.
+		<language name="JPN_KANJI">On l&apos;appelle “jungle sur pattes&quot;.
 Si une tête devient trop grosse,
 elle tombe et produit un NOEUNOEUF.</language>
 	</row>
@@ -1868,10 +1868,10 @@ annonce l&apos;arrivée du printemps.</language>
 
 	<row id="ZKN_COMMENT_FRA_00_147" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>ミニリュウ</comment>
-		<language name="JPN">On l&apos;appelle “Pokémon mirage”
+		<language name="JPN">On l&apos;appelle “Pokémon mirage&quot;
 en raison de sa rareté. On a
 découvert sa mue.</language>
-		<language name="JPN_KANJI">On l&apos;appelle “Pokémon mirage”
+		<language name="JPN_KANJI">On l&apos;appelle “Pokémon mirage&quot;
 en raison de sa rareté. On a
 découvert sa mue.</language>
 	</row>
@@ -2113,10 +2113,10 @@ antennes pour paralyser sa proie.</language>
 		<comment>ランターン</comment>
 		<language name="JPN">La lumière de LANTURN surgit des
 profondeurs. On le surnomme
-“étoile des profondeurs”.</language>
+“étoile des profondeurs&quot;.</language>
 		<language name="JPN_KANJI">La lumière de LANTURN surgit des
 profondeurs. On le surnomme
-“étoile des profondeurs”.</language>
+“étoile des profondeurs&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_FRA_00_172">
@@ -3641,10 +3641,10 @@ aiguisées peuvent couler un navire.</language>
 		<comment>サメハダー</comment>
 		<language name="JPN">Ses crocs lacèrent des feuilles
 d&apos;acier. Il nage à 120 km/h. On
-l&apos;appelle “tyran des mers”.</language>
+l&apos;appelle “tyran des mers&quot;.</language>
 		<language name="JPN_KANJI">Ses crocs lacèrent des feuilles
 d&apos;acier. Il nage à 120 km/h. On
-l&apos;appelle “tyran des mers”.</language>
+l&apos;appelle “tyran des mers&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_FRA_00_320">
@@ -3751,10 +3751,10 @@ qui donnent mal au crâne.</language>
 		<comment>フライゴン</comment>
 		<language name="JPN">Son puissant battement d&apos;ailes
 provoque des tempêtes de sable.
-On l&apos;appelle “esprit du désert”.</language>
+On l&apos;appelle “esprit du désert&quot;.</language>
 		<language name="JPN_KANJI">Son puissant battement d&apos;ailes
 provoque des tempêtes de sable.
-On l&apos;appelle “esprit du désert”.</language>
+On l&apos;appelle “esprit du désert&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_FRA_00_331">
@@ -4755,10 +4755,10 @@ très rarement de ses bras.</language>
 ・シンオウ図鑑プラチナ版</comment>
 		<language name="JPN">Sa façon de flotter sans but au
 gré du vent lui a valu le surnom
-de “bouée des esprits égarés”.</language>
+de “bouée des esprits égarés&quot;.</language>
 		<language name="JPN_KANJI">Sa façon de flotter sans but au
 gré du vent lui a valu le surnom
-de “bouée des esprits égarés”.</language>
+de “bouée des esprits égarés&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_FRA_00_426">
@@ -4811,10 +4811,10 @@ source de joie.</language>
 ・DPポケモンだがプラチナのROM内で入手不可</comment>
 		<language name="JPN">Son cri profond peut invoquer une
 meute de CORNEBRE. On l&apos;appelle
-“le crieur de mauvais augure”.</language>
+“le crieur de mauvais augure&quot;.</language>
 		<language name="JPN_KANJI">Son cri profond peut invoquer une
 meute de CORNEBRE. On l&apos;appelle
-“le crieur de mauvais augure”.</language>
+“le crieur de mauvais augure&quot;.</language>
 	</row>
 
 	<row id="ZKN_COMMENT_FRA_00_431">
