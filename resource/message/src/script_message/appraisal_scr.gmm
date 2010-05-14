@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-14T16:16:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T16:17:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1510" top="244" right="2215" bottom="864" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="279" right="1280" bottom="677" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -655,7 +655,7 @@ FIGHTERM</attribute>
 きみも　そう思わんかね？　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_r_07" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_07" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・イベント終了</comment>
 		<attribute name="キャラ指定">格闘家♂
@@ -663,7 +663,7 @@ FIGHTERM</attribute>
 		<language name="JPN" width="256">きがかわったら　めずらしい　どうぐ
 ゆずって　くれないかね？　かね？</language>
 		<language name="JPN_KANJI" width="256">気が変わったら　珍しい道具　
-ゆずってくれないかね　かね？</language>
+ゆずってくれないかね？　かね？</language>
 	</row>
 
 	<row id="msg_appraisal_r_08" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
