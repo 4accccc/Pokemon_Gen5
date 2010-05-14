@@ -173,7 +173,6 @@ EVENT_START ev_waza_omoidashi
   // ハートのうろこ所持チェック
   {
     DEFINE_LOCAL have_uroko
-    _ADD_ITEM( ITEM_HAATONOUROKO, 1, have_uroko )  // TEST:
     _ITEM_CHK( ITEM_HAATONOUROKO, 1, have_uroko )
     IF $have_uroko == FALSE THEN 
       _JUMP omoidashi_exit_byebye 
