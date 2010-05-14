@@ -120,6 +120,17 @@ static void _yenowinCreateSys(WIFIP2PMATCH_WORK *wk)
 }
 
 
+static int _bmpMenu_YesNoSelectMain(WIFIP2PMATCH_WORK *wk)
+{
+  int ret;
+
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  if( ret != BMPMENU_NULL ){
+    wk->pYesNoWork=NULL;
+  }
+  return ret;
+}
+
 //------------------------------------------------------------------
 /**
  * $brief   —Fl”Ô†‚Ì–¼‘O‚ðexpand‚·‚é
@@ -252,6 +263,7 @@ static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bS
   }
   if(wk->pStream){
     PRINTSYS_PrintStreamDelete( wk->pStream );
+    wk->pStream = NULL;
   }
 
   wk->MsgWin=GFL_BMPWIN_Create(
@@ -631,6 +643,7 @@ static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
   if(WIFI_STATUS_GetVChatStatus( pWork->pMatch )==FALSE){
     switch(param){
     case WIFI_GAME_VCT:
+    case WIFI_GAME_TVT:
       BmpMenuList_ColorControl(wk,FBMP_COL_BLK_SDW,FBMP_COL_WHITE,FBMP_COL_BLK_SDW);
       break;
     default:
@@ -973,6 +986,10 @@ static void BmpWinDelete( WIFIP2PMATCH_WORK *wk )
   if(wk->menulist){
     BmpMenuWork_ListDelete( wk->menulist );
     wk->menulist = NULL;
+  }
+  if(wk->pYesNoWork){
+    BmpMenu_YesNoMenuExit( wk->pYesNoWork );
+    wk->pYesNoWork = NULL;
   }
 }
 

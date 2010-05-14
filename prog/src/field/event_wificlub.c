@@ -358,6 +358,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     ep2p->localProc = GFL_PROC_LOCAL_boot(HEAPID_PROC);
     GFL_PROC_LOCAL_CallProc(ep2p->localProc,
                             FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
+    ep2p->pMatchParam->seq = WIFI_GAME_NONE;
     (*seq)  = P2P_LOGIN;
     break;
   case P2P_LOGIN:

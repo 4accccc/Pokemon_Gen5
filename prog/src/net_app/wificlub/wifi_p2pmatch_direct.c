@@ -121,7 +121,7 @@ static int _playerDirectInit3( WIFIP2PMATCH_WORK *wk, int seq )
   u8 command;
 
   GFL_FONTSYS_SetDefaultColor();
-  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  ret = _bmpMenu_YesNoSelectMain(wk);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -385,7 +385,7 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
   int ret;
   u8 command;
   GFL_FONTSYS_SetDefaultColor();
-  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  ret = _bmpMenu_YesNoSelectMain(wk);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -424,7 +424,12 @@ static int _playerDirectSub23( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_UI_KEY_GetTrg()){
     return seq;
   }
-  wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
+  if(wk->pParentWork->btalk){
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
+  }
+  else{
+    wk->command = WIFIP2PMATCH_PLAYERMACHINE_TALKEND;
+  }
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
   return seq;
 }
@@ -1146,7 +1151,7 @@ static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
   int ret;
   u8 command;
   GFL_FONTSYS_SetDefaultColor();
-  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  ret = _bmpMenu_YesNoSelectMain(wk);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -1192,8 +1197,15 @@ static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
     u32 fail_bit;
 
     if(!_regulationCheck(wk)){        // 選ぶ事ができない
-      wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+      if(wk->pParentWork->btalk){
+        wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+      }
+      else{
+        _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+        return seq;
+      }
     }
     else{
       wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START;
@@ -1488,7 +1500,7 @@ static int _playerDirectFailed3( WIFIP2PMATCH_WORK *wk, int seq )
   int ret;
   u8 command;
   GFL_FONTSYS_SetDefaultColor();
-  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  ret = _bmpMenu_YesNoSelectMain(wk);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -1669,7 +1681,7 @@ static int _playerDirectVCTChange3( WIFIP2PMATCH_WORK *wk, int seq )
   int ret;
   u8 command;
   GFL_FONTSYS_SetDefaultColor();
-  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  ret = _bmpMenu_YesNoSelectMain(wk);
 
   if(ret == BMPMENU_NULL){  // まだ選択中
     return seq;
@@ -1781,6 +1793,34 @@ static int _playerDirectWaitSendCommand( WIFIP2PMATCH_WORK *wk, int seq )
                       1, &wk->command)){
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
+  return seq;
+}
+
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERMACHINE_TALKEND
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerMachineTalkEnd( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
+  GFL_NET_StateWifiMatchEnd(TRUE);
+
+  if(GFL_NET_IsParentMachine()){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1038, FALSE);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
+  }
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
 
