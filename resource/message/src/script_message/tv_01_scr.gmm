@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T11:24:40"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T16:58:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -5192,7 +5192,7 @@ HAVE A NICE DAY！　ムチュッ！</language>
 こんしゅうの　ひとこと
 コミュニケーションは　コレ！▼
 『それ　どこで　みつけたの？』▼
-ポケモンでも　それいがいでも
+どんな　ときでも
 つかえちゃいそうな　ひとことね！▼
 ハイッ　そんな　べんりフレーズを
 えいごでは　こういうの！▼
@@ -5209,7 +5209,7 @@ HAVE A NICE DAY！　ムチュッ！</language>
 今週の　一言
 コミュニケーションは　コレ！▼
 『それ　どこで　見つけたの？』▼
-ポケモンでも　それ以外でも
+どんな　ときでも
 使えちゃいそうな　一言ね！▼
 ハイッ　そんな　便利フレーズを
 英語では　こういうの！▼
@@ -5236,8 +5236,8 @@ HAVE A NICE DAY！　ムチュッ！</language>
 『しりあえて　よかったわ』▼
 はじめて　あったひととの
 わかれぎわの　ひとことね！▼
-ジョディなら　そんなときは
-こういうわ！▼
+ジョディなら
+そんなとき　こういうわ！▼
 『Nice meeting you』
 ナイス　ミーティング　ユー！▼
 がっちり　あくしゅなんて　しながら
@@ -5251,8 +5251,8 @@ SEE　YOU　SOON！</language>
 『知り合えて　良かったわ』▼
 初めて　出会った　人との
 別れ際の　一言ね！▼
-ジョディなら　そんな時は
-こういうわ！▼
+ジョディなら
+そんなとき　こういうわ！▼
 『Nice meeting you』
 ナイス　ミーティング　ユー！▼
 がっちり　握手なんて　しながら
@@ -5289,7 +5289,7 @@ SEE　YOU　SOON！</language>
 ジョディ　昨日　ミュージカルで
 とんでもなく　キュートな▽
 ポケモンに　一目ぼれ　したのっ！▼
-そんな時の　ための　一言っ！
+そんなときの　ための　一言っ！
 『あなたの　ファンに　なりました！』▼
 ……ミュージカルの　あと　英語で
 ジョディ　こう　いってやったわ！▼
@@ -5332,7 +5332,7 @@ SEE YOU AGAIN－！</language>
 『TRADE&apos;N TALK』の　時間よ！▼
 今日は　テレパシーの　ように
 2人の　考えが　ピタリと▽
-重なった　時の　一言！▼
+重なった　ときの　一言！▼
 『ちょうど　同じこと
 考えてたの！』▼
 『I was thinking the same thing!』
@@ -5407,7 +5407,7 @@ OOPS！　これは　目立つわね！▼
 かわゆいっ！
 ほしいっ！▼
 でも　ひとのものを　とったら
-どろぼうよねっ！▼
+どろぼう　よねっ！▼
 えーい　わたしも　つかまえに
 いくぞーって　ときの　ひとこと！▼
 『Where did you catch
@@ -5421,7 +5421,7 @@ that pokemon?』▼
 		<language name="JPN_KANJI" width="256">ジョディ『ハーイ　ミナサン！
 『TRADE&apos;N TALK』の　時間よ！▼
 今日は　気になる　ポケモンを
-見かけた　時に　聞きたい▽
+みかけた　ときに　聞きたい▽
 この　質問を　教えるわ！▼
 『そのポケモン
 どこで　つかまえたの？』▼
@@ -5430,12 +5430,12 @@ that pokemon?』▼
 でも　人のものを　とったら
 泥棒よねっ！▼
 えーい　わたしも　つかまえに
-いくぞーって　時の　一言！▼
+いくぞーって　ときの　一言！▼
 『Where did you catch
 that pokemon?』▼
 ウェァ　ディジュゥ　キャッチ
 ザット　ポーケモン？▼
-これで　見かけた　ポケモンを
+これで　みかけた　ポケモンを
 つかまえに　いくことが　できるわ！▼
 それじゃ　今日は　ここまでよ！
 みんなみんな　BYEBYE！</language>
@@ -5514,7 +5514,7 @@ HEYHAAAAY！これで　おたがいの
 今週の　一言は　コレ！
 「おれの　ポケモン　見てみろよ！」▼
 おれの　じまんの　ポケモンを
-とくと　見ろと！　FOO！▼
+とくと　みろと！　FOO！▼
 そんな　一言を　英語で
 言うと　コレ！▼
 「Take a look at my Pokemon!」
@@ -5784,7 +5784,7 @@ OHHHH！　バッチリ　おめかしした
 		<language name="JPN_KANJI" width="256">ボブ『HI EVERYONE！▼
 今日の　『TRADE&apos;N TALK』では
 ボクが　よく　言われる　この▽
-一言を　紹介　しよう！▼
+一言を　紹介しよう！▼
 『冗談だろ！？』▼
 ボクの　周りには　ショッキングな
 ニュースが　多くてね▼
