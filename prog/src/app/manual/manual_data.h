@@ -84,3 +84,6 @@ extern  BOOL MANUAL_DATA_OpenFlagIsOpen( MANUAL_DATA_WORK* work, u16 open_flag, 
 extern  BOOL MANUAL_DATA_ReadFlagIsRead( MANUAL_DATA_WORK* work, u16 read_flag, GAMEDATA* gamedata );
 extern  void MANUAL_DATA_ReadFlagSetRead( MANUAL_DATA_WORK* work, u16 read_flag, GAMEDATA* gamedata );
 
+// ‰æ‘œ‚ÌID
+extern  BOOL MANUAL_DATA_ImageIdIsValid( MANUAL_DATA_WORK* work, u16 image_id );  // ‰æ‘œ‚ÌID‚ª—LŒø(‰æ‘œ‚ ‚è)‚©–³Œø(‰æ‘œ‚È‚µ)‚©‚ð•Ô‚·(—LŒø‚Ì‚Æ‚«TRUE)
+

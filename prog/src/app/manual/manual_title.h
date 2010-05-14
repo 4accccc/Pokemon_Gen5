@@ -58,7 +58,7 @@ typedef struct
   u16                  cursor_pos;   // 全項目の中での番号
   // out 
   MANUAL_TITLE_RESULT  result;
-  u16                  serial_no;    // resultがMANUAL_TITLE_RESULT_ITEMのときのみ使用する
+  u16                  serial_no;    // resultがMANUAL_TITLE_RESULT_ITEMのときのみ使用する  // serial_noと言っているが実際はtitle_idxである。
 }
 MANUAL_TITLE_PARAM;
 

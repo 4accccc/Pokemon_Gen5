@@ -98,7 +98,7 @@ MANUAL_TITLE_WORK*  MANUAL_TITLE_Init(
   {
     // out
     work->param->result    = MANUAL_TITLE_RESULT_RETURN;
-    work->param->serial_no = 0;
+    work->param->serial_no = 0;  // serial_no‚ÆŒ¾‚Á‚Ä‚¢‚é‚ªÀÛ‚Ítitle_idx‚Å‚ ‚éB
   }
   // ‹¤’Ê
   work->cmn_wk = cmn_wk;
@@ -200,7 +200,7 @@ void  MANUAL_TITLE_Exit(
     else if( work->list_param.result == MANUAL_LIST_RESULT_ITEM )
     {
       work->param->result    = MANUAL_TITLE_RESULT_ITEM;
-      work->param->serial_no = work->list_param.item[ work->param->cursor_pos ].no;
+      work->param->serial_no = work->list_param.item[ work->param->cursor_pos ].no;  // serial_no‚ÆŒ¾‚Á‚Ä‚¢‚é‚ªÀÛ‚Ítitle_idx‚Å‚ ‚éB
     }
   }
 

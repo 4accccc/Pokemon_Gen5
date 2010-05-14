@@ -8,6 +8,14 @@
  *  モジュール名：MANUAL_DATA
  */
 //============================================================================
+
+
+// デバッグ機能
+//#define DEBUG_OPEN_FLAG_ALL_ON    // これが定義されているとき、オープンフラグが全てONになっている
+//#define DEBUG_READ_FLAG_ALL_OFF   // これが定義されているとき、リードフラグが全てOFFになっている
+//#define DEBUG_READ_FLAG_ALL_ON    // これが定義されているとき、リードフラグが全てONになっている
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -18,6 +26,12 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "app/app_taskmenu.h"
+
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "savedata/save_control.h"
+#include "savedata/c_gear_data.h"
+#include "savedata/etc_save.h"
+#include "field/eventwork.h"
 
 #include "manual_graphic.h"
 #include "manual_def.h"
@@ -246,7 +260,38 @@ u16  MANUAL_DATA_CateRefGetTotalCateNum( MANUAL_DATA_WORK* work )
 //=====================================
 BOOL MANUAL_DATA_OpenFlagIsOpen( MANUAL_DATA_WORK* work, u16 open_flag, GAMEDATA* gamedata )
 {
+#ifdef DEBUG_OPEN_FLAG_ALL_ON
   return TRUE;
+#else
+
+  BOOL is_open = FALSE;
+  switch( open_flag )
+  {
+  case MANUAL_OPEN_FLAG_START:
+    {
+      is_open = TRUE;
+    }
+    break;
+  case MANUAL_OPEN_FLAG_CGERA:
+    {
+      if( CGEAR_SV_GetCGearONOFF( CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(gamedata)) ) )
+      {
+        is_open = TRUE;
+      }
+    }
+    break;
+  case MANUAL_OPEN_FLAG_NCLEAR:
+    {
+      if( EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork(gamedata), SYS_FLAG_GAME_CLEAR) )
+      {
+        is_open = TRUE;
+      }
+    }
+    break;
+  }
+  return is_open;
+
+#endif
 }
 
 //-------------------------------------
@@ -254,10 +299,31 @@ BOOL MANUAL_DATA_OpenFlagIsOpen( MANUAL_DATA_WORK* work, u16 open_flag, GAMEDATA
 //=====================================
 BOOL MANUAL_DATA_ReadFlagIsRead( MANUAL_DATA_WORK* work, u16 read_flag, GAMEDATA* gamedata )
 {
+#if defined DEBUG_READ_FLAG_ALL_OFF
+  return FALSE;
+#elif defined DEBUG_READ_FLAG_ALL_ON
   return TRUE;
+#else
+
+  ETC_SAVE_WORK* etc_sv = SaveData_GetEtc(GAMEDATA_GetSaveControlWork(gamedata));
+  BOOL is_read = EtcSave_GetManualFlag( etc_sv, read_flag );
+  return is_read;
+
+#endif
 }
 void MANUAL_DATA_ReadFlagSetRead( MANUAL_DATA_WORK* work, u16 read_flag, GAMEDATA* gamedata )
 {
+  ETC_SAVE_WORK* etc_sv = SaveData_GetEtc(GAMEDATA_GetSaveControlWork(gamedata));
+  EtcSave_SetManualFlag( etc_sv, read_flag );
+}
+
+//-------------------------------------
+/// 画像のID
+//=====================================
+BOOL MANUAL_DATA_ImageIdIsValid( MANUAL_DATA_WORK* work, u16 image_id )  // 画像のIDが有効(画像あり)か無効(画像なし)かを返す(有効のときTRUE)
+{
+  if( image_id != MANUAL_DATA_IMAGE_NONE ) return TRUE;
+  return FALSE;
 }
 
 

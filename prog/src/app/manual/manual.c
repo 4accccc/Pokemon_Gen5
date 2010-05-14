@@ -426,22 +426,34 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
               // à–¾‰æ–Ê
               work->disp_type = DISP_TYPE_EXPLAIN;
               {
-                work->explain_param.page_num       = 7;
-                work->explain_param.title_str_id   = 0;
+                u16 title_idx = work->title_param.serial_no;  // result‚ªMANUAL_TITLE_RESULT_ITEM‚Ì‚Æ‚«‚Ì‚ÝŽg—p‚·‚é  // serial_no‚ÆŒ¾‚Á‚Ä‚¢‚é‚ªŽÀÛ‚Ítitle_idx‚Å‚ ‚éB
+                u16 page_num = MANUAL_DATA_TitleGetPageNum( work->cmn_wk->data_wk, title_idx );
+
+                // Šù“Ç‚É‚·‚é
                 {
-                  u8 i;
-                  for( i=0; i<work->explain_param.page_num; i++ )
+                  u16 read_flag = MANUAL_DATA_TitleGetReadFlag( work->cmn_wk->data_wk, title_idx );
+                  if( !MANUAL_DATA_ReadFlagIsRead( work->cmn_wk->data_wk, read_flag, work->cmn_wk->gamedata ) )
                   {
-                    work->explain_param.page[i].image  = MANUAL_EXPLAIN_NO_IMAGE;
-                    work->explain_param.page[i].str_id = i;
+                    MANUAL_DATA_ReadFlagSetRead( work->cmn_wk->data_wk, read_flag, work->cmn_wk->gamedata );
                   }
-                  work->explain_param.page[0].image  = 0;
-                  work->explain_param.page[1].image  = 1;
-                  work->explain_param.page[2].image  = 2;
-                  work->explain_param.page[3].image  = MANUAL_EXPLAIN_NO_IMAGE;
-                  work->explain_param.page[4].image  = 0;
-                  work->explain_param.page[5].image  = 1;
-                  work->explain_param.page[6].image  = 2;
+                }
+
+                work->explain_param.title_str_id   = MANUAL_DATA_TitleGetTitleGmmId( work->cmn_wk->data_wk, title_idx );
+                work->explain_param.page_num       = MANUAL_DATA_TitleGetPageNum( work->cmn_wk->data_wk, title_idx );
+
+                {
+                  u16 page_order;
+                  for( page_order=0; page_order<page_num; page_order++ )
+                  {
+                    u16 image_id = MANUAL_DATA_TitleGetPageImageId( work->cmn_wk->data_wk, title_idx, page_order );
+                    if( !MANUAL_DATA_ImageIdIsValid( work->cmn_wk->data_wk, image_id ) )
+                    {
+                      image_id = MANUAL_EXPLAIN_NO_IMAGE;
+                    }
+                    work->explain_param.page[page_order].image  = image_id;
+                    
+                    work->explain_param.page[page_order].str_id = MANUAL_DATA_TitleGetPageGmmId( work->cmn_wk->data_wk, title_idx, page_order );
+                  }
                 }
               }
               work->explain_wk = MANUAL_EXPLAIN_Init( &work->explain_param, work->cmn_wk );
