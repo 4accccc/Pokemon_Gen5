@@ -2022,7 +2022,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         MYSTERY_NET_ClearError( p_wk->p_net );
 
         MYSTERY_Printf( "Žæ“¾‚Å‚«‚È‚©‚Á‚½\n" );
-        MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+        *p_seq  = SEQ_DIRTY_END;
         break;
       }
     }
