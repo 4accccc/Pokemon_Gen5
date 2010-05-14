@@ -388,19 +388,19 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 
   while( que->runningJob )
   {
+    // 最初の色変更時、デフォルトの色情報を覚えておく
+    //最初の描画色とフォントカラーが一致した場合不定値をセットしていたので対応
+    if( que->fColorChanged == FALSE )
+    {
+      u8 defL, defS, defB;
+      GFL_FONTSYS_GetColor( &defL, &defS, &defB );
+      que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
+      que->fColorChanged = TRUE;
+    }
     if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_REQ )
     {
       u8 colL, colS, colB;
 
-      // 最初の色変更時、デフォルトの色情報を覚えておく
-      //最初の描画色とフォントカラーが一致した場合不定値をセットしていたので対応
-      if( que->fColorChanged == FALSE )
-      {
-        u8 defL, defS, defB;
-        GFL_FONTSYS_GetColor( &defL, &defS, &defB );
-        que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
-        que->fColorChanged = TRUE;
-      }
       PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
       if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
       {
