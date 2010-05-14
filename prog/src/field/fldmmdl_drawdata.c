@@ -1999,11 +1999,11 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmHeroCycleTbl[DRAW_STA_DIR4_MAX]
   DATA_BlActAnmHeroCycle_WalkD2F,
   DATA_BlActAnmHeroCycle_WalkL2F,
   DATA_BlActAnmHeroCycle_WalkR2F,
-#else //2Fアニメ早すぎとの事で、4Fを当てる
-  DATA_BlActAnmHeroCycle_WalkU4F,//DRWA_STA_WALK_2F
-  DATA_BlActAnmHeroCycle_WalkD4F,
-  DATA_BlActAnmHeroCycle_WalkL4F,
-  DATA_BlActAnmHeroCycle_WalkR4F,
+#else //2Fアニメ早すぎとの事で、4Fを当てる -> 更に遅くとの事で8Fを当てる
+  DATA_BlActAnmHeroCycle_WalkU8F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmHeroCycle_WalkD8F,
+  DATA_BlActAnmHeroCycle_WalkL8F,
+  DATA_BlActAnmHeroCycle_WalkR8F,
 #endif
   DATA_BlActAnmHeroCycle_WalkU6F,//DRWA_STA_WALK_6F
   DATA_BlActAnmHeroCycle_WalkD6F,
