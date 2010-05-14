@@ -61,6 +61,7 @@
 #include "net_app/union/union_main.h"
 #include "net_app/union/union_chara.h"
 #include "event_comm_error.h"
+#include "./c_gear/c_gear.h"             //CGEAR_IsDoEventWireless
 
 #include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_～
 #include "../../../resource/fldmapdata/script/hiden_def.h"
@@ -180,6 +181,7 @@ typedef struct {
 //--------------------------------------------------------------
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
+static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 //--------------------------------------------------------------
 //  個別イベントチェック
 //--------------------------------------------------------------
@@ -733,7 +735,8 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
     if( crowdpeople ){
       FIELD_CROWD_PEOPLE_ClearSubWindow( crowdpeople );
     }
-
+    // トランシーバー音を消す
+    stopTVTSE( gsys, fieldmap_work );
   }
   return event;
 }
@@ -937,6 +940,8 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     if( crowdpeople ){
       FIELD_CROWD_PEOPLE_ClearSubWindow( crowdpeople );
     }
+    // トランシーバー音を消す
+    stopTVTSE( gsys, fieldmap_work );
   }
 
   return event;
@@ -1357,6 +1362,22 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 #endif
 }
 
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/// トランシーバー音を消す
+//--------------------------------------------------------------
+static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+{
+  FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
+  const C_GEAR_WORK * cgear = FIELD_SUBSCREEN_GetCGearWork( subscreen );
+  //Cギアじゃないか、Cギアからワイヤレスに移行するイベントでない場合
+  if ( cgear == NULL || CGEAR_IsDoEventWireless( cgear ) == FALSE )
+  {
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(gsys) );
+    FSND_StopTVTRingTone( fsnd );
+  }
+}
 
 //======================================================================
 //======================================================================

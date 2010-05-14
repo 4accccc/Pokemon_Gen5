@@ -4195,8 +4195,9 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   // スリープ時は強制停止
   if( SleepMode_IsSleep( pWork ) && 
       (pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS) ){
-    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-    FSND_StopTVTRingTone( fsnd );
+    //イベントによる着信音の制御はfield_event_check.cに任せる2010.05.14 tamada
+    //FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+    //FSND_StopTVTRingTone( fsnd );
     pWork->tvt_snd = FALSE;
   }
 
