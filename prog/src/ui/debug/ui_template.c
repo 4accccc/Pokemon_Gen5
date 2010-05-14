@@ -782,7 +782,7 @@ static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID )
   GF_ASSERT( gamesys );
 
   gamedata = GAMESYSTEM_GetGameData(gamesys);
-	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, GAMEDATA_GetWiFiList(gamedata), heapID );
+	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, gamedata, heapID );
 }
 //----------------------------------------------------------------------------
 /**

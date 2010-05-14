@@ -160,6 +160,7 @@ typedef struct
   u8  pltNo;
   u8  anmCnt;
   WIFI_LIST *wifiList;
+  BOOL isCgearOn;
 
   //時計
   BOOL  isDispColon;
@@ -197,7 +198,7 @@ static INFOWIN_WORK *infoWk = NULL;
 //  @param pltNo  パレット番号(1本必要)
 //  @param commSys  通信システム
 //  @param heapId ヒープID
-void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , WIFI_LIST *wifiList , const HEAPID heapId )
+void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAMEDATA *gameData , const HEAPID heapId )
 {
   GF_ASSERT_MSG(infoWk == NULL ,"Infobar is initialized!!\n");
 
@@ -212,7 +213,16 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , WIFI_LIST *wifiList , co
 
   infoWk->wifiState = IWS_DISABLE;
   infoWk->batteryVol = GFL_UI_GetBattLevel();
-  infoWk->wifiList = wifiList;
+  if( gameData != NULL )
+  {
+    infoWk->wifiList = GAMEDATA_GetWiFiList(gameData);
+    infoWk->isCgearOn =  GAMEDATA_GetAlwaysNetFlag( gameData );
+  }
+  else
+  {
+    infoWk->wifiList = NULL;
+    infoWk->isCgearOn =  FALSE;
+  }
   infoWk->anmCnt = 0;
   
   //一回強制的に更新
@@ -255,7 +265,8 @@ void  INFOWIN_Update( void )
     
     //すれ違いビーコンのチェック
     int checkCnt=0;
-    if( GAMEBEACON_Get_UpdateLogNo( &checkCnt ) != GAMEBEACON_SYSTEM_LOG_MAX )
+    if( infoWk->isCgearOn == TRUE &&
+        GAMEBEACON_Get_UpdateLogNo( &checkCnt ) != GAMEBEACON_SYSTEM_LOG_MAX )
     {
       INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
       INFOWIN_SetBit(INFOWIN_GET_BEACON);

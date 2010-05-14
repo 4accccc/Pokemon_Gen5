@@ -906,7 +906,7 @@ static void init_debugred_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
   
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
-  INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , GAMEDATA_GetWiFiList(gameData) , pWork->heapID);
+  INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , gameData , pWork->heapID);
  // FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_DEBUGIRC);
 }
 
@@ -976,7 +976,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
   pWork->fieldMenuWork = FIELD_MENU_InitMenu( HEAPID_FIELD_SUBSCREEN , pWork->heapID , pWork , pWork->fieldmap , isScrollIn );
   if(FIELDMENU_GetMenuType(gameData,ev,zoneId)!=FIELD_MENU_UNION)
   {
-    INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , GAMEDATA_GetWiFiList(gameData) , pWork->heapID);
+    INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , gameData , pWork->heapID);
   }
   // INFOWINのスクリーン下部分にタッチバーを書き込む(のでINFOWIN_Initの後に置いてね）
   FIELDMENU_RewriteInfoScreen( pWork->heapID );

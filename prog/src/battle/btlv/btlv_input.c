@@ -991,7 +991,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 
   //情報ステータスバー初期化
-  INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, GAMEDATA_GetWiFiList( biw->gameData ), biw->heapID );
+  INFOWIN_Init( GFL_BG_FRAME2_S, INFOWIN_PAL_NO, biw->gameData , biw->heapID );
   //情報ステータスバー表示
   GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
 

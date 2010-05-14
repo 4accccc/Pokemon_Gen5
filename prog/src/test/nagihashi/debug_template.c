@@ -306,15 +306,14 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 
   //INFOWINの設定
   {
-    WIFI_LIST *wifiList  = NULL;
+    GAMEDATA *p_gamedata = NULL;
     if( p_param->p_gamesys )
     {
-      GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_param->p_gamesys);
-      wifiList  = GAMEDATA_GetWiFiList(p_gamedata);
+      p_gamedata = GAMESYSTEM_GetGameData(p_param->p_gamesys);
     }
     INFOWIN_Init( BG_FRAME_BAR_M,
         PLTID_BG_INFOWIN_M,
-        wifiList, HEAPID_NAGI_DEBUG_SUB );
+        p_gamedata, HEAPID_NAGI_DEBUG_SUB );
   }
 
   //タッチバーの設定
