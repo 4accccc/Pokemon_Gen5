@@ -33,7 +33,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
-#define AI_SEQ_PRINT
+//#define AI_SEQ_PRINT
 //#define TR_AI_WAZA_CACHE    //技AI内で技データのキャッシュを持つ
 #endif
 #endif
@@ -44,7 +44,8 @@
 //
 //=========================================================================
 #define TR_AI_WAZATBL_MAX ( 48 )
-#define TR_AI_SEQ_COUNT   ( 3 ) //命令をいくつ実行したら、制御を返すかを指定
+#define TR_AI_SEQ_COUNT   ( 4 ) //命令をいくつ実行したら、制御を返すかを指定
+#define TR_AI_SEQ_TICK    ( 1000 )
 
 //=========================================================================
 //  AI用の構造体宣言
@@ -87,11 +88,12 @@ typedef struct{
 #ifdef TR_AI_WAZA_CACHE
   WazaID        wazaID[ TR_AI_WAZATBL_MAX ];
   WAZA_DATA     *wd[ TR_AI_WAZATBL_MAX ];
+  ARCHANDLE*    waza_handle;
 #endif
 
   HEAPID        heapID;
   ARCHANDLE*    handle;
-  ARCHANDLE*    waza_handle;
+  ARCHANDLE*    item_handle;
   VM_CODE*      sequence;
 
   const BTL_MAIN_MODULE*    wk;
@@ -104,6 +106,8 @@ typedef struct{
 
   int           calc_count;
   u32           common_rnd;     //連動ランダム
+
+  OSTick        tick;
 
 #if 0
   u8  AI_ITEM_TYPE[2];
@@ -299,6 +303,7 @@ static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no );
 static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param );
 static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag );
 static  u32   get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag );
+static  s32   get_item_param( TR_AI_WORK* taw, u16 item_no, u16 param );
 
 //============================================================================================
 /**
@@ -473,9 +478,10 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
   taw->ai_bit_temp = ai_bit;
 
   taw->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
-  taw->waza_handle = WAZADATA_OpenDataHandle( heapID );
+  taw->item_handle = ITEM_OpenItemDataArcHandle( heapID );
 
 #ifdef TR_AI_WAZA_CACHE
+  taw->waza_handle = WAZADATA_OpenDataHandle( heapID );
   {
     int i;
 
@@ -562,9 +568,10 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   int i;
 
   GFL_ARC_CloseDataHandle( taw->handle );
-  GFL_ARC_CloseDataHandle( taw->waza_handle );
+  GFL_ARC_CloseDataHandle( taw->item_handle );
 
 #ifdef TR_AI_WAZA_CACHE
+  GFL_ARC_CloseDataHandle( taw->waza_handle );
   for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
   {
     GFL_HEAP_FreeMemory ( taw->wd[ i ] );
@@ -684,6 +691,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
         taw->seq_no = AI_SEQ_THINK_INIT;
       }
       taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
+      taw->tick = OS_GetTick();
       tr_ai_sequence( vmh, taw );
       if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
       {
@@ -805,6 +813,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
           taw->seq_no = AI_SEQ_THINK_INIT;
         }
         taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
+        taw->tick = OS_GetTick();
         tr_ai_sequence( vmh, taw );
         if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
         {
@@ -980,12 +989,23 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
         }
         else
         {
+#if 0
+          //命令実行カウントバージョン
           if( --taw->calc_count == 0 )
           {
             taw->calc_count = TR_AI_SEQ_COUNT;
             taw->status_flag |= AI_STATUSFLAG_CONTINUE;
             break;
           }
+#else
+          //TickTimeバージョン
+          if( OS_GetTick() - taw->tick > TR_AI_SEQ_TICK )
+          {
+            taw->calc_count = TR_AI_SEQ_COUNT;
+            taw->status_flag |= AI_STATUSFLAG_CONTINUE;
+            break;
+          }
+#endif
         }
       }
       else{
@@ -2412,7 +2432,7 @@ static  VMCMD_RESULT  AI_CHECK_SOUBI_EQUIP( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_CHECK_SOUBI_EQUIP\n");
 #endif
 
-  taw->calc_work = ITEM_GetParam( item, ITEM_PRM_EQUIP, taw->heapID );
+  taw->calc_work = get_item_param( taw, item, ITEM_PRM_EQUIP );
 
   return taw->vmcmd_result;
 }
@@ -2972,7 +2992,7 @@ static  VMCMD_RESULT  AI_CHECK_NAGETSUKERU_IRYOKU( VMHANDLE* vmh, void* context_
   if( !BPP_CheckSick( get_bpp( taw, pos ), WAZASICK_SASIOSAE ) )
   {
     u32 item = BPP_GetItem( get_bpp( taw, pos ) );
-    taw->calc_work = ITEM_GetParam( item, ITEM_PRM_NAGETUKERU_ATC, taw->heapID );
+    taw->calc_work = get_item_param( taw, item, ITEM_PRM_NAGETUKERU_ATC );
   }
 
   return taw->vmcmd_result;
@@ -4009,5 +4029,17 @@ static  u32 get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const
     }
   }
   return max_dmg;
+}
+
+//============================================================================================
+/**
+ *  アイテムデータを取得
+ */
+//============================================================================================
+static  s32   get_item_param( TR_AI_WORK* taw, u16 item_no, u16 param )
+{ 
+  ITEMDATA* item_data = (ITEMDATA*)ITEM_GetItemDataArcHandle( taw->item_handle, item_no, taw->heapID );
+
+  return ITEM_GetBufParam( item_data, param );
 }
 
