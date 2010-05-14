@@ -7416,8 +7416,16 @@ static const BtlEventHandlerTable*  ADD_Teleport( u32* numElems )
 }
 static void handler_Teleport_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  // ñÏê∂êÌà»äOÇÕé∏îs
   if( BTL_SVFTOOL_GetCompetitor(flowWk) != BTL_COMPETITOR_WILD ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+  }
+  // ä™Ç´ïtÇ©ÇÍÇƒÇ¢ÇΩÇÁé∏îs
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CheckSick(bpp, WAZASICK_BIND) ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+    }
   }
 }
 static void handler_Teleport( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

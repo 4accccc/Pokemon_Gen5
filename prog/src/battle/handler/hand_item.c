@@ -163,7 +163,6 @@ static void handler_JapoNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static void handler_JapoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RenbuNomi( u32* numElems );
 static void handler_RenbuNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_RenbuNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SiroiHerb( u32* numElems );
 static void handler_SiroiHerb_ActCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SiroiHerb_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2134,6 +2133,7 @@ static void handler_JapoNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
     {
+      BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
       work[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
@@ -2167,7 +2167,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_RenbuNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_REACTION, handler_RenbuNomi_Damage     }, // ダメージ反応ハンドラ
-    { BTL_EVENT_USE_ITEM,          handler_RenbuNomi_Use        }, // アイテム使用ハンドラ
+    { BTL_EVENT_USE_ITEM,          handler_JapoNomi_Use         }, // アイテム使用ハンドラ（ジャポのみと同じ）
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2179,28 +2179,10 @@ static void handler_RenbuNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_SPECIAL )
     {
+      BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
       work[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
-  }
-}
-// アイテム使用ハンドラ
-static void handler_RenbuNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-    u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    const BTL_POKEPARAM* target;
-
-    param->pokeID = work[0];
-    target = BTL_SVFTOOL_GetPokeParam( flowWk, param->pokeID );
-    param->damage = BTL_CALC_QuotMaxHP( target, quot );
-
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_DamageOpponent );
-    HANDEX_STR_AddArg( &param->exStr, param->pokeID );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
   }
 }
 
