@@ -883,15 +883,12 @@ static int _evalcallback(int index, void* param)
       if(pWork->friendChageType==targetmy){
         value+=10;
       }
-#if DEBUG_ONLY_FOR_ohno
-#else
       for(i=0;i<EVENT_GTSNEGO_RECONNECT_NUM;i++){
-        if(profile == pEv->profileID[i]){
+        if((profile == pEv->profileID[i]) && (profile!=0)){
           value = 0;
           break;
         }
       }
-#endif
     }
   }
   OHNO_Printf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
