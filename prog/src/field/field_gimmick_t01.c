@@ -133,11 +133,11 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     // 拡張オブジェクトのユニットを追加
     if ( (time_zone == TIMEZONE_NIGHT) || (time_zone == TIMEZONE_MIDNIGHT) )
     {
-      FLD_EXP_OBJ_AddUnit( exobj_cnt, &SetupNight, EXPOBJ_UNIT_IDX );
+      FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &SetupNight, EXPOBJ_UNIT_IDX );
     }
     else
     {
-      FLD_EXP_OBJ_AddUnit( exobj_cnt, &SetupMorning, EXPOBJ_UNIT_IDX );
+      FLD_EXP_OBJ_AddUnitByHandle(exobj_cnt, &SetupMorning, EXPOBJ_UNIT_IDX);
     }
   }
 

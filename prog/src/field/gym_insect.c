@@ -840,8 +840,9 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_INSECT_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_INSECT_TMP));
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_INSECT_UNIT_IDX );
-{
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_INSECT_UNIT_IDX);
+
+  {
     int size = GFI_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP);
     OS_Printf("bfore_size = %x\n",size);
   }

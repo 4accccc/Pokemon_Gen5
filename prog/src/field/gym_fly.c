@@ -497,7 +497,7 @@ void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
       (fieldWork, GYM_FLY_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_FLY_TMP));
 
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_FLY_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_FLY_UNIT_IDX);
 
   for (i=0;i<CANNON_NUM_MAX;i++){
     //座標セット　大砲

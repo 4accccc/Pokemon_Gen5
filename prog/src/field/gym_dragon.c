@@ -476,8 +476,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
       (fieldWork, GYM_DRAGON_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_DRAGON_TMP));
 
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_DRAGON_UNIT_IDX );
-
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_DRAGON_UNIT_IDX);
   //座標セット
   for (i=0;i<DRAGON_NUM_MAX;i++)
   {

@@ -160,7 +160,7 @@ void R04D03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
       (fieldmap, R04D03_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldmap), sizeof(GMK_WORK));
   work = GMK_TMP_WK_GetWork(fieldmap, R04D03_TMP_ASSIGN_ID);
   // 拡張オブジェクトのユニットを追加
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
 
   // ギミック管理ワークを初期化 
   InitWork( work, fieldmap );

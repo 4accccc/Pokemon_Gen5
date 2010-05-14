@@ -84,7 +84,7 @@ void D12_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   // 拡張オブジェクトのユニットを追加
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &Setup, EXPOBJ_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &Setup, EXPOBJ_UNIT_IDX );
 
   {
     VecFx32 pos = { SHIP_X, SHIP_Y, SHIP_Z };

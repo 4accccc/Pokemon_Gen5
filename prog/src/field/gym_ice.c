@@ -242,7 +242,7 @@ void GYM_ICE_Setup(FIELDMAP_WORK *fieldWork)
       (fieldWork, GYM_ICE_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ICE_TMP));
 
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_ICE_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_ICE_UNIT_IDX);
 
   //座標セット
   for (i=0;i<WALL_NUM_MAX;i++)

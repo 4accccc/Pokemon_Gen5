@@ -613,7 +613,8 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_ELEC_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ELEC_TMP));
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_ELEC_UNIT_IDX );  
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_ELEC_UNIT_IDX);
+
   //座標セット　カプセル
   {
     VecFx32 pos = {CAP1_X, OBJ3D_Y, CAP1_Z};

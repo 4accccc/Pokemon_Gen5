@@ -19,6 +19,9 @@ extern FLD_EXP_OBJ_CNT_PTR FLD_EXP_OBJ_Create
 extern void FLD_EXP_OBJ_Delete(FLD_EXP_OBJ_CNT_PTR ptr);
 extern void FLD_EXP_OBJ_AddUnit
           (  FLD_EXP_OBJ_CNT_PTR ptr,const GFL_G3D_UTIL_SETUP *inSetup, const u16 inIndex );
+extern void FLD_EXP_OBJ_AddUnitByHandle(  FLD_EXP_OBJ_CNT_PTR ptr,
+                          const GFL_G3D_UTIL_SETUP *inSetup,
+                          const u16 inIndex);
 extern void FLD_EXP_OBJ_DelUnit( FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx );
 extern GFL_G3D_UTIL *FLD_EXP_OBJ_GetUtil(FLD_EXP_OBJ_CNT_PTR ptr);
 extern u16 FLD_EXP_OBJ_GetUtilUnitIdx(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx);

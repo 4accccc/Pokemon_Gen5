@@ -529,4 +529,75 @@ fx32 FLD_EXP_OBJ_GetAnimeLastFrame(EXP_OBJ_ANM_CNT_PTR ptr )
 
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ユニット追加　アーカイブハンドル版
+ *
+ * @param	ptr     モジュールポインタ
+ * @param	inSetup		設定データ
+ * @param inIndex   登録するインデックス
+ * @param handle    アーカイブハンドル
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FLD_EXP_OBJ_AddUnitByHandle(  FLD_EXP_OBJ_CNT_PTR ptr,
+                          const GFL_G3D_UTIL_SETUP *inSetup,
+                          const u16 inIndex)
+{
+  u16 i;
+  u16 unitIdx;
+  EXP_OBJ_STATUS *exp_status;
+  u16 obj_num;
 
+  if ( ptr->Unit[inIndex].Valid == TRUE ){
+    GF_ASSERT_MSG(0,"CAN NOT ADD UNIT\n");
+  }
+
+  {
+    ARCHANDLE *handle;
+    HEAPID heapid = ptr->HeapID;
+    u32 arcID = inSetup->resTbl[0].arcive;
+    handle = GFL_ARC_OpenDataHandle( arcID, GFL_HEAP_LOWID(heapid) );
+    unitIdx = GFL_G3D_UTIL_AddUnitResShareByHandle( ptr->ObjUtil, inSetup, handle );
+    GFL_ARC_CloseDataHandle( handle );
+  }
+
+  obj_num = inSetup->objCount;
+  if (obj_num == 0){
+    GF_ASSERT_MSG(0,"OBJ NOTHING\n");
+  }
+  ptr->Unit[inIndex].ObjNum = obj_num;
+  ptr->Unit[inIndex].Valid = TRUE;
+  ptr->Unit[inIndex].UtilUnitIdx = unitIdx;
+
+  exp_status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(EXP_OBJ_STATUS)*obj_num);
+  ptr->Unit[inIndex].ExpObjStatus = exp_status;
+
+  ptr->Unit[inIndex].AnmList = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(ANM_LIST)*obj_num);
+
+  for(i=0;i<obj_num;i++){
+    const GFL_G3D_UTIL_OBJ * objTbl = inSetup->objTbl;
+    u16 anm_num = objTbl[i].anmCount;
+    AnmCntInit(&ptr->Unit[inIndex].AnmList[i], anm_num, ptr->HeapID);
+    
+    VEC_Set( &exp_status[i].ObjStatus.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+	  MTX_Identity33( &exp_status[i].ObjStatus.rotate );
+    VEC_Set( &exp_status[i].ObjStatus.trans, 0, 0, 0 );
+
+    //デフォルトはカリングしない
+    exp_status[i].Culling = FALSE;
+    //デフォルトは表示状態
+    exp_status[i].Vanish = FALSE;
+    {
+      int j;
+      GFL_G3D_OBJ *g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, inIndex, i);
+      ANM_LIST *lst;
+      lst = &ptr->Unit[inIndex].AnmList[i];
+      for (j=0;j<lst->AnmNum;j++){
+        lst->AnmCnt[j].g3Danm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, j );
+      }
+    }
+  }
+  GF_ASSERT(GFL_HEAP_CheckHeapSafe(ptr->HeapID) == TRUE);
+}

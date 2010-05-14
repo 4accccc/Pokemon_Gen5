@@ -299,7 +299,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_ANTI_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ANTI_TMP));
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_ANTI_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_ANTI_UNIT_IDX);
   //スイッチ座標セット
   {
     u8 i;

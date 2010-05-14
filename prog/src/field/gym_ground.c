@@ -434,8 +434,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
 
 
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_GROUND_UNIT_IDX );
-
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_GROUND_UNIT_IDX);
   //座標セット
   for (i=0;i<LIFT_NUM_MAX;i++)
   {
