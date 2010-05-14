@@ -1066,16 +1066,20 @@ sub_sage_appear:
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w, msg_n01r0502_boss_06b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	//Ｎのアップ絵表示
+	//Ｎのアップ絵表示　※プレーンウィンドウを出すたびにアニメのリクエストをしましょう
 	_START_FACEUP( FLD_FACEUP_BG_CATSLE, FLD_FACEUP_CHAR_BOSS, FALSE )
 
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
+      _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12w )
+      _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12_01w )
 			_PLAINWIN_CLOSE()
 		ELSE
+      _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12b )
+      _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12_01b )
 			_PLAINWIN_CLOSE()
 		ENDIF
@@ -1554,11 +1558,12 @@ ev_last:
 
 	_TIME_WAIT( 5 )
 
-	//Ｎのアップ絵表示
+	//Ｎのアップ絵表示  ※プレーンウィンドウを出すたびにアニメのリクエストをしましょう
 	_START_FACEUP( FLD_FACEUP_BG_CATSLE2, FLD_FACEUP_CHAR_BOSS, TRUE )
 
 	//プレイヤー名！
 	_PLAYER_NAME( 0 )
+  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_17 )
 	_PLAINWIN_CLOSE()
 
@@ -1570,13 +1575,13 @@ ev_last:
 			
 			//電気石の洞穴ではいを選択した場合
 			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
-
+			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
 				_PLAINWIN_CLOSE()
 			
 			//いいえを選択した場合
 			ELSE
-
+			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
 				_PLAINWIN_CLOSE()
 			
@@ -1586,13 +1591,13 @@ ev_last:
 		
 			//電気石の洞穴ではいを選択した場合
 			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
-
+			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
 				_PLAINWIN_CLOSE()
 			
 			//いいえを選択した場合
 			ELSE
-
+			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
 				_PLAINWIN_CLOSE()
 			
@@ -1600,7 +1605,7 @@ ev_last:
 		
 		ENDIF
 }
-
+  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
 
 	//無音にする
@@ -1608,6 +1613,7 @@ ev_last:
 
 	_TIME_WAIT( 60 )
 
+	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
 	_PLAINWIN_CLOSE()
 	
