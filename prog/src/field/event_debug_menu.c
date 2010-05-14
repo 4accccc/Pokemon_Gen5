@@ -5690,7 +5690,8 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
   case SEQ_SEEK_ID:
     zone_id = getNextZoneID( amcw );
     if ( zone_id >= ZONE_ID_MAX || zone_id < 0 )
-    {
+    { 
+      OS_Printf( "HUDSON: ALL MAP CHECK SCCESS!!\n" ); // hudson ŒŸo—p
       return GMEVENT_RES_FINISH;
     }
     {

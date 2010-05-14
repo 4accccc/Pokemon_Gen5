@@ -317,6 +317,7 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
   case CHECK_SEQ_FINISH:
     DebugPrint_Finish( work );
 		PMSND_PlaySE( SEQ_SE_DECIDE4 );
+    OS_Printf( "HUDSON: ALL CONNECT CHECK SUCCESS!!\n" ); // hudson åüèoóp
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
