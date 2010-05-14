@@ -290,6 +290,12 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
     return;
   }
 
+  //ƒXƒŠ[ƒv‚É“ü‚ë‚¤‚Æ‚µ‚Ä‚¢‚éê‡‚ÍØ’f
+  if(GFL_UI_CheckCoverAndBatt() == TRUE){
+    GameCommSys_ExitReq(gcsp);
+    return;
+  }
+
   if(gbs->error_wait > 0){
     gbs->error_wait--;
   }

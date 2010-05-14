@@ -234,8 +234,8 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     return;
   }
 
-  //ƒXƒŠ[ƒv‚É“ü‚ë‚¤‚Æ‚µ‚Ä‚¢‚éê‡‚ÍØ’f
-  if(GFL_UI_CheckCoverAndBatt() == TRUE){
+  //ŠW‚ğ•Â‚¶‚Ä‚¢‚éê‡‚ÍØ’f
+  if(PAD_DetectFold()){
     GameCommSys_ExitReq(intcomm->game_comm);
     return;
   }
