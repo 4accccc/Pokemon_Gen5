@@ -36,6 +36,9 @@ $data_index = 0;
 #‰ğÍ
 foreach $one ( @EXCEL_FILE )
 {
+  $one =~ s/\r\n/\t/g;
+  $one =~ s/\n/\t/g;
+  
   @line = split( /\t/, $one );
 
   if( $data_in == 0 )
