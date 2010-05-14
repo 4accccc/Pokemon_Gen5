@@ -4793,11 +4793,11 @@
 
 	<row id="ZKN_COMMENT_00_494_000">
 		<language name="JPN">たいないで　むげんの　エネルギーを
-つくりだす。ビクティ●に　ふれた
-あいてに　エネルギーを　わける。</language>
+つくりだす。ふれた　あいてに
+エネルギーを　わけあたえる。</language>
 		<language name="JPN_KANJI">体内で　無限の　エネルギーを
-作り出す。ビクティ●に　触れた
-相手に　エネルギーを　分け与える。</language>
+作り出す。触れた　相手に
+エネルギーを　分け与える。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_495_000">
@@ -4810,11 +4810,11 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_496_000">
-		<language name="JPN">おいしげった　きや　くさの　かげを
+		<language name="JPN">おいしげった　くさきの　かげを
 くぐりぬけ　こうげきを　さける。
 たくみな　ムチさばきで　はんげき。</language>
-		<language name="JPN_KANJI">生い茂った　木や　草の　陰を
-潜り抜けて　攻撃を　避ける。
+		<language name="JPN_KANJI">生い茂った　草木の　かげを
+くぐりぬけて　攻撃を　避ける。
 巧みな　ムチさばきで　反撃。</language>
 	</row>
 
@@ -4858,9 +4858,9 @@
 		<language name="JPN">おなかの　ホタチは　ツメと　おなじ
 せいぶんで　できている。おなかから
 はずして　こがたなとして　つかう。</language>
-		<language name="JPN_KANJI">お腹の　ホタチは　ツメと　同じ
-成分で　できている。お腹から　外して
-小刀として　使うことが　できる。</language>
+		<language name="JPN_KANJI">お腹の　ホタチは
+ツメと　同じ 成分で　できている。
+お腹から　外して 小刀として　使う。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_502_000">
@@ -4878,23 +4878,23 @@
 ほえる　だけで　てきを　いあつする。</language>
 		<language name="JPN_KANJI">前脚の　よろいの　一部が
 大きな　剣に　なっている。
-吼える　だけで　敵を　威圧する。</language>
+ほえる　だけで　敵を　威圧する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_504_000">
-		<language name="JPN">とても　けいかいしんが　つよい。
-こうたいで　すあなの　いりぐちで
-まわりの　ようすを　みはっている。</language>
-		<language name="JPN_KANJI">とても　警戒心が　強い。
-交替で　巣穴の　入り口で
-まわりの　様子を　見張っている。</language>
+		<language name="JPN">けいかいしんが　つよく　こうたいで
+すあなの　まわりを　みはりつづける。
+みはりが　いないと　ふあんなのだ。</language>
+		<language name="JPN_KANJI">警戒心が　強く　交替で
+巣穴の　まわりを　見張り続ける。
+見張りが　いないと　不安なのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_505_000">
-		<language name="JPN">きいろの　もようを　ひからせて
+		<language name="JPN">からだの　もようを　ひからせて
 てきを　いかくする。まっくらやみでも
 まわりを　みとおす　めを　もつ。</language>
-		<language name="JPN_KANJI">黄色の　模様を　光らせて
+		<language name="JPN_KANJI">体の　模様を　光らせて
 敵を　威嚇する。真っ暗闇でも
 まわりを　見通す　目を　持つ。</language>
 	</row>
@@ -4903,27 +4903,27 @@
 		<language name="JPN">かおを　おおう　ながい　けは
 すぐれた　レーダー。しゅういの
 ようすを　びんかんに　さっちする。</language>
-		<language name="JPN_KANJI">顔を　覆う　長い毛は　レーダーの
-ような　機能を　持つ。空気の　動きで
-周囲の　様子を　敏感に　察知する。</language>
+		<language name="JPN_KANJI">顔を　おおう　長い　毛は
+優れた　レーダー。周囲の　様子を
+敏感に　察知する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_507_000">
 		<language name="JPN">トレーナーの　しじに　ちゅうじつ。
 おおむかしから　ポケモンを　そだてる
 トレーナーの　てつだいを　してきた。</language>
-		<language name="JPN_KANJI">トレーナーの　指示を　忠実に　守る。
-大昔から　ポケモンを　育成する
+		<language name="JPN_KANJI">トレーナーの　指示に　忠実。
+大昔から　ポケモンを　育てる
 トレーナーの　手伝いを　してきた。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_508_000">
-		<language name="JPN">ゆきやまや　さばくなど　かこくな
-とちで　ひとの　しごとを　てつだう。
+		<language name="JPN">やまや　うみで　そうなんした　ひとを
+きゅうじょする　ことが　とくい。
 とても　かしこい　ポケモン。</language>
-		<language name="JPN_KANJI">古くから　雪山や　砂漠など　過酷な
-土地で　人の　仕事を　手伝ってきた。
-とてもに　賢い　ポケモン。</language>
+		<language name="JPN_KANJI">海や　山で　遭難した　人を
+救助する　ことが　得意。
+とても　賢い　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_509_000">
@@ -4931,8 +4931,8 @@
 その　スキに　もちものを　うばう。
 おこると　ツメを　たてて　はんげき。</language>
 		<language name="JPN_KANJI">かわいらしい　仕草で　油断させて
-すの　スキに　持ち物を　奪う。
-怒ると　爪を　立てて　反撃。</language>
+その　スキに　持ち物を　奪う。
+怒ると　ツメを　立てて　反撃。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_510_000">
@@ -4954,10 +4954,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_512_000">
-		<language name="JPN">トゲが　たくさん　ついた　しっぽを
+		<language name="JPN">トゲの　たくさん　ついた　しっぽを
 あいてに　たたきつけて　こうげき。
 きしょうの　はげしい　ポケモン。</language>
-		<language name="JPN_KANJI">トゲが　たくさん　ついた　しっぽを
+		<language name="JPN_KANJI">トゲの　たくさん　ついた　しっぽを
 相手に　叩きつけて　攻撃。
 気性の　激しい　ポケモン。</language>
 	</row>
@@ -4967,8 +4967,8 @@
 あたまの　ふさの　なかが　もえていて
 ３００どの　こうおんになる。</language>
 		<language name="JPN_KANJI">火山の　洞穴で　暮らす。
-頭の　房の　中が　燃えていて
-最高　３００度　以上の　高温になる。</language>
+頭の　ふさの　中が　燃えていて
+３００度の　高温になる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_514_000">
@@ -4976,8 +4976,8 @@
 あたまや　しっぽから　ひのこを
 まきちらせて　てきを　こがす。</language>
 		<language name="JPN_KANJI">体の　中の　炎を　燃やして
-頭や　尻尾から　火の粉を　撒き散らし
-敵に　振りかけ　焦がす。</language>
+頭や　しっぽから　火の粉を　
+まき散らせて　敵を　焦がす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_515_000">
@@ -4985,17 +4985,17 @@
 あたまの　ふさに　ためた　みずを
 しっぽから　まいて　しめらせる。</language>
 		<language name="JPN_KANJI">乾燥した　環境に　弱い。
-頭の　房に　溜めた　水を　尻尾から
-まいて　あたりを　湿らせる。</language>
+頭の　ふさに　溜めた　水を
+しっぽから　まいて　湿らせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_516_000">
 		<language name="JPN">しっぽから　こうあつの　みずを
 はっしゃすると　コンクリートの
-かべも　はかいする　いりょくだ。</language>
-		<language name="JPN_KANJI">頭の　房は　大きな　貯水タンク。
-尻尾から　高圧の　水を　発射すると
-コンクリートの　壁も　破壊する。</language>
+かべも　はかいする　いりょく。</language>
+		<language name="JPN_KANJI">しっぽから　高圧の　水を　発射すると
+コンクリートの　壁も
+破壊する　威力。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_517_000">
@@ -5011,7 +5011,7 @@
 		<language name="JPN">たべた　ゆめを　じったいか　させる。
 おでこから　もれる　けむりが　ゆめに
 でてきた　ものに　すがたを　かえる。</language>
-		<language name="JPN_KANJI">食べた　夢を　実体化させる。
+		<language name="JPN_KANJI">食べた　夢を　実体化　させる。
 おでこから　もれる　煙が　夢に
 出てきた　ものに　姿を　変える。</language>
 	</row>
@@ -5031,23 +5031,23 @@
 あると　しんじられている。</language>
 		<language name="JPN_KANJI">ハトーボーの　住む　森の　奥には
 争いのない　平和な　国が　あると
-古くから　信じられている。</language>
+信じられている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_521_000">
 		<language name="JPN">オスは　あたまに　かざりを　もつ。
 トレーナー　いがいの　ひとには
 けっして　なつかない　せいしつ。</language>
-		<language name="JPN_KANJI">オスの　頭には　羽根が　発達した
-飾りを　持つ。トレーナー　以外の
-人には　けっして　懐かない　性質。</language>
+		<language name="JPN_KANJI">オスは　頭に　かざりを　もつ。
+トレーナー　以外の　人には
+けっして　なつかない　性質。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_522_000">
 		<language name="JPN">カミナリぐもで　そらが　おおわれると
 あらわれる。たてがみで　カミナリを
 キャッチして　でんきを　ためる。</language>
-		<language name="JPN_KANJI">カミナリ雲で　空が　覆われると
+		<language name="JPN_KANJI">カミナリ雲で　空が　おおわれると
 現れる。たてがみで　カミナリを
 キャッチして　電気を　溜める。</language>
 	</row>
@@ -5056,9 +5056,9 @@
 		<language name="JPN">きしょうが　はげしく　おこると
 たてがみから　しほうはっぽうに
 でんげきを　うちまくるので　きけん。</language>
-		<language name="JPN_KANJI">気性が　激しく　怒ると　たてがみから
-四方八方に　電撃を　撃ちまくるので
-危険。</language>
+		<language name="JPN_KANJI">気性が　激しく
+怒ると　たてがみから 四方八方に
+電撃を　撃ちまくるので 危険。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_524_000">
@@ -5067,7 +5067,7 @@
 たいないに　エネルギーコアを　もつ。</language>
 		<language name="JPN_KANJI">１００年前の　大地震のときに
 地割れから　発見された。
-体内に　エネルギーコアを　持つ。</language>
+体内に　エネルギーコアを　もつ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_525_000">
@@ -5125,12 +5125,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_531_000">
-		<language name="JPN">とても　みみが　いい　ポケモン。
-はっぱが　こすれる　かすかな　おとを
-１キロ　はなれていても　ききとれる。</language>
-		<language name="JPN_KANJI">とても　耳が　いい　ポケモン。
-葉っぱが　擦れる　微かな　音を
-１キロ　離れていても　聞き取れる。</language>
+		<language name="JPN">けたはずれの　ちょうりょくを　もつ。
+かすかな　おとで　まわりの　ようすを
+レーダーのように　キャッチする。</language>
+		<language name="JPN_KANJI">けたちがいの　聴力を　もつ。
+かすかな　音で　まわりの　様子を
+レーダーのように　キャッチする。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_532_000">
@@ -5161,10 +5161,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_535_000">
-		<language name="JPN">ほおを　しんどうさせて　ひとには
+		<language name="JPN">ほっぺを　しんどうさせて　ひとには
 きこえない　おんぱを　だす。
 おんぱの　リズムで　かいわする。</language>
-		<language name="JPN_KANJI">頬を　振動させて
+		<language name="JPN_KANJI">ほっぺを　振動させて
 人には　聞こえない　音波を　出す。
 音波の　リズムで　会話する。</language>
 	</row>
@@ -5193,7 +5193,7 @@
 きまって　５ひきで　むれを　つくる。</language>
 		<language name="JPN_KANJI">自分よりも　体の　大きな　相手を
 投げたくなる　習性。
-決まって　５匹で　群を　作る。</language>
+決まって　５匹で　むれを　作る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_539_000">
@@ -5219,7 +5219,7 @@
 さむさを　ふせぐ。みじかな　おちばを
 たべながら　もりを　いどうする。</language>
 		<language name="JPN_KANJI">葉っぱで　体を　包み込んで
-寒さを　防ぐ、身近な　落ち葉を
+寒さを　防ぐ。身近な　落ち葉を
 食べながら　森を　移動する。</language>
 	</row>
 
@@ -5245,8 +5245,8 @@
 		<language name="JPN">ふだんは　うごかないが　おそわれると
 こうそく　かいてんして　はしりまわり
 たいあたりで　はんげきするのだ。</language>
-		<language name="JPN_KANJI">ふだんは　動かないが　襲われると
-高速　回転して　走り回り
+		<language name="JPN_KANJI">ふだんは　動かないが
+襲われると 高速　回転して　走り回り
 体当たりで　反撃するのだ。</language>
 	</row>
 
@@ -5301,7 +5301,7 @@
 こたいが　むれに　まぎれこんでいる。</language>
 		<language name="JPN_KANJI">赤と　青の　バスラオは　仲が　悪いが
 なぜか　色の　違う　個体が
-群に　紛れ込んでいる。</language>
+むれに　紛れ込んでいる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_551_000">
@@ -5310,16 +5310,16 @@
 くろい　まくが　めを　まもる。</language>
 		<language name="JPN_KANJI">砂の　中に　潜り　目と　鼻を
 外に　出して　移動する。
-黒い　膜が　眼球を　砂から　守る。</language>
+黒い　膜が　目を　守る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_552_000">
 		<language name="JPN">めを　おおう　とくしゅな　まくが
 ぶったいの　ねつを　かんちするため
 くらやみでも　まわりが　みえるのだ。</language>
-		<language name="JPN_KANJI">眼球を　覆う　特殊な　膜が
-物体の　放射熱を　感知するため
-暗闇でも　周囲を　把握できるのだ。</language>
+		<language name="JPN_KANJI">眼球を　おおう　特殊な　膜が
+物体の　熱を　感知するため
+暗闇でも　まわりが　見えるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_553_000">
@@ -5415,10 +5415,10 @@
 	<row id="ZKN_COMMENT_00_563_000">
 		<language name="JPN">りっぱな　かんおけの　ふりをして
 はかドロボウを　こらしめる。
-からだが　きんで　おおわれている。</language>
+じゅんきんで　おおわれた　からだ。</language>
 		<language name="JPN_KANJI">立派な　棺桶の　ふりをして
 墓ドロボウを　こらしめる。
-体が　金で　覆われている。</language>
+純金で　おおわれた　体。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_564_000">
@@ -5459,10 +5459,10 @@
 
 	<row id="ZKN_COMMENT_00_568_000">
 		<language name="JPN">ゴミぶくろが　さんぎょうはいきぶつと
-かがくへんかを　おこして
+かがくへんかを　おこした　ことで
 ポケモンとして　うまれかわった。</language>
 		<language name="JPN_KANJI">ゴミ袋が　産業廃棄物と
-化学変化を　起こして
+化学変化を　起こした　ことで
 ポケモンとして　生まれ変わった。</language>
 	</row>
 
@@ -5485,12 +5485,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_571_000">
-		<language name="JPN">おおぜいを　いっせいに　ばかして
-まぼろしの　ふうけいを　みせる。
-すうひきの　むれで　こうどうする。</language>
-		<language name="JPN_KANJI">大勢を　いっせいに　化かして
-幻の　風景を　見せる。
-数匹の　群で　行動する。</language>
+		<language name="JPN">いっぺんに　おおぜいの　ひとを
+ばかす　ちからを　もつ。まぼろしの
+けしきを　みせて　すみかを　まもる。</language>
+		<language name="JPN_KANJI">いっぺんに　大勢の　人を
+化かす　力を　持つ。
+幻の　景色を　見せて　住処を　守る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_572_000">
@@ -5656,12 +5656,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_590_000">
-		<language name="JPN">モンスターボールが　かいはつされる
-いぜんから　イッシュちほうに
-せいそくしていた　ポケモン。</language>
-		<language name="JPN_KANJI">モンスターボールが　開発される
-以前より　イッシュ地方に
-生息していた　ポケモン。</language>
+		<language name="JPN">モンスターボールに　なぜか　にている
+ポケモン。つかまえようとした　てきに
+どくほうしを　ふきかけて　げきたい。</language>
+		<language name="JPN_KANJI">モンスターボールに　なぜか　似ている
+ポケモン。捕まえようとした　敵に
+毒胞子を　吹きかけて　撃退。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_591_000">
@@ -5674,12 +5674,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_592_000">
-		<language name="JPN">かいめんを　ながれに　まかせて
-たくさんの　プルンス●が　みなとに
-あつまって　こまる　ことがある。</language>
-		<language name="JPN_KANJI">移動は　いつも　波まかせ。
-たくさんの　プルンス●が　港に
-集まって　困る　ことがある。</language>
+		<language name="JPN">えものを　どくで　しびれさせて
+８０００メートルの　しんかいに
+あるという　すみかに　つれていく。</language>
+		<language name="JPN_KANJI">獲物を　毒で　痺れさせて
+８０００メートルの　深海に
+あるという　住処に　連れて行く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_593_000">
@@ -5720,20 +5720,20 @@
 
 	<row id="ZKN_COMMENT_00_597_000">
 		<language name="JPN">ほらあなの　かべに　トゲを　つきさし
-はりつく。いわの　なかの　こうぶつを
-とかして　きゅうしゅうする。</language>
-		<language name="JPN_KANJI">洞穴の　壁に　トゲを　突き刺し
-はりつく。岩に　埋もれている　鉱物を
-体液で　溶かして　吸収する。</language>
+はりつく。いわに　ふくまれる
+こうぶつを　きゅうしゅうする。</language>
+		<language name="JPN_KANJI">洞穴の　壁に
+トゲを　突き刺し　はりつく。
+岩に　含まれる　鉱物を　吸収する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_598_000">
-		<language name="JPN">トゲつきの　しょくしゅで　じめんや
-ほらあなの　かべに　からだに　あった
-くぼみを　ほって　すみかを　つくる。</language>
-		<language name="JPN_KANJI">トゲ付きの　触手で　地面や
-洞穴の　壁に　体の　サイズに　合った
-くぼみを　掘って　すみかを　作る。</language>
+		<language name="JPN">ほらあなの　てんじょうに　はりつき
+したを　とおる　えものに　むかって
+てつの　トゲを　うちこみ　おそう。</language>
+		<language name="JPN_KANJI">洞穴の　天井に　張り付き
+下を　通る　獲物に　向かって
+鉄の　トゲを　打ち込み　襲う。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_599_000">
@@ -5766,17 +5766,17 @@
 	<row id="ZKN_COMMENT_00_602_000">
 		<language name="JPN">むれで　こうどうする　ポケモン。
 でんきを　つくる　きかんを　もち
-ピンチに　なると　はつでんさせる。</language>
-		<language name="JPN_KANJI">群で　行動する　ポケモン。
-背骨の　脇に　電気を　作る　器官を
-持ち　危険を　察知すると　発電する。</language>
+ピンチになると　はつでんさせる。</language>
+		<language name="JPN_KANJI">群れで　行動する　ポケモン。
+電気を　作る　器官を　もち
+ピンチになると　発電する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_603_000">
-		<language name="JPN">しょくよくが　おうせい。てごろな
+		<language name="JPN">しょくよく　おうせいな　ポケモン。
 えものを　みつけると　おそいかかり
 でんきで　しびれさせてから　たべる。</language>
-		<language name="JPN_KANJI">旺盛な　食欲の　持ち主。手ごろな
+		<language name="JPN_KANJI">食欲　旺盛な　ポケモン。
 獲物を　見つけると　襲いかかり
 電気で　痺れさせてから　食べる。</language>
 	</row>
@@ -5786,7 +5786,7 @@
 すいつき　くいこませた　キバから
 でんきを　ながして　かんでんさせる。</language>
 		<language name="JPN_KANJI">吸盤の　口で　獲物に　吸いつき
-相手の　体に　食い込ませた　キバから
+食い込ませた　キバから
 電気を　流して　感電させる。</language>
 	</row>
 
@@ -5809,30 +5809,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_607_000">
-		<language name="JPN">くらやみで　まちかまえて　あかりで
-みちあんない　する　ふりを　して
-せいめいりょくを　すいとるのだ。</language>
-		<language name="JPN_KANJI">暗闇で　待ち構えて　明かりを　灯して
-道案内　する　振りを　して
-生命力を　吸い取るのだ。</language>
+		<language name="JPN">あかりを　ともして　みちあんないを
+するように　みせかけながら
+せいめいりょくを　すいとっている。</language>
+		<language name="JPN_KANJI">明かりを　灯して　道案内を
+するように　見せかけながら
+生命力を　吸い取っている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_608_000">
 		<language name="JPN">りんじゅうの　きわに　あらわれて
 たましいが　にくたいを　はなれると
 すかさず　すいとってしまうのだ。</language>
-		<language name="JPN_KANJI">人や　ポケモンの　臨終の　際に　現れ
-魂が　肉体を　離れた　ところを
+		<language name="JPN_KANJI">臨終の　際に　現れて
+魂が　肉体を　離れると
 すかさず　吸い取ってしまうのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_609_000">
 		<language name="JPN">シャンデラの　ほのおに　つつまれると
 たましいが　すいとられ　もやされる。
-ぬけがらの　にくたいが　のこるのだ。</language>
+ぬけがらの　からだ　だけが　のこる。</language>
 		<language name="JPN_KANJI">シャンデラの　炎に　包まれると
 魂が　吸い取られ　燃やされる。
-抜け殻の　肉体が　残るのだ。</language>
+抜け殻の　体　だけが　残る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_610_000">
@@ -5966,8 +5966,8 @@
 えものに　しがみつき　やいばを
 くいこませて　いためつけるのだ。</language>
 		<language name="JPN_KANJI">ズルガシーの　命令で　戦う。
-獲物に　しがみつき　全身の　刃を
-食いこませて　苦しめるのだ。</language>
+獲物に　しがみつき
+刃を　食いこませて　痛めつけるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_625_000">
@@ -5975,35 +5975,35 @@
 えものを　むれで　おいつめる。
 とどめは　ズルガシーが　さす。</language>
 		<language name="JPN_KANJI">大勢の　ズルル●●を　従えて
-獲物を　群で　追いつめる。
-とどめは　ズルガシーが　差す。</language>
+獲物を　群れで　追いつめる。
+とどめは　ズルガシーが　刺す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_626_000">
 		<language name="JPN">みさかいなく　とっしんして　ずつきを
 くらわせる。はしっている　れっしゃを
-だっせんさせた　こともある。</language>
+だっせんさせる　はかいりょく。</language>
 		<language name="JPN_KANJI">見境なく　突進して　頭突きを
 食らわせる。走っている　列車を
-脱線させた　こともある。</language>
+脱線させる　破壊力。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_627_000">
 		<language name="JPN">つよい　あいてにも　みさかいなく
 たたかいを　いどむ。たたかいを
-くりかえすことで　つよくなるのだ。</language>
-		<language name="JPN_KANJI">自分よりも　強そうな　相手でも
-見境なく　戦いを　挑む。
-戦いを　繰り返して　強くなるのだ。</language>
+くりかえす　ことで　つよくなるのだ。</language>
+		<language name="JPN_KANJI">強い　相手にも　見境なく
+見境なく　戦いを　挑む。戦いを
+繰り返す　ことで　強くなるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_628_000">
 		<language name="JPN">ゆうもう　かかんで　しられている。
 そらの　たたかいでは　さいきょうと
 いわれている　おおぞらのせんし。</language>
-		<language name="JPN_KANJI">勇猛果敢で　知られた　ポケモン。
-空の　戦いでは　最強と　言われる。
-大空の戦士　という　別名を　もつ。</language>
+		<language name="JPN_KANJI">勇猛　果敢で　知られている。
+空の　戦いでは
+最強と　言われている　大空の戦士。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_629_000">
@@ -6116,11 +6116,11 @@
 
 	<row id="ZKN_COMMENT_00_641_000">
 		<language name="JPN">トルネロスの　しっぽから　ふきだした
-エネルギーが　たいきの　ながれを
-かえるので　おおあらしに　なるのだ。</language>
+エネルギーが　おおあらしを　おこす。
+みんかを　ふきとばす　パワー。</language>
 		<language name="JPN_KANJI">トルネロスの　しっぽから　噴き出した
-エネルギーが　大気の　流れを
-変えるので　大嵐に　なるのだ。</language>
+エネルギーが　大嵐を　起こす。
+民家を　吹き飛ばす　パワー。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_642_000">
@@ -6133,12 +6133,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_643_000">
-		<language name="JPN">シン●●●が　はっせいさせる　ねつは
-せかいじゅうの　たいきを　うごかして
-てんきを　かえる　パワーである。</language>
-		<language name="JPN_KANJI">シン●●●が　発生させる　熱は
-世界中の　大気を　対流させて
-天候を　変える　パワーである。</language>
+		<language name="JPN">シン●●●の　しっぽが　もえると
+ねつエネルギーで　たいきが　うごいて
+せかいの　てんきが　へんかする。</language>
+		<language name="JPN_KANJI">シン●●●の　しっぽが　燃えると
+熱エネルギーで　大気が　動いて
+世界の　天気が　変化する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_644_000">
