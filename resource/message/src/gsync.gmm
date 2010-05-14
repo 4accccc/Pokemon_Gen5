@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-05-11T17:33:16"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-05-14T14:24:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="692"/>
 		<band id="3" index="3" style="0000" width="692"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -446,12 +446,12 @@
 
 	<row id="GSYNC_014">
 		<language name="JPN" width="256">ぜんかいのゆめの　カケラを
-はいたついんから▽
+ハイリンクで▽
 うけとっていませんが▼
 ポケモンをおこしても
 よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">前回の夢のカケラを
-配達員から　受け取っていませんが▼
+ハイリンクで　受け取っていませんが▼
 ポケモンを起こしても
 よろしいですか？</language>
 	</row>
