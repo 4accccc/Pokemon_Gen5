@@ -31,6 +31,7 @@
 #ifdef DEBUG_ONLY_FOR_hudson
 
 #define HUDSON_TESTCODE_MAP_JUMP ("1")
+#define HUDSON_TESTCODE_ALL_CONNECT ("2")
 
 extern BOOL HUDSON_IsSkipTitle( void );
 

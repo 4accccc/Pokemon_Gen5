@@ -139,16 +139,18 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 #ifdef DEBUG_ONLY_FOR_hudson
 
 #include "debug/debug_hudson.h"
-#include "field/event_debug_menu.h"
+#include "field/event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
+#include "field/event_debug_menu.h" // for EVENT_DEBUG_AllMapCheck
+
 static void HudsonMain( GAMESYS_WORK* gsys )
 {
   static int debugcnt = 0;
 
-  if( debugcnt < 120 )
+  if( debugcnt < 180 )
   {
     debugcnt++;
   }
-  else if( debugcnt == 120 )
+  else if( debugcnt == 180 )
   {
     debugcnt++;
 
@@ -167,10 +169,18 @@ static void HudsonMain( GAMESYS_WORK* gsys )
       new_event = EVENT_DEBUG_AllMapCheck( gsys, FALSE );
       GAMESYSTEM_SetEvent( gsys, new_event );
     }
-   
+    // 全接続チェック
+    else if( STD_StrCmp( OS_GetArgv(1), HUDSON_TESTCODE_ALL_CONNECT ) == 0 )
+    {
+      GMEVENT * new_event;
+
+      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+          FS_OVERLAY_ID( debug_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
+      GAMESYSTEM_SetEvent( gsys, new_event );
+    }
   }
 }
-#endif
+#endif // DEBUG_ONLY_FOR_hudson
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -180,7 +190,7 @@ static GFL_PROC_RESULT GameMainProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 
 #ifdef DEBUG_ONLY_FOR_hudson
   HudsonMain( gsys );
-#endif
+#endif // DEBUG_ONLY_FOR_hudson
 
 	if (GameSystem_Main(gsys)) {
 		return GFL_PROC_RES_FINISH;
