@@ -248,7 +248,7 @@ u16 ZUKAN_SEARCH_ENGINE_Search(
     // ’n•û}ŠÓ‚Ìê‡‚Í’n•û}ŠÓ‚É“oê‚µ‚Ä‚¢‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
     if( term->mode == ZKNCOMM_LIST_SORT_MODE_LOCAL )
     {
-      if( chihou_list[monsno] == 0 )
+      if( chihou_list[monsno] == POKEPER_CHIHOU_NO_NONE )
         BLOCK_FULL_FLAG_ON_AND_CONTINUE(i)
     }
 
