@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T17:17:31"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T12:43:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -881,7 +881,7 @@
 		<comment>サザナミわん</comment>
 		<language name="JPN" width="256">なみが　かがやいている　として
 せかいでも　ひょうばんの　うみ</language>
-		<language name="JPN_KANJI" width="256">波が　輝いているいる　として
+		<language name="JPN_KANJI" width="256">波が　輝いている　として
 世界でも　評判の　海</language>
 	</row>
 
