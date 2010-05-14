@@ -64,7 +64,7 @@ typedef enum{
 }BTLV_MCSS_PROJECTION;
 
 typedef enum
-{ 
+{
   BTLV_MCSS_MEPACHI_ON    = MCSS_MEPACHI_ON,
   BTLV_MCSS_MEPACHI_OFF   = MCSS_MEPACHI_OFF,
   BTLV_MCSS_MEPACHI_FLIP  = MCSS_MEPACHI_FLIP,
@@ -73,19 +73,19 @@ typedef enum
 }BTLV_MCSS_MEPACHI_FLAG;
 
 typedef enum
-{ 
+{
   BTLV_MCSS_VANISH_ON   = MCSS_VANISH_ON,
   BTLV_MCSS_VANISH_OFF  = MCSS_VANISH_OFF,
   BTLV_MCSS_VANISH_FLIP = MCSS_VANISH_FLIP,
 }BTLV_MCSS_VANISH_FLAG;
 
 typedef enum
-{ 
+{
   BTLV_MCSS_ANM_STOP_ON   = MCSS_ANM_STOP_ON,
   BTLV_MCSS_ANM_STOP_OFF  = MCSS_ANM_STOP_OFF,
 }BTLV_MCSS_ANM_STOP_FLAG;
 
-typedef enum{ 
+typedef enum{
   BTLV_MCSS_STATUS_FLAG_MIGAWARI  = 0x00000001,    //みがわりフラグ
   BTLV_MCSS_STATUS_FLAG_RARE      = 0x00000002,    //レアフラグ
 
@@ -97,17 +97,17 @@ typedef struct _BTLV_MCSS BTLV_MCSS;
 typedef struct _BTLV_MCSS_WORK BTLV_MCSS_WORK;
 
 typedef struct
-{ 
+{
   BTLV_MCSS_WORK* bmw;
   BtlvMcssPos     position;
   int             axis;               //回転軸
   int             shift;              //回転シフト
-	fx32	          radius_h;           //横方向半径
-	fx32	          radius_v;           //縦方向半径
-	int		          frame;              //1回転何フレームか
-	int		          rotate_wait;        //回転ウエイト
-	int		          count;              //回転数
-	int		          rotate_after_wait;  //1回転した後のウエイト
+  fx32            radius_h;           //横方向半径
+  fx32            radius_v;           //縦方向半径
+  int             frame;              //1回転何フレームか
+  int             rotate_wait;        //回転ウエイト
+  int             count;              //回転数
+  int             rotate_after_wait;  //1回転した後のウエイト
   int             angle;
   int             speed;
   int             rotate_wait_count;
@@ -115,15 +115,15 @@ typedef struct
 }BTLV_MCSS_MOVE_CIRCLE_PARAM;
 
 typedef struct
-{ 
+{
   BTLV_MCSS_WORK* bmw;
   BtlvMcssPos     position;
   VecFx32         pos;              //移動基準座標
-	int		          dir;              //方向
+  int             dir;              //方向
   fx32            angle;            //角度
   fx32            speed;            //速度
-	fx32	          radius;           //半径
-	int		          frame;            //フレーム
+  fx32            radius;           //半径
+  int             frame;            //フレーム
 }BTLV_MCSS_MOVE_SIN_PARAM;
 
 extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID );
