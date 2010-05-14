@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T21:40:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T14:50:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -380,7 +380,7 @@
 それを　楽しみに　してるんだ</language>
 	</row>
 
-	<row id="msg_t01r0201_middleman1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0201_middleman1_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・クリア後</comment>
 		<attribute name="キャラ指定">男性</attribute>
@@ -394,7 +394,7 @@
 それが　一番の悩み　なのかね</language>
 	</row>
 
-	<row id="msg_t01r0201_middlewoman1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0201_middlewoman1_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・クリア後</comment>
 		<attribute name="キャラ指定">女性</attribute>
@@ -408,7 +408,7 @@
 当然なのよね</language>
 	</row>
 
-	<row id="msg_t01r0201_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0201_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・クリア後に出現
 ・削除タイミング、条件未定</comment>
