@@ -2229,6 +2229,9 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
   // トレーナータイプ切り替え
   case TRC_KEY_REQ_TRAINER_TYPE:
     if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      TR_CARD_SV_PTR trsave = GAMEDATA_GetTrainerCardPtr(wk->tcp->gameData);
+
+      TRCSave_SetTrainerViewChange( trsave );   //変更したフラグを立てる
       PMSND_PlaySE( SND_TRCARD_TRTYPE );
       _add_UnionTrNo( wk->TrCardData );
       TRCBmp_PrintTrainerType( wk, wk->TrCardData->UnionTrNo, 1 );

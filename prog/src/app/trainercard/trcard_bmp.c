@@ -17,6 +17,7 @@
 
 #include "gamesystem\msgspeed.h"
 #include "savedata/playtime.h"
+#include "savedata/trainercard_data.h"
 #include "trcard_bmp.h"
 #include "trcard_cgx_def.h"
 
@@ -429,8 +430,19 @@ void TRCBmp_PrintTrainerType( TR_CARD_WORK *wk, int trtype, int trans_sw )
 {
   GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                          NARC_message_trtype_dat, wk->heapId );
-  STRBUF *str = GFL_MSG_CreateString( msgdata, UnionView_GetMsgType(trtype) );
-  int length = PRINTSYS_GetStrWidth( str, wk->fontHandle, 0 );
+  STRBUF *str;
+  int length;
+  TR_CARD_SV_PTR trsave = GAMEDATA_GetTrainerCardPtr(wk->tcp->gameData);
+
+  // 既にユニオン見た目を変更しているか？
+  if(TRCSave_GetTrainerViewChange( trsave )){
+    // していたら反映させた文字列を
+    str = GFL_MSG_CreateString( msgdata, UnionView_GetMsgType(trtype) );
+  }else{
+    // してなかったら「ポケモントレーナー」
+    str = GFL_MSG_CreateString( msgdata, MSG_TRTYPE_HERO );
+  }
+  length = PRINTSYS_GetStrWidth( str, wk->fontHandle, 0 );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_TRAINER_TYPE]), 0 );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_TRAINER_TYPE]),
