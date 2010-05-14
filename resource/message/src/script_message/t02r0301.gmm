@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-04T17:18:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T14:44:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,17 +292,16 @@
 	</lock>
 
 
-	<row id="msg_t02r0301_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_t02r0301_man1_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN1
 青年１</attribute>
 		<language name="JPN" width="256">いまは　よわい　ポケモンでも
 そだてれば　つよくなる！▽
-だいじなのは　あいじょう！</language>
+だいじなのは　あいじょう　だね！</language>
 		<language name="JPN_KANJI" width="256">いまは　弱い　ポケモンでも
 育てれば　強くなる！▽
-大事なのは　愛情！</language>
+大事なのは　愛情だね！</language>
 	</row>
 
 	<row id="msg_t02r0301_middlewoman2_01">
@@ -319,9 +318,8 @@
 冒険の　旅って！</language>
 	</row>
 
-	<row id="msg_t02r0301_babyboy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_t02r0301_babyboy1_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">男の子１</attribute>
 		<language name="JPN" width="256">せかいを　みちびく　えいゆうの　もと
 その　ポケモン　すがたを　あらわし▽
