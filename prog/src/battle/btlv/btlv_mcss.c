@@ -1320,7 +1320,7 @@ void  BTLV_MCSS_ResetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position )
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
 
-  MCSS_ResetPaletteFadeBaseColor( bmw->btlv_mcss[ index ].mcss );
+  MCSS_ResetPaletteFadeBaseColor( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss );
 }
 
 //============================================================================================

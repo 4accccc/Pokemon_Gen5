@@ -2100,13 +2100,23 @@ void  BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value )
 BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm )
 { 
   //ゲージが存在しないときはなにもせずにリターン
-  if( bgw->bgcl[ pos ].base_clwk == NULL )
+  if( bgw->bgcl[ pos ].base_clwk == NULL ) 
   {
+    *color = GAUGETOOL_HP_DOTTO_GREEN;
+    *sick_anm = APP_COMMON_ST_ICON_NONE;
     return FALSE;
   }
 
   *color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
-  *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+
+  if( GFL_CLACT_WK_GetDrawEnable( bgw->bgcl[ pos ].status_clwk ) ==  FALSE )
+  { 
+    *sick_anm = APP_COMMON_ST_ICON_NONE;
+  }
+  else
+  { 
+    *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+  }
 
   return TRUE;
 }
