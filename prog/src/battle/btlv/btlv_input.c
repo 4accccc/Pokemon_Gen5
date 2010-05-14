@@ -4801,11 +4801,11 @@ static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
 
 static  void  TCB_SetFocus( GFL_TCB* tcb, void* work )
 { 
-  BTLV_INPUT_WORK* biw = ( BTLV_INPUT_WORK* )work;
+  TCB_SET_FOCUS* tsf = ( TCB_SET_FOCUS* )work;
 
   if( !BTLV_EFFECT_CheckExecute() )
   { 
-    BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+    BTLV_EFFECT_SetCameraFocus( tsf->pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
     BTLV_EFFECT_FreeTCB( tcb );
   }
 }
