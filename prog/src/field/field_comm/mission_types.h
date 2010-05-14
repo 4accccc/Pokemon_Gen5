@@ -227,7 +227,7 @@ typedef struct{
   u8 padding;
   
   u16 ready_timer;            ///<開始前のエントリー待ちの残り時間(秒)
-  u8 padding2[2];
+  u16 exe_timer;              ///<ミッションの終了時間
 }MISSION_DATA;
 
 
@@ -281,12 +281,15 @@ typedef struct{
   u8 data_send_req;           ///<TRUE:ミッションデータの送信を行う
   u8 result_send_req;         ///<TRUE:ミッションデータの送信を行う
   u8 send_mission_start;      ///<準備期間終了。ミッション開始を送信(_SEND_MISSION_START_xxx)
+  u8 start_client_bit;        ///<子から「ミッション開始宣言」を受信した(bit管理)
+  u8 send_start_client_bit;   ///<子への「ミッション開始宣言」の返事送信bit
 
   //子が持つデータ
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信
   u8 parent_result_recv;      ///<TRUE:親から結果を受信
   u8 recv_entry_answer_result;  ///<ミッション受注の返事(MISSION_ENTRY_RESULT_???)
   u8 parent_achieve_recv;     ///<親からミッション達成報告を受信(MISSION_ACHIEVE_???)
+  u8 mission_start_ok;        ///<TRUE:親から「ミッション開始宣言」の返答を受け取った
   u8 mine_entry;              ///<TRUE:ミッション参加している
   u8 mission_complete;        ///<TRUE:今実行しているミッションは完了した
 }MISSION_SYSTEM;

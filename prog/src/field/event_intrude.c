@@ -170,6 +170,8 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
     SEQ_MISSION_VIEW_WAIT,
     SEQ_DISGUISE_START,
     SEQ_DISGUISE_MAIN,
+    SEQ_MISSION_START_SEND,
+    SEQ_MISSION_START_SEND_ANSWER_WAIT,
   	SEQ_FINISH,
   };
 	
@@ -234,7 +236,28 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
       (*seq)++;
     }
     break;
-	  
+	
+	case SEQ_MISSION_START_SEND:
+	  if(intcomm != NULL){
+      if(IntrudeSend_MissionClientStart(intcomm, &intcomm->mission) == TRUE){
+        (*seq)++;
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+	case SEQ_MISSION_START_SEND_ANSWER_WAIT:
+	  if(intcomm != NULL){
+  	  if(MISSION_CheckMissionStartOK(&intcomm->mission) == TRUE){
+        (*seq)++;
+      }
+    }
+    else{
+      (*seq)++;
+    }
+    break;
+    
 	case SEQ_FINISH:   //I—¹ˆ—
     IntrudeEventPrint_ExitFieldMsg(&dis_wk->iem);
 

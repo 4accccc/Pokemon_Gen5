@@ -41,6 +41,7 @@ enum{
 //  プロトタイプ宣言
 //==============================================================================
 static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
+static void MISSION_Update_StartClientAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_SetMissionFail(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, int fail_netid);
 static void MISSION_Update_EntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 static void MISSION_Update_AchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
@@ -120,8 +121,8 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
         mission->send_mission_start = _SEND_MISSION_START_SEND_REQ;
       }
     }
-    else{
-      if(_GetMissionTime(mission) > mission->data.cdata.time){
+    else if(mission->mission_start_ok == TRUE){
+      if(_GetMissionTime(mission) > mission->data.exe_timer){
         GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
         MISSION_SetMissionFail(intcomm, mission, GAMEDATA_GetIntrudeMyID(gamedata));
       }
@@ -132,6 +133,7 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   MISSION_Update_EntryAnswer(intcomm, mission);
   MISSION_Update_AchieveAnswer(intcomm, mission);
   MISSION_SendUpdate(intcomm, mission);
+  MISSION_Update_StartClientAnswer(intcomm, mission);
 }
 
 //--------------------------------------------------------------
@@ -153,6 +155,27 @@ static s32 _GetMissionTime(MISSION_SYSTEM *mission)
   return timer - mission->start_timer;
 }
 
+//--------------------------------------------------------------
+/**
+ * 実施中のミッションの残り時間を取得
+ *
+ * @param   mission		
+ *
+ * @retval  s32		残り時間
+ */
+//--------------------------------------------------------------
+static s32 MISSION_GetExeMissionTimer(MISSION_SYSTEM *mission)
+{
+  s32 ret_timer;
+  
+ ret_timer = mission->data.exe_timer;  //mission->data.cdata.time;
+ ret_timer -= _GetMissionTime(mission);
+  if(ret_timer < 0){
+    return 0;
+  }
+  return ret_timer;
+}
+
 //==================================================================
 /**
  * ミッション残り時間を取得
@@ -168,13 +191,14 @@ s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission)
   
   if(MISSION_RecvCheck(mission) == TRUE 
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    if(mission->data.ready_timer > 0){
+    if(mission->data.ready_timer > 0 || mission->mission_start_ok == FALSE){
       ret_timer = mission->data.ready_timer;
+      ret_timer -= _GetMissionTime(mission);
     }
     else{
-      ret_timer = mission->data.cdata.time;
+      ret_timer = MISSION_GetExeMissionTimer(mission);
     }
-    ret_timer -= _GetMissionTime(mission);
+    
     if(ret_timer < 0){
       return 0;
     }
@@ -288,6 +312,49 @@ void MISSION_RecvMissionStart(MISSION_SYSTEM *mission)
 
 //==================================================================
 /**
+ * クライアントから「ミッション開始宣言」を受信
+ *
+ * @param   mission		
+ * @param   net_id		
+ */
+//==================================================================
+void MISSION_RecvMissionStartClient(MISSION_SYSTEM *mission, NetID net_id)
+{
+  mission->start_client_bit |= 1 << net_id;
+  mission->send_start_client_bit |= 1 << net_id;
+}
+
+//==================================================================
+/**
+ * 親からもらった「ミッション開始宣言の返事」を受信
+ *
+ * @param   mission		  
+ * @param   net_id		  
+ * @param   now_timer		親からもらった現在のミッションの残り時間
+ */
+//==================================================================
+void MISSION_RecvMissionStartClientAnswer(MISSION_SYSTEM *mission, s32 now_timer)
+{
+  mission->mission_start_ok = TRUE;
+  mission->data.exe_timer = now_timer;
+}
+
+//==================================================================
+/**
+ * 親からミッション開始OKをもらったかチェック
+ *
+ * @param   mission		
+ *
+ * @retval  BOOL		  TRUE:OK
+ */
+//==================================================================
+BOOL MISSION_CheckMissionStartOK(MISSION_SYSTEM *mission)
+{
+  return mission->mission_start_ok;
+}
+
+//==================================================================
+/**
  * ミッションデータ送信リクエストが発生していれば送信を行う
  *
  * @param   intcomm		
@@ -321,6 +388,23 @@ static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mis
   if(mission->send_mission_start == _SEND_MISSION_START_SEND_REQ){
     if(IntrudeSend_MissionStart(intcomm, mission) == TRUE){
       mission->send_mission_start = _SEND_MISSION_START_SENDED;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 「ミッション開始宣言」の返事
+ *
+ * @param   mission		
+ */
+//--------------------------------------------------------------
+static void MISSION_Update_StartClientAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  if(mission->send_start_client_bit > 0){
+    if(IntrudeSend_MissionClientStartAnswer(
+        intcomm, MISSION_GetExeMissionTimer(mission), mission->send_start_client_bit) == TRUE){
+      mission->send_start_client_bit = 0;
     }
   }
 }
@@ -1026,7 +1110,7 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   }
 #endif
   
-  if(entry_req->cdata.type == MISSION_TYPE_VICTORY || entry_req->cdata.type == MISSION_TYPE_ITEM){
+  if(entry_req->cdata.type == MISSION_TYPE_VICTORY || entry_req->cdata.type == MISSION_TYPE_ATTRIBUTE){
     if(GFL_NET_SystemGetConnectNum() != 2 || GFL_NET_GetConnectNum() != 2){
       OS_TPrintf("NG:二人専用ミッションだが接続人数が二人ではない\n");
       mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG_TWIN;
@@ -1041,6 +1125,7 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   exe_mdata->palace_area = entry_req->target_info.net_id;
   exe_mdata->monolith_type = entry_req->monolith_type;
   exe_mdata->ready_timer = _MISSION_READY_TIMER;
+  exe_mdata->exe_timer = entry_req->cdata.time;
   
   //返事セット
   mission->entry_answer[net_id].mdata = *exe_mdata;
