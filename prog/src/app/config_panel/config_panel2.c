@@ -2660,6 +2660,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     if( COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_DECIDE], &pos )
         && p_wk->select != APPBAR_WIN_DECIDE )
     {
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
       PMSND_PlaySE( CONFIG_SE_DECIDE );
       p_wk->select = APPBAR_WIN_DECIDE;
       p_wk->is_decide = TRUE;
@@ -2667,6 +2668,7 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
     else if(  COLLISION_IsRectXPos( &sc_appbar_rect[APPBAR_WIN_CANCEL], &pos )
         && p_wk->select != APPBAR_WIN_CANCEL )
     {
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
       PMSND_PlaySE( CONFIG_SE_CANCEL );
       p_wk->select  = APPBAR_WIN_CANCEL;
       p_wk->is_decide = TRUE;
@@ -2997,6 +2999,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     //キー切替時
     p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
     Scroll_ChangePlt( p_wk, TRUE );
+    p_wk->is_info_update  = TRUE;
     break;
 
   case UI_INPUT_SLIDE:
@@ -3030,8 +3033,15 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 
   case UI_INPUT_TRG_UP:
     p_wk->cont_sync = 0;
-    p_wk->select--;
-    p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
+
+    if( p_wk->select == CONFIG_LIST_MSGSPEED)
+    {
+      p_wk->select  = CONFIG_LIST_CANCEL;
+    }
+    else
+    {
+      p_wk->select--;
+    }
 
 #ifndef SCROLL_MOVE_NONE
     //スクロールする距離になったら動く
@@ -3040,10 +3050,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       Scroll_Move( p_wk, -SCROLL_WINDOW_H_DOT );
     }
 #endif
-    if( p_wk->select < CONFIG_LIST_MAX )
-    {
-      p_wk->is_info_update  = TRUE;
-    }
+    p_wk->is_info_update  = TRUE;
     PMSND_PlaySE( CONFIG_SE_MOVE );
     Scroll_ChangePlt( p_wk, TRUE );
     GRAPHIC_StartPalleteFade( p_graphic );
@@ -3060,8 +3067,14 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 
   case UI_INPUT_TRG_DOWN:
     p_wk->cont_sync = 0;
-    p_wk->select++;
-    p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
+    if( p_wk->select == CONFIG_LIST_CANCEL )
+    {
+      p_wk->select =  CONFIG_LIST_MSGSPEED;
+    }
+    else
+    {
+      p_wk->select++;
+    }
 #ifndef SCROLL_MOVE_NONE
     //スクロールする距離になったら動く
     if( p_wk->select > bar_top+SCROLL_DISPLAY )
@@ -3069,10 +3082,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       Scroll_Move( p_wk, SCROLL_WINDOW_H_DOT );
     }
 #endif
-    if( p_wk->select < CONFIG_LIST_MAX )
-    {
-      p_wk->is_info_update  = TRUE;
-    }
+    p_wk->is_info_update  = TRUE;
     PMSND_PlaySE( CONFIG_SE_MOVE );
     Scroll_ChangePlt( p_wk, TRUE );
     GRAPHIC_StartPalleteFade( p_graphic );
@@ -3164,7 +3174,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   //上画面メッセージ更新
   if( p_wk->is_info_update )
   {
-    if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
+    if( CONFIG_LIST_MSGSPEED <= p_wk->select && p_wk->select < CONFIG_LIST_MAX )
     {
       int speed;
       BOOL is_stream;
@@ -3180,8 +3190,12 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       }
       GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
       MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed, is_stream );
-      p_wk->is_info_update  = FALSE;
     }
+    else
+    {
+      GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
+    }
+    p_wk->is_info_update  = FALSE;
   }
 
 
