@@ -140,6 +140,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 	{
 		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
 
+    tlw->mcss_sys = mcss_sys;
 		tlw->palette_p = &mcss_sys->shadow_palette_proxy;
 		tlw->pal_ofs = MCSS_PAL_ADRS + 0x100;
 		tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData,
@@ -1768,6 +1769,14 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 	if( tlw->mcss )
   {
     tlw->mcss->tcb_load_resource = NULL;
+  }
+
+	if( tlw->mcss_sys )
+  {
+	  if( tlw->mcss_sys->tcb_load_shadow )
+    { 
+	    tlw->mcss_sys->tcb_load_shadow = NULL;
+    }
   }
 
 	GFL_HEAP_FreeMemory( work );

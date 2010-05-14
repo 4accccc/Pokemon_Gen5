@@ -70,6 +70,7 @@ typedef struct
 	void*											pBufPltt;			//テクスチャパレットバッファ
 	u32												chr_ofs;
 	u32												pal_ofs;
+	MCSS_SYS_WORK*						mcss_sys;
 	MCSS_WORK*								mcss;
 }TCB_LOADRESOURCE_WORK;
 
