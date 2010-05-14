@@ -1426,7 +1426,7 @@ static void _musicalNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
   if(!pWork->buttonWin[i]){
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
-      1, 8, 18, 4,
+      1, 8, 23, 4,
       _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   }
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
