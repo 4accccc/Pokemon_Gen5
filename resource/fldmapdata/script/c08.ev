@@ -178,15 +178,15 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
+	//イベント曲再生
+	_START_EVENT_BGM_EX( SEQ_BGM_E_SAGE, BGM_FADE_MIDDLE )
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
 	//カメラ操作　ゲーヂス中心に
 	_CAMERA_MOVE( 9688,0,970752,26574848,0,11436032,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	
-	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
 	//ゲーヂスの演説　
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
