@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-13T22:46:21"/>
+	<create user="ohmori" host="W00223" date="2010-05-14T11:31:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -435,12 +435,12 @@
 		<comment>ミッション画面：チュートリアル中のメッセージ</comment>
 		<language name="JPN" width="256">ミッションを　えらぶことで
 あいてを　たすけることが　できます▼
-まずは　この　なかから
+まず　はじめに　このなかから
 『サポート　ミッション』を　えらび▽
 ミッションを　かいしして　ください</language>
 		<language name="JPN_KANJI" width="256">ミッションを　選ぶことで
 相手を　助けることが　できます▼
-まずは　この　中から
+まず　はじめに　この中から
 『サポート　ミッション』を　選び▽
 ミッションを　開始して　ください</language>
 	</row>
@@ -449,11 +449,11 @@
 		<comment>ミッション画面：チュートリアル中のメッセージ</comment>
 		<language name="JPN" width="256">べつの　ミッションを
 えらんで　います▼
-『サポート　ミッション』を
+まずは　『サポート　ミッション』を
 えらんで　かいしして　ください</language>
 		<language name="JPN_KANJI" width="256">別の　ミッションを
 選んで　います▼
-『サポート　ミッション』を
+まずは　『サポート　ミッション』を
 選んで　開始して　ください</language>
 	</row>
 
