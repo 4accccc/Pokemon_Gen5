@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-11-24#$
-  $Rev: 11190 $
-  $Author: mizutani_nakaba $
+  $Date:: 2009-11-09#$
+  $Rev: 11125 $
+  $Author: okubata_ryoma $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/os.h>
@@ -261,17 +261,17 @@ static void SetISBNString(const char **isbn)
     pos[] =
     {
         {
-        80, 136, 17}
+        80, 142, 17}
         ,                              /* ISBN */
         {
-        125, 151, 12}
+        125, 157, 12}
         ,                              /* 合同登記号 */
         {
-        106, 167, 4}
-        ,                              /* 新出＊字(左) (＊はウ冠に申) */
+        106, 173, 4}
+        ,                              /* 新出音管(左) */
         {
-        139, 167, 3}
-        ,                              /* 新出＊字(右) (＊はウ冠に申) */
+        139, 173, 3}
+        ,                              /* 新出音管(右) */
     }
     ;
     const int   count = sizeof(pos) / sizeof(*pos); /* 総行数 */
@@ -327,8 +327,8 @@ static void SetISBNString(const char **isbn)
                             {
                                 char    ISBN[ 17 ] ,
                                 char    合同登記号[ 12 ] ,
-                                char    新出＊字(左)[ 4 ] , (＊はウ冠に申)
-                                char    新出＊字(右)[ 3 ]   (＊はウ冠に申)
+                                char    新出音管(左)[ 4 ] ,
+                                char    新出音管(右)[ 4 ]
                             }
 
                 param   -   ISBN 番号表示に関する動作を指定します。
