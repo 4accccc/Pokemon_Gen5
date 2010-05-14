@@ -855,6 +855,8 @@ static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
     int aMsgBuff[]={IRCBTL_STR_44};
     _msgWindowCreate(aMsgBuff, pWork);
   }
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
   PMSND_PlaySystemSE(SEQ_SE_FLD_124);
   _friendNumWindowCreate(IRCBTL_STR_35, pWork);
 
@@ -2297,10 +2299,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
     int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
     if(num1==WIFILIST_FRIEND_MAX){
       pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-
-      GFL_NET_SetAutoErrorCheck(FALSE);
-      GFL_NET_SetNoChildErrorCheck(FALSE);
-
       _CHANGE_STATE(pWork,_waitFinish);        // I‚í‚è()
       pWork->timer = _FULL_TIMER;
       return;

@@ -495,6 +495,7 @@ void NetErr_ExitNetSystem( void )
   if(GFL_NET_IsInit() )
   { 
     GFL_NET_Exit(NULL);
+    GFL_NET_IRCWIRELESS_ResetSystemError();  //ÔŠOüWIRLESSØ’f
     do{
       GFL_NET_Main();
       OS_TPrintf("GFL_NET_IsExit‚ÌŠ®—¹‚ğ‘Ò‚Á‚Ä‚¢‚Ü‚·\n");

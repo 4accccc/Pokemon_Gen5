@@ -198,6 +198,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) = _CALL_IRCBATTLE_MENU;
     break;
   case _CALL_IRCBATTLE_MENU:
+    GFL_NET_IRCWIRELESS_ResetSystemError();  //ê‘äOê¸WIRLESSêÿíf
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &IrcBattleMenuProcData, dbw);
     (*seq)++;
     break;
@@ -205,7 +206,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-
     if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
     {
       *seq = _FIELD_FADEOUT_IRCBATTLE;
@@ -495,6 +495,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_END:
+    GFL_NET_IRCWIRELESS_ResetSystemError();  //ê‘äOê¸WIRLESSêÿíf
     _battleParaFree(dbw);
     return GMEVENT_RES_FINISH;
 
