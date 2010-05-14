@@ -99,7 +99,12 @@ extern u16
 
 extern u16
 	GFL_G3D_UTIL_AddUnitResShare
-		( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_SETUP* setup );    
+		( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_SETUP* setup );
+
+extern u16
+	GFL_G3D_UTIL_AddUnitResShareByHandle
+		( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_SETUP* setup, ARCHANDLE *handle );
+    
 //--------------------------------------------------------------------------------------------
 /**
  * ƒ†ƒjƒbƒg”jŠü
