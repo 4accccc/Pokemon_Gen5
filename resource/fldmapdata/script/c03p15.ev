@@ -127,8 +127,6 @@ EVENT_END
 /**************************************************************/
 //C03P15が1の時に起動
 EVENT_START		ev_scene_c03p15_plazmaevent_01
-
-	_START_EVENT_BGM(SEQ_BGM_E_PLASMA)
 	
 	//アーティが自機に気付く
 	_OBJ_ANIME( C03P15_LEADER3_01, anm_leader3_kiduku )
@@ -207,13 +205,17 @@ EVENT_START		ev_scene_c03p15_plazmaevent_01
 	
 	_BALLOONWIN_OBJMSG( msg_c03p15_leader3_07 , C03P15_LEADER3_01 )
 	_MSGWIN_CLOSE()
-
+	
+	//プラズマ団のBGMスタート
+	_START_EVENT_BGM(SEQ_BGM_E_PLASMA)
+	
 	//階段SE
+	_TIME_WAIT(8)
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	//プラズマ団登場
 	_TIME_WAIT(8)
 	_OBJ_ADD_EX( 15,0,DIR_DOWN,MMDL_ID_EVENTOBJ_00,HAKAIW,MV_DMY )
-	
+
 	//プラズマ団：数歩移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_plazma_come )
 	_OBJ_ANIME_WAIT()
@@ -238,7 +240,10 @@ EVENT_START		ev_scene_c03p15_plazmaevent_01
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
-
+	
+	//BGMのエンド
+	_END_EVENT_BGM()
+	
 	//アーティ：自機の真横に移動
 	_OBJ_ANIME( C03P15_LEADER3_01, anm_leader3_mayoko )
 	_OBJ_ANIME_WAIT()
@@ -284,8 +289,6 @@ EVENT_START		ev_scene_c03p15_plazmaevent_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
-
-	_END_EVENT_BGM()
 	
 	//========================================/
 	
