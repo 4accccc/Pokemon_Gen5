@@ -53,6 +53,7 @@ typedef struct {
   u16   hp;
   u16   item;
   u16   usedItem;
+  u16   defaultTokusei;
   u8    myID;
   u8    defaultFormNo;
   u8    fHensin     : 1;
@@ -216,6 +217,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.fFakeEnable = NULL;
   bpp->coreParam.fBtlIn = NULL;
   bpp->coreParam.defaultFormNo = PP_Get( pp, ID_PARA_form_no, NULL );
+  bpp->coreParam.defaultTokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 
   setupBySrcData( bpp, pp, TRUE );
 
@@ -2024,6 +2026,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
     bpp->coreParam.fFakeEnable = TRUE;
   }
   bpp->formNo = bpp->coreParam.defaultFormNo;
+  bpp->tokusei = bpp->coreParam.defaultTokusei;
 }
 //=============================================================================================
 /**
@@ -2050,8 +2053,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
     bpp->coreParam.fFakeEnable = TRUE;
   }
   bpp->formNo = bpp->coreParam.defaultFormNo;
-
-
+  bpp->tokusei = bpp->coreParam.defaultTokusei;
 }
 //=============================================================================================
 /**
