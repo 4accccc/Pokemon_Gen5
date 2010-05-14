@@ -51,7 +51,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		//マップ遷移後のフェード明け
 		_MAP_FADE_BLACK_IN_SLOW()
 		_MAP_FADE_END_CHECK()
-				
+			
 		_PLAYER_NAME(0)
 		//博士が喋る
 		//博士（父）：『まさか……	
@@ -233,7 +233,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	$WK_SCENE_D03R0101 = 1
 
 	//========================================//
-	
+
 EVENT_END
 
 //--------------------------------------------------------------------

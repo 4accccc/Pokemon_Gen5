@@ -167,27 +167,29 @@ EVENT_START    ev_pos_d08R0901_boss_01
 
 	//バージョンによって、復活するポケモンを変更する
 	DEFINE_LOCAL	LCWK_VERSION
+	DEFINE_LOCAL	LWK_DIR
+	
 	_GET_ROM_VERSION(LCWK_VERSION)
+	_PLAYER_DIR_GET(LWK_DIR)
 	
 	//ROMによって、復活するポケモンを変更する
 	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00,SHIN_A, MV_DMY )
+		_OBJ_ADD_EX( 16, 9, DIR_DOWN, MMDL_ID_EVENTOBJ_00,SHIN_A, MV_DMY )
 	ELSE
-		_OBJ_ADD_EX( 16, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00,MU_A, MV_DMY )
+		_OBJ_ADD_EX( 16, 9, DIR_DOWN, MMDL_ID_EVENTOBJ_00,MU_A, MV_DMY )
 	ENDIF
 	
 	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
 	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_gyoe)
+	_OBJ_ANIME_WAIT()
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	//カメラ操作
-	_CAMERA_MOVE(9694,0,970795,1081344,0,1212416,60 )
-	_TIME_WAIT(32)
-	
-	//主人公がNに近寄る
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_01)
-	_TIME_WAIT(24)
+	_CAMERA_MOVE(9688,0,970752,1081344,0,1146880,82 )
+	_TIME_WAIT(78)
 	
 	//デモを呼ぶ
 	_DEMO_FADEOUT_BLACK_CALL()
@@ -210,6 +212,9 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	_CAMERA_MOVE(9694,0,970795,1081344,0,1081344,1 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//シンムの場所を動かす
+	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,16,0,10,DIR_DOWN)
 	
 	//フェードインでフィールドに戻る
 	_DEMO_FADEIN_BLACK_CALL()
@@ -340,12 +345,15 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_MSGWIN_CLOSE()
 
 	//画面暗転処理
-	_TIME_WAIT(4)
-	_MAP_FADE_BLACK_OUT_SLOW()
-	_OBJ_ANIME(D08R0901_LEADER7_01,anm_leader7_idou_02)
 	_TIME_WAIT(8)
+	_OBJ_ANIME(D08R0901_LEADER7_01,anm_leader7_idou_02)
 	_OBJ_ANIME(D08R0901_RIVEL_01,anm_raival_idou_02)
+	_TIME_WAIT(4)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_02)
+	_TIME_WAIT(8)
+	
+	_MAP_FADE_BLACK_OUT_SLOW()
+
 
 	_MAP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
@@ -373,7 +381,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//========================================//
 	
-
 	//画面遷移後、イベントが自動で始まるようにセット
 	_RESERVE_SCRIPT( SCRID_RESERVE_D08_HAKASE1_01 )
 	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)
@@ -398,7 +405,7 @@ _ANIME_LABEL	anm_player_idou_01
 
 _ANIME_LABEL	anm_player_idou_02
 	
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -411,8 +418,8 @@ _ANIME_LABEL	anm_raival_idou_01
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_raival_idou_02
-
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -426,7 +433,7 @@ _ANIME_LABEL	anm_leader7_idou_01
 
 _ANIME_LABEL	anm_leader7_idou_02
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -449,7 +456,8 @@ _ANIME_LABEL	anm_poke_idou_02
 //--------------------------------------------------------------------
 //共通スクリプト：びっくりする                  
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
+_ANIME_LABEL	anm_player_gyoe
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
