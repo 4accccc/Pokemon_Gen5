@@ -4509,10 +4509,18 @@ static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_MESSAGE* param;
+    u16 tokID = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    u16 strID;
+
+    if( (tokID == POKETOKUSEI_TAABOBUREIZU) || (tokID == POKETOKUSEI_TERABORUTEEZI) ){
+      strID = BTL_STRID_SET_TurboBraze;
+    }else{
+      strID = BTL_STRID_SET_Katayaburi;
+    }
 
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Katayaburi );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
     HANDEX_STR_AddArg( &param->str, pokeID );
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }
