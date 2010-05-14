@@ -14,8 +14,6 @@
 #include "arc/arc_def.h"
 #include "arc/fieldmap/area_id.h"
 
-#include "arc/fieldmap/area_map_ita.naix"
-#include "arc/fieldmap/area_map_itp.naix"
 
 #ifdef  PM_DEBUG
 //#define DEBUG_DUMP_AREADATA_INFO

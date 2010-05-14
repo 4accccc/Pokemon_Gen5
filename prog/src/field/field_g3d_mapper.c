@@ -1756,7 +1756,6 @@ static FIELD_GRANM * createGroundAnime( u32 blockNum, GFL_G3D_RES* globalTexture
     0,
     ARCID_AREA_ITA, 0,
     ARCID_AREA_ITP_TBL, 0, 
-    ARCID_AREA_ITP, ARCID_AREA_ITP_TEX,
   };
 
   //  ÉuÉçÉbÉNêî

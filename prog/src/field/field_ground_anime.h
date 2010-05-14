@@ -50,8 +50,6 @@ typedef struct {
 	u16 ita_dataID;
 	u16 itp_arcID;			// itpアニメーション　テーブルデータ
 	u16 itp_tblID;
-	u16 itp_itparcID;		// itpアニメーション　アニメデータ
-	u16 itp_texarcID;		// itpアニメーション　テクスチャデータ
 } FIELD_GRANM_SETUP;
 
 

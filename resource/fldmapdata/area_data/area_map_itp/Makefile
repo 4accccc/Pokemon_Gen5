@@ -125,20 +125,10 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc $(TARGETDIR)/$(targetname3).narc
+do-build:	subdir $(targetname).narc $(targetname2).narc $(TARGETDIR)/$(targetname3).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
-
-# narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR)
-
-# narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
-	$(COPY) $(targetname2).narc $(TARGETDIR)
-	$(COPY) $(targetname2).naix $(TARGETDIR)
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname3).narc: $(targetname3).narc
@@ -177,10 +167,6 @@ $(targetname3).narc: $(OBJ_FILE3)
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
-	rm -f $(TARGETDIR)/$(targetname2).narc
-	rm -f $(TARGETDIR)/$(targetname2).naix
 	rm -f $(TARGETDIR)/$(targetname3).narc
 	rm -f $(TARGETDIR)/$(targetname3).naix
 	rm -f $(targetname).narc

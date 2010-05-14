@@ -59,7 +59,7 @@ foreach $one ( @CSVFILE ){
     $ITP_DATA[ $datacount ] = $line[1];
     $TEX_DATA[ $datacount ] = $line[2];
 
-    if( ($ITP_DATA[ $datacount ] eq "none") || ($TEX_DATA[ $datacount ] eq "none") )
+    if( ("".$ITP_DATA[ $datacount ] eq "none") || ("".$TEX_DATA[ $datacount ] eq "none") )
     {
       $ITP_DATA[ $datacount ] = $ITP_DATA_NONE;
       $TEX_DATA[ $datacount ] = $ITP_DATA_NONE;
@@ -67,37 +67,59 @@ foreach $one ( @CSVFILE ){
     else
     {
       #.を_に変換
-      $ITP_DATA[ $datacount ] =~ s/\.itp/_itpdat/;
-      $TEX_DATA[ $datacount ] =~ s/\.imd/_nsbtx/;
+      $ITP_DATA[ $datacount ] =~ s/\.itp/\.itpdat/;
+      $TEX_DATA[ $datacount ] =~ s/\.imd/\.nsbtx/;
 
       #naixから数字に変換
-      $ITP_DATA[ $datacount ] = &getItpNaix( $ITP_DATA[ $datacount ] );
-      $TEX_DATA[ $datacount ] = &getTexNaix( $TEX_DATA[ $datacount ] );
+      #binaryをまとめて出力する形に変更
+      #$ITP_DATA[ $datacount ] = &getItpNaix( $ITP_DATA[ $datacount ] );
+      #$TEX_DATA[ $datacount ] = &getTexNaix( $TEX_DATA[ $datacount ] );
+      $datacount ++;
     }
     
-    $datacount ++;
   }  
 }
 
 
 #出力
+$offset = 0;
 open( FILE, ">".$ARGV[1] );
 binmode( FILE );
 
-for( $i=0; $i<$ITP_DATA_MAX; $i++ ){
-  if(@ITP_DATA > $i){
-  	print( FILE pack( "C", $ITP_DATA[ $i ]) );
-  }else{
-  	print( FILE pack( "C", $ITP_DATA_NONE) );
-  }
-}
+syswrite( FILE, pack( "I", $datacount ), 4  );
+$offset = 4 + 4 + (($datacount*4)*2);
 
-for( $i=0; $i<$ITP_DATA_MAX; $i++ ){
-  if(@TEX_DATA > $i){
-  	print( FILE pack( "C", $TEX_DATA[ $i ]) );
-  }else{
-  	print( FILE pack( "C", $ITP_DATA_NONE) );
-  }
+#全ファイルのオフセット
+for( $i=0; $i<$datacount; $i++ ){
+  $filesize = -s $ITP_DATA[ $i ];
+  print( "filesize $filesize\n" );
+  print( "offset $offset\n" );
+	syswrite( FILE, pack( "I", $offset ), 4  );
+  $offset += $filesize;
+
+  $filesize = -s $TEX_DATA[ $i ];
+  print( "filesize $filesize\n" );
+  print( "offset $offset\n" );
+	syswrite( FILE, pack( "I", $offset ), 4  );
+  $offset += $filesize;
+}
+syswrite( FILE, pack( "I", $offset ), 4  );
+
+for( $i=0; $i<$datacount; $i++ ){
+
+  $filesize = -s $ITP_DATA[ $i ];
+  open( FILEIN, $ITP_DATA[ $i ] );
+  binmode( FILEIN );
+  read( FILEIN, $data, $filesize );
+	syswrite( FILE, $data, $filesize  );
+  close( FILEIN );
+
+  $filesize = -s $TEX_DATA[ $i ];
+  open( FILEIN, $TEX_DATA[ $i ] );
+  binmode( FILEIN );
+  read( FILEIN, $data, $filesize );
+	syswrite( FILE, $data, $filesize  );
+  close( FILEIN );
 }
 
 close( FILE );

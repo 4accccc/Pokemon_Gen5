@@ -132,8 +132,6 @@
   ARCID_MUSICAL_DEBUG "mus_debug.narc"  #ミュージカルデバッグ用（デバッグ）
   ARCID_ELBOARD_TEST  "elboard_test.narc" #電光掲示板（テスト）
   ARCID_AREA_ITA        "fieldmap/area_map_ita.narc"  #エリア地面アニメーションデータ
-  ARCID_AREA_ITP        "fieldmap/area_map_itp.narc"  #エリア地面アニメーションデータ
-  ARCID_AREA_ITP_TEX    "fieldmap/area_map_itp_tex.narc"  #エリア地面アニメーションデータ
   ARCID_AREA_ITP_TBL    "fieldmap/area_map_itp_tbl.narc"  #エリア地面アニメーションデータ
   ARCID_FIELD_MENU    "field_menu.narc" #フィールドメニュー
   ARCID_TRFGRA  "trgra/trfgra.narc" #トレーナーグラフィック（正面）

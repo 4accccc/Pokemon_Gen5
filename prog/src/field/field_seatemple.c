@@ -22,6 +22,12 @@
 
 #include "arc/fieldmap/field_sea_temple.naix"
 
+#ifdef PM_DEBUG
+
+//#define DEBUG_SEATEMPLE_DRAW_HAICHI
+
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -129,7 +135,7 @@ typedef struct {
   // 表示オブジェ
   GFL_G3D_OBJ* p_obj[MODEL_MODEL_MAX];
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_SEATEMPLE_DRAW_HAICHI
   u8 DEBUG_print_haichi;
 #endif
 
@@ -234,7 +240,7 @@ static void SEATEMPLE_Create(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
 
   GFL_ARC_CloseDataHandle( p_handle );
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_SEATEMPLE_DRAW_HAICHI
   p_wk->DEBUG_print_haichi = TRUE;
 #endif
 }
@@ -299,7 +305,7 @@ static void SEATEMPLE_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_B ], MODEL_ANIME_OBON_B, FX32_ONE );
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_C ], MODEL_ANIME_OBON_C, FX32_ONE );
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_SEATEMPLE_DRAW_HAICHI
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
   {
     if(p_wk->DEBUG_print_haichi){
@@ -320,7 +326,7 @@ static void SEATEMPLE_3DWrite(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldm
 {
   SEATEMPLE_WK* p_wk = p_work;
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_SEATEMPLE_DRAW_HAICHI
   if( p_wk->DEBUG_print_haichi )
 #endif
   {

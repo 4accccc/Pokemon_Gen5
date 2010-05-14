@@ -41,7 +41,7 @@
 
 #ifdef PM_DEBUG
 
-#define DEBUG_FRAME_CONTROL // フレームのコマ送りなどを行う
+//#define DEBUG_FRAME_CONTROL // フレームのコマ送りなどを行う
 
 #endif
 
