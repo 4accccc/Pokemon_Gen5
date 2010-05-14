@@ -1,6 +1,9 @@
 "g3d/intro_bg.nsbca"
 "g3d/intro_bg.nsbma"
 "g3d/intro_bg.nsbmd"
+"g3d/intro_bg_b.nsbca"
+"g3d/intro_bg_b.nsbma"
+"g3d/intro_bg_b.nsbmd"
 "intro_bg.NCGR"
 "intro_bg.NCLR"
 "intro_bg_main.NSCR"
@@ -31,4 +34,3 @@
 "mcss/intro_doctor.NCLR"
 "mcss/intro_doctor.NMAR"
 "mcss/intro_doctor.NMCR"
-
