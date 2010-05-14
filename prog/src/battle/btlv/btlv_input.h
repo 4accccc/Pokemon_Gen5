@@ -40,6 +40,7 @@ F:ローカライズ用予約
 */
 
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
+typedef void  (BTLV_INPUT_TCB_CALLBACK_FUNC)( GFL_TCB* tcb );
 
 ///技選択画面構成用のデータ
 typedef struct{
