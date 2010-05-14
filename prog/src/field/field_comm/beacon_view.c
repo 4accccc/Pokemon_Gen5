@@ -42,6 +42,7 @@
 typedef enum{
   EVWAIT_MENU_ANM,
   EVWAIT_TCB_ANM,
+  EVWAIT_TMENU_ANM,
 }EVWAIT_TYPE;
 
 typedef struct _EVWK_EVENT_START{
@@ -223,9 +224,11 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   if( wk->event_id != EV_NONE ){
     if(!bActive){
       //リクエストを強制破棄
+#if 0
       if( wk->event_id == EV_GPOWER_USE ){
         wk->ctrl.g_power = GPOWER_ID_NULL;
       }
+#endif
       BEACON_VIEW_SUB_EventReserveReset( wk );
     }
     return; //イベントリクエスト中はメイン処理をスキップ
@@ -342,11 +345,18 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     event = event_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
     break;
   case EV_GPOWER_USE:
-    event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
+    call_event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
+    event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_YES].work) );
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
-  case EV_GPOWER_CHECK:
-    event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
+  case EV_GPOWER_CHECK_TMENU_YN:
+    call_event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
+    event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_CHECK].work) );
+    break;
+  case EV_GPOWER_CHECK_TMENU_CHK:
+    call_event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
+    event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu_check[TMENU_CHECK_CALL].work) );
+    wk->gpower_check_req = FALSE;
     break;
   case EV_CALL_TALKMSG_INPUT:
     call_event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
@@ -399,6 +409,7 @@ void BEACON_VIEW_SUB_EventReserveReset( BEACON_VIEW_PTR wk )
 static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * work);
 static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
 static BOOL evsub_WaitTypeTcb( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
+static BOOL evsub_WaitTypeTMenuAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
 
 /*
  *  @brief  各種イベント起動前に、アニメなどの待ちをするためのイベント
@@ -437,13 +448,15 @@ static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * w
   case EVWAIT_TCB_ANM:
     ret = evsub_WaitTypeTcb( wk, ev_wk );
     break;
+  case EVWAIT_TMENU_ANM:
+    ret = evsub_WaitTypeTMenuAnm( wk, ev_wk );
+    break;
   }
   if( ret ){
     wk->event_reserve_f = FALSE;
     GMEVENT_ChangeEvent( event, ev_wk->call_event );
   }
   return GMEVENT_RES_CONTINUE;
-//  return GMEVENT_RES_FINISH;
 }
 
 static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
@@ -464,7 +477,29 @@ static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk
 
 static BOOL evsub_WaitTypeTcb( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
 {
+  GFL_TCBL_Main( wk->pTcbSys );
   return (wk->eff_task_ct == 0 );
+}
+
+static BOOL evsub_WaitTypeTMenuAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
+{
+  APP_TASKMENU_WIN_WORK *tmenu_work = (APP_TASKMENU_WIN_WORK*)ev_wk->param;   
+
+  switch(ev_wk->sub_seq){
+  case 0:
+    APP_TASKMENU_WIN_SetDecide( tmenu_work, TRUE );
+    ev_wk->sub_seq++;
+    break;
+  case 1:
+    APP_TASKMENU_WIN_Update( tmenu_work );
+
+    if( APP_TASKMENU_WIN_IsFinish( tmenu_work )){
+      APP_TASKMENU_WIN_ResetDecide( tmenu_work );
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -537,9 +572,11 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
   if( wk->eff_task_ct ){
     return SEQ_VIEW_UPDATE;
   }
+#if 0
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
     BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_USE );
   }
+#endif
   BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
   BeaconView_UpDownViewSet( wk );
   return SEQ_MAIN;
@@ -592,12 +629,14 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
     return SEQ_GPOWER_USE;
   }
   wk->sub_seq = 0;
+#if 0
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
     BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_USE );
   }else if( wk->gpower_check_req ){
     BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_CHECK );
     wk->gpower_check_req = FALSE;
   }
+#endif
   return SEQ_MAIN;
 }
 
@@ -743,7 +782,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
 #ifdef DEBUG_ONLY_FOR_iwasawa
-//    wk->my_data.power = 1;
+    wk->my_data.power = 1;
 #endif
     wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }

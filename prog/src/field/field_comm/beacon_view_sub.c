@@ -192,7 +192,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     wk->ctrl.target = ret;
     effReq_SetPanelFlash( wk, ret );
-    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_CHECK );
+    BEACON_VIEW_SUB_EventReserve( wk, EV_CALL_DETAIL_VIEW );
     return SEQ_MAIN;
 //    return SEQ_CALL_DETAIL_VIEW;
   }
@@ -1034,10 +1034,10 @@ static int tmenu_Update( BEACON_VIEW_PTR wk,u8 menu_idx )
 
   for( i = 0;i < max;i++){
     if( APP_TASKMENU_WIN_IsTrg( tmenu[i].work )){
-      APP_TASKMENU_WIN_SetDecide( tmenu[i].work, TRUE );
       if(i < (max-1)){
         sub_PlaySE( BVIEW_SE_DECIDE );
       }else{
+        APP_TASKMENU_WIN_SetDecide( tmenu[i].work, TRUE );
         sub_PlaySE( BVIEW_SE_CANCEL );
       }
       ret = i;
@@ -1057,10 +1057,12 @@ static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 select )
   APP_TASKMENU_WIN_Update( wk->tmenu[select].work );
 
   if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[select].work )){
+#if 0
     if( select == TMENU_YN_CHECK ){
       APP_TASKMENU_WIN_ResetDecide( wk->tmenu[select].work );
       return TRUE;  //<確認>を選んだ場合消さないでリセット
     }
+#endif
     for( i = 0;i < TMENU_YN_MAX;i++){
       APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
       wk->tmenu[i].work = NULL;
@@ -1068,6 +1070,19 @@ static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 select )
     return TRUE;
   }
   return FALSE;
+}
+
+/*
+ *  @brief  TaskMenu 終了
+ */
+static void tmenu_YnEnd( BEACON_VIEW_PTR wk )
+{
+  int i;
+
+  for( i = 0;i < TMENU_YN_MAX;i++){
+    APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
+    wk->tmenu[i].work = NULL;
+  }
 }
 
 /*
@@ -1089,6 +1104,18 @@ static BOOL tmenu_CheckEndWait( BEACON_VIEW_PTR wk, u8 select )
   return FALSE;
 }
 
+/*
+ *  @brief  TaskMenu 終了
+ */
+static void tmenu_CheckEnd( BEACON_VIEW_PTR wk )
+{
+  int i;
+
+  for( i = 0;i < TMENU_CHECK_MAX;i++){
+    APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
+    wk->tmenu_check[i].work = NULL;
+  }
+}
 
 //==================================================================
 /**
@@ -2065,40 +2092,43 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
         return;
       }
       twk->ret = ret;
-      twk->seq++;
+
+      switch( twk->ret){
+      case TMENU_YN_CHECK:
+        BEACON_VIEW_SUB_EventReserve( bvp, EV_GPOWER_CHECK_TMENU_YN );
+        twk->seq = 3;
+        break;
+      case TMENU_YN_YES:
+        //使うGパワーを覚えておく
+        bvp->ctrl.g_power = twk->g_power;
+        BEACON_VIEW_SUB_EventReserve( bvp, EV_GPOWER_USE );
+        twk->seq = 4;
+        break;
+      case TMENU_YN_NO:
+        twk->seq = 5;
+        break;
+      }
     }
     return;
-  case 4: //決定アニメ待ち
-    if( !tmenu_YnEndWait( bvp, twk->ret )){
-      return;
-    }
-
-    switch( twk->ret ){
-    case TMENU_YN_CHECK:
-      BEACON_VIEW_SUB_EventReserve( bvp, EV_GPOWER_CHECK );
+  case 4: //使うイベント待ち
+    if( bvp->ctrl.g_power != GPOWER_ID_NULL ) {
+      //途中キャンセルされていたら、選択しなおし
+      bvp->ctrl.g_power = GPOWER_ID_NULL;
       twk->seq = 3;
-      return;
-    case TMENU_YN_NO:
+    }else{
+      //正常に使えていれば、メニューを終了させる
+      tmenu_YnEnd( bvp );
       twk->seq = 6;
-      break;
-    case TMENU_YN_YES:
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use_end );
-      print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
-
-      //使うGパワーを覚えておく
-      bvp->ctrl.g_power = twk->g_power;
-      twk->seq++;
-      break;
     }
-    draw_MenuWindow( bvp, msg_sys_now_record );
-    obj_MenuIconVisibleSet( bvp, TRUE );
     return;
-  case 5:
-    if( print_PopupWindowTimeWaitCheck( &twk->wait ) ){
+  case 5: //キャンセル決定アニメ待ち
+    if( tmenu_YnEndWait( bvp, twk->ret )){
       twk->seq++;
     }
     return;
   case 6:
+    draw_MenuWindow( bvp, msg_sys_now_record );
+    obj_MenuIconVisibleSet( bvp, TRUE );
     taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
     twk->seq++;
     return;
@@ -2151,13 +2181,29 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
         return;
       }
       twk->ret = ret;
+      if(twk->ret == TMENU_CHECK_CALL){
+        BEACON_VIEW_SUB_EventReserve( bvp, EV_GPOWER_CHECK_TMENU_CHK );
+        bvp->gpower_check_req = TRUE;
+        twk->seq = 5;
+      }else{
+        twk->seq = 6;
+      }
+    }
+    return;
+  case 5: //イベントが実行されたかチェック
+    if( bvp->gpower_check_req ){
+      twk->seq = 4; //途中キャンセルされていたら、選択しなおし
+    }else{
+      tmenu_CheckEnd( bvp );
+      twk->seq = 7; //実行されていればメニュー削除
+    }
+    return;
+  case 6: //決定アニメ待ち
+    if( tmenu_CheckEndWait( bvp, twk->ret )){
       twk->seq++;
     }
     return;
-  case 5: //決定アニメ待ち
-    if( !tmenu_CheckEndWait( bvp, twk->ret )){
-      return;
-    }
+  case 7:
     draw_MenuWindow( bvp, msg_sys_now_record );
     obj_MenuIconVisibleSet( bvp, TRUE );
     taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
@@ -2167,7 +2213,7 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     //終了
     break;
   }
-  bvp->gpower_check_req = ( twk->ret == TMENU_CHECK_CALL );
+//  bvp->gpower_check_req = ( twk->ret == TMENU_CHECK_CALL );
   BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
   
   --(*twk->task_ct);
