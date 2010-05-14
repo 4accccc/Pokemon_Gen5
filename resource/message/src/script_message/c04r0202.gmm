@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-05-03T15:34:28"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-05-14T12:23:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -369,7 +369,7 @@
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員70点以上</attribute>
-		<language name="JPN" width="256">いやあ　おつかれさまです！▼
+		<language name="JPN" width="256">いやー　おつかれさまです！▼
 ポケモンたちの　いきが
 みごとなまでに　ピッタリでしたね！▼
 オーナーの　わたしですら
@@ -380,7 +380,7 @@
 おたよりも　たくさん　きています！▼
 みなさんへの　おたよりも　あるので
 じゅんばんに　おわたししましょう！▼</language>
-		<language name="JPN_KANJI" width="256">いやあ　おつかれさまです！▼
+		<language name="JPN_KANJI" width="256">いやー　おつかれさまです！▼
 ポケモンたちの　息が
 見事なまでに　ピッタリでしたよ！▼
 オーナーの　私ですら
@@ -401,7 +401,7 @@
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員30点以上</attribute>
-		<language name="JPN" width="256">ううむ　おつかれさまです！▼
+		<language name="JPN" width="256">うーむ　おつかれさまです！▼
 とても　すばらしい
 ミュージカル　でしたねえ！▼
 その　しょうこに　ほら
@@ -409,7 +409,7 @@
 おたよりを　あずかっています！▼
 いやー　うれしいですねえ
 じゅんばんに　おわたししましょう！▼</language>
-		<language name="JPN_KANJI" width="256">ううむ　おつかれさまです！▼
+		<language name="JPN_KANJI" width="256">うーむ　おつかれさまです！▼
 とても　素晴らしい
 ミュージカル　でしたねえ！▼
 その　証拠に　ほら
@@ -434,7 +434,7 @@
 おたよりを　あずかりましたよ！▼
 いやー　うれしいですねえ
 じゅんばんに　おわたししましょう！▼</language>
-		<language name="JPN_KANJI" width="256">ふーむ　おつかれさまです！▼
+		<language name="JPN_KANJI" width="256">おつかれさまです！▼
 なかなか　みごたえのある
 ミュージカル　でしたねえ！▼
 お客さんから　みなさんあてに
@@ -460,7 +460,7 @@
 おたよりを　もらいましたよ！▼
 いやー　うれしいですねえ
 じゅんばんに　おわたししましょう！▼</language>
-		<language name="JPN_KANJI" width="256">ふーむ　おつかれさまです！▼
+		<language name="JPN_KANJI" width="256">おつかれさまです！▼
 一部で　すごく　盛り上がりのある
 ミュージカル　でしたねえ▼
 ところで　演目を　みていた
