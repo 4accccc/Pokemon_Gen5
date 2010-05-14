@@ -178,7 +178,7 @@ struct _FIELD_MENU_WORK
   u8  menuType;
   BOOL isUpdateCursor;
   BOOL isCancel;
-  BOOL isDispCursor;
+  BOOL isDispCursor;  // カーソルの表示・非表示(TRUE:表示　FALSE非表示）
   int  funcType;      // 決定した機能
   FIELD_MENU_ICON icon[FIELD_MENU_ITEM_NUM];
   FIELD_MENU_ICON *activeIcon; //参照中のアイコン
@@ -305,8 +305,8 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   
   work->cursorPosX = 0;
   work->cursorPosY = 0;
-  work->isUpdateCursor = FALSE;
-  work->isDispCursor = FALSE;
+  work->isDispCursor   = GFL_UI_CheckTouchOrKey()^1;
+  work->isUpdateCursor = work->isDispCursor;
   work->activeIcon = NULL;
   work->vBlankTcb = GFUser_VIntr_CreateTCB( FIELD_MENU_VBlankTCB , (void*)work , 0 );
   
@@ -323,9 +323,11 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   FIELD_MENU_InitIcon( work , arcHandle, menuType);
   GFL_ARC_CloseDataHandle(arcHandle);
 
+  OS_Printf("KEY TOUCH MODE = %d\n", GFL_UI_CheckTouchOrKey());
 
   GFL_BG_SetVisible( FIELD_MENU_BG_PLATE_M, VISIBLE_ON );
   
+  // スクロールインか？
   if( isScrollIn == TRUE )
   {
     work->cursorPosX = 0;
@@ -755,9 +757,12 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                           work->heapId );
     GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor, FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor, TRUE );
-    GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
     GFL_CLACT_WK_SetBgPri( work->cellCursor, 2 );
-    
+    if(work->isDispCursor){
+      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+    }else{
+      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
+    }
     //タッチバーの「×」
     cellInitData.pos_x = 224;
     cellInitData.pos_y = 168;
@@ -986,7 +991,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
       }
       else
       {
-        //TODO 念のため名前が入ってないときに落ちないようにしておく
+        //念のため名前が入ってないときに落ちないようにしておく
         u16 tempName[7] = { L'N',L'o',L'N',L'a',L'm',L'e',0xFFFF };
         GFL_STR_SetStringCode( initWork.str , tempName );
       }
@@ -1153,7 +1158,7 @@ void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYP
         work->cursorPosX = i%2;
         work->cursorPosY = i/2;
         work->isUpdateCursor = TRUE;
-        FIELD_MENU_UpdateCursor( work );
+//        FIELD_MENU_UpdateCursor( work );
         
         //FIXME 今はメニューで仮のものがあり、再起動がかからないので
         //ステータスを初期に戻す処理で対応
@@ -1425,6 +1430,13 @@ static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief カーソル更新処理
+ *
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
 static void  FIELD_MENU_UpdateCursor( FIELD_MENU_WORK* work )
 {
   if( work->isUpdateCursor == TRUE )

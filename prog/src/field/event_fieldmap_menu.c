@@ -53,11 +53,11 @@ typedef enum
   FMENUSTATE_EXIT_MENU,
   FMENUSTATE_USE_SKILL,
 
-	FMENUSTATE_CALL_PROC,
-	FMENUSTATE_RETURN_PROC,
+  FMENUSTATE_CALL_PROC,
+  FMENUSTATE_RETURN_PROC,
 
-	FMENUSTATE_USE_ITEM,
-	FMENUSTATE_RETURN_ITEM,
+  FMENUSTATE_USE_ITEM,
+  FMENUSTATE_RETURN_ITEM,
   
 }FMENU_STATE;
 
@@ -76,12 +76,12 @@ struct _TAG_FMENU_EVENT_WORK
   GMEVENT *gmEvent;
   GAMESYS_WORK *gmSys;
   FIELDMAP_WORK *fieldWork;
-	FIELD_MENU_ITEM_TYPE	item_type;
+  FIELD_MENU_ITEM_TYPE  item_type;
   FMENU_STATE state;
   
   FIELD_SUBSCREEN_MODE return_subscreen_mode;
 
-	EVENT_PROCLINK_PARAM	link;	//プロセスリンク情報
+  EVENT_PROCLINK_PARAM  link; //プロセスリンク情報
   
 };
 
@@ -125,13 +125,13 @@ GMEVENT * EVENT_FieldMapMenu(
   mwk->heapID = heapID;
   mwk->state = FMENUSTATE_INIT;
 
-	mwk->link.gsys			= gsys;
-	mwk->link.field_wk	= fieldWork;
-	mwk->link.event			= event;
-	mwk->link.open_func		= FldMapMenu_Open_Callback;
-	mwk->link.close_func	= FldMapMenu_Close_Callback;
-	mwk->link.wk_adrs		= mwk;
-	mwk->link.data			= EVENT_PROCLINK_DATA_NONE;
+  mwk->link.gsys      = gsys;
+  mwk->link.field_wk  = fieldWork;
+  mwk->link.event     = event;
+  mwk->link.open_func   = FldMapMenu_Open_Callback;
+  mwk->link.close_func  = FldMapMenu_Close_Callback;
+  mwk->link.wk_adrs   = mwk;
+  mwk->link.data      = EVENT_PROCLINK_DATA_NONE;
 
   switch(FIELD_SUBSCREEN_GetMode(subscreen)){
   case FIELD_SUBSCREEN_INTRUDE:
@@ -143,6 +143,9 @@ GMEVENT * EVENT_FieldMapMenu(
   default:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
   }
+
+  // Xボタンで開始しているが、タッチ開始時のようにカーソルは出さない
+  GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
   return event;
 }
@@ -190,9 +193,9 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   FMENU_EVENT_WORK *mwk = wk;
   switch (mwk->state) 
   {
-		//-------------------------------------
-		///		メニュー制御
-		//=====================================
+    //-------------------------------------
+    ///   メニュー制御
+    //=====================================
   case FMENUSTATE_INIT:
     if( FIELD_SUBSCREEN_CanChange( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) ) == TRUE )
     {
@@ -237,10 +240,10 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       const FIELD_MENU_ITEM_TYPE type = FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
       GAMEDATA_SetSubScreenType( gameData , type );
 
-			mwk->item_type	= FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
+      mwk->item_type  = FIELD_SUBSCREEN_GetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) );
 
-			mwk->link.call	= FldMapGetProclinkToMenuItem( type );
-			mwk->state			= FMENUSTATE_CALL_PROC;
+      mwk->link.call  = FldMapGetProclinkToMenuItem( type );
+      mwk->state      = FMENUSTATE_CALL_PROC;
      }
     break;
     
@@ -248,189 +251,189 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     {
       MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
       MMDLSYS_ClearPauseMoveProc( fldMdlSys );
-			//Exitの場合はCallbackの中で戻されるので行わない
-			if( mwk->link.result != EVENT_PROCLINK_RESULT_EXIT
+      //Exitの場合はCallbackの中で戻されるので行わない
+      if( mwk->link.result != EVENT_PROCLINK_RESULT_EXIT
        && mwk->link.result != EVENT_PROCLINK_RESULT_DOWSINGMACHINE ) // DOWSINGMACHINEの場合もCallbackの中で変えられるので行わない
-			{	
-				FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
-			}
-			return( GMEVENT_RES_FINISH );
+      { 
+        FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
+      }
+      return( GMEVENT_RES_FINISH );
     }
     break;
 
-		//-------------------------------------
-		///		フィールド技使用
-		//=====================================
+    //-------------------------------------
+    ///   フィールド技使用
+    //=====================================
   case FMENUSTATE_USE_SKILL:
     {
       FLDSKILL_CHECK_WORK skillCheckWork;
       FLDSKILL_USE_HEADER skillUseWork;
       GMEVENT *event;
 
-			//フィールド復帰
-			{
-				MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
-				MMDLSYS_ClearPauseMoveProc( fldMdlSys );
-			}
-
-			//技使用
-		  FLDSKILL_InitCheckWork( GAMESYSTEM_GetFieldMapWork(mwk->gmSys), &skillCheckWork ); //再初期化
-			FLDSKILL_InitUseHeader( &skillUseWork , mwk->link.select_poke, mwk->link.select_param, mwk->link.zoneID);
-
-			event = FLDSKILL_UseSkill( mwk->link.select_param, &skillUseWork , &skillCheckWork );
-      if( event == NULL ){  //起動エラーチェック
-			  return( GMEVENT_RES_FINISH ); //なにもしないで終わる
+      //フィールド復帰
+      {
+        MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
+        MMDLSYS_ClearPauseMoveProc( fldMdlSys );
       }
-			GMEVENT_ChangeEvent(mwk->gmEvent , event);
+
+      //技使用
+      FLDSKILL_InitCheckWork( GAMESYSTEM_GetFieldMapWork(mwk->gmSys), &skillCheckWork ); //再初期化
+      FLDSKILL_InitUseHeader( &skillUseWork , mwk->link.select_poke, mwk->link.select_param, mwk->link.zoneID);
+
+      event = FLDSKILL_UseSkill( mwk->link.select_param, &skillUseWork , &skillCheckWork );
+      if( event == NULL ){  //起動エラーチェック
+        return( GMEVENT_RES_FINISH ); //なにもしないで終わる
+      }
+      GMEVENT_ChangeEvent(mwk->gmEvent , event);
     }
-		break;
+    break;
 
-		//-------------------------------------
-		///		バッグ、メニューなどアプリへ飛ぶ
-		//=====================================
-	case FMENUSTATE_CALL_PROC:
-		GMEVENT_CallEvent( event, EVENT_ProcLink( &mwk->link, mwk->heapID ) );
-		mwk->state = FMENUSTATE_RETURN_PROC;
-		break;
+    //-------------------------------------
+    ///   バッグ、メニューなどアプリへ飛ぶ
+    //=====================================
+  case FMENUSTATE_CALL_PROC:
+    GMEVENT_CallEvent( event, EVENT_ProcLink( &mwk->link, mwk->heapID ) );
+    mwk->state = FMENUSTATE_RETURN_PROC;
+    break;
 
-	case FMENUSTATE_RETURN_PROC:
-		if( mwk->link.result == EVENT_PROCLINK_RESULT_RETURN )
-		{
-			mwk->state	= FMENUSTATE_MAIN;
-		}
-		else if( mwk->link.result == EVENT_PROCLINK_RESULT_EXIT )
-		{	
-			mwk->state	= FMENUSTATE_EXIT_MENU;
-		}
-		else if( mwk->link.result == EVENT_PROCLINK_RESULT_ITEM )
-		{	
-			mwk->state	= FMENUSTATE_USE_ITEM;
-		}
-		else if( mwk->link.result == EVENT_PROCLINK_RESULT_SKILL )
-		{	
-			mwk->state	= FMENUSTATE_USE_SKILL;
-		}
+  case FMENUSTATE_RETURN_PROC:
+    if( mwk->link.result == EVENT_PROCLINK_RESULT_RETURN )
+    {
+      mwk->state  = FMENUSTATE_MAIN;
+    }
+    else if( mwk->link.result == EVENT_PROCLINK_RESULT_EXIT )
+    { 
+      mwk->state  = FMENUSTATE_EXIT_MENU;
+    }
+    else if( mwk->link.result == EVENT_PROCLINK_RESULT_ITEM )
+    { 
+      mwk->state  = FMENUSTATE_USE_ITEM;
+    }
+    else if( mwk->link.result == EVENT_PROCLINK_RESULT_SKILL )
+    { 
+      mwk->state  = FMENUSTATE_USE_SKILL;
+    }
     else if( mwk->link.result == EVENT_PROCLINK_RESULT_DOWSINGMACHINE )
     {
-			mwk->state	= FMENUSTATE_EXIT_MENU;
+      mwk->state  = FMENUSTATE_EXIT_MENU;
     }
-		break;
+    break;
 
-		//-------------------------------------
-		///		アイテム使用
-		//=====================================
-	case FMENUSTATE_USE_ITEM:
-		{	
-			GMEVENT *p_item_event;
-			//フィールド復帰
-			{
-				MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
-				MMDLSYS_ClearPauseMoveProc( fldMdlSys );
-			}
+    //-------------------------------------
+    ///   アイテム使用
+    //=====================================
+  case FMENUSTATE_USE_ITEM:
+    { 
+      GMEVENT *p_item_event;
+      //フィールド復帰
+      {
+        MMDLSYS *fldMdlSys = FIELDMAP_GetMMdlSys( mwk->fieldWork );
+        MMDLSYS_ClearPauseMoveProc( fldMdlSys );
+      }
 
-			//ITEMの場合はCallbackの中で戻されるので行わない
-			//FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
+      //ITEMの場合はCallbackの中で戻されるので行わない
+      //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
 
-			//アイテムコール
-			//GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
-			p_item_event	= EVENT_FieldItemUse( mwk->link.select_param, mwk->gmSys, mwk->fieldWork );
-			GMEVENT_CallEvent(event, p_item_event );
-			mwk->state = FMENUSTATE_RETURN_ITEM;
-		}
-		break;
+      //アイテムコール
+      //GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
+      p_item_event  = EVENT_FieldItemUse( mwk->link.select_param, mwk->gmSys, mwk->fieldWork );
+      GMEVENT_CallEvent(event, p_item_event );
+      mwk->state = FMENUSTATE_RETURN_ITEM;
+    }
+    break;
 
-	case FMENUSTATE_RETURN_ITEM:
-		//GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
-		return (GMEVENT_RES_FINISH);
- 	}
+  case FMENUSTATE_RETURN_ITEM:
+    //GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
+    return (GMEVENT_RES_FINISH);
+  }
 
   return( GMEVENT_RES_CONTINUE );
 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	FIELD_MENU_ITEM_TYPEからEVENT_PROCLINK_CALL_TYPEへの変換
+ *  @brief  FIELD_MENU_ITEM_TYPEからEVENT_PROCLINK_CALL_TYPEへの変換
  *
- *	@param	FIELD_MENU_ITEM_TYPE type		メニューアイテム
+ *  @param  FIELD_MENU_ITEM_TYPE type   メニューアイテム
  *
- *	@return	プロックリンク
+ *  @return プロックリンク
  */
 //-----------------------------------------------------------------------------
 static EVENT_PROCLINK_CALL_TYPE FldMapGetProclinkToMenuItem( FIELD_MENU_ITEM_TYPE type )
-{	
-	static const int proclink_to_menu_item_tbl[	FMIT_MAX ]	=
-	{	
-		-1,//  FMIT_EXIT,
-		EVENT_PROCLINK_CALL_POKELIST,//  FMIT_POKEMON,
-		EVENT_PROCLINK_CALL_ZUKAN,//  FMIT_ZUKAN,
-		EVENT_PROCLINK_CALL_BAG,//  FMIT_ITEMMENU,
-		EVENT_PROCLINK_CALL_TRAINERCARD,//  FMIT_TRAINERCARD,
-		EVENT_PROCLINK_CALL_REPORT,//  FMIT_REPORT,
-		EVENT_PROCLINK_CALL_CONFIG,//  FMIT_CONFING,
-		-1,//  FMIT_NONE,
-	};
+{ 
+  static const int proclink_to_menu_item_tbl[ FMIT_MAX ]  =
+  { 
+    -1,//  FMIT_EXIT,
+    EVENT_PROCLINK_CALL_POKELIST,//  FMIT_POKEMON,
+    EVENT_PROCLINK_CALL_ZUKAN,//  FMIT_ZUKAN,
+    EVENT_PROCLINK_CALL_BAG,//  FMIT_ITEMMENU,
+    EVENT_PROCLINK_CALL_TRAINERCARD,//  FMIT_TRAINERCARD,
+    EVENT_PROCLINK_CALL_REPORT,//  FMIT_REPORT,
+    EVENT_PROCLINK_CALL_CONFIG,//  FMIT_CONFING,
+    -1,//  FMIT_NONE,
+  };
 
   GF_ASSERT( type < FMIT_MAX );
-	GF_ASSERT( proclink_to_menu_item_tbl[ type ] != -1 );
-	return proclink_to_menu_item_tbl[ type ];
+  GF_ASSERT( proclink_to_menu_item_tbl[ type ] != -1 );
+  return proclink_to_menu_item_tbl[ type ];
 }
 
 //=============================================================================
 /**
- *		CALLBACK
+ *    CALLBACK
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	プロセスリンクに渡すコールバック
+ *  @brief  プロセスリンクに渡すコールバック
  *
- *	@param	const EVENT_PROCLINK_PARAM *param	引数
- *	@param	*wk_adrs													自分のワーク
+ *  @param  const EVENT_PROCLINK_PARAM *param 引数
+ *  @param  *wk_adrs                          自分のワーク
  */
 //-----------------------------------------------------------------------------
 static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
-{	
-	FMENU_EVENT_WORK *mwk	= wk_adrs;
+{ 
+  FMENU_EVENT_WORK *mwk = wk_adrs;
 
-	FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork);
+  FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork);
 
-	//フィールドに戻る場合
-	if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
-			param->result == EVENT_PROCLINK_RESULT_ITEM ||
-			param->result == EVENT_PROCLINK_RESULT_SKILL )
-	{	
-		if( FIELD_SUBSCREEN_GetMode(subscreen) != mwk->return_subscreen_mode )
-		{	
-			FIELD_SUBSCREEN_ChangeForce(subscreen, mwk->return_subscreen_mode );
-		}
-	}
+  //フィールドに戻る場合
+  if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
+      param->result == EVENT_PROCLINK_RESULT_ITEM ||
+      param->result == EVENT_PROCLINK_RESULT_SKILL )
+  { 
+    if( FIELD_SUBSCREEN_GetMode(subscreen) != mwk->return_subscreen_mode )
+    { 
+      FIELD_SUBSCREEN_ChangeForce(subscreen, mwk->return_subscreen_mode );
+    }
+  }
   else if( param->result == EVENT_PROCLINK_RESULT_DOWSINGMACHINE )
   {
     FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_DOWSING );
   }
-	else
-	{	
-		//メニューに戻る場合
-		//fieldmap.c終了時にサブスクリーンモードをgamedataに保存し、
-		//初期化時にわたしているので、ここで再度メニューをする必要はない。
-		//してしまうと、
-		// fieldmap.cのサブスクリーンモード読み直しでinit->exit->initをしてしまい、
-		// PRINTQUEバッファを実行する前に終えてしまう
-		//FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_TOPMENU);
-	
-		FIELD_SUBSCREEN_SetTopMenuItemNo( subscreen, mwk->item_type );
-	}
+  else
+  { 
+    //メニューに戻る場合
+    //fieldmap.c終了時にサブスクリーンモードをgamedataに保存し、
+    //初期化時にわたしているので、ここで再度メニューをする必要はない。
+    //してしまうと、
+    // fieldmap.cのサブスクリーンモード読み直しでinit->exit->initをしてしまい、
+    // PRINTQUEバッファを実行する前に終えてしまう
+    //FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_TOPMENU);
+  
+    FIELD_SUBSCREEN_SetTopMenuItemNo( subscreen, mwk->item_type );
+  }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	プロセスリンクに渡すコールバック
+ *  @brief  プロセスリンクに渡すコールバック
  *
- *	@param	const EVENT_PROCLINK_PARAM *param	引数
- *	@param	*wk_adrs													自分のワーク
+ *  @param  const EVENT_PROCLINK_PARAM *param 引数
+ *  @param  *wk_adrs                          自分のワーク
  */
 //-----------------------------------------------------------------------------
 static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
-{	
-	FMENU_EVENT_WORK *mwk	= wk_adrs;
-	//FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->item_type );
+{ 
+  FMENU_EVENT_WORK *mwk = wk_adrs;
+  //FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->item_type );
 }
