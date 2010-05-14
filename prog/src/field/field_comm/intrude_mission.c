@@ -278,7 +278,6 @@ BOOL MISSION_SetMissionData(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *missio
   }
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
-  mission->start_timer = GFL_RTC_GetTimeBySecond();
   MISSION_ClearMissionEntry(intcomm, mission);
   if(mdata->accept_netid != INTRUDE_NETID_NULL){
     return new_mission;
@@ -342,6 +341,7 @@ void MISSION_RecvMissionStartClientAnswer(MISSION_SYSTEM *mission, s32 now_timer
   if(GFL_NET_IsParentMachine() == FALSE){ //親はMISSION_RecvMissionStartClientでセットされる
     mission->start_timer = GFL_RTC_GetTimeBySecond();
   }
+  OS_TPrintf("start_timer = %d, exe_timer = %d\n", mission->start_timer, now_timer);
 }
 
 //==================================================================

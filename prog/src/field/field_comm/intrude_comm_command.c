@@ -1158,8 +1158,9 @@ BOOL IntrudeSend_MissionClientStartAnswer(INTRUDE_COMM_SYS_PTR intcomm, s32 now_
     return FALSE;
   }
   
-  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_CLIENT_START_ANSWER, sizeof(now_mission_time), &now_mission_time);
+  ret = GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), send_netid_bit,
+    INTRUDE_CMD_MISSION_CLIENT_START_ANSWER, sizeof(now_mission_time), &now_mission_time,
+    FALSE, FALSE, FALSE);
   if(ret == TRUE){
     OS_TPrintf("送信：クライアントミッション開始宣言の返事 send_bit=%d\n", send_netid_bit);
   }

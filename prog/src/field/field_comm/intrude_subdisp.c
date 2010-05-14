@@ -2455,9 +2455,13 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   
   if(intcomm == NULL){
+  #if 0
     //ˆê•”‚ðœ‚¢‚ÄÅŒã‚Ìó‘Ô‚©‚ç‰½‚àXV‚µ‚È‚¢
     intsub->comm.m_status = MISSION_STATUS_NULL;
     intsub->comm.p_md = NULL;
+  #else
+    GFL_STD_MemClear(&intsub->comm, sizeof(INTRUDE_COMM_PARAM));
+  #endif
   }
   else{
     const MISSION_DATA *md;
