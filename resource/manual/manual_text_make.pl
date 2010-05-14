@@ -308,6 +308,7 @@ $manual_explain_col_max                  = 9;
 %manual_explain_tbl_idx_hash_from_cate_no_title_no_page_no  = ();  # cate_no * $manual_explain_hash_cate_no_times + title_no * $manual_explain_hash_title_no_times + page_no
 $manual_explain_hash_cate_no_times       = 1000*1000;
 $manual_explain_hash_title_no_times      = 1000;
+%manual_explain_image_arc_id_hash_from_image = ();  # 同じ名前の画像ファイルは同じarc_idになるようにしておく
 
 # manual_invalid  # 初期化用の不正な値    # 正しい値
 $manual_invalid_cate_no           = 0;    # 1<=
@@ -1119,23 +1120,37 @@ sub WriteManualImageListFile
       else
       {
         # 画像あり
-        my $ri = rindex( $manual_explain_tbl[$i][$manual_explain_col_image], $manual_image_src_suffix );
-        my $file_name = substr( $manual_explain_tbl[$i][$manual_explain_col_image], 0, $ri );
-        my $file_name_bmp        = $file_name . $manual_image_src_suffix;
-        my $file_name_nbfs       = $file_name . $manual_image_nbfs_suffix;
-        my $file_name_lz77_nbfs  = $file_name . $manual_image_lz77_nbfs_suffix;
+        # 同じ名前の画像ファイルは同じarc_idになるようにしておく
+        if( defined( $manual_explain_image_arc_id_hash_from_image{ $manual_explain_tbl[$i][$manual_explain_col_image] } ) )
+        {
+          # 既出の画像
+          my $curr_number_image_id = $manual_explain_image_arc_id_hash_from_image{ $manual_explain_tbl[$i][$manual_explain_col_image] };
+          $manual_explain_tbl[$i][$manual_explain_col_image_arc_id] = $curr_number_image_id;
+        }
+        else
+        {
+          # 初登場の画像
+          my $ri = rindex( $manual_explain_tbl[$i][$manual_explain_col_image], $manual_image_src_suffix );
+          my $file_name = substr( $manual_explain_tbl[$i][$manual_explain_col_image], 0, $ri );
+          my $file_name_bmp        = $file_name . $manual_image_src_suffix;
+          my $file_name_nbfs       = $file_name . $manual_image_nbfs_suffix;
+          my $file_name_lz77_nbfs  = $file_name . $manual_image_lz77_nbfs_suffix;
 
-        # 画像ファイルのリスト
-        printf FH_SRC "%s\r\n", $file_name_bmp;
-        # コンバートバッチファイル
-        printf FH_CONV "%s %s %s\r\n", $manual_image_conv_command_name, $file_name_bmp, $manual_image_conv_command_option;
-        # 圧縮バッチファイル
-        printf FH_COMP "%s %s %s %s\r\n", $manual_image_comp_command_name, $manual_image_comp_command_option, $file_name_lz77_nbfs, $file_name_nbfs;
-        # 圧縮後のファイルのリスト
-        printf FH_LZ77 "\"%s\"\r\n", $file_name_lz77_nbfs;
+          # 画像ファイルのリスト
+          printf FH_SRC "%s\r\n", $file_name_bmp;
+          # コンバートバッチファイル
+          printf FH_CONV "%s %s %s\r\n", $manual_image_conv_command_name, $file_name_bmp, $manual_image_conv_command_option;
+          # 圧縮バッチファイル
+          printf FH_COMP "%s %s %s %s\r\n", $manual_image_comp_command_name, $manual_image_comp_command_option, $file_name_lz77_nbfs, $file_name_nbfs;
+          # 圧縮後のファイルのリスト
+          printf FH_LZ77 "\"%s\"\r\n", $file_name_lz77_nbfs;
         
-        $manual_explain_tbl[$i][$manual_explain_col_image_arc_id] = $number_image_id;
-        $number_image_id++;
+          $manual_explain_tbl[$i][$manual_explain_col_image_arc_id] = $number_image_id;
+          
+          $manual_explain_image_arc_id_hash_from_image{ $manual_explain_tbl[$i][$manual_explain_col_image] } = $number_image_id;  # ハッシュに登録しておく
+          
+          $number_image_id++;
+        }
       }
     }
   }
