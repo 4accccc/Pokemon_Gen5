@@ -1302,7 +1302,7 @@ static GFL_CLWK* obj_ObjAdd(
           cgrNo,palNo,cellNo,
           &ini, ACT_RENDER_ID, wk->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( obj, TRUE );
-
+  GFL_CLACT_WK_SetSRTAnimeFlag( obj, FALSE );
   return obj;
 }
 
