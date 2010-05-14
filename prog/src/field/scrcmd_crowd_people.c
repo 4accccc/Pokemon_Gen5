@@ -60,7 +60,7 @@ VMCMD_RESULT EvCmdCrowdPeople( VMHANDLE *core, void *wk )
   FLDMAPFUNC_SYS* p_funcsys = FIELDMAP_GetFldmapFuncSys( fparam->fieldMap );
 
 
-  FLDMAPFUNC_Create( FS_OVERLAY_ID(field_crowd_people), p_funcsys, &c_FLDMAPFUNC_DATA );
+  FLDMAPFUNC_Create( FS_OVERLAY_ID(field_crowd_people), p_funcsys, &c_FLDMAPFUNC_CROWDPEOPLE_DATA );
 
 	return VMCMD_RESULT_CONTINUE;
 }

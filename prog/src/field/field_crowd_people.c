@@ -301,7 +301,7 @@ typedef struct
 //-------------------------------------
 ///	管理ワーク
 //=====================================
-typedef struct 
+struct _FIELD_CROWD_PEOPLE
 {
   FIELD_PLAYER* p_player;
   MMDLSYS* p_fos;
@@ -310,7 +310,7 @@ typedef struct
   FIELD_CROWD_PEOPLE_BOOL_CONTROL boot_control;
 
   FIELD_CROWD_PEOPLE_NOISE noise;
-} FIELD_CROWD_PEOPLE;
+} ;
 
 
 
@@ -370,6 +370,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx,
 // NOISE管理
 static void FIELD_CROWD_PEOPLE_NOISE_Init( FIELD_CROWD_PEOPLE_NOISE* p_wk, FLDMSGBG* p_fmb, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, int timezone, HEAPID heapID );
 static void FIELD_CROWD_PEOPLE_NOISE_Exit( FIELD_CROWD_PEOPLE_NOISE* p_wk );
+static void FIELD_CROWD_PEOPLE_NOISE_Clear( FIELD_CROWD_PEOPLE_NOISE* p_wk );
 static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, const FIELDMAP_WORK* cp_fieldmap );
 
 static void FIELD_CROWD_PEOPLE_NOISEWK_Init( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, u16 id );
@@ -380,7 +381,7 @@ static void FIELD_CROWD_PEOPLE_NOISEWK_Off( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, F
 
 
 
-const FLDMAPFUNC_DATA c_FLDMAPFUNC_DATA = 
+const FLDMAPFUNC_DATA c_FLDMAPFUNC_CROWDPEOPLE_DATA = 
 {
   0,
   sizeof(FIELD_CROWD_PEOPLE),
@@ -389,6 +390,7 @@ const FLDMAPFUNC_DATA c_FLDMAPFUNC_DATA =
   FIELD_CROWD_PEOPLE_TASK_Update,
   NULL,
 };
+
 
 
 
@@ -431,6 +433,11 @@ static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 
   // 騒音システム初期化
   FIELD_CROWD_PEOPLE_NOISE_Init( &p_wk->noise, p_fmb, &p_wk->boot_control, timezone, heapID );
+
+  // ワークをフィールドマップに登録
+  // field_event_check.cでイベント発生時に群集をとめるため。
+  GF_ASSERT( FIELDMAP_GetCrowdPeopleSys( p_fieldmap ) == NULL );
+  FIELDMAP_SetCrowdPeopleSys( p_fieldmap, p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -442,6 +449,10 @@ static void FIELD_CROWD_PEOPLE_TASK_Delete( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 {
   FIELD_CROWD_PEOPLE* p_wk = p_work;
   int i;
+
+  // ワークをフィールドマップから破棄
+  GF_ASSERT( FIELDMAP_GetCrowdPeopleSys( p_fieldmap ) == p_wk );
+  FIELDMAP_SetCrowdPeopleSys( p_fieldmap, NULL );
   
   // 管理システムワーク破棄
   for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
@@ -492,6 +503,21 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 
   // 騒音システム更新
   FIELD_CROWD_PEOPLE_NOISE_Main( &p_wk->noise, &p_wk->boot_control, p_fieldmap );
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サブwindowを全クリア
+ *
+ *	@param	p_sys 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CROWD_PEOPLE_ClearSubWindow( FIELD_CROWD_PEOPLE* p_sys )
+{
+  FIELD_CROWD_PEOPLE_NOISE_Clear( &p_sys->noise );
 }
 
 
@@ -1424,6 +1450,24 @@ static void FIELD_CROWD_PEOPLE_NOISE_Exit( FIELD_CROWD_PEOPLE_NOISE* p_wk )
   GFL_MSG_Delete( p_wk->p_msgdata );
   p_wk->p_msgdata = NULL;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  騒音システム　総クリア
+ *
+ *	@param	p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void FIELD_CROWD_PEOPLE_NOISE_Clear( FIELD_CROWD_PEOPLE_NOISE* p_wk )
+{
+  int i;
+  // 全OFF
+  for( i=0; i<NOISE_WK_MAX; i++ )
+  {
+    FIELD_CROWD_PEOPLE_NOISEWK_Off( &p_wk->wk[i], p_wk->p_fmb );
+  }
+}
+
 
 //----------------------------------------------------------------------------
 /**

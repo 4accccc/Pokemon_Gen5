@@ -31,6 +31,10 @@ FS_EXTERN_OVERLAY(field_crowd_people);
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	管理ワーク
+//=====================================
+typedef struct _FIELD_CROWD_PEOPLE FIELD_CROWD_PEOPLE;
 
 
 //-----------------------------------------------------------------------------
@@ -38,8 +42,9 @@ FS_EXTERN_OVERLAY(field_crowd_people);
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_CROWDPEOPLE_DATA;
 
-extern const FLDMAPFUNC_DATA c_FLDMAPFUNC_DATA;
+extern void FIELD_CROWD_PEOPLE_ClearSubWindow( FIELD_CROWD_PEOPLE* p_sys );
 
 #ifdef _cplusplus
 }	// extern "C"{

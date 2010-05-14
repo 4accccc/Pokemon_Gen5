@@ -115,6 +115,8 @@
 #include "ev_time.h"  //EVTIME_Update
 #include "field_bbd_color.h"
 
+#include "field_crowd_people.h"  
+
 #include "net_app/union_eff.h"
 
 #include "calender.h"
@@ -377,6 +379,8 @@ struct _FIELDMAP_WORK
   FACEUP_WK_PTR FaceUpWkPtr;
 
   FLD_VREQ* fldVReq;  ///<フィールドVBlank反映
+
+  FIELD_CROWD_PEOPLE* crowdpeople; ///<群集ワーク/タスク生成時にポインタを設定 field_event_check.c内で、イベント発生時に騒音windowを消すため。
 
 #ifdef  PM_DEBUG
 	FIELD_DEBUG_WORK *debugWork;
@@ -3820,6 +3824,34 @@ FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork)
 {
   return &fieldWork->FaceUpWkPtr;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  群集ワークの設定
+ *
+ *	@param	fieldWork   フィールドワーク
+ *	@param	crowdpeople 群集ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAP_SetCrowdPeopleSys( FIELDMAP_WORK * fieldWork, FIELD_CROWD_PEOPLE * crowdpeople )
+{
+  fieldWork->crowdpeople = crowdpeople;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  群集ワークの取得
+ *
+ *	@param	fieldWork   フィールドワーク
+ *
+ *	@return 群集ワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_CROWD_PEOPLE * FIELDMAP_GetCrowdPeopleSys( const FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->crowdpeople;
+}
+
 
 //==================================================================
 /**

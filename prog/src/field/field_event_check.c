@@ -705,6 +705,7 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 	FIELD_PLACE_NAME *place_name_sys;
 	FIELDMAP_WORK * fieldmap_work = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldmap_work); 
+  FIELD_CROWD_PEOPLE* crowdpeople;
   BOOL eff_delete_flag,menu_open_flag;
   //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
   EFFECT_ENC_CheckObjHit( encount );
@@ -726,6 +727,13 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
     // 自機が特殊表示の場合は元に戻す
     FIELD_PLAYER_CheckSpecialDrawForm(
         FIELDMAP_GetFieldPlayer(fieldmap_work), menu_open_flag );
+
+    // 群集 windowを消去
+    crowdpeople = FIELDMAP_GetCrowdPeopleSys( fieldmap_work );
+    if( crowdpeople ){
+      FIELD_CROWD_PEOPLE_ClearSubWindow( crowdpeople );
+    }
+
 	}
 	return event;
 }
@@ -911,6 +919,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldmap_work;
 	FIELD_PLACE_NAME *place_name_sys;
+  FIELD_CROWD_PEOPLE* crowdpeople;
 
 	// イベント起動チェック
 	event = eventCheckNoGrid( gsys, work );
@@ -922,6 +931,12 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 		fieldmap_work   = (FIELDMAP_WORK*)GAMESYSTEM_GetFieldMapWork( gsys );
 		place_name_sys  = FIELDMAP_GetPlaceNameSys( fieldmap_work );
 		FIELD_PLACE_NAME_Hide( place_name_sys );
+
+    // 群集 windowを消去
+    crowdpeople = FIELDMAP_GetCrowdPeopleSys( fieldmap_work );
+    if( crowdpeople ){
+      FIELD_CROWD_PEOPLE_ClearSubWindow( crowdpeople );
+    }
 	}
 
 	return event;

@@ -49,6 +49,8 @@
 #include "field_task.h"
 #include "field_task_manager.h"
 
+#include "field_crowd_people.h"
+
 #include "fld_faceup_ptr.h"
 
 //======================================================================
@@ -162,6 +164,9 @@ extern FLD_VREQ *FIELDMAP_GetFldVReq(FIELDMAP_WORK *fieldWork);
 
 extern void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);
 extern FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork);
+
+extern void FIELDMAP_SetCrowdPeopleSys( FIELDMAP_WORK * fieldWork, FIELD_CROWD_PEOPLE * crowdpeople );
+extern FIELD_CROWD_PEOPLE * FIELDMAP_GetCrowdPeopleSys( const FIELDMAP_WORK * fieldWork );
 
 extern fx32 FIELDMAP_GetBbdActYOffs( const FIELDMAP_WORK * fieldmap );
 #ifdef PM_DEBUG
