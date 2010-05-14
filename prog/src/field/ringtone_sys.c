@@ -181,7 +181,10 @@ void RINGTONE_SYS_Stop( RINGTONE_SYS * rtone )
 //------------------------------------------------------------------
 static BOOL ringTone_PlayMain( RINGTONE_SYS * rtone )
 {
-  rtone->ringWait --;
+  if ( rtone->ringWait )
+  {
+    rtone->ringWait --;
+  }
   if ( rtone->ringWait == 0 )
   {
     if (PMSND_CheckPlaySE_byPlayerID( RINGTONE_SEPLAYER ) == TRUE )
@@ -236,6 +239,16 @@ static void startSE( RINGTONE_SYS * rtone )
 }
 //------------------------------------------------------------------
 /**
+ * @brief 着信音中止
+ */
+//------------------------------------------------------------------
+static void stopSE( RINGTONE_SYS * rtone )
+{
+  PMSND_StopSE_byPlayerID( RINGTONE_SEPLAYER );
+  rtone->ringWait = 0;
+}
+//------------------------------------------------------------------
+/**
  * @brief 他のプレイヤーのミュート操作
  */
 //------------------------------------------------------------------
@@ -285,6 +298,7 @@ static void changeStatus( RINGTONE_SYS * rtone, RINGTONE_REQ req )
   case STAT_OPEN_OFF:
     NNS_SndSetMasterVolume( MAX_VOLUME ); //MasterVol  == 有効
     setMuteOther( rtone, FALSE );         //他のPlayer == 有効
+    stopSE( rtone );
     break;
 
   case STAT_OPEN_ON:
@@ -295,6 +309,7 @@ static void changeStatus( RINGTONE_SYS * rtone, RINGTONE_REQ req )
 
   case STAT_CLOSE_OFF:
     NNS_SndSetMasterVolume( MIN_VOLUME ); //MasterVol  == 無効
+    stopSE( rtone );
     break;
 
   case STAT_CLOSE_ON:
@@ -316,12 +331,12 @@ static void changeStatus( RINGTONE_SYS * rtone, RINGTONE_REQ req )
 static void updateStatus( RINGTONE_SYS * rtone )
 {
   BOOL flag;
+  flag = ringTone_PlayMain( rtone );
   switch ( rtone->state )
   {
   case STAT_OPEN_OFF:
     break;
   case STAT_OPEN_ON:
-    flag = ringTone_PlayMain( rtone );
     if ( flag == FALSE )
     {
       changeStatus( rtone, STAT_OPEN_OFF );
@@ -331,7 +346,6 @@ static void updateStatus( RINGTONE_SYS * rtone )
   case STAT_CLOSE_OFF:
     break;
   case STAT_CLOSE_ON:
-    flag = ringTone_PlayMain( rtone );
     if ( flag == FALSE )
     {
       changeStatus( rtone, STAT_CLOSE_OFF );
