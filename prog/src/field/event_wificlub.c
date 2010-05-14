@@ -233,6 +233,9 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
   BTL_SETUP_AllocRecBuffer( pClub->para, GFL_HEAPID_APP); //録画バッファ確保 BTL_SETUPの後に必ず呼ばないといけない
   BATTLE_PARAM_SetRegulation( pClub->para, pClub->pMatchParam->pRegulation, HEAPID_PROC);
 
+  //レベル補正を設定
+  PokeRegulation_ModifyLevelPokeParty( pClub->pMatchParam->pRegulation, pClub->pMatchParam->pPokeParty[0]);
+  PokeRegulation_ModifyLevelPokeParty( pClub->pMatchParam->pRegulation, pClub->pMatchParam->pPokeParty[1]);
 
 }
 
@@ -400,6 +403,9 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     NET_PRINT("P2P_SELECT %d %d\n",(*seq) ,ep2p->pMatchParam->seq);
     if(P2P_BATTLE != (*seq) ){  // バトル以外はいらない
       _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
+    }
+    else{
+      
     }
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(ui_common));
