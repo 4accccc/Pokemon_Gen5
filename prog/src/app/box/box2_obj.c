@@ -1424,7 +1424,7 @@ void BOX2OBJ_PartyPokeIconFrmInSet( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_SetPos(
 			syswk->app, id, PartyPokeInitPos[i][0], PartyPokeInitPos[i][1], CLSYS_DEFREND_MAIN );
 		BOX2OBJ_PokeIconPriChg( syswk->app, BOX2OBJ_POKEICON_TRAY_MAX+i, BOX2OBJ_POKEICON_PRI_CHG_PUT );
-		if( i < ppcnt ){
+		if( i < ppcnt && syswk->get_pos != (i+BOX2OBJ_POKEICON_TRAY_MAX)  ){
 			BOX2OBJ_Vanish( syswk->app, id, TRUE );
 		}else{
 			BOX2OBJ_Vanish( syswk->app, id, FALSE );

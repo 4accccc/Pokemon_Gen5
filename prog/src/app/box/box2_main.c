@@ -1852,15 +1852,17 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
         BOX2OBJ_PokeIconDefaultPosGet( dat[i].mv_pos, &px, &py, syswk->move_mode );
       }else if( dat[i].mv_pos < BOX2OBJ_POKEICON_PUT_MAX ){
         BOX2OBJ_PokeIconDefaultPosGet( dat[i].mv_pos, &px, &py, syswk->move_mode );
-/*
         if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == FALSE &&
             BOX2BGWFRM_CheckPartyPokeFrameLeft(syswk->app->wfrm) == FALSE ){
           py += 192;
         }
-*/
       }else{
         if( dat[i].df_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
           BOX2OBJ_PokeIconDefaultPosGet( BOX2OBJ_POKEICON_MAX-1, &px, &py, syswk->move_mode );
+	        if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == FALSE &&
+	            BOX2BGWFRM_CheckPartyPokeFrameLeft(syswk->app->wfrm) == FALSE ){
+	          py += 192;
+	        }
         }else{
           BOX2OBJ_PokeIconDefaultPosGet( dat[i].df_pos, &px, &py, syswk->move_mode );
         }
