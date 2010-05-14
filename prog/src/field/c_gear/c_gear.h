@@ -34,6 +34,8 @@ extern void CGEAR_Exit(C_GEAR_WORK* pWork);
 
 extern GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WORK* pSub );
 
+extern BOOL CGEAR_IsDoEventWireless( const C_GEAR_WORK* cpWork );
+
 
 //extern const GFL_PROC_DATA CGEARProcData;
 

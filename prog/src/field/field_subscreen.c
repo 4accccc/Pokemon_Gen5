@@ -1097,6 +1097,26 @@ void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( FIELD_SUBSCREEN_WORK* pWork, HE
   FLD_VREQ_GFL_BG_SetVisible( FIELDMAP_GetFldVReq(pWork->fieldmap), GFL_BG_FRAME1_M, VISIBLE_ON );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGearワーク取得
+ *
+ *	@param	cpWork  ワーク
+ *
+ *	@retval NULL  CGEAR　以外
+ *	@retval CGEAR　ワーク
+ */
+//-----------------------------------------------------------------------------
+void* FIELD_SUBSCREEN_GetCGearWork( const FIELD_SUBSCREEN_WORK* cpWork )
+{
+  if( (cpWork->mode == FIELD_SUBSCREEN_NORMAL) || (cpWork->mode == FIELD_SUBSCREEN_CGEARFIRST) ){
+    return cpWork->cgearWork;
+  }
+  return NULL;
+}
+
+
 //=============================================================================
 //=============================================================================
 

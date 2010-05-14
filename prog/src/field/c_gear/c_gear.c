@@ -4369,6 +4369,25 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
   return event;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR wireless遷移動作中チェック
+ *
+ *	@param	cpWork  ワーク
+ *
+ *	@retval TRUE    動作中
+ *	@retval FALSE   ちがう
+ */
+//-----------------------------------------------------------------------------
+BOOL CGEAR_IsDoEventWireless( const C_GEAR_WORK* cpWork )
+{
+  if( cpWork->doEvent == FIELD_SUBSCREEN_ACTION_WIRELESS ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 
 //----------------------------------------------------------------------------
 /**

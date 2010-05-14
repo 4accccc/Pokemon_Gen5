@@ -129,6 +129,9 @@ extern BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork );
 extern BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork );
 extern void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( FIELD_SUBSCREEN_WORK* pWork, HEAPID heapID );
 
+// C_GEAR_WORK* CgearÉèÅ[ÉNÇÃéÊìæ
+extern void* FIELD_SUBSCREEN_GetCGearWork( const FIELD_SUBSCREEN_WORK* cpWork );
+
 
 #ifdef  PM_DEBUG
 extern void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork);
