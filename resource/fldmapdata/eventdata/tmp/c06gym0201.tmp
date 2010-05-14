@@ -1,5 +1,0 @@
-#../data/c06gym0201.mev
-../tmp/c06gym0201.bin:../data/c06gym0201.mev $(UNIQ_SCRIPTHEADER) ../tmp/c06gym0201.h 
-	@echo ../data/c06gym0201.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c06gym0201.h 
-

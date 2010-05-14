@@ -186,12 +186,6 @@ c01r0301_def.h: c01r0301.ev
 c01r0302_def.h: c01r0302.ev
 	$(EV_DEF) c01r0302.ev $(SCR_OFFS_ID_H)
 
-c01r0401_def.h: c01r0401.ev
-	$(EV_DEF) c01r0401.ev $(SCR_OFFS_ID_H)
-
-c01r0402_def.h: c01r0402.ev
-	$(EV_DEF) c01r0402.ev $(SCR_OFFS_ID_H)
-
 c01r0501_def.h: c01r0501.ev
 	$(EV_DEF) c01r0501.ev $(SCR_OFFS_ID_H)
 
@@ -200,9 +194,6 @@ c02_def.h: c02.ev
 
 c02gym0101_def.h: c02gym0101.ev
 	$(EV_DEF) c02gym0101.ev $(SCR_OFFS_ID_H)
-
-c02gym0102_def.h: c02gym0102.ev
-	$(EV_DEF) c02gym0102.ev $(SCR_OFFS_ID_H)
 
 c02gym0201_def.h: c02gym0201.ev
 	$(EV_DEF) c02gym0201.ev $(SCR_OFFS_ID_H)
@@ -387,9 +378,6 @@ c04r0201_def.h: c04r0201.ev
 c04r0202_def.h: c04r0202.ev
 	$(EV_DEF) c04r0202.ev $(SCR_OFFS_ID_H)
 
-c04r0203_def.h: c04r0203.ev
-	$(EV_DEF) c04r0203.ev $(SCR_OFFS_ID_H)
-
 c04r0301_def.h: c04r0301.ev
 	$(EV_DEF) c04r0301.ev $(SCR_OFFS_ID_H)
 
@@ -479,9 +467,6 @@ c06_def.h: c06.ev
 
 c06gym0101_def.h: c06gym0101.ev
 	$(EV_DEF) c06gym0101.ev $(SCR_OFFS_ID_H)
-
-c06gym0201_def.h: c06gym0201.ev
-	$(EV_DEF) c06gym0201.ev $(SCR_OFFS_ID_H)
 
 c06pc0101_def.h: c06pc0101.ev
 	$(EV_DEF) c06pc0101.ev $(SCR_OFFS_ID_H)
@@ -705,9 +690,6 @@ d04r2201_def.h: d04r2201.ev
 d04r2301_def.h: d04r2301.ev
 	$(EV_DEF) d04r2301.ev $(SCR_OFFS_ID_H)
 
-d04r2401_def.h: d04r2401.ev
-	$(EV_DEF) d04r2401.ev $(SCR_OFFS_ID_H)
-
 d04r2501_def.h: d04r2501.ev
 	$(EV_DEF) d04r2501.ev $(SCR_OFFS_ID_H)
 
@@ -719,9 +701,6 @@ d04r2801_def.h: d04r2801.ev
 
 d04r2901_def.h: d04r2901.ev
 	$(EV_DEF) d04r2901.ev $(SCR_OFFS_ID_H)
-
-d04r3001_def.h: d04r3001.ev
-	$(EV_DEF) d04r3001.ev $(SCR_OFFS_ID_H)
 
 d04r3101_def.h: d04r3101.ev
 	$(EV_DEF) d04r3101.ev $(SCR_OFFS_ID_H)
@@ -773,9 +752,6 @@ d07r0401_def.h: d07r0401.ev
 
 d07r0501_def.h: d07r0501.ev
 	$(EV_DEF) d07r0501.ev $(SCR_OFFS_ID_H)
-
-d07r0601_def.h: d07r0601.ev
-	$(EV_DEF) d07r0601.ev $(SCR_OFFS_ID_H)
 
 d07r0701_def.h: d07r0701.ev
 	$(EV_DEF) d07r0701.ev $(SCR_OFFS_ID_H)
@@ -1073,9 +1049,6 @@ plh02_def.h: plh02.ev
 
 plh03_def.h: plh03.ev
 	$(EV_DEF) plh03.ev $(SCR_OFFS_ID_H)
-
-plh04_def.h: plh04.ev
-	$(EV_DEF) plh04.ev $(SCR_OFFS_ID_H)
 
 plh05_def.h: plh05.ev
 	$(EV_DEF) plh05.ev $(SCR_OFFS_ID_H)
