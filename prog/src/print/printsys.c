@@ -361,15 +361,13 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
   }
 
   // 初回書き込み前にグローバルカラー情報をリセット
+  // jobColorを現在描画色に統合
   {
     u8 colL, colS, colB;
     u8 fReset = FALSE;
 
     switch( que->runningJob->colorState ){
     case JOB_COLORSTATE_IGNORE:
-      PRINTSYS_LSB_GetLSB( que->runningJob->defColor, &colL, &colS, &colB );
-      fReset = TRUE;
-      break;
     case JOB_COLORSTATE_CHANGE_DONE:
       PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
       fReset = TRUE;
@@ -695,6 +693,7 @@ static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, s1
     u8 letter, shadow, back;
     GFL_FONTSYS_GetColor( &letter, &shadow, &back );
     wk->defColor = PRINTSYS_LSB_Make( letter, shadow, back );
+    wk->jobColor = wk->defColor;
   }
 }
 //--------------------------------------------------------------------------
@@ -869,16 +868,13 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     {
       u8 colL, colS, colB;
 
-      GFL_FONTSYS_GetColor( &colL, &colS, &colB );
-      OS_TPrintf("Backup DefaultColor= %d %d %d\n", colL, colS, colB );
-      wk->defColor = PRINTSYS_LSB_Make( colL, colS, colB );
-
       colL = STR_TOOL_GetTagParam(sp, 0);
       colS = STR_TOOL_GetTagParam(sp, 1);
       colB = STR_TOOL_GetTagParam(sp, 2);
 
       OS_TPrintf("Set Ctrl Tag Color= %d %d %d\n", colL, colS, colB );
       GFL_FONTSYS_SetColor( colL, colS, colB );
+      wk->jobColor = PRINTSYS_LSB_Make( colL, colS, colB );
     }
     break;
 
@@ -957,6 +953,7 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
       colorIdx = STR_TOOL_GetTagParam( sp, 0 );
       bgcolor = PRINTSYS_LSB_GetB( wk->defColor );
       GFL_FONTSYS_SetColor( colorIdx*2+1, colorIdx*2+2, bgcolor );
+      wk->jobColor = PRINTSYS_LSB_Make( colorIdx*2+1, colorIdx*2+2, bgcolor );
     }
     break;
 
