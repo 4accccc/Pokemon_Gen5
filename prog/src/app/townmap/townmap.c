@@ -517,6 +517,7 @@ static void PLACE_Exit( PLACE_WORK *p_wk );
 static void PLACE_Main( PLACE_WORK *p_wk );
 static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_next );
 static void PLACE_SetVisible( PLACE_WORK *p_wk, BOOL is_visible );
+static void PLACE_SetVisibleForce( PLACE_WORK *p_wk, BOOL is_visible );
 static void PLACE_SetWldPos( PLACE_WORK *p_wk, const GFL_POINT *cp_pos );
 static void PLACE_GetWldPos( const PLACE_WORK *cp_wk, GFL_POINT *p_pos );
 static void PLACE_AddWldPos( PLACE_WORK *p_wk, const GFL_POINT *cp_pos );
@@ -530,6 +531,7 @@ static BOOL PLACEDATA_IsVisiblePlaceName( const PLACE_DATA *cp_wk );
 static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug );
 static void PlaceData_Exit( PLACE_DATA *p_wk );
 static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible );
+static void PlaceData_SetVisibleForce( PLACE_DATA *p_wk, BOOL is_visible );
 static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, const GFL_POINT *cp_wld_pos );
 static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, const GFL_POINT *cp_wld_pos, u32 *p_distance );
 static void	PlaceData_Scale( PLACE_DATA *p_wk, fx32 scale, const GFL_POINT *cp_center_next );
@@ -902,6 +904,17 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//タッチ
 	UI_Init( &p_wk->ui, HEAPID_TOWNMAP );
+
+
+  //初期町名
+  {
+    const PLACE_DATA *cp_data;
+    cp_data	= PLACE_Hit( &p_wk->place, &p_wk->cursor );
+    if( cp_data != NULL )
+    {
+      PLACEWND_Start( &p_wk->placewnd, cp_data );
+    }
+  }
 
 #ifdef DEBUG_MENU_USE
 
@@ -1512,7 +1525,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
         p_wk->cp_select	= NULL;
       }
 
-			PLACE_SetVisible( &p_wk->place, FALSE );
+			PLACE_SetVisibleForce( &p_wk->place, FALSE );
 
 			p_wk->is_scale	= TRUE;
 		}
@@ -1560,7 +1573,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
         p_wk->cp_select	= NULL;
       }			
       
-      PLACE_SetVisible( &p_wk->place, FALSE );
+      PLACE_SetVisibleForce( &p_wk->place, FALSE );
 
 			p_wk->is_scale	= FALSE;
 		}
@@ -1570,7 +1583,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	//スケール終了後の場所表示処理
 	if( MAP_IsScaleEnd( &p_wk->map ) )
 	{	
-		PLACE_SetVisible( &p_wk->place, TRUE );
+		PLACE_SetVisibleForce( &p_wk->place, TRUE );
 	}
 }
 //=============================================================================
@@ -1841,7 +1854,7 @@ static void CURSOR_Init( CURSOR_WORK *p_wk, GFL_CLWK *p_cursor, GFL_CLWK *p_ring
   }
   else
   { 
-    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CURSOR_CLWK_CURSOR], FALSE );
   }
 }
 //----------------------------------------------------------------------------
@@ -2378,6 +2391,32 @@ static void PLACE_SetVisible( PLACE_WORK *p_wk, BOOL is_visible )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  強制的に表示を操作する
+ *
+ *	@param	PLACE_WORK *p_wk  ワーク
+ *	@param	is_visible        TRUEならば表示  FALSEならば非表示
+ */
+//-----------------------------------------------------------------------------
+static void PLACE_SetVisibleForce( PLACE_WORK *p_wk, BOOL is_visible )
+{
+  if( is_visible == FALSE )
+  {
+    int i;
+    for( i = 0; i < p_wk->data_num; i++ )
+    {	
+      PlaceData_SetVisibleForce( &p_wk->p_place[i], is_visible );
+    }
+    PLACEMARK_SetVisible( &p_wk->player, is_visible );
+  }
+  else
+  {
+    PLACE_SetVisible( p_wk, TRUE );
+    PLACEMARK_SetVisible( &p_wk->player, TRUE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	場所	座標を設定
  *
  *	@param	PLACE_WORK *p_wk		ワーク
@@ -2857,6 +2896,21 @@ static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible )
       }
 		}
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制的に表示を消す
+ *
+ *	@param	PLACE_DATA *p_wk  ワーク
+ *	@param	is_visible        表示
+ */
+//-----------------------------------------------------------------------------
+static void PlaceData_SetVisibleForce( PLACE_DATA *p_wk, BOOL is_visible )
+{
+  if( p_wk->p_clwk )
+  {
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+  }
 }
 //----------------------------------------------------------------------------
 /**
