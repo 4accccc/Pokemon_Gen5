@@ -351,110 +351,103 @@ void PRINTSYS_QUE_SetLimitTick( PRINT_QUE* que, OSTick tick )
 //==============================================================================================
 BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 {
+  OSTick start, diff;
+  u8 endFlag = FALSE;
+
   que->debugCounter++;
-  if( que->runningJob )
-  {
-    OSTick start, diff;
-    u8 endFlag = FALSE;
 
-    // 初回書き込み前にグローバルカラー情報をリセット
-    {
-      u8 colL, colS, colB;
-      u8 fReset = FALSE;
-
-      switch( que->runningJob->colorState ){
-      case JOB_COLORSTATE_IGNORE:
-        PRINTSYS_LSB_GetLSB( que->runningJob->defColor, &colL, &colS, &colB );
-        fReset = TRUE;
-        break;
-      case JOB_COLORSTATE_CHANGE_DONE:
-        PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
-        fReset = TRUE;
-        break;
-      default:
-        break;
-      }
-
-      if( fReset )
-      {
-        if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) ){
-          GFL_FONTSYS_SetColor( colL, colS, colB );
-        }
-      }
-    }
-
-    start = OS_GetTick();
-
-    while( que->runningJob )
-    {
-      if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_REQ )
-      {
-        u8 colL, colS, colB;
-
-        PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
-        if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
-        {
-          // 最初の色変更時、デフォルトの色情報を覚えておく
-          if( que->fColorChanged == FALSE )
-          {
-            u8 defL, defS, defB;
-            GFL_FONTSYS_GetColor( &defL, &defS, &defB );
-            que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
-            que->fColorChanged = TRUE;
-          }
-          GFL_FONTSYS_SetColor( colL, colS, colB );
-        }
-        que->runningJob->colorState = JOB_COLORSTATE_CHANGE_DONE;
-      }
-
-      while( *(que->sp) != EOM_CODE )
-      {
-        que->sp = print_next_char( que->runningJob, que->sp, TRUE );
-        diff = OS_GetTick() - start;
-        if( diff > que->limitPerFrame )
-        {
-          endFlag = TRUE;
-          break;
-        }
-      }
-      //
-      if( *(que->sp) == EOM_CODE )
-      {
-        u16 pos;
-
-        // job 終了ごとにデフォルト色に戻す
-        if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_DONE )
-        {
-          u8 defL, defS, defB;
-          PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
-          if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
-            GFL_FONTSYS_SetColor( defL, defS, defB );
-          }
-        }
-        pos = Que_AdrsToBufPos( que, que->runningJob );
-
-        que->runningJob = Que_ReadNextJobAdrs( que, que->runningJob );
-        if( que->runningJob )
-        {
-          pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
-          pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB*) );
-          que->sp = Que_BufPosToAdrs( que, pos );
-        }
-      }
-
-      if( endFlag ){ break; }
-    }
-
-    if( que->runningJob )
-    {
-      que->bufEndPos = Que_AdrsToBufPos( que, que->sp );
-      return FALSE;
-    }
-
-    que->bufTopPos = 0;
-    que->bufEndPos = que->bufSize;
+  if( que->runningJob == NULL ){
+    return TRUE;
   }
 
+  // 初回書き込み前にグローバルカラー情報をリセット
+  {
+    u8 colL, colS, colB;
+    u8 fReset = FALSE;
+
+    switch( que->runningJob->colorState ){
+    case JOB_COLORSTATE_IGNORE:
+      PRINTSYS_LSB_GetLSB( que->runningJob->defColor, &colL, &colS, &colB );
+      fReset = TRUE;
+      break;
+    case JOB_COLORSTATE_CHANGE_DONE:
+      PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
+      fReset = TRUE;
+      break;
+    default:
+      break;
+    }
+
+    if( fReset )
+    {
+      if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) ){
+        GFL_FONTSYS_SetColor( colL, colS, colB );
+      }
+    }
+  }
+
+  start = OS_GetTick();
+
+  while( que->runningJob )
+  {
+    if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_REQ )
+    {
+      u8 colL, colS, colB;
+
+      PRINTSYS_LSB_GetLSB( que->runningJob->jobColor, &colL, &colS, &colB );
+      if( GFL_FONTSYS_IsDifferentColor(colL, colS, colB) )
+      {
+        // 最初の色変更時、デフォルトの色情報を覚えておく
+        if( que->fColorChanged == FALSE )
+        {
+          u8 defL, defS, defB;
+          GFL_FONTSYS_GetColor( &defL, &defS, &defB );
+          que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
+          que->fColorChanged = TRUE;
+        }
+        GFL_FONTSYS_SetColor( colL, colS, colB );
+      }
+      que->runningJob->colorState = JOB_COLORSTATE_CHANGE_DONE;
+    }
+
+    while( *(que->sp) != EOM_CODE )
+    {
+      que->sp = print_next_char( que->runningJob, que->sp, TRUE );
+      diff = OS_GetTick() - start;
+      if( diff > que->limitPerFrame )
+      {
+        endFlag = TRUE;
+        break;
+      }
+    }
+    //
+    if( *(que->sp) == EOM_CODE )
+    {
+      u16 pos;
+
+      // job 終了ごとにデフォルト色に戻す
+      if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_DONE )
+      {
+        u8 defL, defS, defB;
+        PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
+        if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
+          GFL_FONTSYS_SetColor( defL, defS, defB );
+        }
+      }
+      pos = Que_AdrsToBufPos( que, que->runningJob );
+
+      que->runningJob = Que_ReadNextJobAdrs( que, que->runningJob );
+      if( que->runningJob )
+      {
+        pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
+        pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB*) );
+        que->sp = Que_BufPosToAdrs( que, pos );
+      }
+    }
+
+    if( endFlag ){ break; }
+  } //while_end
+  
   if( que->fColorChanged )
   {
     u8 defL, defS, defB;
@@ -462,11 +455,19 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
       GFL_FONTSYS_SetColor( defL, defS, defB );
     }
-    que->fColorChanged = FALSE;
   }
 
+  if( que->runningJob != NULL )
+  {
+    que->bufEndPos = Que_AdrsToBufPos( que, que->sp );
+    return FALSE;
+  }
+  que->bufTopPos = 0;
+  que->bufEndPos = que->bufSize;
+  que->fColorChanged = FALSE;
   return TRUE;
 }
+
 //==============================================================================================
 /**
  * プリントキューの処理が全て完了しているかチェック
