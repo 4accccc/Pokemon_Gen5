@@ -277,8 +277,7 @@ EVENT_START   ev_pos_d01r0101_support_01
 	
 	//サポート登場
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_01)
-	_OBJ_ANIME_WAIT()
-	
+	_TIME_WAIT( 32 )
 	//主人公振り向く
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_retrun01)
 	_OBJ_ANIME_WAIT()
@@ -287,6 +286,7 @@ EVENT_START   ev_pos_d01r0101_support_01
 	_BALLOONWIN_CLOSE()
 	//サポート廃墟内へ
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_02)
+	_TIME_WAIT( 8 )
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_retrun02)
 	_OBJ_ANIME_WAIT()
 	
@@ -1252,25 +1252,21 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_01
 	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：プレイヤー振り向く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_player_retrun01
-	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　夢イベント用：プレイヤー一歩後ずさる
+//	R01　夢イベント用：プレイヤー見送る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_player_retrun02
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1292,7 +1288,9 @@ _ANIME_LABEL	anm_d01r0101_support_pos_z23_01
 //	R01　夢イベント用：廃墟の中に入っていくサポート 
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_support_02
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	AC_STAY_WALK_R_16F,0
 	_ANIME_DATA	AC_STAY_WALK_L_16F,0
 	_ANIME_DATA	AC_STAY_WALK_R_16F,0
