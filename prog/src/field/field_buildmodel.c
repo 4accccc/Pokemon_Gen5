@@ -180,9 +180,6 @@ typedef struct {
 typedef struct {
   const BMINFO * bmInfo;              ///<配置モデル情報
   GFL_G3D_RES*  g3DresMdl;            ///<モデルリソース
-#ifndef BMODEL_TEXSET
-  GFL_G3D_RES*  g3DresTex;            ///<テクスチャリソース
-#endif
   GFL_G3D_RES*  g3DresAnm[GLOBAL_OBJ_ANMCOUNT];  ///<アニメリソース
 }OBJ_RES;
 
@@ -259,9 +256,7 @@ struct _FIELD_BMODEL_MAN
 	u32	objRes_Count;		  		///<共通オブジェクトリソース数
 	OBJ_RES * objRes;					///<共通オブジェクトリソース
 
-#ifdef BMODEL_TEXSET
 	GFL_G3D_RES*	g3DresTex;  ///<テクスチャセット
-#endif
 
   u32 objHdl_Count;
   OBJ_HND * objHdl;
@@ -334,10 +329,8 @@ static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
 static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header );
 static const void* BM_AREA_HEADER_getNSBMDData( const BM_AREA_HEADER* header, u32 count );
 
-#ifdef BMODEL_TEXSET
 static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, u8* gray_scale);
 static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
-#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -361,9 +354,6 @@ static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOB
 
 static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 entryNo, u8 *gray_scale);
 static void OBJRES_finalize( OBJ_RES * objRes );
-#ifndef BMODEL_TEXSET
-static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * resTex);
-#endif
 static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, const OBJ_RES* objRes);
 static void OBJHND_finalize( OBJ_HND * objHdl );
 static void OBJHND_animate(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl );
@@ -460,9 +450,7 @@ void FIELD_BMODEL_MAN_Delete(FIELD_BMODEL_MAN * man)
   // BMAreaデータ破棄
   releaseAreaBMData( man );
 
-#ifdef BMODEL_TEXSET
   freeBMTextureSet( man );
-#endif
 	GFL_HEAP_FreeMemory(man);
 
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_IsAllDelete;
@@ -530,25 +518,19 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   if (AREADATA_GetInnerOuterSwitch(areadata) != 0) 
   {	
     mdl_arc_id = ARCID_BMODEL_OUTDOOR_AREA;
-#ifdef BMODEL_TEXSET
     bmtex_arc_id = ARCID_BMODEL_TEXSET_OUTDOOR;
-#endif
   }
   else
   {	
     mdl_arc_id = ARCID_BMODEL_INDOOR_AREA;
-#ifdef BMODEL_TEXSET
     bmtex_arc_id = ARCID_BMODEL_TEXSET_INDOOR;
-#endif
   }
 
   // エリア別配置モデルデータの読み込み
   loadAreaBMData( man, mdl_arc_id, bmlist_index );
 
-#ifdef BMODEL_TEXSET
   //エリア別配置モデルテクスチャセットの読み込み
   loadBMTextureSet(man, bmtex_arc_id, bmlist_index, gray_scale );
-#endif
 
   //必要な配置モデルデータの読み込み
   BMINFO_Load(man);
@@ -898,7 +880,6 @@ static u16 calcArcIndex(u16 area_id)
 	return 0;	//エラー対処
 }
 
-#ifdef BMODEL_TEXSET
 //------------------------------------------------------------------
 /**
  * @brief エリア別配置モデルIDテクスチャセットの読み込み
@@ -941,7 +922,6 @@ static void freeBMTextureSet(FIELD_BMODEL_MAN * man)
   }
 }
 
-#endif
 
 //============================================================================================
 //
@@ -1215,18 +1195,6 @@ static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOB
 //  GFL_G3D 用リソース管理オブジェクト
 //
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-#ifndef BMODEL_TEXSET
-static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * objRes)
-{
-  if ( objRes->g3DresTex != NULL ) {
-    return objRes->g3DresTex;
-  } else {
-    return objRes->g3DresMdl;
-  }
-}
-#endif
 
 //------------------------------------------------------------------
 // オブジェクトリソースを作成
@@ -1243,22 +1211,6 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 ent
 	GFL_G3D_CreateResourceAuto( objRes->g3DresMdl, (void*)BM_AREA_HEADER_getNSBMDData( man->bm_areadata, entryNo ) ); //配置モデル内で、リソースデータを書き換えることはない。
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( objRes->g3DresMdl );
 
-#ifndef BMODEL_TEXSET
-  //テクスチャ登録
-  //現状、テクスチャはモデリングimdに含まれるものを使用している
-  objRes->g3DresTex = NULL;
-  resTex = objRes->g3DresMdl;
-  if (GFL_G3D_CheckResourceType( resTex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE)
-  {
-    if( gray_scale != GRAYSCALE_TYPE_NULL ){
-  	  FLDMAPPER_Field_Grayscale( resTex, gray_scale );
-    }
-	  GFL_G3D_TransVramTexture( resTex );
-  } else {
-    OS_Printf("配置モデルにテクスチャが含まれていません！(mdlID=%d)\n", bm_id);
-    GF_ASSERT(0);
-  }
-#endif
 
   {
     const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objRes->bmInfo);
@@ -1293,17 +1245,6 @@ static void OBJRES_finalize( OBJ_RES * objRes )
       objRes->g3DresAnm[anmNo] = NULL;
     }
   }
-#ifndef BMODEL_TEXSET
-  if( objRes->g3DresTex == NULL ){
-    resTex = objRes->g3DresMdl;
-  } else {
-    resTex = objRes->g3DresTex;
-    BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( objRes->g3DresTex ) );
-    GFL_G3D_DeleteResource( objRes->g3DresTex );
-    objRes->g3DresTex = NULL;
-  }
-  GFL_G3D_FreeVramTexture( resTex );
-#endif
 
   if( objRes->g3DresMdl != NULL ){
     BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( objRes->g3DresMdl );
@@ -1381,14 +1322,8 @@ static void OBJHND_initialize(const FIELD_BMODEL_MAN * man, OBJ_HND * objHdl, co
   int anmNo;
   const FIELD_BMANIME_DATA * anmData = BMINFO_getAnimeData(objRes->bmInfo);
 
-#ifdef BMODEL_TEXSET
   //レンダー生成
   g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, man->g3DresTex );
-#else
-  resTex = OBJRES_getResTex( objRes );
-  //レンダー生成
-  g3Drnd = GFL_G3D_RENDER_Create( objRes->g3DresMdl, 0, resTex );
-#endif
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( g3Drnd );
   BMODEL_DEBUG_RESOURCE_MEMORY_ALLOCATOR_SIZE_Plus( GFL_G3D_RENDER_GetRenderObj( g3Drnd ) );
 
