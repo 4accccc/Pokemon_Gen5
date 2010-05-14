@@ -264,6 +264,7 @@ _ANIME_LABEL	anm_doc_turn
 //Œ¤‹†ˆõ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_doc_move
+  _ANIME_DATA	AC_WALK_D_8F,1
   _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -291,7 +292,7 @@ _ANIME_LABEL	anm_doc_up_gyoe
 _ANIME_LABEL	anm_doc_return
   _ANIME_DATA	AC_WALK_U_8F,2
   _ANIME_DATA	AC_WALK_L_8F,2
-  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
   
