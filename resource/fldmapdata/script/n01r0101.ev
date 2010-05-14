@@ -131,6 +131,8 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_hirumu )
 	_OBJ_ANIME_WAIT()
 	
+	_TIME_WAIT( 20 )
+	
 	//ÇVêlèOÇQÅFëOÇ÷
 	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
 	_OBJ_ANIME_WAIT()
