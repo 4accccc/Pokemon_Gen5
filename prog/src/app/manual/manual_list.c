@@ -467,10 +467,22 @@ static void Manual_List_Prepare( MANUAL_LIST_WORK* work )
       FALSE,
       work->cmn_wk->heap_id );
 
+/*
   GFL_ARCHDL_UTIL_TransVramScreen(
       work->cmn_wk->handle_system,
       NARC_manual_bg2_NSCR,
       BG_FRAME_S_REAR,
+      0,
+      0,  // ‘S“]‘—
+      FALSE,
+      work->cmn_wk->heap_id );
+*/
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
+      work->cmn_wk->handle_system,
+      NARC_manual_bg2_NSCR,
+      BG_FRAME_S_REAR,
+      0,
       0,
       0,  // ‘S“]‘—
       FALSE,

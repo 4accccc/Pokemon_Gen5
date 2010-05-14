@@ -356,6 +356,7 @@ static void Manual_Top_Prepare( MANUAL_TOP_WORK* work )
       FALSE,
       work->cmn_wk->heap_id );
 
+/*
   GFL_ARCHDL_UTIL_TransVramScreen(
       work->cmn_wk->handle_system,
       NARC_manual_bg1_NSCR,
@@ -364,7 +365,17 @@ static void Manual_Top_Prepare( MANUAL_TOP_WORK* work )
       0,  // ‘S“]‘—
       FALSE,
       work->cmn_wk->heap_id );
+*/
 
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
+      work->cmn_wk->handle_system,
+      NARC_manual_bg1_NSCR,
+      BG_FRAME_S_REAR,
+      0,
+      0,
+      0,  // ‘S“]‘—
+      FALSE,
+      work->cmn_wk->heap_id );
 
   // APP_TASKMENU_WIN
   Manual_Top_PrepareAppTaskmenuWin( work );
