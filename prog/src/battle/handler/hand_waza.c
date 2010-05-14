@@ -1528,6 +1528,7 @@ static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
   param->pokeID = pokeID;
   param->damage = damage;
+  param->fHitHidePoke = TRUE;
   HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HazureJibaku );
   HANDEX_STR_AddArg( &param->exStr, pokeID );
 }
@@ -4426,7 +4427,7 @@ static void handler_WeatherBall_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_WeatherBall_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) != POKETYPE_NORMAL)
+  &&  (BTL_SVFTOOL_GetWeather(flowWk) != BTL_WEATHER_NONE)
   ){
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
   }
@@ -7247,19 +7248,18 @@ static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
     PokeTokusei  tok = BPP_GetValue( target, BPP_TOKUSEI );
 
-    if( (tok != POKETOKUSEI_FUSIGINAMAMORI)
-    &&  !BTL_CALC_IsCantRecvTokusei(tok)
-    ){
-        BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  tok_param;
+    if( !BTL_CALC_IsCantRecvTokusei(tok))
+    {
+      BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  tok_param;
 
-        tok_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
-        tok_param->pokeID = pokeID;
-        tok_param->tokuseiID = BPP_GetValue( target, BPP_TOKUSEI );
-        tok_param->fSameTokEffective = TRUE;
-        HANDEX_STR_Setup( &tok_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Narikiri );
-        HANDEX_STR_AddArg( &tok_param->exStr, pokeID );
-        HANDEX_STR_AddArg( &tok_param->exStr, target_pokeID );
-        HANDEX_STR_AddArg( &tok_param->exStr, tok_param->tokuseiID );
+      tok_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
+      tok_param->pokeID = pokeID;
+      tok_param->tokuseiID = BPP_GetValue( target, BPP_TOKUSEI );
+      tok_param->fSameTokEffective = TRUE;
+      HANDEX_STR_Setup( &tok_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Narikiri );
+      HANDEX_STR_AddArg( &tok_param->exStr, pokeID );
+      HANDEX_STR_AddArg( &tok_param->exStr, target_pokeID );
+      HANDEX_STR_AddArg( &tok_param->exStr, tok_param->tokuseiID );
     }
   }
 }
@@ -9251,20 +9251,25 @@ static void handler_NakamaDukuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u32 targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
-    BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 myTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
-    u32 i;
-    // 対象ポケモンのとくせいを自分と同じものに書き換え
-    for(i=0; i<targetCnt; ++i)
+
+    if( !BTL_CALC_IsCantRecvTokusei(myTokusei) )
     {
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
-      param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
-      param->tokuseiID = myTokusei;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
-      HANDEX_STR_AddArg( &param->exStr, param->pokeID );
-      HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
+      u32 targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
+      BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
+      u32 i;
+
+      // 対象ポケモンのとくせいを自分と同じものに書き換え
+      for(i=0; i<targetCnt; ++i)
+      {
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
+        param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
+        param->tokuseiID = myTokusei;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_TokuseiChange );
+        HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+        HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
+      }
     }
   }
 }

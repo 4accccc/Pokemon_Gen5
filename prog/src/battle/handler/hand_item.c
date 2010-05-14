@@ -2133,7 +2133,7 @@ static void handler_JapoNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
     {
-      BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
+//      BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
       work[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
@@ -3408,6 +3408,7 @@ static void handler_KuroiHedoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
       param->pokeID = pokeID;
       param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+      param->fHitHidePoke = TRUE;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
@@ -3502,6 +3503,7 @@ static void handler_KuttukiBari_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     param->pokeID = pokeID;
     param->damage = BTL_CALC_QuotMaxHP( bpp, common_GetItemParam(myHandle, ITEM_PRM_ATTACK) );
+    param->fHitHidePoke = TRUE;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Damage );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );

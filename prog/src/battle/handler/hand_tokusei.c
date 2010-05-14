@@ -2546,6 +2546,7 @@ static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
         param->pokeID = pokeID;
         param->damage = damage;
+        param->fHitHidePoke = TRUE;
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
@@ -3228,7 +3229,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, allPokeID[i] );
       tok = BPP_GetValue( bpp, BPP_TOKUSEI );
-      if( !BTL_CALC_IsCantRecvTokusei(tok) )
+      if( !BTL_CALC_IsCantRecvTokusei(tok) || (tok == POKETOKUSEI_FUSIGINAMAMORI) )
       {
         targetPokeID[ targetCnt++ ] = allPokeID[i];
       }
@@ -3849,6 +3850,7 @@ static void handler_Kansouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       {
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
         param->pokeID = pokeID;
+        param->fHitHidePoke = TRUE;
         param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
@@ -4443,9 +4445,14 @@ static void handler_Nightmare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     const BTL_POKEPARAM* bpp;
     u8 ePokeID[ BTL_POSIDX_MAX ];
-    u8 pokeCnt = BTL_SVFTOOL_GetAllOpponentFrontPokeID( flowWk, pokeID, ePokeID );
+    u8 pokeCnt, i;
+
     u8 exe_flag = FALSE;
-    u8 i;
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+
+    pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, ePokeID );
+
     for(i=0; i<pokeCnt; ++i)
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, ePokeID[i] );
@@ -4547,6 +4554,7 @@ static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFa
       POKETOKUSEI_JUUNAN,         POKETOKUSEI_MAIPEESU,   POKETOKUSEI_MIZUNOBEERU,
       POKETOKUSEI_RIIFUGAADO,     POKETOKUSEI_FUMIN,      POKETOKUSEI_HATOMUNE,
       POKETOKUSEI_YARUKI,         POKETOKUSEI_MENEKI,     POKETOKUSEI_MAGUMANOYOROI,
+      POKETOKUSEI_AMANOJAKU,
     };
     u32 i;
     for(i=0; i<NELEMS(disableTokTable); ++i)
@@ -4845,6 +4853,7 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
       param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       param->damage = damage;
+      param->fHitHidePoke = TRUE;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HedoroEki );
       HANDEX_STR_AddArg( &param->exStr, param->pokeID );
 

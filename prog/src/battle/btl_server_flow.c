@@ -14498,7 +14498,6 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
   u16 prevTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
 
   if( ((param->fSameTokEffective) || ( param->tokuseiID != prevTokusei ))
-  &&  !BTL_CALC_TOK_CheckCantChange(param->tokuseiID)
   ){
     SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
 
