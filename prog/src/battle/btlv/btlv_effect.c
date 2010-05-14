@@ -121,6 +121,7 @@ typedef struct
   int         work;
   int         wait;
   int         color;
+  BOOL        vanish;   //バニッシュ状態でエフェクトが呼ばれていたらTRUE
 }BTLV_EFFECT_DAMAGE_TCB;
 
 typedef struct
@@ -499,6 +500,7 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
   bedt->target = target;
   bedt->work = BTLV_EFFECT_BLINK_TIME;
   bedt->wait = 0;
+  bedt->vanish = BTLV_MCSS_GetVanishFlag( bew->bmw, target );
 
   if( WAZADATA_GetDamageType( waza ) == WAZADATA_DMG_PHYSIC )
   {
@@ -1675,19 +1677,28 @@ static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work )
   }
   switch( bedt->seq_no ){
   case 0:
-    BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 16, 16, 0, bedt->color );
+    if( bedt->vanish == FALSE )
+    { 
+      BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 16, 16, 0, bedt->color );
+    }
     bedt->wait = BTLV_EFFECT_BLINK_WAIT;
     bedt->seq_no = 1;
     break;
   case 1:
-    BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_ON );
+    if( bedt->vanish == FALSE )
+    { 
+      BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_ON );
+    }
     bedt->wait = BTLV_EFFECT_BLINK_WAIT;
     bedt->seq_no = 2;
     break;
   case 2:
     bedt->seq_no = 0;
-    BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_OFF );
-    BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 0, 0, 0, 0x7fff );
+    if( bedt->vanish == FALSE )
+    { 
+      BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_OFF );
+      BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 0, 0, 0, 0x7fff );
+    }
     bedt->wait = BTLV_EFFECT_BLINK_WAIT;
     if( --bedt->work == 0 ){
       BTLV_EFFECT_FreeTCB( tcb );
