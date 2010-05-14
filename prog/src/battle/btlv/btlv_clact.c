@@ -442,7 +442,7 @@ static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int ty
     bctw->emw.vector.z = FX_Div( end->z, FX32_CONST( frame ) );
     break;
   }
-  GFL_TCB_AddTask( bclw->tcb_sys, func, bctw, 0 );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bclw->tcb_sys, func, bctw, 0 ), cb_func, GROUP_DEFAULT );
 }
 
 //============================================================================================
