@@ -1305,18 +1305,6 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     break;
   case 3:
     if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
-    #if 0 //使用が未定になった　2010.03.26(金)
-      WIFI_NEGOTIATION_SAVEDATA *negosv= GAMEDATA_GetWifiNegotiation(unisys->uniparent->game_data);
-      NetID my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-      u32 recv_bit = (u32)situ->mycomm.mystatus_recv_bit;
-      int i;
-      for(i = 0; recv_bit > 0; i++){
-        if(i != my_net_id && (recv_bit & (1 << i))){
-          WIFI_NEGOTIATION_SV_SetFriend(
-            negosv, GAMEDATA_GetMyStatusPlayer(unisys->uniparent->game_data, i));
-        }
-      }
-    #endif
       return TRUE;
     }
     break;
@@ -1567,18 +1555,6 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     break;
   case 3:
     if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
-    #if 0 //使用が未定になった 2010.03.26(金)
-      WIFI_NEGOTIATION_SAVEDATA *negosv= GAMEDATA_GetWifiNegotiation(unisys->uniparent->game_data);
-      NetID my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-      u32 recv_bit = (u32)situ->mycomm.mystatus_recv_bit;
-      int i;
-      for(i = 0; recv_bit > 0; i++){
-        if(i != my_net_id && (recv_bit & (1 << i))){
-          WIFI_NEGOTIATION_SV_SetFriend(
-            negosv, GAMEDATA_GetMyStatusPlayer(unisys->uniparent->game_data, i));
-        }
-      }
-    #endif
       return TRUE;
     }
     break;
