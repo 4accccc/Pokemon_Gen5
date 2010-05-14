@@ -150,7 +150,7 @@ extern  void	          MCSS_SetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys, cons
 extern  void	          MCSS_SetAnimeFrame( MCSS_WORK *mcss, const fx32 frame );
 extern  u16             MCSS_GetAnimeNum( MCSS_WORK* mcss );
 extern  void	          MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK* mcss, u8 evy, u32 rgb );
-extern  void	          MCSS_ResetPaletteFadeBaseColor( MCSS_WORK *mcss );
+extern  void	          MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss );
 extern  int	            MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss );
 
 #ifdef PM_DEBUG
