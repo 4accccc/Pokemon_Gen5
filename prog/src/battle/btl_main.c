@@ -161,7 +161,6 @@ struct _BTL_MAIN_MODULE {
   u8        fBonusMoneyFixed     : 1;
   u8        fLoseMoneyFixed      : 1;
   u8        fBGMFadeOutDisable   : 1;
-  u8        fLevelupIntr         : 1;
 
 
 };
@@ -283,7 +282,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fLoseMoneyFixed = FALSE;
       wk->fCommError = FALSE;
       wk->fBGMFadeOutDisable = FALSE;
-      wk->fLevelupIntr = FALSE;
       wk->MultiAIClientNum = 0;
 
       TAYA_Printf("musicDef=%d, musicWin=%d\n", setup_param->musicDefault, setup_param->musicWin );
@@ -1936,48 +1934,22 @@ static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq )
 //======================================================================================================
 //======================================================================================================
 
-void BTL_MAIN_IntrLevelupProc( const BTL_MAIN_MODULE* wk )
-{
-  BTL_MAIN_MODULE* pwk = (BTL_MAIN_MODULE*)wk;
-  longjmp( pwk->setjmpBuf, 1 );
-}
 
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 {
   BOOL quitFlag = FALSE;
   int i;
 
-  if( setjmp(wk->setjmpBuf) == 1 ){
-    wk->fLevelupIntr = TRUE;
-    BTL_SERVER_IntrLevelup_Start( wk->server );
-    OS_TPrintf("JumpReturned\n");
-  }
+  BTL_SERVER_Main( wk->server );
 
-  if( wk->fLevelupIntr )
+  for(i=0; i<BTL_CLIENT_MAX; i++)
   {
-    BOOL fEndIntr = BTL_SERVER_IntrLevelup_Main( wk->server );
-    for(i=0; i<BTL_CLIENT_MAX; i++){
-      if( wk->client[i] != NULL ){
-        BTL_CLIENT_Main (wk->client[i] );
-      }
-    }
-    if( fEndIntr ){
-      wk->fLevelupIntr = FALSE;
-    }
-  }
-  else
-  {
-    BTL_SERVER_Main( wk->server );
-
-    for(i=0; i<BTL_CLIENT_MAX; i++)
+    if( wk->client[i] != NULL )
     {
-      if( wk->client[i] != NULL )
+      if( BTL_CLIENT_Main(wk->client[i]) )
       {
-        if( BTL_CLIENT_Main(wk->client[i]) )
-        {
-          BTL_CLIENT_GetEscapeInfo( wk->client[i], &wk->escapeInfo );
-          quitFlag = TRUE;
-        }
+        BTL_CLIENT_GetEscapeInfo( wk->client[i], &wk->escapeInfo );
+        quitFlag = TRUE;
       }
     }
   }

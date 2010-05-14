@@ -20,6 +20,7 @@
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
 #include "..\btlv\btlv_effect.h"
+#include "..\btlv\btlv_gauge.h"
 
 #include "hand_common.h"
 #include "hand_side.h"
@@ -3841,29 +3842,37 @@ static const BtlEventHandlerTable*  ADD_Jitabata( u32* numElems )
 static void handler_Jitabata( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   static const struct {
-    fx32  ratio;
-    u32   pow;
+    u16   dot_ratio;
+    u16   pow;
   }tbl[]={
-    { FX32_CONST(2.0),  200 },
-    { FX32_CONST(7.8),  150 },
-    { FX32_CONST(18.7), 100 },
-    { FX32_CONST(32.8),  80 },
-    { FX32_CONST(65.6),  40 },
-    { FX32_CONST(100),   20 },
+    {  1,  200 },
+    {  4,  150 },
+    {  9,  100 },
+    { 16,   80 },
+    { 32,   40 },
+    { 48,   20 },
   };
 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    fx32 r = BPP_GetHPRatio( bpp );
-    u32 i, max;
-
-    max = NELEMS(tbl) - 1;
-    for(i=0; i<max; ++i)
-    {
-      if( r <= tbl[i].ratio ){ break; }
+    u32 r = (BPP_GetValue(bpp, BPP_HP) * BTLV_GAUGE_HP_DOTTOMAX) / BPP_GetValue(bpp, BPP_MAX_HP);
+    if( r == 0 ){
+      r = 1;
     }
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, tbl[i].pow );
+
+    {
+      u32 i, max;
+      max = NELEMS(tbl) - 1;
+      for(i=0; i<max; ++i)
+      {
+        if( r <= tbl[i].dot_ratio ){ break; }
+      }
+
+      TAYA_Printf("‚¶‚½‚Î‚½ dot=%d, pow=%d\n", r, tbl[i].pow );
+
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, tbl[i].pow );
+    }
   }
 }
 //----------------------------------------------------------------------------------
