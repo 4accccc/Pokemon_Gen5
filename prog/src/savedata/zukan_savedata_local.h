@@ -54,7 +54,9 @@ enum {
 	COLOR_RARE,
 	COLOR_MAX,
 
-	TEXTVER_ARRAY_LEN = 370,		///< 言語フラグ
+//	TEXTVER_ARRAY_LEN = 370,		///< 言語フラグ
+	TEXTVER_VER_MAX = 7,				///< 言語種類数		日/英/仏/伊/独/西/韓
+	TEXTVER_ARRAY_LEN = 432,		///< 言語フラグ		ポケモン数 * 言語数 / 8 = 493 * 7 / 8 = 432
 };
 
 
@@ -73,6 +75,9 @@ struct ZUKAN_SAVEDATA {
 	u32	shortcutMonsNo:10;		///< Ｙ登録されたポケモン番号（諸事情により未使用）
 
   u32 get_flag[POKEZUKAN_ARRAY_LEN];    ///< 捕まえたフラグ用ワーク
+
+// 21 x 4 x 3 = 252
+// 649 x 3 / 8 = 1947 / 8 = 244
 
   u32 sex_flag[SEE_FLAG_MAX][POKEZUKAN_ARRAY_LEN];		///< オスメスフラグ用ワーク
 	u32	draw_sex[SEE_FLAG_MAX][POKEZUKAN_ARRAY_LEN];		///< 閲覧中オスメスフラグ

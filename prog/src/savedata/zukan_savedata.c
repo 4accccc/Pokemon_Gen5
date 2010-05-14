@@ -238,8 +238,8 @@ static inline void SetZukanRandom( ZUKAN_SAVEDATA * zw, u16 monsno, u32 rand )
 //----------------------------------------------------------
 static void SetZukanTextVersionUp( ZUKAN_SAVEDATA * zw, u16 monsno, u32 lang )
 {
-	// 国コード最大
-	if( lang > 8 ){
+	// 国コード最大 or 欠番コード
+	if( lang > 8 || lang == 6 ){
 		return;
 	}
 
@@ -248,7 +248,12 @@ static void SetZukanTextVersionUp( ZUKAN_SAVEDATA * zw, u16 monsno, u32 lang )
 		return;
 	}
 
-  zw->TextVersionUp[monsno] |= ( 1 << (lang-1) );
+	// 言語６番が欠番なので、スペイン語以降は-1
+	if( lang >= LANG_SPAIN ){
+		lang -= 1;
+	}
+
+	set_bit( zw->TextVersionUp, (monsno-1)*TEXTVER_VER_MAX+(lang-1) );
 }
 
 //----------------------------------------------------------------------------
@@ -269,7 +274,7 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
     MONSNO_DAAKURAI,		// ダークライ
     MONSNO_SHEIMI,			// シェイミ
     MONSNO_ARUSEUSU,		// アルセウス
-		MONSNO_652,	// ツチノカミ
+		MONSNO_652,					// ツチノカミ
 		MONSNO_RAI,					// ライ
 		MONSNO_DARUTANISU,	// ダルタニス
 		MONSNO_MERODHIA,		// メロディア
@@ -295,7 +300,7 @@ static BOOL check_LocalCompMonsno( u16 monsno )
 {
   int i;
   static const u16 cut_check_monsno[] = {
-		MONSNO_652,	// ツチノカミ
+		MONSNO_652,					// ツチノカミ
 		MONSNO_RAI,					// ライ
 		MONSNO_DARUTANISU,	// ダルタニス
 		MONSNO_MERODHIA,		// メロディア
@@ -1359,8 +1364,8 @@ BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 
 {
   zukan_incorrect(zw);
 
-	// 国コード最大
-	if( country_code > 8 ){
+	// 国コード最大 or 欠番コード
+	if( country_code > 8 || country_code == 6 ){
 		return FALSE;
 	}
 
@@ -1369,9 +1374,10 @@ BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 
 		return FALSE;
 	}
 
-	// フラグチェック
-	if( ( zw->TextVersionUp[monsno] & (1<<(country_code-1)) ) == 0 ){
-		return FALSE;
+	// 言語６番が欠番なので、スペイン語以降は-1
+	if( country_code >= LANG_SPAIN ){
+		country_code -= 1;
 	}
-	return TRUE;
+
+	return check_bit( zw->TextVersionUp, (monsno-1)*TEXTVER_VER_MAX+(country_code-1) );
 }
