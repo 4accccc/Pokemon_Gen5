@@ -292,7 +292,7 @@ void SPPOKE_GMK_SetupTrio(FIELDMAP_WORK *fieldWork)
   //三銃士イベント用ワークのアロケーション
   ;
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &SetupTrio, SPPOKE_TRIO_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &SetupTrio, SPPOKE_TRIO_UNIT_IDX );
 
   //ボール初期化
   //OBJを非表示状態にする
@@ -376,7 +376,7 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
   //メロディアイベント用ワークのアロケーション
   ;
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &SetupMero, SPPOKE_MERO_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &SetupMero, SPPOKE_MERO_UNIT_IDX );
   
   //ボール初期化
   //OBJを非表示状態にする
@@ -465,7 +465,7 @@ void SPPOKE_GMK_SetupZoroa(FIELDMAP_WORK *fieldWork)
     gmk_wk->Work = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heap_id), sizeof(SMOKE_GMK_WK) );
   }
 
-  //必要なリソースの用意
+  //必要なリソースの用意(アーカイブＩＤが２つ以上あるのでハンドル関数を使用しません)
   FLD_EXP_OBJ_AddUnit(ptr, &SetupZoroa, ZOROA_UNIT_IDX );
   
   //ボール初期化

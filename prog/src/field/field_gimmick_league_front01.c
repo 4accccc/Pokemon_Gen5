@@ -364,7 +364,7 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
 
   // 拡張オブジェクトのユニットを追加
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[LF01_EXUNIT_GIMMICK], LF01_EXUNIT_GIMMICK );
+  FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &unit[LF01_EXUNIT_GIMMICK], LF01_EXUNIT_GIMMICK );
 
   // 各オブジェの配置
   {

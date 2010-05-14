@@ -341,7 +341,7 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
 
   // 拡張オブジェクトのユニットを追加
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[LF02_EXUNIT_GIMMICK], LF02_EXUNIT_GIMMICK );
+  FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &unit[LF02_EXUNIT_GIMMICK], LF02_EXUNIT_GIMMICK );
 
   // リフトのアニメーション初期化
   //FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA, TRUE );

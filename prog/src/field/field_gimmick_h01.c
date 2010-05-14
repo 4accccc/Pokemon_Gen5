@@ -203,7 +203,7 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   // 拡張オブジェクトのユニットを追加
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
 
   // 船のアニメーション開始
   {

@@ -553,7 +553,7 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     case MOJIMODE_HIRAGANA: index = UNIT_ELBOARD_FAST;   break;
     default: GF_ASSERT(0);
     }
-    FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[ index ], EXPOBJ_UNIT_ELBOARD );
+    FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &unit[ index ], EXPOBJ_UNIT_ELBOARD );
   }
 
   // ギミック管理ワークを作成

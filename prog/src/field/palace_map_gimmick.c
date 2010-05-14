@@ -173,7 +173,7 @@ void PALACE_MAP_GMK_Setup(FIELDMAP_WORK *fieldWork)
   wk = GMK_TMP_WK_AllocWork
       (fieldWork, GIMMICK_WORK_ASSIGN_ID, heapID, sizeof(PALACE_MAP_GMK_WORK));
   // 拡張オブジェクトのユニットを追加
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &map_setup, EXPOBJ_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &map_setup, EXPOBJ_UNIT_IDX );
 
   // 全オブジェの表示をOFF
   for( i=0; i<MAP_OBJ_NUM; i++ ){
