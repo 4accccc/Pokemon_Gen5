@@ -325,6 +325,10 @@ BOOL MANUAL_DATA_ImageIdIsValid( MANUAL_DATA_WORK* work, u16 image_id )  // ‰æ‘œ
   if( image_id != MANUAL_DATA_IMAGE_NONE ) return TRUE;
   return FALSE;
 }
+u16  MANUAL_DATA_ImageIdGetNoImage( MANUAL_DATA_WORK* work )  // ‰æ‘œ‚È‚µ‚Ì‚Æ‚«‚É•\Ž¦‚·‚é‰æ‘œ‚ÌID‚ð“¾‚é
+{
+  return MANUAL_DATA_NO_IMAGE_ID;
+}
 
 
 //------------------------------------------------------------------

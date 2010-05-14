@@ -101,3 +101,6 @@ enum
 #define MANUAL_SND_SB_MOVE     (SEQ_SE_SELECT1)
 
 
+// 上画面のダイレクトカラー画像なしのとき
+#define MANUAL_BG_M_DCBMP_NO_IMAGE  (0xFFFF)    // 画像ファイルなしのとき
+

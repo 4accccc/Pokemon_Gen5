@@ -86,4 +86,5 @@ extern  void MANUAL_DATA_ReadFlagSetRead( MANUAL_DATA_WORK* work, u16 read_flag,
 
 // ‰æ‘œ‚ÌID
 extern  BOOL MANUAL_DATA_ImageIdIsValid( MANUAL_DATA_WORK* work, u16 image_id );  // ‰æ‘œ‚ÌID‚ª—LŒø(‰æ‘œ‚ ‚è)‚©–³Œø(‰æ‘œ‚È‚µ)‚©‚ð•Ô‚·(—LŒø‚Ì‚Æ‚«TRUE)
+extern  u16  MANUAL_DATA_ImageIdGetNoImage( MANUAL_DATA_WORK* work );  // ‰æ‘œ‚È‚µ‚Ì‚Æ‚«‚É•\Ž¦‚·‚é‰æ‘œ‚ÌID‚ð“¾‚é
 

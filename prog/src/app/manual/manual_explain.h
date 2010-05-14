@@ -25,7 +25,6 @@
 *  定数定義
 */
 //=============================================================================
-#define MANUAL_EXPLAIN_NO_IMAGE  (0xFFFF)    // 画像ファイルなしのとき
 #define MANUAL_EXPLAIN_PAGE_MAX  (9)         // 最大9ページ
 
 typedef enum

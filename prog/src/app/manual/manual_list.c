@@ -70,6 +70,17 @@ ATM_WIN_ITEM;
 
 #define SCROLL_Y  (APP_TASKMENU_PLATE_HEIGHT*8/2)
 
+
+// 文字の色を変更しておく
+#define ATM_HALF_ITEM_PAL_LINE_POS0 (0x0)
+#define ATM_HALF_ITEM_PAL_LINE_POS1 (0x1)
+#define ATM_HALF_ITEM_PAL_COLOR_POS (0xd)
+#define ATM_HALF_ITEM_TEXT_COLOR    (0x1ce7)
+
+// 選択できないパネルの文字色カラー
+#define ATM_HALF_ITEM_MSGCOLOR (PRINTSYS_MACRO_LSB(0xf,0xd,0x3))
+
+
 // 入力状態
 typedef enum
 {
@@ -127,7 +138,9 @@ struct _MANUAL_LIST_WORK
   APP_TASKMENU_WIN_WORK*      atm_win_wk[ATM_WIN_ITEM_MAX];  // NULLのときなし
   BOOL                        atm_win_is_show[ATM_WIN_ITEM_MAX];  // TRUEのとき表示している、FALSEのとき表示していない
                                                                   // atm_win_wk[i]がNULLでないときだけ有効な値が入っている
-  
+
+  u16                         atm_half_item_text_color_buf;
+
   // OBJ
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   sb_cursor_clwk;
@@ -548,6 +561,21 @@ static void Manual_List_PrepareAppTaskmenuWin( MANUAL_LIST_WORK* work )
         work->cmn_wk->font,
         work->cmn_wk->print_que_main,
         work->cmn_wk->heap_id );
+  }
+
+  // 文字の色を変更しておく
+  {
+    work->atm_half_item_text_color_buf = ATM_HALF_ITEM_TEXT_COLOR;
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_BG_PLTT_SUB,
+        ( BG_PAL_POS_S_ATM + ATM_HALF_ITEM_PAL_LINE_POS0 ) * 0x20 + ATM_HALF_ITEM_PAL_COLOR_POS * 0x2,
+        &(work->atm_half_item_text_color_buf),
+        0x2 );
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_BG_PLTT_SUB,
+        ( BG_PAL_POS_S_ATM + ATM_HALF_ITEM_PAL_LINE_POS1 ) * 0x20 + ATM_HALF_ITEM_PAL_COLOR_POS * 0x2,
+        &(work->atm_half_item_text_color_buf),
+        0x2 );
   }
 
   // リストを動かした際に呼び出す関数を利用して、最初の表示を作成する
@@ -1037,7 +1065,7 @@ static void Manual_List_UpdateAppTaskmenuWin( MANUAL_LIST_WORK* work )
 
       // 窓の設定
       atm_item_wk.str       = GFL_MSG_CreateString( work->cmn_wk->msgdata_main, work->param->item[item_idx].str_id );
-      atm_item_wk.msgColor  = APP_TASKMENU_ITEM_MSGCOLOR;
+      atm_item_wk.msgColor  = (i==ATM_WIN_ITEM_UP_HALF||i==ATM_WIN_ITEM_DOWN_HALF)?(ATM_HALF_ITEM_MSGCOLOR):(APP_TASKMENU_ITEM_MSGCOLOR);
       atm_item_wk.type      = APP_TASKMENU_WIN_TYPE_NORMAL;
 
       work->atm_win_wk[i] = APP_TASKMENU_WIN_Create(

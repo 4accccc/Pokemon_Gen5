@@ -67,7 +67,7 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
   // frmnum              posx  posy  sizx  sizy  palnum                dir                    x  y
   {  BG_FRAME_S_MAIN,       0,    0,    1,    1, BG_PAL_POS_S_TEXT,    GFL_BMP_CHRAREA_GET_F, 0, 0 },  // TEXT_DUMMY
   {  BG_FRAME_S_MAIN,       1,    0,   30,    2, BG_PAL_POS_S_TEXT,    GFL_BMP_CHRAREA_GET_F, 0, 1 },  // TEXT_TITLE
-  {  BG_FRAME_S_MAIN,       0,    3,   32,   18, BG_PAL_POS_S_TEXT,    GFL_BMP_CHRAREA_GET_F, 4, 0 },  // TEXT_EXPLAIN
+  {  BG_FRAME_S_MAIN,       0,    2,   32,   19, BG_PAL_POS_S_TEXT,    GFL_BMP_CHRAREA_GET_F, 4, 6 },  // TEXT_EXPLAIN
 };
 
 #define TEXT_TITLE_COLOR_L    (15)  // •¶ŽšŽåF
@@ -190,19 +190,8 @@ void  MANUAL_EXPLAIN_Exit(
     MANUAL_EXPLAIN_WORK*     work
 )
 {
-  // ‰æ‘œ‚ðÁ‹Ž
-  {
-    u32  image_size = 256*192*2;
-    u32  size;
-    u16* buf;
-
-    buf = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, image_size );
-    size = image_size;
-
-    DC_FlushRange( buf, size );
-    GX_LoadBG2Bmp( buf, 0, image_size );
-    GFL_HEAP_FreeMemory( buf );
-  }
+  // ‰æ‘œ‚ð‰æ‘œ‚È‚µ‚Ì‚Æ‚«‚Ì‚à‚Ì‚É‚µ‚Ä‚¨‚­
+  MANUAL_COMMON_DrawBgMDcbmp( work->cmn_wk, MANUAL_DATA_ImageIdGetNoImage( work->cmn_wk->data_wk ) );
 
   // VBlank’†TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
@@ -455,17 +444,6 @@ static void Manual_Explain_PageChange( MANUAL_EXPLAIN_WORK* work )
 
   // ‰æ‘œ
 
-  if( work->param->page[work->page_no].image == MANUAL_EXPLAIN_NO_IMAGE )
-  {
-    buf = GFL_HEAP_AllocClearMemory( work->cmn_wk->heap_id, image_size );
-    size = image_size;
-  }
-  else
-  {
-    buf = GFL_ARCHDL_UTIL_LoadEx( work->cmn_wk->handle_explain, work->param->page[work->page_no].image, TRUE, work->cmn_wk->heap_id, &size );
-  }
-  DC_FlushRange( buf, size );
-  GX_LoadBG2Bmp( buf, 0, image_size );
-  GFL_HEAP_FreeMemory( buf );
+  MANUAL_COMMON_DrawBgMDcbmp( work->cmn_wk, work->param->page[work->page_no].image );  // work->param->page[work->page_no].image‚É‚Í‰æ‘œID‚©MANUAL_BG_M_DCBMP_NO_IMAGE‚ª“ü‚Á‚Ä‚¢‚é
 }
 

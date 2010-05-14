@@ -13,7 +13,8 @@
 enum {
 	NARC_manual_image_image100428_1228_000_lz77_nbfs = 0,
 	NARC_manual_image_image100428_1229_000_lz77_nbfs = 1,
-	NARC_manual_image_image100428_1229_001_lz77_nbfs = 2
+	NARC_manual_image_image100428_1229_001_lz77_nbfs = 2,
+	NARC_manual_image_bg_lz77_nbfs = 3
 };
 
 /* NARC_MANUAL_IMAGE_NAIX_ */

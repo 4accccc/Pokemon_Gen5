@@ -121,10 +121,6 @@ MANUAL_WORK;
 // VBlank関数
 static void Manual_VBlankFunc( GFL_TCB* tcb, void* wk );
 
-// メインBGの設定
-static void Manual_MainBgInit( MANUAL_WORK* work );
-static void Manual_MainBgExit( MANUAL_WORK* work );
-
 
 //=============================================================================
 /**
@@ -189,7 +185,6 @@ static GFL_PROC_RESULT Manual_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
 
   // メインBG
   //GFL_BG_SetPriority( BG_FRAME_M_PIC,     BG_FRAME_PRI_M_PIC );
-  Manual_MainBgInit( work );
   // サブBG
   GFL_BG_SetPriority( BG_FRAME_S_REAR,    BG_FRAME_PRI_S_REAR );
   GFL_BG_SetPriority( BG_FRAME_S_MAIN,    BG_FRAME_PRI_S_MAIN );
@@ -228,7 +223,7 @@ static GFL_PROC_RESULT Manual_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
     // in
     work->explain_param.page_num       = 1;
     work->explain_param.title_str_id   = 0;
-    work->explain_param.page[0].image  = MANUAL_EXPLAIN_NO_IMAGE;
+    work->explain_param.page[0].image  = MANUAL_BG_M_DCBMP_NO_IMAGE;
     work->explain_param.page[0].str_id = 0;
   }
   
@@ -281,9 +276,6 @@ static GFL_PROC_RESULT Manual_ProcExit( GFL_PROC* proc, int* seq, void* pwk, voi
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
-
-  // メインBG
-  Manual_MainBgExit( work );
 
   // 共通
   MANUAL_COMMON_Exit( work->cmn_wk );
@@ -448,7 +440,7 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
                     u16 image_id = MANUAL_DATA_TitleGetPageImageId( work->cmn_wk->data_wk, title_idx, page_order );
                     if( !MANUAL_DATA_ImageIdIsValid( work->cmn_wk->data_wk, image_id ) )
                     {
-                      image_id = MANUAL_EXPLAIN_NO_IMAGE;
+                      image_id = MANUAL_BG_M_DCBMP_NO_IMAGE;
                     }
                     work->explain_param.page[page_order].image  = image_id;
                     
@@ -525,23 +517,5 @@ static GFL_PROC_RESULT Manual_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
 static void Manual_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   MANUAL_WORK* work = (MANUAL_WORK*)wk;
-}
-
-//-------------------------------------
-/// メインBGの設定
-//=====================================
-static void Manual_MainBgInit( MANUAL_WORK* work )
-{
-  {
-    G2_SetBG2ControlDCBmp( GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000 );
-    G2_SetBG2Priority( BG_FRAME_PRI_M_PIC );
-    G2_BG0Mosaic( FALSE );
-  }
-
-  GFL_BG_SetVisible( BG_FRAME_M_PIC, VISIBLE_ON );
-}
-static void Manual_MainBgExit( MANUAL_WORK* work )
-{
-  // 何もしない
 }
 

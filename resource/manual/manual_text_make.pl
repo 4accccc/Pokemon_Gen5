@@ -352,6 +352,11 @@ $manual_data_gmm_none_name     = "MANUAL_DATA_GMM_NONE";
 $manual_data_image_none_no     = 0xFFFF;                    # 画像ファイルなしなのでnaix中のIDなし
 $manual_data_image_none_name   = "MANUAL_DATA_IMAGE_NONE";
 
+# 画像がないときに使用する画像のID
+$manual_no_image_arc_id; # 画像の1番最後に追加する(即ち画像の総数をIDとする)
+$manual_no_image_name          = "MANUAL_DATA_NO_IMAGE_ID";
+$manual_no_image_file_name     = "bg.bmp";
+
 # タイトルファイル
 $manual_data_title_file_name       = "manual_data_title.dat";        # リトルエンディアンのバイナリ
 # タイトル開始場所ファイル
@@ -1135,6 +1140,40 @@ sub WriteManualImageListFile
     }
   }
 
+  # 画像がないときに使用する画像を最後に追加する
+  {
+    # 画像がないときに使用する画像のID
+    $manual_no_image_arc_id = $number_image_id;  # 画像の1番最後に追加する(即ち画像の総数をIDとする)
+
+    my $ri = rindex( $manual_no_image_file_name, $manual_image_src_suffix );
+    my $file_name = substr( $manual_no_image_file_name, 0, $ri );
+    my $file_name_bmp        = $file_name . $manual_image_src_suffix;
+    my $file_name_nbfs       = $file_name . $manual_image_nbfs_suffix;
+    my $file_name_lz77_nbfs  = $file_name . $manual_image_lz77_nbfs_suffix;
+
+    # 画像ファイルのリスト
+    printf FH_SRC "%s\r\n", $file_name_bmp;
+    # コンバートバッチファイル
+    printf FH_CONV "%s %s %s\r\n", $manual_image_conv_command_name, $file_name_bmp, $manual_image_conv_command_option;
+    # 圧縮バッチファイル
+    printf FH_COMP "%s %s %s %s\r\n", $manual_image_comp_command_name, $manual_image_comp_command_option, $file_name_lz77_nbfs, $file_name_nbfs;
+    # 圧縮後のファイルのリスト
+    printf FH_LZ77 "\"%s\"\r\n", $file_name_lz77_nbfs;
+  }
+
+  # 画像なしのときも使用する画像があるので、その画像のIDを書いておく
+  for( my $i=0; $i<$manual_explain_num; $i++ )
+  {
+    if( $manual_explain_tbl[$i][$manual_explain_col_first] == 1 )
+    {
+      if( $manual_explain_tbl[$i][$manual_explain_col_image] eq $manual_csv_reserve_image_none )
+      {
+        # 画像なし
+        $manual_explain_tbl[$i][$manual_explain_col_image_arc_id] = $manual_no_image_arc_id;
+      }
+    }
+  }
+
   # 出力ファイルをクローズ
   close( FH_SRC );
   close( FH_CONV );
@@ -1191,6 +1230,7 @@ sub WriteDataDefineFile
 
   printf FH "#define %s (%d)\r\n", $manual_data_gmm_none_name, $manual_data_gmm_none_no;
   printf FH "#define %s (%d)\r\n", $manual_data_image_none_name, $manual_data_image_none_no;
+  printf FH "#define %s (%d)\r\n", $manual_no_image_name, $manual_no_image_arc_id;
 
   # 出力ファイルをクローズ
   close( FH );
