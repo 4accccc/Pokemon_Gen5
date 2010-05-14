@@ -1831,13 +1831,7 @@ BasicAI_290:			// 	ちょうのまい
 BasicAI_291:			// 	ヘビーボンバー
 	AIEND
 
-BasicAI_292:			// 	シンクロノイズ          //←やりかたをプログラマに聞く
-	CHECK_TYPE	CHECK_ATTACK_TYPE1
-	CHECK_TYPE	CHECK_ATTACK_TYPE2
-
-	CHECK_TYPE	CHECK_DEFENCE_TYPE1
-	CHECK_TYPE	CHECK_DEFENCE_TYPE2
-
+BasicAI_292:			// 	シンクロノイズ   
 	AIEND
 
 BasicAI_293:			// 	エレクトボール
@@ -1877,7 +1871,7 @@ BasicAI_298_end:
 
 	AIEND
 
-BasicAI_299:			// 	なかまづくり             //←やりかたをプログラマに聞く
+BasicAI_299:			// 	なかまづくり          
 
   CHECK_TOKUSEI	CHECK_ATTACK		
 	IF_EQUAL	TOKUSYU_KATAYABURI,BasicAI_299_end	// かたやぶりチェック
@@ -1960,7 +1954,7 @@ BasicAI_316:			// 	せいちょう
 BasicAI_317:			// 	アクロバット
 	AIEND
 
-BasicAI_318:			// 	ミラータイプ             //←やりかたをプログラマに聞く
+BasicAI_318:			// 	ミラータイプ     
 	AIEND
 
 BasicAI_319:			// 	かたきうち
