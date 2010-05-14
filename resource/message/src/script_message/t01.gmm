@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-14T16:02:02"/>
+	<create user="matsumiya" host="W00224" date="2010-05-14T16:24:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -597,12 +597,12 @@
 １番道路に　ふみだそうよ！▼</language>
 	</row>
 
-	<row id="msg_t01_black_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_t01_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・white_05表示後に話しかけ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『さ　いこう！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『さ　いこう！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『さ　行こう！▼</language>
 	</row>
 
 	<row id="msg_t01_black_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -628,8 +628,7 @@
 	</row>
 
 	<row id="msg_t01_bigman_01">
-		<comment>♂
-・仮メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">かがくの　ちからって　すげー！▼
@@ -674,8 +673,7 @@
 	</row>
 
 	<row id="msg_t01_babygirl1_01">
-		<comment>♀
-・仮メッセージ</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">babygirl1</attribute>
 		<language name="JPN" width="256">よのなかには　たっくさんの　ポケモンと
 いろんな　ひとが　いるんだって！！[BE:01:ページ切り替え（クリア）]
