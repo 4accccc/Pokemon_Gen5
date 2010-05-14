@@ -1281,7 +1281,8 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 	    		
 	        _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_03)
-				
+			_MSGWIN_CLOSE()
+			
 			//ギミック発動。本棚が横に移動する
 				
 			//本棚が動く音の開始

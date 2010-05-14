@@ -371,7 +371,6 @@ ev_c03p07_hakai:
 	//いない　いない！　この　なかに　なかまとか
 	_BALLOONWIN_OBJMSG( msg_c03p07_hakaim_01 , C03P07_HAKAIM_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	//戦わない場合
 	IF $SCWK_ANSWER == SCR_NO THEN

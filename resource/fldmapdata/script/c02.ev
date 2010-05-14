@@ -300,7 +300,6 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	//間を作るためのウェイト	
 
-	
 	//Nがしゃべる
 	//まよえる　トレーナーよ
 	_BALLOONWIN_OBJMSG_POS( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00,POS_DEFAULT)
@@ -312,14 +311,12 @@ EVENT_START   ev_pos_c02_boss_01
 	
 		//Nが喋る・いいえの場合
 		//Ｎ『ボクを　からかっているね
-
 		_BALLOONWIN_OBJMSG_POS( msg_c02_boss_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
     	_MSGWIN_CLOSE()
 		
 	ELSE
 		//Nが喋る・はいの場合
 		//Ｎ『ボクに　さからうんだね
-
 		_BALLOONWIN_OBJMSG_POS( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
     	_MSGWIN_CLOSE()
     	
@@ -713,13 +710,13 @@ _ANIME_LABEL	anm_player_move2
 //アロエ:博物館の外で、きょろきょろしている                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_kyorokyoro
-	_ANIME_DATA AC_STAY_WALK_R_16F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA AC_STAY_WALK_L_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA AC_STAY_WALK_R_16F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA AC_WAIT_8F,1
-	_ANIME_DATA AC_STAY_WALK_L_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

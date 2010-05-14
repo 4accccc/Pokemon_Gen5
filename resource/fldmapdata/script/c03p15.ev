@@ -192,8 +192,6 @@ EVENT_START		ev_scene_c03p15_plazmaevent_01
 	_MSGWIN_CLOSE()
 	
 	//……アイリスちゃん
-	_OBJ_ANIME( C03P15_SUPPORT_01, anm_stay_u )
-	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG( msg_c03p15_white_02 , C03P15_SUPPORT_01 )
 	_MSGWIN_CLOSE()
 	
