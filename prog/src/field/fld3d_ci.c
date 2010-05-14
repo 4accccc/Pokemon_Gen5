@@ -47,9 +47,9 @@
 #define TEXSIZ_T  (128)
 #define TEXVRAMSIZ		(TEXSIZ_S/8 * TEXSIZ_T/8 * 0x20)	// chrNum_x * chrNum_y * chrSiz
 
-
+#define VOICE_TIME (30)
 #define POKE_VOICE_WAIT (5)
-#define VOICE_VOL_OFS (8)
+#define VOICE_VOL_OFS (16)
 
 #define CUTIN_WHITE_FADE_SPD (-1)
 
@@ -83,7 +83,8 @@ typedef struct POKE_WORK_tag
   BOOL Egg;
 
   BOOL VoicePlayFlg;
-  int SePlayWait;
+  u16 SePlayWait;
+  u16 VoiceTime;
   u32 VoicePlayerIdx;
 }POKE_WORK;
 
@@ -202,7 +203,7 @@ static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr);
 
 static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work );
+//static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work );
 
 static void ParticleCallBack(GFL_EMIT_PTR emit);
 static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo);
@@ -518,6 +519,7 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
 
     poke_work->SePlayWait = POKE_VOICE_WAIT;
     poke_work->VoicePlayFlg = TRUE;
+    poke_work->VoiceTime = VOICE_TIME;
   }
 
   return event;
@@ -1697,6 +1699,7 @@ static GMEVENT_RESULT PokeGraTransEvt( GMEVENT* event, int* seq, void* work )
 static BOOL VoiceMain(GMEVENT* event, FLD3D_CI_PTR ptr)
 {
   //鳴き声再生
+  BOOL voice_end;
   POKE_WORK *poke_work;
   poke_work = (POKE_WORK*)ptr->Work;
   if (poke_work->VoicePlayFlg && poke_work->SePlayWait)
@@ -1712,10 +1715,42 @@ static BOOL VoiceMain(GMEVENT* event, FLD3D_CI_PTR ptr)
       }
       else poke_work->VoicePlayerIdx = PMV_PlayVoice( poke_work->MonsNo, poke_work->FormNo );
     }
+    poke_work->VoiceTime = VOICE_TIME;
+    return FALSE;   //鳴き声鳴らしたら、一度処理をメインに戻す（鳴き声を確実に鳴らすため）
   }
 
-  if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End)
+  voice_end = FALSE;
+
+  //鳴き声鳴らした後の判定
+  if ( !poke_work->SePlayWait )
   {
+    //鳴き声なっていないなら、終了
+    if ( !PMV_CheckPlay() )
+    {
+      voice_end = TRUE;
+    }
+    else
+    {
+      if (poke_work->VoiceTime) poke_work->VoiceTime--;
+      else{
+        s8 volume;
+        volume = PMVOICE_GetVolume( poke_work->VoicePlayerIdx );
+        if ( volume > 0){
+          PMV_SetVolume( poke_work->VoicePlayerIdx, -VOICE_VOL_OFS );
+        }
+        else
+        {
+          PMV_StopVoice();
+          voice_end = TRUE;
+        }
+      }
+    }
+  }
+
+  if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End&&voice_end)
+  {
+    return TRUE;
+#if 0    
     if ( PMV_CheckPlay() )  //鳴き声がなっている場合は鳴き声フェードアウトイベントをコール
     {
       GMEVENT * call_event;
@@ -1728,6 +1763,7 @@ static BOOL VoiceMain(GMEVENT* event, FLD3D_CI_PTR ptr)
     {
       return TRUE;
     }
+#endif    
   }
 
   return FALSE;
@@ -1837,6 +1873,7 @@ static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
   }
 }
 
+#if 0
 //--------------------------------------------------------------------------------------------
 /**
  * ポケモン鳴き声フェードアウトイベント
@@ -1883,7 +1920,7 @@ static GMEVENT_RESULT VoiceFadeOutEvt( GMEVENT* event, int* seq, void* work )
   
   return GMEVENT_RES_CONTINUE;
 }
-
+#endif
 //--------------------------------------------------------------------------------------------
 /**
  * ホワイトアウトイベント
