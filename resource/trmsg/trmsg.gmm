@@ -13111,10 +13111,10 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_BIGFOUR1_02_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いい　しょうせつと　おなじで
-たたかいの　でだしは　だいじですよね</language>
-		<language name="JPN_KANJI" width="216">いい小説と　同じで
-戦いの　出だしは　大事ですよね</language>
+		<language name="JPN" width="216">はじまりかたって　たいせつ　ですよね
+しょうぶも　しょうせつも</language>
+		<language name="JPN_KANJI" width="216">始まり方って　重要ですよね
+勝負も　小説も</language>
 	</row>
 
 	<row id="TRID_BIGFOUR1_02_TRMSG_FIGHT_POKE_LAST">
@@ -13132,7 +13132,7 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_BIGFOUR1_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……うわあ　アタシ
+		<language name="JPN" width="216">……うわあ　アタシ　またも
 しちゃってます　あぜんぼーぜん▼
 いろいろ　ことばは　しっていますが
 うまく　いいあらわせないんですよね▼
@@ -13140,8 +13140,8 @@ puo accadere ancora di tutto!</language>
 いまの　きもちとか　それに▽
 とじこめられちゃうから　かなあ▼
 でも　これだけは　いわせてください
-あなた　グレートです！！</language>
-		<language name="JPN_KANJI" width="216">……うわあ　アタシ
+あなた　さらに　グレートです！！</language>
+		<language name="JPN_KANJI" width="216">……うわあ　アタシ　またも
 しちゃってます　あぜんぼーぜん▼
 いろいろ　言葉は　知っていますが
 うまく　言い表せないんですよね▼
@@ -13149,7 +13149,7 @@ puo accadere ancora di tutto!</language>
 今　あふれている　感情とか　それに▽
 閉じ込められちゃうから　かなあ▼
 でも　これだけは　いわせてください
-あなた　グレートです！！</language>
+あなた　さらに　グレートです！！</language>
 	</row>
 
 	<row id="TRID_BIGFOUR2_02_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -13233,33 +13233,37 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_BIGFOUR4_02_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">すてきな　じかんが　はじまりそうで
-なんだか　ワクワクして　きちゃう</language>
-		<language name="JPN_KANJI" width="216">すてきな　時間が　始まりそうで
-なんだか　ワクワクして　きちゃう</language>
+		<language name="JPN" width="216">すてきな　じかんが　はじまる
+この　しゅんかんが　おきにいり……</language>
+		<language name="JPN_KANJI" width="216">すてきな　時間が　始まる
+この　瞬間が　お気に入り……</language>
 	</row>
 
 	<row id="TRID_BIGFOUR4_02_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">こんなときでも
+		<language name="JPN" width="216">どんなときでも
 あわてず　さわがずに……</language>
-		<language name="JPN_KANJI" width="216">こんなときでも
+		<language name="JPN_KANJI" width="216">どんなときでも
 慌てず　騒がずに……</language>
 	</row>
 
 	<row id="TRID_BIGFOUR4_02_TRMSG_FIGHT_POKE_LAST_HP_HALF">
 		<language name="JPN" width="216">アタクシを　しんじて　たたかう
-ポケモンのためにも　あきらめません</language>
+ポケモンのためにも　あきらめません！</language>
 		<language name="JPN_KANJI" width="216">アタクシを　信じて　戦う
-ポケモンのためにも　あきらめません</language>
+ポケモンのためにも　あきらめません！</language>
 	</row>
 
 	<row id="TRID_BIGFOUR4_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">エレガントで　エクセレントな
+		<language name="JPN" width="216">これまでどおり……
+いえ　これまで　いじょうに▼
+エレガントで　エクセレントな
 トレーナーなのね　アナタ▼
 アナタの　ポケモンにも
 ひんが　そなわっていて▽
 おあいてしていて　うれしかったわ</language>
-		<language name="JPN_KANJI" width="216">エレガントで　エクセレントな
+		<language name="JPN_KANJI" width="216">これまでどおり……
+いえ　これまで以上に▼
+エレガントで　エクセレントな
 トレーナーなのね　アナタ▼
 アナタの　ポケモンにも
 品が　備わっていて▽
