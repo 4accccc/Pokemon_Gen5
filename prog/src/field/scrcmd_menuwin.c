@@ -1817,7 +1817,8 @@ static VMCMD_RESULT addPlainWin(
     SCRCMD_WORK_SetMsgWinPtr( work, win );
   }
   
-  FLDPLAINMSGWIN_PrintStreamStartStrBuf( win, 2, 2, msgbuf );
+  FLDPLAINMSGWIN_PrintStreamStartStrBuf( win,
+      PLAINMSGWIN_WRITE_START_X, PLAINMSGWIN_WRITE_START_Y, msgbuf );
   SCREND_CHK_SetBitOn(SCREND_CHK_PLAINWIN_OPEN);
   
   VMCMD_SetWait( core, PlainWinMsgWait );

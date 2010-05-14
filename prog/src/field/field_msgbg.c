@@ -66,9 +66,7 @@
 #define SYSWIN_POS_100506 //’è‹`‚ÅˆÊ’u‡‚í‚¹‚½‚¢—v–]”½‰f
 
 #ifdef SYSWIN_POS_100506
-#define SYSWIN_WRITE_OFFS_X (8)
-#else
-#define SYSWIN_WRITE_OFFS_X (0)
+#define SYSWIN_MSG_START_OFFS_X (8)
 #endif
 
 #ifdef SYSWIN_POS_100506
@@ -1386,9 +1384,7 @@ void FLDSYSWIN_Delete( FLDSYSWIN *sysWin )
 //--------------------------------------------------------------
 void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 {
-#if SYSWIN_WRITE_OFFS_X
-  x += SYSWIN_WRITE_OFFS_X;
-#endif
+  x += SYSWIN_MSG_START_OFFS_X;
   FLDMSGPRINT_Print( sysWin->msgPrint, x, y, strID );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(sysWin->bmpwin) );
 }
@@ -1405,9 +1401,7 @@ void FLDSYSWIN_Print( FLDSYSWIN *sysWin, u16 x, u16 y, u32 strID )
 //--------------------------------------------------------------
 void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
 {
-#if SYSWIN_WRITE_OFFS_X
-  x += SYSWIN_WRITE_OFFS_X;
-#endif
+  x += SYSWIN_MSG_START_OFFS_X;
   FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
 }
 
@@ -1425,9 +1419,7 @@ void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *sysWin, u16 x, u16 y, STRBUF *strBuf )
 void FLDSYSWIN_PrintStrBufColor( FLDSYSWIN *sysWin,
     u16 x, u16 y, STRBUF *strBuf, PRINTSYS_LSB color )
 {
-#if SYSWIN_WRITE_OFFS_X
-  x += SYSWIN_WRITE_OFFS_X;
-#endif
+  x += SYSWIN_MSG_START_OFFS_X;
   FLDMSGPRINT_PrintStrBufColor( sysWin->msgPrint, x, y, strBuf, color );
 }
 
@@ -2544,10 +2536,8 @@ void FLDSYSWIN_STREAM_PrintStart(
   
   GF_ASSERT( sysWin->msgData );
   GFL_MSG_GetString( sysWin->msgData, strID, sysWin->strBuf );
-
-#if SYSWIN_WRITE_OFFS_X
-  x += SYSWIN_WRITE_OFFS_X;
-#endif
+  
+  x += SYSWIN_MSG_START_OFFS_X;
   
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
     sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, Control_GetMsgWait( &sysWin->fmb->print_cont ) );
@@ -2570,10 +2560,8 @@ void FLDSYSWIN_STREAM_PrintStrBufStart(
     FLDMSGPRINT_STREAM_Delete( sysWin->msgPrintStream );
   }
   
-#if SYSWIN_WRITE_OFFS_X
-  x += SYSWIN_WRITE_OFFS_X;
-#endif
-
+  x += SYSWIN_MSG_START_OFFS_X;
+  
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
     sysWin->fmb, strBuf, sysWin->bmpwin, x, y, Control_GetMsgWait( &sysWin->fmb->print_cont ) );
 }
@@ -2707,10 +2695,7 @@ void FLDSYSWIN_STREAM_AllPrintStrBuf(
   sysWin->msgPrint = FLDMSGPRINT_SetupPrint(
       sysWin->fmb, NULL, sysWin->bmpwin );
   
-#if SYSWIN_WRITE_OFFS_X
-  x += SYSWIN_WRITE_OFFS_X;
-#endif
-  
+  x += SYSWIN_MSG_START_OFFS_X;
   FLDMSGPRINT_PrintStrBuf( sysWin->msgPrint, x, y, strBuf );
 }
 
