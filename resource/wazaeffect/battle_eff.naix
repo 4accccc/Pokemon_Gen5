@@ -87,7 +87,8 @@ enum {
 	NARC_battle_eff_se_049_bin = 73,
 	NARC_battle_eff_se_050_bin = 74,
 	NARC_battle_eff_se_051_bin = 75,
-	NARC_battle_eff_se_052_bin = 76
+	NARC_battle_eff_se_052_bin = 76,
+	NARC_battle_eff_se_053_bin = 77
 };
 
 /* NARC_BATTLE_EFF_NAIX_ */
