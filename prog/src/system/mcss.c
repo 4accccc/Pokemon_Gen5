@@ -1616,8 +1616,24 @@ void	MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK* mcss, u8 
  * @param[in] mcss      MCSSワーク構造体のポインタ
  */
 //--------------------------------------------------------------------------
-void	MCSS_ResetPaletteFadeBaseColor( MCSS_WORK *mcss )
+void	MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 { 
+	TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
+
+  tlw->mcss = mcss;
+	tlw->palette_p = &mcss->mcss_palette_proxy;
+	tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * mcss->index;
+
+	tlw->pPlttData = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( NNSG2dPaletteData ) );
+
+	tlw->pPlttData->fmt = mcss->mcss_palette_proxy.fmt;
+	tlw->pPlttData->bExtendedPlt = FALSE;
+	tlw->pPlttData->szByte = mcss->pltt_data_size;
+	tlw->pPlttData->pRawData = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( mcss->heapID ), mcss->pltt_data_size );
+
+  MI_CpuCopy16( mcss->base_pltt_data, tlw->pPlttData->pRawData, mcss->pltt_data_size );
+
+  mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
   mcss->fade_pltt_data_flag = 0;
 }
 
