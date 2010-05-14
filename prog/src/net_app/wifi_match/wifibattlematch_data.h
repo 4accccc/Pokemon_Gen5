@@ -11,6 +11,7 @@
 #pragma once
 
 #include "poke_tool/pokeparty.h"
+#include "msg/msg_wifi_place_msg_world.h"
 #include "buflen.h"
 #include "system/pms_data.h"
 #include "savedata/mystatus.h"
@@ -200,10 +201,11 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
   }
 
   //場所
-  if( p_mystatus->nation >= WIFI_COUNTRY_GetDataLen() )
+  if( p_mystatus->nation >= msg_wifi_place_msg_world_max )
   { 
     OS_TPrintf( "国が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
     p_mystatus->nation  = 0;
+    p_mystatus->area  = 0;
     dirty++;
   }
 
@@ -212,6 +214,7 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
     if( p_mystatus->nation != 0 && p_mystatus->area >= WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_mystatus->nation ) )
     {
       OS_TPrintf( "地域が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
+      p_mystatus->nation  = 0;
       p_mystatus->area  = 0;
       dirty++;
     }
