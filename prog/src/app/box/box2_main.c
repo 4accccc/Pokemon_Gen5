@@ -3013,7 +3013,7 @@ static void PokeIconFreeDataMake( BOX2_SYS_WORK * syswk, u32 get_pos )
     dat[i].flg    = 1;
     PokeIconMoveParamMake( syswk, &dat[i] );
   }
-  dat[get].mv_pos = BOX2OBJ_POKEICON_MAX - 1;
+  dat[get].mv_pos = BOX2OBJ_POKEICON_PUT_MAX - 1;
   dat[get].flg    = 1;
   PokeIconMoveParamMake( syswk, &dat[get] );
 }
