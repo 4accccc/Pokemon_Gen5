@@ -36,7 +36,6 @@ static void _IntrudeRecv_MonolithStatusReq(const int netID, const int size, cons
 static void _IntrudeRecv_MonolithStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionListReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionList(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionEntryAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _MissionOrderConfirm(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -82,7 +81,6 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MissionList, _RecvHugeBuffer}, //INTRUDE_CMD_MISSION_LIST
   {_MissionOrderConfirm, NULL},                //INTRUDE_CMD_MISSION_ORDER_CONFIRM
   {_IntrudeRecv_MissionEntryAnswer, NULL},     //INTRUDE_CMD_MISSION_ENTRY_ANSWER
-  {_IntrudeRecv_MissionReq, NULL},             //INTRUDE_CMD_MISSION_REQ
   {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
   {_IntrudeRecv_MissionStart, NULL},           //INTRUDE_CMD_MISSION_START
   {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
@@ -936,65 +934,6 @@ BOOL IntrudeSend_MissionEntryAnswer(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_netid, 
     INTRUDE_CMD_MISSION_ENTRY_ANSWER, sizeof(MISSION_ENTRY_ANSWER), entry_answer, 
     FALSE, FALSE, FALSE);
-}
-
-//==============================================================================
-//  
-//==============================================================================
-//--------------------------------------------------------------
-/**
- * @brief   コマンド受信：ミッション要求
- * @param   netID      送ってきたID
- * @param   size       パケットサイズ
- * @param   pData      データ
- * @param   pWork      ワークエリア
- * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
- */
-//--------------------------------------------------------------
-static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-  INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  const MISSION_REQ *req = pData;
-  
-  if(GFL_NET_IsParentMachine() == FALSE){
-    return;
-  }
-  
-  OS_TPrintf("受信：ミッション要求 net_id=%d\n", netID);
-  MISSION_SetEntry(intcomm, &intcomm->mission, req, netID);
-  //要求されたからには今のミッションを返してあげる。発動後の途中乱入かもしれないので。
-  MISSION_Set_DataSendReq(&intcomm->mission);
-}
-
-//==================================================================
-/**
- * データ送信：ミッション要求
- *
- * @param   intcomm         
- * @param   monolith_type		MONOLITH_TYPE_???
- * @param   zone_id		      ミニモノリスがあるゾーンID
- *
- * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
- */
-//==================================================================
-BOOL IntrudeSend_MissionReq(INTRUDE_COMM_SYS_PTR intcomm, int monolith_type, u16 zone_id)
-{
-#if 0 //削除予定 2010.01.29(金) 
-  MISSION_REQ req;
-  
-  if(_OtherPlayerExistence() == FALSE){
-    return FALSE;
-  }
-
-  req.monolith_type = monolith_type;
-  req.zone_id = zone_id;
-  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_REQ, sizeof(MISSION_REQ), &req);
-#else
-  GF_ASSERT(0);
-  return FALSE;
-#endif
 }
 
 //==============================================================================

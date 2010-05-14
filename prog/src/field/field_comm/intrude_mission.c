@@ -209,37 +209,6 @@ void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission)
 
 //==================================================================
 /**
- * ミッションリクエストデータを受け取り、ミッションを発動する
- *
- * @param   mission		      ミッションシステムへのポインタ
- * @param   req		          リクエストデータへのポインタ
- * @param   accept_netid		ミッション受注者のNetID
- *
- * @retval  BOOL		TRUE:ミッション発動。　FALSE:発動できない
- */
-//==================================================================
-BOOL MISSION_SetEntry(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_REQ *req, int accept_netid)
-{
-#if 0 //削除予定 2010.01.29(金)
-  MISSION_DATA *mdata = &mission->data;
-  
-  if(mdata->accept_netid != INTRUDE_NETID_NULL){
-    return FALSE;
-  }
-  mdata->accept_netid = accept_netid;
-  mdata->monolith_type = req->monolith_type;
-  mdata->zone_id = req->zone_id;
-  mdata->target_netid = _TragetNetID_Choice(intcomm, accept_netid);
-  
-  return TRUE;
-#else
-  GF_ASSERT(0);
-  return FALSE;
-#endif
-}
-
-//==================================================================
-/**
  * ミッションリストをセット
  *
  * @param   mission		代入先

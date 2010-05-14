@@ -38,7 +38,6 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_MISSION_LIST,                   ///<ミッション選択候補リスト
   INTRUDE_CMD_MISSION_ORDER_CONFIRM,          ///<ミッション受注します
   INTRUDE_CMD_MISSION_ENTRY_ANSWER,           ///<「ミッション受注します」の返事
-  INTRUDE_CMD_MISSION_REQ,                    ///<ミッション要求リクエスト
   INTRUDE_CMD_MISSION_DATA,                   ///<ミッションデータ
   INTRUDE_CMD_MISSION_START,                  ///<ミッション開始
   INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
