@@ -1834,6 +1834,7 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 effIndex = BTLV_WAZAEFF_NOROI_NORMAL;
 
+  // ゴーストタイプ
     if( BPP_IsMatchType(bpp, POKETYPE_GHOST) )
     {
       int restHP = BPP_GetValue( bpp, BPP_HP );
@@ -1862,10 +1863,12 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         }
       }
       effIndex = BTLV_WAZAEFF_NOROI_GHOST;
+  // ゴースト以外タイプ
     }
     else
     {
       BTL_HANDEX_PARAM_RANK_EFFECT* param;
+      TAYA_Printf("のろいを使うポケID=%d\n", pokeID);
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
@@ -7468,6 +7471,7 @@ static void handler_Nagetukeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u16 itemID = BPP_GetItem( bpp );
     if( (itemID == ITEM_DUMMY_DATA)
     ||  (BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_NAGETUKERU_ATC) == 0 )
+    ||  (BPP_CheckSick(bpp, WAZASICK_SASIOSAE))
     ){
       BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER);
     }

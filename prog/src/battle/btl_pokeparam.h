@@ -121,6 +121,7 @@ typedef enum {
   BPP_CONTFLG_MORAIBI,
 
   BPP_CONTFLG_MAX,
+  BPP_CONTFLG_NULL = BPP_CONTFLG_MAX,
 
 }BppContFlag;
 

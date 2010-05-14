@@ -7936,8 +7936,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
 {
   volume = scEvent_RankValueChange( wk, target, effect, wazaUsePokeID, itemID, volume );
 
-
-  BTL_Printf("ポケ[%d]の能力ランク(%d)を%d段階、上昇させる\n", BPP_GetID(target), effect, volume );
+  BTL_N_Printf( DBGSTR_SVFL_RankEffCore, BPP_GetID(target), effect, volume, atkPokeID );
   if( !BPP_IsRankEffectValid(target, effect, volume) ){
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
@@ -7948,7 +7947,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
   {
     BOOL ret = TRUE;
 
-    if( scEvent_CheckRankEffectSuccess(wk, target, effect, wazaUsePokeID, volume) )
+    if( scEvent_CheckRankEffectSuccess(wk, target, effect, atkPokeID, volume) )
     {
       // ここまで来たらランク効果発生
       BTL_Printf("ランク効果発生：type=%d, volume=%d, itemID=%d\n", effect, volume, itemID );
@@ -8625,8 +8624,8 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
   BTL_POKEPARAM* target = BTL_POKESET_Get( targetRec, 0 );
   PokeTokusei atk_tok, tgt_tok;
 
-  atk_tok = BPP_GetValue( attacker, BPP_TOKUSEI_EFFECTIVE );
-  tgt_tok = BPP_GetValue( target, BPP_TOKUSEI_EFFECTIVE );
+  atk_tok = BPP_GetValue( attacker, BPP_TOKUSEI );
+  tgt_tok = BPP_GetValue( target, BPP_TOKUSEI );
 
   if( (!BTL_CALC_TOK_CheckCantChange(atk_tok)) && (!BTL_CALC_TOK_CheckCantChange(tgt_tok)) )
   {
@@ -11245,6 +11244,27 @@ static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_TAME_RELEASE );
   BTL_EVENTVAR_Pop();
 }
+
+/**
+ *  そらをとぶ状態など、画面から消えているかチェック
+ */
+static BppContFlag CheckPokeHideState( const BTL_POKEPARAM* bpp )
+{
+  static const BppContFlag  hideState[] = {
+    BPP_CONTFLG_SORAWOTOBU, BPP_CONTFLG_ANAWOHORU, BPP_CONTFLG_DIVING, BPP_CONTFLG_SHADOWDIVE,
+  };
+  u32 i;
+
+  for(i=0; i<NELEMS(hideState); ++i)
+  {
+    if( BPP_CONTFLAG_Get(bpp, hideState[i]) )
+    {
+      return hideState[ i ];
+    }
+  }
+  return BPP_CONTFLG_NULL;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] そらをとぶ、ダイビング等、場から隠れているポケモンへのヒットチェック
@@ -11259,30 +11279,23 @@ static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 //----------------------------------------------------------------------------------
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
-  static const BppContFlag  hideState[] = {
-    BPP_CONTFLG_SORAWOTOBU, BPP_CONTFLG_ANAWOHORU, BPP_CONTFLG_DIVING, BPP_CONTFLG_SHADOWDIVE,
-  };
-
   BOOL avoidFlag = FALSE;
-  u32 i;
 
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-    for(i=0; i<NELEMS(hideState); ++i)
-    {
-      if( BPP_CONTFLAG_Get(defender, hideState[i]) )
-      {
-        BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_FLAG, TRUE );
-        BTL_EVENTVAR_SetValue( BTL_EVAR_POKE_HIDE, hideState[i] );
-        BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_POKE_HIDE );
-        if( BTL_EVENTVAR_GetValue(BTL_EVAR_AVOID_FLAG) ){
-          avoidFlag = TRUE;
-          break;
-        }
+  BppContFlag  hideState = CheckPokeHideState( defender );
+  if( hideState != BPP_CONTFLG_NULL )
+  {
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKE_HIDE, hideState );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_AVOID_FLAG, TRUE );
+
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_POKE_HIDE );
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_AVOID_FLAG) ){
+        avoidFlag = TRUE;
       }
-    }
-  BTL_EVENTVAR_Pop();
+    BTL_EVENTVAR_Pop();
+  }
 
   return avoidFlag;
 }
@@ -13864,11 +13877,15 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-    TAYA_Printf( " HandEx damage pokeID=%d\n", param->pokeID );
+
     if( !BPP_IsDead(pp_target) )
     {
-      if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr) ){
-        return 1;
+      if( (param->fHitHidePoke)
+      ||  (CheckPokeHideState(pp_target) == BPP_CONTFLG_NULL)
+      ){
+        if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr) ){
+          return 1;
+        }
       }
     }
   }

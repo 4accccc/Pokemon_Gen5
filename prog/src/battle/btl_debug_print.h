@@ -235,6 +235,7 @@ typedef enum {
   DBGSTR_SVFL_RelivePokeStart,
   DBGSTR_SVFL_ReliveEndIn,
   DBGSTR_SVFL_ReliveEndIgnore,
+  DBGSTR_SVFL_RankEffCore,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

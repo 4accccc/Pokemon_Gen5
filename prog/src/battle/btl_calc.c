@@ -803,7 +803,7 @@ void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attac
 BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok )
 {
   static const u16 prohibits[] = {
-    POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
+    POKETOKUSEI_FUSIGINAMAMORI,
   };
   u16 i;
   for(i=0; i<NELEMS(prohibits); ++i)

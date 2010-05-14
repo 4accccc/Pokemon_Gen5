@@ -280,6 +280,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_RelivePokeStart:     return "ClientID=%d のポケが生き返った..";
   case DBGSTR_SVFL_ReliveEndIn:         return "空きがあるので入場させる\n";
   case DBGSTR_SVFL_ReliveEndIgnore:     return "空きがないので無視する\n";
+  case DBGSTR_SVFL_RankEffCore:         return "ポケ[%d]の能力ランク(%d)を %d 段階変化 (ワザ使用ポケ=%d）\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
