@@ -198,7 +198,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) = _CALL_IRCBATTLE_MENU;
     break;
   case _CALL_IRCBATTLE_MENU:
-    GFL_NET_IRCWIRELESS_ResetSystemError();  //ê‘äOê¸WIRLESSêÿíf
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &IrcBattleMenuProcData, dbw);
     (*seq)++;
     break;

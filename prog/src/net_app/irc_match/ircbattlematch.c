@@ -2481,6 +2481,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
 //    _CHANGE_STATE( pWork, _modeInit);
   }
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+  GFL_NET_IRCWIRELESS_ResetSystemError();  //ê‘äOê¸WIRLESSêÿíf
 
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ,  GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG0, 9, 14);
   
