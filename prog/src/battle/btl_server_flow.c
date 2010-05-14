@@ -9988,6 +9988,7 @@ static void scPut_ConfCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 static void scPut_MeromeroAct( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   u8 target_pokeID = BPP_GetSickParam( bpp, WAZASICK_MEROMERO );
+  scPut_EffectByPokePos( wk, bpp, BTLEFF_MEROMERO );
   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_MeromeroAct, BPP_GetID(bpp), target_pokeID );
 }
 //--------------------------------------------------------------------------

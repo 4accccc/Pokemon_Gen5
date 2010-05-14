@@ -2801,6 +2801,11 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
   return FALSE;
 }
 
+BOOL BPP_HENSIN_Check( const BTL_POKEPARAM* bpp )
+{
+  return bpp->coreParam.fHensin;
+}
+
 //---------------------------------------------------------------------------------------------
 // ‚Ý‚ª‚í‚èŠÖ˜A
 //---------------------------------------------------------------------------------------------

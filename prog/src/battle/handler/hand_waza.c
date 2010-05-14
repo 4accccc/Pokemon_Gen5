@@ -1597,8 +1597,13 @@ static void handler_Sketch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
     WazaID waza = BPP_GetPrevWazaID( target );
-    if( waza != WAZANO_NULL)
-    {
+    if( (waza != WAZANO_NULL)
+    &&  (waza != WAZANO_SUKETTI)
+    &&  (waza != WAZANO_WARUAGAKI)
+    &&  (waza != WAZANO_OSYABERI)
+    &&  (!BPP_WAZA_IsUsable(self, waza))
+    &&  (!BPP_HENSIN_Check(self))
+    ){
       u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       if( wazaIdx != PTL_WAZA_MAX )
       {
