@@ -1088,8 +1088,8 @@ static GFL_PROC_RESULT IRC_AURA_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
     for( i = 0; i < MSGWNDID_MAX; i++ )
     {
       MSGWND_Main( &p_wk->msgwnd[i], &p_wk->msg );
-      MSGWND_Main( &p_wk->msgtitle, &p_wk->msg );
     }
+    MSGWND_Main( &p_wk->msgtitle, &p_wk->msg );
   }
   //1たん停止
   //BACKOBJ_Main( &p_wk->backobj );
@@ -2375,6 +2375,10 @@ static void MSGWND_PrintPlayerName( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u
     GFL_FONT*   p_font;
     p_que   = MSG_GetPrintQue( cp_msg );
     p_font  = MSG_GetFont( cp_msg );
+
+    //キューをクリア
+    PRINTSYS_QUE_Clear( p_que );
+
     PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
   }
 }
