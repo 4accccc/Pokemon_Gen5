@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: title_white.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TITLE_WHITE_NAIX_
+#define NARC_TITLE_WHITE_NAIX_
+
+enum {
+	NARC_title_white_wht_logo_NCGR = 0,
+	NARC_title_white_wht_logo_NSCR = 1,
+	NARC_title_white_wht_logo_NCLR = 2
+};
+
+/* NARC_TITLE_WHITE_NAIX_ */
+#endif

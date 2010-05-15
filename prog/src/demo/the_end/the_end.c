@@ -26,7 +26,7 @@
 #include "font/font.naix"
 #include "script_message.naix"
 #include "staff_roll.naix"
-#include "title.naix"
+#include "title/title_res.h"
 
 // サウンド
 
@@ -431,6 +431,8 @@ static void TheEnd_BgExit( THE_END_WORK* work )
 
 
 // タイトルロゴ素材
+//title/title_res.hで吸収
+/*
 static const int logo_tbl[][3]={
   {
     NARC_title_wht_logo_NCLR,
@@ -443,7 +445,7 @@ static const int logo_tbl[][3]={
     NARC_title_blk_logo_NSCR,
   }
 };
-
+*/
 //----------------------------------------------------------------------------------
 /**
  * @brief タイトルロゴグラフィックを読み込み
@@ -454,12 +456,12 @@ static const int logo_tbl[][3]={
 static void TheEnd_LogoInit( THE_END_WORK* work )
 {
   int version = GetVersion()-VERSION_WHITE;
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_TITLE, work->heap_id );
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, work->heap_id );
 
   // 共通
   GFL_ARCHDL_UTIL_TransVramPalette(
       handle,
-      logo_tbl[version][0],
+      TITLE_RES_LOGO_NCLR,
       PALTYPE_MAIN_BG,
       BG_PAL_POS_M_GRA * 0x20,
       BG_PAL_NUM_M_GRA * 0x20,
@@ -467,7 +469,7 @@ static void TheEnd_LogoInit( THE_END_WORK* work )
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
       handle,
-      logo_tbl[version][1],
+      TITLE_RES_LOGO_NCGR,
       BG_FRAME_M_LOGO,  
       0,
       0,  // 全転送
@@ -476,7 +478,7 @@ static void TheEnd_LogoInit( THE_END_WORK* work )
 
   GFL_ARCHDL_UTIL_TransVramScreen(
       handle,
-      logo_tbl[version][2],
+      TITLE_RES_LOGO_NSCR,
       BG_FRAME_M_LOGO,
       0,
       0,  // 全転送

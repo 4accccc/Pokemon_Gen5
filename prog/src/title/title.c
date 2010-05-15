@@ -27,7 +27,8 @@
 #include "app/mictest.h"
 #include "sound/pm_sndsys.h"
 
-#include "title.naix"
+#include "title_res.h"
+
 #include "title1.naix"
 #include "title/title.h"
 
@@ -561,21 +562,12 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
   }
   //グラフィックデータロード(LOGO)
   {
-  #if PM_VERSION == VERSION_BLACK
-    GFL_ARC_UTIL_TransVramBgCharacter(
-      ARCID_TITLE, NARC_title_blk_logo_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
-    GFL_ARC_UTIL_TransVramScreen(
-      ARCID_TITLE, NARC_title_blk_logo_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
-    GFL_ARC_UTIL_TransVramPalette(
-      ARCID_TITLE, NARC_title_blk_logo_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
-  #else
-    GFL_ARC_UTIL_TransVramBgCharacter(
-      ARCID_TITLE, NARC_title_wht_logo_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
-    GFL_ARC_UTIL_TransVramScreen(
-      ARCID_TITLE, NARC_title_wht_logo_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
-    GFL_ARC_UTIL_TransVramPalette(
-      ARCID_TITLE, NARC_title_wht_logo_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
-  #endif
+  GFL_ARC_UTIL_TransVramBgCharacter(
+    TITLE_RES_ARCID, TITLE_RES_LOGO_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
+  GFL_ARC_UTIL_TransVramScreen(
+    TITLE_RES_ARCID, TITLE_RES_LOGO_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
+  GFL_ARC_UTIL_TransVramPalette(
+    TITLE_RES_ARCID, TITLE_RES_LOGO_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
   
     GFL_BG_LoadScreenReq( FRAME_LOGO );
     GFL_BG_SetVisible(FRAME_LOGO, VISIBLE_ON);

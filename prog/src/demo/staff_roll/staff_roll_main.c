@@ -20,7 +20,7 @@
 #include "message.naix"
 #include "msg/msg_staff_list_jp.h"
 #include "msg/msg_staff_list_eng.h"
-#include "title.naix"
+#include "title/title_res.h"
 #include "demo3d.naix"
 
 #include "staff_roll_main.h"
@@ -513,19 +513,12 @@ static void ExitBg(void)
 
 static void LoadBgGraphic(void)
 {
-	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL_L );
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
 
-#if PM_VERSION == LOCAL_VERSION
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_title_blk_logo_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+		ah, TITLE_RES_LOGO_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_title_blk_logo_NSCR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-#else
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_title_wht_logo_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_title_wht_logo_NSCR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-#endif
+		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
 
 	GFL_ARC_CloseDataHandle( ah );
 
@@ -545,14 +538,9 @@ static void LoadBgGraphic(void)
 static void LoadLogoPalette( SRMAIN_WORK * wk, BOOL flg )
 {
 	if( flg == TRUE ){
-		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL );
-#if PM_VERSION == LOCAL_VERSION
+		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL );
 		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_title_blk_logo_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
-#else
-		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_title_wht_logo_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
-#endif
+			ah, TITLE_RES_LOGO_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
 		GFL_ARC_CloseDataHandle( ah );
 	}else{
 		// フォントパレット
