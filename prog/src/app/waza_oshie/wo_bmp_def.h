@@ -138,7 +138,7 @@ enum {
 // è„Å@ãZÉäÉXÉg
 #define WIN_MWAZA_PX  (  7 )
 #define WIN_MWAZA_PY  (  5 )
-#define WIN_MWAZA_SX  ( 10 )
+#define WIN_MWAZA_SX  ( 11 )
 #define WIN_MWAZA_SY  ( 16 )
 #define WIN_MWAZA_PAL ( WO_PAL_SYS_FONT )
 #define WIN_MWAZA_CGX ( WIN_TITLE_CGX + WIN_TITLE_SX*WIN_TITLE_SY )
