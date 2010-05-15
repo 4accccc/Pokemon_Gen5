@@ -1949,17 +1949,17 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_END], 8 );
-    if(keyflag){
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    }else{
-      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-    }
     break;
   case TOUCH_RETURN:        // トレーナーカード終了→メニューへ
     PMSND_PlaySE( SND_TRCARD_CANCEL );
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_RETURN], 9 );
+    if(keyflag){
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    }else{
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    }
     break;
   }
 

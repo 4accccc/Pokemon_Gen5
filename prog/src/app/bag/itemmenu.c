@@ -1086,7 +1086,7 @@ static void _itemInnerUseRightStone( FIELD_ITEMMENU_WORK* pWork )
 {
   if( pWork->ret_item ==ITEM_DAAKUSUTOON || pWork->ret_item==ITEM_RAITOSUTOON )
   {
-/*	シナリオで自動発動するので、確実に使えなくてよい。 2010/05/13 by nakahiro
+/*  シナリオで自動発動するので、確実に使えなくてよい。 2010/05/13 by nakahiro
     SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( pWork->gamedata );
     ENC_SV_PTR encsv = EncDataSave_GetSaveDataPtr( save );
     EVENTWORK *evwork = GAMEDATA_GetEventWork(pWork->gamedata);
@@ -1753,13 +1753,13 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // 強制終了
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-		if( pWork->mode != BAG_MODE_POKELIST ){
-	    pWork->ret_code = BAG_NEXTPROC_EXIT;
-	    pWork->ret_item = ITEM_DUMMY_DATA;
-	    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-//	    _CHANGE_STATE(pWork,NULL);
-	    SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
-		}
+    if( pWork->mode != BAG_MODE_POKELIST ){
+      pWork->ret_code = BAG_NEXTPROC_EXIT;
+      pWork->ret_item = ITEM_DUMMY_DATA;
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+//      _CHANGE_STATE(pWork,NULL);
+      SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+    }
     return;
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
@@ -2221,7 +2221,7 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
     // 売値が0、もじくは重要フラグがONの時は売れない
     if( val == 0 || event )
     {
-		  ITEMDISP_ChangeActive( pWork, FALSE );
+      ITEMDISP_ChangeActive( pWork, FALSE );
       // 「○○○を　かいとることは　できません」
       GFL_MSG_GetString( pWork->MsgManager, mes_shop_093, pWork->pStrBuf );
       ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
@@ -3567,16 +3567,17 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
-		if( pWork->mode != BAG_MODE_POKELIST ){
-	    pWork->ret_code = BAG_NEXTPROC_EXIT;
-	    pWork->ret_item = ITEM_DUMMY_DATA;
-	    SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
-		}
+    if( pWork->mode != BAG_MODE_POKELIST ){
+      pWork->ret_code = BAG_NEXTPROC_EXIT;
+      pWork->ret_item = ITEM_DUMMY_DATA;
+      SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
+    }
   // 戻るボタン
   }else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     pWork->ret_item = ITEM_DUMMY_DATA;
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, NULL );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
   // リスト
   }else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
     // アイテム選択シーケンスでの操作
