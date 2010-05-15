@@ -93,7 +93,7 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 768, heapID );
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
