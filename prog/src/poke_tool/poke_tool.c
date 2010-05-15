@@ -26,6 +26,8 @@
 
 //サイズがずれたらWIFI不正チェックを通らなく可能性があるので、
 //名木橋のみコンパイルエラーチェックをしておく
+//また、worldtrade_savedataでもPPの大きさをdefineしているので、
+//ずれたら修正しなければならない
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
 SDK_COMPILER_ASSERT( sizeof(POKEMON_PARAM) == 220 );
 #endif
