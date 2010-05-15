@@ -319,9 +319,10 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
     }
   }
 
+#ifdef PM_DEBUG
   // ユーザデータの状態をチェック。
   GFL_NET_DWC_showFriendInfo();
-
+#endif
 
   if( !DWC_CheckHasProfile( _dWork->pUserData ) )
   {
@@ -424,12 +425,18 @@ int GFL_NET_DWC_connect()
         return ret;
       }
     }
-    // オーバーレイしてる場合 DWC_Initを再度CALLしてあげないとここで停止
-    // フレンドライブラリ初期化
-    DWC_InitFriendsMatch( _dWork->pUserData,
-                          GAME_PRODUCTID,
-                          GAME_SECRET_KEY, 0, 0,
-                          _dWork->pFriendData, FRIENDLIST_MAXSIZE);
+    {
+      int max = 0;
+      // オーバーレイしてる場合 DWC_Initを再度CALLしてあげないとここで停止
+      // フレンドライブラリ初期化
+      if(_dWork->pFriendData){
+        max = FRIENDLIST_MAXSIZE;
+      }
+      DWC_InitFriendsMatch( _dWork->pUserData,
+                            GAME_PRODUCTID,
+                            GAME_SECRET_KEY, 0, 0,
+                            _dWork->pFriendData, max);
+    }
 
     {// IPLのユーザ名を使ってログイン
       // 自分のユーザ名を圧縮。
@@ -446,24 +453,29 @@ int GFL_NET_DWC_connect()
     break;
 
   case MDSTATE_UPDATESERVERS:
-    // 認証成功、プロファイルID取得
-    result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
-                                    UpdateServersCallback, _dWork->pUserData,
-                                    FriendStatusCallback, &_dWork,
-                                    DeleteFriendListCallback, &_dWork);
-
-    if (result == FALSE){
-      // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
-      // FALSEが返ってくるので、普通はTRUE
-      MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
-      GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
-    }
-    else{
-      // GameSpyサーバ上バディ成立コールバックを登録する
-      DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
-      DWC_ProcessFriendsMatch();
-    }
-    _CHANGE_STATE(MDSTATE_UPDATESERVERSASYNC);
+     if(_dWork->pFriendData){
+       // 認証成功、プロファイルID取得
+       result = DWC_UpdateServersAsync(NULL, //（過去との互換性のため、必ずNULL)
+                                       UpdateServersCallback, _dWork->pUserData,
+                                       FriendStatusCallback, &_dWork,
+                                       DeleteFriendListCallback, &_dWork);
+       
+       if (result == FALSE){
+         // 呼んでもいい状態（ログインが完了していない状態）で呼んだ時のみ
+         // FALSEが返ってくるので、普通はTRUE
+         MYDWC_DEBUGPRINT("DWC_UpdateServersAsync error teminated.\n");
+         GFL_NET_StateSetError(GFL_NET_ERROR_RESET_SAVEPOINT);
+       }
+       else{
+         // GameSpyサーバ上バディ成立コールバックを登録する
+         DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
+         DWC_ProcessFriendsMatch();
+       }
+       _CHANGE_STATE(MDSTATE_UPDATESERVERSASYNC);
+     }
+     else{
+       _CHANGE_STATE(MDSTATE_LOGIN);
+     }
     break;
   case MDSTATE_UPDATESERVERSASYNC:
     DWC_ProcessFriendsMatch();
@@ -2219,6 +2231,9 @@ static void mydwc_updateFriendInfo( void )
 {
   int i;
 
+  if(_dWork->pFriendData==NULL){
+    return;
+  }
   for(i = 0; i < FRIENDINFO_UPDATA_PERFRAME; i++)
   {
     int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
@@ -2571,10 +2586,16 @@ static void NewClientCallback(int index, void* param)
  * @retval  none
  */
 //==============================================================================
+#if PM_DEBUG
 void GFL_NET_DWC_showFriendInfo()
 {
   int i;
 
+  if(_dWork->pFriendData==NULL){
+    return;
+  }
+
+  
   if( !DWC_CheckHasProfile( _dWork->pUserData ) )
   {
     DWCFriendData token;
@@ -2623,7 +2644,7 @@ void GFL_NET_DWC_showFriendInfo()
     MYDWC_DEBUGPRINT("\n");
   }
 }
-
+#endif
 
 // 送信したかどうかを返します
 BOOL GFL_NET_DWC_IsSendVoiceAndInc(void)
