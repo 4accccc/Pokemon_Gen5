@@ -1359,11 +1359,27 @@ static int _playerDirectBattleStart4( WIFIP2PMATCH_WORK *wk, int seq )
   if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
                         CNM_WFP2PMF_POPEPARTY, PokeParty_GetWorkSize(),
                         wk->pParentWork->pPokeParty[id], FALSE, FALSE, TRUE)){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKEPARTY_END,WB_NET_WIFICLUB);
-      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5);
+
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
+
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42);
   }
   return seq;
 }
+
+
+//WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42
+
+static int _playerDirectBattleStart42( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKEPARTY_END,WB_NET_WIFICLUB);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5);
+  }
+  return seq;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief   ポケパーティー転送  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5

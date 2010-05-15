@@ -1011,7 +1011,12 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   WifiP2PMatch_VCTConnectMain, //WIFIP2PMATCH_MODE_VCT_CONNECT_MAIN
   _playerDirectSub23, //  WIFIP2PMATCH_PLAYERDIRECT_SUB23
   _playerMachineTalkEnd, //  WIFIP2PMATCH_PLAYERMACHINE_TALKEND,
+  _playerDirectBattleStart42, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42
 };
+
+
+
+
 
 #define _MAXNUM   (2)         // 最大接続人数
 #define _MAXSIZE  (80)        // 最大送信バイト数
