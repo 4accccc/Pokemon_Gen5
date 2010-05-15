@@ -99,7 +99,7 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
     statusParam->ppt  =PST_PP_TYPE_POKEPASO;
   }
 
-	GAMESYSTEM_CallProc( wk->param->gamesys,
+  GFL_PROC_LOCAL_CallProc( wk->local_proc,
 		FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, statusParam );
 
 	wk->subprocflag = 1;
@@ -120,11 +120,12 @@ int WorldTrade_Status_Main(WORLDTRADE_WORK *wk, int seq)
 {
 	int ret=SEQ_MAIN;
 
-		if(1){	
+  if( wk->local_proc_status == GFL_PROC_MAIN_NULL )
+  {	
 
-			WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, wk->sub_process_mode );
-			ret = SEQ_FADEOUT;
-		}
+    WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, wk->sub_process_mode );
+    ret = SEQ_FADEOUT;
+  }
 
 	return ret;
 }

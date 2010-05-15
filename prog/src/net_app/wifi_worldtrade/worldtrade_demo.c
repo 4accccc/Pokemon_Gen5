@@ -153,7 +153,7 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
     GF_ASSERT(0);
 	}
 #ifndef DEBUG_DEMO_NONE
-	GAMESYSTEM_CallProc( wk->param->gamesys,
+  GFL_PROC_LOCAL_CallProc( wk->local_proc,
 		FS_OVERLAY_ID(pokemon_trade), call_proc, wk->sub_proc_wk );
 #endif
 
@@ -179,7 +179,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 	switch(wk->subprocess_seq){
   case DEMO_MODE_DEMO:
-    if( 1 ){
+    if( wk->local_proc_status == GFL_PROC_MAIN_NULL )
+    {
 
 			// 進化チェック
 			if(wk->sub_process_mode==MODE_EXCHANGE){
@@ -220,7 +221,7 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 #ifndef DEBUG_DEMO_NONE
           GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ));
 
-          GAMESYSTEM_CallProc( wk->param->gamesys,
+          GFL_PROC_LOCAL_CallProc( wk->local_proc,
               FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
 #endif
 
@@ -274,7 +275,7 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 #ifndef DEBUG_DEMO_NONE
             GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ));
 
-            GAMESYSTEM_CallProc( wk->param->gamesys,
+            GFL_PROC_LOCAL_CallProc( wk->local_proc,
                 FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->sub_proc_wk );
 #endif
             wk->subprocess_seq = DEMO_MODE_SHINKA;
@@ -302,8 +303,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 		break;
 	case DEMO_MODE_SHINKA:
-		if(1){
-
+    if( wk->local_proc_status == GFL_PROC_MAIN_NULL )
+    {
       if( wk->sub_proc_wk )
       {
         SHINKA_DEMO_PARAM *p_param  = wk->sub_proc_wk;

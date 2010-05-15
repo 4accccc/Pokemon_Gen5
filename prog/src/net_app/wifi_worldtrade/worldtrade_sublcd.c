@@ -215,6 +215,7 @@ void WorldTrade_HeroDemo( WORLDTRADE_WORK *wk )
 		hdw->seq     = 0;
 		hdw->heroy   = HERO_START_POSY;
 		hdw->wk      = wk;
+    hdw->wk->demo_end = 0;
 
 		// ‚­‚é‚­‚é‰ñ‚é
 		HeroAnimeChange( hdw, 0 );

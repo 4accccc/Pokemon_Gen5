@@ -295,6 +295,7 @@ enum{
 
 ///< ボックス横の矢印
 #define CELL_BOXARROW_NO	( 38 )
+#define CELL_BOXARROW_NO_PASSIVE	( 61 )
 
 
 ///< ポケモン検索
@@ -329,7 +330,8 @@ enum{
 ///< ユニオンキャラの総数
 #define UNIONCHARA_ALL_NUM  (16)
 
-#define WORLDTRADE_BOX_TEMOTI (0xFF)
+///< ボックスの手持ち
+#define WORLDTRADE_BOX_TEMOTI (RETURN_POSITION_TEMOTI)
 
 ///< 検索条件のレベル指定の使用するメッセージテーブルを指定する
 enum{
@@ -600,6 +602,9 @@ typedef struct _WORLDTRADE_WORK{
   int search_se_sync;
   int wifi_seq;
 
+  GFL_PROCSYS *local_proc;
+  GFL_PROC_MAIN_STATUS local_proc_status;
+
 #ifdef PM_DEBUG
 	int 					frame;									//
 	int						framenum[9][2];							//
@@ -736,6 +741,7 @@ extern POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_MANAGER 
 extern int WorldTrade_GetPokeMax( POKEPARTY *party, BOX_MANAGER *box,  int  tray );
 extern int WorldTrade_GetPPorPPP( int tray );
 extern BOOL WorldTrade_PokemonMailCheck( POKEMON_PARAM *pp );
+extern void WorldTrade_CheckBoxTray( WORLDTRADE_WORK *wk );
 
 // workdtrade_deposit.c
 extern int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq);

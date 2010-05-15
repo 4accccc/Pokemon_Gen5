@@ -1706,6 +1706,8 @@ static void PokeDepositPrint(
   STRBUF *namebuf = GFL_STR_CreateBuffer( MONS_NAME_SIZE+EOM_SIZE, HEAPID_WORLDTRADE );
   STRBUF *sexbuf = GFL_STR_CreateBuffer( MONS_NAME_SIZE+EOM_SIZE, HEAPID_WORLDTRADE );
   int sex, level,i;
+
+  BOOL is_sex_visible;
   
   OS_TPrintf("deposit_ppp3 = %08x", ppp);
   
@@ -1715,8 +1717,10 @@ static void PokeDepositPrint(
   PPP_Get(ppp, ID_PARA_nickname, namebuf );
   sex   = PPP_Get( ppp, ID_PARA_sex,   NULL )+1;
   level = PokePasoLevelCalc(ppp);
+
+  is_sex_visible  = PPP_Get( ppp, ID_PARA_nidoran_nickname, NULL );
   
-  OS_Printf("sex=%d, level=%d\n",sex, level);
+  OS_Printf("sex=%d, level=%d\n nidoran%d\n",sex, level, is_sex_visible);
   
   // 「あずけるポケモン」・性別アイコン文字列取得
   strbuf     = GFL_MSG_CreateString( MsgManager, msg_gtc_05_011  );
@@ -1736,7 +1740,7 @@ static void PokeDepositPrint(
   WorldTrade_SysPrint( win[1], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
   //WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
   WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 2, PRINTSYS_LSB_Make(15,2,0), print );
-  if(sex!=DPW_TR_GENDER_NONE){
+  if(sex!=DPW_TR_GENDER_NONE && is_sex_visible){
     WorldTrade_SysPrint( win[1], sexbuf,   70, 0, 0, sex_mark_col(sex-1), print );
   }
 

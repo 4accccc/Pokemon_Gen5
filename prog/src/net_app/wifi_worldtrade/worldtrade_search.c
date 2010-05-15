@@ -62,6 +62,7 @@ static  int SubSeq_SearchResultMessage( WORLDTRADE_WORK *wk );
 static  int CursorPosGet( WORLDTRADE_WORK *wk );
 static void CursorMove( WORLDTRADE_WORK *wk );
 static  int SubSeq_End( WORLDTRADE_WORK *wk);
+static  int SubSeq_End_Err( WORLDTRADE_WORK *wk);
 static  int SubSeq_InputPokenameMessage( WORLDTRADE_WORK *wk);
 
 
@@ -113,6 +114,7 @@ enum{
 	SUBSEQ_START,
 	SUBSEQ_MAIN,
 	SUBSEQ_END,
+	SUBSEQ_END_ERR,
 
 	SUBSEQ_INPUT_POKENAME_MES,
     SUBSEQ_POKENAME_SELECT_LIST,
@@ -160,6 +162,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	SubSeq_Start,				// SUBSEQ_START
 	SubSeq_Main,             	// SUBSEQ_MAIN,
 	SubSeq_End,              	// SUBSEQ_END,
+	SubSeq_End_Err,              	// SUBSEQ_END_ERR
 
 	SubSeq_InputPokenameMessage,	// SUBSEQ_INPUT_POKENAME_MES,
 	
@@ -1427,8 +1430,12 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 		case DPW_TR_ERROR_SERVER_TIMEOUT :
 		case DPW_TR_ERROR_DISCONNECTED:	
 			// サーバーと通信できません→終了
-			OS_TPrintf(" server full.\n");
 			wk->subprocess_seq = SUBSEQ_SEARCH_ERROR_DICONNECT_MES1;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1570,14 +1577,13 @@ static int SubSeq_ServerQueryFailure( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_SearchErrorDisconnectMessage1( WORLDTRADE_WORK *wk )
 {
-	// 「ＧＴＳのかくにんにしっぱいしました」
-	SubSeq_MessagePrint( wk, msg_gtc_error_004, 4, 0, 0x0f0f );
+	// 「ＧＴＳとのせつぞくがきれました。うけつけにもどります」
+	SubSeq_MessagePrint( wk, msg_gtc_error_006, 4, 0, 0x0f0f );
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_SEARCH_ERROR_DICONNECT_MES2 );
 	wk->wait =0;
 	PMSND_PlaySE(SE_GTC_NG);
 
 	return SEQ_MAIN;
-	
 }
 
 //------------------------------------------------------------------
@@ -1593,14 +1599,12 @@ static int SubSeq_SearchErrorDisconnectMessage2( WORLDTRADE_WORK *wk )
 {
 	// うけつけにもどります
 	SubSeq_MessagePrint( wk, msg_gtc_error_006_02, 4, 0, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_END );
+	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_END_ERR );
 	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGIN_ERR );
 	PMSND_PlaySE(SE_GTC_NG);
 
 	return SEQ_MAIN;
-	
 }
-
 
 //------------------------------------------------------------------
 /**
@@ -1766,6 +1770,28 @@ static int SubSeq_End( WORLDTRADE_WORK *wk)
 	return SEQ_FADEOUT;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   サブプロセスシーケンス終了処理  エラー用
+ *
+ * @param   wk		
+ *
+ * @retval  int		
+ */
+//------------------------------------------------------------------
+static  int SubSeq_End_Err( WORLDTRADE_WORK *wk)
+{
+  OS_TPrintf( "DPW_TRを終了しました\n" );
+  Dpw_Tr_End();
+
+	// 必ず時間アイコンを消去(２重解放対策はしておく）
+	WorldTrade_TimeIconDel(wk);
+
+  WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+    wk->subprocess_seq = 0;
+	
+	return SEQ_FADEOUT;
+}
 
 
 //------------------------------------------------------------------

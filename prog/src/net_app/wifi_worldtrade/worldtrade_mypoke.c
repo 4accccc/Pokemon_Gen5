@@ -998,6 +998,7 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 	STRBUF *namebuf = GFL_STR_CreateBuffer( (BUFLEN_POKEMON_NAME+EOM_SIZE)*2, HEAPID_WORLDTRADE );
 	STRBUF *itembuf = GFL_STR_CreateBuffer( (BUFLEN_ITEM_NAME+EOM_SIZE)*2, HEAPID_WORLDTRADE );
 	int sex, level,itemno,i,monsno;
+  BOOL is_sex_visible;
 	
 	// ニックネーム・性別・レベル・開発ＮＯ・アイテム取得
 	PPP_Get(ppp, ID_PARA_nickname, namebuf );
@@ -1005,8 +1006,9 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 	sex    = post->gender;
 	level  = post->level;
 	itemno = PPP_Get( ppp, ID_PARA_item, NULL );
+  is_sex_visible  = PPP_Get( ppp, ID_PARA_nidoran_nickname, NULL );
 	
-	OS_Printf("sex=%d, level=%d\n",sex, level);
+	OS_Printf("sex=%d, level=%d nidoran=%d\n",sex, level, is_sex_visible);
 	
 	// 「もちもの」・性別文字列・ＬＶ．？？？・種族名・アイテム名、文字列生成
 	itemlabel  = GFL_MSG_CreateString( MsgManager, msg_gtc_04_004  );
@@ -1025,7 +1027,7 @@ void WorldTrade_PokeInfoPrint( 	GFL_MSGDATA *MsgManager,
 
 	// 描画
 	WorldTrade_SysPrint( win[0], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
-	if(sex!=DPW_TR_GENDER_NONE){
+	if(sex!=DPW_TR_GENDER_NONE && is_sex_visible){
 		WorldTrade_SysPrint( win[0], sexbuf,   64, 0, 0, sex_mark_col(sex),print );
 	}
 	WorldTrade_SysPrint( win[1], strbuf,     0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );

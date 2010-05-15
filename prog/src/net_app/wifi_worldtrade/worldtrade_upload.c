@@ -74,7 +74,6 @@ static int MyPokemonPocketFullCheck( WORLDTRADE_WORK *wk, Dpw_Tr_Data *trData);
 static void PrintError( WORLDTRADE_WORK *wk );
 static void SetSaveNextSequence( WORLDTRADE_WORK *wk, int nextSeq1st, int nextSeq2nd );
 
-
 static int Subseq_Start( WORLDTRADE_WORK *wk);
 
 static int Subseq_EvilCheckStart( WORLDTRADE_WORK *wk );
@@ -93,6 +92,7 @@ static int Subseq_End( WORLDTRADE_WORK *wk);
 static int Subseq_ServerServiceError( WORLDTRADE_WORK *wk );
 static int Subseq_ServerServiceEnd( WORLDTRADE_WORK *wk );
 static int Subseq_MessageWait( WORLDTRADE_WORK *wk );
+static int Subseq_MessageKeyWait( WORLDTRADE_WORK *wk );
 static int Subseq_DownloadStart( WORLDTRADE_WORK *wk );
 static int Subseq_DownloadResult( WORLDTRADE_WORK *wk );
 static int Subseq_DownloadFinish( WORLDTRADE_WORK *wk );
@@ -122,6 +122,10 @@ static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk );
 static int SubSeq_TimeoutSaveWait( WORLDTRADE_WORK *wk );
 static int Subseq_DownloadExFinish( WORLDTRADE_WORK *wk );
 static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, Dpw_Tr_Data *tr );
+
+static int Subseq_StartCancelAsync( WORLDTRADE_WORK *wk );
+static int Subseq_WaitCancelAsync( WORLDTRADE_WORK *wk );
+static int Subseq_EndErr( WORLDTRADE_WORK *wk );
 
 
 #if GTS_DUPLICATE_BUG_FIX
@@ -191,10 +195,14 @@ enum{
 
 	SUBSEQ_END,
 	SUBSEQ_MES_WAIT,
+  SUBSEQ_MES_KEYWAIT,
 	SUBSEQ_ERROR_MESSAGE,
 	
 	SUBSEQ_RETURN_TITLE_MESSAGE,
 
+	SUBSEQ_START_CANCEL_ASYNC,
+	SUBSEQ_WAIT_CANCEL_ASYNC,
+	SUBSEQ_END_ERR,
 };
 
 
@@ -258,8 +266,13 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 	Subseq_End,             	// SUBSEQ_END,
 	Subseq_MessageWait,     	// SUBSEQ_MES_WAIT
+	Subseq_MessageKeyWait,     	// SUBSEQ_MES_KEYWAIT
 	Subseq_ErrorMessage,		// SUBSEQ_ERROR_MESSAGE,
 	Subseq_ReturnTitleMessage,	// SUBSEQ_RETURN_TITLE_MESSAGE,
+
+	Subseq_StartCancelAsync, //SUBSEQ_START_CANCEL_ASYNC,
+	Subseq_WaitCancelAsync, //SUBSEQ_WAIT_CANCEL_ASYNC,
+	Subseq_EndErr,//SUBSEQ_END_ERR,
 };
 
 
@@ -337,9 +350,15 @@ int WorldTrade_Upload_Init(WORLDTRADE_WORK *wk, int seq)
 int WorldTrade_Upload_Main(WORLDTRADE_WORK *wk, int seq)
 {
 	int ret;
+  int temp_seq  = wk->subprocess_seq;
 
 	// シーケンス遷移で実行
 	ret = (*Functable[wk->subprocess_seq])( wk );
+
+  if(temp_seq != wk->subprocess_seq )
+  {
+    OS_TPrintf( "SEQ:pre %d now %d\n", temp_seq, wk->subprocess_seq );
+  }
 
 	return ret;
 }
@@ -717,18 +736,18 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
     NHTTP_RAP_End(wk->nhttp);
 
     //送られてきた状態は正常か
-    OS_TPrintf( "不正検査！=[%d]\n", wk->evilcheck_data.poke_result );
+    OS_TPrintf( "不正検査=[%d]\n", wk->evilcheck_data.poke_result );
     if( wk->evilcheck_data.status_code == 0 )
     { 
       if( wk->evilcheck_data.poke_result == NHTTP_RAP_EVILCHECK_RESULT_OK )
       { 
-        OS_TPrintf( "不正検査終了！=[%d]\n", wk->evilcheck_data.poke_result );
+        OS_TPrintf( "不正検査終了=[%d]次=%d\n", wk->evilcheck_data.poke_result, wk->evilcheck_mode );
         wk->subprocess_seq = wk->evilcheck_mode;
       }
       else
       { 
         // 「このポケモンはあずける事ができません」→タイトルへ
-        OS_TPrintf( "不正検査NG！=[%d]\n", wk->evilcheck_data.poke_result );
+        OS_TPrintf( "不正検査NG=[%d]\n", wk->evilcheck_data.poke_result );
         wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
         wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
       }
@@ -736,10 +755,25 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
     else
     { 
       // 「このポケモンはあずける事ができません」→タイトルへ
-      OS_TPrintf( "不正検査NG！=[%d]\n", wk->evilcheck_data.poke_result );
+      OS_TPrintf( "不正検査NG=[%d]\n", wk->evilcheck_data.poke_result );
       wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
       wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
     }
+  }
+  else if( NHTTP_ERROR_BUSY != error )
+  {
+			// サーバーと通信できません→終了
+			OS_TPrintf(" evilcheck error. %d \n", error);
+			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
+			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NHTTP_RAP_PokemonEvilCheckDelete(wk->nhttp);
+      NHTTP_RAP_End(wk->nhttp);
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
   }
 
 	return SEQ_MAIN;
@@ -805,6 +839,11 @@ static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 			OS_TPrintf(" server full.\n");
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_ILLEGAL_DATA:
 		case DPW_TR_ERROR_CHEAT_DATA:
@@ -832,6 +871,11 @@ static int Subseq_UploadResult( WORLDTRADE_WORK *wk )
 			OS_TPrintf(" upload error. %d \n", result);
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1034,6 +1078,12 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 			OS_TPrintf(" upload error. %d \n", result);
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1108,6 +1158,12 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -1250,6 +1306,12 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 			OS_TPrintf(" upload error. %d \n", result);
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1432,13 +1494,13 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 			case POKEMON_ALL_FULL:
 				WorldTrade_TimeIconDel(wk);
 		 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_030, 1, 0x0f0f );
- 				WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SERVER_TRADE_CHECK_END );
+ 				WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_SERVER_TRADE_CHECK_END );
 				break;
 			// メールが受け取れない
 			case POKEMON_NOT_FULL_BUT_MAIL_NORECV:
 				WorldTrade_TimeIconDel(wk);
 		 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_036, 1, 0x0f0f );
- 				WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SERVER_TRADE_CHECK_END );
+ 				WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_SERVER_TRADE_CHECK_END );
 				break;
 			// 受け取れる
 			case POKEMON_RECV_OK:
@@ -1513,6 +1575,11 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 			OS_TPrintf(" upload error. %d \n", result);
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1525,28 +1592,8 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
-      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      NetErr_DispCallFatal();
 		}
-
-    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,FALSE) )
-    {
-    case GFL_NET_DWC_ERROR_RESULT_NONE:        //エラーはおきていない
-      /* なにもしない */
-      break;
-    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
-			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
-      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
-      break; 
-    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
-      NetErr_ExitNetSystem();
-			wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
-      wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
-      break;
-    case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
-			NetErr_DispCallFatal();
-      break;
-    }
 	}
 	return SEQ_MAIN;
 }
@@ -1660,6 +1707,11 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
 			OS_TPrintf(" upload error. %d \n", result);
 			wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			return SEQ_MAIN;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
@@ -1673,34 +1725,12 @@ static int Subseq_ServerDownloadResult( WORLDTRADE_WORK *wk )
 		AfterTradeCheck_ProcessControl( wk );
 
 	}
-	else{
+  else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
-      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
+      NetErr_DispCallFatal();
 		}
-
-    switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,FALSE) )
-    {
-    case GFL_NET_DWC_ERROR_RESULT_NONE:        //エラーはおきていない
-      /* なにもしない */
-      break;
-    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
-			wk->ConnectErrorNo = DPW_TR_ERROR_FAILURE;
-      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
-      break; 
-    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
-      NetErr_ExitNetSystem();
-			wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
-      wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
-      break;
-    case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
-			NetErr_DispCallFatal();
-      break;
-    }
-
-
-	}
+  }
 	return SEQ_MAIN;
 }
 
@@ -1788,6 +1818,92 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp,
 		OS_Printf("うみのむこうフラグはたたない\n");
 	}
 #endif //PHC_EVENT_CHECK
+}
+//------------------------------------------------------------------
+/**
+ * @brief   非同期処理のキャンセルを開始
+ *
+ * @param   wk		
+ *
+ * @retval  int		
+ */
+//------------------------------------------------------------------
+static int Subseq_StartCancelAsync( WORLDTRADE_WORK *wk )
+{
+  OS_TPrintf( "キャンセル処理開始\n" );
+  wk->timeout_count = 0;
+  Dpw_Tr_CancelAsync();
+  wk->subprocess_seq = SUBSEQ_WAIT_CANCEL_ASYNC;
+	return SEQ_MAIN;
+}
+//------------------------------------------------------------------
+/**
+ * @brief   非同期処理のキャンセル待ち
+ *
+ * @param   wk		
+ *
+ * @retval  int		
+ */
+//------------------------------------------------------------------
+static int Subseq_WaitCancelAsync( WORLDTRADE_WORK *wk )
+{
+  if( Dpw_Tr_IsAsyncEnd() )
+  {
+    s32 result = Dpw_Tr_GetAsyncResult();
+    switch( result )
+    {
+    case DPW_TR_ERROR_CANCEL:
+      OS_TPrintf( "キャンセル成功\n" );
+      wk->subprocess_seq = SUBSEQ_END_ERR;//wk->subprocess_nextseq;
+      break;
+
+    case DPW_TR_ERROR_DISCONNECTED:
+    case DPW_TR_ERROR_FAILURE:
+    case DPW_TR_ERROR_SERVER_TIMEOUT:
+      OS_TPrintf( "キャンセル失敗=%d\n",result );
+      wk->subprocess_seq = SUBSEQ_END_ERR;//wk->subprocess_nextseq;
+      break;
+
+    case DPW_TR_ERROR_FATAL:
+      NetErr_DispCallFatal();
+      break;
+    }
+
+  }
+  else
+  {
+    OS_TPrintf( "キャンセル処理を待っています\n" );
+
+    wk->timeout_count++;
+    if(wk->timeout_count == 60*60){
+      wk->subprocess_seq = SUBSEQ_END_ERR;//wk->subprocess_nextseq;
+		}
+  }
+	return SEQ_MAIN;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   エラーで終了
+ *
+ * @param   wk		
+ *
+ * @retval  int		
+ */
+//------------------------------------------------------------------
+static int Subseq_EndErr( WORLDTRADE_WORK *wk )
+{
+  OS_TPrintf( "DPW_TRを終了しました\n" );
+  Dpw_Tr_End();
+
+	// 必ず時間アイコンを消去(２重解放対策はしておく）
+	WorldTrade_TimeIconDel(wk);
+
+  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+  wk->subprocess_seq = 0;
+	
+	return SEQ_FADEOUT;
+
 }
 
 //------------------------------------------------------------------
@@ -1881,6 +1997,11 @@ static int Subseq_DownloadExFinishResult( WORLDTRADE_WORK *wk)
 			OS_TPrintf(" download server stop service.\n");
       wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 
 		// 1ヶ月過ぎてしまった
@@ -1955,8 +2076,6 @@ static int Subseq_Main( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int Subseq_UploadSuccessMessage( WORLDTRADE_WORK *wk )
 {
-//	Enter_MessagePrint( wk, wk->MsgManager,msg_gtc_13_002, 1, 0x0f0f );
-//	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_NOW_SAVE_MES );
 	
 	// あずけたフラグを立てる
 	wk->DepositFlag     = 1;
@@ -1980,8 +2099,6 @@ static int Subseq_UploadSuccessMessage( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Subseq_DownloadSuccessMessage( WORLDTRADE_WORK *wk)
 {
-//	Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_14_002, 1, 0x0f0f );
-//	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_NOW_SAVE_MES );
 	
 	// あずけたフラグを落とす
 	 wk->DepositFlag     = 0;
@@ -2006,8 +2123,6 @@ static int Subseq_DownloadSuccessMessage( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int Subseq_ExchangeSuccessMessage( WORLDTRADE_WORK *wk)
 {
-//	Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_15_002, 1, 0x0f0f );
-//	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_NOW_SAVE_MES );
 	
 	// デモへ行く予約をしておく
 	WorldTrade_SubProcessChange( wk, WORLDTRADE_DEMO, MODE_EXCHANGE );
@@ -2030,8 +2145,6 @@ static int Subseq_ExchangeSuccessMessage( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int Subseq_DownloadExSuccessMessage( WORLDTRADE_WORK *wk)
 {
-//	Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_14_002, 1, 0x0f0f );
-//	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_NOW_SAVE_MES );
 	
 	// あずけたフラグを落とす
 	 wk->DepositFlag     = 0;
@@ -2109,6 +2222,11 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
       wk->ConnectErrorNo = result;
 			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
+
+      NetErr_ExitNetSystem();
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 			break;
 	// -----------------------------------------
 	// 共通エラー処理
@@ -2159,7 +2277,7 @@ static int Subseq_ServerPokeDeleteWait( WORLDTRADE_WORK *wk)
 static int Subseq_ExchangeFailedMessage( WORLDTRADE_WORK *wk)
 {
 	Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_15_003, 1, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_END );
+	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_END );
 	
 	WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 
@@ -2241,7 +2359,16 @@ static int Subseq_ErrorMessage( WORLDTRADE_WORK *wk )
 
 	// エラーに対応したプリント
 	PrintError(wk);
-	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_END );
+
+  //非同期処理が終わっていないければキャンセル
+  if( Dpw_Tr_IsAsyncEnd() )
+  {
+    WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_END_ERR );
+  }
+  else
+  {
+    WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_START_CANCEL_ASYNC );
+  }
 	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGIN_ERR );
 	
 	// 時間アイコン消去(２重解放になるのを気をつける）
@@ -2249,7 +2376,6 @@ static int Subseq_ErrorMessage( WORLDTRADE_WORK *wk )
 
 	return SEQ_MAIN;
 }
-
 
 //------------------------------------------------------------------
 /**
@@ -2264,7 +2390,7 @@ static int Subseq_ReturnTitleMessage( WORLDTRADE_WORK *wk )
 {	
 	// エラーに対応したプリント
 	PrintError(wk);
-	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_END );
+	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_END );
 	WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 	
 	// 時間アイコン消去(SUBSEQ_ENDと２重解放になるのでNULLチェックは必要
@@ -2455,7 +2581,7 @@ static int SubSeq_TimeoutSaveWait( WORLDTRADE_WORK *wk )
 
 		// ●●●はこうかんされませんでした…
 		Enter_MessagePrint( wk, wk->MsgManager, wk->error_mes_no, 1, 0x0f0f );
-		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SERVER_TRADE_CHECK_END );
+		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_KEYWAIT, SUBSEQ_SERVER_TRADE_CHECK_END );
 
 	}
 	
@@ -2511,14 +2637,32 @@ static int Subseq_End( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int Subseq_MessageWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( &wk->print )==0
-      && GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) {
+	if( GF_MSG_PrintEndCheck( &wk->print )==0 ) {
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  会話終了をキーかタッチで待ってから次のシーケンスへ
+ *
+ *	@param	WORLDTRADE_WORK *wk 
+ *
+ *	@return int 
+ */
+//-----------------------------------------------------------------------------
+static int Subseq_MessageKeyWait( WORLDTRADE_WORK *wk )
+{
+	if( GF_MSG_PrintEndCheck( &wk->print )==0
+      && (( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ))
+          || ( GFL_UI_TP_GetTrg() ) ) {
+    PMSND_PlaySE( SEQ_SE_MESSAGE );
+		wk->subprocess_seq = wk->subprocess_nextseq;
+	}
+	return SEQ_MAIN;
+}
 
 
 
@@ -2537,7 +2681,7 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 //	BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 boxNum, POKEMON_PASO_PARAM* poke );
 
 	// 手持ちからでなければBOXのポケモンを消去する
-	if(wk->BoxTrayNo!=18){
+	if(wk->BoxTrayNo!=WORLDTRADE_BOX_TEMOTI){
 		POKEMON_PARAM *pp = PokemonParam_AllocWork(HEAPID_WORLDTRADE);
 		PokeReplace(
 			BOXDAT_GetPokeDataAddress( wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos ),
@@ -2692,7 +2836,7 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKE
 	// 図鑑登録処理
   ZUKANSAVE_SetPokeGet( wk->param->zukanwork, pp );
 
-	boxno = 18;
+	boxno = WORLDTRADE_BOX_TEMOTI;
 	if(PokeParty_GetPokeCount(wk->param->myparty)==6){
 		// てもちがいっぱいだったら格納先をボックスに
 		OS_Printf("格納先はBOX\n");
@@ -2725,14 +2869,14 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKE
   PP_Put( pp, ID_PARA_sex, POKETOOL_GetSex( PP_Get( pp, ID_PARA_monsno, NULL ), PP_Get( pp, ID_PARA_form_no, NULL ), PP_Get( pp, ID_PARA_personal_rnd, NULL )  ) );
 
 	// てもち(てもちが一杯はこの時点だとどうしようもないので）
-	if(boxno==18){
+	if(boxno==WORLDTRADE_BOX_TEMOTI){
 		int num;
 
 		// メールがついているので、手持ちにしか受け取れない
 		PokeParty_Add(wk->param->myparty, pp);
 		num = PokeParty_GetPokeCount( wk->param->myparty );
 
-		wk->EvoPokeInfo.boxno = 18;
+		wk->EvoPokeInfo.boxno = WORLDTRADE_BOX_TEMOTI;
 		wk->EvoPokeInfo.pos   = num-1;
 		OS_Printf("てもちに追加した\n");
 
@@ -2886,7 +3030,6 @@ static void SetSaveNextSequence( WORLDTRADE_WORK *wk, int nextSeq1st, int nextSe
 	wk->saveNextSeq2nd = nextSeq2nd;
 	
 }
-
 
 #if GTS_DUPLICATE_BUG_FIX
 

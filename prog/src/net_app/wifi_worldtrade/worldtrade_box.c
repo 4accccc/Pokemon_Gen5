@@ -79,7 +79,7 @@ static int SubSeq_MessageClearWait( WORLDTRADE_WORK *wk );
 static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int flag, u16 dat, int winflag );
 static void TransPokeIconCharaPal( int pokeno, int form, int gender, int tamago, int no, GFL_CLWK* icon, ARCHANDLE* handle, WORLDTRADE_POKEBUF *pbuf );
 static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now);
-static int RoundWork( int num, int max, int move );
+static int BoxTrayRoundWork( int num, int max, int move );
 static void CursorControl( WORLDTRADE_WORK *wk );
 static int SubSeq_SelectList( WORLDTRADE_WORK *wk );
 static int SubSeq_SelectWait( WORLDTRADE_WORK *wk );
@@ -807,6 +807,8 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void InitWork( WORLDTRADE_WORK *wk )
 {
+  //ボックスの最大数チェック
+  WorldTrade_CheckBoxTray( wk );
 
 	// ボックストレイ名文字列バッファ
 	wk->BoxTrayNameString = GFL_STR_CreateBuffer( BOX_TRAY_NAME_BUF_NUM, HEAPID_WORLDTRADE );
@@ -1079,7 +1081,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 			GFL_CLACT_WK_SetAutoAnmFlag( wk->BoxArrowActWork[0], 1 );
 			GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[0], CELL_BOXARROW_NO );
 			
-			wk->BoxTrayNo = RoundWork( wk->BoxTrayNo, 19, 1);
+			wk->BoxTrayNo = BoxTrayRoundWork( wk->BoxTrayNo, wk->BoxTrayMax, 1);
 			NowBoxPageInfoGet( wk, wk->BoxTrayNo );
 			PMSND_PlaySE(WORLDTRADE_MOVE_SE);
 			break;
@@ -1088,7 +1090,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 			GFL_CLACT_WK_SetAutoAnmFlag( wk->BoxArrowActWork[1], 1 );
 			GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[1], CELL_BOXARROW_NO+1 );
 
-			wk->BoxTrayNo = RoundWork( wk->BoxTrayNo, 19, -1);
+			wk->BoxTrayNo = BoxTrayRoundWork( wk->BoxTrayNo, wk->BoxTrayMax, -1);
 			NowBoxPageInfoGet( wk, wk->BoxTrayNo );
 			PMSND_PlaySE(WORLDTRADE_MOVE_SE);
 			break;
@@ -1189,7 +1191,7 @@ static void CursorControl( WORLDTRADE_WORK *wk )
 				GFL_CLACT_WK_SetAutoAnmFlag( wk->BoxArrowActWork[arw_idx], 1 );
 				GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[arw_idx], CELL_BOXARROW_NO+arw_idx );
 
-				wk->BoxTrayNo = RoundWork( wk->BoxTrayNo, 19, tmp-100);
+				wk->BoxTrayNo = BoxTrayRoundWork( wk->BoxTrayNo, wk->BoxTrayMax, tmp-100);
 				NowBoxPageInfoGet( wk, wk->BoxTrayNo );
 				PMSND_PlaySE(WORLDTRADE_MOVE_SE);
 			}else{
@@ -1237,24 +1239,45 @@ static void  CursorPosPrioritySet( GFL_CLWK* cursor, int pos )
 
 //------------------------------------------------------------------
 /**
- * @brief   numにmoveを足し,0以下ならmax-1に、maxなら0にして返す
+ * @brief   ボックスのトレイ回り込み処理
+ *              numにmoveを足し,0以下ならmax-1に、maxなら0にして返す
+ *
+ *              wbよりmax変動＋手持ちインデックスを変更したため、
+ *              回り込みもそれを準拠する
  *
  * @param   num		元の値
- * @param   max		最大値
+ * @param   max		ボックスの最大値
  * @param   move	足す値（＋－あり）
  *
  * @retval  int		
  */
 //------------------------------------------------------------------
-static int RoundWork( int num, int max, int move )
+static int BoxTrayRoundWork( int num, int max, int move )
 {
-	num += move;
-	if(num < 0) {
-		return max-1;
-	}
-	if(num==max){
-		return 0;
-	}
+  if( num == WORLDTRADE_BOX_TEMOTI )
+  {
+    //手持ちのときは移動方向によって
+    //ボックスへ帰る
+    if( move > 0 )
+    {
+      num = 0;
+    }
+    else if( move < 0 )
+    {
+      num = max-1;
+    }
+  }
+  else
+  {
+    //手持ち以外は単純な回り込み
+    num += move;
+    if(num < 0) {
+      return WORLDTRADE_BOX_TEMOTI;
+    }
+    if(num==max){
+      return WORLDTRADE_BOX_TEMOTI;
+    }
+  }
 	return num;
 }
 
@@ -1713,7 +1736,7 @@ static int ExchangeCheck( WORLDTRADE_WORK *wk )
 	pp = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
 
 	// あいてのポケモンにメールがついていて、自分のてもちが６ひきだったときは交換できない。
-	if(WorldTrade_PokemonMailCheck(pp) && wk->BoxTrayNo!=18){
+	if(WorldTrade_PokemonMailCheck(pp) && wk->BoxTrayNo!=WORLDTRADE_BOX_TEMOTI){
 		if(PokeParty_GetPokeCount(wk->param->myparty)==6){
 			SubSeq_MessagePrint( wk, msg_gtc_01_029, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN );
@@ -2139,7 +2162,7 @@ static void PokemonIconSet( POKEMON_PASO_PARAM *paso, GFL_CLWK* icon,
  * @brief   ボックス・てもちのポケモンデータを読み込む
  *
  * @param   wk		GTS画面ワーク
- * @param   now		0-17:ボックスNO、18:手持ち
+ * @param   now		0-BoxTrayMax:ボックスNO、WORLDTRADE_BOX_TEMOTI:手持ち
  *
  * @retval  none		
  */
@@ -2159,7 +2182,7 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 	handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_WORLDTRADE );
 
 	// ボックス
-	if(now>=0 && now <18){
+	if(now>=0 && now < wk->BoxTrayMax ){
 		for(i=0;i<BOX_POKE_NUM;i++){
 		  PokemonLevelSet(BOXDAT_GetPokeDataAddress( boxdata, now, i ), &wk->boxWork->info[i] );
 		}
@@ -2177,7 +2200,7 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 		// ボックスのトレイ名取得
 		BOXDAT_GetBoxName( boxdata, now, wk->BoxTrayNameString );
 	
-	}else{
+	}else if( now == WORLDTRADE_BOX_TEMOTI ){
 	// てもち
 		int num = PokeParty_GetPokeCount( wk->param->myparty );
 
@@ -2210,6 +2233,10 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 		}
 		GFL_MSG_GetString( wk->MsgManager, msg_gtc_04_023, wk->BoxTrayNameString );
 	}
+  else
+  {
+    GF_ASSERT_MSG(0,"BOX範囲外%d\n",now);
+  }
 	GFL_ARC_CloseDataHandle( handle );
 	
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->SubWin), 0x0000 );
@@ -2229,14 +2256,14 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 /**
  * @brief   指定したポケモンデータはPOKEMON_PARAMか、POKEMON_PASO_PARAMか？
  *
- * @param   box		0-17:ボックスNO、18:手持ち
+ * @param   tray	0-BoxTrayMax:ボックスNO、WORLDTRADE_BOX_TEMOTI:手持ち
  *
  * @retval  int		0:POKEMON_PASO_PARAM 1:POKEMON_PARAM
  */
 //==============================================================================
 int WorldTrade_GetPPorPPP( int tray )
 {
-	if( tray == 18 ){
+	if( tray == WORLDTRADE_BOX_TEMOTI ){
 		return 1;
 	}else{
 		return 0;
@@ -2249,7 +2276,7 @@ int WorldTrade_GetPPorPPP( int tray )
  *
  * @param   party	POKEPARTYポインタ
  * @param   box		ボックスのセーブデータ
- * @param   tray	0-17:ボックスNO、18:手持ち
+ * @param   tray	0-BoxTrayMax:ボックスNO、WORLDTRADE_BOX_TEMOTI:手持ち
  * @param   pos		ボックス位置（０－２９）手持ちの場合は0-5
  *
  * @retval  POKEMON_PASO_PARAM *		取得したポケモンデータのポインタ
@@ -2275,7 +2302,7 @@ POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_MANAGER *box,  
  *
  * @param   party	POKEPARTYポインタ
  * @param   box		ボックスのセーブデータ
- * @param   tray	0-17:ボックスNO、18:手持ち
+ * @param   tray	0-BoxTrayMax:ボックスNO、WORLDTRADE_BOX_TEMOTI:手持ち
  *
  * @retval  int 総数
  */
@@ -2297,7 +2324,7 @@ int WorldTrade_GetPokeMax( POKEPARTY *party, BOX_MANAGER *box,  int  tray )
  *
  * @param   party	POKEPARTYポインタ
  * @param   box		ボックスのセーブデータ
- * @param   tray	0-17:ボックスNO、18:手持ち
+ * @param   tray	0-BoxTrayMax:ボックスNO、WORLDTRADE_BOX_TEMOTI:手持ち
  * @param   pos		ボックス位置（０－２９）手持ちの場合は0-5
  *
  * @retval  int		
@@ -2403,7 +2430,7 @@ static int PokeNewItemCheck( POKEMON_PASO_PARAM *ppp )
  *
  * @param   party	POKEPARTYポインタ
  * @param   box		BOXセーブデータ
- * @param   tray	0-17:ボックスNO、18:手持ち
+ * @param   tray	0-BoxTrayMax:ボックスNO、WORLDTRADE_BOX_TEMOTI:手持ち
  * @param   pos		ボックス位置（０－２９）手持ちの場合は0-5
  *
  * @retval  int		WANT_POKE_NO, WANT_POME_YES, WANT_POKE_TAMAGO
@@ -2599,4 +2626,35 @@ BOOL WorldTrade_PokemonMailCheck( POKEMON_PARAM *pp )
 	}
 	
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボックスのトレイ最大数をチェックする
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WorldTrade_CheckBoxTray( WORLDTRADE_WORK *wk )
+{
+  wk->BoxTrayMax  = BOXDAT_GetTrayMax( wk->param->mybox );
+
+  //トレイが最大になっていなかったらトレイ増加チェックを行なう
+  if( wk->BoxTrayMax < BOX_MAX_TRAY )
+  {
+    int i;
+    //現在のトレイ全てにポケモンが１匹でもいたら増加する
+    for( i = 0; i < wk->BoxTrayMax; i++ )
+    {
+      if( BOXDAT_GetPokeExistCount( wk->param->mybox, i ) == 0 )
+      {
+        break;
+      }
+    }
+
+    if( i == wk->BoxTrayMax )
+    {
+      wk->BoxTrayMax = BOXDAT_AddTrayMax( wk->param->mybox );
+    }
+  }
 }

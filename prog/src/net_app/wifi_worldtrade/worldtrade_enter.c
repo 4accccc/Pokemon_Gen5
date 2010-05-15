@@ -282,6 +282,7 @@ static int Enter_Start( WORLDTRADE_WORK *wk)
 
   wk->subprocess_seq  = ENTER_END;
 	wk->boxSearchFlag = 1;
+  wk->OpeningFlag   = 0;
 
   WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 
@@ -409,8 +410,7 @@ static BOOL Enter_DpwTrInit( WORLDTRADE_WORK *wk )
 
 	// DPW_TR初期化
 	Dpw_Tr_Init( profileId, DWC_CreateFriendKey( MyUserData ),LIBDPW_SERVER_TYPE );
-
-	OS_TPrintf("Dpw Trade 初期化\n");
+	OS_TPrintf("Dpw_Tr_Init 初期化\n");
 
 	
 	return TRUE;
@@ -680,12 +680,15 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
     param->mode         = WIFILOGIN_MODE_NORMAL;
   }
 
-  GAMESYSTEM_CallProc( wk->param->gamesys,
+  GFL_PROC_LOCAL_CallProc( wk->local_proc,
 		FS_OVERLAY_ID(wifi_login), 
     &WiFiLogin_ProcData, wk->sub_proc_wk );
 
-  wk->subprocess_seq = ENTER_WIFILOGIN_PROC_WAIT;
 
+  //もしエラーならばここでエラー画面になる
+  NetErr_DispCall(FALSE); 
+
+  wk->subprocess_seq = ENTER_WIFILOGIN_PROC_WAIT;
 	return SEQ_MAIN;
 }
 
@@ -701,7 +704,7 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
 static int Enter_Wifilogin_wait( WORLDTRADE_WORK *wk )
 { 
   WIFILOGIN_PARAM *param  = wk->sub_proc_wk;
-  if( 1 )
+  if( wk->local_proc_status == GFL_PROC_MAIN_NULL )
   { 
     switch( param->result )
     { 
@@ -743,10 +746,14 @@ static int Enter_Wifilogout_start( WORLDTRADE_WORK *wk )
   param->logout_before_callback = Enter_WifiLogOutCallBack;
   param->p_callback_wk  = wk;
 
-  GAMESYSTEM_CallProc( wk->param->gamesys,  FS_OVERLAY_ID(wifi_login), 
+  GFL_PROC_LOCAL_CallProc( wk->local_proc,
+      FS_OVERLAY_ID(wifi_login), 
       &WiFiLogout_ProcData, wk->sub_proc_wk );
 
   wk->subprocess_seq = ENTER_WIFILOGOUT_PROC_WAIT;
+
+  //もしエラーならばここでエラー画面になる
+  NetErr_DispCall(FALSE); 
 
 	return SEQ_MAIN;
 }
@@ -762,7 +769,7 @@ static int Enter_Wifilogout_start( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_Wifilogout_wait( WORLDTRADE_WORK *wk )
 { 
-  if( 1 )
+  if( wk->local_proc_status == GFL_PROC_MAIN_NULL )
   { 
     GFL_HEAP_FreeMemory(wk->sub_proc_wk);
 
@@ -867,6 +874,7 @@ static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogInCallBack( WIFILOGIN_MESSAGE_WORK
   case SEQ_ERROR_WAIT:
     if( Enter_ServerServiceEnd( wk, p_msg ) )
     { 
+      wk->wifi_seq  = 0;
       return WIFILOGIN_CALLBACK_RESULT_FAILED;
     }
     break;
@@ -886,7 +894,11 @@ static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogInCallBack( WIFILOGIN_MESSAGE_WORK
  */
 //-----------------------------------------------------------------------------
 static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogOutCallBack( WIFILOGIN_MESSAGE_WORK *p_msg, void *p_callback_wk )
-{ 
+{
+  WORLDTRADE_WORK *wk = p_callback_wk;
+
+  OS_TPrintf( "Dpw_Trを終了しました\n" );
+  Dpw_Tr_End();
   return WIFILOGIN_CALLBACK_RESULT_SUCCESS;
 }
 

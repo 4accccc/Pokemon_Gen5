@@ -998,14 +998,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
     GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
     wk->subprocess_seq  = SUBSEQ_CURSOR_WAIT;
 
-    if( wk->TitleCursorPos == 2 )
-    { 
-      PMSND_PlaySE(SE_CANCEL);
-    }
-    else
-    { 
-      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
-    }
+    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 
 	}else if(GFL_UI_KEY_GetTrg() & PAD_KEY_UP){
 		if(wk->TitleCursorPos!=0){

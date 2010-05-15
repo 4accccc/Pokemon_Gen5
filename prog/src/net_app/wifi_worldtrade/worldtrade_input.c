@@ -3169,6 +3169,8 @@ static void Nation_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max )
 static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
 {
 	u16 *scr;
+  u8 page_max;
+
 	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_level_lz_nscr, 1 );
 	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
@@ -3186,8 +3188,9 @@ static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
 	PokeName_ListPrint( wk, 0, wk->listMax );
 
 	// ページ数表示
-	PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_POKENAME_WIN_NUM], 
-				wk->page, _list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM ) );
+  page_max = _list_page_num( wk->listMax, MODE_POKENAME_WIN_NUM );
+  PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_POKENAME_WIN_NUM], 
+      wk->page, page_max );
 
 	// もどる表示
 	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
@@ -3214,12 +3217,19 @@ static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 1 );
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 1 );
+
+  if( page_max == 1 )
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], FALSE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
+  }
 
 	wk->seq  = WI_SEQ_POKENAME_MAIN;
-
-
 
 	return BMPMENU_NULL;
 }
@@ -3660,6 +3670,8 @@ static int	wi_seq_nation_head2_return( WORLDTRADE_INPUT_WORK *wk )
 static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
 {
 	u16 *scr;
+  u8 page_max;
+
 	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
 	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
@@ -3672,8 +3684,10 @@ static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
 												 head2pokename[wk->Head1]+wk->Head2 );
 	Nation_ListPrint( wk, 0, wk->listMax );
 	wk->page    = 0;
-	PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_NATION_WIN_NUM], 
-				wk->page, _list_page_num( wk->listMax, MODE_NATION_WIN_NUM ) );
+
+  page_max  = _list_page_num( wk->listMax, MODE_NATION_WIN_NUM );
+  PagePrint(  wk->BgWinFrm, wk->NumFontSys, wk->MenuBmp[MODE_NATION_WIN_NUM], 
+      wk->page, page_max );
 
 	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009,&wk->print );
 
@@ -3695,8 +3709,18 @@ static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
   }
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 1 );
-	GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], 1 );
+
+  if( page_max == 1 )
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], FALSE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
+  }
+
 
 	wk->seq  = WI_SEQ_NATION_MAIN;
 	

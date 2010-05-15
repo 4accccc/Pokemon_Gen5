@@ -87,6 +87,7 @@ static void WorldTrade_WndSetting(void);
 
 
 
+
 //============================================================================================
 //  関数テーブル定義
 //============================================================================================
@@ -150,6 +151,8 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     debug_worldtrade = wk;
 
 
+    //local_proc
+    wk->local_proc  = GFL_PROC_LOCAL_boot(HEAPID_WORLDTRADE);
 
     //task
     wk->task_wk_area  = GFL_HEAP_AllocMemory( HEAPID_WORLDTRADE, GFL_TCB_CalcSystemWorkSize( 8 ) );
@@ -210,11 +213,10 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     DWC_UpdateConnection();
     // 通信状態を確認してアイコンの表示を変える
     WirelessIconEasy_SetLevel(WorldTrade_WifiLinkLevel());
-
-    // Dpw_Tr_Main() だけは例外的にいつでも呼べる
-    Dpw_Tr_Main();
   }
+  Dpw_Tr_Main();
 
+  wk->local_proc_status = GFL_PROC_LOCAL_Main( wk->local_proc );
   GFL_TCB_Main( wk->tcbsys );
   WT_PRINT_Main( &wk->print );
 
@@ -265,7 +267,7 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     return GFL_PROC_RES_FINISH;
   }
   ServerWaitTimeFunc( wk );
-  BoxPokeNumGet( wk );
+  //BoxPokeNumGet( wk );
 
   if(wk->clactSet!=NULL){
     GFL_CLACT_SYS_Main();
@@ -317,6 +319,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
   MsgPrintTouchPanelFlagSet( MSG_TP_OFF );
   GFL_TCB_Exit( wk->tcbsys );
   GFL_HEAP_FreeMemory( wk->task_wk_area );
+  GFL_PROC_LOCAL_Exit( wk->local_proc );
 
   // タッチフォントアンロード
   WT_PRINT_Exit( &wk->print );
@@ -419,7 +422,7 @@ static void InitWork( WORLDTRADE_WORK *wk, WORLDTRADE_PARAM *param )
   wk->Search.level_max       = 0;
   wk->SearchBackup.characterNo = 0;
   wk->demo_end               = 0;
-  wk->BoxTrayNo          = 18;
+  wk->BoxTrayNo          = WORLDTRADE_BOX_TEMOTI;
   wk->boxPokeNum         = 0;
   wk->boxSearchFlag      = 0;
   wk->SubLcdTouchOK      = 0;
