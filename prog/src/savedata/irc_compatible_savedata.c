@@ -68,7 +68,7 @@ struct _IRC_COMPATIBLE_SAVEDATA
 static u8 Irc_Compatible_SV_InsertRanking( IRC_COMPATIBLE_RANKING_DATA *p_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg );
-static u16 Irc_Compatible_SV_GetPlayCount( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, u32 trainerID );
+static const IRC_COMPATIBLE_RANKING_DATA * Irc_Compatible_SV_GetRankDataForTrainerID( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, u32 trainerID );
 static void Irc_Compatible_SV_AddPlayCount( IRC_COMPATIBLE_RANKING_DATA *p_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 //=============================================================================
 /**
@@ -107,10 +107,10 @@ u32 IRC_COMPATIBLE_SV_GetRankNum( const IRC_COMPATIBLE_SAVEDATA *cp_sv )
 {	
 	int i;
 
-	//ランクインの数はセーブしておらず、play_cntを見て計算する
+	//ランクインの数はセーブしておらず、使用しているかを見て計算する
 	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
 	{	
-		if( cp_sv->rank[i].play_cnt == 0 )
+		if( cp_sv->rank[i].is_use == 0 )
 		{	
 			break;
 		}
@@ -423,10 +423,17 @@ u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate 
 u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg )
 {	
 	IRC_COMPATIBLE_RANKING_DATA	new_data;
-	u16 play_cnt;
+	u16   play_cnt  = 0;  //初期回数は０
+  BOOL  only_day  = 1;  //始めての場合は１
+  const IRC_COMPATIBLE_RANKING_DATA *cp_pre_data;
 
 	//回数取得
-	play_cnt	= Irc_Compatible_SV_GetPlayCount( p_sv->rank, IRC_COMPATIBLE_SV_RANKING_MAX, trainerID );
+  cp_pre_data = Irc_Compatible_SV_GetRankDataForTrainerID( p_sv->rank, IRC_COMPATIBLE_SV_RANKING_MAX, trainerID );
+  if( cp_pre_data )
+  {
+    play_cnt  = cp_pre_data->play_cnt;
+    only_day  = cp_pre_data->only_day;
+  }
 
 	//データ作成
 	Irc_Compatible_SV_SetData( &new_data, cp_name, score, play_cnt, sex, birth_month, birth_day, trainerID, mons_no, form_no, mons_sex, egg );
@@ -518,7 +525,7 @@ static u8 Irc_Compatible_SV_InsertRanking( IRC_COMPATIBLE_RANKING_DATA *p_rank, 
 	//挿入箇所をチェック
 	for( i = 0; i < len; i++ )
 	{	
-		if( p_rank[i].score < cp_new->score )
+		if( p_rank[i].is_use == FALSE || p_rank[i].score < cp_new->score )
 		{	
 			insert	= i;
 			break;
@@ -608,17 +615,17 @@ static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, cons
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	プレイ回数を取得
+ *	@brief	トレーナーIDからランキングデータを取得する
  *
  *	@param	const IRC_COMPATIBLE_RANKING_DATA *cp_rank	ワーク
  *	@param	len																					長さ
  *	@param	trainerID																		ID
  *
- *	@retval	プレイ回数
+ *	@retval	ランキングデータ
  *
  */
 //-----------------------------------------------------------------------------
-static u16 Irc_Compatible_SV_GetPlayCount( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, u32 trainerID )
+static const IRC_COMPATIBLE_RANKING_DATA * Irc_Compatible_SV_GetRankDataForTrainerID( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, u32 trainerID )
 {	
 	int i;
 
@@ -627,11 +634,11 @@ static u16 Irc_Compatible_SV_GetPlayCount( const IRC_COMPATIBLE_RANKING_DATA *cp
 		if( cp_rank[i].trainerID == trainerID &&
         cp_rank[i].is_use == 1 )
 		{
-			return cp_rank[i].play_cnt;
+			return &cp_rank[i];
 		}
 	}
 
-	return 0;
+	return NULL;
 }
 
 //----------------------------------------------------------------------------
