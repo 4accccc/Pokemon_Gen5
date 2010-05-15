@@ -311,6 +311,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
     switch(target->gsid){
     case WB_NET_PALACE_SERVICEID:     //N“ü(ƒpƒŒƒX)
 //    case WB_NET_FIELDMOVE_SERVICEID:
+      if(PAD_DetectFold() == FALSE)  //ŠW‚ð•Â‚¶‚Ä‚¢‚éê‡‚ÍŒq‚¬‚És‚©‚È‚¢
       {
         u16 zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
         if(zone_id != gbs->palace_check_zoneid){
