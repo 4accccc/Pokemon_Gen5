@@ -252,6 +252,19 @@ void UnionMain_SetAppealNo(UNION_SYSTEM_PTR unisys, UNION_APPEAL appeal_no)
 
 //==================================================================
 /**
+ * アピール番号をセット
+ *
+ * @param   unisys		
+ * @param   appeal_no		アピール番号
+ */
+//==================================================================
+UNION_APPEAL UnionMain_GetAppealNo(UNION_SYSTEM_PTR unisys)
+{
+  return unisys->my_situation.appeal_no;
+}
+
+//==================================================================
+/**
  * 自機が外部イベントを発動出来るフリーな状態か調べる
  * @param   gsys		
  * @retval  BOOL		TRUE:完全にフリー　FALSE:フリーではない

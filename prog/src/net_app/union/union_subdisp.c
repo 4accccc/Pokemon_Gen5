@@ -231,6 +231,7 @@ static BOOL _UniSub_EntryPlateTouchWork(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG
 
 static void _UniSub_ChatPlate_Update(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no, PLATE_COLOR color);
+static void _UniSub_CheckPageSkip(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR unisys);
 
 
 //==============================================================================
@@ -287,10 +288,21 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   {//メニューから画面復帰の場合用に全体描画
     UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
     if(unisys != NULL){
+      int i;
+      unisub->appeal_no = UnionMain_GetAppealNo(unisys);
       _UniSub_Chat_DispAllWrite(unisub, &unisys->chat_log);
+      if(unisub->appeal_no != UNION_APPEAL_NULL){
+        for(i = 0; i < NELEMS(AppealNo_CategoryTbl); i++){
+          if(AppealNo_CategoryTbl[i] == unisub->appeal_no){
+            GFL_CLACT_WK_SetPlttOffs(
+              unisub->act[UNISUB_ACTOR_APPEAL_CHAT + i], 1, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+            break;
+          }
+        }
+      }
     }
   }
-  
+
   //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
   GFL_NET_WirelessIconOBJWinON();
   G2S_SetWndOBJInsidePlane(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
@@ -359,7 +371,22 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
       PRINT_UTIL_Trans( &unisub->print_util[i], unisub->printQue );
     }
   }
-  
+}
+
+//==================================================================
+/**
+ * ユニオン下画面：描画
+ *
+ * @param   unisub		
+ * @param   bActive   TRUE:下画面アクティブ状態
+ *                    FALSE:非アクティブ(他のイベント中：操作を受け付けてはいけない)
+ */
+//==================================================================
+void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub, BOOL bActive)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(unisub->gsys);
+  UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
+
   //チャット処理
   if(unisys != NULL){
     UNION_MY_SITUATION *situ = &unisys->my_situation;
@@ -367,8 +394,8 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
       UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata, situ->chat_type);
       situ->chat_upload = FALSE;
     }
-  #if PM_DEBUG
-    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+  #ifdef PM_DEBUG
+    else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
 //      PMSDAT_SetDebugRandom(&situ->chat_pmsdata);
       PMSDAT_SetDebugRandomDeco( &situ->chat_pmsdata, HEAPID_FIELDMAP );
       UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata, UNION_CHAT_TYPE_NORMAL);
@@ -405,6 +432,9 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
     if(unisub->scrollbar_touch == FALSE){
       unisub->scrollbar_touch = _UniSub_ScrollArea_TouchCheck(unisub);
     }
+    if(unisub->scrollbar_touch == FALSE && unisys != NULL){
+      _UniSub_CheckPageSkip(unisub, unisys);
+    }
   }
   
   if(unisys != NULL){
@@ -420,19 +450,6 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub, BOOL bActive)
       UnionMain_SetAppealNo(unisys, unisub->appeal_no);
     }
   }
-}
-
-//==================================================================
-/**
- * ユニオン下画面：描画
- *
- * @param   unisub		
- * @param   bActive   TRUE:下画面アクティブ状態
- *                    FALSE:非アクティブ(他のイベント中：操作を受け付けてはいけない)
- */
-//==================================================================
-void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub, BOOL bActive)
-{
 }
 
 
@@ -1080,7 +1097,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     dest_pos = 0;
     src_pos = dest_pos + offset;
     while(src_pos < UNION_CHAT_VIEW_LOG_NUM){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no-1);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no-offset);
       dest_pos++;
       src_pos++;
     }
@@ -1096,7 +1113,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     dest_pos = UNION_CHAT_VIEW_LOG_NUM - 1;
     src_pos = dest_pos + offset;
     while(src_pos > -1){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no+1);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no+offset);
       dest_pos--;
       src_pos--;
     }
@@ -1526,4 +1543,46 @@ static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no
     UNION_PLATE_SIZE_X, UNION_PLATE_SIZE_Y, change_palno);
   GFL_BG_LoadScreenV_Req(UNION_FRAME_S_PLATE);
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * チャットログのページスキップ処理
+ *
+ * @param   unisub		
+ * @param   unisys		
+ */
+//--------------------------------------------------------------
+static void _UniSub_CheckPageSkip(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR unisys)
+{
+  s32 view_no, low, high;
+
+  if(unisys == NULL){
+    return;
+  }
+
+  if(unisys->chat_log.chat_log_count < UNION_CHAT_VIEW_LOG_NUM){
+    return;
+  }
+  
+  view_no = unisys->chat_log.chat_view_no;
+  high = unisys->chat_log.chat_log_count;
+  low = unisys->chat_log.chat_log_count - UNION_CHAT_LOG_MAX;
+  if(low < UNION_CHAT_VIEW_LOG_NUM-1){
+    low = UNION_CHAT_VIEW_LOG_NUM-1;
+  }
+  
+  if(GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L){
+    view_no -= UNION_CHAT_VIEW_LOG_NUM;
+    if(view_no < low){
+      view_no = low;
+    }
+  }
+  else if(GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R){
+    view_no += UNION_CHAT_VIEW_LOG_NUM;
+    if(view_no > high){
+      view_no = high;
+    }
+  }
+  unisys->chat_log.chat_view_no = view_no;
 }
