@@ -53,7 +53,7 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //Ú‘±‹ÖŽ~
   if(GFL_NET_IsParentMachine()){
     if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
-      if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit )){
+      if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
         // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
         _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT);
@@ -115,7 +115,7 @@ static int _playerMachineBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
   u32 regulation = _createRegulation(wk);
   
   if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
-    if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit )){
+    if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
       // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);

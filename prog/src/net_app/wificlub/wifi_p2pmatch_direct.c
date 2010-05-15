@@ -878,8 +878,9 @@ static POKEPARTY * _BBox_PokePartyAlloc(GAMEDATA* pGameData)
 //--------------------------------------------------------------
 static void _BBox_PokePartyFree(POKEPARTY *party)
 {
-  GF_ASSERT(party != NULL);
-  GFL_HEAP_FreeMemory(party);
+  if(party){
+    GFL_HEAP_FreeMemory(party);
+  }
 }
 
 
@@ -895,17 +896,15 @@ static void _BBox_PokePartyFree(POKEPARTY *party)
  * unisys->alloc.regulationにレギュレーションデータがロードされている必要があります
  */
 //--------------------------------------------------------------
-static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(REGULATION* pReg,GAMEDATA* pGameData, u32 *fail_bit)
+static POKE_REG_RETURN_ENUM _CheckRegulation_BBox(REGULATION* pReg,POKEPARTY *bb_party, u32 *fail_bit)
 {
   POKE_REG_RETURN_ENUM reg_ret=POKE_REG_NUM_FAILED;
-  POKEPARTY *bb_party = _BBox_PokePartyAlloc(pGameData);
   
   *fail_bit = 0;
   
   if(bb_party != NULL){
     reg_ret = PokeRegulationMatchLookAtPokeParty(
       pReg, bb_party, fail_bit);
-    _BBox_PokePartyFree(bb_party);
   }
   else{ //バトルボックスのセーブデータが存在しない
     *fail_bit = 0xffffffff;
@@ -1027,7 +1026,7 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
   u32 fail_bit;
   if(GFL_UI_KEY_GetTrg()){
     _Menu_RegulationDelete(wk);
-    _CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit );
+    _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
     _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_BBOX);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
   }
@@ -1243,12 +1242,10 @@ static int _playerDirectBattleStart( WIFIP2PMATCH_WORK *wk, int seq )
   
   if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
     ///バトルボックスのみ なのですすむ
-    POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
-    PokeParty_Copy(bb_party, wk->pParentWork->pPokeParty[id]);
-    GFL_HEAP_FreeMemory(bb_party);
+    PokeParty_Copy(wk->bb_party, wk->pParentWork->pPokeParty[id]);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
   }
-  else if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit )){
+  else if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
     //てもちのみなのですすむ
     PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
@@ -1277,9 +1274,7 @@ static int _playerDirectBattleStart2( WIFIP2PMATCH_WORK *wk, int seq )
   _battlePokePartySelectMenu( wk );
 
   {
-    POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
-    _pokeIconResourceCreate(wk, GAMEDATA_GetMyPokemon(wk->pGameData), bb_party);
-    GFL_HEAP_FreeMemory(bb_party);
+    _pokeIconResourceCreate(wk, GAMEDATA_GetMyPokemon(wk->pGameData), wk->bb_party);
   }
   
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3);
@@ -1311,9 +1306,7 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
       _pokeIconDispSwitch(wk,TRUE);
     }
     else{
-      POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
-      _Print_DrawPokeStatusBmpWin(wk, bb_party);
-      GFL_HEAP_FreeMemory(bb_party);
+      _Print_DrawPokeStatusBmpWin(wk, wk->bb_party);
       _pokeIconDispSwitch(wk,FALSE);
     }
   }
@@ -1334,9 +1327,7 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   case _BATTLEBOX:
     {
-      POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
-      PokeParty_Copy(bb_party, wk->pParentWork->pPokeParty[id]);
-      GFL_HEAP_FreeMemory(bb_party);
+      PokeParty_Copy(wk->bb_party, wk->pParentWork->pPokeParty[id]);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
     }
     break;

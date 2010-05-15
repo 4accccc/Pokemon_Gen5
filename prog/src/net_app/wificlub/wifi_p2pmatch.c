@@ -1202,7 +1202,7 @@ static BOOL _regulationCheck(WIFIP2PMATCH_WORK * wk)
   u32 fail_bit;
 
   if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
-    if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit )){
+    if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
       // ‘I‚Ô–‚ª‚Å‚«‚È‚¢
       return FALSE;
     }
@@ -7180,6 +7180,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   wk->pSaveData = pParentWork->pSaveData;
   wk->pGameData = pParentWork->pGameData;
 
+  wk->bb_party = _BBox_PokePartyAlloc(wk->pGameData);
+  
   wk->pMyPoke = GAMEDATA_GetMyPokemon(wk->pGameData);
   wk->pList = GAMEDATA_GetWiFiList(wk->pGameData);
   wk->pConfig = SaveData_GetConfig(pParentWork->pSaveData);
@@ -7324,6 +7326,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
     pParentWork->targetID = GFL_NET_DWC_GetFriendIndex();
   }
 
+  _BBox_PokePartyFree(wk->bb_party);
+
+  
   // ƒ[ƒN‰ğ•ú
   FreeMessageWork( wk );
 

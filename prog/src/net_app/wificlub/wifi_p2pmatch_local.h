@@ -415,6 +415,7 @@ struct _WIFIP2PMATCH_WORK{
   SAVE_CONTROL_WORK*  pSaveData;
   GAMEDATA* pGameData;
   POKEPARTY* pMyPoke;
+  POKEPARTY* bb_party;
   void* pEmail;
   void* pFrontier;
   CONFIG* pConfig;

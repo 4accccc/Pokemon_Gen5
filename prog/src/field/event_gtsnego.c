@@ -55,6 +55,7 @@ enum _EVENT_GTSNEGO {
   _CALL_TRADE,
   _WAIT_TRADE,
   _DISCONNECT_TRADE,
+  _DISCONNECT_TRADE2,
   _SEQ_EVOLUTION,
   _SEQ_EVOLUTIONEND,
   _CALL_MAIL,
@@ -182,9 +183,12 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     break;
   case _DISCONNECT_TRADE:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE)){
-      GFL_NET_StateWifiMatchEnd(TRUE);
-      (*seq) = _CALL_WIFINEGO;
+      (*seq) = _DISCONNECT_TRADE2;
     }
+    break;
+  case _DISCONNECT_TRADE2:
+    GFL_NET_StateWifiMatchEnd(TRUE);
+    (*seq) = _CALL_WIFINEGO;
     break;
   case _SEQ_EVOLUTION:
     //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
