@@ -60,19 +60,15 @@ extern BOOL UnionMsg_YesNo_SelectLoop(UNION_SYSTEM_PTR unisys, BOOL *result);
 
 extern void UnionMsg_Menu_MainMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 extern void UnionMsg_Menu_MainMenuDel(UNION_SYSTEM_PTR unisys);
-extern u32 UnionMsg_Menu_MainMenuSelectLoop(UNION_SYSTEM_PTR unisys);
+extern u32 UnionMsg_Menu_MainMenuSelectLoop(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 
 extern void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, int menu_index, UNION_MENU_REGULATION *menu_reg);
 extern void UnionMsg_Menu_BattleMenuDel(UNION_SYSTEM_PTR unisys);
 extern u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu, 
-  UNION_MENU_REGULATION *menu_reg, BOOL *reg_look);
+  UNION_MENU_REGULATION *menu_reg, BOOL *reg_look, FIELDMAP_WORK *fieldWork);
 
 extern void UnionMsg_Menu_BattleMenuMultiTitleSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 extern void UnionMsg_Menu_BattleMenuMultiTitleDel(UNION_SYSTEM_PTR unisys);
-
-extern void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
-extern void UnionMsg_Menu_PokePartySelectMenuDel(UNION_SYSTEM_PTR unisys);
-extern u32 UnionMsg_Menu_PokePartySelectMenuSelectLoop(UNION_SYSTEM_PTR unisys);
 
 extern void UnionMsg_Menu_RegulationSetup(UNION_SYSTEM_PTR unisys, 
   FIELDMAP_WORK *fieldWork, u32 fail_bit, BOOL shooter_type, REGWIN_TYPE regwin_type);

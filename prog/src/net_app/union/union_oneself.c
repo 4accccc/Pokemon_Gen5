@@ -1368,7 +1368,7 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       u32 select_list;
       const POKEPARTY *party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
       
-      select_list = UnionMsg_Menu_MainMenuSelectLoop(unisys);
+      select_list = UnionMsg_Menu_MainMenuSelectLoop(unisys, fieldWork);
       if(select_list == FLDMENUFUNC_NULL){
         break;
       }
@@ -1842,7 +1842,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     (*seq)++;
     break;
   case LOCALSEQ_MENU_LOOP:
-    select_ret = UnionMsg_Menu_BattleMenuSelectLoop(unisys, &next_menu, &situ->menu_reg, &look);
+    select_ret = UnionMsg_Menu_BattleMenuSelectLoop(unisys, &next_menu, &situ->menu_reg, &look, fieldWork);
     if(next_menu == TRUE){
       situ->work = select_ret;
       UnionMsg_Menu_BattleMenuDel(unisys);
@@ -3695,35 +3695,6 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
       }
     }
     break;
-#if 0
-  case _MENU:   //メインメニュー描画
-    UnionMsg_Menu_PokePartySelectMenuSetup(unisys, fieldWork);
-    (*seq)++;
-    break;
-  case _MENU_WAIT:
-    {
-      u32 select_list;
-      
-      select_list = UnionMsg_Menu_PokePartySelectMenuSelectLoop(unisys);
-      switch(select_list){
-      case FLDMENUFUNC_NULL:
-        break;
-      case FLDMENUFUNC_CANCEL:
-      case COLOSSEUM_SELECT_PARTY_CANCEL:
-        OS_TPrintf("メニューをキャンセルしました\n");
-        UnionMsg_Menu_PokePartySelectMenuDel(unisys);
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
-        return TRUE;
-      case COLOSSEUM_SELECT_PARTY_TEMOTI:
-      case COLOSSEUM_SELECT_PARTY_BOX:
-        UnionMsg_Menu_PokePartySelectMenuDel(unisys);
-        clsys->select_pokeparty = select_list;
-        (*seq)++;
-        break;
-      }
-    }
-    break;
-#else
 
   case _MENU:   //メインメニュー描画
     {
@@ -3754,7 +3725,6 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
         OS_TPrintf("メニューをキャンセルしました\n");
         _BBox_PokePartyFree(unisys->alloc.bbox_party);
         unisys->alloc.bbox_party = NULL;
-        UnionMsg_Menu_PokePartySelectMenuDel(unisys);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
         return TRUE;
       }
@@ -3769,13 +3739,11 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
         }
         _BBox_PokePartyFree(unisys->alloc.bbox_party);
         unisys->alloc.bbox_party = NULL;
-        UnionMsg_Menu_PokePartySelectMenuDel(unisys);
         (*seq)++;
       }
     }
     break;
 
-#endif
   case _REG_CHECK:
     {
       POKE_REG_RETURN_ENUM reg_ret = 0;
