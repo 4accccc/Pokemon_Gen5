@@ -14,6 +14,11 @@
 #include "enceffno_def.h"
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 
+#include "field/zonedata.h"
+#include "arc/fieldmap/zone_id.h"
+
+#define ZONE_GRP_CHAMPION_LOAD  (ZONE_ID_D09)
+
 //--------------------------------------------------------------
 /**
  * 野生戦エフェクト抽選（釣りを除く）
@@ -29,6 +34,8 @@
 void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, BOOL inDoubleBattle, 
     FIELDMAP_WORK *fieldmap,int *outEffNo, u16 *outBgmNo )
 {
+  u16 zone_group = ZONEDATA_GetGroupID( FIELDMAP_GetZoneID( fieldmap ));
+
   //特定のモンスターかを調べる
   switch (inMonsNo){
   case MONSNO_530: //ゾロアーク MONSNO_ZOROAAKU
@@ -73,14 +80,19 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
   //エフェクトエンカウントチェック
   if ( inEncType == ENC_TYPE_EFFECT )
   {
-    *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
     *outEffNo = ENCEFFID_EFF_POKE;
     return;
   }
   //釣りチェック
   if ( inEncType == ENC_TYPE_FISHING )
   {
-    *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    //チャンピオンロードは固定曲 10.05.15
+    if( zone_group == ZONE_GRP_CHAMPION_LOAD ){
+      *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
+    }else{
+      *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    }
     *outEffNo = ENCEFFID_WILD_WATER;
     return;
   }
@@ -129,7 +141,13 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     }
   
     *outEffNo = eff;
-    *outBgmNo = bgm;
+
+    //チャンピオンロードは固定曲 10.05.15
+    if( zone_group == ZONE_GRP_CHAMPION_LOAD ){
+      *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
+    }else{
+      *outBgmNo = bgm;
+    }
   }
 
   return;
