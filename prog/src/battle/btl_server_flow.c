@@ -1198,7 +1198,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
 static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 {
   u32 i;
-  u8 fLevelUp, fShowDown;
+  u8 fExpGet, fShowDown;
 
   BTL_N_Printf( DBGSTR_SVFL_ActOrderMainStart, startOrderIdx );
 
@@ -1207,17 +1207,13 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     ActOrder_Proc( wk, &wk->actOrder[i] );
 
     // レベルアップコマンド発生
-    fLevelUp = scproc_CheckExpGet( wk );
+    fExpGet = scproc_CheckExpGet( wk );
 
     // 決着（大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる）
     fShowDown = scproc_CheckShowdown( wk );
 
     if( fShowDown ){
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
-      return i+1;
-    }
-    if( fLevelUp ){
-      wk->flowResult = SVFLOW_RESULT_LEVELUP;
       return i+1;
     }
 
@@ -1228,7 +1224,13 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     if( wk->flowResult == SVFLOW_RESULT_POKE_CHANGE ){
       // @@@ トンボがえりで…殴られた方が死んで終了の場合は引っ込む処理要らないねぇ。
       // @@@ -> トンボがえりハンドラで決着チェックはする方がよさそう。
+      TAYA_Printf( "トンボがえりか何かで途中入れ替えです\n" );
       reqChangePokeForServer( wk );
+      return i+1;
+    }
+
+    if( fExpGet ){
+      wk->flowResult = SVFLOW_RESULT_LEVELUP;
       return i+1;
     }
 
@@ -1247,14 +1249,14 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     u8 numDeadPoke;
 
     // ターンチェック処理
-    fLevelUp = scproc_TurnCheck( wk );
+    fExpGet = scproc_TurnCheck( wk );
     fShowDown = scproc_CheckShowdown( wk );
 
     if( fShowDown ){
       wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
       return wk->numActOrder;
     }
-    if( fLevelUp ){
+    if( fExpGet ){
       wk->flowResult = SVFLOW_RESULT_LEVELUP;
       return wk->numActOrder;
     }
@@ -8822,7 +8824,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 {
   // このPOKESETに対象ポケモンを格納する
   BTL_POKESET* pokeSet = wk->psetTarget;
-  BOOL fLevelUp = FALSE;
+  BOOL fExpGet = FALSE;
 
   if( wk->turnCheckStep == 0 )
   {
@@ -8850,21 +8852,21 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
   case 1:
     wk->turnCheckStep++;
     if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_BEGIN) ){
-      fLevelUp = TRUE;
+      fExpGet = TRUE;
       break;
     }
     /* fallthru */
   case 2:
     wk->turnCheckStep++;
     if( scproc_turncheck_weather(wk, pokeSet) ){
-      fLevelUp = TRUE;
+      fExpGet = TRUE;
       break;
     }
     /* fallthru */
   case 3:
     wk->turnCheckStep++;
     if( scproc_turncheck_sick(wk, pokeSet) ){
-      fLevelUp = TRUE;
+      fExpGet = TRUE;
       break;
     }
     /* fallthru */
@@ -8876,7 +8878,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
   case 5:
     wk->turnCheckStep++;
     if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_END) ){
-      fLevelUp = TRUE;
+      fExpGet = TRUE;
       break;
     }
     /* fallthru */
@@ -8909,7 +8911,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     return FALSE;
   }
 
-  return fLevelUp;
+  return fExpGet;
 }
 /**
  *  ターンチェック：トリプル時リセットムーブ処理

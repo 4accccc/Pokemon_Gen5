@@ -807,7 +807,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
   switch( *seq ){
   case 0:
     BTL_Printf("入場ポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
-    TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
     SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON_FOR_COVER, server->changePokePos,
         server->changePokeCnt*sizeof(server->changePokePos[0]) );
     (*seq)++;
@@ -823,7 +822,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
         SetAdapterCmdSingle( server, BTL_ACMD_CONFIRM_IREKAE, BTL_CLIENTID_SA_PLAYER,
                 &server->enemyPutPokeID, sizeof(server->enemyPutPokeID) );
       }
-      TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
       (*seq)++;
     }
     break;
@@ -839,13 +837,11 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
         BTL_N_Printf( DBGSTR_SV_SendActRecordFailed );
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
       }
-      TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
     }
     break;
 
   case 3:
     if( WaitAllAdapterReply(server) ){
-      TAYA_Printf("Reset Adapter %d\n", __LINE__ );
       ResetAdapterCmd( server );
       (*seq)++;
     }
@@ -857,10 +853,8 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     (*seq)++;
     /* fallthru */
   case 5:
-    TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
 //    SCQUE_Init( server->que );
     server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
-    TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
 
     BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 

@@ -1065,6 +1065,14 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->time_out_flg = FALSE;
   plist->commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
   plist->end_flg = FALSE;
+
+  TAYA_Printf("***** Setup Plist *****\n");
+  TAYA_Printf(" MODE=%d\n", plist->mode );
+  TAYA_Printf(" fight_pos_max=%d\n", plist->fight_poke_max );
+  TAYA_Printf(" sel_poke=%d\n", plist->sel_poke );
+  TAYA_Printf(" sel_pos_index=%d\n", plist->sel_pos_index );
+  TAYA_Printf(" chg_waza_param=%d\n", plist->chg_waza );
+  TAYA_Printf("\n");
 }
 //=============================================================================================
 /**

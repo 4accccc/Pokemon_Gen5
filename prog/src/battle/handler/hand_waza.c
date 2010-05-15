@@ -3099,9 +3099,7 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       fIntr = TRUE;
     }else{
       u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
-      TAYA_Printf("©•ª‚ª‘_‚¤ƒ|ƒP=%d\n", targetPokeID);
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID ){
-        TAYA_Printf( "  ->Š„‚è‚İ‚Ü‚·\n");
         fIntr = TRUE;
       }
     }
@@ -3127,7 +3125,6 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     if( BTL_SVFTOOL_IsMemberOutIntr(flowWk) )
     {
-      TAYA_Printf("“ü‚ê‘Ö‚í‚ë‚¤‚Æ‚µ‚Ä‚¢‚éƒ„ƒc‚ğ‰£‚é‚Í‚Q”{\n");
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
   }
