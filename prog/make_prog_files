@@ -1464,6 +1464,7 @@ SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_GTS_NEGOTIATE = net_app/gts_nego/gtsnego_proc.c \
 								net_app/gts_nego/gtsnego_disp.c \
+								savedata/wifi_negotiation_debug.c \
 								net_app/gts_nego/gtsnego_message.c
 
 

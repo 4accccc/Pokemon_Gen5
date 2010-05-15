@@ -1489,6 +1489,53 @@ static int _downScrollFunc(GTSNEGO_WORK *pWork)
 }
 
 
+
+
+#if PM_DEBUG
+
+
+
+static void _modeDebugAdd( GTSNEGO_WORK *pWork )
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    GTSNEGO_MESSAGE_AppMenuClose(pWork->pAppTask);
+    GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
+    pWork->pAppTask=NULL;
+    TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
+    switch(selectno){
+    case 0:
+      WIFINEGOSV_DEBUG_AddFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData), 99);
+    case 1:
+      _CHANGE_STATE(pWork,_friendSelectWait);
+      break;
+    }
+  }
+}
+
+static void _modeDebugDelete( GTSNEGO_WORK *pWork )
+{
+  int no;
+  
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    GTSNEGO_MESSAGE_AppMenuClose(pWork->pAppTask);
+    GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
+    pWork->pAppTask=NULL;
+    TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
+    switch(selectno){
+    case 0:
+      no = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
+      OS_TPrintf("no %d\n",no);
+      WIFINEGOSV_DEBUG_DeleteFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData), no);
+    case 1:
+      _CHANGE_STATE(pWork,_friendSelectWait);
+      break;
+    }
+  }
+}
+#endif
+
 //------------------------------------------------------------------
 /**
  * $brief   ŒðŠ·‘ŠŽè‘I‘ð‘Ò‚¿
@@ -1596,6 +1643,21 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     }
   }
 
+#if PM_DEBUG
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_001);
+    _CHANGE_STATE(pWork,_modeDebugDelete);
+    pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
+    _CHANGE_STATE(pWork,_modeDebugAdd);
+    pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+    return;
+  }
+#endif
+  
   if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
     bHit = _upScrollFunc(pWork);
   }

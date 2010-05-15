@@ -44,6 +44,12 @@ extern u16 WIFI_NEGOTIATION_SV_GetChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
 extern void WIFI_NEGOTIATION_SV_AddChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
 
 
+
+#if PM_DEBUG
+extern void WIFINEGOSV_DEBUG_DeleteFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,int index);
+extern void WIFINEGOSV_DEBUG_AddFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 addnum);
+#endif
+
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
