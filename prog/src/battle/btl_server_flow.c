@@ -314,6 +314,8 @@ struct _BTL_SVFLOW_WORK {
   u8      nigeruCount;
   u8      wazaEffIdx;
   u8      fMemberOutIntr;
+  u8      MemberOutIntrPokeCount;
+  u8      MemberOutIntrPokeID[ BTL_POS_MAX ];
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
   u8      pokeInFlag [ BTL_POKEID_MAX ];
@@ -715,7 +717,7 @@ static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContF
 static void scPut_ResetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
 static void scPut_SetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
 static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
-static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* outPoke );
+static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* outPoke );
 static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   WazaID orgWazaid, BtlPokePos orgTargetPos, REQWAZA_WORK* reqWaza );
 static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
@@ -3789,11 +3791,18 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
   // 割り込みチェック
   if( !fIntrDisable )
   {
-    u8 intrPokeID = scEvent_MemberChangeIntr( wk, outPoke );
-    if( intrPokeID != BTL_POKEID_NULL )
+    u32 intrPokeCount = scEvent_MemberChangeIntr( wk, outPoke );
+    if( intrPokeCount )
     {
+      u32 i;
       wk->fMemberOutIntr = TRUE;
-      ActOrder_IntrProc( wk, intrPokeID );
+      for(i=0; i<intrPokeCount; ++i)
+      {
+        ActOrder_IntrProc( wk, wk->MemberOutIntrPokeID[i] );
+        if( BPP_IsDead(outPoke) ){
+          break;
+        }
+      }
       wk->fMemberOutIntr = FALSE;
     }
   }
@@ -10689,7 +10698,7 @@ static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTur
 
 //---------------------------------------------------------------------------------------------
 //
-// 【イベント層】
+// 【Event】
 //
 // メイン処理層での判定に必要な各種条件の決定を行う。
 // ハンドラ類の呼び出しはイベント層からのみ行われる。
@@ -10705,12 +10714,11 @@ static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTur
  * @param   wk
  * @param   outPoke
  *
- * @retval  u8        割り込む場合、該当ポケモンID／それ以外 BTL_POKEID_NULL
+ * @retval  u32        割り込みたいポケモン数
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* outPoke )
+static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* outPoke )
 {
-  u8 intrPokeID = BTL_POKEID_NULL;
   u32 i;
 
   // １度、未処理ポケモンの全ワザハンドラを登録しておく
@@ -10726,11 +10734,11 @@ static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     }
   }
 
+  wk->MemberOutIntrPokeCount = 0;
+
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1, BPP_GetID(outPoke) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, intrPokeID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1, BPP_GetID(outPoke) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MENBERCHANGE_INTR );
-    intrPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
   BTL_EVENTVAR_Pop();
 
   // 未処理ポケモンの全ワザハンドラを削除
@@ -10745,8 +10753,9 @@ static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     }
   }
 
-  return intrPokeID;
+  return wk->MemberOutIntrPokeCount;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * [Event] 他のワザを呼び出すワザなら、呼び出すワザのパラメータをセットする
@@ -13359,6 +13368,21 @@ BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEf
 BOOL BTL_SVFTOOL_IsMemberOutIntr( BTL_SVFLOW_WORK* wk )
 {
   return wk->fMemberOutIntr;
+}
+//--------------------------------------------------------------------------------------
+/**
+ * メンバー入れ替え時の割り込みリクエスト
+ *
+ * @param   wk
+ * @param   pokeID    割り込みたいポケID
+ */
+//--------------------------------------------------------------------------------------
+void BTL_SVFTOOL_AddMemberOutIntr( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  if( wk->MemberOutIntrPokeCount < NELEMS(wk->MemberOutIntrPokeID) )
+  {
+    wk->MemberOutIntrPokeID[ wk->MemberOutIntrPokeCount++ ] = pokeID;
+  }
 }
 
 //=============================================================================================

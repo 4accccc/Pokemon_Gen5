@@ -3105,7 +3105,7 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
     if( fIntr )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_ATK, pokeID );
+      BTL_SVFTOOL_AddMemberOutIntr( flowWk, pokeID );
     }
   }
 }
