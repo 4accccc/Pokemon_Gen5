@@ -5143,7 +5143,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         //ŽålŒö–¼“ü—Í‚Ì‚Æ‚«AŒˆ’è‚Å‚«‚È‚©‚Á‚½‚ç•¶Žš‚ðo‚µ‚Ä–ß‚é
         if( !CanDecide( p_wk) )
         { 
-          PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+          PMSND_PlaySE( NAMEIN_SE_BEEP );
           MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_008 );
           p_wk->is_illegal_msg  = TRUE;
           break;
@@ -5154,7 +5154,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
               p_wk->strinput.input_str, 
               HEAPID_NAME_INPUT ) )
         { 
-          PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+          PMSND_PlaySE( NAMEIN_SE_BEEP );
           break;
         }
 
@@ -5164,7 +5164,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
               p_wk->strinput.input_idx,
               HEAPID_NAME_INPUT ) )
         { 
-          PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+          PMSND_PlaySE( NAMEIN_SE_BEEP );
           MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_009 );
           p_wk->is_illegal_msg  = TRUE;
           break;
