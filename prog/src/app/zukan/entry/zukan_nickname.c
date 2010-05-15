@@ -928,6 +928,7 @@ static void Zukan_Nickname_BssMain( ZUKAN_NICKNAME_WORK* work )
                            work->heap_id );
         param.yes_msg = GFL_MSG_CreateString( msgdata, msgid_yesno_yes );
         param.no_msg = GFL_MSG_CreateString( msgdata, msgid_yesno_no );
+        param.b_cancel_flag = TRUE;  //BƒLƒƒƒ“ƒZƒ‹—LŒø
         BTLV_INPUT_CreateScreen( work->bss_wk, BTLV_INPUT_SCRTYPE_YES_NO, &param );
         GFL_STR_DeleteBuffer( param.yes_msg );
         GFL_STR_DeleteBuffer( param.no_msg );
