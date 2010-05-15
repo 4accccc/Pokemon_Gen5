@@ -487,11 +487,11 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 // 相手のポケモン情報画面のBMPWIN情報
 static const int info_bmpwin_table[][5]={
 	{   1,  1,  9,  2, GFL_BG_FRAME2_M, },	// ポケモンのニックネーム
-	{   9,  4,  8,  2, GFL_BG_FRAME2_M, },	// ポケモンの種族名
+	{   8,  4,  8,  2, GFL_BG_FRAME2_M, },	// ポケモンの種族名
 	{  11,  1,  7,  2, GFL_BG_FRAME2_M, },	// 「レベル」
 	{  14,  1,  7,  2, GFL_BG_FRAME2_M, },	// レベル
 	{   1, 10,  6,  2, GFL_BG_FRAME2_M, },	// 「もちもの」
-	{  11, 10, 11,  2, GFL_BG_FRAME2_M, },	// 所持アイテム名
+	{   8, 10, 12,  2, GFL_BG_FRAME2_M, },	// 所持アイテム名
 	{   1,  4,  6,  2, GFL_BG_FRAME2_M, },	// 「なまえ」
 	{   1, 13,  9,  2, GFL_BG_FRAME2_M, },	// 「あずけたひと」
 	{  12, 13,  8,  2, GFL_BG_FRAME2_M, },	// トレーナー名
@@ -499,7 +499,7 @@ static const int info_bmpwin_table[][5]={
 	{   2, 18, 27,  2, GFL_BG_FRAME2_M, },	// 住んでいる国
 	{   3, 20, 27,  2, GFL_BG_FRAME2_M, },	// 住んでいる場所（県・州）
 	{   1,  7,  4,  2, GFL_BG_FRAME2_M, },	// 「おや」
-	{  10,  7,  8,  2, GFL_BG_FRAME2_M, },	// 親名
+	{   8,  7,  8,  2, GFL_BG_FRAME2_M, },	// 親名
 	{   1,  1, 24,  2, GFL_BG_FRAME3_S, },	// 「ほしいポケモン」
 	{   2,  3, 27,  2, GFL_BG_FRAME3_S, },	// ほしいポケモン情報1
 };
