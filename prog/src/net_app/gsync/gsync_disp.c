@@ -28,6 +28,7 @@
 #include "pokeicon/pokeicon.h"
 #include "system/laster.h"
 
+#include "net/dreamworld_netdata.h"
 
 #include "system/bmp_menuwork.h"
 #include "system/bmp_winframe.h"
@@ -143,7 +144,7 @@ struct _GSYNC_DISP_WORK {
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
 
-  ICON_MOVE_PARAM aIconParam[DREAM_WORLD_DATA_MAX_ITEMBOX+1];  //アイテム+ポケモン
+  ICON_MOVE_PARAM aIconParam[DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX];  //アイテム+ポケモン
 
   HEAPID heapID;
 
@@ -971,7 +972,7 @@ static void GSYNC_DISP_IconFreeAll(GSYNC_DISP_WORK* pWork )
 {
   int i;
 
-  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+1);i++){
+  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);i++){
     GSYNC_DISP_IconFree( &pWork->aIconParam[i] );
   }
 }
@@ -1101,14 +1102,14 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
   int i,buf1=0,buf2=0;
   int rand;
 
-  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+1);i++){
+  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);i++){
     if(pWork->aIconParam[i].on){
       _PokemonMove( &pWork->aIconParam[i] );
     }
   }
 
 
-  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+1);i++){
+  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);i++){
     if(pWork->aIconParam[i].on==TRUE){
       if(pWork->aIconParam[i].end==FALSE){
         buf1 |= 1 << (i % 2);
@@ -1116,7 +1117,7 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
     }
   }
   {
-    rand = GFUser_GetPublicRand(DREAM_WORLD_DATA_MAX_ITEMBOX+1);
+    rand = GFUser_GetPublicRand(DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);
     buf2 = 1 << (rand % 2);
     
     if((pWork->aIconParam[rand].on==FALSE) && (pWork->aIconParam[rand].no) != 0 && ((buf1&buf2)==0) ){

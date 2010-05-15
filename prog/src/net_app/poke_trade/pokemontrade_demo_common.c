@@ -120,7 +120,6 @@ static void _jumpSeStrat(int count)
 
 static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATUS* pMystatus, BOOL bBye)
 {
-#if 1
   int select;
   if(bBye){ //‹A‚é‚Ù‚¤
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
@@ -138,21 +137,21 @@ static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATU
       select = 1;
     }
   }
-#endif
   
   {
-    POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, POKEMONTRADEPROC_IsTriSelect(pWork));
+    POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, select);
     u32 id = PP_Get(pp,ID_PARA_id_no,NULL);
     int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
     int frm = PP_Get( pp, ID_PARA_form_no, NULL );
+    int tamago = PP_Get(pp,ID_PARA_tamago_flag,NULL);
     BOOL nojimpflg;
 
-    {
+    if(!tamago){
       POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(monsno, frm, pWork->heapID);
       nojimpflg = POKE_PERSONAL_GetParam(ppd, POKEPER_ID_no_jump);
       POKE_PERSONAL_CloseHandle(ppd);
     }
-    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
+    if( tamago ){
       *nojump = TRUE;
     }
     else if(nojimpflg){
@@ -161,7 +160,7 @@ static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATU
     else{
       *nojump = FALSE;
     }
-    NET_PRINT("Status %d Pokemon %d\n", MyStatus_GetID(pMystatus), id);
+    NET_PRINT("Status %d Pokemon %d Select %d\n", MyStatus_GetID(pMystatus), id, select);
     if(MyStatus_GetID(pMystatus) != id){
       *msg = FALSE;
     }

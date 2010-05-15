@@ -264,9 +264,9 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       GFL_STD_MemFill(&buff, 0, sizeof(buff));
 
       // buff Ç…ílÇê›íË
-      buff.findPokemon = 100;
-      buff.findPokemon = 50;
-      buff.findPokemonForm = 1;
+//      buff.findPokemon = 100;
+//      buff.findPokemon = 50;
+ //     buff.findPokemonForm = 1;
       
       OS_TPrintf("CRC ,%x %d\n", GFL_STD_CrcCalc(&buff,sizeof(buff)-2) , sizeof(buff));
     }

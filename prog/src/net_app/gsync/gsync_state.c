@@ -1047,6 +1047,8 @@ static void _itemDispInit(G_SYNC_WORK* pWork,DREAM_WORLD_SERVER_DOWNLOAD_DATA* p
 
 static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream,gs_response* pRep )
 {
+  int i;
+  
   if(pRep->ret_cd != DREAM_WORLD_SERVER_ERROR_NONE){
     pWork->ErrorNo = pRep->ret_cd;
     _CHANGE_STATE(_ErrorDisp);
@@ -1069,14 +1071,31 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     if(pWork->zukanNo != DREAM_WORLD_NOPICTURE){
       pWork->msgBit = pWork->msgBit | 0x04;
     }
+#if DOWNLOADPOKE_MORE_VER
+    //シンボルポケ格納
+    for(i=0;i<DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
+      if(pDream->poke[i].findPokemon==0){
+        break;
+      }
+      _symbolPokemonSave(pWork, pDreamSave,
+                         pDream->poke[i].findPokemon,
+                         pDream->poke[i].findPokemonSex,
+                         pDream->poke[i].findPokemonForm,
+                         pDream->poke[i].findPokemonTecnique,
+                         pDream->poke[i].findPokemonAct);
+      GSYNC_DISP_MoveIconAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX,
+                             pDream->poke[i].findPokemon, pDream->poke[i].findPokemonForm,
+                             pDream->poke[i].findPokemonSex);
+    }
+#else
     //シンボルポケ格納
     _symbolPokemonSave(pWork, pDreamSave, pDream->findPokemon,
                        pDream->findPokemonSex,
                        pDream->findPokemonForm,
                        pDream->findPokemonTecnique, pDream->findPokemonAct);
-
     GSYNC_DISP_MoveIconAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX,
                            pDream->findPokemon, pDream->findPokemonForm,pDream->findPokemonSex);
+#endif
       
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
