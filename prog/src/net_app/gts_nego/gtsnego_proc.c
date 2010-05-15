@@ -464,6 +464,22 @@ static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _LevelButtonCallbackTouch(int bttnid,GTSNEGO_WORK* pWork)
+{
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_SetActive( pWork->pAppWin, FALSE );
+  }
+  return _LevelButtonCallback( bttnid, pWork);
+
+}
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   モードセレクト画面キー処理
  * @retval  none
  */
@@ -988,7 +1004,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
     if(pWork->touch!=NULL){
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,pWork->pAppWin, _CROSSCUR_TYPE_NONE);
-      pWork->keyMode=FALSE;
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
       if(pWork->touch(bttnid, pWork)){
         return;
       }
@@ -1056,7 +1072,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
 
   if(GFL_UI_KEY_GetTrg()){
     if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,pWork->pAppWin, pWork->key2);
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
       return;
     }
@@ -1111,7 +1127,6 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
     TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
     switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
     case TOUCHBAR_ICON_RETURN:
-      pWork->keyMode = FALSE;
       bReturn = TRUE;
       break;
     default:
@@ -1145,9 +1160,10 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
   GTSNEGO_DISP_LevelInputInit(pWork->pDispWork);
-  pWork->touch = &_LevelButtonCallback;
+  pWork->touch = &_LevelButtonCallbackTouch;
 
-  GTSNEGO_MESSAGE_DispLevel(pWork->pMessageWork, &_BttnCallBack, pWork);
+  GTSNEGO_MESSAGE_DispLevel(pWork->pMessageWork, &_BttnCallBack, pWork,
+                            pWork->chageLevel,pWork->myChageType,pWork->friendChageType);
 
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_025);
 
@@ -1944,7 +1960,6 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
     if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_TOUCH){
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
-      pWork->keyMode=TRUE;
       return;
     }
   }

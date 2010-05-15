@@ -773,7 +773,12 @@ static const GFL_UI_TP_HITTBL _levelselectBtnTbl[] = {
  */
 //------------------------------------------------------------------------------
 
-void GTSNEGO_MESSAGE_DispLevel(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork)
+
+static u16 levelmsg[]={GTSNEGO_012,GTSNEGO_009,GTSNEGO_010,GTSNEGO_011};
+static u16 mymsg[]={GTSNEGO_017,GTSNEGO_013,GTSNEGO_014,GTSNEGO_015,GTSNEGO_016};
+
+
+void GTSNEGO_MESSAGE_DispLevel(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork,int lvno,int myno, int friendno)
 {
 
   GTSNEGO_MESSAGE_DispInit(pWork);
@@ -787,9 +792,13 @@ void GTSNEGO_MESSAGE_DispLevel(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc call
   GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_029, 1, 16);
 
   GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 0);
-  pWork->msgidx[_MESSAGE_LEVEL] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_012,  13,  6);
-  pWork->msgidx[_MESSAGE_MY] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_017,     16, 11);
-  pWork->msgidx[_MESSAGE_FRIEND] = GTSNEGO_MESSAGE_Disp(pWork, GTSNEGO_017, 16, 16);
+  pWork->msgidx[_MESSAGE_LEVEL] = GTSNEGO_MESSAGE_Disp(pWork, levelmsg[lvno],  13,  6);
+  pWork->msgidx[_MESSAGE_MY] = GTSNEGO_MESSAGE_Disp(pWork, mymsg[myno], 16, 11);
+  pWork->msgidx[_MESSAGE_FRIEND] = GTSNEGO_MESSAGE_Disp(pWork, mymsg[friendno], 16, 16);
+
+//  GTSNEGO_MESSAGE_DispLevelChange(pWork->pMessageWork,pWork->chageLevel);
+//  GTSNEGO_MESSAGE_DispMyChange(pWork->pMessageWork,pWork->myChageType);
+//  GTSNEGO_MESSAGE_DispFriendChange(pWork->pMessageWork,pWork->friendChageType);
 
   GTSNEGO_MESSAGE_DispTransReq(pWork);
 
@@ -800,23 +809,17 @@ void GTSNEGO_MESSAGE_DispLevel(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc call
 
 void GTSNEGO_MESSAGE_DispLevelChange(GTSNEGO_MESSAGE_WORK* pWork,int no)
 {
-  u16 msg[]={GTSNEGO_012,GTSNEGO_009,GTSNEGO_010,GTSNEGO_011};
-  
-  GTSNEGO_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_LEVEL]);
+  GTSNEGO_MESSAGE_DispMsgChange(pWork, levelmsg[no],  pWork->msgidx[_MESSAGE_LEVEL]);
 }
 
 void GTSNEGO_MESSAGE_DispMyChange(GTSNEGO_MESSAGE_WORK* pWork,int no)
 {
-  u16 msg[]={GTSNEGO_017,GTSNEGO_013,GTSNEGO_014,GTSNEGO_015,GTSNEGO_016};
-  
-  GTSNEGO_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_MY]);
+  GTSNEGO_MESSAGE_DispMsgChange(pWork, mymsg[no],  pWork->msgidx[_MESSAGE_MY]);
 }
 
 void GTSNEGO_MESSAGE_DispFriendChange(GTSNEGO_MESSAGE_WORK* pWork,int no)
 {
-  u16 msg[]={GTSNEGO_017,GTSNEGO_013,GTSNEGO_014,GTSNEGO_015,GTSNEGO_016};
-  
-  GTSNEGO_MESSAGE_DispMsgChange(pWork, msg[no],  pWork->msgidx[_MESSAGE_FRIEND]);
+  GTSNEGO_MESSAGE_DispMsgChange(pWork, mymsg[no],  pWork->msgidx[_MESSAGE_FRIEND]);
 }
 
 
