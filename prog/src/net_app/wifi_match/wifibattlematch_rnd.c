@@ -1276,8 +1276,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 #endif
     { 
       //‘ÎíŽÒî•ñ•\Ž¦
-      Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
-      WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_START_BADWORD;
     }
     else
@@ -1356,6 +1354,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
 
   case SEQ_OK_MATCHING_MSG:
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     PMSND_StopSE();
     PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
@@ -1368,6 +1367,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     if( p_wk->cnt++ > MATCHING_MSG_WAIT_SYNC )
     { 
       p_wk->cnt      = 0;
+      Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
       GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
       *p_seq      = SEQ_WAIT_MATCH_CARDIN;
     }
@@ -2349,7 +2349,6 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitBadWord( p_wk->p_net, &is_badword );
       if( ret )
       { 
-        Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
       else
@@ -2403,10 +2402,10 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_OK_MATCHING_MSG:
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     PMSND_StopSE();
     PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
-    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_010, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_OK_MATCHING_WAIT );
@@ -2416,6 +2415,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     if( p_wk->cnt++ > MATCHING_MSG_WAIT_SYNC )
     { 
       p_wk->cnt      = 0;
+      Util_MatchInfo_Create( p_wk, p_param->p_enemy_data );
       GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
       *p_seq      = SEQ_WAIT_MATCH_CARDIN;
     }
