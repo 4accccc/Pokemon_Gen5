@@ -1104,6 +1104,20 @@ void	MCSS_FlipMepachiFlag( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
+ * @brief アニメストップフラグゲット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ *
+ * @retval  フラグ
+ */
+//--------------------------------------------------------------------------
+int MCSS_GetAnmStopFlag( MCSS_WORK *mcss )
+{
+	return mcss->anm_stop_flag;
+}
+
+//--------------------------------------------------------------------------
+/**
  * @brief アニメストップフラグセット
  *
  * @param[in]  mcss MCSSワーク構造体のポインタ
@@ -1111,7 +1125,19 @@ void	MCSS_FlipMepachiFlag( MCSS_WORK *mcss )
 //--------------------------------------------------------------------------
 void	MCSS_SetAnmStopFlag( MCSS_WORK *mcss )
 {
-	mcss->anm_stop_flag = MCSS_ANM_STOP_ON;
+	mcss->anm_stop_flag |= MCSS_ANM_STOP_ON;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief アニメストップフラグセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAnmStopFlagAlways( MCSS_WORK *mcss )
+{
+	mcss->anm_stop_flag |= MCSS_ANM_STOP_ALWAYS;
 }
 
 //--------------------------------------------------------------------------
@@ -1123,7 +1149,19 @@ void	MCSS_SetAnmStopFlag( MCSS_WORK *mcss )
 //--------------------------------------------------------------------------
 void	MCSS_ResetAnmStopFlag( MCSS_WORK *mcss )
 {
-	mcss->anm_stop_flag = MCSS_ANM_STOP_OFF;
+	mcss->anm_stop_flag &= ( MCSS_ANM_STOP_ON ^ 0xffffffff );
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief アニメストップフラグリセット
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetAnmStopFlagAlways( MCSS_WORK *mcss )
+{
+	mcss->anm_stop_flag &= ( MCSS_ANM_STOP_ALWAYS ^ 0xffffffff );
 }
 
 //--------------------------------------------------------------------------

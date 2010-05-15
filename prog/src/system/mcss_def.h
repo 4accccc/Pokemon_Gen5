@@ -96,24 +96,25 @@ struct _MCSS_WORK
 	s8														pal_fade_wait_tmp;		//パレットフェード　wait_tmp値
 	int														pal_fade_value;			  //パレットフェード　フェード値
 	u32														pal_fade_rgb;					//パレットフェード　end_evy時のrgb値
-	u32														alpha					    :8; //alpha値
-	u32														mepachi_flag	    :1;	//メパチフラグ
-	u32														anm_stop_flag	    :1;	//アニメストップフラグ
-	u32														vanish_flag		    :1;	//バニッシュフラグ
-	u32														pal_fade_flag	    :1;	//パレットフェードフラグ
-	u32                           is_load_resource  :1; //リソース読み込み完了フラグ
-  u32                           shadow_alpha      :9; //影アルファ(32で通常の半分を
-	u32														shadow_vanish_flag:1;    
-	u32														mosaic				    :8; //モザイク    
-	u32														fade_pltt_data_flag:1;    
+	u32														alpha					      :8; //alpha値
+	u32														mepachi_flag	      :1;	//メパチフラグ
+	u32														anm_stop_flag	      :2;	//アニメストップフラグ
+	u32														vanish_flag		      :1;	//バニッシュフラグ
+	u32														pal_fade_flag	      :1;	//パレットフェードフラグ
+	u32                           is_load_resource    :1; //リソース読み込み完了フラグ
+  u32                           shadow_alpha        :9; //影アルファ(32で通常の半分を
+	u32														shadow_vanish_flag  :1;    
+	u32														mosaic				      :4; //モザイク    
+	u32														fade_pltt_data_flag :1;    
+	u32														                    :3;    
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
   MCSS_ADD_WORK                 maw;
 
   fx32                          mcss_anm_frame;       //アニメーションを進めるフレーム数
 
-  u16     shadow_rotate;
-  VecFx32 shadow_offset;
+  u16                           shadow_rotate;
+  VecFx32                       shadow_offset;
 };
 
 struct _MCSS_SYS_WORK
