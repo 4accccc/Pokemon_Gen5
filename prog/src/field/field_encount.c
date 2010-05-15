@@ -154,6 +154,11 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     //最後のエンカウントからのプレイヤーの歩数を加算
     encwork_AddPlayerWalkCount( ewk, fplayer);
   }
+  
+  //エンカウントデータが有効かチェック
+  if( enc->encdata == NULL || enc->encdata->enable_f == FALSE ){
+    return NULL;
+  }
 
 #ifdef PM_DEBUG
   //デバッグ強制エンカウントOffルーチン
@@ -307,6 +312,11 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
 
   ENCPOKE_FLD_PARAM fld_spa;
+  
+  //エンカウントデータが有効かチェック
+  if( enc->encdata == NULL || enc->encdata->enable_f == FALSE ){
+    return NULL;
+  }
 
   //ロケーションチェック
   if( enc_type == ENC_TYPE_EFFECT ){

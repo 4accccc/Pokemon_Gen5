@@ -199,7 +199,7 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   
   //エンカウントデータチェック
-  if( !enc->encdata->enable_f ){
+  if( enc->encdata == NULL || !enc->encdata->enable_f ){
     return;
   }
 

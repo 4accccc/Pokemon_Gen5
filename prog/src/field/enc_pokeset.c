@@ -269,6 +269,10 @@ int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PA
   u32 num = 0;
   ENC_COMMON_DATA enc_tbl[ENC_MONS_NUM_MAX];
 
+  GF_ASSERT( inData != NULL && inData->enable_f );
+  
+  MI_CpuClear32( enc_tbl, sizeof(ENC_COMMON_DATA)*ENC_MONS_NUM_MAX);
+
   //ROMからエンカウントデータテーブルを取得
   eps_GetEncountTable( inData, efp, zone_id, enc_tbl);
 
@@ -666,7 +670,7 @@ static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM
   if( ioEfp->location != ENC_LOCATION_GROUND_L ){
     return FALSE;
   }
-  if( GFUser_GetPublicRand0( 1000 ) >= GENERATE_ENC_PROB ){
+  if( GFUser_GetPublicRand0( 1000 ) > GENERATE_ENC_PROB ){
     return FALSE;
   }
   outTable[0].monsNo = gene->mons_no;
