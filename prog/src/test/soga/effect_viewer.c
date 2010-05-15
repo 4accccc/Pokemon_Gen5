@@ -1341,7 +1341,6 @@ static  void  EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
     }
     str_src = GFL_MSG_CreateString( evw->msg,  PVMSG_MONSNAME );
     WORDSET_ExpandStr( mons_info, str_dst, str_src );
-    GFL_HEAP_FreeMemory( str_src );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), TITLE_LABEL_X, TITLE_LABEL_Y + 24, str_dst, evw->font );
 
     GFL_HEAP_FreeMemory( str_src );
