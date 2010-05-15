@@ -82,6 +82,7 @@ typedef struct _ENCPOKE_FLD_PARAM
   //発動率100
   u32 spa_rate_up:1;            ///<エンカウント率2倍(ありじごく他)
   u32 spa_rate_down:1;          ///<エンカウント率1/2(あくしゅう他)
+  u32 spa_fishing_rate_up:1;    ///<釣りの時だけエンカウント率2倍
   u32 spa_item_rate_up:1;       ///<アイテムが手に入りやすい(ふくがん他)
   u32 spa_chr_fix:1;            ///<手持ちと同じ性格(シンクロ他)
 
@@ -94,7 +95,7 @@ typedef struct _ENCPOKE_FLD_PARAM
   u32 spa_high_lv_hit:1;  ///<レベルの高いポケモンとエンカウントしやすい(やるき他)
   u32 spa_low_lv_rm:1;    ///<レベルの低いポケモンとエンカウントしない(威嚇他)
 
-  u32 dmy:17;
+  u32 dmy:16;
 }ENCPOKE_FLD_PARAM;
 
 extern void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,

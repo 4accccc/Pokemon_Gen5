@@ -124,6 +124,11 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
 
   outEfp->gdata = gdata;
   outEfp->enc_save = EncDataSave_GetSaveDataPtr( save );
+  
+  //釣り戦闘かどうか
+  if( location == ENC_LOCATION_FISHING || location == ENC_LOCATION_FISHING_SP ){
+    outEfp->fishing_f = TRUE;
+  }
 
   //プレイヤーのIDセット
   outEfp->my = GAMEDATA_GetMyStatus( (GAMEDATA*)gdata );
@@ -149,10 +154,6 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   //フラグチェック
   outEfp->gameclear_f = EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( (GAMEDATA*)gdata ),SYS_FLAG_GAME_CLEAR); 
 
-  //釣り戦闘かどうか
-  if( location == ENC_LOCATION_FISHING || location == ENC_LOCATION_FISHING_SP ){
-    outEfp->fishing_f = TRUE;
-  }
   //スプレーチェック
   if ( !EncDataSave_CanUseSpray( EncDataSave_GetSaveDataPtr(save) ) ){
     outEfp->spray_f = TRUE;
@@ -201,6 +202,17 @@ u32 ENCPOKE_EncProbManipulation( const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* g
 {
   u32 new_prob = inProb;
 
+  if( efp->fishing_f ){ //釣り戦闘では「ねんちゃく/きゅうばん」しか影響しない
+    if( efp->spa_fishing_rate_up ){
+      new_prob *= 2;
+    }
+    if( new_prob > 100 ){
+      new_prob = 100;
+    }
+    return new_prob;
+  }
+  //↓釣り戦闘以外
+
   //特性による確率変更
   if( efp->spa_rate_up ){
     new_prob *= 2;
@@ -211,7 +223,7 @@ u32 ENCPOKE_EncProbManipulation( const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* g
   if(efp->mons_item == ITEM_KIYOMENOOHUDA || efp->mons_item == ITEM_KIYOMENOOKOU){
     new_prob = (inProb * 2) / 3;
   }
-  if(new_prob >= 100){
+  if(new_prob > 100){
     new_prob = 100;
   }
   //Gパワー変動
@@ -524,7 +536,7 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
     return;
   ///<砂嵐エンカウント率1/2（すながくれ他)
   case TOKUSYU_SUNAGAKURE:
-    if(weather == WEATHER_NO_STORM){
+    if(weather == WEATHER_NO_STORM || weather == WEATHER_NO_STORMHIGH ){
       ioEfp->spa_rate_down = TRUE;
     }
     return;
@@ -538,7 +550,7 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
   case TOKUSYU_NENTYAKU:
   case TOKUSYU_KYUUBAN:
     if(ioEfp->fishing_f){
-      ioEfp->spa_rate_up = TRUE;
+      ioEfp->spa_fishing_rate_up = TRUE;
     }
     return;
   ///<アイテムが手に入りやすい(ふくがん他)
@@ -871,6 +883,7 @@ static void eps_EncPokeItemSet(POKEMON_PARAM* pp,
   range = DATA_ItemRangeTable[item_range+itemlv_up*2];
   rnd = eps_GetPercentRand();
 
+  IWASAWA_Printf("Item rnd = %d\n",rnd);
   tmp = 0;
   for(i = 0;i < PPD_ITEM_SLOT_NUM;i++){
     tmp += range[i];

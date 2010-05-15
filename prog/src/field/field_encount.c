@@ -323,9 +323,10 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, enc_type,
       FIELD_WEATHER_GetWeatherNo(FIELDMAP_GetFieldWeather( enc->fwork )) );
 
-  //道具/特性/Gパワーによるエンカウント率変動は釣りに影響しない
   if( enc_type != ENC_TYPE_EFFECT ){
-    if( enc_GetPercentRand() < per ){
+    //エフェクトエンカウントでない時は、ねんちゃくときゅうばんが有効
+    per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
+    if( enc_GetPercentRand() > per ){
       return( NULL );
     }
   }
@@ -564,7 +565,7 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
     }
   }
 
-  if( enc_GetPercentRand() < per ){
+  if( enc_GetPercentRand() <= per ){
     return( TRUE );
   }
   return( FALSE );
