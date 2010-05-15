@@ -398,7 +398,8 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
         //まばたき
         if( ( BTLV_MCSS_CheckExist( bmw, pos ) ) && ( GFL_STD_MtRand( 100 ) == 0 ) )
         {
-          if( ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 )
+          if( ( ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 ) &&
+                ( BTLV_MCSS_GetAnmStopFlag( bmw, pos ) == BTLV_MCSS_ANM_STOP_OFF ) )
           {
             BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
           }
@@ -442,7 +443,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
               break;
             case APP_COMMON_ST_ICON_KOORI:       // 氷
               BTLV_MCSS_SetPaletteFadeBaseColor( bmw, pos, 8, GX_RGB( 15, 15, 31 ) );
-              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ON );
+              BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_ON );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
               break;
             case APP_COMMON_ST_ICON_YAKEDO:      // 火傷
@@ -460,7 +461,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
               { 
                 BTLV_MCSS_ResetPaletteFadeBaseColor( bmw, pos );
                 BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_OFF );
-                BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_OFF );
+                BTLV_MCSS_SetAnmStopFlag( bmw, pos, BTLV_MCSS_ANM_STOP_ALWAYS_OFF );
                 BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE );
                 bmw->btlv_mcss[ index ].sick_set_flag = 0;
                 bmw->evy_dir = 0;
@@ -742,6 +743,22 @@ void  BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
 
 //============================================================================================
 /**
+ * @brief アニメストップフラグ取得
+ *
+ * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  アニメストップさせたいポケモンの立ち位置
+ * @param[in] flag    アニメストップフラグ（BTLV_MCSS_ANM_STOP_ON、BTLV_MCSS_ANM_STOP_OFF）
+ */
+//============================================================================================
+int  BTLV_MCSS_GetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  return  MCSS_GetAnmStopFlag( bmw->btlv_mcss[ index ].mcss );
+}
+
+//============================================================================================
+/**
  * @brief アニメストップ処理
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
@@ -755,6 +772,14 @@ void  BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag )
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
   if( flag == BTLV_MCSS_ANM_STOP_ON ){
     MCSS_SetAnmStopFlag( bmw->btlv_mcss[ index ].mcss );
+  }
+  else if( flag == BTLV_MCSS_ANM_STOP_ALWAYS_ON )
+  {
+    MCSS_SetAnmStopFlagAlways( bmw->btlv_mcss[ index ].mcss );
+  }
+  else if( flag == BTLV_MCSS_ANM_STOP_ALWAYS_OFF )
+  {
+    MCSS_ResetAnmStopFlagAlways( bmw->btlv_mcss[ index ].mcss );
   }
   else{
     MCSS_ResetAnmStopFlag( bmw->btlv_mcss[ index ].mcss );

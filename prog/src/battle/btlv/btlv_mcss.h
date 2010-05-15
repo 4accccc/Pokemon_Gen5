@@ -81,8 +81,10 @@ typedef enum
 
 typedef enum
 {
-  BTLV_MCSS_ANM_STOP_ON   = MCSS_ANM_STOP_ON,
-  BTLV_MCSS_ANM_STOP_OFF  = MCSS_ANM_STOP_OFF,
+  BTLV_MCSS_ANM_STOP_ON         = MCSS_ANM_STOP_ON,
+  BTLV_MCSS_ANM_STOP_OFF        = MCSS_ANM_STOP_OFF,
+  BTLV_MCSS_ANM_STOP_ALWAYS_ON  = MCSS_ANM_STOP_ALWAYS,
+  BTLV_MCSS_ANM_STOP_ALWAYS_OFF,
 }BTLV_MCSS_ANM_STOP_FLAG;
 
 typedef enum{
@@ -137,6 +139,7 @@ extern  void            BTLV_MCSS_SetPosition( BTLV_MCSS_WORK *bmw, int position
 extern  void            BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
+extern  int             BTLV_MCSS_GetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
 extern  BTLV_MCSS_VANISH_FLAG BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_VANISH_FLAG flag );
