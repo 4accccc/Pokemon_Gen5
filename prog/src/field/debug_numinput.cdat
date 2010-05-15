@@ -9,25 +9,29 @@
 
 //////////////////////////////////////////////////////
 ///エフェクトエンカウント関連
-static const DEBUG_NUMINPUT_PARAM interval_param = {
+static const DEBUG_NUMINPUT_PARAM enceff_interval_param = {
  1, 0xFFFF, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
-static const DEBUG_NUMINPUT_PARAM prob_param = {
+static const DEBUG_NUMINPUT_PARAM enceff_prob_param = {
  0, 100, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
-static const DEBUG_NUMINPUT_PARAM prob_fix_param = {
+static const DEBUG_NUMINPUT_PARAM enceff_prob_fix_param = {
  0, 1, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
-static const DEBUG_NUMINPUT_PARAM ofs_param = {
+static const DEBUG_NUMINPUT_PARAM enceff_ofs_param = {
  0, 10, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
+};
+static const DEBUG_NUMINPUT_PARAM enceff_pos_param = {
+ 0, 0, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
 static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
   //gmm_id, param, dni_param
- { dni_effenc_interval, EFFENC_DNI_INTERVAL, &interval_param },
- { dni_effenc_prob,     EFFENC_DNI_PROB, &prob_param },
- { dni_effenc_prob_fix, EFFENC_DNI_PROB_FIX, &prob_fix_param },
- { dni_effenc_pos_ofsx, EFFENC_DNI_OFSX, &ofs_param }, 
- { dni_effenc_pos_ofsz, EFFENC_DNI_OFSZ, &ofs_param },
+ { dni_effenc_interval, EFFENC_DNI_INTERVAL, &enceff_interval_param },
+ { dni_effenc_prob,     EFFENC_DNI_PROB, &enceff_prob_param },
+ { dni_effenc_prob_fix, EFFENC_DNI_PROB_FIX, &enceff_prob_fix_param },
+ { dni_effenc_pos_ofsx, EFFENC_DNI_OFSX, &enceff_ofs_param }, 
+ { dni_effenc_pos_ofsz, EFFENC_DNI_OFSZ, &enceff_ofs_param },
+ { dni_effenc_pos_check, EFFENC_DNI_POSITION, &enceff_pos_param },
 };
 
 //////////////////////////////////////////////////////

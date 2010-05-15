@@ -821,6 +821,19 @@ u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 p
     return wk->deb_ofsx;
   case EFFENC_DNI_OFSZ: 
     return wk->deb_ofsz;
+  case EFFENC_DNI_POSITION: 
+    {
+      u32 num = 0;
+      s32 x,y,z;
+      if( !wk->param.valid_f){
+        return 0;
+      }
+      x = wk->param.gx;
+      z = wk->param.gz;
+      y = wk->param.gy;
+      if(y < 0 ){ y += 999; }
+      return (x*1000000+y*1000+z);
+    }
   }
   return 0;
 }
