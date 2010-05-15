@@ -932,6 +932,8 @@ static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 {
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
   PMSND_FadeOutBGM( PMSND_FADE_FAST );
   pWork->anmCount=0;
@@ -942,6 +944,9 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->anmCount < PMSND_FADE_FAST){
+    return;
+  }
+  if(!WIPE_SYS_EndCheck()){
     return;
   }
 
