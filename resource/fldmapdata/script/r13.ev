@@ -211,6 +211,7 @@ EVENT_END
 EVENT_START   ev_r13_girl1_01
 {
 DEFINE_LOCAL LWK_DIR
+_PLAYER_DIR_GET(LWK_DIR)
 
 	_TALK_OBJ_START()
 	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
@@ -221,22 +222,8 @@ DEFINE_LOCAL LWK_DIR
 		_OBJ_ADD(R13_MONSTERBALL_01)
 		$WK_SCENE_H04_ITEMNUM = 0 
 		//========================================/
-		
-		_VOICE_PLAY( MONSNO_278, 0 )
-		_BALLOONWIN_OBJMSG(msg_r13_poke_01,R13_POKE100_01)
-		_VOICE_WAIT()
-		_AB_KEYWAIT_MARK()
-		_MSGWIN_CLOSE()
-		
-		_PLAYER_DIR_GET(LWK_DIR)
-		IF $LWK_DIR == DIR_LEFT THEN
-			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_left)
-		ELSE
-			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_up)
-		ENDIF
-		_OBJ_ANIME_WAIT()
-		
-		_BALLOONWIN_OBJMSG(msg_r13_girl1_01,R13_GIRL1_01)
+			
+		_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_01,R13_GIRL1_01,POS_UL)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -244,103 +231,126 @@ DEFINE_LOCAL LWK_DIR
 	
 		IF FLAG_ON(FE_H04_ITEMHAVING_01) THEN
 		
-			_BALLOONWIN_TALKOBJ_MSG(msg_r13_girl1_02)
+			_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_02,R13_GIRL1_01,POS_UL)
 			_MSGWIN_CLOSE()
-			
-			_OBJ_ANIME(R13_POKE100_01,anm_common_turn_l)
-			_OBJ_ANIME_WAIT()
 			
 			//手紙を渡すようなアニメ
-			_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_r)
-			_OBJ_ANIME_WAIT()
-
-			_VOICE_PLAY( MONSNO_278, 0 )
-			_VOICE_WAIT()		
-			_OBJ_ANIME(R13_POKE100_01,anm_common_jump_d)
-			_BALLOONWIN_OBJMSG_POS(msg_r13_poke_02,R13_POKE100_01,POS_DEFAULT)
-			_MSGWIN_CLOSE()
+			_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_d)
 			_OBJ_ANIME_WAIT()
 			
+			_OBJ_ANIME(R13_POKE100_01,anm_common_turn_u)
+			_OBJ_ANIME_WAIT()
+			
+			_OBJ_ANIME(R13_POKE100_01,anm_common_gyoe)
+			_OBJ_ANIME_WAIT()
+
+			_VOICE_PLAY( MONSNO_278, 0 )						
+			_BALLOONWIN_OBJMSG_POS(msg_r13_poke_02,R13_POKE100_01,POS_DL)
+			_VOICE_WAIT()
+			_AB_KEYWAIT_MARK()
+			_MSGWIN_CLOSE()
+		
 			_TURN_HERO_SITE()
+			
 			//手紙を一枚見つけた
 			IF $WK_SCENE_H04_ITEMNUM == 1 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_03,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_03,R13_GIRL1_01,POS_UL)
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 						
 			//手紙を二枚見つけた
 			ELSIF $WK_SCENE_H04_ITEMNUM == 2 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_04,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_04,R13_GIRL1_01,POS_UL)
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 			//手紙を三枚見つけた
 			ELSIF $WK_SCENE_H04_ITEMNUM == 3 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_05,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_05,R13_GIRL1_01,POS_UL)
 				_MSGWIN_CLOSE()
+
+				_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_d)
+				_OBJ_ANIME_WAIT()
 				
-				_TIME_WAIT(16)
-				_VOICE_PLAY( MONSNO_278, 0 )
-				_VOICE_WAIT()
-				_BALLOONWIN_OBJMSG_POS(msg_r13_poke_03,R13_POKE100_01,POS_DEFAULT)
-				_MSGWIN_CLOSE()
-				
-				_TIME_WAIT(8)
-				_OBJ_ANIME(R13_POKE100_01,anm_kyamome_wing)
+				_OBJ_ANIME(R13_POKE100_01,anm_common_onpu)
 				_OBJ_ANIME_WAIT()
 
-    			//フェードイン
-    			_BLACK_OUT()
-    			_DISP_FADE_END_CHECK()
-    			
-    			_OBJ_DEL(R13_POKE100_01)
-    			_FLAG_SET(FV_H04_POKE_01)
+				_VOICE_PLAY( MONSNO_278, 0 )			
+				_BALLOONWIN_OBJMSG_POS(msg_r13_poke_03,R13_POKE100_01,POS_DL)
+				_VOICE_WAIT()
+				_AB_KEYWAIT_MARK()
+				_MSGWIN_CLOSE()
+
+				_OBJ_ANIME(R13_POKE100_01,anm_common_turn_d)
+				_OBJ_ANIME_WAIT()
+				
+				_OBJ_ANIME(R13_POKE100_01,anm_kyamome_wing)
 				
 				_TIME_WAIT(16)
-				_SE_PLAY(SEQ_SE_KAIDAN)
+    			//フェードイン
+    			_BLACK_OUT_SLOW()
+    			_DISP_FADE_END_CHECK()
+				_OBJ_ANIME_WAIT()
+    			
+    			//羽ばたき音
+				_SE_PLAY(SEQ_SE_W017_01)
+				_SE_WAIT()
+				_SE_PLAY(SEQ_SE_W017_01)
 				_SE_WAIT()
 				
-			    //ちょっと待つ
-			    _TIME_WAIT( 16 )
+    			_OBJ_DEL(R13_POKE100_01)
+			
+				IF $LWK_DIR == DIR_DOWN THEN
+					_OBJ_ADD_EX(684,211,DIR_DOWN,MMDL_ID_EVENTOBJ_00,MONSTERBALL,MV_DMY)				
+					_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+					_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_r)
+				ELSE
+					_OBJ_ADD_EX(684,213,DIR_DOWN,MMDL_ID_EVENTOBJ_00,MONSTERBALL,MV_DMY)
+					_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+					_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_d)
+				ENDIF	
+				_OBJ_ANIME_WAIT()
+				
 			    //フェードイン
-			    _BLACK_IN()
+			    _BLACK_IN_SLOW()
 			    _DISP_FADE_END_CHECK()
-    			
+				
 				_SYSWIN_MSG( msg_r13_sys_01, POS_DEFAULT )
 				_MSGWIN_CLOSE()
 				
-				//わざマシン「とんぼがえり」
-				_ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN89,1)
+				//アイテム入手処理 わざマシン「とんぼがえり」
+				_OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+ 				_ITEM_EVENT_FIELD(ITEM_WAZAMASIN89,1)
 				
 			ENDIF
 			
 			//========================================/
 			_FLAG_RESET(FE_H04_ITEMHAVING_01)
-			
+    		_FLAG_SET(FV_H04_POKE_01)
 			//========================================/
 		ELSE			
 
 			//手紙を見つけていない
 			IF $WK_SCENE_H04_ITEMNUM == 0 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_01,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_01,R13_GIRL1_01,POS_UL)
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()	
 								
 			//手紙を一枚見つけた
 			ELSIF $WK_SCENE_H04_ITEMNUM == 1 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_03,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_03,R13_GIRL1_01,POS_UL)
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 						
 			//手紙を二枚見つけた
 			ELSIF $WK_SCENE_H04_ITEMNUM == 2 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_04,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_04,R13_GIRL1_01,POS_UL)
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 
 			//手紙を三枚見つけた（イベントをクリアしている）
 			ELSIF $WK_SCENE_H04_ITEMNUM == 3 THEN
-				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_06,R13_GIRL1_01,POS_DEFAULT)
+				_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_06,R13_GIRL1_01,POS_UL)
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
@@ -365,7 +375,7 @@ EVENT_START   ev_r13_oldman1_01
 			_BALLOONWIN_OBJMSG_POS( msg_r13_oldman1_02 , R13_OLDMAN1_01, POS_DEFAULT )
 			_MSGWIN_CLOSE()
 			
-			_ITEM_EVENT_KEYWAIT( ITEM_HAITATUBUTU1, 1 )
+			_ITEM_EVENT_NOWAIT( ITEM_HAITATUBUTU1, 1 )
 			
 			//========================================/
 			$WK_SCENE_H04_ITEMNUM += 1
@@ -392,7 +402,7 @@ EVENT_START   ev_r13_backpackerw_01
 			_BALLOONWIN_OBJMSG_POS( msg_r13_backpackerw_02 , R13_BACKPACKERW_01, POS_DEFAULT )
 			_MSGWIN_CLOSE()
 			
-			_ITEM_EVENT_KEYWAIT( ITEM_HAITATUBUTU3, 1 )
+			_ITEM_EVENT_NOWAIT( ITEM_HAITATUBUTU3, 1 )
 			
 			//========================================/
 			$WK_SCENE_H04_ITEMNUM += 1
@@ -423,9 +433,10 @@ EVENT_START   ev_r13_poke100_01
 {
 DEFINE_LOCAL LWK_DIR
 
+	_TALK_OBJ_START()
+	
 	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
-		_TALK_OBJ_START()
-		
+				
 		//========================================/
 		_FLAG_SET(FE_H04_DELIVERY_01)
 		_FLAG_RESET(FV_H04_ITEM_02)
@@ -434,28 +445,17 @@ DEFINE_LOCAL LWK_DIR
 		//========================================/
 
 		_VOICE_PLAY( MONSNO_278, 0 )			
-		_BALLOONWIN_OBJMSG_POS(msg_r13_poke_01,R13_POKE100_01,POS_DEFAULT)
+		_BALLOONWIN_OBJMSG_POS(msg_r13_poke_01,R13_POKE100_01,POS_DL)
 		_VOICE_WAIT()
-		_AB_KEYWAIT_MARK()
-		_MSGWIN_CLOSE()
-		
-		_PLAYER_DIR_GET(LWK_DIR)
-		IF $LWK_DIR == DIR_LEFT THEN
-			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_left)
-		ELSE
-			_OBJ_ANIME(R13_POKE100_01,anm_kyamome_urouro_up)
-		ENDIF
-		_OBJ_ANIME_WAIT()
-		
-		_OBJ_ANIME(R13_GIRL1_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
-		
-		_BALLOONWIN_OBJMSG_POS(msg_r13_girl1_01,R13_GIRL1_01,POS_DEFAULT)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
-	
+
 	ELSE
-		_EASY_TALK_POKEVOICE(MONSNO_278,msg_r13_poke_01)
+		_VOICE_PLAY( MONSNO_278, 0 )			
+		_BALLOONWIN_OBJMSG_POS(msg_r13_poke_01,R13_POKE100_01,POS_DL)
+		_VOICE_WAIT()
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 	ENDIF
 }
 EVENT_END
@@ -538,8 +538,7 @@ _ANIME_LABEL	anm_common_turn_u
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_jump_d
 
-	_ANIME_DATA AC_STAY_JUMP_D_8F,3
-	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_STAY_JUMP_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -547,7 +546,6 @@ _ANIME_LABEL	anm_common_jump_d
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_kyamome_wing
 
-	_ANIME_DATA AC_STAY_WALK_D_8F,3
 	_ANIME_DATA	AC_WARP_UP,1
 	_ANIME_DATA	ACMD_END,0
 	

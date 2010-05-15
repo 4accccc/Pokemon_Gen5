@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 21:33:33
+#save date:2010/05/15 16:58:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -739,7 +739,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R13_GIRL1_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -762,7 +762,7 @@ R13_POKE100_01
 #OBJ CODE Number
 TPOKE_0305
 #MOVE CODE Number
-MV_RND_ULR
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -770,7 +770,7 @@ FV_H04_POKE_01
 #Event Script Name
 SCRID_R13_POKE100_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
