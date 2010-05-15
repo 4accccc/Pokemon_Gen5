@@ -1674,7 +1674,6 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
       // @todo これだとピンチBGM中にはSEQ_BGM_BATTLESUPERIORに移行しないが、これで良いのだろうか？
       if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
       ){
-        BTLV_EFFECT_SetTrainerBGMChangeFlag( SEQ_BGM_BATTLESUPERIOR );
         if( BTLV_EFFECT_GetPinchBGMFlag() == 0 )
         {
           //現状、曲変化はジムリーダーだけ
@@ -1689,6 +1688,12 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
         }
         else
         {
+          //現状、曲変化はジムリーダーだけ
+          u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+          if( BTL_CALC_IsTrtypeGymLeader(trType) )
+          { 
+            BTLV_EFFECT_SetTrainerBGMChangeFlag( SEQ_BGM_BATTLESUPERIOR );
+          }
           wk->fAITrainerBGMChanged = TRUE;
         }
       }
