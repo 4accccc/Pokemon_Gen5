@@ -441,12 +441,32 @@ int UnionOneself_Update(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
  * @retval  BOOL    TRUE：成功
  */
 //==================================================================
-BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
+static BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
 {
   UNION_MY_SITUATION *situ = &unisys->my_situation;
 
   situ->next_union_status = req_status;
   return TRUE;
+}
+
+//==================================================================
+/**
+ * 外側から次のUNION_STATUSをセットする
+ *
+ * @param   unisys		
+ * @param   req_status		
+ *
+ * @retval  BOOL		TRUE:成功
+ */
+//==================================================================
+BOOL UnionOneself_Outside_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+
+  if(situ->func_proc == ONESELF_SUBPROC_UPDATE){  //UPDATE状態でないと受け付けない
+    return UnionOneself_ReqStatus(unisys, req_status);
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

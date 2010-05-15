@@ -293,7 +293,7 @@ BOOL UNION_CHARA_TalkCheck(UNION_SYSTEM_PTR unisys, u16 chara_index)
   
   unichara = unisys->character;
   for(i = 0; i < UNION_CHARACTER_MAX; i++){
-    if(unichara->occ == TRUE && unichara->parent_pc != NULL){ //NULLチェックは念のため
+    if(unichara->occ == TRUE && unichara->parent_pc != NULL && unichara->parent_pc->life > 0){ //NULLチェックは念のため
       if(((unichara->parent_pc->buffer_no << 8) | (unichara->child_no + UNION_CHARINDEX_OFFSET)) == chara_index){
         if(unichara->event_status == BPC_EVENT_STATUS_LEAVE 
             || unichara->event_status == BPC_EVENT_STATUS_ENTER

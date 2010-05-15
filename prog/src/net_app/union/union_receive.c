@@ -73,7 +73,7 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
 
   if(situ->union_status == UNION_STATUS_NORMAL){
     //接続要求チェック
-    if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ)
+    if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ && bpc->life > 0)
     {
       u8 my_mac[6];
       OS_GetMacAddress(my_mac);
@@ -82,7 +82,7 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
         OS_TPrintf("接続要求：Mac一致\n");
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, bpc);
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_TALK_PC, bpc);
-        UnionOneself_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER);
+        UnionOneself_Outside_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER);
       }
       else
       {
