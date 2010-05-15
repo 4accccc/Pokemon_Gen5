@@ -14,9 +14,9 @@
 #include "poke_tool/poke_tool.h"
 #include "system/gf_date.h"
 
-#define RETURN_POSITION_TEMOTI	( 18 )
+#define RETURN_POSITION_TEMOTI	( 0xFF )
 
-//@todo size
+//åªèÛ220Ç»ÇÃÇ≈ë´ÇËÇƒÇ¢ÇÈ
 #define WORLDTRADE_POKEMON_DATA_SIZE  (236)
 
 //----------------------------------------------------------
