@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-11T23:16:06"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-15T17:41:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="170" top="266" right="875" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="207" top="315" right="912" bottom="1061" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="453"/>
@@ -878,7 +878,7 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_rndmatch_02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ランダムマッチでは
@@ -891,11 +891,16 @@ C-Gear入手前</comment>
 フリーと　レーティングの
 ２つの　モードが　あります[BE:01:ページ切り替え（クリア）]
 フリーモードは　だれでも
-さんか　できます[BE:01:ページ切り替え（クリア）]
+じゆうに　さんか　できます[BE:01:ページ切り替え（クリア）]
 レーティングモードは
-ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
-とうろく　しないと[BE:00:ページ切り替え（行送り）]
-さんか　できません[BE:01:ページ切り替え（クリア）]</language>
+ゲームシンクせっていを　おこない[BE:01:ページ切り替え（クリア）]
+おてもとの　パソコンで
+ポケモングローバルリンクの[BE:00:ページ切り替え（行送り）]
+ホームページに　アクセスして[BE:01:ページ切り替え（クリア）]
+ゲームシンクＩＤコードを
+とうろくすることで　さんか　できます[BE:01:ページ切り替え（クリア）]
+http://www.pokemon-gl.com
+（ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチでは
 遠くにいる　見知らぬ人と[BE:00:ページ切り替え（行送り）]
 通信対戦が　できます[BE:01:ページ切り替え（クリア）]
@@ -906,10 +911,16 @@ C-Gear入手前</comment>
 フリーと　レーティングの
 ２つの　モードが　あります[BE:01:ページ切り替え（クリア）]
 フリーモードは　だれでも
-参加できます[BE:01:ページ切り替え（クリア）]
+自由に　参加できます[BE:01:ページ切り替え（クリア）]
 レーティングモードは
-ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
-登録しないと　参加できません[BE:01:ページ切り替え（クリア）]</language>
+ゲームシンク設定を　行い[BE:01:ページ切り替え（クリア）]
+お手元の　パソコンで
+ポケモングローバルリンクの[BE:00:ページ切り替え（行送り）]
+ホームページに　アクセスして[BE:01:ページ切り替え（クリア）]
+ゲームシンクＩＤコードを
+登録することで　参加できます[BE:01:ページ切り替え（クリア）]
+http://www.pokemon-gl.com
+（ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -962,13 +973,11 @@ C-Gear入手前</comment>
 気軽に　挑戦してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードは
-ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
-とうろくすると　えらぶことが　できる[BE:01:ページ切り替え（クリア）]
-たいせんを　きわめたい　ひとに
+たいせんを　きわめたい　ひとに[BE:00:ページ切り替え（行送り）]
 おすすめの　モードです[BE:01:ページ切り替え（クリア）]
 つうしんを　つなげると
 レーティングの　ちかい　ひとと[BE:00:ページ切り替え（行送り）]
@@ -991,9 +1000,7 @@ C-Gear入手前</comment>
 さんかちゅう　ＤＳほんたいを
 かえるときは　ごちゅうい　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">レーティングモードは
-ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
-登録すると　選ぶことが　できる[BE:01:ページ切り替え（クリア）]
-対戦を　極めたい人に
+対戦を　極めたい人に[BE:00:ページ切り替え（行送り）]
 おすすめの　モードです[BE:01:ページ切り替え（クリア）]
 通信を　つなげたとき
 レーティングの　近い人と[BE:00:ページ切り替え（行送り）]
@@ -1002,7 +1009,7 @@ C-Gear入手前</comment>
 １５００から　スタートして[BE:00:ページ切り替え（行送り）]
 勝つと　あがり　負けると　さがります[BE:01:ページ切り替え（クリア）]
 レーティングが　高いほど
-対戦が　強い　トレーナーに　なるので[BE:01:ページ切り替え（クリア）]
+対戦の　強い　トレーナーと　なるので[BE:01:ページ切り替え（クリア）]
 ぜひ　挑戦して
 今の　レベルを　確かめてください[BE:01:ページ切り替え（クリア）]
 最後に　参加中の
