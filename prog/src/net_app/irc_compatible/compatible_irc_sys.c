@@ -1150,6 +1150,7 @@ void COMPATIBLE_IRC_GetStatus( GAMESYS_WORK *cp_gamesys, COMPATIBLE_STATUS *p_st
     RTCDate   date;
     GFL_RTC_GetDate( &date );
     p_status->is_day14  = (date.day == 14);
+    p_status->date  = GFDATE_RTCDate2GFDate( &date );
   }
 }
 

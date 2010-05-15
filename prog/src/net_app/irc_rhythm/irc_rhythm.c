@@ -2392,7 +2392,11 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
       BACKOBJ_COLOR color;
 			color = RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
 			BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos, color );
-			RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
+
+      if( p_wk->sub_seq == 0 )
+      {
+        RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
+      }
 		}
 	}
 
@@ -2410,7 +2414,6 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
     { 
       SEQFUNC_Result( p_wk, &p_wk->sub_seq );
     }
-
 	}
 
   if( p_wk->is_sub_seq == FALSE )

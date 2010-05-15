@@ -136,10 +136,10 @@ static void SUBPROC_FREE_Result( void *p_param_adrs, void *p_wk_adrs );
 static void *SUBPROC_ALLOC_Ranking( HEAPID heapID, void *p_wk_adrs );
 static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs );
 //RULE
-static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, BOOL is_init, HEAPID heapID );
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, BOOL is_init, GFDATE gfdate, HEAPID heapID );
 static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp_player2_name );
 static u32 MATH_GetMostOnebit( u32 x, u8 bit );
-static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status );
+static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status, GFDATE gfdate );
 static u32 RULE_CalcRhythmMinus( u32 cnt_diff );
 //=============================================================================
 /**
@@ -1043,6 +1043,7 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 		{	
       BOOL is_init;
       u32 rhythm_minus;
+      GFDATE  gfdate;
       COMPATIBLE_STATUS my_status;
 
       { 
@@ -1072,13 +1073,23 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 
       COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
 
+      //親の日時を使う
+      if( GFL_NET_IsParentMachine() )
+      {
+        gfdate  = my_status.date;
+      }
+      else
+      {
+        gfdate  = p_wk->p_you_status->date;
+      }
+
       //リズムのマイナス点を計算
       rhythm_minus  = RULE_CalcRhythmMinus( p_wk->rhythm_cnt_diff );
 
       //得点計算
 			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
           rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status, is_init,
-          HEAPID_IRCCOMPATIBLE_SYSTEM );
+          gfdate, HEAPID_IRCCOMPATIBLE_SYSTEM );
 		}
 	}
 
@@ -1167,7 +1178,7 @@ static void SUBPROC_FREE_Ranking( void *p_param_adrs, void *p_wk_adrs )
  *	@return	スコア
  */
 //-----------------------------------------------------------------------------
-static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, BOOL is_init, HEAPID heapID )
+static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u32 aura_minus, const COMPATIBLE_STATUS *cp_my_status, const COMPATIBLE_STATUS *cp_you_status, BOOL is_init, GFDATE gfdate, HEAPID heapID )
 {	
   u32 bio;
 	s32 score;
@@ -1176,7 +1187,7 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u
 	//プレイヤーの名前から運命値を算出
 
   //バイオリズム
-  bio = (RULE_CalcBioRhythm( cp_my_status ) + RULE_CalcBioRhythm( cp_you_status )) / 2;
+  bio = (RULE_CalcBioRhythm( cp_my_status, gfdate ) + RULE_CalcBioRhythm( cp_you_status, gfdate )) / 2;
 
   //総合点
 	score	= (rhythm_score * 50/100) + (aura_score * 40/100) + (bio*10/100);
@@ -1209,10 +1220,12 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u
   score -= ( aura_minus + rhythm_minus );
   score = MATH_CLAMP( score, 0, 100 );
 
-  OS_TPrintf( "▲相性最終計算▲ %d\n", score );
-  OS_TPrintf( "リズム点 %d 減点 -%d\n", rhythm_score, rhythm_minus );
-  OS_TPrintf( "オーラ点 %d 減点 -%d\n", aura_score, aura_minus );
-  OS_TPrintf( "バイオ %d ゲタ %d\n", bio, add );
+  OS_TFPrintf( 1,"▲相性最終計算▲ %d\n", score );
+  OS_TFPrintf( 1,"リズム点 %d 減点 -%d\n", rhythm_score, rhythm_minus );
+  OS_TFPrintf( 1,"オーラ点 %d 減点 -%d\n", aura_score, aura_minus );
+  OS_TFPrintf( 1,"バイオ %d ゲタ %d\n", bio, add );
+  OS_TFPrintf( 1,"年 %d 月 %d　日 %d\n", GFDATE_GetYear(gfdate),
+      GFDATE_GetMonth(gfdate),GFDATE_GetDay(gfdate) );
 
 	return score;
 }
@@ -1360,10 +1373,10 @@ static u32 MATH_GetMostOnebit( u32 x, u8 bit )
  */
 //-----------------------------------------------------------------------------
 #include "system/rtc_tool.h"
-static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status )
+static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status, GFDATE gfdate )
 { 
   RTCDate date;
-  GFL_RTC_GetDate( &date );
+  GFDATE_GFDate2RTCDate( gfdate, &date );
   return Irc_Compatible_SV_CalcBioRhythm( cp_status->barth_month, cp_status->barth_day, &date );
 }
 //----------------------------------------------------------------------------
