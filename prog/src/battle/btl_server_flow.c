@@ -639,7 +639,7 @@ static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16
 static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* rec );
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+  const BTL_POKEPARAM* attacker, BTL_POKESET* targets, BOOL* fFailMsgEnable );
 static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk );
 static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk );
@@ -8600,8 +8600,9 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       HandExResult result = HandExResult_NULL;
+      BOOL fFailMsgEnable;
 
-      if( scEvent_UnCategoryWaza(wk, wazaParam, attacker, targets) )
+      if( scEvent_UnCategoryWaza(wk, wazaParam, attacker, targets, &fFailMsgEnable) )
       {
         result = scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
         if( result == HandExResult_Enable ){
@@ -8609,8 +8610,11 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
         }
       }
 
-      if( (result == HandExResult_NULL) || (result == HandExResult_Fail) ){
-        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+      if( (result == HandExResult_NULL) || (result == HandExResult_Fail) )
+      {
+        if( fFailMsgEnable ){
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+        }
       }
 
       Hem_PopState( &wk->HEManager, hem_state );
@@ -8761,9 +8765,8 @@ static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* 
  */
 //----------------------------------------------------------------------------------
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  const BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+  const BTL_POKEPARAM* attacker, BTL_POKESET* targets, BOOL* fFailMsgEnable )
 {
-  // @TODO 本来はスタックポインタの値ではなく、明確にハンドラ側から成否フラグを受け取るべき
   u16 sp = Hem_GetStackPtr( &wk->HEManager );
 
   BTL_EVENTVAR_Push();
@@ -8775,6 +8778,8 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       targetMax = BTL_POKESET_GetCountMax( targets );
       targetCnt = BTL_POKESET_GetCount( targets );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, targetCnt );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, TRUE );
+
 
       BTL_N_Printf( DBGSTR_SVFL_UncategoryWazaInfo, BPP_GetID(attacker), targetCnt, targetMax);
 
@@ -8792,6 +8797,9 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       else{
         BTL_EVENT_CallHandlers( wk, BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET );
       }
+
+      (*fFailMsgEnable) = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+
     }
   BTL_EVENTVAR_Pop();
 

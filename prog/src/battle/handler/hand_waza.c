@@ -5671,12 +5671,15 @@ static void handler_PsycoShift( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
         }
         sick_param->sickCont = defaultCont;
         sick_param->pokeID = target_pokeID;
-        sick_param->fAlmost = TRUE;
+        sick_param->fAlmost = TRUE; // 何らかの要因で失敗したら原因表示する
 
         cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
         cure_param->sickCode = sick;
         cure_param->poke_cnt = 1;
         cure_param->pokeID[0] = pokeID;
+        cure_param->header.failSkipFlag = TRUE;
+
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );  // 標準失敗メッセージをオフ
       }
     }
   }

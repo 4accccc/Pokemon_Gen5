@@ -661,9 +661,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       print_que_info( server->que, "Server Send ... ");
     }
 
-    if( server->que->writePtr ){
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-    }
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
     (*seq)++;
     break;
 
@@ -804,7 +802,6 @@ static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-#if 1
 static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
@@ -866,12 +863,9 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
 
     BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-    if( server->que->writePtr ){
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-      (*seq)++;
-    }else{
-        setMainProc_Root( server );
-    }
+
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    (*seq)++;
     break;
 
   case 6:
@@ -902,93 +896,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
 
   return FALSE;
 }
-#else
-static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
-{
-  switch( *seq ){
-  case 0:
-    BTL_Printf("入場ポケモン選択へ  交替されるポケ数=%d\n", server->changePokeCnt);
-    SetAdapterCmdEx( server, BTL_ACMD_SELECT_POKEMON_FOR_COVER, server->changePokePos,
-        server->changePokeCnt*sizeof(server->changePokePos[0]) );
-    (*seq)++;
-    break;
-
-  case 1:
-    if( WaitAllAdapterReply(server) )
-    {
-      if( Irekae_IsNeedConfirm(server) )
-      {
-        server->enemyPutPokeID = Irekae_GetEnemyPutPokeID( server );
-
-        SetAdapterCmdSingle( server, BTL_ACMD_CONFIRM_IREKAE, BTL_CLIENTID_SA_PLAYER,
-                &server->enemyPutPokeID, sizeof(server->enemyPutPokeID) );
-      }
-      TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
-      (*seq)++;
-    }
-    break;
-
-  case 2:
-    if( WaitAllAdapterReply(server) )
-    {
-      ResetAdapterCmd( server );
-      TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
-
-      SCQUE_Init( server->que );
-
-      storeClientAction( server );
-      BTL_SVFLOW_StartAfterPokeIn_Boot( server->flowWork );
-      server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
-      TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
-
-      BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-      if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
-        (*seq)++;
-      }else{
-        BTL_N_Printf( DBGSTR_SV_SendActRecordFailed );
-        (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
-      }
-    }
-    break;
-
-  case 3:
-    if( WaitAllAdapterReply(server) ){
-      ResetAdapterCmd( server );
-      (*seq)++;
-    }
-    break;
-
-  case 4:
-    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-    (*seq)++;
-    break;
-
-  case 5:
-    if( WaitAllAdapterReply(server) )
-    {
-      ResetAdapterCmd( server );
-
-      switch( server->flowResult ){
-      case SVFLOW_RESULT_POKE_COVER:
-        (*seq) = 0;
-        break;
-      case SVFLOW_RESULT_BTL_SHOWDOWN:
-        setMainProc( server, ServerMain_ExitBattle );
-        break;
-      case SVFLOW_RESULT_BTL_QUIT:
-        BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
-        return TRUE;
-      default:
-        setMainProc_Root( server );
-        break;
-      }
-    }
-    break;
-  }
-
-  return FALSE;
-}
-#endif
 
 /**
  *  スタンドアロン入れ替え戦にて、プレイヤー側に入れ替えを確認する必要があるか判定
@@ -1082,9 +989,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     SCQUE_Init( server->que );
     server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork, &server->clientAction );
     BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-    if( server->que->writePtr ){
-      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-    }
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
     (*seq)++;
     break;
 
