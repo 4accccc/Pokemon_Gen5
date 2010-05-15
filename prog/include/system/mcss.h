@@ -23,14 +23,15 @@
  */
 //--------------------------------------------------------------------------
 
-#define	MCSS_MEPACHI_ON		( 1 )		//メパチON
-#define	MCSS_MEPACHI_OFF	( 0 )		//メパチOFF
-#define	MCSS_MEPACHI_FLIP	( 2 )		//メパチFLIP
-#define	MCSS_ANM_STOP_ON	( 1 )		//アニメストップON
-#define	MCSS_ANM_STOP_OFF	( 0 )		//アニメストップOFF
-#define	MCSS_VANISH_ON		( 1 )		//バニッシュON
-#define	MCSS_VANISH_OFF		( 0 )		//バニッシュOFF
-#define	MCSS_VANISH_FLIP	( 2 )		//バニッシュFLIP
+#define	MCSS_MEPACHI_ON		    ( 1 )		//メパチON
+#define	MCSS_MEPACHI_OFF	    ( 0 )		//メパチOFF
+#define	MCSS_MEPACHI_FLIP	    ( 2 )		//メパチFLIP
+#define	MCSS_ANM_STOP_ON	    ( 1 )		//アニメストップON
+#define	MCSS_ANM_STOP_OFF	    ( 0 )		//アニメストップOFF
+#define	MCSS_ANM_STOP_ALWAYS	( 2 )		//アニメストップ強制
+#define	MCSS_VANISH_ON		    ( 1 )		//バニッシュON
+#define	MCSS_VANISH_OFF		    ( 0 )		//バニッシュOFF
+#define	MCSS_VANISH_FLIP	    ( 2 )		//バニッシュFLIP
 
 #define MCSS_SHADOW_ALPHA_AUTO ( 32 )//影のアルファ値を本体の半分にします
 
@@ -117,8 +118,11 @@ extern	void						MCSS_SetShadowOffset( MCSS_WORK *mcss, VecFx32 *ofs );
 extern	void						MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 extern	void						MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
 extern	void						MCSS_FlipMepachiFlag( MCSS_WORK *mcss );
+extern  int             MCSS_GetAnmStopFlag( MCSS_WORK *mcss );
 extern	void						MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
+extern	void						MCSS_SetAnmStopFlagAlways( MCSS_WORK *mcss );
 extern	void						MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
+extern	void						MCSS_ResetAnmStopFlagAlways( MCSS_WORK *mcss );
 extern	int							MCSS_GetVanishFlag( MCSS_WORK *mcss );
 extern	void						MCSS_SetVanishFlag( MCSS_WORK *mcss );
 extern	void						MCSS_ResetVanishFlag( MCSS_WORK *mcss );
