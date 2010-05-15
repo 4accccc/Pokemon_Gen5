@@ -115,7 +115,6 @@ void PokemonTrade_SetMyPokeColor( POKEMON_TRADE_WORK* pWork  )
 {
   int i;
 
-  OS_TPrintf("%d    \n",pWork->BOX_TRAY_MAX);
   
   for(i = 0; i < pWork->BOX_TRAY_MAX; i++){
     PokemonTrade_TrayPokeDotPut( pWork, i, &pWork->FriendPokemonCol[0][i*BOX_MAX_POS] );

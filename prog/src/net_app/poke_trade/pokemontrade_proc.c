@@ -641,6 +641,10 @@ static u8* _setThreePokemon(int netID, void* pWk, int size)
 static u8* _setPokemonColorBuffer(int netID, void* pWk, int size)
 {
   POKEMON_TRADE_WORK *pWork = pWk;
+  
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return (u8*)pWork->FriendPokemonCol[0];
+  }
   return (u8*)pWork->FriendPokemonCol[1];
 }
 
@@ -2036,7 +2040,7 @@ static void _touchState_BeforeTimeingFi(POKEMON_TRADE_WORK* pWork)
   if(WIPE_SYS_EndCheck()){
     POKETRADE_MESSAGE_WindowClear(pWork);
 
-    IRC_POKETRADE3D_SetColorTex(pWork);
+//    IRC_POKETRADE3D_SetColorTex(pWork);
 
   //  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 //    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
@@ -2052,6 +2056,9 @@ static void _touchState_BeforeTimeingFo(POKEMON_TRADE_WORK* pWork)
 //    return;
 //  }
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork) || GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKECOLOR,WB_NET_TRADE_SERVICEID)){
+
+    IRC_POKETRADE3D_SetColorTex(pWork);
+
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     _CHANGE_STATE(pWork, _touchState_BeforeTimeingFi);
@@ -3606,10 +3613,10 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     _CHANGE_STATE(pWork, POKMEONTRADE_SAVE_TimingStart);
     return GFL_PROC_RES_FINISH;
   }
-  if(POKEMONTRADE_MOVE_MAIL == pParentWork->ret){
-    _CHANGE_STATE(pWork, POKMEONTRADE_EVOLUTION_TimingStart);
-    return GFL_PROC_RES_FINISH;
-  }
+//  if(POKEMONTRADE_MOVE_MAIL == pParentWork->ret){
+  //  _CHANGE_STATE(pWork, POKMEONTRADE_EVOLUTION_TimingStart);
+ //   return GFL_PROC_RES_FINISH;
+//  }
   
   POKETRADE_MESSAGE_HeapInit(pWork);
   _dispInit(pWork);
@@ -3923,6 +3930,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
       else if(pWork->type != POKEMONTRADE_TYPE_UNION){  //ユニオンルームでのエラーはユニオンルーム側で管理するため画面を終了させる事だけを行う
         NetErr_App_ReqErrorDisp();
       }
+      pWork->pParentWork->ret = POKEMONTRADE_MOVE_ERROR;
       retCode = GFL_PROC_RES_FINISH;
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
