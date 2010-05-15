@@ -3113,14 +3113,10 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_ACTION_PARAM  action;
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-    if( BTL_SVFTOOL_GetThisTurnAction(flowWk, targetPokeID, &action) )
+    if( BTL_SVFTOOL_IsMemberOutIntr(flowWk) )
     {
-      if( BTL_ACTION_GetAction(&action) == BTL_ACTION_CHANGE ){
-        TAYA_Printf("“ü‚ê‘Ö‚í‚ë‚¤‚Æ‚µ‚Ä‚éƒ„ƒc‚É‚Í‚Q”{‚Å‚·\n");
-        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
-      }
+      TAYA_Printf("“ü‚ê‘Ö‚í‚ë‚¤‚Æ‚µ‚Ä‚¢‚éƒ„ƒc‚ð‰£‚éŽž‚Í‚Q”{\n");
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
   }
 }

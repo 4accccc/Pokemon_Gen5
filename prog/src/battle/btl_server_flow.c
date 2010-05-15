@@ -313,6 +313,7 @@ struct _BTL_SVFLOW_WORK {
   u8      numRelivePoke;
   u8      nigeruCount;
   u8      wazaEffIdx;
+  u8      fMemberOutIntr;
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
   u8      pokeInFlag [ BTL_POKEID_MAX ];
@@ -891,6 +892,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->getPokePos = BTL_POS_NULL;
   wk->nigeruCount = 0;
   wk->wazaEffIdx = 0;
+  wk->fMemberOutIntr = FALSE;
   wk->cmdBuildStep = 0;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
@@ -3788,7 +3790,9 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
     u8 intrPokeID = scEvent_MemberChangeIntr( wk, outPoke );
     if( intrPokeID != BTL_POKEID_NULL )
     {
+      wk->fMemberOutIntr = TRUE;
       ActOrder_IntrProc( wk, intrPokeID );
+      wk->fMemberOutIntr = FALSE;
     }
   }
 
@@ -13340,6 +13344,19 @@ u32 BTL_SVFTOOL_GetSideEffectCount( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSide
 BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEffect effect )
 {
   return BTL_HANDLER_POS_IsRegistered( effect, pos );
+}
+//--------------------------------------------------------------------------------------
+/**
+ * メンバー入れ替え時の割り込みアクション解決中であるかチェック
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsMemberOutIntr( BTL_SVFLOW_WORK* wk )
+{
+  return wk->fMemberOutIntr;
 }
 
 //=============================================================================================
