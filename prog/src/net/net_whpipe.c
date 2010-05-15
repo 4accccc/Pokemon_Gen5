@@ -89,6 +89,10 @@
 
 #define POKEMONWB_BEACON_PRODUCT_NO (0)   //この番号のビーコンは製品版
 
+#ifdef PM_DEBUG
+extern u8 DebugAloneTest;
+#endif
+
 /**
  *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
  */
@@ -293,7 +297,14 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 	WH_SetGgid(pInit->ggid);
 	pNetWL->pUserWork = pUserWork;
 	pNetWL->disconnectType = _DISCONNECT_NONE;
+#ifdef PM_DEBUG
+  if(DebugAloneTest == 0){
+    DebugAloneTest = _DEBUG_ALONETEST;
+  }
+	pNetWL->mineDebugNo = DebugAloneTest;
+#else
 	pNetWL->mineDebugNo = _DEBUG_ALONETEST;
+#endif
 	pNetWL->_sTgid = WM_GetNextTgid();
 
 #ifdef DEBUG_WH_BEACON_PRINT_ON
@@ -2203,17 +2214,10 @@ void GFL_NET_WL_PauseBeacon(int flg)
 //-----------------------------------------------
 u32 DEBUG_NET_WHPIPE_AloneTestCodeGet( void )
 {
-	GFL_NETWL* pNetWL = NULL;
-
-	if( _pNetWL == NULL ){
-		return 255; //通信未初期化なので繋げない
-	}
-	pNetWL = _pNetWL;
-
-  if( pNetWL->mineDebugNo == _DEBUG_ALONETEST_DEFAULT ){
+  if(DebugAloneTest == _DEBUG_ALONETEST_DEFAULT){
     return 0;
   }
-	return pNetWL->mineDebugNo;
+  return DebugAloneTest;
 }
 
 ///値を設定するための関数
@@ -2221,14 +2225,16 @@ void DEBUG_NET_WHPIPE_AloneTestCodeSet( u32 value )
 {
 	GFL_NETWL* pNetWL = NULL;
 
-	if( _pNetWL == NULL || value > 32){
+  if( value == 0 ){
+    value = _DEBUG_ALONETEST_DEFAULT;
+  }
+  DebugAloneTest = value;
+
+	if( _pNetWL == NULL ){
 		return; //通信未初期化なので変更しない
 	}
 	pNetWL = _pNetWL;
   
-  if( value == 0 ){
-    value = _DEBUG_ALONETEST_DEFAULT;
-  }
   pNetWL->mineDebugNo = value;
 }
 

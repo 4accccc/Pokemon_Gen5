@@ -52,6 +52,13 @@ FS_EXTERN_OVERLAY(wifilobby_common);
 FS_EXTERN_OVERLAY(dpw_common);
 
 
+#ifdef PM_DEBUG
+//net_whpipe.cでしか使用しないが、オーバーレイされるsrcの為、値が消えてしまう
+//消されないように常駐であるこのファイルに定義だけ行う
+u8 DebugAloneTest = 0;
+#endif
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ワイヤレスデバイスをロードする
