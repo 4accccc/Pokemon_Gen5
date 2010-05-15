@@ -62,7 +62,7 @@ BOOL  WIFI_LocalAreaExistCheck(int nationID);
 //============================================================================================
 #ifdef PM_DEBUG
 //#define WIFI_ERATH_DEBUG
-#define WIFI_ERATH_DEBUG_ALL_DRAW
+//#define WIFI_ERATH_DEBUG_ALL_DRAW
 #endif
 
 //地点登録最大数
@@ -989,10 +989,10 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       switch(list_result){
       case 0:   //「はい」
         if(wk->Japan_ROM_mode == TRUE){
-          wk->my_nation_tmp = country106; //日本語版限定処理（国入力スキップ）
-          *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_AREA; //地域別登録リスト選択へ
+          wk->my_nation_tmp = WIFI_COUNTRY_GetJapanID(); //日本語版限定処理（国入力スキップ）
+          *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_AREA;    //地域別登録リスト選択へ
         }else{
-          *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION;//国別登録リスト選択へ
+          *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION;  //国別登録リスト選択へ
         }
         break;
       case BMPMENU_CANCEL:  //「いいえ」

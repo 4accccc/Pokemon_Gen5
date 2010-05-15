@@ -278,6 +278,7 @@ u32 WIFI_COUNTRY_DataIndexToCountryCode( u32 dataIndex )
 }
 
 
+
 //------------------------------------------------------------------
 /**
  * データインデックスから地域データIDを取得
@@ -294,3 +295,17 @@ u32 WIFI_COUNTRY_DataIndexToPlaceDataID( u32 dataIndex )
   return NationFlag_to_AreaID[dataIndex].place_dataID;
 }
 
+//NationFlag_to_AreaIDでの日本が置いてあるテーブル
+#define NATION_AREA_TABLE_JAPAN_INDEX ( 13 )
+
+//------------------------------------------------------------------
+/**
+ * 国・地域関連付けテーブルから日本のIDを取得（データ更新時にズレないように）
+ *
+ * @retval  u32   日本の国ID
+ */
+//------------------------------------------------------------------
+u32 WIFI_COUNTRY_GetJapanID(void)
+{
+  return NationFlag_to_AreaID[NATION_AREA_TABLE_JAPAN_INDEX].nationID;
+}
