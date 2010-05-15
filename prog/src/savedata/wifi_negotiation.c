@@ -77,12 +77,12 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 //--------------------------------------------------------------------------------------------
 void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS* pMyStatus)
 {
-  int profileID = MyStatus_GetProfileID(pMyStatus);
+  u32 playerID = MyStatus_GetID(pMyStatus);
 
-  if(profileID==0){
+  if(playerID==0){
     return;
   }
-  if(WIFI_NEGOTIATION_SV_IsCheckFriend(pSV,profileID)){
+  if(WIFI_NEGOTIATION_SV_IsCheckFriend(pSV,playerID)){
     return;
   }
   if(pSV->count >= WIFI_NEGOTIATION_DATAMAX){
@@ -108,7 +108,7 @@ s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
   if(index >= WIFI_NEGOTIATION_DATAMAX){
     i=0;
   }
-  return MyStatus_GetProfileID(&pSV->aMyStatus[ i ]);
+  return MyStatus_GetID(&pSV->aMyStatus[ i ]);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ s32 WIFI_NEGOTIATION_SV_GetFriendNum(WIFI_NEGOTIATION_SAVEDATA* pSV)
   int i=0,j=0;
 
   for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
-    if(MyStatus_GetProfileID(&pSV->aMyStatus[ i ])!=0){
+    if(MyStatus_GetID(&pSV->aMyStatus[ i ])!=0){
       j++;
     }
   }

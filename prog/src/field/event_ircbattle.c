@@ -400,9 +400,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _CALL_EVOLUTION;
       }
- //     else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_MAIL){
-   //     (*seq) = _CALL_MAIL;
-  //    }
       else{
         (*seq) = _CALL_NET_END;
       }

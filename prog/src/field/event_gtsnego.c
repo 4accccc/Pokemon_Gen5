@@ -42,6 +42,7 @@ FS_EXTERN_OVERLAY(app_mail);
 
 //----------------------------------------------------------------
 
+#define _TIMINGDISCONNECT (1)
 #define HEAPID_CORE GFL_HEAPID_APP
 
 enum _EVENT_GTSNEGO {
@@ -53,6 +54,7 @@ enum _EVENT_GTSNEGO {
   _WAIT_WIFINEGO,
   _CALL_TRADE,
   _WAIT_TRADE,
+  _DISCONNECT_TRADE,
   _SEQ_EVOLUTION,
   _SEQ_EVOLUTIONEND,
   _CALL_MAIL,
@@ -167,13 +169,23 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _SEQ_EVOLUTION;
       }
-      else{
-        GFL_NET_StateWifiMatchEnd(TRUE);
+      else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_ERROR){
         (*seq) = _CALL_WIFINEGO;
+      }
+      else{
+        GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE);
+        GFL_NET_SetAutoErrorCheck(FALSE);
+        GFL_NET_SetNoChildErrorCheck(FALSE);
+        (*seq) = _DISCONNECT_TRADE;
       }
     }
     break;
-    
+  case _DISCONNECT_TRADE:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE)){
+      GFL_NET_StateWifiMatchEnd(TRUE);
+      (*seq) = _CALL_WIFINEGO;
+    }
+    break;
   case _SEQ_EVOLUTION:
     //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
     //dbw->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->aPokeTr.gamedata,
