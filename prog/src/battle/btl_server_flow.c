@@ -738,7 +738,7 @@ static void scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
 static void scEvent_TameSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza );
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static BOOL scEvent_IsExcuseCalcHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
+static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, u8 lv,
@@ -5443,7 +5443,7 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
     return FALSE;
   }
 
-  if( scEvent_IsExcuseCalcHit(wk, attacker, defender, wazaParam->wazaID) ){
+  if( scEvent_IsCalcHitCancel(wk, attacker, defender, wazaParam->wazaID) ){
     return TRUE;
   }
 
@@ -11324,15 +11324,15 @@ static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
  * @retval  BOOL        確率計算をスキップする場合はTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_IsExcuseCalcHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
+static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
   BOOL result = WAZADATA_IsAlwaysHit( waza );
   if( !result )
   {
     BTL_EVENTVAR_Push();
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, FALSE );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_EXCUSE_CALC_HIT );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_HIT_CANCEL );
       result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
     BTL_EVENTVAR_Pop();
   }

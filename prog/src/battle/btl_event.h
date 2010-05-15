@@ -72,7 +72,7 @@ typedef enum {
   BTL_EVENT_WAZA_AVOID,             ///< ワザ外れた
   BTL_EVENT_DMG_TO_RECOVER_CHECK,   ///< ワザダメージ->回復化チェックハンドラ
   BTL_EVENT_DMG_TO_RECOVER_FIX,     ///< ワザダメージ->回復化決定ハンドラ
-  BTL_EVENT_EXCUSE_CALC_HIT,        ///< 命中率計算を飛ばすかチェック
+  BTL_EVENT_CALC_HIT_CANCEL,        ///< 命中率計算を飛ばすかチェック
   BTL_EVENT_WAZA_HIT_RANK,          ///< 命中率・回避率の決定ハンドラ
   BTL_EVENT_WAZA_HIT_RATIO,         ///< ワザの命中率補正ハンドラ
   BTL_EVENT_WAZA_HIT_COUNT,         ///< ヒット回数決定（複数回ヒットワザのみ）

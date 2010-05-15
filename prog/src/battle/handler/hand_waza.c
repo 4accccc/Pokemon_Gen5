@@ -265,6 +265,7 @@ static const BtlEventHandlerTable*  ADD_Fuiuti( u32* numElems );
 static void handler_Fuiuti_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Oiuti( u32* numElems );
 static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Oiuti_HitCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Daibakuhatsu( u32* numElems );
 static void handler_Daibakuhatsu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -3078,8 +3079,9 @@ static void handler_Fuiuti_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable*  ADD_Oiuti( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_MENBERCHANGE_INTR, handler_Oiuti_Intr },    // 入れ替え割り込みハンドラ
-    { BTL_EVENT_WAZA_DMG_PROC2,    handler_Oiuti_Dmg  },    // ダメージ計算最終チェック
+    { BTL_EVENT_MENBERCHANGE_INTR, handler_Oiuti_Intr     },  // 入れ替え割り込みハンドラ
+    { BTL_EVENT_CALC_HIT_CANCEL,   handler_Oiuti_HitCheck },  // ヒットチェック計算をスキップ
+    { BTL_EVENT_WAZA_DMG_PROC2,    handler_Oiuti_Dmg      },  // ダメージ計算最終チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3109,6 +3111,16 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+// ヒットチェック計算をスキップ
+static void handler_Oiuti_HitCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  &&  (BTL_SVFTOOL_IsMemberOutIntr(flowWk))
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
+}
+// ダメージ計算最終チェックハンドラ
 static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4511,7 +4523,7 @@ static const BtlEventHandlerTable*  ADD_Kaminari( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_POKE_HIDE,   handler_Kaminari_checkHide     },  // 消えポケヒットチェック
-    { BTL_EVENT_EXCUSE_CALC_HIT,   handler_Kaminari_excuseHitCalc },  // ヒット確率計算スキップ
+    { BTL_EVENT_CALC_HIT_CANCEL,   handler_Kaminari_excuseHitCalc },  // ヒット確率計算スキップ
     { BTL_EVENT_WAZA_HIT_RATIO,    handler_Kaminari_hitRatio      },  // 命中率計算
   };
   *numElems = NELEMS( HandlerTable );
@@ -4555,7 +4567,7 @@ static void handler_Kaminari_hitRatio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_Fubuki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_EXCUSE_CALC_HIT,   handler_Fubuki },      // ヒット確率計算スキップハンドラ
+    { BTL_EVENT_CALC_HIT_CANCEL,   handler_Fubuki },      // ヒット確率計算スキップハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
