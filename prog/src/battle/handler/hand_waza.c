@@ -3097,13 +3097,14 @@ static void handler_Oiuti_Intr( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       fIntr = TRUE;
     }else{
       u8 targetPokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, action.fight.targetPos );
+      TAYA_Printf("Ž©•ª‚ª‘_‚¤ƒ|ƒP=%d\n", targetPokeID);
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) == targetPokeID ){
+        TAYA_Printf( "  ->Š„‚èž‚Ý‚Ü‚·\n");
         fIntr = TRUE;
       }
     }
     if( fIntr )
     {
-      BTL_Printf("Š„‚èž‚Ý‚Ü‚·\n");
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_ATK, pokeID );
     }
   }
@@ -3117,7 +3118,7 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     if( BTL_SVFTOOL_GetThisTurnAction(flowWk, targetPokeID, &action) )
     {
       if( BTL_ACTION_GetAction(&action) == BTL_ACTION_CHANGE ){
-        BTL_Printf("“ü‚ê‘Ö‚í‚ë‚¤‚Æ‚µ‚Ä‚éƒ„ƒc‚É‚Í‚Q”{‚Å‚·\n");
+        TAYA_Printf("“ü‚ê‘Ö‚í‚ë‚¤‚Æ‚µ‚Ä‚éƒ„ƒc‚É‚Í‚Q”{‚Å‚·\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
       }
     }
@@ -7416,6 +7417,7 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
       change_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       change_param->pokeID = pokeID;
+      change_param->fIntrDisable = TRUE;
     }
   }
 }

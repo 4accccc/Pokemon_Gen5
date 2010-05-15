@@ -448,7 +448,7 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
 static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
-static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
+static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable );
 static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
@@ -3751,11 +3751,9 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 //-----------------------------------------------------------------------------------
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx )
 {
-  // @@@ 成否チェック ... コマンド選択時にハジくので必要ないか？
-
   scPut_MemberOutMessage( wk, outPoke );
 
-  if( scproc_MemberOutForChange(wk, outPoke) )
+  if( scproc_MemberOutForChange(wk, outPoke, FALSE) )
   {
     BtlPokePos pos;
     u8 clientID, posIdx;
@@ -3776,14 +3774,16 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
  * メンバーを場から退場させる（入れ替え処理前）
  *
  * @param   wk
- * @param   bpp     退場させるポケモンパラメータ
+ * @param   bpp           退場させるポケモンパラメータ
+ * @param   fIntrDisable  割り込みアクション（おいうちなど）を禁止するフラグ
  *
  * @retval  BOOL    退場できたらTRUE／割り込まれて死んだりしたらFALSE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
+static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable )
 {
   // 割り込みチェック
+  if( !fIntrDisable )
   {
     u8 intrPokeID = scEvent_MemberChangeIntr( wk, outPoke );
     if( intrPokeID != BTL_POKEID_NULL )
@@ -14858,7 +14858,7 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 {
   BTL_HANDEX_PARAM_CHANGE_MEMBER* param = (BTL_HANDEX_PARAM_CHANGE_MEMBER*)param_header;
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  if( scproc_MemberOutForChange(wk, bpp) )
+  if( scproc_MemberOutForChange(wk, bpp, param->fIntrDisable) )
   {
     BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
 
