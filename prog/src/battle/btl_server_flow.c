@@ -417,7 +417,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
 static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fPutMsg );
 static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static void scPut_MemberOutAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
 static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
@@ -452,7 +452,7 @@ static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
 static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable );
-static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
+static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u16 effectNo );
 static void scEvent_MemberOutFixed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke );
 static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTION_PARAM* action );
 static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -622,7 +622,7 @@ static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, c
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* defaultTarget );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  BOOL fForceChange, BOOL* fFailMsgDisped, BTL_HANDEX_STR_PARAMS* succeedMsg );
+  BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
@@ -1224,9 +1224,6 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     }
 
     if( wk->flowResult == SVFLOW_RESULT_POKE_CHANGE ){
-      // @@@ トンボがえりで…殴られた方が死んで終了の場合は引っ込む処理要らないねぇ。
-      // @@@ -> トンボがえりハンドラで決着チェックはする方がよさそう。
-      TAYA_Printf( "トンボがえりか何かで途中入れ替えです\n" );
       reqChangePokeForServer( wk );
       return i+1;
     }
@@ -2938,21 +2935,6 @@ static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
   SCQUE_PUT_ACT_MemberOutMsg( wk->que, clientID, pokeID );
 }
-//----------------------------------------------------------------------------------
-/**
- * [Put] メンバー交替時にポケモンを引っ込める処理コマンド
- *
- * @param   wk
- * @param   bpp
- */
-//----------------------------------------------------------------------------------
-static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
-{
-  u8 pokeID = BPP_GetID( bpp );
-  BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
-
-  SCQUE_PUT_ACT_MemberOut( wk->que, pos );
-}
 //-----------------------------------------------------------------------------------
 // サーバーフロー：アイテム使用
 //-----------------------------------------------------------------------------------
@@ -3809,7 +3791,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 
   if( !BPP_IsDead(outPoke) )
   {
-    scproc_MemberOutCore( wk, outPoke );
+    scproc_MemberOutCore( wk, outPoke, 0 );
     return TRUE;
   }
 
@@ -3821,14 +3803,26 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
  *
  * @param   wk
  * @param   outPoke
+ * @param   effectNo   エフェクトナンバー(0=標準エフェクト）
  *
  */
 //----------------------------------------------------------------------------------
-static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke )
+static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u16 effectNo )
 {
   u8 pokeID = BPP_GetID( outPoke );
 
-  scPut_MemberOut( wk, outPoke );
+
+  {
+    BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
+    if( pos != BTL_POS_NULL )
+    {
+      if( effectNo == 0 ){
+        effectNo = BTLEFF_POKEMON_MODOSU;
+      }
+      SCQUE_PUT_ACT_MemberOut( wk->que, pos, effectNo );
+    }
+  }
+
   BPP_Clear_ForOut( outPoke );
   SCQUE_PUT_OP_OutClear( wk->que, BPP_GetID(outPoke) );
 
@@ -8232,7 +8226,7 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
-    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, NULL) )
+    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, 0, NULL) )
     {
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
     }
@@ -8250,13 +8244,14 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
  * @param   attacker
  * @param   target
  * @param   fForceChange  強制的に入れ替えモードで実行（FALSEならルール等に応じて自動判別）
+ * @param   effectNo      成功時エフェクトナンバー（0 = 標準エフェクト）
  * @param   fFailMsgDisped  [out] 特殊な失敗条件発生、原因を表示したらTRUE
  *
  * @retval  BOOL    成功時TRUE
  */
 //----------------------------------------------------------------------------------
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  BOOL fForceChange, BOOL* fFailMsgDisped, BTL_HANDEX_STR_PARAMS* succeedMsg )
+  BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BTL_HANDEX_STR_PARAMS* succeedMsg )
 {
   PushOutEffect   eff;
 
@@ -8323,7 +8318,7 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
 
           nextPokeID = BPP_GetID( nextPoke );
 
-          scproc_MemberOutCore( wk, target );
+          scproc_MemberOutCore( wk, target, effectNo );
           if( succeedMsg != NULL ){
             handexSub_putString( wk, succeedMsg );
           }
@@ -8339,7 +8334,7 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
         u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(attacker) );
         BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
 
-        scproc_MemberOutCore( wk, target );
+        scproc_MemberOutCore( wk, target, effectNo );
         wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
       }
     }
@@ -14994,7 +14989,7 @@ static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
 
   BOOL fFailMsgDisped;
 
-  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped, &param->exStr) )
+  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped, param->effectNo, &param->exStr) )
   {
     return 1;
   }

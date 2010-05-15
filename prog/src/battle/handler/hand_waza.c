@@ -9383,6 +9383,8 @@ static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
 
     param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    param->effectNo = (BTL_EVENT_FACTOR_GetSubID(myHandle) == WAZANO_KARI_TOMOENAGE)?
+                          BTLEFF_TOMOENAGE_RETURN : BTLEFF_DRAGONTAIL_RETURN;
   }
 }
 //----------------------------------------------------------------------------------

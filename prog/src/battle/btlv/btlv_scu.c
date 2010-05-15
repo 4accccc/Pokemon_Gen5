@@ -2848,12 +2848,13 @@ typedef struct {
   STATUS_WIN*  statWin;
   u16     seq;
   u16     viewpos;
+  u16     effectNo;
   u8*     taskCounter;
 
 }POKEOUT_ACT_WORK;
 
 
-void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, BOOL fSkipMode )
+void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, u16 effectNo, BOOL fSkipMode )
 {
   if( fSkipMode )
   {
@@ -2868,6 +2869,7 @@ void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, BOOL fSkipMode 
     twk->viewpos = vpos;
     twk->statWin = &wk->statusWin[ vpos ];
     twk->taskCounter = &wk->taskCounter[TASKTYPE_MEMBER_OUT];
+    twk->effectNo = (effectNo != 0)? effectNo : BTLEFF_POKEMON_MODOSU;
     twk->seq = 0;
 
     (*(twk->taskCounter))++;
@@ -2884,7 +2886,8 @@ static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs )
 
   switch( twk->seq ){
   case 0:
-    BTLV_EFFECT_AddByPos( twk->viewpos, BTLEFF_POKEMON_MODOSU );
+    TAYA_Printf("MemberOut EffectNo=%d\n", twk->effectNo );
+    BTLV_EFFECT_AddByPos( twk->viewpos, twk->effectNo );
     twk->seq++;
     break;
   case 1:

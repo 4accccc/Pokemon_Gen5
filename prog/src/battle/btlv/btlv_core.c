@@ -1767,9 +1767,9 @@ BOOL BTLV_WaitReliveAct( BTLV_CORE* wk )
  *
  */
 //=============================================================================================
-void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, BtlvMcssPos vpos )
+void BTLV_ACT_MemberOut_Start( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo )
 {
-  BTLV_SCU_StartMemberOutAct( wk->scrnU, vpos, BTL_CLIENT_IsChapterSkipMode(wk->myClient) );
+  BTLV_SCU_StartMemberOutAct( wk->scrnU, vpos, effectNo, BTL_CLIENT_IsChapterSkipMode(wk->myClient) );
 }
 BOOL BTLV_ACT_MemberOut_Wait( BTLV_CORE* wk )
 {

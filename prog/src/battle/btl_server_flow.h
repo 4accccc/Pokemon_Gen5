@@ -751,6 +751,7 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8   pokeID;                  ///< 対象ポケID
   u8   fForceChange;            ///< 強制入れ替えモードフラグ
+  u16  effectNo;                ///< 成功時エフェクトナンバー
   BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PUSHOUT;
 

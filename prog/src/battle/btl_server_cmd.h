@@ -431,9 +431,9 @@ static inline void SCQUE_PUT_ACT_MemberOutMsg( BTL_SERVER_CMD_QUE* que, u8 clien
   SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT_MSG, clientID, pokeID );
 }
 // 【アクション】ポケモン退場
-static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, BtlPokePos pos )
+static inline void SCQUE_PUT_ACT_MemberOut( BTL_SERVER_CMD_QUE* que, BtlPokePos pos, u16 effectNo )
 {
-  SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT, pos );
+  SCQUE_PUT_Common( que, SC_ACT_MEMBER_OUT, pos, effectNo );
 }
 // 【アクション】ポケモン入場
 static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx, u8 memberIdx, u8 fPutMsg )

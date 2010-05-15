@@ -43,7 +43,7 @@ extern void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_WaitReliveAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pokePos, u8 clientID, u8 memberIdx, BOOL fEffectSkip );
 extern BOOL BTLV_SCU_WaitPokeIn( BTLV_SCU* wk );
-extern void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, BOOL fSkipMode );
+extern void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, u16 effectNo, BOOL fSkipMode );
 extern BOOL BTLV_SCU_WaitMemberOutAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos, BOOL fSkipEffect );
 extern BOOL BTLV_SCU_WaitHPGauge( BTLV_SCU* wk );

@@ -5095,11 +5095,7 @@ static u16 CheckMemberOutStrID( BTL_CLIENT* wk, u8 clientID, BOOL* fClientArg )
 /**
  * メンバー引き上げアクション
  *
- * @param   wk
- * @param   seq
- * @param   args
- *
- * @retval  BOOL
+ * args[0]: pos  args[1]: effectNo
  */
 //----------------------------------------------------------------------------------
 static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
@@ -5108,7 +5104,7 @@ static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
-      BTLV_ACT_MemberOut_Start( wk->viewCore, vpos );
+      BTLV_ACT_MemberOut_Start( wk->viewCore,  vpos, args[1] );
       (*seq)++;
     }
     break;
