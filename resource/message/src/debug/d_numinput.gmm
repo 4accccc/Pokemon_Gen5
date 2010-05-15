@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-08T16:16:44"/>
+	<create user="iwasawa" host="W00157" date="2010-05-15T16:11:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,42 +424,49 @@
 		<language name="JPN_KANJI" width="240">フェード速度</language>
 	</row>
 
-	<row id="dni_effenc_interval" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="dni_effenc_interval" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>エフェクトエンカウント関連メニュー
 　エフェクトチェックインターバル</comment>
 		<language name="JPN" width="240">インターバル（ほすう）</language>
 		<language name="JPN_KANJI" width="240">インターバル（歩数）</language>
 	</row>
 
-	<row id="dni_effenc_prob" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="dni_effenc_prob" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>エフェクトエンカウント関連メニュー
 　エフェクト発生確率</comment>
 		<language name="JPN" width="240">かくりつ</language>
 		<language name="JPN_KANJI" width="240">確率</language>
 	</row>
 
-	<row id="dni_effenc_prob_fix" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="dni_effenc_prob_fix" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>エフェクトエンカウント関連メニュー
 　デバッグエフェクト発生確率をマップチェンジ時に保持する</comment>
 		<language name="JPN" width="240">かくりつこてい</language>
 		<language name="JPN_KANJI" width="240">確率固定</language>
 	</row>
 
-	<row id="dni_effenc_pos_ofsx" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="dni_effenc_pos_ofsx" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>エフェクトエンカウント関連メニュー
 　エフェクト発生位置オフセット</comment>
 		<language name="JPN" width="240">オフセットX</language>
 		<language name="JPN_KANJI" width="240">オフセットX</language>
 	</row>
 
-	<row id="dni_effenc_pos_ofsz" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="dni_effenc_pos_ofsz" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>エフェクトエンカウント関連メニュー
 　エフェクト発生位置オフセット</comment>
 		<language name="JPN" width="240">オフセットZ</language>
 		<language name="JPN_KANJI" width="240">オフセットZ</language>
 	</row>
 
-	<row id="dni_number_string" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="dni_effenc_pos_check" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>エフェクトエンカウント関連メニュー
+　エフェクト発生確認</comment>
+		<language name="JPN" width="240">pos check</language>
+		<language name="JPN_KANJI" width="240">pos check</language>
+	</row>
+
+	<row id="dni_number_string" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>数値表示用</comment>
 		<language name="JPN" width="240">[2:09:10桁:0]</language>
 		<language name="JPN_KANJI" width="240">[2:09:10桁:0]</language>
