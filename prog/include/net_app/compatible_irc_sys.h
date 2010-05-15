@@ -29,6 +29,7 @@
 #include "net\network_define.h"
 #include "gamesystem/gamesystem.h"
 #include "savedata/irc_compatible_savedata.h"
+#include "system/gf_date.h"
 
 //=============================================================================
 /**
@@ -81,6 +82,7 @@ typedef enum {
 //=====================================
 typedef struct 
 {
+  GFDATE  date;
   u8 barth_month;
   u8 barth_day;
   u16 mons_no;
