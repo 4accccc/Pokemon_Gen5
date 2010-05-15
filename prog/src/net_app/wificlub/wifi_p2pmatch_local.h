@@ -33,6 +33,7 @@
 #include "wifi_p2pmatchroom.h"
 #include "ui/touchbar.h"
 #include "system/time_icon.h"
+#include "app/app_printsys_common.h"
 
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
@@ -478,7 +479,8 @@ struct _WIFIP2PMATCH_WORK{
 //  u16 singleCur[3];			// バトルの詳細部分のメニューカーソル
   u16 bSingle;				// SINGLEバトル　ダブルバトルスイッチ
   WIFIP2PMATCH_PROC_PARAM* pParentWork;
- WIFI_STATUS targetStatus;  //接続しようとしている人のステータス
+  WIFI_STATUS targetStatus;  //接続しようとしている人のステータス
+  APP_PRINTSYS_COMMON_WORK trgWork;  //キーの制御を行うワーク
 
   u16 friendNo;			// 今つながっている友達ナンバー
   BOOL bRetryBattle;

@@ -209,6 +209,18 @@ static void EndMessageWindowOff( WIFIP2PMATCH_WORK *wk )
 
 static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 {
+
+  BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc(&wk->trgWork, wk->pStream);
+
+  if(ret){
+    if(wk->pStream){
+      PRINTSYS_PrintStreamDelete( wk->pStream );
+      wk->pStream = NULL;
+    }
+  }
+  return ret;
+
+#if 0
   int state;
   
   if(wk->pStream){
@@ -232,6 +244,7 @@ static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
     return FALSE;  //‚Ü‚¾I‚í‚Á‚Ä‚È‚¢
   }
   return TRUE;// I‚í‚Á‚Ä‚¢‚é
+#endif
 }
 
 
@@ -291,6 +304,7 @@ static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bS
   else{
     wk->pStream = PRINTSYS_PrintStream(wk->MsgWin ,0,0, wk->TalkString, wk->fontHandle,
                                        MSGSPEED_GetWait(), wk->pMsgTcblSys, 2,HEAPID_WIFIP2PMATCH, 15);
+    APP_PRINTSYS_COMMON_PrintStreamInit(&wk->trgWork, APP_PRINTSYS_COMMON_TYPE_KEY );
   }
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
