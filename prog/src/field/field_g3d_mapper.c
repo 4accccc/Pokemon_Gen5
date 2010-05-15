@@ -163,6 +163,7 @@ struct _FLD_G3D_MAPPER {
   u8          nowFrameTopWriteNum; // 今フレームのトップ描画数
   u8          calcVcount; // 
   u8          pad[2];
+  u32         tailvblankCount;
   /*-----------------*/
 
 	VecFx32 globalDrawOffset;		//共通座標オフセット
@@ -216,6 +217,7 @@ static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper );
 static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, FLD_G3D_MAP* g3Dmap, u32 index );
 static void WRITEBLOCK_Control_CalcWriteSchedule( FLDMAPPER* g3Dmapper );
 static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u32 index, FLDMAPPER_DRAW_TYPE draw_type, u32* drawblock_index );
+static void WRITEBLOCK_Control_SetTailVBlankCount( FLDMAPPER* g3Dmapper );
 
 
 // ブロックインデックスの再計算　ツール
@@ -467,10 +469,14 @@ void	FLDMAPPER_MainTail( FLDMAPPER* g3Dmapper )
     //WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
 
+
 #ifdef DEBUG_PRINT_LOADING_TICK
     OS_TPrintf( " %ld\n", OS_GetTick() - DEBUG_starttick );
   }
 #endif
+
+  //TailでのVBlankCountを保存
+  WRITEBLOCK_Control_SetTailVBlankCount( g3Dmapper );
 }
 
 
@@ -2100,6 +2106,8 @@ static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPE
 static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper )
 {
   int v_count;
+  u32 vblankCount;
+  s32 vblank_dif;
   
   GFL_STD_MemFill( g3Dmapper->writeBlockIndexTbl, WRITE_BLOCK_INDEX_NULL, sizeof(u8) * g3Dmapper->blockNum );
   g3Dmapper->nowWriteBlockNum = 0;
@@ -2110,18 +2118,41 @@ static void WRITEBLOCK_Control_Clear( FLDMAPPER* g3Dmapper )
 
   g3Dmapper->nowFrameTopWriteNum = 0;
 
-  // VCountからトップの描画可能数を割り出す。
-  v_count = GX_GetVCount();
-  g3Dmapper->calcVcount = v_count;
-  if( (v_count > 192) || (v_count <= WRITE_BLOCK_NORMAL_VCOUNT) ){
-    // VBlank中最大描画可能
-    g3Dmapper->canTopWriteSize = WRITE_BLOCK_NORMAL_BLOCKSIZ;
+  // tail描画からVBlankCountが２以上増えている場合は、
+  // 処理落ちしているので、top描画はしない。
+  // 増加が１なら、VCountからトップの描画可能数を割り出す。
+  vblankCount = OS_GetVBlankCount();
+  vblank_dif  = vblankCount - g3Dmapper->tailvblankCount;
+  //TOMOYA_Printf( "vblankCount %d vblank_dif %d\n", vblankCount, vblank_dif );
+  if( vblank_dif >= 2 ){
+    g3Dmapper->calcVcount = 0xffff;
+    g3Dmapper->canTopWriteSize = 0;
   }else{
-    
-    v_count -= WRITE_BLOCK_NORMAL_VCOUNT;
-    g3Dmapper->canTopWriteSize = WRITE_BLOCK_NORMAL_BLOCKSIZ - (WRITE_BLOCK_NORMAL_VCOUNT_ONE_SIZE*v_count);
+    v_count = GX_GetVCount();
+    g3Dmapper->calcVcount = v_count;
+    if( (v_count > 192) || (v_count <= WRITE_BLOCK_NORMAL_VCOUNT) ){
+      // VBlank中最大描画可能
+      g3Dmapper->canTopWriteSize = WRITE_BLOCK_NORMAL_BLOCKSIZ;
+    }else{
+      
+      v_count -= WRITE_BLOCK_NORMAL_VCOUNT;
+      g3Dmapper->canTopWriteSize = WRITE_BLOCK_NORMAL_BLOCKSIZ - (WRITE_BLOCK_NORMAL_VCOUNT_ONE_SIZE*v_count);
+    }
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  tailMainでのVBlankCountを保存
+ *
+ *	@param	g3Dmapper 
+ */
+//-----------------------------------------------------------------------------
+static void WRITEBLOCK_Control_SetTailVBlankCount( FLDMAPPER* g3Dmapper )
+{
+  g3Dmapper->tailvblankCount = OS_GetVBlankCount();
+}
+
 
 //----------------------------------------------------------------------------
 /**
