@@ -77,7 +77,7 @@ void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID )
   }
 
   GF_ASSERT_MSG(0, "not exist pokeID=%d\n", pokeID);
-  OS_TPrintf("set break point\n");
+  TAYA_Printf("set break point\n");
 
 }
 //=============================================================================================

@@ -4888,13 +4888,13 @@ static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuButton( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,     handler_DassyutuButton_Reaction },  // ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_INFO,     handler_DassyutuButton_Reaction },  // ダメージ処理終了ハンドラ
     { BTL_EVENT_USE_ITEM,                handler_DassyutuButton_Use      },  // どうぐ使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-// ダメージ反応ハンドラ
+// ダメージ処理終了ハンドラ
 static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分がダメージを受けた側
@@ -4902,7 +4902,10 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   if( common_CheckTargetPokeID(pokeID) )
   {
     // 控えに交替可能メンバーがいるなら、どうぐ使用ハンドラ呼び出し
-    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) ){
+    //（割り込みアクション時を除く）
+    if( (!BTL_SVFTOOL_IsMemberOutIntr(flowWk))
+    &&  (BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID))
+    ){
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
   }
