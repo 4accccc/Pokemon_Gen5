@@ -1935,8 +1935,11 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       switch( p_wk->mode )
       { 
       case MYSTERY_NET_MODE_WIFI:
-        MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD );
-        is_cancel  = TRUE;
+        if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_WIFI_DOWNLOAD )
+        { 
+          MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_CANCEL_WIFI_DOWNLOAD );
+          is_cancel  = TRUE;
+        }
         break;
       case MYSTERY_NET_MODE_WIRELESS:
         if( MYSTERY_NET_GetState( p_wk->p_net ) == MYSTERY_NET_STATE_MAIN_BEACON_DOWNLOAD )
@@ -2847,19 +2850,22 @@ static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, voi
     break;
 
   case SEQ_INIT:
-    switch( p_wk->mode )
-    { 
-    case MYSTERY_NET_MODE_WIRELESS:
-      break;
+    if( MYSTERY_NET_GetState( p_wk->p_net)  == MYSTERY_NET_STATE_WAIT )
+    {
+      switch( p_wk->mode )
+      { 
+      case MYSTERY_NET_MODE_WIRELESS:
+        break;
 
-    case MYSTERY_NET_MODE_WIFI:
-      MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_LOGOUT_WIFI );
-      break;
+      case MYSTERY_NET_MODE_WIFI:
+        MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_LOGOUT_WIFI );
+        break;
 
-    case MYSTERY_NET_MODE_IRC:
-      break;
+      case MYSTERY_NET_MODE_IRC:
+        break;
+      }
+      *p_seq  = SEQ_WAIT;
     }
-    *p_seq  = SEQ_WAIT;
     break;
 
   case SEQ_WAIT:
