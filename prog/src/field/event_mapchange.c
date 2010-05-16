@@ -2826,8 +2826,6 @@ static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id )
  * マップをまたいでor画面暗転中もずっと維持されるメモリ状態などはここで設定する。
  * マップ初期化時だけでなく、コンティニュー時、全滅時などにも呼ばれる。
  * （逆に、初期化時のみの処理はMAPCHG_updateGameDataに集積すること）
- *
- * @todo  下記の※checkの対処を行う
  */
 //--------------------------------------------------------------
 static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
@@ -2838,7 +2836,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   GF_ASSERT( fieldmap == NULL );
 
-  //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこで行うようにしたい
+  //裏マップモード設定
   if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
       && ZONEDATA_IsPalace(zone_id) == FALSE){ //パレス島では白黒にしない
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
@@ -2846,9 +2844,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   else{
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_NORMAL );
   }
-  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
-  //         変更もそのスクリプト内で行うようにする
-  //         ミュージカル控え室も同じように処理するAri100329
+  
+  //サブスクリーン設定
   if ( ZONEDATA_IsUnionRoom( zone_id ) )
   {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
