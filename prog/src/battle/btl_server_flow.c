@@ -622,7 +622,7 @@ static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, c
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* defaultTarget );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BTL_HANDEX_STR_PARAMS* succeedMsg );
+  BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BOOL fIgnoreLevel, BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
 static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
@@ -8226,7 +8226,7 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
-    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, 0, NULL) )
+    if( scproc_PushOutCore(wk, attacker, target, FALSE, &fFailMsgDisped, 0, FALSE, NULL) )
     {
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
     }
@@ -8245,13 +8245,14 @@ static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARA
  * @param   target
  * @param   fForceChange  強制的に入れ替えモードで実行（FALSEならルール等に応じて自動判別）
  * @param   effectNo      成功時エフェクトナンバー（0 = 標準エフェクト）
+ * @param   fIgnoreLevel  レベル差による失敗判定を行わない
  * @param   fFailMsgDisped  [out] 特殊な失敗条件発生、原因を表示したらTRUE
  *
  * @retval  BOOL    成功時TRUE
  */
 //----------------------------------------------------------------------------------
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
-  BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BTL_HANDEX_STR_PARAMS* succeedMsg )
+  BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BOOL fIgnoreLevel, BTL_HANDEX_STR_PARAMS* succeedMsg )
 {
   PushOutEffect   eff;
 
@@ -8277,6 +8278,16 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
     // 対象が死んでたら失敗
     if( BPP_IsDead(target) ){
       return FALSE;
+    }
+
+    // 対象の方がレベル上だったら失敗
+    if( !fIgnoreLevel )
+    {
+      u8 atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
+      u8 tgtLevel = BPP_GetValue( target, BPP_LEVEL );
+      if( tgtLevel > atkLevel ){
+        return FALSE;
+      }
     }
 
     // 特殊要因で失敗
@@ -14989,7 +15000,8 @@ static u8 scproc_HandEx_pushOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
 
   BOOL fFailMsgDisped;
 
-  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped, param->effectNo, &param->exStr) )
+  if( scproc_PushOutCore(wk, attacker, target, param->fForceChange, &fFailMsgDisped,
+        param->effectNo, param->fIgnoreLevel, &param->exStr) )
   {
     return 1;
   }

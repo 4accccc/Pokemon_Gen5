@@ -4731,6 +4731,7 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       HANDEX_STR_AddArg( &consume_param->exStr, targetPokeID );
 
       push_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+      push_param->fIgnoreLevel = TRUE;
     }
   }
 }
