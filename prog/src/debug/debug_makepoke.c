@@ -13,6 +13,7 @@
 #include "print/str_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "waza_tool/wazano_def.h"
+#include "item/item.h"
 #include "buflen.h"
 
 #include "font/font.naix"
@@ -344,6 +345,82 @@ enum {
   LX_RARE_BOX = LX_RARE_CAP + 20,
   LY_RARE_BOX = LY_RARE_CAP-4,
 
+
+  LX_NICKNAME_CAP = 4,
+  LY_NICKNAME_CAP = 4,
+  LX_NICKNAME_BOX = LX_NICKNAME_CAP + CALC_STRBOX_WIDTH(6),
+  LY_NICKNAME_BOX = LY_NICKNAME_CAP,
+
+  LX_POKERUS_CAP = 156,
+  LY_POKERUS_CAP = LY_LV1,
+  LX_POKERUS_BOX = LX_POKERUS_CAP + CALC_STRBOX_WIDTH(5),
+  LY_POKERUS_BOX = LY_POKERUS_CAP,
+
+  LX_GET_LEVEL_CAP = 4,
+  LY_GET_LEVEL_CAP = LY_LV3,
+  LX_GET_LEVEL_BOX = LX_GET_LEVEL_CAP + CALC_STRBOX_WIDTH(6),
+  LY_GET_LEVEL_BOX = LY_GET_LEVEL_CAP,
+
+  LX_GET_BALL_CAP = LX_GET_LEVEL_BOX + CALC_NUMBOX_WIDTH(4),
+  LY_GET_BALL_CAP = LY_LV3,
+  LX_GET_BALL_BOX = LX_GET_BALL_CAP + CALC_STRBOX_WIDTH(3),
+  LY_GET_BALL_BOX = LY_GET_BALL_CAP,
+
+  LX_GET_CASETTE_CAP = 4,
+  LY_GET_CASETTE_CAP = LY_LV4,
+  LX_GET_CASETTE_BOX = LX_GET_CASETTE_CAP + CALC_STRBOX_WIDTH(4),
+  LY_GET_CASETTE_BOX = LY_GET_CASETTE_CAP,
+
+  LX_COUNTRY_CAP = LX_GET_CASETTE_BOX + CALC_STRBOX_WIDTH(8),
+  LY_COUNTRY_CAP = LY_LV4,
+  LX_COUNTRY_BOX = LX_COUNTRY_CAP + CALC_STRBOX_WIDTH(2),
+  LY_COUNTRY_BOX = LY_COUNTRY_CAP,
+
+  LX_GET_PLACE_CAP = 4,
+  LY_GET_PLACE_CAP = LY_LV6,
+  LX_GET_PLACE_BOX = LX_GET_PLACE_CAP + CALC_STRBOX_WIDTH(9),
+  LY_GET_PLACE_BOX = LY_GET_PLACE_CAP,
+  LX_GET_YEAR_CAP  = 4,
+  LY_GET_YEAR_CAP  = LY_LV7,
+  LX_GET_YEAR_BOX  = LX_GET_YEAR_CAP + CALC_STRBOX_WIDTH(1),
+  LY_GET_YEAR_BOX  = LY_GET_YEAR_CAP,
+  LX_GET_MONTH_CAP = LX_GET_YEAR_BOX + CALC_STRBOX_WIDTH(4),
+  LY_GET_MONTH_CAP = LY_LV7,
+  LX_GET_MONTH_BOX = LX_GET_MONTH_CAP + CALC_STRBOX_WIDTH(1),
+  LY_GET_MONTH_BOX = LY_GET_MONTH_CAP,
+  LX_GET_DAY_CAP   = LX_GET_MONTH_BOX + CALC_STRBOX_WIDTH(4),
+  LY_GET_DAY_CAP   = LY_LV7,
+  LX_GET_DAY_BOX   = LX_GET_DAY_CAP + CALC_STRBOX_WIDTH(1),
+  LY_GET_DAY_BOX   = LY_GET_DAY_CAP,
+
+  LX_BIRTH_PLACE_CAP = 4,
+  LY_BIRTH_PLACE_CAP = LY_LV8,
+  LX_BIRTH_PLACE_BOX = LX_BIRTH_PLACE_CAP + CALC_STRBOX_WIDTH(9),
+  LY_BIRTH_PLACE_BOX = LY_BIRTH_PLACE_CAP,
+  LX_BIRTH_YEAR_CAP  = 4,
+  LY_BIRTH_YEAR_CAP  = LY_LV9,
+  LX_BIRTH_YEAR_BOX  = LX_BIRTH_YEAR_CAP + CALC_STRBOX_WIDTH(1),
+  LY_BIRTH_YEAR_BOX  = LY_BIRTH_YEAR_CAP,
+  LX_BIRTH_MONTH_CAP = LX_BIRTH_YEAR_BOX + CALC_STRBOX_WIDTH(4),
+  LY_BIRTH_MONTH_CAP = LY_LV9,
+  LX_BIRTH_MONTH_BOX = LX_BIRTH_MONTH_CAP + CALC_STRBOX_WIDTH(1),
+  LY_BIRTH_MONTH_BOX = LY_BIRTH_MONTH_CAP,
+  LX_BIRTH_DAY_CAP   = LX_BIRTH_MONTH_BOX + CALC_STRBOX_WIDTH(4),
+  LY_BIRTH_DAY_CAP   = LY_LV9,
+  LX_BIRTH_DAY_BOX   = LX_BIRTH_DAY_CAP + CALC_STRBOX_WIDTH(1),
+  LY_BIRTH_DAY_BOX   = LY_BIRTH_DAY_CAP,
+
+  LX_ID_H_CAP = 4,
+  LY_ID_H_CAP = LY_LV11,
+  LX_ID_H_BOX = LX_ID_H_CAP + CALC_STRBOX_WIDTH(4),
+  LY_ID_H_BOX = LY_ID_H_CAP,
+
+  LX_ID_L_CAP = LX_ID_H_BOX + CALC_NUMBOX_WIDTH(6),
+  LY_ID_L_CAP = LY_LV11,
+  LX_ID_L_BOX = LX_ID_L_CAP + CALC_STRBOX_WIDTH(4),
+  LY_ID_L_BOX = LY_ID_L_CAP,
+
+
 };
 
 typedef enum {
@@ -353,6 +430,8 @@ typedef enum {
   INPUTBOX_TYPE_FIXVAL,   ///< 表示するだけの数値
   INPUTBOX_TYPE_FIXSTR,   ///< 表示するだけの文字列
   INPUTBOX_TYPE_BTN,      ///< タッチ反応で特殊処理するためのボタン
+
+  INPUTBOX_TYPE_NICKNAME,
 }InputBoxType;
 
 typedef enum {
@@ -409,9 +488,35 @@ typedef enum {
   INPUTBOX_ID_FORM,
   INPUTBOX_ID_TAMAGO,
   INPUTBOX_ID_RARE,
+
+  INPUTBOX_ID_NICKNAME,
+  INPUTBOX_ID_NICKNAME_FLG,
+  INPUTBOX_ID_POKERUS,
+  INPUTBOX_ID_GET_LEVEL,
+  INPUTBOX_ID_GET_BALL,
+  INPUTBOX_ID_GET_CASETTE,
+  INPUTBOX_ID_COUNTRY,
+  INPUTBOX_ID_GET_PLACE,
+  INPUTBOX_ID_GET_YEAR,
+  INPUTBOX_ID_GET_MONTH,
+  INPUTBOX_ID_GET_DAY,
+  INPUTBOX_ID_BIRTH_PLACE,
+  INPUTBOX_ID_BIRTH_YEAR,
+  INPUTBOX_ID_BIRTH_MONTH,
+  INPUTBOX_ID_BIRTH_DAY,
+
+  INPUTBOX_ID_OYAID_H,
+  INPUTBOX_ID_OYAID_L,
+
   INPUTBOX_ID_MAX,
 
 }InputBoxID;
+
+enum {
+  PAGE_0,
+  PAGE_1,
+  PAGE_MAX,
+};
 
 typedef enum {
   SWITCH_STRNUM_DEFAULT = 2,
@@ -451,6 +556,7 @@ typedef struct {
   u8   height;
 
   u16  paraID;
+  u16  pageNo;
   u32  arg;
   u32  arg2;
 
@@ -461,222 +567,298 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
 
   { INPUTBOX_TYPE_STR, DMPSTR_POKEMON, LX_POKETYPE_CAP, LY_POKETYPE_CAP,
     LX_POKETYPE_BOX, LY_POKETYPE_BOX, 56, LINE_HEIGHT,
-    ID_PARA_monsno, NARC_message_monsname_dat, 0  },
+    ID_PARA_monsno, PAGE_0, NARC_message_monsname_dat, 0  },
 
   { INPUTBOX_TYPE_NUM, DMPSTR_LEVEL,   LX_LEVEL_CAP,  LY_LEVEL_CAP,
     LX_LEVEL_BOX,   LY_LEVEL_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_level, 100, 1 },
+    ID_PARA_level, PAGE_0, 100, 1 },
 
   { INPUTBOX_TYPE_NUM, DMPSTR_HP_EXP,  LX_EXP_CAP,  LY_EXP_CAP,
     LX_EXP_BOX,   LY_EXP_BOX,  CALC_NUMBOX_WIDTH(8), LINE_HEIGHT,
-    ID_PARA_exp, INPUTBOX_NUM_ARG_EXP, 0 },
+    ID_PARA_exp, PAGE_0, INPUTBOX_NUM_ARG_EXP, 0 },
 
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_SEX,   LX_SEX_CAP,  LY_SEX_CAP,
     LX_SEX_BOX,   LY_SEX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_sex, DMPSTR_SEX_MALE, SWITCH_STRNUM_DEFAULT },
+    ID_PARA_sex, PAGE_0, DMPSTR_SEX_MALE, SWITCH_STRNUM_DEFAULT },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_SEIKAKU,    LX_SEIKAKU_CAP,    LY_SEIKAKU_CAP,
     LX_SEIKAKU_BOX,    LY_SEIKAKU_BOX,    CALC_STRBOX_WIDTH(5),   LINE_HEIGHT,
-    ID_PARA_seikaku,   NARC_message_chr_dat, 0 },
+    ID_PARA_seikaku, PAGE_0,   NARC_message_chr_dat, 0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_TOKUSEI,    LX_TOKUSEI_CAP,    LY_TOKUSEI_CAP,
     LX_TOKUSEI_BOX,    LY_TOKUSEI_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_speabino,  NARC_message_tokusei_dat, 0 },
+    ID_PARA_speabino, PAGE_0,  NARC_message_tokusei_dat, 0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_ITEM,    LX_ITEM_CAP,    LY_ITEM_CAP,
     LX_ITEM_BOX,    LY_ITEM_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_item, NARC_message_itemname_dat, 0 },
+    ID_PARA_item, PAGE_0, NARC_message_itemname_dat, 0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA1,   LX_WAZA1_CAP,   LY_WAZA1_CAP,
     LX_WAZA1_BOX,   LY_WAZA1_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza1, NARC_message_wazaname_dat,  0 },
+    ID_PARA_waza1, PAGE_0, NARC_message_wazaname_dat,  0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA2,   LX_WAZA2_CAP,   LY_WAZA2_CAP,
     LX_WAZA2_BOX,   LY_WAZA2_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza2, NARC_message_wazaname_dat,    0 },
+    ID_PARA_waza2, PAGE_0, NARC_message_wazaname_dat,    0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA3,   LX_WAZA3_CAP,   LY_WAZA3_CAP,
     LX_WAZA3_BOX,   LY_WAZA3_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza3, NARC_message_wazaname_dat,    0 },
+    ID_PARA_waza3, PAGE_0, NARC_message_wazaname_dat,    0 },
 
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA4,   LX_WAZA4_CAP,   LY_WAZA4_CAP,
     LX_WAZA4_BOX,   LY_WAZA4_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza4, NARC_message_wazaname_dat,    0 },
+    ID_PARA_waza4, PAGE_0, NARC_message_wazaname_dat,    0 },
 
   //---------------------------------------------------
   // PP系
   //---------------------------------------------------
   { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT1,   LX_PPCNT1_CAP,   LY_PPCNT1_CAP,
     LX_PPCNT1_BOX,   LY_PPCNT1_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count1, 3,  0 },
+    ID_PARA_pp_count1, PAGE_0, 3,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT2,   LX_PPCNT2_CAP,   LY_PPCNT2_CAP,
     LX_PPCNT2_BOX,   LY_PPCNT2_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count2, 3,    0 },
+    ID_PARA_pp_count2, PAGE_0, 3,    0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT3,   LX_PPCNT3_CAP,   LY_PPCNT3_CAP,
     LX_PPCNT3_BOX,   LY_PPCNT3_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count3, 3,    0 },
+    ID_PARA_pp_count3, PAGE_0, 3,    0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT4,   LX_PPCNT4_CAP,   LY_PPCNT4_CAP,
     LX_PPCNT4_BOX,   LY_PPCNT4_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count4, 3,    0 },
+    ID_PARA_pp_count4, PAGE_0, 3,    0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX1_CAP,  LY_PPMAX1_CAP,
     LX_PPMAX1_BOX,   LY_PPMAX1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max1, 100,  0 },
+    ID_PARA_pp_max1, PAGE_0, 100,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX2_CAP,  LY_PPMAX2_CAP,
     LX_PPMAX2_BOX,   LY_PPMAX2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max2, 100,    0 },
+    ID_PARA_pp_max2, PAGE_0, 100,    0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX3_CAP,  LY_PPMAX3_CAP,
     LX_PPMAX3_BOX,   LY_PPMAX3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max3, 100,    0 },
+    ID_PARA_pp_max3, PAGE_0, 100,    0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX4_CAP,  LY_PPMAX4_CAP,
     LX_PPMAX4_BOX,   LY_PPMAX4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max4,  100,  0 },
+    ID_PARA_pp_max4, PAGE_0,  100,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
     LX_PPEDIT1_BOX,   LY_PPEDIT1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp1, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX1 },
+    ID_PARA_pp1, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX1 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
     LX_PPEDIT2_BOX,   LY_PPEDIT2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp2, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX2 },
+    ID_PARA_pp2, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX2 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
     LX_PPEDIT3_BOX,   LY_PPEDIT3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp3, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX3 },
+    ID_PARA_pp3, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX3 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
     LX_PPEDIT4_BOX,   LY_PPEDIT4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp4, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX4 },
+    ID_PARA_pp4, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX4 },
 
   //---------------------------------------------------
   // パラメータ系
   //---------------------------------------------------
   { INPUTBOX_TYPE_NUM,  DMPSTR_HP_RND,   LX_HPRND_CAP,   LY_HPRND_CAP,
     LX_HPRND_BOX,    LY_HPRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_hp_rnd,  31,  0 },
+    ID_PARA_hp_rnd, PAGE_0,  31,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_HP_EXP,   LX_HPEXP_CAP,   LY_HPEXP_CAP,
     LX_HPEXP_BOX,    LY_HPEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hp_exp,  255,  0 },
+    ID_PARA_hp_exp, PAGE_0,  255,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_HP,   LX_HPVAL_CAP,   LY_HPVAL_CAP,
     LX_HPVAL_BOX,    LY_HPVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hpmax,   512,  0 },
+    ID_PARA_hpmax, PAGE_0,   512,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_SLASH,    LX_HPSLASH_CAP,       LY_HPSLASH_CAP,
     LX_HPEDIT_BOX,   LY_HPEDIT_BOX,   CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hp,      INPUTBOX_NUM_ARG_DEPEND,  INPUTBOX_ID_HPVAL },
+    ID_PARA_hp, PAGE_0,      INPUTBOX_NUM_ARG_DEPEND,  INPUTBOX_ID_HPVAL },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_POW_RND,   LX_POWRND_CAP,   LY_POWRND_CAP,
     LX_POWRND_BOX,    LY_POWRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pow_rnd,  31,  0 },
+    ID_PARA_pow_rnd, PAGE_0,  31,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_POW_EXP,   LX_POWEXP_CAP,   LY_POWEXP_CAP,
     LX_POWEXP_BOX,    LY_POWEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_pow_exp,  255,  0 },
+    ID_PARA_pow_exp, PAGE_0,  255,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_POW,   LX_POWVAL_CAP,   LY_POWVAL_CAP,
     LX_POWVAL_BOX,    LY_POWVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_pow,   255,  0 },
+    ID_PARA_pow, PAGE_0,   255,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_DEF_RND,   LX_DEFRND_CAP,   LY_DEFRND_CAP,
     LX_DEFRND_BOX,    LY_DEFRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_def_rnd,  31,  0 },
+    ID_PARA_def_rnd, PAGE_0,  31,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_DEF_EXP,   LX_DEFEXP_CAP,   LY_DEFEXP_CAP,
     LX_DEFEXP_BOX,    LY_DEFEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_def_exp,  255,  0 },
+    ID_PARA_def_exp, PAGE_0,  255,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_DEF,   LX_DEFVAL_CAP,   LY_DEFVAL_CAP,
     LX_DEFVAL_BOX,    LY_DEFVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_def,   255,  0 },
+    ID_PARA_def, PAGE_0,   255,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_AGI_RND,   LX_AGIRND_CAP,   LY_AGIRND_CAP,
     LX_AGIRND_BOX,    LY_AGIRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_agi_rnd,  31,  0 },
+    ID_PARA_agi_rnd, PAGE_0,  31,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_AGI_EXP,   LX_AGIEXP_CAP,   LY_AGIEXP_CAP,
     LX_AGIEXP_BOX,    LY_AGIEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_agi_exp,  255,  0 },
+    ID_PARA_agi_exp, PAGE_0,  255,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_AGI,   LX_AGIVAL_CAP,   LY_AGIVAL_CAP,
     LX_AGIVAL_BOX,    LY_AGIVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_agi,   255,  0 },
+    ID_PARA_agi, PAGE_0,   255,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_SPW_RND,   LX_SPWRND_CAP,   LY_SPWRND_CAP,
     LX_SPWRND_BOX,    LY_SPWRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_spepow_rnd,  31,  0 },
+    ID_PARA_spepow_rnd, PAGE_0,  31,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_SPW_EXP,   LX_SPWEXP_CAP,   LY_SPWEXP_CAP,
     LX_SPWEXP_BOX,    LY_SPWEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spepow_exp,  255,  0 },
+    ID_PARA_spepow_exp, PAGE_0,  255,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SPW,   LX_SPWVAL_CAP,   LY_SPWVAL_CAP,
     LX_SPWVAL_BOX,    LY_SPWVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spepow,   255,  0 },
+    ID_PARA_spepow, PAGE_0,   255,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_SDF_RND,   LX_SDFRND_CAP,   LY_SDFRND_CAP,
     LX_SDFRND_BOX,    LY_SDFRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_spedef_rnd,  31,  0 },
+    ID_PARA_spedef_rnd, PAGE_0,  31,  0 },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_SDF_EXP,   LX_SDFEXP_CAP,   LY_SDFEXP_CAP,
     LX_SDFEXP_BOX,    LY_SDFEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spedef_exp,  255,  0 },
+    ID_PARA_spedef_exp, PAGE_0,  255,  0 },
 
   { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SDF,   LX_SDFVAL_CAP,   LY_SDFVAL_CAP,
     LX_SDFVAL_BOX,    LY_SDFVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spedef,   255,  0 },
+    ID_PARA_spedef, PAGE_0,   255,  0 },
 
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_TYPE,   LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_TYPE_BOX,    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_type1,  NARC_message_typename_dat,  0 },
+    ID_PARA_type1, PAGE_0,  NARC_message_typename_dat,  0 },
 
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_TYPE_BOX+CALC_STRBOX_WIDTH(4),    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_type2,  NARC_message_typename_dat,  0 },
+    ID_PARA_type2, PAGE_0,  NARC_message_typename_dat,  0 },
 
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
+    ID_PARA_type2, PAGE_0,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
 
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_HATAKU_BTN,      LY_HATAKU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2,      NARC_message_debug_makepoke_dat,  DMPSTR_HATAKUDAKE },
+    ID_PARA_type2, PAGE_0,      NARC_message_debug_makepoke_dat,  DMPSTR_HATAKUDAKE },
 
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE },
+    ID_PARA_type2, PAGE_0,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE },
 
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_JOUTAI, LX_SICK_CAP,  LY_SICK_CAP,
     LX_SICK_BOX,    LY_SICK_BOX,  CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_condition, DMPSTR_SICK_NULL, SWITCH_STRNUM_SICK,
+    ID_PARA_condition, PAGE_0, DMPSTR_SICK_NULL, SWITCH_STRNUM_SICK,
   },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_NATUKI,  LX_NATSUKI_CAP,  LY_NATSUKI_CAP,
     LX_NATSUKI_BOX,     LY_NATSUKI_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_friend,     255, 0,
+    ID_PARA_friend, PAGE_0,     255, 0,
   },
 
   { INPUTBOX_TYPE_NUM,  DMPSTR_FORM,  LX_FORM_CAP,  LY_FORM_CAP,
     LX_FORM_BOX,        LY_FORM_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_form_no,    31, 0,
+    ID_PARA_form_no, PAGE_0,    31, 0,
   },
 
+  // たまご
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_TAMAGO, LX_TAMAGO_CAP,  LY_TAMAGO_CAP,
     LX_TAMAGO_BOX,       LY_TAMAGO_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
-    ID_PARA_tamago_flag, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
+    ID_PARA_tamago_flag, PAGE_0, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
   },
-
+  // レア
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_RARE, LX_RARE_CAP,  LY_RARE_CAP,
     LX_RARE_BOX,           LY_RARE_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
-    ID_PARA_tamago_flag,   DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
+    ID_PARA_tamago_flag, PAGE_0,   DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
   },
+
+  //---------------------------------------------------
+  // ２ページ目
+  //---------------------------------------------------
+  // ニックネーム
+  { INPUTBOX_TYPE_NICKNAME,  DMPSTR_NICKNAME,  LX_NICKNAME_CAP,    LY_NICKNAME_CAP,
+    LX_NICKNAME_BOX,  LY_NICKNAME_BOX,  CALC_STRBOX_WIDTH(6),   LINE_HEIGHT,
+    ID_PARA_nickname, PAGE_1,   0, 0 },
+  // ニックネームフラグ
+  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_NULL,      0,   0,
+    LX_NICKNAME_BOX+CALC_STRBOX_WIDTH(7),    LY_NICKNAME_BOX,   CALC_STRBOX_WIDTH(2), LINE_HEIGHT,
+    ID_PARA_nickname_flag, PAGE_1,  1,  0 },
+  // ポケルス
+  { INPUTBOX_TYPE_NUM,  DMPSTR_POKERUS,   LX_POKERUS_CAP,   LY_POKERUS_CAP,
+    LX_POKERUS_BOX,    LY_POKERUS_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_pokerus,  PAGE_1,  255,  0 },
+  // 捕獲レベル
+  { INPUTBOX_TYPE_NUM, DMPSTR_GET_LEVEL,   LX_GET_LEVEL_CAP,  LY_GET_LEVEL_CAP,
+    LX_GET_LEVEL_BOX,   LY_GET_LEVEL_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_get_level, PAGE_1, 100, 1 },
+  // 捕獲ボール
+  { INPUTBOX_TYPE_STR,  DMPSTR_GET_BALL,    LX_GET_BALL_CAP,    LY_GET_BALL_CAP,
+    LX_GET_BALL_BOX,    LY_GET_BALL_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
+    ID_PARA_get_ball,   PAGE_1, NARC_message_itemname_dat, 0 },
+  // 捕獲カセット
+  { INPUTBOX_TYPE_SWITCH,  DMPSTR_GET_CASETTE, LX_GET_CASETTE_CAP,  LY_GET_CASETTE_CAP,
+    LX_GET_CASETTE_BOX,    LY_GET_CASETTE_BOX,  CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
+    ID_PARA_get_cassette,  PAGE_1, DMPSTR_CASETTE_00, 13,
+  },
+  // 国コード
+  { INPUTBOX_TYPE_SWITCH,  DMPSTR_COUNTRY, LX_COUNTRY_CAP,  LY_COUNTRY_CAP,
+    LX_COUNTRY_BOX,    LY_COUNTRY_BOX,  CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
+    ID_PARA_country_code,  PAGE_1, DMPSTR_COUNTRY_00, 7,
+  },
+  // つかまえた場所
+  { INPUTBOX_TYPE_NUM,   DMPSTR_GET_PLACE,   LX_GET_PLACE_CAP,   LY_GET_PLACE_CAP,
+    LX_GET_PLACE_BOX,    LY_GET_PLACE_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
+    ID_PARA_get_place,   PAGE_1, 65535,  0 },
+  // つかまえた年
+  { INPUTBOX_TYPE_NUM,   DMPSTR_YEAR,        LX_GET_YEAR_CAP,   LY_GET_YEAR_CAP,
+    LX_GET_YEAR_BOX,     LY_GET_YEAR_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_get_year,    PAGE_1,  255,  0 },
+  // つかまえた月
+  { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_GET_MONTH_CAP,     LY_GET_MONTH_CAP,
+    LX_GET_MONTH_BOX,    LY_GET_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_get_month,   PAGE_1,  255,  0 },
+  // つかまえた日
+  { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_GET_DAY_CAP,       LY_GET_DAY_CAP,
+    LX_GET_DAY_BOX,      LY_GET_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_get_day,     PAGE_1,  255,  0 },
+
+  // うまれた場所
+  { INPUTBOX_TYPE_NUM,   DMPSTR_BIRTH_PLACE,   LX_BIRTH_PLACE_CAP,   LY_BIRTH_PLACE_CAP,
+    LX_BIRTH_PLACE_BOX,  LY_BIRTH_PLACE_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
+    ID_PARA_birth_place, PAGE_1, 65535,  0 },
+  // うまれた年
+  { INPUTBOX_TYPE_NUM,   DMPSTR_YEAR,        LX_BIRTH_YEAR_CAP,   LY_BIRTH_YEAR_CAP,
+    LX_BIRTH_YEAR_BOX,   LY_BIRTH_YEAR_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_birth_year,  PAGE_1,  255,  0 },
+  // うまれた月
+  { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_BIRTH_MONTH_CAP,     LY_BIRTH_MONTH_CAP,
+    LX_BIRTH_MONTH_BOX,  LY_BIRTH_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_birth_month, PAGE_1,  255,  0 },
+  // うまれた日
+  { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_BIRTH_DAY_CAP,       LY_BIRTH_DAY_CAP,
+    LX_BIRTH_DAY_BOX,    LY_BIRTH_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
+    ID_PARA_birth_day,   PAGE_1,  255,  0 },
+  // 親ID（上位）
+  { INPUTBOX_TYPE_NUM,   DMPSTR_ID_H,   LX_ID_H_CAP,   LY_ID_H_CAP,
+    LX_ID_H_BOX,         LY_ID_H_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
+    ID_PARA_id_no,       PAGE_1, 65535,  0 },
+  // 親ID（下位）
+  { INPUTBOX_TYPE_NUM,   DMPSTR_ID_L,   LX_ID_L_CAP,   LY_ID_L_CAP,
+    LX_ID_L_BOX,         LY_ID_L_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
+    ID_PARA_id_no,       PAGE_1, 65535,  0 },
 
 };
 
@@ -733,8 +915,11 @@ typedef struct {
   POKEMON_PARAM*  src;
   HEAPID  heapID;
   u8      seq;
+  s8      pageNo;
+  u8      touch_prev_flag;
 
   u32       oyaID;
+  u32       oyaID_org;
   STRCODE   oyaName[ PERSON_NAME_SIZE ];
   u8        oyaSex;
 
@@ -763,6 +948,7 @@ static void box_initwork( DMP_MAINWORK* wk );
 static int box_getvalue( const DMP_MAINWORK* wk, u32 boxIdx );
 static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp );
 static void box_update( DMP_MAINWORK* wk, u32 boxID, u32 value );
+static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value );
 static void box_write_fixval( DMP_MAINWORK* wk, u32 boxID, u32 value );
 static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf );
 static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID );
@@ -785,6 +971,10 @@ static u32 personal_getparam( const POKEMON_PARAM* pp, PokePersonalParamID param
 static u8 personal_get_tokusei_kinds( const POKEMON_PARAM* pp );
 static u16 personal_get_tokusei( const POKEMON_PARAM* pp, u8 idx );
 static BOOL personal_is_sex_fixed( const POKEMON_PARAM* pp );
+static u8 casetteVer_formal_to_local( u8 val );
+static u8 casetteVer_local_to_formal( u8 val );
+static u8 countryCode_formal_to_local( u8 val );
+static u8 countryCode_local_to_formal( u8 value );
 
 //--------------------------------------------------------------
 /**
@@ -823,6 +1013,7 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
         wk->oyaSex = 0;
         STRTOOL_Copy( dmyName, wk->oyaName, NELEMS(wk->oyaName) );
       }
+      wk->oyaID_org = wk->oyaID;
 
       if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 )
       {
@@ -837,6 +1028,7 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
 
       UpdatePokeExpMinMax( wk, wk->dst );
       wk->seq = 0;
+      wk->pageNo = PAGE_0;
     }
   }
 
@@ -1009,7 +1201,9 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
     SEQ_DRAW_BOX,
     SEQ_WAIT_CTRL,
     SEQ_INPUT_STR,
+    SEQ_INPUT_NICKNAME,
     SEQ_INPUT_NUM,
+    SEQ_PAGE_CHANGE,
   };
 
   if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
@@ -1036,12 +1230,37 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
       }
       break;
     case SEQ_WAIT_CTRL:
+      // L,R によるページ切り替え
+      {
+        u16 keyTrg = GFL_UI_KEY_GetTrg();
+        u8 fChange = FALSE;
+        if( keyTrg & PAD_BUTTON_L )
+        {
+          if( --(wk->pageNo) < 0 ){
+            wk->pageNo = PAGE_MAX - 1;
+          }
+          fChange = TRUE;
+        }
+        else if( keyTrg & PAD_BUTTON_R )
+        {
+          if( ++(wk->pageNo) >= PAGE_MAX ){
+            wk->pageNo = PAGE_0;
+          }
+          fChange = TRUE;
+        }
+        if( fChange ){
+          wk->seq = SEQ_PAGE_CHANGE;
+          break;
+        }
+      }
+
       wk->boxIdx = check_box_touch( wk );
       if( wk->boxIdx >= 0 )
       {
         const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
         switch( p->type ){
         case INPUTBOX_TYPE_STR:
+        case INPUTBOX_TYPE_NICKNAME:
           {
             static const GFL_SKB_SETUP setup = {
               STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
@@ -1055,7 +1274,7 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
             }
             wk->skb = GFL_SKB_Create( (void*)(wk->strbuf), &wk->skbSetup, wk->heapID );
             COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg, wk->heapID );
-            wk->seq = SEQ_INPUT_STR;
+            wk->seq = (p->type == INPUTBOX_TYPE_STR)? SEQ_INPUT_STR : SEQ_INPUT_NICKNAME;
           }
           break;
         case INPUTBOX_TYPE_NUM:
@@ -1065,11 +1284,20 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
           break;
         case INPUTBOX_TYPE_SWITCH:
           {
-            u8 val = box_getvalue( wk, wk->boxIdx ) + 1;
-            if( val >= p->arg2 ){
-              val = 0;
+            int val = box_getvalue( wk, wk->boxIdx );
+            if( wk->touch_prev_flag ){
+              if( --val < 0 ){
+                val = p->arg2-1;
+              }
+            }else{
+              if( ++val >= p->arg2 ){
+                val = 0;
+              }
             }
+
+            pp_update( wk, wk->boxIdx, val );
             box_update( wk, wk->boxIdx, val );
+//            box_setup( wk, wk->boxIdx, wk->dst );
           }
           break;
         case INPUTBOX_TYPE_BTN:
@@ -1139,6 +1367,28 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
         wk->seq = SEQ_WAIT_CTRL;
       }
       break;
+    case SEQ_INPUT_NICKNAME:
+      if( COMPSKB_Main(&wk->comp) )
+      {
+        const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
+
+        if( GFL_STR_GetBufferLength(wk->strbuf) == 0)
+        {
+          u16  mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+          GFL_MSGDATA* msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, GFL_HEAP_LOWID(wk->heapID) );
+          GFL_MSG_GetString( msg, mons_no, wk->strbuf );
+          GFL_MSG_Delete( msg );
+        }
+
+        PP_Put( wk->dst, p->paraID, (u32)(wk->strbuf) );
+        box_update( wk, wk->boxIdx, 0 );
+        box_relation( wk, wk->boxIdx );
+
+        COMPSKB_Cleanup( &wk->comp );
+        GFL_SKB_Delete( wk->skb );
+        wk->seq = SEQ_WAIT_CTRL;
+      }
+      break;
     case SEQ_INPUT_NUM:
       if( NumInput_Main(&wk->numInput) )
       {
@@ -1147,6 +1397,12 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
         box_relation( wk, wk->boxIdx );
         wk->seq = SEQ_WAIT_CTRL;
       }
+      break;
+    case SEQ_PAGE_CHANGE:
+      GFL_BMP_Clear( wk->bmp, COLIDX_WHITE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+      wk->seq = SEQ_DRAW_CAPTION;
+      break;
     }
   }
   return FALSE;
@@ -1164,12 +1420,16 @@ static int check_box_touch( DMP_MAINWORK* wk )
       {
         const INPUT_BOX_PARAM* p = &InputBoxParams[i];
 
+        if( p->pageNo != wk->pageNo ){ continue; }
+
         if( (p->type == INPUTBOX_TYPE_FIXVAL) ||  (p->type == INPUTBOX_TYPE_FIXSTR)){
           continue;
         }
         if( (x >= p->xpos) && (x <= (p->xpos + p->width))
         &&  (y >= p->ypos) && (y <= (p->ypos + p->height))
         ){
+          u32 x_center = p->xpos + (p->width / 2);
+          wk->touch_prev_flag = ( x < x_center );
           return i;
         }
       }
@@ -1207,6 +1467,8 @@ static void update_dst( DMP_MAINWORK* wk )
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
 ///  personal_rnd = POKETOOL_CalcPersonalRand( mons_no, PTL_FORM_NONE, sex );
   personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, rare_flag );
+
+  PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
   PP_Clear( wk->dst );
   {
@@ -1303,6 +1565,24 @@ static void update_dst( DMP_MAINWORK* wk )
   PP_Put( wk->dst, ID_PARA_condition, box_getvalue(wk, INPUTBOX_ID_SICK) );
   PP_Put( wk->dst, ID_PARA_friend,    box_getvalue(wk, INPUTBOX_ID_NATSUKI) );
   PP_Put( wk->dst, ID_PARA_form_no,   box_getvalue(wk, INPUTBOX_ID_FORM) );
+  PP_Put( wk->dst, ID_PARA_pokerus,   box_getvalue(wk, INPUTBOX_ID_POKERUS) );
+  PP_Put( wk->dst, ID_PARA_get_level, box_getvalue(wk, INPUTBOX_ID_GET_LEVEL) );
+
+  PP_Put( wk->dst, ID_PARA_nickname, (u32)(wk->strbuf) );
+
+  // 捕獲ボール
+  {
+    u8 getBallID = ITEM_GetBallID( box_getvalue(wk, INPUTBOX_ID_GET_BALL) );
+    if( getBallID == BALLID_NULL ){
+      getBallID = BALLID_MONSUTAABOORU;
+    }
+    PP_Put( wk->dst, ID_PARA_get_ball,  getBallID );
+  }
+  // 捕獲カセット
+  PP_Put( wk->dst, ID_PARA_get_cassette, casetteVer_local_to_formal(box_getvalue(wk, INPUTBOX_ID_GET_CASETTE)) );
+
+  // 国コード
+  PP_Put( wk->dst, ID_PARA_get_cassette, countryCode_local_to_formal(box_getvalue(wk, INPUTBOX_ID_COUNTRY)) );
 
 }
 
@@ -1316,22 +1596,26 @@ static void update_dst( DMP_MAINWORK* wk )
 //----------------------------------------------------------------------------------
 static void print_caption( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
 {
-  if( p->cap_strID != DMPSTR_NULL ){
-    u32 ypos = p->cap_ypos + ((LINE_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2);
-    GFL_MSG_GetString( wk->msgData, p->cap_strID, wk->strbuf );
-    PRINT_UTIL_Print( &wk->printUtil, wk->printQue, p->cap_xpos, ypos, wk->strbuf, wk->font );
+  if( p->pageNo == wk->pageNo )
+  {
+    if( p->cap_strID != DMPSTR_NULL ){
+      u32 ypos = p->cap_ypos + ((LINE_HEIGHT - GFL_FONT_GetLineHeight(wk->font)) / 2);
+      GFL_MSG_GetString( wk->msgData, p->cap_strID, wk->strbuf );
+      PRINT_UTIL_Print( &wk->printUtil, wk->printQue, p->cap_xpos, ypos, wk->strbuf, wk->font );
+    }
   }
 }
 
 static PRINTSYS_LSB box_sub_get_bgcol( u8 input_type )
 {
   switch( input_type ){
-  case INPUTBOX_TYPE_STR:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_ORANGE_D );
-  case INPUTBOX_TYPE_NUM:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_BLUE_L );
-  case INPUTBOX_TYPE_SWITCH:  return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_GREEN_L );
-  case INPUTBOX_TYPE_FIXVAL:  return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
-  case INPUTBOX_TYPE_FIXSTR:  return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
-  case INPUTBOX_TYPE_BTN:     return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_RED_L );
+  case INPUTBOX_TYPE_STR:      return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_ORANGE_D );
+  case INPUTBOX_TYPE_NICKNAME: return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_ORANGE_D );
+  case INPUTBOX_TYPE_NUM:      return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_BLUE_L );
+  case INPUTBOX_TYPE_SWITCH:   return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_GREEN_L );
+  case INPUTBOX_TYPE_FIXVAL:   return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
+  case INPUTBOX_TYPE_FIXSTR:   return PRINTSYS_LSB_Make( COLIDX_WHITE, 0, COLIDX_GRAY );
+  case INPUTBOX_TYPE_BTN:      return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_RED_L );
   }
   return PRINTSYS_LSB_Make( COLIDX_BLACK, 0, COLIDX_WHITE );
 }
@@ -1351,13 +1635,16 @@ static int box_getvalue( const DMP_MAINWORK* wk, u32 boxIdx )
 }
 
 /**
- *  ボックスに値のセットと同時にPPも更新
+ *  PPを元にボックスに値のセット
  */
 static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
 {
   const INPUT_BOX_PARAM* p = &InputBoxParams[ boxID ];
-
   u32 value;
+
+  if( p->pageNo != wk->pageNo ){
+    return;
+  }
 
   switch( p->paraID ){
   case ID_PARA_seikaku:
@@ -1405,6 +1692,31 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
       }
     }
     break;
+  case ID_PARA_nickname:
+//    PP_Get( pp, p->paraID, NULL );
+    value = 0;
+    break;
+
+  case ID_PARA_get_cassette:
+    value = casetteVer_formal_to_local( PP_Get(pp, p->paraID, NULL) );
+    break;
+
+  case ID_PARA_id_no:
+    {
+      value = PP_Get( pp, p->paraID, NULL );
+      if( boxID == INPUTBOX_ID_OYAID_L ){
+        value &= 0xffff;
+      }else{
+        value >>= 16;
+        value &= 0xffff;
+      }
+    }
+    break;
+
+  case ID_PARA_country_code:
+    value = countryCode_formal_to_local( PP_Get(pp, p->paraID, NULL) );
+    break;
+
   default:
     if( boxID == INPUTBOX_ID_RARE ){
       value = PP_CheckRare( pp );
@@ -1450,9 +1762,7 @@ static void box_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
   if( str_width < p->width ){
     xpos += (p->width - str_width) / 2;
   }
-  if( boxID == INPUTBOX_ID_HPEDIT ){
-    TAYA_Printf("Box-xpos=%d, width=%d, strWidth=%d, strX=%d\n", p->xpos, p->width, str_width, xpos);
-  }
+
   str_height = GFL_FONT_GetLineHeight( wk->font );
   ypos = p->ypos;
   if( str_height < p->height ){
@@ -1460,6 +1770,31 @@ static void box_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
   }
 
   PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, xpos, ypos, wk->strbuf, wk->font, color );
+}
+static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
+{
+  const INPUT_BOX_PARAM* p = &InputBoxParams[ boxID ];
+
+  switch( boxID ){
+  case INPUTBOX_ID_RARE:
+    wk->boxValue[ boxID ] = value;
+    update_dst( wk );
+    break;
+
+  case INPUTBOX_ID_GET_CASETTE:
+    value = casetteVer_local_to_formal( value );
+    PP_Put( wk->dst, p->paraID, value );
+    break;
+
+  case INPUTBOX_ID_COUNTRY:
+    value = countryCode_local_to_formal( value );
+    PP_Put( wk->dst, p->paraID, value );
+    break;
+
+  default:
+    PP_Put( wk->dst, p->paraID, value );
+  }
+
 }
 
 static void box_write_fixval( DMP_MAINWORK* wk, u32 boxID, u32 value )
@@ -1502,6 +1837,10 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
       GFL_MSG_GetString( msgdat, value, wk->strbuf );
       GFL_MSG_Delete( msgdat );
     }
+    break;
+
+  case INPUTBOX_TYPE_NICKNAME:
+    PP_Get( wk->dst, ID_PARA_nickname, (void*)buf );
     break;
 
   case INPUTBOX_TYPE_BTN:
@@ -1670,6 +2009,55 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       UpdatePokeExpMinMax( wk, wk->dst );
       box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
     }
+    break;
+
+  case INPUTBOX_ID_NICKNAME:
+    {
+      u8 flg = PP_Get( wk->dst, ID_PARA_nickname_flag, NULL );
+      box_update( wk, INPUTBOX_ID_NICKNAME_FLG, flg );
+    }
+    break;
+
+  case INPUTBOX_ID_GET_BALL:
+    {
+      u8 value = box_getvalue( wk, INPUTBOX_ID_GET_BALL );
+      u8 ballID = ITEM_GetBallID( value );
+      if( ballID == BALLID_NULL ){
+        ballID = BALLID_MONSUTAABOORU;
+        value = ITEM_MONSUTAABOORU;
+        box_update( wk, INPUTBOX_ID_GET_BALL, value );
+      }
+      PP_Put( wk->dst, ID_PARA_get_ball, ballID );
+    }
+    break;
+
+  case INPUTBOX_ID_OYAID_H:
+  case INPUTBOX_ID_OYAID_L:
+    {
+      u32 id_H = box_getvalue( wk, INPUTBOX_ID_OYAID_H );
+      u32 id_L = box_getvalue( wk, INPUTBOX_ID_OYAID_L );
+      wk->oyaID = (id_H << 16) | (id_L);
+      update_dst( wk );
+    }
+    break;
+
+
+  case INPUTBOX_ID_POKERUS:
+  case INPUTBOX_ID_GET_LEVEL:
+  case INPUTBOX_ID_GET_PLACE:
+  case INPUTBOX_ID_GET_YEAR:
+  case INPUTBOX_ID_GET_MONTH:
+  case INPUTBOX_ID_GET_DAY:
+  case INPUTBOX_ID_BIRTH_PLACE:
+  case INPUTBOX_ID_BIRTH_YEAR:
+  case INPUTBOX_ID_BIRTH_MONTH:
+  case INPUTBOX_ID_BIRTH_DAY:
+    {
+      const INPUT_BOX_PARAM* p = &InputBoxParams[ updateBoxID ];
+      u32 value = box_getvalue( wk, updateBoxID );
+      PP_Put( wk->dst, p->paraID, value );
+    }
+    break;
   }
 }
 
@@ -2126,4 +2514,54 @@ static BOOL personal_is_sex_fixed( const POKEMON_PARAM* pp )
   return FALSE;
 }
 
+//==============================================================================================
+//  カセットバージョン変換
+//==============================================================================================
+/**
+ *  カセットバージョン（gmmのID順と同じにしておく）
+ */
+static const u8 CasetteVer[] = {
+  VERSION_BLACK,    VERSION_WHITE,    VERSION_GOLD,     VERSION_SILVER,
+  VERSION_DIAMOND,  VERSION_PEARL,    VERSION_PLATINUM, VERSION_RUBY,
+  VERSION_SAPPHIRE, VERSION_EMERALD,  VERSION_RED,      VERSION_GREEN,
+  VERSION_COLOSSEUM,
+};
 
+// PP設定 -> ローカル値
+static u8 casetteVer_formal_to_local( u8 val )
+{
+  int i;
+  for(i=0; i<NELEMS(CasetteVer); ++i){
+    if( CasetteVer[i] == val ){
+      return i;
+    }
+  }
+  return 0;
+}
+static u8 casetteVer_local_to_formal( u8 val )
+{
+  return CasetteVer[ val ];
+}
+//==============================================================================================
+//  国コード変換
+//==============================================================================================
+static const u8 CountryCode[] = {
+  LANG_JAPAN, LANG_ENGLISH, LANG_FRANCE,
+  LANG_ITALY, LANG_GERMANY, LANG_SPAIN,
+  LANG_KOREA,
+};
+// PP設定 -> ローカル値
+static u8 countryCode_formal_to_local( u8 val )
+{
+  int i;
+  for(i=0; i<NELEMS(CountryCode); ++i){
+    if( CountryCode[i] == val ){
+      return i;
+    }
+  }
+  return 0;
+}
+static u8 countryCode_local_to_formal( u8 value )
+{
+  return CountryCode[ value ];
+}
