@@ -157,6 +157,8 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
   GAMEDATA* gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
   int no;
   int shooter = Regulation_GetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER);
+
+  OS_TPrintf("シューター%d\n",shooter);
   
   switch(gamemode){
   case WIFI_GAME_BATTLE_SINGLE_FLAT:

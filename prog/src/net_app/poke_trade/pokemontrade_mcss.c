@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  pokemontrade_demo_gts.c
+ * @file	  pokemontrade_mcss.c
  * @bfief	  ポケモン交換アニメーション  上に行く部分
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/09/27
@@ -39,6 +39,138 @@
 #include "sound/pm_voice.h"
 
 #include "pokemontrade_demo.cdat"
+
+
+
+
+typedef struct{
+  int se;
+  int frame;
+} _SE_TBL;
+
+
+void POKETRADE_SE_gtsSeStrat(int count)
+{
+  int i;
+  _SE_TBL setbl[]={
+    //    {    SEQ_SE_DANSA       ,_GTSSTART_SEQ_SE_DANSA		},
+    //    {  SEQ_SE_SYS_83      ,_GTSSTART_SEQ_SE_SYS_83		},
+    {SEQ_SE_W554_PAKIN,  _GTSSTART_SEQ_SE_W554_PAKIN},
+    {SEQ_SE_BOWA2,       _GTSSTART_SEQ_SE_BOWA2		},
+    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON			},
+    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON1			},
+    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON2			},
+    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON3			},
+    {SEQ_SE_TDEMO_001,   _GTSSTART_SEQ_SE_TDEMO_001},
+    {SEQ_SE_TDEMO_002,   _GTSSTART_SEQ_SE_TDEMO_002},
+    {SEQ_SE_W028_02,     _GTSSTART_SEQ_SE_W028_02	},
+    {SEQ_SE_TDEMO_006,   _GTSSTART_SEQ_SE_TDEMO_006},
+    {SEQ_SE_TDEMO_007,   _GTSSTART_SEQ_SE_TDEMO_007},
+    {SEQ_SE_TDEMO_008,   _GTSSTART_SEQ_SE_TDEMO_008},
+    {SEQ_SE_TDEMO_009,   _GTSSTART_SEQ_SE_TDEMO_009},
+    {SEQ_SE_TDEMO_010,   _GTSSTART_SEQ_SE_TDEMO_010},
+    {SEQ_SE_TDEMO_011,   _GTSSTART_SEQ_SE_TDEMO_011},
+    {SEQ_SE_TDEMO_001,   _GTSSTART2_SEQ_SE_TDEMO_001},
+    {SEQ_SE_TDEMO_009,   _GTSSTART2_SEQ_SE_TDEMO_009},
+    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON			},
+    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON1			},
+    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON2			},
+    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON3			},
+    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON4			},
+    {SEQ_SE_TDEMO_004,   _GTSSTART_SEQ_SE_TDEMO_004},
+    {SEQ_SE_BOWA2,       _GTSSTART2_SEQ_SE_BOWA2		},
+    {SEQ_SE_TDEMO_001,   _GTSSTART3_SEQ_SE_TDEMO_001},
+  };
+
+  for(i=0;i<elementof(setbl);i++){
+    if(setbl[i].frame == count){
+      PMSND_PlaySE(setbl[i].se);
+    }
+  }
+}
+
+void POKETRADE_SE_irSeStrat(int count)
+{
+  int i;
+  _SE_TBL setbl[]={
+    //   {SEQ_SE_DANSA,  _IRCSTART_SEQ_SE_DANSA},
+    //  {SEQ_SE_SYS_83,  _IRCSTART_SEQ_SE_SYS_83},
+    {SEQ_SE_W554_PAKIN,  _IRCSTART_SEQ_SE_W554_PAKIN},
+    {SEQ_SE_BOWA2,  _IRCSTART_SEQ_SE_BOWA2},
+    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON},
+    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON1},
+    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON2},
+    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON3},
+    {SEQ_SE_TDEMO_001,  _IRCSTART_SEQ_SE_TDEMO_001},
+    {SEQ_SE_W028_02,  _IRCSTART_SEQ_SE_W028_02},
+    {SEQ_SE_TDEMO_009,  _IRCSTART_SEQ_SE_TDEMO_009},
+    {SEQ_SE_TDEMO_002,  _IRCSTART_SEQ_SE_TDEMO_002},
+    {SEQ_SE_TDEMO_003,  _IRCSTART_SEQ_SE_TDEMO_003},
+    {SEQ_SE_W054_01,  _IRCSTART_SEQ_SE_W054_01},
+    {SEQ_SE_W179_02,  _IRCSTART_SEQ_SE_W179_02},
+    {SEQ_SE_W307_03,  _IRCSTART_SEQ_SE_W307_03},
+    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON},
+    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON1},
+    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON2},
+    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON3},
+    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON4},
+    {SEQ_SE_TDEMO_004,  _IRCSTART_SEQ_SE_TDEMO_004},
+    {SEQ_SE_TDEMO_005,  _IRCSTART_SEQ_SE_TDEMO_005},
+    {SEQ_SE_TDEMO_001,  _IRCSTART2_SEQ_SE_TDEMO_001},
+  };
+
+  for(i=0;i<elementof(setbl);i++){
+    if(setbl[i].frame == count){
+      PMSND_PlaySE(setbl[i].se);
+    }
+  }
+}
+
+
+
+
+static void _jumpSeStrat(int count,POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  _SE_TBL longsetbl[]={
+    {SEQ_SE_DANSA,  _LONGSTART_SEQ_SE_DANSA},
+    {SEQ_SE_SYS_83,  _LONGSTART_SEQ_SE_SYS_83},
+  };
+
+  _SE_TBL shortsetbl[]={
+    {SEQ_SE_DANSA,  _SHORTSTART1_SEQ_SE_DANSA},
+    {SEQ_SE_SYS_83,  _SHORTSTART1_SEQ_SE_SYS_83},
+    {SEQ_SE_DANSA,  _SHORTSTART2_SEQ_SE_DANSA},
+    {SEQ_SE_SYS_83,  _SHORTSTART2_SEQ_SE_SYS_83},
+    {SEQ_SE_DANSA,  _SHORTSTART3_SEQ_SE_DANSA},
+    {SEQ_SE_SYS_83,  _SHORTSTART3_SEQ_SE_SYS_83},
+  };
+
+
+  if(pWork->bByebyeNoJump){  //ジャンプしない
+    return;
+  }
+  else if(!pWork->bByebyeMessageEach){     // 不一致なのでジャンプ+回転
+    for(i=0;i<elementof(longsetbl);i++){
+      if(longsetbl[i].frame == count){
+        PMSND_PlaySE(longsetbl[i].se);
+      }
+    }
+  }
+  else{ // 一致しているのでジャンプ
+
+    for(i=0;i<elementof(shortsetbl);i++){
+      if(shortsetbl[i].frame == count){
+        PMSND_PlaySE(shortsetbl[i].se);
+      }
+    }
+
+  }
+
+  OS_TPrintf("C %d\n",count);
+}
+
+
 
 
 
@@ -139,7 +271,7 @@ static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove,BOOL bWave)
  */
 //-------------------------------------------------
 
-static void _pokeMoveTblFunc(_POKEMCSS_MOVE_WORK* pMove)
+static void _pokeMoveTblFunc(_POKEMCSS_MOVE_WORK* pMove,POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 apos,aposold;
   VecFx32* pPMT = &pMove->MoveTbl[pMove->nowcount];
@@ -150,6 +282,7 @@ static void _pokeMoveTblFunc(_POKEMCSS_MOVE_WORK* pMove)
 
   MCSS_SetPosition( pMove->pMcss ,&apos );
 
+  _jumpSeStrat(pMove->nowcount,pWork);
 
 }
 
@@ -160,7 +293,7 @@ static void _pokeMoveTblFunc(_POKEMCSS_MOVE_WORK* pMove)
  */
 //-------------------------------------------------
 
-void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
+void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove,POKEMON_TRADE_WORK* pWork)
 {
   if(!pMove){
     return;
@@ -172,7 +305,7 @@ void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   if(pMove->time != pMove->nowcount)
   {
     if(pMove->MoveTbl){
-      _pokeMoveTblFunc(pMove);
+      _pokeMoveTblFunc(pMove,pWork);
       return;
     }
     else{

@@ -1053,8 +1053,10 @@ extern APP_TASKMENU_WIN_WORK* POKEMONTRADE_MESSAGE_CancelButtonStart(POKEMON_TRA
 extern void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,int change);
 extern BOOL POKEMONTRADE_MESSAGE_ButtonCheck(POKEMON_TRADE_WORK* pWork);
 
-extern void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
+extern void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove,POKEMON_TRADE_WORK* pWork);
 extern _POKEMCSS_MOVE_WORK* POKEMONTRADE_pokeTblMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, VecFx32* pTbl, HEAPID heapID);
 extern _POKEMCSS_MOVE_WORK* POKEMONTRADE_pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
 extern void POKEMONTRADE_pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos);
+extern void POKETRADE_SE_irSeStrat(int count);
+extern void POKETRADE_SE_gtsSeStrat(int count);
 

@@ -4,109 +4,6 @@
 
 
 
-typedef struct{
-  int se;
-  int frame;
-} _SE_TBL;
-
-
-static void _gtsSeStrat(int count)
-{
-  int i;
-  _SE_TBL setbl[]={
-    {    SEQ_SE_DANSA       ,_GTSSTART_SEQ_SE_DANSA		},
-    {  SEQ_SE_SYS_83      ,_GTSSTART_SEQ_SE_SYS_83		},
-    {SEQ_SE_W554_PAKIN,  _GTSSTART_SEQ_SE_W554_PAKIN},
-    {SEQ_SE_BOWA2,       _GTSSTART_SEQ_SE_BOWA2		},
-    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON			},
-    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON1			},
-    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON2			},
-    {SEQ_SE_KON,         _GTSSTART_SEQ_SE_KON3			},
-    {SEQ_SE_TDEMO_001,   _GTSSTART_SEQ_SE_TDEMO_001},
-    {SEQ_SE_TDEMO_002,   _GTSSTART_SEQ_SE_TDEMO_002},
-    {SEQ_SE_W028_02,     _GTSSTART_SEQ_SE_W028_02	},
-    {SEQ_SE_TDEMO_006,   _GTSSTART_SEQ_SE_TDEMO_006},
-    {SEQ_SE_TDEMO_007,   _GTSSTART_SEQ_SE_TDEMO_007},
-    {SEQ_SE_TDEMO_008,   _GTSSTART_SEQ_SE_TDEMO_008},
-    {SEQ_SE_TDEMO_009,   _GTSSTART_SEQ_SE_TDEMO_009},
-    {SEQ_SE_TDEMO_010,   _GTSSTART_SEQ_SE_TDEMO_010},
-    {SEQ_SE_TDEMO_011,   _GTSSTART_SEQ_SE_TDEMO_011},
-    {SEQ_SE_TDEMO_001,   _GTSSTART2_SEQ_SE_TDEMO_001},
-    {SEQ_SE_TDEMO_009,   _GTSSTART2_SEQ_SE_TDEMO_009},
-    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON			},
-    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON1			},
-    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON2			},
-    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON3			},
-    {SEQ_SE_KON,         _GTSSTART2_SEQ_SE_KON4			},
-    {SEQ_SE_TDEMO_004,   _GTSSTART_SEQ_SE_TDEMO_004},
-    {SEQ_SE_BOWA2,       _GTSSTART2_SEQ_SE_BOWA2		},
-    {SEQ_SE_TDEMO_001,   _GTSSTART3_SEQ_SE_TDEMO_001},
-  };
-
-  for(i=0;i<elementof(setbl);i++){
-    if(setbl[i].frame == count){
-      PMSND_PlaySE(setbl[i].se);
-    }
-  }
-}
-
-static void _irSeStrat(int count)
-{
-  int i;
-  _SE_TBL setbl[]={
-    {SEQ_SE_DANSA,  _IRCSTART_SEQ_SE_DANSA},
-    {SEQ_SE_SYS_83,  _IRCSTART_SEQ_SE_SYS_83},
-    {SEQ_SE_W554_PAKIN,  _IRCSTART_SEQ_SE_W554_PAKIN},
-    {SEQ_SE_BOWA2,  _IRCSTART_SEQ_SE_BOWA2},
-    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON},
-    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON1},
-    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON2},
-    {SEQ_SE_KON,  _IRCSTART_SEQ_SE_KON3},
-    {SEQ_SE_TDEMO_001,  _IRCSTART_SEQ_SE_TDEMO_001},
-    {SEQ_SE_W028_02,  _IRCSTART_SEQ_SE_W028_02},
-    {SEQ_SE_TDEMO_009,  _IRCSTART_SEQ_SE_TDEMO_009},
-    {SEQ_SE_TDEMO_002,  _IRCSTART_SEQ_SE_TDEMO_002},
-    {SEQ_SE_TDEMO_003,  _IRCSTART_SEQ_SE_TDEMO_003},
-    {SEQ_SE_W054_01,  _IRCSTART_SEQ_SE_W054_01},
-    {SEQ_SE_W179_02,  _IRCSTART_SEQ_SE_W179_02},
-    {SEQ_SE_W307_03,  _IRCSTART_SEQ_SE_W307_03},
-    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON},
-    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON1},
-    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON2},
-    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON3},
-    {SEQ_SE_KON,  _IRCSTART2_SEQ_SE_KON4},
-    {SEQ_SE_TDEMO_004,  _IRCSTART_SEQ_SE_TDEMO_004},
-    {SEQ_SE_TDEMO_005,  _IRCSTART_SEQ_SE_TDEMO_005},
-    {SEQ_SE_TDEMO_001,  _IRCSTART2_SEQ_SE_TDEMO_001},
-  };
-
-  for(i=0;i<elementof(setbl);i++){
-    if(setbl[i].frame == count){
-      PMSND_PlaySE(setbl[i].se);
-    }
-  }
-}
-
-
-static void _jumpSeStrat(int count)
-{
-  int i;
-  _SE_TBL setbl[]={
-    {SEQ_SE_DANSA,  _IRCSTART_SEQ_SE_DANSA},
-    {SEQ_SE_SYS_83,  _IRCSTART_SEQ_SE_SYS_83},
-  };
-
-  for(i=0;i<elementof(setbl);i++){
-    if(setbl[i].frame == count){
-      PMSND_PlaySE(setbl[i].se);
-    }
-  }
-  OS_TPrintf("C %d\n",count);
-}
-
-
-
-
 
 
 
@@ -137,7 +34,7 @@ static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATU
       select = 1;
     }
   }
-  
+
   {
     POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, select);
     u32 id = PP_Get(pp,ID_PARA_id_no,NULL);
@@ -187,10 +84,10 @@ static void _pokemonCreateCLACTAdd(POKEMON_TRADE_WORK* pWork)
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     pWork->pPokemonTradeDemo->pPokeCreateCLWK = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                  pWork->cellRes[CHAR_POKECREATE],
-                                                  pWork->cellRes[PLT_POKECREATE],
-                                                  pWork->cellRes[ANM_POKECREATE],
-                                                  &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+                                                                     pWork->cellRes[CHAR_POKECREATE],
+                                                                     pWork->cellRes[PLT_POKECREATE],
+                                                                     pWork->cellRes[ANM_POKECREATE],
+                                                                     &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->pPokemonTradeDemo->pPokeCreateCLWK , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->pPokemonTradeDemo->pPokeCreateCLWK, TRUE );
   }
@@ -208,7 +105,7 @@ static void _pokemonCreateCLACTAdd(POKEMON_TRADE_WORK* pWork)
 //------------------------------------------------------------------
 static void _pokemonCreateCLACTInit(POKEMON_TRADE_WORK* pWork)
 {
-  
+
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADEDEMO, pWork->heapID );
 
   pWork->cellRes[CHAR_POKECREATE] =
@@ -239,7 +136,7 @@ static void _pokemonCreateCLACTInit(POKEMON_TRADE_WORK* pWork)
 
 static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
 {
-  
+
   if(pWork->pPokemonTradeDemo->pPokeCreateCLWK){
     GFL_CLACT_WK_Remove( pWork->pPokemonTradeDemo->pPokeCreateCLWK);
   }
@@ -252,7 +149,7 @@ static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
   pWork->cellRes[PLT_POKECREATE] = 0;
   pWork->cellRes[ANM_POKECREATE] = 0;
   pWork->pPokemonTradeDemo->pPokeCreateCLWK=NULL;
-     
+
 }
 
 //速度調整関数
@@ -293,7 +190,7 @@ static void _demoBGMChangeStart(POKEMON_TRADE_WORK* pWork)
 //------------------------------------------------------------------
 static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
 {
-//  _demoBGMChange(pWork->anmCount);
+  //  _demoBGMChange(pWork->anmCount);
 
   POKEMONTRADE3D_3DReelPaletteFade(pWork);
 
@@ -310,7 +207,7 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
   }
 
   IRC_POKETRADEDEMO_RemoveModel(pWork);
-  
+
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND,WB_NET_TRADE_SERVICEID);
     _CHANGE_STATE(pWork,_changeDemo_ModelT2);
@@ -351,8 +248,8 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   pWork->pD2Fade->pal_end = -16;
 
   if(pWork->modelno!=-1){
-//    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
-//    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
+    //    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
+    //    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
   }
 
   // ポケモン中央に移動開始
@@ -384,16 +281,15 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
   {  // フェード中
     _setFadeMask(pWork->pD2Fade);
-    POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0]);
-    POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1]);
+    POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0],pWork);
+    POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1],pWork);
   }
 
   if(pWork->anmCount > ANMCNTC(_POKEMON_CENTER_TIME)){  //フェード完了
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-//    POKMEONTRADE_RemoveCoreResource( pWork);
-    
- //   pWork->cellUnit = GFL_CLACT_UNIT_Create( 3 , 0 , pWork->heapID );
+    POKETRADE_2D_GTSPokemonIconResetAll(pWork);
+    IRC_POKETRADE_AllDeletePokeIconResource(pWork);
 
     _setNextAnim(pWork, 0);
 
@@ -405,24 +301,26 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
         int formno = PP_Get(pp,ID_PARA_form_no,NULL);
         PMV_REF pmvRef;
         PMV_MakeRefDataMine( &pmvRef );
+        OS_TPrintf("泣き声 %d\n",monsno);
         PMVOICE_Play( monsno, formno, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
       }
       if(pWork->pMoveMcss[0]){
         GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
         pWork->pMoveMcss[0]=NULL;
       }
+#if 0
       if(MyStatus_GetID(pWork->pFriend) != id){
         pWork->bByebyeMessageEach = FALSE;
       }
       else{
         pWork->bByebyeMessageEach = TRUE;
       }
-
+#endif
 
       if(!pWork->bByebyeMessageEach){     // 不一致なのでジャンプ+回転
         VecFx32 apos;
         POKEMON_PARAM* pp;
-        
+
         MCSS_GetPosition(pWork->pokeMcss[0], &apos);
         if(pWork->bByebyeNoJump){
           pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
@@ -456,6 +354,9 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
 static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
 {
+  GFL_NET_WirelessIconEasy_HoldLCD(FALSE,pWork->heapID);
+  GFL_NET_ReloadIcon();
+  
   if(pWork->type == POKEMONTRADE_TYPE_GTSUP){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_19, pWork->pMessageStrBufEx );
   }
@@ -476,14 +377,14 @@ static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
   GFL_BG_FillScreen( GX_PLANEMASK_BG2, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
   POKETRADE_MESSAGE_WindowOpenCustom(pWork,FALSE,FALSE);
-  
-  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
+
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
   G2S_BlendNone();
 }
 
 static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork)
 {
-  _jumpSeStrat(pWork->anmCount);
+  //_jumpSeStrat(pWork->anmCount,pWork);
   if(pWork->anmCount == 10){
     _byebyeMessage(pWork);  //別れのメッセージ
   }
@@ -517,7 +418,7 @@ static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork)
     }
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
   }
-  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0],pWork);
 }
 
 
@@ -541,3 +442,53 @@ static void _moveMcssDelete(POKEMON_TRADE_WORK* pWork,int no)
 }
 
 
+static void _MCSS_ApperSet(MCSS_WORK *mcss, POKEMON_TRADE_WORK* pWork)
+{
+  VecFx32 apos;
+  MCSS_SetAlpha(mcss, 31);
+  MCSS_ResetVanishFlag(mcss);
+  apos.x = _POKEMON_PLAYER_CENTER_POSX;
+  apos.y = _POKEMON_PLAYER_CENTER_POSY;
+  apos.z = _POKEMON_PLAYER_CENTER_POSZ;
+  MCSS_SetPosition( mcss ,&apos );
+  MCSS_SetAnmStopFlag(mcss);
+
+  MCSS_SetScale( mcss, &pWork->pPokemonTradeDemo->PushPos );
+  MCSS_SetPaletteFade( mcss, 16, 16, 0, 0x7fff );
+}
+
+
+//最後にポケモンを登場させる時に泣き声＋うごき
+
+static void _pokemonApperLastCreate(POKEMON_TRADE_WORK* pWork, int num)
+{
+  VecFx32 apos;
+  {  //声を出す
+    POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, 1-POKEMONTRADEPROC_IsTriSelect(pWork));
+    int id = PP_Get(pp,ID_PARA_id_no,NULL);
+    if(! PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
+      int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
+      int formno = PP_Get(pp,ID_PARA_form_no,NULL);
+      OS_TPrintf("泣き声 %d\n",monsno);
+      PMVOICE_Play( monsno, formno, 64, FALSE, 0, 0, FALSE, 0 );
+    }
+  }
+  if(!pWork->bEncountMessageEach){     // 不一致なのでジャンプ+回転
+    MCSS_GetPosition(pWork->pokeMcss[num], &apos);
+    if(pWork->bEncountNoJump){
+      pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[num], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
+    }
+    else{
+      pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[num], elementof(_triJumpTbl), &apos, _triJumpTbl,  pWork->heapID);
+    }
+  }
+  else{// 一致しているのでジャンプ
+    MCSS_GetPosition(pWork->pokeMcss[num], &apos);
+    if(pWork->bEncountNoJump){
+      pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[num], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
+    }
+    else{
+      pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[num], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
+    }
+  }
+}

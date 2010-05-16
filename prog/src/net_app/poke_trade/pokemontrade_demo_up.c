@@ -178,7 +178,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
-  _gtsSeStrat(pWork->anmCount);
+  POKETRADE_SE_gtsSeStrat(pWork->anmCount);
 
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-3)){
@@ -464,8 +464,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADEDEMO_RemoveModel( pWork);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade20);
   }
-  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0]);
-  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0],pWork);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1],pWork);
 }
 
 

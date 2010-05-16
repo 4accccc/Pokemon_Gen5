@@ -3303,8 +3303,9 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
 
   POKE_GTS_InitEruptedIconResource(pWork);
   
-  IRC_POKETRADE_InitBoxCursor(pWork);
-
+  if(pWork->type < POKEMONTRADE_TYPE_VISUAL){
+    IRC_POKETRADE_InitBoxCursor(pWork);
+  }
   IRC_POKETRADE_CreatePokeIconResource(pWork);
 
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
@@ -3620,8 +3621,9 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   
   POKETRADE_MESSAGE_HeapInit(pWork);
   _dispInit(pWork);
-  POKETRADE_TOUCHBAR_Init(pWork);
-  
+  if(pWork->type>=POKEMONTRADE_TYPE_VISUAL){
+    POKETRADE_TOUCHBAR_Init(pWork);
+  }
 
 #if DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_ibe_mana
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );

@@ -241,7 +241,7 @@ void POKETRADE_MESSAGE_WindowOpenCustom(POKEMON_TRADE_WORK* pWork,BOOL bFast,BOO
 
 void POKETRADE_MESSAGE_ChangeStreamType(POKEMON_TRADE_WORK* pWork,int type)
 {
-  APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork, APP_PRINTSYS_COMMON_TYPE_THROUGH );
+  APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork, type );
 }
 
 

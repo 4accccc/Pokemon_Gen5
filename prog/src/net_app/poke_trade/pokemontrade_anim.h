@@ -286,11 +286,20 @@ demo_backshot2.ncg
 //飛び上がっていくSEのスタートフレーム
 #define _IRC_PMSND_START  (50)
 
+//
+#define _LONGSTART_SEQ_SE_DANSA (1)			//デモ	IR交換デモ	ポケモンジャンプ	ぴゅう
+#define _LONGSTART_SEQ_SE_SYS_83	 (13)		//デモ	IR交換デモ	ポケモン着地	とん！
 
-//SEタイミング -1はここでは当てれないので手であててある
+#define _SHORTSTART1_SEQ_SE_DANSA (1)			//デモ	IR交換デモ	ポケモンジャンプ	ぴゅう
+#define _SHORTSTART1_SEQ_SE_SYS_83	 (13)		//デモ	IR交換デモ	ポケモン着地	とん！
+#define _SHORTSTART2_SEQ_SE_DANSA (15)			//デモ	IR交換デモ	ポケモンジャンプ	ぴゅう
+#define _SHORTSTART2_SEQ_SE_SYS_83	 (25)		//デモ	IR交換デモ	ポケモン着地	とん！
+#define _SHORTSTART3_SEQ_SE_DANSA (27)			//デモ	IR交換デモ	ポケモンジャンプ	ぴゅう
+#define _SHORTSTART3_SEQ_SE_SYS_83	 (39)		//デモ	IR交換デモ	ポケモン着地	とん！
 
-#define _IRCSTART_SEQ_SE_DANSA (-1)			//デモ	IR交換デモ	ポケモンジャンプ	ぴゅう
-#define _IRCSTART_SEQ_SE_SYS_83	 (-1)		//デモ	IR交換デモ	ポケモン着地	とん！
+
+
+
 #define _IRCSTART_SEQ_SE_W554_PAKIN (32)			//デモ	IR交換デモ	ポケモン、光る	ピカーーー！
 #define _IRCSTART_SEQ_SE_BOWA2 (33)			//デモ	IR交換デモ	ボールに入る	ボワ！
 #define _IRCSTART_SEQ_SE_KON	 (38)		//デモ	IR交換デモ	ボールはねる	コンコンコン…

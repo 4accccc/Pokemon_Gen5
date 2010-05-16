@@ -1412,6 +1412,11 @@ static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work)
 }
 
 
+static void _friendSelectWaitPre( GTSNEGO_WORK *pWork )
+{
+  pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_049);
+  _CHANGE_STATE(pWork,_friendSelectWait);
+}
 
 
 static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
@@ -1434,8 +1439,7 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
       _CHANGE_STATE(pWork,_matchKeyMake);
       break;
     case 1:
-        GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
-
+      GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
       GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_024);
       if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
         GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key3);
@@ -1443,7 +1447,7 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
       else{
         GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
       }
-      _CHANGE_STATE(pWork,_friendSelectWait);
+      _CHANGE_STATE(pWork,_friendSelectWaitPre);
       break;
     }
   }
@@ -1621,6 +1625,7 @@ static void _pAppWinDel( GTSNEGO_WORK *pWork )
 {
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
     pWork->pAppWin = NULL;
   }
 }

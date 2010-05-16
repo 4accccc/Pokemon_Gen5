@@ -5,6 +5,8 @@
 
 
 
+
+
 static VecFx32 _triJumpTbl[]={
 {0,FX32_ONE*_JUMP_MUL*0,           0},
 {0,FX32_ONE*_JUMP_MUL*0.258819045, 0},

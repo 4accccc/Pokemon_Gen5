@@ -199,46 +199,30 @@ static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork)
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   POKETRADE_MESSAGE_WindowOpen(pWork);
   _setNextAnim(pWork, 0);
-  POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_THROUGH);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
 
-
-
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
 
 }
 
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp;
-  
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
+  if(PRINTSTREAM_STATE_PAUSE == PRINTSYS_PrintStreamGetState( pWork->pStream )){
+    pWork->anmCount = 0;
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
   }
-  if(pWork->anmCount < 400){
-    return;
-  }
-
-  if(POKEMONTRADEPROC_IsTriSelect(pWork))
-  {
-    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
-  }
-  else{
-    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
-  }
-
-
-  WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
-  WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
-  POKETRADE_MESSAGE_WindowOpen(pWork);
-  _setNextAnim(pWork, 0);
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
-
 }
 
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 {
+  if(pWork->anmCount == 60){
+    POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_THROUGH);
+  }
+  if(pWork->anmCount == 61){
+    POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
+  }
+
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
@@ -979,6 +963,8 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   POKETRADE_TOUCHBAR_Init(pWork);
+
+  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID);
   GFL_NET_ReloadIcon();
   _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);
 
