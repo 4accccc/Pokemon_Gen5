@@ -979,69 +979,47 @@ static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
 { 
   BOOL ret  = FALSE;
 
-  if( p_wk->list == 0  )
+  //リストの半分の位置
+  const int check_p = (p_wk->line_max-1)/2 + (p_wk->line_max-1)%2;
+
+  if( value > 0 )
   {
-    //リスト上部の場合カーソルが中央に動くまでリストは動かない
-    if( p_wk->max < p_wk->line_max )
-    { 
-      //項目が枠未満のとき
-      if( p_wk->min < p_wk->cursor && value == -1 )
-      { 
-        p_wk->cursor  -= 1;
-        ret = TRUE;
-      }
-      else if( p_wk->max-1 > p_wk->cursor && value == 1 )
-      { 
-        p_wk->cursor  += 1;
-        ret = TRUE;
-      }
-      
-    }
-    else
-    { 
-      //枠分あった場合
-      if(p_wk->cursor == p_wk->line_max/2 && value == 1 )
-      {
-        p_wk->list  += 1;
-        ret = TRUE;
-      }
-      else
-      { 
-        if( 0 <= p_wk->cursor + value && p_wk->cursor + value <= p_wk->line_max/2 )
-        { 
-          p_wk->cursor  += value;
-          ret = TRUE;
-        }
-      }
-    }
-  }
-  else if( p_wk->list + p_wk->line_max ==  p_wk->param.list_max )
-  { 
-    //リスト下部の場合
-    if( p_wk->cursor == p_wk->line_max/2 && value == -1 )
-    { 
-      p_wk->list  += -1;
+    if( check_p == p_wk->cursor && p_wk->list + p_wk->line_max < p_wk->param.list_max )
+    {
+      //リストが動くのはチェックポイントまできていて、
+      //下部が見えるまで
+      p_wk->list += value;
       ret = TRUE;
     }
-    else
+    else if( p_wk->list + p_wk->cursor < p_wk->param.list_max-1 )
     {
-      if( p_wk->line_max/2 <= p_wk->cursor + value && p_wk->cursor + value < p_wk->line_max )
-      { 
-        p_wk->cursor  += value;
-        ret = TRUE;
-      }
+      //カーソルが動けるのはリストの範囲内のみ
+      p_wk->cursor += value;
+      ret = TRUE;
     }
   }
-  else
-  { 
-    //その他はリストが動く
-    p_wk->list  += value;
-    ret = TRUE;
+  else if( value < 0 )
+  {
+    if( check_p == p_wk->cursor && 0 < p_wk->list  )
+    {
+      //リストが動くのはチェックポイントまできていて、
+      //範囲内のとき
+      p_wk->list += value;
+      ret = TRUE;
+    }
+    else if( 0 < p_wk->cursor )
+    {
+      //カーソルが動けるのはリストの範囲内のみ
+      p_wk->cursor += value;
+      ret = TRUE;
+    }
   }
 
   //動くときカーソルが移動する
   if( ret )
   { 
+    OS_TFPrintf( 3, "cur=%d lis=%d max=%d line=%d v=%d\n", p_wk->cursor, p_wk->list, p_wk->param.list_max, p_wk->line_max,value );
+
     if( p_wk->param.p_balleff_main )
     { 
       BR_BALLEFF_StartMove( p_wk->param.p_balleff_main, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
@@ -1117,7 +1095,7 @@ static void Br_TouchList_SelectCallback( BR_LIST_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void Br_CursorList_SelectCallback( BR_LIST_WORK *p_wk )
 { 
-  GF_ASSERT( p_wk->cursor + p_wk->list < p_wk->param.list_max );
+  GF_ASSERT_MSG( p_wk->cursor + p_wk->list < p_wk->param.list_max, "cur=%d lis=%d max=%d\n", p_wk->cursor, p_wk->list, p_wk->param.list_max );
   p_wk->select_param  = p_wk->param.cp_list[ p_wk->cursor + p_wk->list ].param;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

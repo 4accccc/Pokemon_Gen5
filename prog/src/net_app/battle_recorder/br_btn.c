@@ -26,6 +26,20 @@
 //外部公開
 #include "br_btn.h"
 
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+//#define DEBUG_MOVESYNC_MODIFY
+#endif //PM_DEBUG
+
+//定数をデバッグ操作で変更可能にするためのマクロ
+#ifdef DEBUG_MOVESYNC_MODIFY
+#define VALUE_CONST( name, value )  static int name = value;
+#else
+#define VALUE_CONST( name, value )  static const int name = value;
+#endif //DEBUG_MOVESYNC_MODIFY
+
 //=============================================================================
 /**
  *					定数宣言
@@ -42,12 +56,12 @@ typedef enum
   BR_BTN_MOVE_DOWN_TAG,     //タグ位置からボタン位置へ下がるtarget= need
   BR_BTN_MOVE_NEXT_TARGET,  //ターゲットの座標へいく  
 } BR_BTN_MOVE;
-#define BR_BTN_MOVE_DEFAULT_SYNC  (32)
-#define BR_BTN_MOVE_HIDE_SYNC     (16)
-#define BR_BTN_MOVE_APPEAR_SYNC   (16)
-#define BR_BTN_MOVE_UPTAG_M_SYNC   (BR_BTN_MOVE_DEFAULT_SYNC/2)
-#define BR_BTN_MOVE_UPTAG_S_SYNC   (BR_BTN_MOVE_DEFAULT_SYNC/2)
 
+VALUE_CONST( BR_BTN_MOVE_DEFAULT_SYNC, 26 )
+VALUE_CONST( BR_BTN_MOVE_HIDE_SYNC, 10 )
+VALUE_CONST( BR_BTN_MOVE_APPEAR_SYNC, 16 )
+VALUE_CONST( BR_BTN_MOVE_UPTAG_M_SYNC, 14 )
+VALUE_CONST( BR_BTN_MOVE_UPTAG_S_SYNC, 14 )
 
 //-------------------------------------
 ///	ボタン公開情報
@@ -552,6 +566,63 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
   { 
     BR_TEXT_PrintMain( p_wk->p_text );
   }
+
+
+#ifdef DEBUG_MOVESYNC_MODIFY
+  {
+    static int s_modify_mode  = 0;
+    static const char * scp_name_tbl[]  =
+    {
+      "デフォルト",
+      "隠れるとき",
+      "出現時",
+      "上昇時上",
+      "上昇時↓",
+    };
+    int *p_value_tbl[]  =
+    {
+      &BR_BTN_MOVE_DEFAULT_SYNC,
+      &BR_BTN_MOVE_HIDE_SYNC,
+      &BR_BTN_MOVE_APPEAR_SYNC,
+      &BR_BTN_MOVE_UPTAG_M_SYNC,
+      &BR_BTN_MOVE_UPTAG_S_SYNC,
+    };
+    const int trg = GFL_UI_KEY_GetTrg();
+    BOOL is_update  = FALSE;
+
+    if( trg & PAD_BUTTON_L )
+    {
+      if( s_modify_mode > 0 )
+      {
+        s_modify_mode--;
+      }
+      is_update = TRUE;
+    }
+    else if( trg & PAD_BUTTON_R )
+    {
+      if( s_modify_mode < NELEMS(scp_name_tbl )-1 )
+      {
+        s_modify_mode++;
+      }
+      is_update = TRUE;
+    }
+    else if( trg & PAD_KEY_UP )
+    {
+      (*p_value_tbl[ s_modify_mode])++;
+      is_update = TRUE;
+    }
+    else if( trg & PAD_KEY_DOWN )
+    {
+      (*p_value_tbl[ s_modify_mode])--;
+      is_update = TRUE;
+    }
+
+    if( is_update )
+    {
+      OS_TPrintf( "%s=%d\n", scp_name_tbl[ s_modify_mode ], *p_value_tbl[ s_modify_mode] );
+    }
+  }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
