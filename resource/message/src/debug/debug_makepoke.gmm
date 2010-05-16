@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-23T12:45:44"/>
+	<create user="taya" host="W00146" date="2010-05-16T20:46:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="138"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -548,6 +548,138 @@
 
 	<row id="DMPSTR_TAMAGO_ON">
 		<language name="JPN" width="256">○</language>
+	</row>
+
+	<row id="DMPSTR_NICKNAME">
+		<language name="JPN" width="256">ニックネーム</language>
+	</row>
+
+	<row id="DMPSTR_POKERUS">
+		<language name="JPN" width="256">ポケルス</language>
+	</row>
+
+	<row id="DMPSTR_GET_LEVEL">
+		<language name="JPN" width="256">ほかくレベル</language>
+	</row>
+
+	<row id="DMPSTR_GET_BALL">
+		<language name="JPN" width="256">ボール</language>
+	</row>
+
+	<row id="DMPSTR_GET_CASETTE">
+		<language name="JPN" width="256">カセット</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_00">
+		<language name="JPN" width="256">ブラック</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_01">
+		<language name="JPN" width="256">ホワイト</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_02">
+		<language name="JPN" width="256">Ｈゴールド</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_03">
+		<language name="JPN" width="256">Ｓシルバー</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_04">
+		<language name="JPN" width="256">ダイヤ</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_05">
+		<language name="JPN" width="256">パール</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_06">
+		<language name="JPN" width="256">プラチナ</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_07">
+		<language name="JPN" width="256">ルビー</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_08">
+		<language name="JPN" width="256">サファイア</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_09">
+		<language name="JPN" width="256">エメラルド</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_10">
+		<language name="JPN" width="256">Ｆレッド</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_11">
+		<language name="JPN" width="256">Ｒグリーン</language>
+	</row>
+
+	<row id="DMPSTR_CASETTE_12">
+		<language name="JPN" width="256">コロシアム</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY">
+		<language name="JPN" width="256">くに</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_00">
+		<language name="JPN" width="256">にほん</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_01">
+		<language name="JPN" width="256">アメリカ</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_02">
+		<language name="JPN" width="256">フランス</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_03">
+		<language name="JPN" width="256">イタリア</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_04">
+		<language name="JPN" width="256">ドイツ</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_05">
+		<language name="JPN" width="256">スペイン</language>
+	</row>
+
+	<row id="DMPSTR_COUNTRY_06">
+		<language name="JPN" width="256">かんこく</language>
+	</row>
+
+	<row id="DMPSTR_GET_PLACE">
+		<language name="JPN" width="256">つかまえた　ばしょ</language>
+	</row>
+
+	<row id="DMPSTR_BIRTH_PLACE">
+		<language name="JPN" width="256">うまれた　ばしょ</language>
+	</row>
+
+	<row id="DMPSTR_YEAR">
+		<language name="JPN" width="256">年</language>
+	</row>
+
+	<row id="DMPSTR_MONTH">
+		<language name="JPN" width="256">月</language>
+	</row>
+
+	<row id="DMPSTR_DAY">
+		<language name="JPN" width="256">日</language>
+	</row>
+
+	<row id="DMPSTR_ID_H">
+		<language name="JPN" width="256">ID_H</language>
+	</row>
+
+	<row id="DMPSTR_ID_L">
+		<language name="JPN" width="256">ID_L</language>
 	</row>
 
 	<flowchart-group-list>
