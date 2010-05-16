@@ -101,7 +101,6 @@ extern void MyStatus_SetTrainerView( MYSTATUS *my, u8 view );
 // ROMコード = PM_VERSIONが初期値
 extern u8 MyStatus_GetRomCode( const MYSTATUS * my );
 extern void MyStatus_SetRomCode( MYSTATUS * my, u8 rom_code );
-extern u8 PokemonDP_GetRomCode( void );
 
 // リージョンコード  //PM_LANGが初期値
 extern u8  MyStatus_GetRegionCode( const MYSTATUS * my );

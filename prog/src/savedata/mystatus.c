@@ -375,22 +375,6 @@ void  MyStatus_SetRomCode( MYSTATUS * my, u8 rom_code )
 
 //==============================================================================
 /**
- * $brief  DP の ＲＯＭバージョンコードを設定する
- *
- * @param  none
- *
- * @param  rom_code   PokemonDP の RomCode
- *
- * ※DPではこの戻り値以外にもVERSION_DIAMOND or VERSION_PEARLが入っている場合があります
- */
-//==============================================================================
-u8  PokemonDP_GetRomCode( void )
-{
-  return POKEMON_DP_ROM_CODE;
-}
-
-//==============================================================================
-/**
  * $brief   リージョンコードを返す
  *
  * @param   my    自分状態保持ワークへのポインタ

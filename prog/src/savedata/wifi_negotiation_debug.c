@@ -33,22 +33,14 @@
 void WIFINEGOSV_DEBUG_DeleteFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,int index)
 {
   int x=0;
-  int i, j, count;
+  int size = WIFI_NEGOTIATION_DATAMAX-index;
   MYSTATUS* pMyStatus;
 
-  count = WIFI_NEGOTIATION_SV_GetCount(pSV);
-
-  j = count - 1 - index;
-  if(j<0){
-    j+=WIFI_NEGOTIATION_DATAMAX;
-  }
-  j = j % WIFI_NEGOTIATION_DATAMAX;
-
-  for(x = j; x < (WIFI_NEGOTIATION_DATAMAX-1); x++){
-    MyStatus_Copy(&pSV->aMyStatus[x+1], &pSV->aMyStatus[x]);
+  size--;
+  if(size > 0){
+    STD_MoveMemory(&pSV->aMyStatus[index+1],&pSV->aMyStatus[index], MyStatus_GetWorkSize()*size);
   }
   GFL_STD_MemClear(&pSV->aMyStatus[WIFI_NEGOTIATION_DATAMAX-1],  MyStatus_GetWorkSize());
-  pSV->count = WIFI_NEGOTIATION_SV_GetFriendNum(pSV);
 }
 
 //--------------------------------------------------------------------------------------------

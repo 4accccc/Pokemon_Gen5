@@ -88,8 +88,8 @@ enum _IBMODE_SELECT {
 };
 
 enum _CHANGEMODE_SELECT {
-  _CHANGEMODE_SELECT_ANYONE=0,
-  _CHANGEMODE_SELECT_FRIEND,
+  _CHANGEMODE_SELECT_ANYONE=0,   //だれでも
+  _CHANGEMODE_SELECT_FRIEND,     //ともだち
 };
 
 enum _CHANGEMODE_LEVEL {
@@ -99,6 +99,9 @@ enum _CHANGEMODE_LEVEL {
   _CHANGEMODE_LEVEL_51_100,
   _CHANGEMODE_LEVEL_MAX,
 };
+
+#define _FRIENDMATCH_ALL (_CHANGEMODE_LEVEL_MAX)  //ともだちならだれとでも
+
 
 enum _CHANGEMODE_IMAGE {
   _CHANGEMODE_IMAGE_ALL,
@@ -114,9 +117,9 @@ enum _CHANGEMODE_IMAGE {
 enum _GTSNEGO_MATCHKEY {
   _MATCHKEY_PROFILE,   //自分のProfile
   _MATCHKEY_TYPE,     //交換タイプ 知り合いかどうか
-  _MATCHKEY_LEVEL,    //交換LV
+  _MATCHKEY_LEVEL,    //交換LV               知り合いの場合  全員かどうか
   _MATCHKEY_IMAGE_MY,  //自分の希望
-  _MATCHKEY_IMAGE_FRIEND,  //相手に対しての希望
+  _MATCHKEY_IMAGE_FRIEND,  //相手に対しての希望 
   _MATCHKEY_ROMCODE,    //ROMバージョン
   _MATCHKEY_DEBUG,    //デバッグか製品か
   _MATCHKEY_SEARCHPROFILE,   //探しているProfile
@@ -156,6 +159,7 @@ struct _GTSNEGO_WORK {
   HEAPID heapID;
   int connect_bit;
   int timer;
+  int selectFriendID;
   BOOL connect_ok;
   BOOL receive_ok;
   BOOL bInitMessage;
@@ -873,7 +877,7 @@ static int _evalcallback(int index, void* param)
 {
   GTSNEGO_WORK *pWork=param;
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-  int value = -1;
+  int value = -200;
   int targetlv,targetfriend,targetmy;
   u32 profile,friendprofile;
   int i;
@@ -885,13 +889,40 @@ static int _evalcallback(int index, void* param)
   friendprofile = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_SEARCHPROFILE].keyStr,0);
   
   if(pWork->changeMode==_CHANGEMODE_SELECT_FRIEND){//ともだち
-    if( WIFI_NEGOTIATION_SV_IsCheckFriend( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave) ,profile )){
-      if(friendprofile == MyStatus_GetID( GAMEDATA_GetMyStatus(pEv->gamedata) )){
-        value=100;
+    if(targetlv == _FRIENDMATCH_ALL){  //だれとでもつなぎたいという人からMatch検査が来た
+      if(pWork->selectFriendIndex==-1){  //自分自身がだれとでもつなぎたいという人である場合
+        if( WIFI_NEGOTIATION_SV_IsCheckFriend( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave) ,profile )){
+          //該当者がリストにいればOK
+          value=100;
+          OS_TPrintf(" だれとでもつなぎたいという人+じぶんもだれでも\n");
+        }
+      }
+      else{  //自分は誰かを探している
+        if( pWork->selectFriendID == profile ){  //それは相手か
+          value=100;
+          OS_TPrintf(" だれとでもつなぎたいという人+じぶんはあなた \n");
+        }
+      }
+    }
+    else{   //誰かを探しているひとである
+      if(friendprofile == MyStatus_GetID( GAMEDATA_GetMyStatus(pEv->gamedata) )){  //自分かどうか
+        if(pWork->selectFriendIndex==-1){  //自分自身がだれとでもつなぎたいという人である場合
+          //相手のプロファイルが自分のセーブデータにある場合
+          if( WIFI_NEGOTIATION_SV_IsCheckFriend( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave) ,profile )){
+            OS_TPrintf(" 誰かを探しているひと + 自分自身がだれとでも \n");
+            value=100;
+          }
+        }
+        else{  //自分は誰かを探している
+          if( pWork->selectFriendID == profile ){  //それは相手か
+            OS_TPrintf(" 誰かを探しているひと + じぶんはあなた \n");
+            value=100;
+          }
+        }
       }
     }
   }
-  else{
+  else{  //だれでも
     if(pWork->chageLevel==targetlv){
       if(pWork->myChageType==targetfriend){
         value+=10;
@@ -932,30 +963,32 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
     _CHANGE_STATE(pWork,_matchingState);
     return;
   }
-  
 
   GFL_NET_SetWifiBothNet(FALSE);
-  
+
   GFL_NET_DWC_GetMySendedFriendCode(pWork->pList, (DWCFriendData*)&buff[0]);
 
   OHNO_Printf("選んだ番号 %d\n", pWork->selectFriendIndex);
 
   buff[0] = pWork->profileID;
-  if(pWork->changeMode == _CHANGEMODE_SELECT_FRIEND){
-    {
-      MYSTATUS* pFriend = WIFI_NEGOTIATION_SV_GetMyStatus( WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSave),pWork->selectFriendIndex);
-      buff[_MATCHKEY_SEARCHPROFILE] = MyStatus_GetID(pFriend);
-    }
-  }
-  else{
-    buff[_MATCHKEY_SEARCHPROFILE] = 0;
-  }
   buff[1] = pWork->changeMode;
-  buff[2] = pWork->chageLevel;
+  buff[_MATCHKEY_LEVEL] = pWork->chageLevel;
   buff[3] = pWork->myChageType;
   buff[4] = pWork->friendChageType;
   buff[5] = PM_VERSION + (PM_LANG<<16); 
   buff[6] = MATCHINGKEY;
+  buff[_MATCHKEY_SEARCHPROFILE] = 0;
+  
+  if(pWork->changeMode == _CHANGEMODE_SELECT_FRIEND){
+    if(pWork->selectFriendIndex==-1){
+      buff[_MATCHKEY_LEVEL] = _FRIENDMATCH_ALL;
+    }
+    else{
+      MYSTATUS* pFriend = GTSNEGO_GetMyStatus(pWork->pGameData,pWork->selectFriendIndex);
+      buff[_MATCHKEY_SEARCHPROFILE] = MyStatus_GetID(pFriend);
+      pWork->selectFriendID = MyStatus_GetID(pFriend);
+    }
+  }
 
   for(i = 0; i < _MATCHKEY_MAX; i++)
   {
@@ -1200,9 +1233,15 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 
 MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index)
 {
-  int i, j, count;
+  int i, j=index, count;
   MYSTATUS* pMyStatus;
 
+  count =  WIFI_NEGOTIATION_SV_GetFriendNum(GAMEDATA_GetWifiNegotiation(pGameData));
+  if((index >= count) || (index < 0)){
+    return NULL;
+  }
+
+#if 0
   count = WIFI_NEGOTIATION_SV_GetCount(GAMEDATA_GetWifiNegotiation(pGameData));
   if((index >= WIFI_NEGOTIATION_DATAMAX) || (index < 0)){
     return NULL;
@@ -1213,6 +1252,7 @@ MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index)
     j+=WIFI_NEGOTIATION_DATAMAX;
   }
   j = j % WIFI_NEGOTIATION_DATAMAX;
+#endif
   pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pGameData), j);
   return pMyStatus;
 }
@@ -1229,26 +1269,29 @@ MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index)
 
 static MYSTATUS* GTSNEGO_GetMyStatusIconOnly( GAMEDATA* pGameData, int index)
 {
-  int i, j, count;
+  int i, j=index, count;
   MYSTATUS* pMyStatus;
 
-  count = WIFI_NEGOTIATION_SV_GetCount(GAMEDATA_GetWifiNegotiation(pGameData));
+ count =  WIFI_NEGOTIATION_SV_GetFriendNum(GAMEDATA_GetWifiNegotiation(pGameData));
+  
+//  count = WIFI_NEGOTIATION_SV_GetCount(GAMEDATA_GetWifiNegotiation(pGameData));
 //  if((index >= WIFI_NEGOTIATION_DATAMAX) || (index < 0)){
 //    return NULL;
 //  }
   if(index < 0){
-    index = 0;
+    j = 0;
   }
-  if(index >= count){
-    index = count-1;
+  if(j >= count){
+    j = count-1;
   }
   
-
+#if 0
   j = count - 1 - index;
   if(j<0){
     j+=WIFI_NEGOTIATION_DATAMAX;
   }
   j = j % WIFI_NEGOTIATION_DATAMAX;
+#endif
   pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pGameData), j);
   return pMyStatus;
 }
@@ -1428,7 +1471,12 @@ static void _friendSelectDecide2( GTSNEGO_WORK *pWork )
 //------------------------------------------------------------------
 static void _friendSelectDecide( GTSNEGO_WORK *pWork )
 {
-  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_036);
+  if(pWork->selectFriendIndex==-1){
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_050);
+  }
+  else{
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_036);
+  }
   _CHANGE_STATE(pWork,_friendSelectDecide2);
 }
 
@@ -1536,6 +1584,18 @@ static void _modeDebugDelete( GTSNEGO_WORK *pWork )
 }
 #endif
 
+
+static void _friendSelectFlashDecide( GTSNEGO_WORK *pWork )
+{
+  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+    pWork->selectFriendIndex = -1;  //リストの人全部
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+    _CHANGE_STATE(pWork,_friendSelectDecide);
+  }
+}
+
 //------------------------------------------------------------------
 /**
  * $brief   交換相手選択待ち
@@ -1548,6 +1608,7 @@ const static GFL_UI_TP_HITTBL _tp_data2[]={
   { 8*3, 8*(3+6), 8*1, 8*(32-3)},
   { 8*(3+6), 8*(3+6*2), 8*1, 8*(32-3)},
   { 8*(3+6*2), 8*(3+6*3), 8*1, 8*(32-3)},
+  { 192-24, 192, 64, 256-64},
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
@@ -1556,6 +1617,13 @@ const static GFL_UI_TP_HITTBL _tp_data3[]={
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
+static void _pAppWinDel( GTSNEGO_WORK *pWork )
+{
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+  }
+}
 
 
 static void _friendSelectWait( GTSNEGO_WORK *pWork )
@@ -1631,7 +1699,6 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
         i--;
         continue;
       }
-
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
       {
         GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,FALSE);
@@ -1645,12 +1712,14 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
 
 #if PM_DEBUG
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
+    _pAppWinDel(pWork);
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_001);
     _CHANGE_STATE(pWork,_modeDebugDelete);
     pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
     return;
   }
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
+    _pAppWinDel(pWork);
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
     _CHANGE_STATE(pWork,_modeDebugAdd);
     pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
@@ -1673,19 +1742,27 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // キーでの決定
     PMSND_PlaySystemSE(_SE_DECIDE);
-
     GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
-
     pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
-    OHNO_Printf("選んだ番号 %d\n", pWork->selectFriendIndex);
+    _pAppWinDel(pWork);
     _CHANGE_STATE(pWork,_friendSelectDecide);
     return;
   }
-
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_START){  // キーでの決定
+    PMSND_PlaySystemSE(_SE_DECIDE);
+    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+    _CHANGE_STATE(pWork,_friendSelectFlashDecide);
+    return;
+  }
 
   {  //TPで誰を選んだのか
     int trgindex=GFL_UI_TP_HitTrg(_tp_data2);
     switch(trgindex){
+    case 3:
+      PMSND_PlaySystemSE(_SE_DECIDE);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+      _CHANGE_STATE(pWork,_friendSelectFlashDecide);
+      return;
     case 2:
       if(pWork->scrollPanelCursor.listmax < 3){
         break;
@@ -1697,17 +1774,13 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       }
       //break throw
     case 0:
-
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
-      
       pWork->key3 = trgindex  + _CROSSCUR_TYPE_FRIEND1;
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
       GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
-
       pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
-      OHNO_Printf("選んだ番号 %d\n", pWork->selectFriendIndex);
-//      pWork->selectFriendIndex = trgindex;
       PMSND_PlaySystemSE(_SE_DECIDE);
+      _pAppWinDel(pWork);
       _CHANGE_STATE(pWork,_friendSelectDecide);
       return;
     }
@@ -1735,6 +1808,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   case TOUCHBAR_ICON_RETURN:
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
+    _pAppWinDel(pWork);
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
     GTSNEGO_DISP_FriendSelectFree(pWork->pDispWork);
     GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
@@ -1826,6 +1900,9 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
 //  GTSNEGO_DISP_UnionListRenew(pWork->pDispWork,pWork->pGameData, -2);
 
   //GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, -2);
+
+  pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_049);
+
   GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,
                               pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
                               pWork->scrollPanelCursor.listmax );

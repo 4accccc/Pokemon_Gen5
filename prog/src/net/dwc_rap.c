@@ -860,7 +860,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
     if( _dWork->isvchat == 0 ) {
       // ボイスチャットの切断完了。
       // 通信自体を切る。
-      MYDWC_DEBUGPRINT("ボイスチャットの切断完了。\n");
+      MYDWC_DEBUGPRINT("切断完了\n");
       DWC_CloseAllConnectionsHard( );
       _CHANGE_STATE(MDSTATE_DISCONNECT);
       // _dWork->state = MDSTATE_DISCONNECT;

@@ -834,13 +834,17 @@ void GTSNEGO_MESSAGE_DeleteDispLevel(GTSNEGO_MESSAGE_WORK* pWork)
 APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* pWork,int msgno)
 {
   APP_TASKMENU_WIN_WORK* pAppWin;
+  int length;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  pAppWin =APP_TASKMENU_WIN_CreateEx( pWork->pAppTaskRes,
-                                           pWork->appitem, 16-6, 24-3, 12,3, FALSE,TRUE, pWork->heapID);
+
+  length = PRINTSYS_GetStrWidth( pWork->appitem[0].str , pWork->pFontHandle , 0 );
+  length+=32;
+  pAppWin = APP_TASKMENU_WIN_CreateEx( pWork->pAppTaskRes,
+                                           pWork->appitem, 16-(length/16), 24-3, ((length/16)*2),3, FALSE,TRUE, pWork->heapID);
 
   
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);

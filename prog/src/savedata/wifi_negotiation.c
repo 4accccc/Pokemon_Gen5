@@ -59,7 +59,7 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   Wi-Fiネゴシエーション用ともだちデータをループ保存
+ * @brief   Wi-Fiネゴシエーション用ともだちデータを先頭に保存
  * @param   pSV       WIFI_NEGOTIATION_SAVEDATAポインタ
  * @param   pMyStatus MYSTATUS
  */
@@ -67,6 +67,7 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS* pMyStatus)
 {
   u32 playerID = MyStatus_GetID(pMyStatus);
+  u32 size = MyStatus_GetWorkSize();
 
   if(playerID==0){
     return;
@@ -74,11 +75,8 @@ void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS
   if(WIFI_NEGOTIATION_SV_IsCheckFriend(pSV,playerID)){
     return;
   }
-  if(pSV->count >= WIFI_NEGOTIATION_DATAMAX){
-    pSV->count = 0;
-  }
-  MyStatus_Copy(pMyStatus, &pSV->aMyStatus[pSV->count]);
-  pSV->count++;  //繰り返し保存
+  STD_MoveMemory(&pSV->aMyStatus[1],&pSV->aMyStatus[0],(WIFI_NEGOTIATION_DATAMAX-1)*size);
+  GFL_STD_MemCopy(pMyStatus, &pSV->aMyStatus[0], size);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -135,24 +133,13 @@ BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 player
   int i;
 
   for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
-    if(MyStatus_GetID(&pSV->aMyStatus[ i ]) == playerID){
-      return TRUE;
+    if(MyStatus_GetRomCode(&pSV->aMyStatus[ i ]) != 0){  //空かどうかの判定
+      if(MyStatus_GetID(&pSV->aMyStatus[ i ]) == playerID){
+        return TRUE;
+      }
     }
   }
   return FALSE;
-}
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief   保存番号を返す
- * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
- * @return	順番
- */
-//--------------------------------------------------------------------------------------------
-int WIFI_NEGOTIATION_SV_GetCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
-{
-  return pSV->count;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -165,14 +152,13 @@ int WIFI_NEGOTIATION_SV_GetCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
 //--------------------------------------------------------------------------------------------
 s32 WIFI_NEGOTIATION_SV_GetFriendNum(WIFI_NEGOTIATION_SAVEDATA* pSV)
 {
-  int i=0,j=0;
-
+  int i;
   for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
-    if(MyStatus_GetID(&pSV->aMyStatus[ i ])!=0){
-      j++;
+    if(MyStatus_GetRomCode(&pSV->aMyStatus[ i ]) == 0){  //空かどうかの判定
+      break;
     }
   }
-  return j;
+  return i;
 }
 
 //--------------------------------------------------------------
@@ -222,23 +208,6 @@ void WIFI_NEGOTIATION_SV_AddChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
     pSV->num = _COUNTMAX;
   }
 }
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief   渡したプロファイルIDに一致する物があるかどうかさがす
- * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
- * @param   profile 検査profileID
- * @return	一致したらTRUE
- */
-//--------------------------------------------------------------------------------------------
-#if 0
-void WIFI_NEGOTIATION_SV_GetDate(WIFI_NEGOTIATION_SAVEDATA* pSV,RTCDate * date)
-{
-//  RTCDate * date
-  int i;
-}
-#endif
 
 
 

@@ -73,6 +73,7 @@ enum _EVENT_GTSNEGO {
 typedef struct 
 {
   int soundNo;
+  int timeout;
   DWCSvlResult aSVL;
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK       *fieldmap;
@@ -177,12 +178,17 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE);
         GFL_NET_SetAutoErrorCheck(FALSE);
         GFL_NET_SetNoChildErrorCheck(FALSE);
+        dbw->timeout=100;
         (*seq) = _DISCONNECT_TRADE;
       }
     }
     break;
   case _DISCONNECT_TRADE:
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE)){
+    dbw->timeout--;
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE) ){
+      (*seq) = _DISCONNECT_TRADE2;
+    }
+    if(dbw->timeout<0){
       (*seq) = _DISCONNECT_TRADE2;
     }
     break;
