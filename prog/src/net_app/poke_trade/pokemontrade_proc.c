@@ -3621,7 +3621,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   
   POKETRADE_MESSAGE_HeapInit(pWork);
   _dispInit(pWork);
-  if(pWork->type>=POKEMONTRADE_TYPE_VISUAL){
+  if(pWork->type < POKEMONTRADE_TYPE_VISUAL){
     POKETRADE_TOUCHBAR_Init(pWork);
   }
 
