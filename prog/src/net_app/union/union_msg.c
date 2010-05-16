@@ -817,7 +817,7 @@ u16 UnionMsg_GetMsgID_GuruguruDameTamagoNG(UNION_SYSTEM_PTR unisys)
 //==================================================================
 u16 UnionMsg_GetMsgID_PlayGameBattle(int target_sex)
 {
-  return talk_failed_child_table[target_sex];
+  return talk_table_fight[GFUser_GetPublicRand(TALK_FIGHT_MAX)][target_sex];
 }
 
 //==================================================================
@@ -828,7 +828,7 @@ u16 UnionMsg_GetMsgID_PlayGameBattle(int target_sex)
 //==================================================================
 u16 UnionMsg_GetMsgID_PlayGameMainMenuSelect(int target_sex)
 {
-  return talk_table_fight[GFUser_GetPublicRand(TALK_FIGHT_MAX)][target_sex];
+  return talk_failed_child_table[target_sex];
 }
 
 //==================================================================
