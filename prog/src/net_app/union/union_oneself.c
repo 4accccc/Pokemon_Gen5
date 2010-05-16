@@ -2256,19 +2256,21 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
 {
   UNION_PLAY_CATEGORY play_category;
   u16 buf_no;
+  int sex;
   
   switch(*seq){
   case 0:
+    sex = UNION_CHARA_GetCharaIndex_to_Sex(unisys, situ->mycomm.talk_obj_id);
     buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
     play_category = unisys->receive_beacon[buf_no].beacon.play_category;
     switch(play_category){
     case UNION_PLAY_CATEGORY_TALK:           //会話中
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-        UnionMsg_GetMsgID_PlayGameMainMenuSelect(situ->mycomm.talk_pc->beacon.sex));
+        UnionMsg_GetMsgID_PlayGameMainMenuSelect(sex));
       break;
     case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-        UnionMsg_GetMsgID_PlayGameTrainerCard(situ->mycomm.talk_pc->beacon.sex));
+        UnionMsg_GetMsgID_PlayGameTrainerCard(sex));
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
@@ -2291,19 +2293,19 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-        UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
+        UnionMsg_GetMsgID_PlayGameBattle(sex));
       break;
     case UNION_PLAY_CATEGORY_GURUGURU:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-        UnionMsg_GetMsgID_PlayGameGuruguru(situ->mycomm.talk_pc->beacon.sex));
+        UnionMsg_GetMsgID_PlayGameGuruguru(sex));
       break;
     case UNION_PLAY_CATEGORY_PICTURE:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-        UnionMsg_GetMsgID_PlayGamePicture(situ->mycomm.talk_pc->beacon.sex));
+        UnionMsg_GetMsgID_PlayGamePicture(sex));
       break;
     case UNION_PLAY_CATEGORY_TRADE:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
-        UnionMsg_GetMsgID_PlayGameTrade(situ->mycomm.talk_pc->beacon.sex));
+        UnionMsg_GetMsgID_PlayGameTrade(sex));
       break;
     default:
       OS_TPrintf("未知の遊び play_category = %d\n", situ->play_category);

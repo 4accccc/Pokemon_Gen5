@@ -271,6 +271,34 @@ u16 UNION_CHARA_GetCharaIndex_to_ParentNo(u16 chara_index)
 
 //==================================================================
 /**
+ * CharacterIndexから性別を取得する
+ *
+ * @param   unisys		
+ * @param   chara_index		キャラクタインデックス
+ *
+ * @retval  int		
+ */
+//==================================================================
+int UNION_CHARA_GetCharaIndex_to_Sex(UNION_SYSTEM_PTR unisys, u16 chara_index)
+{
+  int i;
+  UNION_CHARACTER *unichara;
+
+  unichara = unisys->character;
+  for(i = 0; i < UNION_CHARACTER_MAX; i++){
+    if(unichara->occ == TRUE && unichara->parent_pc != NULL){
+      if(UNION_CHARA_GetCharaIndex(unichara->parent_pc, unichara) == chara_index){
+        return unichara->sex;
+      }
+    }
+    unichara++;
+  }
+  GF_ASSERT(0);
+  return PM_MALE;
+}
+
+//==================================================================
+/**
  * CharacterIndexが通信プレイヤーかNPCかを判定する
  *
  * @param   chara_index		
