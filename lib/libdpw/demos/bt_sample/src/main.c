@@ -457,7 +457,7 @@ void NitroMain()
 				
 				if (result == DPW_BT_ERROR_CANCEL)
 				{	// キャンセルできたとき
-					OS_TPrintf(" cancel upload player sccess.\n");
+					OS_TPrintf(" cancel upload player success.\n");
 					app_state = SAMPLE_BT_UPLOAD_PLAYER;
 				}
 				else if (result == 0)
@@ -478,6 +478,7 @@ void NitroMain()
 			// ７勝したプレイヤーのデータをアップロードする。
 			// サーバーをアップデートしたときにこの部屋のリーダーになるはず。
 			// 番号の一番大きい部屋へアップロードする
+			OS_TPrintf(" download from rank=%d, room_num=%d.\n", BT_ROOM_RANK, room_num);
 			Dpw_Bt_UploadPlayerAsync(BT_ROOM_RANK, room_num, 7, &upload_player, token, TOKEN_LEN);
 			app_state = SAMPLE_BT_UPLOAD_PLAYER_WAIT;
 			break;
@@ -533,7 +534,6 @@ void NitroMain()
 				else
 				{
 					OS_TPrintf(" download room.\n");
-
 					{
 						RTCDate date;
 						RTCTime time;
@@ -624,7 +624,7 @@ static void set_upload_player(void) {
     			 14,0,0,0,106,0,0,0,0,0,0,0,0,0,0,0,57,148,138,197,0,0,0,0,0,0,0,0,0,0,0,1,61,70,100,0,96,0,241,0,161,0,255,255,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,
     			 25,0,78,0,241,0,255,255,0,0,0,0,0,0,0,0,10,1,0,0,176,238,83,172,1,0,4,0,83,4,255,255,0,24,0,0,0,0,89,4,255,255,1,0,0,0,115,4,255,255,2,0,0,0,123,5,255,255,215,3};
     memcpy(upload_player.pokemon, data, sizeof(data));
-    upload_player.countryCode = 110;
+	upload_player.countryCode = 110;
     upload_player.langCode = 8;
     upload_player.ngname_f = 0;
 	upload_player.playerName[0] = 0x30AB;      // カ
