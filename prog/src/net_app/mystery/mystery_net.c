@@ -807,7 +807,9 @@ static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       belivery_beacon_init.ConfusionID  = 0;
       belivery_beacon_init.heapID       = p_wk->heapID;
       p_wk->p_beacon  = DELIVERY_BEACON_Init( &belivery_beacon_init );
-      DELIVERY_BEACON_RecvStart( p_wk->p_beacon );
+      DELIVERY_BEACON_RecvStart( p_wk->p_beacon );    
+      
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
     }
     p_wk->recv_status = MYSTERY_NET_RECV_STATUS_NONE;
     *p_seq = SEQ_INIT_WAIT;
@@ -819,6 +821,8 @@ static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       //通信アイコン
       GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
       GFL_NET_ReloadIcon();
+
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
       *p_seq = SEQ_END;
     }
     break;
