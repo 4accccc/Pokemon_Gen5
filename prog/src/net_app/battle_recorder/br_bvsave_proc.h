@@ -13,6 +13,7 @@
 #include "br_res.h"
 #include "br_fade.h"
 #include "br_net.h"
+#include "br_inner.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -39,6 +40,7 @@ typedef struct
   u64               video_number; //[in ]保存するビデオナンバー
   BOOL              is_secure;    //[in ]視聴済みかどうか
   BOOL              is_save;      //[out]セーブしたかどうか
+  BR_SAVEDATA_IDX   save_idx;     //[out]どこにセーブしたのか()
 } BR_BVSAVE_PROC_PARAM;
 
 

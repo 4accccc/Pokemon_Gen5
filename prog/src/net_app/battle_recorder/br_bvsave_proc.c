@@ -842,6 +842,7 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
       { 
         p_wk->p_param->is_save  = TRUE; 
+        p_wk->p_param->save_idx = BR_SAVEDATA_OTHER_00+p_wk->save_btn_idx;
         (*p_seq)++;
       }
       p_wk->cnt++;

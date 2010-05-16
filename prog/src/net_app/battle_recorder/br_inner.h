@@ -70,14 +70,14 @@ enum
 //-------------------------------------
 ///外部セーブデータの状況
 //=====================================
-enum
+typedef enum
 { 
   BR_SAVEDATA_PLAYER,
   BR_SAVEDATA_OTHER_00,
   BR_SAVEDATA_OTHER_01,
   BR_SAVEDATA_OTHER_02,
   BR_SAVEDATA_NUM,
-};
+} BR_SAVEDATA_IDX;
 typedef struct 
 {
   BOOL    is_valid[BR_SAVEDATA_NUM]; //セーブデータが存在するか

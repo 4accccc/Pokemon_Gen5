@@ -860,11 +860,13 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
     //保存からの戻り
     //一旦BRS上に読み込むが、そのあとセーブチェックをするため
     //BRS上は外部セーブデータの可能性がある
+    //だが、そのあと再度読み直しているのでBRS上に録画データがあるとみなしてよい
     { 
       const BR_BVSAVE_PROC_PARAM  *cp_bvsave_param  = cp_pre_param;
       p_param->mode				    = p_wk->p_param->p_data->record_mode;
       p_param->p_outline      = &p_wk->p_param->p_data->outline;
       p_param->video_number   = cp_bvsave_param->video_number;
+      p_param->is_return      = TRUE;
     }
     break;
     
@@ -1252,8 +1254,20 @@ static void BR_BVSAVE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
   //保存していたら、セーブデータをリロードする
   if( p_param->is_save )
   { 
+    //セーブ状況をチェック
     Br_Core_CheckSaveData( &p_wk->p_param->p_data->rec_saveinfo,
       FALSE, p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
+
+    //セーブ状況をチェックするとBRS上を上書いてしまうので、
+    //セーブしたもので再度BTS上へ展開する
+    {
+      LOAD_RESULT result;
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata );
+      BattleRec_Load( p_sv, GFL_HEAP_LOWID( HEAPID_BATTLE_RECORDER_CORE ), &result, p_param->save_idx ); 
+      if( result == LOAD_RESULT_OK )
+      { 
+      }
+    }
   }
 }
 

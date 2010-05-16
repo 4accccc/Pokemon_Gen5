@@ -1117,7 +1117,7 @@ static void Br_TouchList_SelectCallback( BR_LIST_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void Br_CursorList_SelectCallback( BR_LIST_WORK *p_wk )
 { 
-  GF_ASSERT( p_wk->cursor + p_wk->list < p_wk->param.list_max  );
+  GF_ASSERT( p_wk->cursor + p_wk->list < p_wk->param.list_max );
   p_wk->select_param  = p_wk->param.cp_list[ p_wk->cursor + p_wk->list ].param;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
