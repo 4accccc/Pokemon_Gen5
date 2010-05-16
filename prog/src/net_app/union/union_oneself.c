@@ -2092,7 +2092,9 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
     break;
   case LOCALSEQ_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      return TRUE;
+      if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
+        return TRUE;
+      }
     }
     break;
   
@@ -2730,59 +2732,40 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
 static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   enum{
-    _SEQ_TIMING_START,
-    _SEQ_TIMING_WAIT,
-    _SEQ_SHUTDOWN_START,
+    _SEQ_INIT,
     _SEQ_SHUTDOWN_WAIT,
-    _SEQ_RESTART,
-  };
-  enum{
-    _LAST_MSG_WAIT = 30,
+    _SEQ_RESTART_WAIT,
+    _SEQ_TALK_WAIT,
   };
 
-  if((*seq) <= _SEQ_TIMING_WAIT && _UnionCheckError_ForceExit(unisys) == TRUE){
+  if((*seq) < _SEQ_TALK_WAIT && _UnionCheckError_ForceExit(unisys) == TRUE){
     return TRUE;
   }
   
-  if(UnionMsg_TalkStream_Check(unisys) == TRUE && situ->work < _LAST_MSG_WAIT){
-    situ->work++;
-  }
-  
   switch(*seq){
-  case _SEQ_TIMING_START:
-    situ->work = 0;
-    GFL_NET_HANDLE_TimeSyncStart(
-      GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION);
-    OS_TPrintf("Ø’f‘O‚Ì“¯ŠúŽæ‚èFŠJŽn\n");
+  case _SEQ_INIT:
+    UnionComm_SetTalkShutdown(unisys);
     (*seq)++;
     break;
-  case _SEQ_TIMING_WAIT:
-    if(GFL_NET_HANDLE_IsTimeSync(
-        GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION) == TRUE){
-      GFL_NET_SetNoChildErrorCheck(FALSE);  //Ø’f‹–‰Â
-      OS_TPrintf("Ø’f‘O‚Ì“¯ŠúŽæ‚èF¬Œ÷\n");
+
+  case _SEQ_SHUTDOWN_WAIT:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE && GFL_NET_IsExit() == TRUE){
+      UnionComm_Req_Restarts(unisys);
       (*seq)++;
     }
     break;
-  case _SEQ_SHUTDOWN_START:
-    if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
-      GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);
-      return FALSE;
-    }
-
-    UnionComm_Req_ShutdownRestarts(unisys);
-    (*seq)++;
-    break;
-  case _SEQ_SHUTDOWN_WAIT:
+  case _SEQ_RESTART_WAIT:
     if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
       (*seq)++;
     }
     break;
-  case _SEQ_RESTART:
-    if(UnionMsg_TalkStream_Check(unisys) == TRUE && situ->work >= _LAST_MSG_WAIT){
-      UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
-      return TRUE;
+  case _SEQ_TALK_WAIT:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
+        UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
+        return TRUE;
+      }
     }
     break;
   }

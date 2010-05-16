@@ -386,7 +386,9 @@ typedef struct{
   u8 mystatus_recv_bit;       ///<MYSTATUS受信結果(bit管理)
   u8 first_talk;              ///<0:初回会話 1以上：継続会話
   u8 target_card_receive;     ///<TRUE:相手のカードを受信した
-  u8 padding[2];
+  u8 talk_exit_req_bit;       ///<会話中の切断リクエストbit
+  u8 talk_exit_seq:7;         ///<会話中の切断リクエストにより実行されるシーケンスの管理番号
+  u8 talk_exit_exe:1;         ///<TRUE:会話中の切断処理実行中
 }UNION_MY_COMM;
 
 ///メニューでの選択レギュレーション項目

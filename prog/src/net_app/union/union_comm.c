@@ -54,6 +54,7 @@ enum{
 //==============================================================================
 static void UnionComm_InitCallback(void *pWork);
 static void	UnionComm_ExitCallback(void* pWork);
+static void UnionComm_TalkShutdownUpdate(UNION_SYSTEM_PTR unisys);
 static void UnionComm_MinigameUpdate(UNION_SYSTEM_PTR unisys);
 static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys);
 static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys);
@@ -471,6 +472,83 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
   UnionComm_Colosseum_Update(unisys); //コロシアム更新
   
   UnionComm_MinigameUpdate(unisys); //ミニゲーム更新
+
+  UnionComm_TalkShutdownUpdate(unisys);
+}
+
+//==================================================================
+/**
+ * 会話中の切断リクエスト処理を実行させる
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionComm_SetTalkShutdown(UNION_SYSTEM_PTR unisys)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  situ->mycomm.talk_exit_exe = TRUE;
+}
+
+//==================================================================
+/**
+ * 会話中の切断リクエスト処理を実行されているか調べる
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		TRUE:実行されている
+ */
+//==================================================================
+BOOL UnionComm_GetTalkShutdown(UNION_SYSTEM_PTR unisys)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  return situ->mycomm.talk_exit_exe;
+}
+
+//--------------------------------------------------------------
+/**
+ * 会話中の切断リクエスト処理更新
+ *
+ * @param   unisys		
+ */
+//--------------------------------------------------------------
+static void UnionComm_TalkShutdownUpdate(UNION_SYSTEM_PTR unisys)
+{
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+
+  if(situ->mycomm.talk_exit_exe == FALSE || NetErr_App_CheckError()){
+    return;
+  }
+  
+  switch(situ->mycomm.talk_exit_seq){
+  case 0:
+    if(UnionSend_TalkShutdown() == TRUE){
+      situ->mycomm.talk_exit_seq++;
+    }
+    break;
+  case 1:
+    {
+      u32 exit_bit = situ->mycomm.talk_exit_req_bit;
+      if(MATH_CountPopulation(exit_bit) >= GFL_NET_GetConnectNum()){
+        GFL_NET_SetNoChildErrorCheck(FALSE);  //切断許可
+        situ->mycomm.talk_exit_seq++;
+      }
+    }
+    break;
+  case 2:
+    if(GFL_NET_IsParentMachine() == TRUE){
+      if(GFL_NET_GetConnectNum() <= 1){
+        UnionComm_Req_Shutdown(unisys);
+        situ->mycomm.talk_exit_seq++;
+      }
+    }
+    else{
+      UnionComm_Req_Shutdown(unisys);
+      situ->mycomm.talk_exit_seq++;
+    }
+    break;
+  default:  //全ての処理が完了
+    break;
+  }
 }
 
 //--------------------------------------------------------------

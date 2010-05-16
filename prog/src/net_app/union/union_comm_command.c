@@ -26,7 +26,7 @@
 //  プロトタイプ宣言
 //==============================================================================
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
-static void _UnionRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_TalkShutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_Mystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -50,7 +50,7 @@ static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const
 //==============================================================================
 ///ユニオン受信コマンドテーブル   ※UNION_CMD_???と並びを同じにしておくこと！！
 const NetRecvFuncTable Union_CommPacketTbl[] = {
-  {_UnionRecv_Shutdown, NULL},                //UNION_CMD_SHUTDOWN
+  {_UnionRecv_TalkShutdown, NULL},                //UNION_CMD_SHUTDOWN
   {_UnionRecv_MainMenuListResult, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT
   {_UnionRecv_MainMenuListResultAnswer, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT_ANSWER
   {_UnionRecv_Mystatus, NULL},                          //UNION_CMD_MYSTATUS
@@ -96,9 +96,12 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 	return unisys->huge_receive_buf[netID];
 }
 
+//==============================================================================
+//  
+//==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   コマンド受信：切断
+ * @brief   コマンド受信：会話中の切断リクエスト
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -107,9 +110,25 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
  * @retval  none  
  */
 //--------------------------------------------------------------
-static void _UnionRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _UnionRecv_TalkShutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   UNION_SYSTEM_PTR unisys = pWork;
+  
+  UnionComm_SetTalkShutdown(unisys);
+  unisys->my_situation.mycomm.talk_exit_req_bit |= 1 << netID;
+  OS_TPrintf("切断リクエスト受信 netID=%d, bit=%d\n", netID, unisys->my_situation.mycomm.talk_exit_req_bit);
+}
+
+//==================================================================
+/**
+ * データ送信：会話中の切断リクエスト
+ * @param   select_list		選択結果(UNION_MSG_MENU_SELECT_???)
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_TalkShutdown(void)
+{
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), UNION_CMD_TALK_SHUTDOWN, 0, NULL);
 }
 
 //==============================================================================
