@@ -30,6 +30,7 @@ typedef enum{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
+extern void UNION_CHARA_WorkInit(UNION_SYSTEM_PTR unisys);
 extern void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *fieldmap);
 extern UNION_CHARA_INDEX UNION_CHARA_CheckCharaIndex(u16 chara_index);
 extern u16 UNION_CHARA_GetCharaIndex_to_ParentNo(u16 chara_index);

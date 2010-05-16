@@ -4298,6 +4298,7 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
   case LEAVE_SEQ_WARP_UNION:
     clsys->colosseum_leave = TRUE;
     UnionBeacon_ClearAllReceiveData(unisys);
+    UNION_CHARA_WorkInit(unisys);
     UnionMyComm_Init(unisys, &situ->mycomm);
     UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_UNION_WARP, NULL);
     (*seq)++;

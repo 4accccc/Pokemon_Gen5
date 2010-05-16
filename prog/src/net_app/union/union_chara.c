@@ -148,6 +148,18 @@ SDK_COMPILER_ASSERT(NELEMS(UnicharaFuncTbl) == BPC_EVENT_STATUS_MAX);
 //  
 //
 //==============================================================================
+//==================================================================
+/**
+ * ユニオンキャラクターワークを初期化
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UNION_CHARA_WorkInit(UNION_SYSTEM_PTR unisys)
+{
+  GFL_STD_MemClear(unisys->character, sizeof(UNION_CHARACTER) * UNION_CHARACTER_MAX);
+}
+
 //--------------------------------------------------------------
 /**
  * ビーコンPC：イベントリクエスト
