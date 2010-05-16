@@ -225,7 +225,7 @@ static void _changeState(WIFILOGIN_WORK* pWork,StateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(WIFILOGIN_WORK* pWork,StateFunc state, int line)
 {
-  NET_PRINT("neg: %d\n",line);
+  NET_PRINT("log: %d\n",line);
   _changeState(pWork, state);
 }
 #endif
@@ -527,7 +527,7 @@ static void _saveingWait(WIFILOGIN_WORK* pWork)
 static void _saveingStart(WIFILOGIN_WORK* pWork)
 {
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
-    _connectingCommonWait(pWork);
+//    _connectingCommonWait(pWork);  //‚±‚±‚Åó‘Ô‚ª‘JˆÚ‚µ‚Ä‚µ‚Ü‚¤‚½‚ß ƒGƒ‰[‚à‚¢‚ç‚È‚¢    _checkError(pWork);
   }
   else{
     MyStatus_SetProfileID( GAMEDATA_GetMyStatus(pWork->gamedata), WifiList_GetMyGSID(pWork->pList) );

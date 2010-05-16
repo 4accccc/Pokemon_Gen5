@@ -471,14 +471,18 @@ int GFL_NET_DWC_connect()
          DWC_SetBuddyFriendCallback(BuddyFriendCallback, NULL);
          DWC_ProcessFriendsMatch();
        }
-       _CHANGE_STATE(MDSTATE_UPDATESERVERSASYNC);
+     //  _CHANGE_STATE(MDSTATE_UPDATESERVERSASYNC);
      }
-     else{
-       _CHANGE_STATE(MDSTATE_LOGIN);
-     }
+    _CHANGE_STATE(MDSTATE_UPDATESERVERSASYNC);
+//     else{
+//       _CHANGE_STATE(MDSTATE_LOGIN);
+//     }
     break;
   case MDSTATE_UPDATESERVERSASYNC:
     DWC_ProcessFriendsMatch();
+    if(_dWork->pFriendData==NULL){
+      _CHANGE_STATE(MDSTATE_LOGIN);
+    }
     break;
 
   case MDSTATE_LOGIN:
