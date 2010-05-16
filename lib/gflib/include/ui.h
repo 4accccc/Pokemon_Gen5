@@ -46,7 +46,8 @@ typedef enum {
   GFL_UI_SLEEP_NET = 0x04,       ///< 通信全般
   GFL_UI_SLEEP_MIC = 0x08,       ///< MIC
   GFL_UI_SLEEP_MB  = 0x10,       ///< マルチブート子機
-  GFL_UI_SLEEP_USER = 0x20,      ///< ここからは外部定義になる
+  GFL_UI_SLEEP_NETIRC = 0x20,    ///< 赤外線ワイヤレス
+  GFL_UI_SLEEP_USER = 0x40,      ///< ここからは外部定義になる
 } GF_UI_SLEEP_e;
 
 
