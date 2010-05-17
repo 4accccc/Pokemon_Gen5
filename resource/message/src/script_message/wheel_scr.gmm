@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-12T12:20:34"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-17T17:47:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="287"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1694,7 +1694,7 @@ OL</attribute>
 		<attribute name="キャラ指定">WAITRESS
 ウェイトレス</attribute>
 		<language name="JPN" width="256">あっ　そうですか▼
-まあ　わたし　しばらく　このあたり
+まあ　ワタシ　しばらく　このあたり
 いると　おもいますから</language>
 		<language name="JPN_KANJI" width="256">あっ　そうですか▼
 まあ　しばらく　この辺り
@@ -1733,7 +1733,7 @@ OL</attribute>
 スッキリ　しちゃったー！▼
 やっぱ　おんなのこ　どうしでしか
 はなせないことって　ありますよね！▼
-わたし　しばらく　このあたりに
+ワタシ　しばらく　このあたりに
 いると　おもいます！▼
 ひまなとき　あったら
 また　こえ　かけて　くださいね！</language>
@@ -1743,7 +1743,7 @@ OL</attribute>
 スッキリ　しちゃったー！▼
 やっぱ　女の子　同士でしか
 話せないことって　ありますよね！▼
-わたし　しばらく　この辺りに
+ワタシ　しばらく　この辺りに
 いると　思います！▼
 ひまなとき　あったら
 また　声　かけて　くださいね！</language>
@@ -1763,7 +1763,7 @@ OL</attribute>
 		<language name="JPN" width="256">あー！　この　あいだの　ひとー！
 げんき　してましたー？▼
 もしも　じかん　あったら　また
-わたしに　つきあって　くださいよ▼
+ワタシに　つきあって　くださいよ▼
 ポケモンしょうぶ　したり
 かんらんしゃに　のって▽
 おしゃべり　しません？</language>
@@ -1829,7 +1829,7 @@ OL</attribute>
 やっぱり　あなたの　ほうが
 ポケモンの　あつかいも▽
 じょうずだし　かなわないです▼
-わたしよりも　ずっと　やせてて
+ワタシよりも　ずっと　やせてて
 かおも　ちいさいし……▽
 なんか　あこがれちゃいますよ！▼
 それじゃあ　そろそろ
@@ -1857,7 +1857,7 @@ OL</attribute>
 		<language name="JPN" width="256">あーあ　もう　おわっちゃった！▼
 やっぱり　あなたと　あそんでると
 じかんが　すぎるの　はやいな！▼
-わたし　って　あんまり　ともだちが
+ワタシ　って　あんまり　ともだちが
 おおいタイプ　じゃ　ないから▽
 こうして　いっしょに　いろんなこと▽
 したり　はなせる　あいて　って▽
