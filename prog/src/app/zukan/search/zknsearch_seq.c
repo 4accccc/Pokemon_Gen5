@@ -238,6 +238,8 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 	wk->page = 0xff;
 
+  ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );  // モードを設定したいのでリセットする
+
 	return MAINSEQ_INIT_MENU;
 }
 
@@ -422,13 +424,50 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 		PMSND_StopSE();
 	}
 
+
+  // 分割検索エンジン
+	if( wk->loadingCnt == 1 ){
+    // 生成
+    wk->egn_wk = ZUKAN_SEARCH_ENGINE_DivInit(
+        wk->dat->savedata,
+				wk->dat->sort,
+				HEAPID_ZUKAN_SYS );
+    wk->egn_st = ZKN_SCH_EGN_DIV_STATE_CONTINUE;
+  }
+  else if( wk->loadingCnt >= 2 && wk->egn_st == ZKN_SCH_EGN_DIV_STATE_CONTINUE ){
+    u16  num;
+    u16* list;
+    // 検索
+    wk->egn_st = ZUKAN_SEARCH_ENGINE_DivSearch(
+               wk->egn_wk,
+               HEAPID_ZUKAN_SYS,
+               &num,
+               &list );
+    if( wk->egn_st == ZKN_SCH_EGN_DIV_STATE_FINISH )
+    {
+      wk->dat->listMax = num;
+      wk->dat->list = list;
+      // 破棄
+      ZUKAN_SEARCH_ENGINE_DivExit(
+               wk->egn_wk
+      );
+    }
+  }
+  if( wk->loadingCnt == (60*2+1) && wk->egn_st == ZKN_SCH_EGN_DIV_STATE_CONTINUE ){  // まだ終わっていないとき
+    wk->loadingCnt = (60*2+1) -1;  // カウントを止めておく
+  }
+
+
 	if( wk->loadingCnt == (60*2+1) ){
 		wk->loadingCnt = 0;
-		wk->dat->listMax = ZUKAN_SEARCH_ENGINE_Search(
-												wk->dat->savedata,
-												wk->dat->sort,
-												HEAPID_ZUKAN_SYS,
-												&wk->dat->list );
+
+//    分割検索に変更したのでコメントアウト
+//		wk->dat->listMax = ZUKAN_SEARCH_ENGINE_Search(
+//												wk->dat->savedata,
+//												wk->dat->sort,
+//												HEAPID_ZUKAN_SYS,
+//												&wk->dat->list );
+
 		if( wk->dat->listMax != 0 ){
 //			PMSND_StopSE();
 			PMSND_PlaySE( ZKNSEARCH_SE_HIT );

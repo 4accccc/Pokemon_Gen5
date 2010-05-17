@@ -48,6 +48,14 @@ enum {
 	/* 直値で。 */
 };
 
+// 分割検索エンジンの状態
+typedef enum
+{
+  ZKN_SCH_EGN_DIV_STATE_CONTINUE,  // 検索継続中
+  ZKN_SCH_EGN_DIV_STATE_FINISH,    // 検索完了
+}
+ZKN_SCH_EGN_DIV_STATE;
+
 
 //=============================================================================
 /**
@@ -64,6 +72,9 @@ typedef struct {
 	u8	form;				// 形（１４種）
 }ZKNCOMM_LIST_SORT;
 
+// 分割検索エンジンワーク
+typedef struct  _ZKN_SCH_EGN_DIV_WORK  ZKN_SCH_EGN_DIV_WORK;
+
 
 //=============================================================================
 /**
@@ -78,6 +89,24 @@ extern u16 ZUKAN_SEARCH_ENGINE_Search(
                const ZKNCOMM_LIST_SORT*   term,
                HEAPID                     heap_id,
                u16**                      list );
+
+//-------------------------------------
+/// 分割検索する(1フレームに少しずつ検索する)
+//=====================================
+extern  ZKN_SCH_EGN_DIV_WORK*  ZUKAN_SEARCH_ENGINE_DivInit(
+               const ZUKAN_SAVEDATA*      zkn_sv,
+               const ZKNCOMM_LIST_SORT*   term,      // 呼び出し元はこれを削除しないこと
+               HEAPID                     heap_id
+);
+extern  void                   ZUKAN_SEARCH_ENGINE_DivExit(
+               ZKN_SCH_EGN_DIV_WORK*      work
+);
+extern  ZKN_SCH_EGN_DIV_STATE  ZUKAN_SEARCH_ENGINE_DivSearch(  // 1フレームに1回呼び出す
+               ZKN_SCH_EGN_DIV_WORK*      work,
+               HEAPID                     heap_id,
+               u16*                       num,      // 戻り値がZKN_SCH_EGN_DIV_STATE_FINISHになったら有効
+               u16**                      list      // 戻り値がZKN_SCH_EGN_DIV_STATE_FINISHになったら有効
+);
 
 //-------------------------------------
 /// 全国/地方図鑑の番号順リストを得る

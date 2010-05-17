@@ -22,6 +22,7 @@
 #include "zukansearch.h"
 #include "zknsearch_bmp_def.h"
 #include "zknsearch_obj_def.h"
+#include "zukan_search_engine.h"
 
 
 //============================================================================================
@@ -109,6 +110,9 @@ typedef struct {
 
 	u16	frameScrollCnt;			// 開始・終了時のスクロールカウンタ
 	s16	frameScrollVal;			// 開始・終了時のスクロール値
+
+  ZKN_SCH_EGN_DIV_WORK*  egn_wk;    // 分割検索エンジンワーク
+  ZKN_SCH_EGN_DIV_STATE  egn_st;    // 分割検索エンジンの状態
 
 }ZKNSEARCHMAIN_WORK;
 
