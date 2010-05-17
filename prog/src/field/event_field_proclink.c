@@ -111,6 +111,7 @@ typedef struct
 {
   EVENT_PROCLINK_MENUOPEN_FUNC  open_func;    //メニュー等を開く関数    (NULLで行わない)
   EVENT_PROCLINK_MENUCLOSE_FUNC close_func;   //メニュー等を閉じる関数  (NULLで行わない)
+  EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC init_before_func;//[in]fieldmap生成前に呼ばれる関数（NULLで行わない）
   void *wk_adrs;                              //コールバックに渡す引数
   const EVENT_PROCLINK_PARAM *param;          //引数
 } PROCLINK_CALLBACK_WORK;
@@ -159,9 +160,10 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs );
 //-------------------------------------
 /// FUNCITON
 //=====================================
-static void PROCLINK_CALLBACK_Set( PROCLINK_CALLBACK_WORK *wk, const EVENT_PROCLINK_PARAM *param, EVENT_PROCLINK_MENUOPEN_FUNC  open_func, EVENT_PROCLINK_MENUCLOSE_FUNC close_func, void *wk_adrs );
+static void PROCLINK_CALLBACK_Set( PROCLINK_CALLBACK_WORK *wk, const EVENT_PROCLINK_PARAM *param, EVENT_PROCLINK_MENUOPEN_FUNC  open_func, EVENT_PROCLINK_MENUCLOSE_FUNC close_func, EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC init_before_func, void *wk_adrs );
 static void PROCLINK_CALLBACK_Open( PROCLINK_CALLBACK_WORK *wk );
 static void PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk );
+static void PROCLINK_CALLBACK_InitBefore( PROCLINK_CALLBACK_WORK *wk );
 
 //-------------------------------------
 /// 各PROCごとのCALL関数とRETURN関数
@@ -394,7 +396,7 @@ GMEVENT * EVENT_ProcLink( EVENT_PROCLINK_PARAM *param, HEAPID heapID )
   wk->item_no   = 0;
   wk->mode      = 0;
 
-  PROCLINK_CALLBACK_Set( &wk->callback, wk->param, wk->param->open_func, wk->param->close_func, wk->param->wk_adrs );
+  PROCLINK_CALLBACK_Set( &wk->callback, wk->param, wk->param->open_func, wk->param->close_func, wk->param->init_before_func, wk->param->wk_adrs );
 
   NAGI_Printf(  "init call %d\n", wk->param->call);
 
@@ -559,6 +561,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     break;
     
   case SEQ_FLD_OPEN:      //PROCから戻る
+    PROCLINK_CALLBACK_InitBefore( &wk->callback );
     GMEVENT_CallEvent(event, EVENT_FieldOpen(wk->param->gsys));
     *seq = SEQ_FLD_FADEIN;
     break;
@@ -701,14 +704,16 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
  *  @param    param       引数
  *  @param    open_func   開く関数
  *  @param    close_func  閉じる関数
+ *  @param    init_before_func  初期化前関数
  *  @param    wk_adrs     引数に与えたワーク
  */
 //-----------------------------------------------------------------------------
-static void PROCLINK_CALLBACK_Set( PROCLINK_CALLBACK_WORK *wk, const EVENT_PROCLINK_PARAM *param, EVENT_PROCLINK_MENUOPEN_FUNC  open_func, EVENT_PROCLINK_MENUCLOSE_FUNC close_func, void *wk_adrs )
+static void PROCLINK_CALLBACK_Set( PROCLINK_CALLBACK_WORK *wk, const EVENT_PROCLINK_PARAM *param, EVENT_PROCLINK_MENUOPEN_FUNC  open_func, EVENT_PROCLINK_MENUCLOSE_FUNC close_func, EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC init_before_func, void *wk_adrs )
 { 
   GFL_STD_MemClear( wk, sizeof(PROCLINK_CALLBACK_WORK) );
   wk->open_func   = open_func;
   wk->close_func  = close_func;
+  wk->init_before_func  = init_before_func;
   wk->wk_adrs     = wk_adrs;
   wk->param       = param;
 }
@@ -738,6 +743,20 @@ static void PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk )
   if( wk->close_func )
   { 
     wk->close_func( wk->param, wk->wk_adrs );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  fieldmap初期化前に呼ばれる関数を実行
+ *
+ *	@param	PROCLINK_CALLBACK_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PROCLINK_CALLBACK_InitBefore( PROCLINK_CALLBACK_WORK *wk )
+{
+  if( wk->init_before_func )
+  {
+    wk->init_before_func( wk->param, wk->wk_adrs );
   }
 }
 

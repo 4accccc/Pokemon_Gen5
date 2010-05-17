@@ -74,6 +74,7 @@ typedef enum
 typedef struct _EVENT_PROCLINK_PARAM EVENT_PROCLINK_PARAM;
 typedef void (*EVENT_PROCLINK_MENUOPEN_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 typedef void (*EVENT_PROCLINK_MENUCLOSE_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+typedef void (*EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 
 //-------------------------------------
 /// イベントの引数
@@ -94,6 +95,7 @@ struct _EVENT_PROCLINK_PARAM
   //コールバック
   EVENT_PROCLINK_MENUOPEN_FUNC  open_func;    //[in ]メニュー等を開く関数   (NULLで行わない)
   EVENT_PROCLINK_MENUCLOSE_FUNC close_func;   //[in ]メニュー等を閉じる関数 (NULLで行わない)
+  EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC init_before_func;//[in]fieldmap生成前に呼ばれる関数（NULLで行わない）
   void *wk_adrs;                              //[in ]コールバックに渡す引数
 
   EVENT_PROCLINK_RESULT     result;     //[out]終了結果

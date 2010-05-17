@@ -94,6 +94,7 @@ static EVENT_PROCLINK_CALL_TYPE FldMapGetProclinkToMenuItem( FIELD_MENU_ITEM_TYP
 //コールバック
 static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+static void FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 //======================================================================
 //  イベント：フィールドマップメニュー
 //======================================================================
@@ -130,6 +131,7 @@ GMEVENT * EVENT_FieldMapMenu(
   mwk->link.event     = event;
   mwk->link.open_func   = FldMapMenu_Open_Callback;
   mwk->link.close_func  = FldMapMenu_Close_Callback;
+  mwk->link.init_before_func  = FldMapMenu_InitBefore_Callback;
   mwk->link.wk_adrs   = mwk;
   mwk->link.data      = EVENT_PROCLINK_DATA_NONE;
 
@@ -385,7 +387,7 @@ static EVENT_PROCLINK_CALL_TYPE FldMapGetProclinkToMenuItem( FIELD_MENU_ITEM_TYP
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *  @brief  プロセスリンクに渡すコールバック
+ *  @brief  プロセスリンクに渡すコールバック  メニューが開く動作のとき実行される
  *
  *  @param  const EVENT_PROCLINK_PARAM *param 引数
  *  @param  *wk_adrs                          自分のワーク
@@ -397,36 +399,23 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
 
   FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork);
 
+  //!!!　※この関数内でのFIELD_SUBSCREEN_ChangeForce関数の使用禁止!!!
+
+  //以前ここでFIELD_SUBSCREEN_ChangeForceでサブスクリーンモードを変更をしていましたが、
+  //そうするとfieldmapのinitで生成したあとにここで再度初期化をおこない無駄なsyncがかかるため、
+  //FldMapMenu_InitBefore_Callback内でgamedataのSubscreenModeに設定するようにしました
+  //そうすれば、fieldmapの初期化時にgamedataのSubscreenModeを見て1回だけ初期化します　nagihashi
+
   //フィールドに戻る場合
-  if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
-      param->result == EVENT_PROCLINK_RESULT_ITEM ||
-      param->result == EVENT_PROCLINK_RESULT_SKILL )
-  { 
-    if( FIELD_SUBSCREEN_GetMode(subscreen) != mwk->return_subscreen_mode )
-    { 
-      FIELD_SUBSCREEN_ChangeForce(subscreen, mwk->return_subscreen_mode );
-    }
-  }
-  else if( param->result == EVENT_PROCLINK_RESULT_DOWSINGMACHINE )
-  {
-    FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_DOWSING );
-  }
-  else
+  if( param->result == EVENT_PROCLINK_RESULT_RETURN )
   { 
     //メニューに戻る場合
-    //fieldmap.c終了時にサブスクリーンモードをgamedataに保存し、
-    //初期化時にわたしているので、ここで再度メニューをする必要はない。
-    //してしまうと、
-    // fieldmap.cのサブスクリーンモード読み直しでinit->exit->initをしてしまい、
-    // PRINTQUEバッファを実行する前に終えてしまう
-    //FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_TOPMENU);
-  
     FIELD_SUBSCREEN_SetTopMenuItemNo( subscreen, mwk->item_type );
   }
 }
 //----------------------------------------------------------------------------
 /**
- *  @brief  プロセスリンクに渡すコールバック
+ *  @brief  プロセスリンクに渡すコールバック  メニューが閉じる動作のとき実行される
  *
  *  @param  const EVENT_PROCLINK_PARAM *param 引数
  *  @param  *wk_adrs                          自分のワーク
@@ -435,5 +424,35 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
 static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 { 
   FMENU_EVENT_WORK *mwk = wk_adrs;
-  //FIELD_SUBSCREEN_SetTopMenuItemNo( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork) , mwk->item_type );
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  プロセスリンクに渡すコールバック  fieldmapの初期化前に実行される
+ *
+ *  @param  const EVENT_PROCLINK_PARAM *param 引数
+ *  @param  *wk_adrs                          自分のワーク
+ */
+//-----------------------------------------------------------------------------
+static void FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
+{ 
+  FMENU_EVENT_WORK *mwk = wk_adrs;
+  GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( mwk->gmSys );
+
+  switch( param->result )
+  {
+  case EVENT_PROCLINK_RESULT_DOWSINGMACHINE:
+    GAMEDATA_SetSubScreenMode( gamedata, FIELD_SUBSCREEN_DOWSING );
+    break;
+
+  case EVENT_PROCLINK_RESULT_RETURN:
+    GAMEDATA_SetSubScreenMode( gamedata, FIELD_SUBSCREEN_TOPMENU );
+    break;
+
+  case EVENT_PROCLINK_RESULT_EXIT:
+    /* fallthrough */
+  case EVENT_PROCLINK_RESULT_ITEM:
+    /* fallthrough */
+  case EVENT_PROCLINK_RESULT_SKILL:
+    GAMEDATA_SetSubScreenMode( gamedata, mwk->return_subscreen_mode );
+  }
 }
