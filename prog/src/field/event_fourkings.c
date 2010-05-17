@@ -1687,7 +1687,7 @@ static void BAD_SOUND_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
   if( *p_wk->p_localwk_1 ){
     if( p_wk->se_stop == FALSE ){
       FSND_StopEnvSE( p_wk->p_fieldsound, SEQ_SE_FLD_116 );
-      p_wk->se_stop = FALSE;
+      p_wk->se_stop = TRUE;
     }
   }
 }
