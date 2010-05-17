@@ -42,9 +42,9 @@ extern "C"{
 //=====================================
 extern void FIELD_FLAGCONT_INIT_WalkStepOver(GAMEDATA * gdata, FIELDMAP_WORK* fieldWork);   // fieldmap.c
 extern void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id);        // event_mapchange.c
-extern void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id);         // –¢ŽÀ‘•
-extern void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id);       // –¢ŽÀ‘•
-extern void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id);         // –¢ŽÀ‘•
+extern void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id);        // event_mapchange.c
+extern void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id);      // event_mapchange.c
+extern void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id);        // event_mapchange.c
 extern void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id);       // event_mapchange.c
 extern void FIELD_FLAGCONT_INIT_Continue(GAMEDATA * gdata, u16 zone_id);       // event_mapchange.c
 extern void FIELD_FLAGCONT_INIT_FieldIn(GAMEDATA * gdata, u16 zone_id);
