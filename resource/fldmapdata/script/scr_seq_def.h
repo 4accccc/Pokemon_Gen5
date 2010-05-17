@@ -10590,20 +10590,22 @@
 //--------------------------------------------------------------
 /**
  *  _GET_QUIZ     クイズ取得
+ * @param all   全問題から抽選していいか？　TRUEのとき全問題から抽選
  * @param quiz  クイズ
  * @param hint  ヒント
  * @param ans   答え簡易会話単語コード
  */
 //--------------------------------------------------------------
-#define _GET_QUIZ( quiz, hint, ans ) \
-    _ASM_GET_QUIZ quiz, hint, ans
+#define _GET_QUIZ( all, quiz, hint, ans ) \
+    _ASM_GET_QUIZ all, quiz, hint, ans
 
-  .macro _ASM_GET_QUIZ quiz, hint, ans
+  .macro _ASM_GET_QUIZ all, quiz, hint, ans
   .short EV_SEQ_GET_QUIZ
+  .short \all
   .short \quiz
   .short \hint
   .short \ans
-  .endm  
+  .endm
 
 
 
