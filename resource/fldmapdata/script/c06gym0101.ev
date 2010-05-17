@@ -213,7 +213,7 @@ _TALK_OBJ_START()
 		}
 		
 		//～～は　フウロから　ジェットバッジを　もらった
-		_SYSWIN_MSG( msg_c06gym0101_leader_03 , POS_DOWN )
+		_SYSWIN_MSG( msg_c06gym0101_leader_03 , POS_DEFAULT )
 		_SYSWIN_CLOSE()
 
 		//あと　すごく　たのしい　ポケモンしょうぶを
