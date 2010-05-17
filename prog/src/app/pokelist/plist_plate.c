@@ -197,11 +197,14 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   PLIST_PLATE_CheckBattleOrder( work , plateWork );
       
   //参加番号のチェック
-  for( i=0;i<6;i++ )
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
   {
-    if( work->plData->in_num[i] == plateWork->idx +1 )
+    for( i=0;i<6;i++ )
     {
-      plateWork->btlOrder = i;
+      if( work->plData->in_num[i] == plateWork->idx +1 )
+      {
+        plateWork->btlOrder = i;
+      }
     }
   }
   
