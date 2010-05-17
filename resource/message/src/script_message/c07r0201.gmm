@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="satou" host="W00177" date="2010-05-15T19:05:19"/>
+	<create user="satou" host="W00177" date="2010-05-17T14:50:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -680,9 +680,9 @@
 		<comment>シママ</comment>
 		<attribute name="キャラ指定">クイズその16</attribute>
 		<language name="JPN" width="256">たてがみから　でんきを　だす
-たいでんポケモンは　なにかな？</language>
+たいでんポケモンは　なにかな？▼</language>
 		<language name="JPN_KANJI" width="256">たてがみから　電気を　出す
-たいでんポケモンは　なにかな？</language>
+たいでんポケモンは　なにかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -698,27 +698,27 @@
 		<comment>エモンガ</comment>
 		<attribute name="キャラ指定">クイズその18</attribute>
 		<language name="JPN" width="256">おおきな　みみの
-モモンガポケモンって　なにかな？</language>
+モモンガポケモンって　なにかな？▼</language>
 		<language name="JPN_KANJI" width="256">大きな　耳の
-モモンガポケモンって　なにかな？</language>
+モモンガポケモンって　なにかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>バチュル</comment>
 		<attribute name="キャラ指定">クイズその19</attribute>
 		<language name="JPN" width="256">くっつきポケモンって
-なんの　ことかな？</language>
+なんの　ことかな？▼</language>
 		<language name="JPN_KANJI" width="256">くっつきポケモンって
-なんの　ことかな？</language>
+なんの　ことかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ハトーボー</comment>
 		<attribute name="キャラ指定">クイズその20</attribute>
 		<language name="JPN" width="256">のばとポケモン　と
-いえば　なにかな？</language>
+いえば　なにかな？▼</language>
 		<language name="JPN_KANJI" width="256">のばとポケモン　と
-いえば　なにかな？</language>
+いえば　なにかな？▼</language>
 	</row>
 
 	<row id="msg_quiz_21" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
