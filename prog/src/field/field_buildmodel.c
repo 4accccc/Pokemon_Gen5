@@ -41,7 +41,6 @@
 #include "field/field_comm/intrude_work.h"
 
 
-#define BMODEL_TEXSET (1)
 
 //============================================================================================
 //  DEBUG リソースメモリ使用量の検査
@@ -319,7 +318,7 @@ static inline u8 AnimeNoAssert(u8 anmNo)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man);
+static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man, BMODEL_ID default_id );
 static u16 calcArcIndex(u16 area_id);
 
 static void loadAreaBMData( FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id );
@@ -511,19 +510,20 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 	u16 bmlist_index = calcArcIndex(area_id);
   ARCID bmtex_arc_id;
   ARCID mdl_arc_id;
+  BMODEL_ID default_id;
   int i;
-
-	GFL_STD_MemClear(man->BMIDToEntryTable, sizeof(man->BMIDToEntryTable));
 
   if (AREADATA_GetInnerOuterSwitch(areadata) != 0) 
   {	
     mdl_arc_id = ARCID_BMODEL_OUTDOOR_AREA;
     bmtex_arc_id = ARCID_BMODEL_TEXSET_OUTDOOR;
+    default_id = NARC_output_buildmodel_outdoor_rock_01_nsbmd;
   }
   else
   {	
     mdl_arc_id = ARCID_BMODEL_INDOOR_AREA;
     bmtex_arc_id = ARCID_BMODEL_TEXSET_INDOOR;
+    default_id = NARC_output_buildmodel_indoor_dust01_nsbmd;
   }
 
   // エリア別配置モデルデータの読み込み
@@ -536,7 +536,7 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   BMINFO_Load(man);
 
 	//ID→登録順序の変換データテーブル生成
-	makeBMIDToEntryTable(man);
+	makeBMIDToEntryTable( man, default_id );
 
   createAllResource( man, gray_scale );
   createFullTimeObjHandle( man, &man->g3dMapObj );
@@ -800,14 +800,30 @@ static void releaseAreaBMData( FIELD_BMODEL_MAN * man )
 //------------------------------------------------------------------
 //BMODEL_IDで引くBMIDToEntryTableにはentryToBMIDTableへのオフセットを格納
 //------------------------------------------------------------------
-static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man)
+static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man, BMODEL_ID default_id )
 {
 	u8 entryNo;
+  u8 clearCode;
+  int i;
+
+	GFL_STD_MemFill(man->BMIDToEntryTable, BMODEL_ENTRY_MAX, sizeof(man->BMIDToEntryTable));
+
 	for (entryNo = 0; entryNo < man->entryCount; entryNo++)
 	{	
 		BMODEL_ID bm_id = man->bmInfo[entryNo].bm_id;
 		man->BMIDToEntryTable[bm_id] = entryNo;
 	}
+
+  //Outdoor/Indoorそれぞれのデフォルトのエントリーナンバーを取り出す
+  clearCode = man->BMIDToEntryTable[ default_id ];
+  for ( i = 0; i < BMODEL_ID_MAX; i ++ )
+  {
+    //初期値のままの箇所にはデフォルトに対応したエントリナンバーを書き込む
+    if ( man->BMIDToEntryTable[i] == BMODEL_ENTRY_MAX )
+    {
+      man->BMIDToEntryTable[i] = clearCode;
+    }
+  }
 }
 
 //------------------------------------------------------------------
@@ -2066,7 +2082,7 @@ FIELD_BMODEL * FIELD_BMODEL_Create_Direct(
   // 表示ステータス設定
   bmodel->g3dObjStatus = *status;
   // モデル制御オブジェクトを作成
-  entryNo = man->BMIDToEntryTable[bmodel_id];
+  entryNo = BMIDtoEntryNo( man, bmodel_id );
   objRes = &(man->objRes[entryNo]);
   OBJHND_initialize( man, &bmodel->objHdl, objRes );
 
