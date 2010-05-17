@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-16T22:36:59"/>
+	<create user="taya" host="W00146" date="2010-05-17T11:46:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -680,6 +680,10 @@
 
 	<row id="DMPSTR_ID_L">
 		<language name="JPN" width="256">ID L</language>
+	</row>
+
+	<row id="DMPSTR_EVENT_FLAG">
+		<language name="JPN" width="256">イベントはいふ</language>
 	</row>
 
 	<flowchart-group-list>
