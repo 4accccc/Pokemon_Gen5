@@ -32,7 +32,7 @@
 
 #include "ev_time.h"
 #include "savedata/system_data.h"
-
+#define PRE_QUIZ_NUM_MAX  (22)
 #define NORMAL_QUIZ_NUM_MAX  (30)
 #define QUIZ_NUM_MAX  (NORMAL_QUIZ_NUM_MAX+1)   //’Êí30–â+’a¶“ú–â‘è1–â
 
@@ -56,6 +56,7 @@ VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
   SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
   
+  u16 all = SCRCMD_GetVMWorkValue( core, work );
   u16 *quiz = SCRCMD_GetVMWork( core, work );
   u16 *hint = SCRCMD_GetVMWork( core, work );
   u16 *ans = SCRCMD_GetVMWork( core, work );
@@ -88,8 +89,17 @@ VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
   else
   {
     u32 rnd;
-    //0`29‚Ì—”‚ğ‚Æ‚é
-    rnd = GFUser_GetPublicRand(NORMAL_QUIZ_NUM_MAX);    
+    //‘S–â‘è‚©‚ç’Š‘I‚µ‚Ä‚¢‚¢‚©H
+    if (all)
+    {
+      //0`29‚Ì—”‚ğ‚Æ‚é
+      rnd = GFUser_GetPublicRand(NORMAL_QUIZ_NUM_MAX);
+    }
+    else
+    {
+      //0`PRE_QUIZ_NUM_MAX-1‚Ì—”‚ğ‚Æ‚é
+      rnd = GFUser_GetPublicRand(PRE_QUIZ_NUM_MAX);
+    }
     *quiz = msg_quiz_01 + rnd;
     *hint = msg_quiz_hint_01 + rnd;
     *ans = answer[rnd];
