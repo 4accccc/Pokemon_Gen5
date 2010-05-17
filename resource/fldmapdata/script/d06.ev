@@ -115,7 +115,7 @@ EVENT_START    ev_d06_stopper_01
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_01)
 		_OBJ_ANIME_WAIT()
 		
-		//ヤーコンが振り向く
+		//ヤーコン：巣の前へ
 		IF $LWK_HERO_POSX == 105 THEN 
 			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_a)
 		ELSIF $LWK_HERO_POSX == 106 THEN
@@ -126,15 +126,10 @@ EVENT_START    ev_d06_stopper_01
 			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_d)
 		ENDIF
 		
-		//主人公が振り向く
-		//主人公の動きとヤーコンの動きを合わせる為のウェイト
-		_TIME_WAIT(16)
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_l)
+		//100517斉藤マ調整
 		_OBJ_ANIME_WAIT()
-		
-		//主人公の動きとヤーコンの動きを合わせる為のウェイト		
-		_TIME_WAIT(8)
-		//主人公が振り向く
+
+		//主人公：上を向く
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_u)
 		_OBJ_ANIME_WAIT()
 		
