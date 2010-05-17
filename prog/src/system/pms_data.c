@@ -40,7 +40,6 @@
 #define SENTENCE_ID_DEFAULT   (0)
 #define SENTENCE_TYPE_CLEAR   (0xffff)
 
-//TODO 適当
 #define PMS_MESSAGE_BUF_SIZE (256)  //メッセージバッファの作成に使うサイズ
 
 //--------------------------------------------------------------
@@ -587,7 +586,6 @@ u32 PMSDAT_GetSentenceIdMax( u32 sentence_type )
   //if( sentence_type < NELEMS(SentenceDatID) )
   if( sentence_type < PMS_TYPE_MAX )
   {
-//    /// @TODO マジックナンバー
 //    // とりあえず現状は全タイプ20個になっているので...
 //    return 20;
 

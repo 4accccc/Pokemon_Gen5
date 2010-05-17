@@ -420,7 +420,7 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
   }
 
   // メンバコピー
-  // @TODO CLACTとBMPWINを保持しておいて構造体を丸ごとコピーするほうが保守性が高い。
+  // CLACTとBMPWINを保持しておいて構造体を丸ごとコピーするほうが保守性が高い。
   dst->print_util.transReq = src->print_util.transReq;
   dst->b_useflag = src->b_useflag;
   dst->b_visible = src->b_visible;
@@ -949,7 +949,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
     }
   }
   
-  // @TODO 一度開放しているのであまり効率が良くない。
+  // 一度開放しているのであまり効率が良くない。
   // 負荷がかかるようであれば、PMSDAT_ToStringの中でしていることをこちらに持ってくる。
   // もしくはPMSDATの方で後からレジストする関数を作る。
   GFL_STR_DeleteBuffer( buf_src );

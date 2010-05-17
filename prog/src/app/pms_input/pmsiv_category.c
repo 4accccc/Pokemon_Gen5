@@ -291,7 +291,7 @@ void PMSIV_CATEGORY_SetupGraphicDatas( PMSIV_CATEGORY* wk, ARCHANDLE* p_handle )
 
   HOSAKA_Printf("BG FRM_MAIN_CATEGORY base charpos=%d \n", charpos);
 
-	//TODO こいつはキャラのアドレスを固定してやらないと、解放後に上書きされるかも
+	//こいつはキャラのアドレスを固定してやらないと、解放後に上書きされるかも
 	//BMPWINを保持するように変更
 	charpos = setup_group_window( wk, charpos );
   
@@ -909,7 +909,6 @@ void PMSIV_CATEGORY_StartModeChange( PMSIV_CATEGORY* wk )
   }
   else
   {
-    //@TODO ↓1キャラが削れる
 	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(p_handle, NARC_pmsi_pms_bg_main01_NSCR,
 		  FRM_MAIN_CATEGORY, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	  
