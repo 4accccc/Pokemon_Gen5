@@ -180,6 +180,7 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  );
 static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude );
 static void dmgrecClearWork( BTL_POKEPARAM* bpp );
 static void dmgrecFwdTurn( BTL_POKEPARAM* bpp );
+static void setLevelUpWaza( BTL_POKEPARAM* bpp );
 static inline void flgbuf_clear( u8* buf, u32 size );
 static inline void flgbuf_set( u8* buf, u32 flagID );
 static inline void flgbuf_reset( u8* buf, u32 flagID );
@@ -519,6 +520,8 @@ void BPP_WAZA_Copy( const BTL_POKEPARAM* bppSrc, BTL_POKEPARAM* bppDst )
   for(i=0; i<NELEMS(bppDst->waza); ++i){
     bppDst->waza[i] = bppSrc->waza[i];
   }
+  bppDst->wazaCnt = bppSrc->wazaCnt;
+  TAYA_Printf("ワザカウント=%d\n", bppDst->wazaCnt );
 }
 
 //=============================================================================================
@@ -866,12 +869,12 @@ BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp )
  *
  */
 //=============================================================================================
-u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
+u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 {
-  if( wazaIdx < pp->wazaCnt ){
-    return  pp->waza[wazaIdx].pp;
+  if( wazaIdx < bpp->wazaCnt ){
+    return  bpp->waza[wazaIdx].pp;
   }else{
-    GF_ASSERT_MSG(0,"wazaIdx:%d, wazaCnt:%d", wazaIdx, pp->wazaCnt);
+    GF_ASSERT_MSG(0,"wazaIdx:%d, wazaCnt:%d", wazaIdx, bpp->wazaCnt);
     return 0;
   }
 }
@@ -885,10 +888,10 @@ u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BPP_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx )
+BOOL BPP_IsPPFull( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 {
-  GF_ASSERT(wazaIdx < pp->wazaCnt);
-  return  pp->waza[wazaIdx].pp == pp->waza[wazaIdx].ppMax;
+  GF_ASSERT(wazaIdx < bpp->wazaCnt);
+  return  bpp->waza[wazaIdx].pp == bpp->waza[wazaIdx].ppMax;
 }
 //=============================================================================================
 /**
@@ -2587,6 +2590,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
   }
   return FALSE;
 }
+
 //=============================================================================================
 /**
  * レベル100になるまでに必要な経験値を取得
