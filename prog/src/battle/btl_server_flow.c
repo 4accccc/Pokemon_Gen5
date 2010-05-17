@@ -14090,7 +14090,8 @@ static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 {
   const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
 
-  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
+// ‘å”š”­->‚¨‚ñ‚Ë‚ñ ‚ª‚ ‚é‚Ì‚ÅAê‚É‚¢‚È‚­‚Ä‚à—LŒø
+//  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
     if( !BPP_IsDead(target) ){
