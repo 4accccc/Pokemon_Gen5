@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T14:16:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T14:17:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -551,7 +551,7 @@
 水が　流れ落ちている！</language>
 	</row>
 
-	<row id="msg_teleport_ask_01">
+	<row id="msg_teleport_ask_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>フィールド技テレポート
 ・0＝マップ名</comment>
 		<language name="JPN" width="256">さいごに　やすんだ
