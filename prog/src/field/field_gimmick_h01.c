@@ -225,9 +225,6 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // 橋ISSのマスターボリュームを復帰
   ISS_3DS_SYS_SetMasterVolume( work->iss3dsSys, 127 );
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-H01: set up\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -259,9 +256,6 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワークを破棄
   GMK_TMP_WK_FreeWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-H01: end\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -363,8 +357,6 @@ static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
 
     // 設定データ取得
     data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h01_trailer1_head_3dsu_data_bin, heapID );
-    OBATA_Printf( "trailer1 data[0] = %d\n", data[0] );
-    OBATA_Printf( "trailer1 data[1] = %d\n", data[1] );
 
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_1_HEAD );
     sobj = SOUNDOBJ_Create( fieldmap, status, ISS3DS_UNIT_TRACK09, data[0] << FX32_SHIFT, data[1] );
@@ -387,8 +379,6 @@ static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
 
     // 設定データ取得
     data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h01_trailer2_head_3dsu_data_bin, heapID );
-    OBATA_Printf( "trailer2 data[0] = %d\n", data[0] );
-    OBATA_Printf( "trailer2 data[1] = %d\n", data[1] );
 
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_TRAILER_2_HEAD );
     sobj = SOUNDOBJ_Create( fieldmap, status, ISS3DS_UNIT_TRACK10, data[0] << FX32_SHIFT, data[1] );
@@ -410,8 +400,6 @@ static void InitWork( H01WORK* work, FIELDMAP_WORK* fieldmap )
 
     // 設定データ取得
     data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h01_ship_3dsu_data_bin, heapID );
-    OBATA_Printf( "ship data[0] = %d\n", data[0] );
-    OBATA_Printf( "ship data[1] = %d\n", data[1] );
 
     status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, 0, OBJ_SHIP );
     sobj = SOUNDOBJ_Create( fieldmap, status, ISS3DS_UNIT_TRACK08, data[0] << FX32_SHIFT, data[1] );
@@ -458,14 +446,6 @@ static void LoadWaitTime( H01WORK* work )
     work->maxWait[i] = data[1];
     GFL_HEAP_FreeMemory( data );
   }
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-H01: load wait data\n" );
-  for( i=0; i<SOBJ_NUM; i++ )
-  {
-    OBATA_Printf( "- minWait[%d] = %d\n", i, work->minWait[i] );
-    OBATA_Printf( "- maxWait[%d] = %d\n", i, work->maxWait[i] );
-  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -479,20 +459,6 @@ static void LoadWindData( H01WORK* work )
 {
   GFL_ARC_LoadDataOfs( &work->wind_data,  
                        ARCID, NARC_h01_wind_data_bin, 0, sizeof(WIND_DATA) );
-  // DEBUG:
-  {
-    int i;
-    OBATA_Printf( "GIMMICK-H01: load wind data\n" );
-    OBATA_Printf( "- trackBit = " );
-    for( i=0; i<16; i++ )
-    {
-      if( work->wind_data.trackBit & (1<<(16-i-1)) ) OBATA_Printf( "■" );
-      else                                           OBATA_Printf( "□" );
-    }
-    OBATA_Printf( "\n" );
-    OBATA_Printf( "- minHeight = %d\n", (int)work->wind_data.minHeight );
-    OBATA_Printf( "- maxHeight = %d\n", (int)work->wind_data.maxHeight );
-  } 
 }
 
 //------------------------------------------------------------------------------------------
@@ -516,7 +482,6 @@ static void SaveGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap )
   {
     fx32 frame  = SOUNDOBJ_GetAnimeFrame( work->sobj[i] );
     gmk_save[i] = (frame >> FX32_SHIFT);
-    OBATA_Printf( "GIMMICK-H01: gimmick save[%d] = %d\n", i, gmk_save[i] );
   }
 }
 
@@ -543,7 +508,6 @@ static void LoadGimmick( H01WORK* work, FIELDMAP_WORK* fieldmap )
     {
       fx32 frame = gmk_save[i] << FX32_SHIFT;
       SOUNDOBJ_SetAnimeFrame( work->sobj[i], frame );
-      OBATA_Printf( "GIMMICK-H01: gmk load[%d] = %d\n", i, gmk_save[i] );
     }
   }
 }

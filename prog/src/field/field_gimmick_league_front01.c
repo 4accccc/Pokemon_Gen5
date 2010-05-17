@@ -243,9 +243,6 @@ void LEAGUE_FRONT_01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   LF01WORK* work;
   HEAPID heap_id;
 
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-LF01: setup\n" ); 
-
   // ギミック管理ワーク作成
   heap_id      = FIELDMAP_GetHeapID( fieldmap );
   work         = (LF01WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID,  heap_id, sizeof(LF01WORK) );
@@ -273,9 +270,6 @@ void LEAGUE_FRONT_01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワーク破棄
   GMK_TMP_WK_FreeWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-LF01: end\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -318,9 +312,6 @@ static void Save( FIELDMAP_WORK* fieldmap, GIMMICKWORK_DATA_INDEX idx, u32 data 
 
   // ギミックワークに保存
   save_work[idx] = data;
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-FL01: save[%d] = %d\n", idx, data );
 }
 
 //------------------------------------------------------------------------------------------
@@ -343,9 +334,6 @@ static u32 Load( FIELDMAP_WORK* fieldmap, GIMMICKWORK_DATA_INDEX idx )
 
   // ギミックワークから取得
   val = save_work[idx];
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-FL01: load[%d] = %d\n", idx, val );
 
   return val;
 }

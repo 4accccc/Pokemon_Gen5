@@ -517,7 +517,9 @@ static void AddNews_SPECIAL( GATEWORK* work ); // 臨時情報を追加する
 static void AddSpNews_DIRECT( GATEWORK* work, const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx ); // 臨時情報 ( メッセージそのまま ) を追加する
 static void AddSpNews_GYM( GATEWORK* work ); // 臨時情報 ( ジム情報 ) を追加する
 // デバッグ
+#ifdef PM_DEBUG
 static void DebugPrint_SAVEWORK( const SAVEWORK* save ); // セーブワークを出力する
+#endif
 
 
 //==========================================================================================
@@ -580,9 +582,6 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   RecoverElboardStatus( work );  // 掲示板の状態復帰
   SetElboardPos( work ); // 電光掲示板を配置
   StartMonitorAnime( work ); // モニター・アニメーション開始
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-GATE: setup\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -602,9 +601,6 @@ void GATE_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワークを破棄
   DeleteGateWork( work );
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-GATE: end\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -698,9 +694,6 @@ static void SaveGimmick( const GATEWORK* work )
   saveWork->recoveryFrame    = GOBJ_ELBOARD_GetFrame( work->elboard ) >> FX32_SHIFT; 
   saveWork->champNewsMinutes = work->champNewsMinutes;
   saveWork->newsEntryData    = work->newsEntryData;
-
-  // DEBUG: セーブバッファ出力
-  DebugPrint_SAVEWORK( saveWork );
 }
 
 //------------------------------------------------------------------------------------------
@@ -722,9 +715,6 @@ static void LoadGimmick( GATEWORK* work )
   work->firstSetupFlag   = saveWork->firstSetupFlag;
   work->recoveryFrame    = saveWork->recoveryFrame;  // 掲示板の復帰ポイント
   work->champNewsMinutes = saveWork->champNewsMinutes;
-
-  // DEBUG: セーブバッファ出力
-  DebugPrint_SAVEWORK( saveWork );
 }
 
 //------------------------------------------------------------------------------------------
@@ -2231,6 +2221,7 @@ static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
   dest->weatherNo[0] = weatherNo;
 }
 
+#ifdef PM_DEBUG
 //------------------------------------------------------------------------------------------
 /**
  * @brief セーブワークを出力する
@@ -2267,3 +2258,4 @@ static void DebugPrint_SAVEWORK( const SAVEWORK* save )
                   i, save->newsEntryData.spNewsFlag[i] );
   }
 }
+#endif

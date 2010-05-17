@@ -241,8 +241,6 @@ static void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap )
 
       // 設定データ取得
       data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h03_train1_3ds_unit_data_bin, heapID );
-      OBATA_Printf( "train1 data[0] = %d\n", data[0] );
-      OBATA_Printf( "train1 data[1] = %d\n", data[1] );
 
       // 作成
       status = FLD_EXP_OBJ_GetUnitObjStatus( exObjCnt, 0, OBJ_TRAIN_1 );
@@ -260,8 +258,6 @@ static void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap )
 
       // 設定データ取得
       data = GFL_ARC_LoadDataAlloc( ARCID, NARC_h03_train2_3ds_unit_data_bin, heapID );
-      OBATA_Printf( "train2 data[0] = %d\n", data[0] );
-      OBATA_Printf( "train2 data[1] = %d\n", data[1] );
 
       // 作成
       status = FLD_EXP_OBJ_GetUnitObjStatus( exObjCnt, 0, OBJ_TRAIN_2 );
@@ -302,9 +298,6 @@ static void LoadWaitTime( H03WORK* work )
     work->minWait[i] = data[0];
     work->maxWait[i] = data[1];
     GFL_HEAP_FreeMemory( data );
-    // DEBUG:
-    //OBATA_Printf( "minWait[%d] = %d\n", i, work->minWait[i] );
-    //OBATA_Printf( "maxWait[%d] = %d\n", i, work->maxWait[i] );
   }
 }
 
@@ -329,7 +322,6 @@ static void SaveGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
   {
     fx32 frame  = SOUNDOBJ_GetAnimeFrame( work->sobj[i] );
     gmk_save[i] = (frame >> FX32_SHIFT);
-    OBATA_Printf( "SaveGimmick: gmk_save[%d] = %d\n", i, gmk_save[i] );
   }
 }
 
@@ -356,8 +348,6 @@ static void LoadGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
     {
       fx32 frame = gmk_save[i] << FX32_SHIFT;
       SOUNDOBJ_SetAnimeFrame( work->sobj[i], frame );
-      OBATA_Printf( "LoadGimmick: gmk_save[%d] = %d\n", i, gmk_save[i] );
-      OBATA_Printf( "LoadGimmick: frame = %x\n", i, frame );
     }
   }
 }
