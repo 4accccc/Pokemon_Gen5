@@ -67,10 +67,7 @@ static int seq_LogEntry( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
 static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
-//static int seq_TalkMsgInput( BEACON_VIEW_PTR wk );
 static int seq_ThankYou( BEACON_VIEW_PTR wk );
-//static int seq_ReturnCGear( BEACON_VIEW_PTR wk );
-//static int seq_CallDetailView( BEACON_VIEW_PTR wk );
 
 static void debug_InputCheck(BEACON_VIEW_PTR view);
 static void _sub_DataSetup(BEACON_VIEW_PTR wk);
@@ -224,11 +221,6 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   if( wk->event_id != EV_NONE ){
     if(!bActive){
       //リクエストを強制破棄
-#if 0
-      if( wk->event_id == EV_GPOWER_USE ){
-        wk->ctrl.g_power = GPOWER_ID_NULL;
-      }
-#endif
       BEACON_VIEW_SUB_EventReserveReset( wk );
     }
     return; //イベントリクエスト中はメイン処理をスキップ
@@ -254,22 +246,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   case SEQ_GPOWER_USE:
     wk->seq = seq_GPowerUse( wk );
     break;
-#if 0
-  case SEQ_TALKMSG_INPUT:
-    wk->seq = seq_TalkMsgInput( wk );
-    break;
-#endif
   case SEQ_THANK_YOU:
     wk->seq = seq_ThankYou( wk );
     break;
-#if 0
-  case SEQ_RETURN_CGEAR:
-    wk->seq = seq_ReturnCGear( wk );
-    break;
-  case SEQ_CALL_DETAIL_VIEW:
-    wk->seq = seq_CallDetailView( wk );
-    break;
-#endif
   case SEQ_EV_REQ_WAIT:
   case SEQ_END:
   default:
@@ -576,11 +555,6 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
   if( wk->eff_task_ct ){
     return SEQ_VIEW_UPDATE;
   }
-#if 0
-  if( wk->ctrl.g_power != GPOWER_ID_NULL){
-    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_USE );
-  }
-#endif
   BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
   BeaconView_UpDownViewSet( wk );
   return SEQ_MAIN;
@@ -633,39 +607,9 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
     return SEQ_GPOWER_USE;
   }
   wk->sub_seq = 0;
-#if 0
-  if( wk->ctrl.g_power != GPOWER_ID_NULL){
-    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_USE );
-  }else if( wk->gpower_check_req ){
-    BEACON_VIEW_SUB_EventReserve( wk, EV_GPOWER_CHECK );
-    wk->gpower_check_req = FALSE;
-  }
-#endif
   return SEQ_MAIN;
 }
 
-#if 0
-/*
- *  @brief  一言メッセージを入力＆送信
- */
-static int seq_TalkMsgInput( BEACON_VIEW_PTR wk )
-{
-  switch( wk->sub_seq ){
-  case 0:
-    BeaconView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_ANM );
-    wk->sub_seq++;
-    break;
-  case 1:
-    if(BeaconView_MenuBarCheckAnm( wk, MENU_HELLO )){
-      break;
-    }
-    wk->sub_seq = 0;
-    BEACON_VIEW_SUB_EventReserve( wk, EV_CALL_TALKMSG_INPUT );
-    return SEQ_END;
-  }
-  return SEQ_TALKMSG_INPUT;
-}
-#endif
 /*
  *  @brief  御礼をする相手を選ぶ
  */
@@ -673,41 +617,6 @@ static int seq_ThankYou( BEACON_VIEW_PTR wk )
 {
   return BeaconView_SubSeqThanks( wk );
 }
-
-#if 0
-/*
- *  @brief  CGearに戻る
- */
-static int seq_ReturnCGear( BEACON_VIEW_PTR wk )
-{
-  switch( wk->sub_seq ){
-  case 0:
-    BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_ANM );
-    wk->sub_seq++;
-    break;
-  case 1:
-    if( BeaconView_MenuBarCheckAnm( wk, MENU_RETURN )){
-      break;
-    }
-    BEACON_VIEW_SUB_EventReserve( wk , EV_RETURN_CGEAR );
-    wk->sub_seq = 0;
-    return SEQ_END;
-  }
-  return SEQ_RETURN_CGEAR;
-}
-
-/*
- *  @brief  詳細画面呼び出し
- */
-static int seq_CallDetailView( BEACON_VIEW_PTR wk )
-{
-  if( wk->eff_task_ct ){
-    return SEQ_CALL_DETAIL_VIEW;
-  }
-  BEACON_VIEW_SUB_EventReserve( wk , EV_CALL_DETAIL_VIEW );
-  return SEQ_END;
-}
-#endif
 
 #ifdef PM_DEBUG
 //--------------------------------------------------------------

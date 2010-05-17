@@ -184,7 +184,6 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
       break;
     }
     return SEQ_MAIN;
-//    return SEQ_GPOWER_USE+ret;
   }
 
   //パネルあたり判定
@@ -194,7 +193,6 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
     effReq_SetPanelFlash( wk, ret );
     BEACON_VIEW_SUB_EventReserve( wk, EV_CALL_DETAIL_VIEW );
     return SEQ_MAIN;
-//    return SEQ_CALL_DETAIL_VIEW;
   }
 
   //上下矢印あたり判定
@@ -1057,12 +1055,6 @@ static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 select )
   APP_TASKMENU_WIN_Update( wk->tmenu[select].work );
 
   if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[select].work )){
-#if 0
-    if( select == TMENU_YN_CHECK ){
-      APP_TASKMENU_WIN_ResetDecide( wk->tmenu[select].work );
-      return TRUE;  //<確認>を選んだ場合消さないでリセット
-    }
-#endif
     for( i = 0;i < TMENU_YN_MAX;i++){
       APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
       wk->tmenu[i].work = NULL;
