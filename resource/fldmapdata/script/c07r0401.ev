@@ -164,15 +164,13 @@ EVENT_START   ev_c07r0401_gentleman_01
 							
 						//==================================//
 
+					//レベル差が0
+					ELSIF $LWK_CHECK_NOW_LV == 0 THEN
+						_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_15 ,C07R0401_GENTLEMAN_01)
+						
 					//レベル差が25以下
-					ELSIF $LWK_CHECK_NOW_LV >= 0 THEN
+					ELSIF $LWK_CHECK_NOW_LV >= 1 THEN
 						_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_12 ,C07R0401_GENTLEMAN_01)
-					
-					//全ての条件を既に満たした
-					ELSIF FLAG_ON( FE_C07R0401_ITEM_GET_LV01 ) && FLAG_ON( FE_C07R0401_ITEM_GET_LV02 ) && FLAG_ON( FE_C07R0401_ITEM_GET_LV03 ) THEN
-					
-						//いやーきみにはいいものをいいものを見せてもらった！（終了）
-						_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_14 ,C07R0401_GENTLEMAN_01)
 					
 					//例外処理
 					ELSE
