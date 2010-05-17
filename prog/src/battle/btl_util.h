@@ -228,6 +228,7 @@ extern void BPP_SICKCONT_IncTurn( BPP_SICK_CONT* cont, u8 inc );
 extern void BPP_SICKCONT_SetTurn( BPP_SICK_CONT* cont, u8 turn );
 
 
+
 //===================================================================
 // ポケモンタイプを合成して１変数として扱うための措置
 //===================================================================

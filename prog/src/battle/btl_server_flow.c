@@ -465,6 +465,7 @@ static void scproc_Fight_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
 static void scEvent_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scproc_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
+static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
 static void scEvent_WazaReflect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
@@ -590,7 +591,7 @@ static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
 static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDispFailResult );
 static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable );
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr );
 static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaSick sick, BPP_SICK_CONT sickCont );
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
@@ -3979,11 +3980,14 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), FALSE );
   }
 
+  scproc_EndWazaSeq( wk, attacker, actWaza );
+
   if( reqWaza.wazaID != WAZANO_NULL ){
     BTL_HANDLER_Waza_Remove( attacker, reqWaza.wazaID );
   }
   BTL_HANDLER_Waza_Remove( attacker, orgWaza );
-  scEvent_EndWazaSeq( wk, attacker, orgWaza );
+
+
 }
 //----------------------------------------------------------------------------------
 /**
@@ -4319,6 +4323,22 @@ static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASEQ_START );
   BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+/**
+ * ワザシーケンス終了処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+  scEvent_EndWazaSeq( wk, attacker, waza );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -7460,7 +7480,7 @@ static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
 {
   if( scproc_AddSickCheckFail(wk, target, attacker, sick, sickCont, fAlmost) == FALSE )
   {
-    scproc_AddSickCore( wk, target, attacker, sick, sickCont, fDefaultMsgEnable );
+    scproc_AddSickCore( wk, target, attacker, sick, sickCont, fDefaultMsgEnable, NULL );
     return TRUE;
   }
   return FALSE;
@@ -7586,7 +7606,7 @@ static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL
  */
 //----------------------------------------------------------------------------------
 static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable )
+  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr )
 {
   scPut_AddSick( wk, target, sick, sickCont );
 
@@ -7607,6 +7627,9 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
     BTL_SICK_MakeDefaultMsg( sick, sickCont, target, &wk->strParam );
     handexSub_putString( wk, &wk->strParam );
     HANDEX_STR_Clear( &wk->strParam );
+  }
+  else if( exStr != NULL ){
+    handexSub_putString( wk, exStr );
   }
 
   // 状態異常確定イベントコール
@@ -14097,10 +14120,7 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
           scPut_TokWin_In( wk, pp_user );
         }
 
-        scproc_AddSickCore( wk, target, pp_user, param->sickID, param->sickCont, fDefaultMsg );
-        if( !fDefaultMsg ){
-          handexSub_putString( wk, &param->exStr );
-        }
+        scproc_AddSickCore( wk, target, pp_user, param->sickID, param->sickCont, fDefaultMsg, &param->exStr );
 
         if( param->header.tokwin_flag ){
           scPut_TokWin_Out( wk, pp_user );
