@@ -1595,15 +1595,11 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
 {
   if( BTL_CALC_IsBasicSickID(sick) )
   {
-    PokeSick pokeSick = BPP_GetPokeSick( bpp );
-    GF_ASSERT(pokeSick == POKESICK_NULL);
+    BPP_CurePokeSick( bpp );
   }
 
   bpp->sickCont[ sick ] = contParam;
   bpp->wazaSickCounter[sick] = 0;
-  if( sick == WAZASICK_NEMURI ){
-  }
-
 }
 
 
