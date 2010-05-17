@@ -10883,7 +10883,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_WB, // camera_area
+		NARC_camera_scroll_original_R05_bin, // camera_area
 		0, // padding
 		371,
 		0,
@@ -11510,7 +11510,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_WB, // camera_area
+		NARC_camera_scroll_original_R09_bin, // camera_area
 		0, // padding
 		326,
 		0,
@@ -12071,7 +12071,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_WB, // camera_area
+		NARC_camera_scroll_original_R11_bin, // camera_area
 		0, // padding
 		456,
 		0,
@@ -12665,7 +12665,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_WB, // camera_area
+		NARC_camera_scroll_original_R16_bin, // camera_area
 		0, // padding
 		458,
 		0,
