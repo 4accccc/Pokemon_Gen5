@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-16T05:08:36"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-17T13:22:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,7 +469,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="693"/>
 		<band id="3" index="3" style="0000" width="693"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1313,9 +1313,9 @@
 	<row id="syachi_mystery_01_013" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物をダウンロードするか確認</comment>
 		<language name="JPN" width="216">この　おくりものを
-じゅしん　しますか？</language>
+うけとりますか？</language>
 		<language name="JPN_KANJI">この　おくりものを
-受信しますか？</language>
+受け取りますか？</language>
 	</row>
 
 	<row id="syachi_mystery_01_013_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1332,9 +1332,9 @@
 
 	<row id="syachi_mystery_01_014" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物データを書き込み中</comment>
-		<language name="JPN" width="216">おくりものを　じゅしんちゅう　です
+		<language name="JPN" width="216">おくりものを　うけとっています
 でんげんを　きらないで　ください……</language>
-		<language name="JPN_KANJI">おくりものを　受信中です
+		<language name="JPN_KANJI">おくりものを　受け取っています
 電源を　切らないで　ください……</language>
 	</row>
 

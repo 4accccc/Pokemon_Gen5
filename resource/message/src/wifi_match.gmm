@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T16:38:14"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-17T18:55:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="138"/>
+		<comment position="1" width="216"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -293,7 +293,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="340"/>
 			<font default=" 0:large" position="5" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="98" top="562" right="803" bottom="1190" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
+		<tag-palette left="551" top="42" right="1024" bottom="440" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -423,7 +423,7 @@
 		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0][2:03:４桁:0].[2:01:２桁:1].[2:01:２桁:2]－[2:03:４桁:3].[2:01:２桁:4].[2:01:２桁:5]</language>
 	</row>
 
-	<row id="WIFIMATCH_STR_017" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="WIFIMATCH_STR_017">
 		<comment>ロック中</comment>
 		<language name="JPN" width="256">とうろく　ポケモン</language>
 		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
@@ -434,7 +434,7 @@
 		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
 	</row>
 
-	<row id="WIFIMATCH_STR_017_02" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="WIFIMATCH_STR_017_02">
 		<comment>未登録</comment>
 		<language name="JPN" width="256">とうろく　ポケモン</language>
 		<language name="JPN_KANJI" width="256">登録　ポケモン</language>
@@ -626,7 +626,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_02">
+	<row id="WIFIMATCH_WIFI_STR_02" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいは
 ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
@@ -671,20 +671,27 @@
 探しています……</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_05">
+	<row id="WIFIMATCH_WIFI_STR_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">ポケモングローバルリンクに
-ゲームシンクコードが[BE:00:ページ切り替え（行送り）]
+ゲームシンクＩＤコードが[BE:00:ページ切り替え（行送り）]
 とうろく　されていません[BE:01:ページ切り替え（クリア）]
 ゲームシンク　せっていを　おこない
-ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
-とうろくを　おこなってください[BE:01:ページ切り替え（クリア）]</language>
+おてもとの　パソコンで[BE:00:ページ切り替え（行送り）]
+ポケモングローバルリンクの[BE:00:ページ切り替え（行送り）]
+ホームページで[BE:00:ページ切り替え（行送り）]
+とうろくを　おこなってください[BE:01:ページ切り替え（クリア）]
+http://www.pokemon-gl.com
+（ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモングローバルリンクに
-ゲームシンクコードが[BE:00:ページ切り替え（行送り）]
+ゲームシンクＩＤコードが[BE:00:ページ切り替え（行送り）]
 登録　されていません[BE:01:ページ切り替え（クリア）]
 ゲームシンク設定を　行い
-ポケモングローバルリンクで[BE:00:ページ切り替え（行送り）]
-登録を　おこなってください[BE:01:ページ切り替え（クリア）]</language>
+お手元の　パソコンで[BE:01:ページ切り替え（クリア）]
+ポケモングローバルリンクの
+ホームページで　登録を行ってください[BE:01:ページ切り替え（クリア）]
+http://www.pokemon-gl.com
+（ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_06">
@@ -715,7 +722,7 @@
 参加できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_08" back-color=",,,,,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="WIFIMATCH_WIFI_STR_08">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">せんしゅしょうを　こうしん　します
 でんげんを　きらないで　ください</language>
@@ -723,15 +730,15 @@
 電源を　切らないでください</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_09">
+	<row id="WIFIMATCH_WIFI_STR_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">さんか　できる　たいかいは
-かいさい　されていません[BE:01:ページ切り替え（クリア）]</language>
+げんざい　かいさい　されていません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">参加できる　大会は
-開催されていません[BE:01:ページ切り替え（クリア）]</language>
+現在　開催されていません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_10" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="WIFIMATCH_WIFI_STR_10">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
@@ -793,7 +800,7 @@
 更新できません　でした</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_15" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="WIFIMATCH_WIFI_STR_15">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">バトルボックスの　ポケモンを
 たいかいに　とうろくします[BE:01:ページ切り替え（クリア）]
@@ -919,11 +926,11 @@
 		<language name="JPN_KANJI" width="256">対戦を　続けますか？</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_25">
+	<row id="WIFIMATCH_WIFI_STR_25" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">たいかい　きかんが　すぎました
+		<language name="JPN" width="256">かいさい　きかんが　すぎました
 たいかいを　しゅうりょうします[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">大会　期間が　過ぎました
+		<language name="JPN_KANJI" width="256">開催　期間が　過ぎました
 大会を　終了します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1049,19 +1056,19 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_38" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="WIFIMATCH_WIFI_STR_38">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">エントリーした　たいかいは
-まだ　かいさい　されていません[BE:01:ページ切り替え（クリア）]
+げんざい　かいさい　されていません[BE:01:ページ切り替え（クリア）]
 たいかいの　にっていを
 かくにんして　おまちください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">エントリーした　大会は
-まだ　開催　されていません[BE:01:ページ切り替え（クリア）]
+現在　開催　されていません[BE:01:ページ切り替え（クリア）]
 大会の　日程を
 確認して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_39" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="WIFIMATCH_WIFI_STR_39">
 		<comment>バトルボックスにポケモンが１匹もいない</comment>
 		<language name="JPN" width="256">バトルボックスに
 ポケモンが　１ひきも　いません[BE:01:ページ切り替え（クリア）]
@@ -1075,7 +1082,7 @@
 おいてください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_40" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="WIFIMATCH_WIFI_STR_40">
 		<language name="JPN" width="256">たいせんの　けっかを
 サーバーに　おくりました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">対戦の　結果を
@@ -1180,7 +1187,7 @@
 データが　ありません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_09" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="WIFIMATCH_DPC_STR_09">
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">この　たいかいは
 とちゅうで　ほんたいと　ＤＳカードを[BE:00:ページ切り替え（行送り）]
@@ -1194,7 +1201,7 @@
 解除に　なりました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_10" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="WIFIMATCH_DPC_STR_10">
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">さんかを　かいじょすると
 おなじ　たいかいには[BE:00:ページ切り替え（行送り）]
@@ -1206,7 +1213,7 @@
 解除しても　よろしいですか？</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_11" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="WIFIMATCH_DPC_STR_11">
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">たいかいの　さんかを　かいじょ　します
 ほんとうに　よろしいですか？</language>
@@ -1214,7 +1221,7 @@
 本当に　よろしいですか？</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_12" back-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="WIFIMATCH_DPC_STR_12">
 		<language name="JPN" width="256">たいかいへの　さんかを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会への　参加を
