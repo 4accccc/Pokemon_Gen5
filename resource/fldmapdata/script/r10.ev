@@ -49,27 +49,33 @@ EVENT_START   ev_pos_r10_rival_01
 
 	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	
-	//自転車チェック
-	_PLAYER_FORM_GET( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
-		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
-	ENDIF
-	
 	//主人公座標に応じてライバルに隣接
 	SWITCH $POSZ
 	CASE 117 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z117 )
 		_OBJ_ANIME_WAIT()
-	CASE 118 THEN
+	CASE 118 THEN	  //目の前に立った時
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z118 )
 		_OBJ_ANIME_WAIT()
-	CASE 119 THEN  //目の前に立った時
+	CASE 119 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z119 )
 		_OBJ_ANIME_WAIT()
 	DEFAULT  //目の前に立ったケースと同じ処理を行う
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z118 )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
+	
+	//自転車チェック
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+	
+	//118以外の場合左を向く
+	IF $POSZ != 118 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_02 )
+		_OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//サポートちょっと遅れてかけよってくる
 	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_come )
@@ -267,7 +273,6 @@ _ANIME_LABEL	anm_r10_player_turn_z117
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -285,6 +290,12 @@ _ANIME_LABEL	anm_r10_player_turn_z119
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向くz119
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_turn_02
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
