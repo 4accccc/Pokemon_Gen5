@@ -451,6 +451,28 @@ BOOL BOX2BGWFRM_CheckPartyPokeFrameLeft( BGWINFRM_WORK * wk )
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手持ちポケモンフレームが表示中か
+ *
+ * @param		wk		ＢＧウィンドウフレームワーク
+ *
+ * @retval	"TRUE = あり"
+ * @retval	"FALSE = なし"
+ *
+ * @li	Ｘ座標は見ていない
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BOX2BGWFRM_CheckPartyPokeFrame( BGWINFRM_WORK * wk )
+{
+	s8	x, y;
+
+	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_PARTY, &x, &y );
+	if( y == WINFRM_PARTYPOKE_PY ){
+		return TRUE;
+	}
+	return FALSE;
+}
 
 //============================================================================================
 //	ポケモンメニューフレーム
