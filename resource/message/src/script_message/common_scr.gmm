@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-01T20:41:53"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T14:20:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,12 +336,13 @@
 	</lock>
 
 
-	<row id="msg_common_test_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_common_test_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">テストメッセージです</language>
 		<language name="JPN_KANJI" width="256">テスト文章です</language>
 	</row>
 
-	<row id="msg_yen_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_yen_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#808080,,,#808080,,#404040,#808080,,,#808080,,">
 		<comment>未使用</comment>
 		<language name="JPN">[2:05:６桁:2]円</language>
 		<language name="JPN_KANJI">[2:05:６桁:2]円</language>
