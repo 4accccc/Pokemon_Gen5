@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T15:03:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T12:17:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,7 +310,7 @@
 	</row>
 
 	<row id="msg_c03_leader3_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
@@ -318,7 +318,7 @@
 	</row>
 
 	<row id="msg_c03_leader3_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
@@ -464,9 +464,8 @@
 ヒウンは　飛ぶ雲　めでたい雲</language>
 	</row>
 
-	<row id="msg_c03_sign2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>BGメッセージ
-・c03p09/c03p17接続口</comment>
+	<row id="msg_c03_sign2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ヒウンシティ
 ヒウンは　そらとぶくも　めでたいくも</language>
@@ -523,7 +522,7 @@
 ……人は歩くから　すれ違う</language>
 	</row>
 
-	<row id="msg_c03_sign8_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03_sign8_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">バトルカンパニー
