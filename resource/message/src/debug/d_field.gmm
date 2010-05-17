@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-12T15:03:22"/>
+	<create user="iwasawa" host="W00157" date="2010-05-17T11:58:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1095,6 +1095,16 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_DEMO3D_DEMO_24">
 		<language name="JPN" width="160">エンディングＷ</language>
 		<language name="JPN_KANJI" width="160">エンディングＷ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_25">
+		<language name="JPN" width="160">タイトルＢ</language>
+		<language name="JPN_KANJI" width="160">タイトルＢ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_DEMO3D_DEMO_26">
+		<language name="JPN" width="160">タイトルＷ</language>
+		<language name="JPN_KANJI" width="160">タイトルＷ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_MVPOKE">
