@@ -2006,10 +2006,11 @@ static void handler_ReafGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     // 天候が晴れ
     if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE )
     {
-      // ポケモン系状態異常にはならない
+      // ポケモン系状態異常＆あくびにはならない
       WazaSick sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
-      if( BTL_CALC_IsBasicSickID(sickID) )
-      {
+      if( (BTL_CALC_IsBasicSickID(sickID))
+      ||  (sickID == WAZASICK_AKUBI)
+      ){
         work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
       }
     }
