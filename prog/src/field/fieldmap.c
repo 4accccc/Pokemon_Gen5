@@ -3134,7 +3134,7 @@ static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id )
     FLD_SCENEAREA_LOADER_Clear( fieldWork->sceneAreaLoader );
     
     // シーンエリアを読み込んで設定
-    FLD_SCENEAREA_LOADER_LoadOriginal( fieldWork->sceneAreaLoader, ARCID_GRID_CAMERA_SCENE, id, fieldWork->heapID );
+    FLD_SCENEAREA_LOADER_Load( fieldWork->sceneAreaLoader, FLD_SCENEAREA_LOAD_GRID, id, fieldWork->heapID );
 
 
     FLD_SCENEAREA_Load( fieldWork->sceneArea, 
