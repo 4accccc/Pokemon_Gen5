@@ -1034,12 +1034,18 @@
 	</row>
 
 	<row id="TRID_ARTIST_01_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">わがはいが　えがくのは
-もっとも　ポケモンが　かがやくとき！▽
-つまり　わざの　やりとり　だよ！</language>
-		<language name="JPN_KANJI" width="216">我輩が　描くのは
-もっとも　ポケモンが　輝くとき！▽
-つまり　技の　やりとり　だよ！</language>
+		<language name="JPN" width="216">この　せかいに　しろや　くろ
+あか　みどり　あお　きいろ……　と▽
+かずおおくの　いろが　あるのは▼
+まざりあって　あたらしい
+いろを　うみだす　ためだ！▼
+ドッカーン！！</language>
+		<language name="JPN_KANJI" width="216">この世界に　白や　黒
+赤　緑　青　黄色……　と▽
+数多くの　色が　あるのは▼
+混ざり合って　新しい
+色を　生みだす　ためだ！▼
+ドッカーン！！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_START">
@@ -5878,23 +5884,23 @@
 	</row>
 
 	<row id="TRID_BOSS_1_04_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">ポケモンしょうぶは　おたがい
+		<language name="JPN" width="216">ポケモンしょうぶは　おたがいが
 わかりあうためと　しんじているかい？</language>
-		<language name="JPN_KANJI" width="216">ポケモン勝負は　お互い
+		<language name="JPN_KANJI" width="216">ポケモン勝負は　お互いが
 理解するためと　信じているかい？</language>
 	</row>
 
-	<row id="TRID_BOSS_1_04_TRMSG_FIGHT_POKE_LAST_HP_HALF">
-		<language name="JPN" width="216">ボクの　トモダチよ　ポケモンよ
-ふんばってくれないか</language>
-		<language name="JPN_KANJI" width="216">ボクの　トモダチよ　ポケモンよ
-ふんばってくれないか</language>
+	<row id="TRID_BOSS_1_04_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">ボクの　ぜんしんから　あふれる
+トモダチへの　ラブ！　みせてあげるよ</language>
+		<language name="JPN_KANJI" width="216">ボクの　全身から　あふれる
+トモダチへの　ラブ！　みせてあげるよ</language>
 	</row>
 
 	<row id="TRID_BOSS_1_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……トモダチが　きずつく
+		<language name="JPN" width="216">トモダチが　きずつく……
 これが　ポケモンしょうぶ　だよね</language>
-		<language name="JPN_KANJI" width="216">……トモダチが　傷つく
+		<language name="JPN_KANJI" width="216">トモダチが　傷つく……
 これが　ポケモン勝負　だよね</language>
 	</row>
 
