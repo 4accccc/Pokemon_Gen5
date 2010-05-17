@@ -72,6 +72,8 @@ static void StartStandByBGM( EVENT_WORK* work );
 static void CallBGMFadeInEvent( EVENT_WORK* work, GMEVENT* parentEvent );
 // 画面のフェードイン
 static void CallFadeInEvent( const EVENT_WORK* work, GMEVENT* parentEvent );
+// 地名表示
+static void PutPlaceNameRequest( EVENT_WORK* work );
 
 
 //=======================================================================================
@@ -145,29 +147,18 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
-  // カメラのセットアップ
   case 0:
-    (*seq)++;
-    break;
-
-  // BGM再生開始
-  case 1:
+    // BGM再生開始
     if( evdata->BGM_standby_flag ) {
       StartStandByBGM( work );
     }
-    (*seq)++;
-    break;
-
-  // 画面フェード開始
-  case 2:
+    // 画面フェード開始
     CallFadeInEvent( work, event );
     (*seq)++;
     break;
 
-  // イベント終了
-  case 3:
-    FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
+  case 1:
+    PutPlaceNameRequest( work ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -192,11 +183,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* 
     (*seq)++;
     break;
 
-  // イベント終了
   case 1:
-    FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
-    return GMEVENT_RES_FINISH;
+    PutPlaceNameRequest( work ); // 地名表示更新リクエスト
+    return GMEVENT_RES_FINISH; // イベント終了
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -214,14 +203,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
-  // 画面フェードイン開始
   case 0: 
+    // 画面フェードイン開始
     CallFadeInEvent( work, event );
     (*seq)++;
     break;
 
-  // BGM 操作
   case 1:  
+    // BGM 操作
     if( evdata->BGM_standby_flag ) {
       StartStandByBGM( work );
     }
@@ -231,17 +220,15 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
     (*seq)++;
     break;
 
-  // 自機の一歩移動アニメ
   case 2:
+    // 自機の一歩移動アニメ
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gameSystem, fieldmap) );
     (*seq)++;
     break;
 
-  // イベント終了
   case 3:
-    FIELD_PLACE_NAME_Display(
-        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
-    return GMEVENT_RES_FINISH;
+    PutPlaceNameRequest( work ); // 地名表示更新リクエスト
+    return GMEVENT_RES_FINISH; // イベント終了
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -259,17 +246,15 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
-  // ワープ出現イベント
   case 0:
+    // ワープ出現イベント
 		GMEVENT_CallEvent(event, EVENT_APPEAR_Warp( NULL, gameSystem, fieldmap ) );
     (*seq)++;
     break;
 
-  // イベント終了
   case 1:
-    FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
-    return GMEVENT_RES_FINISH;
+    PutPlaceNameRequest( work ); // 地名表示更新リクエスト
+    return GMEVENT_RES_FINISH; // イベント終了
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -288,20 +273,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
   FIELD_CAMERA*    camera     = FIELDMAP_GetFieldCamera( fieldmap );
 
   switch( *seq ) {
-  // ドア退出イベント
   case 0:
+    // ドア退出イベント
     GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( evdata ) );
     (*seq)++;
     break;
 
-  // 地名表示更新リクエスト発行
   case 1:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id );
-    (*seq)++;
-    break;
-
-  // イベント終了
-  case 2:
+    PutPlaceNameRequest( work ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -320,31 +299,23 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, in
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
-  // カメラのセットアップ
   case 0:
-    (*seq)++;
-    break;
-
-  // BGM再生開始
-  case 1:
+    // BGM再生開始
     if( evdata->BGM_standby_flag ) {
       StartStandByBGM( work );
     }
     (*seq)++;
     break;
 
-  // 画面フェード開始
-  case 2:
-    // 基本フェード
+  case 1:
+    // 画面フェード開始
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
     (*seq)++;
     break;
 
-  // イベント終了
-  case 3:
-    FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
-    return GMEVENT_RES_FINISH;
+  case 2:
+    PutPlaceNameRequest( work ); // 地名表示更新リクエスト
+    return GMEVENT_RES_FINISH; // イベント終了
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -412,4 +383,19 @@ static void CallFadeInEvent( const EVENT_WORK* work, GMEVENT* parentEvent )
     GMEVENT_CallEvent( parentEvent, 
         EVENT_FieldFadeIn( gameSystem, fieldmap, evdata->fadein_type, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
   }
+} 
+
+//---------------------------------------------------------------------------------------
+/**
+ * @brief 地名表示のリクエストを発行する
+ *
+ * @param work
+ */
+//---------------------------------------------------------------------------------------
+static void PutPlaceNameRequest( EVENT_WORK* work )
+{
+  ENTRANCE_EVDATA* evdata   = work->evdata;
+
+  FIELD_PLACE_NAME_Display( 
+      FIELDMAP_GetPlaceNameSys(evdata->fieldmap), evdata->nextLocation.zone_id );
 }

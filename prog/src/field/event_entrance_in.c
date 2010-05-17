@@ -149,27 +149,21 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
   FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch ( *seq ) {
-  // BGM再生準備
   case 0:
+    // BGM 変更準備
     StandByNextBGM( work );
-    (*seq)++;
-    break;
 
-  // SE 再生
-  case 1:
+    // SE 再生
     if( evdata->fadeout_type != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
+
+    // 画面フェードアウト開始
+    CallFadeOutEvent( work, event );
+
     (*seq)++; 
     break;
 
-  // 画面フェードアウト
-  case 2:
-    CallFadeOutEvent( work, event );
-    (*seq)++;
-    break;
-
-  // イベント終了
-  case 3:
-    return GMEVENT_RES_FINISH;
+  case 1:
+    return GMEVENT_RES_FINISH; // イベント終了
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -187,8 +181,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
-  // ドア進入イベント
   case 0:
+    // ドア進入イベント
     GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( evdata ) );
     (*seq)++;
     break;
@@ -215,9 +209,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
 
   switch ( *seq ) {
   case 0:  
-    // 自機の一歩移動アニメ開始
-    work->oneStepTCB = PlayerOneStepAnimeStart( fieldmap );
-
     // BGM 操作
     if( CheckBGMFadeOut_at_Dungeon(work) ) {
       // BGM フェードアウト
@@ -227,27 +218,25 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
       // BGM 再生準備
       StandByNextBGM( work );
     }
+
+    // 自機の一歩移動アニメ開始
+    work->oneStepTCB = PlayerOneStepAnimeStart( fieldmap );
+
     (*seq)++;
     break;
 
   case 1:
-    // 自機の一歩移動アニメ終了待ち
-    if( CheckPlayerOneStepAnimeEnd( work->oneStepTCB ) ) { (*seq)++; }
+    // 自機の一歩移動アニメが終了
+    if( CheckPlayerOneStepAnimeEnd( work->oneStepTCB ) ) {
+      // クロスフェードでなければ, SEを再生
+      if( evdata->fadeout_type != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
+      // 画面フェードアウト開始
+      CallFadeOutEvent( work, event ); 
+      (*seq)++; 
+    }
     break;
 
-  case 2: 
-    // クロスフェードでなければ, SEを再生
-    if( evdata->fadeout_type != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
-    (*seq)++; 
-    break;
-
-  case 3:
-    // 画面フェードアウト
-    CallFadeOutEvent( work, event ); 
-    (*seq)++;
-    break;
-
-  case 4:
+  case 2:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -266,8 +255,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp( GMEVENT* event, int* s
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
-  // ワープ退出イベント
   case 0:
+    // ワープ退出イベント
 		GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( NULL, gameSystem, fieldmap ) );
     (*seq)++;
     break;
@@ -352,22 +341,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, in
   FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch ( *seq ) {
-  // BGM再生準備
   case 0:
+    // BGM 変更準備
     StandByNextBGM( work );
-    (*seq)++;
-    break;
-
-  // 画面フェードアウト
-  case 1:
     PMSND_PlaySE( INTSE_WARP );
+    // 画面フェードアウト開始
     GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
     (*seq)++;
     break;
 
-  // イベント終了
-  case 2:
-    return GMEVENT_RES_FINISH;
+  case 1:
+    return GMEVENT_RES_FINISH; // イベント終了
   }
   return GMEVENT_RES_CONTINUE;
 }
