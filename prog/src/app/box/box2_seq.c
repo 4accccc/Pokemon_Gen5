@@ -2240,6 +2240,8 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
 	}
 
+	syswk->get_pos = BOX2MAIN_GETPOS_NONE;	// –¢Žæ“¾‚É‚·‚é
+
 	switch( syswk->app->mv_err_code ){
 	case BOX2MAIN_ERR_CODE_MAIL:			// ƒ[ƒ‹‚ðŽ‚Á‚Ä‚¢‚é
 		PMSND_PlaySE( SE_BOX2_WARNING );
