@@ -5300,10 +5300,6 @@ static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
   &&  (work[0] == 1)
   ){
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_IsMatchType(bpp, type) )
-    {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
-    }
+    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
   }
 }
