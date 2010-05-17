@@ -1323,6 +1323,8 @@ static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
 {
   u32 ret;
 
+  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BPL_WAZAINFOMODE_MAIN; }
+
   if( CheckTimeOut( wk ) == TRUE ){
     return SEQ_BPL_ENDSET;
   }
@@ -1345,13 +1347,13 @@ static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
   case BPLIST_UI_WAZAINFO_RETURN:   // もどる
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
+//    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
     return SEQ_BPL_ENDSET;
 
   case CURSORMOVE_CANCEL:         // キャンセル
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
+//    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
     return SEQ_BPL_ENDSET;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
@@ -1381,48 +1383,11 @@ static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
 {
-/*
-  int ret = BPL_TPCheck( wk, Page5_HitRect );
+  u32 ret;
 
-  if( ret == GFL_UI_TP_HIT_NONE ){
-    ret = BAPP_CursorMove( wk->cmv_wk );
-    if( ret == BAPP_CMV_CANCEL ){
-      ret = 6;
-    }
-  }else{
-    BattlePokeList_CursorOff( wk );
-  }
+  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BPL_WAZADEL_SEL; }
 
-  switch( ret ){
-  case 0:   // 技
-  case 1:
-  case 2:
-  case 3:
-  case 4:
-    wk->dat->sel_wp = (u8)ret;
-    wk->wws_page_cp = (u8)ret;
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL1+ret );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_I;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 5:   // 戦闘<->コンテスト切り替え
-    wk->wws_page_cp = (u8)ret;
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_CONTEST );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 6:   // キャンセル
-    wk->dat->sel_wp = BPL_SEL_WP_CANCEL;
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-  return SEQ_BPL_WAZADEL_SEL;
-*/
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
+	ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
   case BPLIST_UI_WAZADEL_SEL1:    // 技１
@@ -1438,25 +1403,16 @@ static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_WAZADEL_RETURN:  // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     wk->dat->sel_wp = BPL_SEL_WP_CANCEL;
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    return SEQ_BPL_BUTTON_WAIT;
+		return SEQ_BPL_ENDSET;
 
   case CURSORMOVE_CANCEL:         // キャンセル
     PlaySE( wk, SEQ_SE_CANCEL2 );
     wk->dat->sel_wp = BPL_SEL_WP_CANCEL;
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    return SEQ_BPL_BUTTON_WAIT;
+		return SEQ_BPL_ENDSET;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
     PlaySE( wk, SEQ_SE_SELECT1 );
