@@ -412,13 +412,17 @@ enum {
 
   LX_ID_H_CAP = 4,
   LY_ID_H_CAP = LY_LV11,
-  LX_ID_H_BOX = LX_ID_H_CAP + CALC_STRBOX_WIDTH(4),
+  LX_ID_H_BOX = LX_ID_H_CAP + CALC_STRBOX_WIDTH(3),
   LY_ID_H_BOX = LY_ID_H_CAP,
-
   LX_ID_L_CAP = LX_ID_H_BOX + CALC_NUMBOX_WIDTH(6),
   LY_ID_L_CAP = LY_LV11,
-  LX_ID_L_BOX = LX_ID_L_CAP + CALC_STRBOX_WIDTH(4),
+  LX_ID_L_BOX = LX_ID_L_CAP + CALC_STRBOX_WIDTH(3),
   LY_ID_L_BOX = LY_ID_L_CAP,
+
+  LX_EVENTGET_CAP   = 192,
+  LY_EVENTGET_CAP   = LY_LV6,
+  LX_EVENTGET_BOX   = LX_EVENTGET_CAP + 8,
+  LY_EVENTGET_BOX   = LY_EVENTGET_CAP + LINE_HEIGHT+ 4,
 
 
 };
@@ -504,9 +508,9 @@ typedef enum {
   INPUTBOX_ID_BIRTH_YEAR,
   INPUTBOX_ID_BIRTH_MONTH,
   INPUTBOX_ID_BIRTH_DAY,
-
   INPUTBOX_ID_OYAID_H,
   INPUTBOX_ID_OYAID_L,
+  INPUTBOX_ID_EVENTGET_FLAG,
 
   INPUTBOX_ID_MAX,
 
@@ -834,7 +838,6 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_GET_DAY_CAP,       LY_GET_DAY_CAP,
     LX_GET_DAY_BOX,      LY_GET_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
     ID_PARA_get_day,     PAGE_1,  255,  0 },
-
   // うまれた場所
   { INPUTBOX_TYPE_NUM,   DMPSTR_BIRTH_PLACE,   LX_BIRTH_PLACE_CAP,   LY_BIRTH_PLACE_CAP,
     LX_BIRTH_PLACE_BOX,  LY_BIRTH_PLACE_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
@@ -859,7 +862,11 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   { INPUTBOX_TYPE_NUM,   DMPSTR_ID_L,   LX_ID_L_CAP,   LY_ID_L_CAP,
     LX_ID_L_BOX,         LY_ID_L_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
     ID_PARA_id_no,       PAGE_1, 65535,  0 },
-
+  // イベント配布フラグ
+  { INPUTBOX_TYPE_SWITCH,  DMPSTR_EVENT_FLAG, LX_EVENTGET_CAP,  LY_EVENTGET_CAP,
+    LX_EVENTGET_BOX,       LY_EVENTGET_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
+    ID_PARA_event_get_flag, PAGE_1, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
+  },
 };
 
 //--------------------------------------------------------------
@@ -1548,7 +1555,6 @@ static void update_dst( DMP_MAINWORK* wk )
                  rHP, rPow, rDef, rSat, rSde, rAgi );
   }
 
-
   // アイテム
   {
     u32 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
@@ -1560,7 +1566,6 @@ static void update_dst( DMP_MAINWORK* wk )
     u8 tamago_flg = box_getvalue( wk, INPUTBOX_ID_TAMAGO );
     PP_Put( wk->dst, ID_PARA_tamago_flag, tamago_flg );
   }
-
 
   PP_Put( wk->dst, ID_PARA_condition, box_getvalue(wk, INPUTBOX_ID_SICK) );
   PP_Put( wk->dst, ID_PARA_friend,    box_getvalue(wk, INPUTBOX_ID_NATSUKI) );
@@ -1578,11 +1583,15 @@ static void update_dst( DMP_MAINWORK* wk )
     }
     PP_Put( wk->dst, ID_PARA_get_ball,  getBallID );
   }
+
   // 捕獲カセット
   PP_Put( wk->dst, ID_PARA_get_cassette, casetteVer_local_to_formal(box_getvalue(wk, INPUTBOX_ID_GET_CASETTE)) );
 
   // 国コード
-  PP_Put( wk->dst, ID_PARA_get_cassette, countryCode_local_to_formal(box_getvalue(wk, INPUTBOX_ID_COUNTRY)) );
+  PP_Put( wk->dst, ID_PARA_country_code, countryCode_local_to_formal(box_getvalue(wk, INPUTBOX_ID_COUNTRY)) );
+
+  // イベント配布フラグ
+  PP_Put( wk->dst, ID_PARA_event_get_flag, box_getvalue(wk, INPUTBOX_ID_EVENTGET_FLAG) );
 
 }
 
