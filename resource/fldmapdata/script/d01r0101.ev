@@ -1327,6 +1327,8 @@ EVENT_START   ev_pos_d01r0101_sage5_01
 	//七賢人５：しょあ！
 	_BALLOONWIN_OBJMSG( msg_d01r0101_sage5_end_01 , D01R0101_SAGE5_01 )
 	
+	_BALLOONWIN_OBJMSG( msg_d01r0101_sage5_end_01a , D01R0101_SAGE5_01 )
+	
 	//七賢人５：おどろけばひとも
 	_BALLOONWIN_OBJMSG( msg_d01r0101_sage5_end_01b , D01R0101_SAGE5_01 )
 	
