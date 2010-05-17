@@ -87,6 +87,6 @@
   }
   if exist_flag != 0
     system( "svn commit trfgra_wb.scr -m \"仮素材追加\"" )
-    system( "ipmsg /MSG /SEAL W00205 トレーナーグラフィック仮素材をコミットしました　コンバートお願いします" )
-    system( "ipmsg /MSG localhost トレーナーグラフィック仮素材があります　大村君からの返答を待ってください" )
+#    system( "ipmsg /MSG /SEAL W00205 トレーナーグラフィック仮素材をコミットしました　コンバートお願いします" )
+#    system( "ipmsg /MSG localhost トレーナーグラフィック仮素材があります　大村君からの返答を待ってください" )
   end
