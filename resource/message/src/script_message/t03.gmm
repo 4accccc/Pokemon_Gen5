@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T15:15:55"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-17T22:01:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="332" top="267" right="832" bottom="895" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -353,7 +353,7 @@
 ふってきて　できた　そうじゃ▼
 そして　その　いんせきの　なかには
 よにも　おそろしい　ばけもんが▽
-ひそんで　おったそうな……▼　
+ひそんで　おったそうな……▼
 ばけもんは　ばんに　なると
 つめたい　かぜと　ともに▽
 ひとざとに　あらわれては▽
@@ -372,7 +372,7 @@
 降って来て　出来た　そうじゃ▼
 そして　その　いんせきの　中には
 世にも　恐ろしい　化けもんが▽
-潜んで　おったそうな……▼　
+潜んで　おったそうな……▼
 化けもんは　晩に　なると
 冷たい　風と　ともに▽
 人里に　現れては▽
@@ -386,14 +386,14 @@
 町の　おきてに　したそうじゃ▼</language>
 	</row>
 
-	<row id="msg_t03_oldwoman1_02_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t03_oldwoman1_02_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 イベント終了</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
 		<language name="JPN" width="256">……　……　……　……　……
-ま　いまじゃ　こんな　はなし▽
+ま　いまじゃ　こんな　はなしなぞ▽
 だれも　しんじとらん▼
-じゃけどな▼
+じゃけどな……▼
 いまでも　カゴメに　すんどる　もんは
 ばんに　なったら　ちゃんと　うちに▽
 かえるから　ふしぎ　じゃろ？▼
@@ -402,9 +402,9 @@
 なにかしらの　えいきょうを▽
 あたえとる　っちゅうことかのう</language>
 		<language name="JPN_KANJI" width="256">……　……　……　……　……
-ま　今じゃ　こんな　話▽
+ま　今じゃ　こんな　話なぞ▽
 だれも　信じとらん▼
-じゃけどな▼
+じゃけどな……▼
 今でも　カゴメに　住んどる　もんは
 晩に　なったら　ちゃんと　家に▽
 帰るから　不思議　じゃろ？▼
