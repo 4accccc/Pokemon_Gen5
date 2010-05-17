@@ -63,27 +63,20 @@ EVENT_START   ev_scene_d05r0101_01
 	//階段SE待ち
 	_SE_WAIT()
 	
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-
-	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,557056,0,1851392,32 )
-
 	//「？」
 	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_01)
 	_OBJ_ANIME_WAIT()
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//会話
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_01,D05R0101_RIVAL_01)
-	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
-	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
+	//右を向く
+	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_02)
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
+	_BALLOONWIN_CLOSE()
 	
 	//==================================//
 	
@@ -111,7 +104,6 @@ EVENT_START   ev_pos_d05r0101_rival_01
 	//先に行くか質問
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_03,D05R0101_RIVAL_02)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 		_BALLOONWIN_OBJMSG(msg_d05r0101_black_04,D05R0101_RIVAL_02)
@@ -246,9 +238,7 @@ _ANIME_LABEL	anm_rival_to_player_z11
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0101_rival_01
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_MARK_HATENA,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -257,7 +247,7 @@ _ANIME_LABEL	anm_d05r0101_rival_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0101_rival_02
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
