@@ -1008,8 +1008,7 @@ SRCS_OVERLAY_FIELD_GIMMICK_T01 = field/field_gimmick_t01.c
 
 # マッパーサンプル
 #===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample5.c \
-																test/tetsu/debug_common.c \
+SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/debug_common.c \
 																test/tetsu/debug_watanabe.c
 
 #UI汎用モジュール

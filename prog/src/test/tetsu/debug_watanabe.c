@@ -46,7 +46,7 @@ static BOOL mainFunc( void* procwork );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
         ( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  allocWork(proc);
+  //allocWork(proc);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -59,10 +59,14 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 static GFL_PROC_RESULT DebugWatanabeMainProcMain
         ( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#if 0
   if( mainFunc(mywk) == FALSE ){
     return GFL_PROC_RES_FINISH;
   }
   return GFL_PROC_RES_CONTINUE;
+#else
+	return GFL_PROC_RES_FINISH;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -77,8 +81,8 @@ static GFL_PROC_RESULT DebugWatanabeMainProcMain
 static GFL_PROC_RESULT DebugWatanabeMainProcEnd
         ( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  setNextProc(mywk);
-  freeWork(proc);
+  //setNextProc(mywk);
+  //freeWork(proc);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -93,6 +97,7 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
 
 
 
+#if 0
 //============================================================================================
 /**
  *
@@ -132,7 +137,7 @@ FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeSample5ProcData;
 
 static const DEBUGITEM_LIST debugItemList[] = {
-  {DEBUG_TETSU_MENU5, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample5ProcData},
+	{DEBUG_TETSU_MENU5, FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeSample5ProcData},
 };
 
 //------------------------------------------------------------------
@@ -500,5 +505,6 @@ static  BOOL control(DEBUG_WATANABE_WORK* dw)
   return FALSE;
 }
 
+#endif
 
 
