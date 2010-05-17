@@ -7857,11 +7857,13 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
 
   if( !failFlag )
   {
+    TAYA_Printf("AddPer=%d\n", per );
     if( perOccur(wk, per) ){
       return TRUE;
     }
     // デバッグ機能により必ず発生
     if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_TUIKA) ){
+      TAYA_Printf("Debug ON\n" );
       return TRUE;
     }
   }
@@ -12506,18 +12508,25 @@ static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather 
 //----------------------------------------------------------------------------------
 static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp )
 {
-  u32 ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_RECOVER_RATIO );
+  u32 base_ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_RECOVER_RATIO );
+  fx32 ex_ratio;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, ratio );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_RATIO, 0 );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RECOVER_HP_RATIO );
-    ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+    ex_ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
   BTL_EVENTVAR_Pop();
 
   {
     u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
-    u32 volume = (maxHP * ratio) / 100;//BTL_CALC_MulRatio( maxHP, ratio );
+    u32 volume;
+
+    if( ex_ratio ){
+      volume = BTL_CALC_MulRatio( maxHP, ex_ratio );
+    }else{
+      volume = BTL_CALC_MulRatioInt( maxHP, base_ratio );
+    }
     if( volume == 0 ){
       volume = 1;
     }else if( volume > maxHP ){

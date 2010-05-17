@@ -7447,8 +7447,10 @@ static const BtlEventHandlerTable*  ADD_Teleport( u32* numElems )
 }
 static void handler_Teleport_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 野生戦以外は失敗
-  if( BTL_SVFTOOL_GetCompetitor(flowWk) != BTL_COMPETITOR_WILD ){
+  // 野生シングル戦以外は失敗
+  if( (BTL_SVFTOOL_GetCompetitor(flowWk) != BTL_COMPETITOR_WILD)
+  ||  (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_SINGLE)
+  ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
   }
   // 巻き付かれていたら失敗

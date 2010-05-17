@@ -1552,6 +1552,7 @@ static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
     param->pokeID = pokeID;
     param->formNo = nextForm;
+    param->header.tokwin_flag = TRUE;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
@@ -4979,7 +4980,6 @@ static void handler_Nenchaku_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( (waza == WAZANO_TORIKKU)
     ||  (waza == WAZANO_SURIKAE)
-    ||  (waza == WAZANO_DOROBOU)
     ){
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
       {
