@@ -348,7 +348,7 @@
 #define TOPIC_BUTTON_TOUCH_AREA_WIDTH  (216) // タッチ範囲の幅
 #define TOPIC_BUTTON_TOUCH_AREA_HEIGHT  (24) // タッチ範囲の高さ
 #define TOPIC_BUTTON_TOUCH_AREA_TOP     (24) // タッチ範囲の左上y座標
-#define TOPIC_BUTTON_TOUCH_AREA_BOTTOM (232) // タッチ範囲の右下y座標
+#define TOPIC_BUTTON_TOUCH_AREA_BOTTOM (168) // タッチ範囲の右下y座標
 // スクロールバー
 #define SCROLL_BAR_TOUCH_AREA_LEFT   (232) // タッチ範囲の左上x座標
 #define SCROLL_BAR_TOUCH_AREA_TOP    (24)  // タッチ範囲の左上y座標

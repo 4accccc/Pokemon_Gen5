@@ -524,11 +524,11 @@ static void MainSeq_SETUP( RRG_WORK* work )
   Setup3D();
 
   // BG 準備
-  SetupBG           ( work );
+  SetupBG( work );
   SetupSubBG_WINDOW ( work );
-  SetupSubBG_FONT   ( work );
+  SetupSubBG_FONT( work );
   SetupMainBG_WINDOW( work );
-  SetupMainBG_FONT  ( work );
+  SetupMainBG_FONT( work );
 
   // 文字列描画オブジェクト 準備
   CreateBGFonts( work );
