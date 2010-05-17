@@ -10,6 +10,8 @@ class PARA
     NAME
     INFO1
     INFO2
+    INFO1_KANJI
+    INFO2_KANJI
   ]
 end
 
@@ -94,8 +96,20 @@ end
       info2 = split_data[ PARA::INFO2 ]
     end
     info = info1 + "\r\n" + info2
+    if split_data[ PARA::INFO1_KANJI ] == nil
+      info1_kanji = ""
+    else
+      info1_kanji = split_data[ PARA::INFO1_KANJI ]
+    end
+    if split_data[ PARA::INFO2_KANJI ] == nil
+      info2_kanji = ""
+    else
+      info2_kanji = split_data[ PARA::INFO2_KANJI ]
+    end
+    info = info1 + "\r\n" + info2
+    info_kanji = info1_kanji + "\r\n" + info2_kanji
     #@todo 漢字説明文ありなんですが、現状データがないので、同じ文字列で生成
-    tokuinfo_gmm.make_row_index_kanji( "TOKUSEIINFO_", cnt, info, info )
+    tokuinfo_gmm.make_row_index_kanji( "TOKUSEIINFO_", cnt, info, info_kanji )
     cnt += 1
   }
 
