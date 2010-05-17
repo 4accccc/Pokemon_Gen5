@@ -217,7 +217,6 @@ EVENT_START   ev_scene_c07_leader7_01
 	
 	//ハチクジムから出てくる・主人公たち押しのけられる
 	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_exit )
-	_TIME_WAIT( 4 )
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c07_player_koutai )
 	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_rival_koutai )
 	_OBJ_ANIME( C07_RIVAL_01 , anm_c07_rival_koutai )
@@ -271,11 +270,11 @@ EVENT_START   ev_scene_c07_leader7_01
 	
 	//ハチクその場歩き
 	_OBJ_ANIME( C07_LEADER7_01 , anm_c07_leader_steystep_d )
-	_OBJ_ANIME_WAIT()
 	
 	//ハチク：リュウラセンのとう！？
 	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_03 , C07_LEADER7_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
 	
 	//ダークトリニティ退場
 	_TIME_WAIT ( 8 )
@@ -318,7 +317,6 @@ EVENT_START   ev_scene_c07_leader7_01
 	_OBJ_ANIME_WAIT()
 	
 	//主人公サポートと向き合う
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_rival )
 	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_support_to_player )
 	_OBJ_ANIME_WAIT()
 	
@@ -504,7 +502,7 @@ _ANIME_LABEL	anm_player_to_rival
 // C07　リュウラセンイベント開始：主人公ライバルに向き合う
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c07_support_to_player
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
