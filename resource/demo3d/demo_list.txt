@@ -15,6 +15,7 @@ DEMO_LIST =	c_cruiser.xls \
 			      n_legend_meat_b.xls \
 			      n_legend_meat_w.xls \
 			      riza_bridge.xls \
-			      v_boat_port.xls
-
+			      v_boat_port.xls \
+			      title_b.xls \
+			      title_w.xls
 
