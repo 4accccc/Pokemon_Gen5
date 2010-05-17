@@ -1415,6 +1415,8 @@ ev_last:
 	
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_kubi )
 	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 16 )
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2654208,30 )
@@ -1575,13 +1577,13 @@ ev_last:
 			
 			//電気石の洞穴ではいを選択した場合
 			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
-			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
+				_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
 				_PLAINWIN_CLOSE()
 			
 			//いいえを選択した場合
 			ELSE
-			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
+				_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
 				_PLAINWIN_CLOSE()
 			
@@ -1591,13 +1593,13 @@ ev_last:
 		
 			//電気石の洞穴ではいを選択した場合
 			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
-			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
+				_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
 				_PLAINWIN_CLOSE()
 			
 			//いいえを選択した場合
 			ELSE
-			  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
+				_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
 				_PLAINWIN_CLOSE()
 			
@@ -1605,17 +1607,21 @@ ev_last:
 		
 		ENDIF
 }
-  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
+	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
+	_PLAINWIN_CLOSE()
 
 	//無音にする
 	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
 
-	_TIME_WAIT( 60 )
+	_TIME_WAIT( 40 )
 
 	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
 	_PLAINWIN_CLOSE()
+	
+	_SE_PLAY(SEQ_SE_END_01)
+	_SE_WAIT()
 	
 	//Ｎのアップ絵終了
 	_CAMERA_END()
@@ -1850,6 +1856,7 @@ _ANIME_LABEL	anm_gcis_last1
 _ANIME_LABEL	anm_n_nayamu
 	_ANIME_DATA	AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
