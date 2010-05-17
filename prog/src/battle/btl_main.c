@@ -4860,33 +4860,6 @@ const SHOOTER_ITEM_BIT_WORK* BTL_MAIN_GetSetupShooterBit( const BTL_MAIN_MODULE*
 
 //=============================================================================================
 /**
- * クライアント側でレベルアップ処理を行った後、サーバ側パラメータに書き戻す
- * ※スタンドアロン実行時のみ有効
- *
- * @param   wk
- * @param   pokeID
- */
-//=============================================================================================
-void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
-{
-  GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_COMM);
-  GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_SUBWAY);
-  {
-    BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( &wk->pokeconForServer, pokeID );
-    BPP_ReflectByPP( bpp );
-
-    // レベルアップでなつき度上昇
-    {
-      const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
-      NATSUKI_Calc( (POKEMON_PARAM*)BPP_GetSrcData(bpp), CALC_NATSUKI_LEVELUP, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
-    }
-
-    BTL_N_Printf( DBGSTR_MAIN_CheckHPByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
-    BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
-  }
-}
-//=============================================================================================
-/**
  * 録画再生処理が最後まで正常に行われたことをパラメータに書き戻す
  *
  * @param   wk

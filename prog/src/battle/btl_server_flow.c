@@ -299,6 +299,7 @@ struct _BTL_SVFLOW_WORK {
   WAZA_ROB_PARAM*         wazaRobParam;
   HITCHECK_PARAM*         hitCheckParam;
   BTL_ESCAPEINFO          escInfo;
+  BTL_LEVELUP_INFO        lvupInfo;
   u8                      cmdBuildStep;
   u8                      actOrderStep;
   u8                      turnCheckStep;
@@ -9902,7 +9903,7 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         &&  CheckPlayerSideAlive(wk)
         ){
           u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
-          TAYA_Printf("WinBGMNo=%d\n", WinBGM);
+
           SCQUE_PUT_ACT_PlayWinBGM( wk->que, WinBGM );
           wk->fWinBGMPlayWild = TRUE;
         }
@@ -9913,7 +9914,7 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         {
           u32 restExp = exp;
           while(1){
-            if( !BPP_AddExp(bpp, &restExp, NULL) ){
+            if( !BPP_AddExp(bpp, &restExp, &wk->lvupInfo) ){
               break;
             }
           }

@@ -38,6 +38,22 @@ enum {
   WAZADMG_REC_MAX = BPP_WAZADMG_REC_MAX,            ///< ワザダメージレコード：１ターンにつき、何件分まで記録するか？
 };
 
+//--------------------------------------------------------------
+/**
+ *  ワザ
+ */
+//--------------------------------------------------------------
+typedef struct {
+  u16  number;            ///< ワザナンバー
+  u16  recoverNumber;     ///< バトル中にワザが書き換わった時に、巻き戻し用に前のワザを保存
+  u8   pp;                ///< PP値
+  u8   ppMax;             ///< PP最大値
+  u8   ppCnt;             ///< PP増加数
+  u8   usedFlag : 4;      ///< 使用したフラグ（死亡・入れ替えなどでクリア）
+  u8   usedFlagFix : 4;   ///< 使用したフラグ（死亡・入れ替えなどでも保持）
+}BPP_WAZA;
+
+
 
 //--------------------------------------------------------------
 /**
@@ -47,6 +63,7 @@ enum {
 typedef struct {
   const POKEMON_PARAM*  ppSrc;
   const POKEMON_PARAM*  ppFake;
+  BPP_WAZA            backup_waza[ PTL_WAZA_MAX ];
   u32   exp;
   u16   monsno;
   u16   hpMax;        ///< 最大HP
@@ -54,11 +71,13 @@ typedef struct {
   u16   item;
   u16   usedItem;
   u16   defaultTokusei;
+  u8    level;
   u8    myID;
   u8    defaultFormNo;
   u8    fHensin     : 1;
   u8    fFakeEnable : 1;
   u8    fBtlIn      : 1;
+
 }BPP_CORE_PARAM;
 
 //--------------------------------------------------------------
@@ -76,7 +95,7 @@ typedef struct {
   u16 sp_defence;   ///< とくぼう
   u16 agility;      ///< すばやさ
 
-  u8  level;        ///< レベル
+//  u8  level;        ///< レベル
   u8  type1;        ///< タイプ１
   u8  type2;        ///< タイプ２
   u8  sex;          ///< 性別
@@ -99,22 +118,6 @@ typedef struct {
   s8  avoid;      ///< 回避率
 
 }BPP_VARIABLE_PARAM;
-
-//--------------------------------------------------------------
-/**
- *  ワザ
- */
-//--------------------------------------------------------------
-typedef struct {
-  u16  number;            ///< ワザナンバー
-  u16  recoverNumber;     ///< バトル中にワザが書き換わった時に、巻き戻し用に前のワザを保存
-  u8   pp;                ///< PP値
-  u8   ppMax;             ///< PP最大値
-  u8   ppCnt;             ///< PP増加数
-  u8   usedFlag : 4;      ///< 使用したフラグ（死亡・入れ替えなどでクリア）
-  u8   usedFlagFix : 4;   ///< 使用したフラグ（死亡・入れ替えなどでも保持）
-}BPP_WAZA;
-
 
 struct _BTL_POKEPARAM {
 
@@ -166,7 +169,9 @@ struct _BTL_POKEPARAM {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP );
+static u32 setupWazaFromSrcPP( BPP_WAZA* waza, const POKEMON_PARAM* pp );
 static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
+static void clearHensin( BTL_POKEPARAM* bpp );
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
 static void clearCounter( BTL_POKEPARAM* bpp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
@@ -180,7 +185,6 @@ static void cureDependSick( BTL_POKEPARAM* bpp, WazaSick sickID  );
 static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude );
 static void dmgrecClearWork( BTL_POKEPARAM* bpp );
 static void dmgrecFwdTurn( BTL_POKEPARAM* bpp );
-static void setLevelUpWaza( BTL_POKEPARAM* bpp );
 static inline void flgbuf_clear( u8* buf, u32 size );
 static inline void flgbuf_set( u8* buf, u32 flagID );
 static inline void flgbuf_reset( u8* buf, u32 flagID );
@@ -219,6 +223,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.fBtlIn = NULL;
   bpp->coreParam.defaultFormNo = PP_Get( pp, ID_PARA_form_no, NULL );
   bpp->coreParam.defaultTokusei = PP_Get( pp, ID_PARA_speabino, 0 );
+  bpp->coreParam.level = PP_Get( pp, ID_PARA_level, 0 );
 
   setupBySrcData( bpp, pp, TRUE );
 
@@ -278,28 +283,15 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
     bpp->coreParam.hp = PP_Get( srcPP, ID_PARA_hp, 0 );
     bpp->coreParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
   }
+  bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
+
 
   // 基本パラメタ初期化
   setupBySrcDataBase( bpp, srcPP );
 
   // 所有ワザデータ初期化
-  bpp->wazaCnt = 0;
-  for(i=0; i<PTL_WAZA_MAX; i++)
-  {
-    bpp->waza[i].number = PP_Get( srcPP, ID_PARA_waza1+i, 0 );
-    if( bpp->waza[i].number != WAZANO_NULL )
-    {
-      bpp->waza[i].pp = PP_Get( srcPP, ID_PARA_pp1+i, 0 );
-      bpp->waza[i].ppMax = PP_Get( srcPP, ID_PARA_pp_max1+i, 0 );
-      bpp->waza[i].ppCnt = PP_Get( srcPP, ID_PARA_pp_count1+i, 0 );
-      bpp->wazaCnt++;
-    }
-    else
-    {
-      bpp->waza[i].pp = 0;
-      bpp->waza[i].ppMax = 0;
-      bpp->waza[i].ppCnt = 0;
-    }
+  bpp->wazaCnt = setupWazaFromSrcPP( bpp->waza, srcPP );
+  for(i=0; i<PTL_WAZA_MAX; i++){
     bpp->waza[i].usedFlag = FALSE;
     bpp->waza[i].usedFlagFix = FALSE;
     bpp->waza[i].recoverNumber = bpp->waza[i].number;
@@ -308,12 +300,43 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
   bpp->usedWazaCount = 0;
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
-  bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
+
   bpp->weight = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->formNo, POKEPER_ID_weight ) / 10;
   if( bpp->weight < BTL_POKE_WEIGHT_MIN ){
     bpp->weight = BTL_POKE_WEIGHT_MIN;
   }
 }
+/**
+ *
+ */
+static u32 setupWazaFromSrcPP( BPP_WAZA* waza, const POKEMON_PARAM* pp )
+{
+  u8 fastFlag = PP_FastModeOn( (POKEMON_PARAM*)pp );
+  u32 i, cnt = 0;
+
+  for(i=0; i<PTL_WAZA_MAX; i++)
+  {
+    waza[i].number = PP_Get( pp, ID_PARA_waza1+i, 0 );
+    if( waza[i].number != WAZANO_NULL )
+    {
+      waza[i].pp = PP_Get( pp, ID_PARA_pp1+i, 0 );
+      waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1+i, 0 );
+      waza[i].ppCnt = PP_Get( pp, ID_PARA_pp_count1+i, 0 );
+      ++cnt;
+    }
+    else
+    {
+      waza[i].pp = 0;
+      waza[i].ppMax = 0;
+      waza[i].ppCnt = 0;
+    }
+    waza[i].recoverNumber = waza[i].number;
+  }
+
+  PP_FastModeOff( (POKEMON_PARAM*)pp, fastFlag );
+  return cnt;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * 元になるポケモンパラメータ構造体からバトルパラメータ部分のみ構築
@@ -327,7 +350,7 @@ static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
   bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
   bpp->baseParam.sex = PP_GetSex( srcPP );
-  bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
+//  bpp->baseParam.level = PP_Get( srcPP, ID_PARA_level, 0 );
   bpp->baseParam.attack = PP_Get( srcPP, ID_PARA_pow, 0 );
   bpp->baseParam.defence = PP_Get( srcPP, ID_PARA_def, 0 );
   bpp->baseParam.sp_attack = PP_Get( srcPP, ID_PARA_spepow, 0 );
@@ -335,6 +358,23 @@ static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->baseParam.agility = PP_Get( srcPP, ID_PARA_agi, 0 );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * へんしん状態のクリア
+ *
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void clearHensin( BTL_POKEPARAM* bpp )
+{
+  if( bpp->coreParam.fHensin )
+  {
+    setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE );
+
+    GFL_STD_MemCopy( bpp->coreParam.backup_waza, bpp->waza, sizeof(bpp->waza) );
+    bpp->coreParam.fHensin = FALSE;
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * ワザ使用フラグのクリア
@@ -751,7 +791,7 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
   case BPP_HIT_RATIO:       return bpp->varyParam.hit;
   case BPP_AVOID_RATIO:     return bpp->varyParam.avoid;
 
-  case BPP_LEVEL:           return bpp->baseParam.level;
+  case BPP_LEVEL:           return bpp->coreParam.level;
   case BPP_SEX:             return bpp->baseParam.sex;
 
   case BPP_HP:              return bpp->coreParam.hp;
@@ -2016,6 +2056,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
+  clearHensin( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
   BPP_MIGAWARI_Delete( bpp );
@@ -2047,6 +2088,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
    * 退場時に継続フラグクリアはさせてはいけない
    */
 
+  clearHensin( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
   BPP_MIGAWARI_Delete( bpp );
@@ -2522,56 +2564,71 @@ u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt )
 //=============================================================================================
 BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
 {
-  if( bpp->baseParam.level < PTL_LEVEL_MAX )
+  if( bpp->coreParam.level < PTL_LEVEL_MAX )
   {
     u32 expNow, expSum, expBorder;
 
     expNow = bpp->coreParam.exp;
     expSum = expNow + (*expRest);
-    expBorder = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, bpp->baseParam.level+1 );
+    expBorder = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, bpp->coreParam.level+1 );
 
     if( expSum >= expBorder )
     {
       u32 expAdd = (expBorder - expNow);
       u16 prevHP   = bpp->coreParam.hpMax;
       u16 diffHP;
+      u8  fFastMode = PP_FastModeOn( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+      u8  atk, def, sp_atk, sp_def, agi;
 
-      if( info ){
-        info->atk    = bpp->baseParam.attack;
-        info->def    = bpp->baseParam.defence;
-        info->sp_atk = bpp->baseParam.sp_attack;
-        info->sp_def = bpp->baseParam.sp_defence;
-        info->agi    = bpp->baseParam.agility;
-      }
+      // レベルアップ前パラメータ
+      atk = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
+      def = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
+      agi = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
+      sp_atk = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
+      sp_def = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
 
       bpp->coreParam.exp = (expNow + expAdd);
       PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->coreParam.exp );
       PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 
+      // レベルアップ後パラメータ
       bpp->coreParam.hpMax = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hpmax, 0 );
-      bpp->baseParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
-      bpp->baseParam.attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
-      bpp->baseParam.defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
-      bpp->baseParam.sp_attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
-      bpp->baseParam.sp_defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
-      bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
+      bpp->coreParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
       diffHP = bpp->coreParam.hpMax - prevHP;
+      info->atk    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
+      info->def    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
+      info->sp_atk = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
+      info->sp_def = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
+      info->agi    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
 
-      if( info ){
-        info->level  = bpp->baseParam.level;
-        info->hp     = diffHP;
-        info->atk    = bpp->baseParam.attack - info->atk;
-        info->def    = bpp->baseParam.defence - info->def;
-        info->sp_atk = bpp->baseParam.sp_attack - info->sp_atk;
-        info->sp_def = bpp->baseParam.sp_defence - info->sp_def;
-        info->agi    = bpp->baseParam.agility - info->agi;
+      if( !(bpp->coreParam.fHensin) )
+      {
+        bpp->baseParam.attack     = info->atk;
+        bpp->baseParam.defence    = info->def;
+        bpp->baseParam.sp_attack  = info->sp_atk;
+        bpp->baseParam.sp_defence = info->sp_def;
+        bpp->baseParam.agility    = info->agi;
       }
+      else{
+        bpp->baseParam.attack     += (info->atk - atk);
+        bpp->baseParam.defence    += (info->def - def);
+        bpp->baseParam.sp_attack  += (info->sp_atk - sp_atk);
+        bpp->baseParam.sp_defence += (info->sp_def - sp_def);
+        bpp->baseParam.agility    += (info->agi - agi);
+      }
+
+      info->level  = bpp->coreParam.level;
+      info->hp     = diffHP;
+      info->atk    -= atk;
+      info->def    -= def;
+      info->sp_atk -= sp_atk;
+      info->sp_def -= sp_def;
+      info->agi    -= agi;
 
       bpp->coreParam.hp += diffHP;
       PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
 
-//      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
-//      PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
+      PP_FastModeOff( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), fFastMode );
 
       *expRest -= expAdd;
       return TRUE;
@@ -2607,40 +2664,6 @@ u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp )
 
 //=============================================================================================
 /**
- * レベルアップパラメータを反映させる（クライアント用）
- *
- * @param   bpp
- */
-//=============================================================================================
-void BPP_ReflectLevelup( BTL_POKEPARAM* bpp, u8 nextLevel, u8 hpMax, u8 atk, u8 def, u8 spAtk, u8 spDef, u8 agi )
-{
-  bpp->coreParam.exp = POKETOOL_GetMinExp( bpp->coreParam.monsno, bpp->formNo, nextLevel );
-
-  bpp->coreParam.hp     += hpMax;
-  bpp->coreParam.hpMax  += hpMax;
-
-  bpp->baseParam.level = nextLevel;
-  bpp->baseParam.attack     += atk;
-  bpp->baseParam.defence    += def;
-  bpp->baseParam.sp_attack  += spAtk;
-  bpp->baseParam.sp_defence += spDef;
-  bpp->baseParam.agility    += agi;
-}
-//=============================================================================================
-/**
- * 経験値アップを反映させる（クライアント用）
- *
- * @param   bpp
- */
-//=============================================================================================
-void BPP_ReflectExpAdd( BTL_POKEPARAM* bpp )
-{
-  POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
-  bpp->coreParam.exp = PP_Get( pp, ID_PARA_exp, NULL );
-}
-
-//=============================================================================================
-/**
  * Srcポケモンデータに現在のパラメータを反映
  *
  * @param   bpp
@@ -2662,15 +2685,23 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
     PP_SetSick( pp, POKESICK_NULL );
   }
 
-  for(i=0; i<PTL_WAZA_MAX; ++i)
   {
-    PP_SetWazaPos( pp, bpp->waza[i].number, i );
-    PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].pp );
-    PP_Put( pp, ID_PARA_pp_count1+i, bpp->waza[i].ppCnt );
+    BPP_WAZA* wp = (bpp->coreParam.fHensin)? bpp->coreParam.backup_waza : bpp->waza;
+    for(i=0; i<PTL_WAZA_MAX; ++i)
+    {
+      PP_SetWazaPos( pp, wp[i].number, i );
+      PP_Put( pp, ID_PARA_pp1+i, wp[i].pp );
+      PP_Put( pp, ID_PARA_pp_count1+i, wp[i].ppCnt );
+    }
+  }
+
+  {
+    u8 formNo = ( bpp->coreParam.fHensin )? bpp->coreParam.defaultFormNo : bpp->formNo;
+    PP_Put( pp, ID_PARA_form_no, formNo );
   }
 
   PP_Put( pp, ID_PARA_item, bpp->coreParam.item );
-  PP_Put( pp, ID_PARA_form_no, bpp->formNo );
+
 }
 //=============================================================================================
 /**
@@ -2681,7 +2712,11 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_ReflectByPP( BTL_POKEPARAM* bpp )
 {
-  setupBySrcData( bpp, bpp->coreParam.ppSrc, TRUE );
+  if( !(bpp->coreParam.fHensin) ){
+    setupBySrcData( bpp, bpp->coreParam.ppSrc, TRUE );
+  }else{
+    setupWazaFromSrcPP( bpp->coreParam.backup_waza, bpp->coreParam.ppSrc );
+  }
 }
 //=============================================================================================
 /**
@@ -2769,7 +2804,12 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
     static BPP_CORE_PARAM  core = {0};
     int i;
 
+    GFL_STD_MemCopy( bpp->waza, bpp->coreParam.backup_waza, sizeof(bpp->waza) );
     core = bpp->coreParam;
+
+    for(i=0; i<PTL_WAZA_MAX; ++i){
+      TAYA_Printf(" hensin backup waza[%d] = %d\n", i, bpp->coreParam.backup_waza[i].number );
+    }
 
     *bpp = *target;
     bpp->coreParam = core;

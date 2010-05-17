@@ -6102,7 +6102,6 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
     BPP_ReflectByPP( bpp );
     BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
-//    BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, pokeID );
     {
        // 場に出ているならゲージ演出
        if( fGaugeExist )
