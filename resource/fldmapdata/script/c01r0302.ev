@@ -20,8 +20,27 @@ _EVENT_DATA    ev_c01r0302_man1_01
 _EVENT_DATA    ev_c01r0302_breederw_01
 _EVENT_DATA    ev_c01r0302_poke1_01
 _EVENT_DATA    ev_c01r0302_poke2_01
+_EVENT_DATA		ev_zone_c01r0302
 _EVENT_DATA_END
 
+/**************************************************************/
+/*            ZONE_CHANGE_LABEL	                               */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_c01r0302
+
+{
+	//バージョンを取得してOBJを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならモンメン
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		$OBJCHRWORK0 = POKE24
+	//Whiteならチュリネ
+	ELSE
+		$OBJCHRWORK0 = POKE18
+	ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*  C01R0302 MAN1の会話用イベントスクリプト*/
@@ -48,5 +67,15 @@ EVENT_END
 /*  C01R0302 POKE2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_poke2_01
-	_EASY_TALK_POKEVOICE( MONSNO_537, msg_c01r0302_poke2_01 )
+	//バージョンを取得して会話を分岐させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならモンメン
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		_EASY_TALK_POKEVOICE( MONSNO_521, msg_c01r0302_poke2_01b )
+	
+	//Whiteならチュリネ
+	ELSE
+		_EASY_TALK_POKEVOICE( MONSNO_533, msg_c01r0302_poke2_01 )
+	ENDIF
 EVENT_END
