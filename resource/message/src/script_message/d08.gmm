@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:41:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T20:10:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -595,8 +595,19 @@
 
 	<row id="msg_d08_hakase1_00_10" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂
-・アイテム入手後、自動で表示
-・以降も、d08r0910イベント後まで繰り返し</comment>
+・アイテム入手後、自動で表示</comment>
+		<attribute name="キャラ指定">HAKASE1
+アララギ博士父</attribute>
+		<language name="JPN" width="256">アララギ『それにしても……
+プラズマだんめ　なにを　ねらう……？▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『それにしても……
+プラズマ団め　なにを　目論む……？▼</language>
+	</row>
+
+	<row id="msg_d08_hakase1_00_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・hakase1_00_10以降、
+　d08r0910イベント後まで繰り返し</comment>
 		<attribute name="キャラ指定">HAKASE1
 アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『それにしても……
