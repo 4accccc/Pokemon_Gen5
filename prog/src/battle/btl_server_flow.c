@@ -7563,10 +7563,10 @@ static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL
     }
   }
 
-  // 「ねむり」状態の時には「あくび」にならない
+  // 基本状態以上の時には「あくび」にならない
   if( sick == WAZASICK_AKUBI )
   {
-    if( BPP_CheckSick(target, WAZASICK_NEMURI) ){
+    if( BPP_GetPokeType(target) != POKESICK_NULL ){
       return BTL_ADDSICK_FAIL_OTHER;
     }
   }
