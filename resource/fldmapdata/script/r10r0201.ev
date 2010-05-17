@@ -123,7 +123,7 @@ ev_sub_gate_event:
     _RET
   ELSE
 
-    //バッジもってない→「まずはてにいれるのだ」
+    //バッジもってない→「まずはてにいれるのだ」（この処理にはシナリオ上来ない）
     _BALLOONWIN_OBJMSG( msg_r10r0201_badge_04, R10R0201_VETERANM )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
@@ -163,9 +163,9 @@ ev_sub_gate_open_demo:
         _PLAYER_POS_GET( HEROX, HEROY )
         //「～バッジをもつものよ！さきにすすみゆうきをしめせ！」
         IF $HEROX == 19 || $HEROX == 20 THEN
-          _BALLOONWIN_OBJMSG_POS( msg_r10r0201_badge_03, R10R0201_VETERANM, POS_UL )
+          _BALLOONWIN_OBJMSG_POS( msg_r10r0201_badge_03, R10R0201_VETERANM, POS_UP )
         ELSE
-          _BALLOONWIN_OBJMSG_POS( msg_r10r0201_badge_03, R10R0201_VETERANM, POS_UR )
+          _BALLOONWIN_OBJMSG_POS( msg_r10r0201_badge_03, R10R0201_VETERANM, POS_UP )
         ENDIF
         _AB_KEYWAIT_MARK()
         _BALLOONWIN_CLOSE()
