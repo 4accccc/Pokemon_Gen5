@@ -57,7 +57,6 @@ EVENT_START   ev_c07r0401_gentleman_01
 		//‚Ç‚ê‚¾‚¯ˆ¤î‚ðŽ‚Á‚Äˆç‚Ä‚½‚©Œ©‚¹‚Ä‚­‚ê‚È‚¢‚©‚¢H
 		_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_02 ,C07R0401_GENTLEMAN_01)
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
 		
 			//‰ñ“š‚É‚æ‚è•ªŠò
 		IF $SCWK_ANSWER == 0 THEN
