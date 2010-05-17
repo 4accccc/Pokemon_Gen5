@@ -1979,8 +1979,6 @@ static void handler_Tanjun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     int value = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
     value *= 2;
-    if( value < -4 ){ value = -4; }
-    if( value > 4 ){ value = 4; }
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, value );
   }
 }
