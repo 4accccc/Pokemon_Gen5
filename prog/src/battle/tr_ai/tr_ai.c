@@ -4039,7 +4039,10 @@ static  u32 get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const
 static  s32   get_item_param( TR_AI_WORK* taw, u16 item_no, u16 param )
 { 
   ITEMDATA* item_data = (ITEMDATA*)ITEM_GetItemDataArcHandle( taw->item_handle, item_no, taw->heapID );
+  s32       item_param = ITEM_GetBufParam( item_data, param );
 
-  return ITEM_GetBufParam( item_data, param );
+  GFL_HEAP_FreeMemory( item_data );
+
+  return item_param;
 }
 
