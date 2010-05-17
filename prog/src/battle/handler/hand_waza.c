@@ -7650,11 +7650,18 @@ static void handler_FukuroDataki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     for(i=0; i<cnt_max; ++i)
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
-      if( BPP_IsFightEnable(bpp)
-      &&  (BPP_GetPokeSick(bpp) == POKESICK_NULL)
+      if( BPP_GetID(bpp) == pokeID )
+      {
+        ++cnt;
+      }
+      else if(  (BPP_IsFightEnable(bpp))
+      &&        (BPP_GetPokeSick(bpp) == POKESICK_NULL)
       ){
         ++cnt;
       }
+    }
+    if( cnt == 0 ){
+      cnt = 1;
     }
     if( cnt ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_HITCOUNT, cnt );
