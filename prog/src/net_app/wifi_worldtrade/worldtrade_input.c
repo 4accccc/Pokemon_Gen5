@@ -2544,6 +2544,11 @@ static int	wi_seq_winin( WORLDTRADE_INPUT_WORK *wk )
 
 
 		if(wk->type==MODE_LEVEL){
+
+      GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 0 );
+      GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 0 );
+      GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
+      GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
 			WorldTrade_CLACT_PosChange( wk->ArrowAct[0], PAGE_ARROW2_X, PAGE_ARROW_Y);
 			WorldTrade_CLACT_PosChange( wk->ArrowAct[1], PAGE_ARROW1_X, PAGE_ARROW_Y);
 			GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], 1 );
@@ -3220,14 +3225,19 @@ static int	wi_seq_pokename_init( WORLDTRADE_INPUT_WORK *wk )
 
   if( page_max == 1 )
   {
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], FALSE );
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], FALSE );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO_PASSIVE );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO_PASSIVE+1 );
   }
   else
   {
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
   }
+
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 0 );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
 
 	wk->seq  = WI_SEQ_POKENAME_MAIN;
 
@@ -3712,14 +3722,18 @@ static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
 
   if( page_max == 1 )
   {
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], FALSE );
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], FALSE );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO_PASSIVE );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO_PASSIVE+1 );
   }
   else
   {
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[0], CELL_BOXARROW_NO );
+    GFL_CLACT_WK_SetAnmSeq( wk->ArrowAct[1], CELL_BOXARROW_NO+1 );
   }
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[0], 0 );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->ArrowAct[1], 0 );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[0], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->ArrowAct[1], TRUE );
 
 
 	wk->seq  = WI_SEQ_NATION_MAIN;
