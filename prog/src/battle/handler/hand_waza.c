@@ -7607,7 +7607,8 @@ static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
         HANDEX_STR_AddArg( &param->str, target_pokeID );
 
         work[0] = target_pokeID;
-        work[ WORKIDX_STICK ] = 1;
+
+        BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
       }
     }
   }
