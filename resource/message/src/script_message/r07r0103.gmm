@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:43:33"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T14:41:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,37 +292,11 @@
 	</lock>
 
 
-	<row id="msg_r07r0103_nurse_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・戦闘後、フィールドに復帰すると
-　自動でこのメッセージ表示
-・表示後、画面暗転＋回復SE＋回復処理</comment>
-		<attribute name="キャラ指定">トレーナー
-nurse_01</attribute>
-		<language name="JPN" width="256">それでは　ナースの　おしごと
-はじめちゃいます！▼</language>
-		<language name="JPN_KANJI" width="256">それでは　ナースの　お仕事
-始めちゃいます！▼</language>
-	</row>
-
-	<row id="msg_r07r0103_nurse_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・回復処理後
-・以降、繰り返し</comment>
-		<attribute name="キャラ指定">トレーナー
-nurse_01</attribute>
-		<language name="JPN" width="256">みんな　できることは　ちがいます▼
-で　あたしに　できるのは
-ポケモンを　げんきに　してあげること▼
-いろんな　ひと　ポケモンが
-いろんな　ことが　できるってのが▼
-ステキだと　おもうんですよね</language>
-		<language name="JPN_KANJI" width="256">みんな　できることは　違います▼
-で　あたしに　できるのは
-ポケモンを　元気に　してあげること▼
-いろんな　人　ポケモンが
-いろんな　ことが　できるってのが▼
-ステキだと　思うんですよね</language>
+	<row id="msg_mapscript_dummy" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
