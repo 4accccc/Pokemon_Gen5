@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-11T19:06:06"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-17T18:05:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,9 +346,9 @@
 
 	<row id="msg_reception03_01">
 		<attribute name="キャラ指定">受付男性３</attribute>
-		<language name="JPN" width="256">いまは　[2:01:２桁:11]にんの　きゃくが
+		<language name="JPN" width="256">いまは　[2:01:２桁:11]にんの　おきゃくさんが
 ユナイテッドタワーに　きているよ</language>
-		<language name="JPN_KANJI" width="256">いまは　[2:01:２桁:11]人の　客が
+		<language name="JPN_KANJI" width="256">いまは　[2:01:２桁:11]人の　お客さんが
 ユナイテッドタワーに　来ているよ</language>
 	</row>
 
