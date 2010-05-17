@@ -24,10 +24,6 @@
 #include "p_status_gra.naix"
 
 #include "msg/msg_trainermemo.h"
-#include "msg/msg_place_name.h"
-#include "msg/msg_place_name_out.h"
-#include "msg/msg_place_name_per.h"
-#include "msg/msg_place_name_spe.h"
 
 #include "p_sta_sys.h"
 #include "p_sta_info.h"
@@ -923,60 +919,25 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
 //’n–¼•ÏŠ·
 static STRBUF* PSTATUS_INFO_GetPlaceStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const u32 place )
 {
-  if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
+  const ARCDATID datId = POKE_PLACE_GetMessageDatId( place );
+  const u32 msgId = POKE_PLACE_GetMessageId( place );
+  
+  switch( datId )
   {
-    return GFL_MSG_CreateString( infoWork->msgPlaceSp , POKE_MEMO_PLACE_PALACE-30001 );
+  case NARC_message_place_name_dat:
+    return GFL_MSG_CreateString( infoWork->msgPlace , msgId ); 
+    break;
+  case NARC_message_place_name_spe_dat:
+    return GFL_MSG_CreateString( infoWork->msgPlaceSp , msgId ); 
+    break;
+  case NARC_message_place_name_out_dat:
+    return GFL_MSG_CreateString( infoWork->msgPlaceOut , msgId ); 
+    break;
+  case NARC_message_place_name_per_dat:
+    return GFL_MSG_CreateString( infoWork->msgPlacePerson , msgId ); 
+    break;
   }
-  else
-  if( place <= 30000 )
-  {
-    if( place >= msg_place_name_max )
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlace , MAPNAME_TOOIBASYO ); 
-    }
-    else
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlace , place ); 
-    }
-  }
-  else
-  if( place <= 40000 )
-  {
-    const u32 temp = place-30001;
-    if( temp >= msg_place_name_spe_max )
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlace , MAPNAME_TOOIBASYO ); 
-    }
-    else
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlaceSp , temp ); 
-    }
-  }
-  else
-  if( place <= 60000 )
-  {
-    const u32 temp = place-40001;
-    if( temp >= msg_place_name_out_max )
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlaceOut , MAPNAME_TOOIBASYO_OUT ); 
-    }
-    else
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlaceOut , temp ); 
-    }
-  }
-  else
-  if( place <= 65535 )
-  {
-    const u32 temp = place-60001;
-    if( temp >= msg_place_name_per_max )
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlacePerson , MAPNAME_TOOKUNIIRUHITO ); 
-    }
-    else
-    {
-      return GFL_MSG_CreateString( infoWork->msgPlacePerson , temp ); 
-    }
-  }
-  return GFL_MSG_CreateString( infoWork->msgPlace , MAPNAME_TOOIBASYO ); 
+  GF_ASSERT(0);
+  return GFL_MSG_CreateString( infoWork->msgPlace , 0 ); 
+  
 }

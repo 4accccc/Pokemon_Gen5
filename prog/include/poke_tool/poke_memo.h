@@ -10,24 +10,38 @@
 //======================================================================
 #include "poke_tool/poke_tool.h"
 
-//特殊トレーナーメモ用場所定義
-#define POKE_MEMO_PLACE_POKE_SHIFTER (30001)  //ポケシフター(過去作転送
-#define POKE_MEMO_PLACE_GAME_TRADE   (30002)  //つうしんこうかん(ゲーム内)
-#define POKE_MEMO_PLACE_HUMAN_TRADE   (30002)  //つうしんこうかん(人と通信)
-#define POKE_MEMO_PLACE_KANTOU       (30004)  //カントー
-#define POKE_MEMO_PLACE_JYOUTO       (30005)  //ジョウト
-#define POKE_MEMO_PLACE_HOUEN        (30006)  //ホウエン
-#define POKE_MEMO_PLACE_SHINOU       (30007)  //シンオウ
-#define POKE_MEMO_PLACE_FAR_PLACE    (30008)  //とおいとち(XD・コロシアム
-#define POKE_MEMO_PLACE_UNKNOWN      (30009)  //----------(不明
-#define POKE_MEMO_PERSON_SODATEYA    (60002)  //育て屋夫婦
-#define POKE_MEMO_PERSON_TOREZYAHANTA (60003)  //トレジャーハンター
+#include "msg/msg_place_name.h"
+#include "msg/msg_place_name_out.h"
+#include "msg/msg_place_name_per.h"
+#include "msg/msg_place_name_spe.h"
 
-#define POKE_MEMO_PLACE_SEREBIXI_BEFORE  (30010)   //セレビィ転送時
-#define POKE_MEMO_PLACE_SEREBIXI_AFTER   (30011)   //セレビィイベント後
-#define POKE_MEMO_PLACE_ENRAISUI_BEFORE  (30012)   //エンテイ・ライコウ・スイクン転送時
-#define POKE_MEMO_PLACE_ENRAISUI_AFTER   (30013)   //エンテイ・ライコウ・スイクン後
-#define POKE_MEMO_PLACE_PALACE           (30014)   //パレス
+//トレーナーメモ ファイル部分
+#define POKE_PLACE_START_SPECIAL_PLACE   (30001)
+#define POKE_PLACE_START_OUTER_PLACE     (40001)
+#define POKE_PLACE_START_PERSON_NAME     (60001)
+
+//特殊トレーナーメモ用場所定義
+#define POKE_MEMO_PLACE_POKE_SHIFTER  (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_POKESIHUTAH)  //ポケシフター(過去作転送
+#define POKE_MEMO_PLACE_GAME_TRADE    (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_NAIBUTUUSINKOUKAN)  //つうしんこうかん(ゲーム内)
+#define POKE_MEMO_PLACE_HUMAN_TRADE   (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_TUUSINKOUKAN)  //つうしんこうかん(人と通信)
+#define POKE_MEMO_PLACE_KANTOU        (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_KANTO)  //カントー
+#define POKE_MEMO_PLACE_JYOUTO        (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_ZYOTO)  //ジョウト
+#define POKE_MEMO_PLACE_HOUEN         (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_HOUEN)  //ホウエン
+#define POKE_MEMO_PLACE_SHINOU        (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_SINOH)  //シンオウ
+#define POKE_MEMO_PLACE_FAR_PLACE     (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_TOOKUHANARETATOTI)  //とおいとち(XD・コロシアム
+#define POKE_MEMO_PLACE_UNKNOWN       (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_HUSEINAKOHDO)  //----------(不明
+#define POKE_MEMO_PERSON_SODATEYA     (POKE_PLACE_START_PERSON_NAME+MAPNAME_SODATEYA)  //育て屋夫婦
+#define POKE_MEMO_PERSON_TOREZYAHANTA (POKE_PLACE_START_PERSON_NAME+MAPNAME_TOREZYAHANTA)  //トレジャーハンター
+
+#define POKE_MEMO_PLACE_SEREBIXI_BEFORE  (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_2010HAIHU_EV1_01)   //セレビィ転送時
+#define POKE_MEMO_PLACE_SEREBIXI_AFTER   (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_2010HAIHU_EV1_02)   //セレビィイベント後
+#define POKE_MEMO_PLACE_ENRAISUI_BEFORE  (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_2010HAIHU_EV2_01)   //エンテイ・ライコウ・スイクン転送時
+#define POKE_MEMO_PLACE_ENRAISUI_AFTER   (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_2010HAIHU_EV2_02)   //エンテイ・ライコウ・スイクン後
+#define POKE_MEMO_PLACE_PALACE           (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_PARESUKYOUTUU)   //パレス
+
+//不正値用
+#define POKE_MEMO_UNKNOWN_PLACE       (MAPNAME_TOOIBASYO)
+#define POKE_MEMO_UNKNOWN_PERSON      (POKE_PLACE_START_PERSON_NAME+MAPNAME_TOOKUNIIRUHITO)
 
 //DPPtHGSSでの特殊な地名(映画セレビィ・エンライスイ
 #define POKE_MEMO_2010_MOVIE   (3008)
@@ -81,3 +95,7 @@ extern const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const P
 //イベント後の処理を行う(2010映画配布用
 extern void POKE_MEMO_SetEventPoke_AfterEventPP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type );
 extern void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type );
+
+//地名→メッセージのdatIdとmessageId
+const ARCDATID POKE_PLACE_GetMessageDatId( const u32 place );
+const u32 POKE_PLACE_GetMessageId( const u32 place );

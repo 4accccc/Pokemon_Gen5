@@ -11,10 +11,12 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "field/zonedata.h"
 
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_memo.h"
 
+#include "message.naix"
 
 //======================================================================
 //	define
@@ -178,6 +180,7 @@ void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u
 
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType )
 {
+
   if( setType == PMDT_1 )
   {
     PPP_Put( ppp , ID_PARA_get_place , 0 );
@@ -201,14 +204,28 @@ static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , 
   
   if( setType == PMDT_1 )
   {
-    PPP_Put( ppp , ID_PARA_get_place , place );
+    if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
+    {
+      PPP_Put( ppp , ID_PARA_get_place , POKE_MEMO_PLACE_PALACE );
+    }
+    else
+    {
+      PPP_Put( ppp , ID_PARA_get_place , place );
+    }
     PPP_Put( ppp , ID_PARA_get_year  , date.year );
     PPP_Put( ppp , ID_PARA_get_month , date.month );
     PPP_Put( ppp , ID_PARA_get_day   , date.day );
   }
   else
   {
-    PPP_Put( ppp , ID_PARA_birth_place , place );
+    if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
+    {
+      PPP_Put( ppp , ID_PARA_birth_place , POKE_MEMO_PLACE_PALACE );
+    }
+    else
+    {
+      PPP_Put( ppp , ID_PARA_birth_place , place );
+    }
     PPP_Put( ppp , ID_PARA_birth_year  , date.year );
     PPP_Put( ppp , ID_PARA_birth_month , date.month );
     PPP_Put( ppp , ID_PARA_birth_day   , date.day );
@@ -409,4 +426,118 @@ void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_
   }
 
   PPP_FastModeOff(ppp,fastFlg);
+}
+
+#pragma mark [>PokePlace
+const ARCDATID POKE_PLACE_GetMessageDatId( const u32 place )
+{
+  if( place < POKE_PLACE_START_SPECIAL_PLACE )
+  {
+    if( place >= msg_place_name_max )
+    {
+      return NARC_message_place_name_dat;
+    }
+    else
+    {
+      return NARC_message_place_name_dat;
+    }
+  }
+  else
+  if( place < POKE_PLACE_START_OUTER_PLACE )
+  {
+    const u32 temp = place-POKE_PLACE_START_SPECIAL_PLACE;
+    if( temp >= msg_place_name_spe_max )
+    {
+      return NARC_message_place_name_dat;
+    }
+    else
+    {
+      return NARC_message_place_name_spe_dat;
+    }
+  }
+  else
+  if( place < POKE_PLACE_START_PERSON_NAME )
+  {
+    const u32 temp = place-POKE_PLACE_START_OUTER_PLACE;
+    if( temp >= msg_place_name_out_max )
+    {
+      return NARC_message_place_name_dat;
+    }
+    else
+    {
+      return NARC_message_place_name_out_dat;
+    }
+  }
+  else
+  if( place <= 65535 )
+  {
+    const u32 temp = place-POKE_PLACE_START_PERSON_NAME;
+    if( temp >= msg_place_name_per_max )
+    {
+      return NARC_message_place_name_per_dat;
+    }
+    else
+    {
+      return NARC_message_place_name_per_dat;
+    }
+  }
+  return NARC_message_place_name_dat;
+}
+
+const u32 POKE_PLACE_GetMessageId( const u32 place )
+{
+  if( place < POKE_PLACE_START_SPECIAL_PLACE )
+  {
+    if( place >= msg_place_name_max )
+    {
+      return MAPNAME_TOOIBASYO;
+    }
+    else
+    {
+      return place;
+    }
+  }
+  else
+  if( place < POKE_PLACE_START_OUTER_PLACE )
+  {
+    const u32 temp = place-POKE_PLACE_START_SPECIAL_PLACE;
+    if( temp >= msg_place_name_spe_max )
+    {
+      return MAPNAME_TOOIBASYO;
+    }
+    else
+    {
+      return temp;
+    }
+  }
+  else
+  if( place < POKE_PLACE_START_PERSON_NAME )
+  {
+    const u32 temp = place-POKE_PLACE_START_OUTER_PLACE;
+    if( temp >= msg_place_name_out_max )
+    {
+      return MAPNAME_TOOIBASYO;
+    }
+    else
+    {
+      return temp;
+    }
+  }
+  else
+  if( place <= 65535 )
+  {
+    const u32 temp = place-POKE_PLACE_START_PERSON_NAME;
+    if( temp >= msg_place_name_per_max )
+    {
+      return MAPNAME_TOOKUNIIRUHITO;
+    }
+    else
+    {
+      return temp;
+    }
+  }
+  else
+  {
+    return MAPNAME_TOOIBASYO;
+  }
 }
