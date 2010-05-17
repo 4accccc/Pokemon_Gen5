@@ -64,7 +64,9 @@ enum {
 	NARC_trainer_case_card_button_NANR = 50,
 	NARC_trainer_case_touch_ef_NANR = 51,
 	NARC_trainer_case_gym_leader_NSBMD = 52,
-	NARC_trainer_case_gym_leader_NSBCA = 53
+	NARC_trainer_case_gym_leader_b_NSBMD = 53,
+	NARC_trainer_case_gym_leader_NSBCA = 54,
+	NARC_trainer_case_gym_leader_b_NSBCA = 55
 };
 
 /* NARC_TRAINER_CASE_NAIX_ */
