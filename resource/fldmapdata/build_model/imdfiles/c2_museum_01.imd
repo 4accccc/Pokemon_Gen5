@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-02-01T13:27:20" source="c2_museum_01c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-05-17T20:52:04" source="c2_museum_01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-02-01T13:27:20" source="c2_museum_01c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-05-17T20:52:04" source="c2_museum_01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -544,7 +544,7 @@
 </tex_palette_array>
 
 <material_array size="10">
-	<material index="0" name="c4m_hashira_1"
+	<material index="0" name="c4m_hashira"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -592,7 +592,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="c4m_kabe2_1"
+	<material index="2" name="c4m_kabe2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -616,7 +616,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="c4m_kabe_001_1"
+	<material index="3" name="c4m_kabe_001"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -640,31 +640,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="c4m_kanban2_1"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="13"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="6 6 6"
-		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="3"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="5" name="c4m_kanban_1"
+	<material index="4" name="c4m_kanban"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -688,7 +664,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="c4m_yane_001_1"
+	<material index="5" name="c4m_kanban2"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="13"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="6 6 6"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="6" name="c4m_yane_001"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -736,7 +736,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="h_kage_1"
+	<material index="8" name="h_kage"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -760,7 +760,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="h_mado_1"
+	<material index="9" name="h_mado"
 		light0="off" light1="on" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1584,9 +1584,9 @@
 	<polygon index="4" name="polygon4"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-3.507813 1.337891 2.523193"
-		volume_max="-2.431641 2.247314 3.323242"
-		volume_r="5.013916"
+		volume_min="-3.507813 1.337891 2.273193"
+		volume_max="-2.431641 2.247314 3.073242"
+		volume_r="4.851807"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1597,11 +1597,11 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 33.375000"/>
 					<nrm xyz="0.000000 0.660156 0.750000"/>
-					<pos_xyz xyz="-3.507813 1.337891 3.323242"/>
+					<pos_xyz xyz="-3.507813 1.337891 3.073242"/>
 					<tex st="32.000000 33.375000"/>
 					<pos_xy xy="-2.431641 1.337891"/>
 					<tex st="32.000000 1.375000"/>
-					<pos_yz yz="2.247314 2.523193"/>
+					<pos_yz yz="2.247314 2.273193"/>
 					<tex st="0.000000 1.375000"/>
 					<pos_xy xy="-3.507813 2.247314"/>
 				</primitive>
@@ -1611,9 +1611,9 @@
 	<polygon index="5" name="polygon5"
 		vertex_size="24" polygon_size="6"
 		triangle_size="0" quad_size="6"
-		volume_min="-3.378906 0.312500 2.750000"
-		volume_max="-2.628906 1.312500 3.250000"
-		volume_r="4.868652"
+		volume_min="-3.378906 0.312500 2.500000"
+		volume_max="-2.628906 1.312500 3.000000"
+		volume_r="4.705322"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1624,30 +1624,30 @@
 					<mtx idx="0"/>
 					<tex st="-13.375000 16.000000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xyz xyz="-3.378906 0.312500 2.750000"/>
-					<pos_xz xz="-3.378906 3.250000"/>
+					<pos_xyz xyz="-3.378906 0.312500 2.500000"/>
+					<pos_xz xz="-3.378906 3.000000"/>
 					<tex st="-13.375000 0.000000"/>
 					<pos_xy xy="-3.378906 1.312500"/>
-					<pos_xz xz="-3.378906 2.750000"/>
+					<pos_xz xz="-3.378906 2.500000"/>
 					<tex st="-13.375000 16.000000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="-2.628906 0.312500 3.250000"/>
-					<pos_xz xz="-2.628906 2.750000"/>
+					<pos_xyz xyz="-2.628906 0.312500 3.000000"/>
+					<pos_xz xz="-2.628906 2.500000"/>
 					<tex st="-13.375000 0.000000"/>
 					<pos_xy xy="-2.628906 1.312500"/>
-					<pos_xz xz="-2.628906 3.250000"/>
+					<pos_xz xz="-2.628906 3.000000"/>
 					<tex st="0.000000 -32.000000"/>
 					<nrm xyz="0.000000 -1.000000 0.000000"/>
-					<pos_xyz xyz="-3.378906 0.312500 2.750000"/>
+					<pos_xyz xyz="-3.378906 0.312500 2.500000"/>
 					<tex st="16.000000 -32.000000"/>
 					<pos_xy xy="-2.628906 0.312500"/>
 					<tex st="16.000000 -48.000000"/>
-					<pos_xz xz="-2.628906 3.250000"/>
+					<pos_xz xz="-2.628906 3.000000"/>
 					<tex st="0.000000 -48.000000"/>
 					<pos_xy xy="-3.378906 0.312500"/>
 					<tex st="0.000000 -16.000000"/>
 					<nrm xyz="0.000000 0.000000 -1.000000"/>
-					<pos_yz yz="1.312500 2.750000"/>
+					<pos_yz yz="1.312500 2.500000"/>
 					<tex st="16.000000 -16.000000"/>
 					<pos_xy xy="-2.628906 1.312500"/>
 					<tex st="16.000000 -32.000000"/>
@@ -1656,13 +1656,13 @@
 					<pos_xy xy="-3.378906 0.312500"/>
 					<tex st="0.625000 11.625000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_yz yz="1.312500 3.250000"/>
+					<pos_yz yz="1.312500 3.000000"/>
 					<pos_xy xy="-2.628906 1.312500"/>
-					<pos_xz xz="-2.628906 2.750000"/>
+					<pos_xz xz="-2.628906 2.500000"/>
 					<pos_xy xy="-3.378906 1.312500"/>
 					<tex st="0.062500 15.812500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="0.312500 3.250000"/>
+					<pos_yz yz="0.312500 3.000000"/>
 					<tex st="15.875000 15.812500"/>
 					<pos_xy xy="-2.628906 0.312500"/>
 					<tex st="15.875000 0.187500"/>
@@ -2148,7 +2148,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface136" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -2170,8 +2170,8 @@
 		<display index="1" material="1" polygon="7" priority="0"/>
 		<display index="2" material="2" polygon="2" priority="0"/>
 		<display index="3" material="3" polygon="1" priority="0"/>
-		<display index="4" material="4" polygon="4" priority="0"/>
-		<display index="5" material="5" polygon="5" priority="0"/>
+		<display index="4" material="4" polygon="5" priority="0"/>
+		<display index="5" material="5" polygon="4" priority="0"/>
 		<display index="6" material="6" polygon="3" priority="0"/>
 		<display index="7" material="7" polygon="8" priority="0"/>
 		<display index="8" material="8" polygon="9" priority="0"/>
