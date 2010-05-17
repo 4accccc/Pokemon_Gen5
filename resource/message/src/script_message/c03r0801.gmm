@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T20:04:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T12:57:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,15 +292,15 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>？？？</comment>
+	<row id="msg_mapscript_dummy" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_bg_c03r0801_lock_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>開く予定無し</comment>
+	<row id="msg_bg_c03r0801_lock_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">ドア</attribute>
 		<language name="JPN" width="256">カギが　かかっていて　あかない</language>
 		<language name="JPN_KANJI" width="256">カギが　かかっていて　開かない</language>
@@ -1069,15 +1069,15 @@ msg_c03r0801_hint_02</comment>
 私　気づきました！</language>
 	</row>
 
-	<row id="msg_c03r0801_babygirl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>トレーナー前</comment>
+	<row id="msg_c03r0801_babygirl2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">トレーナー　です２</language>
 		<language name="JPN_KANJI" width="256">トレーナー　です２</language>
 	</row>
 
-	<row id="msg_c03r0801_babygirl2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>トレーナー後</comment>
+	<row id="msg_c03r0801_babygirl2_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">しょうぶが　おわりました２</language>
 		<language name="JPN_KANJI" width="256">勝負が　終わりました２</language>
