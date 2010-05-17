@@ -12462,7 +12462,7 @@ static u16 scEvent_RecalcDrainVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     volume = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
     ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
     if( volume != 0 ){
-      volume = BTL_CALC_MulRatio( volume, ratio );
+      volume = BTL_CALC_MulRatio_OverZero( volume, ratio );
     }
   BTL_EVENTVAR_Pop();
 
