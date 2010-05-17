@@ -294,7 +294,8 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	InitVBlank( wk );
 
-	return SetFadeIn( wk, MAINSEQ_START_SE_PLAY );
+//	return SetFadeIn( wk, MAINSEQ_START_SE_PLAY );
+	return SetFadeIn( wk, MAINSEQ_MAIN );
 }
 
 static int MainSeq_Wipe( SRMAIN_WORK * wk )
@@ -342,7 +343,7 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 // äJénéûÇÃÇrÇdçƒê∂
 static int MainSeq_StartSePlay( SRMAIN_WORK * wk )
 {
-	PMSND_PlaySE( SEQ_SE_END_01 );
+//	PMSND_PlaySE( SEQ_SE_END_01 );
 	return MAINSEQ_MAIN;
 }
 
