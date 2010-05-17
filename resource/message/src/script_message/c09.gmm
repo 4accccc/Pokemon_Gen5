@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-12T12:37:57"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T20:18:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,11 +365,11 @@
 		<language name="JPN" width="256">じゅんびを　おこたるな！▼
 あちらの　いりぐちを　ぬけて
 ポケモンの　かいふくなど▽
-できるかぎりの　よういを　するのだ！</language>
+できるかぎりの　よういを　するのだ！▼</language>
 		<language name="JPN_KANJI" width="256">準備を　怠るな！▼
 あちらの　入り口を　ぬけて
 ポケモンの　回復など▽
-できるかぎりの　用意を　するのだ！</language>
+できるかぎりの　用意を　するのだ！▼</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_05">
