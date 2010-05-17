@@ -22,6 +22,8 @@
 #include "n_legend_meat_w.cdat"
 #include "riza_bridge.cdat"
 #include "v_boat_port.cdat"
+#include "title_b.cdat"
+#include "title_w.cdat"
 
 
 static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
@@ -42,5 +44,7 @@ static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
  { &data_n_legend_meat_w_scene, demo3d_cmd_n_legend_meat_w_data, demo3d_cmd_n_legend_meat_w_end_data, res_n_legend_meat_w_scene_unit, NELEMS(res_n_legend_meat_w_scene_unit) },
  { &data_riza_bridge_scene, demo3d_cmd_riza_bridge_data, demo3d_cmd_riza_bridge_end_data, res_riza_bridge_scene_unit, NELEMS(res_riza_bridge_scene_unit) },
  { &data_v_boat_port_scene, demo3d_cmd_v_boat_port_data, demo3d_cmd_v_boat_port_end_data, res_v_boat_port_scene_unit, NELEMS(res_v_boat_port_scene_unit) },
+ { &data_title_b_scene, demo3d_cmd_title_b_data, demo3d_cmd_title_b_end_data, res_title_b_scene_unit, NELEMS(res_title_b_scene_unit) },
+ { &data_title_w_scene, demo3d_cmd_title_w_data, demo3d_cmd_title_w_end_data, res_title_w_scene_unit, NELEMS(res_title_w_scene_unit) },
 };
 

@@ -27,7 +27,9 @@
 #define DEMO3D_ID_N_LEGEND_MEAT_W (14)
 #define DEMO3D_ID_RIZA_BRIDGE (15)
 #define DEMO3D_ID_V_BOAT_PORT (16)
+#define DEMO3D_ID_TITLE_B (17)
+#define DEMO3D_ID_TITLE_W (18)
 
-#define DEMO3D_ID_MAX (17)
+#define DEMO3D_ID_MAX (19)
 
 #endif // __DEMO3D_DEMOID_H__
