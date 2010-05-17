@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:31:18"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T20:05:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -358,7 +358,22 @@
 
 	<row id="msg_d05r0101_black_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・メッセージ表示後、
+・メッセージ表示後、カメラ移動</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">……かんがえても
+わかるわけ　ないよね▼
+……メンドーだし
+さっさと　なかを　しらべよう▼</language>
+		<language name="JPN_KANJI" width="256">……考えても
+わかるわけ　ないよね▼
+……メンドーだし
+さっさと　中を　探索しよう▼</language>
+	</row>
+
+	<row id="msg_d05r0101_black_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・black_02表示後、
 　主人公がd05r0201の手前に移動するまで
 　このメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">友達♂
