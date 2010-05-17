@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/13 13:10:44
+#save date:2010/05/15 14:27:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h02.wms
 #SECTION START:OBJ_EVENT
@@ -11,37 +11,6 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h02.wms
 #hold event number:
 3
 #event number: 0
-#type
-1
-#ID name
-H02_MIDDLEMAN1_01
-#OBJ CODE Number
-MIDDLEMAN1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H02_MIDDLEMAN1_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-1
-#Move Limit Z Number
-5
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1688 0 -520
-#event number: 1
 #type
 1
 #ID name
@@ -67,12 +36,12 @@ DIR_DOWN
 #Move Limit X Number
 1
 #Move Limit Z Number
-1
+5
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-2920 0 -472
-#event number: 2
+1688 0 -520
+#event number: 1
 #type
 1
 #ID name
@@ -103,6 +72,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 696 0 -504
+#event number: 2
+#type
+1
+#ID name
+H02_MIDDLEMAN1_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H02_MIDDLEMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+2920 0 -472
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -10,9 +10,9 @@
 #ifndef ZONE_H02_EVC_H
 #define ZONE_H02_EVC_H
 
-#define H02_MIDDLEMAN1_01                  0
-#define H02_WOMAN2_01                      1
-#define H02_BOY2_01                        2
+#define H02_WOMAN2_01                      0
+#define H02_BOY2_01                        1
+#define H02_MIDDLEMAN1_01                  2
 
 #endif //ZONE_H02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
