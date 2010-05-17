@@ -1075,19 +1075,17 @@ void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData,
  *
  * @param fieldSound
  * @param gameData
- * @param prevZoneID 遷移前のゾーンID
  * @param nextZoneID 遷移後のゾーンID
  */
 //---------------------------------------------------------------------------------
 void FSND_StandByNextMapBGM( 
-    FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 prevZoneID, u16 nextZoneID )
+    FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID )
 { 
   u32 prevBGM, nextBGM;
 
   // 前後のゾーンのBGMを取得
-  prevBGM = GetSpecialBGM( gameData, prevZoneID );
+  prevBGM = PMSND_GetBGMsoundNo();
   nextBGM = GetSpecialBGM( gameData, nextZoneID );
-  if( prevBGM == SPECIAL_BGM_NONE ) { prevBGM = GetZoneBGM( gameData, prevZoneID ); }
   if( nextBGM == SPECIAL_BGM_NONE ) { nextBGM = GetZoneBGM( gameData, nextZoneID ); }
 
   // 前後のBGMが同じなら何もしない
