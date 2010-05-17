@@ -415,6 +415,10 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
   BattlePokeList_ButtonPalSet( wk, wk->page );
 
   BattlePokeList_ObjInit( wk );
+	// 技説明の場合は技のタイプアイコンを初期化
+	if( wk->dat->mode == BPL_MODE_WAZAINFO ){
+		BattlePokelist_WazaTypeSet( wk );
+	}
   BattlePokeList_PageObjSet( wk, wk->page );
 
   BattlePokeList_BmpInit( wk );
@@ -1242,17 +1246,9 @@ static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk )
 {
-/*
-  if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-    return SEQ_BPL_PAGECHG_WAZASET_I;
-  }
-  BattlePokelist_WazaTypeSet( wk );
-  BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BI );
-*/
   if( BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BI ) == FALSE ){
     return SEQ_BPL_PAGECHG_WAZASET_I;
   }
-//  BattlePokelist_WazaTypeSet( wk );
   return SEQ_BPL_WAZADEL_MAIN;
 }
 
