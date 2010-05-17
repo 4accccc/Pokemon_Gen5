@@ -936,11 +936,11 @@ static void DepositDecideFunc( WORLDTRADE_WORK*wk )
 		PMSND_PlaySE(SE_CANCEL);
 	}else{
 		if(wk->BoxCursorPos!=BOX_CUROSOR_TRAYNAME_POS){
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 			// œœœ‚ð‚ ‚¸‚¯‚Ü‚·‚©H
 			switch(PokemonCheck( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos )){
 			// ‚¾‚¹‚é
 			case WANT_POKE_OK:
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 				if(CheckPocket( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos )){
 					WT_WORDSET_RegisterPokeNickNamePPP( wk->WordSet, 0, 
 							WorldTrade_GetPokePtr(wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos) );
@@ -955,6 +955,7 @@ static void DepositDecideFunc( WORLDTRADE_WORK*wk )
 				break;
 			// ƒ^ƒ}ƒS‚Í‚¾‚¹‚È‚¢
 			case WANT_POKE_TAMAGO:
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 				SubSeq_MessagePrint( wk, msg_gtc_01_028, 1, 0, 0x0f0f, 1 );
 				WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 				break;
