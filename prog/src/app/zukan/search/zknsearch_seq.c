@@ -238,7 +238,14 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 	wk->page = 0xff;
 
-  ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );  // モードを設定したいのでリセットする
+  //ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );  // モードを設定したいのでリセットする
+  // 全部リセットするのではなく、モードだけ変更する 
+  if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){ 
+    wk->dat->sort->mode = ZKNCOMM_LIST_SORT_MODE_ZENKOKU;
+  }
+  else{
+    wk->dat->sort->mode = ZKNCOMM_LIST_SORT_MODE_LOCAL;
+  }
 
 	return MAINSEQ_INIT_MENU;
 }
