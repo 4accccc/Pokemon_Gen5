@@ -67,7 +67,7 @@ do-build: out_end
 
 out_end: trainer_wb.csv
 	ruby ../../tools/trdata_conv/trdata_conv.rb $< ../message/template.gmm
-#	ruby ../../tools/trdata_conv/file_exist.rb $(LSTFILE) ../../../pokemon_wb_doc/trgra/
+	ruby ../../tools/trdata_conv/file_exist.rb $(LSTFILE) ../../../pokemon_wb_doc/trgra/
 endif
 
 do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(GRADIR)$(SCRFILE) $(HASHDIR)$(HASH) $(GRAHEADERDIR)$(GRA_HEADER)
