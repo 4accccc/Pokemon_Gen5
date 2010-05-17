@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-11T14:40:34"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-17T21:47:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="693"/>
 		<band id="3" index="3" style="0000" width="693"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -402,16 +402,16 @@
 ・たいせん（msg_union_info_01_04の続き。
 システムバッファに収まらない為分割）</comment>
 		<language name="JPN" width="216" line="2">ローテーションバトルは
-ポケモンを　まえに　２ひき[BE:00:ページ切り替え（行送り）]
-うしろに　１ひき　だしながら[BE:00:ページ切り替え（行送り）]
+ポケモンを　まえに　１ひき[BE:00:ページ切り替え（行送り）]
+うしろに　２ひき　だしながら[BE:00:ページ切り替え（行送り）]
 ふたりで　たいせん　します[BE:01:ページ切り替え（クリア）]
 マルチバトルは　たたかいの　ばに
 ４にんで　ポケモンを[BE:00:ページ切り替え（行送り）]
 １ひきずつ　だして[BE:00:ページ切り替え（行送り）]
 ２たい２で　たいせん　します[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216" line="2">ローテーションバトルは
-ポケモンを　前に　２匹[BE:00:ページ切り替え（行送り）]
-後ろに　１匹　だしながら[BE:00:ページ切り替え（行送り）]
+ポケモンを　前に　１匹[BE:00:ページ切り替え（行送り）]
+後ろに　２匹　だしながら[BE:00:ページ切り替え（行送り）]
 ２人で　対戦します[BE:01:ページ切り替え（クリア）]
 マルチバトルは　戦いの　場に
 ４人で　ポケモンを[BE:00:ページ切り替え（行送り）]
