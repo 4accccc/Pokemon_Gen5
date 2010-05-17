@@ -6212,7 +6212,7 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
  */
 static BOOL HITCHECK_IsFirstTime( const HITCHECK_PARAM* param )
 {
-  return param->count == 1;
+  return param->count == 0;
 }
 /**
  *  複数回ヒットするワザか判定
@@ -6324,20 +6324,6 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     }
   }
 
-  // ワザエフェクト生成
-  #if 0
-  if( HITCHECK_CheckWazaEffectPuttable(hitCheckParam) )
-  {
-    if( HITCHECK_IsFirstTime(hitCheckParam) ){
-      wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-    }
-    else{
-      SCQUE_PUT_ACT_WazaEffect( wk->que,
-        wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
-    }
-  }
-  #endif
-
   // 身代わり判定
   for(i=0, migawari_cnt=0; i<poke_cnt; ++i)
   {
@@ -6366,6 +6352,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
       scproc_Fight_Damage_Determine( wk, attacker, bpp[i], wazaParam );
     }
   }
+  hitCheckParam->count++;
 
   // ダメージコマンド出力
   scPut_WazaDamagePlural( wk, wazaParam, poke_cnt, affAry, bpp, dmg, critical_flg, fTargetPlural );

@@ -534,6 +534,7 @@ static void handler_Teleport_ExMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static const BtlEventHandlerTable*  ADD_Nagetukeru( u32* numElems );
 static void handler_Nagetukeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_WazaPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_DenjiFuyuu( u32* numElems );
 static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -7480,6 +7481,7 @@ static const BtlEventHandlerTable*  ADD_Nagetukeru( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_Nagetukeru_ExeCheck },
     { BTL_EVENT_WAZA_POWER,             handler_Nagetukeru_WazaPower},
+    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_Nagetukeru_DmgDetermine },
     { BTL_EVENT_WAZA_DMG_REACTION,      handler_Nagetukeru_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
@@ -7510,6 +7512,22 @@ static void handler_Nagetukeru_WazaPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
+static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u16 itemID = BPP_GetItem( bpp );
+    if( itemID != ITEM_DUMMY_DATA )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Nagetukeru );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+      HANDEX_STR_AddArg( &param->str, itemID );
+    }
+  }
+}
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -7523,9 +7541,6 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
       item_param->pokeID = pokeID;
       item_param->itemID = ITEM_DUMMY_DATA;
-      HANDEX_STR_Setup( &item_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Nagetukeru );
-      HANDEX_STR_AddArg( &item_param->exStr, pokeID );
-      HANDEX_STR_AddArg( &item_param->exStr, itemID );
 
       {
         int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
