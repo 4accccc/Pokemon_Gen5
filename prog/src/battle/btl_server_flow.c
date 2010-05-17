@@ -5665,6 +5665,7 @@ static void scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   if( BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_SORAWOTOBU)
   ||  BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_DIVING)
   ||  BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_ANAWOHORU)
+  ||  BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_SHADOWDIVE)
   ){
     SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), TRUE );
   }
