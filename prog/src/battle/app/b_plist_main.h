@@ -31,27 +31,8 @@ enum {
 	BPLIST_PAGE_PP_RCV,				// PP回復技選択ページ
 	BPLIST_PAGE_WAZASET_BS,		// ステータス技忘れ１ページ（戦闘技選択）
 	BPLIST_PAGE_WAZASET_BI,		// ステータス技忘れ２ページ（戦闘技詳細）
-//	BPLIST_PAGE_WAZASET_CS,		// ステータス技忘れ３ページ（コンテスト技選択）
-//	BPLIST_PAGE_WAZASET_CI,		// ステータス技忘れ４ページ（コンテスト技詳細）
 	BPLIST_PAGE_DEAD,					// 瀕死入れ替え選択ページ
 };
-
-// パレット定義
-/*
-#define	BPL_PAL_NN_PLATE	( 0 )		///< パレット00：プレート（通常）
-#define	BPL_PAL_MN_PLATE	( 5 )		///< パレット01：プレート（マルチ）
-#define	BPL_PAL_DN_PLATE	( 7 )		///< パレット02：プレート（瀕死）
-#define	BPL_PAL_HPGAGE		( 9 )		///< パレット09：HPゲージ
-
-#define	BPL_PAL_B_RED		( 10 )		///< パレット09：ボタン（赤）
-#define	BPL_PAL_B_GREEN		( 12 )		///< パレット09：ボタン（緑）
-
-#define	BPL_PAL_SYS_FONT	( 13 )		///< パレット13：システムフォント
-#define	BPL_PAL_TALK_WIN	( 14 )		///< パレット14：会話ウィンドウ
-#define	BPL_PAL_TALK_FONT	( BPL_PAL_SYS_FONT )		///< パレット15：会話フォント
-
-#define	BPL_HP_DOTTO_MAX	( 48 )		///< HPゲージのドットサイズ
-*/
 
 // ウィンドウインデックス
 enum {
@@ -178,20 +159,6 @@ enum {
 	WIN_P7_MAX
 };
 
-/*
-// ページ８の追加ウィンドウインデックス
-enum {
-	WIN_P8_NAME = 0,	// 名前
-	WIN_P8_SKILL,		// 技名
-	WIN_P8_PP,			// PP
-	WIN_P8_PPNUM,		// PP/PP
-	WIN_P8_APP,			// 「アピールポイント」
-	WIN_P8_INFO,		// 技説明
-	WIN_P8_WASURERU,	// 「わすれる」
-	WIN_P8_MAX
-};
-*/
-
 // セルアクターのID
 enum {
 	BPL_CA_ITEM1 = 0,
@@ -295,6 +262,7 @@ enum {
 	BPLIST_CELRES_MAX,
 };
 
+// 技データ
 typedef struct {
 	u16	id;		// 技番号
 	u8	pp;		// PP
@@ -306,6 +274,7 @@ typedef struct {
 	u8	pow;	// 威力
 }BPL_POKEWAZA;
 
+// ポケモンデータ
 typedef struct {
 	POKEMON_PARAM * pp;		// ポケモンデータ
 
@@ -321,29 +290,22 @@ typedef struct {
 	u16	hp;			// HP
 	u16	mhp;		// 最大HP
 
-	u8	type1;		// タイプ１
-	u8	type2;		// タイプ２
-	u8	lv:7;		// レベル
+	u8	type1;			// タイプ１
+	u8	type2;			// タイプ２
+	u8	lv:7;				// レベル
 	u8	sex_put:1;	// 性別表示（ニドラン用）0=ON, 1=OFF
-	u8	sex:3;		// 性別
-	u8	st:4;		// 状態異常
-	u8	egg:1;		// タマゴ
+	u8	sex:3;			// 性別
+	u8	st:4;				// 状態異常
+	u8	egg:1;			// タマゴ
 
 	u16	spa;		// 特性
 	u16	item;		// アイテム
 
-	u32	now_exp;		// 現在の経験値
+	u32	now_exp;			// 現在の経験値
 	u32	now_lv_exp;		// 現在のレベルの経験値
 	u32	next_lv_exp;	// 次のレベルの経験値
 
-	u8	style;			// かっこよさ
-	u8	beautiful;		// うつくしさ
-	u8	cute;			// かわいさ
-	u8	clever;			// かしこさ
-	u8	strong;			// たくましさ
-
-	u8	cb;				// カスタムボール
-	u8	form;			// フォルムNo
+	u32	form;			// フォルムNo
 
 	BPL_POKEWAZA	waza[4];	// 技データ
 
@@ -351,11 +313,6 @@ typedef struct {
 
 #define	BPL_BANM_MAX_N	( 3 )		// ボタンアニメパターン数（通常）
 #define	BPL_BANM_MAX_E	( 4 )		// ボタンアニメパターン数（押せないボタンあり）
-// プレートボタンサイズ
-/*
-#define	BPL_BSX_PLATE	( 16 )
-#define	BPL_BSY_PLATE	( 6 )
-*/
 // 命令ボタンサイズ
 #define	BPL_BSX_COMMAND	( 13 )
 #define	BPL_BSY_COMMAND	( 5 )
@@ -381,6 +338,7 @@ typedef struct {
 #define	BPL_BSX_WP		( 5 )
 #define	BPL_BSY_WP		( 2 )
 
+// 入れ替えログデータ
 typedef struct {
 	u16	pos1;
 	u16	pos2;
@@ -405,10 +363,8 @@ typedef struct {
 	u16	btn_chg[BPL_BANM_MAX_N][BPL_BSX_CHG*BPL_BSY_CHG];				// 入れ替えボタン
 	u16	btn_waza[BPL_BANM_MAX_E][BPL_BSX_WAZA*BPL_BSY_WAZA];			// 技ボタン
 	u16	btn_del[BPL_BANM_MAX_N][BPL_BSX_DEL*BPL_BSY_DEL];				// 忘れるボタン
-//	u16	btn_contest[BPL_BANM_MAX_N][BPL_BSX_CONTEST*BPL_BSY_CONTEST];	// コンテスト切り替えボタン
 	u16	btn_wp[BPL_BANM_MAX_N][BPL_BSX_WP*BPL_BSY_WP];					// 技位置ボタン
 
-//	u16	wb_pal[16*2];	// 技ボタンのパレット
 	u16	wb_pal[16];			// 技ボタンのパレット
 
 	u8	btn_seq;
@@ -418,7 +374,6 @@ typedef struct {
 	u8	btn_pat:3;
 	u8	btn_flg:1;
 
-//	NUMFONT * nfnt;					// 8x8フォント
 	GFL_FONT * nfnt;				// 8x8フォント
 	GFL_MSGDATA * mman;			// メッセージデータマネージャ
 	WORDSET * wset;					// 単語セット
@@ -426,14 +381,9 @@ typedef struct {
 	PRINT_QUE * que;				// プリントキュー
 	PRINT_STREAM * stream;	// プリントストリーム
 
-//	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
-//	CATS_RES_PTR	crp;				// リソース管理
-//	CATS_ACT_PTR	cap[BPL_CA_MAX];	// OAMのCAP
 	GFL_CLUNIT * clunit;
 	GFL_CLWK * clwk[BPL_CA_MAX];
 
-//	GFL_BMPWIN * win[WIN_MAX];	// BMPウィンドウデータ（通常）
-//	GFL_BMPWIN * add_win[64];		// BMPウィンドウデータ（追加）
 	PRINT_UTIL	win[WIN_MAX];	// BMPウィンドウデータ（通常）
 	PRINT_UTIL	add_win[64];	// BMPウィンドウデータ（追加）
 	GFL_BMPWIN * dmy_win;			// BMPウィンドウデータ（ダミー）
@@ -454,12 +404,6 @@ typedef struct {
 	u8	page;			// 現在のページ
 	u8	midx;			// メッセージインデックス
 
-	u8	rcv_seq;
-	u8	rcv_st;
-	u16	rcv_hp;
-	u16	rcv_pp[4];
-
-//	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
 	CURSORMOVE_WORK * cmwk;					// カーソル制御ワーク
 	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 	BOOL cursor_flg;
@@ -468,8 +412,6 @@ typedef struct {
 	u8	wwm_page_cp;			// ステータス技忘れ技詳細ページのカーソル位置
 
 	u8	talk_win_clear;		// メッセージ表示後にメッセージウィンドウをクリア
-
-//	u8	multi_pos;				// マルチバトルの立ち位置
 
 	// 瀕死入れ替え
 	BGWINFRM_WORK * chg_wfrm;
@@ -484,8 +426,6 @@ typedef struct {
 	u32	palRes[BPLIST_PALRES_MAX];
 	u32	celRes[BPLIST_CELRES_MAX];
 
-//	u32	cancelSE;			// キャンセル用ＳＥ
-
 	const u8 * putWin;
 
 }BPLIST_WORK;
@@ -499,55 +439,66 @@ typedef int (*pBPlistFunc)(BPLIST_WORK*);
 
 //--------------------------------------------------------------------------------------------
 /**
- * 指定位置にポケモンが存在するか
+ * @brief		指定位置にポケモンが存在するか
  *
- * @param	wk		ワーク
- * @param	pos		位置
+ * @param		wk    ワーク
+ * @param		pos   位置
  *
- * @retval	"0 = いない"
- * @retval	"1 = 戦闘中"
- * @retval	"2 = 控え"
+ * @retval  "0 = いない"
+ * @retval  "1 = 戦闘中"
+ * @retval  "2 = 控え"
  */
 //--------------------------------------------------------------------------------------------
 extern u8 BattlePokeList_PokeSetCheck( BPLIST_WORK * wk, s32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * ダブルバトルチェック
+ * @brief		マルチバトルチェック
  *
- * @param	wk		ワーク
+ * @param		wk    ワーク
  *
- * @retval	"TRUE = ダブルバトル"
- * @retval	"FALSE = ダブルバトル以外"
- */
-//--------------------------------------------------------------------------------------------
-//extern u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * マルチバトルチェック
- *
- * @param	wk		ワーク
- *
- * @retval	"TRUE = ダブルバトル"
- * @retval	"FALSE = ダブルバトル以外"
+ * @retval  "TRUE = マルチバトル"
+ * @retval  "FALSE = マルチバトル以外"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BattlePokeList_MultiCheck( BPLIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * マルチバトルでパートナーのポケモンかチェック
+ * @brief		マルチバトルでパートナーのポケモンかチェック
  *
- * @param	wk		ワーク
- * @param	pos		位置
+ * @param		wk    ワーク
+ * @param		pos   位置
  *
- * @retval	"TRUE = はい"
- * @retval	"FALSE = いいえ"
+ * @retval  "TRUE = はい"
+ * @retval  "FALSE = いいえ"
  */
 //--------------------------------------------------------------------------------------------
 extern u8 BattlePokeList_MultiPosCheck( BPLIST_WORK * wk, u8 pos );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		画面上の位置から並びデータ位置を取得
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos		画面上の位置
+ *
+ * @return	並びデータ位置
+ */
+//--------------------------------------------------------------------------------------------
 extern u8 BPLISTMAIN_GetListRow( BPLIST_WORK * wk, u32 pos );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		最新の入れ替えログを取得
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos1	位置１
+ * @param		pos2	位置２
+ * @param		del		取得後にログを削除するか TRUE = 削除
+ *
+ * @retval	"TRUE = 取得"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 extern BOOL BPLISTMAIN_GetNewLog( BPLIST_WORK * wk, u8 * pos1, u8 * pos2, BOOL del );

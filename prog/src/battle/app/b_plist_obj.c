@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file  b_plist_obj.c
- * @brief í“¬—pƒ|ƒPƒ‚ƒ“ƒŠƒXƒg‰æ–ÊOBJˆ—
- * @author  Hiroyuki Nakamura
- * @date  05.02.07
+ * @file		b_plist_obj.c
+ * @brief		í“¬—pƒ|ƒPƒ‚ƒ“ƒŠƒXƒg‰æ–ÊOBJˆ—
+ * @author	Hiroyuki Nakamura
+ * @date		05.02.07
  */
 //============================================================================================
 #include <gflib.h>
@@ -12,33 +12,8 @@
 #include "poke_tool/gauge_tool.h"
 #include "pokeicon/pokeicon.h"
 #include "item/item.h"
-//#include "item/itemsym.h"
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
-
-/*ª[GS_CONVERT_TAG]*/
-//#include "system/procsys.h"
-/*ª[GS_CONVERT_TAG]*/
-/*
-#include "system/palanm.h"
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-*/
-//#include "system/clact_tool.h"
-/*ª[GS_CONVERT_TAG]*/
-/*
-#include "battle/battle_common.h"
-#include "battle/fight_tool.h"
-#include "battle/wazatype_icon.h"
-#include "poketool/pokeparty.h"
-#include "poketool/pokeicon.h"
-#include "application/p_status.h"
-#include "application/pokelist.h"
-#include "application/app_tool.h"
-#include "itemtool/item.h"
-#include "b_app_tool.h"
-*/
 
 #include "battle/battgra_wb.naix"
 #include "app_menu_common.naix"
@@ -53,75 +28,6 @@
 //============================================================================================
 //  ’è”’è‹`
 //============================================================================================
-/*
-#define CLACT_ID_COMMON   ( 45063 ) // ‚±‚Ì‰æ–Ê‚Åg—p‚·‚éƒZƒ‹ƒAƒNƒ^[‚ÌID
-
-// ƒLƒƒƒ‰ƒŠƒ\[ƒXID
-enum {
-  CHR_ID_POKE1 = CLACT_ID_COMMON,   // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“F‚P•C–Ú
-  CHR_ID_POKE2,           // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“F‚Q•C–Ú
-  CHR_ID_POKE3,           // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“F‚R•C–Ú
-  CHR_ID_POKE4,           // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“F‚S•C–Ú
-  CHR_ID_POKE5,           // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“F‚T•C–Ú
-  CHR_ID_POKE6,           // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“F‚U•C–Ú
-
-  CHR_ID_STATUS,            // ó‘ÔˆÙíƒAƒCƒRƒ“F‚P•C–Ú
-
-  CHR_ID_POKETYPE1,         // ƒ|ƒPƒ‚ƒ“ƒ^ƒCƒvƒAƒCƒRƒ“‚P
-  CHR_ID_POKETYPE2,         // ƒ|ƒPƒ‚ƒ“ƒ^ƒCƒvƒAƒCƒRƒ“‚Q
-
-  CHR_ID_WAZATYPE1,         // ‹Zƒ^ƒCƒvƒAƒCƒRƒ“‚P
-  CHR_ID_WAZATYPE2,         // ‹Zƒ^ƒCƒvƒAƒCƒRƒ“‚Q
-  CHR_ID_WAZATYPE3,         // ‹Zƒ^ƒCƒvƒAƒCƒRƒ“‚R
-  CHR_ID_WAZATYPE4,         // ‹Zƒ^ƒCƒvƒAƒCƒRƒ“‚S
-  CHR_ID_WAZATYPE5,         // ‹Zƒ^ƒCƒvƒAƒCƒRƒ“‚T
-
-  CHR_ID_BUNRUI,            // •ª—ŞƒAƒCƒRƒ“
-
-  CHR_ID_ITEM,            // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-
-  CHR_ID_CND,             // ƒRƒ“ƒfƒBƒVƒ‡ƒ“
-
-  CHR_ID_CURSOR,            // ƒJ[ƒ\ƒ‹
-
-  CHR_ID_MAX = CHR_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-
-// ƒpƒŒƒbƒgƒŠƒ\[ƒXID
-enum {
-  PAL_ID_POKE = CLACT_ID_COMMON,    // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“i‚R–{j
-  PAL_ID_STATUS,            // ó‘ÔˆÙíƒAƒCƒRƒ“i‚P–{j
-  PAL_ID_TYPE,            // ƒ^ƒCƒv/•ª—ŞƒAƒCƒRƒ“i‚R–{j
-  PAL_ID_ITEM,            // ƒAƒCƒeƒ€ƒAƒCƒRƒ“i‚P–{j
-  PAL_ID_CND,             // ƒRƒ“ƒfƒBƒVƒ‡ƒ“i‚P–{j
-  PAL_ID_CURSOR,            // ƒJ[ƒ\ƒ‹i‚P–{j
-  PAL_ID_MAX = PAL_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-
-// ƒZƒ‹ƒŠƒ\[ƒXID
-enum {
-  CEL_ID_POKE = CLACT_ID_COMMON,    // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“
-  CEL_ID_STATUS,            // ó‘ÔˆÙíƒAƒCƒRƒ“
-  CEL_ID_TYPE,            // ƒ^ƒCƒv/•ª—ŞƒAƒCƒRƒ“
-  CEL_ID_ITEM,            // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-  CEL_ID_CND,             // ƒRƒ“ƒfƒBƒVƒ‡ƒ“
-  CEL_ID_CURSOR,            // ƒJ[ƒ\ƒ‹
-  CEL_ID_MAX = CEL_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-
-// ƒZƒ‹ƒAƒjƒƒŠƒ\[ƒXID
-enum {
-  ANM_ID_POKE = CLACT_ID_COMMON,    // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“
-  ANM_ID_STATUS,            // ó‘ÔˆÙíƒAƒCƒRƒ“
-  ANM_ID_TYPE,            // ƒ^ƒCƒv/•ª—ŞƒAƒCƒRƒ“
-  ANM_ID_ITEM,            // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-  ANM_ID_CND,             // ƒRƒ“ƒfƒBƒVƒ‡ƒ“
-  ANM_ID_CURSOR,            // ƒJ[ƒ\ƒ‹
-  ANM_ID_MAX = ANM_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-*/
-
-#define CURSOR_CLA_MAX    ( 5 )   // ƒJ[ƒ\ƒ‹‚ÌOBJ”
 
 // ƒpƒŒƒbƒgˆÊ’u•ƒTƒCƒY
 #define PALOFS_POKEICON     ( 0 )
@@ -144,7 +50,6 @@ enum {
 static void BPL_ClactResManInit( BPLIST_WORK * wk );
 static void BPL_ClactPokeLoad( BPLIST_WORK * wk );
 static void BPL_ClactStatusLoad( BPLIST_WORK * wk );
-//static void BPL_ClactConditionLoad( BPLIST_WORK * wk );
 static void BPL_ClactTypeLoad( BPLIST_WORK * wk );
 static void BPL_ClactItemLoad( BPLIST_WORK * wk );
 static void BPL_ClactAddAll( BPLIST_WORK * wk );
@@ -159,10 +64,6 @@ static void BPL_Page4ObjSet( BPLIST_WORK * wk );
 static void BPL_Page5ObjSet( BPLIST_WORK * wk );
 static void BPL_Page6ObjSet( BPLIST_WORK * wk );
 static void BPL_Page7ObjSet( BPLIST_WORK * wk );
-//static void BPL_Page8ObjSet( BPLIST_WORK * wk );
-//static void BPL_Page9ObjSet( BPLIST_WORK * wk );
-
-//static void BPL_EzConditionPut( BPLIST_WORK * wk );
 
 static void BPL_ClactCursorAdd( BPLIST_WORK * wk );
 static void BPL_CursorDel( BPLIST_WORK * wk );
@@ -172,7 +73,7 @@ static void HPGaugeResLoad( BPLIST_WORK * wk );
 
 
 //============================================================================================
-//  ƒOƒ[ƒoƒ‹•Ï”
+//  ƒOƒ[ƒoƒ‹
 //============================================================================================
 // ƒŠƒ\[ƒXƒe[ƒuƒ‹
 static const u32 ObjParamEz[][5] =
@@ -332,9 +233,9 @@ static const GFL_CLACTPOS P6_WazaKindPos = { 24, 80 };  // ƒy[ƒW‚U‚Ì‹Z•ª—ŞƒAƒCƒ
 
 //--------------------------------------------------------------------------------------------
 /**
- * í“¬—pƒ|ƒPƒŠƒXƒgOBJ‰Šú‰»
+ * @brief		í“¬—pƒ|ƒPƒŠƒXƒgOBJ‰Šú‰»
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -346,7 +247,6 @@ void BattlePokeList_ObjInit( BPLIST_WORK * wk )
   BPL_ClactStatusLoad( wk );
   BPL_ClactItemLoad( wk );
   BPL_ClactTypeLoad( wk );
-//  BPL_ClactConditionLoad( wk );
   CursorResLoad( wk );
   HPGaugeResLoad( wk );
   BPL_ClactAddAll( wk );
@@ -357,9 +257,9 @@ void BattlePokeList_ObjInit( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‰Šú‰»
+ * @brief		ƒŠƒ\[ƒXƒ}ƒl[ƒWƒƒ[‰Šú‰»
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -377,22 +277,13 @@ static void BPL_ClactResManInit( BPLIST_WORK * wk )
   for( i=0; i<BPLIST_CELRES_MAX; i++ ){
     wk->celRes[i] = 0xffffffff;
   }
-
-/*
-  TCATS_RESOURCE_NUM_LIST crnl = { CHR_ID_MAX, PAL_ID_MAX, CEL_ID_MAX, ANM_ID_MAX, 0, 0 };
-  CATS_SYS_PTR  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-  wk->crp = CATS_ResourceCreate( csp );
-  CATS_ClactSetInit( csp, wk->crp, BPL_CA_MAX+CURSOR_CLA_MAX );
-  CATS_ResourceManagerInit( csp, wk->crp, &crnl );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
+ * @brief		ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -409,7 +300,6 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
   // ƒLƒƒƒ‰
   res = &wk->chrRes[BPLIST_CHRRES_POKE1];
   for( i=0; i<TEMOTI_POKEMAX; i++ ){
-//		pos = BPLISTMAIN_GetListRow( wk, i );
 		pos = i;
     if( wk->poke[pos].mons != 0 ){
       res[i] = GFL_CLGRP_CGR_Register(
@@ -445,9 +335,9 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ó‘ÔˆÙíƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
+ * @brief		ó‘ÔˆÙíƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -478,9 +368,9 @@ static void BPL_ClactStatusLoad( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ^ƒCƒv/•ª—ŞƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
+ * @brief		ƒ^ƒCƒv/•ª—ŞƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -522,9 +412,9 @@ static void BPL_ClactTypeLoad( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒAƒCƒeƒ€ƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
+ * @brief		ƒAƒCƒeƒ€ƒAƒCƒRƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -555,35 +445,13 @@ static void BPL_ClactItemLoad( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒRƒ“ƒfƒBƒVƒ‡ƒ“‚ÌƒOƒ‰ƒtƒBƒbƒNƒ[ƒh
+ * @brief		ƒJ[ƒ\ƒ‹ƒŠƒ\[ƒXƒ[ƒh
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-/*
-static void BPL_ClactConditionLoad( BPLIST_WORK * wk )
-{
-  CATS_SYS_PTR  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-  // ƒpƒŒƒbƒg
-  CATS_LoadResourcePlttWorkArc(
-    wk->pfd, FADE_SUB_OBJ, csp, wk->crp, ARC_BPLIST_GRA,
-    NARC_b_plist_gra_b_plist_obj_NCLR, 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_CND );
-  // ƒZƒ‹
-  CATS_LoadResourceCellArc(
-    csp, wk->crp, ARC_BPLIST_GRA, NARC_b_plist_gra_b_plist_obj_NCER, 0, CEL_ID_CND );
-  // ƒZƒ‹ƒAƒjƒ
-  CATS_LoadResourceCellAnmArc(
-    csp, wk->crp, ARC_BPLIST_GRA, NARC_b_plist_gra_b_plist_obj_NANR, 0, ANM_ID_CND );
-  // ƒLƒƒƒ‰
-  CATS_LoadResourceCharArc(
-    csp, wk->crp, ARC_BPLIST_GRA,
-    NARC_b_plist_gra_b_plist_obj_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_CND );
-}
-*/
-
 static void CursorResLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
@@ -609,6 +477,15 @@ static void CursorResLoad( BPLIST_WORK * wk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		‚g‚oƒQ[ƒWƒŠƒ\[ƒXƒ[ƒh
+ *
+ * @param		wk    ƒ[ƒN
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void HPGaugeResLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
@@ -621,11 +498,6 @@ static void HPGaugeResLoad( BPLIST_WORK * wk )
                                         APP_COMMON_GetHPBarBaseCharArcIdx(APP_COMMON_MAPPING_32K),
                                         FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
   // ƒpƒŒƒbƒg
-/*
-  wk->palRes[BPLIST_PALRES_HPGAUGE] = GFL_CLGRP_PLTT_RegisterEx(
-                                        ah, APP_COMMON_GetHPBarBasePltArcIdx(),
-                                        CLSYS_DRAW_SUB, PALOFS_HPGAUGE, 1, PALSIZ_HPGAUGE, wk->dat->heap );
-*/
   wk->palRes[BPLIST_PALRES_HPGAUGE] = GFL_CLGRP_PLTT_Register(
                                         ah, APP_COMMON_GetHPBarBasePltArcIdx(),
                                         CLSYS_DRAW_SUB, PALOFS_HPGAUGE, wk->dat->heap );
@@ -640,14 +512,12 @@ static void HPGaugeResLoad( BPLIST_WORK * wk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
-
-
 //--------------------------------------------------------------------------------------------
 /**
- * ƒZƒ‹ƒAƒNƒ^[’Ç‰ÁiŒÂ•Êj
+ * @brief		ƒZƒ‹ƒAƒNƒ^[’Ç‰ÁiŒÂ•Êj
  *
- * @param wk    ƒ[ƒN
- * @param id    ’Ç‰Á‚·‚éƒZƒ‹ƒAƒNƒ^[‚ÌID
+ * @param		wk    ƒ[ƒN
+ * @param		res		ƒŠƒ\[ƒXƒCƒ“ƒfƒbƒNƒXƒe[ƒuƒ‹
  *
  * @return  ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
  */
@@ -670,43 +540,14 @@ static GFL_CLWK * BPL_ClactAdd( BPLIST_WORK * wk, const u32 * res )
             wk->celRes[res[2]],
             &dat, CLSYS_DRAW_SUB, wk->dat->heap );
 
-//  GFL_CLACT_WK_SetPlttOffs( clwk , prm->palNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-//  GFL_CLACT_WK_SetAutoAnmFlag( plateWork->pokeIcon , TRUE );
-
   return clwk;
-
-/*
-  TCATS_OBJECT_ADD_PARAM_S  prm;
-  CATS_SYS_PTR  csp;
-
-  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-  prm.x = 0;
-  prm.y = 0;
-  prm.z = 0;
-
-  prm.anm = 0;
-  prm.pri = ObjParamEz[id][4];
-  prm.pal = 0;
-  prm.d_area = NNS_G2D_VRAM_TYPE_2DSUB;
-
-  prm.id[0] = ObjParamEz[id][0];
-  prm.id[1] = ObjParamEz[id][1];
-  prm.id[2] = ObjParamEz[id][2];
-  prm.id[3] = ObjParamEz[id][3];
-
-  prm.bg_pri = 1;
-  prm.vram_trans = 0;
-
-  return CATS_ObjectAdd_S( csp, wk->crp, &prm );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒZƒ‹ƒAƒNƒ^[’Ç‰Ái‘S‚Äj
+ * @brief		ƒZƒ‹ƒAƒNƒ^[’Ç‰Ái‘S‚Äj
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -721,16 +562,6 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
     wk->clwk[i] = BPL_ClactAdd( wk, ObjParamEz[i] );
   }
   GFL_NET_ReloadIcon();
-/*
-  {
-    u16 * pltt_vram = (u16 *)HW_DB_OBJ_PLTT;
-    OS_Printf( "¡¡¡ pal ¡¡¡\n" );
-    for( i=0; i<16; i++ ){
-      OS_Printf( "0x%x, ", pltt_vram[14*16+i] );
-    }
-    OS_Printf( "\n¡¡¡ pal ¡¡¡\n" );
-  }
-*/
 
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, 0x1e0 );
   BPL_PokeIconPaletteChg( wk );
@@ -738,9 +569,9 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * í“¬—pƒ|ƒPƒŠƒXƒgOBJíœ
+ * @brief		í“¬—pƒ|ƒPƒŠƒXƒgOBJíœ
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -765,28 +596,14 @@ void BattlePokeList_ObjFree( BPLIST_WORK * wk )
   }
 
   GFL_CLACT_UNIT_Delete( wk->clunit );
-
-/*
-  CATS_SYS_PTR  csp;
-  u32 i;
-
-  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-  for( i=0; i<BPL_CA_MAX; i++ ){
-    CATS_ActorPointerDelete_S( wk->cap[i] );
-  }
-
-  BPL_CursorDel( wk );
-
-  CATS_ResourceDestructor_S( csp, wk->crp );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒZƒ‹ƒAƒNƒ^[‚ğ•\¦‚µ‚ÄÀ•W•ÏX
+ * @brief		ƒZƒ‹ƒAƒNƒ^[‚ğ•\¦‚µ‚ÄÀ•W•ÏX
  *
- * @param wk    ƒ[ƒN
+ * @param		clwk		ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
+ * @param		pos			•\¦À•W
  *
  * @return  none
  */
@@ -799,43 +616,35 @@ static void BPL_ClactOn( GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“‚ÌƒpƒŒƒbƒgØ‚è‘Ö‚¦
+ * @brief		ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“‚ÌƒpƒŒƒbƒgØ‚è‘Ö‚¦
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void BPL_PokeIconPaletteChg( BPLIST_WORK * wk )
 {
-	u16	pos;
   s16 i;
 
   for( i=0; i<TEMOTI_POKEMAX; i++ ){
-//		pos = BPLISTMAIN_GetListRow( wk, i );
-		pos = i;
-    if( wk->poke[pos].mons == 0 ){ continue; }
-/*
-    CATS_ObjectPaletteSetCap(
-      wk->cap[BPL_CA_POKE1+i],
-      PokeIconPalNumGet(wk->poke[i].mons,wk->poke[i].form,wk->poke[i].egg) );
-*/
-// CLWK_PLTTOFFS_MODE_OAM_COLOR
+    if( wk->poke[i].mons == 0 ){ continue; }
+
     GFL_CLACT_WK_SetPlttOffs(
       wk->clwk[BPL_CA_POKE1+i],
-      POKEICON_GetPalNum(wk->poke[pos].mons,wk->poke[pos].form,wk->poke[pos].sex,wk->poke[pos].egg),
+      POKEICON_GetPalNum(wk->poke[i].mons,wk->poke[i].form,wk->poke[i].sex,wk->poke[i].egg),
       CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ^ƒCƒvƒAƒCƒRƒ“Ø‚è‘Ö‚¦
+ * @brief		ƒ^ƒCƒvƒAƒCƒRƒ“Ø‚è‘Ö‚¦
  *
- * @param wk    ƒ[ƒN
- * @param cap   ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
- * @param res_id  ƒŠƒ\[ƒXID
- * @param type  ƒ^ƒCƒv
+ * @param		wk				ƒ[ƒN
+ * @param		clwk		  ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
+ * @param		chrResID	ƒLƒƒƒ‰ƒŠƒ\[ƒXID
+ * @param		type		  ƒ^ƒCƒv
  *
  * @return  none
  */
@@ -861,11 +670,12 @@ static void BPL_TypeIconChange( BPLIST_WORK * wk, GFL_CLWK * clwk, u32 chrResID,
 
 //--------------------------------------------------------------------------------------------
 /**
- * •ª—ŞƒAƒCƒRƒ“Ø‚è‘Ö‚¦
+ * @brief		•ª—ŞƒAƒCƒRƒ“Ø‚è‘Ö‚¦
  *
- * @param wk    ƒ[ƒN
- * @param cap   ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
- * @param kind  •ª—Ş
+ * @param		wk				ƒ[ƒN
+ * @param		clwk			ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
+ * @param		chrResID	ƒLƒƒƒ‰ƒŠƒ\[ƒX‚h‚c
+ * @param		kind			•ª—Ş
  *
  * @return  none
  */
@@ -896,12 +706,11 @@ static void BPL_KindIconChange( BPLIST_WORK * wk, u32 objID, u32 chrResID, u32 k
 
 //--------------------------------------------------------------------------------------------
 /**
- * ó‘ÔˆÙíƒAƒCƒRƒ“Ø‚è‘Ö‚¦
+ * @brief		ó‘ÔˆÙíƒAƒCƒRƒ“Ø‚è‘Ö‚¦
  *
- * @param st    ƒXƒe[ƒ^ƒX
- * @param cap   ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
- * @param x   XÀ•W
- * @param y   YÀ•W
+ * @param		st    ƒXƒe[ƒ^ƒX
+ * @param		clwk	ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
+ * @param		pos		•\¦À•W
  *
  * @return  none
  */
@@ -916,11 +725,11 @@ static void BPL_StIconPut( u16 st, GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ|ƒPƒ‚ƒ“‚Ìƒ^ƒCƒvƒAƒCƒRƒ“Ø‚è‘Ö‚¦
+ * @brief		ƒ|ƒPƒ‚ƒ“‚Ìƒ^ƒCƒvƒAƒCƒRƒ“Ø‚è‘Ö‚¦
  *
- * @param wk    ƒ[ƒN
- * @param pd    ƒ|ƒPƒ‚ƒ“ƒf[ƒ^
- * @param pos   À•Wƒf[ƒ^
+ * @param		wk    ƒ[ƒN
+ * @param		pd    ƒ|ƒPƒ‚ƒ“ƒf[ƒ^
+ * @param		pos   À•Wƒf[ƒ^
  *
  * @return  none
  */
@@ -948,12 +757,11 @@ static void BPL_PokeTypeIconPut( BPLIST_WORK * wk, BPL_POKEDATA * pd, const GFL_
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒAƒCƒeƒ€ƒAƒCƒRƒ“Ø‚è‘Ö‚¦
+ * @brief		ƒAƒCƒeƒ€ƒAƒCƒRƒ“Ø‚è‘Ö‚¦
  *
- * @param item  ƒXƒe[ƒ^ƒX
- * @param cap   ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
- * @param x   XÀ•W
- * @param y   YÀ•W
+ * @param		item		ƒAƒCƒeƒ€”Ô†
+ * @param		clwk		ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
+ * @param		pos			•\¦À•W
  *
  * @return  none
  */
@@ -972,32 +780,10 @@ static void BPL_ItemIconPut( u16 item, GFL_CLWK * clwk, const GFL_CLACTPOS * pos
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒAƒCƒeƒ€ƒAƒCƒRƒ“Ø‚è‘Ö‚¦
+ * @brief		ƒy[ƒW‚²‚Æ‚ÉOBJ‚ğƒZƒbƒg
  *
- * @param cb    ƒJƒXƒ^ƒ€ƒ{[ƒ‹ID
- * @param cap   ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
- * @param x   XÀ•W
- * @param y   YÀ•W
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_CustomBallIconPut( u8 cb, CATS_ACT_PTR cap, const int x, const int y )
-{
-  if( cb == 0 ){ return; }
-
-  GFL_CLACT_WK_SetAnmSeq( cap, 2 );
-  BPL_ClactOn( cap, x, y );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ƒy[ƒW‚²‚Æ‚ÉOBJ‚ğƒZƒbƒg
- *
- * @param wk    ƒ[ƒN
- * @param page  ƒy[ƒW
+ * @param		wk    ƒ[ƒN
+ * @param		page  ƒy[ƒW
  *
  * @return  none
  */
@@ -1043,24 +829,14 @@ void BattlePokeList_PageObjSet( BPLIST_WORK * wk, u32 page )
   case BPLIST_PAGE_WAZASET_BI:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Qƒy[ƒWií“¬‹ZÚ×j
     BPL_Page6ObjSet( wk );
     break;
-
-/*
-  case BPLIST_PAGE_WAZASET_CS:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Rƒy[ƒWiƒRƒ“ƒeƒXƒg‹ZÚ×j
-    BPL_Page9ObjSet( wk );
-    break;
-
-  case BPLIST_PAGE_WAZASET_CI:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Sƒy[ƒWiƒRƒ“ƒeƒXƒg‹Z‘I‘ğj
-    BPL_Page8ObjSet( wk );
-    break;
-*/
   }
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚P‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒy[ƒW‚P‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1090,32 +866,13 @@ static void BPL_Page1ObjSet( BPLIST_WORK * wk )
         wk->poke[pos].item, wk->clwk[BPL_CA_ITEM1+pos], &actpos );
     }
   }
-
-/*
-  s32 i;
-
-  for( i=0; i<TEMOTI_POKEMAX; i++ ){
-    if( wk->poke[i].mons == 0 ){ continue; }
-    // ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“
-    BPL_ClactOn( wk->cap[BPL_CA_POKE1+i], P1_PokePos[i][0], P1_PokePos[i][1] );
-    // ó‘ÔˆÙíƒAƒCƒRƒ“
-    BPL_StIconPut(
-      wk->poke[i].st, wk->cap[BPL_CA_STATUS1+i], P1_StatusPos[i][0], P1_StatusPos[i][1] );
-    // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-    BPL_ItemIconPut(
-      wk->poke[i].item, wk->cap[BPL_CA_ITEM1+i], P1_PokePos[i][0]+8, P1_PokePos[i][1]+8 );
-    // ƒJƒXƒ^ƒ€ƒ{[ƒ‹ƒAƒCƒRƒ“
-    BPL_CustomBallIconPut(
-      wk->poke[i].cb, wk->cap[BPL_CA_CB1+i], P1_PokePos[i][0]+16, P1_PokePos[i][1]+8 );
-  }
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * “ü‚ê‘Ö‚¦ƒy[ƒW‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		“ü‚ê‘Ö‚¦ƒy[ƒW‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1136,28 +893,12 @@ static void BPL_ChgPageObjSet( BPLIST_WORK * wk )
   pos.x += 8;
   pos.y += 8;
   BPL_ItemIconPut( pd->item, wk->clwk[BPL_CA_ITEM1+row], &pos );
-
-/*
-  BPL_POKEDATA * pd;
-  u16 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  // ƒ|ƒPƒAƒCƒRƒ“
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P_CHG_PokePos[0], P_CHG_PokePos[1] );
-  // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P_CHG_PokePos[0]+8, P_CHG_PokePos[1]+8 );
-  // ƒJƒXƒ^ƒ€ƒ{[ƒ‹ƒAƒCƒRƒ“
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P_CHG_PokePos[0]+16, P_CHG_PokePos[1]+8 );
-*/
 }
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚Q‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒy[ƒW‚Q‚ÌOBJ‚ğƒZƒbƒg
  *
  * @param wk    ƒ[ƒN
  *
@@ -1195,9 +936,9 @@ static void BPL_StMainPageObjSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒXƒe[ƒ^ƒX‹Z‘I‘ğƒy[ƒW‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒXƒe[ƒ^ƒX‹Z‘I‘ğƒy[ƒW‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1207,7 +948,6 @@ static void BPL_StWazaSelPageObjSet( BPLIST_WORK * wk )
   BPL_POKEDATA * pd;
   GFL_CLACTPOS  pos;
 	u32	row;
-//  u32 i;
 
 	row = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
   pd  = &wk->poke[row];
@@ -1230,9 +970,9 @@ static void BPL_StWazaSelPageObjSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚S‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒy[ƒW‚S‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1276,9 +1016,9 @@ static void BPL_Page4ObjSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚T‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒy[ƒW‚T‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1310,9 +1050,9 @@ static void BPL_Page5ObjSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚U‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒy[ƒW‚U‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1361,9 +1101,9 @@ static void BPL_Page6ObjSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚V‚ÌOBJ‚ğƒZƒbƒg
+ * @brief		ƒy[ƒW‚V‚ÌOBJ‚ğƒZƒbƒg
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1395,75 +1135,7 @@ static void BPL_Page7ObjSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒy[ƒW‚W‚ÌOBJ‚ğƒZƒbƒg
- *
- * @param wk    ƒ[ƒN
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_Page8ObjSet( BPLIST_WORK * wk )
-{
-  BPL_POKEDATA * pd = &wk->poke[wk->dat->sel_poke];
-
-  // ƒ|ƒPƒAƒCƒRƒ“
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P6_PokePos[0], P6_PokePos[1] );
-
-  // ‹Zƒ^ƒCƒv
-  BPL_ClactOn(
-    wk->cap[BPL_CA_WAZATYPE1+wk->dat->sel_wp], P8_WazaTypePos[0], P8_WazaTypePos[1] );
-  // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P6_PokePos[0]+8, P6_PokePos[1]+8 );
-  // ƒJƒXƒ^ƒ€ƒ{[ƒ‹ƒAƒCƒRƒ“
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P6_PokePos[0]+16, P6_PokePos[1]+8 );
-
-  // ƒRƒ“ƒfƒBƒVƒ‡ƒ“
-  BPL_EzConditionPut( wk );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ƒy[ƒW‚X‚ÌOBJ‚ğƒZƒbƒg
- *
- * @param wk    ƒ[ƒN
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_Page9ObjSet( BPLIST_WORK * wk )
-{
-  BPL_POKEDATA * pd = &wk->poke[wk->dat->sel_poke];
-
-  // ƒ|ƒPƒAƒCƒRƒ“
-  BPL_ClactOn( wk->cap[BPL_CA_POKE1+wk->dat->sel_poke], P6_PokePos[0], P6_PokePos[1] );
-
-  // ‹Zƒ^ƒCƒv
-//  BPL_ClactOn(
-//    wk->cap[BPL_CA_WAZATYPE1+wk->dat->sel_wp], P8_WazaTypePos[0], P8_WazaTypePos[1] );
-
-  // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
-  BPL_ItemIconPut(
-    pd->item, wk->cap[BPL_CA_ITEM1+wk->dat->sel_poke], P6_PokePos[0]+8, P6_PokePos[1]+8 );
-  // ƒJƒXƒ^ƒ€ƒ{[ƒ‹ƒAƒCƒRƒ“
-  BPL_CustomBallIconPut(
-    pd->cb, wk->cap[BPL_CA_CB1+wk->dat->sel_poke], P6_PokePos[0]+16, P6_PokePos[1]+8 );
-
-  // ‹Zƒ^ƒCƒv
-  BattlePokelist_WazaTypeSet( wk );
-
-  // ƒRƒ“ƒfƒBƒVƒ‡ƒ“
-  BPL_EzConditionPut( wk );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ‹ZƒAƒCƒRƒ“ƒZƒbƒgFí“¬ or ƒRƒ“ƒeƒXƒg
+ * @brief		‹ZƒAƒCƒRƒ“ƒZƒbƒgFí“¬ or ƒRƒ“ƒeƒXƒg
  *
  * @param wk    ƒ[ƒN
  *
@@ -1507,21 +1179,16 @@ void BattlePokelist_WazaTypeSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“ƒAƒjƒØ‚è‘Ö‚¦
+ * @brief		ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“ƒAƒjƒØ‚è‘Ö‚¦
  *
- * @param cap   ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
- * @param anm   ƒAƒjƒ
+ * @param		clwk	ƒZƒ‹ƒAƒNƒ^[ƒf[ƒ^
+ * @param		anm		ƒAƒjƒ
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void BPL_PokeIconAnmChg( GFL_CLWK * clwk, u16 anm )
 {
-/*
-  if( CATS_ObjectAnimeSeqGetCap( cap ) == anm ){ return; }
-  GFL_CLACT_WK_SetAnmFrameCap( cap, 0 );
-  GFL_CLACT_WK_SetAnmSeq( cap, anm );
-*/
   if( GFL_CLACT_WK_GetAnmSeq( clwk ) == anm ){ return; }
 
   GFL_CLACT_WK_SetAnmFrame( clwk, 0 );
@@ -1530,9 +1197,9 @@ static void BPL_PokeIconAnmChg( GFL_CLWK * clwk, u16 anm )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“ƒAƒjƒƒ`ƒFƒbƒN
+ * @brief		ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“ƒAƒjƒƒ`ƒFƒbƒN
  *
- * @param pd    ƒ|ƒPƒ‚ƒ“ƒf[ƒ^
+ * @param		pd    ƒ|ƒPƒ‚ƒ“ƒf[ƒ^
  *
  * @return  ƒAƒjƒ”Ô†
  */
@@ -1567,9 +1234,9 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“ƒAƒjƒ
+ * @brief		ƒ|ƒPƒ‚ƒ“ƒAƒCƒRƒ“ƒAƒjƒ
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1580,7 +1247,6 @@ void BPL_PokeIconAnime( BPLIST_WORK * wk )
   u8	anm;
 	u8	pos;
 
-//  for( i=0; i<PokeParty_GetPokeCount(wk->dat->pp); i++ ){
   for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		pos = BPLISTMAIN_GetListRow( wk, i );
 
@@ -1590,144 +1256,8 @@ void BPL_PokeIconAnime( BPLIST_WORK * wk )
 
     BPL_PokeIconAnmChg( wk->clwk[BPL_CA_POKE1+pos], anm );
     GFL_CLACT_WK_AddAnmFrame( wk->clwk[BPL_CA_POKE1+pos], FX32_ONE );
-//    GFL_CLACT_WK_AddAnmFrameNumCap( wk->cap[BPL_CA_POKE1+i], FX32_ONE );
   }
 }
-
-//============================================================================================
-//  ŠÈˆÕƒRƒ“ƒfƒBƒVƒ‡ƒ“
-//============================================================================================
-/*
-#define EZCON1_MIN_X  ( 144 )
-#define EZCON1_MAX_X  ( 144 )
-#define EZCON1_MIN_Y  ( 24 )
-#define EZCON1_MAX_Y  ( 2 )
-
-#if AFTER_MASTER_070409_59_EUR_FIX
-
-#define EZCON2_MIN_X  ( 144 )
-#define EZCON2_MAX_X  ( 164 )
-#define EZCON2_MIN_Y  ( 24 )
-#define EZCON2_MAX_Y  ( 16 )
-
-#define EZCON3_MIN_X  ( 144 )
-#define EZCON3_MAX_X  ( 156 )
-#define EZCON3_MIN_Y  ( 24 )
-#define EZCON3_MAX_Y  ( 41 )
-
-#define EZCON4_MIN_X  ( 143 )
-#define EZCON4_MAX_X  ( 131 )
-#define EZCON4_MIN_Y  ( 24 )
-#define EZCON4_MAX_Y  ( 41 )
-
-#define EZCON5_MIN_X  ( 143 )
-#define EZCON5_MAX_X  ( 123 )
-#define EZCON5_MIN_Y  ( 24 )
-#define EZCON5_MAX_Y  ( 16 )
-
-#else
-
-#define EZCON2_MIN_X  ( 144 )
-#define EZCON2_MAX_X  ( 167 )
-#define EZCON2_MIN_Y  ( 24 )
-#define EZCON2_MAX_Y  ( 18 )
-
-#define EZCON3_MIN_X  ( 144 )
-#define EZCON3_MAX_X  ( 159 )
-#define EZCON3_MIN_Y  ( 24 )
-#define EZCON3_MAX_Y  ( 47 )
-
-#define EZCON4_MIN_X  ( 143 )
-#define EZCON4_MAX_X  ( 128 )
-#define EZCON4_MIN_Y  ( 24 )
-#define EZCON4_MAX_Y  ( 47 )
-
-#define EZCON5_MIN_X  ( 143 )
-#define EZCON5_MAX_X  ( 120 )
-#define EZCON5_MIN_Y  ( 24 )
-#define EZCON5_MAX_Y  ( 18 )
-
-#endif
-
-#define EZCND_MAX_RPM ( 300 )
-#define EZCND_DEF_RPM ( 44 )    // 300 = 256 + EZCND_DEF_RPM
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ŠÈˆÕƒRƒ“ƒfƒBƒVƒ‡ƒ“‚Ì•\¦À•Wæ“¾
- *
- * @param prm   ƒpƒ‰ƒ[ƒ^
- * @param max   Å‘å’l
- * @param min   Å¬’l
- *
- * @return  •\¦À•W
- */
-//--------------------------------------------------------------------------------------------
-/*
-static s16 BPL_EzCndPosGet( u32 prm, s16 max, s16 min )
-{
-  u32 dot;
-
-  prm += EZCND_DEF_RPM;
-
-  if( min > max ){
-    dot = ( ( min - max ) * prm ) << 16;
-    dot = ( dot / EZCND_MAX_RPM ) >> 16;
-    return min + (s16)dot * -1;
-  }
-
-  dot = ( ( max - min ) * prm ) << 16;
-  dot = ( dot / EZCND_MAX_RPM ) >> 16;
-  return min + (s16)dot;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ŠÈˆÕƒRƒ“ƒfƒBƒVƒ‡ƒ“•\¦
- *
- * @param wk    í“¬ƒ|ƒPƒŠƒXƒg‚Ìƒ[ƒN
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_EzConditionPut( BPLIST_WORK * wk )
-{
-  BPL_POKEDATA * pd;
-  u16 i;
-
-  pd = &wk->poke[wk->dat->sel_poke];
-
-  BPL_PokeIconAnmChg( wk->cap[BPL_CA_CND1], 0 );
-  BPL_PokeIconAnmChg( wk->cap[BPL_CA_CND2], 1 );
-  BPL_PokeIconAnmChg( wk->cap[BPL_CA_CND3], 3 );
-  BPL_PokeIconAnmChg( wk->cap[BPL_CA_CND4], 4 );
-  BPL_PokeIconAnmChg( wk->cap[BPL_CA_CND5], 2 );
-
-  BPL_ClactOn(
-    wk->cap[BPL_CA_CND1],
-    BPL_EzCndPosGet( pd->style, EZCON1_MAX_X, EZCON1_MIN_X ),
-    BPL_EzCndPosGet( pd->style, EZCON1_MAX_Y, EZCON1_MIN_Y ) );
-  BPL_ClactOn(
-    wk->cap[BPL_CA_CND2],
-    BPL_EzCndPosGet( pd->beautiful, EZCON2_MAX_X, EZCON2_MIN_X ),
-    BPL_EzCndPosGet( pd->beautiful, EZCON2_MAX_Y, EZCON2_MIN_Y ) );
-  BPL_ClactOn(
-    wk->cap[BPL_CA_CND3],
-    BPL_EzCndPosGet( pd->cute, EZCON3_MAX_X, EZCON3_MIN_X ),
-    BPL_EzCndPosGet( pd->cute, EZCON3_MAX_Y, EZCON3_MIN_Y ) );
-  BPL_ClactOn(
-    wk->cap[BPL_CA_CND4],
-    BPL_EzCndPosGet( pd->clever, EZCON4_MAX_X, EZCON4_MIN_X ),
-    BPL_EzCndPosGet( pd->clever, EZCON4_MAX_Y, EZCON4_MIN_Y ) );
-  BPL_ClactOn(
-    wk->cap[BPL_CA_CND5],
-    BPL_EzCndPosGet( pd->strong, EZCON5_MAX_X, EZCON5_MIN_X ),
-    BPL_EzCndPosGet( pd->strong, EZCON5_MAX_Y, EZCON5_MIN_Y ) );
-}
-*/
 
 
 //============================================================================================
@@ -1736,9 +1266,9 @@ static void BPL_EzConditionPut( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ‘I‘ğƒJ[ƒ\ƒ‹’Ç‰Á
+ * @brief		‘I‘ğƒJ[ƒ\ƒ‹’Ç‰Á
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1753,29 +1283,13 @@ static void BPL_ClactCursorAdd( BPLIST_WORK * wk )
     wk->celRes[BPLIST_CELRES_CURSOR] );
 
   BAPPTOOL_VanishCursor( wk->cpwk, FALSE );
-
-/*
-  CATS_SYS_PTR csp;
-  BCURSOR_PTR cursor;
-
-  csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-  BCURSOR_ResourceLoad(
-    csp, wk->crp, wk->pfd, wk->dat->heap, CHR_ID_CURSOR, PAL_ID_CURSOR, CEL_ID_CURSOR, ANM_ID_CURSOR );
-
-  cursor = BCURSOR_ActorCreate(
-        csp, wk->crp, wk->dat->heap,
-        CHR_ID_CURSOR, PAL_ID_CURSOR, CEL_ID_CURSOR, ANM_ID_CURSOR, 0, 1 );
-
-  BAPP_CursorMvWkSetBCURSOR_PTR( wk->cmv_wk, cursor );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ‘I‘ğƒJ[ƒ\ƒ‹íœ
+ * @brief		‘I‘ğƒJ[ƒ\ƒ‹íœ
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
  *
  * @return  none
  */
@@ -1783,214 +1297,19 @@ static void BPL_ClactCursorAdd( BPLIST_WORK * wk )
 static void BPL_CursorDel( BPLIST_WORK * wk )
 {
   BAPPTOOL_DelCursor( wk->cpwk );
-
-/*
-  BCURSOR_ActorDelete( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
-  BCURSOR_ResourceFree(
-    wk->crp, CHR_ID_CURSOR, PAL_ID_CURSOR, CEL_ID_CURSOR, ANM_ID_CURSOR );
-*/
 }
-
-/*
-// ƒ|ƒPƒ‚ƒ“‘I‘ğ‰æ–ÊˆÚ“®ƒe[ƒuƒ‹
-static const POINTSEL_WORK P1_CursorPosTbl[] =
-{
-  {   8,   8, 120,  40, 6, 2, 6, 1 },   // 0
-  { 136,  16, 248,  48, 4, 3, 0, 2 },   // 1
-  {   8,  56, 120,  88, 0, 4, 1, 3 },   // 2
-  { 136,  64, 248,  96, 1, 5, 2, 4 },   // 3
-  {   8, 104, 120, 136, 2, 1, 3, 5 },   // 4
-  { 136, 112, 248, 144, 3, 6, 4, 6 },   // 5
-  { 224, 160, 248, 184, 5, 0, 5, 0 },   // 6i–ß‚éj
-};
-static const POINTSEL_WORK Chg_CursorPosTbl[] =
-{
-  {  16,  16, 240, 136, 0, BAPP_CMV_RETBIT|1, 0, 0 },   // 0 : ‚¢‚ê‚©‚¦‚é
-  {   8, 160,  96, 184, 0, 1, 1, 2 },           // 1 : ‹­‚³‚ğŒ©‚é
-  { 112, 160, 200, 184, 0, 2, 1, 3 },           // 2 : ‹Z‚ğŒ©‚é
-  { 224, 160, 248, 184, 0, 3, 2, 3 },           // 3 : –ß‚é
-};
-static const POINTSEL_WORK StMain_CursorPosTbl[] =
-{
-  {   8, 160,  32, 184, 0, 0, 0, 1 },   // 0 : ã
-  {  48, 160,  72, 184, 1, 1, 0, 2 },   // 1 : ‰º
-  { 104, 160, 192, 184, 2, 2, 1, 3 },   // 2 : ‹Z‚ğŒ©‚é
-  { 224, 160, 248, 184, 3, 3, 2, 3 },   // 3 : –ß‚é
-};
-static const POINTSEL_WORK StWazaSel_CursorPosTbl[] =
-{
-  {   8,  56, 120,  88, 0, 2, 0, 1 },   // 0 : ‹Z‚P
-  { 136,  56, 248,  88, 1, 3, 0, 1 },   // 1 : ‹Z‚Q
-  {   8, 104, 120, 136, 0, BAPP_CMV_RETBIT|4, 2, 3 },   // 2 : ‹Z‚R
-  { 136, 104, 248, 136, 1, BAPP_CMV_RETBIT|7, 2, 3 },   // 3 : ‹Z‚S
-  {   8, 160,  32, 184, 2, 4, 4, 5 },   // 4 : ã
-  {  48, 160,  72, 184, 2, 5, 4, 6 },   // 5 : ‰º
-  { 104, 160, 192, 184, 3, 6, 5, 7 },   // 6 : ‹­‚³‚ğŒ©‚é
-  { 224, 160, 248, 184, 3, 7, 6, 7 },   // 7 : –ß‚é
-};
-static const POINTSEL_WORK StWazaInfo_CursorPosTbl[] =
-{
-  {  92, 157, 124, 165, 0, 2, 0, 1 },   // 0 : ‹Z‚P
-  { 132, 157, 164, 165, 1, 3, 0, 4 },   // 1 : ‹Z‚Q
-  {  92, 173, 124, 181, 0, 2, 2, 3 },   // 2 : ‹Z‚R
-  { 132, 173, 164, 181, 1, 3, 2, 4 },   // 3 : ‹Z‚S
-  { 224, 160, 248, 184, 4, 4, BAPP_CMV_RETBIT|3, 4 },   // 4 : –ß‚é
-};
-static const POINTSEL_WORK DelSel_CursorPosTbl[] =
-{
-  {   8,  56, 120,  88, 5, 2, 0, 1 },           // 0 : ‹Z‚P‰æ–Ê‚Ö
-  { 136,  56, 248,  88, 5, 3, 0, 1 },           // 1 : ‹Z‚Q‰æ–Ê‚Ö
-  {   8, 104, 120, 136, 0, 4, 2, 3 },           // 2 : ‹Z‚R‰æ–Ê‚Ö
-  { 136, 104, 248, 136, 1, 6, 2, 3 },           // 3 : ‹Z‚S‰æ–Ê‚Ö
-  {  72, 152, 184, 184, 2, 4, 4, 6 },           // 4 : ‹Z‚T‰æ–Ê‚Ö
-  { 192,   8, 248,  24, 5, BAPP_CMV_RETBIT|1, 0, 5 },   // 5 : í“¬<->ƒRƒ“ƒeƒXƒg‚ÌØ‚è‘Ö‚¦
-  { 224, 160, 248, 184, 3, 6, 4, 6 },           // 6 : –ß‚é
-};
-
-static const POINTSEL_WORK DelInfo_CursorPosTbl[] =
-{
-  {   8, 160, 200, 184, 1, 0, 0, 2 },           // 0 : ‚í‚·‚ê‚é
-  { 192,   8, 248,  24, 1, BAPP_CMV_RETBIT|2, 0, 1 },   // 1 : í“¬<->ƒRƒ“ƒeƒXƒg‚ÌØ‚è‘Ö‚¦
-  { 224, 160, 248, 184, 1, 2, 0, 2 },           // 2 : –ß‚é
-};
-
-static const POINTSEL_WORK PPRcv_CursorPosTbl[] =
-{
-  {   8,  56, 120,  88, 0, 2, 0, 1 },           // 0 : ‹Z‚P‰ñ•œ
-  { 136,  56, 248,  88, 1, 3, 0, 1 },           // 1 : ‹Z‚Q‰ñ•œ
-  {   8, 104, 120, 136, 0, 4, 2, 3 },           // 2 : ‹Z‚R‰ñ•œ
-  { 136, 104, 248, 136, 1, 4, 2, 3 },           // 3 : ‹Z‚S‰ñ•œ
-  { 224, 160, 248, 184, BAPP_CMV_RETBIT|3, 4, 4, 4 },   // 4 : –ß‚é
-};
-
-static const POINTSEL_WORK * const CursorPosTable[] = {
-  P1_CursorPosTbl,      // ƒ|ƒPƒ‚ƒ“‘I‘ğƒy[ƒW
-  Chg_CursorPosTbl,     // ƒ|ƒPƒ‚ƒ““ü‚ê‘Ö‚¦ƒy[ƒW
-  StMain_CursorPosTbl,    // ƒXƒe[ƒ^ƒXƒƒCƒ“ƒy[ƒW
-  StWazaSel_CursorPosTbl,   // ƒXƒe[ƒ^ƒX‹Z‘I‘ğƒy[ƒW
-  StWazaInfo_CursorPosTbl,  // ƒXƒe[ƒ^ƒX‹ZÚ×ƒy[ƒW
-  PPRcv_CursorPosTbl,     // PP‰ñ•œ‹Z‘I‘ğƒy[ƒW
-  DelSel_CursorPosTbl,    // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Pƒy[ƒWií“¬‹Z‘I‘ğj
-  DelInfo_CursorPosTbl,   // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Qƒy[ƒWií“¬‹ZÚ×j
-  DelSel_CursorPosTbl,    // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Rƒy[ƒWiƒRƒ“ƒeƒXƒg‹Z‘I‘ğj
-  DelInfo_CursorPosTbl,   // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Sƒy[ƒWiƒRƒ“ƒeƒXƒg‹ZÚ×j
-};
-*/
-/*
-
-/*
-#define WAZADEL_SEL_MV_TBL_N  ( 0x7f )  // ‹Z–Y‚ê‚Ì‹Z‘I‘ğ‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹i’Êíj
-#define WAZADEL_SEL_MV_TBL_C  ( 0x5f )  // ‹Z–Y‚ê‚Ì‹Z‘I‘ğ‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹iƒRƒ“ƒeƒXƒg‚È‚µj
-#define WAZADEL_MAIN_MV_TBL_N ( 7 ) // ‹Z–Y‚ê‚ÌÚ×‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹i’Êíj
-#define WAZADEL_MAIN_MV_TBL_C ( 5 ) // ‹Z–Y‚ê‚ÌÚ×‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹iƒRƒ“ƒeƒXƒg‚È‚µj
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
- * ‘I‘ğƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹ì¬i‹Z–Y‚ê‹Z‘I‘ğƒy[ƒWj
+ * @brief		•m€“ü‚ê‘Ö‚¦‚Ì‚n‚a‚i“®ì
  *
- * @param wk    ƒ[ƒN
+ * @param		wk    ƒ[ƒN
+ * @param		num		ƒ|ƒPƒ‚ƒ“ˆÊ’u
+ * @param		mv		ˆÚ“®’l
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-/*
-static void BPL_WazaDelSelCursorMvTblMake( BPLIST_WORK * wk )
-{
-  if( wk->ev_contest == 0 ){
-    BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_SEL_MV_TBL_C );
-  }else{
-    BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_SEL_MV_TBL_N );
-  }
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ‘I‘ğƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹ì¬i‹Z–Y‚ê‹ZŒˆ’èƒy[ƒWj
- *
- * @param wk    ƒ[ƒN
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_WazaDelMainCursorMvTblMake( BPLIST_WORK * wk )
-{
-  if( wk->ev_contest == 0 ){
-    BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_MAIN_MV_TBL_C );
-  }else{
-    BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_MAIN_MV_TBL_N );
-  }
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ‘I‘ğƒJ[ƒ\ƒ‹ƒZƒbƒg
- *
- * @param wk    ƒ[ƒN
- * @param page  ƒy[ƒWID
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page )
-{
-  BAPP_CursorMvWkSetPoint( wk->cmv_wk, CursorPosTable[page] );
-
-  switch( page ){
-
-  case BPLIST_PAGE_SELECT:    // ƒ|ƒPƒ‚ƒ“‘I‘ğƒy[ƒW
-      BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->dat->sel_poke );
-    wk->chg_page_cp = 0;
-    wk->dat->sel_wp = 0;
-    break;
-
-  case BPLIST_PAGE_POKE_CHG:    // ƒ|ƒPƒ‚ƒ““ü‚ê‘Ö‚¦ƒy[ƒW
-    BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->chg_page_cp );
-    wk->dat->sel_wp = 0;
-    break;
-
-  case BPLIST_PAGE_WAZA_SEL:    // ƒXƒe[ƒ^ƒX‹Z‘I‘ğƒy[ƒW
-  case BPLIST_PAGE_SKILL:     // ƒXƒe[ƒ^ƒX‹ZÚ×ƒy[ƒW
-    BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->dat->sel_wp );
-    break;
-
-  case BPLIST_PAGE_WAZASET_BS:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Pƒy[ƒWií“¬‹Z‘I‘ğj
-//  case BPLIST_PAGE_WAZASET_CS:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Rƒy[ƒWiƒRƒ“ƒeƒXƒg‹Z‘I‘ğj
-    BPL_WazaDelSelCursorMvTblMake( wk );
-    BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->wws_page_cp );
-    break;
-
-  case BPLIST_PAGE_WAZASET_BI:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Qƒy[ƒWií“¬‹ZÚ×j
-//  case BPLIST_PAGE_WAZASET_CI:  // ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Sƒy[ƒWiƒRƒ“ƒeƒXƒg‹ZÚ×j
-    BPL_WazaDelMainCursorMvTblMake( wk );
-    BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->wwm_page_cp );
-    break;
-  }
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ‘I‘ğƒJ[ƒ\ƒ‹”ñ•\¦
- *
- * @param wk    ƒ[ƒN
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BattlePokeList_CursorOff( BPLIST_WORK * wk )
-{
-  BAPP_CursorMvWkSetFlag( wk->cmv_wk, 0 );
-  BAPP_CursorMvWkPosInit( wk->cmv_wk );
-  BCURSOR_OFF( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
-}
-*/
-
 void BPLISTOBJ_MoveDeadChg( BPLIST_WORK * wk, u8 num, s8 mv )
 {
 	GFL_CLACTPOS	pos;
@@ -2015,6 +1334,17 @@ void BPLISTOBJ_MoveDeadChg( BPLIST_WORK * wk, u8 num, s8 mv )
   GFL_CLACT_WK_SetPos( wk->clwk[BPL_CA_HPGAUGE1+row], &pos, CLSYS_DRAW_SUB );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		•m€“ü‚ê‘Ö‚¦‚Ì‚n‚a‚i“ü‚ê‘Ö‚¦
+ *
+ * @param		wk    ƒ[ƒN
+ * @param		num1	ƒ|ƒPƒ‚ƒ“ˆÊ’u‚P
+ * @param		num2	ƒ|ƒPƒ‚ƒ“ˆÊ’u‚Q
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 void BPLISTOBJ_ChgDeadSel( BPLIST_WORK * wk, u8 num1, u8 num2 )
 {
 	GFL_CLACTPOS	pos1, pos2;

@@ -42,85 +42,81 @@
 //============================================================================================
 // メインシーケンス
 enum {
-  SEQ_BPL_INIT = 0,   // 初期化
-  SEQ_BPL_SELECT,     // ポケモン選択画面コントロール
-  SEQ_BPL_IREKAE,     // 入れ替えページコントロール
-  SEQ_BPL_ST_MAIN,    // ステータスメイン画面コントロール
-  SEQ_BPL_ST_WAZASEL,   // ステータス技選択画面コントロール
-  SEQ_BPL_ST_SKILL,   // ステータス技画面コントロール
+  SEQ_BPL_INIT = 0,			// 初期化
+  SEQ_BPL_SELECT,				// ポケモン選択画面コントロール
+  SEQ_BPL_IREKAE,				// 入れ替えページコントロール
+  SEQ_BPL_ST_MAIN,			// ステータスメイン画面コントロール
+  SEQ_BPL_ST_WAZASEL,		// ステータス技選択画面コントロール
+  SEQ_BPL_ST_SKILL,			// ステータス技画面コントロール
 
   SEQ_BPL_POKESEL_DEAD,   // 瀕死入れ替え選択コントロール
   SEQ_BPL_POKECHG_DEAD,   // 瀕死入れ替えアニメ
-  SEQ_BPL_DEAD_ERR_RET,
+  SEQ_BPL_DEAD_ERR_RET,		// 瀕死入れ替えエラーからの復帰処理
 
-  SEQ_BPL_PAGE1_CHG,         // ポケモン選択へ
-  SEQ_BPL_PAGECHG_IREKAE,   // 入れ替えページへ
-  SEQ_BPL_PAGECHG_STMAIN,   // ステータス詳細へ
-  SEQ_BPL_PAGECHG_WAZASEL,  // ステータス技選択へ
-  SEQ_BPL_PAGECHG_WAZAINFO, // ステータス技詳細画面へ
-  SEQ_BPL_PAGECHG_WAZASET_S,  // 技忘れ選択画面へ
-  SEQ_BPL_PAGECHG_WAZASET_I,  // 技忘れ決定へ
-  SEQ_BPL_PAGECHG_PPRCV,    // 技回復へ
-  SEQ_BPL_PAGECHG_DEAD,    // 瀕死入れ替え選択へ
+  SEQ_BPL_PAGE1_CHG,					// ポケモン選択へ
+  SEQ_BPL_PAGECHG_IREKAE,			// 入れ替えページへ
+  SEQ_BPL_PAGECHG_STMAIN,			// ステータス詳細へ
+  SEQ_BPL_PAGECHG_WAZASEL,		// ステータス技選択へ
+  SEQ_BPL_PAGECHG_WAZAINFO,		// ステータス技詳細画面へ
+  SEQ_BPL_PAGECHG_WAZASET_S,	// 技忘れ選択画面へ
+  SEQ_BPL_PAGECHG_WAZASET_I,	// 技忘れ決定へ
+  SEQ_BPL_PAGECHG_PPRCV,			// 技回復へ
+  SEQ_BPL_PAGECHG_DEAD,				// 瀕死入れ替え選択へ
 
-  SEQ_BPL_POKECHG,    // ポケモン切り替え
-  SEQ_BPL_CHG_ERR_SET,  // 入れ替えエラーセット
-  SEQ_BPL_IREKAE_ERR,   // 入れ替えエラー終了待ち
+  SEQ_BPL_POKECHG,			// ポケモン切り替え
+  SEQ_BPL_CHG_ERR_SET,	// 入れ替えエラーセット
+  SEQ_BPL_IREKAE_ERR,		// 入れ替えエラー終了待ち
 
-  SEQ_BPL_MSG_WAIT,   // メッセージ表示
-  SEQ_BPL_TRG_WAIT,   // メッセージ表示後のキー待ち
+  SEQ_BPL_MSG_WAIT,		// メッセージ表示
+  SEQ_BPL_TRG_WAIT,		// メッセージ表示後のキー待ち
 
-  SEQ_BPL_WAZADEL_SEL,    // 技忘れ選択
-  SEQ_BPL_WAZADEL_MAIN,   // 技忘れ決定
-  SEQ_BPL_WAZADEL_ERROR,  // 技忘れエラー
+  SEQ_BPL_WAZADEL_SEL,		// 技忘れ選択
+  SEQ_BPL_WAZADEL_MAIN,		// 技忘れ決定
+  SEQ_BPL_WAZADEL_ERROR,	// 技忘れエラー
 
-  SEQ_BPL_WAZARCV_SEL,  // 技回復選択
+  SEQ_BPL_WAZARCV_SEL,		// 技回復選択
 
-  SEQ_BPL_BUTTON_WAIT,  // ボタンアニメ終了待ち
+  SEQ_BPL_BUTTON_WAIT,		// ボタンアニメ終了待ち
 
-	SEQ_BPL_WAZAINFOMODE_MAIN,
+	SEQ_BPL_WAZAINFOMODE_MAIN,	// 技説明モードメイン
 
-//  SEQ_BPL_STRCV,      // ステータス回復
-//  SEQ_BPL_PPALLRCV,   // PP全回復
-
-  SEQ_BPL_ENDSET,     // 終了フェードセット
-  SEQ_BPL_ENDWAIT,    // 終了フェード待ち
-  SEQ_BPL_END,        // 終了
+  SEQ_BPL_ENDSET,			// 終了フェードセット
+  SEQ_BPL_ENDWAIT,		// 終了フェード待ち
+  SEQ_BPL_END,				// 終了
 };
 
 #define TMP_MSG_BUF_SIZ   ( 512 )   // テンポラリメッセージサイズ
 
-#define PLATE_BG_SX   ( 16 )    // プレートBGサイズX
-#define PLATE_BG_SY   ( 6 )   // プレートBGサイズY
-#define PLATE_BG_P_PX ( 0 )   // ポケモンがいる場合のプレートBG参照X座標
-#define PLATE_BG_P_PY ( 0 )   // ポケモンがいる場合のプレートBG参照Y座標
-#define PLATE_BG_N_PX ( 16 )    // ポケモンがいない場合のプレートBG参照X座標
-#define PLATE_BG_N_PY ( 13 )    // ポケモンがいない場合のプレートBG参照Y座標
+#define PLATE_BG_SX   ( 16 )		// プレートBGサイズX
+#define PLATE_BG_SY   ( 6 )			// プレートBGサイズY
+#define PLATE_BG_P_PX ( 0 )			// ポケモンがいる場合のプレートBG参照X座標
+#define PLATE_BG_P_PY ( 0 )			// ポケモンがいる場合のプレートBG参照Y座標
+#define PLATE_BG_N_PX ( 16 )		// ポケモンがいない場合のプレートBG参照X座標
+#define PLATE_BG_N_PY ( 13 )		// ポケモンがいない場合のプレートBG参照Y座標
 
-#define PLATE_POKE1_PX  ( 0 )   // ポケモン１のプレートBGX座標
-#define PLATE_POKE1_PY  ( 0 )   // ポケモン１のプレートBGY座標
-#define PLATE_POKE2_PX  ( 16 )    // ポケモン２のプレートBGX座標
-#define PLATE_POKE2_PY  ( 1 )   // ポケモン２のプレートBGY座標
-#define PLATE_POKE3_PX  ( 0 )   // ポケモン３のプレートBGX座標
-#define PLATE_POKE3_PY  ( 6 )   // ポケモン３のプレートBGY座標
-#define PLATE_POKE4_PX  ( 16 )    // ポケモン４のプレートBGX座標
-#define PLATE_POKE4_PY  ( 7 )   // ポケモン４のプレートBGY座標
-#define PLATE_POKE5_PX  ( 0 )   // ポケモン５のプレートBGX座標
-#define PLATE_POKE5_PY  ( 12 )    // ポケモン５のプレートBGY座標
-#define PLATE_POKE6_PX  ( 16 )    // ポケモン６のプレートBGX座標
-#define PLATE_POKE6_PY  ( 13 )    // ポケモン６のプレートBGY座標
+#define PLATE_POKE1_PX  ( 0 )		// ポケモン１のプレートBGX座標
+#define PLATE_POKE1_PY  ( 0 )		// ポケモン１のプレートBGY座標
+#define PLATE_POKE2_PX  ( 16 )	// ポケモン２のプレートBGX座標
+#define PLATE_POKE2_PY  ( 1 )		// ポケモン２のプレートBGY座標
+#define PLATE_POKE3_PX  ( 0 )		// ポケモン３のプレートBGX座標
+#define PLATE_POKE3_PY  ( 6 )		// ポケモン３のプレートBGY座標
+#define PLATE_POKE4_PX  ( 16 )	// ポケモン４のプレートBGX座標
+#define PLATE_POKE4_PY  ( 7 )		// ポケモン４のプレートBGY座標
+#define PLATE_POKE5_PX  ( 0 )		// ポケモン５のプレートBGX座標
+#define PLATE_POKE5_PY  ( 12 )	// ポケモン５のプレートBGY座標
+#define PLATE_POKE6_PX  ( 16 )	// ポケモン６のプレートBGX座標
+#define PLATE_POKE6_PY  ( 13 )	// ポケモン６のプレートBGY座標
 
-#define P2_EXPGAGE_PX ( 32+14 ) // ページ２の経験値ゲージ書き換えX座標
-#define P2_EXPGAGE_PY ( 5 )   // ページ２の経験値ゲージ書き換えY座標
-#define P3_EXPGAGE_PX ( 10 )    // ページ３の経験値ゲージ書き換えX座標
-#define P3_EXPGAGE_PY ( 8 )   // ページ３の経験値ゲージ書き換えY座標
+#define P2_EXPGAGE_PX ( 32+14 )	// ページ２の経験値ゲージ書き換えX座標
+#define P2_EXPGAGE_PY ( 5 )			// ページ２の経験値ゲージ書き換えY座標
+#define P3_EXPGAGE_PX ( 10 )		// ページ３の経験値ゲージ書き換えX座標
+#define P3_EXPGAGE_PY ( 8 )			// ページ３の経験値ゲージ書き換えY座標
 
-#define EXP_CGX     ( 0x16 )  // 経験値ゲージキャラ番号
-#define EXP_DOT_CHR_MAX ( 8 )   // 経験値ゲージのキャラ数
-#define EXP_DOT_MAX   ( 64 )    // 経験値ゲージの最大ドット数
+#define EXP_CGX					( 0x16 )	// 経験値ゲージキャラ番号
+#define EXP_DOT_CHR_MAX	( 8 )			// 経験値ゲージのキャラ数
+#define EXP_DOT_MAX			( 64 )		// 経験値ゲージの最大ドット数
 
-//#define BATTLE_BAGLIST_FADE_SPEED (-8)
-#define BATTLE_BAGLIST_FADE_SPEED (0)
+#define BATTLE_BAGLIST_FADE_SPEED (0)		// フェード速度
 
 
 //============================================================================================
@@ -151,8 +147,6 @@ static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk );
 static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk );
 static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk );
 static int BPL_SeqPageChgPPRcv( BPLIST_WORK * wk );
-//static int BPL_SeqStRcv( BPLIST_WORK * wk );
-//static int BPL_SeqPPAllRcv( BPLIST_WORK * wk );
 static int BPL_SeqEndSet( BPLIST_WORK * wk );
 static int BPL_SeqEndWait( BPLIST_WORK * wk );
 static BOOL BPL_SeqEnd( GFL_TCB* tcb, BPLIST_WORK * wk );
@@ -169,22 +163,14 @@ static void BPL_MsgManExit( BPLIST_WORK * wk );
 static void BPL_PokeDataMake( BPLIST_WORK * wk );
 
 static u8 BPL_PokemonSelect( BPLIST_WORK * wk );
-//static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl );
 static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page );
 static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page );
 static u8 BPL_IrekaeCheck( BPLIST_WORK * wk );
 static u8 BPL_NextPokeGet( BPLIST_WORK * wk, s32 pos, s32 mv );
 static void BPL_PokePlateSet( BPLIST_WORK * wk );
 static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page );
-//static void BPL_P2_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
-//static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
-//static void BPL_ContestWazaHeartPut( BPLIST_WORK * wk, u8 page );
 static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk );
-//static void BPL_HidenOff_Battle( BPLIST_WORK * wk );
-//static void BPL_HidenOff_Contest( BPLIST_WORK * wk );
 static u8 BPL_TamagoCheck( BPLIST_WORK * wk );
-
-//static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap );
 
 static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos );
 static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos );
@@ -193,9 +179,7 @@ static void CursorMoveSet( BPLIST_WORK * wk, u8 page );
 
 static void InitListRow( BPLIST_WORK * wk );
 static void ChangeListRow( BPLIST_WORK * wk, u32 pos1, u32 pos2 );
-static BOOL CheckListRow( BPLIST_WORK * wk, u32 pos );
-//static BOOL CheckRetNum( BPLIST_WORK * wk );
-//static void SetRetNum( BPLIST_WORK * wk );
+static BOOL CheckListRowSelect( BPLIST_WORK * wk, u32 pos );
 static void SetLog( BPLIST_WORK * wk, u8 pos1, u8 pos2 );
 static int BPL_SeqPageChgDead( BPLIST_WORK * wk );
 static int BPL_SeqPokeSelDead( BPLIST_WORK * wk );
@@ -253,9 +237,6 @@ static const pBPlistFunc MainSeqFunc[] = {
 
 	BPL_SeqWazaInfoModeMain,
 
-//  BPL_SeqStRcv,
-//  BPL_SeqPPAllRcv,
-
   BPL_SeqEndSet,
   BPL_SeqEndWait,
 };
@@ -271,13 +252,33 @@ static const u8 PlatePos[][2] =
   { PLATE_POKE6_PX, PLATE_POKE6_PY }
 };
 
+// 各ページのスクリーンファイル
+static const u32 ScreenArc[][2] =
+{ // ボタンBGスクリーン, 背景BGスクリーン
+  { NARC_b_plist_gra_poke_sel_t_lz_NSCR, NARC_b_plist_gra_poke_sel_u_lz_NSCR },							// ポケモン選択ページ
+  { NARC_b_plist_gra_poke_chg_t_lz_NSCR, NARC_b_plist_gra_poke_chg_u_lz_NSCR },							// ポケモン入れ替えページ
+  { NARC_b_plist_gra_st_main_t_lz_NSCR, NARC_b_plist_gra_st_main_u_lz_NSCR },								// ステータスメインページ
+  { NARC_b_plist_gra_st_waza_sel_t_lz_NSCR, NARC_b_plist_gra_st_waza_sel_u_lz_NSCR },				// ステータス詳細ページ
+  { NARC_b_plist_gra_st_waza_main_t_lz_NSCR, NARC_b_plist_gra_st_waza_main_u_lz_NSCR },			// ステータス技ページ
+  { NARC_b_plist_gra_item_waza_t_lz_NSCR, NARC_b_plist_gra_item_waza_u_lz_NSCR },						// PP回復技選択ページ
+  { NARC_b_plist_gra_waza_delb_sel_t_lz_NSCR, NARC_b_plist_gra_waza_delb_sel_u_lz_NSCR },		// ステータス技忘れ１ページ（戦闘技選択）
+  { NARC_b_plist_gra_waza_delb_main_t_lz_NSCR, NARC_b_plist_gra_waza_delb_main_u_lz_NSCR },	// ステータス技忘れ２ページ（戦闘技詳細）
+  { NARC_b_plist_gra_poke_sel_t_lz_NSCR, NARC_b_plist_gra_poke_sel_u_lz_NSCR },							// 瀕死入れ替え選択ページ
+};
+
+// マルチバトル時のリストの並び順
+static const u8 InitListRowMulti[2][6] =
+{
+  { 0, 3, 1, 4, 2, 5 },		// 立ち位置・左
+  { 3, 0, 4, 1, 5, 2 },		// 立ち位置・右
+};
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * 戦闘用ポケモンリストタスク追加
+ * @brief		戦闘用ポケモンリストタスク追加
  *
- * @param dat   リストデータ
+ * @param		dat   リストデータ
  *
  * @return  none
  */
@@ -336,10 +337,10 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メインタスク
+ * @brief		メインタスク
  *
- * @param tcb
- * @param work
+ * @param		tcb
+ * @param		work
  *
  * @return  none
  */
@@ -361,137 +362,15 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
   GFL_TCBL_Main( wk->tcbl );
   BPL_PokeIconAnime( wk );
 
-//  GFL_CLACT_SYS_Main( wk->crp );
   BattlePokeList_ButtonAnmMain( wk );
   BPLISTBMP_PrintMain( wk );
-
-#if 0
-  switch( wk->seq ){
-  case SEQ_BPL_INIT:    // 初期化
-    wk->seq = BPL_SeqInit( wk );
-    break;
-
-  case SEQ_BPL_SELECT:  // ポケモン選択画面コントロール
-    wk->seq = BPL_SeqPokeSelect( wk );
-    break;
-
-  case SEQ_BPL_IREKAE:
-    wk->seq = BPL_SeqPokeIrekae( wk );
-    break;
-
-  case SEQ_BPL_ST_MAIN: // ステータスメイン画面コントロール
-    wk->seq = BPL_SeqStatusMain( wk );
-    break;
-
-  case SEQ_BPL_ST_WAZASEL:  // ステータス技選択画面コントロール
-    wk->seq = BPL_SeqWazaSelect( wk );
-    break;
-
-  case SEQ_BPL_ST_SKILL:    // 技画面コントロール
-    wk->seq = BPL_SeqStInfoWaza( wk );
-    break;
-
-  case SEQ_BPL_PAGE1_CHG:
-    wk->seq = BPL_SeqPage1Chg( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_IREKAE:  // 入れ替えページへ
-    wk->seq = BPL_SeqPageChgIrekae( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_STMAIN:  // ステータス詳細へ
-    wk->seq = BPL_SeqPageChgStatus( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_WAZASEL: // 技選択へ
-    wk->seq = BPL_SeqPageChgStWazaSel( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_WAZAINFO:
-    wk->seq = BPL_SeqPageChgWazaInfo( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_WAZASET_S: // 技忘れ選択画面へ
-    wk->seq = BPL_SeqPageChgWazaSetSel( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_WAZASET_I:
-    wk->seq = BPL_SeqPageChgWazaSetEnter( wk );
-    break;
-
-  case SEQ_BPL_PAGECHG_PPRCV: // 技回復へ
-    wk->seq = BPL_SeqPageChgPPRcv( wk );
-    break;
-
-  case SEQ_BPL_POKECHG:   // ポケモン切り替え
-    wk->seq = BPL_SeqPokeChange( wk );
-    break;
-
-  case SEQ_BPL_CHG_ERR_SET: // 入れ替えエラーセット
-    wk->seq = BPL_SeqChgErrSet( wk );
-    break;
-
-  case SEQ_BPL_IREKAE_ERR:  // 入れ替えエラー終了待ち
-    wk->seq = BPL_SeqIrekaeErr( wk );
-    break;
-
-  case SEQ_BPL_MSG_WAIT:  // メッセージウェイト
-    wk->seq = BPL_SeqMsgWait( wk );
-    break;
-
-  case SEQ_BPL_TRG_WAIT:  // メッセージ表示後のキー待ち
-    wk->seq = BPL_SeqTrgWait( wk );
-    break;
-
-  case SEQ_BPL_WAZADEL_SEL: // 技忘れ選択
-    wk->seq = BPL_SeqWazaDelSelect( wk );
-    break;
-
-  case SEQ_BPL_WAZADEL_MAIN:  // 技忘れ決定
-    wk->seq = BPL_SeqWazaDelMain( wk );
-    break;
-
-  case SEQ_BPL_WAZARCV_SEL: // 技回復選択
-    wk->seq = BPL_SeqWazaRcvSelect( wk );
-    break;
-
-  case SEQ_BPL_BUTTON_WAIT: // ボタンアニメ終了待ち
-    wk->seq = BPL_SeqButtonWait( wk );
-    break;
-
-  case SEQ_BPL_STRCV:     // ステータス回復
-    wk->seq = BPL_SeqStRcv( wk );
-    break;
-
-  case SEQ_BPL_PPALLRCV:    // PP全回復
-    wk->seq = BPL_SeqPPAllRcv( wk );
-    break;
-
-  case SEQ_BPL_ENDSET:  // 終了フェードセット
-    wk->seq = BPL_SeqEndSet( wk );
-    break;
-
-  case SEQ_BPL_END:   // 終了
-    if( BPL_SeqEnd( tcb, wk ) == TRUE ){
-      return;
-    }
-  }
-
-  BPL_PokeIconAnime( wk );
-
-  GFL_CLACT_SYS_Main( wk->crp );
-/*↑[GS_CONVERT_TAG]*/
-  BattlePokeList_ButtonAnmMain( wk );
-
-#endif
-
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 初期化シーケンス
+ * @brief		初期化シーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -521,21 +400,17 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
     ret = SEQ_BPL_SELECT;
   }
 
-//  wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
-
   wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
   InitListRow( wk );
 
   BPL_PokeDataMake( wk );
 
-//  BPL_VramInit();
   BPL_BgInit( wk );
   BPL_BgGraphicSet( wk );
   BPL_MsgManSet( wk );
 
   BPL_PageChgBgScreenChg( wk, wk->page );
-//  BPL_PokePlateSet( wk );
   BattlePokeList_ButtonPageScreenInit( wk, wk->page );
   BattlePokeList_ButtonPalSet( wk, wk->page );
 
@@ -546,12 +421,6 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
   BattlePokeList_BmpWrite( wk, wk->page );
   BPLISTBMP_SetStrScrn( wk );
 
-//  wk->dat->cursor_flg = 1;
-/*
-  if( wk->dat->cursor_flg != 0 ){
-    BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
-  }
-*/
   if( *wk->dat->cursor_flg == 1 ){
     wk->cursor_flg = TRUE;
   }else{
@@ -574,53 +443,19 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 		}
   }
 
-//  BattlePokeList_CursorMoveSet( wk, wk->page );
-
   BPL_ExpGagePut( wk, wk->page );
-
-//  GFL_NET_ReloadIcon();
-//  PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, FADE_PAL_ONE_SIZE );
-//  {
-/*
-    u16 * defWk = PaletteWorkDefaultWorkGet( wk->pfd, FADE_SUB_OBJ );
-    u16 * trsWk = PaletteWorkTransWorkGet( wk->pfd, FADE_SUB_OBJ );
-//    u32 i;
-    defWk[14*16+1] = 0x1f;
-    defWk[14*16+2] = 0x3e;
-    defWk[14*16+3] = 0x7c;
-    defWk[14*16+15] = 0x7fff;
-    trsWk[14*16+1] = 0x1f;
-    trsWk[14*16+2] = 0x3e;
-    trsWk[14*16+3] = 0x7c;
-    trsWk[14*16+15] = 0x7fff;
-*/
-/*
-    OS_Printf( "■■■ pal ■■■\n" );
-    for( i=0; i<16; i++ ){
-      OS_Printf( "0x%x, ", defWk[14*16+i] );
-    }
-    OS_Printf( "\n■■■ pal ■■■\n" );
-    defWk = PaletteWorkTransWorkGet( wk->pfd, FADE_SUB_OBJ );
-    for( i=0; i<16; i++ ){
-      OS_Printf( "0x%x, ", defWk[14*16+i] );
-    }
-    OS_Printf( "\n■■■ pal ■■■\n" );
-*/
-//  }
-
 
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, wk->dat->tcb_sys );
-
 
   return ret;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモン選択ページのコントロールシーケンス
+ * @brief		ポケモン選択ページのコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -649,41 +484,16 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
           wk->chg_pos1 = pos1;
           wk->chg_pos2 = pos2;
           wk->btn_seq = 0;
-//          PlaySE( wk, wk->cancelSE );
           PlaySE( wk, SEQ_SE_CANCEL2 );
           return SEQ_BPL_POKECHG_DEAD;
         }
       // キャンセル無効以外
       }else if( wk->dat->mode != BPL_MODE_NO_CANCEL ){
-//        PlaySE( wk, wk->cancelSE );
         PlaySE( wk, SEQ_SE_CANCEL2 );
         BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
         SetSelPosCancel( wk );
         return SEQ_BPL_ENDSET;
       }
-/*
-      if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
-        PlaySE( wk, SEQ_SE_DECIDE2 );
-        BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-        SetSelPosCancel( wk );
-        return SEQ_BPL_ENDSET;
-      }else{
-        u8  pos1, pos2;
-        if( BPLISTMAIN_GetNewLog( wk, &pos1, &pos2, TRUE ) == TRUE ){
-          if( pos1 < pos2 ){
-            GF_ASSERT_MSG( pos1 < BPL_SELNUM_MAX, "pos1 = %d\n", pos1 );
-            wk->dat->sel_pos[pos1] = BPL_SELPOS_NONE;
-          }else{
-            GF_ASSERT_MSG( pos2 < BPL_SELNUM_MAX, "pos2 = %d\n", pos2 );
-            wk->dat->sel_pos[pos2] = BPL_SELPOS_NONE;
-          }
-          wk->chg_pos1 = pos1;
-          wk->chg_pos2 = pos2;
-          wk->btn_seq = 0;
-          return SEQ_BPL_POKECHG_DEAD;
-        }
-      }
-*/
     }else{
       PlaySE( wk, SEQ_SE_DECIDE2 );
       BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke );
@@ -701,9 +511,9 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム使用
+ * @brief		アイテム使用
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -742,81 +552,13 @@ static int BPL_PokeItemUse( BPLIST_WORK * wk )
   dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, dat->sel_poke );
 
   return SEQ_BPL_ENDSET;
-
-#if 0
-  BPLIST_DATA * dat = wk->dat;
-
-  // さしおさえで使用不可
-  if( ( dat->sel_poke == 0 && dat->skill_item_use[0] != 0 ) ||
-    ( dat->sel_poke == 1 && dat->skill_item_use[1] != 0 ) ){
-    BattlePokeList_ItemUseSkillErrMsgSet( wk );
-    BattlePokeList_TalkMsgSet( wk );
-    wk->dat->sel_poke = BPL_SEL_EXIT;
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    return SEQ_BPL_MSG_WAIT;
-  }
-
-  // １つの技のPP回復
-  if( ITEM_GetParam( dat->item, ITEM_PRM_PP_RCV, dat->heap ) != 0 &&
-      ITEM_GetParam( dat->item, ITEM_PRM_ALL_PP_RCV, dat->heap ) == 0 &&
-      wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ].egg == 0 ){
-
-    wk->ret_seq = SEQ_BPL_PAGECHG_PPRCV;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-
-  if( BattleWorkStatusRecover(dat->bw,dat->client_no,dat->list_row[dat->sel_poke],0,dat->item) == TRUE ){
-    // 全技PP回復
-    if( ITEM_GetParam( dat->item, ITEM_PRM_ALL_PP_RCV, dat->heap ) != 0 ){
-      wk->ret_seq = SEQ_BPL_PAGECHG_PPRCV;
-    }else{
-      // 戦闘に出ているポケモンで、瀕死回復以外
-      if( BattlePokeList_PokeSetCheck( wk, dat->sel_poke ) == 1 &&
-        ITEM_GetParam( dat->item, ITEM_PRM_DEATH_RCV, dat->heap ) == 0 ){
-//        BattleBag_SubItem( dat->bw, dat->item, dat->bag_page, dat->heap );
-        wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ].pp =
-          BattleWorkPokemonParamGet( dat->bw, dat->client_no, dat->list_row[dat->sel_poke] );
-        dat->hp_rcv = PP_Get( wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ].pp, ID_PARA_hp, NULL );
-        dat->hp_rcv -= wk->poke[ BPLISTMAIN_GetListRow(wk,dat->sel_poke) ].hp;
-        wk->ret_seq = SEQ_BPL_ENDSET;
-      }else{
-        wk->ret_seq = SEQ_BPL_STRCV;
-      }
-    }
-/*
-    if( ITEM_GetParam( dat->item, ITEM_PRM_ALL_PP_RCV, dat->heap ) == 0 ){
-      if( BattlePokeList_PokeSetCheck( wk, dat->sel_poke ) == 1 ){
-        BattleBag_SubItem( dat->bw, dat->item, dat->bag_page, dat->heap );
-        wk->poke[dat->sel_poke].pp =
-          BattleWorkPokemonParamGet( dat->bw, dat->client_no, dat->list_row[dat->sel_poke] );
-        dat->hp_rcv = PP_Get( wk->poke[dat->sel_poke].pp, ID_PARA_hp, NULL );
-        dat->hp_rcv -= wk->poke[dat->sel_poke].hp;
-        wk->ret_seq = SEQ_BPL_ENDSET;
-      }else{
-        wk->ret_seq = SEQ_BPL_STRCV;
-      }
-    }else{
-      wk->ret_seq = SEQ_BPL_PAGECHG_PPRCV;
-    }
-*/
-    wk->rcv_seq = 0;
-    return SEQ_BPL_BUTTON_WAIT;
-  }else{
-    GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
-    BattlePokeList_TalkMsgSet( wk );
-    wk->dat->sel_poke = BPL_SEL_EXIT;
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    return SEQ_BPL_MSG_WAIT;
-  }
-  return SEQ_BPL_MSG_WAIT;
-#endif
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 入れ替えページのコントロールシーケンス
+ * @brief		入れ替えページのコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -829,53 +571,6 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     return SEQ_BPL_ENDSET;
   }
 
-/*
-  ret = BPL_IrekaeSelect( wk );
-
-  switch( ret ){
-  case 0:   // 入れ替える
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE_CHG );
-    if( BPL_IrekaeCheck( wk ) == TRUE ){
-      // 通常の入れ替え
-      if( wk->dat->mode != BPL_MODE_CHG_DEAD ){
-        wk->dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
-        return SEQ_BPL_ENDSET;
-      }
-      // 瀕死時の入れ替え
-      if( CheckDeadPoke( wk ) == FALSE ){
-        // 即戻りなら、ここでワークをセットして終了
-        SetDeadChangeData( wk );
-        return SEQ_BPL_ENDSET;
-      }else{
-        wk->ret_seq = SEQ_BPL_PAGECHG_DEAD;
-        return SEQ_BPL_BUTTON_WAIT;
-      }
-    }
-    wk->ret_seq = SEQ_BPL_CHG_ERR_SET;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 1:   // 強さを見る
-    if( BPL_TamagoCheck( wk ) == TRUE ){ break; }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_STATUS1 );
-    wk->ret_seq = SEQ_BPL_PAGECHG_STMAIN;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 2:   // 技を見る
-    if( BPL_TamagoCheck( wk ) == TRUE ){ break; }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZASEL1 );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 3:   // 戻る
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_PAGE1_CHG;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-*/
   ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -917,13 +612,6 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_CHG_RETURN:      // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGE1_CHG;
@@ -953,9 +641,9 @@ static int BPL_SeqPokeIrekae( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ステータスメインページのコントロールシーケンス
+ * @brief		ステータスメインページのコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -968,46 +656,6 @@ static int BPL_SeqStatusMain( BPLIST_WORK * wk )
     return SEQ_BPL_ENDSET;
   }
 
-/*
-  ret = BPL_StatusMainSelect( wk );
-
-  switch( ret ){
-  case 0:   // 前のポケモンへ
-    {
-      u8 pos = BPL_NextPokeGet( wk, wk->dat->sel_poke, -1 );
-      if( pos == 0xff ){ break; }
-      wk->dat->sel_poke = pos;
-    }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_UP );
-    wk->ret_seq = SEQ_BPL_POKECHG;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 1:   // 次のポケモンへ
-    {
-      u8 pos = BPL_NextPokeGet( wk, wk->dat->sel_poke, 1 );
-      if( pos == 0xff ){ break; }
-      wk->dat->sel_poke = pos;
-    }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_DOWN );
-    wk->ret_seq = SEQ_BPL_POKECHG;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 2:   // 技を見る
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZASEL2 );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 3:   // 戻る
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->chg_page_cp = 1;    // 入れ替えページのカーソル位置を「強さを見る」へ
-    wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-*/
   ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -1040,13 +688,6 @@ static int BPL_SeqStatusMain( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_STATUS_RETURN:   // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->chg_page_cp = 1;    // 入れ替えページのカーソル位置を「強さを見る」へ
@@ -1078,9 +719,9 @@ static int BPL_SeqStatusMain( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ステータス技選択ページのコントロールシーケンス
+ * @brief		ステータス技選択ページのコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1093,59 +734,6 @@ static int BPL_SeqWazaSelect( BPLIST_WORK * wk )
     return SEQ_BPL_ENDSET;
   }
 
-/*
-  ret = BPL_StWazaSelect( wk );
-
-  switch( ret ){
-  case 0:   // 技１
-  case 1:   // 技２
-  case 2:   // 技３
-  case 3:   // 技４
-    if( wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[ret].id == 0 ){
-      break;
-    }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZA1+ret );
-    wk->dat->sel_wp = ret;
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZAINFO;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 4:   // 前のポケモンへ
-    {
-      u8 pos = BPL_NextPokeGet( wk, wk->dat->sel_poke, -1 );
-      if( pos == 0xff ){ break; }
-      wk->dat->sel_poke = pos;
-    }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_UP );
-    wk->ret_seq = SEQ_BPL_POKECHG;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 5:   // 次のポケモンへ
-    {
-      u8 pos = BPL_NextPokeGet( wk, wk->dat->sel_poke, 1 );
-      if( pos == 0xff ){ break; }
-      wk->dat->sel_poke = pos;
-    }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_DOWN );
-    wk->ret_seq = SEQ_BPL_POKECHG;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 6:   // 強さを見る
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_STATUS2 );
-    wk->ret_seq = SEQ_BPL_PAGECHG_STMAIN;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 7:   // 戻る
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->chg_page_cp = 2;    // 入れ替えページのカーソル位置を「技を見る」へ
-    wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-*/
   ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -1191,13 +779,6 @@ static int BPL_SeqWazaSelect( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_WAZA_RETURN:   // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->chg_page_cp = 2;    // 入れ替えページのカーソル位置を「技を見る」へ
@@ -1227,12 +808,11 @@ static int BPL_SeqWazaSelect( BPLIST_WORK * wk )
   return SEQ_BPL_ST_WAZASEL;
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * ステータス技詳細ページのコントロールシーケンス
+ * @brief		ステータス技詳細ページのコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1245,29 +825,6 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
     return SEQ_BPL_ENDSET;
   }
 
-/*
-  ret = BPL_StInfoWazaSelect( wk );
-
-  switch( ret ){
-  case 0:   // 技１
-  case 1:   // 技２
-  case 2:   // 技３
-  case 3:   // 技４
-    if( wk->dat->sel_wp != ret &&
-      wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[ret].id == 0 ){
-      break;
-    }
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    wk->dat->sel_wp = ret;
-    return SEQ_BPL_PAGECHG_WAZAINFO;
-
-  case 4:   // 戻る
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-*/
   ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -1284,13 +841,6 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
     return SEQ_BPL_PAGECHG_WAZAINFO;
 
   case BPLIST_UI_WAZAINFO_RETURN:   // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
@@ -1318,7 +868,15 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
   return SEQ_BPL_ST_SKILL;
 }
 
-// 技説明モードメイン処理
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		技説明モードメイン処理
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
 {
   u32 ret;
@@ -1347,13 +905,11 @@ static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
   case BPLIST_UI_WAZAINFO_RETURN:   // もどる
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-//    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
     return SEQ_BPL_ENDSET;
 
   case CURSORMOVE_CANCEL:         // キャンセル
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-//    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASEL;
     return SEQ_BPL_ENDSET;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
@@ -1374,9 +930,9 @@ static int BPL_SeqWazaInfoModeMain( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ５のコントロールシーケンス
+ * @brief		ページ５のコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1432,61 +988,15 @@ static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ６のコントロールシーケンス
+ * @brief		ページ６のコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 {
-/*
-  int ret = BPL_TPCheck( wk, Page6_HitRect );
-
-  if( ret == GFL_UI_TP_HIT_NONE ){
-    ret = BAPP_CursorMove( wk->cmv_wk );
-    if( ret == BAPP_CMV_CANCEL ){
-      ret = 2;
-    }
-  }else{
-    BattlePokeList_CursorOff( wk );
-  }
-
-  switch( ret ){
-  case 0:   // わすれる
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL_B );
-#if 0
-    if( BPL_HidenCheck( wk ) == TRUE ){
-      BPL_HidenMsgPut( wk );
-      BPL_HidenOff_Battle( wk );
-      wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
-    }else{
-
-      wk->ret_seq = SEQ_BPL_ENDSET;
-    }
-#else
-    wk->ret_seq = SEQ_BPL_ENDSET;
-#endif
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 1:   // 戦闘<->コンテスト切り替え
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_CONTEST );
-    wk->wwm_page_cp = (u8)ret;
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_I;
-    return SEQ_BPL_BUTTON_WAIT;
-
-  case 2:   // キャンセル
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->wwm_page_cp = 0;
-    wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-  return SEQ_BPL_WAZADEL_MAIN;
-*/
   u32 ret = CURSORMOVE_MainCont( wk->cmwk );
 
   switch( ret ){
@@ -1503,13 +1013,6 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_DELINFO_RETURN:  // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->wwm_page_cp = 0;
@@ -1539,6 +1042,15 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
   return SEQ_BPL_WAZADEL_MAIN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		技忘れエラー処理
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaDelError( BPLIST_WORK * wk )
 {
   // 技マシンを持っていない
@@ -1553,71 +1065,17 @@ static int BPL_SeqWazaDelError( BPLIST_WORK * wk )
   return SEQ_BPL_MSG_WAIT;
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * 技回復選択ページのコントロールシーケンス
+ * @brief		技回復選択ページのコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 {
-/*
-  BPLIST_DATA * dat;
-  int ret;
-
-  dat = wk->dat;
-  ret = BPL_TPCheck( wk, PPRcvPage_HitRect );
-  if( ret == GFL_UI_TP_HIT_NONE ){
-    ret = BAPP_CursorMove( wk->cmv_wk );
-    if( ret == BAPP_CMV_CANCEL ){
-      ret = 4;
-    }
-  }else{
-    BattlePokeList_CursorOff( wk );
-  }
-
-  switch( ret ){
-  case 0:   // 技
-  case 1:
-  case 2:
-  case 3:
-#if 0
-    if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
-    wk->dat->sel_wp = (u8)ret;
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
-//    if( BattleWorkStatusRecover(dat->bw,dat->client_no,dat->list_row[dat->sel_poke],ret,dat->item) == TRUE ){
-    if( 0 ){
-      wk->rcv_seq = 0;
-      wk->ret_seq = SEQ_BPL_STRCV;
-      return SEQ_BPL_BUTTON_WAIT;
-    }else{
-      GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
-      BattlePokeList_TalkMsgSet( wk );
-      wk->dat->sel_poke = BPL_SEL_EXIT;
-      wk->ret_seq = SEQ_BPL_ENDSET;
-      return SEQ_BPL_MSG_WAIT;
-    }
-    break;
-#endif
-    if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
-    wk->dat->sel_wp = (u8)ret;
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
-    return SEQ_BPL_ENDSET;
-
-  case 4:   // キャンセル
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
-    wk->ret_seq = SEQ_BPL_PAGE1_CHG;
-    return SEQ_BPL_BUTTON_WAIT;
-  }
-  return SEQ_BPL_WAZARCV_SEL;
-*/
   BPLIST_DATA * dat;
   u32 ret;
 
@@ -1629,25 +1087,6 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
   case BPLIST_UI_PPRCV_WAZA2:     // 技２
   case BPLIST_UI_PPRCV_WAZA3:     // 技３
   case BPLIST_UI_PPRCV_WAZA4:     // 技４
-/*
-    if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
-    wk->dat->sel_wp = (u8)ret;
-    PlaySE( wk, SEQ_SE_DECIDE2 );
-    BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
-//    if( BattleWorkStatusRecover(dat->bw,dat->client_no,dat->list_row[dat->sel_poke],ret,dat->item) == TRUE ){
-    if( 0 ){
-      wk->rcv_seq = 0;
-      wk->ret_seq = SEQ_BPL_STRCV;
-      return SEQ_BPL_BUTTON_WAIT;
-    }else{
-      GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
-      BattlePokeList_TalkMsgSet( wk );
-      wk->dat->sel_poke = BPL_SEL_EXIT;
-      wk->ret_seq = SEQ_BPL_ENDSET;
-      return SEQ_BPL_MSG_WAIT;
-    }
-    break;
-*/
     {
       u8  pos = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
       if( wk->poke[pos].waza[ret].id == 0 ){ break; }
@@ -1659,13 +1098,6 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
     }
 
   case BPLIST_UI_PPRCV_RETURN:    // もどる
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      PlaySE( wk, SEQ_SE_CANCEL2 );
-    }else{
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-    }
-*/
     PlaySE( wk, SEQ_SE_CANCEL2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
     wk->ret_seq = SEQ_BPL_PAGE1_CHG;
@@ -1693,12 +1125,11 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
   return SEQ_BPL_WAZARCV_SEL;
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：ポケモン選択ページへ
+ * @brief		ページ切り替え：ポケモン選択ページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1713,9 +1144,9 @@ static int BPL_SeqPage1Chg( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：ポケモン入れ替えページへ
+ * @brief		ページ切り替え：ポケモン入れ替えページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1730,9 +1161,9 @@ static int BPL_SeqPageChgIrekae( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：ステータスメインページへ
+ * @brief		ページ切り替え：ステータスメインページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1747,9 +1178,9 @@ static int BPL_SeqPageChgStatus( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：ステータス技選択ページへ
+ * @brief		ページ切り替え：ステータス技選択ページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1764,9 +1195,9 @@ static int BPL_SeqPageChgStWazaSel( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：技詳細ページへ
+ * @brief		ページ切り替え：技詳細ページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1785,9 +1216,9 @@ static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：技忘れページへ
+ * @brief		ページ切り替え：技忘れページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1802,9 +1233,9 @@ static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：技忘れ詳細ページへ
+ * @brief		ページ切り替え：技忘れ詳細ページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1827,9 +1258,9 @@ static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：技回復ページへ
+ * @brief		ページ切り替え：技回復ページへ
  *
- * @param wk    戦闘ポケリストのワーク
+ * @param		wk    戦闘ポケリストのワーク
  *
  * @return  次のシーケンス
  */
@@ -1839,19 +1270,14 @@ static int BPL_SeqPageChgPPRcv( BPLIST_WORK * wk )
   if( BPL_PageChange( wk, BPLIST_PAGE_PP_RCV ) == FALSE ){
     return SEQ_BPL_PAGECHG_PPRCV;
   }
-/*
-  if( ITEM_GetParam( wk->dat->item, ITEM_PRM_ALL_PP_RCV, wk->dat->heap ) != 0 ){
-    return SEQ_BPL_PPALLRCV;
-  }
-*/
   return SEQ_BPL_WAZARCV_SEL;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンきりかえシーケンス
+ * @brief		ポケモンきりかえシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1870,9 +1296,9 @@ static int BPL_SeqPokeChange( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 入れ替えエラーセット
+ * @brief		入れ替えエラーセット
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1886,9 +1312,9 @@ static int BPL_SeqChgErrSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 入れ替えエラーメッセージ終了待ちシーケンス
+ * @brief		入れ替えエラーメッセージ終了待ちシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1901,9 +1327,9 @@ static int BPL_SeqIrekaeErr( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ表示シーケンス
+ * @brief		メッセージ表示シーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1919,9 +1345,9 @@ static int BPL_SeqMsgWait( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ表示後のキー待ちシーケンス
+ * @brief		メッセージ表示後のキー待ちシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1944,9 +1370,9 @@ static int BPL_SeqTrgWait( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ボタンアニメ終了待ちシーケンス
+ * @brief		ボタンアニメ終了待ちシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1961,149 +1387,9 @@ static int BPL_SeqButtonWait( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 回復シーケンス
+ * @brief		終了フェードセットシーケンス
  *
- * @param wk    戦闘ポケリストのワーク
- *
- * @return  次のシーケンス
- */
-//--------------------------------------------------------------------------------------------
-/*
-static int BPL_SeqStRcv( BPLIST_WORK * wk )
-{
-  BPLIST_DATA * dat;
-  u32 pos;
-
-  dat = wk->dat;
-  pos = BPLISTMAIN_GetListRow( wk, dat->sel_poke );
-
-  switch( wk->rcv_seq ){
-  case 0:
-    wk->poke[pos].pp =
-//      BattleWorkPokemonParamGet( dat->bw, dat->client_no, dat->list_row[dat->sel_poke] );
-        NULL;
-//    BattlePokeList_ItemUseMsgSet( wk );
-    if( wk->page == BPLIST_PAGE_PP_RCV ){
-  //    wk->rcv_pp[0] = (u16)PP_Get(wk->poke[dat->sel_poke].pp,ID_PARA_pp1+dat->sel_wp,NULL);
-      wk->rcv_pp[0] = PP_Get( wk->poke[pos].pp,ID_PARA_pp1+dat->sel_wp,NULL);
-      wk->rcv_seq = 2;
-    }else{
-      wk->poke[pos].st = APP_COMMON_GetStatusIconAnime( wk->poke[pos].pp );
-      if( wk->poke[pos].st == APP_COMMON_ST_ICON_NONE ){
-//        GFL_CLACT_UNIT_SetDrawEnableCap( wk->cap[BPL_CA_STATUS1+dat->sel_poke], 0 );
-        BattlePokeList_P1_LvPut( wk, dat->sel_poke );
-      }
-      wk->rcv_hp = PP_Get( wk->poke[pos].pp, ID_PARA_hp, NULL );
-      wk->rcv_seq = 4;
-    }
-//    PlaySE( wk, SEQ_SE_DP_KAIFUKU );
-    break;
-
-  case 1:   // HP回復
-    if( wk->poke[pos].hp != wk->rcv_hp ){
-      wk->poke[pos].hp++;
-      BattlePokeList_P1_HPPut( wk, dat->sel_poke );
-      break;
-    }
-    wk->rcv_seq = 3;
-    break;
-
-  case 2:   // PP回復
-    if( wk->poke[pos].waza[dat->sel_wp].pp != wk->rcv_pp[0] ){
-      wk->poke[pos].waza[dat->sel_wp].pp++;
-      BattlePokeList_PPRcv( wk, WIN_P7_SKILL1+dat->sel_wp, dat->sel_wp );
-      break;
-    }
-    wk->rcv_seq = 3;
-    break;
-
-  case 3:
-//    BattleBag_SubItem( dat->bw, dat->item, dat->bag_page, dat->heap );
-    BattlePokeList_TalkMsgSet( wk );
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    wk->dat->sel_pos[0] = pos;
-    return SEQ_BPL_MSG_WAIT;
-
-  case 4:   // 瀕死回復のために１度だけ呼ぶ
-    if( wk->poke[pos].hp != wk->rcv_hp ){
-      wk->poke[pos].hp++;
-      BattlePokeList_P1_HPPut( wk, dat->sel_poke );
-      BPL_HPRcvButtonPut( wk );
-    }
-    wk->rcv_seq = 1;
-    break;
-
-  }
-  return SEQ_BPL_STRCV;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * PP全回復シーケンス
- *
- * @param wk    戦闘ポケリストのワーク
- *
- * @return  次のシーケンス
- */
-//--------------------------------------------------------------------------------------------
-/*
-static int BPL_SeqPPAllRcv( BPLIST_WORK * wk )
-{
-  BPLIST_DATA * dat;
-  u32 pos;
-  u32 i, j;
-
-  dat = wk->dat;
-  pos = BPLISTMAIN_GetListRow( wk, dat->sel_poke );
-
-  switch( wk->rcv_seq ){
-  case 0:
-    wk->poke[pos].pp =
-//      BattleWorkPokemonParamGet( dat->bw, dat->client_no, dat->list_row[dat->sel_poke] );
-      NULL;
-    for( i=0; i<4; i++ ){
-      if( wk->poke[pos].waza[i].id == 0 ){ continue; }
-      wk->rcv_pp[i] = (u16)PP_Get(wk->poke[pos].pp,ID_PARA_pp1+i,NULL);
-    }
-//    BattlePokeList_ItemUseMsgSet( wk );
-//    PlaySE( wk, SEQ_SE_DP_KAIFUKU );
-    wk->rcv_seq = 1;
-    break;
-
-  case 1:   // PP回復
-    j = 0;
-    for( i=0; i<4; i++ ){
-      if( wk->poke[pos].waza[i].id == 0 ){
-        j++;
-        continue;
-      }
-      if( wk->poke[pos].waza[i].pp != wk->rcv_pp[i] ){
-        wk->poke[pos].waza[i].pp++;
-        BattlePokeList_PPRcv( wk, WIN_P7_SKILL1+i, i );
-      }else{
-        j++;
-      }
-    }
-    if( j == 4 ){ wk->rcv_seq = 2; }
-    break;
-
-  case 2:
-//    BattleBag_SubItem( dat->bw, dat->item, dat->bag_page, dat->heap );
-    BattlePokeList_TalkMsgSet( wk );
-    wk->ret_seq = SEQ_BPL_ENDSET;
-    return SEQ_BPL_MSG_WAIT;
-  }
-
-  return SEQ_BPL_PPALLRCV;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 終了フェードセットシーケンス
- *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -2112,34 +1398,23 @@ static int BPL_SeqEndSet( BPLIST_WORK * wk )
 {
   // マルチモード時の選択位置補正
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-/*
-    u32 i;
-    for( i=0; i<BPL_SELNUM_MAX; i++ ){
-      if( wk->dat->sel_pos[i] != BPL_SELPOS_NONE ){
-        wk->dat->sel_pos[i] /= 2;
-      }
-			OS_Printf( "ENDSET : wk->dat->sel_pos[%d] = %d\n", i, wk->dat->sel_pos[i] );
-    }
-*/
     wk->dat->sel_poke /= 2;
   }
-/*
-  OS_Printf( "\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n" );
-  OS_Printf( "sel_poke = %d\n", wk->dat->sel_poke );
-  {
-    u32 i;
-    for( i=0; i<BPL_SELNUM_MAX; i++ ){
-      OS_Printf( "sel_pos = %d\n", wk->dat->sel_pos[i] );
-    }
-  }
-  OS_Printf( "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n" );
-*/
 
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 0, 16, 0, wk->dat->tcb_sys );
   return SEQ_BPL_ENDWAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		終了フェード待ちシーケンス
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqEndWait( BPLIST_WORK * wk )
 {
   if( PaletteFadeCheck( wk->pfd ) == 0 ){
@@ -2150,9 +1425,9 @@ static int BPL_SeqEndWait( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 終了シーケンス
+ * @brief		終了シーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = 終了"
  * @retval  "FALSE = フェード中"
@@ -2170,7 +1445,6 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
   }else{
     *wk->dat->cursor_flg = 0;
   }
-//  wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
 
   BPL_MsgManExit( wk );
   BattlePokeList_ObjFree( wk );
@@ -2179,57 +1453,21 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 
   GFL_TCBL_Exit( wk->tcbl );
 
-//  BAPP_CursorMoveWorkFree( wk->cmv_wk );
   BPLISTUI_Exit( wk );
 
   BAPPTOOL_FreeCursor( wk->cpwk );
 
-//  FontProc_UnloadFont( FONT_TOUCH );
-
   GFL_TCB_DeleteTask( tcb );
   GFL_HEAP_FreeMemory( wk );
-
-//  GFL_HEAP_DeleteHeap( HEAPID_BATTLE_APP_TEST );
-
-//	OS_Printf( "waza pos = %d\n", wk->dat->sel_wp );
 
   return TRUE;
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * VRAM初期化
+ * @brief		BG初期化
  *
- * @param none
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_VramInit(void)
-{
-  GFL_DISP_VRAM tbl = {
-    GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
-    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-    GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
-    GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-    GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
-    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-    GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
-    GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-    GX_VRAM_TEX_0_B,        // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_01_FG     // テクスチャパレットスロット
-  };
-  GFL_DISP_SetBank( &tbl );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * BG初期化
- *
- * @param dat   リストデータ
+ * @param		wk		ワーク
  *
  * @return  none
  */
@@ -2292,9 +1530,9 @@ static void BPL_BgInit( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * BG解放
+ * @brief		BG解放
  *
- * @param ini   BGLデータ
+ * @param		none
  *
  * @return  none
  */
@@ -2312,22 +1550,11 @@ static void BPL_BgExit(void)
   GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
 }
 
-/*
-#define PCOL_N_BLUE   ( PRINTSYS_LSB_MAKE( 7, 8, 0 ) )    // フォントカラー：青
-#define PCOL_N_RED    ( PRINTSYS_LSB_MAKE( 3, 4, 0 ) )    // フォントカラー：赤
-#define PCOL_B_BLUE   ( PRINTSYS_LSB_MAKE( 10, 11, 0 ) )    // フォントカラー：ボタン用青
-#define PCOL_B_RED    ( PRINTSYS_LSB_MAKE( 12, 13, 0 ) )    // フォントカラー：ボタン用赤
-*/
-#define SFNT_COL_BLUE ( 7 )
-#define SFNT_COL_RED  ( 3 )
-#define BFNT_COL_BLUE ( 10 )
-#define BFNT_COL_RED  ( 12 )
-
 //--------------------------------------------------------------------------------------------
 /**
- * グラフィックデータセット
+ * @brief		グラフィックデータセット
  *
- * @param wk    ポケモンリスト画面のワーク
+ * @param		wk    ポケモンリスト画面のワーク
  *
  * @return  none
  */
@@ -2344,21 +1571,11 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
   {
     NNSG2dScreenData * dat;
     void * buf;
-/*
-    buf = GFL_ARC_LoadDataAllocByHandle(
-            hdl, NARC_b_plist_gra_b_plist_anm_NSCR, wk->dat->heap );
-    NNS_G2dGetUnpackedScreenData( buf, &dat );
-*/
     buf = GFL_ARCHDL_UTIL_LoadScreen(
             hdl, NARC_b_plist_gra_b_plist_anm_lz_NSCR, TRUE, &dat, wk->dat->heap );
     BattlePokeList_ButtonScreenMake( wk, (u16 *)dat->rawData );
     GFL_HEAP_FreeMemory( buf );
 
-/*
-    buf = GFL_ARC_LoadDataAllocByHandle(
-            hdl, NARC_b_plist_gra_b_plist_anm2_NSCR, wk->dat->heap );
-    NNS_G2dGetUnpackedScreenData( buf, &dat );
-*/
     buf = GFL_ARCHDL_UTIL_LoadScreen(
             hdl, NARC_b_plist_gra_b_plist_anm2_lz_NSCR, TRUE, &dat, wk->dat->heap );
     BattlePokeList_ButtonScreenMake2( wk, (u16 *)dat->rawData );
@@ -2373,7 +1590,6 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
 
   {
     u16 * pltt = PaletteWorkDefaultWorkGet( wk->pfd, FADE_SUB_BG );
-//    GFL_STD_MemCopy( &pltt[BPL_PAL_B_GREEN*16], wk->wb_pal, 0x20*2 );
     GFL_STD_MemCopy( &pltt[BPL_PAL_B_GREEN*16], wk->wb_pal, 0x20 );
   }
 
@@ -2386,48 +1602,14 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
   PaletteWorkSet_Arc(
     wk->pfd, ARCID_FONT, NARC_font_default_nclr,
     wk->dat->heap, FADE_SUB_BG, 0x20, BPL_PAL_SYS_FONT*16 );
-
-/*
-  // システムフォントパレットセット
-  PaletteWorkSet_Arc(
-    wk->pfd, ARC_FONT, NARC_font_system_ncrl,
-    wk->dat->heap, FADE_SUB_BG, 0x20, BPL_PAL_SYS_FONT*16 );
-
-  // 会話フォントパレットセット
-  PaletteWorkSet_Arc(
-    wk->pfd, ARC_FONT, NARC_font_talk_ncrl,
-    wk->dat->heap, FADE_SUB_BG, 0x20, BPL_PAL_TALK_FONT*16 );
-
-  // 会話ウィンドウセット
-  {
-    WINTYPE wt = BattleWorkConfigWinTypeGet( wk->dat->bw );
-    GFL_ARC_UTIL_TransVramBgCharacter(
-      ARC_WINFRAME, TalkWinCgxArcGet(wt),
-      GFL_BG_FRAME0_S, TALK_WIN_CGX_POS, 0, 0, wk->dat->heap );
-    PaletteWorkSet_Arc(
-      wk->pfd, ARC_WINFRAME, TalkWinPalArcGet(wt),
-      wk->dat->heap, FADE_SUB_BG, 0x20, BPL_PAL_TALK_WIN*16 );
-  }
-
-  { // ボタンフォント用パレットの青と赤をシステムフォント用のパレットにコピー
-    u16 * pal = PaletteWorkDefaultWorkGet( wk->pfd, FADE_SUB_BG );
-    u16 * buf = GFL_HEAP_AllocMemory( wk->dat->heap, 0x20 );
-
-    GFL_STD_MemCopy( &pal[BPL_PAL_SYS_FONT*16], buf, 0x20 );
-    GFL_STD_MemCopy( &pal[BPL_PAL_HPGAGE*16+BFNT_COL_BLUE], &buf[SFNT_COL_BLUE], 4 );
-    GFL_STD_MemCopy( &pal[BPL_PAL_HPGAGE*16+BFNT_COL_RED], &buf[SFNT_COL_RED], 4 );
-    PaletteWorkSet( wk->pfd, buf, FADE_SUB_BG, BPL_PAL_SYS_FONT*16, 0x20 );
-    GFL_HEAP_FreeMemory( buf );
-  }
-*/
 }
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ関連セット
+ * @brief		メッセージ関連セット
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  none
  */
@@ -2435,21 +1617,17 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
 static void BPL_MsgManSet( BPLIST_WORK * wk )
 {
   wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_plist_dat, wk->dat->heap );
-//  wk->nfnt = NUMFONT_Create( 15, 14, FBMP_COL_NULL, wk->dat->heap );
   wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
   wk->wset = WORDSET_Create( wk->dat->heap );
-//  wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
   wk->que  = PRINTSYS_QUE_CreateEx( 2048, wk->dat->heap );
   wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
-
-//  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // テスト
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ関連削除
+ * @brief		メッセージ関連削除
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  none
  */
@@ -2457,7 +1635,6 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 static void BPL_MsgManExit( BPLIST_WORK * wk )
 {
   GFL_MSG_Delete( wk->mman );
-//  NUMFONT_Delete( wk->nfnt );
   GFL_FONT_Delete( wk->nfnt );
   WORDSET_Delete( wk->wset );
   PRINTSYS_QUE_Delete( wk->que );
@@ -2466,9 +1643,11 @@ static void BPL_MsgManExit( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンデータ作成
+ * @brief		ポケモンデータ作成コア
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
+ * @param		pp		POKEMON_PARAM
+ * @param		dat		作成データ
  *
  * @return  none
  */
@@ -2512,14 +1691,7 @@ static void PokeDataMakeCore( BPLIST_WORK * wk, POKEMON_PARAM * pp, BPL_POKEDATA
   dat->spa  = (u16)PP_Get( dat->pp, ID_PARA_speabino, NULL );
   dat->item = (u16)PP_Get( dat->pp, ID_PARA_item, NULL );
 
-  dat->style     = (u8)PP_Get( dat->pp, ID_PARA_style, NULL );
-  dat->beautiful = (u8)PP_Get( dat->pp, ID_PARA_beautiful, NULL );
-  dat->cute      = (u8)PP_Get( dat->pp, ID_PARA_cute, NULL );
-  dat->clever    = (u8)PP_Get( dat->pp, ID_PARA_clever, NULL );
-  dat->strong    = (u8)PP_Get( dat->pp, ID_PARA_strong, NULL );
-
-  dat->cb = (u16)PP_Get( dat->pp, ID_PARA_cb_id, NULL );
-  dat->form = (u8)PP_Get( dat->pp, ID_PARA_form_no, NULL );
+  dat->form = (u32)PP_Get( dat->pp, ID_PARA_form_no, NULL );
 
   dat->now_exp     = PP_Get( dat->pp, ID_PARA_exp, NULL );
   dat->now_lv_exp  = PP_GetMinExp( dat->pp );
@@ -2544,6 +1716,15 @@ static void PokeDataMakeCore( BPLIST_WORK * wk, POKEMON_PARAM * pp, BPL_POKEDATA
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンデータ作成
+ *
+ * @param		wk    ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void BPL_PokeDataMake( BPLIST_WORK * wk )
 {
   u32 i;
@@ -2570,19 +1751,13 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
       }
     }
   }
-
-
-//  wk->poke[0].hp = 0;
-//  wk->poke[1].hp = 0;
-//  wk->poke[2].hp = 0;
-//  wk->poke[3].hp = 0;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモン選択
+ * @brief		ポケモン選択
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = 選択された"
  * @retval  "FALSE = 未選択"
@@ -2606,18 +1781,10 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
     break;
 
   case BPLIST_UI_LIST_RETURN:
-/*
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      wk->cancelSE = SEQ_SE_CANCEL2;
-    }else{
-      wk->cancelSE = SEQ_SE_DECIDE2;
-    }
-*/
     wk->dat->sel_poke = BPL_SEL_EXIT;
     return TRUE;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-//    wk->cancelSE = SEQ_SE_CANCEL2;
     wk->dat->sel_poke = BPL_SEL_EXIT;
     return TRUE;
 
@@ -2639,218 +1806,10 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 入れ替えページ選択
+ * @brief		指定位置にポケモンが存在するか
  *
- * @param wk    ワーク
- *
- * @retval  "0xff != 選択された"
- * @retval  "0xff = 未選択"
- */
-//--------------------------------------------------------------------------------------------
-/*
-static u8 BPL_IrekaeSelect( BPLIST_WORK * wk )
-{
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
-
-  switch( ret ){
-  case BPLIST_UI_CHG_ENTER:       // いれかえる
-  case BPLIST_UI_CHG_STATUS:      // つよさをみる
-  case BPLIST_UI_CHG_WAZA:        // わざをみる
-  case BPLIST_UI_CHG_RETURN:      // もどる
-    break;
-
-  case CURSORMOVE_CANCEL:         // キャンセル
-    ret = BPLIST_UI_CHG_RETURN;
-    break;
-
-  case CURSORMOVE_CURSOR_MOVE:    // 移動
-    PlaySE( wk, SEQ_SE_SELECT1 );
-    break;
-
-  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
-  case CURSORMOVE_NONE:           // 動作なし
-    ret = 0xff;
-    break;
-  }
-
-  return (u8)ret;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ステータス選択
- *
- * @param wk    ワーク
- *
- * @retval  "0xff != 選択された"
- * @retval  "0xff = 未選択"
- */
-//--------------------------------------------------------------------------------------------
-/*
-static u8 BPL_StatusMainSelect( BPLIST_WORK * wk )
-{
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
-
-  switch( ret ){
-  case BPLIST_UI_STATUS_UP:       // 前のポケモンへ
-  case BPLIST_UI_STATUS_DOWN:     // 次のポケモンへ
-  case BPLIST_UI_STATUS_WAZA:     // わざをみる
-  case BPLIST_UI_STATUS_RETURN:   // もどる
-    break;
-
-  case CURSORMOVE_CANCEL:         // キャンセル
-    ret = BPLIST_UI_STATUS_RETURN;
-    break;
-
-  case CURSORMOVE_CURSOR_MOVE:    // 移動
-    PlaySE( wk, SEQ_SE_SELECT1 );
-    break;
-
-  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
-  case CURSORMOVE_NONE:           // 動作なし
-    ret = 0xff;
-    break;
-  }
-
-  return (u8)ret;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ステータス技選択
- *
- * @param wk    ワーク
- *
- * @retval  "0xff != 選択された"
- * @retval  "0xff = 未選択"
- */
-//--------------------------------------------------------------------------------------------
-/*
-static u8 BPL_StWazaSelect( BPLIST_WORK * wk )
-{
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
-
-  switch( ret ){
-  case BPLIST_UI_WAZA_SEL1:     // 技１
-  case BPLIST_UI_WAZA_SEL2:     // 技２
-  case BPLIST_UI_WAZA_SEL3:     // 技３
-  case BPLIST_UI_WAZA_SEL4:     // 技４
-  case BPLIST_UI_WAZA_UP:       // 前のポケモンへ
-  case BPLIST_UI_WAZA_DOWN:     // 次のポケモンへ
-  case BPLIST_UI_WAZA_STATUS:   // つよさをみる
-  case BPLIST_UI_WAZA_RETURN:   // もどる
-    break;
-
-  case CURSORMOVE_CANCEL:       // キャンセル
-    ret = BPLIST_UI_WAZA_RETURN;
-    break;
-
-  case CURSORMOVE_CURSOR_MOVE:    // 移動
-    PlaySE( wk, SEQ_SE_SELECT1 );
-    break;
-
-  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
-  case CURSORMOVE_NONE:           // 動作なし
-    ret = 0xff;
-    break;
-  }
-
-  return (u8)ret;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ステータス技詳細選択
- *
- * @param wk    ワーク
- *
- * @retval  "0xff != 選択された"
- * @retval  "0xff = 未選択"
- */
-//--------------------------------------------------------------------------------------------
-/*
-static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk )
-{
-  u32 ret = CURSORMOVE_MainCont( wk->cmwk );
-
-  switch( ret ){
-  case BPLIST_UI_WAZAINFO_SEL1:     // 技１
-  case BPLIST_UI_WAZAINFO_SEL2:     // 技２
-  case BPLIST_UI_WAZAINFO_SEL3:     // 技３
-  case BPLIST_UI_WAZAINFO_SEL4:     // 技４
-  case BPLIST_UI_WAZAINFO_RETURN:   // もどる
-    break;
-
-  case CURSORMOVE_CANCEL:         // キャンセル
-    ret = BPLIST_UI_WAZAINFO_RETURN;
-    break;
-
-  case CURSORMOVE_CURSOR_MOVE:    // 移動
-    PlaySE( wk, SEQ_SE_SELECT1 );
-    break;
-
-  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
-  case CURSORMOVE_NONE:           // 動作なし
-    ret = 0xff;
-    break;
-  }
-
-  return (u8)ret;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * タッチパネルのボタン押し判定
- *
- * @param wk    ワーク
- * @param tbl   TPデータテーブル
- *
- * @retval  "GFL_UI_TP_HIT_NONE = 押されていない"
- * @retval  "GFL_UI_TP_HIT_NONE != 押したボタン番号"
- */
-//--------------------------------------------------------------------------------------------
-/*
-static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl )
-{
-  int ret = GFL_UI_TP_HitTrg( tbl );
-#if 0
-  if( ret != GFL_UI_TP_HIT_NONE ){
-    u16 pat = 0xfffe;
-    if( GFL_BG_CheckDot( wk->bgl, GFL_BG_FRAME3_S, sys.tp_x, sys.tp_y, &pat ) == FALSE ){
-      return GFL_UI_TP_HIT_NONE;
-    }
-  }
-#endif
-  return ret;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 指定位置にポケモンが存在するか
- *
- * @param wk    ワーク
- * @param pos   位置
+ * @param		wk    ワーク
+ * @param		pos   位置
  *
  * @retval  "0 = いない"
  * @retval  "1 = 戦闘中"
@@ -2862,12 +1821,6 @@ u8 BattlePokeList_PokeSetCheck( BPLIST_WORK * wk, s32 pos )
   if( wk->poke[ BPLISTMAIN_GetListRow(wk,pos) ].mons == 0 ){
     return 0;
   }
-/*
-  if( pos == 0 ||
-    ( (BattlePokeList_DoubleCheck(wk)||BattlePokeList_MultiCheck(wk)) && pos == 1 ) ){
-    return 1;
-  }
-*/
   if( FightPokeCheck( wk, pos ) == TRUE ){
     return 1;
   }
@@ -2876,11 +1829,11 @@ u8 BattlePokeList_PokeSetCheck( BPLIST_WORK * wk, s32 pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 次のポケモンを取得
+ * @brief		次のポケモンを取得
  *
- * @param wk    ワーク
- * @param pos   現在位置
- * @param mv    移動方向
+ * @param		wk    ワーク
+ * @param		pos   現在位置
+ * @param		mv    移動方向
  *
  * @retval  "0xff = 次のポケモンなし"
  * @retval  "0xff != 次のポケモンの位置"
@@ -2934,42 +1887,10 @@ static u8 BPL_NextPokeGet( BPLIST_WORK * wk, s32 pos, s32 mv )
 
 //--------------------------------------------------------------------------------------------
 /**
- * プレート書き換え
+ * @brief		経験値ゲージ書き換え
  *
- * @param wk    ワーク
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_PokePlateSet( BPLIST_WORK * wk )
-{
-  s16 i, j;
-
-  if( wk->dat->mode == BPL_MODE_WAZASET ){ return; }
-
-  for( i=0; i<TEMOTI_POKEMAX; i++ ){
-    j = BattlePokeList_PokeSetCheck( wk, i );
-    if( j == 1 ){
-      GFL_BG_WriteScreen(
-        wk->bgl, GFL_BG_FRAME2_S, wk->btn_plate1[0],
-        PlatePos[i][0], PlatePos[i][1], PLATE_BG_SX, PLATE_BG_SY );
-    }else if( j == 2 ){
-      GFL_BG_WriteScreen(
-        wk->bgl, GFL_BG_FRAME2_S, wk->btn_plate2[0],
-        PlatePos[i][0], PlatePos[i][1], PLATE_BG_SX, PLATE_BG_SY );
-    }
-  }
-  GFL_BG_LoadScreenV_Req( wk->bgl, GFL_BG_FRAME2_S );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 経験値ゲージ書き換え
- *
- * @param wk    ワーク
- * @param page  ページ番号
+ * @param		wk    ワーク
+ * @param		page  ページ番号
  *
  * @return  none
  */
@@ -3006,7 +1927,6 @@ static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page )
       cgx = EXP_CGX + dot;
     }
 
-//    BPL_P3_ExpGagePut( wk, cgx, P3_EXPGAGE_PX+i, P3_EXPGAGE_PY );
 		GFL_BG_FillScreen(
 			GFL_BG_FRAME3_S, cgx, P3_EXPGAGE_PX+i, P3_EXPGAGE_PY, 1, 1, GFL_BG_SCRWRT_PALNL );
 
@@ -3020,114 +1940,18 @@ static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page )
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
 }
 
-/*
-static void BPL_P2_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py )
-{
-  GFL_BG_FillScreen( wk->bgl, GFL_BG_FRAME3_S, cgx, px, py, 1, 1, GFL_BG_SCRWRT_PALNL );
-  GFL_BG_FillScreen( wk->bgl, GFL_BG_FRAME3_S, cgx+32, px, py+1, 1, 1, GFL_BG_SCRWRT_PALNL );
-}
-*/
-/*
-static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py )
-{
-  GFL_BG_FillScreen( GFL_BG_FRAME3_S, cgx, px, py, 1, 1, GFL_BG_SCRWRT_PALNL );
-}
-*/
-
-#define HEART1_CHR_NUM  ( 0x140 )
-#define HEART2_CHR_NUM  ( 0x125 )
-#define HEART_PX    ( 2 )
-#define HEART_PY    ( 14 )
-#define HEART_MAX   ( 6 )
-
 //--------------------------------------------------------------------------------------------
 /**
- * コンテスト技のハート書き換え
+ * @brief		ページ切り替え
  *
- * @param wk    ワーク
- * @param chr   使用キャラ
- * @param num   何個目のハートか
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_ContestWazaHeartPutMain( BPLIST_WORK * wk, u16 chr, u8 num )
-{
-  GFL_BG_FillScreen(
-    GFL_BG_FRAME3_S, chr, HEART_PX+num*2, HEART_PY, 1, 1, GFL_BG_SCRWRT_PALNL );
-  GFL_BG_FillScreen(
-    GFL_BG_FRAME3_S, chr+1, HEART_PX+num*2+1, HEART_PY, 1, 1, GFL_BG_SCRWRT_PALNL );
-  GFL_BG_FillScreen(
-    GFL_BG_FRAME3_S, chr+32, HEART_PX+num*2, HEART_PY+1, 1, 1, GFL_BG_SCRWRT_PALNL );
-  GFL_BG_FillScreen(
-    GFL_BG_FRAME3_S, chr+33, HEART_PX+num*2+1, HEART_PY+1, 1, 1, GFL_BG_SCRWRT_PALNL );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * コンテスト技のハート初期化
- *
- * @param wk    ワーク
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_ContestWazaHeartInit( BPLIST_WORK * wk )
-{
-  u16 i;
-
-  for( i=0; i<HEART_MAX; i++ ){
-    BPL_ContestWazaHeartPutMain( wk, HEART2_CHR_NUM, i );
-  }
-}
-*/
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * ページ切り替え
- *
- * @param wk      ワーク
- * @param next_page 次のページ
+ * @param		wk					ワーク
+ * @param		next_page		次のページ
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 {
-/*
-  if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-    return FALSE;
-  }
-
-  BPL_PageChgBgScreenChg( wk, next_page );
-
-  GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME0_S, 0 );
-  GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME1_S, 0 );
-
-  BattlePokeList_PageObjSet( wk, next_page );
-  BattlePokeList_BmpFree( wk );
-  BattlePokeList_BmpAdd( wk, next_page );
-  BattlePokeList_BmpWrite( wk, next_page );
-  BPL_ExpGagePut( wk, next_page );
-
-//  BPL_ContestWazaHeartPut( wk, next_page );
-
-//  BattlePokeList_CursorMoveSet( wk, next_page );
-//  BPLISTUI_ChangePage( wk, next_page, 0 );
-  CursorMoveSet( wk, next_page );
-
-  BattlePokeList_ButtonPageScreenInit( wk, next_page );
-  BattlePokeList_ButtonPalSet( wk, next_page );
-
-  wk->page = next_page;
-
-  return TRUE;
-*/
   switch( wk->page_chg_seq ){
   case 0:
     if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
@@ -3159,24 +1983,9 @@ static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
   return FALSE;
 }
 
-static const u32 ScreenArc[][2] =
-{ // ボタンBGスクリーン, 背景BGスクリーン
-  { NARC_b_plist_gra_poke_sel_t_lz_NSCR, NARC_b_plist_gra_poke_sel_u_lz_NSCR },       // ポケモン選択ページ
-  { NARC_b_plist_gra_poke_chg_t_lz_NSCR, NARC_b_plist_gra_poke_chg_u_lz_NSCR },       // ポケモン入れ替えページ
-  { NARC_b_plist_gra_st_main_t_lz_NSCR, NARC_b_plist_gra_st_main_u_lz_NSCR },       // ステータスメインページ
-  { NARC_b_plist_gra_st_waza_sel_t_lz_NSCR, NARC_b_plist_gra_st_waza_sel_u_lz_NSCR },   // ステータス詳細ページ
-  { NARC_b_plist_gra_st_waza_main_t_lz_NSCR, NARC_b_plist_gra_st_waza_main_u_lz_NSCR },   // ステータス技ページ
-  { NARC_b_plist_gra_item_waza_t_lz_NSCR, NARC_b_plist_gra_item_waza_u_lz_NSCR },     // PP回復技選択ページ
-  { NARC_b_plist_gra_waza_delb_sel_t_lz_NSCR, NARC_b_plist_gra_waza_delb_sel_u_lz_NSCR }, // ステータス技忘れ１ページ（戦闘技選択）
-  { NARC_b_plist_gra_waza_delb_main_t_lz_NSCR, NARC_b_plist_gra_waza_delb_main_u_lz_NSCR }, // ステータス技忘れ２ページ（戦闘技詳細）
-//  { NARC_b_plist_gra_waza_delc_sel_t_NSCR, NARC_b_plist_gra_waza_delc_sel_u_NSCR }, // ステータス技忘れ３ページ（コンテスト技詳細）
-//  { NARC_b_plist_gra_waza_delc_main_t_NSCR, NARC_b_plist_gra_waza_delc_main_u_NSCR }, // ステータス技忘れ４ページ（コンテスト技選択）
-  { NARC_b_plist_gra_poke_sel_t_lz_NSCR, NARC_b_plist_gra_poke_sel_u_lz_NSCR },       // 瀕死入れ替え選択ページ
-};
-
 //--------------------------------------------------------------------------------------------
 /**
- * BGスクリーン書き換え
+ * @brief		BGスクリーン書き換え
  *
  * @param wk    ワーク
  * @param page  ページID
@@ -3191,10 +2000,6 @@ static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page )
   u32 i;
 
   for( i=0; i<2; i++ ){
-/*
-    buf = GFL_ARC_LoadDataAlloc( ARCID_B_PLIST_GRA, ScreenArc[page][i], wk->dat->heap );
-    NNS_G2dGetUnpackedScreenData( buf, &dat );
-*/
     buf = GFL_ARC_UTIL_LoadScreen(
       ARCID_B_PLIST_GRA, ScreenArc[page][i], TRUE, &dat, wk->dat->heap );
     GFL_BG_WriteScreen( GFL_BG_FRAME2_S+i, (u16 *)dat->rawData, 0, 0, 32, 24 );
@@ -3205,9 +2010,9 @@ static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 入れ替えチェック
+ * @brief		入れ替えチェック
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = 入れ替え可"
  * @retval  "FALSE = 入れ替え不可"
@@ -3225,16 +2030,6 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
   // 他人
   if( BattlePokeList_MultiPosCheck( wk, pos ) == TRUE ){
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m05 );
-/*
-    {
-      int pcn;
-
-      pcn = BattleWorkPartnerClientNoGet( wk->dat->bw, wk->dat->client_no );
-//      WORDSET_RegisterPlayerName( wk->wset, 0, BattleWorkMyStatusGet(wk->dat->bw,pcn) );
-      WORDSET_RegisterTrainerNameBattle(
-        wk->wset, 0, BattleWorkTrainerDataGet(wk->dat->bw,pcn) );
-    }
-*/
     WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
     GFL_STR_DeleteBuffer( str );
     return FALSE;
@@ -3250,11 +2045,6 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
   }
 
   // 出ている
-//  if( BattlePokeList_PokeSetCheck( wk, wk->dat->sel_poke ) == 1 ){
-/*
-  if( wk->dat->list_row[wk->dat->sel_poke] == wk->dat->fight_poke1 ||
-    wk->dat->list_row[wk->dat->sel_poke] == wk->dat->fight_poke2 ){
-*/
   if( FightPokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m01 );
     WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
@@ -3270,7 +2060,6 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
   }
 
   // 選択されている
-//  if( wk->dat->double_sel != 6 && wk->dat->list_row[wk->dat->sel_poke] == wk->dat->double_sel ){
   if( ChangePokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
     dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ];
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m18 );
@@ -3295,9 +2084,9 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * タマゴチェック
+ * @brief		タマゴチェック
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = タマゴ"
  * @retval  "FALSE = タマゴ以外"
@@ -3313,32 +2102,9 @@ static u8 BPL_TamagoCheck( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ダブルバトルチェック
+ * @brief		マルチバトルチェック
  *
- * @param wk    ワーク
- *
- * @retval  "TRUE = ダブルバトル"
- * @retval  "FALSE = ダブルバトル以外"
- */
-//--------------------------------------------------------------------------------------------
-/*
-u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk )
-{
-  u32 type = BattleWorkFightTypeGet(wk->dat->bw);
-
-  if( type != FIGHT_TYPE_2vs2_YASEI && type != FIGHT_TYPE_AI_MULTI &&
-    (type & (FIGHT_TYPE_2vs2|FIGHT_TYPE_TAG)) ){
-    return TRUE;
-  }
-  return FALSE;
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * マルチバトルチェック
- *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = マルチバトル"
  * @retval  "FALSE = マルチバトル以外"
@@ -3347,22 +2113,14 @@ u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk )
 BOOL BattlePokeList_MultiCheck( BPLIST_WORK * wk )
 {
   return wk->dat->multiMode;
-/*
-  u32 type = BattleWorkFightTypeGet(wk->dat->bw);
-
-  if( type != FIGHT_TYPE_2vs2_YASEI && type != FIGHT_TYPE_AI_MULTI && (type&FIGHT_TYPE_MULTI) ){
-    return TRUE;
-  }
-  return FALSE;
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * マルチバトルでパートナーのポケモンかチェック
+ * @brief		マルチバトルでパートナーのポケモンかチェック
  *
- * @param wk    ワーク
- * @param pos   位置
+ * @param		wk    ワーク
+ * @param		pos   位置
  *
  * @retval  "TRUE = はい"
  * @retval  "FALSE = いいえ"
@@ -3371,32 +2129,14 @@ BOOL BattlePokeList_MultiCheck( BPLIST_WORK * wk )
 u8 BattlePokeList_MultiPosCheck( BPLIST_WORK * wk, u8 pos )
 {
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-/*
-    if( wk->dat->multiPos == 0 ){
-      if( pos >= 3 ){ return TRUE; }
-    }else{
-      if( pos < 3 ){ return TRUE; }
-    }
-*/
     if( pos >= 3 ){ return TRUE; }
   }
   return FALSE;
-
-/*
-  if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-    if( wk->dat->multiPos == CLIENT_TYPE_A ){
-      if( ( pos & 1 ) != 0 ){ return TRUE; }
-    }else{
-      if( ( pos & 1 ) == 0 ){ return TRUE; }
-    }
-  }
-  return FALSE;
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 技忘れチェック
+ * @brief		技忘れチェック
  *
  * @param   wk    ワーク
  *
@@ -3414,89 +2154,14 @@ static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk )
 
   waza = wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp].id;
   return FIELD_SKILL_CHECK_CheckForgetSkill( wk->dat->gamedata, waza, wk->dat->heap );
-
-/*
-  if( wk->dat->sel_wp == 4 ){
-    waza = wk->dat->chg_waza;
-  }else{
-    waza = wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp].id;
-  }
-  return FIELD_SKILL_CHECK_CheckForgetSkill( wk->dat->gamedata, waza, wk->dat->heap );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 技パラメータを非表示に（戦闘）
+ * @brief		指定位置のポケモンが戦闘に出ているか（並び替え対応）
  *
- * @param wk    ワーク
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_HidenOff_Battle( BPLIST_WORK * wk )
-{
-  // 分類アイコン
-  GFL_CLACT_UNIT_SetDrawEnableCap( wk->cap[BPL_CA_BUNRUI], 0 );
-
-  // 分類
-  GF_BGL_BmpWinOffVReq( &wk->add_win[WIN_P6_BRNAME] );
-
-  // 命中
-  GF_BGL_BmpWinOffVReq( &wk->add_win[WIN_P6_HITNUM] );
-
-  // 威力
-  GF_BGL_BmpWinOffVReq( &wk->add_win[WIN_P6_POWNUM] );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 技パラメータを非表示に（コンテスト）
- *
- * @param wk    ワーク
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BPL_HidenOff_Contest( BPLIST_WORK * wk )
-{
-  // ハート
-  BPL_ContestWazaHeartInit( wk );
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * アイテムを減らす
- *
- * @param bw    戦闘のワーク
- * @param item  アイテム番号
- * @param page  ポケット番号
- * @param heap  ヒープID
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap )
-{
-  if( item != ITEM_AOIBIIDORO && item != ITEM_AKAIBIIDORO && item != ITEM_KIIROBIIDORO ){
-    MyItem_SubItem( BattleWorkMyItemGet(bw), item, 1, heap );
-  }
-  MyItem_BattleBagLastItemSet( BattleWorkBagCursorGet(bw), item, page );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 指定位置のポケモンが戦闘に出ているか
- *
- * @param wk    戦闘リストワーク
- * @param pos   位置
+ * @param		wk    戦闘リストワーク
+ * @param		pos   位置
  *
  * @retval  "TRUE = 出ている"
  * @retval  "FALSE = それ以外"
@@ -3514,91 +2179,65 @@ static BOOL FightPokeCheck( BPLIST_WORK * wk, u32 pos )
     return FALSE;
   }
 
-/*
-  switch( wk->dat->rule ){
-  case BTL_RULE_SINGLE:   // シングル
-    if( pos == 0 ){
-      return TRUE;
-    }
-    break;
-
-  case BTL_RULE_DOUBLE:   // ダブル
-    if( pos == 0 || pos == 1 ){
-      return TRUE;
-    }
-    break;
-
-  case BTL_RULE_TRIPLE:   // トリプル
-  case BTL_RULE_ROTATION: // ローテーション
-    if( pos == 0 || pos == 1 || pos == 2 ){
-      return TRUE;
-    }
-  }
-*/
 	if( pos < wk->dat->fight_poke_max ){
 		return TRUE;
 	}
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		指定位置のポケモンが戦闘に出ているか（画面上の位置）
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos   位置
+ *
+ * @retval  "TRUE = 出ている"
+ * @retval  "FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL FightPosCheck( BPLIST_WORK * wk, u32 pos )
 {
-/*
-  switch( wk->dat->rule ){
-  case BTL_RULE_SINGLE:   // シングル
-    if( pos == 0 ){
-      return TRUE;
-    }
-    break;
-
-  case BTL_RULE_DOUBLE:   // ダブル
-    if( pos == 0 || pos == 1 ){
-      return TRUE;
-    }
-    break;
-
-  case BTL_RULE_TRIPLE:   // トリプル
-  case BTL_RULE_ROTATION: // ローテーション
-    if( pos == 0 || pos == 1 || pos == 2 ){
-      return TRUE;
-    }
-  }
-*/
 	if( pos < wk->dat->fight_poke_max ){
 		return TRUE;
 	}
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		すでに選択されているか
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos   位置
+ *
+ * @retval  "TRUE = 選択されている"
+ * @retval  "FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL ChangePokeCheck( BPLIST_WORK * wk, u32 pos )
 {
   pos = BPLISTMAIN_GetListRow( wk, pos );
 
-/*
-  switch( wk->dat->rule ){
-  case BTL_RULE_SINGLE:   // シングル
-    break;
-
-  case BTL_RULE_DOUBLE:   // ダブル
-  case BTL_RULE_TRIPLE:   // トリプル
-  case BTL_RULE_ROTATION: // ローテーション
-    if( pos == wk->dat->change_sel[0] || pos == wk->dat->change_sel[1] ){
-      return TRUE;
-    }
-    return CheckListRow( wk, pos );
-  }
-*/
 	if( wk->dat->fight_poke_max != 1 ){
     if( pos == wk->dat->change_sel[0] || pos == wk->dat->change_sel[1] ){
       return TRUE;
     }
-    return CheckListRow( wk, pos );
+    return CheckListRowSelect( wk, pos );
 	}
   return FALSE;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動設定
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		page	ページ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CursorMoveSet( BPLIST_WORK * wk, u8 page )
 {
   u32 pos;
@@ -3639,20 +2278,15 @@ static void CursorMoveSet( BPLIST_WORK * wk, u8 page )
 }
 
 
-
-
-
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//============================================================================================
-static const u8 InitListRowMulti[2][6] =
-{
-  { 0, 3, 1, 4, 2, 5 },
-  { 3, 0, 4, 1, 5, 2 },
-};
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストの並びを初期化
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitListRow( BPLIST_WORK * wk )
 {
   u32 i;
@@ -3678,6 +2312,17 @@ static void InitListRow( BPLIST_WORK * wk )
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストの並びを入れ替え
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos1	位置１
+ * @param		pos2	位置２
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeListRow( BPLIST_WORK * wk, u32 pos1, u32 pos2 )
 {
   u8  tmp;
@@ -3687,7 +2332,18 @@ static void ChangeListRow( BPLIST_WORK * wk, u32 pos1, u32 pos2 )
   wk->listRow[pos2] = tmp;
 }
 
-static BOOL CheckListRow( BPLIST_WORK * wk, u32 pos )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		選択されているか
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos		位置（並び替えデータの位置）
+ *
+ * @retval	"TRUE = 選択されている"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL CheckListRowSelect( BPLIST_WORK * wk, u32 pos )
 {
   u32 i;
 
@@ -3699,49 +2355,48 @@ static BOOL CheckListRow( BPLIST_WORK * wk, u32 pos )
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		画面上の位置から並びデータ位置を取得
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos		画面上の位置
+ *
+ * @return	並びデータ位置
+ */
+//--------------------------------------------------------------------------------------------
 u8 BPLISTMAIN_GetListRow( BPLIST_WORK * wk, u32 pos )
 {
   return wk->listRow[pos];
 }
 
-/*
-static BOOL CheckRetNum( BPLIST_WORK * wk )
-{
-  u16 i, j;
-
-  j = 0;
-  for( i=0; i<BPL_SELNUM_MAX; i++ ){
-    if( wk->dat->sel_pos[i] == BPL_SELPOS_SET ){
-      j++;
-      if( j == 2 ){
-        return FALSE;
-      }
-    }
-  }
-  return TRUE;
-}
-*/
-/*
-static void SetRetNum( BPLIST_WORK * wk )
-{
-  u32 i;
-
-  for( i=0; i<BPL_SELNUM_MAX; i++ ){
-    if( wk->dat->sel_pos[i] == BPL_SELPOS_SET ){
-      wk->dat->sel_pos[i] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
-      break;
-    }
-  }
-
-  ChangeListRow( wk, i, wk->dat->sel_poke );
-}
-*/
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		入れ替えデータ設定
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos		入れ替え先の画面上の位置
+ * @param		row		入れ替え元の画面上の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetRetNum( BPLIST_WORK * wk, u8 pos, u8 row )
 {
   wk->dat->sel_pos[pos] = BPLISTMAIN_GetListRow( wk, row );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		入れ替えログ作成
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos1	位置１
+ * @param		pos2	位置２
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetLog( BPLIST_WORK * wk, u8 pos1, u8 pos2 )
 {
   u8  i;
@@ -3756,6 +2411,19 @@ static void SetLog( BPLIST_WORK * wk, u8 pos1, u8 pos2 )
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		最新の入れ替えログを取得
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		pos1	位置１
+ * @param		pos2	位置２
+ * @param		del		取得後にログを削除するか TRUE = 削除
+ *
+ * @retval	"TRUE = 取得"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL BPLISTMAIN_GetNewLog( BPLIST_WORK * wk, u8 * pos1, u8 * pos2, BOOL del )
 {
   s32 i;
@@ -3774,8 +2442,15 @@ BOOL BPLISTMAIN_GetNewLog( BPLIST_WORK * wk, u8 * pos1, u8 * pos2, BOOL del )
   return FALSE;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替え先選択ページへの切り替え処理
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgDead( BPLIST_WORK * wk )
 {
   if( BPL_PageChange( wk, BPLIST_PAGE_DEAD ) == FALSE ){
@@ -3785,6 +2460,16 @@ static int BPL_SeqPageChgDead( BPLIST_WORK * wk )
   return SEQ_BPL_POKESEL_DEAD;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替え先のチェック
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @retval	"TRUE = 入れ替え可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckDeadChange( BPLIST_WORK * wk )
 {
   BPL_POKEDATA * dat;
@@ -3797,16 +2482,6 @@ static BOOL CheckDeadChange( BPLIST_WORK * wk )
   // 他人
   if( BattlePokeList_MultiPosCheck( wk, pos ) == TRUE ){
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m05 );
-/*
-    {
-      int pcn;
-
-      pcn = BattleWorkPartnerClientNoGet( wk->dat->bw, wk->dat->client_no );
-//      WORDSET_RegisterPlayerName( wk->wset, 0, BattleWorkMyStatusGet(wk->dat->bw,pcn) );
-      WORDSET_RegisterTrainerNameBattle(
-        wk->wset, 0, BattleWorkTrainerDataGet(wk->dat->bw,pcn) );
-    }
-*/
     WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
     GFL_STR_DeleteBuffer( str );
     return FALSE;
@@ -3821,7 +2496,7 @@ static BOOL CheckDeadChange( BPLIST_WORK * wk )
     return FALSE;
   }
 
-  // 瀕死
+  // 戦闘に出ている（=入れ替え位置なのに生きている）
   if( dat->hp != 0 ){
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m01 );
     WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
@@ -3830,45 +2505,24 @@ static BOOL CheckDeadChange( BPLIST_WORK * wk )
     return FALSE;
   }
 
-/*
-  // タマゴ
-  if( BPL_TamagoCheck( wk ) == TRUE ){
-    GFL_MSG_GetString( wk->mman, mes_b_plist_m04, wk->msg_buf );
-    return FALSE;
-  }
-
-  // 選択されている
-//  if( wk->dat->double_sel != 6 && wk->dat->list_row[wk->dat->sel_poke] == wk->dat->double_sel ){
-  if( ChangePokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
-    dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ];
-    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m18 );
-    WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
-    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-    GFL_STR_DeleteBuffer( str );
-    return FALSE;
-  }
-
-  // 技
-  if( wk->dat->chg_waza != 0 ){
-    dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->init_poke) ];
-    str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m03 );
-    WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
-    WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-    GFL_STR_DeleteBuffer( str );
-    return FALSE;
-  }
-*/
-
   return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替え先選択処理
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqPokeSelDead( BPLIST_WORK * wk )
 {
   if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BPL_POKESEL_DEAD; }
 
   if( BPL_PokemonSelect( wk ) == TRUE ){
     if( wk->dat->sel_poke == BPL_SEL_EXIT ){
-//      PlaySE( wk, wk->cancelSE );
       PlaySE( wk, SEQ_SE_CANCEL2 );
       BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
       wk->dat->sel_poke = wk->chg_poke_sel;
@@ -3877,16 +2531,6 @@ static int BPL_SeqPokeSelDead( BPLIST_WORK * wk )
     }else if( wk->dat->sel_poke == wk->chg_poke_sel ){
       return SEQ_BPL_PAGECHG_IREKAE;
     }else{
-/*
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-      BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_POKE1+wk->dat->sel_poke );
-      if( wk->dat->mode == BPL_MODE_ITEMUSE ){
-        return BPL_PokeItemUse( wk );
-      }else{
-        wk->ret_seq = SEQ_BPL_PAGECHG_IREKAE;
-      }
-      return SEQ_BPL_BUTTON_WAIT;
-*/
       if( CheckDeadChange( wk ) == TRUE ){
         SetLog( wk, wk->dat->sel_poke, wk->chg_poke_sel );
         SetRetNum( wk, wk->dat->sel_poke, wk->chg_poke_sel );
@@ -3905,6 +2549,15 @@ static int BPL_SeqPokeSelDead( BPLIST_WORK * wk )
   return SEQ_BPL_POKESEL_DEAD;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替えエラー復帰
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqDeadErrRet( BPLIST_WORK * wk )
 {
   BmpWinFrame_Clear( wk->win[WIN_TALK].win, WINDOW_TRANS_ON );
@@ -3913,14 +2566,34 @@ static int BPL_SeqDeadErrRet( BPLIST_WORK * wk )
   return SEQ_BPL_POKESEL_DEAD;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替えプレートのスクリーン位置取得
+ *
+ * @param		x			Ｘ座標
+ * @param		y			Ｙ座標
+ * @param		num		位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void GetDeadScrnPos( u8 * x, u8 * y, u8 num )
 {
   *x = ( num & 1 ) * BPL_COMM_BSX_PLATE;
   *y = num / 2 * BPL_COMM_BSY_PLATE + ( num & 1 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替えプレートデータ作成
+ *
+ * @param		scrn	スクリーンデータ
+ * @param		frm		ＢＧフレーム
+ * @param		num		位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MakeDeadChgScrn( u16 * scrn, u8 frm, u8 num )
 {
   u16 * buf;
@@ -3935,6 +2608,17 @@ static void MakeDeadChgScrn( u16 * scrn, u8 frm, u8 num )
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替えＯＢＪ動作
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		num		位置
+ * @param		mode	移動モード
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MoveDeadChgObj( BPLIST_WORK * wk, u8 num, u8 mode )
 {
   u8  pos;
@@ -3957,6 +2641,16 @@ static void MoveDeadChgObj( BPLIST_WORK * wk, u8 num, u8 mode )
   BPLISTOBJ_MoveDeadChg( wk, num, mv );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替え動作
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @retval	"TRUE = 動作中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
 {
   switch( wk->btn_seq ){
@@ -4071,6 +2765,15 @@ static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
   return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死時の入れ替え動作シーケンス
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BPL_SeqPokeChgDead( BPLIST_WORK * wk )
 {
   if( MoveDeadChangeMain( wk ) == FALSE ){
@@ -4085,7 +2788,16 @@ static int BPL_SeqPokeChgDead( BPLIST_WORK * wk )
   return SEQ_BPL_POKECHG_DEAD;
 }
 
-// 瀕死入れ替え動作が必要かどうか
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		瀕死入れ替え動作が必要かどうか
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @retval	"TRUE = 必要"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckDeadPoke( BPLIST_WORK * wk )
 {
   u8  cnt;
@@ -4097,15 +2809,6 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk )
     return FALSE;
   }
 
-/*
-  if( wk->dat->rule == BTL_RULE_SINGLE ){
-    return FALSE;
-  }else if( wk->dat->rule == BTL_RULE_DOUBLE ){
-    max = 2;
-  }else{
-    max = 3;
-  }
-*/
 	if( wk->dat->fight_poke_max == 1 ){
 		return FALSE;
 	}else{
@@ -4124,22 +2827,19 @@ static BOOL CheckDeadPoke( BPLIST_WORK * wk )
     }
   }
 
-/*
-  // 入れ替え可能なポケモンが複数いるか
-  cnt = 0;
-  for( i=max; i<TEMOTI_POKEMAX; i++ ){
-    if( wk->poke[i].mons != 0 && wk->poke[i].egg != 0 ){
-      cnt++;
-      if( cnt == 2 ){
-        return TRUE;
-      }
-    }
-  }
-*/
-
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		続けて瀕死入れ替えを行うか
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @retval	"TRUE = やる"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
 {
   u8  max;
@@ -4150,15 +2850,6 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
     return FALSE;
   }
 
-/*
-  if( wk->dat->rule == BTL_RULE_SINGLE ){
-    return FALSE;
-  }else if( wk->dat->rule == BTL_RULE_DOUBLE ){
-    max = 2;
-  }else{
-    max = 3;
-  }
-*/
 	if( wk->dat->fight_poke_max == 1 ){
 		return FALSE;
 	}else{
@@ -4176,12 +2867,19 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk )
   return FALSE;
 }
 
-// 上から検索して瀕死の箇所に強制的にセット
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		上から検索して瀕死の箇所に強制的にセット
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetDeadChangeData( BPLIST_WORK * wk )
 {
   // マルチの場合は立ち位置が関係するので、確実に０に入れる
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-//    wk->dat->sel_pos[0] = wk->dat->sel_poke;
 		wk->dat->sel_pos[0] = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
   }else{
     u32 i;
@@ -4196,7 +2894,15 @@ static void SetDeadChangeData( BPLIST_WORK * wk )
   }
 }
 
-// キャンセル設定
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		キャンセル設定
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetSelPosCancel( BPLIST_WORK * wk )
 {
   u32 i;
@@ -4206,16 +2912,18 @@ static void SetSelPosCancel( BPLIST_WORK * wk )
   }
 }
 
-// 強制終了チェック
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		強制終了チェック
+ *
+ * @param		wk    戦闘リストワーク
+ *
+ * @retval	"TRUE = 強制終了"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckTimeOut( BPLIST_WORK * wk )
 {
-/*
-  // テスト
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-    SetSelPosCancel( wk );
-    return TRUE;
-  }
-*/
   if( wk->dat->time_out_flg == TRUE ){
     SetSelPosCancel( wk );
     return TRUE;
@@ -4223,6 +2931,16 @@ static BOOL CheckTimeOut( BPLIST_WORK * wk )
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＳＥ再生
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		no		ＳＥ番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PlaySE( BPLIST_WORK * wk, int no )
 {
 	if( wk->dat->commFlag == FALSE ){

@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	b_plist_ui.c
- * @brief	戦闘用ポケモンリスト画面 インターフェース関連
+ * @file		b_plist_ui.c
+ * @brief		戦闘用ポケモンリスト画面 インターフェース関連
  * @author	Hiroyuki Nakamura
- * @date	09.09.29
+ * @date		09.09.29
  */
 //============================================================================================
 #include <gflib.h>
@@ -16,10 +16,7 @@
 
 
 //============================================================================================
-//============================================================================================
-
-
-//============================================================================================
+//	プロトタイプ宣言
 //============================================================================================
 static void VanishCursor( BPLIST_WORK * wk, BOOL flg );
 static void MoveCursor( BPLIST_WORK * wk, int pos );
@@ -30,9 +27,8 @@ static void CallBack_Move( void * work, int nowPos, int oldPos );
 
 
 //============================================================================================
+//	グローバル
 //============================================================================================
-
-
 
 // ポケモン選択画面カーソル移動データ
 static const CURSORMOVE_DATA PokeSel_CursorMoveTbl[] =
@@ -46,12 +42,6 @@ static const CURSORMOVE_DATA PokeSel_CursorMoveTbl[] =
 	{ 236, 172,  32+20,  32+16, 5, 0, 5, 0, { 19*8, 24*8-1, 27*8, 32*8-1 } },		// 6（戻る）
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
-};
-static const CURSORMOVE_CALLBACK P1_CallBack = {
-	CallBack_On,
-	CallBack_Off,
-	CallBack_Move,
-	CallBack_Touch,
 };
 
 // 入れ替え画面
@@ -137,7 +127,7 @@ static const CURSORMOVE_DATA DelInfo_CursorPosTbl[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 
-
+// カーソル移動データテーブル
 static const CURSORMOVE_DATA * const PointTable[] = {
 	PokeSel_CursorMoveTbl,		// ポケモン選択画面
 	Chg_CursorMoveTbl,				// 入れ替え画面
@@ -150,27 +140,31 @@ static const CURSORMOVE_DATA * const PointTable[] = {
 	PokeSel_CursorMoveTbl,		// 瀕死入れ替え選択
 };
 
-static const CURSORMOVE_CALLBACK * const CallBackTable[] = {
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
-	&P1_CallBack,
+// コールバックテーブル
+static const CURSORMOVE_CALLBACK CallBackTable = {
+	CallBack_On,
+	CallBack_Off,
+	CallBack_Move,
+	CallBack_Touch,
 };
 
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動初期化
+ *
+ * @param		wk    ワーク
+ * @param		page	ページ
+ * @param		pos		初期位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 void BPLISTUI_Init( BPLIST_WORK * wk, u32 page, u32 pos )
 {
 	wk->cmwk = CURSORMOVE_Create(
 								PointTable[page],
-								CallBackTable[page],
+								&CallBackTable,
 								wk,
 								wk->cursor_flg,
 								pos,
@@ -179,34 +173,82 @@ void BPLISTUI_Init( BPLIST_WORK * wk, u32 page, u32 pos )
 	MoveCursor( wk, pos );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動削除
+ *
+ * @param		wk    ワーク
+ * @param		page	ページ
+ * @param		pos		初期位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 void BPLISTUI_Exit( BPLIST_WORK * wk )
 {
 	CURSORMOVE_Exit( wk->cmwk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動切り替え
+ *
+ * @param		wk    ワーク
+ * @param		page	ページ
+ * @param		pos		初期位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 void BPLISTUI_ChangePage( BPLIST_WORK * wk, u32 page, u32 pos )
 {
 	BPLISTUI_Exit( wk );
 	BPLISTUI_Init( wk, page, pos );
 }
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル表示切り替え
+ *
+ * @param		wk    ワーク
+ * @param		flg		TRUE = 表示, FALSE = 非表示
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void VanishCursor( BPLIST_WORK * wk, BOOL flg )
 {
 	wk->cursor_flg = flg;
 	BAPPTOOL_VanishCursor( wk->cpwk, flg );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動
+ *
+ * @param		wk    ワーク
+ * @param		pos		カーソル位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void MoveCursor( BPLIST_WORK * wk, int pos )
 {
 	const CURSORMOVE_DATA *	dat = CURSORMOVE_GetMoveData( wk->cmwk, pos );
 	BAPPTOOL_MoveCursorPoint( wk->cpwk, dat );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック関数：カーソル表示
+ *
+ * @param		work    ワーク
+ * @param		nowPos	現在のカーソル位置
+ * @param		oldPos	前回のカーソル位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_On( void * work, int nowPos, int oldPos )
 {
 	BPLIST_WORK * wk = work;
@@ -215,6 +257,17 @@ static void CallBack_On( void * work, int nowPos, int oldPos )
 	VanishCursor( wk, TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック関数：カーソル非表示
+ *
+ * @param		work    ワーク
+ * @param		nowPos	現在のカーソル位置
+ * @param		oldPos	前回のカーソル位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_Off( void * work, int nowPos, int oldPos )
 {
 	BPLIST_WORK * wk = work;
@@ -222,6 +275,17 @@ static void CallBack_Off( void * work, int nowPos, int oldPos )
 	VanishCursor( wk, FALSE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック関数：タッチ
+ *
+ * @param		work    ワーク
+ * @param		nowPos	現在のカーソル位置
+ * @param		oldPos	前回のカーソル位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_Touch( void * work, int nowPos, int oldPos )
 {
 	BPLIST_WORK * wk = work;
@@ -229,6 +293,17 @@ static void CallBack_Touch( void * work, int nowPos, int oldPos )
 	VanishCursor( wk, FALSE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック関数：カーソル移動
+ *
+ * @param		work    ワーク
+ * @param		nowPos	現在のカーソル位置
+ * @param		oldPos	前回のカーソル位置
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_Move( void * work, int nowPos, int oldPos )
 {
 	BPLIST_WORK * wk = work;

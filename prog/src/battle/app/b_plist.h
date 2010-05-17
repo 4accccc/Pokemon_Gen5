@@ -1,14 +1,12 @@
 //============================================================================================
 /**
- * @file  b_plist.h
- * @brief 戦闘用ポケモンリスト画面　外部公開ヘッダファイル
- * @author  Hiroyuki Nakamura
- * @date  05.02.01
+ * @file		b_plist.h
+ * @brief		戦闘用ポケモンリスト画面　外部公開ヘッダファイル
+ * @author	Hiroyuki Nakamura
+ * @date		05.02.01
  */
 //============================================================================================
-#ifndef B_PLIST_H
-#define B_PLIST_H
-
+#pragma	once
 
 #include "pm_define.h"
 #include "print/printsys.h"
@@ -46,7 +44,7 @@ typedef struct {
   POKEPARTY * pp;         // ポケモンデータ
   POKEPARTY * multi_pp;   // マルチの相手側ポケモンデータ
 
-  GFL_FONT * font;
+  GFL_FONT * font;	// フォント
 
   HEAPID  heap;     // ヒープID
 
@@ -82,17 +80,6 @@ typedef struct {
   u8  sel_wp;     // 選択された技位置
   u8  end_flg;    // 終了フラグ
 
-
-
-//  void * myitem;    // アイテムデータ
-
-//  BATTLE_WORK * bw;   // 戦闘用ワーク
-
-//  u8  ret_mode;       // 選択された処理
-//  u16 hp_rcv;     // HP回復量
-//  s32 client_no;            // クライアントNo
-//  u8  list_row[TEMOTI_POKEMAX]; // リストロウ
-//  u8  bag_page;   // バッグのページ
 }BPLIST_DATA;
 
 
@@ -102,14 +89,11 @@ typedef struct {
 
 //--------------------------------------------------------------------------------------------
 /**
- * 戦闘用ポケモンリストタスク追加
+ * @brief		戦闘用ポケモンリストタスク追加
  *
- * @param dat   リストデータ
+ * @param		dat   リストデータ
  *
- * @return none
+ * @return	none
  */
 //--------------------------------------------------------------------------------------------
 extern void BattlePokeList_TaskAdd( BPLIST_DATA * dat );
-
-
-#endif  /* B_PLIST_H */
