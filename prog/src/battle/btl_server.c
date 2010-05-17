@@ -1099,8 +1099,8 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
       {
         if( BTL_MAIN_GetSetupStatusFlag(server->mainModule, BTL_STATUS_FLAG_LEGEND_EX) == FALSE )
         {
-          u16 winBGM = BTL_MAIN_GetWinBGMNo( server->mainModule );
-          PMSND_PlayBGM( winBGM );
+//          u16 winBGM = BTL_MAIN_GetWinBGMNo( server->mainModule );
+//          PMSND_PlayBGM( winBGM );
         }
         setMainProc( server, ServerMain_ExitBattle_KeyWait );
       }

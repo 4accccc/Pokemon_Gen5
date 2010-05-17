@@ -314,6 +314,7 @@ struct _BTL_SVFLOW_WORK {
   u8      nigeruCount;
   u8      wazaEffIdx;
   u8      fMemberOutIntr;
+  u8      fWinBGMPlayWild;
   u8      MemberOutIntrPokeCount;
   u8      MemberOutIntrPokeID[ BTL_POS_MAX ];
   u8      relivedPokeID[ BTL_POKEID_MAX ];
@@ -896,6 +897,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->nigeruCount = 0;
   wk->wazaEffIdx = 0;
   wk->fMemberOutIntr = FALSE;
+  wk->fWinBGMPlayWild = FALSE;
   wk->cmdBuildStep = 0;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
@@ -1351,6 +1353,38 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
 
   if( (pokeExist[0] == FALSE) || (pokeExist[1] == FALSE) ){
     return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL CheckPlayerSideAlive( BTL_SVFLOW_WORK* wk )
+{
+  u32 i;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( BTL_MAIN_IsExistClient(wk->mainModule, i) )
+    {
+      u8 side = BTL_MAIN_GetClientSide( wk->mainModule, i );
+      u8 playerSide = BTL_MAIN_GetClientSide( wk->mainModule, BTL_MAIN_GetPlayerClientID(wk->mainModule) );
+
+      if( side == playerSide )
+      {
+        BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, i );
+        if( BTL_PARTY_GetAliveMemberCount(party) )
+        {
+          return TRUE;
+        }
+      }
+    }
   }
   return FALSE;
 }
@@ -9335,14 +9369,13 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       wk->pokeDeadFlag[pokeID] = 1;
       BTL_DEADREC_Add( &wk->deadRec, pokeID );
 
-      // @@@ みがわり出てたら画面から消すコマンド生成？
-
       // ラストのシン・ムは「○○は　たおれた」メッセージを表示しない
       if( (BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND_EX) == FALSE)
       ||  (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_CLIENT_PLAYER)
       ){
         SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
       }
+
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
 
       BPP_Clear_ForDead( poke );
@@ -9356,7 +9389,6 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
         BOOL fLargeDiffLevel = ( (deadPokeLv + 30) <= enemyMaxLv );
 
         BTL_N_Printf( DBGSTR_SVFL_DeadDiffLevelCheck, deadPokeLv, enemyMaxLv);
-
         BTL_MAIN_ReflectNatsukiDead( wk->mainModule, poke, fLargeDiffLevel );
       }
 
@@ -9855,7 +9887,6 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
     {
       BTL_POKEPARAM* bpp;
 
-      TAYA_Printf( "経験値取得...calcPtr=%p, i=%d, exp=%d\n", calcExp, i, calcExp[i].exp );
 
       bpp = BTL_PARTY_GetMemberData( party, i );
       if( BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX )
@@ -9863,6 +9894,18 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         u32 exp   = calcExp[i].exp;
         u16 strID = (calcExp[i].fBonus)? BTL_STRID_STD_GetExp_Bonus : BTL_STRID_STD_GetExp;
         u8  pokeID = BPP_GetID( bpp );
+
+        // 野生戦でプレイヤー勝利ならこの時点でBGM再生コマンド
+        if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+        &&  (wk->fWinBGMPlayWild == FALSE)
+        &&  scproc_CheckShowdown(wk)
+        &&  CheckPlayerSideAlive(wk)
+        ){
+          u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
+          TAYA_Printf("WinBGMNo=%d\n", WinBGM);
+          SCQUE_PUT_ACT_PlayWinBGM( wk->que, WinBGM );
+          wk->fWinBGMPlayWild = TRUE;
+        }
 
 //        BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
         SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );

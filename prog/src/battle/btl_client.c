@@ -344,6 +344,7 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL msgPokanCallback( u32 arg );
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
@@ -1691,7 +1692,7 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
           //現状、曲変化はジムリーダーだけ
           u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
           if( BTL_CALC_IsTrtypeGymLeader(trType) )
-          { 
+          {
             BTLV_EFFECT_SetTrainerBGMChangeFlag( SEQ_BGM_BATTLESUPERIOR );
           }
           wk->fAITrainerBGMChanged = TRUE;
@@ -4911,6 +4912,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_RESET_MOVE,        scProc_ACT_ResetMove      },
     { SC_ACT_MIGAWARI_CREATE,   scProc_ACT_MigawariCreate },
     { SC_ACT_MIGAWARI_DELETE,   scProc_ACT_MigawariDelete },
+    { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM        },
   };
 
 restart:
@@ -6006,6 +6008,18 @@ static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args
     }
   }
   return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  PlayBGM
+ *  args .. [0]:BGMナンバー
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  TAYA_Printf("BGMNo=%d\n", args[0]);
+  PMSND_PlayBGM( args[0] );
+  return TRUE;
 }
 
 //---------------------------------------------------------------------------------------
