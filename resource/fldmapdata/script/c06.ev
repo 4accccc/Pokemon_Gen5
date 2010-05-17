@@ -67,7 +67,6 @@ EVENT_START    ev_scene_c06_boss_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l_q)
 	_OBJ_ANIME_WAIT()
 	
-
 	//N「……キミの　ポケモンと　はなしをさせてもらうよ
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_01, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
@@ -123,25 +122,30 @@ EVENT_START    ev_scene_c06_boss_01
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME(C06_BOSS_01,anm_boss_turn)
+	_OBJ_ANIME_WAIT()
+	
 	//N「その　けっか……
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_08, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
-	_OBJ_ANIME_WAIT()
 	
-
 	//画面右に移動する
 	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_back)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_turn)
 	_OBJ_ANIME_WAIT()
 	
+	//Ｎ：削除
 	_OBJ_DEL(C06_BOSS_01)
-	_FLAG_SET(FV_C06_BOSS)
 	
 	//BGM終了
 	_END_EVENT_BGM()
 	
+	//========================================//
 	//イベントを無効に
 	$WK_SCENE_C06 = 3
+	
+	//Ｎを非表示に
+	_FLAG_SET(FV_C06_BOSS)
+	//========================================//
 	
 EVENT_END
 
