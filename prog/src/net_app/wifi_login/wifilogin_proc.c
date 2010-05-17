@@ -722,6 +722,7 @@ static void _checkError( WIFILOGIN_WORK* pWork )
       WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
       NetErr_DispCallPushPop();
+      WIFILOGIN_DISP_ResetErrorDisplay(pWork->pDispWork);
 
       //エラークリア
       GFL_NET_StateClearWifiError();

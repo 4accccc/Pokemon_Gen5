@@ -57,4 +57,4 @@ extern void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork);
 extern void WIFILOGIN_DISP_SettingSubBgControl(WIFILOGIN_DISP_WORK* pWork);
 extern void WIFILOGIN_DISP_StartSmoke(WIFILOGIN_DISP_WORK* pWork);
 
-
+extern void WIFILOGIN_DISP_ResetErrorDisplay(WIFILOGIN_DISP_WORK* pWork);

@@ -809,3 +809,23 @@ void WIFILOGIN_DISP_StartSmoke(WIFILOGIN_DISP_WORK* pWork)
   pWork->smokeTimer=1;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラーの画面を戻に戻す
+ *
+ *	@param	pWork ワーク
+ */
+//-----------------------------------------------------------------------------
+void WIFILOGIN_DISP_ResetErrorDisplay(WIFILOGIN_DISP_WORK* pWork)
+{
+  switch( pWork->bg ){
+  case WIFILOGIN_BG_DREAM_WORLD:
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG0 , 6 , 16 );
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3 , GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG0 , 6 , 16 );
+    break;
+  case WIFILOGIN_BG_NORMAL:
+    G2_SetBlendAlpha( 1<<GFL_BG_FRAME0_M , 1<<GFL_BG_FRAME3_M , 8,16 );
+    break;
+  }
+
+}
