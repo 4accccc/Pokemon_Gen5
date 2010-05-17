@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T20:29:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T12:36:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,6 +294,7 @@
 
 	<row id="msg_c03r0601_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・主人公性別：♂
 ・ｃ03ジムバッジ取得後
 ・pos（GRIDX=2~7、GRIDZ=9）を踏むと画面下から出現
 　主人公と隣接し向き合ってメッセージ表示
@@ -305,6 +306,26 @@
 というわけで　さっそく
 ポケモンしょうぶ　だよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]▼
+ライブキャスターで　いった
+約束　覚えてるよねえ▼
+というわけで　さっそく
+ポケモン勝負だよ！▼</language>
+	</row>
+
+	<row id="msg_c03r0601_white_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・主人公性別：♀
+・ｃ03ジムバッジ取得後
+・pos（GRIDX=2~7、GRIDZ=9）を踏むと画面下から出現
+　主人公と隣接し向き合ってメッセージ表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]▼
+ライブキャスターで　いった
+やくそく　おぼえてるよねえ▼
+というわけで　さっそく
+ポケモンしょうぶ　だよ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]▼
 ライブキャスターで　いった
 約束　覚えてるよねえ▼
 というわけで　さっそく
