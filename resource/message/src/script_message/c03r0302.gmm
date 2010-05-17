@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:55:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T15:47:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,14 +309,12 @@
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ピントレンズは　わざの
-めいちゅうりつを　あげる　どうぐ！▼
-どんな　すばらしい　わざでも
-あたらないと　いみ　ないからねー！</language>
-		<language name="JPN_KANJI" width="256">ピントレンズは　技の
-命中率を　あげる　道具！▼
-どんな　すばらしい　技でも
-当たらないと　意味ないからねー！</language>
+		<language name="JPN" width="256">ピントレンズを　もたせると
+ポケモンの　わざが　なんと！▽
+きゅうしょに　あたりやすくなります！</language>
+		<language name="JPN_KANJI" width="256">ピントレンズを　持たせると
+ポケモンの　技が　なんと！▽
+急所に　当たりやすくなります！</language>
 	</row>
 
 	<row id="msg_c03r0302_businessman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
