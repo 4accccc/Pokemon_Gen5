@@ -207,7 +207,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c05r0601_hakaim_01
 	_TALK_OBJ_START()
-	_FIX_SHOP_CALL( SHOP_OKOU )
+	_BALLOONWIN_OBJMSG( msg_c05r0601_hakaim_end_01 ,C05R0601_HAKAIM_01)
+	_FIX_SHOP_CALL_GREETING_LESS( SHOP_OKOU )
 EVENT_END
 
 /**************************************************************/
