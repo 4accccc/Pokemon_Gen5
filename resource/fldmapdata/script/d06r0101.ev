@@ -85,6 +85,12 @@ EVENT_START    ev_pos_d06r0101_n_01
 	_OBJ_ANIME(D06R0101_NINJA_02,anm_ninja_add)
 	_OBJ_ANIME_WAIT()
 	
+	//100517斉藤マ修正
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
 
 	//主人公びっくりする
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
@@ -333,9 +339,9 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_MSGWIN_CLOSE()
 	
 	//主人公がびっくり
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_down )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
 	_OBJ_ANIME_WAIT()
 	
 	//主人公が移動する
@@ -347,14 +353,10 @@ EVENT_START    ev_pos_d06r0101_denki_01
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come16 )
 	CASE 17 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come17 )
-	ENDSWITCH	
-	_OBJ_ANIME_WAIT()
+	ENDSWITCH
 	
 	//ホワイトがやってくる
 	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_01)
-	//主人公の動きとサポートの動きを合わせる為のウェイト
-	_TIME_WAIT(80)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_turn_s1)
 	_OBJ_ANIME_WAIT()
 	
 	//ホワイト:しってる？　動いている
@@ -407,7 +409,6 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_OBJ_ANIME_WAIT()
 */	
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01,POS_DR)
-	_BALLOONWIN_CLOSE()
 
 	//博士2が喋る
 	//博士2:ちょっと　パパに　頼まれて
@@ -444,7 +445,7 @@ EVENT_END
 _ANIME_LABEL	anm_player_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0 
-	
+
 //--------------------------------------------------------------------
 //主人公:振り向き特殊                         
 //--------------------------------------------------------------------
@@ -488,15 +489,21 @@ _ANIME_LABEL	anm_turn_s4
 _ANIME_LABEL	anm_player_come15
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,7
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0  
 
 _ANIME_LABEL	anm_player_come16
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,8
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0  
 
 _ANIME_LABEL	anm_player_come17
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,7
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0  
 	
 //--------------------------------------------------------------------
@@ -504,11 +511,7 @@ _ANIME_LABEL	anm_player_come17
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_01
 	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA AC_WALK_U_8F,3
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
-	_ANIME_DATA AC_WAIT_4F,5
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_WALK_U_8F,5
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0  
 
@@ -532,7 +535,7 @@ _ANIME_LABEL	anm_hakase2_kuru_02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_05
 	_ANIME_DATA AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -697,7 +700,13 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	_OBJ_ANIME(D06R0101_NINJA_03,anm_ninja_add)
 	_OBJ_ANIME_WAIT()
 	
-
+	//100517斉藤マ修正
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
@@ -822,7 +831,7 @@ EVENT_START    ev_pos_d06r0101_denki_04
 		_MSGWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
-    	//ラストメッセージようにフラグをセット
+    	//ラストメッセージ分岐メッセージ用フラグをセット
     	_FLAG_SET(FE_N_LASTMESSAGE)
 		//============================================//
 	
@@ -833,7 +842,7 @@ EVENT_START    ev_pos_d06r0101_denki_04
 		_MSGWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
-    	//ラストメッセージようにフラグをセット
+    	//ラストメッセージ分岐メッセージ用フラグをリセット
     	_FLAG_RESET(FE_N_LASTMESSAGE)
 		//============================================//
 	
@@ -884,8 +893,9 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//プレイヤーがどく
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_b)
+	//100517斉藤マ修正
+	//プレイヤー：Ｎを見る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
 	
 	//Nが喋る
@@ -904,10 +914,8 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_BALLOONWIN_CLOSE()
 	
 	//Nが画面外に移動
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_right)
-	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_saru_03)
-	_TIME_WAIT(40)
+	_TIME_WAIT(48)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_up)
 	_TIME_WAIT(4)
 	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_up)
@@ -922,22 +930,18 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	//BGM終了
 	_END_EVENT_BGM()
 	
-	//プレイヤーがアララギに近づく
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
-	_OBJ_ANIME_WAIT()
-	
 	//博士2が喋る
 	//博士2:……　まあ　いきなり　わかってもらえるとは
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_11, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
-	//話題を大きく切り替えた段落を作るためのウェイト
-	_TIME_WAIT(12)
-	//博士2が喋る
-	//博士2:さてと……　もうすこし　データを　あつめるかなー
+	//プレイヤー：博士を見る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
+	//博士：プレイヤーを見て
 	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
-	_TIME_WAIT(4)
 	_OBJ_ANIME_WAIT()
+	
+	//博士2:さてと……　もうすこし　データを　あつめるかなー
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_12, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
