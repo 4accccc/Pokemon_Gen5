@@ -2649,8 +2649,8 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
 
   if( pal_trans ){
 
-    GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle, _bgpal[ sex ],
-                                      PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELD_SUBSCREEN);
+    //GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle, _bgpal[ sex ],
+    //                                  PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELD_SUBSCREEN);
 
 
     {
@@ -2660,6 +2660,10 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
       u16* pltt_data;
 
       buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, _bgpal[ sex ], &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+
+      // “]‘—
+			DC_FlushRange( pltt->pRawData, pltt->szByte );
+      GXS_LoadBGPltt( pltt->pRawData, 0, pltt->szByte );
 
       pltt_data = pltt->pRawData;
       for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_NUM; y++){
