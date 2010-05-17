@@ -560,7 +560,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
         member_max = UNION_GURUGURU_MEMBER_MAX;
       }
       unisys->alloc.uniapp = UnionAppSystem_AllocAppWork(
-        HEAPID_WORLD, member_max,
+        unisys, HEAPID_WORLD, member_max,
         GAMEDATA_GetMyStatus(unisys->uniparent->game_data));
       if(situ->mycomm.intrude == TRUE){  //乱入時ならば親はすでにuniappを確保しているので同期の必要無し
         *seq = _SEQ_BASIC_STATUS_REQ;

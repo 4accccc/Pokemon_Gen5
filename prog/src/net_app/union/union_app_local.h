@@ -42,7 +42,7 @@ struct _UNION_APP_WORK{
   BOOL shutdown_exe;            ///<TRUE:切断実行中
   BOOL shutdown;                ///<TRUE:切断した
   
-  MYSTATUS *mystatus[UNION_APP_MEMBER_MAX];
+  UNION_APP_MY_PARAM appmy[UNION_APP_MEMBER_MAX];     ///<メンバー基本情報
   
   u8 recv_basic_status_req_bit;   ///<基本情報要求リクエスト発生(bit管理)
   u8 recv_mystatus_req_bit;       ///<MYSTATUS要求リクエスト発生(bit管理)

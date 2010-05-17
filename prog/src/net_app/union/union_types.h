@@ -279,6 +279,13 @@ typedef struct _UNION_APP_WORK * UNION_APP_PTR;
 ///_UNION_APP_BASIC_STATUS構造体の不定形ポインタ型
 typedef struct _UNION_APP_BASIC_STATUS UNION_APP_BASIC;
 
+///UnionAppでの基本ステータス
+typedef struct{
+  MYSTATUS myst;
+  u8 mac_address[6];
+  u8 padding[2];
+}UNION_APP_MY_PARAM;
+
 
 ///接続メンバーの情報
 typedef struct{

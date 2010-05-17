@@ -32,7 +32,7 @@ static void _SendUpdate_LeavePlayer(UNION_APP_PTR uniapp);
 static void _SendUpdate_BasicStatus(UNION_APP_PTR uniapp);
 static void _SendUpdate_Mystatus(UNION_APP_PTR uniapp);
 static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp);
-static void _Update_LeaveCallback(UNION_APP_PTR uniapp);
+static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
 
 
 
@@ -52,17 +52,14 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp);
  * @retval  UNION_APP_PTR		
  */
 //==================================================================
-UNION_APP_PTR UnionAppSystem_AllocAppWork(HEAPID heap_id, u8 member_max, const MYSTATUS *myst)
+UNION_APP_PTR UnionAppSystem_AllocAppWork(UNION_SYSTEM_PTR unisys, HEAPID heap_id, u8 member_max, const MYSTATUS *myst)
 {
   UNION_APP_PTR uniapp;
-  int i;
+  UNION_APP_MY_PARAM appmy;
   
   GF_ASSERT(member_max <= UNION_APP_MEMBER_MAX);
   
   uniapp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(struct _UNION_APP_WORK));
-  for(i = 0; i < UNION_APP_MEMBER_MAX; i++){
-    uniapp->mystatus[i] = MyStatus_AllocWork(heap_id);
-  }
   
   if(GFL_NET_IsParentMachine() == TRUE){
     uniapp->basic_status.member_bit = 3;  //最初は二人通信から始まる (NetID 0と1)
@@ -70,8 +67,11 @@ UNION_APP_PTR UnionAppSystem_AllocAppWork(HEAPID heap_id, u8 member_max, const M
   uniapp->basic_status.member_max = member_max;
   
   //自分のMYSTATUSセット
-  UnionAppSystem_SetMystatus(uniapp, 
-    GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()), myst);
+  GFL_STD_MemClear(&appmy, sizeof(UNION_APP_MY_PARAM));
+  appmy.myst = *myst;
+  OS_GetMacAddress(appmy.mac_address);
+  UnionAppSystem_SetMystatus(uniapp, unisys,
+    GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()), &appmy);
   
   Union_App_Parent_EntryBlock(uniapp);
   Union_App_Parent_LeaveBlock(uniapp);
@@ -88,11 +88,6 @@ UNION_APP_PTR UnionAppSystem_AllocAppWork(HEAPID heap_id, u8 member_max, const M
 //==================================================================
 void UnionAppSystem_FreeAppWork(UNION_APP_PTR uniapp)
 {
-  int i;
-  
-  for(i = 0; i < UNION_APP_MEMBER_MAX; i++){
-    GFL_HEAP_FreeMemory(uniapp->mystatus[i]);
-  }
   GFL_HEAP_FreeMemory(uniapp);
 }
 
@@ -155,7 +150,7 @@ void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
   }
   _SendUpdate_Mystatus(uniapp);
   _Update_IntrudeReadyCallback(uniapp);
-  _Update_LeaveCallback(uniapp);
+  _Update_LeaveCallback(uniapp, unisys);
 }
 
 //--------------------------------------------------------------
@@ -184,6 +179,7 @@ static void _SendUpdate_LeavePlayer(UNION_APP_PTR uniapp)
       if((uniapp->basic_status.member_bit & (1 << net_id))
           && (now_member_bit & (1 << net_id)) == 0){
         if(UnionSend_MinigameLeaveChild(now_member_bit, net_id) == TRUE){
+          UnionAppSystem_SetLeaveChild(uniapp, net_id);
           uniapp->basic_status.member_bit ^= 1 << net_id;
         }
       }
@@ -223,7 +219,7 @@ static void _SendUpdate_Mystatus(UNION_APP_PTR uniapp)
   
   if(uniapp->recv_mystatus_req_bit > 0){
     if(UnionSend_MinigameMystatus(uniapp->recv_mystatus_req_bit,
-        uniapp->mystatus[GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())]) == TRUE){
+        &uniapp->appmy[GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())]) == TRUE){
       uniapp->recv_mystatus_req_bit = 0;
     }
   }
@@ -251,7 +247,7 @@ static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp)
           
           if(uniapp->entry_callback != NULL){
             OS_TPrintf("乱入CallBack NetID=%d\n", net_id);
-            uniapp->entry_callback(net_id, uniapp->mystatus[net_id], uniapp->userwork);
+            uniapp->entry_callback(net_id, &uniapp->appmy[net_id].myst, uniapp->userwork);
           }
         }
         uniapp->recv_intrude_ready_bit ^= 1 << net_id;
@@ -267,7 +263,7 @@ static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp)
  * @param   uniapp		
  */
 //--------------------------------------------------------------
-static void _Update_LeaveCallback(UNION_APP_PTR uniapp)
+static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
 {
   int net_id;
   
@@ -275,16 +271,18 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp)
     for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
       if(uniapp->recv_leave_bit & (1 << net_id)){
         if((uniapp->recv_mystatus_bit & (1 << net_id)) 
-            && uniapp->basic_status.member_bit & (1 << net_id)){
+            && (GFL_NET_IsParentMachine() == TRUE || (uniapp->basic_status.member_bit & (1 << net_id)))){
           if(uniapp->leave_callback != NULL){
             OS_TPrintf("離脱CallBack NetID=%d\n", net_id);
-            uniapp->leave_callback(net_id, uniapp->mystatus[net_id], uniapp->userwork);
+            uniapp->leave_callback(net_id, &uniapp->appmy[net_id].myst, uniapp->userwork);
           }
           //正規メンバーのbitを落とす
-          uniapp->basic_status.member_bit ^= 1 << net_id;
-          uniapp->recv_mystatus_bit ^= 1 << net_id;
+          uniapp->basic_status.member_bit &= 0xff ^ (1 << net_id);
+          uniapp->recv_mystatus_bit &= 0xff ^ (1 << net_id);
+          UnionMyComm_PartyDelParam(
+            &unisys->my_situation.mycomm, uniapp->appmy[net_id].mac_address);
         }
-        uniapp->recv_leave_bit ^= 1 << net_id;
+        uniapp->recv_leave_bit &= 0xff ^ (1 << net_id);
       }
     }
   }
@@ -335,13 +333,20 @@ void UnionAppSystem_ReqMystatus(UNION_APP_PTR uniapp, NetID net_id)
  *
  * @param   uniapp		
  * @param   net_id		
- * @param   myst		
+ * @param   pAppmy		
  */
 //==================================================================
-void UnionAppSystem_SetMystatus(UNION_APP_PTR uniapp, NetID net_id, const MYSTATUS *myst)
+void UnionAppSystem_SetMystatus(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys, NetID net_id, const UNION_APP_MY_PARAM *pAppmy)
 {
-  MyStatus_Copy(myst, uniapp->mystatus[net_id]);
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  
+  uniapp->appmy[net_id] = *pAppmy;
   uniapp->recv_mystatus_bit |= 1 << net_id;
+
+  if(net_id != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    UnionMyComm_PartyAddParam(&situ->mycomm, pAppmy->mac_address, 
+      MyStatus_GetTrainerView(&pAppmy->myst), MyStatus_GetMySex(&pAppmy->myst));
+  }
 }
 
 //==================================================================
@@ -427,7 +432,7 @@ void UnionAppSystem_SetLeaveChild(UNION_APP_PTR uniapp, NetID net_id)
   }
   else{
     GF_ASSERT_MSG(0, "recv_mystbit=%d, member_bit=%d, net_id=%d\n", 
-      uniapp->recv_mystatus_req_bit, uniapp->basic_status.member_bit, net_id);
+      uniapp->recv_mystatus_bit, uniapp->basic_status.member_bit, net_id);
   }
 }
 
@@ -610,7 +615,7 @@ const MYSTATUS * Union_App_GetMystatus(UNION_APP_PTR uniapp, NetID net_id)
     return NULL;
   }
   
-  return uniapp->mystatus[net_id];
+  return &uniapp->appmy[net_id].myst;
 }
 
 //==================================================================

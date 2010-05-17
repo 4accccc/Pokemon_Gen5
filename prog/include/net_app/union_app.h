@@ -34,6 +34,10 @@ typedef void (*UNION_APP_CALLBACK_ENTRY_FUNC)(NetID net_id, const MYSTATUS *myst
 typedef void (*UNION_APP_CALLBACK_LEAVE_FUNC)(NetID net_id, const MYSTATUS *mystatus, void *userwork);
 
 
+//==============================================================================
+//  構造体定義
+//==============================================================================
+
 //--------------------------------------------------------------
 //  各ミニゲーム用のParentWork
 //--------------------------------------------------------------
@@ -65,7 +69,7 @@ typedef struct{
 //  システムで使用
 //--------------------------------------------------------------
 extern UNION_APP_PTR UnionAppSystem_AllocAppWork(
-  HEAPID heap_id, u8 member_max, const MYSTATUS *myst);
+  UNION_SYSTEM_PTR unisys, HEAPID heap_id, u8 member_max, const MYSTATUS *myst);
 extern void UnionAppSystem_FreeAppWork(UNION_APP_PTR uniapp);
 extern BOOL UnionAppSystem_SetEntryUser(UNION_APP_PTR uniapp, NetID net_id, const MYSTATUS *myst);
 extern void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
@@ -73,7 +77,7 @@ extern void UnionAppSystem_ReqBasicStatus(UNION_APP_PTR uniapp, NetID net_id);
 extern void UnionAppSystem_SetBasicStatus(
   UNION_APP_PTR uniapp, const UNION_APP_BASIC *basic_status);
 extern void UnionAppSystem_ReqMystatus(UNION_APP_PTR uniapp, NetID net_id);
-extern void UnionAppSystem_SetMystatus(UNION_APP_PTR uniapp, NetID net_id, const MYSTATUS *myst);
+extern void UnionAppSystem_SetMystatus(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys, NetID net_id, const UNION_APP_MY_PARAM *pAppmy);
 extern BOOL UnionAppSystem_CheckBasicStatus(UNION_APP_PTR uniapp);
 extern BOOL UnionAppSystem_CheckMystatus(UNION_APP_PTR uniapp);
 extern void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id);

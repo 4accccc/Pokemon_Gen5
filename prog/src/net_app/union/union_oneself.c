@@ -1973,6 +1973,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
   enum{
     LOCALSEQ_INIT,
     LOCALSEQ_END,
+    LOCALSEQ_LASTKEY_END,
     
     LOCALSEQ_REGWIN_PRINT_WAIT,
     
@@ -1999,13 +2000,13 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_PlayGameMainMenuSelect(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-      (*seq) = LOCALSEQ_END;
+      (*seq) = LOCALSEQ_LASTKEY_END;
       break;
     case UNION_PLAY_CATEGORY_TRAINERCARD:    //トレーナーカード
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_PlayGameTrainerCard(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-      (*seq) = LOCALSEQ_END;
+      (*seq) = LOCALSEQ_LASTKEY_END;
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
@@ -2026,7 +2027,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-      (*seq) = LOCALSEQ_END;
+      (*seq) = LOCALSEQ_LASTKEY_END;
       break;
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
     case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
@@ -2047,7 +2048,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
           UnionMsg_GetMsgID_PlayGameBattle(situ->mycomm.talk_pc->beacon.sex));
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-        (*seq) = LOCALSEQ_END;
+        (*seq) = LOCALSEQ_LASTKEY_END;
       }
       break;
     case UNION_PLAY_CATEGORY_GURUGURU:  //ぐるぐる交換
@@ -2060,7 +2061,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
           UnionMsg_GetMsgID_PlayGameGuruguru(situ->mycomm.talk_pc->beacon.sex));
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-        (*seq) = LOCALSEQ_END;
+        (*seq) = LOCALSEQ_LASTKEY_END;
       }
       break;
     case UNION_PLAY_CATEGORY_PICTURE:   //お絵かき
@@ -2073,28 +2074,34 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
           UnionMsg_GetMsgID_PlayGamePicture(situ->mycomm.talk_pc->beacon.sex));
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-        (*seq) = LOCALSEQ_END;
+        (*seq) = LOCALSEQ_LASTKEY_END;
       }
       break;
     case UNION_PLAY_CATEGORY_TRADE:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
         UnionMsg_GetMsgID_PlayGameTrade(situ->mycomm.talk_pc->beacon.sex));
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-      (*seq) = LOCALSEQ_END;
+      (*seq) = LOCALSEQ_LASTKEY_END;
       break;
     default:
       OS_TPrintf("未知の遊び play_category = %d\n", play_category);
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_unknown_game);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-      (*seq) = LOCALSEQ_END;
+      (*seq) = LOCALSEQ_LASTKEY_END;
       break;
     }
     break;
-  case LOCALSEQ_END:
+
+  case LOCALSEQ_LASTKEY_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
         return TRUE;
       }
+    }
+    break;
+  case LOCALSEQ_END:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      return TRUE;
     }
     break;
   
@@ -2120,7 +2127,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
             UnionMsg_GetMsgID_MultiIntrudeRefuses(situ->mycomm.talk_pc->beacon.sex));
           UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-          (*seq) = LOCALSEQ_END;
+          (*seq) = LOCALSEQ_LASTKEY_END;
         }
         else{ //途中参加する
           //乱入可のシーケンスをとりあえずセット　不可の場合は以下の処理で上書きしていく
@@ -2199,12 +2206,13 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
             break;
           }
           UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
-          (*seq) = LOCALSEQ_END;
+          (*seq) = LOCALSEQ_LASTKEY_END;
         }
         else{ //途中参加する
           //乱入可のシーケンスをとりあえずセット　不可の場合は以下の処理で上書きしていく
           situ->mycomm.mainmenu_yesno_result = result;
           UnionOneself_ReqStatus(unisys, UNION_STATUS_INTRUDE);
+          (*seq) = LOCALSEQ_END;
           switch(situ->mycomm.mainmenu_select){
           case UNION_PLAY_CATEGORY_PICTURE:
             UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
@@ -2218,11 +2226,13 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
                   UnionMsg_GetMsgID_GuruguruIntrudeDametamago(
                   situ->mycomm.talk_pc->beacon.sex));
                 UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+                *seq = LOCALSEQ_LASTKEY_END;
               }
               else if(PokeParty_GetPokeCountOnlyEgg(party) == 0){ //タマゴが無い
                 UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
                   UnionMsg_GetMsgID_GuruguruIntrudeNoEgg(situ->mycomm.talk_pc->beacon.sex));
                 UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+                *seq = LOCALSEQ_LASTKEY_END;
               }
               else{ //乱入OK
                 UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
@@ -2231,7 +2241,6 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
             }
             break;
           }
-          (*seq) = LOCALSEQ_END;
         }
       }
     }

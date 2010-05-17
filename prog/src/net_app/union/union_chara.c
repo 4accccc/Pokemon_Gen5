@@ -748,9 +748,16 @@ static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *un
   switch(*seq){
   case 0:
     if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
-      MMDL_SetAcmd(mmdl, AC_WARP_DOWN);
-      MMDL_SetStatusBitVanish( mmdl, FALSE );
-      (*seq)++;
+      MMDL_GRIDPOS grid_pos, player_pos;
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+
+      MMDL_GetGridPos( FIELD_PLAYER_GetMMdl( player ), &player_pos );
+      MMDL_GetGridPos( mmdl, &grid_pos );
+      if(grid_pos.gx != player_pos.gx || grid_pos.gz != player_pos.gz){
+        MMDL_SetAcmd(mmdl, AC_WARP_DOWN);
+        MMDL_SetStatusBitVanish( mmdl, FALSE );
+        (*seq)++;
+      }
     }
     break;
   case 1:
