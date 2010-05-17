@@ -16,7 +16,9 @@ enum {
 	NARC_staff_roll_end_nclr = 2,
 	NARC_staff_roll_end_ncgr = 3,
 	NARC_staff_roll_end_nscr = 4,
-	NARC_staff_roll_end_e_nscr = 5
+	NARC_staff_roll_end_e_nscr = 5,
+	NARC_staff_roll_staffroll_b_nsbmd = 6,
+	NARC_staff_roll_staffroll_b_nsbca = 7
 };
 
 /* NARC_STAFF_ROLL_NAIX_ */

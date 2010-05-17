@@ -1,6 +1,10 @@
 "staff_list_jp.dat"
 "staff_list_eng.dat"
+
 "end.nclr"
 "end.ncgr"
 "end.nscr"
 "end_e.nscr"
+
+"staffroll_b.nsbmd"
+"staffroll_b.nsbca"
