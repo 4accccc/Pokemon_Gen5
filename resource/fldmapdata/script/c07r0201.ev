@@ -83,7 +83,19 @@ EVENT_START ev_scene_c07r0201_game_start
   $LOCALWORK0 = 0
 
   //問題抽選
-  _GET_QUIZ(quiz_msg, hint_msg, ans)
+  {
+     DEFINE_LOCAL all
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN    //ゲームクリア前
+      //抽選する問題を制限
+      $all = FALSE
+    ELSE                                        //ゲームクリア後
+      //全問題から抽選
+      $all = TRUE
+    ENDIF
+
+    _GET_QUIZ(all, quiz_msg, hint_msg, ans)
+  }
+
   //誕生日問題のとき使用するので、タグ番号0にプレーヤー名をセット
   _PLAYER_NAME(0)
 
