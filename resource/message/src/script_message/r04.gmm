@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T14:38:47"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T14:34:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1306" top="113" right="2011" bottom="741" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -499,7 +499,7 @@ TVトランシーバー</attribute>
 		<language name="JPN_KANJI" width="256">４番道路</language>
 	</row>
 
-	<row id="msg_r04_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r04_sign2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">４ばんどうろ</language>
@@ -530,7 +530,7 @@ TVトランシーバー</attribute>
 ポケモンセンターに　行きましょう！</language>
 	</row>
 
-	<row id="msg_r04_sign4_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r04_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=398、GRIDZ=557</comment>
 		<attribute name="キャラ指定">看板</attribute>
