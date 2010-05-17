@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T15:15:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T20:22:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1314" top="140" right="2019" bottom="768" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -323,7 +323,7 @@
 むしのように　かっこよく　戦え！</language>
 	</row>
 
-	<row id="msg_r10r0301_badge_04">
+	<row id="msg_r10r0301_badge_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・バッジ未所有時</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
