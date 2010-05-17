@@ -1712,7 +1712,7 @@ void  BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir )
   bmrw->dir     = dir;
   bmw->mcss_tcb_rotation_execute = 1;
 
-  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Rotation, bmrw, 0 ), TCB_BTLV_MCSS_Rotate_CB, GROUP_MCSS );
+  BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Rotation, bmrw, 0 ), TCB_BTLV_MCSS_Rotation_CB, GROUP_MCSS );
 }
 
 //============================================================================================
@@ -2415,12 +2415,15 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
     return;
   }
 
-  if( MCSS_GetStopCellAnms( bmw->btlv_mcss[ index ].mcss ) == MCSS_CELL_ANIM_NONSTOP )
+  if( bmw->mcss_tcb_rotation_execute )
   {
     return;
   }
 
-  if( bmw->mcss_tcb_rotation_execute )
+  //NONSTOPアニメだと1時間くらい放置したときにズレがでるので、Restartを呼んでおく
+  MCSS_RestartAnime( bmw->btlv_mcss[ index ].mcss );
+
+  if( MCSS_GetStopCellAnms( bmw->btlv_mcss[ index ].mcss ) == MCSS_CELL_ANIM_NONSTOP )
   {
     return;
   }
