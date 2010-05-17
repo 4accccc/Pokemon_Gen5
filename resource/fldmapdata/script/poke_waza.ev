@@ -165,7 +165,7 @@ EVENT_START ev_waza_omoidashi
   {
     DEFINE_LOCAL first_contact
     _FLAG_CHECK( FE_REMIND_FIRSTTALK, first_contact )
-    IF $first_contact == TRUE THEN
+    IF $first_contact == FALSE THEN
       _FLAG_SET( FE_REMIND_FIRSTTALK )  // フラグセット
       _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_12, SCWK_TARGET_OBJID, POS_DOWN )
     ENDIF
