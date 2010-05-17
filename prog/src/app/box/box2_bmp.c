@@ -1018,7 +1018,7 @@ static void PokeWazaPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 w
 			StrPrint( appwk, winID, man, info->waza[i], 0, i*16, appwk->font, FCOL_N_BLACK );
 		}
 	}else{
-		StrPrint( appwk, winID, man, mes_box_subst_01_12, 0, 0, appwk->font, FCOL_N_BLACK );
+		StrPrint( appwk, winID, appwk->mman, mes_box_subst_01_12, 0, 0, appwk->font, FCOL_N_BLACK );
 	}
 
 	GFL_MSG_Delete( man );
