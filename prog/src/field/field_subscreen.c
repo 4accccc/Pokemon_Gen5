@@ -166,8 +166,6 @@ static void exit_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void draw_dowsing_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 
-static FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode);
-
 static void init_report_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void exit_report_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
@@ -512,8 +510,7 @@ const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
  * @return  mode    Ø‚è‘Ö‚í‚éƒ‚[ƒh
  */
 //----------------------------------------------------------------------------
-
-static FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
+FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
 {
   if(FIELD_SUBSCREEN_NORMAL==new_mode){
     GAMEDATA* pGame = GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap));

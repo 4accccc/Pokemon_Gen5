@@ -30,6 +30,7 @@
 #include "field/zonedata.h"
 #include "field/event_field_proclink.h"
 #include "field/field_skill.h"
+#include "field/event_subscreen.h"
 
 //======================================================================
 //  define
@@ -138,12 +139,16 @@ GMEVENT * EVENT_FieldMapMenu(
   switch(FIELD_SUBSCREEN_GetMode(subscreen)){
   case FIELD_SUBSCREEN_INTRUDE:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_INTRUDE;
+    OS_Printf("XMenu Return Mode = %d, Intrude\n",FIELD_SUBSCREEN_GetMode(subscreen));
     break;
   case FIELD_SUBSCREEN_BEACON_VIEW:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_BEACON_VIEW;
+    OS_Printf("XMenu Return Mode = %d, BeaconView\n",FIELD_SUBSCREEN_GetMode(subscreen));
     break;
   default:
-    mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
+    mwk->return_subscreen_mode = 
+      FIELD_SUBSCREEN_CGearCheck( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL );
+    OS_Printf("XMenu Return Mode = %d, normal\n",FIELD_SUBSCREEN_GetMode(subscreen) );
   }
 
   // Xボタンで開始しているが、タッチ開始時のようにカーソルは出さない
@@ -257,7 +262,9 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
       if( mwk->link.result != EVENT_PROCLINK_RESULT_EXIT
        && mwk->link.result != EVENT_PROCLINK_RESULT_DOWSINGMACHINE ) // DOWSINGMACHINEの場合もCallbackの中で変えられるので行わない
       { 
-        FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
+//        FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), mwk->return_subscreen_mode);
+        GMEVENT_ChangeEvent( event, EVENT_ChangeSubScreen( GMEVENT_GetGameSysWork( event ), mwk->fieldWork, mwk->return_subscreen_mode ));
+        return( GMEVENT_RES_CONTINUE );
       }
       return( GMEVENT_RES_FINISH );
     }
