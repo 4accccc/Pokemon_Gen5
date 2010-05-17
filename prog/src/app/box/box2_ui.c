@@ -1672,7 +1672,7 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
+void BOX2UI_SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	u8	ret, status;
 
@@ -1731,7 +1731,7 @@ static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos
 		CursorObjMove( syswk, now_pos );
 	}
 
-	SetTouchBarIconPokeGet( syswk, now_pos );
+	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
 	syswk->app->old_cur_pos = now_pos;
 }
@@ -1752,7 +1752,7 @@ static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_p
 {
 	BOX2_SYS_WORK * syswk = work;
 
-	SetTouchBarIconPokeGet( syswk, now_pos );
+	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -1787,7 +1787,7 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
 		CursorObjMove( syswk, now_pos );
 	}
 
-	SetTouchBarIconPokeGet( syswk, now_pos );
+	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
 	syswk->app->old_cur_pos = now_pos;
 }
@@ -2038,7 +2038,7 @@ static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int ol
 		CursorObjMove( syswk, now_pos );
 	}
 
-	SetTouchBarIconPokeGet( syswk, now_pos );
+	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
 	syswk->app->old_cur_pos = now_pos;
 }
@@ -2059,7 +2059,7 @@ static void BoxArrangePartyPokeMoveCallBack_Move( void * work, int now_pos, int 
 {
 	BOX2_SYS_WORK * syswk = work;
 
-	SetTouchBarIconPokeGet( syswk, now_pos );
+	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
 	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
@@ -2092,7 +2092,7 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
 		CursorObjMove( syswk, now_pos );
 	}
 
-	SetTouchBarIconPokeGet( syswk, now_pos );
+	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
 	syswk->app->old_cur_pos = now_pos;
 }
