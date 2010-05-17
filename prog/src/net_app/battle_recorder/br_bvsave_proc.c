@@ -83,6 +83,7 @@ typedef struct
   u16                   work0;
   u16                   work1;
   u32                   cnt;
+  u32                   text_cnt;
 } BR_BVSAVE_WORK;
 
 
@@ -859,19 +860,24 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_011 );
     }
     p_wk->cnt++;
+    p_wk->text_cnt  = 0;
     (*p_seq)++;
     break;
 
   case SEQ_SEND_WAIT:
     p_wk->cnt++;
+    p_wk->text_cnt++;
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
-    { 
-      if( p_wk->cnt > RR_SEARCH_SE_FRAME )
+    {
+      if( p_wk->cnt > RR_SEARCH_SE_FRAME ) 
       { 
-        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+        if( p_wk->text_cnt > 60 ) //msg_info_011のメッセージが一瞬でよくわからないので、最低60フレーム待つ
+        {
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
 
-        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_012 );
-        (*p_seq)++;
+          BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_012 );
+          (*p_seq)++;
+        }
       }
     }
     break;
