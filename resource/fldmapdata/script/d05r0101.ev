@@ -76,6 +76,7 @@ EVENT_START   ev_scene_d05r0101_01
 	_OBJ_ANIME_WAIT()
 	
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//==================================//
