@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohnishi_shinichi" host="W00207" date="2010-05-10T16:17:08" source="map20_06c.mb"/>
+	<create user="ohnishi_shinichi" host="W00207" date="2010-05-14T10:41:57" source="map20_06c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohnishi_shinichi" host="W00207" date="2010-05-10T16:17:08" source="map20_06c.mb"/>
+<original_create user="ohnishi_shinichi" host="W00207" date="2010-05-14T10:41:57" source="map20_06c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -6984,9 +6984,9 @@
 	<polygon index="25" name="polygon25"
 		vertex_size="24" polygon_size="7"
 		triangle_size="0" quad_size="7"
-		volume_min="-0.484375 -0.250000 -0.468750"
+		volume_min="-0.484375 -0.250000 -0.531250"
 		volume_max="-0.015625 -0.062500 -0.156250"
-		volume_r="0.718994"
+		volume_r="0.761230"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -6997,13 +6997,13 @@
 					<mtx idx="0"/>
 					<tex st="13.312500 4.687500"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-0.484375 -0.062500 -0.468750"/>
+					<pos_s xyz="-0.484375 -0.062500 -0.531250"/>
 					<pos_xz xz="-0.484375 -0.156250"/>
-					<pos_yz yz="-0.250000 -0.468750"/>
+					<pos_yz yz="-0.250000 -0.531250"/>
 					<pos_xz xz="-0.484375 -0.156250"/>
-					<pos_xz xz="-0.015625 -0.468750"/>
+					<pos_xz xz="-0.015625 -0.531250"/>
 					<pos_xz xz="-0.015625 -0.156250"/>
-					<pos_yz yz="-0.062500 -0.468750"/>
+					<pos_yz yz="-0.062500 -0.531250"/>
 					<pos_xz xz="-0.015625 -0.156250"/>
 				</primitive>
 				<primitive index="1" type="quads" vertex_size="16">
@@ -7032,7 +7032,7 @@
 					<tex st="20.000000 24.000000"/>
 					<pos_xz xz="-0.046875 -0.156250"/>
 					<tex st="13.312500 4.687500"/>
-					<pos_s xyz="-0.015625 -0.062500 -0.468750"/>
+					<pos_s xyz="-0.015625 -0.062500 -0.531250"/>
 					<pos_xy xy="-0.484375 -0.062500"/>
 					<pos_xy xy="-0.484375 -0.250000"/>
 					<pos_xy xy="-0.015625 -0.250000"/>
