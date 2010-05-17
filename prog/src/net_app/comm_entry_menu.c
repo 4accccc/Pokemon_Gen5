@@ -82,6 +82,8 @@ typedef enum{
 #define PARENT_LIST_MAX     (16)
 ///親機探索メニューリストに載っている寿命
 #define PARENT_LIST_LIFE    (30*5)
+///親機探索メニュー接続時タイムアウト
+#define PARENT_LIST_TIMEOUT (60*5)
 
 ///_ParentSearchList_Updateの最終結果
 typedef enum{
@@ -159,6 +161,7 @@ typedef struct{
   u8 list_update_req;
   u8 list_strbuf_create;
   u8 return_seq;
+  u16 timeoutCnt;
 }PARENTSEARCH_LIST;
 
 ///参加募集管理システム
@@ -583,6 +586,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
         }
         else{
           em->seq = _SEQ_ENTRY;
+          _StreamMsgSet(em, msg_connect_02_01);
         }
       }
     }
@@ -2041,6 +2045,8 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
     
     _SEQ_YESNO_INIT,
     _SEQ_YESNO_MAIN,
+    
+    _SEQ_WAIT_TIMEOUT_MSG,
   };
   
   switch(psl->local_seq){
@@ -2060,19 +2066,30 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
         em->parentsearch.list_update_req = FALSE;
       }
     }
-    else{
-      if(GFL_NET_SystemGetConnectNum() > 1){
-        if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
+    else
+    {
+      if(GFL_NET_SystemGetConnectNum() > 1)
+      {
+        if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+        {
           OS_TPrintf("ネゴシエーション送信\n");
           psl->local_seq++;
         }
       }
-      else{
-        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+      else
+      {
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+        {
           psl->return_seq = psl->local_seq;
           psl->local_seq = _SEQ_YESNO_INIT;
         }
-        //※check　ここに一定時間経っても親機に接続出来なかったらキャンセル扱いにする処理を入れる
+        //一定時間経っても親機に接続出来なかったらキャンセル扱いにする
+        psl->timeoutCnt++;
+        if( psl->timeoutCnt >= PARENT_LIST_TIMEOUT )
+        {
+          psl->local_seq = _SEQ_WAIT_TIMEOUT_MSG;
+          _StreamMsgSet(em, msg_game_connect_timeout);
+        }
       }
     }
     break;
@@ -2090,6 +2107,13 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
       psl->return_seq = psl->local_seq;
       psl->local_seq = _SEQ_YESNO_INIT;
     }
+    //タイミングよく親が抜けた
+    if(em->game_cancel == TRUE)
+    {
+      //キャンセル選択中に親が進んだ処理と一緒の流れに入れるためOKを帰す
+      psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
+      psl->local_seq = _SEQ_FINISH;
+    }
     break;
   case _SEQ_PARENT_ANSWER_WAIT: 
     if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
@@ -2106,6 +2130,13 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
       psl->return_seq = psl->local_seq;
       psl->local_seq = _SEQ_YESNO_INIT;
+    }
+    //タイミングよく親が抜けた
+    if(em->game_cancel == TRUE)
+    {
+      //キャンセル選択中に親が進んだ処理と一緒の流れに入れるためOKを帰す
+      psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
+      psl->local_seq = _SEQ_FINISH;
     }
     break;
   case _SEQ_FINISH:
@@ -2154,6 +2185,14 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
       }
     }
     break;
+
+  case _SEQ_WAIT_TIMEOUT_MSG:
+    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    {
+      psl->final_select = PARENT_SEARCH_LIST_SELECT_CANCEL;
+      psl->local_seq = _SEQ_FINISH;
+    }
+    break;
   }
   
   return PARENT_SEARCH_LIST_SELECT_NULL;
@@ -2186,6 +2225,7 @@ static BOOL _ParentSearchList_ListSelectUpdate(COMM_ENTRY_MENU_PTR em)
       GFL_NET_ConnectToParent(psl->connect_parent->mac_address);
       WORDSET_RegisterPlayerName( em->wordset, 0, &psl->connect_parent->mystatus );
       _StreamMsgSet(em, msg_game_wait_parent);
+      psl->timeoutCnt = 0;
     }
     break;
   }
