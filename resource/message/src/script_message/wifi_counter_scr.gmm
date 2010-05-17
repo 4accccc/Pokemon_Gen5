@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-15T17:41:19"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T17:10:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="207" top="315" right="912" bottom="1061" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="157" right="2272" bottom="866" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="453"/>
@@ -464,7 +464,7 @@ C-Gear入手前</comment>
 ＧＴＳの　こうかんには
 ＧＴＳと　ＧＴＳネゴシエーションの[BE:00:ページ切り替え（行送り）]
 ２しゅるい　あります[BE:01:ページ切り替え（クリア）]
-ぞれぞれ　こうかんの　ほうほうが
+それぞれ　こうかんの　ほうほうが
 かわりますので　ごちゅういください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳでは
 遠くにいる　見知らぬ人と[BE:00:ページ切り替え（行送り）]
@@ -472,7 +472,7 @@ C-Gear入手前</comment>
 ＧＴＳの　交換には
 ＧＴＳと　ＧＴＳネゴシエーションの[BE:00:ページ切り替え（行送り）]
 ２種類　あります[BE:01:ページ切り替え（クリア）]
-ぞれぞれ　交換の　方法が
+それぞれ　交換の　方法が
 かわりますので　ご注意ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
