@@ -984,7 +984,7 @@ EVENT_START ev_hide_item_156
 EVENT_END
 
 EVENT_START ev_hide_item_157
-//ホドモエの市場 ( 4, 9 )
+//ホドモエの市場 ( 7, 13 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_157 )// ハートのウロコ
 EVENT_END
 
