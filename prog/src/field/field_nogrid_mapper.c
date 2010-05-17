@@ -194,7 +194,7 @@ void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RE
   }
   if( cp_data->areaDataID != FLDNOGRID_RESISTDATA_NONE )
   {
-    FLD_SCENEAREA_LOADER_Load( p_mapper->p_areaLoader, cp_data->areaDataID, heapID );
+    FLD_SCENEAREA_LOADER_Load( p_mapper->p_areaLoader, FLD_SCENEAREA_LOAD_RAIL, cp_data->areaDataID, heapID );
     FLD_SCENEAREA_Load( p_mapper->p_areaMan, 
         FLD_SCENEAREA_LOADER_GetData( p_mapper->p_areaLoader ),
         FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),

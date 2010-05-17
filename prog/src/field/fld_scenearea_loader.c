@@ -30,6 +30,13 @@
  *					íËêîêÈåæ
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	
+//=====================================
+static const u32 sc_ARCID[ FLD_SCENEAREA_LOADTYPE_MAX ] = {
+  ARCID_SCENEAREA_DATA,
+  ARCID_GRID_CAMERA_SCENE,
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -42,6 +49,7 @@
 struct _FLD_SCENEAREA_LOADER {
 	void* p_data;
 	u32 num;
+  ARCHANDLE* arcHandle[ FLD_SCENEAREA_LOADTYPE_MAX ];
 };
 
 //-----------------------------------------------------------------------------
@@ -116,8 +124,14 @@ static const FLD_SCENEAREA_FUNC sc_FLD_SCENEAREA_FUNC =
 FLD_SCENEAREA_LOADER* FLD_SCENEAREA_LOADER_Create( HEAPID heapID )
 {
 	FLD_SCENEAREA_LOADER* p_sys;
+  int i;
 
-	p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_SCENEAREA_LOADER) );
+  p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_SCENEAREA_LOADER) );
+
+  for( i=0; i<FLD_SCENEAREA_LOADTYPE_MAX; i++ ){
+    p_sys->arcHandle[i] = GFL_ARC_OpenDataHandle( sc_ARCID[i], heapID );
+  }
+  
 	return p_sys;
 }
 
@@ -130,7 +144,12 @@ FLD_SCENEAREA_LOADER* FLD_SCENEAREA_LOADER_Create( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void FLD_SCENEAREA_LOADER_Delete( FLD_SCENEAREA_LOADER* p_sys )
 {
+  int i;
+  
 	FLD_SCENEAREA_LOADER_Clear( p_sys );
+  for( i=0; i<FLD_SCENEAREA_LOADTYPE_MAX; i++ ){
+    GFL_ARC_CloseDataHandle( p_sys->arcHandle[i] );
+  }
 	GFL_HEAP_FreeMemory( p_sys );
 }
 
@@ -144,9 +163,18 @@ void FLD_SCENEAREA_LOADER_Delete( FLD_SCENEAREA_LOADER* p_sys )
  *	@param	heapID		ÉqÅ[ÉvID
  */
 //-----------------------------------------------------------------------------
-void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, HEAPID heapID )
+void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, FLD_SCENEAREA_LOADTYPE loadtype, u32 datano, HEAPID heapID )
 {
-  FLD_SCENEAREA_LOADER_LoadOriginal( p_sys, ARCID_SCENEAREA_DATA, datano, heapID );
+	u32 size;
+	
+	GF_ASSERT( p_sys );
+  GF_ASSERT( loadtype < FLD_SCENEAREA_LOADTYPE_MAX );
+
+	p_sys->p_data = GFL_ARCHDL_UTIL_LoadEx( p_sys->arcHandle[loadtype], datano, FALSE, heapID, &size );
+	p_sys->num		= size / sizeof(FLD_SCENEAREA_DATA);
+
+	TOMOYA_Printf( "SCENEAREA_size = %d\n", size );
+	TOMOYA_Printf( "SCENEAREA num = %d\n",  p_sys->num );
 }
 
 //----------------------------------------------------------------------------

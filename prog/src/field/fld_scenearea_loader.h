@@ -23,6 +23,15 @@ extern "C"{
  *					íËêîêÈåæ
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	LOAD_TYPE
+//=====================================
+typedef enum {
+  FLD_SCENEAREA_LOAD_RAIL,
+  FLD_SCENEAREA_LOAD_GRID,
+
+  FLD_SCENEAREA_LOADTYPE_MAX,
+} FLD_SCENEAREA_LOADTYPE;
 
 //-----------------------------------------------------------------------------
 /**
@@ -46,7 +55,7 @@ extern void FLD_SCENEAREA_LOADER_Delete( FLD_SCENEAREA_LOADER* p_sys );
 
 
 // ì«Ç›çûÇ›ÅAÉNÉäÉA
-extern void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, u32 datano, HEAPID heapID );
+extern void FLD_SCENEAREA_LOADER_Load( FLD_SCENEAREA_LOADER* p_sys, FLD_SCENEAREA_LOADTYPE loadtype, u32 datano, HEAPID heapID );
 extern void FLD_SCENEAREA_LOADER_LoadOriginal( FLD_SCENEAREA_LOADER* p_sys, u32 arcID, u32 datano, HEAPID heapID );
 extern void FLD_SCENEAREA_LOADER_Clear( FLD_SCENEAREA_LOADER* p_sys );
 
