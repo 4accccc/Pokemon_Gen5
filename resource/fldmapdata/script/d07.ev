@@ -150,12 +150,15 @@ EVENT_START  ev_pos_d07_rival_01
 	_PLAINWIN_MSG_UP(msg_d07_champion_01  )
 	_MSGWIN_CLOSE()
 	
+	
+	
 	//主人公アテグの方を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_d07_player_look_champion )
-	_OBJ_ANIME_WAIT()
 	
-	//アテグ専用曲
-	_START_EVENT_BGM( SEQ_BGM_E_CHAMPION )
+	//イベント曲再生
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_FIELD, BGM_FADE_SHORT )
+	
+	_OBJ_ANIME_WAIT()
 
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
@@ -163,6 +166,8 @@ EVENT_START  ev_pos_d07_rival_01
 	//カメラ操作　アテグ中心に
 	_CAMERA_MOVE( 9688,0,1134592,9334784,0,13295616,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	//アテグ専用曲
+	_START_EVENT_BGM( SEQ_BGM_E_CHAMPION )
 	 
 	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_act_01 )
 	_OBJ_ANIME_WAIT()
@@ -224,6 +229,9 @@ EVENT_START  ev_pos_d07_rival_01
 	//わざマシン入手処理（なみのり）
 	_ITEM_EVENT_KEYWAIT ( ITEM_HIDENMASIN03 , 1  )
 	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//アテグ：じゃあな
 	_BALLOONWIN_OBJMSG(msg_d07_champion_05,D07_CHAMPION_01  )
 	_BALLOONWIN_CLOSE()
@@ -252,6 +260,8 @@ EVENT_START  ev_pos_d07_rival_01
 	
 	//ライバル退場
 	_OBJ_ANIME( D07_RIVAL_01,anm_d07_rival_goodbye )
+	_TIME_WAIT( 32 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_d07_player_look_goodbye )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルとアテグのOBJ削除
@@ -391,4 +401,11 @@ _ANIME_LABEL	anm_d07_rival_goodbye
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+	
+	//--------------------------------------------------------------
+//	D07　ライバルイベント用：ライバル退場
+//-------------- ---------------------
+_ANIME_LABEL	anm_d07_player_look_goodbye
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
