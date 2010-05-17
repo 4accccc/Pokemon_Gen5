@@ -98,7 +98,7 @@
 #define	TRTYPE_SWIMMERW    ( 85 )    //ビキニのおねえさん
 #define	TRTYPE_POLICE    ( 86 )    //おまわりさん
 #define	TRTYPE_MAID    ( 87 )    //メイド
-#define	TRTYPE_BCHAMP    ( 88 )    //サブウェイマスター
+#define	TRTYPE_BCHAMP    ( 88 )    //サブウェイマスター（BCHAMP）
 #define	TRTYPE_CHAMPION    ( 89 )    //チャンピオン
 #define	TRTYPE_CYCLINGM    ( 90 )    //サイクリング♂
 #define	TRTYPE_CYCLINGW    ( 91 )    //サイクリング♀
@@ -112,4 +112,5 @@
 #define	TRTYPE_PRINCE_1    ( 99 )    //ブルジョワールけ（PRINCE_1）
 #define	TRTYPE_DPCHAMPION    ( 100 )    //ポケモントレーナー（DPCHAMPION）
 #define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん（BOSS_2）
-#define	TRTYPE_MAX	( 102 )
+#define	TRTYPE_BCHAMP2    ( 102 )    //サブウェイマスター2
+#define	TRTYPE_MAX	( 103 )

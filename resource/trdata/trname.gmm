@@ -3463,6 +3463,11 @@
 		<language name="JPN_KANJI" width="216">タツロウ</language>
 	</row>
 
+	<row id="bchamp2_01">
+		<language name="JPN" width="216">クダリ</language>
+		<language name="JPN_KANJI" width="216">クダリ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
