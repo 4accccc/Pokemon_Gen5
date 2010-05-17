@@ -2046,6 +2046,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
+  BPP_MIGAWARI_Delete( bpp );
   BPP_CombiWaza_ClearParam( bpp );
 
 //  ConfrontRec_Clear( bpp );
