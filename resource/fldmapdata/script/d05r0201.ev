@@ -107,7 +107,7 @@ EVENT_START   ev_scene_d05r0201_vs_plasma
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団宣戦布告して布陣を組む
-	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_hakaim_01,D05R0201_HAKAIW_08 , POS_UR)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_hakaim_01,D05R0201_HAKAIM_03 , POS_UR)
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(D05R0201_HAKAIM_01,anm_d05r0201_hakai_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai_02)
@@ -290,6 +290,7 @@ EVENT_START   ev_d05r0201_rival_01
 	
 	_TALK_START_SE_PLAY()
 	_BALLOONWIN_OBJMSG( msg_d05r0201_black_01 , D05R0201_RIVAL_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 EVENT_END
@@ -513,7 +514,10 @@ ev_d05r0201_vs_plasma_win:
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
-
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	
 	//復帰、workmanとヤーコン配置
 	_FLAG_RESET(FV_D05R0201_WORKMAN_01)
 	_OBJ_ADD(D05R0201_WORKMAN_01)
@@ -522,22 +526,28 @@ ev_d05r0201_vs_plasma_win:
 	_OBJ_ADD(D05R0201_WORKMAN_04)
 	_OBJ_ADD(D05R0201_LEADER5_01)
 	
+	_SE_WAIT()
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
-	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,294912,0,753664,40 )
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	//階段SE
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
+	//カメラ操作　サポートの位置にカメラを合わせる
+	//_CAMERA_MOVE( 9688,0,970752,294912,0,1081344,40 )
+	//_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT( 16 )
 	
 	_OBJ_ANIME(D05R0201_LEADER5_01,anm_d05r0201_leader5_come_01)
 	_OBJ_ANIME(D05R0201_WORKMAN_01,anm_d05r0201_workman1_come_01)
 	_OBJ_ANIME(D05R0201_WORKMAN_02,anm_d05r0201_workman1_come_01)
 	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman1_come_01)
 	_OBJ_ANIME(D05R0201_WORKMAN_04,anm_d05r0201_workman1_come_01)
+	
+	_CAMERA_MOVE( 9688,0,970752,294912,0,753664,40 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_OBJ_ANIME_WAIT()
+	
+	//主人公どく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_look_down )
 	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_player_look_down)
 	_OBJ_ANIME_WAIT()
@@ -551,7 +561,7 @@ ev_d05r0201_vs_plasma_win:
 	_BALLOONWIN_CLOSE()
 	
 	//さぎょういん：ラジャー！
-	_PLAINWIN_MSG_UP( msg_d05r0201_workman_01 )
+	_PLAINWIN_MSG_DOWN( msg_d05r0201_workman_01 )
 	_PLAINWIN_CLOSE() 
 	
 	{
@@ -715,6 +725,8 @@ ev_d05r0201_vs_plasma_win:
 	
 	//ライバル退場
 	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_goodbye)
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_look_down )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL(D05R0201_RIVAL_01)
@@ -760,7 +772,7 @@ _RET
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0201_leader5_come_01
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -768,7 +780,7 @@ _ANIME_LABEL	anm_d05r0201_leader5_come_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0201_workman1_come_01
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -894,14 +906,6 @@ _ANIME_LABEL	anm_d05r0201_rival_side
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0201_workman2_bye_01
-	_ANIME_DATA	AC_WALK_D_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0201：workmanプラズマ団を連れて去る（２）
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05r0201_hakai1_bye_01
 	_ANIME_DATA	AC_WALK_D_8F,7
 	_ANIME_DATA	ACMD_END,0
 
@@ -909,8 +913,16 @@ _ANIME_LABEL	anm_d05r0201_hakai1_bye_01
 //	D05R0201：workmanプラズマ団を連れて去る（２）
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_d05r0201_hakai2_bye_01
+_ANIME_LABEL	anm_d05r0201_hakai1_bye_01
 	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（２）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai2_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
