@@ -617,42 +617,6 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GATEWORK* work = (GATEWORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
   static fx32 animeSpeed = FX32_ONE;
 
-#if 0
-  // TEST: •¶Žš‘—‚è‘¬“x‚Ì’²®
-  {
-    int key = GFL_UI_KEY_GetCont();
-    int trg = GFL_UI_KEY_GetTrg();
-    //if( key & PAD_BUTTON_DEBUG )
-    {
-      if( trg & PAD_BUTTON_R )
-      {
-        animeSpeed += FX_F32_TO_FX32( 0.1f );
-        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
-      }
-      if( trg & PAD_BUTTON_L )
-      {
-        animeSpeed -= FX_F32_TO_FX32( 0.1f );
-        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
-      }
-      if( trg & PAD_BUTTON_Y )
-      {
-        animeSpeed -= FX_F32_TO_FX32( 0.01f );
-        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
-      }
-      if( trg & PAD_BUTTON_B )
-      {
-        animeSpeed += FX_F32_TO_FX32( 0.01f );
-        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
-      }
-      if( trg & PAD_BUTTON_START )
-      {
-        animeSpeed = FX_F32_TO_FX32( 1.0f );
-        OS_Printf( "animeSpeed = %f\n", FX_FX32_TO_F32(animeSpeed) );
-      }
-    }
-  }
-#endif
-
   // “dŒõŒfŽ¦”ÂƒƒCƒ“ˆ—
   GOBJ_ELBOARD_Main( work->elboard, animeSpeed );
 
