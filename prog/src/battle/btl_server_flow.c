@@ -3594,12 +3594,17 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
   BTL_HANDEX_PARAM_MESSAGE* msg_param;
   u32 cnt, volume, i;
   u8 pokeID = BPP_GetID( bpp );
+  u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
 
   cnt = BPP_WAZA_GetCount( bpp );
+
 
   for(i=0; i<cnt; ++i)
   {
     volume = BPP_WAZA_GetPPShort( bpp, i );
+    if( volume > ppValue ){
+      volume = ppValue;
+    }
 
     if( volume )
     {
