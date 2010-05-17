@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T17:56:35"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T12:59:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -866,21 +866,21 @@
 	</row>
 
 	<row id="msg_c03r1101_man1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r1101_woman1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r1101_pokemon_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">ポケモン
 ミネズミ</attribute>
 		<language name="JPN" width="256">no data</language>
