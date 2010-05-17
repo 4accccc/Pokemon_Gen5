@@ -401,36 +401,36 @@
 	<row id="TOKUSEIINFO_001">
 		<language name="JPN" width="216">やせいの　ポケモンが
 よりつき　にくくなる。</language>
-		<language name="JPN_KANJI" width="216">やせいの　ポケモンが
+		<language name="JPN_KANJI" width="216">野生の　ポケモンが
 よりつき　にくくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_002">
 		<language name="JPN" width="216">せんとうに　でると
 あめを　ふらす。</language>
-		<language name="JPN_KANJI" width="216">せんとうに　でると
-あめを　ふらす。</language>
+		<language name="JPN_KANJI" width="216">戦闘に　でると
+雨を　降らす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_003">
 		<language name="JPN" width="216">ちょっとずつ
 すばやく　なっていく。</language>
 		<language name="JPN_KANJI" width="216">ちょっとずつ
-すばやく　なっていく。</language>
+素早く　なっていく。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_004">
 		<language name="JPN" width="216">あいての　こうげきが
 きゅうしょに　あたらない。</language>
-		<language name="JPN_KANJI" width="216">あいての　こうげきが
-きゅうしょに　あたらない。</language>
+		<language name="JPN_KANJI" width="216">相手の　攻撃が
+急所に　当たらない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_005">
 		<language name="JPN" width="216">いちげきひっさつが
 きかない。</language>
-		<language name="JPN_KANJI" width="216">いちげきひっさつが
-きかない。</language>
+		<language name="JPN_KANJI" width="216">一撃必殺が　効かない。
+</language>
 	</row>
 
 	<row id="TOKUSEIINFO_006">
@@ -443,147 +443,147 @@
 	<row id="TOKUSEIINFO_007">
 		<language name="JPN" width="216">まひ　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">まひ　じょうたいに
+		<language name="JPN_KANJI" width="216">まひ状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_008">
 		<language name="JPN" width="216">すなあらしで
 かいひりつが　あがる。</language>
-		<language name="JPN_KANJI" width="216">すなあらしで
-かいひりつが　あがる。</language>
+		<language name="JPN_KANJI" width="216">砂あらしで
+回避率が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_009">
 		<language name="JPN" width="216">さわった　あいてを
 まひさせる　ことがある。</language>
-		<language name="JPN_KANJI" width="216">さわった　あいてを
+		<language name="JPN_KANJI" width="216">触った　相手を
 まひさせる　ことがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_010">
 		<language name="JPN" width="216">でんきを　うけると
 かいふくする。</language>
-		<language name="JPN_KANJI" width="216">でんきを　うけると
-かいふくする。</language>
+		<language name="JPN_KANJI" width="216">でんきを　受けると
+回復する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_011">
 		<language name="JPN" width="216">みずを　うけると
 かいふくする。</language>
-		<language name="JPN_KANJI" width="216">みずを　うけると
-かいふくする。</language>
+		<language name="JPN_KANJI" width="216">みずを　受けると
+回復する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_012">
 		<language name="JPN" width="216">メロメロ　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">メロメロ　じょうたいに
+		<language name="JPN_KANJI" width="216">メロメロ　状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_013">
 		<language name="JPN" width="216">てんきの　えいきょうが
 なくなる。</language>
-		<language name="JPN_KANJI" width="216">てんきの　えいきょうが
+		<language name="JPN_KANJI" width="216">天気の　影響が
 なくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_014">
 		<language name="JPN" width="216">わざの　めいちゅうりつが
 あがる。</language>
-		<language name="JPN_KANJI" width="216">わざの　めいちゅうりつが
+		<language name="JPN_KANJI" width="216">技の　命中率が
 あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_015">
 		<language name="JPN" width="216">ねむり　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">ねむり　じょうたいに
+		<language name="JPN_KANJI" width="216">ねむり状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_016">
 		<language name="JPN" width="216">うけた　わざの　タイプに
 へんかする。</language>
-		<language name="JPN_KANJI" width="216">うけた　わざの　タイプに
-へんかする。</language>
+		<language name="JPN_KANJI" width="216">受けた　技の　タイプに
+変化する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_017">
 		<language name="JPN" width="216">どく　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">どく　じょうたいに
+		<language name="JPN_KANJI" width="216">どく状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_018">
 		<language name="JPN" width="216">ほのおを　うけると
 ほのおわざが　つよくなる。</language>
-		<language name="JPN_KANJI" width="216">ほのおを　うけると
-ほのおわざが　つよくなる。</language>
+		<language name="JPN_KANJI" width="216">ほのおを　受けると
+ほのお技が　強くなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_019">
 		<language name="JPN" width="216">わざの　ついかこうかを
 うけない。</language>
-		<language name="JPN_KANJI" width="216">わざの　ついかこうかを
-うけない。</language>
+		<language name="JPN_KANJI" width="216">技の　追加効果を
+受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_020">
 		<language name="JPN" width="216">こんらん　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">こんらん　じょうたいに
+		<language name="JPN_KANJI" width="216">混乱状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_021">
 		<language name="JPN" width="216">いれかえさせる　わざが
 きかない。</language>
-		<language name="JPN_KANJI" width="216">いれかえさせる　わざが
-きかない。</language>
+		<language name="JPN_KANJI" width="216">入れ替えさせる　技が
+効かない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_022">
 		<language name="JPN" width="216">あいての　こうげきを
 さげる。</language>
-		<language name="JPN_KANJI" width="216">あいての　こうげきを
+		<language name="JPN_KANJI" width="216">相手の　攻撃を
 さげる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_023">
 		<language name="JPN" width="216">あいての　かげをふみ
 にげられなくする。</language>
-		<language name="JPN_KANJI" width="216">あいての　かげをふみ
-にげられなくする。</language>
+		<language name="JPN_KANJI" width="216">相手の　影をふみ
+逃げられなくする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_024">
 		<language name="JPN" width="216">ふれた　あいてを
 キズつける。</language>
-		<language name="JPN_KANJI" width="216">ふれた　あいてを
+		<language name="JPN_KANJI" width="216">触れた　相手を
 キズつける。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_025">
 		<language name="JPN" width="216">こうかばつぐん　しか
 あたらない。</language>
-		<language name="JPN_KANJI" width="216">こうかばつぐん　しか
-あたらない。</language>
+		<language name="JPN_KANJI" width="216">効果バツグン　しか
+当たらない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_026">
 		<language name="JPN" width="216">じめんタイプの　わざを
 うけない。</language>
-		<language name="JPN_KANJI" width="216">じめんタイプの　わざを
-うけない。</language>
+		<language name="JPN_KANJI" width="216">じめんタイプの　技を
+受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_027">
 		<language name="JPN" width="216">ふれると　どく　まひ
 ねむりに　することがある。</language>
-		<language name="JPN_KANJI" width="216">ふれると　どく　まひ
+		<language name="JPN_KANJI" width="216">触れると　どく　まひ
 ねむりに　することがある。</language>
 	</row>
 
@@ -591,76 +591,76 @@
 		<language name="JPN" width="216">どく　まひ　やけどを
 あいてに　うつす。</language>
 		<language name="JPN_KANJI" width="216">どく　まひ　やけどを
-あいてに　うつす。</language>
+相手に　うつす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_029">
 		<language name="JPN" width="216">あいてに　のうりょくを
 さげられない。</language>
-		<language name="JPN_KANJI" width="216">あいてに　のうりょくを
+		<language name="JPN_KANJI" width="216">相手に　能力を
 さげられない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_030">
 		<language name="JPN" width="216">じょうたい　いじょうが
 ひっこむと　なおる。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうが
-ひっこむと　なおる。</language>
+		<language name="JPN_KANJI" width="216">状態異常が
+ひっこむと　治る。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_031">
 		<language name="JPN" width="216">でんきタイプの　わざを
 すべて　うける。</language>
-		<language name="JPN_KANJI" width="216">でんきタイプの　わざを
-すべて　うける。</language>
+		<language name="JPN_KANJI" width="216">でんきタイプの　技を
+すべて　受ける。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_032">
 		<language name="JPN" width="216">わざの　ついかこうかが
 でやすい。</language>
-		<language name="JPN_KANJI" width="216">わざの　ついかこうかが
+		<language name="JPN_KANJI" width="216">技の　追加効果が
 でやすい。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_033">
 		<language name="JPN" width="216">あめのとき　すばやさが
 あがる。</language>
-		<language name="JPN_KANJI" width="216">あめのとき　すばやさが
+		<language name="JPN_KANJI" width="216">雨のとき　素早さが
 あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_034">
 		<language name="JPN" width="216">はれのとき　すばやさが
 あがる。</language>
-		<language name="JPN_KANJI" width="216">はれのとき　すばやさが
+		<language name="JPN_KANJI" width="216">晴れのとき　素早さが
 あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_035">
 		<language name="JPN" width="216">やせいの　ポケモンに
 そうぐう　しやすくなる。</language>
-		<language name="JPN_KANJI" width="216">やせいの　ポケモンに
-そうぐう　しやすくなる。</language>
+		<language name="JPN_KANJI" width="216">野生の　ポケモンに
+遭遇しやすくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_036">
 		<language name="JPN" width="216">あいてと　おなじ
 とくせいに　なる。</language>
-		<language name="JPN_KANJI" width="216">あいてと　おなじ
-とくせいに　なる。</language>
+		<language name="JPN_KANJI" width="216">相手と　同じ
+特性に　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_037">
 		<language name="JPN" width="216">ぶつり　こうげきの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">ぶつり　こうげきの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">物理攻撃の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_038">
 		<language name="JPN" width="216">ふれた　あいてに　どくを
 おわせる　ことがある。</language>
-		<language name="JPN_KANJI" width="216">ふれた　あいてに　どくを
+		<language name="JPN_KANJI" width="216">触れた　相手に　毒を
 おわせる　ことがある。</language>
 	</row>
 
@@ -674,14 +674,14 @@
 	<row id="TOKUSEIINFO_040">
 		<language name="JPN" width="216">こおり　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">こおり　じょうたいに
+		<language name="JPN_KANJI" width="216">こおり状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_041">
 		<language name="JPN" width="216">やけど　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">やけど　じょうたいに
+		<language name="JPN_KANJI" width="216">やけど状態に
 ならない。</language>
 	</row>
 
@@ -689,104 +689,104 @@
 		<language name="JPN" width="216">はがねの　ポケモンを
 にげられなくする。</language>
 		<language name="JPN_KANJI" width="216">はがねの　ポケモンを
-にげられなくする。</language>
+逃げられなくする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_043">
 		<language name="JPN" width="216">おとの　わざを
 うけない。</language>
-		<language name="JPN_KANJI" width="216">おとの　わざを
-うけない。</language>
+		<language name="JPN_KANJI" width="216">音の　技を
+受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_044">
 		<language name="JPN" width="216">あめのとき　すこしずつ
 ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="216">あめのとき　すこしずつ
-ＨＰを　かいふくする。</language>
+		<language name="JPN_KANJI" width="216">雨のとき　すこしずつ
+ＨＰを　回復する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_045">
 		<language name="JPN" width="216">せんとうで　すなあらしを
 おこす。</language>
-		<language name="JPN_KANJI" width="216">せんとうで　すなあらしを
+		<language name="JPN_KANJI" width="216">戦闘で　砂あらしを
 おこす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_046">
 		<language name="JPN" width="216">あいての　つかう　わざの
 ＰＰを　おおく　へらす。</language>
-		<language name="JPN_KANJI" width="216">あいての　つかう　わざの
-ＰＰを　おおく　へらす。</language>
+		<language name="JPN_KANJI" width="216">相手の　使う　技の
+ＰＰを　多く　減らす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_047">
 		<language name="JPN" width="216">ほのおと　こおりタイプの
 わざに　つよい。</language>
 		<language name="JPN_KANJI" width="216">ほのおと　こおりタイプの
-わざに　つよい。</language>
+技に　強い。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_048">
 		<language name="JPN" width="216">おきるのが　はやくなる。
 </language>
-		<language name="JPN_KANJI" width="216">おきるのが　はやくなる。
+		<language name="JPN_KANJI" width="216">起きるのが　早くなる。
 </language>
 	</row>
 
 	<row id="TOKUSEIINFO_049">
 		<language name="JPN" width="216">ふれた　あいてを　やけど
 させることがある。</language>
-		<language name="JPN_KANJI" width="216">ふれた　あいてを　やけど
+		<language name="JPN_KANJI" width="216">触れた　相手を　やけど
 させることがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_050">
 		<language name="JPN" width="216">やせいの　ポケモンから
 かならず　にげられる。</language>
-		<language name="JPN_KANJI" width="216">やせいの　ポケモンから
-かならず　にげられる。</language>
+		<language name="JPN_KANJI" width="216">野生の　ポケモンから
+必ず　逃げられる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_051">
 		<language name="JPN" width="216">めいちゅうりつを
 さげられない。</language>
-		<language name="JPN_KANJI" width="216">めいちゅうりつを
+		<language name="JPN_KANJI" width="216">命中率を
 さげられない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_052">
 		<language name="JPN" width="216">あいてに　こうげきを
 さげられない。</language>
-		<language name="JPN_KANJI" width="216">あいてに　こうげきを
+		<language name="JPN_KANJI" width="216">相手に　攻撃を
 さげられない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_053">
 		<language name="JPN" width="216">どうぐを　ひろってくる
 ことが　ある。</language>
-		<language name="JPN_KANJI" width="216">どうぐを　ひろってくる
+		<language name="JPN_KANJI" width="216">道具を　拾ってくる
 ことが　ある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_054">
 		<language name="JPN" width="216">こうげきが　れんぞくで
 だせない。</language>
-		<language name="JPN_KANJI" width="216">こうげきが　れんぞくで
+		<language name="JPN_KANJI" width="216">攻撃が　連続で
 だせない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_055">
 		<language name="JPN" width="216">こうげきは　たかいが
 はずれやすい。</language>
-		<language name="JPN_KANJI" width="216">こうげきは　たかいが
+		<language name="JPN_KANJI" width="216">攻撃は　たかいが
 はずれやすい。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_056">
 		<language name="JPN" width="216">ふれると　メロメロに
 することがある。</language>
-		<language name="JPN_KANJI" width="216">ふれると　メロメロに
+		<language name="JPN_KANJI" width="216">触れると　メロメロに
 することがある。</language>
 	</row>
 
@@ -794,209 +794,209 @@
 		<language name="JPN" width="216">マイナスが　いると
 とくこうが　あがる。</language>
 		<language name="JPN_KANJI" width="216">マイナスが　いると
-とくこうが　あがる。</language>
+特攻が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_058">
 		<language name="JPN" width="216">プラスが　いると
 とくこうが　あがる。</language>
 		<language name="JPN_KANJI" width="216">プラスが　いると
-とくこうが　あがる。</language>
+特攻が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_059">
 		<language name="JPN" width="216">てんきで　ポワルンが
 へんかする。</language>
-		<language name="JPN_KANJI" width="216">てんきで　ポワルンが
-へんかする。</language>
+		<language name="JPN_KANJI" width="216">天気で　ポワルンが
+変化する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_060">
 		<language name="JPN" width="216">どうぐを　とられない。
 </language>
-		<language name="JPN_KANJI" width="216">どうぐを　とられない。
+		<language name="JPN_KANJI" width="216">道具を　取られない。
 </language>
 	</row>
 
 	<row id="TOKUSEIINFO_061">
 		<language name="JPN" width="216">じょうたい　いじょうを
 なおす　ことがある。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうを
-なおす　ことがある。</language>
+		<language name="JPN_KANJI" width="216">状態異常を
+治すことが　ある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_062">
 		<language name="JPN" width="216">じょうたい　いじょうで
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうで
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">状態異常で
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_063">
 		<language name="JPN" width="216">じょうたい　いじょうで
 ぼうぎょが　あがる。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうで
-ぼうぎょが　あがる。</language>
+		<language name="JPN_KANJI" width="216">状態異常で
+防御が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_064">
 		<language name="JPN" width="216">すいとった　あいての
 ＨＰを　へらす。</language>
-		<language name="JPN_KANJI" width="216">すいとった　あいての
-ＨＰを　へらす。</language>
+		<language name="JPN_KANJI" width="216">吸いとった　相手の
+ＨＰを　減らす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_065">
 		<language name="JPN" width="216">ピンチのとき　くさの
 いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="216">ピンチのとき　くさの
-いりょくが　あがる。</language>
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_066">
 		<language name="JPN" width="216">ピンチのとき　ほのおの
 いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="216">ピンチのとき　ほのおの
-いりょくが　あがる。</language>
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_067">
 		<language name="JPN" width="216">ピンチのとき　みずの
 いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="216">ピンチのとき　みずの
-いりょくが　あがる。</language>
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_068">
 		<language name="JPN" width="216">ピンチのとき　むしの
 いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="216">ピンチのとき　むしの
-いりょくが　あがる。</language>
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_069">
 		<language name="JPN" width="216">ぶつかっても
 はんどうを　うけない。</language>
 		<language name="JPN_KANJI" width="216">ぶつかっても
-はんどうを　うけない。</language>
+反動を　受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_070">
 		<language name="JPN" width="216">せんとうに　でると
 にほんばれに　なる。</language>
-		<language name="JPN_KANJI" width="216">せんとうに　でると
+		<language name="JPN_KANJI" width="216">戦闘に　でると
 にほんばれに　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_071">
 		<language name="JPN" width="216">せんとうで　あいてを
 にげられなくする。</language>
-		<language name="JPN_KANJI" width="216">せんとうで　あいてを
-にげられなくする。</language>
+		<language name="JPN_KANJI" width="216">戦闘で　相手を
+逃げられなくする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_072">
 		<language name="JPN" width="216">ねむり　じょうたいに
 ならない。</language>
-		<language name="JPN_KANJI" width="216">ねむり　じょうたいに
+		<language name="JPN_KANJI" width="216">ねむり状態に
 ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_073">
 		<language name="JPN" width="216">あいてに　のうりょくを
 さげられない。</language>
-		<language name="JPN_KANJI" width="216">あいてに　のうりょくを
+		<language name="JPN_KANJI" width="216">相手に　能力を
 さげられない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_074">
 		<language name="JPN" width="216">ぶつり　こうげきの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">ぶつり　こうげきの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">物理攻撃の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_075">
 		<language name="JPN" width="216">あいての　こうげきが
 きゅうしょに　あたらない。</language>
-		<language name="JPN_KANJI" width="216">あいての　こうげきが
-きゅうしょに　あたらない。</language>
+		<language name="JPN_KANJI" width="216">相手の　攻撃が
+急所に　当たらない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_076">
 		<language name="JPN" width="216">てんきの　えいきょうが
 なくなる。</language>
-		<language name="JPN_KANJI" width="216">てんきの　えいきょうが
+		<language name="JPN_KANJI" width="216">天気の　影響が
 なくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_077">
 		<language name="JPN" width="216">こんらん　していると
 かいひ　しやすくなる。</language>
-		<language name="JPN_KANJI" width="216">こんらん　していると
-かいひ　しやすくなる。</language>
+		<language name="JPN_KANJI" width="216">混乱していると
+回避しやすくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_078">
 		<language name="JPN" width="216">でんきを　うけると
 すばやさが　あがる。</language>
-		<language name="JPN_KANJI" width="216">でんきを　うけると
-すばやさが　あがる。</language>
+		<language name="JPN_KANJI" width="216">でんきを　受けると
+素早さが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_079">
 		<language name="JPN" width="216">せいべつが　おなじだと
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">せいべつが　おなじだと
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">性別が　同じだと
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_080">
 		<language name="JPN" width="216">ひるむ　たびに
 すばやさが　あがる。</language>
 		<language name="JPN_KANJI" width="216">ひるむ　たびに
-すばやさが　あがる。</language>
+素早さが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_081">
 		<language name="JPN" width="216">てんきが　あられのとき　
 かいひりつが　あがる。</language>
-		<language name="JPN_KANJI" width="216">てんきが　あられのとき　
-かいひりつが　あがる。</language>
+		<language name="JPN_KANJI" width="216">天気が　あられのとき　
+回避率が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_082">
 		<language name="JPN" width="216">きのみを　いつもより
 はやく　つかう。</language>
 		<language name="JPN_KANJI" width="216">きのみを　いつもより
-はやく　つかう。</language>
+はやく　使う。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_083">
 		<language name="JPN" width="216">きゅうしょに　うけると
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">きゅうしょに　うけると
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">急所に　受けると
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_084">
 		<language name="JPN" width="216">どうぐが　なくなると
 すばやさが　あがる。</language>
-		<language name="JPN_KANJI" width="216">どうぐが　なくなると
-すばやさが　あがる。</language>
+		<language name="JPN_KANJI" width="216">道具が　なくなると
+素早さが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_085">
 		<language name="JPN" width="216">ほのお　わざの
 いりょくを　よわめる。</language>
-		<language name="JPN_KANJI" width="216">ほのお　わざの
-いりょくを　よわめる。</language>
+		<language name="JPN_KANJI" width="216">ほのお　技の
+威力を　よわめる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_086">
 		<language name="JPN" width="216">のうりょく　へんかが
 いつもより　はげしい。</language>
-		<language name="JPN_KANJI" width="216">のうりょく　へんかが
+		<language name="JPN_KANJI" width="216">能力　変化が
 いつもより　はげしい。</language>
 	</row>
 
@@ -1004,517 +1004,517 @@
 		<language name="JPN" width="216">あついと　ＨＰが　へる。
 みずで　ＨＰを　かいふく。</language>
 		<language name="JPN_KANJI" width="216">あついと　ＨＰが　へる。
-みずで　ＨＰを　かいふく。</language>
+みずで　ＨＰを　回復。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_088">
 		<language name="JPN" width="216">あいての　のうりょくを
 みて　つよさを　かえる。</language>
-		<language name="JPN_KANJI" width="216">あいての　のうりょくを
-みて　つよさを　かえる。</language>
+		<language name="JPN_KANJI" width="216">相手の　能力を　みて
+強さを　変える。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_089">
 		<language name="JPN" width="216">パンチを　つかう　わざの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">パンチを　つかう　わざの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">パンチを　使う　技の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_090">
 		<language name="JPN" width="216">どくじょうたいに　なると
 ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="216">どくじょうたいに　なると
-ＨＰを　かいふくする。</language>
+		<language name="JPN_KANJI" width="216">どく状態に　なると
+ＨＰを　回復する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_091">
 		<language name="JPN" width="216">タイプが　おなじ　わざの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">タイプが　おなじ　わざの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">タイプが　同じ　技の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_092">
 		<language name="JPN" width="216">れんぞく　わざを
 たくさん　だせる。</language>
-		<language name="JPN_KANJI" width="216">れんぞく　わざを
+		<language name="JPN_KANJI" width="216">連続技を
 たくさん　だせる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_093">
 		<language name="JPN" width="216">じょうたい　いじょうが
 あめの　とき　なおる。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうが
-あめの　とき　なおる。</language>
+		<language name="JPN_KANJI" width="216">状態異常が
+雨の　とき　治る。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_094">
 		<language name="JPN" width="216">はれると　ＨＰが　へるが
 とくこうが　あがる。</language>
-		<language name="JPN_KANJI" width="216">はれると　ＨＰが　へるが
-とくこうが　あがる。</language>
+		<language name="JPN_KANJI" width="216">晴れると　ＨＰが　減るが
+特攻が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_095">
 		<language name="JPN" width="216">じょうたい　いじょうで
 すばやさが　あがる。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうで
-すばやさが　あがる。</language>
+		<language name="JPN_KANJI" width="216">状態異常で
+素早さが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_096">
 		<language name="JPN" width="216">だしたわざが　すべて
 ノーマルタイプに　なる。</language>
-		<language name="JPN_KANJI" width="216">だしたわざが　すべて
+		<language name="JPN_KANJI" width="216">だした技が　すべて
 ノーマルタイプに　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_097">
 		<language name="JPN" width="216">きゅうしょに　あてたとき
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">きゅうしょに　あてたとき
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">急所に　当てたとき
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_098">
 		<language name="JPN" width="216">こうげき　いがいでは
 ダメージを　うけない。</language>
-		<language name="JPN_KANJI" width="216">こうげき　いがいでは
-ダメージを　うけない。</language>
+		<language name="JPN_KANJI" width="216">攻撃　以外では
+ダメージを　受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_099">
 		<language name="JPN" width="216">おたがいの　わざが
 かならず　あたる。</language>
-		<language name="JPN_KANJI" width="216">おたがいの　わざが
-かならず　あたる。</language>
+		<language name="JPN_KANJI" width="216">お互いの　技が
+かならず　当たる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_100">
 		<language name="JPN" width="216">あいてより　すばやくても
 こうどうが　おそくなる。</language>
-		<language name="JPN_KANJI" width="216">あいてより　すばやくても
-こうどうが　おそくなる。</language>
+		<language name="JPN_KANJI" width="216">相手より　素早くても
+行動が　遅くなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_101">
 		<language name="JPN" width="216">よわい　わざの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">よわい　わざの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">弱い　技の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_102">
 		<language name="JPN" width="216">じょうたい　いじょうに
 はれのとき　ならない。</language>
-		<language name="JPN_KANJI" width="216">じょうたい　いじょうに
-はれのとき　ならない。</language>
+		<language name="JPN_KANJI" width="216">晴れのとき
+状態異常に　ならない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_103">
 		<language name="JPN" width="216">もっている　どうぐを
 つかうことが　できない。</language>
-		<language name="JPN_KANJI" width="216">もっている　どうぐを
-つかうことが　できない。</language>
+		<language name="JPN_KANJI" width="216">持っている　道具を
+使うことが　できない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_104">
 		<language name="JPN" width="216">とくせいに　かんけいなく
 あいてに　わざを　だせる。</language>
-		<language name="JPN_KANJI" width="216">とくせいに　かんけいなく
-あいてに　わざを　だせる。</language>
+		<language name="JPN_KANJI" width="216">特性に　関係なく
+相手に　技を　だせる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_105">
 		<language name="JPN" width="216">あいての　きゅうしょに
 こうげきが　あたりやすい。</language>
-		<language name="JPN_KANJI" width="216">あいての　きゅうしょに
-こうげきが　あたりやすい。</language>
+		<language name="JPN_KANJI" width="216">相手の　急所に
+攻撃が　当たりやすい。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_106">
 		<language name="JPN" width="216">ひんしの　ときに　ふれた
 あいてに　ダメージ。</language>
-		<language name="JPN_KANJI" width="216">ひんしの　ときに　ふれた
-あいてに　ダメージ。</language>
+		<language name="JPN_KANJI" width="216">ひんしの　ときに　触れた
+相手に　ダメージ。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_107">
 		<language name="JPN" width="216">あいての　もつ　きけんな
 わざを　さっちする。</language>
-		<language name="JPN_KANJI" width="216">あいての　もつ　きけんな
-わざを　さっちする。</language>
+		<language name="JPN_KANJI" width="216">相手の　もつ　危険な
+技を　察知する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_108">
 		<language name="JPN" width="216">あいての　もつ　わざを
 よみとることが　できる。</language>
-		<language name="JPN_KANJI" width="216">あいての　もつ　わざを
-よみとることが　できる。</language>
+		<language name="JPN_KANJI" width="216">相手の　もつ　技を
+読み取ることが　できる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_109">
 		<language name="JPN" width="216">あいての　のうりょくの
 へんかを　むしする。</language>
-		<language name="JPN_KANJI" width="216">あいての　のうりょくの
-へんかを　むしする。</language>
+		<language name="JPN_KANJI" width="216">相手の　能力の
+変化を　無視する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_110">
 		<language name="JPN" width="216">こうかいまひとつ　のとき
 わざを　つよめる。</language>
-		<language name="JPN_KANJI" width="216">こうかいまひとつ　のとき
-わざを　つよめる。</language>
+		<language name="JPN_KANJI" width="216">効果いまひとつ　のとき
+技を　強める。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_111">
 		<language name="JPN" width="216">こうかばつぐん　のとき
 いりょくを　よわめる。</language>
-		<language name="JPN_KANJI" width="216">こうかばつぐん　のとき
-いりょくを　よわめる。</language>
+		<language name="JPN_KANJI" width="216">効果バツグン　のとき
+威力を　弱める。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_112">
 		<language name="JPN" width="216">こうげきと　すばやさが
 しばらく　はんぶんになる。</language>
-		<language name="JPN_KANJI" width="216">こうげきと　すばやさが
-しばらく　はんぶんになる。</language>
+		<language name="JPN_KANJI" width="216">攻撃と　素早さが
+しばらく　半分になる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_113">
 		<language name="JPN" width="216">ゴーストタイプに　わざが
 あたるようになる。</language>
-		<language name="JPN_KANJI" width="216">ゴーストタイプに　わざが
-あたるようになる。</language>
+		<language name="JPN_KANJI" width="216">ゴーストタイプに　技が
+当たるようになる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_114">
 		<language name="JPN" width="216">みずタイプの　わざを
 すべて　うける。</language>
-		<language name="JPN_KANJI" width="216">みずタイプの　わざを
-すべて　うける。</language>
+		<language name="JPN_KANJI" width="216">みずタイプの　技を
+すべて　受ける。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_115">
 		<language name="JPN" width="216">てんきが　あられのとき
 ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="216">てんきが　あられのとき
-ＨＰを　かいふくする。</language>
+		<language name="JPN_KANJI" width="216">天気が　あられのとき
+ＨＰを　回復する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_116">
 		<language name="JPN" width="216">こうかばつぐん　のとき
 いりょくを　よわめる。</language>
-		<language name="JPN_KANJI" width="216">こうかばつぐん　のとき
-いりょくを　よわめる。</language>
+		<language name="JPN_KANJI" width="216">効果バツグン　のとき
+威力を　弱める。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_117">
 		<language name="JPN" width="216">せんとうに　でると
 あられを　ふらす。</language>
-		<language name="JPN_KANJI" width="216">せんとうに　でると
+		<language name="JPN_KANJI" width="216">戦闘に　でると
 あられを　ふらす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_118">
 		<language name="JPN" width="216">あまいミツを　あつめて
 くることが　ある。</language>
-		<language name="JPN_KANJI" width="216">あまいミツを　あつめて
+		<language name="JPN_KANJI" width="216">あまいミツを　集めて
 くることが　ある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_119">
 		<language name="JPN" width="216">あいての　もちものを
 しることが　できる。</language>
-		<language name="JPN_KANJI" width="216">あいての　もちものを
-しることが　できる。</language>
+		<language name="JPN_KANJI" width="216">相手の　持ち物を
+知ることが　できる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_120">
 		<language name="JPN" width="216">はんどうで　ダメージを
 うけるわざが　つよくなる。</language>
-		<language name="JPN_KANJI" width="216">はんどうで　ダメージを
-うけるわざが　つよくなる。</language>
+		<language name="JPN_KANJI" width="216">反動で　ダメージを
+受ける技が　強くなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_121">
 		<language name="JPN" width="216">もっている　プレートで
 タイプが　かわる。</language>
-		<language name="JPN_KANJI" width="216">もっている　プレートで
-タイプが　かわる。</language>
+		<language name="JPN_KANJI" width="216">持っている　プレートで
+タイプが　変わる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_122">
 		<language name="JPN" width="216">はれのとき　じぶんと
 みかたが　つよくなる。</language>
-		<language name="JPN_KANJI" width="216">はれのとき　じぶんと
-みかたが　つよくなる。</language>
+		<language name="JPN_KANJI" width="216">晴れのとき　自分と
+味方が　強くなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_123">
 		<language name="JPN" width="216">ねむっている　あいての
 ＨＰを　へらす。</language>
-		<language name="JPN_KANJI" width="216">ねむっている　あいての
+		<language name="JPN_KANJI" width="216">ねむっている　相手の
 ＨＰを　へらす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_124">
 		<language name="JPN" width="216">さわられた　あいてから
 どうぐを　ぬすむ。</language>
-		<language name="JPN_KANJI" width="216">さわられた　あいてから
-どうぐを　ぬすむ。</language>
+		<language name="JPN_KANJI" width="216">触られた　相手から
+道具を　盗む。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_125">
 		<language name="JPN" width="216">ちからが　つよくなるが
 ついかこうかが　だせない。</language>
-		<language name="JPN_KANJI" width="216">ちからが　つよくなるが
-ついかこうかが　だせない。</language>
+		<language name="JPN_KANJI" width="216">力が　強くなるが
+追加効果が　だせない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_126">
 		<language name="JPN" width="216">のうりょくの　へんかが
 ぎゃくてんする。</language>
-		<language name="JPN_KANJI" width="216">のうりょくの　へんかが
-ぎゃくてんする。</language>
+		<language name="JPN_KANJI" width="216">能力の　変化が
+逆転する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_127">
 		<language name="JPN" width="216">あいてを　きんちょうさせ
 きのみを　たべさせない。</language>
-		<language name="JPN_KANJI" width="216">あいてを　きんちょうさせ
-きのみを　たべさせない。</language>
+		<language name="JPN_KANJI" width="216">相手を　きんちょうさせ
+きのみを　食べさせない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_128">
 		<language name="JPN" width="216">のうりょくが　さがると
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">のうりょくが　さがると
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">能力が　さがると
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_129">
 		<language name="JPN" width="216">ＨＰが　はんぶんになると
 ちからが　よわくなる。</language>
-		<language name="JPN_KANJI" width="216">ＨＰが　はんぶんになると
-ちからが　よわくなる。</language>
+		<language name="JPN_KANJI" width="216">ＨＰが　半分になると
+力が　弱くなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_130">
 		<language name="JPN" width="216">たまに　ふれた　あいてを
 かなしばりにする。</language>
-		<language name="JPN_KANJI" width="216">たまに　ふれた　あいてを
+		<language name="JPN_KANJI" width="216">たまに　触れた　相手を
 かなしばりにする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_131">
 		<language name="JPN" width="216">みかたの　じょうたいを
 たまに　なおしてしまう。</language>
-		<language name="JPN_KANJI" width="216">みかたの　じょうたいを
-たまに　なおしてしまう。</language>
+		<language name="JPN_KANJI" width="216">味方の　状態を
+たまに　治してしまう。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_132">
 		<language name="JPN" width="216">みかたの　ダメージを
 へらすことができる。</language>
-		<language name="JPN_KANJI" width="216">みかたの　ダメージを
-へらすことができる。</language>
+		<language name="JPN_KANJI" width="216">味方の　ダメージを
+減らすことができる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_133">
 		<language name="JPN" width="216">ぶつりわざで　ぼうぎょが
 さがり　すばやさがあがる。</language>
-		<language name="JPN_KANJI" width="216">ぶつりわざで　ぼうぎょが
-さがり　すばやさがあがる。</language>
+		<language name="JPN_KANJI" width="216">物理技で　防御がさがり
+素早さが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_134">
 		<language name="JPN" width="216">じぶんの　おもさが
 ２ばいに　なる。</language>
-		<language name="JPN_KANJI" width="216">じぶんの　おもさが
-２ばいに　なる。</language>
+		<language name="JPN_KANJI" width="216">自分の　重さが
+２倍に　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_135">
 		<language name="JPN" width="216">じぶんの　おもさが
 はんぶんに　なる。</language>
-		<language name="JPN_KANJI" width="216">じぶんの　おもさが
-はんぶんに　なる。</language>
+		<language name="JPN_KANJI" width="216">自分の　重さが
+半分に　なる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_136">
 		<language name="JPN" width="216">ＨＰが　まんたんのときに
 ダメージが　すくなくなる。</language>
-		<language name="JPN_KANJI" width="216">ＨＰが　まんたんのときに
-ダメージが　すくなくなる。</language>
+		<language name="JPN_KANJI" width="216">ＨＰが　満タンのときに
+ダメージが　少なくなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_137">
 		<language name="JPN" width="216">どくのとき　ぶつりの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">どくのとき　ぶつりの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">どくのとき　物理の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_138">
 		<language name="JPN" width="216">やけどのとき　とくしゅの
 いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="216">やけどのとき　とくしゅの
-いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">やけどのとき　特殊の
+威力が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_139">
 		<language name="JPN" width="216">つかった　きのみを
 なんかいも　つくりだす。</language>
-		<language name="JPN_KANJI" width="216">つかった　きのみを
-なんかいも　つくりだす。</language>
+		<language name="JPN_KANJI" width="216">使った　きのみを
+何回も　つくりだす。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_140">
 		<language name="JPN" width="216">いきをあわせて　みかたの
 こうげきを　うけない。</language>
-		<language name="JPN_KANJI" width="216">いきをあわせて　みかたの
-こうげきを　うけない。</language>
+		<language name="JPN_KANJI" width="216">息を合わせて　味方の
+攻撃を　受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_141">
 		<language name="JPN" width="216">のうりょくが　あがったり
 さがったりする。</language>
-		<language name="JPN_KANJI" width="216">のうりょくが　あがったり
+		<language name="JPN_KANJI" width="216">能力が　あがったり
 さがったりする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_142">
 		<language name="JPN" width="216">てんきの　えいきょうで
 ダメージを　うけない。</language>
-		<language name="JPN_KANJI" width="216">てんきの　えいきょうで
-ダメージを　うけない。</language>
+		<language name="JPN_KANJI" width="216">天気の　影響で
+ダメージを　受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_143">
 		<language name="JPN" width="216">さわるだけで　あいてを　
 どくにすることがある。</language>
-		<language name="JPN_KANJI" width="216">さわるだけで　あいてを　
-どくにすることがある。</language>
+		<language name="JPN_KANJI" width="216">触るだけで　相手を　
+毒にすることがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_144">
 		<language name="JPN" width="216">ひっこめると ＨＰが
 すこし　かいふくする。</language>
 		<language name="JPN_KANJI" width="216">ひっこめると ＨＰが
-すこし　かいふくする。</language>
+少し　回復する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_145">
 		<language name="JPN" width="216">ぼうぎょを　さげる
 こうげきを　うけない。</language>
-		<language name="JPN_KANJI" width="216">ぼうぎょを　さげる
-こうげきを　うけない。</language>
+		<language name="JPN_KANJI" width="216">防御を　さげる
+攻撃を　受けない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_146">
 		<language name="JPN" width="216">すなあらしで
 すばやさが　あがる。</language>
-		<language name="JPN_KANJI" width="216">すなあらしで
-すばやさが　あがる。</language>
+		<language name="JPN_KANJI" width="216">砂あらしで
+素早さが　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_147">
 		<language name="JPN" width="216">へんかわざを　うけにくい
 からだに　なっている。</language>
-		<language name="JPN_KANJI" width="216">へんかわざを　うけにくい
-からだに　なっている。</language>
+		<language name="JPN_KANJI" width="216">変化技を　受けにくい
+体に　なっている。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_148">
 		<language name="JPN" width="216">いちばん　さいごに
 わざをだすと　つよくなる。</language>
-		<language name="JPN_KANJI" width="216">いちばん　さいごに
-わざをだすと　つよくなる。</language>
+		<language name="JPN_KANJI" width="216">一番　最後に
+技をだすと　強くなる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_149">
 		<language name="JPN" width="216">うしろの　ポケモンに
 なりきって　でてくる。</language>
-		<language name="JPN_KANJI" width="216">うしろの　ポケモンに
+		<language name="JPN_KANJI" width="216">後ろの　ポケモンに
 なりきって　でてくる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_150">
 		<language name="JPN" width="216">めのまえの　ポケモンに
 へんしん　してしまう。</language>
-		<language name="JPN_KANJI" width="216">めのまえの　ポケモンに
-へんしん　してしまう。</language>
+		<language name="JPN_KANJI" width="216">目の前の　ポケモンに
+変身してしまう。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_151">
 		<language name="JPN" width="216">あいての　かべを
 すりぬけて　こうげき。</language>
-		<language name="JPN_KANJI" width="216">あいての　かべを
-すりぬけて　こうげき。</language>
+		<language name="JPN_KANJI" width="216">相手の　かべを
+すりぬけて　攻撃。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_152">
 		<language name="JPN" width="216">あいてに　さわられると
 あいてを　ミイラにする。</language>
-		<language name="JPN_KANJI" width="216">あいてに　さわられると
-あいてを　ミイラにする。</language>
+		<language name="JPN_KANJI" width="216">相手に　触られると
+相手を　ミイラにする。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_153">
 		<language name="JPN" width="216">あいてを　たおすと
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">あいてを　たおすと
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">相手を　たおすと
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_154">
 		<language name="JPN" width="216">あくを　うけると
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="216">あくを　うけると
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="216">あくを　受けると
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_155">
 		<language name="JPN" width="216">びびって　すばやさが
 あがる　タイプがある。</language>
-		<language name="JPN_KANJI" width="216">びびって　すばやさが
+		<language name="JPN_KANJI" width="216">びびって　素早さが
 あがる　タイプがある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_156">
 		<language name="JPN" width="216">へんかわざを　かえす
 ことが　できる。</language>
-		<language name="JPN_KANJI" width="216">へんかわざを　かえす
+		<language name="JPN_KANJI" width="216">変化技を　返す
 ことが　できる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_157">
 		<language name="JPN" width="216">くさの　わざを　うけると
 とくこうが　あがる。</language>
-		<language name="JPN_KANJI" width="216">くさの　わざを　うけると
-とくこうが　あがる。</language>
+		<language name="JPN_KANJI" width="216">くさの　技を　受けると
+特攻が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_158">
 		<language name="JPN" width="216">へんかわざを　せんせいで
 だすことが　できる。</language>
-		<language name="JPN_KANJI" width="216">へんかわざを　せんせいで
+		<language name="JPN_KANJI" width="216">変化技を　先制で
 だすことが　できる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_159">
 		<language name="JPN" width="216">すなあらしで　いりょくが
 あがる　わざがある。</language>
-		<language name="JPN_KANJI" width="216">すなあらしで　いりょくが
-あがる　わざがある。</language>
+		<language name="JPN_KANJI" width="216">砂あらしで　威力が
+あがる　技がある。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_160">
 		<language name="JPN" width="216">ふれた　あいてを
 キズつける。</language>
-		<language name="JPN_KANJI" width="216">ふれた　あいてを
+		<language name="JPN_KANJI" width="216">触れた　相手を
 キズつける。</language>
 	</row>
 
@@ -1522,28 +1522,28 @@
 		<language name="JPN" width="216">ピンチに　なると
 すがたが　へんかする。</language>
 		<language name="JPN_KANJI" width="216">ピンチに　なると
-すがたが　へんかする。</language>
+姿が　変化する。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_162">
 		<language name="JPN" width="216">じぶんや　みかたの
 めいちゅうが　あがる。</language>
-		<language name="JPN_KANJI" width="216">じぶんや　みかたの
-めいちゅうが　あがる。</language>
+		<language name="JPN_KANJI" width="216">自分や　味方の
+命中が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_163">
 		<language name="JPN" width="216">とくせいに　かんけいなく
 あいてに　わざを　だせる。</language>
-		<language name="JPN_KANJI" width="216">とくせいに　かんけいなく
-あいてに　わざを　だせる。</language>
+		<language name="JPN_KANJI" width="216">特性に　関係なく
+相手に　技を　だせる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_164">
 		<language name="JPN" width="216">とくせいに　かんけいなく
 あいてに　わざを　だせる。</language>
-		<language name="JPN_KANJI" width="216">とくせいに　かんけいなく
-あいてに　わざを　だせる。</language>
+		<language name="JPN_KANJI" width="216">特性に　関係なく
+相手に　技を　だせる。</language>
 	</row>
 
 	<flowchart-group-list>
