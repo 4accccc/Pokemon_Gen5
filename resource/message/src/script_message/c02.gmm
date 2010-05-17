@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T11:55:16"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T20:15:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1457,6 +1457,35 @@ C02ジムリーダー</attribute>
 	</row>
 
 	<row id="msg_c02_white_stone_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：d04r0601イベント後
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『……なんだか
+たいへんそう　ってことしか▽
+わからなかったんだけどお▼
+……[1:00:トレーナー名:0]
+ソウリュウシティは　わかる？▼
+セッカシティから
+シリンダーブリッジを　わたった▽
+さきに　あるんだって▼
+いまの　せつめいで
+よく　わからなかったら▽
+タウンマップを　みてね……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……なんだか
+大変そう　ってことしか▽
+わからなかったんだけどお▼
+……[1:00:トレーナー名:0]
+ソウリュウシティは　わかる？▼
+セッカシティから
+シリンダーブリッジを　渡った▽
+先に　あるんだって▼
+いまの　説明で
+よく　わからなかったら▽
+タウンマップを　みてね……▼</language>
+	</row>
+
+	<row id="msg_c02_white_stone_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・white_stone_03表示後
 　別マップに行くまで繰り返し表示
