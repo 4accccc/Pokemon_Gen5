@@ -21,6 +21,7 @@
 #include "field_player.h"
 #include "field_buildmodel.h"
 
+#include "entrance_event_common.h"
 #include "entrance_camera.h"
 #include "event_entrance_effect.h" 
 #include "event_mapchange.h"        // for MAPCHANGE_setPlayerVanish
@@ -73,27 +74,16 @@ enum {
 //============================================================================================
 typedef struct {
 
-  // 以下はワーク生成時にセットされる
-  GAMESYS_WORK *  gameSystem;      //<<<ゲームシステムへのポインタ
-  GAMEDATA *      gameData;        //<<<ゲームデータへのポインタ
-  FIELDMAP_WORK * fieldmap;        //<<<フィールドマップへのポインタ
-  FIELD_SOUND *   fieldSound;      //<<<フィールドサウンドへのポインタ
-  u16             prevZoneID;      //<<<ドアに入る時のゾーンID
-  u16             nextZoneID;      //<<<ドアから出た先のゾーンID
-  BOOL            cameraAnimeFlag; //<<<カメラアニメーションの有無
-  BOOL            seasonDispFlag;  //<<<四季表示を行うかどうか
-  u8              startSeason;     //<<<最初に表示する季節 ( 四季表示を行う場合のみ有効 )
-  u8              endSeason;       //<<<最後に表示する季節 ( 四季表示を行う場合のみ有効 )
-  FIELD_FADE_TYPE fadeType;        //<<<季節表示を行わない場合のフェードタイプ
-  ECAM_WORK*      ECamWork;        //<<<カメラ演出ワーク
-  ECAM_PARAM      ECamParam;       //<<<カメラ演出パラメータ
-  EXIT_TYPE       exitType;        //<<<出入り口タイプ
-  u16             count;           //<<<カウンタ
-  u8              playerDir;       //<<<自機の向き
-  VecFx32         doorSearchPos;   //<<<ドア検索位置
-  FIELD_BMODEL *  doorBM;          //<<<ドアの配置モデル
-  u8              seq[ MAX_SEQ_LENGTH ]; //<<<シーケンス
-  u8              seqPos;                //<<<現在のシーケンス位置
+  ENTRANCE_EVDATA* evdata;          //<<<出入り口イベントの共通ワーク
+  FIELD_SOUND *    fieldSound;      //<<<フィールドサウンドへのポインタ
+  ECAM_WORK*       ECamWork;        //<<<カメラ演出ワーク
+  ECAM_PARAM       ECamParam;       //<<<カメラ演出パラメータ
+  u16              count;           //<<<カウンタ
+  u8               playerDir;       //<<<自機の向き
+  VecFx32          doorSearchPos;   //<<<ドア検索位置
+  FIELD_BMODEL *   doorBM;          //<<<ドアの配置モデル
+  u8               seq[ MAX_SEQ_LENGTH ]; //<<<シーケンス
+  u8               seqPos;                //<<<現在のシーケンス位置
 
 } FIELD_DOOR_ANIME_WORK;
 
@@ -144,56 +134,37 @@ void EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* 
 /**
  * @brief ドアからでてくる一連の演出イベントを生成する
  *
- * @param gameSystem
- * @param fieldmap
- * @param cameraAnimeFlag カメラアニメーションの有無
- * @param seasonDispFlag  四季表示を行うかどうか
- * @param startSeason     最初に表示する季節 ( 四季表示を行う場合のみ有効 )
- * @param endSeason       最後に表示する季節 ( 四季表示を行う場合のみ有効 )
- * @param fadeType        季節表示を行わない場合のフェードタイプ
- * @param exitType        出入り口タイプ
+ * @param evdata 出入り口イベントの共通ワーク
  *
  * @return 生成したイベント
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gameSystem, FIELDMAP_WORK * fieldmap, 
-                                    BOOL cameraAnimeFlag,
-                                    BOOL seasonDispFlag, u8 startSeason, u8 endSeason,
-                                    FIELD_FADE_TYPE fadeType,
-                                    EXIT_TYPE exitType )
+GMEVENT* EVENT_FieldDoorOutAnime( ENTRANCE_EVDATA* evdata )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * work;
 
   // イベントを生成
   event = GMEVENT_Create( 
-      gameSystem, NULL, ExitEvent_DoorOut, sizeof(FIELD_DOOR_ANIME_WORK) ); 
+      evdata->gameSystem, NULL, ExitEvent_DoorOut, sizeof(FIELD_DOOR_ANIME_WORK) ); 
 
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
-  work->gameSystem      = gameSystem;
-  work->gameData        = GAMESYSTEM_GetGameData( gameSystem );
-  work->fieldmap        = GAMESYSTEM_GetFieldMapWork( gameSystem );
-  work->fieldSound      = GAMEDATA_GetFieldSound( work->gameData );
-  work->cameraAnimeFlag = cameraAnimeFlag;
-  work->seasonDispFlag  = seasonDispFlag;
-  work->startSeason     = startSeason;
-  work->endSeason       = endSeason;
-  work->fadeType        = fadeType;
-  work->doorBM          = NULL;
-  work->exitType        = exitType;
-  work->count           = 0;
-  work->playerDir       = GetPlayerDir( fieldmap );
-  work->seqPos          = 0;
+  work->evdata     = evdata;
+  work->fieldSound = GAMEDATA_GetFieldSound( evdata->gameData );
+  work->doorBM     = NULL;
+  work->count      = 0;
+  work->playerDir  = GetPlayerDir( evdata->fieldmap );
+  work->seqPos     = 0;
 
   // カメラ演出のセットアップパラメータを作成
-  work->ECamWork = ENTRANCE_CAMERA_CreateWork( fieldmap );
-  work->ECamParam.exitType  = exitType;
+  work->ECamWork = ENTRANCE_CAMERA_CreateWork( evdata->fieldmap );
+  work->ECamParam.exitType  = evdata->exit_type_out;
   work->ECamParam.situation = ECAM_SITUATION_OUT;
   work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
 
   // ドアを検索
-  GetPlayerPos( fieldmap, &work->doorSearchPos );
+  GetPlayerPos( evdata->fieldmap, &work->doorSearchPos );
   SearchDoorBM( work );
 
   // シーケンスの流れを決定
@@ -210,7 +181,8 @@ GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gameSystem, FIELDMAP_WORK * f
 //--------------------------------------------------------------------------------------------
 static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
 {
-  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  ENTRANCE_EVDATA* evdata   = work->evdata;
+  FIELDMAP_WORK*   fieldmap = evdata->fieldmap;
   int idx = 0;
 
   // ドアがある場合
@@ -246,7 +218,7 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
   // ドアがない場合
   else {
     // 特殊出入口
-    if( EXIT_TYPE_IsSpExit(work->exitType) ) {
+    if( EXIT_TYPE_IsSpExit(evdata->exit_type_out) ) {
       work->seq[idx++] = SEQ_DOOROUT_INIT;
       work->seq[idx++] = SEQ_DOOROUT_EFFECT_START;
       work->seq[idx++] = SEQ_DOOROUT_PLAYER_STEP;
@@ -286,9 +258,10 @@ static void SetupDoorOutEventSeq( FIELD_DOOR_ANIME_WORK* work )
 static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 { 
 	FIELD_DOOR_ANIME_WORK * work       = wk;
-	GAMESYS_WORK *          gameSystem = work->gameSystem;
-  GAMEDATA *              gameData   = work->gameData;
-  FIELDMAP_WORK *         fieldmap   = work->fieldmap;
+  ENTRANCE_EVDATA*        evdata     = work->evdata;
+	GAMESYS_WORK *          gameSystem = evdata->gameSystem;
+  GAMEDATA *              gameData   = evdata->gameData;
+  FIELDMAP_WORK *         fieldmap   = evdata->fieldmap;
   FIELD_SOUND *           fieldSound = work->fieldSound;
   FIELD_CAMERA *          camera     = FIELDMAP_GetFieldCamera( fieldmap ); 
   FIELD_TASK_MAN *        task_man   = FIELDMAP_GetTaskManager( fieldmap );
@@ -409,53 +382,37 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 /**
  * @brief ドアに入る一連の演出イベントを生成する
  *
- * @param gameSystem
- * @param fieldmap
- * @param cameraAnimeFlag カメラアニメーションの有無
- * @param seasonDispFlag  四季表示を行うかどうか
- * @param fadeType        四季表示を行わない場合のフェードタイプ
+ * @param evdata 出入り口イベントの共通ワーク
  *
  * @return 生成したイベント
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT* EVENT_FieldDoorInAnime ( 
-    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
-    u16 prevZoneID, u16 nextZoneID,
-    BOOL cameraAnimeFlag, BOOL seasonDispFlag, FIELD_FADE_TYPE fadeType,
-    EXIT_TYPE exitType )
+GMEVENT* EVENT_FieldDoorInAnime( ENTRANCE_EVDATA* evdata )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * work;
 
   // イベントを生成 
   event = GMEVENT_Create( 
-      gameSystem, NULL, ExitEvent_DoorIn, sizeof(FIELD_DOOR_ANIME_WORK) ); 
+      evdata->gameSystem, NULL, ExitEvent_DoorIn, sizeof(FIELD_DOOR_ANIME_WORK) ); 
 
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
-  work->gameSystem      = gameSystem;
-  work->gameData        = GAMESYSTEM_GetGameData( gameSystem );
-  work->fieldmap        = GAMESYSTEM_GetFieldMapWork( gameSystem );
-  work->fieldSound      = GAMEDATA_GetFieldSound( work->gameData );
-  work->prevZoneID      = prevZoneID;
-  work->nextZoneID      = nextZoneID;
-  work->cameraAnimeFlag = cameraAnimeFlag;
-  work->seasonDispFlag  = seasonDispFlag;
-  work->fadeType        = fadeType;
-  work->doorBM          = NULL;
-  work->exitType        = exitType;
-  work->count           = 0;
-  work->playerDir       = GetPlayerDir( fieldmap );
-  work->seqPos          = 0;
+  work->evdata     = evdata;
+  work->fieldSound = GAMEDATA_GetFieldSound( evdata->gameData );
+  work->doorBM     = NULL;
+  work->count      = 0;
+  work->playerDir  = GetPlayerDir( evdata->fieldmap );
+  work->seqPos     = 0;
 
   // カメラ演出のセットアップパラメータを作成
-  work->ECamWork = ENTRANCE_CAMERA_CreateWork( fieldmap );
-  work->ECamParam.exitType  = exitType;
+  work->ECamWork = ENTRANCE_CAMERA_CreateWork( evdata->fieldmap );
+  work->ECamParam.exitType  = evdata->exit_type_in;
   work->ECamParam.situation = ECAM_SITUATION_IN;
   work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
 
   // ドアを検索
-  GetPlayerFrontPos( fieldmap, &work->doorSearchPos );
+  GetPlayerFrontPos( evdata->fieldmap, &work->doorSearchPos );
   SearchDoorBM( work );
 
   // シーケンスの流れを決定
@@ -473,7 +430,8 @@ GMEVENT* EVENT_FieldDoorInAnime (
 //--------------------------------------------------------------------------------------------
 static void SetupDoorInEventSeq( FIELD_DOOR_ANIME_WORK* work )
 {
-  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  ENTRANCE_EVDATA* evdata   = work->evdata;
+  FIELDMAP_WORK*   fieldmap = evdata->fieldmap;
   int idx = 0;
 
   // ドアがある場合
@@ -507,9 +465,10 @@ static void SetupDoorInEventSeq( FIELD_DOOR_ANIME_WORK* work )
 static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
 { 
   FIELD_DOOR_ANIME_WORK * work       = wk;
-  GAMESYS_WORK *          gameSystem = work->gameSystem;
-  GAMEDATA *              gameData   = work->gameData;
-  FIELDMAP_WORK *         fieldmap   = work->fieldmap;
+  ENTRANCE_EVDATA*        evdata     = work->evdata;
+  GAMESYS_WORK *          gameSystem = evdata->gameSystem;
+  GAMEDATA *              gameData   = evdata->gameData;
+  FIELDMAP_WORK *         fieldmap   = evdata->fieldmap;
   FIELD_SOUND *           fieldSound = work->fieldSound; 
   FIELD_TASK_MAN *        task_man   = FIELDMAP_GetTaskManager( fieldmap );
 
@@ -574,7 +533,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
 
     // BGM再生準備
   case SEQ_DOORIN_BGM_STAND_BY:
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->prevZoneID, work->nextZoneID );
+    FSND_StandByNextMapBGM( fieldSound, gameData, evdata->nextLocation.zone_id );
+    evdata->BGM_standby_flag = TRUE;
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
     break;
@@ -777,13 +737,14 @@ static void FinishCurrentSeq( FIELD_DOOR_ANIME_WORK* work )
 //--------------------------------------------------------------------------------------------
 static void SearchDoorBM( FIELD_DOOR_ANIME_WORK* work )
 {
+  ENTRANCE_EVDATA* evdata = work->evdata;
   FLDMAPPER* fldmapper;
   FIELD_BMODEL_MAN* BModelMan;
 
   GF_ASSERT( work->doorBM == NULL );
 
   // ドアを検索
-  fldmapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
+  fldmapper = FIELDMAP_GetFieldG3Dmapper( evdata->fieldmap );
   BModelMan = FLDMAPPER_GetBuildModelManager( fldmapper );
   work->doorBM = FIELD_BMODEL_Create_Search( BModelMan, BM_SEARCH_ID_DOOR, &work->doorSearchPos );
 }
@@ -913,17 +874,18 @@ static void StartDoorClose( const FIELD_DOOR_ANIME_WORK* work )
 //--------------------------------------------------------------------------------------------
 static void StartFadeInEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work )
 {
+  ENTRANCE_EVDATA* evdata = work->evdata;
   GMEVENT* fadeEvent;
 
-  if( work->seasonDispFlag ) { 
-    // 季節フェード
+  // 季節フェード
+  if( evdata->season_disp_flag ) { 
     fadeEvent = EVENT_FieldFadeIn_Season( 
-        work->gameSystem, work->fieldmap, work->startSeason, work->endSeason );
+        evdata->gameSystem, evdata->fieldmap, evdata->start_season, evdata->end_season );
   }
+  // 基本フェード
   else { 
-    // 基本フェード
     fadeEvent = EVENT_FieldFadeIn( 
-        work->gameSystem, work->fieldmap, work->fadeType, FIELD_FADE_WAIT, TRUE, 0, 0 );
+        evdata->gameSystem, evdata->fieldmap, evdata->fadein_type, FIELD_FADE_WAIT, TRUE, 0, 0 );
   }
 
   GMEVENT_CallEvent( event, fadeEvent );
@@ -939,17 +901,18 @@ static void StartFadeInEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work 
 //--------------------------------------------------------------------------------------------
 static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work )
 {
+  ENTRANCE_EVDATA* evdata = work->evdata;
   GMEVENT* fadeEvent;
 
-  if( work->seasonDispFlag ) { 
-    // 輝度フェード
+  // 輝度フェード
+  if( evdata->season_disp_flag ) { 
     fadeEvent = EVENT_FieldFadeOut_Black( 
-        work->gameSystem, work->fieldmap, FIELD_FADE_WAIT );
+        evdata->gameSystem, evdata->fieldmap, FIELD_FADE_WAIT );
   }
+  // 基本フェード
   else { 
-    // 基本フェード
     fadeEvent = EVENT_FieldFadeOut( 
-        work->gameSystem, work->fieldmap, work->fadeType, FIELD_FADE_WAIT );
+        evdata->gameSystem, evdata->fieldmap, evdata->fadeout_type, FIELD_FADE_WAIT );
   }
 
   GMEVENT_CallEvent( event, fadeEvent );
@@ -967,11 +930,13 @@ static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work
 //--------------------------------------------------------------------------------------------
 static BOOL CheckMapChangeSE( const FIELD_DOOR_ANIME_WORK* work )
 {
+  ENTRANCE_EVDATA* evdata = work->evdata;
+
   // ドアがある場合は再生しない
   if( CheckDoorExist(work) ) { return FALSE; }
 
   // クロスフェードの場合は再生しない
-  if( work->fadeType == FIELD_FADE_CROSS ) { return FALSE; }
+  if( evdata->fadeout_type == FIELD_FADE_CROSS ) { return FALSE; }
 
   return TRUE;
 }

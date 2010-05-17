@@ -45,6 +45,7 @@
 #include "move_pokemon.h"
 #include "field_sound.h"
 #include "effect_encount.h" 
+#include "entrance_event_common.h"
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
 #include "event_appear.h"
@@ -694,6 +695,8 @@ typedef struct
   u16  prevSeason;         ///<遷移前の季節
   u16  nextSeason;         ///<遷移後の季節
 
+  ENTRANCE_EVDATA entranceEventData; ///<出入り口イベント用のワーク
+
 } MAPCHANGE_WORK;
 
 typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
@@ -744,6 +747,73 @@ static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
     work->prevSeason = prevSeason;
     work->nextSeason = nextSeason;
   }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 出入り口イベント用のワークをセットアップする ( 入り口用 )
+ *
+ * @param work
+ * @param parentEvent 出入り口イベントの親イベント
+ */
+//------------------------------------------------------------------
+static void SetupEntranceEventData_In( MAPCHANGE_WORK* work, GMEVENT* parentEvent )
+{
+  ENTRANCE_EVDATA* data = &(work->entranceEventData);
+
+  data->parentEvent      = parentEvent;
+  data->gameSystem       = work->gameSystem;
+  data->gameData         = work->gameData;
+  data->fieldmap         = work->fieldmap;
+  data->exit_type_in     = work->exit_type;
+  data->prev_zone_id     = work->before_zone_id;
+  data->nextLocation     = work->loc_req;
+  data->fadeout_type     = FIELD_FADE_GetFadeOutType( work->before_zone_id, work->loc_req.zone_id );
+  data->fadein_type      = FIELD_FADE_GetFadeInType( work->before_zone_id, work->loc_req.zone_id );
+  data->season_disp_flag = (work->seasonUpdateEnable) && (work->seasonUpdateOccur);
+  data->start_season     = PMSEASON_GetNextSeasonID( work->prevSeason );
+  data->end_season       = work->nextSeason; 
+  data->BGM_standby_flag = FALSE;
+  data->BGM_fadeout_flag = FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 出入り口イベント用のワークをセットアップする ( 出口用 )
+ *
+ * @param work
+ * @param parentEvent 出入り口イベントの親イベント
+ */
+//------------------------------------------------------------------
+static void SetupEntranceEventData_Out( MAPCHANGE_WORK* work, GMEVENT* parentEvent )
+{
+  ENTRANCE_EVDATA* data = &(work->entranceEventData);
+
+  data->parentEvent      = parentEvent;
+  data->gameSystem       = work->gameSystem;
+  data->gameData         = work->gameData;
+  data->fieldmap         = work->fieldmap;
+  data->exit_type_in     = work->exit_type;
+  data->prev_zone_id     = work->before_zone_id;
+  data->nextLocation     = work->loc_req;
+  data->fadeout_type     = FIELD_FADE_GetFadeOutType( work->before_zone_id, work->loc_req.zone_id );
+  data->fadein_type      = FIELD_FADE_GetFadeInType( work->before_zone_id, work->loc_req.zone_id );
+  data->season_disp_flag = (work->seasonUpdateEnable) && (work->seasonUpdateOccur);
+  data->start_season     = PMSEASON_GetNextSeasonID( work->prevSeason );
+  data->end_season       = work->nextSeason; 
+
+  // 出口の EXIT_TYPE を決定
+  if( work->loc_req.type == LOCATION_TYPE_DIRECT ) {
+    data->exit_type_out = EXIT_TYPE_NONE;
+  }
+  else {
+    EVENTDATA_SYSTEM* eventData;
+    const CONNECT_DATA* connectData;
+
+    eventData   = GAMEDATA_GetEventData( work->gameData );
+    connectData = EVENTDATA_GetConnectByID( eventData, work->loc_req.exit_id );
+    data->exit_type_out = CONNECTDATA_GetExitType( connectData );
+  } 
 }
 
 //------------------------------------------------------------------
@@ -886,17 +956,15 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
   switch(*seq)
   {
   case 0:
-    // 季節更新の有無を決定
-    JudgeSeasonUpdateOccur( work );
+    JudgeSeasonUpdateOccur( work ); // 季節更新の有無を決定
     // 動作モデルの移動を止める
     {
       MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
       MMDLSYS_PauseMoveProc( fmmdlsys );
     }
     // 入口進入イベント
-    GMEVENT_CallEvent( event, 
-        EVENT_EntranceIn( event, gameSystem, gameData, fieldmap, 
-                          work->loc_req, work->exit_type, work->seasonUpdateOccur ) );
+    SetupEntranceEventData_In( work, event ); // 出入り口イベント共通ワークをセットアップ
+    GMEVENT_CallEvent( event, EVENT_EntranceIn( &(work->entranceEventData) ) );
     (*seq)++;
     return GMEVENT_RES_CONTINUE_DIRECT;
     break;
@@ -908,10 +976,8 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
     break;
   case 2:
     // 入口退出イベント
-    GMEVENT_CallEvent( event, 
-        EVENT_EntranceOut( event, gameSystem, gameData, fieldmap, work->loc_req, work->before_zone_id,
-                           work->seasonUpdateOccur, 
-                           PMSEASON_GetNextSeasonID(work->prevSeason), work->nextSeason ) );
+    SetupEntranceEventData_Out( work, event ); // 出入り口イベント共通ワークをセットアップ
+    GMEVENT_CallEvent( event, EVENT_EntranceOut( &(work->entranceEventData) ) );
     (*seq)++;
     break;
   case 3:
@@ -963,9 +1029,8 @@ static GMEVENT_RESULT EVENT_MapChangeIntrude( GMEVENT* event, int* seq, void* wk
     
   case SEQ_ENTRANCE_IN:
     // 入口進入イベント
-    GMEVENT_CallEvent( event, 
-        EVENT_EntranceIn( event, gameSystem, gameData, fieldmap, 
-                          work->loc_req, work->exit_type, work->seasonUpdateOccur ) );
+    SetupEntranceEventData_In( work, event ); // 出入り口イベント共通ワークをセットアップ
+    GMEVENT_CallEvent( event, EVENT_EntranceIn( &(work->entranceEventData) ) );
     (*seq)++;
     return GMEVENT_RES_CONTINUE_DIRECT;
     break;
@@ -977,10 +1042,8 @@ static GMEVENT_RESULT EVENT_MapChangeIntrude( GMEVENT* event, int* seq, void* wk
     break;
   case SEQ_ENTRANCE_OUT:
     // 入口退出イベント
-    GMEVENT_CallEvent( event, 
-        EVENT_EntranceOut( event, gameSystem, gameData, fieldmap, work->loc_req, work->before_zone_id,
-                           work->seasonUpdateOccur, 
-                           PMSEASON_GetNextSeasonID(work->prevSeason), work->nextSeason ) );
+    SetupEntranceEventData_Out( work, event ); // 出入り口イベント共通ワークをセットアップ
+    GMEVENT_CallEvent( event, EVENT_EntranceOut( &(work->entranceEventData) ) );
     (*seq)++;
     break;
   case SEQ_FINISH:
@@ -1043,7 +1106,7 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1081,7 +1144,7 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade( GMEVENT* event, int* seq, void* wk 
     break;
   case 1:
     // BGM更新リクエスト
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1205,7 +1268,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
     break;
   case _SEQ_BGM_CHANGE:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1257,7 +1320,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, voi
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1310,7 +1373,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1368,7 +1431,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1424,7 +1487,7 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
       PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
     }
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     (*seq)++;
     break;
@@ -1493,6 +1556,8 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, vo
 
   // 完了
   case 4:
+    FIELD_PLACE_NAME_Display( 
+        FIELDMAP_GetPlaceNameSys( fieldmap ), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1544,6 +1609,8 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleDown( GMEVENT* event, int* seq, 
 
   // 完了
   case 4:
+    FIELD_PLACE_NAME_Display(
+        FIELDMAP_GetPlaceNameSys( fieldmap ), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1558,7 +1625,9 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp( GMEVENT* event, int* seq, void* wk 
 {
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
+  GAMEDATA*       gameData   = work->gameData;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch( *seq )
   {
@@ -1573,6 +1642,9 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp( GMEVENT* event, int* seq, void* wk 
     (*seq)++;
     break;
   case 2: 
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
     // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;

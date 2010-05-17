@@ -9,31 +9,15 @@
  */
 /////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
-
+#include "entrance_event_common.h"
 
 //---------------------------------------------------------------------------------------
 /**
  * @brief 出入口退出イベントを作成する
  *
- * @param parent            親イベント
- * @param gameSystem
- * @param gameData
- * @param fieldmap
- * @param location          遷移先指定
- * @param prevZoneID        遷移前のゾーン
- * @param seasonDisplayFlag 季節表示を行うかどうか
- * @param startSeason       最初に表示する季節
- * @param endtSeason        最後に表示する季節
+ * @param evdata 出入り口イベント共通ワーク
  *
  * @return 作成したイベント
  */
 //---------------------------------------------------------------------------------------
-GMEVENT* EVENT_EntranceOut( GMEVENT* parent, 
-                            GAMESYS_WORK* gameSystem,
-                            GAMEDATA* gameData, 
-                            FIELDMAP_WORK* fieldmap, 
-                            LOCATION location,
-                            u16 prevZoneID,
-                            BOOL seasonDisplayFlag,
-                            u8 startSeason,
-                            u8 endSeason );
+extern GMEVENT* EVENT_EntranceOut( ENTRANCE_EVDATA* evdata );

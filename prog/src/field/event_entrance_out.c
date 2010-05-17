@@ -52,16 +52,7 @@ typedef enum {
 //=======================================================================================
 typedef struct {
 
-  GAMESYS_WORK*     gameSystem;
-  GAMEDATA*         gameData;
-  FIELDMAP_WORK*    fieldmap;
-  LOCATION          location;          // 遷移先指定
-  u16               prevZoneID;        // 遷移前のゾーン
-  EXIT_TYPE         exitType;          // 出入り口タイプ
-  BOOL              seasonDisplayFlag; // 季節表示を行うかどうか
-  u8                startSeason;       // 最初に表示する季節
-  u8                endSeason;         // 最後に表示する季節
-  FIELD_FADE_TYPE   fadeInType;        // 季節表示がない場合のF/Iタイプ
+  ENTRANCE_EVDATA* evdata; // 出入り口イベントの共通ワーク
 
 } EVENT_WORK;
 
@@ -76,6 +67,11 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT* event, int* 
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, int* seq, void* wk );
+// BGM
+static void StartStandByBGM( EVENT_WORK* work );
+static void CallBGMFadeInEvent( EVENT_WORK* work, GMEVENT* parentEvent );
+// 画面のフェードイン
+static void CallFadeInEvent( const EVENT_WORK* work, GMEVENT* parentEvent );
 
 
 //=======================================================================================
@@ -86,32 +82,15 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, in
 /**
  * @brief 出入口退出イベントを作成する
  *
- * @param parent            親イベント
- * @param gameSystem
- * @param gameData
- * @param fieldmap
- * @param location          遷移先指定
- * @param prevZoneID        遷移前のゾーン
- * @param seasonDisplayFlag 季節表示を行うかどうか
- * @param startSeason       最初に表示する季節
- * @param endtSeason        最後に表示する季節
+ * @param evdata 出入り口イベント共通ワーク
  *
  * @return 作成したイベント
  */
 //---------------------------------------------------------------------------------------
-GMEVENT* EVENT_EntranceOut( GMEVENT* parent, 
-                            GAMESYS_WORK* gameSystem,
-                            GAMEDATA* gameData, 
-                            FIELDMAP_WORK* fieldmap, 
-                            LOCATION location,
-                            u16 prevZoneID,
-                            BOOL seasonDisplayFlag,
-                            u8 startSeason,
-                            u8 endSeason )
+GMEVENT* EVENT_EntranceOut( ENTRANCE_EVDATA* evdata )
 {
   GMEVENT* event;
   EVENT_WORK* work; 
-  EXIT_TYPE exitType; 
   EVENTFUNC_TYPE funcType;
 
   // イベントテーブル
@@ -125,21 +104,8 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
     EVENT_FUNC_EntranceOut_ExitTypeIntrude, // EVENTFUNC_TYPE_INTRUDE 侵入
   };
 
-  // EXIT_TYPEを決定
-  if( location.type == LOCATION_TYPE_DIRECT ) {
-    exitType = EXIT_TYPE_NONE;
-  }
-  else {
-    EVENTDATA_SYSTEM* eventData;
-    const CONNECT_DATA* connectData;
-
-    eventData   = GAMEDATA_GetEventData( gameData );
-    connectData = EVENTDATA_GetConnectByID( eventData, location.exit_id );
-    exitType    = CONNECTDATA_GetExitType( connectData );
-  } 
-
   // イベント処理関数を決定
-  switch( exitType ) {
+  switch( evdata->exit_type_out ) {
   case EXIT_TYPE_NONE:    funcType = EVENTFUNC_TYPE_NONE;    break;
   case EXIT_TYPE_MAT:     funcType = EVENTFUNC_TYPE_NONE;    break;
   case EXIT_TYPE_STAIRS:  funcType = EVENTFUNC_TYPE_STEP;    break;
@@ -151,20 +117,12 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
   }
 
   // イベント作成
-  event = GMEVENT_Create( gameSystem, parent, eventFuncTable[ funcType ], sizeof( EVENT_WORK ) );
+  event = GMEVENT_Create( evdata->gameSystem, evdata->parentEvent, 
+      eventFuncTable[ funcType ], sizeof( EVENT_WORK ) );
 
   // イベント・ワークを初期化
-  work                    = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->gameSystem        = gameSystem;
-  work->gameData          = gameData;
-  work->fieldmap          = fieldmap;
-  work->prevZoneID        = prevZoneID;
-  work->location          = location;
-  work->exitType          = exitType;
-  work->seasonDisplayFlag = seasonDisplayFlag;
-  work->startSeason       = startSeason;
-  work->endSeason         = endSeason;
-  work->fadeInType        = FIELD_FADE_GetFadeInType( prevZoneID, location.zone_id );
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work->evdata = evdata;
 
   return event;
 }
@@ -181,11 +139,10 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* seq, void* wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-	GAMEDATA*      gameData   = work->gameData;
-  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( work->gameData );
+	EVENT_WORK*      work       = wk;
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   // カメラのセットアップ
@@ -195,29 +152,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 
   // BGM再生開始
   case 1:
-    FSND_PlayStartBGM( fieldSound, gameData, work->location.zone_id );
+    if( evdata->BGM_standby_flag ) {
+      StartStandByBGM( work );
+    }
     (*seq)++;
     break;
 
   // 画面フェード開始
   case 2:
-    if( work->seasonDisplayFlag ) { 
-      // 季節フェード
-      GMEVENT_CallEvent( event, 
-          EVENT_FieldFadeIn_Season( gameSystem, fieldmap, work->startSeason, work->endSeason ) );
-    }
-    else {
-      // 基本フェード
-      GMEVENT_CallEvent( event, 
-          EVENT_FieldFadeIn( gameSystem, fieldmap, work->fadeInType, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
-    }
+    CallFadeInEvent( work, event );
     (*seq)++;
     break;
 
   // イベント終了
   case 3:
     FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
+        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -230,24 +180,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* seq, void* wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
+	EVENT_WORK*      work       = wk;
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   case 0:
     // ドア退出イベント
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldDoorOutAnime( gameSystem, fieldmap, TRUE, work->seasonDisplayFlag, 
-                                 work->startSeason, work->endSeason, work->fadeInType,
-                                 work->exitType ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( evdata ) );
     (*seq)++;
     break;
 
   // イベント終了
   case 1:
     FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
+        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -260,42 +208,25 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* 
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int *seq, void * wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-	GAMEDATA*      gameData   = work->gameData;
-  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( work->gameData );
+	EVENT_WORK*      work       = wk;
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   // 画面フェードイン開始
   case 0: 
-    if( work->seasonDisplayFlag ) { 
-      // 季節フェード
-      GMEVENT_CallEvent( event, 
-          EVENT_FieldFadeIn_Season( gameSystem, fieldmap, work->startSeason, work->endSeason ) );
-    }
-    else { 
-      // クロスフェード
-      GMEVENT_CallEvent( event, 
-          EVENT_FieldFadeIn( gameSystem, fieldmap, work->fadeInType, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
-    }
+    CallFadeInEvent( work, event );
     (*seq)++;
     break;
 
   // BGM 操作
   case 1:  
-    {
-      ISS_SYS* iss = GAMESYSTEM_GetIssSystem( gameSystem );
-      ISS_DUNGEON_SYS* issD = ISS_SYS_GetIssDungeonSystem( iss );
-      // 遷移の前後ともにISS-Dの制御が有効
-      if( ISS_DUNGEON_SYS_IsActiveAt(issD, work->prevZoneID) && 
-          ISS_DUNGEON_SYS_IsActiveAt(issD, work->location.zone_id) ) {
-        // フェードイン
-        GMEVENT_CallEvent( event, EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST ) );
-      }
-      else {
-        FSND_PlayStartBGM( fieldSound, gameData, work->location.zone_id );
-      }
+    if( evdata->BGM_standby_flag ) {
+      StartStandByBGM( work );
+    }
+    else if( evdata->BGM_fadeout_flag ) {
+      CallBGMFadeInEvent( work, event );
     }
     (*seq)++;
     break;
@@ -309,7 +240,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
   // イベント終了
   case 3:
     FIELD_PLACE_NAME_Display(
-        FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
+        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -322,10 +253,10 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int *seq, void * wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-	GAMEDATA*      gameData   = work->gameData;
+	EVENT_WORK*      work       = wk;
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   // ワープ出現イベント
@@ -337,7 +268,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
   // イベント終了
   case 1:
     FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
+        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -350,23 +281,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *seq, void * wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-  FIELD_CAMERA*  camera     = FIELDMAP_GetFieldCamera( work->fieldmap );
+	EVENT_WORK*      work       = wk;
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
+  FIELD_CAMERA*    camera     = FIELDMAP_GetFieldCamera( fieldmap );
 
   switch( *seq ) {
   // ドア退出イベント
   case 0:
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldDoorOutAnime( gameSystem, fieldmap, FALSE, 
-                                 work->seasonDisplayFlag, work->startSeason, work->endSeason, work->fadeInType, work->exitType ) );
+    GMEVENT_CallEvent( event, EVENT_FieldDoorOutAnime( evdata ) );
     (*seq)++;
     break;
 
   // 地名表示更新リクエスト発行
   case 1:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id );
+    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id );
     (*seq)++;
     break;
 
@@ -384,11 +314,10 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, int* seq, void* wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-	GAMEDATA*      gameData   = work->gameData;
-  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( work->gameData );
+	EVENT_WORK*      work       = wk;
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   // カメラのセットアップ
@@ -398,7 +327,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, in
 
   // BGM再生開始
   case 1:
-    FSND_PlayStartBGM( fieldSound, gameData, work->location.zone_id );
+    if( evdata->BGM_standby_flag ) {
+      StartStandByBGM( work );
+    }
     (*seq)++;
     break;
 
@@ -412,8 +343,73 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, in
   // イベント終了
   case 3:
     FIELD_PLACE_NAME_Display( 
-        FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
+        FIELDMAP_GetPlaceNameSys(fieldmap), evdata->nextLocation.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @brief スタンバイした BGM の再生を開始する
+ *
+ * @param work
+ */
+//---------------------------------------------------------------------------------------
+static void StartStandByBGM( EVENT_WORK* work )
+{
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMEDATA*        gameData   = evdata->gameData;
+  FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
+
+  GF_ASSERT( evdata->BGM_standby_flag );
+
+  FSND_PlayStartBGM( fieldSound, gameData, evdata->nextLocation.zone_id );
+}
+
+//---------------------------------------------------------------------------------------
+/**
+ * @brief フェードアウトした BGM のフェードインイベントを呼び出す
+ *
+ * @param work
+ * @param parentEvent
+ */
+//---------------------------------------------------------------------------------------
+static void CallBGMFadeInEvent( EVENT_WORK* work, GMEVENT* parentEvent )
+{
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	GAMEDATA*        gameData   = evdata->gameData;
+  FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
+
+  GF_ASSERT( evdata->BGM_fadeout_flag );
+
+  GMEVENT_CallEvent( parentEvent, 
+      EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST ) );
+} 
+
+//---------------------------------------------------------------------------------------
+/**
+ * @brief 画面のフェードインイベントを呼び出す
+ *
+ * @param work
+ * @param parentEvent
+ */
+//---------------------------------------------------------------------------------------
+static void CallFadeInEvent( const EVENT_WORK* work, GMEVENT* parentEvent )
+{
+  ENTRANCE_EVDATA* evdata     = work->evdata;
+	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
+	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
+
+  // 季節フェード
+  if( evdata->season_disp_flag ) { 
+    GMEVENT_CallEvent( parentEvent, 
+        EVENT_FieldFadeIn_Season( gameSystem, fieldmap, evdata->start_season, evdata->end_season ) );
+  }
+  // 基本フェード
+  else {
+    GMEVENT_CallEvent( parentEvent, 
+        EVENT_FieldFadeIn( gameSystem, fieldmap, evdata->fadein_type, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
+  }
 }

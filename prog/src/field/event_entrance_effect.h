@@ -8,24 +8,10 @@
  */
 //============================================================================================
 #pragma once
-#include "event_field_fade.h" // for FIELD_FADE_TYPE
+#include "entrance_event_common.h" // for ENTRANCE_EVDATA
 
-extern GMEVENT * EVENT_FieldDoorInAnime ( GAMESYS_WORK * gsys, 
-                                          FIELDMAP_WORK * fieldmap, 
-                                          u16 prevZoneID, u16 nextZoneID,
-                                          BOOL cam_anm_flag, 
-                                          BOOL season_disp_flag,
-                                          FIELD_FADE_TYPE fadeType,
-                                          EXIT_TYPE exitType );
-
-extern GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gsys, 
-                                           FIELDMAP_WORK * fieldmap, 
-                                           BOOL cam_anm_flag, 
-                                           BOOL season_disp_flag, 
-                                           u8 start_season,
-                                           u8 end_season,
-                                           FIELD_FADE_TYPE fadeType,
-                                           EXIT_TYPE exitType );
+extern GMEVENT* EVENT_FieldDoorInAnime( ENTRANCE_EVDATA* evdata ); 
+extern GMEVENT* EVENT_FieldDoorOutAnime( ENTRANCE_EVDATA* evdata );
 
 // é©ã@ÇÃàÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ
 extern void EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest );

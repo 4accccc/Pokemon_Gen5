@@ -9,27 +9,15 @@
  */
 /////////////////////////////////////////////////////////////////////////////////////////
 #pragma once
-
+#include "entrance_event_common.h"
 
 //---------------------------------------------------------------------------------------
 /**
  * @brief 出入口進入イベントを作成する
  *
- * @param parent            親イベント
- * @param gameSystem
- * @param gameData
- * @param fieldmap
- * @param nextLocation      遷移先指定
- * @param exitType          遷移タイプ指定
- * @param seasonDisplayFlag 季節表示を行うかどうか
+ * @param evdata 出入り口イベントの共通データ
  *
  * @return 作成したイベント
  */
 //---------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_EntranceIn( GMEVENT* parent, 
-                                  GAMESYS_WORK* gameSystem,
-                                  GAMEDATA* gameData, 
-                                  FIELDMAP_WORK* fieldmap, 
-                                  LOCATION nextLocation, 
-                                  EXIT_TYPE exitType,
-                                  BOOL seasonDisplayFlag );
+extern GMEVENT* EVENT_EntranceIn( ENTRANCE_EVDATA* evdata );
