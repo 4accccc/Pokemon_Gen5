@@ -521,19 +521,27 @@ void PSTATUS_SUB_DispPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
   }
   
   {
-    const u32 monsno = PPP_Get( ppp , ID_PARA_monsno , NULL );
-    const u32 formno = PPP_Get( ppp , ID_PARA_form_no , NULL );
-    POKEMON_PERSONAL_DATA *personalData = POKE_PERSONAL_OpenHandle( monsno , formno ,work->heapId );
-    if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_no_jump ) == TRUE )
+    if( work->isEgg == FALSE )
     {
-      subWork->isGround = TRUE;
+      const u32 monsno = PPP_Get( ppp , ID_PARA_monsno , NULL );
+      const u32 formno = PPP_Get( ppp , ID_PARA_form_no , NULL );
+      POKEMON_PERSONAL_DATA *personalData = POKE_PERSONAL_OpenHandle( monsno , formno ,work->heapId );
+      if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_no_jump ) == TRUE )
+      {
+        subWork->isGround = TRUE;
+      }
+      else
+      {
+        subWork->isGround = FALSE;
+      }
+      subWork->weight = POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_weight );
+      POKE_PERSONAL_CloseHandle( personalData );
     }
     else
     {
       subWork->isGround = FALSE;
+      subWork->weight = 0;
     }
-    subWork->weight = POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_weight );
-    POKE_PERSONAL_CloseHandle( personalData );
   }
 
 
