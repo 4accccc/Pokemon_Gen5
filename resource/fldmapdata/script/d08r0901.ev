@@ -291,14 +291,13 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	//Nの動作モデルを消す
 	_TIME_WAIT(23)
 	_OBJ_DEL( D08R0901_BOSS_01 )
-	_OBJ_ANIME_WAIT()
-	_SE_WAIT()
-	
-	//Nとパッケージポケモンを消す
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	//主人公がNが飛び去った方向を見る
+	_TIME_WAIT( 4 )
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_turn_s1)
 	_OBJ_ANIME_WAIT()
+	_SE_WAIT()
+	//パッケージポケモンを消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
 	//自機にカメラを戻す
 	_CAMERA_DEF_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
@@ -318,7 +317,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	//ハチクとライバルがやってくる		
 	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
-	_TIME_WAIT(24)
+	_TIME_WAIT( 64 )
+	//主人公：ライバルたちを見る
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
@@ -344,17 +344,13 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_leader7_02, D08R0901_LEADER7_01,POS_DR)
 	_MSGWIN_CLOSE()
 
-	//画面暗転処理
-	_TIME_WAIT(8)
+	//外へ向かうアニメ
 	_OBJ_ANIME(D08R0901_LEADER7_01,anm_leader7_idou_02)
 	_OBJ_ANIME(D08R0901_RIVEL_01,anm_raival_idou_02)
-	_TIME_WAIT(4)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou_02)
-	_TIME_WAIT(8)
-	
+	_TIME_WAIT( 4 )
+	//画面暗転
 	_MAP_FADE_BLACK_OUT_SLOW()
-
-
 	_MAP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
 	
@@ -405,6 +401,7 @@ _ANIME_LABEL	anm_player_idou_01
 
 _ANIME_LABEL	anm_player_idou_02
 	
+	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
@@ -418,8 +415,9 @@ _ANIME_LABEL	anm_raival_idou_01
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_raival_idou_02
+	_ANIME_DATA AC_WAIT_4F,1
 	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_WALK_D_8F,3
+	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -433,7 +431,7 @@ _ANIME_LABEL	anm_leader7_idou_01
 
 _ANIME_LABEL	anm_leader7_idou_02
 
-	_ANIME_DATA AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
