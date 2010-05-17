@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T18:55:32"/>
+	<create user="matsumiya" host="W00224" date="2010-05-17T12:34:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,16 +350,16 @@ meine Führerscheinprüfung...</language>
 		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">Hey, Trainer!
 Check out my moves!▼
-Have you gone to the next City yet?
+Have you gone to the next city yet?
 I learned this move at the▽
 musical over there.▽
-Cool, ain&apos;t it?</language>
+Pretty cool, isn&apos;t it?</language>
 		<language name="JPN_KANJI" width="256">Hey, Trainer!
 Check out my moves!▼
-Have you gone to the next City yet?
+Have you gone to the next city yet?
 I learned this move at the▽
 musical over there.▽
-Cool, ain&apos;t it?</language>
+Pretty cool, isn&apos;t it?</language>
 	</row>
 
 	<row id="msg_c03r1302_girl3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -434,14 +434,14 @@ Cool, ain&apos;t it?</language>
 　はずかしがらなくていいんだよ
 　色んな人に話しかけてみなよ</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">Hi there,
-having a good time?▼
-You don&apos;t have to be shy,
-feel free to talk to anyone.</language>
-		<language name="JPN_KANJI" width="256">Hi there,
-having a good time?▼
-You don&apos;t have to be shy,
-feel free to talk to anyone.</language>
+		<language name="JPN" width="256">Hi there.
+Having a good time?▼
+You don&apos;t have to be shy.
+Feel free to talk to anyone.</language>
+		<language name="JPN_KANJI" width="256">Hi there.
+Having a good time?▼
+You don&apos;t have to be shy.
+Feel free to talk to anyone.</language>
 	</row>
 
 	<row id="msg_c03r1302_boy4_01">
