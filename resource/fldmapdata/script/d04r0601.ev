@@ -33,7 +33,13 @@ _EVENT_DATA_END
 /*		D04R0601　遺跡イベント	予約スクリプト				  */
 /**************************************************************/
 EVENT_START		ev_reserve_d04r0601_event_01
-	
+
+	//自転車チェック
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
 	_OBJ_ANIME_WAIT()
 	
