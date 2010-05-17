@@ -64,6 +64,9 @@
 
 #define MB_PARENT_FIRST_TIMEOUT (60*15) //通常5秒以内で接続するのができなかった。
 
+
+#define MP_PARENT_DEB (defined(PM_DEBUG))
+
 //======================================================================
 //  enum
 //======================================================================
@@ -315,6 +318,11 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work );
 static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work );
 
 static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state );
+
+#if MP_PARENT_DEB
+static void MB_PARENT_InitDebug( MB_PARENT_WORK *work );
+static void MB_PARENT_TermDebug( MB_PARENT_WORK *work );
+#endif
 
 BOOL WhCallBackFlg = FALSE;
 static u16 MB_PARENT_bgScrollCnt = 0;
@@ -2530,6 +2538,10 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   
   MB_PARENT_Init( work );
   
+#if MP_PARENT_DEB
+  MB_PARENT_InitDebug( work );
+#endif
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -2539,11 +2551,15 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   MB_PARENT_WORK *work = mywk;
-  
   //ワーク解放後に使うので保持
   BOOL isMovieTrans = FALSE;
   BOOL isNetErr = work->isNetErr;
   BOOL isSave = GAMEDATA_GetIsSave( work->initWork->gameData );
+  
+#if MP_PARENT_DEB
+  MB_PARENT_TermDebug( work );
+#endif
+
   if( work->initWork->mode == MPM_MOVIE_TRANS )
   {
     isMovieTrans = TRUE;
@@ -2626,3 +2642,81 @@ static GFL_PROC_RESULT MB_PARENT_ProcMain( GFL_PROC * proc, int * seq , void *pw
   return GFL_PROC_RES_CONTINUE;
 }
 
+
+
+#if MP_PARENT_DEB
+
+#include "debug/debugwin_sys.h"
+
+static const BOOL MB_PARENT_Debug_UpdateValue_u16( u16 *val , u16 max );
+static void MPD_U_LocalHight( void* userWork , DEBUGWIN_ITEM* item );
+static void MPD_D_LocalHight( void* userWork , DEBUGWIN_ITEM* item );
+
+#define MB_PARENT_DEB_GROUP_TOP (50)
+static void MB_PARENT_InitDebug( MB_PARENT_WORK *work )
+{
+  GFL_FONT *fontHandle = MB_MSG_GetFont( work->msgWork );
+  
+  DEBUGWIN_InitProc( MB_PARENT_FRAME_SSMSG , fontHandle );
+
+  DEBUGWIN_AddGroupToTop( MB_PARENT_DEB_GROUP_TOP , "マルチブート" , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MPD_U_LocalHight ,MPD_D_LocalHight , (void*)work , MB_PARENT_DEB_GROUP_TOP , work->heapId );
+
+
+  DEBUGWIN_ChangeLetterColor( 0,0,0 );
+}
+
+static void MB_PARENT_TermDebug( MB_PARENT_WORK *work )
+{
+  DEBUGWIN_RemoveGroup( MB_PARENT_DEB_GROUP_TOP );
+  DEBUGWIN_ExitProc();
+}
+
+static const BOOL MB_PARENT_Debug_UpdateValue_u16( u16 *val , u16 max )
+{
+  u16 value;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ value = 10; }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){ value = 100; }
+  else{ value = 1; }
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    *val += value;
+    if( *val > max )
+    {
+      *val = 0;
+    }
+    return TRUE;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( *val - value < 0 )
+    {
+      *val = max;
+    }
+    else
+    {
+      *val -= value;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static void MPD_U_LocalHight( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_PARENT_WORK *work = (MB_PARENT_WORK*)userWork;
+  const BOOL ret = MB_PARENT_Debug_UpdateValue_u16( &work->localHighScore , 999 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MPD_D_LocalHight( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MB_PARENT_WORK *work = (MB_PARENT_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "HighScore[%d]",work->localHighScore );
+}
+
+#endif

@@ -108,7 +108,7 @@ typedef struct
   u8  priorytyBkup;
   u8  scrollXBkup;
   u8  scrollYBkup;
-  
+  u8  visibleBkup;
   
 }DEBUGWIN_SYSTEM_WORK;
 
@@ -256,11 +256,20 @@ static void DEBUGWIN_OpenDebugWindow( void )
   debWork->priorytyBkup = GFL_BG_GetPriority(debWork->frmnum);
   debWork->scrollXBkup = GFL_BG_GetScrollX(debWork->frmnum);
   debWork->scrollYBkup = GFL_BG_GetScrollY(debWork->frmnum);
+  if( debWork->frmnum <= GFL_BG_FRAME3_M )
+  {
+    debWork->visibleBkup = GFL_DISP_GetMainVisible();
+  }
+  else
+  {
+    debWork->visibleBkup = GFL_DISP_GetSubVisible();
+  }
   
   //上で退避させたものの設定
   GFL_BG_SetPriority( debWork->frmnum , 0 );
   GFL_BG_SetScroll( debWork->frmnum , GFL_BG_SCROLL_X_SET , 0 );
   GFL_BG_SetScroll( debWork->frmnum , GFL_BG_SCROLL_Y_SET , 0 );
+  GFL_BG_SetVisible( debWork->frmnum , TRUE );
 
   //スクリーンの作成
   {
@@ -307,6 +316,15 @@ static void DEBUGWIN_CloseDebugWindow( void )
   GFL_BG_SetScroll( debWork->frmnum , GFL_BG_SCROLL_X_SET , debWork->scrollXBkup );
   GFL_BG_SetScroll( debWork->frmnum , GFL_BG_SCROLL_Y_SET , debWork->scrollYBkup );
   GFL_BG_SetPriority( debWork->frmnum , debWork->priorytyBkup );
+  if( debWork->frmnum <= GFL_BG_FRAME3_M )
+  {
+    GFL_DISP_GX_SetVisibleControlDirect( debWork->visibleBkup );
+  }
+  else
+  {
+    GFL_DISP_GXS_SetVisibleControlDirect( debWork->visibleBkup );
+  }
+
   //Fontカラーの復帰
   GFL_FONTSYS_SetColor( debWork->fontColBkup[0] ,
                         debWork->fontColBkup[1] ,
