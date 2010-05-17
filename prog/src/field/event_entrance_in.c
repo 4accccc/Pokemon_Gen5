@@ -144,9 +144,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeNone( GMEVENT * event, int *
 	EVENT_WORK*      work       = wk;
   ENTRANCE_EVDATA* evdata     = work->evdata;
 	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
-	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
-	GAMEDATA*        gameData   = evdata->gameData;
-  FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch ( *seq ) {
   case 0:
@@ -177,8 +174,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
 {
 	EVENT_WORK*      work       = wk;
   ENTRANCE_EVDATA* evdata     = work->evdata;
-	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
-	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   case 0:
@@ -200,12 +195,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* seq, void* wk )
 {
-	EVENT_WORK*      work       = wk;
-  ENTRANCE_EVDATA* evdata     = work->evdata;
-	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
-	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
-	GAMEDATA*        gameData   = evdata->gameData;
-  FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
+	EVENT_WORK*      work     = wk;
+  ENTRANCE_EVDATA* evdata   = work->evdata;
+	FIELDMAP_WORK*   fieldmap = evdata->fieldmap;
 
   switch ( *seq ) {
   case 0:  
@@ -278,7 +270,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
 {
 	EVENT_WORK*      work       = wk;
   ENTRANCE_EVDATA* evdata     = work->evdata;
-	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
   FIELD_CAMERA*    camera     = FIELDMAP_GetFieldCamera( fieldmap );
 
@@ -337,8 +328,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, in
   ENTRANCE_EVDATA* evdata     = work->evdata;
 	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
 	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
-	GAMEDATA*        gameData   = evdata->gameData;
-  FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
 
   switch ( *seq ) {
   case 0:

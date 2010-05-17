@@ -143,8 +143,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 {
 	EVENT_WORK*      work       = wk;
   ENTRANCE_EVDATA* evdata     = work->evdata;
-	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
-	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
 
   switch( *seq ) {
   case 0:
@@ -171,10 +169,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* seq, void* wk )
 {
-	EVENT_WORK*      work       = wk;
-  ENTRANCE_EVDATA* evdata     = work->evdata;
-	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
-	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
+	EVENT_WORK*      work   = wk;
+  ENTRANCE_EVDATA* evdata = work->evdata;
 
   switch( *seq ) {
   case 0:
@@ -266,11 +262,10 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *seq, void * wk )
 {
-	EVENT_WORK*      work       = wk;
-  ENTRANCE_EVDATA* evdata     = work->evdata;
-	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
-	FIELDMAP_WORK*   fieldmap   = evdata->fieldmap;
-  FIELD_CAMERA*    camera     = FIELDMAP_GetFieldCamera( fieldmap );
+	EVENT_WORK*      work     = wk;
+  ENTRANCE_EVDATA* evdata   = work->evdata;
+	FIELDMAP_WORK*   fieldmap = evdata->fieldmap;
+  FIELD_CAMERA*    camera   = FIELDMAP_GetFieldCamera( fieldmap );
 
   switch( *seq ) {
   case 0:
