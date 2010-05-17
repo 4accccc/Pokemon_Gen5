@@ -7601,7 +7601,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_R_E_SU,
 		SEQ_BGM_R_E_AU,
 		SEQ_BGM_R_E_WI,
-		enc_dummy,
+		NARC_encount_data_w_d10_bin,
 		NARC_eventdata_d10_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
