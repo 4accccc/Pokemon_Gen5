@@ -198,7 +198,7 @@ learn_skill:
 
   //覚えた後の子芝居
   IF $SCWK_ANSWER == TRUE THEN
-    //自機２歩前
+    //自機3歩前
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
     _OBJ_ANIME_WAIT()
 
@@ -310,7 +310,7 @@ _ANIME_LABEL	anm_merodhia_normal
 //自機定位置へ　左から話しかけたとき
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_front
-  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
   
 
