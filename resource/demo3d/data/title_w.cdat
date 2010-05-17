@@ -12,19 +12,19 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_title_w_scene = {
-	NARC_data_demo3d_n_legend_born_w_camera_bin,	///<カメラID
+	NARC_data_demo3d_n_legend_meat_w_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
-	TRUE,	///<2画面連結
+	FALSE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
-	FX32_CONST(28.0),FX32_CONST(28.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(35.0),FX32_CONST(35.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
-	FX32_CONST(1.0 ),	///<ScaleW
-	149,-142,	///<2画面main_ofs,2画面sub_ofs
+	FX32_CONST(0.1 ),	///<ScaleW
+	0,0,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
 	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
 	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
@@ -42,48 +42,8 @@ static const DEMO3D_SCENE_DATA data_title_w_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_title_w_data[] = {
- { DEMO3D_CMD_TYPE_SE_PLAY, 42, { SEQ_SE_LBDEMO_02, 40, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 135, { SEQ_SE_LBDEMO_01, 80, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 218-1, { MASK_MAIN_DISPLAY, 1, 0, 12, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 220-2, { MASK_MAIN_DISPLAY, 2, 12, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 229-1, { MASK_MAIN_DISPLAY, 1, 0, 12, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 231-2, { MASK_MAIN_DISPLAY, 2, 12, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 239-1, { MASK_MAIN_DISPLAY, 1, 0, 12, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 241-2, { MASK_MAIN_DISPLAY, 2, 12, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 241, { SEQ_SE_W319_01, 50, 0, 0, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 246-1, { MASK_MAIN_DISPLAY, 1, 0, 12, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 248-2, { MASK_MAIN_DISPLAY, 2, 12, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 255-1, { MASK_MAIN_DISPLAY, 1, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 258-3, { MASK_MAIN_DISPLAY, 3, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 260-1, { MASK_MAIN_DISPLAY, 1, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 263-3, { MASK_MAIN_DISPLAY, 3, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 263, { SEQ_SE_FLD_127, 127, 0, 0, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 265-1, { MASK_MAIN_DISPLAY, 1, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 268-2, { MASK_MAIN_DISPLAY, 2, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 270-2, { MASK_MAIN_DISPLAY, 2, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 290-20, { MASK_MAIN_DISPLAY, 20, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 382, { SEQ_SE_LBDEMO_03, 127, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 450, { SEQ_SE_LBDEMO_03, 127, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 525-15, { MASK_MAIN_DISPLAY, 15, 0, 8, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 525, { SEQ_SE_LBDEMO_05, 127, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 570-25, { MASK_MAIN_DISPLAY, 25, 8, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 616, { SEQ_SE_LBDEMO_04, 127, -128, 0, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 616, { SEQ_SE_LBDEMO_04, 127, 127, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 746, { SEQ_SE_LBDEMO_09, 127, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 827-1, { MASK_MAIN_DISPLAY, 1, 0, 12, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 827, { SEQ_SE_W307_EXP, 100, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 827, { SEQ_SE_W348_02, 100, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 827, { SEQ_SE_FLD_166, 30, 0, 0, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 829-2, { MASK_MAIN_DISPLAY, 2, 12, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 876, { SEQ_SE_FLD_166, 30, 127, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 964, { SEQ_SE_FLD_166, 30, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 1030, { SEQ_SE_FLD_166, 30, -128, 0, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 1080, { SEQ_SE_SHINKA_W060C, 100, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 1100, { SEQ_SE_DUMMY5, 0, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SE_PLAY, 1100, { SEQ_SE_DUMMY5, 0, 0, 0, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1174-15, { MASK_MAIN_DISPLAY, 15, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1194-15, { MASK_MAIN_DISPLAY, 15, -16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1360-50, { MASK_MAIN_DISPLAY, 50, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 490-60, { MASK_MAIN_DISPLAY, 60, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 550-60, { MASK_MAIN_DISPLAY, 60, 16, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -101,66 +61,45 @@ static const DEMO3D_CMD_DATA demo3d_cmd_title_w_end_data[] = {
 //============================================
 
 ///==================================
-/// n_legend_born_w_01 Unit File Resource
+/// n_legend_meat_w_01 Unit File Resource
 
-static const u16 res_title_w_file_n_legend_born_w_01[] = {
- NARC_data_demo3d_n_legend_born_w_01_nsbmd,
- NARC_data_demo3d_n_legend_born_w_01_nsbtp,
- NARC_data_demo3d_n_legend_born_w_01_nsbca,
+static const u16 res_title_w_file_n_legend_meat_w_01[] = {
+ NARC_data_demo3d_n_legend_meat_w_01_nsbmd,
+ NARC_data_demo3d_n_legend_meat_w_01_nsbta,
+ NARC_data_demo3d_n_legend_meat_w_01_nsbca,
+ NARC_data_demo3d_n_legend_meat_w_01_nsbma,
 };
 
-static const DEMO3D_FILE_UNIT res_title_w_file_unit_n_legend_born_w_01[] = {
- { res_title_w_file_n_legend_born_w_01, 3 },
-};
-
-///==================================
-/// n_legend_born_w_02 Unit File Resource
-
-static const u16 res_title_w_file_n_legend_born_w_02[] = {
- NARC_data_demo3d_n_legend_born_w_02_nsbmd,
- NARC_data_demo3d_n_legend_born_w_02_nsbtp,
- NARC_data_demo3d_n_legend_born_w_02_nsbca,
- NARC_data_demo3d_n_legend_born_w_02_nsbma,
-};
-
-static const DEMO3D_FILE_UNIT res_title_w_file_unit_n_legend_born_w_02[] = {
- { res_title_w_file_n_legend_born_w_02, 4 },
+static const DEMO3D_FILE_UNIT res_title_w_file_unit_n_legend_meat_w_01[] = {
+ { res_title_w_file_n_legend_meat_w_01, 4 },
 };
 
 ///==================================
-/// n_legend_born_w_03 Unit File Resource
+/// n_legend_meat_w_02 Unit File Resource
 
-static const u16 res_title_w_file_n_legend_born_w_03[] = {
- NARC_data_demo3d_n_legend_born_w_03_nsbmd,
- NARC_data_demo3d_n_legend_born_w_03_nsbtp,
- NARC_data_demo3d_n_legend_born_w_03_nsbta,
- NARC_data_demo3d_n_legend_born_w_03_nsbca,
- NARC_data_demo3d_n_legend_born_w_03_nsbma,
+static const u16 res_title_w_file_n_legend_meat_w_02[] = {
+ NARC_data_demo3d_n_legend_meat_w_02_nsbmd,
+ NARC_data_demo3d_n_legend_meat_w_02_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_title_w_file_unit_n_legend_born_w_03[] = {
- { res_title_w_file_n_legend_born_w_03, 5 },
+static const DEMO3D_FILE_UNIT res_title_w_file_unit_n_legend_meat_w_02[] = {
+ { res_title_w_file_n_legend_meat_w_02, 2 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_title_w_file_unit_n_legend_born_w_01_tbl[] = {
- { res_title_w_file_unit_n_legend_born_w_01, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_title_w_file_unit_n_legend_meat_w_01_tbl[] = {
+ { res_title_w_file_unit_n_legend_meat_w_01, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_title_w_file_unit_n_legend_born_w_02_tbl[] = {
- { res_title_w_file_unit_n_legend_born_w_02, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_title_w_file_unit_n_legend_born_w_03_tbl[] = {
- { res_title_w_file_unit_n_legend_born_w_03, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_title_w_file_unit_n_legend_meat_w_02_tbl[] = {
+ { res_title_w_file_unit_n_legend_meat_w_02, 1 },
 };
 
 static const DEMO3D_SCENE_UNIT res_title_w_scene_unit[] = {
- { res_title_w_file_unit_n_legend_born_w_01_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_title_w_file_unit_n_legend_born_w_02_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_title_w_file_unit_n_legend_born_w_03_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_title_w_file_unit_n_legend_meat_w_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_title_w_file_unit_n_legend_meat_w_02_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
