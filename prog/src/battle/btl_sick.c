@@ -126,7 +126,12 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
   {
     BTL_HANDEX_PARAM_DAMAGE* dmg_param;
     u16 damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+    u16 hp = BPP_GetValue( bpp, BPP_HP );
     u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
+
+    if( damage > hp ){
+      damage = hp;
+    }
 
     dmg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
     dmg_param->pokeID = pokeID;
