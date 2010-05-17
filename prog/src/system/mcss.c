@@ -44,7 +44,7 @@
 #define	MCSS_DEFAULT_SHADOW_OFFSET	( -0x1000 )	//影位置のZ方向のオフセット値
 
 #define MCSS_VCOUNT_BORDER_LOW          ( 192 )   //テクスチャ転送するときのVCOUNTの境界
-#define MCSS_VCOUNT_BORDER_HIGH         ( 213 )   //テクスチャ転送するときのVCOUNTの境界
+#define MCSS_VCOUNT_BORDER_HIGH         ( 210 )//( 213 )   //テクスチャ転送するときのVCOUNTの境界
                                                   //(192~213がレンダリングエンジンのブランク期間）
 
 #define MCSS_FLIP_NONE	(0)  //そのまま
