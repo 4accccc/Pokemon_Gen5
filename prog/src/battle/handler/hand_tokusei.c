@@ -4695,7 +4695,7 @@ static void common_TenkiFormChange( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
     case BTL_WEATHER_RAIN:  form_next = FORMNO_POWARUN_RAIN; break;
     case BTL_WEATHER_SNOW:  form_next = FORMNO_POWARUN_SNOW; break;
     default:
-      form_next = form_now;
+      form_next = FORMNO_POWARUN_NORMAL;
     }
 
     if( form_next != form_now )
@@ -6083,7 +6083,7 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 /**
  *  とくせい「すなのちから」
  *
- * 天候がすなあらしの時、地面、岩、鋼の威力が上がる。１．３倍。
+ * 天候がすなあらしの時、地面、岩、鋼ワザの威力が上がる。１．３倍。
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems )
@@ -6103,7 +6103,13 @@ static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     // 天候すなあらしなら威力増加
     if( BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SAND )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
+      PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+      if( (type == POKETYPE_JIMEN)
+      ||  (type == POKETYPE_IWA)
+      ||  (type == POKETYPE_HAGANE)
+      ){
+        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
+      }
     }
   }
 }
