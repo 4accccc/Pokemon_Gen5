@@ -64,10 +64,6 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	_BALLOONWIN_OBJMSG_POS( msg_c03r1101_sage1_01 , C03R1101_SAGE1_01,POS_UR)
 	_MSGWIN_CLOSE()
 	
-	//アーティ：キョロキョロする
-	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_kyoro )
-	_OBJ_ANIME_WAIT()
-	
 	//プラズマ団って　人が　持っているものが
 	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_01 , C03R1101_LEADER3_01 )
 	_MSGWIN_CLOSE()
@@ -347,14 +343,14 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	//じゃあ　～くん　ボクは　ジムで
 	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_leave )
 	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
+	_OBJ_ANIME_WAIT()
 	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG_MF( msg_c03r1101_leader3_08, msg_c03r1101_leader3_09, C03R1101_LEADER3_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//アーティ・出る
 	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_leave1 )
-	_TIME_WAIT(16)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_stay_d)
 	_OBJ_ANIME_WAIT()
 
 	_OBJ_DEL( C03R1101_LEADER3_01 )
