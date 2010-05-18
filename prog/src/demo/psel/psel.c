@@ -686,6 +686,7 @@ typedef struct
   u16              move_step_count;   // POKE_MOVE_STEPŠe’iŠK‚É‚¨‚¯‚éƒJƒEƒ“ƒg
   POKE_MOVE_STEP   move_step;
   POKE_MOVE_REQ    move_req;
+  BOOL             move_req_no_change_move_step;  // move_req‚ðo‚µ‚½Œã‚É‚Ü‚¾ˆê“x‚àmove_step‚âmove_step_count‚ð•ÏX‚µ‚Ä‚¢‚È‚¢‚Æ‚«TRUEA•ÏX‚µ‚½‚Æ‚«FALSE
 }
 POKE_SET;
 
@@ -1788,6 +1789,7 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
       work->poke_set[i].move_step_count   = 0;
       work->poke_set[i].move_step         = POKE_MOVE_STEP_P0_STOP;
       work->poke_set[i].move_req          = POKE_MOVE_REQ_NONE;
+      work->poke_set[i].move_req_no_change_move_step = FALSE;
     }
   }
 
@@ -1902,7 +1904,8 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
 
           p->move_step_count = 0;
           p->move_step = POKE_MOVE_STEP_P0_TO_P1;
-          
+          p->move_req_no_change_move_step = FALSE;
+
           // break;‚µ‚È‚¢
         }
         else
@@ -1945,10 +1948,12 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
             
           p->move_step_count = 0;
           p->move_step = POKE_MOVE_STEP_P0_STOP;
+          p->move_req_no_change_move_step = FALSE;
         }
         else
         {
           p->move_step_count = p->move_step_count + count_add;
+          p->move_req_no_change_move_step = FALSE;
           if( p->move_step_count == d->p0p1_frame )
           {
             p->move_step_count = 0;
@@ -1971,10 +1976,12 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         {
           p->move_step_count = d->p0p1_frame -1;
           p->move_step = POKE_MOVE_STEP_P0_TO_P1;
+          p->move_req_no_change_move_step = FALSE;
         }
         else
         {
           p->move_step_count = p->move_step_count + count_add;
+          p->move_req_no_change_move_step = FALSE;
           if( p->move_step_count == d->p1_frame )
           {
             p->move_step_count = 0;
@@ -2013,10 +2020,12 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         {
           p->move_step_count = d->p1_frame -1;
           p->move_step = POKE_MOVE_STEP_P1_WAIT;
+          p->move_req_no_change_move_step = FALSE;
         }
         else
         {
           p->move_step_count = p->move_step_count + count_add;
+          p->move_req_no_change_move_step = FALSE;
           if( p->move_step_count == d->p1p2_frame )
           {
             p->move_step_count = 0;
@@ -2040,6 +2049,7 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
           GFL_CLACT_WK_SetBgPri( p->clwk[POKE_BIG], OBJ_BG_PRI_S_POKE );  // bgpri
           p->move_step_count = d->p1p2_frame -1;
           p->move_step = POKE_MOVE_STEP_P1_TO_P2;
+          p->move_req_no_change_move_step = FALSE;
         }
         else
         {
@@ -2047,7 +2057,10 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
           {
             GFL_CLACT_WK_SetBgPri( p->clwk[POKE_BIG], OBJ_BG_PRI_S_POKE_SPOT );  // bgpri
             p->move_req = POKE_MOVE_REQ_NONE;
-            work->poke_info_print = TRUE;  // ƒ|ƒPƒ‚ƒ“‚Ìƒ^ƒCƒv‚ÆŽí‘°–¼‚ð‘‚­
+            if( !(p->move_req_no_change_move_step) )  // ‰½‚à•Ï‚í‚Á‚Ä‚¢‚È‚¢‚Æ‚«‚Í‘‚­•K—v‚Í‚È‚¢‚Ì‚Å
+            {
+              work->poke_info_print = TRUE;  // ƒ|ƒPƒ‚ƒ“‚Ìƒ^ƒCƒv‚ÆŽí‘°–¼‚ð‘‚­
+            }
           }
         }
       }
@@ -2119,11 +2132,13 @@ static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke )  // ‰
       if( i == target_poke )
       {
         work->poke_set[i].move_req   = POKE_MOVE_REQ_P0_TO_P2;
+        work->poke_set[i].move_req_no_change_move_step = TRUE;
         //GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_FRONT );  // ’–Ú‚µ‚Ä‚¢‚È‚¢ƒ|ƒPƒ‚ƒ“‚Ì‚Ù‚¤‚ªŽè‘O‚Ì‚±‚Æ‚à‚ ‚é‚Ì‚ÅA–ˆƒtƒŒ[ƒ€Ý’è‚·‚é‚±‚Æ‚É‚µ‚½B
       }
       else
       {
         work->poke_set[i].move_req   = POKE_MOVE_REQ_P2_TO_P0;
+        work->poke_set[i].move_req_no_change_move_step = TRUE;
         //GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_BACK );  // ’–Ú‚µ‚Ä‚¢‚È‚¢ƒ|ƒPƒ‚ƒ“‚Ì‚Ù‚¤‚ªŽè‘O‚Ì‚±‚Æ‚à‚ ‚é‚Ì‚ÅA–ˆƒtƒŒ[ƒ€Ý’è‚·‚é‚±‚Æ‚É‚µ‚½B
       }
     }
