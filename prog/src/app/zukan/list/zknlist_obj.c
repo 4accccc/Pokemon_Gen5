@@ -577,6 +577,7 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 		dat.palRes = wk->palRes[dat.palRes];
 		dat.celRes = wk->celRes[dat.celRes];
 		wk->clwk[i] = ZKNCOMM_CreateClact( wk->clunit, &dat, HEAPID_ZUKAN_LIST );
+		GFL_CLACT_WK_SetSRTAnimeFlag( wk->clwk[i], FALSE );
 	}
 
 	// バージョンアップ前
@@ -718,6 +719,7 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 	prm.palRes = wk->palRes[prm.palRes];
 	prm.celRes = wk->celRes[prm.celRes];
 	wk->clwk[newID] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
+	GFL_CLACT_WK_SetSRTAnimeFlag( wk->clwk[newID], FALSE );
 
 	ppd = POKE_PERSONAL_OpenHandle( mons, form, HEAPID_ZUKAN_LIST_L );
 	if( mons != 0 ){
@@ -777,6 +779,7 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 		prm.dat.pos_y = POKEICON_PY + POKEICON_SY * i;
 		prm.chrRes = wk->chrRes[ZKNLISTOBJ_CHRRES_POKEICON+i];
 		wk->clwk[ZKNLISTOBJ_IDX_POKEICON+i] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
+		GFL_CLACT_WK_SetSRTAnimeFlag( wk->clwk[ZKNLISTOBJ_IDX_POKEICON+i], FALSE );
 	}
 
 	prm = PokeIconClactParam;
@@ -788,9 +791,11 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 		prm.chrRes = wk->chrRes[ZKNLISTOBJ_CHRRES_POKEICON_S+i];
 		prm.disp = CLSYS_DRAW_SUB;
 		wk->clwk[ZKNLISTOBJ_IDX_POKEICON_S+i] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
+		GFL_CLACT_WK_SetSRTAnimeFlag( wk->clwk[ZKNLISTOBJ_IDX_POKEICON_S+i], FALSE );
 		ZKNLISTOBJ_SetBlendMode( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, TRUE );
 
 		wk->clwk[ZKNLISTOBJ_IDX_POKEICON_SW+i] = ZKNCOMM_CreateClact( wk->clunit, &prm, HEAPID_ZUKAN_LIST );
+		GFL_CLACT_WK_SetSRTAnimeFlag( wk->clwk[ZKNLISTOBJ_IDX_POKEICON_SW+i], FALSE );
 		GFL_CLACT_WK_SetObjMode( wk->clwk[ZKNLISTOBJ_IDX_POKEICON_SW+i], GX_OAM_MODE_OBJWND );
 	}
 

@@ -636,6 +636,8 @@ static GFL_CLWK * ClactWorkCreate( BOX2_APP_WORK * appwk, const BOX_CLWK_DATA * 
 					appwk->celRes[prm->celRes],
 					&prm->dat, prm->disp, HEAPID_BOX_APP );
 
+	GFL_CLACT_WK_SetSRTAnimeFlag( clwk, FALSE );
+
 //	GFL_CLACT_WK_SetPlttOffs( clwk, prm->pal, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
 	return clwk;
