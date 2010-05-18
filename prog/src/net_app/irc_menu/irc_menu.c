@@ -1828,6 +1828,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MSG_PRINT:
+    APPBAR_SetVisible( p_wk->p_appbar, FALSE );
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_004, 0, 0  );
 		*p_seq	= SEQ_SEND_STATUS;
 		break;
