@@ -4894,7 +4894,7 @@
 		<language name="JPN">ほっぺの　ふくろに　ためた　きのみの
 タネを　とばして　こうげき。てきを
 はっけんすると　しっぽを　たてる。</language>
-		<language name="JPN_KANJI">頬袋に　溜めた　木の実の　タネを
+		<language name="JPN_KANJI">頬袋に　ためた　木の実の　タネを
 飛ばして　攻撃。
 敵を　発見すると　しっぽを　立てる。</language>
 	</row>
@@ -4984,7 +4984,7 @@
 		<language name="JPN">あたまの　ふさに　ためた　みずは
 えいよう　たっぷり。しょくぶつに
 かけると　おおきく　そだつのだ。</language>
-		<language name="JPN_KANJI">頭の　ふさに　溜めた　水は
+		<language name="JPN_KANJI">頭の　ふさに　ためた　水は
 栄養　たっぷり。
 植物に　かけると　大きく　育つのだ。</language>
 	</row>
@@ -4993,7 +4993,7 @@
 		<language name="JPN">あたまの　ふさに　みずを　ためる。
 ちょすいりょうが　へると　しっぽで
 みずを　すいあげて　ほきゅうする。</language>
-		<language name="JPN_KANJI">頭の　ふさに　水を　溜める。
+		<language name="JPN_KANJI">頭の　ふさに　水を　ためる。
 貯水量が　減ると　しっぽで
 水を　吸い上げて　補給する。</language>
 	</row>
@@ -5236,9 +5236,9 @@
 		<language name="JPN">かみついて　もうどくを　あたえる。
 てんてきの　おおきな　とりポケモンも
 からだが　しびれて　うごけなくなる。</language>
-		<language name="JPN_KANJI">噛みついて　猛毒を　与える。
+		<language name="JPN_KANJI">かみついて　猛毒を　与える。
 天敵の　大きな　とりポケモンも
-体が　痺れて　動けなくなる。</language>
+体が　しびれて　動けなくなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_544_000">
@@ -5319,7 +5319,7 @@
 すなあらしから　めを　まもる。</language>
 		<language name="JPN_KANJI">数匹で　群れを　作る。
 眼球を　カバーする　膜が
-砂嵐から　目を　守る。</language>
+すなあらしから　目を　守る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_553_000">
@@ -5354,7 +5354,7 @@
 はなの　タネを　ねらう　てんてきの
 とりポケモンを　おいはらうのだ。</language>
 		<language name="JPN_KANJI">アップテンポの　踊りと　音で
-花の　タネを　狙う　天敵の
+花の　タネを　ねらう　天敵の
 とりポケモンを　追い払うのだ。</language>
 	</row>
 
@@ -5633,7 +5633,7 @@
 でんきを　まくの　うちがわに　ためて
 かっくうしながら　でんきを　はなつ。</language>
 		<language name="JPN_KANJI">ほっぺの　電気袋で　作った　電気を
-膜の　内側に　溜めて
+膜の　内側に　ためて
 滑空しながら　電気を　放つ。</language>
 	</row>
 
@@ -5665,7 +5665,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_591_000">
-		<language name="JPN">りょうううでの　モンスターボールに
+		<language name="JPN">りょううでの　モンスターボールに
 にた　カサを　ゆらゆらと　うごかして
 えものを　さそう　ダンスを　おどる。</language>
 		<language name="JPN_KANJI">両腕の　モンスターボールに　似た
@@ -5742,7 +5742,7 @@
 かみあわずに　はなれてしまう。</language>
 		<language name="JPN_KANJI">２つの　体は　組み合わせが
 決まっている。別の　体とは
-噛み合わずに　離れてしまう。</language>
+かみ合わずに　離れてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_600_000">
@@ -5765,10 +5765,10 @@
 
 	<row id="ZKN_COMMENT_01_602_000">
 		<language name="JPN">１ひきの　でんりょくは　ちいさいが
-たくさんの　エレス●●が　つながると
+たくさんの　シビシラスが　つながると
 カミナリと　おなじ　いりょくになる。</language>
 		<language name="JPN_KANJI">１匹の　電力は　小さいが
-たくさんの　エレス●●が　つながると
+たくさんの　シビシラスが　つながると
 雷と　同じ　威力になる。</language>
 	</row>
 
@@ -5776,16 +5776,16 @@
 		<language name="JPN">まるい　もようが　はつでん　きかん。
 あいてに　まきついてから　もようを
 おしつけて　でんきを　ながすのだ。</language>
-		<language name="JPN_KANJI">丸い　斑点が　発電　器官。
+		<language name="JPN_KANJI">丸い　模様が　発電　器官。
 相手に　巻きついてから　模様を
-押し付けて　電気を　流すのだ</language>
+押し付けて　電気を　流すのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_604_000">
 		<language name="JPN">うでの　ちからで　うみから　はいだし
 みずべの　えものに　おそいかかる。
 いっしゅんで　うみへ　ひきずりこむ。</language>
-		<language name="JPN_KANJI">腕の　力で　海から　這い出し
+		<language name="JPN_KANJI">腕の　力で　海から　はい出し
 水辺の　獲物に　襲いかかる。
 一瞬で　海へ　引きずりこむ。</language>
 	</row>
@@ -5859,7 +5859,7 @@
 てつを　きる　キバで　いどみかかる。</language>
 		<language name="JPN_KANJI">優しい　性格だが　縄張りを　荒らす
 者には　容赦しない。
-鉄を　斬る　キバで　挑みかかる。</language>
+鉄を　切る　キバで　挑みかかる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_613_000">
@@ -5894,7 +5894,7 @@
 とじて　ぼうぎょ。ふたの　すきまから
 ベトベトした　どくえきを　とばす。</language>
 		<language name="JPN_KANJI">敵に　襲われると　からの　ふたを
-閉じて　防御。ふたの　隙間から
+閉じて　防御。ふたの　すきまから
 ベトベトした　毒液を　飛ばす。</language>
 	</row>
 
@@ -5957,7 +5957,7 @@
 むねの　ふういんを　はがすと
 エネルギーが　ぼうそうしてしまう。</language>
 		<language name="JPN_KANJI">マッハの　スピードで　空を　飛ぶ。
-胸の　封印を　剥がすと
+胸の　封印を　はがすと
 エネルギーが　暴走してしまう。</language>
 	</row>
 
@@ -5967,7 +5967,7 @@
 てごろな　いしで　はを　とぐ。</language>
 		<language name="JPN_KANJI">全身が　刃物の　ポケモン。
 戦いで　刃こぼれすると　
-河原の　石で　刃を　砥ぐ。</language>
+河原の　石で　刃を　とぐ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_625_000">
@@ -5976,7 +5976,7 @@
 やぶれると　むれを　おいだされる。</language>
 		<language name="JPN_KANJI">ズルル●●の　群れを　率いている。
 ボスの　座を　奪い合い　戦う。
-敗れると　群を　追い出される。</language>
+敗れると　群れを　追い出される。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_626_000">
@@ -6001,8 +6001,8 @@
 		<language name="JPN">なかまのため　きけんを　かえりみず
 たたかう。じどうしゃを　つかんだまま
 おおぞらを　まう　ことが　できる。</language>
-		<language name="JPN_KANJI">仲間のため　危険を　省みず　戦う。
-自動車を　掴んだまま
+		<language name="JPN_KANJI">仲間のため　危険を　かえりみ
+戦う。自動車を　つかんだまま
 大空を　舞う　ことが　できる。</language>
 	</row>
 
@@ -6046,7 +6046,7 @@
 		<language name="JPN">なんにでも　かみつく　しゅうせい。
 たべられるものは　なんでも　たべる。
 うかつに　ちかよると　きけんだ。</language>
-		<language name="JPN_KANJI">なんにでも　噛みつく　習性。
+		<language name="JPN_KANJI">なんにでも　かみつく　習性。
 食べられるものは　なんでも　食べる。
 うかつに　近寄ると　危険だ。</language>
 	</row>
@@ -6083,7 +6083,7 @@
 なったとき　ドラー●●の　ほのおが
 たいようの　かわりに　なったという。</language>
 		<language name="JPN_KANJI">火山灰で　地上が　真っ暗に
-なったとき ドラー●●の　炎が
+なったとき　ドラー●●の　炎が
 太陽の　代わりに　なったという。</language>
 	</row>
 
@@ -6145,9 +6145,9 @@
 		<language name="JPN">しっぽで　でんきを　つくりだす。
 ぜんしんを　カミナリぐもに　かくして
 イッシュちほうの　そらを　とぶ。</language>
-		<language name="JPN_KANJI">尻尾の　中心部で　電気を　作り出す。
-体の　まわりに　雷雲を　まとって
-イッシュ地方を　見守っているという。</language>
+		<language name="JPN_KANJI">しっぽで　電気を　作り出す。
+全身を　カミナリ雲に　隠して
+イッシュ地方の　空を　飛ぶ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_645_000">
