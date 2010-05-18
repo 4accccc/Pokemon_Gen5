@@ -622,6 +622,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
 static void scproc_Ichigeki_Succeed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, const SVFL_WAZAPARAM* wazaParam, BtlTypeAffAbout affAbout );
 static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAffAbout affAbout, BppKoraeruCause korae_cause, u16 damage );
+static void scproc_Ichigeki_Migawari( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, const SVFL_WAZAPARAM* wazaParam, BtlTypeAffAbout affAbout );
 static void scproc_Fight_PushOut( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* defaultTarget );
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
@@ -642,6 +643,7 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage );
+static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* rec );
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
@@ -8213,14 +8215,21 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         u16  damage = BPP_GetValue( target, BPP_HP );
         BtlTypeAffAbout  affAbout = BTL_CALC_TypeAffAbout( aff );
 
-        BppKoraeruCause  korae_cause = scEvent_CheckKoraeru( wk, attacker, target, &damage );
-
         wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
 
-        if( korae_cause == BPP_KORAE_NONE ){
-          scproc_Ichigeki_Succeed( wk, target, wazaParam, affAbout );
-        }else{
-          scproc_Ichigeki_Korae( wk, target, wazaParam, affAbout, korae_cause, damage );
+        if( BPP_MIGAWARI_IsExist(target) )
+        {
+          scproc_Ichigeki_Migawari( wk, target, wazaParam, affAbout );
+        }
+        else
+        {
+          BppKoraeruCause korae_cause = scEvent_CheckKoraeru( wk, attacker, target, &damage );
+
+          if( korae_cause == BPP_KORAE_NONE ){
+            scproc_Ichigeki_Succeed( wk, target, wazaParam, affAbout );
+          }else{
+            scproc_Ichigeki_Korae( wk, target, wazaParam, affAbout, korae_cause, damage );
+          }
         }
 
         wazaDmgRec_Add( wk, atkPos, attacker, target, wazaParam, damage );
@@ -8268,6 +8277,20 @@ static void scproc_Ichigeki_Korae( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, c
   SCQUE_PUT_ACT_WazaDamage( wk->que, BPP_GetID(target), affAbout, wazaParam->wazaID );
 
   scproc_Koraeru( wk, target, korae_cause );
+}
+//----------------------------------------------------------------------------------
+/**
+ * ˆêŒ‚•KŽEƒƒU ‚Ý‚ª‚í‚è”j‰ó
+ */
+//----------------------------------------------------------------------------------
+static void scproc_Ichigeki_Migawari( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, const SVFL_WAZAPARAM* wazaParam, BtlTypeAffAbout affAbout )
+{
+  u8 pokeID = BPP_GetID( target );
+
+  SCQUE_PUT_ACT_WazaIchigeki( wk->que, pokeID );
+  SCQUE_PUT_ACT_WazaDamage( wk->que, pokeID, affAbout, wazaParam->wazaID );
+  scproc_Migawari_Delete( wk, target );
+
 }
 
 //---------------------------------------------------------------------------------------------
@@ -8792,15 +8815,27 @@ static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16
   scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDamage );
   if( BPP_MIGAWARI_AddDamage(bpp, damage) )
   {
-    u8 pokeID = BPP_GetID( bpp );
-    BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
-
-    scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDestract );
-    SCQUE_PUT_OP_MigawariDelete( wk->que, pokeID );
-    SCQUE_PUT_ACT_MigawariDelete( wk->que, pos );
+    scproc_Migawari_Delete( wk, bpp );
     return TRUE;
   }
   return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * ‚Ý‚ª‚í‚è - íœˆ—
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
+
+  scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDestract );
+  SCQUE_PUT_OP_MigawariDelete( wk->que, pokeID );
+  SCQUE_PUT_ACT_MigawariDelete( wk->que, pos );
 }
 //----------------------------------------------------------------------------------
 /**
