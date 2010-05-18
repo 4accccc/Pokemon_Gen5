@@ -1625,14 +1625,16 @@ static void InitBmp( START_MENU_WORK * wk )
 	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_TIME], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// }ŠÓ
-	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_04 );
-	{
-		u16	num = ZUKANSAVE_GetZukanPokeSeeCount( ZUKAN_SAVEDATA_GetZukanSave(wk->savedata), HEAPID_STARTMENU );
-		WORDSET_RegisterNumber( wk->wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	if( EVENTWORK_CheckEventFlag( wk->evwk, SYS_FLAG_ZUKAN_GET ) == TRUE ){
+		str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_04 );
+		{
+			u16	num = ZUKANSAVE_GetZukanPokeSeeCount( ZUKAN_SAVEDATA_GetZukanSave(wk->savedata), HEAPID_STARTMENU );
+			WORDSET_RegisterNumber( wk->wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		}
+		WORDSET_ExpandStr( wk->wset, wk->exp, str );
+		PRINT_UTIL_PrintColor( &wk->util[BMPWIN_ZUKAN], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
+		GFL_STR_DeleteBuffer( str );
 	}
-	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_ZUKAN], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
-	GFL_STR_DeleteBuffer( str );
 	// ƒoƒbƒW
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_05 );
 	{
