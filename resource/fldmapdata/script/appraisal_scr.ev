@@ -308,7 +308,22 @@ _TALK_OBJ_START()
 	DEFINE_LOCAL LWK_RETMODE
 	DEFINE_LOCAL LWK_MONEY
 	DEFINE_LOCAL LWK_CROWN
+
+	//初回話しかけ時
+	IF FLAG_OFF( FE_T04R0101_APPRAISAL_TALK) THEN
+
+		//オレ　ごらんのとおりの　リッチな　だいふごう
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_01 )
 	
+		//========================================/
+		
+		//初回話しかけフラグセット
+		_FLAG_SET( FE_T04R0101_APPRAISAL_TALK )
+		
+		//========================================/
+
+	ENDIF
+
 	//こだいのおうかん初取得時
 	IF FLAG_OFF( FE_T04R0101_APPRAISAL_CROWN ) THEN
 		
@@ -389,26 +404,11 @@ EVENT_END
 
 ev_fugou:
 {
+
 	DEFINE_LOCAL LWK_ITEM
 	DEFINE_LOCAL LWK_RETMODE
 	DEFINE_LOCAL LWK_MONEY
-	DEFINE_LOCAL LWK_CROWN
 	
-	//初回話しかけ時
-	IF FLAG_OFF( FE_T04R0101_APPRAISAL_TALK) THEN
-
-		//オレ　ごらんのとおりの　リッチな　だいふごう
-		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_01 )
-	
-		//========================================/
-		
-		//初回話しかけフラグセット
-		_FLAG_SET( FE_T04R0101_APPRAISAL_TALK )
-		
-		//========================================/
-
-	ENDIF
-		
 	//譲るアイテムが存在するかチェック
 	DEFINE_LOCAL LWK_ITEMCHECK
 	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_RICH , LWK_ITEMCHECK )
