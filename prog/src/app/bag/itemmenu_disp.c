@@ -1412,6 +1412,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
   int length;
+	ARCHANDLE * ah;
 
   // 文字色指定
   static const u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
@@ -1453,6 +1454,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 	if( pWork->oamlistpos_old == pWork->oamlistpos ){ return; }
 
 	// リスト表示
+	ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
 	for( i=0; i<ITEM_LIST_NUM; i++ ){
     ITEM_ST * item;
 
@@ -1471,7 +1473,8 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 			PRINTSYS_LSB color;
 
       // ※ページ切替時にロードするようにすれば、負荷が軽減される
-      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+//      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+			itemdata = ITEM_GetItemDataArcHandle( ah, item->id, pWork->heapID );
 			type     = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
 
 			// 文字色指定。枠の外はグラデ
@@ -1536,6 +1539,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
+	GFL_ARC_CloseDataHandle( ah );
 
 	pWork->bCellChange = 1;
 }

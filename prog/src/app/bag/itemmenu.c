@@ -2804,6 +2804,7 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   int length;
   ITEM_SORTDATA_TYPE * sort;
   ITEM_ST * item;
+	ARCHANDLE * ah;
 
   // メモリ確保
   sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
@@ -2815,12 +2816,15 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 
   // ソート用データ生成
   // カテゴリ << 28 + ソート番号 << 16 + アイテム番号
+	ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
   for( i=0; i<length; i++ ){
-    void * dat = ITEM_GetItemArcData( item[i].id, ITEM_GET_DATA, pWork->heapID );
+//    void * dat = ITEM_GetItemArcData( item[i].id, ITEM_GET_DATA, pWork->heapID );
+		void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
     sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
     sort[i].st   = item[i];
     GFL_HEAP_FreeMemory( dat );
   }
+	GFL_ARC_CloseDataHandle( ah );
 
   MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
 
