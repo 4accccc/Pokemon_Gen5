@@ -512,7 +512,7 @@ static void _getPokeIconPos(int index, GFL_CLACTPOS* pos)
 }
 
 
-static POKEMON_PARAM* _CreatePokeData(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork)
+POKEMON_PARAM* POKEMONTRADE_CreatePokeData(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp = NULL;
 
@@ -2331,7 +2331,7 @@ static void _endWaitState(POKEMON_TRADE_WORK* pWork)
 static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork)
 { //選択ポケモン表示
   BOOL bRet = FALSE;
-  POKEMON_PARAM* pp = _CreatePokeData(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
+  POKEMON_PARAM* pp = POKEMONTRADE_CreatePokeData(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, POKETOOL_GetWorkSize(), pp)){

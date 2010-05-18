@@ -665,6 +665,15 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     GF_ASSERT((pWork->pParentWork->friendNo-1) >= 0);
     WifiList_SetResult(GAMEDATA_GetWiFiList(pWork->pGameData), pWork->pParentWork->friendNo-1,0,0,1);
     break;
+  case POKEMONTRADE_TYPE_UNION:
+  case POKEMONTRADE_TYPE_IRC:
+    {
+      int index;
+      if(WifiList_CheckFriendMystatus(GAMEDATA_GetWiFiList(pWork->pGameData),pWork->pFriend,&index )) {
+        WifiList_SetResult(GAMEDATA_GetWiFiList(pWork->pGameData), index,0,0,1);
+      }
+    }
+    break;
   }
 
 }

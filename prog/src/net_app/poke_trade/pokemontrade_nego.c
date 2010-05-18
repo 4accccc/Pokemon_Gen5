@@ -344,8 +344,9 @@ void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork)
 BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno)
 { //選択ポケモン表示
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
-  POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+ // POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
+//  POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+  POKEMON_PARAM* pp = POKEMONTRADE_CreatePokeData(pWork->pBox, pWork->selectBoxno, pWork->selectIndex, pWork);
   int no;
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){

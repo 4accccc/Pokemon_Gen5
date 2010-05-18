@@ -852,6 +852,8 @@ extern BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRAE_EndCancelState(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev );
+extern POKEMON_PARAM* POKEMONTRADE_CreatePokeData(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork);
+
 
 
 #if _TRADE_DEBUG

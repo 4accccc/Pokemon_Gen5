@@ -163,6 +163,62 @@ static void _partySub3All(EVENT_IRCBATTLE_WORK *dbw)
 }
 
 
+
+static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
+{
+  int i,index,friend,myno;
+
+  if(0 == dbw->para->multiMode){
+    friend = -1;
+  }
+  else{
+    for(i = 0;i < 4; i++){
+      if(GFL_STD_MemComp(dbw->demo_prm.trainer_data[i].mystatus,
+                         GAMEDATA_GetMyStatus(pGameData),MyStatus_GetWorkSize())){
+        myno = i;
+        switch(myno){
+        case 0:
+          friend = 2;
+          break;
+        case 1:
+          friend = 3;
+          break;
+        case 2:
+          friend = 0;
+          break;
+        case 3:
+          friend = 1;
+          break;
+        }
+        break;
+      }
+    }
+  }
+  
+  for(i = 0;i < 4; i++){
+    MYSTATUS* pMy = GAMEDATA_GetMyStatusPlayer( pGameData, i );
+    if(i != GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle()) && pMy){
+      if(WifiList_CheckFriendMystatus(GAMEDATA_GetWiFiList(pGameData), pMy, &index )) {
+        if( i == friend ){
+          WifiList_SetLastPlayDate(GAMEDATA_GetWiFiList(pGameData), index);
+        }
+        else{
+          if(dbw->demo_prm.result == COMM_BTL_DEMO_RESULT_WIN){
+            // バトルの記録
+            WifiList_SetResult(GAMEDATA_GetWiFiList(pGameData),
+                               index,1,0,0);
+          }
+          else if(dbw->demo_prm.result == COMM_BTL_DEMO_RESULT_LOSE){
+            WifiList_SetResult(GAMEDATA_GetWiFiList(pGameData),
+                               index,0,1,0);
+          }
+        }
+      }
+    }
+  }
+}
+
+
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
 
 //============================================================================================
@@ -385,17 +441,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     PMSND_StopBGM();
     PMSND_PlayBGM( dbw->soundNo );
     PMSND_FadeInBGM(PMSND_FADE_NORMAL);
-#if 0
-    if(dbw->demo_prm.result == COMM_BTL_DEMO_RESULT_WIN){
-      // バトルの記録
-      WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(gsys)),
-                         pClub->pMatchParam->friendNo-1,1,0,0);
-    }
-    else if(ep2p->demo_prm.result == COMM_BTL_DEMO_RESULT_LOSE){
-      WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(gsys)),
-                         pClub->pMatchParam->friendNo-1,0,1,0);
-    }
-#endif
+    _wifilistPlayData(dbw,GAMESYSTEM_GetGameData(gsys));
     
     (*seq) = _CALL_NET_END;
     break;

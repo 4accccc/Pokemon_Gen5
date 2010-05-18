@@ -3370,38 +3370,28 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
 
   case MCR_RET_MYSELECT:   //パソコンに話しかける
-    wk->pParentWork->btalk = FALSE;  //NOTダイレクト
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    if(_modeWait(status)){
-      WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
-    }
-    else{  // 募集の行で選択したとき
+    {  // 募集の行で選択したとき
       if(status == WIFI_STATUS_WAIT){
+        wk->pParentWork->btalk = FALSE;  //NOTダイレクト
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
+        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        return seq;
       }
     }
-    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
-    return seq;
     break;
-
   case MCR_RET_SELECT:   //相手に話しかける
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    if(_modeWait(status)){
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
-      WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
-    }
-    else if(WIFI_STATUS_WAIT==status){  // 人の名前ー＞マッチングへ
+    if(WIFI_STATUS_WAIT==status){  // 人の名前ー＞マッチングへ
       //相手の状態を確保 以後この状態をみるように変更 相手の動作をリアルタイムに追わない
       int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       GFL_STD_MemCopy(WifiFriendMatchStatusGet( friendNo - 1 ), &wk->targetStatus, sizeof(WIFI_STATUS));
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
       WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+      return seq;
     }
-    return seq;
     break;
-
   default:
     GF_ASSERT(0);
     break;
@@ -3659,7 +3649,7 @@ static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq )
   MCRSYS_SetFriendObj( wk, HEAPID_WIFIP2PMATCH );
   MCVSys_UpdataBttn( wk );
 
-  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_017, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECTEND_YESNO);
   }
