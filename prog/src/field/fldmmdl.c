@@ -204,7 +204,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
     u32 size;
     size = SYS_MDL_PRM_WORK_SIZE;
 
-    mmdlsys->pMdlPrmWork = GFL_HEAP_AllocClearMemory( HEAPID_WORLD, size );
+    mmdlsys->pMdlPrmWork = GFL_HEAP_AllocClearMemory( heapID, size );
   }
 
   return( mmdlsys );
