@@ -413,6 +413,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
       //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
       PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
       PSTATUS_RIBBON_DispInfo( work , ribbonWork );
+      PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
       work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }

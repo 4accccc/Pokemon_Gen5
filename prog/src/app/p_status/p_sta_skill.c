@@ -1328,6 +1328,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
         work->ktst = GFL_APP_END_KEY;
         skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
         PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
         return TRUE;
     }
   }
@@ -2034,18 +2035,6 @@ static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_30 ,
                              0 , 0 , PSTATUS_STR_COL_WHITE );
   }
-  /*
-  if( skillRet == FSCR_NO_MACHINE )
-  {
-    PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_30 ,
-                             0 , 0 , PSTATUS_STR_COL_WHITE );
-  }
-  else
-  {
-    PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_31 ,
-                             0 , 0 , PSTATUS_STR_COL_WHITE );
-  }
-  */
   PMSND_PlaySystemSE(PSTATUS_SND_ERROR);
 }
 //--------------------------------------------------------------

@@ -204,11 +204,14 @@ static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , 
   
   if( setType == PMDT_1 )
   {
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
     if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
     {
       PPP_Put( ppp , ID_PARA_get_place , POKE_MEMO_PLACE_PALACE );
     }
     else
+#endif //MULTI_BOOT_MAKE    
     {
       PPP_Put( ppp , ID_PARA_get_place , place );
     }
@@ -218,11 +221,14 @@ static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , 
   }
   else
   {
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
     if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
     {
       PPP_Put( ppp , ID_PARA_birth_place , POKE_MEMO_PLACE_PALACE );
     }
     else
+#endif //MULTI_BOOT_MAKE    
     {
       PPP_Put( ppp , ID_PARA_birth_place , place );
     }

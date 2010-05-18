@@ -2476,6 +2476,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         
         GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
       }
+      PMSND_PlaySystemSE( PLIST_SND_CURSOR );
       work->ktst = GFL_APP_KTST_KEY;
     }
   }
