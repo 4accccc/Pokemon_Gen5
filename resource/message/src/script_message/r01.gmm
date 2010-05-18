@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T12:38:58"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T11:48:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -495,7 +495,7 @@
 		<language name="JPN" width="256">ベル『ちゃんと　きいてよ
 なんなのよお　もう！？[BE:01:ページ切り替え（クリア）]
 どれだけ　ポケモンを　つかまえたか
-みんなで　きょうそう　しよう？[BE:01:ページ切り替え（クリア）]
+みんなで　きょうそう　しようよ？[BE:01:ページ切り替え（クリア）]
 ポケモンずかんの
 つかまえた　かずが▽
 おおい　ひとの　かちね！[BE:01:ページ切り替え（クリア）]</language>
@@ -554,12 +554,12 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『おや　[1:00:トレーナー名:0]
-ベルと　しょうぶ　するのか？[BE:01:ページ切り替え（クリア）]
+ベルと　しょうぶ　するのかい？[BE:01:ページ切り替え（クリア）]
 ぼくも　ベルも
 ポケモンずかんの[BE:00:ページ切り替え（行送り）]
 つかまえた　かずは　２ひき　さ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『おや　[1:00:トレーナー名:0]
-ベルと　勝負するのか？[BE:01:ページ切り替え（クリア）]
+ベルと　勝負するのかい？[BE:01:ページ切り替え（クリア）]
 ぼくも　ベルも
 図鑑の　捕まえた数は　２匹さ</language>
 	</row>
@@ -581,7 +581,7 @@
 たくさん　つかまえたか　くらべる？</language>
 		<language name="JPN_KANJI" width="256">ベル『どう？　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 どちらが　多くの　ポケモンを
-捕まえたか　比べてみる？</language>
+捕まえたか　比べる？</language>
 	</row>
 
 	<row id="msg_r01_white_11">
@@ -651,14 +651,8 @@
 		<comment>未使用</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">……[1:00:トレーナー名:0]
-みんなの　ライブキャスターが▽
-いっせいに　なったね▼
-さあ　つなげようか▼</language>
-		<language name="JPN_KANJI" width="256">……[1:00:トレーナー名:0]
-みんなの　ライブキャスターが▽
-一斉に　鳴ったね▼
-さあ　つなげようか▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r01_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
