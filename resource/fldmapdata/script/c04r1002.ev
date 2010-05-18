@@ -37,6 +37,12 @@ EVENT_START	ev_c04r1002_trainerm_01
 		_MSGWIN_CLOSE()
 		//たいようのいし入手
 		_ITEM_EVENT_KEYWAIT( ITEM_TAIYOUNOISI, 1 )
+		
+		//========================================//
+		//入手フラグをセット
+		_FLAG_SET( FE_C04R1002_ITEMGET_01 )
+		//========================================//
+		
 	ENDIF
 
 	//バージョンによってメッセージを分岐
