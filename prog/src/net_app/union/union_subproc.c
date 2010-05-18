@@ -426,32 +426,45 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
 #if 1
   POKEMONTRADE_PARAM* pPTP = pwk;
   enum{
+    _SEQ_FADEOUT,
+    _SEQ_FIELD_OUT,
     _SEQ_TRADE,
     _SEQ_CHECK,
     _SEQ_EVOLUTION,
     _SEQ_EVOLUTIONEND,
     _SEQ_CALL_MAIL,
     _SEQ_WAIT_MAIL,
+    _SEQ_FIELD_IN,
+    _SEQ_FADEIN,
     _SEQ_END,
   };
 	switch(*seq) {
+  case _SEQ_FADEOUT:
+    // フェードアウト
+    *child_event = EVENT_FieldFadeOut_Black(gsys, fieldWork, FIELD_FADE_WAIT);
+		(*seq) ++;
+    break;
+  case _SEQ_FIELD_OUT:
+    // フェードアウト
+    *child_event = EVENT_FieldClose(gsys, fieldWork);
+		(*seq) ++;
+    break;
 	case _SEQ_TRADE:
-    *child_event = EVENT_FieldSubProc(
-  	    gsys, fieldWork, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, pPTP);
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, pPTP );
 		(*seq) ++;
     break;
   case _SEQ_CHECK:
-    if(pPTP->ret == POKEMONTRADE_MOVE_EVOLUTION){
-      (*seq) = _SEQ_EVOLUTION;
-    }
-    else{
-      (*seq) = _SEQ_END;
+    if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL )
+    {
+      if(pPTP->ret == POKEMONTRADE_MOVE_EVOLUTION){
+        (*seq) = _SEQ_EVOLUTION;
+      }
+      else{
+        (*seq) = _SEQ_FIELD_IN;
+      }
     }
     break;
   case _SEQ_EVOLUTION:
-    //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    //SHINKADEMO_InitParam( pPTP->shinka_param, pPTP->gamedata,
-    //                      pPTP->pParty, pPTP->after_mons_no, 0, pPTP->cond, TRUE,FALSE );
     {
       SHINKA_DEMO_PARAM* sdp = pPTP->shinka_param;
       sdp->gamedata          = pPTP->gamedata;
@@ -463,21 +476,36 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
       sdp->b_enable_cancel   = FALSE;
       pPTP->shinka_param = sdp;
     }
-    *child_event = EVENT_FieldSubProc( gsys, fieldWork, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, pPTP->shinka_param );
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, pPTP->shinka_param );
 		(*seq) ++;
     break;
   case _SEQ_EVOLUTIONEND:
-    //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
-    pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
-    (*seq)=_SEQ_TRADE;
+    if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL )
+    {
+      pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
+      (*seq)=_SEQ_TRADE;
+    }
     break;
   case _SEQ_CALL_MAIL:
     pPTP->aMailBox.gamedata = pPTP->gamedata;
-    *child_event = EVENT_FieldSubProc( gsys, fieldWork, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &pPTP->aMailBox );
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &pPTP->aMailBox );
     (*seq)++;
     break;
   case _SEQ_WAIT_MAIL:
-    (*seq)=_SEQ_TRADE;
+    if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL )
+    {
+      (*seq)=_SEQ_TRADE;
+    }
+    break;
+    
+  case _SEQ_FIELD_IN:
+    *child_event = EVENT_FieldOpen(gsys);
+    (*seq) = _SEQ_FADEIN;
+    break;
+  case _SEQ_FADEIN:
+    // フェードイン
+    *child_event = EVENT_FieldFadeIn_Black(gsys, fieldWork, FIELD_FADE_WAIT);
+    (*seq) = _SEQ_END;
     break;
   default:
     return TRUE;

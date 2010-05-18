@@ -484,6 +484,7 @@ static void _UniSub_SystemExit(UNION_SUBDISP_PTR unisub)
 {
   GFL_MSG_Delete(unisub->msgdata);
   GFL_FONT_Delete(unisub->font_handle);
+  PRINTSYS_QUE_Clear(unisub->printQue);
   PRINTSYS_QUE_Delete(unisub->printQue);
   GFL_CLACT_UNIT_Delete(unisub->clunit);
 }
