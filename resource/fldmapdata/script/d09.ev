@@ -112,7 +112,6 @@ EVENT_START	ev_pos_d09_slipdown_01
 	
 	//ひー！俺には無理っす
 	_GIZAWIN_OBJMSG_POS( msg_d09_trainerm_01, D09_TRAINERM_01, POS_UR )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
 	_CAMERA_RECV_MOVE(20)	//カメラ復帰移動
@@ -175,7 +174,7 @@ EVENT_START	ev_d09_trainerm_01
 	_OBJ_ANIME( D09_TRAINERM_01, anm_trainerm_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	_GIZAWIN_OBJMSG_POS( msg_d09_trainerm_01, D09_TRAINERM_01, POS_DEFAULT )
+	_GIZAWIN_OBJMSG_POS( msg_d09_trainerm_01a, D09_TRAINERM_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 EVENT_END
