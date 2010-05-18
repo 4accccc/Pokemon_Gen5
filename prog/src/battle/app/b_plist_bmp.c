@@ -785,6 +785,11 @@ void BattlePokeList_BmpWrite( BPLIST_WORK * wk, u32 page )
   switch( page ){
   case BPLIST_PAGE_SELECT:    // ポケモン選択ページ
     BPL_Page1BmpWrite( wk );
+	  if( wk->dat->mode == BPL_MODE_ITEMUSE ){
+	    BPL_PokeSelStrPut( wk, mes_b_plist_01_601 );
+	  }else{
+	    BPL_PokeSelStrPut( wk, mes_b_plist_01_600 );
+	  }
 		break;
 
 	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
@@ -2026,12 +2031,6 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
     }
 
     BattlePokeList_P1_LvPut( wk, i );
-  }
-
-  if( wk->dat->mode == BPL_MODE_ITEMUSE ){
-    BPL_PokeSelStrPut( wk, mes_b_plist_01_601 );
-  }else{
-    BPL_PokeSelStrPut( wk, mes_b_plist_01_600 );
   }
 }
 
