@@ -717,7 +717,10 @@ static void BPL_KindIconChange( BPLIST_WORK * wk, u32 objID, u32 chrResID, u32 k
 //--------------------------------------------------------------------------------------------
 static void BPL_StIconPut( u16 st, GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 {
-  if( st == APP_COMMON_ST_ICON_NONE ){ return; }
+  if( st == APP_COMMON_ST_ICON_NONE ){
+	  GFL_CLACT_WK_SetPos( clwk, pos, CLSYS_DRAW_SUB );
+		return;
+	}
 
   GFL_CLACT_WK_SetAnmSeq( clwk, st );
   BPL_ClactOn( clwk, pos );
