@@ -412,11 +412,11 @@ enum {
 
   LX_ID_H_CAP = 4,
   LY_ID_H_CAP = LY_LV11,
-  LX_ID_H_BOX = LX_ID_H_CAP + CALC_STRBOX_WIDTH(3),
+  LX_ID_H_BOX = LX_ID_H_CAP + CALC_STRBOX_WIDTH(2),
   LY_ID_H_BOX = LY_ID_H_CAP,
   LX_ID_L_CAP = LX_ID_H_BOX + CALC_NUMBOX_WIDTH(6),
   LY_ID_L_CAP = LY_LV11,
-  LX_ID_L_BOX = LX_ID_L_CAP + CALC_STRBOX_WIDTH(3),
+  LX_ID_L_BOX = LX_ID_L_CAP + CALC_STRBOX_WIDTH(2),
   LY_ID_L_BOX = LY_ID_L_CAP,
 
   LX_EVENTGET_CAP   = 192,
@@ -1786,6 +1786,11 @@ static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
 
   switch( boxID ){
   case INPUTBOX_ID_RARE:
+    wk->boxValue[ boxID ] = value;
+    update_dst( wk );
+    break;
+
+  case INPUTBOX_ID_SEX:
     wk->boxValue[ boxID ] = value;
     update_dst( wk );
     break;
