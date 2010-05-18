@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-05-18T11:31:38"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-05-18T12:04:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -394,16 +394,17 @@ http://www.pokemon-gl.com/</language>
 	</row>
 
 	<row id="PDWACC_008_01">
-		<language name="JPN" width="256">ゲームシンクＩＤを　はっこうしました
+		<language name="JPN" width="256">ゲームシンクＩＤコードを
+はっこうしました
 
-うえのゲームシンクＩＤ　は
+うえのゲームシンクＩＤコードは
 ゲームをはじめるときの
 メインメニュー
 ゲームシンクせっていから
 みなおすことが　できます▼</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクＩＤを　発行しました
+		<language name="JPN_KANJI" width="256">ゲームシンクＩＤコードを発行しました
 
-上記のゲームシンクＩＤ　は
+上記のゲームシンクＩＤコードは
 ゲーム開始時のメインメニュー
 ゲームシンク設定から
 見直すことが　できます▼</language>
