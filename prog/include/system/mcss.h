@@ -101,6 +101,8 @@ extern	MCSS_WORK*			MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, f
 extern	void						MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
 extern	void						MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
+extern	void						MCSS_SetOrthoModeMcss( MCSS_WORK *mcss );
+extern	void						MCSS_ResetOrthoModeMcss( MCSS_WORK *mcss );
 extern	void						MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void						MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void						MCSS_GetOfsPosition( MCSS_WORK *mcss, VecFx32 *pos );
