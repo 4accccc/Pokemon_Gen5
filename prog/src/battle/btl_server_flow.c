@@ -10922,7 +10922,7 @@ static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacke
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEPOS_ORG, orgTargetPos );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, reqWaza->wazaID );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, WAZANO_NULL );
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEPOS, BTL_POS_NULL );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
 
@@ -10933,6 +10933,11 @@ static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacke
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
 
   BTL_EVENTVAR_Pop();
+
+  if( (reqWaza->wazaID != WAZANO_NULL) && (reqWaza->targetPos == BTL_POS_NULL) ){
+    failFlag = TRUE;
+  }
+
   return !failFlag;
 }
 //----------------------------------------------------------------------------------
