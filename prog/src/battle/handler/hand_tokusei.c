@@ -2804,20 +2804,24 @@ static void handler_IkarinoTubo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     // クリティカルだったら攻撃マックスまでアップ
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_FLAG) )
     {
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      int rankupVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK_RANK );
+      if( rankupVolume > 0 )
       {
-        BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-        const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-        param->rankType = WAZA_RANKEFF_ATTACK;
-        param->rankVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK_RANK );
-        param->fAlmost = TRUE;
-        param->poke_cnt = 1;
-        param->pokeID[0] = pokeID;
-        param->fStdMsgDisable = TRUE;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_IkarinoTubo );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        {
+          BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+          param->rankType = WAZA_RANKEFF_ATTACK;
+          param->rankVolume = BPP_RankEffectUpLimit( bpp, BPP_ATTACK_RANK );
+          param->fAlmost = TRUE;
+          param->poke_cnt = 1;
+          param->pokeID[0] = pokeID;
+          param->fStdMsgDisable = TRUE;
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_IkarinoTubo );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+        }
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
       }
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
   }
 }
