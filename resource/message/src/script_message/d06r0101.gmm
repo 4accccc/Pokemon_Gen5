@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T15:59:38"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T16:11:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -644,11 +644,11 @@
 　できればその場で四方を振り向きつつ待機</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『アタシはね
+		<language name="JPN" width="256">ベル『あたしはね
 はかせの　ボディーガードなの！▼
 って　そんな　ひつようないけど……
 だいじなものは　まもらないと　ね！</language>
-		<language name="JPN_KANJI" width="256">ベル『アタシはね
+		<language name="JPN_KANJI" width="256">ベル『あたしはね
 博士の　ボディーガードなの！▼
 って　そんな　必要ないけど……
 大事なものは　守らないと　ね！</language>
@@ -761,10 +761,10 @@
 　繰り返し表示</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『アタシは　ここでも
+		<language name="JPN" width="256">ベル『あたしは　ここでも
 ポケモン　つかまえるつもり！▽
 だって　たびは　であい　なんだもん！</language>
-		<language name="JPN_KANJI" width="256">ベル『アタシは　ここでも
+		<language name="JPN_KANJI" width="256">ベル『あたしは　ここでも
 ポケモン　捕まえるつもり！▽
 だって　旅は　出会い　なんだもん！</language>
 	</row>
