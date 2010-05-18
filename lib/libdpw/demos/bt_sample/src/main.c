@@ -433,7 +433,7 @@ void NitroMain()
 				else
 				{
 					room_num = result;		// ルーム数を保存する
-					OS_TPrintf(" room num %d\n", room_num);
+					OS_TPrintf(" room num = %d\n", room_num);
 					app_state = SAMPLE_BT_UPLOAD_PLAYER_FOR_CANCEL;
 				}
 			}
@@ -442,6 +442,7 @@ void NitroMain()
 			// ７勝したプレイヤーのデータをアップロードする。
 			// サーバーをアップデートしたときにこの部屋のリーダーになるはず。
 			// 番号の一番大きい部屋へアップロードする
+			OS_TPrintf(" upload to rank = %d, room_num = %d.\n", BT_ROOM_RANK, room_num);
 			Dpw_Bt_UploadPlayerAsync(BT_ROOM_RANK, room_num, 7, &upload_player, token, TOKEN_LEN);
 			app_state = SAMPLE_BT_CANCEL;
 			break;
@@ -478,7 +479,7 @@ void NitroMain()
 			// ７勝したプレイヤーのデータをアップロードする。
 			// サーバーをアップデートしたときにこの部屋のリーダーになるはず。
 			// 番号の一番大きい部屋へアップロードする
-			OS_TPrintf(" download from rank=%d, room_num=%d.\n", BT_ROOM_RANK, room_num);
+			OS_TPrintf(" upload to rank = %d, room_num = %d.\n", BT_ROOM_RANK, room_num);
 			Dpw_Bt_UploadPlayerAsync(BT_ROOM_RANK, room_num, 7, &upload_player, token, TOKEN_LEN);
 			app_state = SAMPLE_BT_UPLOAD_PLAYER_WAIT;
 			break;
@@ -518,6 +519,7 @@ void NitroMain()
                 */
 		case SAMPLE_BT_DOWNLOAD_ROOM:
 			// ルームをダウンロードする
+			OS_TPrintf(" download from rank = %d, room_num = %d.\n", BT_ROOM_RANK, room_num);
 			Dpw_Bt_DownloadRoomAsync(BT_ROOM_RANK, room_num, &download_room);
 			app_state = SAMPLE_BT_DOWNLOAD_ROOM_WAIT;
 			break;

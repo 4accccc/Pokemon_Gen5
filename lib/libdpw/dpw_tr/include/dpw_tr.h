@@ -62,7 +62,7 @@ typedef enum {
 	DPW_TR_ERROR_NG_OWNER_NAME = -11,	//!< アップロードされた主人公名がNGワードを含んでいる
 	DPW_TR_ERROR_CANCEL	= -12,			//!< 処理が Dpw_Tr_CancelAsync() によってキャンセルされた。
 	DPW_TR_ERROR_FATAL = -13,			//!< 通信致命的エラー。電源の再投入が必要です
-	DPW_TR_ERROR_DISCONNECTED = -14,	//!< 通信不能エラー。ライブラリの初期化が必要です。
+	DPW_TR_ERROR_DISCONNECTED = -14,	//!< 通信不能エラー。DWC_CleanupInetあるいはDWC_CleanupInetAsyncによる通信の切断と、ライブラリの初期化が必要です
 	DPW_TR_ERROR_FAILURE = -15			//!< 通信失敗エラー。リトライしてください
 } DpwTrError;
 
@@ -156,7 +156,7 @@ typedef struct {
  *-----------------------------------------------------------------------*/
 
 extern void Dpw_Tr_Init(s32 pid, u64 friend_key, DPW_SERVER_TYPE server_type);
-extern s32 Dpw_Tr_Main(void);
+extern void Dpw_Tr_Main(void);
 extern void Dpw_Tr_End(void);
 extern BOOL Dpw_Tr_IsAsyncEnd(void);
 extern s32 Dpw_Tr_GetAsyncResult(void);

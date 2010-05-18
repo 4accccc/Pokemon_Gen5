@@ -54,7 +54,7 @@ typedef enum {
 	DPW_BT_ERROR_ILLIGAL_REQUEST = -3,	//!< サーバへの不正な要求。不正な部屋番号を指定しています
 	DPW_BT_ERROR_CANCEL	= -4,			//!< 処理が Dpw_Bt_CancelAsync() によってキャンセルされた
 	DPW_BT_ERROR_FATAL = -5,			//!< 通信致命的エラー。電源の再投入が必要です
-	DPW_BT_ERROR_DISCONNECTED = -6,		//!< 通信不能エラー。ライブラリの初期化が必要です。
+	DPW_BT_ERROR_DISCONNECTED = -6,		//!< 通信不能エラー。DWC_CleanupInetあるいはDWC_CleanupInetAsyncによる通信の切断と、ライブラリの初期化が必要です
 	DPW_BT_ERROR_FAILURE = -7			//!< 通信失敗エラー。リトライしてください
 } DpwBtError;
 
@@ -130,7 +130,7 @@ typedef struct {
  *-----------------------------------------------------------------------*/
 
 extern void Dpw_Bt_Init(s32 pid, u64 friend_key, DPW_SERVER_TYPE server_type);
-extern s32 Dpw_Bt_Main(void);
+extern void Dpw_Bt_Main(void);
 extern void Dpw_Bt_End(void);
 extern BOOL Dpw_Bt_IsAsyncEnd(void);
 extern s32 Dpw_Bt_GetAsyncResult(void);
