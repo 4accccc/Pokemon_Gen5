@@ -4530,6 +4530,11 @@ void MMDLSYS_SetSysOBJCodeParam( MMDLSYS *mmdlsys, int list_id)
 {
   NOZOMU_Printf("list_id %d\n",list_id);
 	GFL_ARC_LoadData( mmdlsys->pMdlPrmWork, ARCID_MMDL_LIST, list_id );
+  {
+    u16 *data = (u16*)mmdlsys->pMdlPrmWork;
+    u16 num = data[0];
+    GF_ASSERT_MSG(num <= REGULAR_MAX, "%d ƒƒ‚ƒŠ‚É“ü‚él”‚ð’´‚¦‚Ü‚µ‚½", num);
+  }
 }
 
 //--------------------------------------------------------------
