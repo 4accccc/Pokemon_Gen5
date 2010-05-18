@@ -540,6 +540,7 @@ static const BtlEventHandlerTable*  ADD_DenjiFuyuu( u32* numElems );
 static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Tedasuke( u32* numElems );
 static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tedasuke_SkipAvoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tedasuke_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tedasuke_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_FukuroDataki( u32* numElems );
@@ -6326,7 +6327,8 @@ static void handler_Fuuin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static const BtlEventHandlerTable*  ADD_Alomatherapy( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_Alomatherapy   }, // 未分類ワザハンドラ
+    { BTL_EVENT_SKIP_AVOID_CHECK,             handler_Tedasuke_SkipAvoid }, // 命中チェックスキップハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_Alomatherapy       }, // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7612,13 +7614,23 @@ static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_Tedasuke( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Tedasuke_Ready },       // 未分類ワザハンドラ
-    { BTL_EVENT_WAZA_POWER,         handler_Tedasuke_WazaPow },     // ワザ威力チェック
-    { BTL_EVENT_TURNCHECK_BEGIN,    handler_Tedasuke_TurnCheck },   // ターンチェック開始ハンドラ
+    { BTL_EVENT_SKIP_AVOID_CHECK,   handler_Tedasuke_SkipAvoid },  // 命中チェックスキップハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Tedasuke_Ready     },  // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_POWER,         handler_Tedasuke_WazaPow   },  // ワザ威力チェック
+    { BTL_EVENT_TURNCHECK_BEGIN,    handler_Tedasuke_TurnCheck },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 命中チェックスキップハンドラ
+static void handler_Tedasuke_SkipAvoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
+}
+// 未分類ワザハンドラ
 static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_SVFTOOL_GetFrontPosNum(flowWk) > 1 )
@@ -7644,6 +7656,7 @@ static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     }
   }
 }
+// ワザ威力チェック
 static void handler_Tedasuke_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK)==work[0] )
@@ -7651,6 +7664,7 @@ static void handler_Tedasuke_WazaPow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.5f) );
   }
 }
+// ターンチェック開始ハンドラ
 static void handler_Tedasuke_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
@@ -8735,7 +8749,7 @@ static void handler_Negoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       {
         u8 idx = BTL_CALC_GetRand( cnt );
         WazaID waza = work[ idx ];
-        BtlPokePos  pos= BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
+        BtlPokePos  pos = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  waza );
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );

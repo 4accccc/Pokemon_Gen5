@@ -1281,11 +1281,20 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
       return BTL_POS_NULL;
     }
 
+    // 生きてるポケモンがいればその中からランダム
     pokeCnt = BTL_MAIN_ExpandExistPokeID( mainModule, pokeCon, exPos, pokeID );
     if( pokeCnt )
     {
       u8 rnd = BTL_CALC_GetRand( pokeCnt );
       return BTL_MAIN_PokeIDtoPokePos( mainModule, pokeCon, pokeID[rnd] );
+    }
+
+    // いなければ該当位置からランダム
+    pokeCnt = BTL_MAIN_ExpandBtlPos( mainModule, exPos, pokeID );
+    if( pokeCnt )
+    {
+      u8 rnd = BTL_CALC_GetRand( pokeCnt );
+      return pokeID[ rnd ];
     }
 
     return BTL_POS_NULL;

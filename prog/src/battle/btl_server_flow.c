@@ -503,6 +503,7 @@ static void DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff );
 static BtlTypeAff DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static BOOL scEvent_SkipAvoidCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
 static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
@@ -5449,6 +5450,9 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
   {
+    if( scEvent_SkipAvoidCheck(wk, attacker, bpp, wazaParam) ){
+      continue;
+    }
     if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID)
     ||  !scEvent_CheckHit(wk, attacker, bpp, wazaParam)
     ){
@@ -5465,6 +5469,34 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     Hem_PopState( &wk->HEManager, hem_state );
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザ命中判定をスキップするかチェック
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   wazaParam
+ *
+ * @retval  BOOL    スキップする場合はTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_SkipAvoidCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam )
+{
+  BOOL fSkip = FALSE;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKIP_AVOID_CHECK );
+    fSkip = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  return fSkip;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * トリプル時、当たらない位置のポケモンかどうかを判定
@@ -10933,10 +10965,6 @@ static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacke
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
 
   BTL_EVENTVAR_Pop();
-
-  if( (reqWaza->wazaID != WAZANO_NULL) && (reqWaza->targetPos == BTL_POS_NULL) ){
-    failFlag = TRUE;
-  }
 
   return !failFlag;
 }
