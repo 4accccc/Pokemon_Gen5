@@ -712,6 +712,7 @@ _RET
 sub_receipt_challenge_multi_comm:
 {
   DEFINE_LOCAL irc
+  DEFINE_LOCAL comm_id
   
   _BSUBWAY_TOOL( BSWSUB_GET_COMM_IRC_FLAG, BSW_NULL, BSW_NULL, irc )
   
@@ -814,7 +815,7 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_bsw_common_comm_exit
     _RET
   ENDIF
-
+  
   //お互いが選んだポケモンデータを交換
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, ret )
@@ -871,17 +872,31 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_SET_UNION_ACQ, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //親機なら対戦トレーナー抽選
-  _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, BSW_NULL, ret )
+  _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, BSW_NULL, comm_id )
   
-  IF $ret == 0 THEN //親機なら対戦トレーナーセット
-    //トレーナー抽選
+  IF $comm_id == 0 THEN //親機なら対戦トレーナー抽選
     _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
+  ENDIF
+  
+  //トレーナーデータ受送信開始
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+    _CALL sub_bsw_common_comm_exit
+    _RET
+  ENDIF
+  
+  IF $comm_id == 0 THEN  
     //子機に選んだデータを送信
-    
     _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
   ELSE //子機は親からデータを受け取る
     _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
   ENDIF
+  
+  //トレーナーデータ送受信完了
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA_END, BSW_NULL, comm_ret )
   
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )

@@ -611,11 +611,23 @@ BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
   OS_Printf( "WIFI受付 バトルサブウェイ　トレーナーNoを送信した\n" );
   
   MI_CpuCopy8( bsw_scr->trainer, bsw_scr->send_buf, size );
-   
+  
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),
         FC_BSUBWAY_TR_DATA,size,bsw_scr->send_buf) == TRUE ){
     ret = TRUE;
   }
+  
+  OS_Printf( "send sio multi trainer01 = %d,%d:%d,%d\n",
+        bsw_scr->trainer[0], bsw_scr->trainer[1],
+        bsw_scr->trainer[2], bsw_scr->trainer[3] );
+  OS_Printf(  "send sio multi trainer02 = %d,%d:%d,%d\n",
+        bsw_scr->trainer[4], bsw_scr->trainer[5],
+        bsw_scr->trainer[6], bsw_scr->trainer[7] );
+  OS_Printf(  "send sio multi trainer03 = %d,%d:%d,%d\n",
+        bsw_scr->trainer[8], bsw_scr->trainer[9],
+        bsw_scr->trainer[10], bsw_scr->trainer[11] );
+  OS_Printf(  "send sio multi trainer04 = %d,%d\n",
+        bsw_scr->trainer[12], bsw_scr->trainer[13] );
   
   return ret;
 }
@@ -725,16 +737,16 @@ static void commCmd_FrWiFiCounterTowerRecvBufTrainerData(
   
   MI_CpuCopy8( recv_buf, bsw_scr->trainer, BSUBWAY_STOCK_TRAINER_MAX*2 );
   
-  OS_Printf( "sio multi trainer01 = %d,%d:%d,%d\n",
+  OS_Printf( "recv sio multi trainer01 = %d,%d:%d,%d\n",
         bsw_scr->trainer[0], bsw_scr->trainer[1],
         bsw_scr->trainer[2], bsw_scr->trainer[3] );
-  OS_Printf(  "sio multi trainer02 = %d,%d:%d,%d\n",
+  OS_Printf(  "recv sio multi trainer02 = %d,%d:%d,%d\n",
         bsw_scr->trainer[4], bsw_scr->trainer[5],
         bsw_scr->trainer[6], bsw_scr->trainer[7] );
-  OS_Printf(  "sio multi trainer03 = %d,%d:%d,%d\n",
+  OS_Printf(  "recv sio multi trainer03 = %d,%d:%d,%d\n",
         bsw_scr->trainer[8], bsw_scr->trainer[9],
         bsw_scr->trainer[10], bsw_scr->trainer[11] );
-  OS_Printf(  "sio multi trainer04 = %d,%d\n",
+  OS_Printf(  "recv sio multi trainer04 = %d,%d\n",
         bsw_scr->trainer[12], bsw_scr->trainer[13] );
 }
 
