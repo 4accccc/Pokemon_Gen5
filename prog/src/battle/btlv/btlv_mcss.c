@@ -87,7 +87,8 @@ struct  _BTLV_MCSS
   BtlvMcssPos     position;
   u32             mepachi_always_flag :1;
   u32             sick_set_flag       :1;
-  u32                                 :30;
+  u32             mcss_proj_mode      :1;
+  u32                                 :29;
 };
 
 struct _BTLV_MCSS_WORK
@@ -98,9 +99,8 @@ struct _BTLV_MCSS_WORK
 
   u32             mcss_pos_3vs3             :1;
   u32             mcss_pos_rotate           :1;
-  u32             mcss_proj_mode            :1;
   u32             mcss_tcb_rotation_execute :1;
-  u32                                       :28;
+  u32                                       :29;
   u32             mcss_tcb_move_execute;
   u32             mcss_tcb_scale_execute;
   u32             mcss_tcb_rotate_execute;
@@ -527,6 +527,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   GF_ASSERT_MSG( BTLV_MCSS_GetIndex( bmw, position ) == BTLV_MCSS_NO_INDEX, "pos=%d", position );
 
   bmw->btlv_mcss[ index ].status_flag = 0;
+  bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
 
   //—§‚¿ˆÊ’u‚ð•Û‘¶
   bmw->btlv_mcss[ index ].position = position;
@@ -593,6 +594,8 @@ void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
   GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT( index < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT_MSG( BTLV_MCSS_GetIndex( bmw, position ) == BTLV_MCSS_NO_INDEX, "pos=%d", position );
+
+  bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
 
   //—§‚¿ˆÊ’u‚ð•Û‘¶
   bmw->btlv_mcss[ index ].position = position;
@@ -662,12 +665,12 @@ void  BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw )
 
   MCSS_SetOrthoMode( bmw->mcss_sys );
 
-  bmw->mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
-
   for( position = 0 ; position < BTLV_MCSS_POS_TOTAL ; position++ )
   {
-    if( BTLV_MCSS_GetIndex( bmw, position ) != BTLV_MCSS_NO_INDEX )
+    int index = BTLV_MCSS_GetIndex( bmw, position );
+    if( index != BTLV_MCSS_NO_INDEX )
     {
+      bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
       BTLV_MCSS_SetDefaultScale( bmw, position );
     }
   }
@@ -686,12 +689,12 @@ void  BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 
   MCSS_ResetOrthoMode( bmw->mcss_sys );
 
-  bmw->mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
-
   for( position = 0 ; position < BTLV_MCSS_POS_TOTAL ; position++ )
   {
-    if( BTLV_MCSS_GetIndex( bmw, position ) != BTLV_MCSS_NO_INDEX )
+    int index = BTLV_MCSS_GetIndex( bmw, position );
+    if( index != BTLV_MCSS_NO_INDEX )
     {
+      bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
       BTLV_MCSS_SetDefaultScale( bmw, position );
     }
   }
@@ -847,7 +850,9 @@ void  BTLV_MCSS_GetPokeDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, int positi
 //============================================================================================
 fx32  BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 {
-  return BTLV_MCSS_GetPokeDefaultScaleEx( bmw, position, bmw->mcss_proj_mode );
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  return BTLV_MCSS_GetPokeDefaultScaleEx( bmw, position, bmw->btlv_mcss[ index ].mcss_proj_mode );
 }
 
 //============================================================================================
@@ -1838,7 +1843,7 @@ static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
   GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss );
 
-  def_scale = BTLV_MCSS_GetDefaultScale( bmw, position, bmw->mcss_proj_mode );
+  def_scale = BTLV_MCSS_GetDefaultScale( bmw, position, bmw->btlv_mcss[ index ].mcss_proj_mode );
 
   VEC_Set( &scale, def_scale, def_scale, FX32_ONE );
 

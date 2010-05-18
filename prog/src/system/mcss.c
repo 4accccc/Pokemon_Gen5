@@ -290,19 +290,6 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	G3_Identity();
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 
-	if( mcss_sys->mcss_ortho_mode == 0 ){
-		G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
-	}
-	else{
-		// カメラ行列を設定します。
-		// 単位行列と等価
-		VecFx32 Eye    = { 0, 0, 0 };          // Eye position
-		VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
-		VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
-
-		G3_LookAt( &Eye, &vUp, &at, NULL );
-	}
-
 	//ビルボード回転行列を求める
 	{
 		MtxFx43						camera;
@@ -319,11 +306,23 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 		    ( mcss_sys->mcss[index]->is_load_resource == 1 ) ){
 	    fx32  pos_z_default = 0;
       fx32  scale_offset_work = FX32_ONE;
-
-			G3_PushMtx();
+	    int   ortho_mode = ( mcss_sys->mcss_ortho_mode == 0 ) ? 0 : mcss_sys->mcss[ index ]->ortho_mode;
 
 			mcss		= mcss_sys->mcss[index];
 			image_p		= &mcss->mcss_image_proxy;
+
+	    if( ortho_mode == 0 ){ 
+		    G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
+	    }
+	    else{
+		    // カメラ行列を設定します。
+		    // 単位行列と等価
+		    VecFx32 Eye    = { 0, 0, 0 };          // Eye position
+		    VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
+		    VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
+
+		    G3_LookAt( &Eye, &vUp, &at, NULL );
+	    }
 
 			anim_ctrl_mc= NNS_G2dGetMCAnimAnimCtrl(&mcss->mcss_mcanim);
 			MC_Array = (NNSG2dMCNodeCellAnimArray*)&mcss->mcss_mcanim.multiCellInstance.pCellAnimInstasnces;
@@ -358,7 +357,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			pos.y = mcss->pos.y + mcss->ofs_pos.y;
 			pos.z = mcss->pos.z + mcss->ofs_pos.z;
 
-			if( mcss_sys->mcss_ortho_mode == 0 ){
+	    if( ortho_mode == 0 ){ 
 				anim_pos.x = MCSS_CONST( anim_SRT_mc.px );
 				anim_pos.y = MCSS_CONST( -anim_SRT_mc.py );
 				anim_pos.x = FX_Mul( anim_pos.x,mcss_sys->mcAnimRate );
@@ -386,7 +385,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			//前もって、不変なマルチセルデータをカレント行列にかけておく
 			G3_Translate( pos.x, pos.y, pos.z );
 			//カメラの逆行列を掛け合わせる（ビルボード処理）
-			if( mcss_sys->mcss_ortho_mode == 0 ){
+	    if( ortho_mode == 0 ){ 
 				G3_MultMtx44( &inv_camera );
 			}
 
@@ -495,7 +494,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
-									  mcss_sys->mcss_ortho_mode,
+	                  ortho_mode,
 									  &pos_z_default, flipFlg, &scale_offset_work);
 					}
 					else{
@@ -507,7 +506,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
-									  mcss_sys->mcss_ortho_mode,
+	                  ortho_mode,
 									  &pos_z_default, flipFlg, &scale_offset_work);
 					}
 				}
@@ -519,10 +518,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->tex_s,
 							  ncec->tex_t,
 							  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
-							  mcss_sys->mcss_ortho_mode,
+	              ortho_mode,
 							  &pos_z_default, flipFlg, &scale_offset_work);
 			}
-			G3_PopMtx(1);
 		}
 	}
 	G3_PopMtx(1);
@@ -781,6 +779,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
 			mcss_sys->mcss[ count ]->maw = *maw;
 			mcss_sys->mcss[ count ]->mcss_anm_frame = FX32_ONE;
+			mcss_sys->mcss[ count ]->ortho_mode = 1;
 			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
@@ -866,6 +865,30 @@ void	MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys )
 void	MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys )
 {
 	mcss_sys->mcss_ortho_mode = 0;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 正射影描画モードをセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetOrthoModeMcss( MCSS_WORK *mcss )
+{
+	mcss->ortho_mode = 1;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief 正射影描画モードをリセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetOrthoModeMcss( MCSS_WORK *mcss )
+{
+	mcss->ortho_mode = 0;
 }
 
 //--------------------------------------------------------------------------

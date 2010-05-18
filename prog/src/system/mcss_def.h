@@ -106,7 +106,8 @@ struct _MCSS_WORK
 	u32														shadow_vanish_flag  :1;    
 	u32														mosaic				      :4; //モザイク    
 	u32														fade_pltt_data_flag :1;    
-	u32														                    :3;    
+	u32														ortho_mode          :1;    
+	u32														                    :2;    
 	int														index;								//登録INDEX
 	int														heapID;								//使用するヒープID
   MCSS_ADD_WORK                 maw;
@@ -127,8 +128,8 @@ struct _MCSS_SYS_WORK
 	NNSG2dRenderSurface			mcss_surface;					//メイン画面 Surface
 #endif //USE_RENDER
 	NNSG2dImagePaletteProxy	shadow_palette_proxy;	//パレットプロキシ（影用）
-	u32											mcss_ortho_mode	:1;		//正射影描画モードフラグ
-	u32																			:31;
+  u32                     mcss_ortho_mode :1;   //正射影描画モードフラグ
+  u32                                     :31;
 	u32											texAdrs;							//テクスチャ転送開始アドレス
 	u32											palAdrs;							//テクスチャパレット転送開始アドレス
   MCSS_CALLBACK_FUNC*     load_resource_callback;   //LoadResourceの前に呼ばれるコールバック（キャラデータ操作に使用）
