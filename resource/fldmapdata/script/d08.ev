@@ -611,7 +611,7 @@ EVENT_START    ev_d08_hakase1_01
 	//リュウラセンのイベントが起動している
 	ELSE
 
-		_BALLOONWIN_TALKOBJ_MSG(msg_d08_hakase1_00_10)
+		_BALLOONWIN_TALKOBJ_MSG(msg_d08_hakase1_00_11)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 			
