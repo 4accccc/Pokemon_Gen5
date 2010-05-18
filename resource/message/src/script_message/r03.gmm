@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T11:09:16"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T15:29:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -492,7 +492,7 @@
 大丈夫だから　泣かないで！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・サポートのほうを向いてメッセージ表示
 ・続けてwhite_04</comment>
@@ -518,7 +518,7 @@
 ポケモンを　とられちゃったのよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公向き
 ・続けてblack_08_01</comment>
@@ -530,7 +530,7 @@
 はやく　いいなよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_08_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r03_black_08_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左へ倍速移動
 ・画面外に消えると、主人公操作可能に
@@ -538,13 +538,13 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-ポケモンを　とりもどそう！[BE:01:ページ切り替え（クリア）]
+ポケモンを　とりもどすよ[BE:01:ページ切り替え（クリア）]
 ベル！　きみは
-その　おんなのこの　そばにいるんだ[BE:01:ページ切り替え（クリア）]</language>
+その　おんなのこの　そばにいてよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-ポケモンを　取り戻そう！[BE:01:ページ切り替え（クリア）]
+ポケモンを　取り戻すよ[BE:01:ページ切り替え（クリア）]
 ベル！　きみは
-その　女の子の　そばにいるんだ[BE:01:ページ切り替え（クリア）]</language>
+その　女の子の　そばにいてよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r03_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -554,11 +554,11 @@
 ・r03r0301のイベントクリアまで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『おねがい……　[1:00:トレーナー名:0]
-プラズマだんに　うばわれた▽
+		<language name="JPN" width="256">ベル『おねがい……　[1:00:トレーナー名:0]▼
+プラズマだんに　うばわれた
 ポケモンを　とりかえしてあげて！</language>
-		<language name="JPN_KANJI" width="256">ベル『お願い……　[1:00:トレーナー名:0]
-プラズマ団に　奪われた▽
+		<language name="JPN_KANJI" width="256">ベル『お願い……　[1:00:トレーナー名:0]▼
+プラズマ団に　奪われた
 ポケモンを　取り返してあげて！</language>
 	</row>
 
@@ -569,11 +569,11 @@
 ・r03r0301のイベントクリアまで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『おねがい……　[1:00:トレーナー名:0]
-プラズマだんに　うばわれた▽
+		<language name="JPN" width="256">ベル『おねがい……　[1:00:トレーナー名:0]▼
+プラズマだんに　うばわれた
 ポケモンを　とりかえしてあげて！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『お願い……　[1:00:トレーナー名:0]
-プラズマ団に　奪われた▽
+		<language name="JPN_KANJI" width="256">ベル『お願い……　[1:00:トレーナー名:0]▼
+プラズマ団に　奪われた
 ポケモンを　取り返してあげて！▼</language>
 	</row>
 
@@ -730,7 +730,8 @@
 		<comment>♀
 ・メッセージ表示後、サポートと女の子
 　横並びの状態でc01方面へ移動
-　画面外に消えると、主人公操作可能に</comment>
+　画面外に消えると、主人公操作可能に
+・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ！　ヒールボール！▼
@@ -753,7 +754,7 @@
 		<comment>♂
 ・pos（GRIDX=720、GRIDZ=581~583）で発動
 　主人公に隣接してこのメッセージ表示
-0＝プレイヤー名</comment>
+・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]　ストップ！[BE:01:ページ切り替え（クリア）]</language>
@@ -791,8 +792,9 @@
 	</row>
 
 	<row id="msg_r03_sodateya_01m" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>育て屋：タマゴが見つかったときに３番道路を通ると
-声をかけてくれる（posイベント）</comment>
+		<comment>♂
+・育て屋：タマゴが見つかったときに３番道路を通ると
+　声をかけてくれる（posイベント）</comment>
 		<attribute name="キャラ指定">育て屋じいさん</attribute>
 		<language name="JPN" width="256">おーい　[1:00:トレーナー名:0]くん！
 ちょっと　きてくれ！▼</language>
@@ -801,8 +803,9 @@
 	</row>
 
 	<row id="msg_r03_sodateya_01f" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>育て屋：タマゴが見つかったときに３番道路を通ると
-声をかけてくれる（posイベント）</comment>
+		<comment>♂
+・育て屋：タマゴが見つかったときに３番道路を通ると
+　声をかけてくれる（posイベント）</comment>
 		<attribute name="キャラ指定">育て屋じいさん</attribute>
 		<language name="JPN" width="256">おーい　[1:00:トレーナー名:0]ちゃん！
 ちょっと　きてくれ！▼</language>
@@ -893,9 +896,8 @@
 そこに　セットされた　ポケモンです！</language>
 	</row>
 
-	<row id="msg_r03_sign4_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
-		<comment>育て屋看板
-・仮メッセージ</comment>
+	<row id="msg_r03_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>育て屋看板</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ポケモン　そだてや
 たいせつな　ポケモン　あずかります</language>
