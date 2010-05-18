@@ -23,6 +23,10 @@
 #include "message.naix"
 #include "msg/msg_d_numinput_r.h"
 
+#include "savedata/questionnaire_save.h"
+#include "app/research_radar/question_id.h"
+//#include "app/research_radar/answer_num_question.cdat"
+
 //======================================================================
 //======================================================================
 ///項目選択用データの定義
@@ -68,6 +72,9 @@ typedef struct{
 //プロトタイプ
 //======================================================================
 static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work);
+static void SetResearchDataAtRandom( GAMESYS_WORK* gameSystem );
+static void SetResearchDataAtRandom_today( GAMESYS_WORK* gameSystem, u32 rand_max );
+static void SetResearchDataAtRandom_total( GAMESYS_WORK* gameSystem, u32 rand_max );
 
 //--------------------------------------------------------------
 ///サブメニューイベント：デバッグフラグ操作
@@ -360,16 +367,22 @@ static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work)
   switch( *seq ) {
   case 0:
 		{
-			const DEBUG_MENU_INITIALIZER* menu;
+			const DEBUG_MENU_INITIALIZER* menu = NULL;
 			switch( wk->page ) {
 			case 0: menu = &DATA_DNumInput_MenuInitializer_team; break;
 			case 1: menu = &DATA_DNumInput_MenuInitializer_Qtotal; break;
 			case 2: menu = &DATA_DNumInput_MenuInitializer_Atotal; break;
 			case 3: menu = &DATA_DNumInput_MenuInitializer_Qtoday; break;
 			case 4: menu = &DATA_DNumInput_MenuInitializer_Atoday; break;
+      case 5: SetResearchDataAtRandom( gsys ); break; // ランダムセットアップ
 			default: GF_ASSERT(0);
 			}
-			wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldWork, wk->heapID, menu );
+      if( menu ) {
+        wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldWork, wk->heapID, menu );
+      }
+      else {
+        return GMEVENT_RES_FINISH;
+      }
 		}
     (*seq)++;
     break;
@@ -774,5 +787,95 @@ static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
 
   return new_event;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * @brief 調査人数をランダムに設定する
+ */
+//--------------------------------------------------------------
+static void SetResearchDataAtRandom( GAMESYS_WORK* gameSystem )
+{ 
+  u8 q_id, a_id;
+
+  // 今日の調査人数
+  SetResearchDataAtRandom_today( gameSystem, 99 );
+
+  // いままでの調査人数
+  SetResearchDataAtRandom_total( gameSystem, 9999 );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 調査人数をランダムに設定する ( 今日の調査人数 )
+ */
+//--------------------------------------------------------------
+static void SetResearchDataAtRandom_today( GAMESYS_WORK* gameSystem, u32 rand_max )
+{
+  u8 q_id, a_id;
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save );
+
+  for( q_id=0; q_id < QUESTION_ID_NUM; q_id++ )
+  {
+    u32 total_add_count = 0;
+
+    for( a_id=0; a_id < AnswerNum_question[ q_id ]; a_id++ )
+    {
+      u32 add_count, added_count;
+      u32 before_count, after_count;
+
+      add_count = GFUser_GetPublicRand0( rand_max );
+      before_count = QuestionnaireWork_GetTodayAnswerNum( QSave, q_id, a_id + 1 );
+      QuestionnaireWork_AddTodayAnswerNum( QSave, q_id, a_id + 1, add_count );
+      after_count = QuestionnaireWork_GetTodayAnswerNum( QSave, q_id, a_id + 1 );
+      added_count = after_count - before_count;
+      total_add_count += added_count;
+    }
+    QuestionnaireWork_AddTodayCount( QSave, q_id, total_add_count );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 調査人数をランダムに設定する ( いままでの調査人数 )
+ */
+//--------------------------------------------------------------
+static void SetResearchDataAtRandom_total( GAMESYS_WORK* gameSystem, u32 rand_max )
+{
+  u8 q_id, a_id;
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save );
+
+  for( q_id=0; q_id < QUESTION_ID_NUM; q_id++ )
+  {
+    u32 total_add_count = 0;
+
+    for( a_id=0; a_id < AnswerNum_question[ q_id ]; a_id++ )
+    {
+      u32 add_count, added_count;
+      u32 before_count, after_count;
+
+      add_count = GFUser_GetPublicRand0( rand_max );
+      before_count = QuestionnaireWork_GetTotalAnswerNum( QSave, q_id, a_id + 1 );
+      QuestionnaireWork_AddTotalAnswerNum( QSave, q_id, a_id + 1, add_count );
+      after_count = QuestionnaireWork_GetTotalAnswerNum( QSave, q_id, a_id + 1 );
+      added_count = after_count - before_count;
+      total_add_count += added_count;
+    }
+    QuestionnaireWork_AddTotalCount( QSave, q_id, total_add_count );
+  }
+}
+
 
 #endif  //PM_DEBUG

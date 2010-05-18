@@ -49,6 +49,7 @@ static BOOL debugMenuCallProc_QTotal( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_ATotal( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_QToday( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_AToday( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_Random( DEBUG_MENU_EVENT_WORK * p_wk );
 
 
 //======================================================================
@@ -60,11 +61,12 @@ static BOOL debugMenuCallProc_AToday( DEBUG_MENU_EVENT_WORK * p_wk );
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
-  { DEBUG_FIELD_RESEARCH_team,  debugMenuCallProc_Team },  // 調査隊関連
+  { DEBUG_FIELD_RESEARCH_team,   debugMenuCallProc_Team },   // 調査隊関連
   { DEBUG_FIELD_RESEARCH_Qtotal, debugMenuCallProc_QTotal }, // いままでの調査人数 ( 質問 )
   { DEBUG_FIELD_RESEARCH_Atotal, debugMenuCallProc_ATotal }, // いままでの調査人数 ( 回答 )
   { DEBUG_FIELD_RESEARCH_Qtoday, debugMenuCallProc_QToday }, // 今日の調査人数 ( 質問 )
   { DEBUG_FIELD_RESEARCH_Atoday, debugMenuCallProc_AToday }, // 今日の調査人数 ( 回答 )
+  { DEBUG_FIELD_RESEARCH_Random, debugMenuCallProc_Random }, // ランダムセットアップ
 }; 
 
 //--------------------------------------------------------------
@@ -282,7 +284,7 @@ static BOOL debugMenuCallProc_Team( DEBUG_MENU_EVENT_WORK * p_wk )
 
   event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 0 );
 
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
 
   return TRUE;
 }
@@ -295,7 +297,7 @@ static BOOL debugMenuCallProc_QTotal( DEBUG_MENU_EVENT_WORK * p_wk )
 
   event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 1 );
 
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
 
   return TRUE;
 }
@@ -308,7 +310,7 @@ static BOOL debugMenuCallProc_ATotal( DEBUG_MENU_EVENT_WORK * p_wk )
 
   event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 2 );
 
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
 
   return TRUE;
 }
@@ -321,7 +323,7 @@ static BOOL debugMenuCallProc_QToday( DEBUG_MENU_EVENT_WORK * p_wk )
 
   event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 3 );
 
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
 
   return TRUE;
 }
@@ -334,7 +336,20 @@ static BOOL debugMenuCallProc_AToday( DEBUG_MENU_EVENT_WORK * p_wk )
 
   event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 4 );
 
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
+
+  return TRUE;
+}
+//--------------------------------------------------------------
+/// デバッグメニュー：ランダムセットアップ
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_Random( DEBUG_MENU_EVENT_WORK * p_wk )
+{
+  GMEVENT* event;
+
+  event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 5 );
+
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
 
   return TRUE;
 }

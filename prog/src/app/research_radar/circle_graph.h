@@ -21,14 +21,14 @@ typedef struct _CIRCLE_GRAPH CIRCLE_GRAPH;
 //==========================================================================
 typedef struct
 {
-  u8 ID;           // ID
-  u8 value;        // 値
-  u8 outerColorR;  // 外周の色(R) [0, 31]
-  u8 outerColorG;  // 外周の色(G) [0, 31]
-  u8 outerColorB;  // 外周の色(B) [0, 31]
-  u8 centerColorR; // 中心点の色(R) [0, 31]
-  u8 centerColorG; // 中心点の色(G) [0, 31]
-  u8 centerColorB; // 中心点の色(B) [0, 31]
+  u8  ID;           // ID
+  u32 value;        // 値
+  u8  outerColorR;  // 外周の色(R) [0, 31]
+  u8  outerColorG;  // 外周の色(G) [0, 31]
+  u8  outerColorB;  // 外周の色(B) [0, 31]
+  u8  centerColorR; // 中心点の色(R) [0, 31]
+  u8  centerColorG; // 中心点の色(G) [0, 31]
+  u8  centerColorB; // 中心点の色(B) [0, 31]
 
 } GRAPH_COMPONENT_ADD_DATA;
 
