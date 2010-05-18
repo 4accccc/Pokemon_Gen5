@@ -1036,7 +1036,7 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
     if( pow == 0 )
     {
       PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_POW] , mes_status_06_28 ,
-                                     PSTATUS_SKILL_STR_WAZA_POWER_NUM_X , PSTATUS_SKILL_STR_WAZA_POWER_NUM_Y , PSTATUS_STR_COL_VALUE );
+                                     PSTATUS_SKILL_STR_WAZA_POWER_NUM_X+6 , PSTATUS_SKILL_STR_WAZA_POWER_NUM_Y , PSTATUS_STR_COL_VALUE );
     }
     else
     {
@@ -1053,10 +1053,11 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
                             PSTATUS_SKILL_STR_WAZA_HIT_X , PSTATUS_SKILL_STR_WAZA_HIT_Y , PSTATUS_STR_COL_TITLE );
   {
     u32 hit = WAZADATA_GetParam( wazaNo, WAZAPARAM_HITPER );
-    if( hit == 0 )
+    if( WAZADATA_IsAlwaysHit( wazaNo ) == TRUE ||
+        hit == 0 )
     {
       PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_HIT] , mes_status_06_28 ,
-                                     PSTATUS_SKILL_STR_WAZA_HIT_NUM_X , PSTATUS_SKILL_STR_WAZA_HIT_NUM_Y , PSTATUS_STR_COL_VALUE );
+                                     PSTATUS_SKILL_STR_WAZA_HIT_NUM_X+6 , PSTATUS_SKILL_STR_WAZA_HIT_NUM_Y , PSTATUS_STR_COL_VALUE );
     }
     else
     {
