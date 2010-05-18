@@ -1691,10 +1691,14 @@ static u8 getHatchCountUpdateValue( POKEPARTY* party )
   for( i=0; i<partyCount; i++ )
   {
     POKEMON_PARAM* param;
-    u32 tokusei;
+    u32 tokusei, tamago_flag;
 
     param = PokeParty_GetMemberPointer( party, i );
     tokusei = PP_Get( param, ID_PARA_speabino, NULL );
+    tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+
+    // タマゴは無視
+    if( tamago_flag ) { continue; }
 
     // 特性「ほのおのからだ」「マグマのよろい」を持つポケモンがいる
     if( (tokusei == TOKUSYU_HONOONOKARADA) || (tokusei == TOKUSYU_MAGUMANOYOROI) ) {
