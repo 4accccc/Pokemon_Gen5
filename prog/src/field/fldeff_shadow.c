@@ -241,6 +241,11 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
       FLDEFF_TASK_CallDelete( task );
       return;
     }
+    {
+      int bbdIdx = work->bbdUnitIdx + 0;  //BBD‚ÌINDEX == BBDACT‚ÌUNITIDX + Unit“àIdx
+      u8 polyID = 2;    //Base 0 + 2 == 2 ‚ª‰e‚ÌPolyID
+      GFL_BBD_SetObjectPolID( work->eff_shadow->bbdsys, bbdIdx, &polyID );
+    }
   }
   
   FLDEFF_TASK_CallUpdate( task ); //‘¦AÀ•W‚ð”½‰f‚·‚é
@@ -289,27 +294,13 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
     }
   }
 
-#ifdef PM_DEBUG  
-  if( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) ||
-      MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
-      MMDL_CheckMoveBit(work->fmmdl,MMDL_MOVEBIT_SHADOW_VANISH) ){
-    work->vanish_flag = TRUE;
-  }
-#else
   if( MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
       MMDL_CheckMoveBit(work->fmmdl,MMDL_MOVEBIT_SHADOW_VANISH) ){
     work->vanish_flag = TRUE;
   }
-#endif
   else
   {
     work->vanish_flag = FALSE;
-    MMDL_GetVectorPos( work->fmmdl, &pos );
-    pos.y += NUM_FX32(-4);
-#ifdef MMDL_BBD_DRAW_OFFS_Z_USE 
-    pos.z += NUM_FX32(2)+0x800;
-#endif
-    FLDEFF_TASK_SetPos( task, &pos );
   }
 }
 
