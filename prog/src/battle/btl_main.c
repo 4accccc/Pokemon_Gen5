@@ -3696,7 +3696,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   u8 pokeID;
 
   POKEMON_PARAM* pp;
-  u8 i;
+  int i;
 
   pokecon->srcParty[ clientID ] = party_src;
 
@@ -3709,13 +3709,23 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   }
 
   // 最後以外のポケモンがイリュージョン使いなら、最後のSrcPPを見せかけデータにする
-  pokeID = pokeID_Start;
-  for(i=0; i<(poke_count-1); ++i, ++pokeID)
   {
-    if( BPP_GetValue(pokecon->pokeParam[pokeID], BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
+    int lastIndex;
+    for(i=(poke_count-1); i>0; --i){
+      pp = PokeParty_GetMemberPointer( party_src, i );
+      if( !PP_Get(pp, ID_PARA_tamago_flag, NULL) ){
+        lastIndex = i;
+        break;
+      }
+    }
+    pokeID = pokeID_Start;
+    for(i=0; i<lastIndex; ++i, ++pokeID)
     {
-      pp = PokeParty_GetMemberPointer( party_src, (poke_count - 1) );
-      BPP_SetViewSrcData( pokecon->pokeParam[ pokeID ], pp );
+      if( BPP_GetValue(pokecon->pokeParam[pokeID], BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
+      {
+        pp = PokeParty_GetMemberPointer( party_src, (poke_count - 1) );
+        BPP_SetViewSrcData( pokecon->pokeParam[ pokeID ], pp );
+      }
     }
   }
 
