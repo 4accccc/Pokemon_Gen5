@@ -481,8 +481,17 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     //ブラックアウト開始
-    GFL_FADE_SetMasterBrightReq(
+    if (ptr->Last)
+    {
+      //両面フェード
+      GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -8 );
+    }
+    else
+    {
+      GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 0 );
+    }
     (*seq)++;
     break;
   case 1:
