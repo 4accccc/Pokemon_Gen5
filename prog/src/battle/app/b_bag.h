@@ -1,13 +1,12 @@
 //============================================================================================
 /**
- * @file  b_bag.h
- * @brief 戦闘用バッグ画面 外部公開ファイル
- * @author  Hiroyuki Nakamura
- * @date  05.02.10
+ * @file		b_bag.h
+ * @brief		戦闘用バッグ画面 外部公開ファイル
+ * @author	Hiroyuki Nakamura
+ * @date		05.02.10
  */
 //============================================================================================
-#ifndef B_BAG_H
-#define B_BAG_H
+#pragma	once
 
 #include "print/printsys.h"
 #include "savedata/myitem_savedata.h"
@@ -72,17 +71,6 @@ typedef struct {
 
 	BOOL	commFlag;			// 通信対戦かどうか　TRUE = 通信対戦
 
-
-//  u16 used_item;    // 前回使用したアイテム
-//  u8  used_poke;    // 前回使用したアイテムのポケット
-
-//  u32 skill_item_use; // 技で使用不可
-//  s32 client_no;    // クライアントNo
-
-//  u8  enc_double;     // 野生2vs2でボールが投げられない場合は１
-//  u8  waza_vanish;    // 相手が「そらをとぶ」などで見えない場合は１
-//  u8  waza_migawari;  // 相手が「みがわり」を使用している場合は１
-
 }BBAG_DATA;
 
 
@@ -92,14 +80,11 @@ typedef struct {
 
 //--------------------------------------------------------------------------------------------
 /**
- * 戦闘用バッグタスク追加
+ * @brief		戦闘用バッグタスク追加
  *
- * @param dat   バッグデータ
+ * @param		dat   バッグデータ
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void BattleBag_TaskAdd( BBAG_DATA * dat );
-
-
-#endif  // B_BAG_H

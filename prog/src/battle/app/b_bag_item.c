@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file  b_bag_item.c
- * @brief 戦闘用バッグ画面 アイテム制御関連
- * @author  Hiroyuki Nakamura
- * @date  09.08.26
+ * @file		b_bag_item.c
+ * @brief		戦闘用バッグ画面 アイテム制御関連
+ * @author	Hiroyuki Nakamura
+ * @date		09.08.26
  */
 //============================================================================================
 #include <gflib.h>
@@ -18,18 +18,15 @@
 //============================================================================================
 //  定数定義
 //============================================================================================
-//#define TEST_SHOOTER_ITEM
-
-#ifdef TEST_SHOOTER_ITEM
-typedef struct {
-  u16 item;
-  u16 cost;
-}SHOOTER_ITEM;
-#endif  // TEST_SHOOTER_ITEM
 
 //============================================================================================
 //  グローバル
 //============================================================================================
+
+// 戦闘で使用するアイテムが入っているフィールドのポケット
+static const u8 SearchPocket[] = {
+	BAG_POKE_NORMAL, BAG_POKE_DRUG, BAG_POKE_NUTS,
+};
 
 // ポケットIDテーブル
 static const u8 PocketNum[] = {
@@ -37,83 +34,11 @@ static const u8 PocketNum[] = {
 };
 
 
-#ifdef TEST_SHOOTER_ITEM
-// シューター用アイテムテーブル
-static const SHOOTER_ITEM ShooterItemTable[] =
-{
-  { ITEM_KURITHIKATTAA, 1 },    // クリティカッター
-  { ITEM_SUPIIDAA, 1 },         // スピーダー
-  { ITEM_SUPESYARUAPPU, 1 },    // スペシャルアップ
-  { ITEM_SUPESYARUGAADO, 1 },   // スペシャルガード
-  { ITEM_DHIFENDAA, 1 },        // ディフェンダー
-  { ITEM_PURASUPAWAA, 1 },      // プラスパワー
-  { ITEM_YOKUATAARU, 1 },       // ヨクアタール
-  { ITEM_EFEKUTOGAADO, 1 },     // エフェクトガード
-
-  { ITEM_KIZUGUSURI, 2 },       // キズぐすり
-
-  { ITEM_PIIPIIEIDO, 3 },       // ピーピーエイド
-  { ITEM_AITEMUKOORU, 3 },      // アイテムコール
-  { ITEM_KURITHIKATTO2, 3 },    // クリティカット２
-  { ITEM_SUPIIDAA2, 3 },        // スピーダー２
-  { ITEM_spAPPU2, 3 },          // ＳＰアップ２
-  { ITEM_spGAADO2, 3 },         // ＳＰガード２
-  { ITEM_DHIFENDAA2, 3 },       // ディフェンダー２
-  { ITEM_PURASUPAWAA2, 3 },     // プラスパワー２
-  { ITEM_YOKUATAARU2, 3 },      // ヨクアタール２
-
-  { ITEM_IIKIZUGUSURI, 4 },     // いいキズぐすり
-  { ITEM_KOORINAOSI, 4 },       // こおりなおし
-  { ITEM_DOKUKESI, 4 },         // どくけし
-  { ITEM_NEMUKEZAMASI, 4 },     // ねむけざまし
-  { ITEM_MAHINAOSI, 4 },        // まひなおし
-  { ITEM_YAKEDONAOSI, 4 },      // やけどなおし
-
-  { ITEM_SUKIRUKOORU, 5 },      // スキルコール
-  { ITEM_KURITHIKATTO3, 5 },    // クリティカット３
-  { ITEM_SUPIIDAA3, 5 },        // スピーダー３
-  { ITEM_spAPPU3, 5 },          // ＳＰアップ３
-  { ITEM_spGAADO3, 5 },         // ＳＰガード３
-  { ITEM_DHIFENDAA3, 5 },       // ディフェンダー３
-  { ITEM_PURASUPAWAA3, 5 },     // プラスパワー３
-  { ITEM_YOKUATAARU3, 5 },      // ヨクアタール３
-
-  { ITEM_SUGOIKIZUGUSURI, 6 },  // すごいキズぐすり
-  { ITEM_NANDEMONAOSI, 6 },     // なんでもなおし
-  { ITEM_PIIPIIEIDAA, 6 },      // ピーピーエイダー
-
-  { ITEM_PIIPIIRIKABAA, 7 },    // ピーピーリカバー
-  { ITEM_AITEMUDOROPPU, 7 },    // アイテムドロップ
-
-  { ITEM_MANTANNOKUSURI, 8 },   // まんたんのくすり
-
-  { ITEM_HURATTOKOORU, 9 },     // フラットコール
-
-  { ITEM_PIIPIIMAKKUSU, 10 },   // ピーピーマックス
-
-  { ITEM_GENKINOKAKERA, 11 },   // げんきのかけら
-
-  { ITEM_SUPIIDAA6, 12 },       // スピーダー６
-  { ITEM_spAPPU6, 12 },         // ＳＰアップ６
-  { ITEM_spGAADO6, 12 },        // ＳＰガード６
-  { ITEM_DHIFENDAA6, 12 },      // ディフェンダー６
-  { ITEM_PURASUPAWAA6, 12 },    // プラスパワー６
-  { ITEM_YOKUATAARU6, 12 },     // ヨクアタール６
-
-  { ITEM_KAIHUKUNOKUSURI, 13 }, // かいふくのくすり
-
-  { ITEM_GENKINOKATAMARI, 14 }, // げんきのかたまり
-
-  { ITEM_DUMMY_DATA, 0 },       // 終了
-};
-#endif  // TEST_SHOOTER_ITEM
-
-
 //--------------------------------------------------------------------------------------------
 /**
- * 前回使用したアイテムをチェック
+ * @brief		前回使用したアイテムをチェック
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = あり"
  * @retval  "FALSE = なし"
@@ -134,9 +59,9 @@ BOOL BattleBag_UsedItemChack( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 最後に使った道具のカーソル位置再設定
+ * @brief		最後に使った道具のカーソル位置再設定
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  none
  */
@@ -154,20 +79,15 @@ void BattleBag_CorsorReset( BBAG_WORK * wk )
   }
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムを戦闘ポケットに振り分ける
+ * @brief		アイテムを戦闘ポケットに振り分ける
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static const u8 SearchPocket[] = {
-	BAG_POKE_NORMAL, BAG_POKE_DRUG, BAG_POKE_NUTS,
-};
-
 void BattleBag_PocketInit( BBAG_WORK * wk )
 {
   ITEM_ST * item;
@@ -178,15 +98,12 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
 
 	ah = ITEM_OpenItemDataArcHandle( wk->dat->heap );
 
-//  for( i=0; i<BAG_POKE_MAX; i++ ){
-	for( i=0; i<3; i++ ){
+	for( i=0; i<NELEMS(SearchPocket); i++ ){
     j = 0;
     while(1){
-//      item = MYITEM_PosItemGet( wk->dat->myitem, i, j );
       item = MYITEM_PosItemGet( wk->dat->myitem, SearchPocket[i], j );
       if( item == NULL ){ break; }
       if( !( item->id == 0 || item->no == 0 ) ){
-//        prm = ITEM_GetParam( item->id, ITEM_PRM_BTL_POCKET, wk->dat->heap );
 				buf = ITEM_GetItemDataArcHandle( ah, item->id, wk->dat->heap );
 				prm = ITEM_GetBufParam( buf, ITEM_PRM_BTL_POCKET );
 				GFL_HEAP_FreeMemory( buf );
@@ -202,7 +119,6 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
 
 	GFL_ARC_CloseDataHandle( ah );
 
-
   for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
     if( wk->item_max[i] == 0 ){
       wk->scr_max[i] = 0;
@@ -217,7 +133,7 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムを戦闘ポケットに振り分ける（シューター用）
+ * @brief		アイテムを戦闘ポケットに振り分ける（シューター用）
  *
  * @param   wk    ワーク
  *
@@ -226,24 +142,6 @@ void BattleBag_PocketInit( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BattleBag_ShooterPocketInit( BBAG_WORK * wk )
 {
-#ifdef TEST_SHOOTER_ITEM
-  ITEM_ST item;
-  u32 i, j, k;
-  s32 prm;
-
-  i = 0;
-  while(1){
-    if( ShooterItemTable[i].item == ITEM_DUMMY_DATA || ShooterItemTable[i].cost == 0 ){
-      break;
-    }
-    wk->pocket[0][wk->item_max[0]].id = ShooterItemTable[i].item;
-    wk->pocket[0][wk->item_max[0]].no = 1;
-    wk->item_max[0]++;
-    i++;
-  }
-
-  wk->scr_max[0] = (wk->item_max[0]-1) / 6;
-#else
   u32 i;
 
   for( i=0; i<SHOOTER_ITEM_MAX; i++ ){
@@ -254,12 +152,11 @@ void BattleBag_ShooterPocketInit( BBAG_WORK * wk )
     }
   }
   wk->scr_max[0] = (wk->item_max[0]-1) / 6;
-#endif  // #ifdef TEST_SHOOTER_ITEM
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムを戦闘ポケットに振り分ける（捕獲デモ用）
+ * @brief		アイテムを戦闘ポケットに振り分ける（捕獲デモ用）
  *
  * @param   wk    ワーク
  *
@@ -276,10 +173,10 @@ void BattleBag_GetDemoPocketInit( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 指定位置にアイテムがあるか
+ * @brief		指定位置にアイテムがあるか
  *
- * @param wk    ワーク
- * @param pos   位置（０～５）
+ * @param		wk    ワーク
+ * @param		pos   位置（０～５）
  *
  * @retval  "あり = アイテム番号"
  * @retval  "なし = 0"
@@ -296,23 +193,7 @@ u16 BattleBag_PosItemCheck( BBAG_WORK * wk, u32 pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム機能を取得
- *
- * @param wk    ワーク
- *
- * @return  アイテム機能
- */
-//--------------------------------------------------------------------------------------------
-u8 BattleBag_ItemUseCheck( BBAG_WORK * wk )
-{
-//  return (u8)ItemParamGet( wk->dat->ret_item, ITEM_PRM_BATTLE, wk->dat->heap );
-  return 0;
-}
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * シューター時のコスト取得
+ * @brief		シューター時のコスト取得
  *
  * @param   item    アイテム番号
  *
@@ -321,20 +202,5 @@ u8 BattleBag_ItemUseCheck( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 u16 BBAGITEM_GetCost( u16 item )
 {
-#ifdef TEST_SHOOTER_ITEM
-  u32 i = 0;
-
-  while(1){
-    if( ShooterItemTable[i].item == 0 || ShooterItemTable[i].cost == 0 ){
-      break;
-    }
-    if( ShooterItemTable[i].item == item ){
-      break;
-    }
-    i++;
-  }
-  return ShooterItemTable[i].cost;
-#else
   return SHOOTER_ITEM_ItemIndexToCost( item );
-#endif
 }

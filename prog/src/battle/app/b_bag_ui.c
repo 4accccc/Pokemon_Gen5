@@ -1,17 +1,12 @@
 //============================================================================================
 /**
- * @file	b_bag_ui.c
- * @brief	戦闘用バッグ画面 インターフェース関連
+ * @file		b_bag_ui.c
+ * @brief		戦闘用バッグ画面 インターフェース関連
  * @author	Hiroyuki Nakamura
- * @date	09.09.25
+ * @date		09.09.25
  */
 //============================================================================================
 #include <gflib.h>
-
-/*
-#include "arc_def.h"
-#include "system/palanm.h"
-*/
 
 #include "b_app_tool.h"
 
@@ -21,15 +16,16 @@
 
 
 //============================================================================================
+//	定数定義
 //============================================================================================
 
 
 //============================================================================================
+//	プロトタイプ宣言
 //============================================================================================
 static void VanishCursor( BBAG_WORK * wk, BOOL flg );
 static void MoveCursor( BBAG_WORK * wk, int pos );
 
-//static void DummyCallBack( void * work, int nowPos, int oldPos );
 static void CallBack_On( void * work, int nowPos, int oldPos );
 static void CallBack_Off( void * work, int nowPos, int oldPos );
 static void CallBack_Touch( void * work, int nowPos, int oldPos );
@@ -38,6 +34,7 @@ static void CallBack_OnItemList( void * work, int nowPos, int oldPos );
 
 
 //============================================================================================
+//	グローバル
 //============================================================================================
 
 // ポケット選択画面移動テーブル
@@ -96,14 +93,14 @@ static const CURSORMOVE_CALLBACK P3_CallBack = {
 	CallBack_Touch,
 };
 
-
-
+// カーソル移動データテーブル
 static const CURSORMOVE_DATA * const PointTable[] = {
 	P1_CursorPosTbl,
 	P2_CursorPosTbl,
 	P3_CursorPosTbl,
 };
 
+// コールバックテーブル
 static const CURSORMOVE_CALLBACK * const CallBackTable[] = {
 	&P1_CallBack,
 	&P2_CallBack,
@@ -112,8 +109,16 @@ static const CURSORMOVE_CALLBACK * const CallBackTable[] = {
 
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動初期化
+ *
+ * @param		wk		ワーク
+ * @param		pos		初期位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BBAGUI_Init( BBAG_WORK * wk, u32 page, u32 pos )
 {
 	wk->cmwk = CURSORMOVE_Create(
@@ -127,11 +132,31 @@ void BBAGUI_Init( BBAG_WORK * wk, u32 page, u32 pos )
 	MoveCursor( wk, pos );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動削除
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BBAGUI_Exit( BBAG_WORK * wk )
 {
 	CURSORMOVE_Exit( wk->cmwk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動切り替え
+ *
+ * @param		wk		ワーク
+ * @param		page	ページ
+ * @param		pos		初期位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BBAGUI_ChangePage( BBAG_WORK * wk, u32 page, u32 pos )
 {
 	if( wk->cursor_flg == FALSE ){
@@ -154,26 +179,49 @@ void BBAGUI_ChangePage( BBAG_WORK * wk, u32 page, u32 pos )
 	BBAGUI_Init( wk, page, pos );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル表示切り替え
+ *
+ * @param		wk		ワーク
+ * @param		flg		TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void VanishCursor( BBAG_WORK * wk, BOOL flg )
 {
 	wk->cursor_flg = flg;
 	BAPPTOOL_VanishCursor( wk->cpwk, flg );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル移動
+ *
+ * @param		wk		ワーク
+ * @param		pos		位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MoveCursor( BBAG_WORK * wk, int pos )
 {
 	const CURSORMOVE_DATA *	dat = CURSORMOVE_GetMoveData( wk->cmwk, pos );
 	BAPPTOOL_MoveCursorPoint( wk->cpwk, dat );
 }
 
-
-/*
-static void DummyCallBack( void * work, int nowPos, int oldPos )
-{
-}
-*/
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル表示
+ *
+ * @param		work		ワーク
+ * @param		nowPos	現在の位置
+ * @param		oldPos	前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_On( void * work, int nowPos, int oldPos )
 {
 	BBAG_WORK * wk = work;
@@ -182,6 +230,17 @@ static void CallBack_On( void * work, int nowPos, int oldPos )
 	VanishCursor( wk, TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル非表示
+ *
+ * @param		work		ワーク
+ * @param		nowPos	現在の位置
+ * @param		oldPos	前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_Off( void * work, int nowPos, int oldPos )
 {
 	BBAG_WORK * wk = work;
@@ -189,6 +248,17 @@ static void CallBack_Off( void * work, int nowPos, int oldPos )
 	VanishCursor( wk, FALSE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：タッチ
+ *
+ * @param		work		ワーク
+ * @param		nowPos	現在の位置
+ * @param		oldPos	前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_Touch( void * work, int nowPos, int oldPos )
 {
 	BBAG_WORK * wk = work;
@@ -196,6 +266,17 @@ static void CallBack_Touch( void * work, int nowPos, int oldPos )
 	VanishCursor( wk, FALSE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル移動
+ *
+ * @param		work		ワーク
+ * @param		nowPos	現在の位置
+ * @param		oldPos	前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_Move( void * work, int nowPos, int oldPos )
 {
 	BBAG_WORK * wk = work;
@@ -203,6 +284,17 @@ static void CallBack_Move( void * work, int nowPos, int oldPos )
 	MoveCursor( wk, nowPos );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル表示（アイテム選択ページ）
+ *
+ * @param		work		ワーク
+ * @param		nowPos	現在の位置
+ * @param		oldPos	前回の位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CallBack_OnItemList( void * work, int nowPos, int oldPos )
 {
 	BBAG_WORK * wk = work;

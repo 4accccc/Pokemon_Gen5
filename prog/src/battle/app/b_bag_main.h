@@ -1,13 +1,12 @@
 //============================================================================================
 /**
- * @file	b_bag_main.h
- * @brief	戦闘用バッグ画面
+ * @file		b_bag_main.h
+ * @brief		戦闘用バッグ画面
  * @author	Hiroyuki Nakamura
- * @date	05.02.10
+ * @date		05.02.10
  */
 //============================================================================================
-#ifndef B_BAG_MAIN_H
-#define B_BAG_MAIN_H
+#pragma	once
 
 #include "print/wordset.h"
 #include "system/palanm.h"
@@ -22,9 +21,6 @@
 //	定数定義
 //============================================================================================
 // パレット定義
-//#define	BBAG_PAL_BTN_FONT	( 0 )			///< パレット00：ボタンフォントで使用してます
-//#define	BPL_PAL_SYS_WIN	( 12 )			///< パレット12：システムウィンドウ
-//#define	BBAG_PAL_SYS_FONT	( 4 )			///< パレット13：システムフォント
 #define	BBAG_PAL_TALK_WIN		( 11 )		///< パレット11：会話ウィンドウ
 #define	BBAG_PAL_TALK_FONT	( 12 )		///< パレット12：会話フォント
 
@@ -82,14 +78,6 @@ enum {
 	BBAG_PAGE_MAIN,			// アイテム選択ページ
 	BBAG_PAGE_ITEM			// アイテム使用ページ
 };
-
-/*
-// ページ１の選択ID
-enum {
-	BBAG_P1_LASTITEM = BBAG_POKE_MAX,	// 最後に使用した道具
-	BBAG_P1_RETURN						// 戻る
-};
-*/
 
 // セルアクターのID
 enum {
@@ -164,16 +152,11 @@ enum {
 	BBAG_CA_ENERGIE_G6,
 	BBAG_CA_ENERGIE_G7,
 
-//	BBAG_CA_GETDEMO,
-
 	BBAG_CA_MAX
 };
 
 #define	BBAG_POCKET_IN_MAX		( 36 )		// 各ポケットに入る数
 
-
-#define	BBAG_BANM_MAX_N	( 3 )		// ボタンアニメパターン数（通常）
-#define	BBAG_BANM_MAX_E	( 4 )		// ボタンアニメパターン数（押せないボタンあり）
 // ポケットボタンサイズ
 #define	BBAG_BSX_POCKET	( 16 )
 #define	BBAG_BSY_POCKET	( 9 )
@@ -208,7 +191,6 @@ enum {
 	BBAG_CHRRES_ITEM7,
 	BBAG_CHRRES_COST,
 	BBAG_CHRRES_CURSOR,
-//	BBAG_CHRRES_DEMO,
 	BBAG_CHRRES_MAX,
 
 	// パレット
@@ -221,17 +203,16 @@ enum {
 	BBAG_PALRES_ITEM7,
 	BBAG_PALRES_COST,
 	BBAG_PALRES_CURSOR,			// ※この次に捕獲デモカーソルを読み込んでいます！
-//	BBAG_PALRES_DEMO,
 	BBAG_PALRES_MAX,
 
 	// セル・アニメ
 	BBAG_CELRES_ITEM = 0,
 	BBAG_CELRES_COST,
 	BBAG_CELRES_CURSOR,
-//	BBAG_CELRES_DEMO,
 	BBAG_CELRES_MAX,
 };
 
+// ワーク
 typedef struct {
 	BBAG_DATA * dat;		// 外部参照データ
 
@@ -239,79 +220,49 @@ typedef struct {
 
 	PALETTE_FADE_PTR pfd;	// パレットフェードデータ
 
-//	NUMFONT * nfnt;				// 8x8フォント
 	GFL_MSGDATA * mman;			// メッセージデータマネージャ
 	WORDSET * wset;					// 単語セット
 	STRBUF * msg_buf;				// メッセージ用バッファ
 	PRINT_QUE * que;				// プリントキュー
 	PRINT_STREAM * stream;	// プリントストリーム
 
-//	GF_BGL_BMPWIN	talk_win;	// BMPウィンドウデータ（通常）
-//	GF_BGL_BMPWIN * add_win;	// BMPウィンドウデータ（追加）
 	GFL_BMPWIN * talk_win;
-//	GFL_BMPWIN * add_win[WIN_MAX];
-//	BAPP_BMPWIN_QUE	add_win[WIN_MAX];
 	PRINT_UTIL	add_win[WIN_MAX];
 
 	u8	bmp_add_max;			// 追加したBMPの数
-	u8	p2_swap;				// ページ２のスワップ描画フラグ
-//	u8	midx;					// メッセージインデックス
+	u8	p2_swap;					// ページ２のスワップ描画フラグ
 
-//	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
 	CURSORMOVE_WORK * cmwk;					// カーソル制御ワーク
 	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 
-//	FINGER_PTR	finger;			// 捕獲デモ用指カーソル
 	BTLV_FINGER_CURSOR_WORK * getdemoCursor;
 
 	ITEM_ST	pocket[5][BBAG_POCKET_IN_MAX];	// ポケットデータ
 
-//	CATS_RES_PTR	crp;				// リソース管理
-//	CATS_ACT_PTR	cap[BBAG_CA_MAX];	// OAMのCAP
 	GFL_CLUNIT * clunit;
 	GFL_CLWK * clwk[BBAG_CA_MAX];
 
 	// ボタンアニメスクリーンデータ
-/*
-	u16	btn_pocket[BBAG_BANM_MAX_N][BBAG_BSX_POCKET*BBAG_BSY_POCKET];	// ポケットボタン
-	u16	btn_use[BBAG_BANM_MAX_E][BBAG_BSX_USE*BBAG_BSY_USE];			// 使用ボタン
-	u16	btn_ret[BBAG_BANM_MAX_N][BBAG_BSX_RET*BBAG_BSY_RET];			// 戻るボタン
-	u16	btn_item[BBAG_BANM_MAX_E][BBAG_BSX_ITEM*BBAG_BSY_ITEM];			// アイテム
-	u16	btn_up[BBAG_BANM_MAX_E][BBAG_BSX_UP*BBAG_BSY_UP];				// 前のページへ
-	u16	btn_down[BBAG_BANM_MAX_E][BBAG_BSX_DOWN*BBAG_BSY_DOWN];			// 次のページへ
-
-	u16	btn_icon_hp[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
-	u16	btn_icon_st[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
-	u16	btn_icon_ball[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
-	u16	btn_icon_batl[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
-*/
 	BGWINFRM_WORK * bgwfrm;
 
 	u8	btn_seq;
 	u8	btn_cnt;
 	u8	btn_id;
 	u8	btn_flg;
-//	u8	btn_flg:4;
-//	u8	btn_mode:4;
 	u8	btn_win[8];
 
-	u8	seq;			// メインシーケンス
+	u8	seq;				// メインシーケンス
 	u8	ret_seq;		// 復帰シーケンス
-	u8	page;			// ページID
+	u8	page;				// ページID
 	u8	poke_id;		// ポケットID
 
 	s8	page_mv;		// アイテム選択ページの移動方向
 
-/*
-	u8	item_max[5];	// アイテム数
-	u8	scr_max[5];		// アイテムスクロールカウンタ最大値
-*/
 	u8	item_max[BATTLE_BAG_POKE_MAX];	// アイテム数
 	u8	scr_max[BATTLE_BAG_POKE_MAX];		// アイテムスクロールカウンタ最大値
 
 	u8	get_seq;		// 捕獲デモシーケンス
 	u8	get_cnt;		// 捕獲デモカウンタ
-//	u8	get_anm;		// 捕獲デモカーソルアニメフラグ
 
   u16 used_item;    // 前回使用したアイテム
   u8  used_poke;    // 前回使用したアイテムのポケット
@@ -320,31 +271,11 @@ typedef struct {
 	u32	chrRes[BBAG_CHRRES_MAX];
 	u32	palRes[BBAG_PALRES_MAX];
 	u32	celRes[BBAG_CELRES_MAX];
-//	u32	anmRes[16];
 	BOOL cursor_flg;
 
 	const u8 * putWin;
-
 
 }BBAG_WORK;
 
 typedef int (*pBBagFunc)(BBAG_WORK*);
 
-
-//============================================================================================
-//	プロトタイプ宣言
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * 使用するポケモンを取得
- *
- * @param	wk		ワーク
- *
- * @return	ポケモン位置
- */
-//--------------------------------------------------------------------------------------------
-int BattleBag_SelMonsNoGet( BBAG_WORK * wk );
-
-
-#endif	// B_BAG_MAIN_H

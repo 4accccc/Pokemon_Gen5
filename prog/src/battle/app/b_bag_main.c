@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file  b_bag_main.c
- * @brief 戦闘用バッグ画面
- * @author  Hiroyuki Nakamura
- * @date  05.02.10
+ * @file		b_bag_main.c
+ * @brief		戦闘用バッグ画面
+ * @author	Hiroyuki Nakamura
+ * @date		05.02.10
  */
 //============================================================================================
 #include <gflib.h>
@@ -14,53 +14,11 @@
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
-//#include "savedata/myitem_savedata.h"
 
 #include "../btlv/btlv_effect.h"
-/*
-#include "gflib/touchpanel.h"
-*/
-//#include "system/lib_pack.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/window.h"
-*/
-//#include "system/arc_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-//#include "system/arc_util.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/fontproc.h"
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-#include "system/font_arc.h"
-#include "system/snd_tool.h"
-#include "battle/battle_common.h"
-#include "battle/fight_tool.h"
-#include "battle/server_tool.h"
-#include "battle/battle_server.h"
-#include "battle/wazano_def.h"
-#include "application/app_tool.h"
-#include "msgdata/msg.naix"
-*/
 #include "msg/msg_b_bag.h"
-/*
-#include "msg/msg_common_scr.h"
-#include "itemtool/item.h"
-#include "itemtool/myitem.h"
-#include "itemtool/itemuse_def.h"
-*/
-#include "b_app_tool.h"
 
-//#include "system/procsys.h"
-/*↑[GS_CONVERT_TAG]*/
-//#include "system/clact_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "poketool/pokeparty.h"
-#include "application/p_status.h"
-*/
+#include "b_app_tool.h"
 
 #include "b_bag.h"
 #include "b_bag_main.h"
@@ -71,7 +29,6 @@
 #include "b_bag_ui.h"
 #include "b_bag_bmp_def.h"
 #include "b_bag_gra.naix"
-
 
 
 //============================================================================================
@@ -109,7 +66,6 @@ enum {
 
 #define TMP_MSG_BUF_SIZ   ( 512 )   // テンポラリメッセージサイズ
 
-//#define BATTLE_BAGLIST_FADE_SPEED (-8)
 #define BATTLE_BAGLIST_FADE_SPEED (0)
 
 
@@ -117,7 +73,6 @@ enum {
 //  プロトタイプ宣言
 //============================================================================================
 static void BattleBag_Main( GFL_TCB* tcb, void * work );
-/*↑[GS_CONVERT_TAG]*/
 
 static int BBAG_SeqInit( BBAG_WORK * wk );
 static int BBAG_SeqShooterInit( BBAG_WORK * wk );
@@ -138,9 +93,7 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk );
 static int BBAG_SeqEndSet( BBAG_WORK * wk );
 static int BBAG_SeqEndWait( BBAG_WORK * wk );
 static BOOL BBAG_SeqEnd( GFL_TCB* tcb, BBAG_WORK * wk );
-/*↑[GS_CONVERT_TAG]*/
 
-//static void BBAG_VramInit(void);
 static void BBAG_BgInit( BBAG_WORK * wk );
 static void BBAG_BgExit(void);
 static void BBAG_BgGraphicSet( BBAG_WORK * wk );
@@ -154,8 +107,6 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page );
 static BOOL CheckTimeOut( BBAG_WORK * wk );
 
 static void PlaySE( BBAG_WORK * wk, int no );
-
-//static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap );
 
 
 //============================================================================================
@@ -195,48 +146,13 @@ static const pBBagFunc MainSeqFunc[] = {
 
 //--------------------------------------------------------------------------------------------
 /**
- * 戦闘用バッグタスク追加
+ * @brief		戦闘用バッグタスク追加
  *
- * @param dat   バッグデータ
+ * @param		dat   バッグデータ
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-/*
-static const u16 testItem[][2] =
-{
-  { ITEM_MASUTAABOORU, 1 },   // マスターボール
-  { ITEM_HAIPAABOORU, 11 },   // ハイパーボール
-  { ITEM_SUUPAABOORU, 22 },   // スーパーボール
-  { ITEM_MONSUTAABOORU, 22 }, // モンスターボール
-  { ITEM_NETTOBOORU, 33 },    // ネットボール
-  { ITEM_DAIBUBOORU, 44 },    // ダイブボール
-  { ITEM_NESUTOBOORU, 55 },   // ネストボール
-  { ITEM_RIPIITOBOORU, 66 },  // リピートボール
-  { ITEM_TAIMAABOORU, 77 },   // タイマーボール
-  { ITEM_GOOZYASUBOORU, 88 }, // ゴージャスボール
-  { ITEM_PUREMIABOORU, 99 },  // プレミアボール
-  { ITEM_DAAKUBOORU, 100 },   // ダークボール
-  { ITEM_HIIRUBOORU, 111 },   // ヒールボール
-  { ITEM_KUIKKUBOORU, 222 },  // クイックボール
-  { ITEM_PURESYASUBOORU, 333 }, // プレシャスボール
-  { ITEM_KIZUGUSURI, 444 },     // キズぐすり
-  { ITEM_DOKUKESI, 555 },       // どくけし
-  { ITEM_YAKEDONAOSI, 666 },    // やけどなおし
-  { ITEM_KOORINAOSI, 777 },     // こおりなおし
-  { ITEM_NEMUKEZAMASI, 888 },   // ねむけざまし
-  { ITEM_MAHINAOSI, 999 },      // まひなおし
-  { ITEM_KAIHUKUNOKUSURI, 99 }, // かいふくのくすり
-  { ITEM_MANTANNOKUSURI, 999 }, // まんたんのくすり
-  { ITEM_SUGOIKIZUGUSURI, 99 }, // すごいキズぐすり
-  { ITEM_IIKIZUGUSURI, 999 },   // いいキズぐすり
-  { ITEM_NANDEMONAOSI, 999 },   // なんでもなおし
-  { ITEM_GENKINOKAKERA, 999 },  // げんきのかけら
-  { ITEM_GENKINOKATAMARI, 99 }, // げんきのかたまり
-  { 0, 0 },
-};
-*/
-
 void BattleBag_TaskAdd( BBAG_DATA * dat )
 {
   BBAG_WORK * wk;
@@ -270,20 +186,6 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 		wk->poke_id = 0;
   }
 
-//  テスト処理
-/*
-  {
-    u32 i = 0;
-    while(1){
-      if( testItem[i][0] == 0 || testItem[i][1] == 0 ){
-        break;
-      }
-      MYITEM_AddItem( dat->myitem, testItem[i][0], testItem[i][1], dat->heap );
-      i++;
-    }
-  }
-*/
-
   {
     u32 i;
 
@@ -295,33 +197,14 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
   }
 
   BattleBag_UsedItemChack( wk );
-//  wk->used_item = 2;
-//  wk->used_poke = 1;
-
-//  wk->dat->energy = 7;
-//  wk->dat->reserved_energy = 3;
-
-
-/*
-  if( BattleWorkFightTypeGet(wk->dat->bw) & FIGHT_TYPE_GET_DEMO ){
-    wk->dat->mode = BBAG_MODE_GETDEMO;
-  }
-*/
-//	wk->dat->mode = BBAG_MODE_GETDEMO;
-
-
-/** デバッグ処理 **/
-//  wk->dat->myitem = MyItem_AllocWork( wk->dat->heap );
-//  Debug_MyItem_MakeBag( wk->dat->myitem, wk->dat->heap );
-//  wk->dat->mode = BBAG_MODE_GETDEMO;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * メインタスク
+ * @brief		メインタスク
  *
- * @param tcb
- * @param work
+ * @param		tcb
+ * @param		work
  *
  * @return  none
  */
@@ -342,20 +225,17 @@ static void BattleBag_Main( GFL_TCB * tcb, void * work )
 
   GFL_TCBL_Main( wk->tcbl );
 
-//  BattleBag_ButtonAnmMain( wk );
   BBAGANM_ButtonAnmMain( wk );
   BGWINFRM_MoveMain( wk->bgwfrm );
-//  BattleBag_GetDemoCursorAnm( wk );
-//  GFL_CLACT_SYS_Main( wk->crp );
 
   BBAGBMP_PrintMain( wk );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 初期化シーケンス
+ * @brief		初期化シーケンス（通常）
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -366,19 +246,11 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
   wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
-//  wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
   wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
-//  BBAG_VramInit();
   BBAG_BgInit( wk );
   BBAG_BgGraphicSet( wk );
   BBAG_MsgManSet( wk );
-
-//  FontProc_LoadFont( FONT_TOUCH, wk->dat->heap );
-
-//  wk->poke_id = (u8)MyItem_BattleBagPocketPagePosGet( BattleWorkBagCursorGet(wk->dat->bw) );
-//  wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
-//  wk->poke_id = 0;
 
   if( wk->dat->mode == BBAG_MODE_GETDEMO ){
 		BattleBag_GetDemoPocketInit( wk );
@@ -390,7 +262,6 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
   BattleBag_BmpWrite( wk, wk->page );
   BBAGBMP_SetStrScrn( wk );
 
-//  BattleBag_ButtonPageScreenInit( wk, wk->page );
   BBAGANM_ButtonInit( wk );
   BBAGANM_PageButtonPut( wk, wk->page );
 
@@ -405,14 +276,6 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
   BAPPTOOL_VanishCursor( wk->cpwk, wk->cursor_flg );
 
   BBAGUI_Init( wk, wk->page, 0 );
-
-/*
-  if( wk->dat->cursor_flg != 0 ){
-    BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
-  }
-*/
-//  BattleBag_CursorMoveSet( wk, wk->page );
-//  BBAG_GetDemoCursorSet( wk, wk->page );
 
   GFL_NET_ReloadIcon();
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
@@ -429,22 +292,26 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
   return SEQ_BBAG_POCKET;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		初期化シーケンス（シューター用）
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 {
   G2S_BlendNone();
 
   wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
-//  wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
   wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
-//  BBAG_VramInit();
   BBAG_BgInit( wk );
   BBAG_BgGraphicSet( wk );
   BBAG_MsgManSet( wk );
-
-//  wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
-//	wk->poke_id = 0;
 
   BattleBag_ShooterPocketInit( wk );
 
@@ -454,7 +321,6 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
   BattleBag_BmpWrite( wk, wk->page );
   BBAGBMP_SetStrScrn( wk );
 
-//  BattleBag_ButtonPageScreenInit( wk, wk->page );
   BBAGANM_ButtonInit( wk );
   BBAGANM_PageButtonPut( wk, wk->page );
 
@@ -462,14 +328,6 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
   BattleBag_PageObjSet( wk, wk->page );
 
   BBAGUI_Init( wk, wk->page, 0 );
-
-/*
-  if( wk->dat->cursor_flg != 0 ){
-    BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
-  }
-*/
-//  BattleBag_CursorMoveSet( wk, wk->page );
-//  BBAG_GetDemoCursorSet( wk, wk->page );
 
   GFL_NET_ReloadIcon();
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
@@ -482,9 +340,9 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ１のコントロールシーケンス
+ * @brief		ページ１のコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -523,13 +381,6 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
       break;
 
     case BBAG_UI_P1_RETURN:   // 戻る
-/*
-			if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-				PlaySE( wk, SEQ_SE_CANCEL2 );
-			}else{
-				PlaySE( wk, SEQ_SE_DECIDE2 );
-			}
-*/
 			PlaySE( wk, SEQ_SE_CANCEL2 );
       wk->dat->ret_item = ITEM_DUMMY_DATA;
       wk->dat->ret_page = BBAG_POKE_MAX;
@@ -562,9 +413,9 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ２のコントロールシーケンス
+ * @brief		ページ２のコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -596,13 +447,6 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
     break;
 
   case BBAG_UI_P2_RETURN:   // 戻る
-/*
-		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-			PlaySE( wk, SEQ_SE_CANCEL2 );
-		}else{
-			PlaySE( wk, SEQ_SE_DECIDE2 );
-		}
-*/
 		PlaySE( wk, SEQ_SE_CANCEL2 );
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
     if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
@@ -696,9 +540,9 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 次のアイテムページへ
+ * @brief		次のアイテムページへ
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -707,7 +551,6 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
 {
   s8  scr = wk->dat->item_scr[wk->poke_id];
 
-//  wk->dat->item_pos[wk->poke_id] = 0;
   scr += wk->page_mv;
   if( scr > wk->scr_max[wk->poke_id] ){
     wk->dat->item_scr[wk->poke_id] = 0;
@@ -718,14 +561,18 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
   }
   BattleBag_Page2_StrItemPut( wk );
   BattleBag_Page2_StrPageNumPut( wk );
-//  BattleBag_PageObjSet( wk, wk->page );
-//  BBAGANM_PageButtonPut( wk, wk->page );
-//  BattleBag_ButtonPageScreenInit( wk, wk->page );
-//  BBAG_P2CursorMvTblMake( wk );
-//  return SEQ_BBAG_ITEM;
   return SEQ_BBAG_ITEMSEL_WAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		次のアイテムページへ（キュー待ち）
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BBAG_SeqItemSelWait( BBAG_WORK * wk )
 {
   if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
@@ -737,12 +584,11 @@ static int BBAG_SeqItemSelWait( BBAG_WORK * wk )
   return SEQ_BBAG_ITEMSEL_WAIT;
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * ページ３のコントロールシーケンス
+ * @brief		ページ３のコントロールシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -771,13 +617,6 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
     return BBAG_ItemUse( wk );
 
   case BBAG_UI_P3_RETURN:   // 戻る
-/*
-		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-			PlaySE( wk, SEQ_SE_CANCEL2 );
-		}else{
-			PlaySE( wk, SEQ_SE_DECIDE2 );
-		}
-*/
 		PlaySE( wk, SEQ_SE_CANCEL2 );
     wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
     BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
@@ -807,9 +646,9 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム使用
+ * @brief		アイテム使用
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -847,120 +686,20 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 		}
 	}
 
-
-/*
-  // エラーメッセージテスト
-  GFL_MSG_GetString( wk->mman, mes_b_bag_m01, wk->msg_buf );
-  BattleBag_TalkMsgSet( wk );
-  wk->ret_seq = SEQ_BBAG_ERR;
-  return SEQ_BBAG_MSG_WAIT;
-*/
-
-/*
-  BBAG_DATA * dat = wk->dat;
-
-  if( wk->poke_id == BBAG_POKE_BATTLE ){
-    int smn = BattleBag_SelMonsNoGet( wk );
-    u32 prm = ItemParamGet( dat->ret_item, ITEM_PRM_BATTLE, dat->heap );
-
-    // さしおさえ
-    if( dat->skill_item_use != 0 && dat->ret_item != ITEM_EFEKUTOGAADO && prm != ITEMUSE_BTL_ESCAPE ){
-
-      POKEMON_PARAM * pp;
-      STRBUF * str;
-
-      pp  = BattleWorkPokemonParamGet( dat->bw, dat->client_no, smn );
-      str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m13 );
-      WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-      WORDSET_RegisterWazaName( wk->wset, 1, WAZANO_SASIOSAE );
-      WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-      GFL_STR_DeleteBuffer( str );
-      BattleBag_TalkMsgSet( wk );
-      wk->ret_seq = SEQ_BBAG_ERR;
-      return SEQ_BBAG_MSG_WAIT;
-    }
-
-    if( BattleWorkStatusRecover(dat->bw,dat->client_no,smn,0,dat->ret_item) == TRUE ){
-      BattleBag_SubItem( dat->bw, dat->ret_item, wk->poke_id, dat->heap );
-      return SEQ_BBAG_ENDSET;
-    }else if( prm == ITEMUSE_BTL_ESCAPE ){
-      if( !(BattleWorkFightTypeGet(dat->bw) & FIGHT_TYPE_TRAINER) ){
-        BattleBag_SubItem( dat->bw, dat->ret_item, wk->poke_id, dat->heap );
-        return SEQ_BBAG_ENDSET;
-      }else{
-        GFL_MSGDATA * mman;
-        STRBUF * str;
-        mman = MSGMAN_Create( GflMsgLoadType_DIRECT, ARC_MSG, NARC_msg_common_scr_dat, dat->heap );
-        str  = GFL_MSG_CreateString( mman, msg_item_ng_01 );
-        WORDSET_RegisterPlayerName( wk->wset, 0, dat->myst );
-        WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-        GFL_STR_DeleteBuffer( str );
-        MSGMAN_Delete( mman );
-        BattleBag_TalkMsgSet( wk );
-        wk->ret_seq = SEQ_BBAG_ERR;
-        return SEQ_BBAG_MSG_WAIT;
-      }
-    }else{
-      MSGMAN_GetString( wk->mman, mes_b_bag_m01, wk->msg_buf );
-      BattleBag_TalkMsgSet( wk );
-      wk->ret_seq = SEQ_BBAG_ERR;
-      return SEQ_BBAG_MSG_WAIT;
-    }
-  }else if( wk->poke_id == BBAG_POKE_BALL ){
-    // 野生ダブル
-    if( dat->enc_double == 1 ){
-      MSGMAN_GetString( wk->mman, mes_b_bag_m11, wk->msg_buf );
-      BattleBag_TalkMsgSet( wk );
-      wk->ret_seq = SEQ_BBAG_ERR;
-      return SEQ_BBAG_MSG_WAIT;
-    }
-
-    // 空を飛ぶとか
-    if( dat->waza_vanish == 1 ){
-      MSGMAN_GetString( wk->mman, mes_b_bag_m14, wk->msg_buf );
-      BattleBag_TalkMsgSet( wk );
-      wk->ret_seq = SEQ_BBAG_ERR;
-      return SEQ_BBAG_MSG_WAIT;
-    }
-
-    // 身代わり
-    if( dat->waza_migawari == 1 ){
-      MSGMAN_GetString( wk->mman, mes_b_bag_m15, wk->msg_buf );
-      BattleBag_TalkMsgSet( wk );
-      wk->ret_seq = SEQ_BBAG_ERR;
-      return SEQ_BBAG_MSG_WAIT;
-    }
-
-    { // 手持ち・ボックスいっぱい
-      POKEPARTY * party = BattleWorkPokePartyGet( dat->bw, dat->client_no );
-      BOX_MANAGER * box = BattleWorkBoxDataGet( dat->bw );
-
-      if( PokeParty_GetPokeCount( party ) == 6 &&
-        BOXDAT_GetEmptyTrayNumber( box ) == BOXDAT_TRAYNUM_ERROR ){
-
-        MSGMAN_GetString( wk->mman, mes_b_bag_m12, wk->msg_buf );
-        BattleBag_TalkMsgSet( wk );
-        wk->ret_seq = SEQ_BBAG_ERR;
-        return SEQ_BBAG_MSG_WAIT;
-      }
-    }
-  }
-*/
   return SEQ_BBAG_ENDSET;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：ポケット選択ページへ
+ * @brief		ページ切り替え：ポケット選択ページへ
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPage1Chg( BBAG_WORK * wk )
 {
-//  BBAG_PageChange( wk, BBAG_PAGE_POCKET );
   BattleBag_BmpWrite( wk, BBAG_PAGE_POCKET );
   wk->page = BBAG_PAGE_POCKET;
   wk->ret_seq = SEQ_BBAG_POCKET;
@@ -969,16 +708,15 @@ static int BBAG_SeqPage1Chg( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：アイテム選択ページへ
+ * @brief		ページ切り替え：アイテム選択ページへ
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPage2Chg( BBAG_WORK * wk )
 {
-//  BBAG_PageChange( wk, BBAG_PAGE_MAIN );
   BattleBag_BmpWrite( wk, BBAG_PAGE_MAIN );
   wk->page = BBAG_PAGE_MAIN;
   wk->ret_seq = SEQ_BBAG_ITEM;
@@ -987,22 +725,30 @@ static int BBAG_SeqPage2Chg( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページ切り替え：アイテム使用ページへ
+ * @brief		ページ切り替え：アイテム使用ページへ
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPage3Chg( BBAG_WORK * wk )
 {
-//  BBAG_PageChange( wk, BBAG_PAGE_ITEM );
   BattleBag_BmpWrite( wk, BBAG_PAGE_ITEM );
   wk->page = BBAG_PAGE_ITEM;
   wk->ret_seq = SEQ_BBAG_USE;
   return SEQ_BBAG_PAGECHG_WAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ切り替え：アイテム使用ページへ（キュー待ち）
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BBAG_SeqPageChgWait( BBAG_WORK * wk )
 {
   if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
@@ -1014,9 +760,9 @@ static int BBAG_SeqPageChgWait( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 入れ替えエラーメッセージ終了待ちシーケンス
+ * @brief		入れ替えエラーメッセージ終了待ちシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1029,9 +775,9 @@ static int BBAG_SeqError( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ表示シーケンス
+ * @brief		メッセージ表示シーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1047,9 +793,9 @@ static int BBAG_SeqMsgWait( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * トリガーウェイトシーケンス
+ * @brief		トリガーウェイトシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1068,9 +814,9 @@ static int BBAG_SeqTrgWait( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ボタンアニメ終了待ちシーケンス
+ * @brief		ボタンアニメ終了待ちシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1080,19 +826,14 @@ static int BBAG_SeqButtonWait( BBAG_WORK * wk )
   if( wk->btn_flg == 0 ){
     return wk->ret_seq;
   }
-/*
-  if( wk->btn_seq == 2 ){
-    return wk->ret_seq;
-  }
-*/
   return SEQ_BBAG_BUTTON_WAIT;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 終了フェードセットシーケンス
+ * @brief		終了フェードセットシーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
@@ -1105,6 +846,15 @@ static int BBAG_SeqEndSet( BBAG_WORK * wk )
   return SEQ_BBAG_ENDWAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		終了フェード待ち
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int BBAG_SeqEndWait( BBAG_WORK * wk )
 {
   if( PaletteFadeCheck( wk->pfd ) == 0 ){
@@ -1115,9 +865,9 @@ static int BBAG_SeqEndWait( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 終了シーケンス
+ * @brief		終了シーケンス
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @retval  "TRUE = 終了"
  * @retval  "FALSE = フェード中"
@@ -1144,71 +894,27 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
   BBAG_BgExit();
 
   GFL_TCBL_Exit( wk->tcbl );
-//  BAPP_CursorMoveWorkFree( wk->cmv_wk );
   BBAGUI_Exit( wk );
   BAPPTOOL_FreeCursor( wk->cpwk );
 
   GFL_TCB_DeleteTask( tcb );
   GFL_HEAP_FreeMemory( wk );
 
-//  GFL_HEAP_DeleteHeap( HEAPID_BATTLE_APP_TEST );
-
   return TRUE;
-
-#if 0
-  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return FALSE; }
-
-  BattleBag_ObjFree( wk );
-  BattleBag_BmpFreeAll( wk );
-  BBAG_MsgManExit( wk );
-  BBAG_BgExit();
-
-  wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
-
-  BAPP_CursorMoveWorkFree( wk->cmv_wk );
-
-//  FontProc_UnloadFont( FONT_TOUCH );
-
-  if( wk->dat->ret_item != ITEM_DUMMY_DATA ){
-/*
-    BAG_CURSOR * cur;
-    u8  i;
-
-    cur = BattleWorkBagCursorGet( wk->dat->bw );
-    for( i=0; i<5; i++ ){
-      MyItem_BattleBagCursorSet( cur, i, wk->dat->item_pos[i], wk->dat->item_scr[i] );
-    }
-    MyItem_BattleBagPocketPagePosSet( cur, wk->poke_id );
-*/
-  }
-
-  wk->dat->end_flg = 1;
-//  PMDS_taskDel( tcb );
-
-  return TRUE;
-#endif
 }
-
-
-
-
-//#define BBAG_GETDEMO_WAIT_COUNT   ( 44*3 )    // 捕獲デモウェイト
-//#define BBAG_GETDEMO_WAIT_COUNT   ( 3 )    // 捕獲デモウェイト
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * 捕獲デモメイン
+ * @brief		捕獲デモメイン
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  移行するシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 {
-//  if( PaletteFadeCheck( wk->pfd ) != 0 ){ return SEQ_BBAG_GETDEMO; }
-
   switch( wk->get_seq ){
 	case 0:
 		if( BTLV_FINGER_CURSOR_CheckExecute( wk->getdemoCursor ) == TRUE ){
@@ -1271,45 +977,11 @@ static int BBAG_SeqGetDemoMain( BBAG_WORK * wk )
 }
 
 
-
-
-
-
-
-
 //--------------------------------------------------------------------------------------------
 /**
- * VRAM初期化
+ * @brief		BG初期化
  *
- * @param none
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BBAG_VramInit(void)
-{
-  GFL_DISP_VRAM tbl = {
-    GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
-    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-    GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
-    GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-    GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
-    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-    GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
-    GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-    GX_VRAM_TEX_0_B,        // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_01_FG     // テクスチャパレットスロット
-  };
-  GFL_DISP_SetBank( &tbl );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * BG初期化
- *
- * @param dat   リストデータ
+ * @param		wk		ワーク
  *
  * @return  none
  */
@@ -1377,9 +1049,9 @@ static void BBAG_BgInit( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * BG解放
+ * @brief		BG解放
  *
- * @param ini   BGLデータ
+ * @param		none
  *
  * @return  none
  */
@@ -1399,9 +1071,9 @@ static void BBAG_BgExit(void)
 
 //--------------------------------------------------------------------------------------------
 /**
- * グラフィックデータセット
+ * @brief		グラフィックデータセット
  *
- * @param wk    ポケモンリスト画面のワーク
+ * @param		wk		ワーク
  *
  * @return  none
  */
@@ -1424,21 +1096,6 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
     hdl, NARC_b_bag_gra_b_bag_base_lz_NSCR,
     GFL_BG_FRAME3_S, 0, 0, TRUE, wk->dat->heap );
 
-/*
-  {
-    NNSG2dScreenData * dat;
-    void * buf;
-    u16 * scrn;
-
-    buf = GFL_ARC_LoadDataAllocByHandle(
-            hdl, NARC_b_bag_gra_b_bag_anm_NSCR, wk->dat->heap );
-    NNS_G2dGetUnpackedScreenData( buf, &dat );
-    scrn = (u16 *)dat->rawData;
-    BattleBag_ButtonScreenMake( wk, scrn );
-    GFL_HEAP_FreeMemory( buf );
-  }
-*/
-
   PaletteWorkSet_ArcHandle(
       wk->pfd, hdl, NARC_b_bag_gra_b_bag_bg_NCLR,
       wk->dat->heap, FADE_SUB_BG, 0x20*7, 0 );
@@ -1458,9 +1115,9 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ関連セット
+ * @brief		メッセージ関連セット
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  none
  */
@@ -1468,19 +1125,17 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 static void BBAG_MsgManSet( BBAG_WORK * wk )
 {
   wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_bag_dat, wk->dat->heap );
-//  wk->nfnt = NUMFONT_Create( 15, 14, FBMP_COL_NULL, wk->dat->heap );
   wk->wset = WORDSET_Create( wk->dat->heap );
   wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
-//  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // テスト
 
   wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ関連削除
+ * @brief		メッセージ関連削除
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
  * @return  none
  */
@@ -1488,7 +1143,6 @@ static void BBAG_MsgManSet( BBAG_WORK * wk )
 static void BBAG_MsgManExit( BBAG_WORK * wk )
 {
   GFL_MSG_Delete( wk->mman );
-//  NUMFONT_Delete( wk->nfnt );
   WORDSET_Delete( wk->wset );
   PRINTSYS_QUE_Delete( wk->que );
 
@@ -1496,24 +1150,12 @@ static void BBAG_MsgManExit( BBAG_WORK * wk )
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 //--------------------------------------------------------------------------------------------
 /**
- * BGスクロール
+ * @brief		BGスクロール
  *
- * @param wk    ワーク
- * @param page  次のページ
+ * @param		wk    ワーク
+ * @param		page  次のページ
  *
  * @return  none
  */
@@ -1536,132 +1178,43 @@ static void BBAG_PageChgBgScroll( BBAG_WORK * wk, u8 page )
   }
 }
 
-/*
-#define ITEM_PAGE_NAME_BG_PX  ( 2 )
-#define ITEM_PAGE_NAME_BG_PY  ( 35 )
-#define ITEM_PAGE_NAME_BG_SX  ( 28 )
-#define ITEM_PAGE_NAME_BG_SY  ( 4 )
-#define ITEM_PAGE_INFO_BG_PX  ( 2 )
-#define ITEM_PAGE_INFO_BG_PY  ( 40 )
-#define ITEM_PAGE_INFO_BG_SX  ( 28 )
-#define ITEM_PAGE_INFO_BG_SY  ( 8 )
-*/
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム使用ページのBGパレット変更
+ * @brief		ページ切り替え
  *
- * @param wk    ワーク
- * @param page  ページID
- *
- * @return  移行するシーケンス
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BBAG_PageBgPalChg( BBAG_WORK * wk, u8 page )
-{
-  if( page != BBAG_PAGE_ITEM ){ return; }
-
-  GFL_BG_ChangeScreenPalette(
-    GFL_BG_FRAME2_S, ITEM_PAGE_NAME_BG_PX,
-    ITEM_PAGE_NAME_BG_PY, ITEM_PAGE_NAME_BG_SX, ITEM_PAGE_NAME_BG_SY, 8+wk->poke_id );
-  GFL_BG_ChangeScreenPalette(
-    GFL_BG_FRAME2_S, ITEM_PAGE_INFO_BG_PX,
-    ITEM_PAGE_INFO_BG_PY, ITEM_PAGE_INFO_BG_SX, ITEM_PAGE_INFO_BG_SY, 8+wk->poke_id );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * ページ切り替え
- *
- * @param wk      ワーク
- * @param next_page 次のページ
+ * @param		wk					ワーク
+ * @param		next_page		次のページ
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 {
-//  BBAG_PageBgPalChg( wk, next_page );
   BBAG_PageChgBgScroll( wk, next_page );
 
   GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME0_S, 0 );
   GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME1_S, 0 );
 
-//  BattleBag_BmpFree( wk );
-//  BattleBag_BmpAdd( wk, next_page );
-//  BattleBag_BmpWrite( wk, next_page );
   BBAGBMP_SetStrScrn( wk );
 
-//  BattleBag_ButtonPageScreenInit( wk, next_page );
   BBAGANM_PageButtonPut( wk, next_page );
 
   BBAGUI_ChangePage( wk, next_page, 0 );
 
-//  BattleBag_CursorMoveSet( wk, next_page );
-//  BBAG_GetDemoCursorSet( wk, next_page );
-
-//  wk->page = next_page;
-
-//  BattleBag_PageObjSet( wk, wk->page );
   BattleBag_PageObjSet( wk, next_page );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 使用するポケモンを取得
+ * @brief		強制終了チェック
  *
- * @param wk    ワーク
- *
- * @return  ポケモン位置
- */
-//--------------------------------------------------------------------------------------------
-int BattleBag_SelMonsNoGet( BBAG_WORK * wk )
-{
-  return 0;
-/*
-  int ret;
-
-  ret = ST_ServerParamDataGet(
-      wk->dat->bw,
-      BattleWorkServerParamGet(wk->dat->bw), ID_SP_sel_mons_no, wk->dat->client_no );
-
-  return ret;
-*/
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アイテムを減らす
- *
- * @param bw    戦闘のワーク
- * @param item  アイテム番号
- * @param page  ポケット番号
- * @param heap  ヒープID
+ * @param		wk		ワーク
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-/*
-static void BattleBag_SubItem( BATTLE_WORK * bw, u16 item, u16 page, u32 heap )
-{
-  MyItem_SubItem( BattleWorkMyItemGet(bw), item, 1, heap );
-  MyItem_BattleBagLastItemSet( BattleWorkBagCursorGet(bw), item, page );
-}
-*/
-
-
-// 強制終了チェック
 static BOOL CheckTimeOut( BBAG_WORK * wk )
 {
-/*
-	// テスト
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-		wk->dat->ret_item = ITEM_DUMMY_DATA;
-		wk->dat->ret_cost = 0;
-		return TRUE;
-	}
-*/
 	if( wk->dat->time_out_flg == TRUE ){
 		wk->dat->ret_item = ITEM_DUMMY_DATA;
 		wk->dat->ret_cost = 0;
@@ -1670,6 +1223,16 @@ static BOOL CheckTimeOut( BBAG_WORK * wk )
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＳＥ再生
+ *
+ * @param		wk		ワーク
+ * @param		no		ＳＥ番号
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void PlaySE( BBAG_WORK * wk, int no )
 {
 	if( wk->dat->commFlag == FALSE ){

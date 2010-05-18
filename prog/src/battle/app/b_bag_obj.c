@@ -1,25 +1,13 @@
 //============================================================================================
 /**
- * @file	b_bag_obj.c
- * @brief	戦闘用バッグ画面 OBJ関連
+ * @file		b_bag_obj.c
+ * @brief		戦闘用バッグ画面 OBJ関連
  * @author	Hiroyuki Nakamura
- * @date	09.08.26
+ * @date		09.08.26
  */
 //============================================================================================
 #include <gflib.h>
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-*/
-//#include "system/clact_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "battle/battle_common.h"
-#include "battle/fight_tool.h"
-#include "itemtool/item.h"
-*/
+
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
 
@@ -35,58 +23,27 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-/*
-#define	CLACT_ID_COMMON		( 46263 )	// この画面で使用するセルアクターのID
-
-// キャラリソースID
-enum {
-	CHR_ID_ITEM1 = CLACT_ID_COMMON,		// アイテムアイコン：１
-	CHR_ID_ITEM2,						// アイテムアイコン：２
-	CHR_ID_ITEM3,						// アイテムアイコン：３
-	CHR_ID_ITEM4,						// アイテムアイコン：４
-	CHR_ID_ITEM5,						// アイテムアイコン：５
-	CHR_ID_ITEM6,						// アイテムアイコン：６
-	CHR_ID_GETDEMO,						// 捕獲デモカーソル
-	CHR_ID_CURSOR,						// カーソル
-
-	CHR_ID_MAX = CHR_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-
-// パレットリソースID
-enum {
-	PAL_ID_ITEM1 = CLACT_ID_COMMON,		// アイテムアイコン：１
-	PAL_ID_ITEM2,						// アイテムアイコン：２
-	PAL_ID_ITEM3,						// アイテムアイコン：３
-	PAL_ID_ITEM4,						// アイテムアイコン：４
-	PAL_ID_ITEM5,						// アイテムアイコン：５
-	PAL_ID_ITEM6,						// アイテムアイコン：６
-	PAL_ID_GETDEMO,						// 捕獲デモカーソル
-	PAL_ID_CURSOR,						// カーソル
-
-	PAL_ID_MAX = PAL_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-
-// セルリソースID
-enum {
-	CEL_ID_ITEM = CLACT_ID_COMMON,		// アイテムアイコン
-	CEL_ID_GETDEMO,						// 捕獲デモカーソル
-	CEL_ID_CURSOR,						// カーソル
-
-	CEL_ID_MAX = CEL_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-
-// セルアニメリソースID
-enum {
-	ANM_ID_ITEM = CLACT_ID_COMMON,		// アイテムアイコン
-	ANM_ID_GETDEMO,						// 捕獲デモカーソル
-	ANM_ID_CURSOR,						// カーソル
-
-	ANM_ID_MAX = ANM_ID_CURSOR - CLACT_ID_COMMON + 1
-};
-*/
 
 #define	CURSOR_CLA_MAX		( 5 )		// カーソルのOBJ数
 #define	FINGER_CLA_MAX		( 1 )		// 指カーソルのOBJ数
+
+// 捕獲デモのカーソル表示座標
+#define	P1_GETDEMO_CURSOR_X		( 192 )
+#define	P1_GETDEMO_CURSOR_Y		( 24 )
+#define	P2_GETDEMO_CURSOR_X		( 64 )
+#define	P2_GETDEMO_CURSOR_Y		( 16 )
+#define	P3_GETDEMO_CURSOR_X		( 104 )
+#define	P3_GETDEMO_CURSOR_Y		( 152 )
+
+#define	GETDEMO_DURSOR_PAL	( BBAG_PALRES_CURSOR + 1 )		// 捕獲デモカーソルパレット位置
+
+// コストバーアニメ番号
+#define	COST_ANM_ENE_NONE			( 15 )		// エネルギーなし
+#define	COST_ANM_ENE_ONE			( 16 )		// エネルギー１
+#define	COST_ANM_ENE_TWO			( 17 )		// エネルギー２
+#define	COST_ANM_ENE_RES_ONE	( 18 )		// エネルギー１＋チャージ１
+#define	COST_ANM_RES_ONE			( 19 )		// チャージ１
+#define	COST_ANM_RES_TWO			( 20 )		// チャージ２
 
 
 //============================================================================================
@@ -96,24 +53,19 @@ static void BBAG_ClactResManInit( BBAG_WORK * wk );
 static void BBAG_ClactItemLoad( BBAG_WORK * wk );
 static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 palResID );
 static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u32 palResID );
-//static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk );
 static void BBAG_ClactAddAll( BBAG_WORK * wk );
 static void BBAG_Page1ObjSet( BBAG_WORK * wk );
 static void BBAG_Page2ObjSet( BBAG_WORK * wk );
 static void BBAG_Page3ObjSet( BBAG_WORK * wk );
 static void BBAG_ClactCursorAdd( BBAG_WORK * wk );
 static void BBAG_CursorDel( BBAG_WORK * wk );
-//static void BBAG_ClactGetDemoCursorAdd( BBAG_WORK * wk );
-//static void BBAG_GetDemoCursorDel( BBAG_WORK * wk );
 static void CostResLoad( BBAG_WORK * wk );
 static void CursorResLoad( BBAG_WORK * wk );
 
-//static void SetGetDemoCursorCallBack( BBAG_WORK * wk, u32 anm );
 static void InitGetDemoCursor( BBAG_WORK * wk );
 static void ExitGetDemoCursor( BBAG_WORK * wk );
 static void SetGetDemoCursor( BBAG_WORK * wk, int px, int py );
 static void DelGetDemoCursor( BBAG_WORK * wk );
-
 
 static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_CLACTPOS * pos );
 
@@ -122,11 +74,9 @@ static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_C
 //	グローバル変数
 //============================================================================================
 // ページ１のポケモンアイコンの座標
-//static const int P1_ItemIconPos[2] = { 24, 178 };
 static const GFL_CLACTPOS P1_ItemIconPos = { 36, 180 };
 
 // ページ２のアイテムアイコンの座標
-//static const int P2_ItemIconPos[][2] =
 static const GFL_CLACTPOS P2_ItemIconPos[] =
 {
 	// アイテムアイコン
@@ -221,17 +171,15 @@ static const u32 ClactDat[][3] =
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
-
-//	{ BBAG_CHRRES_DEMO, BBAG_PALRES_DEMO, BBAG_CELRES_DEMO },
 };
 
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * 戦闘用バッグOBJ初期化
+ * @brief		戦闘用バッグOBJ初期化
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -240,25 +188,22 @@ void BattleBag_ObjInit( BBAG_WORK * wk )
 {
 	BBAG_ClactResManInit( wk );
 	BBAG_ClactItemLoad( wk );
-//	BBAG_ClactGetDemoLoad( wk );
 	CostResLoad( wk );
 	CursorResLoad( wk );
 
 	BBAG_ClactAddAll( wk );
 	BBAG_ClactCursorAdd( wk );
-//	BBAG_ClactGetDemoCursorAdd( wk );
 
 	InitGetDemoCursor( wk );
 
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * リソースマネージャー初期化
+ * @brief		リソースマネージャー初期化
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -276,22 +221,13 @@ static void BBAG_ClactResManInit( BBAG_WORK * wk )
 	for( i=0; i<BBAG_CELRES_MAX; i++ ){
 		wk->celRes[i] = 0xffffffff;
 	}
-
-/*
-	TCATS_RESOURCE_NUM_LIST	crnl = { CHR_ID_MAX, PAL_ID_MAX, CEL_ID_MAX, ANM_ID_MAX, 0, 0 };
-	CATS_SYS_PTR	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	wk->crp = CATS_ResourceCreate( csp );
-	CATS_ClactSetInit( csp, wk->crp, BBAG_CA_MAX+CURSOR_CLA_MAX+FINGER_CLA_MAX );
-	CATS_ResourceManagerInit( csp, wk->crp, &crnl );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムアイコンのグラフィックロード
+ * @brief		アイテムアイコンのグラフィックロード
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -327,42 +263,15 @@ static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 																	ah, ITEM_GetIconCell(),  ITEM_GetIconCellAnm(), wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
-
-/*
-	CATS_SYS_PTR	csp;
-	u32	i;
-	ARCHANDLE* hdl;
-	
-	hdl = GFL_ARC_OpenDataHandle( ARC_ITEMICON,  GFL_HEAP_LOWID(wk->dat->heap) ); 
-	
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	for( i=0; i<6; i++ ){
-		// キャラ
-		CATS_LoadResourceCharArcH(
-			csp, wk->crp, hdl,
-			GetItemIndex(1,ITEM_GET_ICON_CGX), 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_ITEM1+i );
-		// パレット
-		CATS_LoadResourcePlttWorkArcH(
-			wk->pfd, FADE_SUB_OBJ, csp, wk->crp, hdl,
-			GetItemIndex(1,ITEM_GET_ICON_PAL), 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_ITEM1+i );
-	}
-	// セル
-	CATS_LoadResourceCellArcH( csp, wk->crp, hdl, ItemIconCellGet(), 0, CEL_ID_ITEM );
-	// セルアニメ
-	CATS_LoadResourceCellAnmArcH( csp, wk->crp, hdl, ItemIconCAnmGet(), 0, ANM_ID_ITEM );
-	
-	GFL_ARC_CloseDataHandle( hdl );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムアイコンキャラ切り替え
+ * @brief		アイテムアイコンキャラ切り替え
  *
- * @param	wk		ワーク
- * @param	item	アイテム番号
- * @param	res_id	キャラリソースID
+ * @param		wk			ワーク
+ * @param		item		アイテム番号
+ * @param		res_id	キャラリソースID
  *
  * @return	none
  */
@@ -396,24 +305,16 @@ static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 pa
 					wk->dat->heap, FADE_SUB_OBJ, 0x20, palResID * 16 );
 
   GFL_ARC_CloseDataHandle( ah );
-
-/*
-	CATS_SYS_PTR	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	CATS_ChangeResourceCharArc(
-		csp, wk->crp, ARC_ITEMICON,
-		GetItemIndex(item,ITEM_GET_ICON_CGX), 0, res_id );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムアイコンパレット切り替え
+ * @brief		アイテムアイコンパレット切り替え
  *
- * @param	wk		ワーク
- * @param	item	アイテム番号
- * @param	pos		位置
- * @param	res_id	パレットリソースID
+ * @param		wk			ワーク
+ * @param		item		アイテム番号
+ * @param		pos			位置
+ * @param		res_id	パレットリソースID
  *
  * @return	none
  */
@@ -431,14 +332,17 @@ static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u32 palResID )
 			ITEM_GetIndex(item,ITEM_GET_ICON_PAL),
 			PALTYPE_SUB_OBJ, palResID * 0x20, 0x20, wk->dat->heap );
 	}
-
-/*
-	PaletteWorkSet_Arc(
-		wk->pfd, ARC_ITEMICON,
-		GetItemIndex(item,ITEM_GET_ICON_PAL), wk->dat->heap,FADE_SUB_OBJ, 0x20, pos*16 );
-*/
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソースロード（コスト）
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CostResLoad( BBAG_WORK * wk )
 {
   ARCHANDLE * ah;
@@ -463,6 +367,15 @@ static void CostResLoad( BBAG_WORK * wk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソースロード（カーソル）
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CursorResLoad( BBAG_WORK * wk )
 {
   ARCHANDLE * ah;
@@ -499,58 +412,12 @@ static void CursorResLoad( BBAG_WORK * wk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * 捕獲デモカーソルのグラフィックロード
+ * @brief		セルアクター追加（個別）
  *
- * @param	wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BBAG_ClactGetDemoLoad( BBAG_WORK * wk )
-{
-  ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->dat->heap) );
-
-	// キャラ
-	wk->chrRes[BBAG_CHRRES_DEMO] = GFL_CLGRP_CGR_Register(
-																	ah, NARC_battgra_wb_finger_cursor_NCGR,
-																	FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
-	// パレット
-  wk->palRes[BBAG_PALRES_DEMO] = GFL_CLGRP_PLTT_Register(
-																		ah, NARC_battgra_wb_finger_cursor_NCLR,
-																		CLSYS_DRAW_SUB, BBAG_PALRES_DEMO*0x20, wk->dat->heap );
-	// セル・アニメ
-  wk->celRes[BBAG_CELRES_DEMO] = GFL_CLGRP_CELLANIM_Register(
-																		ah,
-																		NARC_battgra_wb_finger_cursor_NCER,
-																		NARC_battgra_wb_finger_cursor_NANR,
-																		wk->dat->heap );
-
-	// パレットフェードに設定
-	{
-		NNSG2dPaletteData * dat;
-		void * buf;
-
-		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_finger_cursor_NCLR, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
-		PaletteWorkSet(
-			wk->pfd, &(((u16*)(dat->pRawData))[0]), FADE_SUB_OBJ, BBAG_PALRES_DEMO*16, 0x20 );
-	
-		GFL_HEAP_FreeMemory( buf );
-	}
-
-  GFL_ARC_CloseDataHandle( ah );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * セルアクター追加（個別）
- *
- * @param	wk		ワーク
- * @param	id		追加するセルアクターのID
+ * @param		wk		ワーク
+ * @param		id		追加するセルアクターのID
  *
  * @return	セルアクターデータ
  */
@@ -573,99 +440,14 @@ static GFL_CLWK * BBAG_ClactAdd( BBAG_WORK * wk, const u32 * res )
 						wk->celRes[res[2]],
 						&dat, CLSYS_DRAW_SUB, wk->dat->heap );
 
-//	GFL_CLACT_WK_SetPlttOffs( clwk , prm->palNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-//	GFL_CLACT_WK_SetAutoAnmFlag( plateWork->pokeIcon , TRUE );
-
-	return clwk;
-
-/*
-    plateWork->pokeIconNcgRes = GFL_CLGRP_CGR_Register( arcHandle , 
-        POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-    
-    GFL_ARC_CloseDataHandle(arcHandle);
-
-    pltNum = POKEICON_GetPalNumGetByPPP( ppp );
-    cellInitData.pos_x = PLIST_PLATE_POKE_POS_X;
-    cellInitData.pos_y = PLIST_PLATE_POKE_POS_Y;
-    cellInitData.anmseq = POKEICON_ANM_HPMAX;
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 2;
-    plateWork->pokeIcon = GFL_CLACT_WK_Create( plateWork->cellUnit ,
-              plateWork->pokeIconNcgRes,
-              work->cellRes[PCR_PLT_POKEICON],
-              work->cellRes[PCR_ANM_POKEICON],
-              &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
-    GFL_CLACT_WK_SetPlttOffs( plateWork->pokeIcon , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-    GFL_CLACT_WK_SetAutoAnmFlag( plateWork->pokeIcon , TRUE );
-*/
-
-/*
-	TCATS_OBJECT_ADD_PARAM_S	prm;
-	CATS_SYS_PTR	csp;
-
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	prm.x = 0;
-	prm.y = 0;
-	prm.z = 0;
-
-	prm.anm = 0;
-	prm.pri = ClactDat[id][4];
-	prm.pal = 0;
-	prm.d_area = NNS_G2D_VRAM_TYPE_2DSUB;
-
-	prm.id[0] = ClactDat[id][0];
-	prm.id[1] = ClactDat[id][1];
-	prm.id[2] = ClactDat[id][2];
-	prm.id[3] = ClactDat[id][3];
-	
-	prm.bg_pri = 1;
-	prm.vram_trans = 0;
-
-	return CATS_ObjectAdd_S( csp, wk->crp, &prm );
-*/
-}
-
-/*
-static GFL_CLWK * BBAG_ClactAddDemoCursor( BBAG_WORK * wk, const u32 * res )
-{
-	GFL_CLWK * clwk;
-	GFL_CLWK_AFFINEDATA	dat;
-
-	dat.clwkdata.pos_x   = 0;
-	dat.clwkdata.pos_y   = 0;
-	dat.clwkdata.anmseq  = 0;
-	dat.clwkdata.softpri = 1;
-	dat.clwkdata.bgpri   = 1;
-
-	dat.affinepos_x = 0;
-	dat.affinepos_y = 0;
-	dat.scale_x = FX32_ONE;
-	dat.scale_y = FX32_ONE;
-	dat.rotation = 0;
-	dat.affine_type = CLSYS_AFFINETYPE_DOUBLE;
-
-	clwk = GFL_CLACT_WK_CreateAffine(
-						wk->clunit,
-						wk->chrRes[res[0]],
-						wk->palRes[res[1]],
-						wk->celRes[res[2]],
-						&dat, CLSYS_DRAW_SUB, wk->dat->heap );
-
-
-//	GFL_CLACT_WK_SetPlttOffs( clwk , prm->palNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-//	GFL_CLACT_WK_SetAutoAnmFlag( plateWork->pokeIcon , TRUE );
-
 	return clwk;
 }
-*/
-
 
 //--------------------------------------------------------------------------------------------
 /**
- * セルアクター追加（全て）
+ * @brief		セルアクター追加（全て）
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -675,22 +457,17 @@ static void BBAG_ClactAddAll( BBAG_WORK * wk )
 	u32	i;
 
 	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX+BAPPTOOL_CURSOR_MAX, 0, wk->dat->heap );
-//	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX, 0, wk->dat->heap );
 
-//	for( i=0; i<BBAG_CA_GETDEMO; i++ ){
 	for( i=0; i<BBAG_CA_MAX; i++ ){
 		wk->clwk[i] = BBAG_ClactAdd( wk, ClactDat[i] );
 	}
-
-	// 捕獲デモカーソル
-//	wk->clwk[BBAG_CA_GETDEMO] = BBAG_ClactAddDemoCursor( wk, ClactDat[BBAG_CA_GETDEMO] );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 戦闘用バッグOBJ削除
+ * @brief		戦闘用バッグOBJ削除
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -723,29 +500,13 @@ void BattleBag_ObjFree( BBAG_WORK * wk )
 	}
 
 	GFL_CLACT_UNIT_Delete( wk->clunit );
-
-/*
-	CATS_SYS_PTR	csp;
-	u32	i;
-	
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	for( i=0; i<BBAG_CA_MAX; i++ ){
-		CATS_ActorPointerDelete_S( wk->cap[i] );
-	}
-
-	BBAG_CursorDel( wk );
-	BBAG_GetDemoCursorDel( wk );
-
-	CATS_ResourceDestructor_S( csp, wk->crp );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * セルアクターを表示して座標変更
+ * @brief		セルアクターを表示して座標変更
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -758,10 +519,10 @@ static void BBAG_ClactOn( GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページごとにOBJをセット
+ * @brief		ページごとにOBJをセット
  *
- * @param	wk		ワーク
- * @param	page	ページ
+ * @param		wk		ワーク
+ * @param		page	ページ
  *
  * @return	none
  */
@@ -789,23 +550,11 @@ void BattleBag_PageObjSet( BBAG_WORK * wk, u32 page )
 	}
 }
 
-// 捕獲デモのカーソル表示座標
-#define	P1_GETDEMO_CURSOR_X		( 192 )
-#define	P1_GETDEMO_CURSOR_Y		( 24 )
-#define	P2_GETDEMO_CURSOR_X		( 64 )
-#define	P2_GETDEMO_CURSOR_Y		( 16 )
-#define	P3_GETDEMO_CURSOR_X		( 104 )
-#define	P3_GETDEMO_CURSOR_Y		( 152 )
-
-static const GFL_CLACTPOS P1_DemoCursorPos = { P1_GETDEMO_CURSOR_X, P1_GETDEMO_CURSOR_Y };
-static const GFL_CLACTPOS P2_DemoCursorPos = { P2_GETDEMO_CURSOR_X, P2_GETDEMO_CURSOR_Y };
-static const GFL_CLACTPOS P3_DemoCursorPos = { P3_GETDEMO_CURSOR_X, P3_GETDEMO_CURSOR_Y };
-
 //--------------------------------------------------------------------------------------------
 /**
- * ポケット選択ページのOBJをセット
+ * @brief		ポケット選択ページのOBJをセット
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -816,22 +565,19 @@ static void BBAG_Page1ObjSet( BBAG_WORK * wk )
 
 	if( wk->used_item != ITEM_DUMMY_DATA ){
 		BBAG_ItemIconCharChg( wk, wk->used_item, BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7 );
-//		BBAG_ItemIconPlttChg( wk, wk->used_item, 0, PAL_ID_ITEM1 );
 		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM7], &P1_ItemIconPos );
 	}
 
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
 		SetGetDemoCursor( wk, P1_GETDEMO_CURSOR_X, P1_GETDEMO_CURSOR_Y );
-//		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P1_DemoCursorPos );
-//		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
 	}
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム選択ページのOBJをセット
+ * @brief		アイテム選択ページのOBJをセット
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -850,29 +596,23 @@ static void BBAG_Page2ObjSet( BBAG_WORK * wk )
 
 		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
 			CostObjPut( wk, BBAG_CA_COST1_NUM+i*8, BBAGITEM_GetCost(item), 0, &P2_ItemIconPos[6+i] );
-//			BBAG_ClactOn( wk->clwk[BBAG_CA_COST1+i], &P2_ItemIconPos[6+i] );
-//			GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1+i], BBAGITEM_GetCost(item)-1 );
 		}
 	}
 
 	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
 		CostObjPut( wk, BBAG_CA_ENERGIE_NUM, wk->dat->energy, wk->dat->reserved_energy, &P2_ItemIconPos[6+i] );
-//		BBAG_ClactOn( wk->clwk[BBAG_CA_ENERGIE], &P2_ItemIconPos[6+i] );
-//		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_ENERGIE], 13 );
 	}
 
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
 		SetGetDemoCursor( wk, P2_GETDEMO_CURSOR_X, P2_GETDEMO_CURSOR_Y );
-//		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P2_DemoCursorPos );
-//		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
 	}
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム使用ページのOBJをセット
+ * @brief		アイテム使用ページのOBJをセット
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -883,19 +623,14 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 
 	item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
 	BBAG_ItemIconCharChg( wk, item, BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7 );
-//	BBAG_ItemIconPlttChg( wk, item, 0, PAL_ID_ITEM1 );
 	BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM7], &P3_ItemIconPos[0] );
 
 	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
 			CostObjPut( wk, BBAG_CA_COST1_NUM, BBAGITEM_GetCost(item), 0, &P3_ItemIconPos[1] );
-//		BBAG_ClactOn( wk->clwk[BBAG_CA_COST1], &P3_ItemIconPos[1] );
-//		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1], BBAGITEM_GetCost(item)-1 );
 	}
 
 	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
 		SetGetDemoCursor( wk, P3_GETDEMO_CURSOR_X, P3_GETDEMO_CURSOR_Y );
-//		BBAG_ClactOn( wk->clwk[BBAG_CA_GETDEMO], &P3_DemoCursorPos );
-//		BBAG_ChangeGetDemoCursorAnm( wk, 0 );
 	}
 }
 
@@ -906,9 +641,9 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 選択カーソル追加
+ * @brief		選択カーソル追加
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -922,29 +657,13 @@ static void BBAG_ClactCursorAdd( BBAG_WORK * wk )
 		wk->celRes[BBAG_CELRES_CURSOR] );
 
 	BAPPTOOL_VanishCursor( wk->cpwk, FALSE );
-
-/*
-	CATS_SYS_PTR csp;
-	BCURSOR_PTR	cursor;
-
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	BCURSOR_ResourceLoad(
-		csp, wk->crp, wk->pfd, wk->dat->heap, CHR_ID_CURSOR, PAL_ID_CURSOR, CEL_ID_CURSOR, ANM_ID_CURSOR );
-
-	cursor = BCURSOR_ActorCreate(
-				csp, wk->crp, wk->dat->heap,
-				CHR_ID_CURSOR, PAL_ID_CURSOR, CEL_ID_CURSOR, ANM_ID_CURSOR, 0, 1 );
-
-	BAPP_CursorMvWkSetBCURSOR_PTR( wk->cmv_wk, cursor );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 選択カーソル削除
+ * @brief		選択カーソル削除
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -952,325 +671,89 @@ static void BBAG_ClactCursorAdd( BBAG_WORK * wk )
 static void BBAG_CursorDel( BBAG_WORK * wk )
 {
 	BAPPTOOL_DelCursor( wk->cpwk );
-
-/*
-	BCURSOR_ActorDelete( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
-	BCURSOR_ResourceFree(
-		wk->crp, CHR_ID_CURSOR, PAL_ID_CURSOR, CEL_ID_CURSOR, ANM_ID_CURSOR );
-*/
 }
-
-
-/*
-// ポケット選択画面移動テーブル
-static const POINTSEL_WORK P1_CursorPosTbl[] =
-{
-	{   8,  16, 120,  72, 0, 1, 0, 2 },					// 0 : HP回復ポケット
-	{   8,  88, 120, 144, 0, 4, 1, 3 },					// 1 : 状態回復ポケット
-	{ 136,  16, 248,  72, 2, 3, 0, 2 },					// 2 : ボールポケット
-	{ 136,  88, 248, 144, 2, 5, 1, 3 },					// 3 : 戦闘用ポケット
-	{   8, 160, 200, 184, 1, 4, 4, 5 },					// 4 : 最後に使用した道具
-	{ 224, 160, 248, 184, BAPP_CMV_RETBIT|3, 5, 4, 5 },	// 5 : 戻る
-};
-
-// アイテム選択画面移動テーブル
-static const POINTSEL_WORK P2_CursorPosTbl[] =
-{
-	{   8,  16, 120,  48, 0, 2, 0, 1 },					// 0 : アイテム１
-	{ 136,  16, 248,  48, 1, 3, 0, 1 },					// 1 : アイテム２
-	{   8,  64, 120,  96, 0, 4, 2, 3 },					// 2 : アイテム３
-	{ 136,  64, 248,  96, 1, 5, 2, 3 },					// 3 : アイテム４
-	{   8, 112, 120, 144, 2, 6, 4, 5 },					// 4 : アイテム５
-	{ 136, 112, 248, 144, 3, 6, 4, 5 },					// 5 : アイテム６
-	{ 224, 160, 248, 184, BAPP_CMV_RETBIT|5, 6, 6, 6 },	// 6 : 戻る
-};
-
-// アイテム選択画面移動テーブル
-static const POINTSEL_WORK P3_CursorPosTbl[] =
-{
-	{   8, 160, 200, 184, 0, 0, 0, 1 },	// 0 : 使う
-	{ 224, 160, 248, 184, 1, 1, 0, 1 },	// 1 : 戻る
-};
-
-static const POINTSEL_WORK * const CursorPosTable[] = {
-	P1_CursorPosTbl,
-	P2_CursorPosTbl,
-	P3_CursorPosTbl,
-};
-
-
-#define	P1_DEF_CMV_TBL	( 0x3f )	// ページ１のデフォルトカーソル移動テーブル
-#define	P1_LST_CMV_TBL	( 0x2f )	// ページ１の最後に使った道具有のカーソル移動テーブル
-#define	P2_DEF_CMV_TBL	( 0x100 )	// ページ２のデフォルトカーソル移動テーブル
-#define	P2_PAGE_TBL		( 0xc0 )	// ページ２のページ切り替えカーソル移動テーブル
-
-/*
-void BBAG_P1CursorMvTblMake( BBAG_WORK * wk )
-{
-	if( wk->used_item != 0 ){
-		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, P1_DEF_CMV_TBL );
-	}else{
-		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, P1_LST_CMV_TBL );
-	}
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 選択カーソル移動テーブル作成
- *
- * @param	wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BBAG_P2CursorMvTblMake( BBAG_WORK * wk )
-{
-	u32	tbl;
-	u32	i;
-
-	tbl = P2_DEF_CMV_TBL;
-	for( i=0; i<6; i++ ){
-		if( wk->pocket[wk->poke_id][wk->dat->item_scr[wk->poke_id]*6+i].id == 0 ){
-			continue;
-		}
-		tbl |= (1<<i);
-	}
-	if( wk->scr_max[wk->poke_id] != 0 ){
-		tbl |= P2_PAGE_TBL;
-	}
-	BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, tbl );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 選択カーソルセット
- *
- * @param	wk		ワーク
- * @param	page	ページID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BattleBag_CursorMoveSet( BBAG_WORK * wk, u8 page )
-{
-	BAPP_CursorMvWkSetPoint( wk->cmv_wk, CursorPosTable[page] );
-
-	switch( page ){
-	case BBAG_PAGE_POCKET:		// ポケット選択ページ
-//		if( BAPP_CursorMvWkGetFlag( wk->cmv_wk ) == 1 ){
-			BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->poke_id );
-//		}
-//		BBAG_P1CursorMvTblMake( wk );
-		break;
-
-	case BBAG_PAGE_MAIN:		// アイテム選択ページ
-//		if( BAPP_CursorMvWkGetFlag( wk->cmv_wk ) == 1 ){
-			BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->dat->item_pos[wk->poke_id] );
-//		}
-//		BBAG_P2CursorMvTblMake( wk );
-		break;
-
-	case BBAG_PAGE_ITEM:		// アイテム使用ページ
-		break;
-	}
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 選択カーソル非表示
- *
- * @param	wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BattleBag_CursorOff( BBAG_WORK * wk )
-{
-	BAPP_CursorMvWkSetFlag( wk->cmv_wk, 0 );
-	BAPP_CursorMvWkPosInit( wk->cmv_wk );
-	BCURSOR_OFF( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
-}
-*/
 
 
 //============================================================================================
 //	捕獲デモカーソル
 //============================================================================================
-/*
-void BattleBag_GetDemoCursorAnm( BBAG_WORK * wk )
-{
-	GFL_CLACT_WK_AddAnmFrameNumCap( wk->cap[BBAG_CA_GETDEMO], FX32_ONE );
-//	BattleBag_GetDemoCursorPush( wk );
-}
-*/
-/*
-void BattleBag_GetDemoCursorPush( BBAG_WORK * wk )
-{
-//	if( wk->get_anm == 1 ){
-		s16	x, y;
-		GFL_CLACT_WK_GetPosCap( wk->cap[BBAG_CA_GETDEMO], &x, &y );
-		GFL_CLACT_WK_SetWldPosCap( wk->cap[BBAG_CA_GETDEMO], x, y+8 );
-//	}
-}
-*/
 
-#define	GETDEMO_DURSOR_PAL	( BBAG_PALRES_CURSOR + 1 )
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		捕獲デモカーソル初期化
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitGetDemoCursor( BBAG_WORK * wk )
 {
 	wk->getdemoCursor = BTLV_FINGER_CURSOR_Init( wk->pfd, GETDEMO_DURSOR_PAL, wk->dat->heap );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		捕獲デモカーソル削除
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitGetDemoCursor( BBAG_WORK * wk )
 {
 	BTLV_FINGER_CURSOR_Exit( wk->getdemoCursor );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		捕獲デモカーソルセット
+ *
+ * @param		wk		ワーク
+ * @param		px		Ｘ座標
+ * @param		py		Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetGetDemoCursor( BBAG_WORK * wk, int px, int py )
 {
 	BTLV_FINGER_CURSOR_Create( wk->getdemoCursor, px, py, 2, 6, 20 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		捕獲デモカーソル削除
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DelGetDemoCursor( BBAG_WORK * wk )
 {
 	BTLV_FINGER_CURSOR_Delete( wk->getdemoCursor );
 }
 
-/*
-static void GetDemoCursorCallBack_Normal( u32 param, fx32 currentFrame )
-{
-	BBAG_WORK * wk = (BBAG_WORK *)param;
-	wk->get_cnt++;
-}
 
-static void GetDemoCursorCallBack_Push( u32 param, fx32 currentFrame )
-{
-	BBAG_WORK * wk = (BBAG_WORK *)param;
-	wk->get_cnt++;
-}
-
-static void SetGetDemoCursorCallBack( BBAG_WORK * wk, u32 anm )
-{
-	GFL_CLWK_ANM_CALLBACK	dat;
-
-	dat.param = (u32)wk;
-
-	if( anm == 0 ){
-		dat.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM;
-		dat.frame_idx     = 0;
-		dat.p_func        = GetDemoCursorCallBack_Normal;
-	}else{
-		dat.callback_type = CLWK_ANM_CALLBACK_TYPE_SPEC_FRM;
-		dat.frame_idx     = BBAGOBJ_GETDEMO_CURSOR_PUSH_BUTTON_ANIME_FRAME;
-		dat.p_func        = GetDemoCursorCallBack_Push;
-	}
-
-	wk->get_cnt = 0;
-
-	GFL_CLACT_WK_StartAnmCallBack( wk->clwk[BBAG_CA_GETDEMO], &dat );
-}
-
-void BBAG_ChangeGetDemoCursorAnm( BBAG_WORK * wk, u32 anm )
-{
-	GFL_CLACT_WK_SetAnmFrame( wk->clwk[BBAG_CA_GETDEMO], 0 );
-	GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_GETDEMO], anm );
-	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[BBAG_CA_GETDEMO], TRUE );
-
-	SetGetDemoCursorCallBack( wk, anm );
-}
-*/
+//============================================================================================
+//	コスト
+//============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
- * 捕獲デモカーソル追加
+ * @brief		コスト配置
  *
- * @param	wk		ワーク
+ * @param		wk				ワーク
+ * @param		idx				OBJインデックス
+ * @param		ene				現在のエネルギー
+ * @param		res_ene		足りないエネルギー
+ * @param		pos				表示座標
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-/*
-static void BBAG_ClactGetDemoCursorAdd( BBAG_WORK * wk )
-{
-	CATS_SYS_PTR csp;
-	FINGER_PTR	finger;
-
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	FINGER_ResourceLoad(
-		csp, wk->crp, wk->dat->heap, wk->pfd, CHR_ID_GETDEMO, PAL_ID_GETDEMO, CEL_ID_GETDEMO, ANM_ID_GETDEMO );
-
-	wk->finger = FINGER_ActorCreate(
-					csp, wk->crp, wk->dat->heap,
-					CHR_ID_GETDEMO, PAL_ID_GETDEMO, CEL_ID_GETDEMO, ANM_ID_GETDEMO, 0, 0 );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 捕獲デモカーソル削除
- *
- * @param	wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BBAG_GetDemoCursorDel( BBAG_WORK * wk )
-{
-	FINGER_ActorDelete( wk->finger );
-	FINGER_ResourceFree(
-		wk->crp, CHR_ID_GETDEMO, PAL_ID_GETDEMO, CEL_ID_GETDEMO, ANM_ID_GETDEMO );
-}
-*/
-
-/*
-#define	GET_DEMO_FINGER_WAIT	( 60 )		// アニメウェイト
-
-// カーソル表示座標テーブル
-static const int GetDemoCursorPos[3][2] =
-{
-	{ P1_GETDEMO_CURSOR_X, P1_GETDEMO_CURSOR_Y },
-	{ P2_GETDEMO_CURSOR_X, P2_GETDEMO_CURSOR_Y },
-	{ P3_GETDEMO_CURSOR_X, P3_GETDEMO_CURSOR_Y }
-};
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 捕獲デモカーソルセット
- *
- * @param	wk		ワーク
- * @param	page	ページID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BBAG_GetDemoCursorSet( BBAG_WORK * wk, u8 page )
-{
-	if( wk->dat->mode == BBAG_MODE_GETDEMO ){
-		FINGER_PosSetON( wk->finger, GetDemoCursorPos[page][0], GetDemoCursorPos[page][1] );
-		FINGER_TouchReq( wk->finger, GET_DEMO_FINGER_WAIT );
-	}else{
-		FINGER_OFF( wk->finger );
-	}
-}
-*/
-
-#define	COST_ANM_ENE_NONE			( 15 )
-#define	COST_ANM_ENE_ONE			( 16 )
-#define	COST_ANM_ENE_TWO			( 17 )
-#define	COST_ANM_ENE_RES_ONE	( 18 )
-#define	COST_ANM_RES_ONE			( 19 )
-#define	COST_ANM_RES_TWO			( 20 )
-
 static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_CLACTPOS * pos )
 {
 	GFL_CLACTPOS	mvp;

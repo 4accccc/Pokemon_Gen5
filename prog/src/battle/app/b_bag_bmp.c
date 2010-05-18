@@ -1,35 +1,18 @@
 //============================================================================================
 /**
- * @file	b_bag_bmp.c
- * @brief	戦闘用バッグ画面 BMP関連
+ * @file		b_bag_bmp.c
+ * @brief		戦闘用バッグ画面 BMP関連
  * @author	Hiroyuki Nakamura
- * @date	09.08.25
+ * @date		09.08.25
  */
 //============================================================================================
 #include <gflib.h>
 
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
-/*
-#include "system/window.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-#include "system/pmfprint.h"
-#include "system/buflen.h"
-*/
-//#include "system/clact_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "battle/battle_common.h"
-#include "battle/fight_tool.h"
-#include "msg/msg.naix"
-*/
+
 #include "msg/msg_b_bag.h"
-/*
-#include "itemtool/item.h"
-*/
+
 #include "b_app_tool.h"
 
 #include "b_bag.h"
@@ -41,16 +24,37 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-/*
-#define	PCOL_N_BLACK	( PRINTSYS_LSB_MAKE( 1, 2, 0 ) )		// フォントカラー：黒
-#define	PCOL_N_WHITE	( PCOL_N_BLACK )						// フォントカラー：白
-#define	PCOL_N_BLUE		( PRINTSYS_LSB_MAKE( 7, 8, 0 ) )		// フォントカラー：青
-#define	PCOL_N_RED		( PRINTSYS_LSB_MAKE( 3, 4, 0 ) )		// フォントカラー：赤
-#define	PCOL_BTN		( PRINTSYS_LSB_MAKE( 3, 2, 1 ) )		// ボタンフォント
-*/
 
 #define	FCOL_S12W		( PRINTSYS_LSB_Make(15,2,0) )	// フォントカラー：白
-//#define	FCOL_T12B		( PRINTSYS_LSB_Make(1,2,15) )	// フォントカラー：黒
+
+// ポケット選択ページ：ポケット名表示座標
+#define	P1_ZYOUTAI_PY		( 0 )
+#define	P1_KAIFUKU2_PY	( 16 )
+#define	P1_HP_PY				( 0 )
+#define	P1_KAIFUKU3_PY	( 16 )
+#define	P1_BATTLE_PY		( 0 )
+#define	P1_BALL_PY			( 0 )
+#define	P1_LASTITEM_PY	( 0 )		// 最後に使った道具
+
+#define	P2_ITEMNAME_PY	( 8-1 )		// アイテム選択ページのアイテム名表示Y座標
+#define	P2_ITEMNUM_PY		( 4 )			// アイテム選択ページの個数表示Y座標
+#define	P2_PAGE_NUM_PY	( 4 )			// アイテム選択ページのページ数表示Y座標
+
+// アイテム選択ページのポケット名表示座標
+#define	P2_NEXT_PY				( 8 )
+#define	P2_POCKET_HP1_PY	( 4 )
+#define	P2_POCKET_HP2_PY	( P2_POCKET_HP1_PY+16 )
+#define	P2_POCKET_ST1_PY	( 4 )
+#define	P2_POCKET_ST2_PY	( P2_POCKET_ST1_PY+16 )
+#define	P2_POCKET_BALL_PY	( 12 )
+#define	P2_POCKET_BATL_PY	( 12 )
+
+#define	P3_ITEMNAME_PY	( 0 )		// アイテム使用ページのアイテム名表示Y座標
+#define	P3_ITEMINFO_PX	( 4 )		// アイテム使用ページのアイテム情報表示X座標
+#define	P3_ITEMINFO_PY	( 0 )		// アイテム使用ページのアイテム情報表示Y座標
+#define	P3_ITEMNUM_PY		( 0 )		// アイテム使用ページのアイテム数表示Y座標
+
+#define	P3_USE_PY				( 0 )		// 「つかう」表示Y座標
 
 
 //============================================================================================
@@ -62,12 +66,8 @@ static void BBAG_Page3BmpWrite( BBAG_WORK * wk );
 
 
 //============================================================================================
-//	グローバル変数
+//	グローバル
 //============================================================================================
-/*
-extern GFL_BMPWIN* GFL_BMPWIN_Create( u8 frmnum, u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u8 dir );
-GFL_BMP_CHRAREA_GET_B
-*/
 
 // 会話ウィンドウデータ
 static const u8 CommBmpData[] = {
@@ -246,21 +246,30 @@ static const u8 P3_PutWin[] = {
 	BAPPTOOL_SET_STR_SCRN_END
 };
 
+// アイテム名のメッセージID
+static const u32 ItemStrGmm[][2] =
+{	// 名前、x???
+	{ mes_b_bag_02_000, mes_b_bag_02_001 },
+	{ mes_b_bag_02_100, mes_b_bag_02_101 },
+	{ mes_b_bag_02_200, mes_b_bag_02_201 },
+	{ mes_b_bag_02_300, mes_b_bag_02_301 },
+	{ mes_b_bag_02_400, mes_b_bag_02_401 },
+	{ mes_b_bag_02_500, mes_b_bag_02_501 }
+};
+
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMPウィンドウ初期化
+ * @brief		BMPウィンドウ初期化
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
 void BattleBag_BmpInit( BBAG_WORK * wk )
 {
-//	OS_Printf( "BBAG2 : %d\n", WIN_P2_POCKET_CGX+WIN_P2_POCKET_SX*WIN_P2_POCKET_SY );
-//	OS_Printf( "BBAG3 : %d\n", WIN_P3_USE_CGX+WIN_P3_USE_SX*WIN_P3_USE_SY );
 	wk->talk_win = GFL_BMPWIN_Create(
 									CommBmpData[0],
 									CommBmpData[1], CommBmpData[2],
@@ -272,10 +281,10 @@ void BattleBag_BmpInit( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ページごとのBMPウィンドウ追加
+ * @brief		ページごとのBMPウィンドウ追加
  *
- * @param	wk		ワーク
- * @param	page	ページ
+ * @param		wk		ワーク
+ * @param		page	ページ
  *
  * @return	none
  */
@@ -296,46 +305,13 @@ void BattleBag_BmpAdd( BBAG_WORK * wk, u32 page )
 													GFL_BMP_CHRAREA_GET_B );
 		dat += 6;
 	}
-
-#if 0
-	const u8 * dat;
-	u32	i;
-
-	switch( page ){
-	case BBAG_PAGE_POCKET:	// ポケット選択ページ
-		dat = Page1_BmpData[0];
-		wk->bmp_add_max = WIN_P1_MAX;
-		break;
-	case BBAG_PAGE_MAIN:	// アイテム選択ページ
-		dat = Page2_BmpData[0];
-		wk->bmp_add_max = WIN_P2_MAX;
-		break;
-	case BBAG_PAGE_ITEM:	// アイテム使用ページ
-		dat = Page3_BmpData[0];
-		wk->bmp_add_max = WIN_P3_MAX;
-		break;
-	}
-
-//	wk->add_win = GFL_BMPWIN_Init( wk->dat->heap, wk->bmp_add_max );
-
-	for( i=0; i<wk->bmp_add_max; i++ ){
-//		GF_BGL_BmpWinAddEx( wk->bgl, &wk->add_win[i], &dat[i] );
-		wk->add_win[i] = GFL_BMPWIN_Create(
-												dat[0],
-												dat[1], dat[2],
-												dat[3], dat[4],
-												dat[5],
-												GFL_BMP_CHRAREA_GET_B );
-		dat += 6;
-	}
-#endif
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 追加BMPウィンドウ削除
+ * @brief		追加BMPウィンドウ削除
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -351,9 +327,9 @@ void BattleBag_BmpFree( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMPウィンドウ全削除
+ * @brief		BMPウィンドウ全削除
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -368,10 +344,10 @@ void BattleBag_BmpFreeAll( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMP書き込み
+ * @brief		BMP書き込み
  *
- * @param	wk		ワーク
- * @param	page	ページ
+ * @param		wk		ワーク
+ * @param		page	ページ
  *
  * @return	none
  */
@@ -393,13 +369,13 @@ void BattleBag_BmpWrite( BBAG_WORK * wk, u32 page )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 文字列表示
+ * @brief		文字列表示
  *
- * @param	wk		戦闘バッグのワーク
- * @param	widx	ウィンドウインデックス
- * @param	midx	メッセージインデックス
- * @param	py		表示Y座標
- * @param	col		カラー
+ * @param		wk		戦闘バッグのワーク
+ * @param		widx	ウィンドウインデックス
+ * @param		midx	メッセージインデックス
+ * @param		py		表示Y座標
+ * @param		col		カラー
  *
  * @return	none
  */
@@ -415,37 +391,17 @@ static void BBAG_StrPut( BBAG_WORK * wk, u32 widx, u32 midx, u32 py, u16 col )
 	str = GFL_MSG_CreateString( wk->mman, midx );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
-//	PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, str, wk->dat->font, col );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 	PRINT_UTIL_PrintColor( &wk->add_win[widx], wk->que, px, py, str, wk->dat->font, col );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 
 	GFL_STR_DeleteBuffer( str );
-//  GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
-// ポケット名表示座標
-#define	P1_ZYOUTAI_PY	( 0 )
-#define	P1_KAIFUKU2_PY	( 16 )
-#define	P1_HP_PY		( 0 )
-#define	P1_KAIFUKU3_PY	( 16 )
-#define	P1_BATTLE_PY	( 0 )
-#define	P1_BALL_PY		( 0 )
-#define	P1_LASTITEM_PY	( 0 )
-/*
-	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_000, P1_HP_PY, FCOL_S12W );
-	BBAG_StrPut( wk, WIN_P1_HP, mes_b_bag_01_001, P1_KAIFUKU3_PY, FCOL_S12W );
-	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_100, P1_ZYOUTAI_PY, FCOL_S12W );
-	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_101, P1_KAIFUKU2_PY, FCOL_S12W );
-	BBAG_StrPut( wk, WIN_P1_BALL, mes_b_bag_01_500, P1_BALL_PY, FCOL_S12W );
-	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, FCOL_S12W );
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケット選択ページ表示
+ * @brief		ポケット選択ページ表示
  *
- * @param	wk		戦闘バッグのワーク
+ * @param		wk		戦闘バッグのワーク
  *
  * @return	none
  */
@@ -468,17 +424,9 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, FCOL_S12W );
 	if( wk->used_item != ITEM_DUMMY_DATA ){
 		STRBUF * str = GFL_MSG_CreateString( wk->mman, mes_b_bag_01_600 );
-/*
-		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp( wk->add_win[WIN_P1_LASTITEM].win ),
-			0, P1_LASTITEM_PY, str, wk->dat->font, FCOL_S12W );
-//		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P1_LASTITEM] );
-*/
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[WIN_P1_LASTITEM], wk->que, 0, P1_LASTITEM_PY, str, wk->dat->font, FCOL_S12W );
-//		BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P1_LASTITEM] );
 		GFL_STR_DeleteBuffer( str );
-//	  GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[WIN_P1_LASTITEM].win );
 	}else{
 		GFL_BMPWIN_TransVramCharacter( wk->add_win[WIN_P1_LASTITEM].win );
 	}
@@ -487,29 +435,16 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 }
 
 
-// アイテム名のメッセージID
-static const u32 ItemStrGmm[][2] =
-{	// 名前、x???
-	{ mes_b_bag_02_000, mes_b_bag_02_001 },
-	{ mes_b_bag_02_100, mes_b_bag_02_101 },
-	{ mes_b_bag_02_200, mes_b_bag_02_201 },
-	{ mes_b_bag_02_300, mes_b_bag_02_301 },
-	{ mes_b_bag_02_400, mes_b_bag_02_401 },
-	{ mes_b_bag_02_500, mes_b_bag_02_501 }
-};
-
-#define	P2_ITEMNAME_PY	( 8-1 )		// アイテム選択ページのアイテム名表示Y座標
-
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム名表示
+ * @brief		アイテム名表示
  *
- * @param	wk			戦闘バッグのワーク
- * @param	dat_pos		データ位置（ポケット内のアイテム位置）
- * @param	put_pos		表示位置
- * @param	widx		ウィンドウインデックス
- * @param	fidx		フォントインデックス
- * @param	col			カラー
+ * @param		wk			戦闘バッグのワーク
+ * @param		dat_pos		データ位置（ポケット内のアイテム位置）
+ * @param		put_pos		表示位置
+ * @param		widx		ウィンドウインデックス
+ * @param		fidx		フォントインデックス
+ * @param		col			カラー
  *
  * @return	none
  */
@@ -533,31 +468,25 @@ static void BBAG_ItemNamePut(
 		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
 		siz = PRINTSYS_GetStrWidth( wk->msg_buf, wk->dat->font, 0 );
 		px  = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
-//		GF_STR_PrintColor( win, fidx, wk->msg_buf, px, P2_ITEMNAME_PY, MSG_NO_PUT, col, NULL );
-//		PRINTSYS_PrintQueColor(
-//			wk->que, bmp, px, P2_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//		BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[widx], wk->que, px, P2_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//		BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 		GFL_STR_DeleteBuffer( str );
 	}else{
-//		GFL_BMPWIN_MakeTransWindow_VBlank( win );
 		GFL_BMPWIN_TransVramCharacter( win );
 	}
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * 個数表示
+ * @brief		個数表示
  *
- * @param	wk			戦闘バッグのワーク
- * @param	dat_pos		データ位置（ポケット内のアイテム位置）
- * @param	put_pos		表示位置
- * @param	widx		ウィンドウインデックス
- * @param	fidx		フォントインデックス
- * @param	py			表示Y座標
- * @param	col			カラー
+ * @param		wk				戦闘バッグのワーク
+ * @param		dat_pos		データ位置（ポケット内のアイテム位置）
+ * @param		put_pos		表示位置
+ * @param		widx			ウィンドウインデックス
+ * @param		fidx			フォントインデックス
+ * @param		py				表示Y座標
+ * @param		col				カラー
  *
  * @return	none
  */
@@ -581,28 +510,20 @@ static void BBAG_ItemNumPut(
 			3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
 
-//		GF_STR_PrintColor( win, fidx, wk->msg_buf, 0, py, MSG_NO_PUT, col, NULL );
-//		PRINTSYS_PrintQueColor(
-//			wk->que, bmp, 0, py, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//		BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 		PRINT_UTIL_PrintColor(
 			&wk->add_win[widx], wk->que, 0, py, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//		BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
 		GFL_STR_DeleteBuffer( str );
 	}else{
-//		GFL_BMPWIN_MakeTransWindow_VBlank( win );
 		GFL_BMPWIN_TransVramCharacter( win );
 	}
 }
 
-#define	P2_ITEMNUM_PY	( 4 )	// アイテム選択ページの個数表示Y座標
-
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム名と個数表示（個別）
+ * @brief		アイテム名と個数表示（個別）
  *
- * @param	wk		戦闘バッグのワーク
- * @param	pos		表示位置
+ * @param		wk		戦闘バッグのワーク
+ * @param		pos		表示位置
  *
  * @return	none
  */
@@ -626,9 +547,9 @@ static void BBAG_P2_ItemPut( BBAG_WORK * wk, u32 pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム名と個数表示（全体）
+ * @brief		アイテム名と個数表示（全体）
  *
- * @param	wk		戦闘バッグのワーク
+ * @param		wk		戦闘バッグのワーク
  *
  * @return	none
  */
@@ -652,14 +573,11 @@ void BattleBag_Page2_StrItemPut( BBAG_WORK * wk )
 	wk->p2_swap ^= 1;
 }
 
-
-#define	P2_PAGE_NUM_PY	( 4 )	// アイテム選択ページのページ数表示Y座標
-
 //--------------------------------------------------------------------------------------------
 /**
- * ページ数表示
+ * @brief		ページ数表示
  *
- * @param	wk		戦闘バッグのワーク
+ * @param		wk		戦闘バッグのワーク
  *
  * @return	none
  */
@@ -679,10 +597,6 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 	str = GFL_MSG_CreateString( wk->mman, mes_b_bag_02_800 );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px  = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
-/*
-	GF_STR_PrintColor(
-		win, FONT_SYSTEM, str, px, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
-*/
 	PRINTSYS_PrintQueColor(
 			wk->que, bmp, px, P2_PAGE_NUM_PY, str, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( str );
@@ -692,8 +606,6 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 		wk->wset, 0, wk->scr_max[wk->poke_id]+1,
 		2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-//	GF_STR_PrintColor(
-//		win, FONT_SYSTEM, wk->msg_buf, px+siz, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
 	PRINTSYS_PrintQueColor(
 			wk->que, bmp, px+siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
 	GFL_STR_DeleteBuffer( str );
@@ -705,34 +617,17 @@ void BattleBag_Page2_StrPageNumPut( BBAG_WORK * wk )
 
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
 	siz = PRINTSYS_GetStrWidth( wk->msg_buf, wk->dat->font, 0 );
-//	GF_STR_PrintColor(
-//		win, FONT_SYSTEM, wk->msg_buf, px-siz, P2_PAGE_NUM_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
-//	PRINTSYS_PrintQueColor(
-//			wk->que, bmp, px-siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P2_PAGENUM] );
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[WIN_P2_PAGENUM], wk->que,
 		px-siz, P2_PAGE_NUM_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P2_PAGENUM] );
 	GFL_STR_DeleteBuffer( str );
-
-//	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
-
-// アイテム選択ページのポケット名表示座標
-#define	P2_NEXT_PY			( 8 )
-#define	P2_POCKET_HP1_PY	( 4 )
-#define	P2_POCKET_HP2_PY	( P2_POCKET_HP1_PY+16 )
-#define	P2_POCKET_ST1_PY	( 4 )
-#define	P2_POCKET_ST2_PY	( P2_POCKET_ST1_PY+16 )
-#define	P2_POCKET_BALL_PY	( 12 )
-#define	P2_POCKET_BATL_PY	( 12 )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケット名表示
+ * @brief		ポケット名表示
  *
- * @param	wk		戦闘バッグのワーク
+ * @param		wk		戦闘バッグのワーク
  *
  * @return	none
  */
@@ -774,9 +669,9 @@ static void BBAG_Page2PocketNamePut( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム選択ページ
+ * @brief		アイテム選択ページ
  *
- * @param	wk		戦闘バッグのワーク
+ * @param		wk		戦闘バッグのワーク
  *
  * @return	none
  */
@@ -788,17 +683,13 @@ static void BBAG_Page2BmpWrite( BBAG_WORK * wk )
 	BattleBag_Page2_StrPageNumPut( wk );
 }
 
-#define	P3_ITEMNAME_PY	( 0 )	// アイテム使用ページのアイテム名表示Y座標
-#define	P3_ITEMINFO_PX	( 4 )	// アイテム使用ページのアイテム情報表示X座標
-#define	P3_ITEMINFO_PY	( 0 )	// アイテム使用ページのアイテム情報表示Y座標
-#define	P3_ITEMNUM_PY	( 0 )	// アイテム使用ページのアイテム数表示Y座標
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム名表示
+ * @brief		アイテム名表示
  *
- * @param	wk			戦闘バッグのワーク
- * @param	dat_pos		データ位置（ポケット内のアイテム位置）
+ * @param		wk				戦闘バッグのワーク
+ * @param		dat_pos		データ位置（ポケット内のアイテム位置）
  *
  * @return	none
  */
@@ -816,26 +707,18 @@ static void BBAG_P3_ItemNamePut( BBAG_WORK * wk, u32 dat_pos )
 
 	bmp = GFL_BMPWIN_GetBmp( win );
 	GFL_BMP_Clear( bmp, 0 );
-//	GF_STR_PrintColor(
-//		win, FONT_SYSTEM, wk->msg_buf, 0, P3_ITEMNAME_PY, MSG_NO_PUT, PCOL_N_WHITE, NULL );
-//	PRINTSYS_PrintQueColor(
-//			wk->que, bmp, 0, P3_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NAME] );
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[WIN_P3_NAME], wk->que,
 		0, P3_ITEMNAME_PY, wk->msg_buf, wk->dat->font, FCOL_S12W );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NAME] );
 	GFL_STR_DeleteBuffer( str );
-
-//	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム情報表示
+ * @brief		アイテム情報表示
  *
- * @param	wk			戦闘バッグのワーク
- * @param	dat_pos		データ位置（ポケット内のアイテム位置）
+ * @param		wk				戦闘バッグのワーク
+ * @param		dat_pos		データ位置（ポケット内のアイテム位置）
  *
  * @return	none
  */
@@ -848,27 +731,17 @@ static void BBAG_P3_ItemInfoPut( BBAG_WORK * wk, u32 dat_pos )
 	win = wk->add_win[WIN_P3_INFO].win;
 	buf = GFL_STR_CreateBuffer( BUFLEN_ITEM_INFO, wk->dat->heap );
 	ITEM_GetInfo( buf, wk->pocket[wk->poke_id][dat_pos].id, wk->dat->heap );
-//	GF_STR_PrintColor(
-//		win, FONT_SYSTEM, buf, P3_ITEMINFO_PX, P3_ITEMINFO_PY, MSG_NO_PUT, PCOL_N_BLACK, NULL );
-//	PRINTSYS_PrintQueColor(
-//			wk->que, GFL_BMPWIN_GetBmp(win), P3_ITEMINFO_PX, P3_ITEMINFO_PY, buf, wk->dat->font, FCOL_S12W );
-//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_INFO] );
 	PRINT_UTIL_PrintColor(
 		&wk->add_win[WIN_P3_INFO], wk->que,
 		P3_ITEMINFO_PX, P3_ITEMINFO_PY, buf, wk->dat->font, FCOL_S12W );
-//	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_INFO] );
 	GFL_STR_DeleteBuffer( buf );
-
-//	GFL_BMPWIN_MakeTransWindow_VBlank( win );
 }
-
-#define	P3_USE_PY	( 0 )		// 「つかう」表示Y座標
 
 //--------------------------------------------------------------------------------------------
 /**
- * アイテム使用ページ
+ * @brief		アイテム使用ページ
  *
- * @param	wk		戦闘バッグのワーク
+ * @param		wk		戦闘バッグのワーク
  *
  * @return	none
  */
@@ -896,9 +769,9 @@ static void BBAG_Page3BmpWrite( BBAG_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ表示
+ * @brief		メッセージ表示
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -907,21 +780,18 @@ void BattleBag_TalkMsgSet( BBAG_WORK * wk )
 {
 	GFL_BMP_DATA * bmp;
 
-//	BmpWinFrame_Write( &wk->talk_win, WINDOW_TRANS_OFF, TALK_WIN_CGX_POS, BBAG_PAL_TALK_WIN );
 	BmpWinFrame_Write( wk->talk_win, WINDOW_TRANS_OFF ,1, BBAG_PAL_TALK_WIN );
-//	GFL_BMPWIN_MakeFrameScreen( wk->talk_win, 1, BBAG_PAL_TALK_WIN );
 
 	bmp = GFL_BMPWIN_GetBmp( wk->talk_win );
-//	GFL_BMP_Clear( bmp, FBMP_COL_WHITE );
 	GFL_BMP_Clear( bmp, 15 );
 	BattleBag_TalkMsgStart( wk );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ表示開始
+ * @brief		メッセージ表示開始
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
@@ -930,7 +800,6 @@ void BattleBag_TalkMsgStart( BBAG_WORK * wk )
 {
 	GFL_FONTSYS_SetColor( 1, 2, 0 );
 
-//	MsgPrintSkipFlagSet( MSG_SKIP_ON );
 	wk->stream = PRINTSYS_PrintStream(
 									wk->talk_win,
 									0, 0, wk->msg_buf, wk->dat->font,
@@ -941,116 +810,32 @@ void BattleBag_TalkMsgStart( BBAG_WORK * wk )
 									15 );	// clear color
 
 	GFL_BMPWIN_MakeTransWindow_VBlank( wk->talk_win );
-
-/*
-	MsgPrintSkipFlagSet( MSG_SKIP_ON );
-	wk->midx = GF_STR_PrintSimple(
-				&wk->talk_win, FONT_TALK, wk->msg_buf,
-				0, 0, BattleWorkConfigMsgSpeedGet(wk->dat->bw), NULL );
-*/
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
- * バッグ内使用アイテムのメッセージセット
+ * @brief		文字列転送
  *
- * @param	wk		ワーク
+ * @param		wk		ワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BattleBag_ItemUseMsgSet( BBAG_WORK * wk )
-{
-/*
-	POKEMON_PARAM * pp;
-	void * item;
-	STRBUF * str;
-	int	smn;
-	
-	item = GetItemArcData( wk->dat->ret_item, ITEM_GET_DATA, wk->dat->heap );
-	smn  = BattleBag_SelMonsNoGet( wk );
-	pp   = BattleWorkPokemonParamGet( wk->dat->bw, wk->dat->client_no, smn );
-
-	// 能力ガード
-	if( ItemBufParamGet( item, ITEM_PRM_ABILITY_GUARD ) != 0 ){
-		MSGMAN_GetString( wk->mman, mes_b_bag_m02, wk->msg_buf );
-	// 攻撃力アップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_ATTACK_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m04 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	// 防御力アップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_DEFENCE_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m08 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	// 特攻アップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_SP_ATTACK_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m05 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	// 特防アップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_SP_DEFENCE_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m07 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	// 素早さアップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_AGILITY_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m06 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	// 命中率アップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_HIT_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m09 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	// クリティカル率アップ
-	}else if( ItemBufParamGet( item, ITEM_PRM_CRITICAL_UP ) != 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m03 );
-		WORDSET_RegisterPokeNickName( wk->wset, 0, PPPPointerGet(pp) );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	}else{
-		str = GFL_MSG_CreateString( wk->mman, mes_b_bag_m10 );
-		WORDSET_RegisterItemName( wk->wset, 0, wk->dat->ret_item );
-		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-		GFL_STR_DeleteBuffer( str );
-	}
-
-	GFL_HEAP_FreeMemory( item );
-*/
-/*↑[GS_CONVERT_TAG]*/
-}
-
-
-
 void BBAGBMP_PrintMain( BBAG_WORK * wk )
 {
 	BAPPTOOL_PrintUtilTrans( wk->add_win, wk->que, WIN_MAX );
 }
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BMPWINスクリーン配置
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BBAGBMP_SetStrScrn( BBAG_WORK * wk )
 {
-/*
-	u32	i = 0;
-
-	while(1){
-		if( wk->putWin[i] == SET_STR_SCRN_END ){
-			break;
-		}
-		BAPPTOOL_PrintScreenTrans( &wk->add_win[wk->putWin[i]] );
-		i++;
-	}
-*/
 	BAPPTOOL_SetStrScrn( wk->add_win, wk->putWin );
 }
