@@ -1135,7 +1135,7 @@ static void PMSSelect_BG_PlateTrans( PMS_SELECT_BG_WORK* wk, u8 view_pos_id, u32
     buff[i] = ( buff[i] & 0xFFF ) + 0x1000 * ( sentence_type + PLATE_BG_PLTT_OFS_BASE );
   }
 
-  //@TODO 枠だけ転送すれば良い。
+  //【軽量化】：本当は枠だけ転送すれば良い
   GFL_BG_WriteScreenExpand( BG_FRAME_TEXT_M, 
     0, view_pos_id * PLATE_BG_SY + 1,
     sx, PLATE_BG_SY,
@@ -1272,7 +1272,7 @@ static void PMSSelect_BG_PlateFutterTrans( PMS_SELECT_BG_WORK* wk, u32 sentence_
 
   u16* buff = (u16*)&wk->platescrnData->rawData;
 
-  //@TODO スクリーンバッファ全体を置き換える必要はない
+  //【軽量化】：本当はスクリーンバッファ全体を置き換える必要はない
 
   // パレット指定
   for( i=0; i<(sx*sy); i++ )
@@ -1937,7 +1937,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
 
         LIST_BAR_SetPosFromKey( wk, FALSE );
 
-        //@TODO 重いようなら、
+        //【軽量化】：重いようなら、
         //1:ページ全体が更新されない時はUpdateAllをスクリーンのカラーを置換する処理にする
         //2:移動の時はコピーを使う。
         PLATE_CNT_UpdateAll( wk );
@@ -2322,8 +2322,6 @@ static BOOL ScenePlateSelect_Main( int* seq , void* work )
       wk->out_param->out_pms_data     = NULL;
       wk->sub_res = SEQ_PLATE_SELECT_FADE_OUT_START;
       return TRUE;
-
-    // @TODO 左右と項目アイコン
 
     case TOUCHBAR_ICON_CUTSOM1 :
     case TOUCHBAR_SELECT_NONE :
