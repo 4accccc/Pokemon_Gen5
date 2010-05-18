@@ -2121,7 +2121,7 @@ static void BattleWazaParamPut( WO_WORK * wk, u32 prm )
 
     // –½’†
     tmp = WAZADATA_GetParam( prm, WAZAPARAM_HITPER );
-    if( tmp == 0 ){
+    if( tmp == 0 || WAZADATA_IsAlwaysHit( prm )){
       GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_12, wk->mbuf );
     }else{
       NumPrmSet( wk, msg_waza_oboe_01_09, tmp, 3, STR_NUM_DISP_LEFT );
